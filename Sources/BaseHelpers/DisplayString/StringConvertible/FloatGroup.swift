@@ -34,7 +34,7 @@ extension FloatGroup {
   ) -> String {
     let labels = components.map { component in
       let labelString = component.label.stringValue(from: labelStyle) ?? ""
-      let valueString = component.value.displayString(places, grouping: grouping)
+      let valueString = component.value.displayString(places: places, grouping: grouping)
       return labelString + separators.propertyLabel + valueString
     }
     return labels.joined(separators.component)

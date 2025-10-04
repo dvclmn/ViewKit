@@ -35,10 +35,7 @@ public struct PathDebugRenderer {
     for label in result.labelPoints where label.element.isLabelled {
 
       context.drawDebugText(
-        label.point.displayString(
-          .fractionLength(0),
-          labelStyle: .none
-        ),
+        label.point.displayString(places: 0, labelStyle: .none),
         at: label.point,
         positioned: .aboveOrigin,
         colour: .primary,

@@ -19,7 +19,7 @@ extension BinaryFloatingPoint {
   public func toPercentString(within range: ClosedRange<Self>) -> String {
     let normalised: Double = Double(self.normalised(from: range))
     let percent = normalised * 100
-    return String(percent.displayString(.fractionLength(0)) + "%")
+    return String(percent.displayString(places: 0) + "%")
   }
 
   public var degreesToRadians: Self { self * .pi / 180 }

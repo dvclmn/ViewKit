@@ -25,7 +25,7 @@ public struct GridConfig: Sendable {
   public init(
     columnMode: ColumnConfig.Mode,
     //    columns: columns: ColumnConfig,
-    spacingItem: CGFloat = 8,
+    spacingItem: CGFloat?,
     spacingGrid: CGFloat? = nil,
     alignmentItem: Alignment? = nil,
     alignmentGrid: HorizontalAlignment = .center
@@ -36,7 +36,7 @@ public struct GridConfig: Sendable {
 
     self.columns = ColumnConfig(
       mode: columnMode,
-      spacing: spacingItem,
+      spacing: spacingItem ?? 8,
       alignment: alignmentItem
     )
   }
@@ -57,7 +57,7 @@ extension GridConfig: CustomStringConvertible {
     return DisplayString {
       "GridConfig"
       columns.description
-      "Spacing: \(spacingGrid?.displayString(.fractionLength(0)) ?? "nil"))"
+      "Spacing: \(spacingGrid?.displayString(places: 0) ?? "nil"))"
       "Alignnment: \(alignmentGrid.displayName))"
     }.output
 

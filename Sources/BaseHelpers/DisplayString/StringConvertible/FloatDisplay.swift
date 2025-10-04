@@ -17,7 +17,7 @@ public protocol FloatDisplay: StringConvertible {
   /// decimal places and other numeric/float based
   /// formatting sorted, before other touches.
   func displayString(
-    _ places: Int,
+    places: Int,
     grouping: Grouping
   ) -> String
 }
@@ -42,7 +42,7 @@ extension FloatDisplay {
   /// Albeit via typeliases ``Grouping``
   /// and ``DecimalPlaces``
   public func displayString(
-    _ places: Int = 2,
+    places: Int = 2,
     grouping: Grouping = .automatic
   ) -> String {
 

@@ -5,10 +5,13 @@
 //  Created by Dave Coleman on 4/10/2025.
 //
 
-import Foundation
+import SwiftUI
 
 extension CGPoint: FloatGroup {
-  public var separators: Separators { .cgPoint }
+  public var separators: Separators {
+    Separators(propertyLabel: ": ", component: ", ")
+  }
+
   public var components: [Component] {
     [
       Component("X", value: self.x),
@@ -17,8 +20,24 @@ extension CGPoint: FloatGroup {
   }
 }
 
-extension CGPoint: FloatGroup {
-  public var separators: Separators { .cgPoint }
+extension CGSize: FloatGroup {
+  public var separators: Separators {
+    Separators(propertyLabel: ": ", component: " x ")
+  }
+
+  public var components: [Component] {
+    [
+      Component(PropertyLabel("Width", abbreviated: "W"), value: self.width),
+      Component(PropertyLabel("Height", abbreviated: "H"), value: self.height),
+    ]
+  }
+}
+
+extension UnitPoint: FloatGroup {
+  public var separators: Separators {
+    Separators(propertyLabel: ": ", component: ", ")
+  }
+
   public var components: [Component] {
     [
       Component("X", value: self.x),
@@ -26,6 +45,20 @@ extension CGPoint: FloatGroup {
     ]
   }
 }
+
+//extension CGRect: FloatGroup {
+//  public var separators: Separators {
+//    Separators(propertyLabel: ": ", component: ", ")
+//  }
+//
+//  public var components: [Component] {
+//    [
+//      Component(PropertyLabel("Si", abbreviated: <#T##String?#>), value: <#T##any FloatDisplay#>)
+////      Component("X", value: self.),
+////      Component("Y", value: self.y),
+//    ]
+//  }
+//}
 
 //extension CGPoint: FloatDisplay {
 //  public var values: [CGFloat] { [x, y] }
