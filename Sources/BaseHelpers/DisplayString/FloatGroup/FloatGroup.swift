@@ -11,16 +11,25 @@ import Foundation
 public protocol FloatGroup {
   var components: [Component] { get }
   var separators: Separators { get }
+
+  func displayString(
+    places: Int,
+    grouping: Grouping,
+    labelStyle: PropertyLabel.Style,
+  ) -> String
 }
 
 /// Can be a pair (like CGPoint), or three (like CGRect) etc
 extension FloatGroup {
 
+  /// Default for convenience
+  public var displayString: String { displayString() }
+
   /// In the moment / case-by-case properties, put into the
   /// function signature, for flexibility
-  func output(
-    places: Int,
-    grouping: Grouping,
+  public func displayString(
+    places: Int = 2,
+    grouping: Grouping = .automatic,
     labelStyle: PropertyLabel.Style = .standard,
   ) -> String {
     let labels = components.map { component in
