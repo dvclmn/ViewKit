@@ -11,11 +11,11 @@ import Foundation
 
 /// Types like `CGPoint` that have floats as it's properties
 public protocol FloatGroup {
-  var components: ComponentGroup { get }
-  
+  var components: [Component] { get }
+  var separators: Separators { get }
   /// Specified at the group level, so all floats have the same config
-  var config: FloatConfig { get }
-  var labelStyle: PropertyLabel.Style { get }
+//  var config: FloatConfig { get }
+//  var labelStyle: PropertyLabel.Style { get }
 //  var decimalPlaces: Int { get }
 //  var grouping: Grouping { get }
 //  var components: [Component] { get }
@@ -33,13 +33,34 @@ public protocol FloatGroup {
 /// Can be a pair (like CGPoint), or three (like CGRect) etc
 extension FloatGroup {
   
-  public func displayString(
-    
+  
+  /// In the moment / case-by-case properties, put into the
+  /// function signature, for flexibility
+  func output(
+    places: Int,
+    grouping: Grouping,
+    labelStyle: PropertyLabel.Style = .standard,
   ) -> String {
-    components.output(
-      labelStyle: <#T##PropertyLabel.Style#>
-    )
+    let labels = components.map { component in
+      component.output(
+        places: places,
+        grouping: grouping,
+        propertyLabelSeparator: separators.propertyLabel,
+        labelStyle: labelStyle
+      )
+    }
+    return labels.joined(separators.component)
   }
+  
+//  public func displayString(
+//    places: Int = 2,
+//    grouping: Grouping = .automatic,
+//    labelStyle: PropertyLabel.Style = .standard
+//  ) -> String {
+//    components.output(
+//      labelStyle: <#T##PropertyLabel.Style#>
+//    )
+//  }
 
   //  public func output(
   //    labelStyle: PropertyLabel.Style,

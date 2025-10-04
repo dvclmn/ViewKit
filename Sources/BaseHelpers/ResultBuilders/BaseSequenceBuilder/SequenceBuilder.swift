@@ -64,11 +64,11 @@ public struct SequenceBuilder<Element> {
   }
 }
 
-extension SequenceBuilder where Element: FloatDisplay {
-  public static func buildExpression(
-    _ expression: Element
-  ) -> [StringConvertible] {
-    [expression.displayString(<#T##places: DecimalPlaces##DecimalPlaces#>, grouping: <#T##Grouping#>)]
-  }
-}
+//extension SequenceBuilder where Element: FloatDisplay {
+//  public static func buildExpression(
+//    _ expression: Element
+//  ) -> [StringConvertible] {
+//    [expression.displayString(<#T##places: DecimalPlaces##DecimalPlaces#>, grouping: <#T##Grouping#>)]
+//  }
+//}
 

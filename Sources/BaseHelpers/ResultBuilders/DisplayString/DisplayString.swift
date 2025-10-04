@@ -11,19 +11,19 @@ public struct DisplayString {
 
   /// A Component is a `label` and `value` pair
   let content: [any StringConvertible]
-//  let components: [Component<Value>]
+  //  let components: [Component<Value>]
 
   /// This is the *top-level* seperator, that appears between
   /// each element in the builder (defined on a new line in
   /// the source code). Defaults to and is frequently set to
   /// a new line character `"\n"`
-  let separator: SeparatorType
+  let separator: String
 
   public init(
-    separator: String = SeparatorType.defaultBuilderElement,
+    separator: String = ", ",
     @DisplayStringBuilder _ content: () -> [any StringConvertible]
   ) {
-    self.separator = SeparatorType.builderElement(separator)
+    self.separator = separator
     self.content = content()
   }
 
@@ -39,13 +39,13 @@ public struct DisplayString {
 }
 
 extension DisplayString {
-  
+
   /// Trying this out as a default output value
   public var output: String {
     let stringValue = content.map { convertible in
       convertible.stringValue
     }.joined(separator: separator.stringValue)
-    
+
     return stringValue
   }
 }
@@ -70,29 +70,28 @@ extension DisplayString {
   ///   )
   /// }
   /// ```
-//  func formatted(
-//    _ places: DecimalPlaces,
-//    grouping: Grouping,
-//    labelStyle: PropertyLabel.Style
-//  ) -> String {
-//    
-//    if let floatValues = content as? [any FloatDisplay] {
-//      
-//      let labelValuePairs = floatValues.map { component in
-//        let labelSep = component
-//        let label = labelStyle.labelString(for: component)
-//        let value = component.value.displayString(places, grouping: grouping)
-//        guard let label else {
-//          return value
-//        }
-//        return label + labelSep + value
-//      }
-//      let result = labelValuePairs.joined(separator: separator)
-//      return result
-//      
-//    } else {
-//      return output
-//    }
-//  }
+  //  func formatted(
+  //    _ places: DecimalPlaces,
+  //    grouping: Grouping,
+  //    labelStyle: PropertyLabel.Style
+  //  ) -> String {
+  //
+  //    if let floatValues = content as? [any FloatDisplay] {
+  //
+  //      let labelValuePairs = floatValues.map { component in
+  //        let labelSep = component
+  //        let label = labelStyle.labelString(for: component)
+  //        let value = component.value.displayString(places, grouping: grouping)
+  //        guard let label else {
+  //          return value
+  //        }
+  //        return label + labelSep + value
+  //      }
+  //      let result = labelValuePairs.joined(separator: separator)
+  //      return result
+  //
+  //    } else {
+  //      return output
+  //    }
+  //  }
 }
-

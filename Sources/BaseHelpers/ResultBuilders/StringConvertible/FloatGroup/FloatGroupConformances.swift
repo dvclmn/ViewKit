@@ -8,17 +8,16 @@
 import Foundation
 
 extension CGPoint: FloatGroup {
-
-  /// Baked in / static properties relating to the type, like CGPoint
-  //  var propertyLabelSeparator: String { ": " }
-  //  var componentSeparator: String { ", " }
-  //
-  public var components: ComponentGroup {
-    return ComponentGroup(
-      separators: .cgPoint,
+  //  public var config: FloatConfig { .default }
+  public var separators: Separators { .cgPoint }
+  public var components: [Component] {
+    [
       Component("X", value: self.x),
       Component("Y", value: self.y),
-    )
+    ]
+    //    ComponentGroup(
+    //      separators: .cgPoint,
+    //    )
   }
   //
   //  /// In the moment / case-by-case properties, put into the

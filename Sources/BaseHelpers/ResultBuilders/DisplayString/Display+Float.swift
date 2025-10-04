@@ -10,7 +10,7 @@ import SwiftUI
 public struct FloatConfig {
   let decimalPlaces: Int
   let grouping: Grouping
-  
+
   public init(
     places: Int = 2,
     grouping: Grouping = .automatic
@@ -19,12 +19,15 @@ public struct FloatConfig {
     self.grouping = grouping
   }
 }
+extension FloatConfig {
+  public static var `default`: FloatConfig { .init() }
+}
 
 public protocol FloatDisplay {
   associatedtype Value: BinaryFloatingPoint
   var value: Value { get }
-  var config: FloatConfig { get }
-  
+  //  var config: FloatConfig { get }
+
   var displayString: String { get }
 
   /// This is an early formatting pass, just to get the

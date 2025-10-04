@@ -29,55 +29,41 @@ extension Component {
   /// makes it easier to specify the same sep for
   /// multiple Components
   func output(
+    places: Int,
+    grouping: Grouping,
     propertyLabelSeparator separator: String = ": ",
     labelStyle: PropertyLabel.Style
   ) -> String {
     let labelString = label.stringValue(from: labelStyle) ?? ""
-    let valueString = value.displayString(
-      value.config.decimalPlaces,
-      grouping: value.config.grouping
-    )
+    let valueString = value.displayString(places, grouping: grouping)
     return labelString + separator + valueString
   }
 }
 
 // MARK: - Component Group
-public struct ComponentGroup {
-  public let separators: Separators
-  public let components: [Component]
-  //  let propertyLabelSeparator: String
-  //  let componentSeparator: String
-
-  public init(
-    separators: Separators = .default,
-    //    components: [Component],
-    //    labelSep propertyLabelSeparator: String,
-    //    componentSep componentSeparator: String,
-    _ components: Component...
-//    components: () -> [Component]
-  ) {
-    self.separators = separators
-    self.components = components
-    //    self.propertyLabelSeparator = propertyLabelSeparator
-    //    self.componentSeparator = componentSeparator
-  }
-}
-extension ComponentGroup {
-
-  /// In the moment / case-by-case properties, put into the
-  /// function signature, for flexibility
-  func output(
-    labelStyle: PropertyLabel.Style = .standard
-  ) -> String {
-    let labels = components.map { component in
-      component.output(
-        propertyLabelSeparator: separators.propertyLabel,
-        labelStyle: labelStyle
-      )
-    }
-    return labels.joined(separators.component)
-  }
-}
+//public struct ComponentGroup {
+//  public let separators: Separators
+//  public let components: [Component]
+//  //  let propertyLabelSeparator: String
+//  //  let componentSeparator: String
+//
+//  public init(
+//    separators: Separators = .default,
+//    //    components: [Component],
+//    //    labelSep propertyLabelSeparator: String,
+//    //    componentSep componentSeparator: String,
+//    _ components: Component...
+////    components: () -> [Component]
+//  ) {
+//    self.separators = separators
+//    self.components = components
+//    //    self.propertyLabelSeparator = propertyLabelSeparator
+//    //    self.componentSeparator = componentSeparator
+//  }
+//}
+//extension ComponentGroup {
+//
+//}
 
 public struct Separators {
   let propertyLabel: String
