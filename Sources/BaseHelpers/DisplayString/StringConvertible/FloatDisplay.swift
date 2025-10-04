@@ -7,13 +7,11 @@
 
 import SwiftUI
 
+public typealias Grouping = FloatingPointFormatStyle<Double>.Configuration.Grouping
 
-public protocol FloatDisplay {
+public protocol FloatDisplay: StringConvertible {
   associatedtype Value: BinaryFloatingPoint
   var value: Value { get }
-  //  var config: FloatConfig { get }
-
-  var displayString: String { get }
 
   /// This is an early formatting pass, just to get the
   /// decimal places and other numeric/float based
@@ -24,14 +22,14 @@ public protocol FloatDisplay {
   ) -> String
 }
 
-//public typealias DecimalPlaces = FloatingPointFormatStyle<Double>.Configuration.Precision
-public typealias Grouping = FloatingPointFormatStyle<Double>.Configuration.Grouping
-
 /// ``StringConvertibleFloat`` doesn't concern itself with
 /// properties like `valueLabel`s (e.g. "W" for width etc).
 /// Just formatting a single value, and returning it for
 /// any further processing required
 extension FloatDisplay {
+
+  /// `StringConvertible` conformance
+  public var stringValue: String { self.displayString() }
 
   /// A convenience that just returns the `displayString()`
   /// method with it's default values

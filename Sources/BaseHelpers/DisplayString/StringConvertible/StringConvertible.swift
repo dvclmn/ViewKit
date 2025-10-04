@@ -32,7 +32,7 @@ extension Array: StringConvertible where Element: StringConvertible {
 
 // MARK: - Alignment
 extension Alignment: StringConvertible {
-  public var stringValue: String { self.displayName }
+  public var stringValue: String { self.displayName.standard }
 }
 
 // MARK: - String, Ranges, Regex
