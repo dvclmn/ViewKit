@@ -7,21 +7,6 @@
 
 import SwiftUI
 
-public struct FloatConfig {
-  let decimalPlaces: Int
-  let grouping: Grouping
-
-  public init(
-    places: Int = 2,
-    grouping: Grouping = .automatic
-  ) {
-    self.decimalPlaces = places
-    self.grouping = grouping
-  }
-}
-extension FloatConfig {
-  public static var `default`: FloatConfig { .init() }
-}
 
 public protocol FloatDisplay {
   associatedtype Value: BinaryFloatingPoint
