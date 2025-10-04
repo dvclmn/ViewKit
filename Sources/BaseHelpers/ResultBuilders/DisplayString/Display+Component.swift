@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Single Component
 
-/// A key-value pair
+/// A key-value pair, for display floats with labels
 public struct Component {
   let label: PropertyLabel
   let value: any FloatDisplay
@@ -24,20 +24,20 @@ public struct Component {
 }
 
 extension Component {
-  /// Putting the property label separator here,
-  /// rather than on the `Component` type itself,
-  /// makes it easier to specify the same sep for
-  /// multiple Components
-  func output(
-    places: Int,
-    grouping: Grouping,
-    propertyLabelSeparator separator: String = ": ",
-    labelStyle: PropertyLabel.Style
-  ) -> String {
-    let labelString = label.stringValue(from: labelStyle) ?? ""
-    let valueString = value.displayString(places, grouping: grouping)
-    return labelString + separator + valueString
-  }
+//  /// Putting the property label separator here,
+//  /// rather than on the `Component` type itself,
+//  /// makes it easier to specify the same sep for
+//  /// multiple Components
+//  func output(
+//    places: Int,
+//    grouping: Grouping,
+//    propertyLabelSeparator separator: String = ": ",
+//    labelStyle: PropertyLabel.Style
+//  ) -> String {
+//    let labelString = label.stringValue(from: labelStyle) ?? ""
+//    let valueString = value.displayString(places, grouping: grouping)
+//    return labelString + separator + valueString
+//  }
 }
 
 // MARK: - Component Group
