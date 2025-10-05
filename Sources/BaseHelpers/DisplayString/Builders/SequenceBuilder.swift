@@ -45,33 +45,43 @@
 
 @resultBuilder
 public struct DisplayStringBuilder {
-  public static func buildBlock(_ components: StringConvertible...) -> [StringConvertible] {
-    components
+  public static func buildBlock(_ components: StringConvertible...) -> [String] {
+    components.map(\.stringValue)
   }
 
-  public static func buildOptional(_ component: [StringConvertible]?) -> [StringConvertible] {
-    component ?? []
+  public static func buildOptional(_ component: StringConvertible?) -> [String] {
+    component.map { [$0.stringValue] } ?? []
   }
 
-  public static func buildEither(first component: [StringConvertible]) -> [StringConvertible] {
-    component
+  public static func buildEither(
+    first component: StringConvertible
+  ) -> [String] {
+    [component.stringValue]
   }
   
-  public static func buildEither(second component: [StringConvertible]) -> [StringConvertible] {
-    component
+  public static func buildEither(
+    second component: StringConvertible
+  ) -> [String] {
+    [component.stringValue]
   }
   
-//  public static func buildEither(first component: [any StringConvertible]) -> [any StringConvertible] {
+//  public static func buildEither(first component: [StringConvertible]) -> [String] {
 //    component
 //  }
 //
-//  public static func buildEither(second component: [any StringConvertible]) -> [any StringConvertible] {
+//  public static func buildEither(second component: [StringConvertible]) -> [String] {
 //    component
 //  }
 
-  public static func buildArray(_ components: [[StringConvertible]]) -> [StringConvertible] {
-    components.flatMap { $0 }
+  public static func buildArray(
+    _ components: [[StringConvertible]]
+  ) -> [String] {
+    components.flatMap { $0.map { $0.stringValue } }
   }
+  
+//  public static func buildArray(_ components: [[StringConvertible]]) -> [String] {
+//    components.flatMap { $0 }
+//  }
 }
 
 //@resultBuilder
