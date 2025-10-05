@@ -7,16 +7,19 @@
 
 import SwiftUI
 
+public protocol StringConvertible {
+  var stringValue: String { get }
+}
+
 public protocol StyledString: StringConvertible {
   var styledValue: AttributedString { get }
 }
+
 extension StyledString {
   public var stringValue: String { self.styledValue.toString }
 }
 
-public protocol StringConvertible {
-  var stringValue: String { get }
-}
+
 
 // MARK: - Primitives
 extension String: StringConvertible {

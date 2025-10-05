@@ -14,7 +14,6 @@ extension ColumnConfig {
 
     case fixedColumns(Int, GridConfig.FitMode)
     case adaptive(GridConfig.FitMode)
-
   }
 }
 

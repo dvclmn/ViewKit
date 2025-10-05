@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 3/10/2025.
 //
 
+import Foundation
 //public typealias DisplayStringBuilder = SequenceBuilder<StringConvertible>
 
 /// Good to remember:
@@ -34,29 +35,66 @@
 
 @resultBuilder
 public struct DisplayStringBuilder {
-  public static func buildBlock(_ components: StringConvertible...) -> [String] {
-    components.map(\.stringValue)
-  }
-
-  public static func buildOptional(_ component: StringConvertible?) -> [String] {
-    component.map { [$0.stringValue] } ?? []
-  }
-
-  public static func buildEither(
-    first component: StringConvertible
-  ) -> [String] {
-    [component.stringValue]
+  public static func buildBlock(_ components: DisplayUnit...) -> [DisplayUnit] {
+    components
   }
   
-  public static func buildEither(
-    second component: StringConvertible
-  ) -> [String] {
-    [component.stringValue]
+  public static func buildOptional(_ component: [DisplayUnit]?) -> [DisplayUnit] {
+    component ?? []
   }
-
-  public static func buildArray(
-    _ components: [[StringConvertible]]
-  ) -> [String] {
-    components.flatMap { $0.map { $0.stringValue } }
+  
+  public static func buildEither(first component: [DisplayUnit]) -> [DisplayUnit] {
+    component
+  }
+  
+  public static func buildEither(second component: [DisplayUnit]) -> [DisplayUnit] {
+    component
+  }
+  
+  public static func buildArray(_ components: [[DisplayUnit]]) -> [DisplayUnit] {
+    components.flatMap { $0 }
+  }
+  
+  // MARK: - buildExpression overloads
+  
+  public static func buildExpression(_ string: String) -> DisplayUnit {
+    DisplayUnit(string)
+  }
+  
+  public static func buildExpression(_ attributed: AttributedString) -> DisplayUnit {
+    DisplayUnit(attributed)
+  }
+  
+  public static func buildExpression(_ value: some StringConvertible) -> DisplayUnit {
+    DisplayUnit(value.stringValue)
   }
 }
+
+//@resultBuilder
+//public struct DisplayStringBuilder {
+//  public static func buildBlock(_ components: StringConvertible...) -> [String] {
+//    components.map(\.stringValue)
+//  }
+//
+//  public static func buildOptional(_ component: StringConvertible?) -> [String] {
+//    component.map { [$0.stringValue] } ?? []
+//  }
+//
+//  public static func buildEither(
+//    first component: StringConvertible
+//  ) -> [String] {
+//    [component.stringValue]
+//  }
+//  
+//  public static func buildEither(
+//    second component: StringConvertible
+//  ) -> [String] {
+//    [component.stringValue]
+//  }
+//
+//  public static func buildArray(
+//    _ components: [[StringConvertible]]
+//  ) -> [String] {
+//    components.flatMap { $0.map { $0.stringValue } }
+//  }
+//}
