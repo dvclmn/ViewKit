@@ -48,7 +48,7 @@ extension ColumnConfig: CustomStringConvertible {
       mode.description
       Labeled("Spacing", value: spacing)
       Labeled("Alignment", value: alignment)
-    }.output
+    }.outputString
     
     //    """
     //    GridConfig [

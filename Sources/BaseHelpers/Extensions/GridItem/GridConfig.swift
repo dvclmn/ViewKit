@@ -59,7 +59,7 @@ extension GridConfig: CustomStringConvertible {
       columns.description
       "Spacing: \(spacingGrid?.displayString(places: 0) ?? "nil"))"
       "Alignnment: \(alignmentGrid.displayName))"
-    }.output
+    }.outputString
 
     //    """
     //    GridConfig [

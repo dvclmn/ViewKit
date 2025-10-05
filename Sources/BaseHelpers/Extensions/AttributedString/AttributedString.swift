@@ -38,7 +38,7 @@ extension AttributedString {
     let highlightContainer: AttributeContainer = .highlighter
     self.setAttributes(highlightContainer)
   }
-  
+
   public var toString: String {
     String(self.characters)
   }
@@ -69,6 +69,20 @@ extension AttributedString {
 
   public mutating func addLineBreak() {
     self.characters.append("\n")
+  }
+
+}
+
+extension Array where Element == AttributedString {
+
+  public func joined(separator: String = "") -> AttributedString {
+    self.enumerated().reduce(into: AttributedString()) { result, element in
+      let (index, component) = element
+      result.append(component)
+      if index < self.count - 1 {
+        result.append(AttributedString(separator))
+      }
+    }
   }
 
 }

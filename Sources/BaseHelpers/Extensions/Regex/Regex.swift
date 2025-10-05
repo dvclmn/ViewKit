@@ -47,7 +47,7 @@ extension SingleCapture.Match {
         Labeled("Capture", value: self.output.1)
       }
 
-    }.output
+    }.outputString
   }
 }
 
@@ -63,6 +63,6 @@ extension Regex<AnyRegexOutput>.Match {
         Labeled("Full match", value: self.output)
       }
 
-    }.output
+    }.outputString
   }
 }

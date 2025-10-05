@@ -9,13 +9,14 @@ import SwiftUI
 
 public struct DebugTextOverlayModifier: ViewModifier {
 //  @Environment(\.safeAreaPadding) private var safeAreaPadding
-  let value: String
+  let value: StringComponent
+//  let value: String
   let alignment: Alignment
   let padding: (Edge.Set, CGFloat?)
   public func body(content: Content) -> some View {
     content
       .overlay(alignment: alignment) {
-        Text(value)
+        Text(value.attributedString)
           .modifier(DebugTextStyleModifier())
           .safeAreaPadding(padding.0, padding.1)
           .allowsHitTesting(false)
@@ -40,8 +41,24 @@ public struct DebugTextStyleModifier: ViewModifier {
 }
 
 extension View {
+  
   public func debugTextOverlay(
-    _ value: String,
+        _ value: String,
+    alignment: Alignment = .topLeading,
+    padding: (Edge.Set, CGFloat?) = (.all, nil)
+  ) -> some View {
+    self.modifier(
+      DebugTextOverlayModifier(
+        value: StringComponent(value),
+        alignment: alignment,
+        padding: padding
+      )
+    )
+  }
+  
+  public func debugTextOverlay(
+    _ value: StringComponent,
+//    _ value: String,
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil)
   ) -> some View {
@@ -61,7 +78,7 @@ extension View {
   ) -> some View {
     self.modifier(
       DebugTextOverlayModifier(
-        value: value.joined(separator: "\n"),
+        value: StringComponent(value.joined(separator: "\n")),
         //        value: value.flatMap().joined(separator: "\n"),
         alignment: alignment,
         padding: padding

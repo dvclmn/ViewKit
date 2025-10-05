@@ -13,18 +13,13 @@ public enum StringComponent: Equatable, Hashable, StringConvertible {
 
   public init(_ string: String) {
     self = .plain(string)
-//    self.plain = string
-//    self.attributed = AttributedString(string)
   }
 
   public init(_ attributed: AttributedString) {
     self = .attributed(attributed)
-//    self.plain = String(attributed.characters)
-//    self.attributed = attributed
   }
 
-  // Computed property for the plain string
-  public var string: String {
+  public var stringValue: String {
     switch self {
       case .plain(let str):
         return str
@@ -33,7 +28,6 @@ public enum StringComponent: Equatable, Hashable, StringConvertible {
     }
   }
 
-  // Direct access to AttributedString when needed
   public var attributedString: AttributedString {
     switch self {
       case .plain(let str):
@@ -43,20 +37,20 @@ public enum StringComponent: Equatable, Hashable, StringConvertible {
     }
   }
 
-  public var stringValue: String { string }
+//  public var stringValue: String { string }
 }
 
 extension StringComponent {
   public func styledAutomatically() -> StringComponent {
     var new = self.attributedString
-    let pattern = /\sx\s/
+    let pattern = /:\s/
     new.findRangesAndApplyAttributes(
       matching: pattern,
       attributes: .highlighter
     )
     return Self.init(new)
   }
-  
+
   public func applying(_ modifier: (inout AttributedString) -> Void) -> StringComponent {
     var new = self.attributedString
     modifier(&new)
@@ -70,21 +64,21 @@ extension StringComponent {
 
   }
 
-  public func italic() -> StringComponent {
-    var new = self
-    var attr = new.attributed
-    attr.inlinePresentationIntent = .emphasized
-    new.attributed = attr
-    return new
-  }
-
-  public func foregroundColor(_ colour: Color) -> StringComponent {
-    var new = self
-    var attr = new.attributed
-    attr.foregroundColor = colour
-    new.attributed = attr
-    return new
-  }
+//  public func italic() -> StringComponent {
+//    var new = self
+//    var attr = new.attributed
+//    attr.inlinePresentationIntent = .emphasized
+//    new.attributed = attr
+//    return new
+//  }
+//
+//  public func foregroundColor(_ colour: Color) -> StringComponent {
+//    var new = self
+//    var attr = new.attributed
+//    attr.foregroundColor = colour
+//    new.attributed = attr
+//    return new
+//  }
 }
 
 extension String {

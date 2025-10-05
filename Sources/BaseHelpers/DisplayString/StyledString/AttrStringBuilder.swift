@@ -10,7 +10,7 @@ import SwiftUI
 
 // MARK: - @AttrString function builder attribute
 @resultBuilder
-public struct AttrString {
+public struct AttributedStringBuilder {
   public static func buildBlock(
     _ components: AttributedString...
   ) -> AttributedString {

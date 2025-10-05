@@ -62,6 +62,6 @@ extension AnyRegexOutput: StringConvertible {
       self.summarise(key: \.type)
       self.summarise(key: \.value)
     }
-    .output
+    .outputString
   }
 }

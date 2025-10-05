@@ -27,19 +27,26 @@ public struct DisplayString {
 }
 
 extension DisplayString {
-  public var output: String {
-    components.map(\.plain).joined(separator: separator)
+  public var output: StringComponent {
+    let joined = components.map(\.attributedString).joined(separator: separator)
+    return StringComponent(joined)
+  }
+  
+  public var outputString: String {
+    components.map(\.stringValue).joined(separator: separator)
   }
 
   public var outputStyled: AttributedString {
-    components.enumerated().reduce(into: AttributedString()) { result, element in
-      let (index, component) = element
-      result.append(component.attributed)
-      if index < components.count - 1 {
-        result.append(AttributedString(separator))
-      }
-    }
+    components.map(\.attributedString).joined(separator: separator)
+//    components.enumerated().reduce(into: AttributedString()) { result, element in
+//      let (index, component) = element
+//      result.append(component.attributedString)
+//      if index < components.count - 1 {
+//        result.append(AttributedString(separator))
+//      }
+//    }
   }
+  
 }
 
 extension DisplayString: StringConvertible {
@@ -51,3 +58,4 @@ extension DisplayString: StringConvertible {
 //    self
 //  }
 //}
+
