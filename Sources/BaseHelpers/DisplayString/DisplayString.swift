@@ -10,7 +10,7 @@ import Foundation
 public struct DisplayString {
 //public struct DisplayString<Value: StringConvertible> {
 
-  let content: [String]
+  private let content: [any StringConvertible]
 //  let content: [any StringConvertible]
 //  let content: [Value]
   
@@ -20,14 +20,23 @@ public struct DisplayString {
   /// a new line character `"\n"`
   let separator: String
 
-  public init(
+  public init<T: StringConvertible>(
     separator: String = ", ",
-    @DisplayStringBuilder _ content: () -> [String]
-//    @DisplayStringBuilder _ content: () -> [Value]
+    @SequenceBuilder<T> _ content: () -> [T]
   ) {
     self.separator = separator
-    self.content = content().map(\.stringValue)
+    self.content = content().map { $0 as any StringConvertible }
   }
+
+  
+//  public init(
+//    separator: String = ", ",
+//    @DisplayStringBuilder _ content: () -> [String]
+////    @DisplayStringBuilder _ content: () -> [Value]
+//  ) {
+//    self.separator = separator
+//    self.content = content().map(\.stringValue)
+//  }
 }
 
 extension DisplayString {
