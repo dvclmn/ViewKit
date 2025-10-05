@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 3/10/2025.
 //
 
-public typealias DisplayStringBuilder = SequenceBuilder<StringConvertible>
+public typealias DisplayStringBuilder = SequenceBuilder<any StringConvertible>
 
 /// Good to remember:
 /// The `{Example}Builder` (the type decorated directly with

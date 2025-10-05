@@ -15,7 +15,7 @@ public struct Indented {
   public init(
     _ title: String? = nil,
     prefix: String = "  | ",
-    @DisplayStringBuilder _ content: () -> [any StringConvertible]
+    @DisplayStringBuilder _ content: () -> [some StringConvertible]
   ) {
     self.title = title
     self.prefix = prefix

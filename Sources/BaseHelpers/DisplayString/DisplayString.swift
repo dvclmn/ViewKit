@@ -8,11 +8,11 @@
 import Foundation
 
 public struct DisplayString {
+//public struct DisplayString<Value: StringConvertible> {
 
-  /// A Component is a `label` and `value` pair
   let content: [any StringConvertible]
-  //  let components: [Component<Value>]
-
+//  let content: [Value]
+  
   /// This is the *top-level* seperator, that appears between
   /// each element in the builder (defined on a new line in
   /// the source code). Defaults to and is frequently set to
@@ -21,27 +21,18 @@ public struct DisplayString {
 
   public init(
     separator: String = ", ",
-    @DisplayStringBuilder _ content: () -> [any StringConvertible]
+    @DisplayStringBuilder _ content: () -> [some StringConvertible]
+//    @DisplayStringBuilder _ content: () -> [Value]
   ) {
     self.separator = separator
     self.content = content()
   }
-
-  //  public init(
-  //    components: [Component],
-  //    componentSeparator: String = .defaultComponentSeparator,
-  //    labelSeparator: String = .defaultLabelSeparator
-  //  ) {
-  //    self.components = components
-  //    self.componentSeparator = componentSeparator
-  //    self.labelSeparator = labelSeparator
-  //  }
 }
 
 extension DisplayString {
 
   /// Trying this out as a default output value
-  public var output: String {
+  public var output: some StringConvertible {
     let stringValue = content.map { convertible in
       convertible.stringValue
     }.joined(separator: separator.stringValue)
@@ -49,7 +40,7 @@ extension DisplayString {
     return stringValue
   }
 }
-extension DisplayString {
+//extension DisplayString {
 
   /// This allows customisation at the conformance site,
   /// e.g. for `CGPoint`:
@@ -94,4 +85,4 @@ extension DisplayString {
   //      return output
   //    }
   //  }
-}
+//}
