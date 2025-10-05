@@ -10,7 +10,8 @@ import Foundation
 public struct DisplayString {
 //public struct DisplayString<Value: StringConvertible> {
 
-  let content: [any StringConvertible]
+  let content: [String]
+//  let content: [any StringConvertible]
 //  let content: [Value]
   
   /// This is the *top-level* seperator, that appears between
@@ -21,18 +22,19 @@ public struct DisplayString {
 
   public init(
     separator: String = ", ",
-    @DisplayStringBuilder _ content: () -> [some StringConvertible]
+    @DisplayStringBuilder _ content: () -> [String]
 //    @DisplayStringBuilder _ content: () -> [Value]
   ) {
     self.separator = separator
-    self.content = content()
+    self.content = content().map(\.stringValue)
   }
 }
 
 extension DisplayString {
 
   /// Trying this out as a default output value
-  public var output: some StringConvertible {
+  public var output: String {
+//  public var output: some StringConvertible {
     let stringValue = content.map { convertible in
       convertible.stringValue
     }.joined(separator: separator.stringValue)

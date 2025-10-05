@@ -18,7 +18,8 @@ public struct Labeled {
 //  public let label: PropertyLabel
 
   public let key: String
-  public let value: (any StringConvertible)?
+  public let value: String?
+//  public let value: (any StringConvertible)?
   
   /// E.g. for `CGPoint`
   /// ```
@@ -28,7 +29,7 @@ public struct Labeled {
   
   public init(
     _ key: String,
-    value: (any StringConvertible)?,
+    value: String?,
     separator: String = ": "
   ) {
     self.key = key
