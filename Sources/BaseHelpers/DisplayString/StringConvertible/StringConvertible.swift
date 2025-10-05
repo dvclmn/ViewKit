@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+public protocol StyledString: StringConvertible {
+  var styledValue: AttributedString { get }
+}
+extension StyledString {
+  public var stringValue: String { self.styledValue.toString }
+}
+
 public protocol StringConvertible {
   var stringValue: String { get }
 }

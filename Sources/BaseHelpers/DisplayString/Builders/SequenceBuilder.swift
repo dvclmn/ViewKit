@@ -32,17 +32,6 @@
 /// }
 /// ```
 
-//@resultBuilder
-//public struct SequenceBuilder<T> {
-//  public static func buildBlock(_ components: T...) -> [T] { components }
-//  public static func buildOptional(_ component: [T]?) -> [T] { component ?? [] }
-//  public static func buildEither(first component: [T]) -> [T] { component }
-//  public static func buildEither(second component: [T]) -> [T] { component }
-//  public static func buildArray(_ components: [[T]]) -> [T] {
-//    components.flatMap { $0 }
-//  }
-//}
-
 @resultBuilder
 public struct DisplayStringBuilder {
   public static func buildBlock(_ components: StringConvertible...) -> [String] {
@@ -64,63 +53,10 @@ public struct DisplayStringBuilder {
   ) -> [String] {
     [component.stringValue]
   }
-  
-//  public static func buildEither(first component: [StringConvertible]) -> [String] {
-//    component
-//  }
-//
-//  public static func buildEither(second component: [StringConvertible]) -> [String] {
-//    component
-//  }
 
   public static func buildArray(
     _ components: [[StringConvertible]]
   ) -> [String] {
     components.flatMap { $0.map { $0.stringValue } }
   }
-  
-//  public static func buildArray(_ components: [[StringConvertible]]) -> [String] {
-//    components.flatMap { $0 }
-//  }
 }
-
-//@resultBuilder
-//public struct SequenceBuilder<Element> {
-//  public static func buildBlock(
-//    _ components: Element...
-//  ) -> [Element] {
-//    components
-//  }
-//
-//  public static func buildOptional(
-//    _ component: [Element]?
-//  ) -> [Element] {
-//    component ?? []
-//  }
-//
-//  public static func buildEither(
-//    first component: [Element]
-//  ) -> [Element] {
-//    component
-//  }
-//
-//  public static func buildEither(
-//    second component: [Element]
-//  ) -> [Element] {
-//    component
-//  }
-//
-//  public static func buildArray(
-//    _ components: [[Element]]
-//  ) -> [Element] {
-//    components.flatMap { $0 }
-//  }
-//}
-
-//extension SequenceBuilder where Element: FloatDisplay {
-//  public static func buildExpression(
-//    _ expression: Element
-//  ) -> [StringConvertible] {
-//    [expression.displayString(<#T##places: DecimalPlaces##DecimalPlaces#>, grouping: <#T##Grouping#>)]
-//  }
-//}

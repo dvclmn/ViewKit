@@ -42,11 +42,9 @@ extension ColumnConfig.Mode {
   }
 }
 
-#warning("Come back to this asap")
 extension ColumnConfig.Mode: CustomStringConvertible {
   public var description: String {
-//    assert(false, "Fix this")
-    return DisplayString {
+    DisplayString(", ") {
       "ColumnMode"
       switch self {
         case .fixedColumns(let count, let fitMode): "Fixed Columns [count: \(count), mode: \(fitMode)]"
