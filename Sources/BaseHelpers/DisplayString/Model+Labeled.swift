@@ -16,8 +16,8 @@ import Foundation
 public struct Labeled {
 
   public let key: String
-//  public let value: String?
-//  public let value: (any StringConvertible)?
+  //  public let value: String?
+  //  public let value: (any StringConvertible)?
   public let value: StringComponent?
 
   /// E.g. for `CGPoint`
@@ -28,24 +28,35 @@ public struct Labeled {
 
   public init(
     _ key: String,
-    value: StringComponent?,
-//    value: String?,
+    value: (any StringConvertible)?,
+    //    value: StringComponent?,
+    //    value: String?,
     separator: String = ": "
   ) {
     self.key = key
-    self.value = value
+    self.value = value.map { StringComponent($0.stringValue) }
     self.separator = separator
   }
   
 //  public init(
 //    _ key: String,
-//    value: Any?,
+//    value: (any StyledString)?,
 //    separator: String = ": "
 //  ) {
 //    self.key = key
-//    self.value = StringComponent(String(describing: value))
+//    self.value = value.map { StringComponent($0.styledValue) }
 //    self.separator = separator
 //  }
+
+  //  public init(
+  //    _ key: String,
+  //    value: Any?,
+  //    separator: String = ": "
+  //  ) {
+  //    self.key = key
+  //    self.value = StringComponent(String(describing: value))
+  //    self.separator = separator
+  //  }
 }
 
 // MARK: - StringConvertible Conformance

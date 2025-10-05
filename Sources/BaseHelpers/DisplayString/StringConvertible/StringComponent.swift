@@ -7,48 +7,67 @@
 
 import SwiftUI
 
-public struct StringComponent: StringConvertible {
-  public var plain: String
-  public var attributed: AttributedString
+public enum StringComponent: Equatable, Hashable, StringConvertible {
+  case plain(String)
+  case attributed(AttributedString)
 
   public init(_ string: String) {
-    self.plain = string
-    self.attributed = AttributedString(string)
+    self = .plain(string)
+//    self.plain = string
+//    self.attributed = AttributedString(string)
   }
 
   public init(_ attributed: AttributedString) {
-    self.plain = String(attributed.characters)
-    self.attributed = attributed
+    self = .attributed(attributed)
+//    self.plain = String(attributed.characters)
+//    self.attributed = attributed
   }
 
-  public var stringValue: String { plain }
+  // Computed property for the plain string
+  public var string: String {
+    switch self {
+      case .plain(let str):
+        return str
+      case .attributed(let attrStr):
+        return String(attrStr.characters)
+    }
+  }
+
+  // Direct access to AttributedString when needed
+  public var attributedString: AttributedString {
+    switch self {
+      case .plain(let str):
+        return AttributedString(str)
+      case .attributed(let attrStr):
+        return attrStr
+    }
+  }
+
+  public var stringValue: String { string }
 }
 
 extension StringComponent {
   public func styledAutomatically() -> StringComponent {
-    var new = self
+    var new = self.attributedString
     let pattern = /\sx\s/
-    new.attributed.findRangesAndApplyAttributes(
+    new.findRangesAndApplyAttributes(
       matching: pattern,
       attributes: .highlighter
     )
-    return new
-    //    if new.plain.contains(" x ") {
-    //      var attr = new.attributed
-    //      if let range = attr.range(of: " x ") {
-    //        attr[range].foregroundColor = .secondary
-    //      }
-    //      new.attributed = attr
-    //    }
-    //    return new
+    return Self.init(new)
+  }
+  
+  public func applying(_ modifier: (inout AttributedString) -> Void) -> StringComponent {
+    var new = self.attributedString
+    modifier(&new)
+    return Self.init(new)
   }
 
   public func bold() -> StringComponent {
-    var new = self
-    var attr = new.attributed
-    attr.inlinePresentationIntent = .stronglyEmphasized
-    new.attributed = attr
-    return new
+    return self.applying { attr in
+      attr.inlinePresentationIntent = .emphasized
+    }
+
   }
 
   public func italic() -> StringComponent {

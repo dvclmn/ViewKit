@@ -22,11 +22,7 @@ import Foundation
 public typealias SingleCapture = Regex<(Substring, Substring)>
 public typealias DoubleCapture = Regex<(Substring, Substring, Substring)>
 public typealias TripleCapture = Regex<(Substring, Substring, Substring, Substring)>
-//extension Regex {
-//}
 
-/// The below, for some reason, can also be expressed as:
-/// `Regex<Regex<Substring>.RegexOutput>.Match`
 public typealias RegexMatch = Regex<Regex<Substring>.RegexOutput>.Match
 
 /// Ranges
@@ -42,7 +38,7 @@ extension SingleCapture.Match {
   public var displayString: String {
     DisplayString {
       Indented("Match") {
-        Labeled("Range", value: self)
+        Labeled("Range", value: String(describing: self))
         Labeled("Matched text", value: self.0)
         Labeled("Captured group", value: self.1)
       }
@@ -56,7 +52,7 @@ extension SingleCapture.Match {
 }
 
 extension Regex<AnyRegexOutput>.Match {
-//extension Regex<Regex<Substring>.RegexOutput>.Match {
+  //extension Regex<Regex<Substring>.RegexOutput>.Match {
   public var displayString: String {
     DisplayString {
       Indented("Match") {
@@ -66,7 +62,7 @@ extension Regex<AnyRegexOutput>.Match {
       Indented("Output") {
         Labeled("Full match", value: self.output)
       }
-      
+
     }.output
   }
 }
