@@ -23,48 +23,45 @@ extension String {
   }
 
   public func findMatches(for pattern: Regex<Substring>) -> [RegexMatch] {
-    //    let string = String(self.characters)
     let matches = self.matches(of: pattern)
     return matches
   }
 
   public func getRange(
-    for attributedString: AttributedString,
+    for attrString: AttributedString,
     matching pattern: Regex<Substring>
   ) -> AttributedRange? {
     let matches = findMatches(for: pattern)
-    return attributedString.getRange(for: matches)
+    return attrString.getRange(for: matches)
   }
 
   public func getAllRanges(
-    for attributedString: AttributedString,
+    for attrString: AttributedString,
     matching pattern: Regex<Substring>
   ) -> [AttributedRange] {
     let matches = findMatches(for: pattern)
-    return attributedString.getAllRanges(for: matches)
-    //    let matches = findMatches(for: pattern)
-    //    return matches.compactMap { match in
-    //      self.range(of: match.output)
-    //    }
+    return attrString.getAllRanges(for: matches)
   }
 
   @discardableResult
   public func findRangesAndApplyAttributes(
-    to attributedString: inout AttributedString,
+    to attrString: inout AttributedString,
     matching pattern: Regex<Substring>,
     attributes: AttributeContainer
   ) -> [AttributedRange] {
     let matches = findMatches(for: pattern)
-    return attributedString.findRangesAndApplyAttributes(for: matches, attributes: attributes)
-//    var ranges: [AttributedRange] = []
-//
-//    for match in matches {
-//      if let range = attributedString.range(of: match.output) {
-//        attributedString[range].setAttributes(attributes)
-//        ranges.append(range)
-//      }
-//    }
-//    return ranges
+    return attrString.findRangesAndApplyAttributes(for: matches, attributes: attributes)
+  }
+
+  public func getAttributed(
+    text: AttributedString,
+    //    to attrString: inout AttributedString,
+    matching pattern: Regex<Substring>,
+    attributes: AttributeContainer
+  ) -> AttributedString {
+    let matches = findMatches(for: pattern)
+    return text.styled(matches: matches, attributes: attributes)
+    //    return attrString.findRangesAndApplyAttributes(for: matches, attributes: attributes)
   }
 
   public func withQuotes(_ type: QuotesType = .double) -> String {
@@ -78,18 +75,6 @@ extension String {
   public var toMarkdownCompatible: LocalizedStringKey {
     LocalizedStringKey(self)
   }
-
-  //  public static func createBlankString(
-  //    width: Int,
-  //    height: Int,
-  //    character: Character = " "
-  //  ) -> String {
-  //    precondition(width > 0 && height > 0, "Cannot create a string with zero width or height.")
-  //
-  //    let rowString = String(repeating: character, count: width)
-  //    let rows = Array(repeating: rowString, count: height)
-  //    return rows.joined(separator: "\n")
-  //  }
 
   public var firstLine: String {
     let firstSubstring = self.split(separator: "\n").first ?? ""
@@ -203,8 +188,6 @@ extension String {
   private func wrapInDividers(_ text: String) -> String {
     return "\n---\n\(text)\n---\n"
   }
-
-
 
   //  public func newLinesIndented() -> String {
   //    let lines: [String.SubSequence] = self.split(separator: "\n", omittingEmptySubsequences: true)

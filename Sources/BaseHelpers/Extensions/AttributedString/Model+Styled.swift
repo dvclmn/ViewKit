@@ -16,36 +16,70 @@ import Foundation
 /// ```
 /// /(?<styleTarget>x|y|X|Y|:\s|,\s|W|H|Column|COL|Row|ROW|ROWS|COLS)/
 /// ```
-public struct RunStyle {
+
+public struct StyledText {
+  let patterns: [StyledPattern]
+  let sourceText: AttributedString
+  //  let sourceText: String
+
+  //  lazy var sourceString: String = {
+  //    sourceText.toString
+  //  }()
+
+  public init(
+    patterns: [StyledPattern],
+    sourceText: AttributedString
+  ) {
+    self.patterns = patterns
+    self.sourceText = sourceText
+  }
+
+  public init(
+    patterns: [StyledPattern],
+    sourceText: String
+  ) {
+    self.init(patterns: patterns, sourceText: AttributedString(sourceText))
+  }
+}
+
+public struct StyledPattern {
   let pattern: Regex<Substring>
 
   /// For more styles and info, see
   /// `BaseHelpers/Extensions/AttributedString/AttributeContainer`
   let attributes: AttributeContainer
+
+  public init(_ pattern: Regex<Substring>, attributes: AttributeContainer) {
+    self.pattern = pattern
+    self.attributes = attributes
+  }
 }
 
-public struct Styled {
-  let styles: [RunStyle]
-  let sourceText: String
-}
+extension StyledText {
 
-extension Styled {
   public func output() -> AttributedString {
-    var result = AttributedString(sourceText)
-    for style in styles {
-      apply(runStyle: style, to: &result)
+    var result = sourceText
+    let string = sourceText.toString
+    for style in patterns {
+      return string.getAttributed(text: result, matching: style.pattern, attributes: style.attributes)
     }
     return result
   }
 
-  private func apply(
-    runStyle: RunStyle,
-    to attributedString: inout AttributedString
-  ) {
-    sourceText.findRangesAndApplyAttributes(
-      to: &attributedString,
-      matching: runStyle.pattern,
-      attributes: runStyle.attributes
-    )
-  }
+  //  private func apply(
+  //    runStyle: StyledPattern,
+  //    to attributedString: AttributedString
+  //  ) -> Attrib {
+  //    let
+  //    sourceString.getAttributed(
+  //      text: attributedString,
+  //      matching: runStyle.pattern,
+  //      attributes: runStyle.attributes
+  //    )
+  ////      .findRangesAndApplyAttributes(
+  ////      to: &attributedString,
+  ////      matching: runStyle.pattern,
+  ////      attributes: runStyle.attributes
+  ////    )
+  //  }
 }

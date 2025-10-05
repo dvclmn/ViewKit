@@ -9,7 +9,7 @@ import Foundation
 
 public struct DisplayString {
 
-  private let components: [StringComponent]
+  private let components: [StyledString]
 
   /// This is the *top-level* seperator, that appears between
   /// each element in the builder (defined on a new line in
@@ -19,7 +19,7 @@ public struct DisplayString {
 
   public init(
     _ separator: String = "\n",
-    @DisplayStringBuilder _ content: () -> [StringComponent]
+    @DisplayStringBuilder _ content: () -> [StyledString]
   ) {
     self.separator = separator
     self.components = content()
@@ -27,9 +27,9 @@ public struct DisplayString {
 }
 
 extension DisplayString {
-  public var output: StringComponent {
+  public var output: StyledString {
     let joined = components.map(\.attributedString).joined(separator: separator)
-    return StringComponent(joined)
+    return StyledString(joined)
   }
   
   public var outputString: String {

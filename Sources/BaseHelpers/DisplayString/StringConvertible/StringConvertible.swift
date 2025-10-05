@@ -12,14 +12,74 @@ public protocol StringConvertible {
 }
 
 public protocol StyledString: StringConvertible {
-  var styledValue: AttributedString { get }
+  var styledString: AttributedString { get }
+//  init(fromAttributed attributed: AttributedString)
+//  init(fromString string: String)
 }
 
 extension StyledString {
-  public var stringValue: String { self.styledValue.toString }
+  public var stringValue: String { self.styledString.toString }
+//  public init(fromAttributed attributed: AttributedString) {
+//    
+//  }
 }
 
+extension StyledString {
 
+  private var patterns: [StyledPattern] {
+    [
+      StyledPattern(/:\s/, attributes: .highlighter),
+      StyledPattern(/\sx\s/, attributes: .neonOrange),
+    ]
+  }
+
+  private var autoStyled: StyledText {
+    StyledText(patterns: patterns, sourceText: self.styledString)
+  }
+
+  public func styledAutomatically() -> Self {
+    return self.styledAutomatically()
+//    return self.autoStyled.output()
+//    return self.applying {
+//      $0.findRangesAndApplyAttributes(
+//        matching: patterns,
+//        attributes: .highlighter
+//      )
+//    }
+  }
+
+  public func applying(_ modifier: (inout AttributedString) -> Void) -> Self {
+    var new = self
+    var attr = new.styledString
+    modifier(&attr)
+    return new
+  }
+
+  public func italic() -> Self {
+    return self.applying { attr in
+      attr.inlinePresentationIntent = .emphasized
+    }
+  }
+
+  public func bold() -> Self {
+    return self.applying { attr in
+      attr.inlinePresentationIntent = .stronglyEmphasized
+    }
+  }
+
+  public func secondary() -> Self {
+    return self.applying { attr in
+      attr.foregroundColor = .secondary
+    }
+  }
+}
+
+extension String {
+  public func bold() -> StyledString {
+    self.attr
+//    StyledString(self).bold()
+  }
+}
 
 // MARK: - Primitives
 extension String: StringConvertible {
