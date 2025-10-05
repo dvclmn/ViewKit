@@ -20,12 +20,15 @@ public struct DisplayString {
   /// a new line character `"\n"`
   let separator: String
 
-  public init<T: StringConvertible>(
-    separator: String = ", ",
-    @SequenceBuilder<T> _ content: () -> [T]
+  public init(
+    separator: String = "\n",
+//    separator: String = ", ",
+    @DisplayStringBuilder _ content: () -> [any StringConvertible]
+//    @SequenceBuilder<T> _ content: () -> [T]
   ) {
     self.separator = separator
-    self.content = content().map { $0 as any StringConvertible }
+    self.content = content()
+//    self.content = content().map { $0 as any StringConvertible }
   }
 
   
@@ -43,13 +46,20 @@ extension DisplayString {
 
   /// Trying this out as a default output value
   public var output: String {
-//  public var output: some StringConvertible {
-    let stringValue = content.map { convertible in
-      convertible.stringValue
-    }.joined(separator: separator.stringValue)
-
-    return stringValue
+    content.map(\.stringValue).joined(separator: separator)
   }
+//  public var output: String {
+////  public var output: some StringConvertible {
+//    let stringValue = content.map { convertible in
+//      convertible.stringValue
+//    }.joined(separator: separator.stringValue)
+//
+//    return stringValue
+//  }
+}
+
+extension DisplayString: StringConvertible {
+  public var stringValue: String { output }
 }
 //extension DisplayString {
 

@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 3/10/2025.
 //
 
-public typealias DisplayStringBuilder = SequenceBuilder<StringConvertible>
+//public typealias DisplayStringBuilder = SequenceBuilder<StringConvertible>
 
 /// Good to remember:
 /// The `{Example}Builder` (the type decorated directly with
@@ -32,13 +32,44 @@ public typealias DisplayStringBuilder = SequenceBuilder<StringConvertible>
 /// }
 /// ```
 
+//@resultBuilder
+//public struct SequenceBuilder<T> {
+//  public static func buildBlock(_ components: T...) -> [T] { components }
+//  public static func buildOptional(_ component: [T]?) -> [T] { component ?? [] }
+//  public static func buildEither(first component: [T]) -> [T] { component }
+//  public static func buildEither(second component: [T]) -> [T] { component }
+//  public static func buildArray(_ components: [[T]]) -> [T] {
+//    components.flatMap { $0 }
+//  }
+//}
+
 @resultBuilder
-public struct SequenceBuilder<T> {
-  public static func buildBlock(_ components: T...) -> [T] { components }
-  public static func buildOptional(_ component: [T]?) -> [T] { component ?? [] }
-  public static func buildEither(first component: [T]) -> [T] { component }
-  public static func buildEither(second component: [T]) -> [T] { component }
-  public static func buildArray(_ components: [[T]]) -> [T] {
+public struct DisplayStringBuilder {
+  public static func buildBlock(_ components: StringConvertible...) -> [StringConvertible] {
+    components
+  }
+
+  public static func buildOptional(_ component: [StringConvertible]?) -> [StringConvertible] {
+    component ?? []
+  }
+
+  public static func buildEither(first component: [StringConvertible]) -> [StringConvertible] {
+    component
+  }
+  
+  public static func buildEither(second component: [StringConvertible]) -> [StringConvertible] {
+    component
+  }
+  
+//  public static func buildEither(first component: [any StringConvertible]) -> [any StringConvertible] {
+//    component
+//  }
+//
+//  public static func buildEither(second component: [any StringConvertible]) -> [any StringConvertible] {
+//    component
+//  }
+
+  public static func buildArray(_ components: [[StringConvertible]]) -> [StringConvertible] {
     components.flatMap { $0 }
   }
 }
