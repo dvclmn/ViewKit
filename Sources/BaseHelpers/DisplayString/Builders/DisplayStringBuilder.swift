@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 //public typealias DisplayStringBuilder = SequenceBuilder<StringConvertible>
 
 /// Good to remember:
@@ -35,39 +36,70 @@ import Foundation
 
 @resultBuilder
 public struct DisplayStringBuilder {
-  public static func buildBlock(_ components: DisplayUnit...) -> [DisplayUnit] {
-    components
-  }
   
-  public static func buildOptional(_ component: [DisplayUnit]?) -> [DisplayUnit] {
-    component ?? []
-  }
-  
-  public static func buildEither(first component: [DisplayUnit]) -> [DisplayUnit] {
-    component
-  }
-  
-  public static func buildEither(second component: [DisplayUnit]) -> [DisplayUnit] {
-    component
-  }
-  
-  public static func buildArray(_ components: [[DisplayUnit]]) -> [DisplayUnit] {
+//  public static func buildBlock(_ components: [StringComponent]...) -> [StringComponent] {
+//    components.flatMap { $0 }
+//  }
+  public static func buildBlock(_ components: [StringComponent]...) -> [StringComponent] {
     components.flatMap { $0 }
   }
+
+  public static func buildOptional(_ component: [StringComponent]?) -> [StringComponent] {
+    component ?? []
+  }
+
+  public static func buildEither(first component: [StringComponent]) -> [StringComponent] {
+    component
+  }
   
+  public static func buildEither(second component: [StringComponent]) -> [StringComponent] {
+    component
+  }
+  
+//  public static func buildEither(first component: [StringComponent]) -> [StringComponent] {
+//    component
+//  }
+//
+//  public static func buildEither(second component: [StringComponent]) -> [StringComponent] {
+//    component
+//  }
+
+  public static func buildArray(_ components: [[StringComponent]]) -> [StringComponent] {
+    components.flatMap { $0 }
+  }
+
   // MARK: - buildExpression overloads
-  
-  public static func buildExpression(_ string: String) -> DisplayUnit {
-    DisplayUnit(string)
+
+  public static func buildExpression(_ string: String) -> [StringComponent] {
+    [
+      StringComponent(string)
+    ]
+  }
+
+  public static func buildExpression(_ attributed: AttributedString) -> [StringComponent] {
+    [
+      StringComponent(attributed)
+    ]
+  }
+
+  public static func buildExpression(_ value: some StringConvertible) -> [StringComponent] {
+    [
+      StringComponent(value.stringValue)
+    ]
   }
   
-  public static func buildExpression(_ attributed: AttributedString) -> DisplayUnit {
-    DisplayUnit(attributed)
+  // Allows for using both arrays and single items
+  public static func buildExpression(_ expression: [StringComponent]) -> [StringComponent] {
+    expression
   }
   
-  public static func buildExpression(_ value: some StringConvertible) -> DisplayUnit {
-    DisplayUnit(value.stringValue)
+  public static func buildExpression(_ expression: StringComponent) -> [StringComponent] {
+    [expression]
   }
+  
+//  public static func buildExpression(_ components: [StringComponent]) -> [StringComponent] {
+//    components
+//  }
 }
 
 //@resultBuilder
@@ -85,7 +117,7 @@ public struct DisplayStringBuilder {
 //  ) -> [String] {
 //    [component.stringValue]
 //  }
-//  
+//
 //  public static func buildEither(
 //    second component: StringConvertible
 //  ) -> [String] {

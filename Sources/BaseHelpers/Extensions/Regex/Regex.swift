@@ -42,7 +42,7 @@ extension SingleCapture.Match {
   public var displayString: String {
     DisplayString {
       Indented("Match") {
-        Labeled("Range", value: self.range)
+        Labeled("Range", value: self)
         Labeled("Matched text", value: self.0)
         Labeled("Captured group", value: self.1)
       }

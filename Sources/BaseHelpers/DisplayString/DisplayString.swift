@@ -10,7 +10,6 @@ import Foundation
 public struct DisplayString {
 
   private let components: [StringComponent]
-  //  private let content: [any StringConvertible]
 
   /// This is the *top-level* seperator, that appears between
   /// each element in the builder (defined on a new line in

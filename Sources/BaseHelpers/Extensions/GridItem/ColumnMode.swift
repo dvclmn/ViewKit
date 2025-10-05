@@ -43,12 +43,22 @@ extension ColumnConfig.Mode {
 
 extension ColumnConfig.Mode: CustomStringConvertible {
   public var description: String {
-    DisplayString(", ") {
-      "ColumnMode"
-      switch self {
-        case .fixedColumns(let count, let fitMode): "Fixed Columns [count: \(count), mode: \(fitMode)]"
-        case .adaptive(let fitMode): "Adaptive [mode: \(fitMode)]"
+    return DisplayString(", ") {
+      "One line"
+      if isPreview {
+        "True"
+      } else {
+        "False"
       }
+//        switch self {
+//          case .fixedColumns(_, _): "Fixed"
+//          case .adaptive(_): "Adaptive"
+//        }
+//      "ColumnMode"
+//      switch self {
+//        case .fixedColumns(let count, let fitMode): "Fixed Columns [count: \(count), mode: \(fitMode)]"
+//        case .adaptive(let fitMode): "Adaptive [mode: \(fitMode)]"
+//      }
     }.output
   }
 }

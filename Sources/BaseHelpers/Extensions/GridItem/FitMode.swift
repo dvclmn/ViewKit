@@ -47,10 +47,10 @@ extension GridConfig.FitMode: CustomStringConvertible {
 //    assert(false, "Fix this")
     return DisplayString {
       "FitMode"
-      switch self {
-        case .fill(let min, let max): "Fill [min: \(min), max: \(max)]"
-        case .fixedWidth(let width): "Fixed Width [width: \(width)]"
-      }
+//      switch self {
+//        case .fill(let min, let max): "Fill [min: \(min), max: \(max)]"
+//        case .fixedWidth(let width): "Fixed Width [width: \(width)]"
+//      }
     }.output
   }
 }
