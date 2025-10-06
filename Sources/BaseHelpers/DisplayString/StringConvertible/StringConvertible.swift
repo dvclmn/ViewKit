@@ -43,10 +43,12 @@ extension StyledString {
   public func styledAutomatically() -> Self {
     return patternPresets.reduce(StyledString("")) { partialResult, preset in
       self.applying { attr in
-        attr.findRangesAndApplyAttributes(
-          matching: preset.pattern,
-          attributes: preset.attributes
-        )
+        
+        attr.editAttributes(for: preset., transform: <#T##(inout AttributedSubstring) -> Void#>)
+//        attr.findRangesAndApplyAttributes(
+//          matching: preset.pattern,
+//          attributes: preset.attributes
+//        )
       }
     }
   }
