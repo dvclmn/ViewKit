@@ -45,7 +45,8 @@ extension ColumnConfig: CustomStringConvertible {
   public var description: String {
     return DisplayString {
       Indented("ColumnConfig") {
-        mode.description
+        Labeled("Mode", value: mode.description)
+//        mode.description
         Labeled("Spacing", value: spacing)
         Labeled("Alignment", value: alignment)
       }

@@ -55,7 +55,6 @@ extension GridConfig {
 extension GridConfig: CustomStringConvertible {
   public var description: String {
     return DisplayString {
-
       Indented("GridConfig") {
         columns.description
         "Spacing: \(spacingGrid?.displayString(places: 0) ?? "nil"))"

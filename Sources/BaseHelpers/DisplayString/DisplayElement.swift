@@ -21,7 +21,7 @@ public enum DisplayElement {
 }
 
 extension DisplayElement: StyledStringConvertible {
-  
+
   public var toStyledString: StyledString {
     switch self {
       case .text(let styledString):
