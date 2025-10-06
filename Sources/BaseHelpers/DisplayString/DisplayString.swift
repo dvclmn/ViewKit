@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public struct DisplayString {
 
   private let components: [StyledString]
@@ -30,15 +29,16 @@ public struct DisplayString {
 extension DisplayString {
 
   public var output: String {
-    components.map(\.stringValue).joined(separator: separator)
+    components.map(\.styledString).joined(separator).toString
+    //    components.map { $0.styledString.toString }.joined(separator)
   }
 
   public var outputStyled: AttributedString {
-    components.map(\.string).joined(separator: separator)
+    components.map(\.styledString).joined(separator)
   }
 }
 
-extension DisplayString: DisplayStringConvertible {
+extension DisplayString: StyledStringConvertible {
   public func toDisplayString() -> StyledString {
     StyledString(self.outputStyled)
   }

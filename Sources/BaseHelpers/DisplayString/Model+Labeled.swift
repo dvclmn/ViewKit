@@ -26,18 +26,12 @@ public struct Labeled {
 
   public init(
     _ key: String,
-    value: (any StringConvertible)?,
+    value: (any StyledStringConvertible)?,
     separator: String = ": "
   ) {
     self.key = key
-    self.value = value.map { StyledString($0.stringValue) }
+    self.value = value?.toDisplayString()
+    //    self.value = value.map { StyledString($0.stringValue) }
     self.separator = separator
-  }
-}
-
-// MARK: - StringConvertible Conformance
-extension Labeled: StringConvertible {
-  public var stringValue: String {
-    "\(key)\(separator)\(String(describing: value?.stringValue))"
   }
 }

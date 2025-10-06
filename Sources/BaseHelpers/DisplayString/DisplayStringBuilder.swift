@@ -47,7 +47,7 @@ extension DisplayStringBuilder {
 
   /// This handles specific types, anything from `String`
   /// to `AttributedString` to `Indented`
-  public static func buildExpression<T: DisplayStringConvertible>(_ value: T) -> [StyledString] {
+  public static func buildExpression<T: StyledStringConvertible>(_ value: T) -> [StyledString] {
     [value.toDisplayString()]
   }
 }

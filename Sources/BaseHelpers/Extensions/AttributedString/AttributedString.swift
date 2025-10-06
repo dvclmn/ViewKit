@@ -74,7 +74,7 @@ extension AttributedString {
 }
 
 extension Array where Element == AttributedString {
-  public func joined(separator: String = "") -> AttributedString {
+  public func joined(_ separator: String = "") -> AttributedString {
     guard !isEmpty else { return AttributedString() }
     
     /// Pre-create separator once to avoid repeated initialisation

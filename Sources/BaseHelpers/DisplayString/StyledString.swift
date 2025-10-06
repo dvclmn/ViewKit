@@ -7,15 +7,40 @@
 
 import Foundation
 
-public struct StyledString {
-  public var styledString: AttributedString
+public enum StyledStringStorage {
+  case plain(String)
+  case attributed(AttributedString)
+}
 
-  public init(_ attributedString: AttributedString) {
-    self.styledString = attributedString
-  }
+public struct StyledString {
+  private var storage: StyledStringStorage
+  //  public var styledString: AttributedString
+
   public init(_ string: String) {
-    self.styledString = string.toAttributedString
+    storage = .plain(string)
   }
+  public init(_ attributed: AttributedString) { storage = .attributed(attributed) }
+
+  public var styledString: AttributedString {
+    switch storage {
+      case .plain(let str): return AttributedString(str)
+      case .attributed(let attr): return attr
+    }
+  }
+
+  public var plainString: String {
+    switch storage {
+      case .plain(let str): return str
+      case .attributed(let attr): return attr.toString
+    }
+  }
+
+  //  public init(_ attributedString: AttributedString) {
+  //    self.styledString = attributedString
+  //  }
+  //  public init(_ string: String) {
+  //    self.styledString = string.toAttributedString
+  //  }
 }
 
 extension StyledString {

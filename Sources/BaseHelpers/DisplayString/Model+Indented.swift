@@ -23,7 +23,7 @@ public struct Indented {
   }
 }
 
-extension Indented: DisplayStringConvertible {
+extension Indented: StyledStringConvertible {
   
   public func toDisplayString() -> StyledString {
     
