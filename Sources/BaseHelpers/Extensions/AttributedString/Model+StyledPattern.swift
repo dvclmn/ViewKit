@@ -42,6 +42,7 @@ public struct StyledThing {
   }
 }
 
+// (?<styleTarget>x|y|X|Y|:\s|,\s|W|H|Column|COL|Row|ROW|ROWS|COLS)/
 public struct StyledPattern {
   let pattern: Regex<Substring>
 
