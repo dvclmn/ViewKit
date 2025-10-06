@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// When `Indented` has it's own `buildExpression`, conformance
+/// to `StyledStringConvertible` is not needed nor read
 public struct Indented {
   public let title: String?
   public let indentString: String
@@ -49,16 +51,7 @@ public struct Indented {
 //  }
 //}
 
-extension Indented: StyledStringConvertible {
-
-  public var toStyledString: StyledString {
-
-    let indentedItems = contentElements.map { element in
-      indentString + element.toStyledString
-    }.joined("\n")
-    guard let title else {
-      return indentedItems
-    }
-    return title + " Butts" + "\n" + indentString + indentedItems
-  }
-}
+//extension Indented: StyledStringConvertible {
+//
+//
+//}

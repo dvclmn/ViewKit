@@ -12,7 +12,18 @@ public struct StyledString {
   public var plainString: String { styledString.toString }
 
   public init(_ attributed: AttributedString) { styledString = attributed }
-  public init(_ string: String) { styledString = string.toAttributed }
+  public init(
+    _ string: String,
+    with attributes: AttributeContainer? = nil
+  ) {
+    if let attributes {
+      styledString = AttributedString(string, attributes: attributes)
+
+    } else {
+      styledString = string.toAttributed
+
+    }
+  }
 }
 
 extension StyledString {
@@ -122,7 +133,6 @@ extension StyledString {
   func splitByNewlines() -> [StyledString] {
     let string = self.plainString
     let lines = string.substringLines()
-    //    let lines = string.components(separatedBy: "\n")
 
     guard lines.count > 1 else {
       return [self]

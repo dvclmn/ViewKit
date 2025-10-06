@@ -28,29 +28,19 @@ extension DisplayElement: StyledStringConvertible {
         return styledString
 
       case .indented(let title, let indent, let content):
-        // Convert all content to styled strings first
+
+        /// Convert all content to styled strings first
         let convertedContent = content.map { $0.toStyledString }
+        let indentedElements = indentedElements(indent, content: convertedContent)
 
-        // Indent each element properly, handling multi-line content
-        let indentedElements = convertedContent.flatMap { element -> [StyledString] in
-          let lines = element.splitByNewlines()
-          guard !lines.isEmpty else { return [StyledString("")] }
-
-          // Indent each line except the first one gets special handling
-          // when joining multiple elements
-          return lines.enumerated().map { index, line in
-            index == 0 ? line : StyledString(indent) + line
-          }
-        }
-
-        // Join elements, making sure to indent between elements
+        /// Join elements, making sure to indent between
         guard !indentedElements.isEmpty else {
-          return StyledString("")
+          return StyledString("$", with: .highlighter)
         }
 
         var result = indentedElements[0]
         for element in indentedElements.dropFirst() {
-          // If element doesn't start with indent, add it
+          /// If element doesn't start with indent, add it
           if !element.plainString.hasPrefix(indent) {
             result = result + StyledString("\n" + indent) + element
           } else {
@@ -58,12 +48,30 @@ extension DisplayElement: StyledStringConvertible {
           }
         }
 
-        // Add title if present
+        /// Add title if present
         if let title = title {
           return StyledString(title + "\n") + result
         }
 
         return result
     }
+  }
+
+  private func indentedElements(
+    _ indent: String,
+    content: [StyledString]
+  ) -> [StyledString] {
+    /// Indent each element properly, handling multi-line content
+    let indented = content.flatMap { element -> [StyledString] in
+      let lines = element.splitByNewlines()
+      guard !lines.isEmpty else { return [StyledString("")] }
+
+      /// Indent each line except the first one gets special handling
+      /// when joining multiple elements
+      return lines.enumerated().map { index, line in
+        index == 0 ? line : StyledString(indent) + line
+      }
+    }
+    return indented
   }
 }
