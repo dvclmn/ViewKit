@@ -59,3 +59,10 @@ extension FloatDisplay {
   }
 
 }
+// MARK: - Conformances
+extension Double: FloatDisplay {
+  public var value: Self { self }
+}
+extension CGFloat: FloatDisplay {
+  public var value: Self { self }
+}
