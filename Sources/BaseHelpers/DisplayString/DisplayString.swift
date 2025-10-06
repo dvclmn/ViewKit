@@ -29,13 +29,21 @@ public struct DisplayString {
 extension DisplayString {
 
   public var output: String {
-    components.map(\.styledString).joined(separator).toString
-    //    components.map { $0.styledString.toString }.joined(separator)
+    components.map(\.plainString).joined(separator: separator)
   }
-
+  
   public var outputStyled: AttributedString {
     components.map(\.styledString).joined(separator)
   }
+  
+//  public var output: String {
+//    components.map(\.styledString).joined(separator).toString
+//    //    components.map { $0.styledString.toString }.joined(separator)
+//  }
+//
+//  public var outputStyled: AttributedString {
+//    components.map(\.styledString).joined(separator)
+//  }
 }
 
 extension DisplayString: StyledStringConvertible {

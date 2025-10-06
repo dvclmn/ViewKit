@@ -31,17 +31,10 @@ extension Int: StyledStringConvertible {
   }
 }
 
-// MARK: - StringConvertible Conformance
+
 extension Labeled: StyledStringConvertible {
-
   public func toDisplayString() -> StyledString {
-    
-    if let styled = self.value {
-      "Hello" + styled.styledString
-    }
-//    .init("\(key)\(separator)\(String(describing: value?.styledString))")
-
+    let valuePart = value?.styledString ?? ""
+    return StyledString("\(key)\(separator)\(valuePart)")
   }
-  //  public var stringValue: String {
-  //  }
 }
