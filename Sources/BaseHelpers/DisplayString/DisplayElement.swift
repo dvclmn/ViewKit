@@ -41,8 +41,9 @@ extension DisplayElement: StyledStringConvertible {
         var result = indentedElements[0]
         for element in indentedElements.dropFirst() {
           /// If element doesn't start with indent, add it
-          if !element.plainString.hasPrefix(indent) {
-            result = result + StyledString("\n" + indent) + element
+          let hasIndent = element.plainString.hasPrefix(indent)
+          if !hasIndent {
+            result = result + StyledString("\n" + indent, with: .blackOnOrange) + element
           } else {
             result = result + StyledString("\n") + element
           }
@@ -69,7 +70,7 @@ extension DisplayElement: StyledStringConvertible {
       /// Indent each line except the first one gets special handling
       /// when joining multiple elements
       return lines.enumerated().map { index, line in
-        index == 0 ? line : StyledString(indent) + line
+        index == 0 ? line : StyledString(indent, with: .blackOnGreen) + line
       }
     }
     return indented

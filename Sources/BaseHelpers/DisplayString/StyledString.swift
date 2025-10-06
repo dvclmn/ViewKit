@@ -31,7 +31,7 @@ extension StyledString {
   private var patternPresets: [StyledPattern] {
     [
       StyledPattern(/:\s/, attributes: .highlighter),
-      StyledPattern(/\sx\s/, attributes: .neonOrange),
+      StyledPattern(/\sx\s/, attributes: .blackOnOrange),
     ]
   }
 
@@ -143,9 +143,9 @@ extension StyledString {
 
     for line in lines {
       let lineLength = line.count
-      //      let lineLength = line.utf16.count
+      
       guard lineLength > 0 else {
-        result.append(StyledString(""))
+        result.append(StyledString("?", with: .blackOnOrange))
         continue
       }
 
@@ -153,11 +153,9 @@ extension StyledString {
       let lineAttributed = AttributedString(self.styledString[currentIndex..<endIndex])
       result.append(StyledString(lineAttributed))
 
-      // Move past the newline character if there is one
-
+      /// Move past the newline character if there is one
       if endIndex < self.styledString.endIndex {
         currentIndex = self.styledString.index(endIndex, offsetByCharacters: 1)
-        //        currentIndex = self.styledString.index(after: endIndex)
       }
     }
 

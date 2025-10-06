@@ -57,7 +57,8 @@ extension GridConfig: CustomStringConvertible {
     return DisplayString {
       Indented("GridConfig") {
         columns.description
-        "Spacing: \(spacingGrid?.displayString(places: 0) ?? "nil"))"
+        Labeled("Spacing", value: spacingGrid?.displayString(places: 0))
+        "Spacing: \(spacingGrid?.displayString(places: 0) ?? "nil")"
         "Alignnment: \(alignmentGrid.displayName))"
 
       }

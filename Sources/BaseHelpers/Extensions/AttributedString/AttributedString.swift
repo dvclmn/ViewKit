@@ -35,7 +35,7 @@ extension AttributedString {
 
     print(self.toString)
 
-    let highlightContainer: AttributeContainer = .highlighter
+    let highlightContainer: AttributeContainer = .colours(.black, on: .green)
     self.setAttributes(highlightContainer)
   }
 

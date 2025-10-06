@@ -30,9 +30,7 @@ public struct Labeled {
     separator: String = ": "
   ) {
     self.key = key
-    //    self.value =  StyledString()
     self.value = value.map { .text(StyledString($0.toString)) }
-//    self.value = value.map { StyledString($0.toString) }
     self.separator = separator
   }
 }
@@ -40,8 +38,11 @@ public struct Labeled {
 extension Labeled: StyledStringConvertible {
   public var toStyledString: StyledString {
     
-//    let valuePart = String(describing: value?.toStyledString)
+    let labelPart = StyledString("\(key)\(separator)", with: .secondary)
     let valuePart = value?.toStyledString ?? "nil"
-    return StyledString("\(key)\(separator)\(valuePart)")
+    return labelPart + valuePart
+//    return StyledString("\(key)\(separator)\(valuePart)")
+    
+    
   }
 }

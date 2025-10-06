@@ -29,7 +29,7 @@ public struct DebugTextStyleModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .font(.callout)
-      .foregroundStyle(.primary.opacity(0.8))
+//      .foregroundStyle(.primary.opacity(0.8))
       .monospaced()
 //      .monospacedDigit()
       .padding(.horizontal, 6)
