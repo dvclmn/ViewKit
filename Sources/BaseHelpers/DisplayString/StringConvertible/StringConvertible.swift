@@ -13,7 +13,7 @@ public protocol StringConvertible {
 
 public struct StyledString: StringConvertible {
   public var string: AttributedString
-  
+
   public init(_ string: AttributedString) {
     self.string = string
   }
@@ -21,7 +21,6 @@ public struct StyledString: StringConvertible {
     self.string = string.toAttributedString
   }
 }
-
 
 extension StyledString {
   public var stringValue: String { self.string.toString }
@@ -43,12 +42,10 @@ extension StyledString {
   public func styledAutomatically() -> Self {
     return patternPresets.reduce(StyledString("")) { partialResult, preset in
       self.applying { attr in
-        
-        attr.editAttributes(for: preset., transform: <#T##(inout AttributedSubstring) -> Void#>)
-//        attr.findRangesAndApplyAttributes(
-//          matching: preset.pattern,
-//          attributes: preset.attributes
-//        )
+
+        attr.editAttributes(matching: preset.pattern) { substring in
+          substring.mergeAttributes(preset.attributes)
+        }
       }
     }
   }
@@ -123,9 +120,9 @@ extension AnyRegexOutput: StringConvertible {
   public var stringValue: String {
     DisplayString {
       self.summarise(key: \.name).description
-//      self.summarise(key: \.range)
-//      self.summarise(key: \.type)
-//      self.summarise(key: \.value)
+      //      self.summarise(key: \.range)
+      //      self.summarise(key: \.type)
+      //      self.summarise(key: \.value)
     }
     .output
   }

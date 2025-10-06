@@ -51,6 +51,6 @@ extension GridConfig.FitMode: CustomStringConvertible {
 //        case .fill(let min, let max): "Fill [min: \(min), max: \(max)]"
 //        case .fixedWidth(let width): "Fixed Width [width: \(width)]"
 //      }
-    }.outputString
+    }.output
   }
 }
