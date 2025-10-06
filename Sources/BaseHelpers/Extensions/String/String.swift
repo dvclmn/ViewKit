@@ -68,7 +68,7 @@ extension String {
     return "\(type.rawValue)\(self)\(type.rawValue)"
   }
 
-  public var toAttributedString: AttributedString {
+  public var toAttributed: AttributedString {
     return AttributedString(self)
   }
 

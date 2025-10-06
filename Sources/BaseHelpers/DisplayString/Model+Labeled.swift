@@ -35,3 +35,10 @@ public struct Labeled {
     self.separator = separator
   }
 }
+
+extension Labeled: StyledStringConvertible {
+  public func toDisplayString() -> StyledString {
+    let valuePart = value?.styledString ?? ""
+    return StyledString("\(key)\(separator)\(valuePart)")
+  }
+}

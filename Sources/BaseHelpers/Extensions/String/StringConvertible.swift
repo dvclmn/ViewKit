@@ -9,32 +9,49 @@ public protocol StringConvertible {
   var toString: String { get }
 }
 
-public protocol StyledStringConvertible: StringConvertible {
-  func toDisplayString() -> StyledString
+
+
+// MARK: - Primitives
+extension String: StringConvertible {
+  public var stringValue: String { self }
 }
 
-extension StyledStringConvertible {
-  public var toString: String {
-    self.toDisplayString().styledString.toString
+extension Int: StringConvertible {
+  public var stringValue: String { String(self) }
+}
+
+extension Bool: StringConvertible {
+  public var stringValue: String { self ? "true" : "false" }
+}
+
+extension Array: StringConvertible where Element: StringConvertible {
+  public var stringValue: String {
+    self.map(\.stringValue).joined(separator: ", ")
   }
 }
 
-extension String: StyledStringConvertible {
-  public func toDisplayString() -> StyledString {
-    .init(self)
-  }
+// MARK: - Alignment
+extension Alignment: StringConvertible {
+  public var stringValue: String { self.displayName.standard }
 }
 
-extension Int: StyledStringConvertible {
-  public func toDisplayString() -> StyledString {
-    .init(self.toString)
-  }
+// MARK: - String, Ranges, Regex
+extension Range<String.Index>: StringConvertible {
+  public var stringValue: String { self.description }
 }
 
+extension Substring: StringConvertible {
+  public var stringValue: String { String(self) }
+}
 
-extension Labeled: StyledStringConvertible {
-  public func toDisplayString() -> StyledString {
-    let valuePart = value?.styledString ?? ""
-    return StyledString("\(key)\(separator)\(valuePart)")
+extension AnyRegexOutput: StringConvertible {
+  public var stringValue: String {
+    DisplayString {
+      self.summarise(key: \.name).description
+      //      self.summarise(key: \.range)
+      //      self.summarise(key: \.type)
+      //      self.summarise(key: \.value)
+    }
+    .output
   }
 }

@@ -49,7 +49,7 @@ extension View {
   ) -> some View {
     self.modifier(
       DebugTextOverlayModifier(
-        text: text.toAttributedString,
+        text: text.toAttributed,
         alignment: alignment,
         padding: padding
       )
