@@ -11,46 +11,48 @@ public protocol StringConvertible {
   var stringValue: String { get }
 }
 
-public protocol StyledString: StringConvertible {
-  var styledString: AttributedString { get }
-//  init(fromAttributed attributed: AttributedString)
-//  init(fromString string: String)
+public struct StyledString: StringConvertible {
+  public var string: AttributedString
+  
+  public init(_ string: AttributedString) {
+    self.string = string
+  }
+  public init(_ string: String) {
+    self.string = string.toAttributedString
+  }
 }
 
 extension StyledString {
-  public var stringValue: String { self.styledString.toString }
-//  public init(fromAttributed attributed: AttributedString) {
-//    
-//  }
+  public var stringValue: String { self.string.toString }
 }
 
 extension StyledString {
 
-  private var patterns: [StyledPattern] {
+  private var patternPresets: [StyledPattern] {
     [
       StyledPattern(/:\s/, attributes: .highlighter),
       StyledPattern(/\sx\s/, attributes: .neonOrange),
     ]
   }
 
-  private var autoStyled: StyledText {
-    StyledText(patterns: patterns, sourceText: self.styledString)
+  private var stylePresets: StyledThing {
+    StyledThing(patterns: patternPresets, sourceText: self.string)
   }
 
   public func styledAutomatically() -> Self {
-    return self.styledAutomatically()
-//    return self.autoStyled.output()
-//    return self.applying {
-//      $0.findRangesAndApplyAttributes(
-//        matching: patterns,
-//        attributes: .highlighter
-//      )
-//    }
+    return patternPresets.reduce(StyledString("")) { partialResult, preset in
+      self.applying { attr in
+        attr.findRangesAndApplyAttributes(
+          matching: preset.pattern,
+          attributes: preset.attributes
+        )
+      }
+    }
   }
 
   public func applying(_ modifier: (inout AttributedString) -> Void) -> Self {
-    var new = self
-    var attr = new.styledString
+    let new = self
+    var attr = new.string
     modifier(&attr)
     return new
   }
@@ -76,8 +78,8 @@ extension StyledString {
 
 extension String {
   public func bold() -> StyledString {
-    self.attr
-//    StyledString(self).bold()
+    StyledString(self).bold()
+    //    StyledString(self).bold()
   }
 }
 
@@ -117,11 +119,11 @@ extension Substring: StringConvertible {
 extension AnyRegexOutput: StringConvertible {
   public var stringValue: String {
     DisplayString {
-      self.summarise(key: \.name)
-      self.summarise(key: \.range)
-      self.summarise(key: \.type)
-      self.summarise(key: \.value)
+      self.summarise(key: \.name).description
+//      self.summarise(key: \.range)
+//      self.summarise(key: \.type)
+//      self.summarise(key: \.value)
     }
-    .outputString
+    .output
   }
 }

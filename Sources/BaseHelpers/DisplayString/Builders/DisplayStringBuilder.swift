@@ -38,10 +38,10 @@ public typealias BuilderElement = StyledString
 
 @resultBuilder
 public struct DisplayStringBuilder {
-  
-//  public static func buildBlock(_ components: [StringComponent]...) -> [StringComponent] {
-//    components.flatMap { $0 }
-//  }
+
+  //  public static func buildBlock(_ components: [StringComponent]...) -> [StringComponent] {
+  //    components.flatMap { $0 }
+  //  }
   public static func buildBlock(_ components: [BuilderElement]...) -> [BuilderElement] {
     components.flatMap { $0 }
   }
@@ -53,18 +53,18 @@ public struct DisplayStringBuilder {
   public static func buildEither(first component: [BuilderElement]) -> [BuilderElement] {
     component
   }
-  
+
   public static func buildEither(second component: [BuilderElement]) -> [BuilderElement] {
     component
   }
-  
-//  public static func buildEither(first component: [StringComponent]) -> [StringComponent] {
-//    component
-//  }
-//
-//  public static func buildEither(second component: [StringComponent]) -> [StringComponent] {
-//    component
-//  }
+
+  //  public static func buildEither(first component: [StringComponent]) -> [StringComponent] {
+  //    component
+  //  }
+  //
+  //  public static func buildEither(second component: [StringComponent]) -> [StringComponent] {
+  //    component
+  //  }
 
   public static func buildArray(_ components: [[BuilderElement]]) -> [BuilderElement] {
     components.flatMap { $0 }
@@ -72,29 +72,25 @@ public struct DisplayStringBuilder {
 
   // MARK: - buildExpression overloads
 
-//  public static func buildExpression(_ string: String) -> [BuilderElement] {
-//    [string]
-//  }
-//
-//  public static func buildExpression(_ attributed: AttributedString) -> [BuilderElement] {
-//    [
-//      StringComponent(attributed)
-//    ]
-//  }
+  public static func buildExpression(_ string: String) -> [BuilderElement] {
+    [BuilderElement(string)]
+  }
 
+  public static func buildExpression(_ attributed: AttributedString) -> [BuilderElement] {
+    [BuilderElement(attributed)]
+  }
 
-  
   // Allows for using both arrays and single items
   public static func buildExpression(_ expression: [BuilderElement]) -> [BuilderElement] {
     expression
   }
-  
+
   public static func buildExpression(_ expression: BuilderElement) -> [BuilderElement] {
     [expression]
   }
-  
-//  public static func buildExpression(_ components: [StringComponent]) -> [StringComponent] {
-//    components
+
+//  public static func buildExpression(_ components: [StringConvertible]) -> [BuilderElement] {
+//    components.compactMap { BuilderElement($0.stringValue) }
 //  }
 }
 

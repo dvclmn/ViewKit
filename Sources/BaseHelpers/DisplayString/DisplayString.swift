@@ -15,7 +15,7 @@ public struct DisplayString {
   /// each element in the builder (defined on a new line in
   /// the source code). Defaults to and is frequently set to
   /// a new line character `"\n"`
-  let separator: String
+  private let separator: String
 
   public init(
     _ separator: String = "\n",
@@ -27,17 +27,17 @@ public struct DisplayString {
 }
 
 extension DisplayString {
-  public var output: StyledString {
-    let joined = components.map(\.attributedString).joined(separator: separator)
-    return StyledString(joined)
-  }
+//  public var output: StyledString {
+//    let joined = components.map(\.string).joined(separator: separator)
+//    return StyledString(joined)
+//  }
   
-  public var outputString: String {
+  public var output: String {
     components.map(\.stringValue).joined(separator: separator)
   }
 
   public var outputStyled: AttributedString {
-    components.map(\.attributedString).joined(separator: separator)
+    components.map(\.string).joined(separator: separator)
 //    components.enumerated().reduce(into: AttributedString()) { result, element in
 //      let (index, component) = element
 //      result.append(component.attributedString)

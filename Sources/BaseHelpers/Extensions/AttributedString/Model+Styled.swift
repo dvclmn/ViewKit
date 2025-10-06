@@ -17,7 +17,7 @@ import Foundation
 /// /(?<styleTarget>x|y|X|Y|:\s|,\s|W|H|Column|COL|Row|ROW|ROWS|COLS)/
 /// ```
 
-public struct StyledText {
+public struct StyledThing {
   let patterns: [StyledPattern]
   let sourceText: AttributedString
   //  let sourceText: String
@@ -55,7 +55,7 @@ public struct StyledPattern {
   }
 }
 
-extension StyledText {
+extension StyledThing {
 
   public func output() -> AttributedString {
     var result = sourceText

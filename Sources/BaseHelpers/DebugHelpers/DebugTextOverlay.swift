@@ -9,14 +9,14 @@ import SwiftUI
 
 public struct DebugTextOverlayModifier: ViewModifier {
 //  @Environment(\.safeAreaPadding) private var safeAreaPadding
-  let value: StringComponent
+  let text: AttributedString
 //  let value: String
   let alignment: Alignment
   let padding: (Edge.Set, CGFloat?)
   public func body(content: Content) -> some View {
     content
       .overlay(alignment: alignment) {
-        Text(value.attributedString)
+        Text(text)
           .modifier(DebugTextStyleModifier())
           .safeAreaPadding(padding.0, padding.1)
           .allowsHitTesting(false)
@@ -43,13 +43,13 @@ public struct DebugTextStyleModifier: ViewModifier {
 extension View {
   
   public func debugTextOverlay(
-        _ value: String,
+        _ text: String,
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil)
   ) -> some View {
     self.modifier(
       DebugTextOverlayModifier(
-        value: StringComponent(value),
+        text: text.toAttributedString,
         alignment: alignment,
         padding: padding
       )
@@ -57,14 +57,14 @@ extension View {
   }
   
   public func debugTextOverlay(
-    _ value: StringComponent,
+    _ text: AttributedString,
 //    _ value: String,
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil)
   ) -> some View {
     self.modifier(
       DebugTextOverlayModifier(
-        value: value,
+        text: text,
         alignment: alignment,
         padding: padding
       )
@@ -72,13 +72,13 @@ extension View {
   }
 
   public func debugTextOverlay(
-    _ value: String...,
+    _ text: String...,
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil)
   ) -> some View {
     self.modifier(
       DebugTextOverlayModifier(
-        value: StringComponent(value.joined(separator: "\n")),
+        text: AttributedString(text.joined(separator: "\n")),
         //        value: value.flatMap().joined(separator: "\n"),
         alignment: alignment,
         padding: padding
