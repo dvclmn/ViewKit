@@ -104,8 +104,57 @@ extension Array where Element == StyledString {
   }
 }
 
-extension String {
-  public func bold() -> StyledString {
-    StyledString(self).bold()
+//extension String {
+//  public func bold() -> any StyledStringConvertible {
+//    StyledString(self).bold()
+//  }
+////  public func bold() -> StyledString {
+////    StyledString(self).bold()
+////  }
+//}
+//extension String {
+//  public func bold() -> StyledString {
+//    self.toStyledString.bold()
+//  }
+//}
+
+extension StyledString {
+  func splitByNewlines() -> [StyledString] {
+    let string = self.plainString
+    let lines = string.substringLines()
+    //    let lines = string.components(separatedBy: "\n")
+
+    guard lines.count > 1 else {
+      return [self]
+    }
+
+    var result: [StyledString] = []
+    var currentIndex = self.styledString.startIndex
+
+    for line in lines {
+      let lineLength = line.count
+      //      let lineLength = line.utf16.count
+      guard lineLength > 0 else {
+        result.append(StyledString(""))
+        continue
+      }
+
+      let endIndex = self.styledString.index(currentIndex, offsetByCharacters: lineLength)
+      let lineAttributed = AttributedString(self.styledString[currentIndex..<endIndex])
+      result.append(StyledString(lineAttributed))
+
+      // Move past the newline character if there is one
+
+      if endIndex < self.styledString.endIndex {
+        currentIndex = self.styledString.index(endIndex, offsetByCharacters: 1)
+        //        currentIndex = self.styledString.index(after: endIndex)
+      }
+    }
+
+    return result
   }
+}
+
+extension StyledString: CustomStringConvertible {
+  public var description: String { plainString }
 }

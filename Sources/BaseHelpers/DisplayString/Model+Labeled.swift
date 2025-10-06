@@ -16,7 +16,7 @@ import Foundation
 public struct Labeled {
 
   public let key: String
-  public let value: StyledString?
+  public let value: BuilderElement?
 
   /// E.g. for `CGPoint`
   /// ```
@@ -31,14 +31,17 @@ public struct Labeled {
   ) {
     self.key = key
     //    self.value =  StyledString()
-    self.value = value.map { StyledString($0.toString) }
+    self.value = value.map { .text(StyledString($0.toString)) }
+//    self.value = value.map { StyledString($0.toString) }
     self.separator = separator
   }
 }
 
 extension Labeled: StyledStringConvertible {
   public var toStyledString: StyledString {
-    let valuePart = value?.styledString ?? ""
+    
+//    let valuePart = String(describing: value?.toStyledString)
+    let valuePart = value?.toStyledString ?? "nil"
     return StyledString("\(key)\(separator)\(valuePart)")
   }
 }

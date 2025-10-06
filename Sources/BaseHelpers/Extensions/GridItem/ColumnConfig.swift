@@ -44,10 +44,11 @@ extension ColumnConfig {
 extension ColumnConfig: CustomStringConvertible {
   public var description: String {
     return DisplayString {
-      "ColumnConfig"
-      mode.description
-      Labeled("Spacing", value: spacing)
-      Labeled("Alignment", value: alignment)
+      Indented("ColumnConfig") {
+        mode.description
+        Labeled("Spacing", value: spacing)
+        Labeled("Alignment", value: alignment)
+      }
     }.output
     
     //    """

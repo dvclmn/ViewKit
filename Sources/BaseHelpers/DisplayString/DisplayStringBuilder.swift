@@ -7,7 +7,36 @@
 
 import Foundation
 
-public typealias BuilderElement = StyledString
+// Helper extension to split StyledString by lines while preserving styling
+
+//extension DisplayElement: StyledStringConvertible {
+//  public var toStyledString: StyledString {
+//    switch self {
+//      case .text(let styledString):
+//        return styledString
+//      case .indented(let title, let indent, let content):
+//        return title + indent + content
+//    }
+//  }
+//}
+
+//@resultBuilder
+//public struct DisplayStringIndentedBuilder {
+//  public static func buildBlock(_ components: [DisplayElement]...) -> [DisplayElement] {
+//    components.flatMap { $0 }
+//  }
+//
+//  public static func buildExpression<T: StyledStringConvertible>(_ value: T) -> [DisplayElement] {
+//    [.text(value.toStyledString)]
+//  }
+//
+//  public static func buildExpression(_ value: Indented) -> [DisplayElement] {
+//    [.indented(title: value.title, indent: value.indentString, content: value.contentElements)]
+//  }
+//}
+
+public typealias BuilderElement = DisplayElement
+//public typealias BuilderElement = StyledString
 
 @resultBuilder
 public struct DisplayStringBuilder {
@@ -47,7 +76,26 @@ extension DisplayStringBuilder {
 
   /// This handles specific types, anything from `String`
   /// to `AttributedString` to `Indented`
-  public static func buildExpression<T: StyledStringConvertible>(_ value: T) -> [StyledString] {
-    [value.toStyledString]
+  //  public static func buildExpression<T: StyledStringConvertible>(_ value: T) -> [StyledString] {
+  //    [value.toStyledString]
+  //  }
+
+  public static func buildExpression<T: StyledStringConvertible>(_ value: T) -> [BuilderElement] {
+    if let value = value as? Indented {
+      return [.indented(title: value.title, indent: value.indentString, content: value.contentElements)]
+    }
+    return [.text(value.toStyledString)]
+    
   }
+
+//  public static func buildExpression(_ value: Indented) -> [BuilderElement] {
+//    [
+//      .indented(
+//        title: value.title,
+//        indent: value.indentString,
+//        content: value.contentElements
+//      )
+//    ]
+//  }
+  
 }

@@ -26,26 +26,26 @@ public enum SubsequenceStrategy {
 }
 
 extension String {
-  
+
   public func lines(
     subsequenceStrategy: SubsequenceStrategy = .doNotOmit
-    //    omittingEmptySubsequences: Bool = false
+      //    omittingEmptySubsequences: Bool = false
   ) -> [String] {
-    
+
     let lines: [String] = self.substringLines(
       subsequenceStrategy: subsequenceStrategy
     ).map { substring in
       String(substring)
     }
-    
+
     return lines
   }
-  
+
   public var longestLineLength: Int {
     let longestLine = substringLines().map { $0.count }.max() ?? 1
     return longestLine
   }
-  
+
   public func indentingEachLine(
     level: Int = 1,
     indentString: String = "\t"
@@ -54,10 +54,10 @@ extension String {
     let result = self.substringLines()
       .map { indent + $0 }
       .joined(separator: "\n")
-    
+
     return result
   }
-  
+
   public func substringLines(
     subsequenceStrategy: SubsequenceStrategy = .doNotOmit,
   ) -> [Substring] {
