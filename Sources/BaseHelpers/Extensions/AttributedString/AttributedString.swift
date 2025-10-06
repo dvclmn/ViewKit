@@ -74,15 +74,16 @@ extension AttributedString {
 }
 
 extension Array where Element == AttributedString {
-
   public func joined(separator: String = "") -> AttributedString {
-    self.enumerated().reduce(into: AttributedString()) { result, element in
-      let (index, component) = element
-      result.append(component)
-      if index < self.count - 1 {
-        result.append(AttributedString(separator))
-      }
+    guard !isEmpty else { return AttributedString() }
+    
+    /// Pre-create separator once to avoid repeated initialisation
+    let separatorAttr = AttributedString(separator)
+    
+    /// Use reduce(into:) for in-place mutation (no copies)
+    return dropFirst().reduce(into: self[0]) { result, element in
+      result.append(separatorAttr)
+      result.append(element)
     }
   }
-
 }
