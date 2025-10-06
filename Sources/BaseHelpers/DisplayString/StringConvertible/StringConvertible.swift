@@ -22,6 +22,7 @@ public struct StyledString: StringConvertible {
   }
 }
 
+
 extension StyledString {
   public var stringValue: String { self.string.toString }
 }

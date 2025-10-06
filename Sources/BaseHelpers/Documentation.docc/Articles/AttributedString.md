@@ -1,8 +1,40 @@
 # AttributedString
 
+
+Anatomy
 - String: The raw text content
 - Attributes: Style metadata attached to ranges of that text
 - Runs: Contiguous ranges where attributes don't change
+
+## Replace attributes
+Handy way to replace a kind of attribute(s) with another
+https://forums.swift.org/t/attributedstring-it-s-a-string-a-range-a-dictionary-to-allow-type-safe-access-of-attributes-but-i-m-having-a-hard-time-understanding-how-to-access-with-what-address-index/76204/14
+```
+attrString.replaceAttributes(
+    AttributeContainer
+      .measurement(.value)
+      .numberSymbol(.decimalSeparator),
+    with: AttributeContainer.foregroundColor(.blue)
+  )
+)
+```
+
+
+## Transform attributes
+
+```
+attrString.transformingAttributes(\.numberSymbol, \.measurement, \.numberPart, \.foregroundColor) {
+    $3.value = if $0.value == .decimalSeparator {
+        .green
+    } else if $1.value == .unit {
+        .orange
+    } else if $2.value == .fraction {
+        .blue
+    } else {
+        nil
+    }
+}
+```
 
 ## Runs
 A "run" is just a continuous stretch of text where nothing changes about the styling. When any attribute changes (color, font, size, etc.), that's where one run ends and the next begins.

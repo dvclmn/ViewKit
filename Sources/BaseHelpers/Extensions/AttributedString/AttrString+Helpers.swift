@@ -9,22 +9,46 @@ import Foundation
 
 extension AttributedString {
 
-  public func findMatches(for pattern: Regex<Substring>) -> [RegexMatch] {
+  /// If no value is provided to `matches`, this will fall back by
+  /// first converting `self` to `String`, then searching for
+  /// matches in that. String conversion may incur performance cost
+  public func getRanges(
+    using matches: [RegexMatch]? = nil,
+    matching pattern: Regex<Substring>
+  ) -> [AttributedRange] {
+    let patternMatches = matches ?? findMatches(for: pattern)
+    return patternMatches.compactMap { match in
+      self.range(of: match.output)
+    }
+  }
+
+  /// Use this method if an existing String representation
+  /// for `self` does not already exist. This will first
+  /// convert to `String`, then find matches. String
+  /// conversion may incur performance cost.
+  private func findMatches(for pattern: Regex<Substring>) -> [RegexMatch] {
     let string = String(self.characters)
     let matches = string.matches(of: pattern)
     return matches
   }
 
-  public func getRange(for matches: [RegexMatch]) -> AttributedRange? {
-    return matches.lazy
-      .compactMap { self.range(of: $0.output) }
-      .first
-  }
+  /// Note: provide existing matches if available, otherwise
+  /// will need to convert `self` to `String` first
+  /// as a fallback, which may have performance impact.
+  //  public func getRange(
+  //    withMatches matches: [RegexMatch]? = nil,
+  //    matching pattern: Regex<Substring>
+  //  ) -> AttributedRange? {
+  //
+  //    let patternMatches = matches ?? findMatches(for: pattern)
+  //    return getFirstRange(for: patternMatches)
+  //  }
 
-  public func getRange(matching pattern: Regex<Substring>) -> AttributedRange? {
-    let matches = findMatches(for: pattern)
-    return getRange(for: matches)
-  }
+  //  private func getFirstRange(for matches: [RegexMatch]) -> AttributedRange? {
+  //    return matches.lazy
+  //      .compactMap { self.range(of: $0.output) }
+  ////      .first
+  //  }
 
   public func getAllRanges(
     for matches: [RegexMatch]
@@ -39,20 +63,31 @@ extension AttributedString {
     return getAllRanges(for: matches)
   }
 
-  @discardableResult
-  public mutating func findRangesAndApplyAttributes(
+  public func editAttributes(
     for matches: [RegexMatch],
-    attributes: AttributeContainer
-  ) -> [AttributedRange] {
-    var ranges: [AttributedRange] = []
+    transform: (AttributedSubstring) -> Void
+  ) {
     for match in matches {
       if let range = self.range(of: match.output) {
-        self[range].setAttributes(attributes)
-        ranges.append(range)
+        transform(self[range])
       }
     }
-    return ranges
   }
+
+  //  @discardableResult
+  //  public mutating func findRangesAndApplyAttributes(
+  //    for matches: [RegexMatch],
+  //    attributes: AttributeContainer
+  //  ) -> [AttributedRange] {
+  //    var ranges: [AttributedRange] = []
+  //    for match in matches {
+  //      if let range = self.range(of: match.output) {
+  //        self[range].setAttributes(attributes)
+  //        ranges.append(range)
+  //      }
+  //    }
+  //    return ranges
+  //  }
 
   public func styled(
     matches: [RegexMatch],
@@ -61,10 +96,8 @@ extension AttributedString {
     //    var ranges: [AttributedRange] = []
     var new = self
     for match in matches {
-      if let range = self.range(of: match.output) {
+      if let range: Range<AttributedString.Index> = self.range(of: match.output) {
         new[range].mergeAttributes(attributes)
-//        new[range].setAttributes(attributes)
-        //        ranges.append(range)
       }
     }
 
