@@ -50,7 +50,7 @@ extension ColumnConfig: CustomStringConvertible {
         Labeled("Spacing", value: spacing)
         Labeled("Alignment", value: alignment)
       }
-    }.output
+    }.plainText
     
     //    """
     //    GridConfig [

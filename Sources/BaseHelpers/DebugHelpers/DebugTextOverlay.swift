@@ -30,7 +30,7 @@ public struct DebugTextStyleModifier: ViewModifier {
     content
       .font(.callout)
 //      .foregroundStyle(.primary.opacity(0.8))
-      .monospaced()
+//      .monospaced()
 //      .monospacedDigit()
       .padding(.horizontal, 6)
       .padding(.vertical, 4)

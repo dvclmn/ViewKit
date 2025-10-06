@@ -48,6 +48,6 @@ extension ColumnConfig.Mode: CustomStringConvertible {
         case .fixedColumns(let count, let fitMode): "Fixed Columns [count: \(count), mode: \(fitMode)]"
         case .adaptive(let fitMode): "Adaptive [mode: \(fitMode)]"
       }
-    }.output
+    }.plainText
   }
 }

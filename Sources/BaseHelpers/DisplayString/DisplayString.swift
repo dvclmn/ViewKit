@@ -5,12 +5,12 @@
 //  Created by Dave Coleman on 2/10/2025.
 //
 
-import Foundation
+import SwiftUI
 
 public struct DisplayString {
 
   private let components: [BuilderElement]
-//  private let components: [StyledString]
+  //  private let components: [StyledString]
 
   /// This is the *top-level* seperator, that appears between
   /// each element in the builder (defined on a new line in
@@ -29,17 +29,51 @@ public struct DisplayString {
 
 extension DisplayString {
 
-  public var output: String {
+  public var plainText: String {
     components.map(\.toStyledString.plainString).joined(separator: separator)
   }
 
-  public var outputStyled: AttributedString {
+  public var output: AttributedString {
+    //    self.output()
     components.map(\.toStyledString.styledString).joined(separator)
+  }
+
+  public func markdown(language: String? = nil) -> AttributedString {
+    let string = components.map { element in
+      element.toStyledString.plainString
+    }.joinedLines()
+
+    let markdown = try? AttributedString(
+      markdown: string,
+      options: .init(
+        allowsExtendedAttributes: true,
+        interpretedSyntax: .full,
+        failurePolicy: .returnPartiallyParsedIfPossible,
+        languageCode: language,
+        appliesSourcePositionAttributes: true
+      ),
+      baseURL: nil
+    )
+    return markdown ?? output
   }
 }
 
 extension DisplayString: StyledStringConvertible {
   public var toStyledString: StyledString {
-    StyledString(self.outputStyled)
+    StyledString(self.output)
   }
+}
+
+extension AttributedString {
+  public func monospaced(_ font: Font? = nil) -> AttributedString {
+    self.transformingAttributes(\.font) { attr in
+      attr.value = font?.monospaced() ?? Font.body.monospaced()
+      //      attr.value = Font.body.monospaced()
+    }
+    //    self.transformingAttributes(
+    //      AttributeScopes.SwiftUIAttributes.FontAttribute.Type) { key in
+    //        key.
+    //      }
+  }
+
 }

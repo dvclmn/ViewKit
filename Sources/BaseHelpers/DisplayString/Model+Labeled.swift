@@ -37,12 +37,11 @@ public struct Labeled {
 
 extension Labeled: StyledStringConvertible {
   public var toStyledString: StyledString {
-    
+
     let labelPart = StyledString("\(key)\(separator)", with: .secondary)
     let valuePart = value?.toStyledString ?? "nil"
     return labelPart + valuePart
-//    return StyledString("\(key)\(separator)\(valuePart)")
-    
-    
+    //    return StyledString("\(key)\(separator)\(valuePart)")
+
   }
 }

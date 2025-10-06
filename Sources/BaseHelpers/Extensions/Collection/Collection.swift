@@ -103,7 +103,8 @@ extension Hashable {
   }
 
   //extension Set where Element: Identifiable, Element.ID: Hashable {
-  public func isAtTop<T: Collection>(of collection: T) -> Bool where T.Element: Hashable, T.Element: Identifiable, T.Element.ID == Self {
+  public func isAtTop<T: Collection>(of collection: T) -> Bool
+  where T.Element: Hashable, T.Element: Identifiable, T.Element.ID == Self {
     guard let firstResultID = collection.first?.id else {
       return false
     }

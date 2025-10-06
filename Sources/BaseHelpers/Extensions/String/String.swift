@@ -202,6 +202,9 @@ extension Array where Element == String {
   public func joined(_ separator: String = "") -> String {
     self.joined(separator: separator)
   }
+  public func joinedLines() -> String {
+    self.joined(separator: "\n")
+  }
 }
 
 extension String {
