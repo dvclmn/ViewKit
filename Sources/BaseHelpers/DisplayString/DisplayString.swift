@@ -47,7 +47,7 @@ extension DisplayString {
 }
 
 extension DisplayString: StyledStringConvertible {
-  public func toStyledString() -> StyledString {
+  public var toStyledString: StyledString {
     StyledString(self.outputStyled)
   }
 }

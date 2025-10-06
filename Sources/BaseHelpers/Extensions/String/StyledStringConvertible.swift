@@ -5,14 +5,22 @@
 //  Created by Dave Coleman on 6/10/2025.
 //
 
+import Foundation
+
 public protocol StyledStringConvertible {
   //  associatedtype Value: StringConvertible
   //  var value: Value { get }
-  func toStyledString() -> StyledString
+  var toStyledString: StyledString { get }
 }
 
 
+extension String: StyledStringConvertible {
+  public var toStyledString: StyledString { .init(self) }
+}
 
+extension AttributedString: StyledStringConvertible {
+  public var toStyledString: StyledString { .init(self) }
+}
 
 //extension StyledStringConvertible where Self: StringConvertible {
 //  public var toString: String {

@@ -25,9 +25,9 @@ public struct Indented {
 
 extension Indented: StyledStringConvertible {
 
-  public func toStyledString() -> StyledString {
+  public var toStyledString: StyledString {
 
-    let indentedItems = content.map { indentString + $0 }
+    let indentedItems = content.map { indentString + $0 }.joined("\n")
     guard let title else {
       return indentedItems
     }

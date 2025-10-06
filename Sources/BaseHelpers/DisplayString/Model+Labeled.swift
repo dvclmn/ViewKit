@@ -26,18 +26,18 @@ public struct Labeled {
 
   public init(
     _ key: String,
-    value: (any StyledStringConvertible)?,
+    value: (any StringConvertible)?,
     separator: String = ": "
   ) {
     self.key = key
-    self.value = value?.toStyledString()
-    //    self.value = value.map { StyledString($0.stringValue) }
+    //    self.value =  StyledString()
+    self.value = value.map { StyledString($0.toString) }
     self.separator = separator
   }
 }
 
 extension Labeled: StyledStringConvertible {
-  public func toStyledString() -> StyledString {
+  public var toStyledString: StyledString {
     let valuePart = value?.styledString ?? ""
     return StyledString("\(key)\(separator)\(valuePart)")
   }

@@ -7,22 +7,12 @@
 
 import Foundation
 
-//public enum StyledStringStorage {
-//  case plain(String)
-//  case attributed(AttributedString)
-//}
-
 public struct StyledString {
-  //  private var storage: StyledStringStorage
   public var styledString: AttributedString
   public var plainString: String { styledString.toString }
-  //  public lazy var plainString: String = { styledString.toString }()
 
   public init(_ attributed: AttributedString) { styledString = attributed }
-
-  public init(_ string: String) {
-    styledString = string.toAttributed
-  }
+  public init(_ string: String) { styledString = string.toAttributed }
 }
 
 extension StyledString {
@@ -77,39 +67,65 @@ extension StyledString {
   }
 
   public static func + (lhs: StyledString, rhs: String) -> StyledString {
-    StyledString(lhs.styledString + AttributedString(rhs))
+    StyledString(lhs.styledString.appending(rhs))
   }
 
   public static func + (lhs: String, rhs: StyledString) -> StyledString {
-    StyledString(AttributedString(lhs) + rhs.styledString)
+    StyledString(lhs.appending(rhs.styledString))
+  }
+  
+  public static func + (lhs: StyledString, rhs: AttributedString) -> StyledString {
+    StyledString(lhs.styledString + rhs)
+  }
+  
+  public static func + (lhs: AttributedString, rhs: StyledString) -> StyledString {
+    StyledString(lhs + rhs.styledString)
+  }
+}
+
+extension StyledString: ExpressibleByStringLiteral {
+  public init(stringLiteral value: String) {
+    self.init(value)
   }
 }
 
 extension Array where Element == StyledString {
-  
+
   public func joined(_ separator: String = "") -> StyledString {
     guard !isEmpty else { return StyledString(AttributedString()) }
-    
+
     /// Pre-create separator once to avoid repeated initialisation
     let separatorAttr = AttributedString(separator)
-    
+
     /// Use reduce(into:) for in-place mutation (no copies)
     return dropFirst().reduce(into: self[0]) { result, element in
-      result.append(separatorAttr)
-      result.append(element)
+      result = result + separatorAttr + element
+//      result.append(separatorAttr)
+//      result.append(element)
     }
   }
 }
 
 extension StyledString {
-  
-//  public func append(_ other: StyledString) -> Self {
-//    self + other
+//  public func appending(_ other: StyledString) -> StyledString {
+//    return .init(attributed)
 //  }
-//  
-//  public func append(_ attributed: AttributedString) -> Self {
-//    self + attributed
+//
+//  public func appending(_ attributed: AttributedString) -> StyledString {
+//    return .init(attributed)
 //  }
+//
+//  public func appending(_ attributed: AttributedString) -> StyledString {
+//    return .init(attributed)
+//  }
+
+  //  public func append(_ other: StyledString) -> Self {
+  //    self + other
+  //  }
+  //
+  //  public func append(_ attributed: AttributedString) -> Self {
+  //    self + attributed
+  //  }
 }
 
 //extension StyledString: StyledStringConvertible {

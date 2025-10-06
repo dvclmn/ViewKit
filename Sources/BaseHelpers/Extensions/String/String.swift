@@ -27,42 +27,43 @@ extension String {
     return matches
   }
 
-  public func getRange(
-    for attrString: AttributedString,
-    matching pattern: Regex<Substring>
-  ) -> AttributedRange? {
-    let matches = findMatches(for: pattern)
-    return attrString.getRange(for: matches)
-  }
+//  public func getRange(
+//    for attrString: AttributedString,
+//    matching pattern: Regex<Substring>
+//  ) -> AttributedRange? {
+//    let matches = findMatches(for: pattern)
+//    return attrString.getRange(for: matches)
+//  }
 
-  public func getAllRanges(
-    for attrString: AttributedString,
-    matching pattern: Regex<Substring>
-  ) -> [AttributedRange] {
-    let matches = findMatches(for: pattern)
-    return attrString.getAllRanges(for: matches)
-  }
+//  public func getAttributedRanges
+//  public func getAllRanges(
+//    for attrString: AttributedString,
+//    matching pattern: Regex<Substring>
+//  ) -> [AttributedRange] {
+//    let matches = findMatches(for: pattern)
+//    return attrString.getAllRanges(for: matches)
+//  }
 
-  @discardableResult
-  public func findRangesAndApplyAttributes(
-    to attrString: inout AttributedString,
-    matching pattern: Regex<Substring>,
-    attributes: AttributeContainer
-  ) -> [AttributedRange] {
-    let matches = findMatches(for: pattern)
-    return attrString.findRangesAndApplyAttributes(for: matches, attributes: attributes)
-  }
-
-  public func getAttributed(
-    text: AttributedString,
-    //    to attrString: inout AttributedString,
-    matching pattern: Regex<Substring>,
-    attributes: AttributeContainer
-  ) -> AttributedString {
-    let matches = findMatches(for: pattern)
-    return text.styled(matches: matches, attributes: attributes)
-    //    return attrString.findRangesAndApplyAttributes(for: matches, attributes: attributes)
-  }
+//  @discardableResult
+//  public func findRangesAndApplyAttributes(
+//    to attrString: inout AttributedString,
+//    matching pattern: Regex<Substring>,
+//    attributes: AttributeContainer
+//  ) -> [AttributedRange] {
+//    let matches = findMatches(for: pattern)
+//    return attrString.findRangesAndApplyAttributes(for: matches, attributes: attributes)
+//  }
+//
+//  public func getAttributed(
+//    text: AttributedString,
+//    //    to attrString: inout AttributedString,
+//    matching pattern: Regex<Substring>,
+//    attributes: AttributeContainer
+//  ) -> AttributedString {
+//    let matches = findMatches(for: pattern)
+//    return text.styled(matches: matches, attributes: attributes)
+//    //    return attrString.findRangesAndApplyAttributes(for: matches, attributes: attributes)
+//  }
 
   public func withQuotes(_ type: QuotesType = .double) -> String {
     return "\(type.rawValue)\(self)\(type.rawValue)"
