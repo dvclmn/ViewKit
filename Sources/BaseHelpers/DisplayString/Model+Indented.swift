@@ -10,12 +10,12 @@ import Foundation
 public struct Indented {
   public let title: String?
   public let indentString: String
-  public let content: [BuilderElement]
+  public let content: [StyledString]
 
   public init(
     _ title: String? = nil,
     prefix indentString: String = "  | ",
-    @DisplayStringBuilder _ content: () -> [BuilderElement]
+    @DisplayStringBuilder _ content: () -> [StyledString]
   ) {
     self.title = title
     self.indentString = indentString

@@ -8,9 +8,9 @@
 import SwiftUI
 
 public struct DebugTextOverlayModifier: ViewModifier {
-//  @Environment(\.safeAreaPadding) private var safeAreaPadding
+  //  @Environment(\.safeAreaPadding) private var safeAreaPadding
   let text: AttributedString
-//  let value: String
+  //  let value: String
   let alignment: Alignment
   let padding: (Edge.Set, CGFloat?)
   public func body(content: Content) -> some View {
@@ -30,7 +30,8 @@ public struct DebugTextStyleModifier: ViewModifier {
     content
       .font(.callout)
       .foregroundStyle(.primary.opacity(0.8))
-      .monospacedDigit()
+      .monospaced()
+//      .monospacedDigit()
       .padding(.horizontal, 6)
       .padding(.vertical, 4)
       .background(.regularMaterial)
@@ -41,9 +42,9 @@ public struct DebugTextStyleModifier: ViewModifier {
 }
 
 extension View {
-  
+
   public func debugTextOverlay(
-        _ text: String,
+    _ text: String,
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil)
   ) -> some View {
@@ -55,10 +56,10 @@ extension View {
       )
     )
   }
-  
+
   public func debugTextOverlay(
     _ text: AttributedString,
-//    _ value: String,
+    //    _ value: String,
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil)
   ) -> some View {

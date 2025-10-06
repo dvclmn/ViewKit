@@ -73,11 +73,11 @@ extension StyledString {
   public static func + (lhs: String, rhs: StyledString) -> StyledString {
     StyledString(lhs.appending(rhs.styledString))
   }
-  
+
   public static func + (lhs: StyledString, rhs: AttributedString) -> StyledString {
     StyledString(lhs.styledString + rhs)
   }
-  
+
   public static func + (lhs: AttributedString, rhs: StyledString) -> StyledString {
     StyledString(lhs + rhs.styledString)
   }
@@ -100,44 +100,12 @@ extension Array where Element == StyledString {
     /// Use reduce(into:) for in-place mutation (no copies)
     return dropFirst().reduce(into: self[0]) { result, element in
       result = result + separatorAttr + element
-//      result.append(separatorAttr)
-//      result.append(element)
     }
   }
 }
 
-extension StyledString {
-//  public func appending(_ other: StyledString) -> StyledString {
-//    return .init(attributed)
-//  }
-//
-//  public func appending(_ attributed: AttributedString) -> StyledString {
-//    return .init(attributed)
-//  }
-//
-//  public func appending(_ attributed: AttributedString) -> StyledString {
-//    return .init(attributed)
-//  }
-
-  //  public func append(_ other: StyledString) -> Self {
-  //    self + other
-  //  }
-  //
-  //  public func append(_ attributed: AttributedString) -> Self {
-  //    self + attributed
-  //  }
-}
-
-//extension StyledString: StyledStringConvertible {
-//  public func toDisplayString() -> StyledString {
-//    let valuePart = value?.styledString ?? ""
-//    return StyledString("\(key)\(separator)\(valuePart)")
-//  }
-//}
-
 extension String {
   public func bold() -> StyledString {
     StyledString(self).bold()
-    //    StyledString(self).bold()
   }
 }
