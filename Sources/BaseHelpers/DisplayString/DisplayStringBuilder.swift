@@ -36,14 +36,6 @@ public struct DisplayStringBuilder {
 // MARK: - buildExpression overloads
 extension DisplayStringBuilder {
 
-  public static func buildExpression(_ string: String) -> [BuilderElement] {
-    [BuilderElement(string)]
-  }
-
-  public static func buildExpression(_ attributed: AttributedString) -> [BuilderElement] {
-    [BuilderElement(attributed)]
-  }
-
   /// Allows for using both arrays and single items
   public static func buildExpression(_ expression: [BuilderElement]) -> [BuilderElement] {
     expression
@@ -51,5 +43,11 @@ extension DisplayStringBuilder {
 
   public static func buildExpression(_ expression: BuilderElement) -> [BuilderElement] {
     [expression]
+  }
+
+  /// This handles specific types, anything from `String`
+  /// to `AttributedString` to `Indented`
+  public static func buildExpression<T: DisplayStringConvertible>(_ value: T) -> [StyledString] {
+    [value.toDisplayString()]
   }
 }

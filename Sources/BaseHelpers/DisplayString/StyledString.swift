@@ -8,18 +8,14 @@
 import Foundation
 
 public struct StyledString {
-  public var string: AttributedString
+  public var styledString: AttributedString
 
   public init(_ attributedString: AttributedString) {
-    self.string = attributedString
+    self.styledString = attributedString
   }
   public init(_ string: String) {
-    self.string = string.toAttributedString
+    self.styledString = string.toAttributedString
   }
-}
-
-extension StyledString {
-  public var stringValue: String { self.string.toString }
 }
 
 extension StyledString {
@@ -31,9 +27,9 @@ extension StyledString {
     ]
   }
 
-  private var stylePresets: StyledThing {
-    StyledThing(patterns: patternPresets, sourceText: self.string)
-  }
+  //  private var stylePresets: StyledThing {
+  //    StyledThing(patterns: patternPresets, sourceText: self.styledString)
+  //  }
 
   public func styledAutomatically() -> Self {
     return patternPresets.reduce(StyledString("")) { partialResult, preset in
@@ -48,7 +44,7 @@ extension StyledString {
 
   public func applying(_ modifier: (inout AttributedString) -> Void) -> Self {
     let new = self
-    var attr = new.string
+    var attr = new.styledString
     modifier(&attr)
     return new
   }
