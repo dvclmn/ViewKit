@@ -8,9 +8,6 @@
 import Foundation
 
 extension Character {
-  public var toString: String {
-    String(self)
-  }
 
   public var descriptiveName: String {
     switch self {

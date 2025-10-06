@@ -39,9 +39,6 @@ extension AttributedString {
     self.setAttributes(highlightContainer)
   }
 
-  public var toString: String {
-    String(self.characters)
-  }
 
   public func lines(
     subsequenceStrategy: SubsequenceStrategy = .doNotOmit
@@ -85,5 +82,34 @@ extension Array where Element == AttributedString {
       result.append(separatorAttr)
       result.append(element)
     }
+  }
+}
+
+extension AttributedString {
+  public func appending(_ string: String) -> AttributedString {
+    var copy = self
+    copy.append(string.toAttributed)
+    return copy
+  }
+  //  public static func + (lhs: AttributedString, rhs: String) -> AttributedString {
+  //    var result = lhs
+  //    result.append(AttributedString(rhs))
+  //    return result
+  //  }
+  //
+  //  public static func + (lhs: String, rhs: AttributedString) -> AttributedString {
+  //    var result = AttributedString(lhs)
+  //    result.append(rhs)
+  //    return result
+  //  }
+}
+
+extension String {
+  /// Returns an attributed string
+  public func appending(_ attributed: AttributedString) -> AttributedString {
+    var attr = self.toAttributed
+    attr.append(attributed)
+    return attr
+    
   }
 }

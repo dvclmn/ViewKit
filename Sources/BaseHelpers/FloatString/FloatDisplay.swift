@@ -29,7 +29,7 @@ public protocol FloatDisplay: StringConvertible {
 extension FloatDisplay {
 
   /// `StringConvertible` conformance
-  public var stringValue: String { self.displayString() }
+  public var toString: String { self.displayString() }
 
   /// A convenience that just returns the `displayString()`
   /// method with it's default values

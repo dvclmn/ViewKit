@@ -5,25 +5,39 @@
 //  Created by Dave Coleman on 6/10/2025.
 //
 
-public protocol StyledStringConvertible: StringConvertible {
-  func toDisplayString() -> StyledString
+public protocol StyledStringConvertible {
+  //  associatedtype Value: StringConvertible
+  //  var value: Value { get }
+  func toStyledString() -> StyledString
 }
 
-extension StyledStringConvertible {
-  public var toString: String {
-    self.toDisplayString().styledString.toString
-  }
-}
 
-extension String: StyledStringConvertible {
-  public func toDisplayString() -> StyledString {
-    .init(self)
-  }
-}
 
-extension Int: StyledStringConvertible {
-  public func toDisplayString() -> StyledString {
-    .init(self.toString)
-  }
-}
 
+//extension StyledStringConvertible where Self: StringConvertible {
+//  public var toString: String {
+//    self.toString
+//    //    self.toStyledString().styledString.toString
+//  }
+//}
+
+//extension StyledStringConvertible where Self: StringConvertible {
+//  public var value: Value { return self.toString }
+//}
+//extension String: StyledStringConvertible {
+//  public func toDisplayString() -> StyledString {
+//    .init(self)
+//  }
+//}
+//
+//extension Int: StyledStringConvertible {
+//  public func toDisplayString() -> StyledString {
+//    .init(self.toString)
+//  }
+//}
+//
+//extension Int: StyledStringConvertible {
+//  public func toDisplayString() -> StyledString {
+//    .init(self.toString)
+//  }
+//}

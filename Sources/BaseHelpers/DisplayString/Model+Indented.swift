@@ -9,27 +9,25 @@ import Foundation
 
 public struct Indented {
   public let title: String?
-  public let prefix: String
+  public let indentString: String
   public let content: [BuilderElement]
-  
+
   public init(
     _ title: String? = nil,
-    prefix: String = "  | ",
+    prefix indentString: String = "  | ",
     @DisplayStringBuilder _ content: () -> [BuilderElement]
   ) {
     self.title = title
-    self.prefix = prefix
+    self.indentString = indentString
     self.content = content()
   }
 }
 
 extension Indented: StyledStringConvertible {
-  
-  public func toDisplayString() -> StyledString {
-    
-    
-    let indentedItems = content.map { prefix + $0.string }
-      .joined(separator: "\n")
+
+  public func toStyledString() -> StyledString {
+
+    let indentedItems = content.map { indentString + $0 }
     guard let title else {
       return indentedItems
     }

@@ -15,7 +15,8 @@ import Foundation
 public struct StyledString {
   //  private var storage: StyledStringStorage
   public var styledString: AttributedString
-  public lazy var plainString: String = { styledString.toString }()
+  public var plainString: String { styledString.toString }
+  //  public lazy var plainString: String = { styledString.toString }()
 
   public init(_ attributed: AttributedString) { styledString = attributed }
 
@@ -82,6 +83,33 @@ extension StyledString {
   public static func + (lhs: String, rhs: StyledString) -> StyledString {
     StyledString(AttributedString(lhs) + rhs.styledString)
   }
+}
+
+extension Array where Element == StyledString {
+  
+  public func joined(_ separator: String = "") -> StyledString {
+    guard !isEmpty else { return StyledString(AttributedString()) }
+    
+    /// Pre-create separator once to avoid repeated initialisation
+    let separatorAttr = AttributedString(separator)
+    
+    /// Use reduce(into:) for in-place mutation (no copies)
+    return dropFirst().reduce(into: self[0]) { result, element in
+      result.append(separatorAttr)
+      result.append(element)
+    }
+  }
+}
+
+extension StyledString {
+  
+//  public func append(_ other: StyledString) -> Self {
+//    self + other
+//  }
+//  
+//  public func append(_ attributed: AttributedString) -> Self {
+//    self + attributed
+//  }
 }
 
 //extension StyledString: StyledStringConvertible {

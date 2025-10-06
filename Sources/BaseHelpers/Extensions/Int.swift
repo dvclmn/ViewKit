@@ -47,14 +47,6 @@ extension Int {
     self % 2 == 0
   }
 
-  public var toString: String {
-    String(self)
-  }
-  //
-  //  public var displayString: String {
-  //    String(self)
-  //  }
-
   public var asCGFloat: CGFloat {
     CGFloat(self)
   }
