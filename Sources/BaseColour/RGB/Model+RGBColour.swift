@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable, ColourModel {
   public let id: UUID
-  public var red: UnitInterval
-  public var green: UnitInterval
-  public var blue: UnitInterval
-  public var alpha: UnitInterval
+  public var red: Double
+  public var green: Double
+  public var blue: Double
+  public var alpha: Double
 
   public var name: String?
 
@@ -23,28 +24,34 @@ public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable, C
     alpha: Double = 1.0,
     name: String? = nil
   ) {
-    self.init(
-      unitInterval: red.toUnitInterval,
-      green.toUnitInterval,
-      blue.toUnitInterval,
-      alpha.toUnitInterval,
-      name: name
-    )
-  }
-  public init(
-    unitInterval red: UnitInterval,
-    _ green: UnitInterval,
-    _ blue: UnitInterval,
-    _ alpha: UnitInterval = 1.0,
-    name: String? = nil
-  ) {
     self.id = UUID()
     self.red = red
     self.green = green
     self.blue = blue
     self.alpha = alpha
     self.name = name
+    //    self.init(
+    //      unitInterval: red.toUnitInterval,
+    //      green.toUnitInterval,
+    //      blue.toUnitInterval,
+    //      alpha.toUnitInterval,
+    //      name: name
+    //    )
   }
+  //  public init(
+  //    unitInterval red: Double,
+  //    _ green: Double,
+  //    _ blue: Double,
+  //    _ alpha: Double = 1.0,
+  //    name: String? = nil
+  //  ) {
+  //    self.id = UUID()
+  //    self.red = red
+  //    self.green = green
+  //    self.blue = blue
+  //    self.alpha = alpha
+  //    self.name = name
+  //  }
 
   public init(
     r: Double,
@@ -65,7 +72,7 @@ public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable, C
     self.init(
       resolved: resolved,
       name: name
-//      name: name ?? colour.colourName
+        //      name: name ?? colour.colourName
     )
   }
 

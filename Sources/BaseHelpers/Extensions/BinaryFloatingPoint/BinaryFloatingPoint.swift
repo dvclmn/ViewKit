@@ -29,9 +29,9 @@ extension BinaryFloatingPoint {
     return value < 0 ? value + 1.0 : value
   }
 
-  public var toUnitInterval: UnitInterval { return UnitInterval(Double(self)) }
+//  public var toUnitInterval: Double { return Double(self) }
 
-  public var toUnitIntervalCyclic: UnitIntervalCyclic { return UnitIntervalCyclic(Double(self)) }
+//  public var toUnitIntervalCyclic: UnitIntervalCyclic { return UnitIntervalCyclic(Double(self)) }
 
   /// Map distance to a scaled distance using atan
   public func scaledDistance(

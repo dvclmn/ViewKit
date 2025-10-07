@@ -71,13 +71,13 @@ public enum HSVComponent: String, ColourComponent {
         $0.hue = UnitIntervalCyclic($1)
       }
       case .saturation: {
-        $0.saturation = UnitInterval($1)
+        $0.saturation = Double($1)
       }
       case .brightness: {
-        $0.brightness = UnitInterval($1)
+        $0.brightness = Double($1)
       }
       case .alpha: {
-        $0.alpha = UnitInterval($1)
+        $0.alpha = Double($1)
       }
     }
   }

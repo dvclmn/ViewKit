@@ -69,7 +69,7 @@ let package = Package(
         .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
-    .target(name: "BaseColour"),
+    .target(name: "BaseColour", dependencies: [.sharedHelpers]),
     .target(name: "ColourExtract"),
     .target(name: "CurveFunctions"),
     .target(name: "GridCanvas", dependencies: [.baseHelpers]),

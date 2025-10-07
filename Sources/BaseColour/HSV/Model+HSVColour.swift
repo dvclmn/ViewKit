@@ -17,9 +17,9 @@ import SwiftUI
 ///   based on human perception.
 public struct HSVColour: Equatable, Sendable, ColourModel {
   public var hue: UnitIntervalCyclic
-  public var saturation: UnitInterval
-  public var brightness: UnitInterval
-  public var alpha: UnitInterval
+  public var saturation: Double
+  public var brightness: Double
+  public var alpha: Double
   public var name: String?
 
   public var swiftUIColour: Color {
@@ -49,9 +49,9 @@ public struct HSVColour: Equatable, Sendable, ColourModel {
 
   public init(
     hueCyclic: UnitIntervalCyclic,
-    saturation: UnitInterval,
-    brightness: UnitInterval,
-    alpha: UnitInterval = 1.0,
+    saturation: Double,
+    brightness: Double,
+    alpha: Double = 1.0,
     name: String? = nil
   ) {
 

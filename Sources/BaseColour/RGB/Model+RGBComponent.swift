@@ -27,10 +27,10 @@ public enum RGBComponent: String, ColourComponent {
   
   public var set: (inout RGBColour, Double) -> Void {
     switch self {
-      case .red: { $0.red = UnitInterval($1) }
-      case .green: { $0.green = UnitInterval($1) }
-      case .blue: { $0.blue = UnitInterval($1) }
-      case .alpha: { $0.alpha = UnitInterval($1) }
+      case .red: { $0.red = Double($1) }
+      case .green: { $0.green = Double($1) }
+      case .blue: { $0.blue = Double($1) }
+      case .alpha: { $0.alpha = Double($1) }
     }
   }
   
@@ -55,10 +55,10 @@ public enum RGBComponent: String, ColourComponent {
   
   public func sliderTrackGradient(colour: RGBColour) -> LinearGradient {
     func makeColour(
-      r: UnitInterval,
-      g: UnitInterval,
-      b: UnitInterval,
-      opacity: UnitInterval = 1.0
+      r: Double,
+      g: Double,
+      b: Double,
+      opacity: Double = 1.0
 //      r: Double,
 //      g: Double,
 //      b: Double,
