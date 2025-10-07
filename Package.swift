@@ -154,3 +154,37 @@ extension String {
     return "Sources/BaseMacrosSources/MacroDeclarations/" + macroName
   }
 }
+
+/// List of common modules for convenience
+enum BaseModule {
+  case baseHelpers
+  case macros
+  case networking
+  case baseUI
+  // case canvasKit
+  case colourKit
+  //  case componentTools
+  case curveKit
+  case gestureKit
+  case graphicsKit
+  // case motionKit
+  // case popupKit
+  // case searchKit
+  case sharedHelpers
+  // case waveKit
+  // case wrecktangle
+
+  var targetName: String {
+    switch self {
+      case .baseHelpers: "BaseHelpers"
+      case .macros: "BaseMacrosSources"
+      case .networking: "BaseNetworking"
+      case .baseUI: "BaseUI"
+      case .colourKit: "ColourKit"
+      case .curveKit: "CurveKit"
+      case .gestureKit: "GestureKit"
+      case .graphicsKit: "GraphicsKit"
+      case .sharedHelpers: "SharedHelpers"
+    }
+  }
+}
