@@ -61,7 +61,7 @@ let package = Package(
         "BaseColour",
         .product(name: "NSUI", package: "nsui"),
       ],
-//      resources: [.process("Assets.xcassets")],
+      //      resources: [.process("Assets.xcassets")],
     ),
     .target(
       name: "BaseNetworking",
@@ -77,12 +77,14 @@ let package = Package(
         "CurveFunctions",
       ],
     ),
-    .target(name: "ComponentTools", dependencies: [
-      .baseHelpers,
-      "BaseColour",
-      .sharedHelpers,
-      .baseMacros,
-    ]),
+    .target(
+      name: "ComponentTools",
+      dependencies: [
+        .baseHelpers,
+        "BaseColour",
+        .sharedHelpers,
+        //        .baseMacros,
+      ]),
     .target(name: "ColourExtract"),
     .target(name: "CurveFunctions"),
     .target(name: "GridCanvas", dependencies: [.baseHelpers]),
