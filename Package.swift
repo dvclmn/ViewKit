@@ -10,9 +10,22 @@ let package = Package(
     .macOS("14.0"),
   ],
   products: [
+    // MARK: - Helpers
     .library(name: "BaseHelpers", targets: ["BaseHelpers"]),
+    .library(name: "BaseColour", targets: ["BaseColour"]),
+    .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
+    .library(name: "ColourExtract", targets: ["ColourExtract"]),
+    .library(name: "CurveFunctions", targets: ["CurveFunctions"]),
+    .library(name: "GridCanvas", targets: ["GridCanvas"]),
+    .library(name: "LilyPad", targets: ["LilyPad"]),
+
+    /// Common resources shared between `BaseHelpers` and `BaseMacros`
+    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
+    .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
+
+    // MARK: - Macros
     .library(
-      name: "BaseMacrosLibrary",
+      name: "BaseMacros",
       targets: [
         "AssociatedValues",
         "CaseDetection",
@@ -25,15 +38,6 @@ let package = Package(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
     ),
-    .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
-    .library(name: "ColourExtract", targets: ["ColourExtract"]),
-    .library(name: "CurveFunctions", targets: ["CurveFunctions"]),
-    .library(name: "GridCanvas", targets: ["GridCanvas"]),
-    .library(name: "LilyPad", targets: ["LilyPad"]),
-
-    /// Common resources shared between `BaseHelpers` and `BaseMacros`
-    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
-    .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
   ],
 
   // MARK: - Dependancies
@@ -45,6 +49,34 @@ let package = Package(
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
   ],
   targets: [
+
+    // MARK: - Other targets
+    .target(
+      name: "BaseHelpers",
+      dependencies: [
+        .sharedHelpers,
+        .baseMacros,
+        "CurveFunctions",
+        "BaseColour",
+        .product(name: "NSUI", package: "nsui"),
+      ],
+      resources: [.process("Assets.xcassets")],
+    ),
+    .target(
+      name: "BaseNetworking",
+      dependencies: [
+        .baseHelpers,
+        .product(name: "KeychainSwift", package: "keychain-swift"),
+      ],
+    ),
+    .target(name: "BaseColour"),
+    .target(name: "ColourExtract"),
+    .target(name: "CurveFunctions"),
+    .target(name: "GridCanvas", dependencies: [.baseHelpers]),
+    .target(name: "LilyPad", dependencies: [.baseHelpers]),
+    .target(name: "SharedHelpers"),
+    .target(name: "Wrecktangle"),
+
     // MARK: - BaseMacro targets
     .macro(
       name: "BaseMacros",
@@ -93,31 +125,6 @@ let package = Package(
       ],
       path: "Sources/BaseMacrosSources/BaseMacrosClient",
     ),
-
-    // MARK: - Other targets
-    .target(
-      name: "BaseHelpers",
-      dependencies: [
-        .sharedHelpers,
-        .baseMacros,
-        "CurveFunctions",
-        .product(name: "NSUI", package: "nsui"),
-      ],
-      resources: [.process("Assets.xcassets")],
-    ),
-    .target(
-      name: "BaseNetworking",
-      dependencies: [
-        .baseHelpers,
-        .product(name: "KeychainSwift", package: "keychain-swift"),
-      ],
-    ),
-    .target(name: "ColourExtract"),
-    .target(name: "CurveFunctions"),
-    .target(name: "GridCanvas", dependencies: [.baseHelpers]),
-    .target(name: "LilyPad", dependencies: [.baseHelpers]),
-    .target(name: "SharedHelpers"),
-    .target(name: "Wrecktangle"),
 
   ],
 )

@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreGraphics
+import
 
 public struct PatternConfiguration: Codable, Equatable, Hashable, Sendable {
   
