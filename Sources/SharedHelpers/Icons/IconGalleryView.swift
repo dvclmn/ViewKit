@@ -9,7 +9,7 @@ import SwiftUI
 
 enum IconType {
   case native
-  case custom
+//  case custom
 }
 
 public struct IconGalleryView: View {
@@ -18,7 +18,7 @@ public struct IconGalleryView: View {
   //  @State private var thumbnailSize: IconThumbnailSize = .wide
 
   let columns: [GridItem] = [GridItem(.flexible())]
-  @State private var iconType: IconType = .custom
+  @State private var iconType: IconType = .native
 
   let altIconSquareSize: CGFloat = 24
 
@@ -68,8 +68,8 @@ extension IconGalleryView {
         case .native:
           Image(systemName: iconString)
 
-        case .custom:
-          Image(ImageResource(name: iconString, bundle: .module))
+//        case .custom:
+//          Image(ImageResource(name: iconString, bundle: .module))
 
       }
     }
@@ -109,8 +109,8 @@ extension IconGalleryView {
     switch iconType {
       case .native:
         return Icons.allCases
-      case .custom:
-        return CustomSymbol.allCases
+//      case .custom:
+//        return CustomSymbol.allCases
     }
   }
 }

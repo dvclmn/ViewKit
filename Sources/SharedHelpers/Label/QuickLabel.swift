@@ -51,7 +51,7 @@ extension QuickLabel {
     icon: IconLiteral? = nil,
     role: Role? = nil
   ) {
-    self.attributedText = text.toAttributed
+    self.attributedText = AttributedString(text)
     self.icon = icon
     self.role = role
   }
@@ -64,7 +64,7 @@ extension QuickLabel {
     role: Role? = nil
   ) {
     self.init(
-      text.toAttributed,
+      AttributedString(text),
       icon: symbolString.map { IconLiteral.symbol($0) },
       role: role
     )
@@ -94,7 +94,7 @@ extension QuickLabel {
 
 extension QuickLabel: ExpressibleByStringLiteral {
   public init(stringLiteral value: String) {
-    self.init(value.toAttributed)
+    self.init(AttributedString(value))
   }
 }
 

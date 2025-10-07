@@ -7,6 +7,7 @@
 
 import Foundation
 
+#warning("This is not working i think at the moment, whilst I figure out dependancy graph woes")
 public enum CustomSymbol: String, Sendable, Codable, IconGalleryViewable {
   case artboard
   case zoom  // search, magnifying glass
