@@ -12,16 +12,19 @@ let package = Package(
   products: [
     // MARK: - Helpers
     .library(name: "BaseHelpers", targets: ["BaseHelpers"]),
-    .library(name: "BaseColour", targets: ["BaseColour"]),
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
-    .library(name: "ComponentTools", targets: ["ComponentTools"]),
-    .library(name: "ColourExtract", targets: ["ColourExtract"]),
-    .library(name: "CurveFunctions", targets: ["CurveFunctions"]),
-    .library(name: "GridCanvas", targets: ["GridCanvas"]),
-    .library(name: "LilyPad", targets: ["LilyPad"]),
-
-    /// Common resources shared between `BaseHelpers` and `BaseMacros`
+    .library(name: "BaseUI", targets: ["BaseUI"]),
+    .library(name: "CanvasKit", targets: ["CanvasKit"]),
+    .library(name: "ColourKit", targets: ["ColourKit"]),
+    //    .library(name: "ComponentTools", targets: ["ComponentTools"]),
+    .library(name: "CurveKit", targets: ["CurveKit"]),
+    .library(name: "GestureKit", targets: ["GestureKit"]),
+    .library(name: "GraphicsKit", targets: ["GraphicsKit"]),
+    .library(name: "MotionKit", targets: ["MotionKit"]),
+    .library(name: "PopupKit", targets: ["PopupKit"]),
+    .library(name: "SearchKit", targets: ["SearchKit"]),
     .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
+    .library(name: "WaveKit", targets: ["WaveKit"]),
     .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
 
     // MARK: - Macros
@@ -48,17 +51,24 @@ let package = Package(
     .package(url: "https://github.com/mattmassicotte/nsui", from: "1.3.0"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
+    .package(url: "https://github.com/ukushu/Ifrit", from: "3.0.0"),
+    .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
+    .package(url: "https://github.com/kean/Nuke", from: "12.8.0"),
   ],
-  targets: [
 
-    // MARK: - Other targets
+  // MARK: - Targets
+  
+  
+  
+  
+  targets: [
     .target(
       name: "BaseHelpers",
       dependencies: [
-        .sharedHelpers,
-        .baseMacros,
-        "CurveFunctions",
-        "BaseColour",
+        .targetDep(.sharedHelpers),
+        .targetDep(.macros),
+        .targetDep(.curveKit),
+        .targetDep(.colourKit),
         .product(name: "NSUI", package: "nsui"),
       ],
       //      resources: [.process("Assets.xcassets")],
@@ -66,29 +76,27 @@ let package = Package(
     .target(
       name: "BaseNetworking",
       dependencies: [
-        .baseHelpers,
+        .targetDep(.baseHelpers),
         .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
     .target(
-      name: "BaseColour",
+      name: "BaseUI",
       dependencies: [
-        .sharedHelpers,
-        "CurveFunctions",
+        .targetDep(.baseHelpers),
+        .targetDep(.sharedHelpers),
+        .targetDep(.curveKit),
+        .sharing
       ],
     ),
     .target(
-      name: "ComponentTools",
+      name: "ColourKit",
       dependencies: [
-        .baseHelpers,
-        "BaseColour",
-        .sharedHelpers,
-        //        .baseMacros,
-      ]),
-    .target(name: "ColourExtract"),
-    .target(name: "CurveFunctions"),
-    .target(name: "GridCanvas", dependencies: [.baseHelpers]),
-    .target(name: "LilyPad", dependencies: [.baseHelpers]),
+        .targetDep(.sharedHelpers),
+        .targetDep(.curveKit),
+      ],
+    ),
+
     .target(name: "SharedHelpers"),
     .target(name: "Wrecktangle"),
 
@@ -101,7 +109,7 @@ let package = Package(
         .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
-      path: "Sources/BaseMacrosSources/MacroExpansions",
+      path: "Sources/BaseMacros/MacroExpansions",
     ),
     .target(
       name: "AssociatedValues",
@@ -138,20 +146,24 @@ let package = Package(
         "Persistable",
         "SetOfOptions",
       ],
-      path: "Sources/BaseMacrosSources/BaseMacrosClient",
+      path: "Sources/BaseMacros/BaseMacrosClient",
     ),
 
   ],
 )
 // MARK: - Convenient type-safe extensions
 extension Target.Dependency {
-  static var baseHelpers: Self { "BaseHelpers" }
-  static var sharedHelpers: Self { "SharedHelpers" }
-  static var baseMacros: Self { "BaseMacrosGuts" }
+  static func targetDep(_ target: BaseModule) -> Self {
+    target.targetName
+    //    .product(name: target.targetName, package: "BaseHelpers")
+  }
+  static var sharing: Self {
+    .product(name: "Sharing", package: "swift-sharing")
+  }
 }
 extension String {
   static func macroDecl(_ macroName: String) -> String {
-    return "Sources/BaseMacrosSources/MacroDeclarations/" + macroName
+    return "Sources/BaseMacros/MacroDeclarations/" + macroName
   }
 }
 
@@ -177,7 +189,7 @@ enum BaseModule {
   var targetName: String {
     switch self {
       case .baseHelpers: "BaseHelpers"
-      case .macros: "BaseMacrosSources"
+      case .macros: "BaseMacros"  // Guts?
       case .networking: "BaseNetworking"
       case .baseUI: "BaseUI"
       case .colourKit: "ColourKit"
