@@ -7,7 +7,7 @@
 
 import BaseHelpers
 import SharedHelpers
-import BaseColour
+import ColourKit
 import SwiftUI
 
 public struct TextTag: View {

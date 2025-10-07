@@ -7,6 +7,7 @@
 
 //import BaseHelpers
 import SwiftUI
+import VectorKit
 
 public struct LineGraphView: View {
   @Environment(\.self) private var envSelf
@@ -17,6 +18,7 @@ public struct LineGraphView: View {
   let barSpacing: CGFloat
   let barWidth: CGFloat
   let colour: Color
+  let contrastColour: Color
 //  let colour: CodableColour
   public var body: some View {
 
@@ -46,7 +48,8 @@ public struct LineGraphView: View {
       }
 
       context.stroke(
-        path, with: .color(colour.contrastColour(strength: .moderate, environment: envSelf).colour), lineWidth: 2)
+        path, with: .color(contrastColour), lineWidth: 2)
+//        path, with: .color(colour.contrastColour(strength: .moderate, environment: envSelf).colour), lineWidth: 2)
     }
   }
 }

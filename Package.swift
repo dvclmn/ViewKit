@@ -91,6 +91,7 @@ let package = Package(
       ],
     ),
     .target(name: "CanvasKit"),
+    
     .target(
       name: "ColourKit",
       dependencies: [
@@ -102,7 +103,8 @@ let package = Package(
     .target(
       name: "CurveKit",
       dependencies: [
-        .targetDep(.colourKit)
+//        .targetDep(.colourKit),
+        .targetDep(.vectorKit),
       ]
     ),
     .target(name: "GestureKit"),
@@ -115,7 +117,7 @@ let package = Package(
         .product(name: "IfritStatic", package: "Ifrit")
       ]),
     .target(name: "SharedHelpers"),
-    .target(name: "WaveKit"),
+    .target(name: "WaveKit", dependencies: [.targetDep(.curveKit)]),
     .target(name: "VectorKit"),
     .target(name: "Wrecktangle"),
 

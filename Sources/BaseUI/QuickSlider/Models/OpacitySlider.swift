@@ -8,7 +8,7 @@
 import BaseHelpers
 import SwiftUI
 import SharedHelpers
-import BaseColour
+import ColourKit
 
 extension Image {
   @MainActor

@@ -8,7 +8,7 @@
 //#if canImport(AppKit)
 
 import SwiftUI
-import BaseColour
+import ColourKit
 
 public struct PatternPreset: Sendable {
   let style: PatternStyle
