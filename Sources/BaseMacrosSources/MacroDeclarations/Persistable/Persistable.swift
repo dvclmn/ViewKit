@@ -5,7 +5,15 @@
 @attached(member, names: named(CodingKeys), named(init(from:)), named(encode(to:)), named(init))
 
 /// Handles `RawRepresentable` conformance
-@attached(extension, conformances: RawRepresentable, Codable, names: named(init(rawValue:)), named(rawValue), named(init(decoder:)), named(decoder))
+@attached(
+  extension,
+  conformances: RawRepresentable,
+  Codable,
+  names: named(init(rawValue:)),
+  named(rawValue),
+  named(init(decoder:)),
+  named(decoder)
+)
 
 public macro Persistable() = #externalMacro(
   /// Important: `module` corresponds to `targets: [.macro(name: "ExampleNameMacros"...)]`

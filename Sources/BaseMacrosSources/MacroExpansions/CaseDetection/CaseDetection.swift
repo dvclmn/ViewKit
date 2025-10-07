@@ -30,10 +30,11 @@ public enum CaseDetectionMacro: MemberMacro {
     /// Dig out the access control keyword we need.
     let access = decl.modifiers.first(where: \.isPublicAccessLevel)
     let members = decl.memberBlock.members
-    
-    return members
+
+    return
+      members
       .compactMap { $0.decl.as(EnumCaseDeclSyntax.self) }
-      .map { $0.elements.first!.name }
+      .map { $0.elements.first?.name ?? "unknown" }
       .map { ($0, $0.initialUppercased) }
       .map { original, uppercased in
         """
@@ -41,11 +42,13 @@ public enum CaseDetectionMacro: MemberMacro {
           if case .\(raw: original) = self {
             return true
           }
-
           return false
+        }
+
+        \(access)var caseName: String {
+          \(raw: uppercased)
         }
         """
       }
   }
 }
-

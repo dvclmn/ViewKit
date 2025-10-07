@@ -12,8 +12,7 @@ import Foundation
 public struct Indented {
   public let title: String?
   public let indentString: String
-  public let contentElements: [BuilderElement]
-  //  public let content: [StyledString]
+  public let content: [BuilderElement]
 
   public init(
     _ title: String? = nil,
@@ -22,18 +21,8 @@ public struct Indented {
   ) {
     self.title = title
     self.indentString = indentString
-    self.contentElements = content()
+    self.content = content()
   }
-
-  //  public init(
-  //    _ title: String? = nil,
-  //    prefix indentString: String = "  | ",
-  //    @DisplayStringBuilder _ content: () -> [StyledString]
-  //  ) {
-  //    self.title = title
-  //    self.indentString = indentString
-  //    self.content = content()
-  //  }
 }
 
 //extension Indented: StyledStringConvertible {

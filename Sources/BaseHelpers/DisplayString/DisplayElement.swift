@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import CaseDetection
 
+@CaseDetection
 public enum DisplayElement {
   case text(StyledString)
   case indented(title: String?, indent: String, content: [DisplayElement])

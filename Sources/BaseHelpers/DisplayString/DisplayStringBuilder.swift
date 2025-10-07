@@ -14,6 +14,7 @@ public typealias BuilderElement = DisplayElement
 public struct DisplayStringBuilder {
 
   public static func buildBlock(_ components: [BuilderElement]...) -> [BuilderElement] {
+    printPadded("Ran DisplayStringBuilder.buildBlock", )
     components.flatMap { $0 }
   }
 
@@ -32,6 +33,13 @@ public struct DisplayStringBuilder {
   public static func buildArray(_ components: [[BuilderElement]]) -> [BuilderElement] {
     components.flatMap { $0 }
   }
+  
+  private static func debugString(
+    components: [BuilderElement],
+    function: String = #function,
+  ) -> String {
+    let componentName = components.reduce("") { $0 + "\($1.isIndented ? "Indented" : "Plain"))"
+    }
 }
 
 // MARK: - buildExpression overloads
@@ -46,19 +54,9 @@ extension DisplayStringBuilder {
     [expression]
   }
 
-  /// This handles specific types, anything from `String`
-  /// to `AttributedString` to `Indented`
-  //  public static func buildExpression<T: StyledStringConvertible>(_ value: T) -> [StyledString] {
-  //    [value.toStyledString]
-  //  }
-
   public static func buildExpression<T: StyledStringConvertible>(_ value: T) -> [BuilderElement] {
-//    if let value = value as? Indented {
-//      return [.indented(title: value.title, indent: value.indentString, content: value.contentElements)]
-//    }
-//    return
     [.text(value.toStyledString)]
-    
+
   }
 
   public static func buildExpression(_ value: Indented) -> [BuilderElement] {
@@ -66,9 +64,9 @@ extension DisplayStringBuilder {
       .indented(
         title: value.title,
         indent: value.indentString,
-        content: value.contentElements
+        content: value.content
       )
     ]
   }
-  
+
 }

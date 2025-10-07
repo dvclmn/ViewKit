@@ -30,7 +30,8 @@ public struct DisplayString {
 extension DisplayString {
 
   public var plainText: String {
-    components.map(\.toStyledString.plainString).joined(separator: separator)
+    components.map(\.toStyledString.plainString).joined("  \n")
+    //    components.map(\.toStyledString.plainString).joined(separator)
   }
 
   public var output: AttributedString {
@@ -39,21 +40,26 @@ extension DisplayString {
   }
 
   public func markdown(language: String? = nil) -> AttributedString {
-    let string = components.map { element in
-      element.toStyledString.plainString
-    }.joinedLines()
 
-    let markdown = try? AttributedString(
-      markdown: string,
+    //    let string = components.map { element in
+    //      element.toStyledString.plainString
+    //    }.joinedLines()
+
+    var markdown = try? AttributedString(
+      markdown: plainText,
       options: .init(
-        allowsExtendedAttributes: true,
+        allowsExtendedAttributes: false,
         interpretedSyntax: .full,
-        failurePolicy: .returnPartiallyParsedIfPossible,
+        failurePolicy: .throwError,
         languageCode: language,
-        appliesSourcePositionAttributes: true
+        appliesSourcePositionAttributes: false
       ),
       baseURL: nil
     )
+
+    //    markdown?.transformingAttributes(\.presentationIntent) { attr in
+    //      attr.value = Prese
+    //    }
     return markdown ?? output
   }
 }
@@ -62,6 +68,7 @@ extension DisplayString: StyledStringConvertible {
   public var toStyledString: StyledString {
     StyledString(self.output)
   }
+
 }
 
 extension AttributedString {
