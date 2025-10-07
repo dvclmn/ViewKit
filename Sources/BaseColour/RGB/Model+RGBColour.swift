@@ -97,10 +97,10 @@ extension RGBColour {
   public var swiftUIColour: Color {
     Color(
       colourSpace,
-      red: red.value,
-      green: green.value,
-      blue: blue.value,
-      opacity: alpha.value
+      red: red,
+      green: green,
+      blue: blue,
+      opacity: alpha
     )
   }
 

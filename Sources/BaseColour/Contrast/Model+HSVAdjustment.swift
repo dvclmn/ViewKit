@@ -11,12 +11,13 @@ import Foundation
 /// Does not set hsb values to these, but adds to them
 public struct HSVAdjustment: Sendable {
 
-  public var hue: UnitIntervalCyclic?
+  public var hue: Double?
   public var saturation: Double?
   public var brightness: Double?
 
   public init(
-    hueCyclic: UnitIntervalCyclic? = nil,
+    hueCyclic: Double? = nil,
+//    hueCyclic: UnitIntervalCyclic? = nil,
     saturation: Double? = nil,
     brightness: Double? = nil
   ) {
@@ -30,7 +31,11 @@ public struct HSVAdjustment: Sendable {
     saturation: Double? = nil,
     brightness: Double? = nil
   ) {
-    self.init(hueCyclic: hue?.toUnitIntervalCyclic, saturation: saturation, brightness: brightness)
+    self.init(
+      hueCyclic: hue,
+      saturation: saturation,
+      brightness: brightness
+    )
   }
 
   public init(
