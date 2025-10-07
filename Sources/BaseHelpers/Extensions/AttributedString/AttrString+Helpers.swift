@@ -59,28 +59,6 @@ extension AttributedString {
     self.editAttributes(for: matches, transform: transform)
   }
 
-//  public func styled(
-//    matches: [RegexMatch],
-//    attributes: AttributeContainer
-//  ) -> Self {
-//    var new = self
-//    for match in matches {
-//      if let range: Range<AttributedString.Index> = self.range(of: match.output) {
-//        new[range].mergeAttributes(attributes)
-//      }
-//    }
-//    return new
-//  }
-
-//  @discardableResult
-//  public mutating func findRangesAndApplyAttributes(
-//    matching pattern: Regex<Substring>,
-//    attributes: AttributeContainer
-//  ) -> [AttributedRange] {
-//    let matches = findMatches(for: pattern)
-//    return findRangesAndApplyAttributes(for: matches, attributes: attributes)
-//  }
-
   #warning("Find way to write similar code for Single, Double, Triple captures, without redundancy etc")
   //  public func getRange(for pattern: TripleCapture) -> TripleCaptureRange? {
   //

@@ -8,14 +8,14 @@
 #if canImport(AppKit)
 import AppKit
 
-public extension NSMutableAttributedString {
-  
-  @MainActor func setAttributeSet(
+extension NSMutableAttributedString {
+
+  @MainActor public func setAttributeSet(
     _ attributeSet: AttributeSet,
     range: NSRange,
     with typingAttributes: Attributes? = nil
   ) {
-    
+
     if let typingAttributes = typingAttributes {
       setAttributes(attributeSet.attributes, range: range)
       addAttributes(typingAttributes, range: range)

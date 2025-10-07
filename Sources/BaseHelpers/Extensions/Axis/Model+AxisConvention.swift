@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-//public protocol AxisFromConvention {
-//
-//}
-
 /// A mapping between `Dimension` (width / height) and `Axis` (horizontal / vertical).
 ///
 /// Why this exists:
@@ -93,53 +89,4 @@ public enum DimensionToAxisConvention {
         return rect.size.width
     }
   }
-
-  #warning("I'm not convinced that CGPoint or UnitPoint make sense within this concept. Hidden for now.")
-
-  // MARK: - CGPoint
-
-  /// Returns the "horizontal" coordinate from a point, according to the convention.
-  ///
-  /// - `.widthIsHorizontal`: horizontal = `x`
-  /// - `.heightIsHorizontal`: horizontal = `y`
-  //  public func horizontalLength(point: CGPoint) -> CGFloat {
-  //    switch self {
-  //      case .widthIsHorizontal:
-  //        return point.x
-  //      case .heightIsHorizontal:
-  //        return point.y
-  //    }
-  //  }
-
-  /// Returns the "vertical" coordinate from a point, according to the convention.
-  ///
-  /// - `.widthIsHorizontal`: vertical = `y`
-  /// - `.heightIsHorizontal`: vertical = `x`
-  //  public func verticalLength(point: CGPoint) -> CGFloat {
-  //    switch self {
-  //      case .widthIsHorizontal:
-  //        return point.y
-  //      case .heightIsHorizontal:
-  //        return point.x
-  //    }
-  //  }
-
-  // MARK: - UnitPoint
-  //  public func horizontalLength(unitPoint: UnitPoint) -> CGFloat {
-  //    switch self {
-  //      case .widthIsHorizontal:
-  //        return unitPoint.x
-  //      case .heightIsHorizontal:
-  //        return unitPoint.y
-  //    }
-  //  }
-
-  //  public func verticalLength(unitPoint: UnitPoint) -> CGFloat {
-  //    switch self {
-  //      case .widthIsHorizontal:
-  //        return unitPoint.y
-  //      case .heightIsHorizontal:
-  //        return unitPoint.x
-  //    }
-  //  }
 }

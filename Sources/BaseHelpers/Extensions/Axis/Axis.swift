@@ -79,49 +79,19 @@ extension Axis {
         return convention.verticalLength(rect: rect)
     }
   }
-  
+
   /// Returns the sum of the two *opposing* inset lengths, for this axis,
   /// interpreting leading/trailing/top/bottom according to the given convention.
-    public func length(
-      fromInsets edgeInsets: EdgeInsets,
-      convention: DimensionToAxisConvention = .widthIsHorizontal
-    ) -> CGFloat {
-      switch self {
-        case .horizontal:
-          return convention.horizontalLength(edgeInsets: edgeInsets)
-        case .vertical:
-          return convention.verticalLength(edgeInsets: edgeInsets)
-      }
+  public func length(
+    fromInsets edgeInsets: EdgeInsets,
+    convention: DimensionToAxisConvention = .widthIsHorizontal
+  ) -> CGFloat {
+    switch self {
+      case .horizontal:
+        return convention.horizontalLength(edgeInsets: edgeInsets)
+      case .vertical:
+        return convention.verticalLength(edgeInsets: edgeInsets)
     }
-
-  /// Returns the coordinate for this axis from a `CGPoint`,
-  /// interpreting x/y according to the given convention.
-  //  public func length(
-  //    from point: CGPoint,
-  //    convention: DimensionToAxisConvention = .widthIsHorizontal
-  //  ) -> CGFloat {
-  //    switch self {
-  //      case .horizontal:
-  //        return convention.horizontalLength(point: point)
-  //      case .vertical:
-  //        return convention.verticalLength(point: point)
-  //    }
-  //  }
-
-
-
-  /// Returns the total inset length for this axis from `UnitPoint`,
-  /// interpreting x/y according to the given convention.
-  //  public func length(
-  //    from unitPoint: UnitPoint,
-  //    convention: DimensionToAxisConvention = .widthIsHorizontal
-  //  ) -> CGFloat {
-  //    switch self {
-  //      case .horizontal:
-  //        return convention.horizontalLength(unitPoint: unitPoint)
-  //      case .vertical:
-  //        return convention.verticalLength(unitPoint: unitPoint)
-  //    }
-  //  }
+  }
 
 }
