@@ -1,0 +1,57 @@
+//
+//  SmoothMaskModifier.swift
+//  BaseComponents
+//
+//  Created by Dave Coleman on 8/9/2025.
+//
+
+import BaseHelpers
+import CurveFunctions
+import SharedHelpers
+//import SmoothStepGradient
+import SwiftUI
+
+public struct SmoothMaskModifier: ViewModifier {
+
+  let start: UnitPoint
+  let end: UnitPoint
+  let curve: UnitCurve
+  let isEnabled: Bool
+
+  public func body(content: Content) -> some View {
+    content
+      .mask {
+        ZStack {
+          Color.black
+
+          SmoothLinearGradient(
+            from: Color.black,
+            to: Color.clear,
+            startPoint: start,
+            endPoint: end,
+            curve: curve
+          )
+          .opacity(isEnabled ? 1 : 0)
+
+        }
+        .allowsHitTesting(false)
+      }  // END mask
+  }
+}
+extension View {
+  public func smoothMask(
+    from start: UnitPoint,
+    to end: UnitPoint,
+    curve: UnitCurve = .easeInOut,
+    isEnabled: Bool = true,
+  ) -> some View {
+    self.modifier(
+      SmoothMaskModifier(
+        start: start,
+        end: end,
+        curve: curve,
+        isEnabled: isEnabled,
+      )
+    )
+  }
+}
