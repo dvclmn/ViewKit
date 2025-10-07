@@ -112,7 +112,8 @@ extension GraphicsContext {
         dx: 0, dy: (labelHeightUnZoomed * 1.2) * debugTextPosition.multiplierForYPosition),
       size: labelSize
     )
-    self.fill(labelRect.path, with: .color(Swatch.plumGrey40.swiftUIColour))
+    self.fill(labelRect.path, with: .color(Color.gray))
+//    self.fill(labelRect.path, with: .color(Swatch.plumGrey40.swiftUIColour))
     self.draw(text, at: labelRect.midpoint)
 
     /// Draw dot at provided point, if needed

@@ -4,12 +4,12 @@
 input_dir: Sources/BaseHelpers/
 output_dir: Sources
 ##   - To know which params are supported for a template, use `swiftgen template doc xcassets swift5` to open the template documentation on GitHub.
-colors:
+xcassets:
   ## The file(s)/dir(s) to parse (e.g. the path to your assets catalog for the xcassets command
   inputs:
-    - Assets.xcassets/swatch
+    - Assets.xcassets
   outputs:
-    - templatePath: colors-swift5.stencil
+    - templatePath: xcassets-swift5.stencil
       params:
         publicAccess: true
       output: BaseColour/Swatch+Generated.swift

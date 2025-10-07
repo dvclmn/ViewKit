@@ -9,7 +9,7 @@ import SwiftUI
 
 extension Swatch {
 
-  public var id: String { rawValue }
+//  public var id: String { rawValue }
   
   public func toCodableColour(_ environment: EnvironmentValues?) -> CodableColour {
     return CodableColour(
@@ -28,7 +28,9 @@ extension Swatch {
   }
 
   public var swiftUIColour: Color {
-    Color("swatch/\(rawValue)", bundle: .module)
+    #warning("Temporarily unavailable")
+    Color.pink
+//    Color("swatch/\(rawValue)", bundle: .module)
   }
 
   public var type: SwatchType {

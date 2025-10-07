@@ -18,10 +18,10 @@ public enum RGBComponent: String, ColourComponent {
 
   public var get: (RGBColour) -> Double {
     switch self {
-      case .red: { $0.red.value }
-      case .green: { $0.green.value }
-      case .blue: { $0.blue.value }
-      case .alpha: { $0.alpha.value }
+      case .red: { $0.red }
+      case .green: { $0.green }
+      case .blue: { $0.blue }
+      case .alpha: { $0.alpha }
     }
   }
   
@@ -64,7 +64,7 @@ public enum RGBComponent: String, ColourComponent {
 //      b: Double,
 //      opacity: Double = 1.0
     ) -> Color {
-      Color(red: r.value, green: g.value, blue: b.value).opacity(opacity.value)
+      Color(red: r, green: g, blue: b).opacity(opacity)
     }
     
     let (start, end): (Color, Color)
