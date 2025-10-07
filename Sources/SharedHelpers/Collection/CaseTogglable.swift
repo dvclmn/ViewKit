@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 29/9/2025.
 //
 
+import Foundation
+
 public protocol CaseTogglable: CaseIterable, CaseCyclable {
   mutating func toggle()
 }

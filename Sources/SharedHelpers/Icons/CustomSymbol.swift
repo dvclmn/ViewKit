@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 31/8/2025.
 //
 
+import Foundation
+
 public enum CustomSymbol: String, Sendable, Codable, IconGalleryViewable {
   case artboard
   case zoom  // search, magnifying glass
