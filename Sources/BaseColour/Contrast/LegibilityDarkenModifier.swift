@@ -22,7 +22,7 @@ struct LegibilityDarkenAdjuster {
   ) -> (h: CGFloat, s: CGFloat, v: CGFloat) {
     let newSaturation: CGFloat = (s * (1.0 + 0.2 * strength)).clamped(to: 0...1)
     let newBrightness: CGFloat = (v + -0.1 * strength).clamped(to: 0...1)
-    let newHue: CGFloat = (h + (hueShift / 360)).truncatingRemainder(dividingBy: 1).toUnitIntervalCyclic.value
+    let newHue: CGFloat = (h + (hueShift / 360)).truncatingRemainder(dividingBy: 1)
     //    return HSVAdjustment(h: newHue, s: newSaturation, v: newBrightness)
     return (newHue, newSaturation, newBrightness)
   }
@@ -63,7 +63,7 @@ public struct LegibilityDarkenModifier: ViewModifier {
 extension View {
   public func legibilityDarken(
     base: Color,
-    tint: Color = Color.blue.opacityMid,
+    tint: Color = Color.blue.opacity(0.4),
     strength: CGFloat = 0.5,
     hueShift: CGFloat = 0
   ) -> some View {
@@ -77,72 +77,73 @@ extension View {
   }
 }
 
-// MARK: - Shape Style
-public struct LegibilityDarkenStyle: ShapeStyle {
-  let base: Color
-  let tint: Color
-  let strength: CGFloat
-  let hueShift: CGFloat
-
-  public func resolve(in environment: EnvironmentValues) -> Color {
-    /// Get the resolved color in the current environment
-    let resolved = tint.resolve(in: environment)
-    /// Convert to HSV using your project's helper
-    var hsv = HSVColour(resolved: resolved, name: nil)
-
-    /// Adjust values
-    let adjusted = LegibilityDarkenAdjuster.adjust(
-      hue: hsv.hue.value,
-      saturation: hsv.saturation.value,
-      brightness: hsv.brightness.value,
-      strength: strength,
-      hueShift: hueShift
-    )
-    hsv.saturation = adjusted.s.toUnitInterval
-    hsv.brightness = adjusted.v.toUnitInterval
-    hsv.hue = adjusted.h.toUnitIntervalCyclic
-
-    /// Make a new Color from HSV
-    let adjustedColor = hsv.swiftUIColour
-
-    let mixed = base.mixCompatible(with: adjustedColor, by: 0.5)
-    return mixed
-  }
-}
-
-public struct QuickMixStyle: ShapeStyle {
-  let base: Color
-  let tint: Color
-  let strength: CGFloat
-  //  let hueShift: CGFloat
-
-  public func resolve(in environment: EnvironmentValues) -> Color {
-
-    return base.mixCompatible(with: tint, by: strength)
-    //    /// Get the resolved color in the current environment
-    //    let resolved = tint.resolve(in: environment)
-    //    /// Convert to HSV using your project's helper
-    //    var hsv = HSVColour(resolved: resolved, name: nil)
-    //
-    //    /// Adjust values
-    //    let adjusted = LegibilityDarkenAdjuster.adjust(
-    //      hue: hsv.hue.value,
-    //      saturation: hsv.saturation.value,
-    //      brightness: hsv.brightness.value,
-    //      strength: strength,
-    //      hueShift: hueShift
-    //    )
-    //    hsv.saturation = adjusted.s.toUnitInterval
-    //    hsv.brightness = adjusted.v.toUnitInterval
-    //    hsv.hue = adjusted.h.toUnitIntervalCyclic
-    //
-    //    /// Make a new Color from HSV
-    //    let adjustedColor = hsv.swiftUIColour
-    //
-    //    let mixed = base.mixCompatible(with: adjustedColor, by: 0.5)
-    //    return mixed
-  }
-}
+//// MARK: - Shape Style
+//public struct LegibilityDarkenStyle: ShapeStyle {
+//  let base: Color
+//  let tint: Color
+//  let strength: CGFloat
+//  let hueShift: CGFloat
+//
+//  public func resolve(in environment: EnvironmentValues) -> Color {
+//    /// Get the resolved color in the current environment
+//    let resolved = tint.resolve(in: environment)
+//    /// Convert to HSV using your project's helper
+//    var hsv = HSVColour(resolved: resolved, name: nil)
+//
+//    /// Adjust values
+//    let adjusted = LegibilityDarkenAdjuster.adjust(
+//      hue: hsv.hue.value,
+//      saturation: hsv.saturation,
+//      brightness: hsv.brightness,
+//      strength: strength,
+//      hueShift: hueShift
+//    )
+//    hsv.saturation = adjusted.s.toUnitInterval
+//    hsv.brightness = adjusted.v.toUnitInterval
+//    hsv.hue = adjusted.h.toUnitIntervalCyclic
+//
+//    /// Make a new Color from HSV
+//    let adjustedColor = hsv.swiftUIColour
+//
+//    let mixed = base.mixCompatible(with: adjustedColor, by: 0.5)
+////    let mixed = base.mixCompatible(with: adjustedColor, by: 0.5)
+//    return mixed
+//  }
+//}
+//
+//public struct QuickMixStyle: ShapeStyle {
+//  let base: Color
+//  let tint: Color
+//  let strength: CGFloat
+//  //  let hueShift: CGFloat
+//
+//  public func resolve(in environment: EnvironmentValues) -> Color {
+//
+//    return base.mixCompatible(with: tint, by: strength)
+//    //    /// Get the resolved color in the current environment
+//    //    let resolved = tint.resolve(in: environment)
+//    //    /// Convert to HSV using your project's helper
+//    //    var hsv = HSVColour(resolved: resolved, name: nil)
+//    //
+//    //    /// Adjust values
+//    //    let adjusted = LegibilityDarkenAdjuster.adjust(
+//    //      hue: hsv.hue.value,
+//    //      saturation: hsv.saturation.value,
+//    //      brightness: hsv.brightness.value,
+//    //      strength: strength,
+//    //      hueShift: hueShift
+//    //    )
+//    //    hsv.saturation = adjusted.s.toUnitInterval
+//    //    hsv.brightness = adjusted.v.toUnitInterval
+//    //    hsv.hue = adjusted.h.toUnitIntervalCyclic
+//    //
+//    //    /// Make a new Color from HSV
+//    //    let adjustedColor = hsv.swiftUIColour
+//    //
+//    //    let mixed = base.mixCompatible(with: adjustedColor, by: 0.5)
+//    //    return mixed
+//  }
+//}
 
 /// `self` as Base colour
 //extension Color {
@@ -161,34 +162,34 @@ public struct QuickMixStyle: ShapeStyle {
 //  }
 //}
 
-extension ShapeStyle where Self == Color {
-
-  public static func quickMix(
-    base: Color,
-    tint: Color,
-    strength: CGFloat = 0.5,
-  ) -> some ShapeStyle {
-    QuickMixStyle(
-      base: base,
-      tint: tint,
-      strength: strength,
-    )
-  }
-
-  public static func legibilityDarken(
-    base: Color = .black.opacityMid,
-    tint: Color = .blue.opacityLow,
-    strength: CGFloat = 0.5,
-    hueShift: CGFloat = 0
-  ) -> some ShapeStyle {
-    LegibilityDarkenStyle(
-      base: base,
-      tint: tint,
-      strength: strength,
-      hueShift: hueShift
-    )
-
-    //    AnyShapeStyle(
-    //    )
-  }
-}
+//extension ShapeStyle where Self == Color {
+//
+//  public static func quickMix(
+//    base: Color,
+//    tint: Color,
+//    strength: CGFloat = 0.5,
+//  ) -> some ShapeStyle {
+//    QuickMixStyle(
+//      base: base,
+//      tint: tint,
+//      strength: strength,
+//    )
+//  }
+//
+//  public static func legibilityDarken(
+//    base: Color = .black.opacityMid,
+//    tint: Color = .blue.opacityLow,
+//    strength: CGFloat = 0.5,
+//    hueShift: CGFloat = 0
+//  ) -> some ShapeStyle {
+//    LegibilityDarkenStyle(
+//      base: base,
+//      tint: tint,
+//      strength: strength,
+//      hueShift: hueShift
+//    )
+//
+//    //    AnyShapeStyle(
+//    //    )
+//  }
+//}

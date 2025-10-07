@@ -16,7 +16,7 @@ import SwiftUI
 /// -  Luminance depends on how the three channels contribute
 ///   based on human perception.
 public struct HSVColour: Equatable, Sendable, ColourModel {
-  public var hue: UnitIntervalCyclic
+  public var hue: Double
   public var saturation: Double
   public var brightness: Double
   public var alpha: Double
@@ -24,10 +24,10 @@ public struct HSVColour: Equatable, Sendable, ColourModel {
 
   public var swiftUIColour: Color {
     Color(
-      hue: hue.value,
-      saturation: saturation.value,
-      brightness: brightness.value,
-      opacity: alpha.value
+      hue: hue,
+      saturation: saturation,
+      brightness: brightness,
+      opacity: alpha
     )
   }
 
@@ -38,24 +38,8 @@ public struct HSVColour: Equatable, Sendable, ColourModel {
     alpha: Double = 1.0,
     name: String? = nil
   ) {
-    self.init(
-      hueCyclic: hue.toUnitIntervalCyclic,
-      saturation: saturation.toUnitInterval,
-      brightness: brightness.toUnitInterval,
-      alpha: alpha.toUnitInterval,
-      name: name
-    )
-  }
 
-  public init(
-    hueCyclic: UnitIntervalCyclic,
-    saturation: Double,
-    brightness: Double,
-    alpha: Double = 1.0,
-    name: String? = nil
-  ) {
-
-    self.hue = hueCyclic
+    self.hue = hue
     self.saturation = saturation
     self.brightness = brightness
     self.alpha = alpha
@@ -109,7 +93,7 @@ extension HSVColour {
       adjustment.brightness.map { brightness + $0 } ?? brightness
 
     return HSVColour(
-      hueCyclic: adjustedHue,
+      hue: adjustedHue,
       saturation: adjustedSaturation,
       brightness: adjustedBrightness,
       alpha: alpha,

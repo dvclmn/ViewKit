@@ -50,19 +50,19 @@ extension HSVColour {
   }
   public init(fromRGB rgb: RGBColour) {
     self.init(
-      fromRGB: rgb.red.value,
-      g: rgb.green.value,
-      b: rgb.blue.value,
-      a: rgb.alpha.value,
+      fromRGB: rgb.red,
+      g: rgb.green,
+      b: rgb.blue,
+      a: rgb.alpha,
       name: rgb.name
     )
   }
   
 //  public init(fromRGB rgb: RGBColour) {
 //
-//    let rd: CGFloat = rgb.red.value
-//    let gd: CGFloat = rgb.green.value
-//    let bd: CGFloat = rgb.blue.value
+//    let rd: CGFloat = rgb.red
+//    let gd: CGFloat = rgb.green
+//    let bd: CGFloat = rgb.blue
 //
 //    let maxV: CGFloat = max(rd, max(gd, bd))
 //    let minV: CGFloat = min(rd, min(gd, bd))
@@ -92,7 +92,7 @@ extension HSVColour {
 //      hue: h,
 //      saturation: s,
 //      brightness: b,
-//      alpha: rgb.alpha.value,
+//      alpha: rgb.alpha,
 //      name: rgb.name
 //    )
 //
@@ -106,13 +106,13 @@ extension RGBColour {
     /// Normalize hue to `[0, 1]` range, handling negative values
     /// Older version, not sure which is better:
     /// `let h = hsv.hue - floor(hsv.hue)`
-    let h = hsv.hue.value.truncatingRemainder(dividingBy: 1.0)
-    let s = hsv.saturation.value
-    let v = hsv.brightness.value
+    let h = hsv.hue.truncatingRemainder(dividingBy: 1.0)
+    let s = hsv.saturation
+    let v = hsv.brightness
 
     /// Early exit for grayscale (no saturation)
-    guard s.value > 0 else {
-      self.init(red: v, green: v, blue: v, alpha: hsv.alpha.value, name: hsv.name)
+    guard s > 0 else {
+      self.init(red: v, green: v, blue: v, alpha: hsv.alpha, name: hsv.name)
       return
     }
 
@@ -152,6 +152,6 @@ extension RGBColour {
       /// Fallback (shouldn't occur)
       default: (r, g, b) = (v, v, v)
     }
-    self.init(r: r, g: g, b: b, a: hsv.alpha.value, name: hsv.name)
+    self.init(r: r, g: g, b: b, a: hsv.alpha, name: hsv.name)
   }
 }

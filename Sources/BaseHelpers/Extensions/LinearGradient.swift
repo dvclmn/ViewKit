@@ -13,26 +13,14 @@ extension LinearGradient {
     direction: Alignment = .top,
     falloffAmount: CGFloat = 0.9
   ) -> LinearGradient {
-    
+
     LinearGradient(
       colors: [
         colour,
-        colour.opacity(falloffAmount.inversePercentage)
+        colour.opacity(falloffAmount.inversePercentage),
       ],
       startPoint: direction.toUnitPoint(),
       endPoint: direction.opposite.toUnitPoint()
     )
   }
-  
-  public static func rainbow(
-    start: UnitPoint = .leading,
-    end: UnitPoint = .trailing
-  ) -> LinearGradient {
-    LinearGradient(
-      colors: .rainbow,
-      startPoint: start,
-      endPoint: end
-    )
-  }
-
 }

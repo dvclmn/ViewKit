@@ -21,6 +21,6 @@ public protocol ColourModel {
 
 // MARK: - Extension methods
 extension ColourModel {
-  public mutating func opacity(_ opacity: Double) { alpha = opacity.toUnitInterval }
+  public mutating func opacity(_ opacity: Double) { alpha = opacity }
   public var colourSpace: Color.RGBColorSpace { .sRGB }
 }

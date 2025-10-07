@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CurveFunctions
+//import CurveFunctions
 
 /// Protocol for types that can be treated as "zero" when nil
 public protocol Zeroable {
@@ -17,9 +17,9 @@ extension Double: Zeroable {
   public static var zero: Double { 0.0 }
 }
 
-extension UnitIntervalCyclic: Zeroable {
-  public static var zero: UnitIntervalCyclic { 0.0 }
-}
+//extension UnitIntervalCyclic: Zeroable {
+//  public static var zero: UnitIntervalCyclic { 0.0 }
+//}
 
 extension Optional where Wrapped: Zeroable {
 
@@ -40,14 +40,14 @@ extension Optional where Wrapped: Zeroable {
   }
 }
 
-extension Optional where Wrapped: Zeroable & BinaryFloatingPoint {
-
-  /// Standard linear interpolation for floating point values
-  public func interpolated(towards other: Wrapped?, strength: Wrapped) -> Wrapped? {
-    guard self != nil || other != nil else { return nil }
-    let from = self ?? .zero
-    let to = other ?? .zero
-    return lerp(from: from, to: to, strength)
-  }
-
-}
+//extension Optional where Wrapped: Zeroable & BinaryFloatingPoint {
+//
+//  /// Standard linear interpolation for floating point values
+//  public func interpolated(towards other: Wrapped?, strength: Wrapped) -> Wrapped? {
+//    guard self != nil || other != nil else { return nil }
+//    let from = self ?? .zero
+//    let to = other ?? .zero
+//    return lerp(from: from, to: to, strength)
+//  }
+//
+//}

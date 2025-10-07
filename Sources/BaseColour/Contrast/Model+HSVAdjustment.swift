@@ -5,26 +5,31 @@
 //  Created by Dave Coleman on 29/6/2025.
 //
 
+import CurveFunctions
 import Foundation
+import SharedHelpers
 
 /// Represents a *delta* adjustment in HSV space
 /// Does not set hsb values to these, but adds to them
 public struct HSVAdjustment: Sendable {
 
+  /// Important: This `hue` is cyclic. I am no longer using
+  /// `UnitIntervalCyclic` because it's fiddly, but
+  /// this does still need (somehow) to be made cyclic
   public var hue: Double?
   public var saturation: Double?
   public var brightness: Double?
 
-  public init(
-    hueCyclic: Double? = nil,
-//    hueCyclic: UnitIntervalCyclic? = nil,
-    saturation: Double? = nil,
-    brightness: Double? = nil
-  ) {
-    self.hue = hueCyclic
-    self.saturation = saturation
-    self.brightness = brightness
-  }
+  //  public init(
+  //    hue: Double? = nil,
+  ////    hue: UnitIntervalCyclic? = nil,
+  //    saturation: Double? = nil,
+  //    brightness: Double? = nil
+  //  ) {
+  //    self.hue = hue
+  //    self.saturation = saturation
+  //    self.brightness = brightness
+  //  }
 
   public init(
     hue: Double? = nil,
@@ -32,7 +37,7 @@ public struct HSVAdjustment: Sendable {
     brightness: Double? = nil
   ) {
     self.init(
-      hueCyclic: hue,
+      hue: hue,
       saturation: saturation,
       brightness: brightness
     )
@@ -65,28 +70,28 @@ extension HSVAdjustment {
     strength: Double
   ) -> HSVAdjustment {
     HSVAdjustment(
-      hueCyclic: hue.interpolated(towards: other.hue, strength: strength),
+      hue: hue.interpolated(towards: other.hue, strength: strength),
       saturation: saturation.interpolated(towards: other.saturation, strength: strength),
       brightness: brightness.interpolated(towards: other.brightness, strength: strength)
     )
   }
-  
-//  func scaleAll(by factor: Double) -> HSVAdjustment {
-//    HSVAdjustment(
-//      hue: hue.map { $0.value * factor },
-//      saturation: saturation.map { $0 * factor },
-//      brightness: brightness.map { $0 * factor }
-//    )
-//  }
-//
-//  func scale(
-//    _ keyPath: WritableKeyPath<HSVAdjustment, Double>,
-//    by factor: Double
-//  ) -> HSVAdjustment {
-//    var result = self
-//    result[keyPath: keyPath] *= factor
-//    return result
-//  }
+
+  //  func scaleAll(by factor: Double) -> HSVAdjustment {
+  //    HSVAdjustment(
+  //      hue: hue.map { $0.value * factor },
+  //      saturation: saturation.map { $0 * factor },
+  //      brightness: brightness.map { $0 * factor }
+  //    )
+  //  }
+  //
+  //  func scale(
+  //    _ keyPath: WritableKeyPath<HSVAdjustment, Double>,
+  //    by factor: Double
+  //  ) -> HSVAdjustment {
+  //    var result = self
+  //    result[keyPath: keyPath] *= factor
+  //    return result
+  //  }
 
   /// With `interpolated`, `HSVAdjustment` now knows how to
   /// go from one instance of itself, to another, linearly interpolating.
@@ -127,7 +132,7 @@ extension HSVAdjustment {
     /// We don't handle `strength` just yet; first we gather
     /// the modifiers together for processing.
     let lumThreshold: LuminanceThreshold = .init(from: colour)
-    
+
     let contributors: [any HSVModifier] = [
       lumThreshold,
       purpose,
@@ -144,10 +149,35 @@ extension HSVAdjustment {
 
 public func + (lhs: HSVAdjustment, rhs: HSVAdjustment) -> HSVAdjustment {
   HSVAdjustment(
-    hueCyclic: lhs.hue.combined(with: rhs.hue) { $0.interpolated(towards: $1, strength: 1.0)
+    hue: lhs.hue.combined(with: rhs.hue) {
+      $0.interpolated(towards: $1, strength: 1.0)
     },
     saturation: lhs.saturation.combined(with: rhs.saturation, using: +),
-    
+
     brightness: lhs.brightness.combined(with: rhs.brightness, using: +)
   )
+}
+
+extension Optional where Wrapped == Double {
+
+  /// Cyclic interpolation for hue values (shortest path around color wheel)
+  public func interpolated(
+    towards other: Double?,
+    strength: Double
+  ) -> Double? {
+    switch (self, other) {
+
+      case (nil, nil): return nil
+
+      /// Keep current hue when target is nil
+      case (let hue?, nil): return hue
+
+      /// Jump to target when current is nil
+      case (nil, let target?): return target
+
+      case (let from?, let to?):
+        let value = from.interpolated(towards: to, strength: strength)
+        return value
+    }
+  }
 }

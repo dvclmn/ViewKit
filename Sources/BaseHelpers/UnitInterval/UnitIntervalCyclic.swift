@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedHelpers
 
 /// Represents a half-open interval unit, `[0, 1)`.
 /// Includes `0` but excludes `1`.
@@ -24,21 +25,7 @@ public struct UnitIntervalCyclic: ExpressibleByFloatLiteral, Sendable, Equatable
   }
 }
 
-extension UnitIntervalCyclic {
 
-  /// Interpolate shortest path around colour wheel
-  public func interpolated(
-    towards other: Self,
-    strength: Double
-  ) -> Self {
-    let delta = ((other.value - value + 1.5).truncatingRemainder(dividingBy: 1.0)) - 0.5
-    return Self(value + delta * strength)
-  }
-
-  /// Useful for Hue
-  public var degrees: Double { value * 360 }
-  public init(degrees: Double) { self.init(degrees / 360) }
-}
 
 extension Optional where Wrapped == UnitIntervalCyclic {
 
@@ -57,7 +44,9 @@ extension Optional where Wrapped == UnitIntervalCyclic {
       /// Jump to target when current is nil
       case (nil, let target?): return target
 
-      case (let from?, let to?): return from.interpolated(towards: to, strength: strength)
+      case (let from?, let to?):
+        let value = from.value.interpolated(towards: to.value, strength: strength.value)
+        return UnitIntervalCyclic(value)
     }
   }
 }

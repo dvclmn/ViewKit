@@ -8,13 +8,6 @@
 import Foundation
 
 extension BinaryFloatingPoint {
-  public var toDouble: Double {
-    return Double(self)
-  }
-  
-  public var toFloat: Float {
-    return Float(self)
-  }
 
   public func toPercentString(within range: ClosedRange<Self>) -> String {
     let normalised: Double = Double(self.normalised(from: range))

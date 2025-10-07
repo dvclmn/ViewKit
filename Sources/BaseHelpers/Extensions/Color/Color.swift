@@ -25,10 +25,6 @@ extension Array where Element == Color {
 
 extension Color {
 
-  public func toCodable(_ env: EnvironmentValues?) -> CodableColour {
-    return CodableColour(fromColor: self, env: env)
-  }
-
   //  public var namedColour: NamedColour? {
   //    return NamedColour.allCases.first { $0.colour.swiftUIColour == self }
   //  }
@@ -94,8 +90,3 @@ extension Color {
   public var toNSColour: NSUIColor { NSUIColor(self) }
 }
 
-extension Array where Element == Color {
-  public static let rainbow: [Color] = [
-    .red, .orange, .yellow, .green, .blue, .indigo, .purple, .pink, .red,
-  ]
-}

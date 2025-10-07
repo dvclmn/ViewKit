@@ -8,7 +8,6 @@
 import Foundation
 
 extension BinaryFloatingPoint {
-  public var toDouble: Double {
-    Double(self)
-  }
+  public var toDouble: Double { Double(self) }
+  public var toFloat: Float { Float(self) }
 }

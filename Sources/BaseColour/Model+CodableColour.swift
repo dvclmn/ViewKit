@@ -147,3 +147,10 @@ extension CodableColour {
 //extension HSVColour {
 //  init(fromCodable colour: CodableColour)
 //}
+
+
+extension Color {
+  public func toCodable(_ env: EnvironmentValues?) -> CodableColour {
+    return CodableColour(fromColor: self, env: env)
+  }
+}

@@ -14,6 +14,7 @@ let package = Package(
     .library(name: "BaseHelpers", targets: ["BaseHelpers"]),
     .library(name: "BaseColour", targets: ["BaseColour"]),
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
+    .library(name: "ComponentTools", targets: ["ComponentTools"]),
     .library(name: "ColourExtract", targets: ["ColourExtract"]),
     .library(name: "CurveFunctions", targets: ["CurveFunctions"]),
     .library(name: "GridCanvas", targets: ["GridCanvas"]),
@@ -69,7 +70,19 @@ let package = Package(
         .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
-    .target(name: "BaseColour", dependencies: [.sharedHelpers]),
+    .target(
+      name: "BaseColour",
+      dependencies: [
+        .sharedHelpers,
+        "CurveFunctions",
+      ],
+    ),
+    .target(name: "ComponentTools", dependencies: [
+      .baseHelpers,
+      "BaseColour",
+      .sharedHelpers,
+      .baseMacros,
+    ]),
     .target(name: "ColourExtract"),
     .target(name: "CurveFunctions"),
     .target(name: "GridCanvas", dependencies: [.baseHelpers]),
