@@ -8,20 +8,22 @@
 import Foundation
 
 public func printPadded(
-  _ message: String,
+  _ items: Any...,
+  separator: String = " ",
   withTimestamp: Bool = true
 ) {
-  let adjustedMessage = "\(message)\n\n"
+  let adjustedMessage = "\(items)\n\n"
   guard withTimestamp else {
-    print(adjustedMessage)
+    print(adjustedMessage, separator: separator)
     return
   }
-  
-  let timestamp: String = Date.now.formatted(.dateTime
-    .hour(.twoDigits(amPM: .abbreviated))
-    .minute(.twoDigits)
-    .second(.twoDigits)
-    .secondFraction(.milliseconds(3))
+
+  let timestamp: String = Date.now.formatted(
+    .dateTime
+      .hour(.twoDigits(amPM: .abbreviated))
+      .minute(.twoDigits)
+      .second(.twoDigits)
+      .secondFraction(.milliseconds(3))
   )
-  print("(\(timestamp)) " + adjustedMessage)
+  print("(\(timestamp)) " + adjustedMessage, separator: separator)
 }

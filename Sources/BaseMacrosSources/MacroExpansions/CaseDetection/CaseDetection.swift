@@ -17,8 +17,14 @@
 //
 //===----------------------------------------------------------------------===//
 
+import BaseHelpers
+import MacroToolkit
 import SwiftSyntax
 import SwiftSyntaxMacros
+
+// Obtained from Swift example macros
+// https://github.com/swiftlang/swift-syntax/blob/main/Examples/Sources/MacroExamples/Implementation/Member/CaseDetectionMacro.swift
+// Additional modifications based on stackotter's MacroToolkit
 
 public enum CaseDetectionMacro: MemberMacro {
   public static func expansion(
@@ -27,28 +33,64 @@ public enum CaseDetectionMacro: MemberMacro {
     conformingTo: [TypeSyntax],
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
-    /// Dig out the access control keyword we need.
-    let access = decl.modifiers.first(where: \.isPublicAccessLevel)
-    let members = decl.memberBlock.members
 
-    return
-      members
-      .compactMap { $0.decl.as(EnumCaseDeclSyntax.self) }
-      .map { $0.elements.first?.name ?? "unknown" }
-      .map { ($0, $0.initialUppercased) }
+    guard let detectedEnum = Enum(decl) else {
+      throw MacroError("@CaseDetection can only be attached to enum declarations")
+    }
+
+    let access = detectedEnum.accessLevel?.name ?? ""
+    //    let thing = node.
+
+    let argument = MacroAttribute(node).argument(labeled: "includesNames")?.asBooleanLiteral
+    let isShowingNames: Bool = argument?.value ?? false
+
+    //    SimpleDiagnosticMessage(
+    //      message: arguments.debugDescription,
+    //      diagnosticID: MessageID(domain: "casedetection", id: "something"),
+    //      severity: <#T##DiagnosticSeverity#>
+    //    )
+
+    //    guard
+    //      let ((nil, nameExpr), (nil, ageExpr)) = destructure(attribute.arguments),
+    //      let name = nameExpr.asStringLiteral?.value,
+    //      let age = ageExpr.asIntegerLiteral?.value
+    //    else {
+    //      throw MacroError("Usage: @MyMacro(\"stackotter\", 105)")
+    //    }
+    let cases: [EnumCase] = detectedEnum.cases
+    let detections: [DeclSyntax] =
+      cases
+      .map { ($0.identifier, $0.identifier.initialUppercased) }
       .map { original, uppercased in
         """
-        \(access)var is\(raw: uppercased): Bool {
+        \(raw: access) var is\(raw: uppercased): Bool {
           if case .\(raw: original) = self {
             return true
           }
           return false
         }
-
-        \(access)var caseName: String {
-          \(raw: uppercased)
-        }
         """
       }
+
+    if isShowingNames {
+
+//      let caseStrings: String = cases.map { item in
+//        "case .\(item.identifier): \"\(item.identifier.initialUppercased)\""
+//      }.joinedLines()
+
+      let refName: DeclSyntax = """
+        \(raw: access) var referenceName: String {
+          switch self {
+            "Hello"
+          }
+        }
+
+        """
+      let result = detections + [refName]
+      return result
+    }
+
+    return detections
+
   }
 }

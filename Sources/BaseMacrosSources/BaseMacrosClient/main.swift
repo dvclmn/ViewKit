@@ -20,6 +20,20 @@ enum ExampleEnum {
   case fish
 }
 
+@CaseDetection(includesNames: true)
+enum ExampleEnumNames {
+  case dog
+  case cat
+  case fish
+  var names: String {
+    switch self {
+      case .dog: "Dog"
+      case .cat: "Dog"
+      case .fish: "Dog"
+    }
+  }
+}
+
 // MARK: - MetaEnum
 
 /// Seems to help create a corresponding enum without assoc. values?

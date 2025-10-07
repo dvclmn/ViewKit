@@ -39,9 +39,10 @@ let package = Package(
   // MARK: - Dependancies
   dependencies: [
     .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.0.0"),
-    .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.1"),
+    .package(url: "https://github.com/swiftlang/swift-syntax", from: "600.0.1"),
     .package(url: "https://github.com/mattmassicotte/nsui", from: "1.3.0"),
-    .package(url: "https://github.com/evgenyneu/keychain-swift.git", from: "24.0.0"),
+    .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
+    .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
   ],
   targets: [
     // MARK: - BaseMacro targets
@@ -51,33 +52,34 @@ let package = Package(
         .sharedHelpers,
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+        .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
       path: "Sources/BaseMacrosSources/MacroExpansions",
     ),
     .target(
       name: "AssociatedValues",
       dependencies: ["BaseMacros"],
-      path: "Sources/BaseMacrosSources/MacroDeclarations/AssociatedValues"
+      path: .macroDecl("AssociatedValues")
     ),
     .target(
       name: "CaseDetection",
       dependencies: ["BaseMacros"],
-      path: "Sources/BaseMacrosSources/MacroDeclarations/CaseDetection"
+      path: .macroDecl("CaseDetection")
     ),
     .target(
       name: "MetaEnum",
       dependencies: ["BaseMacros"],
-      path: "Sources/BaseMacrosSources/MacroDeclarations/MetaEnum"
+      path: .macroDecl("MetaEnum")
     ),
     .target(
       name: "Persistable",
       dependencies: ["BaseMacros"],
-      path: "Sources/BaseMacrosSources/MacroDeclarations/Persistable"
+      path: .macroDecl("Persistable")
     ),
     .target(
       name: "SetOfOptions",
       dependencies: ["BaseMacros"],
-      path: "Sources/BaseMacrosSources/MacroDeclarations/SetOfOptions"
+      path: .macroDecl("SetOfOptions")
     ),
 
     .executableTarget(
@@ -124,4 +126,9 @@ extension Target.Dependency {
   static var baseHelpers: Self { "BaseHelpers" }
   static var sharedHelpers: Self { "SharedHelpers" }
   static var baseMacros: Self { "BaseMacros" }
+}
+extension String {
+  static func macroDecl(_ macroName: String) -> String {
+    return "Sources/BaseMacrosSources/MacroDeclarations/" + macroName
+  }
 }

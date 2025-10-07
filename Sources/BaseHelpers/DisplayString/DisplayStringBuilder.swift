@@ -15,7 +15,7 @@ public struct DisplayStringBuilder {
 
   public static func buildBlock(_ components: [BuilderElement]...) -> [BuilderElement] {
     printPadded("Ran DisplayStringBuilder.buildBlock", )
-    components.flatMap { $0 }
+    return components.flatMap { $0 }
   }
 
   public static func buildOptional(_ component: [BuilderElement]?) -> [BuilderElement] {
@@ -38,7 +38,8 @@ public struct DisplayStringBuilder {
     components: [BuilderElement],
     function: String = #function,
   ) -> String {
-    let componentName = components.reduce("") { $0 + "\($1.isIndented ? "Indented" : "Plain"))"
+    "\(function): \(components.count) elements"
+//    let componentName = components.reduce("") { $0 + "\($1.isIndented ? "Indented" : "Plain"))"
     }
 }
 
