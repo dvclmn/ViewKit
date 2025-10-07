@@ -34,7 +34,8 @@ public enum ModificationStrengthPreset: CaseIterable, Identifiable, Sendable {
       case .moderate: "Moderate"
       case .standard: "Standard"
       case .highContrast: "High Contrast"
-      case .custom(let strength): "Custom (\(strength.displayString))"
+      case .custom(let strength): "Custom (\(strength))"
+//      case .custom(let strength): "Custom (\(strength.displayString))"
     }
   }
   public var nameAbbreviated: String {
@@ -44,7 +45,8 @@ public enum ModificationStrengthPreset: CaseIterable, Identifiable, Sendable {
       case .moderate: "Mod."
       case .standard: "Std."
       case .highContrast: "Hi-Con."
-      case .custom(let strength): "\(strength.displayString)"
+      case .custom(let strength): "\(strength)"
+//      case .custom(let strength): "\(strength.displayString)"
     }
   }
 
@@ -52,7 +54,8 @@ public enum ModificationStrengthPreset: CaseIterable, Identifiable, Sendable {
 
   public var percentString: String {
     let value: CGFloat = adjustmentStrength * 100
-    return value.displayString(places: 0) + "%"
+    return "\(value)%"
+//    return value.displayString(places: 0) + "%"
   }
 
   public var adjustmentStrength: Double {

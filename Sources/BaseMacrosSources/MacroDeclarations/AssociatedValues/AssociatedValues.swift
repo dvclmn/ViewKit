@@ -10,6 +10,6 @@
 // https://github.com/bernndr/swift-macros/
 @attached(member, names: arbitrary)
 public macro AssociatedValues() = #externalMacro(
-  module: "BaseMacros",
+  module: "BaseMacrosGuts",
   type: "AssociatedValuesMacro"
 )

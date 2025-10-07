@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 10/7/2025.
 //
 
-import AssociatedValues
 import Foundation
 
 /// A property label is aimed at expressing the
@@ -79,3 +78,4 @@ extension PropertyLabel {
     }
   }
 }
+

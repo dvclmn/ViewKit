@@ -61,7 +61,7 @@ let package = Package(
         "BaseColour",
         .product(name: "NSUI", package: "nsui"),
       ],
-      resources: [.process("Assets.xcassets")],
+//      resources: [.process("Assets.xcassets")],
     ),
     .target(
       name: "BaseNetworking",
@@ -92,7 +92,7 @@ let package = Package(
 
     // MARK: - BaseMacro targets
     .macro(
-      name: "BaseMacros",
+      name: "BaseMacrosGuts",
       dependencies: [
         .sharedHelpers,
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
@@ -103,27 +103,27 @@ let package = Package(
     ),
     .target(
       name: "AssociatedValues",
-      dependencies: ["BaseMacros"],
+      dependencies: ["BaseMacrosGuts"],
       path: .macroDecl("AssociatedValues")
     ),
     .target(
       name: "CaseDetection",
-      dependencies: ["BaseMacros"],
+      dependencies: ["BaseMacrosGuts"],
       path: .macroDecl("CaseDetection")
     ),
     .target(
       name: "MetaEnum",
-      dependencies: ["BaseMacros"],
+      dependencies: ["BaseMacrosGuts"],
       path: .macroDecl("MetaEnum")
     ),
     .target(
       name: "Persistable",
-      dependencies: ["BaseMacros"],
+      dependencies: ["BaseMacrosGuts"],
       path: .macroDecl("Persistable")
     ),
     .target(
       name: "SetOfOptions",
-      dependencies: ["BaseMacros"],
+      dependencies: ["BaseMacrosGuts"],
       path: .macroDecl("SetOfOptions")
     ),
 
@@ -145,7 +145,7 @@ let package = Package(
 extension Target.Dependency {
   static var baseHelpers: Self { "BaseHelpers" }
   static var sharedHelpers: Self { "SharedHelpers" }
-  static var baseMacros: Self { "BaseMacros" }
+  static var baseMacros: Self { "BaseMacrosGuts" }
 }
 extension String {
   static func macroDecl(_ macroName: String) -> String {

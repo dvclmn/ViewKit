@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 8/7/2025.
 //
 
+/// ⚠️ Dependancy: `displayString`
 import SwiftUI
 
 public struct DebugCircleModifier: ViewModifier {

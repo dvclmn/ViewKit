@@ -27,9 +27,9 @@ extension HSVColour {
 extension RGBColour {
   public func toXYZ() -> XYZColour {
     // Step 1: Linearise sRGB
-    let r = linearised(red.value)
-    let g = linearised(green.value)
-    let b = linearised(blue.value)
+    let r = linearised(red)
+    let g = linearised(green)
+    let b = linearised(blue)
 
     // Step 2: Convert to XYZ (D65 white)
     let x = (0.4124564 * r) + (0.3575761 * g) + (0.1804375 * b)
@@ -52,20 +52,20 @@ extension RGBColour {
   public func luminance(using method: LuminanceMethod = .wcag) -> Double {
     switch method {
       case .wcag:
-        let r = linearised(red.value)
-        let g = linearised(green.value)
-        let b = linearised(blue.value)
+        let r = linearised(red)
+        let g = linearised(green)
+        let b = linearised(blue)
         return (0.2126 * r + 0.7152 * g + 0.0722 * b).clamped(to: 0...1)
 
       case .rec601:
-        let r = linearised(red.value)
-        let g = linearised(green.value)
-        let b = linearised(blue.value)
+        let r = linearised(red)
+        let g = linearised(green)
+        let b = linearised(blue)
         return (0.299 * r + 0.587 * g + 0.114 * b).clamped(to: 0...1)
 
       case .hsp:
         // Works directly in gamma-encoded space
-        return sqrt(0.299 * pow(red.value, 2) + 0.587 * pow(green.value, 2) + 0.114 * pow(blue.value, 2)).clamped(to: 0...1)
+        return sqrt(0.299 * pow(red, 2) + 0.587 * pow(green, 2) + 0.114 * pow(blue, 2)).clamped(to: 0...1)
 
       case .cielab:
         /// This assumes input RGB is already in sRGB space. If your package later

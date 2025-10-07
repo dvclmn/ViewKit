@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedHelpers
 import CaseDetection
 
 @CaseDetection(includesNames: true)
