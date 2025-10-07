@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import CurveFunctions
+import CurveKit
 import BaseHelpers
 
 /// For simplicity, I've decided to require that `WaveDrivenProperty`

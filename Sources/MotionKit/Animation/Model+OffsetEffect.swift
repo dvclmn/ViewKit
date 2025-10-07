@@ -7,7 +7,7 @@
 
 import SwiftUI
 import BaseHelpers
-import CurveFunctions
+import CurveKit
 
 /// Wonder if I merge all effects into a single thing
 //public struct Effect: Model {

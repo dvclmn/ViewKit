@@ -8,7 +8,7 @@
 import BaseHelpers
 //import SmoothStepGradient
 import SharedHelpers
-import CurveFunctions
+import CurveKit
 import SwiftUI
 
 public struct ScrollMaskModifier: ViewModifier {

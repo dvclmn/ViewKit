@@ -7,7 +7,7 @@
 
 import Foundation
 import BaseHelpers
-import CurveFunctions
+import CurveKit
 
 enum DragMethod: Sendable {
   case twoFingerPan

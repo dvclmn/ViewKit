@@ -6,7 +6,7 @@
 //
 
 import BaseHelpers
-import CurveFunctions
+import CurveKit
 import SwiftUI
 
 @Observable

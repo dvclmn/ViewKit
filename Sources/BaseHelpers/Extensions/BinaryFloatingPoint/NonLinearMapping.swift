@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CurveFunctions
+import CurveKit
 
 extension BinaryFloatingPoint {
 

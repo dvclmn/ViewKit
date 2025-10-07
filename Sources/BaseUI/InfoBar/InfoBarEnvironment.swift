@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BaseComponents
+import BaseUI
 
 extension EnvironmentValues {
   @Entry public var sectionLabelDisplay: LabelDisplay? = nil

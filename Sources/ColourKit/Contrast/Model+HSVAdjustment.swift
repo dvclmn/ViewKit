@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 29/6/2025.
 //
 
-import CurveFunctions
+import CurveKit
 import Foundation
 import SharedHelpers
 

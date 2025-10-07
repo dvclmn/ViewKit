@@ -8,7 +8,7 @@
 import SwiftUI
 import Ifrit
 import BaseHelpers
-import BaseComponents
+import BaseUI
 import SharedHelpers
 
 extension Fuse: FuzzyProvider {}

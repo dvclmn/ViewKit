@@ -24,6 +24,7 @@ let package = Package(
     .library(name: "PopupKit", targets: ["PopupKit"]),
     .library(name: "SearchKit", targets: ["SearchKit"]),
     .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
+    .library(name: "VectorKit", targets: ["VectorKit"]),
     .library(name: "WaveKit", targets: ["WaveKit"]),
     .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
 
@@ -66,6 +67,7 @@ let package = Package(
         .targetDep(.macros),
         .targetDep(.curveKit),
         .targetDep(.colourKit),
+        .targetDep(.vectorKit),
         .product(name: "NSUI", package: "nsui"),
       ],
       //      resources: [.process("Assets.xcassets")],
@@ -83,6 +85,7 @@ let package = Package(
         .targetDep(.baseHelpers),
         .targetDep(.sharedHelpers),
         .targetDep(.curveKit),
+        .targetDep(.colourKit),
         .sharing,
         .product(name: "NukeUI", package: "Nuke"),
       ],
@@ -96,16 +99,24 @@ let package = Package(
       ],
     ),
 
-    .target(name: "CurveKit"),
+    .target(
+      name: "CurveKit",
+      dependencies: [
+        .targetDep(.colourKit)
+      ]
+    ),
     .target(name: "GestureKit"),
     .target(name: "GraphicsKit"),
     .target(name: "MotionKit"),
     .target(name: "PopupKit"),
-    .target(name: "SearchKit", dependencies: [
-      .product(name: "IfritStatic", package: "Ifrit"),
-    ]),
+    .target(
+      name: "SearchKit",
+      dependencies: [
+        .product(name: "IfritStatic", package: "Ifrit")
+      ]),
     .target(name: "SharedHelpers"),
     .target(name: "WaveKit"),
+    .target(name: "VectorKit"),
     .target(name: "Wrecktangle"),
 
     // MARK: - BaseMacro targets
@@ -164,7 +175,7 @@ extension Target.Dependency {
   static func targetDep(_ baseModule: BaseModule) -> Self {
     //    "\(baseModule.targetName)"
     .target(name: baseModule.targetName)
-//    .product(name: baseModule.targetName, package: "BaseHelpers")
+    //    .product(name: baseModule.targetName, package: "BaseHelpers")
   }
   static var sharing: Self {
     .product(name: "Sharing", package: "swift-sharing")
@@ -192,6 +203,7 @@ enum BaseModule {
   // case popupKit
   // case searchKit
   case sharedHelpers
+  case vectorKit
   // case waveKit
   // case wrecktangle
 
@@ -206,6 +218,7 @@ enum BaseModule {
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
       case .sharedHelpers: "SharedHelpers"
+      case .vectorKit: "VectorKit"
     }
   }
 }

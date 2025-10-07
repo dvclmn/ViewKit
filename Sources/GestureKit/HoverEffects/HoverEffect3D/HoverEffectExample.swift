@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BaseComponents
+import BaseUI
 
 struct HoverEffectExampleView: View {
 

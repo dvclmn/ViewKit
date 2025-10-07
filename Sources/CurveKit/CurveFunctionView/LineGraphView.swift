@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 27/8/2025.
 //
 
-import BaseHelpers
+//import BaseHelpers
 import SwiftUI
 
 public struct LineGraphView: View {
@@ -16,7 +16,8 @@ public struct LineGraphView: View {
   let samples: [CGFloat]
   let barSpacing: CGFloat
   let barWidth: CGFloat
-  let colour: CodableColour
+  let colour: Color
+//  let colour: CodableColour
   public var body: some View {
 
     Canvas {

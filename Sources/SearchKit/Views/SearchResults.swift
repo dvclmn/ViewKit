@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 21/9/2025.
 //
 
-import BaseComponents
+import BaseUI
 import BaseHelpers
 import SharedHelpers
 import SwiftUI

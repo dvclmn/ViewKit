@@ -5,10 +5,10 @@
 //  Created by Dave Coleman on 15/8/2025.
 //
 
-import BaseComponents
+import BaseUI
 import BaseHelpers
 import SwiftUI
-import CurveFunctions
+import CurveKit
 
 /// Note: it's expected that this View will be embedded in a `TimelineView`,
 /// to provide the `elapsed` time value.

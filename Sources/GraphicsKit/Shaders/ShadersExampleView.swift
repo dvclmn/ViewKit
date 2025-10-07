@@ -7,7 +7,7 @@
 
 import BaseHelpers
 import SwiftUI
-import BaseComponents
+import BaseUI
 
 public struct ShadersExampleView: View {
 

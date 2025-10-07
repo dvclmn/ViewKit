@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BaseComponents
+import BaseUI
 import BaseHelpers
 import SharedHelpers
 
