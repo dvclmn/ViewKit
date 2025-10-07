@@ -17,7 +17,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import BaseHelpers
 import MacroToolkit
 import SwiftSyntax
 import SwiftSyntaxMacros
@@ -74,6 +73,9 @@ public enum CaseDetectionMacro: MemberMacro {
 
     if isShowingNames {
 
+      let casesString: String = cases.reduce("") { partialResult, item in
+        partialResult + "case .\(item.identifier): \"\(item.identifier.initialUppercased)\"\n"
+      }
 //      let caseStrings: String = cases.map { item in
 //        "case .\(item.identifier): \"\(item.identifier.initialUppercased)\""
 //      }.joinedLines()
@@ -81,7 +83,7 @@ public enum CaseDetectionMacro: MemberMacro {
       let refName: DeclSyntax = """
         \(raw: access) var referenceName: String {
           switch self {
-            "Hello"
+            \(raw: casesString)
           }
         }
 
