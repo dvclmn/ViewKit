@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 public enum LayoutType {
   case hstack(alignment: VerticalAlignment = .center)

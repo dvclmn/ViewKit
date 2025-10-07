@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 public typealias ViewSizeOutput<T> = (T) -> Void
 

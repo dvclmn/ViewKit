@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 /// A Viewport is considered to be a single, self-contained View,
 /// not including any native components like Toolbar or Inspector.
