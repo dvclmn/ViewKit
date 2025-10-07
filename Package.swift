@@ -36,7 +36,7 @@ let package = Package(
         "MetaEnum",
         "Persistable",
         "SetOfOptions",
-      ]
+      ],
     ),
     .executable(
       name: "BaseMacrosClient",
@@ -57,10 +57,7 @@ let package = Package(
   ],
 
   // MARK: - Targets
-  
-  
-  
-  
+
   targets: [
     .target(
       name: "BaseHelpers",
@@ -86,9 +83,11 @@ let package = Package(
         .targetDep(.baseHelpers),
         .targetDep(.sharedHelpers),
         .targetDep(.curveKit),
-        .sharing
+        .sharing,
+        .product(name: "NukeUI", package: "Nuke"),
       ],
     ),
+    .target(name: "CanvasKit"),
     .target(
       name: "ColourKit",
       dependencies: [
@@ -97,19 +96,28 @@ let package = Package(
       ],
     ),
 
+    .target(name: "CurveKit"),
+    .target(name: "GestureKit"),
+    .target(name: "GraphicsKit"),
+    .target(name: "MotionKit"),
+    .target(name: "PopupKit"),
+    .target(name: "SearchKit", dependencies: [
+      .product(name: "IfritStatic", package: "Ifrit"),
+    ]),
     .target(name: "SharedHelpers"),
+    .target(name: "WaveKit"),
     .target(name: "Wrecktangle"),
 
     // MARK: - BaseMacro targets
     .macro(
       name: "BaseMacrosGuts",
       dependencies: [
-        .sharedHelpers,
+        .targetDep(.sharedHelpers),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
-      path: "Sources/BaseMacros/MacroExpansions",
+      path: "Sources/BaseMacrosSources/MacroExpansions",
     ),
     .target(
       name: "AssociatedValues",
@@ -146,16 +154,17 @@ let package = Package(
         "Persistable",
         "SetOfOptions",
       ],
-      path: "Sources/BaseMacros/BaseMacrosClient",
+      path: "Sources/BaseMacrosSources/BaseMacrosClient",
     ),
 
   ],
 )
 // MARK: - Convenient type-safe extensions
 extension Target.Dependency {
-  static func targetDep(_ target: BaseModule) -> Self {
-    target.targetName
-    //    .product(name: target.targetName, package: "BaseHelpers")
+  static func targetDep(_ baseModule: BaseModule) -> Self {
+    //    "\(baseModule.targetName)"
+    .target(name: baseModule.targetName)
+//    .product(name: baseModule.targetName, package: "BaseHelpers")
   }
   static var sharing: Self {
     .product(name: "Sharing", package: "swift-sharing")
@@ -163,7 +172,7 @@ extension Target.Dependency {
 }
 extension String {
   static func macroDecl(_ macroName: String) -> String {
-    return "Sources/BaseMacros/MacroDeclarations/" + macroName
+    return "Sources/BaseMacrosSources/MacroDeclarations/" + macroName
   }
 }
 
@@ -189,7 +198,7 @@ enum BaseModule {
   var targetName: String {
     switch self {
       case .baseHelpers: "BaseHelpers"
-      case .macros: "BaseMacros"  // Guts?
+      case .macros: "BaseMacrosGuts"  // Guts?
       case .networking: "BaseNetworking"
       case .baseUI: "BaseUI"
       case .colourKit: "ColourKit"
