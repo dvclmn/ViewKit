@@ -10,14 +10,7 @@ import SwiftUI
 
 extension Path {
   
-  public init(
-    fromPoints points: [CGPoint],
-    type: PathType = .line,
-    shouldDropFirst: Bool = true
-  ) {
-    self = points.toPath(type: type, shouldDropFirst: shouldDropFirst)
-  }
-  
+
   public static func catmullRomPath(
     points: [CGPoint],
     tension: CGFloat = 0.5,

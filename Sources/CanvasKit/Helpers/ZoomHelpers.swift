@@ -1,8 +1,8 @@
 //
-//  BFP+Zoom.swift
+//  ZoomHelpers.swift
 //  BaseHelpers
 //
-//  Created by Dave Coleman on 10/8/2025.
+//  Created by Dave Coleman on 8/10/2025.
 //
 
 import Foundation
@@ -102,5 +102,5 @@ extension BinaryFloatingPoint {
     let transformedZoom = pow(normalizedZoom, sensitivity)
     return transformedZoom * (zoomRange.upperBound - zoomRange.lowerBound) + zoomRange.lowerBound
   }
-
+  
 }

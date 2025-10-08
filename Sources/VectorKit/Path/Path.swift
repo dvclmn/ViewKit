@@ -14,6 +14,15 @@ extension Path {
       path.addRect(CGRect(origin: .zero, size: size))
     }
   }
+  
+  public init(
+    fromPoints points: [CGPoint],
+    type: PathType = .line,
+    shouldDropFirst: Bool = true
+  ) {
+    self = points.toPath(type: type, shouldDropFirst: shouldDropFirst)
+  }
+  
 
   public static func createGrid(
     columns: Int,

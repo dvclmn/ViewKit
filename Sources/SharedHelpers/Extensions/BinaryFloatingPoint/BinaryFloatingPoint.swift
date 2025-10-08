@@ -24,10 +24,8 @@ extension BinaryFloatingPoint {
     self = incrementing(by: amount, in: range)
   }
 
-  public func hueWrapped() -> Self {
-    let value = self.truncatingRemainder(dividingBy: 1.0)
-    return value < 0 ? value + 1.0 : value
-  }
+  public var toDouble: Double { Double(self) }
+  public var toFloat: Float { Float(self) }
 
 //  public var toUnitInterval: Double { return Double(self) }
 
