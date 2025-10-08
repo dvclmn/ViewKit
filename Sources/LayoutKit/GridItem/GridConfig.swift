@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StringKit
 
 /// Note: this is specifically geared toward `LazyVGrid`,
 /// `LazyHGrid` is not supported.

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StringKit
 
 public struct ColumnConfig: Sendable {
   

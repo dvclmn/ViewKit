@@ -6,7 +6,7 @@
 //
 
 import AppKit
-import BaseHelpers
+import SharedHelpers
 
 /// Manages trackpad touches and maintains their history for velocity calculations
 class TrackpadTouchManager {
@@ -91,7 +91,6 @@ class TrackpadTouchManager {
     //    let eventData = TouchEventData(touches: updatedTouches, pressure: pressure)
     //    return eventData
   }
-
 
   private func updateTouchHistory(
     touchId: Int,

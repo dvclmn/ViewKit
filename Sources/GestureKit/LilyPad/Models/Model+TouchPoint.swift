@@ -6,9 +6,9 @@
 //
 
 import AppKit
-import BaseHelpers
-import Foundation
-//import MemberwiseInit
+import StringShared
+import CurveKit
+//import StringKit
 
 public struct TouchPoint: TimestampedPosition, Identifiable, Sendable, Hashable, Equatable, Codable {
   public let id: Int

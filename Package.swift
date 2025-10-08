@@ -18,7 +18,7 @@ let package = Package(
         "EnumMacros",
         "Persistable",
         "StringKit",
-//        "ToolKit",
+        //        "ToolKit",
       ]
     ),
     .executable(
@@ -26,6 +26,7 @@ let package = Package(
       targets: ["BaseMacrosClient"]
     ),
     .library(name: "ToolKit", targets: ["ToolKit"]),
+    .library(name: "StringShared", targets: ["StringShared"]),
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
     .library(
       name: "BaseUI",
@@ -81,7 +82,7 @@ let package = Package(
       name: "BaseUI",
       dependencies: [
         .dep(.baseHelpers),
-        .dep(.sharedHelpers),
+        .dep(.stringShared),
         .dep(.curveKit),
         .dep(.enumMacros),
         .dep(.colourKit),
@@ -94,8 +95,12 @@ let package = Package(
     .target(
       name: "CanvasKit",
       dependencies: [
-        .dep(.sharedHelpers)
-      ], ),
+        .dep(.baseUI),
+        .dep(.sharedHelpers),
+        .dep(.gestureKit),
+        .sharing,
+      ],
+    ),
 
     .target(
       name: "ColourKit",
@@ -122,18 +127,34 @@ let package = Package(
         .dep(.sharedHelpers),
       ]
     ),
-    .target(name: "GestureKit"),
+    .target(
+      name: "StringShared",
+      dependencies: [
+        .dep(.sharedHelpers),
+        .dep(.stringKit),
+      ],
+    ),
+    .target(
+      name: "GestureKit",
+      dependencies: [
+        .dep(.stringShared),
+        .dep(.layoutKit),
+//        .dep(.sharedHelpers),
+        .dep(.curveKit),
+      ]
+    ),
     .target(
       name: "GraphicsKit",
       dependencies: [
-        .dep(.sharedHelpers)
+        .dep(.sharedHelpers),
       ]
     ),
-
     .target(
       name: "LayoutKit",
       dependencies: [
-        .dep(.sharedHelpers),
+        .dep(.stringShared),
+//        .dep(.sharedHelpers),
+//        .dep(.stringKit),
         .dep(.enumMacros),
       ]
     ),
@@ -224,7 +245,10 @@ enum BaseModule {
   case motionKit
   case sharedHelpers
   case stringKit
-  //  case styleKit
+  
+  /// Export modules
+  case toolKit
+  case stringShared
 
   var name: String {
     switch self {
@@ -243,6 +267,8 @@ enum BaseModule {
       case .motionKit: "MotionKit"
       case .sharedHelpers: "SharedHelpers"
       case .stringKit: "StringKit"
+      case .toolKit: "ToolKit"
+      case .stringShared: "StringShared"
     //      case .styleKit: "StyleKit"
     }
   }

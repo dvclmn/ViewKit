@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 10/8/2025.
 //
 
-import BaseHelpers
+import SharedHelpers
 import SwiftUI
 
 enum AxisMode {

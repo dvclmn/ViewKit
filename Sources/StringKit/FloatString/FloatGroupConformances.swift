@@ -46,6 +46,24 @@ extension UnitPoint: FloatGroup {
   }
 }
 
+extension CGVector: FloatGroup {
+//  public var valueA: Double { dx }
+//  public var valueB: Double { dy }
+//  public var labelA: PropertyLabel { .init("DX") }
+//  public var labelB: PropertyLabel { .init("DY") }
+
+  public var separators: Separators {
+    Separators(propertyLabel: ": ", component: " x ")
+  }
+  
+  public var components: [Component] {
+    [
+      Component("DX", value: self.dx),
+      Component("DY", value: self.dy),
+    ]
+  }
+}
+
 //extension CGRect: FloatGroup {
 //  public var separators: Separators {
 //    Separators(propertyLabel: ": ", component: ", ")
@@ -84,13 +102,7 @@ extension UnitPoint: FloatGroup {
 //  public var labelA: PropertyLabel { .init("W", "Width") }
 //  public var labelB: PropertyLabel { .init("H", "Height") }
 //}
-//extension CGVector: FloatDisplay {
-//  public var valueA: Double { dx }
-//  public var valueB: Double { dy }
-//  public var labelA: PropertyLabel { .init("DX") }
-//  public var labelB: PropertyLabel { .init("DY") }
-//
-//}
+
 //extension UnitPoint: FloatDisplay {
 //  public var valueA: Double { x }
 //  public var valueB: Double { y }
