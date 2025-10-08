@@ -12,7 +12,6 @@ import SwiftUI
 ///
 /// ```
 /// import SwiftUI
-/ // <- Import this
 ///
 /// @main
 /// struct ExampleApp: App {

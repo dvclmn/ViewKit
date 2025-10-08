@@ -12,7 +12,9 @@ import SwiftSyntaxMacros
 struct BaseMacrosPlugin: CompilerPlugin {
   let providingMacros: [Macro.Type] = [
     PersistableMacro.self,
-    AttributeMacro.self,
+    SampleBuilderMacro.self,
+    SampleBuilderItemMacro.self,
+//    AttributeMacro.self,
     CaseDetectionMacro.self,
     MetaEnumMacro.self,
     SetOfOptionsMacro.self,

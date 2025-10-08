@@ -10,7 +10,14 @@ let package = Package(
     .macOS("14.0"),
   ],
   products: [
-    .library(name: "BaseMacros", targets: ["EnumMacros", "Persistable"]),
+    .library(
+      name: "BaseMacros",
+      targets: [
+        "EnumMacros",
+        "Persistable",
+        "SampleDataMacro",
+      ]
+    ),
     .executable(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
@@ -53,7 +60,7 @@ let package = Package(
       name: "BaseNetworking",
       dependencies: [
         .dep(.stringShared),
-        .product(name: "KeychainSwift", package: "keychain-swift")
+        .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
     .target(
@@ -142,7 +149,6 @@ let package = Package(
     .target(
       name: "ToolKit",
       dependencies: [
-        //        .dep(.baseHelpers),
         .dep(.enumMacros),
         .dep(.baseUI),
         .dep(.layoutKit),
@@ -172,11 +178,20 @@ let package = Package(
       dependencies: ["BaseMacros"],
       path: .macroDecl("EnumMacros")
     ),
+    .target(
+      name: "SampleDataMacro",
+      dependencies: [
+        "BaseMacros",
+        .dep(.sharedHelpers),
+      ],
+      path: .macroDecl("SampleDataMacro")
+    ),
     .executableTarget(
       name: "BaseMacrosClient",
       dependencies: [
         "EnumMacros",
         "Persistable",
+        "SampleDataMacro",
       ],
       path: .macrosSource + "/BaseMacrosClient",
     ),

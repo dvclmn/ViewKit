@@ -25,8 +25,8 @@ public macro Persistable() = #externalMacro(
   type: "PersistableMacro"
 )
 
-@attached(peer)
-public macro Attribute(originalName: String) = #externalMacro(
-  module: "BaseMacros",
-  type: "AttributeMacro"
-)
+//@attached(peer)
+//public macro Attribute(originalName: String) = #externalMacro(
+//  module: "BaseMacros",
+//  type: "AttributeMacro"
+//)
