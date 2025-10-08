@@ -11,12 +11,6 @@ import SharedHelpers
 
 extension CGPoint {
 
-  public func removingPanAndZoom(pan: CGSize, zoom: CGFloat) -> CGPoint {
-    let unPanned: CGPoint = self - pan
-    let unZoomed: CGPoint = unPanned / zoom
-    return unZoomed
-  }
-
   // MARK: - UnitPoint
   public func debugColour(unitPoint: UnitPoint, in size: CGSize) -> Color {
     guard self.isNear(unitPoint: unitPoint, in: size) else {

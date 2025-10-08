@@ -29,13 +29,3 @@ public func scale(
   let result = value * controlSize.scaleFactor * strength
   return result.clamped(min)
 }
-
-//extension Bool {
-//  public func compact<T: BinaryFloatingPoint>(
-//    _ value: T,
-//    by strength: ReductionStrength = .standard
-//  ) -> T {
-//    let reduced = value * T(strength.rawValue)
-//    return self ? reduced : value
-//  }
-//}

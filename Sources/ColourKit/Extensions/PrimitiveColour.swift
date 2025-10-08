@@ -23,14 +23,15 @@ public enum PrimitiveColour: String, Identifiable, CaseIterable, Sendable {
   case white
   case none
 
-  public init?(fromSwatch swatch: Swatch) {
-    let lower = swatch.rawValue.lowercased()
-
-    guard let match = PrimitiveColour.allCases.first(where: { lower.contains($0.rawValue) }) else {
-      return nil
-    }
-    self = match
-  }
+  #warning("Turn back on if Swatch survives")
+//  public init?(fromSwatch swatch: Swatch) {
+//    let lower = swatch.rawValue.lowercased()
+//
+//    guard let match = PrimitiveColour.allCases.first(where: { lower.contains($0.rawValue) }) else {
+//      return nil
+//    }
+//    self = match
+//  }
   public var name: String { rawValue.capitalized }
 
   public var id: String { rawValue }
@@ -51,11 +52,11 @@ public enum PrimitiveColour: String, Identifiable, CaseIterable, Sendable {
       case .none: Color.clear
     }
   }
-  
+
   public func codableColour(_ env: EnvironmentValues?) -> CodableColour {
     return swiftUIColour.toCodable(env)
   }
-  
+
   public var toSystemColour: SystemColour? {
     SystemColour(rawValue: self.rawValue)
   }

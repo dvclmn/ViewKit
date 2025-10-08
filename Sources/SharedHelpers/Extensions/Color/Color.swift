@@ -72,6 +72,6 @@ extension Color {
       opacity: randomOpacity ? .random(in: 0...1) : 1
     )
   }
-  public var toNSColour: NSUIColor { NSUIColor(self) }
+//  public var toNSColour: NSUIColor { NSUIColor(self) }
 }
 

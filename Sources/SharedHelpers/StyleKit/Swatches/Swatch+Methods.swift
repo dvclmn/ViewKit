@@ -11,21 +11,21 @@ extension Swatch {
 
 //  public var id: String { rawValue }
   
-  public func toCodableColour(_ environment: EnvironmentValues?) -> CodableColour {
-    return CodableColour(
-      resolved: swiftUIColour.resolve(in: CodableColour.environmentOrDefault(environment)),
-      name: name
-    )
-  }
+//  public func toCodableColour(_ environment: EnvironmentValues?) -> CodableColour {
+//    return CodableColour(
+//      resolved: swiftUIColour.resolve(in: CodableColour.environmentOrDefault(environment)),
+//      name: name
+//    )
+//  }
 
-  public func toRGB(_ environment: EnvironmentValues) -> RGBColour {
-    let rgb = RGBColour(
-      colour: self.swiftUIColour,
-      environment: environment,
-      name: self.name
-    )
-    return rgb
-  }
+//  public func toRGB(_ environment: EnvironmentValues) -> RGBColour {
+//    let rgb = RGBColour(
+//      colour: self.swiftUIColour,
+//      environment: environment,
+//      name: self.name
+//    )
+//    return rgb
+//  }
 
   public var swiftUIColour: Color {
     #warning("Temporarily unavailable")
@@ -74,9 +74,9 @@ extension Swatch {
     return grouped
   }
 
-  public var primitiveColour: PrimitiveColour? {
-    PrimitiveColour(fromSwatch: self)
-  }
+//  public var primitiveColour: PrimitiveColour? {
+//    PrimitiveColour(fromSwatch: self)
+//  }
 
   public var primitiveColourName: String {
     return primitiveColour?.rawValue ?? "Unknown"

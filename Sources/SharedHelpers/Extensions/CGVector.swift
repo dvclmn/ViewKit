@@ -9,6 +9,70 @@ import Foundation
 
 extension CGVector {
   
+  
+  
+  /// Performs vector magnitude limiting while preserving direction
+  /// Could apply to:
+  /// - Game movement systems (limiting player/NPC speeds)
+  /// - Physics simulations (terminal velocity, speed limits)
+  /// - Animation easing and smoothing
+  /// - Signal processing (amplitude limiting)
+  /// - Any system needing bounded vector magnitudes
+  public func clampVelocity(
+    maxVelocity: Double = 10.0
+  ) -> CGVector {
+    
+    guard magnitude > maxVelocity else { return self }
+    
+    /// Scale down to max velocity while preserving direction
+    let scale = maxVelocity / magnitude
+    
+    return CGVector(
+      dx: self.dx * scale,
+      dy: self.dy * scale
+    )
+  }
+  
+  public var magnitude: CGFloat {
+    return sqrt(dx * dx + dy * dy)
+  }
+  
+  public static func between(
+    _ from: CGPoint,
+    _ to: CGPoint,
+    dt: TimeInterval
+  ) -> CGVector {
+    guard dt > 0 else { return .zero }
+    return CGVector(
+      dx: (to.x - from.x) / dt,
+      dy: (to.y - from.y) / dt
+    )
+  }
+  
+  /// Velocity vs. Speed
+  ///
+  /// Velocity is a vector (has direction and magnitude, e.g., `dx` and `dy` in 2D space).
+  /// Speed is the scalar magnitude of velocity (how fast, regardless of direction).
+  ///
+  /// The below takes the Euclidean norm (or "length") of the velocity vector,
+  /// which is mathematically defined as: `speed = √(dx² + dy²)`
+  ///
+  /// Example usage:
+  /// ```
+  /// let velocity = CGVector(dx: 3.0, dy: 4.0)
+  /// print(velocity.speed) // 5.0 (classic 3-4-5 triangle)
+  ///
+  /// ```
+  public var speed: CGFloat {
+    return sqrt(dx * dx + dy * dy)
+  }
+  
+  public func normalisedSpeed(
+    maxSpeed: CGFloat = 1000.0
+  ) -> CGFloat {
+    return min(speed / maxSpeed, 1.0)
+  }
+  
 //  public var displayString: String {
 //    self.displayString()
 //  }
@@ -91,66 +155,4 @@ extension CGVector {
 //    return clampVelocity(finalVelocity)
 //  }
 
-
-  /// Performs vector magnitude limiting while preserving direction
-  /// Could apply to:
-  /// - Game movement systems (limiting player/NPC speeds)
-  /// - Physics simulations (terminal velocity, speed limits)
-  /// - Animation easing and smoothing
-  /// - Signal processing (amplitude limiting)
-  /// - Any system needing bounded vector magnitudes
-  public func clampVelocity(
-    maxVelocity: Double = 10.0
-  ) -> CGVector {
-
-    guard magnitude > maxVelocity else { return self }
-
-    /// Scale down to max velocity while preserving direction
-    let scale = maxVelocity / magnitude
-
-    return CGVector(
-      dx: self.dx * scale,
-      dy: self.dy * scale
-    )
-  }
-
-  public var magnitude: CGFloat {
-    return sqrt(dx * dx + dy * dy)
-  }
-
-  public static func between(
-    _ from: CGPoint,
-    _ to: CGPoint,
-    dt: TimeInterval
-  ) -> CGVector {
-    guard dt > 0 else { return .zero }
-    return CGVector(
-      dx: (to.x - from.x) / dt,
-      dy: (to.y - from.y) / dt
-    )
-  }
-
-  /// Velocity vs. Speed
-  ///
-  /// Velocity is a vector (has direction and magnitude, e.g., `dx` and `dy` in 2D space).
-  /// Speed is the scalar magnitude of velocity (how fast, regardless of direction).
-  ///
-  /// The below takes the Euclidean norm (or "length") of the velocity vector,
-  /// which is mathematically defined as: `speed = √(dx² + dy²)`
-  ///
-  /// Example usage:
-  /// ```
-  /// let velocity = CGVector(dx: 3.0, dy: 4.0)
-  /// print(velocity.speed) // 5.0 (classic 3-4-5 triangle)
-  ///
-  /// ```
-  public var speed: CGFloat {
-    return sqrt(dx * dx + dy * dy)
-  }
-  
-  public func normalisedSpeed(
-    maxSpeed: CGFloat = 1000.0
-  ) -> CGFloat {
-    return min(speed / maxSpeed, 1.0)
-  }
 }
