@@ -86,6 +86,7 @@ let package = Package(
         .targetDep(.sharedHelpers),
         .targetDep(.curveKit),
         .targetDep(.colourKit),
+        "PopupKit",
         .sharing,
         .product(name: "NukeUI", package: "Nuke"),
       ],
