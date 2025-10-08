@@ -14,9 +14,11 @@ let package = Package(
       name: "BaseHelpers",
       targets: [
         "BaseHelpers",
-        "EnumMacros",  // AssociatedValues, CaseDetection, MetaEnum & SetOfOptions
+        // AssociatedValues, CaseDetection, MetaEnum & SetOfOptions
+        "EnumMacros",
         "Persistable",
         "StringKit",
+        "ToolKit",
       ]
     ),
     .executable(
@@ -106,9 +108,22 @@ let package = Package(
         .dep(.sharedHelpers)
       ]
     ),
+    .target(
+      name: "ToolKit",
+      dependencies: [
+        .dep(.baseHelpers),
+        .dep(.enumMacros),
+        .dep(.baseUI),
+        .dep(.layoutKit),
+        .dep(.stringKit),
+        .dep(.sharedHelpers),
+      ]
+    ),
     .target(name: "GestureKit"),
     .target(name: "GraphicsKit", dependencies: [.dep(.sharedHelpers)]),
-    .target(name: "LayoutKit"),
+    
+      .target(name: "LayoutKit"),
+    
     .target(name: "MotionKit"),
     //    .target(
     //      name: "SearchKit",
@@ -117,16 +132,15 @@ let package = Package(
     //      ]
     //    ),
     .target(name: "SharedHelpers"),
-    //    .target(name: "WaveKit", dependencies: [.dep(.curveKit)]),
+
     .target(
       name: "StringKit",
       dependencies: [
         .nsui,
         .dep(.sharedHelpers),
+        .dep(.enumMacros),
       ]
     ),
-    //    .target(name: "StyleKit"),
-    //    .target(name: "Wrecktangle"),
 
     // MARK: - BaseMacro targets
     .macro(
