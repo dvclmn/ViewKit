@@ -7,6 +7,7 @@
 
 import SharedHelpers
 import SwiftUI
+import LayoutKit
 
 extension Flexi {
   public struct GridItem: View {

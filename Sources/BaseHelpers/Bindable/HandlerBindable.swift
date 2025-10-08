@@ -7,6 +7,7 @@
 
 // ⚠️ Has dependancy: `updateIfChanged`
 import SwiftUI
+import SharedHelpers
 
 extension View {
   public func bind<Value: Equatable>(

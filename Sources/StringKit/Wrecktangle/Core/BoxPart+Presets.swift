@@ -5,9 +5,6 @@
 //  Created by Dave Coleman on 12/9/2024.
 //
 
-import BaseHelpers
-
-
 public extension BoxCore.PartType {
   
   /// This should be able to replace the old method, using 'archetype' glyphs

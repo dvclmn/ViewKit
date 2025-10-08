@@ -21,19 +21,16 @@ public struct MultilineString {
   }
 
   public init(_ string: String) {
-    self.init(string.lines.map { Array($0) })
+    self.init(string.substringLines().map { Array($0) })
   }
-
 
 }
 
 extension MultilineString {
 
-
   public var string: String {
     grid.map { String($0) }.joined(separator: "\n")
   }
-
 
   public var height: Int {
     grid.count
@@ -89,7 +86,6 @@ extension MultilineString: Sequence {
   public func enumerated() -> EnumeratedSequence<[[Character]]> {
     grid.enumerated()
   }
-
 
   mutating func append(_ row: [Character]) {
     grid.append(row)

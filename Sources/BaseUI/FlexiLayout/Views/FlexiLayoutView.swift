@@ -7,6 +7,7 @@
 
 //import BaseHelpers
 import SharedHelpers
+import LayoutKit
 import SwiftUI
 
 public enum Flexi<Content, Item>

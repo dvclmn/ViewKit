@@ -30,7 +30,7 @@ extension KeyboardShortcut {
     modifierStyle: KeyboardElementDisplayStyle = .symbolLiteral,
   ) -> String {
     let modifiers: String = modifierStyle.isSymbol ? modifiers.symbols : modifiers.names
-    let key: String = keyStyle.isSymbol ? key.symbolLiteral.toString.uppercased() : key.name(isAbbreviated: keyStyle.isAbbreviated)
+    let key: String = keyStyle.isSymbol ? String(key.symbolLiteral).uppercased() : key.name(isAbbreviated: keyStyle.isAbbreviated)
     return modifiers + key
   }
 }

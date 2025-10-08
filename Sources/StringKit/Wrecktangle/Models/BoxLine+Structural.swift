@@ -5,8 +5,6 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-import BaseHelpers
-
 public extension BoxCore.BoxLine {
 
   struct StructuralContent: LineContent {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedHelpers
 
 public typealias BuilderElement = DisplayElement
 //public typealias BuilderElement = StyledString

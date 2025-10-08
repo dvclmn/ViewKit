@@ -34,7 +34,7 @@ public struct BoxCore {
 
 extension BoxCore: CustomStringConvertible {
   public var description: String {
-    self.attributedString.string
+    self.attributedString.toString
   }
 }
 

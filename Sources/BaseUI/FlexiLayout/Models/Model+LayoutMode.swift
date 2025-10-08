@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SharedHelpers
+import LayoutKit
 
 public protocol ListLayoutMode: View {}
 public protocol GridLayoutMode: View {}

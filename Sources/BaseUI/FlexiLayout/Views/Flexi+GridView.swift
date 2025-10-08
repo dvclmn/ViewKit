@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 21/9/2025.
 //
 
-import BaseHelpers
-import SwiftUI
 import SharedHelpers
+import SwiftUI
+import LayoutKit
 
 extension Flexi {
 
@@ -109,13 +109,13 @@ extension Flexi.GridView {
       DummyContent.Strings.paragraphs[3]
       Indented("## Flexi+GridView") {
         Labeled("Column count", value: self.columnCount?.toString)
-//        Labeled("Grid config", value: config.description)
+        //        Labeled("Grid config", value: config.description)
         config.description
       }
     }
     .markdown()
-//    .output
-//    .monospaced(.callout)
+    //    .output
+    //    .monospaced(.callout)
 
   }
 

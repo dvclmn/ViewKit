@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 8/10/2025.
 //
 
-import Foundation
+import SwiftUI
 import SharedHelpers
 
 extension EnvironmentValues {

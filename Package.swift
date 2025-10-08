@@ -18,13 +18,14 @@ let package = Package(
         "EnumMacros",
         "Persistable",
         "StringKit",
-        "ToolKit",
+//        "ToolKit",
       ]
     ),
     .executable(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
     ),
+    .library(name: "ToolKit", targets: ["ToolKit"]),
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
     .library(
       name: "BaseUI",
@@ -62,7 +63,7 @@ let package = Package(
       name: "BaseHelpers",
       dependencies: [
         .dep(.sharedHelpers),
-        //        .dep(.macros),
+        .dep(.enumMacros),
         .dep(.curveKit),
         .dep(.colourKit),
         .product(name: "NSUI", package: "nsui"),
