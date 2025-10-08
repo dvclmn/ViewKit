@@ -18,10 +18,6 @@ let package = Package(
         "Persistable",
       ]
     ),
-    .library(
-      name: "BaseMacros",
-      targets: [],
-    ),
     .executable(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
@@ -136,39 +132,24 @@ let package = Package(
 
     // MARK: - BaseMacro targets
     .macro(
-      name: "BaseMacrosGuts",
+      name: "BaseMacros",
       dependencies: [
         .targetDep(.sharedHelpers),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
-      path: "Sources/BaseMacrosSources/MacroExpansions",
-    ),
-    .target(
-      name: "AssociatedValues",
-      dependencies: ["BaseMacrosGuts"],
-      path: .macroDecl("AssociatedValues")
-    ),
-    .target(
-      name: "CaseDetection",
-      dependencies: ["BaseMacrosGuts"],
-      path: .macroDecl("CaseDetection")
-    ),
-    .target(
-      name: "MetaEnum",
-      dependencies: ["BaseMacrosGuts"],
-      path: .macroDecl("MetaEnum")
+      path: "Sources/BaseMacros/MacroExpansions",
     ),
     .target(
       name: "Persistable",
-      dependencies: ["BaseMacrosGuts"],
+      dependencies: ["BaseMacros"],
       path: .macroDecl("Persistable")
     ),
     .target(
-      name: "SetOfOptions",
-      dependencies: ["BaseMacrosGuts"],
-      path: .macroDecl("SetOfOptions")
+      name: "EnumMacros",
+      dependencies: ["BaseMacros"],
+      path: .macroDecl("EnumMacros")
     ),
 
     .executableTarget(
@@ -213,11 +194,11 @@ enum BaseModule {
   case graphicsKit
   case layoutKit
   case motionKit
-  case searchKit
+//  case searchKit
   case sharedHelpers
   case stringKit
   case styleKit
-  case vectorKit
+//  case vectorKit
 
   var name: String {
     switch self {
