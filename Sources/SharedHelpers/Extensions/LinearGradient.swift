@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension LinearGradient {
-  
+
   public static func rainbow(
     start: UnitPoint = .leading,
     end: UnitPoint = .trailing
@@ -19,11 +19,27 @@ extension LinearGradient {
       endPoint: end
     )
   }
-}
 
+  public static func lightFalloff(
+    _ colour: Color = .white.opacity(0.1),
+    direction: Alignment = .top,
+    falloffAmount: CGFloat = 0.9
+  ) -> LinearGradient {
+
+    LinearGradient(
+      colors: [
+        colour,
+        colour.opacity(falloffAmount.inversePercentage),
+      ],
+      startPoint: direction.toUnitPoint(),
+      endPoint: direction.opposite.toUnitPoint()
+    )
+  }
+}
 
 extension Array where Element == Color {
   public static let rainbow: [Color] = [
     .red, .orange, .yellow, .green, .blue, .indigo, .purple, .pink, .red,
   ]
+
 }
