@@ -86,7 +86,11 @@ let package = Package(
         .product(name: "NukeUI", package: "Nuke"),
       ],
     ),
-    .target(name: "CanvasKit"),
+    .target(
+      name: "CanvasKit",
+      dependencies: [
+        .dep(.sharedHelpers)
+      ], ),
 
     .target(
       name: "ColourKit",

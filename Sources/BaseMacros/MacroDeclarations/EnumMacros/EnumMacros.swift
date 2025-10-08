@@ -11,7 +11,7 @@
 // https://github.com/bernndr/swift-macros/
 @attached(member, names: arbitrary)
 public macro AssociatedValues() = #externalMacro(
-  module: "BaseMacrosGuts",
+  module: "BaseMacros",
   type: "AssociatedValuesMacro"
 )
 
@@ -20,14 +20,14 @@ public macro AssociatedValues() = #externalMacro(
 @attached(member, names: arbitrary)
 public macro CaseDetection(includesNames: Bool = false) =
 #externalMacro(
-  module: "BaseMacrosGuts",
+  module: "BaseMacros",
   type: "CaseDetectionMacro"
 )
 
 // MARK: - MetaEnum
 @attached(member, names: named(Meta))
 public macro MetaEnum() = #externalMacro(
-  module: "BaseMacrosGuts",
+  module: "BaseMacros",
   type: "MetaEnumMacro"
 )
 
@@ -60,6 +60,6 @@ public macro MetaEnum() = #externalMacro(
 @attached(member, names: arbitrary)
 @attached(extension, conformances: OptionSet, Sendable)
 public macro SetOfOptions<RawType>() = #externalMacro(
-  module: "BaseMacrosGuts",
+  module: "BaseMacros",
   type: "SetOfOptionsMacro"
 )

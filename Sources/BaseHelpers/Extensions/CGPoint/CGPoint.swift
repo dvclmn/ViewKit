@@ -396,17 +396,7 @@ extension CGPoint {
     return pointAlong(from: p1, to: p2, t: 0.5)
   }
 
-  public func applyPanAndZoom(pan: CGSize, zoom: CGFloat) -> CGPoint {
-    let scaled = CGPoint(
-      x: x * zoom,
-      y: y * zoom
-    )
-    let translated = CGPoint(
-      x: scaled.x + pan.width,
-      y: scaled.y + pan.height
-    )
-    return translated
-  }
+
 
   /// Find a point along the line between two points
   /// Example usage

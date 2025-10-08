@@ -1,11 +1,12 @@
 //
-//  Model+ResizePoint.swift
+//  ResizePoint.swift
 //  BaseHelpers
 //
-//  Created by Dave Coleman on 6/8/2025.
+//  Created by Dave Coleman on 8/10/2025.
 //
 
-import SwiftUI
+import Foundation
+import SharedHelpers
 
 public enum ResizePoint: String, CaseIterable, Identifiable {
   case topLeading
@@ -21,7 +22,7 @@ public enum ResizePoint: String, CaseIterable, Identifiable {
 }
 
 extension ResizePoint {
-  
+
   public var name: String { rawValue }
 
   public init(fromUnitPoint unitPoint: UnitPoint) {
@@ -75,7 +76,7 @@ extension ResizePoint {
     }
   }
 
-//#if canImport(AppKit)
+  //#if canImport(AppKit)
   public var toCompatPointerStyle: PointerStyleCompatible {
     let style = PointerStyleCompatible.frameResize(
       position: self.toCompatFrameResizePosition,
@@ -96,5 +97,5 @@ extension ResizePoint {
       case .bottom: .bottom
     }
   }
-//  #endif
+  //  #endif
 }
