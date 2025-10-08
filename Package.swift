@@ -60,10 +60,9 @@ let package = Package(
       name: "BaseHelpers",
       dependencies: [
         .targetDep(.sharedHelpers),
-        .targetDep(.macros),
+//        .targetDep(.macros),
         .targetDep(.curveKit),
         .targetDep(.colourKit),
-        .targetDep(.vectorKit),
         .product(name: "NSUI", package: "nsui"),
       ],
       //      resources: [.process("Assets.xcassets")],
@@ -82,8 +81,8 @@ let package = Package(
         .targetDep(.sharedHelpers),
         .targetDep(.curveKit),
         .targetDep(.colourKit),
-        "PopupKit",
         .sharing,
+        .product(name: "IfritStatic", package: "Ifrit"),
         .product(name: "NukeUI", package: "Nuke"),
       ],
     ),
@@ -101,22 +100,23 @@ let package = Package(
       name: "CurveKit",
       dependencies: [
         //        .targetDep(.colourKit),
-        .targetDep(.vectorKit)
       ]
     ),
     .target(name: "GestureKit"),
     .target(name: "GraphicsKit"),
+    .target(name: "LayoutKit"),
     .target(name: "MotionKit"),
-    .target(name: "PopupKit"),
-    .target(
-      name: "SearchKit",
-      dependencies: [
-        .product(name: "IfritStatic", package: "Ifrit")
-      ]),
+//    .target(
+//      name: "SearchKit",
+//      dependencies: [
+//
+//      ]
+//    ),
     .target(name: "SharedHelpers"),
-    .target(name: "WaveKit", dependencies: [.targetDep(.curveKit)]),
-    .target(name: "VectorKit"),
-    .target(name: "Wrecktangle"),
+//    .target(name: "WaveKit", dependencies: [.targetDep(.curveKit)]),
+    .target(name: "StringKit"),
+    .target(name: "StyleKit"),
+//    .target(name: "Wrecktangle"),
 
     // MARK: - BaseMacro targets
     .macro(
@@ -139,15 +139,11 @@ let package = Package(
       dependencies: ["BaseMacros"],
       path: .macroDecl("EnumMacros")
     ),
-
     .executableTarget(
       name: "BaseMacrosClient",
       dependencies: [
-        "AssociatedValues",
-        "CaseDetection",
-        "MetaEnum",
+        "EnumMacros",
         "Persistable",
-        "SetOfOptions",
       ],
       path: .macrosSource + "/BaseMacrosClient",
     ),
@@ -193,6 +189,8 @@ enum BaseModule {
   var name: String {
     switch self {
       case .baseHelpers: "BaseHelpers"
+      case .enumMacros: "EnumMacros"
+      case .persistable: "Persistable"
 //      case .macros: "BaseMacrosGuts"  // Guts?
       case .networking: "BaseNetworking"
       case .baseUI: "BaseUI"
