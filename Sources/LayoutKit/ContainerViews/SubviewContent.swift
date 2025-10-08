@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 9/6/2025.
 //
 
-import BaseHelpers
 import SwiftUI
+import SharedHelpers
 
 @available(macOS 15.0, iOS 18.0, *)
 public struct SubviewContent: View {

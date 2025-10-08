@@ -8,7 +8,6 @@
 #if os(macOS)
 
 import SwiftUI
-import BaseHelpers
 import SharedHelpers
 
 extension Flexi {

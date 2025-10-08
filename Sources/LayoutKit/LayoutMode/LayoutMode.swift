@@ -1,12 +1,16 @@
 //
-//  Model+LayoutType.swift
-//  BaseComponents
+//  LayoutMode.swift
+//  BaseHelpers
 //
-//  Created by Dave Coleman on 20/9/2025.
+//  Created by Dave Coleman on 8/10/2025.
 //
 
-import SwiftUI
+import Foundation
 import SharedHelpers
+
+extension EnvironmentValues {
+  @Entry public var layoutType: LayoutType = .passthrough
+}
 
 public enum LayoutType {
   case hstack(alignment: VerticalAlignment = .center)
@@ -66,46 +70,46 @@ public enum LayoutType {
   }
 }
 
+#warning("Is the below still useful?")
+//public struct LayoutToggle: View {
+//
+//  @Binding var mode: LayoutMode
+//
+//  public init(_ mode: Binding<LayoutMode>) {
+//    self._mode = mode
+//  }
+//  public var body: some View {
+//
+//    Button {
+//      mode.moveForward()
+//    } label: {
+//      MaybeLabel(mode.label)
+//    }
+//
+//  }
+//}
+
 public enum LayoutMode: String, CaseCyclable, CaseTogglable, Codable, Sendable, RawRepresentable {
   public static var defaultCase: LayoutMode { .list }
-  
+
   case grid
   case list
-  
+
   public var label: QuickLabel {
     QuickLabel(rawValue.capitalized, icon: .symbol(iconString))
   }
-  
+
   public var iconString: String {
     switch self {
       case .grid: "circle.grid.2x2"
       case .list: "checklist.unchecked"
     }
   }
-  
+
   public var isGrid: Bool {
-     self == .grid
+    self == .grid
   }
   public var isList: Bool {
     self == .list
   }
 }
-
-#warning("Is the below still useful?")
-//public struct LayoutToggle: View {
-//  
-//  @Binding var mode: LayoutMode
-//  
-//  public init(_ mode: Binding<LayoutMode>) {
-//    self._mode = mode
-//  }
-//  public var body: some View {
-//    
-//    Button {
-//      mode.moveForward()
-//    } label: {
-//      MaybeLabel(mode.label)
-//    }
-//    
-//  }
-//}

@@ -6,10 +6,8 @@
 //
 
 import Foundation
-import CaseDetection
+import EnumMacros
 
-//extension Flexi {
-//}
 @CaseDetection
 public enum SelectionMode: Sendable {
   case single

@@ -5,9 +5,6 @@
 //  Created by Dave Coleman on 29/9/2025.
 //
 
-import BaseHelpers
-import CaseDetection
-import Sharing
 import SwiftUI
 
 @Observable

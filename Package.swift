@@ -82,7 +82,9 @@ let package = Package(
         .dep(.baseHelpers),
         .dep(.sharedHelpers),
         .dep(.curveKit),
+        .dep(.enumMacros),
         .dep(.colourKit),
+        .dep(.layoutKit),
         .sharing,
         .product(name: "IfritStatic", package: "Ifrit"),
         .product(name: "NukeUI", package: "Nuke"),
@@ -120,10 +122,21 @@ let package = Package(
       ]
     ),
     .target(name: "GestureKit"),
-    .target(name: "GraphicsKit", dependencies: [.dep(.sharedHelpers)]),
-    
-      .target(name: "LayoutKit"),
-    
+    .target(
+      name: "GraphicsKit",
+      dependencies: [
+        .dep(.sharedHelpers)
+      ]
+    ),
+
+    .target(
+      name: "LayoutKit",
+      dependencies: [
+        .dep(.sharedHelpers),
+        .dep(.enumMacros),
+      ]
+    ),
+
     .target(name: "MotionKit"),
     //    .target(
     //      name: "SearchKit",

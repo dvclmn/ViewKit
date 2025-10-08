@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 5/9/2025.
 //
 
-import BaseHelpers
 import SwiftUI
+import SharedHelpers
 
 public protocol ListLayoutMode: View {}
 public protocol GridLayoutMode: View {}

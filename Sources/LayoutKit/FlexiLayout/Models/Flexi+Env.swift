@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BaseHelpers
+import SharedHelpers
 
 extension EnvironmentValues {
   @Entry public var layoutMode: LayoutMode? = nil

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SharedHelpers
 
 public enum ExampleTab: String, Pickable, Shortcuttable {
   public static let pickerLabel: QuickLabel = QuickLabel("Example Tab")

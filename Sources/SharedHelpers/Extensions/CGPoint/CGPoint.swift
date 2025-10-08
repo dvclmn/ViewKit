@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import SharedHelpers
-
 
 extension CGPoint {
 
@@ -347,19 +345,17 @@ extension CGPoint {
     return CGRect(origin: origin, size: size)
   }
 
-
-
   public var toCGSize: CGSize {
     return CGSize(width: self.x, height: self.y)
   }
 
-//  @available(*, deprecated, message: "Not sure this makes sense, consider revising.")
-//  public func clamp(toMax maxValue: CGFloat) -> CGPoint {
-//    return CGPoint(
-//      x: max(-maxValue, min(maxValue, self.x)),
-//      y: max(-maxValue, min(maxValue, self.y))
-//    )
-//  }
+  //  @available(*, deprecated, message: "Not sure this makes sense, consider revising.")
+  //  public func clamp(toMax maxValue: CGFloat) -> CGPoint {
+  //    return CGPoint(
+  //      x: max(-maxValue, min(maxValue, self.x)),
+  //      y: max(-maxValue, min(maxValue, self.y))
+  //    )
+  //  }
 
   public func delta(
     from lastPosition: CGPoint,
@@ -395,8 +391,6 @@ extension CGPoint {
   ) -> CGPoint {
     return pointAlong(from: p1, to: p2, t: 0.5)
   }
-
-
 
   /// Find a point along the line between two points
   /// Example usage
@@ -475,8 +469,6 @@ extension CGPoint {
   public func pointAlong(to end: CGPoint, distance: CGFloat) -> CGPoint {
     return CGPoint.pointAlong(from: self, to: end, distance: distance)
   }
-
- 
 
 }
 

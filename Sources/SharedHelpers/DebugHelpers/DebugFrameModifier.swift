@@ -8,7 +8,6 @@
 #if DEBUG
 
 import SwiftUI
-import SharedHelpers
 
 public struct DebugFrameModifier: ViewModifier {
 

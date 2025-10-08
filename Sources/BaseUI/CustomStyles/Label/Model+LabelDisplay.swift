@@ -5,10 +5,20 @@
 //  Created by Dave Coleman on 8/7/2024.
 //
 
-import BaseHelpers
-import Foundation
+//import BaseHelpers
+import SharedHelpers
 import SwiftUI
 import CaseDetection
+
+extension EnvironmentValues {
+  
+  /// This is useful because SwiftUI exposes control over display of
+  /// icon and label elements in the form of the `LabelStyle` protocol.
+  /// So when using custom label styles, setting e.g. `labelStyle(iconOnly)`
+  /// will override the custom style. This works around that.
+  @Entry public var labelDisplay: LabelDisplay? = nil
+}
+
 
 @CaseDetection
 public enum LabelDisplay: String, CaseIterable, Identifiable, Equatable, Sendable {

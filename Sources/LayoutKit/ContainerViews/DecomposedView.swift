@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BaseHelpers
+import SharedHelpers
 
 public enum SubViewType: Sendable {
   case subview
