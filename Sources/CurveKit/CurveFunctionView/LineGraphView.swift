@@ -7,7 +7,6 @@
 
 //import BaseHelpers
 import SwiftUI
-import VectorKit
 
 public struct LineGraphView: View {
   @Environment(\.self) private var envSelf

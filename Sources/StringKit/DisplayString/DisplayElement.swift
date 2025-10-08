@@ -7,9 +7,9 @@
 
 import Foundation
 import SharedHelpers
-//import CaseDetection
+import EnumMacros
 
-//@CaseDetection(includesNames: true)
+@CaseDetection(includesNames: true)
 public enum DisplayElement {
   case text(StyledString)
   case indented(title: String?, indent: String, content: [DisplayElement])

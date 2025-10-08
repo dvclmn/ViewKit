@@ -1,23 +1,39 @@
 //
-//  Ext+CGPoint.swift
+//  Path.swift
 //  BaseHelpers
 //
-//  Created by Dave Coleman on 7/10/2025.
+//  Created by Dave Coleman on 8/10/2025.
 //
 
 import SwiftUI
 
+extension Path {
 
-public enum PathType {
-  case line
-  case smooth
+  public enum PathType {
+    case line
+    case smooth
+  }
+
+  public init(fromSize size: CGSize) {
+    self.init { path in
+      path.addRect(CGRect(origin: .zero, size: size))
+    }
+  }
+
+  public init(
+    fromPoints points: [CGPoint],
+    type: PathType = .line,
+    shouldDropFirst: Bool = true
+  ) {
+    self = points.toPath(type: type, shouldDropFirst: shouldDropFirst)
+  }
+
 }
-
 
 extension Array where Element == CGPoint {
   
   public func toPath(
-    type: PathType = .line,
+    type: Path.PathType = .line,
     shouldDropFirst: Bool = true
   ) -> Path {
     switch type {
@@ -33,6 +49,7 @@ extension Array where Element == CGPoint {
         return toSmoothPath()
     }
   }
+  
   
   /// Alternative: Smooth curved path using quadratic curves
   func toSmoothPath() -> Path {

@@ -32,7 +32,7 @@ let package = Package(
         "GraphicsKit",
         "LayoutKit",
         "MotionKit",
-        "StyleKit",
+        //        "StyleKit",
       ]
     ),
     .library(name: "CanvasKit", targets: ["CanvasKit"]),
@@ -59,10 +59,10 @@ let package = Package(
     .target(
       name: "BaseHelpers",
       dependencies: [
-        .targetDep(.sharedHelpers),
-//        .targetDep(.macros),
-        .targetDep(.curveKit),
-        .targetDep(.colourKit),
+        .dep(.sharedHelpers),
+        //        .dep(.macros),
+        .dep(.curveKit),
+        .dep(.colourKit),
         .product(name: "NSUI", package: "nsui"),
       ],
       //      resources: [.process("Assets.xcassets")],
@@ -70,17 +70,17 @@ let package = Package(
     .target(
       name: "BaseNetworking",
       dependencies: [
-        .targetDep(.baseHelpers),
+        .dep(.baseHelpers),
         .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
     .target(
       name: "BaseUI",
       dependencies: [
-        .targetDep(.baseHelpers),
-        .targetDep(.sharedHelpers),
-        .targetDep(.curveKit),
-        .targetDep(.colourKit),
+        .dep(.baseHelpers),
+        .dep(.sharedHelpers),
+        .dep(.curveKit),
+        .dep(.colourKit),
         .sharing,
         .product(name: "IfritStatic", package: "Ifrit"),
         .product(name: "NukeUI", package: "Nuke"),
@@ -91,38 +91,44 @@ let package = Package(
     .target(
       name: "ColourKit",
       dependencies: [
-        .targetDep(.sharedHelpers),
-        .targetDep(.curveKit),
+        .dep(.sharedHelpers),
+        .dep(.curveKit),
       ],
     ),
 
     .target(
       name: "CurveKit",
       dependencies: [
-        //        .targetDep(.colourKit),
+        .dep(.sharedHelpers)
       ]
     ),
     .target(name: "GestureKit"),
-    .target(name: "GraphicsKit"),
+    .target(name: "GraphicsKit", dependencies: [.dep(.sharedHelpers)]),
     .target(name: "LayoutKit"),
     .target(name: "MotionKit"),
-//    .target(
-//      name: "SearchKit",
-//      dependencies: [
-//
-//      ]
-//    ),
+    //    .target(
+    //      name: "SearchKit",
+    //      dependencies: [
+    //
+    //      ]
+    //    ),
     .target(name: "SharedHelpers"),
-//    .target(name: "WaveKit", dependencies: [.targetDep(.curveKit)]),
-    .target(name: "StringKit"),
-    .target(name: "StyleKit"),
-//    .target(name: "Wrecktangle"),
+    //    .target(name: "WaveKit", dependencies: [.dep(.curveKit)]),
+    .target(
+      name: "StringKit",
+      dependencies: [
+        .nsui,
+        .dep(.sharedHelpers),
+      ]
+    ),
+    //    .target(name: "StyleKit"),
+    //    .target(name: "Wrecktangle"),
 
     // MARK: - BaseMacro targets
     .macro(
       name: "BaseMacros",
       dependencies: [
-        .targetDep(.sharedHelpers),
+        .dep(.sharedHelpers),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
@@ -152,11 +158,14 @@ let package = Package(
 )
 // MARK: - Convenient type-safe extensions
 extension Target.Dependency {
-  static func targetDep(_ baseModule: BaseModule) -> Self {
+  static func dep(_ baseModule: BaseModule) -> Self {
     .target(name: baseModule.name)
   }
   static var sharing: Self {
     .product(name: "Sharing", package: "swift-sharing")
+  }
+  static var nsui: Self {
+    .product(name: "NSUI", package: "nsui")
   }
 }
 extension String {
@@ -169,7 +178,7 @@ extension String {
 /// List of common modules for convenience
 enum BaseModule {
   case baseHelpers
-//  case macros
+  //  case macros
   case enumMacros
   case persistable
   case networking
@@ -183,15 +192,14 @@ enum BaseModule {
   case motionKit
   case sharedHelpers
   case stringKit
-  case styleKit
-
+  //  case styleKit
 
   var name: String {
     switch self {
       case .baseHelpers: "BaseHelpers"
       case .enumMacros: "EnumMacros"
       case .persistable: "Persistable"
-//      case .macros: "BaseMacrosGuts"  // Guts?
+      //      case .macros: "BaseMacrosGuts"  // Guts?
       case .networking: "BaseNetworking"
       case .baseUI: "BaseUI"
       case .canvasKit: "CanvasKit"
@@ -203,7 +211,7 @@ enum BaseModule {
       case .motionKit: "MotionKit"
       case .sharedHelpers: "SharedHelpers"
       case .stringKit: "StringKit"
-      case .styleKit: "StyleKit"
+    //      case .styleKit: "StyleKit"
     }
   }
 }
