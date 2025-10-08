@@ -6,17 +6,8 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
-public enum ResizeMode {
-  /// Fill destination rect exactly, even if aspect ratio is distorted
-  case stretch
-
-  /// Contain: scale uniformly to fit within destination (aspect ratio preserved)
-  case fit
-
-  /// Cover: scale uniformly to cover entire destination (aspect ratio preserved, may clip)
-  case fill
-}
 
 extension CGPoint {
 
@@ -362,27 +353,19 @@ extension CGPoint {
     return CGRect(origin: origin, size: size)
   }
 
-  public func removingZoom(_ zoom: CGFloat) -> CGPoint {
-    return self / zoom
-  }
 
-  func removingZoomPercent(_ zoomPercent: CGFloat) -> CGPoint {
-    let adjustedX = self.x.removingZoomPercent(zoomPercent)
-    let adjustedY = self.y.removingZoomPercent(zoomPercent)
-    return CGPoint(x: adjustedX, y: adjustedY)
-  }
 
   public var toCGSize: CGSize {
     return CGSize(width: self.x, height: self.y)
   }
 
-  @available(*, deprecated, message: "Not sure this makes sense, consider revising.")
-  public func clamp(toMax maxValue: CGFloat) -> CGPoint {
-    return CGPoint(
-      x: max(-maxValue, min(maxValue, self.x)),
-      y: max(-maxValue, min(maxValue, self.y))
-    )
-  }
+//  @available(*, deprecated, message: "Not sure this makes sense, consider revising.")
+//  public func clamp(toMax maxValue: CGFloat) -> CGPoint {
+//    return CGPoint(
+//      x: max(-maxValue, min(maxValue, self.x)),
+//      y: max(-maxValue, min(maxValue, self.y))
+//    )
+//  }
 
   public func delta(
     from lastPosition: CGPoint,
@@ -410,48 +393,6 @@ extension CGPoint {
 
   public var isNan: Bool {
     x.isNaN || y.isNaN
-  }
-
-  /// Shift right (increases x)
-  public func shiftedRight(_ distance: CGFloat) -> CGPoint {
-    return CGPoint(x: self.x + distance, y: self.y)
-  }
-
-  /// Shift left (decreases x)
-  public func shiftedLeft(_ distance: CGFloat) -> CGPoint {
-    return CGPoint(x: self.x - distance, y: self.y)
-  }
-
-  /// Shift down (increases y)
-  public func shiftedDown(_ distance: CGFloat) -> CGPoint {
-    return CGPoint(x: self.x, y: self.y + distance)
-  }
-
-  /// Shift up (decreases y)
-  public func shiftedUp(_ distance: CGFloat) -> CGPoint {
-    let copy = self
-    return CGPoint(x: copy.x, y: copy.y - distance)
-  }
-
-  /// Shift diagonally
-  public func shifted(dx: CGFloat, dy: CGFloat) -> CGPoint {
-    return CGPoint(x: self.x + dx, y: self.y + dy)
-  }
-
-  /// Shift by another point
-  public func shifted(by point: CGPoint) -> CGPoint {
-    return CGPoint(x: self.x + point.x, y: self.y + point.y)
-  }
-  public func shifted(by offset: CGSize) -> CGPoint {
-    return CGPoint(
-      x: self.x + offset.width,
-      y: self.y + offset.height
-    )
-  }
-
-  /// Shift by the same value in both directions
-  public func shifted(by delta: CGFloat) -> CGPoint {
-    return CGPoint(x: self.x + delta, y: self.y + delta)
   }
 
   public static func midPoint(
@@ -551,56 +492,7 @@ extension CGPoint {
     return CGPoint.pointAlong(from: self, to: end, distance: distance)
   }
 
-  /// Generate a spiral as an array of points, starting from this point as center
-  public func generateSpiral(
-    turns: CGFloat = 1.5,
-    maxRadius: CGFloat = 50,
-    pointCount: Int = 60
-  ) -> [CGPoint] {
-    var points: [CGPoint] = []
-
-    let angleStep = (turns * 2 * .pi) / CGFloat(pointCount - 1)
-
-    for i in 0..<pointCount {
-      let t = CGFloat(i) / CGFloat(pointCount - 1)  // 0 to 1
-      let angle = angleStep * CGFloat(i)
-
-      // Spiral grows outward as we progress
-      let radius = maxRadius * t
-
-      let x = self.x + radius * cos(angle)
-      let y = self.y + radius * sin(angle)
-
-      points.append(CGPoint(x: x, y: y))
-    }
-
-    return points
-  }
-
-  /// Alternative: Golden ratio spiral (more mathematically pure)
-  public func generateGoldenSpiral(
-    turns: CGFloat = 1.5,
-    scale: CGFloat = 20,
-    pointCount: Int = 60
-  ) -> [CGPoint] {
-    var points: [CGPoint] = []
-    let phi: CGFloat = (1 + sqrt(5)) / 2  // Golden ratio
-
-    for i in 0..<pointCount {
-      let t = CGFloat(i) / CGFloat(pointCount - 1) * turns
-      let angle = t * 2 * .pi
-
-      // Golden spiral radius grows exponentially
-      let radius = scale * pow(phi, t * 0.5)
-
-      let x = self.x + radius * cos(angle)
-      let y = self.y + radius * sin(angle)
-
-      points.append(CGPoint(x: x, y: y))
-    }
-
-    return points
-  }
+ 
 
 }
 
