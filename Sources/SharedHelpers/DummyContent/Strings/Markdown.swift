@@ -37,7 +37,7 @@ public extension DummyContent.Strings {
     
     ```swift
     import Shortcuts
-    import BaseHelpers
+    // import BaseHelpers
     
     struct MessageInputView: View {
     

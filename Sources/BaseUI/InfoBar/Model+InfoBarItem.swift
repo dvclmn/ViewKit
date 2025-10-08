@@ -6,6 +6,7 @@
 //
 
 // import BaseHelpers
+import SharedHelpers
 import Foundation
 
 public struct InfoBarItem: Identifiable, Equatable, Hashable, Sendable {

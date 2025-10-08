@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import Foundation
-import BaseHelpers
+// import BaseHelpers
 
 //public protocol TrackpadTouch: TimestampedPosition, Identifiable, Sendable, Hashable, Equatable, Codable {
 //  var id: Int { get }

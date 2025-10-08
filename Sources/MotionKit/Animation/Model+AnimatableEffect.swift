@@ -7,7 +7,7 @@
 
 import SwiftUI
 import CurveKit
-import BaseHelpers
+// import BaseHelpers
 
 /// For simplicity, I've decided to require that `WaveDrivenProperty`
 /// recieve it's wave vlaue from a `WaveComposition`.

@@ -7,6 +7,8 @@
 
 //import BaseUI
 // import BaseHelpers
+import LayoutKit
+import SharedHelpers
 import SwiftUI
 
 struct InfoBarSectionView: View {
@@ -27,7 +29,7 @@ struct InfoBarSectionView: View {
         }
         .padding(.horizontal, Styles.sizeSmall)
 
-        .labelStyle(.custom)
+        .labelStyle(.base)
 
       } header: {
         MaybeLabel(sectionTitle)

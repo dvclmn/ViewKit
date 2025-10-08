@@ -10,17 +10,6 @@ let package = Package(
     .macOS("14.0"),
   ],
   products: [
-//    .library(
-//      name: "BaseHelpers",
-//      targets: [
-//        "BaseHelpers",
-//        // AssociatedValues, CaseDetection, MetaEnum & SetOfOptions
-//        "EnumMacros",
-//        "Persistable",
-//        "StringKit",
-//        //        "ToolKit",
-//      ]
-//    ),
     .executable(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
@@ -36,7 +25,6 @@ let package = Package(
         "GraphicsKit",
         "LayoutKit",
         "MotionKit",
-        //        "StyleKit",
       ]
     ),
     .library(name: "CanvasKit", targets: ["CanvasKit"]),
@@ -60,28 +48,15 @@ let package = Package(
   // MARK: - Targets
 
   targets: [
-//    .target(
-//      name: "BaseHelpers",
-//      dependencies: [
-//        .dep(.sharedHelpers),
-//        .dep(.enumMacros),
-//        .dep(.curveKit),
-//        .dep(.colourKit),
-//        .product(name: "NSUI", package: "nsui"),
-//      ],
-//      //      resources: [.process("Assets.xcassets")],
-//    ),
     .target(
       name: "BaseNetworking",
       dependencies: [
-        .dep(.baseHelpers),
-        .product(name: "KeychainSwift", package: "keychain-swift"),
+        .product(name: "KeychainSwift", package: "keychain-swift")
       ],
     ),
     .target(
       name: "BaseUI",
       dependencies: [
-        .dep(.baseHelpers),
         .dep(.stringShared),
         .dep(.curveKit),
         .dep(.enumMacros),
@@ -118,30 +93,12 @@ let package = Package(
         .dep(.sharedHelpers)
       ]
     ),
-    .target(
-      name: "ToolKit",
-      dependencies: [
-        .dep(.baseHelpers),
-        .dep(.enumMacros),
-        .dep(.baseUI),
-        .dep(.layoutKit),
-        .dep(.stringKit),
-        .dep(.sharedHelpers),
-      ]
-    ),
-    .target(
-      name: "StringShared",
-      dependencies: [
-        .dep(.sharedHelpers),
-        .dep(.stringKit),
-      ],
-    ),
+
     .target(
       name: "GestureKit",
       dependencies: [
         .dep(.stringShared),
         .dep(.layoutKit),
-//        .dep(.sharedHelpers),
         .dep(.curveKit),
       ]
     ),
@@ -149,26 +106,18 @@ let package = Package(
       name: "GraphicsKit",
       dependencies: [
         .dep(.sharedHelpers),
-        .dep(.baseHelpers),
+        .dep(.colourKit),
       ]
     ),
     .target(
       name: "LayoutKit",
       dependencies: [
         .dep(.stringShared),
-//        .dep(.sharedHelpers),
-//        .dep(.stringKit),
         .dep(.enumMacros),
       ]
     ),
 
     .target(name: "MotionKit"),
-    //    .target(
-    //      name: "SearchKit",
-    //      dependencies: [
-    //
-    //      ]
-    //    ),
     .target(name: "SharedHelpers"),
 
     .target(
@@ -177,6 +126,26 @@ let package = Package(
         .nsui,
         .dep(.sharedHelpers),
         .dep(.enumMacros),
+      ]
+    ),
+
+    .target(
+      name: "StringShared",
+      dependencies: [
+        .dep(.sharedHelpers),
+        .dep(.stringKit),
+      ],
+    ),
+
+    .target(
+      name: "ToolKit",
+      dependencies: [
+        //        .dep(.baseHelpers),
+        .dep(.enumMacros),
+        .dep(.baseUI),
+        .dep(.layoutKit),
+        .dep(.stringKit),
+        .dep(.sharedHelpers),
       ]
     ),
 
@@ -233,7 +202,7 @@ extension String {
 
 /// List of common modules for convenience
 enum BaseModule {
-  case baseHelpers
+  //  case baseHelpers
   //  case macros
   case enumMacros
   case persistable
@@ -248,14 +217,14 @@ enum BaseModule {
   case motionKit
   case sharedHelpers
   case stringKit
-  
+
   /// Export modules
   case toolKit
   case stringShared
 
   var name: String {
     switch self {
-      case .baseHelpers: "BaseHelpers"
+      //      case .baseHelpers: "BaseHelpers"
       case .enumMacros: "EnumMacros"
       case .persistable: "Persistable"
       //      case .macros: "BaseMacrosGuts"  // Guts?

@@ -6,7 +6,7 @@
 //
 
 import BaseUI
-import BaseHelpers
+// import BaseHelpers
 import SwiftUI
 
 public struct ItemLabelView<Item: FuzzySearchable>: View {
