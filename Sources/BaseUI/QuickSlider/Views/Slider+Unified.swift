@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SharedHelpers
+import GestureKit
 
 public struct SliderUnified: View {
   @Environment(\.sliderControlSize) private var controlSize

@@ -5,9 +5,10 @@
 //  Created by Dave Coleman on 1/10/2025.
 //
 
-import BaseHelpers
+//import BaseHelpers
 import SwiftUI
-import CaseDetection
+import SharedHelpers
+import EnumMacros
 
 extension EnvironmentValues {
   @Entry public var keyDisplayStyle: KeyboardElementDisplayStyle = .symbolLiteral

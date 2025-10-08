@@ -8,6 +8,7 @@
 //import BaseHelpers
 import LayoutKit
 import SwiftUI
+import SharedHelpers
 
 public struct BouncyDragModifier: ViewModifier {
   @State private var store: BouncyHandler

@@ -8,6 +8,7 @@
 import Foundation
 import BaseHelpers
 import SharedHelpers
+import LayoutKit
 
 @MainActor
 public protocol FuzzySearchHandler: Sendable, AnyObject where Self.Item.ID: Sendable {

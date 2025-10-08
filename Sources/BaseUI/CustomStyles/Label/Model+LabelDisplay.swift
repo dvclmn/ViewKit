@@ -8,7 +8,7 @@
 //import BaseHelpers
 import SharedHelpers
 import SwiftUI
-import CaseDetection
+import EnumMacros
 
 extension EnvironmentValues {
   

@@ -6,8 +6,9 @@
 //
 
 //import BaseUI
-import BaseHelpers
 import SwiftUI
+import SharedHelpers
+import BaseHelpers
 
 public struct CodeLoadingView: View {
 
@@ -211,7 +212,8 @@ extension CodeLoadingView {
         )
         let roundedRect = Path(roundedRect: rect, cornerRadius: config.word.rounding)
 
-        context.fill(roundedRect, with: .color(config.word.type.swatch.swiftUIColour))
+        context.fill(roundedRect, with: .color(.pink))
+//        context.fill(roundedRect, with: .color(config.word.type.swatch.swiftUIColour))
       }
 
       currentX += segmentWidth + spacing
@@ -221,7 +223,7 @@ extension CodeLoadingView {
 
 #if DEBUG
 @available(macOS 15, iOS 18, *)
-#Preview(traits: .grainient(.narrow)) {
+#Preview(traits: .size(.normal)) {
   CodeLoadingView()
     .padding()
 }

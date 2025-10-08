@@ -87,6 +87,7 @@ let package = Package(
         .dep(.enumMacros),
         .dep(.colourKit),
         .dep(.layoutKit),
+        .dep(.graphicsKit),
         .sharing,
         .product(name: "IfritStatic", package: "Ifrit"),
         .product(name: "NukeUI", package: "Nuke"),
@@ -147,6 +148,7 @@ let package = Package(
       name: "GraphicsKit",
       dependencies: [
         .dep(.sharedHelpers),
+        .dep(.baseHelpers),
       ]
     ),
     .target(

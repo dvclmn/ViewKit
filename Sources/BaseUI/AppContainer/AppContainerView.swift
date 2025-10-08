@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 11/6/2025.
 //
 
-import PopupKit
 import SwiftUI
 
 public struct AppContainer<Content: View>: View {

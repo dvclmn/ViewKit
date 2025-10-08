@@ -37,7 +37,7 @@ public struct HelpButton: View {
 }
 #if DEBUG
 @available(macOS 15, iOS 18, *)
-#Preview(traits: .grainient) {
+#Preview(traits: .size(.normal)) {
   HelpButton(text: AttributedString("*Help*"))
 }
 #endif

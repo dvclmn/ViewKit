@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 17/5/2025.
 //
 
-import BaseHelpers
+import SharedHelpers
 import SwiftUI
-import BaseUI
 
 public struct ShadersExampleView: View {
 
@@ -22,10 +21,12 @@ public struct ShadersExampleView: View {
           }
 
         ForEach(EmojiBunch.allCases) { emoji in
-          FeatureIconView(
-            emoji: emoji.emojiString,
-            fontSize: 140
-          )
+          Text(emoji.emojiString)
+            .font(.system(size: 140))
+//          FeatureIconView(
+//            emoji: emoji.emojiString,
+//            fontSize: 140
+//          )
           .offset(emoji.offset(in: proxy.size, strength: 0.4))
         }
 

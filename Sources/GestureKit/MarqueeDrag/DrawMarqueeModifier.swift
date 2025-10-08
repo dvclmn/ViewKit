@@ -24,9 +24,9 @@ public struct DrawMarqueeModifier: ViewModifier {
             }
             .allowsHitTesting(false)
 
-            Text("Origin: \(rect.origin.displayString(places: 0))")
-              .font(.caption)
-              .quickBackground()
+            //            Text("Origin: \(rect.origin.displayString(places: 0))")
+            //              .font(.caption)
+            //              .quickBackground()
           }
 
         }  // END rect check, is enabled
