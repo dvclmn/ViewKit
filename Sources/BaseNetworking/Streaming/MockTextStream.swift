@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 18/7/2024.
 //
 
-// import BaseHelpers
-import Foundation
+
+import StringShared
 import SwiftUI
 
 /// A service that provides simulated streaming responses for testing UI

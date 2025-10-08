@@ -10,6 +10,7 @@ let package = Package(
     .macOS("14.0"),
   ],
   products: [
+    .library(name: "BaseMacros", targets: ["EnumMacros", "Persistable"]),
     .executable(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
@@ -51,6 +52,7 @@ let package = Package(
     .target(
       name: "BaseNetworking",
       dependencies: [
+        .dep(.stringShared),
         .product(name: "KeychainSwift", package: "keychain-swift")
       ],
     ),
