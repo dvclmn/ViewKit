@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 extension Shape {
   
@@ -24,7 +25,7 @@ extension Shape {
 
   /// `let result = shape.analyse(in: rect)`
   public func analyse(in rect: CGRect) -> PathDebugResult {
-    self.path(in: rect).analyse()
+    self.path(in: rect).analyse(pointSize: .normal)
   }
 
 }

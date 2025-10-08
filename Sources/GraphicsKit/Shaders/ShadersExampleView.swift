@@ -64,8 +64,7 @@ public struct ShadersExampleView: View {
   }
 }
 #if DEBUG
-@available(macOS 15, iOS 18, *)
-#Preview(traits: .size(.normal)) {
+#Preview {
   ShadersExampleView()
 }
 #endif

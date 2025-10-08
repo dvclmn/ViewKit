@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 11/12/2024.
 //
 
-import BaseHelpers
+import SharedHelpers
 import SwiftUI
 
 /// Defines the characteristics of a rough stroke

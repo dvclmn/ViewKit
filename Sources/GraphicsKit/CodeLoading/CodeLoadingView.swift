@@ -222,8 +222,7 @@ extension CodeLoadingView {
 }
 
 #if DEBUG
-@available(macOS 15, iOS 18, *)
-#Preview(traits: .size(.normal)) {
+#Preview {
   CodeLoadingView()
     .padding()
 }

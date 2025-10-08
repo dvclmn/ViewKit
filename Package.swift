@@ -10,17 +10,17 @@ let package = Package(
     .macOS("14.0"),
   ],
   products: [
-    .library(
-      name: "BaseHelpers",
-      targets: [
-        "BaseHelpers",
-        // AssociatedValues, CaseDetection, MetaEnum & SetOfOptions
-        "EnumMacros",
-        "Persistable",
-        "StringKit",
-        //        "ToolKit",
-      ]
-    ),
+//    .library(
+//      name: "BaseHelpers",
+//      targets: [
+//        "BaseHelpers",
+//        // AssociatedValues, CaseDetection, MetaEnum & SetOfOptions
+//        "EnumMacros",
+//        "Persistable",
+//        "StringKit",
+//        //        "ToolKit",
+//      ]
+//    ),
     .executable(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
@@ -60,17 +60,17 @@ let package = Package(
   // MARK: - Targets
 
   targets: [
-    .target(
-      name: "BaseHelpers",
-      dependencies: [
-        .dep(.sharedHelpers),
-        .dep(.enumMacros),
-        .dep(.curveKit),
-        .dep(.colourKit),
-        .product(name: "NSUI", package: "nsui"),
-      ],
-      //      resources: [.process("Assets.xcassets")],
-    ),
+//    .target(
+//      name: "BaseHelpers",
+//      dependencies: [
+//        .dep(.sharedHelpers),
+//        .dep(.enumMacros),
+//        .dep(.curveKit),
+//        .dep(.colourKit),
+//        .product(name: "NSUI", package: "nsui"),
+//      ],
+//      //      resources: [.process("Assets.xcassets")],
+//    ),
     .target(
       name: "BaseNetworking",
       dependencies: [
@@ -88,6 +88,7 @@ let package = Package(
         .dep(.colourKit),
         .dep(.layoutKit),
         .dep(.graphicsKit),
+        .dep(.gestureKit),
         .sharing,
         .product(name: "IfritStatic", package: "Ifrit"),
         .product(name: "NukeUI", package: "Nuke"),

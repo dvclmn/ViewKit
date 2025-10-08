@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-import BaseHelpers
-
+import SharedHelpers
 
 public struct RoughPathGenerator {
   private let style: RoughPathStyle

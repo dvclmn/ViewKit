@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BaseHelpers
+import SharedHelpers
 
 public struct FloorAppearance: Sendable, Codable, Equatable, Hashable {
   

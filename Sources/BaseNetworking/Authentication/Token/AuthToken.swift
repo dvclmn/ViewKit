@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BaseHelpers
+// import BaseHelpers
 
 /// A generic representation of an authentication token.
 public struct AuthToken: Codable {

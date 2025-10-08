@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 26/3/2024.
 //
 
-import BaseHelpers
-
-
+//import BaseHelpers
+import LayoutKit
 import Foundation
 import SwiftUI
 
@@ -15,8 +14,8 @@ public struct CustomLabeledContent: LabeledContentStyle {
   @Environment(\.layoutAxis) private var layoutAxis
   @Environment(\.layoutAlignment) private var layoutAlignment
   @Environment(\.explicitWidth) private var explicitWidth
-  
-//  @Environment(\.layoutConfig) private var layoutConfig
+
+  //  @Environment(\.layoutConfig) private var layoutConfig
 
   public func makeBody(configuration: Configuration) -> some View {
 

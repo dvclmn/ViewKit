@@ -7,7 +7,7 @@
 
 import Foundation
 import BaseHelpers
-import SharedHelpers
+import StringShared
 
 public typealias FuzzyRanges = [CountableClosedRange<Int>]
 

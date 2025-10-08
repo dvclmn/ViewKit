@@ -11,7 +11,7 @@ public typealias DebugPaths = [DebugPathElement: Path]
 
 extension Path {
 
-  func analyse(pointSize: PointSize = .normal) -> PathDebugResult {
+  public func analyse(pointSize: PointSize = .normal) -> PathDebugResult {
     var debugPaths: DebugPaths = Dictionary(
       uniqueKeysWithValues: DebugPathElement.allCases.map { ($0, Path()) }
     )
