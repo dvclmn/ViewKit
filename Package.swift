@@ -16,6 +16,7 @@ let package = Package(
         "BaseHelpers",
         "EnumMacros",  // AssociatedValues, CaseDetection, MetaEnum & SetOfOptions
         "Persistable",
+        "StringKit",
       ]
     ),
     .executable(
@@ -27,30 +28,17 @@ let package = Package(
       name: "BaseUI",
       targets: [
         "BaseUI",
+        "GestureKit",
+        "GraphicsKit",
         "LayoutKit",
+        "MotionKit",
+        "StyleKit",
       ]
     ),
-    .library(
-      name: "CanvasKit",
-      targets: [
-        "CanvasKit"
-      ]
-    ),
-
-    //    .library(name: "CanvasKit", targets: ["CanvasKit"]),
-    //    .library(name: "ColourKit", targets: ["ColourKit"]),
-    //    .library(name: "CurveKit", targets: ["CurveKit"]),
-    //    .library(name: "GestureKit", targets: ["GestureKit"]),
-    //    .library(name: "GraphicsKit", targets: ["GraphicsKit"]),
-    //    .library(name: "MotionKit", targets: ["MotionKit"]),
-    //    .library(name: "PopupKit", targets: ["PopupKit"]),
-    //    .library(name: "SearchKit", targets: ["SearchKit"]),
-    //    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
-    //    .library(name: "VectorKit", targets: ["VectorKit"]),
-    //    .library(name: "WaveKit", targets: ["WaveKit"]),
-    //    .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
-
-    // MARK: - Macros
+    .library(name: "CanvasKit", targets: ["CanvasKit"]),
+    .library(name: "ColourKit", targets: ["ColourKit"]),
+    .library(name: "CurveKit", targets: ["CurveKit"]),
+    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
   ],
 
   // MARK: - Dependancies
@@ -139,7 +127,7 @@ let package = Package(
         .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
-      path: "Sources/BaseMacros/MacroExpansions",
+      path: .macrosSource + "/MacroExpansions",
     ),
     .target(
       name: "Persistable",
@@ -161,7 +149,7 @@ let package = Package(
         "Persistable",
         "SetOfOptions",
       ],
-      path: "Sources/BaseMacrosSources/BaseMacrosClient",
+      path: .macrosSource + "/BaseMacrosClient",
     ),
 
   ],
@@ -177,14 +165,17 @@ extension Target.Dependency {
 }
 extension String {
   static func macroDecl(_ macroName: String) -> String {
-    return "Sources/BaseMacrosSources/MacroDeclarations/" + macroName
+    return .macrosSource + "/MacroDeclarations/" + macroName
   }
+  static var macrosSource: String { "Sources/BaseMacros" }
 }
 
 /// List of common modules for convenience
 enum BaseModule {
   case baseHelpers
-  case macros
+//  case macros
+  case enumMacros
+  case persistable
   case networking
   case baseUI  // Aka BaseComponents
   case canvasKit
@@ -194,29 +185,27 @@ enum BaseModule {
   case graphicsKit
   case layoutKit
   case motionKit
-//  case searchKit
   case sharedHelpers
   case stringKit
   case styleKit
-//  case vectorKit
+
 
   var name: String {
     switch self {
       case .baseHelpers: "BaseHelpers"
-      case .macros: "BaseMacrosGuts"  // Guts?
+//      case .macros: "BaseMacrosGuts"  // Guts?
       case .networking: "BaseNetworking"
       case .baseUI: "BaseUI"
+      case .canvasKit: "CanvasKit"
       case .colourKit: "ColourKit"
       case .curveKit: "CurveKit"
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
-      case .searchKit: "SearchKit"
       case .sharedHelpers: "SharedHelpers"
       case .stringKit: "StringKit"
       case .styleKit: "StyleKit"
-      case .vectorKit: "VectorKit"
     }
   }
 }
