@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BaseHelpers
+// import BaseHelpers
 import SharedHelpers
 
 public final class ExampleFuzzySearchProvider: FuzzyProvider {

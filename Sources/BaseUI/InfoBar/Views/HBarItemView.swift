@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 3/6/2025.
 //
 
-import BaseUI
-import BaseHelpers
+// import BaseHelpers
 import SwiftUI
+import SharedHelpers
 
 public struct InfoBarItemView: View {
   @Environment(\.isShowingSectionHeader) private var isShowingSectionHeader
