@@ -10,39 +10,51 @@ let package = Package(
     .macOS("14.0"),
   ],
   products: [
-    // MARK: - Helpers
-    .library(name: "BaseHelpers", targets: ["BaseHelpers"]),
-    .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
-    .library(name: "BaseUI", targets: ["BaseUI"]),
-    .library(name: "CanvasKit", targets: ["CanvasKit"]),
-    .library(name: "ColourKit", targets: ["ColourKit"]),
-    //    .library(name: "ComponentTools", targets: ["ComponentTools"]),
-    .library(name: "CurveKit", targets: ["CurveKit"]),
-    .library(name: "GestureKit", targets: ["GestureKit"]),
-    .library(name: "GraphicsKit", targets: ["GraphicsKit"]),
-    .library(name: "MotionKit", targets: ["MotionKit"]),
-    .library(name: "PopupKit", targets: ["PopupKit"]),
-    .library(name: "SearchKit", targets: ["SearchKit"]),
-    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
-    .library(name: "VectorKit", targets: ["VectorKit"]),
-    .library(name: "WaveKit", targets: ["WaveKit"]),
-    .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
-
-    // MARK: - Macros
+    .library(
+      name: "BaseHelpers",
+      targets: [
+        "BaseHelpers",
+        "EnumMacros",  // AssociatedValues, CaseDetection, MetaEnum & SetOfOptions
+        "Persistable",
+      ]
+    ),
     .library(
       name: "BaseMacros",
-      targets: [
-        "AssociatedValues",
-        "CaseDetection",
-        "MetaEnum",
-        "Persistable",
-        "SetOfOptions",
-      ],
+      targets: [],
     ),
     .executable(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
     ),
+    .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
+    .library(
+      name: "BaseUI",
+      targets: [
+        "BaseUI",
+        "LayoutKit",
+      ]
+    ),
+    .library(
+      name: "CanvasKit",
+      targets: [
+        "CanvasKit"
+      ]
+    ),
+
+    //    .library(name: "CanvasKit", targets: ["CanvasKit"]),
+    //    .library(name: "ColourKit", targets: ["ColourKit"]),
+    //    .library(name: "CurveKit", targets: ["CurveKit"]),
+    //    .library(name: "GestureKit", targets: ["GestureKit"]),
+    //    .library(name: "GraphicsKit", targets: ["GraphicsKit"]),
+    //    .library(name: "MotionKit", targets: ["MotionKit"]),
+    //    .library(name: "PopupKit", targets: ["PopupKit"]),
+    //    .library(name: "SearchKit", targets: ["SearchKit"]),
+    //    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
+    //    .library(name: "VectorKit", targets: ["VectorKit"]),
+    //    .library(name: "WaveKit", targets: ["WaveKit"]),
+    //    .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
+
+    // MARK: - Macros
   ],
 
   // MARK: - Dependancies
@@ -92,7 +104,7 @@ let package = Package(
       ],
     ),
     .target(name: "CanvasKit"),
-    
+
     .target(
       name: "ColourKit",
       dependencies: [
@@ -104,8 +116,8 @@ let package = Package(
     .target(
       name: "CurveKit",
       dependencies: [
-//        .targetDep(.colourKit),
-        .targetDep(.vectorKit),
+        //        .targetDep(.colourKit),
+        .targetDep(.vectorKit)
       ]
     ),
     .target(name: "GestureKit"),
@@ -176,9 +188,7 @@ let package = Package(
 // MARK: - Convenient type-safe extensions
 extension Target.Dependency {
   static func targetDep(_ baseModule: BaseModule) -> Self {
-    //    "\(baseModule.targetName)"
-    .target(name: baseModule.targetName)
-    //    .product(name: baseModule.targetName, package: "BaseHelpers")
+    .target(name: baseModule.name)
   }
   static var sharing: Self {
     .product(name: "Sharing", package: "swift-sharing")
@@ -195,22 +205,21 @@ enum BaseModule {
   case baseHelpers
   case macros
   case networking
-  case baseUI
-  // case canvasKit
+  case baseUI  // Aka BaseComponents
+  case canvasKit
   case colourKit
-  //  case componentTools
   case curveKit
   case gestureKit
   case graphicsKit
-  // case motionKit
-  // case popupKit
-  // case searchKit
+  case layoutKit
+  case motionKit
+  case searchKit
   case sharedHelpers
+  case stringKit
+  case styleKit
   case vectorKit
-  // case waveKit
-  // case wrecktangle
 
-  var targetName: String {
+  var name: String {
     switch self {
       case .baseHelpers: "BaseHelpers"
       case .macros: "BaseMacrosGuts"  // Guts?
@@ -220,7 +229,12 @@ enum BaseModule {
       case .curveKit: "CurveKit"
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
+      case .layoutKit: "LayoutKit"
+      case .motionKit: "MotionKit"
+      case .searchKit: "SearchKit"
       case .sharedHelpers: "SharedHelpers"
+      case .stringKit: "StringKit"
+      case .styleKit: "StyleKit"
       case .vectorKit: "VectorKit"
     }
   }
