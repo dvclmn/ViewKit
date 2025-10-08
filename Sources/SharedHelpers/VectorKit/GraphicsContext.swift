@@ -61,38 +61,39 @@ extension GraphicsContext {
     pointDisplay: DebugPoint,
     zoomPercent zoomLevel: CGFloat?  // Pass in normalised zoom if relevant
   ) {
-    
-    let zoom = zoomLevel ?? 1.0
-    let fontSizeUnZoomed = fontSize.removingZoomPercent(zoom)
-    //    let fontSizeUnZoomed = fontSize.removingZoom(zoom)
-    
-    /// Calculate size, for drawing Label background
-    let labelWidthUnZoomed: CGFloat = {
-      let approximateCharacterWidth: CGFloat = fontSize * 0.7
-      let labelCharacterWidth = CGFloat(text.firstLine.count) * approximateCharacterWidth
-      return labelCharacterWidth.removingZoomPercent(zoom)
-    }()
-    let labelHeightUnZoomed: CGFloat = fontSizeUnZoomed * 1.5
-    let labelSize = CGSize(width: labelWidthUnZoomed, height: labelHeightUnZoomed)
-    
-    /// Set up Text, with basic styles
-    let text = Text(text)
-      .font(.system(size: fontSizeUnZoomed, weight: .semibold))
-      .foregroundStyle(colour)
-    
-    let labelRect = CGRect(
-      origin: point.centredIn(size: labelSize).shifted(
-        dx: 0, dy: (labelHeightUnZoomed * 1.2) * debugTextPosition.multiplierForYPosition),
-      size: labelSize
-    )
-    self.fill(labelRect.path, with: .color(Color.gray))
-    //    self.fill(labelRect.path, with: .color(Swatch.plumGrey40.swiftUIColour))
-    self.draw(text, at: labelRect.midpoint)
-    
-    /// Draw dot at provided point, if needed
-    if let pointColour = pointDisplay.colourForPoint {
-      self.drawCircleCentred(at: point, colour: pointColour)
-    }
+    assert(false, "Turned off until I can find a way to implement zoom/pan-related stuff, without weirdness with CanvasKit")
+//
+//    let zoom = zoomLevel ?? 1.0
+//    let fontSizeUnZoomed = fontSize.removingZoomPercent(zoom)
+//    //    let fontSizeUnZoomed = fontSize.removingZoom(zoom)
+//    
+//    /// Calculate size, for drawing Label background
+//    let labelWidthUnZoomed: CGFloat = {
+//      let approximateCharacterWidth: CGFloat = fontSize * 0.7
+//      let labelCharacterWidth = CGFloat(text.firstLine.count) * approximateCharacterWidth
+//      return labelCharacterWidth.removingZoomPercent(zoom)
+//    }()
+//    let labelHeightUnZoomed: CGFloat = fontSizeUnZoomed * 1.5
+//    let labelSize = CGSize(width: labelWidthUnZoomed, height: labelHeightUnZoomed)
+//    
+//    /// Set up Text, with basic styles
+//    let text = Text(text)
+//      .font(.system(size: fontSizeUnZoomed, weight: .semibold))
+//      .foregroundStyle(colour)
+//    
+//    let labelRect = CGRect(
+//      origin: point.centredIn(size: labelSize).shifted(
+//        dx: 0, dy: (labelHeightUnZoomed * 1.2) * debugTextPosition.multiplierForYPosition),
+//      size: labelSize
+//    )
+//    self.fill(labelRect.path, with: .color(Color.gray))
+//    //    self.fill(labelRect.path, with: .color(Swatch.plumGrey40.swiftUIColour))
+//    self.draw(text, at: labelRect.midpoint)
+//    
+//    /// Draw dot at provided point, if needed
+//    if let pointColour = pointDisplay.colourForPoint {
+//      self.drawCircleCentred(at: point, colour: pointColour)
+//    }
   }
   
   // MARK: - Centered Circle
@@ -161,3 +162,4 @@ extension GraphicsContext {
     )
   }
 }
+

@@ -79,7 +79,9 @@ extension Swatch {
 //  }
 
   public var primitiveColourName: String {
-    return primitiveColour?.rawValue ?? "Unknown"
+    #warning("Figure this out")
+    return "Not implemented"
+//    return primitiveColour?.rawValue ?? "Unknown"
   }
 
   public var isVibrant: Bool {

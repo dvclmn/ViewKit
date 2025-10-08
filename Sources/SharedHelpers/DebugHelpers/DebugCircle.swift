@@ -21,9 +21,9 @@ public struct DebugCircleModifier: ViewModifier {
               .fill(.purple)
               .frame(width: size, height: size)
 
-#warning("This shouldn't need a String(describing), need to fix DisplayString stuff")
-            Text(String(describing: location.displayString))
-            
+//            #warning("This shouldn't need a String(describing), need to fix DisplayString stuff")
+            Text(String(describing: location.debugDescription))
+
               .font(.caption)
               .padding(4)
               .background(.thinMaterial)

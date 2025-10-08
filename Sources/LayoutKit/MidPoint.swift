@@ -1,12 +1,11 @@
 //
-//  MidpointModifier.swift
+//  MidPoint.swift
 //  BaseHelpers
 //
-//  Created by Dave Coleman on 7/5/2025.
+//  Created by Dave Coleman on 8/10/2025.
 //
 
 import SwiftUI
-import
 
 public struct MidpointModifier: ViewModifier {
 
@@ -32,5 +31,3 @@ extension View {
     self.modifier(MidpointModifier(colour: colour))
   }
 }
-
-

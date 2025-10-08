@@ -50,7 +50,7 @@ extension View {
   ) -> some View {
     self.modifier(
       DebugTextOverlayModifier(
-        text: text.toAttributed,
+        text: AttributedString(text),
         alignment: alignment,
         padding: padding
       )

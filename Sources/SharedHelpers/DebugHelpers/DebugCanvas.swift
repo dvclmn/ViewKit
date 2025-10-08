@@ -34,3 +34,16 @@ public enum DebugTextPosition {
     }
   }
 }
+
+public enum StrokeDashStyle {
+  case dots
+  case dashes(length: CGFloat)
+  
+  public var dashLength: CGFloat {
+    switch self {
+        /// Zero allows correct behaviour for `dash: [CGFloat]`
+      case .dots: .zero
+      case .dashes(let length): length
+    }
+  }
+}
