@@ -7,29 +7,20 @@
 
 import SwiftUI
 
-//public struct CharacterWidth {
-//  var fontStyle: Font.TextStyle
-//
-//  public var width: CGFloat {
-//    let testCharacter: Character = "0"
-//
-//  }
-//}
-
-
 public struct CharacterSize: ViewModifier {
-//  @State private var characterWidth: CGFloat = .zero
+  @Environment(\.font) private var font
+
   let character: Character
-  let fontStyle: Font
-  let widthDidChange: (CGFloat) -> Void
+  //  let fontStyle: Font
+  let sizeDidChange: (CGSize) -> Void
   public func body(content: Content) -> some View {
     content
       .overlay {
         VStack {
           Text(character.toString)
-            .font(fontStyle)
-            .viewSize(mode: .debounce(0.1)) { size in
-              widthDidChange(size.width)
+            //            .font(font)
+            .viewSize(mode: .debounce(0.2)) { size in
+              sizeDidChange(size)
             }
             .hidden()
         }
@@ -38,16 +29,14 @@ public struct CharacterSize: ViewModifier {
   }
 }
 extension View {
-  public func characterWidth(
+  public func characterSize(
     _ testCharacter: Character = "0",
-    fontStyle: Font,
-    _ widthDidChange: @escaping (CGFloat) -> Void
+    _ sizeDidChange: @escaping (CGSize) -> Void
   ) -> some View {
     self.modifier(
       CharacterSize(
         character: testCharacter,
-        fontStyle: fontStyle,
-        widthDidChange: widthDidChange
+        sizeDidChange: sizeDidChange
       )
     )
   }
