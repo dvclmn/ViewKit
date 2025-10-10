@@ -44,20 +44,10 @@ public struct Separators {
   let component: String
 
   public init(
-    propertyLabel: String = ": ",
-    component: String = " x "
+    propertyLabel: String,
+    component: String
   ) {
     self.propertyLabel = propertyLabel
     self.component = component
-  }
-}
-
-extension Separators {
-  public static var `default`: Separators {
-    .init()
-  }
-  
-  public static var cgSize: Separators {
-    .init(propertyLabel: ": ", component: " x ")
   }
 }

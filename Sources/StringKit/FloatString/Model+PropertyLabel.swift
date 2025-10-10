@@ -30,25 +30,22 @@ public struct PropertyLabel {
 }
 
 extension PropertyLabel: ExpressibleByStringLiteral {
-  
+
   public init(stringLiteral value: String) {
     self.init(value)
   }
 }
 
 extension PropertyLabel {
-  
+
   public func stringValue(from style: PropertyLabel.Style) -> String? {
     return style.labelString(for: self)
   }
-  
-  //@AssociatedValues
+
   public enum Style: Equatable {
     case none
     case standard
     case abbreviated
-    //  case standard(String)
-    //  case abbreviated(String)
 
     public var keyPath: KeyPath<PropertyLabel, String>? {
       switch self {
@@ -58,13 +55,6 @@ extension PropertyLabel {
       }
     }
 
-    //    public var label: String? {
-    //      switch self {
-    //        case .none: nil
-    //        case .standard(let string): string
-    //        case .abbreviated(let string): string
-    //      }
-    //    }
     /// This will be composed together with float values
     /// within `DisplayString/formatted()`.
     /// Returning nil allows expressing "No label please"
@@ -78,4 +68,3 @@ extension PropertyLabel {
     }
   }
 }
-
