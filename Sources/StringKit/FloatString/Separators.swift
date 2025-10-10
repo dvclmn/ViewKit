@@ -8,7 +8,7 @@
 import Foundation
 
 public struct Separators {
-  
+
   /// Seperates the `key` from the `value`
   /// E.g. the `": "` from `X: 10, Y: -20`
   ///
@@ -17,7 +17,7 @@ public struct Separators {
   /// and a `value: any StringConvertible`.
   /// This is often a single `Component`
   let propertyLabelSeparator: String
-  
+
   /// Seperates two (or more) `key-value` pairs
   /// E.g. the `" x "` from `800 x 600px`
   /// Or the `", "` from `X: 10, Y: -20`
@@ -26,7 +26,7 @@ public struct Separators {
   /// Whoever handles joining multiple `Component`s
   /// This is often a build expression?
   let componentSeparator: String
-  
+
   public init(
     propertyLabel: String,
     component: String
@@ -42,15 +42,22 @@ extension Separators {
       self.rawValue = rawValue
     }
     public let rawValue: Int
-    
+
     public static let propertyLabel = Self(rawValue: 1 << 0)
     public static let component = Self(rawValue: 1 << 1)
     public static let both: Self = [.propertyLabel, .component]
   }
 }
 
-extension Separators.Visibility {
-  func generateString(for component: Component) -> String {
-    if self == ... // Or self.contains(...)?
-  }
-}
+//extension Separators.Visibility {
+//  func propertyLabelSeparator(from separators: Separators) -> String {
+//    return contains(.propertyLabel) ? separators.propertyLabelSeparator : ""
+//  }
+//
+//  func componentSeparator(
+//    from separators: Separators,
+//    isLast: Bool = false
+//  ) -> String {
+//    return (contains(.component) && !isLast) ? separators.componentSeparator : ""
+//  }
+//}

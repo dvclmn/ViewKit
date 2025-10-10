@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 10/7/2025.
 //
 
-import Foundation
 import EnumMacros
+import Foundation
 
 /// A property label is aimed at expressing the
 /// string representaiton for a property, such as
