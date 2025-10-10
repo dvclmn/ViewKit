@@ -40,15 +40,15 @@ extension TextCore {
 
         result.append(compactOutput, addsLineBreak: false)
         result.addLineBreak()
-        #warning("Need to go back to file String+Repeater, as I commented this out when something elsewhere was breaking")
-        
-        let pattern = "I need to fix this, this is turned off!"
-//        let pattern = String.pattern(totalCount: width) {
-//          character("|")
-//          repeating(".", count: 4)
-//          character("╷")
-//          repeating(".", count: 4)
-//        }
+        //        #warning("Need to go back to file String+Repeater, as I commented this out when something elsewhere was breaking")
+
+        //        let pattern = "I need to fix this, this is turned off!"
+        let pattern = String.pattern(totalCount: width) {
+          character("|")
+          repeating(".", count: 4)
+          character("╷")
+          repeating(".", count: 4)
+        }
 
         result.append(
           pattern, addsLineBreak: false

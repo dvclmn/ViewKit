@@ -10,6 +10,7 @@ import Foundation
 public enum DebounceMode {
   case noDebounce
   case debounce(TimeInterval = 0.2)
+//  case byo(AsyncDebouncer)
 
   public var shouldDebounce: Bool {
     switch self {

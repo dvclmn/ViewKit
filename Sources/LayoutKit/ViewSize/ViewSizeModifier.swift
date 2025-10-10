@@ -5,29 +5,33 @@
 //  Created by Dave Coleman on 8/5/2025.
 //
 
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 public typealias ViewSizeOutput<T> = (T) -> Void
 
-public struct ViewSizeModifier<CaptureType: GeometryCapturable>: ViewModifier {
+public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
 
   @State private var debouncer: AsyncDebouncer?
-  
-  let capture: GeometryCapture<CaptureType>
-  let valueOutput: ViewSizeOutput<CaptureType>
+  //  @State private var newCapture: Capture?
+
+  let capture: GeometryCapture<Capture>
+  let valueOutput: ViewSizeOutput<Capture>
 
   // MARK: - Initialiser
   public init(
-    capture: GeometryCapture<CaptureType>,
+    capture: GeometryCapture<Capture>,
     mode: DebounceMode,
-    valueOutput: @escaping ViewSizeOutput<CaptureType>
+    valueOutput: @escaping ViewSizeOutput<Capture>
   ) {
     switch mode {
       case .debounce(let interval):
         self._debouncer = State(initialValue: AsyncDebouncer(interval: interval))
       case .noDebounce:
         self._debouncer = State(initialValue: nil)
+
+    //      case .byo(let existingDebouncer):
+    //        self._debouncer = State(initialValue: existingDebouncer)
     }
     self.capture = capture
     self.valueOutput = valueOutput
@@ -35,11 +39,14 @@ public struct ViewSizeModifier<CaptureType: GeometryCapturable>: ViewModifier {
 
   // MARK: - View Modifier
   public func body(content: Content) -> some View {
+    
     content
       .onGeometryChange(for: capture.type) { proxy in
         return capture.transform(proxy)
 
       } action: { newValue in
+        //        updateIfChanged(&newCapture, to: newValue)
+
         Task {
           if let debouncer {
             await debouncer.execute { @MainActor in
@@ -50,6 +57,15 @@ public struct ViewSizeModifier<CaptureType: GeometryCapturable>: ViewModifier {
           }
         }
       }
+
+    //      .onAppear {
+    //        sleepyTask(interval: 0.4) { @MainActor in
+    //          if let newCapture {
+    //            valueOutput(newCapture)
+    //          }
+    //        }
+    //
+    //      }
   }
 }
 

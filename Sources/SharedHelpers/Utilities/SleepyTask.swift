@@ -11,7 +11,8 @@ public func sleepyTask(
   interval: TimeInterval = 1,
   _ task: @Sendable @escaping () async -> Void,
 ) {
-  Task { @MainActor in
+  Task { 
+//  Task { @MainActor in
     do {
       try await Task.sleep(for: .seconds(interval))
       await task()
