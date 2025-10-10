@@ -10,27 +10,27 @@ import SwiftUI
 
 public struct CharacterAndViewSize: ViewModifier {
   @Environment(\.font) private var font
-  
+
   @State private var characterSize: CGSize?
   @State private var viewSize: CGSize?
-  
+
   let debounceMode: DebounceMode
   let character: Character
   //  let fontStyle: Font
   let sizeDidChange: (CGSize?, CGSize?) -> Void
-  
+
   public func body(content: Content) -> some View {
     content
       .overlay {
         //        VStack(spacing: 0) {
         Text(character.toString)
-        //                        .font(font)
+          //                        .font(font)
           .tracking(0)
           .viewSize(mode: debounceMode) { size in
             characterSize = size
           }
           .hidden()
-        //        }
+          //        }
           .allowsHitTesting(false)
       }
       .viewSize(mode: debounceMode) { size in
@@ -46,29 +46,21 @@ public struct CharacterAndViewSize: ViewModifier {
   }
 }
 extension CharacterSize {
-  public static func charactersPerAxis(
+  public static func characterCountForViewAxis(
     _ axis: Axis = .horizontal,
     characterSize: CGSize?,
     containerSize: CGSize?
   ) -> Int? {
-    let divisor: CGFloat
     guard let characterSize, let containerSize else { return nil }
-    switch axis {
-      case .horizontal:
-        guard characterSize.width > 0, containerSize.width > 0 else { return nil }
-        divisor = characterSize.width
-      case .vertical:
-        guard characterSize.height > 0, containerSize.height > 0 else { return nil }
-        divisor = characterSize.height
-    }
-    
-    let dimension = axis == .horizontal ? containerSize.width : containerSize.height
-    return Int(dimension / divisor)
+    let charLength = axis.length(fromSize: characterSize)
+    let containerLength = axis.length(fromSize: containerSize)
+    guard charLength > 0, containerLength > 0 else { return nil }
+    return Int(containerLength / charLength)
   }
 }
 
 extension View {
-  
+
   /// Find the size of a single character of a (usually
   /// monospaced) font. Optionally read the container view
   /// size for calculating the Characters-per-dimension etc.

@@ -175,6 +175,23 @@ extension CGSize {
   public var isNan: Bool {
     return width.isNaN || height.isNaN
   }
+  
+  /// Optional because of things
+  public func adjustAxisLength(
+    _ axis: Axis,
+    newValue: CGFloat?
+  ) -> CGSize? {
+    guard let newValue else {return nil}
+    switch axis {
+      case .horizontal:
+        return CGSize(width: newValue, height: self.height)
+        
+      case .vertical:
+        return CGSize(width: self.width, height: newValue)
+        
+    }
+  }
+
 
   public var widthOrHeightIsZero: Bool {
     self.width.isZero || self.height.isZero
