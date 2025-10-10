@@ -7,7 +7,9 @@
 
 import Foundation
 
-/// Types like `CGPoint` that have floats as it's properties
+/// Types like `CGPoint` that have float properties.
+/// May be a pair, like `CGPoint`'s `x` and `y`,
+/// or more, like `CGRect`
 public protocol FloatGroup {
   var components: [Component] { get }
   var separators: Separators { get }
@@ -16,10 +18,10 @@ public protocol FloatGroup {
     places: Int,
     grouping: Grouping,
     labelStyle: PropertyLabel.Style,
+    separators: Separators.Visibility
   ) -> String
 }
 
-/// Can be a pair (like CGPoint), or three (like CGRect) etc
 extension FloatGroup {
 
   /// Default for convenience
@@ -31,12 +33,25 @@ extension FloatGroup {
     places: Int = 2,
     grouping: Grouping = .automatic,
     labelStyle: PropertyLabel.Style = .standard,
+    separators: Separators.Visibility = .both
   ) -> String {
+    
     let labels = components.map { component in
+      ///
       let labelString = component.label.stringValue(from: labelStyle) ?? ""
       let valueString = component.value.displayString(places: places, grouping: grouping)
-      return labelString + separators.propertyLabel + valueString
+      
+      return labelString + separators.propertyLabelSeparator + valueString
     }
-    return labels.joined(separators.component)
+    
+    let joinedResult: String
+    if labelStyle.isNone {
+      joinedResult = labels.joined("")
+      
+    } else {
+      joinedResult = labels.joined(separators.componentSeparator)
+    }
+
+    return joinedResult
   }
 }

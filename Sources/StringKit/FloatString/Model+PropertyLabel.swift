@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import EnumMacros
 
 /// A property label is aimed at expressing the
 /// string representaiton for a property, such as
@@ -42,6 +43,7 @@ extension PropertyLabel {
     return style.labelString(for: self)
   }
 
+  @CaseDetection()
   public enum Style: Equatable {
     case none
     case standard
@@ -60,9 +62,7 @@ extension PropertyLabel {
     /// Returning nil allows expressing "No label please"
     public func labelString(
       for label: PropertyLabel
-        //        for component: Component
     ) -> String? {
-
       guard let keyPath else { return nil }
       return label[keyPath: keyPath]
     }

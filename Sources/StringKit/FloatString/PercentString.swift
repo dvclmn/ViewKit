@@ -8,7 +8,7 @@
 import Foundation
 
 extension BinaryFloatingPoint {
-  
+
   public func toPercentString(within range: ClosedRange<Self>) -> String {
     let normalised: Double = Double(self.normalised(from: range))
     let percent = normalised * 100
