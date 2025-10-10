@@ -7,5 +7,6 @@
 
 @_exported import EnumMacros
 @_exported import BaseUI
+@_exported import LayoutKit
 @_exported import StringKit
 @_exported import SharedHelpers

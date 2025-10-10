@@ -43,7 +43,7 @@ extension PropertyLabel {
     return style.labelString(for: self)
   }
 
-  @CaseDetection()
+  @CaseDetection
   public enum Style: Equatable {
     case none
     case standard
