@@ -15,7 +15,7 @@ import SwiftUI
 ///   wildly different luminance.
 /// -  Luminance depends on how the three channels contribute
 ///   based on human perception.
-public struct HSVColour: Equatable, Sendable, ColourModel, LuminanceReadable {
+public struct HSVColour: Equatable, Sendable, ColourModel {
   public var hue: Double
   public var saturation: Double
   public var brightness: Double

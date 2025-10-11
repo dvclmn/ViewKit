@@ -7,23 +7,6 @@
 
 import Foundation
 
-public enum LuminanceMethod: Sendable, Codable {
-  case wcag  // Rec.709 coefficients, linearised sRGB
-  case rec601  // Video standard
-  case hsp  // Perceived brightness
-  case cielab  // CIE L* lightness
-}
-
-extension HSVColour {
-  public func luminance(using method: LuminanceMethod = .wcag) -> Double {
-    RGBColour(fromHSV: self).luminance(using: method)
-  }
-  
-  public func luminanceThreshold(using method: LuminanceMethod) -> LuminanceThreshold {
-    RGBColour(fromHSV: self).luminanceThreshold(using: method)
-  }
-}
-
 extension RGBColour {
   public func toXYZ() -> XYZColour {
     // Step 1: Linearise sRGB

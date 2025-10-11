@@ -17,18 +17,12 @@ public protocol ColourModel {
   init(resolved: Color.Resolved, name: String?)
 }
 
-public protocol LuminanceReadable {
-  func luminance(using method: LuminanceMethod) -> Double
-  func luminanceThreshold(using method: LuminanceMethod) -> LuminanceThreshold
-  
-}
 
 // MARK: - Extension methods
 extension ColourModel {
   public mutating func opacity(_ opacity: Double) { alpha = opacity }
   public var colourSpace: Color.RGBColorSpace { .sRGB }
 }
-
 
 extension Color: ColourModel {
   public init(resolved: Resolved, name: String?) {
