@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension RGBColour: SwiftUIColourResolvable {
+extension RGBColour: EnvironmentResolvableColour {
 
   public var swiftUIColour: Color {
     Color(
@@ -46,7 +46,7 @@ extension RGBColour: SwiftUIColourResolvable {
 
 }
 
-extension HSVColour: SwiftUIColourResolvable {
+extension HSVColour: EnvironmentResolvableColour {
 
   public var swiftUIColour: Color {
     Color(

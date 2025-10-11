@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-public protocol SwiftUIColourResolvable {
+public protocol EnvironmentResolvableColour {
   var swiftUIColour: Color { get }
-  
   init(
     colour: Color,
     environment: EnvironmentValues,
