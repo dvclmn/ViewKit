@@ -46,17 +46,7 @@ public struct CharacterAndViewSize: ViewModifier {
   }
 }
 extension CharacterSize {
-  public static func characterCountForViewAxis(
-    _ axis: Axis = .horizontal,
-    characterSize: CGSize?,
-    containerSize: CGSize?
-  ) -> Int? {
-    guard let characterSize, let containerSize else { return nil }
-    let charLength = axis.length(fromSize: characterSize)
-    let containerLength = axis.length(fromSize: containerSize)
-    guard charLength > 0, containerLength > 0 else { return nil }
-    return Int(containerLength / charLength)
-  }
+
 }
 
 extension View {
