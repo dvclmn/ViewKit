@@ -7,14 +7,28 @@
 
 import SwiftUI
 
+public protocol SwiftUIColourResolvable {
+  var swiftUIColour: Color { get }
+  
+  init(
+    colour: Color,
+    environment: EnvironmentValues,
+    name: String?
+  )
+  init(
+    resolved: Color.Resolved,
+    name: String?
+  )
+}
+
 public protocol ColourModel {
   var colourSpace: Color.RGBColorSpace { get }
   var name: String? { get }
-  var swiftUIColour: Color { get }
   var alpha: Double { get set }
   mutating func opacity(_ opacity: Double)
   static func gray(_ brightness: Double, alpha: Double) -> Self
-  init(resolved: Color.Resolved, name: String?)
+  
+//  init(resolved: Color.Resolved, name: String?)
 }
 
 
@@ -24,7 +38,16 @@ extension ColourModel {
   public var colourSpace: Color.RGBColorSpace { .sRGB }
 }
 
-extension Color: ColourModel {
+
+extension Color: ColourModel, SwiftUIColourResolvable {
+  public init(
+    colour: Color,
+    environment: EnvironmentValues,
+    name: String?
+  ) {
+    self = colour
+  }
+  
   public init(resolved: Resolved, name: String?) {
     self.init(resolved)
   }

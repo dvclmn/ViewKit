@@ -22,14 +22,7 @@ public struct HSVColour: Equatable, Sendable, ColourModel {
   public var alpha: Double
   public var name: String?
 
-  public var swiftUIColour: Color {
-    Color(
-      hue: hue,
-      saturation: saturation,
-      brightness: brightness,
-      opacity: alpha
-    )
-  }
+  
 
   public init(
     hue: Double,
@@ -47,22 +40,7 @@ public struct HSVColour: Equatable, Sendable, ColourModel {
 
   }
 
-  public init(
-    colour: Color,
-    environment: EnvironmentValues,
-    name: String?
-  ) {
-    let resolved = colour.resolve(in: environment)
-    self.init(resolved: resolved, name: name)
-  }
 
-  public init(
-    resolved: Color.Resolved,
-    name: String?
-  ) {
-    let rgba = RGBColour(resolved: resolved, name: name)
-    self.init(fromRGB: rgba)
-  }
 }
 
 extension HSVColour: HSVAdjustable {

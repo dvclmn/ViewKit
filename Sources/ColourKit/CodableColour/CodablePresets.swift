@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-extension CodableColour {
-  public static func encode(color: Color) throws -> Data {
+extension ColourCodable {
+  public func encode(color: Color) throws -> Data {
     guard let codableColor = SystemColour(colour: color) else {
       throw EncodingError.wrongColor
     }
     return try JSONEncoder().encode(codableColor)
   }
 
-  public static func decodeColor(from data: Data) throws -> Color {
+  public func decodeColor(from data: Data) throws -> Color {
     let codableColor = try JSONDecoder()
       .decode(SystemColour.self, from: data)
     return Color(codableColour: codableColor)

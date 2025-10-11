@@ -43,3 +43,13 @@ extension Color: LuminanceReadable {
   }
 
 }
+
+extension CodableColour: LuminanceReadable {
+  public func luminance(using method: LuminanceMethod = .wcag) -> Double {
+    fatalError("Not yet implemented")
+  }
+  
+  public func luminanceThreshold(using method: LuminanceMethod) -> LuminanceThreshold {
+    fatalError("Not yet implemented")
+  }
+}
