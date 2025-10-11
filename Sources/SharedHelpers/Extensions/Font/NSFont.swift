@@ -15,11 +15,34 @@ extension Font {
 }
 
 extension NSFont {
+  
+  /// System font with specified size, weight, and design.
+  public static func preferredFont(
+    size: CGFloat,
+    design: Font.Design = .default,
+    weight: Font.Weight = .regular
+  ) -> NSFont {
+    // Start with system font descriptor
+    let systemDescriptor = NSFont.systemFont(ofSize: size).fontDescriptor
+    
+    // Apply design trait
+    let designed = systemDescriptor.withDesign(design.nsFontDesign) ?? systemDescriptor
+    
+    // Apply weight trait
+    let weighted = designed.addingAttributes([
+      .traits: [NSFontDescriptor.TraitKey.weight: weight.nsFontWeight]
+    ])
+    
+    // Create font with explicit size
+    return NSFont(descriptor: weighted, size: size) ?? NSFont.systemFont(ofSize: size, weight: weight.nsFontWeight)
+  }
+  
+  
   /// A rough mapping of SwiftUI `Font.TextStyle` to AppKit preferred text styles.
   public static func preferredFont(
-    style: Font.TextStyle,
+    _ style: Font.TextStyle,
     design: Font.Design = .default,
-    weight: Font.Weight
+    weight: Font.Weight = .regular
   ) -> NSFont {
     let descriptor: NSFontDescriptor
 
@@ -46,7 +69,13 @@ extension NSFont {
 
     // Apply design trait
     let designed = descriptor.withDesign(design.nsFontDesign) ?? descriptor
-    return NSFont(descriptor: designed, size: 0) ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
+
+    // Apply weight trait
+    let weighted = designed.addingAttributes([
+      .traits: [NSFontDescriptor.TraitKey.weight: weight.nsFontWeight]
+    ])
+
+    return NSFont(descriptor: weighted, size: 0) ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
   }
 }
 
@@ -62,30 +91,19 @@ extension Font.Design {
   }
 }
 
-//extension NSFont {
-//
-//  func something(_ font: Font) -> NSFont {
-//
-//    let descriptor = NSFontDescriptor(
-//      fontAttributes: <#T##[NSFontDescriptor.AttributeName : Any]?#>
-//    )
-////    switch font {
-////      case .body: NSFont.
-////      case .callout: NSFont.
-////      case .caption: NSFont.
-////      case .caption2: NSFont.
-////      case .footnote: NSFont.
-////      case .headline: NSFont.
-////      case .largeTitle: NSFont.
-////      case .subheadline: NSFont.
-////      case .title: NSFont.
-////      case .title2: NSFont.
-////      case .title3: NSFont.
-////      default: .body
-////    }
-//  }
-//}
-//
-//extension NSFontDescriptor {
-//
-//}
+extension Font.Weight {
+  fileprivate var nsFontWeight: NSFont.Weight {
+    switch self {
+      case .ultraLight: return .ultraLight
+      case .thin: return .thin
+      case .light: return .light
+      case .regular: return .regular
+      case .medium: return .medium
+      case .semibold: return .semibold
+      case .bold: return .bold
+      case .heavy: return .heavy
+      case .black: return .black
+      default: return .regular
+    }
+  }
+}
