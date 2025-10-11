@@ -93,6 +93,7 @@ let package = Package(
       dependencies: [
         .dep(.sharedHelpers),
         .dep(.curveKit),
+        .nsui,
       ],
     ),
 

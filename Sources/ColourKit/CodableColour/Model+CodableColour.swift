@@ -8,13 +8,118 @@
 /// `Color` can *take in* HSV values
 /// `Color.Resolved` can *give* only RGB
 
+import NSUI
 import SwiftUI
+
+public struct ColourCoder {
+
+  public struct Platform {
+    //    public static func encode(_ colour: Color) throws -> Data { ... }
+    //    public static func decode(from data: Data) throws -> Color { ... }
+
+    public static func encode(_ colour: Color) throws -> Data {
+      let platformColor = NSUIColor(colour)
+      return try NSKeyedArchiver.archivedData(
+        withRootObject: platformColor,
+        requiringSecureCoding: true
+      )
+    }
+
+    public static func decode(from data: Data) throws -> Color {
+      guard
+        let platformColor = try NSKeyedUnarchiver.unarchivedObject(
+          ofClass: NSUIColor.self,
+          from: data
+        )
+      else {
+        throw DecodingError.wrongType
+      }
+      return Color(nsuiColor: platformColor)
+    }
+
+  }
+  public struct Components {
+    public static func encode(_ colour: Color) throws -> Data {
+      guard let cgColor = colour.cgColor else {
+        throw CodingError.wrongColor
+      }
+      return try JSONEncoder()
+        .encode(CodableColor(cgColor: cgColor))
+
+    }
+    public static func decode(from data: Data) throws -> Color {
+      let codableColor = try JSONDecoder()
+        .decode(CodableColor.self, from: data)
+      return Color(cgColor: codableColor.cgColor)
+
+    }
+  }
+
+  enum DecodingError: Error {
+    case wrongType
+  }
+}
+
+public struct CodableColor: Codable {
+  let cgColor: CGColor
+
+  enum CodingKeys: String, CodingKey {
+    case colorSpace
+    case components
+  }
+
+  public init(cgColor: CGColor) {
+    self.cgColor = cgColor
+  }
+
+  public init(from decoder: Decoder) throws {
+    let container =
+      try decoder
+      .container(keyedBy: CodingKeys.self)
+    let colorSpace =
+      try container
+      .decode(String.self, forKey: .colorSpace)
+    let components =
+      try container
+      .decode([CGFloat].self, forKey: .components)
+
+    guard
+      let cgColorSpace = CGColorSpace(name: colorSpace as CFString),
+      let cgColor = CGColor(
+        colorSpace: cgColorSpace, components: components
+      )
+    else {
+      throw CodingError.wrongData
+    }
+
+    self.cgColor = cgColor
+  }
+
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    guard
+      let colorSpace = cgColor.colorSpace?.name,
+      let components = cgColor.components
+    else {
+      throw CodingError.wrongData
+    }
+
+    try container.encode(colorSpace as String, forKey: .colorSpace)
+    try container.encode(components, forKey: .components)
+  }
+
+}
+
+enum CodingError: Error {
+  case wrongColor
+  case wrongData
+}
 
 //public protocol CodableColour {
 //  var resolved: Color.Resolved { get set }
 //  var name: String? { get set }
 //  var colour: Color { get }
-//  
+//
 //  mutating func setResolved(
 //    _ colour: Color,
 //    environment: EnvironmentValues?
@@ -26,10 +131,10 @@ import SwiftUI
 //  public let id: UUID
 //  public var resolved: Color.Resolved
 //  public var name: String?
-//  
-//  
+//
+//
 //  private static let colourSpace: Color.RGBColorSpace = .sRGB
-//  
+//
 //  public init(
 //    fromColor color: Color,
 //    env: EnvironmentValues?,
@@ -37,7 +142,7 @@ import SwiftUI
 //  ) {
 //    self.init(resolved: color.resolve(in: Self.environmentOrDefault(env)), name: name)
 //  }
-//  
+//
 //  public init(
 //    resolved: Color.Resolved,
 //    name: String? = nil
@@ -46,7 +151,7 @@ import SwiftUI
 //    self.resolved = resolved
 //    self.name = name
 //  }
-//  
+//
 //  public init(
 //    r: Double,
 //    g: Double,
@@ -63,7 +168,7 @@ import SwiftUI
 //    )
 //    self.init(resolved: resolved, name: name)
 //  }
-//  
+//
 //  public init(fromHSV hsv: HSVColour, env: EnvironmentValues?) {
 //    let colourRep = hsv.swiftUIColour
 //    self.init(
@@ -74,11 +179,11 @@ import SwiftUI
 //}
 //
 //extension CodableColour {
-//  
+//
 //  public var nameWithFallback: String { name ?? "Unknown" }
 //
 //  public var colour: Color { Color(resolved) }
-//  
+//
 //  public var toHSV: HSVColour {
 //    return HSVColour(
 //      fromRGB: resolved.red.toDouble,
@@ -88,18 +193,18 @@ import SwiftUI
 //      name: name
 //    )
 //  }
-//  
+//
 //  public mutating func setResolved(
 //    _ colour: Color,
 //    environment: EnvironmentValues?
 //  ) {
 //    resolved = colour.resolve(in: Self.environmentOrDefault(environment))
 //  }
-//  
+//
 //  public static func environmentOrDefault(_ env: EnvironmentValues?) -> EnvironmentValues {
 //    env ?? EnvironmentValues()
 //  }
-//  
+//
 //  /// Returns `self` if no mod provided
 //  public func contrastColour(
 //    _ modification: ColourModification?,
@@ -109,7 +214,7 @@ import SwiftUI
 //    let modified = toHSV.contrastColour(modification: modification)
 //    return CodableColour(fromHSV: modified, env: env)
 //  }
-//  
+//
 //  public func contrastColour(
 //    strength: ModificationStrengthPreset,
 //    purpose: ColourPurpose = .legibility,
@@ -124,18 +229,18 @@ import SwiftUI
 //    )
 //    return CodableColour(fromHSV: modified, env: environment)
 //  }
-//  
+//
 ////  func applying(adjustment: HSVAdjustment) -> HSVColour {
-////    
+////
 ////    let hsv = self.toHSV
 ////    let adjustedHue = adjustment.hue.map { hsv.hue + $0 } ?? hsv.hue
-////    
+////
 ////    let adjustedSaturation =
 ////    adjustment.saturation.map { hsv.saturation + $0 } ?? hsv.saturation
-////    
+////
 ////    let adjustedBrightness =
 ////    adjustment.brightness.map { hsv.brightness + $0 } ?? hsv.brightness
-////    
+////
 ////    return HSVColour(
 ////      hueCyclic: adjustedHue,
 ////      saturation: adjustedSaturation,
