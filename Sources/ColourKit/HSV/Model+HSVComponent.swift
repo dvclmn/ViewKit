@@ -25,60 +25,25 @@ public enum HSVComponent: String, ColourComponent {
   case brightness
   case alpha
 
-  //  public var keyPath: WritableKeyPath<Model, Double> {
-  //    switch self {
-  //      case .hue: \.hue
-  //      case .saturation: \.saturation
-  //      case .brightness: \.brightness
-  //      case .alpha: \.alpha
-  //    }
-  //  }
-
-  //  public var hsvAdjustmentPath: KeyPath<HSVAdjustment, Double?> {
-  //    switch self {
-  //      case .hue:
-  //        return \.hue
-  //      case .saturation:
-  //        return \.saturation
-  //      case .brightness:
-  //        return \.brightness
-  //      case .alpha:
-  //        assertionFailure("Alpha not relevant in this context.")
-  //        return \.hue
-  //    }
-  //  }
-
   public var get: (HSVColour) -> Double {
     switch self {
-      case .hue: {
-        $0.hue
-      }
-      case .saturation: {
-        $0.saturation
-      }
-      case .brightness: {
-        $0.brightness
-      }
-      case .alpha: {
-        $0.alpha
-      }
+      case .hue: { $0.hue }
+      case .saturation: { $0.saturation }
+      case .brightness: { $0.brightness }
+      case .alpha: { $0.alpha }
     }
   }
 
   public var set: (inout HSVColour, Double) -> Void {
     switch self {
-      case .hue: {
-        $0.hue = Double($1)
-      }
-      case .saturation: {
-        $0.saturation = Double($1)
-      }
-      case .brightness: {
-        $0.brightness = Double($1)
-      }
-      case .alpha: {
-        $0.alpha = Double($1)
-      }
+      case .hue:
+        { $0.hue = Double($1) }
+      case .saturation:
+        { $0.saturation = Double($1) }
+      case .brightness:
+        { $0.brightness = Double($1) }
+      case .alpha:
+        { $0.alpha = Double($1) }
     }
   }
 

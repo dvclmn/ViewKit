@@ -7,22 +7,23 @@
 
 import SwiftUI
 
-public enum SystemColour: String, CaseIterable, Identifiable, Sendable {
-  case red
+public enum SystemColour: String, CaseIterable, Identifiable, Sendable, Codable {
+  case black
   case blue
+  case brown
+  case clear
+  case cyan
+  case gray
   case green
-  case orange
-  case yellow
-  case pink
-  case purple
   case indigo
   case mint
-  case cyan
-  case brown
-  case gray
-  case black
+  case orange
+  case pink
+  case purple
+  case red
+  case teal
   case white
-  case clear
+  case yellow
   case primary
   case secondary
   case accentColor
@@ -33,6 +34,7 @@ public enum SystemColour: String, CaseIterable, Identifiable, Sendable {
       switch colour {
         case .red: SystemColour.red
         case .blue: SystemColour.blue
+        case .teal: SystemColour.teal
         case .green: SystemColour.green
         case .orange: SystemColour.orange
         case .yellow: SystemColour.yellow
@@ -52,7 +54,6 @@ public enum SystemColour: String, CaseIterable, Identifiable, Sendable {
         default: nil
       }
 
-    //    print("Result of `Color.\(colour)` conversion: \(String(describing: result))")
     guard let result else { return nil }
     self = result
   }
@@ -74,6 +75,7 @@ public enum SystemColour: String, CaseIterable, Identifiable, Sendable {
     switch self {
       case .red: Color.red
       case .blue: Color.blue
+      case .teal: Color.teal
       case .green: Color.green
       case .orange: Color.orange
       case .yellow: Color.yellow
