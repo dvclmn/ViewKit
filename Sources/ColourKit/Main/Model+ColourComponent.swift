@@ -15,7 +15,7 @@ import SwiftUI
 public protocol ColourComponent: Identifiable, Sendable, CaseIterable, RawRepresentable where RawValue == String {
 
   associatedtype Model: ColourModel
-//  associatedtype ComponentValue: BinaryFloatingPoint
+
   var id: String { get }
   var name: String { get }
   var nameInitial: Character { get }
@@ -36,8 +36,6 @@ public protocol ColourComponent: Identifiable, Sendable, CaseIterable, RawRepres
   var get: (_ model: Model) -> Double { get }
   var set: (_ model: inout Model, _ newValue: Double) -> Void { get }
   
-//  func componentBinding(_ component: Self) -> Binding<Double>
-
   func sliderTrackGradient(colour: Model) -> LinearGradient
 }
 

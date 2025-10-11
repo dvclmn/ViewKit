@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// There are certain methods for interacting with `HSVAdjustment`
+/// and similar, that don't need to be on `HSVAdjustable` conformants.
 extension HSVColour {
   
   public func contrastColour(

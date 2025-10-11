@@ -12,7 +12,7 @@ public enum LuminanceThreshold: HSVModifier {
   case light
   
   public init(
-    from colour: any ColourModel,
+    from colour: any LuminanceReadable,
     using method: LuminanceMethod = .wcag
   ) {
     self = colour.luminance(using: method) > 0.35 ? .light : .dark

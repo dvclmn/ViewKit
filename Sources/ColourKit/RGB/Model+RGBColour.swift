@@ -8,7 +8,7 @@
 import SwiftUI
 import SharedHelpers
 
-public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable, ColourModel {
+public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable, ColourModel, HSVAdjustable {
   public let id: UUID
   public var red: Double
   public var green: Double
@@ -30,28 +30,7 @@ public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable, C
     self.blue = blue
     self.alpha = alpha
     self.name = name
-    //    self.init(
-    //      unitInterval: red.toUnitInterval,
-    //      green.toUnitInterval,
-    //      blue.toUnitInterval,
-    //      alpha.toUnitInterval,
-    //      name: name
-    //    )
   }
-  //  public init(
-  //    unitInterval red: Double,
-  //    _ green: Double,
-  //    _ blue: Double,
-  //    _ alpha: Double = 1.0,
-  //    name: String? = nil
-  //  ) {
-  //    self.id = UUID()
-  //    self.red = red
-  //    self.green = green
-  //    self.blue = blue
-  //    self.alpha = alpha
-  //    self.name = name
-  //  }
 
   public init(
     r: Double,
@@ -72,7 +51,6 @@ public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable, C
     self.init(
       resolved: resolved,
       name: name
-        //      name: name ?? colour.colourName
     )
   }
 

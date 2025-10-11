@@ -123,7 +123,7 @@ extension HSVAdjustment {
   //  }
 
   static func applyingModifiers(
-    for colour: any ColourModel,
+    for luminanceColour: any LuminanceReadable,
     strength: ModificationStrengthPreset,
     purpose: ColourPurpose = .legibility,
     chroma: ColourChroma = .standard
@@ -131,7 +131,7 @@ extension HSVAdjustment {
 
     /// We don't handle `strength` just yet; first we gather
     /// the modifiers together for processing.
-    let lumThreshold: LuminanceThreshold = .init(from: colour)
+    let lumThreshold: LuminanceThreshold = .init(from: luminanceColour)
 
     let contributors: [any HSVModifier] = [
       lumThreshold,

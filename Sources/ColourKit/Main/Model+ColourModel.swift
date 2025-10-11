@@ -17,7 +17,7 @@ public protocol ColourModel {
   init(resolved: Color.Resolved, name: String?)
 }
 
-public protocol ColourLuminence {
+public protocol LuminanceReadable {
   func luminance(using method: LuminanceMethod) -> Double
   func luminanceThreshold(using method: LuminanceMethod) -> LuminanceThreshold
   
