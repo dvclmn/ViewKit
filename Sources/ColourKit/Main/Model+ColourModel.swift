@@ -21,7 +21,7 @@ public protocol SwiftUIColourResolvable {
   )
 }
 
-public protocol ColourModel {
+public protocol ColourModel: Codable {
   var colourSpace: Color.RGBColorSpace { get }
   var name: String? { get }
   var alpha: Double { get set }
@@ -39,32 +39,32 @@ extension ColourModel {
 }
 
 
-extension Color: ColourModel, SwiftUIColourResolvable {
-  public init(
-    colour: Color,
-    environment: EnvironmentValues,
-    name: String?
-  ) {
-    self = colour
-  }
-  
-  public init(resolved: Resolved, name: String?) {
-    self.init(resolved)
-  }
-  
-  public static func gray(
-    _ brightness: Double,
-    alpha: Double
-  ) -> Color {
-    return Color(hue: 0, saturation: 0, brightness: brightness, opacity: alpha)
-  }
-  
-  public var colourSpace: RGBColorSpace { .sRGB }
-  public var name: String? { self.description }
-  public var swiftUIColour: Color { self }
-  public var alpha: Double {
-    get { self.toNSColour.alphaComponent }
-    set { self = self.opacity(newValue) }
-  }
-}
+//extension Color: ColourModel, SwiftUIColourResolvable {
+//  public init(
+//    colour: Color,
+//    environment: EnvironmentValues,
+//    name: String?
+//  ) {
+//    self = colour
+//  }
+//  
+//  public init(resolved: Resolved, name: String?) {
+//    self.init(resolved)
+//  }
+//  
+//  public static func gray(
+//    _ brightness: Double,
+//    alpha: Double
+//  ) -> Color {
+//    return Color(hue: 0, saturation: 0, brightness: brightness, opacity: alpha)
+//  }
+//  
+//  public var colourSpace: RGBColorSpace { .sRGB }
+//  public var name: String? { self.description }
+//  public var swiftUIColour: Color { self }
+//  public var alpha: Double {
+//    get { self.toNSColour.alphaComponent }
+//    set { self = self.opacity(newValue) }
+//  }
+//}
 

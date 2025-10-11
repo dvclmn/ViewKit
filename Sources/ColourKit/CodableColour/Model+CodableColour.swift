@@ -8,47 +8,51 @@
 /// `Color` can *take in* HSV values
 /// `Color.Resolved` can *give* only RGB
 
+// Credit to Natalia Panferova and Matthaus Woolard of
+// https://nilcoalescing.com/blog/EncodeAndDecodeSwiftUIColor/
+
 import NSUI
 import SwiftUI
 
-public protocol ColourCodable: Codable {
-  
-  associatedtype Colour: ColourModel
-  var colour: Colour { get }
-//  var cgColor: CGColor { get }
-  
-//  init(cgColor: CGColor)
-
+public protocol ComponentColourCodable: Codable {
+  var colour: Color { get }
 }
 
-extension ColourCodable {
-  
-  public func encodeAsPlatformColour() throws -> Data {
-//  public func encodeAsPlatformColour(_ colour: Color) throws -> Data {
-    let platformColor = NSUIColor(colour.swiftUIColour)
+/// For when dealing only with Apple platforms
+/// The encoded color will be decoded on one of those platforms
+public protocol PlatformColourCodable: Codable {
+  var colour: Color { get }
+}
+
+extension PlatformColourCodable {
+
+  public func encode() throws -> Data {
+    //  public func encodeAsPlatformColour(_ colour: Color) throws -> Data {
+    let platformColor = NSUIColor(colour)
     return try NSKeyedArchiver.archivedData(
       withRootObject: platformColor,
       requiringSecureCoding: true
     )
   }
 
-  public func decodeAsPlatformColour(from data: Data) throws -> Colour {
+  public func decode(from data: Data) throws -> Color {
     guard
       let platformColor = try NSKeyedUnarchiver.unarchivedObject(
         ofClass: NSUIColor.self,
         from: data
       )
     else { throw DecodingError.wrongType }
-    
-    let swiftUIColor = Color(nsuiColor: platformColor)
-    
-    
+    return Color(nsuiColor: platformColor)
+
   }
+}
+
+extension ComponentColourCodable {
 
   // MARK: - Colour Components
 
   public func encodeAsCGComponents() throws -> Data {
-//  public func encodeAsCGComponents(_ colour: Color) throws -> Data {
+    //  public func encodeAsCGComponents(_ colour: Color) throws -> Data {
     guard let cgColor = colour.swiftUIColour.cgColor else {
       throw CodingError.wrongColor
     }
