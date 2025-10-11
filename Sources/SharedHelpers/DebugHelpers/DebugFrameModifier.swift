@@ -16,11 +16,12 @@ public struct DebugFrameModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-      .border(colour.opacityLow, width: 2)
+      .border(colour.opacity(0.2), width: 2)
       .overlay(alignment: .topLeading) {
         Text(label)
           .font(.callout)
-          .foregroundStyle(colour.opacityMid)
+          .foregroundStyle(colour.opacity(0.8))
+          .background(Color.black.opacity(0.8))
           .padding(Styles.sizeSmall)
       }
   }

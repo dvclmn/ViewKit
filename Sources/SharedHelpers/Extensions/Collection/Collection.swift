@@ -7,6 +7,10 @@
 
 extension Collection {
 
+  public subscript(safe index: Index) -> Element? {
+    return indices.contains(index) ? self[index] : nil
+  }
+
   public func hasIndex(_ offset: Int) -> Bool {
     let startIndex = self.startIndex
     let endIndex = self.endIndex
@@ -74,40 +78,41 @@ extension Collection where Element: Hashable {
   }
 }
 
-extension Set {
-  //extension Set where Element: Identifiable, Element.ID: Hashable {
-  public func isAtTop<T: Collection>(of collection: T) -> Bool where T.Element == Self.Element {
-
-    guard let firstResultID = collection.first else {
-      return false
-    }
-
-    /// I only want a *single* result selected, and to know
-    /// if it's at the top/start of the list
-    guard self.count == 1,
-      let firstSelected = self.first
-    else { return false }
-    return firstResultID == firstSelected
-
-    //    return collection.isOnlyFirstElementSelected(for: [self])
-  }
-}
-
-extension Hashable {
-  //extension Set where Element: Identifiable, Element.ID: Hashable {
-  public func isAtTop<T: Collection>(of collection: T) -> Bool where T.Element == Self {
-    guard let firstResult = collection.first else {
-      return false
-    }
-    return firstResult == self
-  }
-
-  //extension Set where Element: Identifiable, Element.ID: Hashable {
-  public func isAtTop<T: Collection>(of collection: T) -> Bool
-  where T.Element: Hashable, T.Element: Identifiable, T.Element.ID == Self {
-    guard let firstResultID = collection.first?.id else {
-      return false
-    }
-    return firstResultID == self
-  }
-}
+#warning("These extensions were way too broad, so were popping up in every auto-complete.")
+//extension Set {
+//  //extension Set where Element: Identifiable, Element.ID: Hashable {
+//  public func isAtTop<T: Collection>(of collection: T) -> Bool where T.Element == Self.Element {
+//
+//    guard let firstResultID = collection.first else {
+//      return false
+//    }
+//
+//    /// I only want a *single* result selected, and to know
+//    /// if it's at the top/start of the list
+//    guard self.count == 1,
+//      let firstSelected = self.first
+//    else { return false }
+//    return firstResultID == firstSelected
+//
+//    //    return collection.isOnlyFirstElementSelected(for: [self])
+//  }
+//}
+//
+//extension Hashable {
+//  //extension Set where Element: Identifiable, Element.ID: Hashable {
+//  public func isAtTop<T: Collection>(of collection: T) -> Bool where T.Element == Self {
+//    guard let firstResult = collection.first else {
+//      return false
+//    }
+//    return firstResult == self
+//  }
+//
+//  //extension Set where Element: Identifiable, Element.ID: Hashable {
+//  public func isAtTop<T: Collection>(of collection: T) -> Bool
+//  where T.Element: Hashable, T.Element: Identifiable, T.Element.ID == Self {
+//    guard let firstResultID = collection.first?.id else {
+//      return false
+//    }
+//    return firstResultID == self
+//  }
+//}

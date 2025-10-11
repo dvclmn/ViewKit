@@ -5,13 +5,8 @@
 //  Created by Dave Coleman on 9/6/2025.
 //
 
-import SwiftUI
 import SharedHelpers
-
-public enum SubViewType: Sendable {
-  case subview
-  case section
-}
+import SwiftUI
 
 public struct DecomposedView<Content: View>: View {
 
@@ -31,7 +26,7 @@ public struct DecomposedView<Content: View>: View {
     self.spacing = spacing
     self.content = content()
   }
-  
+
   public init(
     _ subviewType: SubViewType,
     axis: Axis?,
@@ -69,9 +64,9 @@ public struct DecomposedView<Content: View>: View {
               }
             }
         }  // END switch
-      } // END group
+      }  // END group
       /// This passes the axis through to the Section/Subview's `DynamicStack`
-//      .environment(\.layoutAxis, axis)
+      //      .environment(\.layoutAxis, axis)
       .environment(\.layoutType, layoutType)
     } else {
       // MARK: - All OS versions below macOS 15
