@@ -11,55 +11,6 @@
 import NSUI
 import SwiftUI
 
-public struct ColourCoder {
-
-  public struct Platform {
-    //    public static func encode(_ colour: Color) throws -> Data { ... }
-    //    public static func decode(from data: Data) throws -> Color { ... }
-
-    public static func encode(_ colour: Color) throws -> Data {
-      let platformColor = NSUIColor(colour)
-      return try NSKeyedArchiver.archivedData(
-        withRootObject: platformColor,
-        requiringSecureCoding: true
-      )
-    }
-
-    public static func decode(from data: Data) throws -> Color {
-      guard
-        let platformColor = try NSKeyedUnarchiver.unarchivedObject(
-          ofClass: NSUIColor.self,
-          from: data
-        )
-      else {
-        throw DecodingError.wrongType
-      }
-      return Color(nsuiColor: platformColor)
-    }
-
-  }
-  public struct Components {
-    public static func encode(_ colour: Color) throws -> Data {
-      guard let cgColor = colour.cgColor else {
-        throw CodingError.wrongColor
-      }
-      return try JSONEncoder()
-        .encode(CodableColor(cgColor: cgColor))
-
-    }
-    public static func decode(from data: Data) throws -> Color {
-      let codableColor = try JSONDecoder()
-        .decode(CodableColor.self, from: data)
-      return Color(cgColor: codableColor.cgColor)
-
-    }
-  }
-
-  enum DecodingError: Error {
-    case wrongType
-  }
-}
-
 public struct CodableColor: Codable {
   let cgColor: CGColor
 
@@ -114,6 +65,54 @@ enum CodingError: Error {
   case wrongColor
   case wrongData
 }
+
+
+extension CodableColor {
+  //public struct ColourCoder {
+  
+  // MARK: - Platform/native approach
+  public struct Platform {
+    public static func encode(_ colour: Color) throws -> Data {
+      let platformColor = NSUIColor(colour)
+      return try NSKeyedArchiver.archivedData(
+        withRootObject: platformColor,
+        requiringSecureCoding: true
+      )
+    }
+    
+    public static func decode(from data: Data) throws -> Color {
+      guard
+        let platformColor = try NSKeyedUnarchiver.unarchivedObject(
+          ofClass: NSUIColor.self,
+          from: data
+        )
+      else { throw DecodingError.wrongType }
+      return Color(nsuiColor: platformColor)
+    }
+  }
+  
+  // MARK: - Colour Components
+  public struct Components {
+    public static func encode(_ colour: Color) throws -> Data {
+      guard let cgColor = colour.cgColor else {
+        throw CodingError.wrongColor
+      }
+      return try JSONEncoder().encode(CodableColor(cgColor: cgColor))
+      
+    }
+    public static func decode(from data: Data) throws -> Color {
+      let codableColor = try JSONDecoder()
+        .decode(CodableColor.self, from: data)
+      return Color(cgColor: codableColor.cgColor)
+      
+    }
+  }
+  
+  enum DecodingError: Error {
+    case wrongType
+  }
+}
+
 
 //public protocol CodableColour {
 //  var resolved: Color.Resolved { get set }
