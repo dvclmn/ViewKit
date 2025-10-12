@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 12/5/2025.
 //
 
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable, ColourModel, HSVAdjustable {
   public let id: UUID
@@ -42,10 +42,14 @@ public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable, C
     self.init(red: r, green: g, blue: b, alpha: a, name: name)
   }
 
-
+  public init(fromSystem system: SystemColour, env: EnvironmentValues) {
+    self.init(
+      colour: system.swiftUIColour,
+      environment: env,
+      name: system.name
+    )
+  }
 }
-
-
 
 extension RGBColour {
 

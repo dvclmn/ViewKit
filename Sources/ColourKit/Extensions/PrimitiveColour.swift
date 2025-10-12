@@ -23,7 +23,7 @@ public enum PrimitiveColour: String, Identifiable, CaseIterable, Sendable {
   case white
   case none
 
-  #warning("Turn back on if Swatch survives")
+//  #warning("Turn back on if Swatch survives")
   //  public init?(fromSwatch swatch: Swatch) {
   //    let lower = swatch.rawValue.lowercased()
   //

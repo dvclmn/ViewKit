@@ -40,6 +40,7 @@ extension EnvironmentValues {
 
   /// Labels
   @Entry public var labelColour: AnyShapeStyle? = nil
+  @Entry public var itemColour: Color? = nil
   @Entry public var labelWeight: Font.Weight? = nil
 
   /// Strokes

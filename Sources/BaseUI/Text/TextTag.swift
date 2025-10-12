@@ -13,12 +13,12 @@ import SwiftUI
 public struct TextTag: View {
   @Environment(\.self) private var envSelf
   let text: String
-  let colour: CodableColour
+  let colour: RGBColour
   //  let colour: Color
 
   public init(
     _ text: String,
-    colour: CodableColour
+    colour: RGBColour
       //    colour: CodableColour = Color.gray.opacityLow
   ) {
     self.text = text
@@ -34,16 +34,21 @@ public struct TextTag: View {
         colour.contrastColour(
           strength: .moderate,
           purpose: .complementary,
-          chroma: .monochrome,
-          environment: envSelf
-        ).colour
+          chroma: .monochrome
+        ).swiftUIColour
+//          .contrastColour(
+//          strength: .moderate,
+//          purpose: .complementary,
+//          chroma: .monochrome,
+//          environment: envSelf
+//        ).colour
       )
       .quickBackground(
         shape: .rect(cornerRadius: Styles.sizeTiny),
         padding: 2,
-        tint: colour.colour,
+        tint: colour.swiftUIColour,
       )
-      .environment(\.strokeColour, colour.colour.toShapeStyle)
+      .environment(\.strokeColour, colour.swiftUIColour.toShapeStyle)
       .environment(\.strokeWeight, 1)
   }
 }

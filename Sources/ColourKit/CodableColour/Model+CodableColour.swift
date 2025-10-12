@@ -21,54 +21,57 @@ public protocol ComponentColourCodable: Codable {
 
   /// Note, `cgColor` is only available on constant colors,
   /// will return `nil` if we try to access it on a dynamic color.
-//  var colour: Color { get }
-  
+  var colour: Color { get }
+
 }
 
 extension ComponentColourCodable {
 
   // MARK: - Colour Components
-//
-//  public func encode() throws -> Data {
-//    //  public func encodeAsCGComponents(_ colour: Color) throws -> Data {
-//    guard let cgColor = colour.swiftUIColour.cgColor else {
-//      throw CodingError.wrongColor
-//    }
-//    return try JSONEncoder().encode(self.cgColor)
-//
-//  }
-//  public func decode(from data: Data) throws -> Color {
-//    let codableColor = try JSONDecoder()
-//      .decode(Self.self, from: data)
-//    return Color(cgColor: codableColor.cgColor)
-//
-//  }
+  //
+  //  public func encode() throws -> Data {
+  //    //  public func encodeAsCGComponents(_ colour: Color) throws -> Data {
+  //    guard let cgColor = colour.swiftUIColour.cgColor else {
+  //      throw CodingError.wrongColor
+  //    }
+  //    return try JSONEncoder().encode(self.cgColor)
+  //
+  //  }
+  //  public func decode(from data: Data) throws -> Color {
+  //    let codableColor = try JSONDecoder()
+  //      .decode(Self.self, from: data)
+  //    return Color(cgColor: codableColor.cgColor)
+  //
+  //  }
 
 }
 
 struct CodableColorFromComponents: Codable {
   let cgColor: CGColor
-  
+
   enum CodingKeys: String, CodingKey {
     case colorSpace
     case components
   }
-  
+
   init(color: Color, env: EnvironmentValues) {
     self.cgColor = color.resolve(in: env).cgColor
   }
   init(cgColor: CGColor) {
     self.cgColor = cgColor
   }
-  
+
   init(from decoder: Decoder) throws {
-    let container = try decoder
+    let container =
+      try decoder
       .container(keyedBy: CodingKeys.self)
-    let colorSpace = try container
+    let colorSpace =
+      try container
       .decode(String.self, forKey: .colorSpace)
-    let components = try container
+    let components =
+      try container
       .decode([CGFloat].self, forKey: .components)
-    
+
     guard
       let cgColorSpace = CGColorSpace(name: colorSpace as CFString),
       let cgColor = CGColor(
@@ -77,10 +80,10 @@ struct CodableColorFromComponents: Codable {
     else {
       throw CodingError.wrongData
     }
-    
+
     self.cgColor = cgColor
   }
-  
+
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     guard
@@ -89,7 +92,7 @@ struct CodableColorFromComponents: Codable {
     else {
       throw CodingError.wrongData
     }
-    
+
     try container.encode(colorSpace as String, forKey: .colorSpace)
     try container.encode(components, forKey: .components)
   }

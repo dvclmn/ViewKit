@@ -50,6 +50,7 @@ let package = Package(
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/ukushu/Ifrit", from: "3.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
+    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
     .package(url: "https://github.com/kean/Nuke", from: "12.8.0"),
   ],
 
@@ -94,6 +95,7 @@ let package = Package(
         .dep(.sharedHelpers),
         .dep(.curveKit),
         .nsui,
+        .product(name: "CasePaths", package: "swift-case-paths"),
       ],
     ),
 

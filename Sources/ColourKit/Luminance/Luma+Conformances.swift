@@ -30,26 +30,26 @@ extension HSVColour: LuminanceReadable {
   }
 }
 
-extension Color: LuminanceReadable {
-  public func luminance(using method: LuminanceMethod = .wcag) -> Double {
-    fatalError("Not yet implemented")
-//    RGBColour(colour: <#T##Color#>, environment: <#T##EnvironmentValues#>, name: <#T##String?#>)
-//    RGBColour(fromHSV: self).luminance(using: method)
-  }
-
-  public func luminanceThreshold(using method: LuminanceMethod) -> LuminanceThreshold {
-    fatalError("Not yet implemented")
-//    RGBColour(fromHSV: self).luminanceThreshold(using: method)
-  }
-
-}
-
-extension CodableColour: LuminanceReadable {
-  public func luminance(using method: LuminanceMethod = .wcag) -> Double {
-    fatalError("Not yet implemented")
-  }
-  
-  public func luminanceThreshold(using method: LuminanceMethod) -> LuminanceThreshold {
-    fatalError("Not yet implemented")
-  }
-}
+//extension Color: LuminanceReadable {
+//  public func luminance(using method: LuminanceMethod = .wcag) -> Double {
+//    fatalError("Not yet implemented")
+////    RGBColour(colour: <#T##Color#>, environment: <#T##EnvironmentValues#>, name: <#T##String?#>)
+////    RGBColour(fromHSV: self).luminance(using: method)
+//  }
+//
+//  public func luminanceThreshold(using method: LuminanceMethod) -> LuminanceThreshold {
+//    fatalError("Not yet implemented")
+////    RGBColour(fromHSV: self).luminanceThreshold(using: method)
+//  }
+//
+//}
+//
+//extension CodableColour: LuminanceReadable {
+//  public func luminance(using method: LuminanceMethod = .wcag) -> Double {
+//    fatalError("Not yet implemented")
+//  }
+//  
+//  public func luminanceThreshold(using method: LuminanceMethod) -> LuminanceThreshold {
+//    fatalError("Not yet implemented")
+//  }
+//}

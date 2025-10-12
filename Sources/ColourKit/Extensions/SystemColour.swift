@@ -6,8 +6,31 @@
 //
 
 import SwiftUI
+import SharedHelpers
+import CasePaths
 
-public enum SystemColour: String, CaseIterable, Identifiable, Sendable, Codable {
+@dynamicMemberLookup
+public struct ColourPreset: ModelBase {
+  public let systemColour: SystemColour
+  public let opacity: Double
+  
+  public init(_ colour: SystemColour, opacity: Double = 1) {
+    self.systemColour = colour
+    self.opacity = opacity
+  }
+  
+  public var colour: Color {
+    return self.systemColour.swiftUIColour.opacity(opacity)
+  }
+}
+extension ColourPreset {
+  public subscript(dynamicMember keyPath: KeyPath<ColourPreset, SystemColour>) -> SystemColour {
+    return self[keyPath: keyPath]
+  }
+}
+
+@CasePathable
+public enum SystemColour: String, CaseIterable, ModelBaseWithID {
   case black
   case blue
   case brown
@@ -58,6 +81,10 @@ public enum SystemColour: String, CaseIterable, Identifiable, Sendable, Codable 
     self = result
   }
 
+//  public func opacity(_ opacity: Double) -> Color {
+//    return self.swiftUIColour.opacity(opacity)
+//  }
+  
   public var id: String { rawValue }
 
   public var name: String {
@@ -94,4 +121,28 @@ public enum SystemColour: String, CaseIterable, Identifiable, Sendable, Codable 
       case .accentColor: Color.accentColor
     }
   }
+  
 }
+
+//extension RGBColour {
+//public static var black: Self { RGBCo }
+//public static var blue: Self {  }
+//public static var brown: Self {  }
+//public static var clear: Self {  }
+//public static var cyan: Self {  }
+//public static var gray: Self {  }
+//public static var green: Self {  }
+//public static var indigo: Self {  }
+//public static var mint: Self {  }
+//public static var orange: Self {  }
+//public static var pink: Self {  }
+//public static var purple: Self {  }
+//public static var red: Self {  }
+//public static var teal: Self {  }
+//public static var white: Self {  }
+//public static var yellow: Self {  }
+//public static var primary: Self {  }
+//public static var secondary: Self {  }
+//public static var accentColor: Self {  }
+//
+//}
