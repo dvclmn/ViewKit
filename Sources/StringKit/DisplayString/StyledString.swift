@@ -143,7 +143,7 @@ extension StyledString {
 
     for line in lines {
       let lineLength = line.count
-      
+
       guard lineLength > 0 else {
         result.append(StyledString("?", with: .blackOnOrange))
         continue

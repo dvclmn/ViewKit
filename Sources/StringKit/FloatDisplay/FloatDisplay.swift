@@ -12,7 +12,7 @@ public enum FloatDisplay {}
 public typealias Grouping = FloatingPointFormatStyle<Double>.Configuration.Grouping
 
 extension FloatDisplay {
-  public protocol DisplayString: StringConvertible {
+  public protocol FloatString: StringConvertible {
     associatedtype Value: BinaryFloatingPoint
     var value: Value { get }
     
@@ -26,11 +26,11 @@ extension FloatDisplay {
   }
 }
 
-/// ``StringConvertibleFloat`` doesn't concern itself with
-/// properties like `valueLabel`s (e.g. "W" for width etc).
+/// This doesn't concern itself with things like
+/// property labels (e.g. "W" for width etc).
 /// Just formatting a single value, and returning it for
 /// any further processing required
-extension FloatDisplay.DisplayString {
+extension FloatDisplay.FloatString {
 
   /// `StringConvertible` conformance
   public var toString: String { self.displayString() }
@@ -39,12 +39,6 @@ extension FloatDisplay.DisplayString {
   /// method with it's default values
   public var displayString: String { self.displayString() }
 
-  /// I like the API of `NumberFormatStyleConfiguration.Precision`,
-  /// so I've chosen not to abstract over it, but use it directly, to
-  /// express the decimal/integer places.
-  ///
-  /// Albeit via typeliases ``Grouping``
-  /// and ``DecimalPlaces``
   public func displayString(
     places: Int = 2,
     grouping: Grouping = .automatic
@@ -52,7 +46,7 @@ extension FloatDisplay.DisplayString {
 
     /// Manually converting from the more ambiguous `BinaryFloatingPoint`,
     /// to `Double`, so the compiler knows exactly what we're dealing with
-    let valueToFormat = Double(self.value)
+    let valueToFormat = Double(value)
 
     let formatted = valueToFormat.formatted(
       .number.precision(.fractionLength(places))
@@ -64,9 +58,9 @@ extension FloatDisplay.DisplayString {
 
 }
 // MARK: - Conformances
-extension Double: FloatDisplay.DisplayString {
+extension Double: FloatDisplay.FloatString {
   public var value: Self { self }
 }
-extension CGFloat: FloatDisplay.DisplayString {
+extension CGFloat: FloatDisplay.FloatString {
   public var value: Self { self }
 }
