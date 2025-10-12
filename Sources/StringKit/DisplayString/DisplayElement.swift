@@ -1,5 +1,5 @@
 //
-//  DisplayElement.swift
+//  DisplayBlock.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 6/10/2025.
@@ -11,10 +11,10 @@ import SharedHelpers
 
 
 @CaseDetection(includesNames: true)
-public enum DisplayElement {
+public enum DisplayBlock {
   case text(StyledString)
   case indented(Indented)
-  //  case indented(title: String?, indent: String, content: [BuilderElement])
+  //  case indented(title: String?, indent: String, content: [DisplayBlock])
 
   var indentationDepth: Int {
     switch self {
@@ -25,7 +25,7 @@ public enum DisplayElement {
   }
 }
 
-extension DisplayElement: StyledStringConvertible {
+extension DisplayBlock: StyledStringConvertible {
 
   public var toStyledString: StyledString {
     switch self {

@@ -8,35 +8,32 @@
 import Foundation
 import SharedHelpers
 
-public typealias BuilderElement = DisplayElement
-//public typealias BuilderElement = StyledString
-
 @resultBuilder
 public struct DisplayStringBuilder {
 
-  public static func buildBlock(_ components: [BuilderElement]...) -> [BuilderElement] {
+  public static func buildBlock(_ components: [DisplayBlock]...) -> [DisplayBlock] {
     printPadded("Ran DisplayStringBuilder.buildBlock", )
     return components.flatMap { $0 }
   }
 
-  public static func buildOptional(_ component: [BuilderElement]?) -> [BuilderElement] {
+  public static func buildOptional(_ component: [DisplayBlock]?) -> [DisplayBlock] {
     component ?? []
   }
 
-  public static func buildEither(first component: [BuilderElement]) -> [BuilderElement] {
+  public static func buildEither(first component: [DisplayBlock]) -> [DisplayBlock] {
     component
   }
 
-  public static func buildEither(second component: [BuilderElement]) -> [BuilderElement] {
+  public static func buildEither(second component: [DisplayBlock]) -> [DisplayBlock] {
     component
   }
 
-  public static func buildArray(_ components: [[BuilderElement]]) -> [BuilderElement] {
+  public static func buildArray(_ components: [[DisplayBlock]]) -> [DisplayBlock] {
     components.flatMap { $0 }
   }
   
   private static func debugString(
-    components: [BuilderElement],
+    components: [DisplayBlock],
     function: String = #function,
   ) -> String {
     "\(function): \(components.count) elements"
@@ -48,27 +45,27 @@ public struct DisplayStringBuilder {
 extension DisplayStringBuilder {
 
   /// Allows for using both arrays and single items
-  public static func buildExpression(_ expression: [BuilderElement]) -> [BuilderElement] {
+  public static func buildExpression(_ expression: [DisplayBlock]) -> [DisplayBlock] {
     expression
   }
 
-  public static func buildExpression(_ expression: BuilderElement) -> [BuilderElement] {
+  public static func buildExpression(_ expression: DisplayBlock) -> [DisplayBlock] {
     [expression]
   }
 
-  public static func buildExpression<T: StyledStringConvertible>(_ value: T) -> [BuilderElement] {
+  public static func buildExpression<T: StyledStringConvertible>(_ value: T) -> [DisplayBlock] {
     [.text(value.toStyledString)]
 
   }
 
-  public static func buildExpression(_ value: Indented) -> [BuilderElement] {
-    [
-      .indented(
-        title: value.title,
-        indent: value.indentString,
+  public static func buildExpression(_ value: Indented) -> [DisplayBlock] {
+    [.indented(
+      Indented(
+        value.title,
+        indentString: value.indentString,
         content: value.content
       )
-    ]
+    )]
   }
 
 }

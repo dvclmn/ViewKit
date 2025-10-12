@@ -11,7 +11,7 @@ import Foundation
 public struct Labeled {
 
   public let key: String
-  public let value: BuilderElement?
+  public let value: DisplayBlock?
 
   /// E.g. for `CGPoint`
   /// ```

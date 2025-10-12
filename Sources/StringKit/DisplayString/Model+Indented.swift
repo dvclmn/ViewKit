@@ -12,16 +12,26 @@ import Foundation
 public struct Indented {
   public let title: String?
   public let indentString: String
-  public let content: [BuilderElement]
+  public let content: [DisplayBlock]
 
   public init(
     _ title: String? = nil,
     prefix indentString: String = " | ",
-    @DisplayStringBuilder _ content: () -> [BuilderElement]
+    @DisplayStringBuilder _ content: () -> [DisplayBlock]
   ) {
     self.title = title
     self.indentString = indentString
     self.content = content()
+  }
+  
+  public init(
+    _ title: String? = nil,
+    indentString: String = " | ",
+    content: [DisplayBlock]
+  ) {
+    self.title = title
+    self.indentString = indentString
+    self.content = content
   }
 }
 

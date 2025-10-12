@@ -7,55 +7,55 @@
 
 import SwiftUI
 
-extension CGPoint: FloatGroup {
+extension CGPoint: FloatDisplay.Group {
 
   public var separators: Separators {
     Separators(propertyLabel: ": ", component: ", ")
   }
 
-  public var components: [Component] {
+  public var components: [FloatDisplay.Component] {
     [
-      Component("X", value: self.x),
-      Component("Y", value: self.y),
+      FloatDisplay.Component("X", value: self.x),
+      FloatDisplay.Component("Y", value: self.y),
     ]
   }
 }
 
-extension CGSize: FloatGroup {
+extension CGSize: FloatDisplay.Group {
   public var separators: Separators {
     Separators(propertyLabel: ": ", component: " x ")
   }
 
-  public var components: [Component] {
+  public var components: [FloatDisplay.Component] {
     [
-      Component(PropertyLabel("Width", abbreviated: "W"), value: self.width),
-      Component(PropertyLabel("Height", abbreviated: "H"), value: self.height),
+      FloatDisplay.Component(PropertyLabel("Width", abbreviated: "W"), value: self.width),
+      FloatDisplay.Component(PropertyLabel("Height", abbreviated: "H"), value: self.height),
     ]
   }
 }
 
-extension UnitPoint: FloatGroup {
+extension UnitPoint: FloatDisplay.Group {
   public var separators: Separators {
     Separators(propertyLabel: ": ", component: ", ")
   }
 
-  public var components: [Component] {
+  public var components: [FloatDisplay.Component] {
     [
-      Component("X", value: self.x),
-      Component("Y", value: self.y),
+      FloatDisplay.Component("X", value: self.x),
+      FloatDisplay.Component("Y", value: self.y),
     ]
   }
 }
 
-extension CGVector: FloatGroup {
+extension CGVector: FloatDisplay.Group {
   public var separators: Separators {
     Separators(propertyLabel: ": ", component: " x ")
   }
 
-  public var components: [Component] {
+  public var components: [FloatDisplay.Component] {
     [
-      Component("DX", value: self.dx),
-      Component("DY", value: self.dy),
+      FloatDisplay.Component("DX", value: self.dx),
+      FloatDisplay.Component("DY", value: self.dy),
     ]
   }
 }

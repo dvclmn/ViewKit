@@ -11,26 +11,24 @@ import Foundation
 /// May be a pair, like `CGPoint`'s `x` and `y`,
 /// or more, like `CGRect`
 
-extension FloatDisplay {
-  public protocol Group {
-    var components: [Component] { get }
-    var separators: Separators { get }
-
-    /// It's worth noting that whilst this looks repetitious,
-    /// looking at `FloatDisplay.DisplayString`'s
-    /// method of the same name, this is geared towards
-    /// groups specifically, having the concept of
-    /// `labelStyle` and `separators`
-    func displayString(
-      places: Int,
-      grouping: Grouping,
-      labelStyle: PropertyLabel.Style,
-      separators: Separators.Visibility
-    ) -> String
-  }
+public protocol FloatGroup: PropertiesLabeled {
+  var components: [Component] { get }
+  var separators: Separators { get }
+  
+  /// It's worth noting that whilst this looks repetitious,
+  /// looking at `FloatDisplay.DisplayString`'s
+  /// method of the same name, this is geared towards
+  /// groups specifically, having the concept of
+  /// `labelStyle` and `separators`
+  func displayString(
+    places: Int,
+    grouping: Grouping,
+    labelStyle: PropertyLabel.Style,
+    separators: Separators.Visibility
+  ) -> String
 }
 
-extension FloatDisplay.Group {
+extension FloatGroup {
 
   /// Default for convenience
   public var displayString: String { displayString() }

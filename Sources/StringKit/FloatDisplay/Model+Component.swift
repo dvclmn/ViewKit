@@ -11,16 +11,17 @@ import Foundation
 
 /// A key-value pair, for display floats with labels
 extension FloatDisplay {
-  public struct Component {
-    let label: PropertyLabel
-    let value: any DisplayString
-    
-    public init(
-      _ label: PropertyLabel,
-      value: any DisplayString,
-    ) {
-      self.label = label
-      self.value = value
-    }
+}
+public struct FloatComponent: LabeledComponent {
+  typealias Value = FloatString
+  public let label: PropertyLabel
+  let value: Value
+  
+  public init(
+    _ label: PropertyLabel,
+    value: Value,
+  ) {
+    self.label = label
+    self.value = value
   }
 }

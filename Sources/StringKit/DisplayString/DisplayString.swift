@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct DisplayString {
 
-  private let components: [BuilderElement]
+  private let components: [DisplayBlock]
   //  private let components: [StyledString]
 
   /// This is the *top-level* seperator, that appears between
@@ -20,7 +20,7 @@ public struct DisplayString {
 
   public init(
     _ separator: String = "\n",
-    @DisplayStringBuilder _ content: () -> [BuilderElement]
+    @DisplayStringBuilder _ content: () -> [DisplayBlock]
   ) {
     self.separator = separator
     self.components = content()
