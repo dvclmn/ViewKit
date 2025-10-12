@@ -8,19 +8,6 @@
 import EnumMacros
 import Foundation
 
-//public protocol PropertiesLabeled {
-//
-//  /// Number of properties to be labeled are unknown
-//  var components: [LabelComponent] { get }
-////  var labels: [PropertyLabel] { get }
-//}
-
-/// Corresponds to `FloatDisplay.Component`
-//public struct LabelComponent {
-//  let label: PropertyLabel
-//  let value: any StringConvertible
-//}
-
 /// A property label is aimed at expressing the
 /// string representaiton for a property, such as
 /// "X" and "Y" properties for CGPoint. Or "width"

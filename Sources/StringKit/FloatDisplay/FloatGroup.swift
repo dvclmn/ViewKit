@@ -25,7 +25,24 @@ import Foundation
 //  ) -> String
 //}
 
-extension FloatGroup {
+
+//public protocol FloatGroup: PropertiesLabeled where Component == FloatComponent {
+//  func displayString(
+//    places: Int,
+//    grouping: Grouping,
+//    labelStyle: PropertyLabel.Style,
+//    separators: Separators.Visibility
+//  ) -> String
+//}
+
+
+//extension FloatGroup {
+
+/// Types like `CGPoint` that have float properties.
+/// May be a pair, like `CGPoint`'s `x` and `y`,
+/// or more, like `CGRect`
+
+extension PropertiesLabeled where Component: FloatLabeledComponent {
 
   /// Default for convenience
   public var displayString: String { displayString() }
