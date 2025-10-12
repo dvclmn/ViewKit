@@ -11,26 +11,26 @@ public enum FloatDisplay {}
 
 public typealias Grouping = FloatingPointFormatStyle<Double>.Configuration.Grouping
 
-extension FloatDisplay {
-  public protocol FloatString: StringConvertible {
-    associatedtype Value: BinaryFloatingPoint
-    var value: Value { get }
-    
-    /// This is an early formatting pass, just to get the
-    /// decimal places and other numeric/float based
-    /// formatting sorted, before other touches.
-    func displayString(
-      places: Int,
-      grouping: Grouping
-    ) -> String
-  }
+//extension FloatDisplay {
+//}
+public protocol FloatString: StringConvertible {
+  associatedtype Value: BinaryFloatingPoint
+  var value: Value { get }
+  
+  /// This is an early formatting pass, just to get the
+  /// decimal places and other numeric/float based
+  /// formatting sorted, before other touches.
+  func displayString(
+    places: Int,
+    grouping: Grouping
+  ) -> String
 }
 
 /// This doesn't concern itself with things like
 /// property labels (e.g. "W" for width etc).
 /// Just formatting a single value, and returning it for
 /// any further processing required
-extension FloatDisplay.FloatString {
+extension FloatString {
 
   /// `StringConvertible` conformance
   public var toString: String { self.displayString() }
@@ -58,9 +58,9 @@ extension FloatDisplay.FloatString {
 
 }
 // MARK: - Conformances
-extension Double: FloatDisplay.FloatString {
+extension Double: FloatString {
   public var value: Self { self }
 }
-extension CGFloat: FloatDisplay.FloatString {
+extension CGFloat: FloatString {
   public var value: Self { self }
 }

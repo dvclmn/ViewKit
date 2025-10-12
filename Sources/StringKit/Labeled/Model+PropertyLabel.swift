@@ -15,34 +15,11 @@ import Foundation
 ////  var labels: [PropertyLabel] { get }
 //}
 
-public protocol PropertiesLabeled {
-  associatedtype Component: LabeledComponent
-
-  //public protocol LabeledGroup {
-  var components: [Component] { get }
-  var separators: Separators { get }
-}
-
-extension PropertiesLabeled where Component == FloatComponent {
-  func displayString(
-    places: Int,
-    grouping: Grouping,
-    labelStyle: PropertyLabel.Style,
-    separators: Separators.Visibility
-  ) -> String
-}
-
-public protocol LabeledComponent {
-  associatedtype Value: StringConvertible
-  var label: PropertyLabel { get }
-  var value: Value { get }
-}
-
 /// Corresponds to `FloatDisplay.Component`
-public struct LabelComponent {
-  let label: PropertyLabel
-  let value: any StringConvertible
-}
+//public struct LabelComponent {
+//  let label: PropertyLabel
+//  let value: any StringConvertible
+//}
 
 /// A property label is aimed at expressing the
 /// string representaiton for a property, such as
