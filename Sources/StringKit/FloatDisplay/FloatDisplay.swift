@@ -7,26 +7,30 @@
 
 import SwiftUI
 
+public enum FloatDisplay {}
+
 public typealias Grouping = FloatingPointFormatStyle<Double>.Configuration.Grouping
 
-public protocol FloatDisplay: StringConvertible {
-  associatedtype Value: BinaryFloatingPoint
-  var value: Value { get }
-
-  /// This is an early formatting pass, just to get the
-  /// decimal places and other numeric/float based
-  /// formatting sorted, before other touches.
-  func displayString(
-    places: Int,
-    grouping: Grouping
-  ) -> String
+extension FloatDisplay {
+  public protocol DisplayString: StringConvertible {
+    associatedtype Value: BinaryFloatingPoint
+    var value: Value { get }
+    
+    /// This is an early formatting pass, just to get the
+    /// decimal places and other numeric/float based
+    /// formatting sorted, before other touches.
+    func displayString(
+      places: Int,
+      grouping: Grouping
+    ) -> String
+  }
 }
 
 /// ``StringConvertibleFloat`` doesn't concern itself with
 /// properties like `valueLabel`s (e.g. "W" for width etc).
 /// Just formatting a single value, and returning it for
 /// any further processing required
-extension FloatDisplay {
+extension FloatDisplay.DisplayString {
 
   /// `StringConvertible` conformance
   public var toString: String { self.displayString() }
@@ -60,9 +64,9 @@ extension FloatDisplay {
 
 }
 // MARK: - Conformances
-extension Double: FloatDisplay {
+extension Double: FloatDisplay.DisplayString {
   public var value: Self { self }
 }
-extension CGFloat: FloatDisplay {
+extension CGFloat: FloatDisplay.DisplayString {
   public var value: Self { self }
 }

@@ -10,6 +10,7 @@ import Foundation
 /// Types like `CGPoint` that have float properties.
 /// May be a pair, like `CGPoint`'s `x` and `y`,
 /// or more, like `CGRect`
+
 public protocol FloatGroup {
   var components: [Component] { get }
   var separators: Separators { get }
