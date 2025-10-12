@@ -8,14 +8,16 @@
 import SwiftUI
 
 extension CGPoint: PropertiesLabeled {
-//  public typealias Component = FloatComponent
+//  public typealias Value = CGFloat
   
+//  typealias Value = FloatString
+  //  public typealias Component = FloatComponent
 
   public var separators: Separators {
     Separators(propertyLabel: ": ", component: ", ")
   }
 
-  public var components: [LabelComponent] {
+  public var components: [LabelComponent<CGFloat>] {
     [
       LabelComponent("X", value: self.x),
       LabelComponent("Y", value: self.y),
@@ -23,41 +25,41 @@ extension CGPoint: PropertiesLabeled {
   }
 }
 
-//extension CGSize: FloatDisplay.Group {
-//  public var separators: Separators {
-//    Separators(propertyLabel: ": ", component: " x ")
-//  }
-//
-//  public var components: [FloatDisplay.Component] {
-//    [
-//      FloatDisplay.Component(PropertyLabel("Width", abbreviated: "W"), value: self.width),
-//      FloatDisplay.Component(PropertyLabel("Height", abbreviated: "H"), value: self.height),
-//    ]
-//  }
-//}
-//
-//extension UnitPoint: FloatDisplay.Group {
-//  public var separators: Separators {
-//    Separators(propertyLabel: ": ", component: ", ")
-//  }
-//
-//  public var components: [FloatDisplay.Component] {
-//    [
-//      FloatDisplay.Component("X", value: self.x),
-//      FloatDisplay.Component("Y", value: self.y),
-//    ]
-//  }
-//}
-//
-//extension CGVector: FloatDisplay.Group {
-//  public var separators: Separators {
-//    Separators(propertyLabel: ": ", component: " x ")
-//  }
-//
-//  public var components: [FloatDisplay.Component] {
-//    [
-//      FloatDisplay.Component("DX", value: self.dx),
-//      FloatDisplay.Component("DY", value: self.dy),
-//    ]
-//  }
-//}
+extension CGSize: PropertiesLabeled {
+  public var separators: Separators {
+    Separators(propertyLabel: ": ", component: " x ")
+  }
+
+  public var components: [LabelComponent<CGFloat>] {
+    [
+      LabelComponent(PropertyLabel("Width", abbreviated: "W"), value: self.width),
+      LabelComponent(PropertyLabel("Height", abbreviated: "H"), value: self.height),
+    ]
+  }
+}
+
+extension UnitPoint: PropertiesLabeled {
+  public var separators: Separators {
+    Separators(propertyLabel: ": ", component: ", ")
+  }
+
+  public var components: [LabelComponent<CGFloat>] {
+    [
+      LabelComponent("X", value: self.x),
+      LabelComponent("Y", value: self.y),
+    ]
+  }
+}
+
+extension CGVector: PropertiesLabeled {
+  public var separators: Separators {
+    Separators(propertyLabel: ": ", component: " x ")
+  }
+
+  public var components: [LabelComponent<CGFloat>] {
+    [
+      LabelComponent("DX", value: self.dx),
+      LabelComponent("DY", value: self.dy),
+    ]
+  }
+}

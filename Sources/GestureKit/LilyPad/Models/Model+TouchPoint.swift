@@ -6,8 +6,9 @@
 //
 
 import AppKit
-import StringShared
 import CurveKit
+import StringShared
+
 //import StringKit
 
 public struct TouchPoint: TimestampedPosition, Identifiable, Sendable, Hashable, Equatable, Codable {
@@ -21,7 +22,7 @@ public struct TouchPoint: TimestampedPosition, Identifiable, Sendable, Hashable,
   public let pressure: CGFloat
   public let deviceSize: CGSize
   public let isResting: Bool
-  
+
   public let mappedSize: CGSize?
 
   public init(
@@ -91,25 +92,27 @@ extension TouchPoint {
       mappedSize: CGSize(width: 1, height: 1)
     )
   }
-  
-    public init(
-      current: TouchPoint,
-      updatedPosition: CGPoint,
-      mappedSize: CGSize,
-    ) {
-      precondition(current.position.isNormalised, "Touch point must be normalised (0.0 to 1.0). Cannot perform mapping on a non-normalised point.")
-      self.init(
-        id: current.id,
-        phase: current.phase,
-        position: updatedPosition,
-        timestamp: current.timestamp,
-        velocity: current.velocity,
-        pressure: current.pressure,
-        deviceSize: current.deviceSize,
-        isResting: current.isResting,
-        mappedSize: mappedSize,
-      )
-    }
+
+  public init(
+    current: TouchPoint,
+    updatedPosition: CGPoint,
+    mappedSize: CGSize,
+  ) {
+    precondition(
+      current.position.isNormalised,
+      "Touch point must be normalised (0.0 to 1.0). Cannot perform mapping on a non-normalised point.")
+    self.init(
+      id: current.id,
+      phase: current.phase,
+      position: updatedPosition,
+      timestamp: current.timestamp,
+      velocity: current.velocity,
+      pressure: current.pressure,
+      deviceSize: current.deviceSize,
+      isResting: current.isResting,
+      mappedSize: mappedSize,
+    )
+  }
 
   public func withVelocity(_ velocity: CGVector) -> TouchPoint {
     TouchPoint(

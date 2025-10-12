@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum FloatDisplay {}
+//public enum FloatDisplay {}
 
 public typealias Grouping = FloatingPointFormatStyle<Double>.Configuration.Grouping
 

@@ -42,7 +42,8 @@ import Foundation
 /// May be a pair, like `CGPoint`'s `x` and `y`,
 /// or more, like `CGRect`
 
-extension PropertiesLabeled where Component: FloatLabeledComponent {
+extension PropertiesLabeled where Value: FloatString {
+//extension PropertiesLabeled where Component: FloatLabeledComponent {
 
   /// Default for convenience
   public var displayString: String { displayString() }
