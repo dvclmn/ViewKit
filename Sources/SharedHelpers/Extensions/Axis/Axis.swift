@@ -11,19 +11,15 @@ extension Axis {
 
   public var toAxisSet: Axis.Set {
     switch self {
-      case .horizontal:
-        return [.horizontal]
-      case .vertical:
-        return [.vertical]
+      case .horizontal: [.horizontal]
+      case .vertical: [.vertical]
     }
   }
 
   public var name: String {
     switch self {
-      case .horizontal:
-        "X"
-      case .vertical:
-        "Y"
+      case .horizontal: "X"
+      case .vertical: "Y"
     }
   }
 
