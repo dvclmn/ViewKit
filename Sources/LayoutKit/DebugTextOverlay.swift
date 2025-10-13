@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StringShared
 
 public struct DebugTextOverlayModifier: ViewModifier {
   
@@ -87,6 +88,24 @@ extension View {
     self.modifier(
       DebugTextOverlayModifier(
         text: AttributedString(text.joined(separator: "\n")),
+        //        value: value.flatMap().joined(separator: "\n"),
+        isEnabled: isEnabled,
+        alignment: alignment,
+        padding: padding
+      )
+    )
+  }
+  
+  public func debugTextOverlay(
+//    _ text: String...,
+    isEnabled: Bool = true,
+    alignment: Alignment = .topLeading,
+    padding: (Edge.Set, CGFloat?) = (.all, nil),
+    @DisplayStringBuilder _ content: () -> [DisplayBlock]
+  ) -> some View {
+    self.modifier(
+      DebugTextOverlayModifier(
+        text: content().styledOutput(),
         //        value: value.flatMap().joined(separator: "\n"),
         isEnabled: isEnabled,
         alignment: alignment,

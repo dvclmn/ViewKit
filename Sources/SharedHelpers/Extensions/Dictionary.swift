@@ -47,7 +47,7 @@ extension Dictionary {
   ) where Value == [S.Element] {
     self.init(grouping: values, by: { $0[keyPath: keyPath] })
   }
-
+  
 }
 
 extension Dictionary where Value: Sequence {

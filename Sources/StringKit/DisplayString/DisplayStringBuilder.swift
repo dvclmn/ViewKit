@@ -12,7 +12,7 @@ import SharedHelpers
 public struct DisplayStringBuilder {
 
   public static func buildBlock(_ components: [DisplayBlock]...) -> [DisplayBlock] {
-    printPadded("Ran DisplayStringBuilder.buildBlock", )
+//    printPadded("Ran DisplayStringBuilder.buildBlock", )
     return components.flatMap { $0 }
   }
 

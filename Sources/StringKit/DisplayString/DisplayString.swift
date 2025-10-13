@@ -36,7 +36,7 @@ extension DisplayString {
 
   public var output: AttributedString {
     //    self.output()
-    components.map(\.toStyledString.styledString).joined(separator)
+    components.styledOutput(separator: separator)
   }
 
   public func markdown(language: String? = nil) -> AttributedString {
@@ -70,6 +70,13 @@ extension DisplayString: StyledStringConvertible {
   }
 
 }
+
+extension Array where Element == DisplayBlock {
+  public func styledOutput(separator: String = "\n") -> AttributedString {
+    self.map(\.toStyledString.styledString).joined(separator)
+  }
+}
+
 
 extension AttributedString {
   public func monospaced(_ font: Font? = nil) -> AttributedString {

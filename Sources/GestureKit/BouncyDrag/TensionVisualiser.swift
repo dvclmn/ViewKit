@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LayoutKit
 
 struct TensionCurveView: View {
   var radius: CGFloat
@@ -55,11 +56,12 @@ struct TensionCurveView: View {
     //    .padding()
     .frame(height: radius)
     .padding()
-    .debugTextOverlay(
-      "Radius: \(radius)",
-      "Tension: \(tension)",
-      alignment: .bottomTrailing
-    )
+    
+//    .debugTextOverlay(
+//      "Radius: \(radius)",
+//      "Tension: \(tension)",
+//      alignment: .bottomTrailing
+//    )
     .background(Color.gray.opacity(0.1))
     .clipShape(RoundedRectangle(cornerRadius: 8))
     .allowsHitTesting(false)
