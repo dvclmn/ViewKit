@@ -28,6 +28,15 @@ extension BinaryFloatingPoint {
     guard characterLength > 0, self > 0 else { return nil }
     return Int(CGFloat(self) / characterLength)
   }
+  
+  public func toFloategerWidth(for characterSize: CGSize) -> Int? {
+    /// Gets the relevant edge length for the given axis
+    return self.toFloateger(axis: .horizontal, characterSize: characterSize)
+  }
+  public func toFloategerHeight(for characterSize: CGSize) -> Int? {
+    /// Gets the relevant edge length for the given axis
+    return self.toFloateger(axis: .vertical, characterSize: characterSize)
+  }
 }
 
 extension CGSize {
@@ -42,21 +51,50 @@ extension CGSize {
     let lengthOfSelf = axis.length(fromSize: self)
     return lengthOfSelf.toFloateger(axis: axis, characterSize: characterSize)
   }
+  
+  public func toFloategerWidth(for characterSize: CGSize) -> Int? {
+//    let lengthOfSelf = axis.length(fromSize: self)
+    return self.width.toFloategerWidth(for: characterSize)
+  }
+  
+  public func toFloategerHeight(for characterSize: CGSize) -> Int? {
+    return self.height.toFloategerHeight(for: characterSize)
+  }
 }
 
 extension Int {
-  /// Converts `self` to a float, based on provided `characterSize`
+  /// Converts a character count (`self`) to a CGFloat dimension
+  /// based on the provided `characterSize`
   public func toFloateger(
     axis: Axis,
-//    characterCount: Int
     characterSize: CGSize
   ) -> CGFloat? {
+    guard self > 0 else { return nil }
     
-    /// self is the number of characters
+    let characterLength = axis.length(fromSize: characterSize)
+    guard characterLength > 0 else { return nil }
     
-//    let characterLength = axis.length(fromSize: characterSize)
-//    return charLength
-//    let lengthOfSelf = axis.length(fromSize: self)
-//    return lengthOfSelf.toFloateger(axis: axis, characterSize: characterSize)
+    return CGFloat(self) * characterLength
   }
+  
+  public func toFloategerWidth(for characterSize: CGSize) -> CGFloat? {
+    return self.toFloateger(axis: .horizontal, characterSize: characterSize)
+  }
+  public func toFloategerHeight(for characterSize: CGSize) -> CGFloat? {
+    return self.toFloateger(axis: .vertical, characterSize: characterSize)
+  }
+//  /// Converts `self` to a float, based on provided `characterSize`
+//  public func toFloateger(
+//    axis: Axis,
+////    characterCount: Int
+//    characterSize: CGSize
+//  ) -> CGFloat? {
+//    
+//    /// self is the number of characters
+//    
+////    let characterLength = axis.length(fromSize: characterSize)
+////    return charLength
+////    let lengthOfSelf = axis.length(fromSize: self)
+////    return lengthOfSelf.toFloateger(axis: axis, characterSize: characterSize)
+//  }
 }
