@@ -8,6 +8,12 @@
 import SwiftUI
 
 extension String {
+  
+  /// Pads the string with spaces on the right to at least the given width.
+  public func padded(to width: Int) -> String {
+    if count >= width { return self }
+    return self + String(repeating: " ", count: width - count)
+  }
 
   public enum QuotesType: String {
     case single = "'"
