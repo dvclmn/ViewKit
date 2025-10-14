@@ -7,20 +7,28 @@
 
 import SwiftUI
 
-
 extension Path {
-  
+
+  public mutating func move(to unitPoint: UnitPoint, in size: CGSize) {
+    let point = unitPoint.toCGPoint(in: size)
+    self.move(to: point)
+  }
+  public mutating func addLine(to unitPoint: UnitPoint, in size: CGSize) {
+    let point = unitPoint.toCGPoint(in: size)
+    self.addLine(to: point)
+  }
+
   public enum PathType {
     case line
     case smooth
   }
-  
+
   public init(fromSize size: CGSize) {
     self.init { path in
       path.addRect(CGRect(origin: .zero, size: size))
     }
   }
-  
+
   public init(
     fromPoints points: [CGPoint],
     type: PathType = .line,
@@ -28,11 +36,11 @@ extension Path {
   ) {
     self = points.toPath(type: type, shouldDropFirst: shouldDropFirst)
   }
-  
+
 }
 
 extension Array where Element == CGPoint {
-  
+
   public func toPath(
     type: Path.PathType = .line,
     shouldDropFirst: Bool = true
@@ -45,29 +53,28 @@ extension Array where Element == CGPoint {
           path.move(to: firstPoint)
           path.addLines(lines)
         }
-        
+
       case .smooth:
         return toSmoothPath()
     }
   }
-  
-  
+
   /// Alternative: Smooth curved path using quadratic curves
   func toSmoothPath() -> Path {
     return Path { path in
       guard self.count > 1 else { return }
-      
+
       path.move(to: self[0])
-      
+
       if self.count == 2 {
         path.addLine(to: self[1])
         return
       }
-      
+
       // Create smooth curves between points
       for i in 1..<self.count {
         let current = self[i]
-        
+
         if i == self.count - 1 {
           // Last point - just draw line
           path.addLine(to: current)
@@ -84,7 +91,6 @@ extension Array where Element == CGPoint {
     }
   }
 }
-
 
 extension Path {
 

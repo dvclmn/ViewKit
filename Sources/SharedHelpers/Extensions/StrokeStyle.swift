@@ -13,30 +13,48 @@ public struct StrokeLighting: Sendable {
   public var thickness: CGFloat = 1.0
 }
 
+public enum StrokeDashStyle {
+  case dots
+  case dashes(length: CGFloat)
+
+  public var dashLength: CGFloat {
+    switch self {
+      /// Zero allows correct behaviour for `dash: [CGFloat]`
+      case .dots: .zero
+      case .dashes(let length): length
+    }
+  }
+}
+
+public enum StrokeCapStyle {
+  /// Aka square
+  case butt
+  case round
+  
+  public var value: CGLineCap {
+    switch self {
+      case .butt: .butt
+      case .round: .round
+    }
+  }
+}
 
 extension StrokeStyle {
-  public static var simple01: StrokeStyle {
-    .init(lineWidth: 1)
-  }
-  public static var simple02: StrokeStyle {
-    .init(lineWidth: 2)
-  }
-  public static var simple03: StrokeStyle {
-    .init(lineWidth: 3)
-  }
-  public static var simple04: StrokeStyle {
-    .init(lineWidth: 4)
-  }
-  
+  public static var simple01: StrokeStyle { .init(lineWidth: 1) }
+  public static var simple02: StrokeStyle { .init(lineWidth: 2) }
+  public static var simple03: StrokeStyle { .init(lineWidth: 3) }
+  public static var simple04: StrokeStyle { .init(lineWidth: 4) }
+
   // MARK: - Dashed Stroke
   public static func dashed(
     strokeWidth: CGFloat,
     style: StrokeDashStyle = .dots,
+    caps: StrokeCapStyle = .round,
     gap: CGFloat = 3,
   ) -> StrokeStyle {
     StrokeStyle(
       lineWidth: strokeWidth,
-      lineCap: .round,
+      lineCap: caps.value,
       lineJoin: .round,
       dash: [style.dashLength, strokeWidth * gap]
     )
