@@ -19,25 +19,30 @@ import SwiftUI
 public struct GridLength: Hashable, Codable {
   public var count: Int
   public var unit: CGFloat
-  
+
   public init(count: Int, unit: CGFloat) {
     self.count = count
     self.unit = unit
   }
 
-  public init(screenLength: CGFloat, unit: CGFloat) {
-    self.count = Int((screenLength / unit).rounded(.towardZero))
+  public init?(
+    screenLength: CGFloat,
+    unit: CGFloat,
+    rounding: GridRounding = .down
+  ) {
+    guard let count = screenLength.toGridCount(using: unit, rounding: rounding) else {
+      return nil
+    }
+    self.count = count
     self.unit = unit
   }
 }
 
 extension GridLength {
+
+  public var screenLength: CGFloat { screenLength() }
+
   public func screenLength(fallback: CGFloat = 0) -> CGFloat {
     count.toScreenLength(using: unit) ?? fallback
   }
-  
-//  public var screenLength: CGFloat {
-//    return count.toScreenLength(using: unit) ?? .zero
-//    CGFloat(count) * unit
-//  }
 }
