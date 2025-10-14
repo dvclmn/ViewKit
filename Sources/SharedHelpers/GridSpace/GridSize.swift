@@ -9,22 +9,25 @@ import Foundation
 
 /// Equivalent to `CGSize`
 public struct GridSize: Hashable, Codable {
-  public var rows: GridLength
-  public var columns: GridLength
+
+  /// Columns == Width
+  public var width: GridLength
+
+  /// Rows == Height
+  public var height: GridLength
 
   public init(
-    rows: GridLength,
-    columns: GridLength,
+    width: GridLength,
+    height: GridLength,
   ) {
-    self.rows = rows
-    self.columns = columns
+    self.width = width
+    self.height = height
   }
-
 }
 
 extension GridSize {
   public var screenSize: CGSize {
-    CGSize(width: columns.screenLength, height: rows.screenLength)
+    CGSize(width: width.screenLength, height: height.screenLength)
   }
 }
 // MARK: - Initialisers
@@ -36,8 +39,8 @@ extension GridSize {
     unitSize: CGSize
   ) {
     self.init(
-      rows: GridLength(count: height, unit: unitSize.width),
-      columns: GridLength(count: width, unit: unitSize.height),
+      width: GridLength(count: width, unit: unitSize.width),
+      height: GridLength(count: height, unit: unitSize.height),
     )
   }
 
@@ -59,11 +62,25 @@ extension GridSize {
       rounding: rounding
     )
     guard let width, let height else { return nil }
-    
+
     self.init(width: width, height: height, unitSize: unitSize)
-    //    self.init(
-    //      columns: GridLength(count: width, unit: unit),
-    //      rows: GridLength(count: height, unit: unit)
-    //    )
+  }
+
+  public func adjustCounts(
+    transform: (Int, Int) -> (width: Int, height: Int)
+  ) -> GridSize {
+    let transformed = transform(width.count, height.count)
+    return GridSize(
+      width: transformed.width,
+      height: transformed.height,
+      unitSize: unitSize
+    )
+  }
+
+  private var unitSize: CGSize {
+    return CGSize(
+      width: width.unit,
+      height: height.unit
+    )
   }
 }

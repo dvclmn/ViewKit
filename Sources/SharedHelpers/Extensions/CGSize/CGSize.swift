@@ -175,23 +175,57 @@ extension CGSize {
   public var isNan: Bool {
     return width.isNaN || height.isNaN
   }
-  
+
   /// Optional because of things
   public func adjustAxisLength(
     _ axis: Axis,
-    newValue: CGFloat?
-  ) -> CGSize? {
-    guard let newValue else {return nil}
+    newValue: CGFloat
+  ) -> CGSize {
+    //    guard let newValue else {return nil}
     switch axis {
       case .horizontal:
         return CGSize(width: newValue, height: self.height)
-        
+
       case .vertical:
         return CGSize(width: self.width, height: newValue)
-        
+
     }
   }
 
+  public func adjustAxisLength(
+    _ axis: Axis,
+    transform: (CGFloat) -> CGFloat
+  ) -> CGSize {
+    //    guard let size = self else { return nil }
+
+    switch axis {
+      case .horizontal:
+
+        let transformed = transform(self.width)
+        return CGSize(width: transformed, height: self.height)
+
+      case .vertical:
+
+        let transformed = transform(self.height)
+        return CGSize(width: self.width, height: transformed)
+    }
+  }
+
+  public func adjustLengths(
+    transform: (CGFloat, CGFloat) -> (width: CGFloat, height: CGFloat)
+  ) -> CGSize {
+    //    guard let size = self else { return nil }
+
+    let transformed = transform(self.width, self.height)
+    return CGSize(width: transformed.width, height: transformed.height)
+    //    switch axis {
+    //      case .horizontal:
+    //      case .vertical:
+
+    //        let transformed = transform(self.height)
+    //        return CGSize(width: self.width, height: transformed)
+    //    }
+  }
 
   public var widthOrHeightIsZero: Bool {
     self.width.isZero || self.height.isZero
@@ -214,6 +248,5 @@ extension CGSize {
 
     return CGSize(width: CGFloat(advance), height: lineHeight)
   }
-
 
 }

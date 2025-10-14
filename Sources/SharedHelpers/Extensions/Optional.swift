@@ -105,27 +105,6 @@ extension Optional where Wrapped == CGSize {
       _boundSize = (newValue == .zero) ? nil : newValue
     }
   }
-
-  public func adjustAxisLength(
-    _ axis: Axis,
-    transform: (CGFloat) -> CGFloat
-  ) -> CGSize? {
-    guard let size = self else { return nil }
-
-    switch axis {
-      case .horizontal:
-
-        let transformed = transform(size.width)
-        return CGSize(width: transformed, height: size.height)
-
-      case .vertical:
-
-        let transformed = transform(size.height)
-        return CGSize(width: size.width, height: transformed)
-    //        return CGSize(width: self.width, height: newValue)
-
-    }
-  }
 }
 
 //func ??<Bool>(lhs: Binding<Optional<Bool>>, rhs: Bool) -> Binding<Bool> {
