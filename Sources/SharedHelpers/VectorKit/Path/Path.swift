@@ -95,6 +95,7 @@ extension Array where Element == CGPoint {
 extension Path {
 
   public static func createGrid(
+//    fillStyle: GridFillStyle,
     columns: Int,
     rows: Int,
     cellSize: CGSize,

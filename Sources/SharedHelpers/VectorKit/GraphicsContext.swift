@@ -7,66 +7,8 @@
 
 import SwiftUI
 
-public enum GridFillStyle {
-  case fixed(columns: Int, rows: Int)
-  case fill(size: CGSize)
-}
-
-public struct GridLineConfiguration {
-//  let columns: Int
-//  let rows: Int
-  let fillStyle: GridFillStyle
-  let cellSize: CGSize
-  let colour: Color
-  let strokeThickness: CGFloat
-
-  public init(
-    fillSize: CGSize,
-    //    fillStyle: GridFillStrategy,
-    cellSize: CGSize,
-    colour: Color = .gray.opacity(0.4),
-    strokeThickness: CGFloat = 1.0,
-  ) {
-    self.fillStyle = .fill(size: fillSize)
-
-    self.cellSize = cellSize
-    self.colour = colour
-    self.strokeThickness = strokeThickness
-  }
-  
-  public init(
-//    fillStyle: GridFillStrategy,
-    columnCount: Int,
-    rowCount: Int,
-    cellSize: CGSize,
-    colour: Color = .gray.opacity(0.4),
-    strokeThickness: CGFloat = 1.0,
-  ) {
-    self.fillStyle = .fixed(columns: columnCount, rows: rowCount)
-//    self.columns = columnCount
-//    self.rows = rowCount
-    self.cellSize = cellSize
-    self.colour = colour
-    self.strokeThickness = strokeThickness
-  }
-}
-
 extension GraphicsContext {
-  
-  public func drawGridLines(
-    config: GridLineConfiguration,
-    containerSize: CGSize,
-    canvasZoom: CGFloat
-  ) {
-    let zoomed = config.cellSize * canvasZoom
-    let path = Path.createGrid(
-      columns: config.columns,
-      rows: config.rows,
-      cellSize: zoomed,
-      containerSize: containerSize
-    )
-    self.stroke(path, with: .color(config.colour), lineWidth: config.strokeThickness)
-  }
+
   
   // MARK: - Quick Text Label, w/ Background and Dot
   /// Note: This relies on the zoom level passed to `zoomPercent` being already
@@ -83,41 +25,42 @@ extension GraphicsContext {
     pointDisplay: DebugPoint,
     zoomPercent zoomLevel: CGFloat?  // Pass in normalised zoom if relevant
   ) {
-    assert(false, "Turned off until I can find a way to implement zoom/pan-related stuff, without weirdness with CanvasKit")
-//
-//    let zoom = zoomLevel ?? 1.0
-//    let fontSizeUnZoomed = fontSize.removingZoomPercent(zoom)
-//    //    let fontSizeUnZoomed = fontSize.removingZoom(zoom)
-//    
-//    /// Calculate size, for drawing Label background
-//    let labelWidthUnZoomed: CGFloat = {
-//      let approximateCharacterWidth: CGFloat = fontSize * 0.7
-//      let labelCharacterWidth = CGFloat(text.firstLine.count) * approximateCharacterWidth
-//      return labelCharacterWidth.removingZoomPercent(zoom)
-//    }()
-//    let labelHeightUnZoomed: CGFloat = fontSizeUnZoomed * 1.5
-//    let labelSize = CGSize(width: labelWidthUnZoomed, height: labelHeightUnZoomed)
-//    
-//    /// Set up Text, with basic styles
-//    let text = Text(text)
-//      .font(.system(size: fontSizeUnZoomed, weight: .semibold))
-//      .foregroundStyle(colour)
-//    
-//    let labelRect = CGRect(
-//      origin: point.centredIn(size: labelSize).shifted(
-//        dx: 0, dy: (labelHeightUnZoomed * 1.2) * debugTextPosition.multiplierForYPosition),
-//      size: labelSize
-//    )
-//    self.fill(labelRect.path, with: .color(Color.gray))
-//    //    self.fill(labelRect.path, with: .color(Swatch.plumGrey40.swiftUIColour))
-//    self.draw(text, at: labelRect.midpoint)
-//    
-//    /// Draw dot at provided point, if needed
-//    if let pointColour = pointDisplay.colourForPoint {
-//      self.drawCircleCentred(at: point, colour: pointColour)
-//    }
+    assert(
+      false, "Turned off until I can find a way to implement zoom/pan-related stuff, without weirdness with CanvasKit")
+    //
+    //    let zoom = zoomLevel ?? 1.0
+    //    let fontSizeUnZoomed = fontSize.removingZoomPercent(zoom)
+    //    //    let fontSizeUnZoomed = fontSize.removingZoom(zoom)
+    //
+    //    /// Calculate size, for drawing Label background
+    //    let labelWidthUnZoomed: CGFloat = {
+    //      let approximateCharacterWidth: CGFloat = fontSize * 0.7
+    //      let labelCharacterWidth = CGFloat(text.firstLine.count) * approximateCharacterWidth
+    //      return labelCharacterWidth.removingZoomPercent(zoom)
+    //    }()
+    //    let labelHeightUnZoomed: CGFloat = fontSizeUnZoomed * 1.5
+    //    let labelSize = CGSize(width: labelWidthUnZoomed, height: labelHeightUnZoomed)
+    //
+    //    /// Set up Text, with basic styles
+    //    let text = Text(text)
+    //      .font(.system(size: fontSizeUnZoomed, weight: .semibold))
+    //      .foregroundStyle(colour)
+    //
+    //    let labelRect = CGRect(
+    //      origin: point.centredIn(size: labelSize).shifted(
+    //        dx: 0, dy: (labelHeightUnZoomed * 1.2) * debugTextPosition.multiplierForYPosition),
+    //      size: labelSize
+    //    )
+    //    self.fill(labelRect.path, with: .color(Color.gray))
+    //    //    self.fill(labelRect.path, with: .color(Swatch.plumGrey40.swiftUIColour))
+    //    self.draw(text, at: labelRect.midpoint)
+    //
+    //    /// Draw dot at provided point, if needed
+    //    if let pointColour = pointDisplay.colourForPoint {
+    //      self.drawCircleCentred(at: point, colour: pointColour)
+    //    }
   }
-  
+
   // MARK: - Centered Circle
   public func drawCircleCentred(
     at origin: CGPoint,
@@ -129,7 +72,7 @@ extension GraphicsContext {
     let circleRect = CGRect(origin: circleOrigin, size: CGSize(fromLength: size))
     self.fill(.init(ellipseIn: circleRect), with: .color(colour))
   }
-  
+
   // MARK: - Quick Fill and Stroke
   public func fillAndStroke(
     _ path: Path,
@@ -147,14 +90,14 @@ extension GraphicsContext {
       lineWidth: strokeThickness
     )
   }
-  
+
   public func drawHorizonLine(
     in size: CGSize,
     colour: Color = .gray,
     strokeStyle: StrokeStyle? = nil,
     strokeWidth: CGFloat = 2
   ) {
-    
+
     let stroke = strokeStyle ?? StrokeStyle.dashed(strokeWidth: strokeWidth)
     let rect = CGRect(origin: .zero, size: size)
     let midY = rect.midY
@@ -168,7 +111,7 @@ extension GraphicsContext {
       style: stroke
     )
   }
-  
+
   // MARK: - Dashed Stroke
   public func dashedStroke(
     _ path: Path,
@@ -184,4 +127,3 @@ extension GraphicsContext {
     )
   }
 }
-
