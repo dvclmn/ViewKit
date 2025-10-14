@@ -17,14 +17,14 @@ extension BinaryFloatingPoint {
   ) -> Int? {
     let unitLength = axis.length(fromSize: unitSize)
     return self.toGridCount(using: unitLength, rounding: rounding)
-//    let unitLength = axis.length(fromSize: unitSize)
-//    guard isValidState(with: unitLength) else { return nil }
-//    let resultRounded = (CGFloat(self) / unitLength).rounded(rounding.value)
-//    return Int(resultRounded)
+    //    let unitLength = axis.length(fromSize: unitSize)
+    //    guard isValidState(with: unitLength) else { return nil }
+    //    let resultRounded = (CGFloat(self) / unitLength).rounded(rounding.value)
+    //    return Int(resultRounded)
   }
 
   public func toGridCount(
-    using unitLength: CGSize,
+    using unitLength: CGFloat,
     rounding: GridRounding = .down
   ) -> Int? {
     guard isValidState(with: unitLength) else { return nil }
@@ -39,26 +39,26 @@ extension BinaryFloatingPoint {
   /// Aka how many times does this character length fit into `self`
   /// Note: this uses `.floor()`, ssuming this is the default
   /// used by Swift's `Int()` init
-//  public func toFloateger(
-//    axis: Axis,
-//    characterSize: CGSize
-//  ) -> Int? {
-//    /// Gets the relevant edge length for the given axis
-//    let characterLength = axis.length(fromSize: characterSize)
-//
-//    /// Check that both the character length and self are non-zero
-//    guard characterLength > 0, self > 0 else { return nil }
-//    return Int(CGFloat(self) / characterLength)
-//  }
-//
-//  public func toFloategerWidth(for characterSize: CGSize) -> Int? {
-//    /// Gets the relevant edge length for the given axis
-//    return self.toFloateger(axis: .horizontal, characterSize: characterSize)
-//  }
-//  public func toFloategerHeight(for characterSize: CGSize) -> Int? {
-//    /// Gets the relevant edge length for the given axis
-//    return self.toFloateger(axis: .vertical, characterSize: characterSize)
-//  }
+  //  public func toFloateger(
+  //    axis: Axis,
+  //    characterSize: CGSize
+  //  ) -> Int? {
+  //    /// Gets the relevant edge length for the given axis
+  //    let characterLength = axis.length(fromSize: characterSize)
+  //
+  //    /// Check that both the character length and self are non-zero
+  //    guard characterLength > 0, self > 0 else { return nil }
+  //    return Int(CGFloat(self) / characterLength)
+  //  }
+  //
+  //  public func toFloategerWidth(for characterSize: CGSize) -> Int? {
+  //    /// Gets the relevant edge length for the given axis
+  //    return self.toFloateger(axis: .horizontal, characterSize: characterSize)
+  //  }
+  //  public func toFloategerHeight(for characterSize: CGSize) -> Int? {
+  //    /// Gets the relevant edge length for the given axis
+  //    return self.toFloateger(axis: .vertical, characterSize: characterSize)
+  //  }
 }
 
 // MARK: - Int extension
@@ -85,22 +85,46 @@ extension Int {
 
 extension CGSize {
 
-  /// Aka how many times does this character length fit into `self`
-  /// Note: this uses `.floor()`, ssuming this is the default
-  /// used by Swift's `Int()` init
-  public func toFloateger(
-    axis: Axis,
-    characterSize: CGSize
+  public func toGridCount(
+    along axis: Axis,
+    using unitSize: CGSize,
+    rounding: GridRounding = .down
   ) -> Int? {
     let lengthOfSelf = axis.length(fromSize: self)
-    return lengthOfSelf.toFloateger(axis: axis, characterSize: characterSize)
+    return lengthOfSelf.toGridCount(
+      along: axis,
+      using: unitSize,
+      rounding: rounding
+    )
+  }
+  
+  public func toGridCount(
+    along axis: Axis,
+    using unitLength: CGFloat,
+    rounding: GridRounding = .down
+  ) -> Int? {
+    let lengthOfSelf = axis.length(fromSize: self)
+    return lengthOfSelf.toGridCount(using: unitLength, rounding: rounding)
+//    return lengthOfSelf.toGridCount(
+//      along: axis,
+//      using: unitSize,
+//      rounding: rounding
+//    )
   }
 
-  public func toFloategerWidth(for characterSize: CGSize) -> Int? {
-    return self.width.toFloategerWidth(for: characterSize)
-  }
-
-  public func toFloategerHeight(for characterSize: CGSize) -> Int? {
-    return self.height.toFloategerHeight(for: characterSize)
-  }
+  //  public func toFloateger(
+  //    axis: Axis,
+  //    characterSize: CGSize
+  //  ) -> Int? {
+  //    let lengthOfSelf = axis.length(fromSize: self)
+  //    return lengthOfSelf.toFloateger(axis: axis, characterSize: characterSize)
+  //  }
+  //
+  //  public func toFloategerWidth(for characterSize: CGSize) -> Int? {
+  //    return self.width.toFloategerWidth(for: characterSize)
+  //  }
+  //
+  //  public func toFloategerHeight(for characterSize: CGSize) -> Int? {
+  //    return self.height.toFloategerHeight(for: characterSize)
+  //  }
 }
