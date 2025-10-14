@@ -69,16 +69,16 @@ public enum DimensionToAxisConvention {
   /// Returns the horizontal length from a size, according to the convention.
   public func horizontalLength(size: GridSize) -> GridLength {
     switch self {
-      case .widthIsHorizontal: size.width
-      case .heightIsHorizontal: size.height
+      case .widthIsHorizontal: size.columns
+      case .heightIsHorizontal: size.rows
     }
   }
   
   /// Returns the vertical length from a size, according to the convention.
   public func verticalLength(size: GridSize) -> GridLength {
     switch self {
-      case .widthIsHorizontal: size.height
-      case .heightIsHorizontal: size.width
+      case .widthIsHorizontal: size.rows
+      case .heightIsHorizontal: size.columns
     }
   }
 

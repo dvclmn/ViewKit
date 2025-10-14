@@ -10,6 +10,18 @@ import SwiftUI
 // MARK: - Float extension
 extension BinaryFloatingPoint {
 
+  
+  /// Converts a float (screen) value, to an integer (grid) value,
+  /// based on a unit reference point (`unitSize`).
+  ///
+  /// Because this method accepts
+  /// a unit of type `CGSize`,  an `axis` is provided to
+  /// specify which edge to use as the unit length.
+  /// - Parameters:
+  ///   - axis: The edge to use for the unit length, from `unitSize`
+  ///   - unitSize: The size that defines a new reference point, where width == 1 unit wide, and height == 1 unit high
+  ///   - rounding: Whether to round up or down, when converting floats to integers
+  /// - Returns: An integer that represents the number of 'units' that can fit along the length of `self`
   public func toGridCount(
     along axis: Axis,
     using unitSize: CGSize,
@@ -78,5 +90,29 @@ extension CGSize {
     let lengthOfSelf = axis.length(fromSize: self)
     return lengthOfSelf.toGridCount(using: unitLength, rounding: rounding)
   }
+  
+  public func toGridSize(
+    using unitSize: CGSize,
+    rounding: GridRounding = .down
+  ) -> GridSize? {
+    guard let gridWidth = self.width.toGridCount(along: .horizontal, using: unitSize, rounding: rounding),
+    let gridHeight = self.height.toGridCount(along: .vertical, using: unitSize, rounding: rounding)
+            else { return nil }
+    return GridSize(width: gridWidth, height: gridHeight, unitSize: unitSize)
+  }
+  
+  public func toGridCounts(
+    using unitSize: CGSize,
+//    using unitLength: CGFloat,
+    rounding: GridRounding = .down
+  ) -> GridSizeCounts? {
+//    let lengthOfSelf = axis.length(fromSize: self)
+    
+    let size = self.toGridSize(using: unitSize, rounding: rounding)
+//    let size = lengthOfSelf.toGridCount(using: unitLength, rounding: rounding)
+    return size?.gridSizeCounts
+  }
+  
+  
 
 }
