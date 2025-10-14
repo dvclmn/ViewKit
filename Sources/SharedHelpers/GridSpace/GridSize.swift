@@ -29,6 +29,24 @@ extension GridSize {
   public var screenSize: CGSize {
     CGSize(width: width.screenLength, height: height.screenLength)
   }
+
+  public func adjustCounts(
+    transform: (Int, Int) -> (width: Int, height: Int)
+  ) -> GridSize? {
+    let transformed = transform(width.count, height.count)
+    return GridSize(
+      width: transformed.width,
+      height: transformed.height,
+      unitSize: unitSize
+    )
+  }
+
+  private var unitSize: CGSize {
+    return CGSize(
+      width: width.unit,
+      height: height.unit
+    )
+  }
 }
 // MARK: - Initialisers
 extension GridSize {
@@ -66,21 +84,4 @@ extension GridSize {
     self.init(width: width, height: height, unitSize: unitSize)
   }
 
-  public func adjustCounts(
-    transform: (Int, Int) -> (width: Int, height: Int)
-  ) -> GridSize {
-    let transformed = transform(width.count, height.count)
-    return GridSize(
-      width: transformed.width,
-      height: transformed.height,
-      unitSize: unitSize
-    )
-  }
-
-  private var unitSize: CGSize {
-    return CGSize(
-      width: width.unit,
-      height: height.unit
-    )
-  }
 }
