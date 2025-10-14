@@ -7,6 +7,26 @@
 
 import SwiftUI
 
+public typealias Floateger = (count: Int, length: CGFloat)
+public typealias Sizeger = (count: Int, length: CGSize)
+
+public struct IntFloat {
+  let count: Int
+}
+
+public struct IntSize {
+  let width: Int
+  let height: Int
+  
+  public init(
+    width: Int,
+    height: Int
+  ) {
+    self.width = width
+    self.height = height
+  }
+}
+
 //public enum Floateger {
 //  case asInt(Int)
 //  case asFloat(CGFloat)
@@ -53,7 +73,6 @@ extension CGSize {
   }
   
   public func toFloategerWidth(for characterSize: CGSize) -> Int? {
-//    let lengthOfSelf = axis.length(fromSize: self)
     return self.width.toFloategerWidth(for: characterSize)
   }
   
@@ -83,18 +102,5 @@ extension Int {
   public func toFloategerHeight(for characterSize: CGSize) -> CGFloat? {
     return self.toFloateger(axis: .vertical, characterSize: characterSize)
   }
-//  /// Converts `self` to a float, based on provided `characterSize`
-//  public func toFloateger(
-//    axis: Axis,
-////    characterCount: Int
-//    characterSize: CGSize
-//  ) -> CGFloat? {
-//    
-//    /// self is the number of characters
-//    
-////    let characterLength = axis.length(fromSize: characterSize)
-////    return charLength
-////    let lengthOfSelf = axis.length(fromSize: self)
-////    return lengthOfSelf.toFloateger(axis: axis, characterSize: characterSize)
-//  }
+
 }
