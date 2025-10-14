@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+/// Notes:
+/// - `unit` means the original capture of View geometry (such as the
+/// width and height of a font's glyph, at a certain size), which is then used
+/// as the basis for conversion of a float, to an 'integer', or more of a coordinate
+///
+/// “This cell is 8 characters wide (grid-space),
+/// which equals 8 × 9pt = 72pt (screen-space).”
+///
+/// Settled on the names now, which is Grid length, and Screen length
 public struct GridLength: Hashable, Codable {
   public var count: Int
   public var unit: CGFloat
@@ -23,33 +32,12 @@ public struct GridLength: Hashable, Codable {
 }
 
 extension GridLength {
-  
-  public var screenLength: CGFloat {
-    CGFloat(count) * unit
+  public func screenLength(fallback: CGFloat = 0) -> CGFloat {
+    count.toScreenLength(using: unit) ?? fallback
   }
-}
-
-//public typealias Floateger = (count: Int, length: CGFloat)
-//public typealias Sizeger = (count: Int, length: CGSize)
-//
-//public struct IntFloat {
-//  let count: Int
-//}
-//
-//public struct IntSize {
-//  let width: Int
-//  let height: Int
-//  
-//  public init(
-//    width: Int,
-//    height: Int
-//  ) {
-//    self.width = width
-//    self.height = height
+  
+//  public var screenLength: CGFloat {
+//    return count.toScreenLength(using: unit) ?? .zero
+//    CGFloat(count) * unit
 //  }
-//}
-
-//public enum Floateger {
-//  case asInt(Int)
-//  case asFloat(CGFloat)
-//}
+}

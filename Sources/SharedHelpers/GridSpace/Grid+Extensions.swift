@@ -57,25 +57,43 @@ extension CGSize {
 }
 
 extension Int {
+  
+  public func toScreenLength(
+    using unitLength: CGFloat,
+    fallback: CGFloat? = nil
+  ) -> CGFloat? {
+    guard self >= 0, unitLength > 0, unitLength.isFinite else {
+      return fallback
+    }
+    return CGFloat(self) * unitLength
+  }
+  
+//  public func toScreenLength(using unitLength: CGFloat) -> CGFloat? {
+//    guard self >= 0, unitLength > 0, unitLength.isFinite else { return nil }
+////    guard self > 0, unitLength > 0 else { return nil }
+//    return CGFloat(self) * unitLength
+//  }
+  
   /// Converts a character count (`self`) to a CGFloat dimension
   /// based on the provided `characterSize`
-  public func toFloateger(
+  public func toScreenLength(
     axis: Axis,
-    characterSize: CGSize
+    unitSize: CGSize
+//    characterSize: CGSize
   ) -> CGFloat? {
     guard self > 0 else { return nil }
     
-    let characterLength = axis.length(fromSize: characterSize)
-    guard characterLength > 0 else { return nil }
+    let unitLength = axis.length(fromSize: unitSize)
+    guard unitLength > 0 else { return nil }
     
-    return CGFloat(self) * characterLength
+    return CGFloat(self) * unitLength
   }
   
-  public func toFloategerWidth(for characterSize: CGSize) -> CGFloat? {
-    return self.toFloateger(axis: .horizontal, characterSize: characterSize)
+  public func toScreenWidth(for unitSize: CGSize) -> CGFloat? {
+    return self.toScreenLength(axis: .horizontal, unitSize: unitSize)
   }
-  public func toFloategerHeight(for characterSize: CGSize) -> CGFloat? {
-    return self.toFloateger(axis: .vertical, characterSize: characterSize)
+  public func toScreenHeight(for unitSize: CGSize) -> CGFloat? {
+    return self.toScreenLength(axis: .vertical, unitSize: unitSize)
   }
   
 }
