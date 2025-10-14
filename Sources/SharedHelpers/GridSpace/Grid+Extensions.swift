@@ -1,39 +1,14 @@
 //
-//  Floateger.swift
+//  Grid+Extensions.swift
 //  BaseHelpers
 //
-//  Created by Dave Coleman on 13/10/2025.
+//  Created by Dave Coleman on 14/10/2025.
 //
 
 import SwiftUI
 
-public typealias Floateger = (count: Int, length: CGFloat)
-public typealias Sizeger = (count: Int, length: CGSize)
-
-public struct IntFloat {
-  let count: Int
-}
-
-public struct IntSize {
-  let width: Int
-  let height: Int
-  
-  public init(
-    width: Int,
-    height: Int
-  ) {
-    self.width = width
-    self.height = height
-  }
-}
-
-//public enum Floateger {
-//  case asInt(Int)
-//  case asFloat(CGFloat)
-//}
-
 extension BinaryFloatingPoint {
-
+  
   /// Aka how many times does this character length fit into `self`
   /// Note: this uses `.floor()`, ssuming this is the default
   /// used by Swift's `Int()` init
@@ -43,7 +18,7 @@ extension BinaryFloatingPoint {
   ) -> Int? {
     /// Gets the relevant edge length for the given axis
     let characterLength = axis.length(fromSize: characterSize)
-
+    
     /// Check that both the character length and self are non-zero
     guard characterLength > 0, self > 0 else { return nil }
     return Int(CGFloat(self) / characterLength)
@@ -60,7 +35,7 @@ extension BinaryFloatingPoint {
 }
 
 extension CGSize {
-
+  
   /// Aka how many times does this character length fit into `self`
   /// Note: this uses `.floor()`, ssuming this is the default
   /// used by Swift's `Int()` init
@@ -102,5 +77,5 @@ extension Int {
   public func toFloategerHeight(for characterSize: CGSize) -> CGFloat? {
     return self.toFloateger(axis: .vertical, characterSize: characterSize)
   }
-
+  
 }
