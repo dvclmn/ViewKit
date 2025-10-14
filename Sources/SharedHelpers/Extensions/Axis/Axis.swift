@@ -105,5 +105,19 @@ extension Axis {
         return convention.verticalLength(edgeInsets: edgeInsets)
     }
   }
+  
+  /// Returns the float value for this axis from a `CGPoint`,
+  /// interpreting x/y according to the given convention.
+  public func point(
+    fromPoint point: CGPoint,
+    convention: DimensionToAxisConvention = .widthIsHorizontal
+  ) -> CGFloat {
+    switch self {
+      case .horizontal:
+        return convention.horizontalPoint(point: point)
+      case .vertical:
+        return convention.verticalPoint(point: point)
+    }
+  }
 
 }

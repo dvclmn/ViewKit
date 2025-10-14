@@ -63,7 +63,44 @@ extension UnitPoint {
       y: self.y * size.height
     )
     return result
+  }
 
+  public func toCGPointAxis(
+    for axis: Axis,
+    length: CGFloat
+  ) -> CGFloat {
+//  ) -> CGPoint {
+
+    let point: CGPoint
+    switch axis {
+      case .horizontal:
+        point = CGPoint(
+          x: self.x * length,
+          y: self.y
+        )
+
+      case .vertical:
+        point = CGPoint(
+          x: self.x,
+          y: self.y * length
+        )
+
+    //        point = self.toCGPoint(in: CGSize(width: .zero, height: length))
+    }
+    return axis.point(fromPoint: point)
+    
+    //    let initialResult = CGPoint(
+    //      x: self.x * length,
+    //      y: self.y * length
+    //    )
+    //    let resultLength = axis.point(fromPoint: initialResult)
+    //    let result = CGPoint(
+    //      x: self.x * size.width,
+    //      y: self.y * size.height
+    //    )
+
+    //    let result = valueForAxis * length
+    //    return resultLength
   }
 
   public static func location(
@@ -138,7 +175,6 @@ extension UnitPoint {
       default: return .center
     }
   }
-
 
   /// This is just for visual debugging
   public var debugColour: Color {

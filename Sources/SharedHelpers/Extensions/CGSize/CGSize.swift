@@ -129,6 +129,8 @@ extension CGSize {
   public var midpoint: CGPoint {
     return CGPoint(x: width / 2, y: height / 2)
   }
+  
+  
 
   public var halved: CGSize {
     return CGSize(width: width / 2, height: height / 2)

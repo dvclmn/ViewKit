@@ -59,9 +59,10 @@ extension BinaryFloatingPoint {
     using unitLength: CGFloat,
     rounding: GridRounding = .down
   ) -> Self {
-    guard isValidState(with: unitLength) else { return self }
-    let gridCount = self.toGridCount(using: unitLength, rounding: rounding)
-    let result = gridCount?.toScreenLength(using: unitLength) ?? CGFloat(self)
+    guard isValidState(with: unitLength),
+      let gridCount = self.toGridCount(using: unitLength, rounding: rounding),
+      let result = gridCount.toScreenLength(using: unitLength)
+    else { return self }
 
     return Self(result)
   }

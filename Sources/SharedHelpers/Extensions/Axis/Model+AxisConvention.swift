@@ -63,6 +63,24 @@ public enum DimensionToAxisConvention {
       case .heightIsHorizontal: size.width
     }
   }
+  
+  // MARK: - CGPoint
+  
+  /// Returns the horizontal length from a size, according to the convention.
+  public func horizontalPoint(point: CGPoint) -> CGFloat {
+    switch self {
+      case .widthIsHorizontal: point.x
+      case .heightIsHorizontal: point.y
+    }
+  }
+  
+  /// Returns the vertical length from a size, according to the convention.
+  public func verticalPoint(point: CGPoint) -> CGFloat {
+    switch self {
+      case .widthIsHorizontal: point.y
+      case .heightIsHorizontal: point.x
+    }
+  }
 
   // MARK: - GridSize
   

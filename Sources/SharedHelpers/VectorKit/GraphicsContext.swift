@@ -7,22 +7,44 @@
 
 import SwiftUI
 
+public enum GridFillStyle {
+  case fixed(columns: Int, rows: Int)
+  case fill(size: CGSize)
+}
+
 public struct GridLineConfiguration {
-  let columns: Int
-  let rows: Int
+//  let columns: Int
+//  let rows: Int
+  let fillStyle: GridFillStyle
   let cellSize: CGSize
   let colour: Color
   let strokeThickness: CGFloat
+
+  public init(
+    fillSize: CGSize,
+    //    fillStyle: GridFillStrategy,
+    cellSize: CGSize,
+    colour: Color = .gray.opacity(0.4),
+    strokeThickness: CGFloat = 1.0,
+  ) {
+    self.fillStyle = .fill(size: fillSize)
+
+    self.cellSize = cellSize
+    self.colour = colour
+    self.strokeThickness = strokeThickness
+  }
   
   public init(
+//    fillStyle: GridFillStrategy,
     columnCount: Int,
     rowCount: Int,
     cellSize: CGSize,
     colour: Color = .gray.opacity(0.4),
     strokeThickness: CGFloat = 1.0,
   ) {
-    self.columns = columnCount
-    self.rows = rowCount
+    self.fillStyle = .fixed(columns: columnCount, rows: rowCount)
+//    self.columns = columnCount
+//    self.rows = rowCount
     self.cellSize = cellSize
     self.colour = colour
     self.strokeThickness = strokeThickness
