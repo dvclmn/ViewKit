@@ -37,6 +37,32 @@ public struct FrameDimensions: Sendable {
     self.height = size.height
     self.alignment = alignment
   }
+  
+  public init(
+    fromLength length: CGFloat,
+    axis: Axis = .horizontal,
+    alignment: Alignment = .center
+  ) {
+    switch axis {
+      case .horizontal:
+        self.width = length
+        self.height = nil
+        
+      case .vertical:
+        self.width = nil
+        self.height = length
+    }
+//    self.width = size.width
+//    self.height = size.height
+    self.alignment = alignment
+  }
+}
+
+
+extension FrameDimensions: ExpressibleByNilLiteral {
+  public init(nilLiteral: ()) {
+    self.init()
+  }
 }
 
 extension FrameDimensions {

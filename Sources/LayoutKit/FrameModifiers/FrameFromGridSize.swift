@@ -5,64 +5,88 @@
 //  Created by Dave Coleman on 10/10/2025.
 //
 
+import StringShared
 import SwiftUI
-import ToolKit
 
-public struct FrameFromGridSize: ViewModifier {
-  @Environment(AppHandler.self) private var store
-  @Environment(\.characterSize) private var characterSize
+//public struct FrameFromGridSize: ViewModifier {
+//  //  @Environment(AppHandler.self) private var store
+//  //  @Environment(\.characterSize) private var characterSize
+//
+//  let axis: Axis
+//  let size: GridSize
+//
+//  public func body(content: Content) -> some View {
+//    content
+//      .overlay {
+//        Text("Need to implement")
+//      }
+//    //      .frame(
+//    //        width: width,
+//    //        height: ,
+//    //        alignment: .leading
+//    //      )
+//    //      .overlay {
+//    //        if characterSize == nil {
+//    //          Circle().fill(.red.tertiary)
+//    //        }
+//    //      }
+//
+//  }
+//}
+
+public struct FrameFromGridLength: ViewModifier {
+  @Environment(\.unitSize) private var unitSize
 
   let axis: Axis
-  let size: GridSize
+  let length: Int
+  let alignment: Alignment
 
   public func body(content: Content) -> some View {
     content
       .frame(
-        width: width,
-        height: ,
-        alignment: .leading
+        width: dimensions.width,
+        height: dimensions.height,
+        alignment: alignment
       )
-      .overlay {
-        if characterSize == nil {
-          Circle().fill(.red.tertiary)
-        }
-      }
 
   }
 }
-extension FrameFromCharacterSize {
 
-  private var width: FrameDimensions {
-//  private var width: CGFloat? {
-    
-    
-//    return widthCount.toScreenLength(along: .horizontal)
-//    return widthCount.floategerWidth
-    
-    
-//    let diffResult = store.characterCalculator.width(for: widthCount)
-//    return result
-    
-//    guard let charWidth = characterSize?.width else { return nil }
-//    let result = CGFloat(widthCount) * charWidth
-//    print("Character-based frame width: \(result, default: "nil")")
-//    print("Different result width: \(diffResult, default: "nil")")
-//    print("Store vs Env char size:\n\nStore: \(store.characterSize?.displayString, default: "nil")\nEnv:   \(characterSize?.displayString, default: "nil")")
-//    return diffResult
+extension FrameFromGridLength {
+
+  private var dimensions: FrameDimensions {
+    guard let unitSize else { return nil }
+
+    let unitLength = axis.length(fromSize: unitSize)
+    guard let length = length.toScreenLength(using: unitLength) else { return nil }
+    //        let unitLength =
+    return FrameDimensions(
+      fromLength: length,
+      axis: axis,
+      alignment: alignment
+    )
+
   }
 
 }
 extension View {
-  public func frameFromCharacterSize(
-    for text: String
-  ) -> some View {
-    self.modifier(FrameFromCharacterSize(widthCount: text.count))
-  }
+  //  public func frameFromGridSize(
+  //    for text: String
+  //  ) -> some View {
+  //    self.modifier(FrameFromCharacterSize(widthCount: text.count))
+  //  }
 
   public func frameFromGridLength(
-    axis: Axis,
-    length: Int
+    axis: Axis = .horizontal,
+    length: Int,
+    alignment: Alignment = .center
   ) -> some View {
-    self.modifier(FrameFromCharacterSize(widthCount: widthCount))
+    self.modifier(
+      FrameFromGridLength(
+        axis: axis,
+        length: length,
+        alignment: alignment
+      )
+    )
   }
 }
