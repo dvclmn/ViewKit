@@ -1,38 +1,19 @@
 //
-//  FromFromRectModifier.swift
-//  BaseComponents
+//  FrameFromSize.swift
+//  BaseHelpers
 //
-//  Created by Dave Coleman on 30/7/2025.
+//  Created by Dave Coleman on 15/10/2025.
 //
-
 
 import SwiftUI
 
-// MARK: - Frame modifiers
-public struct FrameFromRectModifier: ViewModifier {
-
-  let rect: CGRect?
-  let alignment: Alignment
-  public func body(content: Content) -> some View {
-    content
-      .frame(
-        width: rect?.width,
-        height: rect?.height,
-        alignment: alignment
-      )
-      .position(
-        x: rect?.midX ?? .zero,
-        y: rect?.midY ?? .zero
-      )
-  }
-}
-
-
 public struct FrameFromSizeModifier: ViewModifier {
-
+  
+  let axis: Axis.Set
   let width: CGFloat?
   let height: CGFloat?
   let alignment: Alignment
+  
   public func body(content: Content) -> some View {
     content
       .frame(
@@ -42,24 +23,16 @@ public struct FrameFromSizeModifier: ViewModifier {
       )
   }
 }
+extension FrameFromSizeModifier {
+  private var dimensions
+}
 
-// MARK: - View extensions
 extension View {
-
-  public func frameFromRect(
-    _ rect: CGRect?,
-    alignment: Alignment = .center
-  ) -> some View {
-    self.modifier(
-      FrameFromRectModifier(
-        rect: rect,
-        alignment: alignment
-      )
-    )
-  }
-
+  
+  /// Specify both H and V axes to form a square.
   public func frameFromLength(
-    _ length: CGFloat,
+    _ length: CGFloat?,
+    axis: Axis.Set,
     alignment: Alignment = .center
   ) -> some View {
     self.modifier(
@@ -70,7 +43,7 @@ extension View {
       )
     )
   }
-
+  
   public func frameFromSize(
     _ size: CGSize?,
     alignment: Alignment = .center
@@ -96,5 +69,5 @@ extension View {
     )
   }
   
- 
+  
 }

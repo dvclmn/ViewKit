@@ -16,7 +16,7 @@ public struct FrameDimensions: Sendable {
   public var width: CGFloat?
   public var height: CGFloat?
   public var alignment: Alignment
-  
+
   public static let `default` = FrameDimensions()
 
   public init(
@@ -28,7 +28,7 @@ public struct FrameDimensions: Sendable {
     self.height = height
     self.alignment = alignment
   }
-  
+
   public init(
     fromSize size: CGSize,
     alignment: Alignment = .center
@@ -37,7 +37,7 @@ public struct FrameDimensions: Sendable {
     self.height = size.height
     self.alignment = alignment
   }
-  
+
   public init(
     fromLength length: CGFloat,
     axis: Axis = .horizontal,
@@ -47,17 +47,14 @@ public struct FrameDimensions: Sendable {
       case .horizontal:
         self.width = length
         self.height = nil
-        
+
       case .vertical:
         self.width = nil
         self.height = length
     }
-//    self.width = size.width
-//    self.height = size.height
     self.alignment = alignment
   }
 }
-
 
 extension FrameDimensions: ExpressibleByNilLiteral {
   public init(nilLiteral: ()) {
@@ -74,7 +71,7 @@ extension FrameDimensions {
 
 extension FrameDimensions: CustomStringConvertible {
   public var description: String {
-    return "FrameDimensions[W: \(width?.displayString ?? "nil"), H: \(height?.displayString ?? "nil"), Alignment: \(alignment.displayName.abbreviated)]"
+    return
+      "FrameDimensions[W: \(width?.displayString ?? "nil"), H: \(height?.displayString ?? "nil"), Alignment: \(alignment.displayName.abbreviated)]"
   }
 }
-
