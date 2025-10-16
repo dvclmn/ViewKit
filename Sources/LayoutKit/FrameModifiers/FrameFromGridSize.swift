@@ -62,10 +62,9 @@ extension FrameFromGridLength {
 
     return FrameDimensions(
       fromLength: length,
-      axis: axis,
+      axis: axis.toAxisSet,
       alignment: alignment
     )
-
   }
 
 }

@@ -30,28 +30,39 @@ public struct FrameDimensions: Sendable {
   }
 
   public init(
-    fromSize size: CGSize,
+    fromSize size: CGSize?,
     alignment: Alignment = .center
   ) {
-    self.width = size.width
-    self.height = size.height
+    self.width = size?.width
+    self.height = size?.height
     self.alignment = alignment
   }
 
   public init(
-    fromLength length: CGFloat,
-    axis: Axis = .horizontal,
+    fromLength length: CGFloat?,
+    axis: Axis.Set = .horizontal,
     alignment: Alignment = .center
   ) {
-    switch axis {
-      case .horizontal:
-        self.width = length
-        self.height = nil
-
-      case .vertical:
-        self.width = nil
-        self.height = length
+    guard !axis.isEmpty else {
+      self.width = nil
+      self.height = nil
+      self.alignment = alignment
+      return
     }
+
+    if axis == .horizontal {
+      self.width = length
+      self.height = nil
+
+    } else if axis == .vertical {
+      self.width = nil
+      self.height = length
+
+    } else {
+      self.width = length
+      self.height = length
+    }
+
     self.alignment = alignment
   }
 }

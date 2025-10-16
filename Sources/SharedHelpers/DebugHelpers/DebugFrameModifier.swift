@@ -18,14 +18,14 @@ public struct DebugFrameModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-      .border(colour.opacity(isEnabled ? 0.2 : 0.0), width: 2)
+      .border(colour.opacity(isEnabled ? 0.2 : 0.0), width: 1)
       .overlay(alignment: .topLeading) {
-        if isEnabled {
+        if isEnabled, !label.isEmpty {
           Text(label)
             .font(.callout)
-            .opacity(labelOpacity)
             .foregroundStyle(colour.opacity(0.8))
             .background(Color.black.opacity(0.8))
+            .opacity(labelOpacity)
             .padding(Styles.sizeSmall)
         }
       }

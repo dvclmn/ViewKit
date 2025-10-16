@@ -45,4 +45,19 @@ extension GridLength {
   public func screenLength(fallback: CGFloat = 0) -> CGFloat {
     count.toScreenLength(using: unit) ?? fallback
   }
+  
+  public func clamped(min: Int, max: Int) -> Self {
+    let newCount = self.count.clamped(min, max)
+    return GridLength(count: newCount, unit: self.unit)
+  }
+}
+
+extension GridLength: Comparable {
+  public static func < (
+    lhs: GridLength,
+    rhs: GridLength
+  ) -> Bool {
+    lhs.count < rhs.count
+//    lhs.screenLength() < rhs.screenLength()
+  }
 }

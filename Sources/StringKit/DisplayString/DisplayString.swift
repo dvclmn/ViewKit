@@ -30,8 +30,8 @@ public struct DisplayString {
 extension DisplayString {
 
   public var plainText: String {
-    components.map(\.toStyledString.plainString).joined("  \n")
-    //    components.map(\.toStyledString.plainString).joined(separator)
+//    components.map(\.toStyledString.plainString).joined("  \n")
+        components.map(\.toStyledString.plainString).joined(separator)
   }
 
   public var output: AttributedString {

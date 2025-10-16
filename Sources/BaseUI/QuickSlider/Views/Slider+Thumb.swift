@@ -40,7 +40,7 @@ public struct SliderThumb<ThumbShape: InsettableShape>: View {
           x: 0,
           y: 0.3
         )
-        .frameFromLength(diameter)
+        .frameFromLength(diameter, axis: [.horizontal, .vertical])
         .position(position)
         .allowsHitTesting(false)
     }

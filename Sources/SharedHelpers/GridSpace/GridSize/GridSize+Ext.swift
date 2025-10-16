@@ -14,6 +14,9 @@ extension GridSize {
   public var width: Int { columns.count }
   public var height: Int { rows.count }
   
+  public var screenWidth: CGFloat { columns.screenLength }
+  public var screenHeight: CGFloat { rows.screenLength }
+  
   public var gridSizeCounts: GridSizeCounts { (width, height) }
   
   public var screenSize: CGSize {

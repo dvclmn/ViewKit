@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 28/5/2025.
 //
 
-
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 public struct PopupViewModifier: ViewModifier {
   @Environment(\.popup) private var popup
@@ -16,21 +15,22 @@ public struct PopupViewModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .overlay(alignment: alignment) {
-//        if let debugPopup = debugPopup {
-          PopupView(debugPopup ?? popup?.popupMessage)
-            .padding(Styles.sizeRegular)
-          
-//        } else if let activeMessage = popup.popupMessage {
-//          PopupView(activeMessage)
-//            .padding(Styles.sizeRegular)
-//        }
+        //        if let debugPopup = debugPopup {
+        PopupView(debugPopup ?? popup?.popupMessage)
+          .padding(Styles.sizeRegular)
+
+        //        } else if let activeMessage = popup.popupMessage {
+        //          PopupView(activeMessage)
+        //            .padding(Styles.sizeRegular)
+        //        }
       }
 
   }
 }
 extension View {
   public func popupView(
-    debugPopup: PopupMessage? = nil,
+    debugPopup: PopupDebug,
+//    debugPopup: PopupMessage? = nil,
     alignment: Alignment = .top
   ) -> some View {
     self.modifier(
@@ -39,4 +39,10 @@ extension View {
         alignment: alignment
       ))
   }
+}
+
+public enum PopupDebug {
+  case example
+  case custom(PopupMessage)
+  case none
 }
