@@ -12,7 +12,7 @@ import SwiftUI
 
 public extension KBShortcut {
 
-  enum Modifier: @MainActor ShortcutKey, CaseIterable, Identifiable {
+  enum Modifier: ShortcutKey, CaseIterable, Identifiable, Sendable {
     
     public static let allCases: [KBShortcut.Modifier] = [.shift, .option, .command, .control, .capsLock]
     

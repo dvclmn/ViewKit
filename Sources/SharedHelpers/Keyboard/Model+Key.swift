@@ -9,12 +9,12 @@ import SwiftUI
 
 #if canImport(AppKit)
 
-public extension KBShortcut {
+extension KBShortcut {
 
   /// These are the **non-Modifier** keys
-  
-  enum Key: @MainActor ShortcutKey, CaseIterable {
-    static public let allCases: [KBShortcut.Key] = [
+
+  public enum Key: ShortcutKey, CaseIterable {
+    static public let allCases: [Self] = [
       .character("a"),
       .clear,
       .delete,
@@ -32,7 +32,7 @@ public extension KBShortcut {
       .space,
       .tab,
     ]
-    
+
     case character(Character)
     case clear
     case delete
@@ -49,7 +49,7 @@ public extension KBShortcut {
     case `return`
     case space
     case tab
-    
+
     public var name: String {
       switch self {
         case .character(let character): "\(character.lowercased())"
@@ -68,10 +68,10 @@ public extension KBShortcut {
         case .`return`: "Return"
         case .space: "Space"
         case .tab: "Tab"
-          
+
       }
     }
-    
+
     public var symbolName: String {
       switch self {
         case .character(let character): "\(character)"
@@ -90,10 +90,10 @@ public extension KBShortcut {
         case .`return`: "return"
         case .space: "space"
         case .tab: "arrow.forward.to.line"
-          
+
       }
     }
-    
+
     public var symbolLiteral: Character {
       switch self {
         case .character(let character): character
@@ -114,7 +114,7 @@ public extension KBShortcut {
         case .tab: "􁂎"
       }
     }
-    
+
     public var alternativeLiteral: Character? {
       switch self {
         case .upArrow: "↑"
@@ -124,13 +124,13 @@ public extension KBShortcut {
         default: nil
       }
     }
-    
+
     public var type: KBShortcut.KeyType {
       .key
     }
-    
+
   }
-  
+
 }
 
 #endif

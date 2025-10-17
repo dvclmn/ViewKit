@@ -129,7 +129,12 @@ let package = Package(
       ]
     ),
 
-    .target(name: "MotionKit"),
+    .target(
+      name: "MotionKit",
+      dependencies: [
+        .dep(.stringShared)
+      ]
+    ),
     .target(name: "SharedHelpers"),
 
     .target(

@@ -10,7 +10,7 @@ import Foundation
 import SharedHelpers
 import LayoutKit
 
-//@MainActor
+@MainActor
 public protocol FuzzySearchHandler: AnyObject where Self.Item.ID: Sendable {
   associatedtype Provider: FuzzyProvider
   associatedtype Item: FuzzySearchable & LabeledItem & Sendable

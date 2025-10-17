@@ -11,7 +11,7 @@ import StringShared
 
 public typealias FuzzyRanges = [CountableClosedRange<Int>]
 
-nonisolated public protocol FuzzySearchable: LabeledItem, Identifiable {
+nonisolated public protocol FuzzySearchable: LabeledItem, Identifiable, Sendable {
   var stringRepresentation: String { get }
 
   /// Called with the fuse instance and the query, returns a `FuzzyMatch` if this item matched.

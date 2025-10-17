@@ -9,7 +9,7 @@ import Foundation
 
 extension DummyContent {
 
-  public struct Animal: Identifiable, Equatable, Sendable, @MainActor LabeledItem {
+  public struct Animal: Identifiable, Equatable, Sendable, LabeledItem {
     public let id: UUID
     public let label: QuickLabel
     let state: Bool
@@ -57,7 +57,6 @@ extension DummyContent.Animal {
     Self(label: "Zebra", state: false, category: Category.endangered),
   ]
 
-  @MainActor
   static let iconSymbol: [IconLiteral] = [
     .symbol(Icons.binoculars.icon),
     .symbol(Icons.window.icon),

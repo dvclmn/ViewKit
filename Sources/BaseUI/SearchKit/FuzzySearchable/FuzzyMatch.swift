@@ -7,7 +7,9 @@
 
 import Foundation
 
-public struct FuzzyMatch<Item: FuzzySearchable>: Sendable, Identifiable {
+public struct FuzzyMatch<Item: FuzzySearchable>: Sendable, Identifiable
+//where Item: Sendable
+{
   public var id: Item.ID { item.id }
   public let item: Item
   public let score: Double

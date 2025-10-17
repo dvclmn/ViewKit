@@ -12,7 +12,7 @@ import SwiftUI
 /// SwiftUI uses: `KeyboardShortcut`
 
 // MARK: - Main Shortcut model
-public struct KBShortcut: Equatable, Sendable {
+public struct KBShortcut: Equatable {
   public let key: KBShortcut.Key
   public let modifiers: [KBShortcut.Modifier]
   public let label: KBShortcut.Label?
@@ -61,7 +61,7 @@ extension KBShortcut {
     case modifier
   }
 
-  public protocol ShortcutKey: Identifiable, Equatable {
+  public protocol ShortcutKey: Identifiable, Equatable, Sendable {
     //  protocol ShortcutKey: Equatable, Sendable, Identifiable {
 
     var id: String { get }

@@ -12,7 +12,7 @@ import SwiftUI
 
 extension Fuse: FuzzyProvider {}
 
-//@MainActor
+@MainActor
 @Observable
 final class ExampleSearchHandler: FuzzySearchHandler, Sendable {
   typealias Provider = Fuse

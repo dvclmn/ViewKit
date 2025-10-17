@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum MoveDirection: String, @MainActor LabeledItem {
+public enum MoveDirection: String, LabeledItem {
   case next
   case previous
 
