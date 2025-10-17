@@ -1,4 +1,4 @@
-// swift-tools-version: 6.1
+// swift-tools-version: 6.2
 
 import CompilerPluginSupport
 import PackageDescription
@@ -15,7 +15,7 @@ let package = Package(
       targets: [
         "EnumMacros",
         "Persistable",
-//        "SampleDataMacro",
+        //        "SampleDataMacro",
       ]
     ),
     .executable(
@@ -50,7 +50,7 @@ let package = Package(
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/ukushu/Ifrit", from: "3.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
-//    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
+    //    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
     .package(url: "https://github.com/kean/Nuke", from: "12.8.0"),
   ],
 
@@ -95,7 +95,7 @@ let package = Package(
         .dep(.sharedHelpers),
         .dep(.curveKit),
         .nsui,
-//        .product(name: "CasePaths", package: "swift-case-paths"),
+        //        .product(name: "CasePaths", package: "swift-case-paths"),
       ],
     ),
 
@@ -174,27 +174,27 @@ let package = Package(
     .target(
       name: "Persistable",
       dependencies: ["BaseMacros"],
-      path: .macroDecl("Persistable")
+      path: .macroDecl("Persistable"),
     ),
     .target(
       name: "EnumMacros",
       dependencies: ["BaseMacros"],
-      path: .macroDecl("EnumMacros")
+      path: .macroDecl("EnumMacros"),
     ),
-//    .target(
-//      name: "SampleDataMacro",
-//      dependencies: [
-//        "BaseMacros",
-//        .dep(.sharedHelpers),
-//      ],
-//      path: .macroDecl("SampleDataMacro")
-//    ),
+    //    .target(
+    //      name: "SampleDataMacro",
+    //      dependencies: [
+    //        "BaseMacros",
+    //        .dep(.sharedHelpers),
+    //      ],
+    //      path: .macroDecl("SampleDataMacro")
+    //    ),
     .executableTarget(
       name: "BaseMacrosClient",
       dependencies: [
         "EnumMacros",
         "Persistable",
-//        "SampleDataMacro",
+        //        "SampleDataMacro",
       ],
       path: .macrosSource + "/BaseMacrosClient",
     ),
@@ -218,6 +218,16 @@ extension String {
     return .macrosSource + "/MacroDeclarations/" + macroName
   }
   static var macrosSource: String { "Sources/BaseMacros" }
+}
+
+extension SwiftSetting {
+  static var mainActorDefault: Self { .defaultIsolation(MainActor.self) }
+}
+
+for target in package.targets {
+  var settings = target.swiftSettings ?? []
+  settings.append(.enableExperimentalFeature("StrictConcurrency"))
+  target.swiftSettings = settings
 }
 
 /// List of common modules for convenience
