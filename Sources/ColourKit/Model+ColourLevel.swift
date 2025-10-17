@@ -17,7 +17,7 @@ public protocol ColourHandlerProtocol {
   var background: Color { get }
 }
 
-public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable {
+public enum ColourLevel: String, Sendable, @MainActor CaseCyclable, CaseIterable {
   public typealias Item = Self
   
   public static let defaultCase: ColourLevel = .foreground

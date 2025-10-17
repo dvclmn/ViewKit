@@ -12,7 +12,7 @@ import SwiftUI
 /// structs (e.g. `RedComponent`, `HueComponent`).
 ///
 /// I ended up back with enums, and much better off for it.
-public protocol ColourComponent: Identifiable, Sendable, CaseIterable, RawRepresentable where RawValue == String {
+nonisolated public protocol ColourComponent: Identifiable, CaseIterable, RawRepresentable where RawValue == String {
 
   associatedtype Model: ColourModel
 

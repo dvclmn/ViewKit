@@ -5,19 +5,18 @@
 //  Created by Dave Coleman on 15/6/2024.
 //
 
-import SharedHelpers
-
+import StringShared
 import SwiftUI
 
 public struct FadeSlide: ViewModifier {
   let distance: Double
   let opacity: Double
-  
+
   public init(
     _ direction: Direction.Vertical,
     distance: Double
   ) {
-    
+
     switch direction {
       case .up:
         self.distance = 0
@@ -26,8 +25,8 @@ public struct FadeSlide: ViewModifier {
         self.distance = distance
         self.opacity = 0
     }
-//    self.distance = distance
-//    self.opacity = opacity
+    //    self.distance = distance
+    //    self.opacity = opacity
   }
 
   public func body(content: Content) -> some View {
@@ -36,7 +35,6 @@ public struct FadeSlide: ViewModifier {
       .opacity(opacity)
   }
 }
-
 
 @MainActor
 extension AnyTransition {
@@ -49,12 +47,12 @@ extension AnyTransition {
       identity: FadeSlide(direction.opposite, distance: distance)
     )
   }
-//  public static func fadeSlideOut: AnyTransition {
-//    .modifier(
-//      active: FadeSlideIn(distance: 0, opacity: 0.0),
-//      identity: FadeSlideIn(distance: 12, opacity: 1.0)
-//    )
-//  }
+  //  public static func fadeSlideOut: AnyTransition {
+  //    .modifier(
+  //      active: FadeSlideIn(distance: 0, opacity: 0.0),
+  //      identity: FadeSlideIn(distance: 12, opacity: 1.0)
+  //    )
+  //  }
 
   public static func fadeSlideAsymmetric(distance: CGFloat = 12) -> AnyTransition {
     .asymmetric(
@@ -63,7 +61,6 @@ extension AnyTransition {
     )
   }
 }
-
 
 struct AnimationTest: Identifiable {
   let id = UUID()
@@ -114,7 +111,6 @@ struct AnimationExamples: View {
         SingleAnimationView(animationItem: $animation)
       }
     }
-
 
   }
 }
@@ -218,7 +214,6 @@ extension SingleAnimationView {
 
       HStack(spacing: 14) {
 
-
         Text("\(property.wrappedValue, specifier: "%.2f")")
           .padding(.horizontal, 6)
           .padding(.vertical, 3)
@@ -227,7 +222,7 @@ extension SingleAnimationView {
 
         Slider(
           value: property,
-          in: start ... end
+          in: start...end
         )
         .controlSize(.small)
 
@@ -258,7 +253,6 @@ extension SingleAnimationView {
         .buttonStyle(.plain)
         .labelStyle(.iconOnly)
 
-
       }
       .font(.system(size: 15))
       .monospacedDigit()
@@ -271,7 +265,6 @@ extension SingleAnimationView {
   }
 }
 
-
 #if DEBUG
 #Preview {
   AnimationExamples()
@@ -279,8 +272,6 @@ extension SingleAnimationView {
     .background(.black.opacity(0.6))
 }
 #endif
-
-
 
 func nonOptionalBinding<T: Sendable>(_ binding: Binding<T?>, defaultValue: T) -> Binding<T> {
   Binding<T>(

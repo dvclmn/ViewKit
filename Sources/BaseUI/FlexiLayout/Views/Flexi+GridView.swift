@@ -132,31 +132,31 @@ extension Flexi.GridView {
 
 }
 
-#if DEBUG
-@available(macOS 15, iOS 18, *)
-#Preview(traits: .size(.normal)) {
-
-  @Previewable @State var store: FlexiHandler<DummyContent.Animal> = .init(mode: .single)
-
-  /// Column maths
-  ///
-  /// - Width of container
-  /// - Number of columns
-  /// - Item spacing (horizontal) – multiplied by no. columns -1
-
-  Flexi.GridView(data: DummyContent.Animal.data) { item in
-    Rectangle()
-      .fill(Color.blue.quinary)
-      .frameWithAspectRatio(0.8)
-  }
-  .environment(
-    \.gridColumnMode,
-    .adaptive(.fill(min: 80, max: 140))
-  )
-  .environment(\.gridItemSpacing, 20)
-  .environment(\.layoutSpacing, 20)
-  .environment(store)
-  .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-
-}
-#endif
+//#if DEBUG
+//@available(macOS 15, iOS 18, *)
+//#Preview(traits: .size(.normal)) {
+//
+//  @Previewable @State var store: FlexiHandler<DummyContent.Animal> = .init(mode: .single)
+//
+//  /// Column maths
+//  ///
+//  /// - Width of container
+//  /// - Number of columns
+//  /// - Item spacing (horizontal) – multiplied by no. columns -1
+//
+//  Flexi.GridView(data: DummyContent.Animal.data) { item in
+//    Rectangle()
+//      .fill(Color.blue.quinary)
+//      .frameWithAspectRatio(0.8)
+//  }
+//  .environment(
+//    \.gridColumnMode,
+//    .adaptive(.fill(min: 80, max: 140))
+//  )
+//  .environment(\.gridItemSpacing, 20)
+//  .environment(\.layoutSpacing, 20)
+//  .environment(store)
+//  .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+//
+//}
+//#endif

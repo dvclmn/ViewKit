@@ -8,7 +8,7 @@
 import Foundation
 
 /// Avoiding importing iFrit as dependancy, it'll need to conform to this
-public protocol FuzzyProvider {
+nonisolated public protocol FuzzyProvider {
 //  associatedtype Prop: SearchableProperty
 
 //  func searchSync<S: Sequence>(

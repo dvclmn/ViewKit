@@ -9,7 +9,7 @@ import Foundation
 
 extension DummyContent {
 
-  public struct Animal: Identifiable, Sendable, @MainActor LabeledItem {
+  public struct Animal: Identifiable, Equatable, Sendable, @MainActor LabeledItem {
     public let id: UUID
     public let label: QuickLabel
     let state: Bool

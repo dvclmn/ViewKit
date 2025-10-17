@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-@MainActor
-public enum ExampleTab: String, Pickable, Shortcuttable {
+public enum ExampleTab: String, @MainActor Pickable, @MainActor  Shortcuttable {
   
   public static let pickerLabel: QuickLabel = QuickLabel("Example Tab")
   case blim

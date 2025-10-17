@@ -20,7 +20,7 @@ public protocol EnvironmentResolvableColour {
   )
 }
 
-public protocol ColourModel: Codable {
+nonisolated public protocol ColourModel: Codable {
   var colourSpace: Color.RGBColorSpace { get }
   var name: String? { get }
   var alpha: Double { get set }

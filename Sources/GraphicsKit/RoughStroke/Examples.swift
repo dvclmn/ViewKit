@@ -22,17 +22,17 @@ struct RoughnessExampleView: View {
       
       
       RoundedRectangle(cornerRadius: 10)
-        .roughen(roughness: roughness, segments: segments, jitter: jitter)
+//        .roughen(roughness: roughness, segments: segments, jitter: jitter)
         .fill(.mint)
         .stroke(.indigo, style: .init(lineWidth: 2))
       
       Circle()
-        .roughen(roughness: roughness, segments: segments, jitter: jitter)
+//        .roughen(roughness: roughness, segments: segments, jitter: jitter)
         .fill(.orange)
         .stroke(.purple, style: .init(lineWidth: 2))
       
       Diamond()
-        .roughen(roughness: roughness, segments: segments, jitter: jitter)
+//        .roughen(roughness: roughness, segments: segments, jitter: jitter)
         .fill(.brown)
         .stroke(.blue, style: .init(lineWidth: 2))
       //            Circle()

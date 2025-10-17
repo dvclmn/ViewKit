@@ -16,7 +16,7 @@ import SwiftUI
 /// - Saturation is a percentage of color intensity (0-100%)
 /// - Value/Brightness is a percentage of lightness (0-100%)
 
-public enum HSVComponent: String, ColourComponent {
+public enum HSVComponent: String, ColourComponent, Sendable {
 
   public typealias Model = HSVColour
 

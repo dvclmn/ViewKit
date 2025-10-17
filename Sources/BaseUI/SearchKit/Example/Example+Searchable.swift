@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import SharedHelpers
 
 public final class ExampleFuzzySearchProvider: FuzzyProvider {
@@ -16,7 +15,9 @@ public final class ExampleFuzzySearchProvider: FuzzyProvider {
 
 }
 
-public enum SearchableItem: String, FuzzySearchable, CaseIterable, CaseCyclable, LabeledItem, Pickable {
+public enum SearchableItem: String, FuzzySearchable, Sendable, CaseIterable, CaseCyclable,
+  LabeledItem, Pickable
+{
 
   public typealias Provider = ExampleFuzzySearchProvider
   public static let defaultCase: Self = .ratio

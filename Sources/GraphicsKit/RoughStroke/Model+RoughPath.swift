@@ -7,46 +7,47 @@
 
 import SwiftUI
 
-public struct RoughPath<S: Shape>: Shape {  
-  let sourceShape: S
-  let style: RoughPathStyle
-  
-  public init(
-    _ source: S,
-    style: RoughPathStyle
-  ) {
-    self.sourceShape = source
-    self.style = style
-  }
-  
-  public func path(in rect: CGRect) -> Path {
-    let path = sourceShape.path(in: rect)
-    
-    var generator = RoughPathGenerator(style: style)
-    var roughPath = generator.roughenPath(path)
-    
-    roughPath.closeSubpath()
-    return roughPath
-  }
-}
-
-public extension Shape {
-  func roughen(
-    roughness: CGFloat = 10,
-    segments: CGFloat = 20,
-    jitter: CGFloat = 4
-  ) -> some Shape {
-    return RoughPath(
-      self,
-      style: RoughPathStyle(
-        roughness: roughness,
-        segments: Int(segments),
-        seed: 312,
-        jitter: jitter
-      )
-    )
-  }
-}
+#warning("I want to keep this, but cannot figure out main-actor whatevers")
+//public struct RoughPath<S: Shape>: Shape {
+//  let sourceShape: S
+//  let style: RoughPathStyle
+//  
+//  public init(
+//    _ source: S,
+//    style: RoughPathStyle
+//  ) {
+//    self.sourceShape = source
+//    self.style = style
+//  }
+//  
+//  @MainActor public func path(in rect: CGRect) -> Path {
+//    let path = sourceShape.path(in: rect)
+//    
+//    var generator = RoughPathGenerator(style: style)
+//    var roughPath = generator.roughenPath(path)
+//    
+//    roughPath.closeSubpath()
+//    return roughPath
+//  }
+//}
+//
+//public extension Shape {
+//  func roughen(
+//    roughness: CGFloat = 10,
+//    segments: CGFloat = 20,
+//    jitter: CGFloat = 4
+//  ) -> some Shape {
+//    return RoughPath(
+//      self,
+//      style: RoughPathStyle(
+//        roughness: roughness,
+//        segments: Int(segments),
+//        seed: 312,
+//        jitter: jitter
+//      )
+//    )
+//  }
+//}
 
 //extension GraphicsContext {
 //  public mutating func roughStroke(

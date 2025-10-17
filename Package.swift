@@ -220,15 +220,15 @@ extension String {
   static var macrosSource: String { "Sources/BaseMacrosLibrary" }
 }
 
-for target in package.targets {
-  guard target.name != BaseModule.enumMacros.name,
-    target.name != BaseModule.persistable.name
-  else { continue }
-
-  var settings = target.swiftSettings ?? []
-  settings.append(.defaultIsolation(MainActor.self))
-  target.swiftSettings = settings
-}
+//for target in package.targets {
+//  guard target.name != BaseModule.enumMacros.name,
+//    target.name != BaseModule.persistable.name
+//  else { continue }
+//
+//  var settings = target.swiftSettings ?? []
+//  settings.append(.defaultIsolation(MainActor.self))
+//  target.swiftSettings = settings
+//}
 
 /// List of common modules for convenience
 enum BaseModule {

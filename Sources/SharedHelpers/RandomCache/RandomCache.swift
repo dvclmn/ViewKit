@@ -15,7 +15,7 @@ import Foundation
 /// - Note: The associated `Value` type must conform to `BinaryFloatingPoint` to ensure
 ///         compatibility with floating-point random operations.
 ///
-public protocol RandomGeneratable {
+nonisolated public protocol RandomGeneratable {
   associatedtype Value: BinaryFloatingPoint
   
   /// Generates a new instance with random values.
