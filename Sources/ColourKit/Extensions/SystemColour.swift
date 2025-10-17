@@ -7,9 +7,8 @@
 
 import SwiftUI
 import SharedHelpers
-import CasePaths
+//import CasePaths
 
-@dynamicMemberLookup
 public struct ColourPreset: ModelBase {
   public let systemColour: SystemColour
   public let opacity: Double
@@ -24,12 +23,12 @@ public struct ColourPreset: ModelBase {
   }
 }
 extension ColourPreset {
-  public subscript(dynamicMember keyPath: KeyPath<ColourPreset, SystemColour>) -> SystemColour {
-    return self[keyPath: keyPath]
-  }
+//  public subscript(dynamicMember keyPath: KeyPath<ColourPreset, SystemColour>) -> SystemColour {
+//    return self[keyPath: keyPath]
+//  }
 }
 
-@CasePathable
+//@CasePathable
 public enum SystemColour: String, CaseIterable, ModelBaseWithID {
   case black
   case blue

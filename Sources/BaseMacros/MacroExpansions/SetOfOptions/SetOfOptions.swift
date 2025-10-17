@@ -99,3 +99,6 @@ public struct SetOfOptionsMacro {
     return (structDecl, optionsEnum, rawType)
   }
 }
+
+
+

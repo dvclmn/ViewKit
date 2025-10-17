@@ -49,7 +49,7 @@ enum AnotherEnum {
 /// Note: The `struct` is a requirement
 @SetOfOptions<Int>
 struct CoolAnimals {
-  private enum Options: Int {
+  enum Options: Int {
     case bat
     case frog
     case ape
