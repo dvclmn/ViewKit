@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 extension LinearGradient {
 
   public static func rainbow(

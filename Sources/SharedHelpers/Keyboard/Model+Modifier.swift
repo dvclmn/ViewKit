@@ -9,8 +9,9 @@ import SwiftUI
 
 #if canImport(AppKit)
 
+
 public extension KBShortcut {
-  
+
   enum Modifier: ShortcutKey, CaseIterable, Identifiable {
     
     public static let allCases: [KBShortcut.Modifier] = [.shift, .option, .command, .control, .capsLock]

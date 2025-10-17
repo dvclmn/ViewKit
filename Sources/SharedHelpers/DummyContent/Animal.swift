@@ -7,7 +7,9 @@
 
 import Foundation
 
+
 extension DummyContent {
+  
   public struct Animal: Identifiable, Sendable, LabeledItem {
     public let id: UUID
     public let label: QuickLabel
@@ -56,6 +58,7 @@ extension DummyContent.Animal {
     Self(label: "Zebra", state: false, category: Category.endangered),
   ]
 
+  @MainActor
   static let iconSymbol: [IconLiteral] = [
     .symbol(Icons.binoculars.icon),
     .symbol(Icons.window.icon),
@@ -137,7 +140,7 @@ extension DummyContent.Animal {
 //}
 
 extension DummyContent.Animal {
-  public enum Category: String, ModelBase {
+  public enum Category: String, Sendable, Codable, Equatable, Hashable {
     case predator
     case cute
     case extinct

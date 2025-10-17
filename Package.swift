@@ -220,13 +220,9 @@ extension String {
   static var macrosSource: String { "Sources/BaseMacros" }
 }
 
-extension SwiftSetting {
-  static var mainActorDefault: Self { .defaultIsolation(MainActor.self) }
-}
-
 for target in package.targets {
   var settings = target.swiftSettings ?? []
-  settings.append(.enableExperimentalFeature("StrictConcurrency"))
+  settings.append(.defaultIsolation(MainActor.self))
   target.swiftSettings = settings
 }
 

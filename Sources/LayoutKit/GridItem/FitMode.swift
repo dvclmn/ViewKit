@@ -11,7 +11,7 @@ import StringKit
 
 extension GridConfig {
 
-  public enum FitMode: RawRepresentable, ModelBase {
+  public enum FitMode: RawRepresentable, Sendable, Codable, Equatable, Hashable {
     case fill(min: CGFloat, max: CGFloat = .infinity)
     case fixedWidth(width: CGFloat)
 

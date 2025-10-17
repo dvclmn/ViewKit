@@ -11,4 +11,5 @@ import Foundation
 /// ``Animal`` A struct with categories
 /// ``JSON`` A basic JSON sample
 /// ``SearchableItem`` Fuzzy search model
+@MainActor
 public enum DummyContent {}

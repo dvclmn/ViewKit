@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol LabeledItem: ModelBaseWithID {
+public protocol LabeledItem: Sendable, Codable, Equatable, Hashable, Identifiable {
   var id: String { get }
   var label: QuickLabel { get }
   var blurb: String? { get }

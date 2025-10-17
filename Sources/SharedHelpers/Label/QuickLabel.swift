@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct QuickLabel: ModelBase {
+public struct QuickLabel: Sendable, Codable, Equatable, Hashable {
   public var attributedText: AttributedString
   public let icon: IconLiteral?
   public let role: Role?

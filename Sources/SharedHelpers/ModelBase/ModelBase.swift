@@ -7,13 +7,15 @@
 
 import Foundation
 
+@MainActor
 public protocol ModelBase: Sendable, Codable, Equatable, Hashable {}
 
-public protocol ModelBaseWithID: ModelBase, Identifiable where ID: Hashable {
+@MainActor
+public protocol ModelBaseWithID: Sendable, Codable, Equatable, Hashable, Identifiable where ID: Hashable {
   var id: ID { get }
 }
 
-public protocol Editable: ModelBase {
+public protocol Editable: Sendable, Codable, Equatable, Hashable {
   var dateAdded: Date { get }
   var dateDeleted: Date? { get set }
   var dateModified: Date? { get set }

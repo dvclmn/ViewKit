@@ -9,7 +9,7 @@ import SwiftUI
 import SharedHelpers
 //import CasePaths
 
-public struct ColourPreset: ModelBase {
+public struct ColourPreset: Sendable, Codable, Equatable, Hashable {
   public let systemColour: SystemColour
   public let opacity: Double
   
@@ -29,7 +29,7 @@ extension ColourPreset {
 }
 
 //@CasePathable
-public enum SystemColour: String, CaseIterable, ModelBaseWithID {
+public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Hashable, Identifiable {
   case black
   case blue
   case brown

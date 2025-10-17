@@ -7,167 +7,163 @@
 //
 #if canImport(AppKit)
 
-  import SwiftUI
+import SwiftUI
 
-  /// SwiftUI uses: `KeyboardShortcut`
+/// SwiftUI uses: `KeyboardShortcut`
 
-  // MARK: - Main Shortcut model
-  public struct KBShortcut: Equatable, Sendable {
-    public let key: KBShortcut.Key
-    public let modifiers: [KBShortcut.Modifier]
-    public let label: KBShortcut.Label?
+// MARK: - Main Shortcut model
+public struct KBShortcut: Equatable, Sendable {
+  public let key: KBShortcut.Key
+  public let modifiers: [KBShortcut.Modifier]
+  public let label: KBShortcut.Label?
+
+  public init(
+    _ key: KBShortcut.Key,
+    modifiers: [KBShortcut.Modifier] = [],
+    label: Label? = nil
+  ) {
+    self.key = key
+    self.modifiers = modifiers
+    self.label = label
+  }
+
+  /// AppKit init
+  public init(
+    _ key: KBShortcut.Key,
+    modifierFlags: NSEvent.ModifierFlags,
+    label: KBShortcut.Label? = nil
+  ) {
+    self.key = key
+    self.modifiers = KBShortcut.Modifier.from(modifierFlags)
+    self.label = label
+  }
+}
+
+extension KBShortcut {
+  public struct Label: Equatable, Sendable {
+    public var title: String
+    public var icon: String
 
     public init(
-      _ key: KBShortcut.Key,
-      modifiers: [KBShortcut.Modifier] = [],
-      label: Label? = nil
+      title: String,
+      icon: String
     ) {
-      self.key = key
-      self.modifiers = modifiers
-      self.label = label
-    }
-
-    /// AppKit init
-    public init(
-      _ key: KBShortcut.Key,
-      modifierFlags: NSEvent.ModifierFlags,
-      label: KBShortcut.Label? = nil
-    ) {
-      self.key = key
-      self.modifiers = KBShortcut.Modifier.from(modifierFlags)
-      self.label = label
+      self.title = title
+      self.icon = icon
     }
   }
+}
+//
+extension KBShortcut {
 
-
-  extension KBShortcut {
-    public struct Label: Equatable, Sendable {
-      public var title: String
-      public var icon: String
-
-      public init(
-        title: String,
-        icon: String
-      ) {
-        self.title = title
-        self.icon = icon
-      }
-    }
-  }
-  //
-  extension KBShortcut {
-
-    public enum KeyType {
-      case key
-      case modifier
-    }
-
-    protocol ShortcutKey: Equatable, Sendable, Identifiable {
-
-      var id: String { get }
-
-      /// E.g. `Delete` or `Control`
-      var name: String { get }
-
-      /// E.g. `delete.backward` or `control`
-      var symbolName: String { get }
-
-      /// E.g. `􁂈` or `􀆍`
-      var symbolLiteral: Character { get }
-
-      var type: KeyType { get }
-    }
+  public enum KeyType {
+    case key
+    case modifier
   }
 
-  extension KBShortcut.ShortcutKey {
-    public var id: String { symbolName }
+  protocol ShortcutKey: Equatable, Sendable, Identifiable {
+
+    var id: String { get }
+
+    /// E.g. `Delete` or `Control`
+    var name: String { get }
+
+    /// E.g. `delete.backward` or `control`
+    var symbolName: String { get }
+
+    /// E.g. `􁂈` or `􀆍`
+    var symbolLiteral: Character { get }
+
+    var type: KeyType { get }
   }
+}
 
-  extension KBShortcut: CustomStringConvertible {
+extension KBShortcut.ShortcutKey {
+  public var id: String { symbolName }
+}
 
-    public var description: String {
+extension KBShortcut: CustomStringConvertible {
 
-      let key = self.key.name.uppercased()
-      let modifierLiterals = self.modifiers.summarise(key: \.symbolLiteral, delimiter: nil)
-      let modifierNames = self.modifiers.summarise(key: \.symbolName)
+  public var description: String {
 
-      let result: String = """
+    let key = self.key.name.uppercased()
+    let modifierLiterals = self.modifiers.summarise(key: \.symbolLiteral, delimiter: nil)
+    let modifierNames = self.modifiers.summarise(key: \.symbolName)
 
-        \(modifierLiterals)\(key)
-        Shortcut(
-          key: \(key), 
-          modifiers: \(modifierNames)
-        )
-        """
+    let result: String = """
 
-      return result
-    }
+      \(modifierLiterals)\(key)
+      Shortcut(
+        key: \(key), 
+        modifiers: \(modifierNames)
+      )
+      """
+
+    return result
   }
+}
 
+struct ShortcutDescriptionsView: View {
 
-  struct ShortcutDescriptionsView: View {
+  let modifierList: [KBShortcut.Modifier] = KBShortcut.Modifier.allCases
+  let shortKeyList: [KBShortcut.Key] = KBShortcut.Key.allCases
 
-    let modifierList: [KBShortcut.Modifier] = KBShortcut.Modifier.allCases
-    let shortKeyList: [KBShortcut.Key] = KBShortcut.Key.allCases
+  let columns: [GridItem] = Array(
+    repeating: GridItem(
+      .flexible(),
+      spacing: 20
+    ),
+    count: 3
+  )
 
-    let columns: [GridItem] = Array(
-      repeating: GridItem(
-        .flexible(),
-        spacing: 20
-      ),
-      count: 3
-    )
+  var body: some View {
 
-    var body: some View {
+    //      LazyVGrid(columns: columns) {
+    //        ForEach(modifierList) { modifier in
+    EmptyView()
+    //          ShortcutPreview(
+    //            symbolLiteral: modifier.symbolLiteral,
+    //            name: modifier.name
+    //          )
 
+    //        }
+    //        ForEach(shortKeyList) { key in
+    //          ShortcutPreview(
+    //            symbolLiteral: key.symbolLiteral,
+    //            name: key.name
+    //          )
+    //        }
+    //      }  // END grid
+    //      .padding(40)
+    //      .frame(width: 400, height: 700)
+    //      .background(.black.opacity(0.6))
 
-//      LazyVGrid(columns: columns) {
-//        ForEach(modifierList) { modifier in
-          EmptyView()
-//          ShortcutPreview(
-//            symbolLiteral: modifier.symbolLiteral,
-//            name: modifier.name
-//          )
-
-//        }
-//        ForEach(shortKeyList) { key in
-//          ShortcutPreview(
-//            symbolLiteral: key.symbolLiteral,
-//            name: key.name
-//          )
-//        }
-//      }  // END grid
-//      .padding(40)
-//      .frame(width: 400, height: 700)
-//      .background(.black.opacity(0.6))
-
-    }
   }
+}
 
-  extension ShortcutDescriptionsView {
+extension ShortcutDescriptionsView {
 
-    @ViewBuilder
-    func ShortcutPreview(
-      symbolLiteral: Character,
-      name: String
-    ) -> some View {
+  @ViewBuilder
+  func ShortcutPreview(
+    symbolLiteral: Character,
+    name: String
+  ) -> some View {
 
-      VStack(spacing: 20) {
-        Text("\(symbolLiteral)")
-          .font(.title2)
-        Text(name)
-          .foregroundStyle(.secondary)
-      }
-      .frame(width: 110, height: 80)
+    VStack(spacing: 20) {
+      Text("\(symbolLiteral)")
+        .font(.title2)
+      Text(name)
+        .foregroundStyle(.secondary)
     }
+    .frame(width: 110, height: 80)
   }
+}
 
-  #if DEBUG
-    #Preview {
-      ShortcutDescriptionsView()
-    }
-  #endif
-
+#if DEBUG
+#Preview {
+  ShortcutDescriptionsView()
+}
+#endif
 
 //  extension Keyboard {
 //
