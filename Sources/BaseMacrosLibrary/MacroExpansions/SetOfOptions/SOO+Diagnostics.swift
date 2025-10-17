@@ -18,7 +18,7 @@ enum SetOfOptionsMacroDiagnostic {
   case requiresOptionsEnumRawType
 }
 
-extension SetOfOptionsMacroDiagnostic: @preconcurrency DiagnosticMessage {
+extension SetOfOptionsMacroDiagnostic: DiagnosticMessage {
   func diagnose(at node: some SyntaxProtocol) -> Diagnostic {
     Diagnostic(node: Syntax(node), message: self)
   }

@@ -60,7 +60,7 @@ extension SetOfOptionsMacro: ExtensionMacro {
 
     /// Create extension with only the missing conformances
     let conformanceList = conformances.joined(separator: ", ")
-    return [try ExtensionDeclSyntax("extension \(type): \(raw: conformanceList) {}")]
+    return [try ExtensionDeclSyntax("nonisolated extension \(type): \(raw: conformanceList) {}")]
   }
 }
 
