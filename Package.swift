@@ -217,7 +217,7 @@ extension String {
   static func macroDecl(_ macroName: String) -> String {
     return .macrosSource + "/MacroDeclarations/" + macroName
   }
-  static var macrosSource: String { "Sources/BaseMacros" }
+  static var macrosSource: String { "Sources/BaseMacrosLibrary" }
 }
 
 for target in package.targets {
