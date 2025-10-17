@@ -7,13 +7,13 @@
 
 import Foundation
 
-@MainActor
+//@MainActor
 public protocol ModelBase: Sendable, Codable, Equatable, Hashable {}
 
-@MainActor
-public protocol ModelBaseWithID: Sendable, Codable, Equatable, Hashable, Identifiable where ID: Hashable {
-  var id: ID { get }
-}
+//@MainActor
+//public protocol ModelBaseWithID: Sendable, Codable, Equatable, Hashable, Identifiable where ID: Hashable {
+//  var id: ID { get }
+//}
 
 public protocol Editable: Sendable, Codable, Equatable, Hashable {
   var dateAdded: Date { get }

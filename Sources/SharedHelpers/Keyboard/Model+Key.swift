@@ -13,7 +13,7 @@ public extension KBShortcut {
 
   /// These are the **non-Modifier** keys
   
-  enum Key: ShortcutKey, CaseIterable {
+  enum Key: @MainActor ShortcutKey, CaseIterable {
     static public let allCases: [KBShortcut.Key] = [
       .character("a"),
       .clear,

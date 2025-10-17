@@ -61,7 +61,8 @@ extension KBShortcut {
     case modifier
   }
 
-  protocol ShortcutKey: Equatable, Sendable, Identifiable {
+  public protocol ShortcutKey: Identifiable, Equatable {
+    //  protocol ShortcutKey: Equatable, Sendable, Identifiable {
 
     var id: String { get }
 

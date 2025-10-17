@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-public enum MoveDirection: String, Sendable, Equatable, Hashable, LabeledItem {
+public enum MoveDirection: String, LabeledItem {
   case next
   case previous
 
   public var label: QuickLabel { QuickLabel(rawValue.capitalized, symbol: icon) }
+  public var blurb: String? { nil }
 
-  var icon: String {
+  public var id: String { rawValue }
+  public var icon: String {
     switch self {
       case .next: Icons.next.icon
       case .previous: Icons.previous.icon

@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 extension DummyContent {
-  
-  public struct Animal: Identifiable, Sendable, LabeledItem {
+
+  public struct Animal: Identifiable, Sendable, @MainActor LabeledItem {
     public let id: UUID
     public let label: QuickLabel
     let state: Bool
@@ -112,32 +111,6 @@ extension DummyContent.Animal {
   }
 
 }
-
-//extension DummyContent.Animal {
-//  static func mapWithIcons(
-//    _ icons: [IconLiteral],
-//    transform: (IconLiteral) -> IconLiteral,
-//    fallback: IconLiteral
-//  ) -> [Self] {
-//    return Self.data.enumerated().map { index, animal in
-//      let iconIndex = index < icons.count ? index : index % max(icons.count, 1)
-//      let newIcon = icons.isEmpty ? fallback : transform(icons[iconIndex])
-//
-//      let newLabel = QuickLabel(animal.label.text, icon: newIcon)
-//
-//      return Self(
-//        id: animal.id,
-//        label: newLabel,
-//        state: animal.state,
-//        category: animal.category
-//      )
-//    }
-//  }
-//
-//  // Usage examples:
-//  // static let customEmojiData = mapWithIcons(iconEmoji, transform: { $0 }, fallback: .emoji("🐾"))
-//  // static let customSymbolData = mapWithIcons(iconSymbol, transform: { $0 }, fallback: .symbol(Icons.pawprint.icon))
-//}
 
 extension DummyContent.Animal {
   public enum Category: String, Sendable, Codable, Equatable, Hashable {

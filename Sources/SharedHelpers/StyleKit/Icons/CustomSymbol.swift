@@ -7,8 +7,8 @@
 
 import Foundation
 
-#warning("This is not working i think at the moment, whilst I figure out dependancy graph woes")
-public enum CustomSymbol: String, Sendable, Codable, IconGalleryViewable {
+//#warning("This is not working i think at the moment, whilst I figure out dependancy graph woes")
+public enum CustomSymbol: String, Sendable, Codable, @MainActor IconGalleryViewable {
   case artboard
   case zoom  // search, magnifying glass
   case terminal  // code

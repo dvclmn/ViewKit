@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol CaseCyclable: CaseIterable, LabeledItem
+public protocol CaseCyclable: CaseIterable, LabeledItem, Equatable
 where
 AllCases: RandomAccessCollection,
 AllCases.Index == Int
