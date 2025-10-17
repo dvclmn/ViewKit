@@ -101,7 +101,8 @@ extension MetaEnumMacro: MemberMacro {
 enum CaseMacroDiagnostic {
   case notAnEnum(DeclGroupSyntax)
 }
-extension CaseMacroDiagnostic: DiagnosticMessage {
+
+extension CaseMacroDiagnostic: @preconcurrency DiagnosticMessage {
   var message: String {
     switch self {
       case .notAnEnum(let decl):
