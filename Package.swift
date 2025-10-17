@@ -15,7 +15,7 @@ let package = Package(
       targets: [
         "EnumMacros",
         "Persistable",
-        "SampleDataMacro",
+//        "SampleDataMacro",
       ]
     ),
     .executable(
@@ -181,20 +181,20 @@ let package = Package(
       dependencies: ["BaseMacros"],
       path: .macroDecl("EnumMacros")
     ),
-    .target(
-      name: "SampleDataMacro",
-      dependencies: [
-        "BaseMacros",
-        .dep(.sharedHelpers),
-      ],
-      path: .macroDecl("SampleDataMacro")
-    ),
+//    .target(
+//      name: "SampleDataMacro",
+//      dependencies: [
+//        "BaseMacros",
+//        .dep(.sharedHelpers),
+//      ],
+//      path: .macroDecl("SampleDataMacro")
+//    ),
     .executableTarget(
       name: "BaseMacrosClient",
       dependencies: [
         "EnumMacros",
         "Persistable",
-        "SampleDataMacro",
+//        "SampleDataMacro",
       ],
       path: .macrosSource + "/BaseMacrosClient",
     ),

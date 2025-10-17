@@ -32,7 +32,7 @@ public struct DebugTextStyleModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .fixedSize(horizontal: true, vertical: false)
-      .font(.callout)
+      .font(.caption)
       //      .foregroundStyle(.primary.opacity(0.8))
       .monospaced()
       //      .monospacedDigit()

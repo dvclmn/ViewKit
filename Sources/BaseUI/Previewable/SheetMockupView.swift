@@ -22,6 +22,7 @@ struct SheetMockup<Sheet: View>: ViewModifier {
         Color.black.opacity(0.4)
           .ignoresSafeArea()
         sheet()
+          .quickBackground(padding: Styles.sizeMedium)
           .clipShape(.rect(cornerRadius: Styles.sizeMedium))
           //          .background {
           //            RimLightShape(fillStyle: AnyShapeStyle(.regularMaterial)) {

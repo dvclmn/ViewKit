@@ -22,7 +22,7 @@ public struct AppContainer<Content: View>: View {
   public var body: some View {
     content
       .environment(\.popup, popup)
-      .popupView(debugPopup: nil)
+      .popupView(debugPopup: .none)
       #if canImport(AppKit)
     .readModifierKeys()
       #endif

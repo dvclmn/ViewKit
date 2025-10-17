@@ -10,27 +10,23 @@ import SwiftUI
 
 public struct PopupViewModifier: ViewModifier {
   @Environment(\.popup) private var popup
-  let debugPopup: PopupMessage?
+
+  let debugPopup: PopupDebug
   let alignment: Alignment
   public func body(content: Content) -> some View {
     content
       .overlay(alignment: alignment) {
-        //        if let debugPopup = debugPopup {
-        PopupView(debugPopup ?? popup?.popupMessage)
+
+        PopupView(debugPopup.message ?? popup?.popupMessage)
           .padding(Styles.sizeRegular)
-
-        //        } else if let activeMessage = popup.popupMessage {
-        //          PopupView(activeMessage)
-        //            .padding(Styles.sizeRegular)
-        //        }
       }
-
   }
 }
+
 extension View {
   public func popupView(
     debugPopup: PopupDebug,
-//    debugPopup: PopupMessage? = nil,
+    //    debugPopup: PopupMessage? = nil,
     alignment: Alignment = .top
   ) -> some View {
     self.modifier(
@@ -39,10 +35,4 @@ extension View {
         alignment: alignment
       ))
   }
-}
-
-public enum PopupDebug {
-  case example
-  case custom(PopupMessage)
-  case none
 }

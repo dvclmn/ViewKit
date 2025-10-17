@@ -65,6 +65,23 @@ extension Binding where Value == CGRect {
   }
 }
 
+// MARK: - OptionSet
+extension Binding where Value: OptionSet & Sendable, Value.Element == Value {
+  /// Returns a Boolean binding that toggles the presence of a single option in the set.
+  func contains(_ element: Value) -> Binding<Bool> {
+    Binding<Bool>(
+      get: { wrappedValue.contains(element) },
+      set: { isIncluded in
+        if isIncluded {
+          wrappedValue.insert(element)
+        } else {
+          wrappedValue.remove(element)
+        }
+      }
+    )
+  }
+}
+
 // MARK: - Binding CGPoint
 //extension Binding where Value == CGPoint {
 //  public var toBinding: CGPoint {

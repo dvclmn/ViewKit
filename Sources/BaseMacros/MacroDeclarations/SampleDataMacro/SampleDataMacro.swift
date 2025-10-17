@@ -15,13 +15,13 @@ import SharedHelpers
 // Copyright (c) 2023 Pedro Rojas and project authors
 // Licensed under MIT License
 
-@attached(member, names: named(sample))
-public macro SampleBuilder(
-  numberOfItems: Int,
-  dataGeneratorType: DataGeneratorType
-) = #externalMacro(module: "BaseMacros", type: "SampleBuilderMacro")
-
-@attached(peer)
-public macro SampleBuilderItem(
-  category: SampleBuilderItemCategory
-) = #externalMacro(module: "BaseMacros", type: "SampleBuilderItemMacro")
+//@attached(member, names: named(sample))
+//public macro SampleBuilder(
+//  numberOfItems: Int,
+//  dataGeneratorType: DataGeneratorType
+//) = #externalMacro(module: "BaseMacros", type: "SampleBuilderMacro")
+//
+//@attached(peer)
+//public macro SampleBuilderItem(
+//  category: SampleBuilderItemCategory
+//) = #externalMacro(module: "BaseMacros", type: "SampleBuilderItemMacro")

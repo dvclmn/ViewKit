@@ -42,6 +42,13 @@ extension GridSize {
   }
 }
 
+
+extension GridSize: CustomStringConvertible {
+  public var description: String {
+    return "W: \(screenWidth) (\(width))\nH: \(screenHeight) (\(height))"
+  }
+}
+
 //extension CGSize {
 //  public func gridSizeCounts() -> GridSizeCounts {
 //    let gridSize = self.
