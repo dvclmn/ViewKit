@@ -40,6 +40,7 @@
 ///     }
 ///   }
 ///
+///   // EXPANSION BELOW
 ///   public init(rawValue: Int) {
 ///     self.rawValue = rawValue
 ///   }

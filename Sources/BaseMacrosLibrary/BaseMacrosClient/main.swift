@@ -1,5 +1,5 @@
-import Foundation
 import EnumMacros
+import Foundation
 import Persistable
 
 // MARK: - Persistable
@@ -7,7 +7,7 @@ import Persistable
 struct ExampleConfiguration: Sendable {
 
   var rounding: Double = 8
-//  @Attribute(originalName: "test") var rounding: Double = 8
+  //  @Attribute(originalName: "test") var rounding: Double = 8
   var showCount: Bool = false
 }
 
@@ -55,6 +55,8 @@ struct CoolAnimals {
     case ape
   }
 }
+
+//let thing: CoolAnimals = .all
 
 // MARK: - SampleData
 

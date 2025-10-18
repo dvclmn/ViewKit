@@ -16,8 +16,8 @@ extension GraphicsContext {
   ) {
     let zoomed = config.cellSize * canvasZoom
     let (columns, rows) = (
-      config.gridSize?.columns.count ?? 1,
-      config.gridSize?.rows.count ?? 1,
+      config.gridSize?.columns.gridLength ?? 1,
+      config.gridSize?.rows.gridLength ?? 1,
     )
     let path = Path.createGrid(
       columns: columns,

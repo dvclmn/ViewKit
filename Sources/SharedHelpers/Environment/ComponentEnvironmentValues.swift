@@ -107,5 +107,8 @@ extension EnvironmentValues {
   /// Read more: ``GridSize``
   @Entry public var unitSize: CGSize? = nil
   
+  /// Meant as a debug helper, for when I'm not sure who is
+  /// consuming this View, or what it's context is.
+  @Entry public var viewDescription: String? = nil
   
 }

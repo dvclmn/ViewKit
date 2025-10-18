@@ -17,7 +17,9 @@ import SwiftUI
 ///
 /// Settled on the names now, which is Grid length, and Screen length
 public struct GridLength: Hashable, Codable {
-  public var count: Int
+  
+  /// Prefer use of ``gridLength``, to better pair with ``screenLength``
+  private var count: Int
   public var unit: CGFloat
 
   public init(count: Int, unit: CGFloat) {
@@ -40,12 +42,13 @@ public struct GridLength: Hashable, Codable {
 
 extension GridLength {
 
+  public var gridLength: Int { count }
   public var screenLength: CGFloat { screenLength() }
 
   public func screenLength(fallback: CGFloat = 0) -> CGFloat {
     count.toScreenLength(using: unit) ?? fallback
   }
-  
+
   public func clamped(min: Int, max: Int) -> Self {
     let newCount = self.count.clamped(min, max)
     return GridLength(count: newCount, unit: self.unit)
@@ -58,6 +61,5 @@ extension GridLength: Comparable {
     rhs: GridLength
   ) -> Bool {
     lhs.count < rhs.count
-//    lhs.screenLength() < rhs.screenLength()
   }
 }

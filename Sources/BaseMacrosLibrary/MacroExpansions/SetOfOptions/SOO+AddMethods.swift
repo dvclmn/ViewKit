@@ -70,6 +70,13 @@ extension SetOfOptionsMacro: MemberMacro {
     rawType: TypeSyntax
       //    access: TokenSyntax?
   ) -> [DeclSyntax] {
+    
+    let primary: [DeclSyntax] = [
+      //      "\(access)typealias RawValue = \(rawType)",
+      "\(access)let rawValue: \(rawType)",
+      //      "\(access)init() { self.rawValue = 0 }",
+      "\(access)init(rawValue: \(rawType)) { self.rawValue = rawValue }",
+    ]
 
     let staticVars = caseElements.map { (element) -> DeclSyntax in
       """
@@ -137,11 +144,6 @@ extension SetOfOptionsMacro: MemberMacro {
       """,
     ]
 
-    return [
-      "\(access)typealias RawValue = \(rawType)",
-      "\(access)var rawValue: RawValue",
-      "\(access)init() { self.rawValue = 0 }",
-      "\(access)init(rawValue: RawValue) { self.rawValue = rawValue }",
-    ] + staticVars + extraDecls
+    return primary + staticVars + extraDecls
   }
 }

@@ -6,10 +6,12 @@
 //
 
 import LayoutKit
+import StringShared
 import SwiftUI
 
 public struct Repeater<Content: View>: View {
-
+  @Environment(\.isDebugMode) private var isDebugMode
+  
   let count: Int
   let axis: Axis?
   let spacing: CGFloat?
@@ -30,8 +32,16 @@ public struct Repeater<Content: View>: View {
   public var body: some View {
 
     DynamicStack(axis: axis, spacing: spacing) {
-      ForEach(0..<self.count, id: \.self) { _ in
+      ForEach(0..<self.count, id: \.self) { count in
         content
+          .overlay {
+            if isDebugMode {
+              Text("Count: \(count)")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: true, vertical: false)
+            }
+          }
       }
     }
 //    .frame(minWidth: 100, minHeight: 100)
