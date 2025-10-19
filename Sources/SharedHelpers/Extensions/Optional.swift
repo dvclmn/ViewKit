@@ -105,6 +105,11 @@ extension Optional where Wrapped == CGSize {
       _boundSize = (newValue == .zero) ? nil : newValue
     }
   }
+  
+  public func length(for axis: Axis) -> CGFloat? {
+    guard let self else { return nil }
+    return axis.length(fromSize: self)
+  }
 }
 
 //func ??<Bool>(lhs: Binding<Optional<Bool>>, rhs: Bool) -> Binding<Bool> {

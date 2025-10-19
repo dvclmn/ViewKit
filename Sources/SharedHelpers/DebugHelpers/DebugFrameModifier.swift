@@ -23,6 +23,7 @@ public struct DebugFrameModifier: ViewModifier {
         if isEnabled, !label.isEmpty {
           Text(label)
             .font(.callout)
+            .fixedSize(horizontal: true, vertical: false)
             .foregroundStyle(colour.opacity(0.8))
             .background(Color.black.opacity(0.8))
             .opacity(labelOpacity)

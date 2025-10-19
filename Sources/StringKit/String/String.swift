@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension String {
-  
+
   /// Pads the string with spaces on the right to at least the given width.
   public func padded(
     to width: Int,
@@ -36,43 +36,43 @@ extension String {
     return matches
   }
 
-//  public func getRange(
-//    for attrString: AttributedString,
-//    matching pattern: Regex<Substring>
-//  ) -> AttributedRange? {
-//    let matches = findMatches(for: pattern)
-//    return attrString.getRange(for: matches)
-//  }
+  //  public func getRange(
+  //    for attrString: AttributedString,
+  //    matching pattern: Regex<Substring>
+  //  ) -> AttributedRange? {
+  //    let matches = findMatches(for: pattern)
+  //    return attrString.getRange(for: matches)
+  //  }
 
-//  public func getAttributedRanges
-//  public func getAllRanges(
-//    for attrString: AttributedString,
-//    matching pattern: Regex<Substring>
-//  ) -> [AttributedRange] {
-//    let matches = findMatches(for: pattern)
-//    return attrString.getAllRanges(for: matches)
-//  }
+  //  public func getAttributedRanges
+  //  public func getAllRanges(
+  //    for attrString: AttributedString,
+  //    matching pattern: Regex<Substring>
+  //  ) -> [AttributedRange] {
+  //    let matches = findMatches(for: pattern)
+  //    return attrString.getAllRanges(for: matches)
+  //  }
 
-//  @discardableResult
-//  public func findRangesAndApplyAttributes(
-//    to attrString: inout AttributedString,
-//    matching pattern: Regex<Substring>,
-//    attributes: AttributeContainer
-//  ) -> [AttributedRange] {
-//    let matches = findMatches(for: pattern)
-//    return attrString.findRangesAndApplyAttributes(for: matches, attributes: attributes)
-//  }
-//
-//  public func getAttributed(
-//    text: AttributedString,
-//    //    to attrString: inout AttributedString,
-//    matching pattern: Regex<Substring>,
-//    attributes: AttributeContainer
-//  ) -> AttributedString {
-//    let matches = findMatches(for: pattern)
-//    return text.styled(matches: matches, attributes: attributes)
-//    //    return attrString.findRangesAndApplyAttributes(for: matches, attributes: attributes)
-//  }
+  //  @discardableResult
+  //  public func findRangesAndApplyAttributes(
+  //    to attrString: inout AttributedString,
+  //    matching pattern: Regex<Substring>,
+  //    attributes: AttributeContainer
+  //  ) -> [AttributedRange] {
+  //    let matches = findMatches(for: pattern)
+  //    return attrString.findRangesAndApplyAttributes(for: matches, attributes: attributes)
+  //  }
+  //
+  //  public func getAttributed(
+  //    text: AttributedString,
+  //    //    to attrString: inout AttributedString,
+  //    matching pattern: Regex<Substring>,
+  //    attributes: AttributeContainer
+  //  ) -> AttributedString {
+  //    let matches = findMatches(for: pattern)
+  //    return text.styled(matches: matches, attributes: attributes)
+  //    //    return attrString.findRangesAndApplyAttributes(for: matches, attributes: attributes)
+  //  }
 
   public func withQuotes(_ type: QuotesType = .double) -> String {
     return "\(type.rawValue)\(self)\(type.rawValue)"
@@ -132,79 +132,70 @@ extension String {
     guard let rangeTo = self[rangeFrom...].range(of: to)?.lowerBound else { return nil }
     return String(self[rangeFrom..<rangeTo])
   }
+}
 
-  /// Truncates a string to show a maximum number of content characters with ellipsis in the middle.
+public enum TruncationStyle {
+  case start  // "...end"
+  case middle  // "begin...end"
+  case end  // "begin..."
+}
+
+extension String {
+  /// Truncates a string to a maximum length using the specified truncation style.
   /// The ellipsis ("...") does not count toward the maxLength.
   ///
   /// Examples:
-  /// - "Hello World".truncateMiddle(maxLength: 8) → "Hell...orld" (4 + 4 chars)
-  /// - "Short".truncateMiddle(maxLength: 10) → "Short" (unchanged)
-  /// - "UUID-1234-5678-9ABC-DEF0".truncateMiddle(maxLength: 8) → "UUID...DEF0" (4 + 4 chars)
-  /// - "".truncateMiddle() → "(Empty)"
+  /// - "Hello World".truncate(to: 8, style: .middle) → "Hell...orld"
+  /// - "Hello World".truncate(to: 8, style: .end) → "Hello..."
+  /// - "Hello World".truncate(to: 8, style: .start) → "...World"
+  /// - "Short".truncate(to: 10) → "Short" (unchanged)
+  /// - "".truncate(to: 10) → "(Empty)"
   ///
   /// - Parameters:
   ///   - maxLength: Maximum number of content characters to show (ellipsis not counted, minimum 2)
-  ///   - showEnd: Whether to show characters from the end. If false, only shows beginning + ellipsis
-  ///   - wrapWithDividers: Whether to wrap the result in decorative dividers for display
+  ///   - style: The truncation style (.start, .middle, or .end)
   ///   - emptyPlaceholder: Text to show when the string is empty
   /// - Returns: Truncated string with ellipsis, or original string if shorter than maxLength
-  public func truncateMiddle(
-    maxLength: Int = 20,
-    showEnd: Bool = true,
-    wrapWithDividers: Bool = false,
+  public func truncate(
+    to maxLength: Int = 20,
+    style: TruncationStyle = .middle,
     emptyPlaceholder: String = "(Empty)"
   ) -> String {
 
     // Handle empty string
-    if self.isEmpty {
-      let result = emptyPlaceholder
-      return wrapWithDividers ? wrapInDividers(result) : result
-    }
+    guard !self.isEmpty else { return emptyPlaceholder }
 
     // Ensure minimum length for meaningful truncation
-    let minLength = 2  // Minimum to show at least 1 char on each side (or 2 chars + "..." if showEnd is false)
+    let minLength = 2
     let effectiveMaxLength = max(minLength, maxLength)
 
     // If string is short enough, return as-is
-    if self.count <= effectiveMaxLength {
-      return wrapWithDividers ? wrapInDividers(self) : self
-    }
+    guard self.count > effectiveMaxLength else { return self }
 
     let ellipsis = "..."
 
-    let result: String
+    switch style {
+      case .start:
+        let suffix = String(self.suffix(effectiveMaxLength))
+        return "\(ellipsis)\(suffix)"
 
-    if showEnd {
-      // Show beginning and end: "begin...end"
-      // Split the maxLength evenly between prefix and suffix
-      let prefixLength = effectiveMaxLength / 2
-      let suffixLength = effectiveMaxLength - prefixLength  // This handles odd numbers by giving extra to suffix
+      case .middle:
+        let prefixLength = effectiveMaxLength / 2
+        let suffixLength = effectiveMaxLength - prefixLength
+        let prefix = String(self.prefix(prefixLength))
+        let suffix = String(self.suffix(suffixLength))
+        return "\(prefix)\(ellipsis)\(suffix)"
 
-      let prefix = String(self.prefix(prefixLength))
-      let suffix = String(self.suffix(suffixLength))
-
-      result = "\(prefix)\(ellipsis)\(suffix)"
-    } else {
-      // Show only beginning: "begin..."
-      let prefix = String(self.prefix(effectiveMaxLength))
-
-      result = "\(prefix)\(ellipsis)"
+      case .end:
+        let prefix = String(self.prefix(effectiveMaxLength))
+        return "\(prefix)\(ellipsis)"
     }
-
-    return wrapWithDividers ? wrapInDividers(result) : result
   }
 
   /// Wraps text in decorative dividers for display purposes
-  private func wrapInDividers(_ text: String) -> String {
-    return "\n---\n\(text)\n---\n"
+  public func wrappedInDividers() -> String {
+    return "\n---\n\(self)\n---\n"
   }
-
-  //  public func newLinesIndented() -> String {
-  //    let lines: [String.SubSequence] = self.split(separator: "\n", omittingEmptySubsequences: true)
-  //
-  //    let output: String = "\n  | " + lines.joined(separator: "\n  | ")
-  //    return output
-  //  }
 }
 
 extension Array where Element == String {
@@ -220,5 +211,14 @@ extension String {
   //extension Optional where Wrapped == String {
   public var toDescribing: String {
     return String(describing: self)
+  }
+}
+
+extension UUID {
+  public func truncated(
+    to maxLength: Int = 8,
+    style: TruncationStyle = .middle,
+  ) -> String {
+    self.uuidString.truncate(to: maxLength, style: style)
   }
 }

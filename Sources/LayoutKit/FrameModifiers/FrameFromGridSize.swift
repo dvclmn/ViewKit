@@ -8,32 +8,6 @@
 import StringShared
 import SwiftUI
 
-//public struct FrameFromGridSize: ViewModifier {
-//  //  @Environment(AppHandler.self) private var store
-//  //  @Environment(\.characterSize) private var characterSize
-//
-//  let axis: Axis
-//  let size: GridSize
-//
-//  public func body(content: Content) -> some View {
-//    content
-//      .overlay {
-//        Text("Need to implement")
-//      }
-//    //      .frame(
-//    //        width: width,
-//    //        height: ,
-//    //        alignment: .leading
-//    //      )
-//    //      .overlay {
-//    //        if characterSize == nil {
-//    //          Circle().fill(.red.tertiary)
-//    //        }
-//    //      }
-//
-//  }
-//}
-
 public struct FrameFromGridLength: ViewModifier {
   @Environment(\.unitSize) private var unitSize
 
@@ -48,7 +22,6 @@ public struct FrameFromGridLength: ViewModifier {
         height: dimensions.height,
         alignment: alignment
       )
-
   }
 }
 
@@ -69,11 +42,6 @@ extension FrameFromGridLength {
 
 }
 extension View {
-  //  public func frameFromGridSize(
-  //    for text: String
-  //  ) -> some View {
-  //    self.modifier(FrameFromCharacterSize(widthCount: text.count))
-  //  }
 
   public func frameFromGridLength(
     axis: Axis = .horizontal,

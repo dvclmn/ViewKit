@@ -71,14 +71,6 @@ extension BinaryFloatingPoint {
 // MARK: - Int extension
 extension Int {
 
-  //  public func toScreenLength(
-  //    along axis: Axis,
-  //    using unitSize: CGSize,
-  //  ) -> CGFloat? {
-  //    let unitLength = axis.length(fromSize: unitSize)
-  //    return toScreenLength(using: unitLength)
-  //  }
-
   public func toScreenLength(
     using unitLength: CGFloat,
   ) -> CGFloat? {
@@ -88,6 +80,7 @@ extension Int {
 //    print("Resulting screen length: \(result)")
     return result
   }
+  
   private func isValidState(with unitLength: CGFloat) -> Bool {
 //    print("Checking if Int of value `\(self)` is valid for conversion with unit length \(unitLength)")
     let result = self >= 0 && unitLength > 0 && unitLength.isFinite

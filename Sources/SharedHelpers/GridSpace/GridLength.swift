@@ -28,10 +28,11 @@ public struct GridLength: Hashable, Codable {
   }
 
   public init?(
-    screenLength: CGFloat,
-    unit: CGFloat,
+    screenLength: CGFloat?,
+    unit: CGFloat?,
     rounding: GridRounding = .down
   ) {
+    guard let screenLength, let unit else { return nil }
     guard let count = screenLength.toGridCount(using: unit, rounding: rounding) else {
       return nil
     }

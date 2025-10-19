@@ -40,11 +40,12 @@ extension GridSize {
   }
 
   public init?(
-    fromSize size: CGSize,
-    unitSize: CGSize,
+    fromSize size: CGSize?,
+    unitSize: CGSize?,
     rounding: GridRounding = .down
   ) {
 
+    guard let size, let unitSize else { return nil }
     let width = size.toGridCount(
       along: .horizontal,
       using: unitSize,
