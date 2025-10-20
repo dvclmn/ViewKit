@@ -31,15 +31,15 @@ extension SetOfOptionsMacro: ExtensionMacro {
 
     /// Check for existing conformances
     var hasOptionSet = false
-    var hasSendable = false
+//    var hasSendable = false
 
     if let inheritedTypes = structDecl.inheritanceClause?.inheritedTypes {
       for inherited in inheritedTypes {
         let typeName = inherited.type.trimmedDescription
         if typeName == "OptionSet" {
           hasOptionSet = true
-        } else if typeName == "Sendable" {
-          hasSendable = true
+//        } else if typeName == "Sendable" {
+//          hasSendable = true
         }
       }
     }
@@ -49,9 +49,9 @@ extension SetOfOptionsMacro: ExtensionMacro {
     if !hasOptionSet {
       conformances.append("OptionSet")
     }
-    if !hasSendable {
-      conformances.append("Sendable")
-    }
+//    if !hasSendable {
+//      conformances.append("Sendable")
+//    }
 
     /// If all conformances are already present, don't add an extension
     guard !conformances.isEmpty else {

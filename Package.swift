@@ -14,8 +14,7 @@ let package = Package(
       name: "BaseMacrosLibrary",
       targets: [
         "EnumMacros",
-        "Persistable",
-        //        "SampleDataMacro",
+//        "Persistable",
       ]
     ),
     .executable(
@@ -172,34 +171,27 @@ let package = Package(
         .dep(.sharedHelpers),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+//        .product(name: "SwiftSyntax", package: "swift-syntax"),
+        .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
-      path: .macrosSource + "/MacroExpansions",
+      path: .macrosSource + "/MacroImplementations",
     ),
-    .target(
-      name: "Persistable",
-      dependencies: ["BaseMacros"],
-      path: .macroDecl("Persistable"),
-    ),
+//    .target(
+//      name: "Persistable",
+//      dependencies: ["BaseMacrosImplementation"],
+//      path: .macrosSource + "/MacroDeclarations",
+//    ),
     .target(
       name: "EnumMacros",
-      dependencies: ["BaseMacros"],
-      path: .macroDecl("EnumMacros"),
+      dependencies: ["BaseMacrosImplementation"],
+      path: .macrosSource + "/MacroDeclarations",
     ),
-    //    .target(
-    //      name: "SampleDataMacro",
-    //      dependencies: [
-    //        "BaseMacros",
-    //        .dep(.sharedHelpers),
-    //      ],
-    //      path: .macroDecl("SampleDataMacro")
-    //    ),
     .executableTarget(
       name: "BaseMacrosClient",
       dependencies: [
         "EnumMacros",
-        "Persistable",
-        //        "SampleDataMacro",
+//        "Persistable",
       ],
       path: .macrosSource + "/BaseMacrosClient",
     ),
@@ -219,9 +211,6 @@ extension Target.Dependency {
   }
 }
 extension String {
-  static func macroDecl(_ macroName: String) -> String {
-    return .macrosSource + "/MacroDeclarations/" + macroName
-  }
   static var macrosSource: String { "Sources/BaseMacrosLibrary" }
 }
 
@@ -237,12 +226,11 @@ extension String {
 
 /// List of common modules for convenience
 enum BaseModule {
-  //  case baseHelpers
-  //  case macros
+
   case enumMacros
-  case persistable
+//  case persistable
   case networking
-  case baseUI  // Aka BaseComponents
+  case baseUI
   case canvasKit
   case colourKit
   case curveKit
@@ -259,10 +247,8 @@ enum BaseModule {
 
   var name: String {
     switch self {
-      //      case .baseHelpers: "BaseHelpers"
       case .enumMacros: "EnumMacros"
-      case .persistable: "Persistable"
-      //      case .macros: "BaseMacrosGuts"  // Guts?
+//      case .persistable: "Persistable"
       case .networking: "BaseNetworking"
       case .baseUI: "BaseUI"
       case .canvasKit: "CanvasKit"
@@ -276,7 +262,6 @@ enum BaseModule {
       case .stringKit: "StringKit"
       case .toolKit: "ToolKit"
       case .stringShared: "StringShared"
-    //      case .styleKit: "StyleKit"
     }
   }
 }

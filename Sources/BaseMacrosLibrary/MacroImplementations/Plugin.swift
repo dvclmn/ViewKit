@@ -11,7 +11,7 @@ import SwiftSyntaxMacros
 @main
 struct BaseMacrosPlugin: CompilerPlugin {
   let providingMacros: [Macro.Type] = [
-    PersistableMacro.self,
+//    PersistableMacro.self,
 //    SampleBuilderMacro.self,
 //    SampleBuilderItemMacro.self,
 //    AttributeMacro.self,
