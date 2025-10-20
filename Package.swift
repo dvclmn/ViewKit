@@ -167,7 +167,7 @@ let package = Package(
 
     // MARK: - BaseMacro targets
     .macro(
-      name: "BaseMacros",
+      name: "BaseMacrosImplementation",
       dependencies: [
         .dep(.sharedHelpers),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),

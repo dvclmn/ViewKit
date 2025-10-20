@@ -44,6 +44,7 @@ extension GridSize {
 
 extension GridSize: CustomStringConvertible {
   public var description: String {
+//    let scrWidth: String = screenWidth.formatted()
     return "W: \(screenWidth) (\(width))\nH: \(screenHeight) (\(height))"
   }
 }

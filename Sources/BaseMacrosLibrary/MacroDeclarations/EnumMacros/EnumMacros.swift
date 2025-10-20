@@ -60,6 +60,6 @@ public macro MetaEnum() = #externalMacro(
 @attached(member, names: arbitrary)
 @attached(extension, conformances: OptionSet, Sendable)
 public macro SetOfOptions<RawType>() = #externalMacro(
-  module: "BaseMacros",
+  module: "BaseMacrosImplementation",
   type: "SetOfOptionsMacro"
 )

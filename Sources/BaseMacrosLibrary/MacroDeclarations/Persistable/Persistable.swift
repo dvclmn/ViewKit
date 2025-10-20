@@ -18,7 +18,7 @@
 public macro Persistable() = #externalMacro(
   /// Important: `module` corresponds to `targets: [.macro(name: "ExampleNameMacros"...)]`
   /// **Note the plural**
-  module: "BaseMacros",
+  module: "BaseMacrosImplementation",
   
   /// `type` corresponds to the name of the Macros struct, e.g.
   /// `public struct ExampleNameMacro: MemberMacro {...}`

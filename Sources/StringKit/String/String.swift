@@ -26,6 +26,13 @@ extension String {
   public var toURL: URL? {
     return URL(string: self)
   }
+  
+  public func combining(
+    with other: String,
+    separator: String = ", "
+  ) -> String {
+    self + separator + other
+  }
 
   public var withQuotes: String {
     self.withQuotes(.double)
