@@ -129,8 +129,6 @@ extension CGSize {
   public var midpoint: CGPoint {
     return CGPoint(x: width / 2, y: height / 2)
   }
-  
-  
 
   public var halved: CGSize {
     return CGSize(width: width / 2, height: height / 2)
@@ -178,55 +176,35 @@ extension CGSize {
     return width.isNaN || height.isNaN
   }
 
-  /// Optional because of things
-  public func adjustAxisLength(
+  public func adjustLength(
     _ axis: Axis,
     newValue: CGFloat
   ) -> CGSize {
-    //    guard let newValue else {return nil}
     switch axis {
       case .horizontal:
         return CGSize(width: newValue, height: self.height)
 
       case .vertical:
         return CGSize(width: self.width, height: newValue)
-
     }
   }
 
-  public func adjustAxisLength(
+  /// I think this and the below (that transforms both axes)
+  /// just allow the caller to hop in and  'do some stuff' to
+  /// the values, before creating a new size from them.
+  public func adjustLength(
     _ axis: Axis,
     transform: (CGFloat) -> CGFloat
   ) -> CGSize {
-    //    guard let size = self else { return nil }
-
-    switch axis {
-      case .horizontal:
-
-        let transformed = transform(self.width)
-        return CGSize(width: transformed, height: self.height)
-
-      case .vertical:
-
-        let transformed = transform(self.height)
-        return CGSize(width: self.width, height: transformed)
-    }
+    let transformed = transform(axis.length(fromSize: self))
+    return self.adjustLength(axis, newValue: transformed)
   }
 
   public func adjustLengths(
     transform: (CGFloat, CGFloat) -> (width: CGFloat, height: CGFloat)
   ) -> CGSize {
-    //    guard let size = self else { return nil }
-
     let transformed = transform(self.width, self.height)
     return CGSize(width: transformed.width, height: transformed.height)
-    //    switch axis {
-    //      case .horizontal:
-    //      case .vertical:
-
-    //        let transformed = transform(self.height)
-    //        return CGSize(width: self.width, height: transformed)
-    //    }
   }
 
   public var widthOrHeightIsZero: Bool {

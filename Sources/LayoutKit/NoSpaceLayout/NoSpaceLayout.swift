@@ -13,7 +13,7 @@ public struct HPack<Content: View>: View {
   let content: Content
 
   public init(
-    alignment: VerticalAlignment = .center,
+    _ alignment: VerticalAlignment = .center,
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.alignment = alignment
@@ -33,7 +33,7 @@ public struct VPack<Content: View>: View {
   let content: Content
   
   public init(
-    alignment: HorizontalAlignment = .center,
+    _ alignment: HorizontalAlignment = .center,
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.alignment = alignment
