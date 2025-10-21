@@ -5,14 +5,12 @@
 //  Created by Dave Coleman on 3/3/2024.
 //
 
-
 import Foundation
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 public struct Tooltip: ViewModifier {
 
-  //  @State private var viewHeight: CGFloat = .zero
   @State private var isHovered = false
 
   let text: String
@@ -23,19 +21,17 @@ public struct Tooltip: ViewModifier {
   let colour: Color
 
   public func body(content: Content) -> some View {
-//    ZStack {
-      content
-        .debouncedHover(enterInterval: 0.7, exitInterval: 0.2) { hovering in
-          self.isHovered = hovering
-        }  // END hover
+    content
+      .debouncedHover(enterInterval: 0.7, exitInterval: 0.2) { hovering in
+        self.isHovered = hovering
+      }  // END hover
 
-        .overlay(alignment: toolTipAlignment) {
-//          ZStack {
-            TooTipView()
-            
-//          }
+      .overlay(alignment: toolTipAlignment) {
+
+        TooTipView()
+
           .alignmentGuide(toolTipAlignment.horizontal) { d in
-            
+
             /// Horizontal positioning
             switch toolTipAlignment.horizontal {
               case .leading:
@@ -58,10 +54,10 @@ public struct Tooltip: ViewModifier {
             }
           }
           .allowsHitTesting(false)
-//                    .zIndex(999999)
-//                    .layoutPriority(10)
-        }
-//    }
+        //                    .zIndex(999999)
+        //                    .layoutPriority(10)
+      }
+    //    }
   }
 }
 
@@ -80,26 +76,26 @@ extension Tooltip {
     let excludedAlignments: [Alignment] = [.leading, .trailing]
     let hasInset: Bool = !excludedAlignments.contains(toolTipAlignment)
     let insetH: CGFloat = hasInset ? -14 : 12
-    
+
     let defaultOffset = CGSize(insetH, 10)
     let totalOffset: CGSize = defaultOffset
-    
+
     let unitPoint = toolTipAlignment.toUnitPoint()
-//    let unitPoint = toolTipAlignment.toolTipUnitPoint
+    //    let unitPoint = toolTipAlignment.toolTipUnitPoint
     let finalOffset = unitPoint.offset(by: totalOffset)
     return finalOffset[axis]
-    
-//    let unitPoint = toolTipAlignment.toUnitPoint()
-//    guard unitPoint != .center else { return .zero }
-////        let unitPoint = toolTipAlignment.toolTipUnitPoint
-//
-//    let finalOffset = unitPoint.offset(by: totalOffset)
-//    //      return .zero
-//    //    }
-//    
-//    
-//    
-//    return finalOffset[axis]
+
+    //    let unitPoint = toolTipAlignment.toUnitPoint()
+    //    guard unitPoint != .center else { return .zero }
+    ////        let unitPoint = toolTipAlignment.toolTipUnitPoint
+    //
+    //    let finalOffset = unitPoint.offset(by: totalOffset)
+    //    //      return .zero
+    //    //    }
+    //
+    //
+    //
+    //    return finalOffset[axis]
     //    baseOffsetLength
   }
 

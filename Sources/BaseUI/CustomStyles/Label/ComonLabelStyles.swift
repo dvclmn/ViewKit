@@ -16,7 +16,7 @@ public struct CommonLabelStyleModifier: ViewModifier {
   @Environment(\.iconFontSize) private var iconFontSize
   @Environment(\.labelDisplay) private var labelDisplay
   @Environment(\.symbolRenderingMode) private var symbolRenderingMode
-//  @Environment(\.symbolVariant) private var symbolVariant
+  //  @Environment(\.symbolVariant) private var symbolVariant
 
   let labelPart: LabelPart
   let explicitLabelDisplay: LabelDisplay?
@@ -33,7 +33,7 @@ public struct CommonLabelStyleModifier: ViewModifier {
     }  // END group
     .foregroundStyle(labelPart.isIcon ? finalIconStyle : AnyShapeStyle(.primary))
     .fontWeight(elementWeight)
-    
+
     /// Note: Choosing not to set `.symbolVariant()` here. Prefer setting this high
     /// up in the View hierarchy, and overriding with `.environment(_:_:)`.
     /// This saves needing a shadow `symbolVariant` Env value

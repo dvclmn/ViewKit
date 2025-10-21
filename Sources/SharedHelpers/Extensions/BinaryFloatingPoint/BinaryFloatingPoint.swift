@@ -5,12 +5,14 @@
 //  Created by Dave Coleman on 27/2/2025.
 //
 
-import Foundation
+import SwiftUI
 
 public var twoPi: CGFloat { .pi * 2 }
 
 /// Looking for `clamp` methods? See `Extrensions/Comparable`
 extension BinaryFloatingPoint {
+  
+  public var toAngle: Angle { .degrees(Double(self)) }
 
   public func incrementing(by amount: Self, in range: ClosedRange<Self>? = nil) -> Self {
     var result = self + amount

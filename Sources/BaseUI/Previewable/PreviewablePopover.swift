@@ -5,19 +5,18 @@
 //  Created by Dave Coleman on 6/9/2025.
 //
 
-
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 public struct PreviewablePopoverModifier<PopoverContent: View>: ViewModifier {
   @Environment(\.layoutAlignment) private var layoutAlignment
   @Environment(\.explicitSize) private var explicitSize
-  
+
   @Binding var isPresented: Bool
   let attachmentAnchor: PopoverAttachmentAnchor
   let arrowEdge: Edge?
   let isPreviewing: Bool
-  
+
   @ViewBuilder let popoverContent: PopoverContent
 
   public func body(content: Content) -> some View {
