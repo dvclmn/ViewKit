@@ -5,45 +5,8 @@
 //  Created by Dave Coleman on 1/9/2025.
 //
 
-import SwiftUI
 import SharedHelpers
-
-public struct ColourPreset: Sendable, Codable, Equatable, Hashable {
-  public let base: SystemColour
-  public let mix: SystemColour?
-  public let mixAmount: Double
-  public let opacity: Double
-  
-  public init(
-    base: SystemColour,
-    mix: SystemColour? = nil,
-    mixAmount: Double = 0.5,
-    opacity: Double = 1.0
-  ) {
-    self.base = base
-    self.mix = mix
-    self.mixAmount = mixAmount
-    self.opacity = opacity
-  }
-//  public init(
-//    _ colour: SystemColour,
-//    opacity: Double = 1
-//  ) {
-//    self.systemColour = colour
-//    self.opacity = opacity
-//  }
-  
-  public func colour: Color {
-    return base.withMix(mix, mixAmount)
-//    return self.systemColour.swiftUIColour.opacity(opacity)
-  }
-}
-extension ColourPreset {
-//  public subscript(dynamicMember keyPath: KeyPath<ColourPreset, SystemColour>) -> SystemColour {
-//    return self[keyPath: keyPath]
-//  }
-}
-
+import SwiftUI
 
 
 //@CasePathable
@@ -98,10 +61,10 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Ha
     self = result
   }
 
-//  public func opacity(_ opacity: Double) -> Color {
-//    return self.swiftUIColour.opacity(opacity)
-//  }
-  
+  //  public func opacity(_ opacity: Double) -> Color {
+  //    return self.swiftUIColour.opacity(opacity)
+  //  }
+
   public var id: String { rawValue }
 
   public var name: String {
@@ -110,9 +73,9 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Ha
       default: rawValue.capitalized
     }
   }
-  
-  public func withMix(_ colour: Color, _ amount: Double) -> Color {
-    return self.toColour.mixCompatible(with: colour, by: amount, in: .perceptual)
+
+  public func withMix(_ colour: Self, _ amount: Double) -> Color {
+    return self.toColour.mixCompatible(with: colour.toColour, by: amount, in: .perceptual)
   }
 
   public var toPrimitiveColour: PrimitiveColour? {
@@ -142,7 +105,7 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Ha
       case .accentColor: Color.accentColor
     }
   }
-  
+
 }
 
 //extension RGBColour {

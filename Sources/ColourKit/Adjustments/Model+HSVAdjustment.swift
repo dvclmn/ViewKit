@@ -6,8 +6,8 @@
 //
 
 import CurveKit
-import Foundation
 import SharedHelpers
+import SwiftUI
 
 /// Represents a *delta* adjustment in HSV space
 /// Does not set hsb values to these, but adds to them
@@ -36,11 +36,9 @@ public struct HSVAdjustment: Sendable {
     saturation: Double? = nil,
     brightness: Double? = nil
   ) {
-    self.init(
-      hue: hue,
-      saturation: saturation,
-      brightness: brightness
-    )
+    self.hue = hue
+    self.saturation = saturation
+    self.brightness = brightness
   }
 
   public init(
@@ -52,7 +50,27 @@ public struct HSVAdjustment: Sendable {
   }
 }
 
+extension Color {
+  public var hsvAdjustment: HSVAdjustment {
+    let nsColour = NSColor(self)
+    let hue = nsColour.hueComponent
+    let sat = nsColour.saturationComponent
+    let val = nsColour.brightnessComponent
+    return HSVAdjustment(h: hue, s: sat, v: val)
+  }
+  public func hsvAdjusted(by adjustment: HSVAdjustment, strength: Double = 0.5) -> Color {
+    let adjusted: HSVAdjustment = hsvAdjustment.interpolated(towards: adjustment, strength: strength)
+    return adjusted.toColour(withBase: self)
+  }
+}
+
 extension HSVAdjustment {
+
+  public func toColour(withBase base: Color) -> Color {
+    guard let hue, let saturation, let brightness else { return base }
+    let nsColour = NSColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0)
+    return Color(nsColor: nsColour)
+  }
 
   public static func adjustments(
     from modifiers: [any HSVModifier]
