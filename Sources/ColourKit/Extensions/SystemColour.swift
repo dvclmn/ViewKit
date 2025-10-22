@@ -131,16 +131,6 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Ha
       }
 
     return colour.usingColorSpace(colourSpace)
-
-    //    let thing = NSColor.usingColorSpace(<#T##self: NSColor##NSColor#>)
-    //    let thing = NSColor.init(
-    //      colorSpace: .deviceRGB,
-    //      hue: <#T##CGFloat#>,
-    //      saturation: <#T##CGFloat#>,
-    //      brightness: <#T##CGFloat#>,
-    //      alpha: <#T##CGFloat#>
-    //    )
-    //    let thing = self.toColour?
   }
 
 }
@@ -157,30 +147,7 @@ extension SystemColour {
   public func hsvAdjusted(by adjustment: HSVAdjustment) -> Color? {
     guard let baseAdjustment = hsvAdjustment else { return nil }
     let adjusted: HSVAdjustment = baseAdjustment.interpolated(towards: adjustment)
-    return adjusted.toColour(withBase: self.toColour)
+    return adjusted.toColour()
   }
 
 }
-
-//extension RGBColour {
-//public static var black: Self { RGBCo }
-//public static var blue: Self {  }
-//public static var brown: Self {  }
-//public static var clear: Self {  }
-//public static var cyan: Self {  }
-//public static var gray: Self {  }
-//public static var green: Self {  }
-//public static var indigo: Self {  }
-//public static var mint: Self {  }
-//public static var orange: Self {  }
-//public static var pink: Self {  }
-//public static var purple: Self {  }
-//public static var red: Self {  }
-//public static var teal: Self {  }
-//public static var white: Self {  }
-//public static var yellow: Self {  }
-//public static var primary: Self {  }
-//public static var secondary: Self {  }
-//public static var accentColor: Self {  }
-//
-//}

@@ -54,8 +54,8 @@ public struct HSVAdjustment: Sendable, Codable, Equatable, Hashable {
 
 extension HSVAdjustment {
 
-  public func toColour(withBase base: Color) -> Color {
-    guard let hue, let saturation, let brightness else { return base }
+  public func toColour() -> Color? {
+    guard let hue, let saturation, let brightness else { return nil }
     let nsColour = NSColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0)
     return Color(nsColor: nsColour)
   }

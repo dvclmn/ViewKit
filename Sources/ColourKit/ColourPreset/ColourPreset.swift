@@ -12,27 +12,27 @@ public protocol CodableColour: Codable, Equatable, Hashable {
 }
 
 public struct ColourPreset: Sendable, Codable, Equatable, Hashable, CodableColour {
-  
+
   /// The colours to mix
   public let colours: [SystemColour]
   public let adjustment: HSVAdjustment?
   public let mixAmount: Double
   public let opacity: Double
 
-//  public init(
-//    _ base: SystemColour,
-//    mix: SystemColour? = nil,
-//    mixAmount: Double = 0.5,
-//    adjustment: HSVAdjustment? = nil,
-//    opacity: Double = 1.0
-//  ) {
-//    self.base = base
-//    self.mix = mix
-//    self.mixAmount = mixAmount
-//    self.adjustment = adjustment
-//    self.opacity = opacity
-//  }
-  
+  //  public init(
+  //    _ base: SystemColour,
+  //    mix: SystemColour? = nil,
+  //    mixAmount: Double = 0.5,
+  //    adjustment: HSVAdjustment? = nil,
+  //    opacity: Double = 1.0
+  //  ) {
+  //    self.base = base
+  //    self.mix = mix
+  //    self.mixAmount = mixAmount
+  //    self.adjustment = adjustment
+  //    self.opacity = opacity
+  //  }
+
   public init(
     _ colourList: SystemColour...,
     mixAmount: Double = 0.5,
@@ -41,7 +41,7 @@ public struct ColourPreset: Sendable, Codable, Equatable, Hashable, CodableColou
   ) {
     let list = colourList.map { $0 }
     precondition(!list.isEmpty)
-    
+
     self.colours = list
     self.mixAmount = mixAmount
     self.adjustment = adjustment
@@ -53,24 +53,7 @@ public struct ColourPreset: Sendable, Codable, Equatable, Hashable, CodableColou
     let mixed = colours.reduce(into: Color.clear) { partial, sysColour in
       partial = partial.mixCompatible(with: sysColour.toColour, by: mixAmount)
     }
-    
-    
-//    guard let mix else { return base.toColour }
 
-//    var first = colours.first ?? SystemColour.white
-//    var first = colours.first?.toColour ?? Color.white
-//    let colour = colours.reduce(first) { partialResult, col in
-//      partialResult.withMix(col, mixAmount)
-//      partialResult.mixCompatible(with: col, by: mixAmount, in: .perceptual)
-//    }
-//    for item in colours {
-//      
-//    }
-//    if let mix {
-//      colour = base.withMix(mix, mixAmount).opacity(opacity)
-//    } else {
-//      colour = base.toColour
-//    }
     guard let adjustment else {
       return mixed
     }
@@ -85,7 +68,7 @@ extension ColourPreset {
     mixAmount: 0.36,
     adjustment: .init(s: -0.16, v: -0.16)
   )
-  
+
   public static let pinkNeon: ColourPreset = ColourPreset(
     .pink,
     .blue,

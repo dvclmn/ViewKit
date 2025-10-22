@@ -16,7 +16,7 @@ extension Color {
   public func hsvAdjusted(by adjustment: HSVAdjustment) -> Color? {
     guard let baseAdjustment = toHSVAdustment() else { return nil }
     let adjusted: HSVAdjustment = baseAdjustment.interpolated(towards: adjustment)
-    return adjusted.toColour(withBase: self)
+    return adjusted.toColour()
   }
 }
 
