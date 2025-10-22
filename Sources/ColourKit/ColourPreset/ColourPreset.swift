@@ -7,46 +7,89 @@
 
 import SwiftUI
 
-public struct ColourPreset: Sendable, Codable, Equatable, Hashable {
-  public let base: SystemColour
-  public let mix: SystemColour?
-  public let hsvAdjustment: HSVAdjustment?
+public protocol CodableColour: Codable, Equatable, Hashable {
+  var colour: Color { get }
+}
+
+public struct ColourPreset: Sendable, Codable, Equatable, Hashable, CodableColour {
+  
+  /// The colours to mix
+  public let colours: [SystemColour]
+  public let adjustment: HSVAdjustment?
   public let mixAmount: Double
   public let opacity: Double
 
+//  public init(
+//    _ base: SystemColour,
+//    mix: SystemColour? = nil,
+//    mixAmount: Double = 0.5,
+//    adjustment: HSVAdjustment? = nil,
+//    opacity: Double = 1.0
+//  ) {
+//    self.base = base
+//    self.mix = mix
+//    self.mixAmount = mixAmount
+//    self.adjustment = adjustment
+//    self.opacity = opacity
+//  }
+  
   public init(
-    _ base: SystemColour,
-    mix: SystemColour? = nil,
+    _ colourList: SystemColour...,
     mixAmount: Double = 0.5,
-    hsvAdjustment: HSVAdjustment? = nil,
+    adjustment: HSVAdjustment? = nil,
     opacity: Double = 1.0
   ) {
-    self.base = base
-    self.mix = mix
+    let list = colourList.map { $0 }
+    precondition(!list.isEmpty)
+    
+    self.colours = list
     self.mixAmount = mixAmount
-    self.hsvAdjustment = hsvAdjustment
+    self.adjustment = adjustment
     self.opacity = opacity
   }
 
   public var colour: Color {
-    guard let mix else { return base.toColour }
-    let mixed = base.withMix(mix, mixAmount).opacity(opacity)
 
-    guard let hsvAdjustment else {
+    let mixed = colours.reduce(into: Color.clear) { partial, sysColour in
+      partial = partial.mixCompatible(with: sysColour.toColour, by: mixAmount)
+    }
+    
+    
+//    guard let mix else { return base.toColour }
+
+//    var first = colours.first ?? SystemColour.white
+//    var first = colours.first?.toColour ?? Color.white
+//    let colour = colours.reduce(first) { partialResult, col in
+//      partialResult.withMix(col, mixAmount)
+//      partialResult.mixCompatible(with: col, by: mixAmount, in: .perceptual)
+//    }
+//    for item in colours {
+//      
+//    }
+//    if let mix {
+//      colour = base.withMix(mix, mixAmount).opacity(opacity)
+//    } else {
+//      colour = base.toColour
+//    }
+    guard let adjustment else {
       return mixed
     }
-    return mixed.hsvAdjusted(by: hsvAdjustment) ?? mixed
+    return mixed.hsvAdjusted(by: adjustment) ?? mixed
   }
 }
 extension ColourPreset {
 
   public static let greenNeon: ColourPreset = ColourPreset(
     .green,
-    mix: .yellow,
+    .yellow,
     mixAmount: 0.36,
-    //    mixAmount: -0.7,
-    hsvAdjustment: .init(s: -0.16, v: -0.16),
-    //        hsvAdjustment: .init(h: 1.34, v: -0.2),
-    //    opacity: 0.84,
+    adjustment: .init(s: -0.16, v: -0.16)
+  )
+  
+  public static let pinkNeon: ColourPreset = ColourPreset(
+    .pink,
+    .blue,
+    mixAmount: 0.46,
+    adjustment: .init(s: -0.4, v: -0.2)
   )
 }
