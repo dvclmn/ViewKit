@@ -35,7 +35,7 @@ public struct TextTag: View {
           strength: .moderate,
           purpose: .complementary,
           chroma: .monochrome
-        ).swiftUIColour
+        ).toColour
 //          .contrastColour(
 //          strength: .moderate,
 //          purpose: .complementary,
@@ -46,9 +46,9 @@ public struct TextTag: View {
       .quickBackground(
         shape: .rect(cornerRadius: Styles.sizeTiny),
         padding: 2,
-        tint: colour.swiftUIColour,
+        tint: colour.toColour,
       )
-      .environment(\.strokeColour, colour.swiftUIColour.toShapeStyle)
+      .environment(\.strokeColour, colour.toColour.toShapeStyle)
       .environment(\.strokeWeight, 1)
   }
 }

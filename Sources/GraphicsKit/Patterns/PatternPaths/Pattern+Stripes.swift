@@ -19,7 +19,7 @@ extension GraphicsContext {
     for i in 0..<repetitions {
       let x = CGFloat(i) * stripeWidth
       let rect = CGRect(x: x, y: 0, width: config.size, height: size.height)
-      let color = i.isMultiple(of: 2) ? config.primaryColour.swiftUIColour : config.secondaryColour.swiftUIColour
+      let color = i.isMultiple(of: 2) ? config.primaryColour.toColour : config.secondaryColour.toColour
       self.fill(Path(rect), with: .color(color))
     }
   }

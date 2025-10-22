@@ -74,17 +74,26 @@ extension Int {
   public func toScreenLength(
     using unitLength: CGFloat,
   ) -> CGFloat? {
-//    print("Converting count of `\(self)` to screen length, with unit length `\(unitLength)`")
+    //    print("Converting count of `\(self)` to screen length, with unit length `\(unitLength)`")
     guard isValidState(with: unitLength) else { return nil }
     let result = CGFloat(self) * unitLength
-//    print("Resulting screen length: \(result)")
+    //    print("Resulting screen length: \(result)")
     return result
   }
-  
+
+  public func toScreenLength(
+    along axis: Axis,
+    using unitSize: CGSize?,
+  ) -> CGFloat? {
+    guard let unitSize else { return nil }
+    let length = axis.length(fromSize: unitSize)
+    return toScreenLength(using: length)
+  }
+
   private func isValidState(with unitLength: CGFloat) -> Bool {
-//    print("Checking if Int of value `\(self)` is valid for conversion with unit length \(unitLength)")
+    //    print("Checking if Int of value `\(self)` is valid for conversion with unit length \(unitLength)")
     let result = self >= 0 && unitLength > 0 && unitLength.isFinite
-//    print("State is valid? `\(result)`")
+    //    print("State is valid? `\(result)`")
     return result
 
   }

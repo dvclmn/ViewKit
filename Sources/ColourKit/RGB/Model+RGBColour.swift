@@ -44,7 +44,7 @@ public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable, C
 
   public init(fromSystem system: SystemColour, env: EnvironmentValues) {
     self.init(
-      colour: system.swiftUIColour,
+      colour: system.toColour,
       environment: env,
       name: system.name
     )

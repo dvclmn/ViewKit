@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-extension ShapeStyle where Self == Color {
+extension Color {
+//extension ShapeStyle where Self == Color {
   public func mixCompatible(
     with rhs: Self,
     by fraction: Double,

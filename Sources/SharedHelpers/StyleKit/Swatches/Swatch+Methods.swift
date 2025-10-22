@@ -27,7 +27,7 @@ extension Swatch {
 //    return rgb
 //  }
 
-  public var swiftUIColour: Color {
+  public var toColour: Color {
     #warning("Temporarily unavailable")
     Color.pink
 //    Color("swatch/\(rawValue)", bundle: .module)

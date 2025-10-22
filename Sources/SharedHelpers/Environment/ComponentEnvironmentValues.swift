@@ -111,4 +111,6 @@ extension EnvironmentValues {
   /// consuming this View, or what it's context is.
   @Entry public var viewDescription: String? = nil
   
+  @Entry public var opacityDim: CGFloat? = nil
+  
 }

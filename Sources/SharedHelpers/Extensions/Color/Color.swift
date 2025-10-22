@@ -26,7 +26,7 @@ extension Array where Element == Color {
 extension Color {
 
   //  public var namedColour: NamedColour? {
-  //    return NamedColour.allCases.first { $0.colour.swiftUIColour == self }
+  //    return NamedColour.allCases.first { $0.colour.toColour == self }
   //  }
 
   //  public func complementary(

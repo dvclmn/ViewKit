@@ -15,7 +15,6 @@ public struct DynamicStack<Content: View>: View {
   @Environment(\.layoutAlignment) private var layoutAlignment
   @Environment(\.layoutSpacing) private var layoutSpacing
 
-  //  let axis: Axis?
   let layoutType: LayoutType
   let spacing: CGFloat?
   let content: Content

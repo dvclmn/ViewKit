@@ -69,10 +69,10 @@ extension ColourHandler {
   }
 
   public var foreground: Color {
-    foregroundRGB.swiftUIColour
+    foregroundRGB.toColour
   }
   public var background: Color {
-    backgroundRGB.swiftUIColour
+    backgroundRGB.toColour
   }
   //  public var foregroundHSV: HSVColour {
   //    HSVColour(fromRGB: foregroundRGB)

@@ -82,7 +82,7 @@ extension ColourSquarePicker {
             saturation: 1,
             brightness: 1,
             alpha: 1
-          ).swiftUIColour
+          ).toColour
         )
 
       LinearGradient(

@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension BoxCore.Theme.ColourSet {
-  
+
   ///
   /// ```swift
   /// let defaultColorSet = ColorSet.default
@@ -21,21 +21,21 @@ extension BoxCore.Theme.ColourSet {
     tertiary: Color.tertiary,
     accent: Color.peach
   )
-  
+
   static let purple: Self = Self(
     primary: Color.lavendar,
     secondary: Color.secondary,
     tertiary: Color.tertiary,
     accent: Color.peach
   )
-  
+
   static let matrix: Self = Self(
     primary: Color.green,
     secondary: Color.secondary,
     tertiary: Color.tertiary,
     accent: Color.olive
   )
-  
+
 }
 
 extension Color {
@@ -47,4 +47,3 @@ extension Color {
   static let olive = Color(.displayP3, red: 0.377, green: 0.38, blue: 0.276, opacity: 1)
   static let green = Color.green
 }
-

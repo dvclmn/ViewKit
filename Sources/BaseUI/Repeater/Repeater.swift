@@ -44,6 +44,7 @@ public struct Repeater<Content: View>: View {
           }
       }
     }
+//    .background(Color.red.quaternary)
     //    .frame(minWidth: 100, minHeight: 100)
     //    .debugTextOverlay("Repeating \(count) times", alignment: .topLeading)
     //    .border(Color.green.opacity(0.3))

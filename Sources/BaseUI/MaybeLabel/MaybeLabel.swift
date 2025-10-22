@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 28/2/2025.
 //
 
-
 import SharedHelpers
 import SwiftUI
 
@@ -17,7 +16,7 @@ public struct MaybeLabel: View {
   public init(_ label: QuickLabel) {
     self.label = label
   }
-  
+
   public init(
     _ text: String, icon: IconLiteral? = nil
   ) {
@@ -32,7 +31,7 @@ public struct MaybeLabel: View {
       } icon: {
         IconView(icon)
       }
-      
+
     } else {
       Text(label.attributedText)
     }

@@ -36,7 +36,7 @@ public enum PrimitiveColour: String, Identifiable, CaseIterable, Sendable {
 
   public var id: String { rawValue }
 
-  public var swiftUIColour: Color {
+  public var toColour: Color {
     switch self {
       case .red: Color.red
       case .orange: Color.orange

@@ -44,7 +44,6 @@ extension Edge {
     }
   }
 
-
   public var name: String {
     switch self {
       case .top: "Top"
@@ -54,10 +53,24 @@ extension Edge {
     }
   }
 
-  public var axis: Axis {
-    switch self {
-      case .top, .bottom: .vertical
-      case .leading, .trailing: .horizontal
+  /// Convenient default, assumes convention of width == horizontal
+  public var toAxis: Axis {
+    self.toAxis(using: .widthIsHorizontal)
+  }
+
+  public func toAxis(using convention: DimensionToAxisConvention) -> Axis {
+    switch convention {
+      case .widthIsHorizontal:
+        switch self {
+          case .top, .bottom: .vertical
+          case .leading, .trailing: .horizontal
+        }
+
+      case .heightIsHorizontal:
+        switch self {
+          case .top, .bottom: .horizontal
+          case .leading, .trailing: .vertical
+        }
     }
   }
 
@@ -79,7 +92,6 @@ extension Edge {
     }
   }
 
-
   public var alignmentOpposite: Alignment {
     switch self {
       case .top: .bottom
@@ -87,5 +99,47 @@ extension Edge {
       case .leading: .trailing
       case .trailing: .leading
     }
+  }
+}
+
+// top
+// leading
+// bottom
+// trailing
+// all
+// horizontal
+// vertical
+extension Edge.Set {
+  public func toAxis(using convention: DimensionToAxisConvention) -> Axis? {
+    switch convention {
+      case .widthIsHorizontal:
+        if self == .top
+          || self == .bottom
+          || self == .vertical
+        {
+          return .vertical
+        }
+        if self == .leading
+            || self == .trailing
+            || self == .horizontal
+        {
+          return .horizontal
+        }
+
+      case .heightIsHorizontal:
+        if self == .top
+            || self == .bottom
+            || self == .vertical
+        {
+          return .horizontal
+        }
+        if self == .leading
+            || self == .trailing
+            || self == .horizontal
+        {
+          return .vertical
+        }
+    }
+    return nil
   }
 }

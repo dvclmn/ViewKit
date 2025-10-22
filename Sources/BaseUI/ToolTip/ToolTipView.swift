@@ -35,8 +35,8 @@ struct ToolTipView: View {
     }
     .transition(
       .asymmetric(
-        insertion: .opacity.animation(Styles.animationExtraQuickNSmooth),
-        removal: .opacity.animation(Styles.animationEased)
+        insertion: .opacity.animation(.easeOut(duration: 0.01)),
+        removal: .opacity.animation(Styles.animationSpringQuickNSubtle)
       )
     )
   }

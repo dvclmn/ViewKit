@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 8/10/2025.
 //
 
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 extension EnvironmentValues {
   @Entry public var layoutType: LayoutType = .passthrough
