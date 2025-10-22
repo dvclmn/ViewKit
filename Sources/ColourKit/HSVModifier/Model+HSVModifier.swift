@@ -19,10 +19,7 @@ extension Array where Element == HSVAdjustment {
 
     /// Apply strength to each adjustment, then combine them
     let weightedAdjustments = self.map { adjustment in
-      HSVAdjustment.zero.interpolated(
-        towards: adjustment,
-        strength: strength
-      )
+      HSVAdjustment.zero.interpolated(towards: adjustment)
     }
     return weightedAdjustments.reduce(.zero, +)
   }

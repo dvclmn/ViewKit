@@ -11,7 +11,7 @@ import SwiftUI
 
 /// Represents a *delta* adjustment in HSV space
 /// Does not set hsb values to these, but adds to them
-public struct HSVAdjustment: Sendable {
+public struct HSVAdjustment: Sendable, Codable, Equatable, Hashable {
 
   /// Important: This `hue` is cyclic. I am no longer using
   /// `UnitIntervalCyclic` because it's fiddly, but
@@ -19,7 +19,7 @@ public struct HSVAdjustment: Sendable {
   public var hue: Double?
   public var saturation: Double?
   public var brightness: Double?
-
+  public let strength: Double
   //  public init(
   //    hue: Double? = nil,
   ////    hue: UnitIntervalCyclic? = nil,
@@ -34,11 +34,13 @@ public struct HSVAdjustment: Sendable {
   public init(
     hue: Double? = nil,
     saturation: Double? = nil,
-    brightness: Double? = nil
+    brightness: Double? = nil,
+    strength: Double = 1.0
   ) {
     self.hue = hue
     self.saturation = saturation
     self.brightness = brightness
+    self.strength = strength
   }
 
   public init(
@@ -47,20 +49,6 @@ public struct HSVAdjustment: Sendable {
     v: Double? = nil,
   ) {
     self.init(hue: h, saturation: s, brightness: v)
-  }
-}
-
-extension Color {
-  public var hsvAdjustment: HSVAdjustment {
-    let nsColour = NSColor(self)
-    let hue = nsColour.hueComponent
-    let sat = nsColour.saturationComponent
-    let val = nsColour.brightnessComponent
-    return HSVAdjustment(h: hue, s: sat, v: val)
-  }
-  public func hsvAdjusted(by adjustment: HSVAdjustment, strength: Double = 0.5) -> Color {
-    let adjusted: HSVAdjustment = hsvAdjustment.interpolated(towards: adjustment, strength: strength)
-    return adjusted.toColour(withBase: self)
   }
 }
 
@@ -83,10 +71,7 @@ extension HSVAdjustment {
     HSVAdjustment(h: nil, s: nil, v: nil)
   }
 
-  public func interpolated(
-    towards other: HSVAdjustment,
-    strength: Double
-  ) -> HSVAdjustment {
+  public func interpolated(towards other: HSVAdjustment) -> HSVAdjustment {
     HSVAdjustment(
       hue: hue.interpolated(towards: other.hue, strength: strength),
       saturation: saturation.interpolated(towards: other.saturation, strength: strength),

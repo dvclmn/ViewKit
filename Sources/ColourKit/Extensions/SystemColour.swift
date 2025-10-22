@@ -8,7 +8,6 @@
 import SharedHelpers
 import SwiftUI
 
-
 //@CasePathable
 public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Hashable, Identifiable {
   case black
@@ -104,6 +103,61 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Ha
       case .secondary: Color.secondary
       case .accentColor: Color.accentColor
     }
+  }
+
+  public func toNSColour(using colourSpace: NSColorSpace = .deviceRGB) -> NSColor? {
+
+    let colour =
+      switch self {
+        case .red: NSColor.red
+        case .blue: NSColor.blue
+        case .teal: NSColor.systemTeal
+        case .green: NSColor.green
+        case .orange: NSColor.orange
+        case .yellow: NSColor.yellow
+        case .pink: NSColor.systemPink
+        case .purple: NSColor.purple
+        case .indigo: NSColor.systemIndigo
+        case .mint: NSColor.systemMint
+        case .cyan: NSColor.cyan
+        case .brown: NSColor.brown
+        case .gray: NSColor.gray
+        case .black: NSColor.black
+        case .white: NSColor.white
+        case .clear: NSColor.clear
+        case .primary: NSColor.labelColor
+        case .secondary: NSColor.secondaryLabelColor
+        case .accentColor: NSColor.controlAccentColor
+      }
+
+    return colour.usingColorSpace(colourSpace)
+
+    //    let thing = NSColor.usingColorSpace(<#T##self: NSColor##NSColor#>)
+    //    let thing = NSColor.init(
+    //      colorSpace: .deviceRGB,
+    //      hue: <#T##CGFloat#>,
+    //      saturation: <#T##CGFloat#>,
+    //      brightness: <#T##CGFloat#>,
+    //      alpha: <#T##CGFloat#>
+    //    )
+    //    let thing = self.toColour?
+  }
+
+}
+
+extension SystemColour {
+  public var hsvAdjustment: HSVAdjustment? {
+    guard let nsColour = self.toNSColour() else { return nil }
+    let hue = nsColour.hueComponent
+    let sat = nsColour.saturationComponent
+    let val = nsColour.brightnessComponent
+    return HSVAdjustment(h: hue, s: sat, v: val)
+  }
+
+  public func hsvAdjusted(by adjustment: HSVAdjustment) -> Color? {
+    guard let baseAdjustment = hsvAdjustment else { return nil }
+    let adjusted: HSVAdjustment = baseAdjustment.interpolated(towards: adjustment)
+    return adjusted.toColour(withBase: self.toColour)
   }
 
 }
