@@ -16,7 +16,6 @@ public struct CommonLabelStyleModifier: ViewModifier {
   @Environment(\.iconFontSize) private var iconFontSize
   @Environment(\.labelDisplay) private var labelDisplay
   @Environment(\.symbolRenderingMode) private var symbolRenderingMode
-  //  @Environment(\.symbolVariant) private var symbolVariant
 
   let labelPart: LabelPart
   let explicitLabelDisplay: LabelDisplay?

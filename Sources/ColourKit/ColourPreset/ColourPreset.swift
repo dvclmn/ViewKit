@@ -13,45 +13,53 @@ public protocol CodableColour: Codable, Equatable, Hashable {
 
 public struct ColourPreset: Sendable, Codable, Equatable, Hashable, CodableColour {
 
+  public let base: SystemColour
+  public let mix: SystemColour?
   /// The colours to mix
-  public let colours: [SystemColour]
+//  public let colours: [SystemColour]
   public let adjustment: HSVAdjustment?
   public let mixAmount: Double
   public let opacity: Double
 
-  //  public init(
-  //    _ base: SystemColour,
-  //    mix: SystemColour? = nil,
-  //    mixAmount: Double = 0.5,
-  //    adjustment: HSVAdjustment? = nil,
-  //    opacity: Double = 1.0
-  //  ) {
-  //    self.base = base
-  //    self.mix = mix
-  //    self.mixAmount = mixAmount
-  //    self.adjustment = adjustment
-  //    self.opacity = opacity
-  //  }
+    public init(
+      _ base: SystemColour,
+      _ mix: SystemColour? = nil,
+      mixAmount: Double = 0.5,
+      adjustment: HSVAdjustment? = nil,
+      opacity: Double = 1.0
+    ) {
+      self.base = base
+      self.mix = mix
+      self.mixAmount = mixAmount
+      self.adjustment = adjustment
+      self.opacity = opacity
+    }
 
-  public init(
-    _ colourList: SystemColour...,
-    mixAmount: Double = 0.5,
-    adjustment: HSVAdjustment? = nil,
-    opacity: Double = 1.0
-  ) {
-    let list = colourList.map { $0 }
-    precondition(!list.isEmpty)
-
-    self.colours = list
-    self.mixAmount = mixAmount
-    self.adjustment = adjustment
-    self.opacity = opacity
-  }
+//  public init(
+//    _ colourList: SystemColour...,
+//    mixAmount: Double = 0.5,
+//    adjustment: HSVAdjustment? = nil,
+//    opacity: Double = 1.0
+//  ) {
+//    let list = colourList.map { $0 }
+//    precondition(!list.isEmpty)
+//
+//    self.colours = list
+//    self.mixAmount = mixAmount
+//    self.adjustment = adjustment
+//    self.opacity = opacity
+//  }
 
   public var colour: Color {
 
-    let mixed = colours.reduce(into: Color.clear) { partial, sysColour in
-      partial = partial.mixCompatible(with: sysColour.toColour, by: mixAmount)
+//    let mixed = colours.reduce(into: Color.clear) { partial, sysColour in
+//      partial = partial.mixCompatible(with: sysColour.toColour, by: mixAmount)
+//    }
+    let mixed: Color
+    if let mix {
+      mixed = base.withMix(mix, mixAmount)
+    } else {
+      mixed = base.toColour
     }
 
     guard let adjustment else {

@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 21/9/2025.
 //
 
-
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 public struct IconView: View {
   @Environment(\.labelDisplay) private var labelDisplay
@@ -27,7 +26,8 @@ public struct IconView: View {
         case .symbol(let symbolString):
           Image(systemName: symbolString)
 
-        case .customSymbol(let customSymbol):
+        case .customSymbol(_):
+          //        case .customSymbol(let customSymbol):
           Text("Not implemented")
       //          Image(
       //            ImageResource(
@@ -37,6 +37,6 @@ public struct IconView: View {
       //          )
       }
     }
-    .commonLabelStyles(for: .icon, display: labelDisplay)
+    
   }
 }

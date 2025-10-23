@@ -181,4 +181,13 @@ extension VerticalAlignment {
       default: .center
     }
   }
+  
+//  public var toTextAlignment: TextAlignment {
+//    switch self {
+//      case .leading: .leading
+//      case .center: .center
+//      case .bottom: .trailing
+//      default: .leading
+//    }
+//  }
 }

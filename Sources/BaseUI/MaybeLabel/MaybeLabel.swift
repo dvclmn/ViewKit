@@ -12,16 +12,24 @@ public struct MaybeLabel: View {
   @Environment(\.labelDisplay) private var labelDisplay
 
   let label: QuickLabel
+  let isPlain: Bool
 
-  public init(_ label: QuickLabel) {
+  public init(
+    _ label: QuickLabel,
+    isPlain: Bool = false
+  ) {
     self.label = label
+    self.isPlain = isPlain
   }
 
   public init(
-    _ text: String, icon: IconLiteral? = nil
+    _ text: String,
+    icon: IconLiteral? = nil,
+    isPlain: Bool = false
   ) {
     let quickLabel = QuickLabel(text, icon: icon)
     self.label = quickLabel
+    self.isPlain = isPlain
   }
   public var body: some View {
 
@@ -29,7 +37,15 @@ public struct MaybeLabel: View {
       Label {
         Text(label.attributedText)
       } icon: {
-        IconView(icon)
+
+        /// Icon-specific styles in here
+
+        if isPlain {
+          IconView(icon)
+        } else {
+          IconView(icon)
+            .commonLabelStyles(for: .icon, display: labelDisplay)
+        }
       }
 
     } else {
