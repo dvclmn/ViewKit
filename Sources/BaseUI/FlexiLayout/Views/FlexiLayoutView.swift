@@ -49,9 +49,9 @@ extension Flexi {
 
           #endif
         }
-        .bind($store.scrolledID, to: $scrolledID)
-        .bind($store.singleSelection, to: $singleSelection)
-        .bind($store.multiSelection, to: $multiSelection)
+        .bindModel($store.scrolledID, to: $scrolledID)
+        .bindModel($store.singleSelection, to: $singleSelection)
+        .bindModel($store.multiSelection, to: $multiSelection)
 
         .task(id: groupPath) {
           updateIfChanged(&store.groupPath, to: groupPath)

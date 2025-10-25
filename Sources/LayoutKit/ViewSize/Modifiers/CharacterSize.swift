@@ -16,27 +16,19 @@ public struct CharacterSize: ViewModifier {
 
   let debounceMode: DebounceMode
   let character: Character
-  //  let fontStyle: Font
   let sizeDidChange: (CGSize?) -> Void
 
   public func body(content: Content) -> some View {
     content
       .overlay {
-        //        VStack(spacing: 0) {
         Text(character.toString)
-          //                        .font(font)
           .tracking(0)
           .viewSize(mode: debounceMode) { size in
             characterSize = size
           }
           .hidden()
-          //        }
           .allowsHitTesting(false)
       }
-//      .viewSize(mode: debounceMode) { size in
-//        viewSize = size
-//        //        sizeDidChange(size)
-//      }
       .task(id: characterSize) {
         sizeDidChange(characterSize)
       }
@@ -56,13 +48,13 @@ extension View {
   ///   - sizeDidChange: Callback when the character or view size changes
   /// - Returns: Two optional sizes, the first for the charatcer, the second for the container view
   public func characterSize(
-    _ debounceMode: DebounceMode = .debounce(0.2),
     _ testCharacter: Character = "M",
+    mode : DebounceMode = .debounce(0.2),
     _ sizeDidChange: @escaping (CGSize?) -> Void
   ) -> some View {
     self.modifier(
       CharacterSize(
-        debounceMode: debounceMode,
+        debounceMode: mode,
         character: testCharacter,
         sizeDidChange: sizeDidChange
       )

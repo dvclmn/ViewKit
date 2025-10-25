@@ -15,7 +15,7 @@ public extension KeyPress {
     ----------
     \(self.key.symbolCapitalised)\(self.modifiers.symbols)
     Phase: \(phase.name)
-    
+    Characters: \(self.characters)
     
     """
   }

@@ -6,40 +6,40 @@
 //
 
 // ⚠️ Has dependancy: `updateIfChanged`
-import SwiftUI
-import SharedHelpers
+//import SwiftUI
+//import SharedHelpers
 
-extension View {
-  public func bind<Value: Equatable>(
-    _ lhs: Binding<Value>,
-    to rhs: Binding<Value>
-  ) -> some View {
-    self.modifier(TwoWayBind(lhs: lhs, rhs: rhs))
-  }
-}
-
-private struct TwoWayBind<Value: Equatable>: ViewModifier {
-
-  @State var hasAppeared = false
-
-  let lhs: Binding<Value>
-  let rhs: Binding<Value>
-
-  func body(content: Content) -> some View {
-    content
-      .onAppear {
-        guard !self.hasAppeared else { return }
-        self.hasAppeared = true
-        updateIfChanged(&lhs.wrappedValue, to: rhs.wrappedValue)
-      }
-      .onChange(of: lhs.wrappedValue) { _, new in
-        updateIfChanged(&rhs.wrappedValue, to: new)
-      }
-      .onChange(of: rhs.wrappedValue) { _, new in
-        updateIfChanged(&lhs.wrappedValue, to: new)
-      }
-  }
-}
+//extension View {
+//  public func bind<Value: Equatable>(
+//    _ lhs: Binding<Value>,
+//    to rhs: Binding<Value>
+//  ) -> some View {
+//    self.modifier(TwoWayBind(lhs: lhs, rhs: rhs))
+//  }
+//}
+//
+//private struct TwoWayBind<Value: Equatable>: ViewModifier {
+//
+//  @State var hasAppeared = false
+//
+//  let lhs: Binding<Value>
+//  let rhs: Binding<Value>
+//
+//  func body(content: Content) -> some View {
+//    content
+//      .onAppear {
+//        guard !self.hasAppeared else { return }
+//        self.hasAppeared = true
+//        updateIfChanged(&lhs.wrappedValue, to: rhs.wrappedValue)
+//      }
+//      .onChange(of: lhs.wrappedValue) { _, new in
+//        updateIfChanged(&rhs.wrappedValue, to: new)
+//      }
+//      .onChange(of: rhs.wrappedValue) { _, new in
+//        updateIfChanged(&lhs.wrappedValue, to: new)
+//      }
+//  }
+//}
 
 //extension View {
 //

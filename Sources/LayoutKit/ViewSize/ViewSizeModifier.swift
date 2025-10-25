@@ -50,9 +50,11 @@ public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
         Task {
           if let debouncer {
             await debouncer.execute { @MainActor in
+//              print("Geometry change with debouncing.")
               valueOutput(newValue)
             }
           } else {
+//            print("Geometry change, *no* debouncing.")
             valueOutput(newValue)
           }
         }

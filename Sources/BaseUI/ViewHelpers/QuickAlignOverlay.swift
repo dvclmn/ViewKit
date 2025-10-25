@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-//overlay<S, T>(_ style: S, in shape: T, fillStyle: FillStyle = FillStyle()) -> some View where S : ShapeStyle, T : Shape
-
 public struct QuickAlignOverlayModifier<OverlayContent: View>: ViewModifier {
 
   let alignment: Alignment
@@ -18,6 +16,19 @@ public struct QuickAlignOverlayModifier<OverlayContent: View>: ViewModifier {
     content
       .overlay(alignment: alignment) {
         overlayContent
+      }
+  }
+}
+
+public struct QuickAlignBackgroundModifier<OverlayContent: View>: ViewModifier {
+  
+  let alignment: Alignment
+  @ViewBuilder var backgroundContent: OverlayContent
+  
+  public func body(content: Content) -> some View {
+    content
+      .background(alignment: alignment) {
+        backgroundContent
       }
   }
 }
@@ -31,6 +42,19 @@ extension View {
       QuickAlignOverlayModifier(
         alignment: alignment,
         overlayContent: content
+      )
+    )
+  }
+  
+  /// Purely to remove the need to type alignment.
+  public func background<V>(
+    _ alignment: Alignment,
+    @ViewBuilder content: () -> V
+  ) -> some View where V: View {
+    self.modifier(
+      QuickAlignBackgroundModifier(
+        alignment: alignment,
+        backgroundContent: content
       )
     )
   }

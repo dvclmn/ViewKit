@@ -15,8 +15,6 @@ public struct ColourPreset: Sendable, Codable, Equatable, Hashable, CodableColou
 
   public let base: SystemColour
   public let mix: SystemColour?
-  /// The colours to mix
-//  public let colours: [SystemColour]
   public let adjustment: HSVAdjustment?
   public let mixAmount: Double
   public let opacity: Double
@@ -34,21 +32,6 @@ public struct ColourPreset: Sendable, Codable, Equatable, Hashable, CodableColou
       self.adjustment = adjustment
       self.opacity = opacity
     }
-
-//  public init(
-//    _ colourList: SystemColour...,
-//    mixAmount: Double = 0.5,
-//    adjustment: HSVAdjustment? = nil,
-//    opacity: Double = 1.0
-//  ) {
-//    let list = colourList.map { $0 }
-//    precondition(!list.isEmpty)
-//
-//    self.colours = list
-//    self.mixAmount = mixAmount
-//    self.adjustment = adjustment
-//    self.opacity = opacity
-//  }
 
   public var colour: Color {
 

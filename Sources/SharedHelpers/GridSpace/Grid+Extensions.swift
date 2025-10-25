@@ -131,3 +131,14 @@ extension CGSize {
   }
 
 }
+
+extension Optional where Wrapped == CGSize {
+  public func gridLength(
+    _ count: Int,
+    along axis: Axis = .horizontal,
+  ) -> CGFloat? {
+//    guard let unitSize = self else { return nil }
+//    return unitSize.to
+    return count.toScreenLength(along: axis, using: self)
+  }
+}
