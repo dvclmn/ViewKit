@@ -35,9 +35,6 @@ public struct ColourPreset: Sendable, Codable, Equatable, Hashable, CodableColou
 
   public var colour: Color {
 
-//    let mixed = colours.reduce(into: Color.clear) { partial, sysColour in
-//      partial = partial.mixCompatible(with: sysColour.toColour, by: mixAmount)
-//    }
     let mixed: Color
     if let mix {
       mixed = base.withMix(mix, mixAmount)
@@ -53,6 +50,9 @@ public struct ColourPreset: Sendable, Codable, Equatable, Hashable, CodableColou
 }
 extension ColourPreset {
 
+  public static let primary: ColourPreset = .init(.primary)
+  public static let secondary: ColourPreset = .init(.secondary)
+  
   public static let greenNeon: ColourPreset = ColourPreset(
     .green,
     .yellow,

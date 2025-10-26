@@ -22,6 +22,7 @@ let package = Package(
       targets: ["BaseMacrosClient"]
     ),
     .library(name: "ToolKit", targets: ["ToolKit"]),
+    .library(name: "BaseModels", targets: ["BaseModels"]),
     .library(name: "StringShared", targets: ["StringShared"]),
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
     .library(
@@ -49,6 +50,7 @@ let package = Package(
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/ukushu/Ifrit", from: "3.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
+    .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
     //    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
     .package(url: "https://github.com/kean/Nuke", from: "12.8.0"),
   ],
@@ -76,6 +78,15 @@ let package = Package(
         .sharing,
         .product(name: "IfritStatic", package: "Ifrit"),
         .product(name: "NukeUI", package: "Nuke"),
+      ],
+    ),
+    .target(
+      name: "BaseModels",
+      dependencies: [
+        .dep(.stringShared),
+        .dep(.enumMacros),
+        .sharing,
+        .product(name: "IdentifiedCollections", package: "swift-identified-collections"),
       ],
     ),
     .target(
@@ -158,6 +169,7 @@ let package = Package(
       dependencies: [
         .dep(.enumMacros),
         .dep(.baseUI),
+        .dep(.baseModels),
         .dep(.layoutKit),
         .dep(.stringKit),
         .dep(.sharedHelpers),
@@ -231,6 +243,7 @@ enum BaseModule {
 //  case persistable
   case networking
   case baseUI
+  case baseModels
   case canvasKit
   case colourKit
   case curveKit
@@ -251,6 +264,7 @@ enum BaseModule {
 //      case .persistable: "Persistable"
       case .networking: "BaseNetworking"
       case .baseUI: "BaseUI"
+      case .baseModels: "BaseModels"
       case .canvasKit: "CanvasKit"
       case .colourKit: "ColourKit"
       case .curveKit: "CurveKit"
