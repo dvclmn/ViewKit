@@ -102,7 +102,7 @@ enum CaseMacroDiagnostic {
   case notAnEnum(DeclGroupSyntax)
 }
 
-extension CaseMacroDiagnostic: @preconcurrency DiagnosticMessage {
+extension CaseMacroDiagnostic: DiagnosticMessage {
   var message: String {
     switch self {
       case .notAnEnum(let decl):

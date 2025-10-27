@@ -18,7 +18,6 @@ public final class AsyncDebouncer {
     self.interval = Duration.seconds(interval)
   }
 
-  /// Execute a debounced async task that returns a value
   public func execute<T: Sendable>(
     action: @escaping @Sendable () async -> T?
   ) async -> T? {

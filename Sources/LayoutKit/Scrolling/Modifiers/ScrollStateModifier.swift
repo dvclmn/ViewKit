@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 8/3/2025.
 //
 
-
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 public struct ScrollStateModifier: ViewModifier {
 
@@ -40,11 +39,6 @@ public struct ScrollStateModifier: ViewModifier {
             withAxis: axis,
             tolerance: tolerance
           )
-//          return ScrollLocation(
-//            fromGeometry: geometry,
-//            withAxis: axis,
-//            tolerance: tolerance
-//          )
 
         } action: { oldValue, newValue in
 

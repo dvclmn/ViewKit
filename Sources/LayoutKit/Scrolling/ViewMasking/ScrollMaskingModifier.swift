@@ -7,7 +7,7 @@
 
 
 import SharedHelpers
-import CurveKit
+//import CurveKit
 import SwiftUI
 
 public struct ScrollMaskModifier: ViewModifier {

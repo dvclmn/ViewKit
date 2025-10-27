@@ -26,3 +26,28 @@ final public class UndoHandler<Value> {
 
   init() {}
 }
+
+//@MainActor
+//@Observable
+//final class UndoCoordinator<Item: ItemModel> {
+//  @ObservationIgnored private var managers: [Item.ID: UndoManager] = [:]
+//  var activeTableID: Item.ID?
+//  
+//  func registerManager(for id: Item.ID) -> UndoManager {
+//    if let existing = managers[id] {
+//      return existing
+//    } else {
+//      let manager = UndoManager()
+//      managers[id] = manager
+//      return manager
+//    }
+//  }
+//  
+//  func setActiveTable(_ id: Item.ID?) {
+//    activeTableID = id
+//  }
+//  
+//  var activeManager: UndoManager? {
+//    activeTableID.flatMap { managers[$0] }
+//  }
+//}

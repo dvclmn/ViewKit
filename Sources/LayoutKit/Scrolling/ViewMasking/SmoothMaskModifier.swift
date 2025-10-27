@@ -6,7 +6,7 @@
 //
 
 
-import CurveKit
+//import CurveKit
 import SharedHelpers
 //import SmoothStepGradient
 import SwiftUI

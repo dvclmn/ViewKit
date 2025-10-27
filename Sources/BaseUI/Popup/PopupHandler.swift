@@ -43,7 +43,8 @@ extension Popup {
     }
   }
 
-  public func showPopup(_ popupMessage: PopupMessage) {
+  public func showPopup(_ popupMessage: PopupMessage?) {
+    guard let popupMessage else { return }
     Task { @MainActor in
       await showAndHidePopup(popupMessage: popupMessage)
     }
