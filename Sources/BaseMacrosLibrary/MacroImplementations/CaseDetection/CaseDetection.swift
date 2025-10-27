@@ -34,49 +34,6 @@ extension CaseDetectionMacro: MemberMacro {
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
 
-    guard let detectedEnum = Enum(decl) else {
-      throw MacroError("@CaseDetection can only be attached to enum declarations")
-    }
-
-    let access = detectedEnum.accessLevel?.name ?? ""
-    let isShowingNames = node.boolArgument(labeled: "includesNames")
-//    let argument = MacroAttribute(node).argument(labeled: "includesNames")?.asBooleanLiteral
-//    let isShowingNames: Bool = argument?.value ?? false
-
-    let cases: [EnumCase] = detectedEnum.cases
-    let detections: [DeclSyntax] =
-      cases
-      .map { ($0.identifier, $0.identifier.initialUppercased) }
-      .map { original, uppercased in
-        """
-        \(raw: access) var is\(raw: uppercased): Bool {
-          if case .\(raw: original) = self {
-            return true
-          }
-          return false
-        }
-        """
-      }
-
-    if isShowingNames {
-
-      let casesString: String = cases.reduce("") { partialResult, item in
-        partialResult + "case .\(item.identifier): \"\(item.identifier.initialUppercased)\"\n"
-      }
-
-      let refName: DeclSyntax = """
-        \(raw: access) var referenceName: String {
-          switch self {
-            \(raw: casesString)
-          }
-        }
-
-        """
-      let result = detections + [refName]
-      return result
-    }
-
-    return detections
-
+    
   }
 }

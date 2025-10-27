@@ -5,26 +5,90 @@
 //  Created by Dave Coleman on 27/10/2025.
 //
 
-import SwiftDiagnostics
+import MacroToolkit
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 public struct CaseDetectionMacro {
-  
+
+  let detectedEnum: Enum
+  let includesNames: Bool
+
+  init(
+    node: AttributeSyntax,
+    decl: some DeclGroupSyntax,
+
+    //    decl: EnumDeclSyntax,
+  ) throws {
+    guard let enumDecl = decl as? EnumDeclSyntax else {
+      throw MacroError("@CaseDetection can only be attached to enum declarations")
+    }
+    self.detectedEnum = Enum(enumDecl)
+    self.includesNames = node.boolArgument(labeled: "includesNames")
+  }
+
   /// What do we need for Case Detection
   /// - The enum decl
   /// - The access level
-  /// 
-  
-//  let parentTypeName: TokenSyntax
-//  let childCases: [EnumCaseElementSyntax]
-//  let access: DeclModifierListSyntax.Element?
-//  let parentParamName: TokenSyntax
-  
-//  init(
-//    node: AttributeSyntax,
-//    declaration: some DeclGroupSyntax,
-//    context: some MacroExpansionContext
-//  )
+  ///
+
+  //  let parentTypeName: TokenSyntax
+  //  let childCases: [EnumCaseElementSyntax]
+  //  let access: DeclModifierListSyntax.Element?
+  //  let parentParamName: TokenSyntax
+
+  //  init(
+  //    node: AttributeSyntax,
+  //    declaration: some DeclGroupSyntax,
+  //    context: some MacroExpansionContext
+  //  )
+}
+
+extension CaseDetectionMacro {
+
+  private var cases: [EnumCase] { detectedEnum.cases }
+  private var access: String { detectedEnum.accessLevel?.name ?? "" }
+
+  func makeCaseDetector() -> [DeclSyntax] {
+
+    let detections: [DeclSyntax] =
+      cases
+      .map { ($0.identifier, $0.identifier.initialUppercased) }
+      .map { original, uppercased in
+        """
+        \(raw: access) var is\(raw: uppercased): Bool {
+          if case .\(raw: original) = self {
+            return true
+          }
+          return false
+        }
+        """
+      }
+
+    guard includesNames else {
+      return detections
+    }
+    return detections + [buildNames()]
+
+  }
+
+  func buildNames() -> DeclSyntax {
+
+    let casesString: String = cases.reduce("") { partialResult, item in
+      partialResult + "case .\(item.identifier): \"\(item.identifier.initialUppercased)\"\n"
+    }
+
+    let refName: DeclSyntax = """
+      \(raw: access) var referenceName: String {
+        switch self {
+          \(raw: casesString)
+        }
+      }
+
+      """
+
+    return refName
+  }
+
 }
