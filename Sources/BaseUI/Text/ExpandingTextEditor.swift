@@ -7,16 +7,20 @@
 
 import SwiftUI
 
-public struct ExpandingTextEditor<Content: View>: View {
-  
+public struct ExpandingTextEditor: View {
+  @Environment(\.textAlignment) private var textAlignment
   @Binding var text: String
   let alignment: Alignment
-  let content: Content
+//  let content: Content
   
   public init(
-    @ViewBuilder content: @escaping () -> Content
+    text: Binding<String>,
+    alignment: Alignment = .topLeading,
+//    @ViewBuilder content: @escaping () -> Content
   ) {
-    self.content = content()
+    self._text = text
+    self.alignment = alignment
+//    self.content = content()
   }
   
   public var body: some View {
@@ -32,16 +36,14 @@ public struct ExpandingTextEditor<Content: View>: View {
       )
     
       .overlay(alignment: .topLeading) {
-        content
+//        content
         
         TextEditor(text: $text)
-//          .focused($focused, equals: .textField(cellPosition))
-//          .scrollDisabled(true)
         /// Removes the slight default padding, to better-match `Text`
           .padding(.horizontal, -5)
           .textEditorStyle(.plain)
 
       }
-      .multilineTextAlignment(textAlignment)
+      .multilineTextAlignment(textAlignment ?? .leading)
   }
 }

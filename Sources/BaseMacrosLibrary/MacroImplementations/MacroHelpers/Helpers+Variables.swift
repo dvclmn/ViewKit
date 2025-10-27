@@ -1,9 +1,16 @@
+//
+//  Helpers+Variables.swift
+//  BaseHelpers
+//
+//  Created by Dave Coleman on 27/10/2025.
+//
+
 /*
  This source file is part of SwiftAndTipsMacros
-
+ 
  Copyright (c) 2023 Pedro Rojas and project authors
  Licensed under MIT License
-*/
+ */
 
 //
 //  VariableDeclSyntax+Extension.swift
@@ -21,20 +28,20 @@ extension VariableDeclSyntax {
     else {
       return false
     }
-
+    
     guard let accesor = bindings.first?.accessorBlock
     else {
       // Nothing to review. It's a valid stored property
       return true
     }
-
+    
     switch accesor.accessors {
       case .accessors(let accesorBlockSyntax):
         // Observers are valid accesors only
         let validAccesors = Set<TokenKind>([
           .keyword(.willSet), .keyword(.didSet),
         ])
-
+        
         let hasValidAccesors = accesorBlockSyntax.contains {
           // Other kind of accesors will make the variable a computed property
           validAccesors.contains($0.accessorSpecifier.tokenKind)
@@ -44,21 +51,22 @@ extension VariableDeclSyntax {
         // A variable with only a getter is not valid for initialization.
         return false
     }
-
+    
   }
-
-  var isPublic: Bool {
-    modifiers.contains {
-      $0.name.tokenKind == .keyword(.public)
-    }
-  }
-
-  var isPrivate: Bool {
-    modifiers.contains {
-      $0.name.tokenKind == .keyword(.private)
-    }
-  }
-
+  
+//  var isPublic: Bool {
+//    
+////    modifiers.contains {
+////      $0.name.tokenKind == .keyword(.public)
+////    }
+//  }
+//  
+//  var isPrivate: Bool {
+////    modifiers.contains {
+////      $0.name.tokenKind == .keyword(.private)
+////    }
+//  }
+  
   var typeName: String {
     self.bindings.first?.typeAnnotation?.type.as(IdentifierTypeSyntax.self)?.name.text ?? ""
   }

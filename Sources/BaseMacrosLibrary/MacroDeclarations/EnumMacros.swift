@@ -26,7 +26,7 @@ public macro CaseDetection(includesNames: Bool = false) =
 
 // MARK: - MetaEnum
 @attached(member, names: named(Meta))
-public macro MetaEnum() = #externalMacro(
+public macro MetaEnum(includesCaseDetection: Bool = true) = #externalMacro(
   module: "BaseMacrosImplementation",
   type: "MetaEnumMacro"
 )

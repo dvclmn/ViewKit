@@ -10,9 +10,6 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-// Below from https://github.com/swiftlang/swift-syntax/
-// swift-syntax/Examples/Sources/MacroExamples/Implementation/Member/NewTypeMacro.swift
-
 extension DeclModifierSyntax {
   public var isPublicAccessLevel: Bool {
     switch self.name.tokenKind {
@@ -44,6 +41,22 @@ extension LabeledExprListSyntax {
 }
 
 extension TokenSyntax {
+
+  public enum TriviaKind {
+    case leading, trailing
+
+  }
+
+  public func triviaRemoved(_ kind: TriviaKind) -> TokenSyntax {
+    switch kind {
+      case .leading:
+        return self.with(\.leadingTrivia, [])
+
+      case .trailing:
+        return self.with(\.trailingTrivia, [])
+    }
+  }
+
   public var initialUppercased: String {
     let name = self.text
     guard let initial = name.first else {

@@ -25,7 +25,8 @@ import SwiftSyntaxMacros
 // https://github.com/swiftlang/swift-syntax/blob/main/Examples/Sources/MacroExamples/Implementation/Member/CaseDetectionMacro.swift
 // Additional modifications based on stackotter's MacroToolkit
 
-public enum CaseDetectionMacro: MemberMacro {
+extension CaseDetectionMacro: MemberMacro {
+//public enum CaseDetectionMacro: MemberMacro {
   public static func expansion(
     of node: AttributeSyntax,
     providingMembersOf decl: some DeclGroupSyntax,
@@ -38,24 +39,10 @@ public enum CaseDetectionMacro: MemberMacro {
     }
 
     let access = detectedEnum.accessLevel?.name ?? ""
-    //    let thing = node.
+    let isShowingNames = node.boolArgument(labeled: "includesNames")
+//    let argument = MacroAttribute(node).argument(labeled: "includesNames")?.asBooleanLiteral
+//    let isShowingNames: Bool = argument?.value ?? false
 
-    let argument = MacroAttribute(node).argument(labeled: "includesNames")?.asBooleanLiteral
-    let isShowingNames: Bool = argument?.value ?? false
-
-    //    SimpleDiagnosticMessage(
-    //      message: arguments.debugDescription,
-    //      diagnosticID: MessageID(domain: "casedetection", id: "something"),
-    //      severity: <#T##DiagnosticSeverity#>
-    //    )
-
-    //    guard
-    //      let ((nil, nameExpr), (nil, ageExpr)) = destructure(attribute.arguments),
-    //      let name = nameExpr.asStringLiteral?.value,
-    //      let age = ageExpr.asIntegerLiteral?.value
-    //    else {
-    //      throw MacroError("Usage: @MyMacro(\"stackotter\", 105)")
-    //    }
     let cases: [EnumCase] = detectedEnum.cases
     let detections: [DeclSyntax] =
       cases
@@ -76,9 +63,6 @@ public enum CaseDetectionMacro: MemberMacro {
       let casesString: String = cases.reduce("") { partialResult, item in
         partialResult + "case .\(item.identifier): \"\(item.identifier.initialUppercased)\"\n"
       }
-//      let caseStrings: String = cases.map { item in
-//        "case .\(item.identifier): \"\(item.identifier.initialUppercased)\""
-//      }.joinedLines()
 
       let refName: DeclSyntax = """
         \(raw: access) var referenceName: String {

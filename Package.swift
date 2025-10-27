@@ -51,7 +51,6 @@ let package = Package(
     .package(url: "https://github.com/ukushu/Ifrit", from: "3.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
     .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
-    //    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
     .package(url: "https://github.com/kean/Nuke", from: "12.8.0"),
   ],
 
