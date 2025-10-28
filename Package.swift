@@ -206,6 +206,17 @@ let package = Package(
       ],
       path: .macrosSource + "/BaseMacrosClient",
     ),
+    
+//      .testTarget(
+//        name: "MacroTests",
+//        dependencies: [
+//          "BaseMacrosImplementation",
+//          .product(
+//            name: "SwiftSyntaxMacrosTestSupport",
+//            package: "swift-syntax"
+//          ),
+//        ]
+//      ),
 
   ],
 )

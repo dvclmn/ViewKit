@@ -27,7 +27,7 @@ public struct MetaEnumMacro {
   let childCases: [EnumCaseElementSyntax]
   let access: DeclModifierListSyntax.Element?
   let parentParamName: TokenSyntax
-  let caseDetection: CaseDetectionMacro?
+  let caseDetection: CaseDetectionMacro
   
   var debugString: String = "None"
 
@@ -35,7 +35,7 @@ public struct MetaEnumMacro {
     node: AttributeSyntax,
     decl: some DeclGroupSyntax,
     context: some MacroExpansionContext,
-    includesCaseDetection: Bool
+//    includesCaseDetection: Bool
   ) throws {
 
     guard let enumDecl = decl.as(EnumDeclSyntax.self) else {

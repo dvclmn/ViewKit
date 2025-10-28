@@ -25,7 +25,7 @@ enum ExampleEnumNames {
 
 // MARK: - MetaEnum
 
-/// Seems to help create a corresponding enum without assoc. values?
+/// Creates a corresponding enum without assoc. values
 @MetaEnum
 enum AnotherEnum {
   case bird(Int)
@@ -33,12 +33,6 @@ enum AnotherEnum {
   case shark
 }
 
-@MetaEnum(includesCaseDetection: false)
-enum AnotherEnumWithCaseDetect {
-  case bird(Int)
-  case whale(String)
-  case shark
-}
 
 // MARK: - SetOfOptions
 

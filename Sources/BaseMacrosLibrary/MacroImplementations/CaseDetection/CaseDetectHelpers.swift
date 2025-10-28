@@ -23,7 +23,9 @@ public struct CaseDetectionMacro {
       throw MacroError("@CaseDetection can only be attached to enum declarations")
     }
     self.detectedEnum = Enum(enumDecl)
-    self.includesNames = node.boolArgument(labeled: "includesNames")
+    let shouldIncludeNames = node.boolArgument(labeled: "includesNames")
+
+    self.includesNames = shouldIncludeNames
   }
 }
 

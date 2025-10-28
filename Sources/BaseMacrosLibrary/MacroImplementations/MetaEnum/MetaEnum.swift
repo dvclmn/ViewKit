@@ -21,6 +21,7 @@ import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
+import MacroToolkit
 
 extension MetaEnumMacro: MemberMacro {
   public static func expansion(
@@ -38,6 +39,8 @@ extension MetaEnumMacro: MemberMacro {
       context: context,
       includesCaseDetection: shouldDetectCases
     )
+    
+    throw MacroError("Detect? \(shouldDetectCases)")
 
     return macro.makeMetaEnum()
   }
