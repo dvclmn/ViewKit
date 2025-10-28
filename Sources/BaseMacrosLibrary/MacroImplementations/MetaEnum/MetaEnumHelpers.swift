@@ -26,13 +26,8 @@ import SwiftSyntaxMacros
 public struct MetaEnumMacro {
 
   let detectedEnum: Enum
-
-  //  let parentTypeName: TokenSyntax
-
   let parentParamName: TokenSyntax
   let caseDetection: CaseDetectionMacro
-
-  var debugString: String = "None"
 
   init(
     node: AttributeSyntax,
@@ -45,22 +40,13 @@ public struct MetaEnumMacro {
     }
     self.detectedEnum = Enum(enumDecl)
 
-    //    guard let enumDecl = decl.as(EnumDeclSyntax.self) else {
-    //      throw DiagnosticsError(diagnostics: [
-    //        CaseMacroDiagnostic.notAnEnum(decl).diagnose(at: Syntax(node))
-    //      ])
-    //    }
-
     self.caseDetection = try CaseDetectionMacro(
       node: node,
       decl: decl
     )
 
-    //    self.access = enumDecl.modifiers.first(where: \.isPublicAccessLevel)
-
     self.parentParamName = context.makeUniqueName("parent")
   }
-
 }
 
 extension MetaEnumMacro {
@@ -69,11 +55,6 @@ extension MetaEnumMacro {
   var access: String { detectedEnum.accessLevel?.name ?? "" }
   var childCases: [EnumCase] { detectedEnum.cases }
 
-  //  self.childCases = enumDecl.caseElements.map { parentCase in
-  //    parentCase.with(\.parameterClause, nil)
-  //  }
-  //  var parentTypeName: TokenSyntax { detectedEnum.name.triviaRemoved(.trailing) }
-
   func makeMetaEnum() -> [DeclSyntax] {
     let caseDecls =
       childCases
@@ -81,20 +62,19 @@ extension MetaEnumMacro {
         "  case \(childCase.identifier)"
       }
       .joined(separator: "\n")
+    
+    let detections = caseDetection.makeCaseDetector().map { item in
+      "\(item)"
+    }.joined(separator: "\n")
 
-//    let caseDetectorIfAvailable: [DeclSyntax]
-//    if let caseDetection {
-//      caseDetectorIfAvailable =
-//    } else {
-//      caseDetectorIfAvailable = []
-//    }
     let meta: DeclSyntax = """
       \(raw: access)enum Meta {
       \(raw: caseDecls)
       \(makeMetaInit())
+      \(raw: detections)
       }
       """
-    return [meta] + caseDetection.makeCaseDetector()
+    return [meta]
   }
 
   func makeMetaInit() -> DeclSyntax {
