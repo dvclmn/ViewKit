@@ -66,8 +66,7 @@ public struct MetaEnumMacro {
 extension MetaEnumMacro {
 
   var parentTypeName: String { detectedEnum.identifier }
-  var access: String? { detectedEnum.accessLevel?.name }
-
+  var access: String { detectedEnum.accessLevel?.name ?? "" }
   var childCases: [EnumCase] { detectedEnum.cases }
 
   //  self.childCases = enumDecl.caseElements.map { parentCase in
@@ -79,23 +78,23 @@ extension MetaEnumMacro {
     let caseDecls =
       childCases
       .map { childCase in
-        "  case \(childCase.name)"
+        "  case \(childCase.identifier)"
       }
       .joined(separator: "\n")
 
-    let caseDetectorIfAvailable: [DeclSyntax]
-    if let caseDetection {
-      caseDetectorIfAvailable = caseDetection.makeCaseDetector()
-    } else {
-      caseDetectorIfAvailable = []
-    }
+//    let caseDetectorIfAvailable: [DeclSyntax]
+//    if let caseDetection {
+//      caseDetectorIfAvailable =
+//    } else {
+//      caseDetectorIfAvailable = []
+//    }
     let meta: DeclSyntax = """
-      \(access)enum Meta {
+      \(raw: access)enum Meta {
       \(raw: caseDecls)
       \(makeMetaInit())
       }
       """
-    return [meta] + caseDetectorIfAvailable
+    return [meta] + caseDetection.makeCaseDetector()
   }
 
   func makeMetaInit() -> DeclSyntax {
@@ -103,15 +102,15 @@ extension MetaEnumMacro {
       childCases
       .map { childCase in
         """
-          case .\(childCase.name):
-            self = .\(childCase.name)
+          case .\(childCase.identifier):
+            self = .\(childCase.identifier)
         """
       }
       .joined(separator: "\n")
 
     return """
               // Hello
-      \(access)init(_ \(parentParamName): \(parentTypeName)) {
+      \(raw: access)init(_ \(parentParamName): \(raw: parentTypeName)) {
         switch \(parentParamName) {
       \(raw: caseStatements)
         }

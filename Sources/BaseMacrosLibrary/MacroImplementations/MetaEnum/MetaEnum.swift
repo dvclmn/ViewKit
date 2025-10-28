@@ -31,16 +31,14 @@ extension MetaEnumMacro: MemberMacro {
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
 
-    let shouldDetectCases: Bool = node.boolArgument(labeled: "includesCaseDetection")
+//    let shouldDetectCases: Bool = node.boolArgument(labeled: "includesCaseDetection")
 
     let macro = try MetaEnumMacro(
       node: node,
       decl: declaration,
       context: context,
-      includesCaseDetection: shouldDetectCases
+//      includesCaseDetection: shouldDetectCases
     )
-    
-    throw MacroError("Detect? \(shouldDetectCases)")
 
     return macro.makeMetaEnum()
   }
