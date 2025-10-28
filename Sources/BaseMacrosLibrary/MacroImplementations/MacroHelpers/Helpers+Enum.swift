@@ -33,4 +33,6 @@ extension EnumCaseDeclSyntax {
       ($0.firstName, $0.type)
     } ?? []
   }
+  
+  
 }

@@ -26,7 +26,7 @@ import SwiftSyntaxMacros
 // Additional modifications based on stackotter's MacroToolkit
 
 extension CaseDetectionMacro: MemberMacro {
-//public enum CaseDetectionMacro: MemberMacro {
+
   public static func expansion(
     of node: AttributeSyntax,
     providingMembersOf decl: some DeclGroupSyntax,

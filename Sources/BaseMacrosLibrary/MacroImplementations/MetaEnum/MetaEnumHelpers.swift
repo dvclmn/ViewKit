@@ -17,49 +17,46 @@
 //
 //===----------------------------------------------------------------------===//
 
+import MacroToolkit
 import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 public struct MetaEnumMacro {
-  let parentTypeName: TokenSyntax
-  let childCases: [EnumCaseElementSyntax]
-  let access: DeclModifierListSyntax.Element?
+
+  let detectedEnum: Enum
+
+  //  let parentTypeName: TokenSyntax
+
   let parentParamName: TokenSyntax
   let caseDetection: CaseDetectionMacro
-  
+
   var debugString: String = "None"
 
   init(
     node: AttributeSyntax,
     decl: some DeclGroupSyntax,
     context: some MacroExpansionContext,
-//    includesCaseDetection: Bool
   ) throws {
 
-    guard let enumDecl = decl.as(EnumDeclSyntax.self) else {
-      throw DiagnosticsError(diagnostics: [
-        CaseMacroDiagnostic.notAnEnum(decl).diagnose(at: Syntax(node))
-      ])
+    guard let enumDecl = decl as? EnumDeclSyntax else {
+      throw MacroError("@MetaEnum can only be attached to enum declarations")
     }
+    self.detectedEnum = Enum(enumDecl)
 
-    if includesCaseDetection {
-      self.caseDetection = try? CaseDetectionMacro(
-        node: node,
-        decl: decl
-      )
+    //    guard let enumDecl = decl.as(EnumDeclSyntax.self) else {
+    //      throw DiagnosticsError(diagnostics: [
+    //        CaseMacroDiagnostic.notAnEnum(decl).diagnose(at: Syntax(node))
+    //      ])
+    //    }
 
-    } else {
-      self.caseDetection = nil
-    }
+    self.caseDetection = try CaseDetectionMacro(
+      node: node,
+      decl: decl
+    )
 
-    self.parentTypeName = enumDecl.name.triviaRemoved(.trailing)
-    self.access = enumDecl.modifiers.first(where: \.isPublicAccessLevel)
-
-    self.childCases = enumDecl.caseElements.map { parentCase in
-      parentCase.with(\.parameterClause, nil)
-    }
+    //    self.access = enumDecl.modifiers.first(where: \.isPublicAccessLevel)
 
     self.parentParamName = context.makeUniqueName("parent")
   }
@@ -67,6 +64,16 @@ public struct MetaEnumMacro {
 }
 
 extension MetaEnumMacro {
+
+  var parentTypeName: String { detectedEnum.identifier }
+  var access: String? { detectedEnum.accessLevel?.name }
+
+  var childCases: [EnumCase] { detectedEnum.cases }
+
+  //  self.childCases = enumDecl.caseElements.map { parentCase in
+  //    parentCase.with(\.parameterClause, nil)
+  //  }
+  //  var parentTypeName: TokenSyntax { detectedEnum.name.triviaRemoved(.trailing) }
 
   func makeMetaEnum() -> [DeclSyntax] {
     let caseDecls =
