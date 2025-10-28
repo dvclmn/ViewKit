@@ -1,15 +1,5 @@
 import EnumMacros
 import Foundation
-//import Persistable
-
-// MARK: - Persistable
-//@Persistable
-//struct ExampleConfiguration: Sendable {
-//
-//  var rounding: Double = 8
-//  //  @Attribute(originalName: "test") var rounding: Double = 8
-//  var showCount: Bool = false
-//}
 
 // MARK: - Case detection
 @CaseDetection
@@ -43,6 +33,13 @@ enum AnotherEnum {
   case shark
 }
 
+@MetaEnum(includesCaseDetection: false)
+enum AnotherEnumWithCaseDetect {
+  case bird(Int)
+  case whale(String)
+  case shark
+}
+
 // MARK: - SetOfOptions
 
 /// Synthesises an `OptionSet` to accompany the `enum`
@@ -66,4 +63,3 @@ struct CoolAnimals {
 //  }
 //
 //}
-

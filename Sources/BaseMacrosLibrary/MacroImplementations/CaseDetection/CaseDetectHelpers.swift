@@ -18,8 +18,6 @@ public struct CaseDetectionMacro {
   init(
     node: AttributeSyntax,
     decl: some DeclGroupSyntax,
-
-    //    decl: EnumDeclSyntax,
   ) throws {
     guard let enumDecl = decl as? EnumDeclSyntax else {
       throw MacroError("@CaseDetection can only be attached to enum declarations")
@@ -27,22 +25,6 @@ public struct CaseDetectionMacro {
     self.detectedEnum = Enum(enumDecl)
     self.includesNames = node.boolArgument(labeled: "includesNames")
   }
-
-  /// What do we need for Case Detection
-  /// - The enum decl
-  /// - The access level
-  ///
-
-  //  let parentTypeName: TokenSyntax
-  //  let childCases: [EnumCaseElementSyntax]
-  //  let access: DeclModifierListSyntax.Element?
-  //  let parentParamName: TokenSyntax
-
-  //  init(
-  //    node: AttributeSyntax,
-  //    declaration: some DeclGroupSyntax,
-  //    context: some MacroExpansionContext
-  //  )
 }
 
 extension CaseDetectionMacro {

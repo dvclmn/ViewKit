@@ -27,32 +27,48 @@ public struct MetaEnumMacro {
   let childCases: [EnumCaseElementSyntax]
   let access: DeclModifierListSyntax.Element?
   let parentParamName: TokenSyntax
+  let caseDetection: CaseDetectionMacro?
+  
+  var debugString: String = "None"
 
   init(
     node: AttributeSyntax,
-    declaration: some DeclGroupSyntax,
-    context: some MacroExpansionContext
+    decl: some DeclGroupSyntax,
+    context: some MacroExpansionContext,
+    includesCaseDetection: Bool
   ) throws {
-    guard let enumDecl = declaration.as(EnumDeclSyntax.self) else {
+
+    guard let enumDecl = decl.as(EnumDeclSyntax.self) else {
       throw DiagnosticsError(diagnostics: [
-        CaseMacroDiagnostic.notAnEnum(declaration).diagnose(at: Syntax(node))
+        CaseMacroDiagnostic.notAnEnum(decl).diagnose(at: Syntax(node))
       ])
     }
 
-    parentTypeName = enumDecl.name.triviaRemoved(.trailing)
-//    parentTypeName = enumDecl.name.with(\.trailingTrivia, [])
+    if includesCaseDetection {
+      self.caseDetection = try? CaseDetectionMacro(
+        node: node,
+        decl: decl
+      )
 
-    access = enumDecl.modifiers.first(where: \.isPublicAccessLevel)
+    } else {
+      self.caseDetection = nil
+    }
 
-    childCases = enumDecl.caseElements.map { parentCase in
+    self.parentTypeName = enumDecl.name.triviaRemoved(.trailing)
+    self.access = enumDecl.modifiers.first(where: \.isPublicAccessLevel)
+
+    self.childCases = enumDecl.caseElements.map { parentCase in
       parentCase.with(\.parameterClause, nil)
     }
 
-    parentParamName = context.makeUniqueName("parent")
+    self.parentParamName = context.makeUniqueName("parent")
   }
 
-  func makeMetaEnum() -> DeclSyntax {
-    // FIXME: Why does this need to be a string to make trailing trivia work properly?
+}
+
+extension MetaEnumMacro {
+
+  func makeMetaEnum() -> [DeclSyntax] {
     let caseDecls =
       childCases
       .map { childCase in
@@ -60,16 +76,22 @@ public struct MetaEnumMacro {
       }
       .joined(separator: "\n")
 
-    return """
+    let caseDetectorIfAvailable: [DeclSyntax]
+    if let caseDetection {
+      caseDetectorIfAvailable = caseDetection.makeCaseDetector()
+    } else {
+      caseDetectorIfAvailable = []
+    }
+    let meta: DeclSyntax = """
       \(access)enum Meta {
       \(raw: caseDecls)
       \(makeMetaInit())
       }
       """
+    return [meta] + caseDetectorIfAvailable
   }
 
   func makeMetaInit() -> DeclSyntax {
-    // FIXME: Why does this need to be a string to make trailing trivia work properly?
     let caseStatements =
       childCases
       .map { childCase in
@@ -81,6 +103,7 @@ public struct MetaEnumMacro {
       .joined(separator: "\n")
 
     return """
+              // Hello
       \(access)init(_ \(parentParamName): \(parentTypeName)) {
         switch \(parentParamName) {
       \(raw: caseStatements)

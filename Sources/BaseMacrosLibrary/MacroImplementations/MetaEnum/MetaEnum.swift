@@ -29,39 +29,54 @@ extension MetaEnumMacro: MemberMacro {
     conformingTo: [TypeSyntax],
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
-    
-    let macro = try MetaEnumMacro(node: node, declaration: declaration, context: context)
-    
-    return [macro.makeMetaEnum()]
+
+    let shouldDetectCases: Bool = node.boolArgument(labeled: "includesCaseDetection")
+
+    let macro = try MetaEnumMacro(
+      node: node,
+      decl: declaration,
+      context: context,
+      includesCaseDetection: shouldDetectCases
+    )
+
+    return macro.makeMetaEnum()
   }
 }
 
 enum CaseMacroDiagnostic {
   case notAnEnum(DeclGroupSyntax)
+  case noCaseDetect
 }
 
 extension CaseMacroDiagnostic: DiagnosticMessage {
+
+  var name: String {
+    switch self {
+      case .notAnEnum: "notAnEnum"
+      case .noCaseDetect: "noCaseDetect"
+    }
+  }
+
   var message: String {
     switch self {
       case .notAnEnum(let decl):
-        return "'@MetaEnum' can only be attached to an enum, not \(decl.descriptiveDeclKind(withArticle: true))"
+        "'@MetaEnum' can only be attached to an enum, not \(decl.descriptiveDeclKind(withArticle: true))"
+
+      case .noCaseDetect: "Didn't detect cases"
     }
   }
-  
-  var diagnosticID: MessageID {
-    switch self {
-      case .notAnEnum:
-        return MessageID(domain: "MetaEnumDiagnostic", id: "notAnEnum")
-    }
-  }
-  
+
+  static var domain: String { "MetaEnumDiagnostic" }
+
+  var diagnosticID: MessageID { MessageID(domain: Self.domain, id: name) }
+
   var severity: DiagnosticSeverity {
     switch self {
-      case .notAnEnum:
-        return .error
+      case .notAnEnum: .error
+      case .noCaseDetect: .note
     }
   }
-  
+
   func diagnose(at node: Syntax) -> Diagnostic {
     Diagnostic(node: node, message: self)
   }

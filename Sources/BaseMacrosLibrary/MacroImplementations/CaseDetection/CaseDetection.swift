@@ -34,6 +34,7 @@ extension CaseDetectionMacro: MemberMacro {
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
 
-    
+    let macro = try CaseDetectionMacro(node: node, decl: decl)
+    return macro.makeCaseDetector()
   }
 }
