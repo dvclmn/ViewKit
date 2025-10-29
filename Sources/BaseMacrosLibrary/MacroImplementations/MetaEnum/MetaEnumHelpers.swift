@@ -57,14 +57,11 @@ extension MetaEnumMacro {
 
   func makeMetaEnum() -> [DeclSyntax] {
 
-    let names = childCases.map { childCase in
-      "\(childCase.identifier)"
-    }
-
     let meta: DeclSyntax = """
       \(raw: access)enum Meta {
       \(raw: caseDecls)
       \(makeMetaInit())
+      \(caseNames)
       \(raw: detections)
       }
       """
@@ -117,7 +114,29 @@ extension MetaEnumMacro {
   ///     }
   ///   }
   ///
-  /// // Case names
+
+  /// ## Case Names
+  /// ```
+  /// var name: String {
+  ///   case .bird: "Bird"
+  ///   case .whale: "Whale"
+  /// }
+  /// ```
+  var caseNames: DeclSyntax {
+
+    let cases = childCases.map { childCase in
+      "case .\(childCase.identifier): \"\(childCase.identifier.capitalized)\""
+    }.joined(separator: "\n")
+
+    return
+      """
+      \(raw: access)var name: String {
+        switch self {
+          \(raw: cases)
+        }
+      }
+      """
+  }
 
   /// ## Case Detection
   ///
