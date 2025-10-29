@@ -14,13 +14,13 @@ enum ExampleEnumNames {
   case dog
   case cat
   case fish
-  var names: String {
-    switch self {
-      case .dog: "Dog"
-      case .cat: "Cat"
-      case .fish: "Fish"
-    }
-  }
+//  var names: String {
+//    switch self {
+//      case .dog: "Dog"
+//      case .cat: "Cat"
+//      case .fish: "Fish"
+//    }
+//  }
 }
 
 // MARK: - MetaEnum

@@ -56,16 +56,10 @@ extension MetaEnumMacro {
   var childCases: [EnumCase] { detectedEnum.cases }
 
   func makeMetaEnum() -> [DeclSyntax] {
-    let caseDecls =
-      childCases
-      .map { childCase in
-        "  case \(childCase.identifier)"
-      }
-      .joined(separator: "\n")
-    
-    let detections = caseDetection.makeCaseDetector().map { item in
-      "\(item)"
-    }.joined(separator: "\n")
+
+    let names = childCases.map { childCase in
+      "\(childCase.identifier)"
+    }
 
     let meta: DeclSyntax = """
       \(raw: access)enum Meta {
@@ -89,12 +83,57 @@ extension MetaEnumMacro {
       .joined(separator: "\n")
 
     return """
-              // Hello
       \(raw: access)init(_ \(parentParamName): \(raw: parentTypeName)) {
         switch \(parentParamName) {
       \(raw: caseStatements)
         }
       }
       """
+  }
+
+  /// ```
+  /// // Meta enum declaration
+  /// enum Meta {
+  ///   case bird
+  ///   case whale
+  /// […]
+  private var caseDecls: String {
+    return
+      childCases
+      .map { childCase in
+        "  case \(childCase.identifier)"
+      }
+      .joined(separator: "\n")
+  }
+
+  /// ```
+  /// // Initialiser
+  ///   init(_ abc123: ParentEnum) {
+  ///     switch abc123 {
+  ///       case .bird:
+  ///         self = .bird
+  ///       case .whale:
+  ///         self = .whale
+  ///     }
+  ///   }
+  ///
+  /// // Case names
+
+  /// ## Case Detection
+  ///
+  /// ```
+  /// var isBird: Bool {
+  ///   if case .bird = self {
+  ///     return true
+  ///   }
+  ///   return false
+  /// }
+  /// […]
+  ///
+  /// ```
+  var detections: String {
+    caseDetection.makeCaseDetector().map { item in
+      "\(item)"
+    }.joined(separator: "\n")
   }
 }
