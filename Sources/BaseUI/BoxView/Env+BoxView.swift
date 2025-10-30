@@ -19,9 +19,6 @@ extension View {
   public func boxStyle(
     glyphs: Box.GlyphSet = .sharp,
     frame: Box.Theme.FrameStyle = .single
-      //    _ width: Int? = nil,
-      //    _ height: Int? = nil,
-      //    alignment: Alignment = .center
   ) -> some View {
     self
       .environment(\.glyphSet, glyphs)
@@ -33,10 +30,13 @@ extension View {
     _ height: Int? = nil,
     alignment: Alignment = .center
   ) -> some View {
-    self.frameFromGridSize(
-      width: width ?? 20,
-      height: height,
-      alignment: alignment
-    )
+    self
+      .environment(\.gridWidth, width)
+      .environment(\.gridHeight, height)
+//    self.frameFromGridSize(
+//      width: width ?? 20,
+//      height: height,
+//      alignment: alignment
+//    )
   }
 }

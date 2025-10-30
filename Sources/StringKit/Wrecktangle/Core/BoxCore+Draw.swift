@@ -42,11 +42,11 @@ extension Box {
         let boxLine = line(.text(content: headerLine, lineLimit: config.headerLineLimit))
         output.append(boxLine, addsLineBreak: true)
       }
+      
+      /// Divider
+      let divider = line(.divider)
+      output.append(divider, addsLineBreak: true)
     }
-
-    /// Divider
-    let divider = line(.divider)
-    output.append(divider, addsLineBreak: true)
 
     /// Content
     let contentLines = TextFlow(

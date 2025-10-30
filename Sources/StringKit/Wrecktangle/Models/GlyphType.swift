@@ -7,10 +7,8 @@
 
 extension Box {
 
-
   /// I ought to make it so the code will use the external version of a glyph,
   /// if there is no internal style available?
-  ///
   public enum GlyphType: Hashable, Sendable {
 
     /// Basic lines
@@ -32,26 +30,34 @@ extension Box {
 
     case blank
 
-    public enum Location: Hashable, Sendable {
-      case interior
-      case exterior
-    }
-
     var fallback: Box.GlyphType? {
       switch self {
         case .horizontal(.interior):
           return .horizontal(.exterior)
+
         case .vertical(.interior):
           return .vertical(.exterior)
+
         case .join(_, _, let type):
-          return .join(x: .exterior, y: .exterior, type: type)  // Default to cross join
+          /// Default to cross join
+          return .join(x: .exterior, y: .exterior, type: type)
+
         case .corner(_, let type):
-          return .corner(location: .exterior, type: type)  // Default to top-leading corner
+          /// Default to top-leading corner
+          return .corner(location: .exterior, type: type)
 
         default:
           return nil
       }
     }
+  }
+}
+
+extension Box.GlyphType {
+  
+  public enum Location: Hashable, Sendable {
+    case interior
+    case exterior
   }
 
 }

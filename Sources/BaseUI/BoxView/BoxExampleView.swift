@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 22/8/2024.
 //
 
-import SwiftUI
 import StringKit
+import SwiftUI
 
 struct BoxExampleView: View {
 
@@ -20,26 +20,24 @@ struct BoxExampleView: View {
 
     VStack(spacing: 14) {
 
-      Text(box01.attributedString)
-      //      Text(box02.attributedString)
+      BoxView("I love boxes made of text") {
+        Self.testString.toAttributed
+      }
+      .gridFrame(42)
 
-      //      HStack {
-      //        Text(boxSmall01.attributedString)
-      //        Text(boxSmall02.attributedString)
-      //      }
-      
-      Group {
-        BoxView("Header title") {
-          "Hello"
-        }
-        
-        BoxView {
-          "No header text"
-        }
+      BoxView("Header title") {
+        "Hello"
       }
       .gridFrame(20)
       .boxStyle(glyphs: .double, frame: .double)
-      
+
+      BoxView {
+        "No header text"
+        "This is another line"
+      }
+      .gridFrame(38)
+      .boxStyle(glyphs: .rounded, frame: .single)
+
     }
     .preferredColorScheme(.dark)
     .textSelection(.enabled)
@@ -56,16 +54,16 @@ struct BoxExampleView: View {
 
 extension BoxExampleView {
 
-  var box01: Box {
-    Box(
-      header: "I love boxes made of text",
-      content: Self.testString.toAttributed,
-      width: boxWidth,
-      glyphSet: .rounded,
-      frameStyle: .double,
-      counterStyle: .ruler
-    )
-  }
+  //  var box01: Box {
+  //    Box(
+  //      header: "I love boxes made of text",
+  //      content: ,
+  //      width: boxWidth,
+  //      glyphSet: .rounded,
+  //      frameStyle: .double,
+  //      counterStyle: .ruler
+  //    )
+  //  }
 
   static var testString: String {
     """

@@ -13,25 +13,6 @@ extension Box {
 
     switch lineType {
 
-      case .top:
-
-        let structureLine = buildStructureLine(for: lineType, hasLineBreak: false)
-
-        /// Note the order here, shadow first, then structure
-        return structureLine
-
-      case .divider:
-
-        return buildStructureLine(for: lineType, hasLineBreak: false)
-
-      case .bottom:
-
-        let structureLine = buildStructureLine(for: lineType, hasLineBreak: true)
-        //        let shadowLine = buildShadow(for: lineType, hasLineBreak: true)
-
-        /// Structure first, then shadow
-        return structureLine
-
       case .text(let content, let lineLimit):
 
         /// This uses `BoxLine`s text-based initialiser
@@ -45,12 +26,17 @@ extension Box {
         let lineString = lineResult.render()
 
         return lineString
-
+        
+      case .top, .divider, .bottom:
+        return buildStructureLine(for: lineType, hasLineBreak: false)
     }
 
   }  // END create line
 
-  private func buildStructureLine(for preset: BoxLine.LineType, hasLineBreak: Bool) -> String {
+  private func buildStructureLine(
+    for preset: BoxLine.LineType,
+    hasLineBreak: Bool
+  ) -> String {
 
     guard let parts = preset.parts else {
       return "nil"

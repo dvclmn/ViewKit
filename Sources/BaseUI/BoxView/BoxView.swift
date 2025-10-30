@@ -42,8 +42,8 @@ public struct BoxView: View {
 
       .overlay {
         GridGuideOverlay(opacity: 0.1)
+          .isDebugMode(true)
       }
-      .background(Color.mint.quaternary)
   }
 }
 
