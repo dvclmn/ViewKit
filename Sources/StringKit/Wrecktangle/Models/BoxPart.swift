@@ -7,36 +7,20 @@
 
 import Foundation
 
-public extension Box {
+public struct BoxPart {
+  public var content: MultilineString
+  public var type: PartType
 
-  struct BoxPart {
-    public var content: MultilineString
-    public var type: PartType
-    
-    public init(content: MultilineString, type: PartType) {
-      self.content = content
-      self.type = type
-    }
+  public init(content: MultilineString, type: PartType) {
+    self.content = content
+    self.type = type
   }
 }
 
-public extension Box.BoxPart {
-  
-  var width: Int {
-    content.width
-  }
-  
-  var height: Int {
-    content.height
-  }
-  
-  var columns: Int {
-    self.width
-  }
-  
-  var rows: Int {
-    self.height
-  }
-  
+extension BoxPart {
 
+  public var width: Int { content.width }
+  public var height: Int { content.height }
+  public var columns: Int { width }
+  public var rows: Int { height }
 }

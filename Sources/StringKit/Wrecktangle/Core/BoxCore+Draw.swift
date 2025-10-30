@@ -32,9 +32,9 @@ extension Box {
       let headerLines: [String] = headerText.reflowText(
         width: widthForText,
         maxLines: config.headerLineLimit,
-        paddingWidth: self.config.theme.padding,
+        paddingH: self.config.theme.padding,
         paddingCharacter: invisibleIfNeeded(.space),
-        wrappingOption: self.config.wordWrapStrategy
+//        wrappingOption: self.config.wordWrapStrategy
       )
 
       for headerLine in headerLines {
@@ -52,9 +52,9 @@ extension Box {
     let contentLines: [String] = self.content.reflowText(
       width: widthForText,
       maxLines: config.contentLineLimit,
-      paddingWidth: self.config.theme.padding,
+      paddingH: self.config.theme.padding,
       paddingCharacter: invisibleIfNeeded(.space),
-      wrappingOption: self.config.wordWrapStrategy
+//      wrappingOption: self.config.wordWrapStrategy
     )
 
     for contentLine in contentLines {

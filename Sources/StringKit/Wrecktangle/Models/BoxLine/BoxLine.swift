@@ -5,23 +5,20 @@
 //  Created by Dave Coleman on 11/9/2024.
 //
 
-
 /// Currently this library can only handle horizontal dividers, not vertical.
 /// So processing line-by-line, vertically, is fairly straightforward.
-///
+extension Box {
 
-public extension Box {
-  
-  struct BoxLine {
+  public struct BoxLine {
     let content: LineContent
-    
+
     /// The width left for content, after leading/trailing
     /// structure/padding/shadow is accounted for
     let remainingWidth: Int
     let leadingCap: BoxPart
     let trailingCap: BoxPart
     let theme: Box.Theme
-    
+
     /// Default initialiser (structure-based)
     init(
       remainingWidth: Int,
@@ -37,7 +34,7 @@ public extension Box {
       self.trailingCap = trailingCap
       self.theme = theme
     }
-    
+
     /// Convenience initialiser for text-based content
     init(
       text: String,
@@ -45,11 +42,11 @@ public extension Box {
       remainingWidth: Int,
       theme: Box.Theme
     ) {
-      
+
       self.content = TextContent(text, lineLimit: lineLimit)
       self.remainingWidth = remainingWidth
       self.theme = theme
-      
+
       /// Currently, this initialiser 'has to' take in a `theme` parameter, to obtain
       /// the correct `BoxParts` for the leading and trailing caps, to save
       /// the package user from having to do it. Text-based lines will always
@@ -57,73 +54,72 @@ public extension Box {
       /// in based on the selected Theme).
       self.leadingCap = BoxPart.create(.vertical(.leading), with: theme)
       self.trailingCap = BoxPart.create(.vertical(.trailing), with: theme)
-      
+
       let conditions = Self.checkConditions(leadingCap: self.leadingCap, trailingCap: self.trailingCap)
-      
+
       precondition(
         conditions.condition,
         conditions.message
       )
-      
+
     }
   }
 }
 
-public extension Box.BoxLine {
-  
-  protocol LineContent {
+extension Box.BoxLine {
+
+  public protocol LineContent {
     var rawContent: String { get }
   }
 
-  typealias ThreePartLine = (
-    leading: Box.PartType,
-    repeater: Box.PartType,
-    trailing: Box.PartType
+  public typealias ThreePartLine = (
+    leading: BoxPart.PartType,
+    repeater: BoxPart.PartType,
+    trailing: BoxPart.PartType
   )
-  
+
   /// What kinds of lines could there be, in a box?
   ///
   /// Note: These, by definition, describe a *whole* line, stretching
   /// from one end to the other. Not just a sub-component.
   ///
   /// E.g. `top` would consist of a leading cap, repeating part, and trailing cap.
-  ///
-  enum LineType: Hashable, Sendable {
+  public enum LineType: Hashable, Sendable {
     case top
     case divider
     case bottom
     case text(content: String, lineLimit: Int = 0)
-    
+
     public var parts: ThreePartLine? {
       switch self {
         case .top:
           (
-            Box.PartType.corner(.topLeading),
-            Box.PartType.horizontal(.top),
-            Box.PartType.corner(.topTrailing)
+            BoxPart.PartType.corner(.topLeading),
+            BoxPart.PartType.horizontal(.top),
+            BoxPart.PartType.corner(.topTrailing)
           )
         case .divider:
           (
-            Box.PartType.join(.leading),
-            Box.PartType.horizontal(.interior),
-            Box.PartType.join(.trailing)
+            BoxPart.PartType.join(.leading),
+            BoxPart.PartType.horizontal(.interior),
+            BoxPart.PartType.join(.trailing)
           )
         case .bottom:
           (
-            Box.PartType.corner(.bottomLeading),
-            Box.PartType.horizontal(.bottom),
-            Box.PartType.corner(.bottomTrailing)
+            BoxPart.PartType.corner(.bottomLeading),
+            BoxPart.PartType.horizontal(.bottom),
+            BoxPart.PartType.corner(.bottomTrailing)
           )
         case .text:
           nil
       }
-    } // END parts
-    
+    }  // END parts
+
     private static let shadowLookup: [LineType: Set<Box.LightSource>] = [
       .top: [.bottomLeading, .bottomTrailing],
-      .bottom: [.topLeading, .topTrailing]
+      .bottom: [.topLeading, .topTrailing],
     ]
-    
+
     func hasShadow(lightSource: Box.LightSource) -> Bool {
       switch self {
         case .top, .bottom:
@@ -133,6 +129,5 @@ public extension Box.BoxLine {
       }
     }
   }
-  
-}
 
+}

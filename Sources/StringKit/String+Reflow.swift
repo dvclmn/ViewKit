@@ -5,24 +5,32 @@
 //  Created by Dave Coleman on 14/9/2024.
 //
 
-public enum WordWrapStrategy: Sendable {
-  case hyphenate
-  case wrap
-//  case crop
-}
+//public enum WordWrapStrategy: Sendable {
+//  case hyphenate
+//  case wrap
+////  case crop
+//}
 public enum PaddingBookend {
   case none
   case both(width: Int)
 }
 
-public extension String {
+public struct TextFlow {
+  
+  let text: String
+  let shouldHyphenate: Bool
+  let width: Int
+}
+
+public extension TextFlow {
   
   func reflowText(
-    width: Int,
+//    width: Int,
     maxLines: Int = 0,
-    paddingWidth: Int = 1, // leading and trailing
+    paddingH: Int = 1, // leading and trailing
     paddingCharacter: Character = " ",
-    wrappingOption: WordWrapStrategy = .wrap
+//    shouldHyphenate: Bool = true,
+//    wrappingOption: WordWrapStrategy = .wrap
   ) -> [String] {
     
     guard width > 0 else {
@@ -31,13 +39,13 @@ public extension String {
     }
     
     // Calculate the effective width for text content
-    let effectiveWidth = width - (2 * paddingWidth)
+    let effectiveWidth = width - (2 * paddingH)
     guard effectiveWidth > 0 else {
       print("Error: Width is too small to accommodate padding")
       return []
     }
     
-    let paragraphs = self.components(separatedBy: .newlines)
+    let paragraphs = text.components(separatedBy: .newlines)
     var reflowedLines: [String] = []
     
     for paragraph in paragraphs {
@@ -66,14 +74,20 @@ public extension String {
           currentLine += wordString
         } else {
           
-          reflowedLines.append(currentLine.padLine(toFill: width, with: paddingCharacter, bookends: .both(width: paddingWidth)))
+          reflowedLines.append(
+            currentLine.padLine(
+              toFill: width,
+              with: paddingCharacter,
+              bookends: .both(width: paddingH)
+            )
+          )
           
           // Handle word exceeding width
           if wordString.count > effectiveWidth {
             let wrappedWords = wrapLongWord(wordString, width: effectiveWidth, option: wrappingOption)
             
             reflowedLines.append(contentsOf: wrappedWords.dropLast().map {
-              $0.padLine(toFill: width, with: paddingCharacter, bookends: .both(width: paddingWidth))
+              $0.padLine(toFill: width, with: paddingCharacter, bookends: .both(width: paddingH))
             })
             currentLine = wrappedWords.last ?? ""
           } else {
@@ -84,7 +98,7 @@ public extension String {
 
       
       if !currentLine.isEmpty {
-        reflowedLines.append(currentLine.padLine(toFill: width, with: paddingCharacter, bookends: .both(width: paddingWidth)))
+        reflowedLines.append(currentLine.padLine(toFill: width, with: paddingCharacter, bookends: .both(width: paddingH)))
       }
     }
     
@@ -95,30 +109,13 @@ public extension String {
     return reflowedLines
   }
 
-  private func padLine(
-    toFill width: Int,
-    with character: Character,
-    bookends: PaddingBookend = .none
-  ) -> String {
-    
-    var result: String = self
-    
-    switch bookends {
-      case .both(let bookendWidth):
-        let bookendPadding = String(repeating: character, count: bookendWidth)
-        result = bookendPadding + result + bookendPadding
-      case .none:
-        break
-    }
-    
-    let remainingWidth = max(0, width - result.count)
-    result += String(repeating: character, count: remainingWidth)
-    
-    return result
 
-  }
   
-  private func wrapLongWord(_ word: String, width: Int, option: WordWrapStrategy) -> [String] {
+  private func wrapLongWord(
+    _ word: String,
+    width: Int,
+//    option: WordWrapStrategy
+  ) -> [String] {
     var wrappedWords: [String] = []
     var remainingWord = word
     
@@ -151,4 +148,29 @@ public extension String {
   
   
   
+}
+
+extension String {
+  private func padLine(
+    toFill width: Int,
+    with character: Character,
+    bookends: PaddingBookend = .none
+  ) -> String {
+    
+    var result: String = self
+    
+    switch bookends {
+      case .both(let bookendWidth):
+        let bookendPadding = String(repeating: character, count: bookendWidth)
+        result = bookendPadding + result + bookendPadding
+      case .none:
+        break
+    }
+    
+    let remainingWidth = max(0, width - result.count)
+    result += String(repeating: character, count: remainingWidth)
+    
+    return result
+    
+  }
 }

@@ -5,55 +5,38 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
+extension Box {
 
-public extension Box {
-  
-  enum JoinType: Hashable, Sendable {
-    case leading
-    case trailing
-    case top
-    case bottom
-    case cross
-    
-    
-  }
-  
-  enum CornerType: Hashable, Sendable {
-    case topLeading
-    case topTrailing
-    case bottomLeading
-    case bottomTrailing
-  }
-  
+
   /// I ought to make it so the code will use the external version of a glyph,
   /// if there is no internal style available?
   ///
-  enum GlyphType: Hashable, Sendable {
-    
+  public enum GlyphType: Hashable, Sendable {
+
     /// Basic lines
     case horizontal(Location = .exterior)
     case vertical(Location = .exterior)
-    
+
     /// Joins
     case join(
       x: Location = .interior,
       y: Location = .exterior,
-      type: JoinType
+      type: BoxPart.Join
     )
-    
+
     /// Corners
     case corner(
       location: Location = .exterior,
-      type: CornerType
+      type: BoxPart.Corner
     )
-    
+
     case blank
-    
+
     public enum Location: Hashable, Sendable {
       case interior
       case exterior
     }
-    
+
     var fallback: Box.GlyphType? {
       switch self {
         case .horizontal(.interior):
@@ -61,14 +44,14 @@ public extension Box {
         case .vertical(.interior):
           return .vertical(.exterior)
         case .join(_, _, let type):
-          return .join(x: .exterior, y: .exterior, type: type) // Default to cross join
+          return .join(x: .exterior, y: .exterior, type: type)  // Default to cross join
         case .corner(_, let type):
-          return .corner(location: .exterior, type: type) // Default to top-leading corner
-          
+          return .corner(location: .exterior, type: type)  // Default to top-leading corner
+
         default:
           return nil
       }
     }
   }
-    
+
 }

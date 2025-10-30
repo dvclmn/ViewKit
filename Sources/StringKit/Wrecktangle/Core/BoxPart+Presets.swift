@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 12/9/2024.
 //
 
-extension Box.PartType {
+extension BoxPart.PartType {
 
   /// This should be able to replace the old method, using 'archetype' glyphs
   /// that would then need to be swapped in.
@@ -209,12 +209,12 @@ extension Box.PartType {
 
 }
 
-extension Box.BoxPart {
+extension BoxPart {
 
   public static func create(
-    _ type: Box.PartType,
+    _ type: BoxPart.PartType,
     with theme: Box.Theme
-  ) -> Box.BoxPart {
+  ) -> BoxPart {
 
     let glyphGrid = type.preset(with: theme.frameStyle)
     let characterGrid = glyphGrid.map { row in
@@ -246,7 +246,7 @@ extension Box.BoxPart {
 
     //    print("Character grid:\n \(multilineString)")
 
-    return Box.BoxPart(content: finalResult, type: type)
+    return BoxPart(content: finalResult, type: type)
   }
 
   //  private static func addShadow(

@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-
 /// Thoughts for a parametric shadow system
 ///
 /// - Any characters provided for any one parameter, will be cycled randomly
@@ -34,13 +33,13 @@
 ///
 /// ```
 
-public extension Box.Theme {
-  
-  struct Shadow: Sendable {
+extension Box.Theme {
+
+  public struct Shadow: Sendable {
     var type: ShadowType
     var lightSource: Box.LightSource
     var strength: ShadowStrength
-    
+
     public init(
       type: ShadowType = .simple,
       lightSource: Box.LightSource = .topTrailing,
@@ -53,8 +52,8 @@ public extension Box.Theme {
   }
 }
 
-public extension Box.Theme.Shadow {
-  
+extension Box.Theme.Shadow {
+
   /// What do we need to know to create a shadow for a side?
   ///
   /// 1. Dimensions — only 1x character high for text lines, but need
@@ -62,11 +61,10 @@ public extension Box.Theme.Shadow {
   /// 2. Whether it repeats horizontally
   /// 3. Alignment based on light source
   ///
-  
-  
+
   /// Referring to horizontal space only
   ///
-  var reservedSpace: Int {
+  public var reservedSpace: Int {
     switch type {
       case .simple:
         1
@@ -74,21 +72,17 @@ public extension Box.Theme.Shadow {
         0
     }
   }
-  
 
-  
-  enum ShadowType: Sendable {
+  public enum ShadowType: Sendable {
     case simple
     case none
-  } // END shadow type
-  
+  }  // END shadow type
 
-  
-  enum ShadowStrength: Sendable {
+  public enum ShadowStrength: Sendable {
     case light
     case medium
     case dark
-    
+
     public var character: Character {
       switch self {
         case .light:
@@ -103,15 +97,15 @@ public extension Box.Theme.Shadow {
 
 }
 
-public extension Box {
-  
-  enum LightSource: Sendable {
+extension Box {
+
+  public enum LightSource: Sendable {
     case topLeading
     case topTrailing
     case bottomLeading
     case bottomTrailing
-    
-    public func hasShadow(_ location: Box.VerticalLocation) -> Bool {
+
+    public func hasShadow(_ location: BoxPart.VerticalLocation) -> Bool {
       switch location {
         case .leading:
           self == .topLeading || self == .bottomLeading
@@ -121,7 +115,6 @@ public extension Box {
           false
       }
     }
-    
-  } // END light source
-}
 
+  }  // END light source
+}

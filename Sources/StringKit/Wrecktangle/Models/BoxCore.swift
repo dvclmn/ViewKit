@@ -7,8 +7,6 @@
 
 import Foundation
 
-//public typealias Box = BoxCore
-
 public struct Box {
 
   var header: String?
@@ -39,20 +37,9 @@ extension Box {
   /// The remaning width for text, after removing space
   /// reserved for structural elements
   public var widthForText: Int {
-    let caps = theme.frameStyle.maximumGridSize.width.value
-
-    return max(0, boxWidth - caps)
-
+    let capCount = theme.frameStyle.maximumGridSize.width.value
+    return max(0, boxWidth - capCount)
   }
-
-  //  var shadow: BoxCore.Theme.Shadow {
-  //    self.config.theme.shadow
-  //  }
-  //
-  //  var shadowCharacter: Character {
-  //    self.config.theme.shadow.strength.character
-  //  }
-
 }
 
 extension Box: CustomStringConvertible {
