@@ -7,9 +7,9 @@
 
 /// Currently this library can only handle horizontal dividers, not vertical.
 /// So processing line-by-line, vertically, is fairly straightforward.
-extension Box {
+extension Box.Builder {
 
-  public struct BoxLine {
+  public struct Line {
     let content: LineContent
 
     /// The width left for content, after leading/trailing
@@ -66,11 +66,11 @@ extension Box {
   }
 }
 
-extension Box.BoxLine {
+public protocol LineContent {
+  var rawContent: String { get }
+}
 
-  public protocol LineContent {
-    var rawContent: String { get }
-  }
+extension Box.Builder.Line {
 
   public typealias ThreePartLine = (
     leading: Box.PartType,
@@ -115,19 +115,19 @@ extension Box.BoxLine {
       }
     }  // END parts
 
-    private static let shadowLookup: [LineType: Set<Box.LightSource>] = [
-      .top: [.bottomLeading, .bottomTrailing],
-      .bottom: [.topLeading, .topTrailing],
-    ]
-
-    func hasShadow(lightSource: Box.LightSource) -> Bool {
-      switch self {
-        case .top, .bottom:
-          return Self.shadowLookup[self, default: []].contains(lightSource)
-        case .divider, .text:
-          return false
-      }
-    }
+    //    private static let shadowLookup: [LineType: Set<Box.LightSource>] = [
+    //      .top: [.bottomLeading, .bottomTrailing],
+    //      .bottom: [.topLeading, .topTrailing],
+    //    ]
+    //
+    //    func hasShadow(lightSource: Box.LightSource) -> Bool {
+    //      switch self {
+    //        case .top, .bottom:
+    //          return Self.shadowLookup[self, default: []].contains(lightSource)
+    //        case .divider, .text:
+    //          return false
+    //      }
+    //    }
   }
 
 }

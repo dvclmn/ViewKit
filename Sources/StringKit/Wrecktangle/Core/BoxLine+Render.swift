@@ -5,21 +5,17 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-public extension Box.BoxLine {
+extension Box.Builder.Line {
 
-  func render() -> String {
+  public func render() -> String {
 
     let renderedContent: MultilineString
-    
-//    print("Leading cap: \(leadingCap.content). Trailing cap: \(trailingCap.content)")
-    
     renderedContent = MultilineString(content.rawContent)
 
     let joinedContent = leadingCap.content + renderedContent + trailingCap.content
-    
+
     return joinedContent.string
-    
+
   }
-  
-  
+
 }

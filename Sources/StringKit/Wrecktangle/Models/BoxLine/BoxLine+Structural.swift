@@ -5,11 +5,11 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-public extension Box.BoxLine {
+extension Box.Builder.Line {
 
-  struct StructuralContent: LineContent {
+  public struct StructuralContent: LineContent {
     public let rawContent: String
-    
+
     init(
       adjustedWidth: Int,
       repeatingPattern: Box.Part

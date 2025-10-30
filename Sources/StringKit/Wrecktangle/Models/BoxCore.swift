@@ -7,6 +7,14 @@
 
 import Foundation
 
+/// An ASCII box without any text content, just the structure.
+/// For wrapping a SwiftUI view in a box
+public struct ViewBox {
+  let width: Int
+  let height: Int
+  let theme: Box.Theme
+}
+
 public struct Box {
   var header: String?
   var content: AttributedString
@@ -23,6 +31,7 @@ extension Box {
     frameStyle: Box.Theme.FrameStyle,
     counterStyle: TextCore.WidthCounterStyle = .ruler
   ) {
+
     let theme = Box.Theme(
       glyphSet: glyphSet,
       frameStyle: frameStyle,
@@ -49,12 +58,6 @@ extension Box {
   public var glyphSet: GlyphSet { config.theme.glyphSet }
   public var boxWidth: Int { config.width }
 
-  /// The remaning width for text, after removing space
-  /// reserved for structural elements
-  public var widthForText: Int {
-    let capCount = theme.frameStyle.maximumGridSize.width.value
-    return max(0, boxWidth - capCount)
-  }
 }
 
 extension Box: CustomStringConvertible {

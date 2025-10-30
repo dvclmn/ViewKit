@@ -6,9 +6,27 @@
 //
 
 extension Box {
+  public struct Builder {
+    let width: Int
+    let theme: Box.Theme
 
-  public func line(
-    _ lineType: BoxLine.LineType
+  }
+}
+
+extension Box.Builder {
+
+  /// The remaning width for text, after removing space
+  /// reserved for structural elements
+  public var widthForText: Int {
+    let capCount = theme.frameStyle.maximumGridSize.width.value
+    return max(0, width - capCount)
+  }
+}
+
+extension Box.Builder {
+
+  func buildLine(
+    _ lineType: Line.LineType
   ) -> String {
 
     switch lineType {
@@ -16,7 +34,7 @@ extension Box {
       case .text(let content, let lineLimit):
 
         /// This uses `BoxLine`s text-based initialiser
-        let lineResult = Box.BoxLine(
+        let lineResult = Line(
           text: content,
           lineLimit: lineLimit,
           remainingWidth: widthForText,
@@ -26,7 +44,7 @@ extension Box {
         let lineString = lineResult.render()
 
         return lineString
-        
+
       case .top, .divider, .bottom:
         return buildStructureLine(for: lineType, hasLineBreak: false)
     }
@@ -34,7 +52,7 @@ extension Box {
   }  // END create line
 
   private func buildStructureLine(
-    for preset: BoxLine.LineType,
+    for preset: Line.LineType,
     hasLineBreak: Bool
   ) -> String {
 
@@ -47,7 +65,7 @@ extension Box {
     let trailing = Box.Part.create(parts.trailing, with: theme)
 
     /// This uses `BoxLine`s structure-based initialiser
-    let lineResult = BoxLine(
+    let lineResult = Line(
       remainingWidth: widthForText,
       repeater: repeating,
       leadingCap: leading,

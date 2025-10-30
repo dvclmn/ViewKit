@@ -5,23 +5,22 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-extension Box.BoxLine {
-  
+extension Box.Builder.Line {
+
   static func checkConditions(
     leadingCap: Box.Part,
     trailingCap: Box.Part
   ) -> (condition: Bool, message: String) {
-    
+
     let heightCheck: Bool = leadingCap.height == 1 && trailingCap.height == 1
     let message: String = """
-    Caps for text-based lines cannot exceed a height of 1.
-    This allows line height to be calculated correctly.
-    Provided Cap heights: Leading '\(leadingCap.height)`, Trailing '\(trailingCap.height)'
-    """
-    
+      Caps for text-based lines cannot exceed a height of 1.
+      This allows line height to be calculated correctly.
+      Provided Cap heights: Leading '\(leadingCap.height)`, Trailing '\(trailingCap.height)'
+      """
+
     return (heightCheck, message)
-    
+
   }
 
-  
 }
