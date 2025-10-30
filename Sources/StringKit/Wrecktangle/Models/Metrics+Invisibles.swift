@@ -10,8 +10,13 @@ import SwiftUI
 
 public extension Box {
   
+  func paddingCharacter(for element: Invisibles) -> Character {
+//    guard config.metrics?.invisibles
+    guard config.metrics.contains(.invisibles) else { return " " }
+    return element.character
+  }
+  
   enum Invisibles {
-    
     case line
     case space
     case tab
@@ -33,19 +38,17 @@ public extension Box {
         case .paddingAlt: "."
       }
     }
-    
   }
-  
-  func invisibleIfNeeded(
-    _ character: Invisibles,
-    fallBackCharacter: Character = " " // I.e. character to return if invisibles are not needed
-  ) -> Character {
-    
-    let isShowing = self.config.metrics.invisibles
-    
-    let result = isShowing ? character.character : fallBackCharacter
-    
-    return result
-  }
-  
 }
+
+//func invisibleIfNeeded(
+//  _ character: Invisibles,
+//  fallBackCharacter: Character = " " // I.e. character to return if invisibles are not needed
+//) -> Character {
+//  
+//  let isShowing = self.config.metrics.invisibles
+//  
+//  let result = isShowing ? character.character : fallBackCharacter
+//  
+//  return result
+//}

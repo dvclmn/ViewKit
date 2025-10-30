@@ -35,10 +35,10 @@ extension Box {
     public var contentLineLimit: Int
 
     public let shouldHyphenate: Bool
-//    public var wordWrapStrategy: WordWrapStrategy
 
     /// Display metadata about the box itself
     public var metrics: Metrics
+    public let counterStyle: TextCore.WidthCounterStyle
 
     public init(
       theme: Theme = Theme(),
@@ -46,8 +46,8 @@ extension Box {
       headerLineLimit: Int = 0,
       contentLineLimit: Int = 0,
       shouldHyphenate: Bool = true,
-//      wordWrapStrategy: WordWrapStrategy = .hyphenate,
-      metrics: Metrics = Metrics()
+      metrics: Metrics = [],
+      counterStyle: TextCore.WidthCounterStyle = .ruler
     ) {
       self.theme = theme
       self.width = width
@@ -55,10 +55,10 @@ extension Box {
       self.contentLineLimit = contentLineLimit
       self.shouldHyphenate = shouldHyphenate
       self.metrics = metrics
+      self.counterStyle = counterStyle
     }
 
     /// The default configuration for a `Box`.
-    ///
     public static let `default` = Config()
   }
 

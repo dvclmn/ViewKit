@@ -13,7 +13,7 @@ extension Box {
     width: Int,
     glyphSet: Box.GlyphSet,
     frameStyle: Box.Theme.FrameStyle,
-    widthCounter: TextCore.WidthCounterStyle
+    counterStyle: TextCore.WidthCounterStyle = .ruler
   ) {
     let theme = Box.Theme(
       glyphSet: glyphSet,
@@ -21,19 +21,24 @@ extension Box {
       padding: 1
     )
 
-    let metrics = Box.Config.Metrics(
-      widthCounter: widthCounter,
-      lineNumbers: false,
-      invisibles: false
-    )
+//    let metrics: Box.Config.Metrics?
+//    if let widthCounter {
+//      metrics = Box.Config.Metrics(
+//        widthCounter: widthCounter,
+//        lineNumbers: false,
+//        invisibles: false
+//      )
+//    } else {
+//      metrics = nil
+//    }
 
     let config = Box.Config(
       theme: theme,
       width: width,
       headerLineLimit: 2,
       contentLineLimit: 8,
-      //      wordWrapStrategy: .hyphenate,
-      metrics: metrics
+      counterStyle: counterStyle
+//      metrics: metrics
     )
 
     self.header = header

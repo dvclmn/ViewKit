@@ -50,7 +50,7 @@ extension BoxExampleView {
       width: boxWidth,
       glyphSet: .rounded,
       frameStyle: .double,
-      widthCounter: .off
+      widthCounter: nil
     )
   }
 

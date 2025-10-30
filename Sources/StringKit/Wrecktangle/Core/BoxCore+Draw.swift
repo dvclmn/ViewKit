@@ -16,13 +16,12 @@ extension Box {
     var output = AttributedString()
 
     /// Add a width counter, according to user's preference ()
-    output += TextCore.widthCounter(boxWidth, style: self.config.metrics.widthCounter)
+    if config.metrics.contains(.widthCounter) {
+      //    if let counter = config.metrics?.widthCounter {
+      output += TextCore.widthCounter(boxWidth, style: config.counterStyle)
+    }
 
     /// Box roof
-
-    //    let shadowLine = line(.shadow)
-    //    output.append(shadowLine, addsLineBreak: true)
-
     let top = line(.top)
     output.append(top, addsLineBreak: true)
 
@@ -33,20 +32,13 @@ extension Box {
         text: headerText,
         shouldHyphenate: config.shouldHyphenate,
         width: widthForText,
-        paddingCharacter: invisibleIfNeeded(.space)
+        paddingCharacter: paddingCharacter(for: .space)
+        //        paddingCharacter:  invisibleIfNeeded(.space)
       )
       .flowed(
         maxLines: config.contentLineLimit,
         paddingH: config.theme.padding
       )
-
-      //      let headerLines: [String] = headerText.reflowText(
-      //        width: widthForText,
-      //        maxLines: config.headerLineLimit,
-      //        paddingH: config.theme.padding,
-      //        paddingCharacter: invisibleIfNeeded(.space),
-      //        //        wrappingOption: self.config.wordWrapStrategy
-      //      )
 
       for headerLine in headerLines {
         let boxLine = line(.text(content: headerLine, lineLimit: config.headerLineLimit))
@@ -63,20 +55,12 @@ extension Box {
       text: self.content,
       shouldHyphenate: config.shouldHyphenate,
       width: widthForText,
-      paddingCharacter: invisibleIfNeeded(.space)
+      paddingCharacter: paddingCharacter(for: .space)
     )
     .flowed(
       maxLines: config.contentLineLimit,
       paddingH: config.theme.padding
     )
-
-    //    let contentLines: [String] = self.content.reflowed(
-    //      width: widthForText,
-    //      maxLines: config.contentLineLimit,
-    //      paddingH: self.config.theme.padding,
-    //      paddingCharacter: invisibleIfNeeded(.space),
-    ////      wrappingOption: self.config.wordWrapStrategy
-    //    )
 
     for contentLine in contentLines {
       let boxLine = line(.text(content: contentLine, lineLimit: config.contentLineLimit))
