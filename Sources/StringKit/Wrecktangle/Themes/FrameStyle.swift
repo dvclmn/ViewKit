@@ -22,13 +22,12 @@ extension Box.Theme {
     /// exceeding this tile size is likely to break the layout in some way.
     ///
     public var maximumGridSize: Box.Dimensions {
-
-      let dimensions: Box.Dimensions
-
       switch self {
         case .single:
 
           /// # Single — 1x1
+          ///
+          /// Examples:
           ///
           /// ```
           /// // Top leading corner
@@ -40,15 +39,16 @@ extension Box.Theme {
           /// 1 ╧
           ///
           /// ```
-          ///
           let width: Int = 1 + 1  // One character either side
           let height: Int = 1
 
-          dimensions = .init(width, height)
+          return Box.Dimensions(width, height)
 
         case .double:
 
           /// # Double — 3x2
+          ///
+          /// Examples:
           ///
           /// ```
           /// // Top leading corner, 3x2
@@ -66,15 +66,12 @@ extension Box.Theme {
           /// 2 ═
           ///
           /// ```
-          ///
           let width: Int = 3 + 3  // One character either side
           let height: Int = 2
 
-          dimensions = .init(width, height)
+          return Box.Dimensions(width, height)
 
       }
-
-      return dimensions
     }
 
   }

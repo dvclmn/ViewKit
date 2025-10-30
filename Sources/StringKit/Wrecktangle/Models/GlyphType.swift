@@ -12,16 +12,12 @@ extension Box {
   public enum GlyphType: Hashable, Sendable {
 
     /// Basic lines
-    case horizontal(Location = .exterior)
-    case vertical(Location = .exterior)
+    case horizontal(Location)
+    case vertical(Location)
 
     /// Joins
-    case join(
-      x: Location = .interior,
-      y: Location = .exterior,
-      type: BoxPart.Join
-    )
-
+    case join(x: Location, y: Location, type: BoxPart.Join)
+    
     /// Corners
     case corner(
       location: Location = .exterior,
@@ -29,26 +25,28 @@ extension Box {
     )
 
     case blank
+  }
+}
 
-    var fallback: Box.GlyphType? {
-      switch self {
-        case .horizontal(.interior):
-          return .horizontal(.exterior)
-
-        case .vertical(.interior):
-          return .vertical(.exterior)
-
-        case .join(_, _, let type):
-          /// Default to cross join
-          return .join(x: .exterior, y: .exterior, type: type)
-
-        case .corner(_, let type):
-          /// Default to top-leading corner
-          return .corner(location: .exterior, type: type)
-
-        default:
-          return nil
-      }
+extension Box.GlyphType {
+  var fallback: Box.GlyphType? {
+    switch self {
+      case .horizontal(.interior):
+        return .horizontal(.exterior)
+        
+      case .vertical(.interior):
+        return .vertical(.exterior)
+        
+      case .join(_, _, let type):
+        /// Default to cross join
+        return .join(x: .exterior, y: .exterior, type: type)
+        
+      case .corner(_, let type):
+        /// Default to top-leading corner
+        return .corner(location: .exterior, type: type)
+        
+      default:
+        return nil
     }
   }
 }
