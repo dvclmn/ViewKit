@@ -51,6 +51,10 @@ extension Box.PartType {
 
       case .corner(let cornerType):
         cornerType.glyphStack()
+        
+      case .blank:
+        [[Box.GlyphType.blank]]
+        
     }  // END switch self
 
   }  // END frame double

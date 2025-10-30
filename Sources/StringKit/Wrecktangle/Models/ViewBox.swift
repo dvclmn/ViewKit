@@ -46,7 +46,7 @@ extension ViewBox {
     output.append(top, addsLineBreak: true)
 
     /// Content
-    for _ in 0..<(height - 2) {
+    for _ in 0..<(height - 5) {
       let blank = builder.buildLine(.structure(.blank))
       output.append(blank, addsLineBreak: true)
     }

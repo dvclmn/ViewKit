@@ -15,6 +15,7 @@ extension Box {
     case vertical(VerticalLocation = .leading)
     case join(Join)
     case corner(Corner)
+    case blank
 
     public var flexibility: PartFlexibility {
       switch self {

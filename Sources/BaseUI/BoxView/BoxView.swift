@@ -17,14 +17,17 @@ public struct BoxView<Content: View>: View {
   @State private var viewSize: CGSize?
 
   let alignment: Alignment
+  let padding: Int
   let content: Content
 
   public init(
     separator: String = "\n",
+    padding: Int = 1,
     alignment: Alignment = .center,
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.alignment = alignment
+    self.padding = padding
     self.content = content()
   }
 
@@ -33,25 +36,29 @@ public struct BoxView<Content: View>: View {
       .viewSize(mode: .debounce(0.2)) { size in
         updateIfChanged(&self.viewSize, to: size)
       }
-      //      .viewSize(.debounce(0.2)) { size in
-      //        updateIfChanged(&self.characterSize, to: char)
-      //      }
-      //      .characterAndViewSize(.debounce(0.2)) { char, view in
-      //        updateIfChanged(&self.characterSize, to: char)
-      //        updateIfChanged(&self.viewSize, to: view)
-      //      }
+
       .gridFrame(
         dimensions?.width,
         dimensions?.height
       )
 
-      .overlay {
-        GridGuideOverlay(opacity: 0.1)
-          .isDebugMode(true)
-      }
+      //      .overlay {
+      //        GridGuideOverlay(opacity: 0.1)
+      //          .isDebugMode(true)
+      //      }
 
       .background {
-        Text(ViewBox(width: dimensions?.width ?? 20, height: dimensions?.height ?? 30, theme: .init()).attributedString)
+        Text(
+          ViewBox(
+            width: dimensions?.width ?? 20,
+            height: dimensions?.height ?? 30,
+            theme: Box.Theme(
+              glyphSet: glyphSet ?? .sharp,
+              frameStyle: frameStyle ?? .single,
+              padding: padding
+            )
+          ).attributedString
+        )
       }
   }
 }
@@ -59,7 +66,7 @@ public struct BoxView<Content: View>: View {
 extension BoxView {
   private var dimensions: GridDimensions? {
     guard let unitSize else { return nil }
-    return viewSize?.toGridDimensions(using: unitSize, rounding: .down)
+    return viewSize?.toGridDimensions(using: unitSize, rounding: .up)
   }
 }
 

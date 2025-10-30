@@ -14,7 +14,11 @@ extension Box {
     case vertical(Location)
 
     /// Joins
-    case join(x: Location, y: Location, type: Box.PartType.Join)
+    case join(
+      x: Location,
+      y: Location,
+      type: Box.PartType.Join
+    )
     
     /// Corners
     case corner(
