@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum CodableColour: Codable, Equatable, Hashable {
+public enum CodableColour: Codable, Equatable, Hashable, Sendable {
   case hex(String)
   case rgb(RGBColour)
   case hsv(HSVColour)
@@ -26,59 +26,46 @@ public enum CodableColour: Codable, Equatable, Hashable {
 //  var colour: Color { get }
 //}
 
-public struct ColourPreset: Sendable, Codable, Equatable, Hashable {
+public struct ColourMix: Sendable, Codable, Equatable, Hashable {
 
   public let base: SystemColour
-  public let mix: SystemColour?
-  public let adjustment: HSVAdjustment?
+  public let mix: SystemColour
+//  public let adjustment: HSVAdjustment?
   public let mixAmount: Double
-  public let opacity: Double
+//  public let opacity: Double
 
     public init(
       _ base: SystemColour,
-      _ mix: SystemColour? = nil,
+      _ mix: SystemColour,
       mixAmount: Double = 0.5,
-      adjustment: HSVAdjustment? = nil,
-      opacity: Double = 1.0
+//      adjustment: HSVAdjustment? = nil,
+//      opacity: Double = 1.0
     ) {
       self.base = base
       self.mix = mix
       self.mixAmount = mixAmount
-      self.adjustment = adjustment
-      self.opacity = opacity
+//      self.adjustment = adjustment
+//      self.opacity = opacity
     }
 
-  public var colour: Color {
-
-    let mixed: Color
-    if let mix {
-      mixed = base.withMix(mix, mixAmount)
-    } else {
-      mixed = base.toColour
-    }
-
-    guard let adjustment else {
-      return mixed
-    }
-    return mixed.hsvAdjusted(by: adjustment) ?? mixed
-  }
+  public var colour: Color { base.withMix(mix, mixAmount) }
 }
-extension ColourPreset {
+extension ColourMix {
 
-  public static let primary: ColourPreset = .init(.primary)
-  public static let secondary: ColourPreset = .init(.secondary)
+//  public static let primary: Self = .init(.primary)
+//  public static let secondary: Self = .init(.secondary)
   
-  public static let greenNeon: ColourPreset = ColourPreset(
+  public static let greenNeon: Self = .init(
     .green,
     .yellow,
     mixAmount: 0.36,
-    adjustment: .init(s: -0.16, v: -0.16)
+//    adjustment: .init(s: -0.16, v: -0.16)
   )
 
-  public static let pinkNeon: ColourPreset = ColourPreset(
+  public static let pinkNeon: Self = .init(
     .pink,
     .blue,
     mixAmount: 0.46,
-    adjustment: .init(s: -0.4, v: -0.2)
+//    adjustment: .init(s: -0.4, v: -0.2)
   )
 }
