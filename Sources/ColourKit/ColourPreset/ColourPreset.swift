@@ -13,6 +13,11 @@ public enum CodableColour: Codable, Equatable, Hashable, Sendable {
   case hsv(HSVColour)
   case rgbRaw(r: Double, g: Double, b: Double)
   case system(SystemColour)
+  case mix(
+    SystemColour,
+    SystemColour,
+    Double = 0.5
+  )
 }
 
 /// Need to think through the possible ways to express a Colour.

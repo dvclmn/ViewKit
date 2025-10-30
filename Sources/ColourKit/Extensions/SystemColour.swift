@@ -8,24 +8,23 @@
 import SharedHelpers
 import SwiftUI
 
-//@CasePathable
 public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Hashable, Identifiable {
-  case black
-  case blue
-  case brown
-  case clear
-  case cyan
-  case gray
-  case green
-  case indigo
-  case mint
-  case orange
-  case pink
-  case purple
   case red
-  case teal
-  case white
+  case orange
   case yellow
+  case green
+  case mint
+  case teal
+  case cyan
+  case blue
+  case indigo
+  case purple
+  case pink
+  case brown
+  case white
+  case gray
+  case black
+  case clear
   case primary
   case secondary
   case accentColor
@@ -35,20 +34,20 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Ha
     let result: Self? =
       switch colour {
         case .red: SystemColour.red
-        case .blue: SystemColour.blue
-        case .teal: SystemColour.teal
-        case .green: SystemColour.green
         case .orange: SystemColour.orange
         case .yellow: SystemColour.yellow
-        case .pink: SystemColour.pink
-        case .purple: SystemColour.purple
-        case .indigo: SystemColour.indigo
+        case .green: SystemColour.green
         case .mint: SystemColour.mint
+        case .teal: SystemColour.teal
         case .cyan: SystemColour.cyan
+        case .blue: SystemColour.blue
+        case .indigo: SystemColour.indigo
+        case .purple: SystemColour.purple
+        case .pink: SystemColour.pink
         case .brown: SystemColour.brown
+        case .white: SystemColour.white
         case .gray: SystemColour.gray
         case .black: SystemColour.black
-        case .white: SystemColour.white
         case .clear: SystemColour.clear
         case .primary: SystemColour.primary
         case .secondary: SystemColour.secondary
