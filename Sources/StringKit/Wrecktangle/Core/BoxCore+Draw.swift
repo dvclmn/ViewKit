@@ -29,13 +29,24 @@ extension Box {
     /// Header
     if let headerText = self.header {
 
-      let headerLines: [String] = headerText.reflowText(
+      let headerLines = TextFlow(
+        text: headerText,
+        shouldHyphenate: config.shouldHyphenate,
         width: widthForText,
-        maxLines: config.headerLineLimit,
-        paddingH: self.config.theme.padding,
-        paddingCharacter: invisibleIfNeeded(.space),
-//        wrappingOption: self.config.wordWrapStrategy
+        paddingCharacter: invisibleIfNeeded(.space)
       )
+      .flowed(
+        maxLines: config.contentLineLimit,
+        paddingH: config.theme.padding
+      )
+
+      //      let headerLines: [String] = headerText.reflowText(
+      //        width: widthForText,
+      //        maxLines: config.headerLineLimit,
+      //        paddingH: config.theme.padding,
+      //        paddingCharacter: invisibleIfNeeded(.space),
+      //        //        wrappingOption: self.config.wordWrapStrategy
+      //      )
 
       for headerLine in headerLines {
         let boxLine = line(.text(content: headerLine, lineLimit: config.headerLineLimit))
@@ -48,14 +59,24 @@ extension Box {
     output.append(divider, addsLineBreak: true)
 
     /// Content
-
-    let contentLines: [String] = self.content.reflowText(
+    let contentLines = TextFlow(
+      text: self.content,
+      shouldHyphenate: config.shouldHyphenate,
       width: widthForText,
-      maxLines: config.contentLineLimit,
-      paddingH: self.config.theme.padding,
-      paddingCharacter: invisibleIfNeeded(.space),
-//      wrappingOption: self.config.wordWrapStrategy
+      paddingCharacter: invisibleIfNeeded(.space)
     )
+    .flowed(
+      maxLines: config.contentLineLimit,
+      paddingH: config.theme.padding
+    )
+
+    //    let contentLines: [String] = self.content.reflowed(
+    //      width: widthForText,
+    //      maxLines: config.contentLineLimit,
+    //      paddingH: self.config.theme.padding,
+    //      paddingCharacter: invisibleIfNeeded(.space),
+    ////      wrappingOption: self.config.wordWrapStrategy
+    //    )
 
     for contentLine in contentLines {
       let boxLine = line(.text(content: contentLine, lineLimit: config.contentLineLimit))
