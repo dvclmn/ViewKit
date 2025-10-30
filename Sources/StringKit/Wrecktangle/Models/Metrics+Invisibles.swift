@@ -11,7 +11,6 @@ import SwiftUI
 public extension Box {
   
   func paddingCharacter(for element: Invisibles) -> Character {
-//    guard config.metrics?.invisibles
     guard config.metrics.contains(.invisibles) else { return " " }
     return element.character
   }
@@ -30,8 +29,7 @@ public extension Box {
     
     public var character: Character {
       switch self {
-        case .line: "¬"
-//        case .line(.end): "¶"
+        case .line: "¬" // ¶
         case .space: "/"
         case .tab: "→"
         case .padding: ","
@@ -40,15 +38,3 @@ public extension Box {
     }
   }
 }
-
-//func invisibleIfNeeded(
-//  _ character: Invisibles,
-//  fallBackCharacter: Character = " " // I.e. character to return if invisibles are not needed
-//) -> Character {
-//  
-//  let isShowing = self.config.metrics.invisibles
-//  
-//  let result = isShowing ? character.character : fallBackCharacter
-//  
-//  return result
-//}

@@ -9,5 +9,6 @@ import SwiftUI
 import StringKit
 
 extension EnvironmentValues {
-  @Entry public var glyphSet: Box.GlyphSet = .sharp
+  @Entry public var glyphSet: Box.GlyphSet? = nil
+  @Entry public var frameStyle: Box.Theme.FrameStyle? = nil
 }

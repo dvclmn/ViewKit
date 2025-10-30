@@ -9,7 +9,6 @@ import EnumMacros
 import Foundation
 import SharedHelpers
 
-
 @CaseDetection(includesNames: true)
 public enum DisplayBlock {
   case text(StyledString)
@@ -44,7 +43,7 @@ extension DisplayBlock: StyledStringConvertible {
         }
 
         var result = indentedElements[0]
-        
+
         for element in indentedElements.dropFirst() {
           /// If element doesn't start with indent, add it
           let hasIndent = element.plainString.hasPrefix(indented.indentString)

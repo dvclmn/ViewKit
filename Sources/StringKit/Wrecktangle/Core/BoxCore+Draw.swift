@@ -17,7 +17,6 @@ extension Box {
 
     /// Add a width counter, according to user's preference ()
     if config.metrics.contains(.widthCounter) {
-      //    if let counter = config.metrics?.widthCounter {
       output += TextCore.widthCounter(boxWidth, style: config.counterStyle)
     }
 
@@ -33,7 +32,6 @@ extension Box {
         shouldHyphenate: config.shouldHyphenate,
         width: widthForText,
         paddingCharacter: paddingCharacter(for: .space)
-        //        paddingCharacter:  invisibleIfNeeded(.space)
       )
       .flowed(
         maxLines: config.contentLineLimit,

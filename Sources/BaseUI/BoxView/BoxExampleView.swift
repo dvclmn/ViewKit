@@ -27,6 +27,11 @@ struct BoxExampleView: View {
       //        Text(boxSmall01.attributedString)
       //        Text(boxSmall02.attributedString)
       //      }
+      
+      BoxView(width: 20) {
+        Text("Hello")
+      }
+      
     }
     .preferredColorScheme(.dark)
     .textSelection(.enabled)
@@ -50,7 +55,7 @@ extension BoxExampleView {
       width: boxWidth,
       glyphSet: .rounded,
       frameStyle: .double,
-      widthCounter: nil
+      counterStyle: .ruler
     )
   }
 
