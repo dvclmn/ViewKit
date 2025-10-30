@@ -19,7 +19,7 @@ public struct FrameFromGridSize: ViewModifier {
     content
       .frame(
         width: width.toScreenLength(along: .horizontal, using: unitSize),
-        height: width.toScreenLength(along: .vertical, using: unitSize),
+        height: height.toScreenLength(along: .vertical, using: unitSize),
         alignment: alignment
       )
   }
@@ -76,7 +76,6 @@ extension View {
   }
 
   public func frameFromGridSize(
-    //    axis: Axis = .horizontal,
     width: Int,
     height: Int,
     alignment: Alignment = .center
@@ -85,8 +84,6 @@ extension View {
       FrameFromGridSize(
         width: width,
         height: height,
-        //        axis: axis,
-        //        length: length,
         alignment: alignment
       )
     )

@@ -23,7 +23,6 @@ public extension BoxCore {
     let theme: BoxCore.Theme
     
     /// Default initialiser (structure-based)
-    ///
     init(
       remainingWidth: Int,
       repeater: BoxPart,
@@ -40,7 +39,6 @@ public extension BoxCore {
     }
     
     /// Convenience initialiser for text-based content
-    ///
     init(
       text: String,
       lineLimit: Int,
@@ -57,8 +55,6 @@ public extension BoxCore {
       /// the package user from having to do it. Text-based lines will always
       /// have the below part types (obviously with the correct glyphs subbed
       /// in based on the selected Theme).
-      ///
-      
       self.leadingCap = BoxPart.create(.vertical(.leading), with: theme)
       self.trailingCap = BoxPart.create(.vertical(.trailing), with: theme)
       

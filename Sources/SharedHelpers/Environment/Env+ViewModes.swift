@@ -42,3 +42,9 @@ extension EnvironmentValues {
   //    }
   //  }
 }
+
+extension View {
+  public func isDebugMode(_ mode: Bool) -> some View {
+    self.environment(\.isDebugMode, mode)
+  }
+}

@@ -5,29 +5,21 @@
 //  Created by Dave Coleman on 22/8/2024.
 //
 
+extension BoxCore {
 
-
-public extension BoxCore {
-
-  static func header(_ info: String) -> String {
+  public static func header(_ info: String) -> String {
     return """
-      
+
       \(headerExteriorLine)
       \(info)
       \(headerInteriorLine)
       """
   }
 
+  public static let headerExteriorLine: String = "=============================================================="
+  public static let headerInteriorLine: String = "--------------------------------------------------------------"
+  public static let footerLine: String = "◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡"
 
-  static let headerExteriorLine: String = "=============================================================="
-  static let headerInteriorLine: String = "--------------------------------------------------------------"
-  static let footerLine: String = "◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡◠◡"
-
-
-
-  static let footerLineAlt: String = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-
-
-
+  public static let footerLineAlt: String = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
 }

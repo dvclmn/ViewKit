@@ -5,14 +5,14 @@
 //  Created by Dave Coleman on 24/8/2024.
 //
 
-public extension BoxCore.Theme {
-  
-  enum FrameStyle: Sendable {
+extension BoxCore.Theme {
+
+  public enum FrameStyle: Sendable {
     case single
     case double
-    
+
     /// Not yet implemented
-//    case intertwined
+    //    case intertwined
 
     /// This property forms a 'promise' that no single `BoxPart` should
     /// exceed either dimension (width or height) for the given
@@ -22,12 +22,12 @@ public extension BoxCore.Theme {
     /// exceeding this tile size is likely to break the layout in some way.
     ///
     public var maximumGridSize: BoxCore.Dimensions {
-      
+
       let dimensions: BoxCore.Dimensions
-      
+
       switch self {
         case .single:
-          
+
           /// # Single — 1x1
           ///
           /// ```
@@ -41,14 +41,13 @@ public extension BoxCore.Theme {
           ///
           /// ```
           ///
-          let width: Int = 1 + 1 // One character either side
+          let width: Int = 1 + 1  // One character either side
           let height: Int = 1
-          
+
           dimensions = .init(width, height)
 
-          
         case .double:
-          
+
           /// # Double — 3x2
           ///
           /// ```
@@ -68,13 +67,13 @@ public extension BoxCore.Theme {
           ///
           /// ```
           ///
-          let width: Int = 3 + 3 // One character either side
+          let width: Int = 3 + 3  // One character either side
           let height: Int = 2
-          
+
           dimensions = .init(width, height)
-          
+
       }
-      
+
       return dimensions
     }
 
