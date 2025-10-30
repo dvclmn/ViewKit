@@ -8,30 +8,16 @@
 import Foundation
 
 public struct Box {
-
   var header: String?
   var content: AttributedString
-  //  var content: String
   var config: Config
-
 }
 
 extension Box {
 
-//  public init(
-//    header: String? = nil,
-//    content: AttributedString,
-//    config: Config = .init()
-//  ) {
-//    self.header = header
-//    self.content = content
-//    self.config = config
-//  }
-
   public init(
-    header: String,
+    header: String?,
     content: AttributedString,
-    //    content: String,
     width: Int,
     glyphSet: Box.GlyphSet,
     frameStyle: Box.Theme.FrameStyle,
@@ -43,30 +29,17 @@ extension Box {
       padding: 1
     )
 
-    //    let metrics: Box.Config.Metrics?
-    //    if let widthCounter {
-    //      metrics = Box.Config.Metrics(
-    //        widthCounter: widthCounter,
-    //        lineNumbers: false,
-    //        invisibles: false
-    //      )
-    //    } else {
-    //      metrics = nil
-    //    }
-
     let config = Box.Config(
       theme: theme,
       width: width,
       headerLineLimit: 2,
       contentLineLimit: 8,
       counterStyle: counterStyle
-        //      metrics: metrics
     )
 
     self.header = header
     self.content = content
     self.config = config
-
   }
 
   public var attributedString: AttributedString { drawBox() }

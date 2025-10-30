@@ -28,9 +28,17 @@ struct BoxExampleView: View {
       //        Text(boxSmall02.attributedString)
       //      }
       
-      BoxView(width: 20) {
-        Text("Hello")
+      Group {
+        BoxView("Header title") {
+          "Hello"
+        }
+        
+        BoxView {
+          "No header text"
+        }
       }
+      .gridFrame(20)
+      .boxStyle(glyphs: .double, frame: .double)
       
     }
     .preferredColorScheme(.dark)
@@ -51,7 +59,7 @@ extension BoxExampleView {
   var box01: Box {
     Box(
       header: "I love boxes made of text",
-      content: Self.testString,
+      content: Self.testString.toAttributed,
       width: boxWidth,
       glyphSet: .rounded,
       frameStyle: .double,

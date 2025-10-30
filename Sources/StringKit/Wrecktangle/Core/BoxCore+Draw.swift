@@ -50,7 +50,7 @@ extension Box {
 
     /// Content
     let contentLines = TextFlow(
-      text: self.content,
+      text: content.toString,
       shouldHyphenate: config.shouldHyphenate,
       width: widthForText,
       paddingCharacter: paddingCharacter(for: .space)
