@@ -8,8 +8,18 @@
 extension Box {
   public struct Builder {
     let width: Int
+    let height: Int?
     let theme: Box.Theme
-
+    
+    public init(
+      width: Int,
+      height: Int? = nil,
+      theme: Box.Theme = .init()
+    ) {
+      self.width = width
+      self.height = height
+      self.theme = theme
+    }
   }
 }
 

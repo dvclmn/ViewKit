@@ -7,14 +7,6 @@
 
 import Foundation
 
-/// An ASCII box without any text content, just the structure.
-/// For wrapping a SwiftUI view in a box
-public struct ViewBox {
-  let width: Int
-  let height: Int
-  let theme: Box.Theme
-}
-
 public struct Box {
   var header: String?
   var content: AttributedString

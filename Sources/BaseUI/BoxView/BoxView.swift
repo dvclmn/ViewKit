@@ -26,7 +26,7 @@ public struct BoxView<Content: View>: View {
     separator: String = "\n",
     alignment: Alignment = .center,
     @ViewBuilder content: @escaping () -> Content
-//    @DisplayStringBuilder content: () -> [DisplayBlock]
+      //    @DisplayStringBuilder content: () -> [DisplayBlock]
   ) {
     self.title = title
     self.alignment = alignment
@@ -48,15 +48,26 @@ public struct BoxView<Content: View>: View {
   }
 }
 
-//extension BoxView {
-//  private var textOutput: AttributedString {
-//    Box(
-//      header: title,
-//      content: content,
-//      width: gridWidth ?? 20,
-//      glyphSet: glyphSet ?? .sharp,
-//      frameStyle: frameStyle ?? .single,
-//      counterStyle: .ruler
-//    ).attributedString
-//  }
-//}
+#if DEBUG
+#Preview {
+
+  VStack(spacing: 14) {
+
+    BoxView("I love boxes made of text") {
+
+      Text("I'm a SwiftUI View")
+      Text(DummyContent.Strings.paragraphs[8].toAttributed)
+    }
+//    .gridFrame(42)
+//    .boxStyle(glyphs: .double, frame: .double)
+
+  }
+  .textSelection(.enabled)
+  .monospaced()
+  .frame(
+    minWidth: 400,
+    minHeight: 600
+  )
+  .background(.black.opacity(0.6))
+}
+#endif
