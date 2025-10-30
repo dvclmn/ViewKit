@@ -42,9 +42,9 @@ extension Box {
       return "nil"
     }
 
-    let leading = BoxPart.create(parts.leading, with: theme)
-    let repeating = BoxPart.create(parts.repeater, with: theme)
-    let trailing = BoxPart.create(parts.trailing, with: theme)
+    let leading = Box.Part.create(parts.leading, with: theme)
+    let repeating = Box.Part.create(parts.repeater, with: theme)
+    let trailing = Box.Part.create(parts.trailing, with: theme)
 
     /// This uses `BoxLine`s structure-based initialiser
     let lineResult = BoxLine(

@@ -220,6 +220,48 @@ extension DummyContent.Strings {
     ```
     """,
     
+     """
+    let top = line(.top)
+      output.appendString(top, addsLineBreak: true)
+      
+      /// Header
+      if let headerText = self.header {
+        
+        let headerLines: [String] = headerText.reflowText(
+          width: widthForText,
+          maxLines: config.headerLineLimit,
+          paddingWidth: self.config.theme.padding,
+          paddingCharacter: invisibleIfNeeded(.space),
+          wrappingOption: self.config.wordWrapStrategy
+        )
+        
+        for headerLine in headerLines {
+          let boxLine = line(.text(content: headerLine, lineLimit: config.headerLineLimit))
+          output.appendString(boxLine, addsLineBreak: true)
+        }
+      }
+    
+    
+      ╭──────────────────────────────╮
+    //│ ╭──────────────────────────╮ │
+    //│ │ At this point I've made  │ │
+    //│ │ more commits to my repo  │ │
+    //│ │ *renaming* it, than I    │ │
+    //│ │ have for actual code.    │ │
+    //│ │                          │ │
+    //│ ╰──────────────────────────╯ │
+    //╰──────────────────────────────╯
+    /////////////////////////////////
+    
+    
+    
+    At this point I've made 
+    more commits to my repo 
+    renaming it than I have 
+    for actual code. 
+      
+    """,
+    
     """
     I want to also set weight in the same convenient way — but I noticed a possible gotcha? Will I need to ‘drill down’ *another* level here (a bit like how we’ve been doing with `MarkdownTheme.set() > MarkdownTheme.Fonts.with() > FontConfig.setSize()`).
     

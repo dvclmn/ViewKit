@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-extension BoxPart.PartType {
+extension Box.PartType {
 
   func frameDouble() -> Box.GlyphStack {
 
@@ -15,113 +15,50 @@ extension BoxPart.PartType {
 
       case .horizontal(.top):
         output = [
-          [Glyph.horizontal(.exterior)],
-          [Glyph.horizontal(.interior)],
+          [Box.GlyphType.horizontal(.exterior)],
+          [Box.GlyphType.horizontal(.interior)],
         ]
 
       case .horizontal(.bottom):
         output = [
-          [Glyph.horizontal(.interior)],
-          [Glyph.horizontal(.exterior)],
+          [Box.GlyphType.horizontal(.interior)],
+          [Box.GlyphType.horizontal(.exterior)],
         ]
 
       case .horizontal(.interior):
         output = [
-          [Glyph.horizontal(.interior)]
+          [Box.GlyphType.horizontal(.interior)]
         ]
 
       case .vertical(.leading):
         output = [
-          [Glyph.vertical(.exterior), Glyph.blank, Glyph.vertical(.interior)]
+          [
+            Box.GlyphType.vertical(.exterior),
+            Box.GlyphType.blank,
+            Box.GlyphType.vertical(.interior),
+          ]
         ]
 
       case .vertical(.trailing):
         output = [
-          [Glyph.vertical(.interior), Glyph.blank, Glyph.vertical(.exterior)]
+          [
+            Box.GlyphType.vertical(.interior),
+            Box.GlyphType.blank,
+            Box.GlyphType.vertical(.exterior),
+          ]
         ]
       case .vertical(.interior):
         output = [
-          [Glyph.vertical(.interior)]
+          [Box.GlyphType.vertical(.interior)]
         ]
 
       case .join(let joinType):
         output = joinType.glyphStack()
-        
+
       case .corner(let cornerType):
-        switch cornerType {
-
-          /// # Example
-          ///
-          ///
-          /// ```
-          /// ["┏","━","━"],
-          ///
-          /// ["┃"," ","┌"]
-          ///
-          /// // Output:
-          /// ┏━━
-          /// ┃ ┌
-          ///
-          /// ```
-          ///
-          case .topLeading:
-            output = [
-              [
-                Glyph.corner(location: .exterior, type: cornerType),
-                Glyph.horizontal(.exterior),
-                Glyph.horizontal(.exterior),
-              ],
-              [
-                Glyph.vertical(.exterior),
-                Glyph.blank,
-                Glyph.corner(location: .interior, type: cornerType),
-              ],
-            ]
-
-          case .topTrailing:
-            output = [
-              [
-                Glyph.horizontal(.exterior),
-                Glyph.horizontal(.exterior),
-                Glyph.corner(location: .exterior, type: cornerType),
-              ],
-              [
-                Glyph.corner(location: .interior, type: cornerType),
-                Glyph.blank,
-                Glyph.vertical(.exterior),
-              ],
-            ]
-
-          case .bottomLeading:
-            output = [
-              [
-                Glyph.vertical(.exterior),
-                Glyph.blank,
-                Glyph.corner(location: .interior, type: cornerType),
-              ],
-              [
-                Glyph.corner(location: .exterior, type: cornerType),
-                Glyph.horizontal(.exterior),
-                Glyph.horizontal(.exterior),
-              ],
-            ]
-          case .bottomTrailing:
-            output = [
-              [
-                Glyph.corner(location: .interior, type: cornerType),
-                Glyph.blank,
-                Glyph.vertical(.exterior),
-              ],
-              [
-                Glyph.horizontal(.exterior),
-                Glyph.horizontal(.exterior),
-                Glyph.corner(location: .exterior, type: cornerType),
-              ],
-            ]
-        }
+        output = cornerType.glyphStack()
     }  // END switch self
-
+    
     return output
-
-  }
+  } // END frame double
 }

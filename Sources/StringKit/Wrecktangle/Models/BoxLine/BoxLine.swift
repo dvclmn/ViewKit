@@ -15,16 +15,16 @@ extension Box {
     /// The width left for content, after leading/trailing
     /// structure/padding/shadow is accounted for
     let remainingWidth: Int
-    let leadingCap: BoxPart
-    let trailingCap: BoxPart
+    let leadingCap: Box.Part
+    let trailingCap: Box.Part
     let theme: Box.Theme
 
     /// Default initialiser (structure-based)
     init(
       remainingWidth: Int,
-      repeater: BoxPart,
-      leadingCap: BoxPart,
-      trailingCap: BoxPart,
+      repeater: Box.Part,
+      leadingCap: Box.Part,
+      trailingCap: Box.Part,
       theme: Box.Theme
     ) {
       self.remainingWidth = remainingWidth
@@ -48,12 +48,12 @@ extension Box {
       self.theme = theme
 
       /// Currently, this initialiser 'has to' take in a `theme` parameter, to obtain
-      /// the correct `BoxParts` for the leading and trailing caps, to save
+      /// the correct `Box.Parts` for the leading and trailing caps, to save
       /// the package user from having to do it. Text-based lines will always
       /// have the below part types (obviously with the correct glyphs subbed
       /// in based on the selected Theme).
-      self.leadingCap = BoxPart.create(.vertical(.leading), with: theme)
-      self.trailingCap = BoxPart.create(.vertical(.trailing), with: theme)
+      self.leadingCap = Box.Part.create(.vertical(.leading), with: theme)
+      self.trailingCap = Box.Part.create(.vertical(.trailing), with: theme)
 
       let conditions = Self.checkConditions(leadingCap: self.leadingCap, trailingCap: self.trailingCap)
 
@@ -73,9 +73,9 @@ extension Box.BoxLine {
   }
 
   public typealias ThreePartLine = (
-    leading: BoxPart.PartType,
-    repeater: BoxPart.PartType,
-    trailing: BoxPart.PartType
+    leading: Box.PartType,
+    repeater: Box.PartType,
+    trailing: Box.PartType
   )
 
   /// What kinds of lines could there be, in a box?
@@ -94,21 +94,21 @@ extension Box.BoxLine {
       switch self {
         case .top:
           (
-            BoxPart.PartType.corner(.topLeading),
-            BoxPart.PartType.horizontal(.top),
-            BoxPart.PartType.corner(.topTrailing)
+            Box.PartType.corner(.topLeading),
+            Box.PartType.horizontal(.top),
+            Box.PartType.corner(.topTrailing)
           )
         case .divider:
           (
-            BoxPart.PartType.join(.leading),
-            BoxPart.PartType.horizontal(.interior),
-            BoxPart.PartType.join(.trailing)
+            Box.PartType.join(.leading),
+            Box.PartType.horizontal(.interior),
+            Box.PartType.join(.trailing)
           )
         case .bottom:
           (
-            BoxPart.PartType.corner(.bottomLeading),
-            BoxPart.PartType.horizontal(.bottom),
-            BoxPart.PartType.corner(.bottomTrailing)
+            Box.PartType.corner(.bottomLeading),
+            Box.PartType.horizontal(.bottom),
+            Box.PartType.corner(.bottomTrailing)
           )
         case .text:
           nil

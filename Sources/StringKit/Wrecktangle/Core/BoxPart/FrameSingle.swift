@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-extension BoxPart.PartType {
+extension Box.PartType {
 
   func frameSingle() -> Box.GlyphStack {
 
@@ -17,19 +17,19 @@ extension BoxPart.PartType {
         output = Box.GlyphType.horizontal(.exterior)
 
       case .horizontal(.interior):
-        output = Glyph.horizontal(.interior)
+        output = Box.GlyphType.horizontal(.interior)
 
       case .vertical(.leading), .vertical(.trailing):
-        output = Glyph.vertical(.exterior)
+        output = Box.GlyphType.vertical(.exterior)
 
       case .vertical(.interior):
-        output = Glyph.vertical(.interior)
+        output = Box.GlyphType.vertical(.interior)
 
       case .join(let joinType):
-        output = Glyph.join(x: .exterior, y: .exterior, type: joinType)
+        output = Box.GlyphType.join(x: .exterior, y: .exterior, type: joinType)
 
       case .corner(let cornerType):
-        output = Glyph.corner(location: .exterior, type: cornerType)
+        output = Box.GlyphType.corner(location: .exterior, type: cornerType)
 
     }  // END switch self
 

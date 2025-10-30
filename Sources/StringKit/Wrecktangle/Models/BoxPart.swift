@@ -20,16 +20,16 @@ extension Box {
   
 }
 
-extension BoxPart {
+extension Box.Part {
   public var width: Int { content.width }
   public var height: Int { content.height }
   public var columns: Int { width }
   public var rows: Int { height }
 
   public static func create(
-    _ type: BoxPart.PartType,
+    _ type: Box.PartType,
     with theme: Box.Theme
-  ) -> BoxPart {
+  ) -> Self {
 
     let glyphGrid = type.preset(with: theme.frameStyle)
     let characterGrid = glyphGrid.map { row in
@@ -39,6 +39,6 @@ extension BoxPart {
     let multilineString = MultilineString(characterGrid)
     let finalResult: MultilineString
     finalResult = multilineString
-    return BoxPart(content: finalResult, type: type)
+    return Self(content: finalResult, type: type)
   }
 }

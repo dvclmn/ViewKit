@@ -12,7 +12,7 @@ public extension Box.BoxLine {
     
     init(
       adjustedWidth: Int,
-      repeatingPattern: BoxPart
+      repeatingPattern: Box.Part
     ) {
 
       let contentString = repeatingPattern.content.repeatHorizontally(toWidth: adjustedWidth)

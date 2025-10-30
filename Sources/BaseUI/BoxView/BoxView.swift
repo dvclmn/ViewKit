@@ -59,3 +59,36 @@ extension BoxView {
     ).attributedString
   }
 }
+
+#if DEBUG
+#Preview {
+  
+  VStack(spacing: 14) {
+    
+    BoxView("I love boxes made of text") {
+      Self.testString.toAttributed
+    }
+    .gridFrame(42)
+    
+    BoxView("Header title") {
+      "Hello"
+    }
+    .gridFrame(20)
+    .boxStyle(glyphs: .double, frame: .double)
+    
+    BoxView {
+      "No header text"
+      "This is another line"
+    }
+    .gridFrame(38)
+    .boxStyle(glyphs: .rounded, frame: .single)
+    
+  }
+  .preferredColorScheme(.dark)
+  .textSelection(.enabled)
+  .monospaced()
+  .environment(\._lineHeightMultiple, 0.84)
+  .frame(width: 370, height: 640)
+  .background(.black.opacity(0.6))
+}
+#endif

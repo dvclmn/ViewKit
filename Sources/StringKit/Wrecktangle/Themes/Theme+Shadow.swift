@@ -105,7 +105,7 @@ extension Box {
     case bottomLeading
     case bottomTrailing
 
-    public func hasShadow(_ location: BoxPart.VerticalLocation) -> Bool {
+    public func hasShadow(_ location: Box.PartType.VerticalLocation) -> Bool {
       switch location {
         case .leading:
           self == .topLeading || self == .bottomLeading

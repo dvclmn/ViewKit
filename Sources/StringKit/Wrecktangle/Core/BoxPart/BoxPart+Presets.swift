@@ -9,7 +9,7 @@ extension Box {
   typealias GlyphStack = [[GlyphType]]
 }
 
-extension BoxPart.PartType {
+extension Box.PartType {
 
   public func preset(with frameStyle: Box.Theme.FrameStyle) -> [[Box.GlyphType]] {
     switch frameStyle {

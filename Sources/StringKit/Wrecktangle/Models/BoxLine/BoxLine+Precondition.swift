@@ -8,8 +8,8 @@
 extension Box.BoxLine {
   
   static func checkConditions(
-    leadingCap: BoxPart,
-    trailingCap: BoxPart
+    leadingCap: Box.Part,
+    trailingCap: Box.Part
   ) -> (condition: Bool, message: String) {
     
     let heightCheck: Bool = leadingCap.height == 1 && trailingCap.height == 1
