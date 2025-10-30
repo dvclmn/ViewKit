@@ -122,12 +122,12 @@ extension CGSize {
     return GridSize(width: gridWidth, height: gridHeight, unitSize: unitSize)
   }
 
-  public func toGridCounts(
+  public func toGridDimensions(
     using unitSize: CGSize,
     rounding: GridRounding = .down
-  ) -> GridSizeCounts? {
+  ) -> GridDimensions? {
     let size = self.toGridSize(using: unitSize, rounding: rounding)
-    return size?.gridSizeCounts
+    return size?.gridDimensions
   }
 
 }

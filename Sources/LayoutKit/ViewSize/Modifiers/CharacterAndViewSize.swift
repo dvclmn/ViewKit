@@ -15,27 +15,22 @@ public struct CharacterAndViewSize: ViewModifier {
   @State private var viewSize: CGSize?
 
   let debounceMode: DebounceMode
-  let character: Character
-  //  let fontStyle: Font
+  let character: Character = "M"
   let sizeDidChange: (CGSize?, CGSize?) -> Void
 
   public func body(content: Content) -> some View {
     content
       .overlay {
-        //        VStack(spacing: 0) {
         Text(character.toString)
-          //                        .font(font)
           .tracking(0)
           .viewSize(mode: debounceMode) { size in
             characterSize = size
           }
           .hidden()
-          //        }
           .allowsHitTesting(false)
       }
       .viewSize(mode: debounceMode) { size in
         viewSize = size
-        //        sizeDidChange(size)
       }
       .task(id: characterSize) {
         sizeDidChange(characterSize, viewSize)
@@ -43,32 +38,5 @@ public struct CharacterAndViewSize: ViewModifier {
       .task(id: viewSize) {
         sizeDidChange(characterSize, viewSize)
       }
-  }
-}
-extension CharacterSize {
-
-}
-
-extension View {
-
-  /// Find the size of a single character of a (usually
-  /// monospaced) font. Optionally read the container view
-  /// size for calculating the Characters-per-dimension etc.
-  /// - Parameters:
-  ///   - testCharacter: The character to use as source of dimensions
-  ///   - sizeDidChange: Callback when the character or view size changes
-  /// - Returns: Two optional sizes, the first for the charatcer, the second for the container view
-  public func characterAndViewSize(
-    _ debounceMode: DebounceMode = .debounce(0.2),
-    _ testCharacter: Character = "M",
-    _ sizeDidChange: @escaping (CGSize?, CGSize?) -> Void
-  ) -> some View {
-    self.modifier(
-      CharacterAndViewSize(
-        debounceMode: debounceMode,
-        character: testCharacter,
-        sizeDidChange: sizeDidChange
-      )
-    )
   }
 }

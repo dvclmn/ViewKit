@@ -12,46 +12,38 @@ import SwiftUI
 public struct BoxView<Content: View>: View {
   @Environment(\.glyphSet) private var glyphSet
   @Environment(\.frameStyle) private var frameStyle
-  @Environment(\.gridWidth) private var gridWidth
-  @Environment(\.gridHeight) private var gridHeight
+  @Environment(\.unitSize) private var unitSize
 
-  @State private var characterSize: CGSize?
   @State private var viewSize: CGSize?
 
-  //  let title: String?
   let alignment: Alignment
   let content: Content
 
   public init(
-    //    _ title: String? = nil,
     separator: String = "\n",
     alignment: Alignment = .center,
     @ViewBuilder content: @escaping () -> Content
-      //    @DisplayStringBuilder content: () -> [DisplayBlock]
   ) {
-    //    self.title = title
     self.alignment = alignment
     self.content = content()
   }
 
   public var body: some View {
     content
-      //      .characterSize(mode: .debounce(0.2)) { size in
-      //        updateIfChanged(&self.characterSize, to: size)
-      //      }
-      .characterAndViewSize(.debounce(0.2)) { char, view in
-        updateIfChanged(&self.characterSize, to: char)
-        updateIfChanged(&self.viewSize, to: view)
+      .viewSize(mode: .debounce(0.2)) { size in
+        updateIfChanged(&self.viewSize, to: size)
       }
+      //      .viewSize(.debounce(0.2)) { size in
+      //        updateIfChanged(&self.characterSize, to: char)
+      //      }
+      //      .characterAndViewSize(.debounce(0.2)) { char, view in
+      //        updateIfChanged(&self.characterSize, to: char)
+      //        updateIfChanged(&self.viewSize, to: view)
+      //      }
       .gridFrame(
-        viewSize?.toGridCount(
-          along: <#T##Axis#>,
-          using: <#T##CGSize#>,
-          rounding: <#T##GridRounding#>
-        ),
-        gridHeight
+        dimensions?.width,
+        dimensions?.height
       )
-      .environment(\.unitSize, characterSize)
 
       .overlay {
         GridGuideOverlay(opacity: 0.1)
@@ -59,13 +51,16 @@ public struct BoxView<Content: View>: View {
       }
 
       .background {
-        Text(ViewBox(width: gridWidth ?? 20, height: gridHeight ?? 30, theme: .init()).attributedString)
+        Text(ViewBox(width: dimensions?.width ?? 20, height: dimensions?.height ?? 30, theme: .init()).attributedString)
       }
   }
 }
 
 extension BoxView {
-  private var gridFame:
+  private var dimensions: GridDimensions? {
+    guard let unitSize else { return nil }
+    return viewSize?.toGridDimensions(using: unitSize, rounding: .down)
+  }
 }
 
 #if DEBUG
@@ -73,13 +68,13 @@ extension BoxView {
 
   VStack(spacing: 14) {
 
-    BoxView("I love boxes made of text") {
+    BoxView {
 
       Text("I'm a SwiftUI View")
       Text(DummyContent.Strings.paragraphs[8].toAttributed)
     }
-    //    .gridFrame(42)
-    //    .boxStyle(glyphs: .double, frame: .double)
+    //        .gridFrame(42)
+    //        .boxStyle(glyphs: .double, frame: .double)
 
   }
   .textSelection(.enabled)

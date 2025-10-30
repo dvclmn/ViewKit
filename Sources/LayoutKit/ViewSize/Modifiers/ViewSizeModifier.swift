@@ -13,7 +13,6 @@ public typealias ViewSizeOutput<T> = (T) -> Void
 public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
 
   @State private var debouncer: AsyncDebouncer?
-  //  @State private var newCapture: Capture?
 
   let capture: GeometryCapture<Capture>
   let valueOutput: ViewSizeOutput<Capture>
@@ -29,9 +28,6 @@ public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
         self._debouncer = State(initialValue: AsyncDebouncer(interval: interval))
       case .noDebounce:
         self._debouncer = State(initialValue: nil)
-
-    //      case .byo(let existingDebouncer):
-    //        self._debouncer = State(initialValue: existingDebouncer)
     }
     self.capture = capture
     self.valueOutput = valueOutput
@@ -68,24 +64,5 @@ public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
     //        }
     //
     //      }
-  }
-}
-
-// MARK: - View Extension
-extension View {
-  /// Previously had default value for `debounceMode`, but this felt
-  /// too risky for domains that may be tripped up by immediate vs debounced
-  public func viewSize<T: GeometryCapturable>(
-    capture: GeometryCapture<T> = .size,
-    mode debounceMode: DebounceMode,
-    valueOutput: @escaping ViewSizeOutput<T>,
-  ) -> some View {
-    self.modifier(
-      ViewSizeModifier(
-        capture: capture,
-        mode: debounceMode,
-        valueOutput: valueOutput
-      )
-    )
   }
 }

@@ -6,11 +6,14 @@
 //
 
 public struct GridDimensions {
-  let width: Int
-  let height: Int
+  public let width: Int
+  public let height: Int
   
   public init(width: Int, height: Int) {
     self.width = width
     self.height = height
+  }
+  public init(_ width: Int, _ height: Int) {
+    self.init(width: width, height: height)
   }
 }
