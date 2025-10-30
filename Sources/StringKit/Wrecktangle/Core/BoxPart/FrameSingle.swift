@@ -6,8 +6,7 @@
 //
 
 extension Box.PartType {
-
-  func frameSingle() -> Box.GlyphStack {
+  var frameStackSingle: Box.GlyphStack {
 
     let output: Box.GlyphType
 

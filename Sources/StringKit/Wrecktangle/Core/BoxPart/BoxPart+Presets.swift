@@ -6,15 +6,16 @@
 //
 
 extension Box {
-  typealias GlyphStack = [[GlyphType]]
+  /// A 2D array of Glyphs, representing multiple rows of text
+  public typealias GlyphStack = [[GlyphType]]
 }
 
 extension Box.PartType {
 
-  public func preset(with frameStyle: Box.Theme.FrameStyle) -> [[Box.GlyphType]] {
+  public func preset(with frameStyle: Box.Theme.FrameStyle) -> Box.GlyphStack {
     switch frameStyle {
-      case .single: frameSingle()
-      case .double: frameDouble()
-    }  // END switch frame style
+      case .single: frameStackSingle
+      case .double: frameStackDouble
+    }
   }
 }

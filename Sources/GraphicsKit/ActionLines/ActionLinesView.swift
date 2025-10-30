@@ -117,7 +117,7 @@ public struct ActionLinesView: View {
 
       /// Controls
       ActionControlsView()
-        .padding()
+//        .padding()
         .background(.black.opacityLow)
 
     }

@@ -7,11 +7,26 @@
 
 import SwiftUI
 
-public protocol CodableColour: Codable, Equatable, Hashable {
-  var colour: Color { get }
+public enum CodableColour: Codable, Equatable, Hashable {
+  case hex(String)
+  case rgb(RGBColour)
+  case hsv(HSVColour)
+  case rgbRaw(r: Double, g: Double, b: Double)
+  case system(SystemColour)
 }
 
-public struct ColourPreset: Sendable, Codable, Equatable, Hashable, CodableColour {
+/// Need to think through the possible ways to express a Colour.
+/// - Hex string
+/// - RGB component float values
+/// - Declarative, a bit like `ColourPreset` (which tbh is totally clunky)
+///   This tries to combine some SwiftUI colour mixing, with secondary HSV adjustment
+/// - System Colour / Primitives (no customisaton, just static members)
+/// - Preset/Swatch – was previously what I used, in tandem with Xcode colour asset
+//public protocol CodableColour: Codable, Equatable, Hashable {
+//  var colour: Color { get }
+//}
+
+public struct ColourPreset: Sendable, Codable, Equatable, Hashable {
 
   public let base: SystemColour
   public let mix: SystemColour?

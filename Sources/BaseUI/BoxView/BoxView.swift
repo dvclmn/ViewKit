@@ -66,7 +66,7 @@ extension BoxView {
   VStack(spacing: 14) {
     
     BoxView("I love boxes made of text") {
-      Self.testString.toAttributed
+      DummyContent.Strings.paragraphs[8].toAttributed
     }
     .gridFrame(42)
     
@@ -84,11 +84,14 @@ extension BoxView {
     .boxStyle(glyphs: .rounded, frame: .single)
     
   }
-  .preferredColorScheme(.dark)
   .textSelection(.enabled)
   .monospaced()
-  .environment(\._lineHeightMultiple, 0.84)
-  .frame(width: 370, height: 640)
+//  .environment(\._lineHeightMultiple, 0.84)
+  .frame(
+    minWidth: 400,
+    minHeight: 600
+  )
+//  .frame(width: 370, height: 640)
   .background(.black.opacity(0.6))
 }
 #endif
