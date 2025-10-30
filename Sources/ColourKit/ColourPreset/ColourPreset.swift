@@ -7,18 +7,7 @@
 
 import SwiftUI
 
-public enum CodableColour: Codable, Equatable, Hashable, Sendable {
-  case hex(String)
-  case rgb(RGBColour)
-  case hsv(HSVColour)
-  case rgbRaw(r: Double, g: Double, b: Double)
-  case system(SystemColour)
-  case mix(
-    SystemColour,
-    SystemColour,
-    Double = 0.5
-  )
-}
+
 
 /// Need to think through the possible ways to express a Colour.
 /// - Hex string

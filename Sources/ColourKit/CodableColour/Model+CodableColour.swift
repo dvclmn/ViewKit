@@ -14,6 +14,52 @@
 import NSUI
 import SwiftUI
 
+public enum CodableColour: Codable, Equatable, Hashable, Sendable {
+  case hex(String)
+  case rgb(RGBColour)
+  case hsv(HSVColour)
+  case rgbRaw(r: Double, g: Double, b: Double)
+  case system(SystemColour)
+  case mix(
+    SystemColour,
+    SystemColour,
+    Double = 0.5
+  )
+}
+
+extension CodableColour {
+  public var color: Color {
+    switch self {
+      case .hex(let hex):
+        return Color(hex: hex)
+      case .rgb(let model):
+        return Color(
+          red: model.red,
+          green: model.green,
+          blue: model.blue,
+          opacity: model.alpha
+        )
+      case .rgbRaw(let r, let g, let b):
+        return Color(red: r, green: g, blue: b)
+      case .hsv(let model):
+        let rgb = model.toRGB() // assuming you already have this
+        return Color(
+          red: rgb.red,
+          green: rgb.green,
+          blue: rgb.blue,
+          opacity: rgb.alpha
+        )
+      case .system(let system):
+        return system.toColour
+      case .mix(let a, let b, let t):
+        let c1 = a.toColour
+        let c2 = b.toColour
+        return c1.mix(with: c2, amount: t)
+    }
+  }
+}
+
+
 /// For encoding a representation of the color that can be used
 /// on other platforms (e.g. web). We use `CGColor` and get
 /// the color components from there.
