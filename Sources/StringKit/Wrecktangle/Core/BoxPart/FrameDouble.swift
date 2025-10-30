@@ -7,9 +7,9 @@
 
 extension BoxPart.PartType {
 
-  func frameDouble() -> GlyphStack {
+  func frameDouble() -> Box.GlyphStack {
 
-    let output: GlyphStack
+    let output: Box.GlyphStack
 
     switch self {
 
@@ -45,7 +45,8 @@ extension BoxPart.PartType {
         ]
 
       case .join(let joinType):
-
+        output = joinType.glyphStack()
+        
       case .corner(let cornerType):
         switch cornerType {
 

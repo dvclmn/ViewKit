@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-extension BoxPart.PartType {
-  
+extension Box.PartType {
+
   public enum Join: Hashable, Sendable {
     case leading
     case trailing
@@ -17,41 +17,41 @@ extension BoxPart.PartType {
 
 }
 
-extension BoxPart.PartType.Join {
-  func glyphStack() -> BoxPart.PartType.GlyphStack {
+extension Box.PartType.Join {
+  func glyphStack() -> Box.GlyphStack {
     switch self {
       case .leading:
         return [
           [
-            Glyph.vertical(.exterior),
-            Glyph.blank,
+            Box.GlyphType.vertical(.exterior),
+            Box.GlyphType.blank,
             /// I can use `joinType` directly here, as `PartType` and `GlyphType`
             /// share the same type for describing joins
-            Glyph.join(x: .interior, y: .interior, type: joinType),
+            Box.GlyphType.join(x: .interior, y: .interior, type: self),
           ]
         ]
-        
+
       case .trailing:
-        output = [
+        return [
           [
-            Glyph.join(x: .interior, y: .interior, type: joinType),
-            Glyph.blank,
-            Glyph.vertical(.exterior),
+            Box.GlyphType.join(x: .interior, y: .interior, type: self),
+            Box.GlyphType.blank,
+            Box.GlyphType.vertical(.exterior),
           ]
         ]
-        
+
       case .top:
-        output = [
-          [Glyph.horizontal(.exterior)],
-          [Glyph.join(x: .interior, y: .interior, type: joinType)],
+        return [
+          [Box.GlyphType.horizontal(.exterior)],
+          [Box.GlyphType.join(x: .interior, y: .interior, type: self)],
         ]
       case .bottom:
-        output = [
-          [Glyph.join(x: .interior, y: .interior, type: joinType)],
-          [Glyph.horizontal(.exterior)],
+        return [
+          [Box.GlyphType.join(x: .interior, y: .interior, type: self)],
+          [Box.GlyphType.horizontal(.exterior)],
         ]
       case .cross:
-        output = [[Glyph.join(x: .interior, y: .interior, type: joinType)]]
+        return [[Box.GlyphType.join(x: .interior, y: .interior, type: self)]]
     }
 
   }

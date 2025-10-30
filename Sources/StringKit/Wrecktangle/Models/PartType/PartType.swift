@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension BoxPart {
+extension Box {
 
   public enum PartType: Hashable {
 
@@ -27,7 +27,7 @@ extension BoxPart {
 
 }
 
-extension BoxPart {
+extension Box.PartType {
 
   public enum HorizontalLocation: Hashable {
     case top

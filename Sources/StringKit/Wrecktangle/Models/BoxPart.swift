@@ -7,14 +7,17 @@
 
 import Foundation
 
-public struct BoxPart {
-  public var content: MultilineString
-  public var type: PartType
-
-  public init(content: MultilineString, type: PartType) {
-    self.content = content
-    self.type = type
+extension Box {
+  public struct Part {
+    public var content: MultilineString
+    public var type: PartType
+    
+    public init(content: MultilineString, type: PartType) {
+      self.content = content
+      self.type = type
+    }
   }
+  
 }
 
 extension BoxPart {

@@ -7,14 +7,14 @@
 
 extension BoxPart.PartType {
 
-  func frameSingle() -> GlyphStack {
+  func frameSingle() -> Box.GlyphStack {
 
-    let output: Glyph
+    let output: Box.GlyphType
 
     switch self {
 
       case .horizontal(.top), .horizontal(.bottom):
-        output = Glyph.horizontal(.exterior)
+        output = Box.GlyphType.horizontal(.exterior)
 
       case .horizontal(.interior):
         output = Glyph.horizontal(.interior)
