@@ -18,14 +18,9 @@ extension BoxPart {
 
     public var flexibility: PartFlexibility {
       switch self {
-        case .horizontal:
-          .repeatable(axis: .horizontal)
-
-        case .vertical:
-          .repeatable(axis: .vertical)
-
-        default:
-          .fixed
+        case .horizontal: .repeatable(axis: .horizontal)
+        case .vertical: .repeatable(axis: .vertical)
+        default: .fixed
       }
     }
   }  // END part type
@@ -51,6 +46,7 @@ extension BoxPart {
     case capTrailing
   }
 
+  /// Whether or not this part should take on repeatable behaviour
   public enum PartFlexibility: Equatable {
     case repeatable(axis: Axis)
     case fixed

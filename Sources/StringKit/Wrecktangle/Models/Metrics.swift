@@ -5,33 +5,18 @@
 //  Created by Dave Coleman on 24/8/2024.
 //
 
-extension Box.Config {
+extension Box {
 
-//  public struct Metrics: Sendable {
-//    var widthCounter: TextCore.WidthCounterStyle
-//    var lineNumbers: Bool
-//    var invisibles: Bool
-//
-//    public init(
-//      widthCounter: TextCore.WidthCounterStyle = .ruler,
-//      lineNumbers: Bool = false,
-//      invisibles: Bool = false
-//    ) {
-//      self.widthCounter = widthCounter
-//      self.lineNumbers = lineNumbers
-//      self.invisibles = invisibles
-//    }
-//  }
-}
+  public struct Metrics: OptionSet, Sendable {
+    public init(rawValue: Int) {
+      self.rawValue = rawValue
+    }
+    public let rawValue: Int
 
-public struct Metrics: OptionSet, Sendable {
-  public init(rawValue: Int) {
-    self.rawValue = rawValue
+    public static let widthCounter = Self(rawValue: 1 << 0)
+    public static let invisibles = Self(rawValue: 1 << 1)
+    public static let lineNumbers = Self(rawValue: 1 << 2)
+    public static let all: Self = [.widthCounter, .invisibles, .lineNumbers]
   }
-  public let rawValue: Int
-  
-  public static let widthCounter = Self(rawValue: 1 << 0)
-  public static let invisibles = Self(rawValue: 1 << 1)
-  public static let lineNumbers = Self(rawValue: 1 << 2)
-  public static let all: Self = [.widthCounter, .invisibles, .lineNumbers]
+
 }
