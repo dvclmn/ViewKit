@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 15/9/2024.
 //
 
-public extension BoxCore {
+public extension Box {
   static let boxDrawing: String = """
   
   U+2580  ▀  Upper half block

@@ -34,16 +34,16 @@
 ///
 /// ```
 
-public extension BoxCore.Theme {
+public extension Box.Theme {
   
   struct Shadow: Sendable {
     var type: ShadowType
-    var lightSource: BoxCore.LightSource
+    var lightSource: Box.LightSource
     var strength: ShadowStrength
     
     public init(
       type: ShadowType = .simple,
-      lightSource: BoxCore.LightSource = .topTrailing,
+      lightSource: Box.LightSource = .topTrailing,
       strength: ShadowStrength = .light
     ) {
       self.type = type
@@ -53,7 +53,7 @@ public extension BoxCore.Theme {
   }
 }
 
-public extension BoxCore.Theme.Shadow {
+public extension Box.Theme.Shadow {
   
   /// What do we need to know to create a shadow for a side?
   ///
@@ -103,7 +103,7 @@ public extension BoxCore.Theme.Shadow {
 
 }
 
-public extension BoxCore {
+public extension Box {
   
   enum LightSource: Sendable {
     case topLeading
@@ -111,7 +111,7 @@ public extension BoxCore {
     case bottomLeading
     case bottomTrailing
     
-    public func hasShadow(_ location: BoxCore.VerticalLocation) -> Bool {
+    public func hasShadow(_ location: Box.VerticalLocation) -> Bool {
       switch location {
         case .leading:
           self == .topLeading || self == .bottomLeading

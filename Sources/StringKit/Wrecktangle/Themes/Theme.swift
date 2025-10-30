@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public extension BoxCore {
+public extension Box {
   
   struct Theme: Sendable {
     

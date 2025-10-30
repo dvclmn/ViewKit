@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 24/8/2024.
 //
 
-extension BoxCore.Theme {
+extension Box.Theme {
 
   public enum FrameStyle: Sendable {
     case single
@@ -21,9 +21,9 @@ extension BoxCore.Theme {
     /// This can also be thought of like a tile size. Any `BoxPart`
     /// exceeding this tile size is likely to break the layout in some way.
     ///
-    public var maximumGridSize: BoxCore.Dimensions {
+    public var maximumGridSize: Box.Dimensions {
 
-      let dimensions: BoxCore.Dimensions
+      let dimensions: Box.Dimensions
 
       switch self {
         case .single:

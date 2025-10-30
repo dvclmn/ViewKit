@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public extension BoxCore {
+public extension Box {
   
   enum Invisibles {
     

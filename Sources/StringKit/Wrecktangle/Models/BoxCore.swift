@@ -7,18 +7,18 @@
 
 import Foundation
 
-public typealias Box = BoxCore
+//public typealias Box = BoxCore
 
-public struct BoxCore {
-  
+public struct Box {
+
   var header: String?
   var content: String
   var config: Config
-  
-  var attributedString: AttributedString {
+
+  public var attributedString: AttributedString {
     return self.drawBox()
   }
-  
+
   public init(
     header: String? = nil,
     content: String,
@@ -28,45 +28,35 @@ public struct BoxCore {
     self.content = content
     self.config = config
   }
+}
+
+extension Box {
+
+  public var theme: Theme { config.theme }
+  public var glyphSet: GlyphSet { config.theme.glyphSet }
+  public var boxWidth: Int { config.width }
+
+  /// The remaning width for text, after removing space
+  /// reserved for structural elements
+  public var widthForText: Int {
+    let caps = theme.frameStyle.maximumGridSize.width.value
+
+    return max(0, boxWidth - caps)
+
+  }
+
+  //  var shadow: BoxCore.Theme.Shadow {
+  //    self.config.theme.shadow
+  //  }
+  //
+  //  var shadowCharacter: Character {
+  //    self.config.theme.shadow.strength.character
+  //  }
 
 }
 
-
-extension BoxCore: CustomStringConvertible {
+extension Box: CustomStringConvertible {
   public var description: String {
     self.attributedString.toString
   }
-}
-
-public extension BoxCore {
-  
-  var theme: Theme {
-    self.config.theme
-  }
-  
-  var glyphSet: GlyphSet {
-    self.config.theme.glyphSet
-  }
-  
-  var boxWidth: Int {
-    self.config.width
-  }
-  
-  var widthLeftForText: Int {
-
-//    let shadowSpace = theme.shadow.reservedSpace
-    let caps = theme.frameStyle.maximumGridSize.width.value
-    
-    return max(0, boxWidth - caps)
-    
-  }
-  
-//  var shadow: BoxCore.Theme.Shadow {
-//    self.config.theme.shadow
-//  }
-//  
-//  var shadowCharacter: Character {
-//    self.config.theme.shadow.strength.character
-//  }
-  
 }

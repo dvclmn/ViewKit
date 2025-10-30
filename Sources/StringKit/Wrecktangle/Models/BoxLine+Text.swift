@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-public extension BoxCore.BoxLine {
+public extension Box.BoxLine {
   
   struct TextContent: LineContent {
     public let rawContent: String

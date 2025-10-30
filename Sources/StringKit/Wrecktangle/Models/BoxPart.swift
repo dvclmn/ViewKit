@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension BoxCore {
+public extension Box {
 
   struct BoxPart {
     public var content: MultilineString
@@ -20,7 +20,7 @@ public extension BoxCore {
   }
 }
 
-public extension BoxCore.BoxPart {
+public extension Box.BoxPart {
   
   var width: Int {
     content.width

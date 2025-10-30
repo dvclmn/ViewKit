@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension BoxCore {
+extension Box {
 
   internal func drawBox() -> AttributedString {
 
@@ -30,7 +30,7 @@ extension BoxCore {
     if let headerText = self.header {
 
       let headerLines: [String] = headerText.reflowText(
-        width: widthLeftForText,
+        width: widthForText,
         maxLines: config.headerLineLimit,
         paddingWidth: self.config.theme.padding,
         paddingCharacter: invisibleIfNeeded(.space),
@@ -50,7 +50,7 @@ extension BoxCore {
     /// Content
 
     let contentLines: [String] = self.content.reflowText(
-      width: widthLeftForText,
+      width: widthForText,
       maxLines: config.contentLineLimit,
       paddingWidth: self.config.theme.padding,
       paddingCharacter: invisibleIfNeeded(.space),

@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 12/9/2024.
 //
 
-extension BoxCore.PartType {
+extension Box.PartType {
 
   /// This should be able to replace the old method, using 'archetype' glyphs
   /// that would then need to be swapped in.
@@ -18,16 +18,16 @@ extension BoxCore.PartType {
   ///   ]
   /// ```
   ///
-  public func preset(with frameStyle: BoxCore.Theme.FrameStyle) -> [[BoxCore.GlyphType]] {
+  public func preset(with frameStyle: Box.Theme.FrameStyle) -> [[Box.GlyphType]] {
 
-    typealias Glyph = BoxCore.GlyphType
+    typealias Glyph = Box.GlyphType
 
     switch frameStyle {
 
       // MARK: - Single frame
       case .single:
 
-        let output: BoxCore.GlyphType
+        let output: Box.GlyphType
 
         switch self {
 
@@ -56,7 +56,7 @@ extension BoxCore.PartType {
       // MARK: - Double frame
       case .double:
 
-        let output: [[BoxCore.GlyphType]]
+        let output: [[Box.GlyphType]]
 
         switch self {
 
@@ -209,12 +209,12 @@ extension BoxCore.PartType {
 
 }
 
-extension BoxCore.BoxPart {
+extension Box.BoxPart {
 
   public static func create(
-    _ type: BoxCore.PartType,
-    with theme: BoxCore.Theme
-  ) -> BoxCore.BoxPart {
+    _ type: Box.PartType,
+    with theme: Box.Theme
+  ) -> Box.BoxPart {
 
     let glyphGrid = type.preset(with: theme.frameStyle)
     let characterGrid = glyphGrid.map { row in
@@ -246,7 +246,7 @@ extension BoxCore.BoxPart {
 
     //    print("Character grid:\n \(multilineString)")
 
-    return BoxCore.BoxPart(content: finalResult, type: type)
+    return Box.BoxPart(content: finalResult, type: type)
   }
 
   //  private static func addShadow(

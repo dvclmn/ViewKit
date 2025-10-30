@@ -1,33 +1,33 @@
 //
-//  BoxCore+Init.swift
+//  Box+Init.swift
 //  BoxCore
 //
 //  Created by Dave Coleman on 16/9/2024.
 //
 
-public extension BoxCore {
+public extension Box {
   
   init(
     header: String,
     content: String,
     width: Int,
-    glyphSet: BoxCore.GlyphSet,
-    frameStyle: BoxCore.Theme.FrameStyle,
+    glyphSet: Box.GlyphSet,
+    frameStyle: Box.Theme.FrameStyle,
     widthCounter: TextCore.WidthCounterStyle
   ) {
-    let theme = BoxCore.Theme(
+    let theme = Box.Theme(
       glyphSet: glyphSet,
       frameStyle: frameStyle,
       padding: 1
     )
     
-    let metrics = BoxCore.Config.Metrics(
+    let metrics = Box.Config.Metrics(
       widthCounter: widthCounter,
       lineNumbers: false,
       invisibles: false
     )
     
-    let config = BoxCore.Config(
+    let config = Box.Config(
       theme: theme,
       width: width,
       headerLineLimit: 2,

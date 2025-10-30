@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 22/8/2024.
 //
 
-extension BoxCore {
+extension Box {
 
   public static func header(_ info: String) -> String {
     return """

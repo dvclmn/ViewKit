@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-extension BoxCore {
+extension Box {
 
   public func line(
     _ lineType: BoxLine.LineType
@@ -35,10 +35,10 @@ extension BoxCore {
       case .text(let content, let lineLimit):
 
         /// This uses `BoxLine`s text-based initialiser
-        let lineResult = BoxCore.BoxLine(
+        let lineResult = Box.BoxLine(
           text: content,
           lineLimit: lineLimit,
-          remainingWidth: widthLeftForText,
+          remainingWidth: widthForText,
           theme: theme
         )
 
@@ -62,7 +62,7 @@ extension BoxCore {
 
     /// This uses `BoxLine`s structure-based initialiser
     let lineResult = BoxLine(
-      remainingWidth: widthLeftForText,
+      remainingWidth: widthForText,
       repeater: repeating,
       leadingCap: leading,
       trailingCap: trailing,

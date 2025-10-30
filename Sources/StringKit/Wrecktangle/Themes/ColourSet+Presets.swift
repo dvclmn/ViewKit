@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension BoxCore.Theme.ColourSet {
+extension Box.Theme.ColourSet {
 
   ///
   /// ```swift

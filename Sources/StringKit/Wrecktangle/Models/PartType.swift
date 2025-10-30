@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public extension BoxCore {
+public extension Box {
   
   enum HorizontalLocation: Hashable {
     case top
@@ -23,8 +23,8 @@ public extension BoxCore {
 
   enum PartType: Hashable {
     
-    case horizontal(BoxCore.HorizontalLocation = .top)
-    case vertical(BoxCore.VerticalLocation = .leading)
+    case horizontal(Box.HorizontalLocation = .top)
+    case vertical(Box.VerticalLocation = .leading)
     case join(JoinType)
     case corner(CornerType)
     

@@ -63,7 +63,7 @@ extension BoxExampleView {
       if let headerText = self.header {
         
         let headerLines: [String] = headerText.reflowText(
-          width: widthLeftForText,
+          width: widthForText,
           maxLines: config.headerLineLimit,
           paddingWidth: self.config.theme.padding,
           paddingCharacter: invisibleIfNeeded(.space),

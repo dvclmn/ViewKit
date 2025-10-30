@@ -10,7 +10,7 @@
 /// So processing line-by-line, vertically, is fairly straightforward.
 ///
 
-public extension BoxCore {
+public extension Box {
   
   struct BoxLine {
     let content: LineContent
@@ -20,7 +20,7 @@ public extension BoxCore {
     let remainingWidth: Int
     let leadingCap: BoxPart
     let trailingCap: BoxPart
-    let theme: BoxCore.Theme
+    let theme: Box.Theme
     
     /// Default initialiser (structure-based)
     init(
@@ -28,7 +28,7 @@ public extension BoxCore {
       repeater: BoxPart,
       leadingCap: BoxPart,
       trailingCap: BoxPart,
-      theme: BoxCore.Theme
+      theme: Box.Theme
     ) {
       self.remainingWidth = remainingWidth
 
@@ -43,7 +43,7 @@ public extension BoxCore {
       text: String,
       lineLimit: Int,
       remainingWidth: Int,
-      theme: BoxCore.Theme
+      theme: Box.Theme
     ) {
       
       self.content = TextContent(text, lineLimit: lineLimit)
@@ -69,16 +69,16 @@ public extension BoxCore {
   }
 }
 
-public extension BoxCore.BoxLine {
+public extension Box.BoxLine {
   
   protocol LineContent {
     var rawContent: String { get }
   }
 
   typealias ThreePartLine = (
-    leading: BoxCore.PartType,
-    repeater: BoxCore.PartType,
-    trailing: BoxCore.PartType
+    leading: Box.PartType,
+    repeater: Box.PartType,
+    trailing: Box.PartType
   )
   
   /// What kinds of lines could there be, in a box?
@@ -98,33 +98,33 @@ public extension BoxCore.BoxLine {
       switch self {
         case .top:
           (
-            BoxCore.PartType.corner(.topLeading),
-            BoxCore.PartType.horizontal(.top),
-            BoxCore.PartType.corner(.topTrailing)
+            Box.PartType.corner(.topLeading),
+            Box.PartType.horizontal(.top),
+            Box.PartType.corner(.topTrailing)
           )
         case .divider:
           (
-            BoxCore.PartType.join(.leading),
-            BoxCore.PartType.horizontal(.interior),
-            BoxCore.PartType.join(.trailing)
+            Box.PartType.join(.leading),
+            Box.PartType.horizontal(.interior),
+            Box.PartType.join(.trailing)
           )
         case .bottom:
           (
-            BoxCore.PartType.corner(.bottomLeading),
-            BoxCore.PartType.horizontal(.bottom),
-            BoxCore.PartType.corner(.bottomTrailing)
+            Box.PartType.corner(.bottomLeading),
+            Box.PartType.horizontal(.bottom),
+            Box.PartType.corner(.bottomTrailing)
           )
         case .text:
           nil
       }
     } // END parts
     
-    private static let shadowLookup: [LineType: Set<BoxCore.LightSource>] = [
+    private static let shadowLookup: [LineType: Set<Box.LightSource>] = [
       .top: [.bottomLeading, .bottomTrailing],
       .bottom: [.topLeading, .topTrailing]
     ]
     
-    func hasShadow(lightSource: BoxCore.LightSource) -> Bool {
+    func hasShadow(lightSource: Box.LightSource) -> Bool {
       switch self {
         case .top, .bottom:
           return Self.shadowLookup[self, default: []].contains(lightSource)

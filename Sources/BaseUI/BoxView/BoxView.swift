@@ -5,20 +5,29 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-import SwiftUI
 import StringKit
+import SwiftUI
 
-public struct BoxView<Content: View>: View {
-  
-  let content: Content
-  
+public struct BoxView: View {
+  @Environment(\.glyphSet) private var glyphSet
+
+  let width: Int
+  let content: Text
+
   public init(
-    @ViewBuilder content: @escaping () -> Content
+    separator: String = "\n",
+    width: Int,
+    @TextBuilder content: () -> [Text]
   ) {
-    self.content = content()
+    self.width = width
+    self.content = content().joined(separator: Text(separator))
   }
-  
+
   public var body: some View {
     content
   }
+}
+
+extension BoxView {
+  
 }

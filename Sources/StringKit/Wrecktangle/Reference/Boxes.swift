@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 24/8/2024.
 //
 
-public extension BoxCore {
+public extension Box {
   
   static let singleBox: String = """
   ┏━━━━━━━┓

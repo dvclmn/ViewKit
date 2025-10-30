@@ -5,47 +5,44 @@
 //  Created by Dave Coleman on 23/8/2024.
 //
 
+extension Box {
 
-public extension BoxCore {
-  
-  /// Defines the appearance and behavior of a `BoxCore`.
+  /// Defines the appearance and behavior of a `Box`.
   ///
-  /// Use `Config` to customize various aspects of a `BoxCore`,
+  /// Use `Config` to customize various aspects of a `Box`,
   /// such as its theme, width, and content limitations.
-  ///
-  ///
-  struct Config: Sendable {
+  public struct Config: Sendable {
 
     /// The visual theme of the box.
     ///
     public var theme: Theme
-    
+
     /// The width of the box in `Character`s.
     ///
     /// This value determines the overall width of the box, including its borders.
     /// The content will be wrapped to fit within this width.
     ///
     public var width: Int
-    
+
     /// The maximum number of lines for the header.
     ///
     /// If set, the header will be truncated if it exceeds this number of lines.
     /// Set to `nil` for no limit.
     ///
     public var headerLineLimit: Int
-    
+
     /// The maximum number of lines for the main content.
     ///
     /// If set, the content will be truncated if it exceeds this number of lines.
     /// Set to `nil` for no limit.
     ///
     public var contentLineLimit: Int
-    
+
     public var wordWrapStrategy: WordWrapStrategy
     /// Display metadata about the box itself
     ///
     public var metrics: Metrics
-    
+
     public init(
       theme: Theme = Theme(),
       width: Int = 60,
@@ -61,8 +58,8 @@ public extension BoxCore {
       self.wordWrapStrategy = wordWrapStrategy
       self.metrics = metrics
     }
-    
-    /// The default configuration for a `BoxCore`.
+
+    /// The default configuration for a `Box`.
     ///
     public static let `default` = Config()
   }

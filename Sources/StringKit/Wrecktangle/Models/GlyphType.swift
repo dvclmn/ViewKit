@@ -6,7 +6,7 @@
 //
 
 
-public extension BoxCore {
+public extension Box {
   
   enum JoinType: Hashable, Sendable {
     case leading
@@ -54,7 +54,7 @@ public extension BoxCore {
       case exterior
     }
     
-    var fallback: BoxCore.GlyphType? {
+    var fallback: Box.GlyphType? {
       switch self {
         case .horizontal(.interior):
           return .horizontal(.exterior)

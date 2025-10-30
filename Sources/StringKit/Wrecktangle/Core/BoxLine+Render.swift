@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-public extension BoxCore.BoxLine {
+public extension Box.BoxLine {
 
   func render() -> String {
 

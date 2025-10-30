@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 12/9/2024.
 //
 
-public extension BoxCore {
+public extension Box {
   
   enum GlyphSet: Sendable {
     case base([GlyphType: Character])

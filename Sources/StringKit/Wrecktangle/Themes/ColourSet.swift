@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// ColourSet is not yet public, still working on it
-extension BoxCore.Theme {
+extension Box.Theme {
 
   struct ColourSet: Sendable {
     private var colors: [ColourCategory: Attributes]

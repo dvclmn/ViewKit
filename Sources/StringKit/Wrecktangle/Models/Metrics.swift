@@ -1,11 +1,11 @@
 //
 //  Metrics.swift
-//  BoxCore
+//  Box
 //
 //  Created by Dave Coleman on 24/8/2024.
 //
 
-public extension BoxCore.Config {
+public extension Box.Config {
   
   struct Metrics: Sendable {
     var widthCounter: TextCore.WidthCounterStyle

@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-extension BoxCore.BoxLine {
+extension Box.BoxLine {
   
-  static func checkConditions(leadingCap: BoxCore.BoxPart, trailingCap: BoxCore.BoxPart) -> (condition: Bool, message: String) {
+  static func checkConditions(leadingCap: Box.BoxPart, trailingCap: Box.BoxPart) -> (condition: Bool, message: String) {
     
     let heightCheck: Bool = leadingCap.height == 1 && trailingCap.height == 1
     let message: String = """

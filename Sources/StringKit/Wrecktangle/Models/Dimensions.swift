@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 15/9/2024.
 //
 
-public extension BoxCore {
+public extension Box {
   
   protocol FixedDimension {
     var value: Int { get }
@@ -42,7 +42,7 @@ public extension BoxCore {
   }
 }
 
-extension BoxCore.DimensionType: BoxCore.FixedDimension {
+extension Box.DimensionType: Box.FixedDimension {
   
   /// Warning: This will cause a fatal error if accessed for a
   /// variable-width (aka `repeatable`) dimension type.
