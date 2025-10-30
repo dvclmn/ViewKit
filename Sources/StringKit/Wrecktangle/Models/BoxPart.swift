@@ -18,9 +18,24 @@ public struct BoxPart {
 }
 
 extension BoxPart {
-
   public var width: Int { content.width }
   public var height: Int { content.height }
   public var columns: Int { width }
   public var rows: Int { height }
+
+  public static func create(
+    _ type: BoxPart.PartType,
+    with theme: Box.Theme
+  ) -> BoxPart {
+
+    let glyphGrid = type.preset(with: theme.frameStyle)
+    let characterGrid = glyphGrid.map { row in
+      row.map { theme.glyphSet.character(for: $0) }
+    }
+
+    let multilineString = MultilineString(characterGrid)
+    let finalResult: MultilineString
+    finalResult = multilineString
+    return BoxPart(content: finalResult, type: type)
+  }
 }

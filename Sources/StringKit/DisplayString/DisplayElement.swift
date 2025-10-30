@@ -26,6 +26,32 @@ public enum DisplayBlock {
 
 extension DisplayBlock: StyledStringConvertible {
 
+  private func indentedElements(
+    _ indent: String,
+    content: [StyledString]
+  ) -> [StyledString] {
+
+    /// Indent each element, handling multi-line content
+    let indented = content.flatMap { element -> [StyledString] in
+      let lines = element.splitByNewlines()
+
+      /// Handle the edge case of an empty element gracefully.
+      guard let firstLine = lines.first else { return [StyledString("")] }
+
+      /// Take the rest of the lines...
+      let subsequentLines = lines.dropFirst()
+
+      /// ...and map over them to add the indent.
+      let indentedSubsequentLines = subsequentLines.map { line in
+        StyledString(indent, with: .blackOnGreen) + line
+      }
+
+      /// Recombine the first line with the now-indented subsequent lines.
+      return [firstLine] + indentedSubsequentLines
+    }
+    return indented
+  }
+
   public var toStyledString: StyledString {
     switch self {
       case .text(let styledString):
@@ -63,29 +89,4 @@ extension DisplayBlock: StyledStringConvertible {
     }
   }
 
-  private func indentedElements(
-    _ indent: String,
-    content: [StyledString]
-  ) -> [StyledString] {
-
-    /// Indent each element, handling multi-line content
-    let indented = content.flatMap { element -> [StyledString] in
-      let lines = element.splitByNewlines()
-
-      /// Handle the edge case of an empty element gracefully.
-      guard let firstLine = lines.first else { return [StyledString("")] }
-
-      /// Take the rest of the lines...
-      let subsequentLines = lines.dropFirst()
-
-      /// ...and map over them to add the indent.
-      let indentedSubsequentLines = subsequentLines.map { line in
-        StyledString(indent, with: .blackOnGreen) + line
-      }
-
-      /// Recombine the first line with the now-indented subsequent lines.
-      return [firstLine] + indentedSubsequentLines
-    }
-    return indented
-  }
 }

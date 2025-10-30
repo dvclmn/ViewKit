@@ -7,8 +7,6 @@
 
 extension Box {
 
-  /// I ought to make it so the code will use the external version of a glyph,
-  /// if there is no internal style available?
   public enum GlyphType: Hashable, Sendable {
 
     /// Basic lines
@@ -53,9 +51,10 @@ extension Box.GlyphType {
 
 extension Box.GlyphType {
   
+  /// This usually describes the thickness of a structural
+  /// glyph; typically bolder for exterior, lighter for interior
   public enum Location: Hashable, Sendable {
     case interior
     case exterior
   }
-
 }

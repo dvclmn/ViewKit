@@ -52,14 +52,6 @@ extension BoxPart {
     case fixed
   }
 
-  public enum Join: Hashable, Sendable {
-    case leading
-    case trailing
-    case top
-    case bottom
-    case cross
-  }
-
   public enum Corner: Hashable, Sendable {
     case topLeading
     case topTrailing

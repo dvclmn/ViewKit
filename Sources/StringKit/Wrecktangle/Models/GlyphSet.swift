@@ -5,12 +5,15 @@
 //  Created by Dave Coleman on 12/9/2024.
 //
 
-public extension Box {
-  
-  enum GlyphSet: Sendable {
-    case base([GlyphType: Character])
-    indirect case fallback([GlyphType: Character], GlyphSet)
-    
+public typealias GlyphMap = [Box.GlyphType: Character]
+
+extension Box {
+
+  // https://www.hackingwithswift.com/example-code/language/what-are-indirect-enums
+  public enum GlyphSet: Sendable {
+    case base(GlyphMap)
+    indirect case fallback(GlyphMap, GlyphSet)
+
     func character(for glyphType: GlyphType) -> Character {
       switch self {
         case .base(let glyphMap):
@@ -19,15 +22,18 @@ public extension Box {
           return characterFromMap(glyphMap, for: glyphType) ?? fallbackSet.character(for: glyphType)
       }
     }
-    
-    
-    private func characterFromMap(_ glyphMap: [GlyphType: Character], for glyphType: GlyphType) -> Character? {
-      // Check for exact match
+
+    private func characterFromMap(
+      _ glyphMap: GlyphMap,
+      for glyphType: GlyphType
+    ) -> Character? {
+
+      /// Check for exact match
       if let char = glyphMap[glyphType] {
         return char
       }
-      
-      // For join and corner, try equivalent interior variants first
+
+      /// For join and corner, try equivalent interior variants first
       switch glyphType {
         case .join(_, _, let type):
           if let char = glyphMap[.join(x: .interior, y: .interior, type: type)] {
@@ -40,14 +46,15 @@ public extension Box {
         default:
           break
       }
-      
-      // Check for fallback within the same map
+
+      /// Check for fallback within the same map
       if let fallbackType = glyphType.fallback,
-         let fallbackChar = glyphMap[fallbackType] {
+        let fallbackChar = glyphMap[fallbackType]
+      {
         return fallbackChar
       }
-      
-      // For join and corner, try falling back to exterior variants
+
+      /// For join and corner, try falling back to exterior variants
       switch glyphType {
         case .join(_, _, let type):
           return glyphMap[.join(x: .exterior, y: .exterior, type: type)]
@@ -57,11 +64,5 @@ public extension Box {
           return nil
       }
     }
-    
-    
   }
-  
-  
 }
-
-
