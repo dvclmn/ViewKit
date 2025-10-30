@@ -23,7 +23,7 @@ extension Box {
     }
 
     /// Box roof
-    let top = builder.buildLine(.top)
+    let top = builder.buildLine(.structure(.top))
     output.append(top, addsLineBreak: true)
 
     /// Header
@@ -35,7 +35,7 @@ extension Box {
     buildContent(builder, output: &output)
     
     /// Bottom
-    let bottom = builder.buildLine(.bottom)
+    let bottom = builder.buildLine(.structure(.bottom))
     output.append(bottom, addsLineBreak: true)
 
     return output
@@ -65,7 +65,7 @@ extension Box {
     }
 
     /// Divider
-    let divider = builder.buildLine(.divider)
+    let divider = builder.buildLine(.structure(.divider))
     output.append(divider, addsLineBreak: true)
   }
 

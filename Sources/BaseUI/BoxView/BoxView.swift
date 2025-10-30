@@ -16,36 +16,56 @@ public struct BoxView<Content: View>: View {
   @Environment(\.gridHeight) private var gridHeight
 
   @State private var characterSize: CGSize?
+  @State private var viewSize: CGSize?
 
-  let title: String?
+  //  let title: String?
   let alignment: Alignment
   let content: Content
 
   public init(
-    _ title: String? = nil,
+    //    _ title: String? = nil,
     separator: String = "\n",
     alignment: Alignment = .center,
     @ViewBuilder content: @escaping () -> Content
       //    @DisplayStringBuilder content: () -> [DisplayBlock]
   ) {
-    self.title = title
+    //    self.title = title
     self.alignment = alignment
     self.content = content()
   }
 
   public var body: some View {
     content
-      .characterSize(mode: .debounce(0.2)) { size in
-        updateIfChanged(&self.characterSize, to: size)
+      //      .characterSize(mode: .debounce(0.2)) { size in
+      //        updateIfChanged(&self.characterSize, to: size)
+      //      }
+      .characterAndViewSize(.debounce(0.2)) { char, view in
+        updateIfChanged(&self.characterSize, to: char)
+        updateIfChanged(&self.viewSize, to: view)
       }
-      .gridFrame(gridWidth, gridHeight)
+      .gridFrame(
+        viewSize?.toGridCount(
+          along: <#T##Axis#>,
+          using: <#T##CGSize#>,
+          rounding: <#T##GridRounding#>
+        ),
+        gridHeight
+      )
       .environment(\.unitSize, characterSize)
 
       .overlay {
         GridGuideOverlay(opacity: 0.1)
           .isDebugMode(true)
       }
+
+      .background {
+        Text(ViewBox(width: gridWidth ?? 20, height: gridHeight ?? 30, theme: .init()).attributedString)
+      }
   }
+}
+
+extension BoxView {
+  private var gridFame:
 }
 
 #if DEBUG
@@ -58,8 +78,8 @@ public struct BoxView<Content: View>: View {
       Text("I'm a SwiftUI View")
       Text(DummyContent.Strings.paragraphs[8].toAttributed)
     }
-//    .gridFrame(42)
-//    .boxStyle(glyphs: .double, frame: .double)
+    //    .gridFrame(42)
+    //    .boxStyle(glyphs: .double, frame: .double)
 
   }
   .textSelection(.enabled)
