@@ -32,7 +32,7 @@ extension Box.PartType {
   public enum HorizontalLocation: Hashable {
     case top
     case bottom
-    case interior  // Aka Divider
+    case interior  // Aka Divider/Spacer
   }
 
   public enum VerticalLocation: Hashable, Sendable {

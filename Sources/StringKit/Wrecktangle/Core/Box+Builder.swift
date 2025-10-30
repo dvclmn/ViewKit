@@ -10,7 +10,7 @@ extension Box {
     let width: Int
     let height: Int?
     let theme: Box.Theme
-    
+
     public init(
       width: Int,
       height: Int? = nil,
@@ -36,46 +36,60 @@ extension Box.Builder {
 extension Box.Builder {
 
   func buildLine(
-    _ lineType: Line.LineType
+    _ lineType: Box.Line.LineType
   ) -> String {
-
     switch lineType {
-
       case .text(let content, let lineLimit):
-
-        /// This uses `BoxLine`s text-based initialiser
-        let lineResult = Line(
-          text: content,
-          lineLimit: lineLimit,
-          remainingWidth: widthForText,
-          theme: theme
-        )
-
-        let lineString = lineResult.render()
-
-        return lineString
-
-      case .top, .divider, .bottom:
-        return buildStructureLine(for: lineType, hasLineBreak: false)
+        return buildTextLine(content: content, lineLimit: lineLimit)
+      case .structure(let structureType):
+        return buildStructureLine(for: structureType, hasLineBreak: false)
     }
-
   }  // END create line
 
+  private func buildTextLine(
+    content: String,
+    lineLimit: Int
+  ) -> String {
+
+    //    switch lineType {
+
+    //      case .text(let content, let lineLimit):
+
+    /// This uses `BoxLine`s text-based initialiser
+    let lineResult = Box.Line(
+      text: content,
+      lineLimit: lineLimit,
+      remainingWidth: widthForText,
+      theme: theme
+    )
+
+    let lineString = lineResult.render()
+
+    return lineString
+
+    //      case .top, .divider, .bottom, .blank:
+    //        return buildStructureLine(for: lineType, hasLineBreak: false)
+    //    }
+
+  }
+
   private func buildStructureLine(
-    for preset: Line.LineType,
+    for type: Box.Line.StructureType,
+    //    for preset: Line.LineType,
     hasLineBreak: Bool
   ) -> String {
 
-    guard let parts = preset.parts else {
-      return "nil"
-    }
+    let parts = type.parts
+    //    guard let parts = preset.parts else {
+    //      return "nil"
+    //    }
 
     let leading = Box.Part.create(parts.leading, with: theme)
     let repeating = Box.Part.create(parts.repeater, with: theme)
     let trailing = Box.Part.create(parts.trailing, with: theme)
 
     /// This uses `BoxLine`s structure-based initialiser
-    let lineResult = Line(
+    let lineResult = Box.Line(
       remainingWidth: widthForText,
       repeater: repeating,
       leadingCap: leading,

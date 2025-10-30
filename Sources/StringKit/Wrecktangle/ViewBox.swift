@@ -16,6 +16,7 @@ public struct ViewBox {
 }
 
 extension ViewBox {
+  
   func drawBox() -> AttributedString {
     
     let builder = Box.Builder(

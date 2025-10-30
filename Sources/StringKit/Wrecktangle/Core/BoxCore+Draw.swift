@@ -67,7 +67,6 @@ extension Box {
     /// Divider
     let divider = builder.buildLine(.divider)
     output.append(divider, addsLineBreak: true)
-
   }
 
   private func buildContent(

@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-extension Box.Builder.Line {
+extension Box.Line {
 
   public struct StructuralContent: LineContent {
     public let rawContent: String

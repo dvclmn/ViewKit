@@ -7,7 +7,7 @@
 
 /// Currently this library can only handle horizontal dividers, not vertical.
 /// So processing line-by-line, vertically, is fairly straightforward.
-extension Box.Builder {
+extension Box {
 
   public struct Line {
     let content: LineContent
@@ -70,64 +70,3 @@ public protocol LineContent {
   var rawContent: String { get }
 }
 
-extension Box.Builder.Line {
-
-  public typealias ThreePartLine = (
-    leading: Box.PartType,
-    repeater: Box.PartType,
-    trailing: Box.PartType
-  )
-
-  /// What kinds of lines could there be, in a box?
-  ///
-  /// Note: These, by definition, describe a *whole* line, stretching
-  /// from one end to the other. Not just a sub-component.
-  ///
-  /// E.g. `top` would consist of a leading cap, repeating part, and trailing cap.
-  public enum LineType: Hashable, Sendable {
-    case top
-    case divider
-    case bottom
-    case text(content: String, lineLimit: Int = 0)
-
-    public var parts: ThreePartLine? {
-      switch self {
-        case .top:
-          (
-            Box.PartType.corner(.topLeading),
-            Box.PartType.horizontal(.top),
-            Box.PartType.corner(.topTrailing)
-          )
-        case .divider:
-          (
-            Box.PartType.join(.leading),
-            Box.PartType.horizontal(.interior),
-            Box.PartType.join(.trailing)
-          )
-        case .bottom:
-          (
-            Box.PartType.corner(.bottomLeading),
-            Box.PartType.horizontal(.bottom),
-            Box.PartType.corner(.bottomTrailing)
-          )
-        case .text:
-          nil
-      }
-    }  // END parts
-
-    //    private static let shadowLookup: [LineType: Set<Box.LightSource>] = [
-    //      .top: [.bottomLeading, .bottomTrailing],
-    //      .bottom: [.topLeading, .topTrailing],
-    //    ]
-    //
-    //    func hasShadow(lightSource: Box.LightSource) -> Bool {
-    //      switch self {
-    //        case .top, .bottom:
-    //          return Self.shadowLookup[self, default: []].contains(lightSource)
-    //        case .divider, .text:
-    //          return false
-    //      }
-    //    }
-  }
-
-}
