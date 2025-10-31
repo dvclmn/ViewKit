@@ -8,17 +8,18 @@
 extension Box {
   public typealias GlyphMap = [Box.GlyphType: Character]
 
+  /// A `GlyphSet` can either be a `base` set, or a
   // https://www.hackingwithswift.com/example-code/language/what-are-indirect-enums
   public enum GlyphSet: Sendable {
     case base(GlyphMap)
-    indirect case fallback(GlyphMap, GlyphSet)
+    indirect case partial(GlyphMap, GlyphSet)
 
     func character(for glyphType: GlyphType) -> Character {
       switch self {
         case .base(let glyphMap):
           return characterFromMap(glyphMap, for: glyphType) ?? "?"
 
-        case .fallback(let glyphMap, let fallbackSet):
+        case .partial(let glyphMap, let fallbackSet):
           return characterFromMap(
             glyphMap,
             for: glyphType

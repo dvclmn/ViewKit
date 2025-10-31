@@ -57,7 +57,7 @@ extension Box.GlyphSet {
     ]
   )
 
-  public static let rounded = Box.GlyphSet.fallback(
+  public static let rounded = Box.GlyphSet.partial(
     [
 
       Box.GlyphType.horizontal(.exterior): "─",
@@ -77,7 +77,7 @@ extension Box.GlyphSet {
 
     ], sharp)
 
-  public static let double = Box.GlyphSet.fallback(
+  public static let double = Box.GlyphSet.partial(
     [
 
       Box.GlyphType.horizontal(.exterior): "═",
