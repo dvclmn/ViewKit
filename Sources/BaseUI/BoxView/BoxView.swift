@@ -42,31 +42,36 @@ public struct BoxView<Content: View>: View {
         dimensions?.height
       )
 
-      //      .overlay {
-      //        GridGuideOverlay(opacity: 0.1)
-      //          .isDebugMode(true)
-      //      }
-
       .background {
-        Text(
-          ViewBox(
-            width: dimensions?.width ?? 20,
-            height: dimensions?.height ?? 30,
-            theme: Box.Theme(
-              glyphSet: glyphSet ?? .sharp,
-              frameStyle: frameStyle ?? .single,
-              padding: padding
-            )
-          ).attributedString
-        )
+        BoxFrame()
       }
+      .overlay {
+        GridGuideOverlay(opacity: 0.2)
+          .isDebugMode(true)
+      }
+
   }
 }
 
 extension BoxView {
+  
+  @ViewBuilder
+  private func BoxFrame() -> some View {
+    Text(
+      ViewBox(
+        width: dimensions?.width ?? 20,
+        height: dimensions?.height ?? 30,
+        theme: Box.Theme(
+          glyphSet: glyphSet ?? .sharp,
+          frameStyle: frameStyle ?? .single,
+          padding: padding
+        )
+      ).attributedString
+    )
+  }
   private var dimensions: GridDimensions? {
     guard let unitSize else { return nil }
-    return viewSize?.toGridDimensions(using: unitSize, rounding: .up)
+    return viewSize?.toGridDimensions(using: unitSize, rounding: .down)
   }
 }
 

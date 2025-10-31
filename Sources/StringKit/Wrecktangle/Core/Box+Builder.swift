@@ -13,7 +13,7 @@ extension Box {
 
     public init(
       width: Int,
-      height: Int? = nil,
+      height: Int?,
       theme: Box.Theme = .init()
     ) {
       self.width = width
@@ -31,6 +31,12 @@ extension Box.Builder {
     let capCount = theme.frameStyle.maximumGridSize.width.value
     return max(0, width - capCount)
   }
+
+  public var heightForText: Int? {
+    guard let height else { return nil }
+    let capCount = theme.frameStyle.maximumGridSize.height.value
+    return max(0, height - capCount)
+  }
 }
 
 extension Box.Builder {
@@ -41,8 +47,21 @@ extension Box.Builder {
     switch lineType {
       case .text(let content, let lineLimit):
         return buildTextLine(content: content, lineLimit: lineLimit)
+
       case .structure(let structureType):
         return buildStructureLine(for: structureType, hasLineBreak: false)
+
+      case .blank:
+        let lineResult = Box.Line(
+          text: String(repeating: " ", count: widthForText),
+          //          text: String(repeating: widthForText, count: " "),
+          lineLimit: heightForText ?? 0,
+          remainingWidth: widthForText,
+          theme: theme
+        )
+        let lineString = lineResult.render()
+        return lineString
+
     }
   }  // END create line
 
@@ -51,10 +70,6 @@ extension Box.Builder {
     lineLimit: Int
   ) -> String {
 
-    //    switch lineType {
-
-    //      case .text(let content, let lineLimit):
-
     /// This uses `BoxLine`s text-based initialiser
     let lineResult = Box.Line(
       text: content,
@@ -62,27 +77,16 @@ extension Box.Builder {
       remainingWidth: widthForText,
       theme: theme
     )
-
     let lineString = lineResult.render()
-
     return lineString
-
-    //      case .top, .divider, .bottom, .blank:
-    //        return buildStructureLine(for: lineType, hasLineBreak: false)
-    //    }
-
   }
 
   private func buildStructureLine(
     for type: Box.Line.StructureType,
-    //    for preset: Line.LineType,
     hasLineBreak: Bool
   ) -> String {
 
     let parts = type.parts
-    //    guard let parts = preset.parts else {
-    //      return "nil"
-    //    }
 
     let leading = Box.Part.create(parts.leading, with: theme)
     let repeating = Box.Part.create(parts.repeater, with: theme)

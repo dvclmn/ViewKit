@@ -40,7 +40,7 @@ extension Box.Theme {
           ///
           /// ```
           let width: Int = 1 + 1  // One character either side
-          let height: Int = 1
+          let height: Int = 3
 
           return Box.Dimensions(width, height)
 
@@ -67,7 +67,7 @@ extension Box.Theme {
           ///
           /// ```
           let width: Int = 3 + 3  // One character either side
-          let height: Int = 2
+          let height: Int = 5
 
           return Box.Dimensions(width, height)
 

@@ -35,10 +35,7 @@ extension Box.Part {
     let characterGrid = glyphGrid.map { row in
       row.map { theme.glyphSet.character(for: $0) }
     }
-
     let multilineString = MultilineString(characterGrid)
-    let finalResult: MultilineString
-    finalResult = multilineString
-    return Self(content: finalResult, type: type)
+    return Self(content: multilineString, type: type)
   }
 }

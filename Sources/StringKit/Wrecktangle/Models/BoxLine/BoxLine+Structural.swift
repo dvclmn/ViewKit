@@ -14,7 +14,6 @@ extension Box.Line {
       adjustedWidth: Int,
       repeatingPattern: Box.Part
     ) {
-
       let contentString = repeatingPattern.content.repeatHorizontally(toWidth: adjustedWidth)
       self.rawContent = contentString.string
     }

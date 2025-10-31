@@ -34,6 +34,7 @@ extension ViewBox {
 
     let builder = Box.Builder(
       width: width,
+      height: height,
       theme: theme
     )
 
@@ -46,9 +47,14 @@ extension ViewBox {
     output.append(top, addsLineBreak: true)
 
     /// Content
-    for _ in 0..<(height - 5) {
-      let blank = builder.buildLine(.structure(.blank))
+    let adjustedHeight = builder.heightForText ?? height
+    for _ in 0..<adjustedHeight {
+      let blank = builder.buildLine(.blank)
       output.append(blank, addsLineBreak: true)
+      
+//      let blankString = String(repeating: " ", count: width)
+//      let boxLine = builder.buildLine(.text(content: blankString, lineLimit: 0))
+//      output.append(boxLine, addsLineBreak: false)
     }
 
     /// Bottom
@@ -57,5 +63,4 @@ extension ViewBox {
 
     return output
   }
-
 }

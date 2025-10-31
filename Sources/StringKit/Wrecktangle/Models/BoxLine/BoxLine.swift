@@ -42,7 +42,6 @@ extension Box {
       remainingWidth: Int,
       theme: Box.Theme
     ) {
-
       self.content = TextContent(text, lineLimit: lineLimit)
       self.remainingWidth = remainingWidth
       self.theme = theme
@@ -55,13 +54,15 @@ extension Box {
       self.leadingCap = Box.Part.create(.vertical(.leading), with: theme)
       self.trailingCap = Box.Part.create(.vertical(.trailing), with: theme)
 
-      let conditions = Self.checkConditions(leadingCap: self.leadingCap, trailingCap: self.trailingCap)
+      let conditions = Self.checkConditions(
+        leadingCap: self.leadingCap,
+        trailingCap: self.trailingCap
+      )
 
       precondition(
         conditions.condition,
         conditions.message
       )
-
     }
   }
 }

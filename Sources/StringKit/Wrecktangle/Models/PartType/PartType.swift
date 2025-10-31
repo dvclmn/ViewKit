@@ -19,9 +19,10 @@ extension Box {
 
     public var flexibility: PartFlexibility {
       switch self {
-        case .horizontal: .repeatable(axis: .horizontal)
+        case .horizontal, .blank: .repeatable(axis: .horizontal)
         case .vertical: .repeatable(axis: .vertical)
-        default: .fixed
+        case .join, .corner: .fixed
+//        default: .fixed
       }
     }
   }  // END part type

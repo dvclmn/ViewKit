@@ -11,7 +11,11 @@ extension Box {
 
   func drawBox() -> AttributedString {
 
-    let builder = Box.Builder(width: boxWidth, theme: theme)
+    let builder = Box.Builder(
+      width: boxWidth,
+      height: nil,
+      theme: theme
+    )
 
     /// We start off with a fresh, blank attr. string. The 'build process' is based
     /// on concatenation, added section-by-section, starting from the top.
@@ -85,7 +89,12 @@ extension Box {
     )
 
     for contentLine in contentLines {
-      let boxLine = builder.buildLine(.text(content: contentLine, lineLimit: config.contentLineLimit))
+      let boxLine = builder.buildLine(
+        .text(
+          content: contentLine,
+          lineLimit: config.contentLineLimit
+        )
+      )
       output.append(boxLine, addsLineBreak: true)
     }
 

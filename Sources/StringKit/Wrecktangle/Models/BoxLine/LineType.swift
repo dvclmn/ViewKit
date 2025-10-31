@@ -23,10 +23,8 @@ extension Box.Line {
     case top
     case divider
     case bottom
-    //
-
     /// This should generate spaces for the full width
-    case blank  // `spacer` a better name?
+//    case blank  // `spacer` a better name?
 
     public var parts: ThreePartLine {
       switch self {
@@ -51,12 +49,14 @@ extension Box.Line {
             Box.PartType.corner(.bottomTrailing)
           )
 
-        case .blank:
-          (
-            Box.PartType.vertical(.interior),
-            Box.PartType.horizontal(.interior),
-            Box.PartType.vertical(.interior)
-          )
+//        case .blank:
+//          (
+//            Box.PartType.blank,
+////            Box.PartType.vertical(.interior),
+//            Box.PartType.blank,
+//            Box.PartType.blank
+////            Box.PartType.vertical(.interior)
+//          )
       //        case .text:
       //          nil
       }
@@ -67,6 +67,7 @@ extension Box.Line {
 
     case text(content: String, lineLimit: Int = 0)
     case structure(StructureType)
+    case blank
 
     //    private static let shadowLookup: [LineType: Set<Box.LightSource>] = [
     //      .top: [.bottomLeading, .bottomTrailing],
