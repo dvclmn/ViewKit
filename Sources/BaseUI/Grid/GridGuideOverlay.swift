@@ -50,10 +50,16 @@ public struct GridGuideOverlayModifier: ViewModifier {
           .opacity(opacity)
           .allowsHitTesting(false)
         } else {
-          Text("Unit Size not found")
-            .foregroundStyle(.red.secondary)
-            .bold()
-            .background(Color.black)
+          if isPreview {
+            ProgressView("Loading Unit Size")
+              .foregroundStyle(.tertiary)
+              .font(.caption)
+              .progressViewStyle(.linear)
+            //            Text("Unit Size not found")
+            //              .foregroundStyle(.red.secondary)
+            //              .bold()
+            //              .background(Color.black)
+          }
         }  // END size check
 
         //        GridGuideOverlay(opacity: opacity)

@@ -27,29 +27,31 @@ public struct CharacterSizeModifier: ViewModifier {
           .monospaced()
           .allowsTightening(false)
           .viewSize(mode: debounceMode) { size in
-            
+
             /// This derives a single glyph size from the larger
             /// test string being used. The aim being to obtain a more
             /// accurate size, by averaging out any glyph differences
             let charSize = testString.characterSize(size)
-            
+
             /// This value can be used either via the callback,
             /// or by directly updating the `unitSize` env value
             if shouldSetEnv {
               /// This updates the env value
               self.characterSize = charSize
-              
+
             } else {
-              
+
               /// This sends the size to the consumer via callback
               sizeDidChange(charSize)
             }
           }
           .foregroundStyle(.cyan.secondary)
-          //          .hidden()
+                    .hidden()
           .allowsHitTesting(false)
-          .environment(\.unitSize, shouldSetEnv ? characterSize : unitSize)
+        
       }
+//      .environment(\.unitSize, characterSize)
+      .environment(\.unitSize, shouldSetEnv ? characterSize : unitSize)
 
   }
 }
