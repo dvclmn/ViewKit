@@ -6,95 +6,46 @@
 //
 
 extension Box {
-  public typealias GlyphMap = [Box.GlyphType: Character]
+  
 
-  /// A `GlyphSet` can either be a `base` set, or a
-  // https://www.hackingwithswift.com/example-code/language/what-are-indirect-enums
+  /// A `GlyphSet` can either be a `base` set, or a `partial`set.
+  ///
+  /// A `base` set represents the 'most exhaustive' list of Glyphs, for describing
+  /// an ASCII box drawing.
+  ///
+  /// A `partial` set can then build upon this foundation, specifying
+  /// which `base` set to fall back on, for un-specified glyphs
   public enum GlyphSet: Sendable {
+
+    public static let globalFallback: Character = "?"
+
     case base(GlyphMap)
+
+    /// `indirect` because we need to specify the set
+    /// to fall back on, for partial sets
     indirect case partial(GlyphMap, GlyphSet)
-
-    func character(for glyphType: GlyphType) -> Character {
-      switch self {
-        case .base(let glyphMap):
-          return characterFromMap(glyphMap, for: glyphType) ?? "?"
-
-        case .partial(let glyphMap, let fallbackSet):
-          return characterFromMap(
-            glyphMap,
-            for: glyphType
-          ) ?? fallbackSet.character(for: glyphType)
-      }
-    }
-
-    private func characterFromMap(
-      _ glyphMap: GlyphMap,
-      for glyphType: GlyphType
-    ) -> Character? {
-
-      /// Check for exact match
-      if let char = glyphMap[glyphType] {
-        return char
-      }
-
-      /// For join and corner, try equivalent interior variants first
-      if let interior = fallBackInterior(glyphMap, for: glyphType) {
-        return interior
-      }
-
-      /// Check for fallback within the same map
-      if let fallbackType = glyphType.fallback {
-        return glyphMap[fallbackType]
-      }
-
-      if let exterior = fallBackExterior(glyphMap, for: glyphType) {
-        return exterior
-      }
-
-      return nil
-
-    }  // END char from Map
   }
 }
 
 extension Box.GlyphSet {
 
-  func fallBackInterior(
-    _ glyphMap: Box.GlyphMap,
-    for glyphType: Box.GlyphType
-  ) -> Character? {
-    switch glyphType {
-      case .join(_, _, let type):
-        let glyphType = Box.GlyphType.join(x: .interior, y: .interior, type: type)
-        return glyphMap[glyphType]
+  /// Returns a Character for the given 'purpose' (Glyph Type),
+  /// based on how it is defined for this Set.
+  func character(for glyphType: Box.GlyphType) -> Character {
+    
+    let lookup: Box.GlyphLookup
+    
+    switch self {
+      /// This *should* return a result, as a Base set ought to be exhaustive
+      case .base(let glyphMap):
+        lookup =
+        return characterFromMap(glyphMap, for: glyphType) ?? Self.globalFallback
 
-      case .corner(_, let type):
-        return glyphMap[.corner(location: .interior, type: type)]
-
-      default: return nil
+      case .partial(let glyphMap, let fallbackSet):
+        let fallbackCharacter = fallbackSet.character(for: glyphType)
+        return characterFromMap(glyphMap, for: glyphType) ?? fallbackCharacter
     }
   }
 
-  func fallBackExterior(
-    _ glyphMap: Box.GlyphMap,
-    for glyphType: Box.GlyphType
-  ) -> Character? {
-    /// For join and corner, try falling back to exterior variants
-    switch glyphType {
-      case .join(_, _, let type):
-        let type = Box.GlyphType.join(
-          x: .exterior,
-          y: .exterior,
-          type: type
-        )
-        return glyphMap[type]
-
-      case .corner(_, let type):
-        let type = Box.GlyphType.corner(location: .exterior, type: type)
-        return glyphMap[type]
-
-      default:
-        return nil
-    }
-  }
+  
 }

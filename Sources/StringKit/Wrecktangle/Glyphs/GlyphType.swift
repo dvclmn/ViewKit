@@ -22,7 +22,7 @@ extension Box {
       y: Placement,
       type: Box.PartType.Join
     )
-    
+
     /// Corners
     case corner(
       location: Placement = .exterior,
@@ -38,17 +38,17 @@ extension Box.GlyphType {
     switch self {
       case .horizontal(.interior):
         return .horizontal(.exterior)
-        
+
       case .vertical(.interior):
         return .vertical(.exterior)
-        
+
       case .join(_, _, let type):
         return .join(x: .exterior, y: .exterior, type: type)
-        
+
       case .corner(_, let type):
         /// Default to top-leading corner
         return .corner(location: .exterior, type: type)
-        
+
       default:
         return nil
     }
@@ -56,7 +56,7 @@ extension Box.GlyphType {
 }
 
 extension Box.GlyphType {
-  
+
   /// Describes where this Glyph should be used, in the context
   /// of a Box structure. Typically based on interior vs exterior
   /// usage; bolder glyph weight for exterior, lighter for interior.
