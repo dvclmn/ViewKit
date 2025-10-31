@@ -25,26 +25,28 @@ public struct GridGuideOverlayModifier: ViewModifier {
               config: .init(
                 fillSize: size,
                 cellSize: unitSize,
-                colour: .cyan,
+                colour: .cyan.opacity(opacity),
                 strokeThickness: 1
               ),
               containerSize: size,
               canvasZoom: 1.0
             )
 
-            let gridWidth: Int = size.width.toGridCount(using: unitSize.width, rounding: .up) ?? 0
-            for i in 0..<gridWidth {
-              context.drawDebugText(
-                "\(i)",
-                at: CGPoint(x: CGFloat(i) * unitSize.width, y: 0),
-                pointDisplay: .point(.blue),
-                zoomPercent: 1.0
-              )
-
-            }
+//            let gridWidth: Int = size.width.toGridCount(using: unitSize.width, rounding: .up) ?? 0
+//            for i in 0..<gridWidth {
+//              context.drawDebugText(
+//                "\(i)",
+//                at: CGPoint(x: CGFloat(i) * unitSize.width, y: -30),
+//                positioned: .aboveOrigin,
+//                fontSize: 20,
+//                pointDisplay: .none,
+//                zoomPercent: 1.0
+//              )
+//            }
           }
+          
           //      .compositingGroup()
-          .opacity(opacity)
+//          .opacity(opacity)
           .allowsHitTesting(false)
 
         } else {
