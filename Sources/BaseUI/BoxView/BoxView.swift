@@ -37,6 +37,9 @@ public struct BoxView<Content: View>: View {
         updateIfChanged(&self.viewSize, to: size)
       }
 
+    /// Padding to seat content within Box view
+      .gridPadding(.horizontal, 1)
+    
       .gridFrame(
         dimensions?.width,
         dimensions?.height
