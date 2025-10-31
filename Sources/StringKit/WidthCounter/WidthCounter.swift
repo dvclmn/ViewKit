@@ -11,7 +11,6 @@ import SwiftUI
 extension TextCore {
 
   public enum WidthCounterStyle: Sendable {
-//    case off
     case ruler
     case digits
   }
@@ -24,15 +23,14 @@ extension TextCore {
     var result = AttributedString()
 
     switch style {
-//      case .off:
-//        break
 
       case .digits:
 
         let fullOutput = self.generateDigitCounter(width)
-
         result.append(fullOutput.tens, addsLineBreak: true)
-        result.append(fullOutput.ones, addsLineBreak: true)
+        
+        /// Specify `false` here so we're not left with a trailing line break
+        result.append(fullOutput.ones, addsLineBreak: false)
 
       case .ruler:
 
@@ -40,9 +38,7 @@ extension TextCore {
 
         result.append(compactOutput, addsLineBreak: false)
         result.addLineBreak()
-        //        #warning("Need to go back to file String+Repeater, as I commented this out when something elsewhere was breaking")
 
-        //        let pattern = "I need to fix this, this is turned off!"
         let pattern = String.pattern(totalCount: width) {
           character("|")
           repeating(".", count: 4)
