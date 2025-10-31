@@ -6,7 +6,10 @@
 //
 
 extension Box {
-  /// A 2D array of Glyphs, representing multiple rows of text
+  /// A 2D array of Glyphs. This represents multiple rows (lines)
+  /// of text, *however*: these usually will not stretch the full
+  /// text width of the overall Box drawing. These are stitched
+  /// together with other multi-line stacks, to form a cohesive whole.
   public typealias GlyphStack = [[GlyphType]]
 }
 

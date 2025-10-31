@@ -7,22 +7,25 @@
 
 extension Box {
 
+  /// Refers to a *single character* (glyph) only.
+  /// Distinct from ``Box/PartType``, which handles
+  /// a composite of glyphs to form a useful whole.
   public enum GlyphType: Hashable, Sendable {
 
     /// Basic lines
-    case horizontal(Location)
-    case vertical(Location)
+    case horizontal(Placement)
+    case vertical(Placement)
 
     /// Joins
     case join(
-      x: Location,
-      y: Location,
+      x: Placement,
+      y: Placement,
       type: Box.PartType.Join
     )
     
     /// Corners
     case corner(
-      location: Location = .exterior,
+      location: Placement = .exterior,
       type: Box.PartType.Corner
     )
 
@@ -40,7 +43,6 @@ extension Box.GlyphType {
         return .vertical(.exterior)
         
       case .join(_, _, let type):
-        /// Default to cross join
         return .join(x: .exterior, y: .exterior, type: type)
         
       case .corner(_, let type):
@@ -55,9 +57,10 @@ extension Box.GlyphType {
 
 extension Box.GlyphType {
   
-  /// This usually describes the thickness of a structural
-  /// glyph; typically bolder for exterior, lighter for interior
-  public enum Location: Hashable, Sendable {
+  /// Describes where this Glyph should be used, in the context
+  /// of a Box structure. Typically based on interior vs exterior
+  /// usage; bolder glyph weight for exterior, lighter for interior.
+  public enum Placement: Hashable, Sendable {
     case interior
     case exterior
   }

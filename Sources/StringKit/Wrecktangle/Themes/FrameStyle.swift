@@ -21,58 +21,58 @@ extension Box.Theme {
     /// This can also be thought of like a tile size. Any `BoxPart`
     /// exceeding this tile size is likely to break the layout in some way.
     ///
-    public var maximumGridSize: Box.Dimensions {
-      switch self {
-        case .single:
-
-          /// # Single — 1x1
-          ///
-          /// Examples:
-          ///
-          /// ```
-          /// // Top leading corner
-          ///   1
-          /// 1 ┌
-          ///
-          /// //Bottom centre join
-          ///   1
-          /// 1 ╧
-          ///
-          /// ```
-          let width: Int = 1 + 1  // One character either side
-          let height: Int = 3
-
-          return Box.Dimensions(width, height)
-
-        case .double:
-
-          /// # Double — 3x2
-          ///
-          /// Examples:
-          ///
-          /// ```
-          /// // Top leading corner, 3x2
-          ///
-          ///   123
-          /// 1 ┏━━
-          /// 2 ┃ ┏
-          ///
-          ///
-          /// // Bottom centre join 1x2
-          /// // Does not exceed 3x2
-          ///
-          ///   1
-          /// 1 ┷
-          /// 2 ═
-          ///
-          /// ```
-          let width: Int = 3 + 3  // One character either side
-          let height: Int = 5
-
-          return Box.Dimensions(width, height)
-
-      }
-    }
+//    public var maximumGridSize: Box.Dimensions {
+//      switch self {
+//        case .single:
+//
+//          /// # Single — 1x1
+//          ///
+//          /// Examples:
+//          ///
+//          /// ```
+//          /// // Top leading corner
+//          ///   1
+//          /// 1 ┌
+//          ///
+//          /// //Bottom centre join
+//          ///   1
+//          /// 1 ╧
+//          ///
+//          /// ```
+//          let width: Int = 1 + 1  // One character either side
+//          let height: Int = 3
+//
+//          return Box.Dimensions(width, height)
+//
+//        case .double:
+//
+//          /// # Double — 3x2
+//          ///
+//          /// Examples:
+//          ///
+//          /// ```
+//          /// // Top leading corner, 3x2
+//          ///
+//          ///   123
+//          /// 1 ┏━━
+//          /// 2 ┃ ┏
+//          ///
+//          ///
+//          /// // Bottom centre join 1x2
+//          /// // Does not exceed 3x2
+//          ///
+//          ///   1
+//          /// 1 ┷
+//          /// 2 ═
+//          ///
+//          /// ```
+//          let width: Int = 3 + 3  // One character either side
+//          let height: Int = 5
+//
+//          return Box.Dimensions(width, height)
+//
+//      }
+//    }
 
   }
 }
