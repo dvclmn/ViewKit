@@ -5,24 +5,10 @@
 //  Created by Dave Coleman on 11/10/2025.
 //
 
-import SharedHelpers
+import StringShared
 import SwiftUI
 
-//public struct GridGuideOverlay: View {
-//
-//
-//  let opacity: CGFloat
-//
-//  public init(opacity: CGFloat = 0.15) {
-//    self.opacity = opacity
-//  }
-//  public var body: some View {
-//
-//  }
-//}
-
 public struct GridGuideOverlayModifier: ViewModifier {
-
   @Environment(\.unitSize) private var unitSize
 
   let opacity: CGFloat
@@ -45,16 +31,27 @@ public struct GridGuideOverlayModifier: ViewModifier {
               containerSize: size,
               canvasZoom: 1.0
             )
+
+            let gridWidth: Int = size.width.toGridCount(using: unitSize.width, rounding: .up) ?? 0
+            for i in 0..<gridWidth {
+              context.drawDebugText(
+                "\(i)",
+                at: CGPoint(x: CGFloat(i) * unitSize.width, y: 0),
+                pointDisplay: .point(.blue),
+                zoomPercent: 1.0
+              )
+
+            }
           }
           //      .compositingGroup()
           .opacity(opacity)
           .allowsHitTesting(false)
+
         } else {
           if isPreview {
             ProgressView("Loading Unit Size")
               .foregroundStyle(.tertiary)
               .font(.caption)
-              .progressViewStyle(.linear)
             //            Text("Unit Size not found")
             //              .foregroundStyle(.red.secondary)
             //              .bold()

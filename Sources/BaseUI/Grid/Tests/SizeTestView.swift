@@ -19,18 +19,18 @@ public struct SizeTestView: View {
         TextWithSize(28)
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-      .border(Color.green.opacity(0.3))
+      //      .border(Color.green.opacity(0.3))
     }
 
     //      .environment(\.unitSize, CGSize(width: 1, height: 2))
 
     //      .padding(100)
-//    .frame(
-//      minWidth: 700,
-//      maxWidth: .infinity,
-//      maxHeight: .infinity,
-//      alignment: .leading
-//    )
+    //    .frame(
+    //      minWidth: 700,
+    //      maxWidth: .infinity,
+    //      maxHeight: .infinity,
+    //      alignment: .leading
+    //    )
 
   }
 }
