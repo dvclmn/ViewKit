@@ -33,45 +33,51 @@ public struct BoxView<Content: View>: View {
 
   public var body: some View {
     content
+      /// Padding to seat content within Box view
       .gridPadding(.horizontal, padding)
       .gridPadding(.vertical, padding * 2)
+
       .viewSize(mode: .debounce(0.2)) { size in
         updateIfChanged(&self.viewSize, to: size)
       }
 
-    /// Padding to seat content within Box view
-    
       .gridFrame(
         dimensions?.width,
         dimensions?.height
       )
-
-      .background {
+      .border(Color.orange.opacity(0.3))
+      .background(.topLeading) {
         BoxFrame()
+          .border(Color.green.opacity(0.3))
       }
       .overlay {
-        GridGuideOverlay(opacity: 0.2)
+        GridGuideOverlay(opacity: 0.4)
           .isDebugMode(true)
+          .border(Color.purple.opacity(0.3))
       }
 
   }
 }
 
 extension BoxView {
-  
+
   @ViewBuilder
   private func BoxFrame() -> some View {
-    Text(
-      ViewBox(
-        width: dimensions?.width ?? 20,
-        height: dimensions?.height ?? 30,
-        theme: Box.Theme(
-          glyphSet: glyphSet ?? .sharp,
-          frameStyle: frameStyle ?? .single,
-          padding: padding
-        )
-      ).attributedString
-    )
+    if let w = dimensions?.width, let h = dimensions?.height {
+      Text(
+        ViewBox(
+          width: w,
+          height: h,
+          theme: Box.Theme(
+            glyphSet: glyphSet ?? .sharp,
+            frameStyle: frameStyle ?? .single,
+            padding: padding
+          )
+        ).attributedString
+      )
+      .fixedSize()
+//      .frameFromGridSize(width: w, height: h, alignment: alignment)
+    }
   }
   private var dimensions: GridDimensions? {
     guard let unitSize else { return nil }

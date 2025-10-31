@@ -21,7 +21,8 @@ public enum GridFont: String, ModelBase, Pickable, CaseIterable, Identifiable {
 
   public var id: String { rawValue }
 
-  public var label: QuickLabel { QuickLabel(rawValue) }
+  public var name: String { rawValue }
+  public var label: QuickLabel { QuickLabel(name) }
   
   public static let baseFontSize: CGFloat = 15
 
@@ -38,3 +39,4 @@ public enum GridFont: String, ModelBase, Pickable, CaseIterable, Identifiable {
     }
   }
 }
+

@@ -76,6 +76,25 @@ extension Box.GlyphSet {
       Box.GlyphType.corner(type: .bottomTrailing): "╯",
 
     ], sharp)
+  
+  public static let test = Box.GlyphSet.partial(
+    [
+      
+      Box.GlyphType.horizontal(.exterior): "╳", // ░
+      ///
+      Box.GlyphType.vertical(.exterior): "╳",
+      
+      Box.GlyphType.join(x: .exterior, y: .exterior, type: .top): "T",
+      Box.GlyphType.join(x: .exterior, y: .exterior, type: .bottom): "B",
+      Box.GlyphType.join(x: .exterior, y: .exterior, type: .leading): "L",
+      Box.GlyphType.join(x: .exterior, y: .exterior, type: .trailing): "R",
+      
+      Box.GlyphType.corner(type: .topLeading): "r",
+      Box.GlyphType.corner(type: .topTrailing): "a",
+      Box.GlyphType.corner(type: .bottomLeading): "m",
+      Box.GlyphType.corner(type: .bottomTrailing): "s",
+      
+    ], sharp)
 
   public static let double = Box.GlyphSet.partial(
     [
