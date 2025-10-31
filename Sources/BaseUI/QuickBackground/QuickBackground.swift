@@ -19,6 +19,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   @Environment(\.backgroundMaterial) private var backgroundMaterial
   @Environment(\.strokeColour) private var strokeColour
   @Environment(\.strokeWeight) private var strokeWeight
+  
 
   let isEnabled: Bool
   let shape: S
@@ -33,7 +34,8 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
       .padding(.bottom, opticalPadding)
       .background {
         shape
-          .fill(tintColour)
+          .fill(.tint)
+//          .fill(tintColour)
           .fill(material)
           .stroke(strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)), lineWidth: strokeWeight ?? 1)
       }

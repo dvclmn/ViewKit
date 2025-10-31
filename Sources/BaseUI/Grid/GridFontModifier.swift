@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 31/10/2025.
 //
 
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 public struct GridFontModifier: ViewModifier {
 
@@ -16,6 +16,9 @@ public struct GridFontModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .font(gridFont)
+      .monospaced()
+      /// Prevents any compression of the spacing between characters
+      .allowsTightening(false)
   }
 }
 extension GridFontModifier {
@@ -27,7 +30,7 @@ extension GridFontModifier {
           design: .monospaced
         )
       default:
-        .custom(fontStyle.rawValue, size: fontSize)
+        .custom(fontStyle.rawValue, fixedSize: fontSize)
     }
   }
 }

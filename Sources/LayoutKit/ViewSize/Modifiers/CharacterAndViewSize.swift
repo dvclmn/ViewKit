@@ -8,7 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
-public struct CharacterAndViewSize: ViewModifier {
+public struct CharacterAndViewSizeModifier: ViewModifier {
   @Environment(\.font) private var font
 
   @State private var characterSize: CGSize?
@@ -20,14 +20,8 @@ public struct CharacterAndViewSize: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-      .overlay {
-        Text(character.toString)
-          .tracking(0)
-          .viewSize(mode: debounceMode) { size in
-            characterSize = size
-          }
-          .hidden()
-          .allowsHitTesting(false)
+      .characterSize(mode: debounceMode) { size in
+        characterSize = size
       }
       .viewSize(mode: debounceMode) { size in
         viewSize = size

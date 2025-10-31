@@ -80,9 +80,9 @@ extension Box.GlyphSet {
   public static let test = Box.GlyphSet.partial(
     [
       
-      Box.GlyphType.horizontal(.exterior): "╳", // ░
+      Box.GlyphType.horizontal(.exterior): "M", // ░
       ///
-      Box.GlyphType.vertical(.exterior): "╳",
+      Box.GlyphType.vertical(.exterior): "S",
       
       Box.GlyphType.join(x: .exterior, y: .exterior, type: .top): "T",
       Box.GlyphType.join(x: .exterior, y: .exterior, type: .bottom): "B",

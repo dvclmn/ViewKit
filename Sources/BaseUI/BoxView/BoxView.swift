@@ -46,6 +46,7 @@ public struct BoxView<Content: View>: View {
         dimensions?.height
       )
       .border(Color.orange.opacity(0.3))
+
       .background(.topLeading) {
         BoxFrame()
           .border(Color.green.opacity(0.3))
@@ -61,23 +62,32 @@ public struct BoxView<Content: View>: View {
 
 extension BoxView {
 
+  private var boxText: String? {
+    guard let w = dimensions?.width, let h = dimensions?.height else { return nil }
+    let text = ViewBox(
+      width: w,
+      height: h,
+      theme: Box.Theme(
+        glyphSet: glyphSet ?? .sharp,
+        frameStyle: frameStyle ?? .single,
+        padding: padding
+      )
+    ).plainText
+    
+    let result = text
+      .split(separator: "\n", omittingEmptySubsequences: true)
+      .joined(separator: "\n")
+    
+    return result
+  }
+
   @ViewBuilder
   private func BoxFrame() -> some View {
-    if let w = dimensions?.width, let h = dimensions?.height {
-      Text(
-        ViewBox(
-          width: w,
-          height: h,
-          theme: Box.Theme(
-            glyphSet: glyphSet ?? .sharp,
-            frameStyle: frameStyle ?? .single,
-            padding: padding
-          )
-        ).attributedString
-      )
-      .fixedSize()
-//      .frameFromGridSize(width: w, height: h, alignment: alignment)
+    if let boxText {
+      Text(boxText)
+        .fixedSize()
     }
+    //      .frameFromGridSize(width: w, height: h, alignment: alignment)
   }
   private var dimensions: GridDimensions? {
     guard let unitSize else { return nil }

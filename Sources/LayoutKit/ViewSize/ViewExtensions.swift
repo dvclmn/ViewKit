@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 // MARK: - View Extension
 extension View {
@@ -38,7 +38,7 @@ extension View {
     _ sizeDidChange: @escaping (CGSize?, CGSize?) -> Void
   ) -> some View {
     self.modifier(
-      CharacterAndViewSize(
+      CharacterAndViewSizeModifier(
         debounceMode: debounceMode,
         sizeDidChange: sizeDidChange
       )
@@ -56,7 +56,7 @@ extension View {
     _ sizeDidChange: @escaping (CGSize?) -> Void
   ) -> some View {
     self.modifier(
-      CharacterSize(
+      CharacterSizeModifier(
         debounceMode: mode,
         sizeDidChange: sizeDidChange
       )

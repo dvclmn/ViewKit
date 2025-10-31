@@ -8,32 +8,49 @@
 import SharedHelpers
 import SwiftUI
 
-public struct CharacterSize: ViewModifier {
-  @Environment(\.font) private var font
+public struct CharacterSizeModifier: ViewModifier {
 
-  @State private var characterSize: CGSize?
-  @State private var viewSize: CGSize?
-
+  //  private let character: Character = "M"
+  private let guideDimensions = GridDimensions(16, 5)
   let debounceMode: DebounceMode
-  let character: Character = "M"
   let sizeDidChange: (CGSize?) -> Void
 
   public func body(content: Content) -> some View {
     content
       .overlay {
-        Text(character.toString)
+        Text(guideString)
+          .fixedSize()
           .tracking(0)
+          .monospaced()
+          .allowsTightening(false)
           .viewSize(mode: debounceMode) { size in
-            characterSize = size
+            handleSizeChange(size)
+            //            sizeDidChange(size)
           }
           .hidden()
           .allowsHitTesting(false)
       }
-      .task(id: characterSize) {
-        sizeDidChange(characterSize)
-      }
-//      .task(id: viewSize) {
-//        sizeDidChange(characterSize, viewSize)
-//      }
+  }
+}
+
+extension CharacterSizeModifier {
+  private func handleSizeChange(_ size: CGSize) {
+    let width = size.width / CGFloat(guideDimensions.width)
+    let height = size.height / CGFloat(guideDimensions.height)
+    let result = CGSize(
+      width: width.clamped(1),
+      height: height.clamped(1)
+    )
+    sizeDidChange(result)
+  }
+
+  private var guideString: String {
+    """
+    abcdefghijklmnop
+    klmnopqrstuvwxyz
+    1234567890123456
+    ABCDEFGHIJKLMNOP
+    KLMNOPQRSTUVWXYZ
+    """
   }
 }
