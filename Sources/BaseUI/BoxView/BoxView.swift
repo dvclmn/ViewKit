@@ -51,11 +51,12 @@ public struct BoxView<Content: View>: View {
         BoxFrame()
           .border(Color.green.opacity(0.3))
       }
-      .overlay {
-        GridGuideOverlay(opacity: 0.4)
-          .isDebugMode(true)
-          .border(Color.purple.opacity(0.3))
-      }
+      .gridGuide(opacity: 0.2)
+//      .overlay {
+//        GridGuideOverlay(opacity: 0.4)
+//          .isDebugMode(true)
+//          .border(Color.purple.opacity(0.3))
+//      }
 
   }
 }

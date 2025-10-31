@@ -40,10 +40,11 @@ public struct BoxTextView: View {
       .gridFrame(gridWidth, gridHeight)
       .environment(\.unitSize, characterSize)
 
-      .overlay {
-        GridGuideOverlay(opacity: 0.1)
-          .isDebugMode(true)
-      }
+      .gridGuide(opacity: 0.2)
+//      .overlay {
+//        GridGuideOverlay(opacity: 0.1)
+//          .isDebugMode(true)
+//      }
   }
 }
 

@@ -58,7 +58,24 @@ extension View {
     self.modifier(
       CharacterSizeModifier(
         debounceMode: mode,
-        sizeDidChange: sizeDidChange
+        sizeDidChange: sizeDidChange,
+        shouldSetEnv: false
+      )
+    )
+  }
+
+  /// This overload for `CharacterSizeModifier`
+  /// is provided for when the character size can be sent
+  /// straight to the environment as `unitSize`, and doesn't
+  /// need to go through the domain via callback.
+  public func setCharacterUnitSize(
+    mode: DebounceMode = .debounce(0.2)
+  ) -> some View {
+    self.modifier(
+      CharacterSizeModifier(
+        debounceMode: mode,
+        sizeDidChange: { _ in },
+        shouldSetEnv: true
       )
     )
   }
