@@ -33,12 +33,13 @@ public struct BoxView<Content: View>: View {
 
   public var body: some View {
     content
+      .gridPadding(.horizontal, padding)
+      .gridPadding(.vertical, padding * 2)
       .viewSize(mode: .debounce(0.2)) { size in
         updateIfChanged(&self.viewSize, to: size)
       }
 
     /// Padding to seat content within Box view
-      .gridPadding(.horizontal, 1)
     
       .gridFrame(
         dimensions?.width,

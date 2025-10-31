@@ -22,11 +22,9 @@ extension Box {
         case .horizontal, .blank: .repeatable(axis: .horizontal)
         case .vertical: .repeatable(axis: .vertical)
         case .join, .corner: .fixed
-//        default: .fixed
       }
     }
   }  // END part type
-
 }
 
 extension Box.PartType {

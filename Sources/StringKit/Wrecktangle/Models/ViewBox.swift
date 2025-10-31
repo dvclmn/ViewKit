@@ -7,13 +7,23 @@
 
 import Foundation
 
+public protocol BoxShape {
+  
+  func drawBox() -> AttributedString
+}
+
+/// Note: This and the OG `Box` can probably just be seen as
+/// different Configs, or arrangements of Box primitives (Lines, Parts, etc).
+/// These don't need to really know about how to build these parts,
+/// should probably be dumb, and be driven by a Box Engine.
+
 /// An ASCII box without any text content, just the structure.
 /// For wrapping a SwiftUI view in a box
 public struct ViewBox {
   let width: Int
   let height: Int
   let theme: Box.Theme
-  
+
   public init(
     width: Int,
     height: Int,
@@ -26,7 +36,7 @@ public struct ViewBox {
 }
 
 extension ViewBox {
-  
+
   public var attributedString: AttributedString { drawBox() }
   public var plainText: String { attributedString.toString }
 
@@ -51,10 +61,6 @@ extension ViewBox {
     for _ in 0..<adjustedHeight {
       let blank = builder.buildLine(.blank)
       output.append(blank, addsLineBreak: true)
-      
-//      let blankString = String(repeating: " ", count: width)
-//      let boxLine = builder.buildLine(.text(content: blankString, lineLimit: 0))
-//      output.append(boxLine, addsLineBreak: false)
     }
 
     /// Bottom

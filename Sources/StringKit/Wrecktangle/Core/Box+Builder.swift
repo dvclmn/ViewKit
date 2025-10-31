@@ -6,8 +6,12 @@
 //
 
 extension Box {
+  /// The Builder (aka 'Box Engine') should handle box drawing
+  /// based on simple instructions (see ``ViewBox`` and ``Box``)
   public struct Builder {
     let width: Int
+    
+    /// Allows dynamic/flexible height, if not defined
     let height: Int?
     let theme: Box.Theme
 
@@ -54,7 +58,6 @@ extension Box.Builder {
       case .blank:
         let lineResult = Box.Line(
           text: String(repeating: " ", count: widthForText),
-          //          text: String(repeating: widthForText, count: " "),
           lineLimit: heightForText ?? 0,
           remainingWidth: widthForText,
           theme: theme
@@ -81,32 +84,7 @@ extension Box.Builder {
     return lineString
   }
 
-  private func buildStructureLine(
-    for type: Box.Line.StructureType,
-    hasLineBreak: Bool
-  ) -> String {
 
-    let parts = type.parts
-
-    let leading = Box.Part.create(parts.leading, with: theme)
-    let repeating = Box.Part.create(parts.repeater, with: theme)
-    let trailing = Box.Part.create(parts.trailing, with: theme)
-
-    /// This uses `BoxLine`s structure-based initialiser
-    let lineResult = Box.Line(
-      remainingWidth: widthForText,
-      repeater: repeating,
-      leadingCap: leading,
-      trailingCap: trailing,
-      theme: theme
-    )
-
-    let lineString = lineResult.render()
-
-    let result = lineString + (hasLineBreak ? "\n" : "")
-    return result
-
-  }
 
   //  private func buildShadow(for lineType: BoxLine.LineType, hasLineBreak: Bool) -> String {
   //
