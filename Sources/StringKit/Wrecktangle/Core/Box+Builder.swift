@@ -32,13 +32,13 @@ extension Box.Builder {
   /// The remaning width for text, after removing space
   /// reserved for structural elements
   public var widthForText: Int {
-    let capCount = theme.frameStyle.maximumGridSize.width.value
+    let capCount = theme.frameStyle.maxGridSize.width
     return max(0, width - capCount)
   }
 
   public var heightForText: Int? {
     guard let height else { return nil }
-    let capCount = theme.frameStyle.maximumGridSize.height.value
+    let capCount = theme.frameStyle.maxGridSize.height
     return max(0, height - capCount)
   }
 }
@@ -84,7 +84,32 @@ extension Box.Builder {
     return lineString
   }
 
+  private func buildStructureLine(
+    for type: Box.Line.StructureType,
+    hasLineBreak: Bool
+  ) -> String {
 
+    let parts = type.parts
+
+    let leading = Box.Part.create(parts.leading, with: theme)
+    let repeating = Box.Part.create(parts.repeater, with: theme)
+    let trailing = Box.Part.create(parts.trailing, with: theme)
+
+    /// This uses `BoxLine`s structure-based initialiser
+    let lineResult = Box.Line(
+      remainingWidth: widthForText,
+      repeater: repeating,
+      leadingCap: leading,
+      trailingCap: trailing,
+      theme: theme
+    )
+
+    let lineString = lineResult.render()
+
+    let result = lineString + (hasLineBreak ? "\n" : "")
+    return result
+
+  }
 
   //  private func buildShadow(for lineType: BoxLine.LineType, hasLineBreak: Bool) -> String {
   //

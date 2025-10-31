@@ -9,8 +9,6 @@ extension Box.Line {
 
   public enum LineType: Hashable, Sendable {
     case text(content: String, lineLimit: Int = 0)
-
-    /// Consists
     case structure(StructureType)
     case blank
   }

@@ -33,17 +33,18 @@ extension Box.GlyphSet {
   /// based on how it is defined for this Set.
   func character(for glyphType: Box.GlyphType) -> Character {
     
-    let lookup: Box.GlyphLookup
-    
     switch self {
       /// This *should* return a result, as a Base set ought to be exhaustive
       case .base(let glyphMap):
-        lookup =
-        return characterFromMap(glyphMap, for: glyphType) ?? Self.globalFallback
+        let lookup = Box.GlyphLookup(map: glyphMap, type: glyphType)
+        return lookup.character ?? Self.globalFallback
+//        return characterFromMap(glyphMap, for: glyphType) ?? Self.globalFallback
 
       case .partial(let glyphMap, let fallbackSet):
+        let lookup = Box.GlyphLookup(map: glyphMap, type: glyphType)
         let fallbackCharacter = fallbackSet.character(for: glyphType)
-        return characterFromMap(glyphMap, for: glyphType) ?? fallbackCharacter
+        return lookup.character ?? fallbackCharacter
+//        return characterFromMap(glyphMap, for: glyphType) ?? fallbackCharacter
     }
   }
 

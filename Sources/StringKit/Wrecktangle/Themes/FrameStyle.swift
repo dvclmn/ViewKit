@@ -5,11 +5,36 @@
 //  Created by Dave Coleman on 24/8/2024.
 //
 
-extension Box.Theme {
+import SharedHelpers
 
+extension Box.Theme {
+  
   public enum FrameStyle: Sendable {
     case single
     case double
+  }
+}
+
+extension Box.Theme.FrameStyle {
+  
+  /// Relevant for fixed only, i think? Not repeating?
+  /// This should account for glyphs on *both* sides of the relevant axis?
+  /// This is why it's returned as `doubled`
+  var maxGridSize: GridDimensions {
+    switch self {
+        /// Each glyph, either side (leading-trailing, or top-bottom)
+      case .single:
+        let widthAndHeight = 1
+        return GridDimensions(widthAndHeight, widthAndHeight).doubled
+        
+      case .double:
+        let width = 3
+        let height = 2
+        return GridDimensions(width, height).doubled
+    }
+  }
+}
+
 
     /// Not yet implemented
     //    case intertwined
@@ -74,5 +99,5 @@ extension Box.Theme {
 //      }
 //    }
 
-  }
-}
+  
+
