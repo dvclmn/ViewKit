@@ -13,7 +13,8 @@ extension Box {
     
     /// Allows dynamic/flexible height, if not defined
     let height: Int?
-    let theme: Box.Theme
+    let config: Box.Config
+//    let theme: Box.Theme
 
     public init(
       width: Int,

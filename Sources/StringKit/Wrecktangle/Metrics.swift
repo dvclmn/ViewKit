@@ -18,5 +18,5 @@ extension Box {
     public static let lineNumbers = Self(rawValue: 1 << 2)
     public static let all: Self = [.widthCounter, .invisibles, .lineNumbers]
   }
-
 }
+

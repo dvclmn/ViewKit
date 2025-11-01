@@ -17,7 +17,6 @@ extension StringStack {
 
     let patternWidth = self.width
     let patternHeight = self.height
-
     // Early return if no repetition needed
     guard patternWidth < width else {
       switch trimMethod {
@@ -36,32 +35,26 @@ extension StringStack {
     let fullRepetitions = width / patternWidth
     let remainder = width % patternWidth
 
-    // Build the base repeated pattern (full repetitions only)
-    let baseWidth = fullRepetitions * patternWidth
-    let basePattern = (0..<fullRepetitions).reduce(StringStack([])) { result, _ in
-      result.joinedHorizontally(with: self, padding: nil)
+    // Create array of stacks to join
+    var stacksToJoin = Array(repeating: self, count: fullRepetitions)
+
+    if remainder > 0 {
+      let remainderStack: StringStack
+      switch trimMethod {
+        case .crop:
+          remainderStack = self.cropped(toWidth: remainder)
+        case .leaveSpace:
+          remainderStack = StringStack(
+            self.stack.map { row in
+              row.prefix(remainder) + .padded(with: paddingCharacter, count: Swift.max(0, remainder - row.count))
+            }
+          )
+      }
+      stacksToJoin.append(remainderStack)
     }
 
-    guard remainder > 0 else { return basePattern }
-
-    // Handle the remainder using your existing joining logic
-    switch trimMethod {
-      case .crop:
-        let remainderStack = StringStack(
-          self.stack.map { Array($0.prefix(remainder)) }
-        )
-        return basePattern.joinedHorizontally(with: remainderStack, padding: nil)
-
-      case .leaveSpace:
-        let remainderStack = StringStack(
-          self.stack.map { row in
-            guard row.count >= remainder else {
-              return row + .padded(with: paddingCharacter, count: remainder - row.count)
-            }
-            return Array(row.prefix(remainder))
-          }
-        )
-        return basePattern.joinedHorizontally(with: remainderStack, padding: paddingCharacter)
+    return stacksToJoin.reduce(StringStack([])) { result, stack in
+      result.joinedHorizontally(with: stack, padding: trimMethod == .leaveSpace ? paddingCharacter : nil)
     }
   }
 

@@ -1,19 +1,16 @@
 //
-//  Models.swift
+//  BoxHandler.swift
 //  Helpers
 //
 //  Created by Dave Coleman on 22/8/2024.
 //
 
-import Foundation
+import SwiftUI
 
-public struct Box {
+public struct HeaderBox {
   var header: String?
   var content: AttributedString
-  var config: Config
-}
-
-extension Box {
+  var config: Box.Config
 
   public init(
     header: String?,
@@ -46,12 +43,8 @@ extension Box {
   public var attributedString: AttributedString { drawBox() }
   public var plainText: String { attributedString.toString }
 
-  public var theme: Theme { config.theme }
-  public var glyphSet: GlyphSet { config.theme.glyphSet }
+  public var theme: Box.Theme { config.theme }
+  public var glyphSet: Box.GlyphSet { config.theme.glyphSet }
   public var boxWidth: Int { config.width }
 
-}
-
-extension Box: CustomStringConvertible {
-  public var description: String { plainText }
 }
