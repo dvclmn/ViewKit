@@ -8,9 +8,6 @@
 import Foundation
 
 /// A structure representing a multiline string as a mutable stack of character rows.
-///
-/// Construct a `StringStack` from a standard `String` or a grid of characters,
-/// access or modify rows, and transform the stack back into a single string as needed.
 public struct StringStack {
 
   private var stack: [[Character]]
@@ -29,7 +26,6 @@ public struct StringStack {
 extension StringStack {
 
   public var string: String { stack.map { String($0) }.joined("\n") }
-
   public var height: Int { stack.count }
   public var width: Int { stack.map { $0.count }.max() ?? 0 }
 
@@ -90,5 +86,4 @@ extension StringStack: Sequence {
   mutating func append(_ row: [Character]) {
     stack.append(row)
   }
-
 }

@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 14/9/2024.
 //
 
+import SwiftUI
+
 public func + (lhs: StringStack, rhs: StringStack) -> StringStack {
   lhs.joinHorizontally(with: rhs)
 }
@@ -14,15 +16,20 @@ public func += (lhs: inout StringStack, rhs: StringStack) {
 }
 
 extension StringStack {
-  public static func joinHorizontally(
+  public static func join(
     _ strings: StringStack...,
+    along axis: Axis,
     padding: Character? = nil
   ) -> StringStack {
-    strings.reduce(StringStack([])) { $0.joinHorizontally(with: $1, padding: padding) }
-  }
+    strings.reduce(StringStack([])) { partial, string in
+      switch axis {
+        case .horizontal:
+          partial.joinHorizontally(with: string, padding: padding)
 
-  public static func joinVertically(_ strings: StringStack..., padding: Character? = nil) -> StringStack {
-    strings.reduce(StringStack([])) { $0.joinVertically(with: $1, padding: padding) }
+        case .vertical:
+          partial.joinVertically(with: string, padding: padding)
+      }
+    }
   }
 }
 
@@ -37,7 +44,10 @@ public func * (lhs: StringStack, rhs: Int) -> StringStack {
 
 extension StringStack {
 
-  public func joinHorizontally(with other: StringStack, padding: Character? = nil) -> StringStack {
+  public func joinHorizontally(
+    with other: StringStack,
+    padding: Character? = nil
+  ) -> StringStack {
     let maxHeight = Swift.max(self.height, other.height)
     var result = StringStack([])
 
