@@ -10,7 +10,7 @@ import SwiftUI
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack {
 
-  private var stack: [[Character]]
+  var stack: [[Character]]
 
   public init(_ grid: [[Character]]) {
     self.stack = grid
@@ -65,56 +65,6 @@ extension StringStack {
 // MARK: - Joining
 extension StringStack {
 
-  /// Right now, if padding is nil, shorter rows or columns simply “disappear” —
-  /// this can lead to jagged edges. You might prefer to default to space
-  /// padding when widths/heights don’t match, unless nil is explicitly
-  /// intended to mean “truncate”.
-  
-  /// Explicit handling could help readability:
-  /// `let padChar = padding ?? " "`
-  public static func joined(
-    _ strings: StringStack...,
-    along axis: Axis,
-    padding: Character? = nil
-  ) -> StringStack {
-    strings.reduce(StringStack([])) { partial, string in
-      switch axis {
-        case .horizontal:
-          partial.joinedHorizontally(with: string, padding: padding)
-
-        case .vertical:
-          partial.joinedVertically(with: string, padding: padding)
-      }
-    }
-  }
-
-  private func joinedHorizontally(
-    with other: StringStack,
-    padding: Character? = nil
-  ) -> StringStack {
-    let maxHeight = Swift.max(self.height, other.height)
-    var result = StringStack([])
-
-    for i in 0..<maxHeight {
-      let left = self.row(at: i, paddedTo: self.width, with: padding)
-      let right = other.row(at: i, paddedTo: other.width, with: padding)
-      result.append(left + right)
-    }
-
-    return result
-  }
-
-  private func joinedVertically(with other: StringStack, padding: Character? = nil) -> StringStack {
-    let maxWidth = Swift.max(width, other.width)
-    var result = self
-
-    for i in 0..<other.height {
-      let row = other.row(at: i, paddedTo: maxWidth, with: padding)
-      result.append(row)
-    }
-
-    return result
-  }
   
   // Ensure all rows have consistent width
   public func normalized(
@@ -149,7 +99,7 @@ extension StringStack {
     count > 0 ? Array(repeating: char, count: count) : []
   }
 
-  private func row(
+  func row(
     at index: Int,
     paddedTo width: Int,
     with char: Character?

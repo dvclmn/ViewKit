@@ -39,7 +39,7 @@ extension Box.Part {
     with theme: Box.Theme
   ) -> Self {
 
-    let stack = type.glyphStack(with: theme.frameStyle)
+    let stack = type.glyphStack(for: theme.frameStyle)
     let characterGrid = stack.map { row in
       row.map { theme.glyphSet.character(for: $0) }
     }
