@@ -55,9 +55,31 @@ extension Box.Part {
 //    let multilineString = StringStack(characterGrid)
 //    return Self(content: multilineString, type: type)
 //  }
-}
 
-extension Box.PartType {
+  var stringStack: StringStack {
+    switch type.flexibility {
+      case .repeatable(let axis):
+        // already a uniform grid; fine
+        return content.stringStack
+      case .fixed:
+        return content.stringStack
+    }
+  }
+  
+  var isText: Bool {
+    type == .blank // or however you distinguish text placeholders
+  }
+}
+extension Box.Part {
+  
+  func render(toWidth target: Int? = nil) -> String {
+    if let target, flexibility == .repeatable(axis: .horizontal) {
+      return content.repeatHorizontally(toWidth: target).string
+    } else {
+      return content.string
+    }
+  }
+
   func build(using theme: Box.Theme) -> Box.Part {
     let glyphStack = glyphStack(for: theme.frameStyle)
     let grid = glyphStack.map { row in

@@ -5,26 +5,45 @@
 //  Created by Dave Coleman on 11/9/2024.
 //
 
-/// Currently this library can only handle horizontal dividers, not vertical.
-/// So processing line-by-line, vertically, is fairly straightforward.
 extension Box {
-  
   public struct Line {
-    var leading: Part
-    var body: Part
-    var trailing: Part
+    public let leading: Part
+    public let body: Part
+    public let trailing: Part
+    
+    public init(leading: Part, body: Part, trailing: Part) {
+      // Basic invariant: leading/trailing must be 1 row high if body is text.
+      precondition(
+        (leading.height == 1 && trailing.height == 1) || !body.isText,
+        "Text lines must have single-character caps."
+      )
+      self.leading = leading
+      self.body = body
+      self.trailing = trailing
+    }
   }
 }
 
-extension Box.Line {
-  static func textLine(_ text: String, theme: Box.Theme) -> Box.Line {
-    Box.Line(
-      leading: .vertical(.leading).build(using: theme),
-      body: .text(text).build(using: theme),
-      trailing: .vertical(.trailing).build(using: theme)
-    )
-  }
-}
+/// Currently this library can only handle horizontal dividers, not vertical.
+/// So processing line-by-line, vertically, is fairly straightforward.
+//extension Box {
+//  
+//  public struct Line {
+//    var leading: Part
+//    var body: Part
+//    var trailing: Part
+//  }
+//}
+//
+//extension Box.Line {
+//  static func textLine(_ text: String, theme: Box.Theme) -> Box.Line {
+//    Box.Line(
+//      leading: .vertical(.leading).build(using: theme),
+//      body: .text(text).build(using: theme),
+//      trailing: .vertical(.trailing).build(using: theme)
+//    )
+//  }
+//}
 
 //  public struct Line {
 //    let content: LineContent
