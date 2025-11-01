@@ -83,7 +83,7 @@ extension Edge {
 
     }
   }
-  public var edgeSet: Edge.Set {
+  public var toSet: Edge.Set {
     switch self {
       case .top: .top
       case .leading: .leading

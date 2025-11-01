@@ -17,6 +17,18 @@ extension Box {
 
   private static let boxScraps: String = """
 
+    ╭───────────────────────╮
+    │ Heading here          │
+    ├───────────────────────┤
+    │                       │
+    │ Some text content     │
+    │ here – with existing  │
+    │ support for line      │
+    │ breaks / text         │
+    │ reflow etc.           │
+    │                       │
+    ╰───────────────────────╯
+    
     ﹍␣ ݂﹍⠠  ݂ ݂ ݂ ݂␣ ݂ ݂␣ ݂ ݂ ݂ ݂  ݂ ݂ ݂ ݂݂␣ ݂ ݂ ݂ ݂ ݂
     ﹍﹎⠠.⠤⠄
     ░░░░░░░░░░░░░⠿

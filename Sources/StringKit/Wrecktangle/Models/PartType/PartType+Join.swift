@@ -8,7 +8,7 @@
 extension Box.PartType {
 
   /// Describes where the joining takes place
-  public enum Join: Hashable, Sendable {
+  public enum Join: Hashable, Sendable, Codable {
     case leading  // ┠
     case trailing  // ┨
     case top // ┯

@@ -10,7 +10,7 @@ extension Box {
   /// Refers to a *single character* (glyph) only.
   /// Distinct from ``Box/PartType``, which handles
   /// a composite of glyphs to form a useful whole.
-  public enum GlyphType: Hashable, Sendable {
+  public enum GlyphType: Hashable, Sendable, Codable {
 
     /// Basic lines
     case horizontal(Placement)
@@ -60,7 +60,7 @@ extension Box.GlyphType {
   /// Describes where this Glyph should be used, in the context
   /// of a Box structure. Typically based on interior vs exterior
   /// usage; bolder glyph weight for exterior, lighter for interior.
-  public enum Placement: Hashable, Sendable {
+  public enum Placement: Hashable, Sendable, Codable {
     case interior
     case exterior
   }

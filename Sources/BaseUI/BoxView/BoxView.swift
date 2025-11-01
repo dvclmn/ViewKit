@@ -22,8 +22,8 @@ public struct BoxView<Content: View>: View {
 
   public init(
     separator: String = "\n",
-    paddingH: Int = 1,
-    paddingV: Int = 1,
+    paddingH: Int = 0,
+    paddingV: Int = 0,
     alignment: Alignment = .center,
     @ViewBuilder content: @escaping () -> Content
   ) {
@@ -42,22 +42,14 @@ public struct BoxView<Content: View>: View {
         updateIfChanged(&self.viewSize, to: size)
       }
 
-      .gridFrame(
+      .background(.topLeading) {
+        BoxFrame()
+      }
+      .setGridFrame(
         dimensions?.width,
         dimensions?.height
       )
-      .border(Color.orange.opacity(0.3))
-
-      .background(.topLeading) {
-        BoxFrame()
-          .border(Color.green.opacity(0.3))
-      }
       .gridGuide(opacity: 0.2)
-    //      .overlay {
-    //        GridGuideOverlay(opacity: 0.4)
-    //          .isDebugMode(true)
-    //          .border(Color.purple.opacity(0.3))
-    //      }
 
   }
 }

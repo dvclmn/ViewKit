@@ -37,7 +37,7 @@ public struct BoxTextView: View {
       .characterSize(mode: .debounce(0.2)) { size in
         updateIfChanged(&self.characterSize, to: size)
       }
-      .gridFrame(gridWidth, gridHeight)
+      .setGridFrame(gridWidth, gridHeight)
       .environment(\.unitSize, characterSize)
 
       .gridGuide(opacity: 0.2)
@@ -54,8 +54,8 @@ extension BoxTextView {
       header: title,
       content: content,
       width: gridWidth ?? 20,
-      glyphSet: glyphSet ?? .sharp,
-      frameStyle: frameStyle ?? .single,
+      glyphSet: glyphSet,
+      frameStyle: frameStyle,
       counterStyle: .ruler
     ).attributedString
   }
@@ -69,20 +69,20 @@ extension BoxTextView {
     BoxTextView("I love boxes made of text") {
       DummyContent.Strings.paragraphs[8].toAttributed
     }
-    .gridFrame(42)
+    .setGridFrame(42)
     
     BoxTextView("Header title") {
       "Hello"
     }
-    .gridFrame(20)
-    .boxStyle(glyphs: .double, frame: .double)
+    .setGridFrame(20)
+    .setBoxStyle(glyphs: .double, frame: .double)
     
     BoxTextView {
       "No header text"
       "This is another line"
     }
-    .gridFrame(38)
-    .boxStyle(glyphs: .rounded, frame: .single)
+    .setGridFrame(38)
+    .setBoxStyle(glyphs: .rounded, frame: .single)
     
   }
   .textSelection(.enabled)

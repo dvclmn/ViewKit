@@ -18,7 +18,7 @@ public struct SizeDriftView: View {
       SizeDriftInternal(width: 38)
     }
     .gridGuide(opacity: 0.1)
-    .setCharacterUnitSize()
+    .setCharacterUnitSize(mode: .debounce(0.2))
     .gridFont(.sfMono, size: fontSize)
 
   }

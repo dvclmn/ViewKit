@@ -40,7 +40,7 @@ extension SizeTestView {
   private func TextWithSize(_ size: CGFloat) -> some View {
     Text("I'm a sentence with 73 characters. I want to see when we reach the thing.")
       .gridGuide(opacity: 0.3)
-      .setCharacterUnitSize()
+      .setCharacterUnitSize(mode: .debounce(0.2))
       .gridFont(.sfMono, size: size)
   }
 }

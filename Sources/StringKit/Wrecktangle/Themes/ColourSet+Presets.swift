@@ -39,8 +39,6 @@ extension Box.Theme.ColourSet {
 }
 
 extension Color {
-  static let primary = Color.primary
-  static let secondary = Color.secondary
   static let tertiary = Color.secondary.opacity(0.4)
   static let peach = Color(.displayP3, red: 0.806, green: 0.536, blue: 0.422, opacity: 1)
   static let lavendar = Color(.displayP3, red: 0.596, green: 0.495, blue: 0.969, opacity: 1)

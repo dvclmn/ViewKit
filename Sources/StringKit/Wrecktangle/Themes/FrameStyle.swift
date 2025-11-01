@@ -9,7 +9,7 @@ import SharedHelpers
 
 extension Box.Theme {
   
-  public enum FrameStyle: Sendable {
+  public enum FrameStyle: Sendable, Codable, Equatable {
     case single
     case double
   }

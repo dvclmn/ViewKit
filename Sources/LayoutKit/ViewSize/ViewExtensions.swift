@@ -52,7 +52,7 @@ extension View {
   ///   - sizeDidChange: Callback when the character or view size changes
   /// - Returns: Two optional sizes, the first for the charatcer, the second for the container view
   public func characterSize(
-    mode: DebounceMode = .debounce(0.2),
+    mode: DebounceMode,
     _ sizeDidChange: @escaping (CGSize?) -> Void
   ) -> some View {
     self.modifier(
@@ -69,7 +69,7 @@ extension View {
   /// straight to the environment as `unitSize`, and doesn't
   /// need to go through the domain via callback.
   public func setCharacterUnitSize(
-    mode: DebounceMode = .debounce(0.2)
+    mode: DebounceMode
   ) -> some View {
     self.modifier(
       CharacterSizeModifier(

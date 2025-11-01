@@ -10,50 +10,54 @@ import SwiftUI
 
 public struct GridGuideOverlayModifier: ViewModifier {
   @Environment(\.unitSize) private var unitSize
+  @Environment(\.isShowingGridGuide) private var isShowingGridGuide
 
   private let isDrawingDebugText: Bool = false
 
   let opacity: CGFloat
+
   public func body(content: Content) -> some View {
     content
       .overlay {
+        if isShowingGridGuide {
 
-        Group {
-          if let unitSize {
-            Canvas {
-              context,
-              size in
+          Group {
+            if let unitSize {
+              Canvas {
+                context,
+                size in
 
-              context.drawGridLines(
-                config: .init(
-                  fillSize: size,
-                  cellSize: unitSize,
-                  colour: .cyan.opacity(opacity),
-                  strokeThickness: 1
-                ),
-                containerSize: size,
-                canvasZoom: 1.0
-              )
-
-              if isDrawingDebugText {
-                debugText(
-                  size: size,
-                  unitSize: unitSize,
-                  context: context
+                context.drawGridLines(
+                  config: .init(
+                    fillSize: size,
+                    cellSize: unitSize,
+                    colour: .cyan.opacity(opacity),
+                    strokeThickness: 1
+                  ),
+                  containerSize: size,
+                  canvasZoom: 1.0
                 )
-              }
-            }
 
-          } else {
-            if isPreview {
-              ProgressView("Loading Unit Size")
-                .foregroundStyle(.tertiary)
-                .font(.caption)
-            }
-          }  // END size check
-        }  // END group
-        .allowsHitTesting(false)
-      }
+                if isDrawingDebugText {
+                  debugText(
+                    size: size,
+                    unitSize: unitSize,
+                    context: context
+                  )
+                }
+              }
+
+            } else {
+              if isPreview {
+                ProgressView("Loading Unit Size")
+                  .foregroundStyle(.tertiary)
+                  .font(.caption)
+              }
+            }  // END size check
+          }  // END group
+          .allowsHitTesting(false)
+        } // is showing check
+      } // END overlay
   }
 }
 extension GridGuideOverlayModifier {

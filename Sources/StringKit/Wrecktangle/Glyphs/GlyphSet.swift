@@ -14,7 +14,7 @@ extension Box {
   ///
   /// A `partial` set can then build upon this foundation, specifying
   /// which `base` set to fall back on, for un-specified glyphs
-  public enum GlyphSet: Sendable {
+  public enum GlyphSet: Sendable, Codable, Equatable {
 
     public static let globalFallback: Character = "?"
 
