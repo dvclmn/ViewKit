@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-public struct GridDimensions {
+public struct GridDimensions: Sendable, Equatable, Hashable {
   public let width: Int
   public let height: Int
   
@@ -18,8 +18,22 @@ public struct GridDimensions {
   }
 }
 
+extension GridDimensions: ExpressibleByIntegerLiteral {
+  /// Creates an instance with the provided value for both dimensions
+  public init(integerLiteral value: Int) {
+    self.init(width: value, height: value)
+  }
+}
+
 extension GridDimensions {
   public var doubled: GridDimensions {
     GridDimensions(width: width * 2, height: height * 2)
   }
+}
+
+public func + (lhs: GridDimensions, rhs: GridDimensions) -> GridDimensions {
+  return GridDimensions(
+    width: lhs.width + rhs.width,
+    height: lhs.height + rhs.height
+  )
 }

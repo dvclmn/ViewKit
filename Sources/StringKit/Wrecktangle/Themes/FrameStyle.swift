@@ -17,10 +17,13 @@ extension Box.Theme {
 
 extension Box.Theme.FrameStyle {
   
+  /// The width and height reserved for structure,
+  /// unable to be used by content.
+  ///
   /// Relevant for fixed only, i think? Not repeating?
   /// This should account for glyphs on *both* sides of the relevant axis?
   /// This is why it's returned as `doubled`
-  var maxGridSize: GridDimensions {
+  public var reservedDimensions: GridDimensions {
     switch self {
         /// Each glyph, either side (leading-trailing, or top-bottom)
       case .single:

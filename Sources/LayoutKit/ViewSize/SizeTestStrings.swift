@@ -23,7 +23,7 @@ struct TestString {
 }
 
 extension TestString {
-  
+
   /// The size of a single Character, based on the measurement
   /// of the full Test String dimensions
   func characterSize(_ size: CGSize) -> CGSize {
@@ -41,28 +41,35 @@ extension TestString {
   static var example01: TestString {
     TestString(
       """
-      abcdefghijklmnop
-      klmnopqrstuvwxyz
-      1234567890123456
-      ABCDEFGHIJKLMNOP
-      KLMNOPQRSTUVWXYZ
+      abcdefghijklmnopabcdefghijklmnopabcdefghijklmnop
+      klmnopqrstuvwxyzklmnopqrstuvwxyzklmnopqrstuvwxyz
+      123456789012345612345678901234561234567890123456
+      ABCDEFGHIJKLMNOPABCDEFGHIJKLMNOPABCDEFGHIJKLMNOP
+      abcdefghijklmnopabcdefghijklmnopabcdefghijklmnop
+      klmnopqrstuvwxyzklmnopqrstuvwxyzklmnopqrstuvwxyz
+      123456789012345612345678901234561234567890123456
+      ABCDEFGHIJKLMNOPABCDEFGHIJKLMNOPABCDEFGHIJKLMNOP
+      abcdefghijklmnopabcdefghijklmnopabcdefghijklmnop
+      klmnopqrstuvwxyzklmnopqrstuvwxyzklmnopqrstuvwxyz
+      123456789012345612345678901234561234567890123456
+      ABCDEFGHIJKLMNOPABCDEFGHIJKLMNOPABCDEFGHIJKLMNOP
       """,
-      w: 16,
-      h: 5,
+      w: 48,
+      h: 12,
     )
   }
-  
+
   static var boxParts: TestString {
     TestString(
       """
-      //░[⣡│└┐◢┏║←↑→↓╳│┋┛
-      !@#$%^&*()<>":{}|?!
-      //░[⣡│└┐◢┏║←↑→↓╳│┋┛
-      !@#$%^&*()<>":{}|?!
-      abcdefghijklmnop<>?
-      klmnopqrstuvwxyz<>?
+      //░[⣡│└┐◢┏║←↑→↓╳│┋┛abcdefghijklmnop
+      !@#$%^&*()<>":{}|?!klmnopqrstuvwxyz
+      //░[⣡│└┐◢┏║←↑→↓╳│┋┛1234567890123456
+      !@#$%^&*()<>":{}|?!ABCDEFGHIJKLMNOP
+      abcdefghijklmnop<>?KLMNOPQRSTUVWXYZ
+      klmnopqrstuvwxyz<>?abcdefghijklmnop
       """,
-      w: 19,
+      w: 35,
       h: 6,
     )
   }

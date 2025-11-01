@@ -15,7 +15,6 @@ public struct CharacterAndViewSizeModifier: ViewModifier {
   @State private var viewSize: CGSize?
 
   let debounceMode: DebounceMode
-  let character: Character = "M"
   let sizeDidChange: (CGSize?, CGSize?) -> Void
 
   public func body(content: Content) -> some View {

@@ -17,25 +17,26 @@ public struct BoxView<Content: View>: View {
   @State private var viewSize: CGSize?
 
   let alignment: Alignment
-  let padding: Int
+  let padding: GridDimensions
   let content: Content
 
   public init(
     separator: String = "\n",
-    padding: Int = 1,
+    paddingH: Int = 1,
+    paddingV: Int = 1,
     alignment: Alignment = .center,
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.alignment = alignment
-    self.padding = padding
+    self.padding = GridDimensions(paddingH, paddingV)
     self.content = content()
   }
 
   public var body: some View {
     content
       /// Padding to seat content within Box view
-      .gridPadding(.horizontal, padding)
-      .gridPadding(.vertical, padding * 2)
+      .gridPadding(.horizontal, paddingAdjusted.width)
+      .gridPadding(.vertical, paddingAdjusted.height)
 
       .viewSize(mode: .debounce(0.2)) { size in
         updateIfChanged(&self.viewSize, to: size)
@@ -52,16 +53,25 @@ public struct BoxView<Content: View>: View {
           .border(Color.green.opacity(0.3))
       }
       .gridGuide(opacity: 0.2)
-//      .overlay {
-//        GridGuideOverlay(opacity: 0.4)
-//          .isDebugMode(true)
-//          .border(Color.purple.opacity(0.3))
-//      }
+    //      .overlay {
+    //        GridGuideOverlay(opacity: 0.4)
+    //          .isDebugMode(true)
+    //          .border(Color.purple.opacity(0.3))
+    //      }
 
   }
 }
 
 extension BoxView {
+  
+  /// Padding first needs to account for the width/height
+  /// taken up by structure, like the frame. As well as any
+  /// user-specified padding.
+  private var paddingAdjusted: GridDimensions {
+    let reserved = frameStyle.reservedDimensions
+    let user = self.padding
+    return reserved + user
+  }
 
   private var boxText: String? {
     guard let w = dimensions?.width, let h = dimensions?.height else { return nil }
@@ -69,16 +79,17 @@ extension BoxView {
       width: w,
       height: h,
       theme: Box.Theme(
-        glyphSet: glyphSet ?? .sharp,
-        frameStyle: frameStyle ?? .single,
+        glyphSet: glyphSet,
+        frameStyle: frameStyle,
         padding: padding
       )
     ).plainText
-    
-    let result = text
+
+    let result =
+      text
       .split(separator: "\n", omittingEmptySubsequences: true)
       .joined(separator: "\n")
-    
+
     return result
   }
 

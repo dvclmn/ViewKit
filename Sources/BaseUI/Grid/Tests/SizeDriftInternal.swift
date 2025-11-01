@@ -9,6 +9,32 @@ import LayoutKit
 import StringShared
 import SwiftUI
 
+enum CharacterSizeSource {
+  case unitSize(CGSize?)
+  case sentence(CGSize?)
+
+  var name: String {
+    switch self {
+      case .unitSize: "Unit Size"
+      case .sentence: "Sentence"
+    }
+  }
+
+  var size: CGSize? {
+    switch self {
+      case .unitSize(let size): size
+      case .sentence(let size): size
+    }
+  }
+
+  var colour: Color {
+    switch self {
+      case .unitSize: Color.green
+      case .sentence: Color.blue
+    }
+  }
+}
+
 public struct SizeDriftInternal: View {
   @Environment(\.unitSize) private var unitSize
 
@@ -18,11 +44,8 @@ public struct SizeDriftInternal: View {
   public var body: some View {
 
     VPack(.leading) {
-      SizeVisual(unitSize)
-        .tint(.orange)
-
-      SizeVisual(sentenceBasedSize)
-        .tint(.blue)
+      SizeVisual(from: .unitSize(unitSize))
+      SizeVisual(from: .sentence(sentenceBasedSize))
     }
 
     VPack(.leading) {
@@ -40,25 +63,25 @@ public struct SizeDriftInternal: View {
 extension SizeDriftInternal {
 
   private var sentenceBasedSize: CGSize? {
-    return sentenceSize?.adjustLength(.horizontal) { w in
-      w / CGFloat(self.width)
-      //      let newH = h / CGFloat(1)
-      //      return (newW, newH)
-    }
+    return sentenceSize?.adjustLength(.horizontal) { $0 / CGFloat(self.width) }
   }
 
   @ViewBuilder
-  private func SizeVisual(_ size: CGSize?) -> some View {
+  private func SizeVisual(from source: CharacterSizeSource) -> some View {
     HPack {
       ForEach(0..<width, id: \.self) { i in
         Rectangle()
-          .fill(.tint)
+          .fill(source.colour.tertiary)
           .frame(
-            width: size?.width,
+            width: source.size?.width,
             /// Not assessing height here, just width
             height: unitSize?.height
           )
       }
+    }
+    .overlay {
+      Text(source.name)
+        .font(.caption)
     }
 
   }

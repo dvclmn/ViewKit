@@ -32,13 +32,13 @@ extension Box.Builder {
   /// The remaning width for text, after removing space
   /// reserved for structural elements
   public var widthForText: Int {
-    let capCount = theme.frameStyle.maxGridSize.width
+    let capCount = theme.frameStyle.reservedDimensions.width
     return max(0, width - capCount)
   }
 
   public var heightForText: Int? {
     guard let height else { return nil }
-    let capCount = theme.frameStyle.maxGridSize.height
+    let capCount = theme.frameStyle.reservedDimensions.height
     return max(0, height - capCount)
   }
 }

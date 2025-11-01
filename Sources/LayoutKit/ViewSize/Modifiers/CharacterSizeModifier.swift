@@ -13,7 +13,7 @@ public struct CharacterSizeModifier: ViewModifier {
 
   @State private var characterSize: CGSize?
 
-  private let testString = TestString.boxParts
+  private let testString = TestString.example01
 
   let debounceMode: DebounceMode
   let sizeDidChange: (CGSize?) -> Void
@@ -40,17 +40,16 @@ public struct CharacterSizeModifier: ViewModifier {
               self.characterSize = charSize
 
             } else {
-
               /// This sends the size to the consumer via callback
               sizeDidChange(charSize)
             }
           }
           .foregroundStyle(.cyan.secondary)
-                    .hidden()
+          .hidden()
           .allowsHitTesting(false)
-        
+
       }
-//      .environment(\.unitSize, characterSize)
+      //      .environment(\.unitSize, characterSize)
       .environment(\.unitSize, shouldSetEnv ? characterSize : unitSize)
 
   }

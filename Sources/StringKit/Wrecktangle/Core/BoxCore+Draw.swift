@@ -60,7 +60,7 @@ extension Box {
     )
     .flowed(
       maxLines: config.contentLineLimit,
-      paddingH: config.theme.padding
+      paddingH: config.theme.padding.width
     )
 
     for headerLine in headerLines {
@@ -85,7 +85,7 @@ extension Box {
     )
     .flowed(
       maxLines: config.contentLineLimit,
-      paddingH: config.theme.padding
+      paddingH: config.theme.padding.width
     )
 
     for contentLine in contentLines {
