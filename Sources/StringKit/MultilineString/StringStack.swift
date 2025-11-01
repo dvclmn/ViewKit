@@ -115,6 +115,25 @@ extension StringStack {
 
     return result
   }
+  
+  // Ensure all rows have consistent width
+  public func normalized(
+    toWidth width: Int? = nil,
+    paddingCharacter: Character = " "
+  ) -> StringStack {
+    let targetWidth = width ?? self.width
+    var result = StringStack([])
+    for row in stack {
+      var normalizedRow = row
+      if normalizedRow.count < targetWidth {
+        normalizedRow.append(contentsOf: Array(repeating: paddingCharacter, count: targetWidth - normalizedRow.count))
+      } else if normalizedRow.count > targetWidth {
+        normalizedRow = Array(normalizedRow.prefix(targetWidth))
+      }
+      result.append(normalizedRow)
+    }
+    return result
+  }
 
 //  func normalised(toWidth width: Int, height: Int, padding: Character) -> StringStack {
 //    var rows = stack

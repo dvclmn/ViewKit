@@ -9,10 +9,11 @@ import Foundation
 
 extension Box {
   public struct Part {
-    public var content: StringStack
+    public var content: GlyphStack
+//    public var content: StringStack
     public var type: PartType
     
-    public init(content: StringStack, type: PartType) {
+    public init(content: GlyphStack, type: PartType) {
       self.content = content
       self.type = type
     }
@@ -21,11 +22,18 @@ extension Box {
 }
 
 extension Box.Part {
+  public var flexibility: Box.PartType.Flexibility {
+    type.flexibility
+  }
   public var width: Int { content.width }
   public var height: Int { content.height }
   public var columns: Int { width }
   public var rows: Int { height }
 
+  var stringStack: StringStack {
+    
+  }
+  
   public static func create(
     _ type: Box.PartType,
     with theme: Box.Theme

@@ -31,7 +31,6 @@ public func * (lhs: StringStack, rhs: Int) -> StringStack {
 
 extension StringStack {
 
-
   public func joinWithCaps(
     leading: StringStack,
     trailing: StringStack,

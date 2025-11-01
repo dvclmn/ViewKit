@@ -15,7 +15,6 @@ extension Box.Line {
     trailing: Box.PartType
   )
 
-
   /// What kinds of lines could there be, in a box?
   ///
   /// Note: These, by definition, describe a *whole* line, stretching

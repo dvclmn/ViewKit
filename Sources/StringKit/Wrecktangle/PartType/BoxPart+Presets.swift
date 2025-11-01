@@ -26,7 +26,9 @@ extension Box {
 
 extension Box.PartType {
 
-  public func glyphStack(with frameStyle: Box.Theme.FrameStyle) -> Box.GlyphStack {
+  public func glyphStack(
+    for frameStyle: Box.Theme.FrameStyle
+  ) -> Box.GlyphStack {
     switch frameStyle {
       case .single: frameStackSingle
       case .double: frameStackDouble

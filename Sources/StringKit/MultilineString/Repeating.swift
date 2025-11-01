@@ -10,7 +10,7 @@ extension StringStack {
   public func repeatHorizontally(
     toWidth width: Int,
     paddingCharacter: Character = " ",
-    trimMethod: TrimMethod = .crop  // Need to implement this
+    trimMethod: TrimMethod = .crop
   ) -> StringStack {
 
     guard !self.isEmpty else { return StringStack([]) }

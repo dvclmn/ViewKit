@@ -35,7 +35,7 @@ extension Box {
     case corner(Corner)
     case blank
 
-    public var flexibility: PartFlexibility {
+    public var flexibility: Flexibility {
       switch self {
         case .horizontal, .blank: .repeatable(axis: .horizontal)
         case .vertical: .repeatable(axis: .vertical)
@@ -65,7 +65,7 @@ extension Box.PartType {
   }
 
   /// Whether or not this part should take on repeatable behaviour
-  public enum PartFlexibility: Equatable, Codable {
+  public enum Flexibility: Equatable, Codable {
     case repeatable(axis: Axis)
     case fixed
   }

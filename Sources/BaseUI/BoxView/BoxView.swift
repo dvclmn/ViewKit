@@ -34,6 +34,7 @@ public struct BoxView<Content: View>: View {
 
   public var body: some View {
     content
+
       /// Padding to seat content within Box view
       .gridPadding(.horizontal, paddingAdjusted.width)
       .gridPadding(.vertical, paddingAdjusted.height)
@@ -55,7 +56,7 @@ public struct BoxView<Content: View>: View {
 }
 
 extension BoxView {
-  
+
   /// Padding first needs to account for the width/height
   /// taken up by structure, like the frame. As well as any
   /// user-specified padding.
@@ -105,10 +106,10 @@ extension BoxView {
   VStack(spacing: 14) {
 
     BoxView {
-
       Text("I'm a SwiftUI View")
       Text(DummyContent.Strings.paragraphs[8].toAttributed)
     }
+
     //        .gridFrame(42)
     //        .boxStyle(glyphs: .double, frame: .double)
 

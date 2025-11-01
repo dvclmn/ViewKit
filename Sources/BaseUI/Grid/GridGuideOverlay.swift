@@ -10,16 +10,17 @@ import SwiftUI
 
 public struct GridGuideOverlayModifier: ViewModifier {
   @Environment(\.unitSize) private var unitSize
-  @Environment(\.isShowingGridGuide) private var isShowingGridGuide
+//  @Environment(\.isShowingGridGuide) private var isShowingGridGuide
 
   private let isDrawingDebugText: Bool = false
 
   let opacity: CGFloat
+  let isEnabled: Bool
 
   public func body(content: Content) -> some View {
     content
       .overlay {
-        if isShowingGridGuide {
+        if isEnabled {
 
           Group {
             if let unitSize {
@@ -82,7 +83,15 @@ extension GridGuideOverlayModifier {
 
 extension View {
 
-  public func gridGuide(opacity: CGFloat = 0.1) -> some View {
-    self.modifier(GridGuideOverlayModifier(opacity: opacity))
+  public func gridGuide(
+    opacity: CGFloat = 0.1,
+    isEnabled: Bool = true
+  ) -> some View {
+    self.modifier(
+      GridGuideOverlayModifier(
+        opacity: opacity,
+        isEnabled: isEnabled
+      )
+    )
   }
 }

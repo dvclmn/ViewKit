@@ -53,13 +53,14 @@ extension View {
   /// - Returns: Two optional sizes, the first for the charatcer, the second for the container view
   public func characterSize(
     mode: DebounceMode,
+    shouldSetEnv: Bool = false,
     _ sizeDidChange: @escaping (CGSize?) -> Void
   ) -> some View {
     self.modifier(
       CharacterSizeModifier(
         debounceMode: mode,
         sizeDidChange: sizeDidChange,
-        shouldSetEnv: false
+        shouldSetEnv: shouldSetEnv
       )
     )
   }

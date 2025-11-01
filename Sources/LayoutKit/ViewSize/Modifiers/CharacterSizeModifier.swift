@@ -39,6 +39,9 @@ public struct CharacterSizeModifier: ViewModifier {
               /// This updates the env value
               self.characterSize = charSize
 
+              /// And still sends out the callback, if needed
+              sizeDidChange(charSize)
+
             } else {
               /// This sends the size to the consumer via callback
               sizeDidChange(charSize)
@@ -50,7 +53,8 @@ public struct CharacterSizeModifier: ViewModifier {
 
       }
       //      .environment(\.unitSize, characterSize)
-      .environment(\.unitSize, shouldSetEnv ? characterSize : unitSize)
+      .environment(\.unitSize, characterSize)
+    //      .environment(\.unitSize, shouldSetEnv ? characterSize : unitSize)
 
   }
 }
