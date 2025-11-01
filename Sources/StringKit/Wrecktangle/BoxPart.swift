@@ -9,10 +9,10 @@ import Foundation
 
 extension Box {
   public struct Part {
-    public var content: MultilineString
+    public var content: StringStack
     public var type: PartType
     
-    public init(content: MultilineString, type: PartType) {
+    public init(content: StringStack, type: PartType) {
       self.content = content
       self.type = type
     }
@@ -31,11 +31,11 @@ extension Box.Part {
     with theme: Box.Theme
   ) -> Self {
 
-    let glyphGrid = type.preset(with: theme.frameStyle)
-    let characterGrid = glyphGrid.map { row in
+    let stack = type.glyphStack(with: theme.frameStyle)
+    let characterGrid = stack.map { row in
       row.map { theme.glyphSet.character(for: $0) }
     }
-    let multilineString = MultilineString(characterGrid)
+    let multilineString = StringStack(characterGrid)
     return Self(content: multilineString, type: type)
   }
 }

@@ -5,15 +5,15 @@
 //  Created by Dave Coleman on 14/9/2024.
 //
 
-extension MultilineString {
+extension StringStack {
 
   public func repeatHorizontally(
     toWidth width: Int,
     paddingCharacter: Character = " ",
     trimMethod: TrimMethod = .crop  // Need to implement this
-  ) -> MultilineString {
+  ) -> StringStack {
 
-    guard !self.isEmpty else { return MultilineString([]) }
+    guard !self.isEmpty else { return StringStack([]) }
 
     let patternWidth = self.width
     let patternHeight = self.height
@@ -21,7 +21,7 @@ extension MultilineString {
     let repetitions = width / patternWidth
     let remainder = width % patternWidth
 
-    var result = MultilineString([])
+    var result = StringStack([])
 
     for row in 0..<patternHeight {
       var newRow: [Character] = []

@@ -8,6 +8,13 @@
 import Foundation
 
 extension Box.Line {
+    
+  public typealias ThreePartLine = (
+    leading: Box.PartType,
+    repeater: Box.PartType,
+    trailing: Box.PartType
+  )
+
 
   /// What kinds of lines could there be, in a box?
   ///

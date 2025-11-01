@@ -9,8 +9,8 @@ extension Box.Line {
 
   public func render() -> String {
 
-    let renderedContent: MultilineString
-    renderedContent = MultilineString(content.rawContent)
+    let renderedContent: StringStack
+    renderedContent = StringStack(content.rawContent)
 
     let joinedContent = leadingCap.content + renderedContent + trailingCap.content
 

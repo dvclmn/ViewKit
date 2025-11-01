@@ -1,5 +1,5 @@
 //
-//  MultilineString.swift
+//  StringStack.swift
 //  TextCore
 //
 //  Created by Dave Coleman on 14/9/2024.
@@ -7,88 +7,88 @@
 
 import Foundation
 
-public enum TrimMethod {
-  case leaveSpace
-  case crop
-}
+/// A structure representing a multiline string as a mutable stack of character rows.
+///
+/// Construct a `StringStack` from a standard `String` or a grid of characters,
+/// access or modify rows, and transform the stack back into a single string as needed.
+public struct StringStack {
 
-public struct MultilineString {
-
-  private var grid: [[Character]]
+  private var stack: [[Character]]
 
   public init(_ grid: [[Character]]) {
-    self.grid = grid
+    self.stack = grid
   }
 
+  /// ``Swift/String/substringLines(subsequenceStrategy:)``
   public init(_ string: String) {
     self.init(string.substringLines().map { Array($0) })
   }
 
 }
 
-extension MultilineString {
+extension StringStack {
 
-  public var string: String {
-    grid.map { String($0) }.joined(separator: "\n")
-  }
+  public var string: String { stack.map { String($0) }.joined("\n") }
 
-  public var height: Int {
-    grid.count
-  }
+  public var height: Int { stack.count }
+  public var width: Int { stack.map { $0.count }.max() ?? 0 }
 
-  public var width: Int {
-    grid.map { $0.count }.max() ?? 0
-  }
-
+  /// Accesses or modifies the row of characters at the specified index.
+  ///
+  /// - Parameter row: The zero-based index of the row to access or modify.
+  /// - Returns: The array of `Character` representing the row at the given index, or
+  ///   an empty array if the index is out of bounds.
+  ///
+  /// - Note:
+  ///   - If the getter is called with a row index greater than or equal to `height`,
+  ///     it returns an empty array.
+  ///   - If the setter is called with a row index less than `height`, it replaces the existing row.
+  ///   - If the setter is called with a row index equal to `height`, it appends the new row at the end.
+  ///   - Setting with a row index greater than `height` has no effect.
   public subscript(row: Int) -> [Character] {
     get {
-      guard row < grid.count else { return [] }
-      return grid[row]
+      guard row < stack.count else { return [] }
+      return stack[row]
     }
     set {
-      if row < grid.count {
-        grid[row] = newValue
-      } else if row == grid.count {
-        grid.append(newValue)
+      if row < stack.count {
+        stack[row] = newValue
+
+      } else if row == stack.count {
+        stack.append(newValue)
       }
     }
   }
-
+  
+  /// Indicates whether the stack contains no characters in any row.
   public var isEmpty: Bool {
-    grid.isEmpty || grid.allSatisfy { $0.isEmpty }
-  }
-
-}
-
-extension MultilineString: ExpressibleByArrayLiteral {
-  public init(arrayLiteral elements: [Character]...) {
-    self.grid = elements
-  }
-
-}
-
-extension MultilineString: CustomStringConvertible {
-  public var description: String {
-    self.string
+    stack.isEmpty || stack.allSatisfy { $0.isEmpty }
   }
 }
 
-extension MultilineString: Sequence {
+extension StringStack: CustomStringConvertible {
+  public var description: String { string }
+}
+
+extension StringStack: Sequence {
 
   public func makeIterator() -> IndexingIterator<[[Character]]> {
-    grid.makeIterator()
+    stack.makeIterator()
   }
 
   public func map<T>(_ transform: ([Character]) -> T) -> [T] {
-    grid.map(transform)
+    stack.map(transform)
   }
 
   public func enumerated() -> EnumeratedSequence<[[Character]]> {
-    grid.enumerated()
+    stack.enumerated()
   }
 
+  /// Appends a new row of characters to the end of the stack.
+  ///
+  /// - Parameter row: The row of characters to append.
   mutating func append(_ row: [Character]) {
-    grid.append(row)
+    stack.append(row)
   }
 
 }

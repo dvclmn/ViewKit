@@ -5,45 +5,46 @@
 //  Created by Dave Coleman on 14/9/2024.
 //
 
-public extension MultilineString {
-  static func +(lhs: MultilineString, rhs: MultilineString) -> MultilineString {
-    lhs.joinHorizontally(with: rhs)
+public func + (lhs: StringStack, rhs: StringStack) -> StringStack {
+  lhs.joinHorizontally(with: rhs)
+}
+
+public func += (lhs: inout StringStack, rhs: StringStack) {
+  lhs = lhs + rhs
+}
+
+extension StringStack {
+  public static func joinHorizontally(
+    _ strings: StringStack...,
+    padding: Character? = nil
+  ) -> StringStack {
+    strings.reduce(StringStack([])) { $0.joinHorizontally(with: $1, padding: padding) }
   }
-  
-  static func +=(lhs: inout MultilineString, rhs: MultilineString) {
-    lhs = lhs + rhs
-  }
-  
-  static func joinHorizontally(_ strings: MultilineString..., padding: Character? = nil) -> MultilineString {
-    strings.reduce(MultilineString([])) { $0.joinHorizontally(with: $1, padding: padding) }
-  }
-  
-  static func joinVertically(_ strings: MultilineString..., padding: Character? = nil) -> MultilineString {
-    strings.reduce(MultilineString([])) { $0.joinVertically(with: $1, padding: padding) }
+
+  public static func joinVertically(_ strings: StringStack..., padding: Character? = nil) -> StringStack {
+    strings.reduce(StringStack([])) { $0.joinVertically(with: $1, padding: padding) }
   }
 }
 
-// For repeating a MultilineString
-public func * (lhs: MultilineString, rhs: Int) -> MultilineString {
-  var result = MultilineString([])
+// For repeating a StringStack
+public func * (lhs: StringStack, rhs: Int) -> StringStack {
+  var result = StringStack([])
   for _ in 0..<rhs {
     result = result + lhs
   }
   return result
 }
 
+extension StringStack {
 
-
-public extension MultilineString {
-  
-  func joinHorizontally(with other: MultilineString, padding: Character? = nil) -> MultilineString {
+  public func joinHorizontally(with other: StringStack, padding: Character? = nil) -> StringStack {
     let maxHeight = Swift.max(self.height, other.height)
-    var result = MultilineString([])
-    
+    var result = StringStack([])
+
     for i in 0..<maxHeight {
       let leftRow = i < self.height ? self[i] : []
       let rightRow = i < other.height ? other[i] : []
-      
+
       if let padding = padding {
         let leftPadding = i < self.height ? [] : [Character](repeating: padding, count: self.width)
         let rightPadding = i < other.height ? [] : [Character](repeating: padding, count: other.width)
@@ -52,14 +53,14 @@ public extension MultilineString {
         result.append(leftRow + rightRow)
       }
     }
-    
+
     return result
   }
-  
-  func joinVertically(with other: MultilineString, padding: Character? = nil) -> MultilineString {
+
+  public func joinVertically(with other: StringStack, padding: Character? = nil) -> StringStack {
     let maxWidth = Swift.max(self.width, other.width)
     var result = self
-    
+
     for row in other {
       if let padding = padding {
         let paddedRow = row + [Character](repeating: padding, count: maxWidth - row.count)
@@ -68,24 +69,23 @@ public extension MultilineString {
         result.append(row)
       }
     }
-    
+
     return result
   }
-  
-  func joinWithCaps(
-    leading: MultilineString,
-    trailing: MultilineString,
+
+  public func joinWithCaps(
+    leading: StringStack,
+    trailing: StringStack,
     errorGlyph: Character = "!"
-  ) -> MultilineString {
+  ) -> StringStack {
     let maxHeight = Swift.max(height, leading.height, trailing.height)
-    var result = MultilineString([])
-    
+    var result = StringStack([])
+
     for i in 0..<maxHeight {
       let leadingRow = i < leading.height ? leading[i] : [Character](repeating: errorGlyph, count: leading.width)
       let contentRow = i < height ? self[i] : [Character](repeating: " ", count: width)
       let trailingRow = i < trailing.height ? trailing[i] : [Character](repeating: errorGlyph, count: trailing.width)
-      
-      
+
       /// I didn't know this until just recently, but if you supply `String` with
       /// an array (or even, as below, multiple concatenated arrays!) of
       /// `[Character]`, Swift will initialise this as... a `String`.
@@ -98,7 +98,7 @@ public extension MultilineString {
       ///
       result.append(leadingRow + contentRow + trailingRow)
     }
-    
+
     return result
   }
 }
