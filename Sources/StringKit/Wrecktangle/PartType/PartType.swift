@@ -10,6 +10,22 @@ import SharedHelpers
 
 extension Box {
 
+  /// A Part Type refers to a *composition* of Glyphs.
+  /// This is distinct from ``Box/GlyphType``, which
+  /// describes the role of a *single* Glyph.
+  ///
+  /// `PartType` example:
+  ///
+  /// ```
+  /// // A 3x2 Corner
+  /// ┏━━
+  /// ┃ ┌
+  ///
+  ///
+  /// // A 3x1 Trailing Join
+  /// ┤ ║
+  /// 
+  /// ```
   public enum PartType: Hashable, Codable {
 
     case horizontal(HorizontalLocation = .top)

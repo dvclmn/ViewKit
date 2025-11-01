@@ -8,28 +8,27 @@
 import Foundation
 import SwiftUI
 
-public extension Box {
-  
-  func paddingCharacter(for element: Invisibles) -> Character {
-    guard config.metrics.contains(.invisibles) else { return " " }
-    return element.character
+extension Box {
+
+  public func paddingCharacter(for element: Invisibles) -> Character {
+    config.metrics.contains(.invisibles) ? element.character : " "
   }
-  
-  enum Invisibles {
+
+  public enum Invisibles {
     case line
     case space
     case tab
     case padding
     case paddingAlt
-    
+
     public enum LineType {
       case new
-      case end
+      case wrap
     }
-    
+
     public var character: Character {
       switch self {
-        case .line: "¬" // ¶
+        case .line: "¬"  // ¶
         case .space: "/"
         case .tab: "→"
         case .padding: ","

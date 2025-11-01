@@ -10,6 +10,12 @@ extension Box {
   /// Refers to a *single character* (glyph) only.
   /// Distinct from ``Box/PartType``, which handles
   /// a composite of glyphs to form a useful whole.
+  ///
+  /// GlyphType example:
+  /// ```
+  /// Horizontal: ━, ─, ︶, ┄
+  /// Vertical:
+  /// ```
   public enum GlyphType: Hashable, Sendable, Codable {
 
     /// Basic lines

@@ -7,16 +7,6 @@
 
 import Foundation
 
-//public protocol BoxLine {
-//  var leading: Box.PartType { get }
-//  var repeating: Box.PartType { get }
-//  var trailing: Box.PartType { get }
-//}
-
-//public struct Structure: BoxLine {
-//
-//}
-
 extension Box.Line {
 
   /// What kinds of lines could there be, in a box?
@@ -29,8 +19,6 @@ extension Box.Line {
     case top
     case divider
     case bottom
-    /// This should generate spaces for the full width
-    //    case blank  // `spacer` a better name?
 
     public var parts: ThreePartLine {
       switch self {
@@ -54,17 +42,6 @@ extension Box.Line {
             Box.PartType.horizontal(.bottom),
             Box.PartType.corner(.bottomTrailing)
           )
-
-      //        case .blank:
-      //          (
-      //            Box.PartType.blank,
-      ////            Box.PartType.vertical(.interior),
-      //            Box.PartType.blank,
-      //            Box.PartType.blank
-      ////            Box.PartType.vertical(.interior)
-      //          )
-      //        case .text:
-      //          nil
       }
     }  // END parts
   }

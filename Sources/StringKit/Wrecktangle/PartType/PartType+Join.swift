@@ -11,14 +11,14 @@ extension Box.PartType {
   public enum Join: Hashable, Sendable, Codable {
     case leading  // ┠
     case trailing  // ┨
-    case top // ┯
-    case bottom //
-    case cross
+    case top  // ┯
+    case bottom  // ┷
+    case cross  // ╂
   }
-
 }
 
 extension Box.PartType.Join {
+  
   func glyphStack() -> Box.GlyphStack {
     switch self {
       case .leading:
