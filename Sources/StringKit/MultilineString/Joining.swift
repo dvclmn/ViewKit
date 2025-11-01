@@ -7,8 +7,9 @@
 
 import SwiftUI
 
+/// Asummes horizontal joining
 public func + (lhs: StringStack, rhs: StringStack) -> StringStack {
-  lhs.joinHorizontally(with: rhs)
+  return StringStack.joined(lhs, rhs, along: .horizontal)
 }
 
 public func += (lhs: inout StringStack, rhs: StringStack) {
@@ -17,21 +18,6 @@ public func += (lhs: inout StringStack, rhs: StringStack) {
 
 extension StringStack {
 
-  public static func join(
-    _ strings: StringStack...,
-    along axis: Axis,
-    padding: Character? = nil
-  ) -> StringStack {
-    strings.reduce(StringStack([])) { partial, string in
-      switch axis {
-        case .horizontal:
-          partial.joinHorizontally(with: string, padding: padding)
-
-        case .vertical:
-          partial.joinVertically(with: string, padding: padding)
-      }
-    }
-  }
 }
 
 // For repeating a StringStack

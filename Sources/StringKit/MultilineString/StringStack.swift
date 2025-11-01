@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 14/9/2024.
 //
 
-import Foundation
+import SwiftUI
 
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack {
@@ -62,53 +62,70 @@ extension StringStack {
   }
 }
 
+// MARK: - Joining
 extension StringStack {
+
+  /// Right now, if padding is nil, shorter rows or columns simply “disappear” —
+  /// this can lead to jagged edges. You might prefer to default to space
+  /// padding when widths/heights don’t match, unless nil is explicitly
+  /// intended to mean “truncate”.
   
-  
-  public func joinHorizontally(
+  /// Explicit handling could help readability:
+  /// `let padChar = padding ?? " "`
+  public static func joined(
+    _ strings: StringStack...,
+    along axis: Axis,
+    padding: Character? = nil
+  ) -> StringStack {
+    strings.reduce(StringStack([])) { partial, string in
+      switch axis {
+        case .horizontal:
+          partial.joinedHorizontally(with: string, padding: padding)
+
+        case .vertical:
+          partial.joinedVertically(with: string, padding: padding)
+      }
+    }
+  }
+
+  private func joinedHorizontally(
     with other: StringStack,
     padding: Character? = nil
   ) -> StringStack {
     let maxHeight = Swift.max(self.height, other.height)
     var result = StringStack([])
-    
+
     for i in 0..<maxHeight {
       let left = self.row(at: i, paddedTo: self.width, with: padding)
       let right = other.row(at: i, paddedTo: other.width, with: padding)
       result.append(left + right)
     }
-    
-    //    for i in 0..<maxHeight {
-    //      let leftRow = i < self.height ? self[i] : []
-    //      let rightRow = i < other.height ? other[i] : []
-    //
-    //      if let padding = padding {
-    //        let leftPadding = i < self.height ? [] : .padded(with: padding, count: self.width)
-    //        let rightPadding = i < other.height ? [] : .padded(with: padding, count: other.width)
-    //
-    //        //        let leftPadding = i < self.height ? [] : [Character](repeating: padding, count: self.width)
-    //        //        let rightPadding = i < other.height ? [] : [Character](repeating: padding, count: other.width)
-    //        result.append(leftPadding + leftRow + rightRow + rightPadding)
-    //      } else {
-    //        result.append(leftRow + rightRow)
-    //      }
-    //    }
-    
+
     return result
   }
-  
-  public func joinVertically(with other: StringStack, padding: Character? = nil) -> StringStack {
+
+  private func joinedVertically(with other: StringStack, padding: Character? = nil) -> StringStack {
     let maxWidth = Swift.max(width, other.width)
     var result = self
-    
+
     for i in 0..<other.height {
       let row = other.row(at: i, paddedTo: maxWidth, with: padding)
       result.append(row)
     }
-    
+
     return result
   }
 
+//  func normalised(toWidth width: Int, height: Int, padding: Character) -> StringStack {
+//    var rows = stack
+//    rows = rows.map { $0 + .padded(with: padding, count: width - $0.count) }
+//    if rows.count < height {
+//      let emptyRow = .padded(with: padding, count: width)
+//      rows += Array(repeating: emptyRow, count: height - rows.count)
+//    }
+//    return StringStack(rows)
+//  }
+  
   private static func fill(_ char: Character, count: Int) -> [Character] {
     count > 0 ? Array(repeating: char, count: count) : []
   }
@@ -127,7 +144,31 @@ extension StringStack {
     }
     return row
   }
-  
-  
+
 }
 
+extension StringStack: CustomStringConvertible {
+  public var description: String { string }
+}
+
+extension StringStack: Sequence {
+  
+  public func makeIterator() -> IndexingIterator<[[Character]]> {
+    stack.makeIterator()
+  }
+  
+  public func map<T>(_ transform: ([Character]) -> T) -> [T] {
+    stack.map(transform)
+  }
+  
+  public func enumerated() -> EnumeratedSequence<[[Character]]> {
+    stack.enumerated()
+  }
+  
+  /// Appends a new row of characters to the end of the stack.
+  ///
+  /// - Parameter row: The row of characters to append.
+  mutating func append(_ row: [Character]) {
+    stack.append(row)
+  }
+}
