@@ -18,7 +18,7 @@ extension Box.PartType {
 }
 
 extension Box.PartType.Join {
-  
+
   func glyphStack() -> Box.GlyphStack {
     switch self {
       case .leading:

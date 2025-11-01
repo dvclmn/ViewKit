@@ -17,17 +17,20 @@ extension Box {
 
   private static let boxScraps: String = """
 
-    ╭───────────────────────╮
-    │ Heading here          │
-    ├───────────────────────┤
-    │                       │
-    │ Some text content     │
-    │ here – with existing  │
-    │ support for line      │
-    │ breaks / text         │
-    │ reflow etc.           │
-    │                       │
-    ╰───────────────────────╯
+    ╭────────────────────────┬─────────────────╮
+    │ Heading here           │ Heading two     │
+    ├────────────────────────┼─────────────────┤
+    │                        │                 │
+    │ Some text content      │ More text       │
+    │                        │ content, etc.   │
+    │ here – with existing   │                 │
+    │ support for line       │                 │
+    │ breaks / text          │                 │
+    │ reflow etc.            │                 │
+    │                        │                 │
+    ╰────────────────────────┴─────────────────╯
+    
+    
     
     ﹍␣ ݂﹍⠠  ݂ ݂ ݂ ݂␣ ݂ ݂␣ ݂ ݂ ݂ ݂  ݂ ݂ ݂ ݂݂␣ ݂ ݂ ݂ ݂ ݂
     ﹍﹎⠠.⠤⠄

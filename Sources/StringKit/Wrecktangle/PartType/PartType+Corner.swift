@@ -9,9 +9,7 @@ extension Box.PartType.Corner {
   func glyphStack() -> Box.GlyphStack {
     switch self {
 
-      /// # Example
-      ///
-      ///
+      /// Example:
       /// ```
       /// ["┏","━","━"],
       ///
@@ -22,7 +20,6 @@ extension Box.PartType.Corner {
       /// ┃ ┌
       ///
       /// ```
-      ///
       case .topLeading:
         [
           [
