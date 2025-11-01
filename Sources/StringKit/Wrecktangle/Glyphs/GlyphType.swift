@@ -14,27 +14,21 @@ extension Box {
   /// GlyphType example:
   /// ```
   /// Horizontal: ━, ─, ︶, ┄
-  /// Vertical:
   /// ```
   public enum GlyphType: Hashable, Sendable, Codable {
 
-    /// Basic lines
     case horizontal(Placement)
     case vertical(Placement)
 
-    /// Joins
     case join(
       x: Placement,
       y: Placement,
       type: Box.PartType.Join
     )
-
-    /// Corners
     case corner(
       location: Placement = .exterior,
       type: Box.PartType.Corner
     )
-
     case blank
   }
 }

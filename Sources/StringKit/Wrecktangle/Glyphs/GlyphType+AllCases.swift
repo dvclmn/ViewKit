@@ -7,6 +7,7 @@
 
 extension Box.GlyphType: CaseIterable {
 
+  /// Originally made for exhaustiveness checking, for Base GlyphSets
   public static let allCases: [Box.GlyphType] = [
     .horizontal(.interior),
     .horizontal(.exterior),

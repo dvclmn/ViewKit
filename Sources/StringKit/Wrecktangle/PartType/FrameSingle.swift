@@ -6,8 +6,8 @@
 //
 
 extension Box.PartType {
-  var frameStackSingle: Box.GlyphStack {
 
+  var frameStackSingle: Box.GlyphStack {
     let output: Box.GlyphType =
       switch self {
         case .horizontal(.top), .horizontal(.bottom):

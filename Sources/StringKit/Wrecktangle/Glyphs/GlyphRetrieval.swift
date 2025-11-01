@@ -15,10 +15,6 @@ extension Box {
 }
 
 extension Box.GlyphLookup {
-  //  private func characterFromMap(
-  //    _ glyphMap: Box.GlyphMap,
-  //    for glyphType: Box.GlyphType
-  //  ) -> Character? {
 
   var character: Character? {
 
@@ -29,7 +25,6 @@ extension Box.GlyphLookup {
 
     /// For join and corner, try equivalent interior variants first
     if let interior = fallBackInterior {
-      //    if let interior = fallBackInterior(map, for: type) {
       return interior
     }
 
@@ -39,7 +34,6 @@ extension Box.GlyphLookup {
     }
 
     if let exterior = fallBackExterior {
-      //    if let exterior = fallBackExterior(map, for: type) {
       return exterior
     }
 
@@ -61,11 +55,6 @@ extension Box.GlyphLookup {
   }
 
   var fallBackExterior: Character? {
-    //  func fallBackExterior(
-    //    _ glyphMap: Box.GlyphMap,
-    //    for glyphType: Box.GlyphType
-    //  ) -> Character? {
-    /// For join and corner, try falling back to exterior variants
     switch type {
       case .join(_, _, let joinType):
         let type = Box.GlyphType.join(

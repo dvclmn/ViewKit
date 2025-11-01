@@ -5,17 +5,19 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 extension Box {
 
-  /// A Part Type refers to a *composition* of Glyphs.
-  /// This is distinct from ``Box/GlyphType``, which
-  /// describes the role of a *single* Glyph.
+  /// A `PartType` is a *composition* of `GlyphType`s.
+  /// See ``Box/GlyphType``. `PartType` describes a
+  /// stack of multiple Characters, and a `GlyphType`
+  /// describes a *single* character.
   ///
-  /// `PartType` example:
+  /// See ``Box/GlyphStack``, the output type for `PartType`
   ///
+  /// Example:
   /// ```
   /// // A 3x2 Corner
   /// ┏━━
@@ -24,10 +26,9 @@ extension Box {
   ///
   /// // A 3x1 Trailing Join
   /// ┤ ║
-  /// 
+  ///
   /// ```
   public enum PartType: Hashable, Codable {
-
     case horizontal(HorizontalLocation = .top)
     case vertical(VerticalLocation = .leading)
     case join(Join)
