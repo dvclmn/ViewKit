@@ -44,5 +44,4 @@ extension Box.GlyphSet {
         return lookup.character ?? fallbackCharacter
     }
   }
-
 }

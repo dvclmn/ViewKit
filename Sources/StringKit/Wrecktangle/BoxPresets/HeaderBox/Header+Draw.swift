@@ -14,7 +14,7 @@ extension HeaderBox {
     let builder = Box.Builder(
       width: boxWidth,
       height: nil,
-      theme: theme
+      config: config
     )
     
     /// We start off with a fresh, blank attr. string. The 'build process' is based

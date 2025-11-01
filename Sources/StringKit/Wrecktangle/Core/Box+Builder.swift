@@ -7,23 +7,22 @@
 
 extension Box {
   /// The Builder (aka 'Box Engine') should handle box drawing
-  /// based on simple instructions (see ``ViewBox`` and ``Box``)
+  /// based on simple instructions (see ``ViewBox`` and ``HeaderBoxBox``)
   public struct Builder {
     let width: Int
-    
+
     /// Allows dynamic/flexible height, if not defined
     let height: Int?
     let config: Box.Config
-//    let theme: Box.Theme
 
     public init(
       width: Int,
       height: Int?,
-      theme: Box.Theme = .init()
+      config: Box.Config = .default
     ) {
       self.width = width
       self.height = height
-      self.theme = theme
+      self.config = config
     }
   }
 }
@@ -33,13 +32,13 @@ extension Box.Builder {
   /// The remaning width for text, after removing space
   /// reserved for structural elements
   public var widthForText: Int {
-    let capCount = theme.frameStyle.reservedDimensions.width
+    let capCount = config.theme.frameStyle.reservedDimensions.width
     return max(0, width - capCount)
   }
 
   public var heightForText: Int? {
     guard let height else { return nil }
-    let capCount = theme.frameStyle.reservedDimensions.height
+    let capCount = config.theme.frameStyle.reservedDimensions.height
     return max(0, height - capCount)
   }
 }
@@ -61,11 +60,10 @@ extension Box.Builder {
           text: String(repeating: " ", count: widthForText),
           lineLimit: heightForText ?? 0,
           remainingWidth: widthForText,
-          theme: theme
+          theme: config.theme
         )
         let lineString = lineResult.render()
         return lineString
-
     }
   }  // END create line
 
@@ -79,7 +77,7 @@ extension Box.Builder {
       text: content,
       lineLimit: lineLimit,
       remainingWidth: widthForText,
-      theme: theme
+      theme: config.theme
     )
     let lineString = lineResult.render()
     return lineString
@@ -92,9 +90,9 @@ extension Box.Builder {
 
     let parts = type.parts
 
-    let leading = Box.Part.create(parts.leading, with: theme)
-    let repeating = Box.Part.create(parts.repeater, with: theme)
-    let trailing = Box.Part.create(parts.trailing, with: theme)
+    let leading = Box.Part.create(parts.leading, with: config.theme)
+    let repeating = Box.Part.create(parts.repeater, with: config.theme)
+    let trailing = Box.Part.create(parts.trailing, with: config.theme)
 
     /// This uses `BoxLine`s structure-based initialiser
     let lineResult = Box.Line(
@@ -102,7 +100,7 @@ extension Box.Builder {
       repeater: repeating,
       leadingCap: leading,
       trailingCap: trailing,
-      theme: theme
+      theme: config.theme
     )
 
     let lineString = lineResult.render()

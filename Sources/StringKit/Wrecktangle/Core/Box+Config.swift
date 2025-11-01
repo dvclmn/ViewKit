@@ -16,22 +16,16 @@ extension Box {
     /// The visual theme of the box.
     public var theme: Theme
 
-    /// The width of the box in `Character`s.
-    ///
-    /// This value determines the overall width of the box, including its borders.
-    /// The content will be wrapped to fit within this width.
+    /// The overall width of the box, in `Character`s.
+    /// Includes all structural elements, padding, and content.
     public var width: Int
 
     /// The maximum number of lines for the header.
-    ///
     /// If set, the header will be truncated if it exceeds this number of lines.
-    /// Set to `nil` for no limit.
     public var headerLineLimit: Int
 
     /// The maximum number of lines for the main content.
-    ///
     /// If set, the content will be truncated if it exceeds this number of lines.
-    /// Set to `nil` for no limit.
     public var contentLineLimit: Int
 
     public let shouldHyphenate: Bool
