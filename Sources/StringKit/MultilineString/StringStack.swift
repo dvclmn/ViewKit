@@ -20,7 +20,6 @@ public struct StringStack {
   public init(_ string: String) {
     self.init(string.substringLines().map { Array($0) })
   }
-
 }
 
 extension StringStack {

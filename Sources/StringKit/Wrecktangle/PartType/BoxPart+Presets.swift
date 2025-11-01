@@ -25,6 +25,8 @@ extension Box {
 }
 
 extension Box.PartType {
+  
+  
 
   public func glyphStack(
     for frameStyle: Box.Theme.FrameStyle

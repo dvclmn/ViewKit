@@ -64,12 +64,6 @@ extension Box.PartType {
     case capTrailing
   }
 
-  /// Whether or not this part should take on repeatable behaviour
-  public enum Flexibility: Equatable, Codable {
-    case repeatable(axis: Axis)
-    case fixed
-  }
-
   public enum Corner: Hashable, Sendable, Codable {
     case topLeading
     case topTrailing
