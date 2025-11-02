@@ -6,25 +6,22 @@
 //
 
 extension Box {
-  
 
-  
   /// Describes where this Glyph should be used, in the context
   /// of a Box structure. Typically based on interior vs exterior
   /// usage; bolder glyph weight for exterior, lighter for interior.
   public enum GlyphProminence: Hashable, Sendable, Codable {
-    case light
-    case regular
-    case strong
+//    case light
+    case standard
+    case increased
   }
 }
 
 extension Box.GlyphProminence {
   fileprivate var alternate: Self {
     switch self {
-      case .light: .strong
-      case .strong: .light
-      case .regular: .regular
+      case .standard: .increased
+      case .increased: .standard
     }
   }
 }

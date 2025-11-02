@@ -7,8 +7,8 @@
 
 extension Box.FrameStyle {
 
-  /// Follows a `Prominence.strong` on the external frame parts,
-  /// and  `Prominence.light` on the internal parts
+  /// Follows a `Prominence.increased` on the external frame parts,
+  /// and  `Prominence.standard` on the internal parts
   func double(
     for partType: Box.PartType,
     with arrangement: Box.ProminenceArrangement
@@ -76,7 +76,7 @@ extension Box.FrameStyle {
 
     }  // END switch self
 
-    private func doubleJoin(
+    func doubleJoin(
       for type: Box.JoinType,
 //      with arrangement: Box.ProminenceArrangement
     ) -> Box.GlyphStack {
@@ -86,32 +86,32 @@ extension Box.FrameStyle {
             [
               Box.GlyphType.vertical(prom01),
               Box.GlyphType.blank,
-              Box.GlyphType.join(x: .light, y: .light, type: type),
+              Box.GlyphType.join(x: .standard, y: .standard, type: type),
             ]
           ]
           
         case .trailing:
           [
             [
-              Box.GlyphType.join(x: .light, y: .light, type: type),
+              Box.GlyphType.join(x: .standard, y: .standard, type: type),
               Box.GlyphType.blank,
-              Box.GlyphType.vertical(.strong),
+              Box.GlyphType.vertical(.increased),
             ]
           ]
           
         case .top:
           [
-            [Box.GlyphType.horizontal(.strong)],
-            [Box.GlyphType.join(x: .light, y: .light, type: type)],
+            [Box.GlyphType.horizontal(.increased)],
+            [Box.GlyphType.join(x: .standard, y: .standard, type: type)],
           ]
           
         case .bottom:
           [
-            [Box.GlyphType.join(x: .light, y: .light, type: type)],
-            [Box.GlyphType.horizontal(.strong)],
+            [Box.GlyphType.join(x: .standard, y: .standard, type: type)],
+            [Box.GlyphType.horizontal(.increased)],
           ]
         case .cross:
-          [[Box.GlyphType.join(x: .light, y: .light, type: type)]]
+          [[Box.GlyphType.join(x: .standard, y: .standard, type: type)]]
       }
       
     }  // END double join
@@ -136,55 +136,55 @@ extension Box.FrameStyle {
       case .topLeading:
         [
           [
-            Box.GlyphType.corner(.strong, type: type),
-            Box.GlyphType.horizontal(.strong),
-            Box.GlyphType.horizontal(.strong),
+            Box.GlyphType.corner(.increased, type: type),
+            Box.GlyphType.horizontal(.increased),
+            Box.GlyphType.horizontal(.increased),
           ],
           [
-            Box.GlyphType.vertical(.strong),
+            Box.GlyphType.vertical(.increased),
             Box.GlyphType.blank,
-            Box.GlyphType.corner(.light, type: type),
+            Box.GlyphType.corner(.standard, type: type),
           ],
         ]
 
       case .topTrailing:
         [
           [
-            Box.GlyphType.horizontal(.strong),
-            Box.GlyphType.horizontal(.strong),
-            Box.GlyphType.corner(.strong, type: type),
+            Box.GlyphType.horizontal(.increased),
+            Box.GlyphType.horizontal(.increased),
+            Box.GlyphType.corner(.increased, type: type),
           ],
           [
-            Box.GlyphType.corner(.light, type: type),
+            Box.GlyphType.corner(.standard, type: type),
             Box.GlyphType.blank,
-            Box.GlyphType.vertical(.strong),
+            Box.GlyphType.vertical(.increased),
           ],
         ]
 
       case .bottomLeading:
         [
           [
-            Box.GlyphType.vertical(.strong),
+            Box.GlyphType.vertical(.increased),
             Box.GlyphType.blank,
-            Box.GlyphType.corner(.light, type: type),
+            Box.GlyphType.corner(.standard, type: type),
           ],
           [
-            Box.GlyphType.corner(.strong, type: type),
-            Box.GlyphType.horizontal(.strong),
-            Box.GlyphType.horizontal(.strong),
+            Box.GlyphType.corner(.increased, type: type),
+            Box.GlyphType.horizontal(.increased),
+            Box.GlyphType.horizontal(.increased),
           ],
         ]
       case .bottomTrailing:
         [
           [
-            Box.GlyphType.corner(.light, type: type),
+            Box.GlyphType.corner(.standard, type: type),
             Box.GlyphType.blank,
-            Box.GlyphType.vertical(.strong),
+            Box.GlyphType.vertical(.increased),
           ],
           [
-            Box.GlyphType.horizontal(.strong),
-            Box.GlyphType.horizontal(.strong),
-            Box.GlyphType.corner(.strong, type: type),
+            Box.GlyphType.horizontal(.increased),
+            Box.GlyphType.horizontal(.increased),
+            Box.GlyphType.corner(.increased, type: type),
           ],
         ]
     }  // END switch self

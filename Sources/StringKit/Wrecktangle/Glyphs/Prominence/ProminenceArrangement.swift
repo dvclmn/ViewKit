@@ -37,37 +37,37 @@ extension Box.ProminenceArrangement {
         switch partType {
           case .horizontal(let location):
             switch location {
-              case .top: (.strong, .light)
-              case .bottom: (.light, .strong)
-              case .interior: (.light, .light)
+              case .top: (.increased, .standard)
+              case .bottom: (.standard, .increased)
+              case .interior: (.standard, .standard)
             }
 
           case .vertical(let location):
             switch location {
-              case .leading: (.strong, .light)
-              case .trailing: (.light, .strong)
-              case .interior: (.light, .light)
+              case .leading: (.increased, .standard)
+              case .trailing: (.standard, .increased)
+              case .interior: (.standard, .standard)
             }
 
           case .join(let joinType):
             switch joinType {
               case .leading, .top:
-                (.strong, .light)
+                (.increased, .standard)
               case .trailing, .bottom:
-                (.light, .strong)
+                (.standard, .increased)
 
               /// Blegh not sure what to do for cross, for this?
               case .cross:
-                (.strong, .strong)
+                (.increased, .increased)
             }
 
           case .corner(let cornerType):
             switch cornerType {
               case .topLeading, .bottomLeading:
-                (.strong, .light)
+                (.increased, .standard)
 
               case .topTrailing, .bottomTrailing:
-                (.light, .strong)
+                (.standard, .increased)
             }
           case .text, .blank:
             nil

@@ -43,7 +43,7 @@ extension Box.Theme {
     public init(
       type: ShadowType = .simple,
       lightSource: Box.LightSource = .topTrailing,
-      strength: ShadowStrength = .light
+      strength: ShadowStrength = .standard
     ) {
       self.type = type
       self.lightSource = lightSource
@@ -85,7 +85,7 @@ extension Box.Theme.Shadow {
 
     public var character: Character {
       switch self {
-        case .light:
+        case .standard:
           "░"
         case .medium:
           "▒"

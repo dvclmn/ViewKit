@@ -31,13 +31,13 @@ extension Box.FrameStyle {
         Box.GlyphType.horizontal(prominence)
         
       case .horizontal(.interior):
-        Box.GlyphType.horizontal(.light)
+        Box.GlyphType.horizontal(.standard)
 
       case .vertical(.leading), .vertical(.trailing):
         Box.GlyphType.vertical(prominence)
 
       case .vertical(.interior):
-        Box.GlyphType.vertical(.light)
+        Box.GlyphType.vertical(.standard)
 
       case .join(let joinType):
         Box.GlyphType.join(x: prominence, y: prominence, type: joinType)
