@@ -44,18 +44,20 @@ extension Box {
   @CaseDetection
   public enum GlyphType: Hashable, Sendable, Codable {
 
-    case horizontal(Weight)
-    case vertical(Weight)
+    case horizontal(Prominence)
+    case vertical(Prominence)
 
     case join(
-      weightX: Weight,
-      weightY: Weight,
+      x: Prominence,
+      y: Prominence,
       type: Box.JoinType
     )
+    
     case corner(
-      Weight = .bold,
+      Prominence = .strong,
       type: Box.CornerType
     )
+    
     case text
 //    case text(Character)
     case blank

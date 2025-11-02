@@ -23,23 +23,23 @@ extension Box.FrameStyle {
 
       /// Same glyph(s) for top and bottom, no difference for single frame
       case .horizontal(.top), .horizontal(.bottom):
-        [[Box.GlyphType.horizontal(.bold)]]
+        [[Box.GlyphType.horizontal(.strong)]]
 
         
       case .horizontal(.interior):
         [[Box.GlyphType.horizontal(.thin)]]
 
       case .vertical(.leading), .vertical(.trailing):
-        [[Box.GlyphType.vertical(.bold)]]
+        [[Box.GlyphType.vertical(.strong)]]
 
       case .vertical(.interior):
         [[Box.GlyphType.vertical(.thin)]]
 
       case .join(let joinType):
-        [[Box.GlyphType.join(weightX: .bold, weightY: .bold, type: joinType)]]
+        [[Box.GlyphType.join(x: .strong, y: .strong, type: joinType)]]
 
       case .corner(let cornerType):
-        [[Box.GlyphType.corner(.bold, type: cornerType)]]
+        [[Box.GlyphType.corner(.strong, type: cornerType)]]
 
       case .text(let string):
         [[]]

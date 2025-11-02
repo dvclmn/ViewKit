@@ -60,15 +60,15 @@ extension Box.PartType {
 
   /// This introduces the concept of *valid orientation*;
   /// for the top of a Box, the Part must be constructed with
-  /// the bold glyph at the top, and the light glyph at the bottom,
+  /// the strong glyph at the top, and the light glyph at the bottom,
   /// according to the intent of the Theme.
   ///
-  /// For the bottom of a frame, the light is top, and the bold
+  /// For the bottom of a frame, the light is top, and the strong
   /// is bottom, and so on for walls etc.
   ///
   /// For example, a Theme may define a double-walled frame
   /// with contrasting weights for each wall character, like the below,
-  /// where the top is bold, and the 'interior' is lighter.
+  /// where the top is strong, and the 'interior' is lighter.
   ///
   /// ```
   ///   ━━━━

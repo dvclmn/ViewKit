@@ -9,7 +9,7 @@
 /// ``Box/Line``
 ///
 /// I am opting to keep this flatter nesting (e.g. not nesting
-/// `PartType` further, within `Part`. Otherwise
+/// `PartType` further, wi.thin `Part`. Otherwise
 /// nesting will become too deep and unweildy.
 /// ``Box/Part``
 /// ``Box/PartType``
