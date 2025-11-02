@@ -11,11 +11,13 @@ extension Box.FrameStyle {
   /// and  `Prominence.standard` on the internal parts
   func double(
     for partType: Box.PartType,
-    with arrangement: Box.ProminenceArrangement
+    exterior exteriorProm: Box.GlyphProminence,
+    interior interiorProm: Box.GlyphProminence,
+//    with arrangement: Box.ProminenceArrangement
   ) -> Box.GlyphStack {
 
-    let prom01 = arrangement.doubleFrameGlyphProminence(for: partType).0
-    let prom02 = arrangement.doubleFrameGlyphProminence(for: partType).1
+//    let prom01 = arrangement.doubleFrameGlyphProminence(for: partType).0
+//    let prom02 = arrangement.doubleFrameGlyphProminence(for: partType).1
 
     switch partType {
 

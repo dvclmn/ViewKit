@@ -8,6 +8,33 @@
 extension Box {
 
   public static let joinTypes: String = """
+    // Single, Leading, 
+    
+    │
+    ├──
+    │
+    
+    
+    // Single, Trailing
+    
+      │ 
+    ──┤ 
+      │ 
+    
+    
+    // Single, Top
+    
+    ───┬───
+       │
+    
+    
+    // Single, Bottom
+    
+       │
+    ───┴───
+    
+    
+
     // Double, Leading, lightInteriorStrongExterior
 
     ┃ │

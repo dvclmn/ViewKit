@@ -31,14 +31,14 @@ extension Box.GlyphType {
   /// Returns a copy of this glyph type, with flipped Prominence
   var alternateProminence: Box.GlyphType? {
     switch self {
-      case .horizontal(let weight):
-        .horizontal(weight.alternate)
+      case .horizontal(let prominence):
+        .horizontal(prominence.alternate)
 
-      case .vertical(let weight):
-        .vertical(weight.alternate)
+      case .vertical(let prominence):
+        .vertical(prominence.alternate)
 
-      case .corner(let weight, let type):
-        .corner(weight.alternate, type: type)
+      case .corner(let prominence, let type):
+        .corner(prominence.alternate, type: type)
 
       case .join(let x, let y, let type):
         .join(x: x.alternate, y: y.alternate, type: type)

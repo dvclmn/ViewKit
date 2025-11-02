@@ -20,39 +20,62 @@ extension Box.FrameStyle {
   /// *same glyph style* for all axes.
   static func single(
     for partType: Box.PartType,
-//    with prominenceArrangement: Box.ProminenceArrangement,
-    with prominence: Box.GlyphProminence,
+    frame frameProm: Box.GlyphProminence,
+    dividers dividerProm: Box.GlyphProminence,
+    //    with prominence: Box.GlyphProminence,
   ) -> Box.GlyphStack {
-//  ) -> Box.GlyphType? {
-    
-    let type: Box.GlyphType? = switch partType {
+    //  ) -> Box.GlyphType? {
 
-      case .horizontal(.top), .horizontal(.bottom):
-        Box.GlyphType.horizontal(prominence)
-        
-      case .horizontal(.interior):
-        Box.GlyphType.horizontal(.standard)
+    let type: Box.GlyphType? =
+      switch partType {
 
-      case .vertical(.leading), .vertical(.trailing):
-        Box.GlyphType.vertical(prominence)
+        case .horizontal(.top), .horizontal(.bottom):
+          Box.GlyphType.horizontal(frameProm)
 
-      case .vertical(.interior):
-        Box.GlyphType.vertical(.standard)
+        case .horizontal(.interior):
+          Box.GlyphType.horizontal(dividerProm)
 
-      case .join(let joinType):
-        Box.GlyphType.join(x: prominence, y: prominence, type: joinType)
+        case .vertical(.leading), .vertical(.trailing):
+          Box.GlyphType.vertical(frameProm)
 
-      case .corner(let cornerType):
-        Box.GlyphType.corner(prominence, type: cornerType)
+        case .vertical(.interior):
+          Box.GlyphType.vertical(dividerProm)
 
-      case .text(let string):
-        nil
+        case .join(let joinType):
+          switch joinType {
+            case .leading, .trailing:
+              Box.GlyphType.join(
+                x: dividerProm,
+                y: frameProm,
+                type: joinType
+              )
 
-      case .blank:
-        Box.GlyphType.blank
+            case .top, .bottom:
+              Box.GlyphType.join(
+                x: frameProm,
+                y: dividerProm,
+                type: joinType
+              )
 
-    }  // END switch self
-    
+            case .cross:
+              Box.GlyphType.join(
+                x: dividerProm,
+                y: dividerProm,
+                type: joinType
+              )
+          }
+
+        case .corner(let cornerType):
+          Box.GlyphType.corner(frameProm, type: cornerType)
+
+        case .text(let string):
+          nil
+
+        case .blank:
+          Box.GlyphType.blank
+
+      }  // END switch self
+
     guard let type else { return [[]] }
     return [[type]]
   }

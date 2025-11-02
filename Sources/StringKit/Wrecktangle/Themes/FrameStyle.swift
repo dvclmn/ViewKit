@@ -11,7 +11,9 @@ extension Box {
   public enum FrameStyle: Sendable, Codable, Equatable {
     
     case single(frame: Prominence, dividers: Prominence)
-    case double(external: Prominence, internal: Prominence)
+    
+    /// Will make the dividers match the internal Prominence
+    case double(exterior: Prominence, interior: Prominence)
 //    case double(ProminenceArrangement)
   }
 }
@@ -43,12 +45,18 @@ extension Box.FrameStyle {
   ) -> Box.GlyphStack {
 
     switch self {
-      case .single(let prominence):
-        Self.single(for: partType, with: prominence)
-        
-      case .double(let prominenceArrangement):
+      case .single(let frame, let dividers):
+        <#code#>
+      case .double(let exterior, let interior):
         <#code#>
     }
+//    switch self {
+//      case .single(let prominence):
+//        Self.single(for: partType, with: prominence)
+//        
+//      case .double(let prominenceArrangement):
+//        <#code#>
+//    }
 //    switch self {
 //      case .single(let arrangement): single(for: partType, with: arr)
 //      case .single: single(for: partType).compactMap { [[$0]] }
