@@ -18,35 +18,42 @@ extension Box.FrameStyle {
   /// Perhaps, in future, I will add the concept of per-axis
   /// glyph styles, but for now, these Frames have the
   /// *same glyph style* for all axes.
-  func single(for partType: Box.PartType) -> Box.GlyphStack {
-    switch partType {
+  private static func single(
+    for partType: Box.PartType,
+//    with prominenceArrangement: Box.ProminenceArrangement,
+    with prominence: Box.GlyphProminence,
+  ) -> Box.GlyphStack {
+//  ) -> Box.GlyphType? {
+    
+    let type: Box.GlyphType? = switch partType {
 
-      /// Same glyph(s) for top and bottom, no difference for single frame
       case .horizontal(.top), .horizontal(.bottom):
-        [[Box.GlyphType.horizontal(.strong)]]
-
+        Box.GlyphType.horizontal(prominence)
         
       case .horizontal(.interior):
-        [[Box.GlyphType.horizontal(.light)]]
+        Box.GlyphType.horizontal(.light)
 
       case .vertical(.leading), .vertical(.trailing):
-        [[Box.GlyphType.vertical(.strong)]]
+        Box.GlyphType.vertical(prominence)
 
       case .vertical(.interior):
-        [[Box.GlyphType.vertical(.light)]]
+        Box.GlyphType.vertical(.light)
 
       case .join(let joinType):
-        [[Box.GlyphType.join(x: .strong, y: .strong, type: joinType)]]
+        Box.GlyphType.join(x: prominence, y: prominence, type: joinType)
 
       case .corner(let cornerType):
-        [[Box.GlyphType.corner(.strong, type: cornerType)]]
+        Box.GlyphType.corner(prominence, type: cornerType)
 
       case .text(let string):
-        [[]]
+        nil
 
       case .blank:
-        [[Box.GlyphType.blank]]
+        Box.GlyphType.blank
 
     }  // END switch self
+    
+    guard let type else { return [[]] }
+    return [[type]]
   }
 }

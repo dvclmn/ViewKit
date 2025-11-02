@@ -7,12 +7,10 @@
 
 import SharedHelpers
 
-
-
 extension Box {
   public enum FrameStyle: Sendable, Codable, Equatable {
-    case single(Box.GlyphProminence)
-    case double
+    case single(ProminenceArrangement)
+    case double(ProminenceArrangement)
   }
 }
 
@@ -41,13 +39,14 @@ extension Box.FrameStyle {
   public func glyphStack(
     for partType: Box.PartType,
   ) -> Box.GlyphStack {
+
     switch self {
-      case .single: single(for: partType)
+      case .single(let arrangement): single(for: partType, with: arr)
+//      case .single: single(for: partType).compactMap { [[$0]] }
       case .double: double(for: partType)
     }
   }
 
-  
 }
 
 /// Not yet implemented
@@ -112,4 +111,3 @@ extension Box.FrameStyle {
 //
 //      }
 //    }
-
