@@ -20,8 +20,9 @@ import Foundation
 public struct Box {
   let width: Int
   let theme: Theme
-  
 }
+
+
 //public enum Box {}
 
 //extension Box: CustomStringConvertible {

@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-//extension Box.PartType {
-extension Box.FrameStyle {
+extension Box.PartType {
+//extension Box.FrameStyle {
 
   /// This is effectively a *conversion*, from a
   /// `PartType` to a `GlyphType`.
@@ -18,12 +18,16 @@ extension Box.FrameStyle {
   /// Perhaps, in future, I will add the concept of per-axis
   /// glyph styles, but for now, these Frames have the
   /// *same glyph style* for all axes.
-  static func single(
-    for partType: Box.PartType,
-    frame frameProm: Box.GlyphProminence,
-    dividers dividerProm: Box.GlyphProminence,
+  public func single(
+//    for partType: Box.PartType,
+//    with frameStyle: Box.FrameStyle,
+    frameProm: Box.GlyphProminence,
+    dividerProm: Box.GlyphProminence,
     //    with prominence: Box.GlyphProminence,
   ) -> Box.GlyphStack {
+    
+    let partType = self
+    let frameProm = frameStyle.
     //  ) -> Box.GlyphType? {
 
     let type: Box.GlyphType? =

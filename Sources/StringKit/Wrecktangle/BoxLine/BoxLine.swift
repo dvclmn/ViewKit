@@ -20,14 +20,18 @@
 
 extension Box {
   public struct Line {
-    public let leading: Part
-    public let body: Part
-    public let trailing: Part
+    public let leading: Box.PartType
+    public let body: Box.PartType
+    public let trailing: Box.PartType
     
-    public init(leading: Part, body: Part, trailing: Part) {
+    public init(
+      leading: Box.PartType,
+      body: Box.PartType,
+      trailing: Box.PartType
+    ) {
       // Basic invariant: if body is text (single row), caps must be 1 high.
       precondition(
-        !(body.type.isText && (leading.height > 1 || trailing.height > 1)),
+        !(body.isText && (leading.height > 1 || trailing.height > 1)),
         """
         Text lines must have single-character caps.
         Leading: \(leading.height), Trailing: \(trailing.height)

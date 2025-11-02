@@ -19,6 +19,15 @@ extension Box {
 }
 
 extension Box.FrameStyle {
+  
+//  func forSingle() -> (frame: Prominence, dividers: Prominence) {
+//    switch self {
+//      case .single(let frame, let dividers):
+//        <#code#>
+//      case .double(let exterior, let interior):
+//        <#code#>
+//    }
+//  }
 
   /// The width and height reserved for structure,
   /// unable to be used by content.

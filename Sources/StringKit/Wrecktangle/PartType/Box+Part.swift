@@ -8,53 +8,35 @@
 import Foundation
 import SharedHelpers
 
-//extension Box {
-//
-//  public struct Part {
-//    public let type: PartType
-//    public let stringStack: StringStack
-//
-//    public var width: Int { stringStack.width }
-//    public var height: Int { stringStack.height }
-//
-//    public var flexibility: PartType.Flexibility { type.flexibility }
-//  }
-//}
 
-extension Box.Part {
-  func render(toWidth target: Int? = nil) -> String {
-    guard let target,
-      flexibility == .repeatable(axis: .horizontal)
-    else { return stringStack.string }
+extension Box {
 
-    return stringStack.repeatHorizontally(toWidth: target).string
+  public struct Part {
+    public let type: Box.PartType
+    public let stringStack: StringStack
+    let theme: Box.Theme
+
+    public init(
+      type: Box.PartType,
+      theme: Theme
+    ) {
+      self.type = type
+      self.stringStack = type.buildStack(using: theme)
+      self.theme = theme
+    }
   }
 }
 
-extension StringStack {
-  public init(
-    from glyphStack: Box.GlyphStack,
-    theme: Box.Theme
-  ) {
-    let grid = glyphStack.map { row in
-      row.map { glyphType in
-        theme.glyphSet.character(for: glyphType)
-      }
-    }
-    self.init(grid)
-  }
+extension Box.Part {
+  
+  public var width: Int { stringStack.width }
+  public var height: Int { stringStack.height }
+  
+  public var flexibility: PartType.Flexibility { type.flexibility }
 }
 
 extension Box.PartType {
-  /// Build this specific Part
-  func buildFrame(using theme: Box.Theme) -> Box.Part {
-//    let glyphStack = theme.frameStyle.glyphStack(for: theme.frameStyle)
-    let frameStack = theme.frameStyle.glyphStack(for: self)
-    let stringStack = frameStack.map { row in
-      row.map { theme.glyphSet.character(for: $0) }
-    }
-    return Box.Part(type: self, stringStack: StringStack(charGrid))
-  }
+
 }
 
 //  public struct Part {

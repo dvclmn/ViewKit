@@ -6,6 +6,16 @@
 //
 
 extension Box {
+  
+  public static let cornerTypes: String = """
+  // Double, topLeading
+  
+  ┏━━━━
+  ┃
+  ┃
+  
+  
+  """
 
   public static let joinTypes: String = """
     // Single, Leading, 
@@ -58,6 +68,13 @@ extension Box {
 
     // Double, Bottom
 
+       │
+    ───┴───
+    ━━━━━━━
+    
+    
+    // Double, Cross
+    
        │
     ───┴───
     ━━━━━━━
