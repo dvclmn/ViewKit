@@ -14,16 +14,11 @@ extension Box {
   /// Single just takes a single `Prominence`.
   public enum ProminenceArrangement {
     case uniform(Prominence)
-    case lightToStrong  // From center, outwards
-    case strongToLight  // From center, outwards
+    case lightInteriorStrongExterior
   }
 }
 
 extension Box.ProminenceArrangement {
-
-  //  func singleFrameGlyphProminence(for partType: Box.PartType) Prominence {
-  //
-  //  }
 
   /// Returns an ordered list of Prominences, from which the caller
   /// can extract what they need.
@@ -37,7 +32,7 @@ extension Box.ProminenceArrangement {
         /// Both the same
         (prom, prom)
 
-      case .lightToStrong:
+      case .lightInteriorStrongExterior:
 
         switch partType {
           case .horizontal(let location):
