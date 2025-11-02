@@ -35,6 +35,8 @@ extension Box {
     case corner(Corner)
     case blank
 
+    /// Can this Part be repeated dynamically along a given Axis?
+    /// Or it is single-use, in a specific location in a structure.
     public var flexibility: Flexibility {
       switch self {
         case .horizontal, .blank: .repeatable(axis: .horizontal)
@@ -47,6 +49,26 @@ extension Box {
 
 extension Box.PartType {
 
+  /// This affects how the Part should be constructed.
+  /// The convention is fairly dependant on the creative intent
+  /// of the Theme.
+  ///
+  /// For example, a Theme may define a double-walled frame
+  /// with contrasting weights for each wall character, like the below,
+  /// where the top is bold, and the 'interior' is lighter.
+  /// ```
+  ///   ━━━━
+  ///   ────
+  ///
+  /// ```
+  ///
+  /// This introduces the concept of *valid orientation*;
+  /// for the top of a Box, the Part must be constructed with
+  /// the bold glyph at the top, and the light glyph at the bottom,
+  /// according to the intent of the Theme.
+  ///
+  /// For the bottom of a frame, the light is top, and the bold
+  /// is bottom, and so on for walls etc.
   public enum HorizontalLocation: Hashable, Codable {
     case top
     case bottom
@@ -56,7 +78,7 @@ extension Box.PartType {
   public enum VerticalLocation: Hashable, Sendable, Codable {
     case leading
     case trailing
-    case interior  // Aka Divider
+    case interior  // Aka Divider/Spacer
   }
 
   public enum LineSegment {
