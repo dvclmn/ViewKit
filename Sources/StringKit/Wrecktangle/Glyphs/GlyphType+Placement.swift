@@ -17,7 +17,7 @@ extension Box.GlyphType {
 }
 
 extension Box.GlyphType.Weight {
-  fileprivate var flipped: Self {
+  fileprivate var alternate: Self {
     switch self {
       case .thin: return .bold
       case .bold: return .thin
@@ -29,22 +29,22 @@ extension Box.GlyphType {
 
   /// Returns a copy of this glyph type, with its placement(s) flipped
   /// from interior <-> exterior where applicable.
-  var flippedPlacement: Self? {
+  var alternateWeight: Box.GlyphType? {
     switch self {
-      case .horizontal(let placement):
-        return .horizontal(placement.flipped)
+      case .horizontal(let weight):
+        .horizontal(weight.alternate)
 
-      case .vertical(let placement):
-        return .vertical(placement.flipped)
+      case .vertical(let weight):
+        .vertical(weight.alternate)
 
-      case .corner(let location, let type):
-        return .corner(location: location.flipped, type: type)
+      case .corner(let weight, let type):
+        .corner(weight.alternate, type: type)
 
       case .join(let x, let y, let type):
-        return .join(x: x.flipped, y: y.flipped, type: type)
+        .join(weightX: x.alternate, weightY: y.alternate, type: type)
 
-      case .blank:
-        return nil
+      case .blank, .text:
+        nil
     }
   }
 }

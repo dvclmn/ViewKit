@@ -41,12 +41,12 @@ extension Box.FrameStyle {
     //      with frameStyle: Box.Theme.FrameStyle
   ) -> Box.GlyphStack {
     switch self {
-      case .single: frameStackSingle
-      case .double: frameStackDouble
+      case .single:
+      case .double: double(for: partType)
     }
   }
 
-  private
+  
 }
 
 /// Not yet implemented

@@ -23,7 +23,7 @@ extension Box.GlyphLookup {
     }
     
     /// Try flipped placement
-    if let flipped = type.flippedPlacement,
+    if let flipped = type.alternateWeight,
        let char = map[flipped] {
       return char
     }

@@ -21,7 +21,7 @@ public struct HeaderBox {
     content: AttributedString,
     width: Int,
     glyphSet: Box.GlyphSet,
-    frameStyle: Box.Theme.FrameStyle,
+    frameStyle: Box.FrameStyle,
     counterStyle: TextCore.WidthCounterStyle = .ruler
   ) {
 
