@@ -6,17 +6,17 @@
 //
 
 extension Box {
-  
-  public enum Corner: Hashable, Sendable, Codable {
+
+  public enum CornerType: Hashable, Sendable, Codable {
     case topLeading
     case topTrailing
     case bottomLeading
     case bottomTrailing
   }
-  
+
 }
-extension Box.Corner {
-  
+extension Box.CornerType {
+
   func glyphStack() -> Box.GlyphStack {
     switch self {
 
@@ -34,58 +34,58 @@ extension Box.Corner {
       case .topLeading:
         [
           [
-            Box.GlyphType.corner(location: .exterior, type: self),
-            Box.GlyphType.horizontal(.exterior),
-            Box.GlyphType.horizontal(.exterior),
+            Box.GlyphType.corner(.bold, type: self),
+            Box.GlyphType.horizontal(.bold),
+            Box.GlyphType.horizontal(.bold),
           ],
           [
-            Box.GlyphType.vertical(.exterior),
+            Box.GlyphType.vertical(.bold),
             Box.GlyphType.blank,
-            Box.GlyphType.corner(location: .interior, type: self),
+            Box.GlyphType.corner(.thin, type: self),
           ],
         ]
 
       case .topTrailing:
         [
           [
-            Box.GlyphType.horizontal(.exterior),
-            Box.GlyphType.horizontal(.exterior),
-            Box.GlyphType.corner(location: .exterior, type: self),
+            Box.GlyphType.horizontal(.bold),
+            Box.GlyphType.horizontal(.bold),
+            Box.GlyphType.corner(.bold, type: self),
           ],
           [
-            Box.GlyphType.corner(location: .interior, type: self),
+            Box.GlyphType.corner(.thin, type: self),
             Box.GlyphType.blank,
-            Box.GlyphType.vertical(.exterior),
+            Box.GlyphType.vertical(.bold),
           ],
         ]
 
       case .bottomLeading:
         [
           [
-            Box.GlyphType.vertical(.exterior),
+            Box.GlyphType.vertical(.bold),
             Box.GlyphType.blank,
-            Box.GlyphType.corner(location: .interior, type: self),
+            Box.GlyphType.corner(.thin, type: self),
           ],
           [
-            Box.GlyphType.corner(location: .exterior, type: self),
-            Box.GlyphType.horizontal(.exterior),
-            Box.GlyphType.horizontal(.exterior),
+            Box.GlyphType.corner(.bold, type: self),
+            Box.GlyphType.horizontal(.bold),
+            Box.GlyphType.horizontal(.bold),
           ],
         ]
       case .bottomTrailing:
         [
           [
-            Box.GlyphType.corner(location: .interior, type: self),
+            Box.GlyphType.corner(.thin, type: self),
             Box.GlyphType.blank,
-            Box.GlyphType.vertical(.exterior),
+            Box.GlyphType.vertical(.bold),
           ],
           [
-            Box.GlyphType.horizontal(.exterior),
-            Box.GlyphType.horizontal(.exterior),
-            Box.GlyphType.corner(location: .exterior, type: self),
+            Box.GlyphType.horizontal(.bold),
+            Box.GlyphType.horizontal(.bold),
+            Box.GlyphType.corner(.bold, type: self),
           ],
         ]
     }  // END switch self
-  } // END glyph stack
+  }  // END glyph stack
 
 }

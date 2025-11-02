@@ -13,38 +13,38 @@ extension Box.PartType {
 
       case .horizontal(.top):
         [
-          [Box.GlyphType.horizontal(.exterior)],
-          [Box.GlyphType.horizontal(.interior)],
+          [Box.GlyphType.horizontal(.bold)],
+          [Box.GlyphType.horizontal(.thin)],
         ]
 
       case .horizontal(.bottom):
         [
-          [Box.GlyphType.horizontal(.interior)],
-          [Box.GlyphType.horizontal(.exterior)],
+          [Box.GlyphType.horizontal(.thin)],
+          [Box.GlyphType.horizontal(.bold)],
         ]
 
       case .horizontal(.interior):
-        [[Box.GlyphType.horizontal(.interior)]]
+        [[Box.GlyphType.horizontal(.thin)]]
 
       case .vertical(.leading):
         [
           [
-            Box.GlyphType.vertical(.exterior),
+            Box.GlyphType.vertical(.bold),
             Box.GlyphType.blank,
-            Box.GlyphType.vertical(.interior),
+            Box.GlyphType.vertical(.thin),
           ]
         ]
 
       case .vertical(.trailing):
         [
           [
-            Box.GlyphType.vertical(.interior),
+            Box.GlyphType.vertical(.thin),
             Box.GlyphType.blank,
-            Box.GlyphType.vertical(.exterior),
+            Box.GlyphType.vertical(.bold),
           ]
         ]
       case .vertical(.interior):
-        [[Box.GlyphType.vertical(.interior)]]
+        [[Box.GlyphType.vertical(.thin)]]
 
       case .join(let joinType):
         joinType.glyphStack()

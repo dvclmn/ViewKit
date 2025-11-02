@@ -31,8 +31,8 @@ extension Box {
   public enum PartType: Hashable, Codable {
     case horizontal(HorizontalLocation = .top)
     case vertical(VerticalLocation = .leading)
-    case join(Join)
-    case corner(Corner)
+    case join(Box.JoinType)
+    case corner(Box.CornerType)
     case blank
 
     /// Describes whether this Part be repeated dynamically
@@ -84,9 +84,9 @@ extension Box.PartType {
     case interior  // Aka Divider/Spacer
   }
 
-  public enum LineSegment {
-    case capLeading
-    case capTrailing
-  }
+//  public enum LineSegment {
+//    case capLeading
+//    case capTrailing
+//  }
 
 }

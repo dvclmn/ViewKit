@@ -24,6 +24,11 @@ extension Box {
   public typealias GlyphStack = [[GlyphType]]
 }
 
+/// Note: these are not so much visual/styling presets.
+/// They are more from the fabrication perspective.
+/// This many by this many, or something.
+///
+/// No 'this fun glyph', and this one, and so on.
 extension Box.PartType {
   
   public func glyphStack(

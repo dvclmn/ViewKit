@@ -47,11 +47,11 @@ extension Box {
     case join(
       weightX: Weight,
       weightY: Weight,
-      type: Box.Join
+      type: Box.JoinType
     )
     case corner(
-      weight: Weight = .bold,
-      type: Box.Corner
+      Weight = .bold,
+      type: Box.CornerType
     )
     case blank
   }
