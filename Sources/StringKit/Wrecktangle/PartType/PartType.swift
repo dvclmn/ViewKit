@@ -35,8 +35,14 @@ extension Box {
     case corner(Corner)
     case blank
 
-    /// Can this Part be repeated dynamically along a given Axis?
-    /// Or it is single-use, in a specific location in a structure.
+    /// Describes whether this Part be repeated dynamically
+    /// along a given Axis. Or whether it is single-use, in a
+    /// specific location in a structure.
+    ///
+    /// In future, I think the code should establish how
+    /// long the repeatable `Part` is (along the relevant axis),
+    /// and thus how the fitting should be calculated, given
+    /// the available box width/height.
     public var flexibility: Flexibility {
       switch self {
         case .horizontal, .blank: .repeatable(axis: .horizontal)

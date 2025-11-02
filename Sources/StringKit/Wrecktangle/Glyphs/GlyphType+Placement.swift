@@ -6,6 +6,27 @@
 //
 
 extension Box.GlyphType {
+  
+  /// Trying to improve how Boxes are constructed, and what the
+  /// instructions for the Builder look like. Balancing delcarative, and
+  /// imperative.
+  ///
+  /// ## Repeating Parts
+  /// Would be neat to create an API to provide a
+  /// horizontal / vertical / either build block (`Part`),
+  /// and have it be stitched together and repeated.
+  /// Could make for some fun, even emergent frame styles.
+  ///
+  /// Do I make the API *dimension-first*, where you can supply
+  /// whatever construction of characters you, as long as the dimensions
+  /// are correct (e.g. `1x2`, `4x5`, whatever). This provides
+  /// perhaps more creative control, but places more responsibility
+  /// on the theme designer, to get the parts matching up right.
+  /// More user-error prone.
+  ///
+  /// Or, make it more declarative, where you just supply a Theme
+  /// or preferred pre-fabbed GlyphSet, with some other parameters,
+  /// and you 'get what you get'?
 
   /// Describes where this Glyph should be used, in the context
   /// of a Box structure. Typically based on interior vs exterior
