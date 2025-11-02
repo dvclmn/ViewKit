@@ -16,9 +16,9 @@ extension Box.PartType {
   }
 }
 
-protocol Repeatable {
-  func repeated(to width: Int, along axis: Axis) -> Box.Part
-}
+//protocol Repeatable {
+//  func repeated(to width: Int, along axis: Axis) -> Box.Part
+//}
 
 //extension Box.Part: Repeatable {
 //  func repeated(to width: Int, along axis: Axis) -> Box.Part {

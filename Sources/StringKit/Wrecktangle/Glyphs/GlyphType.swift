@@ -10,7 +10,6 @@ import Foundation
 
 extension Box {
   
-  
   /// Trying to improve how Boxes are constructed, and what the
   /// instructions for the Builder look like. Balancing delcarative, and
   /// imperative.
@@ -57,7 +56,8 @@ extension Box {
       Weight = .bold,
       type: Box.CornerType
     )
-    case text(Character)
+    case text
+//    case text(Character)
     case blank
   }
 }

@@ -20,9 +20,12 @@ extension Box.FrameStyle {
   /// *same glyph style* for all axes.
   func single(for partType: Box.PartType) -> Box.GlyphStack {
     switch partType {
+
+      /// Same glyph(s) for top and bottom, no difference for single frame
       case .horizontal(.top), .horizontal(.bottom):
         [[Box.GlyphType.horizontal(.bold)]]
 
+        
       case .horizontal(.interior):
         [[Box.GlyphType.horizontal(.thin)]]
 

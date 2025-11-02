@@ -8,18 +8,18 @@
 import Foundation
 import SharedHelpers
 
-extension Box {
-
-  public struct Part {
-    public let type: PartType
-    public let stringStack: StringStack
-
-    public var width: Int { stringStack.width }
-    public var height: Int { stringStack.height }
-
-    public var flexibility: PartType.Flexibility { type.flexibility }
-  }
-}
+//extension Box {
+//
+//  public struct Part {
+//    public let type: PartType
+//    public let stringStack: StringStack
+//
+//    public var width: Int { stringStack.width }
+//    public var height: Int { stringStack.height }
+//
+//    public var flexibility: PartType.Flexibility { type.flexibility }
+//  }
+//}
 
 extension Box.Part {
   func render(toWidth target: Int? = nil) -> String {
