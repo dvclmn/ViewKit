@@ -5,6 +5,9 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
+import EnumMacros
+import Foundation
+
 extension Box {
   
   
@@ -39,6 +42,7 @@ extension Box {
   /// ```
   /// Horizontal: ━, ─, ︶, ┄
   /// ```
+  @CaseDetection
   public enum GlyphType: Hashable, Sendable, Codable {
 
     case horizontal(Weight)
@@ -53,6 +57,7 @@ extension Box {
       Weight = .bold,
       type: Box.CornerType
     )
+    case text(Character)
     case blank
   }
 }

@@ -29,14 +29,14 @@ extension Box {
 /// This many by this many, or something.
 ///
 /// No 'this fun glyph', and this one, and so on.
-extension Box.PartType {
-  
-  public func glyphStack(
-    for frameStyle: Box.Theme.FrameStyle
-  ) -> Box.GlyphStack {
-    switch frameStyle {
-      case .single: frameStackSingle
-      case .double: frameStackDouble
-    }
-  }
-}
+//extension Box.PartType {
+//  
+//  public func frame(
+//    with frameStyle: Box.Theme.FrameStyle
+//  ) -> Box.GlyphStack {
+//    switch frameStyle {
+//      case .single: frameStackSingle
+//      case .double: frameStackDouble
+//    }
+//  }
+//}

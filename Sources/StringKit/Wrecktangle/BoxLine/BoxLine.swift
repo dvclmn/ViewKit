@@ -23,7 +23,7 @@ extension Box {
     public let leading: Part
     public let body: Part
     public let trailing: Part
-    
+
     public init(leading: Part, body: Part, trailing: Part) {
       // Basic invariant: leading/trailing must be 1 row high if body is text.
       precondition(
@@ -40,7 +40,7 @@ extension Box {
 /// Currently this library can only handle horizontal dividers, not vertical.
 /// So processing line-by-line, vertically, is fairly straightforward.
 //extension Box {
-//  
+//
 //  public struct Line {
 //    var leading: Part
 //    var body: Part
@@ -119,4 +119,3 @@ extension Box {
 public protocol LineContent {
   var rawContent: String { get }
 }
-

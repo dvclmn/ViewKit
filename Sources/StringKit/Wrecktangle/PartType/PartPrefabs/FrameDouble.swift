@@ -5,11 +5,15 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-extension Box.PartType {
+extension Box.FrameStyle {
 
-  var frameStackDouble: Box.GlyphStack {
+  //  public static func prefab(for style: Box.FrameStyle)
+  
+  
 
-    switch self {
+  func double(for partType: Box.PartType) -> Box.GlyphStack {
+
+    switch partType {
 
       case .horizontal(.top):
         [
@@ -47,15 +51,20 @@ extension Box.PartType {
         [[Box.GlyphType.vertical(.thin)]]
 
       case .join(let joinType):
-        joinType.glyphStack()
+//        joinType.glyphStack()
 
       case .corner(let cornerType):
-        cornerType.glyphStack()
-        
+//        cornerType.glyphStack()
+
+      case .text(let string):
+        /// Not sure yet what to do for text
+        []
+
       case .blank:
         [[Box.GlyphType.blank]]
-        
+
     }  // END switch self
 
   }  // END frame double
+
 }

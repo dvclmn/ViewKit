@@ -7,15 +7,15 @@
 
 import SharedHelpers
 
-extension Box.Theme {
+extension Box {
   public enum FrameStyle: Sendable, Codable, Equatable {
     case single
     case double
   }
 }
 
-extension Box.Theme.FrameStyle {
-  
+extension Box.FrameStyle {
+
   /// The width and height reserved for structure,
   /// unable to be used by content.
   ///
@@ -24,30 +24,41 @@ extension Box.Theme.FrameStyle {
   /// This is why it's returned as `doubled`
   public var reservedDimensions: GridDimensions {
     switch self {
-        /// Each glyph, either side (leading-trailing, or top-bottom)
+      /// Each glyph, either side (leading-trailing, or top-bottom)
       case .single:
         let widthAndHeight = 1
         return GridDimensions(widthAndHeight, widthAndHeight).doubled
-        
+
       case .double:
         let width = 3
         let height = 2
         return GridDimensions(width, height).doubled
     }
   }
+
+  public func glyphStack(
+    for partType: Box.PartType,
+    //      with frameStyle: Box.Theme.FrameStyle
+  ) -> Box.GlyphStack {
+    switch self {
+      case .single: frameStackSingle
+      case .double: frameStackDouble
+    }
+  }
+
+  private
 }
 
+/// Not yet implemented
+//    case intertwined
 
-    /// Not yet implemented
-    //    case intertwined
-
-    /// This property forms a 'promise' that no single `BoxPart` should
-    /// exceed either dimension (width or height) for the given
-    /// `FrameStyle`, as defined below.
-    ///
-    /// This can also be thought of like a tile size. Any `BoxPart`
-    /// exceeding this tile size is likely to break the layout in some way.
-    ///
+/// This property forms a 'promise' that no single `BoxPart` should
+/// exceed either dimension (width or height) for the given
+/// `FrameStyle`, as defined below.
+///
+/// This can also be thought of like a tile size. Any `BoxPart`
+/// exceeding this tile size is likely to break the layout in some way.
+///
 //    public var maximumGridSize: Box.Dimensions {
 //      switch self {
 //        case .single:
@@ -100,6 +111,4 @@ extension Box.Theme.FrameStyle {
 //
 //      }
 //    }
-
-  
 

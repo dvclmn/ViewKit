@@ -7,6 +7,7 @@
 
 import SharedHelpers
 import SwiftUI
+import EnumMacros
 
 extension Box {
 
@@ -28,11 +29,13 @@ extension Box {
   /// ┤ ║
   ///
   /// ```
+  @CaseDetection
   public enum PartType: Hashable, Codable {
     case horizontal(HorizontalLocation = .top)
     case vertical(VerticalLocation = .leading)
     case join(Box.JoinType)
     case corner(Box.CornerType)
+    case text(String)
     case blank
 
     /// Describes whether this Part be repeated dynamically
@@ -47,7 +50,7 @@ extension Box {
       switch self {
         case .horizontal, .blank: .repeatable(axis: .horizontal)
         case .vertical: .repeatable(axis: .vertical)
-        case .join, .corner: .fixed
+        case .join, .corner, .text: .fixed
       }
     }
   }  // END part type
