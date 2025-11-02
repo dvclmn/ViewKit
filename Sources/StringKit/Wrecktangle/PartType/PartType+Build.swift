@@ -33,15 +33,18 @@ extension Box.PartType {
   /// know which specific Glyphs to ask for, and what
   /// FrameStyle to build for.
   func buildStack(using theme: Box.Theme) -> StringStack {
-    let glyphStack: Box.GlyphStack =
+    let glyphStack =
       switch theme.frameStyle {
-        case .single(frame: let frameProm, dividers: let divProm):
-          return single(
+        case .single(
+          frame: let frameProm,
+          dividers: let divProm
+        ):
+          single(
             frameProm: frameProm,
             dividerProm: divProm
           )
         case .double(exterior: let extProm, interior: let intProm):
-          return double(exterior: extProm, interior: intProm)
+          double(exterior: extProm, interior: intProm)
       }
     return StringStack(from: glyphStack, theme: theme)
     //  func build(using theme: Box.Theme) -> Box.GlyphStack {

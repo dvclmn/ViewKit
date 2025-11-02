@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 /// ``Box``
 /// ``Box/Line``
 ///
@@ -27,20 +25,20 @@ extension Box {
     public let leading: Box.PartType
     public let body: Box.PartType
     public let trailing: Box.PartType
-    
+
     public init(
       leading: Box.PartType,
       body: Box.PartType,
       trailing: Box.PartType
     ) {
       // Basic invariant: if body is text (single row), caps must be 1 high.
-//      precondition(
-//        !(body.type.isText && (leading.height > 1 || trailing.height > 1)),
-//        """
-//        Text lines must have single-character caps.
-//        Leading: \(leading.height), Trailing: \(trailing.height)
-//        """
-//      )
+      //      precondition(
+      //        !(body.type.isText && (leading.height > 1 || trailing.height > 1)),
+      //        """
+      //        Text lines must have single-character caps.
+      //        Leading: \(leading.height), Trailing: \(trailing.height)
+      //        """
+      //      )
       self.leading = leading
       self.body = body
       self.trailing = trailing
@@ -48,17 +46,32 @@ extension Box {
   }
 }
 extension Box.Line {
-  
-  public static func buildText(
-    content: String,
-  ) -> AttributedString {
-    
-  }
-  
-//  public var width: Int { leading.width + body.width + trailing.width }
-//  public var height: Int { max(leading.height, body.height, trailing.height) }
-}
 
+  public func output(with theme: Box.Theme) -> StringStack {
+    let stackLeading = leading.buildStack(using: theme)
+    let stackBody = leading.buildStack(using: theme)
+    let stackTrailing = leading.buildStack(using: theme)
+
+    return stackLeading + stackBody + stackTrailing
+
+  }
+
+  public static func joinLines(
+    lines: Box.Line...,
+    with theme: Box.Theme
+  ) -> StringStack {
+    //    return lines.map { line in
+    //      line.output(with: theme)
+    //    }
+
+    return lines.reduce(into: StringStack("")) { partial, line in
+      partial += line.output(with: theme)
+    }
+  }
+
+  //  public var width: Int { leading.width + body.width + trailing.width }
+  //  public var height: Int { max(leading.height, body.height, trailing.height) }
+}
 
 //extension Box {
 //  public struct Line {

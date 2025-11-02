@@ -8,9 +8,9 @@
 import SwiftUI
 
 public struct HeaderBox {
-  var header: String?
+  var header: String
   var content: AttributedString
-  var theme: Theme
+  var theme: Box.Theme
   var width: Int
 //  var config: Box.Config
   
@@ -19,7 +19,7 @@ public struct HeaderBox {
 //  }
 
   public init(
-    header: String?,
+    header: String,
     content: AttributedString,
     width: Int,
     glyphSet: Box.GlyphSet,

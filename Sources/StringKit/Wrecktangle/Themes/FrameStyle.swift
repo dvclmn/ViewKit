@@ -49,29 +49,29 @@ extension Box.FrameStyle {
     }
   }
 
-  public func glyphStack(
-    for partType: Box.PartType,
-  ) -> Box.GlyphStack {
-
-    switch self {
-      case .single(let frame, let dividers):
-        <#code#>
-      case .double(let exterior, let interior):
-        <#code#>
-    }
+//  public func glyphStack(
+//    for partType: Box.PartType,
+//  ) -> Box.GlyphStack {
+//
 //    switch self {
-//      case .single(let prominence):
-//        Self.single(for: partType, with: prominence)
-//        
-//      case .double(let prominenceArrangement):
+//      case .single(let frame, let dividers):
+//        <#code#>
+//      case .double(let exterior, let interior):
 //        <#code#>
 //    }
-//    switch self {
-//      case .single(let arrangement): single(for: partType, with: arr)
-//      case .single: single(for: partType).compactMap { [[$0]] }
-//      case .double: double(for: partType)
-//    }
-  }
+////    switch self {
+////      case .single(let prominence):
+////        Self.single(for: partType, with: prominence)
+////        
+////      case .double(let prominenceArrangement):
+////        <#code#>
+////    }
+////    switch self {
+////      case .single(let arrangement): single(for: partType, with: arr)
+////      case .single: single(for: partType).compactMap { [[$0]] }
+////      case .double: double(for: partType)
+////    }
+//  }
 
 }
 

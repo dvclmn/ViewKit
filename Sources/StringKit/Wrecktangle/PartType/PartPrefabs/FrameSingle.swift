@@ -27,7 +27,7 @@ extension Box.PartType {
   ) -> Box.GlyphStack {
     
     let partType = self
-    let frameProm = frameStyle.
+//    let frameProm = frameStyle.
     //  ) -> Box.GlyphType? {
 
     let type: Box.GlyphType? =

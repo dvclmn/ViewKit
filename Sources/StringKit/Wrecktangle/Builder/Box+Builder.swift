@@ -64,20 +64,6 @@ extension Box.Builder {
     content: String
   ) -> Box.Line {
 
-    //    let leading = Box.Part(
-    //      type: .vertical(.leading),
-    //      theme: theme
-    //    )
-    //
-    //    let content = Box.Part(
-    //      type: .text(content),
-    //      theme: theme
-    //    )
-    //    let trailing = Box.Part(
-    //      type: .vertical(.leading),
-    //      theme: theme
-    //    )
-
     let line = Box.Line(
       leading: .vertical(.leading),
       body: .text(content),
