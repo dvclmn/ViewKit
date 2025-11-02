@@ -24,23 +24,23 @@ import Foundation
 
 extension Box {
   public struct Line {
-    public let leading: Box.Part
-    public let body: Box.Part
-    public let trailing: Box.Part
+    public let leading: Box.PartType
+    public let body: Box.PartType
+    public let trailing: Box.PartType
     
     public init(
-      leading: Box.Part,
-      body: Box.Part,
-      trailing: Box.Part
+      leading: Box.PartType,
+      body: Box.PartType,
+      trailing: Box.PartType
     ) {
       // Basic invariant: if body is text (single row), caps must be 1 high.
-      precondition(
-        !(body.type.isText && (leading.height > 1 || trailing.height > 1)),
-        """
-        Text lines must have single-character caps.
-        Leading: \(leading.height), Trailing: \(trailing.height)
-        """
-      )
+//      precondition(
+//        !(body.type.isText && (leading.height > 1 || trailing.height > 1)),
+//        """
+//        Text lines must have single-character caps.
+//        Leading: \(leading.height), Trailing: \(trailing.height)
+//        """
+//      )
       self.leading = leading
       self.body = body
       self.trailing = trailing
@@ -55,8 +55,8 @@ extension Box.Line {
     
   }
   
-  public var width: Int { leading.width + body.width + trailing.width }
-  public var height: Int { max(leading.height, body.height, trailing.height) }
+//  public var width: Int { leading.width + body.width + trailing.width }
+//  public var height: Int { max(leading.height, body.height, trailing.height) }
 }
 
 

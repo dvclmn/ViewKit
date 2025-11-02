@@ -13,34 +13,75 @@ extension Box {
 
     /// Allows dynamic/flexible height, if not defined
     let height: Int?
-    
+
     let theme: Box.Theme
-//    let config: Box.Config
+    //    let config: Box.Config
 
     public init(
       width: Int,
       height: Int?,
       theme: Box.Theme
-//      config: Box.Config = .default
+        //      config: Box.Config = .default
     ) {
       self.width = width
       self.height = height
       self.theme = theme
-//      self.config = config
+      //      self.config = config
     }
   }
 }
 
 extension Box.Builder {
-  
-  public func textLine() -> Box.Line {
-    
-    let leading = Box.Par
-    
+
+  public func structureLine(
+    type: Box.Line.StructureType
+  ) -> Box.Line {
+    switch type {
+      case .top:
+        Box.Line(
+          leading: .corner(.topLeading),
+          body: .horizontal(.top),
+          trailing: .corner(.topTrailing)
+        )
+
+      case .divider:
+        Box.Line(
+          leading: .vertical(.leading),
+          body: .horizontal(.interior),
+          trailing: .vertical(.trailing),
+        )
+
+      case .bottom:
+        Box.Line(
+          leading: .corner(.bottomLeading),
+          body: .horizontal(.bottom),
+          trailing: .corner(.bottomTrailing)
+        )
+    }
+  }
+
+  public func textLine(
+    content: String
+  ) -> Box.Line {
+
+    //    let leading = Box.Part(
+    //      type: .vertical(.leading),
+    //      theme: theme
+    //    )
+    //
+    //    let content = Box.Part(
+    //      type: .text(content),
+    //      theme: theme
+    //    )
+    //    let trailing = Box.Part(
+    //      type: .vertical(.leading),
+    //      theme: theme
+    //    )
+
     let line = Box.Line(
-      leading: ,
-      body: ,
-      trailing:
+      leading: .vertical(.leading),
+      body: .text(content),
+      trailing: .vertical(.trailing)
     )
   }
 

@@ -11,29 +11,29 @@ import SharedHelpers
 
 extension Box {
 
-  public struct Part {
-    public let type: Box.PartType
-    public let stringStack: StringStack
-    let theme: Box.Theme
-
-    public init(
-      type: Box.PartType,
-      theme: Theme
-    ) {
-      self.type = type
-      self.stringStack = type.buildStack(using: theme)
-      self.theme = theme
-    }
-  }
+//  public struct Part {
+//    public let type: Box.PartType
+//    public let stringStack: StringStack
+//    let theme: Box.Theme
+//
+//    public init(
+//      type: Box.PartType,
+//      theme: Theme
+//    ) {
+//      self.type = type
+//      self.stringStack = type.buildStack(using: theme)
+//      self.theme = theme
+//    }
+//  }
 }
 
-extension Box.Part {
-  
-  public var width: Int { stringStack.width }
-  public var height: Int { stringStack.height }
-  
-  public var flexibility: PartType.Flexibility { type.flexibility }
-}
+//extension Box.Part {
+//  
+//  public var width: Int { stringStack.width }
+//  public var height: Int { stringStack.height }
+//  
+//  public var flexibility: Box.PartType.Flexibility { type.flexibility }
+//}
 
 //extension Box.PartType {
 //
