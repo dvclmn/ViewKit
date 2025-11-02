@@ -55,19 +55,6 @@ extension Box {
 
 extension Box.PartType {
 
-  /// This affects how the Part should be constructed.
-  /// The convention is fairly dependant on the creative intent
-  /// of the Theme.
-  ///
-  /// For example, a Theme may define a double-walled frame
-  /// with contrasting weights for each wall character, like the below,
-  /// where the top is bold, and the 'interior' is lighter.
-  /// ```
-  ///   ━━━━
-  ///   ────
-  ///
-  /// ```
-  ///
   /// This introduces the concept of *valid orientation*;
   /// for the top of a Box, the Part must be constructed with
   /// the bold glyph at the top, and the light glyph at the bottom,
@@ -75,6 +62,16 @@ extension Box.PartType {
   ///
   /// For the bottom of a frame, the light is top, and the bold
   /// is bottom, and so on for walls etc.
+  ///
+  /// For example, a Theme may define a double-walled frame
+  /// with contrasting weights for each wall character, like the below,
+  /// where the top is bold, and the 'interior' is lighter.
+  ///
+  /// ```
+  ///   ━━━━
+  ///   ────
+  ///
+  /// ```
   public enum HorizontalLocation: Hashable, Codable {
     case top
     case bottom
