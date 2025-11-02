@@ -11,6 +11,10 @@ public struct HeaderBox {
   var header: String?
   var content: AttributedString
   var config: Box.Config
+  
+  func paddingCharacter(for element: Box.Invisibles) -> Character {
+    config.metrics.contains(.invisibles) ? element.character : " "
+  }
 
   public init(
     header: String?,

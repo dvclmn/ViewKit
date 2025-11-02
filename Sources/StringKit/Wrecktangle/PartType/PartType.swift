@@ -64,10 +64,4 @@ extension Box.PartType {
     case capTrailing
   }
 
-  public enum Corner: Hashable, Sendable, Codable {
-    case topLeading
-    case topTrailing
-    case bottomLeading
-    case bottomTrailing
-  }
 }

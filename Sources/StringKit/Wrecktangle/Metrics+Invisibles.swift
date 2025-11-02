@@ -10,7 +10,6 @@ import SwiftUI
 
 extension Box {
 
-  
   public enum Invisibles {
     case line
     case space
@@ -32,10 +31,6 @@ extension Box {
         case .paddingAlt: "."
       }
     }
-//    
-//    public func paddingCharacter(for element: Invisibles) -> Character {
-//      config.metrics.contains(.invisibles) ? element.character : " "
-//    }
 
   }
 }

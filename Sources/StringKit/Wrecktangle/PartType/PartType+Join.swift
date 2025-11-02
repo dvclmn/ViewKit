@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-extension Box.PartType {
+extension Box {
 
   /// Describes where the joining takes place
   public enum Join: Hashable, Sendable, Codable {

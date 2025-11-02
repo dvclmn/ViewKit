@@ -5,6 +5,19 @@
 //  Created by Dave Coleman on 11/9/2024.
 //
 
+/// ``Box``
+/// ``Box/Line``
+///
+/// I am opting to keep this flatter nesting (e.g. not nesting
+/// `PartType` further, within `Part`. Otherwise
+/// nesting will become too deep and unweildy.
+/// ``Box/Part``
+/// ``Box/PartType``
+///
+///
+/// ``Box/Theme``
+/// ``Box/Config``
+
 extension Box {
   public struct Line {
     public let leading: Part

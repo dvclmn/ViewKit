@@ -5,7 +5,18 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-extension Box.PartType.Corner {
+extension Box {
+  
+  public enum Corner: Hashable, Sendable, Codable {
+    case topLeading
+    case topTrailing
+    case bottomLeading
+    case bottomTrailing
+  }
+  
+}
+extension Box.Corner {
+  
   func glyphStack() -> Box.GlyphStack {
     switch self {
 
