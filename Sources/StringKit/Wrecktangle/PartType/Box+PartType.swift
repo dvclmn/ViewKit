@@ -31,8 +31,8 @@ extension Box {
   /// ```
   @CaseDetection
   public enum PartType: Hashable, Codable {
-    case horizontal(HorizontalLocation = .top)
-    case vertical(VerticalLocation = .leading)
+    case horizontal(HorizontalLocation)
+    case vertical(VerticalLocation)
     case join(Box.JoinType)
     case corner(Box.CornerType)
     case text(String)

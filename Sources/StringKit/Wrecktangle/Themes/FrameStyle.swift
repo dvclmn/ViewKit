@@ -7,9 +7,11 @@
 
 import SharedHelpers
 
+
+
 extension Box {
   public enum FrameStyle: Sendable, Codable, Equatable {
-    case single
+    case single(Box.GlyphProminence)
     case double
   }
 }

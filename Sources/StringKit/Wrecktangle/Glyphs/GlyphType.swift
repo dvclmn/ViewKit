@@ -9,7 +9,7 @@ import EnumMacros
 import Foundation
 
 extension Box {
-  
+
   /// Trying to improve how Boxes are constructed, and what the
   /// instructions for the Builder look like. Balancing delcarative, and
   /// imperative.
@@ -31,7 +31,6 @@ extension Box {
   /// or preferred pre-fabbed GlyphSet, with some other parameters,
   /// and you 'get what you get'?
 
-
   /// The building block used by ``Box/PartType``.
   /// Refers to a *single character* (glyph) only.
   /// Distinct from ``Box/PartType``, which handles
@@ -44,23 +43,17 @@ extension Box {
   @CaseDetection
   public enum GlyphType: Hashable, Sendable, Codable {
 
-    case horizontal(Prominence)
-    case vertical(Prominence)
+    case horizontal(GlyphProminence)
+    case vertical(GlyphProminence)
 
     case join(
-      x: Prominence,
-      y: Prominence,
-      type: Box.JoinType
+      x: GlyphProminence,
+      y: GlyphProminence,
+      type: JoinType
     )
-    
-    case corner(
-      Prominence = .strong,
-      type: Box.CornerType
-    )
-    
+
+    case corner(GlyphProminence, type: CornerType)
     case text
-//    case text(Character)
     case blank
   }
 }
-

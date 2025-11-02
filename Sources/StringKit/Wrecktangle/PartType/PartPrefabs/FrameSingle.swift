@@ -27,13 +27,13 @@ extension Box.FrameStyle {
 
         
       case .horizontal(.interior):
-        [[Box.GlyphType.horizontal(.thin)]]
+        [[Box.GlyphType.horizontal(.light)]]
 
       case .vertical(.leading), .vertical(.trailing):
         [[Box.GlyphType.vertical(.strong)]]
 
       case .vertical(.interior):
-        [[Box.GlyphType.vertical(.thin)]]
+        [[Box.GlyphType.vertical(.light)]]
 
       case .join(let joinType):
         [[Box.GlyphType.join(x: .strong, y: .strong, type: joinType)]]
