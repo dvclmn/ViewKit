@@ -10,11 +10,13 @@ import SwiftUI
 public struct HeaderBox {
   var header: String?
   var content: AttributedString
-  var config: Box.Config
+  var theme: Theme
+  var width: Int
+//  var config: Box.Config
   
-  func paddingCharacter(for element: Box.Invisibles) -> Character {
-    config.metrics.contains(.invisibles) ? element.character : " "
-  }
+//  func paddingCharacter(for element: Box.Invisibles) -> Character {
+//    config.metrics.contains(.invisibles) ? element.character : " "
+//  }
 
   public init(
     header: String?,
@@ -22,7 +24,7 @@ public struct HeaderBox {
     width: Int,
     glyphSet: Box.GlyphSet,
     frameStyle: Box.FrameStyle,
-    counterStyle: TextCore.WidthCounterStyle = .ruler
+//    counterStyle: TextCore.WidthCounterStyle = .ruler
   ) {
 
     let theme = Box.Theme(
@@ -31,17 +33,18 @@ public struct HeaderBox {
       padding: 1
     )
 
-    let config = Box.Config(
-      theme: theme,
-      width: width,
-      headerLineLimit: 2,
-      contentLineLimit: 8,
-      counterStyle: counterStyle
-    )
+//    let config = Box.Config(
+//      theme: theme,
+//      width: width,
+//      headerLineLimit: 2,
+//      contentLineLimit: 8,
+//      counterStyle: counterStyle
+//    )
 
     self.header = header
     self.content = content
-    self.config = config
+//    self.config = config
+    self.width = width
   }
 
   public var attributedString: AttributedString { drawBox() }

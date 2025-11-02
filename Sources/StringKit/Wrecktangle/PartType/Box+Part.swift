@@ -35,9 +35,9 @@ extension Box.Part {
   public var flexibility: PartType.Flexibility { type.flexibility }
 }
 
-extension Box.PartType {
-
-}
+//extension Box.PartType {
+//
+//}
 
 //  public struct Part {
 //    public let type: PartType

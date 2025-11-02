@@ -5,6 +5,10 @@
 //  Created by Dave Coleman on 11/9/2024.
 //
 
+import Foundation
+
+
+
 /// ``Box``
 /// ``Box/Line``
 ///
@@ -20,18 +24,18 @@
 
 extension Box {
   public struct Line {
-    public let leading: Box.PartType
-    public let body: Box.PartType
-    public let trailing: Box.PartType
+    public let leading: Box.Part
+    public let body: Box.Part
+    public let trailing: Box.Part
     
     public init(
-      leading: Box.PartType,
-      body: Box.PartType,
-      trailing: Box.PartType
+      leading: Box.Part,
+      body: Box.Part,
+      trailing: Box.Part
     ) {
       // Basic invariant: if body is text (single row), caps must be 1 high.
       precondition(
-        !(body.isText && (leading.height > 1 || trailing.height > 1)),
+        !(body.type.isText && (leading.height > 1 || trailing.height > 1)),
         """
         Text lines must have single-character caps.
         Leading: \(leading.height), Trailing: \(trailing.height)
@@ -44,9 +48,17 @@ extension Box {
   }
 }
 extension Box.Line {
+  
+  public static func buildText(
+    content: String,
+  ) -> AttributedString {
+    
+  }
+  
   public var width: Int { leading.width + body.width + trailing.width }
   public var height: Int { max(leading.height, body.height, trailing.height) }
 }
+
 
 //extension Box {
 //  public struct Line {

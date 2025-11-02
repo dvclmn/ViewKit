@@ -18,8 +18,8 @@ import Foundation
 ///
 ///
 public struct Box {
-  let width: Int
-  let theme: Theme
+//  let width: Int
+//  let theme: Theme
 }
 
 

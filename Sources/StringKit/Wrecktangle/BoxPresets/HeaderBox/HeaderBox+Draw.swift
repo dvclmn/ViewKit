@@ -8,16 +8,19 @@
 import Foundation
 
 extension HeaderBox {
-
+  
   func drawBox() -> AttributedString {
-
-    let theme = config.theme
-    let top = Box.Line.structureLine(.horizontal(.top), theme: theme, width: config.width)
+    
+//    let theme = config.theme
+    
+//    let top = Box.Line.
+    
+//    let top = Box.Line.structureLine(.horizontal(.top), theme: theme, width: config.width)
     let header = Box.Line.textLine(box.header ?? "", theme: theme, totalWidth: config.width)
     let separator = Box.Line.structureLine(.horizontal(.middle), theme: theme, width: config.width)
     let content = Box.Line.textLine(box.content.characters, theme: theme, totalWidth: config.width)
     let bottom = Box.Line.structureLine(.horizontal(.bottom), theme: theme, width: config.width)
-
+    
     return StringStack.joinVertically([
       top.render(toTotalWidth: config.width),
       header.render(toTotalWidth: config.width),
@@ -25,6 +28,8 @@ extension HeaderBox {
       content.render(toTotalWidth: config.width),
       bottom.render(toTotalWidth: config.width),
     ])
+  }
+}
 
     //
     //    let builder = Box.Builder(
@@ -59,7 +64,7 @@ extension HeaderBox {
     //    output.append(bottom, addsLineBreak: true)
     //
     //    return output
-  }
+//  }
 
   // MARK: - Supporting methods
   //  private func buildHeader(
@@ -124,4 +129,4 @@ extension HeaderBox {
   //
   //  }
 
-}
+//}

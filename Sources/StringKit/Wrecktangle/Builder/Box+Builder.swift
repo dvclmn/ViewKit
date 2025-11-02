@@ -9,25 +9,40 @@ extension Box {
   /// The Builder (aka 'Box Engine') should handle box drawing
   /// based on simple instructions (see ``ViewBox`` and ``HeaderBoxBox``)
   public struct Builder {
-//    let width: Int
+    let width: Int
 
     /// Allows dynamic/flexible height, if not defined
     let height: Int?
-    let config: Box.Config
+    
+    let theme: Box.Theme
+//    let config: Box.Config
 
     public init(
       width: Int,
       height: Int?,
-      config: Box.Config = .default
+      theme: Box.Theme
+//      config: Box.Config = .default
     ) {
       self.width = width
       self.height = height
-      self.config = config
+      self.theme = theme
+//      self.config = config
     }
   }
 }
 
 extension Box.Builder {
+  
+  public func textLine() -> Box.Line {
+    
+    let leading = Box.Par
+    
+    let line = Box.Line(
+      leading: ,
+      body: ,
+      trailing:
+    )
+  }
 
   /// The remaning width for text, after removing space
   /// reserved for structural elements
