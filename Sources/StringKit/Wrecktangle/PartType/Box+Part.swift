@@ -31,10 +31,26 @@ extension Box.Part {
   }
 }
 
+extension StringStack {
+  public init(
+    from glyphStack: Box.GlyphStack,
+    theme: Box.Theme
+  ) {
+    let grid = glyphStack.map { row in
+      row.map { glyphType in
+        theme.glyphSet.character(for: glyphType)
+      }
+    }
+    self.init(grid)
+  }
+}
+
 extension Box.PartType {
-  func build(using theme: Box.Theme) -> Box.Part {
-    let glyphStack = glyphStack(for: theme.frameStyle)
-    let charGrid = glyphStack.map { row in
+  /// Build this specific Part
+  func buildFrame(using theme: Box.Theme) -> Box.Part {
+//    let glyphStack = theme.frameStyle.glyphStack(for: theme.frameStyle)
+    let frameStack = theme.frameStyle.glyphStack(for: self)
+    let stringStack = frameStack.map { row in
       row.map { theme.glyphSet.character(for: $0) }
     }
     return Box.Part(type: self, stringStack: StringStack(charGrid))

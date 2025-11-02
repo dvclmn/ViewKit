@@ -47,8 +47,8 @@ public struct HeaderBox {
   public var attributedString: AttributedString { drawBox() }
   public var plainText: String { attributedString.toString }
 
-  public var theme: Box.Theme { config.theme }
-  public var glyphSet: Box.GlyphSet { config.theme.glyphSet }
-  public var boxWidth: Int { config.width }
+//  public var theme: Box.Theme { config.theme }
+//  public var glyphSet: Box.GlyphSet { config.theme.glyphSet }
+//  public var boxWidth: Int { config.width }
 
 }

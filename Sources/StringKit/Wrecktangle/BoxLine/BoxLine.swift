@@ -23,12 +23,15 @@ extension Box {
     public let leading: Part
     public let body: Part
     public let trailing: Part
-
+    
     public init(leading: Part, body: Part, trailing: Part) {
-      // Basic invariant: leading/trailing must be 1 row high if body is text.
+      // Basic invariant: if body is text (single row), caps must be 1 high.
       precondition(
-        (leading.height == 1 && trailing.height == 1) || !body.isText,
-        "Text lines must have single-character caps."
+        !(body.type.isText && (leading.height > 1 || trailing.height > 1)),
+        """
+        Text lines must have single-character caps.
+        Leading: \(leading.height), Trailing: \(trailing.height)
+        """
       )
       self.leading = leading
       self.body = body
@@ -36,6 +39,29 @@ extension Box {
     }
   }
 }
+extension Box.Line {
+  public var width: Int { leading.width + body.width + trailing.width }
+  public var height: Int { max(leading.height, body.height, trailing.height) }
+}
+
+//extension Box {
+//  public struct Line {
+//    public let leading: Part
+//    public let body: Part
+//    public let trailing: Part
+//
+//    public init(leading: Part, body: Part, trailing: Part) {
+//      /// Basic invariant: leading/trailing must be 1 row high if body is text.
+//      precondition(
+//        (leading.height == 1 && trailing.height == 1) || !body.type.isText,
+//        "Text lines must have single-character caps."
+//      )
+//      self.leading = leading
+//      self.body = body
+//      self.trailing = trailing
+//    }
+//  }
+//}
 
 /// Currently this library can only handle horizontal dividers, not vertical.
 /// So processing line-by-line, vertically, is fairly straightforward.

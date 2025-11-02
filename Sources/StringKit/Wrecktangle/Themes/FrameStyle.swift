@@ -38,10 +38,9 @@ extension Box.FrameStyle {
 
   public func glyphStack(
     for partType: Box.PartType,
-    //      with frameStyle: Box.Theme.FrameStyle
   ) -> Box.GlyphStack {
     switch self {
-      case .single:
+      case .single: single(for: partType)
       case .double: double(for: partType)
     }
   }
