@@ -9,9 +9,10 @@ import SwiftUI
 import StringShared
 
 public struct DebugTextOverlayModifier: ViewModifier {
+  @Environment(\.isEnabled) private var isEnabled
   
   let text: AttributedString
-  let isEnabled: Bool
+//  let isEnabled: Bool
   let alignment: Alignment
   let padding: (Edge.Set, CGFloat?)
   public func body(content: Content) -> some View {
@@ -65,14 +66,14 @@ extension View {
 
   public func debugTextOverlay(
     _ text: AttributedString,
-    isEnabled: Bool = true,
+//    isEnabled: Bool = true,
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil)
   ) -> some View {
     self.modifier(
       DebugTextOverlayModifier(
         text: text,
-        isEnabled: isEnabled,
+//        isEnabled: isEnabled,
         alignment: alignment,
         padding: padding
       )
@@ -89,7 +90,7 @@ extension View {
       DebugTextOverlayModifier(
         text: AttributedString(text.joined(separator: "\n")),
         //        value: value.flatMap().joined(separator: "\n"),
-        isEnabled: isEnabled,
+//        isEnabled: isEnabled,
         alignment: alignment,
         padding: padding
       )
@@ -107,7 +108,7 @@ extension View {
       DebugTextOverlayModifier(
         text: content().styledOutput(),
         //        value: value.flatMap().joined(separator: "\n"),
-        isEnabled: isEnabled,
+//        isEnabled: isEnabled,
         alignment: alignment,
         padding: padding
       )

@@ -48,21 +48,20 @@ extension Box {
 extension Box.Line {
 
   public func output(with theme: Box.Theme) -> StringStack {
+    
     let stackLeading = leading.buildStack(using: theme)
     let stackBody = leading.buildStack(using: theme)
     let stackTrailing = leading.buildStack(using: theme)
 
+    #warning("Need to use the right tools from StringStack")
     return stackLeading + stackBody + stackTrailing
-
+//    let result = 
   }
 
   public static func joinLines(
     lines: Box.Line...,
     with theme: Box.Theme
   ) -> StringStack {
-    //    return lines.map { line in
-    //      line.output(with: theme)
-    //    }
 
     return lines.reduce(into: StringStack("")) { partial, line in
       partial += line.output(with: theme)

@@ -12,8 +12,8 @@ public struct HeaderBox {
   var content: AttributedString
   var theme: Box.Theme
   var width: Int
-//  var config: Box.Config
   
+  /// Need to figure this out
 //  func paddingCharacter(for element: Box.Invisibles) -> Character {
 //    config.metrics.contains(.invisibles) ? element.character : " "
 //  }
@@ -24,7 +24,6 @@ public struct HeaderBox {
     width: Int,
     glyphSet: Box.GlyphSet,
     frameStyle: Box.FrameStyle,
-//    counterStyle: TextCore.WidthCounterStyle = .ruler
   ) {
 
     let theme = Box.Theme(
@@ -32,14 +31,6 @@ public struct HeaderBox {
       frameStyle: frameStyle,
       padding: 1
     )
-
-//    let config = Box.Config(
-//      theme: theme,
-//      width: width,
-//      headerLineLimit: 2,
-//      contentLineLimit: 8,
-//      counterStyle: counterStyle
-//    )
 
     self.header = header
     self.content = content

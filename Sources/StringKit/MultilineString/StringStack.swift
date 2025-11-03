@@ -54,50 +54,7 @@ extension StringStack {
       }
     }
   }
-
-  /// Indicates whether the stack contains no characters in any row.
-  public var isEmpty: Bool {
-    stack.isEmpty || stack.allSatisfy { $0.isEmpty }
-  }
-}
-
-// MARK: - Joining
-extension StringStack {
-
   
-  // Ensure all rows have consistent width
-  public func normalized(
-    toWidth width: Int? = nil,
-    paddingCharacter: Character = " "
-  ) -> StringStack {
-    let targetWidth = width ?? self.width
-    var result = StringStack([])
-    for row in stack {
-      var normalizedRow = row
-      if normalizedRow.count < targetWidth {
-        normalizedRow.append(contentsOf: Array(repeating: paddingCharacter, count: targetWidth - normalizedRow.count))
-      } else if normalizedRow.count > targetWidth {
-        normalizedRow = Array(normalizedRow.prefix(targetWidth))
-      }
-      result.append(normalizedRow)
-    }
-    return result
-  }
-
-//  func normalised(toWidth width: Int, height: Int, padding: Character) -> StringStack {
-//    var rows = stack
-//    rows = rows.map { $0 + .padded(with: padding, count: width - $0.count) }
-//    if rows.count < height {
-//      let emptyRow = .padded(with: padding, count: width)
-//      rows += Array(repeating: emptyRow, count: height - rows.count)
-//    }
-//    return StringStack(rows)
-//  }
-  
-  private static func fill(_ char: Character, count: Int) -> [Character] {
-    count > 0 ? Array(repeating: char, count: count) : []
-  }
-
   func row(
     at index: Int,
     paddedTo width: Int,
@@ -112,6 +69,48 @@ extension StringStack {
     }
     return row
   }
+}
+
+extension StringStack {
+
+  
+  /// Indicates whether the stack contains no characters in any row.
+  public var isEmpty: Bool {
+    stack.isEmpty || stack.allSatisfy { $0.isEmpty }
+  }
+  
+  // Ensure all rows have consistent width
+//  public func normalised(
+//    toWidth width: Int? = nil,
+//    paddingCharacter: Character = " "
+//  ) -> StringStack {
+//    let targetWidth = width ?? self.width
+//    var result = StringStack([])
+//    for row in stack {
+//      var normalizedRow = row
+//      if normalizedRow.count < targetWidth {
+//        normalizedRow.append(contentsOf: Array(repeating: paddingCharacter, count: targetWidth - normalizedRow.count))
+//      } else if normalizedRow.count > targetWidth {
+//        normalizedRow = Array(normalizedRow.prefix(targetWidth))
+//      }
+//      result.append(normalizedRow)
+//    }
+//    return result
+//  }
+
+//  func normalised(toWidth width: Int, height: Int, padding: Character) -> StringStack {
+//    var rows = stack
+//    rows = rows.map { $0 + .padded(with: padding, count: width - $0.count) }
+//    if rows.count < height {
+//      let emptyRow = .padded(with: padding, count: width)
+//      rows += Array(repeating: emptyRow, count: height - rows.count)
+//    }
+//    return StringStack(rows)
+//  }
+  
+//  private static func fill(_ char: Character, count: Int) -> [Character] {
+//    count > 0 ? Array(repeating: char, count: count) : []
+//  }
 
 }
 

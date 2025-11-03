@@ -35,16 +35,17 @@ public struct HeaderBoxView: View {
   public var body: some View {
     Text(textOutput)
 
-      .gridSetup(.sfMono, fontSize: 28)
-    
-      .environment(\.isShowingGridGuide, true)
       .frameFromGridSize(width: gridWidth, height: gridHeight)
-      .setGridFrame(gridWidth, gridHeight)
-    
+      .gridSetup(.sfMono, fontSize: 28)
+
+      .environment(\.isShowingGridGuide, true)
+
       .debugTextOverlay(
         """
         Width: \(gridWidth?.toString, default: "nil")
-        """)
+        Text Content: \(content.toString)
+        """
+      ).disabled(true)
 
   }
 }
@@ -61,29 +62,30 @@ extension HeaderBoxView {
   }
 }
 
+
 #if DEBUG
-#Preview {
-
+#Preview(traits: .size(.normal)) {
+  
   VStack(spacing: 14) {
-
+    
     //    BoxTextView("I love boxes made of text") {
     //      DummyContent.Strings.paragraphs[8].toAttributed
     //    }
     //    .setGridFrame(42)
-
+    
     HeaderBoxView("Header title") {
       "Hello"
     }
-    .setGridFrame(10)
+//    .setGridFrame(10)
     .setBoxStyle(glyphs: .double, frame: .double(exterior: .increased, interior: .standard))
-
+    
     //    BoxTextView {
     //      "No header text"
     //      "This is another line"
     //    }
     //    .setGridFrame(38)
     //    .setBoxStyle(glyphs: .rounded, frame: .single())
-
+    
   }
   .textSelection(.enabled)
   .monospaced()
@@ -92,7 +94,6 @@ extension HeaderBoxView {
     minWidth: 400,
     minHeight: 600
   )
-  //  .frame(width: 370, height: 640)
   .background(.black.opacity(0.6))
 }
 #endif

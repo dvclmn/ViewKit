@@ -27,6 +27,8 @@ extension View {
       .environment(\.frameStyle, frame)
   }
 
+  /// This only sets `gridWidth`/`gridHeight` environment
+  /// values. It does not apply a `.frame()` modifier.
   public func setGridFrame(
     _ width: Int? = nil,
     _ height: Int? = nil,

@@ -22,7 +22,6 @@ public enum SubsequenceStrategy {
         return false
     }
   }
-
 }
 
 extension String {
