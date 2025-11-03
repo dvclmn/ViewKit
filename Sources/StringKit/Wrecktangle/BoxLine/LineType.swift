@@ -28,13 +28,13 @@ extension Box.LineType {
     switch self {
       case .text(let content, _):
         let leading = Box.PartType.vertical(.leading).buildStack(using: theme)
-        let trailing = Box.PartType.vertical(.trailing).buildStack(using: theme)
         let contentStack = StringStack(content)
+        let trailing = Box.PartType.vertical(.trailing).buildStack(using: theme)
 
         return StringStack.joined(
           leading,
-          trailing,
           contentStack,
+          trailing,
           along: .horizontal
         )
 

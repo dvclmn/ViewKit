@@ -11,15 +11,18 @@ import SharedHelpers
 public struct Box: Sendable {
 
   let width: Int
+  let height: Int?
   let theme: Theme
   let components: [any Component]
 
   public init(
     width: Int = 20,
+    height: Int? = nil,
     theme: Theme = .default,
     @BoxBuilder content: () -> [any Component]
   ) {
     self.width = width
+    self.height = height
     self.theme = theme
     self.components = content()
   }

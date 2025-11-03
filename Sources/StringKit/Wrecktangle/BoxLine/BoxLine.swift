@@ -107,32 +107,14 @@ extension Box.LineType {
 
   public static func joined(
     lines: [Box.LineType],
-    //    lines: [Box.Line],
     with theme: Box.Theme
   ) -> StringStack {
 
     let stacks = lines.map { line in
       line.output(theme: theme)
-      //      line.(with: theme)
     }
-
     let joined = StringStack.joined(stacks, along: .vertical)
     return joined
-
-    //    let stack: StringStack = lines.reduce(into: StringStack("")) {
-    //      partial,
-    //      line in
-    //      partial = StringStack.joined(
-    //        partial, line.output(with: theme),
-    //        along: .vertical,
-    //        padding: " "
-    //      )
-    //
-    //      //    return lines.reduce(into: StringStack("")) { partial, line in
-    //      //      partial += line.output(with: theme)
-    //
-    //    }
-    //    return stack
   }
 
   public static func joined(
@@ -141,43 +123,6 @@ extension Box.LineType {
   ) -> StringStack {
     Self.joined(lines: lines, with: theme)
   }
-
-  //  public func output(with theme: Box.Theme) -> StringStack {
-  //
-  //    switch self {
-  //      case .text(let content, let lineLimit):
-  //        <#code#>
-  //      case .structure(let type):
-  ////        let stackLeading = leading.buildStack(using: theme)
-  ////        let stackBody = leading.buildStack(using: theme)
-  ////        let stackTrailing = leading.buildStack(using: theme)
-  //
-  //        return StringStack.joined(
-  //          ,
-  //          stackBody,
-  //          stackTrailing,
-  //          along: .horizontal
-  //        )
-  //
-  //      case .blank:
-  //        <#code#>
-  //    }
-  //
-  //  }
-
-  //  public static func joinLines(
-  //    lines: Box.Line...,
-  //    with theme: Box.Theme
-  //  ) -> StringStack {
-  //
-  //    return StringStack.joined(<#T##StringStack...#>, along: <#T##Axis#>, padding: <#T##Character?#>)
-  //    //    return lines.reduce(into: StringStack("")) { partial, line in
-  //    //      partial += line.output(with: theme)
-  //    //    }
-  //  }
-
-  //  public var width: Int { leading.width + body.width + trailing.width }
-  //  public var height: Int { max(leading.height, body.height, trailing.height) }
 }
 
 //extension Box {

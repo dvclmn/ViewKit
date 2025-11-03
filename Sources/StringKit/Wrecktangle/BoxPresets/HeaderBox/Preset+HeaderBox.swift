@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-extension Box {
-  public static let headerBox: Box = Box(width: 20, theme: .default) {
-    Header("Hello World")
-    "I'm Box content?"
-  }
-  
-  public static let frameOnly: Box = Box(width: 20)  {
-    "I'm Box content?"
-  }
-}
+//extension Box {
+//  public static let headerBox: Box = Box(width: 20, theme: .default) {
+//    Header("Hello World")
+//    "I'm Box content?"
+//  }
+//  
+//  public static let frameOnly: Box = Box(width: 20)  {
+//    "I'm Box content?"
+//  }
+//}
 
 //public struct HeaderBox {
 //  var header: String

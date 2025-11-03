@@ -68,7 +68,18 @@ extension BoxView {
 
   private var boxText: String? {
     guard let w = dimensions?.width, let h = dimensions?.height else { return nil }
-    let text = Box.frameOnly.plainText
+//    let text = Box.frameOnly.plainText
+    
+    let text = Box(
+      width: w,
+      height: h,
+      theme: .default
+    ) {
+      Box.Divider()
+      "I'm txt as well"
+      Box.Bottom()
+    }.plainText
+    
 //    let text = FrameBox(
 //      width: w,
 //      height: h,
@@ -79,12 +90,12 @@ extension BoxView {
 //      )
 //    ).plainText
 
-    let result =
-      text
-      .split(separator: "\n", omittingEmptySubsequences: true)
-      .joined(separator: "\n")
+//    let result =
+//      text
+//      .split(separator: "\n", omittingEmptySubsequences: true)
+//      .joined(separator: "\n")
 
-    return result
+    return text
   }
 
   @ViewBuilder
