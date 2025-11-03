@@ -44,10 +44,11 @@ public struct StringStack {
   ) {
     switch axis {
     case .horizontal:
-      self.stack = stringStack.stack.stackedVertically(repeating: count)
+      self.stack = stringStack.stack.stackedHorizontally(repeating: count)
     case .vertical:
       self.stack = stringStack.stack.stackedVertically(repeating: count)
     }
+  }
 //    let stacks = Array(repeating: stack, count: count)
 //    //    for i in 0..<count {
 //    let joined = StringStack.joined(stack, along: axis)
@@ -67,7 +68,7 @@ public struct StringStack {
     
     //    }
     //    self.stack = Array(repeating: row, count: count)
-  }
+//  }
 }
 
 extension StringStack {

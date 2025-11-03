@@ -38,22 +38,23 @@ extension Array where Element: Collection {
 //        stackedHorizontally(repeating: count)
 //    }
 //  }
-
-  /// Stacks the entire array vertically by repeating it `count` times.
-  /// E.g.,
-  /// `[[A, B], [C, D]] vertically, count: 2`
-  /// results in
-  /// `[[A, B], [C, D], [A, B], [C, D]]`
-  private func stackedVertically(repeating count: Int) -> [[Element.Element]] {
-    Array(repeating: self, count: count).flatMap { $0.map { Array($0) } }
+/// Stacks the entire array vertically by repeating it `count` times.
+/// E.g.
+/// `[[A, B], [C, D]] vertically, count: 2`
+/// → `[[A, B], [C, D], [A, B], [C, D]]`
+  func stackedVertically(repeating count: Int) -> [[Element.Element]] {
+    (0..<count).flatMap { _ in
+      self.map { Array($0) }
+    }
   }
-
+  
   /// Stacks each inner array horizontally by repeating its contents `count` times.
   /// E.g.
   /// `[[A, B], [C, D]] horizontally, count: 2`
-  /// results in
-  /// `[[A, B, A, B], [C, D, C, D]]`
-  private func stackedHorizontally(repeating count: Int) -> [[Element.Element]] {
-    self.map { Array(repeating: $0, count: count).flatMap { $0 } }
+  /// → `[[A, B, A, B], [C, D, C, D]]`
+  func stackedHorizontally(repeating count: Int) -> [[Element.Element]] {
+    self.map { collection in
+      (0..<count).flatMap { _ in Array(collection) }
+    }
   }
 }
