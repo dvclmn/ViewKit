@@ -68,15 +68,16 @@ extension BoxView {
 
   private var boxText: String? {
     guard let w = dimensions?.width, let h = dimensions?.height else { return nil }
-    let text = FrameBox(
-      width: w,
-      height: h,
-      theme: Box.Theme(
-        glyphSet: glyphSet,
-        frameStyle: frameStyle,
-        padding: padding
-      )
-    ).plainText
+    let text = Box.frameOnly.plainText
+//    let text = FrameBox(
+//      width: w,
+//      height: h,
+//      theme: Box.Theme(
+//        glyphSet: glyphSet,
+//        frameStyle: frameStyle,
+//        padding: padding
+//      )
+//    ).plainText
 
     let result =
       text

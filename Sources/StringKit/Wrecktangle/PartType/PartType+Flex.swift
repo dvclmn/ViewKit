@@ -9,7 +9,7 @@ import SwiftUI
 
 extension Box.PartType {
   /// Whether or not this part should take on repeatable behaviour
-  public enum Flexibility: Equatable, Codable {
+  public enum Flexibility: Equatable, Codable, Sendable {
     
     case repeatable(axis: Axis)
     case fixed

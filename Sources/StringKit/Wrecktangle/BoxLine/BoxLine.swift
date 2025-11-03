@@ -51,13 +51,22 @@ extension Box.Line {
     lines: [Box.Line],
     with theme: Box.Theme
   ) -> StringStack {
-    let stack: StringStack = lines.reduce(into: "") { partial, line in
+    let stack: StringStack = lines.reduce(into: StringStack("")) {
+      partial,
+      line in
+      partial = StringStack.joined(
+        partial, line.output(with: theme),
+        along: .vertical,
+        padding: " "
+      )
+
       //    return lines.reduce(into: StringStack("")) { partial, line in
-      partial += line.output(with: theme)
+      //      partial += line.output(with: theme)
+
     }
     return stack
   }
-  
+
   public static func joined(
     lines: Box.Line...,
     with theme: Box.Theme
@@ -74,16 +83,16 @@ extension Box.Line {
     return StringStack.joined(stackLeading, stackBody, stackTrailing, along: .vertical)
   }
 
-//  public static func joinLines(
-//    lines: Box.Line...,
-//    with theme: Box.Theme
-//  ) -> StringStack {
-//
-//    return StringStack.joined(<#T##StringStack...#>, along: <#T##Axis#>, padding: <#T##Character?#>)
-//    //    return lines.reduce(into: StringStack("")) { partial, line in
-//    //      partial += line.output(with: theme)
-//    //    }
-//  }
+  //  public static func joinLines(
+  //    lines: Box.Line...,
+  //    with theme: Box.Theme
+  //  ) -> StringStack {
+  //
+  //    return StringStack.joined(<#T##StringStack...#>, along: <#T##Axis#>, padding: <#T##Character?#>)
+  //    //    return lines.reduce(into: StringStack("")) { partial, line in
+  //    //      partial += line.output(with: theme)
+  //    //    }
+  //  }
 
   //  public var width: Int { leading.width + body.width + trailing.width }
   //  public var height: Int { max(leading.height, body.height, trailing.height) }

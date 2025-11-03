@@ -5,10 +5,15 @@
 //  Created by Dave Coleman on 14/9/2024.
 //
 
+import SwiftUI
+
 extension StringStack {
-  /// See ``StringKit/*(lhs:rhs:)`` for `*` operator used here
-  func repeated(_ times: Int) -> StringStack {
-    self * times
+  func repeated(
+    along axis: Axis,
+    count: Int
+  ) -> StringStack {
+    let stack = self.stack.stacked(along: axis, repeating: count)
+    return StringStack(stack)
   }
 
   func repeatedHorizontally(
@@ -120,12 +125,12 @@ extension StringStack {
 
 // MARK: - Repeating operator
 /// For repeating a `StringStack`
-public func * (lhs: StringStack, rhs: Int) -> StringStack {
-  
-  let result = StringStack(repeating: lhs, count: rhs)
-//  var result: StringStack = []
-//  for _ in 0..<rhs {
-//    result =
-//  }
-//  return result
-}
+//public func * (lhs: StringStack, rhs: Int) -> StringStack {
+//
+//  let result = StringStack(repeating: lhs, count: rhs)
+////  var result: StringStack = []
+////  for _ in 0..<rhs {
+////    result =
+////  }
+////  return result
+//}

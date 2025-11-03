@@ -13,8 +13,8 @@ public struct StringStack {
 
   var stack: [[Character]]
 
-  public init(_ grid: [[Character]]) {
-    self.stack = grid
+  public init(_ stack: [[Character]]) {
+    self.stack = stack
   }
 
   /// ``Swift/String/substringLines(subsequenceStrategy:)``
@@ -22,28 +22,34 @@ public struct StringStack {
     self.init(string.substringLines().map { Array($0) })
   }
 
-  /// Initializes a StringStack by repeating a given row a specified number of times.
+  /// Initializes a `StringStack` by repeating a given row
+  /// *vertically* the specified number of times.
   /// - Parameters:
   ///   - row: The row of characters to repeat.
   ///   - count: The number of times to repeat the row.
-  ///
-  /// Note: axis is not needed here, as rows are always
-  /// stacked vertically
   public init(
     repeating row: [Character],
-    //    along axis: Axis,
     count: Int
   ) {
     self.stack = Array(repeating: row, count: count)
   }
 
-  public init(
-    repeating stringStack: StringStack,
-    along axis: Axis,
-    count: Int
-  ) {
-    self.stack = stringStack.stack.stacked(along: axis, repeating: count)
-  }
+//  /// Initializes a `StringStack` by repeating a provided
+//  /// `StringStack` along a given axis the specified number of times.
+//  /// - Parameters:
+//  ///   - stringStack: <#stringStack description#>
+//  ///   - axis: <#axis description#>
+//  ///   - count: The number of times to repeat the row.
+//  
+//  
+//  
+//  public init(
+//    repeating stringStack: StringStack,
+//    along axis: Axis,
+//    count: Int
+//  ) {
+//    self.stack = stringStack.stack.stacked(along: axis, repeating: count)
+//  }
 }
 
 extension StringStack {
@@ -82,21 +88,6 @@ extension StringStack {
       }
     }
   }
-  //
-  //  func row(
-  //    at index: Int,
-  //    paddedTo width: Int,
-  //    with char: Character?
-  //  ) -> [Character] {
-  //    guard index < stack.count else {
-  //      return char.map { .padded(with: $0, count: width) } ?? []
-  //    }
-  //    var row = stack[index]
-  //    if let char, row.count < width {
-  //      row += .padded(with: char, count: width - row.count)
-  //    }
-  //    return row
-  //  }
 }
 
 extension StringStack {

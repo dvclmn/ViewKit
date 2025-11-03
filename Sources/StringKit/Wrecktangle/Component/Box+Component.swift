@@ -8,10 +8,10 @@
 import Foundation
 
 extension Box {
-  public protocol Component: Codable, Sendable {
+  public protocol Component: Codable, Sendable, Equatable {
 //    func makeLines() -> [Box.Line]
     func makeLines(using engine: Box.Engine) -> [Box.Line]
   }
 }
 
-extension Array: Codable where Element == Box.Component {}
+//extension Array: Codable where Element == Box.Component {}

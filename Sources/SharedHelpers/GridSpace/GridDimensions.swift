@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-public struct GridDimensions: Sendable, Equatable, Hashable {
+public struct GridDimensions: Codable, Sendable, Equatable, Hashable {
   public let width: Int
   public let height: Int
   

@@ -52,13 +52,16 @@ public struct HeaderBoxView: View {
 
 extension HeaderBoxView {
   private var textOutput: AttributedString {
-    HeaderBox(
-      header: title ?? "Header",
-      content: content,
-      width: gridWidth ?? 10,
-      glyphSet: glyphSet,
-      frameStyle: frameStyle
-    ).attributedString
+    Box {
+      Box.Header("Some text")
+    }.plainText
+//    HeaderBox(
+//      header: title ?? "Header",
+//      content: content,
+//      width: gridWidth ?? 10,
+//      glyphSet: glyphSet,
+//      frameStyle: frameStyle
+//    ).attributedString
   }
 }
 

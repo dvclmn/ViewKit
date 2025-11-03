@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
+import EnumMacros
 import SharedHelpers
 import SwiftUI
-import EnumMacros
 
 extension Box {
 
@@ -35,7 +35,7 @@ extension Box {
   ///
   /// No 'this fun glyph', and this one, and so on.
   @CaseDetection
-  public enum PartType: Hashable, Codable {
+  public enum PartType: Hashable, Codable, Sendable {
     case horizontal(HorizontalLocation)
     case vertical(VerticalLocation)
     case join(Box.JoinType)
@@ -80,7 +80,7 @@ extension Box.PartType {
   ///   ────
   ///
   /// ```
-  public enum HorizontalLocation: Hashable, Codable {
+  public enum HorizontalLocation: Hashable, Codable, Sendable {
     case top
     case bottom
     case interior  // Aka Divider/Spacer
@@ -92,9 +92,9 @@ extension Box.PartType {
     case interior  // Aka Divider/Spacer
   }
 
-//  public enum LineSegment {
-//    case capLeading
-//    case capTrailing
-//  }
+  //  public enum LineSegment {
+  //    case capLeading
+  //    case capTrailing
+  //  }
 
 }
