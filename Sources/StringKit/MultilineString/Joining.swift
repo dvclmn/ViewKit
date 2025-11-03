@@ -16,70 +16,67 @@ public func += (lhs: inout StringStack, rhs: StringStack) {
   lhs = lhs + rhs
 }
 
-/// For repeating a `StringStack`
-public func * (lhs: StringStack, rhs: Int) -> StringStack {
-  var result = StringStack([])
-  for _ in 0..<rhs {
-    result = result + lhs
-  }
-  return result
-}
-
-
 extension StringStack {
+  public static func joined(
+    _ stacks: [StringStack],
+    along axis: Axis,
+    padding: Character? = nil
+  ) -> StringStack {
+    return stacks.reduce(StringStack([])) { partial, stack in
+      StringStack.joined(partial, stack, along: axis, padding: padding)
+    }
+  }
 
   /// Right now, if padding is nil, shorter rows or columns simply “disappear” —
   /// this can lead to jagged edges. You might prefer to default to space
   /// padding when widths/heights don’t match, unless nil is explicitly
   /// intended to mean “truncate”.
-  
+
   /// Explicit handling could help readability:
   /// `let padChar = padding ?? " "`
   public static func joined(
-    _ strings: StringStack...,
+    _ stacks: StringStack...,
     along axis: Axis,
     padding: Character? = nil
   ) -> StringStack {
-    strings.reduce(StringStack([])) { partial, string in
+    stacks.reduce(StringStack([])) { partial, string in
       switch axis {
         case .horizontal:
           partial.joinedHorizontally(with: string, padding: padding)
-          
+
         case .vertical:
           partial.joinedVertically(with: string, padding: padding)
       }
     }
   }
-  
-  func joinedHorizontally(
+
+  private func joinedHorizontally(
     with other: StringStack,
     padding: Character? = nil
   ) -> StringStack {
     let maxHeight = Swift.max(self.height, other.height)
     var result = StringStack([])
-    
+
     for i in 0..<maxHeight {
       let left = self.row(at: i, paddedTo: self.width, with: padding)
       let right = other.row(at: i, paddedTo: other.width, with: padding)
       result.append(left + right)
     }
-    
     return result
   }
-  
-  func joinedVertically(with other: StringStack, padding: Character? = nil) -> StringStack {
+
+  private func joinedVertically(with other: StringStack, padding: Character? = nil) -> StringStack {
     let maxWidth = Swift.max(width, other.width)
     var result = self
-    
+
     for i in 0..<other.height {
       let row = other.row(at: i, paddedTo: maxWidth, with: padding)
       result.append(row)
     }
-    
+
     return result
   }
 }
-
 
 //extension StringStack {
 //

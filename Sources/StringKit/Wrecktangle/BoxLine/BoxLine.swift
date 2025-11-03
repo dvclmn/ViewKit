@@ -53,9 +53,10 @@ extension Box.Line {
     let stackBody = leading.buildStack(using: theme)
     let stackTrailing = leading.buildStack(using: theme)
 
-    #warning("Need to use the right tools from StringStack")
-    return stackLeading + stackBody + stackTrailing
-//    let result = 
+//    #warning("Need to use the right tools from StringStack")
+//    return stackLeading + stackBody + stackTrailing
+    return StringStack.joined(stackLeading, stackBody, stackTrailing, along: .vertical)
+//    let result =
   }
 
   public static func joinLines(

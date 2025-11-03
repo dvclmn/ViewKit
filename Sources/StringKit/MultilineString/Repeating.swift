@@ -6,36 +6,48 @@
 //
 
 extension StringStack {
+  /// See ``StringKit/*(lhs:rhs:)`` for `*` operator used here
+  func repeated(_ times: Int) -> StringStack {
+    self * times
+  }
+  
+  public func padded(
+    to width: Int,
+    with character: Character
+  ) -> StringStack {
+    var result = StringStack([])
+    for row in 0..<self.height {
+      result.append(self.row(at: row, paddedTo: width, with: character))
+    }
+    return result
+  }
 
   public func repeatHorizontally(
-    toWidth width: Int,
+    to targetWidth: Int,
     paddingCharacter: Character = " ",
-    trimMethod: TrimMethod = .crop
+    trimMethod: TrimMethod
   ) -> StringStack {
 
-    guard !self.isEmpty, width > 0 else { return StringStack([]) }
+    guard !self.isEmpty, targetWidth > 0 else { return StringStack([]) }
 
     let patternWidth = self.width
-    let patternHeight = self.height
-    // Early return if no repetition needed
-    guard patternWidth < width else {
+//    let patternHeight = self.height
+
+    /// Early return if no repetition needed
+    guard patternWidth < targetWidth else {
       switch trimMethod {
         case .crop:
-          return self.cropped(toWidth: width)
+          return self.cropped(toWidth: targetWidth)
+          
         case .leaveSpace:
-          // Use your existing padding approach
-          var result = StringStack([])
-          for row in 0..<patternHeight {
-            result.append(self.row(at: row, paddedTo: width, with: paddingCharacter))
-          }
-          return result
+          return self.padded(to: targetWidth, with: paddingCharacter)
       }
     }
 
-    let fullRepetitions = width / patternWidth
-    let remainder = width % patternWidth
+    let fullRepetitions = targetWidth / patternWidth
+    let remainder = targetWidth % patternWidth
 
-    // Create array of stacks to join
+    /// Create array of stacks to join
     var stacksToJoin = Array(repeating: self, count: fullRepetitions)
 
     if remainder > 0 {
@@ -43,22 +55,46 @@ extension StringStack {
       switch trimMethod {
         case .crop:
           remainderStack = self.cropped(toWidth: remainder)
+          
         case .leaveSpace:
           remainderStack = StringStack(
             self.stack.map { row in
-              row.prefix(remainder) + .padded(with: paddingCharacter, count: Swift.max(0, remainder - row.count))
+              row.prefix(remainder) + .padded(
+                with: paddingCharacter,
+                count: Swift.max(0, remainder - row.count)
+              )
             }
           )
       }
       stacksToJoin.append(remainderStack)
-    }
+    } // END remainder check
 
-    return stacksToJoin.reduce(StringStack([])) { result, stack in
-      result.joinedHorizontally(with: stack, padding: trimMethod == .leaveSpace ? paddingCharacter : nil)
-    }
+//    let result = stacksToJoin.reduce(StringStack([])) { partial, stack in
+//      StringStack.joined(partial, stack, along: .horizontal, padding: trimMethod.isLeaveSpace ? paddingCharacter : nil)
+//    }
+
+    return Self.joined(
+      stacksToJoin,
+      along: .horizontal,
+      padding: trimMethod.isLeaveSpace ? paddingCharacter : nil
+    )
+
+    //    return stacksToJoin.reduce(StringStack([])) { result, stack in
+    //      result.joinedHorizontally(with: stack, padding: trimMethod.isLeaveSpace ? paddingCharacter : nil)
+    //    }
   }
 
   private func cropped(toWidth width: Int) -> StringStack {
     StringStack(self.stack.map { Array($0.prefix(width)) })
   }
+}
+
+// MARK: - Repeating operator
+/// For repeating a `StringStack`
+public func * (lhs: StringStack, rhs: Int) -> StringStack {
+  var result = StringStack([])
+  for _ in 0..<rhs {
+    result = result + lhs
+  }
+  return result
 }
