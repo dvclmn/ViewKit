@@ -43,6 +43,7 @@ public struct HeaderBox {
 
     self.header = header
     self.content = content
+    self.theme = theme
 //    self.config = config
     self.width = width
   }

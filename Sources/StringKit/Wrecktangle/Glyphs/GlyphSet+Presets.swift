@@ -90,10 +90,10 @@ extension Box.GlyphSet {
       Box.GlyphType.join(x: .increased, y: .increased, type: .leading): "L",
       Box.GlyphType.join(x: .increased, y: .increased, type: .trailing): "R",
 
-      Box.GlyphType.corner(.regular, type: .topLeading): "r",
-      Box.GlyphType.corner(.regular, type: .topTrailing): "a",
-      Box.GlyphType.corner(.regular, type: .bottomLeading): "m",
-      Box.GlyphType.corner(.regular, type: .bottomTrailing): "s",
+      Box.GlyphType.corner(.standard, type: .topLeading): "r",
+      Box.GlyphType.corner(.standard, type: .topTrailing): "a",
+      Box.GlyphType.corner(.standard, type: .bottomLeading): "m",
+      Box.GlyphType.corner(.standard, type: .bottomTrailing): "s",
 
     ], sharp)
 

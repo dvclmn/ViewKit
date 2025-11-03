@@ -68,7 +68,7 @@ extension BoxView {
 
   private var boxText: String? {
     guard let w = dimensions?.width, let h = dimensions?.height else { return nil }
-    let text = ViewBox(
+    let text = FrameBox(
       width: w,
       height: h,
       theme: Box.Theme(

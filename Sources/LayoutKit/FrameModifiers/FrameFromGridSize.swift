@@ -11,14 +11,14 @@ import SwiftUI
 public struct FrameFromGridSize: ViewModifier {
   @Environment(\.unitSize) private var unitSize
 
-  let width: Int
+  let width: Int?
   let height: Int?
   let alignment: Alignment
 
   public func body(content: Content) -> some View {
     content
       .frame(
-        width: width.toScreenLength(along: .horizontal, using: unitSize),
+        width: width?.toScreenLength(along: .horizontal, using: unitSize),
         height: height?.toScreenLength(along: .vertical, using: unitSize),
         alignment: alignment
       )
@@ -76,7 +76,7 @@ extension View {
   }
 
   public func frameFromGridSize(
-    width: Int,
+    width: Int?,
     height: Int?,
     alignment: Alignment = .center
   ) -> some View {

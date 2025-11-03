@@ -6,12 +6,12 @@
 //
 
 extension Box.Line {
-  public func render(toTotalWidth totalWidth: Int) -> String {
-    let availableForBody = max(0, totalWidth - (leading.width + trailing.width))
-    return leading.render()
-    + body.render(toWidth: availableForBody)
-    + trailing.render()
-  }
+//  public func render(toTotalWidth totalWidth: Int) -> String {
+//    let availableForBody = max(0, totalWidth - (leading.width + trailing.width))
+//    return leading.render()
+//    + body.render(toWidth: availableForBody)
+//    + trailing.render()
+//  }
   
   
 //  func render(width: Int) -> String {

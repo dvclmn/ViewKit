@@ -17,7 +17,7 @@ extension Box {
 
     public init(
       glyphSet: GlyphSet = .rounded,
-      frameStyle: FrameStyle,
+      frameStyle: FrameStyle = .single(),
       padding: GridDimensions = 1
     ) {
       self.glyphSet = glyphSet
@@ -25,4 +25,8 @@ extension Box {
       self.padding = padding
     }
   }
+}
+
+extension Box.Theme {
+  public static let `default`: Box.Theme = .init()
 }

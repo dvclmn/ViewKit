@@ -19,7 +19,7 @@ extension HeaderBox {
 
     let top = builder.structureLine(type: .top)
     let header = builder.textLine(content: header)
-    let divider = builder.structureLine(type: .divider)
+    let divider = builder.structureLine(type: .divider())
     let content = builder.textLine(content: content.toString)
     let bottom = builder.structureLine(type: .bottom)
 

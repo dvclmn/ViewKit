@@ -7,13 +7,16 @@
 
 extension Box.Line {
   public enum LineType: Hashable, Sendable {
-    case text(content: String, lineLimit: Int = 0)
+    case text(
+      content: String,
+      lineLimit: Int = 0
+    )
     case structure(StructureType)
     case blank
   }
   public enum StructureType: Hashable, Sendable {
     case top
-    case divider
+    case divider(String = "-")
     case bottom
   }
 }

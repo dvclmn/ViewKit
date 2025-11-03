@@ -33,88 +33,88 @@
 ///
 /// ```
 
-extension Box.Theme {
+//extension Box.Theme {
+//
+//  public struct Shadow: Sendable {
+//    var type: ShadowType
+//    var lightSource: Box.LightSource
+//    var strength: ShadowStrength
+//
+//    public init(
+//      type: ShadowType = .simple,
+//      lightSource: Box.LightSource = .topTrailing,
+//      strength: ShadowStrength = .standard
+//    ) {
+//      self.type = type
+//      self.lightSource = lightSource
+//      self.strength = strength
+//    }
+//  }
+//}
 
-  public struct Shadow: Sendable {
-    var type: ShadowType
-    var lightSource: Box.LightSource
-    var strength: ShadowStrength
-
-    public init(
-      type: ShadowType = .simple,
-      lightSource: Box.LightSource = .topTrailing,
-      strength: ShadowStrength = .standard
-    ) {
-      self.type = type
-      self.lightSource = lightSource
-      self.strength = strength
-    }
-  }
-}
-
-extension Box.Theme.Shadow {
-
-  /// What do we need to know to create a shadow for a side?
-  ///
-  /// 1. Dimensions — only 1x character high for text lines, but need
-  /// height to make sure I match structural lines
-  /// 2. Whether it repeats horizontally
-  /// 3. Alignment based on light source
-  ///
-
-  /// Referring to horizontal space only
-  ///
-  public var reservedSpace: Int {
-    switch type {
-      case .simple:
-        1
-      case .none:
-        0
-    }
-  }
-
-  public enum ShadowType: Sendable {
-    case simple
-    case none
-  }  // END shadow type
-
-  public enum ShadowStrength: Sendable {
-    case light
-    case medium
-    case dark
-
-    public var character: Character {
-      switch self {
-        case .standard:
-          "░"
-        case .medium:
-          "▒"
-        case .dark:
-          "▓"
-      }
-    }
-  }
-
-}
-
-extension Box {
-
-  public enum LightSource: Sendable {
-    case topLeading
-    case topTrailing
-    case bottomLeading
-    case bottomTrailing
-
-    public func hasShadow(_ location: Box.PartType.VerticalLocation) -> Bool {
-      switch location {
-        case .leading:
-          self == .topLeading || self == .bottomLeading
-        case .trailing:
-          self == .topTrailing || self == .bottomTrailing
-        case .interior:
-          false
-      }
-    }
-
-  }  // END light source
-}
+//extension Box.Theme.Shadow {
+//
+//  /// What do we need to know to create a shadow for a side?
+//  ///
+//  /// 1. Dimensions — only 1x character high for text lines, but need
+//  /// height to make sure I match structural lines
+//  /// 2. Whether it repeats horizontally
+//  /// 3. Alignment based on light source
+//  ///
+//
+//  /// Referring to horizontal space only
+//  ///
+//  public var reservedSpace: Int {
+//    switch type {
+//      case .simple:
+//        1
+//      case .none:
+//        0
+//    }
+//  }
+//
+//  public enum ShadowType: Sendable {
+//    case simple
+//    case none
+//  }  // END shadow type
+//
+//  public enum ShadowStrength: Sendable {
+//    case light
+//    case medium
+//    case dark
+//
+//    public var character: Character {
+//      switch self {
+//        case .standard:
+//          "░"
+//        case .medium:
+//          "▒"
+//        case .dark:
+//          "▓"
+//      }
+//    }
+//  }
+//
+//}
+//
+//extension Box {
+//
+//  public enum LightSource: Sendable {
+//    case topLeading
+//    case topTrailing
+//    case bottomLeading
+//    case bottomTrailing
+//
+//    public func hasShadow(_ location: Box.PartType.VerticalLocation) -> Bool {
+//      switch location {
+//        case .leading:
+//          self == .topLeading || self == .bottomLeading
+//        case .trailing:
+//          self == .topTrailing || self == .bottomTrailing
+//        case .interior:
+//          false
+//      }
+//    }
+//
+//  }  // END light source
+//}

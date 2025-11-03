@@ -9,7 +9,7 @@ import LayoutKit
 import StringShared
 import SwiftUI
 
-public struct BoxTextView: View {
+public struct HeaderBoxView: View {
   @Environment(\.glyphSet) private var glyphSet
   @Environment(\.frameStyle) private var frameStyle
   @Environment(\.gridWidth) private var gridWidth
@@ -34,65 +34,65 @@ public struct BoxTextView: View {
 
   public var body: some View {
     Text(textOutput)
-      .characterSize(mode: .debounce(0.2)) { size in
-        updateIfChanged(&self.characterSize, to: size)
-      }
-      .setGridFrame(gridWidth, gridHeight)
-      .environment(\.unitSize, characterSize)
 
-      .gridGuide(opacity: 0.2)
-//      .overlay {
-//        GridGuideOverlay(opacity: 0.1)
-//          .isDebugMode(true)
-//      }
+      .gridSetup(.sfMono, fontSize: 28)
+    
+      .environment(\.isShowingGridGuide, true)
+      .frameFromGridSize(width: gridWidth, height: gridHeight)
+      .setGridFrame(gridWidth, gridHeight)
+    
+      .debugTextOverlay(
+        """
+        Width: \(gridWidth?.toString, default: "nil")
+        """)
+
   }
 }
 
-extension BoxTextView {
+extension HeaderBoxView {
   private var textOutput: AttributedString {
-    Box(
-      header: title,
+    HeaderBox(
+      header: title ?? "Header",
       content: content,
-      width: gridWidth ?? 20,
+      width: gridWidth ?? 10,
       glyphSet: glyphSet,
-      frameStyle: frameStyle,
-      counterStyle: .ruler
+      frameStyle: frameStyle
     ).attributedString
   }
 }
 
 #if DEBUG
 #Preview {
-  
+
   VStack(spacing: 14) {
-    
-    BoxTextView("I love boxes made of text") {
-      DummyContent.Strings.paragraphs[8].toAttributed
-    }
-    .setGridFrame(42)
-    
-    BoxTextView("Header title") {
+
+    //    BoxTextView("I love boxes made of text") {
+    //      DummyContent.Strings.paragraphs[8].toAttributed
+    //    }
+    //    .setGridFrame(42)
+
+    HeaderBoxView("Header title") {
       "Hello"
     }
-    .setGridFrame(20)
-    .setBoxStyle(glyphs: .double, frame: .double)
-    
-    BoxTextView {
-      "No header text"
-      "This is another line"
-    }
-    .setGridFrame(38)
-    .setBoxStyle(glyphs: .rounded, frame: .single)
-    
+    .setGridFrame(10)
+    .setBoxStyle(glyphs: .double, frame: .double(exterior: .increased, interior: .standard))
+
+    //    BoxTextView {
+    //      "No header text"
+    //      "This is another line"
+    //    }
+    //    .setGridFrame(38)
+    //    .setBoxStyle(glyphs: .rounded, frame: .single())
+
   }
   .textSelection(.enabled)
   .monospaced()
-//  .environment(\._lineHeightMultiple, 0.84)
+  //  .environment(\._lineHeightMultiple, 0.84)
   .frame(
     minWidth: 400,
     minHeight: 600
   )
-//  .frame(width: 370, height: 640)
+  //  .frame(width: 370, height: 640)
   .background(.black.opacity(0.6))
 }
 #endif

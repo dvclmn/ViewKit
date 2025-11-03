@@ -64,7 +64,7 @@ extension Box.Builder {
     content: String
   ) -> Box.Line {
 
-    let line = Box.Line(
+    return Box.Line(
       leading: .vertical(.leading),
       body: .text(content),
       trailing: .vertical(.trailing)
@@ -74,13 +74,13 @@ extension Box.Builder {
   /// The remaning width for text, after removing space
   /// reserved for structural elements
   public var widthForText: Int {
-    let capCount = config.theme.frameStyle.reservedDimensions.width
+    let capCount = theme.frameStyle.reservedDimensions.width
     return max(0, width - capCount)
   }
 
   public var heightForText: Int? {
     guard let height else { return nil }
-    let capCount = config.theme.frameStyle.reservedDimensions.height
+    let capCount = theme.frameStyle.reservedDimensions.height
     return max(0, height - capCount)
   }
 }

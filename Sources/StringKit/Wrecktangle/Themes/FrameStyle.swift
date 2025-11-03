@@ -10,10 +10,16 @@ import SharedHelpers
 extension Box {
   public enum FrameStyle: Sendable, Codable, Equatable {
     
-    case single(frame: Prominence, dividers: Prominence)
+    case single(
+      frame: Prominence = .increased,
+      dividers: Prominence = .standard
+    )
     
     /// Will make the dividers match the internal Prominence
-    case double(exterior: Prominence, interior: Prominence)
+    case double(
+      exterior: Prominence = .increased,
+      interior: Prominence = .standard
+    )
 //    case double(ProminenceArrangement)
   }
 }
