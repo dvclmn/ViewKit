@@ -101,26 +101,26 @@ extension BoxView {
   }
 }
 
-#if DEBUG
-#Preview {
-
-  VStack(spacing: 14) {
-
-    BoxView {
-      Text("I'm a SwiftUI View")
-      Text(DummyContent.Strings.paragraphs[8].toAttributed)
-    }
-
-    //        .gridFrame(42)
-    //        .boxStyle(glyphs: .double, frame: .double)
-
-  }
-  .textSelection(.enabled)
-  .monospaced()
-  .frame(
-    minWidth: 400,
-    minHeight: 600
-  )
-  .background(.black.opacity(0.6))
-}
-#endif
+//#if DEBUG
+//#Preview {
+//
+//  VStack(spacing: 14) {
+//
+//    BoxView {
+//      Text("I'm a SwiftUI View")
+//      Text(DummyContent.Strings.paragraphs[8].toAttributed)
+//    }
+//
+//    //        .gridFrame(42)
+//    //        .boxStyle(glyphs: .double, frame: .double)
+//
+//  }
+//  .textSelection(.enabled)
+//  .monospaced()
+//  .frame(
+//    minWidth: 400,
+//    minHeight: 600
+//  )
+//  .background(.black.opacity(0.6))
+//}
+//#endif

@@ -32,13 +32,13 @@ extension Box {
       trailing: Box.PartType
     ) {
       // Basic invariant: if body is text (single row), caps must be 1 high.
-      //      precondition(
-      //        !(body.type.isText && (leading.height > 1 || trailing.height > 1)),
-      //        """
-      //        Text lines must have single-character caps.
-      //        Leading: \(leading.height), Trailing: \(trailing.height)
-      //        """
-      //      )
+//            precondition(
+//              !(body.isText && (leading.height > 1 || trailing.height > 1)),
+//              """
+//              Text lines must have single-character caps.
+//              Leading: \(leading.height), Trailing: \(trailing.height)
+//              """
+//            )
       self.leading = leading
       self.body = body
       self.trailing = trailing
@@ -51,20 +51,28 @@ extension Box.Line {
     lines: [Box.Line],
     with theme: Box.Theme
   ) -> StringStack {
-    let stack: StringStack = lines.reduce(into: StringStack("")) {
-      partial,
-      line in
-      partial = StringStack.joined(
-        partial, line.output(with: theme),
-        along: .vertical,
-        padding: " "
-      )
-
-      //    return lines.reduce(into: StringStack("")) { partial, line in
-      //      partial += line.output(with: theme)
-
+    
+    let stacks = lines.map { line in
+      line.output(with: theme)
     }
-    return stack
+    
+    let joined = StringStack.joined(stacks, along: .vertical)
+    return joined
+    
+//    let stack: StringStack = lines.reduce(into: StringStack("")) {
+//      partial,
+//      line in
+//      partial = StringStack.joined(
+//        partial, line.output(with: theme),
+//        along: .vertical,
+//        padding: " "
+//      )
+//
+//      //    return lines.reduce(into: StringStack("")) { partial, line in
+//      //      partial += line.output(with: theme)
+//
+//    }
+//    return stack
   }
 
   public static func joined(
@@ -80,7 +88,7 @@ extension Box.Line {
     let stackBody = leading.buildStack(using: theme)
     let stackTrailing = leading.buildStack(using: theme)
 
-    return StringStack.joined(stackLeading, stackBody, stackTrailing, along: .vertical)
+    return StringStack.joined(stackLeading, stackBody, stackTrailing, along: .horizontal)
   }
 
   //  public static func joinLines(
@@ -97,6 +105,8 @@ extension Box.Line {
   //  public var width: Int { leading.width + body.width + trailing.width }
   //  public var height: Int { max(leading.height, body.height, trailing.height) }
 }
+
+
 
 //extension Box {
 //  public struct Line {

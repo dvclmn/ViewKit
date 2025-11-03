@@ -38,7 +38,11 @@ public struct StringStack {
 extension StringStack {
 
   public var string: String { stack.map { String($0) }.joined("\n") }
-  public var height: Int { stack.count }
+  public var height: Int {
+    let value = stack.count
+    print("Stack Height: \(value)")
+    return value
+  }
   public var width: Int { stack.map { $0.count }.max() ?? 0 }
 
   public var rows: [String] { stack.map { String($0) } }
@@ -98,9 +102,9 @@ extension StringStack: ExpressibleByUnicodeScalarLiteral {
   }
 }
 
-extension StringStack: CustomStringConvertible {
-  public var description: String { string }
-}
+//extension StringStack: CustomStringConvertible {
+//  public var description: String { string }
+//}
 
 extension StringStack: Sequence {
 

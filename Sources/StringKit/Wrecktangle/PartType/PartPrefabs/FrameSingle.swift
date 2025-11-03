@@ -64,6 +64,16 @@ extension Box.PartType {
           }
 
         case .corner(let cornerType):
+//          switch cornerType {
+//            case .topLeading:
+//              Box.GlyphType.corner(frameProm, type: .topLeading)
+//            case .topTrailing:
+//              <#code#>
+//            case .bottomLeading:
+//              <#code#>
+//            case .bottomTrailing:
+//              <#code#>
+//          }
           Box.GlyphType.corner(frameProm, type: cornerType)
 
         case .text:

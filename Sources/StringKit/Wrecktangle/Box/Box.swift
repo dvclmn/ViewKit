@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedHelpers
 
 public struct Box: Sendable {
 
@@ -29,9 +30,18 @@ public struct Box: Sendable {
       height: nil,
       theme: theme
     )
+    
     let lines = components.flatMap { $0.makeLines(using: engine) }
+    
+//    print("Lines, from the Builder components: \(lines.)")
+    dump(lines, name: "Box Lines", indent: 2)
+    
     let stack = Box.Line.joined(lines: lines, with: theme)
-    return stack.string
+    let stringResult = stack.string
+    
+//    print("String Result: \(stringResult)")
+    return stringResult
+    
   }
 }
 

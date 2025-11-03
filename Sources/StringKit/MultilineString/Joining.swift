@@ -40,12 +40,15 @@ extension StringStack {
   ) -> StringStack {
 
     let maxHeight = Swift.max(self.height, other.height)
+
     var result = StringStack([])
 
     for i in 0..<maxHeight {
-
+      print("Running through Rows in StringStack/joinedHorizontally. At Row \(i). Max Height is \(maxHeight)")
       let lhs = self[row: i]
       let rhs = other[row: i]
+      
+      print("LHS Row: \(lhs), RHS Row: \(rhs)")
 
       /// Create and append padding
       let lhsPadding = Self.createPadding(with: char, width: self.width)
@@ -97,7 +100,6 @@ extension StringStack {
     return Array(repeating: char, count: width)
   }
 }
-
 
 /// Assumes horizontal joining
 //public func + (lhs: StringStack, rhs: StringStack) -> StringStack {

@@ -8,22 +8,22 @@ import Foundation
 
 @resultBuilder
 public enum BoxBuilder {
-  public static func buildBlock(_ components: [Box.Component]...) -> [Box.Component] {
+  public static func buildBlock(_ components: [any Box.Component]...) -> [any Box.Component] {
     components.flatMap { $0 }
   }
 
-  public static func buildExpression(_ string: String) -> [Box.Component] {
+  public static func buildExpression(_ string: String) -> [any Box.Component] {
     [Box.Text(string)]
   }
 
-  public static func buildOptional(_ component: [Box.Component]?) -> [Box.Component] {
+  public static func buildOptional(_ component: [any Box.Component]?) -> [any Box.Component] {
     component ?? []
   }
 
-  public static func buildEither(first: [Box.Component]) -> [Box.Component] { first }
-  public static func buildEither(second: [Box.Component]) -> [Box.Component] { second }
+  public static func buildEither(first: [any Box.Component]) -> [any Box.Component] { first }
+  public static func buildEither(second: [any Box.Component]) -> [any Box.Component] { second }
 
-  public static func buildArray(_ components: [[Box.Component]]) -> [Box.Component] {
+  public static func buildArray(_ components: [[any Box.Component]]) -> [any Box.Component] {
     components.flatMap { $0 }
   }
 }
@@ -31,12 +31,12 @@ public enum BoxBuilder {
 extension BoxBuilder {
 
   /// Add support for a single Array...
-  public static func buildExpression(_ component: [Box.Component]) -> [Box.Component] {
-    component
-  }
+//  public static func buildExpression(_ component: [any Box.Component]) -> [any Box.Component] {
+//    component
+//  }
 
   /// ... and a single Block
-  public static func buildExpression(_ component: Box.Component) -> [Box.Component] {
+  public static func buildExpression(_ component: any Box.Component) -> [any Box.Component] {
     [component]
   }
 

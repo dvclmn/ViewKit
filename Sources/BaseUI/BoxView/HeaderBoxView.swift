@@ -34,18 +34,18 @@ public struct HeaderBoxView: View {
 
   public var body: some View {
     Text(textOutput)
-//      .fixedSize()
+      //      .fixedSize()
       .frameFromGridSize(width: gridWidth, height: gridHeight)
       .gridSetup(.sfMono, fontSize: 28)
 
       .environment(\.isShowingGridGuide, true)
 
-//      .debugTextOverlay(
-//        """
-//        Width: \(gridWidth?.toString, default: "nil")
-//        Text Content: \(content.toString)
-//        """
-//      ).disabled(true)
+    //      .debugTextOverlay(
+    //        """
+    //        Width: \(gridWidth?.toString, default: "nil")
+    //        Text Content: \(content.toString)
+    //        """
+    //      ).disabled(true)
 
   }
 }
@@ -54,61 +54,62 @@ extension HeaderBoxView {
   private var textOutput: String {
     let result = Box {
       Box.Top()
-      Box.Header("Some text")
-      "What is this?"
-      "And another?"
-      Box.Divider()
-      Box.Bottom()
-      
+      if let title {
+        Box.Header(title)
+        Box.Divider()
+      }
+      content.toString
     }.plainText
-    print("Box result: \(result)")
+    //    let result = Box {
+    ////      Box.Top()
+    ////      Box.Header("Some text")
+    //      "What is this?"
+    ////      "And another?"
+    ////      Box.Divider()
+    ////      Box.Bottom()
+    //
+    //    }.plainText
+//    print("Box result: \(result)")
     return result
-//    HeaderBox(
-//      header: title ?? "Header",
-//      content: content,
-//      width: gridWidth ?? 10,
-//      glyphSet: glyphSet,
-//      frameStyle: frameStyle
-//    ).attributedString
   }
 }
 
-
 #if DEBUG
 #Preview(traits: .size(.normal)) {
-  
+
   VStack(spacing: 14) {
-    
+
     //    BoxTextView("I love boxes made of text") {
     //      DummyContent.Strings.paragraphs[8].toAttributed
     //    }
     //    .setGridFrame(42)
-    
+
     HeaderBoxView("Single Frame Style") {
       "Short text content"
+      "Felix and Isla are cool"
     }
     .setBoxStyle(
       glyphs: .double,
       frame: .single(frame: .increased, dividers: .standard)
     )
 
-    HeaderBoxView("Double Frame Style") {
-      "Hello, I'm some text content in this box."
-      "Isn't that great!"
-    }
-    .setBoxStyle(
-      glyphs: .double,
-      frame: .double(exterior: .increased, interior: .standard)
-    )
-//    .setGridFrame(10)
-    
+//    HeaderBoxView("Double Frame Style") {
+//      "Hello, I'm some text content in this box."
+//      "Isn't that great!"
+//    }
+//    .setBoxStyle(
+//      glyphs: .double,
+//      frame: .double(exterior: .increased, interior: .standard)
+//    )
+    //    .setGridFrame(10)
+
     //    BoxTextView {
     //      "No header text"
     //      "This is another line"
     //    }
     //    .setGridFrame(38)
     //    .setBoxStyle(glyphs: .rounded, frame: .single())
-    
+
   }
   .textSelection(.enabled)
   .monospaced()

@@ -6,7 +6,7 @@
 //
 
 extension Box {
-  public enum CornerType: Hashable, Sendable, Codable {
+  public enum CornerType: String, Hashable, Sendable, Codable {
     case topLeading
     case topTrailing
     case bottomLeading

@@ -19,9 +19,15 @@ extension Box.PartType {
   ) -> Box.GlyphStack {
     switch frameStyle {
       case .single(let frameProm, let divProm):
-        singleFrame(frameProm: frameProm, divProm: divProm)
+        let single = singleFrame(frameProm: frameProm, divProm: divProm)
+        print("GlyphStack for PartType \(self), with Single FrameStyle: \(single)")
+        return single
+        
+//        singleFrame(frameProm: frameProm, divProm: divProm)
       case .double(let extProm, let intProm):
-        double(extProm: extProm, intProm: intProm)
+        let doubleResult = double(extProm: extProm, intProm: intProm)
+        print("GlyphStack for PartType \(self), with Double FrameStyle: \(doubleResult)")
+        return doubleResult
     }
   }
 }
@@ -36,6 +42,7 @@ extension StringStack {
         theme.glyphSet.character(for: glyphType)
       }
     }
+    print("Let's check the produced grid (`[[Character]]`), from the GlyphStack-based init for StringStack: \(grid)")
     self.init(grid)
   }
 }

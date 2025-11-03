@@ -40,7 +40,7 @@ extension Box {
     case vertical(VerticalLocation)
     case join(Box.JoinType)
     case corner(Box.CornerType)
-    case text(String)
+//    case text(String)
     case blank
 
     /// Describes whether this Part be repeated dynamically
@@ -55,13 +55,26 @@ extension Box {
       switch self {
         case .horizontal, .blank: .repeatable(axis: .horizontal)
         case .vertical: .repeatable(axis: .vertical)
-        case .join, .corner, .text: .fixed
+        case .join, .corner: .fixed
+//        case .join, .corner, .text: .fixed
       }
     }
   }  // END part type
 }
 
 extension Box.PartType {
+  
+  var name: String {
+    switch self {
+      case .horizontal(let loc): "horizontal/\(loc.rawValue)"
+      case .vertical(let loc): "vertical/\(loc.rawValue)"
+      case .join(let joinType): "join/\(joinType.rawValue)"
+      case .corner(let cornerType): "corner/\(cornerType.rawValue)"
+//      case .text(let string): "text/\(string.truncate(to: 16))"
+      case .blank: "blank"
+    }
+    
+  }
 
   /// This introduces the concept of *valid orientation*;
   /// for the top of a Box, the Part must be constructed with
@@ -80,13 +93,13 @@ extension Box.PartType {
   ///   ────
   ///
   /// ```
-  public enum HorizontalLocation: Hashable, Codable, Sendable {
+  public enum HorizontalLocation: String, Hashable, Codable, Sendable {
     case top
     case bottom
     case interior  // Aka Divider/Spacer
   }
 
-  public enum VerticalLocation: Hashable, Sendable, Codable {
+  public enum VerticalLocation: String, Hashable, Sendable, Codable {
     case leading
     case trailing
     case interior  // Aka Divider/Spacer
@@ -97,4 +110,10 @@ extension Box.PartType {
   //    case capTrailing
   //  }
 
+}
+
+extension Box.PartType: CustomStringConvertible {
+  public var description: String {
+    return "PartType/\(name)"
+  }
 }

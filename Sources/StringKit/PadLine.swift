@@ -303,7 +303,7 @@ public struct TextCore {
 
         """
 
-      print(!contentIsSplit ? metrics : "")
+//      print(!contentIsSplit ? metrics : "")
 
       return result
     }
