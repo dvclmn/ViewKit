@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-extension Box.Line {
+//extension Box.Line {
 //  public func render(toTotalWidth totalWidth: Int) -> String {
 //    let availableForBody = max(0, totalWidth - (leading.width + trailing.width))
 //    return leading.render()
@@ -21,7 +21,7 @@ extension Box.Line {
 //    let bodyRendered = body.render(toWidth: bodyWidth)
 //    return leading.render() + bodyRendered + trailing.render()
 //  }
-}
+//}
 
 //extension Box.Line {
 //

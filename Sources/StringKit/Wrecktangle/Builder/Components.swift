@@ -10,21 +10,21 @@ import Foundation
 extension Box {
   public struct Top: Component, Codable {
     public init() {}
-    public func makeLines(using engine: Box.Engine) -> [Box.Line] {
+    public func makeLines(using engine: Box.Engine) -> [Box.LineType] {
       [engine.structureLine(type: .top)]
     }
   }
 
   public struct Divider: Component, Codable {
     public init() {}
-    public func makeLines(using engine: Box.Engine) -> [Box.Line] {
+    public func makeLines(using engine: Box.Engine) -> [Box.LineType] {
       [engine.structureLine(type: .divider)]
     }
   }
 
   public struct Bottom: Component, Codable {
     public init() {}
-    public func makeLines(using engine: Box.Engine) -> [Box.Line] {
+    public func makeLines(using engine: Box.Engine) -> [Box.LineType] {
       [engine.structureLine(type: .bottom)]
     }
   }
@@ -33,7 +33,7 @@ extension Box {
     let content: String
     public init(_ content: String) { self.content = content }
 
-    public func makeLines(using engine: Box.Engine) -> [Box.Line] {
+    public func makeLines(using engine: Box.Engine) -> [Box.LineType] {
 //      print("Created a Box.Text: \(content)")
       return engine.textLines(content)
     }
@@ -43,7 +43,7 @@ extension Box {
     let text: String
     public init(_ text: String) { self.text = text }
 
-    public func makeLines(using engine: Box.Engine) -> [Box.Line] {
+    public func makeLines(using engine: Box.Engine) -> [Box.LineType] {
       [engine.structureLine(type: .top)]
         + engine.textLines(text)
         + [engine.structureLine(type: .divider)]

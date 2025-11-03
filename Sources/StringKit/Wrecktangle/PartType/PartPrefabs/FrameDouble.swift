@@ -181,9 +181,9 @@ extension Box.PartType {
         }
       //        doubleCorner(for: cornerType)
 
-      case .text:
+//      case .text:
         /// Not sure yet what to do for text
-        [[Box.GlyphType.blank]]
+//        [[Box.GlyphType.blank]]
 
       case .blank:
         [[Box.GlyphType.blank]]

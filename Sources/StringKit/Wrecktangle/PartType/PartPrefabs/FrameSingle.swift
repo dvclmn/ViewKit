@@ -76,8 +76,8 @@ extension Box.PartType {
 //          }
           Box.GlyphType.corner(frameProm, type: cornerType)
 
-        case .text:
-          nil
+//        case .text:
+//          nil
 
         case .blank:
           Box.GlyphType.blank

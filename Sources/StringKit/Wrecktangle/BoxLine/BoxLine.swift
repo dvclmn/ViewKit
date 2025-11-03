@@ -21,7 +21,24 @@ import Foundation
 /// ``Box/Config``
 
 extension Box {
-  public struct Line: Codable, Sendable {
+
+  public struct TextLine: Codable, Sendable {
+    public let leading: Box.PartType
+    public let text: String
+    public let trailing: Box.PartType
+
+    public init(
+      leading: Box.PartType,
+      text: String,
+      trailing: Box.PartType
+    ) {
+      self.leading = leading
+      self.text = text
+      self.trailing = trailing
+    }
+  }
+
+  public struct StructureLine: Codable, Sendable {
     public let leading: Box.PartType
     public let body: Box.PartType
     public let trailing: Box.PartType
@@ -32,64 +49,121 @@ extension Box {
       trailing: Box.PartType
     ) {
       // Basic invariant: if body is text (single row), caps must be 1 high.
-//            precondition(
-//              !(body.isText && (leading.height > 1 || trailing.height > 1)),
-//              """
-//              Text lines must have single-character caps.
-//              Leading: \(leading.height), Trailing: \(trailing.height)
-//              """
-//            )
+      //            precondition(
+      //              !(body.isText && (leading.height > 1 || trailing.height > 1)),
+      //              """
+      //              Text lines must have single-character caps.
+      //              Leading: \(leading.height), Trailing: \(trailing.height)
+      //              """
+      //            )
       self.leading = leading
       self.body = body
       self.trailing = trailing
     }
   }
 }
-extension Box.Line {
+extension Box.StructureLine {
 
-  public static func joined(
-    lines: [Box.Line],
+  func build(theme: Box.Theme) -> StringStack {
+    StringStack.joined(
+      leading.buildStack(using: theme),
+      body.buildStack(using: theme),
+      trailing.buildStack(using: theme),
+      along: .horizontal
+    )
+  }
+
+  static func structure(
+    for type: Box.StructureType,
     with theme: Box.Theme
   ) -> StringStack {
-    
-    let stacks = lines.map { line in
-      line.output(with: theme)
+    switch type {
+      case .top:
+        Box.StructureLine(
+          leading: .corner(.topLeading),
+          body: .horizontal(.top),
+          trailing: .corner(.topTrailing)
+        ).build(theme: theme)
+
+      case .divider:
+        Box.StructureLine(
+          leading: .vertical(.leading),
+          body: .horizontal(.interior),
+          trailing: .vertical(.trailing),
+        ).build(theme: theme)
+
+      case .bottom:
+        Box.StructureLine(
+          leading: .corner(.bottomLeading),
+          body: .horizontal(.bottom),
+          trailing: .corner(.bottomTrailing)
+        ).build(theme: theme)
     }
-    
+
+  }
+}
+
+extension Box.LineType {
+
+  public static func joined(
+    lines: [Box.LineType],
+    //    lines: [Box.Line],
+    with theme: Box.Theme
+  ) -> StringStack {
+
+    let stacks = lines.map { line in
+      line.output(theme: theme)
+      //      line.(with: theme)
+    }
+
     let joined = StringStack.joined(stacks, along: .vertical)
     return joined
-    
-//    let stack: StringStack = lines.reduce(into: StringStack("")) {
-//      partial,
-//      line in
-//      partial = StringStack.joined(
-//        partial, line.output(with: theme),
-//        along: .vertical,
-//        padding: " "
-//      )
-//
-//      //    return lines.reduce(into: StringStack("")) { partial, line in
-//      //      partial += line.output(with: theme)
-//
-//    }
-//    return stack
+
+    //    let stack: StringStack = lines.reduce(into: StringStack("")) {
+    //      partial,
+    //      line in
+    //      partial = StringStack.joined(
+    //        partial, line.output(with: theme),
+    //        along: .vertical,
+    //        padding: " "
+    //      )
+    //
+    //      //    return lines.reduce(into: StringStack("")) { partial, line in
+    //      //      partial += line.output(with: theme)
+    //
+    //    }
+    //    return stack
   }
 
   public static func joined(
-    lines: Box.Line...,
+    lines: Box.LineType...,
     with theme: Box.Theme
   ) -> StringStack {
     Self.joined(lines: lines, with: theme)
   }
 
-  public func output(with theme: Box.Theme) -> StringStack {
-
-    let stackLeading = leading.buildStack(using: theme)
-    let stackBody = leading.buildStack(using: theme)
-    let stackTrailing = leading.buildStack(using: theme)
-
-    return StringStack.joined(stackLeading, stackBody, stackTrailing, along: .horizontal)
-  }
+  //  public func output(with theme: Box.Theme) -> StringStack {
+  //
+  //    switch self {
+  //      case .text(let content, let lineLimit):
+  //        <#code#>
+  //      case .structure(let type):
+  ////        let stackLeading = leading.buildStack(using: theme)
+  ////        let stackBody = leading.buildStack(using: theme)
+  ////        let stackTrailing = leading.buildStack(using: theme)
+  //
+  //        return StringStack.joined(
+  //          ,
+  //          stackBody,
+  //          stackTrailing,
+  //          along: .horizontal
+  //        )
+  //
+  //      case .blank:
+  //        <#code#>
+  //    }
+  //
+  //  }
 
   //  public static func joinLines(
   //    lines: Box.Line...,
@@ -105,8 +179,6 @@ extension Box.Line {
   //  public var width: Int { leading.width + body.width + trailing.width }
   //  public var height: Int { max(leading.height, body.height, trailing.height) }
 }
-
-
 
 //extension Box {
 //  public struct Line {

@@ -9,12 +9,12 @@ import Foundation
 
 extension Box.PartType {
   
-  func buildStack(using theme: Box.Theme) -> StringStack {
+  public func buildStack(using theme: Box.Theme) -> StringStack {
     let stack = glyphStack(with: theme.frameStyle)
     return StringStack(from: stack, theme: theme)
   }
 
-  func glyphStack(
+  private func glyphStack(
     with frameStyle: Box.FrameStyle
   ) -> Box.GlyphStack {
     switch frameStyle {

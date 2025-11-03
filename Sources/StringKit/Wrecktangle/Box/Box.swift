@@ -36,7 +36,8 @@ public struct Box: Sendable {
 //    print("Lines, from the Builder components: \(lines.)")
     dump(lines, name: "Box Lines", indent: 2)
     
-    let stack = Box.Line.joined(lines: lines, with: theme)
+    let stack = Box.LineType.joined(lines: lines, with: theme)
+//    let stack = Box.Line.joined(lines: lines, with: theme)
     let stringResult = stack.string
     
 //    print("String Result: \(stringResult)")

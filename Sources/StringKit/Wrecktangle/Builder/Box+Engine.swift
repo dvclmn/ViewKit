@@ -38,7 +38,7 @@ extension Box.Engine {
   public func textLines(
     _ content: String,
     lineLimit: Int = 0
-  ) -> [Box.Line] {
+  ) -> [Box.LineType] {
     let text = TextReflow(
       content,
       width: widthForText,
@@ -60,40 +60,43 @@ extension Box.Engine {
 
   func structureLine(
     type: Box.StructureType
-  ) -> Box.Line {
-    switch type {
-      case .top:
-        Box.Line(
-          leading: .corner(.topLeading),
-          body: .horizontal(.top),
-          trailing: .corner(.topTrailing)
-        )
-
-      case .divider:
-        Box.Line(
-          leading: .vertical(.leading),
-          body: .horizontal(.interior),
-          trailing: .vertical(.trailing),
-        )
-
-      case .bottom:
-        Box.Line(
-          leading: .corner(.bottomLeading),
-          body: .horizontal(.bottom),
-          trailing: .corner(.bottomTrailing)
-        )
-    }
+  ) -> Box.LineType {
+    return Box.LineType.structure(type)
+//    switch type {
+//      case .top:
+//        Box.Line(
+//          leading: .corner(.topLeading),
+//          body: .horizontal(.top),
+//          trailing: .corner(.topTrailing)
+//        )
+//
+//      case .divider:
+//        Box.Line(
+//          leading: .vertical(.leading),
+//          body: .horizontal(.interior),
+//          trailing: .vertical(.trailing),
+//        )
+//
+//      case .bottom:
+//        Box.Line(
+//          leading: .corner(.bottomLeading),
+//          body: .horizontal(.bottom),
+//          trailing: .corner(.bottomTrailing)
+//        )
+//    }
   }
 
   public func textLine(
     content: String
-  ) -> Box.Line {
+  ) -> Box.LineType {
+    
+    return Box.LineType.text(content: content, lineLimit: 0)
 //    print("Single Text Line: \(content)")
-    return Box.Line(
-      leading: .vertical(.leading),
-      body: .text(content),
-      trailing: .vertical(.trailing)
-    )
+//    return Box.LineType(
+//      leading: .vertical(.leading),
+//      body: .text(content),
+//      trailing: .vertical(.trailing)
+//    )
   }
 
   /// The remaning width for text, after removing space
