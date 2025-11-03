@@ -8,14 +8,6 @@
 import SwiftUI
 
 extension Array where Element: Hashable {
-  /// Notes on conversion from Array to Set:
-  ///
-  /// Duplicate handling is the big one. Arrays can contain duplicates, but Sets cannot. When you convert [1, 2, 2, 3] to a Set, you silently lose information - the resulting Set will only contain {1, 2, 3}. This might be intentional for deduplication, but could be surprising if someone expects all elements to be preserved.
-  ///
-  /// Element type constraints matter. Sets require their elements to conform to Hashable. If you put this on a generic Collection extension, it will only be available when the element type is Hashable, but this constraint might not be immediately obvious to callers.
-  /// Performance characteristics change dramatically. Collections might be optimized for sequential access, while Sets are optimized for membership testing. The conversion itself is O(n), but the usage patterns afterward will be completely different.
-  /// Ordering is lost. Collections maintain insertion/index order, but Sets don't guarantee any particular iteration order (though in practice Swift's Set maintains some ordering). Code that depends on element order will break.
-  /// Identity vs equality considerations. If your collection contains reference types, the Set will use the Hashable implementation, which typically relies on equality rather than identity. Two different instances that are "equal" will be deduplicated.
 
   public func toSet() -> Set<Element> {
     return Set(self)
@@ -27,34 +19,68 @@ extension Array where Element: Hashable {
 
 extension Array where Element: Collection {
 
-//  public func stacked(
-//    along axis: Axis,
-//    repeating count: Int
-//  ) -> [[Element.Element]] {
-//    switch axis {
-//      case .horizontal:
-//        stackedHorizontally(repeating: count)
-//      case .vertical:
-//        stackedHorizontally(repeating: count)
-//    }
-//  }
-/// Stacks the entire array vertically by repeating it `count` times.
-/// E.g.
-/// `[[A, B], [C, D]] vertically, count: 2`
-/// → `[[A, B], [C, D], [A, B], [C, D]]`
-  func stackedVertically(repeating count: Int) -> [[Element.Element]] {
-    (0..<count).flatMap { _ in
-      self.map { Array($0) }
+  public func stacked(along axis: Axis, repeating count: Int) -> [[Element.Element]] {
+    switch axis {
+      case .horizontal:
+        stackedHorizontally(repeating: count)
+      case .vertical:
+        stackedVertically(repeating: count)
     }
   }
-  
-  /// Stacks each inner array horizontally by repeating its contents `count` times.
-  /// E.g.
-  /// `[[A, B], [C, D]] horizontally, count: 2`
-  /// → `[[A, B, A, B], [C, D, C, D]]`
+
+  //  public func stacked(
+  //    along axis: Axis,
+  //    repeating count: Int
+  //  ) -> [[Element.Element]] {
+  //    switch axis {
+  //      case .horizontal:
+  //        stackedHorizontally(repeating: count)
+  //      case .vertical:
+  //        stackedHorizontally(repeating: count)
+  //    }
+  //  }
+
+  /// ```
+  /// let tile: [[Character]] = [
+  ///   ["═"],
+  ///   ["━"]
+  /// ]
+  ///
+  /// let v = tile.stackedVertically(repeating: 2)
+  /// print(v)
+  /// // [["═"], ["━"], ["═"], ["━"]]
+  ///
+  /// let h = tile.stackedHorizontally(repeating: 3)
+  /// print(h)
+  /// // [["═", "═", "═"], ["━", "━", "━"]]
+  ///
+  /// ```
+
+  /// Vertically repeats the array of collections.
+  /// e.g. `[[A, B], [C, D]] * 2 → [[A, B], [C, D], [A, B], [C, D]]`
+  func stackedVertically(repeating count: Int) -> [[Element.Element]] {
+    var result: [[Element.Element]] = []
+    result.reserveCapacity(self.count * count)
+
+    for _ in 0..<count {
+      for inner in self {
+        result.append(Array(inner))
+      }
+    }
+    return result
+  }
+
+  /// Horizontally repeats each collection within the array.
+  /// e.g. `[[A, B], [C, D]] * 2 → [[A, B, A, B], [C, D, C, D]]`
   func stackedHorizontally(repeating count: Int) -> [[Element.Element]] {
-    self.map { collection in
-      (0..<count).flatMap { _ in Array(collection) }
+    self.map { inner in
+      var row: [Element.Element] = []
+      row.reserveCapacity(inner.count * count)
+
+      for _ in 0..<count {
+        row.append(contentsOf: inner)
+      }
+      return row
     }
   }
 }
