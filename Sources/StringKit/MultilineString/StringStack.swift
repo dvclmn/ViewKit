@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack {
@@ -25,22 +26,47 @@ public struct StringStack {
   /// - Parameters:
   ///   - row: The row of characters to repeat.
   ///   - count: The number of times to repeat the row.
+  ///
+  /// Note: axis is not needed here, as rows are always
+  /// stacked vertically
   public init(
     repeating row: [Character],
-    along axis: Axis,
+//    along axis: Axis,
     count: Int
   ) {
     self.stack = Array(repeating: row, count: count)
   }
-  
+
   public init(
-    repeating stack: StringStack,
+    repeating stringStack: StringStack,
     along axis: Axis,
     count: Int
   ) {
-    for i in 
-    let stack = StringStack.joined(<#T##[StringStack]#>, along: <#T##Axis#>, padding: <#T##Character?#>)
-//    self.stack = Array(repeating: row, count: count)
+    switch axis {
+    case .horizontal:
+      self.stack = stringStack.stack.stackedVertically(repeating: count)
+    case .vertical:
+      self.stack = stringStack.stack.stackedVertically(repeating: count)
+    }
+//    let stacks = Array(repeating: stack, count: count)
+//    //    for i in 0..<count {
+//    let joined = StringStack.joined(stack, along: axis)
+//    self.stack = joined.stack
+//    
+//    
+//    public init(repeating stack: StringStack, count: Int, axis: Axis) {
+//      switch axis {
+//        case .vertical:
+//          self.stack = Array(repeating: stack.stack, count: count).flatMap { $0 }
+//        case .horizontal:
+//          self.stack = stack.stack.map { Array(repeating: $0, count: count).flatMap { $0 } }
+//      }
+//    }
+    
+    
+    
+    //    }
+    //    self.stack = Array(repeating: row, count: count)
   }
 }
 
@@ -49,7 +75,7 @@ extension StringStack {
   public var string: String { stack.map { String($0) }.joined("\n") }
   public var height: Int { stack.count }
   public var width: Int { stack.map { $0.count }.max() ?? 0 }
-  
+
   public var rows: [String] {
     stack.map { String($0) }
   }
@@ -68,7 +94,7 @@ extension StringStack {
   ///   - Setting with a row index greater than `height` has no effect.
   public subscript(row row: Int) -> [Character] {
     get {
-//      guard row < stack.count else { return [] }
+      //      guard row < stack.count else { return [] }
       return stack[safe: row] ?? []
     }
     set {
@@ -80,21 +106,21 @@ extension StringStack {
       }
     }
   }
-//
-//  func row(
-//    at index: Int,
-//    paddedTo width: Int,
-//    with char: Character?
-//  ) -> [Character] {
-//    guard index < stack.count else {
-//      return char.map { .padded(with: $0, count: width) } ?? []
-//    }
-//    var row = stack[index]
-//    if let char, row.count < width {
-//      row += .padded(with: char, count: width - row.count)
-//    }
-//    return row
-//  }
+  //
+  //  func row(
+  //    at index: Int,
+  //    paddedTo width: Int,
+  //    with char: Character?
+  //  ) -> [Character] {
+  //    guard index < stack.count else {
+  //      return char.map { .padded(with: $0, count: width) } ?? []
+  //    }
+  //    var row = stack[index]
+  //    if let char, row.count < width {
+  //      row += .padded(with: char, count: width - row.count)
+  //    }
+  //    return row
+  //  }
 }
 
 extension StringStack {
@@ -139,7 +165,6 @@ extension StringStack {
 
 }
 
-
 /// This allows writing
 /// ```
 /// guard !self.isEmpty else { return [] }
@@ -153,7 +178,7 @@ extension StringStack: ExpressibleByArrayLiteral {
   public init(arrayLiteral elements: [Character]...) {
     self.stack = elements
   }
-  
+
 }
 
 extension StringStack: ExpressibleByUnicodeScalarLiteral {

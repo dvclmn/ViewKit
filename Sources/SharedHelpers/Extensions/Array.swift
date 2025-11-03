@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 5/5/2025.
 //
 
-import Foundation
+import SwiftUI
 
 extension Array where Element: Hashable {
   /// Notes on conversion from Array to Set:
@@ -23,3 +23,37 @@ extension Array where Element: Hashable {
 
 }
 
+// MARK: - Reusable Array stacking extensions
+
+extension Array where Element: Collection {
+
+//  public func stacked(
+//    along axis: Axis,
+//    repeating count: Int
+//  ) -> [[Element.Element]] {
+//    switch axis {
+//      case .horizontal:
+//        stackedHorizontally(repeating: count)
+//      case .vertical:
+//        stackedHorizontally(repeating: count)
+//    }
+//  }
+
+  /// Stacks the entire array vertically by repeating it `count` times.
+  /// E.g.,
+  /// `[[A, B], [C, D]] vertically, count: 2`
+  /// results in
+  /// `[[A, B], [C, D], [A, B], [C, D]]`
+  private func stackedVertically(repeating count: Int) -> [[Element.Element]] {
+    Array(repeating: self, count: count).flatMap { $0.map { Array($0) } }
+  }
+
+  /// Stacks each inner array horizontally by repeating its contents `count` times.
+  /// E.g.
+  /// `[[A, B], [C, D]] horizontally, count: 2`
+  /// results in
+  /// `[[A, B, A, B], [C, D, C, D]]`
+  private func stackedHorizontally(repeating count: Int) -> [[Element.Element]] {
+    self.map { Array(repeating: $0, count: count).flatMap { $0 } }
+  }
+}
