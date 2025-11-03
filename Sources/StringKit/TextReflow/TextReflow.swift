@@ -5,22 +5,24 @@
 //  Created by Dave Coleman on 14/9/2024.
 //
 
+import Foundation
+
 public enum PaddingBookend {
   case none
   case both(width: Int)
 }
 
-public struct TextFlow {
+public struct TextReflow {
   let text: String
   let shouldHyphenate: Bool
   let width: Int
   let paddingCharacter: Character
 
   public init(
-    text: String,
-    shouldHyphenate: Bool = true,
+    _ text: String,
     width: Int = 20,
-    paddingCharacter: Character = " "
+    paddingCharacter: Character = " ",
+    shouldHyphenate: Bool = true,
   ) {
     self.text = text
     self.shouldHyphenate = shouldHyphenate
@@ -29,9 +31,9 @@ public struct TextFlow {
   }
 }
 
-extension TextFlow {
+extension TextReflow {
 
-  public func flowed(
+  public func reflowed(
     maxLines: Int = 0,
     paddingH: Int = 1,  // leading and trailing
   ) -> [String] {
@@ -45,7 +47,7 @@ extension TextFlow {
     /// after spacing reserved for structure
     let effectiveWidth = width - (2 * paddingH)
     guard effectiveWidth > 0 else {
-      print("Error: Width is too small to accommodate padding")
+      print("Error: Width is too small to accommodate padding & content")
       return []
     }
 
@@ -112,10 +114,6 @@ extension TextFlow {
 
     return reflowedLines
   }
-
-}
-
-extension TextFlow {
 
   private func wrapLongWord(
     _ word: String,

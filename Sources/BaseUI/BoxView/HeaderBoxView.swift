@@ -73,11 +73,23 @@ extension HeaderBoxView {
     //    }
     //    .setGridFrame(42)
     
-    HeaderBoxView("Header title") {
-      "Hello"
+    HeaderBoxView("Single Frame Style") {
+      "Short text content"
     }
+    .setBoxStyle(
+      glyphs: .double,
+      frame: .single(frame: .increased, dividers: .standard)
+    )
+
+    HeaderBoxView("Double Frame Style") {
+      "Hello, I'm some text content in this box."
+      "Isn't that great!"
+    }
+    .setBoxStyle(
+      glyphs: .double,
+      frame: .double(exterior: .increased, interior: .standard)
+    )
 //    .setGridFrame(10)
-    .setBoxStyle(glyphs: .double, frame: .double(exterior: .increased, interior: .standard))
     
     //    BoxTextView {
     //      "No header text"

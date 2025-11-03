@@ -12,7 +12,7 @@ public typealias StringCaps = (leading: String, trailing: String)
 
 public enum PaddedContentType {
   case text
-  case cap
+  case cap // Line cap / book end
 }
 
 public struct LineCaps {
@@ -33,7 +33,9 @@ public struct LineCaps {
 
 public struct TextCore {
 
-  static public func padLine(
+  /// Renamed this from `padLine`, as I was getting confused between
+  /// this, and other similar line padding methods across BaseHelpers.
+  static public func splitAndPadLine(
     _ text: String = "",
     with paddingString: String = " ",
     toFill width: Int,

@@ -40,10 +40,10 @@ extension StringStack {
   ///   - If the setter is called with a row index less than `height`, it replaces the existing row.
   ///   - If the setter is called with a row index equal to `height`, it appends the new row at the end.
   ///   - Setting with a row index greater than `height` has no effect.
-  public subscript(row: Int) -> [Character] {
+  public subscript(row row: Int) -> [Character] {
     get {
-      guard row < stack.count else { return [] }
-      return stack[row]
+//      guard row < stack.count else { return [] }
+      return stack[safe: row] ?? []
     }
     set {
       if row < stack.count {
@@ -54,7 +54,7 @@ extension StringStack {
       }
     }
   }
-  
+
   func row(
     at index: Int,
     paddedTo width: Int,
@@ -64,7 +64,7 @@ extension StringStack {
       return char.map { .padded(with: $0, count: width) } ?? []
     }
     var row = stack[index]
-    if let char = char, row.count < width {
+    if let char, row.count < width {
       row += .padded(with: char, count: width - row.count)
     }
     return row
@@ -73,44 +73,43 @@ extension StringStack {
 
 extension StringStack {
 
-  
   /// Indicates whether the stack contains no characters in any row.
   public var isEmpty: Bool {
     stack.isEmpty || stack.allSatisfy { $0.isEmpty }
   }
-  
-  // Ensure all rows have consistent width
-//  public func normalised(
-//    toWidth width: Int? = nil,
-//    paddingCharacter: Character = " "
-//  ) -> StringStack {
-//    let targetWidth = width ?? self.width
-//    var result = StringStack([])
-//    for row in stack {
-//      var normalizedRow = row
-//      if normalizedRow.count < targetWidth {
-//        normalizedRow.append(contentsOf: Array(repeating: paddingCharacter, count: targetWidth - normalizedRow.count))
-//      } else if normalizedRow.count > targetWidth {
-//        normalizedRow = Array(normalizedRow.prefix(targetWidth))
-//      }
-//      result.append(normalizedRow)
-//    }
-//    return result
-//  }
 
-//  func normalised(toWidth width: Int, height: Int, padding: Character) -> StringStack {
-//    var rows = stack
-//    rows = rows.map { $0 + .padded(with: padding, count: width - $0.count) }
-//    if rows.count < height {
-//      let emptyRow = .padded(with: padding, count: width)
-//      rows += Array(repeating: emptyRow, count: height - rows.count)
-//    }
-//    return StringStack(rows)
-//  }
-  
-//  private static func fill(_ char: Character, count: Int) -> [Character] {
-//    count > 0 ? Array(repeating: char, count: count) : []
-//  }
+  // Ensure all rows have consistent width
+  //  public func normalised(
+  //    toWidth width: Int? = nil,
+  //    paddingCharacter: Character = " "
+  //  ) -> StringStack {
+  //    let targetWidth = width ?? self.width
+  //    var result = StringStack([])
+  //    for row in stack {
+  //      var normalizedRow = row
+  //      if normalizedRow.count < targetWidth {
+  //        normalizedRow.append(contentsOf: Array(repeating: paddingCharacter, count: targetWidth - normalizedRow.count))
+  //      } else if normalizedRow.count > targetWidth {
+  //        normalizedRow = Array(normalizedRow.prefix(targetWidth))
+  //      }
+  //      result.append(normalizedRow)
+  //    }
+  //    return result
+  //  }
+
+  //  func normalised(toWidth width: Int, height: Int, padding: Character) -> StringStack {
+  //    var rows = stack
+  //    rows = rows.map { $0 + .padded(with: padding, count: width - $0.count) }
+  //    if rows.count < height {
+  //      let emptyRow = .padded(with: padding, count: width)
+  //      rows += Array(repeating: emptyRow, count: height - rows.count)
+  //    }
+  //    return StringStack(rows)
+  //  }
+
+  //  private static func fill(_ char: Character, count: Int) -> [Character] {
+  //    count > 0 ? Array(repeating: char, count: count) : []
+  //  }
 
 }
 
@@ -119,19 +118,19 @@ extension StringStack: CustomStringConvertible {
 }
 
 extension StringStack: Sequence {
-  
+
   public func makeIterator() -> IndexingIterator<[[Character]]> {
     stack.makeIterator()
   }
-  
+
   public func map<T>(_ transform: ([Character]) -> T) -> [T] {
     stack.map(transform)
   }
-  
+
   public func enumerated() -> EnumeratedSequence<[[Character]]> {
     stack.enumerated()
   }
-  
+
   /// Appends a new row of characters to the end of the stack.
   ///
   /// - Parameter row: The row of characters to append.

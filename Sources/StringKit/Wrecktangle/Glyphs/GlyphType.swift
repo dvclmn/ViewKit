@@ -53,7 +53,6 @@ extension Box {
     )
 
     case corner(GlyphProminence, type: CornerType)
-//    case text
     case blank
   }
 }

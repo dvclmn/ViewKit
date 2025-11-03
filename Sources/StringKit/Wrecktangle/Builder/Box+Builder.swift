@@ -15,18 +15,15 @@ extension Box {
     let height: Int?
 
     let theme: Box.Theme
-    //    let config: Box.Config
 
     public init(
       width: Int,
       height: Int?,
       theme: Box.Theme
-        //      config: Box.Config = .default
     ) {
       self.width = width
       self.height = height
       self.theme = theme
-      //      self.config = config
     }
   }
 }

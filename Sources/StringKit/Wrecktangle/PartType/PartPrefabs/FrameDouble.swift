@@ -187,7 +187,7 @@ extension Box.PartType {
         }
       //        doubleCorner(for: cornerType)
 
-      case .text(let string):
+      case .text:
         /// Not sure yet what to do for text
         [[Box.GlyphType.blank]]
 

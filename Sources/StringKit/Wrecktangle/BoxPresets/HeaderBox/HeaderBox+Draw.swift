@@ -92,7 +92,7 @@ extension HeaderBox {
 //    output: inout AttributedString
 //  ) {
 //
-//    let headerLines = TextFlow(
+//    let headerLines = TextReflow(
 //      text: text,
 //      shouldHyphenate: config.shouldHyphenate,
 //      width: builder.widthForText,
@@ -117,7 +117,7 @@ extension HeaderBox {
 //    _ builder: Box.Builder,
 //    output: inout AttributedString
 //  ) {
-//    let contentLines = TextFlow(
+//    let contentLines = TextReflow(
 //      text: content.toString,
 //      shouldHyphenate: config.shouldHyphenate,
 //      width: builder.widthForText,

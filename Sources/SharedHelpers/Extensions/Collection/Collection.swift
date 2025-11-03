@@ -5,10 +5,22 @@
 //  Created by Dave Coleman on 17/12/2024.
 //
 
+extension MutableCollection {
+  public subscript(safe index: Index) -> Element? {
+    get {
+      indices.contains(index) ? self[index] : nil
+    }
+    set {
+      guard let newValue, indices.contains(index) else { return }
+      self[index] = newValue
+    }
+  }
+}
+
 extension Collection {
 
   public subscript(safe index: Index) -> Element? {
-    return indices.contains(index) ? self[index] : nil
+    indices.contains(index) ? self[index] : nil
   }
 
   public func hasIndex(_ offset: Int) -> Bool {

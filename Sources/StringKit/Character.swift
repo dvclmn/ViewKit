@@ -63,7 +63,10 @@ extension Character: @retroactive Codable {
 }
 
 extension Array where Element == Character {
-  public static func padded(with char: Character, count: Int) -> [Character] {
+  public static func padded(
+    with char: Character,
+    count: Int
+  ) -> [Character] {
     guard count > 0 else { return [] }
     return Array(repeating: char, count: count)
   }

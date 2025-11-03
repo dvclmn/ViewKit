@@ -52,15 +52,27 @@ extension StringStack {
 
   private func joinedHorizontally(
     with other: StringStack,
-    padding: Character? = nil
+    padding char: Character? = nil
   ) -> StringStack {
     let maxHeight = Swift.max(self.height, other.height)
     var result = StringStack([])
 
     for i in 0..<maxHeight {
-      let left = self.row(at: i, paddedTo: self.width, with: padding)
-      let right = other.row(at: i, paddedTo: other.width, with: padding)
-      result.append(left + right)
+
+      let lhs = self[row: i]
+      let rhs = other[row: i]
+
+      guard let char else {
+        /// No padding required, just join what's here
+        result.append(lhs + rhs)
+        continue
+      }
+
+      /// Create and append padding
+      let lhsPadding = Self.createPadding(for: self, with: char)
+      let rhsPadding = Self.createPadding(for: other, with: char)
+
+      result.append(lhsPadding + lhs + rhs + rhsPadding)
     }
     return result
   }
@@ -76,7 +88,19 @@ extension StringStack {
 
     return result
   }
+
+  private static func createPadding(
+    for stack: Self,
+    with char: Character?,
+  ) -> [Character] {
+    guard let char else { return [] }
+    return Array(repeating: char, count: stack.width)
+  }
 }
+
+//extension Optional where Wrapped == Character {
+//
+//}
 
 //extension StringStack {
 //
