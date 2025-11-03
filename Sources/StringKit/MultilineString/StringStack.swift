@@ -113,6 +113,29 @@ extension StringStack {
 
 }
 
+
+/// This allows writing
+/// ```
+/// guard !self.isEmpty else { return [] }
+/// ```
+///
+/// rather than
+/// ```
+/// guard !self.isEmpty else { StringStack([]) }
+/// ```
+extension StringStack: ExpressibleByArrayLiteral {
+  public init(arrayLiteral elements: [Character]...) {
+    self.stack = elements
+  }
+  
+}
+
+extension StringStack: ExpressibleByUnicodeScalarLiteral {
+  public init(unicodeScalarLiteral value: Character) {
+    self.stack = [[value]]
+  }
+}
+
 extension StringStack: CustomStringConvertible {
   public var description: String { string }
 }

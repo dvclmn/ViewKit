@@ -5,8 +5,9 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-extension Box.Line {
+extension Box {
   public enum LineType: Hashable, Sendable {
+//    case text
     case text(
       content: String,
       lineLimit: Int = 0
@@ -16,7 +17,8 @@ extension Box.Line {
   }
   public enum StructureType: Hashable, Sendable {
     case top
-    case divider(String = "-")
+    case divider
+//    case divider(String = "-")
     case bottom
   }
 }

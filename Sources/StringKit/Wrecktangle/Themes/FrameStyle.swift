@@ -15,7 +15,6 @@ extension Box {
       dividers: Prominence = .standard
     )
 
-    /// Will make the dividers match the internal Prominence
     case double(
       exterior: Prominence = .increased,
       interior: Prominence = .standard

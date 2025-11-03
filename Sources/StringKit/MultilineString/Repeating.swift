@@ -11,11 +11,11 @@ extension StringStack {
     self * times
   }
 
-  func repeatHorizontally(
+  func repeatedHorizontally(
     toWidth width: Int,
     paddingCharacter: Character = " ",
     trimMethod: TrimMethod = .crop  // Need to implement this
-  ) -> Self {
+  ) -> StringStack {
 
     guard !self.isEmpty else { return [] }
 

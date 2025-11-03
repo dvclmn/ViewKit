@@ -30,10 +30,12 @@ extension Box.GlyphSet {
 
   /// Returns a Character for the given 'purpose' (Glyph Type),
   /// based on how it is defined for this Set.
+  /// Note: This doesn't handle any construction of user text content.
+  /// Only structural Box elements.
   func character(for glyphType: Box.GlyphType) -> Character {
 
     switch self {
-      /// This *should* return a result, as a Base set ought to be exhaustive
+      /// This "should" return a result, as a Base set ought to be exhaustive
       case .base(let glyphMap):
         let lookup = Box.GlyphLookup(map: glyphMap, type: glyphType)
         return lookup.character ?? Self.globalFallback

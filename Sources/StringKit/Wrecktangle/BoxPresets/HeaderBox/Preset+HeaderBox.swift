@@ -9,7 +9,8 @@ import SwiftUI
 
 public struct HeaderBox {
   var header: String
-  var content: AttributedString
+  var content: String
+//  var content: AttributedString
   var theme: Box.Theme
   var width: Int
   
@@ -20,7 +21,8 @@ public struct HeaderBox {
 
   public init(
     header: String,
-    content: AttributedString,
+    content: String,
+//    content: AttributedString,
     width: Int,
     glyphSet: Box.GlyphSet,
     frameStyle: Box.FrameStyle,
@@ -39,8 +41,9 @@ public struct HeaderBox {
     self.width = width
   }
 
-  public var attributedString: AttributedString { drawBox() }
-  public var plainText: String { attributedString.toString }
+//  public var attributedString: AttributedString { drawBox() }
+  public var plainText: String { drawBox() }
+//  public var plainText: String { attributedString.toString }
 
 //  public var theme: Box.Theme { config.theme }
 //  public var glyphSet: Box.GlyphSet { config.theme.glyphSet }

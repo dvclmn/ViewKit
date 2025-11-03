@@ -47,27 +47,36 @@ extension Box {
 }
 extension Box.Line {
 
+  public static func joined(
+    lines: Box.Line...,
+    with theme: Box.Theme
+  ) -> StringStack {
+    let stack: StringStack = lines.reduce(into: "") { partial, line in
+      //    return lines.reduce(into: StringStack("")) { partial, line in
+      partial += line.output(with: theme)
+    }
+    return stack
+  }
+
   public func output(with theme: Box.Theme) -> StringStack {
-    
+
     let stackLeading = leading.buildStack(using: theme)
     let stackBody = leading.buildStack(using: theme)
     let stackTrailing = leading.buildStack(using: theme)
 
-//    #warning("Need to use the right tools from StringStack")
-//    return stackLeading + stackBody + stackTrailing
     return StringStack.joined(stackLeading, stackBody, stackTrailing, along: .vertical)
-//    let result =
   }
 
-  public static func joinLines(
-    lines: Box.Line...,
-    with theme: Box.Theme
-  ) -> StringStack {
-
-    return lines.reduce(into: StringStack("")) { partial, line in
-      partial += line.output(with: theme)
-    }
-  }
+//  public static func joinLines(
+//    lines: Box.Line...,
+//    with theme: Box.Theme
+//  ) -> StringStack {
+//
+//    return StringStack.joined(<#T##StringStack...#>, along: <#T##Axis#>, padding: <#T##Character?#>)
+//    //    return lines.reduce(into: StringStack("")) { partial, line in
+//    //      partial += line.output(with: theme)
+//    //    }
+//  }
 
   //  public var width: Int { leading.width + body.width + trailing.width }
   //  public var height: Int { max(leading.height, body.height, trailing.height) }
@@ -170,7 +179,7 @@ extension Box.Line {
 //    }
 //  }
 //}
-
-public protocol LineContent {
-  var rawContent: String { get }
-}
+//
+//public protocol LineContent {
+//  var rawContent: String { get }
+//}

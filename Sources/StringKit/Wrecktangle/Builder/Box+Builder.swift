@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
+import Foundation
+
 extension Box {
   /// The Builder (aka 'Box Engine') should handle box drawing
   /// based on simple instructions (see ``ViewBox`` and ``HeaderBoxBox``)
@@ -14,12 +16,14 @@ extension Box {
     /// Allows dynamic/flexible height, if not defined
     let height: Int?
 
+    let paddingCharacter: Character
     let theme: Box.Theme
 
     public init(
       width: Int,
       height: Int?,
-      theme: Box.Theme
+      theme: Box.Theme,
+      paddingCharacter: Character = " "
     ) {
       self.width = width
       self.height = height
@@ -29,8 +33,26 @@ extension Box {
 }
 
 extension Box.Builder {
+  
+  public func line(_ type: Box.LineType) -> Box.Line {
+    switch type {
+      case .text(let content, let lineLimit):
+        let reflowed = TextReflow(
+          content,
+          width: widthForText,
+          paddingCharacter: paddingCharacter,
+          shouldHyphenate: true
+        )
+        textLine(content: <#T##String#>)
+        
+      case .structure(let structureType):
+        <#code#>
+      case .blank:
+        <#code#>
+    }
+  }
 
-  public func structureLine(
+  private func structureLine(
     type: Box.Line.StructureType
   ) -> Box.Line {
     switch type {

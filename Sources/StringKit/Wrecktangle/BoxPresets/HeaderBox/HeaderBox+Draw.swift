@@ -9,7 +9,17 @@ import Foundation
 
 extension HeaderBox {
 
-  func drawBox() -> AttributedString {
+  /// Import elements to carry over from old approach:
+  ///
+  /// - Lines were built one by one, from top to bottom
+  /// - *Important*: Text needs to be reflowed, using `TextReflow`,
+  ///   or it will not fit correctly
+  /// - To reiterate: Text content must be reflowed, and
+  ///   structural content needs to be *repeated* where relevant
+  /// - For Reflowed Text: the resulting `[String]` then
+  /// needs to be iterated over, and a *new Box Line created for each*.
+  func drawBox() -> String {
+//  func drawBox() -> AttributedString {
 
     let builder = Box.Builder(
       width: width,
@@ -28,7 +38,8 @@ extension HeaderBox {
       with: theme
     )
 
-    return AttributedString(result.string)
+    return result.string
+//    return AttributedString(result.string)
 
     //    let theme = config.theme
 

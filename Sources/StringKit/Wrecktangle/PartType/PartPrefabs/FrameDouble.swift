@@ -6,19 +6,13 @@
 //
 
 extension Box.PartType {
-  //extension Box.FrameStyle {
 
   /// Follows a `Prominence.increased` on the external frame parts,
   /// and  `Prominence.standard` on the internal parts
   public func double(
-    //    for partType: Box.PartType,
     extProm: Box.GlyphProminence,
     intProm: Box.GlyphProminence,
-    //    with arrangement: Box.ProminenceArrangement
   ) -> Box.GlyphStack {
-
-    //    let prom01 = arrangement.doubleFrameGlyphProminence(for: partType).0
-    //    let prom02 = arrangement.doubleFrameGlyphProminence(for: partType).1
 
     switch self {
       case .horizontal(let loc):
