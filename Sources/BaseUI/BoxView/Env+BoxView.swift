@@ -14,7 +14,6 @@ extension EnvironmentValues {
   @Entry public var gridWidth: Int? = nil
   @Entry public var gridHeight: Int? = nil
   @Entry public var isShowingGridGuide: Bool = false
-
 }
 
 extension View {

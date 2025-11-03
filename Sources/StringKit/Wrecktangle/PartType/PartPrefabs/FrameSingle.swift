@@ -21,7 +21,6 @@ extension Box.PartType {
   func singleFrame(
     frameProm: Box.GlyphProminence,
     divProm: Box.GlyphProminence,
-    //    with prominence: Box.GlyphProminence,
   ) -> Box.GlyphStack {
 
     let type: Box.GlyphType? =
@@ -64,20 +63,7 @@ extension Box.PartType {
           }
 
         case .corner(let cornerType):
-//          switch cornerType {
-//            case .topLeading:
-//              Box.GlyphType.corner(frameProm, type: .topLeading)
-//            case .topTrailing:
-//              <#code#>
-//            case .bottomLeading:
-//              <#code#>
-//            case .bottomTrailing:
-//              <#code#>
-//          }
           Box.GlyphType.corner(frameProm, type: cornerType)
-
-//        case .text:
-//          nil
 
         case .blank:
           Box.GlyphType.blank

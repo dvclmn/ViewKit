@@ -36,7 +36,7 @@ public struct HeaderBoxView: View {
     Text(textOutput)
       //      .fixedSize()
       .frameFromGridSize(width: gridWidth, height: gridHeight)
-      .gridSetup(.sfMono, fontSize: 28)
+      .gridSetup(.sfMono, fontSize: 20)
 
       .environment(\.isShowingGridGuide, true)
 
@@ -51,8 +51,15 @@ public struct HeaderBoxView: View {
 }
 
 extension HeaderBoxView {
+  private var theme: Box.Theme {
+    Box.Theme(
+      glyphSet: glyphSet,
+      frameStyle: frameStyle,
+      padding: 1
+    )
+  }
   private var textOutput: String {
-    let result = Box {
+    let result = Box(theme: theme) {
       Box.Top()
       if let title {
         Box.Header(title)
@@ -84,13 +91,21 @@ extension HeaderBoxView {
     //    }
     //    .setGridFrame(42)
 
-    HeaderBoxView("Single Frame Style") {
+    HeaderBoxView("Single, Rounded Frame Style") {
       "Short text content"
       "Felix and Isla are cool"
     }
     .setBoxStyle(
-      glyphs: .double,
+      glyphs: .rounded,
       frame: .single(frame: .increased, dividers: .standard)
+    )
+    
+    HeaderBoxView("Double Frame") {
+      "Some content here"
+    }
+    .setBoxStyle(
+      glyphs: .double,
+      frame: .double(exterior: .increased, interior: .standard)
     )
 
 //    HeaderBoxView("Double Frame Style") {

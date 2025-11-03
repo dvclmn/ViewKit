@@ -20,13 +20,12 @@ extension Box.PartType {
     switch frameStyle {
       case .single(let frameProm, let divProm):
         let single = singleFrame(frameProm: frameProm, divProm: divProm)
-        print("GlyphStack for PartType \(self), with Single FrameStyle: \(single)")
+//        print("GlyphStack for PartType \(self), with Single FrameStyle: \(single)")
         return single
         
-//        singleFrame(frameProm: frameProm, divProm: divProm)
       case .double(let extProm, let intProm):
         let doubleResult = double(extProm: extProm, intProm: intProm)
-        print("GlyphStack for PartType \(self), with Double FrameStyle: \(doubleResult)")
+//        print("GlyphStack for PartType \(self), with Double FrameStyle: \(doubleResult)")
         return doubleResult
     }
   }

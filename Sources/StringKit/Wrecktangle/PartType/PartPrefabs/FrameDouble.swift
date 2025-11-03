@@ -36,7 +36,7 @@ extension Box.PartType {
           case .interior:
             [[Box.GlyphType.horizontal(intProm)]]
         }
-      //
+      
       case .vertical(let loc):
         switch loc {
           case .leading:
@@ -179,134 +179,9 @@ extension Box.PartType {
               ],
             ]
         }
-      //        doubleCorner(for: cornerType)
-
-//      case .text:
-        /// Not sure yet what to do for text
-//        [[Box.GlyphType.blank]]
-
+        
       case .blank:
         [[Box.GlyphType.blank]]
-
     }
-
-    //    let result =
-    //    switch self {
-    //
-    //    }  // END switch self
-
   }  // END frame double
-  //    return result
-
-  //    func doubleJoin(
-  //      for type: Box.JoinType,
-  ////      with arrangement: Box.ProminenceArrangement
-  //    ) -> Box.GlyphStack {
-  //      switch type {
-  //        case .leading:
-  //          [
-  //            [
-  //              Box.GlyphType.vertical(prom01),
-  //              Box.GlyphType.blank,
-  //              Box.GlyphType.join(x: .standard, y: .standard, type: type),
-  //            ]
-  //          ]
-  //
-  //        case .trailing:
-  //          [
-  //            [
-  //              Box.GlyphType.join(x: .standard, y: .standard, type: type),
-  //              Box.GlyphType.blank,
-  //              Box.GlyphType.vertical(.increased),
-  //            ]
-  //          ]
-  //
-  //        case .top:
-  //          [
-  //            [Box.GlyphType.horizontal(.increased)],
-  //            [Box.GlyphType.join(x: .standard, y: .standard, type: type)],
-  //          ]
-  //
-  //        case .bottom:
-  //          [
-  //            [Box.GlyphType.join(x: .standard, y: .standard, type: type)],
-  //            [Box.GlyphType.horizontal(.increased)],
-  //          ]
-  //        case .cross:
-  //          [[Box.GlyphType.join(x: .standard, y: .standard, type: type)]]
-  //      }
-  //
-  //    }  // END double join
-
-  //  private func doubleCorner(for type: Box.CornerType) -> Box.GlyphStack {
-  //    switch type {
-  //
-  //      /// Example:
-  //      /// ```
-  //      /// ["┏","━","━"],
-  //      ///
-  //      /// ["┃"," ","┌"]
-  //      ///
-  //      /// // Output:
-  //      /// ┏━━
-  //      /// ┃ ┌
-  //      ///
-  //      /// ```
-  //      case .topLeading:
-  //        [
-  //          [
-  //            Box.GlyphType.corner(.increased, type: type),
-  //            Box.GlyphType.horizontal(.increased),
-  //            Box.GlyphType.horizontal(.increased),
-  //          ],
-  //          [
-  //            Box.GlyphType.vertical(.increased),
-  //            Box.GlyphType.blank,
-  //            Box.GlyphType.corner(.standard, type: type),
-  //          ],
-  //        ]
-  //
-  //      case .topTrailing:
-  //        [
-  //          [
-  //            Box.GlyphType.horizontal(.increased),
-  //            Box.GlyphType.horizontal(.increased),
-  //            Box.GlyphType.corner(.increased, type: type),
-  //          ],
-  //          [
-  //            Box.GlyphType.corner(.standard, type: type),
-  //            Box.GlyphType.blank,
-  //            Box.GlyphType.vertical(.increased),
-  //          ],
-  //        ]
-  //
-  //      case .bottomLeading:
-  //        [
-  //          [
-  //            Box.GlyphType.vertical(.increased),
-  //            Box.GlyphType.blank,
-  //            Box.GlyphType.corner(.standard, type: type),
-  //          ],
-  //          [
-  //            Box.GlyphType.corner(.increased, type: type),
-  //            Box.GlyphType.horizontal(.increased),
-  //            Box.GlyphType.horizontal(.increased),
-  //          ],
-  //        ]
-  //      case .bottomTrailing:
-  //        [
-  //          [
-  //            Box.GlyphType.corner(.standard, type: type),
-  //            Box.GlyphType.blank,
-  //            Box.GlyphType.vertical(.increased),
-  //          ],
-  //          [
-  //            Box.GlyphType.horizontal(.increased),
-  //            Box.GlyphType.horizontal(.increased),
-  //            Box.GlyphType.corner(.increased, type: type),
-  //          ],
-  //        ]
-  //    }  // END switch self
-  //  }  // END glyph stack
-
 }
