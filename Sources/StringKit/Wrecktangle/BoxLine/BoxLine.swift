@@ -48,7 +48,7 @@ extension Box {
 extension Box.Line {
 
   public static func joined(
-    lines: Box.Line...,
+    lines: [Box.Line],
     with theme: Box.Theme
   ) -> StringStack {
     let stack: StringStack = lines.reduce(into: "") { partial, line in
@@ -56,6 +56,13 @@ extension Box.Line {
       partial += line.output(with: theme)
     }
     return stack
+  }
+  
+  public static func joined(
+    lines: Box.Line...,
+    with theme: Box.Theme
+  ) -> StringStack {
+    Self.joined(lines: lines, with: theme)
   }
 
   public func output(with theme: Box.Theme) -> StringStack {

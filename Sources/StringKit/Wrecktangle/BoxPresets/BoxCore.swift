@@ -34,8 +34,10 @@ public struct Box {
   
   public func draw() -> String {
 //    let builder = Builder(width: width, height: nil, theme: theme)
-    let lines = components.flatMap { $0.makeLines(using: builder) }
-    let stack = Box.Line.joinLines(lines: lines, with: theme)
+    let lines = components.flatMap { $0.makeLines() }
+//    let lines = components.flatMap { $0.makeLines(using: builder) }
+    let stack = Box.Line.joined(lines: lines, with: theme)
+//    let stack = Box.Line.joinLines(lines: lines, with: theme)
     return stack.string
   }
 //  let width: Int

@@ -9,6 +9,7 @@ import Foundation
 
 extension Box {
   public protocol Component {
-    func makeLines(using builder: Box.Builder) -> [Box.Line]
+//    func makeLines() -> [Box.Line]
+    func makeLines(using engine: Box.Engine) -> [Box.Line]
   }
 }

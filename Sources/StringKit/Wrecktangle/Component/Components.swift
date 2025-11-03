@@ -10,22 +10,22 @@ import Foundation
 extension Box {
   public struct Top: Component {
     public init() {}
-    public func makeLines(using builder: Box.Builder) -> [Box.Line] {
-      [builder.structureLine(type: .top)]
+    public func makeLines(using engine: Box.Engine) -> [Box.Line] {
+      [engine.structureLine(type: .top)]
     }
   }
 
   public struct Divider: Component {
     public init() {}
-    public func makeLines(using builder: Box.Builder) -> [Box.Line] {
-      [builder.structureLine(type: .divider())]
+    public func makeLines(using engine: Box.Engine) -> [Box.Line] {
+      [engine.structureLine(type: .divider())]
     }
   }
 
   public struct Bottom: Component {
     public init() {}
-    public func makeLines(using builder: Box.Builder) -> [Box.Line] {
-      [builder.structureLine(type: .bottom)]
+    public func makeLines(using engine: Box.Engine) -> [Box.Line] {
+      [engine.structureLine(type: .bottom)]
     }
   }
 
@@ -33,8 +33,8 @@ extension Box {
     let content: String
     public init(_ content: String) { self.content = content }
 
-    public func makeLines(using builder: Box.Builder) -> [Box.Line] {
-      builder.textLines(content: content)
+    public func makeLines(using engine: Box.Engine) -> [Box.Line] {
+      engine.textLines(content)
     }
   }
 
@@ -42,12 +42,11 @@ extension Box {
     let text: String
     public init(_ text: String) { self.text = text }
 
-    public func makeLines(using builder: Box.Builder) -> [Box.Line] {
-      [
-        builder.structureLine(type: .top),
-        builder.textLine(content: text),
-        builder.structureLine(type: .divider()),
-      ]
+    public func makeLines(using engine: Box.Engine) -> [Box.Line] {
+      [engine.structureLine(type: .top)]
+      + engine.textLines(text)
+      + [engine.structureLine(type: .divider())]
+      
     }
   }
   
@@ -58,9 +57,9 @@ extension Box {
       self.items = content()
     }
     
-    public func makeLines(using builder: Box.Builder) -> [Box.Line] {
+    public func makeLines(using engine: Box.Engine) -> [Box.Line] {
       items
-        .flatMap { $0.makeLines(using: builder) }
+        .flatMap { $0.makeLines(using: engine) }
         .flatMap { $0 } // Flatten any nested arrays
     }
   }
