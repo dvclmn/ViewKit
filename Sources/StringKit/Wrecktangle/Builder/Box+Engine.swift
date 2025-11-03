@@ -10,7 +10,7 @@ import Foundation
 extension Box {
   /// The Builder (aka 'Box Engine') should handle box drawing
   /// based on simple instructions (see ``ViewBox`` and ``HeaderBoxBox``)
-  public struct Engine {
+  public struct Engine: Codable, Sendable {
     let width: Int
 
     /// Allows dynamic/flexible height, if not defined
@@ -27,6 +27,7 @@ extension Box {
     ) {
       self.width = width
       self.height = height
+      self.paddingCharacter = paddingCharacter
       self.theme = theme
     }
   }
@@ -79,16 +80,16 @@ extension Box.Engine {
     }
   }
 
-//  public func textLine(
-//    content: String
-//  ) -> Box.Line {
-//
-//    return Box.Line(
-//      leading: .vertical(.leading),
-//      body: .text(content),
-//      trailing: .vertical(.trailing)
-//    )
-//  }
+  public func textLine(
+    content: String
+  ) -> Box.Line {
+
+    return Box.Line(
+      leading: .vertical(.leading),
+      body: .text(content),
+      trailing: .vertical(.trailing)
+    )
+  }
 
   /// The remaning width for text, after removing space
   /// reserved for structural elements

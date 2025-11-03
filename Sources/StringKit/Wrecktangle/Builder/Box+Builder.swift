@@ -12,8 +12,8 @@ public enum BoxBuilder {
     components.flatMap { $0 }
   }
 
-  public static func buildExpression(_ string: String) -> Box.Component {
-    Box.Text(string)
+  public static func buildExpression(_ string: String) -> [Box.Component] {
+    [Box.Text(string)]
   }
 
   public static func buildOptional(_ component: [Box.Component]?) -> [Box.Component] {

@@ -10,7 +10,7 @@ import SharedHelpers
 
 extension Box {
 
-  public struct Theme: Sendable {
+  public struct Theme: Sendable, Codable {
     public var glyphSet: GlyphSet
     public var frameStyle: FrameStyle
     public var padding: GridDimensions

@@ -21,7 +21,7 @@ import Foundation
 /// ``Box/Config``
 
 extension Box {
-  public struct Line {
+  public struct Line: Codable, Sendable {
     public let leading: Box.PartType
     public let body: Box.PartType
     public let trailing: Box.PartType

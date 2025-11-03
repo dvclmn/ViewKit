@@ -121,9 +121,11 @@ extension StringStack {
 // MARK: - Repeating operator
 /// For repeating a `StringStack`
 public func * (lhs: StringStack, rhs: Int) -> StringStack {
-  var result = StringStack([])
-  for _ in 0..<rhs {
-    result = result + lhs
-  }
-  return result
+  
+  let result = StringStack(repeating: lhs, count: rhs)
+//  var result: StringStack = []
+//  for _ in 0..<rhs {
+//    result =
+//  }
+//  return result
 }

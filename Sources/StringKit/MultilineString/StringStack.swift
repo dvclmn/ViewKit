@@ -20,6 +20,28 @@ public struct StringStack {
   public init(_ string: String) {
     self.init(string.substringLines().map { Array($0) })
   }
+
+  /// Initializes a StringStack by repeating a given row a specified number of times.
+  /// - Parameters:
+  ///   - row: The row of characters to repeat.
+  ///   - count: The number of times to repeat the row.
+  public init(
+    repeating row: [Character],
+    along axis: Axis,
+    count: Int
+  ) {
+    self.stack = Array(repeating: row, count: count)
+  }
+  
+  public init(
+    repeating stack: StringStack,
+    along axis: Axis,
+    count: Int
+  ) {
+    for i in 
+    let stack = StringStack.joined(<#T##[StringStack]#>, along: <#T##Axis#>, padding: <#T##Character?#>)
+//    self.stack = Array(repeating: row, count: count)
+  }
 }
 
 extension StringStack {
@@ -27,6 +49,10 @@ extension StringStack {
   public var string: String { stack.map { String($0) }.joined("\n") }
   public var height: Int { stack.count }
   public var width: Int { stack.map { $0.count }.max() ?? 0 }
+  
+  public var rows: [String] {
+    stack.map { String($0) }
+  }
 
   /// Accesses or modifies the row of characters at the specified index.
   ///
@@ -161,3 +187,4 @@ extension StringStack: Sequence {
     stack.append(row)
   }
 }
+
