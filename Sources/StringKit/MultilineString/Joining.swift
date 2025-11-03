@@ -71,8 +71,6 @@ extension StringStack {
 
     return result
   }
-  
-  
 
   //  private func joinedVertically(
   //    with other: StringStack,
@@ -113,7 +111,7 @@ extension StringStack: ExpressibleByArrayLiteral {
   public init(arrayLiteral elements: [Character]...) {
     self.stack = elements
   }
-  
+
 }
 
 /// Assumes horizontal joining

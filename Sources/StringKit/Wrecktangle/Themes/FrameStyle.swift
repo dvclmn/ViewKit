@@ -9,31 +9,21 @@ import SharedHelpers
 
 extension Box {
   public enum FrameStyle: Sendable, Codable, Equatable {
-    
+
     case single(
       frame: Prominence = .increased,
       dividers: Prominence = .standard
     )
-    
+
     /// Will make the dividers match the internal Prominence
     case double(
       exterior: Prominence = .increased,
       interior: Prominence = .standard
     )
-//    case double(ProminenceArrangement)
   }
 }
 
 extension Box.FrameStyle {
-  
-//  func forSingle() -> (frame: Prominence, dividers: Prominence) {
-//    switch self {
-//      case .single(let frame, let dividers):
-//        <#code#>
-//      case .double(let exterior, let interior):
-//        <#code#>
-//    }
-//  }
 
   /// The width and height reserved for structure,
   /// unable to be used by content.
@@ -54,92 +44,4 @@ extension Box.FrameStyle {
         return GridDimensions(width, height).doubled
     }
   }
-
-//  public func glyphStack(
-//    for partType: Box.PartType,
-//  ) -> Box.GlyphStack {
-//
-//    switch self {
-//      case .single(let frame, let dividers):
-//        <#code#>
-//      case .double(let exterior, let interior):
-//        <#code#>
-//    }
-////    switch self {
-////      case .single(let prominence):
-////        Self.single(for: partType, with: prominence)
-////        
-////      case .double(let prominenceArrangement):
-////        <#code#>
-////    }
-////    switch self {
-////      case .single(let arrangement): single(for: partType, with: arr)
-////      case .single: single(for: partType).compactMap { [[$0]] }
-////      case .double: double(for: partType)
-////    }
-//  }
-
 }
-
-/// Not yet implemented
-//    case intertwined
-
-/// This property forms a 'promise' that no single `BoxPart` should
-/// exceed either dimension (width or height) for the given
-/// `FrameStyle`, as defined below.
-///
-/// This can also be thought of like a tile size. Any `BoxPart`
-/// exceeding this tile size is likely to break the layout in some way.
-///
-//    public var maximumGridSize: Box.Dimensions {
-//      switch self {
-//        case .single:
-//
-//          /// # Single — 1x1
-//          ///
-//          /// Examples:
-//          ///
-//          /// ```
-//          /// // Top leading corner
-//          ///   1
-//          /// 1 ┌
-//          ///
-//          /// //Bottom centre join
-//          ///   1
-//          /// 1 ╧
-//          ///
-//          /// ```
-//          let width: Int = 1 + 1  // One character either side
-//          let height: Int = 3
-//
-//          return Box.Dimensions(width, height)
-//
-//        case .double:
-//
-//          /// # Double — 3x2
-//          ///
-//          /// Examples:
-//          ///
-//          /// ```
-//          /// // Top leading corner, 3x2
-//          ///
-//          ///   123
-//          /// 1 ┏━━
-//          /// 2 ┃ ┏
-//          ///
-//          ///
-//          /// // Bottom centre join 1x2
-//          /// // Does not exceed 3x2
-//          ///
-//          ///   1
-//          /// 1 ┷
-//          /// 2 ═
-//          ///
-//          /// ```
-//          let width: Int = 3 + 3  // One character either side
-//          let height: Int = 5
-//
-//          return Box.Dimensions(width, height)
-//
-//      }
-//    }
