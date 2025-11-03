@@ -8,8 +8,13 @@
 import Foundation
 
 extension Box.PartType {
+  
+  func buildStack(using theme: Box.Theme) -> StringStack {
+    let stack = glyphStack(with: theme.frameStyle)
+    return StringStack(from: stack, theme: theme)
+  }
 
-  public func glyphStack(
+  func glyphStack(
     with frameStyle: Box.FrameStyle
   ) -> Box.GlyphStack {
     switch frameStyle {
@@ -18,31 +23,7 @@ extension Box.PartType {
       case .double(let extProm, let intProm):
         double(extProm: extProm, intProm: intProm)
     }
-    //    switch frameStyle {
-    //      case .single: singleFrame(frameProm: <#T##Box.GlyphProminence#>, dividerProm: <#T##Box.GlyphProminence#>)
-    //      case .double: frameStackDouble
-    //    }
   }
-
-  /// Build this specific PartType. We need the Theme to
-  /// know which specific Glyphs to ask for, and what
-  /// FrameStyle to build for.
-  //  func buildStack(using theme: Box.Theme) -> StringStack {
-  //    let glyphStack =
-  //      switch theme.frameStyle {
-  //        case .single(
-  //          frame: let frameProm,
-  //          dividers: let divProm
-  //        ):
-  //          single(
-  //            frameProm: frameProm,
-  //            dividerProm: divProm
-  //          )
-  //        case .double(exterior: let extProm, interior: let intProm):
-  //          double(exterior: extProm, interior: intProm)
-  //      }
-  //    return StringStack(from: glyphStack, theme: theme)
-  //  }
 }
 
 extension StringStack {
