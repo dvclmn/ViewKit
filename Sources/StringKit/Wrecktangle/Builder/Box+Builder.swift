@@ -30,7 +30,12 @@ public enum BoxBuilder {
 
 extension BoxBuilder {
 
-  /// Add support for a single Block
+  /// Add support for a single Array...
+  public static func buildExpression(_ component: [any Box.Component]) -> [any Box.Component] {
+    component
+  }
+
+  /// ... and a single Block
   public static func buildExpression(_ component: any Box.Component) -> [any Box.Component] {
     [component]
   }

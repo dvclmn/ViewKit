@@ -34,7 +34,7 @@ public struct HeaderBoxView: View {
 
   public var body: some View {
     Text(textOutput)
-      //      .fixedSize()
+//            .fixedSize()
       .frameFromGridSize(width: gridWidth, height: gridHeight)
       .gridSetup(.sfMono, fontSize: 20)
 
@@ -59,25 +59,17 @@ extension HeaderBoxView {
     )
   }
   private var textOutput: String {
-    let result = Box(theme: theme) {
+    Box(theme: theme) {
+      
       Box.Top()
       if let title {
         Box.Header(title)
         Box.Divider()
       }
       content.toString
+      Box.Bottom()
+      
     }.plainText
-    //    let result = Box {
-    ////      Box.Top()
-    ////      Box.Header("Some text")
-    //      "What is this?"
-    ////      "And another?"
-    ////      Box.Divider()
-    ////      Box.Bottom()
-    //
-    //    }.plainText
-//    print("Box result: \(result)")
-    return result
   }
 }
 
@@ -90,7 +82,10 @@ extension HeaderBoxView {
     //      DummyContent.Strings.paragraphs[8].toAttributed
     //    }
     //    .setGridFrame(42)
-
+    GroupBox("Top Only") {
+      
+    }
+    
     HeaderBoxView("Single, Rounded Frame Style") {
       "Short text content"
       "Felix and Isla are cool"
@@ -99,7 +94,7 @@ extension HeaderBoxView {
       glyphs: .rounded,
       frame: .single(frame: .increased, dividers: .standard)
     )
-    
+
     HeaderBoxView("Double Frame") {
       "Some content here"
     }
@@ -108,14 +103,14 @@ extension HeaderBoxView {
       frame: .double(exterior: .increased, interior: .standard)
     )
 
-//    HeaderBoxView("Double Frame Style") {
-//      "Hello, I'm some text content in this box."
-//      "Isn't that great!"
-//    }
-//    .setBoxStyle(
-//      glyphs: .double,
-//      frame: .double(exterior: .increased, interior: .standard)
-//    )
+    //    HeaderBoxView("Double Frame Style") {
+    //      "Hello, I'm some text content in this box."
+    //      "Isn't that great!"
+    //    }
+    //    .setBoxStyle(
+    //      glyphs: .double,
+    //      frame: .double(exterior: .increased, interior: .standard)
+    //    )
     //    .setGridFrame(10)
 
     //    BoxTextView {

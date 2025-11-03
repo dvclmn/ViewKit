@@ -7,7 +7,7 @@
 
 extension Box {
   public enum LineType: Hashable, Sendable {
-    //    case text
+
     case text(
       content: String,
       lineLimit: Int = 0
@@ -18,7 +18,6 @@ extension Box {
   public enum StructureType: Hashable, Sendable {
     case top
     case divider
-    //    case divider(String = "-")
     case bottom
   }
 }
@@ -46,5 +45,24 @@ extension Box.LineType {
       case .blank:
         return StringStack("")
     }
+  }
+  
+  public static func joined(
+    lines: [Box.LineType],
+    with theme: Box.Theme
+  ) -> StringStack {
+    
+    let stacks = lines.map { line in
+      line.output(theme: theme)
+    }
+    let joined = StringStack.joined(stacks, along: .vertical)
+    return joined
+  }
+  
+  public static func joined(
+    lines: Box.LineType...,
+    with theme: Box.Theme
+  ) -> StringStack {
+    Self.joined(lines: lines, with: theme)
   }
 }

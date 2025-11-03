@@ -9,129 +9,104 @@ import LayoutKit
 import StringShared
 import SwiftUI
 
-public struct BoxView<Content: View>: View {
+public struct BoxView: View {
   @Environment(\.glyphSet) private var glyphSet
   @Environment(\.frameStyle) private var frameStyle
-  @Environment(\.unitSize) private var unitSize
+  @Environment(\.gridWidth) private var gridWidth
+  @Environment(\.gridHeight) private var gridHeight
 
-  @State private var viewSize: CGSize?
+  @State private var characterSize: CGSize?
 
-  let alignment: Alignment
-  let padding: GridDimensions
-  let content: Content
+  //  let title: String?
+  //  let alignment: Alignment
+  //  let content: AttributedString
+  let content: [any Box.Component]
 
   public init(
-    separator: String = "\n",
-    paddingH: Int = 0,
-    paddingV: Int = 0,
-    alignment: Alignment = .center,
-    @ViewBuilder content: @escaping () -> Content
+        _ title: String? = nil,
+//    separator: String = "\n",
+//    alignment: Alignment = .center,
+    @BoxBuilder content: () -> [any Box.Component]
+      //    @DisplayStringBuilder content: () -> [DisplayBlock]
   ) {
-    self.alignment = alignment
-    self.padding = GridDimensions(paddingH, paddingV)
+    //    self.title = title
+    //    self.alignment = alignment
     self.content = content()
   }
 
   public var body: some View {
-    content
+    Text(
+      Box(
+        width: gridWidth ?? 20,
+        height: gridHeight,
+        theme: theme
+      ) {
+        content
+      }.plainText
+    )
+    //            .fixedSize()
+    .frameFromGridSize(width: gridWidth, height: gridHeight)
+    .gridSetup(.sfMono, fontSize: 20)
 
-      /// Padding to seat content within Box view
-      .gridPadding(.horizontal, paddingAdjusted.width)
-      .gridPadding(.vertical, paddingAdjusted.height)
+    .environment(\.isShowingGridGuide, true)
 
-      .viewSize(mode: .debounce(0.2)) { size in
-        updateIfChanged(&self.viewSize, to: size)
-      }
-
-      .background(.topLeading) {
-        BoxFrame()
-      }
-      .setGridFrame(
-        dimensions?.width,
-        dimensions?.height
-      )
-      .gridGuide(opacity: 0.2)
+    //      .debugTextOverlay(
+    //        """
+    //        Width: \(gridWidth?.toString, default: "nil")
+    //        Text Content: \(content.toString)
+    //        """
+    //      ).disabled(true)
 
   }
 }
 
 extension BoxView {
-
-  /// Padding first needs to account for the width/height
-  /// taken up by structure, like the frame. As well as any
-  /// user-specified padding.
-  private var paddingAdjusted: GridDimensions {
-    let reserved = frameStyle.reservedDimensions
-    let user = self.padding
-    return reserved + user
+  private var theme: Box.Theme {
+    Box.Theme(
+      glyphSet: glyphSet,
+      frameStyle: frameStyle,
+      padding: 1
+    )
   }
 
-  private var boxText: String? {
-    guard let w = dimensions?.width, let h = dimensions?.height else { return nil }
-//    let text = Box.frameOnly.plainText
-    
-    let text = Box(
-      width: w,
-      height: h,
-      theme: .default
-    ) {
-      Box.Divider()
-      "I'm txt as well"
-      Box.Bottom()
-    }.plainText
-    
-//    let text = FrameBox(
-//      width: w,
-//      height: h,
-//      theme: Box.Theme(
-//        glyphSet: glyphSet,
-//        frameStyle: frameStyle,
-//        padding: padding
-//      )
-//    ).plainText
-
-//    let result =
-//      text
-//      .split(separator: "\n", omittingEmptySubsequences: true)
-//      .joined(separator: "\n")
-
-    return text
-  }
-
-  @ViewBuilder
-  private func BoxFrame() -> some View {
-    if let boxText {
-      Text(boxText)
-        .fixedSize()
-    }
-    //      .frameFromGridSize(width: w, height: h, alignment: alignment)
-  }
-  private var dimensions: GridDimensions? {
-    guard let unitSize else { return nil }
-    return viewSize?.toGridDimensions(using: unitSize, rounding: .down)
-  }
+  //  private var textOutput: String {
+  //    Box(theme: theme) {
+  //
+  //      Box.Top()
+  //      if let title {
+  //        Box.Header(title)
+  //        Box.Divider()
+  //      }
+  //      content.toString
+  //      Box.Bottom()
+  //
+  //    }.plainText
+  //  }
 }
 
-//#if DEBUG
-//#Preview {
-//
-//  VStack(spacing: 14) {
-//
-//    BoxView {
-//      Text("I'm a SwiftUI View")
-//      Text(DummyContent.Strings.paragraphs[8].toAttributed)
-//    }
-//
-//    //        .gridFrame(42)
-//    //        .boxStyle(glyphs: .double, frame: .double)
-//
-//  }
-//  .textSelection(.enabled)
-//  .monospaced()
-//  .frame(
-//    minWidth: 400,
-//    minHeight: 600
-//  )
-//  .background(.black.opacity(0.6))
-//}
-//#endif
+#if DEBUG
+#Preview(traits: .size(.normal)) {
+
+  VStack(spacing: 14) {
+
+    //    BoxTextView("I love boxes made of text") {
+    //      DummyContent.Strings.paragraphs[8].toAttributed
+    //    }
+    //    .setGridFrame(42)
+    GroupBox("Top Only") {
+      BoxView {
+        Box.Top()
+      }
+    }
+
+  }
+  .textSelection(.enabled)
+  .monospaced()
+  //  .environment(\._lineHeightMultiple, 0.84)
+  .frame(
+    minWidth: 400,
+    minHeight: 600
+  )
+  .background(.black.opacity(0.6))
+}
+#endif
