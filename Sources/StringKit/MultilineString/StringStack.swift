@@ -33,23 +33,6 @@ public struct StringStack {
   ) {
     self.stack = Array(repeating: row, count: count)
   }
-
-//  /// Initializes a `StringStack` by repeating a provided
-//  /// `StringStack` along a given axis the specified number of times.
-//  /// - Parameters:
-//  ///   - stringStack: <#stringStack description#>
-//  ///   - axis: <#axis description#>
-//  ///   - count: The number of times to repeat the row.
-//  
-//  
-//  
-//  public init(
-//    repeating stringStack: StringStack,
-//    along axis: Axis,
-//    count: Int
-//  ) {
-//    self.stack = stringStack.stack.stacked(along: axis, repeating: count)
-//  }
 }
 
 extension StringStack {
@@ -58,9 +41,7 @@ extension StringStack {
   public var height: Int { stack.count }
   public var width: Int { stack.map { $0.count }.max() ?? 0 }
 
-  public var rows: [String] {
-    stack.map { String($0) }
-  }
+  public var rows: [String] { stack.map { String($0) } }
 
   /// Accesses or modifies the row of characters at the specified index.
   ///
@@ -75,10 +56,7 @@ extension StringStack {
   ///   - If the setter is called with a row index equal to `height`, it appends the new row at the end.
   ///   - Setting with a row index greater than `height` has no effect.
   public subscript(row row: Int) -> [Character] {
-    get {
-      //      guard row < stack.count else { return [] }
-      return stack[safe: row] ?? []
-    }
+    get { stack[safe: row] ?? [] }
     set {
       if row < stack.count {
         stack[row] = newValue
@@ -97,39 +75,6 @@ extension StringStack {
     stack.isEmpty || stack.allSatisfy { $0.isEmpty }
   }
 
-  // Ensure all rows have consistent width
-  //  public func normalised(
-  //    toWidth width: Int? = nil,
-  //    paddingCharacter: Character = " "
-  //  ) -> StringStack {
-  //    let targetWidth = width ?? self.width
-  //    var result = StringStack([])
-  //    for row in stack {
-  //      var normalizedRow = row
-  //      if normalizedRow.count < targetWidth {
-  //        normalizedRow.append(contentsOf: Array(repeating: paddingCharacter, count: targetWidth - normalizedRow.count))
-  //      } else if normalizedRow.count > targetWidth {
-  //        normalizedRow = Array(normalizedRow.prefix(targetWidth))
-  //      }
-  //      result.append(normalizedRow)
-  //    }
-  //    return result
-  //  }
-
-  //  func normalised(toWidth width: Int, height: Int, padding: Character) -> StringStack {
-  //    var rows = stack
-  //    rows = rows.map { $0 + .padded(with: padding, count: width - $0.count) }
-  //    if rows.count < height {
-  //      let emptyRow = .padded(with: padding, count: width)
-  //      rows += Array(repeating: emptyRow, count: height - rows.count)
-  //    }
-  //    return StringStack(rows)
-  //  }
-
-  //  private static func fill(_ char: Character, count: Int) -> [Character] {
-  //    count > 0 ? Array(repeating: char, count: count) : []
-  //  }
-
 }
 
 /// This allows writing
@@ -145,7 +90,6 @@ extension StringStack: ExpressibleByArrayLiteral {
   public init(arrayLiteral elements: [Character]...) {
     self.stack = elements
   }
-
 }
 
 extension StringStack: ExpressibleByUnicodeScalarLiteral {

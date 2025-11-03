@@ -6,6 +6,13 @@
 //
 
 import SwiftUI
+import EnumMacros
+
+@CaseDetection
+public enum TrimMethod {
+  case leaveSpace
+  case crop
+}
 
 extension StringStack {
   func repeated(

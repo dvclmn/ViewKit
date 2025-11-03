@@ -34,27 +34,35 @@ public struct HeaderBoxView: View {
 
   public var body: some View {
     Text(textOutput)
-
+//      .fixedSize()
       .frameFromGridSize(width: gridWidth, height: gridHeight)
       .gridSetup(.sfMono, fontSize: 28)
 
       .environment(\.isShowingGridGuide, true)
 
-      .debugTextOverlay(
-        """
-        Width: \(gridWidth?.toString, default: "nil")
-        Text Content: \(content.toString)
-        """
-      ).disabled(true)
+//      .debugTextOverlay(
+//        """
+//        Width: \(gridWidth?.toString, default: "nil")
+//        Text Content: \(content.toString)
+//        """
+//      ).disabled(true)
 
   }
 }
 
 extension HeaderBoxView {
-  private var textOutput: AttributedString {
-    Box {
+  private var textOutput: String {
+    let result = Box {
+      Box.Top()
       Box.Header("Some text")
+      "What is this?"
+      "And another?"
+      Box.Divider()
+      Box.Bottom()
+      
     }.plainText
+    print("Box result: \(result)")
+    return result
 //    HeaderBox(
 //      header: title ?? "Header",
 //      content: content,
