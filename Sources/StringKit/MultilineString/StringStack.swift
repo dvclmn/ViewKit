@@ -54,21 +54,21 @@ extension StringStack {
       }
     }
   }
-
-  func row(
-    at index: Int,
-    paddedTo width: Int,
-    with char: Character?
-  ) -> [Character] {
-    guard index < stack.count else {
-      return char.map { .padded(with: $0, count: width) } ?? []
-    }
-    var row = stack[index]
-    if let char, row.count < width {
-      row += .padded(with: char, count: width - row.count)
-    }
-    return row
-  }
+//
+//  func row(
+//    at index: Int,
+//    paddedTo width: Int,
+//    with char: Character?
+//  ) -> [Character] {
+//    guard index < stack.count else {
+//      return char.map { .padded(with: $0, count: width) } ?? []
+//    }
+//    var row = stack[index]
+//    if let char, row.count < width {
+//      row += .padded(with: char, count: width - row.count)
+//    }
+//    return row
+//  }
 }
 
 extension StringStack {

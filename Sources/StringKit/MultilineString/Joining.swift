@@ -38,6 +38,7 @@ extension StringStack {
     with other: StringStack,
     padding char: Character? = nil
   ) -> StringStack {
+
     let maxHeight = Swift.max(self.height, other.height)
     var result = StringStack([])
 
@@ -46,42 +47,74 @@ extension StringStack {
       let lhs = self[row: i]
       let rhs = other[row: i]
 
-      guard let char else {
-        /// No padding required, just join what's here
-        result.append(lhs + rhs)
-        continue
-      }
-
       /// Create and append padding
-      let lhsPadding = Self.createPadding(for: self, with: char)
-      let rhsPadding = Self.createPadding(for: other, with: char)
+      let lhsPadding = Self.createPadding(with: char, width: self.width)
+      let rhsPadding = Self.createPadding(with: char, width: other.width)
 
       result.append(lhsPadding + lhs + rhs + rhsPadding)
     }
     return result
   }
 
-  private func joinedVertically(with other: StringStack, padding: Character? = nil) -> StringStack {
-    let maxWidth = Swift.max(width, other.width)
+  func joinedVertically(with other: Self, padding: Character? = nil) -> Self {
+    let maxWidth = Swift.max(self.width, other.width)
     var result = self
 
-    for i in 0..<other.height {
-      let row = other.row(at: i, paddedTo: maxWidth, with: padding)
-      result.append(row)
+    for row in other {
+      if let padding = padding {
+        let paddedRow = row + [Character](repeating: padding, count: maxWidth - row.count)
+        result.append(paddedRow)
+      } else {
+        result.append(row)
+      }
     }
 
     return result
   }
+  
+  
 
-  private static func createPadding(
-    for stack: Self,
+  //  private func joinedVertically(
+  //    with other: StringStack,
+  //    padding: Character? = nil
+  //  ) -> StringStack {
+  //    let maxWidth = Swift.max(width, other.width)
+  //    var result = self
+  //
+  //    for i in 0..<other.height {
+  //      let rhs = other[row: i]
+  //      let rhsPadding = Self.createPadding(for: other, with: padding)
+  ////      let row = other.row(at: i, paddedTo: maxWidth, with: padding)
+  //      result.append(rhsPadding + rhs)
+  //    }
+  //
+  //    return result
+  //  }
+
+  static func createPadding(
     with char: Character?,
+    width: Int,
   ) -> [Character] {
     guard let char else { return [] }
-    return Array(repeating: char, count: stack.width)
+    return Array(repeating: char, count: width)
   }
 }
 
+/// This allows writing
+/// ```
+/// guard !self.isEmpty else { return [] }
+/// ```
+///
+/// rather than
+/// ```
+/// guard !self.isEmpty else { StringStack([]) }
+/// ```
+extension StringStack: ExpressibleByArrayLiteral {
+  public init(arrayLiteral elements: [Character]...) {
+    self.stack = elements
+  }
+  
+}
 
 /// Assumes horizontal joining
 public func + (lhs: StringStack, rhs: StringStack) -> StringStack {
