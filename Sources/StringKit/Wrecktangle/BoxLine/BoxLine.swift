@@ -64,41 +64,46 @@ extension Box {
 }
 extension Box.StructureLine {
 
-  func build(theme: Box.Theme) -> StringStack {
+  func build(
+    width: Int,
+    theme: Box.Theme
+  ) -> StringStack {
+//    let repeated: StringStack = body.buildStack(using: <#T##Box.Theme#>)
     StringStack.joined(
-      leading.buildStack(using: theme),
-      body.buildStack(using: theme),
-      trailing.buildStack(using: theme),
+      leading.buildStack(toWidth: width, using: theme),
+      body.buildStack(toWidth: width, using: theme),
+      trailing.buildStack(toWidth: width, using: theme),
       along: .horizontal
     )
   }
 
   static func structure(
+    width: Int,
     for type: Box.StructureType,
     with theme: Box.Theme
   ) -> StringStack {
     switch type {
       case .top:
         Box.StructureLine(
-          leading: .join(.cross),
-//          leading: .corner(.topLeading),
+//          leading: .join(.cross),
+          leading: .corner(.topLeading),
           body: .horizontal(.top),
           trailing: .corner(.topTrailing)
-        ).build(theme: theme)
+        ).build(width: width, theme: theme)
 
       case .divider:
         Box.StructureLine(
           leading: .vertical(.leading),
           body: .horizontal(.interior),
           trailing: .vertical(.trailing),
-        ).build(theme: theme)
+        ).build(width: width, theme: theme)
 
       case .bottom:
         Box.StructureLine(
           leading: .corner(.bottomLeading),
           body: .horizontal(.bottom),
           trailing: .corner(.bottomTrailing)
-        ).build(theme: theme)
+        ).build(width: width, theme: theme)
     }
 
   }

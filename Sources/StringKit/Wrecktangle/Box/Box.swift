@@ -37,9 +37,9 @@ public struct Box: Sendable {
     let lines = components.flatMap { $0.makeLines(using: engine) }
     
 //    print("Lines, from the Builder components: \(lines.)")
-    dump(lines, name: "Box Lines", indent: 2)
+//    dump(lines, name: "Box Lines", indent: 2)
     
-    let stack = Box.LineType.joined(lines: lines, with: theme)
+    let stack = Box.LineType.joined(width: width, lines: lines, with: theme)
 //    let stack = Box.Line.joined(lines: lines, with: theme)
     let stringResult = stack.string
     

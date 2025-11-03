@@ -44,11 +44,14 @@ public struct BoxView: View {
         content
       }.plainText
     )
-    //            .fixedSize()
-    .frameFromGridSize(width: gridWidth, height: gridHeight)
-    .gridSetup(.sfMono, fontSize: 20)
+//    .fixedSize(horizontal: true, vertical: false)
+    .frameFromGridSize(
+      width: gridWidth.map { $0 + theme.padding.width * 2 },
+      height: gridHeight
+    )
+    .gridSetup(.sfMono, fontSize: 15)
 
-    .environment(\.isShowingGridGuide, true)
+//    .environment(\.isShowingGridGuide, true)
 
     //      .debugTextOverlay(
     //        """
@@ -87,18 +90,40 @@ extension BoxView {
 #if DEBUG
 #Preview(traits: .size(.normal)) {
 
-  VStack(spacing: 14) {
+  ScrollView {
+    VStack(spacing: 14) {
 
-    //    BoxTextView("I love boxes made of text") {
-    //      DummyContent.Strings.paragraphs[8].toAttributed
-    //    }
-    //    .setGridFrame(42)
-    GroupBox("Top Only") {
-      BoxView {
-        Box.Top()
-      }
+      //    BoxTextView("I love boxes made of text") {
+      //      DummyContent.Strings.paragraphs[8].toAttributed
+      //    }
+      //    .setGridFrame(42)
+//      GroupBox("Top Only") {
+//        BoxView {
+//          Box.Top()
+//        }
+//      }
+//      
+//      GroupBox("Bottom Only") {
+//        BoxView {
+//          Box.Bottom()
+//        }
+//      }
+      
+//      GroupBox("The Lot") {
+        BoxView {
+          Box.Header("Hello, I'm a Header")
+          DummyContent.Strings.paragraphs[0]
+          Box.Bottom()
+        }
+        .setGridFrame(
+          30,
+//          20,
+//          nil,
+          alignment: .leading
+        )
+//      }
+
     }
-
   }
   .textSelection(.enabled)
   .monospaced()

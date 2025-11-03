@@ -6,14 +6,16 @@
 //
 
 import SwiftUI
+import EnumMacros
 
-//extension Box.PartType {
-//  /// Whether or not this part should take on repeatable behaviour
-//  public enum Flexibility: Equatable, Codable, Sendable {
-//    case repeatable(axis: Axis)
-//    case fixed
-//  }
-//}
+extension Box.PartType {
+  /// Whether or not this part should take on repeatable behaviour
+  @CaseDetection
+  public enum Flexibility: Equatable, Codable, Sendable {
+    case repeatable(axis: Axis)
+    case fixed
+  }
+}
 
 //protocol Repeatable {
 //  func repeated(to width: Int, along axis: Axis) -> Box.Part

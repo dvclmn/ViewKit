@@ -60,8 +60,8 @@ extension Box.Engine {
 
   func structureLine(
     type: Box.StructureType
-  ) -> Box.LineType {
-    return Box.LineType.structure(type)
+  ) -> [Box.LineType] {
+    return [Box.LineType.structure(type)]
 //    switch type {
 //      case .top:
 //        Box.Line(

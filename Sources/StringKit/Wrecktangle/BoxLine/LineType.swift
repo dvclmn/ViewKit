@@ -7,7 +7,6 @@
 
 extension Box {
   public enum LineType: Hashable, Sendable {
-
     case text(
       content: String,
       lineLimit: Int = 0
@@ -15,20 +14,37 @@ extension Box {
     case structure(StructureType)
     case blank
   }
+  
   public enum StructureType: Hashable, Sendable {
     case top
     case divider
     case bottom
   }
 }
+public func + (lhs: Box.LineType, rhs: Box.LineType) -> [Box.LineType] {
+  [lhs, rhs]
+}
+
+//extension Box.LineType: RangeReplaceableCollection {
+//  public init() {
+//    <#code#>
+//  }
+//  
+//  public typealias SubSequence = Box.LineType
+//  
+//}
+
 
 extension Box.LineType {
-  public func output(theme: Box.Theme) -> StringStack {
+  public func output(
+    width: Int,
+    theme: Box.Theme
+  ) -> StringStack {
     switch self {
       case .text(let content, _):
-        let leading = Box.PartType.vertical(.leading).buildStack(using: theme)
+        let leading = Box.PartType.vertical(.leading).buildStack(toWidth: width, using: theme)
         let contentStack = StringStack(content)
-        let trailing = Box.PartType.vertical(.trailing).buildStack(using: theme)
+        let trailing = Box.PartType.vertical(.trailing).buildStack(toWidth: width, using: theme)
 
         return StringStack.joined(
           leading,
@@ -38,31 +54,30 @@ extension Box.LineType {
         )
 
       case .structure(let type):
-        return Box.StructureLine.structure(
-          for: type,
-          with: theme
-        )
+        return Box.StructureLine.structure(width: width, for: type, with: theme)
       case .blank:
         return StringStack("")
     }
   }
-  
+
   public static func joined(
+    width: Int,
     lines: [Box.LineType],
     with theme: Box.Theme
   ) -> StringStack {
-    
+
     let stacks = lines.map { line in
-      line.output(theme: theme)
+      line.output(width: width, theme: theme)
     }
     let joined = StringStack.joined(stacks, along: .vertical)
     return joined
   }
-  
+
   public static func joined(
+    width: Int,
     lines: Box.LineType...,
     with theme: Box.Theme
   ) -> StringStack {
-    Self.joined(lines: lines, with: theme)
+    Self.joined(width: width, lines: lines, with: theme)
   }
 }
