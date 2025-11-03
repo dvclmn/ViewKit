@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 14/9/2024.
 //
 
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack {
@@ -31,7 +31,7 @@ public struct StringStack {
   /// stacked vertically
   public init(
     repeating row: [Character],
-//    along axis: Axis,
+    //    along axis: Axis,
     count: Int
   ) {
     self.stack = Array(repeating: row, count: count)
@@ -42,33 +42,8 @@ public struct StringStack {
     along axis: Axis,
     count: Int
   ) {
-    switch axis {
-    case .horizontal:
-      self.stack = stringStack.stack.stackedHorizontally(repeating: count)
-    case .vertical:
-      self.stack = stringStack.stack.stackedVertically(repeating: count)
-    }
+    self.stack = stringStack.stack.stacked(along: axis, repeating: count)
   }
-//    let stacks = Array(repeating: stack, count: count)
-//    //    for i in 0..<count {
-//    let joined = StringStack.joined(stack, along: axis)
-//    self.stack = joined.stack
-//    
-//    
-//    public init(repeating stack: StringStack, count: Int, axis: Axis) {
-//      switch axis {
-//        case .vertical:
-//          self.stack = Array(repeating: stack.stack, count: count).flatMap { $0 }
-//        case .horizontal:
-//          self.stack = stack.stack.map { Array(repeating: $0, count: count).flatMap { $0 } }
-//      }
-//    }
-    
-    
-    
-    //    }
-    //    self.stack = Array(repeating: row, count: count)
-//  }
 }
 
 extension StringStack {
@@ -213,4 +188,3 @@ extension StringStack: Sequence {
     stack.append(row)
   }
 }
-

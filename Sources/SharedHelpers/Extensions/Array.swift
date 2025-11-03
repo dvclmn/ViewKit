@@ -15,11 +15,12 @@ extension Array where Element: Hashable {
 
 }
 
-// MARK: - Reusable Array stacking extensions
+extension Array where Element == [Character] {
 
-extension Array where Element: Collection {
-
-  public func stacked(along axis: Axis, repeating count: Int) -> [[Element.Element]] {
+  public func stacked(
+    along axis: Axis,
+    repeating count: Int
+  ) -> [[Character]] {
     switch axis {
       case .horizontal:
         stackedHorizontally(repeating: count)
@@ -27,60 +28,32 @@ extension Array where Element: Collection {
         stackedVertically(repeating: count)
     }
   }
-
-  //  public func stacked(
-  //    along axis: Axis,
-  //    repeating count: Int
-  //  ) -> [[Element.Element]] {
-  //    switch axis {
-  //      case .horizontal:
-  //        stackedHorizontally(repeating: count)
-  //      case .vertical:
-  //        stackedHorizontally(repeating: count)
-  //    }
-  //  }
-
-  /// ```
-  /// let tile: [[Character]] = [
-  ///   ["═"],
-  ///   ["━"]
-  /// ]
-  ///
-  /// let v = tile.stackedVertically(repeating: 2)
-  /// print(v)
-  /// // [["═"], ["━"], ["═"], ["━"]]
-  ///
-  /// let h = tile.stackedHorizontally(repeating: 3)
-  /// print(h)
-  /// // [["═", "═", "═"], ["━", "━", "━"]]
-  ///
-  /// ```
-
-  /// Vertically repeats the array of collections.
-  /// e.g. `[[A, B], [C, D]] * 2 → [[A, B], [C, D], [A, B], [C, D]]`
-  func stackedVertically(repeating count: Int) -> [[Element.Element]] {
-    var result: [[Element.Element]] = []
+  
+  /// Repeats the entire 2D grid vertically.
+  /// e.g. `[["A","B"],["C","D"]] ×2 → [["A","B"],["C","D"],["A","B"],["C","D"]]`
+  private func stackedVertically(repeating count: Int) -> [[Character]] {
+    var result: [[Character]] = []
     result.reserveCapacity(self.count * count)
 
     for _ in 0..<count {
-      for inner in self {
-        result.append(Array(inner))
-      }
+      result.append(contentsOf: self)
     }
+
     return result
   }
 
-  /// Horizontally repeats each collection within the array.
-  /// e.g. `[[A, B], [C, D]] * 2 → [[A, B, A, B], [C, D, C, D]]`
-  func stackedHorizontally(repeating count: Int) -> [[Element.Element]] {
-    self.map { inner in
-      var row: [Element.Element] = []
-      row.reserveCapacity(inner.count * count)
+  /// Repeats each row horizontally.
+  /// e.g. `[["A","B"],["C","D"]] ×2 → [["A","B","A","B"],["C","D","C","D"]]`
+  private func stackedHorizontally(repeating count: Int) -> [[Character]] {
+    self.map { row in
+      var newRow: [Character] = []
+      newRow.reserveCapacity(row.count * count)
 
       for _ in 0..<count {
-        row.append(contentsOf: inner)
+        newRow.append(contentsOf: row)
       }
-      return row
+
+      return newRow
     }
   }
 }
