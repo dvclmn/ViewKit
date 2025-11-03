@@ -18,6 +18,26 @@ import Foundation
 ///
 ///
 public struct Box {
+  let width: Int
+  let theme: Theme
+  let components: [Component]
+  
+  public init(
+    width: Int,
+    theme: Theme = .default,
+    @BoxBuilder content: () -> [Component]
+  ) {
+    self.width = width
+    self.theme = theme
+    self.components = content()
+  }
+  
+  public func draw() -> String {
+//    let builder = Builder(width: width, height: nil, theme: theme)
+    let lines = components.flatMap { $0.makeLines(using: builder) }
+    let stack = Box.Line.joinLines(lines: lines, with: theme)
+    return stack.string
+  }
 //  let width: Int
 //  let theme: Theme
 }
