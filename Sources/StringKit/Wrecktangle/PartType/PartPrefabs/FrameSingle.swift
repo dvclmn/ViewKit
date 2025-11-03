@@ -18,38 +18,32 @@ extension Box.PartType {
   /// Perhaps, in future, I will add the concept of per-axis
   /// glyph styles, but for now, these Frames have the
   /// *same glyph style* for all axes.
-  public func single(
-    //    for partType: Box.PartType,
-    //    with frameStyle: Box.FrameStyle,
+  func singleFrame(
     frameProm: Box.GlyphProminence,
-    dividerProm: Box.GlyphProminence,
+    divProm: Box.GlyphProminence,
     //    with prominence: Box.GlyphProminence,
   ) -> Box.GlyphStack {
 
-    let partType = self
-    //    let frameProm = frameStyle.
-    //  ) -> Box.GlyphType? {
-
     let type: Box.GlyphType? =
-      switch partType {
+      switch self {
 
         case .horizontal(.top), .horizontal(.bottom):
           Box.GlyphType.horizontal(frameProm)
 
         case .horizontal(.interior):
-          Box.GlyphType.horizontal(dividerProm)
+          Box.GlyphType.horizontal(divProm)
 
         case .vertical(.leading), .vertical(.trailing):
           Box.GlyphType.vertical(frameProm)
 
         case .vertical(.interior):
-          Box.GlyphType.vertical(dividerProm)
+          Box.GlyphType.vertical(divProm)
 
         case .join(let joinType):
           switch joinType {
             case .leading, .trailing:
               Box.GlyphType.join(
-                x: dividerProm,
+                x: divProm,
                 y: frameProm,
                 type: joinType
               )
@@ -57,14 +51,14 @@ extension Box.PartType {
             case .top, .bottom:
               Box.GlyphType.join(
                 x: frameProm,
-                y: dividerProm,
+                y: divProm,
                 type: joinType
               )
 
             case .cross:
               Box.GlyphType.join(
-                x: dividerProm,
-                y: dividerProm,
+                x: divProm,
+                y: divProm,
                 type: joinType
               )
           }

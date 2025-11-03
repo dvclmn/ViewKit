@@ -58,7 +58,7 @@ extension MetaEnumMacro {
   func makeMetaEnum() -> [DeclSyntax] {
 
     let meta: DeclSyntax = """
-      \(raw: access)enum Meta {
+      \(raw: access) enum Meta {
       \(raw: caseDecls)
       \(makeMetaInit())
       \(caseNames)
@@ -80,7 +80,7 @@ extension MetaEnumMacro {
       .joined(separator: "\n")
 
     return """
-      \(raw: access)init(_ \(parentParamName): \(raw: parentTypeName)) {
+      \(raw: access) init(_ \(parentParamName): \(raw: parentTypeName)) {
         switch \(parentParamName) {
       \(raw: caseStatements)
         }
@@ -130,7 +130,7 @@ extension MetaEnumMacro {
 
     return
       """
-      \(raw: access)var name: String {
+      \(raw: access) var name: String {
         switch self {
           \(raw: cases)
         }

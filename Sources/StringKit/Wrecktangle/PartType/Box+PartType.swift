@@ -29,6 +29,11 @@ extension Box {
   /// ┤ ║
   ///
   /// ```
+  /// Note: these are not  visual/styling presets.
+  /// They are more from the fabrication perspective.
+  /// This many by this many, or something.
+  ///
+  /// No 'this fun glyph', and this one, and so on.
   @CaseDetection
   public enum PartType: Hashable, Codable {
     case horizontal(HorizontalLocation)

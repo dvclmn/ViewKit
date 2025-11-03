@@ -12,8 +12,8 @@ extension Box.PartType {
   /// and  `Prominence.standard` on the internal parts
   public func double(
     //    for partType: Box.PartType,
-    exterior extProm: Box.GlyphProminence,
-    interior intProm: Box.GlyphProminence,
+    extProm: Box.GlyphProminence,
+    intProm: Box.GlyphProminence,
     //    with arrangement: Box.ProminenceArrangement
   ) -> Box.GlyphStack {
 
