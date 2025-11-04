@@ -14,10 +14,16 @@ enum RowBuilder {
   }
 }
 
+//@resultBuilder
+//enum GlyphStackBuilder {
+//  static func buildBlock(_ components: [Box.GlyphType]...) -> [[Box.GlyphType]] {
+//    components
+//  }
+//}
 @resultBuilder
 enum GlyphStackBuilder {
-  static func buildBlock(_ components: [Box.GlyphType]...) -> [[Box.GlyphType]] {
-    components
+  static func buildBlock(_ components: any GlyphRowConvertible...) -> [[Box.GlyphType]] {
+    components.map { $0.asGlyphRow() }
   }
 }
 

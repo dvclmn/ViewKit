@@ -7,7 +7,6 @@
 
 extension Box.PartType {
 
-  
   /// Follows a `Prominence.increased` on the external frame parts,
   /// and  `Prominence.standard` on the internal parts
   package func doubleFrameParts(
@@ -128,18 +127,20 @@ extension Box.PartType {
       case .corner(let cornerType):
         switch cornerType {
           case .topLeading:
-            [
-              [
-                Box.GlyphType.corner(.increased, type: cornerType),
-                Box.GlyphType.horizontal(.increased),
-                Box.GlyphType.horizontal(.increased),
-              ],
-              [
-                Box.GlyphType.vertical(.increased),
-                Box.GlyphType.blank,
-                Box.GlyphType.corner(.standard, type: cornerType),
-              ],
-            ]
+
+            GlyphGrid {
+              Row {
+                Box.GlyphType.corner(.increased, type: cornerType)
+                Box.GlyphType.horizontal(.increased)
+                Box.GlyphType.horizontal(.increased)
+              }
+              Row {
+                Box.GlyphType.vertical(.increased)
+                Box.GlyphType.blank
+                Box.GlyphType.corner(.standard, type: cornerType)
+              }
+            }
+
           case .topTrailing:
             [
               [
