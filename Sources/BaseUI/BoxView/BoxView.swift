@@ -37,11 +37,11 @@ public struct BoxView: View {
     )
     .fixedSize(horizontal: true, vertical: false)
     //    .fixedSize(horizontal: true, vertical: false)
-//    .frameFromGridSize(
-//      width: widthForBoxFrame,
-//      //      width: gridWidth.map { $0 + theme.padding.width * 2 },
-//      height: gridHeight
-//    )
+    //    .frameFromGridSize(
+    //      width: widthForBoxFrame,
+    //      //      width: gridWidth.map { $0 + theme.padding.width * 2 },
+    //      height: gridHeight
+    //    )
     .gridSetup(.sfMono, fontSize: 15)
 
     //    .environment(\.isShowingGridGuide, true)
@@ -65,12 +65,12 @@ extension BoxView {
   private var widthForBoxFrame: Int {
 
     let proposed = gridWidth ?? 15
-//    let frameReserved = theme.frameStyle.reservedDimensions.width
-//    let paddingH = theme.padding.width * 2
+    //    let frameReserved = theme.frameStyle.reservedDimensions.width
+    //    let paddingH = theme.padding.width * 2
 
-//    let totalReserved = frameReserved + paddingH
-//    return max(0, proposed + totalReserved)
-    
+    //    let totalReserved = frameReserved + paddingH
+    //    return max(0, proposed + totalReserved)
+
     return proposed
 
   }
@@ -89,22 +89,28 @@ extension BoxView {
 
   ScrollView {
     VStack(spacing: 14) {
+      
       BoxView {
-                Box.Header("Hello, I'm a Header")
+        "Rounded, single frame"
+      }
+      .setBoxStyle(glyphs: .rounded, frame: .single(frame: .standard))
+      
+      BoxView {
+        Box.Header("Hello, I'm a Header")
 
         DummyContent.Strings.paragraphs[3]
 
-//                Box.Divider()
-//                "Last text sign-off"
-//                  Box.Bottom()
-//                  Box.Bottom()
-//                  Box.Bottom()
+        //                Box.Divider()
+        //                "Last text sign-off"
+        //                  Box.Bottom()
+        //                  Box.Bottom()
+        //                  Box.Bottom()
       }
       .setGridFrame(30, alignment: .leading)
       //      .setBoxStyle(glyphs: .test, frame: .single())
       //      .setBoxStyle(glyphs: .test, frame: .double())
       .setBoxStyle(glyphs: .rounded, frame: .double(exterior: .increased, interior: .standard))
-//      .setBoxStyle(glyphs: .rounded, frame: .single(frame: .standard, dividers: .standard))
+      //      .setBoxStyle(glyphs: .rounded, frame: .single(frame: .standard, dividers: .standard))
 
     }
   }
