@@ -91,7 +91,7 @@ extension BoxView {
     VStack(spacing: 14) {
       
       BoxView {
-        "Rounded, single frame"
+        "Rounded, single frame, that's cool man"
       }
       .setBoxStyle(glyphs: .rounded, frame: .single())
       

@@ -16,11 +16,15 @@ extension Box.PartType {
       return StringStack(from: stack, with: engine.theme)
     }
 
-    let reservedWidth = engine.widthForText
+//    let reservedWidth = engine.widthForText
 
-    let stack = glyphStack(with: engine.theme.frameStyle)
-    let stringStack = StringStack(from: stack, with: engine.theme)
-    let repeated = stringStack.repeated(along: .horizontal, count: reservedWidth)
+    let glyphStack = glyphStack(with: engine.theme.frameStyle)
+    let stringStack = StringStack(from: glyphStack, with: engine.theme)
+    
+    let reserved = (stringStack.width * 2) + (engine.theme.padding.width * 2)
+    let repeatCount = engine.width - reserved
+    
+    let repeated = stringStack.repeated(along: .horizontal, count: repeatCount)
     return repeated
   }
 

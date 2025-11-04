@@ -8,6 +8,8 @@
 import Foundation
 
 extension Int {
+  
+  public var doubled: Int { self * 2 }
 
   public var toOpacity: Double {
     let newValue: Double

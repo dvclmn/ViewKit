@@ -51,16 +51,21 @@ extension Box.LineType {
     _ line: Box.TextLine,
     using engine: Box.Engine
   ) -> String {
+    
+    let leading = line.leading.buildStack(using: engine).string
+    let trailing = line.trailing.buildStack(using: engine).string
+    
+    let capWidth = leading.count + trailing.count
+    
+    let widthForText = engine.width - capWidth
+    
     let textContent = TextReflow(
       line.text,
-      width: engine.widthForText,
+      width: widthForText,
       shouldHyphenate: true
     )
     let reflowed = textContent.reflowed()
 
-    let leading = line.leading.buildStack(using: engine).string
-
-    let trailing = line.trailing.buildStack(using: engine).string
 
     let paddingString = String(repeating: " ", count: engine.theme.padding.width)
 

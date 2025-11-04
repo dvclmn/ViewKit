@@ -69,24 +69,24 @@ extension Box.Engine {
   ///
   /// That means it's important that we *do* remove padding from here,
   /// so that the width for text is accurate.
-  public var widthForText: Int {
-    let capLeading = config.theme.frameStyle.reservedDimensions.leading.width
-    let capTrailing = config.theme.frameStyle.reservedDimensions.trailing.width
-    let capWidth = capLeading + capTrailing
+//  public var widthForText: Int {
+//    let capLeading = config.theme.frameStyle.reservedDimensions.leading.width
+//    let capTrailing = config.theme.frameStyle.reservedDimensions.trailing.width
+//    let capWidth = capLeading + capTrailing
+//
+//    let paddingWidth = config.theme.padding.width * 2
+//    let finalWidth = max(0, config.width - capWidth - paddingWidth)
+//    return finalWidth
+//  }
 
-    let paddingWidth = config.theme.padding.width * 2
-    let finalWidth = max(0, config.width - capWidth - paddingWidth)
-    return finalWidth
-  }
-
-  public var heightForText: Int? {
-
-    guard let height = config.height else { return nil }
-
-    let capLeading = config.theme.frameStyle.reservedDimensions.leading.height
-    let capTrailing = config.theme.frameStyle.reservedDimensions.trailing.height
-    let capHeight = capLeading + capTrailing
-
-    return max(0, height - capHeight)
-  }
+//  public var heightForText: Int? {
+//
+//    guard let height = config.height else { return nil }
+//
+//    let capLeading = config.theme.frameStyle.reservedDimensions.leading.height
+//    let capTrailing = config.theme.frameStyle.reservedDimensions.trailing.height
+//    let capHeight = capLeading + capTrailing
+//
+//    return max(0, height - capHeight)
+//  }
 }
