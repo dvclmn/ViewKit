@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 4/11/2025.
 //
 
-//extension Box.StructureType {
+extension Box.StructureType {
 //  func line(
 //    toWidth width: Int,
 //    using theme: Box.Theme
@@ -16,28 +16,35 @@
 //    return StringStack.joined(stacks, along: .horizontal)
 //  }
 //
-//  private func parts() -> [Box.PartType] {
-//    switch self {
-//      case .top:
-//        [
-//          .corner(.topLeading),
-//          .horizontal(.top),
-//          .corner(.topTrailing),
-//        ]
-//
-//      case .divider:
-//        [
-//          .vertical(.leading),
-//          .horizontal(.interior),
-//          .vertical(.trailing),
-//        ]
-//
-//      case .bottom:
-//        [
-//          .corner(.bottomLeading),
-//          .horizontal(.bottom),
-//          .corner(.bottomTrailing),
-//        ]
-//    }
-//  }
-//}
+  func parts() -> [Box.PartType] {
+    switch self {
+      case .top:
+        [
+          .corner(.topLeading),
+          .horizontal(.top),
+          .corner(.topTrailing),
+        ]
+
+      case .divider:
+        [
+          .vertical(.leading),
+          .horizontal(.interior),
+          .vertical(.trailing),
+        ]
+
+      case .bottom:
+        [
+          .corner(.bottomLeading),
+          .horizontal(.bottom),
+          .corner(.bottomTrailing),
+        ]
+        
+      case .blank:
+        [
+          .vertical(.leading),
+          .blank,
+          .vertical(.trailing),
+        ]
+    }
+  }
+}
