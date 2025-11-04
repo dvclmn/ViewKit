@@ -44,26 +44,26 @@ extension Box.LineType {
     }
   }
 
-//  public static func joined(
-//    width: Int,
-//    lines: [Box.LineType],
-//    with theme: Box.Theme
-//  ) -> StringStack {
-//
-//    let stacks = lines.map { line in
-//      line.output(width: width, theme: theme)
-//    }
-//    let joined = StringStack.joined(stacks, along: .vertical)
-//    return joined
-//  }
-//
-//  public static func joined(
-//    width: Int,
-//    lines: Box.LineType...,
-//    with theme: Box.Theme
-//  ) -> StringStack {
-//    Self.joined(width: width, lines: lines, with: theme)
-//  }
+  public static func joined(
+    width: Int,
+    lines: [Box.LineType],
+    with theme: Box.Theme
+  ) -> StringStack {
+
+    let stacks = lines.map { line in
+      line.output(width: width, theme: theme)
+    }
+    let joined = StringStack.joined(stacks, along: .vertical)
+    return joined
+  }
+
+  public static func joined(
+    width: Int,
+    lines: Box.LineType...,
+    with theme: Box.Theme
+  ) -> StringStack {
+    Self.joined(width: width, lines: lines, with: theme)
+  }
 
 }
 
