@@ -31,14 +31,13 @@ extension Box.Engine {
   var theme: Box.Theme { config.theme }
 }
 
-
 extension Box.Engine {
-//  func buildString(from components: [any Box.Component]) -> String {
-//    let allComponents = [Box.Top()] + components + [Box.Bottom()]
-//    let allLines = allComponents.flatMap { $0.makeLines(using: self) }
-//
-//    //    let stack = StringS
-//  }
+  //  func buildString(from components: [any Box.Component]) -> String {
+  //    let allComponents = [Box.Top()] + components + [Box.Bottom()]
+  //    let allLines = allComponents.flatMap { $0.makeLines(using: self) }
+  //
+  //    //    let stack = StringS
+  //  }
 
   //  func buildLines(for type: Box.LineType) -> StringStack {
   //    switch type {
@@ -62,12 +61,32 @@ extension Box.Engine {
 
   /// I think for text lines, we may actually want to go
   /// straight to a `[String]`. As the bulk of this
-  func textLines(
-    _ content: String,
-    lineLimit: Int = 0
-  ) -> [String] {
-    //        ) -> [StringStack] {
-    //  ) -> [Box.LineType] {
+
+  /// This should go from `[Box.LineType]` to String?
+  func textLine(_ content: String) -> Box.LineType {
+    let textLine = Box.TextLine(
+      leading: .vertical(.leading),
+      text: content,
+      trailing: .vertical(.trailing)
+    )
+    return Box.LineType.text(textLine)
+    //    let leadingCap = Box.PartType.vertical(.leading)
+    //      .glyphStack(with: config.theme.frameStyle)
+    //    let traliingCap = Box.PartType.vertical(.trailing)
+    //      .glyphStack(with: config.theme.frameStyle)
+
+    //    return []
+
+    //          let stack = Stringst
+
+    //    let lines = reflowed.map { line in
+    //
+    ////      reflowedTextLine(content: line)
+    //    }
+    //    return lines
+  }
+
+  func reflow() {
     let textContent = TextReflow(
       content,
       width: widthForText,
@@ -78,22 +97,8 @@ extension Box.Engine {
       maxLines: lineLimit,
       paddingH: config.theme.padding.width
     )
-
-    let leadingCap = Box.PartType.vertical(.leading)
-      .glyphStack(with: config.theme.frameStyle)
-    let traliingCap = Box.PartType.vertical(.trailing)
-      .glyphStack(with: config.theme.frameStyle)
-
-    
-    //          let stack = Stringst
-
-    //    let lines = reflowed.map { line in
-    //
-    ////      reflowedTextLine(content: line)
-    //    }
-    //    return lines
   }
-  
+
   func validateTextCap(cap: Box.GlyphStack) {
     precondition(
       cap.count == 1,

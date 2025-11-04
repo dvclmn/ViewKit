@@ -11,10 +11,7 @@ extension Box {
     /// Important: This `content` represents the bulk/raw
     /// text content, *before* any width-aware reflowing.
     /// This operation is performed later.
-    case text(
-      content: String,
-      lineLimit: Int = 0
-    )
+    case text(TextLine)
     case structure(StructureType)
     case blank
   }
@@ -25,6 +22,7 @@ extension Box {
     case bottom
   }
 }
+
 
 /// Joins horizontally
 public func + (lhs: Box.LineType, rhs: Box.LineType) -> [Box.LineType] {
