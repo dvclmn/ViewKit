@@ -42,38 +42,41 @@ extension Box {
 }
 
 extension Box.Engine {
-  
+
   var width: Int { config.width }
   var theme: Box.Theme { config.theme }
-  
-  func buildString(form components: [any Box.Component]) -> String {
+
+  func buildString(from components: [any Box.Component]) -> String {
     let allComponents = [Box.Top()] + components + [Box.Bottom()]
     let allLines = allComponents.flatMap { $0.makeLines(using: self) }
-    
-    let stack =
+
+    //    let stack = StringS
   }
-  
-  func buildLines(for type: Box.LineType) -> StringStack {
-    switch type {
-      case .text(let content, _):
-        
-//        textLine(
-//          content,
-//          toWidth: width,
-//          using: theme
-//        )
-//      case .structure(let type):
-//        type.line(
-//          toWidth: width,
-//          using: theme
-//        )
-//      case .blank: StringStack("")
-    }
-  }
+
+  //  func buildLines(for type: Box.LineType) -> StringStack {
+  //    switch type {
+  //      case .text(let content, _):
+  //
+  //      case .structure(let type):
+  //      case .blank:
+  ////        textLine(
+  ////          content,
+  ////          toWidth: width,
+  ////          using: theme
+  ////        )
+  ////      case .structure(let type):
+  ////        type.line(
+  ////          toWidth: width,
+  ////          using: theme
+  ////        )
+  ////      case .blank: StringStack("")
+  //    }
+  //  }
 
   func textLines(
     _ content: String,
     lineLimit: Int = 0
+      //  ) -> [StringStack] {
   ) -> [Box.LineType] {
     let text = TextReflow(
       content,
@@ -86,14 +89,14 @@ extension Box.Engine {
       paddingH: config.theme.padding.width
     )
     let lines = reflowed.map { line in
-      textLine(content: line)
+      textSingleLine(content: line)
     }
     return lines
   }
 
-  func structureLines(
+  func structureLine(
     type: Box.StructureType
-  ) -> [Box.LineType] {
+  ) -> Box.LineType {
 
     let line =
       switch type {
@@ -102,28 +105,45 @@ extension Box.Engine {
         case .bottom: Box.LineType.structure(.bottom)
       }
 
-    return [line]
+    return line
   }
 
-  public func textLine(
+  public func textSingleLine(
     content: String,
-  ) -> StringStack {
-    
-    return StringStack.joined(
-      stack(for: .vertical(.leading)),
-      StringStack(content),
-      stack(for: .vertical(.trailing)),
-      along: .horizontal
-    )
+  ) -> Box.LineType {
+    //  ) -> StringStack {
+    return .text(content: content, lineLimit: 0)
+
+  }
+
+  func stack(for line: Box.LineType) -> StringStack {
+    switch line {
+      case .text(let content, _):
+        textLines(content)
+        
+      case .structure(let structureType):
+        <#code#>
+      case .blank:
+        <#code#>
+    }
+//    guard part.flexibility.isRepeatable else {
+//      let stack = part.glyphStack(with: theme.frameStyle)
+//      return StringStack(from: stack, with: theme)
+//    }
+//    
+//    let stack = part.glyphStack(with: theme.frameStyle)
+//    let stringStack = StringStack(from: stack, with: theme)
+//    let repeated = stringStack.repeated(along: .horizontal, count: width - theme.padding.width * 2)
+//    return repeated
   }
   
   func stack(for part: Box.PartType) -> StringStack {
-    
+
     guard part.flexibility.isRepeatable else {
       let stack = part.glyphStack(with: theme.frameStyle)
       return StringStack(from: stack, with: theme)
     }
-    
+
     let stack = part.glyphStack(with: theme.frameStyle)
     let stringStack = StringStack(from: stack, with: theme)
     let repeated = stringStack.repeated(along: .horizontal, count: width - theme.padding.width * 2)
@@ -143,5 +163,13 @@ extension Box.Engine {
     guard let height = config.height else { return nil }
     let capCount = config.theme.frameStyle.reservedDimensions.height
     return max(0, height - capCount)
+  }
+}
+
+extension Array where Element == Box.LineType {
+  func toStack() -> StringStack {
+    let lines = self.map { line in
+      line.
+    }
   }
 }
