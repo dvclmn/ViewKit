@@ -73,11 +73,13 @@ extension Box.Engine {
   //    }
   //  }
 
+  /// I think for text lines, we may actually want to go
+  /// straight to a String. As the bulk of this
   func textLines(
     _ content: String,
     lineLimit: Int = 0
-      //  ) -> [StringStack] {
-  ) -> [Box.LineType] {
+        ) -> [StringStack] {
+//  ) -> [Box.LineType] {
     let text = TextReflow(
       content,
       width: widthForText,
@@ -88,9 +90,12 @@ extension Box.Engine {
       maxLines: lineLimit,
       paddingH: config.theme.padding.width
     )
-    let lines = reflowed.map { line in
-      textSingleLine(content: line)
-    }
+          let stack = Stringst
+          
+//    let lines = reflowed.map { line in
+//      
+////      reflowedTextLine(content: line)
+//    }
     return lines
   }
 
@@ -108,34 +113,36 @@ extension Box.Engine {
     return line
   }
 
-  public func textSingleLine(
+  /// Important: a Text Line cannot exceed a height of 1 character.
+  /// This is simply to facilitate the natural flow/behaviour of text, for reading.
+  public func reflowedTextLine(
     content: String,
   ) -> Box.LineType {
     //  ) -> StringStack {
-    return .text(content: content, lineLimit: 0)
+//    return .text(content: content, lineLimit: 0)
 
   }
 
-  func stack(for line: Box.LineType) -> StringStack {
-    switch line {
-      case .text(let content, _):
-        textLines(content)
-        
-      case .structure(let structureType):
-        <#code#>
-      case .blank:
-        <#code#>
-    }
-//    guard part.flexibility.isRepeatable else {
-//      let stack = part.glyphStack(with: theme.frameStyle)
-//      return StringStack(from: stack, with: theme)
+//  func stack(for line: Box.LineType) -> StringStack {
+//    switch line {
+//      case .text(let content, _):
+//        textLines(content)
+//        
+//      case .structure(let structureType):
+//        <#code#>
+//      case .blank:
+//        <#code#>
 //    }
-//    
-//    let stack = part.glyphStack(with: theme.frameStyle)
-//    let stringStack = StringStack(from: stack, with: theme)
-//    let repeated = stringStack.repeated(along: .horizontal, count: width - theme.padding.width * 2)
-//    return repeated
-  }
+////    guard part.flexibility.isRepeatable else {
+////      let stack = part.glyphStack(with: theme.frameStyle)
+////      return StringStack(from: stack, with: theme)
+////    }
+////    
+////    let stack = part.glyphStack(with: theme.frameStyle)
+////    let stringStack = StringStack(from: stack, with: theme)
+////    let repeated = stringStack.repeated(along: .horizontal, count: width - theme.padding.width * 2)
+////    return repeated
+//  }
   
   func stack(for part: Box.PartType) -> StringStack {
 

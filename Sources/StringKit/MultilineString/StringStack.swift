@@ -41,6 +41,7 @@ public struct StringStack {
   ) {
     self.stack = Array(repeating: row, count: count)
   }
+
 }
 
 extension StringStack {

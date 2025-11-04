@@ -7,6 +7,10 @@
 
 extension Box {
   public enum LineType: Hashable, Sendable {
+    
+    /// Important: This `content` represents the bulk/raw
+    /// text content, *before* any width-aware reflowing.
+    /// This operation is performed later.
     case text(
       content: String,
       lineLimit: Int = 0
@@ -27,7 +31,7 @@ public func + (lhs: Box.LineType, rhs: Box.LineType) -> [Box.LineType] {
   [lhs, rhs]
 }
 
-extension Box.LineType {
+//extension Box.LineType {
 //  public func output(
 //    width: Int,
 //    theme: Box.Theme
@@ -48,36 +52,36 @@ extension Box.LineType {
 //    }
 //  }
 
-  public static func joined(
-    width: Int,
-    lines: [Box.LineType],
-    with theme: Box.Theme
-  ) -> StringStack {
+//  public static func joined(
+//    width: Int,
+//    lines: [Box.LineType],
+//    with theme: Box.Theme
+//  ) -> StringStack {
+//
+//    let stacks = lines.map { line in
+//      line.output(width: width, theme: theme)
+//    }
+//    let joined = StringStack.joined(stacks, along: .vertical)
+//    return joined
+//  }
+//
+//  public static func joined(
+//    width: Int,
+//    lines: Box.LineType...,
+//    with theme: Box.Theme
+//  ) -> StringStack {
+//    Self.joined(width: width, lines: lines, with: theme)
+//  }
 
-    let stacks = lines.map { line in
-      line.output(width: width, theme: theme)
-    }
-    let joined = StringStack.joined(stacks, along: .vertical)
-    return joined
-  }
+//}
 
-  public static func joined(
-    width: Int,
-    lines: Box.LineType...,
-    with theme: Box.Theme
-  ) -> StringStack {
-    Self.joined(width: width, lines: lines, with: theme)
-  }
-
-}
-
-extension Box.LineType {
-  fileprivate func textLine(
-    _ content: String,
-    toWidth width: Int,
-    using theme: Box.Theme
-  ) -> StringStack {
-
-
-  }
-}
+//extension Box.LineType {
+//  fileprivate func textLine(
+//    _ content: String,
+//    toWidth width: Int,
+//    using theme: Box.Theme
+//  ) -> StringStack {
+//
+//
+//  }
+//}
