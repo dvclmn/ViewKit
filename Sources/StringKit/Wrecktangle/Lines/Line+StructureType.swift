@@ -6,16 +6,6 @@
 //
 
 extension Box.StructureType {
-//  func line(
-//    toWidth width: Int,
-//    using theme: Box.Theme
-//  ) -> StringStack {
-//    let stacks = parts().map { part in
-//      part.buildStack(toWidth: width, using: theme)
-//    }
-//    return StringStack.joined(stacks, along: .horizontal)
-//  }
-//
   func parts() -> [Box.PartType] {
     switch self {
       case .top:
@@ -28,7 +18,6 @@ extension Box.StructureType {
       case .divider:
         [
           .join(.leading),
-//          .vertical(.leading),
           .horizontal(.interior),
           .join(.trailing),
         ]
@@ -39,7 +28,7 @@ extension Box.StructureType {
           .horizontal(.bottom),
           .corner(.bottomTrailing),
         ]
-        
+
       case .blank:
         [
           .vertical(.leading),
