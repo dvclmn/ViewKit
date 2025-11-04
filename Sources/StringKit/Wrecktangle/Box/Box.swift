@@ -35,15 +35,16 @@ public struct Box: Sendable {
     
 //    let stringResult = stack.string
 
-    return stringResult
+    return "wait one sec"
+//    return stringResult
 
   }
 }
 
 extension Box: Equatable {
   public static func == (lhs: Box, rhs: Box) -> Bool {
-    lhs.width == rhs.width
-      && lhs.theme == rhs.theme
+    lhs.config.width == rhs.config.width
+    && lhs.config.theme == rhs.config.theme
       && lhs.components.count == rhs.components.count
   }
 

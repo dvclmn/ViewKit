@@ -8,6 +8,12 @@
 import Foundation
 
 extension Box.PartType {
+  
+  public func toString(with theme: Box.Theme) -> String {
+    let glyphs = glyphStack(with: theme.frameStyle)
+    let stringStack = StringStack(from: glyphs, with: theme)
+    return stringStack.string
+  }
 
 //  public func buildStack(
 //    toWidth width: Int,
@@ -69,3 +75,7 @@ extension StringStack {
   //  }
 
 }
+
+//extension Box.GlyphStack {
+//  
+//}

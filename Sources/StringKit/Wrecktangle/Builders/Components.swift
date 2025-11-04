@@ -20,8 +20,6 @@ extension Box {
   public struct Top: Component, Codable {
     public init() {}
     public func makeLines(using engine: Box.Engine) -> ComponentOutput {
-      //      engine.structureLines(type: .top)
-      //      Box.StructureType.top.line(toWidth: <#T##Int#>, using: <#T##Box.Theme#>)
       [engine.structureLine(type: .top)]
     }
   }
@@ -51,7 +49,6 @@ extension Box {
     public func makeLines(using engine: Box.Engine) -> ComponentOutput {
       //      print("Created a Box.Text: \(content)")
       [engine.textLine(content)]
-      //      return engine.textLines(content)
     }
   }
 
@@ -75,8 +72,3 @@ extension Box.Component {
     return lhsLines + rhsLines
   }
 }
-//public func + (lhs: any Box.Component, rhs: any Box.Component) -> ComponentOutput {
-//   let lhsLines = lhs.makeLines(using: .init())
-//  let rhsLines = rhs.makeLines(using: .init())
-//  return lhsLines + rhsLines
-//}

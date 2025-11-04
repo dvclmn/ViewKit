@@ -87,16 +87,7 @@ extension Box.Engine {
   }
 
   func reflow() {
-    let textContent = TextReflow(
-      content,
-      width: widthForText,
-      paddingCharacter: " ",
-      shouldHyphenate: true
-    )
-    let reflowed = textContent.reflowed(
-      maxLines: lineLimit,
-      paddingH: config.theme.padding.width
-    )
+
   }
 
   func validateTextCap(cap: Box.GlyphStack) {
@@ -180,10 +171,51 @@ extension Box.Engine {
   }
 }
 
-//extension Array where Element == Box.LineType {
-//  func toStack() -> StringStack {
-//    let lines = self.map { line in
-//      line.
-//    }
-//  }
-//}
+extension Array where Element == Box.LineType {
+  func buildString(using engine: Box.Engine) -> String {
+    let lines = self.map { line in
+      line.buildString(using: engine)
+    }
+    return lines.joined(separator: "\n")
+    //    let lines = self.map { line in
+    //      line.
+    //    }
+  }
+}
+
+extension Box.LineType {
+  func buildString(
+    using engine: Box.Engine
+  ) -> String {
+    switch self {
+      case .text(let line):
+        let textContent = TextReflow(
+          line.text,
+          width: engine.widthForText,
+          paddingCharacter: " ",
+          shouldHyphenate: true
+        )
+        let reflowed = textContent.reflowed(
+          paddingH: engine.config.theme.padding.width
+        )
+        let leading = line.leading.toString(with: engine.theme)
+        let trailing = line.trailing.toString(with: engine.theme)
+        //        let lead = line.leading.glyphStack(with: engine.theme.frameStyle)
+        //        let leadString = StringStack(from: lead, with: engine.theme).string
+
+        //        let result = reflowed.map { textLine in
+        //          leading + textLine + trailing
+        //        }
+        let result = reflowed.reduce(into: "") { partialResult, textLine in
+          partialResult += leading + textLine + trailing
+        }
+
+        return result
+
+      case .structure(let structureType):
+        <#code#>
+      case .blank:
+        <#code#>
+    }
+  }
+}
