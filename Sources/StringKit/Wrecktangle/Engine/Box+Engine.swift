@@ -98,38 +98,54 @@ extension Box.LineType {
     using engine: Box.Engine
   ) -> String {
     switch self {
-      case .text(let line):
-        let textContent = TextReflow(
-          line.text,
-          width: engine.widthForText,
-          shouldHyphenate: true
-        )
-        let reflowed = textContent.reflowed()
-
-        let leading = line.leading.buildStack(
-          toWidth: engine.width,
-          using: engine.theme
-        ).string
-        
-        let trailing = line.trailing.buildStack(
-          toWidth: engine.width,
-          using: engine.theme
-        ).string
-
-        let result = reflowed.map { line in
-          leading + line + trailing
-        }.joined("\n")
-
-        return result
-
-      case .structure(let type):
-        let parts = type.parts()
-        
-        let stacks = parts.map { part in
-          part.buildStack(toWidth: engine.width, using: engine.theme)
-        }
-        return StringStack.joined(stacks, along: .horizontal).string
-
+      case .text(let line): buildTextLine(line, using: engine)
+      case .structure(let type): buildStructureLine(type, using: engine)
     }
+  }
+
+  private func buildStructureLine(
+    _ type: Box.StructureType,
+    using engine: Box.Engine
+  ) -> String {
+    let parts = type.parts()
+
+    let stacks = parts.map { part in
+      part.buildStack(toWidth: engine.width, using: engine.theme)
+    }
+    return StringStack.joined(stacks, along: .horizontal).string
+
+  }
+
+  private func buildTextLine(
+    _ line: Box.TextLine,
+    using engine: Box.Engine
+  ) -> String {
+    let textContent = TextReflow(
+      line.text,
+      width: engine.widthForText,
+      shouldHyphenate: true
+    )
+    let reflowed = textContent.reflowed()
+
+    let leading = line.leading.buildStack(
+      toWidth: engine.width,
+      using: engine.theme
+    ).string
+
+    let trailing = line.trailing.buildStack(
+      toWidth: engine.width,
+      using: engine.theme
+    ).string
+
+    let result = reflowed.map { line in
+      leading
+        + " "
+        + line
+        + " "
+        + trailing
+    }.joined("\n")
+
+    return result
+
   }
 }

@@ -19,9 +19,12 @@ extension Box.PartType {
       return StringStack(from: stack, with: theme)
     }
 
+    let reservedWidth = theme.frameStyle.reservedDimensions.width
+    let repeatCount = width - reservedWidth
+    
     let stack = glyphStack(with: theme.frameStyle)
     let stringStack = StringStack(from: stack, with: theme)
-    let repeated = stringStack.repeated(along: .horizontal, count: width)
+    let repeated = stringStack.repeated(along: .horizontal, count: repeatCount)
     return repeated
   }
 
@@ -61,15 +64,5 @@ extension StringStack {
     self.init(charMatrix)
   }
 
-  //  public init(
-  //    _ theme: Box.Theme,
-  //    @GlyphStackBuilder _ content: () -> Box.GlyphStack
-  //  ) {
-  //    self.init(from: content(), theme: theme)
-  //  }
-
 }
 
-//extension Box.GlyphStack {
-//
-//}

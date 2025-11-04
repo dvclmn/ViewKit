@@ -53,9 +53,7 @@ extension Box {
     public var flexibility: Flexibility {
       switch self {
         case .horizontal, .blank: .repeatable(axis: .horizontal)
-        //        case .vertical: .repeatable(axis: .vertical)
         case .join, .corner, .vertical: .fixed
-      //        case .join, .corner, .text: .fixed
       }
     }
   }  // END part type
@@ -69,10 +67,8 @@ extension Box.PartType {
       case .vertical(let loc): "vertical/\(loc.rawValue)"
       case .join(let joinType): "join/\(joinType.rawValue)"
       case .corner(let cornerType): "corner/\(cornerType.rawValue)"
-      //      case .text(let string): "text/\(string.truncate(to: 16))"
       case .blank: "blank"
     }
-
   }
 
   /// This introduces the concept of *valid orientation*;
@@ -103,12 +99,6 @@ extension Box.PartType {
     case trailing
     case interior  // Aka Divider/Spacer
   }
-
-  //  public enum LineSegment {
-  //    case capLeading
-  //    case capTrailing
-  //  }
-
 }
 
 extension Box {
@@ -127,7 +117,6 @@ extension Box {
     case bottom  // ┷
     case cross  // ╂
   }
-
 }
 
 extension Box.PartType: CustomStringConvertible {
