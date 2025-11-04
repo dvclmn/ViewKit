@@ -25,9 +25,12 @@ public struct Box: Sendable {
   public var plainText: String {
     let engine = Box.Engine(config)
 
-//    let finalLines = [Box.Top()] + components + [Box.Bottom()]
-//    let lines = finalLines.flatMap { $0.makeLines(using: engine) }
+//    return engine.
+    let finalLines = [Box.Top()] + components + [Box.Bottom()]
+    let lines = finalLines.flatMap { $0.makeLines(using: engine) }
+    let stringResult = lines.buildString(using: engine)
     
+    return stringResult
     
 //    let stack = Box.LineType.joined(width: width, lines: lines, with: theme)
     
@@ -35,7 +38,7 @@ public struct Box: Sendable {
     
 //    let stringResult = stack.string
 
-    return "wait one sec"
+//    return "wait one sec"
 //    return stringResult
 
   }

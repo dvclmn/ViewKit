@@ -35,14 +35,14 @@ extension Box.Engine {
 
   /// This should go from `[Box.LineType]` to String?
   func textLine(_ content: String) -> Box.LineType {
-    
+
     let textLine = Box.TextLine(
       leading: .vertical(.leading),
       text: content,
       trailing: .vertical(.trailing)
     )
     return Box.LineType.text(textLine)
- 
+
   }
 
   //  func validateTextCap(cap: Box.GlyphStack) {
@@ -67,50 +67,6 @@ extension Box.Engine {
     return line
   }
 
-  /// Important: a Text Line cannot exceed a height of 1 character.
-  /// This is simply to facilitate the natural flow/behaviour of text, for reading.
-  //  public func reflowedTextLine(
-  //    content: String,
-  //  ) -> Box.LineType {
-  //    //  ) -> StringStack {
-  //    //    return .text(content: content, lineLimit: 0)
-  //
-  //  }
-
-  //  func stack(for line: Box.LineType) -> StringStack {
-  //    switch line {
-  //      case .text(let content, _):
-  //        textLines(content)
-  //
-  //      case .structure(let structureType):
-  //        <#code#>
-  //      case .blank:
-  //        <#code#>
-  //    }
-  ////    guard part.flexibility.isRepeatable else {
-  ////      let stack = part.glyphStack(with: theme.frameStyle)
-  ////      return StringStack(from: stack, with: theme)
-  ////    }
-  ////
-  ////    let stack = part.glyphStack(with: theme.frameStyle)
-  ////    let stringStack = StringStack(from: stack, with: theme)
-  ////    let repeated = stringStack.repeated(along: .horizontal, count: width - theme.padding.width * 2)
-  ////    return repeated
-  //  }
-
-  //  func stack(for part: Box.PartType) -> StringStack {
-  //
-  //    guard part.flexibility.isRepeatable else {
-  //      let stack = part.glyphStack(with: theme.frameStyle)
-  //      return StringStack(from: stack, with: theme)
-  //    }
-  //
-  //    let stack = part.glyphStack(with: theme.frameStyle)
-  //    let stringStack = StringStack(from: stack, with: theme)
-  //    let repeated = stringStack.repeated(along: .horizontal, count: width - theme.padding.width * 2)
-  //    return repeated
-  //  }
-
   /// The remaning width for text, after removing space
   /// reserved for structural elements
   public var widthForText: Int {
@@ -133,9 +89,6 @@ extension Array where Element == Box.LineType {
       line.buildString(using: engine)
     }
     return lines.joined(separator: "\n")
-    //    let lines = self.map { line in
-    //      line.
-    //    }
   }
 }
 
@@ -164,22 +117,21 @@ extension Box.LineType {
         return result
 
       case .structure(let type):
-        
-//        let structure = engine.structureLine(type: type)
-        
+
+        //        let structure = engine.structureLine(type: type)
+
         let partsforType = type.parts()
-        
+
         let partString = partsforType.reduce(into: "") { partialResult, part in
           partialResult += part.toString(with: engine.theme)
         }
-        
+
         return partString
-        
-        
-//        return structure.buildString(using: engine)
-        
-//      case .blank:
-//        let thing = Box.LineType.blank.
+
+    //        return structure.buildString(using: engine)
+
+    //      case .blank:
+    //        let thing = Box.LineType.blank.
     }
   }
 }
