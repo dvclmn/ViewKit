@@ -6,8 +6,9 @@
 //
 
 extension Box.PartType {
+  public typealias Glyph = Box.GlyphType
 
-  /// Follows a `Prominence.increased` on the external frame parts,
+  /// `Prominence.increased` on the external frame parts,
   /// and  `Prominence.standard` on the internal parts
   package func doubleFrameParts(
     extProm: Box.GlyphProminence,
@@ -18,43 +19,45 @@ extension Box.PartType {
       case .horizontal(let loc):
         switch loc {
           case .top:
-            [
-              [Box.GlyphType.horizontal(extProm)],
-              [Box.GlyphType.blank],
-              [Box.GlyphType.horizontal(intProm)],
+            GlyphGrid {
+              Row { Glyph.horizontal(extProm) }
+              Row { Glyph.blank }
+              Row { Glyph.horizontal(intProm) }
 
-            ]
+            }
           case .bottom:
-            [
-              [Box.GlyphType.horizontal(intProm)],
-              [Box.GlyphType.blank],
-              [Box.GlyphType.horizontal(extProm)],
+            GlyphGrid {
+              Row { Glyph.horizontal(intProm) }
+              Row { Glyph.blank }
+              Row { Glyph.horizontal(extProm) }
+            }
 
-            ]
           case .interior:
-            [[Box.GlyphType.horizontal(intProm)]]
+            GlyphGrid { Glyph.horizontal(intProm) }
         }
 
       case .vertical(let loc):
         switch loc {
           case .leading:
-            [
-              [
-                Box.GlyphType.vertical(extProm),
-                Box.GlyphType.blank,
-                Box.GlyphType.vertical(intProm),
-              ]
-            ]
+            GlyphGrid {
+              Row {
+                Glyph.vertical(extProm)
+                Glyph.blank
+                Glyph.vertical(intProm)
+              }
+            }
           case .trailing:
-            [
-              [
-                Box.GlyphType.vertical(intProm),
-                Box.GlyphType.blank,
-                Box.GlyphType.vertical(extProm),
-              ]
-            ]
+            GlyphGrid {
+              Row {
+                Glyph.vertical(intProm)
+                Glyph.blank
+                Glyph.vertical(extProm)
+              }
+            }
           case .interior:
-            [[Box.GlyphType.vertical(intProm)]]
+            GlyphGrid {
+              Glyph.vertical(intProm)
+            }
         }
 
       case .join(let joinType):
@@ -62,42 +65,42 @@ extension Box.PartType {
           case .leading:
             GlyphGrid {
               Row {
-                Box.GlyphType.vertical(extProm)
-                Box.GlyphType.blank
-                Box.GlyphType.join(x: intProm, y: intProm, type: joinType)
+                Glyph.vertical(extProm)
+                Glyph.blank
+                Glyph.join(x: intProm, y: intProm, type: joinType)
               }
             }
           case .trailing:
             GlyphGrid {
               Row {
-                Box.GlyphType.join(x: intProm, y: intProm, type: joinType)
-                Box.GlyphType.blank
-                Box.GlyphType.vertical(extProm)
+                Glyph.join(x: intProm, y: intProm, type: joinType)
+                Glyph.blank
+                Glyph.vertical(extProm)
               }
             }
 
           case .top:
             GlyphGrid {
               Row {
-                Box.GlyphType.horizontal(extProm)
-                Box.GlyphType.blank
-                Box.GlyphType.join(x: intProm, y: intProm, type: joinType)
+                Glyph.horizontal(extProm)
+                Glyph.blank
+                Glyph.join(x: intProm, y: intProm, type: joinType)
               }
             }
 
           case .bottom:
             GlyphGrid {
               Row {
-                Box.GlyphType.join(x: intProm, y: intProm, type: joinType)
-                Box.GlyphType.blank
-                Box.GlyphType.horizontal(extProm)
+                Glyph.join(x: intProm, y: intProm, type: joinType)
+                Glyph.blank
+                Glyph.horizontal(extProm)
               }
             }
 
           case .cross:
             GlyphGrid {
               Row {
-                Box.GlyphType.join(x: intProm, y: intProm, type: joinType)
+                Glyph.join(x: intProm, y: intProm, type: joinType)
               }
             }
         }
@@ -108,62 +111,62 @@ extension Box.PartType {
 
             GlyphGrid {
               Row {
-                Box.GlyphType.corner(.increased, type: cornerType)
-                Box.GlyphType.horizontal(.increased)
-                Box.GlyphType.horizontal(.increased)
+                Glyph.corner(.increased, type: cornerType)
+                Glyph.horizontal(.increased)
+                Glyph.horizontal(.increased)
               }
               Row {
-                Box.GlyphType.vertical(.increased)
-                Box.GlyphType.blank
-                Box.GlyphType.corner(.standard, type: cornerType)
+                Glyph.vertical(.increased)
+                Glyph.blank
+                Glyph.corner(.standard, type: cornerType)
               }
             }
 
           case .topTrailing:
             GlyphGrid {
               Row {
-                Box.GlyphType.corner(.increased, type: cornerType)
-                Box.GlyphType.horizontal(.increased)
-                Box.GlyphType.horizontal(.increased)
+                Glyph.corner(.increased, type: cornerType)
+                Glyph.horizontal(.increased)
+                Glyph.horizontal(.increased)
               }
               Row {
-                Box.GlyphType.vertical(.increased)
-                Box.GlyphType.blank
-                Box.GlyphType.corner(.standard, type: cornerType)
+                Glyph.vertical(.increased)
+                Glyph.blank
+                Glyph.corner(.standard, type: cornerType)
               }
             }
 
           case .bottomLeading:
             GlyphGrid {
               Row {
-                Box.GlyphType.corner(.increased, type: cornerType)
-                Box.GlyphType.horizontal(.increased)
-                Box.GlyphType.horizontal(.increased)
+                Glyph.corner(.increased, type: cornerType)
+                Glyph.horizontal(.increased)
+                Glyph.horizontal(.increased)
               }
               Row {
-                Box.GlyphType.vertical(.increased)
-                Box.GlyphType.blank
-                Box.GlyphType.corner(.standard, type: cornerType)
+                Glyph.vertical(.increased)
+                Glyph.blank
+                Glyph.corner(.standard, type: cornerType)
               }
             }
           case .bottomTrailing:
             GlyphGrid {
               Row {
-                Box.GlyphType.corner(.increased, type: cornerType)
-                Box.GlyphType.horizontal(.increased)
-                Box.GlyphType.horizontal(.increased)
+                Glyph.corner(.increased, type: cornerType)
+                Glyph.horizontal(.increased)
+                Glyph.horizontal(.increased)
               }
               Row {
-                Box.GlyphType.vertical(.increased)
-                Box.GlyphType.blank
-                Box.GlyphType.corner(.standard, type: cornerType)
+                Glyph.vertical(.increased)
+                Glyph.blank
+                Glyph.corner(.standard, type: cornerType)
               }
             }
         }
 
       case .blank:
         GlyphGrid {
-          Box.GlyphType.blank
+          Glyph.blank
         }
     }
   }  // END frame double
