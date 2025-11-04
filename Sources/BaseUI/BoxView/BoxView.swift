@@ -38,7 +38,7 @@ public struct BoxView: View {
     //    .fixedSize(horizontal: true, vertical: false)
     .frameFromGridSize(
       width: widthForBoxFrame,
-//      width: gridWidth.map { $0 + theme.padding.width * 2 },
+      //      width: gridWidth.map { $0 + theme.padding.width * 2 },
       height: gridHeight
     )
     .gridSetup(.sfMono, fontSize: 15)
@@ -56,22 +56,22 @@ public struct BoxView: View {
 }
 
 extension BoxView {
-  
-//  private var widthForBox: Int {
-//    gridWidth ?? 20
-//  }
-//  
+
+  //  private var widthForBox: Int {
+  //    gridWidth ?? 20
+  //  }
+  //
   private var widthForBoxFrame: Int {
-    
+
     let proposed = gridWidth ?? 15
     let frameReserved = theme.frameStyle.reservedDimensions.width
     let paddingH = theme.padding.width * 2
-    
+
     let totalReserved = frameReserved + paddingH
     return max(0, proposed + totalReserved)
-    
+
   }
-  
+
   private var theme: Box.Theme {
     Box.Theme(
       glyphSet: glyphSet,
@@ -101,24 +101,19 @@ extension BoxView {
   ScrollView {
     VStack(spacing: 14) {
       BoxView {
-//        Box.Header("Hello, I'm a Header")
+        //        Box.Header("Hello, I'm a Header")
 
         DummyContent.Strings.paragraphs[3]
 
-        Box.Divider()
-//        "Last text sign-off"
+        //        Box.Divider()
+        //        "Last text sign-off"
         //          Box.Bottom()
       }
-      .setGridFrame(
-        20,
-        //          20,
-        //          nil,
-        alignment: .leading
-      )
-//      .setBoxStyle(glyphs: .test, frame: .single())
-//      .setBoxStyle(glyphs: .test, frame: .double())
-      .setBoxStyle(glyphs: .rounded, frame: .single())
-      
+      .setGridFrame(20, alignment: .leading)
+      //      .setBoxStyle(glyphs: .test, frame: .single())
+      //      .setBoxStyle(glyphs: .test, frame: .double())
+      .setBoxStyle(glyphs: .rounded, frame: .double())
+      //      .setBoxStyle(glyphs: .rounded, frame: .single())
 
     }
   }

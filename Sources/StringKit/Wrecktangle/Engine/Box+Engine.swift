@@ -105,7 +105,7 @@ extension Box.LineType {
           toWidth: engine.width,
           using: engine.theme
         ).string
-        //        let leading = line.leading.toString(with: engine.theme)
+        
         let trailing = line.trailing.buildStack(
           toWidth: engine.width,
           using: engine.theme
@@ -114,44 +114,17 @@ extension Box.LineType {
         let result = reflowed.map { line in
           leading + line + trailing
         }.joined("\n")
-//        let result = reflowed.reduce(into: "") { partialResult, textLine in
-//          partialResult += leading + textLine + trailing
-//        }
 
         return result
 
       case .structure(let type):
-
-        //        let structure = engine.structureLine(type: type)
-
-        let partsforType = type.parts()
-
-        let partString = partsforType.reduce(into: "") {
-          partialResult,
-          part in
-          partialResult +=
-            part.buildStack(
-              toWidth: engine.width,
-              using: engine.theme
-            ).string
+        let parts = type.parts()
+        
+        let stacks = parts.map { part in
+          part.buildStack(toWidth: engine.width, using: engine.theme)
         }
+        return StringStack.joined(stacks, along: .horizontal).string
 
-        //        let partString = partsforType.reduce(into: "") { partialResult, part in
-        //
-        ////          let body: String
-        //          if part.flexibility.isRepeatable {
-        //
-        //          }
-        //
-        //          partialResult += part.toString(with: engine.theme)
-        //        }
-
-        return partString
-
-    //        return structure.buildString(using: engine)
-
-    //      case .blank:
-    //        let thing = Box.LineType.blank.
     }
   }
 }
