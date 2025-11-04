@@ -18,7 +18,6 @@ public struct StringStack {
       self.stack = []
       return
     }
-
     precondition(
       stack.allSatisfy { $0.count == width },
       "Non-rectangular StringStack: all rows must have equal width"
@@ -111,9 +110,9 @@ extension StringStack: ExpressibleByUnicodeScalarLiteral {
   }
 }
 
-//extension StringStack: CustomStringConvertible {
-//  public var description: String { string }
-//}
+extension StringStack: CustomStringConvertible {
+  public var description: String { string }
+}
 
 extension StringStack: Sequence {
 

@@ -45,6 +45,7 @@ extension Box.LineType {
 
       case .structure(let type):
         return Box.StructureLine.structure(width: width, for: type, with: theme)
+        
       case .blank:
         return StringStack("")
     }

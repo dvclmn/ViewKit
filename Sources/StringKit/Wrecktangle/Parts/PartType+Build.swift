@@ -15,10 +15,12 @@ extension Box.PartType {
   ) -> StringStack {
 
     guard self.flexibility.isRepeatable else {
-      let stack = glyphStack(with: theme.frameStyle)
-      return StringStack(from: stack, theme: theme)
+      //      let stack = glyphStack(with: theme.frameStyle)
+
+            return StringStack(from: stack, theme: theme)
 
     }
+
     let stack = glyphStack(with: theme.frameStyle)
     let stringStack = StringStack(from: stack, theme: theme)
     let repeated = stringStack.repeated(along: .horizontal, count: width - theme.padding.width * 2)
@@ -47,27 +49,32 @@ extension StringStack {
     from glyphStack: Box.GlyphStack,
     theme: Box.Theme
   ) {
-    let grid = glyphStack.map { row in
-      row.map { glyphType in
-        theme.glyphSet.character(for: glyphType)
-      }
-    }
-    print("Let's check the produced grid (`[[Character]]`), from the GlyphStack-based init for StringStack: \(grid)")
-    self.init(grid)
-  }
-
-  public init(@GlyphStackBuilder _ content: () -> [[Box.GlyphType]]) {
-    let glyphMatrix = content()
-    let width = glyphMatrix.first?.count ?? 0
-    precondition(glyphMatrix.allSatisfy { $0.count == width }, "Non-rectangular glyph grid")
-
+    let width = glyphStack.first?.count ?? 0
+    precondition(
+      glyphStack.allSatisfy { $0.count == width },
+      "Non-rectangular glyph grid")
+    
     /// Convert from `GlyphType` → `Character`
-    let glyphSet = Box.GlyphSet.sharp  // or passed-in variant
-    let charMatrix = glyphMatrix.map { row in
+    let glyphSet = theme.glyphSet
+    let charMatrix = glyphStack.map { row in
       row.map { glyphSet.character(for: $0) }
     }
-
+    
     self.init(charMatrix)
+//    let grid = glyphStack.map { row in
+//      row.map { glyphType in
+//        theme.glyphSet.character(for: glyphType)
+//      }
+//    }
+//    print("Let's check the produced grid (`[[Character]]`), from the GlyphStack-based init for StringStack: \(grid)")
+//    self.init(grid)
   }
+
+//  public init(
+//    _ theme: Box.Theme,
+//    @GlyphStackBuilder _ content: () -> Box.GlyphStack
+//  ) {
+//    self.init(from: content(), theme: theme)
+//  }
 
 }
