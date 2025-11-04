@@ -14,7 +14,7 @@ extension Box {
     case structure(StructureType)
     case blank
   }
-  
+
   public enum StructureType: Hashable, Sendable {
     case top
     case divider
@@ -31,44 +31,59 @@ extension Box.LineType {
     theme: Box.Theme
   ) -> StringStack {
     switch self {
-      case .text(let content, _):
-        let leading = Box.PartType.vertical(.leading).buildStack(toWidth: width, using: theme)
-        let contentStack = StringStack(content)
-        let trailing = Box.PartType.vertical(.trailing).buildStack(toWidth: width, using: theme)
-
-        return StringStack.joined(
-          leading,
-          contentStack,
-          trailing,
-          along: .horizontal
-        )
-
-      case .structure(let type):
-        return Box.StructureLine.structure(width: width, for: type, with: theme)
-        
-      case .blank:
-        return StringStack("")
+      case .text(let content, _): textLine(
+        content,
+        toWidth: width,
+        using: theme
+      )
+      case .structure(let type): type.line(
+        toWidth: width,
+        using: theme
+      )
+      case .blank: StringStack("")
     }
   }
 
-  public static func joined(
-    width: Int,
-    lines: [Box.LineType],
-    with theme: Box.Theme
+//  public static func joined(
+//    width: Int,
+//    lines: [Box.LineType],
+//    with theme: Box.Theme
+//  ) -> StringStack {
+//
+//    let stacks = lines.map { line in
+//      line.output(width: width, theme: theme)
+//    }
+//    let joined = StringStack.joined(stacks, along: .vertical)
+//    return joined
+//  }
+//
+//  public static func joined(
+//    width: Int,
+//    lines: Box.LineType...,
+//    with theme: Box.Theme
+//  ) -> StringStack {
+//    Self.joined(width: width, lines: lines, with: theme)
+//  }
+
+}
+
+extension Box.LineType {
+  fileprivate func textLine(
+    _ content: String,
+    toWidth width: Int,
+    using theme: Box.Theme
   ) -> StringStack {
 
-    let stacks = lines.map { line in
-      line.output(width: width, theme: theme)
-    }
-    let joined = StringStack.joined(stacks, along: .vertical)
-    return joined
-  }
+    let leading = Box.PartType.vertical(.leading).buildStack(toWidth: width, using: theme)
+    let contentStack = StringStack(content)
+    let trailing = Box.PartType.vertical(.trailing).buildStack(toWidth: width, using: theme)
 
-  public static func joined(
-    width: Int,
-    lines: Box.LineType...,
-    with theme: Box.Theme
-  ) -> StringStack {
-    Self.joined(width: width, lines: lines, with: theme)
+    return StringStack.joined(
+      leading,
+      contentStack,
+      trailing,
+      along: .horizontal
+    )
+
   }
 }

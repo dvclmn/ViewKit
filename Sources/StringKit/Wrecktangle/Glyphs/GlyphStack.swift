@@ -22,4 +22,6 @@ extension Box {
   /// `GlyphStack`s are stitched together with other
   /// Stacks and characters, to form a cohesive whole.
   public typealias GlyphStack = [[Box.GlyphType]]
+  
+//  public typealias Line = StringStack
 }
