@@ -41,12 +41,12 @@ public struct StringStack {
   ) {
     self.stack = Array(repeating: row, count: count)
   }
-
 }
 
 extension StringStack {
 
   public var string: String { stack.map { String($0) }.joined("\n") }
+  
   public var height: Int {
     let value = stack.count
     print("Stack Height: \(value)")
