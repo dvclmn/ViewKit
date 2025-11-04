@@ -57,4 +57,21 @@ extension StringStack {
     print("Let's check the produced grid (`[[Character]]`), from the GlyphStack-based init for StringStack: \(grid)")
     self.init(grid)
   }
+  
+  public init(@GlyphStackBuilder _ content: () -> [[Box.GlyphType]]) {
+    let glyphMatrix = content()
+    let width = glyphMatrix.first?.count ?? 0
+    precondition(glyphMatrix.allSatisfy { $0.count == width }, "Non-rectangular glyph grid")
+    
+    // Convert from GlyphType → Character
+    let glyphSet = Box.GlyphSet.sharp // or passed-in variant
+    let charMatrix = glyphMatrix.map { row in
+      row.map { glyphSet.character(for: $0) }
+    }
+    
+    self.init(charMatrix)
+  }
+
 }
+
+

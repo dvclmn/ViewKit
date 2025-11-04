@@ -20,7 +20,7 @@ extension Box {
 }
 
 extension Box.GlyphProminence {
-  fileprivate var alternate: Self {
+  fileprivate var alt: Self {
     switch self {
       case .standard: .increased
       case .increased: .standard
@@ -31,19 +31,19 @@ extension Box.GlyphProminence {
 extension Box.GlyphType {
 
   /// Returns a copy of this glyph type, with flipped Prominence
-  var alternateProminence: Box.GlyphType? {
+  var prominenceAlt: Box.GlyphType? {
     switch self {
       case .horizontal(let prominence):
-        .horizontal(prominence.alternate)
+        .horizontal(prominence.alt)
 
       case .vertical(let prominence):
-        .vertical(prominence.alternate)
+        .vertical(prominence.alt)
 
       case .corner(let prominence, let type):
-        .corner(prominence.alternate, type: type)
+        .corner(prominence.alt, type: type)
 
       case .join(let x, let y, let type):
-        .join(x: x.alternate, y: y.alternate, type: type)
+        .join(x: x.alt, y: y.alt, type: type)
 
       case .blank:
         nil

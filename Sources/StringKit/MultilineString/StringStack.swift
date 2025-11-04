@@ -14,6 +14,15 @@ public struct StringStack {
   var stack: [[Character]]
 
   public init(_ stack: [[Character]]) {
+    guard let width = stack.first?.count else {
+      self.stack = []
+      return
+    }
+
+    precondition(
+      stack.allSatisfy { $0.count == width },
+      "Non-rectangular StringStack: all rows must have equal width"
+    )
     self.stack = stack
   }
 

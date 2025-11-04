@@ -28,6 +28,7 @@ extension Box.GlyphSet {
       Box.GlyphType.join(x: .increased, y: .standard, type: .bottom): "┷",
       Box.GlyphType.join(x: .standard, y: .increased, type: .leading): "┠",
       Box.GlyphType.join(x: .standard, y: .increased, type: .trailing): "┨",
+      Box.GlyphType.join(x: .standard, y: .increased, type: .cross): "╂",
 
       // MARK: - Bold Joins
       Box.GlyphType.join(x: .increased, y: .increased, type: .top): "┳",
