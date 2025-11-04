@@ -45,7 +45,9 @@ extension Box.GlyphType {
       case .join(let x, let y, let type):
         .join(x: x.alt, y: y.alt, type: type)
 
-      case .literal, .blank: nil
+      case .literal(let char): .literal(char)
+        
+      case .blank: nil
     }
   }
 }

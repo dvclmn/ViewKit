@@ -98,7 +98,7 @@ extension BoxView {
 //                "Last text sign-off"
 //                  Box.Bottom()
 //                  Box.Bottom()
-                  Box.Bottom()
+//                  Box.Bottom()
       }
       .setGridFrame(30, alignment: .leading)
       //      .setBoxStyle(glyphs: .test, frame: .single())

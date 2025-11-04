@@ -142,28 +142,29 @@ extension Box.PartType {
           case .bottomLeading:
             GlyphGrid {
               Row {
-                Glyph.corner(.increased, type: cornerType)
-                Glyph.horizontal(.increased)
-                Glyph.horizontal(.increased)
-              }
-              Row {
                 Glyph.vertical(.increased)
                 Glyph.blank
-                Glyph.corner(.standard, type: cornerType)
+                Glyph.corner(.standard, type: .bottomLeading)
+              }
+              
+              Row {
+                Glyph.corner(.increased, type: .bottomLeading)
+                Glyph.horizontal(.increased)
+                Glyph.horizontal(.increased)
               }
             }
 
           case .bottomTrailing:
             GlyphGrid {
               Row {
-                Glyph.corner(.increased, type: cornerType)
-                Glyph.horizontal(.increased)
-                Glyph.horizontal(.increased)
+//                Glyph.vertical(.increased)
+//                Glyph.blank
+//                Glyph.corner(.standard, type: cornerType)
               }
               Row {
-                Glyph.vertical(.increased)
-                Glyph.blank
-                Glyph.corner(.standard, type: cornerType)
+//                Glyph.corner(.increased, type: cornerType)
+//                Glyph.horizontal(.increased)
+//                Glyph.horizontal(.increased)
               }
             }
         }

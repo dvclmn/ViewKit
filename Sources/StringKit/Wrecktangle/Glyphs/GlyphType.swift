@@ -39,12 +39,12 @@ extension Box {
   }
 }
 
-extension Box.GlyphType: ExpressibleByUnicodeScalarLiteral {
-  public init(unicodeScalarLiteral value: UnicodeScalar) {
-    /// A simple fallback 'literal' type for debugging / placeholder
-    self = .literal(Character(value))
-  }
-}
+//extension Box.GlyphType: ExpressibleByUnicodeScalarLiteral {
+//  public init(unicodeScalarLiteral value: UnicodeScalar) {
+//    /// A simple fallback 'literal' type for debugging / placeholder
+//    self = .literal(Character(value))
+//  }
+//}
 
 /// You’ve already got a really clean fallback mechanism (partial + base).
 /// If you ever want more fine-grained control, one improvement might be to
