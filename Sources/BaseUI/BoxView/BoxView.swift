@@ -101,7 +101,7 @@ extension BoxView {
   ScrollView {
     VStack(spacing: 14) {
       BoxView {
-        Box.Header("Hello, I'm a Header")
+//        Box.Header("Hello, I'm a Header")
 
         DummyContent.Strings.paragraphs[3]
 

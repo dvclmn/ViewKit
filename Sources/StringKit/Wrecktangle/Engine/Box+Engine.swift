@@ -100,20 +100,23 @@ extension Box.LineType {
         let reflowed = textContent.reflowed(
           paddingH: engine.config.theme.padding.width
         )
-        
+
         let leading = line.leading.buildStack(
           toWidth: engine.width,
           using: engine.theme
         ).string
-//        let leading = line.leading.toString(with: engine.theme)
+        //        let leading = line.leading.toString(with: engine.theme)
         let trailing = line.trailing.buildStack(
           toWidth: engine.width,
           using: engine.theme
         ).string
 
-        let result = reflowed.reduce(into: "") { partialResult, textLine in
-          partialResult += leading + textLine + trailing
-        }
+        let result = reflowed.map { line in
+          leading + line + trailing
+        }.joined("\n")
+//        let result = reflowed.reduce(into: "") { partialResult, textLine in
+//          partialResult += leading + textLine + trailing
+//        }
 
         return result
 
@@ -122,25 +125,26 @@ extension Box.LineType {
         //        let structure = engine.structureLine(type: type)
 
         let partsforType = type.parts()
-        
+
         let partString = partsforType.reduce(into: "") {
           partialResult,
           part in
-          partialResult += part.buildStack(
-            toWidth: engine.width,
-            using: engine.theme
-          ).string
+          partialResult +=
+            part.buildStack(
+              toWidth: engine.width,
+              using: engine.theme
+            ).string
         }
 
-//        let partString = partsforType.reduce(into: "") { partialResult, part in
-//          
-////          let body: String
-//          if part.flexibility.isRepeatable {
-//            
-//          }
-//          
-//          partialResult += part.toString(with: engine.theme)
-//        }
+        //        let partString = partsforType.reduce(into: "") { partialResult, part in
+        //
+        ////          let body: String
+        //          if part.flexibility.isRepeatable {
+        //
+        //          }
+        //
+        //          partialResult += part.toString(with: engine.theme)
+        //        }
 
         return partString
 
