@@ -33,7 +33,7 @@ public struct Box: Sendable {
     
     
     
-    let stringResult = stack.string
+//    let stringResult = stack.string
 
     return stringResult
 

@@ -7,18 +7,19 @@
 
 import Foundation
 
+public typealias ComponentOutput = [Box.LineType]
+//typealias ComponentOutput = StringStack
 
 extension Box {
   public protocol Component: Codable, Sendable, Equatable {
-    func makeLines(using engine: Box.Engine) -> StringStack
-//    func makeLines(using engine: Box.Engine) -> [Box.LineType]
+    func makeLines(using engine: Box.Engine) -> ComponentOutput
   }
 }
 
 extension Box {
   public struct Top: Component, Codable {
     public init() {}
-    public func makeLines(using engine: Box.Engine) -> StringStack {
+    public func makeLines(using engine: Box.Engine) -> ComponentOutput {
 //      engine.structureLines(type: .top)
 //      Box.StructureType.top.line(toWidth: <#T##Int#>, using: <#T##Box.Theme#>)
       [engine.structureLine(type: .top)]
@@ -27,14 +28,14 @@ extension Box {
 
   public struct Divider: Component, Codable {
     public init() {}
-    public func makeLines(using engine: Box.Engine) -> StringStack {
+    public func makeLines(using engine: Box.Engine) -> ComponentOutput {
       engine.structureLines(type: .divider)
     }
   }
 
   public struct Bottom: Component, Codable {
     public init() {}
-    public func makeLines(using engine: Box.Engine) -> StringStack{
+    public func makeLines(using engine: Box.Engine) -> ComponentOutput{
       engine.structureLines(type: .bottom)
     }
   }
@@ -43,7 +44,7 @@ extension Box {
     let content: String
     public init(_ content: String) { self.content = content }
 
-    public func makeLines(using engine: Box.Engine) -> StringStack {
+    public func makeLines(using engine: Box.Engine) -> ComponentOutput {
       //      print("Created a Box.Text: \(content)")
       return engine.textLines(content)
     }
@@ -53,7 +54,7 @@ extension Box {
     let text: String
     public init(_ text: String) { self.text = text }
 
-    public func makeLines(using engine: Box.Engine) -> StringStack {
+    public func makeLines(using engine: Box.Engine) -> ComponentOutput {
 //      engine.structureLine(type: .top)
         engine.textLines(text)
         + engine.structureLines(type: .divider)

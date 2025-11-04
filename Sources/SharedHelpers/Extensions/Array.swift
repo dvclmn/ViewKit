@@ -7,40 +7,7 @@
 
 import SwiftUI
 
-protocol GridRepresentable {
-  associatedtype Cell
-  var gridHeight: Int { get }
-  var gridWidth: Int { get }
-  func elementAt(row: Int, column: Int) -> Cell?
-}
-
-extension Array: GridRepresentable where Element: Collection, Element.Index == Int {
-  typealias Cell = Element.Element
-  
-  var gridHeight: Int { count }
-  var gridWidth: Int { self.map { $0.count }.max() ?? 0 }
-  
-  func elementAt(row: Int, column: Int) -> Cell? {
-    guard indices.contains(row) else { return nil }
-    let rowArray = self[row]
-    return rowArray.indices.contains(column) ? rowArray[column] : nil
-  }
-  
-  // Additional grid operations
-  func row(_ index: Int) -> Element? {
-    indices.contains(index) ? self[index] : nil
-  }
-  
-  func column(_ index: Int) -> [Cell]? {
-    guard gridWidth > index else { return nil }
-    return indices.compactMap { row in
-      elementAt(row: row, column: index)
-    }
-  }
-}
-
 extension Array where Element: Hashable {
-
   public func toSet() -> Set<Element> {
     return Set(self)
   }

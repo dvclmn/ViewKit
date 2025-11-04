@@ -10,6 +10,7 @@ import SwiftUI
 
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack {
+  public typealias Cell = Character
 
   var stack: [[Character]]
 
@@ -42,6 +43,16 @@ public struct StringStack {
     self.stack = Array(repeating: row, count: count)
   }
 }
+
+//extension StringStack: GridRepresentable {
+//  public var gridHeight: Int { height }
+//  public var gridWidth: Int { width }
+////  public func elementAt(row: Int, column: Int) -> Cell? {
+////    guard stack.indices.contains(row) else { return nil }
+////    let rowArray = grid[row]
+////    return rowArray.indices.contains(column) ? rowArray[column] : nil
+////  }
+//}
 
 extension StringStack {
 
