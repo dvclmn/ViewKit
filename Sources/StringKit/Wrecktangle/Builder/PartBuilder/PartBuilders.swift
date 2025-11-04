@@ -25,6 +25,7 @@ enum GlyphStackBuilder {
   static func buildBlock(_ components: any GlyphRowConvertible...) -> [[Box.GlyphType]] {
     components.map { $0.asGlyphRow() }
   }
+
 }
 
 struct Row {
@@ -48,4 +49,8 @@ extension Row: GlyphRowConvertible {
 
 extension Array: GlyphRowConvertible where Element == Box.GlyphType {
   func asGlyphRow() -> [Box.GlyphType] { self }
+}
+
+extension Box.GlyphType: GlyphRowConvertible {
+  func asGlyphRow() -> [Box.GlyphType] { [self] }
 }
