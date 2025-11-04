@@ -11,7 +11,9 @@ import Foundation
 extension Array where Element == Box.LineType {
   func buildString(using engine: Box.Engine) -> String {
     let lines = self.map { line in
+//    let lines = self.enumerated().map { index, line in
       line.buildString(using: engine)
+//      "\(index + 1)" + line.buildString(using: engine)
     }
     return lines.joined(separator: "\n")
   }
@@ -39,7 +41,7 @@ extension Box.LineType {
     let parts = type.parts()
 
     let stacks = parts.map { part in
-      part.buildStack(toWidth: engine.width, using: engine.theme)
+      part.buildStack(using: engine)
     }
     return StringStack.joined(stacks, along: .horizontal).string
 
@@ -56,15 +58,9 @@ extension Box.LineType {
     )
     let reflowed = textContent.reflowed()
 
-    let leading = line.leading.buildStack(
-      toWidth: engine.width,
-      using: engine.theme
-    ).string
+    let leading = line.leading.buildStack(using: engine).string
 
-    let trailing = line.trailing.buildStack(
-      toWidth: engine.width,
-      using: engine.theme
-    ).string
+    let trailing = line.trailing.buildStack(using: engine).string
 
     let paddingString = String(repeating: " ", count: engine.theme.padding.width)
 

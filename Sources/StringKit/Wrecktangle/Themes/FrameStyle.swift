@@ -20,6 +20,8 @@ extension Box {
       exterior: Box.GlyphProminence = .increased,
       interior: Box.GlyphProminence = .standard
     )
+    
+    case notebook
   }
 }
 
@@ -31,17 +33,26 @@ extension Box.FrameStyle {
   /// Relevant for fixed only, i think? Not repeating?
   /// This should account for glyphs on *both* sides of the relevant axis?
   /// This is why it's returned as `doubled`
-  public var reservedDimensions: GridDimensions {
+  public var reservedDimensions: (leading: GridDimensions, trailing: GridDimensions) {
+//  public var reservedDimensions: GridDimensions {
     switch self {
       /// Each glyph, either side (leading-trailing, or top-bottom)
       case .single:
         let widthAndHeight = 1
-        return GridDimensions(widthAndHeight, widthAndHeight).doubled
+        let result = GridDimensions(widthAndHeight, widthAndHeight)
+        return (result, result)
 
       case .double:
         let width = 3
         let height = 2
-        return GridDimensions(width, height).doubled
+        let result = GridDimensions(width, height)
+        return (result, result)
+        
+      case .notebook:
+        let leading = GridDimensions(3, 2)
+        let trailing = GridDimensions(2, 2)
+        return (leading, trailing)
+        
     }
   }
 }

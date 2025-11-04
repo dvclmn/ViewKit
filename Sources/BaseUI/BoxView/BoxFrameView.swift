@@ -36,8 +36,8 @@ public struct BoxFrameView<Content: View>: View {
     content
 
       /// Padding to seat content within Box view
-      .gridPadding(.horizontal, paddingAdjusted.width)
-      .gridPadding(.vertical, paddingAdjusted.height)
+//      .gridPadding(.horizontal, paddingAdjusted.width)
+//      .gridPadding(.vertical, paddingAdjusted.height)
 
       .viewSize(mode: .debounce(0.2)) { size in
         updateIfChanged(&self.viewSize, to: size)
@@ -60,11 +60,11 @@ extension BoxFrameView {
   /// Padding first needs to account for the width/height
   /// taken up by structure, like the frame. As well as any
   /// user-specified padding.
-  private var paddingAdjusted: GridDimensions {
-    let reserved = frameStyle.reservedDimensions
-    let user = self.padding
-    return reserved + user
-  }
+//  private var paddingAdjusted: GridDimensions {
+//    let reserved = frameStyle.reservedDimensions
+//    let user = self.padding
+//    return reserved + user
+//  }
 
   private var boxText: String? {
     guard let w = dimensions?.width, let h = dimensions?.height else { return nil }

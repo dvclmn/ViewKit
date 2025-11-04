@@ -30,10 +30,12 @@ public struct Box: Sendable {
     
     let lines = finalLines.flatMap { $0.makeLines(using: engine) }
     
-    let linesString = lines.reduce(into: "") { partialResult, line in
-      partialResult += line.description + "\n"
-    }
-    print("/// Lines:\n\n\(linesString)\n///\n")
+    
+//    let linesDebug = lines.reduce(into: "") { partialResult, line in
+//      partialResult += line.description + "\n"
+//    }
+//    print("/// Lines:\n\n\(linesDebug)\n///\n")
+    
     let stringResult = lines.buildString(using: engine)
     
     return stringResult
