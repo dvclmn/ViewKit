@@ -11,24 +11,24 @@ extension Box {
   /// The Builder (aka 'Box Engine') should handle box drawing
   /// based on simple instructions (see ``ViewBox`` and ``HeaderBoxBox``)
   public struct Engine: Codable, Sendable {
-    let width: Int
-
-    /// Allows dynamic/flexible height, if not defined
-    let height: Int?
-
-    let paddingCharacter: Character
-    let theme: Box.Theme
+    let config: Box.Config
+//    let width: Int
+//
+//    /// Allows dynamic/flexible height, if not defined
+//    let height: Int?
+//
+//    let paddingCharacter: Character
+//    let theme: Box.Theme
 
     public init(
       width: Int,
       height: Int?,
       theme: Box.Theme,
-      paddingCharacter: Character = " "
     ) {
-      self.width = width
-      self.height = height
-      self.paddingCharacter = paddingCharacter
-      self.theme = theme
+      self.config = Config(w: width, h: height, theme: theme)
+//      self.width = width
+//      self.height = height
+//      self.paddingCharacter = paddingCharacter
     }
   }
 }

@@ -10,9 +10,10 @@ import SharedHelpers
 
 public struct Box: Sendable {
 
-  let width: Int
-  let height: Int?
-  let theme: Theme
+  let config: Config
+//  let width: Int
+//  let height: Int?
+//  let theme: Theme
   let components: [any Component]
 
   public init(
@@ -21,9 +22,10 @@ public struct Box: Sendable {
     theme: Theme = .default,
     @BoxBuilder content: () -> [any Component]
   ) {
-    self.width = width
-    self.height = height
-    self.theme = theme
+//    self.width = width
+//    self.height = height
+//    self.theme = theme
+    self.config = Config(w: width, h: height, theme: theme)
     self.components = content()
   }
 
