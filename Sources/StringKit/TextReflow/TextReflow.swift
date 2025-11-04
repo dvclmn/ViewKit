@@ -15,7 +15,14 @@ public enum PaddingBookend {
 public struct TextReflow {
   let text: String
   let shouldHyphenate: Bool
+
+  /// Width for text only. Do not include space for padding
+  /// or any other elements, this should be handled elsewhere
   let width: Int
+
+  /// Used to fill empty space at the end of lines, so that
+  /// each line ends up the same length.
+  /// Usually a space character, so it is unseen.
   let paddingCharacter: Character
 
   public init(
@@ -33,10 +40,7 @@ public struct TextReflow {
 
 extension TextReflow {
 
-  public func reflowed(
-    maxLines: Int = 0,
-    paddingH: Int = 1,  // leading and trailing
-  ) -> [String] {
+  public func reflowed(maxLines: Int = 0) -> [String] {
 
     guard width > 0 else {
       print("Error: Width must be positive")
@@ -45,8 +49,8 @@ extension TextReflow {
 
     /// Calculate the remaining width for text content,
     /// after spacing reserved for structure
-    let effectiveWidth = width - (2 * paddingH)
-    guard effectiveWidth > 0 else {
+
+    guard width > 0 else {
       print("Error: Width is too small to accommodate padding & content")
       return []
     }
@@ -64,15 +68,16 @@ extension TextReflow {
       let leadingWhitespace = paragraph.prefix(while: { $0.isWhitespace })
       let trimmedParagraph = paragraph.dropFirst(leadingWhitespace.count)
 
+      /// This feels brittle, treating words as anything space-speratated
       let words = trimmedParagraph.split(separator: " ", omittingEmptySubsequences: false)
       var currentLine = String(leadingWhitespace)
 
       for word in words {
         let wordString = String(word)
 
-        if currentLine == String(leadingWhitespace) && (currentLine.count + wordString.count) <= effectiveWidth {
+        if currentLine == String(leadingWhitespace) && (currentLine.count + wordString.count) <= width {
           currentLine += wordString
-        } else if currentLine.count + wordString.count + 1 <= effectiveWidth {
+        } else if currentLine.count + wordString.count + 1 <= width {
           if !currentLine.isEmpty && currentLine != String(leadingWhitespace) {
             currentLine += " "
           }
@@ -80,19 +85,19 @@ extension TextReflow {
         } else {
 
           reflowedLines.append(
-            padLine(currentLine, bookends: .both(width: paddingH))
+            padLine(currentLine, bookends: .none)
           )
 
-          // Handle word exceeding width
-          if wordString.count > effectiveWidth {
+          /// Handle word exceeding width
+          if wordString.count > width {
             let wrappedWords = wrapLongWord(
               wordString,
-              width: effectiveWidth
+              width: width
             )
 
             reflowedLines.append(
               contentsOf: wrappedWords.dropLast().map {
-                padLine($0, bookends: .both(width: paddingH))
+                padLine($0, bookends: .none)
               })
             currentLine = wrappedWords.last ?? ""
           } else {
@@ -103,7 +108,7 @@ extension TextReflow {
 
       if !currentLine.isEmpty {
         reflowedLines.append(
-          padLine(currentLine, bookends: .both(width: paddingH))
+          padLine(currentLine, bookends: .none)
         )
       }
     }
@@ -137,12 +142,7 @@ extension TextReflow {
     return wrappedWords
   }
 
-  func padLine(
-    _ line: String,
-    //    toFill width: Int,
-    //    with character: Character,
-    bookends: PaddingBookend = .none
-  ) -> String {
+  func padLine(_ line: String, bookends: PaddingBookend = .none) -> String {
 
     /// Start with current line content
     var result: String = line

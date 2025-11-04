@@ -9,43 +9,21 @@ import Foundation
 
 extension Box.PartType {
 
-//  public func toString(with theme: Box.Theme) -> String {
-//
-//    let glyphs = glyphStack(with: theme.frameStyle)
-//    let stringStack = StringStack(from: glyphs, with: theme)
-//    return stringStack.string
-//  }
-  
   public func buildStack(
     toWidth width: Int,
     using theme: Box.Theme
   ) -> StringStack {
-    
+
     guard self.flexibility.isRepeatable else {
       let stack = glyphStack(with: theme.frameStyle)
       return StringStack(from: stack, with: theme)
     }
-    
+
     let stack = glyphStack(with: theme.frameStyle)
     let stringStack = StringStack(from: stack, with: theme)
-    let repeated = stringStack.repeated(along: .horizontal, count: width - theme.padding.width * 2)
+    let repeated = stringStack.repeated(along: .horizontal, count: width)
     return repeated
   }
-
-
-  //  public func buildStack(
-  //    toWidth width: Int,
-  //    using theme: Box.Theme
-  //  ) -> StringStack {
-  //
-  //  }
-
-  //  private func repeated() -> StringStack {
-  //    let stack = glyphStack(with: theme.frameStyle)
-  //    let stringStack = StringStack(from: stack, with: theme)
-  //    let repeated = stringStack.repeated(along: .horizontal, count: width - theme.padding.width * 2)
-  //    return repeated
-  //  }
 
   func glyphStack(
     with frameStyle: Box.FrameStyle

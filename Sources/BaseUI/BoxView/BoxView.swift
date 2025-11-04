@@ -28,19 +28,20 @@ public struct BoxView: View {
   public var body: some View {
     Text(
       Box(
-        width: widthForBoxFrame - 1,
+        width: widthForBoxFrame,
         height: gridHeight,
         theme: theme
       ) {
         content
       }.plainText
     )
+    .fixedSize(horizontal: true, vertical: false)
     //    .fixedSize(horizontal: true, vertical: false)
-    .frameFromGridSize(
-      width: widthForBoxFrame,
-      //      width: gridWidth.map { $0 + theme.padding.width * 2 },
-      height: gridHeight
-    )
+//    .frameFromGridSize(
+//      width: widthForBoxFrame,
+//      //      width: gridWidth.map { $0 + theme.padding.width * 2 },
+//      height: gridHeight
+//    )
     .gridSetup(.sfMono, fontSize: 15)
 
     //    .environment(\.isShowingGridGuide, true)
@@ -64,11 +65,13 @@ extension BoxView {
   private var widthForBoxFrame: Int {
 
     let proposed = gridWidth ?? 15
-    let frameReserved = theme.frameStyle.reservedDimensions.width
-    let paddingH = theme.padding.width * 2
+//    let frameReserved = theme.frameStyle.reservedDimensions.width
+//    let paddingH = theme.padding.width * 2
 
-    let totalReserved = frameReserved + paddingH
-    return max(0, proposed + totalReserved)
+//    let totalReserved = frameReserved + paddingH
+//    return max(0, proposed + totalReserved)
+    
+    return proposed
 
   }
 
@@ -79,20 +82,6 @@ extension BoxView {
       padding: 1
     )
   }
-
-  //  private var textOutput: String {
-  //    Box(theme: theme) {
-  //
-  //      Box.Top()
-  //      if let title {
-  //        Box.Header(title)
-  //        Box.Divider()
-  //      }
-  //      content.toString
-  //      Box.Bottom()
-  //
-  //    }.plainText
-  //  }
 }
 
 #if DEBUG
@@ -109,11 +98,11 @@ extension BoxView {
         //        "Last text sign-off"
         //          Box.Bottom()
       }
-      .setGridFrame(20, alignment: .leading)
+      .setGridFrame(30, alignment: .leading)
       //      .setBoxStyle(glyphs: .test, frame: .single())
       //      .setBoxStyle(glyphs: .test, frame: .double())
-      .setBoxStyle(glyphs: .rounded, frame: .double())
-      //      .setBoxStyle(glyphs: .rounded, frame: .single())
+//      .setBoxStyle(glyphs: .rounded, frame: .double())
+      .setBoxStyle(glyphs: .rounded, frame: .single(frame: .standard, dividers: .standard))
 
     }
   }

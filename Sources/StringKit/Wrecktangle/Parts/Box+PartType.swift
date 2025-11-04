@@ -53,26 +53,26 @@ extension Box {
     public var flexibility: Flexibility {
       switch self {
         case .horizontal, .blank: .repeatable(axis: .horizontal)
-//        case .vertical: .repeatable(axis: .vertical)
+        //        case .vertical: .repeatable(axis: .vertical)
         case .join, .corner, .vertical: .fixed
-//        case .join, .corner, .text: .fixed
+      //        case .join, .corner, .text: .fixed
       }
     }
   }  // END part type
 }
 
 extension Box.PartType {
-  
+
   var name: String {
     switch self {
       case .horizontal(let loc): "horizontal/\(loc.rawValue)"
       case .vertical(let loc): "vertical/\(loc.rawValue)"
       case .join(let joinType): "join/\(joinType.rawValue)"
       case .corner(let cornerType): "corner/\(cornerType.rawValue)"
-//      case .text(let string): "text/\(string.truncate(to: 16))"
+      //      case .text(let string): "text/\(string.truncate(to: 16))"
       case .blank: "blank"
     }
-    
+
   }
 
   /// This introduces the concept of *valid orientation*;
@@ -108,6 +108,25 @@ extension Box.PartType {
   //    case capLeading
   //    case capTrailing
   //  }
+
+}
+
+extension Box {
+  public enum CornerType: String, Hashable, Sendable, Codable {
+    case topLeading
+    case topTrailing
+    case bottomLeading
+    case bottomTrailing
+  }
+
+  /// Describes where the joining takes place
+  public enum JoinType: String, Hashable, Sendable, Codable {
+    case leading  // ┠
+    case trailing  // ┨
+    case top  // ┯
+    case bottom  // ┷
+    case cross  // ╂
+  }
 
 }
 

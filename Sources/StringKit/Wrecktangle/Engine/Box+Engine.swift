@@ -62,9 +62,17 @@ extension Box.Engine {
 
   /// The remaning width for text, after removing space
   /// reserved for structural elements
+  ///
+  /// ⚠️ IMPORTANT: TextReflow previously handled padding on
+  /// either side of each reflow line of Text, however this
+  /// responsibility has moved out of there, and back to the Box domain.
+  ///
+  /// That means it's important that we *do* remove padding from here,
+  /// so that the width for text is accurate.
   public var widthForText: Int {
-    let capCount = config.theme.frameStyle.reservedDimensions.width
-    let finalWidth = max(0, config.width - capCount)
+    let capWidth = config.theme.frameStyle.reservedDimensions.width
+    let paddingWidth = config.theme.padding.width * 2
+    let finalWidth = max(0, config.width - capWidth - paddingWidth)
     //    print("Width for text: \(finalWidth)")
     return finalWidth
   }
@@ -94,12 +102,9 @@ extension Box.LineType {
         let textContent = TextReflow(
           line.text,
           width: engine.widthForText,
-          paddingCharacter: " ",
           shouldHyphenate: true
         )
-        let reflowed = textContent.reflowed(
-          paddingH: engine.config.theme.padding.width
-        )
+        let reflowed = textContent.reflowed()
 
         let leading = line.leading.buildStack(
           toWidth: engine.width,

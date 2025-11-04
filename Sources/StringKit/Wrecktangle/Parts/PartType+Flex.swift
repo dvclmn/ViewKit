@@ -16,14 +16,3 @@ extension Box.PartType {
     case fixed
   }
 }
-
-//protocol Repeatable {
-//  func repeated(to width: Int, along axis: Axis) -> Box.Part
-//}
-
-//extension Box.Part: Repeatable {
-//  func repeated(to width: Int, along axis: Axis) -> Box.Part {
-//    guard flexibility == .repeatable(axis: axis) else { return self }
-//    // repeat glyphs horizontally or vertically
-//  }
-//}
