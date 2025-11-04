@@ -52,18 +52,25 @@ extension Box.GlyphType: ExpressibleByUnicodeScalarLiteral {
 
 /// That is, you could move character(for:) into a protocol like:
 protocol GlyphProvider {
-  func character(for type: Box.GlyphType) -> Character?
+  func character(
+    for type: Box.GlyphType,
+    with fallback: Character
+  ) -> Character
 }
 
-/// Then make both GlyphMap and GlyphSet conform, so GlyphSet
+/// Then make both `GlyphMap` and `GlyphSet` conform, so `GlyphSet`
 /// can compose multiple sources more generically.
-/// It’s almost the same logic — but it means GlyphSet could later be composed
-/// dynamically from multiple sources, like a theme stack, not just nested .partial.
+/// It’s almost the same logic — but it means `GlyphSet` could later be composed
+/// dynamically from multiple sources, like a theme stack, not just nested `.partial`
 extension Box.GlyphSet: GlyphProvider {
-  func character(for type: Box.GlyphType) -> Character? {
+  func character(
+    for type: Box.GlyphType,
+    with fallback: Character = " "
+  ) -> Character {
     switch self {
       case .base(let glyphMap):
-        return glyphMap[type]
+        return glyphMap[type] ?? fallback
+        
       case .partial(let glyphMap, let fallback):
         return glyphMap[type] ?? fallback.character(for: type)
     }

@@ -16,7 +16,7 @@ extension Box {
   /// which `base` set to fall back on, for un-specified glyphs
   public enum GlyphSet: Sendable, Codable, Equatable {
 
-    public static let globalFallback: Character = "?"
+//    public static let globalFallback: Character = "?"
 
     case base(GlyphMap)
 
@@ -32,18 +32,18 @@ extension Box.GlyphSet {
   /// based on how it is defined for this Set.
   /// Note: This doesn't handle any construction of user text content.
   /// Only structural Box elements.
-  func character(for glyphType: Box.GlyphType) -> Character {
-
-    switch self {
-      /// This "should" return a result, as a Base set ought to be exhaustive
-      case .base(let glyphMap):
-        let lookup = Box.GlyphLookup(map: glyphMap, type: glyphType)
-        return lookup.character ?? Self.globalFallback
-
-      case .partial(let glyphMap, let fallbackSet):
-        let lookup = Box.GlyphLookup(map: glyphMap, type: glyphType)
-        let fallbackCharacter = fallbackSet.character(for: glyphType)
-        return lookup.character ?? fallbackCharacter
-    }
-  }
+//  func character(for glyphType: Box.GlyphType) -> Character {
+//
+//    switch self {
+//      /// This "should" return a result, as a Base set ought to be exhaustive
+//      case .base(let glyphMap):
+//        let lookup = Box.GlyphLookup(map: glyphMap, type: glyphType)
+//        return lookup.character ?? Self.globalFallback
+//
+//      case .partial(let glyphMap, let fallbackSet):
+//        let lookup = Box.GlyphLookup(map: glyphMap, type: glyphType)
+//        let fallbackCharacter = fallbackSet.char`acter(for: glyphType)
+//        return lookup.character ?? fallbackCharacter
+//    }
+//  }
 }
