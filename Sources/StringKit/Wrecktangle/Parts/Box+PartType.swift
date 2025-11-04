@@ -40,7 +40,6 @@ extension Box {
     case vertical(VerticalLocation)
     case join(Box.JoinType)
     case corner(Box.CornerType)
-//    case text(String)
     case blank
 
     /// Describes whether this Part be repeated dynamically

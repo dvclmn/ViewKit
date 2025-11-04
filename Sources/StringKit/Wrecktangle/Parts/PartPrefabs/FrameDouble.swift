@@ -7,9 +7,10 @@
 
 extension Box.PartType {
 
+  
   /// Follows a `Prominence.increased` on the external frame parts,
   /// and  `Prominence.standard` on the internal parts
-  public func doubleFrame(
+  package func doubleFrameParts(
     extProm: Box.GlyphProminence,
     intProm: Box.GlyphProminence,
   ) -> Box.GlyphStack {

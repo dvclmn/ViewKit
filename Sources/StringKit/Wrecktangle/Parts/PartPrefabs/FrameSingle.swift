@@ -18,7 +18,7 @@ extension Box.PartType {
   /// Perhaps, in future, I will add the concept of per-axis
   /// glyph styles, but for now, these Frames have the
   /// *same glyph style* for all axes.
-  func singleFrame(
+  func singleFrameParts(
     frameProm: Box.GlyphProminence,
     divProm: Box.GlyphProminence,
   ) -> Box.GlyphStack {

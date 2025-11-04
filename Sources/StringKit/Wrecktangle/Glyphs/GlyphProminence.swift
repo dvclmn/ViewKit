@@ -9,9 +9,10 @@ public typealias Prominence = Box.GlyphProminence
 
 extension Box {
 
-  /// Describes where this Glyph should be used, in the context
-  /// of a Box structure. Typically based on interior vs exterior
-  /// usage; bolder glyph weight for exterior, lighter for interior.
+  /// Describes the visual weight / thickness of this glyph.
+  /// Usually used in conjunction with location/placement, to
+  /// create the desired effect, such as a bolder exterior
+  /// structure, and lighter interior.
   public enum GlyphProminence: Hashable, Sendable, Codable {
     case standard
     case increased
