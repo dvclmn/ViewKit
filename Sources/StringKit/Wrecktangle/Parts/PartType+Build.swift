@@ -9,18 +9,14 @@ import Foundation
 
 extension Box.PartType {
 
-  public func buildStack(
-    using engine: Box.Engine,
-//    toWidth width: Int,
-//    using theme: Box.Theme
-  ) -> StringStack {
+  public func buildStack(using engine: Box.Engine) -> StringStack {
 
     guard self.flexibility.isRepeatable else {
       let stack = glyphStack(with: engine.theme.frameStyle)
       return StringStack(from: stack, with: engine.theme)
     }
 
-    let reservedWidth = engine.width - engine.widthForText
+    let reservedWidth = engine.widthForText
 
     let stack = glyphStack(with: engine.theme.frameStyle)
     let stringStack = StringStack(from: stack, with: engine.theme)
