@@ -73,3 +73,10 @@ extension Dictionary where Value == Bool {
     //    self[key] = !(self[key] ?? fallBack)
   }
 }
+
+extension Dictionary {
+  public subscript(optionalKey key: Key?) -> Value? {
+    guard let key else { return nil }
+    return self[key]
+  }
+}

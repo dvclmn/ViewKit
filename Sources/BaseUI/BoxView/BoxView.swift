@@ -93,7 +93,7 @@ extension BoxView {
       BoxView {
         "Rounded, single frame"
       }
-      .setBoxStyle(glyphs: .rounded, frame: .single(frame: .standard))
+      .setBoxStyle(glyphs: .rounded, frame: .single())
       
       BoxView {
         Box.Header("Hello, I'm a Header")
@@ -109,7 +109,7 @@ extension BoxView {
       .setGridFrame(30, alignment: .leading)
       //      .setBoxStyle(glyphs: .test, frame: .single())
       //      .setBoxStyle(glyphs: .test, frame: .double())
-      .setBoxStyle(glyphs: .rounded, frame: .double(exterior: .increased, interior: .standard))
+      .setBoxStyle(glyphs: .rounded, frame: .double())
       //      .setBoxStyle(glyphs: .rounded, frame: .single(frame: .standard, dividers: .standard))
 
     }

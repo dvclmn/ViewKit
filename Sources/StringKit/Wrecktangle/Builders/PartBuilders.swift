@@ -10,14 +10,18 @@ import Foundation
 // MARK: - Part Builders
 @resultBuilder
 enum RowBuilder {
-  static func buildBlock(_ components: Box.GlyphType...) -> [Box.GlyphType] {
+  static func buildBlock(
+    _ components: Box.GlyphType...
+  ) -> [Box.GlyphType] {
     components
   }
 }
 
 @resultBuilder
 enum GlyphStackBuilder {
-  static func buildBlock(_ components: any GlyphRowConvertible...) -> [[Box.GlyphType]] {
+  static func buildBlock(
+    _ components: any GlyphRowConvertible...
+  ) -> [[Box.GlyphType]] {
     components.map { $0.asGlyphRow() }
   }
 }
@@ -30,7 +34,9 @@ struct Row {
   }
 }
 
-func GlyphGrid(@GlyphStackBuilder _ content: () -> [[Box.GlyphType]]) -> [[Box.GlyphType]] {
+func GlyphGrid(
+  @GlyphStackBuilder _ content: () -> [[Box.GlyphType]]
+) -> [[Box.GlyphType]] {
   content()
 }
 

@@ -10,17 +10,18 @@ import Foundation
 extension Box {
 
   public struct TextLine: Codable, Sendable, Hashable {
-    public let leading: Box.PartType
+    /// Full-length text content, not reflowed for Box width (yet)
     public let text: String
+    public let leading: Box.PartType
     public let trailing: Box.PartType
 
     public init(
-      leading: Box.PartType,
       text: String,
+      leading: Box.PartType,
       trailing: Box.PartType
     ) {
-      self.leading = leading
       self.text = text
+      self.leading = leading
       self.trailing = trailing
     }
   }
@@ -29,8 +30,8 @@ extension Box {
 extension Box.TextLine: CustomStringConvertible {
   public var description: String {
     return DisplayString {
-      leading.description
       "Text Content: " + text
+      leading.description
       trailing.description
     }.plainText
   }

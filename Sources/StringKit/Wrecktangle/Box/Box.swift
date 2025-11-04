@@ -37,15 +37,6 @@ public struct Box: Sendable {
     let stringResult = lines.buildString(using: engine)
     
     return stringResult
-    
-//    let stack = Box.LineType.joined(width: width, lines: lines, with: theme)
-    
-    
-    
-//    let stringResult = stack.string
-
-//    return "wait one sec"
-//    return stringResult
 
   }
 }
@@ -56,10 +47,4 @@ extension Box: Equatable {
     && lhs.config.theme == rhs.config.theme
       && lhs.components.count == rhs.components.count
   }
-
 }
-
-//extension Box where [Component]: Codable {
-//
-//}
-

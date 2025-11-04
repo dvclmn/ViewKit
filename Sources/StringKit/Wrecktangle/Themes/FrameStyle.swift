@@ -7,17 +7,18 @@
 
 import SharedHelpers
 
+
 extension Box {
   public enum FrameStyle: Sendable, Codable, Equatable {
 
     case single(
-      frame: Prominence = .increased,
-      dividers: Prominence = .standard
+      frame: Box.GlyphProminence = .increased,
+      dividers: Box.GlyphProminence = .standard
     )
 
     case double(
-      exterior: Prominence = .increased,
-      interior: Prominence = .standard
+      exterior: Box.GlyphProminence = .increased,
+      interior: Box.GlyphProminence = .standard
     )
   }
 }

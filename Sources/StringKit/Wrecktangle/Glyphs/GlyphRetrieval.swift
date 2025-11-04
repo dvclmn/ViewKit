@@ -38,37 +38,13 @@ extension Box.GlyphSet: GlyphProvider {
     with fallbackCharacter: Character = " "
   ) -> Character {
     switch self {
-      case .base(let glyphMap):
-        return glyphMap[type] ?? fallbackCharacter
+      case .base(let map):
+        map[type]
+          ?? map[optionalKey: type.prominenceAlt]
+          ?? fallbackCharacter
 
       case .partial(let glyphMap, let fallback):
-        return glyphMap[type] ?? fallback.character(for: type)
+        glyphMap[type] ?? fallback.character(for: type)
     }
   }
 }
-
-//
-//  struct GlyphLookup {
-//    let map: GlyphMap
-//    let type: GlyphType
-//  }
-//}
-//
-//extension Box.GlyphLookup {
-//
-//  var character: Character? {
-//    /// Try exact match
-//    if let char = map[type] {
-//      return char
-//    }
-//
-//
-//    /// Try flipped placement
-//    if let flipped = type.prominenceAlt, let char = map[flipped] {
-//      return char
-//    }
-//
-//    /// No match
-//    return nil
-//  }
-//}

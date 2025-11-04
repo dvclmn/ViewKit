@@ -8,7 +8,6 @@
 import Foundation
 
 public typealias ComponentOutput = [Box.LineType]
-//typealias ComponentOutput = StringStack
 
 extension Box {
   public protocol Component: Codable, Sendable, Equatable {
@@ -47,7 +46,6 @@ extension Box {
     public init(_ content: String) { self.content = content }
 
     public func makeLines(using engine: Box.Engine) -> ComponentOutput {
-      //      print("Created a Box.Text: \(content)")
       [engine.textLine(content)]
     }
   }
