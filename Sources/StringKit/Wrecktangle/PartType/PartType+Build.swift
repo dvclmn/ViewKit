@@ -17,7 +17,7 @@ extension Box.PartType {
     if self.flexibility.isRepeatable {
       let stack = glyphStack(with: theme.frameStyle)
       let stringStack = StringStack(from: stack, theme: theme)
-      let repeated = stringStack.repeated(along: .horizontal, count: width)
+      let repeated = stringStack.repeated(along: .horizontal, count: width - theme.padding.width * 2)
       return repeated
       
     } else {
@@ -37,7 +37,7 @@ extension Box.PartType {
         return single
         
       case .double(let extProm, let intProm):
-        let doubleResult = double(extProm: extProm, intProm: intProm)
+        let doubleResult = doubleFrame(extProm: extProm, intProm: intProm)
 //        print("GlyphStack for PartType \(self), with Double FrameStyle: \(doubleResult)")
         return doubleResult
     }

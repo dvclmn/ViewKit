@@ -44,8 +44,8 @@ extension Box {
     public init(_ text: String) { self.text = text }
 
     public func makeLines(using engine: Box.Engine) -> [Box.LineType] {
-      engine.structureLine(type: .top)
-        + engine.textLines(text)
+//      engine.structureLine(type: .top)
+        engine.textLines(text)
         + engine.structureLine(type: .divider)
 
     }

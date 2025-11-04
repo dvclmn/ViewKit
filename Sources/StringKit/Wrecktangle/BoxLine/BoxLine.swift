@@ -48,14 +48,6 @@ extension Box {
       body: Box.PartType,
       trailing: Box.PartType
     ) {
-      // Basic invariant: if body is text (single row), caps must be 1 high.
-      //            precondition(
-      //              !(body.isText && (leading.height > 1 || trailing.height > 1)),
-      //              """
-      //              Text lines must have single-character caps.
-      //              Leading: \(leading.height), Trailing: \(trailing.height)
-      //              """
-      //            )
       self.leading = leading
       self.body = body
       self.trailing = trailing
@@ -68,7 +60,6 @@ extension Box.StructureLine {
     width: Int,
     theme: Box.Theme
   ) -> StringStack {
-//    let repeated: StringStack = body.buildStack(using: <#T##Box.Theme#>)
     StringStack.joined(
       leading.buildStack(toWidth: width, using: theme),
       body.buildStack(toWidth: width, using: theme),
@@ -84,8 +75,8 @@ extension Box.StructureLine {
   ) -> StringStack {
     switch type {
       case .top:
+        
         Box.StructureLine(
-//          leading: .join(.cross),
           leading: .corner(.topLeading),
           body: .horizontal(.top),
           trailing: .corner(.topTrailing)
@@ -105,6 +96,5 @@ extension Box.StructureLine {
           trailing: .corner(.bottomTrailing)
         ).build(width: width, theme: theme)
     }
-
   }
 }

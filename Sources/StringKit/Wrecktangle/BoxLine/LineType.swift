@@ -25,16 +25,6 @@ public func + (lhs: Box.LineType, rhs: Box.LineType) -> [Box.LineType] {
   [lhs, rhs]
 }
 
-//extension Box.LineType: RangeReplaceableCollection {
-//  public init() {
-//    <#code#>
-//  }
-//  
-//  public typealias SubSequence = Box.LineType
-//  
-//}
-
-
 extension Box.LineType {
   public func output(
     width: Int,

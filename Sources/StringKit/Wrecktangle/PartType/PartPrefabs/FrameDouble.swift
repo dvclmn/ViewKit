@@ -9,7 +9,7 @@ extension Box.PartType {
 
   /// Follows a `Prominence.increased` on the external frame parts,
   /// and  `Prominence.standard` on the internal parts
-  public func double(
+  public func doubleFrame(
     extProm: Box.GlyphProminence,
     intProm: Box.GlyphProminence,
   ) -> Box.GlyphStack {
@@ -19,24 +19,22 @@ extension Box.PartType {
         switch loc {
           case .top:
             [
-              [
-                Box.GlyphType.horizontal(extProm),
-                Box.GlyphType.blank,
-                Box.GlyphType.horizontal(intProm),
-              ]
+              [Box.GlyphType.horizontal(extProm)],
+              [Box.GlyphType.blank],
+              [Box.GlyphType.horizontal(intProm)],
+
             ]
           case .bottom:
             [
-              [
-                Box.GlyphType.horizontal(intProm),
-                Box.GlyphType.blank,
-                Box.GlyphType.horizontal(extProm),
-              ]
+              [Box.GlyphType.horizontal(intProm)],
+              [Box.GlyphType.blank],
+              [Box.GlyphType.horizontal(extProm)],
+
             ]
           case .interior:
             [[Box.GlyphType.horizontal(intProm)]]
         }
-      
+
       case .vertical(let loc):
         switch loc {
           case .leading:
@@ -63,15 +61,17 @@ extension Box.PartType {
         switch joinType {
           case .leading:
             [
+
+              [Box.GlyphType.vertical(extProm)],
+              [Box.GlyphType.blank],
               [
-                Box.GlyphType.vertical(extProm),
-                Box.GlyphType.blank,
                 Box.GlyphType.join(
                   x: intProm,
                   y: intProm,
                   type: joinType
-                ),
-              ]
+                )
+              ],
+
             ]
           case .trailing:
             [
@@ -179,7 +179,7 @@ extension Box.PartType {
               ],
             ]
         }
-        
+
       case .blank:
         [[Box.GlyphType.blank]]
     }

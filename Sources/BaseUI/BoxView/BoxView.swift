@@ -23,9 +23,9 @@ public struct BoxView: View {
   let content: [any Box.Component]
 
   public init(
-        _ title: String? = nil,
-//    separator: String = "\n",
-//    alignment: Alignment = .center,
+    _ title: String? = nil,
+    //    separator: String = "\n",
+    //    alignment: Alignment = .center,
     @BoxBuilder content: () -> [any Box.Component]
       //    @DisplayStringBuilder content: () -> [DisplayBlock]
   ) {
@@ -37,21 +37,22 @@ public struct BoxView: View {
   public var body: some View {
     Text(
       Box(
-        width: gridWidth ?? 20,
+        width: widthForBoxFrame - 1,
         height: gridHeight,
         theme: theme
       ) {
         content
       }.plainText
     )
-//    .fixedSize(horizontal: true, vertical: false)
+    //    .fixedSize(horizontal: true, vertical: false)
     .frameFromGridSize(
-      width: gridWidth.map { $0 + theme.padding.width * 2 },
+      width: widthForBoxFrame,
+//      width: gridWidth.map { $0 + theme.padding.width * 2 },
       height: gridHeight
     )
     .gridSetup(.sfMono, fontSize: 15)
 
-//    .environment(\.isShowingGridGuide, true)
+    //    .environment(\.isShowingGridGuide, true)
 
     //      .debugTextOverlay(
     //        """
@@ -64,6 +65,22 @@ public struct BoxView: View {
 }
 
 extension BoxView {
+  
+//  private var widthForBox: Int {
+//    gridWidth ?? 20
+//  }
+//  
+  private var widthForBoxFrame: Int {
+    
+    let proposed = gridWidth ?? 15
+    let frameReserved = theme.frameStyle.reservedDimensions.width
+    let paddingH = theme.padding.width * 2
+    
+    let totalReserved = frameReserved + paddingH
+    return max(0, proposed + totalReserved)
+    
+  }
+  
   private var theme: Box.Theme {
     Box.Theme(
       glyphSet: glyphSet,
@@ -92,42 +109,29 @@ extension BoxView {
 
   ScrollView {
     VStack(spacing: 14) {
+      BoxView {
+        Box.Header("Hello, I'm a Header")
 
-      //    BoxTextView("I love boxes made of text") {
-      //      DummyContent.Strings.paragraphs[8].toAttributed
-      //    }
-      //    .setGridFrame(42)
-//      GroupBox("Top Only") {
-//        BoxView {
-//          Box.Top()
-//        }
-//      }
-//      
-//      GroupBox("Bottom Only") {
-//        BoxView {
-//          Box.Bottom()
-//        }
-//      }
+        DummyContent.Strings.paragraphs[3]
+
+        Box.Divider()
+        "Last text sign-off"
+        //          Box.Bottom()
+      }
+      .setGridFrame(
+        20,
+        //          20,
+        //          nil,
+        alignment: .leading
+      )
+//      .setBoxStyle(glyphs: .test, frame: .single())
+      .setBoxStyle(glyphs: .test, frame: .double())
       
-//      GroupBox("The Lot") {
-        BoxView {
-          Box.Header("Hello, I'm a Header")
-          DummyContent.Strings.paragraphs[0]
-          Box.Bottom()
-        }
-        .setGridFrame(
-          30,
-//          20,
-//          nil,
-          alignment: .leading
-        )
-//      }
 
     }
   }
   .textSelection(.enabled)
   .monospaced()
-  //  .environment(\._lineHeightMultiple, 0.84)
   .frame(
     minWidth: 400,
     minHeight: 600
