@@ -26,3 +26,12 @@ extension Box {
   }
 }
 
+extension Box.TextLine: CustomStringConvertible {
+  public var description: String {
+    return DisplayString {
+      leading.description
+      "Text Content: " + text
+      trailing.description
+    }.plainText
+  }
+}

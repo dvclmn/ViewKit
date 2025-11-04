@@ -23,11 +23,17 @@ public struct Box: Sendable {
   }
 
   public var plainText: String {
+    
     let engine = Box.Engine(config)
 
-//    return engine.
     let finalLines = [Box.Top()] + components + [Box.Bottom()]
+    
     let lines = finalLines.flatMap { $0.makeLines(using: engine) }
+    
+    let linesString = lines.reduce(into: "") { partialResult, line in
+      partialResult += line.description + "\n"
+    }
+    print("/// Lines:\n\n\(linesString)\n///\n")
     let stringResult = lines.buildString(using: engine)
     
     return stringResult
@@ -56,3 +62,4 @@ extension Box: Equatable {
 //extension Box where [Component]: Codable {
 //
 //}
+

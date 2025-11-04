@@ -113,6 +113,6 @@ extension Box.PartType {
 
 extension Box.PartType: CustomStringConvertible {
   public var description: String {
-    return "PartType/\(name)"
+    return "Part/\(name)"
   }
 }

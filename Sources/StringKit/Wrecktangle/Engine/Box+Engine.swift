@@ -33,9 +33,9 @@ extension Box.Engine {
 
 extension Box.Engine {
 
-  /// This should go from `[Box.LineType]` to String?
+  /// This is used by the Builder's `Box.Component`
+  /// This is meant to be the full, unreflowed text
   func textLine(_ content: String) -> Box.LineType {
-
     let textLine = Box.TextLine(
       leading: .vertical(.leading),
       text: content,
@@ -44,13 +44,6 @@ extension Box.Engine {
     return Box.LineType.text(textLine)
 
   }
-
-  //  func validateTextCap(cap: Box.GlyphStack) {
-  //    precondition(
-  //      cap.count == 1,
-  //      "A text content cap should not exceed 1 character in height"
-  //    )
-  //  }
 
   func structureLine(
     type: Box.StructureType
@@ -107,8 +100,16 @@ extension Box.LineType {
         let reflowed = textContent.reflowed(
           paddingH: engine.config.theme.padding.width
         )
-        let leading = line.leading.toString(with: engine.theme)
-        let trailing = line.trailing.toString(with: engine.theme)
+        
+        let leading = line.leading.buildStack(
+          toWidth: engine.width,
+          using: engine.theme
+        ).string
+//        let leading = line.leading.toString(with: engine.theme)
+        let trailing = line.trailing.buildStack(
+          toWidth: engine.width,
+          using: engine.theme
+        ).string
 
         let result = reflowed.reduce(into: "") { partialResult, textLine in
           partialResult += leading + textLine + trailing
@@ -121,10 +122,25 @@ extension Box.LineType {
         //        let structure = engine.structureLine(type: type)
 
         let partsforType = type.parts()
-
-        let partString = partsforType.reduce(into: "") { partialResult, part in
-          partialResult += part.toString(with: engine.theme)
+        
+        let partString = partsforType.reduce(into: "") {
+          partialResult,
+          part in
+          partialResult += part.buildStack(
+            toWidth: engine.width,
+            using: engine.theme
+          ).string
         }
+
+//        let partString = partsforType.reduce(into: "") { partialResult, part in
+//          
+////          let body: String
+//          if part.flexibility.isRepeatable {
+//            
+//          }
+//          
+//          partialResult += part.toString(with: engine.theme)
+//        }
 
         return partString
 

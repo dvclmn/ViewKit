@@ -17,20 +17,11 @@ public struct BoxView: View {
 
   @State private var characterSize: CGSize?
 
-  //  let title: String?
-  //  let alignment: Alignment
-  //  let content: AttributedString
   let content: [any Box.Component]
 
   public init(
-    _ title: String? = nil,
-    //    separator: String = "\n",
-    //    alignment: Alignment = .center,
     @BoxBuilder content: () -> [any Box.Component]
-      //    @DisplayStringBuilder content: () -> [DisplayBlock]
   ) {
-    //    self.title = title
-    //    self.alignment = alignment
     self.content = content()
   }
 
@@ -110,9 +101,9 @@ extension BoxView {
   ScrollView {
     VStack(spacing: 14) {
       BoxView {
-//        Box.Header("Hello, I'm a Header")
+        Box.Header("Hello, I'm a Header")
 
-//        DummyContent.Strings.paragraphs[3]
+        DummyContent.Strings.paragraphs[3]
 
         Box.Divider()
 //        "Last text sign-off"
@@ -125,7 +116,8 @@ extension BoxView {
         alignment: .leading
       )
 //      .setBoxStyle(glyphs: .test, frame: .single())
-      .setBoxStyle(glyphs: .test, frame: .double())
+//      .setBoxStyle(glyphs: .test, frame: .double())
+      .setBoxStyle(glyphs: .rounded, frame: .single())
       
 
     }

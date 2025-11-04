@@ -13,10 +13,9 @@ extension Box {
     /// This operation is performed later.
     case text(TextLine)
     case structure(StructureType)
-//    case blank
   }
 
-  public enum StructureType: Hashable, Sendable {
+  public enum StructureType: String, Hashable, Sendable {
     case top
     case divider
     case bottom
@@ -24,8 +23,19 @@ extension Box {
   }
 }
 
-
 /// Joins horizontally
 public func + (lhs: Box.LineType, rhs: Box.LineType) -> [Box.LineType] {
   [lhs, rhs]
+}
+
+extension Box.LineType: CustomStringConvertible {
+  public var description: String {
+    switch self {
+      case .text(let textLine):
+        "TextLine/\(textLine)"
+        
+      case .structure(let structureType):
+        "StructureLine/\(structureType.rawValue)"
+    }
+  }
 }
