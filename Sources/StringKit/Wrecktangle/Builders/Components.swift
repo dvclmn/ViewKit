@@ -7,25 +7,35 @@
 
 import Foundation
 
+
+extension Box {
+  public protocol Component: Codable, Sendable, Equatable {
+//    func makeLines(using engine: Box.Engine) -> StringStack
+    func makeLines(using engine: Box.Engine) -> [Box.LineType]
+  }
+}
+
 extension Box {
   public struct Top: Component, Codable {
     public init() {}
     public func makeLines(using engine: Box.Engine) -> [Box.LineType] {
-      engine.structureLine(type: .top)
+      engine.structureLines(type: .top)
+//      Box.StructureType.top.line(toWidth: <#T##Int#>, using: <#T##Box.Theme#>)
+//      engine.structureLine(type: .top)
     }
   }
 
   public struct Divider: Component, Codable {
     public init() {}
     public func makeLines(using engine: Box.Engine) -> [Box.LineType] {
-      engine.structureLine(type: .divider)
+      engine.structureLines(type: .divider)
     }
   }
 
   public struct Bottom: Component, Codable {
     public init() {}
     public func makeLines(using engine: Box.Engine) -> [Box.LineType] {
-      engine.structureLine(type: .bottom)
+      engine.structureLines(type: .bottom)
     }
   }
 
@@ -46,7 +56,7 @@ extension Box {
     public func makeLines(using engine: Box.Engine) -> [Box.LineType] {
 //      engine.structureLine(type: .top)
         engine.textLines(text)
-        + engine.structureLine(type: .divider)
+        + engine.structureLines(type: .divider)
 
     }
   }

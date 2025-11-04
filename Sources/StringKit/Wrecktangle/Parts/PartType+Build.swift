@@ -9,21 +9,12 @@ import Foundation
 
 extension Box.PartType {
 
-  public func buildStack(
-    toWidth width: Int,
-    using theme: Box.Theme
-  ) -> StringStack {
-
-    guard self.flexibility.isRepeatable else {
-      let stack = glyphStack(with: theme.frameStyle)
-      return StringStack(from: stack, with: theme)
-    }
-
-    let stack = glyphStack(with: theme.frameStyle)
-    let stringStack = StringStack(from: stack, with: theme)
-    let repeated = stringStack.repeated(along: .horizontal, count: width - theme.padding.width * 2)
-    return repeated
-  }
+//  public func buildStack(
+//    toWidth width: Int,
+//    using theme: Box.Theme
+//  ) -> StringStack {
+//
+//  }
   
 //  private func repeated() -> StringStack {
 //    let stack = glyphStack(with: theme.frameStyle)
@@ -32,7 +23,7 @@ extension Box.PartType {
 //    return repeated
 //  }
 
-  private func glyphStack(
+  func glyphStack(
     with frameStyle: Box.FrameStyle
   ) -> Box.GlyphStack {
     switch frameStyle {

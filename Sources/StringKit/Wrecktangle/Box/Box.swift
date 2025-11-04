@@ -9,11 +9,7 @@ import Foundation
 import SharedHelpers
 
 public struct Box: Sendable {
-
   let config: Config
-//  let width: Int
-//  let height: Int?
-//  let theme: Theme
   let components: [any Component]
 
   public init(
@@ -22,29 +18,21 @@ public struct Box: Sendable {
     theme: Theme = .default,
     @BoxBuilder content: () -> [any Component]
   ) {
-//    self.width = width
-//    self.height = height
-//    self.theme = theme
     self.config = Config(w: width, h: height, theme: theme)
     self.components = content()
   }
 
   public var plainText: String {
-    let engine = Box.Engine(
-      width: width,
-      height: nil,
-      theme: theme
-    )
+    let engine = Box.Engine(config)
 
-//    let containsHeader = components.contains(where: { comp in
-//      comp is Box.Header
-//    })
-
-//    let boxTopIfNeeded = containsHeader ? [] : [Box.Top()]
-
-    let finalLines = [Box.Top()] + components + [Box.Bottom()]
-    let lines = finalLines.flatMap { $0.makeLines(using: engine) }
-    let stack = Box.LineType.joined(width: width, lines: lines, with: theme)
+//    let finalLines = [Box.Top()] + components + [Box.Bottom()]
+//    let lines = finalLines.flatMap { $0.makeLines(using: engine) }
+    
+    
+//    let stack = Box.LineType.joined(width: width, lines: lines, with: theme)
+    
+    
+    
     let stringResult = stack.string
 
     return stringResult

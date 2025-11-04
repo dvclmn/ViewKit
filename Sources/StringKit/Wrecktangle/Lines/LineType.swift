@@ -21,28 +21,32 @@ extension Box {
     case bottom
   }
 }
+
+/// Joins horizontally
 public func + (lhs: Box.LineType, rhs: Box.LineType) -> [Box.LineType] {
   [lhs, rhs]
 }
 
 extension Box.LineType {
-  public func output(
-    width: Int,
-    theme: Box.Theme
-  ) -> StringStack {
-    switch self {
-      case .text(let content, _): textLine(
-        content,
-        toWidth: width,
-        using: theme
-      )
-      case .structure(let type): type.line(
-        toWidth: width,
-        using: theme
-      )
-      case .blank: StringStack("")
-    }
-  }
+//  public func output(
+//    width: Int,
+//    theme: Box.Theme
+//  ) -> StringStack {
+//    switch self {
+//      case .text(let content, _):
+//        textLine(
+//          content,
+//          toWidth: width,
+//          using: theme
+//        )
+//      case .structure(let type):
+//        type.line(
+//          toWidth: width,
+//          using: theme
+//        )
+//      case .blank: StringStack("")
+//    }
+//  }
 
   public static func joined(
     width: Int,
@@ -74,16 +78,6 @@ extension Box.LineType {
     using theme: Box.Theme
   ) -> StringStack {
 
-    let leading = Box.PartType.vertical(.leading).buildStack(toWidth: width, using: theme)
-    let contentStack = StringStack(content)
-    let trailing = Box.PartType.vertical(.trailing).buildStack(toWidth: width, using: theme)
-
-    return StringStack.joined(
-      leading,
-      contentStack,
-      trailing,
-      along: .horizontal
-    )
 
   }
 }

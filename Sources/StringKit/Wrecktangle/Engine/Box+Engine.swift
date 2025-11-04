@@ -12,13 +12,21 @@ extension Box {
   /// based on simple instructions (see ``ViewBox`` and ``HeaderBoxBox``)
   public struct Engine: Codable, Sendable {
     let config: Box.Config
-//    let width: Int
-//
-//    /// Allows dynamic/flexible height, if not defined
-//    let height: Int?
-//
-//    let paddingCharacter: Character
-//    let theme: Box.Theme
+    //    let width: Int
+    //
+    //    /// Allows dynamic/flexible height, if not defined
+    //    let height: Int?
+    //
+    //    let paddingCharacter: Character
+    //    let theme: Box.Theme
+
+    public init(_ config: Box.Config) {
+      self.config = config
+      //      self.config = Config(w: width, h: height, theme: theme)
+      //      self.width = width
+      //      self.height = height
+      //      self.paddingCharacter = paddingCharacter
+    }
 
     public init(
       width: Int,
@@ -26,91 +34,114 @@ extension Box {
       theme: Box.Theme,
     ) {
       self.config = Config(w: width, h: height, theme: theme)
-//      self.width = width
-//      self.height = height
-//      self.paddingCharacter = paddingCharacter
+      //      self.width = width
+      //      self.height = height
+      //      self.paddingCharacter = paddingCharacter
     }
   }
 }
 
 extension Box.Engine {
+  
+  var width: Int { config.width }
+  var theme: Box.Theme { config.theme }
+  
+  func buildString(form components: [any Box.Component]) -> String {
+    let allComponents = [Box.Top()] + components + [Box.Bottom()]
+    let allLines = allComponents.flatMap { $0.makeLines(using: self) }
+    
+    let stack =
+  }
+  
+  func buildLines(for type: Box.LineType) -> StringStack {
+    switch type {
+      case .text(let content, _):
+        
+//        textLine(
+//          content,
+//          toWidth: width,
+//          using: theme
+//        )
+//      case .structure(let type):
+//        type.line(
+//          toWidth: width,
+//          using: theme
+//        )
+//      case .blank: StringStack("")
+    }
+  }
 
-  public func textLines(
+  func textLines(
     _ content: String,
     lineLimit: Int = 0
   ) -> [Box.LineType] {
     let text = TextReflow(
       content,
       width: widthForText,
-      paddingCharacter: paddingCharacter,
+      paddingCharacter: " ",
       shouldHyphenate: true
     )
-    let reflowed = text.reflowed(maxLines: lineLimit, paddingH: theme.padding.width)
-    //    let reflowed: [String] = [
-    //      "Test one",
-    //      "And two",
-    //      "Then three",
-    //    ]
-
+    let reflowed = text.reflowed(
+      maxLines: lineLimit,
+      paddingH: config.theme.padding.width
+    )
     let lines = reflowed.map { line in
       textLine(content: line)
     }
     return lines
   }
 
-  func structureLine(
+  func structureLines(
     type: Box.StructureType
   ) -> [Box.LineType] {
-    return [Box.LineType.structure(type)]
-//    switch type {
-//      case .top:
-//        Box.Line(
-//          leading: .corner(.topLeading),
-//          body: .horizontal(.top),
-//          trailing: .corner(.topTrailing)
-//        )
-//
-//      case .divider:
-//        Box.Line(
-//          leading: .vertical(.leading),
-//          body: .horizontal(.interior),
-//          trailing: .vertical(.trailing),
-//        )
-//
-//      case .bottom:
-//        Box.Line(
-//          leading: .corner(.bottomLeading),
-//          body: .horizontal(.bottom),
-//          trailing: .corner(.bottomTrailing)
-//        )
-//    }
+
+    let line =
+      switch type {
+        case .top: Box.LineType.structure(.top)
+        case .divider: Box.LineType.structure(.divider)
+        case .bottom: Box.LineType.structure(.bottom)
+      }
+
+    return [line]
   }
 
   public func textLine(
-    content: String
-  ) -> Box.LineType {
+    content: String,
+  ) -> StringStack {
     
-    return Box.LineType.text(content: content, lineLimit: 0)
-//    print("Single Text Line: \(content)")
-//    return Box.LineType(
-//      leading: .vertical(.leading),
-//      body: .text(content),
-//      trailing: .vertical(.trailing)
-//    )
+    return StringStack.joined(
+      stack(for: .vertical(.leading)),
+      StringStack(content),
+      stack(for: .vertical(.trailing)),
+      along: .horizontal
+    )
+  }
+  
+  func stack(for part: Box.PartType) -> StringStack {
+    
+    guard part.flexibility.isRepeatable else {
+      let stack = part.glyphStack(with: theme.frameStyle)
+      return StringStack(from: stack, with: theme)
+    }
+    
+    let stack = part.glyphStack(with: theme.frameStyle)
+    let stringStack = StringStack(from: stack, with: theme)
+    let repeated = stringStack.repeated(along: .horizontal, count: width - theme.padding.width * 2)
+    return repeated
   }
 
   /// The remaning width for text, after removing space
   /// reserved for structural elements
   public var widthForText: Int {
-    let capCount = theme.frameStyle.reservedDimensions.width
-    let finalWidth = max(0, width - capCount)
-//    print("Width for text: \(finalWidth)")
+    let capCount = config.theme.frameStyle.reservedDimensions.width
+    let finalWidth = max(0, config.width - capCount)
+    //    print("Width for text: \(finalWidth)")
     return finalWidth
   }
 
   public var heightForText: Int? {
-    guard let height else { return nil }
-    let capCount = theme.frameStyle.reservedDimensions.height
+    guard let height = config.height else { return nil }
+    let capCount = config.theme.frameStyle.reservedDimensions.height
     return max(0, height - capCount)
   }
 }
