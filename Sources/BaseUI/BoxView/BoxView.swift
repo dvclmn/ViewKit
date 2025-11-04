@@ -103,7 +103,7 @@ extension BoxView {
       .setGridFrame(30, alignment: .leading)
       //      .setBoxStyle(glyphs: .test, frame: .single())
       //      .setBoxStyle(glyphs: .test, frame: .double())
-      .setBoxStyle(glyphs: .sharp, frame: .double(exterior: .increased, interior: .standard))
+      .setBoxStyle(glyphs: .rounded, frame: .double(exterior: .increased, interior: .standard))
 //      .setBoxStyle(glyphs: .rounded, frame: .single(frame: .standard, dividers: .standard))
 
     }

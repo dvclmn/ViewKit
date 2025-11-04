@@ -78,8 +78,8 @@ extension Box.GlyphSet {
     ], sharp)
 
   public static let test = Box.GlyphSet.partial(
+    
     [
-
       Box.GlyphType.blank: Character.blank,
 
       // MARK: - Floor/Ceiling
@@ -119,19 +119,6 @@ extension Box.GlyphSet {
       Box.GlyphType.corner(.standard, type: .topTrailing): "┐",
       Box.GlyphType.corner(.standard, type: .bottomLeading): "└",
       Box.GlyphType.corner(.standard, type: .bottomTrailing): "┘",
-        //      Box.GlyphType.horizontal(.increased): "M",  // ░
-        //
-        //      Box.GlyphType.vertical(.increased): "S",
-        //
-        //      Box.GlyphType.join(x: .increased, y: .increased, type: .top): "T",
-        //      Box.GlyphType.join(x: .increased, y: .increased, type: .bottom): "B",
-        //      Box.GlyphType.join(x: .increased, y: .increased, type: .leading): "L",
-        //      Box.GlyphType.join(x: .increased, y: .increased, type: .trailing): "R",
-        //
-        //      Box.GlyphType.corner(.standard, type: .topLeading): "r",
-        //      Box.GlyphType.corner(.standard, type: .topTrailing): "a",
-        //      Box.GlyphType.corner(.standard, type: .bottomLeading): "m",
-        //      Box.GlyphType.corner(.standard, type: .bottomTrailing): "s",
 
     ], sharp)
 

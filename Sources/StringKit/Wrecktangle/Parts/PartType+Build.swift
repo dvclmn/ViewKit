@@ -21,7 +21,7 @@ extension Box.PartType {
 
     let reservedWidth = theme.frameStyle.reservedDimensions.width
     let repeatCount = width - reservedWidth
-    
+
     let stack = glyphStack(with: theme.frameStyle)
     let stringStack = StringStack(from: stack, with: theme)
     let repeated = stringStack.repeated(along: .horizontal, count: repeatCount)
@@ -33,14 +33,10 @@ extension Box.PartType {
   ) -> Box.GlyphStack {
     switch frameStyle {
       case .single(let frameProm, let divProm):
-        let single = singleFrameParts(frameProm: frameProm, divProm: divProm)
-        //        print("GlyphStack for PartType \(self), with Single FrameStyle: \(single)")
-        return single
+        return singleFrameParts(frameProm: frameProm, divProm: divProm)
 
       case .double(let extProm, let intProm):
-        let doubleResult = doubleFrameParts(extProm: extProm, intProm: intProm)
-        //        print("GlyphStack for PartType \(self), with Double FrameStyle: \(doubleResult)")
-        return doubleResult
+        return doubleFrameParts(extProm: extProm, intProm: intProm)
     }
   }
 }
@@ -65,4 +61,3 @@ extension StringStack {
   }
 
 }
-

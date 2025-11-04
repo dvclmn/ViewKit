@@ -1,0 +1,237 @@
+New Testament editorial symbols
+2E00   ⸀   RIGHT ANGLE SUBSTITUTION MARKER
+→  231C ⌜ top left corner
+2E01   ⸁   RIGHT ANGLE DOTTED SUBSTITUTION MARKER
+2E02   ⸂   LEFT SUBSTITUTION BRACKET
+2E03   ⸃   RIGHT SUBSTITUTION BRACKET
+2E04   ⸄   LEFT DOTTED SUBSTITUTION BRACKET
+2E05   ⸅   RIGHT DOTTED SUBSTITUTION BRACKET
+2E06   ⸆   RAISED INTERPOLATION MARKER
+→  22A4 ⊤ down tack
+2E07   ⸇   RAISED DOTTED INTERPOLATION MARKER
+2E08   ⸈   DOTTED TRANSPOSITION MARKER
+2E09   ⸉   LEFT TRANSPOSITION BRACKET
+2E0A   ⸊   RIGHT TRANSPOSITION BRACKET
+2E0B   ⸋   RAISED SQUARE
+•  used as an opening raised omission bracket
+2E0C   ⸌   LEFT RAISED OMISSION BRACKET
+•  used as an opening or closing raised omission bracket
+2E0D   ⸍   RIGHT RAISED OMISSION BRACKET
+•  used as a closing or opening raised omission bracket
+Ancient Greek textual symbols
+2E0E   ⸎   EDITORIAL CORONIS
+→  1FBD ᾽ greek koronis
+2E0F   ⸏   PARAGRAPHOS
+2E10   ⸐   FORKED PARAGRAPHOS
+2E11   ⸑   REVERSED FORKED PARAGRAPHOS
+2E12   ⸒   HYPODIASTOLE
+=  ypodiastoli
+2E13   ⸓   DOTTED OBELOS
+•  glyph variants may look like '00F7 ÷' or '2238 ∸'
+→  2052 ⁒ commercial minus sign
+2E14   ⸔   DOWNWARDS ANCORA
+•  contrary to its formal name this symbol points upwards
+2E15   ⸕   UPWARDS ANCORA
+•  contrary to its formal name this symbol points downwards
+2E16   ⸖   DOTTED RIGHT-POINTING ANGLE
+=  diple periestigmene
+Ancient Near-Eastern linguistic symbol
+2E17   ⸗   DOUBLE OBLIQUE HYPHEN
+•  used in ancient Near-Eastern linguistics
+•  hyphen in Fraktur text uses 002D - or 2010 ‐, but with a '2E17 ⸗' glyph in Fraktur fonts
+→  002D - hyphen-minus
+→  003D = equals sign
+→  2010 ‐ hyphen
+→  2E40 ⹀ double hyphen
+→  2E5D ⹝ oblique hyphen
+General punctuation
+2E18   ⸘   INVERTED INTERROBANG
+=  gnaborretni
+→  203D ‽ interrobang
+2E19   ⸙   PALM BRANCH
+•  used as a separator
+Dictionary punctuation
+These punctuation marks are used mostly in German dictionaries, to indicate umlaut or case changes with abbreviated stems.
+2E1A   ⸚   HYPHEN WITH DIAERESIS
+•  indicates umlaut of the stem vowel of a plural form
+2E1B   ⸛   TILDE WITH RING ABOVE
+•  indicates change in case for derived form
+                                  Brackets
+                                  2E1C   ⸜   LEFT LOW PARAPHRASE BRACKET
+                                  2E1D   ⸝   RIGHT LOW PARAPHRASE BRACKET
+                                  •  used in N'Ko
+                                  Dictionary punctuation
+                                  2E1E   ⸞   TILDE WITH DOT ABOVE
+                                  •  indicates derived form changes to uppercase
+                                  2E1F   ⸟   TILDE WITH DOT BELOW
+                                  •  indicates derived form changes to lowercase
+                                  Brackets
+                                  2E20   ⸠   LEFT VERTICAL BAR WITH QUILL
+                                  →  2045 ⁅ left square bracket with quill
+                                  2E21   ⸡   RIGHT VERTICAL BAR WITH QUILL
+                                  Half brackets
+                                  These form a set of four corner brackets and are used editorially. They are distinguished from mathematical floor and ceiling characters. Occasionally quine corners are substituted for half brackets.
+                                  2E22   ⸢   TOP LEFT HALF BRACKET
+                                  →  2308 ⌈ left ceiling
+                                  →  231C ⌜ top left corner
+                                  →  300C 「 left corner bracket
+                                  2E23   ⸣   TOP RIGHT HALF BRACKET
+                                  2E24   ⸤   BOTTOM LEFT HALF BRACKET
+                                  2E25   ⸥   BOTTOM RIGHT HALF BRACKET
+                                  Brackets
+                                  2E26   ⸦   LEFT SIDEWAYS U BRACKET
+                                  →  2282 ⊂ subset of
+                                  2E27   ⸧   RIGHT SIDEWAYS U BRACKET
+                                  →  2283 ⊃ superset of
+                                  2E28   ⸨   LEFT DOUBLE PARENTHESIS
+                                  →  2985 ⦅ left white parenthesis
+                                  →  FF5F ｟ fullwidth left white parenthesis
+                                  2E29   ⸩   RIGHT DOUBLE PARENTHESIS
+                                  Historic punctuation
+                                  See also historic punctuation with multiple dots in the range 2058-205E.
+                                  2E2A   ⸪   TWO DOTS OVER ONE DOT PUNCTUATION
+                                  2E2B   ⸫   ONE DOT OVER TWO DOTS PUNCTUATION
+                                  2E2C   ⸬   SQUARED FOUR DOT PUNCTUATION
+                                  2E2D   ⸭   FIVE DOT MARK
+                                  2E2E   ⸮   REVERSED QUESTION MARK
+                                  =  punctus percontativus
+                                  →  003F ? question mark
+                                  →  00BF ¿ inverted question mark
+                                  →  061F ‎؟‎ arabic question mark
+                                  2E2F   ⸯ   VERTICAL TILDE
+                                  •  used for Cyrillic yerik
+                                  →  033E ◌̾ combining vertical tilde
+                                  →  A67F ꙿ cyrillic payerok
+                                  2E30   ⸰   RING POINT
+                                  •  used in Avestan
+                                  →  2218 ∘ ring operator
+                                  →  25E6 ◦ white bullet
+                                  2E31   ⸱   WORD SEPARATOR MIDDLE DOT
+                                  •  used in Avestan, Samaritan, ...
+                                  →  00B7 · middle dot
+                                  Palaeotype transliteration symbol
+                                  2E32   ⸲   TURNED COMMA
+                                  •  indicates nasalization
+                                  →  060C ، arabic comma
+                                  Historic punctuation
+                                  2E33   ⸳   RAISED DOT
+                                  •  glyph position intermediate between 002E . and 00B7 ·
+                                  →  002E . full stop
+                                  →  00B7 · middle dot
+                                  2E34   ⸴   RAISED COMMA
+                                  →  002C , comma
+                                  Palaeotype transliteration symbols
+                                  2E35   ⸵   TURNED SEMICOLON
+                                  •  indicates sudden glottal closure
+                                  →  061B ‎؛‎ arabic semicolon
+                                  2E36   ⸶   DAGGER WITH LEFT GUARD
+                                  •  indicates retracted pronunciation
+                                  2E37   ⸷   DAGGER WITH RIGHT GUARD
+                                  •  indicates advanced pronunciation
+                                  2E38   ⸸   TURNED DAGGER
+                                  •  indicates retroflex pronunciation
+                                  →  2020 † dagger
+                                  2E39   ⸹   TOP HALF SECTION SIGN
+                                  •  indicates pronunciation on one side of the mouth only
+                                  →  00A7 § section sign
+                                  Dashes
+                                  These long dashes are shown in the code charts inside dashed square boxes because of their width. In production fonts they would simply display as extra-wide dashes.
+                                  2E3A   ⸺   TWO-EM DASH
+                                  =  omission dash
+                                  •  may be used in Chinese for abrupt change of thought, inserting new content, or continuation of tone or sound
+                                  →  2014 — em dash
+                                  2E3B   ⸻   THREE-EM DASH
+                                  Alternate forms of punctuation
+                                  2E3C   ⸼   STENOGRAPHIC FULL STOP
+                                  •  used in shorthands and stenographies
+                                  →  002E . full stop
+                                  →  166E ᙮ canadian syllabics full stop
+                                  2E3D   ⸽   VERTICAL SIX DOTS
+                                  →  205E ⁞ vertical four dots
+                                  →  2999 ⦙ dotted fence
+                                  2E3E   ⸾   WIGGLY VERTICAL LINE
+                                  →  2307 ⌇ wavy line
+                                  →  299A ⦚ vertical zigzag line
+                                  Historic punctuation
+                                  2E3F   ⸿   CAPITULUM
+                                  •  ancestor of the pilcrow sign
+                                  →  00B6 ¶ pilcrow sign
+                                  Double hyphen
+                                  The double hyphen is used in transcription of old German manuscripts, and occasionally as a non-standard punctuation mark. It is not intended for the representation of normal hyphens, whose doubled forms in Fraktur text are considered glyphic variants.
+                                  2E40   ⹀   DOUBLE HYPHEN
+                                  →  003D = equals sign
+                                  →  2010 ‐ hyphen
+                                  →  2E17 ⸗ double oblique hyphen
+                                  →  30A0 ゠ katakana-hiragana double hyphen
+                                  →  A78A ꞊ modifier letter short equals sign
+                                  Reversed punctuation
+                                  2E41   ⹁   REVERSED COMMA
+                                  •  Old Hungarian
+                                  •  used occasionally in Sindhi when Sindhi is written in the Arabic script
+                                  →  002C , comma
+                                  →  060C ، arabic comma
+                                  2E42   ⹂   DOUBLE LOW-REVERSED-9 QUOTATION MARK
+                                  →  201E „ double low-9 quotation mark
+                                  Miscellaneous punctuation
+                                  2E43   ⹃   DASH WITH LEFT UPTURN
+                                  •  functions as a paragraphos in some Slavonic texts
+                                  →  2E0F ⸏ paragraphos
+                                  2E44   ⹄   DOUBLE SUSPENSION MARK
+                                  •  indicates omission of letters in a word on some Byzantine Greek seals and coins
+                                  →  0374 ʹ greek numeral sign
+                                  Typicon punctuation
+                                  2E45   ⹅   INVERTED LOW KAVYKA
+                                  2E46   ⹆   INVERTED LOW KAVYKA WITH KAVYKA ABOVE
+                                  →  2A46 ⩆ union above intersection
+                                  →  AB5B ꭛ modifier breve with inverted breve
+                                  2E47   ⹇   LOW KAVYKA
+                                  →  A67E ꙾ cyrillic kavyka
+                                  2E48   ⹈   LOW KAVYKA WITH DOT
+                                  2E49   ⹉   DOUBLE STACKED COMMA
+                                  Historic punctuation
+                                  2E4A   ⹊   DOTTED SOLIDUS
+                                  =  virgula suspensiva
+                                  •  indicates a medial disjunction more than solidus but less than punctus elevatus
+                                  2E4B   ⹋   TRIPLE DAGGER
+                                  →  2020 † dagger
+                                  →  2021 ‡ double dagger
+                                  2E4C   ⹌   MEDIEVAL COMMA
+                                  •  indicates a minor medial pause or disjunction of sense
+                                  2E4D   ⹍   PARAGRAPHUS MARK
+                                  •  indicates the beginning of a paragraph, section, stanza, or proposition
+                                  →  00B6 ¶ pilcrow sign
+                                  →  204B ⁋ reversed pilcrow sign
+                                  →  2E0F ⸏ paragraphos
+                                  →  2E3F ⸿ capitulum
+                                  2E4E   ⹎   PUNCTUS ELEVATUS MARK
+                                  * This mark indicates a major intermediate pause where the sensus is complete but the sentence is not; this is similar in some regards to the modern use of a semicolon.
+2E4F   ⹏   CORNISH VERSE DIVIDER
+2E50   ⹐   CROSS PATTY WITH RIGHT CROSSBAR
+→  2720 ✠ maltese cross
+→  2C75 Ⱶ latin capital letter half h
+2E51   ⹑   CROSS PATTY WITH LEFT CROSSBAR
+→  A7F5 Ꟶ latin capital letter reversed half h
+2E52   ⹒   TIRONIAN SIGN CAPITAL ET
+→  204A ⁊ tironian sign et
+2E53   ⹓   MEDIEVAL EXCLAMATION MARK
+2E54   ⹔   MEDIEVAL QUESTION MARK
+Brackets
+These brackets indicate ellipsis in certain conventions for Japanese transliteration.
+                                                              2E55   ⹕   LEFT SQUARE BRACKET WITH STROKE
+                                                              •  optional ellipsis
+                                                              →  2045 ⁅ left square bracket with quill
+                                                              2E56   ⹖   RIGHT SQUARE BRACKET WITH STROKE
+                                                              2E57   ⹗   LEFT SQUARE BRACKET WITH DOUBLE STROKE
+                                                              •  obligatory ellipsis
+                                                              2E58   ⹘   RIGHT SQUARE BRACKET WITH DOUBLE STROKE
+                                                              Parentheses top and bottom halves
+                                                              These are used in pairs in extended IPA to indicate dubious phonemes or questionable presence of a sound.
+                                                              2E59   ⹙   TOP HALF LEFT PARENTHESIS
+                                                              2E5A   ⹚   TOP HALF RIGHT PARENTHESIS
+                                                              2E5B   ⹛   BOTTOM HALF LEFT PARENTHESIS
+                                                              2E5C   ⹜   BOTTOM HALF RIGHT PARENTHESIS
+                                                              Oblique hyphen
+                                                              The oblique hyphen is historic punctuation seen in some medieval and Renaissance manuscripts. In some modern lexicography an oblique hyphen is used distinctly to indicate hyphenation which is retained when a word is not broken at a line boundary.
+                                                              2E5D   ⹝   OBLIQUE HYPHEN
+                                                              →  2010 ‐ hyphen
+                                                              →  2E17 ⸗ double oblique hyphen

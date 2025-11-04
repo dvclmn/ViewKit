@@ -27,9 +27,10 @@ extension Box.StructureType {
 
       case .divider:
         [
-          .vertical(.leading),
+          .join(.leading),
+//          .vertical(.leading),
           .horizontal(.interior),
-          .vertical(.trailing),
+          .join(.trailing),
         ]
 
       case .bottom:

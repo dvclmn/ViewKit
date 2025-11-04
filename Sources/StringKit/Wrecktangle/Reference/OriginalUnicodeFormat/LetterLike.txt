@@ -1,0 +1,255 @@
+https://en.wikipedia.org/wiki/Letterlike_Symbols
+
+Letterlike symbols
+Some of the letterlike symbols are intended to complete the set of mathematical alphanumeric symbols starting at 1D400.
+2100	 ℀ 	ACCOUNT OF
+ 	 	≈	0061 a 002F / 0063 c
+2101	 ℁ 	ADDRESSED TO THE SUBJECT
+ 	 	=	aux soins (de)
+ 	 	→	214D ⅍ aktieselskab
+ 	 	≈	0061 a 002F / 0073 s
+2102	 ℂ 	DOUBLE-STRUCK CAPITAL C
+ 	 	=	the set of complex numbers
+ 	 	≈	<font> 0043 C latin capital letter c
+2103	 ℃ 	DEGREE CELSIUS
+ 	 	=	degrees centigrade
+ 	 	≈	00B0 ° 0043 C
+2104	 ℄ 	CENTRE LINE SYMBOL
+ 	 	=	clone
+2105	 ℅ 	CARE OF
+ 	 	≈	0063 c 002F / 006F o
+2106	 ℆ 	CADA UNA
+ 	 	•	Spanish for "each one"
+ 	 	≈	0063 c 002F / 0075 u
+2107	 ℇ 	EULER CONSTANT
+ 	 	→	0045 E latin capital letter e
+ 	 	≈	0190 Ɛ latin capital letter open e
+2108	 ℈ 	SCRUPLE
+2109	 ℉ 	DEGREE FAHRENHEIT
+ 	 	≈	00B0 ° 0046 F
+210A	 ℊ 	SCRIPT SMALL G
+ 	 	=	real number symbol
+ 	 	≈	<font> 0067 g latin small letter g
+210B	 ℋ 	SCRIPT CAPITAL H
+ 	 	=	Hamiltonian operator
+ 	 	≈	<font> 0048 H latin capital letter h
+210C	 ℌ 	BLACK-LETTER CAPITAL H
+ 	 	=	Hilbert space
+ 	 	≈	<font> 0048 H latin capital letter h
+210D	 ℍ 	DOUBLE-STRUCK CAPITAL H
+ 	 	≈	<font> 0048 H latin capital letter h
+210E	 ℎ 	PLANCK CONSTANT
+ 	 	=	height, specific enthalpy, ...
+ 	 	•	simply a mathematical italic h; this character's name results from legacy usage
+ 	 	≈	<font> 0068 h latin small letter h
+210F	 ℏ 	PLANCK CONSTANT OVER TWO PI
+ 	 	=	reduced Planck constant, Dirac constant
+ 	 	→	045B ћ cyrillic small letter tshe
+ 	 	≈	<font> 0127 ħ latin small letter h with stroke
+2110	 ℐ 	SCRIPT CAPITAL I
+ 	 	≈	<font> 0049 I latin capital letter i
+2111	 ℑ 	BLACK-LETTER CAPITAL I
+ 	 	=	imaginary part
+ 	 	≈	<font> 0049 I latin capital letter i
+2112	 ℒ 	SCRIPT CAPITAL L
+ 	 	=	Laplace transform
+ 	 	≈	<font> 004C L latin capital letter l
+2113	 ℓ 	SCRIPT SMALL L
+ 	 	=	mathematical symbol 'ell'
+ 	 	=	liter (traditional symbol)
+ 	 	•	despite its character name, this symbol is derived from a special italicized version of the small letter l
+ 	 	•	the SI recommended symbol for liter is 006C l or 004C L
+ 	 	→	1D4C1 𝓁 mathematical script small l
+ 	 	≈	<font> 006C l latin small letter l
+2114	 ℔ 	L B BAR SYMBOL
+ 	 	=	pounds
+ 	 	→	0023 # number sign
+2115	 ℕ 	DOUBLE-STRUCK CAPITAL N
+ 	 	=	natural number
+ 	 	•	a glyph variant with doubled vertical strokes exists
+ 	 	≈	<font> 004E N latin capital letter n
+2116	 № 	NUMERO SIGN
+ 	 	→	0023 # number sign
+ 	 	→	00BA º masculine ordinal indicator
+ 	 	≈	004E N 006F o
+2117	 ℗ 	SOUND RECORDING COPYRIGHT
+ 	 	=	published
+ 	 	=	phonorecord sign
+ 	 	→	00A9 © copyright sign
+ 	 	→	24C5 Ⓟ circled latin capital letter p
+2118	 ℘ 	SCRIPT CAPITAL P
+ 	 	※	WEIERSTRASS ELLIPTIC FUNCTION
+ 	 	•	actually this has the form of a lowercase calligraphic p, despite its name
+2119	 ℙ 	DOUBLE-STRUCK CAPITAL P
+ 	 	≈	<font> 0050 P latin capital letter p
+211A	 ℚ 	DOUBLE-STRUCK CAPITAL Q
+ 	 	=	the set of rational numbers
+ 	 	≈	<font> 0051 Q latin capital letter q
+211B	 ℛ 	SCRIPT CAPITAL R
+ 	 	=	Riemann Integral
+ 	 	≈	<font> 0052 R latin capital letter r
+211C	 ℜ 	BLACK-LETTER CAPITAL R
+ 	 	=	real part
+ 	 	≈	<font> 0052 R latin capital letter r
+211D	 ℝ 	DOUBLE-STRUCK CAPITAL R
+ 	 	=	the set of real numbers
+ 	 	≈	<font> 0052 R latin capital letter r
+211E	 ℞ 	PRESCRIPTION TAKE
+ 	 	=	recipe
+ 	 	=	cross ratio
+211F	 ℟ 	RESPONSE
+2120	 ℠ 	SERVICE MARK
+ 	 	≈	<super> 0053 S 004D M
+2121	 ℡ 	TELEPHONE SIGN
+ 	 	•	typical forms for this symbol may use lowercase, small caps or superscripted letter shapes
+ 	 	→	260E ☎ black telephone
+ 	 	→	2706 ✆ telephone location sign
+ 	 	→	1F4DE 📞 telephone receiver
+ 	 	≈	0054 T 0045 E 004C L
+2122	 ™ 	TRADE MARK SIGN
+ 	 	→	1F12E 🄮 circled wz
+ 	 	≈	<super> 0054 T 004D M
+2123	 ℣ 	VERSICLE
+2124	 ℤ 	DOUBLE-STRUCK CAPITAL Z
+ 	 	=	the set of integers
+ 	 	≈	<font> 005A Z latin capital letter z
+2125	 ℥ 	OUNCE SIGN
+ 	 	→	0292 ʒ latin small letter ezh
+ 	 	→	1F773 🝳 alchemical symbol for half ounce
+ 	 	→	2CF04 𬼄
+2126	 Ω 	OHM SIGN
+ 	 	•	SI unit of resistance, named after G. S. Ohm, German physicist
+ 	 	•	preferred representation is 03A9 Ω
+ 	 	→	260A ☊ ascending node
+ 	 	≡	03A9 Ω greek capital letter omega
+ 	 	↓	03C9 ω greek small letter omega
+2127	 ℧ 	INVERTED OHM SIGN
+ 	 	=	mho
+ 	 	•	archaic unit of conductance (= the SI unit siemens)
+ 	 	•	typographically a turned greek capital letter omega
+ 	 	→	01B1 Ʊ latin capital letter upsilon
+ 	 	→	03A9 Ω greek capital letter omega
+ 	 	→	260B ☋ descending node
+2128	 ℨ 	BLACK-LETTER CAPITAL Z
+ 	 	≈	<font> 005A Z latin capital letter z
+2129	 ℩ 	TURNED GREEK SMALL LETTER IOTA
+ 	 	•	unique element fulfilling a description (logic)
+ 	 	→	03B9 ι greek small letter iota
+212A	 K 	KELVIN SIGN
+ 	 	≡	004B K latin capital letter k
+ 	 	↓	006B k latin small letter k
+212B	 Å 	ANGSTROM SIGN
+ 	 	•	non SI length unit (=0.1 nm) named after A. J. Ångström, Swedish physicist
+ 	 	•	preferred representation is 00C5 Å
+ 	 	≡	00C5 Å latin capital letter a with ring above
+ 	 	↓	00E5 å latin small letter a with ring above
+ 	 	⇛	0041 A + 030A ◌̊
+212C	 ℬ 	SCRIPT CAPITAL B
+ 	 	=	Bernoulli function
+ 	 	≈	<font> 0042 B latin capital letter b
+212D	 ℭ 	BLACK-LETTER CAPITAL C
+ 	 	≈	<font> 0043 C latin capital letter c
+212E	 ℮ 	ESTIMATED SYMBOL
+ 	 	•	used in European packaging
+ 	 	→	0065 e latin small letter e
+212F	 ℯ 	SCRIPT SMALL E
+ 	 	=	error
+ 	 	=	natural exponent
+ 	 	≈	<font> 0065 e latin small letter e
+2130	 ℰ 	SCRIPT CAPITAL E
+ 	 	=	emf (electromotive force)
+ 	 	≈	<font> 0045 E latin capital letter e
+2131	 ℱ 	SCRIPT CAPITAL F
+ 	 	=	Fourier transform
+ 	 	≈	<font> 0046 F latin capital letter f
+2132	 Ⅎ 	TURNED CAPITAL F
+ 	 	=	Claudian digamma inversum
+ 	 	•	lowercase is 214E ⅎ
+ 	 	→	0046 F latin capital letter f
+ 	 	→	03DC Ϝ greek letter digamma
+ 	 	↓	214E ⅎ turned small f
+2133	 ℳ 	SCRIPT CAPITAL M
+ 	 	=	M-matrix (physics)
+ 	 	=	German Mark currency symbol, before WWII
+ 	 	•	when used for the Mark symbol, the range of glyph variation is restricted
+ 	 	→	20BB ₻ nordic mark sign
+ 	 	≈	<font> 004D M latin capital letter m
+2134	 ℴ 	SCRIPT SMALL O
+ 	 	=	order, of inferior order to
+ 	 	≈	<font> 006F o latin small letter o
+Hebrew letterlike math symbols
+These are left-to-right characters. They are used in notations of transfinite cardinals.
+2135	 ℵ 	ALEF SYMBOL
+ 	 	≈	05D0 ‎א‎ hebrew letter alef
+2136	 ℶ 	BET SYMBOL
+ 	 	≈	05D1 ‎ב‎ hebrew letter bet
+2137	 ℷ 	GIMEL SYMBOL
+ 	 	≈	05D2 ‎ג‎ hebrew letter gimel
+2138	 ℸ 	DALET SYMBOL
+ 	 	≈	05D3 ‎ד‎ hebrew letter dalet
+Additional letterlike symbols
+2139	 ℹ 	INFORMATION SOURCE
+ 	 	•	intended for use with 20DD ◌⃝
+ 	 	→	1F6C8 🛈 circled information source
+ 	 	≈	<font> 0069 i latin small letter i
+213A	 ℺ 	ROTATED CAPITAL Q
+ 	 	•	a binding signature mark
+213B	 ℻ 	FACSIMILE SIGN
+ 	 	•	typical forms for this symbol may use lowercase, small caps or superscripted letter shapes
+ 	 	→	2121 ℡ telephone sign
+ 	 	→	1F4E0 📠 fax machine
+ 	 	≈	0046 F 0041 A 0058 X
+213C	 ℼ 	DOUBLE-STRUCK SMALL PI
+ 	 	≈	<font> 03C0 π greek small letter pi
+213D	 ℽ 	DOUBLE-STRUCK SMALL GAMMA
+ 	 	≈	<font> 03B3 γ greek small letter gamma
+213E	 ℾ 	DOUBLE-STRUCK CAPITAL GAMMA
+ 	 	≈	<font> 0393 Γ greek capital letter gamma
+213F	 ℿ 	DOUBLE-STRUCK CAPITAL PI
+ 	 	≈	<font> 03A0 Π greek capital letter pi
+Double-struck large operator
+2140	 ⅀ 	DOUBLE-STRUCK N-ARY SUMMATION
+ 	 	≈	<font> 2211 ∑ n-ary summation
+Additional letterlike symbols
+2141	 ⅁ 	TURNED SANS-SERIF CAPITAL G
+ 	 	=	game
+ 	 	→	A4E8 ꓨ lisu letter hha
+2142	 ⅂ 	TURNED SANS-SERIF CAPITAL L
+ 	 	→	A4F6 ꓶ lisu letter uh
+2143	 ⅃ 	REVERSED SANS-SERIF CAPITAL L
+2144	 ⅄ 	TURNED SANS-SERIF CAPITAL Y
+ 	 	→	11FB0 𑾰 lisu letter yha
+Double-struck italic math symbols
+These stylized mathematical symbols are used in some documents to distinguish special mathematical usages from ordinary variables.
+2145	 ⅅ 	DOUBLE-STRUCK ITALIC CAPITAL D
+ 	 	•	sometimes used for the differential
+ 	 	≈	<font> 0044 D latin capital letter d
+2146	 ⅆ 	DOUBLE-STRUCK ITALIC SMALL D
+ 	 	•	sometimes used for the differential
+ 	 	≈	<font> 0064 d latin small letter d
+2147	 ⅇ 	DOUBLE-STRUCK ITALIC SMALL E
+ 	 	•	sometimes used for the natural exponent
+ 	 	≈	<font> 0065 e latin small letter e
+2148	 ⅈ 	DOUBLE-STRUCK ITALIC SMALL I
+ 	 	•	sometimes used for the imaginary unit
+ 	 	≈	<font> 0069 i latin small letter i
+2149	 ⅉ 	DOUBLE-STRUCK ITALIC SMALL J
+ 	 	•	sometimes used for the imaginary unit
+ 	 	≈	<font> 006A j latin small letter j
+Additional letterlike symbols
+214A	 ⅊ 	PROPERTY LINE
+214B	 ⅋ 	TURNED AMPERSAND
+ 	 	•	used in linear logic
+ 	 	→	0026 & ampersand
+214C	 ⅌ 	PER SIGN
+ 	 	•	abbreviates the word 'per'
+214D	 ⅍ 	AKTIESELSKAB
+ 	 	→	2101 ℁ addressed to the subject
+Lowercase Claudian letter
+Claudian letters in inscriptions are uppercase, but may be transcribed by scholars in lowercase.
+214E	 ⅎ 	TURNED SMALL F
+ 	 	•	uppercase is 2132 Ⅎ
+ 	 	→	03DD ϝ greek small letter digamma
+ 	 	↑	2132 Ⅎ turned capital f
+Biblical editorial symbol
+214F	 ⅏ 	SYMBOL FOR SAMARITAN SOURCE

@@ -1,0 +1,493 @@
+
+Miscellaneous technical
+2300	 ⌀ 	DIAMETER SIGN
+ 	 	→	00F8 ø latin small letter o with stroke
+ 	 	→	2205 ∅ empty set
+2301	 ⌁ 	ELECTRIC ARROW
+ 	 	•	from ISO 2047 ⁇
+ 	 	•	symbol for End of Transmission
+2302	 ⌂ 	HOUSE
+2303	 ⌃ 	UP ARROWHEAD
+ 	 	→	005E ^ circumflex accent
+ 	 	→	02C4 ˄ modifier letter up arrowhead
+ 	 	→	2038 ‸ caret
+ 	 	→	2227 ∧ logical and
+2304	 ⌄ 	DOWN ARROWHEAD
+ 	 	→	02C5 ˅ modifier letter down arrowhead
+ 	 	→	2228 ∨ logical or
+ 	 	→	2335 ⌵ countersink
+2305	 ⌅ 	PROJECTIVE
+ 	 	→	22BC ⊼ nand
+2306	 ⌆ 	PERSPECTIVE
+2307	 ⌇ 	WAVY LINE
+ 	 	→	2E3E ⸾ wiggly vertical line
+ 	 	→	3030 〰 wavy dash
+Ceilings and floors
+These characters are tall and narrow mathematical delimiters, in contrast to the quine corners or half brackets. They are also distinct from CJK corner brackets, which are wide quotation marks.
+2308	 ⌈ 	LEFT CEILING
+ 	 	=	APL upstile
+ 	 	→	2E22 ⸢ top left half bracket
+ 	 	→	300C 「 left corner bracket
+2309	 ⌉ 	RIGHT CEILING
+ 	 	→	20E7 ◌⃧ combining annuity symbol
+ 	 	→	2E23 ⸣ top right half bracket
+230A	 ⌊ 	LEFT FLOOR
+ 	 	=	APL downstile
+ 	 	→	2E24 ⸤ bottom left half bracket
+230B	 ⌋ 	RIGHT FLOOR
+ 	 	→	300D 」 right corner bracket
+ 	 	→	2E25 ⸥ bottom right half bracket
+Crops
+230C	 ⌌ 	BOTTOM RIGHT CROP
+ 	 	•	set of four "crop" corners, arranged facing outward
+230D	 ⌍ 	BOTTOM LEFT CROP
+230E	 ⌎ 	TOP RIGHT CROP
+230F	 ⌏ 	TOP LEFT CROP
+Miscellaneous technical
+2310	 ⌐ 	REVERSED NOT SIGN
+ 	 	=	beginning of line
+ 	 	→	00AC ¬ not sign
+2311	 ⌑ 	SQUARE LOZENGE
+ 	 	=	Kissen (pillow)
+ 	 	•	used as a command delimiter in some very old computers
+ 	 	→	2BCF ⯏ rotated white four pointed cusp
+2312	 ⌒ 	ARC
+ 	 	=	position of any line
+ 	 	→	25E0 ◠ upper half circle
+2313	 ⌓ 	SEGMENT
+ 	 	=	position of a surface
+2314	 ⌔ 	SECTOR
+2315	 ⌕ 	TELEPHONE RECORDER
+2316	 ⌖ 	POSITION INDICATOR
+ 	 	=	true position
+ 	 	→	2BD0 ⯐ square position indicator
+2317	 ⌗ 	VIEWDATA SQUARE
+ 	 	→	22D5 ⋕ equal and parallel to
+2318	 ⌘ 	PLACE OF INTEREST SIGN
+ 	 	=	command key (1.0)
+ 	 	=	operating system key (ISO 9995-7)
+2319	 ⌙ 	TURNED NOT SIGN
+ 	 	=	line marker
+User interface symbols
+231A	 ⌚ 	WATCH
+ 	 	→	23F0 ⏰ alarm clock
+ 	 	→	1F550 🕐 clock face one oclock
+231B	 ⌛ 	HOURGLASS
+ 	 	=	alchemical symbol for hour
+Quine corners
+These form a set of four quine corners, for quincuncial arrangement. They are also used in upper and lower pairs in mathematics, or more rarely in editorial usage as alternatives to half brackets.
+231C	 ⌜ 	TOP LEFT CORNER
+ 	 	→	2E00 ⸀ right angle substitution marker
+ 	 	→	2E22 ⸢ top left half bracket
+231D	 ⌝ 	TOP RIGHT CORNER
+231E	 ⌞ 	BOTTOM LEFT CORNER
+231F	 ⌟ 	BOTTOM RIGHT CORNER
+Integral pieces
+2320	 ⌠ 	TOP HALF INTEGRAL
+ 	 	→	23AE ⎮ integral extension
+2321	 ⌡ 	BOTTOM HALF INTEGRAL
+Frown and smile
+2322	 ⌢ 	FROWN
+ 	 	→	2040 ⁀ character tie
+2323	 ⌣ 	SMILE
+ 	 	→	203F ‿ undertie
+Keyboard symbols
+2324	 ⌤ 	UP ARROWHEAD BETWEEN TWO HORIZONTAL BARS
+ 	 	=	enter key
+2325	 ⌥ 	OPTION KEY
+2326	 ⌦ 	ERASE TO THE RIGHT
+ 	 	=	delete to the right key
+2327	 ⌧ 	X IN A RECTANGLE BOX
+ 	 	=	clear key
+ 	 	→	2612 ☒ ballot box with x
+2328	 ⌨ 	KEYBOARD
+ 	 	→	1F5A6 🖦 keyboard and mouse
+ 	 	→	1F5AE 🖮 wired keyboard
+Deprecated angle brackets
+These characters are deprecated and are strongly discouraged for mathematical use because of their canonical equivalence to CJK punctuation.
+2329	 〈 	LEFT-POINTING ANGLE BRACKET
+ 	 	→	003C < less-than sign
+ 	 	→	2039 ‹ single left-pointing angle quotation mark
+ 	 	→	27E8 ⟨ mathematical left angle bracket
+ 	 	≡	3008 〈 left angle bracket
+232A	 〉 	RIGHT-POINTING ANGLE BRACKET
+ 	 	→	003E > greater-than sign
+ 	 	→	203A › single right-pointing angle quotation mark
+ 	 	→	27E9 ⟩ mathematical right angle bracket
+ 	 	≡	3009 〉 right angle bracket
+Keyboard symbol
+232B	 ⌫ 	ERASE TO THE LEFT
+ 	 	=	delete to the left key
+Chemistry symbol
+232C	 ⌬ 	BENZENE RING
+Drafting symbols
+232D	 ⌭ 	CYLINDRICITY
+232E	 ⌮ 	ALL AROUND-PROFILE
+232F	 ⌯ 	SYMMETRY
+2330	 ⌰ 	TOTAL RUNOUT
+2331	 ⌱ 	DIMENSION ORIGIN
+2332	 ⌲ 	CONICAL TAPER
+2333	 ⌳ 	SLOPE
+ 	 	→	25FA ◺ lower left triangle
+2334	 ⌴ 	COUNTERBORE
+ 	 	→	2423 ␣ open box
+2335	 ⌵ 	COUNTERSINK
+ 	 	→	2304 ⌄ down arrowhead
+APL
+2336	 ⌶ 	APL FUNCTIONAL SYMBOL I-BEAM
+2337	 ⌷ 	APL FUNCTIONAL SYMBOL SQUISH QUAD
+ 	 	→	2395 ⎕ apl functional symbol quad
+ 	 	→	25AF ▯ white vertical rectangle
+ 	 	→	2AFF ⫿ n-ary white vertical bar
+2338	 ⌸ 	APL FUNCTIONAL SYMBOL QUAD EQUAL
+2339	 ⌹ 	APL FUNCTIONAL SYMBOL QUAD DIVIDE
+233A	 ⌺ 	APL FUNCTIONAL SYMBOL QUAD DIAMOND
+ 	 	→	26CB ⛋ white diamond in square
+233B	 ⌻ 	APL FUNCTIONAL SYMBOL QUAD JOT
+ 	 	→	29C7 ⧇ squared small circle
+233C	 ⌼ 	APL FUNCTIONAL SYMBOL QUAD CIRCLE
+233D	 ⌽ 	APL FUNCTIONAL SYMBOL CIRCLE STILE
+233E	 ⌾ 	APL FUNCTIONAL SYMBOL CIRCLE JOT
+ 	 	→	229A ⊚ circled ring operator
+ 	 	→	29BE ⦾ circled white bullet
+233F	 ⌿ 	APL FUNCTIONAL SYMBOL SLASH BAR
+ 	 	→	1019A 𐆚 roman as sign
+2340	 ⍀ 	APL FUNCTIONAL SYMBOL BACKSLASH BAR
+ 	 	→	29F7 ⧷ reverse solidus with horizontal stroke
+2341	 ⍁ 	APL FUNCTIONAL SYMBOL QUAD SLASH
+ 	 	→	29C4 ⧄ squared rising diagonal slash
+2342	 ⍂ 	APL FUNCTIONAL SYMBOL QUAD BACKSLASH
+ 	 	→	29C5 ⧅ squared falling diagonal slash
+2343	 ⍃ 	APL FUNCTIONAL SYMBOL QUAD LESS-THAN
+2344	 ⍄ 	APL FUNCTIONAL SYMBOL QUAD GREATER-THAN
+2345	 ⍅ 	APL FUNCTIONAL SYMBOL LEFTWARDS VANE
+2346	 ⍆ 	APL FUNCTIONAL SYMBOL RIGHTWARDS VANE
+2347	 ⍇ 	APL FUNCTIONAL SYMBOL QUAD LEFTWARDS ARROW
+2348	 ⍈ 	APL FUNCTIONAL SYMBOL QUAD RIGHTWARDS ARROW
+2349	 ⍉ 	APL FUNCTIONAL SYMBOL CIRCLE BACKSLASH
+ 	 	→	29B0 ⦰ reversed empty set
+234A	 ⍊ 	APL FUNCTIONAL SYMBOL DOWN TACK UNDERBAR
+ 	 	=	up tack underbar
+ 	 	•	preferred naming for APL tack symbols now follows the London Convention in ISO/IEC 13751 𓝑:2000 ␣ (APL Extended)
+ 	 	→	22A5 ⊥ up tack
+234B	 ⍋ 	APL FUNCTIONAL SYMBOL DELTA STILE
+234C	 ⍌ 	APL FUNCTIONAL SYMBOL QUAD DOWN CARET
+234D	 ⍍ 	APL FUNCTIONAL SYMBOL QUAD DELTA
+234E	 ⍎ 	APL FUNCTIONAL SYMBOL DOWN TACK JOT
+ 	 	=	up tack jot
+ 	 	→	22A5 ⊥ up tack
+234F	 ⍏ 	APL FUNCTIONAL SYMBOL UPWARDS VANE
+2350	 ⍐ 	APL FUNCTIONAL SYMBOL QUAD UPWARDS ARROW
+2351	 ⍑ 	APL FUNCTIONAL SYMBOL UP TACK OVERBAR
+ 	 	=	down tack overbar
+ 	 	→	22A4 ⊤ down tack
+ 	 	→	3012 〒 postal mark
+2352	 ⍒ 	APL FUNCTIONAL SYMBOL DEL STILE
+2353	 ⍓ 	APL FUNCTIONAL SYMBOL QUAD UP CARET
+ 	 	→	2BB9 ⮹ up arrowhead in a rectangle box
+2354	 ⍔ 	APL FUNCTIONAL SYMBOL QUAD DEL
+2355	 ⍕ 	APL FUNCTIONAL SYMBOL UP TACK JOT
+ 	 	=	down tack jot
+ 	 	→	22A4 ⊤ down tack
+2356	 ⍖ 	APL FUNCTIONAL SYMBOL DOWNWARDS VANE
+2357	 ⍗ 	APL FUNCTIONAL SYMBOL QUAD DOWNWARDS ARROW
+2358	 ⍘ 	APL FUNCTIONAL SYMBOL QUOTE UNDERBAR
+2359	 ⍙ 	APL FUNCTIONAL SYMBOL DELTA UNDERBAR
+235A	 ⍚ 	APL FUNCTIONAL SYMBOL DIAMOND UNDERBAR
+235B	 ⍛ 	APL FUNCTIONAL SYMBOL JOT UNDERBAR
+235C	 ⍜ 	APL FUNCTIONAL SYMBOL CIRCLE UNDERBAR
+235D	 ⍝ 	APL FUNCTIONAL SYMBOL UP SHOE JOT
+ 	 	→	2A40 ⩀ intersection with dot
+235E	 ⍞ 	APL FUNCTIONAL SYMBOL QUOTE QUAD
+235F	 ⍟ 	APL FUNCTIONAL SYMBOL CIRCLE STAR
+ 	 	→	229B ⊛ circled asterisk operator
+2360	 ⍠ 	APL FUNCTIONAL SYMBOL QUAD COLON
+2361	 ⍡ 	APL FUNCTIONAL SYMBOL UP TACK DIAERESIS
+ 	 	=	down tack diaeresis
+ 	 	→	22A4 ⊤ down tack
+2362	 ⍢ 	APL FUNCTIONAL SYMBOL DEL DIAERESIS
+2363	 ⍣ 	APL FUNCTIONAL SYMBOL STAR DIAERESIS
+2364	 ⍤ 	APL FUNCTIONAL SYMBOL JOT DIAERESIS
+ 	 	=	hoot
+2365	 ⍥ 	APL FUNCTIONAL SYMBOL CIRCLE DIAERESIS
+ 	 	=	holler
+2366	 ⍦ 	APL FUNCTIONAL SYMBOL DOWN SHOE STILE
+2367	 ⍧ 	APL FUNCTIONAL SYMBOL LEFT SHOE STILE
+2368	 ⍨ 	APL FUNCTIONAL SYMBOL TILDE DIAERESIS
+ 	 	=	smirk
+2369	 ⍩ 	APL FUNCTIONAL SYMBOL GREATER-THAN DIAERESIS
+236A	 ⍪ 	APL FUNCTIONAL SYMBOL COMMA BAR
+236B	 ⍫ 	APL FUNCTIONAL SYMBOL DEL TILDE
+236C	 ⍬ 	APL FUNCTIONAL SYMBOL ZILDE
+236D	 ⍭ 	APL FUNCTIONAL SYMBOL STILE TILDE
+236E	 ⍮ 	APL FUNCTIONAL SYMBOL SEMICOLON UNDERBAR
+236F	 ⍯ 	APL FUNCTIONAL SYMBOL QUAD NOT EQUAL
+2370	 ⍰ 	APL FUNCTIONAL SYMBOL QUAD QUESTION
+ 	 	→	2BD1 ⯑ uncertainty sign
+2371	 ⍱ 	APL FUNCTIONAL SYMBOL DOWN CARET TILDE
+2372	 ⍲ 	APL FUNCTIONAL SYMBOL UP CARET TILDE
+2373	 ⍳ 	APL FUNCTIONAL SYMBOL IOTA
+2374	 ⍴ 	APL FUNCTIONAL SYMBOL RHO
+2375	 ⍵ 	APL FUNCTIONAL SYMBOL OMEGA
+2376	 ⍶ 	APL FUNCTIONAL SYMBOL ALPHA UNDERBAR
+2377	 ⍷ 	APL FUNCTIONAL SYMBOL EPSILON UNDERBAR
+2378	 ⍸ 	APL FUNCTIONAL SYMBOL IOTA UNDERBAR
+2379	 ⍹ 	APL FUNCTIONAL SYMBOL OMEGA UNDERBAR
+237A	 ⍺ 	APL FUNCTIONAL SYMBOL ALPHA
+Graphics for control codes
+237B	 ⍻ 	NOT CHECK MARK
+ 	 	•	from ISO 2047 ⁇
+ 	 	•	symbol for Negative Acknowledge
+Miscellaneous technical
+237C	 ⍼ 	RIGHT ANGLE WITH DOWNWARDS ZIGZAG ARROW
+Graphics for control codes
+237D	 ⍽ 	SHOULDERED OPEN BOX
+ 	 	•	from ISO 9995 馕-7
+ 	 	•	keyboard symbol for No Break Space
+ 	 	→	2423 ␣ open box
+237E	 ⍾ 	BELL SYMBOL
+ 	 	•	from ISO 2047 ⁇
+ 	 	→	1FBFA 🯺 alarm bell symbol
+237F	 ⍿ 	VERTICAL LINE WITH MIDDLE DOT
+ 	 	•	from ISO 2047 ⁇
+ 	 	•	symbol for End of Medium
+Keyboard symbols from ISO 9995-7
+2380	 ⎀ 	INSERTION SYMBOL
+2381	 ⎁ 	CONTINUOUS UNDERLINE SYMBOL
+2382	 ⎂ 	DISCONTINUOUS UNDERLINE SYMBOL
+2383	 ⎃ 	EMPHASIS SYMBOL
+2384	 ⎄ 	COMPOSITION SYMBOL
+2385	 ⎅ 	WHITE SQUARE WITH CENTRE VERTICAL LINE
+ 	 	=	center
+2386	 ⎆ 	ENTER SYMBOL
+2387	 ⎇ 	ALTERNATIVE KEY SYMBOL
+2388	 ⎈ 	HELM SYMBOL
+ 	 	=	control
+ 	 	→	2638 ☸ wheel of dharma
+2389	 ⎉ 	CIRCLED HORIZONTAL BAR WITH NOTCH
+ 	 	=	pause
+238A	 ⎊ 	CIRCLED TRIANGLE DOWN
+ 	 	=	interrupt, break
+238B	 ⎋ 	BROKEN CIRCLE WITH NORTHWEST ARROW
+ 	 	=	escape
+238C	 ⎌ 	UNDO SYMBOL
+Electrotechnical symbols from IR 181
+238D	 ⎍ 	MONOSTABLE SYMBOL
+238E	 ⎎ 	HYSTERESIS SYMBOL
+238F	 ⎏ 	OPEN-CIRCUIT-OUTPUT H-TYPE SYMBOL
+2390	 ⎐ 	OPEN-CIRCUIT-OUTPUT L-TYPE SYMBOL
+2391	 ⎑ 	PASSIVE-PULL-DOWN-OUTPUT SYMBOL
+2392	 ⎒ 	PASSIVE-PULL-UP-OUTPUT SYMBOL
+2393	 ⎓ 	DIRECT CURRENT SYMBOL FORM TWO
+2394	 ⎔ 	SOFTWARE-FUNCTION SYMBOL
+ 	 	→	2B21 ⬡ white hexagon
+APL
+2395	 ⎕ 	APL FUNCTIONAL SYMBOL QUAD
+ 	 	→	2337 ⌷ apl functional symbol squish quad
+ 	 	→	25AF ▯ white vertical rectangle
+Keyboard symbols from ISO 9995-7
+2396	 ⎖ 	DECIMAL SEPARATOR KEY SYMBOL
+2397	 ⎗ 	PREVIOUS PAGE
+ 	 	→	1F519 🔙 back with leftwards arrow above
+2398	 ⎘ 	NEXT PAGE
+2399	 ⎙ 	PRINT SCREEN SYMBOL
+239A	 ⎚ 	CLEAR SCREEN SYMBOL
+ 	 	→	20E2 ◌⃢ combining enclosing screen
+Bracket pieces
+239B	 ⎛ 	LEFT PARENTHESIS UPPER HOOK
+239C	 ⎜ 	LEFT PARENTHESIS EXTENSION
+239D	 ⎝ 	LEFT PARENTHESIS LOWER HOOK
+239E	 ⎞ 	RIGHT PARENTHESIS UPPER HOOK
+239F	 ⎟ 	RIGHT PARENTHESIS EXTENSION
+23A0	 ⎠ 	RIGHT PARENTHESIS LOWER HOOK
+23A1	 ⎡ 	LEFT SQUARE BRACKET UPPER CORNER
+23A2	 ⎢ 	LEFT SQUARE BRACKET EXTENSION
+23A3	 ⎣ 	LEFT SQUARE BRACKET LOWER CORNER
+23A4	 ⎤ 	RIGHT SQUARE BRACKET UPPER CORNER
+23A5	 ⎥ 	RIGHT SQUARE BRACKET EXTENSION
+23A6	 ⎦ 	RIGHT SQUARE BRACKET LOWER CORNER
+23A7	 ⎧ 	LEFT CURLY BRACKET UPPER HOOK
+23A8	 ⎨ 	LEFT CURLY BRACKET MIDDLE PIECE
+23A9	 ⎩ 	LEFT CURLY BRACKET LOWER HOOK
+23AA	 ⎪ 	CURLY BRACKET EXTENSION
+23AB	 ⎫ 	RIGHT CURLY BRACKET UPPER HOOK
+23AC	 ⎬ 	RIGHT CURLY BRACKET MIDDLE PIECE
+23AD	 ⎭ 	RIGHT CURLY BRACKET LOWER HOOK
+Special character extensions
+23AE	 ⎮ 	INTEGRAL EXTENSION
+ 	 	→	2320 ⌠ top half integral
+ 	 	→	2321 ⌡ bottom half integral
+23AF	 ⎯ 	HORIZONTAL LINE EXTENSION
+ 	 	•	used for extension of arrows
+ 	 	→	23D0 ⏐ vertical line extension
+Bracket pieces
+23B0	 ⎰ 	UPPER LEFT OR LOWER RIGHT CURLY BRACKET SECTION
+ 	 	=	left moustache
+23B1	 ⎱ 	UPPER RIGHT OR LOWER LEFT CURLY BRACKET SECTION
+ 	 	=	right moustache
+Summation sign parts
+23B2	 ⎲ 	SUMMATION TOP
+23B3	 ⎳ 	SUMMATION BOTTOM
+ 	 	→	2211 ∑ n-ary summation
+Horizontal brackets
+These characters are also used as delimiters of vertical text in non-CJK terminal emulation.
+23B4	 ⎴ 	TOP SQUARE BRACKET
+ 	 	→	FE47 ﹇ presentation form for vertical left square bracket
+23B5	 ⎵ 	BOTTOM SQUARE BRACKET
+ 	 	→	FE48 ﹈ presentation form for vertical right square bracket
+23B6	 ⎶ 	BOTTOM SQUARE BRACKET OVER TOP SQUARE BRACKET
+ 	 	•	only used for terminal emulation
+Terminal graphic characters
+23B7	 ⎷ 	RADICAL SYMBOL BOTTOM
+23B8	 ⎸ 	LEFT VERTICAL BOX LINE
+23B9	 ⎹ 	RIGHT VERTICAL BOX LINE
+Scan lines for terminal graphics
+The scan line numbers here refer to old, low-resolution technology for terminals, with only 9 scan lines per fixed-size character glyph.
+23BA	 ⎺ 	HORIZONTAL SCAN LINE-1
+23BB	 ⎻ 	HORIZONTAL SCAN LINE-3
+ 	 	•	scan line-5 is unified with the box-drawing graphic character 2500 ─
+23BC	 ⎼ 	HORIZONTAL SCAN LINE-7
+23BD	 ⎽ 	HORIZONTAL SCAN LINE-9
+Dentistry notation symbols
+23BE	 ⎾ 	DENTISTRY SYMBOL LIGHT VERTICAL AND TOP RIGHT
+ 	 	→	2308 ⌈ left ceiling
+23BF	 ⎿ 	DENTISTRY SYMBOL LIGHT VERTICAL AND BOTTOM RIGHT
+ 	 	→	230A ⌊ left floor
+23C0	 ⏀ 	DENTISTRY SYMBOL LIGHT VERTICAL WITH CIRCLE
+23C1	 ⏁ 	DENTISTRY SYMBOL LIGHT DOWN AND HORIZONTAL WITH CIRCLE
+23C2	 ⏂ 	DENTISTRY SYMBOL LIGHT UP AND HORIZONTAL WITH CIRCLE
+23C3	 ⏃ 	DENTISTRY SYMBOL LIGHT VERTICAL WITH TRIANGLE
+23C4	 ⏄ 	DENTISTRY SYMBOL LIGHT DOWN AND HORIZONTAL WITH TRIANGLE
+23C5	 ⏅ 	DENTISTRY SYMBOL LIGHT UP AND HORIZONTAL WITH TRIANGLE
+23C6	 ⏆ 	DENTISTRY SYMBOL LIGHT VERTICAL AND WAVE
+23C7	 ⏇ 	DENTISTRY SYMBOL LIGHT DOWN AND HORIZONTAL WITH WAVE
+23C8	 ⏈ 	DENTISTRY SYMBOL LIGHT UP AND HORIZONTAL WITH WAVE
+23C9	 ⏉ 	DENTISTRY SYMBOL LIGHT DOWN AND HORIZONTAL
+ 	 	→	22A4 ⊤ down tack
+ 	 	→	252C ┬ box drawings light down and horizontal
+23CA	 ⏊ 	DENTISTRY SYMBOL LIGHT UP AND HORIZONTAL
+ 	 	→	22A5 ⊥ up tack
+ 	 	→	2534 ┴ box drawings light up and horizontal
+23CB	 ⏋ 	DENTISTRY SYMBOL LIGHT VERTICAL AND TOP LEFT
+ 	 	→	2309 ⌉ right ceiling
+23CC	 ⏌ 	DENTISTRY SYMBOL LIGHT VERTICAL AND BOTTOM LEFT
+ 	 	→	230B ⌋ right floor
+Miscellaneous technical
+23CD	 ⏍ 	SQUARE FOOT
+Keyboard and UI symbols
+23CE	 ⏎ 	RETURN SYMBOL
+ 	 	•	may be shown with either hollow or filled glyph
+ 	 	→	21B5 ↵ downwards arrow with corner leftwards
+ 	 	→	2B90 ⮐ return left
+23CF	 ⏏ 	EJECT SYMBOL
+ 	 	•	UI symbol to eject media
+Special character extension
+23D0	 ⏐ 	VERTICAL LINE EXTENSION
+ 	 	•	used for extension of arrows
+ 	 	→	23AF ⎯ horizontal line extension
+Metrical symbols
+23D1	 ⏑ 	METRICAL BREVE
+23D2	 ⏒ 	METRICAL LONG OVER SHORT
+23D3	 ⏓ 	METRICAL SHORT OVER LONG
+23D4	 ⏔ 	METRICAL LONG OVER TWO SHORTS
+23D5	 ⏕ 	METRICAL TWO SHORTS OVER LONG
+23D6	 ⏖ 	METRICAL TWO SHORTS JOINED
+23D7	 ⏗ 	METRICAL TRISEME
+ 	 	→	1D242 ◌𝉂 combining greek musical triseme
+23D8	 ⏘ 	METRICAL TETRASEME
+ 	 	→	1D243 ◌𝉃 combining greek musical tetraseme
+23D9	 ⏙ 	METRICAL PENTASEME
+ 	 	→	1D244 ◌𝉄 combining greek musical pentaseme
+Electrotechnical symbols
+23DA	 ⏚ 	EARTH GROUND
+23DB	 ⏛ 	FUSE
+Horizontal brackets
+These are intended for bracketing terms of mathematical expressions where their glyph extends to accommodate the width of the bracketed expression.
+23DC	 ⏜ 	TOP PARENTHESIS
+ 	 	→	FE35 ︵ presentation form for vertical left parenthesis
+23DD	 ⏝ 	BOTTOM PARENTHESIS
+ 	 	→	FE36 ︶ presentation form for vertical right parenthesis
+23DE	 ⏞ 	TOP CURLY BRACKET
+ 	 	→	FE37 ︷ presentation form for vertical left curly bracket
+23DF	 ⏟ 	BOTTOM CURLY BRACKET
+ 	 	→	FE38 ︸ presentation form for vertical right curly bracket
+23E0	 ⏠ 	TOP TORTOISE SHELL BRACKET
+ 	 	→	FE39 ︹ presentation form for vertical left tortoise shell bracket
+23E1	 ⏡ 	BOTTOM TORTOISE SHELL BRACKET
+ 	 	→	FE3A ︺ presentation form for vertical right tortoise shell bracket
+Miscellaneous technical
+23E2	 ⏢ 	WHITE TRAPEZIUM
+Chemistry symbol
+23E3	 ⏣ 	BENZENE RING WITH CIRCLE
+Miscellaneous technical
+23E4	 ⏤ 	STRAIGHTNESS
+23E5	 ⏥ 	FLATNESS
+23E6	 ⏦ 	AC CURRENT
+23E7	 ⏧ 	ELECTRICAL INTERSECTION
+23E8	 ⏨ 	DECIMAL EXPONENT SYMBOL
+ 	 	•	Algol-60 token for scientific notation literals
+User interface symbols
+23E9	 ⏩ 	BLACK RIGHT-POINTING DOUBLE TRIANGLE
+ 	 	=	fast forward
+23EA	 ⏪ 	BLACK LEFT-POINTING DOUBLE TRIANGLE
+ 	 	=	rewind, fast backwards
+23EB	 ⏫ 	BLACK UP-POINTING DOUBLE TRIANGLE
+23EC	 ⏬ 	BLACK DOWN-POINTING DOUBLE TRIANGLE
+23ED	 ⏭ 	BLACK RIGHT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR
+ 	 	=	skip to the end or next file/track/chapter
+23EE	 ⏮ 	BLACK LEFT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR
+ 	 	=	skip to the start or previous file/track/chapter
+23EF	 ⏯ 	BLACK RIGHT-POINTING TRIANGLE WITH DOUBLE VERTICAL BAR
+ 	 	=	play/pause toggle
+23F0	 ⏰ 	ALARM CLOCK
+ 	 	→	231A ⌚ watch
+ 	 	→	1F550 🕐 clock face one oclock
+ 	 	→	1F570 🕰 mantelpiece clock
+23F1	 ⏱ 	STOPWATCH
+23F2	 ⏲ 	TIMER CLOCK
+23F3	 ⏳ 	HOURGLASS WITH FLOWING SAND
+ 	 	→	231B ⌛ hourglass
+23F4	 ⏴ 	BLACK MEDIUM LEFT-POINTING TRIANGLE
+ 	 	=	reverse, back
+ 	 	•	preferred to 25C0 ◀ black left-pointing triangle
+ 	 	→	2BC7 ⯇ black medium left-pointing triangle centred
+ 	 	→	1F780 🞀 black left-pointing isosceles right triangle
+23F5	 ⏵ 	BLACK MEDIUM RIGHT-POINTING TRIANGLE
+ 	 	=	forward
+ 	 	•	preferred to 25B6 ▶ black right-pointing triangle
+ 	 	→	2BC8 ⯈ black medium right-pointing triangle centred
+ 	 	→	1F782 🞂 black right-pointing isosceles right triangle
+23F6	 ⏶ 	BLACK MEDIUM UP-POINTING TRIANGLE
+ 	 	=	increase
+ 	 	•	preferred to 25B2 ▲ black up-pointing triangle
+ 	 	→	2BC5 ⯅ black medium up-pointing triangle centred
+ 	 	→	1F781 🞁 black up-pointing isosceles right triangle
+23F7	 ⏷ 	BLACK MEDIUM DOWN-POINTING TRIANGLE
+ 	 	=	decrease
+ 	 	•	preferred to 25BC ▼ black down-pointing triangle
+ 	 	→	2BC6 ⯆ black medium down-pointing triangle centred
+ 	 	→	1F783 🞃 black down-pointing isosceles right triangle
+23F8	 ⏸ 	DOUBLE VERTICAL BAR
+ 	 	=	pause
+ 	 	→	2016 ‖ double vertical line
+23F9	 ⏹ 	BLACK SQUARE FOR STOP
+ 	 	=	stop
+ 	 	→	25FC ◼ black medium square
+23FA	 ⏺ 	BLACK CIRCLE FOR RECORD
+ 	 	=	record
+ 	 	→	26AB ⚫ medium black circle
+ 	 	→	1F534 🔴 large red circle
+Power symbols from ISO 7000:2012
+23FB	 ⏻ 	POWER SYMBOL
+ 	 	•	IEC 5009 倉 standby symbol
+ 	 	•	IEEE 1621 ᘡ power symbol
+23FC	 ⏼ 	POWER ON-OFF SYMBOL
+ 	 	•	IEC 5010 倐 power on-off symbol
+23FD	 ⏽ 	POWER ON SYMBOL
+ 	 	•	use 2B58 ⭘ for power off symbol
+ 	 	→	2B58 ⭘ heavy circle
+Power symbol from IEEE 1621-2004
+23FE	 ⏾ 	POWER SLEEP SYMBOL
+ 	 	→	263E ☾ last quarter moon
+Miscellaneous symbol
+23FF	 ⏿ 	OBSERVER EYE SYMBOL

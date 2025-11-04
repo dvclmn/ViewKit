@@ -29,7 +29,7 @@ extension Box.GlyphProminence {
 }
 
 extension Box.GlyphType {
-
+  
   /// Returns a copy of this glyph type, with flipped Prominence
   var prominenceAlt: Box.GlyphType? {
     switch self {

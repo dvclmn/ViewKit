@@ -16,8 +16,6 @@ extension Box {
   /// which `base` set to fall back on, for un-specified glyphs
   public enum GlyphSet: Sendable, Codable, Equatable {
 
-//    public static let globalFallback: Character = "?"
-
     case base(GlyphMap)
 
     /// `indirect` because we need to specify the set

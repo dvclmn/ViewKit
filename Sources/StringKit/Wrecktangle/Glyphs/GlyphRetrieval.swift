@@ -22,6 +22,7 @@ extension Box.GlyphLookup {
       return char
     }
 
+    
     /// Try flipped placement
     if let flipped = type.prominenceAlt, let char = map[flipped] {
       return char

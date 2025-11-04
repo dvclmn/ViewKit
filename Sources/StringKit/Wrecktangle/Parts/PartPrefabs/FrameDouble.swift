@@ -35,6 +35,7 @@ extension Box.PartType {
 
           case .interior:
             GlyphGrid {
+//              Glyph.join(x: .increased, y: .standard, type: .leading)
               Glyph.horizontal(intProm)
             }
         }
@@ -144,11 +145,11 @@ extension Box.PartType {
               Row {
                 Glyph.vertical(.increased)
                 Glyph.blank
-                Glyph.corner(.standard, type: .bottomLeading)
+                Glyph.corner(.standard, type: cornerType)
               }
-              
+
               Row {
-                Glyph.corner(.increased, type: .bottomLeading)
+                Glyph.corner(.increased, type: cornerType)
                 Glyph.horizontal(.increased)
                 Glyph.horizontal(.increased)
               }
@@ -157,14 +158,15 @@ extension Box.PartType {
           case .bottomTrailing:
             GlyphGrid {
               Row {
-//                Glyph.vertical(.increased)
-//                Glyph.blank
-//                Glyph.corner(.standard, type: cornerType)
+                Glyph.corner(.standard, type: cornerType)
+                Glyph.blank
+                Glyph.vertical(.increased)
               }
+
               Row {
-//                Glyph.corner(.increased, type: cornerType)
-//                Glyph.horizontal(.increased)
-//                Glyph.horizontal(.increased)
+                Glyph.horizontal(.increased)
+                Glyph.horizontal(.increased)
+                Glyph.corner(.increased, type: cornerType)
               }
             }
         }
