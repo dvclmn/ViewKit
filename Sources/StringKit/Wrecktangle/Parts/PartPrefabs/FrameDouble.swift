@@ -16,24 +16,27 @@ extension Box.PartType {
   ) -> Box.GlyphStack {
 
     switch self {
+
       case .horizontal(let loc):
         switch loc {
           case .top:
             GlyphGrid {
               Row { Glyph.horizontal(extProm) }
-              Row { Glyph.blank }
               Row { Glyph.horizontal(intProm) }
+              //              Row { Glyph.blank }
 
             }
           case .bottom:
             GlyphGrid {
               Row { Glyph.horizontal(intProm) }
-              Row { Glyph.blank }
+              //              Row { Glyph.blank }
               Row { Glyph.horizontal(extProm) }
             }
 
           case .interior:
-            GlyphGrid { Glyph.horizontal(intProm) }
+            GlyphGrid {
+              Glyph.horizontal(intProm)
+            }
         }
 
       case .vertical(let loc):
@@ -125,14 +128,14 @@ extension Box.PartType {
           case .topTrailing:
             GlyphGrid {
               Row {
+                Glyph.horizontal(.increased)
+                Glyph.horizontal(.increased)
                 Glyph.corner(.increased, type: cornerType)
-                Glyph.horizontal(.increased)
-                Glyph.horizontal(.increased)
               }
               Row {
-                Glyph.vertical(.increased)
-                Glyph.blank
                 Glyph.corner(.standard, type: cornerType)
+                Glyph.blank
+                Glyph.vertical(.increased)
               }
             }
 
@@ -149,6 +152,7 @@ extension Box.PartType {
                 Glyph.corner(.standard, type: cornerType)
               }
             }
+
           case .bottomTrailing:
             GlyphGrid {
               Row {

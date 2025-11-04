@@ -62,7 +62,6 @@ extension Box.GlyphSet {
     [
 
       Box.GlyphType.horizontal(.standard): "─",
-
       Box.GlyphType.vertical(.standard): "│",
 
       Box.GlyphType.join(x: .standard, y: .standard, type: .top): "┬",
@@ -84,12 +83,10 @@ extension Box.GlyphSet {
       Box.GlyphType.blank: Character.blank,
 
       // MARK: - Floor/Ceiling
-      Box.GlyphType.horizontal(.increased): "━",
-      Box.GlyphType.horizontal(.standard): "─",
-
-      // MARK: - Walls
-      Box.GlyphType.vertical(.increased): "┃",
-      Box.GlyphType.vertical(.standard): "│",
+      Box.GlyphType.horizontal(.increased): "━", // H
+      Box.GlyphType.horizontal(.standard): "─", // *
+      Box.GlyphType.vertical(.increased): "┃", // V
+      Box.GlyphType.vertical(.standard): "│", // &
 
       // MARK: - Bold to Thin Joins
       Box.GlyphType.join(x: .increased, y: .standard, type: .top): "B",  // ┯
