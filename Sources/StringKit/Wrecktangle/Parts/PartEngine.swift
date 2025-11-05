@@ -10,17 +10,13 @@ import Foundation
 extension Box {
   public struct PartEngine {
     let theme: Box.Theme
-//    let repeatCount: Int
-//    let boxEngine: Box.Engine
     let position: Box.PositionContext
     
     public init(
       theme: Box.Theme,
-//      repeat count: Int,
       at position: Box.PositionContext
     ) {
       self.theme = theme
-//      self.repeatCount = count
       self.position = position
     }
   }

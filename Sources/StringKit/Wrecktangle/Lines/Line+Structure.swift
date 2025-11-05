@@ -9,7 +9,6 @@ import Foundation
 
 extension Box {
   struct StructureLine {
-    //    let engine: Box.PartEngine
     let leading: Box.PartType
     let repeating: Box.PartType
     let trailing: Box.PartType
@@ -19,7 +18,6 @@ extension Box {
       _ repeating: Box.PartType,
       _ trailing: Box.PartType
     ) {
-      //      self.engine = .init(theme: .default)
       self.leading = leading
       self.repeating = repeating
       self.trailing = trailing

@@ -7,15 +7,6 @@
 
 import Foundation
 
-// MARK: - Part Builders
-@resultBuilder
-enum RowBuilder {
-  static func buildBlock(
-    _ components: Box.GlyphType...
-  ) -> [Box.GlyphType] {
-    components
-  }
-}
 
 @resultBuilder
 enum PartBuilder {
@@ -24,6 +15,18 @@ enum PartBuilder {
   ) -> Box.GlyphStack {
     components.map { $0.asGlyphRow() }
   }
+  
+//  static func buildEither(
+//    first components: any GlyphRowConvertible...
+//  ) -> Box.GlyphStack {
+//    components.map { $0.asGlyphRow() }
+//  }
+//  
+//  static func buildEither(
+//    second components: any GlyphRowConvertible...
+//  ) -> Box.GlyphStack {
+//    components.map { $0.asGlyphRow() }
+//  }
 }
 
 // MARK: - Part Structures

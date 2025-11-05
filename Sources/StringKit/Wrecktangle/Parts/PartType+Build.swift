@@ -15,12 +15,10 @@ extension Box.PartType {
   /// any additional repeating/joining required further down the pipeline.
   public func buildPart(
     using engine: Box.PartEngine,
-//    with theme: Box.Theme,
     repeating count: Int = 1,
-//    at rowPosition: Box.PositionContext? = nil
   ) -> StringStack {
 
-    let part = glyphStack(with: engine.theme.frameStyle)
+    let part = glyphStack(using: engine)
     let stringStack = part.toStringStack(with: engine.theme)
 
     guard count > 1 else {
@@ -30,9 +28,10 @@ extension Box.PartType {
   }
 
   func glyphStack(
-    with frameStyle: Box.FrameStyle
+    using engine: Box.PartEngine,
+    //    with frameStyle: Box.FrameStyle
   ) -> Part {
-    switch frameStyle {
+    switch engine.theme.frameStyle {
 
       case .single(let frameProm, let divProm):
         return singleFrameParts(frameProm: frameProm, divProm: divProm)
@@ -41,12 +40,14 @@ extension Box.PartType {
         return doubleFrameParts(extProm: extProm, intProm: intProm)
 
       case .notebook:
-        return Part {
-          Row {
-            Glyph.horizontal(.standard)
-          }
+        return if engine.isTopHalf {
+          Part { Glyph.horizontal(.standard) }
+        } else {
+          Part { Glyph.corner(.increased, type: .bottomTrailing) }
         }
-    }
+
+    }  // END switch
+
   }
 }
 

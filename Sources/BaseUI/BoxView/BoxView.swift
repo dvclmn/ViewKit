@@ -89,16 +89,24 @@ extension BoxView {
 
   ScrollView {
     VStack(spacing: 14) {
-      
+  
       BoxView {
-        "Rounded, single frame, that's cool man"
+        "I'm a notebook!"
+        "Look at my torn pages, wah."
+        DummyContent.Strings.paragraphs[9].prefix(60).toString
       }
-      .setBoxStyle(glyphs: .double, frame: .single())
+      .setGridFrame(18, alignment: .leading)
+      .setBoxStyle(glyphs: .double, frame: .notebook)
+      
+//      BoxView {
+//        "Rounded, single frame, that's cool man"
+//      }
+//      .setBoxStyle(glyphs: .double, frame: .single())
       
       BoxView {
         Box.Header("Hello, I'm a Header")
 
-        DummyContent.Strings.paragraphs[3]
+        DummyContent.Strings.paragraphs[3].prefix(90).toString
 
         //                Box.Divider()
         //                "Last text sign-off"
