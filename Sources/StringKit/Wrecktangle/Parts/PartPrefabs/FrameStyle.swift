@@ -26,6 +26,14 @@ extension Box {
 }
 
 extension Box.FrameStyle {
+  
+  var reservedWidth: Int {
+    switch self {
+      case .single: 1
+      case .double: 3
+      case .notebook: 3
+    }
+  }
 
   /// The width and height reserved for structure,
   /// unable to be used by content.

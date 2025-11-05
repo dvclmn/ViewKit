@@ -60,27 +60,19 @@ extension Box.LineType {
     _ line: Box.TextLine,
     using engine: Box.Engine
   ) -> String {
+
+    let leadingString = line.leading.buildStack(
+      using: engine,
+      repeatCount: 1
+    )
+    let trailingString = line.leading.buildStack(
+      using: engine,
+      repeatCount: 1
+    )
+    let capWidths = engine.theme.frameStyle.reservedWidth * 2
+    let reservedWidth = (engine.theme.padding.width * 2) + capWidths
     
-//    let leading = line.leading
-//    let leadingWidth = leading.width(for: theme.frameStyle)
-    
-//    let leadingString = leading.buildStack(
-//      using: <#T##Box.Engine#>,
-//      repeatCount: <#T##Int#>
-//    )
-//      .buildStack(
-//      using: engine,
-//      repeatCount:
-//    ).string
-    
-    let leading = line.trailing.buildStack(using: engine).string
-    let trailing = line.trailing.buildStack(using: engine).string
-    
-    let capsWidth = leading.count + trailing.count
-    let reserved = (theme.padding * 2) + capWidth
-    
-    
-    let widthForText = engine.width - reserved
+    let widthForText = engine.width - reservedWidth
     
     let textContent = TextReflow(
       line.text,

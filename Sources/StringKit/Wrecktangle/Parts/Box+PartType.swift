@@ -20,12 +20,12 @@ extension Box {
     case corner(Box.CornerType)
     case blank
 
-    public var flexibility: Flexibility {
-      switch self {
-        case .horizontal, .blank: .repeatable(axis: .horizontal)
-        case .join, .corner, .vertical: .fixed
-      }
-    }
+//    public var flexibility: Flexibility {
+//      switch self {
+//        case .horizontal, .blank: .repeatable(axis: .horizontal)
+//        case .join, .corner, .vertical: .fixed
+//      }
+//    }
   } 
 }
 

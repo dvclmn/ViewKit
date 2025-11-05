@@ -35,6 +35,6 @@ extension Box {
     case corner(GlyphProminence, type: CornerType)
     case blank
 
-    case literal(Character)  // Mostly for debugging
+    case literal(Character)
   }
 }
