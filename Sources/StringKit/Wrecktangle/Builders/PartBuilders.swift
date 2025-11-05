@@ -18,13 +18,20 @@ enum RowBuilder {
 }
 
 @resultBuilder
-enum GlyphStackBuilder {
+enum PartBuilder {
+//enum GlyphStackBuilder {
   static func buildBlock(
     _ components: any GlyphRowConvertible...
-  ) -> [[Box.GlyphType]] {
+  ) -> Box.GlyphStack {
     components.map { $0.asGlyphRow() }
   }
+  
+  static func buildEither(first: any GlyphRowConvertible) -> any GlyphRowConvertible { first }
+  static func buildEither(second: any GlyphRowConvertible) -> any GlyphRowConvertible { second }
+
 }
+
+
 
 // MARK: - Part Structures
 struct Row {

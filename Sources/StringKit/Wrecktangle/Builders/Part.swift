@@ -15,7 +15,7 @@ extension Box {
     var width: Int { glyphs.width }
 
     init(
-      @GlyphStackBuilder _ content: () -> [[Box.GlyphType]]
+      @PartBuilder _ content: () -> GlyphStack
     ) {
       self.glyphs = content()
     }

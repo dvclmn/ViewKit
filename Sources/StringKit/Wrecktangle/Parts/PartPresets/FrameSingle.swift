@@ -42,6 +42,7 @@ extension Box.PartType {
         case .vertical(.interior):
           Part {
             Box.GlyphType.vertical(divProm)
+            Box.GlyphType.vertical(divProm)
           }
 
         case .join(let joinType):
@@ -71,14 +72,18 @@ extension Box.PartType {
           }
 
         case .corner(let cornerType):
-          Box.GlyphType.corner(frameProm, type: cornerType)
+          Part {
+            Box.GlyphType.corner(frameProm, type: cornerType)
+          }
 
         case .blank:
-          Box.GlyphType.blank
+          Part {
+            Box.GlyphType.blank
+          }
 
       }  // END switch self
 
-    guard let type else { return [[]] }
-    return [[type]]
+//    guard let type else { return [[]] }
+//    return [[type]]
   }
 }
