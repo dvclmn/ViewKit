@@ -19,19 +19,43 @@ enum RowBuilder {
 
 @resultBuilder
 enum PartBuilder {
-//enum GlyphStackBuilder {
   static func buildBlock(
     _ components: any GlyphRowConvertible...
   ) -> Box.GlyphStack {
     components.map { $0.asGlyphRow() }
   }
-  
-  static func buildEither(first: any GlyphRowConvertible) -> any GlyphRowConvertible { first }
-  static func buildEither(second: any GlyphRowConvertible) -> any GlyphRowConvertible { second }
 
+//  static func buildEither(first: any GlyphRowConvertible) -> Box.GlyphStack { [first.asGlyphRow()] }
+//  static func buildEither(second: any GlyphRowConvertible) -> Box.GlyphStack { [second.asGlyphRow()] }
+
+//  static func buildOptional(_ component: (any GlyphRowConvertible)?) -> any GlyphRowConvertible {
+//    component ?? [Box.GlyphType]()
+//  }
+//
+//  static func buildArray(_ components: [any GlyphRowConvertible]) -> any GlyphRowConvertible {
+//    components.flatMap { $0.asGlyphRow() }
+//  }
 }
 
-
+//extension PartBuilder {
+//  // Support for single expressions
+//  static func buildExpression(_ expression: Box.GlyphType) -> Box.GlyphStack {
+////  static func buildExpression(_ expression: [any GlyphRowConvertible]) -> Box.GlyphStack{
+//    [[expression]]
+//  }
+//  static func buildExpression(_ expression: [Box.GlyphType]) -> Box.GlyphStack {
+//    //  static func buildExpression(_ expression: [any GlyphRowConvertible]) -> Box.GlyphStack{
+//    [expression]
+//  }
+//
+////  static func buildExpression(_ expression: Box.GlyphType) -> [Box.GlyphType] {
+////    [expression]
+////  }
+////
+////  static func buildExpression(_ expression: [Box.GlyphType]) -> [Box.GlyphType] {
+////    expression
+////  }
+//}
 
 // MARK: - Part Structures
 struct Row {
@@ -40,7 +64,6 @@ struct Row {
     self.glyphs = content()
   }
 }
-
 
 //func Part(@GlyphStackBuilder _ content: () -> [[Box.GlyphType]]) -> Box.GlyphStack {
 //  Box.Part(theme: .default, content).glyphs
@@ -62,3 +85,10 @@ extension Array: GlyphRowConvertible where Element == Box.GlyphType {
 extension Box.GlyphType: GlyphRowConvertible {
   func asGlyphRow() -> [Box.GlyphType] { [self] }
 }
+
+// Make GlyphStack itself conform to GlyphRowConvertible for nested usage
+//extension Box.GlyphStack: GlyphRowConvertible {
+//  func asGlyphRow() -> [Box.GlyphType] {
+//    self.flatMap { $0 }
+//  }
+//}
