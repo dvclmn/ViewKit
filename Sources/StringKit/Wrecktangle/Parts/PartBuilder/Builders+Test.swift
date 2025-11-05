@@ -10,8 +10,13 @@ extension Box {
     func testPart() -> Part {
       return Part {
         Row {
-          Glyph.horizontal(.increased)
-          Glyph.horizontal(.increased)
+          if true {
+            Glyph.horizontal(.increased)
+            
+          } else {
+            Glyph.horizontal(.increased)
+            
+          }
         }
       }
     }

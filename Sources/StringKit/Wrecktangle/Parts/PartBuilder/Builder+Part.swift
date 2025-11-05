@@ -10,46 +10,31 @@ import Foundation
 
 @resultBuilder
 enum PartBuilder {
-  static func buildBlock(
-    _ components: any GlyphRowConvertible...
-  ) -> Box.GlyphStack {
+  static func buildBlock(_ components: any RowConvertible...) -> Box.GlyphStack {
     components.map { $0.asGlyphRow() }
   }
   
-//  static func buildEither(
-//    first components: any GlyphRowConvertible...
-//  ) -> Box.GlyphStack {
-//    components.map { $0.asGlyphRow() }
-//  }
-//  
-//  static func buildEither(
-//    second components: any GlyphRowConvertible...
-//  ) -> Box.GlyphStack {
-//    components.map { $0.asGlyphRow() }
-//  }
-}
-
-// MARK: - Part Structures
-struct Row {
-  let glyphs: [Box.GlyphType]
-  init(@RowBuilder _ content: () -> [Box.GlyphType]) {
-    self.glyphs = content()
+  static func buildEither(first component: Box.GlyphStack) -> Box.GlyphStack {
+    component
+  }
+  
+  static func buildEither(second component: Box.GlyphStack) -> Box.GlyphStack {
+    component
+  }
+  
+  static func buildOptional(_ component: Box.GlyphStack?) -> Box.GlyphStack {
+    component ?? []
   }
 }
 
-// MARK: - Glyph Row Conversion
-protocol GlyphRowConvertible {
-  func asGlyphRow() -> [Box.GlyphType]
-}
+extension PartBuilder {
+  
+  static func buildExpression(_ expression: some RowConvertible) -> Box.GlyphStack {
+    [expression.asGlyphRow()]
+  }
+  
+//  static func buildExpression(_ expression: Row) -> Box.GlyphStack {
+//    [expression.asGlyphRow()]
+//  }
 
-extension Row: GlyphRowConvertible {
-  func asGlyphRow() -> [Box.GlyphType] { glyphs }
-}
-
-extension Array: GlyphRowConvertible where Element == Box.GlyphType {
-  func asGlyphRow() -> [Box.GlyphType] { self }
-}
-
-extension Box.GlyphType: GlyphRowConvertible {
-  func asGlyphRow() -> [Box.GlyphType] { [self] }
 }
