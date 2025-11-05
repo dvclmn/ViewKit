@@ -40,9 +40,18 @@ extension Box.LineType {
   ) -> String {
     let parts = type.parts()
 
+    let partCount = parts.count
+    
     let stacks = parts.map { part in
-      part.buildStack(using: engine)
+      let partWidth = part.glyphStack(with: engine.theme.frameStyle).width
+      
+      let count = partWidth * partCount
+      return part.buildStack(
+        using: engine,
+        repeatCount: count
+      )
     }
+    
     return StringStack.joined(stacks, along: .horizontal).string
 
   }
@@ -52,12 +61,26 @@ extension Box.LineType {
     using engine: Box.Engine
   ) -> String {
     
-    let leading = line.leading.buildStack(using: engine).string
+//    let leading = line.leading
+//    let leadingWidth = leading.width(for: theme.frameStyle)
+    
+//    let leadingString = leading.buildStack(
+//      using: <#T##Box.Engine#>,
+//      repeatCount: <#T##Int#>
+//    )
+//      .buildStack(
+//      using: engine,
+//      repeatCount:
+//    ).string
+    
+    let leading = line.trailing.buildStack(using: engine).string
     let trailing = line.trailing.buildStack(using: engine).string
     
-    let capWidth = leading.count + trailing.count
+    let capsWidth = leading.count + trailing.count
+    let reserved = (theme.padding * 2) + capWidth
     
-    let widthForText = engine.width - capWidth
+    
+    let widthForText = engine.width - reserved
     
     let textContent = TextReflow(
       line.text,

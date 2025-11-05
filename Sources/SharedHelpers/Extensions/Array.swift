@@ -11,7 +11,6 @@ extension Array where Element: Hashable {
   public func toSet() -> Set<Element> {
     return Set(self)
   }
-
 }
 
 extension Array where Element == [Character] {
@@ -54,5 +53,11 @@ extension Array where Element == [Character] {
 
       return newRow
     }
+  }
+}
+
+extension Array where Element: Collection {
+  public var width: Int {
+    self.map { $0.count }.max() ?? 0
   }
 }

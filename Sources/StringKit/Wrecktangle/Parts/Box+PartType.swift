@@ -26,7 +26,7 @@ extension Box {
         case .join, .corner, .vertical: .fixed
       }
     }
-  }  // END part type
+  } 
 }
 
 extension Box.PartType {

@@ -60,7 +60,7 @@ extension StringStack {
   
   public var height: Int {
     let value = stack.count
-    print("Stack Height: \(value)")
+//    print("Stack Height: \(value)")
     return value
   }
   public var width: Int { stack.map { $0.count }.max() ?? 0 }

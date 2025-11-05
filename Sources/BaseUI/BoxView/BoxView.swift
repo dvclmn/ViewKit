@@ -93,7 +93,7 @@ extension BoxView {
       BoxView {
         "Rounded, single frame, that's cool man"
       }
-      .setBoxStyle(glyphs: .rounded, frame: .single())
+      .setBoxStyle(glyphs: .double, frame: .single())
       
       BoxView {
         Box.Header("Hello, I'm a Header")

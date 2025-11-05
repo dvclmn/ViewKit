@@ -23,21 +23,20 @@ public struct Box: Sendable {
   }
 
   public var plainText: String {
-    
+
     let engine = Box.Engine(config)
 
     let finalLines = [Box.Top()] + components + [Box.Bottom()]
-    
+
     let lines = finalLines.flatMap { $0.makeLines(using: engine) }
-    
-    
-//    let linesDebug = lines.reduce(into: "") { partialResult, line in
-//      partialResult += line.description + "\n"
-//    }
-//    print("/// Lines:\n\n\(linesDebug)\n///\n")
-    
+
+    //    let linesDebug = lines.reduce(into: "") { partialResult, line in
+    //      partialResult += line.description + "\n"
+    //    }
+    //    print("/// Lines:\n\n\(linesDebug)\n///\n")
+
     let stringResult = lines.buildString(using: engine)
-    
+
     return stringResult
 
   }
@@ -46,7 +45,7 @@ public struct Box: Sendable {
 extension Box: Equatable {
   public static func == (lhs: Box, rhs: Box) -> Bool {
     lhs.config.width == rhs.config.width
-    && lhs.config.theme == rhs.config.theme
+      && lhs.config.theme == rhs.config.theme
       && lhs.components.count == rhs.components.count
   }
 }

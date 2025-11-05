@@ -8,22 +8,30 @@
 import Foundation
 
 extension Box.PartType {
+  
+  public func width(
+    for frameStyle: Box.FrameStyle,
+//    using engine: Box.Engine
+  ) -> Int {
+    let stack = self.glyphStack(with: frameStyle)
+    let width = stack.width
+    return width
+  }
 
-  public func buildStack(using engine: Box.Engine) -> StringStack {
+  public func buildStack(
+    using engine: Box.Engine,
+    repeatCount: Int
+  ) -> StringStack {
 
     guard self.flexibility.isRepeatable else {
       let stack = glyphStack(with: engine.theme.frameStyle)
       return StringStack(from: stack, with: engine.theme)
     }
 
-//    let reservedWidth = engine.widthForText
-
     let glyphStack = glyphStack(with: engine.theme.frameStyle)
+  
     let stringStack = StringStack(from: glyphStack, with: engine.theme)
-    
-    let reserved = (stringStack.width * 2) + (engine.theme.padding.width * 2)
-    let repeatCount = engine.width - reserved
-    
+
     let repeated = stringStack.repeated(along: .horizontal, count: repeatCount)
     return repeated
   }
@@ -32,12 +40,13 @@ extension Box.PartType {
     with frameStyle: Box.FrameStyle
   ) -> Box.GlyphStack {
     switch frameStyle {
+        
       case .single(let frameProm, let divProm):
         return singleFrameParts(frameProm: frameProm, divProm: divProm)
 
       case .double(let extProm, let intProm):
         return doubleFrameParts(extProm: extProm, intProm: intProm)
-        
+
       case .notebook:
         return GlyphGrid {
           Row {

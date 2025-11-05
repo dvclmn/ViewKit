@@ -35,7 +35,7 @@ extension Box.PartType {
 
           case .interior:
             GlyphGrid {
-//              Glyph.join(x: .increased, y: .standard, type: .leading)
+              //              Glyph.join(x: .increased, y: .standard, type: .leading)
               Glyph.horizontal(intProm)
             }
         }
