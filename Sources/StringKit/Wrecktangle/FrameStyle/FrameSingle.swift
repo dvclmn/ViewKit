@@ -26,14 +26,10 @@ extension Box.PartType {
         Part { Box.GlyphType.horizontal(.increased) }
 
       case .horizontal(.interior):
-        Part {
-          Box.GlyphType.horizontal(.standard)
-        }
+        Part { Box.GlyphType.horizontal(.standard) }
 
       case .vertical(.leading), .vertical(.trailing):
-        Part {
-          Box.GlyphType.vertical(.increased)
-        }
+        Part { Box.GlyphType.vertical(.increased) }
 
       case .vertical(.interior):
         Part {
@@ -43,15 +39,12 @@ extension Box.PartType {
 
       case .join(let joinType):
         join(joinType)
+
       case .corner(let cornerType):
-        Part {
-          Box.GlyphType.corner(.increased, type: cornerType)
-        }
+        Part { Box.GlyphType.corner(.increased, type: cornerType) }
 
       case .blank:
-        Part {
-          Box.GlyphType.blank
-        }
+        Part { Box.GlyphType.blank }
 
     }  // END switch self
   }
