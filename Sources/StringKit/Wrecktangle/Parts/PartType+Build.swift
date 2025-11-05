@@ -8,13 +8,6 @@
 import Foundation
 
 extension Box.PartType {
-
-  public func width(for frameStyle: Box.FrameStyle) -> Int {
-    let stack = self.glyphStack(with: frameStyle)
-    let width = stack.width
-    return width
-  }
-
   /// For parts requiring repetition, supply a value to `repeatCount`.
   /// Otherwise, this defaults to a single instance.
   ///
@@ -32,8 +25,7 @@ extension Box.PartType {
     guard repeatCount > 1 else {
       return stringStack
     }
-    let repeated = stringStack.repeated(along: .horizontal, count: repeatCount)
-    return repeated
+    return stringStack.repeated(along: .horizontal, count: repeatCount)
   }
 
   func glyphStack(
