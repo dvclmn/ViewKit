@@ -11,9 +11,9 @@ import Foundation
 extension Array where Element == Box.LineType {
   func buildString(using engine: Box.Engine) -> String {
     let lines = self.map { line in
-//    let lines = self.enumerated().map { index, line in
+      //    let lines = self.enumerated().map { index, line in
       line.buildString(using: engine)
-//      "\(index + 1)" + line.buildString(using: engine)
+      //      "\(index + 1)" + line.buildString(using: engine)
     }
     return lines.joined(separator: "\n")
   }
@@ -38,20 +38,21 @@ extension Box.LineType {
     _ type: Box.StructureType,
     using engine: Box.Engine
   ) -> String {
-    let parts = type.parts()
-
-    let partCount = parts.count
     
+    let parts = type.parts()
+//    let partCount = parts.count
+
     let stacks = parts.map { part in
-      let partWidth = part.glyphStack(with: engine.theme.frameStyle).width
-      
+//      let partWidth = part.glyphStack(with: engine.theme.frameStyle).width
+
       let count = partWidth * partCount
+      
       return part.buildStack(
         using: engine,
         repeatCount: count
       )
     }
-    
+
     return StringStack.joined(stacks, along: .horizontal).string
 
   }
@@ -61,28 +62,28 @@ extension Box.LineType {
     using engine: Box.Engine
   ) -> String {
 
-    let leadingString = line.leading.buildStack(
+    let leading = line.leading.buildStack(
       using: engine,
       repeatCount: 1
-    )
-    let trailingString = line.leading.buildStack(
+    ).string
+    let trailing = line.leading.buildStack(
       using: engine,
       repeatCount: 1
-    )
+    ).string
+
+    let padding = engine.theme.padding.width
     let capWidths = engine.theme.frameStyle.reservedWidth * 2
-    let reservedWidth = (engine.theme.padding.width * 2) + capWidths
-    
+    let reservedWidth = (padding * 2) + capWidths
+
     let widthForText = engine.width - reservedWidth
-    
+
     let textContent = TextReflow(
       line.text,
       width: widthForText,
       shouldHyphenate: true
     )
     let reflowed = textContent.reflowed()
-
-
-    let paddingString = String(repeating: " ", count: engine.theme.padding.width)
+    let paddingString = String(repeating: " ", count: padding)
 
     let result = reflowed.map { line in
       leading
