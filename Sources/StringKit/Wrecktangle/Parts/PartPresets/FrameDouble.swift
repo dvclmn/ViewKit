@@ -24,19 +24,16 @@ extension Box.PartType {
             Part {
               Row { Glyph.horizontal(extProm) }
               Row { Glyph.horizontal(intProm) }
-              //              Row { Glyph.blank }
 
             }
           case .bottom:
             Part {
               Row { Glyph.horizontal(intProm) }
-              //              Row { Glyph.blank }
               Row { Glyph.horizontal(extProm) }
             }
 
           case .interior:
             Part {
-              //              Glyph.join(x: .increased, y: .standard, type: .leading)
               Glyph.horizontal(intProm)
             }
         }

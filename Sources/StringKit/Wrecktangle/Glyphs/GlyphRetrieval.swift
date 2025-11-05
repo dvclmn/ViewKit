@@ -5,13 +5,6 @@
 //  Created by Dave Coleman on 31/10/2025.
 //
 
-//extension Box.GlyphType: ExpressibleByUnicodeScalarLiteral {
-//  public init(unicodeScalarLiteral value: UnicodeScalar) {
-//    /// A simple fallback 'literal' type for debugging / placeholder
-//    self = .literal(Character(value))
-//  }
-//}
-
 extension Box {
   public typealias GlyphMap = [Box.GlyphType: Character]
 }

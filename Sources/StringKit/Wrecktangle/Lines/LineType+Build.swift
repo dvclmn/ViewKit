@@ -38,30 +38,8 @@ extension Box.LineType {
     _ type: Box.StructureType,
     using engine: Box.Engine
   ) -> String {
-
     let parts = type.parts
-
     return parts.buildParts(using: engine)
-    //    let line = parts.reduce(into: "") { partialResult, part in
-    //      let leading = part.
-    //      partialResult += part.buildPart(using: engine, repeatCount: <#T##Int#>)
-    //    }
-
-    //    let partCount = parts.count
-
-    //    let stacks = parts.map { part in
-    //      let partWidth = part.glyphStack(with: engine.theme.frameStyle).width
-    //      let lead = part
-    //      let count = partWidth * partCount
-
-    //      return part.buildStack(
-    //        using: engine,
-    //        repeatCount: count
-    //      )
-    //    }
-
-    //    return StringStack.joined(stacks, along: .horizontal).string
-
   }
 
   private func buildTextLine(
@@ -69,28 +47,26 @@ extension Box.LineType {
     using engine: Box.Engine
   ) -> String {
 
+    /// Build caps
     let leading = line.leading.buildPart(
       using: engine,
       repeatCount: 1
     ).string
-    let trailing = line.leading.buildPart(
+    let trailing = line.trailing.buildPart(
       using: engine,
       repeatCount: 1
     ).string
 
-    //    let padding = engine.theme.padding.width
-    //    let capWidths = engine.theme.frameStyle.reservedWidth * 2
-    //    let reservedWidth = (padding * 2) + capWidths
-    //
-    //    let widthForText = engine.width - reservedWidth
-
+    /// Reflow Text
     let textContent = TextReflow(
       line.text,
       width: engine.widthForText,
       shouldHyphenate: true
     )
     let reflowed = textContent.reflowed()
-    let paddingCount = engine.theme.padding.width * 2
+    
+    /// Set up Padding
+    let paddingCount = engine.theme.padding.width
     let paddingString = String(repeating: " ", count: paddingCount)
 
     let result = reflowed.map { line in
