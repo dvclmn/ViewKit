@@ -24,18 +24,19 @@ extension Box.PartType {
     
 
     let hasLineNumbers = engine.config.metrics.contains(.lineNumbers)
-//    let numbers = rowNumberToStack(engine.position.rowNumber)
+    let numbers = rowNumberToStack(engine.position.rowNumber)
 
-    let testStack = StringStack([[Character("?")]])
+//    let testStack = StringStack([[Character("?")]])
     
     print(
       "Testing Row Numbers.",
       "Raw Stack:\n\(rawStack)",
-      "Test Stack:\n\(testStack)"
+//      "Test Stack:\n\(testStack)"
     )
     
     let stringStack = StringStack.joined(
-      hasLineNumbers ? [] : [],
+//      hasLineNumbers ? [] : [],
+      hasLineNumbers ? numbers : [],
 //      hasLineNumbers ? testStack : [],
       rawStack,
       along: .horizontal

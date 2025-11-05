@@ -14,17 +14,86 @@ public struct StringStack {
 
   var stack: [[Character]]
 
-  public init(_ stack: [[Character]]) {
-    guard let width = stack.first?.count else {
+  public init(
+    _ stack: [[Character]],
+    visualDebug: Bool = false
+  ) {
+//    guard let width = stack.first?.count else {
+//      self.stack = []
+//      return
+//    }
+    
+    guard let firstRow = stack.first else {
       self.stack = []
       return
     }
     
-    precondition(
-      stack.allSatisfy { $0.count == width },
-      "Non-rectangular StringStack: all rows must have equal width"
-    )
-    self.stack = stack
+
+    let alert: Character = "⚠️"
+//
+//    // Find the maximum width to handle mismatched rows
+//    let maxWidth = stack.reduce(width) { Swift.max($0, $1.count) }
+//
+//    // Pad shorter rows with alert and truncate longer rows
+//    self.stack = stack.map { row in
+//      if row.count == maxWidth {
+//        return row
+//      } else if row.count < maxWidth {
+//        // Pad shorter rows with alert
+//        return row + Array(repeating: alert, count: maxWidth - row.count)
+//      } else {
+//        // Truncate longer rows and add alert at the end
+//        var truncated = Array(row.prefix(maxWidth - 1))
+//        truncated.append(alert)
+//        return truncated
+//      }
+//    }
+    
+    let targetWidth = firstRow.count
+    var hasMismatch = false
+    
+    // Check for mismatches
+    for row in stack {
+      if row.count != targetWidth {
+        hasMismatch = true
+        break
+      }
+    }
+    
+    if !hasMismatch {
+      self.stack = stack
+      return
+    }
+    
+    if visualDebug {
+      print("⚠️ StringStack shape mismatch detected - applying visual patch:")
+      print("Original: \(stack.map { String($0) })")
+    }
+    
+    // Handle mismatches by padding/truncating with ⚠️
+    self.stack = stack.map { row in
+      if row.count == targetWidth {
+        return row
+      } else if row.count < targetWidth {
+        // Pad shorter rows
+        return row + Array(repeating: alert, count: targetWidth - row.count)
+      } else {
+        // Truncate longer rows and mark with ⚠️
+        var newRow = Array(row.prefix(targetWidth - 1))
+        newRow.append(alert)
+        return newRow
+      }
+    }
+    
+    if visualDebug {
+      print("Patched:  \(self.stack.map { String($0) })")
+    }
+
+    //    precondition(
+    //      stack.allSatisfy { $0.count == width },
+    //      "Non-rectangular StringStack: all rows must have equal width"
+    //    )
+    //    self.stack = stack
   }
 
   /// ``Swift/String/substringLines(subsequenceStrategy:)``
