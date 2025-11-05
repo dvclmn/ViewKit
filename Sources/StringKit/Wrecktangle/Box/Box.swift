@@ -26,28 +26,28 @@ public struct Box: Sendable {
   }
 
   public var plainText: String {
-//    let lines = componentsWithStructure.flatMap { $0.makeLines() }
 
-    return lines.buildString(using: engine)
+    let allLines = allComponents.flatMap { $0.makeLines() }
+
+    let final = allLines.enumerated().map {
+      index,
+      lineType in
+      let pos = Box.PositionContext(
+        i: index,
+        rowCount: allLines.count
+      )
+      return lineType.buildString(using: engine, at: pos)
+    }
+    return final.joined("\n")
   }
 }
 
 extension Box {
-  
-  var componentsWithStructure: [any Component] {
+
+  private var allComponents: [any Component] {
     [Box.Top()] + components + [Box.Bottom()]
   }
-  
-  func linesFromComponents() -> [Box.LineType] {
-//    let rawLines = comps.flatMap { $0.makeLines(using: engine) }
-    let rawLines = componentsWithStructure.flatMap { $0.makeLines() }
-    
-    let linesWithContext = rawLines.enumerated().map { index, line in
-      (index, line)
-    }
-  }
 }
-
 
 extension Box {
   func debugString(_ lines: [Box.LineType]) -> String {
@@ -60,7 +60,7 @@ extension Box {
 extension Box: Equatable {
   public static func == (lhs: Box, rhs: Box) -> Bool {
     lhs.config.width == rhs.config.width
-    && lhs.config.theme == rhs.config.theme
-    && lhs.components.count == rhs.components.count
+      && lhs.config.theme == rhs.config.theme
+      && lhs.components.count == rhs.components.count
   }
 }

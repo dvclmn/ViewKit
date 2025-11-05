@@ -10,13 +10,24 @@ import Foundation
 // MARK: - Main String builder
 extension Box.LineType {
   func buildString(
-    using engine: Box.Engine
+    using engine: Box.Engine,
+    at position: Box.PositionContext
   ) -> String {
     switch self {
-      case .text(let line): buildTextLine(line, using: engine)
-      case .structure(let type): buildStructureLine(type, using: engine)
+      case .structure(let type):
+        return type.parts.buildString(using: engine, at: position)
+      case .text(let line):
+        return line.buildString(using: engine, at: position)
     }
   }
+//  func buildString(
+//    using engine: Box.Engine
+//  ) -> String {
+//    switch self {
+//      case .text(let line): buildTextLine(line, using: engine)
+//      case .structure(let type): buildStructureLine(type, using: engine)
+//    }
+//  }
 }
 
 // MARK: - Helper methods for String Building
@@ -72,12 +83,10 @@ extension Box.LineType {
 
 // MARK: - String builder for multiple Lines
 extension Array where Element == Box.LineType {
-  func buildString(using engine: Box.Engine) -> String {
+  func buildString(using engine: Box.Engine, at position: Box.PositionContext) -> String {
     let lines = self.map { line in
-      //    let lines = self.enumerated().map { index, line in
-      line.buildString(using: engine)
-      //      "\(index + 1)" + line.buildString(using: engine)
+      line.buildString(using: engine, at: position)
     }
-    return lines.joined(separator: "\n")
+    return lines.joined("\n")
   }
 }
