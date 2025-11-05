@@ -8,11 +8,21 @@
 import Foundation
 
 extension Box {
-  struct PartEngine {
+  public struct PartEngine {
     let theme: Box.Theme
-    let repeatCount: Int
+//    let repeatCount: Int
 //    let boxEngine: Box.Engine
     let position: Box.PositionContext
+    
+    public init(
+      theme: Box.Theme,
+//      repeat count: Int,
+      at position: Box.PositionContext
+    ) {
+      self.theme = theme
+//      self.repeatCount = count
+      self.position = position
+    }
   }
 }
 
@@ -27,8 +37,11 @@ extension Box.PartEngine {
   }
   
   /// Returns an index for pattern sequences combining both axes.
-  func phase(horizontal index: Int) -> Int {
-    (position.rowIndex + index) % repeatCount
+  func phase(
+    horizontal index: Int,
+    repeating count: Int
+  ) -> Int {
+    (position.rowIndex + index) % count
   }
   
   /// Convenience to alternate glyphs vertically.

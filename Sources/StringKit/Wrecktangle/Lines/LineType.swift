@@ -18,6 +18,7 @@ extension Box {
 
 extension Box {
   protocol RenderableLine {
+//    var partEngine: Box.PartEngine { get }
     func buildString(
       using engine: Engine,
       at position: PositionContext

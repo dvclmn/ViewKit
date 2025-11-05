@@ -14,18 +14,19 @@ extension Box.PartType {
   /// We return a `StringStack`, not a `String`, to allow
   /// any additional repeating/joining required further down the pipeline.
   public func buildPart(
-    with theme: Box.Theme,
-    repeatCount: Int = 1,
-    at rowPosition: Box.PositionContext? = nil
+    using engine: Box.PartEngine,
+//    with theme: Box.Theme,
+    repeating count: Int = 1,
+//    at rowPosition: Box.PositionContext? = nil
   ) -> StringStack {
 
-    let part = glyphStack(with: theme.frameStyle)
-    let stringStack = part.toStringStack(with: theme)
+    let part = glyphStack(with: engine.theme.frameStyle)
+    let stringStack = part.toStringStack(with: engine.theme)
 
-    guard repeatCount > 1 else {
+    guard count > 1 else {
       return stringStack
     }
-    return stringStack.repeated(along: .horizontal, count: repeatCount)
+    return stringStack.repeated(along: .horizontal, count: count)
   }
 
   func glyphStack(

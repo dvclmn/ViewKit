@@ -9,6 +9,7 @@ import Foundation
 
 extension Box {
   struct StructureLine {
+    //    let engine: Box.PartEngine
     let leading: Box.PartType
     let repeating: Box.PartType
     let trailing: Box.PartType
@@ -18,6 +19,7 @@ extension Box {
       _ repeating: Box.PartType,
       _ trailing: Box.PartType
     ) {
+      //      self.engine = .init(theme: .default)
       self.leading = leading
       self.repeating = repeating
       self.trailing = trailing
@@ -29,14 +31,15 @@ extension Box.StructureLine: Box.RenderableLine {
     using engine: Box.Engine,
     at position: Box.PositionContext
   ) -> String {
-    // Same as your buildParts, but with position-aware parts
-    let lead = leading.buildPart(with: engine.theme, at: position)
-    let trail = trailing.buildPart(with: engine.theme, at: position)
-    let repeated = repeating.buildPart(
-      with: engine.theme,
-      repeatCount: engine.repeatedPartWidth,
+
+    let partEngine = Box.PartEngine(
+      theme: engine.theme,
       at: position
     )
+
+    let lead = leading.buildPart(using: partEngine)
+    let trail = trailing.buildPart(using: partEngine)
+    let repeated = repeating.buildPart(using: partEngine, repeating: engine.repeatedPartWidth)
     return StringStack.joined(lead, repeated, trail, along: .horizontal).string
   }
 }
