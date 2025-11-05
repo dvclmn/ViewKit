@@ -9,7 +9,6 @@ import SwiftUI
 import SharedHelpers
 
 extension Box {
-
   public struct Theme: Sendable, Codable, Equatable {
     public var glyphSet: GlyphSet
     public var frameStyle: FrameStyle

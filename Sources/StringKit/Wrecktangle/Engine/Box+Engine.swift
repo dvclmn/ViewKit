@@ -38,26 +38,25 @@ extension Box.Engine {
   ///
   /// Note: The order of the parts here does not matter,
   /// this is handled later.
-  func textLine(_ content: String) -> Box.LineType {
-    let textLine = Box.TextLine(
-      text: content,
-      leading: .vertical(.leading),
-      trailing: .vertical(.trailing)
-    )
-    return Box.LineType.text(textLine)
-  }
-
-  func structureLine(
-    type: Box.StructureType
-  ) -> Box.LineType {
-    switch type {
-      case .top: Box.LineType.structure(.top)
-      case .divider: Box.LineType.structure(.divider)
-      case .bottom: Box.LineType.structure(.bottom)
-      case .blank: Box.LineType.structure(.blank)
-    }
-
-  }
+//  func textLine(_ content: String) -> Box.LineType {
+//    let textLine = Box.TextLine(
+//      text: content,
+//      leading: .vertical(.leading),
+//      trailing: .vertical(.trailing)
+//    )
+//    return Box.LineType.text(textLine)
+//  }
+//
+//  func structureLine(
+//    type: Box.StructureType
+//  ) -> Box.LineType {
+//    switch type {
+//      case .top: Box.LineType.structure(.top)
+//      case .divider: Box.LineType.structure(.divider)
+//      case .bottom: Box.LineType.structure(.bottom)
+//      case .blank: Box.LineType.structure(.blank)
+//    }
+//  }
 
   var widthForPartRepetition: Int {
     let reservedWidth = theme.frameStyle.reservedWidth * 2
