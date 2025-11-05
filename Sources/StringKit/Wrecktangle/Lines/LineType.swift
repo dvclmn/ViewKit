@@ -14,7 +14,6 @@ extension Box {
     case text(TextLine)
     case structure(StructureType)
   }
-
 }
 
 /// Joins horizontally

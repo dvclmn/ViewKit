@@ -17,14 +17,16 @@ extension Box.PartType {
 
   /// For parts requiring repetition, supply a value to `repeatCount`.
   /// Otherwise, this defaults to a single instance.
+  ///
+  /// We return a `StringStack`, not a `String`, to allow
+  /// any additional repeating/joining required further down the pipeline.
   public func buildPart(
-    using engine: Box.Engine,
+    with theme: Box.Theme,
     repeatCount: Int = 1
   ) -> StringStack {
-//  ) -> String {
 
-    let part = glyphStack(with: engine.theme.frameStyle)
-    let stringStack = part.toStringStack(with: engine.theme)
+    let part = glyphStack(with: theme.frameStyle)
+    let stringStack = part.toStringStack(with: theme)
 
     guard repeatCount > 1 else {
       return stringStack

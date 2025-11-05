@@ -7,18 +7,6 @@
 
 import Foundation
 
-// MARK: - String builder for multiple Lines
-extension Array where Element == Box.LineType {
-  func buildString(using engine: Box.Engine) -> String {
-    let lines = self.map { line in
-      //    let lines = self.enumerated().map { index, line in
-      line.buildString(using: engine)
-      //      "\(index + 1)" + line.buildString(using: engine)
-    }
-    return lines.joined(separator: "\n")
-  }
-}
-
 // MARK: - Main String builder
 extension Box.LineType {
   func buildString(
@@ -49,11 +37,11 @@ extension Box.LineType {
 
     /// Build caps
     let leading = line.leading.buildPart(
-      using: engine,
+      with: engine.theme,
       repeatCount: 1
     ).string
     let trailing = line.trailing.buildPart(
-      using: engine,
+      with: engine.theme,
       repeatCount: 1
     ).string
 
@@ -64,7 +52,7 @@ extension Box.LineType {
       shouldHyphenate: true
     )
     let reflowed = textContent.reflowed()
-    
+
     /// Set up Padding
     let paddingCount = engine.theme.padding.width
     let paddingString = String(repeating: " ", count: paddingCount)
@@ -79,5 +67,17 @@ extension Box.LineType {
 
     return result
 
+  }
+}
+
+// MARK: - String builder for multiple Lines
+extension Array where Element == Box.LineType {
+  func buildString(using engine: Box.Engine) -> String {
+    let lines = self.map { line in
+      //    let lines = self.enumerated().map { index, line in
+      line.buildString(using: engine)
+      //      "\(index + 1)" + line.buildString(using: engine)
+    }
+    return lines.joined(separator: "\n")
   }
 }

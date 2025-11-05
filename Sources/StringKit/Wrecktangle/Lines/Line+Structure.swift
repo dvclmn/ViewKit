@@ -27,9 +27,9 @@ extension Box {
 
 extension Box.StructureLine {
   func buildParts(using engine: Box.Engine) -> String {
-    let leadStr = leading.buildPart(using: engine)
-    let trailStr = trailing.buildPart(using: engine)
-    let repeatStr = repeating.buildPart(using: engine, repeatCount: engine.widthForPartRepetition)
+    let leadStr = leading.buildPart(with: engine.theme)
+    let trailStr = trailing.buildPart(with: engine.theme)
+    let repeatStr = repeating.buildPart(with: engine.theme, repeatCount: engine.repeatedPartWidth)
 
     let string = StringStack.joined(
       leadStr, repeatStr, trailStr,

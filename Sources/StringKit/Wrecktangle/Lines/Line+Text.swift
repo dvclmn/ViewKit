@@ -10,7 +10,7 @@ import Foundation
 extension Box {
 
   public struct TextLine: Codable, Sendable, Hashable {
-    /// Full-length text content, not reflowed for Box width (yet)
+    /// Full-length text content, not reflowed for Box width yet
     public let text: String
     public let leading: Box.PartType
     public let trailing: Box.PartType

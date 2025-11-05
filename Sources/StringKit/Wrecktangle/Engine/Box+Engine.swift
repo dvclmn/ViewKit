@@ -29,38 +29,11 @@ extension Box {
 extension Box.Engine {
   var width: Int { config.width }
   var theme: Box.Theme { config.theme }
-}
 
-extension Box.Engine {
+  private var capsWidth: Int { theme.frameStyle.reservedWidth * 2 }
 
-  /// This is used by the Builder's `Box.Component`
-  /// This is meant to be the full, unreflowed text
-  ///
-  /// Note: The order of the parts here does not matter,
-  /// this is handled later.
-//  func textLine(_ content: String) -> Box.LineType {
-//    let textLine = Box.TextLine(
-//      text: content,
-//      leading: .vertical(.leading),
-//      trailing: .vertical(.trailing)
-//    )
-//    return Box.LineType.text(textLine)
-//  }
-//
-//  func structureLine(
-//    type: Box.StructureType
-//  ) -> Box.LineType {
-//    switch type {
-//      case .top: Box.LineType.structure(.top)
-//      case .divider: Box.LineType.structure(.divider)
-//      case .bottom: Box.LineType.structure(.bottom)
-//      case .blank: Box.LineType.structure(.blank)
-//    }
-//  }
-
-  var widthForPartRepetition: Int {
-    let reservedWidth = theme.frameStyle.reservedWidth * 2
-    let result = width - reservedWidth
+  var repeatedPartWidth: Int {
+    let result = width - capsWidth
     return max(0, result)
   }
 
@@ -74,10 +47,7 @@ extension Box.Engine {
   /// That means it's important that we *do* remove padding from here,
   /// so that the width for text is accurate.
   var widthForText: Int {
-    let padding = theme.padding.width
-    let capWidths = theme.frameStyle.reservedWidth * 2
-    let reservedWidth = (padding * 2) + capWidths
-
+    let reservedWidth = (theme.padding.width * 2) + capsWidth
     let widthForText = width - reservedWidth
     return max(0, widthForText)
   }
