@@ -15,7 +15,6 @@ extension Box {
 }
 
 extension Box.StructureType {
-  
   var parts: Box.StructureLine {
     switch self {
       case .top:

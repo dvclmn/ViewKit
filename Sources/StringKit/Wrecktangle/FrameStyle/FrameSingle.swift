@@ -23,7 +23,6 @@ extension Box.PartType {
     divProm: Box.GlyphProminence,
   ) -> Part {
 
-    //    let type: Box.GlyphType? =
     switch self {
 
       case .horizontal(.top), .horizontal(.bottom):
@@ -47,35 +46,6 @@ extension Box.PartType {
 
       case .join(let joinType):
 
-        switch joinType {
-          case .leading, .trailing:
-            Part {
-              Box.GlyphType.join(
-                x: divProm,
-                y: frameProm,
-                type: joinType
-              )
-            }
-
-          case .top, .bottom:
-            Part {
-              Box.GlyphType.join(
-                x: frameProm,
-                y: divProm,
-                type: joinType
-              )
-            }
-
-          case .cross:
-            Part {
-              Box.GlyphType.join(
-                x: divProm,
-                y: divProm,
-                type: joinType
-              )
-            }
-        }
-
       case .corner(let cornerType):
         Part {
           Box.GlyphType.corner(frameProm, type: cornerType)
@@ -87,8 +57,40 @@ extension Box.PartType {
         }
 
     }  // END switch self
+  }
+}
 
-    //    guard let type else { return [[]] }
-    //    return [[type]]
+extension Box.PartType {
+  fileprivate func joins(_ type: Box.JoinType) -> Part {
+    
+    switch type {
+      case .leading, .trailing:
+        Part {
+          Box.GlyphType.join(
+            x: divProm,
+            y: frameProm,
+            type: type
+          )
+        }
+        
+      case .top, .bottom:
+        Part {
+          Box.GlyphType.join(
+            x: frameProm,
+            y: divProm,
+            type: type
+          )
+        }
+        
+      case .cross:
+        Part {
+          Box.GlyphType.join(
+            x: divProm,
+            y: divProm,
+            type: type
+          )
+        }
+    }
+
   }
 }

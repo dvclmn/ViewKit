@@ -32,6 +32,7 @@ extension Box.TextLine: Box.RenderableLine {
     using engine: Box.Engine,
     at position: Box.PositionContext
   ) -> String {
+    
     let partEngine = Box.PartEngine(
       theme: engine.theme,
       at: position

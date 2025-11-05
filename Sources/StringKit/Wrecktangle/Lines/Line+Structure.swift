@@ -37,7 +37,16 @@ extension Box.StructureLine: Box.RenderableLine {
 
     let lead = leading.buildPart(using: partEngine)
     let trail = trailing.buildPart(using: partEngine)
-    let repeated = repeating.buildPart(using: partEngine, repeating: engine.repeatedPartWidth)
-    return StringStack.joined(lead, repeated, trail, along: .horizontal).string
+    let repeated = repeating.buildPart(
+      using: partEngine,
+      repeating: engine.repeatedPartWidth
+    )
+    
+    return StringStack.joined(
+      lead,
+      repeated,
+      trail,
+      along: .horizontal
+    ).string
   }
 }

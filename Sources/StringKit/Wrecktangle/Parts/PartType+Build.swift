@@ -15,22 +15,20 @@ extension Box.PartType {
   /// any additional repeating/joining required further down the pipeline.
   public func buildPart(
     using engine: Box.PartEngine,
-    repeating count: Int = 1,
+    repeating count: Int? = nil,
   ) -> StringStack {
 
     let part = glyphStack(using: engine)
     let stringStack = part.toStringStack(with: engine.theme)
 
-    guard count > 1 else {
+    guard let count, count > 1 else {
       return stringStack
     }
+
     return stringStack.repeated(along: .horizontal, count: count)
   }
 
-  func glyphStack(
-    using engine: Box.PartEngine,
-    //    with frameStyle: Box.FrameStyle
-  ) -> Part {
+  func glyphStack(using engine: Box.PartEngine) -> Part {
     switch engine.theme.frameStyle {
 
       case .single(let frameProm, let divProm):
@@ -41,15 +39,6 @@ extension Box.PartType {
 
       case .notebook:
         return notebookParts(using: engine)
-//        return Part {
-//          engine.alternatingGlyph(.corner(.increased, type: .bottomLeading), .vertical(.increased))
-//        }
-//        return if engine. {
-//          Part { Glyph.horizontal(.standard) }
-//        } else {
-//          Part { Glyph.corner(.increased, type: .bottomTrailing) }
-//        }
-
     }  // END switch
 
   }
@@ -72,12 +61,11 @@ extension StringStack {
       "Non-rectangular glyph grid")
 
     /// Convert from `GlyphType` → `Character`
-    let glyphSet = theme.glyphSet
-    let charMatrix = glyphStack.map { row in
-      row.map { glyphSet.character(for: $0) }
+    let characterGrid = glyphStack.map { row in
+      row.map { theme.glyphSet.character(for: $0) }
     }
 
-    self.init(charMatrix)
+    self.init(characterGrid)
   }
 
 }
