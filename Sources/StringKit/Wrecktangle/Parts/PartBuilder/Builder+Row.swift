@@ -8,17 +8,15 @@
 // MARK: - Part Builders
 @resultBuilder
 enum RowBuilder {
-  static func buildBlock(_ components: Box.GlyphType...) -> [Box.GlyphType] {
-    components
+  static func buildBlock(_ components: [Box.GlyphType]...) -> [Box.GlyphType] {
+    components.flatMap { $0 }
   }
 
-  static func buildEither(first component: [Box.GlyphType]) -> [Box.GlyphType] {
-    component
-  }
-
-  static func buildEither(second component: [Box.GlyphType]) -> [Box.GlyphType] {
-    component
-  }
+//  static func buildEither(first: Box.GlyphType) -> Box.GlyphType { first }
+//  static func buildEither(second: Box.GlyphType) -> Box.GlyphType { second }
+  
+  static func buildEither(first: [Box.GlyphType]) -> [Box.GlyphType] { first }
+  static func buildEither(second: [Box.GlyphType]) -> [Box.GlyphType] { second }
 
   static func buildOptional(_ component: [Box.GlyphType]?) -> [Box.GlyphType] {
     component ?? []

@@ -40,11 +40,15 @@ extension Box.PartType {
         return doubleFrameParts(extProm: extProm, intProm: intProm)
 
       case .notebook:
-        return if engine.isTopHalf {
-          Part { Glyph.horizontal(.standard) }
-        } else {
-          Part { Glyph.corner(.increased, type: .bottomTrailing) }
-        }
+        return notebookParts(using: engine)
+//        return Part {
+//          engine.alternatingGlyph(.corner(.increased, type: .bottomLeading), .vertical(.increased))
+//        }
+//        return if engine. {
+//          Part { Glyph.horizontal(.standard) }
+//        } else {
+//          Part { Glyph.corner(.increased, type: .bottomTrailing) }
+//        }
 
     }  // END switch
 
