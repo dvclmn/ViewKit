@@ -18,26 +18,17 @@ extension Box {
 extension Box {
   public struct Top: Component, Codable {
     public init() {}
-    public func makeLines() -> ComponentOutput {
-      [LineType.structure(.top)]
-    }
+    public func makeLines() -> ComponentOutput { [LineType.structure(.top)] }
   }
 
   public struct Divider: Component, Codable {
     public init() {}
-    public func makeLines() -> ComponentOutput {
-      [
-        LineType.structure(.divider)
-      ]
-    }
+    public func makeLines() -> ComponentOutput { [LineType.structure(.divider)] }
   }
 
   public struct Bottom: Component, Codable {
     public init() {}
-    public func makeLines() -> ComponentOutput {
-      [LineType.structure(.bottom)]
-
-    }
+    public func makeLines() -> ComponentOutput { [LineType.structure(.bottom)] }
   }
 
   public struct Text: Component, Codable {
@@ -58,9 +49,7 @@ extension Box {
     let text: String
     public init(_ text: String) { self.text = text }
 
-    public func makeLines() -> ComponentOutput {
-      return Box.Text(text).combined(with: Box.Divider())
-    }
+    public func makeLines() -> ComponentOutput { Box.Text(text).combined(with: Box.Divider()) }
   }
 }
 

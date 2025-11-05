@@ -10,13 +10,10 @@ import Foundation
 public typealias Part = Box.Part
 extension Box {
   public struct Part {
-
     let glyphs: GlyphStack
     var width: Int { glyphs.width }
 
-    init(
-      @PartBuilder _ content: () -> GlyphStack
-    ) {
+    init(@PartBuilder _ content: () -> GlyphStack) {
       self.glyphs = content()
     }
   }
