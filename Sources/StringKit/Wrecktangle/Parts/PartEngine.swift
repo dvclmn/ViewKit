@@ -7,50 +7,24 @@
 
 import Foundation
 
-extension Box {
-  public struct PartEngine {
-    let config: Box.Config
-//    let theme: Box.Theme
-    let position: Box.PositionContext
-    
-    public init(
-//      theme: Box.Theme,
-      config: Box.Config,
-      at position: Box.PositionContext
-    ) {
-//      self.theme = theme
-      self.config = config
-      self.position = position
-    }
-  }
-}
+//extension Box {
+//  public struct PartEngine {
+//    let config: Box.Config
+//    let position: Box.PositionContext
+//    
+//    public init(
+//      config: Box.Config,
+//      at position: Box.PositionContext
+//    ) {
+//      self.config = config
+//      self.position = position
+//    }
+//  }
+//}
 
-extension Box.PartEngine {
-  
-  var theme: Box.Theme { config.theme }
-  
-  /// True if this is in the top half of the box.
-  var isTopHalf: Bool { position.progress < 0.5 }
-  
-  /// True if near edges (useful for fading or tapered patterns).
-  var isNearEdge: Bool {
-    let p = position.progress
-    return p < 0.1 || p > 0.9
-  }
-  
-  /// Returns an index for pattern sequences combining both axes.
-  func phase(
-    horizontal index: Int,
-    repeating count: Int
-  ) -> Int {
-    (position.rowIndex + index) % count
-  }
-  
-  /// Convenience to alternate glyphs vertically.
-  func alternatingGlyph(
-    _ a: Box.GlyphType,
-    _ b: Box.GlyphType
-  ) -> Box.GlyphType {
-    position.isEven ? a : b
-  }
-}
+//extension Box.PartEngine {
+//  
+//  var theme: Box.Theme { config.theme }
+//  
+//
+//}

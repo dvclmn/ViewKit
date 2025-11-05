@@ -15,15 +15,6 @@ extension Box {
     public init(_ config: Box.Config) {
       self.config = config
     }
-//
-//    public init(
-//      width: Int,
-//      height: Int?,
-//      theme: Box.Theme,
-//      metrics
-//    ) {
-//      self.config = Config(w: width, h: height, theme: theme)
-//    }
   }
 }
 

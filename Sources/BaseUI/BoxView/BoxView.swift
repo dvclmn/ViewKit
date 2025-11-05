@@ -12,6 +12,7 @@ import SwiftUI
 public struct BoxView: View {
   @Environment(\.glyphSet) private var glyphSet
   @Environment(\.frameStyle) private var frameStyle
+  @Environment(\.metrics) private var metrics
   @Environment(\.gridWidth) private var gridWidth
   @Environment(\.gridHeight) private var gridHeight
 
@@ -30,7 +31,8 @@ public struct BoxView: View {
       Box(
         width: widthForBoxFrame,
         height: gridHeight,
-        theme: theme
+        theme: theme,
+        metrics: metrics
       ) {
         content
       }.plainText
@@ -90,13 +92,17 @@ extension BoxView {
   ScrollView {
     VStack(spacing: 14) {
   
-      BoxView {
-        "I'm a notebook!"
-        "Look at my torn pages, wah."
-        DummyContent.Strings.paragraphs[9].prefix(60).toString
-      }
-      .setGridFrame(18, alignment: .leading)
-      .setBoxStyle(glyphs: .sharp, frame: .notebook)
+//      BoxView {
+//        "I'm a notebook!"
+//        "Look at my torn pages, wah."
+//        DummyContent.Strings.paragraphs[9].prefix(60).toString
+//      }
+//      .setGridFrame(18, alignment: .leading)
+//      .setBoxStyle(
+//        glyphs: .sharp,
+//        frame: .notebook,
+//        metrics: []
+//      )
       
 //      BoxView {
 //        "Rounded, single frame, that's cool man"
@@ -117,7 +123,12 @@ extension BoxView {
       .setGridFrame(30, alignment: .leading)
       //      .setBoxStyle(glyphs: .test, frame: .single)
       //      .setBoxStyle(glyphs: .test, frame: .double)
-      .setBoxStyle(glyphs: .rounded, frame: .double)
+      .setBoxStyle(
+        glyphs: .rounded,
+        frame: .double,
+        metrics: []
+//        metrics: [.invisibles]
+      )
       //      .setBoxStyle(glyphs: .rounded, frame: .single(frame: .standard, dividers: .standard))
 
     }

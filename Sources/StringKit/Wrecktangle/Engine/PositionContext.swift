@@ -62,3 +62,30 @@ extension Box.PositionContext {
     values[cycle(values.count)]
   }
 }
+
+extension Box.PositionContext {
+  /// True if this is in the top half of the box.
+  var isTopHalf: Bool { progress < 0.5 }
+  
+  /// True if near edges (useful for fading or tapered patterns).
+  var isNearEdge: Bool {
+    let p = progress
+    return p < 0.1 || p > 0.9
+  }
+  
+  /// Returns an index for pattern sequences combining both axes.
+  func phase(
+    horizontal index: Int,
+    repeating count: Int
+  ) -> Int {
+    (rowIndex + index) % count
+  }
+  
+  /// Convenience to alternate glyphs vertically.
+  func alternatingGlyph(
+    _ a: Box.GlyphType,
+    _ b: Box.GlyphType
+  ) -> Box.GlyphType {
+    isEven ? a : b
+  }
+}

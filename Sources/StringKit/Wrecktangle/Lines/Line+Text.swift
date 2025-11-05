@@ -27,33 +27,6 @@ extension Box {
   }
 }
 
-extension Box.TextLine: Box.RenderableLine {
-  func buildString(
-    using engine: Box.Engine,
-    at position: Box.PositionContext
-  ) -> String {
-    
-    let partEngine = Box.PartEngine(
-      config: engine.config,
-      at: position
-    )
-    let lead = leading.buildPart(using: partEngine).string
-    let trail = trailing.buildPart(using: partEngine).string
-
-    let paddingCount = engine.theme.padding.width
-    let padding = String(repeating: " ", count: paddingCount)
-
-    let textContent = TextReflow(
-      text,
-      width: engine.widthForText,
-      shouldHyphenate: true
-    )
-    return textContent.reflowed().map { line in
-      lead + padding + line + padding + trail
-    }.joined("\n")
-  }
-}
-
 extension Box.TextLine: CustomStringConvertible {
   public var description: String {
     return DisplayString {

@@ -25,3 +25,6 @@ extension Box {
     }
   }
 }
+extension Box.Config {
+  var hasRowNumbers: Bool { metrics.contains(.lineNumbers) }
+}

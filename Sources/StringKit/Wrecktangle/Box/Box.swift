@@ -45,10 +45,7 @@ public struct Box: Sendable {
       )
       let result = lineType.buildString(using: engine, at: pos)
 
-      //      return index.toString
       return result
-      //      return index.toString + result
-      //      return lineType.buildString(using: engine, at: pos)
     }
     return final.joined("\n")
   }

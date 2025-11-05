@@ -7,7 +7,7 @@
 
 extension Box {
   public enum LineType: Hashable, Sendable {
-    
+
     /// Important: This `content` represents the bulk/raw
     /// text content, *before* any width-aware reflowing.
     /// This operation is performed later.
@@ -15,16 +15,22 @@ extension Box {
     case structure(StructureType)
   }
 }
+extension Box.LineType {
 
-extension Box {
-  protocol RenderableLine {
-    func buildString(
-      using engine: Engine,
-      at position: PositionContext
-    ) -> String
+  func buildString(
+    using engine: Box.Engine,
+    at position: Box.PositionContext
+  ) -> String {
+    switch self {
+      case .structure(let type):
+        return type.parts.buildString(using: engine, at: position)
+        
+      case .text(let line):
+        return line.buildString(using: engine, at: position)
+    }
   }
-}
 
+}
 
 /// Joins horizontally
 public func + (lhs: Box.LineType, rhs: Box.LineType) -> [Box.LineType] {
@@ -36,15 +42,9 @@ extension Box.LineType: CustomStringConvertible {
     switch self {
       case .text(let textLine):
         "TextLine/\(textLine)"
-        
+
       case .structure(let structureType):
         "StructureLine/\(structureType.rawValue)"
     }
   }
 }
-
-//extension Box {
-//  protocol LineContent {
-//
-//  }
-//}

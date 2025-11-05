@@ -7,7 +7,8 @@
 
 extension Box.PartType {
 
-  package func notebookParts(using engine: Box.PartEngine) -> Part {
+  package func notebookParts(position: Box.PositionContext) -> Part {
+//  package func notebookParts(using engine: Box.PartEngine) -> Part {
     switch self {
       case .horizontal(let loc):
         horizontal(loc)

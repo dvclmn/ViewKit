@@ -24,29 +24,3 @@ extension Box {
     }
   }
 }
-extension Box.StructureLine: Box.RenderableLine {
-  func buildString(
-    using engine: Box.Engine,
-    at position: Box.PositionContext
-  ) -> String {
-
-    let partEngine = Box.PartEngine(
-      config: engine.config,
-      at: position
-    )
-
-    let lead = leading.buildPart(using: partEngine)
-    let trail = trailing.buildPart(using: partEngine)
-    let repeated = repeating.buildPart(
-      using: partEngine,
-      repeating: engine.repeatedPartWidth
-    )
-    
-    return StringStack.joined(
-      lead,
-      repeated,
-      trail,
-      along: .horizontal
-    ).string
-  }
-}
