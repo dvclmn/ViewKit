@@ -35,7 +35,7 @@ extension Box.PartType {
 
   func glyphStack(
     with frameStyle: Box.FrameStyle
-  ) -> Box.GlyphStack {
+  ) -> Part {
     switch frameStyle {
 
       case .single(let frameProm, let divProm):

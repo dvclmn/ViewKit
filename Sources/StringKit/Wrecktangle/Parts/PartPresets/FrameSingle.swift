@@ -21,45 +21,53 @@ extension Box.PartType {
   func singleFrameParts(
     frameProm: Box.GlyphProminence,
     divProm: Box.GlyphProminence,
-  ) -> Box.GlyphStack {
+  ) -> Part {
 
-    let type: Box.GlyphType? =
+//    let type: Box.GlyphType? =
       switch self {
-
+          
         case .horizontal(.top), .horizontal(.bottom):
-          Box.GlyphType.horizontal(frameProm)
+          Part { Box.GlyphType.horizontal(frameProm) }
 
         case .horizontal(.interior):
-          Box.GlyphType.horizontal(divProm)
+          Part {
+            Box.GlyphType.horizontal(divProm)
+          }
 
         case .vertical(.leading), .vertical(.trailing):
-          Box.GlyphType.vertical(frameProm)
+          Part {
+            Box.GlyphType.vertical(frameProm)
+          }
 
         case .vertical(.interior):
-          Box.GlyphType.vertical(divProm)
+          Part {
+            Box.GlyphType.vertical(divProm)
+          }
 
         case .join(let joinType):
-          switch joinType {
-            case .leading, .trailing:
-              Box.GlyphType.join(
-                x: divProm,
-                y: frameProm,
-                type: joinType
-              )
+          Part {
+            switch joinType {
+              case .leading, .trailing:
+                Box.GlyphType.join(
+                  x: divProm,
+                  y: frameProm,
+                  type: joinType
+                )
 
-            case .top, .bottom:
-              Box.GlyphType.join(
-                x: frameProm,
-                y: divProm,
-                type: joinType
-              )
+              case .top, .bottom:
+                Box.GlyphType.join(
+                  x: frameProm,
+                  y: divProm,
+                  type: joinType
+                )
 
-            case .cross:
-              Box.GlyphType.join(
-                x: divProm,
-                y: divProm,
-                type: joinType
-              )
+              case .cross:
+                Box.GlyphType.join(
+                  x: divProm,
+                  y: divProm,
+                  type: joinType
+                )
+            }
           }
 
         case .corner(let cornerType):

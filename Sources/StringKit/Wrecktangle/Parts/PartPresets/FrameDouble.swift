@@ -13,7 +13,8 @@ extension Box.PartType {
   package func doubleFrameParts(
     extProm: Box.GlyphProminence,
     intProm: Box.GlyphProminence,
-  ) -> Box.GlyphStack {
+  ) -> Part {
+    //  ) -> Box.GlyphStack {
 
     switch self {
 

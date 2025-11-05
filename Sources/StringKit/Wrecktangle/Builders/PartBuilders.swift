@@ -34,27 +34,10 @@ struct Row {
   }
 }
 
-extension Box {
-  struct Part {
-    let theme: Theme
-    let glyphs: GlyphStack
 
-    var width: Int { glyphs.width }
-    var stringValue: String { glyphs.toStringStack(with: theme).string }
-
-    init(
-      theme: Theme,
-      @GlyphStackBuilder _ content: () -> [[Box.GlyphType]]
-    ) {
-      self.theme = theme
-      self.glyphs = content()
-    }
-  }
-}
-
-func Part(@GlyphStackBuilder _ content: () -> [[Box.GlyphType]]) -> Box.GlyphStack {
-  Box.Part(theme: .default, content).glyphs
-}
+//func Part(@GlyphStackBuilder _ content: () -> [[Box.GlyphType]]) -> Box.GlyphStack {
+//  Box.Part(theme: .default, content).glyphs
+//}
 
 // MARK: - Glyph Row Conversion
 protocol GlyphRowConvertible {
