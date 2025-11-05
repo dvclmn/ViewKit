@@ -10,7 +10,7 @@ import Foundation
 public typealias Part = Box.Part
 extension Box {
   public struct Part {
-    
+
     let glyphs: GlyphStack
     var width: Int { glyphs.width }
 
@@ -23,7 +23,8 @@ extension Box {
 }
 
 extension Box.Part {
-  func toString(with theme: Box.Theme) -> String {
-    glyphs.toStringStack(with: theme).string
+  
+  func toStringStack(with theme: Box.Theme) -> StringStack {
+    glyphs.toStringStack(with: theme)
   }
 }

@@ -38,22 +38,29 @@ extension Box.LineType {
     _ type: Box.StructureType,
     using engine: Box.Engine
   ) -> String {
-    
-    let parts = type.parts()
-//    let partCount = parts.count
 
-    let stacks = parts.map { part in
-//      let partWidth = part.glyphStack(with: engine.theme.frameStyle).width
+    let parts = type.parts
 
-      let count = partWidth * partCount
-      
-      return part.buildStack(
-        using: engine,
-        repeatCount: count
-      )
-    }
+    return parts.buildParts(using: engine)
+    //    let line = parts.reduce(into: "") { partialResult, part in
+    //      let leading = part.
+    //      partialResult += part.buildPart(using: engine, repeatCount: <#T##Int#>)
+    //    }
 
-    return StringStack.joined(stacks, along: .horizontal).string
+    //    let partCount = parts.count
+
+    //    let stacks = parts.map { part in
+    //      let partWidth = part.glyphStack(with: engine.theme.frameStyle).width
+    //      let lead = part
+    //      let count = partWidth * partCount
+
+    //      return part.buildStack(
+    //        using: engine,
+    //        repeatCount: count
+    //      )
+    //    }
+
+    //    return StringStack.joined(stacks, along: .horizontal).string
 
   }
 
@@ -62,28 +69,29 @@ extension Box.LineType {
     using engine: Box.Engine
   ) -> String {
 
-    let leading = line.leading.buildStack(
+    let leading = line.leading.buildPart(
       using: engine,
       repeatCount: 1
     ).string
-    let trailing = line.leading.buildStack(
+    let trailing = line.leading.buildPart(
       using: engine,
       repeatCount: 1
     ).string
 
-    let padding = engine.theme.padding.width
-    let capWidths = engine.theme.frameStyle.reservedWidth * 2
-    let reservedWidth = (padding * 2) + capWidths
-
-    let widthForText = engine.width - reservedWidth
+    //    let padding = engine.theme.padding.width
+    //    let capWidths = engine.theme.frameStyle.reservedWidth * 2
+    //    let reservedWidth = (padding * 2) + capWidths
+    //
+    //    let widthForText = engine.width - reservedWidth
 
     let textContent = TextReflow(
       line.text,
-      width: widthForText,
+      width: engine.widthForText,
       shouldHyphenate: true
     )
     let reflowed = textContent.reflowed()
-    let paddingString = String(repeating: " ", count: padding)
+    let paddingCount = engine.theme.padding.width * 2
+    let paddingString = String(repeating: " ", count: paddingCount)
 
     let result = reflowed.map { line in
       leading

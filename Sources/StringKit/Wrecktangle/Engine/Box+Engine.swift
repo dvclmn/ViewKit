@@ -69,6 +69,21 @@ extension Box.Engine {
   ///
   /// That means it's important that we *do* remove padding from here,
   /// so that the width for text is accurate.
+  
+  var widthForPartRepetition: Int {
+    let reservedWidth = theme.frameStyle.reservedWidth * 2
+    let result = width - reservedWidth
+    return max(0, result)
+  }
+  
+  var widthForText: Int {
+    let padding = theme.padding.width
+    let capWidths = theme.frameStyle.reservedWidth * 2
+    let reservedWidth = (padding * 2) + capWidths
+    
+    let widthForText = width - reservedWidth
+    return max(0, widthForText)
+  }
 //  public var widthForText: Int {
 //    let capLeading = config.theme.frameStyle.reservedDimensions.leading.width
 //    let capTrailing = config.theme.frameStyle.reservedDimensions.trailing.width

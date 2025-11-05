@@ -17,18 +17,18 @@ extension Box.PartType {
 
   /// For parts requiring repetition, supply a value to `repeatCount`.
   /// Otherwise, this defaults to a single instance.
-  public func buildStack(
+  public func buildPart(
     using engine: Box.Engine,
     repeatCount: Int = 1
   ) -> StringStack {
+//  ) -> String {
 
-    //    guard self.flexibility.isRepeatable else {
-    //      let stack = glyphStack(with: engine.theme.frameStyle)
-    //      return StringStack(from: stack, with: engine.theme)
-    //    }
+    let part = glyphStack(with: engine.theme.frameStyle)
+    let stringStack = part.toStringStack(with: engine.theme)
 
-    let glyphStack = glyphStack(with: engine.theme.frameStyle)
-    let stringStack = StringStack(from: glyphStack, with: engine.theme)
+    guard repeatCount > 1 else {
+      return stringStack
+    }
     let repeated = stringStack.repeated(along: .horizontal, count: repeatCount)
     return repeated
   }
@@ -54,6 +54,12 @@ extension Box.PartType {
   }
 }
 
+extension Array where Element == [Box.GlyphType] {
+  func toStringStack(with theme: Box.Theme) -> StringStack {
+    return StringStack(from: self, with: theme)
+  }
+}
+
 extension StringStack {
   public init(
     from glyphStack: Box.GlyphStack,
@@ -73,10 +79,4 @@ extension StringStack {
     self.init(charMatrix)
   }
 
-}
-
-extension Array where Element == [Box.GlyphType] {
-  func toStringStack(with theme: Box.Theme) -> StringStack {
-    return StringStack(from: self, with: theme)
-  }
 }

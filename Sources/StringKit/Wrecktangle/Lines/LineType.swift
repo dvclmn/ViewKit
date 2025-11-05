@@ -15,12 +15,6 @@ extension Box {
     case structure(StructureType)
   }
 
-  public enum StructureType: String, Hashable, Sendable {
-    case top
-    case divider
-    case bottom
-    case blank
-  }
 }
 
 /// Joins horizontally
