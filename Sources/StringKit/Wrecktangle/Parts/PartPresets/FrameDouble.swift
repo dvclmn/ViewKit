@@ -20,21 +20,21 @@ extension Box.PartType {
       case .horizontal(let loc):
         switch loc {
           case .top:
-            GlyphGrid {
+            Part {
               Row { Glyph.horizontal(extProm) }
               Row { Glyph.horizontal(intProm) }
               //              Row { Glyph.blank }
 
             }
           case .bottom:
-            GlyphGrid {
+            Part {
               Row { Glyph.horizontal(intProm) }
               //              Row { Glyph.blank }
               Row { Glyph.horizontal(extProm) }
             }
 
           case .interior:
-            GlyphGrid {
+            Part {
               //              Glyph.join(x: .increased, y: .standard, type: .leading)
               Glyph.horizontal(intProm)
             }
@@ -43,7 +43,7 @@ extension Box.PartType {
       case .vertical(let loc):
         switch loc {
           case .leading:
-            GlyphGrid {
+            Part {
               Row {
                 Glyph.vertical(extProm)
                 Glyph.blank
@@ -51,7 +51,7 @@ extension Box.PartType {
               }
             }
           case .trailing:
-            GlyphGrid {
+            Part {
               Row {
                 Glyph.vertical(intProm)
                 Glyph.blank
@@ -59,7 +59,7 @@ extension Box.PartType {
               }
             }
           case .interior:
-            GlyphGrid {
+            Part {
               Glyph.vertical(intProm)
             }
         }
@@ -67,7 +67,7 @@ extension Box.PartType {
       case .join(let joinType):
         switch joinType {
           case .leading:
-            GlyphGrid {
+            Part {
               Row {
                 Glyph.vertical(extProm)
                 Glyph.blank
@@ -75,7 +75,7 @@ extension Box.PartType {
               }
             }
           case .trailing:
-            GlyphGrid {
+            Part {
               Row {
                 Glyph.join(x: intProm, y: intProm, type: joinType)
                 Glyph.blank
@@ -84,7 +84,7 @@ extension Box.PartType {
             }
 
           case .top:
-            GlyphGrid {
+            Part {
               Row {
                 Glyph.horizontal(extProm)
                 Glyph.blank
@@ -93,7 +93,7 @@ extension Box.PartType {
             }
 
           case .bottom:
-            GlyphGrid {
+            Part {
               Row {
                 Glyph.join(x: intProm, y: intProm, type: joinType)
                 Glyph.blank
@@ -102,7 +102,7 @@ extension Box.PartType {
             }
 
           case .cross:
-            GlyphGrid {
+            Part {
               Row {
                 Glyph.join(x: intProm, y: intProm, type: joinType)
               }
@@ -113,7 +113,7 @@ extension Box.PartType {
         switch cornerType {
           case .topLeading:
 
-            GlyphGrid {
+            Part {
               Row {
                 Glyph.corner(.increased, type: cornerType)
                 Glyph.horizontal(.increased)
@@ -127,7 +127,7 @@ extension Box.PartType {
             }
 
           case .topTrailing:
-            GlyphGrid {
+            Part {
               Row {
                 Glyph.horizontal(.increased)
                 Glyph.horizontal(.increased)
@@ -141,7 +141,7 @@ extension Box.PartType {
             }
 
           case .bottomLeading:
-            GlyphGrid {
+            Part {
               Row {
                 Glyph.vertical(.increased)
                 Glyph.blank
@@ -156,7 +156,7 @@ extension Box.PartType {
             }
 
           case .bottomTrailing:
-            GlyphGrid {
+            Part {
               Row {
                 Glyph.corner(.standard, type: cornerType)
                 Glyph.blank
@@ -172,7 +172,7 @@ extension Box.PartType {
         }
 
       case .blank:
-        GlyphGrid {
+        Part {
           Glyph.blank
         }
     }

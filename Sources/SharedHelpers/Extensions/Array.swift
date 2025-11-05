@@ -57,6 +57,7 @@ extension Array where Element == [Character] {
 }
 
 extension Array where Element: Collection {
+  /// Width of the widest row, or zero if none found
   public var width: Int {
     self.map { $0.count }.max() ?? 0
   }

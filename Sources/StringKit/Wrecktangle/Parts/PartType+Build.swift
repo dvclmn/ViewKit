@@ -8,12 +8,12 @@
 import Foundation
 
 extension Box.PartType {
-//  
-//  public func width(for frameStyle: Box.FrameStyle) -> Int {
-//    let stack = self.glyphStack(with: frameStyle)
-//    let width = stack.width
-//    return width
-//  }
+
+  public func width(for frameStyle: Box.FrameStyle) -> Int {
+    let stack = self.glyphStack(with: frameStyle)
+    let width = stack.width
+    return width
+  }
 
   /// For parts requiring repetition, supply a value to `repeatCount`.
   /// Otherwise, this defaults to a single instance.
@@ -22,10 +22,10 @@ extension Box.PartType {
     repeatCount: Int = 1
   ) -> StringStack {
 
-//    guard self.flexibility.isRepeatable else {
-//      let stack = glyphStack(with: engine.theme.frameStyle)
-//      return StringStack(from: stack, with: engine.theme)
-//    }
+    //    guard self.flexibility.isRepeatable else {
+    //      let stack = glyphStack(with: engine.theme.frameStyle)
+    //      return StringStack(from: stack, with: engine.theme)
+    //    }
 
     let glyphStack = glyphStack(with: engine.theme.frameStyle)
     let stringStack = StringStack(from: glyphStack, with: engine.theme)
@@ -37,7 +37,7 @@ extension Box.PartType {
     with frameStyle: Box.FrameStyle
   ) -> Box.GlyphStack {
     switch frameStyle {
-        
+
       case .single(let frameProm, let divProm):
         return singleFrameParts(frameProm: frameProm, divProm: divProm)
 
@@ -45,7 +45,7 @@ extension Box.PartType {
         return doubleFrameParts(extProm: extProm, intProm: intProm)
 
       case .notebook:
-        return GlyphGrid {
+        return Part {
           Row {
             Glyph.horizontal(.standard)
           }
@@ -73,4 +73,10 @@ extension StringStack {
     self.init(charMatrix)
   }
 
+}
+
+extension Array where Element == [Box.GlyphType] {
+  func toStringStack(with theme: Box.Theme) -> StringStack {
+    return StringStack(from: self, with: theme)
+  }
 }
