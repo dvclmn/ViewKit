@@ -92,7 +92,7 @@ extension HeaderBoxView {
     }
     .setBoxStyle(
       glyphs: .rounded,
-      frame: .single(frame: .increased, dividers: .standard)
+      frame: .single
     )
 
     HeaderBoxView("Double Frame") {
@@ -100,7 +100,7 @@ extension HeaderBoxView {
     }
     .setBoxStyle(
       glyphs: .double,
-      frame: .double(exterior: .increased, interior: .standard)
+      frame: .double
     )
 
     //    HeaderBoxView("Double Frame Style") {

@@ -31,14 +31,9 @@ extension Box.PartType {
   func glyphStack(using engine: Box.PartEngine) -> Part {
     switch engine.theme.frameStyle {
 
-      case .single(let frameProm, let divProm):
-        return singleFrameParts(frameProm: frameProm, divProm: divProm)
-
-      case .double(let extProm, let intProm):
-        return doubleFrameParts(extProm: extProm, intProm: intProm)
-
-      case .notebook:
-        return notebookParts(using: engine)
+      case .single: singleFrameParts()
+      case .double: doubleFrameParts()
+      case .notebook: notebookParts(using: engine)
     }  // END switch
 
   }

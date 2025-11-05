@@ -9,10 +9,7 @@ extension Box.PartType {
 
   /// `Prominence.increased` on the external frame parts,
   /// and  `Prominence.standard` on the internal parts
-  package func doubleFrameParts(
-    extProm: Box.GlyphProminence,
-    intProm: Box.GlyphProminence,
-  ) -> Part {
+  package func doubleFrameParts() -> Part {
     //  ) -> Box.GlyphStack {
 
     switch self {
@@ -21,19 +18,19 @@ extension Box.PartType {
         switch loc {
           case .top:
             Part {
-              Row { Glyph.horizontal(extProm) }
-              Row { Glyph.horizontal(intProm) }
+              Row { Glyph.horizontal(.increased) }
+              Row { Glyph.horizontal(.standard) }
 
             }
           case .bottom:
             Part {
-              Row { Glyph.horizontal(intProm) }
-              Row { Glyph.horizontal(extProm) }
+              Row { Glyph.horizontal(.standard) }
+              Row { Glyph.horizontal(.increased) }
             }
 
           case .interior:
             Part {
-              Glyph.horizontal(intProm)
+              Glyph.horizontal(.standard)
             }
         }
 
@@ -42,22 +39,22 @@ extension Box.PartType {
           case .leading:
             Part {
               Row {
-                Glyph.vertical(extProm)
+                Glyph.vertical(.increased)
                 Glyph.blank
-                Glyph.vertical(intProm)
+                Glyph.vertical(.standard)
               }
             }
           case .trailing:
             Part {
               Row {
-                Glyph.vertical(intProm)
+                Glyph.vertical(.standard)
                 Glyph.blank
-                Glyph.vertical(extProm)
+                Glyph.vertical(.increased)
               }
             }
           case .interior:
             Part {
-              Glyph.vertical(intProm)
+              Glyph.vertical(.standard)
             }
         }
 
@@ -66,42 +63,42 @@ extension Box.PartType {
           case .leading:
             Part {
               Row {
-                Glyph.vertical(extProm)
+                Glyph.vertical(.increased)
                 Glyph.blank
-                Glyph.join(x: intProm, y: intProm, type: joinType)
+                Glyph.join(x: .standard, y: .standard, type: joinType)
               }
             }
           case .trailing:
             Part {
               Row {
-                Glyph.join(x: intProm, y: intProm, type: joinType)
+                Glyph.join(x: .standard, y: .standard, type: joinType)
                 Glyph.blank
-                Glyph.vertical(extProm)
+                Glyph.vertical(.increased)
               }
             }
 
           case .top:
             Part {
               Row {
-                Glyph.horizontal(extProm)
+                Glyph.horizontal(.increased)
                 Glyph.blank
-                Glyph.join(x: intProm, y: intProm, type: joinType)
+                Glyph.join(x: .standard, y: .standard, type: joinType)
               }
             }
 
           case .bottom:
             Part {
               Row {
-                Glyph.join(x: intProm, y: intProm, type: joinType)
+                Glyph.join(x: .standard, y: .standard, type: joinType)
                 Glyph.blank
-                Glyph.horizontal(extProm)
+                Glyph.horizontal(.increased)
               }
             }
 
           case .cross:
             Part {
               Row {
-                Glyph.join(x: intProm, y: intProm, type: joinType)
+                Glyph.join(x: .standard, y: .standard, type: joinType)
               }
             }
         }

@@ -18,37 +18,34 @@ extension Box.PartType {
   /// Perhaps, in future, I will add the concept of per-axis
   /// glyph styles, but for now, these Frames have the
   /// *same glyph style* for all axes.
-  func singleFrameParts(
-    frameProm: Box.GlyphProminence,
-    divProm: Box.GlyphProminence,
-  ) -> Part {
+  func singleFrameParts() -> Part {
 
     switch self {
 
       case .horizontal(.top), .horizontal(.bottom):
-        Part { Box.GlyphType.horizontal(frameProm) }
+        Part { Box.GlyphType.horizontal(.increased) }
 
       case .horizontal(.interior):
         Part {
-          Box.GlyphType.horizontal(divProm)
+          Box.GlyphType.horizontal(.standard)
         }
 
       case .vertical(.leading), .vertical(.trailing):
         Part {
-          Box.GlyphType.vertical(frameProm)
+          Box.GlyphType.vertical(.increased)
         }
 
       case .vertical(.interior):
         Part {
-          Box.GlyphType.vertical(divProm)
-          Box.GlyphType.vertical(divProm)
+          Box.GlyphType.vertical(.standard)
+          Box.GlyphType.vertical(.standard)
         }
 
       case .join(let joinType):
-
+        join(joinType)
       case .corner(let cornerType):
         Part {
-          Box.GlyphType.corner(frameProm, type: cornerType)
+          Box.GlyphType.corner(.increased, type: cornerType)
         }
 
       case .blank:
@@ -61,32 +58,32 @@ extension Box.PartType {
 }
 
 extension Box.PartType {
-  fileprivate func joins(_ type: Box.JoinType) -> Part {
-    
+  fileprivate func join(_ type: Box.JoinType) -> Part {
+
     switch type {
       case .leading, .trailing:
         Part {
           Box.GlyphType.join(
-            x: divProm,
-            y: frameProm,
+            x: .standard,
+            y: .increased,
             type: type
           )
         }
-        
+
       case .top, .bottom:
         Part {
           Box.GlyphType.join(
-            x: frameProm,
-            y: divProm,
+            x: .increased,
+            y: .standard,
             type: type
           )
         }
-        
+
       case .cross:
         Part {
           Box.GlyphType.join(
-            x: divProm,
-            y: divProm,
+            x: .standard,
+            y: .standard,
             type: type
           )
         }

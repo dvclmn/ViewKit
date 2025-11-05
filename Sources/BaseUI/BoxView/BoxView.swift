@@ -101,7 +101,7 @@ extension BoxView {
 //      BoxView {
 //        "Rounded, single frame, that's cool man"
 //      }
-//      .setBoxStyle(glyphs: .double, frame: .single())
+//      .setBoxStyle(glyphs: .double, frame: .single)
       
       BoxView {
         Box.Header("Hello, I'm a Header")
@@ -115,9 +115,9 @@ extension BoxView {
         //                  Box.Bottom()
       }
       .setGridFrame(30, alignment: .leading)
-      //      .setBoxStyle(glyphs: .test, frame: .single())
-      //      .setBoxStyle(glyphs: .test, frame: .double())
-      .setBoxStyle(glyphs: .rounded, frame: .double())
+      //      .setBoxStyle(glyphs: .test, frame: .single)
+      //      .setBoxStyle(glyphs: .test, frame: .double)
+      .setBoxStyle(glyphs: .rounded, frame: .double)
       //      .setBoxStyle(glyphs: .rounded, frame: .single(frame: .standard, dividers: .standard))
 
     }
