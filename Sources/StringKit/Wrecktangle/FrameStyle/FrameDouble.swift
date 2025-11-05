@@ -7,11 +7,7 @@
 
 extension Box.PartType {
 
-  /// `Prominence.increased` on the external frame parts,
-  /// and  `Prominence.standard` on the internal parts
   package func doubleFrameParts() -> Part {
-    //  ) -> Box.GlyphStack {
-
     switch self {
       case .horizontal(let loc):
         horizontal(loc)

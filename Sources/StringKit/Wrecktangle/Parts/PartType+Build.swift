@@ -19,13 +19,42 @@ extension Box.PartType {
   ) -> StringStack {
 
     let part = glyphStack(using: engine)
-    let stringStack = part.toStringStack(with: engine.theme)
+    
+    let rawStack = part.toStringStack(with: engine.theme)
+    
+
+    let hasLineNumbers = engine.config.metrics.contains(.lineNumbers)
+//    let numbers = rowNumberToStack(engine.position.rowNumber)
+
+    let testStack = StringStack([[Character("?")]])
+    
+    print(
+      "Testing Row Numbers.",
+      "Raw Stack:\n\(rawStack)",
+      "Test Stack:\n\(testStack)"
+    )
+    
+    let stringStack = StringStack.joined(
+      hasLineNumbers ? [] : [],
+//      hasLineNumbers ? testStack : [],
+      rawStack,
+      along: .horizontal
+    )
 
     guard let count, count > 1 else {
       return stringStack
     }
 
     return stringStack.repeated(along: .horizontal, count: count)
+  }
+
+  private func rowNumberToStack(_ index: Int) -> StringStack {
+    let indexString = index.toString
+    let characters: [Character] = indexString.map { char in
+      return Character(extendedGraphemeClusterLiteral: char)
+    }
+
+    return StringStack([characters])
   }
 
   func glyphStack(using engine: Box.PartEngine) -> Part {

@@ -17,9 +17,15 @@ public struct Box: Sendable {
     width: Int = 20,
     height: Int? = nil,
     theme: Theme = .default,
+    metrics: Metrics = .lineNumbers,
     @BoxBuilder content: () -> [any Component]
   ) {
-    let config = Config(w: width, h: height, theme: theme)
+    let config = Config(
+      w: width,
+      h: height,
+      theme: theme,
+      metrics: metrics
+    )
     self.config = config
     self.components = content()
     self.engine = Box.Engine(config)
@@ -32,16 +38,17 @@ public struct Box: Sendable {
     let final = allLines.enumerated().map {
       index,
       lineType in
-      
+
       let pos = Box.PositionContext(
         i: index,
         rowCount: allLines.count
       )
       let result = lineType.buildString(using: engine, at: pos)
-      
-//      return index.toString
-      return index.toString + result
-//      return lineType.buildString(using: engine, at: pos)
+
+      //      return index.toString
+      return result
+      //      return index.toString + result
+      //      return lineType.buildString(using: engine, at: pos)
     }
     return final.joined("\n")
   }

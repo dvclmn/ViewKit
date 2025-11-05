@@ -9,20 +9,26 @@ import Foundation
 
 extension Box {
   public struct PartEngine {
-    let theme: Box.Theme
+    let config: Box.Config
+//    let theme: Box.Theme
     let position: Box.PositionContext
     
     public init(
-      theme: Box.Theme,
+//      theme: Box.Theme,
+      config: Box.Config,
       at position: Box.PositionContext
     ) {
-      self.theme = theme
+//      self.theme = theme
+      self.config = config
       self.position = position
     }
   }
 }
 
 extension Box.PartEngine {
+  
+  var theme: Box.Theme { config.theme }
+  
   /// True if this is in the top half of the box.
   var isTopHalf: Bool { position.progress < 0.5 }
   

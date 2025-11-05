@@ -19,6 +19,7 @@ public struct StringStack {
       self.stack = []
       return
     }
+    
     precondition(
       stack.allSatisfy { $0.count == width },
       "Non-rectangular StringStack: all rows must have equal width"
@@ -57,10 +58,10 @@ public struct StringStack {
 extension StringStack {
 
   public var string: String { stack.map { String($0) }.joined("\n") }
-  
+
   public var height: Int {
     let value = stack.count
-//    print("Stack Height: \(value)")
+    //    print("Stack Height: \(value)")
     return value
   }
   public var width: Int { stack.map { $0.count }.max() ?? 0 }
@@ -119,6 +120,16 @@ extension StringStack: ExpressibleByArrayLiteral {
 extension StringStack: ExpressibleByUnicodeScalarLiteral {
   public init(unicodeScalarLiteral value: Character) {
     self.stack = [[value]]
+  }
+}
+
+extension StringStack: ExpressibleByStringLiteral {
+  public init(stringLiteral value: StringLiteralType) {
+    let characters = Array(value)
+    //    let characters: [Character] = value.unicodeScalars.map { scalar in
+    //      Character(scalar)
+    //    }
+    self.init([characters])
   }
 }
 

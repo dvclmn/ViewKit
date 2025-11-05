@@ -15,14 +15,15 @@ extension Box {
     public init(_ config: Box.Config) {
       self.config = config
     }
-
-    public init(
-      width: Int,
-      height: Int?,
-      theme: Box.Theme,
-    ) {
-      self.config = Config(w: width, h: height, theme: theme)
-    }
+//
+//    public init(
+//      width: Int,
+//      height: Int?,
+//      theme: Box.Theme,
+//      metrics
+//    ) {
+//      self.config = Config(w: width, h: height, theme: theme)
+//    }
   }
 }
 
@@ -31,9 +32,11 @@ extension Box.Engine {
   var theme: Box.Theme { config.theme }
 
   private var capsWidth: Int { theme.frameStyle.reservedWidth * 2 }
+  private var rowNumbersWidth: Int { config.metrics.contains(.lineNumbers) ? 2 : 0 }
 
   var repeatedPartWidth: Int {
-    let result = width - capsWidth
+    let reserved = capsWidth + rowNumbersWidth
+    let result = width - reserved
     return max(0, result)
   }
 
@@ -47,7 +50,7 @@ extension Box.Engine {
   /// That means it's important that we *do* remove padding from here,
   /// so that the width for text is accurate.
   var widthForText: Int {
-    let reservedWidth = (theme.padding.width * 2) + capsWidth
+    let reservedWidth = (theme.padding.width * 2) + capsWidth + rowNumbersWidth
     let widthForText = width - reservedWidth
     return max(0, widthForText)
   }

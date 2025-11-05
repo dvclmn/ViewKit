@@ -7,7 +7,7 @@
 
 extension Box {
 
-  public struct Metrics: OptionSet, Sendable {
+  public struct Metrics: OptionSet, Sendable, Codable {
     public init(rawValue: Int) {
       self.rawValue = rawValue
     }

@@ -34,7 +34,7 @@ extension Box.TextLine: Box.RenderableLine {
   ) -> String {
     
     let partEngine = Box.PartEngine(
-      theme: engine.theme,
+      config: engine.config,
       at: position
     )
     let lead = leading.buildPart(using: partEngine).string

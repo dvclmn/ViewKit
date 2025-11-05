@@ -10,11 +10,18 @@ extension Box {
     let width: Int
     let height: Int?
     let theme: Theme
+    let metrics: Metrics
     
-    public init(w: Int, h: Int? = nil, theme: Theme) {
+    public init(
+      w: Int,
+      h: Int? = nil,
+      theme: Theme,
+      metrics: Metrics
+    ) {
       self.width = w
       self.height = h
       self.theme = theme
+      self.metrics = metrics
     }
   }
 }
