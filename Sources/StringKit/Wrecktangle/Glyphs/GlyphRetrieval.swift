@@ -30,7 +30,14 @@ extension Box.GlyphSet: GlyphProvider {
     for type: Box.GlyphType,
     with fallbackCharacter: Character = " "
   ) -> Character {
-    switch self {
+    guard !type.isLiteral else {
+      let literalChar: Character? = switch type {
+        case .literal(let character): character
+        default: nil
+      }
+      return literalChar ?? fallbackCharacter
+    }
+    return switch self {
       case .base(let map):
         map[type]
           ?? map[optionalKey: type.prominenceAlt]

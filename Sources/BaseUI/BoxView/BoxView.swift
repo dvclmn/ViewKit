@@ -96,7 +96,7 @@ extension BoxView {
         DummyContent.Strings.paragraphs[9].prefix(60).toString
       }
       .setGridFrame(18, alignment: .leading)
-      .setBoxStyle(glyphs: .double, frame: .notebook)
+      .setBoxStyle(glyphs: .sharp, frame: .notebook)
       
 //      BoxView {
 //        "Rounded, single frame, that's cool man"

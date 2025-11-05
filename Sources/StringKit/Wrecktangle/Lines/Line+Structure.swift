@@ -41,22 +41,3 @@ extension Box.StructureLine: Box.RenderableLine {
     return StringStack.joined(lead, repeated, trail, along: .horizontal).string
   }
 }
-//
-//
-//
-//extension Box.StructureLine {
-//  func buildParts(
-//    using engine: Box.Engine
-//  ) -> String {
-//    let leadStr = leading.buildPart(with: engine.theme)
-//    let trailStr = trailing.buildPart(with: engine.theme)
-//    let repeatStr = repeating.buildPart(with: engine.theme, repeatCount: engine.repeatedPartWidth)
-//
-//    let string = StringStack.joined(
-//      leadStr, repeatStr, trailStr,
-//      along: .horizontal
-//    ).string
-//
-//    return string
-//  }
-//}

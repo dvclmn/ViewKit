@@ -32,11 +32,16 @@ public struct Box: Sendable {
     let final = allLines.enumerated().map {
       index,
       lineType in
+      
       let pos = Box.PositionContext(
         i: index,
         rowCount: allLines.count
       )
-      return lineType.buildString(using: engine, at: pos)
+      let result = lineType.buildString(using: engine, at: pos)
+      
+//      return index.toString
+      return index.toString + result
+//      return lineType.buildString(using: engine, at: pos)
     }
     return final.joined("\n")
   }

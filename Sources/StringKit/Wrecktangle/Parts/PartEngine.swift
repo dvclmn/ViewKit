@@ -41,7 +41,10 @@ extension Box.PartEngine {
   }
   
   /// Convenience to alternate glyphs vertically.
-  func alternatingGlyph(_ a: Box.GlyphType, _ b: Box.GlyphType) -> Box.GlyphType {
+  func alternatingGlyph(
+    _ a: Box.GlyphType,
+    _ b: Box.GlyphType
+  ) -> Box.GlyphType {
     position.isEven ? a : b
   }
 }

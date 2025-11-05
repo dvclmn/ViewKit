@@ -38,7 +38,11 @@ extension Box.PartType {
             
             Part {
               
-              engine.alternatingGlyph(.vertical(.standard), .horizontal(.increased))
+              engine.alternatingGlyph(
+                .literal("&"),
+//                .corner(.standard, type: .topLeading),
+                .horizontal(.increased)
+              )
               
             }
           case .trailing:
