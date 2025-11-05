@@ -24,18 +24,38 @@ extension Box {
     }
   }
 }
-
-extension Box.StructureLine {
-  func buildParts(using engine: Box.Engine) -> String {
-    let leadStr = leading.buildPart(with: engine.theme)
-    let trailStr = trailing.buildPart(with: engine.theme)
-    let repeatStr = repeating.buildPart(with: engine.theme, repeatCount: engine.repeatedPartWidth)
-
-    let string = StringStack.joined(
-      leadStr, repeatStr, trailStr,
-      along: .horizontal
-    ).string
-
-    return string
+extension Box.StructureLine: Box.RenderableLine {
+  func buildString(
+    using engine: Box.Engine,
+    at position: Box.PositionContext
+  ) -> String {
+    // Same as your buildParts, but with position-aware parts
+    let lead = leading.buildPart(with: engine.theme, at: position)
+    let trail = trailing.buildPart(with: engine.theme, at: position)
+    let repeated = repeating.buildPart(
+      with: engine.theme,
+      repeatCount: engine.repeatedPartWidth,
+      at: position
+    )
+    return StringStack.joined(lead, repeated, trail, along: .horizontal).string
   }
 }
+//
+//
+//
+//extension Box.StructureLine {
+//  func buildParts(
+//    using engine: Box.Engine
+//  ) -> String {
+//    let leadStr = leading.buildPart(with: engine.theme)
+//    let trailStr = trailing.buildPart(with: engine.theme)
+//    let repeatStr = repeating.buildPart(with: engine.theme, repeatCount: engine.repeatedPartWidth)
+//
+//    let string = StringStack.joined(
+//      leadStr, repeatStr, trailStr,
+//      along: .horizontal
+//    ).string
+//
+//    return string
+//  }
+//}

@@ -12,7 +12,6 @@ public typealias ComponentOutput = [Box.LineType]
 extension Box {
   public protocol Component: Codable, Sendable, Equatable {
     func makeLines() -> ComponentOutput
-    //    func makeLines(using engine: Box.Engine) -> ComponentOutput
   }
 }
 

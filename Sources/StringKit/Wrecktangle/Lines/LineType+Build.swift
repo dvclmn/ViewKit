@@ -20,55 +20,55 @@ extension Box.LineType {
 }
 
 // MARK: - Helper methods for String Building
-extension Box.LineType {
-
-  private func buildStructureLine(
-    _ type: Box.StructureType,
-    using engine: Box.Engine
-  ) -> String {
-    let parts = type.parts
-    return parts.buildParts(using: engine)
-  }
-
-  private func buildTextLine(
-    _ line: Box.TextLine,
-    using engine: Box.Engine
-  ) -> String {
-
-    /// Build caps
-    let leading = line.leading.buildPart(
-      with: engine.theme,
-      repeatCount: 1
-    ).string
-    let trailing = line.trailing.buildPart(
-      with: engine.theme,
-      repeatCount: 1
-    ).string
-
-    /// Reflow Text
-    let textContent = TextReflow(
-      line.text,
-      width: engine.widthForText,
-      shouldHyphenate: true
-    )
-    let reflowed = textContent.reflowed()
-
-    /// Set up Padding
-    let paddingCount = engine.theme.padding.width
-    let paddingString = String(repeating: " ", count: paddingCount)
-
-    let result = reflowed.map { line in
-      leading
-        + paddingString
-        + line
-        + paddingString
-        + trailing
-    }.joined("\n")
-
-    return result
-
-  }
-}
+//extension Box.LineType {
+//
+//  private func buildStructureLine(
+//    _ type: Box.StructureType,
+//    using engine: Box.Engine
+//  ) -> String {
+//    let parts = type.parts
+//    return parts.buildParts(using: engine)
+//  }
+//
+//  private func buildTextLine(
+//    _ line: Box.TextLine,
+//    using engine: Box.Engine
+//  ) -> String {
+//
+//    /// Build caps
+//    let leading = line.leading.buildPart(
+//      with: engine.theme,
+//      repeatCount: 1
+//    ).string
+//    let trailing = line.trailing.buildPart(
+//      with: engine.theme,
+//      repeatCount: 1
+//    ).string
+//
+//    /// Reflow Text
+//    let textContent = TextReflow(
+//      line.text,
+//      width: engine.widthForText,
+//      shouldHyphenate: true
+//    )
+//    let reflowed = textContent.reflowed()
+//
+//    /// Set up Padding
+//    let paddingCount = engine.theme.padding.width
+//    let paddingString = String(repeating: " ", count: paddingCount)
+//
+//    let result = reflowed.map { line in
+//      leading
+//        + paddingString
+//        + line
+//        + paddingString
+//        + trailing
+//    }.joined("\n")
+//
+//    return result
+//
+//  }
+//}
 
 // MARK: - String builder for multiple Lines
 extension Array where Element == Box.LineType {

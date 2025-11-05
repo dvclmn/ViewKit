@@ -16,6 +16,16 @@ extension Box {
   }
 }
 
+extension Box {
+  protocol RenderableLine {
+    func buildString(
+      using engine: Engine,
+      at position: PositionContext
+    ) -> String
+  }
+}
+
+
 /// Joins horizontally
 public func + (lhs: Box.LineType, rhs: Box.LineType) -> [Box.LineType] {
   [lhs, rhs]
@@ -32,3 +42,9 @@ extension Box.LineType: CustomStringConvertible {
     }
   }
 }
+
+//extension Box {
+//  protocol LineContent {
+//
+//  }
+//}

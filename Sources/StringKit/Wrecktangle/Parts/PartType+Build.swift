@@ -22,7 +22,8 @@ extension Box.PartType {
   /// any additional repeating/joining required further down the pipeline.
   public func buildPart(
     with theme: Box.Theme,
-    repeatCount: Int = 1
+    repeatCount: Int = 1,
+    at rowPosition: Box.PositionContext? = nil
   ) -> StringStack {
 
     let part = glyphStack(with: theme.frameStyle)
