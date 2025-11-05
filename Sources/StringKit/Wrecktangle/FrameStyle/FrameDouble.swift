@@ -6,7 +6,6 @@
 //
 
 extension Box.PartType {
-  public typealias Glyph = Box.GlyphType
 
   /// `Prominence.increased` on the external frame parts,
   /// and  `Prominence.standard` on the internal parts

@@ -8,6 +8,8 @@
 import EnumMacros
 import Foundation
 
+typealias Glyph = Box.GlyphType
+
 extension Box {
 
   /// The building block used by ``Box/PartType``.

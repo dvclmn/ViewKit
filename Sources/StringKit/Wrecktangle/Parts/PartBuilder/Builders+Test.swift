@@ -5,9 +5,7 @@
 //  Created by Dave Coleman on 5/11/2025.
 //
 
-extension Box {
-  typealias Glyph = Box.GlyphType
-  
+extension Box {  
   private struct BuildersTest {
     func testPart() -> Part {
       return Part {

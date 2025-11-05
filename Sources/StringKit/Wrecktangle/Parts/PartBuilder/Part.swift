@@ -20,7 +20,6 @@ extension Box {
 }
 
 extension Box.Part {
-  
   func toStringStack(with theme: Box.Theme) -> StringStack {
     glyphs.toStringStack(with: theme)
   }
