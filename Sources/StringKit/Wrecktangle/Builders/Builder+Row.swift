@@ -10,9 +10,9 @@
 @resultBuilder
 enum RowBuilder {
   static func buildBlock(
-    _ components: [Box.GlyphType]...
+    _ components: Box.GlyphType...
   ) -> [Box.GlyphType] {
-    components.flatMap { $0 }
+    components
   }
   
 //  static func buildEither(
