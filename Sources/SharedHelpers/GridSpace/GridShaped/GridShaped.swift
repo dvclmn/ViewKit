@@ -15,9 +15,15 @@ public protocol GridShaped: Collection {
 
   /// See `StringKit/StringStack` for example init
   /// I kinda want to *prevent* this, if anything?
-  init(_ cells: Cells, fallback: Cell)
-  static func repair(row: Row, targetWidth: Int, fill: Cell) -> Row
-//  static var fallbackCell: Cell { get }
+  init(_ cells: Cells)
+//  init(_ cells: Cells, fallback: Cell)
+  
+  func defaultRepair(
+    _ cells: Cells,
+    fallback: Cell
+  ) -> Cells?
+//  static func repair(row: Row, targetWidth: Int, fill: Cell) -> Row
+  static var fallbackCell: Cell { get }
 }
 
 public enum RowValidation<T: GridShaped> {
@@ -26,8 +32,7 @@ public enum RowValidation<T: GridShaped> {
   case throwError
 }
 
-//extension GridShaped {
-//  
+//
 //  /// Creates a Grid with validated rows
 //  public static func create(
 //    _ cells: Cells,

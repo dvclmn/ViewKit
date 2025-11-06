@@ -9,47 +9,7 @@ import Foundation
 import SharedHelpers
 
 extension StringStack {
-  static func patchedGrid(
-    _ cells: Cells,
-    fallback: Cell
-      //    visualDebug: Bool = false,
-      //    repair: (Row, Int) -> Row
-  ) -> Cells? {
 
-    //    guard let firstRow = cells.first else {
-    //      //      print("Couldn't get first row to determine target width")
-    //      return nil
-    //    }
-
-    let targetWidth = cells.width(for: .widestRow)
-
-    //    if visualDebug {
-    print("⚠️ Grid shape mismatch detected – applying patch:")
-    print("Original: \(cells.map { "\($0)" }.joined(separator: " | "))")
-    //    }
-
-    let patched = cells.map { row in
-      //      row.count == targetWidth ? row : repair(row, targetWidth)
-
-      if row.count == targetWidth {
-        return row
-
-      } else if row.count < targetWidth {
-        return row + Array(repeating: fallback, count: targetWidth - row.count)
-
-      } else {
-        var newRow = Array(row.prefix(targetWidth - 1))
-        newRow.append(fallback)
-        return newRow
-      }
-    }
-
-    //    if visualDebug {
-    print("Patched:  \(patched.map { "\($0)" }.joined(separator: " | "))")
-    //    }
-
-    return patched
-  }
 }
 
 //extension StringStack {

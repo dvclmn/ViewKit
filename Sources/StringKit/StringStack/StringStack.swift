@@ -14,10 +14,12 @@ public struct StringStack: GridShaped {
   public typealias Cell = Character
   public typealias Row = [Character]
 
+  public static let fallbackCell: Cell = "⚠️"
+  
   public var cells: Cells
 
-  public init(_ cells: Cells, fallback: Cell = "⚠️") {
-    let patched = Self.patchedGrid(cells, fallback: fallback)
+  public init(_ cells: Cells) {
+    let patched = Self.defaultRepair(cells, fallback: Self.fallbackCell)
     self.cells = patched ?? []
   }
 }
@@ -47,22 +49,22 @@ extension StringStack: CustomStringConvertible {
   public var description: String { string }
 }
 
-extension StringStack {
-  public static func repair(
-    row: Row,
-    targetWidth: Int,
-    fill: Cell = " "
-  ) -> Row {
-    if row.count == targetWidth {
-      return row
-
-    } else if row.count < targetWidth {
-      return row + Array(repeating: fill, count: targetWidth - row.count)
-
-    } else {
-      var newRow = Array(row.prefix(targetWidth - 1))
-      newRow.append(fill)
-      return newRow
-    }
-  }
-}
+//extension StringStack {
+//  public static func repair(
+//    row: Row,
+//    targetWidth: Int,
+//    fill: Cell = " "
+//  ) -> Row {
+//    if row.count == targetWidth {
+//      return row
+//
+//    } else if row.count < targetWidth {
+//      return row + Array(repeating: fill, count: targetWidth - row.count)
+//
+//    } else {
+//      var newRow = Array(row.prefix(targetWidth - 1))
+//      newRow.append(fill)
+//      return newRow
+//    }
+//  }
+//}
