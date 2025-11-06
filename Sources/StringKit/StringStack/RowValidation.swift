@@ -16,13 +16,12 @@ extension StringStack {
       //    repair: (Row, Int) -> Row
   ) -> Cells? {
 
-    guard let firstRow = cells.first else {
-//      print("Couldn't get first row to determine target width")
-      return nil
-    }
-    
-    let targetWidth = cells.width(for: .widestRow)
+    //    guard let firstRow = cells.first else {
+    //      //      print("Couldn't get first row to determine target width")
+    //      return nil
+    //    }
 
+    let targetWidth = cells.width(for: .widestRow)
 
     //    if visualDebug {
     print("⚠️ Grid shape mismatch detected – applying patch:")

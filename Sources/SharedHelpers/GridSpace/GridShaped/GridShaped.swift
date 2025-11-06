@@ -15,9 +15,8 @@ public protocol GridShaped: Collection {
 
   /// See `StringKit/StringStack` for example init
   /// I kinda want to *prevent* this, if anything?
-  init(_ cells: Cells, fallback: Cell?)
-
-//  static func repair(row: Row, targetWidth: Int, fill: Cell) -> Row
+  init(_ cells: Cells, fallback: Cell)
+  static func repair(row: Row, targetWidth: Int, fill: Cell) -> Row
 //  static var fallbackCell: Cell { get }
 }
 

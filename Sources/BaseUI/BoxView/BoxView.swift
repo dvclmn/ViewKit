@@ -71,16 +71,16 @@ extension BoxView {
 
       BoxView {
         
-        Box.Top()
+//        Box.Top()
         
         Box.Header("Hello, I'm a Header")
 //
-//        DummyContent.Strings.paragraphs[3].prefix(90).toString
+        DummyContent.Strings.paragraphs[3].prefix(90).toString
 
                                 Box.Divider()
         //                        "Last text sign-off"
         //                  Box.Bottom()
-                          Box.Bottom()
+//                          Box.Bottom()
         //                  Box.Bottom()
       }
 //      .environment(\.metrics, [])

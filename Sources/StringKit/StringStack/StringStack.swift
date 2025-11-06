@@ -16,15 +16,12 @@ public struct StringStack: GridShaped {
 
   public var cells: Cells
 
-  public init(_ cells: Cells, fallback: Cell? = nil) {
-//    print("Trying to init StringStack with Cells: \(cells)")
-    let patched = Self.patchedGrid(cells, fallback: fallback ?? "⚠️")
-    
-//    print("Result of Patched: \(String(describing: patched))")
+  public init(_ cells: Cells, fallback: Cell = "⚠️") {
+    let patched = Self.patchedGrid(cells, fallback: fallback)
     self.cells = patched ?? []
-//      Self.repair(row: row, targetWidth: targetWidth, fill: fallback ?? "⚠️")
-//    }
-//    self.cells = patched ?? []
+    //      Self.repair(row: row, targetWidth: targetWidth, fill: fallback ?? "⚠️")
+    //    }
+    //    self.cells = patched ?? []
   }
 
   /// Initializes a `StringStack` by repeating a given row
@@ -61,7 +58,7 @@ extension StringStack: ExpressibleByStringLiteral {
     let characters: Cells = lines.map { string in
       Array(string)
     }
-    self.init(characters, fallback: nil)
+    self.init(characters)
   }
 }
 

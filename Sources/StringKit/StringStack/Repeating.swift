@@ -21,7 +21,7 @@ extension StringStack {
   ) -> StringStack {
 
     let stack = self.cells.stacked(along: axis, repeating: count)
-    return StringStack(stack, fallback: nil)
+    return StringStack(stack)
   }
 
   //  private func cropped(toWidth width: Int) -> StringStack {
