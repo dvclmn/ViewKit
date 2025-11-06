@@ -7,6 +7,64 @@
 
 import Foundation
 
+public protocol GridShaped: Sequence, ExpressibleByArrayLiteral {
+  associatedtype Value
+  typealias Cells = [[Value]]
+  typealias Row = [Value]
+  var cells: Cells { get set }
+
+  init(_ cells: Cells, rowValidation: RowValidationStrategy)
+}
+
+public enum RowValidationStrategy {
+  case autoFix(visualDebug: Bool = false)
+  case throwError
+}
+
+extension GridShaped {
+  public var isEmpty: Bool {
+    cells.isEmpty || cells.allSatisfy { $0.isEmpty }
+  }
+}
+
+// MARK: - Sequence conformance
+extension GridShaped {
+  
+  public func makeIterator() -> IndexingIterator<Cells> {
+    cells.makeIterator()
+  }
+  
+  public func map<T>(_ transform: (Row) -> T) -> [T] {
+    cells.map(transform)
+  }
+  
+  public func enumerated() -> EnumeratedSequence<Cells> {
+    cells.enumerated()
+  }
+
+  mutating func append(_ row: Row) {
+    cells.append(row)
+  }
+}
+
+
+/// This allows writing
+/// ```
+/// guard !self.isEmpty else { return [] }
+/// ```
+///
+/// rather than
+/// ```
+/// guard !self.isEmpty else { StringStack([]) }
+/// ```
+extension GridShaped {
+  public init(arrayLiteral elements: Row...) {
+    self.init(elements, rowValidation: .autoFix())
+//    self.cells = elements
+  }
+}
+
+
 //public protocol GridRepresentable {
 //  associatedtype Cell
 //  var gridHeight: Int { get }

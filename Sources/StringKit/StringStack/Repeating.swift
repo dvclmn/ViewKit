@@ -19,7 +19,7 @@ extension StringStack {
     along axis: Axis,
     count: Int
   ) -> StringStack {
-    let stack = self.stack.stacked(along: axis, repeating: count)
+    let stack = self.cells.stacked(along: axis, repeating: count)
     return StringStack(stack)
   }
 
@@ -126,7 +126,7 @@ extension StringStack {
   //  }
 
   private func cropped(toWidth width: Int) -> StringStack {
-    StringStack(self.stack.map { Array($0.prefix(width)) })
+    StringStack(self.cells.map { Array($0.prefix(width)) })
   }
 }
 

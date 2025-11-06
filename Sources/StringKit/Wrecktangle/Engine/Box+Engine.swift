@@ -24,7 +24,7 @@ extension Box.Engine {
 
   func rowNumbersIfNeeded(for position: ) -> String {
     guard hasRowNumbers else { return "" }
-    return 
+    return
   }
   
   func width(for component: LineComponent) -> Int {
