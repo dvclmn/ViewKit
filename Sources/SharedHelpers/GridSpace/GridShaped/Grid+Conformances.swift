@@ -49,7 +49,8 @@ extension GridShaped {
 /// ```
 extension GridShaped {
   public init(arrayLiteral elements: Self.Row...) {
-    self = Self.create(elements)
+    self.init(elements, fallback: nil)
+//    self = Self.create(elements)
   }
 }
 

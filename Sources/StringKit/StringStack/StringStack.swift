@@ -10,15 +10,24 @@ import SwiftUI
 
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack: GridShaped {
-  public static var fallbackCell: Character { " " }
-  
 
   public typealias Cell = Character
+  public typealias Row = [Character]
+
+  //  public static var fallbackCell: Character { " " }
   public var cells: Cells
 
-  public init(_ cells: Cells) {
-    self = Self.create(cells)
-//    self.cells = cells
+  public init(_ cells: Cells, fallback: Cell?) {
+    //    self = Self.create(cells)
+
+    //    self.cells = cells
+
+    let patched = Self.patchedGrid(cells) { row, targetWidth in
+      Self.repair(row: row, targetWidth: targetWidth, fill: fallback ?? " ")
+    }
+
+    self.cells = patched ?? []
+    //    return Self(patched ?? [])
   }
 
   /// Initializes a `StringStack` by repeating a given row
@@ -27,9 +36,10 @@ public struct StringStack: GridShaped {
   ///   - row: The row of characters to repeat.
   ///   - count: The number of times to repeat the row.
   public init(repeating row: [Character], count: Int) {
-    
+
     let cells = Array(repeating: row, count: count)
-    self = Self.create(cells)
+    self.init(cells, fallback: nil)
+//    self = Self.create(cells)
   }
 }
 
@@ -40,7 +50,8 @@ extension StringStack {
 
 extension StringStack: ExpressibleByUnicodeScalarLiteral {
   public init(unicodeScalarLiteral value: Character) {
-    self = Self.create([[value]])
+    self.init([[value]], fallback: nil)
+//    self = Self.create([[value]])
   }
 }
 
@@ -52,14 +63,35 @@ extension StringStack: ExpressibleByStringLiteral {
       String(substring)
     }
 
-    let characters: [[Character]] = lines.map { string in
+    let characters: Cells = lines.map { string in
       Array(string)
     }
-
-    self = Self.create(characters)
+    self.init(characters, fallback: nil)
+//    self = Self.create(characters)
   }
 }
 
 extension StringStack: CustomStringConvertible {
   public var description: String { string }
+}
+
+extension StringStack {
+  public static func repair(
+    row: Row,
+    targetWidth: Int,
+    fill: Cell = " "
+  ) -> Row {
+    if row.count == targetWidth {
+      return row
+
+    } else if row.count < targetWidth {
+      return row + Array(repeating: fill, count: targetWidth - row.count)
+
+    } else {
+      var newRow = Array(row.prefix(targetWidth - 1))
+      newRow.append(fill)
+      return newRow
+    }
+  }
+
 }

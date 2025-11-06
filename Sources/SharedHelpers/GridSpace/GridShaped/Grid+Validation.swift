@@ -13,9 +13,8 @@ extension GridShaped {
   ///   - repair: A closure that defines how to repair each row.
   ///     The closure receives `(row, targetWidth)` and should return a new row of exactly that width.
   /// - Returns: A new patched grid, or `nil` if no patching was needed.
-  static func patchedGrid(
+  public static func patchedGrid(
     _ cells: Cells,
-//    visualDebug: Bool = false,
     repair: @escaping (Row, Int) -> Row
   ) -> Cells? {
 
@@ -26,44 +25,42 @@ extension GridShaped {
       return nil
     }
 
-//    if visualDebug {
-      print("⚠️ Grid shape mismatch detected – applying patch:")
-      print("Original: \(cells.map { "\($0)" }.joined(separator: " | "))")
-//    }
+//      print("⚠️ Grid shape mismatch detected – applying patch:")
+//      print("Original: \(cells.map { "\($0)" }.joined(separator: " | "))")
+
 
     let patched = cells.map { row in
       row.count == targetWidth ? row : repair(row, targetWidth)
     }
 
-//    if visualDebug {
-      print("Patched:  \(patched.map { "\($0)" }.joined(separator: " | "))")
-//    }
+//      print("Patched:  \(patched.map { "\($0)" }.joined(separator: " | "))")
 
     return patched
   }
 }
 
 
-extension GridShaped where Self.Cell == Character {
-  public static func repair(
-    row: Row,
-    targetWidth: Int,
-    fill: Character = " "
-  ) -> Row {
-    if row.count == targetWidth {
-      return row
-
-    } else if row.count < targetWidth {
-      return row + Array(repeating: fill, count: targetWidth - row.count)
-
-    } else {
-      var newRow = Array(row.prefix(targetWidth - 1))
-      newRow.append(fill)
-      return newRow
-    }
-  }
-
-}
+//extension GridShaped where Self.Cell == Character {
+//  
+//  public static func repair(
+//    row: Row,
+//    targetWidth: Int,
+//    fill: Character = " "
+//  ) -> Row {
+//    if row.count == targetWidth {
+//      return row
+//
+//    } else if row.count < targetWidth {
+//      return row + Array(repeating: fill, count: targetWidth - row.count)
+//
+//    } else {
+//      var newRow = Array(row.prefix(targetWidth - 1))
+//      newRow.append(fill)
+//      return newRow
+//    }
+//  }
+//
+//}
 
 /// Default repair that simply pads or truncates with the last element (if any)
 //  static func defaultRepair(
