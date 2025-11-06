@@ -22,7 +22,6 @@ extension Box.StructureType {
           .corner(.topLeading),
           .horizontal(.top),
           .corner(.topTrailing),
-
         )
 
       case .divider:

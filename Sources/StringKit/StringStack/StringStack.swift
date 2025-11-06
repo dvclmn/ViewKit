@@ -14,20 +14,17 @@ public struct StringStack: GridShaped {
   public typealias Cell = Character
   public typealias Row = [Character]
 
-  //  public static var fallbackCell: Character { " " }
   public var cells: Cells
 
   public init(_ cells: Cells, fallback: Cell? = nil) {
-    //    self = Self.create(cells)
-
-    //    self.cells = cells
-
-    let patched = Self.patchedGrid(cells) { row, targetWidth in
-      Self.repair(row: row, targetWidth: targetWidth, fill: fallback ?? " ")
-    }
-
+//    print("Trying to init StringStack with Cells: \(cells)")
+    let patched = Self.patchedGrid(cells, fallback: fallback ?? "⚠️")
+    
+//    print("Result of Patched: \(String(describing: patched))")
     self.cells = patched ?? []
-    //    return Self(patched ?? [])
+//      Self.repair(row: row, targetWidth: targetWidth, fill: fallback ?? "⚠️")
+//    }
+//    self.cells = patched ?? []
   }
 
   /// Initializes a `StringStack` by repeating a given row
@@ -38,8 +35,7 @@ public struct StringStack: GridShaped {
   public init(repeating row: [Character], count: Int) {
 
     let cells = Array(repeating: row, count: count)
-    self.init(cells, fallback: nil)
-//    self = Self.create(cells)
+    self.init(cells)
   }
 }
 
@@ -50,8 +46,7 @@ extension StringStack {
 
 extension StringStack: ExpressibleByUnicodeScalarLiteral {
   public init(unicodeScalarLiteral value: Character) {
-    self.init([[value]], fallback: nil)
-//    self = Self.create([[value]])
+    self.init([[value]])
   }
 }
 
@@ -67,7 +62,6 @@ extension StringStack: ExpressibleByStringLiteral {
       Array(string)
     }
     self.init(characters, fallback: nil)
-//    self = Self.create(characters)
   }
 }
 

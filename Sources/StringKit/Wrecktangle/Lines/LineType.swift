@@ -23,7 +23,9 @@ extension Box.LineType {
   ) -> String {
     switch self {
       case .structure(let type):
-        return type.parts.buildString(using: engine, at: position)
+        let string = type.parts.buildString(using: engine, at: position)
+//        print("Structure/\(type.rawValue), String: \(string)")
+        return string
         
       case .text(let line):
         return line.buildString(using: engine, at: position)

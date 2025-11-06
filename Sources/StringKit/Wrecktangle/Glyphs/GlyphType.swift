@@ -40,8 +40,19 @@ extension Box {
     case literal(Character)
   }
 }
-extension Array where Element == [Box.GlyphType] {
-  func toStringStack(with theme: Box.Theme) -> StringStack {
-    return StringStack(from: self, with: theme)
+
+extension Box.GlyphType {
+  var name: String {
+    switch self {
+      case .horizontal: "Horizontal"
+      case .vertical: "Vertical"
+      case .join(_, _, let type): "Join.\(type.rawValue)"
+      case .corner(_, let type): "Corner.\(type.rawValue)"
+      case .blank: "Blank"
+      case .literal(let character): "Literal: \(character)"
+    }
   }
+}
+extension Box.GlyphType: CustomStringConvertible {
+  public var description: String { name }
 }

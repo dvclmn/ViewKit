@@ -28,8 +28,9 @@ protocol GlyphProvider {
 extension Box.GlyphSet: GlyphProvider {
   func character(
     for type: Box.GlyphType,
-    with fallbackCharacter: Character = " "
+    with fallbackCharacter: Character = "🐶"
   ) -> Character {
+    
     guard !type.isLiteral else {
       let literalChar: Character? = switch type {
         case .literal(let character): character

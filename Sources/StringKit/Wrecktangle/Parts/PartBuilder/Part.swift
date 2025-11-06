@@ -21,10 +21,10 @@ extension Box {
 }
 
 extension Box.Part {
-  var width: Int { glyphs.width }
+  var width: Int { glyphs.width(for: .widestRow) }
 
   func toStringStack(with theme: Box.Theme) -> StringStack {
-    glyphs.toStringStack(with: theme)
+    StringStack(from: glyphs, with: theme)
   }
 }
 
@@ -35,5 +35,11 @@ extension Box {
     case fixed(Int)
 
     public static var single: PartSpan { .fixed(1) }
+  }
+}
+
+extension Part: CustomStringConvertible {
+  public var description: String {
+    "Part[Glyphs: \(glyphs), W: \(width), StringStack: \(toStringStack(with: .default))]"
   }
 }

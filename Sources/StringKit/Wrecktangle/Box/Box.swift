@@ -32,7 +32,6 @@ public struct Box: Sendable {
   public var plainText: String {
 
     let allLines = allComponents.flatMap { $0.makeLines() }
-
     let final = allLines.enumerated().map {
       index,
       lineType in

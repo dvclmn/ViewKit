@@ -8,40 +8,31 @@
 import Foundation
 
 extension GridShaped {
-  /// Returns a patched version of the grid if any row lengths differ.
-  /// - Parameters:
-  ///   - repair: A closure that defines how to repair each row.
-  ///     The closure receives `(row, targetWidth)` and should return a new row of exactly that width.
-  /// - Returns: A new patched grid, or `nil` if no patching was needed.
-  public static func patchedGrid(
-    _ cells: Cells,
-    repair: @escaping (Row, Int) -> Row
-  ) -> Cells? {
-
-    guard let firstRow = cells.first else { return nil }
-
-    let targetWidth = firstRow.count
-    guard cells.contains(where: { $0.count != targetWidth }) else {
-      return nil
-    }
-
-//      print("⚠️ Grid shape mismatch detected – applying patch:")
-//      print("Original: \(cells.map { "\($0)" }.joined(separator: " | "))")
-
-
-    let patched = cells.map { row in
-      row.count == targetWidth ? row : repair(row, targetWidth)
-    }
-
-//      print("Patched:  \(patched.map { "\($0)" }.joined(separator: " | "))")
-
-    return patched
-  }
+ 
+    
+//
+//
+//    guard let firstRow = cells.first else { return nil }
+//
+//    let targetWidth = firstRow.count
+//    guard cells.contains(where: { $0.count != targetWidth }) else {
+//      return nil
+//    }
+//    //      print("⚠️ Grid shape mismatch detected – applying patch:")
+//    //      print("Original: \(cells.map { "\($0)" }.joined(separator: " | "))")
+//
+//    let patched = cells.map { row in
+//      row.count == targetWidth ? row : repair(row, targetWidth)
+//    }
+//
+//    //      print("Patched:  \(patched.map { "\($0)" }.joined(separator: " | "))")
+//
+//    return patched
+//  }
 }
 
-
 //extension GridShaped where Self.Cell == Character {
-//  
+//
 //  public static func repair(
 //    row: Row,
 //    targetWidth: Int,

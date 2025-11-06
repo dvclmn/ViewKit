@@ -38,15 +38,9 @@ public struct BoxView: View {
       }.plainText
     )
     .fixedSize(horizontal: true, vertical: false)
-    //    .fixedSize(horizontal: true, vertical: false)
-    //    .frameFromGridSize(
-    //      width: widthForBoxFrame,
-    //      //      width: gridWidth.map { $0 + theme.padding.width * 2 },
-    //      height: gridHeight
-    //    )
     .gridSetup(.sfMono, fontSize: 15)
 
-    //    .environment(\.isShowingGridGuide, true)
+    .environment(\.isShowingGridGuide, false)
 
     //      .debugTextOverlay(
     //        """
@@ -75,46 +69,27 @@ extension BoxView {
   ScrollView {
     VStack(spacing: 14) {
 
-      //      BoxView {
-      //        "I'm a notebook!"
-      //        "Look at my torn pages, wah."
-      //        DummyContent.Strings.paragraphs[9].prefix(60).toString
-      //      }
-      //      .setGridFrame(18, alignment: .leading)
-      //      .setBoxStyle(
-      //        glyphs: .sharp,
-      //        frame: .notebook,
-      //        metrics: []
-      //      )
-
-      //      BoxView {
-      //        "Rounded, single frame, that's cool man"
-      //      }
-      //      .setBoxStyle(glyphs: .double, frame: .single)
-
       BoxView {
+        
+        Box.Top()
+        
         Box.Header("Hello, I'm a Header")
+//
+//        DummyContent.Strings.paragraphs[3].prefix(90).toString
 
-        DummyContent.Strings.paragraphs[3].prefix(90).toString
-
-        //                Box.Divider()
-        //                "Last text sign-off"
+                                Box.Divider()
+        //                        "Last text sign-off"
         //                  Box.Bottom()
-        //                  Box.Bottom()
+                          Box.Bottom()
         //                  Box.Bottom()
       }
-      .environment(\.metrics, .lineNumbers)
+//      .environment(\.metrics, [])
+            .environment(\.metrics, .lineNumbers)
       .setGridFrame(30, alignment: .leading)
-      //      .setBoxStyle(glyphs: .test, frame: .single)
-      //      .setBoxStyle(glyphs: .test, frame: .double)
       .setBoxStyle(
-        glyphs: .rounded,
-        frame: .double,
-        //        metrics: []
+        glyphs: .sharp,
+        frame: .single,
       )
-      
-      //      .setBoxStyle(glyphs: .rounded, frame: .single(frame: .standard, dividers: .standard))
-
     }
   }
   .textSelection(.enabled)

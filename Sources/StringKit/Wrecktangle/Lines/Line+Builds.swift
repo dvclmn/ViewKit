@@ -21,7 +21,7 @@ extension Box.StructureLine {
       position: position,
       span: .fill
     )
-    let rowNumbers = StringStack("One secon")
+    let rowNumbers = StringStack("O")
 //    let rowNumbers = engine.hasRowNumbers ? StringStack(position.rowNumber.toString + " ") : ""
 
     return StringStack.joined(

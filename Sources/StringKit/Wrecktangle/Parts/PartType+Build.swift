@@ -13,13 +13,13 @@ extension Box.PartType {
   /// We return a `StringStack`, not a `String`, to allow
   /// any additional repeating/joining required further down the pipeline.
   public func buildPart(
-
     using engine: Box.Engine,
     position: Box.PositionContext,
     span: Box.PartSpan = .single,
   ) -> StringStack {
 
     let part = part(using: engine, position: position)
+//    print("Building Part: \(part)")
     let stringStack = part.toStringStack(with: engine.theme)
 
     switch span {
@@ -35,6 +35,7 @@ extension Box.PartType {
         } else {
           stringStack.repeated(along: .horizontal, count: count)
         }
+
     }
   }
 
@@ -51,26 +52,23 @@ extension Box.PartType {
 }
 
 extension StringStack {
-//  public init(
-//    _ cells: Cells,
-//    rowValidation: RowValidation<StringStack>
-//  ) {
-//    <#code#>
-//  }
   public init(
     from glyphStack: Box.GlyphStack,
     with theme: Box.Theme,
   ) {
-
+//    print("Making StringStack from GlyphStack \(glyphStack) and Theme \(theme)")
     /// Convert from `GlyphType` → `Character`
     let characterGrid = glyphStack.map { row in
-      row.map { theme.glyphSet.character(for: $0) }
+//      print("Processing row \(row)")
+      return row.map {
+        let char = theme.glyphSet.character(for: $0)
+//        print("Character: \(char)")
+        return char
+      }
     }
-    self.init(characterGrid, fallback: nil)
-//    self = Self.create(characterGrid)
-
-//    self.init(characterGrid, rowValidation: RowValidation<StringStack>.ignore)
-//    self.init(characterGrid)
+//    print("Character Grid: \(characterGrid)")
+    
+    self.init(characterGrid)
   }
 
 }

@@ -58,7 +58,18 @@ extension Array where Element == [Character] {
 
 extension Array where Element: Collection {
   /// Width of the widest row, or zero if none found
-  public var width: Int {
-    self.map { $0.count }.max() ?? 0
+  public func width(for strategy: GridWidthStrategy = .widestRow) -> Int {
+//  public var width: Int {
+    switch strategy {
+      case .firstRow:
+        self.first?.count ?? 0
+      case .widestRow:
+        self.map { $0.count }.max() ?? 0
+    }
   }
+}
+
+public enum GridWidthStrategy {
+  case firstRow
+  case widestRow
 }
