@@ -8,8 +8,7 @@
 import Foundation
 
 extension Box {
-
-  public struct Engine: Codable, Sendable {
+  public struct Engine: Codable, Sendable, Equatable {
     let config: Box.Config
 
     public init(_ config: Box.Config) {
@@ -21,9 +20,10 @@ extension Box {
 extension Box.Engine {
   var width: Int { config.width }
   var theme: Box.Theme { config.theme }
+  var hasRowNumbers: Bool { config.metrics.contains(.lineNumbers) }
 
   private var capsWidth: Int { theme.frameStyle.reservedWidth * 2 }
-  private var rowNumbersWidth: Int { config.metrics.contains(.lineNumbers) ? 2 : 0 }
+  private var rowNumbersWidth: Int { hasRowNumbers ? 2 : 0 }
 
   var repeatedPartWidth: Int {
     let reserved = capsWidth + rowNumbersWidth

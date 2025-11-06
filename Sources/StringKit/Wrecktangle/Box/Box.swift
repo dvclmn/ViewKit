@@ -9,7 +9,7 @@ import Foundation
 import SharedHelpers
 
 public struct Box: Sendable {
-  let config: Config
+  //  let config: Config
   let components: [any Component]
   let engine: Box.Engine
 
@@ -26,7 +26,6 @@ public struct Box: Sendable {
       theme: theme,
       metrics: metrics
     )
-    self.config = config
     self.components = content()
     self.engine = Box.Engine(config)
   }
@@ -68,8 +67,8 @@ extension Box {
 }
 extension Box: Equatable {
   public static func == (lhs: Box, rhs: Box) -> Bool {
-    lhs.config.width == rhs.config.width
-      && lhs.config.theme == rhs.config.theme
+    lhs.engine.config.width == rhs.engine.config.width
+      && lhs.engine.config.theme == rhs.engine.config.theme
       && lhs.components.count == rhs.components.count
   }
 }

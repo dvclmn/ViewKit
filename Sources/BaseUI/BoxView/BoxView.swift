@@ -29,7 +29,7 @@ public struct BoxView: View {
   public var body: some View {
     Text(
       Box(
-        width: widthForBoxFrame,
+        width: gridWidth ?? 15,
         height: gridHeight,
         theme: theme,
         metrics: metrics
@@ -60,23 +60,6 @@ public struct BoxView: View {
 
 extension BoxView {
 
-  //  private var widthForBox: Int {
-  //    gridWidth ?? 20
-  //  }
-  //
-  private var widthForBoxFrame: Int {
-
-    let proposed = gridWidth ?? 15
-    //    let frameReserved = theme.frameStyle.reservedDimensions.width
-    //    let paddingH = theme.padding.width * 2
-
-    //    let totalReserved = frameReserved + paddingH
-    //    return max(0, proposed + totalReserved)
-
-    return proposed
-
-  }
-
   private var theme: Box.Theme {
     Box.Theme(
       glyphSet: glyphSet,
@@ -91,24 +74,24 @@ extension BoxView {
 
   ScrollView {
     VStack(spacing: 14) {
-  
-//      BoxView {
-//        "I'm a notebook!"
-//        "Look at my torn pages, wah."
-//        DummyContent.Strings.paragraphs[9].prefix(60).toString
-//      }
-//      .setGridFrame(18, alignment: .leading)
-//      .setBoxStyle(
-//        glyphs: .sharp,
-//        frame: .notebook,
-//        metrics: []
-//      )
-      
-//      BoxView {
-//        "Rounded, single frame, that's cool man"
-//      }
-//      .setBoxStyle(glyphs: .double, frame: .single)
-      
+
+      //      BoxView {
+      //        "I'm a notebook!"
+      //        "Look at my torn pages, wah."
+      //        DummyContent.Strings.paragraphs[9].prefix(60).toString
+      //      }
+      //      .setGridFrame(18, alignment: .leading)
+      //      .setBoxStyle(
+      //        glyphs: .sharp,
+      //        frame: .notebook,
+      //        metrics: []
+      //      )
+
+      //      BoxView {
+      //        "Rounded, single frame, that's cool man"
+      //      }
+      //      .setBoxStyle(glyphs: .double, frame: .single)
+
       BoxView {
         Box.Header("Hello, I'm a Header")
 
@@ -120,15 +103,16 @@ extension BoxView {
         //                  Box.Bottom()
         //                  Box.Bottom()
       }
+      .environment(\.metrics, .lineNumbers)
       .setGridFrame(30, alignment: .leading)
       //      .setBoxStyle(glyphs: .test, frame: .single)
       //      .setBoxStyle(glyphs: .test, frame: .double)
       .setBoxStyle(
         glyphs: .rounded,
         frame: .double,
-        metrics: []
-//        metrics: [.invisibles]
+        //        metrics: []
       )
+      
       //      .setBoxStyle(glyphs: .rounded, frame: .single(frame: .standard, dividers: .standard))
 
     }

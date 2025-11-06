@@ -6,7 +6,7 @@
 //
 
 extension Box {
-  public struct Config: Codable, Sendable {
+  public struct Config: Codable, Sendable, Equatable {
     let width: Int
     let height: Int?
     let theme: Theme
@@ -24,7 +24,4 @@ extension Box {
       self.metrics = metrics
     }
   }
-}
-extension Box.Config {
-  var hasRowNumbers: Bool { metrics.contains(.lineNumbers) }
 }
