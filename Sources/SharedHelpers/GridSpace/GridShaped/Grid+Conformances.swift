@@ -49,7 +49,7 @@ extension GridShaped {
 /// ```
 extension GridShaped {
   public init(arrayLiteral elements: Self.Row...) {
-    self.init(elements, rowValidation: .ignore)
+    self = Self.create(elements)
   }
 }
 

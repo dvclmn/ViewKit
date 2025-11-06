@@ -66,8 +66,10 @@ extension StringStack {
     let characterGrid = glyphStack.map { row in
       row.map { theme.glyphSet.character(for: $0) }
     }
-//
-    self.init(characterGrid, rowValidation: RowValidation<StringStack>.ignore)
+    
+    self = Self.create(characterGrid)
+
+//    self.init(characterGrid, rowValidation: RowValidation<StringStack>.ignore)
 //    self.init(characterGrid)
   }
 

@@ -10,12 +10,14 @@ import SwiftUI
 
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack: GridShaped {
+  public static var fallbackCell: Character { " " }
+  
 
   public typealias Cell = Character
   public var cells: Cells
 
-  public init(_ cells: Cells, rowValidation: RowValidation<StringStack>) {
-
+  public init(_ cells: Cells) {
+    self.cells = cells
   }
 
   /// Initializes a `StringStack` by repeating a given row
@@ -51,22 +53,23 @@ extension StringStack: ExpressibleByStringLiteral {
       Array(string)
     }
 
-    self.init(
-      characters,
-      rowValidation: .patch(
-        {
-          row,
-          targetWidth in
-
-          return Self.defaultRepair(
-            row: row,
-            targetWidth: targetWidth,
-            fill: " "
-          )
-        },
-        visualDebug: true
-      )
-    )
+    self = Self.create(characters)
+//    self.init(
+//      characters,
+//      rowValidation: .patch(
+//        {
+//          row,
+//          targetWidth in
+//
+//          return Self.defaultRepair(
+//            row: row,
+//            targetWidth: targetWidth,
+//            fill: " "
+//          )
+//        },
+////        visualDebug: true
+//      )
+//    )
 
     //    let characters = lines.map { string in
     //      Array(string)
