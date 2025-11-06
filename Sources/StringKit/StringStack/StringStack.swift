@@ -15,27 +15,7 @@ public struct StringStack: GridShaped {
   public var cells: Cells
 
   public init(_ cells: Cells, rowValidation: RowValidation<StringStack>) {
-    switch rowValidation {
-      case .patch(let strategy, let shouldDebug):
-        let patched =
-          Self.patchedGrid(
-            cells,
-            visualDebug: shouldDebug,
-            repair: strategy
-          ) ?? []
-        self.cells = patched
 
-      case .ignore:
-        self.cells = cells
-
-      case .throwError:
-        let canonicalWidth = cells.first?.count ?? 0
-        precondition(
-          cells.allSatisfy { $0.count == canonicalWidth },
-          "Non-rectangular StringStack: all rows must have equal width"
-        )
-        self.cells = cells
-    }
   }
 
   /// Initializes a `StringStack` by repeating a given row
@@ -71,7 +51,22 @@ extension StringStack: ExpressibleByStringLiteral {
       Array(string)
     }
 
-    self.init(characters, rowValidation: .patch(<#T##(Row, Int) -> Row#>, visualDebug: <#T##Bool#>))
+    self.init(
+      characters,
+      rowValidation: .patch(
+        {
+          row,
+          targetWidth in
+
+          return Self.defaultRepair(
+            row: row,
+            targetWidth: targetWidth,
+            fill: " "
+          )
+        },
+        visualDebug: true
+      )
+    )
 
     //    let characters = lines.map { string in
     //      Array(string)
