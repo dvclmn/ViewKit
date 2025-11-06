@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 14/9/2024.
 //
 
-import SwiftUI
 import EnumMacros
+import SwiftUI
 
 @CaseDetection
 public enum TrimMethod {
@@ -19,51 +19,51 @@ extension StringStack {
     along axis: Axis,
     count: Int
   ) -> StringStack {
-    fatalError("Working on GridShaped, one sec")
-//    let stack = self.cells.stacked(along: axis, repeating: count)
-//    return StringStack(stack)
-  }
-  
-//  private func cropped(toWidth width: Int) -> StringStack {
-//    StringStack(self.cells.map { Array($0.prefix(width)) })
-//  }
 
-//  func repeatedHorizontally(
-//    toWidth width: Int,
-//    paddingCharacter: Character = " ",
-//    trimMethod: TrimMethod = .crop  // Need to implement this
-//  ) -> StringStack {
-//
-//    guard !self.isEmpty else { return [] }
-//
-//    let patternWidth = self.width
-//    let patternHeight = self.height
-//
-//    let repetitions = width / patternWidth
-//    let remainder = width % patternWidth
-//
-//    var result: StringStack = []
-//
-//    for row in 0..<patternHeight {
-//      var newRow: [Character] = []
-//      for _ in 0..<repetitions {
-//        newRow.append(contentsOf: self[row: row])
-//      }
-//
-//      if remainder > 0 {
-//        switch trimMethod {
-//          case .leaveSpace:
-//            newRow.append(contentsOf: self[row: row][0..<remainder])
-//            newRow.append(contentsOf: Array(repeating: paddingCharacter, count: patternWidth - remainder))
-//          case .crop:
-//            newRow.append(contentsOf: self[row: row][0..<remainder])
-//        }
-//      }
-//      result.append(newRow)
-//    }
-//
-//    return result
-//  }
+    let stack = self.cells.stacked(along: axis, repeating: count)
+    return StringStack(stack, fallback: nil)
+  }
+
+  //  private func cropped(toWidth width: Int) -> StringStack {
+  //    StringStack(self.cells.map { Array($0.prefix(width)) })
+  //  }
+
+  //  func repeatedHorizontally(
+  //    toWidth width: Int,
+  //    paddingCharacter: Character = " ",
+  //    trimMethod: TrimMethod = .crop  // Need to implement this
+  //  ) -> StringStack {
+  //
+  //    guard !self.isEmpty else { return [] }
+  //
+  //    let patternWidth = self.width
+  //    let patternHeight = self.height
+  //
+  //    let repetitions = width / patternWidth
+  //    let remainder = width % patternWidth
+  //
+  //    var result: StringStack = []
+  //
+  //    for row in 0..<patternHeight {
+  //      var newRow: [Character] = []
+  //      for _ in 0..<repetitions {
+  //        newRow.append(contentsOf: self[row: row])
+  //      }
+  //
+  //      if remainder > 0 {
+  //        switch trimMethod {
+  //          case .leaveSpace:
+  //            newRow.append(contentsOf: self[row: row][0..<remainder])
+  //            newRow.append(contentsOf: Array(repeating: paddingCharacter, count: patternWidth - remainder))
+  //          case .crop:
+  //            newRow.append(contentsOf: self[row: row][0..<remainder])
+  //        }
+  //      }
+  //      result.append(newRow)
+  //    }
+  //
+  //    return result
+  //  }
 
   //  public func repeatHorizontally(
   //    to targetWidth: Int,
@@ -129,7 +129,6 @@ extension StringStack {
   //    //      result.joinedHorizontally(with: stack, padding: trimMethod.isLeaveSpace ? paddingCharacter : nil)
   //    //    }
   //  }
-
 
 }
 

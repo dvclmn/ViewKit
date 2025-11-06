@@ -17,7 +17,7 @@ public struct StringStack: GridShaped {
   //  public static var fallbackCell: Character { " " }
   public var cells: Cells
 
-  public init(_ cells: Cells, fallback: Cell?) {
+  public init(_ cells: Cells, fallback: Cell? = nil) {
     //    self = Self.create(cells)
 
     //    self.cells = cells
