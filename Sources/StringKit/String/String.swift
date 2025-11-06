@@ -26,7 +26,7 @@ extension String {
   public var toURL: URL? {
     return URL(string: self)
   }
-  
+
   public func combining(
     with other: String,
     separator: String = ", "
@@ -109,6 +109,8 @@ extension String {
   public func components(separatedBy separator: Character) -> [String] {
     return self.split(separator: separator).map(String.init)
   }
+
+  public var toCharacters: [Character] { Array(self) }
 
   public var wordCount: Int {
     let words = self.split { !$0.isLetter }

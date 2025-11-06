@@ -40,3 +40,8 @@ extension Box {
     case literal(Character)
   }
 }
+extension Array where Element == [Box.GlyphType] {
+  func toStringStack(with theme: Box.Theme) -> StringStack {
+    return StringStack(from: self, with: theme)
+  }
+}

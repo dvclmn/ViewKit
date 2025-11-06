@@ -22,27 +22,38 @@ extension Box.Engine {
   var theme: Box.Theme { config.theme }
   var hasRowNumbers: Bool { config.metrics.contains(.lineNumbers) }
 
-  private var capsWidth: Int { theme.frameStyle.reservedWidth * 2 }
+  func width(for component: LineComponent) -> Int {
+    switch component {
+      case .rowNumbers:
+        return rowNumbersWidth
+
+      case .repeatedPart:
+        let reserved = capsWidth + rowNumbersWidth
+        let result = width - reserved
+        return max(0, result)
+
+      case .text:
+        let reserved = (theme.padding.width * 2) + capsWidth + rowNumbersWidth
+        let widthForText = width - reserved
+        return max(0, widthForText)
+
+      case .lineCaps:
+        return capsWidth
+
+      case .fullLine:
+        return self.width
+    }
+  }
+
   private var rowNumbersWidth: Int { hasRowNumbers ? 2 : 0 }
+  private var capsWidth: Int { theme.frameStyle.reservedWidth * 2 }
 
-  var repeatedPartWidth: Int {
-    let reserved = capsWidth + rowNumbersWidth
-    let result = width - reserved
-    return max(0, result)
-  }
+}
 
-  /// The remaning width for text, after removing space
-  /// reserved for structural elements
-  ///
-  /// ⚠️ IMPORTANT: TextReflow previously handled padding on
-  /// either side of each reflow line of Text, however this
-  /// responsibility has moved out of there, and back to the Box domain.
-  ///
-  /// That means it's important that we *do* remove padding from here,
-  /// so that the width for text is accurate.
-  var widthForText: Int {
-    let reservedWidth = (theme.padding.width * 2) + capsWidth + rowNumbersWidth
-    let widthForText = width - reservedWidth
-    return max(0, widthForText)
-  }
+enum LineComponent {
+  case rowNumbers
+  case repeatedPart
+  case text
+  case lineCaps  // Includes *both* caps
+  case fullLine
 }

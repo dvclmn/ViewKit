@@ -3,7 +3,6 @@
 
 import Foundation
 
-
 extension String {
   public var camelToSnake: String {
     var result = ""
@@ -18,4 +17,3 @@ extension String {
     return result
   }
 }
-

@@ -34,6 +34,6 @@ extension Box {
     case fill
     case fixed(Int)
 
-    static var single: PartSpan { .fixed(1) }
+    public static var single: PartSpan { .fixed(1) }
   }
 }
