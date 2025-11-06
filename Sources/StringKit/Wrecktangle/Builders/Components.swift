@@ -37,9 +37,9 @@ extension Box {
 
     public func makeLines() -> ComponentOutput {
       let textLine = Box.TextLine(
-        text: content,
-        leading: .vertical(.leading),
-        trailing: .vertical(.trailing)
+        .vertical(.leading),
+        content,
+        .vertical(.trailing)
       )
       return [Box.LineType.text(textLine)]
     }

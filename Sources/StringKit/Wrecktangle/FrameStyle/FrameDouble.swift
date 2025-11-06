@@ -9,22 +9,13 @@ extension Box.PartType {
 
   package func doubleFrameParts() -> Part {
     switch self {
-      case .horizontal(let loc):
-        horizontal(loc)
-
-      case .vertical(let loc):
-        vertical(loc)
-
-      case .join(let joinType):
-        join(joinType)
-
-      case .corner(let cornerType):
-        corner(cornerType)
-
-      case .blank:
-        Part { Glyph.blank }
+      case .horizontal(let loc): horizontal(loc)
+      case .vertical(let loc): vertical(loc)
+      case .join(let joinType): join(joinType)
+      case .corner(let cornerType): corner(cornerType)
+      case .blank: Part { Glyph.blank }
     }
-  }  // END frame double
+  }
 }
 
 extension Box.PartType {
