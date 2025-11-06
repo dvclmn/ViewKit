@@ -6,34 +6,15 @@
 //
 
 extension GridShaped {
-  public var width: Int { cells.map { $0.count }.max() ?? 0 }
+
+  /// Width of the first row — the 'intended' width of a rectangular grid.
+  public var canonicalWidth: Int { cells.first?.count ?? 0 }
+
+  /// Width of the widest row — useful for ragged or irregular data.
+  public var maxWidth: Int { cells.map(\.count).max() ?? 0 }
   public var height: Int { cells.count }
-
-  /// Accesses or modifies the row of characters at the specified index.
-  ///
-  /// - Parameter row: The zero-based index of the row to access or modify.
-  /// - Returns: The array of `Character` representing the row at the given index, or
-  ///   an empty array if the index is out of bounds.
-  ///
-  /// - Note:
-  ///   - If the getter is called with a row index greater than or equal to `height`,
-  ///     it returns an empty array.
-  ///   - If the setter is called with a row index less than `height`, it replaces the existing row.
-  ///   - If the setter is called with a row index equal to `height`, it appends the new row at the end.
-  ///   - Setting with a row index greater than `height` has no effect.
-
-  public subscript(row rowIndex: Int) -> Row {
-    get { cells[safe: rowIndex] ?? [] }
-    set {
-      if rowIndex < cells.count {
-        cells[rowIndex] = newValue
-
-      } else if rowIndex == cells.count {
-        cells.append(newValue)
-      }
-    }
-  }
-
+  
+  
   func cropped(toWidth width: Int) -> Self {
     Self(self.cells.map { Array($0.prefix(width)) })
   }
