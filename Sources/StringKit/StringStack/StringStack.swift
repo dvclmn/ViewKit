@@ -19,20 +19,6 @@ public struct StringStack: GridShaped {
   public init(_ cells: Cells, fallback: Cell = "⚠️") {
     let patched = Self.patchedGrid(cells, fallback: fallback)
     self.cells = patched ?? []
-    //      Self.repair(row: row, targetWidth: targetWidth, fill: fallback ?? "⚠️")
-    //    }
-    //    self.cells = patched ?? []
-  }
-
-  /// Initializes a `StringStack` by repeating a given row
-  /// vertically, the specified number of times.
-  /// - Parameters:
-  ///   - row: The row of characters to repeat.
-  ///   - count: The number of times to repeat the row.
-  public init(repeating row: [Character], count: Int) {
-
-    let cells = Array(repeating: row, count: count)
-    self.init(cells)
   }
 }
 
@@ -51,13 +37,8 @@ extension StringStack: ExpressibleByStringLiteral {
   public init(stringLiteral value: StringLiteralType) {
 
     /// ``Swift/String/substringLines(subsequenceStrategy:)``
-    let lines = value.substringLines().map { substring in
-      String(substring)
-    }
-
-    let characters: Cells = lines.map { string in
-      Array(string)
-    }
+    let lines = value.substringLines().map { String($0)}
+    let characters: Cells = lines.map { Array($0) }
     self.init(characters)
   }
 }
@@ -84,5 +65,4 @@ extension StringStack {
       return newRow
     }
   }
-
 }

@@ -8,15 +8,6 @@
 import SwiftUI
 
 extension StringStack {
-  public static func joined(
-    _ stacks: [StringStack],
-    along axis: Axis,
-    padding: Character? = nil
-  ) -> StringStack {
-    return stacks.reduce(StringStack([])) { partial, stack in
-      StringStack.joined(partial, stack, along: axis, padding: padding)
-    }
-  }
 
   public static func joined(
     _ stacks: StringStack...,
@@ -34,6 +25,16 @@ extension StringStack {
     }
   }
 
+  public static func joined(
+    _ stacks: [StringStack],
+    along axis: Axis,
+    padding: Character? = nil
+  ) -> StringStack {
+    return stacks.reduce(StringStack([])) { partial, stack in
+      StringStack.joined(partial, stack, along: axis, padding: padding)
+    }
+  }
+
   private func joinedHorizontally(
     with other: StringStack,
     padding char: Character? = nil
@@ -43,24 +44,19 @@ extension StringStack {
 
     var result = StringStack([])
 
+    let lhsPadding = Self.createPadding(with: char, width: self.width)
+    let rhsPadding = Self.createPadding(with: char, width: other.width)
+
     for i in 0..<maxHeight {
-      //      print("Running through Rows in StringStack/joinedHorizontally. At Row \(i). Max Height is \(maxHeight)")
       let lhs = self[row: i]
-      
       let rhs = other[row: i]
-
-            print("LHS Row: \(lhs), RHS Row: \(rhs)")
-
-      /// Create and append padding
-      let lhsPadding = Self.createPadding(with: char, width: self.width)
-      let rhsPadding = Self.createPadding(with: char, width: other.width)
-
+      
       result.append(lhsPadding + lhs + rhs + rhsPadding)
     }
     return result
   }
 
-  func joinedVertically(with other: Self, padding: Character? = nil) -> Self {
+  private func joinedVertically(with other: Self, padding: Character? = nil) -> Self {
     let maxWidth = Swift.max(self.width, other.width)
     var result = self
 
@@ -72,26 +68,8 @@ extension StringStack {
         result.append(row)
       }
     }
-
     return result
   }
-
-  //  private func joinedVertically(
-  //    with other: StringStack,
-  //    padding: Character? = nil
-  //  ) -> StringStack {
-  //    let maxWidth = Swift.max(width, other.width)
-  //    var result = self
-  //
-  //    for i in 0..<other.height {
-  //      let rhs = other[row: i]
-  //      let rhsPadding = Self.createPadding(for: other, with: padding)
-  ////      let row = other.row(at: i, paddedTo: maxWidth, with: padding)
-  //      result.append(rhsPadding + rhs)
-  //    }
-  //
-  //    return result
-  //  }
 
   static func createPadding(
     with char: Character?,
@@ -103,10 +81,11 @@ extension StringStack {
 }
 
 /// Assumes horizontal joining
-//public func + (lhs: StringStack, rhs: StringStack) -> StringStack {
-//  return StringStack.joined(lhs, rhs, along: .horizontal)
-//}
-//
-//public func += (lhs: inout StringStack, rhs: StringStack) {
-//  lhs = lhs + rhs
-//}
+public func + (lhs: StringStack, rhs: StringStack) -> StringStack {
+  return StringStack.joined(lhs, rhs, along: .horizontal)
+}
+
+/// Joins horizontally
+public func += (lhs: inout StringStack, rhs: StringStack) {
+  lhs = lhs + rhs
+}
