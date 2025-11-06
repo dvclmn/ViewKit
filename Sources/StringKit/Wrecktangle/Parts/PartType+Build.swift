@@ -49,8 +49,6 @@ extension Box.PartType {
   }
 }
 
-
-
 extension StringStack {
   public init(
     from glyphStack: Box.GlyphStack,

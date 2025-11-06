@@ -19,7 +19,7 @@ extension Box.StructureLine {
     let repeated = repeating.buildPart(
       using: engine,
       position: position,
-      repeating: engine.repeatedPartWidth
+      span: .fill
     )
     let rowNumbers = engine.hasRowNumbers ? StringStack(position.rowNumber.toString + " ") : ""
 

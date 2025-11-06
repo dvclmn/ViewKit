@@ -22,6 +22,11 @@ extension Box.Engine {
   var theme: Box.Theme { config.theme }
   var hasRowNumbers: Bool { config.metrics.contains(.lineNumbers) }
 
+  func rowNumbersIfNeeded(for position: ) -> String {
+    guard hasRowNumbers else { return "" }
+    return 
+  }
+  
   func width(for component: LineComponent) -> Int {
     switch component {
       case .rowNumbers:
