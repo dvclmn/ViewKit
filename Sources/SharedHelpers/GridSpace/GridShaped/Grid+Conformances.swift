@@ -33,7 +33,7 @@ extension GridShaped {
     cells.enumerated()
   }
   
-  mutating func append(_ row: Row) {
+  public mutating func append(_ row: Row) {
     cells.append(row)
 //    fatalError("GridShaped.append(_:) must be implemented by conforming type.")
   }
@@ -48,7 +48,7 @@ extension GridShaped {
 ///
 /// ```
 extension GridShaped {
-  public init(arrayLiteral elements: Row...) {
+  public init(arrayLiteral elements: Self.Row...) {
     self.init(elements, rowValidation: .ignore)
   }
 }

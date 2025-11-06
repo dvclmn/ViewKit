@@ -14,7 +14,7 @@ extension GridShaped {
   ///   - repair: A closure that defines how to repair each row.
   ///     The closure receives `(row, targetWidth)` and should return a new row of exactly that width.
   /// - Returns: A new patched grid, or `nil` if no patching was needed.
-  static func patchedGrid(
+  public static func patchedGrid(
     _ cells: Cells,
     visualDebug: Bool = false,
     repair: (Row, Int) -> Row
@@ -44,31 +44,31 @@ extension GridShaped {
   }
 
   /// Default repair that simply pads or truncates with the last element (if any)
-  static func defaultRepair(
-    row: Row,
-    targetWidth: Int,
-    fallback: Value
-  ) -> Row {
-    guard !row.isEmpty else {
-      return Array(repeating: row.first ?? fallback, count: targetWidth)
-    }
-    guard row.count < targetWidth else {
-      return Array(row.prefix(targetWidth))
-    }
-    return row + Array(repeating: row.last!, count: targetWidth - row.count)
-  }
+//  static func defaultRepair(
+//    row: Row,
+//    targetWidth: Int,
+//    fallback: Value
+//  ) -> Row {
+//    guard !row.isEmpty else {
+//      return Array(repeating: row.first ?? fallback, count: targetWidth)
+//    }
+//    guard row.count < targetWidth else {
+//      return Array(row.prefix(targetWidth))
+//    }
+//    return row + Array(repeating: row.last!, count: targetWidth - row.count)
+//  }
 }
 // MARK: - Patching for String/Character based
-extension GridShaped where Value == Character {
-  static func defaultRepair(row: Row, targetWidth: Int, fill: Character = " ") -> Row {
-    guard row.count < targetWidth else {
-      var newRow = Array(row.prefix(targetWidth - 1))
-      newRow.append(fill)
-      return newRow
-    }
-    return row + Array(repeating: fill, count: targetWidth - row.count)
-  }
-}
+//extension GridShaped where Value == Character {
+//  static func defaultRepair(row: Row, targetWidth: Int, fill: Character = " ") -> Row {
+//    guard row.count < targetWidth else {
+//      var newRow = Array(row.prefix(targetWidth - 1))
+//      newRow.append(fill)
+//      return newRow
+//    }
+//    return row + Array(repeating: fill, count: targetWidth - row.count)
+//  }
+//}
 //  static func patchedGrid(
 //    _ cells: Cells,
 //    visualDebug: Bool

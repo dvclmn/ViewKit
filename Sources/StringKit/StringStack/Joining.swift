@@ -13,7 +13,7 @@ extension StringStack {
     along axis: Axis,
     padding: Character? = nil
   ) -> StringStack {
-    return stacks.reduce(StringStack([])) { partial, stack in
+    return stacks.reduce([]) { partial, stack in
       StringStack.joined(partial, stack, along: axis, padding: padding)
     }
   }
@@ -23,7 +23,7 @@ extension StringStack {
     along axis: Axis,
     padding: Character? = nil
   ) -> StringStack {
-    stacks.reduce(StringStack([])) { partial, string in
+    stacks.reduce([]) { partial, string in
       switch axis {
         case .horizontal:
           partial.joinedHorizontally(with: string, padding: padding)
@@ -41,7 +41,7 @@ extension StringStack {
 
     let maxHeight = Swift.max(self.height, other.height)
 
-    var result = StringStack([])
+    var result: StringStack = []
 
     for i in 0..<maxHeight {
 //      print("Running through Rows in StringStack/joinedHorizontally. At Row \(i). Max Height is \(maxHeight)")

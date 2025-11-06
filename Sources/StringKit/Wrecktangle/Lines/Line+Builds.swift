@@ -21,7 +21,8 @@ extension Box.StructureLine {
       position: position,
       span: .fill
     )
-    let rowNumbers = engine.hasRowNumbers ? StringStack(position.rowNumber.toString + " ") : ""
+    let rowNumbers = StringStack("One secon")
+//    let rowNumbers = engine.hasRowNumbers ? StringStack(position.rowNumber.toString + " ") : ""
 
     return StringStack.joined(
       rowNumbers,
@@ -50,7 +51,7 @@ extension Box.TextLine {
 
     let textContent = TextReflow(
       text,
-      width: engine.widthForText,
+      width: engine.width(for: .text),
       shouldHyphenate: true
     )
 

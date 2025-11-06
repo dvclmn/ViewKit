@@ -10,32 +10,45 @@ import SwiftUI
 
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack: GridShaped {
-  public typealias Value = Character
 
+  public typealias Cell = Character
   public var cells: Cells
 
-//  public init(
-//    _ cells: Stack,
-//    rowValidation: RowValidationStrategy = .autoFix()
-//  ) {
-//
-//    switch rowValidation {
-//      case .autoFix(let debugOption):
-//        self.cells = patchedStack(cells, visualDebug: debugOption) ?? []
-//
-//      case .throwError:
-//        precondition(
-//          cells.allSatisfy { $0.count == width },
-//          "Non-rectangular StringStack: all rows must have equal width"
-//        )
-//        self.cells = cells
-//    }
-//  }
+  public init(_ cells: Cells, rowValidation: RowValidation<StringStack>) {
+    switch rowValidation {
+      case .patch(let strategy, let shouldDebug):
+        let patched =
+          Self.patchedGrid(
+            cells,
+            visualDebug: shouldDebug,
+            repair: strategy
+          ) ?? []
+        self.cells = patched
+
+      case .ignore:
+        self.cells = cells
+
+      case .throwError:
+        let canonicalWidth = cells.first?.count ?? 0
+        precondition(
+          cells.allSatisfy { $0.count == canonicalWidth },
+          "Non-rectangular StringStack: all rows must have equal width"
+        )
+        self.cells = cells
+    }
+  }
+  //  public init(
+  //    _ cells: Stack,
+  //    rowValidation: RowValidationStrategy = .autoFix()
+  //  ) {
+  //
+  //
+  //  }
 
   /// ``Swift/String/substringLines(subsequenceStrategy:)``
-//  public init(_ string: String) {
-//    self.init(string.substringLines().map { Array($0) })
-//  }
+  //  public init(_ string: String) {
+  //    self.init(string.substringLines().map { Array($0) })
+  //  }
 
   /// Initializes a `StringStack` by repeating a given row
   /// vertically, the specified number of times.
@@ -58,17 +71,18 @@ extension StringStack: ExpressibleByUnicodeScalarLiteral {
   }
 }
 
-//extension StringStack: ExpressibleByStringLiteral {
-//  public init(stringLiteral value: StringLiteralType) {
-//    let characters = Array(value)
-//    //    let characters: [Character] = value.unicodeScalars.map { scalar in
-//    //      Character(scalar)
-//    //    }
+extension StringStack: ExpressibleByStringLiteral {
+  public init(stringLiteral value: StringLiteralType) {
+    let characters = Array(value)
+    //    let characters: [Character] = value.unicodeScalars.map { scalar in
+    //      Character(scalar)
+    //    }
 //    self.init([characters])
-//  }
-//}
+    self.init([characters], rowValidation: .ignore)
+  }
+}
 
 extension StringStack: CustomStringConvertible {
   public var description: String { string }
 }
-  
+
