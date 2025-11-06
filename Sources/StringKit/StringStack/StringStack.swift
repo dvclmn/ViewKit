@@ -15,23 +15,23 @@ public struct StringStack: GridShaped {
 
   public var cells: [[Character]]
 
-  public init(
-    _ cells: Stack,
-    rowValidation: RowValidationStrategy = .autoFix()
-  ) {
-
-    switch rowValidation {
-      case .autoFix(let debugOption):
-        self.cells = patchedStack(cells, visualDebug: debugOption) ?? []
-
-      case .throwError:
-        precondition(
-          cells.allSatisfy { $0.count == width },
-          "Non-rectangular StringStack: all rows must have equal width"
-        )
-        self.cells = cells
-    }
-  }
+//  public init(
+//    _ cells: Stack,
+//    rowValidation: RowValidationStrategy = .autoFix()
+//  ) {
+//
+//    switch rowValidation {
+//      case .autoFix(let debugOption):
+//        self.cells = patchedStack(cells, visualDebug: debugOption) ?? []
+//
+//      case .throwError:
+//        precondition(
+//          cells.allSatisfy { $0.count == width },
+//          "Non-rectangular StringStack: all rows must have equal width"
+//        )
+//        self.cells = cells
+//    }
+//  }
 
   /// ``Swift/String/substringLines(subsequenceStrategy:)``
   public init(_ string: String) {

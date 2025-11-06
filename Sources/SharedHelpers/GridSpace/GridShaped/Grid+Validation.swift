@@ -8,7 +8,7 @@
 import Foundation
 
 extension GridShaped {
-  func patchedGrid(
+  static func patchedGrid(
     _ cells: Cells,
     visualDebug: Bool
   ) -> Cells? {
@@ -51,9 +51,9 @@ extension GridShaped {
       }
     }
     
-    if visualDebug {
-      print("Patched:  \(self.cells.map { String($0.description) })")
-    }
+//    if visualDebug {
+//      print("Patched:  \(self.cells.map { String($0.description) })")
+//    }
     
     return patched
     

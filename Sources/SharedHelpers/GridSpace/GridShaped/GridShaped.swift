@@ -7,14 +7,13 @@
 
 import Foundation
 
-public protocol GridShaped: Sequence, ExpressibleByArrayLiteral {
+public protocol GridShaped: Sequence, ExpressibleByArrayLiteral, Collection {
   associatedtype Value
   typealias Cells = [[Value]]
   typealias Row = [Value]
   var cells: Cells { get set }
 
   init(_ cells: Cells, rowValidation: RowValidationStrategy)
-  init(repeating row: Row, count: Int)
 }
 
 public enum RowValidationStrategy {
@@ -23,12 +22,12 @@ public enum RowValidationStrategy {
 }
 
 extension GridShaped {
-  init(_ cells: Cells, rowValidation: RowValidationStrategy = .autoFix()) {
-//    self.cells = cells
+  public init(_ cells: Cells, rowValidation: RowValidationStrategy = .autoFix()) {
+    //    self.cells = cells
     switch rowValidation {
       case .autoFix(let debugOption):
-        self.cells = patchedGrid(cells, visualDebug: debugOption) ?? []
-        
+        self.cells = Self.patchedGrid(cells, visualDebug: debugOption) ?? []
+
       case .throwError:
         precondition(
           cells.allSatisfy { $0.count == width },
@@ -37,8 +36,8 @@ extension GridShaped {
         self.cells = cells
     }
   }
-  init(repeating row: Row, count: Int)
-  
+  //  init(repeating row: Row, count: Int)
+
   public var isEmpty: Bool {
     cells.isEmpty || cells.allSatisfy { $0.isEmpty }
   }
@@ -46,15 +45,15 @@ extension GridShaped {
 
 // MARK: - Sequence conformance
 extension GridShaped {
-  
+
   public func makeIterator() -> IndexingIterator<Cells> {
     cells.makeIterator()
   }
-  
+
   public func map<T>(_ transform: (Row) -> T) -> [T] {
     cells.map(transform)
   }
-  
+
   public func enumerated() -> EnumeratedSequence<Cells> {
     cells.enumerated()
   }
@@ -63,7 +62,6 @@ extension GridShaped {
     cells.append(row)
   }
 }
-
 
 /// This allows writing
 /// ```
@@ -77,10 +75,9 @@ extension GridShaped {
 extension GridShaped {
   public init(arrayLiteral elements: Row...) {
     self.init(elements, rowValidation: .autoFix())
-//    self.cells = elements
+    //    self.cells = elements
   }
 }
-
 
 //public protocol GridRepresentable {
 //  associatedtype Cell

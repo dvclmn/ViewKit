@@ -8,7 +8,7 @@
 extension GridShaped {
   public var width: Int { cells.map { $0.count }.max() ?? 0 }
   public var height: Int { cells.count }
-  
+
   /// Accesses or modifies the row of characters at the specified index.
   ///
   /// - Parameter row: The zero-based index of the row to access or modify.
@@ -27,10 +27,14 @@ extension GridShaped {
     set {
       if rowIndex < cells.count {
         cells[rowIndex] = newValue
-        
+
       } else if rowIndex == cells.count {
         cells.append(newValue)
       }
     }
+  }
+
+  func cropped(toWidth width: Int) -> Self {
+    Self(self.cells.map { Array($0.prefix(width)) })
   }
 }

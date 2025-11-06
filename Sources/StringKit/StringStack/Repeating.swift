@@ -22,6 +22,10 @@ extension StringStack {
     let stack = self.cells.stacked(along: axis, repeating: count)
     return StringStack(stack)
   }
+  
+  private func cropped(toWidth width: Int) -> StringStack {
+    StringStack(self.cells.map { Array($0.prefix(width)) })
+  }
 
 //  func repeatedHorizontally(
 //    toWidth width: Int,
@@ -125,9 +129,7 @@ extension StringStack {
   //    //    }
   //  }
 
-  private func cropped(toWidth width: Int) -> StringStack {
-    StringStack(self.cells.map { Array($0.prefix(width)) })
-  }
+
 }
 
 // MARK: - Repeating operator
