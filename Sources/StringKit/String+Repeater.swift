@@ -62,6 +62,7 @@ public extension String {
   
   static var dashDotPattern: (Int) -> String {
     return { count in
+      
       String.pattern(totalCount: count) {
         character("-")
         character(".")

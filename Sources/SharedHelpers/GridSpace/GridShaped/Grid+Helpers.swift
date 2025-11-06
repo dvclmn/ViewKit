@@ -22,6 +22,8 @@ extension GridShaped {
     cells.isEmpty || cells.allSatisfy { $0.isEmpty }
   }
   
+  public var rows: [Self.Row] { cells.map(\.self) }
+  
 //  func cropped(toWidth width: Int) -> Self {
 //    Self(self.cells.map { Array($0.prefix(width)) })
 //  }

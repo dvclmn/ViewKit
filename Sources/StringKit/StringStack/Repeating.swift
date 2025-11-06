@@ -15,14 +15,7 @@ public enum TrimMethod {
 }
 
 extension StringStack {
-  func repeated(
-    along axis: Axis,
-    count: Int
-  ) -> StringStack {
 
-    let stack = self.cells.stacked(along: axis, repeating: count)
-    return StringStack(stack)
-  }
 
   //  private func cropped(toWidth width: Int) -> StringStack {
   //    StringStack(self.cells.map { Array($0.prefix(width)) })

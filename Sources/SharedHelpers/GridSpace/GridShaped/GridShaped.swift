@@ -7,22 +7,19 @@
 
 import Foundation
 
-public protocol GridShaped: Collection where Self.Element == Self.Row {
+public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Self.Element == Self.Row {
   associatedtype Cell
   typealias Cells = [[Cell]]
   typealias Row = [Cell]
   var cells: Cells { get set }
 
-  /// See `StringKit/StringStack` for example init
-  /// I kinda want to *prevent* this, if anything?
   init(_ cells: Cells)
-//  init(_ cells: Cells, fallback: Cell)
   
   static func defaultRepair(
     _ cells: Cells,
     fallback: Cell
   ) -> Cells?
-//  static func repair(row: Row, targetWidth: Int, fill: Cell) -> Row
+
   static var fallbackCell: Cell { get }
 }
 
@@ -30,6 +27,12 @@ public enum RowValidation<T: GridShaped> {
   case patch((T.Row, Int) -> T.Row)
   case ignore
   case throwError
+}
+
+extension GridShaped {
+  public init(arrayLiteral elements: Self.Element...) {
+    self.init(elements)
+  }
 }
 
 //

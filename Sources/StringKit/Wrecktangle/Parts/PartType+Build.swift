@@ -24,10 +24,11 @@ extension Box.PartType {
 
     switch span {
       case .fill:
-        return stringStack.repeated(
-          along: .horizontal,
-          count: engine.width(for: .repeatedPart)
-        )
+        return StringStack(repeating: stringStack, count: engine.width(for: .repeatedPart))
+//        return stringStack.repeated(
+//          along: .horizontal,
+//          count: engine.width(for: .repeatedPart)
+//        )
 
       case .fixed(let count):
         return if count == 1 {

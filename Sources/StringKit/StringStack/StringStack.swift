@@ -15,7 +15,7 @@ public struct StringStack: GridShaped {
   public typealias Row = [Character]
 
   public static let fallbackCell: Cell = "⚠️"
-  
+
   public var cells: Cells
 
   public init(_ cells: Cells) {
@@ -39,7 +39,7 @@ extension StringStack: ExpressibleByStringLiteral {
   public init(stringLiteral value: StringLiteralType) {
 
     /// ``Swift/String/substringLines(subsequenceStrategy:)``
-    let lines = value.substringLines().map { String($0)}
+    let lines = value.substringLines().map { String($0) }
     let characters: Cells = lines.map { Array($0) }
     self.init(characters)
   }
@@ -48,23 +48,3 @@ extension StringStack: ExpressibleByStringLiteral {
 extension StringStack: CustomStringConvertible {
   public var description: String { string }
 }
-
-//extension StringStack {
-//  public static func repair(
-//    row: Row,
-//    targetWidth: Int,
-//    fill: Cell = " "
-//  ) -> Row {
-//    if row.count == targetWidth {
-//      return row
-//
-//    } else if row.count < targetWidth {
-//      return row + Array(repeating: fill, count: targetWidth - row.count)
-//
-//    } else {
-//      var newRow = Array(row.prefix(targetWidth - 1))
-//      newRow.append(fill)
-//      return newRow
-//    }
-//  }
-//}
