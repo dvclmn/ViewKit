@@ -14,6 +14,7 @@ public protocol GridShaped: Sequence, ExpressibleByArrayLiteral {
   var cells: Cells { get set }
 
   init(_ cells: Cells, rowValidation: RowValidationStrategy)
+  init(repeating row: Row, count: Int)
 }
 
 public enum RowValidationStrategy {
@@ -22,6 +23,22 @@ public enum RowValidationStrategy {
 }
 
 extension GridShaped {
+  init(_ cells: Cells, rowValidation: RowValidationStrategy = .autoFix()) {
+//    self.cells = cells
+    switch rowValidation {
+      case .autoFix(let debugOption):
+        self.cells = patchedGrid(cells, visualDebug: debugOption) ?? []
+        
+      case .throwError:
+        precondition(
+          cells.allSatisfy { $0.count == width },
+          "Non-rectangular StringStack: all rows must have equal width"
+        )
+        self.cells = cells
+    }
+  }
+  init(repeating row: Row, count: Int)
+  
   public var isEmpty: Bool {
     cells.isEmpty || cells.allSatisfy { $0.isEmpty }
   }
