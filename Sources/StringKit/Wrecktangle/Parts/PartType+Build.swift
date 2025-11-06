@@ -19,24 +19,19 @@ extension Box.PartType {
   ) -> StringStack {
 
     let part = part(using: engine, position: position)
-//    print("Building Part: \(part)")
+    //    print("Building Part: \(part)")
     let stringStack = part.toStringStack(with: engine.theme)
 
     switch span {
       case .fill:
-        return StringStack(repeating: stringStack, count: engine.width(for: .repeatedPart))
-//        return stringStack.repeated(
-//          along: .horizontal,
-//          count: engine.width(for: .repeatedPart)
-//        )
+        return StringStack(repeating: stringStack, count: engine.width(for: .repeatedPart), along: .horizontal)
 
       case .fixed(let count):
         return if count == 1 {
           stringStack
         } else {
-          stringStack.repeated(along: .horizontal, count: count)
+          StringStack(repeating: stringStack, count: count, along: .horizontal)
         }
-
     }
   }
 
@@ -57,22 +52,22 @@ extension StringStack {
     from glyphStack: Box.GlyphStack,
     with theme: Box.Theme,
   ) {
-//    print("Making StringStack from GlyphStack / and Theme \(theme)")
+    //    print("Making StringStack from GlyphStack / and Theme \(theme)")
     printPadded(
       "Glyphstack width (widest row): \(glyphStack.width(for: .widestRow))",
       "Glyphstack rows: \(glyphStack.rows)"
     )
     /// Convert from `GlyphType` → `Character`
     let characterGrid = glyphStack.map { row in
-//      print("Processing row \(row)")
+      //      print("Processing row \(row)")
       return row.map {
         let char = theme.glyphSet.character(for: $0)
-//        print("Character: \(char)")
+        //        print("Character: \(char)")
         return char
       }
     }
-//    print("Character Grid: \(characterGrid)")
-    
+    //    print("Character Grid: \(characterGrid)")
+
     self.init(characterGrid)
   }
 

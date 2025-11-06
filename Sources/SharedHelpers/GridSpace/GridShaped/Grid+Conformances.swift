@@ -37,15 +37,15 @@ extension GridShaped {
     cells.append(row)
   }
 
-  public init(repeating grid: Self, count: Int) {
-    precondition(count >= 0, "Repeat count must be non-negative")
-    
-    let newCells: Cells = grid.cells.map { row in
-      Array(repeating: row, count: count).flatMap { $0 }
-    }
-    
-    self.init(newCells)
-  }
+//  public init(repeating grid: Self, count: Int) {
+//    precondition(count >= 0, "Repeat count must be non-negative")
+//    
+//    let newCells: Cells = grid.cells.map { row in
+//      Array(repeating: row, count: count).flatMap { $0 }
+//    }
+//    
+//    self.init(newCells)
+//  }
   
   public init(
     repeating grid: Self,

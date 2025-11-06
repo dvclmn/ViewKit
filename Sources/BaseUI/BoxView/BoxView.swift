@@ -84,7 +84,7 @@ extension BoxView {
         //                  Box.Bottom()
       }
 //      .environment(\.metrics, [])
-            .environment(\.metrics, .lineNumbers)
+//            .environment(\.metrics, .lineNumbers)
       .setGridFrame(30, alignment: .leading)
       .setBoxStyle(
         glyphs: .sharp,
