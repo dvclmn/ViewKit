@@ -19,13 +19,14 @@ extension StringStack {
     along axis: Axis,
     count: Int
   ) -> StringStack {
-    let stack = self.cells.stacked(along: axis, repeating: count)
-    return StringStack(stack)
+    fatalError("Working on GridShaped, one sec")
+//    let stack = self.cells.stacked(along: axis, repeating: count)
+//    return StringStack(stack)
   }
   
-  private func cropped(toWidth width: Int) -> StringStack {
-    StringStack(self.cells.map { Array($0.prefix(width)) })
-  }
+//  private func cropped(toWidth width: Int) -> StringStack {
+//    StringStack(self.cells.map { Array($0.prefix(width)) })
+//  }
 
 //  func repeatedHorizontally(
 //    toWidth width: Int,

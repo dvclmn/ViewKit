@@ -10,10 +10,9 @@ import SwiftUI
 
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack: GridShaped {
-  public typealias Stack = [[Character]]
   public typealias Value = Character
 
-  public var cells: [[Character]]
+  public var cells: Cells
 
 //  public init(
 //    _ cells: Stack,
@@ -34,9 +33,9 @@ public struct StringStack: GridShaped {
 //  }
 
   /// ``Swift/String/substringLines(subsequenceStrategy:)``
-  public init(_ string: String) {
-    self.init(string.substringLines().map { Array($0) })
-  }
+//  public init(_ string: String) {
+//    self.init(string.substringLines().map { Array($0) })
+//  }
 
   /// Initializes a `StringStack` by repeating a given row
   /// vertically, the specified number of times.
@@ -59,15 +58,15 @@ extension StringStack: ExpressibleByUnicodeScalarLiteral {
   }
 }
 
-extension StringStack: ExpressibleByStringLiteral {
-  public init(stringLiteral value: StringLiteralType) {
-    let characters = Array(value)
-    //    let characters: [Character] = value.unicodeScalars.map { scalar in
-    //      Character(scalar)
-    //    }
-    self.init([characters])
-  }
-}
+//extension StringStack: ExpressibleByStringLiteral {
+//  public init(stringLiteral value: StringLiteralType) {
+//    let characters = Array(value)
+//    //    let characters: [Character] = value.unicodeScalars.map { scalar in
+//    //      Character(scalar)
+//    //    }
+//    self.init([characters])
+//  }
+//}
 
 extension StringStack: CustomStringConvertible {
   public var description: String { string }

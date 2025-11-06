@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedHelpers
 
 extension Box.PartType {
 
@@ -50,21 +51,24 @@ extension Box.PartType {
 }
 
 extension StringStack {
+//  public init(
+//    _ cells: Cells,
+//    rowValidation: RowValidation<StringStack>
+//  ) {
+//    <#code#>
+//  }
   public init(
     from glyphStack: Box.GlyphStack,
     with theme: Box.Theme,
   ) {
-    let width = glyphStack.first?.count ?? 0
-    precondition(
-      glyphStack.allSatisfy { $0.count == width },
-      "Non-rectangular glyph grid")
 
     /// Convert from `GlyphType` → `Character`
     let characterGrid = glyphStack.map { row in
       row.map { theme.glyphSet.character(for: $0) }
     }
-
-    self.init(characterGrid)
+//
+    self.init(characterGrid, rowValidation: RowValidation<StringStack>.ignore)
+//    self.init(characterGrid)
   }
 
 }

@@ -7,7 +7,7 @@
 
 extension GridShaped {
 
-  public subscript(row rowIndex: Int, col colIndex: Int) -> Value? {
+  public subscript(row rowIndex: Int, col colIndex: Int) -> Cell? {
     get { cells[safe: rowIndex]?[safe: colIndex] }
     set {
       guard let newValue,
@@ -30,17 +30,17 @@ extension GridShaped {
     }
   }
 
-//  public subscript(col colIndex: Int) -> Row? {
-//
-//    get { self[safe: row] ?? [] }
-//    set {
-//      if row < self.count {
-//        self[row] = newValue
-//
-//      } else if row == self.count {
-//        self.append(newValue)
-//      }
-//    }
-//  }
+  //  public subscript(col colIndex: Int) -> Row? {
+  //
+  //    get { self[safe: row] ?? [] }
+  //    set {
+  //      if row < self.count {
+  //        self[row] = newValue
+  //
+  //      } else if row == self.count {
+  //        self.append(newValue)
+  //      }
+  //    }
+  //  }
 
 }

@@ -7,72 +7,53 @@
 
 import Foundation
 
-public protocol GridShaped: Sequence, ExpressibleByArrayLiteral, Collection {
-  associatedtype Value
-  typealias Cells = [[Value]]
-  typealias Row = [Value]
+public protocol GridShaped: Collection, ExpressibleByArrayLiteral {
+  associatedtype Cell
+  typealias Cells = [[Cell]]
+  typealias Row = [Cell]
   var cells: Cells { get set }
 
-  init(_ cells: Cells, rowValidation: RowValidationStrategy)
+  init(_ cells: Cells, rowValidation: RowValidation<Self>)
 }
 
-public enum RowValidationStrategy {
-  case autoFix(visualDebug: Bool = false)
+public enum RowValidation<T: GridShaped> {
+  case patch((T.Row, Int) -> T.Row, visualDebug: Bool = false)
+  case ignore
   case throwError
 }
 
 extension GridShaped {
-  public init(_ cells: Cells, rowValidation: RowValidationStrategy = .autoFix()) {
-    //    self.cells = cells
-    switch rowValidation {
-      case .autoFix(let debugOption):
-        self.cells = Self.patchedGrid(cells, visualDebug: debugOption) ?? []
-
-      case .throwError:
-        precondition(
-          cells.allSatisfy { $0.count == width },
-          "Non-rectangular StringStack: all rows must have equal width"
-        )
-        self.cells = cells
-    }
-  }
-  //  init(repeating row: Row, count: Int)
-
-  public var isEmpty: Bool {
-    cells.isEmpty || cells.allSatisfy { $0.isEmpty }
-  }
-}
-
-// MARK: - Sequence conformance
-extension GridShaped {
-
-  public func makeIterator() -> IndexingIterator<Cells> {
-    cells.makeIterator()
-  }
-
-  public func map<T>(_ transform: (Row) -> T) -> [T] {
-    cells.map(transform)
-  }
-
-  public func enumerated() -> EnumeratedSequence<Cells> {
-    cells.enumerated()
-  }
-
-  mutating func append(_ row: Row) {
-    cells.append(row)
-  }
-}
-
-/// ```
-/// // Can write this:
-/// guard !self.isEmpty else { return [] }
-///
-/// // Instead of this:
-/// guard !self.isEmpty else { StringStack([]) }
-///
-/// ```
-extension GridShaped {
-  public init(arrayLiteral elements: Row...) {
-    self.init(elements, rowValidation: .autoFix())
-  }
+//  public init(
+//    _ cells: Cells,
+//    rowValidation: RowValidation<Self> = .ignore
+//  ) {
+//    Self.init(cells, rowValidation: rowValidation)
+//  }
+  
+//  public init(
+//    _ cells: Cells,
+//    rowValidation: RowValidation<Self> = .ignore
+//  ) {
+//    switch rowValidation {
+//      case .patch(let strategy, let shouldDebug):
+//        let patched =
+//          Self.patchedGrid(
+//            cells,
+//            visualDebug: shouldDebug,
+//            repair: strategy
+//          ) ?? []
+//        self.cells = patched
+//
+//      case .ignore:
+//        self.cells = cells
+//
+//      case .throwError:
+//        let canonicalWidth = cells.first?.count ?? 0
+//        precondition(
+//          cells.allSatisfy { $0.count == canonicalWidth },
+//          "Non-rectangular StringStack: all rows must have equal width"
+//        )
+//        self.cells = cells
+//    }
+//  }
 }

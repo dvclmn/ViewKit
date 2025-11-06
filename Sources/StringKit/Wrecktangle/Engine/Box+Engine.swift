@@ -22,9 +22,10 @@ extension Box.Engine {
   var theme: Box.Theme { config.theme }
   var hasRowNumbers: Bool { config.metrics.contains(.lineNumbers) }
 
-  func rowNumbersIfNeeded(for position: ) -> String {
+  func rowNumbersIfNeeded(for position: Box.PositionContext) -> String {
     guard hasRowNumbers else { return "" }
-    return
+    #warning("In the middle of working on this, went to StringStack")
+    return "\(position.rowNumber)"
   }
   
   func width(for component: LineComponent) -> Int {
