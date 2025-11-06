@@ -9,7 +9,6 @@ import Foundation
 import SharedHelpers
 
 public struct Box: Sendable {
-  //  let config: Config
   let components: [any Component]
   let engine: Box.Engine
 

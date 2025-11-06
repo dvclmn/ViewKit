@@ -37,18 +37,6 @@ public struct StringStack: GridShaped {
         self.cells = cells
     }
   }
-  //  public init(
-  //    _ cells: Stack,
-  //    rowValidation: RowValidationStrategy = .autoFix()
-  //  ) {
-  //
-  //
-  //  }
-
-  /// ``Swift/String/substringLines(subsequenceStrategy:)``
-  //  public init(_ string: String) {
-  //    self.init(string.substringLines().map { Array($0) })
-  //  }
 
   /// Initializes a `StringStack` by repeating a given row
   /// vertically, the specified number of times.
@@ -73,16 +61,32 @@ extension StringStack: ExpressibleByUnicodeScalarLiteral {
 
 extension StringStack: ExpressibleByStringLiteral {
   public init(stringLiteral value: StringLiteralType) {
-    let characters = Array(value)
+
+    /// ``Swift/String/substringLines(subsequenceStrategy:)``
+    let lines = value.substringLines().map { substring in
+      String(substring)
+    }
+
+    let characters: [[Character]] = lines.map { string in
+      Array(string)
+    }
+
+    self.init(characters, rowValidation: .patch(<#T##(Row, Int) -> Row#>, visualDebug: <#T##Bool#>))
+
+    //    let characters = lines.map { string in
+    //      Array(string)
+    //    }
+    //    self.init(.map { Array($0) })
+
+    //    let characters = Array(value)
     //    let characters: [Character] = value.unicodeScalars.map { scalar in
     //      Character(scalar)
     //    }
-//    self.init([characters])
-    self.init([characters], rowValidation: .ignore)
+    //    self.init([characters])
+    //    self.init([characters], rowValidation: .ignore)
   }
 }
 
 extension StringStack: CustomStringConvertible {
   public var description: String { string }
 }
-
