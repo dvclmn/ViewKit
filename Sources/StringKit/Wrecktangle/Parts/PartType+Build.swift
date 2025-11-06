@@ -17,32 +17,11 @@ extension Box.PartType {
     
     using engine: Box.Engine,
     position: Box.PositionContext,
-//    using engine: Box.PartEngine,
     repeating count: Int? = nil,
   ) -> StringStack {
 
     let part = glyphStack(using: engine, position: position)
     let stringStack = part.toStringStack(with: engine.theme)
-    
-
-//    let hasLineNumbers = engine.config.metrics.contains(.lineNumbers)
-//    let numbers = rowNumberToStack(engine.position.rowNumber)
-
-//    let testStack = StringStack([[Character("?")]])
-    
-//    print(
-//      "Testing Row Numbers.",
-//      "Raw Stack:\n\(stringStack)",
-////      "Test Stack:\n\(testStack)"
-//    )
-    
-//    let stringStack = StringStack.joined(
-////      hasLineNumbers ? [] : [],
-////      hasLineNumbers ? numbers : [],
-////      hasLineNumbers ? testStack : [],
-//      rawStack,
-//      along: .horizontal
-//    )
 
     guard let count, count > 1 else {
       return stringStack
@@ -63,7 +42,6 @@ extension Box.PartType {
   func glyphStack(
     using engine: Box.Engine,
     position: Box.PositionContext
-//    using engine: Box.PartEngine
   ) -> Part {
     switch engine.theme.frameStyle {
 
