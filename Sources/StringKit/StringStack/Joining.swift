@@ -60,13 +60,3 @@ extension StringStack {
 //  }
 }
 
-/// Assumes horizontal joining
-public func + (lhs: StringStack, rhs: StringStack) -> StringStack {
-  StringStack.joined(lhs, rhs, along: .horizontal)
-}
-
-/// Joins horizontally
-public func += (lhs: inout StringStack, rhs: StringStack) {
-  lhs = lhs + rhs
-}
-
