@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol GridShaped: Collection {
+public protocol GridShaped: Collection where Self.Element == Self.Row {
   associatedtype Cell
   typealias Cells = [[Cell]]
   typealias Row = [Cell]
@@ -18,7 +18,7 @@ public protocol GridShaped: Collection {
   init(_ cells: Cells)
 //  init(_ cells: Cells, fallback: Cell)
   
-  func defaultRepair(
+  static func defaultRepair(
     _ cells: Cells,
     fallback: Cell
   ) -> Cells?
