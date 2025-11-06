@@ -56,7 +56,11 @@ extension StringStack {
     from glyphStack: Box.GlyphStack,
     with theme: Box.Theme,
   ) {
-//    print("Making StringStack from GlyphStack \(glyphStack) and Theme \(theme)")
+//    print("Making StringStack from GlyphStack / and Theme \(theme)")
+    printPadded(
+      "Glyphstack width (widest row): \(glyphStack.width(for: .widestRow))",
+      "Glyphstack rows: \(glyphStack.rows)"
+    )
     /// Convert from `GlyphType` → `Character`
     let characterGrid = glyphStack.map { row in
 //      print("Processing row \(row)")

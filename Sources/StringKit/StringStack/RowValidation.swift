@@ -17,17 +17,12 @@ extension StringStack {
   ) -> Cells? {
 
     guard let firstRow = cells.first else {
-      print("Couldn't get first row to determine target width")
+//      print("Couldn't get first row to determine target width")
       return nil
     }
     
     let targetWidth = cells.width(for: .widestRow)
-    
-    print("Successfully got first row to determine target width: \(firstRow). Target width: \(targetWidth)")
 
-    guard cells.contains(where: { $0.count != targetWidth }) else {
-      return nil
-    }
 
     //    if visualDebug {
     print("⚠️ Grid shape mismatch detected – applying patch:")

@@ -21,11 +21,11 @@ extension Box.StructureLine {
       position: position,
       span: .fill
     )
-    let rowNumbers = StringStack("O")
+//    let rowNumbers = StringStack("O")
 //    let rowNumbers = engine.hasRowNumbers ? StringStack(position.rowNumber.toString + " ") : ""
 
     return StringStack.joined(
-      rowNumbers,
+//      rowNumbers,
       lead,
       repeated,
       trail,

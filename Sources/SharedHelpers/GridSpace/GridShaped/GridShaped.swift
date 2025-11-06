@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol GridShaped: Collection, ExpressibleByArrayLiteral {
+public protocol GridShaped: Collection {
   associatedtype Cell
   typealias Cells = [[Cell]]
   typealias Row = [Cell]

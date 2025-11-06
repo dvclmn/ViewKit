@@ -88,7 +88,7 @@ extension BoxView {
       .setGridFrame(30, alignment: .leading)
       .setBoxStyle(
         glyphs: .sharp,
-        frame: .single,
+        frame: .double,
       )
     }
   }

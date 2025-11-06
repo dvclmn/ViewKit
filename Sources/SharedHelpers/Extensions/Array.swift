@@ -67,6 +67,8 @@ extension Array where Element: Collection {
         self.map { $0.count }.max() ?? 0
     }
   }
+  
+  public var rows: Int { self.count }
 }
 
 public enum GridWidthStrategy {

@@ -47,10 +47,10 @@ extension GridShaped {
 /// guard !self.isEmpty else { StringStack([]) }
 ///
 /// ```
-extension GridShaped {
-  public init(arrayLiteral elements: Self.Row...) {
-    self.init(elements, fallback: nil)
-//    self = Self.create(elements)
-  }
-}
+//extension GridShaped {
+//  public init(arrayLiteral elements: Self.Row...) {
+//    self.init(elements, fallback: nil)
+////    self = Self.create(elements)
+//  }
+//}
 
