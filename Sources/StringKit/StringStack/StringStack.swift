@@ -17,7 +17,8 @@ public struct StringStack: GridShaped {
   public var cells: Cells
 
   public init(_ cells: Cells) {
-    self.cells = cells
+    self = Self.create(cells)
+//    self.cells = cells
   }
 
   /// Initializes a `StringStack` by repeating a given row
@@ -26,7 +27,9 @@ public struct StringStack: GridShaped {
   ///   - row: The row of characters to repeat.
   ///   - count: The number of times to repeat the row.
   public init(repeating row: [Character], count: Int) {
-    self.cells = Array(repeating: row, count: count)
+    
+    let cells = Array(repeating: row, count: count)
+    self = Self.create(cells)
   }
 }
 
@@ -37,7 +40,7 @@ extension StringStack {
 
 extension StringStack: ExpressibleByUnicodeScalarLiteral {
   public init(unicodeScalarLiteral value: Character) {
-    self.cells = [[value]]
+    self = Self.create([[value]])
   }
 }
 
@@ -54,34 +57,6 @@ extension StringStack: ExpressibleByStringLiteral {
     }
 
     self = Self.create(characters)
-//    self.init(
-//      characters,
-//      rowValidation: .patch(
-//        {
-//          row,
-//          targetWidth in
-//
-//          return Self.defaultRepair(
-//            row: row,
-//            targetWidth: targetWidth,
-//            fill: " "
-//          )
-//        },
-////        visualDebug: true
-//      )
-//    )
-
-    //    let characters = lines.map { string in
-    //      Array(string)
-    //    }
-    //    self.init(.map { Array($0) })
-
-    //    let characters = Array(value)
-    //    let characters: [Character] = value.unicodeScalars.map { scalar in
-    //      Character(scalar)
-    //    }
-    //    self.init([characters])
-    //    self.init([characters], rowValidation: .ignore)
   }
 }
 

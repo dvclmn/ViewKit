@@ -16,7 +16,7 @@ extension GridShaped {
   static func patchedGrid(
     _ cells: Cells,
 //    visualDebug: Bool = false,
-    repair: (Row, Int) -> Row
+    repair: @escaping (Row, Int) -> Row
   ) -> Cells? {
 
     guard let firstRow = cells.first else { return nil }

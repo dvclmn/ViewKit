@@ -14,6 +14,7 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral {
   var cells: Cells { get set }
 
   /// See `StringKit/StringStack` for example init
+  /// I kinda want to *prevent* this, if anything?
   init(_ cells: Cells)
 
   static func repair(row: Row, targetWidth: Int, fill: Cell) -> Row
@@ -28,6 +29,7 @@ public enum RowValidation<T: GridShaped> {
 }
 
 extension GridShaped {
+  
   /// Creates a Grid with validated rows
   public static func create(
     _ cells: Cells,
@@ -39,5 +41,6 @@ extension GridShaped {
     }
 
     return Self(patched ?? [])
+//    return Self(arrayLiteral: patched)
   }
 }
