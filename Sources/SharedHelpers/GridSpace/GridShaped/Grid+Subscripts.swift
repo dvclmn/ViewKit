@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 6/11/2025.
 //
 
-extension GridShaped {
+extension Grid.GridShaped {
 
   public subscript(row rowIndex: Int, col colIndex: Int) -> Cell? {
     get { cells[safe: rowIndex]?[safe: colIndex] }
@@ -29,18 +29,4 @@ extension GridShaped {
       }
     }
   }
-
-  //  public subscript(col colIndex: Int) -> Row? {
-  //
-  //    get { self[safe: row] ?? [] }
-  //    set {
-  //      if row < self.count {
-  //        self[row] = newValue
-  //
-  //      } else if row == self.count {
-  //        self.append(newValue)
-  //      }
-  //    }
-  //  }
-
 }

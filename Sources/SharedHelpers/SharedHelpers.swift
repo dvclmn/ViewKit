@@ -7,4 +7,4 @@
 
 /// `SharedHelpers` is a strictly *no-dependancy* library
 /// In an effort to win the fight against dependacy graph complexity
-public enum SharedHelpers {}
+//public enum SharedHelpers {}

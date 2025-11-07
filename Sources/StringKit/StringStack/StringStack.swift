@@ -9,7 +9,7 @@ import SharedHelpers
 import SwiftUI
 
 /// A structure representing a multiline string as a mutable stack of character rows.
-public struct StringStack: GridShaped {
+public struct StringStack: SharedHelpers.Grid.GridShaped {
 
   public typealias Cell = Character
   public typealias Row = [Character]
@@ -17,7 +17,7 @@ public struct StringStack: GridShaped {
   public var cells: Cells
 
   public init(_ cells: Cells) {
-    let patched = Self.defaultRepair(
+    let patched = Self.normalisedRows(
       cells,
       padCell: " ",
       truncationCell: "%"
@@ -25,21 +25,25 @@ public struct StringStack: GridShaped {
     self.cells = patched
   }
 
+}
+
+// MARK: - Convenience Initialisers
+extension StringStack {
+ 
   public init(_ string: String) {
     self.init(stringLiteral: string)
   }
-  public init(_ stringRows: [String]) {
-    let rows = stringRows.map { row in
-      StringStack(stringLiteral: row)
-    }
-    self = Self.joined(rows, along: .vertical)
+
+  public init(rows: [String], padToUniformWidth: Bool = true) {
+    let cells = rows.map { Array($0) }
+    self.init(cells)
   }
 }
-
 extension StringStack {
 
-  public var string: String { cells.map { String($0) }.joined("\n") }
   public var rows: [String] { cells.map { String($0) } }
+  public var string: String { rows.joined("\n") }
+  
 }
 
 extension StringStack: ExpressibleByUnicodeScalarLiteral {

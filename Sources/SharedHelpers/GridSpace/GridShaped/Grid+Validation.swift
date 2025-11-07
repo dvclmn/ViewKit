@@ -7,20 +7,58 @@
 
 import Foundation
 
-extension GridShaped {
-  public static func defaultRepair(
+public enum Grid {}
+
+extension Grid {
+  public struct RowNormaliser<T: Grid.GridShaped> {
+    let cells: T.Cells
+    let paddingCell: T.Cell
+    let truncationCell: T.Cell?
+    let alignment: GridAlignment
+    
+    public init(
+      cells: Grid.GridShaped.Cells,
+      paddingCell: Grid.GridShaped.Cell,
+      truncationCell: Grid.GridShaped.Cell?,
+      alignment: GridAlignment
+    ) {
+      self.cells = cells
+      self.paddingCell = paddingCell
+      self.truncationCell = truncationCell
+      self.alignment = alignment
+    }
+  }
+}
+
+extension Grid.RowNormaliser {
+  
+}
+
+
+extension Grid.GridShaped {
+  public func normalisedRows(
+    alignment: GridAlignment = .leading,
+    paddingCell: Cell,
+    truncationCell: Cell?
+  ) -> Cells {
+  
+  }
+  
+  public static func normalisedRows(
     _ cells: Cells,
-    padCell: Cell,
+    alignment: GridAlignment = .leading,
+    paddingCell: Cell,
     truncationCell: Cell?
   ) -> Cells {
 
+    let normaliser = Grid.RowNormaliser(
     let targetWidth = cells.width(for: .widestRow)
 
     let patched: Cells = cells.map { row in
       patchedRow(
         row,
         targetWidth: targetWidth,
-        padCell: padCell,
+        padCell: paddingCell,
         truncationCell: truncationCell
       )
     }
@@ -38,6 +76,7 @@ extension GridShaped {
   private static func patchedRow(
     _ row: Row,
     targetWidth: Int,
+    alignment: GridAlignment,
     padCell: Cell,
     truncationCell: Cell?
   ) -> Row {
@@ -58,6 +97,21 @@ extension GridShaped {
     }
     /// If we're here, the Row is too short, and needs to be padded
     /// If no fallback supplied, default to a space
+    switch alignment {
+      case .center:
+      case .leading:
+      case .trailing:
+      default:
+    }
     return row + Array(repeating: padCell, count: targetWidth - row.count)
+  }
+  
+  private static func padRow(
+    _ alignment: GridAlignment,
+    to width: Int,
+    cell: Cell,
+    
+  ) -> Row {
+    
   }
 }

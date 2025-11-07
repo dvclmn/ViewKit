@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension GridShaped {
+extension Grid.GridShaped {
 
   public static func joined(
     _ others: Self...,
@@ -41,19 +41,7 @@ extension GridShaped {
       .map(+)
     return Self(combined)
   }
-}
 
-/// Assumes horizontal joining
-public func + <T: GridShaped>(lhs: T, rhs: T) -> T {
-  T.joined(lhs, rhs, along: .horizontal)
-}
-
-/// Joins horizontally
-public func += <T: GridShaped>(lhs: inout T, rhs: T) {
-  lhs = lhs + rhs
-}
-
-extension GridShaped {
   static func zipLongest<T>(
     _ a: [T],
     _ b: [T],
@@ -66,4 +54,15 @@ extension GridShaped {
       return (lhs, rhs)
     }
   }
+}
+
+
+/// Assumes horizontal joining
+public func + <T: Grid.GridShaped>(lhs: T, rhs: T) -> T {
+  T.joined(lhs, rhs, along: .horizontal)
+}
+
+/// Joins horizontally
+public func += <T: Grid.GridShaped>(lhs: inout T, rhs: T) {
+  lhs = lhs + rhs
 }
