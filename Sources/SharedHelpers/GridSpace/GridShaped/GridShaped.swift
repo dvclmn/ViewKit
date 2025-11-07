@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Grid {
+
   public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Self.Element == Self.Row {
     associatedtype Cell
     typealias Cells = [[Cell]]
@@ -23,7 +23,7 @@ extension Grid {
         truncationCell: Cell?
       ) -> Cells
   }
-}
+
 
 
 //public enum RowValidation<T: GridShaped> {

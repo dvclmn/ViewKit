@@ -7,59 +7,40 @@
 
 import Foundation
 
-public enum Grid {}
+public struct RowNormaliser<T: GridShaped> {
+  let cells: T.Cells
+  let paddingCell: T.Cell
+  let truncationCell: T.Cell?
+  let alignment: GridAlignment = .leading
 
-extension Grid {
-  public struct RowNormaliser<T: Grid.GridShaped> {
-    let cells: T.Cells
-    let paddingCell: T.Cell
-    let truncationCell: T.Cell?
-    let alignment: GridAlignment
-    
-    public init(
-      cells: Grid.GridShaped.Cells,
-      paddingCell: Grid.GridShaped.Cell,
-      truncationCell: Grid.GridShaped.Cell?,
-      alignment: GridAlignment
-    ) {
-      self.cells = cells
-      self.paddingCell = paddingCell
-      self.truncationCell = truncationCell
-      self.alignment = alignment
-    }
+  public init(
+    cells: T.Cells,
+    paddingCell: T.Cell,
+    truncationCell: T.Cell?,
+    alignment: GridAlignment
+  ) {
+    self.cells = cells
+    self.paddingCell = paddingCell
+    self.truncationCell = truncationCell
+    self.alignment = alignment
   }
 }
 
-extension Grid.RowNormaliser {
-  
-}
+extension RowNormaliser {
 
-
-extension Grid.GridShaped {
-  public func normalisedRows(
-    alignment: GridAlignment = .leading,
-    paddingCell: Cell,
-    truncationCell: Cell?
-  ) -> Cells {
-  
-  }
-  
-  public static func normalisedRows(
-    _ cells: Cells,
-    alignment: GridAlignment = .leading,
-    paddingCell: Cell,
-    truncationCell: Cell?
-  ) -> Cells {
-
-    let normaliser = Grid.RowNormaliser(
+  public var normalised: T.Cells {
+    //    alignment: GridAlignment = .leading,
+    //    paddingCell: T.Cell,
+    //    truncationCell: Cell?
+    //  :Cells {
     let targetWidth = cells.width(for: .widestRow)
 
-    let patched: Cells = cells.map { row in
+    let patched: T.Cells = cells.map { row in
       patchedRow(
         row,
         targetWidth: targetWidth,
-        padCell: paddingCell,
-        truncationCell: truncationCell
+        //        padCell: paddingCell,
+        //        truncationCell: truncationCell
       )
     }
 
@@ -73,13 +54,13 @@ extension Grid.GridShaped {
   /// If supplied, the `truncationIndicator` will cause one *additional*
   /// cell to be removed from the end of the Row, and the indicator put in it's place.
   /// Either for visual debugging, or just to denote truncation.
-  private static func patchedRow(
-    _ row: Row,
+  private func patchedRow(
+    _ row: T.Row,
     targetWidth: Int,
-    alignment: GridAlignment,
-    padCell: Cell,
-    truncationCell: Cell?
-  ) -> Row {
+    //    alignment: GridAlignment,
+    //    padCell: T.Cell,
+    //    truncationCell: T.Cell?
+  ) -> T.Row {
     /// This Row is already the right width, so return it untouched
     guard row.count != targetWidth else { return row }
 
@@ -101,17 +82,47 @@ extension Grid.GridShaped {
       case .center:
       case .leading:
       case .trailing:
-      default:
     }
     return row + Array(repeating: padCell, count: targetWidth - row.count)
   }
-  
+
   private static func padRow(
     _ alignment: GridAlignment,
     to width: Int,
     cell: Cell,
-    
+
   ) -> Row {
-    
+
   }
+}
+
+extension GridShaped {
+
+  public static func normalisedRows(
+    _ cells: Cells,
+    alignment: GridAlignment = .leading,
+    paddingCell: Cell,
+    truncationCell: Cell?
+  ) -> Cells {
+
+    let normaliser = RowNormaliser<Self>(
+      cells: cells,
+      paddingCell: paddingCell,
+      truncationCell: truncationCell,
+      alignment: alignment
+    )
+    //    let targetWidth = cells.width(for: .widestRow)
+    //
+    //    let patched: Cells = cells.map { row in
+    //      patchedRow(
+    //        row,
+    //        targetWidth: targetWidth,
+    //        padCell: paddingCell,
+    //        truncationCell: truncationCell
+    //      )
+    //    }
+    //
+    //    return patched
+  }
+
 }

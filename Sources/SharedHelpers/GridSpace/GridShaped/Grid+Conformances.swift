@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-extension Grid.GridShaped {
+extension GridShaped {
   public init(arrayLiteral elements: Self.Element...) {
     self.init(elements)
   }
 }
 
 // MARK: - Collection conformance
-extension Grid.GridShaped {
+extension GridShaped {
 
   public var startIndex: Int { cells.startIndex }
   public var endIndex: Int { cells.endIndex }

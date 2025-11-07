@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 6/11/2025.
 //
 
-extension Grid.GridShaped {
+extension GridShaped {
 
   /// Width of the first row — the 'intended' width of a rectangular grid.
   public var canonicalWidth: Int { cells.first?.count ?? 0 }

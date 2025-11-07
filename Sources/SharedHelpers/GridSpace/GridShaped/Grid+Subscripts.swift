@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 6/11/2025.
 //
 
-extension Grid.GridShaped {
+extension GridShaped {
 
   public subscript(row rowIndex: Int, col colIndex: Int) -> Cell? {
     get { cells[safe: rowIndex]?[safe: colIndex] }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension Grid.GridShaped {
+extension GridShaped {
 
   public static func joined(
     _ others: Self...,
@@ -58,11 +58,11 @@ extension Grid.GridShaped {
 
 
 /// Assumes horizontal joining
-public func + <T: Grid.GridShaped>(lhs: T, rhs: T) -> T {
+public func + <T: GridShaped>(lhs: T, rhs: T) -> T {
   T.joined(lhs, rhs, along: .horizontal)
 }
 
 /// Joins horizontally
-public func += <T: Grid.GridShaped>(lhs: inout T, rhs: T) {
+public func += <T: GridShaped>(lhs: inout T, rhs: T) {
   lhs = lhs + rhs
 }
