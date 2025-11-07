@@ -11,13 +11,13 @@ public struct RowNormaliser<T: GridShaped> {
   let cells: T.Cells
   let paddingCell: T.Cell
   let truncationCell: T.Cell?
-  let alignment: GridAlignment = .leading
+  let alignment: GridAlignment
 
   public init(
     cells: T.Cells,
     paddingCell: T.Cell,
     truncationCell: T.Cell?,
-    alignment: GridAlignment
+    alignment: GridAlignment = .leading
   ) {
     self.cells = cells
     self.paddingCell = paddingCell
@@ -29,21 +29,8 @@ public struct RowNormaliser<T: GridShaped> {
 extension RowNormaliser {
 
   public var normalised: T.Cells {
-    //    alignment: GridAlignment = .leading,
-    //    paddingCell: T.Cell,
-    //    truncationCell: Cell?
-    //  :Cells {
     let targetWidth = cells.width(for: .widestRow)
-
-    let patched: T.Cells = cells.map { row in
-      patchedRow(
-        row,
-        targetWidth: targetWidth,
-        //        padCell: paddingCell,
-        //        truncationCell: truncationCell
-      )
-    }
-
+    let patched: T.Cells = cells.map { patchedRow($0, width: targetWidth) }
     return patched
   }
 
@@ -56,10 +43,7 @@ extension RowNormaliser {
   /// Either for visual debugging, or just to denote truncation.
   private func patchedRow(
     _ row: T.Row,
-    targetWidth: Int,
-    //    alignment: GridAlignment,
-    //    padCell: T.Cell,
-    //    truncationCell: T.Cell?
+    width targetWidth: Int
   ) -> T.Row {
     /// This Row is already the right width, so return it untouched
     guard row.count != targetWidth else { return row }
@@ -78,22 +62,24 @@ extension RowNormaliser {
     }
     /// If we're here, the Row is too short, and needs to be padded
     /// If no fallback supplied, default to a space
-    switch alignment {
-      case .center:
-      case .leading:
-      case .trailing:
+
+    let padWidth = targetWidth - row.count
+    let padding = Array(repeating: paddingCell, count: padWidth)
+
+    return switch alignment {
+      //      case .center:
+      case .leading: padding + row
+      case .trailing: row + padding
     }
-    return row + Array(repeating: padCell, count: targetWidth - row.count)
-  }
-
-  private static func padRow(
-    _ alignment: GridAlignment,
-    to width: Int,
-    cell: Cell,
-
-  ) -> Row {
 
   }
+
+  //  private func padRow(
+  //    to width: Int,
+  //    with alignment: GridAlignment
+  //  ) -> T.Row {
+  //    row + Array(repeating: padCell, count: targetWidth - row.count)
+  //  }
 }
 
 extension GridShaped {
@@ -111,18 +97,9 @@ extension GridShaped {
       truncationCell: truncationCell,
       alignment: alignment
     )
-    //    let targetWidth = cells.width(for: .widestRow)
-    //
-    //    let patched: Cells = cells.map { row in
-    //      patchedRow(
-    //        row,
-    //        targetWidth: targetWidth,
-    //        padCell: paddingCell,
-    //        truncationCell: truncationCell
-    //      )
-    //    }
-    //
-    //    return patched
+
+    return normaliser.normalised
+
   }
 
 }

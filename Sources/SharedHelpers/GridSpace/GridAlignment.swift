@@ -8,7 +8,7 @@
 import Foundation
 
 public enum GridAlignment: Sendable, Codable, Equatable {
-  case center
+//  case center
   case leading
   case trailing
 }

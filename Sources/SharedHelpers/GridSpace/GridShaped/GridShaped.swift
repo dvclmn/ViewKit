@@ -7,24 +7,22 @@
 
 import Foundation
 
+public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Self.Element == Self.Row {
+  associatedtype Cell
+  typealias Cells = [[Cell]]
+  typealias Row = [Cell]
+  var cells: Cells { get set }
 
-  public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Self.Element == Self.Row {
-    associatedtype Cell
-    typealias Cells = [[Cell]]
-    typealias Row = [Cell]
-    var cells: Cells { get set }
-    
-    init(_ cells: Cells)
-    
-//    static var normaliser: RowNormaliser<Self> { get }
-      static func normaliseRows(
-        _ cells: Cells,
-        padCell: Cell,
-        truncationCell: Cell?
-      ) -> Cells
-  }
+  init(_ cells: Cells)
 
-
+  //    static var normaliser: RowNormaliser<Self> { get }
+  static func normalisedRows(
+    _ cells: Cells,
+    alignment: GridAlignment,
+    paddingCell: Cell,
+    truncationCell: Cell?
+  ) -> Cells
+}
 
 //public enum RowValidation<T: GridShaped> {
 //  case patch((T.Row, Int) -> T.Row)
