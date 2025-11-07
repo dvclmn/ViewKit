@@ -40,7 +40,7 @@ public struct Box: Sendable {
         i: index,
         rowCount: allLines.count
       )
-      let result = lineType.buildString(using: engine, at: pos)
+      let result = lineType.buildLine(using: engine, at: pos)
 
       return result
     }

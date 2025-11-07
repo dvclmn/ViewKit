@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Structure
 extension Box.StructureLine {
-  func buildString(
+  func buildLine(
     using engine: Box.Engine,
     at position: Box.PositionContext
   ) -> String {
@@ -21,11 +21,10 @@ extension Box.StructureLine {
       position: position,
       span: .fill
     )
-//    let rowNumbers = StringStack("O")
-//    let rowNumbers = engine.hasRowNumbers ? StringStack(position.rowNumber.toString + " ") : ""
-
+    let numbers = StringStack(engine.rowNumbers(for: position))
+    
     return StringStack.joined(
-//      rowNumbers,
+      numbers,
       lead,
       repeated,
       trail,
@@ -36,30 +35,42 @@ extension Box.StructureLine {
 
 // MARK: - Text
 extension Box.TextLine {
-  func buildString(
+  func buildLine(
     using engine: Box.Engine,
     at position: Box.PositionContext
   ) -> String {
 
-    let hasRowNumbers = engine.hasRowNumbers
+    let lead = leading.buildPart(using: engine, position: position)
+    let trail = trailing.buildPart(using: engine, position: position)
 
-    let lead = leading.buildPart(using: engine, position: position).string
-    let trail = trailing.buildPart(using: engine, position: position).string
-
+    let numbers = StringStack(engine.rowNumbers(for: position))
+    
     let paddingCount = engine.theme.padding.width
-    let padding = String(repeating: " ", count: paddingCount)
+    let padding = StringStack(repeating: " ", count: paddingCount, along: .horizontal)
+//    let padding = String(repeating: " ", count: paddingCount)
 
     let textContent = TextReflow(
       text,
       width: engine.width(for: .text),
       shouldHyphenate: true
-    )
+    ).reflowed()
+    
+    let textLineStack = StringStack(textContent)
 
-    let numbersIfNeeded: String = hasRowNumbers ? "\(position.rowNumber) " : ""
+    return StringStack.joined(
+      numbers,
+      lead,
+      padding,
+      textLineStack,
+//      padding,
+      trail,
+      along: .horizontal
+    ).string
+//    let numbersIfNeeded: String = hasRowNumbers ? "\(position.rowNumber) " : ""
 
-    return textContent.reflowed().map { line in
+//    return textContent.reflowed().map { line in
 //      "&%" + lead + padding + line + padding + trail
-      numbersIfNeeded + lead + padding + line + padding + trail
-    }.joined("\n")
+//      numbersIfNeeded + lead + padding + line + padding + trail
+//    }.joined("\n")
   }
 }

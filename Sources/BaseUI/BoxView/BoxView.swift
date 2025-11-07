@@ -38,7 +38,7 @@ public struct BoxView: View {
       }.plainText
     )
     .fixedSize(horizontal: true, vertical: false)
-    .gridSetup(.sfMono, fontSize: 15)
+    .gridSetup(.sfMono, fontSize: 13)
 
     .environment(\.isShowingGridGuide, false)
 
@@ -70,34 +70,36 @@ extension BoxView {
     VStack(spacing: 14) {
 
       BoxView {
-        
-//        Box.Top()
-        
-        Box.Header("Hello, I'm a Header")
-//
-        DummyContent.Strings.paragraphs[3].prefix(90).toString
 
-                                Box.Divider()
+        //        Box.Top()
+
+        Box.Header("Hello, I'm a Header")
+        //
+        DummyContent.Strings.paragraphs[6].prefix(590).toString
+
+        Box.Divider()
         //                        "Last text sign-off"
         //                  Box.Bottom()
-//                          Box.Bottom()
+        //                          Box.Bottom()
         //                  Box.Bottom()
       }
-//      .environment(\.metrics, [])
-//            .environment(\.metrics, .lineNumbers)
-      .setGridFrame(30, alignment: .leading)
+      //      .environment(\.metrics, [])
+                  .environment(\.metrics, .lineNumbers)
+      .setGridFrame(40, alignment: .leading)
       .setBoxStyle(
-        glyphs: .sharp,
+        glyphs: .rounded,
         frame: .double,
       )
     }
   }
   .textSelection(.enabled)
   .monospaced()
-  .frame(
-    minWidth: 400,
-    minHeight: 600
-  )
+  .padding()
+  .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+//  .frame(
+//    minWidth: 400,
+//    minHeight: 600
+//  )
   .background(.black.opacity(0.6))
 }
 #endif

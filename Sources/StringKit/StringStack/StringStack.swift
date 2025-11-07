@@ -22,6 +22,16 @@ public struct StringStack: GridShaped {
     let patched = Self.defaultRepair(cells, fallback: Self.fallbackCell)
     self.cells = patched ?? []
   }
+
+  public init(_ string: String) {
+    self.init(stringLiteral: string)
+  }
+  public init(_ stringRows: [String]) {
+    let rows = stringRows.map { row in
+      StringStack(stringLiteral: row)
+    }
+    self = Self.joined(rows, along: .vertical)
+  }
 }
 
 extension StringStack {
@@ -36,12 +46,16 @@ extension StringStack: ExpressibleByUnicodeScalarLiteral {
 }
 
 extension StringStack: ExpressibleByStringLiteral {
-  public init(stringLiteral value: StringLiteralType) {
+  public init(stringLiteral value: String) {
 
-    /// ``Swift/String/substringLines(subsequenceStrategy:)``
-    let lines = value.substringLines().map { String($0) }
-    let characters: Cells = lines.map { Array($0) }
-    self.init(characters)
+    let characters: [Cell] = Array(value)
+
+//    print("Initialising StringStack with String value \(value). Resulting characters: \(characters).")
+    self.init([characters])
+    //    /// ``Swift/String/substringLines(subsequenceStrategy:)``
+    //    let lines = value.substringLines().map { String($0) }
+    //    let characters: Cells = lines.map { Array($0) }
+    //    self.init(characters)
   }
 }
 

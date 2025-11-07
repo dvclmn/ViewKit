@@ -13,11 +13,17 @@ extension GridShaped {
     _ others: Self...,
     along axis: Axis,
   ) -> Self {
+    Self.joined(others, along: axis)
+  }
+
+  public static func joined(
+    _ others: [Self],
+    along axis: Axis,
+  ) -> Self {
     others.reduce(Self([])) { partial, grid in
       switch axis {
         case .horizontal:
           partial.joinedHorizontally(with: grid)
-
         case .vertical:
           partial.joinedVertically(with: grid)
       }
@@ -32,17 +38,6 @@ extension GridShaped {
     with other: Self
   ) -> Self {
 
-//    let fallback = Self.fallbackCell
-    //    let combined: Cells = Self.zipLongest(
-    //      self.cells,
-    //      other.cells,
-    //      fillA: [],
-    //      fillB: []
-    //    ).map { (lhsRow, rhsRow) in
-    //      Self.zipLongest(lhsRow, rhsRow, fillA: fallback, fillB: fallback)
-    //        .map(+)
-    //    }
-
     let combined: Cells = Self.zipLongest(
       self.cells,
       other.cells,
@@ -54,17 +49,17 @@ extension GridShaped {
 
     return Self(combined)
 
-    //    let maxHeight = Swift.max(self.height, other.height)
-    //
-    //    var result = self
-    //
-    //    for i in 0..<maxHeight {
-    //      let lhs = self[row: i]
-    //      let rhs = other[row: i]
-    //
-    //      result.append(lhs + rhs)
-    //    }
-    //    return result
+//        let maxHeight = Swift.max(self.height, other.height)
+//    
+//        var result = self
+//    
+//        for i in 0..<maxHeight {
+//          let lhs = self[row: i]
+//          let rhs = other[row: i]
+//    
+//          result.append(lhs + rhs)
+//        }
+//        return result
   }
 }
 
