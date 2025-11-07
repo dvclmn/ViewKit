@@ -23,11 +23,6 @@ public struct StringStack: GridShaped {
       paddingCell: " ",
       truncationCell: "%"
     )
-//    let patched = Self.normalisedRows(
-//      cells,
-//      padCell: " ",
-//      truncationCell: "%"
-//    )
     self.cells = normalised
   }
 

@@ -35,7 +35,7 @@ extension Box.StructureLine {
       along: .horizontal
     )
 
-    print("Structure stack:\n\(stack.debugDescription)\n\n")
+//    print("Structure stack:\n\(stack.debugDescription)\n\n")
 
     return stack
 

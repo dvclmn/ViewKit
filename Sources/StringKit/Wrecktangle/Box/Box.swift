@@ -33,16 +33,33 @@ public struct Box: Sendable {
 
     /// `allComponents` gathers all the components that have been added
     /// from the builder, and flattens them down into an array of ``Box/LineType``
-    let allComponents = allComponents.flatMap { $0.makeLines() }
+    let stackOutput: [StringStack] = allComponents.map { comp in
+      //    let stacks: [StringStack] = allComponents.enumerated().map { index, comp in
 
-    let lines: [StringStack] = allComponents.enumerated().map { index, lineType in
+      print("All Comps count: \(allComponents.count)")
+      //      print("Component count: \(allComponents.count)")
 
-      let pos = Box.PositionContext(i: index, rowCount: allComponents.count)
-      let result = lineType.buildBoxLine(using: engine, at: pos)
+      let boxLines = comp.makeLines()
+      print("Box Lines count: \(boxLines.count)")
 
-      return result
+      let stacks: [StringStack] = boxLines.enumerated().map { index, line in
+        print("Stacks index: \(index), line: \(line)")
+        let pos = Box.PositionContext(i: index, rowCount: boxLines.count)
+
+        //        let lineStacks: [StringStack] = boxLines.map { line in
+        return line.buildBoxLine(using: engine, at: pos)
+        //        }
+
+      }
+
+      return StringStack.joined(stacks, along: .vertical)
     }
-    let result = StringStack.joined(lines, along: .vertical).string
+
+    //    return stackOutput
+
+    //    let stacks = lines.flatMap(\.self)
+
+    let result = StringStack.joined(stackOutput, along: .vertical).string
     return result
   }
 }

@@ -71,9 +71,14 @@ extension BoxView {
     VStack(spacing: 14) {
 
       BoxView {
+        Box.Header("Hello from here.")
         DummyContent.Strings.paragraphs[5].prefix(270).toString
       }
       .environment(\.metrics, [])
+      .setBoxStyle(
+        glyphs: .rounded,
+        frame: .single,
+      )
       
       BoxView {
         
@@ -90,13 +95,14 @@ extension BoxView {
         //                  Box.Bottom()
       }
       .environment(\.metrics, .lineNumbers)
+      .setBoxStyle(
+        glyphs: .rounded,
+        frame: .double,
+      )
     }
     
     .setGridFrame(36, alignment: .leading)
-    .setBoxStyle(
-      glyphs: .rounded,
-      frame: .double,
-    )
+   
   }
   .textSelection(.enabled)
   .monospaced()

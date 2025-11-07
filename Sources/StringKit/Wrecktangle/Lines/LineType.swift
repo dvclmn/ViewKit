@@ -25,18 +25,15 @@ extension Box.LineType {
     using engine: Box.Engine,
     at position: Box.PositionContext
   ) -> StringStack {
-//  ) -> [String] {
     switch self {
       case .structure(let type):
         let string = type.parts.buildBoxLine(using: engine, at: position)
-//        print("Structure/\(type.rawValue), String: \(string)")
         return string
-        
+
       case .text(let line):
         return line.buildLines(using: engine, at: position)
     }
   }
-
 }
 
 /// Joins horizontally
