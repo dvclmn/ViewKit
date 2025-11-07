@@ -21,7 +21,7 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Self.Ele
     truncationCell: Cell?
   ) -> Cells
 
-  static var fallbackCell: Cell { get }
+//  static var fallbackCell: Cell { get }
 }
 
 public enum RowValidation<T: GridShaped> {

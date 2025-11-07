@@ -37,29 +37,9 @@ extension GridShaped {
   private func joinedHorizontally(
     with other: Self
   ) -> Self {
-
-    //    let combined: Cells = Self.zipLongest(
-    //      self.cells,
-    //      other.cells,
-    //      fillA: [],
-    //      fillB: []
-    //    ).map { lhsRow, rhsRow in
-    //      lhsRow + rhsRow
-    //    }
-    //
-    //    return Self(combined)
-
-    let maxHeight = Swift.max(self.height, other.height)
-
-    var result = self
-
-    for i in 0..<maxHeight {
-      let lhs = self[row: i]
-      let rhs = other[row: i]
-
-      result.append(lhs + rhs)
-    }
-    return result
+    let combined = Self.zipLongest(self.cells, other.cells, fill: [])
+      .map(+)
+    return Self(combined)
   }
 }
 
@@ -86,17 +66,4 @@ extension GridShaped {
       return (lhs, rhs)
     }
   }
-  //  static func zipLongest<A, B>(
-  //    _ a: [A],
-  //    _ b: [B],
-  //    fillA: @autoclosure () -> A,
-  //    fillB: @autoclosure () -> B
-  //  ) -> [(A, B)] {
-  //    let maxCount = Swift.max(a.count, b.count)
-  //    return (0..<maxCount).map { i in
-  //      let lhs = i < a.count ? a[i] : fillA()
-  //      let rhs = i < b.count ? b[i] : fillB()
-  //      return (lhs, rhs)
-  //    }
-  //  }
 }

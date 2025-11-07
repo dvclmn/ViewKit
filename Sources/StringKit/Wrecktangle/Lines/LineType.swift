@@ -17,18 +17,18 @@ extension Box {
 }
 extension Box.LineType {
 
-  func buildLine(
+  func buildLines(
     using engine: Box.Engine,
     at position: Box.PositionContext
-  ) -> String {
+  ) -> [String] {
     switch self {
       case .structure(let type):
         let string = type.parts.buildLine(using: engine, at: position)
 //        print("Structure/\(type.rawValue), String: \(string)")
-        return string
+        return [string]
         
       case .text(let line):
-        return line.buildLine(using: engine, at: position)
+        return line.buildLines(using: engine, at: position)
     }
   }
 

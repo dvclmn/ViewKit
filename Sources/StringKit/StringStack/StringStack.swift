@@ -14,12 +14,16 @@ public struct StringStack: GridShaped {
   public typealias Cell = Character
   public typealias Row = [Character]
 
-  public static let fallbackCell: Cell = "⚠️"
+  //  public static let fallbackCell: Cell = "⚠️"
 
   public var cells: Cells
 
   public init(_ cells: Cells) {
-    let patched = Self.defaultRepair(cells, fallback: Self.fallbackCell)
+    let patched = Self.defaultRepair(
+      cells,
+      padCell: " ",
+      truncationCell: "⚠️"
+    )
     self.cells = patched
   }
 
@@ -35,6 +39,18 @@ public struct StringStack: GridShaped {
 }
 
 extension StringStack {
+  
+//  public func output(options: OutputOptions) -> String {
+//    if options.contains(.rowNumbers) {
+//      cells.enumerated().map { index, row in
+//        let rowNumber = (index + 1).toString + " "
+//        return String(rowNumber + row)
+//      }.joined("\n")
+//      
+//    } else {
+//      cells.map { String($0) }.joined("\n")
+//    }
+//  }
   public var string: String { cells.map { String($0) }.joined("\n") }
   public var rows: [String] { cells.map { String($0) } }
 }
@@ -50,7 +66,7 @@ extension StringStack: ExpressibleByStringLiteral {
 
     let characters: [Cell] = Array(value)
 
-//    print("Initialising StringStack with String value \(value). Resulting characters: \(characters).")
+    //    print("Initialising StringStack with String value \(value). Resulting characters: \(characters).")
     self.init([characters])
     //    /// ``Swift/String/substringLines(subsequenceStrategy:)``
     //    let lines = value.substringLines().map { String($0) }
@@ -61,4 +77,24 @@ extension StringStack: ExpressibleByStringLiteral {
 
 extension StringStack: CustomStringConvertible {
   public var description: String { string }
+}
+
+extension StringStack: CustomDebugStringConvertible {
+  public var debugDescription: String {
+    return DisplayString {
+//      output(options: .rowNumbers)
+    }.plainText
+  }
+}
+
+extension StringStack {
+  public struct OutputOptions: OptionSet, Sendable {
+    public init(rawValue: Int) {
+      self.rawValue = rawValue
+    }
+    public let rawValue: Int
+    
+    public static let rowNumbers = Self(rawValue: 1 << 0)
+     public static let all: Self = [.rowNumbers]
+  }
 }

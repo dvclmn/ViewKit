@@ -40,69 +40,12 @@ extension GridShaped {
   ) {
     switch axis {
       case .horizontal:
-        self.init(grid.cells.map { Array(repeating: $0, count: count).flatMap { $0 } })
+        self.init(
+          grid.cells.map {
+            Array(repeating: $0, count: count).flatMap { $0 }
+          })
       case .vertical:
         self.init(Array(repeating: grid.cells, count: count).flatMap { $0 })
     }
   }
-  
-//  public init(repeating grid: Self, count: Int) {
-//    
-//    var repeated: Self = []
-//    for _ in 0..<count {
-//      grid.rows.map { row in
-//        <#code#>
-//      }
-////      repeated.cells.append(grid.cells)
-//    }
-////    let repeated = grid.rows.map { row in
-////      <#code#>
-////    }
-////    let rows = self.rows
-////  public init(repeating element: Row, count: Int) {
-////    let rows = Array(repeating: element, count: count)
-////    self = Self(rows)
-//  }
-  
-  /// Repeats self
-//  public func repeated() -> Self {
-//
-////    let thing = String(repeating: "", count: 2)
-//  }
-  
-//  func repeated(
-//    along axis: Axis,
-//    count: Int
-//  ) -> StringStack {
-//    
-//    let stack = self.cells.stacked(along: axis, repeating: count)
-//    return StringStack(stack)
-//  }
 }
-
-
-//extension StringStack {
-//  public init(
-//    from glyphStack: Box.GlyphStack,
-//    with theme: Box.Theme,
-//  ) {
-//    //    print("Making StringStack from GlyphStack / and Theme \(theme)")
-//    printPadded(
-//      "Glyphstack width (widest row): \(glyphStack.width(for: .widestRow))",
-//      "Glyphstack rows: \(glyphStack.rows)"
-//    )
-//    /// Convert from `GlyphType` → `Character`
-//    let characterGrid = glyphStack.map { row in
-//      //      print("Processing row \(row)")
-//      return row.map {
-//        let char = theme.glyphSet.character(for: $0)
-//        //        print("Character: \(char)")
-//        return char
-//      }
-//    }
-//    //    print("Character Grid: \(characterGrid)")
-//    
-//    self.init(characterGrid)
-//  }
-//  
-//}
