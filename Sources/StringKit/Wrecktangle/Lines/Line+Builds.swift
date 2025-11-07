@@ -59,7 +59,7 @@ extension Box.TextLine {
     let paddingCount = engine.theme.padding.width
     let padding = StringStack(repeating: " ", count: paddingCount, along: .horizontal)
 
-    let textLines = TextReflow(
+    let textLines: [String] = TextReflow(
       text,
       width: engine.width(for: .text),
       shouldHyphenate: true

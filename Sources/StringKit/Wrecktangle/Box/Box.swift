@@ -30,38 +30,49 @@ public struct Box: Sendable {
   }
 
   public var plainText: String {
-
-    /// `allComponents` gathers all the components that have been added
-    /// from the builder, and flattens them down into an array of ``Box/LineType``
-    let stackOutput: [StringStack] = allComponents.map { comp in
-      //    let stacks: [StringStack] = allComponents.enumerated().map { index, comp in
-
-      print("All Comps count: \(allComponents.count)")
-      //      print("Component count: \(allComponents.count)")
-
-      let boxLines = comp.makeLines()
-      print("Box Lines count: \(boxLines.count)")
-
-      let stacks: [StringStack] = boxLines.enumerated().map { index, line in
-        print("Stacks index: \(index), line: \(line)")
-        let pos = Box.PositionContext(i: index, rowCount: boxLines.count)
-
-        //        let lineStacks: [StringStack] = boxLines.map { line in
-        return line.buildBoxLine(using: engine, at: pos)
-        //        }
-
-      }
-
-      return StringStack.joined(stacks, along: .vertical)
+    let allLines: [Box.LineType] = allComponents.flatMap { $0.makeLines() }
+    
+    let stacks: [StringStack] = allLines.enumerated().map { index, line in
+      let pos = Box.PositionContext(i: index, rowCount: allLines.count)
+      return line.buildBoxLine(using: engine, at: pos)
     }
-
-    //    return stackOutput
-
-    //    let stacks = lines.flatMap(\.self)
-
-    let result = StringStack.joined(stackOutput, along: .vertical).string
-    return result
+    
+    return StringStack.joined(stacks, along: .vertical).string
   }
+  
+//  public var plainText: String {
+//
+//    /// `allComponents` gathers all the components that have been added
+//    /// from the builder, and flattens them down into an array of ``Box/LineType``
+//    let stackOutput: [StringStack] = allComponents.map { comp in
+//      //    let stacks: [StringStack] = allComponents.enumerated().map { index, comp in
+//
+//      print("All Comps count: \(allComponents.count)")
+//      //      print("Component count: \(allComponents.count)")
+//
+//      let boxLines = comp.makeLines()
+//      print("Box Lines count: \(boxLines.count)")
+//
+//      let stacks: [StringStack] = boxLines.enumerated().map { index, line in
+//        print("Stacks index: \(index), line: \(line)")
+//        let pos = Box.PositionContext(i: index, rowCount: boxLines.count)
+//
+//        //        let lineStacks: [StringStack] = boxLines.map { line in
+//        return line.buildBoxLine(using: engine, at: pos)
+//        //        }
+//
+//      }
+//
+//      return StringStack.joined(stacks, along: .vertical)
+//    }
+//
+//    //    return stackOutput
+//
+//    //    let stacks = lines.flatMap(\.self)
+//
+//    let result = StringStack.joined(stackOutput, along: .vertical).string
+//    return result
+//  }
 }
 
 extension Box {
