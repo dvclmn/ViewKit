@@ -14,8 +14,6 @@ public struct StringStack: GridShaped {
   public typealias Cell = Character
   public typealias Row = [Character]
 
-  //  public static let fallbackCell: Cell = "⚠️"
-
   public var cells: Cells
 
   public init(_ cells: Cells) {
@@ -39,18 +37,7 @@ public struct StringStack: GridShaped {
 }
 
 extension StringStack {
-  
-//  public func output(options: OutputOptions) -> String {
-//    if options.contains(.rowNumbers) {
-//      cells.enumerated().map { index, row in
-//        let rowNumber = (index + 1).toString + " "
-//        return String(rowNumber + row)
-//      }.joined("\n")
-//      
-//    } else {
-//      cells.map { String($0) }.joined("\n")
-//    }
-//  }
+
   public var string: String { cells.map { String($0) }.joined("\n") }
   public var rows: [String] { cells.map { String($0) } }
 }
@@ -63,15 +50,8 @@ extension StringStack: ExpressibleByUnicodeScalarLiteral {
 
 extension StringStack: ExpressibleByStringLiteral {
   public init(stringLiteral value: String) {
-
     let characters: [Cell] = Array(value)
-
-    //    print("Initialising StringStack with String value \(value). Resulting characters: \(characters).")
     self.init([characters])
-    //    /// ``Swift/String/substringLines(subsequenceStrategy:)``
-    //    let lines = value.substringLines().map { String($0) }
-    //    let characters: Cells = lines.map { Array($0) }
-    //    self.init(characters)
   }
 }
 
@@ -82,19 +62,7 @@ extension StringStack: CustomStringConvertible {
 extension StringStack: CustomDebugStringConvertible {
   public var debugDescription: String {
     return DisplayString {
-//      output(options: .rowNumbers)
+      string
     }.plainText
-  }
-}
-
-extension StringStack {
-  public struct OutputOptions: OptionSet, Sendable {
-    public init(rawValue: Int) {
-      self.rawValue = rawValue
-    }
-    public let rawValue: Int
-    
-    public static let rowNumbers = Self(rawValue: 1 << 0)
-     public static let all: Self = [.rowNumbers]
   }
 }
