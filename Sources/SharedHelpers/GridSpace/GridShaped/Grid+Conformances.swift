@@ -25,11 +25,10 @@ extension GridShaped {
     cells.map(transform)
   }
 
-//  public func flatMap<T>(_ transform: (Row) -> T) -> [T] {
-//    cells.map(transform)
-//  }
+  //  public func flatMap<T>(_ transform: (Row) -> T) -> [T] {
+  //    cells.map(transform)
+  //  }
 
-  
   public func enumerated() -> EnumeratedSequence<Cells> {
     cells.enumerated()
   }

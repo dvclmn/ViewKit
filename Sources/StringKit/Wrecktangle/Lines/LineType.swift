@@ -30,7 +30,7 @@ extension Box.LineType {
       case .structure(let type):
         let string = type.parts.buildBoxLine(using: engine, at: position)
 //        print("Structure/\(type.rawValue), String: \(string)")
-        return [string]
+        return string
         
       case .text(let line):
         return line.buildLines(using: engine, at: position)

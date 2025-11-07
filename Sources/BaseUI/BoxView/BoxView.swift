@@ -75,22 +75,38 @@ extension BoxView {
 
         //        Box.Header("Hello, I'm a Header")
         //
-        DummyContent.Strings.paragraphs[6].prefix(320).toString
+        DummyContent.Strings.paragraphs[5].prefix(270).toString
 
-//        Box.Divider()
+        //        Box.Divider()
         //                        "Last text sign-off"
         //                  Box.Bottom()
         //                          Box.Bottom()
         //                  Box.Bottom()
       }
-      //      .environment(\.metrics, [])
+      .environment(\.metrics, [])
+      
+      BoxView {
+        
+        //        Box.Top()
+        
+        //        Box.Header("Hello, I'm a Header")
+        //
+        DummyContent.Strings.paragraphs[6].prefix(320).toString
+        
+        //        Box.Divider()
+        //                        "Last text sign-off"
+        //                  Box.Bottom()
+        //                          Box.Bottom()
+        //                  Box.Bottom()
+      }
       .environment(\.metrics, .lineNumbers)
-      .setGridFrame(36, alignment: .leading)
-      .setBoxStyle(
-        glyphs: .rounded,
-        frame: .double,
-      )
     }
+    
+    .setGridFrame(36, alignment: .leading)
+    .setBoxStyle(
+      glyphs: .rounded,
+      frame: .double,
+    )
   }
   .textSelection(.enabled)
   .monospaced()
