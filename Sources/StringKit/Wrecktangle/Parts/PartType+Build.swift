@@ -9,6 +9,8 @@ import Foundation
 import SharedHelpers
 
 extension Box.PartType {
+  
+  
 
   /// We return a `StringStack`, not a `String`, to allow
   /// any additional repeating/joining required further down the pipeline.
@@ -33,17 +35,25 @@ extension Box.PartType {
         }
     }
   }
-
+  
   func part(
     using engine: Box.Engine,
     position: Box.PositionContext
-  ) -> Part {
-    switch engine.theme.frameStyle {
-      case .single: singleFrameParts()
-      case .double: doubleFrameParts()
-      case .notebook: notebookParts(position: position)
-    }  // END switch
+  ) -> Box.Part {
+    let frameStyle = engine.theme.frameStyle
+    return frameStyle.part(for: self) ?? .init { Row { Glyph.blank } }
   }
+
+//  func part(
+//    using engine: Box.Engine,
+//    position: Box.PositionContext
+//  ) -> Part {
+//    switch engine.theme.frameStyle {
+//      case .single: singleFrameParts()
+//      case .double: doubleFrameParts()
+//      case .notebook: notebookParts(position: position)
+//    }  // END switch
+//  }
 }
 
 extension StringStack {

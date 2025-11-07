@@ -9,7 +9,8 @@ import Foundation
 
 public typealias Part = Box.Part
 extension Box {
-  public struct Part {
+
+  public struct Part: Sendable, Codable, Equatable {
     let glyphs: GlyphStack
 
     init(

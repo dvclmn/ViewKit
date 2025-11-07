@@ -66,10 +66,10 @@ extension Box {
     return "/// Lines:\n\n\(linesDebug)\n///\n"
   }
 }
-extension Box: Equatable {
-  public static func == (lhs: Box, rhs: Box) -> Bool {
-    lhs.engine.config.width == rhs.engine.config.width
-      && lhs.engine.config.theme == rhs.engine.config.theme
-      && lhs.components.count == rhs.components.count
-  }
-}
+//extension Box: Equatable {
+//  public static func == (lhs: Box, rhs: Box) -> Bool {
+//    lhs.engine.config.width == rhs.engine.config.width
+//      && lhs.engine.config.theme == rhs.engine.config.theme
+//      && lhs.components.count == rhs.components.count
+//  }
+//}

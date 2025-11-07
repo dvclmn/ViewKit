@@ -1,53 +1,56 @@
 //
-//  FrameNoteBook.swift
+//  FrameDouble.swift
 //  BaseHelpers
 //
-//  Created by Dave Coleman on 5/11/2025.
+//  Created by Dave Coleman on 30/10/2025.
 //
+
+//extension Box.FrameStyle {
+//  static var double: Self {
+//    .init {
+//      (.horizontal(.top), Part { Row { Glyph.horizontal(.increased) } })
+//      (.horizontal(.bottom), Part { Row { Glyph.horizontal(.standard) } })
+//      (.corner(.topLeft), Part { Row { Glyph.corner(.rounded) } })
+//    }
+//  }
+//}
+
+extension Box.FrameStyle {
+  static var double: Self {
+    Frame {
+      (.horizontal(.top), Part {
+        Row { Glyph.horizontal(.increased) }
+        Row { Glyph.horizontal(.standard) }
+      })
+      
+      (.horizontal(.bottom), Part {
+        Row { Glyph.horizontal(.standard) }
+        Row { Glyph.horizontal(.increased) }
+      })
+      
+      (.corner(.topLeft), Part {
+        Row { Glyph.corner(.rounded) }
+      })
+      
+      (.corner(.bottomRight), Part {
+        Row { Glyph.corner(.rounded) }
+      })
+    }
+  }
+}
+
 
 extension Box.PartType {
 
-  package func notebookParts(position: Box.PositionContext) -> Part {
-    var new = self.singleFrameParts()
-    
-//    if let self = case .corner(let cornerType) = self {
-//      <#body#>
-//    }
-//    if case .corner(let cornerType) = self {
-//      switch cornerType {
-//        case .topLeading:
-//          new.
-//        case .topTrailing:
-//          <#code#>
-//        case .bottomLeading:
-//          <#code#>
-//        case .bottomTrailing:
-//          <#code#>
-//      }
-//    }
-    
-    return new
-//    switch self {
-//      case .horizontal(let loc):
-//        horizontal(loc)
-//
-//      case .vertical(let loc):
-//        if position.isEven {
-//          vertical(loc)
-//        } else {
-//          Part { Glyph.literal("?") }
-//        }
-//
-//      case .join(let joinType):
-//        join(joinType)
-//
-//      case .corner(let cornerType):
-//        corner(cornerType)
-//
-//      case .blank:
-//        Part { Glyph.blank }
-//    }
-  }  // END frame double
+  package func doubleFrameParts() -> Part {
+    switch self {
+      case .horizontal(let loc): horizontal(loc)
+      case .vertical(let loc): vertical(loc)
+      case .join(let joinType): join(joinType)
+      case .corner(let cornerType): corner(cornerType)
+      case .blank: Part { Glyph.blank }
+    }
+  }
 }
 
 extension Box.PartType {
