@@ -1,5 +1,12 @@
 # Pipeline
 
+An example of a single Line's journey:
+
+Box Builder > Box Component > LineType > `[String]` > 
+
+The `@BoxBuilder` accepts Box Components, which are required to provide an array of `LineTypes`, as their output.
+
+
 A `GlyphType` describes a single `Character`.
 A `PartType` describes a composition of `GlyphTypes`, like a Tile.
 

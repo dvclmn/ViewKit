@@ -17,13 +17,18 @@ extension Box {
 }
 extension Box.LineType {
 
-  func buildLines(
+  /// This is plural because it returns an *array* of Strings; however, this actually
+  /// only represents a *single* ``Box/LineType``. Box Lines can, however,
+  /// be made up of multiple rows of text, e.g. when a Frame Part is more than
+  /// one character high.
+  func buildBoxLine(
     using engine: Box.Engine,
     at position: Box.PositionContext
-  ) -> [String] {
+  ) -> StringStack {
+//  ) -> [String] {
     switch self {
       case .structure(let type):
-        let string = type.parts.buildLine(using: engine, at: position)
+        let string = type.parts.buildBoxLine(using: engine, at: position)
 //        print("Structure/\(type.rawValue), String: \(string)")
         return [string]
         

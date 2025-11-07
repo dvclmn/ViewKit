@@ -31,6 +31,8 @@ public struct Box: Sendable {
 
   public var plainText: String {
 
+    /// `allLines` gathers all the components that have been added
+    /// from the builder, and flattens them down into an array of ``Box/LineType``
     let allLines = allComponents.flatMap { $0.makeLines() }
     
     let final = allLines.enumerated().flatMap {
@@ -41,7 +43,7 @@ public struct Box: Sendable {
         i: index,
         rowCount: allLines.count
       )
-      let result = lineType.buildLines(using: engine, at: pos)
+      let result = lineType.buildBoxLine(using: engine, at: pos)
 
       return result
     }
