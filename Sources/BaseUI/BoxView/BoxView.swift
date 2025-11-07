@@ -38,6 +38,7 @@ public struct BoxView: View {
       }.plainText
     )
     .fixedSize(horizontal: true, vertical: false)
+    
     .gridSetup(.sfMono, fontSize: 13)
 
     .environment(\.isShowingGridGuide, false)
@@ -70,18 +71,7 @@ extension BoxView {
     VStack(spacing: 14) {
 
       BoxView {
-
-        //        Box.Top()
-
-        //        Box.Header("Hello, I'm a Header")
-        //
         DummyContent.Strings.paragraphs[5].prefix(270).toString
-
-        //        Box.Divider()
-        //                        "Last text sign-off"
-        //                  Box.Bottom()
-        //                          Box.Bottom()
-        //                  Box.Bottom()
       }
       .environment(\.metrics, [])
       
@@ -112,10 +102,6 @@ extension BoxView {
   .monospaced()
   .padding()
   .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-  //  .frame(
-  //    minWidth: 400,
-  //    minHeight: 600
-  //  )
   .background(.black.opacity(0.6))
 }
 #endif

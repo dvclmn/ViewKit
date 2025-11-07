@@ -17,7 +17,6 @@ extension Box.StructureLine {
     using engine: Box.Engine,
     at position: Box.PositionContext
   ) -> StringStack {
-    //  ) -> String {
 
     let lead = leading.buildPart(using: engine, position: position)
     let trail = trailing.buildPart(using: engine, position: position)
@@ -51,7 +50,6 @@ extension Box.TextLine {
     using engine: Box.Engine,
     at position: Box.PositionContext
   ) -> StringStack {
-    //  ) -> [String] {
 
     let lead = leading.buildPart(using: engine, position: position)
     let trail = trailing.buildPart(using: engine, position: position)
@@ -60,26 +58,12 @@ extension Box.TextLine {
 
     let paddingCount = engine.theme.padding.width
     let padding = StringStack(repeating: " ", count: paddingCount, along: .horizontal)
-    //    let padding = String(repeating: " ", count: paddingCount)
 
     let textLines = TextReflow(
       text,
       width: engine.width(for: .text),
       shouldHyphenate: true
     ).reflowed()
-
-    //    let rows = textLines.map { line in
-    //      let textLine = StringStack(line)
-    //      return StringStack.joined(
-    //        numbers,
-    //        lead,
-    //        padding,
-    //        textLine,
-    //        padding,
-    //        trail,
-    //        along: .horizontal
-    //      )
-    //    }
 
     let lines: [StringStack] = textLines.map { textLine in
       let stackText = StringStack(textLine)
@@ -93,30 +77,8 @@ extension Box.TextLine {
         along: .horizontal
       )
     }
-    
+
     let stack = StringStack.joined(lines, along: .vertical)
-    //    let stack: StringStack = textLines.flatMap { line in
-    //      let lineStack = StringStack(line)
-    //      return StringStack.joined(
-    //        numbers,
-    //        lead,
-    //        padding,
-    //        lineStack,
-    //        padding,
-    //        trail,
-    //        along: .horizontal
-    //      )
-    //    }
-
     return stack
-
-    //    print("Text line stack:\n\(textLineStack.string)\n\n\n")
-
-    //    let numbersIfNeeded: String = hasRowNumbers ? "\(position.rowNumber) " : ""
-
-    //    return textContent.reflowed().map { line in
-    //      "&%" + lead + padding + line + padding + trail
-    //      numbersIfNeeded + lead + padding + line + padding + trail
-    //    }.joined("\n")
   }
 }

@@ -31,11 +31,11 @@ public struct Box: Sendable {
 
   public var plainText: String {
 
-    /// `allLines` gathers all the components that have been added
+    /// `allComponents` gathers all the components that have been added
     /// from the builder, and flattens them down into an array of ``Box/LineType``
     let allComponents = allComponents.flatMap { $0.makeLines() }
 
-    let lines = allComponents.enumerated().map { index, lineType in
+    let lines: [StringStack] = allComponents.enumerated().map { index, lineType in
 
       let pos = Box.PositionContext(i: index, rowCount: allComponents.count)
       let result = lineType.buildBoxLine(using: engine, at: pos)

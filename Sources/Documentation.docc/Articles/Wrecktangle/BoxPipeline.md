@@ -2,7 +2,10 @@
 
 An example of a single Line's journey:
 
-Box Builder > Box Component > LineType > `[String]` > 
+Box Builder > Box Component > LineType > `StringStack` > 
+
+
+
 
 The `@BoxBuilder` accepts Box Components, which are required to provide an array of `LineTypes`, as their output.
 
