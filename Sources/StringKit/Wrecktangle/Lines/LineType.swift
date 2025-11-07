@@ -21,17 +21,35 @@ extension Box.LineType {
   /// only represents a *single* ``Box/LineType``. Box Lines can, however,
   /// be made up of multiple rows of text, e.g. when a Frame Part is more than
   /// one character high.
-  func buildBoxLine(
+//  func buildBoxLine(
+//    using engine: Box.Engine,
+//    startingAt rowIndex: inout Int
+////    at position: Box.PositionContext
+//  ) -> StringStack {
+//    switch self {
+//      case .structure(let type):
+//        let string = type.parts.buildBoxLine(using: engine, at: position)
+//        return string
+//
+//      case .text(let line):
+//        return line.buildLines(using: engine, at: position)
+//    }
+//  }
+//  
+  func buildBoxLines(
     using engine: Box.Engine,
-    at position: Box.PositionContext
-  ) -> StringStack {
+    startingAt rowIndex: inout Int
+  ) -> [StringStack] {
+    
     switch self {
       case .structure(let type):
-        let string = type.parts.buildBoxLine(using: engine, at: position)
-        return string
-
+        let pos = Box.PositionContext(i: rowIndex, rowCount: 0)
+        rowIndex += 1
+        return [type.parts.buildBoxLine(using: engine, at: pos)]
+        
       case .text(let line):
-        return line.buildLines(using: engine, at: position)
+        let lines = line.buildLines(using: engine, startingAt: &rowIndex)
+        return lines
     }
   }
 }

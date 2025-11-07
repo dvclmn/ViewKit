@@ -30,21 +30,40 @@ public struct Box: Sendable {
   }
 
   public var plainText: String {
-    let allLines = allComponents.flatMap { $0.makeLines() } // flatten all line types
-    let stacks: [StringStack] = allLines.enumerated().map { index, line in
-      let pos = Box.PositionContext(i: index, rowCount: allLines.count)
-      return line.buildBoxLine(using: engine, at: pos)
+    // Flatten every component’s logical lines
+    let allLineTypes: [Box.LineType] = allComponents.flatMap { $0.makeLines() }
+    
+    // Build *all* visual line stacks (including multi-line text expansion)
+    var globalRowIndex = 0
+    var stacks: [StringStack] = []
+    
+    for lineType in allLineTypes {
+      // Expand this logical line into however many visual rows it produces
+      let subStacks: [StringStack] = lineType
+        .buildBoxLines(using: engine, startingAt: &globalRowIndex)
+      
+      stacks.append(contentsOf: subStacks)
     }
-//
-//    let allLines: [Box.LineType] = allComponents.flatMap { $0.makeLines() }
-//    
+    
+    return StringStack.joined(stacks, along: .vertical).string
+  }
+  
+//  public var plainText: String {
+//    let allLines = allComponents.flatMap { $0.makeLines() } // flatten all line types
 //    let stacks: [StringStack] = allLines.enumerated().map { index, line in
 //      let pos = Box.PositionContext(i: index, rowCount: allLines.count)
 //      return line.buildBoxLine(using: engine, at: pos)
 //    }
-//    
-    return StringStack.joined(stacks, along: .vertical).string
-  }
+////
+////    let allLines: [Box.LineType] = allComponents.flatMap { $0.makeLines() }
+////    
+////    let stacks: [StringStack] = allLines.enumerated().map { index, line in
+////      let pos = Box.PositionContext(i: index, rowCount: allLines.count)
+////      return line.buildBoxLine(using: engine, at: pos)
+////    }
+////    
+//    return StringStack.joined(stacks, along: .vertical).string
+//  }
   
 //  public var plainText: String {
 //

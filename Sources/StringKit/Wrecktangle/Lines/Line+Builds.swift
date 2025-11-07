@@ -48,26 +48,29 @@ extension Box.TextLine {
   /// an array (Rows) of lines, due to it handling multiple lines of text.
   func buildLines(
     using engine: Box.Engine,
-    at position: Box.PositionContext
-  ) -> StringStack {
+//    at position: Box.PositionContext
+    startingAt rowIndex: inout Int
+  ) -> [StringStack] {
 
-    let lead = leading.buildPart(using: engine, position: position)
-    let trail = trailing.buildPart(using: engine, position: position)
-
-    let numbers = StringStack(engine.rowNumbers(for: position))
-
-    let paddingCount = engine.theme.padding.width
-    let padding = StringStack(repeating: " ", count: paddingCount, along: .horizontal)
-
-    let textLines: [String] = TextReflow(
+    let textLines = TextReflow(
       text,
       width: engine.width(for: .text),
       shouldHyphenate: true
     ).reflowed()
-
-    let lines: [StringStack] = textLines.map { textLine in
+    
+    var stacks: [StringStack] = []
+    
+    for textLine in textLines {
+      let pos = Box.PositionContext(i: rowIndex, rowCount: 0)
+      rowIndex += 1
+      
+      let numbers = StringStack(engine.rowNumbers(for: pos))
+      let lead = leading.buildPart(using: engine, position: pos)
+      let trail = trailing.buildPart(using: engine, position: pos)
+      let padding = StringStack(repeating: " ", count: engine.theme.padding.width, along: .horizontal)
       let stackText = StringStack(textLine)
-      return StringStack.joined(
+      
+      let lineStack = StringStack.joined(
         numbers,
         lead,
         padding,
@@ -76,9 +79,39 @@ extension Box.TextLine {
         trail,
         along: .horizontal
       )
+      stacks.append(lineStack)
     }
-
-    let stack = StringStack.joined(lines, along: .vertical)
-    return stack
+    
+    return stacks
+    
+//    let lead = leading.buildPart(using: engine, position: position)
+//    let trail = trailing.buildPart(using: engine, position: position)
+//
+//    let numbers = StringStack(engine.rowNumbers(for: position))
+//
+//    let paddingCount = engine.theme.padding.width
+//    let padding = StringStack(repeating: " ", count: paddingCount, along: .horizontal)
+//
+//    let textLines: [String] = TextReflow(
+//      text,
+//      width: engine.width(for: .text),
+//      shouldHyphenate: true
+//    ).reflowed()
+//
+//    let lines: [StringStack] = textLines.map { textLine in
+//      let stackText = StringStack(textLine)
+//      return StringStack.joined(
+//        numbers,
+//        lead,
+//        padding,
+//        stackText,
+//        padding,
+//        trail,
+//        along: .horizontal
+//      )
+//    }
+//
+//    let stack = StringStack.joined(lines, along: .vertical)
+//    return stack
   }
 }
