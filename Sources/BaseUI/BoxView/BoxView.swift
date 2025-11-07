@@ -73,19 +73,19 @@ extension BoxView {
 
         //        Box.Top()
 
-        Box.Header("Hello, I'm a Header")
+        //        Box.Header("Hello, I'm a Header")
         //
-        DummyContent.Strings.paragraphs[6].prefix(590).toString
+        DummyContent.Strings.paragraphs[6].prefix(320).toString
 
-        Box.Divider()
+//        Box.Divider()
         //                        "Last text sign-off"
         //                  Box.Bottom()
         //                          Box.Bottom()
         //                  Box.Bottom()
       }
       //      .environment(\.metrics, [])
-                  .environment(\.metrics, .lineNumbers)
-      .setGridFrame(40, alignment: .leading)
+      .environment(\.metrics, .lineNumbers)
+      .setGridFrame(26, alignment: .leading)
       .setBoxStyle(
         glyphs: .rounded,
         frame: .double,
@@ -96,10 +96,10 @@ extension BoxView {
   .monospaced()
   .padding()
   .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-//  .frame(
-//    minWidth: 400,
-//    minHeight: 600
-//  )
+  //  .frame(
+  //    minWidth: 400,
+  //    minHeight: 600
+  //  )
   .background(.black.opacity(0.6))
 }
 #endif
