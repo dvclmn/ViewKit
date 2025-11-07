@@ -13,8 +13,8 @@ let package = Package(
     .library(
       name: "BaseMacrosLibrary",
       targets: [
-        "EnumMacros",
-//        "Persistable",
+        "EnumMacros"
+        //        "Persistable",
       ]
     ),
     .executable(
@@ -182,17 +182,17 @@ let package = Package(
         .dep(.sharedHelpers),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
-//        .product(name: "SwiftSyntax", package: "swift-syntax"),
+        //        .product(name: "SwiftSyntax", package: "swift-syntax"),
         .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
       path: .macrosSource + "/MacroImplementations",
     ),
-//    .target(
-//      name: "Persistable",
-//      dependencies: ["BaseMacrosImplementation"],
-//      path: .macrosSource + "/MacroDeclarations",
-//    ),
+    //    .target(
+    //      name: "Persistable",
+    //      dependencies: ["BaseMacrosImplementation"],
+    //      path: .macrosSource + "/MacroDeclarations",
+    //    ),
     .target(
       name: "EnumMacros",
       dependencies: ["BaseMacrosImplementation"],
@@ -201,22 +201,22 @@ let package = Package(
     .executableTarget(
       name: "BaseMacrosClient",
       dependencies: [
-        "EnumMacros",
-//        "Persistable",
+        "EnumMacros"
+        //        "Persistable",
       ],
       path: .macrosSource + "/BaseMacrosClient",
     ),
-    
-//      .testTarget(
-//        name: "MacroTests",
-//        dependencies: [
-//          "BaseMacrosImplementation",
-//          .product(
-//            name: "SwiftSyntaxMacrosTestSupport",
-//            package: "swift-syntax"
-//          ),
-//        ]
-//      ),
+
+    //      .testTarget(
+    //        name: "MacroTests",
+    //        dependencies: [
+    //          "BaseMacrosImplementation",
+    //          .product(
+    //            name: "SwiftSyntaxMacrosTestSupport",
+    //            package: "swift-syntax"
+    //          ),
+    //        ]
+    //      ),
 
   ],
 )
@@ -250,7 +250,7 @@ extension String {
 enum BaseModule {
 
   case enumMacros
-//  case persistable
+  //  case persistable
   case networking
   case baseUI
   case baseModels
@@ -271,7 +271,7 @@ enum BaseModule {
   var name: String {
     switch self {
       case .enumMacros: "EnumMacros"
-//      case .persistable: "Persistable"
+      //      case .persistable: "Persistable"
       case .networking: "BaseNetworking"
       case .baseUI: "BaseUI"
       case .baseModels: "BaseModels"

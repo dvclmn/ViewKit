@@ -22,7 +22,7 @@ public struct StringStack: GridShaped {
     let patched = Self.defaultRepair(
       cells,
       padCell: " ",
-      truncationCell: "⚠️"
+      truncationCell: "%"
     )
     self.cells = patched
   }

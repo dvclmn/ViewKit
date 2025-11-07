@@ -12,13 +12,9 @@ extension GridShaped {
     _ cells: Cells,
     padCell: Cell,
     truncationCell: Cell?
-//    fallback: Cell
   ) -> Cells {
 
     let targetWidth = cells.width(for: .widestRow)
-
-    //    print("⚠️ Grid shape mismatch detected – applying patch:")
-    //    print("Original: \(cells.map { "\($0)" }.joined(separator: " | "))")
 
     let patched: Cells = cells.map { row in
       patchedRow(
@@ -26,13 +22,8 @@ extension GridShaped {
         targetWidth: targetWidth,
         padCell: padCell,
         truncationCell: truncationCell
-//        fallback: fallback
       )
     }
-
-    //    if visualDebug {
-    //    print("Patched:  \(patched.map { "\($0)" }.joined(separator: " | "))")
-    //    }
 
     return patched
   }
@@ -55,19 +46,18 @@ extension GridShaped {
 
     guard row.count < targetWidth else {
       /// This Row is too long
-      //      var newRow = Array(row.prefix(targetWidth - 1))
-      //      newRow.append(fallback)
-      //      return newRow
       guard let truncationCell else {
-        /// Just crops the row
+        /// Just crop the row
         return Array(row.prefix(targetWidth))
       }
+      /// If a truncation Cell is provided, we add it at the last-available Cell
+      /// (removing `1` from the count, so we're not *adding* to the row width)
       let truncated = Array(row.prefix(targetWidth - 1))
       let newRow = truncated + [truncationCell]
       return newRow
     }
-/// If we're here, the Row is too short, and needs to be padded
-/// If no fallback supplied, default to a space
+    /// If we're here, the Row is too short, and needs to be padded
+    /// If no fallback supplied, default to a space
     return row + Array(repeating: padCell, count: targetWidth - row.count)
   }
 }
