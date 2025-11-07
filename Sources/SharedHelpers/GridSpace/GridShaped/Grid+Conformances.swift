@@ -21,7 +21,7 @@ extension GridShaped {
     return cells.index(after: i)
   }
 
-  public func map<T>(_ transform: (Row) -> T) -> [T] {
+  public func mapRows<T>(_ transform: (Row) -> T) -> [T] {
     cells.map(transform)
   }
 

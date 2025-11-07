@@ -17,8 +17,9 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Self.Ele
   
   static func defaultRepair(
     _ cells: Cells,
-    fallback: Cell
-  ) -> Cells?
+    padCell: Cell,
+    truncationCell: Cell?
+  ) -> Cells
 
   static var fallbackCell: Cell { get }
 }

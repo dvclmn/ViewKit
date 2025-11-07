@@ -20,7 +20,7 @@ public struct StringStack: GridShaped {
 
   public init(_ cells: Cells) {
     let patched = Self.defaultRepair(cells, fallback: Self.fallbackCell)
-    self.cells = patched ?? []
+    self.cells = patched
   }
 
   public init(_ string: String) {

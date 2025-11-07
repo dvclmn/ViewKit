@@ -59,16 +59,13 @@ extension Array where Element: Hashable {
 extension Array where Element: Collection {
   /// Width of the widest row, or zero if none found
   public func width(for strategy: GridWidthStrategy = .widestRow) -> Int {
-//  public var width: Int {
     switch strategy {
-      case .firstRow:
-        self.first?.count ?? 0
-      case .widestRow:
-        self.map { $0.count }.max() ?? 0
+      case .firstRow: self.first?.count ?? 0
+      case .widestRow: self.map { $0.count }.max() ?? 0
     }
   }
-  
-  public var rows: Int { self.count }
+
+  public var rowCount: Int { self.count }
 }
 
 public enum GridWidthStrategy {
