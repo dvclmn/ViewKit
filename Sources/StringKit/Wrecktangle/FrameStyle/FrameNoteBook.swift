@@ -8,10 +8,13 @@
 extension Box.PartType {
 
   package func notebookParts(position: Box.PositionContext) -> Part {
-//  package func notebookParts(using engine: Box.PartEngine) -> Part {
     switch self {
       case .horizontal(let loc):
-        horizontal(loc)
+        if position.isEven {
+          horizontal(loc)
+        } else {
+          Part { Glyph.literal("?") }
+        }
 
       case .vertical(let loc):
         vertical(loc)

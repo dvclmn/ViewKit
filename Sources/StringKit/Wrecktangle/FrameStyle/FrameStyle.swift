@@ -7,7 +7,6 @@
 
 import SharedHelpers
 
-
 extension Box {
   public enum FrameStyle: Sendable, Codable, Equatable {
     case single
@@ -17,7 +16,7 @@ extension Box {
 }
 
 extension Box.FrameStyle {
-  
+
   var reservedWidth: Int {
     switch self {
       case .single: 1
