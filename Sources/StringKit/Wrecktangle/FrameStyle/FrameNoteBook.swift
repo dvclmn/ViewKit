@@ -8,26 +8,45 @@
 extension Box.PartType {
 
   package func notebookParts(position: Box.PositionContext) -> Part {
-    switch self {
-      case .horizontal(let loc):
-        if position.isEven {
-          horizontal(loc)
-        } else {
-          Part { Glyph.literal("?") }
-        }
-
-      case .vertical(let loc):
-        vertical(loc)
-
-      case .join(let joinType):
-        join(joinType)
-
-      case .corner(let cornerType):
-        corner(cornerType)
-
-      case .blank:
-        Part { Glyph.blank }
-    }
+    var new = self.singleFrameParts()
+    
+//    if let self = case .corner(let cornerType) = self {
+//      <#body#>
+//    }
+//    if case .corner(let cornerType) = self {
+//      switch cornerType {
+//        case .topLeading:
+//          new.
+//        case .topTrailing:
+//          <#code#>
+//        case .bottomLeading:
+//          <#code#>
+//        case .bottomTrailing:
+//          <#code#>
+//      }
+//    }
+    
+    return new
+//    switch self {
+//      case .horizontal(let loc):
+//        horizontal(loc)
+//
+//      case .vertical(let loc):
+//        if position.isEven {
+//          vertical(loc)
+//        } else {
+//          Part { Glyph.literal("?") }
+//        }
+//
+//      case .join(let joinType):
+//        join(joinType)
+//
+//      case .corner(let cornerType):
+//        corner(cornerType)
+//
+//      case .blank:
+//        Part { Glyph.blank }
+//    }
   }  // END frame double
 }
 

@@ -12,9 +12,6 @@ enum RowBuilder {
     components.flatMap { $0 }
   }
 
-//  static func buildEither(first: Box.GlyphType) -> Box.GlyphType { first }
-//  static func buildEither(second: Box.GlyphType) -> Box.GlyphType { second }
-  
   static func buildEither(first: [Box.GlyphType]) -> [Box.GlyphType] { first }
   static func buildEither(second: [Box.GlyphType]) -> [Box.GlyphType] { second }
 

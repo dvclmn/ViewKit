@@ -20,16 +20,3 @@ enum PartBuilder {
     component ?? []
   }
 }
-
-extension PartBuilder {
-
-//  static func buildExpression(_ expression: some RowConvertible) -> Box.GlyphStack {
-//    [expression.asGlyphRow()]
-//  }
-
-
-  //  static func buildExpression(_ expression: Row) -> Box.GlyphStack {
-  //    [expression.asGlyphRow()]
-  //  }
-
-}

@@ -74,7 +74,7 @@ extension BoxView {
         Box.Header("Hello from here.")
         DummyContent.Strings.paragraphs[5].prefix(270).toString
       }
-      .environment(\.metrics, .lineNumbers)
+//      .environment(\.metrics, .lineNumbers)
 //      .environment(\.metrics, [])
       .setBoxStyle(
         glyphs: .sharp,
