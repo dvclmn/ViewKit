@@ -11,14 +11,9 @@ public typealias Frame = Box.FrameStyle
 extension Box {
   public struct FrameStyle: Sendable, Codable, Equatable {
     var parts: [PartType: Part] = [:]
-    let reservedWidth: Int
 
-    public init(
-      parts: [PartType: Part],
-      width reservedWidth: Int,
-    ) {
+    public init(parts: [PartType: Part]) {
       self.parts = parts
-      self.reservedWidth = reservedWidth
     }
 
     public init(@FrameStyleBuilder _ content: () -> PartMap) {

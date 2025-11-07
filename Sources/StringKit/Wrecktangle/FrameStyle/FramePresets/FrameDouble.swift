@@ -16,25 +16,26 @@
 //}
 
 extension Box.FrameStyle {
-  static var double: Self {
+  public static var double: Self {
     Frame {
-      (.horizontal(.top), Part {
-        Row { Glyph.horizontal(.increased) }
-        Row { Glyph.horizontal(.standard) }
-      })
       
-      (.horizontal(.bottom), Part {
-        Row { Glyph.horizontal(.standard) }
-        Row { Glyph.horizontal(.increased) }
-      })
-      
-      (.corner(.topLeft), Part {
-        Row { Glyph.corner(.rounded) }
-      })
-      
-      (.corner(.bottomRight), Part {
-        Row { Glyph.corner(.rounded) }
-      })
+//      (.horizontal(.top), Part {
+//        Row { Glyph.horizontal(.increased) }
+//        Row { Glyph.horizontal(.standard) }
+//      })
+//      
+//      (.horizontal(.bottom), Part {
+//        Row { Glyph.horizontal(.standard) }
+//        Row { Glyph.horizontal(.increased) }
+//      })
+//      
+//      (.corner(.topLeft), Part {
+//        Row { Glyph.corner(.rounded) }
+//      })
+//      
+//      (.corner(.bottomRight), Part {
+//        Row { Glyph.corner(.rounded) }
+//      })
     }
   }
 }

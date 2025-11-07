@@ -52,7 +52,8 @@ extension Box.Engine {
   }
 
   private var rowNumbersWidth: Int { hasRowNumbers ? 2 : 0 }
-  private var capsWidth: Int { theme.frameStyle.reservedWidth * 2 }
+  private var capsWidth: Int { theme.frameStyle.frameWidth(for: .leading).map { $0 * 2 } ?? 1 }
+  //  private var capsWidth: Int { theme.frameStyle.reservedWidth * 2 }
 
 }
 

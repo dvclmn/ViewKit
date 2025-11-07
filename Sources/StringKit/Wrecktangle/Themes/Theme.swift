@@ -16,7 +16,7 @@ extension Box {
 
     public init(
       glyphSet: GlyphSet = .rounded,
-      frameStyle: FrameStyle = .single,
+      frameStyle: FrameStyle = .double,
       padding: GridDimensions = 1
     ) {
       self.glyphSet = glyphSet

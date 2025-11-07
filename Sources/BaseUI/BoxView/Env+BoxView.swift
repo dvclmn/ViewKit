@@ -10,7 +10,7 @@ import SwiftUI
 
 extension EnvironmentValues {
   @Entry public var glyphSet: Box.GlyphSet = .rounded
-  @Entry public var frameStyle: Box.FrameStyle = .single
+  @Entry public var frameStyle: Box.FrameStyle = .double
   @Entry public var metrics: Box.Metrics = [.invisibles]
   @Entry public var gridWidth: Int? = nil
   @Entry public var gridHeight: Int? = nil

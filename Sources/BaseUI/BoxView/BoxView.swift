@@ -78,7 +78,7 @@ extension BoxView {
 //      .environment(\.metrics, [])
       .setBoxStyle(
         glyphs: .sharp,
-        frame: .notebook,
+        frame: .double,
       )
       
       BoxView {

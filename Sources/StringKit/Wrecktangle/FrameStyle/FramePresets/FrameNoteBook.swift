@@ -7,14 +7,16 @@
 
 
 extension Box.FrameStyle {
-  static let notebook = DerivedFrameStyle(
-    base: Box.FrameStyle.double,
-    overrides: [
-      .corner(.topLeft): { pos in
-        pos.isTopRow ? Part { Row { Glyph.corner(.dogEared) } } : Part { Glyph.blank }
-      }
-    ]
-  )
+//  public static let notebook = DerivedFrameStyle(
+//    base: Box.FrameStyle.double,
+//    overrides: [
+//      .corner(.topLeading): { pos in
+//        pos.isNearEdge ? Part {
+//          Row { Glyph.corner(.increased, type: .topLeading) }
+//        } : Part { Glyph.blank }
+//      }
+//    ]
+//  )
 }
 //
 //  package func notebookParts(position: Box.PositionContext) -> Part {
