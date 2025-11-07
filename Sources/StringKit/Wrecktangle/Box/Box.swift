@@ -30,13 +30,19 @@ public struct Box: Sendable {
   }
 
   public var plainText: String {
-    let allLines: [Box.LineType] = allComponents.flatMap { $0.makeLines() }
-    
+    let allLines = allComponents.flatMap { $0.makeLines() } // flatten all line types
     let stacks: [StringStack] = allLines.enumerated().map { index, line in
       let pos = Box.PositionContext(i: index, rowCount: allLines.count)
       return line.buildBoxLine(using: engine, at: pos)
     }
-    
+//
+//    let allLines: [Box.LineType] = allComponents.flatMap { $0.makeLines() }
+//    
+//    let stacks: [StringStack] = allLines.enumerated().map { index, line in
+//      let pos = Box.PositionContext(i: index, rowCount: allLines.count)
+//      return line.buildBoxLine(using: engine, at: pos)
+//    }
+//    
     return StringStack.joined(stacks, along: .vertical).string
   }
   
