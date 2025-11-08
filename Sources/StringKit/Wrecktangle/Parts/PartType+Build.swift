@@ -41,7 +41,8 @@ extension Box.PartType {
     position: Box.PositionContext
   ) -> Box.Part {
     let frameStyle = engine.theme.frameStyle
-    return frameStyle.part(for: self) ?? .init { Row { Glyph.blank } }
+    let fallback = Part(.blank) { Row { Glyph.blank } }
+    return frameStyle.part(for: self) ?? fallback
   }
 
 //  func part(

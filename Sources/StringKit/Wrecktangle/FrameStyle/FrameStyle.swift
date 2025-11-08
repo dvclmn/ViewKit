@@ -16,7 +16,7 @@ extension Box {
       self.parts = parts
     }
 
-    public init(@FrameStyleBuilder _ content: () -> PartMap) {
+    public init(@FrameBuilder _ content: () -> PartMap) {
       self.parts = content()
     }
   }

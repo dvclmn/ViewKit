@@ -8,7 +8,7 @@
 extension Box {  
   private struct BuildersTest {
     func testPart() -> Part {
-      return Part {
+      return Part(.blank) {
         Row {
           // Cannot pass array of type '[Box.GlyphType]' as variadic arguments of type 'Box.GlyphType'
           if true {
