@@ -71,14 +71,14 @@ extension BoxView {
     VStack(spacing: 14) {
 
       BoxView {
-        Box.Header("Hello from here.")
+        Box.Header("Here is a Header Part.")
         DummyContent.Strings.paragraphs[5].prefix(270).toString
       }
 //      .environment(\.metrics, .lineNumbers)
 //      .environment(\.metrics, [])
       .setBoxStyle(
         glyphs: .sharp,
-        frame: .double,
+        frame: .single,
       )
       
       BoxView {
@@ -95,7 +95,7 @@ extension BoxView {
         //                          Box.Bottom()
         //                  Box.Bottom()
       }
-      .environment(\.metrics, .lineNumbers)
+//      .environment(\.metrics, .lineNumbers)
       .setBoxStyle(
         glyphs: .rounded,
         frame: .double,
