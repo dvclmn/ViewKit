@@ -12,29 +12,25 @@ extension Box {
   /// any Line based on any parts, given a StringStack-based
   /// approach, rather than PartType / String mix
   public struct Line {
-//    let type: LineType
-    let leading: StringStack
+    let leading: PartType
     let body: ContentPart
-//    let body: StringStack
-    let trailing: StringStack
-    
+    let trailing: PartType
+
     /// Init for Text Line
     public init(
-//      type: LineType,
       _ textContent: String,
-      leading: StringStack,
-      trailing: StringStack
+      leading: PartType,
+      trailing: PartType
     ) {
       self.leading = leading
       self.body = .text(textContent)
       self.trailing = trailing
     }
-    
+
     public init(
-      //      type: LineType,
       _ repeater: PartType,
-      leading: StringStack,
-      trailing: StringStack
+      leading: PartType,
+      trailing: PartType
     ) {
       self.leading = leading
       self.body = .structure(repeater)
@@ -46,11 +42,10 @@ extension Box {
 extension Box.Line {
 
   public func build(
-//    _ type: Box.LineType,
     using engine: Box.Engine,
-    startingAt rowIndex: inout Int
+    startingAt rowIndex: inout Int,
+    rowCount: Int
   ) -> [StringStack] {
-//  ) -> Box.Line {
     switch body {
       case .text(let content):
         buildTextLines(
@@ -58,9 +53,9 @@ extension Box.Line {
           using: engine,
           startingAt: &rowIndex
         )
-//        buildTextLines(content, using: engine, startingAt: &rowIndex)
-      case .structure(let structureType):
-        <#code#>
+      //        buildTextLines(content, using: engine, startingAt: &rowIndex)
+      case .structure(let part):
+        buildStructureLine(part, using: engine, at: .init(i: rowIndex, rowCount: rowCount))
     }
   }
   // MARK: - Text Line
@@ -119,20 +114,21 @@ extension Box.Line {
   /// This is named `buildBoxLine` to reinforce that this actually
   /// only builds a 'single line' — but a ``Box/LineType`` can
   /// be made up of more than one line of text.
-  func buildBoxLine(
+  func buildStructureLine(
+    _ repeater: Box.PartType,
     using engine: Box.Engine,
     at position: Box.PositionContext
-  ) -> StringStack {
-    
+  ) -> [StringStack] {
+
     let lead = leading.buildPart(using: engine, position: position)
     let trail = trailing.buildPart(using: engine, position: position)
-    let repeated = repeating.buildPart(
+    let repeated = repeater.buildPart(
       using: engine,
       position: position,
       span: .fill
     )
     let numbers = StringStack(engine.rowNumbers(for: position))
-    
+
     let stack = StringStack.joined(
       numbers,
       lead,
@@ -140,10 +136,8 @@ extension Box.Line {
       trail,
       along: .horizontal
     )
-    
-    //    print("Structure stack:\n\(stack.debugDescription)\n\n")
-    
-    return stack
-    
+
+    return [stack]
+
   }
 }

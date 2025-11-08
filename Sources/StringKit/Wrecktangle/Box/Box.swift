@@ -45,7 +45,8 @@ extension Box {
       /// Expand this logical line into however many visual rows it produces
       let subStacks: [StringStack] = lineType.buildBoxLines(
         using: engine,
-        startingAt: &globalRowIndex
+        startingAt: &globalRowIndex,
+        rowCount: allLineTypes.count
       )
 
       stacks.append(contentsOf: subStacks)

@@ -39,22 +39,22 @@ extension Box.LineType {
 //    }
 //  }
 //  
-  func buildBoxLines(
-    using engine: Box.Engine,
-    startingAt rowIndex: inout Int
-  ) -> [StringStack] {
-    
-    switch self {
-      case .structure(let type):
-        let pos = Box.PositionContext(i: rowIndex, rowCount: 0)
-        rowIndex += 1
-        return [type.parts.buildBoxLine(using: engine, at: pos)]
-        
-      case .text(let line):
-        let lines = line.buildTextLines(using: engine, startingAt: &rowIndex)
-        return lines
-    }
-  }
+//  func buildBoxLines(
+//    using engine: Box.Engine,
+//    startingAt rowIndex: inout Int
+//  ) -> [StringStack] {
+//    
+//    switch self {
+//      case .structure(let type):
+//        let pos = Box.PositionContext(i: rowIndex, rowCount: 0)
+//        rowIndex += 1
+//        return [type.parts.buildBoxLine(using: engine, at: pos)]
+//        
+//      case .text(let line):
+//        let lines = line.buildTextLines(using: engine, startingAt: &rowIndex)
+//        return lines
+//    }
+//  }
 }
 
 /// Joins horizontally
