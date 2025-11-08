@@ -7,6 +7,13 @@
 
 import Foundation
 
+extension Box {
+  enum ContentPart {
+    case text(String)
+    case structure(PartType)
+  }
+}
+
 // MARK: - Structure
 extension Box {
   struct StructureLine {

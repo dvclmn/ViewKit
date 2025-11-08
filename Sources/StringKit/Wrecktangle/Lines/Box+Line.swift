@@ -6,30 +6,144 @@
 //
 
 extension Box {
-  
+
   /// Curious to see whether I *need* `LineType` to
   /// fully express all the stuff, or whether I can just construct
   /// any Line based on any parts, given a StringStack-based
   /// approach, rather than PartType / String mix
   public struct Line {
-    let type: LineType
+//    let type: LineType
     let leading: StringStack
-    let body: StringStack
+    let body: ContentPart
+//    let body: StringStack
     let trailing: StringStack
+    
+    /// Init for Text Line
+    public init(
+//      type: LineType,
+      _ textContent: String,
+      leading: StringStack,
+      trailing: StringStack
+    ) {
+      self.leading = leading
+      self.body = .text(textContent)
+      self.trailing = trailing
+    }
+    
+    public init(
+      //      type: LineType,
+      _ repeater: PartType,
+      leading: StringStack,
+      trailing: StringStack
+    ) {
+      self.leading = leading
+      self.body = .structure(repeater)
+      self.trailing = trailing
+    }
   }
-  
 }
 
 extension Box.Line {
-  static func create(_ type: Box.LineType) -> Box.Line {
-    switch type {
-      case .text(let string):
-        <#code#>
+
+  public func build(
+//    _ type: Box.LineType,
+    using engine: Box.Engine,
+    startingAt rowIndex: inout Int
+  ) -> [StringStack] {
+//  ) -> Box.Line {
+    switch body {
+      case .text(let content):
+        buildTextLines(
+          content,
+          using: engine,
+          startingAt: &rowIndex
+        )
+//        buildTextLines(content, using: engine, startingAt: &rowIndex)
       case .structure(let structureType):
         <#code#>
     }
   }
-  
-  
+  // MARK: - Text Line
+  /// Important: This differs to a Structure line, in that it returns
+  /// an array (Rows) of lines, due to it handling multiple lines of text.
+  private func buildTextLines(
+    _ content: String,
+    using engine: Box.Engine,
+    //    at position: Box.PositionContext
+    startingAt rowIndex: inout Int
+  ) -> [StringStack] {
+
+    let textLines = TextReflow(
+      content,
+      width: engine.width(for: .text),
+      shouldHyphenate: true
+    ).reflowed()
+
+    var stacks: [StringStack] = []
+
+    for textLine in textLines {
+      let pos = Box.PositionContext(i: rowIndex, rowCount: 0)
+      rowIndex += 1
+
+      let numbers = StringStack(engine.rowNumbers(for: pos))
+
+      let leading = Box.PartType.vertical(.leading)
+        .buildPart(using: engine, position: pos)
+      let trailing = Box.PartType.vertical(.trailing)
+        .buildPart(using: engine, position: pos)
+      //      let lead = leading.buildPart(using: engine, position: pos)
+      //      let trail = trailing.buildPart(using: engine, position: pos)
+      //      let trail = trailing.buildPart(using: engine, position: pos)
+
+      let padding = StringStack(repeating: " ", count: engine.theme.padding.width, along: .horizontal)
+      let stackText = StringStack(textLine)
+
+      let lineStack = StringStack.joined(
+        numbers,
+        leading,
+        padding,
+        stackText,
+        padding,
+        trailing,
+        along: .horizontal
+      )
+      stacks.append(lineStack)
+    }
+
+    return stacks
+  }
 }
 
+// MARK: - Structure
+extension Box.Line {
+  /// This is named `buildBoxLine` to reinforce that this actually
+  /// only builds a 'single line' — but a ``Box/LineType`` can
+  /// be made up of more than one line of text.
+  func buildBoxLine(
+    using engine: Box.Engine,
+    at position: Box.PositionContext
+  ) -> StringStack {
+    
+    let lead = leading.buildPart(using: engine, position: position)
+    let trail = trailing.buildPart(using: engine, position: position)
+    let repeated = repeating.buildPart(
+      using: engine,
+      position: position,
+      span: .fill
+    )
+    let numbers = StringStack(engine.rowNumbers(for: position))
+    
+    let stack = StringStack.joined(
+      numbers,
+      lead,
+      repeated,
+      trail,
+      along: .horizontal
+    )
+    
+    //    print("Structure stack:\n\(stack.debugDescription)\n\n")
+    
+    return stack
+    
+  }
+}
