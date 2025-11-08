@@ -7,15 +7,23 @@
 
 extension Box {
   
-  
+  /// Important: I think we need to somehow have an intermediate step
+  /// between PartType and StringStack. Because Builder Components
+  /// can't carry engine / row index context
   public enum LineType: Hashable, Sendable {
 
     /// Important: This `content` represents the bulk/raw
     /// text content, *before* any width-aware reflowing.
     /// This operation is performed later.
     case text(String)
+    case repeater(PartType)
 //    case text(TextLine)
-    case structure(StructureType)
+//    case structure(StructureType)
+//    case top
+//    case divider
+//    case bottom
+//    case blank
+//    case part(ThreePartPreset)
   }
 }
 extension Box.LineType {

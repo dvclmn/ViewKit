@@ -5,16 +5,26 @@
 //  Created by Dave Coleman on 8/11/2025.
 //
 
-extension Box {
+
+
+//extension Box {
+  
+//  public protocol ThreePartLine {
+//    
+//  }
 
   /// Curious to see whether I *need* `LineType` to
   /// fully express all the stuff, or whether I can just construct
   /// any Line based on any parts, given a StringStack-based
   /// approach, rather than PartType / String mix
+  
+  
+  /// This is strictly a Three-Part Line. Will need to introduce
+  /// a new type/system to support e.g. multi-column Boxes
 //  public struct Line {
-//    let leading: PartType
-//    let body: ContentPart
-//    let trailing: PartType
+////    let leading: PartType
+////    let body: ContentPart
+////    let trailing: PartType
 //
 //    /// Init for Text Line
 //    public init(
@@ -37,31 +47,51 @@ extension Box {
 //      self.trailing = trailing
 //    }
 //  }
-}
+//}
 
-extension Box.Line {
-
-  public func build(
-    using engine: Box.Engine,
-    startingAt rowIndex: inout Int,
-    rowCount: Int
-  ) -> [StringStack] {
-    switch body {
+extension Box.LineType {
+  
+  
+  public static func create(
+    _ type: Box.ContentPart
+  ) -> Self {
+    switch type {
       case .text(let content):
-        buildTextLines(
-          content,
-          using: engine,
-          startingAt: &rowIndex
+//        createTextLine(content)
+        buildTextLines(<#T##self: Box.LineType##Box.LineType#>)
+        
+      case .structure(let type):
+        Box.LineType(
+          type.parts.repeater,
+          leading: type.parts.leading,
+          trailing: type.parts.trailing
         )
-      //        buildTextLines(content, using: engine, startingAt: &rowIndex)
-      case .structure(let part):
-        buildStructureLine(
-          part,
-          using: engine,
-          at: .init(i: rowIndex, rowCount: rowCount)
-        )
+        //        createStructureLine(type)
     }
   }
+
+
+//  private func buildStack(
+//    using engine: Box.Engine,
+//    startingAt rowIndex: inout Int,
+//    rowCount: Int
+//  ) -> [StringStack] {
+//    switch body {
+//      case .text(let content):
+//        buildTextLines(
+//          content,
+//          using: engine,
+//          startingAt: &rowIndex
+//        )
+//      //        buildTextLines(content, using: engine, startingAt: &rowIndex)
+//      case .structure(let part):
+//        buildStructureLine(
+//          part,
+//          using: engine,
+//          at: .init(i: rowIndex, rowCount: rowCount)
+//        )
+//    }
+//  }
   // MARK: - Text Line
   /// Important: This differs to a Structure line, in that it returns
   /// an array (Rows) of lines, due to it handling multiple lines of text.

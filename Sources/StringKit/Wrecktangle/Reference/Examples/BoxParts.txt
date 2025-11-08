@@ -1,0 +1,71 @@
+// Double, topLeading
+
+┏━━━━
+┃
+┃
+
+
+// Single, Leading,
+
+│
+├──
+│
+
+
+// Single, Trailing
+
+  │
+──┤
+  │
+
+
+// Single, Top
+
+───┬───
+   │
+
+
+// Single, Bottom
+
+   │
+───┴───
+
+
+
+// Double, Leading, lightInteriorStrongExterior
+
+┃ │
+┃ ├──
+┃ │
+
+
+// Double, Trailing
+
+  │ ┃
+──┤ ┃
+  │ ┃
+
+
+// Double, Top
+
+  ━━━━━━━
+  ───┬───
+     │
+
+
+  // Double, Bottom
+
+     │
+  ───┴───
+  ━━━━━━━
+  
+  
+  // Double, Cross
+  
+     │
+  ───┴───
+  ━━━━━━━
+
+  
+
+

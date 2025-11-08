@@ -19,6 +19,7 @@ extension Box {
     case blank
 //    case custom(Box.ThreePartPreset)
   }
+  
 }
 
 extension Box.StructureType {

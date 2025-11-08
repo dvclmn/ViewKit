@@ -9,11 +9,11 @@ import Foundation
 import SharedHelpers
 
 // MARK: - Structure
-extension Box.StructureLine {
-
-}
-
-// MARK: - Text
-extension Box.TextLine {
- 
-}
+//extension Box.StructureLine {
+//
+//}
+//
+//// MARK: - Text
+//extension Box.TextLine {
+// 
+//}
