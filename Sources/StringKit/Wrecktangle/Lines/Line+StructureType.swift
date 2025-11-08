@@ -6,6 +6,7 @@
 //
 
 extension Box {
+
   public enum StructureType: String, Hashable, Sendable {
     case top
     case divider

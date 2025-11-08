@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// Having this as an array seems neccesary really only for the Header
+/// (at this point), as it needs to 
 public typealias ComponentOutput = [Box.LineType]
 
 extension Box {

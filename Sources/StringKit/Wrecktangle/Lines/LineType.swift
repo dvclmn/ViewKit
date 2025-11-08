@@ -6,12 +6,15 @@
 //
 
 extension Box {
+  
+  
   public enum LineType: Hashable, Sendable {
 
     /// Important: This `content` represents the bulk/raw
     /// text content, *before* any width-aware reflowing.
     /// This operation is performed later.
-    case text(TextLine)
+    case text(String)
+//    case text(TextLine)
     case structure(StructureType)
   }
 }
@@ -48,7 +51,7 @@ extension Box.LineType {
         return [type.parts.buildBoxLine(using: engine, at: pos)]
         
       case .text(let line):
-        let lines = line.buildLines(using: engine, startingAt: &rowIndex)
+        let lines = line.buildTextLines(using: engine, startingAt: &rowIndex)
         return lines
     }
   }

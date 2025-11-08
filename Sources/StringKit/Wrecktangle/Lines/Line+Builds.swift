@@ -46,7 +46,7 @@ extension Box.StructureLine {
 extension Box.TextLine {
   /// Important: This differs to a Structure line, in that it returns
   /// an array (Rows) of lines, due to it handling multiple lines of text.
-  func buildLines(
+  func buildTextLines(
     using engine: Box.Engine,
 //    at position: Box.PositionContext
     startingAt rowIndex: inout Int
@@ -83,35 +83,5 @@ extension Box.TextLine {
     }
     
     return stacks
-    
-//    let lead = leading.buildPart(using: engine, position: position)
-//    let trail = trailing.buildPart(using: engine, position: position)
-//
-//    let numbers = StringStack(engine.rowNumbers(for: position))
-//
-//    let paddingCount = engine.theme.padding.width
-//    let padding = StringStack(repeating: " ", count: paddingCount, along: .horizontal)
-//
-//    let textLines: [String] = TextReflow(
-//      text,
-//      width: engine.width(for: .text),
-//      shouldHyphenate: true
-//    ).reflowed()
-//
-//    let lines: [StringStack] = textLines.map { textLine in
-//      let stackText = StringStack(textLine)
-//      return StringStack.joined(
-//        numbers,
-//        lead,
-//        padding,
-//        stackText,
-//        padding,
-//        trail,
-//        along: .horizontal
-//      )
-//    }
-//
-//    let stack = StringStack.joined(lines, along: .vertical)
-//    return stack
   }
 }
