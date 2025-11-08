@@ -10,7 +10,7 @@ import SharedHelpers
 public typealias Frame = Box.FrameStyle
 
 extension Box {
-  
+
   public struct FrameStyle: Sendable, Codable, Equatable {
     var parts: PartMap = [:]
 
@@ -32,14 +32,9 @@ extension Box.FrameStyle {
     return parts[.vertical(location)]?.width
   }
 
-  func part(for type: Box.PartType) -> Part? {
-    parts[type]
-  }
+  func part(for type: Box.PartType) -> Part? { parts[type] }
 
-  func merged(
-    overrides: Box.PartMap,
-//    reservedWidth: Int
-  ) -> Box.FrameStyle {
+  func merged(overrides: Box.PartMap) -> Box.FrameStyle {
     var newParts = parts
     for (key, value) in overrides {
       newParts[key] = value
@@ -47,23 +42,3 @@ extension Box.FrameStyle {
     return Box.FrameStyle(parts: newParts)
   }
 }
-
-//extension Box {
-//
-//  public enum FrameStyle: Sendable, Codable, Equatable {
-//    case single
-//    case double
-//    case notebook
-//  }
-//}
-
-//extension Box.FrameStyle {
-//
-//  var reservedWidth: Int {
-//    switch self {
-//      case .single: 1
-//      case .double: 3
-//      case .notebook: 3
-//    }
-//  }
-//}

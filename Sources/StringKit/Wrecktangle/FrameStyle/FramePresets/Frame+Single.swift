@@ -10,8 +10,39 @@ extension Box.FrameStyle {
   public static var single: Self {
     Frame {
       Part(.horizontal(.top)) { Glyph.horizontal(.increased) }
-      Part(.horizontal(.bottom)) { Glyph.horizontal(.increased) }
       Part(.horizontal(.interior)) { Glyph.horizontal(.standard) }
+      Part(.horizontal(.bottom)) { Glyph.horizontal(.increased) }
+
+      Part(.vertical(.leading)) { Glyph.vertical(.increased) }
+      Part(.vertical(.interior)) { Glyph.vertical(.standard) }
+      Part(.vertical(.trailing)) { Glyph.vertical(.increased) }
+      
+      Part(.join(.leading)) { Glyph.join(x: .increased, y: .standard) }
+      Part(.join(.trailing)) { Glyph.join(x: .increased, y: .standard) }
+      Part(.join(.top)) { Glyph.join(x: .increased, y: .standard) }
+      Part(.join(.bottom)) { Glyph.join(x: .increased, y: .standard) }
+      Part(.join(.cross)) { Glyph.join(x: .increased, y: .standard) }
+      
+      Part(.corner(.topTrailing)) { Box.GlyphType.corner(.increased) }
+
+//      Part(.join(.leading)) {
+//        Glyph.join(
+//          x: .standard,
+//          y: .increased,
+//        )
+//      }
+//      Part {
+//        Glyph.join(
+//          x: .increased,
+//          y: .standard,
+//        )
+//      }
+//      Part {
+//        Glyph.join(
+//          x: .standard,
+//          y: .standard,
+//        )
+//      }
     }
   }
 }

@@ -12,13 +12,21 @@ extension Box.JoinType {
         Row {
           Glyph.vertical(.increased)
           Glyph.blank
-          Glyph.join(x: .standard, y: .increased, type: .leading)
+          Glyph.join(
+            x: .standard,
+            y: .standard,
+            type: .leading
+          )
         }
       }
 
       Part(.join(.trailing)) {
         Row {
-          Glyph.join(x: .standard, y: .standard, type: .trailing)
+          Glyph.join(
+            x: .standard,
+            y: .standard,
+            type: .trailing
+          )
           Glyph.blank
           Glyph.vertical(.increased)
         }
@@ -28,13 +36,21 @@ extension Box.JoinType {
         Row {
           Glyph.horizontal(.increased)
           Glyph.blank
-          Glyph.join(x: .standard, y: .standard, type: .top)
+          Glyph.join(
+            x: .standard,
+            y: .standard,
+            type: .top
+          )
         }
       }
 
       Part(.join(.bottom)) {
         Row {
-          Glyph.join(x: .standard, y: .standard, type: .bottom)
+          Glyph.join(
+            x: .standard,
+            y: .standard,
+            type: .bottom
+          )
           Glyph.blank
           Glyph.horizontal(.increased)
         }
@@ -42,7 +58,11 @@ extension Box.JoinType {
 
       Part(.join(.cross)) {
         Row {
-          Glyph.join(x: .standard, y: .standard, type: .cross)
+          Glyph.join(
+            x: .standard,
+            y: .standard,
+            type: .cross
+          )
         }
       }
     }
@@ -53,7 +73,7 @@ extension Box.CornerType {
   static var doubleCorner: Frame {
     Frame {
       // MARK: - Corner
-      
+
       Part(.corner(.topLeading)) {
         Row {
           Glyph.corner(.increased, type: .topLeading)
@@ -66,7 +86,7 @@ extension Box.CornerType {
           Glyph.corner(.standard, type: .topLeading)
         }
       }
-      
+
       Part(.corner(.topTrailing)) {
         Row {
           Glyph.horizontal(.increased)
@@ -79,28 +99,28 @@ extension Box.CornerType {
           Glyph.vertical(.increased)
         }
       }
-      
+
       Part(.corner(.bottomLeading)) {
         Row {
           Glyph.vertical(.increased)
           Glyph.blank
           Glyph.corner(.standard, type: .bottomLeading)
         }
-        
+
         Row {
           Glyph.corner(.increased, type: .bottomLeading)
           Glyph.horizontal(.increased)
           Glyph.horizontal(.increased)
         }
       }
-      
+
       Part(.corner(.bottomTrailing)) {
         Row {
           Glyph.corner(.standard, type: .bottomTrailing)
           Glyph.blank
           Glyph.vertical(.increased)
         }
-        
+
         Row {
           Glyph.horizontal(.increased)
           Glyph.horizontal(.increased)

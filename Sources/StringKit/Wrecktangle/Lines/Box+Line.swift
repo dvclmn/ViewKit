@@ -56,7 +56,6 @@ extension Box.Line {
           using: engine,
           startingAt: &rowIndex
         )
-      //        buildTextLines(content, using: engine, startingAt: &rowIndex)
       case .repeater(let part):
         buildStructureLine(
           part,
@@ -71,7 +70,6 @@ extension Box.Line {
   private func buildTextLines(
     _ content: String,
     using engine: Box.Engine,
-    //    at position: Box.PositionContext
     startingAt rowIndex: inout Int
   ) -> [StringStack] {
 
@@ -89,13 +87,8 @@ extension Box.Line {
 
       let numbers = StringStack(engine.rowNumbers(for: pos))
 
-      //      let leading = Box.PartType.vertical(.leading)
-      //        .buildPart(using: engine, position: pos)
-      //      let trailing = Box.PartType.vertical(.trailing)
-      //        .buildPart(using: engine, position: pos)
       let leading = leading.buildPart(using: engine, position: pos)
       let trailing = trailing.buildPart(using: engine, position: pos)
-      //      let trail = trailing.buildPart(using: engine, position: pos)
 
       let padding = StringStack(repeating: " ", count: engine.theme.padding.width, along: .horizontal)
       let stackText = StringStack(textLine)
@@ -150,7 +143,6 @@ extension Box.Line {
 }
 
 extension Box.Line: CustomStringConvertible {
-  //extension Box.TextLine: CustomStringConvertible {
   public var description: String {
     return DisplayString {
       body.description
