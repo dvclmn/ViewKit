@@ -10,7 +10,6 @@ import Foundation
 /// Having this as an array seems neccesary really only for the Header
 /// (at this point), as it needs to
 public typealias ComponentOutput = [Box.Line]
-//public typealias ComponentOutput = [Box.LineType]
 
 extension Box {
   public protocol Component: Codable, Sendable, Equatable {
@@ -21,24 +20,23 @@ extension Box {
 extension Box {
   public struct Top: Component, Codable {
     public init() {}
-    public func makeLines() -> ComponentOutput { [Line.create(.structure(.top))] }
-    //    public func makeLines() -> ComponentOutput { [LineType.structure(.top)] }
+    public func makeLines() -> ComponentOutput { .single(.structure(.top)) }
   }
 
   public struct Divider: Component, Codable {
     public init() {}
-    public func makeLines() -> ComponentOutput { [Line.create(.structure(.divider))] }
+    public func makeLines() -> ComponentOutput { .single(.structure(.divider)) }
   }
 
   public struct Bottom: Component, Codable {
     public init() {}
-    public func makeLines() -> ComponentOutput { [Line.create(.structure(.bottom))] }
+    public func makeLines() -> ComponentOutput { .single(.structure(.bottom)) }
   }
 
   public struct Text: Component, Codable {
     let content: String
     public init(_ content: String) { self.content = content }
-    public func makeLines() -> ComponentOutput { [Line.create(.text(content))] }
+    public func makeLines() -> ComponentOutput { .single(.text(content)) }
   }
 
   public struct Header: Component, Codable {
@@ -54,5 +52,12 @@ extension Box.Component {
     let lhsLines = self.makeLines()
     let rhsLines = other.makeLines()
     return lhsLines + rhsLines
+  }
+}
+
+extension Array where Element == Box.Line {
+
+  static func single(_ type: Box.ContentPart) -> [Box.Line] {
+    [Box.Line.create(type)]
   }
 }

@@ -11,7 +11,7 @@ extension Box {
   public enum ContentPart {
     case text(String)
     case structure(StructureType)
-//    case customPart(PartType)
+    case customPart(PartType)
 //    case structure(PartType)
   }
 }
@@ -21,7 +21,7 @@ extension Box.ContentPart: CustomStringConvertible {
     switch self {
       case .text(let text): text
       case .structure(let type): "\(type)"
-//      case .customPart(let part): part.description
+      case .customPart(let part): part.description
     }
   }
 }

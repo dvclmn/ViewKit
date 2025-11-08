@@ -35,7 +35,7 @@ extension Box {
 
   public var plainText: String {
     /// Flatten every component’s logical lines
-    let allLineTypes: [Box.LineType] = allComponents.flatMap { $0.makeLines() }
+    let allLineTypes: [Box.Line] = allComponents.flatMap { $0.makeLines() }
 
     /// Build *all* visual line stacks (including multi-line text expansion)
     var globalRowIndex = 0
@@ -43,7 +43,7 @@ extension Box {
 
     for lineType in allLineTypes {
       /// Expand this logical line into however many visual rows it produces
-      let subStacks: [StringStack] = lineType.buildBoxLines(
+      let subStacks: [StringStack] = lineType.build(
         using: engine,
         startingAt: &globalRowIndex,
         rowCount: allLineTypes.count

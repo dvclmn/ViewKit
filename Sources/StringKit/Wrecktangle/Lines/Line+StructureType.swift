@@ -12,15 +12,27 @@ extension Box {
     trailing: Box.PartType
   )
   
-  public enum StructureType: String, Hashable, Sendable {
+  public enum StructureType: Hashable, Sendable {
     case top
     case divider
     case bottom
     case blank
+//    case custom(Box.ThreePartPreset)
   }
 }
 
 extension Box.StructureType {
+  
+  var name: String {
+    switch self {
+      case .top: "Top"
+      case .divider: "Divider"
+      case .bottom: "Bottom"
+      case .blank: "Blank"
+//      case .custom(let part): "Part: \(part)"
+    }
+  }
+  
   var parts: Box.ThreePartPreset {
     switch self {
         

@@ -11,32 +11,32 @@ extension Box {
   /// fully express all the stuff, or whether I can just construct
   /// any Line based on any parts, given a StringStack-based
   /// approach, rather than PartType / String mix
-  public struct Line {
-    let leading: PartType
-    let body: ContentPart
-    let trailing: PartType
-
-    /// Init for Text Line
-    public init(
-      _ textContent: String,
-      leading: PartType,
-      trailing: PartType
-    ) {
-      self.leading = leading
-      self.body = .text(textContent)
-      self.trailing = trailing
-    }
-
-    public init(
-      _ repeater: PartType,
-      leading: PartType,
-      trailing: PartType
-    ) {
-      self.leading = leading
-      self.body = .structure(repeater)
-      self.trailing = trailing
-    }
-  }
+//  public struct Line {
+//    let leading: PartType
+//    let body: ContentPart
+//    let trailing: PartType
+//
+//    /// Init for Text Line
+//    public init(
+//      _ textContent: String,
+//      leading: PartType,
+//      trailing: PartType
+//    ) {
+//      self.leading = leading
+//      self.body = .text(textContent)
+//      self.trailing = trailing
+//    }
+//
+//    public init(
+//      _ repeater: PartType,
+//      leading: PartType,
+//      trailing: PartType
+//    ) {
+//      self.leading = leading
+//      self.body = .customPart(repeater)
+//      self.trailing = trailing
+//    }
+//  }
 }
 
 extension Box.Line {
@@ -55,7 +55,11 @@ extension Box.Line {
         )
       //        buildTextLines(content, using: engine, startingAt: &rowIndex)
       case .structure(let part):
-        buildStructureLine(part, using: engine, at: .init(i: rowIndex, rowCount: rowCount))
+        buildStructureLine(
+          part,
+          using: engine,
+          at: .init(i: rowIndex, rowCount: rowCount)
+        )
     }
   }
   // MARK: - Text Line
