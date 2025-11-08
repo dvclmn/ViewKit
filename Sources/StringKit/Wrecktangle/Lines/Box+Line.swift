@@ -7,10 +7,6 @@
 
 extension Box {
 
-  //  public protocol ThreePartLine {
-  //
-  //  }
-
   /// Curious to see whether I *need* `LineType` to
   /// fully express all the stuff, or whether I can just construct
   /// any Line based on any parts, given a StringStack-based
@@ -47,70 +43,28 @@ extension Box {
 }
 
 extension Box.Line {
-  
-  
-  static func single(_ type: Box.LineType) -> [Box.Line] {
-    let line = switch type {
+
+  func buildStack(
+    using engine: Box.Engine,
+    startingAt rowIndex: inout Int,
+    rowCount: Int
+  ) -> [StringStack] {
+    switch body {
       case .text(let content):
-        Box.Line(
+        buildTextLines(
           content,
-          leading: .vertical(.leading),
-          trailing: .vertical(.trailing)
+          using: engine,
+          startingAt: &rowIndex
         )
-        
+      //        buildTextLines(content, using: engine, startingAt: &rowIndex)
       case .repeater(let part):
-        Box.Line(
+        buildStructureLine(
           part,
-          leading: .,
-          trailing: <#T##Box.PartType#>
+          using: engine,
+          at: .init(i: rowIndex, rowCount: rowCount)
         )
-        
-        
-    }
-    return [line]
-    
-    //    [Box.Line.create(type)]
-  }
-
-  public static func create(
-    _ type: Box.ContentPart
-  ) -> Self {
-    switch type {
-      case .text(let content):
-        //        createTextLine(content)
-        buildTextLines(<#T##self: Box.LineType##Box.LineType#>)
-
-      case .structure(let type):
-        Box.LineType(
-          type.parts.repeater,
-          leading: type.parts.leading,
-          trailing: type.parts.trailing
-        )
-    //        createStructureLine(type)
     }
   }
-
-  //  private func buildStack(
-  //    using engine: Box.Engine,
-  //    startingAt rowIndex: inout Int,
-  //    rowCount: Int
-  //  ) -> [StringStack] {
-  //    switch body {
-  //      case .text(let content):
-  //        buildTextLines(
-  //          content,
-  //          using: engine,
-  //          startingAt: &rowIndex
-  //        )
-  //      //        buildTextLines(content, using: engine, startingAt: &rowIndex)
-  //      case .structure(let part):
-  //        buildStructureLine(
-  //          part,
-  //          using: engine,
-  //          at: .init(i: rowIndex, rowCount: rowCount)
-  //        )
-  //    }
-  //  }
   // MARK: - Text Line
   /// Important: This differs to a Structure line, in that it returns
   /// an array (Rows) of lines, due to it handling multiple lines of text.
@@ -135,12 +89,12 @@ extension Box.Line {
 
       let numbers = StringStack(engine.rowNumbers(for: pos))
 
-      let leading = Box.PartType.vertical(.leading)
-        .buildPart(using: engine, position: pos)
-      let trailing = Box.PartType.vertical(.trailing)
-        .buildPart(using: engine, position: pos)
-      //      let lead = leading.buildPart(using: engine, position: pos)
-      //      let trail = trailing.buildPart(using: engine, position: pos)
+      //      let leading = Box.PartType.vertical(.leading)
+      //        .buildPart(using: engine, position: pos)
+      //      let trailing = Box.PartType.vertical(.trailing)
+      //        .buildPart(using: engine, position: pos)
+      let leading = leading.buildPart(using: engine, position: pos)
+      let trailing = trailing.buildPart(using: engine, position: pos)
       //      let trail = trailing.buildPart(using: engine, position: pos)
 
       let padding = StringStack(repeating: " ", count: engine.theme.padding.width, along: .horizontal)

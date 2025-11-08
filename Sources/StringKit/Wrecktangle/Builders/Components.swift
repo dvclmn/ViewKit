@@ -30,7 +30,7 @@ extension Box {
           trailing: .corner(.topTrailing)
         )
       ]
-//      .single(.structure(.top))
+      //      .single(.structure(.top))
     }
   }
 
@@ -40,11 +40,11 @@ extension Box {
       [
         Box.Line(
           .horizontal(.interior),
-          leading: .corner(.topLeading),
-          trailing: .corner(.topTrailing)
+          leading: .join(.leading),
+          trailing: .join(.trailing)
         )
       ]
-//      .single(.structure(.divider))
+      //      .single(.structure(.divider))
     }
   }
 
@@ -65,7 +65,13 @@ extension Box {
     let content: String
     public init(_ content: String) { self.content = content }
     public func makeLines() -> ComponentOutput {
-      .single(.text(content))
+      [
+        Box.Line(
+          content,
+          leading: .vertical(.leading),
+          trailing: .vertical(.trailing)
+        )
+      ]
     }
   }
 
@@ -73,7 +79,9 @@ extension Box {
     let text: String
     public init(_ text: String) { self.text = text }
 
-    public func makeLines() -> ComponentOutput { Box.Text(text).combined(with: Box.Divider()) }
+    public func makeLines() -> ComponentOutput {
+      Box.Text(text).combined(with: Box.Divider())
+    }
   }
 }
 
@@ -83,8 +91,4 @@ extension Box.Component {
     let rhsLines = other.makeLines()
     return lhsLines + rhsLines
   }
-}
-
-extension Array where Element == Box.Line {
-
 }

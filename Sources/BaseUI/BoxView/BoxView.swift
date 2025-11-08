@@ -90,7 +90,7 @@ extension BoxView {
         Box.Header("I'm a header.")
         DummyContent.Strings.paragraphs[6].prefix(320).toString
         
-        //        Box.Divider()
+                Box.Divider()
         //                        "Last text sign-off"
         //                  Box.Bottom()
         //                          Box.Bottom()

@@ -41,64 +41,8 @@ extension Box.FrameStyle {
         Glyph.vertical(.standard)
       }
 
-      
-
-      // MARK: - Corner
-
-      Part(.corner(.topLeading)) {
-        Row {
-          Glyph.corner(.increased, type: .topLeading)
-          Glyph.horizontal(.increased)
-          Glyph.horizontal(.increased)
-        }
-        Row {
-          Glyph.vertical(.increased)
-          Glyph.blank
-          Glyph.corner(.standard, type: .topLeading)
-        }
-      }
-
-      Part(.corner(.topTrailing)) {
-        Row {
-          Glyph.horizontal(.increased)
-          Glyph.horizontal(.increased)
-          Glyph.corner(.increased, type: .topTrailing)
-        }
-        Row {
-          Glyph.corner(.standard, type: .topTrailing)
-          Glyph.blank
-          Glyph.vertical(.increased)
-        }
-      }
-
-      Part(.corner(.bottomLeading)) {
-        Row {
-          Glyph.vertical(.increased)
-          Glyph.blank
-          Glyph.corner(.standard, type: .bottomLeading)
-        }
-
-        Row {
-          Glyph.corner(.increased, type: .bottomLeading)
-          Glyph.horizontal(.increased)
-          Glyph.horizontal(.increased)
-        }
-      }
-
-      Part(.corner(.bottomTrailing)) {
-        Row {
-          Glyph.corner(.standard, type: .bottomTrailing)
-          Glyph.blank
-          Glyph.vertical(.increased)
-        }
-
-        Row {
-          Glyph.horizontal(.increased)
-          Glyph.horizontal(.increased)
-          Glyph.corner(.increased, type: .bottomTrailing)
-        }
-      }
-
-    }
+    }  // END Frame
+    .merged(overrides: Box.JoinType.doubleJoin.parts)
+    .merged(overrides: Box.CornerType.doubleCorner.parts)
   }
 }

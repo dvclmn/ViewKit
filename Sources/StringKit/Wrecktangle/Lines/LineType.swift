@@ -76,8 +76,8 @@ extension Box.LineType: CustomStringConvertible {
       case .text(let textLine):
         "TextLine/\(textLine)"
 
-      case .structure(let structureType):
-        "StructureLine/\(structureType.rawValue)"
+      case .repeater(let part):
+        "StructureLine/\(part)"
     }
   }
 }

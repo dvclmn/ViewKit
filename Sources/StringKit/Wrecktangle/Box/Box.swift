@@ -43,7 +43,7 @@ extension Box {
 
     for lineType in allLineTypes {
       /// Expand this logical line into however many visual rows it produces
-      let subStacks: [StringStack] = lineType.build(
+      let subStacks: [StringStack] = lineType.buildStack(
         using: engine,
         startingAt: &globalRowIndex,
         rowCount: allLineTypes.count
