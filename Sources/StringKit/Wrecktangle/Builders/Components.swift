@@ -9,7 +9,8 @@ import Foundation
 
 /// Having this as an array seems neccesary really only for the Header
 /// (at this point), as it needs to
-public typealias ComponentOutput = [Box.LineType]
+public typealias ComponentOutput = [Box.Line]
+//public typealias ComponentOutput = [Box.LineType]
 
 extension Box {
   public protocol Component: Codable, Sendable, Equatable {
@@ -20,7 +21,8 @@ extension Box {
 extension Box {
   public struct Top: Component, Codable {
     public init() {}
-    public func makeLines() -> ComponentOutput { [LineType.structure(.top)] }
+    public func makeLines() -> ComponentOutput { Line. }
+//    public func makeLines() -> ComponentOutput { [LineType.structure(.top)] }
   }
 
   public struct Divider: Component, Codable {

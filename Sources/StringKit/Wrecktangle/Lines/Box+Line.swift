@@ -114,7 +114,7 @@ extension Box.Line {
   /// This is named `buildBoxLine` to reinforce that this actually
   /// only builds a 'single line' — but a ``Box/LineType`` can
   /// be made up of more than one line of text.
-  func buildStructureLine(
+  private func buildStructureLine(
     _ repeater: Box.PartType,
     using engine: Box.Engine,
     at position: Box.PositionContext

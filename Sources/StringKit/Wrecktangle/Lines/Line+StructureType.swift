@@ -6,7 +6,12 @@
 //
 
 extension Box {
-
+  public typealias ThreePartPreset = (
+    leading: Box.PartType,
+    repeater: Box.PartType,
+    trailing: Box.PartType
+  )
+  
   public enum StructureType: String, Hashable, Sendable {
     case top
     case divider
@@ -16,35 +21,69 @@ extension Box {
 }
 
 extension Box.StructureType {
-  var parts: Box.StructureLine {
+  var parts: Box.ThreePartPreset {
     switch self {
+        
       case .top:
-        Box.StructureLine(
+        
+        (
           .corner(.topLeading),
           .horizontal(.top),
           .corner(.topTrailing),
         )
-
+        
       case .divider:
-        Box.StructureLine(
+        
+        (
           .join(.leading),
           .horizontal(.interior),
           .join(.trailing),
         )
-
+        
       case .bottom:
-        Box.StructureLine(
+        
+        (
           .corner(.bottomLeading),
           .horizontal(.bottom),
           .corner(.bottomTrailing),
         )
-
+        
       case .blank:
-        Box.StructureLine(
+        
+        (
           .vertical(.leading),
           .blank,
           .vertical(.trailing),
         )
+        
+        //      case .top:
+        //        Box.StructureLine(
+        //          .corner(.topLeading),
+        //          .horizontal(.top),
+        //          .corner(.topTrailing),
+        //        )
+        //
+        //      case .divider:
+        //        Box.StructureLine(
+        //          .join(.leading),
+        //          .horizontal(.interior),
+        //          .join(.trailing),
+        //        )
+        //
+        //      case .bottom:
+        //        Box.StructureLine(
+        //          .corner(.bottomLeading),
+        //          .horizontal(.bottom),
+        //          .corner(.bottomTrailing),
+        //        )
+        //
+        //      case .blank:
+        //        Box.StructureLine(
+        //          .vertical(.leading),
+        //          .blank,
+        //          .vertical(.trailing),
+        //        )
+        //    }
     }
   }
 }
