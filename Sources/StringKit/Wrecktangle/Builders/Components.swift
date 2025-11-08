@@ -10,8 +10,8 @@ import Foundation
 /// Having this as an array seems neccesary really only for the Header
 /// (at this point), as it needs to
 //public typealias ComponentOutput = [Box.LineType]
-public typealias ComponentOutput = [StringStack]
-//public typealias ComponentOutput = [Box.Line]
+//public typealias ComponentOutput = [StringStack]
+public typealias ComponentOutput = [Box.Line]
 
 extension Box {
   public protocol Component: Codable, Sendable, Equatable {
@@ -23,21 +23,41 @@ extension Box {
   public struct Top: Component, Codable {
     public init() {}
     public func makeLines() -> ComponentOutput {
-      .single(.structure(.top))
+      [
+        Box.Line(
+          .horizontal(.top),
+          leading: .corner(.topLeading),
+          trailing: .corner(.topTrailing)
+        )
+      ]
+//      .single(.structure(.top))
     }
   }
 
   public struct Divider: Component, Codable {
     public init() {}
     public func makeLines() -> ComponentOutput {
-      .single(.structure(.divider))
+      [
+        Box.Line(
+          .horizontal(.interior),
+          leading: .corner(.topLeading),
+          trailing: .corner(.topTrailing)
+        )
+      ]
+//      .single(.structure(.divider))
     }
   }
 
   public struct Bottom: Component, Codable {
     public init() {}
     public func makeLines() -> ComponentOutput {
-      .single(.structure(.bottom))
+      [
+        Box.Line(
+          .horizontal(.bottom),
+          leading: .corner(.bottomLeading),
+          trailing: .corner(.bottomTrailing)
+        )
+      ]
     }
   }
 
@@ -67,7 +87,4 @@ extension Box.Component {
 
 extension Array where Element == Box.Line {
 
-  static func single(_ type: Box.ContentPart) -> [Box.Line] {
-    [Box.Line.create(type)]
-  }
 }

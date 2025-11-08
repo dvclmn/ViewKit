@@ -7,24 +7,24 @@
 
 import Foundation
 
-extension Box {
-  public enum ContentPart {
-    case text(String)
-    case structure(StructureType)
-//    case customPart(PartType)
-//    case structure(PartType)
-  }
-}
-
-extension Box.ContentPart: CustomStringConvertible {
-  public var description: String {
-    switch self {
-      case .text(let text): text
-      case .structure(let type): "\(type)"
-//      case .customPart(let part): part.description
-    }
-  }
-}
+//extension Box {
+//  public enum ContentPart {
+//    case text(String)
+//    case structure(StructureType)
+////    case customPart(PartType)
+////    case structure(PartType)
+//  }
+//}
+//
+//extension Box.ContentPart: CustomStringConvertible {
+//  public var description: String {
+//    switch self {
+//      case .text(let text): text
+//      case .structure(let type): "\(type)"
+////      case .customPart(let part): part.description
+//    }
+//  }
+//}
 
 // MARK: - Structure
 //extension Box {

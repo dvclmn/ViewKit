@@ -8,9 +8,9 @@
 extension Box.PartType {
 
 //  static func repeater(for )
-  static var repeaterTop: Self { .horizontal(.top) }
-  static var repeaterDivider: Self { .horizontal(.interior) }
-  static var repeaterBottom: Self { .horizontal(.bottom) }
+//  static var repeaterTop: Self { .horizontal(.top) }
+//  static var repeaterDivider: Self { .horizontal(.interior) }
+//  static var repeaterBottom: Self { .horizontal(.bottom) }
   
   
 //  static func preset(for structure: Box.StructureType) -> [Self] {

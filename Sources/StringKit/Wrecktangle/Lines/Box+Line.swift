@@ -5,93 +5,112 @@
 //  Created by Dave Coleman on 8/11/2025.
 //
 
+extension Box {
 
-
-//extension Box {
-  
-//  public protocol ThreePartLine {
-//    
-//  }
+  //  public protocol ThreePartLine {
+  //
+  //  }
 
   /// Curious to see whether I *need* `LineType` to
   /// fully express all the stuff, or whether I can just construct
   /// any Line based on any parts, given a StringStack-based
   /// approach, rather than PartType / String mix
-  
-  
+
   /// This is strictly a Three-Part Line. Will need to introduce
   /// a new type/system to support e.g. multi-column Boxes
-//  public struct Line {
-////    let leading: PartType
-////    let body: ContentPart
-////    let trailing: PartType
-//
-//    /// Init for Text Line
-//    public init(
-//      _ textContent: String,
-//      leading: PartType,
-//      trailing: PartType
-//    ) {
-//      self.leading = leading
-//      self.body = .text(textContent)
-//      self.trailing = trailing
-//    }
-//
-//    public init(
-//      _ repeater: PartType,
-//      leading: PartType,
-//      trailing: PartType
-//    ) {
-//      self.leading = leading
-//      self.body = .customPart(repeater)
-//      self.trailing = trailing
-//    }
-//  }
-//}
+  public struct Line {
+    let leading: PartType
+    let body: LineType
+    let trailing: PartType
 
-extension Box.LineType {
+    /// Init for Text Line
+    public init(
+      _ textContent: String,
+      leading: PartType,
+      trailing: PartType
+    ) {
+      self.leading = leading
+      self.body = .text(textContent)
+      self.trailing = trailing
+    }
+
+    public init(
+      _ repeater: PartType,
+      leading: PartType,
+      trailing: PartType
+    ) {
+      self.leading = leading
+      self.body = .repeater(repeater)
+      self.trailing = trailing
+    }
+  }
+}
+
+extension Box.Line {
   
   
+  static func single(_ type: Box.LineType) -> [Box.Line] {
+    let line = switch type {
+      case .text(let content):
+        Box.Line(
+          content,
+          leading: .vertical(.leading),
+          trailing: .vertical(.trailing)
+        )
+        
+      case .repeater(let part):
+        Box.Line(
+          part,
+          leading: .,
+          trailing: <#T##Box.PartType#>
+        )
+        
+        
+    }
+    return [line]
+    
+    //    [Box.Line.create(type)]
+  }
+
   public static func create(
     _ type: Box.ContentPart
   ) -> Self {
     switch type {
       case .text(let content):
-//        createTextLine(content)
+        //        createTextLine(content)
         buildTextLines(<#T##self: Box.LineType##Box.LineType#>)
-        
+
       case .structure(let type):
         Box.LineType(
           type.parts.repeater,
           leading: type.parts.leading,
           trailing: type.parts.trailing
         )
-        //        createStructureLine(type)
+    //        createStructureLine(type)
     }
   }
 
-
-//  private func buildStack(
-//    using engine: Box.Engine,
-//    startingAt rowIndex: inout Int,
-//    rowCount: Int
-//  ) -> [StringStack] {
-//    switch body {
-//      case .text(let content):
-//        buildTextLines(
-//          content,
-//          using: engine,
-//          startingAt: &rowIndex
-//        )
-//      //        buildTextLines(content, using: engine, startingAt: &rowIndex)
-//      case .structure(let part):
-//        buildStructureLine(
-//          part,
-//          using: engine,
-//          at: .init(i: rowIndex, rowCount: rowCount)
-//        )
-//    }
-//  }
+  //  private func buildStack(
+  //    using engine: Box.Engine,
+  //    startingAt rowIndex: inout Int,
+  //    rowCount: Int
+  //  ) -> [StringStack] {
+  //    switch body {
+  //      case .text(let content):
+  //        buildTextLines(
+  //          content,
+  //          using: engine,
+  //          startingAt: &rowIndex
+  //        )
+  //      //        buildTextLines(content, using: engine, startingAt: &rowIndex)
+  //      case .structure(let part):
+  //        buildStructureLine(
+  //          part,
+  //          using: engine,
+  //          at: .init(i: rowIndex, rowCount: rowCount)
+  //        )
+  //    }
+  //  }
   // MARK: - Text Line
   /// Important: This differs to a Structure line, in that it returns
   /// an array (Rows) of lines, due to it handling multiple lines of text.
