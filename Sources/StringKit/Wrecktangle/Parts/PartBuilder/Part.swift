@@ -14,10 +14,6 @@ extension Box {
     let type: PartType
     let glyphs: GlyphStack
 
-    //    init(@PartBuilder _ content: () -> GlyphStack) {
-    //      self.glyphs = content()
-    //    }
-
     init(_ type: Box.PartType, @PartBuilder _ content: () -> Box.GlyphStack) {
       self.glyphs = content()
       self.type = type

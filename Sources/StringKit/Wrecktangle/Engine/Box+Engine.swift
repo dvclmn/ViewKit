@@ -24,7 +24,6 @@ extension Box.Engine {
 
   func rowNumbers(for position: Box.PositionContext) -> String {
     guard hasRowNumbers else { return "" }
-    //      #warning("In the middle of working on this, went to StringStack")
     return "\(position.rowNumber) "
   }
 
@@ -53,7 +52,6 @@ extension Box.Engine {
 
   private var rowNumbersWidth: Int { hasRowNumbers ? 2 : 0 }
   private var capsWidth: Int { theme.frameStyle.frameWidth(for: .leading).map { $0 * 2 } ?? 1 }
-  //  private var capsWidth: Int { theme.frameStyle.reservedWidth * 2 }
 
 }
 

@@ -6,6 +6,7 @@
 //
 
 extension Box.FrameStyle {
+
   public static var single: Self {
     Frame {
       Part(.horizontal(.top)) { Glyph.horizontal(.increased) }

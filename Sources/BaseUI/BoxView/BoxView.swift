@@ -87,6 +87,7 @@ extension BoxView {
         
         //        Box.Header("Hello, I'm a Header")
         //
+        Box.Header("I'm a header.")
         DummyContent.Strings.paragraphs[6].prefix(320).toString
         
         //        Box.Divider()

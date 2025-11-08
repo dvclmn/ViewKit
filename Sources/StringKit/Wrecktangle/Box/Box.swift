@@ -29,6 +29,10 @@ public struct Box: Sendable {
     self.engine = Box.Engine(config)
   }
 
+}
+
+extension Box {
+
   public var plainText: String {
     /// Flatten every component’s logical lines
     let allLineTypes: [Box.LineType] = allComponents.flatMap { $0.makeLines() }
@@ -49,9 +53,6 @@ public struct Box: Sendable {
 
     return StringStack.joined(stacks, along: .vertical).string
   }
-}
-
-extension Box {
 
   private var allComponents: [any Component] {
     [Box.Top()] + components + [Box.Bottom()]
@@ -66,10 +67,3 @@ extension Box {
     return "/// Lines:\n\n\(linesDebug)\n///\n"
   }
 }
-//extension Box: Equatable {
-//  public static func == (lhs: Box, rhs: Box) -> Bool {
-//    lhs.engine.config.width == rhs.engine.config.width
-//      && lhs.engine.config.theme == rhs.engine.config.theme
-//      && lhs.components.count == rhs.components.count
-//  }
-//}
