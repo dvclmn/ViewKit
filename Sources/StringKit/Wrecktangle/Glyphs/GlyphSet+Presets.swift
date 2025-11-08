@@ -13,139 +13,142 @@ extension Box.GlyphSet {
 
   public static let sharp = Box.GlyphSet.base(
     [
-      Box.GlyphType.blank: Character.blank,
+      Glyph.blank: Character.blank,
 
       // MARK: - Floor/Ceiling
-      Box.GlyphType.horizontal(.increased): "━",
-      Box.GlyphType.horizontal(.standard): "─",
+      Glyph.horizontal(.increased): "━",
+      Glyph.horizontal(.standard): "─",
 
       // MARK: - Walls
-      Box.GlyphType.vertical(.increased): "┃",
-      Box.GlyphType.vertical(.standard): "│",
+      Glyph.vertical(.increased): "┃",
+      Glyph.vertical(.standard): "│",
 
       // MARK: - Bold to Thin Joins
-      Box.GlyphType.join(x: .increased, y: .standard, type: .top): "┯",
-      Box.GlyphType.join(x: .increased, y: .standard, type: .bottom): "┷",
-      Box.GlyphType.join(x: .standard, y: .increased, type: .leading): "┠",
-      Box.GlyphType.join(x: .standard, y: .increased, type: .trailing): "┨",
-      Box.GlyphType.join(x: .standard, y: .increased, type: .cross): "╂",
+      Glyph.join(x: .increased, y: .standard, type: .top): "┯",
+      Glyph.join(x: .increased, y: .standard, type: .bottom): "┷",
+      Glyph.join(x: .standard, y: .increased, type: .leading): "┠",
+      Glyph.join(x: .standard, y: .increased, type: .trailing): "┨",
+      Glyph.join(x: .standard, y: .increased, type: .cross): "╂",
 
       // MARK: - Bold Joins
-      Box.GlyphType.join(x: .increased, y: .increased, type: .top): "┳",
-      Box.GlyphType.join(x: .increased, y: .increased, type: .bottom): "┻",
-      Box.GlyphType.join(x: .increased, y: .increased, type: .leading): "┣",
-      Box.GlyphType.join(x: .increased, y: .increased, type: .trailing): "┫",
-      Box.GlyphType.join(x: .increased, y: .increased, type: .cross): "╋",
+      Glyph.join(x: .increased, y: .increased, type: .top): "┳",
+      Glyph.join(x: .increased, y: .increased, type: .bottom): "┻",
+      Glyph.join(x: .increased, y: .increased, type: .leading): "┣",
+      Glyph.join(x: .increased, y: .increased, type: .trailing): "┫",
+      Glyph.join(x: .increased, y: .increased, type: .cross): "╋",
 
       // MARK: - Thin Joins
-      Box.GlyphType.join(x: .standard, y: .standard, type: .top): "┬",
-      Box.GlyphType.join(x: .standard, y: .standard, type: .bottom): "┴",
-      Box.GlyphType.join(x: .standard, y: .standard, type: .leading): "├",
-      Box.GlyphType.join(x: .standard, y: .standard, type: .trailing): "┤",
-      Box.GlyphType.join(x: .standard, y: .standard, type: .cross): "┼",
+      Glyph.join(x: .standard, y: .standard, type: .top): "┬",
+      Glyph.join(x: .standard, y: .standard, type: .bottom): "┴",
+      Glyph.join(x: .standard, y: .standard, type: .leading): "├",
+      Glyph.join(x: .standard, y: .standard, type: .trailing): "┤",
+      Glyph.join(x: .standard, y: .standard, type: .cross): "┼",
 
       // MARK: - Bold Corners
-      Box.GlyphType.corner(.increased, type: .topLeading): "┏",
-      Box.GlyphType.corner(.increased, type: .topTrailing): "┓",
-      Box.GlyphType.corner(.increased, type: .bottomLeading): "┗",
-      Box.GlyphType.corner(.increased, type: .bottomTrailing): "┛",
+      Glyph.corner(.increased, type: .topLeading): "┏",
+      Glyph.corner(.increased, type: .topTrailing): "┓",
+      Glyph.corner(.increased, type: .bottomLeading): "┗",
+      Glyph.corner(.increased, type: .bottomTrailing): "┛",
 
       // MARK: - Thin Corners
-      Box.GlyphType.corner(.standard, type: .topLeading): "┌",
-      Box.GlyphType.corner(.standard, type: .topTrailing): "┐",
-      Box.GlyphType.corner(.standard, type: .bottomLeading): "└",
-      Box.GlyphType.corner(.standard, type: .bottomTrailing): "┘",
+      Glyph.corner(.standard, type: .topLeading): "┌",
+      Glyph.corner(.standard, type: .topTrailing): "┐",
+      Glyph.corner(.standard, type: .bottomLeading): "└",
+      Glyph.corner(.standard, type: .bottomTrailing): "┘",
     ]
   )
 
   public static let rounded = Box.GlyphSet.partial(
     [
+      Glyph.horizontal(.increased): "─",
+      Glyph.horizontal(.standard): "─",
 
-      Box.GlyphType.horizontal(.standard): "─",
-      Box.GlyphType.vertical(.standard): "│",
+      // MARK: - Walls
+      Glyph.vertical(.increased): "│",
+      Glyph.vertical(.standard): "│",
 
-      Box.GlyphType.join(x: .standard, y: .standard, type: .top): "┬",
-      Box.GlyphType.join(x: .standard, y: .standard, type: .bottom): "┴",
-      Box.GlyphType.join(x: .standard, y: .standard, type: .leading): "├",
-      Box.GlyphType.join(x: .standard, y: .standard, type: .trailing): "┤",
-      Box.GlyphType.join(x: .standard, y: .standard, type: .cross): "┼",
+      Glyph.join(x: .standard, y: .standard, type: .top): "┬",
+      Glyph.join(x: .standard, y: .standard, type: .bottom): "┴",
+      Glyph.join(x: .standard, y: .standard, type: .leading): "├",
+      Glyph.join(x: .standard, y: .standard, type: .trailing): "┤",
+      Glyph.join(x: .standard, y: .standard, type: .cross): "┼",
 
-      Box.GlyphType.corner(.standard, type: .topLeading): "╭",
-      Box.GlyphType.corner(.standard, type: .topTrailing): "╮",
-      Box.GlyphType.corner(.standard, type: .bottomLeading): "╰",
-      Box.GlyphType.corner(.standard, type: .bottomTrailing): "╯",
+      Glyph.corner(.standard, type: .topLeading): "╭",
+      Glyph.corner(.standard, type: .topTrailing): "╮",
+      Glyph.corner(.standard, type: .bottomLeading): "╰",
+      Glyph.corner(.standard, type: .bottomTrailing): "╯",
 
     ], sharp)
 
   public static let test = Box.GlyphSet.partial(
 
     [
-      Box.GlyphType.blank: Character.blank,
+      Glyph.blank: Character.blank,
 
       // MARK: - Floor/Ceiling
-      Box.GlyphType.horizontal(.increased): "━",  // H
-      Box.GlyphType.horizontal(.standard): "─",  // *
-      Box.GlyphType.vertical(.increased): "┃",  // V
-      Box.GlyphType.vertical(.standard): "│",  // &
+      Glyph.horizontal(.increased): "━",  // H
+      Glyph.horizontal(.standard): "─",  // *
+      Glyph.vertical(.increased): "┃",  // V
+      Glyph.vertical(.standard): "│",  // &
 
       // MARK: - Bold to Thin Joins
-      Box.GlyphType.join(x: .increased, y: .standard, type: .top): "B",  // ┯
-      Box.GlyphType.join(x: .increased, y: .standard, type: .bottom): "B",  // ┷
-      Box.GlyphType.join(x: .standard, y: .increased, type: .leading): "B",  // ┠
-      Box.GlyphType.join(x: .standard, y: .increased, type: .trailing): "B",  // ┨
+      Glyph.join(x: .increased, y: .standard, type: .top): "B",  // ┯
+      Glyph.join(x: .increased, y: .standard, type: .bottom): "B",  // ┷
+      Glyph.join(x: .standard, y: .increased, type: .leading): "B",  // ┠
+      Glyph.join(x: .standard, y: .increased, type: .trailing): "B",  // ┨
 
       // MARK: - Bold Joins
-      Box.GlyphType.join(x: .increased, y: .increased, type: .top): "A",  // ┳
-      Box.GlyphType.join(x: .increased, y: .increased, type: .bottom): "A",  // ┻
-      Box.GlyphType.join(x: .increased, y: .increased, type: .leading): "A",  // ┣
-      Box.GlyphType.join(x: .increased, y: .increased, type: .trailing): "A",  // ┫
-      Box.GlyphType.join(x: .increased, y: .increased, type: .cross): "A",  // ╋
+      Glyph.join(x: .increased, y: .increased, type: .top): "A",  // ┳
+      Glyph.join(x: .increased, y: .increased, type: .bottom): "A",  // ┻
+      Glyph.join(x: .increased, y: .increased, type: .leading): "A",  // ┣
+      Glyph.join(x: .increased, y: .increased, type: .trailing): "A",  // ┫
+      Glyph.join(x: .increased, y: .increased, type: .cross): "A",  // ╋
 
       // MARK: - Thin Joins
-      Box.GlyphType.join(x: .standard, y: .standard, type: .top): "C",  // ┬
-      Box.GlyphType.join(x: .standard, y: .standard, type: .bottom): "C",  // ┴
-      Box.GlyphType.join(x: .standard, y: .standard, type: .leading): "C",  // ├
-      Box.GlyphType.join(x: .standard, y: .standard, type: .trailing): "C",  // ┤
-      Box.GlyphType.join(x: .standard, y: .standard, type: .cross): "C",  // ┼
+      Glyph.join(x: .standard, y: .standard, type: .top): "C",  // ┬
+      Glyph.join(x: .standard, y: .standard, type: .bottom): "C",  // ┴
+      Glyph.join(x: .standard, y: .standard, type: .leading): "C",  // ├
+      Glyph.join(x: .standard, y: .standard, type: .trailing): "C",  // ┤
+      Glyph.join(x: .standard, y: .standard, type: .cross): "C",  // ┼
 
       // MARK: - Bold Corners
-      Box.GlyphType.corner(.increased, type: .topLeading): "┏",
-      Box.GlyphType.corner(.increased, type: .topTrailing): "┓",
-      Box.GlyphType.corner(.increased, type: .bottomLeading): "┗",
-      Box.GlyphType.corner(.increased, type: .bottomTrailing): "┛",
+      Glyph.corner(.increased, type: .topLeading): "┏",
+      Glyph.corner(.increased, type: .topTrailing): "┓",
+      Glyph.corner(.increased, type: .bottomLeading): "┗",
+      Glyph.corner(.increased, type: .bottomTrailing): "┛",
 
       // MARK: - Thin Corners
-      Box.GlyphType.corner(.standard, type: .topLeading): "┌",
-      Box.GlyphType.corner(.standard, type: .topTrailing): "┐",
-      Box.GlyphType.corner(.standard, type: .bottomLeading): "└",
-      Box.GlyphType.corner(.standard, type: .bottomTrailing): "┘",
+      Glyph.corner(.standard, type: .topLeading): "┌",
+      Glyph.corner(.standard, type: .topTrailing): "┐",
+      Glyph.corner(.standard, type: .bottomLeading): "└",
+      Glyph.corner(.standard, type: .bottomTrailing): "┘",
 
     ], sharp)
 
   public static let double = Box.GlyphSet.partial(
     [
 
-      Box.GlyphType.horizontal(.increased): "═",
-      Box.GlyphType.horizontal(.standard): "─",
+      Glyph.horizontal(.increased): "═",
+      Glyph.horizontal(.standard): "─",
 
-      Box.GlyphType.vertical(.increased): "║",
-      Box.GlyphType.vertical(.standard): "│",
+      Glyph.vertical(.increased): "║",
+      Glyph.vertical(.standard): "│",
 
-      Box.GlyphType.join(x: .increased, y: .standard, type: .top): "╤",
-      Box.GlyphType.join(x: .increased, y: .standard, type: .bottom): "╧",
-      Box.GlyphType.join(x: .standard, y: .increased, type: .leading): "╟",
-      Box.GlyphType.join(x: .standard, y: .increased, type: .trailing): "╢",
-      Box.GlyphType.join(x: .standard, y: .standard, type: .cross): "┼",
+      Glyph.join(x: .increased, y: .standard, type: .top): "╤",
+      Glyph.join(x: .increased, y: .standard, type: .bottom): "╧",
+      Glyph.join(x: .standard, y: .increased, type: .leading): "╟",
+      Glyph.join(x: .standard, y: .increased, type: .trailing): "╢",
+      Glyph.join(x: .standard, y: .standard, type: .cross): "┼",
 
-      Box.GlyphType.corner(.increased, type: .topLeading): "╔",
-      Box.GlyphType.corner(.increased, type: .topTrailing): "╗",
-      Box.GlyphType.corner(.increased, type: .bottomLeading): "╚",
-      Box.GlyphType.corner(.increased, type: .bottomTrailing): "╝",
+      Glyph.corner(.increased, type: .topLeading): "╔",
+      Glyph.corner(.increased, type: .topTrailing): "╗",
+      Glyph.corner(.increased, type: .bottomLeading): "╚",
+      Glyph.corner(.increased, type: .bottomTrailing): "╝",
 
-      Box.GlyphType.corner(.standard, type: .topLeading): "┌",
-      Box.GlyphType.corner(.standard, type: .topTrailing): "┐",
-      Box.GlyphType.corner(.standard, type: .bottomLeading): "└",
-      Box.GlyphType.corner(.standard, type: .bottomTrailing): "┘",
+      Glyph.corner(.standard, type: .topLeading): "┌",
+      Glyph.corner(.standard, type: .topTrailing): "┐",
+      Glyph.corner(.standard, type: .bottomLeading): "└",
+      Glyph.corner(.standard, type: .bottomTrailing): "┘",
 
     ], sharp)
 

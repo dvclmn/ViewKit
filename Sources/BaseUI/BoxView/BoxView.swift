@@ -77,7 +77,7 @@ extension BoxView {
 //      .environment(\.metrics, .lineNumbers)
 //      .environment(\.metrics, [])
       .setBoxStyle(
-        glyphs: .sharp,
+        glyphs: .rounded,
         frame: .single,
       )
       

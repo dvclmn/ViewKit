@@ -14,22 +14,17 @@ extension Box {
     let type: PartType
     let glyphs: GlyphStack
 
-//    init(_ type: Box.PartType, @PartBuilder _ content: () -> Box.GlyphStack) {
-//      self.glyphs = content()
-//      self.type = type
-//    }
+    init(_ type: Box.PartType, @PartBuilder _ content: () -> Box.GlyphStack) {
+      self.type = type
+      self.glyphs = PartContext.$currentType.withValue(type) {
+        content()
+      }
+    }
   }
 }
 
 extension Box.Part {
-  
-  init(_ type: Box.PartType, @PartBuilder _ content: () -> Box.GlyphStack) {
-    self.type = type
-    self.glyphs = PartContext.$currentType.withValue(type) {
-      content()
-    }
-  }
-  
+
   var width: Int { glyphs.width(for: .widestRow) }
 
   func toStringStack(with theme: Box.Theme) -> StringStack {
@@ -37,7 +32,7 @@ extension Box.Part {
   }
 }
 
-
+// MARK: - Part Context
 /// This allows the leaving off of the `Box.GlyphType.join`'s
 /// `Box.JoinType`, when declared in a `Part` builder closure.
 /// For cleaner syntax.
@@ -61,7 +56,6 @@ enum PartContext {
   @TaskLocal static var currentType: Box.PartType?
 }
 
-
 extension Box.GlyphType {
   static func join(x: Box.GlyphProminence, y: Box.GlyphProminence) -> Self {
     guard case .join(let joinType)? = PartContext.currentType else {
@@ -69,7 +63,7 @@ extension Box.GlyphType {
     }
     return .join(x: x, y: y, type: joinType)
   }
-  
+
   static func corner(_ prominence: Box.GlyphProminence) -> Self {
     guard case .corner(let cornerType)? = PartContext.currentType else {
       fatalError("corner(_:) used outside a corner Part")
