@@ -148,3 +148,14 @@ extension Box.Line {
 
   }
 }
+
+extension Box.Line: CustomStringConvertible {
+  //extension Box.TextLine: CustomStringConvertible {
+  public var description: String {
+    return DisplayString {
+      body.description
+      leading.description
+      trailing.description
+    }.plainText
+  }
+}

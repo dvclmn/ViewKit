@@ -9,8 +9,6 @@ import Foundation
 import SharedHelpers
 
 extension Box.PartType {
-  
-  
 
   /// We return a `StringStack`, not a `String`, to allow
   /// any additional repeating/joining required further down the pipeline.
@@ -35,7 +33,7 @@ extension Box.PartType {
         }
     }
   }
-  
+
   func part(
     using engine: Box.Engine,
     position: Box.PositionContext
@@ -44,17 +42,6 @@ extension Box.PartType {
     let fallback = Part(.blank) { Row { Glyph.blank } }
     return frameStyle.part(for: self) ?? fallback
   }
-
-//  func part(
-//    using engine: Box.Engine,
-//    position: Box.PositionContext
-//  ) -> Part {
-//    switch engine.theme.frameStyle {
-//      case .single: singleFrameParts()
-//      case .double: doubleFrameParts()
-//      case .notebook: notebookParts(position: position)
-//    }  // END switch
-//  }
 }
 
 extension StringStack {
@@ -62,22 +49,12 @@ extension StringStack {
     from glyphStack: Box.GlyphStack,
     with theme: Box.Theme,
   ) {
-    //    print("Making StringStack from GlyphStack / and Theme \(theme)")
-    //    printPadded(
-    //      "Glyphstack width (widest row): \(glyphStack.width(for: .widestRow))",
-    //      "Glyphstack rows: \(glyphStack.rows)"
-    //    )
     /// Convert from `GlyphType` → `Character`
     let characterGrid = glyphStack.map { row in
-      //      print("Processing row \(row)")
       return row.map {
-        let char = theme.glyphSet.character(for: $0)
-        //        print("Character: \(char)")
-        return char
+        return theme.glyphSet.character(for: $0)
       }
     }
-    //    print("Character Grid: \(characterGrid)")
-
     self.init(characterGrid)
   }
 
