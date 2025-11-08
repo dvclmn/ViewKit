@@ -21,32 +21,24 @@ extension Box {
 extension Box {
   public struct Top: Component, Codable {
     public init() {}
-    public func makeLines() -> ComponentOutput { Line. }
-//    public func makeLines() -> ComponentOutput { [LineType.structure(.top)] }
+    public func makeLines() -> ComponentOutput { [Line.create(.structure(.top))] }
+    //    public func makeLines() -> ComponentOutput { [LineType.structure(.top)] }
   }
 
   public struct Divider: Component, Codable {
     public init() {}
-    public func makeLines() -> ComponentOutput { [LineType.structure(.divider)] }
+    public func makeLines() -> ComponentOutput { [Line.create(.structure(.divider))] }
   }
 
   public struct Bottom: Component, Codable {
     public init() {}
-    public func makeLines() -> ComponentOutput { [LineType.structure(.bottom)] }
+    public func makeLines() -> ComponentOutput { [Line.create(.structure(.bottom))] }
   }
 
   public struct Text: Component, Codable {
     let content: String
     public init(_ content: String) { self.content = content }
-
-    public func makeLines() -> ComponentOutput {
-      let textLine = Box.TextLine(
-        .vertical(.leading),
-        content,
-        .vertical(.trailing)
-      )
-      return [Box.LineType.text(textLine)]
-    }
+    public func makeLines() -> ComponentOutput { [Line.create(.text(content))] }
   }
 
   public struct Header: Component, Codable {

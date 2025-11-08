@@ -11,7 +11,6 @@ extension Box.Line {
     switch type {
       case .text(let content): createTextLine(content)
       case .structure(let type): createStructureLine(type)
-//      case .customPart(let part): Box.Line(part, leading: <#T##Box.PartType#>, trailing: <#T##Box.PartType#>)
     }
   }
 
