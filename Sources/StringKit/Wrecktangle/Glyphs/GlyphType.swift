@@ -8,9 +8,9 @@
 import EnumMacros
 import Foundation
 
-public typealias Glyph = Box.GlyphType
+//public typealias Glyph = Box.GlyphType
 
-extension Box {
+//extension Box {
 
   /// The building block used by ``Box/PartType``.
   /// Refers to a *single character* (glyph) only.
@@ -21,40 +21,40 @@ extension Box {
   /// ```
   /// Horizontal: ━, ─, ︶, ┄
   /// ```
-  @MetaEnum
-  @CaseDetection
-  public enum GlyphType: Hashable, Sendable, Codable {
+//  @MetaEnum
+//  @CaseDetection
+//  public enum GlyphType: Hashable, Sendable, Codable {
+//
+//    case horizontal(GlyphProminence)
+//    case vertical(GlyphProminence)
+//
+//    case join(
+//      x: GlyphProminence,
+//      y: GlyphProminence,
+//      type: JoinType
+//    )
+//
+//    case corner(GlyphProminence, type: CornerType)
+//    case blank
+//
+//    case literal(Character)
+//  }
+//}
 
-    case horizontal(GlyphProminence)
-    case vertical(GlyphProminence)
-
-    case join(
-      x: GlyphProminence,
-      y: GlyphProminence,
-      type: JoinType
-    )
-
-    case corner(GlyphProminence, type: CornerType)
-    case blank
-
-    case literal(Character)
-  }
-}
-
-extension Box.GlyphType {
-  var name: String {
-    switch self {
-      case .horizontal: "Horizontal"
-      case .vertical: "Vertical"
-      case .join(_, _, let type): "Join.\(type.rawValue)"
-      case .corner(_, let type): "Corner.\(type.rawValue)"
-      case .blank: "Blank"
-      case .literal(let character): "Literal: \(character)"
-    }
-  }
-}
-extension Box.GlyphType: CustomStringConvertible {
-  public var description: String { name }
-}
+//extension Box.GlyphType {
+//  var name: String {
+//    switch self {
+//      case .horizontal: "Horizontal"
+//      case .vertical: "Vertical"
+//      case .join(_, _, let type): "Join.\(type.rawValue)"
+//      case .corner(_, let type): "Corner.\(type.rawValue)"
+//      case .blank: "Blank"
+//      case .literal(let character): "Literal: \(character)"
+//    }
+//  }
+//}
+//extension Box.GlyphType: CustomStringConvertible {
+//  public var description: String { name }
+//}
 
 

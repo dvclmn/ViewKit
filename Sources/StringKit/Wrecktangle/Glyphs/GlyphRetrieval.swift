@@ -6,14 +6,10 @@
 //
 
 extension Box {
-  public typealias GlyphMap = [Box.GlyphType: Character]
+//  public typealias GlyphMap = [Box.GlyphType: Character]
+  public typealias GlyphMap = [GlyphDescriptor: Character]
 }
 
-/// You’ve already got a really clean fallback mechanism (partial + base).
-/// If you ever want more fine-grained control, one improvement might be to
-/// model fallback resolution via a simple protocol rather than a manual switch.
-
-/// That is, you could move character(for:) into a protocol like:
 protocol GlyphProvider {
   func character(
     for type: Box.GlyphType,
@@ -21,10 +17,6 @@ protocol GlyphProvider {
   ) -> Character
 }
 
-/// Then make both `GlyphMap` and `GlyphSet` conform, so `GlyphSet`
-/// can compose multiple sources more generically.
-/// It’s almost the same logic — but it means `GlyphSet` could later be composed
-/// dynamically from multiple sources, like a theme stack, not just nested `.partial`
 extension Box.GlyphSet: GlyphProvider {
   func character(
     for type: Box.GlyphType,

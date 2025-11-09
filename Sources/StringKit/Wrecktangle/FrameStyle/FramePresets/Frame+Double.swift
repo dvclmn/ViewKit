@@ -22,7 +22,7 @@ extension Box.FrameStyle {
         Glyph.horizontal(.standard)
       }
 
-      //      // MARK: - Horizontal
+      // MARK: - Vertical
       Part(.vertical(.leading)) {
         Row {
           Glyph.vertical(.increased)

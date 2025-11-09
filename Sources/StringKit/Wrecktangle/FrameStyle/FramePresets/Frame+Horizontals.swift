@@ -14,6 +14,4 @@ extension Box.FrameStyle {
       Part(.horizontal(.interior)) { Glyph.horizontal(.standard) }
     }
   }
-  
-  
 }

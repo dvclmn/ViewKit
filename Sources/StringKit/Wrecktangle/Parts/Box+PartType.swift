@@ -11,8 +11,6 @@ import SwiftUI
 
 extension Box {
 
-  public typealias PartMap = [Box.PartType: Box.Part]
-
   /// A `PartType` is a composition of `GlyphType`s.
   @CaseDetection
   public enum PartType: Hashable, Codable, Sendable {

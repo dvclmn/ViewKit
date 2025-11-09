@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 3/11/2025.
 //
 
-
 extension Box {
   /// The output of a ``Box/PartType``.
   ///

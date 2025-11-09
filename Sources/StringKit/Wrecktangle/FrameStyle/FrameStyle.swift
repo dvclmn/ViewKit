@@ -11,6 +11,8 @@ public typealias Frame = Box.FrameStyle
 
 extension Box {
 
+  public typealias PartMap = [Box.PartType: Box.Part]
+  
   public struct FrameStyle: Sendable, Codable, Equatable {
     var parts: PartMap = [:]
 
