@@ -7,11 +7,12 @@
 
 extension Box.Glyph {
   static var thinJoins: [Self] {
-    Glyph("┬", .join(.top))
-    Glyph("┴", .join(.bottom))
-    Glyph("├", .join(.leading))
-    Glyph("┤", .join(.trailing))
-    Glyph("┼", .join(.cross))
-
+    [
+      Glyph("┬", .join(.top)),
+      Glyph("┴", .join(.bottom)),
+      Glyph("├", .join(.leading)),
+      Glyph("┤", .join(.trailing)),
+      Glyph("┼", .join(.cross)),
+    ]
   }
 }

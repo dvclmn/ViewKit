@@ -39,7 +39,7 @@ extension Box.PartType {
     position: Box.PositionContext
   ) -> Box.Part {
     let frameStyle = engine.theme.frameStyle
-    let fallback = Part(.blank) { Row { Glyph.blank } }
+    let fallback = Part(.blank) { Row { GlyphType.blank } }
     return frameStyle.part(for: self) ?? fallback
   }
 }

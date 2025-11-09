@@ -9,8 +9,6 @@ import Foundation
 
 /// Having this as an array seems neccesary really only for the Header
 /// (at this point), as it needs to
-//public typealias ComponentOutput = [Box.LineType]
-//public typealias ComponentOutput = [StringStack]
 public typealias ComponentOutput = [Box.Line]
 
 extension Box {

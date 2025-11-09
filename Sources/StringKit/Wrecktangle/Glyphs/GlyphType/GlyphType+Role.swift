@@ -16,7 +16,7 @@ extension Box.GlyphType {
 }
 
 extension Box.GlyphType.Role {
-  init(fromPartType partType: Box.PartType) {
+  public init(fromPartType partType: Box.PartType) {
     switch partType {
       case .horizontal(_): self = .horizontal
       case .vertical(_): self = .vertical

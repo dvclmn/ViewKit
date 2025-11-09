@@ -21,6 +21,8 @@ extension Box.GlyphSet {
       Glyph("╮", .corner(.topTrailing))
       Glyph("╰", .corner(.bottomLeading))
       Glyph("╯", .corner(.bottomTrailing))
+      
+      Glyph.thinJoins
     }
   }
 //    style: .rounded,
