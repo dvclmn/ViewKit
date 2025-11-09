@@ -5,11 +5,14 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
+import EnumMacros
+
 extension Box {
 
   /// Important: This partly exists because we need to somehow
   /// have an intermediate step between PartType and StringStack.
   /// Because Builder Components can't carry engine / row index context
+  @AssociatedValues
   public enum LineType: Hashable, Sendable {
 
     /// Important: This `content` represents the bulk/raw

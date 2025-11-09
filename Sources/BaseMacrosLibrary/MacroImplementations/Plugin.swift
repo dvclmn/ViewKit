@@ -15,6 +15,7 @@ struct BaseMacrosPlugin: CompilerPlugin {
 //    SampleBuilderMacro.self,
 //    SampleBuilderItemMacro.self,
 //    AttributeMacro.self,
+    AssociatedValuesMacro.self,
     CaseDetectionMacro.self,
     MetaEnumMacro.self,
     SetOfOptionsMacro.self,

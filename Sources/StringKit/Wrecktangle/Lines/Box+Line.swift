@@ -48,16 +48,10 @@ extension Box {
     }
   }
 
-  enum LineCap {
+  enum LinePart {
     case leading
+    case repeater
     case trailing
-
-    var keyPath: KeyPath<Box.Line, PartType> {
-      switch self {
-        case .leading: \.leading
-        case .trailing: \.trailing
-      }
-    }
   }
 }
 
@@ -99,8 +93,6 @@ extension Box.Line {
       along: .horizontal
     )
 
-    //    var stacks: [StringStack] = []
-
     let stacks = textLines.map { line -> StringStack in
       defer { rowIndex += 1 }
 
@@ -123,30 +115,6 @@ extension Box.Line {
         along: .horizontal
       )
     }
-
-    //    for textLine in textLines {
-    //      let pos = Box.PositionContext(i: rowIndex, rowCount: 0)
-    //      rowIndex += 1
-    //
-    //      let numbers = StringStack(engine.rowNumbers(for: pos))
-    //
-    //      let leading = leading.buildPart(using: engine, pos: pos)
-    //      let trailing = trailing.buildPart(using: engine, pos: pos)
-    //
-    //      let stackText = StringStack(textLine)
-    //
-    //      let lineStack = StringStack.joined(
-    //        numbers,
-    //        leading,
-    //        padding,
-    //        stackText,
-    //        padding,
-    //        trailing,
-    //        along: .horizontal
-    //      )
-    //      stacks.append(lineStack)
-    //    }
-
     return stacks
   }
 }
@@ -162,11 +130,10 @@ extension Box.Line {
     at position: Box.PositionContext
   ) -> [StringStack] {
 
-    let lead = stack(for: .leading, pos: position)
-    //    let lead = leading.buildPart(using: engine, pos: position)
-    let trail = trailing.buildPart(using: engine, pos: position)
-    let repeated = repeater.buildPart(
-      using: engine,
+    let leading = stack(.leading, pos: position)
+    let trailing = stack(.trailing, pos: position)
+    let repeater = stack(
+      .repeater,
       pos: position,
       span: .fill
     )
@@ -174,9 +141,9 @@ extension Box.Line {
 
     let stack = StringStack.joined(
       numbers,
-      lead,
-      repeated,
-      trail,
+      leading,
+      repeater,
+      trailing,
       along: .horizontal
     )
     return [stack]
@@ -186,11 +153,24 @@ extension Box.Line {
 // MARK: - Small helpers
 extension Box.Line {
   private func stack(
-    _ cap: Box.LineCap,
+    _ part: Box.LinePart,
     pos position: Box.PositionContext,
     span: Box.PartSpan = .single,
   ) -> StringStack {
-    self[keyPath: cap.keyPath].buildPart(using: engine, pos: position, span: span)
+
+    let linePart: Box.PartType = {
+      switch part {
+        case .leading: return self.leading
+        case .repeater:
+          guard let repeater = self.body.repeaterValue else {
+            fatalError("Do not try to access `LineType.text` for a Structure-type Line.")
+          }
+          return repeater
+        case .trailing: return self.trailing
+      }
+    }()
+
+    return linePart.buildPart(using: engine, pos: position, span: span)
   }
 }
 

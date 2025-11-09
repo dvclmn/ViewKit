@@ -1,6 +1,18 @@
 import EnumMacros
 import Foundation
 
+// MARK: - Associated Values
+
+/// Synthesises an `OptionSet` to accompany the `enum`
+/// Note: The `struct` is a requirement
+@AssociatedValues
+enum CoolPlants {
+  case fern(Int)
+  case cactus(String)
+  case orchid
+}
+
+
 // MARK: - Case detection
 @CaseDetection
 enum ExampleEnum {
