@@ -7,18 +7,18 @@
 
 public typealias GlyphSet = Box.GlyphSet
 extension Box {
-  public typealias GlyphMap = [GlyphDescriptor: Character]
+  public typealias GlyphMap = [GlyphType: Character]
 }
 
 extension Box {
 
   public struct GlyphSet: Codable, Equatable, Sendable {
-    public var design: GlyphDescriptor.Design
+    public var design: GlyphType.Design
     public var map: GlyphMap
     public var fallback: GlyphSetReference?
 
     public init(
-      _ design: GlyphDescriptor.Design,
+      _ design: GlyphType.Design,
       fallback: Self? = nil,
       @GlyphSetBuilder _ map: () -> GlyphMap,
     ) {
@@ -33,7 +33,7 @@ extension Box {
     }
 
     public init(
-      design: GlyphDescriptor.Design,
+      design: GlyphType.Design,
       map: GlyphMap,
       fallback: GlyphSetReference? = nil
     ) {
@@ -46,12 +46,12 @@ extension Box {
 
 extension Box.GlyphSet {
   public func resolve(
-    _ desc: Box.GlyphDescriptor
+    _ desc: Box.GlyphType
   ) -> Character {
     map[desc] ?? fallback?.wrapped.resolve(desc) ?? "🫥"
   }
 }
 
 enum GlyphDesignContext {
-  @TaskLocal static var currentDesign: Box.GlyphDescriptor.Design?
+  @TaskLocal static var currentDesign: Box.GlyphType.Design?
 }

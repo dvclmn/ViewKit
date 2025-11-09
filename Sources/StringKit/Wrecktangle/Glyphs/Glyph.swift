@@ -11,7 +11,7 @@ extension Box {
   /// This should be what is visible *within* the `GlyphSet` builder
   /// ```
   /// GlyphSet {
-  ///    Glyph("┌", .horizontal, .standard, .sharp): "─",)
+  ///    Glyph("┌", .horizontal, .standard, .sharp)
   /// }
   /// ```
   ///
@@ -22,25 +22,24 @@ extension Box {
 
     public init(
       _ character: Character,
-      _ role: Box.GlyphDescriptor.Role,
-      weight: Box.GlyphDescriptor.Prominence = .standard,
-      design: Box.GlyphDescriptor.Design = .sharp
+      _ role: Box.GlyphType.Role,
+      weight: Box.GlyphType.Prominence = .standard,
+      design: Box.GlyphType.Design = .sharp
     ) {
       self.character = character
-      self.descriptor = GlyphDescriptor(role, weight: weight, design: design)
+      self.descriptor = GlyphType(role, weight: weight, design: design)
     }
 
     public init(
       _ character: Character,
-      _ role: Box.GlyphDescriptor.Role,
-      x: Box.GlyphDescriptor.ProminenceType = .standard,
-      y: Box.GlyphDescriptor.ProminenceType = .standard,
-      //      weight: Box.GlyphDescriptor.Prominence = .standard,
-      design: Box.GlyphDescriptor.Design = .sharp
+      _ role: Box.GlyphType.Role,
+      x: Box.GlyphType.ProminenceType = .standard,
+      y: Box.GlyphType.ProminenceType = .standard,
+      design: Box.GlyphType.Design = .sharp
     ) {
       self.character = character
-      self.descriptor = GlyphDescriptor(role, x: x, y: y, design: <#T##Box.GlyphDescriptor.Design#>)
-//      self.descriptor = GlyphDescriptor(role, weight: weight, design: design)
+      self.descriptor = GlyphType(role, x: x, y: y, design: <#T##Box.GlyphType.Design#>)
+      //      self.descriptor = GlyphType(role, weight: weight, design: design)
     }
   }
 

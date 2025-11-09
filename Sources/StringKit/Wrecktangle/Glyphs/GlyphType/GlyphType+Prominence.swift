@@ -7,7 +7,7 @@
 
 //public typealias Prominence = Box.GlyphProminence
 
-extension Box.GlyphDescriptor {
+extension Box.GlyphType {
 
   public struct Prominence: Sendable, Codable, Hashable {
     let x: ProminenceType
@@ -31,7 +31,7 @@ extension Box.GlyphDescriptor {
     case increased
   }
 }
-extension Box.GlyphDescriptor.Prominence {
+extension Box.GlyphType.Prominence {
   public static let standard = Self(x: .standard, y: .standard)
   public static let increased = Self(x: .increased, y: .increased)
 }

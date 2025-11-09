@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 9/11/2025.
 //
 
-extension Box.GlyphDescriptor {
+extension Box.GlyphType {
 
-  func withoutStyle() -> Box.GlyphDescriptor {
+  func withoutStyle() -> Box.GlyphType {
     var copy = self
     /// or `.none`?
     copy.design = .sharp

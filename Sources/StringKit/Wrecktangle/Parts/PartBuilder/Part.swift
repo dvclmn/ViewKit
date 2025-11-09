@@ -8,7 +8,9 @@
 import Foundation
 
 public typealias Part = Box.Part
+
 extension Box {
+  public typealias GlyphStack = [[GlyphType]]
 
   public struct Part: Sendable, Codable, Equatable {
     let type: PartType
@@ -53,7 +55,7 @@ extension Box.Part {
     weight: GlyphType.Prominence = .standard,
     design: GlyphType.Design = .sharp
   ) {
-    let role = Box.GlyphDescriptor.Role(fromPartType: type)
+    let role = Box.GlyphType.Role(fromPartType: type)
     let glyph = GlyphType(role, weight: weight, design: design)
   }
 }

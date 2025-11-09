@@ -23,7 +23,6 @@ extension Box {
 }
 
 extension Box.PartType {
-
   public enum HorizontalLocation: String, Hashable, Codable, Sendable {
     case top
     case bottom

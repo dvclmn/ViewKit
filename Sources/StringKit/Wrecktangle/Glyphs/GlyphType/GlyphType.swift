@@ -7,12 +7,6 @@
 
 import Foundation
 
-/// Hoping to rename so that `GlyphDef` (if it ends up working)
-/// will become `Glyph`, and `GlyphDescriptor` will
-/// become something else.
-
-public typealias GlyphType = Box.GlyphDescriptor
-
 extension Box {
 
   /// The building block used by ``Box/PartType``.
@@ -22,7 +16,7 @@ extension Box {
   ///
   /// This was previously the `GlyphType` enum, with
   /// horizontal, vertical, join, corner, blank and literal
-  public struct GlyphDescriptor: Hashable, Codable, Sendable {
+  public struct GlyphType: Hashable, Codable, Sendable {
     var role: Role
     var weight: Prominence
     var design: Design
@@ -47,31 +41,10 @@ extension Box {
       self.weight = Prominence(x: x, y: y)
       self.design = design
     }
-
   }
 }
 
-extension Box.GlyphDescriptor {
-
-  public enum Role: Hashable, Codable, Sendable {
-    case horizontal
-    case vertical
-    case corner(Box.CornerType)
-    case join(Box.JoinType)
-    case blank
-  }
-
-  public enum Design: String, Sendable, Hashable, Codable {
-    case sharp
-    case rounded
-
-    /// Example: `╔═`
-    /// Named `hollow` to disabiguate from Frame's `double`
-    case hollow
-  }
-}
-
-extension Box.GlyphDescriptor.Role {
+extension Box.GlyphType.Role {
   init(fromPartType partType: Box.PartType) {
     switch partType {
       case .horizontal(_): self = .horizontal
