@@ -30,7 +30,7 @@ public struct StringStack: GridShaped {
 
 // MARK: - Convenience Initialisers
 extension StringStack {
- 
+
   public init(_ string: String) {
     self.init(stringLiteral: string)
   }
@@ -44,7 +44,7 @@ extension StringStack {
 
   public var rows: [String] { cells.map { String($0) } }
   public var string: String { rows.joined("\n") }
-  
+
 }
 
 extension StringStack: ExpressibleByUnicodeScalarLiteral {

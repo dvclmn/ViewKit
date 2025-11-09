@@ -15,6 +15,9 @@ extension Box {
   /// This is strictly a Three-Part Line. Will need to introduce
   /// a new type/system to support e.g. multi-column Boxes
   public struct Line {
+    
+    let engine: Box.Engine
+    
     let leading: PartType
     let body: LineType
     let trailing: PartType
@@ -23,21 +26,25 @@ extension Box {
     public init(
       _ textContent: String,
       leading: PartType,
-      trailing: PartType
+      trailing: PartType,
+      using engine: Box.Engine
     ) {
       self.leading = leading
       self.body = .text(textContent)
       self.trailing = trailing
+      self.engine = engine
     }
 
     public init(
       _ repeater: PartType,
       leading: PartType,
-      trailing: PartType
+      trailing: PartType,
+      using engine: Box.Engine
     ) {
       self.leading = leading
       self.body = .repeater(repeater)
       self.trailing = trailing
+      self.engine = engine
     }
   }
 }
@@ -72,7 +79,6 @@ extension Box.Line {
     let textLines = TextReflow(
       content,
       width: engine.width(for: .text),
-      shouldHyphenate: true
     ).reflowed()
 
     var stacks: [StringStack] = []
@@ -86,7 +92,11 @@ extension Box.Line {
       let leading = leading.buildPart(using: engine, pos: pos)
       let trailing = trailing.buildPart(using: engine, pos: pos)
 
-      let padding = StringStack(repeating: " ", count: engine.theme.padding.width, along: .horizontal)
+      let padding = StringStack(
+        repeating: " ",
+        count: engine.theme.padding.width,
+        along: .horizontal
+      )
       let stackText = StringStack(textLine)
 
       let lineStack = StringStack.joined(
@@ -133,6 +143,15 @@ extension Box.Line {
       along: .horizontal
     )
     return [stack]
+  }
+}
+
+// MARK: - Small helpers
+extension Box.Line {
+  private func stack(
+    for type: Box.PartType
+  ) -> StringStack {
+    type.buildPart(using: <#T##Box.Engine#>, pos: <#T##Box.PositionContext#>, span: <#T##Box.PartSpan#>)
   }
 }
 
