@@ -22,10 +22,10 @@ extension Box {
       _ character: Character,
       _ role: Box.GlyphDescriptor.Role,
       weight: Box.GlyphDescriptor.Prominence = .standard,
-      style: Box.GlyphDescriptor.Design = .sharp
+      design: Box.GlyphDescriptor.Design = .sharp
     ) {
       self.character = character
-      self.descriptor = GlyphDescriptor(role, weight, style)
+      self.descriptor = GlyphDescriptor(role, weight: weight, design: design)
     }
   }
 }

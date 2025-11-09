@@ -21,3 +21,11 @@ enum FrameBuilder {
     component ?? [:]
   }
 }
+
+protocol PartMapConvertible {
+  func asPartMap() -> Box.PartMap
+}
+
+extension Box.GlyphDescriptor: PartMapConvertible {
+  func asPartMap() -> Box.PartMap {  }
+}

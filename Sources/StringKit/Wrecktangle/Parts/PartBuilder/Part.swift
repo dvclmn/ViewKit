@@ -13,6 +13,11 @@ extension Box {
   public struct Part: Sendable, Codable, Equatable {
     let type: PartType
     let glyphs: GlyphStack
+    
+    init(type: Box.PartType, glyphs: [GlyphType]) {
+      self.type = type
+      self.glyphs = [glyphs]
+    }
 
     init(
       _ type: Box.PartType,
@@ -23,6 +28,34 @@ extension Box {
         content()
       }
     }
+  }
+}
+
+extension Box.Part {
+  /// Handy overload for when there's only one Row,
+  /// and one Glyph in that Row. For very simplistic Frames.
+  ///
+  /// ```
+  /// // Instead of this:
+  /// Frame {
+  ///   Part(.horizontal(.top)) {
+  ///     GlyphType.h(.increased, .hollow)
+  ///   }
+  /// }
+  ///
+  /// // We can write this:
+  /// Frame {
+  ///   Part(.horizontal(.top), weight: .increased, style: .hollow)
+  /// }
+  /// ```
+  public init(
+    _ type: Box.PartType,
+    weight: GlyphType.Prominence = .standard,
+    design: GlyphType.Design = .sharp
+  ) {
+    let role = Box.GlyphDescriptor.Role(fromPartType: type)
+    
+    let glyph = GlyphType(role, weight, design)
   }
 }
 

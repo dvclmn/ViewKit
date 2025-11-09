@@ -9,9 +9,15 @@ extension Box.FrameStyle {
 
   public static var horizontals: Self {
     Frame {
-      Part(.horizontal(.top)) { Glyph.h(.increased, .hollow) }
-      Part(.horizontal(.interior)) { Glyph.h(.standard, .sharp) }
-      Part(.horizontal(.bottom)) { Glyph.h(.increased, .sharp) }
+      Part(.horizontal(.top)) {
+        GlyphType.h(.increased, .hollow)
+      }
+      Part(.horizontal(.interior)) {
+        GlyphType.h(.standard, .sharp)
+      }
+      Part(.horizontal(.bottom)) {
+        GlyphType.h(.increased, .sharp)
+      }
     }
   }
 }

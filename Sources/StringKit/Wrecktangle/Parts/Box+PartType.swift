@@ -70,3 +70,20 @@ extension Box.PartType: CustomStringConvertible {
     return "Part/\(name)"
   }
 }
+
+//extension Box.PartType {
+//  init(fromGlyphRole role: Box.GlyphDescriptor.Role) {
+//    switch role {
+//      case .horizontal:
+//        <#code#>
+//      case .vertical:
+//        <#code#>
+//      case .corner(let cornerType):
+//        <#code#>
+//      case .join(let joinType):
+//        <#code#>
+//      case .blank:
+//        <#code#>
+//    }
+//  }
+//}

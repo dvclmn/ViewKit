@@ -6,6 +6,7 @@
 //
 
 public typealias SetRef = Box.GlyphSetReference
+public typealias GlyphSet = Box.GlyphSet
 extension Box {
   public typealias GlyphMap = [GlyphDescriptor: Character]
 }
@@ -16,6 +17,24 @@ extension Box {
     public var style: GlyphDescriptor.Design
     public var map: GlyphMap
     public var fallback: GlyphSetReference?
+
+    public init(
+      _ style: GlyphDescriptor.Design,
+      fallback: Self? = nil,
+      //      fallback: GlyphSetReference? = nil,
+      @GlyphSetBuilder _ map: () -> GlyphMap,
+
+      //      map: GlyphMap,
+      //      fallback: GlyphSetReference? = nil
+    ) {
+      self.style = style
+      if let fallback {
+        self.fallback = SetRef(fallback)
+      } else {
+        self.fallback = nil
+      }
+      self.map = map()
+    }
 
     public init(
       style: GlyphDescriptor.Design,
@@ -35,6 +54,10 @@ extension Box.GlyphSet {
   ) -> Character {
     map[desc] ?? fallback?.wrapped.resolve(desc) ?? "🫥"
   }
+}
+
+enum GlyphDesignContext {
+  @TaskLocal static var currentDesign: Box.GlyphDescriptor.Design?
 }
 //
 //  /// A `GlyphSet` can either be a `base` set, or a `partial`set.

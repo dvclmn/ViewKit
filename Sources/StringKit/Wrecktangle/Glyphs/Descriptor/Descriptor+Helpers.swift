@@ -10,47 +10,47 @@ extension Box.GlyphDescriptor {
   func withoutStyle() -> Box.GlyphDescriptor {
     var copy = self
     /// or `.none`?
-    copy.style = .sharp
+    copy.design = .sharp
     return copy
   }
 
   static func h(
     _ weight: Prominence = .standard,
-    _ style: Design = .sharp
+    _ design: Design = .sharp
   ) -> Self {
-    Self(.horizontal, weight, style)
+    Self(.horizontal, weight: weight, design: design)
   }
 
   static func v(
     _ weight: Prominence = .standard,
-    _ style: Design = .sharp
+    _ design: Design = .sharp
   ) -> Self {
-    Self(.vertical, weight, style)
+    Self(.vertical, weight: weight, design: design)
   }
 
   static func join(
     x: ProminenceType = .standard,
     y: ProminenceType = .standard,
-    _ style: Design = .sharp
+    _ design: Design = .sharp
   ) -> Self {
     guard case .join(let joinType)? = PartContext.currentType else {
       fatalError("join(x:y:) used outside a join Part")
     }
-    return Self(.join(joinType), x: x, y: y, style)
+    return Self(.join(joinType), x: x, y: y, design: design)
   }
 
   static func corner(
     _ weight: Prominence = .standard,
-    _ style: Design = .sharp
+    _ design: Design = .sharp
   ) -> Self {
     guard case .corner(let cornerType)? = PartContext.currentType else {
       fatalError("corner(_:) used outside a corner Part")
     }
     //          return .corner(prominence, type: cornerType)
-    return Self(.corner(cornerType), .standard, style)
+    return Self(.corner(cornerType), weight: .standard, design: design)
   }
 
   static var blank: Self {
-    Self(.blank, .standard, .sharp)
+    Self(.blank, weight: .standard, design: .sharp)
   }
 }

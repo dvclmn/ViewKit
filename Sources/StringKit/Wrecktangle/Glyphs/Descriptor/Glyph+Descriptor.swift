@@ -25,27 +25,27 @@ extension Box {
   public struct GlyphDescriptor: Hashable, Codable, Sendable {
     var role: Role
     var weight: Prominence
-    var style: Design
+    var design: Design
 
     public init(
       _ role: Role,
-      _ weight: Prominence = .standard,
-      _ style: Design = .sharp
+      weight: Prominence = .standard,
+      design: Design = .sharp
     ) {
       self.role = role
       self.weight = weight
-      self.style = style
+      self.design = design
     }
-    
+
     public init(
       _ role: Role,
       x: ProminenceType = .standard,
       y: ProminenceType = .standard,
-      _ style: Design = .sharp
+      design: Design = .sharp
     ) {
       self.role = role
       self.weight = Prominence(x: x, y: y)
-      self.style = style
+      self.design = design
     }
 
   }
@@ -64,9 +64,21 @@ extension Box.GlyphDescriptor {
   public enum Design: String, Sendable, Hashable, Codable {
     case sharp
     case rounded
-    
+
     /// Example: `╔═`
     /// Named `hollow` to disabiguate from Frame's `double`
     case hollow
+  }
+}
+
+extension Box.GlyphDescriptor.Role {
+  init(fromPartType partType: Box.PartType) {
+    switch partType {
+      case .horizontal(_): self = .horizontal
+      case .vertical(_): self = .vertical
+      case .join(let type): self = .join(type)
+      case .corner(let type): self = .corner(type)
+      case .blank: self = .blank
+    }
   }
 }
