@@ -24,10 +24,14 @@ extension Box {
       _ character: Character,
       _ role: Box.GlyphType.Role,
       weight: Box.GlyphType.Prominence = .standard,
-      design: Box.GlyphType.Design = .sharp
+//      design: Box.GlyphType.Design = .sharp
+//      design explicitDesign: Box.GlyphType.Design? = nil
+      design: Box.GlyphType.Design? = nil
     ) {
       self.character = character
-      self.descriptor = GlyphType(role, weight: weight, design: design)
+//      let inferredDesign = explicitDesign ?? GlyphDesignContext.currentDesign ?? .sharp
+//      self.descriptor = GlyphType(role, weight: weight, design: inferredDesign)
+      self.descriptor = .fromRole(role, weight: weight, design: design)
     }
 
     public init(
@@ -35,11 +39,16 @@ extension Box {
       _ role: Box.GlyphType.Role,
       x: Box.GlyphType.ProminenceType = .standard,
       y: Box.GlyphType.ProminenceType = .standard,
-      design: Box.GlyphType.Design = .sharp
+//      design: Box.GlyphType.Design = .sharp
+//      design explicitDesign: Box.GlyphType.Design? = nil
+      design: Box.GlyphType.Design? = nil
     ) {
-      self.character = character
-      self.descriptor = GlyphType(role, x: x, y: y, design: <#T##Box.GlyphType.Design#>)
-      //      self.descriptor = GlyphType(role, weight: weight, design: design)
+      self.init(
+        character,
+        role,
+        weight: GlyphType.Prominence(x: x, y: y),
+        design: design
+      )
     }
   }
 

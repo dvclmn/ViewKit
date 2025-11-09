@@ -27,5 +27,5 @@ protocol PartMapConvertible {
 }
 
 extension Box.GlyphType: PartMapConvertible {
-  func asPartMap() -> Box.PartMap {  }
+  func asPartMap() -> Box.PartMap {}
 }

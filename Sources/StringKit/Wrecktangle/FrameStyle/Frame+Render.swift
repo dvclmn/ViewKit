@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 9/11/2025.
 //
 
+#warning("Is this needed?")
 extension Box {
   public struct FrameRenderer {
     let set: GlyphSet

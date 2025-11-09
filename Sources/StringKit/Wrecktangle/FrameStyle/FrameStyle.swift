@@ -16,13 +16,14 @@ extension Box {
   public struct FrameStyle: Sendable, Codable, Equatable {
     var parts: PartMap = [:]
 
+    public init(@FrameBuilder _ content: () -> PartMap) {
+      self.parts = content()
+    }
+
     public init(parts: PartMap) {
       self.parts = parts
     }
 
-    public init(@FrameBuilder _ content: () -> PartMap) {
-      self.parts = content()
-    }
   }
 }
 

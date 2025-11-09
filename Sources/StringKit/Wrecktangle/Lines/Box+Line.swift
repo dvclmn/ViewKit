@@ -11,6 +11,7 @@ extension Box {
   /// a new type/system to support e.g. multi-column Boxes
   public struct Line {
 
+    #warning("Consider whether engine in here makes sense, should probably be owned / passed in via function sig?")
     let engine: Box.Engine
 
     let leading: PartType

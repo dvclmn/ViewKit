@@ -7,6 +7,15 @@
 
 extension Box.GlyphType {
 
+  static func fromRole(
+    _ role: Role,
+    weight: Prominence = .standard,
+    design: Design? = nil
+  ) -> Self {
+    let resolvedDesign = design ?? GlyphDesignContext.currentDesign ?? .sharp
+    return .init(role, weight: weight, design: resolvedDesign)
+  }
+
   func withoutStyle() -> Box.GlyphType {
     var copy = self
     /// or `.none`?
@@ -33,7 +42,7 @@ extension Box.GlyphType {
     y: ProminenceType = .standard,
     _ design: Design = .sharp
   ) -> Self {
-    guard case .join(let joinType)? = PartContext.currentType else {
+    guard case .join(let joinType)? = Box.PartContext.currentType else {
       fatalError("join(x:y:) used outside a join Part")
     }
     return Self(.join(joinType), x: x, y: y, design: design)
@@ -43,7 +52,7 @@ extension Box.GlyphType {
     _ weight: Prominence = .standard,
     _ design: Design = .sharp
   ) -> Self {
-    guard case .corner(let cornerType)? = PartContext.currentType else {
+    guard case .corner(let cornerType)? = Box.PartContext.currentType else {
       fatalError("corner(_:) used outside a corner Part")
     }
     //          return .corner(prominence, type: cornerType)

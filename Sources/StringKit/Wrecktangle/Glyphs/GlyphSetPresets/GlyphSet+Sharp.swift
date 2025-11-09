@@ -12,8 +12,8 @@ extension Box.GlyphSet {
       Glyph.blank
       
       // MARK: - Floor/Ceiling
-      Glyph("━", .horizontal, weight: .increased)
-      Glyph("─", .horizontal)
+      Glyph("━", .horizontal, weight: .increased, design: .sharp)
+      Glyph("─", .horizontal, design: .sharp)
       
       
       
