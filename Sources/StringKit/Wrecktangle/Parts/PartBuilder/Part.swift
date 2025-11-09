@@ -87,8 +87,10 @@ extension Box.Part {
 ///   Glyph.join(x: .increased, y: .standard)
 /// }
 /// ```
-enum PartContext {
-  @TaskLocal static var currentType: Box.PartType?
+extension Box {
+  enum PartContext {
+    @TaskLocal static var currentType: Box.PartType?
+  }
 }
 
 extension Part: CustomStringConvertible {

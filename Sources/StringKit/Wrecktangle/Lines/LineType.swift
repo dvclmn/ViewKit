@@ -14,10 +14,6 @@ extension Box {
   /// Because Builder Components can't carry engine / row index context
   @AssociatedValues
   public enum LineType: Hashable, Sendable {
-
-    /// Important: This `content` represents the bulk/raw
-    /// text content, *before* any width-aware reflowing.
-    /// This operation is performed later.
     case text(String)
     case repeater(PartType)
   }

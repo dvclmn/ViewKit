@@ -13,5 +13,16 @@ extension Box.GlyphType {
     case join(Box.JoinType)
     case blank
   }
+}
 
+extension Box.GlyphType.Role {
+  init(fromPartType partType: Box.PartType) {
+    switch partType {
+      case .horizontal(_): self = .horizontal
+      case .vertical(_): self = .vertical
+      case .join(let type): self = .join(type)
+      case .corner(let type): self = .corner(type)
+      case .blank: self = .blank
+    }
+  }
 }

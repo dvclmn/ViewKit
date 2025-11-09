@@ -7,11 +7,6 @@
 
 extension Box {
 
-  /// Curious to see whether I *need* `LineType` to
-  /// fully express all the stuff, or whether I can just construct
-  /// any Line based on any parts, given a StringStack-based
-  /// approach, rather than PartType / String mix
-
   /// This is strictly a Three-Part Line. Will need to introduce
   /// a new type/system to support e.g. multi-column Boxes
   public struct Line {
