@@ -7,37 +7,38 @@
 
 import Foundation
 
+@MainActor
 extension Box.GlyphSet {
   
-  static let sharp = GlyphSet(
+  static let sharp = Self(
     style: .sharp,
     map: [
-      .init(.horizontal, .standard, .sharp): "─",
-      .init(.horizontal, .increased, .sharp): "━",
-      .init(.corner(.topLeading), .standard, .sharp): "┌",
-      .init(.corner(.bottomTrailing), .standard, .sharp): "┘",
+      Glyph(.horizontal, .standard, .sharp): "─",
+      Glyph(.horizontal, .increased, .sharp): "━",
+      Glyph(.corner(.topLeading), .standard, .sharp): "┌",
+      Glyph(.corner(.bottomTrailing), .standard, .sharp): "┘",
     ]
   )
   
-  static let rounded = GlyphSet(
+  static let rounded = Self(
     style: .rounded,
     map: [
-      .init(.corner(.topLeading), .standard, .rounded): "╭",
-      .init(.corner(.bottomTrailing), .standard, .rounded): "╯",
+      Glyph(.corner(.topLeading), .standard, .rounded): "╭",
+      Glyph(.corner(.bottomTrailing), .standard, .rounded): "╯",
       // NB: Rounded box drawing chars are all light; no increased-weight variants exist.
     ],
-    fallback: .init(.sharp) // fallback to sharp for anything not covered
+    fallback: SetRef(.sharp) // fallback to sharp for anything not covered
   )
   
-  static let double = GlyphSet(
+  static let double = Self(
     style: .double,
     map: [
-      .init(.horizontal, .standard, .double): "═",
-      .init(.vertical, .standard, .double): "║",
-      .init(.corner(.topLeading), .standard, .double): "╔",
-      .init(.corner(.bottomTrailing), .standard, .double): "╝",
+      Glyph(.horizontal, .standard, .double): "═",
+      Glyph(.vertical, .standard, .double): "║",
+      Glyph(.corner(.topLeading), .standard, .double): "╔",
+      Glyph(.corner(.bottomTrailing), .standard, .double): "╝",
     ],
-    fallback: .init(.sharp)
+    fallback: SetRef(.sharp)
   )
 }
 

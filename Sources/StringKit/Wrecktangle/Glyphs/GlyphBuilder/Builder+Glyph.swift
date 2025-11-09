@@ -10,10 +10,10 @@ enum GlyphBuilder {
   static func buildBlock(_ glyphs: Glyph...) -> [Glyph] { glyphs }
 }
 
-func roundedWeightyGlyphs(@GlyphBuilder _ content: () -> [Glyph]) -> [Character] {
-  let set = Box.GlyphSets.rounded
-  return content().map(set.resolve)
-}
+//func roundedWeightyGlyphs(@GlyphBuilder _ content: () -> [Glyph]) -> [Character] {
+//  let set = Box.GlyphSets.rounded
+//  return content().map(set.resolve)
+//}
 
 
 //@resultBuilder

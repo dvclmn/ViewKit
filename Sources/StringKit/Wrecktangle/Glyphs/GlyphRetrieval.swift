@@ -10,34 +10,38 @@
 //  
 //}
 
-protocol GlyphProvider {
-  func character(
-    for type: Glyph,
-    with fallback: Character
-  ) -> Character
-}
+//protocol GlyphProvider {
+//  func character(
+//    for type: Glyph,
+//    with fallback: Character
+//  ) -> Character
+//}
 
-extension Box.GlyphSet: GlyphProvider {
-  func character(
-    for type: Glyph,
-    with fallbackCharacter: Character = "🐶"
-  ) -> Character {
-    
-    guard !type.isLiteral else {
-      let literalChar: Character? = switch type {
-        case .literal(let character): character
-        default: nil
-      }
-      return literalChar ?? fallbackCharacter
-    }
-    return switch self {
-      case .base(let map):
-        map[type]
-          ?? map[optionalKey: type.prominenceAlt]
-          ?? fallbackCharacter
+//extension Box.GlyphSet: GlyphProvider {
+//  
+//  func character(
+//    for type: Glyph,
+//    with fallbackCharacter: Character = "🐶"
+//  ) -> Character {
+//    
+//    guard !type.isLiteral else {
+//      let literalChar: Character? = switch type {
+//        case .literal(let character): character
+//        default: nil
+//      }
+//      return literalChar ?? fallbackCharacter
+//    }
+//    return switch self {
+//      case .base(let map):
+//        map[type]
+//          ?? map[optionalKey: type.prominenceAlt]
+//          ?? fallbackCharacter
+//
+//      case .partial(let glyphMap, let fallback):
+//        glyphMap[type] ?? fallback.character(for: type)
+//    }
+//  }
+//}
 
-      case .partial(let glyphMap, let fallback):
-        glyphMap[type] ?? fallback.character(for: type)
-    }
-  }
-}
+
+

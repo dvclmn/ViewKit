@@ -56,20 +56,20 @@ enum PartContext {
   @TaskLocal static var currentType: Box.PartType?
 }
 
-extension Box.GlyphType {
-  static func join(x: Box.GlyphProminence, y: Box.GlyphProminence) -> Self {
-    guard case .join(let joinType)? = PartContext.currentType else {
-      fatalError("join(x:y:) used outside a join Part")
-    }
-    return .join(x: x, y: y, type: joinType)
-  }
-
-  static func corner(_ prominence: Box.GlyphProminence) -> Self {
-    guard case .corner(let cornerType)? = PartContext.currentType else {
-      fatalError("corner(_:) used outside a corner Part")
-    }
-    return .corner(prominence, type: cornerType)
-  }
+extension Box.GlyphDescriptor {
+  //  static func join(x: Glyph.Prominence, y: Glyph.Prominence) -> Self {
+  //    guard case .join(let joinType)? = PartContext.currentType else {
+  //      fatalError("join(x:y:) used outside a join Part")
+  //    }
+  //    return .join(x: x, y: y, type: joinType)
+  //  }
+  //
+  //  static func corner(_ prominence: Glyph.Prominence) -> Self {
+  //    guard case .corner(let cornerType)? = PartContext.currentType else {
+  //      fatalError("corner(_:) used outside a corner Part")
+  //    }
+  //    return .corner(prominence, type: cornerType)
+  //  }
 }
 
 // MARK: - Part Span

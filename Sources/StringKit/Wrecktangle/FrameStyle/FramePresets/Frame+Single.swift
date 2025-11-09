@@ -9,13 +9,13 @@ extension Box.FrameStyle {
 
   public static var single: Self {
     Frame {
-      Part(.horizontal(.top)) { Glyph.horizontal(.increased) }
-      Part(.horizontal(.interior)) { Glyph.horizontal(.standard) }
-      Part(.horizontal(.bottom)) { Glyph.horizontal(.increased) }
+      Part(.horizontal(.top)) { Glyph.h(.increased) }
+      Part(.horizontal(.interior)) { Glyph.h(.standard) }
+      Part(.horizontal(.bottom)) { Glyph.h(.increased) }
 
-      Part(.vertical(.leading)) { Glyph.vertical(.increased) }
-      Part(.vertical(.interior)) { Glyph.vertical(.standard) }
-      Part(.vertical(.trailing)) { Glyph.vertical(.increased) }
+      Part(.vertical(.leading)) { Glyph.v(.increased) }
+      Part(.vertical(.interior)) { Glyph.v(.standard) }
+      Part(.vertical(.trailing)) { Glyph.v(.increased) }
       
       Part(.join(.leading)) { Glyph.join(x: .increased, y: .standard) }
       Part(.join(.trailing)) { Glyph.join(x: .increased, y: .standard) }

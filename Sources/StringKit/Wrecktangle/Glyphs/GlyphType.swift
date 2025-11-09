@@ -8,7 +8,10 @@
 import EnumMacros
 import Foundation
 
-
+/// Previous approach, and migration steps:
+///
+/// - `GlyphType` was an enum, with H, V, join, corner, blank and literal
+/// - Has now evolved to struct `GlyphDescriptor`
 
 //extension Box {
 

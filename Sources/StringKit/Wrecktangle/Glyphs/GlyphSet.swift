@@ -5,17 +5,18 @@
 //  Created by Dave Coleman on 12/9/2024.
 //
 
+public typealias SetRef = Box.GlyphSetReference
 extension Box {
   public typealias GlyphMap = [GlyphDescriptor: Character]
 }
 
 extension Box {
-  
-  public struct GlyphSet {
+
+  public struct GlyphSet: Codable, Equatable {
     public var style: GlyphDescriptor.Style
     public var map: GlyphMap
     public var fallback: GlyphSetReference?
-    
+
     public init(
       style: GlyphDescriptor.Style,
       map: GlyphMap,
@@ -25,14 +26,19 @@ extension Box {
       self.map = map
       self.fallback = fallback
     }
-    
   }
-  
-  public final class GlyphSetReference {
+
+  public final class GlyphSetReference: Codable {
     public var wrapped: GlyphSet
     public init(_ wrapped: GlyphSet) { self.wrapped = wrapped }
   }
-  
+
+}
+
+extension Box.GlyphSetReference: Equatable {
+  public static func == (lhs: Box.GlyphSetReference, rhs: Box.GlyphSetReference) -> Bool {
+    lhs.wrapped == rhs.wrapped
+  }
 }
 
 extension Box.GlyphSet {

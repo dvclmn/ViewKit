@@ -6,12 +6,12 @@
 //
 
 extension Box.FrameStyle {
-  
+
   public static var horizontals: Self {
     Frame {
-      Part(.horizontal(.top)) { Glyph.horizontal(.increased) }
-      Part(.horizontal(.bottom)) { Glyph.horizontal(.increased) }
-      Part(.horizontal(.interior)) { Glyph.horizontal(.standard) }
+      Part(.horizontal(.top)) { Glyph.h(.increased, .hollow) }
+      Part(.horizontal(.interior)) { Glyph.h(.standard, .sharp) }
+      Part(.horizontal(.bottom)) { Glyph.h(.increased, .sharp) }
     }
   }
 }
