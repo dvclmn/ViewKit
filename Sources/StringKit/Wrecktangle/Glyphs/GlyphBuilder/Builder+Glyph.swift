@@ -6,8 +6,12 @@
 //
 
 @resultBuilder
-enum GlyphBuilder {
-  static func buildBlock(_ glyphs: Glyph...) -> [Glyph] { glyphs }
+enum GlyphSetBuilder {
+  static func buildBlock(_ glyphs: Glyph...) -> Box.GlyphMap {
+    Dictionary(uniqueKeysWithValues: glyphs.map { ($0.descriptor, $0.character) })
+//    glyphs
+  }
+//  static func buildBlock(_ glyphs: Glyph...) -> [Glyph] { glyphs }
 }
 
 //func roundedWeightyGlyphs(@GlyphBuilder _ content: () -> [Glyph]) -> [Character] {

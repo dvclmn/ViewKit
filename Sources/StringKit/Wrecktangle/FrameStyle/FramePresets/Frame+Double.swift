@@ -9,35 +9,35 @@ extension Box.FrameStyle {
   public static var double: Self {
     Frame {
       Part(.horizontal(.top)) {
-        Row { Glyph.h(.increased) }
-        Row { Glyph.h(.standard) }
+        Row { GlyphType.h(.increased) }
+        Row { GlyphType.h(.standard) }
       }
 
       Part(.horizontal(.bottom)) {
-        Row { Glyph.h(.standard) }
-        Row { Glyph.h(.increased) }
+        Row { GlyphType.h(.standard) }
+        Row { GlyphType.h(.increased) }
       }
       Part(.horizontal(.interior)) {
-        Glyph.h(.standard)
+        GlyphType.h(.standard)
       }
 
       // MARK: - Vertical
       Part(.vertical(.leading)) {
         Row {
-          Glyph.v(.increased)
-          Glyph.blank
-          Glyph.v(.standard)
+          GlyphType.v(.increased)
+          GlyphType.blank
+          GlyphType.v(.standard)
         }
       }
       Part(.vertical(.trailing)) {
         Row {
-          Glyph.v(.standard)
-          Glyph.blank
-          Glyph.v(.increased)
+          GlyphType.v(.standard)
+          GlyphType.blank
+          GlyphType.v(.increased)
         }
       }
       Part(.vertical(.interior)) {
-        Glyph.v(.standard)
+        GlyphType.v(.standard)
       }
 
     }  // END Frame

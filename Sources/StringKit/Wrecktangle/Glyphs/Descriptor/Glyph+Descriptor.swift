@@ -10,7 +10,8 @@ import Foundation
 /// Hoping to rename so that `GlyphDef` (if it ends up working)
 /// will become `Glyph`, and `GlyphDescriptor` will
 /// become something else.
-public typealias Glyph = Box.GlyphDescriptor
+public typealias Glyph = Box.Glyph
+public typealias GlyphType = Box.GlyphDescriptor
 
 extension Box {
 

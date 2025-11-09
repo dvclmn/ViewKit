@@ -7,29 +7,6 @@
 
 import Foundation
 
-extension Box.GlyphSet {
-
-  public static let rounded = Self(
-    style: .rounded,
-    map: [
-      Glyph(.corner(.topLeading), .standard, .rounded): "╭",
-      Glyph(.corner(.bottomTrailing), .standard, .rounded): "╯",
-        // NB: Rounded box drawing chars are all light; no increased-weight variants exist.
-    ],
-    fallback: SetRef(.sharp)  // fallback to sharp for anything not covered
-  )
-
-  public static let hollow = Self(
-    style: .hollow,
-    map: [
-      Glyph(.horizontal, .standard, .hollow): "═",
-      Glyph(.vertical, .standard, .hollow): "║",
-      Glyph(.corner(.topLeading), .standard, .hollow): "╔",
-      Glyph(.corner(.bottomTrailing), .standard, .hollow): "╝",
-    ],
-    fallback: SetRef(.sharp)
-  )
-}
 
 /// This attempts to describe a glyph based on it's usage,
 /// rather than neccesarily it's appearance / visual qualitites

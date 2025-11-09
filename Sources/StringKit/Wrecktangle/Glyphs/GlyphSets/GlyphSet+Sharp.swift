@@ -10,10 +10,10 @@ extension Box.GlyphSet {
   public static let sharp = Self(
     style: .sharp,
     map: [
-      Glyph(.horizontal, .standard, .sharp): "─",
-      Glyph(.horizontal, .increased, .sharp): "━",
-      Glyph(.corner(.topLeading), .standard, .sharp): "┌",
-      Glyph(.corner(.bottomTrailing), .standard, .sharp): "┘",
+      GlyphType(.horizontal, .standard, .sharp): "─",
+      GlyphType(.horizontal, .increased, .sharp): "━",
+      GlyphType(.corner(.topLeading), .standard, .sharp): "┌",
+      GlyphType(.corner(.bottomTrailing), .standard, .sharp): "┘",
     ]
   )
 

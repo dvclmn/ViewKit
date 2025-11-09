@@ -8,23 +8,24 @@
 import Foundation
 
 // MARK: - Part Builders
+typealias RowComponent = Box.GlyphDescriptor
 
 @resultBuilder
 enum RowBuilder {
-  static func buildBlock(_ components: [Glyph]...) -> [Glyph] {
+  static func buildBlock(_ components: [RowComponent]...) -> [RowComponent] {
     components.flatMap { $0 }
   }
 
-  static func buildEither(first: [Glyph]) -> [Glyph] { first }
-  static func buildEither(second: [Glyph]) -> [Glyph] { second }
+  static func buildEither(first: [RowComponent]) -> [RowComponent] { first }
+  static func buildEither(second: [RowComponent]) -> [RowComponent] { second }
 
-  static func buildOptional(_ component: [Glyph]?) -> [Glyph] {
+  static func buildOptional(_ component: [RowComponent]?) -> [RowComponent] {
     component ?? []
   }
 }
 
 extension RowBuilder {
-  static func buildExpression(_ expression: Glyph) -> [Glyph] {
+  static func buildExpression(_ expression: RowComponent) -> [RowComponent] {
     [expression]
   }
 }

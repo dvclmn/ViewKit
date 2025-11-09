@@ -14,9 +14,9 @@ extension Box {
   /// ```
   ///
   /// I think this essentially provides a slightly nicer wrapper around `GlyphMap`
-  public struct GlyphDef {
+  public struct Glyph {
     let character: Character
-    let descriptor: Glyph
+    let descriptor: GlyphType
 
     public init(
       _ character: Character,
