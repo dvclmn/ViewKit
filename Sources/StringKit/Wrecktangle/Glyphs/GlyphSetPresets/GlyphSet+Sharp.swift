@@ -6,57 +6,49 @@
 //
 
 extension Box.GlyphSet {
-  
+
   public static var sharp: Self {
     GlyphSet(.sharp) {
+
       Glyph.blank
-      
+
       // MARK: - Floor/Ceiling
-      Glyph("━", .horizontal, weight: .increased, design: .sharp)
-      Glyph("─", .horizontal, design: .sharp)
-      
-      
-      
+      Glyph("━", .horizontal, weight: .increased)
+      Glyph("─", .horizontal)
+
       // MARK: - Walls
       Glyph("┃", .vertical, weight: .increased)
       Glyph("│", .vertical)
-      
-      Glyph("┯", .join(.top), x: .increased)
-      
+
       // MARK: - Bold to Thin Joins
-      Glyph.join(x: .increased, y: .standard, type: .top): "┯",
-      Glyph.join(x: .increased, y: .standard, type: .bottom): "┷",
-      Glyph.join(x: .standard, y: .increased, type: .leading): "┠",
-      Glyph.join(x: .standard, y: .increased, type: .trailing): "┨",
-      Glyph.join(x: .standard, y: .increased, type: .cross): "╂",
-      
+      Glyph("┯", .join(.top), x: .increased)
+      Glyph("┷", .join(.bottom), x: .increased)
+      Glyph("┠", .join(.leading), y: .increased)
+      Glyph("┨", .join(.trailing), y: .increased)
+      Glyph("╂", .join(.cross), y: .increased)
+
       // MARK: - Bold Joins
-      Glyph.join(x: .increased, y: .increased, type: .top): "┳",
-      Glyph.join(x: .increased, y: .increased, type: .bottom): "┻",
-      Glyph.join(x: .increased, y: .increased, type: .leading): "┣",
-      Glyph.join(x: .increased, y: .increased, type: .trailing): "┫",
-      Glyph.join(x: .increased, y: .increased, type: .cross): "╋",
-      
+      Glyph("┳", .join(.top), x: .increased, y: .increased)
+      Glyph("┻", .join(.bottom), x: .increased, y: .increased)
+      Glyph("┣", .join(.leading), x: .increased, y: .increased)
+      Glyph("┫", .join(.trailing), x: .increased, y: .increased)
+      Glyph("╋", .join(.cross), x: .increased, y: .increased)
+
       // MARK: - Thin Joins
-      Glyph.join(x: .standard, y: .standard, type: .top): "┬",
-      Glyph.join(x: .standard, y: .standard, type: .bottom): "┴",
-      Glyph.join(x: .standard, y: .standard, type: .leading): "├",
-      Glyph.join(x: .standard, y: .standard, type: .trailing): "┤",
-      Glyph.join(x: .standard, y: .standard, type: .cross): "┼",
-      
+
       // MARK: - Bold Corners
-      Glyph.corner(.increased, type: .topLeading): "┏",
-      Glyph.corner(.increased, type: .topTrailing): "┓",
-      Glyph.corner(.increased, type: .bottomLeading): "┗",
-      Glyph.corner(.increased, type: .bottomTrailing): "┛",
-      
+      Glyph("┏", .corner(.topLeading), weight: .increased)
+      Glyph("┓", .corner(.topTrailing), weight: .increased)
+      Glyph("┗", .corner(.bottomLeading), weight: .increased)
+      Glyph("┛", .corner(.bottomTrailing), weight: .increased)
+
       // MARK: - Thin Corners
-      Glyph.corner(.standard, type: .topLeading): "┌",
-      Glyph.corner(.standard, type: .topTrailing): "┐",
-      Glyph.corner(.standard, type: .bottomLeading): "└",
-      Glyph.corner(.standard, type: .bottomTrailing): "┘",
-    }
-    
-  }
-  
+      Glyph("┌", .corner(.topLeading))
+      Glyph("┐", .corner(.topTrailing))
+      Glyph("└", .corner(.bottomLeading))
+      Glyph("┘", .corner(.bottomTrailing))
+    }  // END set
+
+  }  // END sharp preset
+
 }

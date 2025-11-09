@@ -9,7 +9,18 @@ extension Box.GlyphSet {
 //  wqdqkqef
   public static var rounded: Self {
     GlyphSet(.rounded) {
-      Glyph(<#T##character: Character##Character#>, <#T##role: Box.GlyphDescriptor.Role##Box.GlyphDescriptor.Role#>, weight: <#T##Box.GlyphDescriptor.Prominence#>, design: <#T##Box.GlyphDescriptor.Design#>)
+//      Glyph.horizontal(.increased): "─",
+//      Glyph.horizontal(.standard): "─",
+//      
+//      // MARK: - Walls
+//      Glyph.vertical(.increased): "│",
+//      Glyph.vertical(.standard): "│",
+//      
+//      
+      Glyph("╭", .corner(.topLeading))
+      Glyph("╮", .corner(.topTrailing))
+      Glyph("╰", .corner(.bottomLeading))
+      Glyph("╯", .corner(.bottomTrailing))
     }
   }
 //    style: .rounded,
