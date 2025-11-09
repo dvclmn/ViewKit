@@ -24,16 +24,6 @@ extension Box {
 
 extension Box.PartType {
 
-  var name: String {
-    switch self {
-      case .horizontal(let loc): "horizontal/\(loc.rawValue)"
-      case .vertical(let loc): "vertical/\(loc.rawValue)"
-      case .join(let joinType): "join/\(joinType.rawValue)"
-      case .corner(let cornerType): "corner/\(cornerType.rawValue)"
-      case .blank: "blank"
-    }
-  }
-
   public enum HorizontalLocation: String, Hashable, Codable, Sendable {
     case top
     case bottom
@@ -65,25 +55,21 @@ extension Box {
   }
 }
 
+extension Box.PartType {
+  var name: String {
+    switch self {
+      case .horizontal(let loc): "horizontal/\(loc.rawValue)"
+      case .vertical(let loc): "vertical/\(loc.rawValue)"
+      case .join(let joinType): "join/\(joinType.rawValue)"
+      case .corner(let cornerType): "corner/\(cornerType.rawValue)"
+      case .blank: "blank"
+    }
+  }
+
+}
+
 extension Box.PartType: CustomStringConvertible {
   public var description: String {
     return "Part/\(name)"
   }
 }
-
-//extension Box.PartType {
-//  init(fromGlyphRole role: Box.GlyphDescriptor.Role) {
-//    switch role {
-//      case .horizontal:
-//        <#code#>
-//      case .vertical:
-//        <#code#>
-//      case .corner(let cornerType):
-//        <#code#>
-//      case .join(let joinType):
-//        <#code#>
-//      case .blank:
-//        <#code#>
-//    }
-//  }
-//}
