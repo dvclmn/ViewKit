@@ -9,40 +9,41 @@ extension Box.FrameStyle {
 
   public static var single: Self {
     Frame {
-      Part(.horizontal(.top)) { Glyph.h(.increased) }
-      Part(.horizontal(.interior)) { Glyph.h(.standard) }
-      Part(.horizontal(.bottom)) { Glyph.h(.increased) }
+      Part(.horizontal(.top), weight: .increased)
+      Part(.horizontal(.interior))
 
-      Part(.vertical(.leading)) { Glyph.v(.increased) }
-      Part(.vertical(.interior)) { Glyph.v(.standard) }
-      Part(.vertical(.trailing)) { Glyph.v(.increased) }
-      
-      Part(.join(.leading)) { Glyph.join(x: .increased, y: .standard) }
-      Part(.join(.trailing)) { Glyph.join(x: .increased, y: .standard) }
-      Part(.join(.top)) { Glyph.join(x: .increased, y: .standard) }
-      Part(.join(.bottom)) { Glyph.join(x: .increased, y: .standard) }
-      Part(.join(.cross)) { Glyph.join(x: .increased, y: .standard) }
-      
-      Part(.corner(.topTrailing)) { Glyph.corner(.increased) }
+      Part(.horizontal(.bottom)) { GlyphType.h(.increased) }
 
-//      Part(.join(.leading)) {
-//        Glyph.join(
-//          x: .standard,
-//          y: .increased,
-//        )
-//      }
-//      Part {
-//        Glyph.join(
-//          x: .increased,
-//          y: .standard,
-//        )
-//      }
-//      Part {
-//        Glyph.join(
-//          x: .standard,
-//          y: .standard,
-//        )
-//      }
+      Part(.vertical(.leading)) { GlyphType.v(.increased) }
+      Part(.vertical(.interior)) { GlyphType.v(.standard) }
+      Part(.vertical(.trailing)) { GlyphType.v(.increased) }
+
+      Part(.join(.leading)) { GlyphType.join(x: .increased, y: .standard) }
+      Part(.join(.trailing)) { GlyphType.join(x: .increased, y: .standard) }
+      Part(.join(.top)) { GlyphType.join(x: .increased, y: .standard) }
+      Part(.join(.bottom)) { GlyphType.join(x: .increased, y: .standard) }
+      Part(.join(.cross)) { GlyphType.join(x: .increased, y: .standard) }
+
+      Part(.corner(.topTrailing)) { GlyphType.corner(.increased) }
+
+      //      Part(.join(.leading)) {
+      //        Glyph.join(
+      //          x: .standard,
+      //          y: .increased,
+      //        )
+      //      }
+      //      Part {
+      //        Glyph.join(
+      //          x: .increased,
+      //          y: .standard,
+      //        )
+      //      }
+      //      Part {
+      //        Glyph.join(
+      //          x: .standard,
+      //          y: .standard,
+      //        )
+      //      }
     }
   }
 }

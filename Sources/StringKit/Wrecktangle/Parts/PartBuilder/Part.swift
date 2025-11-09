@@ -54,8 +54,7 @@ extension Box.Part {
     design: GlyphType.Design = .sharp
   ) {
     let role = Box.GlyphDescriptor.Role(fromPartType: type)
-    
-    let glyph = GlyphType(role, weight, design)
+    let glyph = GlyphType(role, weight: weight, design: design)
   }
 }
 

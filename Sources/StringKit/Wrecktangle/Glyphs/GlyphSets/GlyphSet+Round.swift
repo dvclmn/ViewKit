@@ -6,8 +6,12 @@
 //
 
 extension Box.GlyphSet {
-  wqdqkqef
-//  public static let rounded = Self(
+//  wqdqkqef
+  public static var rounded: Self {
+    GlyphSet(.rounded) {
+      Glyph(<#T##character: Character##Character#>, <#T##role: Box.GlyphDescriptor.Role##Box.GlyphDescriptor.Role#>, weight: <#T##Box.GlyphDescriptor.Prominence#>, design: <#T##Box.GlyphDescriptor.Design#>)
+    }
+  }
 //    style: .rounded,
 //    map: [
 //      Glyph(.corner(.topLeading), .standard, .rounded): "╭",
