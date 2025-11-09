@@ -23,7 +23,7 @@ extension Box.FrameStyle {
       Part(.join(.bottom)) { Glyph.join(x: .increased, y: .standard) }
       Part(.join(.cross)) { Glyph.join(x: .increased, y: .standard) }
       
-      Part(.corner(.topTrailing)) { Box.GlyphType.corner(.increased) }
+      Part(.corner(.topTrailing)) { Glyph.corner(.increased) }
 
 //      Part(.join(.leading)) {
 //        Glyph.join(

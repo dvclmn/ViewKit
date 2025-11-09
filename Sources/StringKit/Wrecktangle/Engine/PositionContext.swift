@@ -83,8 +83,8 @@ extension Box.PositionContext {
   
   /// Convenience to alternate glyphs vertically.
   func alternatingGlyph(
-    _ a: Box.GlyphType,
-    _ b: Box.GlyphType
+    _ a: Glyph,
+    _ b: Glyph
   ) -> Box.GlyphType {
     isEven ? a : b
   }

@@ -5,21 +5,21 @@
 //  Created by Dave Coleman on 31/10/2025.
 //
 
-extension Box {
+//extension Box {
 //  public typealias GlyphMap = [Box.GlyphType: Character]
-  public typealias GlyphMap = [GlyphDescriptor: Character]
-}
+//  
+//}
 
 protocol GlyphProvider {
   func character(
-    for type: Box.GlyphType,
+    for type: Glyph,
     with fallback: Character
   ) -> Character
 }
 
 extension Box.GlyphSet: GlyphProvider {
   func character(
-    for type: Box.GlyphType,
+    for type: Glyph,
     with fallbackCharacter: Character = "🐶"
   ) -> Character {
     

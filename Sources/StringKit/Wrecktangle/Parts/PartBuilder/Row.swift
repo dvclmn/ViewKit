@@ -9,25 +9,26 @@ import Foundation
 
 // MARK: - Row Structure
 struct Row {
-  let glyphs: [Box.GlyphType]
-  init(@RowBuilder _ content: () -> [Box.GlyphType]) {
+  let glyphs: [Glyph]
+  
+  init(@RowBuilder _ content: () -> [Glyph]) {
     self.glyphs = content()
   }
 }
 
 // MARK: - Row Convertible
 protocol RowConvertible {
-  func asGlyphRow() -> [Box.GlyphType]
+  func asGlyphRow() -> [Glyph]
 }
 
-extension Array: RowConvertible where Element == Box.GlyphType {
-  func asGlyphRow() -> [Box.GlyphType] { self }
+extension Array: RowConvertible where Element == Glyph {
+  func asGlyphRow() -> [Glyph] { self }
 }
 
-extension Box.GlyphType: RowConvertible {
-  func asGlyphRow() -> [Box.GlyphType] { [self] }
+extension Box.GlyphDescriptor: RowConvertible {
+  func asGlyphRow() -> [Glyph] { [self] }
 }
 
 extension Row: RowConvertible {
-  func asGlyphRow() -> [Box.GlyphType] { glyphs }
+  func asGlyphRow() -> [Glyph] { glyphs }
 }

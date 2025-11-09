@@ -8,7 +8,7 @@
 import EnumMacros
 import Foundation
 
-//public typealias Glyph = Box.GlyphType
+
 
 //extension Box {
 
