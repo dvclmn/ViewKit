@@ -12,7 +12,7 @@ extension Box {
 
 extension Box {
 
-  public struct GlyphSet: Codable, Equatable {
+  public struct GlyphSet: Codable, Equatable, Sendable {
     public var style: GlyphDescriptor.Style
     public var map: GlyphMap
     public var fallback: GlyphSetReference?
@@ -28,8 +28,8 @@ extension Box {
     }
   }
 
-  public final class GlyphSetReference: Codable {
-    public var wrapped: GlyphSet
+  public final class GlyphSetReference: Codable, Sendable {
+    public let wrapped: GlyphSet
     public init(_ wrapped: GlyphSet) { self.wrapped = wrapped }
   }
 
@@ -65,3 +65,4 @@ extension Box.GlyphSet {
 //    indirect case partial(GlyphMap, GlyphSet)
 //  }
 //}
+

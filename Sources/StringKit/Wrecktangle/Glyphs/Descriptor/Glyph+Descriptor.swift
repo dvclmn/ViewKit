@@ -25,20 +25,22 @@ extension Box {
       self.weight = weight
       self.style = style
     }
+    
+    public init(
+      _ role: Role,
+      x: ProminenceType = .standard,
+      y: ProminenceType = .standard,
+      _ style: Style = .sharp
+    ) {
+      self.role = role
+      self.weight = Prominence(x: x, y: y)
+      self.style = style
+    }
 
   }
 }
 
 extension Box.GlyphDescriptor {
-
-  /// Describes the visual weight / thickness of this glyph.
-  /// Usually used in conjunction with location/placement, to
-  /// create the desired effect, such as a bolder exterior
-  /// structure, and lighter interior.
-  public enum Prominence: Hashable, Sendable, Codable {
-    case standard
-    case increased
-  }
 
   public enum Role: Hashable, Codable, Sendable {
     case horizontal

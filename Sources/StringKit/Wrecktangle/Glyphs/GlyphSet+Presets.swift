@@ -7,10 +7,9 @@
 
 import Foundation
 
-@MainActor
 extension Box.GlyphSet {
-  
-  static let sharp = Self(
+
+  public static let sharp = Self(
     style: .sharp,
     map: [
       Glyph(.horizontal, .standard, .sharp): "─",
@@ -19,29 +18,28 @@ extension Box.GlyphSet {
       Glyph(.corner(.bottomTrailing), .standard, .sharp): "┘",
     ]
   )
-  
-  static let rounded = Self(
+
+  public static let rounded = Self(
     style: .rounded,
     map: [
       Glyph(.corner(.topLeading), .standard, .rounded): "╭",
       Glyph(.corner(.bottomTrailing), .standard, .rounded): "╯",
-      // NB: Rounded box drawing chars are all light; no increased-weight variants exist.
+        // NB: Rounded box drawing chars are all light; no increased-weight variants exist.
     ],
-    fallback: SetRef(.sharp) // fallback to sharp for anything not covered
+    fallback: SetRef(.sharp)  // fallback to sharp for anything not covered
   )
-  
-  static let double = Self(
-    style: .double,
+
+  public static let hollow = Self(
+    style: .hollow,
     map: [
-      Glyph(.horizontal, .standard, .double): "═",
-      Glyph(.vertical, .standard, .double): "║",
-      Glyph(.corner(.topLeading), .standard, .double): "╔",
-      Glyph(.corner(.bottomTrailing), .standard, .double): "╝",
+      Glyph(.horizontal, .standard, .hollow): "═",
+      Glyph(.vertical, .standard, .hollow): "║",
+      Glyph(.corner(.topLeading), .standard, .hollow): "╔",
+      Glyph(.corner(.bottomTrailing), .standard, .hollow): "╝",
     ],
     fallback: SetRef(.sharp)
   )
 }
-
 
 /// This attempts to describe a glyph based on it's usage,
 /// rather than neccesarily it's appearance / visual qualitites

@@ -28,25 +28,25 @@ extension Box.GlyphDescriptor {
     Self(.vertical, weight, style)
   }
 
-  #warning("Join and Corner need prominence?")
   static func join(
-    _ type: Box.JoinType,
+    x: ProminenceType = .standard,
+    y: ProminenceType = .standard,
     _ style: Style = .sharp
   ) -> Self {
     guard case .join(let joinType)? = PartContext.currentType else {
       fatalError("join(x:y:) used outside a join Part")
     }
-    return Self(.join(joinType), .standard, style)
+    return Self(.join(joinType), x: x, y: y, style)
   }
 
   static func corner(
-    _ type: Box.CornerType,
+    _ weight: Prominence = .standard,
     _ style: Style = .sharp
   ) -> Self {
     guard case .corner(let cornerType)? = PartContext.currentType else {
-            fatalError("corner(_:) used outside a corner Part")
-          }
-//          return .corner(prominence, type: cornerType)
+      fatalError("corner(_:) used outside a corner Part")
+    }
+    //          return .corner(prominence, type: cornerType)
     return Self(.corner(cornerType), .standard, style)
   }
 

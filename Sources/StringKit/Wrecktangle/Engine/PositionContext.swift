@@ -85,7 +85,7 @@ extension Box.PositionContext {
   func alternatingGlyph(
     _ a: Glyph,
     _ b: Glyph
-  ) -> Box.GlyphType {
+  ) -> Glyph {
     isEven ? a : b
   }
 }

@@ -7,7 +7,34 @@
 
 //public typealias Prominence = Box.GlyphProminence
 
-//extension Box {
+extension Box.GlyphDescriptor {
+
+  public struct Prominence: Sendable, Codable, Hashable {
+    let x: ProminenceType
+    let y: ProminenceType
+
+    public init(
+      x: ProminenceType = .standard,
+      y: ProminenceType = .standard
+    ) {
+      self.x = x
+      self.y = y
+    }
+  }
+
+  /// Describes the visual weight / thickness of this glyph.
+  /// Usually used in conjunction with location/placement, to
+  /// create the desired effect, such as a bolder exterior
+  /// structure, and lighter interior.
+  public enum ProminenceType: Hashable, Sendable, Codable {
+    case standard
+    case increased
+  }
+}
+extension Box.GlyphDescriptor.Prominence {
+  public static let standard = Self(x: .standard, y: .standard)
+  public static let increased = Self(x: .increased, y: .increased)
+}
 //
 //  /// Describes the visual weight / thickness of this glyph.
 //  /// Usually used in conjunction with location/placement, to
@@ -29,7 +56,7 @@
 //}
 //
 //extension Box.GlyphType {
-//  
+//
 //  /// Returns a copy of this glyph type, with flipped Prominence
 //  var prominenceAlt: Box.GlyphType? {
 //    switch self {
@@ -46,7 +73,7 @@
 //        .join(x: x.alt, y: y.alt, type: type)
 //
 //      case .literal(let char): .literal(char)
-//        
+//
 //      case .blank: nil
 //    }
 //  }

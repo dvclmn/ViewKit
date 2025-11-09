@@ -52,7 +52,8 @@ extension StringStack {
     /// Convert from `GlyphType` → `Character`
     let characterGrid = glyphStack.map { row in
       return row.map {
-        return theme.glyphSet.character(for: $0)
+        return theme.glyphSet.resolve($0)
+//        return theme.glyphSet.character(for: $0)
       }
     }
     self.init(characterGrid)
