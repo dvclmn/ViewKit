@@ -51,22 +51,18 @@ extension Box.Line {
   ) -> [StringStack] {
     switch body {
       case .text(let content):
-        buildTextLines(
-          content,
-          using: engine,
-          startingAt: &rowIndex
-        )
+        return buildTextLines(content, using: engine, startingAt: &rowIndex)
       case .repeater(let part):
-        buildStructureLine(
-          part,
-          using: engine,
-          at: .init(i: rowIndex, rowCount: rowCount)
-        )
+        let pos = Box.PositionContext(i: rowIndex, rowCount: rowCount)
+        return buildStructureLine(part, using: engine, at: pos)
     }
   }
   // MARK: - Text Line
   /// Important: This differs to a Structure line, in that it returns
   /// an array (Rows) of lines, due to it handling multiple lines of text.
+  ///
+  /// Due to this, we give it a mutable row index, so that these nested
+  /// lines can update it and give a complete picture of the line count
   private func buildTextLines(
     _ content: String,
     using engine: Box.Engine,
@@ -87,8 +83,8 @@ extension Box.Line {
 
       let numbers = StringStack(engine.rowNumbers(for: pos))
 
-      let leading = leading.buildPart(using: engine, position: pos)
-      let trailing = trailing.buildPart(using: engine, position: pos)
+      let leading = leading.buildPart(using: engine, pos: pos)
+      let trailing = trailing.buildPart(using: engine, pos: pos)
 
       let padding = StringStack(repeating: " ", count: engine.theme.padding.width, along: .horizontal)
       let stackText = StringStack(textLine)
@@ -120,11 +116,11 @@ extension Box.Line {
     at position: Box.PositionContext
   ) -> [StringStack] {
 
-    let lead = leading.buildPart(using: engine, position: position)
-    let trail = trailing.buildPart(using: engine, position: position)
+    let lead = leading.buildPart(using: engine, pos: position)
+    let trail = trailing.buildPart(using: engine, pos: position)
     let repeated = repeater.buildPart(
       using: engine,
-      position: position,
+      pos: position,
       span: .fill
     )
     let numbers = StringStack(engine.rowNumbers(for: position))
@@ -136,9 +132,7 @@ extension Box.Line {
       trail,
       along: .horizontal
     )
-
     return [stack]
-
   }
 }
 

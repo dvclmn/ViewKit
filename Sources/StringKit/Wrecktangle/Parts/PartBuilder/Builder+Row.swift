@@ -9,7 +9,6 @@ import Foundation
 
 // MARK: - Part Builders
 
-
 @resultBuilder
 enum RowBuilder {
   static func buildBlock(_ components: [Glyph]...) -> [Glyph] {

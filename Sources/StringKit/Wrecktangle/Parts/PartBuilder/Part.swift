@@ -14,7 +14,10 @@ extension Box {
     let type: PartType
     let glyphs: GlyphStack
 
-    init(_ type: Box.PartType, @PartBuilder _ content: () -> Box.GlyphStack) {
+    init(
+      _ type: Box.PartType,
+      @PartBuilder _ content: () -> Box.GlyphStack
+    ) {
       self.type = type
       self.glyphs = PartContext.$currentType.withValue(type) {
         content()
@@ -24,9 +27,7 @@ extension Box {
 }
 
 extension Box.Part {
-
   var width: Int { glyphs.width(for: .widestRow) }
-
   func toStringStack(with theme: Box.Theme) -> StringStack {
     StringStack(from: glyphs, with: theme)
   }
@@ -54,32 +55,6 @@ extension Box.Part {
 /// ```
 enum PartContext {
   @TaskLocal static var currentType: Box.PartType?
-}
-
-extension Box.GlyphDescriptor {
-  //  static func join(x: Glyph.Prominence, y: Glyph.Prominence) -> Self {
-  //    guard case .join(let joinType)? = PartContext.currentType else {
-  //      fatalError("join(x:y:) used outside a join Part")
-  //    }
-  //    return .join(x: x, y: y, type: joinType)
-  //  }
-  //
-  //  static func corner(_ prominence: Glyph.Prominence) -> Self {
-  //    guard case .corner(let cornerType)? = PartContext.currentType else {
-  //      fatalError("corner(_:) used outside a corner Part")
-  //    }
-  //    return .corner(prominence, type: cornerType)
-  //  }
-}
-
-// MARK: - Part Span
-extension Box {
-  public enum PartSpan {
-    case fill
-    case fixed(Int)
-
-    public static var single: PartSpan { .fixed(1) }
-  }
 }
 
 extension Part: CustomStringConvertible {

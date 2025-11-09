@@ -14,7 +14,7 @@ extension Box.PartType {
   /// any additional repeating/joining required further down the pipeline.
   public func buildPart(
     using engine: Box.Engine,
-    position: Box.PositionContext,
+    pos position: Box.PositionContext,
     span: Box.PartSpan = .single,
   ) -> StringStack {
 
@@ -53,7 +53,6 @@ extension StringStack {
     let characterGrid = glyphStack.map { row in
       return row.map {
         return theme.glyphSet.resolve($0)
-//        return theme.glyphSet.character(for: $0)
       }
     }
     self.init(characterGrid)

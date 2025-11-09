@@ -38,7 +38,7 @@ public struct BoxView: View {
       }.plainText
     )
     .fixedSize(horizontal: true, vertical: false)
-    
+
     .gridSetup(.sfMono, fontSize: 13)
 
     .environment(\.isShowingGridGuide, false)
@@ -71,40 +71,48 @@ extension BoxView {
     VStack(spacing: 14) {
 
       BoxView {
-        Box.Header("Here is a Header Part.")
-        DummyContent.Strings.paragraphs[5].prefix(270).toString
+        Box.Header("Rounded GlyphSet, with header.")
+        "And FrameStyle set to Single."
+        DummyContent.Strings.paragraphs[5].prefix(110).toString
       }
-//      .environment(\.metrics, .lineNumbers)
-//      .environment(\.metrics, [])
+      //      .environment(\.metrics, .lineNumbers)
+      //      .environment(\.metrics, [])
       .setBoxStyle(
         glyphs: .rounded,
         frame: .single,
       )
-      
+
       BoxView {
-        
-        //        Box.Top()
-        
-        //        Box.Header("Hello, I'm a Header")
-        //
+        Box.Header("I have the Hollow style glyphs")
+        "I've got my FrameStyle set to Double."
+        DummyContent.Strings.paragraphs[5].prefix(120).toString
+      }
+      //      .environment(\.metrics, .lineNumbers)
+      //      .environment(\.metrics, [])
+      .setBoxStyle(
+        glyphs: .hollow,
+        frame: .double,
+      )
+
+      BoxView {
         Box.Header("I'm a header.")
-        DummyContent.Strings.paragraphs[6].prefix(320).toString
-        
-                Box.Divider()
+        DummyContent.Strings.paragraphs[6].prefix(120).toString
+
+//        Box.Divider()
         //                        "Last text sign-off"
         //                  Box.Bottom()
         //                          Box.Bottom()
         //                  Box.Bottom()
       }
-//      .environment(\.metrics, .lineNumbers)
+      //      .environment(\.metrics, .lineNumbers)
       .setBoxStyle(
         glyphs: .rounded,
         frame: .double,
       )
     }
-    
+
     .setGridFrame(36, alignment: .leading)
-   
+
   }
   .textSelection(.enabled)
   .monospaced()
