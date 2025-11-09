@@ -15,9 +15,9 @@ extension Box {
   /// This is strictly a Three-Part Line. Will need to introduce
   /// a new type/system to support e.g. multi-column Boxes
   public struct Line {
-    
+
     let engine: Box.Engine
-    
+
     let leading: PartType
     let body: LineType
     let trailing: PartType
@@ -47,21 +47,33 @@ extension Box {
       self.engine = engine
     }
   }
+
+  enum LineCap {
+    case leading
+    case trailing
+
+    var keyPath: KeyPath<Box.Line, PartType> {
+      switch self {
+        case .leading: \.leading
+        case .trailing: \.trailing
+      }
+    }
+  }
 }
 
 extension Box.Line {
 
   func buildStack(
-    using engine: Box.Engine,
+    //    using engine: Box.Engine,
     startingAt rowIndex: inout Int,
     rowCount: Int
   ) -> [StringStack] {
     switch body {
       case .text(let content):
-        return buildTextLines(content, using: engine, startingAt: &rowIndex)
+        return buildTextLines(content, startingAt: &rowIndex)
       case .repeater(let part):
         let pos = Box.PositionContext(i: rowIndex, rowCount: rowCount)
-        return buildStructureLine(part, using: engine, at: pos)
+        return buildStructureLine(part, at: pos)
     }
   }
   // MARK: - Text Line
@@ -72,7 +84,7 @@ extension Box.Line {
   /// lines can update it and give a complete picture of the line count
   private func buildTextLines(
     _ content: String,
-    using engine: Box.Engine,
+    //    using engine: Box.Engine,
     startingAt rowIndex: inout Int
   ) -> [StringStack] {
 
@@ -81,35 +93,59 @@ extension Box.Line {
       width: engine.width(for: .text),
     ).reflowed()
 
-    var stacks: [StringStack] = []
+    let padding = StringStack(
+      repeating: " ",
+      count: engine.theme.padding.width,
+      along: .horizontal
+    )
 
-    for textLine in textLines {
+    //    var stacks: [StringStack] = []
+
+    let stacks = textLines.map { line -> StringStack in
+      defer { rowIndex += 1 }
+
       let pos = Box.PositionContext(i: rowIndex, rowCount: 0)
-      rowIndex += 1
 
       let numbers = StringStack(engine.rowNumbers(for: pos))
 
-      let leading = leading.buildPart(using: engine, pos: pos)
-      let trailing = trailing.buildPart(using: engine, pos: pos)
+      let leading = stack(.leading, pos: pos)
+      let trailing = stack(.trailing, pos: pos)
 
-      let padding = StringStack(
-        repeating: " ",
-        count: engine.theme.padding.width,
-        along: .horizontal
-      )
-      let stackText = StringStack(textLine)
+      let text = StringStack(line)
 
-      let lineStack = StringStack.joined(
+      return .joined(
         numbers,
         leading,
         padding,
-        stackText,
+        text,
         padding,
         trailing,
         along: .horizontal
       )
-      stacks.append(lineStack)
     }
+
+    //    for textLine in textLines {
+    //      let pos = Box.PositionContext(i: rowIndex, rowCount: 0)
+    //      rowIndex += 1
+    //
+    //      let numbers = StringStack(engine.rowNumbers(for: pos))
+    //
+    //      let leading = leading.buildPart(using: engine, pos: pos)
+    //      let trailing = trailing.buildPart(using: engine, pos: pos)
+    //
+    //      let stackText = StringStack(textLine)
+    //
+    //      let lineStack = StringStack.joined(
+    //        numbers,
+    //        leading,
+    //        padding,
+    //        stackText,
+    //        padding,
+    //        trailing,
+    //        along: .horizontal
+    //      )
+    //      stacks.append(lineStack)
+    //    }
 
     return stacks
   }
@@ -122,11 +158,12 @@ extension Box.Line {
   /// be made up of more than one line of text.
   private func buildStructureLine(
     _ repeater: Box.PartType,
-    using engine: Box.Engine,
+    //    using engine: Box.Engine,
     at position: Box.PositionContext
   ) -> [StringStack] {
 
-    let lead = leading.buildPart(using: engine, pos: position)
+    let lead = stack(for: .leading, pos: position)
+    //    let lead = leading.buildPart(using: engine, pos: position)
     let trail = trailing.buildPart(using: engine, pos: position)
     let repeated = repeater.buildPart(
       using: engine,
@@ -149,9 +186,11 @@ extension Box.Line {
 // MARK: - Small helpers
 extension Box.Line {
   private func stack(
-    for type: Box.PartType
+    _ cap: Box.LineCap,
+    pos position: Box.PositionContext,
+    span: Box.PartSpan = .single,
   ) -> StringStack {
-    type.buildPart(using: <#T##Box.Engine#>, pos: <#T##Box.PositionContext#>, span: <#T##Box.PartSpan#>)
+    self[keyPath: cap.keyPath].buildPart(using: engine, pos: position, span: span)
   }
 }
 

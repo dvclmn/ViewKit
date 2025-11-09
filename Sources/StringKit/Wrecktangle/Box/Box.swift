@@ -35,7 +35,7 @@ extension Box {
 
   public var plainText: String {
     /// Flatten every component’s logical lines
-    let allLineTypes: [Box.Line] = allComponents.flatMap { $0.makeLines() }
+    let allLineTypes: [Box.Line] = allComponents.flatMap { $0.makeLines(using: engine) }
 
     /// Build *all* visual line stacks (including multi-line text expansion)
     var globalRowIndex = 0
