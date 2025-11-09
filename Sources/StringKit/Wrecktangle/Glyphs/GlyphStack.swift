@@ -6,18 +6,11 @@
 //
 
 extension Box {
-  /// The output of a ``Box/PartType``.
+  /// The output of a `Part`.
   ///
-  /// A 2D array of Glyphs. A Stack must have the same
-  /// number of Glyphs in each Row; aka equal number
-  /// of Characters per line. This allows a neat 'dimensions'
-  /// notation, like 3x2 and so on.
+  /// A 2D array of Glyphs. Is resolved to a `StringStack`,
+  /// which is a similar grid shape, but more primitive: `[[Character]]`
   ///
-  /// ```
-  /// 123
-  /// 456
-  ///
-  /// ```
   /// `GlyphStack`s are stitched together with other
   /// Stacks and characters, to form a cohesive whole.
   public typealias GlyphStack = [[Glyph]]

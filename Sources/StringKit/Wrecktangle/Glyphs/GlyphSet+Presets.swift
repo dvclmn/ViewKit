@@ -9,16 +9,6 @@ import Foundation
 
 extension Box.GlyphSet {
 
-  public static let sharp = Self(
-    style: .sharp,
-    map: [
-      Glyph(.horizontal, .standard, .sharp): "─",
-      Glyph(.horizontal, .increased, .sharp): "━",
-      Glyph(.corner(.topLeading), .standard, .sharp): "┌",
-      Glyph(.corner(.bottomTrailing), .standard, .sharp): "┘",
-    ]
-  )
-
   public static let rounded = Self(
     style: .rounded,
     map: [

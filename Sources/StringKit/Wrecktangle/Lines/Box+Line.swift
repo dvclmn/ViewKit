@@ -35,6 +35,7 @@ extension Box {
       self.engine = engine
     }
 
+    /// Init for Structure Line
     public init(
       _ repeater: PartType,
       leading: PartType,
@@ -58,7 +59,6 @@ extension Box {
 extension Box.Line {
 
   func buildStack(
-    //    using engine: Box.Engine,
     startingAt rowIndex: inout Int,
     rowCount: Int
   ) -> [StringStack] {
@@ -78,7 +78,6 @@ extension Box.Line {
   /// lines can update it and give a complete picture of the line count
   private func buildTextLines(
     _ content: String,
-    //    using engine: Box.Engine,
     startingAt rowIndex: inout Int
   ) -> [StringStack] {
 
@@ -97,12 +96,9 @@ extension Box.Line {
       defer { rowIndex += 1 }
 
       let pos = Box.PositionContext(i: rowIndex, rowCount: 0)
-
       let numbers = StringStack(engine.rowNumbers(for: pos))
-
       let leading = stack(.leading, pos: pos)
       let trailing = stack(.trailing, pos: pos)
-
       let text = StringStack(line)
 
       return .joined(
@@ -126,17 +122,12 @@ extension Box.Line {
   /// be made up of more than one line of text.
   private func buildStructureLine(
     _ repeater: Box.PartType,
-    //    using engine: Box.Engine,
     at position: Box.PositionContext
   ) -> [StringStack] {
 
     let leading = stack(.leading, pos: position)
     let trailing = stack(.trailing, pos: position)
-    let repeater = stack(
-      .repeater,
-      pos: position,
-      span: .fill
-    )
+    let repeater = stack(.repeater, pos: position, span: .fill)
     let numbers = StringStack(engine.rowNumbers(for: position))
 
     let stack = StringStack.joined(

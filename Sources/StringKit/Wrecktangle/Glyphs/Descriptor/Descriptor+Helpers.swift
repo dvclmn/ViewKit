@@ -16,14 +16,14 @@ extension Box.GlyphDescriptor {
 
   static func h(
     _ weight: Prominence = .standard,
-    _ style: Style = .sharp
+    _ style: Design = .sharp
   ) -> Self {
     Self(.horizontal, weight, style)
   }
 
   static func v(
     _ weight: Prominence = .standard,
-    _ style: Style = .sharp
+    _ style: Design = .sharp
   ) -> Self {
     Self(.vertical, weight, style)
   }
@@ -31,7 +31,7 @@ extension Box.GlyphDescriptor {
   static func join(
     x: ProminenceType = .standard,
     y: ProminenceType = .standard,
-    _ style: Style = .sharp
+    _ style: Design = .sharp
   ) -> Self {
     guard case .join(let joinType)? = PartContext.currentType else {
       fatalError("join(x:y:) used outside a join Part")
@@ -41,7 +41,7 @@ extension Box.GlyphDescriptor {
 
   static func corner(
     _ weight: Prominence = .standard,
-    _ style: Style = .sharp
+    _ style: Design = .sharp
   ) -> Self {
     guard case .corner(let cornerType)? = PartContext.currentType else {
       fatalError("corner(_:) used outside a corner Part")

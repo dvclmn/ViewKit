@@ -13,12 +13,12 @@ extension Box {
 extension Box {
 
   public struct GlyphSet: Codable, Equatable, Sendable {
-    public var style: GlyphDescriptor.Style
+    public var style: GlyphDescriptor.Design
     public var map: GlyphMap
     public var fallback: GlyphSetReference?
 
     public init(
-      style: GlyphDescriptor.Style,
+      style: GlyphDescriptor.Design,
       map: GlyphMap,
       fallback: GlyphSetReference? = nil
     ) {
@@ -26,18 +26,6 @@ extension Box {
       self.map = map
       self.fallback = fallback
     }
-  }
-
-  public final class GlyphSetReference: Codable, Sendable {
-    public let wrapped: GlyphSet
-    public init(_ wrapped: GlyphSet) { self.wrapped = wrapped }
-  }
-
-}
-
-extension Box.GlyphSetReference: Equatable {
-  public static func == (lhs: Box.GlyphSetReference, rhs: Box.GlyphSetReference) -> Bool {
-    lhs.wrapped == rhs.wrapped
   }
 }
 
@@ -65,4 +53,3 @@ extension Box.GlyphSet {
 //    indirect case partial(GlyphMap, GlyphSet)
 //  }
 //}
-
