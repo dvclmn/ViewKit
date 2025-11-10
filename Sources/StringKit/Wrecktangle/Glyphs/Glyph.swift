@@ -18,15 +18,15 @@ extension Box {
   /// I think this essentially provides a slightly nicer wrapper around `GlyphMap`
   public struct Glyph: Sendable {
     let character: Character
-    let descriptor: GlyphType
+    let descriptor: GlyphDescriptor
 
     public init(
       _ character: Character,
       _ role: Box.GlyphRole,
-      weight: Box.GlyphType.Prominence = .standard,
+      weight: Box.GlyphDescriptor.Prominence = .standard,
 //      design: Box.GlyphType.Design = .sharp
 //      design explicitDesign: Box.GlyphType.Design? = nil
-      design: Box.GlyphType.Design? = nil
+      design: Box.GlyphDesign? = nil
     ) {
       self.character = character
 //      let inferredDesign = explicitDesign ?? GlyphDesignContext.currentDesign ?? .sharp
@@ -37,16 +37,16 @@ extension Box {
     public init(
       _ character: Character,
       _ role: Box.GlyphRole,
-      x: Box.GlyphType.ProminenceType = .standard,
-      y: Box.GlyphType.ProminenceType = .standard,
+      x: Box.GlyphDescriptor.ProminenceType = .standard,
+      y: Box.GlyphDescriptor.ProminenceType = .standard,
 //      design: Box.GlyphType.Design = .sharp
 //      design explicitDesign: Box.GlyphType.Design? = nil
-      design: Box.GlyphType.Design? = nil
+      design: Box.GlyphDesign? = nil
     ) {
       self.init(
         character,
         role,
-        weight: GlyphType.Prominence(x: x, y: y),
+        weight: GlyphDescriptor.Prominence(x: x, y: y),
         design: design
       )
     }

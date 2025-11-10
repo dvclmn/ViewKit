@@ -16,15 +16,15 @@ extension Box {
   ///
   /// This was previously the `GlyphType` enum, with
   /// horizontal, vertical, join, corner, blank and literal
-  public struct GlyphType: Hashable, Codable, Sendable {
+  public struct GlyphDescriptor: Hashable, Codable, Sendable {
     var role: GlyphRole
     var weight: Prominence
-    var design: Design
+    var design: GlyphDesign
 
     public init(
       _ role: GlyphRole,
       weight: Prominence = .standard,
-      design: Design = .sharp
+      design: GlyphDesign = .sharp
     ) {
       self.role = role
       self.weight = weight
@@ -35,7 +35,7 @@ extension Box {
       _ role: GlyphRole,
       x: ProminenceType = .standard,
       y: ProminenceType = .standard,
-      design: Design = .sharp
+      design: GlyphDesign = .sharp
     ) {
       self.role = role
       self.weight = Prominence(x: x, y: y)
@@ -44,7 +44,7 @@ extension Box {
   }
 }
 
-extension Box.GlyphType: CustomStringConvertible {
+extension Box.GlyphDescriptor: CustomStringConvertible {
   public var description: String {
     "GlyphType[GlyphRole/\(role.name), Weight/\(weight), Design/\(design.rawValue)]"
   }

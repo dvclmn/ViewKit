@@ -6,7 +6,7 @@
 //
 
 extension Box {
-  public typealias GlyphMap = [GlyphType: Character]
+  public typealias GlyphMap = [GlyphDescriptor: Character]
 }
 
 public typealias GlyphSet = Box.GlyphSet
@@ -18,12 +18,12 @@ extension Box {
     /// This needs to be defined here, to allow the child
     /// `Glyph`s to have their `design` properties set
     /// *once*, rather than requiring each to set it per-Glyph.
-    public var design: GlyphType.Design
+    public var design: GlyphDesign
     public var map: GlyphMap
     public var fallback: GlyphSetReference?
 
     public init(
-      _ design: GlyphType.Design,
+      _ design: GlyphDesign,
       fallback: Self? = nil,
       @GlyphSetBuilder _ map: () -> GlyphMap,
     ) {
@@ -37,7 +37,7 @@ extension Box {
     }
 
     public init(
-      design: GlyphType.Design,
+      design: GlyphDesign,
       map: GlyphMap,
       fallback: GlyphSetReference? = nil
     ) {
@@ -50,12 +50,12 @@ extension Box {
 
 extension Box.GlyphSet {
   public func resolve(
-    _ desc: Box.GlyphType
+    _ desc: Box.GlyphDescriptor
   ) -> Character {
     map[desc] ?? fallback?.wrapped.resolve(desc) ?? "🫥"
   }
 }
 
 enum GlyphDesignContext {
-  @TaskLocal static var currentDesign: Box.GlyphType.Design?
+  @TaskLocal static var currentDesign: Box.GlyphDesign?
 }

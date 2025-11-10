@@ -25,7 +25,7 @@ extension Array: RowConvertible where Element == GlyphType {
   func asGlyphRow() -> [GlyphType] { self }
 }
 
-extension Box.GlyphType: RowConvertible {
+extension Box.GlyphDescriptor: RowConvertible {
   func asGlyphRow() -> [GlyphType] { [self] }
 }
 

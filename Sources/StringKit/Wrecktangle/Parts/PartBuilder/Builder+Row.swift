@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Part Builders
-typealias RowComponent = Box.GlyphType
+typealias RowComponent = Box.GlyphDescriptor
 
 @resultBuilder
 enum RowBuilder {

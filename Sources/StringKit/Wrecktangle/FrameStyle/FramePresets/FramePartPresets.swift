@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 8/11/2025.
 //
 
-public typealias GlyphType = Box.GlyphType
+public typealias GlyphType = Box.GlyphDescriptor
 extension Box.JoinType {
 
   static var doubleJoin: Frame {

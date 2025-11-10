@@ -5,18 +5,18 @@
 //  Created by Dave Coleman on 9/11/2025.
 //
 
-extension Box.GlyphType {
+extension Box.GlyphDescriptor {
 
   static func fromRole(
     _ role: Box.GlyphRole,
     weight: Prominence = .standard,
-    design: Design? = nil
+    design: Box.GlyphDesign? = nil
   ) -> Self {
     let resolvedDesign = design ?? GlyphDesignContext.currentDesign ?? .sharp
     return .init(role, weight: weight, design: resolvedDesign)
   }
 
-  func withoutStyle() -> Box.GlyphType {
+  func withoutStyle() -> Box.GlyphDescriptor {
     var copy = self
     /// or `.none`?
     copy.design = .sharp
@@ -25,14 +25,14 @@ extension Box.GlyphType {
 
   static func h(
     _ weight: Prominence = .standard,
-    _ design: Design = .sharp
+    _ design: Box.GlyphDesign = .sharp
   ) -> Self {
     Self(.horizontal, weight: weight, design: design)
   }
 
   static func v(
     _ weight: Prominence = .standard,
-    _ design: Design = .sharp
+    _ design: Box.GlyphDesign = .sharp
   ) -> Self {
     Self(.vertical, weight: weight, design: design)
   }
@@ -40,7 +40,7 @@ extension Box.GlyphType {
   static func join(
     x: ProminenceType = .standard,
     y: ProminenceType = .standard,
-    _ design: Design = .sharp
+    _ design: Box.GlyphDesign = .sharp
   ) -> Self {
     guard case .join(let joinType)? = Box.PartContext.currentType else {
       fatalError("join(x:y:) used outside a join Part")
@@ -50,7 +50,7 @@ extension Box.GlyphType {
 
   static func corner(
     _ weight: Prominence = .standard,
-    _ design: Design = .sharp
+    _ design: Box.GlyphDesign = .sharp
   ) -> Self {
     guard case .corner(let cornerType)? = Box.PartContext.currentType else {
       fatalError("corner(_:) used outside a corner Part")

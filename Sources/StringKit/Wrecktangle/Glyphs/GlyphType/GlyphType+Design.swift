@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 9/11/2025.
 //
 
-extension Box.GlyphType {
+extension Box {
   
-  public enum Design: String, Sendable, Hashable, Codable {
+  public enum GlyphDesign: String, Sendable, Hashable, Codable {
     case sharp
     case round
     

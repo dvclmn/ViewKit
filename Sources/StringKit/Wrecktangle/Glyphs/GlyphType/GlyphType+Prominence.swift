@@ -7,7 +7,7 @@
 
 //public typealias Prominence = Box.GlyphProminence
 
-extension Box.GlyphType {
+extension Box.GlyphDescriptor {
 
   public struct Prominence: Sendable, Codable, Hashable {
     let x: ProminenceType
@@ -31,11 +31,11 @@ extension Box.GlyphType {
     case increased
   }
 }
-extension Box.GlyphType.Prominence {
+extension Box.GlyphDescriptor.Prominence {
   public static let standard = Self(x: .standard, y: .standard)
   public static let increased = Self(x: .increased, y: .increased)
 }
-extension Box.GlyphType.Prominence: CustomStringConvertible {
+extension Box.GlyphDescriptor.Prominence: CustomStringConvertible {
   public var description: String {
     "Prominence[x: \(x.rawValue), y: \(y.rawValue)]"
   }

@@ -12,9 +12,9 @@ extension Box {
         Row {
           // Cannot pass array of type '[Box.GlyphType]' as variadic arguments of type 'Box.GlyphType'
           if true {
-            GlyphType.h(.increased)
+            GlyphDescriptor.h(.increased)
           } else {
-            GlyphType.h(.increased)
+            GlyphDescriptor.h(.increased)
           }
         }
       }

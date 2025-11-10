@@ -11,13 +11,13 @@ import SharedHelpers
 public typealias Part = Box.PartResolved
 
 extension Box {
-  public typealias GlyphStack = [[GlyphType]]
+  public typealias GlyphStack = [[GlyphDescriptor]]
 
   public struct PartResolved: Sendable, Codable, Equatable, Hashable {
     let type: PartType
     let glyphs: GlyphStack
     
-    init(type: Box.PartType, glyphs: [GlyphType]) {
+    init(type: Box.PartType, glyphs: [GlyphDescriptor]) {
       self.type = type
       self.glyphs = [glyphs]
     }
