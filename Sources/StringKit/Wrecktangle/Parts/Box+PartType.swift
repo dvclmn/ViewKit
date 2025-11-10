@@ -11,9 +11,10 @@ import SwiftUI
 
 extension Box {
 
-  /// A `PartType` is a composition of `GlyphType`s.
+  /// The counterpart to `GlyphRole`. Describes where a Part
+  /// is used, in the stucture of a Box
   @CaseDetection
-  public enum PartType: Hashable, Codable, Sendable {
+  public enum PartRole: Hashable, Codable, Sendable {
     case horizontal(HorizontalLocation)
     case vertical(VerticalLocation)
     case join(Box.JoinType)
@@ -22,7 +23,7 @@ extension Box {
   }
 }
 
-extension Box.PartType {
+extension Box.PartRole {
   public enum HorizontalLocation: String, Hashable, Codable, Sendable {
     case top
     case bottom
@@ -54,7 +55,7 @@ extension Box {
   }
 }
 
-extension Box.PartType {
+extension Box.PartRole {
   var name: String {
     switch self {
       case .horizontal(let loc): "horizontal/\(loc.rawValue)"
@@ -67,7 +68,7 @@ extension Box.PartType {
 
 }
 
-extension Box.PartType: CustomStringConvertible {
+extension Box.PartRole: CustomStringConvertible {
   public var description: String {
     return "Part/\(name)"
   }

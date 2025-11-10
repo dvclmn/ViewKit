@@ -7,7 +7,7 @@
 
 extension Box {
   public struct PartStructure {
-    let type: PartType
+    let type: PartRole
     let roles: [[GlyphRole]]
   }
 }

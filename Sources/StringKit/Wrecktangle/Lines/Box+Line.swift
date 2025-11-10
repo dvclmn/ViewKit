@@ -14,15 +14,15 @@ extension Box {
     #warning("Consider whether engine in here makes sense, should probably be owned / passed in via function sig?")
 //    let engine: Box.Engine
 
-    let leading: PartType
+    let leading: PartRole
     let body: LineType
-    let trailing: PartType
+    let trailing: PartRole
 
     /// Init for Text Line
     public init(
       _ textContent: String,
-      leading: PartType,
-      trailing: PartType,
+      leading: PartRole,
+      trailing: PartRole,
 //      using engine: Box.Engine
     ) {
       self.leading = leading
@@ -33,9 +33,9 @@ extension Box {
 
     /// Init for Structure Line
     public init(
-      _ repeater: PartType,
-      leading: PartType,
-      trailing: PartType,
+      _ repeater: PartRole,
+      leading: PartRole,
+      trailing: PartRole,
 //      using engine: Box.Engine
     ) {
       self.leading = leading

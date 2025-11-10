@@ -18,10 +18,10 @@ extension Box {
 
 extension Box {
 
-  public typealias PartMap = [Box.PartType: Box.Part]
+  public typealias PartMap = [Box.PartRole: Box.Part]
 
   public struct Frame: Sendable, Codable, Equatable {
-    let partTypes: Set<Box.PartType>
+    let partTypes: Set<Box.PartRole>
     //    var parts: PartMap = [:]
 
     public init(@FrameBuilder _ content: () -> FrameBuilderOutput) {
@@ -30,7 +30,7 @@ extension Box {
       //      self.parts = content()
     }
 
-    public init(parts: Set<Box.PartType>) {
+    public init(parts: Set<Box.PartRole>) {
       //    public init(parts: PartMap) {
       self.partTypes = parts
     }
@@ -42,7 +42,7 @@ extension Box.Frame {
   /// The width of the Frame 'column', for the given location.
   /// This is the replacement for the older `var reservedWidth: Int {…}`
   func frameWidth(
-    for location: Box.PartType.VerticalLocation
+    for location: Box.PartRole.VerticalLocation
   ) -> Int? {
 //    let part = self.partTypes.first(where: { })
     
@@ -57,7 +57,7 @@ extension Box.Frame {
 //    )
 //  }
 
-  func part(for type: Box.PartType) -> Part? {
+  func part(for type: Box.PartRole) -> Part? {
     
 //    partMap[type]
   }

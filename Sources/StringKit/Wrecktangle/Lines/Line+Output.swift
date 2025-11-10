@@ -75,7 +75,7 @@ extension Box.Line {
   /// only builds a 'single line' — but a ``Box/LineType`` can
   /// be made up of more than one line of text.
   private func buildStructureLine(
-    _ repeater: Box.PartType,
+    _ repeater: Box.PartRole,
     using engine: Box.Engine,
     at position: Box.PositionContext
   ) -> [StringStack] {
@@ -105,7 +105,7 @@ extension Box.Line {
     span: Box.PartSpan = .single,
   ) -> StringStack {
     
-    let linePart: Box.PartType = {
+    let linePart: Box.PartRole = {
       switch part {
         case .leading: return self.leading
           

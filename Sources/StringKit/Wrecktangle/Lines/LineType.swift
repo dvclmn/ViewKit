@@ -15,7 +15,7 @@ extension Box {
   @AssociatedValues
   public enum LineType: Hashable, Sendable {
     case text(String)
-    case repeater(PartType)
+    case repeater(PartRole)
   }
 }
 

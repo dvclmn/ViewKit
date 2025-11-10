@@ -5,17 +5,17 @@
 //  Created by Dave Coleman on 7/11/2025.
 //
 
-public typealias FrameBuilderOutput = [Box.PartType]
+public typealias FrameBuilderOutput = [Box.PartRole]
 
 @resultBuilder
 enum FrameBuilder {
-  static func buildBlock(_ components: [Box.PartType]...) -> FrameBuilderOutput {
+  static func buildBlock(_ components: [Box.PartRole]...) -> FrameBuilderOutput {
     components.flatMap { $0 }
 //    makeDict(components.flatMap { $0 })
     //    Dictionary(uniqueKeysWithValues: components.map { ($0.type, $0) })
   }
 
-  public static func buildArray(_ components: [[Box.PartType]]) -> FrameBuilderOutput {
+  public static func buildArray(_ components: [[Box.PartRole]]) -> FrameBuilderOutput {
     components.flatMap { $0 }
 //    components
 //    [
@@ -25,16 +25,16 @@ enum FrameBuilder {
 //    components.flatMap { makeDict($0) }
   }
 
-  static func buildEither(first: Box.PartType) -> Box.PartType { first }
-  static func buildEither(second: Box.PartType) -> Box.PartType { second }
-  static func buildOptional(_ component: [Box.PartType]?) -> FrameBuilderOutput {
+  static func buildEither(first: Box.PartRole) -> Box.PartRole { first }
+  static func buildEither(second: Box.PartRole) -> Box.PartRole { second }
+  static func buildOptional(_ component: [Box.PartRole]?) -> FrameBuilderOutput {
     component ?? []
   }
 }
 
 extension FrameBuilder {
 
-  static func buildExpression(_ expression: Box.PartType) -> FrameBuilderOutput {
+  static func buildExpression(_ expression: Box.PartRole) -> FrameBuilderOutput {
     [expression]
 //    //  static func buildArray(_ components: [Box.Part]) -> Box.PartMap {
 //    //    makeDict(components)

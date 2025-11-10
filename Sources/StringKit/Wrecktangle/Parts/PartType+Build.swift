@@ -8,7 +8,7 @@
 import Foundation
 import SharedHelpers
 
-extension Box.PartType {
+extension Box.PartRole {
 
   /// We return a `StringStack`, not a `String`, to allow
   /// any additional repeating/joining required further down the pipeline.
