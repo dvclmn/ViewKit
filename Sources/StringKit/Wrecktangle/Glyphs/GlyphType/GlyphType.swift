@@ -44,3 +44,8 @@ extension Box {
   }
 }
 
+extension Box.GlyphType: CustomStringConvertible {
+  public var description: String {
+    "GlyphType[Role/\(role.name), Weight/\(weight), Design/\(design.rawValue)]"
+  }
+}

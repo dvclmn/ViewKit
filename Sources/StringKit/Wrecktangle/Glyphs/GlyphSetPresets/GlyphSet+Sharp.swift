@@ -12,15 +12,15 @@ extension Box.GlyphSet {
 
       Glyph.blank
 
-      // MARK: - Floor/Ceiling
+      // MARK: - Horizontal
       Glyph("━", .horizontal, weight: .increased)
       Glyph("─", .horizontal)
 
-      // MARK: - Walls
+      // MARK: - Vertical
       Glyph("┃", .vertical, weight: .increased)
       Glyph("│", .vertical)
 
-      // MARK: - Bold to Thin Joins
+      // MARK: - Bold exterior, Thin interior Joins
       Glyph("┯", .join(.top), x: .increased)
       Glyph("┷", .join(.bottom), x: .increased)
       Glyph("┠", .join(.leading), y: .increased)
@@ -35,6 +35,11 @@ extension Box.GlyphSet {
       Glyph("╋", .join(.cross), x: .increased, y: .increased)
 
       // MARK: - Thin Joins
+      Glyph("┬", .join(.top))
+      Glyph("┴", .join(.bottom))
+      Glyph("├", .join(.leading))
+      Glyph("┤", .join(.trailing))
+      Glyph("┼", .join(.cross))
 
       // MARK: - Bold Corners
       Glyph("┏", .corner(.topLeading), weight: .increased)

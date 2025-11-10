@@ -64,6 +64,10 @@ extension Box.Part {
 }
 
 extension Box.Part {
+  static var blank: Box.Part {
+    .init(type: .blank, glyphs: [])
+  }
+  
   var width: Int { glyphs.width(for: .widestRow) }
   func toStringStack(with theme: Box.Theme) -> StringStack {
     StringStack(from: glyphs, with: theme)

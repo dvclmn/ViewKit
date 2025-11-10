@@ -43,4 +43,17 @@ extension Box.FrameStyle {
     }
     return Box.FrameStyle(parts: newParts)
   }
+
+  // MARK: - Debugging
+  func debugDump() {
+    print("FrameStyle parts:")
+    for (key, value) in parts {
+      print(
+        """
+        \(key) → \(value.glyphs.map {
+          $0.map(\.description).joined()
+        })
+        """)
+    }
+  }
 }

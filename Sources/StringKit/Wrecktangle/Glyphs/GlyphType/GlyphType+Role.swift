@@ -16,6 +16,17 @@ extension Box.GlyphType {
 }
 
 extension Box.GlyphType.Role {
+  
+  var name: String {
+    switch self {
+      case .horizontal: "H"
+      case .vertical: "V"
+      case .corner(let type): "Corner/\(type.rawValue)"
+      case .join(let type): "Join/\(type.rawValue)"
+      case .blank: "Blank"
+    }
+  }
+  
   public init(fromPartType partType: Box.PartType) {
     switch partType {
       case .horizontal(_): self = .horizontal

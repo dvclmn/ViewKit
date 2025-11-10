@@ -38,14 +38,31 @@ extension Box.PartType {
     using engine: Box.Engine,
     position: Box.PositionContext
   ) -> Box.Part {
-    let frameStyle = engine.theme.frameStyle
-    let fallback = Part(.blank) { Row { GlyphType.blank } }
-//    guard let part = frameStyle.part(for: self) else {
-//      fatalError("What happened?")
-//    }
-//    return part
-    return frameStyle.part(for: self) ?? fallback
+    guard let part = engine.theme.frameStyle.part(for: self) else {
+      assertionFailure("Missing \(self) in frameStyle.parts")
+      return .blank
+    }
+    return part
   }
+  
+//  func part(
+//    using engine: Box.Engine,
+//    position: Box.PositionContext
+//  ) -> Box.Part {
+//    let frameStyle = engine.theme.frameStyle
+//    frameStyle.debugDump()
+//    let fallback = Part(.blank) { Row { GlyphType.blank } }
+//
+//    guard let part = frameStyle.part(for: self) else {
+//      fatalError("Missing \(self) in FrameStyle")
+//    }
+//
+//    //    guard let part = frameStyle.part(for: self) else {
+//    //      fatalError("What happened?")
+//    //    }
+//    //    return part
+//    return frameStyle.part(for: self) ?? fallback
+//  }
 }
 
 extension StringStack {
