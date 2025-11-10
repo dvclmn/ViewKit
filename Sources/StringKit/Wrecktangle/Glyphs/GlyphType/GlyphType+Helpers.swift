@@ -8,7 +8,7 @@
 extension Box.GlyphType {
 
   static func fromRole(
-    _ role: Role,
+    _ role: Box.GlyphRole,
     weight: Prominence = .standard,
     design: Design? = nil
   ) -> Self {

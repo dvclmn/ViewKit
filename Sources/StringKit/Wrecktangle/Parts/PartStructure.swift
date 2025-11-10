@@ -8,6 +8,6 @@
 extension Box {
   public struct PartStructure {
     let type: PartType
-    let roles: [[GlyphType.Role]]
+    let roles: [[GlyphRole]]
   }
 }

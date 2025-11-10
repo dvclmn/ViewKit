@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 9/11/2025.
 //
 
-extension Box.GlyphType {
-  public enum Role: Hashable, Codable, Sendable {
+extension Box {
+  public enum GlyphRole: Hashable, Codable, Sendable {
     case horizontal
     case vertical
     case corner(Box.CornerType)
@@ -15,7 +15,7 @@ extension Box.GlyphType {
   }
 }
 
-extension Box.GlyphType.Role {
+extension Box.GlyphRole {
   
   var name: String {
     switch self {

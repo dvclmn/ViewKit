@@ -22,7 +22,7 @@ extension Box {
 
     public init(
       _ character: Character,
-      _ role: Box.GlyphType.Role,
+      _ role: Box.GlyphRole,
       weight: Box.GlyphType.Prominence = .standard,
 //      design: Box.GlyphType.Design = .sharp
 //      design explicitDesign: Box.GlyphType.Design? = nil
@@ -36,7 +36,7 @@ extension Box {
 
     public init(
       _ character: Character,
-      _ role: Box.GlyphType.Role,
+      _ role: Box.GlyphRole,
       x: Box.GlyphType.ProminenceType = .standard,
       y: Box.GlyphType.ProminenceType = .standard,
 //      design: Box.GlyphType.Design = .sharp

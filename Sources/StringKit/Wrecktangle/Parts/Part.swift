@@ -56,7 +56,7 @@ extension Box.Part {
     weight: GlyphType.Prominence = .standard,
     design: GlyphType.Design = .sharp
   ) {
-    let role = Box.GlyphType.Role(fromPartType: type)
+    let role = Box.GlyphRole(fromPartType: type)
     let glyph = GlyphType(role, weight: weight, design: design)
     self.type = type
     self.glyphs = [[glyph]]
