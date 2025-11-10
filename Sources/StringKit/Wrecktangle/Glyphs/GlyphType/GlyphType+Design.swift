@@ -16,3 +16,4 @@ extension Box.GlyphType {
     case hollow
   }
 }
+

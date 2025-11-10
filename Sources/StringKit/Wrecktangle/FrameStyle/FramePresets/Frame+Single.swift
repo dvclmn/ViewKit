@@ -18,6 +18,7 @@ extension Box.FrameStyle {
       Part(.vertical(.interior)) { GlyphType.v(.standard) }
       Part(.vertical(.trailing)) { GlyphType.v(.increased) }
 
+      
       Part(.join(.leading)) { GlyphType.join(x: .increased, y: .standard) }
       Part(.join(.trailing)) { GlyphType.join(x: .increased, y: .standard) }
       Part(.join(.top)) { GlyphType.join(x: .increased, y: .standard) }
@@ -25,7 +26,7 @@ extension Box.FrameStyle {
       Part(.join(.cross)) { GlyphType.join(x: .increased, y: .standard) }
 
       for corner in Box.CornerType.allCases {
-        Part(.corner(.bottomLeading)) {
+        Part(.corner(corner)) {
           GlyphType.corner(.increased)
         }
       }

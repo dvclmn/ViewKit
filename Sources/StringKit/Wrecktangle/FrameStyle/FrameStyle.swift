@@ -14,13 +14,17 @@ extension Box {
   public typealias PartMap = [Box.PartType: Box.Part]
 
   public struct FrameStyle: Sendable, Codable, Equatable {
-    var parts: PartMap = [:]
+    let parts: Set<Box.Part>
+    //    var parts: PartMap = [:]
 
-    public init(@FrameBuilder _ content: () -> PartMap) {
-      self.parts = content()
+    public init(@FrameBuilder _ content: () -> FrameBuilderOutput) {
+      //    public init(@FrameBuilder _ content: () -> PartMap) {
+      self.parts = Set(content())
+      //      self.parts = content()
     }
 
-    public init(parts: PartMap) {
+    public init(parts: Set<Box.Part>) {
+      //    public init(parts: PartMap) {
       self.parts = parts
     }
   }
@@ -31,15 +35,26 @@ extension Box.FrameStyle {
   /// The width of the Frame 'column', for the given location.
   /// This is the replacement for the older `var reservedWidth: Int {…}`
   func frameWidth(for location: Box.PartType.VerticalLocation) -> Int? {
-    return parts[.vertical(location)]?.width
+    return partMap[.vertical(location)]?.width
   }
 
-  func part(for type: Box.PartType) -> Part? { parts[type] }
+  var partMap: Box.PartMap {
+    Dictionary(
+      uniqueKeysWithValues: parts.map { part in
+        (part.type, part)
+      }
+    )
+  }
 
-  func merged(overrides: Box.PartMap) -> Box.FrameStyle {
+  func part(for type: Box.PartType) -> Part? { partMap[type] }
+
+  func merged(overrides: Set<Box.Part>) -> Box.FrameStyle {
+    //  func merged(overrides: Box.PartMap) -> Box.FrameStyle {
     var newParts = parts
-    for (key, value) in overrides {
-      newParts[key] = value
+    //    for (key, value) in overrides {
+    for part in overrides {
+      newParts.update(with: part)
+      //      newMap[key] = value
     }
     return Box.FrameStyle(parts: newParts)
   }
@@ -47,7 +62,7 @@ extension Box.FrameStyle {
   // MARK: - Debugging
   func debugDump() {
     print("FrameStyle parts:")
-    for (key, value) in parts {
+    for (key, value) in partMap {
       print(
         """
         \(key) → \(value.glyphs.map {
@@ -60,6 +75,6 @@ extension Box.FrameStyle {
 
 extension Box.FrameStyle: CustomStringConvertible {
   public var description: String {
-    "FrameStyle[parts: \(parts.prettyString)]"
+    "FrameStyle[parts: \(partMap.prettyString)]"
   }
 }

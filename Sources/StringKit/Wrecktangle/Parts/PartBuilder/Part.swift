@@ -13,7 +13,7 @@ public typealias Part = Box.Part
 extension Box {
   public typealias GlyphStack = [[GlyphType]]
 
-  public struct Part: Sendable, Codable, Equatable {
+  public struct Part: Sendable, Codable, Equatable, Hashable {
     let type: PartType
     let glyphs: GlyphStack
     
