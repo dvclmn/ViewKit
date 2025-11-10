@@ -12,10 +12,7 @@ let package = Package(
   products: [
     .library(
       name: "BaseMacrosLibrary",
-      targets: [
-        "EnumMacros"
-        //        "Persistable",
-      ]
+      targets: ["EnumMacros"]
     ),
     .executable(
       name: "BaseMacrosClient",
@@ -39,6 +36,8 @@ let package = Package(
     .library(name: "ColourKit", targets: ["ColourKit"]),
     .library(name: "CurveKit", targets: ["CurveKit"]),
     .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
+    .library(name: "StringKit", targets: ["StringKit"]),
+    .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
   ],
 
   // MARK: - Dependancies
@@ -48,10 +47,8 @@ let package = Package(
     .package(url: "https://github.com/mattmassicotte/nsui", from: "1.3.0"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
-    .package(url: "https://github.com/ukushu/Ifrit", from: "3.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
     .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
-    .package(url: "https://github.com/kean/Nuke", from: "12.8.0"),
   ],
 
   // MARK: - Targets
@@ -60,30 +57,29 @@ let package = Package(
     .target(
       name: "BaseNetworking",
       dependencies: [
-        .dep(.stringShared),
+        .module(.stringShared),
         .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
     .target(
       name: "BaseUI",
       dependencies: [
-        .dep(.stringShared),
-        .dep(.curveKit),
-        .dep(.enumMacros),
-        .dep(.colourKit),
-        .dep(.layoutKit),
-        .dep(.graphicsKit),
-        .dep(.gestureKit),
+        .module(.stringShared),
+        .module(.curveKit),
+        .module(.enumMacros),
+        .module(.colourKit),
+        .module(.layoutKit),
+        .module(.graphicsKit),
+        .module(.gestureKit),
+        .module(.wrecktangle),
         .sharing,
-        .product(name: "IfritStatic", package: "Ifrit"),
-        .product(name: "NukeUI", package: "Nuke"),
       ],
     ),
     .target(
       name: "BaseModels",
       dependencies: [
-        .dep(.stringShared),
-        .dep(.enumMacros),
+        .module(.stringShared),
+        .module(.enumMacros),
         .sharing,
         .product(name: "IdentifiedCollections", package: "swift-identified-collections"),
       ],
@@ -91,9 +87,9 @@ let package = Package(
     .target(
       name: "CanvasKit",
       dependencies: [
-        .dep(.baseUI),
-        .dep(.sharedHelpers),
-        .dep(.gestureKit),
+        .module(.baseUI),
+        .module(.sharedHelpers),
+        .module(.gestureKit),
         .sharing,
       ],
     ),
@@ -101,8 +97,8 @@ let package = Package(
     .target(
       name: "ColourKit",
       dependencies: [
-        .dep(.sharedHelpers),
-        .dep(.curveKit),
+        .module(.sharedHelpers),
+        .module(.curveKit),
         .nsui,
         //        .product(name: "CasePaths", package: "swift-case-paths"),
       ],
@@ -111,37 +107,37 @@ let package = Package(
     .target(
       name: "CurveKit",
       dependencies: [
-        .dep(.sharedHelpers)
+        .module(.sharedHelpers)
       ]
     ),
 
     .target(
       name: "GestureKit",
       dependencies: [
-        .dep(.stringShared),
-        .dep(.layoutKit),
-        .dep(.curveKit),
+        .module(.stringShared),
+        .module(.layoutKit),
+        .module(.curveKit),
       ]
     ),
     .target(
       name: "GraphicsKit",
       dependencies: [
-        .dep(.sharedHelpers),
-        .dep(.colourKit),
+        .module(.sharedHelpers),
+        .module(.colourKit),
       ]
     ),
     .target(
       name: "LayoutKit",
       dependencies: [
-        .dep(.stringShared),
-        .dep(.enumMacros),
+        .module(.stringShared),
+        .module(.enumMacros),
       ]
     ),
 
     .target(
       name: "MotionKit",
       dependencies: [
-        .dep(.stringShared)
+        .module(.stringShared)
       ]
     ),
     .target(name: "SharedHelpers"),
@@ -149,29 +145,36 @@ let package = Package(
     .target(
       name: "StringKit",
       dependencies: [
-        .nsui,
-        .dep(.sharedHelpers),
-        .dep(.enumMacros),
+//        .module(.sharedHelpers),
+//        .module(.enumMacros),
       ]
     ),
 
     .target(
       name: "StringShared",
       dependencies: [
-        .dep(.sharedHelpers),
-        .dep(.stringKit),
+        .module(.sharedHelpers),
+        .module(.stringKit),
       ],
+    ),
+
+    .target(
+      name: "Wrecktangle",
+      dependencies: [
+        .module(.sharedHelpers),
+        .module(.enumMacros),
+      ]
     ),
 
     .target(
       name: "ToolKit",
       dependencies: [
-        .dep(.enumMacros),
-        .dep(.baseUI),
-        .dep(.baseModels),
-        .dep(.layoutKit),
-        .dep(.stringKit),
-        .dep(.sharedHelpers),
+        .module(.enumMacros),
+        .module(.baseUI),
+        .module(.baseModels),
+        .module(.layoutKit),
+        .module(.stringKit),
+        .module(.sharedHelpers),
       ]
     ),
 
@@ -179,20 +182,15 @@ let package = Package(
     .macro(
       name: "BaseMacrosImplementation",
       dependencies: [
-        .dep(.sharedHelpers),
+        .module(.sharedHelpers),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
-        //        .product(name: "SwiftSyntax", package: "swift-syntax"),
         .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
       path: .macrosSource + "/MacroImplementations",
     ),
-    //    .target(
-    //      name: "Persistable",
-    //      dependencies: ["BaseMacrosImplementation"],
-    //      path: .macrosSource + "/MacroDeclarations",
-    //    ),
+
     .target(
       name: "EnumMacros",
       dependencies: ["BaseMacrosImplementation"],
@@ -200,29 +198,15 @@ let package = Package(
     ),
     .executableTarget(
       name: "BaseMacrosClient",
-      dependencies: [
-        "EnumMacros"
-        //        "Persistable",
-      ],
+      dependencies: ["EnumMacros"],
       path: .macrosSource + "/BaseMacrosClient",
     ),
-
-    //      .testTarget(
-    //        name: "MacroTests",
-    //        dependencies: [
-    //          "BaseMacrosImplementation",
-    //          .product(
-    //            name: "SwiftSyntaxMacrosTestSupport",
-    //            package: "swift-syntax"
-    //          ),
-    //        ]
-    //      ),
 
   ],
 )
 // MARK: - Convenient type-safe extensions
 extension Target.Dependency {
-  static func dep(_ baseModule: BaseModule) -> Self {
+  static func module(_ baseModule: BaseModule) -> Self {
     .target(name: baseModule.name)
   }
   static var sharing: Self {
@@ -236,21 +220,10 @@ extension String {
   static var macrosSource: String { "Sources/BaseMacrosLibrary" }
 }
 
-//for target in package.targets {
-//  guard target.name != BaseModule.enumMacros.name,
-//    target.name != BaseModule.persistable.name
-//  else { continue }
-//
-//  var settings = target.swiftSettings ?? []
-//  settings.append(.defaultIsolation(MainActor.self))
-//  target.swiftSettings = settings
-//}
-
 /// List of common modules for convenience
 enum BaseModule {
 
   case enumMacros
-  //  case persistable
   case networking
   case baseUI
   case baseModels
@@ -263,15 +236,15 @@ enum BaseModule {
   case motionKit
   case sharedHelpers
   case stringKit
+  case wrecktangle
 
-  /// Export modules
+  /// Export-only modules
   case toolKit
   case stringShared
 
   var name: String {
     switch self {
       case .enumMacros: "EnumMacros"
-      //      case .persistable: "Persistable"
       case .networking: "BaseNetworking"
       case .baseUI: "BaseUI"
       case .baseModels: "BaseModels"
@@ -286,6 +259,7 @@ enum BaseModule {
       case .stringKit: "StringKit"
       case .toolKit: "ToolKit"
       case .stringShared: "StringShared"
+      case .wrecktangle: "Wrecktangle"
     }
   }
 }

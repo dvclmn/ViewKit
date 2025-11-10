@@ -39,7 +39,6 @@ extension AttributedString {
     self.setAttributes(highlightContainer)
   }
 
-
   public func lines(
     subsequenceStrategy: SubsequenceStrategy = .doNotOmit
   ) -> [String] {
@@ -73,10 +72,10 @@ extension AttributedString {
 extension Array where Element == AttributedString {
   public func joined(_ separator: String = "") -> AttributedString {
     guard !isEmpty else { return AttributedString() }
-    
+
     /// Pre-create separator once to avoid repeated initialisation
     let separatorAttr = AttributedString(separator)
-    
+
     /// Use reduce(into:) for in-place mutation (no copies)
     return dropFirst().reduce(into: self[0]) { result, element in
       result.append(separatorAttr)
@@ -110,6 +109,6 @@ extension String {
     var attr = self.toAttributed
     attr.append(attributed)
     return attr
-    
+
   }
 }

@@ -30,8 +30,8 @@ public struct DisplayString {
 extension DisplayString {
 
   public var plainText: String {
-//    components.map(\.toStyledString.plainString).joined("  \n")
-        components.map(\.toStyledString.plainString).joined(separator)
+    //    components.map(\.toStyledString.plainString).joined("  \n")
+    components.map(\.toStyledString.plainString).joined(separator)
   }
 
   public var output: AttributedString {
@@ -76,7 +76,6 @@ extension Array where Element == DisplayBlock {
     self.map(\.toStyledString.styledString).joined(separator)
   }
 }
-
 
 extension AttributedString {
   public func monospaced(_ font: Font? = nil) -> AttributedString {

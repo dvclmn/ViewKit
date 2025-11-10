@@ -5,7 +5,8 @@
 //  Created by Dave Coleman on 30/8/2024.
 //
 
-import NSUI
+//import NSUI
+import SwiftUI
 
 public typealias Attributes = [NSAttributedString.Key: Any]
 
@@ -22,9 +23,9 @@ public struct AttributeSet: ExpressibleByDictionaryLiteral {
   }
 
   public init(
-    font: NSUIFont,
-    foreground: NSUIColor = .label,
-    background: NSUIColor = .clear,
+    font: Font,
+    foreground: Color = .primary,
+    background: Color = .clear,
     additionalAttributes: Attributes = [:]
   ) {
     let baseAttributes: Attributes = [
@@ -34,6 +35,20 @@ public struct AttributeSet: ExpressibleByDictionaryLiteral {
     ]
     self.attributes = baseAttributes.merging(additionalAttributes) { (_, new) in new }
   }
+  
+//  public init(
+//    font: NSUIFont,
+//    foreground: NSUIColor = .label,
+//    background: NSUIColor = .clear,
+//    additionalAttributes: Attributes = [:]
+//  ) {
+//    let baseAttributes: Attributes = [
+//      .font: font,
+//      .foregroundColor: foreground,
+//      .backgroundColor: background,
+//    ]
+//    self.attributes = baseAttributes.merging(additionalAttributes) { (_, new) in new }
+//  }
 
   public subscript(_ key: Attributes.Key) -> Any? {
     get { attributes[key] }
