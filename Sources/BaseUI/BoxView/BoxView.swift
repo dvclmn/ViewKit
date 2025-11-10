@@ -68,7 +68,7 @@ extension BoxView {
 #Preview(traits: .size(.normal)) {
 
   ScrollView {
-    VStack(spacing: 14) {
+    VStack(alignment: .leading, spacing: 14) {
 
       BoxView {
         Box.Header("Rounded GlyphSet, with header.")
@@ -95,7 +95,7 @@ extension BoxView {
       )
 
       BoxView {
-        Box.Header("I'm a header.")
+        Box.Header("Rounded glyphs, Double Frame")
         DummyContent.Strings.paragraphs[6].prefix(120).toString
 
 //        Box.Divider()

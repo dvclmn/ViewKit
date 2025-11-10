@@ -22,10 +22,12 @@ enum FrameBuilder {
   }
 }
 
-protocol PartMapConvertible {
-  func asPartMap() -> Box.PartMap
-}
-
-extension Box.GlyphType: PartMapConvertible {
-  func asPartMap() -> Box.PartMap {}
-}
+//protocol PartMapConvertible {
+//  func asPartMap() -> Box.PartMap
+//}
+//
+//extension Box.GlyphType: PartMapConvertible {
+//  func asPartMap() -> Box.PartMap {
+//    
+//  }
+//}

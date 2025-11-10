@@ -12,7 +12,7 @@ extension Box {
   public struct Line {
 
     #warning("Consider whether engine in here makes sense, should probably be owned / passed in via function sig?")
-    let engine: Box.Engine
+//    let engine: Box.Engine
 
     let leading: PartType
     let body: LineType
@@ -23,12 +23,12 @@ extension Box {
       _ textContent: String,
       leading: PartType,
       trailing: PartType,
-      using engine: Box.Engine
+//      using engine: Box.Engine
     ) {
       self.leading = leading
       self.body = .text(textContent)
       self.trailing = trailing
-      self.engine = engine
+//      self.engine = engine
     }
 
     /// Init for Structure Line
@@ -36,12 +36,12 @@ extension Box {
       _ repeater: PartType,
       leading: PartType,
       trailing: PartType,
-      using engine: Box.Engine
+//      using engine: Box.Engine
     ) {
       self.leading = leading
       self.body = .repeater(repeater)
       self.trailing = trailing
-      self.engine = engine
+//      self.engine = engine
     }
   }
 

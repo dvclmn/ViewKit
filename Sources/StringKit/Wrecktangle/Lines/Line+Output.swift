@@ -10,15 +10,16 @@ import Foundation
 extension Box.Line {
   
   func buildStack(
+    using engine: Box.Engine,
     startingAt rowIndex: inout Int,
-    rowCount: Int
+    rowCount: Int,
   ) -> [StringStack] {
     switch body {
       case .text(let content):
-        return buildTextLines(content, startingAt: &rowIndex)
+        return buildTextLines(content, using: engine, startingAt: &rowIndex)
       case .repeater(let part):
         let pos = Box.PositionContext(i: rowIndex, rowCount: rowCount)
-        return buildStructureLine(part, at: pos)
+        return buildStructureLine(part, using: engine, at: pos)
     }
   }
   // MARK: - Text Line
@@ -29,6 +30,7 @@ extension Box.Line {
   /// lines can update it and give a complete picture of the line count
   private func buildTextLines(
     _ content: String,
+    using engine: Box.Engine,
     startingAt rowIndex: inout Int
   ) -> [StringStack] {
     
@@ -48,8 +50,8 @@ extension Box.Line {
       
       let pos = Box.PositionContext(i: rowIndex, rowCount: 0)
       let numbers = StringStack(engine.rowNumbers(for: pos))
-      let leading = stack(.leading, pos: pos)
-      let trailing = stack(.trailing, pos: pos)
+      let leading = stack(.leading, using: engine, pos: pos)
+      let trailing = stack(.trailing, using: engine, pos: pos)
       let text = StringStack(line)
       
       return .joined(
@@ -73,12 +75,13 @@ extension Box.Line {
   /// be made up of more than one line of text.
   private func buildStructureLine(
     _ repeater: Box.PartType,
+    using engine: Box.Engine,
     at position: Box.PositionContext
   ) -> [StringStack] {
     
-    let leading = stack(.leading, pos: position)
-    let trailing = stack(.trailing, pos: position)
-    let repeater = stack(.repeater, pos: position, span: .fill)
+    let leading = stack(.leading, using: engine, pos: position)
+    let trailing = stack(.trailing, using: engine, pos: position)
+    let repeater = stack(.repeater, using: engine, pos: position, span: .fill)
     let numbers = StringStack(engine.rowNumbers(for: position))
     
     let stack = StringStack.joined(
@@ -96,6 +99,7 @@ extension Box.Line {
 extension Box.Line {
   private func stack(
     _ part: Box.LinePart,
+    using engine: Box.Engine,
     pos position: Box.PositionContext,
     span: Box.PartSpan = .single,
   ) -> StringStack {
@@ -103,6 +107,7 @@ extension Box.Line {
     let linePart: Box.PartType = {
       switch part {
         case .leading: return self.leading
+          
         case .repeater:
           guard let repeater = self.body.repeaterValue else {
             fatalError("Do not try to access `LineType.text` for a Structure-type Line.")

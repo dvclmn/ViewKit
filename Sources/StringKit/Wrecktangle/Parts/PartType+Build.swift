@@ -40,6 +40,10 @@ extension Box.PartType {
   ) -> Box.Part {
     let frameStyle = engine.theme.frameStyle
     let fallback = Part(.blank) { Row { GlyphType.blank } }
+//    guard let part = frameStyle.part(for: self) else {
+//      fatalError("What happened?")
+//    }
+//    return part
     return frameStyle.part(for: self) ?? fallback
   }
 }

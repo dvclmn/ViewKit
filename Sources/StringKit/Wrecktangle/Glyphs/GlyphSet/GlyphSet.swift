@@ -5,10 +5,11 @@
 //  Created by Dave Coleman on 12/9/2024.
 //
 
-public typealias GlyphSet = Box.GlyphSet
 extension Box {
   public typealias GlyphMap = [GlyphType: Character]
 }
+
+public typealias GlyphSet = Box.GlyphSet
 
 extension Box {
 
@@ -29,7 +30,6 @@ extension Box {
         self.fallback = nil
       }
       self.map = GlyphDesignContext.$currentDesign.withValue(design) { map() }
-
     }
 
     public init(

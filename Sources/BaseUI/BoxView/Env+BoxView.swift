@@ -21,7 +21,6 @@ extension View {
   public func setBoxStyle(
     glyphs: Box.GlyphSet,
     frame: Box.FrameStyle,
-//    metrics: Box.Metrics
   ) -> some View {
     self
       .environment(\.glyphSet, glyphs)

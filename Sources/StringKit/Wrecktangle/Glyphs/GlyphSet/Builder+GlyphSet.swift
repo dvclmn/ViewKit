@@ -7,44 +7,37 @@
 
 @resultBuilder
 enum GlyphSetBuilder {
-  static func buildBlock(_ glyphs: Glyph...) -> Box.GlyphMap {
-    Dictionary(
-      uniqueKeysWithValues: glyphs.map {
-        ($0.descriptor, $0.character)
-      }
-    )
+  static func buildBlock(_ components: Box.GlyphMap...) -> Box.GlyphMap {
+    components.reduce(into: [:]) { $0.merge($1) { _, new in new } }
   }
+  
+  static func buildExpression(_ expression: Glyph) -> Box.GlyphMap {
+    [expression.descriptor: expression.character]
+  }
+  
+  static func buildExpression(_ expression: [Glyph]) -> Box.GlyphMap {
+    Dictionary(uniqueKeysWithValues: expression.map {
+      ($0.descriptor, $0.character)
+    })
+  }
+}
 
-//  static func buildArray(_ glyphs: [Glyph]) -> Box.GlyphMap {
+//@resultBuilder
+//enum GlyphSetBuilder {
+//  static func buildBlock(_ glyphs: Glyph...) -> Box.GlyphMap {
 //    Dictionary(
 //      uniqueKeysWithValues: glyphs.map {
 //        ($0.descriptor, $0.character)
 //      }
 //    )
-////    glyphs.reduce(into: [:]) { $0.merge($1) { _, new in new } }
 //  }
-  
-//  static func buildArray(_ glyphs: [Box.GlyphMap]) -> Box.GlyphMap {
-//    glyphs.reduce(into: [:]) { $0.merge($1) { _, new in new } }
+//}
+//extension GlyphSetBuilder {
+//  static func buildExpression(_ expression: [Glyph]) -> Box.GlyphMap {
+//    Dictionary(
+//      uniqueKeysWithValues: expression.map {
+//        ($0.descriptor, $0.character)
+//      }
+//    )
 //  }
-
-}
-extension GlyphSetBuilder {
-  static func buildExpression(_ expression: [Glyph]) -> Box.GlyphMap {
-    Dictionary(
-      uniqueKeysWithValues: expression.map {
-        ($0.descriptor, $0.character)
-      }
-    )
-//    [expression]
-  }
-  //  static func buildExpression(_ expression: [Glyph]) -> Box.GlyphMap {
-  //    expression.flatMap { glyph in
-  //      Dictionary(
-  //        uniqueKeysWithValues: glyphs.map {
-  //          ($0.descriptor, $0.character)
-  //        }
-  //      )
-  //    }
-  //  }
-}
+//}
