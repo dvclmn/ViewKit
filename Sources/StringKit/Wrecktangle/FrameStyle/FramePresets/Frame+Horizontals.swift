@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 8/11/2025.
 //
 
-extension Box.FrameStyle {
+extension Box.Frame {
 
   public static var horizontals: Self {
     Frame {

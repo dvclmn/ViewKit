@@ -10,7 +10,7 @@ protocol StructuralType {
   associatedtype Key: Hashable
 }
 
-/// E.g. `FrameStyle`, `GlyphSet`
+/// E.g. `Frame`, `GlyphSet`
 protocol DesignMap {
   associatedtype Key: Hashable
   associatedtype Value

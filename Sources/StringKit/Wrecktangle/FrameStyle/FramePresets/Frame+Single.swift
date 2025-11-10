@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-extension Box.FrameStyle {
+extension Box.Frame {
 
   public static var single: Self {
     Frame {

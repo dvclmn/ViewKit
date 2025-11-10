@@ -6,7 +6,7 @@
 //
 
 
-extension Box.FrameStyle {
+extension Box.Frame {
 //  public static let notebook = DerivedFrameStyle(
 //    base: Box.FrameStyle.double,
 //    overrides: [

@@ -39,7 +39,7 @@ extension Box.PartType {
     position: Box.PositionContext
   ) -> Box.Part {
     guard let part = engine.theme.frameStyle.part(for: self) else {
-      assertionFailure("Missing \(self) for FrameStyle \(dump(engine.theme.frameStyle))")
+      assertionFailure("Missing \(self) for Frame \(dump(engine.theme.frameStyle))")
       return .blank
     }
     return part

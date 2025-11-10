@@ -11,12 +11,12 @@ import SharedHelpers
 extension Box {
   public struct Theme: Sendable, Codable, Equatable {
     public var glyphSet: GlyphSet
-    public var frameStyle: FrameStyle
+    public var frameStyle: Frame
     public var padding: GridDimensions
 
     public init(
       glyphSet: GlyphSet = .rounded,
-      frameStyle: FrameStyle = .double,
+      frameStyle: Frame = .double,
       padding: GridDimensions = 1
     ) {
       self.glyphSet = glyphSet

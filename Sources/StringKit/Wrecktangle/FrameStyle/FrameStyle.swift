@@ -7,14 +7,21 @@
 
 import SharedHelpers
 
-public typealias Frame = Box.FrameStyle
+//public typealias Frame = Box.FrameStyle
+
+extension Box {
+  struct FrameStyle {
+    let frame: Frame
+    let glyphSet: GlyphSet
+  }
+}
 
 extension Box {
 
   public typealias PartMap = [Box.PartType: Box.Part]
 
-  public struct FrameStyle: Sendable, Codable, Equatable {
-    let parts: Set<Box.Part>
+  public struct Frame: Sendable, Codable, Equatable {
+    let partTypes: Set<Box.PartType>
     //    var parts: PartMap = [:]
 
     public init(@FrameBuilder _ content: () -> FrameBuilderOutput) {
@@ -30,7 +37,7 @@ extension Box {
   }
 }
 
-extension Box.FrameStyle {
+extension Box.Frame {
 
   /// The width of the Frame 'column', for the given location.
   /// This is the replacement for the older `var reservedWidth: Int {…}`
@@ -48,20 +55,20 @@ extension Box.FrameStyle {
 
   func part(for type: Box.PartType) -> Part? { partMap[type] }
 
-  func merged(overrides: Set<Box.Part>) -> Box.FrameStyle {
-    //  func merged(overrides: Box.PartMap) -> Box.FrameStyle {
+  func merged(overrides: Set<Box.Part>) -> Box.Frame {
+    //  func merged(overrides: Box.PartMap) -> Box.Frame {
     var newParts = parts
     //    for (key, value) in overrides {
     for part in overrides {
       newParts.update(with: part)
       //      newMap[key] = value
     }
-    return Box.FrameStyle(parts: newParts)
+    return Box.Frame(parts: newParts)
   }
 
   // MARK: - Debugging
   func debugDump() {
-    print("FrameStyle parts:")
+    print("Frame parts:")
     for (key, value) in partMap {
       print(
         """
@@ -73,8 +80,8 @@ extension Box.FrameStyle {
   }
 }
 
-extension Box.FrameStyle: CustomStringConvertible {
+extension Box.Frame: CustomStringConvertible {
   public var description: String {
-    "FrameStyle[parts: \(partMap.prettyString)]"
+    "Frame[parts: \(partMap.prettyString)]"
   }
 }
