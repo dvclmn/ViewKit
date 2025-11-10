@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 18/7/2024.
 //
 
-import StringShared
+import BaseUtilities
 import SwiftUI
 
 /// A service that provides simulated streaming responses for testing UI

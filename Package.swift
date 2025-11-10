@@ -18,9 +18,7 @@ let package = Package(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
     ),
-    .library(name: "ToolKit", targets: ["ToolKit"]),
     .library(name: "BaseModels", targets: ["BaseModels"]),
-    .library(name: "StringShared", targets: ["StringShared"]),
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
     .library(
       name: "BaseUI",
@@ -37,7 +35,10 @@ let package = Package(
     .library(name: "CurveKit", targets: ["CurveKit"]),
     .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
     .library(name: "StringKit", targets: ["StringKit"]),
-    .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
+
+    // Export-only libraries
+    .library(name: "ToolKit", targets: ["ToolKit"]),
+    .library(name: "BaseUtilities", targets: ["BaseUtilities"]),
   ],
 
   // MARK: - Dependancies
@@ -57,29 +58,26 @@ let package = Package(
     .target(
       name: "BaseNetworking",
       dependencies: [
-        .module(.stringShared),
+        .module(.baseUtilities),
         .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
     .target(
       name: "BaseUI",
       dependencies: [
-        .module(.stringShared),
         .module(.curveKit),
-        .module(.enumMacros),
         .module(.colourKit),
         .module(.layoutKit),
         .module(.graphicsKit),
         .module(.gestureKit),
-        .module(.wrecktangle),
+        .module(.baseUtilities),
         .sharing,
       ],
     ),
     .target(
       name: "BaseModels",
       dependencies: [
-        .module(.stringShared),
-        .module(.enumMacros),
+        .module(.baseUtilities),
         .sharing,
         .product(name: "IdentifiedCollections", package: "swift-identified-collections"),
       ],
@@ -114,7 +112,7 @@ let package = Package(
     .target(
       name: "GestureKit",
       dependencies: [
-        .module(.stringShared),
+        .module(.baseUtilities),
         .module(.layoutKit),
         .module(.curveKit),
       ]
@@ -129,15 +127,14 @@ let package = Package(
     .target(
       name: "LayoutKit",
       dependencies: [
-        .module(.stringShared),
-        .module(.enumMacros),
+        .module(.baseUtilities)
       ]
     ),
 
     .target(
       name: "MotionKit",
       dependencies: [
-        .module(.stringShared)
+        .module(.baseUtilities)
       ]
     ),
     .target(name: "SharedHelpers"),
@@ -145,34 +142,27 @@ let package = Package(
     .target(
       name: "StringKit",
       dependencies: [
-//        .module(.sharedHelpers),
-//        .module(.enumMacros),
-      ]
-    ),
-
-    .target(
-      name: "StringShared",
-      dependencies: [
-        .module(.sharedHelpers),
-        .module(.stringKit),
-      ],
-    ),
-
-    .target(
-      name: "Wrecktangle",
-      dependencies: [
         .module(.sharedHelpers),
         .module(.enumMacros),
       ]
+    ),
+
+    .target(
+      name: "BaseUtilities",
+      dependencies: [
+        .module(.sharedHelpers),
+        .module(.stringKit),
+        .module(.enumMacros),
+      ],
     ),
 
     .target(
       name: "ToolKit",
       dependencies: [
-        .module(.enumMacros),
         .module(.baseUI),
         .module(.baseModels),
         .module(.layoutKit),
+        .module(.enumMacros),
         .module(.stringKit),
         .module(.sharedHelpers),
       ]
@@ -236,11 +226,10 @@ enum BaseModule {
   case motionKit
   case sharedHelpers
   case stringKit
-  case wrecktangle
 
   /// Export-only modules
   case toolKit
-  case stringShared
+  case baseUtilities
 
   var name: String {
     switch self {
@@ -258,8 +247,7 @@ enum BaseModule {
       case .sharedHelpers: "SharedHelpers"
       case .stringKit: "StringKit"
       case .toolKit: "ToolKit"
-      case .stringShared: "StringShared"
-      case .wrecktangle: "Wrecktangle"
+      case .baseUtilities: "BaseUtilities"
     }
   }
 }
