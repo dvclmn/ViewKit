@@ -6,10 +6,17 @@
 //
 
 extension Box.GlyphSet {
-//  wqdqkqef
   public static var rounded: Self {
-//    GlyphSet(fallback: .sharp) {
     GlyphSet(.round, fallback: .sharp) {
+      
+      Glyph("╭", .corner(.topLeading))
+      Glyph("╮", .corner(.topTrailing))
+      Glyph("╰", .corner(.bottomLeading))
+      Glyph("╯", .corner(.bottomTrailing))
+      
+      Glyph.thinJoins
+      
+      
 //      Glyph.horizontal(.increased): "─",
 //      Glyph.horizontal(.standard): "─",
 //      
@@ -18,12 +25,7 @@ extension Box.GlyphSet {
 //      Glyph.vertical(.standard): "│",
 //      
 //      
-      Glyph("╭", .corner(.topLeading))
-      Glyph("╮", .corner(.topTrailing))
-      Glyph("╰", .corner(.bottomLeading))
-      Glyph("╯", .corner(.bottomTrailing))
-      
-      Glyph.thinJoins
+
     }
   }
 //    style: .rounded,

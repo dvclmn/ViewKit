@@ -26,13 +26,13 @@ extension Box {
 
     public init(@FrameBuilder _ content: () -> FrameBuilderOutput) {
       //    public init(@FrameBuilder _ content: () -> PartMap) {
-      self.parts = Set(content())
+      self.partTypes = Set(content())
       //      self.parts = content()
     }
 
-    public init(parts: Set<Box.Part>) {
+    public init(parts: Set<Box.PartType>) {
       //    public init(parts: PartMap) {
-      self.parts = parts
+      self.partTypes = parts
     }
   }
 }
@@ -41,19 +41,26 @@ extension Box.Frame {
 
   /// The width of the Frame 'column', for the given location.
   /// This is the replacement for the older `var reservedWidth: Int {…}`
-  func frameWidth(for location: Box.PartType.VerticalLocation) -> Int? {
-    return partMap[.vertical(location)]?.width
+  func frameWidth(
+    for location: Box.PartType.VerticalLocation
+  ) -> Int? {
+//    let part = self.partTypes.first(where: { })
+    
+//    return partMap[.vertical(location)]?.width
   }
 
-  var partMap: Box.PartMap {
-    Dictionary(
-      uniqueKeysWithValues: parts.map { part in
-        (part.type, part)
-      }
-    )
-  }
+//  var partMap: Box.PartMap {
+//    Dictionary(
+//      uniqueKeysWithValues: partTypes.map { part in
+//        (part, part)
+//      }
+//    )
+//  }
 
-  func part(for type: Box.PartType) -> Part? { partMap[type] }
+  func part(for type: Box.PartType) -> Part? {
+    
+//    partMap[type]
+  }
 
   func merged(overrides: Set<Box.Part>) -> Box.Frame {
     //  func merged(overrides: Box.PartMap) -> Box.Frame {
