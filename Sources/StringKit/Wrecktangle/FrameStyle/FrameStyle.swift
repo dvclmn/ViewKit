@@ -18,21 +18,21 @@ extension Box {
 
 extension Box {
 
-  public typealias PartMap = [Box.PartRole: Box.PartResolved]
+  public typealias PartMap = [Box.PartRole: Box.PartStructure]
 
   public struct Frame: Sendable, Codable, Equatable {
-    let partTypes: Set<Box.PartRole>
+    let parts: Set<Box.PartRole>
     //    var parts: PartMap = [:]
 
     public init(@FrameBuilder _ content: () -> FrameBuilderOutput) {
       //    public init(@FrameBuilder _ content: () -> PartMap) {
-      self.partTypes = Set(content())
+      self.parts = Set(content())
       //      self.parts = content()
     }
 
     public init(parts: Set<Box.PartRole>) {
       //    public init(parts: PartMap) {
-      self.partTypes = parts
+      self.parts = parts
     }
   }
 }
@@ -44,22 +44,22 @@ extension Box.Frame {
   func frameWidth(
     for location: Box.PartRole.VerticalLocation
   ) -> Int? {
-//    let part = self.partTypes.first(where: { })
-    
-//    return partMap[.vertical(location)]?.width
+    //    let part = self.partTypes.first(where: { })
+
+    //    return partMap[.vertical(location)]?.width
   }
 
-//  var partMap: Box.PartMap {
-//    Dictionary(
-//      uniqueKeysWithValues: partTypes.map { part in
-//        (part, part)
-//      }
-//    )
-//  }
+  //  var partMap: Box.PartMap {
+  //    Dictionary(
+  //      uniqueKeysWithValues: partTypes.map { part in
+  //        (part, part)
+  //      }
+  //    )
+  //  }
 
   func part(for type: Box.PartRole) -> Part? {
-    
-//    partMap[type]
+
+    //    partMap[type]
   }
 
   func merged(overrides: Set<Box.PartResolved>) -> Box.Frame {

@@ -18,12 +18,12 @@ extension Box {
   /// horizontal, vertical, join, corner, blank and literal
   public struct GlyphDescriptor: Hashable, Codable, Sendable {
     var role: GlyphRole
-    var weight: Prominence
+    var weight: GlyphProminence
     var design: GlyphDesign
 
     public init(
       _ role: GlyphRole,
-      weight: Prominence = .standard,
+      weight: GlyphProminence = .standard,
       design: GlyphDesign = .sharp
     ) {
       self.role = role
@@ -33,12 +33,12 @@ extension Box {
 
     public init(
       _ role: GlyphRole,
-      x: ProminenceType = .standard,
-      y: ProminenceType = .standard,
+      x: GlyphProminence.ProminenceType = .standard,
+      y: GlyphProminence.ProminenceType = .standard,
       design: GlyphDesign = .sharp
     ) {
       self.role = role
-      self.weight = Prominence(x: x, y: y)
+      self.weight = GlyphProminence(x: x, y: y)
       self.design = design
     }
   }

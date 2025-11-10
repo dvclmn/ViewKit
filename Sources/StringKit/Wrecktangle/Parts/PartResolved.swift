@@ -14,19 +14,19 @@ extension Box {
   public typealias GlyphStack = [[GlyphDescriptor]]
 
   public struct PartResolved: Sendable, Codable, Equatable, Hashable {
-    let type: PartType
+    let role: PartRole
     let glyphs: GlyphStack
     
-    init(type: Box.PartType, glyphs: [GlyphDescriptor]) {
-      self.type = type
+    init(type: PartRole, glyphs: [GlyphDescriptor]) {
+      self.role = type
       self.glyphs = [glyphs]
     }
 
     init(
-      _ type: Box.PartType,
+      _ type: PartRole,
       @PartBuilder _ content: () -> Box.GlyphStack
     ) {
-      self.type = type
+      self.role = type
       self.glyphs = PartContext.$currentType.withValue(type) {
         content()
       }
@@ -52,13 +52,13 @@ extension Box.PartResolved {
   /// }
   /// ```
   public init(
-    _ type: Box.PartType,
-    weight: GlyphType.Prominence = .standard,
-    design: GlyphType.Design = .sharp
+    _ role: Box.PartRole,
+    weight: Box.GlyphProminence = .standard,
+    design: Box.GlyphDesign = .sharp
   ) {
-    let role = Box.GlyphRole(fromPartType: type)
-    let glyph = GlyphType(role, weight: weight, design: design)
-    self.type = type
+    let glyphRole = Box.GlyphRole(fromPartType: role)
+    let glyph = GlyphType(glyphRole, weight: weight, design: design)
+    self.role = role
     self.glyphs = [[glyph]]
     
   }
@@ -97,7 +97,7 @@ extension Box.PartResolved {
 /// ```
 extension Box {
   enum PartContext {
-    @TaskLocal static var currentType: Box.PartType?
+    @TaskLocal static var currentType: Box.PartRole?
   }
 }
 
