@@ -66,8 +66,8 @@ extension StringStack: CustomStringConvertible {
 
 extension StringStack: CustomDebugStringConvertible {
   public var debugDescription: String {
-    return DisplayString {
-      string
-    }.plainText
+    string
+//    return DisplayString {
+//    }.plainText
   }
 }

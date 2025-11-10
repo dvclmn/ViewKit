@@ -6,8 +6,7 @@
 //
 
 import LayoutKit
-import StringShared
-import Wrecktangle
+import BaseUtilities
 import SwiftUI
 
 public struct BoxView: View {

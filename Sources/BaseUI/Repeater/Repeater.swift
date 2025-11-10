@@ -6,7 +6,7 @@
 //
 
 import LayoutKit
-import StringShared
+import BaseUtilities
 import SwiftUI
 
 public struct Repeater<Content: View>: View {

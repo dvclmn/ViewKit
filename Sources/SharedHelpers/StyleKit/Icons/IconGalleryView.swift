@@ -35,22 +35,23 @@ public struct IconGalleryView: View {
         //        columns: columns,
         spacing: Styles.sizeRegular
       ) {
-        ForEach(icons, id: \.reference) { icon in
-          //        ForEach(Icons.allCases.reversed()) { icon in
-          VStack(spacing: 0) {
-            MainText(icon.reference)
-              .overlay {
-                MainIcon(icon.reference)
-              }
-            //            AltIcons(icon)
-          }
-          .frame(width: thumbnailSize, height: thumbnailSize)
-          .aspectRatio(1 / 1, contentMode: .fill)
-          .fixedSize()
-          .background(.gray.quinary.opacity(0.7))
-          .clipShape(.rect(cornerRadius: Styles.sizeTiny))
-
-        }
+        Text("Need to fix this after changes to String/Shared helpers")
+//        ForEach(icons, id: \.reference) { icon in
+//          //        ForEach(Icons.allCases.reversed()) { icon in
+//          VStack(spacing: 0) {
+//            MainText(icon.reference)
+//              .overlay {
+//                MainIcon(icon.reference)
+//              }
+//            //            AltIcons(icon)
+//          }
+//          .frame(width: thumbnailSize, height: thumbnailSize)
+//          .aspectRatio(1 / 1, contentMode: .fill)
+//          .fixedSize()
+//          .background(.gray.quinary.opacity(0.7))
+//          .clipShape(.rect(cornerRadius: Styles.sizeTiny))
+//
+//        }
       }
       .padding(Styles.sizeMedium)
       //      .frame(maxWidth: .infinity, maxHeight: .infinity)

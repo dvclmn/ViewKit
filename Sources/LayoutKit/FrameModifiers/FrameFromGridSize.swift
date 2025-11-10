@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 10/10/2025.
 //
 
-import StringShared
+import BaseUtilities
 import SwiftUI
 
 public struct FrameFromGridSize: ViewModifier {

@@ -1,5 +1,5 @@
 //
-//  StringSharedExport.swift
+//  BaseUtilities.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 8/10/2025.

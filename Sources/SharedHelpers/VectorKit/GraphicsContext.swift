@@ -13,12 +13,12 @@ extension BinaryFloatingPoint {
     return Self(result)
   }
 }
-extension String {
-  public var firstLine: String {
-    let firstSubstring = self.split(separator: "\n").first ?? ""
-    return String(firstSubstring)
-  }
-}
+//extension String {
+//  public var firstLine: String {
+//    let firstSubstring = self.split(separator: "\n").first ?? ""
+//    return String(firstSubstring)
+//  }
+//}
 
 extension GraphicsContext {
 

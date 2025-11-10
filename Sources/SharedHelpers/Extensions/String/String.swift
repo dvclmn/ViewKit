@@ -8,6 +8,18 @@
 import SwiftUI
 
 extension String {
+  public var camelToSnake: String {
+    var result = ""
+    for (index, ch) in self.enumerated() {
+      if ch.isUppercase {
+        if index > 0 { result.append("_") }
+        result.append(ch.lowercased())
+      } else {
+        result.append(ch)
+      }
+    }
+    return result
+  }
 
   /// Pads the string with spaces on the right to at least the given width.
   public func padded(

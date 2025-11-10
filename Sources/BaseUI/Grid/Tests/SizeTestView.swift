@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 31/10/2025.
 //
 
-import StringShared
+import BaseUtilities
 import SwiftUI
 
 public struct SizeTestView: View {

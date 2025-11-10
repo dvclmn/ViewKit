@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedHelpers
 
 public struct StyledString {
   public var styledString: AttributedString

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import StringShared
+import BaseUtilities
 
 public final class APIRequest<T: Decodable> {
   let url: URL?

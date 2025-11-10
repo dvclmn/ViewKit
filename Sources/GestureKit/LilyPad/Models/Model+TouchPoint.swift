@@ -7,7 +7,7 @@
 
 import AppKit
 import CurveKit
-import StringShared
+import BaseUtilities
 
 //import StringKit
 

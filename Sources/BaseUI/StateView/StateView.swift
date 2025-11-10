@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import StringShared
+import BaseUtilities
 
 public struct StateView<Content: View>: View {
   @Environment(\.layoutAxis) private var layoutAxis

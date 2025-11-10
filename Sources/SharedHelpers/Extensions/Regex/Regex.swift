@@ -35,34 +35,40 @@ public typealias TripleCaptureRange = (AttributedRange, AttributedRange, Attribu
 // extension Regex<Regex.SingleCapture.RegexOutput>.Match {
 extension SingleCapture.Match {
 
+  #warning("Need to re-write this to not depend on DisplayString")
   public var displayString: String {
-    DisplayString {
-      Indented("Match") {
-        Labeled("Range", value: String(describing: self))
-        Labeled("Matched text", value: self.0)
-        Labeled("Captured group", value: self.1)
-      }
-      Indented("Output") {
-        Labeled("Full match", value: self.output.0)
-        Labeled("Capture", value: self.output.1)
-      }
+    return """
+          DisplayString {
+            Indented("Match") {
+              Labeled("Range", value: String(describing: self))
+              Labeled("Matched text", value: self.0)
+              Labeled("Captured group", value: self.1)
+            }
+            Indented("Output") {
+              Labeled("Full match", value: self.output.0)
+              Labeled("Capture", value: self.output.1)
+            }
 
-    }.plainText
+          }.plainText
+      """
   }
 }
 
 extension Regex<AnyRegexOutput>.Match {
   //extension Regex<Regex<Substring>.RegexOutput>.Match {
+#warning("Need to re-write this to not depend on DisplayString")
   public var displayString: String {
-    DisplayString {
-      Indented("Match") {
-        Labeled("Range", value: self.range)
-        Labeled("Matched text", value: self.0)
-      }
-      Indented("Output") {
-        Labeled("Full match", value: self.output)
-      }
+    return """
+          DisplayString {
+            Indented("Match") {
+              Labeled("Range", value: self.range)
+              Labeled("Matched text", value: self.0)
+            }
+            Indented("Output") {
+              Labeled("Full match", value: self.output)
+            }
 
-    }.plainText
+          }.plainText
+      """
   }
 }
