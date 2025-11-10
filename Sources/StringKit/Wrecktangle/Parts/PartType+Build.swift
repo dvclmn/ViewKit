@@ -37,7 +37,7 @@ extension Box.PartRole {
   func part(
     using engine: Box.Engine,
     position: Box.PositionContext
-  ) -> Box.Part {
+  ) -> Box.PartResolved {
     guard let part = engine.theme.frameStyle.part(for: self) else {
       assertionFailure("Missing \(self) for Frame \(dump(engine.theme.frameStyle))")
       return .blank

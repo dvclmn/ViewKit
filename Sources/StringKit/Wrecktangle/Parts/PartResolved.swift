@@ -8,12 +8,12 @@
 import Foundation
 import SharedHelpers
 
-public typealias Part = Box.Part
+public typealias Part = Box.PartResolved
 
 extension Box {
   public typealias GlyphStack = [[GlyphType]]
 
-  public struct Part: Sendable, Codable, Equatable, Hashable {
+  public struct PartResolved: Sendable, Codable, Equatable, Hashable {
     let type: PartType
     let glyphs: GlyphStack
     
@@ -34,7 +34,7 @@ extension Box {
   }
 }
 
-extension Box.Part {
+extension Box.PartResolved {
   /// Handy overload for when there's only one Row,
   /// and one Glyph in that Row. For very simplistic Frames.
   ///
@@ -64,8 +64,8 @@ extension Box.Part {
   }
 }
 
-extension Box.Part {
-  static var blank: Box.Part {
+extension Box.PartResolved {
+  static var blank: Box.PartResolved {
     .init(type: .blank, glyphs: [])
   }
   

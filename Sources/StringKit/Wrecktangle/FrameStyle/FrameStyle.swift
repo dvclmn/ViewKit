@@ -18,7 +18,7 @@ extension Box {
 
 extension Box {
 
-  public typealias PartMap = [Box.PartRole: Box.Part]
+  public typealias PartMap = [Box.PartRole: Box.PartResolved]
 
   public struct Frame: Sendable, Codable, Equatable {
     let partTypes: Set<Box.PartRole>
@@ -62,7 +62,7 @@ extension Box.Frame {
 //    partMap[type]
   }
 
-  func merged(overrides: Set<Box.Part>) -> Box.Frame {
+  func merged(overrides: Set<Box.PartResolved>) -> Box.Frame {
     //  func merged(overrides: Box.PartMap) -> Box.Frame {
     var newParts = parts
     //    for (key, value) in overrides {
