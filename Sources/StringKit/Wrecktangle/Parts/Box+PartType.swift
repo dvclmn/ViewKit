@@ -37,7 +37,7 @@ extension Box.PartType {
 }
 
 extension Box {
-  public enum CornerType: String, Hashable, Sendable, Codable {
+  public enum CornerType: String, Hashable, Sendable, Codable, CaseIterable {
     case topLeading
     case topTrailing
     case bottomLeading

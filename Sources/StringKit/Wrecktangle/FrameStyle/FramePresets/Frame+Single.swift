@@ -24,7 +24,11 @@ extension Box.FrameStyle {
       Part(.join(.bottom)) { GlyphType.join(x: .increased, y: .standard) }
       Part(.join(.cross)) { GlyphType.join(x: .increased, y: .standard) }
 
-      Part(.corner(.topTrailing)) { GlyphType.corner(.increased) }
+//      for corner in Box.CornerType.allCases {
+//        Part(.corner(corner)) {
+//          GlyphType.corner(.increased)
+//        }
+//      }
 
       //      Part(.join(.leading)) {
       //        Glyph.join(

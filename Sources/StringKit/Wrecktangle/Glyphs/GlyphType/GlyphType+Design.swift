@@ -9,7 +9,7 @@ extension Box.GlyphType {
   
   public enum Design: String, Sendable, Hashable, Codable {
     case sharp
-    case rounded
+    case round
     
     /// Example: `╔═`
     /// Named `hollow` to disabiguate from Frame's `double`

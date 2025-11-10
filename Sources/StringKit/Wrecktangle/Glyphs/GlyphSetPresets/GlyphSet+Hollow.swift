@@ -8,8 +8,8 @@
 extension Box.GlyphSet {
 
   public static var hollow: Self {
-    GlyphSet(fallback: .sharp) {
-//    GlyphSet(.hollow, fallback: .sharp) {
+//    GlyphSet(fallback: .sharp) {
+    GlyphSet(.hollow, fallback: .sharp) {
 
       Glyph("═", .horizontal)
       Glyph("─", .horizontal)

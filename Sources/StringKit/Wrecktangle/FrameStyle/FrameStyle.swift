@@ -57,3 +57,9 @@ extension Box.FrameStyle {
     }
   }
 }
+
+extension Box.FrameStyle: CustomStringConvertible {
+  public var description: String {
+    "FrameStyle[parts: \(parts.prettyString)]"
+  }
+}

@@ -8,8 +8,8 @@
 extension Box.GlyphSet {
 //  wqdqkqef
   public static var rounded: Self {
-    GlyphSet(fallback: .sharp) {
-//    GlyphSet(.rounded, fallback: .sharp) {
+//    GlyphSet(fallback: .sharp) {
+    GlyphSet(.round, fallback: .sharp) {
 //      Glyph.horizontal(.increased): "─",
 //      Glyph.horizontal(.standard): "─",
 //      
