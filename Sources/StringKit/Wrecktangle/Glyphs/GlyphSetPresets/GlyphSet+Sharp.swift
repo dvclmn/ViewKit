@@ -8,7 +8,8 @@
 extension Box.GlyphSet {
 
   public static var sharp: Self {
-    GlyphSet(.sharp) {
+    GlyphSet {
+//    GlyphSet(.sharp) {
 
       Glyph.blank
 
