@@ -9,14 +9,14 @@ extension Box {
   /// Needs to have nothing to do with ``Box/GlyphDesign``
   public struct PartStructure: Sendable, Equatable, Codable, Hashable {
     let type: PartRole
-    let roles: [[GlyphStructure]]
+    let glyphs: [[GlyphStructure]]
 
     public init(
       type: PartRole,
-      roles: [[GlyphStructure]]
+      glyphs: [[GlyphStructure]]
     ) {
       self.type = type
-      self.roles = roles
+      self.glyphs = glyphs
     }
   }
 

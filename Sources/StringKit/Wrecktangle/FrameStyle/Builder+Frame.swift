@@ -8,16 +8,49 @@
 @resultBuilder
 enum FrameBuilder {
 
-  typealias Part = Box.PartStructure
+  typealias BlockInput = Box.PartStructure
+  typealias BlockOutput = Box.PartMap
 
-  static func buildBlock(_ components: [Part]...) -> [Part] {
-    components.flatMap { $0 }
-    //    makeDict(components.flatMap { $0 })
-    //    Dictionary(uniqueKeysWithValues: components.map { ($0.type, $0) })
+//  typealias FramePart = Box.PartStructure
+//  typealias PartMap = Box.PartMap
+
+  
+  /// `buildArray` receives an array of whatever your builder’s
+  /// base `buildBlock` returns.
+  ///
+  /// So if you have:
+  /// ```
+  /// buildBlock(_ components: Box.Part...) -> Box.PartMap
+  /// ```
+  ///
+  /// then you get:
+  /// ```
+  /// buildArray(_ components: [Box.PartMap])
+  /// ```
+  ///
+  /// That is — an array of dictionaries, not an array of single Parts.
+  
+
+  static func buildBlock(_ components: BlockInput...) -> BlockOutput {
+    Dictionary(uniqueKeysWithValues: components.map { ($0.type, $0) })
   }
 
-  public static func buildArray(_ components: [[Part]]) -> [Part] {
-    components.flatMap { $0 }
+//  static func buildBlock(_ components: [Part]...) -> [Part] {
+//    components.flatMap { $0 }
+//    //    makeDict(components.flatMap { $0 })
+//    //    Dictionary(uniqueKeysWithValues: components.map { ($0.type, $0) })
+//  }
+
+  public static func buildArray(_ components: [BlockOutput]) -> BlockOutput {
+    components.reduce(into: [:]) { partial, partMap in
+      partial.merge(partMap) { current, new in
+        new
+      }
+    }
+//    components.reduce(into: [:]) {
+//      $0.merge($1) { _, new in new }
+//    }
+//    components.flatMap { $0 }
     //    components
     //    [
     //      reduceDict(components)
