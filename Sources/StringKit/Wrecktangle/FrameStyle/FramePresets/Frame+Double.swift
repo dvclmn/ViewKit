@@ -41,7 +41,7 @@ extension Box.FrameStructure {
       }
 
     }  // END Frame
-//        .merged(overrides: Box.JoinType.doubleJoin.parts)
-//        .merged(overrides: Box.CornerType.doubleCorner.parts)
+    .merged(overrides: Box.JoinType.doubleJoin.parts)
+    .merged(overrides: Box.CornerType.doubleCorner.parts)
   }
 }

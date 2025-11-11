@@ -24,13 +24,6 @@ extension Box.FrameStructure {
       Part(.join(.bottom)) { GlyphType.join(x: .increased, y: .standard) }
       Part(.join(.cross)) { GlyphType.join(x: .increased, y: .standard) }
 
-      //      for corner in Box.CornerType.allCases {
-      //        Part(.horizontal(.top), weight: .increased)
-      //        Part(.corner(corner)) {
-      //          GlyphType.corner(.increased)
-      //        }
-      //      }
-
       Part(.corner(.topLeading), weight: .increased)
       Part(.corner(.topTrailing), weight: .increased)
       Part(.corner(.bottomLeading), weight: .increased)

@@ -71,25 +71,38 @@ extension BoxView {
     VStack(alignment: .leading, spacing: 14) {
 
       BoxView {
-        Box.Header("\"Rounded\" GlyphSet, with FrameStyle \"Single\"")
+        Box.Header("Sharp Glyphs, Double Frame.")
+        "I've got my FrameStyle set to Double."
+        DummyContent.Strings.paragraphs[6].prefix(80).toString
+      }
+      //      .environment(\.metrics, .lineNumbers)
+      //      .environment(\.metrics, [])
+      .setBoxStyle(
+        glyphs: .sharp,
+        frame: .double,
+      )
+      
+      BoxView {
+        Box.Header("Rounded GlyphSet, with FrameStyle \"Single\"")
         DummyContent.Strings.paragraphs[3].prefix(110).toString
       }
       .setBoxStyle(
         glyphs: .rounded,
-        frame: .single,
+        frame: .double,
       )
 
-//      BoxView {
-//        Box.Header("I have the Hollow style glyphs")
-//        "I've got my FrameStyle set to Double."
-//        DummyContent.Strings.paragraphs[5].prefix(120).toString
-//      }
-//      //      .environment(\.metrics, .lineNumbers)
-//      //      .environment(\.metrics, [])
-//      .setBoxStyle(
-//        glyphs: .hollow,
-//        frame: .double,
-//      )
+
+      BoxView {
+        Box.Header("Hollow style glyphs")
+        "I've got my FrameStyle set to Double."
+        DummyContent.Strings.paragraphs[5].prefix(120).toString
+      }
+      //      .environment(\.metrics, .lineNumbers)
+      //      .environment(\.metrics, [])
+      .setBoxStyle(
+        glyphs: .hollow,
+        frame: .double,
+      )
 //
 //      BoxView {
 //        Box.Header("Rounded glyphs, Double Frame")
