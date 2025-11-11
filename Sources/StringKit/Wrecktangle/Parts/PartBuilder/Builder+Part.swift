@@ -9,7 +9,7 @@ import Foundation
 
 @resultBuilder
 enum PartBuilder {
-  public typealias GlyphStack = [[Box.GlyphDescriptor]]
+  public typealias GlyphStack = [[Box.GlyphStructure]]
   
   static func buildBlock(_ components: any RowConvertible...) -> GlyphStack {
     components.map { $0.asGlyphRow() }
