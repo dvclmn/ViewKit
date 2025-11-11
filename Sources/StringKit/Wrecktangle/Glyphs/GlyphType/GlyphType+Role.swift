@@ -16,7 +16,7 @@ extension Box {
 }
 
 extension Box.GlyphRole {
-  
+
   var name: String {
     switch self {
       case .horizontal: "H"
@@ -26,7 +26,7 @@ extension Box.GlyphRole {
       case .blank: "Blank"
     }
   }
-  
+
   public init(fromPartRole partRole: Box.PartRole) {
     switch partRole {
       case .horizontal(_): self = .horizontal

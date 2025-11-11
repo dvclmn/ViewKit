@@ -6,17 +6,28 @@
 //
 
 extension Box.GlyphGroup {
-  
+
+  //  static var straights: Self {
+  //    GlyphGroup {
+  //      // MARK: - Horizontal
+  //      Glyph("━", .horizontal, weight: .increased)
+  //      Glyph("─", .horizontal)
+  //
+  //      // MARK: - Vertical
+  //      Glyph("┃", .vertical, weight: .increased)
+  //      Glyph("│", .vertical)
+  //
+  //    }
+  //  }
+
   static var straights: Self {
+    straightsThin.merged(with: straightsThick)
+  }
+
+  static var straightsThick: Self {
     GlyphGroup {
-      // MARK: - Horizontal
       Glyph("━", .horizontal, weight: .increased)
-      Glyph("─", .horizontal)
-      
-      // MARK: - Vertical
       Glyph("┃", .vertical, weight: .increased)
-      Glyph("│", .vertical)
-      
     }
   }
 
@@ -25,6 +36,13 @@ extension Box.GlyphGroup {
       Glyph("─", .horizontal)
       Glyph("│", .vertical)
     }
+  }
+
+  // MARK: - All Joins
+  static var joins: Self {
+    joinsThick
+      .merged(with: joinsThinInterior)
+      .merged(with: joinsThin)
   }
 
   // MARK: - Thin Joins
@@ -39,7 +57,7 @@ extension Box.GlyphGroup {
   }
 
   // MARK: - Bold Joins
-  static var joins: Self {
+  static var joinsThick: Self {
     GlyphGroup {
       Glyph("┳", .join(.top), x: .increased, y: .increased)
       Glyph("┻", .join(.bottom), x: .increased, y: .increased)
@@ -60,8 +78,13 @@ extension Box.GlyphGroup {
     }
   }
 
-  // MARK: - Bold Corners
+  // MARK: - All Corners
   static var corners: Box.GlyphGroup {
+    cornersThin.merged(with: cornersThick)
+  }
+
+  // MARK: - Bold Corners
+  static var cornersThick: Box.GlyphGroup {
     GlyphGroup {
       Glyph("┏", .corner(.topLeading), weight: .increased)
       Glyph("┓", .corner(.topTrailing), weight: .increased)

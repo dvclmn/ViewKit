@@ -11,10 +11,11 @@ extension Box.GlyphSet {
     GlyphSet(.sharp) {
 
       Glyph.blank
-
       GlyphGroup.straights
       GlyphGroup.joins
       GlyphGroup.corners
+      
+      
 
     }  // END set
 

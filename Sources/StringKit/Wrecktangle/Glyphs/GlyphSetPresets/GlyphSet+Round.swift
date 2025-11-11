@@ -7,7 +7,7 @@
 
 extension Box.GlyphSet {
   public static var rounded: Self {
-    GlyphSet(.round, fallback: .sharp) {
+    GlyphSet(.round) {
 
       Glyph("╭", .corner(.topLeading))
       Glyph("╮", .corner(.topTrailing))
@@ -16,6 +16,7 @@ extension Box.GlyphSet {
 
       GlyphGroup.joinsThin
       GlyphGroup.straightsThin
+//      GlyphGroup.straightsThin
     }
   }
   //    style: .rounded,

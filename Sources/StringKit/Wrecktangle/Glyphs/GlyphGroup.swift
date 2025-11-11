@@ -9,7 +9,7 @@ typealias GlyphGroup = Box.GlyphGroup
 
 extension Box {
   struct GlyphGroup: Mergable {
-    
+
     var map: GlyphMap
 
     init(glyphs: GlyphMap) {
