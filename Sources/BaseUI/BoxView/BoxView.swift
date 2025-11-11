@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-import LayoutKit
 import BaseUtilities
+import LayoutKit
 import SwiftUI
 
 public struct BoxView: View {
@@ -64,64 +64,80 @@ extension BoxView {
   }
 }
 
+extension EnvironmentValues {
+  @Entry var paragraphNumber: Int? = nil
+}
+
+
 #if DEBUG
 #Preview(traits: .size(.normal)) {
 
   ScrollView {
-    VStack(alignment: .leading, spacing: 14) {
+    HStack(alignment: .top, spacing: 24) {
+      //    VStack(alignment: .leading, spacing: 14) {
 
-      BoxView {
-        Box.Header("Sharp Glyphs, Double Frame.")
-        "I've got my FrameStyle set to Double."
-        DummyContent.Strings.paragraphs[6].prefix(80).toString
+      GroupBox("Sharp") {
+        BoxViewExample()
+          .setBoxStyle(
+            glyphs: .sharp,
+            frame: .single,
+          )
+        Divider()
+        BoxViewExample()
+          .setBoxStyle(
+            glyphs: .sharp,
+            frame: .double,
+          )
       }
-      //      .environment(\.metrics, .lineNumbers)
-      //      .environment(\.metrics, [])
-      .setBoxStyle(
-        glyphs: .sharp,
-        frame: .double,
-      )
-      
-      BoxView {
-        Box.Header("Rounded GlyphSet, with FrameStyle \"Single\"")
-        DummyContent.Strings.paragraphs[3].prefix(110).toString
-      }
-      .setBoxStyle(
-        glyphs: .rounded,
-        frame: .double,
-      )
 
+      GroupBox("Round") {
+        BoxViewExample()
+          .setBoxStyle(
+            glyphs: .rounded,
+            frame: .single,
+          )
 
-      BoxView {
-        Box.Header("Hollow style glyphs")
-        "I've got my FrameStyle set to Double."
-        DummyContent.Strings.paragraphs[5].prefix(120).toString
+        Divider()
+        BoxViewExample()
+          .setBoxStyle(
+            glyphs: .rounded,
+            frame: .double,
+          )
       }
-      //      .environment(\.metrics, .lineNumbers)
-      //      .environment(\.metrics, [])
-      .setBoxStyle(
-        glyphs: .hollow,
-        frame: .double,
-      )
-//
-//      BoxView {
-//        Box.Header("Rounded glyphs, Double Frame")
-//        DummyContent.Strings.paragraphs[6].prefix(120).toString
-//
-//        //        Box.Divider()
-//        //                        "Last text sign-off"
-//        //                  Box.Bottom()
-//        //                          Box.Bottom()
-//        //                  Box.Bottom()
-//      }
-//      //      .environment(\.metrics, .lineNumbers)
-//      .setBoxStyle(
-//        glyphs: .rounded,
-//        frame: .double,
-//      )
+      GroupBox("Hollow") {
+        BoxViewExample()
+          .setBoxStyle(
+            glyphs: .hollow,
+            frame: .single,
+          )
+
+        Divider()
+        BoxViewExample()
+          .setBoxStyle(
+            glyphs: .hollow,
+            frame: .double,
+          )
+      }
+
+      //
+      //      BoxView {
+      //        Box.Header("Rounded glyphs, Double Frame")
+      //        DummyContent.Strings.paragraphs[6].prefix(120).toString
+      //
+      //        //        Box.Divider()
+      //        //                        "Last text sign-off"
+      //        //                  Box.Bottom()
+      //        //                          Box.Bottom()
+      //        //                  Box.Bottom()
+      //      }
+      //      //      .environment(\.metrics, .lineNumbers)
+      //      .setBoxStyle(
+      //        glyphs: .rounded,
+      //        frame: .double,
+      //      )
     }
-
-    .setGridFrame(36, alignment: .leading)
+    .environment(\.paragraphNumber, 5)
+    .setGridFrame(22, alignment: .leading)
 
   }
   .textSelection(.enabled)

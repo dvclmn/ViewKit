@@ -17,6 +17,7 @@ extension Box.FrameStructure {
         Row { GlyphType.h(.standard) }
         Row { GlyphType.h(.increased) }
       }
+      
       Part(.horizontal(.interior)) {
         GlyphType.h(.standard)
       }

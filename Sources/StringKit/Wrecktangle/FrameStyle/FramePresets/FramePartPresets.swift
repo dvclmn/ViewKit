@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 8/11/2025.
 //
 
-
 extension Box.JoinType {
 
   static var doubleJoin: Frame {

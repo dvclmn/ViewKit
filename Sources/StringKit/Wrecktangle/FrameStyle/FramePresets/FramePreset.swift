@@ -16,7 +16,7 @@ extension Box {
 
 extension Box.FramePreset {
   
-  var name: String { rawValue.capitalized }
+  public var name: String { rawValue.capitalized }
   var frame: Box.FrameStructure {
     switch self {
       case .single: Frame.single

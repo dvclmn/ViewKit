@@ -18,6 +18,6 @@ extension Box {
 }
 
 extension Box.GlyphDesign {
-  var name: String { rawValue.capitalized }
+  public var name: String { rawValue.capitalized }
 }
 
