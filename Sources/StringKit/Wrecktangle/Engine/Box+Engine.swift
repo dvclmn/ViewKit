@@ -19,6 +19,16 @@ extension Box {
 
 extension Box.Engine {
   var width: Int { config.width }
+
+  var framePreset: Box.FramePreset { theme.frameStyle }
+  var glyphDesign: Box.GlyphDesign { theme.glyphSet.design }
+//  var boxStyle: Box.BoxStyle {
+//    Box.BoxStyle(
+//      frame: theme.frameStyle,
+//      glyphSet: theme.glyphSet
+//    )
+//  }
+
   var theme: Box.Theme { config.theme }
   var hasRowNumbers: Bool { config.metrics.contains(.lineNumbers) }
 
@@ -51,7 +61,7 @@ extension Box.Engine {
   }
 
   private var rowNumbersWidth: Int { hasRowNumbers ? 2 : 0 }
-  private var capsWidth: Int { theme.frameStyle.frameWidth(for: .leading).map { $0 * 2 } ?? 1 }
+  private var capsWidth: Int { theme.frameStyle.frame.frameWidth(for: .leading).map { $0 * 2 } ?? 1 }
 
 }
 

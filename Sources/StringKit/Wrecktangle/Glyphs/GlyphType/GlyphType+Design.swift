@@ -17,3 +17,7 @@ extension Box {
   }
 }
 
+extension Box.GlyphDesign {
+  var name: String { rawValue.capitalized }
+}
+

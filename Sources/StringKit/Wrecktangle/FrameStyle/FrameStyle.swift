@@ -9,12 +9,12 @@ import SharedHelpers
 
 public typealias Frame = Box.FrameStructure
 
-extension Box {
-  struct FrameStyle {
-    let frame: FrameStructure
-    let glyphSet: GlyphSet
-  }
-}
+//extension Box {
+//  struct BoxStyle {
+//    let frame: FramePreset
+//    let glyphSet: GlyphSet
+//  }
+//}
 
 extension Box {
 
@@ -41,24 +41,13 @@ extension Box.FrameStructure {
     return parts[.vertical(location)]?.width
   }
 
-  //  var partMap: Box.PartMap {
-  //    Dictionary(
-  //      uniqueKeysWithValues: partTypes.map { part in
-  //        (part, part)
-  //      }
-  //    )
-  //  }
-
   func part(for type: Box.PartRole) -> Part? {
     parts[type]
   }
 
-  //    func merged(overrides: Set<Box.PartResolved>) -> Box.Frame {
   func merged(overrides: Box.PartMap) -> Self {
     var newParts = parts
     for (key, value) in overrides {
-      //      for part in overrides {
-      //        newParts.update(with: part)
       newParts[key] = value
     }
     return Self(partMap: newParts)
