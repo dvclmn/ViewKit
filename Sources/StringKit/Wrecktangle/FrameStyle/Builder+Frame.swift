@@ -11,10 +11,6 @@ enum FrameBuilder {
   typealias BlockInput = Box.PartStructure
   typealias BlockOutput = Box.PartMap
 
-//  typealias FramePart = Box.PartStructure
-//  typealias PartMap = Box.PartMap
-
-  
   /// `buildArray` receives an array of whatever your builder’s
   /// base `buildBlock` returns.
   ///
@@ -29,17 +25,18 @@ enum FrameBuilder {
   /// ```
   ///
   /// That is — an array of dictionaries, not an array of single Parts.
-  
+  /// If you ever get an error like:
+  ///
+  /// > Cannot convert value of type `[Box.PartMap]`
+  /// > to expected argument type `[Box.Part]`
+  ///
+  /// …it usually means you’ve changed one of the `build*` return types
+  /// (say buildBlock returns `[Box.Part]` but buildArray expects `[Box.PartMap]`).
+  /// They must all line up perfectly — that’s the most common “silent killer” in these setups.
 
   static func buildBlock(_ components: BlockInput...) -> BlockOutput {
     Dictionary(uniqueKeysWithValues: components.map { ($0.type, $0) })
   }
-
-//  static func buildBlock(_ components: [Part]...) -> [Part] {
-//    components.flatMap { $0 }
-//    //    makeDict(components.flatMap { $0 })
-//    //    Dictionary(uniqueKeysWithValues: components.map { ($0.type, $0) })
-//  }
 
   public static func buildArray(_ components: [BlockOutput]) -> BlockOutput {
     components.reduce(into: [:]) { partial, partMap in
@@ -47,66 +44,18 @@ enum FrameBuilder {
         new
       }
     }
-//    components.reduce(into: [:]) {
-//      $0.merge($1) { _, new in new }
-//    }
-//    components.flatMap { $0 }
-    //    components
-    //    [
-    //      reduceDict(components)
-    //    ]
-    //    makeDict(components)
-    //    components.flatMap { makeDict($0) }
   }
 
-  static func buildEither(first: Part) -> Part { first }
-  static func buildEither(second: Part) -> Part { second }
-  static func buildOptional(_ component: [Part]?) -> [Part] {
-    component ?? []
+  static func buildEither(first: BlockOutput) -> BlockOutput { first }
+  static func buildEither(second: BlockOutput) -> BlockOutput { second }
+  static func buildOptional(_ component: BlockOutput?) -> BlockOutput {
+    component ?? [:]
   }
 }
 
 extension FrameBuilder {
-
-  static func buildExpression(_ expression: Part) -> [Part] {
+  
+  static func buildExpression(_ expression: BlockOutput) -> [BlockOutput] {
     [expression]
-    //    //  static func buildArray(_ components: [Box.Part]) -> Box.PartMap {
-    //    //    makeDict(components)
-    //    //
   }
-
-  //  private static func makeDict(_ components: [Box.Part]) -> FrameBuilderOutput {
-  //
-  //  }
-  //
-  //  private static func reduceDict(_ components: [Box.PartMap]) -> FrameBuilderOutput {
-  //    components.reduce(into: [:]) { $0.merge($1) { _, new in new } }
-  ////    Dictionary(
-  ////      uniqueKeysWithValues: components.map { part in
-  ////        (part.type, part)
-  ////      }
-  ////    )
-  //  }
-
-  //  private static func makeGridDict(_ components: [[Box.Part]]) -> Box.PartMap {
-  //    Dictionary(
-  //      uniqueKeysWithValues: components.flatMap { parts in
-  //        parts.map { part in
-  //          (part.type, part)
-  //        }
-  //
-  //      }
-  //    )
-  //  }
-
 }
-
-//protocol PartMapConvertible {
-//  func asPartMap() -> Box.PartMap
-//}
-//
-//extension Box.GlyphType: PartMapConvertible {
-//  func asPartMap() -> Box.PartMap {
-//
-//  }
-//}

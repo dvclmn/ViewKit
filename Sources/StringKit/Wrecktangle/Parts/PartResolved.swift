@@ -66,11 +66,10 @@ extension Box.PartResolved {
 }
 
 extension Box.PartResolved {
-  static var blank: Box.PartResolved {
-    .init(type: .blank, glyphs: [])
-  }
+
   
-  var width: Int { glyphs.width(for: .widestRow) }
+  
+  
   func toStringStack(with theme: Box.Theme) -> StringStack {
     StringStack(from: glyphs, with: theme)
   }

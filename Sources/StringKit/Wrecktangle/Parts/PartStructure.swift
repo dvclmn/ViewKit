@@ -8,7 +8,10 @@
 extension Box {
   /// Needs to have nothing to do with ``Box/GlyphDesign``
   public struct PartStructure: Sendable, Equatable, Codable, Hashable {
+    /// What bit of the Box does this Part build
     let type: PartRole
+    
+    /// What glyphs are used to compose this Part
     let glyphs: [[GlyphStructure]]
 
     public init(
@@ -26,5 +29,19 @@ extension Box {
   public struct GlyphStructure: Sendable, Codable, Hashable {
     let role: GlyphRole
     let weight: Box.GlyphWeight
+    
+    public init(_ role: GlyphRole, weight: Box.GlyphWeight) {
+      self.role = role
+      self.weight = weight
+    }
+  }
+}
+
+extension Box.PartStructure {
+  
+  var width: Int { glyphs.width(for: .widestRow) }
+  
+  static var blank: Box.PartResolved {
+    .init(type: .blank, glyphs: [])
   }
 }
