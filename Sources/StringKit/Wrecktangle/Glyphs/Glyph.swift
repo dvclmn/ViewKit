@@ -23,7 +23,7 @@ extension Box {
     public init(
       _ character: Character,
       _ role: Box.GlyphRole,
-      weight: Box.GlyphProminence = .standard,
+      weight: Box.GlyphWeight = .standard,
 //      design: Box.GlyphType.Design = .sharp
 //      design explicitDesign: Box.GlyphType.Design? = nil
       design: Box.GlyphDesign? = nil
@@ -37,8 +37,8 @@ extension Box {
     public init(
       _ character: Character,
       _ role: Box.GlyphRole,
-      x: Box.GlyphProminence.ProminenceType = .standard,
-      y: Box.GlyphProminence.ProminenceType = .standard,
+      x: Box.GlyphWeight.WeightType = .standard,
+      y: Box.GlyphWeight.WeightType = .standard,
 //      design: Box.GlyphType.Design = .sharp
 //      design explicitDesign: Box.GlyphType.Design? = nil
       design: Box.GlyphDesign? = nil
@@ -46,7 +46,7 @@ extension Box {
       self.init(
         character,
         role,
-        weight: GlyphProminence(x: x, y: y),
+        weight: GlyphWeight(x: x, y: y),
         design: design
       )
     }

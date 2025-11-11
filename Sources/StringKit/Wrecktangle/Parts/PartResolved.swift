@@ -54,7 +54,7 @@ extension Box.PartResolved {
   /// ```
   public init(
     _ role: Box.PartRole,
-    weight: Box.GlyphProminence = .standard,
+    weight: Box.GlyphWeight = .standard,
     design: Box.GlyphDesign = .sharp
   ) {
     let glyphRole = Box.GlyphRole(fromPartType: role)

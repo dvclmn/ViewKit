@@ -9,7 +9,7 @@ extension Box.GlyphDescriptor {
 
   static func fromRole(
     _ role: Box.GlyphRole,
-    weight: Box.GlyphProminence = .standard,
+    weight: Box.GlyphWeight = .standard,
     design: Box.GlyphDesign? = nil
   ) -> Self {
     let resolvedDesign = design ?? GlyphDesignContext.currentDesign ?? .sharp
@@ -24,22 +24,22 @@ extension Box.GlyphDescriptor {
   }
 
   static func h(
-    _ weight: Box.GlyphProminence = .standard,
+    _ weight: Box.GlyphWeight = .standard,
     _ design: Box.GlyphDesign = .sharp
   ) -> Self {
     Self(.horizontal, weight: weight, design: design)
   }
 
   static func v(
-    _ weight: Box.GlyphProminence = .standard,
+    _ weight: Box.GlyphWeight = .standard,
     _ design: Box.GlyphDesign = .sharp
   ) -> Self {
     Self(.vertical, weight: weight, design: design)
   }
 
   static func join(
-    x: Box.GlyphProminence.ProminenceType = .standard,
-    y: Box.GlyphProminence.ProminenceType = .standard,
+    x: Box.GlyphWeight.WeightType = .standard,
+    y: Box.GlyphWeight.WeightType = .standard,
     _ design: Box.GlyphDesign = .sharp
   ) -> Self {
     guard case .join(let joinType)? = Box.PartContext.currentType else {
@@ -49,7 +49,7 @@ extension Box.GlyphDescriptor {
   }
 
   static func corner(
-    _ weight: Box.GlyphProminence = .standard,
+    _ weight: Box.GlyphWeight = .standard,
     _ design: Box.GlyphDesign = .sharp
   ) -> Self {
     guard case .corner(let cornerType)? = Box.PartContext.currentType else {

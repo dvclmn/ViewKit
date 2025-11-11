@@ -25,6 +25,6 @@ extension Box {
   /// at all, so is used for `FrameStyle`
   public struct GlyphStructure: Sendable, Codable, Hashable {
     let role: GlyphRole
-    let weight: Box.GlyphProminence
+    let weight: Box.GlyphWeight
   }
 }
