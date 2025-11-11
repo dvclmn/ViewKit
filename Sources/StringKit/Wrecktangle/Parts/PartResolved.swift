@@ -25,8 +25,6 @@ extension Box {
   }
 }
 
-
-
 extension Box.PartResolved {
   static func from(_ structure: Box.PartStructure, design: Box.GlyphDesign) -> Self {
     structure.resolved(with: design)
@@ -40,11 +38,9 @@ extension Box.PartResolved {
   }
 }
 
-
-
 extension Box.PartResolved: CustomStringConvertible {
   public var description: String {
     "Part[Glyphs: \(glyphs), StringStack: \(toStringStack(with: .default))]"
-//    "Part[Glyphs: \(glyphs), W: \(width), StringStack: \(toStringStack(with: .default))]"
+    //    "Part[Glyphs: \(glyphs), W: \(width), StringStack: \(toStringStack(with: .default))]"
   }
 }

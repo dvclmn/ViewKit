@@ -118,24 +118,8 @@ extension EnvironmentValues {
             frame: .double,
           )
       }
-
-      //
-      //      BoxView {
-      //        Box.Header("Rounded glyphs, Double Frame")
-      //        DummyContent.Strings.paragraphs[6].prefix(120).toString
-      //
-      //        //        Box.Divider()
-      //        //                        "Last text sign-off"
-      //        //                  Box.Bottom()
-      //        //                          Box.Bottom()
-      //        //                  Box.Bottom()
-      //      }
-      //      //      .environment(\.metrics, .lineNumbers)
-      //      .setBoxStyle(
-      //        glyphs: .rounded,
-      //        frame: .double,
-      //      )
     }
+//                .environment(\.metrics, .lineNumbers)
     .environment(\.paragraphNumber, 5)
     .setGridFrame(22, alignment: .leading)
 

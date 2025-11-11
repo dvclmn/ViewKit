@@ -22,12 +22,6 @@ extension Box.Engine {
 
   var framePreset: Box.FramePreset { theme.frameStyle }
   var glyphDesign: Box.GlyphDesign { theme.glyphSet.design }
-//  var boxStyle: Box.BoxStyle {
-//    Box.BoxStyle(
-//      frame: theme.frameStyle,
-//      glyphSet: theme.glyphSet
-//    )
-//  }
 
   var theme: Box.Theme { config.theme }
   var hasRowNumbers: Bool { config.metrics.contains(.lineNumbers) }

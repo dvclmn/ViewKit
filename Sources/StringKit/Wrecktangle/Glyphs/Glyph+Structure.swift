@@ -5,12 +5,13 @@
 //  Created by Dave Coleman on 11/11/2025.
 //
 
-/// For Frame builders
+/// For use within the body of Frame builders
+/// Describes Structure only, not Design
 public typealias GlyphType = Box.GlyphStructure
 
 /// For GlyphSet builders
+/// Describes actual individual Characters (Design/appearance)
 public typealias Glyph = Box.GlyphResolved
-//public typealias Glyph = Box.GlyphDescriptor
 
 extension Box {
 
@@ -35,8 +36,6 @@ extension Box {
     ) {
       let weight = GlyphWeight(x: x, y: y)
       self.init(role, weight: weight)
-      //    self.structure = .init(role, weight: weight)
-      //    self.design = design
     }
-  } // END Glyph structure
+  }  // END Glyph structure
 }

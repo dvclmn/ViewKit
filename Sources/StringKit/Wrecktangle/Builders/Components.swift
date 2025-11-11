@@ -37,6 +37,7 @@ extension Box {
       [
         Box.Line(
           .horizontal(.interior),
+//          leading: .vertical(.leading),
           leading: .join(.leading),
           trailing: .join(.trailing),
         )

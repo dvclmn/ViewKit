@@ -36,7 +36,30 @@ extension Box {
       }
     }
   }
+}
 
+extension Box.PartStructure {
+  public var width: Int { glyphs.width(for: .widestRow) }
+  public static var blank: Self { Part(.blank, glyphs: []) }
+
+  public func resolved(with design: Box.GlyphDesign) -> Box.PartResolved {
+    let resolvedGlyphs: [[Box.GlyphDescriptor]] = glyphs.map { row in
+      row.map { glyph in
+        let role = Box.GlyphRole(fromPartRole: self.role)
+        return Box.GlyphDescriptor(
+          role,
+          weight: glyph.weight,
+          design: design
+        )
+      }
+    }
+
+    return Box.PartResolved(self.role, glyphs: resolvedGlyphs)
+  }
+
+  enum Context {
+    @TaskLocal static var currentRole: Box.PartRole?
+  }
 }
 
 extension Box.PartStructure {
@@ -58,49 +81,18 @@ extension Box.PartStructure {
   /// ```
   public init(
     _ role: Box.PartRole,
-    weight: Box.GlyphWeight = .standard,
-    //    design: Box.GlyphDesign = .sharp
+    weight: Box.GlyphWeight = .standard
   ) {
     let glyphRole = Box.GlyphRole(fromPartRole: role)
     let glyph = Box.GlyphStructure(glyphRole, weight: weight)
-    //    let glyph = GlyphType(glyphRole, weight: weight, design: design)
     self.role = role
     self.glyphs = [[glyph]]
-
   }
 }
 
-extension Box.PartStructure {
-
-  public var width: Int { glyphs.width(for: .widestRow) }
-
-  public static var blank: Self {
-    //  public static var blank: Box.PartResolved {
-    .init(.blank, glyphs: [])
-  }
-
-  public func resolved(with design: Box.GlyphDesign) -> Box.PartResolved {
-    let resolvedGlyphs: [[Box.GlyphDescriptor]] = glyphs.map { row in
-      row.map { glyph in
-        let role = Box.GlyphRole(fromPartRole: self.role)
-        return Box.GlyphDescriptor(
-          role,
-          weight: glyph.weight,
-          design: design
-        )
-      }
-    }
-
-    return Box.PartResolved(self.role, glyphs: resolvedGlyphs)
-  }
-
-  enum Context {
-    @TaskLocal static var currentRole: Box.PartRole?
-  }
-}
 extension Box.PartStructure: CustomStringConvertible {
   public var description: String {
-//    "Part[Glyphs: \(glyphs), StringStack: \(toStringStack(with: .default))]"
-        "Part[Glyphs: \(glyphs), W: \(width)]"
+    //    "Part[Glyphs: \(glyphs), StringStack: \(toStringStack(with: .default))]"
+    "Part[Glyphs: \(glyphs), W: \(width)]"
   }
 }

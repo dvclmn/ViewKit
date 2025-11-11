@@ -9,13 +9,6 @@ import SharedHelpers
 
 public typealias Frame = Box.FrameStructure
 
-//extension Box {
-//  struct BoxStyle {
-//    let frame: FramePreset
-//    let glyphSet: GlyphSet
-//  }
-//}
-
 extension Box {
 
   public typealias PartMap = [Box.PartRole: Box.PartStructure]
