@@ -47,18 +47,18 @@ extension Box.FrameStructure {
   }
 
   // MARK: - Debugging
-  //  func debugDump() {
-  //    print("Frame parts:")
-  //    for part in parts {
-  ////    for (key, value) in parts {
-  //      print(
-  //        """
-  //        \(key) → \(value.glyphs.map {
-  //          $0.map(\.description).joined()
-  //        })
-  //        """)
-  //    }
-  //  }
+  func debugDump() {
+    print("Frame parts:")
+    //      for part in parts {
+    for (key, value) in parts {
+      print(
+        """
+        \(key) → \(value.glyphs.map {
+            $0.map(\.description).joined()
+          })
+        """)
+    }
+  }
 }
 
 extension Box.FrameStructure: CustomStringConvertible {

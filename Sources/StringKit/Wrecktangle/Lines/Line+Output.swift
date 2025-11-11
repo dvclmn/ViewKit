@@ -42,7 +42,7 @@ extension Box.Line {
     ).reflowed()
 
     let padding = StringStack(
-      repeating: " ",
+      repeating: StringStack(unicodeScalarLiteral: Box.paddingCharacterFallback),
       count: engine.theme.padding.width,
       along: .horizontal
     )

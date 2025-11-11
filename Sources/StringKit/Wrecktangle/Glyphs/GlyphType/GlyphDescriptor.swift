@@ -21,14 +21,13 @@ extension Box {
       self.design = design
     }
 
-
   }
 }
 
 extension Box.GlyphDescriptor {
   public var role: Box.GlyphRole { structure.role }
   public var weight: Box.GlyphWeight { structure.weight }
-  
+
   static func fromRole(
     _ role: Box.GlyphRole,
     weight: Box.GlyphWeight = .standard,

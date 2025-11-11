@@ -65,7 +65,6 @@ extension Box.PartRole {
       case .blank: "blank"
     }
   }
-
 }
 
 extension Box.PartRole: CustomStringConvertible {

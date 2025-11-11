@@ -52,7 +52,7 @@ extension Box.GlyphSet {
   public func resolve(
     _ desc: Box.GlyphDescriptor
   ) -> Character {
-    glyphs[desc] ?? fallback?.wrapped.resolve(desc) ?? "#"
+    glyphs[desc] ?? fallback?.wrapped.resolve(desc) ?? Box.glyphSetCharacterFallback
   }
 }
 

@@ -7,9 +7,12 @@
 
 import Foundation
 
+
 /// This attempts to describe a glyph based on it's usage,
 /// rather than neccesarily it's appearance / visual qualitites
 extension Box.GlyphSet {
+  
+
 
 //  public static let sharp = Box.GlyphSet.base(
 //    [
@@ -154,6 +157,3 @@ extension Box.GlyphSet {
 
 }
 
-extension Character {
-  public static var blank: Character { " " }
-}
