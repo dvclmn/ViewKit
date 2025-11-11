@@ -17,50 +17,19 @@ extension Box {
     let role: PartRole
     let glyphs: [[GlyphDescriptor]]
 
-    init(type: PartRole, glyphs: [GlyphDescriptor]) {
+    init(_ type: PartRole, glyphs: [[GlyphDescriptor]]) {
       self.role = type
-      self.glyphs = [glyphs]
+      self.glyphs = glyphs
     }
 
-    init(
-      _ type: PartRole,
-      @PartBuilder _ content: () -> [[GlyphDescriptor]]
-    ) {
-      self.role = type
-      self.glyphs = PartContext.$currentType.withValue(type) {
-        content()
-      }
-    }
   }
 }
 
-extension Box.PartResolved {
-  /// Handy overload for when there's only one Row,
-  /// and one Glyph in that Row. For very simplistic Frames.
-  ///
-  /// ```
-  /// // Instead of this:
-  /// Frame {
-  ///   Part(.horizontal(.top)) {
-  ///     GlyphType.h(.increased, .hollow)
-  ///   }
-  /// }
-  ///
-  /// // We can write this:
-  /// Frame {
-  ///   Part(.horizontal(.top), weight: .increased, style: .hollow)
-  /// }
-  /// ```
-  public init(
-    _ role: Box.PartRole,
-    weight: Box.GlyphWeight = .standard,
-    design: Box.GlyphDesign = .sharp
-  ) {
-    let glyphRole = Box.GlyphRole(fromPartType: role)
-    let glyph = GlyphType(glyphRole, weight: weight, design: design)
-    self.role = role
-    self.glyphs = [[glyph]]
 
+
+extension Box.PartResolved {
+  static func from(_ structure: Box.PartStructure, design: Box.GlyphDesign) -> Self {
+    structure.resolved(with: design)
   }
 }
 
@@ -71,31 +40,7 @@ extension Box.PartResolved {
   }
 }
 
-// MARK: - Part Context
-/// This allows the leaving off of the `Box.GlyphType.join`'s
-/// `Box.JoinType`, when declared in a `Part` builder closure.
-/// For cleaner syntax.
-///
-/// Previously, the join type needed to be redundantly repeated, both
-/// in the Part init, and the Glyph definition, as below:
-/// ```
-/// Part(.join(.leading)) {
-///   Glyph.join(x: .increased, y: .standard, type: .leading)
-/// }
-/// ```
-/// Now, using `PartContext` and `Box/GlyphType/join(x:y:)`
-/// (the static property, not the enum case), I can omit the `type:`
-/// argument, and the Part/Glyph join type is still correctly passed through.
-/// ```
-/// Part(.join(.leading)) {
-///   Glyph.join(x: .increased, y: .standard)
-/// }
-/// ```
-extension Box {
-  enum PartContext {
-    @TaskLocal static var currentType: Box.PartRole?
-  }
-}
+
 
 extension Part: CustomStringConvertible {
   public var description: String {

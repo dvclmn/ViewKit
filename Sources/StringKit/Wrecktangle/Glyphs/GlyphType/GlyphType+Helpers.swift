@@ -5,61 +5,42 @@
 //  Created by Dave Coleman on 9/11/2025.
 //
 
-extension Box.GlyphDescriptor {
+/// Helpful note:
+/// For structure, we're usually talking about Role and Weight.
+/// For the below helpers, the Role is actually expressed in the
+/// function name, like `h()` (horizontal is the Role), and the
+/// Weight is in the signature.
+extension Box.GlyphStructure {
 
-  static func fromRole(
-    _ role: Box.GlyphRole,
-    weight: Box.GlyphWeight = .standard,
-    design: Box.GlyphDesign? = nil
-  ) -> Self {
-    let resolvedDesign = design ?? GlyphDesignContext.currentDesign ?? .sharp
-    return .init(role, weight: weight, design: resolvedDesign)
+  static func h(_ weight: Box.GlyphWeight = .standard) -> Self {
+    Self(.horizontal, weight: weight)
   }
 
-  func withoutStyle() -> Box.GlyphDescriptor {
-    var copy = self
-    /// or `.none`?
-    copy.design = .sharp
-    return copy
+  static func v(_ weight: Box.GlyphWeight = .standard) -> Self {
+    Self(.vertical, weight: weight)
   }
 
-  static func h(
-    _ weight: Box.GlyphWeight = .standard,
-    _ design: Box.GlyphDesign = .sharp
-  ) -> Self {
-    Self(.horizontal, weight: weight, design: design)
-  }
-
-  static func v(
-    _ weight: Box.GlyphWeight = .standard,
-    _ design: Box.GlyphDesign = .sharp
-  ) -> Self {
-    Self(.vertical, weight: weight, design: design)
-  }
-
+  /// No need to pass in `GlyphRole` here. This is handled
+  /// conveniently in the FrameBuilder, where `PartRole` is
+  /// passed through, and converted to `GlyphRole`.
   static func join(
     x: Box.GlyphWeight.WeightType = .standard,
-    y: Box.GlyphWeight.WeightType = .standard,
-    _ design: Box.GlyphDesign = .sharp
+    y: Box.GlyphWeight.WeightType = .standard
   ) -> Self {
-    guard case .join(let joinType)? = Box.PartContext.currentType else {
+    guard case .join(let joinType)? = Box.PartStructure.Context.currentRole else {
       fatalError("join(x:y:) used outside a join Part")
     }
-    return Self(.join(joinType), x: x, y: y, design: design)
+    return Self(.join(joinType), x: x, y: y)
   }
 
-  static func corner(
-    _ weight: Box.GlyphWeight = .standard,
-    _ design: Box.GlyphDesign = .sharp
-  ) -> Self {
-    guard case .corner(let cornerType)? = Box.PartContext.currentType else {
+  static func corner(_ weight: Box.GlyphWeight = .standard) -> Self {
+    guard case .corner(let cornerType)? = Box.PartStructure.Context.currentRole else {
       fatalError("corner(_:) used outside a corner Part")
     }
-    //          return .corner(prominence, type: cornerType)
-    return Self(.corner(cornerType), weight: .standard, design: design)
+    return Self(.corner(cornerType), weight: .standard)
   }
 
   static var blank: Self {
-    Self(.blank, weight: .standard, design: .sharp)
+    Self(.blank, weight: .standard)
   }
 }

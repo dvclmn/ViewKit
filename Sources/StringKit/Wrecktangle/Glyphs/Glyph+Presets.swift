@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 9/11/2025.
 //
 
-extension Box.Glyph {
+extension Box.GlyphResolved {
   static var thinJoins: [Self] {
     [
       Glyph("┬", .join(.top)),

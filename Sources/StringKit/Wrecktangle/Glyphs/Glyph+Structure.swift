@@ -21,9 +21,22 @@ extension Box {
     let role: GlyphRole
     let weight: Box.GlyphWeight
 
-    public init(_ role: GlyphRole, weight: Box.GlyphWeight) {
+    public init(
+      _ role: GlyphRole,
+      weight: Box.GlyphWeight
+    ) {
       self.role = role
       self.weight = weight
     }
-  }
+    public init(
+      _ role: GlyphRole,
+      x: GlyphWeight.WeightType = .standard,
+      y: GlyphWeight.WeightType = .standard
+    ) {
+      let weight = GlyphWeight(x: x, y: y)
+      self.init(role, weight: weight)
+      //    self.structure = .init(role, weight: weight)
+      //    self.design = design
+    }
+  } // END Glyph structure
 }

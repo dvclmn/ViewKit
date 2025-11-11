@@ -8,17 +8,7 @@
 import Foundation
 
 extension Box {
-
-  /// The building block used by ``Box/PartType``.
-  /// Refers to a *single character* (glyph) only.
-  /// Distinct from ``Box/PartType``, which handles
-  /// a composite of glyphs to form a useful whole.
-  ///
-  /// This was previously the `GlyphType` enum, with
-  /// horizontal, vertical, join, corner, blank and literal
   public struct GlyphDescriptor: Hashable, Codable, Sendable {
-    //    var role: GlyphRole
-    //    var weight: GlyphWeight
     let structure: GlyphStructure
     let design: GlyphDesign
 
@@ -28,29 +18,26 @@ extension Box {
       design: GlyphDesign = .sharp
     ) {
       self.structure = .init(role, weight: weight)
-      //      self.role = role
-      //      self.weight = weight
       self.design = design
     }
 
-    public init(
-      _ role: GlyphRole,
-      x: GlyphWeight.WeightType = .standard,
-      y: GlyphWeight.WeightType = .standard,
-      design: GlyphDesign = .sharp
-    ) {
-      let weight = GlyphWeight(x: x, y: y)
-      self.structure = .init(role, weight: weight)
-      //      self.role = role
-      //      self.weight = GlyphWeight(x: x, y: y)
-      self.design = design
-    }
+
   }
 }
 
 extension Box.GlyphDescriptor {
   public var role: Box.GlyphRole { structure.role }
   public var weight: Box.GlyphWeight { structure.weight }
+  
+  static func fromRole(
+    _ role: Box.GlyphRole,
+    weight: Box.GlyphWeight = .standard,
+    design: Box.GlyphDesign? = nil
+  ) -> Self {
+    let resolvedDesign = design ?? GlyphDesignContext.currentDesign ?? .sharp
+    return .init(role, weight: weight, design: resolvedDesign)
+  }
+
 }
 
 extension Box.GlyphDescriptor: CustomStringConvertible {

@@ -27,8 +27,8 @@ extension Box.GlyphRole {
     }
   }
   
-  public init(fromPartType partType: Box.PartRole) {
-    switch partType {
+  public init(fromPartRole partRole: Box.PartRole) {
+    switch partRole {
       case .horizontal(_): self = .horizontal
       case .vertical(_): self = .vertical
       case .join(let type): self = .join(type)
