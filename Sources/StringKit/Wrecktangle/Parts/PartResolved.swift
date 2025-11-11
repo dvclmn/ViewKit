@@ -8,7 +8,8 @@
 import Foundation
 import SharedHelpers
 
-public typealias Part = Box.PartResolved
+public typealias Part = Box.PartStructure
+//public typealias Part = Box.PartResolved
 
 extension Box {
   public typealias GlyphStack = [[GlyphDescriptor]]

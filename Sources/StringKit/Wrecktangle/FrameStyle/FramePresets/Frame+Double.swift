@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-extension Box.Frame {
+extension Box.FrameStructure {
   public static var double: Self {
     Frame {
       Part(.horizontal(.top)) {
@@ -41,7 +41,7 @@ extension Box.Frame {
       }
 
     }  // END Frame
-    .merged(overrides: Box.JoinType.doubleJoin.parts)
-    .merged(overrides: Box.CornerType.doubleCorner.parts)
+//    .merged(overrides: Box.JoinType.doubleJoin.parts)
+//    .merged(overrides: Box.CornerType.doubleCorner.parts)
   }
 }

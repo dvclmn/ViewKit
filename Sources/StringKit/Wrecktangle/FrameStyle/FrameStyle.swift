@@ -7,11 +7,11 @@
 
 import SharedHelpers
 
-//public typealias Frame = Box.FrameStyle
+public typealias Frame = Box.FrameStructure
 
 extension Box {
   struct FrameStyle {
-    let frame: Frame
+    let frame: FrameStructure
     let glyphSet: GlyphSet
   }
 }
@@ -20,34 +20,35 @@ extension Box {
 
   public typealias PartMap = [Box.PartRole: Box.PartStructure]
 
-  public struct Frame: Sendable, Codable, Equatable {
-    let parts: Set<Box.PartRole>
+  public struct FrameStructure: Sendable, Codable, Equatable {
+    let parts: Set<Box.PartStructure>
+//    let parts: Set<Box.PartRole>
     //    var parts: PartMap = [:]
 
-    public init(@FrameBuilder _ content: () -> FrameBuilderOutput) {
+    public init(@FrameBuilder _ content: () -> [Box.PartStructure]) {
       //    public init(@FrameBuilder _ content: () -> PartMap) {
       self.parts = Set(content())
       //      self.parts = content()
     }
 
-    public init(parts: Set<Box.PartRole>) {
+    public init(parts: Set<Box.PartStructure>) {
       //    public init(parts: PartMap) {
       self.parts = parts
     }
   }
 }
 
-extension Box.Frame {
+extension Box.FrameStructure {
 
   /// The width of the Frame 'column', for the given location.
   /// This is the replacement for the older `var reservedWidth: Int {…}`
-  func frameWidth(
-    for location: Box.PartRole.VerticalLocation
-  ) -> Int? {
+//  func frameWidth(
+//    for location: Box.PartRole.VerticalLocation
+//  ) -> Int? {
     //    let part = self.partTypes.first(where: { })
 
     //    return partMap[.vertical(location)]?.width
-  }
+//  }
 
   //  var partMap: Box.PartMap {
   //    Dictionary(
@@ -57,38 +58,40 @@ extension Box.Frame {
   //    )
   //  }
 
-  func part(for type: Box.PartRole) -> Part? {
-
+//  func part(for type: Box.PartRole) -> Part? {
+//parts
     //    partMap[type]
-  }
+//  }
 
-  func merged(overrides: Set<Box.PartResolved>) -> Box.Frame {
-    //  func merged(overrides: Box.PartMap) -> Box.Frame {
-    var newParts = parts
-    //    for (key, value) in overrides {
-    for part in overrides {
-      newParts.update(with: part)
-      //      newMap[key] = value
-    }
-    return Box.Frame(parts: newParts)
-  }
+//  func merged(overrides: Set<Box.PartResolved>) -> Box.Frame {
+//    //  func merged(overrides: Box.PartMap) -> Box.Frame {
+//    var newParts = parts
+//    //    for (key, value) in overrides {
+//    for part in overrides {
+//      newParts.update(with: part)
+//      //      newMap[key] = value
+//    }
+//    return Box.Frame(parts: newParts)
+//  }
 
   // MARK: - Debugging
-  func debugDump() {
-    print("Frame parts:")
-    for (key, value) in partMap {
-      print(
-        """
-        \(key) → \(value.glyphs.map {
-          $0.map(\.description).joined()
-        })
-        """)
-    }
-  }
+//  func debugDump() {
+//    print("Frame parts:")
+//    for part in parts {
+////    for (key, value) in parts {
+//      print(
+//        """
+//        \(key) → \(value.glyphs.map {
+//          $0.map(\.description).joined()
+//        })
+//        """)
+//    }
+//  }
 }
 
-extension Box.Frame: CustomStringConvertible {
+extension Box.FrameStructure: CustomStringConvertible {
   public var description: String {
-    "Frame[parts: \(partMap.prettyString)]"
+    "Frame[parts: \(parts)]"
+//    "Frame[parts: \(parts.prettyString)]"
   }
 }
