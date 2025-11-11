@@ -35,7 +35,7 @@ enum FrameBuilder {
   /// They must all line up perfectly — that’s the most common “silent killer” in these setups.
 
   static func buildBlock(_ components: BlockInput...) -> BlockOutput {
-    Dictionary(uniqueKeysWithValues: components.map { ($0.type, $0) })
+    Dictionary(uniqueKeysWithValues: components.map { ($0.role, $0) })
   }
 
   public static func buildArray(_ components: [BlockOutput]) -> BlockOutput {

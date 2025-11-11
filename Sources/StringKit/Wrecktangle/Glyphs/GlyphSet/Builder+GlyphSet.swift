@@ -21,23 +21,3 @@ enum GlyphSetBuilder {
     })
   }
 }
-
-//@resultBuilder
-//enum GlyphSetBuilder {
-//  static func buildBlock(_ glyphs: Glyph...) -> Box.GlyphMap {
-//    Dictionary(
-//      uniqueKeysWithValues: glyphs.map {
-//        ($0.descriptor, $0.character)
-//      }
-//    )
-//  }
-//}
-//extension GlyphSetBuilder {
-//  static func buildExpression(_ expression: [Glyph]) -> Box.GlyphMap {
-//    Dictionary(
-//      uniqueKeysWithValues: expression.map {
-//        ($0.descriptor, $0.character)
-//      }
-//    )
-//  }
-//}

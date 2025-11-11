@@ -9,14 +9,16 @@ import Foundation
 
 @resultBuilder
 enum PartBuilder {
-  static func buildBlock(_ components: any RowConvertible...) -> Box.GlyphStack {
+  public typealias GlyphStack = [[Box.GlyphDescriptor]]
+  
+  static func buildBlock(_ components: any RowConvertible...) -> GlyphStack {
     components.map { $0.asGlyphRow() }
   }
 
-  static func buildEither(first: Box.GlyphStack) -> Box.GlyphStack { first }
-  static func buildEither(second: Box.GlyphStack) -> Box.GlyphStack { second }
+  static func buildEither(first: GlyphStack) -> GlyphStack { first }
+  static func buildEither(second: GlyphStack) -> GlyphStack { second }
 
-  static func buildOptional(_ component: Box.GlyphStack?) -> Box.GlyphStack {
+  static func buildOptional(_ component: GlyphStack?) -> GlyphStack {
     component ?? []
   }
 }

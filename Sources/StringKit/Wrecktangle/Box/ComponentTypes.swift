@@ -6,13 +6,13 @@
 //
 
 /// E.g. `Part`, `Line`
-protocol StructuralType {
-  associatedtype Key: Hashable
-}
-
-/// E.g. `Frame`, `GlyphSet`
-protocol DesignMap {
-  associatedtype Key: Hashable
-  associatedtype Value
-  var map: [Key: Value] { get set }
-}
+//protocol StructuralType {
+//  associatedtype Key: Hashable
+//}
+//
+///// E.g. `Frame`, `GlyphSet`
+//protocol DesignMap {
+//  associatedtype Key: Hashable
+//  associatedtype Value
+//  var map: [Key: Value] { get set }
+//}

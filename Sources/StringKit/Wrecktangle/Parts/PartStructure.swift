@@ -5,36 +5,26 @@
 //  Created by Dave Coleman on 10/11/2025.
 //
 
+public typealias Part = Box.PartStructure
+
 extension Box {
   /// Needs to have nothing to do with ``Box/GlyphDesign``
   public struct PartStructure: Sendable, Equatable, Codable, Hashable {
     /// What bit of the Box does this Part build
-    let type: PartRole
+    let role: PartRole
     
     /// What glyphs are used to compose this Part
     let glyphs: [[GlyphStructure]]
 
     public init(
-      type: PartRole,
+      _ role: PartRole,
       glyphs: [[GlyphStructure]]
     ) {
-      self.type = type
+      self.role = role
       self.glyphs = glyphs
     }
   }
 
-  /// Describes enough about Structure as to be useful to
-  /// Structure, but importabtly doesn't hold on to `GlyphDesign`
-  /// at all, so is used for `FrameStyle`
-  public struct GlyphStructure: Sendable, Codable, Hashable {
-    let role: GlyphRole
-    let weight: Box.GlyphWeight
-    
-    public init(_ role: GlyphRole, weight: Box.GlyphWeight) {
-      self.role = role
-      self.weight = weight
-    }
-  }
 }
 
 extension Box.PartStructure {

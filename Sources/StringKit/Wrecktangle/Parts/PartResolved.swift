@@ -8,16 +8,15 @@
 import Foundation
 import SharedHelpers
 
-public typealias Part = Box.PartStructure
 //public typealias Part = Box.PartResolved
 
 extension Box {
-  public typealias GlyphStack = [[GlyphDescriptor]]
+  //  public typealias GlyphStack = [[GlyphDescriptor]]
 
   public struct PartResolved: Sendable, Codable, Equatable, Hashable {
     let role: PartRole
-    let glyphs: GlyphStack
-    
+    let glyphs: [[GlyphDescriptor]]
+
     init(type: PartRole, glyphs: [GlyphDescriptor]) {
       self.role = type
       self.glyphs = [glyphs]
@@ -25,7 +24,7 @@ extension Box {
 
     init(
       _ type: PartRole,
-      @PartBuilder _ content: () -> Box.GlyphStack
+      @PartBuilder _ content: () -> [[GlyphDescriptor]]
     ) {
       self.role = type
       self.glyphs = PartContext.$currentType.withValue(type) {
@@ -61,15 +60,12 @@ extension Box.PartResolved {
     let glyph = GlyphType(glyphRole, weight: weight, design: design)
     self.role = role
     self.glyphs = [[glyph]]
-    
+
   }
 }
 
 extension Box.PartResolved {
 
-  
-  
-  
   func toStringStack(with theme: Box.Theme) -> StringStack {
     StringStack(from: glyphs, with: theme)
   }

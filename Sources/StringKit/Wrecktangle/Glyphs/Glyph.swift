@@ -5,8 +5,6 @@
 //  Created by Dave Coleman on 9/11/2025.
 //
 
-public typealias Glyph = Box.Glyph
-
 extension Box {
   /// This should be what is visible *within* the `GlyphSet` builder
   /// ```
@@ -16,7 +14,7 @@ extension Box {
   /// ```
   ///
   /// I think this essentially provides a slightly nicer wrapper around `GlyphMap`
-  public struct Glyph: Sendable {
+  public struct GlyphResolved: Sendable {
     let character: Character
     let descriptor: GlyphDescriptor
 
@@ -53,6 +51,6 @@ extension Box {
   }
 
 }
-extension Box.Glyph {
-  static let blank = Box.Glyph(.blank, .blank)
+extension Box.GlyphResolved {
+  static let blank = Box.GlyphResolved(.blank, .blank)
 }

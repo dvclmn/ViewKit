@@ -49,21 +49,20 @@ extension Box.FrameStructure {
   //    )
   //  }
 
-  //  func part(for type: Box.PartRole) -> Part? {
-  //parts
-  //    partMap[type]
-  //  }
+  func part(for type: Box.PartRole) -> Part? {
+    parts[type]
+  }
 
-  //  func merged(overrides: Set<Box.PartResolved>) -> Box.Frame {
-  //    //  func merged(overrides: Box.PartMap) -> Box.Frame {
-  //    var newParts = parts
-  //    //    for (key, value) in overrides {
-  //    for part in overrides {
-  //      newParts.update(with: part)
-  //      //      newMap[key] = value
-  //    }
-  //    return Box.Frame(parts: newParts)
-  //  }
+  //    func merged(overrides: Set<Box.PartResolved>) -> Box.Frame {
+  func merged(overrides: Box.PartMap) -> Self {
+    var newParts = parts
+    for (key, value) in overrides {
+      //      for part in overrides {
+      //        newParts.update(with: part)
+      newParts[key] = value
+    }
+    return Self(partMap: newParts)
+  }
 
   // MARK: - Debugging
   //  func debugDump() {
