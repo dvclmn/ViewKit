@@ -7,20 +7,22 @@
 
 import EnumMacros
 
+public typealias LinePart = Box.PartRole
+
 extension Box {
 
   /// Important: This partly exists because we need to somehow
   /// have an intermediate step between PartType and StringStack.
   /// Because Builder Components can't carry engine / row index context
   @AssociatedValues
-  public enum LineType: Hashable, Sendable {
+  enum LineType: Hashable, Sendable {
     case text(String)
-    case repeater(PartStructure)
+    case repeater(LinePart)
   }
 }
 
 /// Joins horizontally
-public func + (lhs: Box.LineType, rhs: Box.LineType) -> [Box.LineType] {
+func + (lhs: Box.LineType, rhs: Box.LineType) -> [Box.LineType] {
   [lhs, rhs]
 }
 

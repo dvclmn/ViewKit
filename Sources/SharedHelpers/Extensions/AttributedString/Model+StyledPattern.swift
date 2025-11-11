@@ -19,11 +19,11 @@ import Foundation
 
 public struct StyledPattern {
   public let pattern: Regex<Substring>
-  
+
   /// For more styles and info, see
   /// `BaseHelpers/Extensions/AttributedString/AttributeContainer`
   public let attributes: AttributeContainer
-  
+
   public init(_ pattern: Regex<Substring>, attributes: AttributeContainer) {
     self.pattern = pattern
     self.attributes = attributes

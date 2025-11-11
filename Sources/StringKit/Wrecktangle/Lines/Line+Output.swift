@@ -99,15 +99,16 @@ extension Box.Line {
 // MARK: - Small helpers
 extension Box.Line {
   private func stack(
-    _ part: Box.LinePart,
+    _ segment: Box.LineSegment,
     using engine: Box.Engine,
     pos position: Box.PositionContext,
     span: Box.PartSpan = .single,
   ) -> StringStack {
     
-    let linePart: Box.PartResolved = {
+    let linePart: LinePart = {
+//    let linePart: Box.PartResolved = {
 //    let linePart: Box.PartRole = {
-      switch part {
+      switch segment {
         case .leading: return self.leading
           
         case .repeater:
@@ -119,6 +120,11 @@ extension Box.Line {
       }
     }()
     
-    return linePart.buildPart(using: engine, pos: position, span: span)
+
+    let structure = linePart.part(using: engine, position: position)
+    let resolved = Box.PartResolved.from(structure, design: engine.theme.glyphSet.design)
+    let stack = resolved.toStringStack(with: engine.theme)
+    return stack
+//    return linePart.buildPart(using: engine, pos: position, span: span)
   }
 }

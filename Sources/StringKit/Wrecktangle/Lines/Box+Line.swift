@@ -10,42 +10,34 @@ extension Box {
   /// This is strictly a Three-Part Line. Will need to introduce
   /// a new type/system to support e.g. multi-column Boxes
   public struct Line {
-
-//    #warning("Consider whether engine in here makes sense, should probably be owned / passed in via function sig?")
-//    let engine: Box.Engine
-
-    let leading: PartStructure
+    let leading: LinePart
     let body: LineType
-    let trailing: PartStructure
+    let trailing: LinePart
 
     /// Init for Text Line
     public init(
       _ textContent: String,
-      leading: PartStructure,
-      trailing: PartStructure,
-//      using engine: Box.Engine
+      leading: LinePart,
+      trailing: LinePart,
     ) {
       self.leading = leading
       self.body = .text(textContent)
       self.trailing = trailing
-//      self.engine = engine
     }
 
     /// Init for Structure Line
     public init(
-      _ repeater: PartStructure,
-      leading: PartStructure,
-      trailing: PartStructure,
-//      using engine: Box.Engine
+      _ repeater: LinePart,
+      leading: LinePart,
+      trailing: LinePart,
     ) {
       self.leading = leading
       self.body = .repeater(repeater)
       self.trailing = trailing
-//      self.engine = engine
     }
   }
 
-  enum LinePart {
+  enum LineSegment {
     case leading
     case repeater
     case trailing
