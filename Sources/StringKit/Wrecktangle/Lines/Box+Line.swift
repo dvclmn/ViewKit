@@ -11,18 +11,18 @@ extension Box {
   /// a new type/system to support e.g. multi-column Boxes
   public struct Line {
 
-    #warning("Consider whether engine in here makes sense, should probably be owned / passed in via function sig?")
+//    #warning("Consider whether engine in here makes sense, should probably be owned / passed in via function sig?")
 //    let engine: Box.Engine
 
-    let leading: PartRole
+    let leading: PartStructure
     let body: LineType
-    let trailing: PartRole
+    let trailing: PartStructure
 
     /// Init for Text Line
     public init(
       _ textContent: String,
-      leading: PartRole,
-      trailing: PartRole,
+      leading: PartStructure,
+      trailing: PartStructure,
 //      using engine: Box.Engine
     ) {
       self.leading = leading
@@ -33,9 +33,9 @@ extension Box {
 
     /// Init for Structure Line
     public init(
-      _ repeater: PartRole,
-      leading: PartRole,
-      trailing: PartRole,
+      _ repeater: PartStructure,
+      leading: PartStructure,
+      trailing: PartStructure,
 //      using engine: Box.Engine
     ) {
       self.leading = leading

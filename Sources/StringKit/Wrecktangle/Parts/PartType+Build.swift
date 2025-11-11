@@ -10,30 +10,6 @@ import SharedHelpers
 
 extension Box.PartRole {
 
-  /// We return a `StringStack`, not a `String`, to allow
-  /// any additional repeating/joining required further down the pipeline.
-  public func buildPart(
-    using engine: Box.Engine,
-    pos position: Box.PositionContext,
-    span: Box.PartSpan = .single,
-  ) -> StringStack {
-
-    let part = part(using: engine, position: position)
-    let stringStack = part.toStringStack(with: engine.theme)
-
-    switch span {
-      case .fill:
-        return StringStack(repeating: stringStack, count: engine.width(for: .repeatedPart), along: .horizontal)
-
-      case .fixed(let count):
-        return if count == 1 {
-          stringStack
-        } else {
-          StringStack(repeating: stringStack, count: count, along: .horizontal)
-        }
-    }
-  }
-
   func part(
     using engine: Box.Engine,
     position: Box.PositionContext
@@ -68,11 +44,12 @@ extension Box.PartRole {
 
 extension StringStack {
   public init(
-    from glyphStack: Box.GlyphStack,
+    from descriptors: [[Box.GlyphDescriptor]],
+//    from glyphStack: Box.GlyphStack,
     with theme: Box.Theme,
   ) {
     /// Convert from `GlyphType` → `Character`
-    let characterGrid = glyphStack.map { row in
+    let characterGrid = descriptors.map { row in
       return row.map {
         return theme.glyphSet.resolve($0)
       }

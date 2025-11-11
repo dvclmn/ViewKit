@@ -9,10 +9,11 @@ import Foundation
 
 // MARK: - Row Structure
 struct Row {
-  let glyphDescriptors: [GlyphType]
+  /// These are not descriptor, they're glyph structures
+  let glyphs: [GlyphType]
   
   init(@RowBuilder _ content: () -> [GlyphType]) {
-    self.glyphDescriptors = content()
+    self.glyphs = content()
   }
 }
 
@@ -30,7 +31,7 @@ extension Box.GlyphStructure: RowConvertible {
 }
 
 extension Row: RowConvertible {
-  func asGlyphRow() -> [GlyphType] { glyphDescriptors }
+  func asGlyphRow() -> [GlyphType] { glyphs }
 }
 
 

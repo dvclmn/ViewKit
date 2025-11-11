@@ -98,3 +98,9 @@ extension Box.PartStructure {
     @TaskLocal static var currentRole: Box.PartRole?
   }
 }
+extension Box.PartStructure: CustomStringConvertible {
+  public var description: String {
+//    "Part[Glyphs: \(glyphs), StringStack: \(toStringStack(with: .default))]"
+        "Part[Glyphs: \(glyphs), W: \(width)]"
+  }
+}

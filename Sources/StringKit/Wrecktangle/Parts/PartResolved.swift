@@ -42,8 +42,9 @@ extension Box.PartResolved {
 
 
 
-extension Part: CustomStringConvertible {
+extension Box.PartResolved: CustomStringConvertible {
   public var description: String {
-    "Part[Glyphs: \(glyphs), W: \(width), StringStack: \(toStringStack(with: .default))]"
+    "Part[Glyphs: \(glyphs), StringStack: \(toStringStack(with: .default))]"
+//    "Part[Glyphs: \(glyphs), W: \(width), StringStack: \(toStringStack(with: .default))]"
   }
 }

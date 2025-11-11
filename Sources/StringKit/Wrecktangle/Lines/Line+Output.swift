@@ -105,7 +105,8 @@ extension Box.Line {
     span: Box.PartSpan = .single,
   ) -> StringStack {
     
-    let linePart: Box.PartRole = {
+    let linePart: Box.PartResolved = {
+//    let linePart: Box.PartRole = {
       switch part {
         case .leading: return self.leading
           
