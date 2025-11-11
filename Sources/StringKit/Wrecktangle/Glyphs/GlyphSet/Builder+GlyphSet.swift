@@ -14,10 +14,22 @@ enum GlyphSetBuilder {
   static func buildExpression(_ expression: Glyph) -> Box.GlyphMap {
     [expression.descriptor: expression.character]
   }
-  
-  static func buildExpression(_ expression: [Glyph]) -> Box.GlyphMap {
-    Dictionary(uniqueKeysWithValues: expression.map {
-      ($0.descriptor, $0.character)
-    })
-  }
+
 }
+
+extension GlyphSetBuilder {
+  
+  static func buildExpression(_ expression: Box.GlyphGroup) -> Box.GlyphMap {
+    expression.glyphs
+//    Dictionary(uniqueKeysWithValues: expression.map {
+//      ($0.descriptor, $0.character)
+//    })
+  }
+  
+//  static func buildExpression(_ expression: [Glyph]) -> Box.GlyphMap {
+//    Dictionary(uniqueKeysWithValues: expression.map {
+//      ($0.descriptor, $0.character)
+//    })
+//  }
+}
+

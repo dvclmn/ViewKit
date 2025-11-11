@@ -14,18 +14,18 @@ public typealias GlyphSet = Box.GlyphSet
 extension Box {
 
   public struct GlyphSet: Codable, Equatable, Sendable {
-    
+
     /// This needs to be defined here, to allow the child
     /// `Glyph`s to have their `design` properties set
     /// *once*, rather than requiring each to set it per-Glyph.
     public var design: GlyphDesign
-    public var map: GlyphMap
+    public var glyphs: GlyphMap
     public var fallback: GlyphSetReference?
 
     public init(
       _ design: GlyphDesign,
       fallback: Self? = nil,
-      @GlyphSetBuilder _ map: () -> GlyphMap,
+      @GlyphSetBuilder _ glyphs: () -> GlyphMap,
     ) {
       self.design = design
       if let fallback {
@@ -33,7 +33,7 @@ extension Box {
       } else {
         self.fallback = nil
       }
-      self.map = GlyphDesignContext.$currentDesign.withValue(design) { map() }
+      self.glyphs = GlyphDesignContext.$currentDesign.withValue(design) { glyphs() }
     }
 
     public init(
@@ -42,7 +42,7 @@ extension Box {
       fallback: GlyphSetReference? = nil
     ) {
       self.design = design
-      self.map = map
+      self.glyphs = map
       self.fallback = fallback
     }
   }
@@ -52,7 +52,7 @@ extension Box.GlyphSet {
   public func resolve(
     _ desc: Box.GlyphDescriptor
   ) -> Character {
-    map[desc] ?? fallback?.wrapped.resolve(desc) ?? "🫥"
+    glyphs[desc] ?? fallback?.wrapped.resolve(desc) ?? "🫥"
   }
 }
 
