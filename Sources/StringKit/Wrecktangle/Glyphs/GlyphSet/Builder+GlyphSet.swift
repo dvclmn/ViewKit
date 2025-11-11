@@ -21,7 +21,7 @@ enum GlyphSetBuilder {
 extension GlyphSetBuilder {
   
   static func buildExpression(_ expression: Box.GlyphGroup) -> Box.GlyphMap {
-    expression.glyphs
+    expression.map
 //    Dictionary(uniqueKeysWithValues: expression.map {
 //      ($0.descriptor, $0.character)
 //    })

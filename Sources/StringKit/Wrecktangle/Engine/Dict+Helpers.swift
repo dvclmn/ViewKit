@@ -16,5 +16,12 @@ extension Box {
     }
   }
   
+//  static func merge<Key: Hashable, Value>(
+//    _ dictA: Dictionary<Key, Value>,
+//    _ dictB: Dictionary<Key, Value>
+//  ) -> Dictionary<Key, Value> {
+//    
+//  }
+  
 //  static func dict<S>(_ items: S) -> Dictionary<S.Element> where S : Sequence, S.Element == (Key, Value)
 }

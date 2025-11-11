@@ -39,3 +39,9 @@ extension Box {
     }
   }  // END Glyph structure
 }
+
+extension Box.GlyphStructure: CustomStringConvertible {
+  public var description: String {
+    "\(role) \(weight)"
+  }
+}

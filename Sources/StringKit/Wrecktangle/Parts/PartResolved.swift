@@ -8,11 +8,7 @@
 import Foundation
 import SharedHelpers
 
-//public typealias Part = Box.PartResolved
-
 extension Box {
-  //  public typealias GlyphStack = [[GlyphDescriptor]]
-
   public struct PartResolved: Sendable, Codable, Equatable, Hashable {
     let role: PartRole
     let glyphs: [[GlyphDescriptor]]

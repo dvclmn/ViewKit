@@ -8,37 +8,27 @@
 extension Box.GlyphSet {
   public static var rounded: Self {
     GlyphSet(.round, fallback: .sharp) {
-      
+
       Glyph("╭", .corner(.topLeading))
       Glyph("╮", .corner(.topTrailing))
       Glyph("╰", .corner(.bottomLeading))
       Glyph("╯", .corner(.bottomTrailing))
-      
-      GlyphGroup.thinJoins
-      
-      
-//      Glyph.horizontal(.increased): "─",
-//      Glyph.horizontal(.standard): "─",
-//      
-//      // MARK: - Walls
-//      Glyph.vertical(.increased): "│",
-//      Glyph.vertical(.standard): "│",
-//      
-//      
 
+      GlyphGroup.joinsThin
+      GlyphGroup.straightsThin
     }
   }
-//    style: .rounded,
-//    map: [
-//      Glyph(.corner(.topLeading), .standard, .rounded): "╭",
-//      Glyph(.corner(.bottomTrailing), .standard, .rounded): "╯",
-//      // NB: Rounded box drawing chars are all light; no increased-weight variants exist.
-//    ],
-//    fallback: SetRef(.sharp)  // fallback to sharp for anything not covered
-//  )
+  //    style: .rounded,
+  //    map: [
+  //      Glyph(.corner(.topLeading), .standard, .rounded): "╭",
+  //      Glyph(.corner(.bottomTrailing), .standard, .rounded): "╯",
+  //      // NB: Rounded box drawing chars are all light; no increased-weight variants exist.
+  //    ],
+  //    fallback: SetRef(.sharp)  // fallback to sharp for anything not covered
+  //  )
 
 }
 
 extension Box.GlyphMap {
-  
+
 }

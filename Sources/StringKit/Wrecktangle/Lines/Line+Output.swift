@@ -103,22 +103,36 @@ extension Box.Line {
     span: Box.PartSpan = .single,
   ) -> StringStack {
 
-    let linePart: LinePart = {
-      switch segment {
-        case .leading: return self.leading
+    switch segment {
+      case .leading:
+        return Box.Line.resolvedPart(leading, using: engine, at: position)
+      case .repeater:
 
-        case .repeater:
-          guard let repeater = self.body.repeaterValue else {
-            fatalError("Do not try to access `LineType.text` for a Structure-type Line.")
-          }
-          return repeater
-        case .trailing: return self.trailing
-      }
-    }()
+        switch self.body {
+          case .repeater(let part):
+            return Box.Line.resolvedPart(part, repeated: engine.width(for: .repeatedPart), using: engine, at: position)
+          case .text(_): fatalError("Do not try to access `LineType.repeater` for a Text-type Line.")
+        }
 
-    let structure = linePart.part(using: engine, position: position)
-    let resolved = Box.PartResolved.from(structure, design: engine.theme.glyphSet.design)
+      case .trailing:
+        return Box.Line.resolvedPart(trailing, using: engine, at: position)
+    }
+  }
+}
+
+extension Box.Line {
+  static func resolvedPart(
+    _ part: LinePart,
+    repeated count: Int? = nil,
+    using engine: Box.Engine,
+    at position: Box.PositionContext
+  ) -> StringStack {
+    let structure = part.part(using: engine, position: position)
+    let resolved = structure.resolved(with: engine.glyphDesign)
     let stack = resolved.toStringStack(with: engine.theme)
-    return stack
+    guard let count else {
+      return stack
+    }
+    return StringStack(repeating: stack, count: count, along: .horizontal)
   }
 }

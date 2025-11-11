@@ -11,6 +11,6 @@ extension Character {
 }
 
 extension Box {
-  public static var glyphSetCharacterFallback: Character { "%" }
-  public static var paddingCharacterFallback: Character { "&" }
+  public static var glyphSetCharacterFallback: Character { "?" }
+  public static var paddingCharacterFallback: Character { " " } // &
 }
