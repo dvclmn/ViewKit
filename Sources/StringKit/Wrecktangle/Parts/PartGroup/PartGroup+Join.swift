@@ -5,11 +5,13 @@
 //  Created by Dave Coleman on 12/11/2025.
 //
 
-extension Box.PartGroup {
+extension Box.PartStructure {
+//extension Box.PartGroup {
   //extension Box.JoinType {
 
-  static var doubleJoin: PartGroup {
-    PartGroup {
+//  static var doubleJoin: [Part] {
+  static var doubleJoin: Frame {
+    Frame {
       Part(.join(.leading)) {
         Row {
           GlyphType.v(.increased)
@@ -63,5 +65,6 @@ extension Box.PartGroup {
         }
       }
     }
+    
   }
 }

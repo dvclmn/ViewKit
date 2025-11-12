@@ -6,14 +6,14 @@
 //
 
 extension Box.GlyphGroup {
- 
+
   // MARK: - All Joins
   static var joins: Self {
     joinsThick
       .merged(with: joinsThickExtThinInt)
       .merged(with: joinsThin)
   }
-  
+
   // MARK: - Thin Joins
   static var joinsThin: Self {
     GlyphGroup {
@@ -24,7 +24,7 @@ extension Box.GlyphGroup {
       Glyph("┼", .join(.cross))
     }
   }
-  
+
   // MARK: - Bold Joins
   static var joinsThick: Self {
     GlyphGroup {
@@ -35,7 +35,7 @@ extension Box.GlyphGroup {
       Glyph("╋", .join(.cross), x: .increased, y: .increased)
     }
   }
-  
+
   // MARK: - Bold exterior, Thin interior Joins
   static var joinsThickExtThinInt: Box.GlyphGroup {
     GlyphGroup {

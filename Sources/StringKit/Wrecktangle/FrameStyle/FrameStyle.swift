@@ -8,10 +8,11 @@
 import SharedHelpers
 
 public typealias Frame = Box.FrameStructure
+extension Box {
+  public typealias PartMap = [Box.PartRole: Box.PartStructure]
+}
 
 extension Box {
-
-  public typealias PartMap = [Box.PartRole: Box.PartStructure]
 
   public struct FrameStructure: Sendable, Codable, Equatable, Mergable {
 

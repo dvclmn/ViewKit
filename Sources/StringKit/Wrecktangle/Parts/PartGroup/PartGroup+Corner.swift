@@ -6,8 +6,8 @@
 //
 
 
-extension Box.PartGroup {
-  //extension Box.CornerType {
+//extension Box.PartGroup {
+  extension Box.PartStructure {
   static var doubleCorner: Frame {
     Frame {
       // MARK: - Corner

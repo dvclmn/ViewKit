@@ -41,11 +41,11 @@ extension Box.FrameStructure {
         GlyphType.v(.standard)
       }
       
-      PartGroup.doubleJoin
+//      Part.doubleJoin
 //      PartGroup.doubleCorner
 
     }  // END Frame
-//    .merged(with: Box.JoinType.doubleJoin)
-//    .merged(with: Box.CornerType.doubleCorner)
+    .merged(with: Part.doubleJoin)
+    .merged(with: Part.doubleCorner)
   }
 }
