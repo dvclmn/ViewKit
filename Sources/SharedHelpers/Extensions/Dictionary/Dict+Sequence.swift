@@ -19,7 +19,7 @@ extension Sequence {
   public func toDictionary<Key: Hashable, Value>(
     key: KeyPath<Element, Key>,
     value: KeyPath<Element, Value>,
-    keeping strategy: MergeStrategy<Key, Value>
+    keeping strategy: MergeStrategy<Key, Value> = .first
 //    uniquingKeysWith strategy: @escaping (Value, Value) -> Value
   ) -> [Key: Value] {
     reduce(into: [:]) { result, element in
@@ -41,26 +41,26 @@ extension Sequence {
     //    return result
   }
   
-  public func toDictionary<Key: Hashable, Value>(
-    key: KeyPath<Element, Key>,
-    value: KeyPath<Element, Value?>
-  ) -> [Key: Value] {
-    reduce(into: [:]) { result, element in
-      let k = element[keyPath: key]
-      if let v = element[keyPath: value] {
-        result[k] = v
-      }
-    }
-  }
-  
-  /// Returns a dictionary using the given key and value key paths, keeping the first value for duplicate keys.
-  public func toDictionary<Key: Hashable, Value>(
-    key: KeyPath<Element, Key>,
-    value: KeyPath<Element, Value>
-  ) -> [Key: Value] {
-    toDictionary(key: key, value: value, keeping: .first)
-  }
-  
+//  public func toDictionary<Key: Hashable, Value>(
+//    key: KeyPath<Element, Key>,
+//    value: KeyPath<Element, Value?>
+//  ) -> [Key: Value] {
+//    reduce(into: [:]) { result, element in
+//      let k = element[keyPath: key]
+//      if let v = element[keyPath: value] {
+//        result[k] = v
+//      }
+//    }
+//  }
+//  
+//  /// Returns a dictionary using the given key and value key paths, keeping the first value for duplicate keys.
+//  public func toDictionary<Key: Hashable, Value>(
+//    key: KeyPath<Element, Key>,
+//    value: KeyPath<Element, Value>
+//  ) -> [Key: Value] {
+//    toDictionary(key: key, value: value, keeping: .first)
+//  }
+//  
   /// Convenience for when the element itself is the value
   public func toDictionary<Key: Hashable>(
     key: KeyPath<Element, Key>

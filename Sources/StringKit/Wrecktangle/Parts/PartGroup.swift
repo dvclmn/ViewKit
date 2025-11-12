@@ -8,26 +8,34 @@
 typealias PartGroup = Box.PartGroup
 
 extension Box {
-  struct PartGroup {
-    var parts: [Box.PartStructure]
-//    var glyphs: GlyphStack
+  struct PartGroup: Sendable, Codable, Equatable, Mergable {
+    var map: PartMap = [:]
+    //    var parts: [Box.PartStructure]
+    //    var glyphs: GlyphStack
 
     public init(
       role: PartRole,
       glyphs: GlyphStack
     ) {
       let part = Box.PartStructure(role, glyphs: glyphs)
-      self.parts = [part]
+      let parts = [part]
+      //      let merged = parts.merged(keeping: .last)
+      let map = parts.toDictionary(key: \.role, value: \.self, keeping: .first)
+      //      self.parts = [part]
+      self.map = map
     }
-    
+
     public init(parts: [Box.PartStructure]) {
-      self.parts = parts
+      let map = parts.toDictionary(key: \.role, value: \.self, keeping: .first)
+      //      self.parts = parts
+      //      self.in
     }
 
     /// Builder init
-    init(@FrameBuilder _ parts: () -> [Box.PartStructure]) {
-//    init(@PartBuilder _ parts: () -> GlyphStack) {
-      self.parts = parts()
+    init(@FrameBuilder _ parts: () -> PartMap) {
+      //    init(@PartBuilder _ parts: () -> GlyphStack) {
+
+      self.map = parts()
     }
   }
 }
