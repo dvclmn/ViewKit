@@ -7,19 +7,26 @@
 
 public typealias Part = Box.PartStructure
 
+
+//protocol PartConvertible {
+//  func toGlyphStack() -> GlyphStack
+////  var glyphs: GlyphStack { get }
+//}
+
+
 extension Box {
   /// Needs to have nothing to do with ``Box/GlyphDesign``
   /// Used in FrameBuilders
-  public struct PartStructure: Sendable, Equatable, Codable, Hashable {
+  public struct PartStructure: Sendable, Equatable, Codable, Hashable, PartConvertible {
     /// What bit of the Box does this Part build
     let role: PartRole
 
     /// What glyphs are used to compose this Part
-    let glyphs: [[GlyphStructure]]
+    let glyphs: GlyphStack
 
     public init(
       _ role: PartRole,
-      glyphs: [[GlyphStructure]]
+      glyphs: GlyphStack
     ) {
       self.role = role
       self.glyphs = glyphs
@@ -27,11 +34,11 @@ extension Box {
 
     /// Builder init
     init(
-      _ type: PartRole,
-      @PartBuilder _ content: () -> [[GlyphStructure]]
+      _ role: PartRole,
+      @PartBuilder _ content: () -> GlyphStack
     ) {
-      self.role = type
-      self.glyphs = Context.$currentRole.withValue(type) {
+      self.role = role
+      self.glyphs = Context.$currentRole.withValue(role) {
         content()
       }
     }
@@ -39,6 +46,9 @@ extension Box {
 }
 
 extension Box.PartStructure {
+  
+  func toGlyphStack() -> GlyphStack { glyphs }
+  
   public var width: Int { glyphs.width(for: .widestRow) }
   public static var blank: Self { Part(.blank, glyphs: []) }
 

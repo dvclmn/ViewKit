@@ -7,14 +7,14 @@
 
 
 public enum MergeStrategy<Key, Value> {
-  case keepFirst
-  case keepLast
+  case first
+  case last
   case custom((Value, Value) -> Value)
   
   var function: (Value, Value) -> Value {
     switch self {
-      case .keepFirst: { first, _ in first }
-      case .keepLast: { _, last in last }
+      case .first: { first, _ in first }
+      case .last: { _, last in last }
       case .custom(let f): f
     }
   }

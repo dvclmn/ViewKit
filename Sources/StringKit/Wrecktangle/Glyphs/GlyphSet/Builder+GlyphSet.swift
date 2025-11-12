@@ -8,7 +8,8 @@
 @resultBuilder
 enum GlyphSetBuilder {
   static func buildBlock(_ components: Box.GlyphMap...) -> Box.GlyphMap {
-    Box.reduce(components)
+    components.merged(keeping: .first)
+//    Box.reduce(components)
   }
 
   static func buildExpression(_ expression: Glyph) -> Box.GlyphMap {

@@ -40,9 +40,12 @@ extension Box.FrameStructure {
       Part(.vertical(.interior)) {
         GlyphType.v(.standard)
       }
+      
+      PartGroup.doubleJoin
+      PartGroup.doubleCorner
 
     }  // END Frame
-    .merged(with: Box.JoinType.doubleJoin)
-    .merged(with: Box.CornerType.doubleCorner)
+//    .merged(with: Box.JoinType.doubleJoin)
+//    .merged(with: Box.CornerType.doubleCorner)
   }
 }

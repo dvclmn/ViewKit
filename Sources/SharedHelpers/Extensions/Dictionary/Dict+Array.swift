@@ -18,13 +18,13 @@ extension Array {
   /// let keepCurrent = dicts.reduceDictionaries(keeping: .current) // ["a": 1, "b": 2, "c": 4]
   /// ```
   public func merged<Key: Hashable, Value>(
-    keeping strategy: MergeStrategy<Key, Value> = .new
+    keeping strategy: MergeStrategy<Key, Value> = .first
   ) -> [Key: Value] where Element == [Key: Value] {
     reduce(into: [:]) { partial, dict in
       switch strategy {
-        case .current:
+        case .first:
           partial.merge(dict) { current, _ in current }
-        case .new:
+        case .last:
           partial.merge(dict) { _, new in new }
         case .custom(let combine):
           partial.merge(dict, uniquingKeysWith: combine)

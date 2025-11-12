@@ -19,7 +19,7 @@ extension Sequence {
   public func toDictionary<Key: Hashable, Value>(
     key: KeyPath<Element, Key>,
     value: KeyPath<Element, Value>,
-    uniquingKeysWith strategy: MergeStrategy<Key, Value>
+    keeping strategy: MergeStrategy<Key, Value>
 //    uniquingKeysWith strategy: @escaping (Value, Value) -> Value
   ) -> [Key: Value] {
     reduce(into: [:]) { result, element in
@@ -58,7 +58,7 @@ extension Sequence {
     key: KeyPath<Element, Key>,
     value: KeyPath<Element, Value>
   ) -> [Key: Value] {
-    toDictionary(key: key, value: value, uniquingKeysWith: .keepFirst)
+    toDictionary(key: key, value: value, keeping: .first)
   }
   
   /// Convenience for when the element itself is the value
