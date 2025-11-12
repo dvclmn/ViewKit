@@ -5,10 +5,13 @@
 //  Created by Dave Coleman on 11/11/2025.
 //
 
+import SharedHelpers
+
 typealias GlyphGroup = Box.GlyphGroup
 
 extension Box {
-  struct GlyphGroup: Mergable {
+  struct GlyphGroup {
+//  struct GlyphGroup: Mergable {
 
     var map: GlyphMap
 
@@ -39,9 +42,12 @@ extension Box.GlyphGroup {
   ]
 
   static func fromPresets(_ presets: Presets) -> Self {
-    let groups = presetMap.compactMap { (key, group) in
+    let groups: [GlyphGroup] = presetMap.compactMap { (key, group) in
       presets.contains(key) ? group : nil
     }
-    return groups.reduce(Self(glyphs: [:])) { $0.merged(with: $1) }
+//    return groups.reduce(Self(glyphs: [:])) { $0.merged(with: $1) }
+    return groups.merged(keeping: .custom({ current, new in
+      <#code#>
+    }))
   }
 }

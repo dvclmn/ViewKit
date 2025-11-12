@@ -24,8 +24,10 @@ extension Array {
       switch strategy {
         case .first:
           partial.merge(dict) { current, _ in current }
+          
         case .last:
           partial.merge(dict) { _, new in new }
+          
         case .custom(let combine):
           partial.merge(dict, uniquingKeysWith: combine)
       }

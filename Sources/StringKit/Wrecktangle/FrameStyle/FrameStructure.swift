@@ -15,7 +15,8 @@ extension Box {
   public typealias PartMap = [Box.PartRole: Box.PartStructure]
 
   /// Represents a composition of Parts that describe a complete Frame
-  public struct FrameStructure: Sendable, Codable, Equatable, Mergable {
+  public struct FrameStructure: Sendable, Codable, Equatable {
+//  public struct FrameStructure: Sendable, Codable, Equatable, Mergable {
 
     var map: PartMap = [:]
 
