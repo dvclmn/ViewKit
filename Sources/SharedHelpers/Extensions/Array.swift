@@ -13,6 +13,48 @@ extension Array where Element: Hashable {
   }
 }
 
+extension Array {
+
+  /// ```
+  /// let dicts = [
+  ///   ["a": 1, "b": 2],
+  ///   ["b": 3, "c": 4]
+  /// ]
+  ///
+  /// let keepNew = dicts.reduceDictionaries(keeping: .new)     // ["a": 1, "b": 3, "c": 4]
+  /// let keepCurrent = dicts.reduceDictionaries(keeping: .current) // ["a": 1, "b": 2, "c": 4]
+  /// ```
+  public func reduceToDictionary<Key: Hashable, Value>(
+    keeping strategy: DictionaryKeys
+  ) -> [Key: Value] where Element == [Key: Value] {
+
+    reduce(into: [:]) { partial, dict in
+      switch strategy {
+        case .current:
+          partial.merge(dict) { current, _ in current }
+        case .new:
+          partial.merge(dict) { _, new in new }
+      }
+    }
+
+    //    self.reduce(into: [:]) { partial, dict in
+    //      partial.merge(dict) { _, new in new }
+    //    }
+  }
+}
+public enum DictionaryKeys {
+  case current
+  case new
+}
+//extension Array where Element == [AnyHashable: Any] {
+//  public func reduce() -> [AnyHashable: Any] {
+//    self.reduce(into: [:]) { partial, dict in
+//      partial.merge(dict) { _, new in new }
+//    }
+//  }
+//
+//}
+
 //extension Array where Element == [Character] {
 //
 //  public func stacked(

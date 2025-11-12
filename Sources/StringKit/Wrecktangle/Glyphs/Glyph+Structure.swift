@@ -8,6 +8,7 @@
 /// For use within the body of Frame builders
 /// Describes Structure only, not Design
 public typealias GlyphType = Box.GlyphStructure
+public typealias GlyphStack = [[Box.GlyphStructure]]
 
 /// For GlyphSet builders
 /// Describes actual individual Characters (Design/appearance)

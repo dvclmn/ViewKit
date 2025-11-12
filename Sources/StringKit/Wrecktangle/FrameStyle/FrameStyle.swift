@@ -14,8 +14,7 @@ extension Box {
   public typealias PartMap = [Box.PartRole: Box.PartStructure]
 
   public struct FrameStructure: Sendable, Codable, Equatable, Mergable {
-    typealias Map = PartMap
-//    var map: Map { parts }
+
     var map: PartMap = [:]
 
     public init(@FrameBuilder _ content: () -> PartMap) {
@@ -27,10 +26,6 @@ extension Box {
     }
   }
 }
-//
-//extension Box.FrameStructure: Box.Mergable {
-//  
-//}
 
 extension Box.FrameStructure {
 
@@ -44,18 +39,9 @@ extension Box.FrameStructure {
     map[type]
   }
 
-//  func merged(overrides: Box.PartMap) -> Self {
-//    var newParts = parts
-//    for (key, value) in overrides {
-//      newParts[key] = value
-//    }
-//    return Self(partMap: newParts)
-//  }
-
   // MARK: - Debugging
   func debugDump() {
     print("Frame parts:")
-    //      for part in parts {
     for (key, value) in map {
       print(
         """
@@ -69,8 +55,6 @@ extension Box.FrameStructure {
 
 extension Box.FrameStructure: CustomStringConvertible {
   public var description: String {
-    "Frame[parts: \(map)]"
-    //    "Frame[parts: \(parts.prettyString)]"
+    "Frame[parts: \(map.prettyString)]"
   }
 }
-

@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 7/11/2025.
 //
 
+import SharedHelpers
+
 @resultBuilder
 enum FrameBuilder {
 
@@ -12,15 +14,16 @@ enum FrameBuilder {
   typealias BlockOutput = Box.PartMap
 
   static func buildBlock(_ components: BlockInput...) -> BlockOutput {
-    Dictionary(uniqueKeysWithValues: components.map { ($0.role, $0) })
+    Dictionary(<#T##keysAndValues: Sequence##Sequence#>, uniquingKeysWith: <#T##(Value, Value) throws -> Value#>)
+//    Dictionary(components) { current, new in
+//      new
+//    }
+//    Dictionary(uniqueKeysWithValues: components.map { ($0.role, $0) })
   }
 
   public static func buildArray(_ components: [BlockOutput]) -> BlockOutput {
-    components.reduce(into: [:]) { partial, partMap in
-      partial.merge(partMap) { current, new in
-        new
-      }
-    }
+    components.reduceDictionaries()
+//    Box.reduce(components)
   }
 
   static func buildEither(first: BlockOutput) -> BlockOutput { first }
@@ -28,15 +31,4 @@ enum FrameBuilder {
   static func buildOptional(_ component: BlockOutput?) -> BlockOutput {
     component ?? [:]
   }
-}
-
-extension FrameBuilder {
-  
-//  static func buildExpression(_ expression: BlockInput) -> [BlockOutput] {
-//    [expression]
-//  }
-  
-//  static func buildExpression(_ expression: BlockOutput) -> [BlockOutput] {
-//    [expression]
-//  }
 }

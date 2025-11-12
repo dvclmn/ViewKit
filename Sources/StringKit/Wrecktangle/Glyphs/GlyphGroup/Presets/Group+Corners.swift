@@ -31,5 +31,4 @@ extension Box.GlyphGroup {
       Glyph("┘", .corner(.bottomTrailing))
     }
   }
-
 }

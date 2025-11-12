@@ -59,4 +59,38 @@ extension Sequence {
     Dictionary(grouping: self, by: { $0[keyPath: keyPath] })
   }
 
+  /// Safely creates a dictionary from this sequence
+  public func toDictionary<Key: Hashable, Value>(
+    key: KeyPath<Element, Key>,
+    value: KeyPath<Element, Value>,
+    uniquingKeysWith strategy: @escaping (Value, Value) -> Value
+  ) -> [Key: Value] {
+    var result = [Key: Value]()
+    for element in self {
+      let key = element[keyPath: key]
+      let value = element[keyPath: value]
+
+      if let existing = result[key] {
+        result[key] = strategy(existing, value)
+      } else {
+        result[key] = value
+      }
+    }
+    return result
+  }
+
+  /// Convenience overload that keeps the first value
+  public func toDictionary<Key: Hashable, Value>(
+    key: KeyPath<Element, Key>,
+    value: KeyPath<Element, Value>
+  ) -> [Key: Value] {
+    toDictionary(key: key, value: value) { first, _ in first }
+  }
+
+  /// Convenience for when the element itself is the value
+  public func toDictionary<Key: Hashable>(
+    key: KeyPath<Element, Key>
+  ) -> [Key: Element] {
+    toDictionary(key: key, value: \.self)
+  }
 }

@@ -6,7 +6,7 @@
 //
 
 extension Box.GlyphGroup {
-  public struct Presets: OptionSet, Sendable {
+  public struct Presets: OptionSet, Sendable, Hashable {
     public init(rawValue: Int) {
       self.rawValue = rawValue
     }

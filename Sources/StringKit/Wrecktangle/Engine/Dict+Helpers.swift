@@ -6,15 +6,15 @@
 //
 
 extension Box {
-  static func reduce<Key: Hashable, Value>(_ dicts: [Dictionary<Key, Value>]) -> Dictionary<Key, Value> {
-//    dicts.reduce(into: [:]) { $0.merge($1) { _, new in new } }
-    
-    dicts.reduce(into: [:]) { partial, dict in
-      partial.merge(dict) { current, new in
-        new
-      }
-    }
-  }
+//  static func reduce<Key: Hashable, Value>(_ dicts: [Dictionary<Key, Value>]) -> Dictionary<Key, Value> {
+////    dicts.reduce(into: [:]) { $0.merge($1) { _, new in new } }
+//    
+//    dicts.reduce(into: [:]) { partial, dict in
+//      partial.merge(dict) { current, new in
+//        new
+//      }
+//    }
+//  }
   
 //  static func merge<Key: Hashable, Value>(
 //    _ dictA: Dictionary<Key, Value>,

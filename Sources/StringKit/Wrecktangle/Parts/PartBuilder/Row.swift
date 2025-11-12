@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Row Structure
 struct Row {
-  /// These are not descriptor, they're glyph structures
+  /// These are not descriptors, they're glyph structures
   let glyphs: [GlyphType]
   
   init(@RowBuilder _ content: () -> [GlyphType]) {
