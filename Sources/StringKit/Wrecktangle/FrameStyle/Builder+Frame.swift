@@ -14,7 +14,8 @@ enum FrameBuilder {
   typealias BlockOutput = Box.PartMap
 
   static func buildBlock(_ components: BlockInput...) -> BlockOutput {
-    Dictionary(<#T##keysAndValues: Sequence##Sequence#>, uniquingKeysWith: <#T##(Value, Value) throws -> Value#>)
+    components.toDictionary(key: \.role, value: \.self)
+
 //    Dictionary(components) { current, new in
 //      new
 //    }
@@ -22,7 +23,7 @@ enum FrameBuilder {
   }
 
   public static func buildArray(_ components: [BlockOutput]) -> BlockOutput {
-    components.reduceDictionaries()
+    components.merged(keeping: .new)
 //    Box.reduce(components)
   }
 
