@@ -37,3 +37,23 @@ extension FrameBuilder {
     expression
   }
 }
+
+extension Array where Element == [Box.PartRole: Box.PartStructure] {
+  func mergedParts() -> [Box.PartRole: Box.PartStructure] {
+    merged(keeping: .custom { $0.merged(with: $1) })
+  }
+}
+
+
+extension Array where Element == [Box.GlyphRole: Box.GlyphStructure] {
+  func mergedGlyphs() -> [Box.GlyphRole: Box.GlyphStructure] {
+    merged(keeping: .custom { $0.merged(with: $1) })
+  }
+
+//  func mergedGlyphs() -> [Box.GlyphRole: Box.GlyphStructure] {
+//    merged(keeping: .custom { old, new in
+//      let thing = old
+////      old, new in old.merged(with: new)
+//    })
+//  }
+}

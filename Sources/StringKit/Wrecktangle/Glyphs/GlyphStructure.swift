@@ -41,6 +41,13 @@ extension Box {
   }  // END Glyph structure
 }
 
+extension Box.GlyphStructure {
+  func merged(with other: Self) -> Self {
+    guard role == other.role else { return self }
+    return Box.GlyphStructure(role, weight: weight.merged(with: other.weight))
+  }
+}
+
 extension Box.GlyphStructure: CustomStringConvertible {
   public var description: String {
     "\(role) \(weight)"

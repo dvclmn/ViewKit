@@ -22,8 +22,16 @@ extension Box {
     }
   }
 }
+
 extension Box.GlyphWeight {
   
+  func merged(with other: Self) -> Self {
+    Box.GlyphWeight(
+      x: x.merged(with: other.x),
+      y: y.merged(with: other.y)
+    )
+  }
+
   /// Describes the visual weight / thickness of this glyph.
   /// Usually used in conjunction with location/placement, to
   /// create the desired effect, such as a bolder exterior
@@ -32,9 +40,15 @@ extension Box.GlyphWeight {
     case standard
     case increased
   }
-  
-  
 }
+
+extension Box.GlyphWeight.WeightType {
+  func merged(with other: Self) -> Self {
+    /// Escalate to .increased if either side is increased
+    (self == .increased || other == .increased) ? .increased : .standard
+  }
+}
+
 extension Box.GlyphWeight {
   public static let standard = Self(x: .standard, y: .standard)
   public static let increased = Self(x: .increased, y: .increased)
