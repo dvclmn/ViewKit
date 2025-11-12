@@ -9,9 +9,11 @@ extension Box.GlyphGroup {
 
   // MARK: - All Joins
   static var joins: Self {
-    joinsThick
-      .merged(with: joinsThickExtThinInt)
-      .merged(with: joinsThin)
+    GlyphGroup {
+      joinsThick
+      joinsThickExtThinInt
+      joinsThin
+    }
   }
 
   // MARK: - Thin Joins

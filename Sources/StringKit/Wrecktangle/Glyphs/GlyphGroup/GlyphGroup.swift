@@ -11,7 +11,7 @@ typealias GlyphGroup = Box.GlyphGroup
 
 extension Box {
   struct GlyphGroup {
-//  struct GlyphGroup: Mergable {
+    //  struct GlyphGroup: Mergable {
 
     var map: GlyphMap
 
@@ -19,9 +19,9 @@ extension Box {
       self.map = glyphs
     }
 
-    init(_ presets: Presets) {
-      self = Self.fromPresets(presets)
-    }
+    //    init(_ presets: Presets) {
+    //      self = Self.fromPresets(presets)
+    //    }
 
     init(@GlyphSetBuilder _ glyphs: () -> GlyphMap) {
       self.map = glyphs()
@@ -31,23 +31,31 @@ extension Box {
 
 extension Box.GlyphGroup {
 
-  private static let presetMap: [Presets: GlyphGroup] = [
-    .straightsThin: .straightsThin,
-    .straightsThick: .straightsThick,
-    .joinsThin: .joinsThin,
-    .joinsThick: .joinsThick,
-    .joinsThickExtThinInt: .joinsThickExtThinInt,
-    .cornersThinSharp: .cornersThinSharp,
-    .cornersThickSharp: .cornersThickSharp,
-  ]
-
-  static func fromPresets(_ presets: Presets) -> Self {
-    let groups: [GlyphGroup] = presetMap.compactMap { (key, group) in
-      presets.contains(key) ? group : nil
-    }
-//    return groups.reduce(Self(glyphs: [:])) { $0.merged(with: $1) }
-    return groups.merged(keeping: .custom({ current, new in
-      <#code#>
-    }))
-  }
+  //  private static let presetMap: [Presets: GlyphGroup] = [
+  //    .straightsThin: .straightsThin,
+  //    .straightsThick: .straightsThick,
+  //    .joinsThin: .joinsThin,
+  //    .joinsThick: .joinsThick,
+  //    .joinsThickExtThinInt: .joinsThickExtThinInt,
+  //    .cornersThinSharp: .cornersThinSharp,
+  //    .cornersThickSharp: .cornersThickSharp,
+  //  ]
+  //
+  //  static func fromPresets(_ presets: Presets) -> Self {
+  //    let groups: [GlyphGroup] = presetMap.compactMap { (key, group) in
+  //      presets.contains(key) ? group : nil
+  //    }
+  ////    return groups.reduce(Self(glyphs: [:])) { $0.merged(with: $1) }
+  ////    return groups.merged(keeping: .custom({ current, new in
+  ////      <#code#>
+  ////    }))
+  //
+  //    return
+  //
+  ////    return groups.merged(
+  ////      keeping: .custom { current, new in
+  ////        current.merged(with: new)
+  ////      }
+  ////    )
+  //  }
 }

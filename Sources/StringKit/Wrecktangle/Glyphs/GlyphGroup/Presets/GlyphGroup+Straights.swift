@@ -11,7 +11,10 @@ import Foundation
 extension Box.GlyphGroup {
 
   static var straights: Self {
-    straightsThin.merged(with: straightsThick)
+    GlyphGroup {
+      straightsThin
+      straightsThick
+    }
   }
 
   static var straightsThick: Self {

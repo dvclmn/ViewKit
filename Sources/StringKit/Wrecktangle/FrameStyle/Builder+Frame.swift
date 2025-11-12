@@ -41,7 +41,11 @@ extension FrameBuilder {
 
 extension Array where Element == Box.PartMap {
   func mergedParts() -> Box.PartMap {
-    merged(keeping: .custom { $0.merged(with: $1) })
+    merged(
+      keeping: .custom { current, new in
+        current.merged(with: new)
+      }
+    )
   }
 }
 

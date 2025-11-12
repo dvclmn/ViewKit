@@ -9,7 +9,10 @@ extension Box.GlyphGroup {
 
   // MARK: - All Corners
   static var corners: Box.GlyphGroup {
-    cornersThinSharp.merged(with: cornersThickSharp)
+    GlyphGroup {
+      cornersThinSharp
+      cornersThickSharp
+    }
   }
 
   // MARK: - Bold Corners

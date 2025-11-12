@@ -24,7 +24,8 @@ extension Box {
 }
 
 extension Box.GlyphWeight {
-  
+
+  /// Guards against weight 'data loss'
   func merged(with other: Self) -> Self {
     Box.GlyphWeight(
       x: x.merged(with: other.x),
