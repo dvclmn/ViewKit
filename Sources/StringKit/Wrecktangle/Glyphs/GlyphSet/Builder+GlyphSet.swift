@@ -9,7 +9,6 @@
 enum GlyphSetBuilder {
   static func buildBlock(_ components: Box.GlyphMap...) -> Box.GlyphMap {
     Box.reduce(components)
-//    components.reduce(into: [:]) { $0.merge($1) { _, new in new } }
   }
   
   static func buildExpression(_ expression: Glyph) -> Box.GlyphMap {
@@ -19,18 +18,15 @@ enum GlyphSetBuilder {
 }
 
 extension GlyphSetBuilder {
-  
   static func buildExpression(_ expression: Box.GlyphGroup) -> Box.GlyphMap {
     expression.map
-//    Dictionary(uniqueKeysWithValues: expression.map {
-//      ($0.descriptor, $0.character)
-//    })
   }
   
-//  static func buildExpression(_ expression: [Glyph]) -> Box.GlyphMap {
-//    Dictionary(uniqueKeysWithValues: expression.map {
-//      ($0.descriptor, $0.character)
-//    })
-//  }
+    static func buildExpression(_ expression: [Glyph]) -> Box.GlyphMap {
+      Dictionary(
+        uniqueKeysWithValues: expression.map {
+          ($0.descriptor, $0.character)
+        })
+    }
 }
 

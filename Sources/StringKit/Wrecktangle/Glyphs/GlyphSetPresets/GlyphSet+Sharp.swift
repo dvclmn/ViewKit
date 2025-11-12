@@ -14,8 +14,6 @@ extension Box.GlyphSet {
       GlyphGroup.straights
       GlyphGroup.joins
       GlyphGroup.corners
-      
-      
 
     }  // END set
 

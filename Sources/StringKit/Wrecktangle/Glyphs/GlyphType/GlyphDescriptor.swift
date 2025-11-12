@@ -16,7 +16,6 @@ extension Box {
       _ role: GlyphRole,
       weight: GlyphWeight = .standard,
       design: GlyphDesign
-//      design: GlyphDesign = .sharp
     ) {
       self.structure = .init(role, weight: weight)
       self.design = design
@@ -31,20 +30,15 @@ extension Box.GlyphDescriptor {
   static func fromRole(
     _ role: Box.GlyphRole,
     weight: Box.GlyphWeight = .standard,
-//    design: Box.GlyphDesign? = nil
   ) -> Self {
 
     let resolved = GlyphDesignContext.currentDesign
-//    let resolved = design ?? GlyphDesignContext.currentDesign
     guard let resolved else {
       fatalError("Why is this tripping?")
-      //      return
     }
 
     return .init(role, weight: weight, design: resolved)
-    //    let resolvedDesign = design ?? GlyphDesignContext.currentDesign ?? .sharp
   }
-
 }
 
 extension Box.GlyphDescriptor: CustomStringConvertible {

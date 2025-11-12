@@ -20,30 +20,21 @@ extension Box {
     /// *once*, rather than requiring each to set it per-Glyph.
     public var design: GlyphDesign
     public var glyphs: GlyphMap
-//    public var fallback: GlyphSetReference?
 
     public init(
       _ design: GlyphDesign,
-//      fallback: Self? = nil,
       @GlyphSetBuilder _ glyphs: () -> GlyphMap,
     ) {
       self.design = design
-//      if let fallback {
-//        self.fallback = SetRef(fallback)
-//      } else {
-//        self.fallback = nil
-//      }
       self.glyphs = GlyphDesignContext.$currentDesign.withValue(design) { glyphs() }
     }
 
     public init(
       design: GlyphDesign,
       map: GlyphMap,
-//      fallback: GlyphSetReference? = nil
     ) {
       self.design = design
       self.glyphs = map
-//      self.fallback = fallback
     }
   }
 }
@@ -54,7 +45,6 @@ extension Box.GlyphSet {
   ) -> Character {
 //    "8"
     glyphs[desc] ?? Box.glyphSetCharacterFallback
-//    glyphs[desc] ?? fallback?.wrapped.resolve(desc) ?? Box.glyphSetCharacterFallback
   }
 }
 

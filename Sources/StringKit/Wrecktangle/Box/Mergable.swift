@@ -9,11 +9,10 @@ protocol Mergable {
   associatedtype MapKey: Hashable
   associatedtype Value
   typealias Map = [MapKey: Value]
-  
+
   var map: Map { get set }
   func merged(with other: Self) -> Self
 }
-
 
 extension Mergable {
   func merged(with other: Self) -> Self {
