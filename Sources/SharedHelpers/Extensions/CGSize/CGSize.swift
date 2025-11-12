@@ -98,8 +98,7 @@ extension CGSize {
     return CGSize(width: width, height: height)
   }
 
-  #warning(
-    "I want to see if and where I need to use these, to make sure behaviour is predictable and standardised enough.")
+  // TODO: I want to see if and where I need to use these, to make sure behaviour is predictable and standardised enough.
   //  public func clamped(
   //    max maxSize: CGSize,
   //    min minSize: CGSize

@@ -40,9 +40,7 @@ extension Box {
 }
 
 extension Box.GlyphSet {
-  public func resolve(
-    _ desc: Box.GlyphDescriptor
-  ) -> Character {
+  public func resolve(_ desc: Box.GlyphDescriptor) -> Character {
 //    "8"
     glyphs[desc] ?? Box.glyphSetCharacterFallback
   }

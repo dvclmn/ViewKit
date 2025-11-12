@@ -276,32 +276,31 @@ public struct TextCore {
 
       result += finalCaps.trailing
 
-      let metrics: String = """
-
-
-
-        ---
-
-        Content: \(splitTextChunk)
-        Chunk count: \(splitTextChunk.count)
-        Text spaces: \(textSpaceCount)
-
-        How many splits? \(splitCount)
-
-        Content width: \(contentWidth)
-        Caps: \(finalCaps), and their width: \(capsSpaceCount)
-
-        Provided space: \(width)
-        Total content width inc. spaces & caps: \(finalContentWidth)
-
-        Remaining available width, to be padded out: \(availableSpace)
-        ---
-
-
-
-
-
-        """
+//      let metrics: String = """
+//
+//
+//
+//        ---
+//
+//        Content: \(splitTextChunk)
+//        Chunk count: \(splitTextChunk.count)
+//        Text spaces: \(textSpaceCount)
+//
+//        How many splits? \(splitCount)
+//
+//        Content width: \(contentWidth)
+//        Caps: \(finalCaps), and their width: \(capsSpaceCount)
+//
+//        Provided space: \(width)
+//        Total content width inc. spaces & caps: \(finalContentWidth)
+//
+//        Remaining available width, to be padded out: \(availableSpace)
+//        ---
+//
+//
+//
+//
+//        """
 
 //      print(!contentIsSplit ? metrics : "")
 

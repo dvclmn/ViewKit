@@ -35,7 +35,7 @@ public typealias TripleCaptureRange = (AttributedRange, AttributedRange, Attribu
 // extension Regex<Regex.SingleCapture.RegexOutput>.Match {
 extension SingleCapture.Match {
 
-  #warning("Need to re-write this to not depend on DisplayString")
+  // TODO: Need to re-write this to not depend on DisplayString
   public var displayString: String {
     return """
           DisplayString {
@@ -56,7 +56,7 @@ extension SingleCapture.Match {
 
 extension Regex<AnyRegexOutput>.Match {
   //extension Regex<Regex<Substring>.RegexOutput>.Match {
-#warning("Need to re-write this to not depend on DisplayString")
+// TODO: Need to re-write this to not depend on DisplayString
   public var displayString: String {
     return """
           DisplayString {

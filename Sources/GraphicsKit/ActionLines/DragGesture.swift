@@ -9,7 +9,7 @@
 import SharedHelpers
 import SwiftUI
 
-#warning("Consider using GestureKit for gestures")
+// TODO: Consider using GestureKit for gestures
 
 #if canImport(AppKit)
 extension ActionLinesView {

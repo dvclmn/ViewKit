@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 24/11/2024.
 //
 
-
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 public struct ActionLinesView: View {
 
@@ -117,8 +116,8 @@ public struct ActionLinesView: View {
 
       /// Controls
       ActionControlsView()
-//        .padding()
-        .background(.black.opacityLow)
+        //        .padding()
+//        .background(.black.opacityLow)
 
     }
   }

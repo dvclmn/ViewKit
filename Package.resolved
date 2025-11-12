@@ -1,5 +1,5 @@
 {
-  "originHash" : "40cdc10e4975ee4e9ba36a3429618805a4e89ff3df2646440d77f67390ac6ffa",
+  "originHash" : "f459d16c7efe4d7e637e9b4c69c411e0e5c35f2d6058111a538745e31df39931",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -8,15 +8,6 @@
       "state" : {
         "revision" : "5928286acce13def418ec36d05a001a9641086f2",
         "version" : "1.0.3"
-      }
-    },
-    {
-      "identity" : "ifrit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ukushu/Ifrit",
-      "state" : {
-        "revision" : "9b9556e14cee24ad16b19d0eb099283cf79a7d94",
-        "version" : "3.0.0"
       }
     },
     {
@@ -35,15 +26,6 @@
       "state" : {
         "revision" : "8792b2f789bf03be1be9ecb4df43d2bfe0e5d361",
         "version" : "1.3.0"
-      }
-    },
-    {
-      "identity" : "nuke",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kean/Nuke",
-      "state" : {
-        "revision" : "0ead44350d2737db384908569c012fe67c421e4d",
-        "version" : "12.8.0"
       }
     },
     {
@@ -96,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-docc-plugin",
       "state" : {
-        "revision" : "85e4bb4e1cd62cec64a4b8e769dcefdf0c5b9d64",
-        "version" : "1.4.3"
+        "revision" : "3e4f133a77e644a5812911a0513aeb7288b07d06",
+        "version" : "1.4.5"
       }
     },
     {

@@ -17,7 +17,6 @@ extension Box {
       self.role = type
       self.glyphs = glyphs
     }
-
   }
 }
 

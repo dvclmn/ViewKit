@@ -53,7 +53,7 @@ extension Axis {
     }
   }
 
-  #warning("Does this make sense? Should this be incorporated with `DimensionToAxisConvention`?")
+  // TODO: Does this make sense? Should this be incorporated with `DimensionToAxisConvention`?
   public func getMinMax(_ axis: Axis.MinMax) -> Axis {
     switch axis {
       case .minWidth, .maxWidth:

@@ -151,7 +151,8 @@ extension ShortcutDescriptionsView {
   ) -> some View {
 
     VStack(spacing: 20) {
-      Text("\(symbolLiteral)")
+      Text(String(symbolLiteral))
+//      Text("\(symbolLiteral)")
         .font(.title2)
       Text(name)
         .foregroundStyle(.secondary)

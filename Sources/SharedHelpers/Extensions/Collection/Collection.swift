@@ -90,7 +90,7 @@ extension Collection where Element: Hashable {
   }
 }
 
-#warning("These extensions were way too broad, so were popping up in every auto-complete.")
+// TODO: These extensions were way too broad, so were popping up in every auto-complete.
 //extension Set {
 //  //extension Set where Element: Identifiable, Element.ID: Hashable {
 //  public func isAtTop<T: Collection>(of collection: T) -> Bool where T.Element == Self.Element {

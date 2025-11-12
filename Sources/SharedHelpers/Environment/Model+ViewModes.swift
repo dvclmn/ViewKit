@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-#warning("Important: The below is useful, even though turned off, don't delete")
+// TODO: Important: The below is useful, even though turned off, don't delete
 
 /// I think the below can work, but haven't been sure if and how to
 /// have both an `OptionSet` approach, and the seperate `Bool`s

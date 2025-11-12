@@ -84,7 +84,7 @@ extension Scrubber {
 
   var totalWidth: CGFloat {
     /// The digits, plus room for one character for
-    #warning("Needs to be properly calculated")
+    // TODO: Needs to be properly calculated
     let unitsCharacterWidth: Int = 1
     //    let unitsCharacterWidth: Int = unit.count
     let count: Int = digitCount + unitsCharacterWidth

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SharedHelpers
 
 /// Represents a half-open interval unit, `[0, 1)`.
 /// Includes `0` but excludes `1`.

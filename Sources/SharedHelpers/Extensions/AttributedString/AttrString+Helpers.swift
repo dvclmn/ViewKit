@@ -59,7 +59,7 @@ extension AttributedString {
     self.editAttributes(for: matches, transform: transform)
   }
 
-  #warning("Find way to write similar code for Single, Double, Triple captures, without redundancy etc")
+  // TODO: Find way to write similar code for Single, Double, Triple captures, without redundancy etc
   //  public func getRange(for pattern: TripleCapture) -> TripleCaptureRange? {
   //
   //    let string = String(self.characters)

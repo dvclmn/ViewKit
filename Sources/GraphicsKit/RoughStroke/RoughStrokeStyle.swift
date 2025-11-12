@@ -8,7 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
-#warning("I want to keep this, but cannot figure out main-actor whatevers")
+// TODO: I want to keep this, but cannot figure out main-actor whatevers
 
 /// Defines the characteristics of a rough stroke
 //public struct RoughPathStyle: Sendable {

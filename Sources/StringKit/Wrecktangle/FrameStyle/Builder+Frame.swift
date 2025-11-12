@@ -31,17 +31,9 @@ extension FrameBuilder {
   
   static func buildExpression(_ expression: BlockInput) -> BlockInput {
     expression
-//    [expression.role: expression]
   }
   
   static func buildExpression(_ expression: BlockOutput) -> BlockOutput {
     expression
-    //    [expression.role: expression]
   }
-  
-//  static func buildExpression(_ expression: PartGroup...) -> BlockOutput {
-//    expression.map(\.map).merged(keeping: .last)
-//    let allParts: [Box.PartStructure] = expression.flatMap(\.parts)
-//    return allParts.toDictionary(key: \.role, value: \.self)
-//  }
 }

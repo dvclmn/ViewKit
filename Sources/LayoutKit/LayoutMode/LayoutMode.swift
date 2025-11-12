@@ -70,7 +70,7 @@ public enum LayoutType {
   }
 }
 
-#warning("Is the below still useful?")
+// TODO: Is the below still useful?
 //public struct LayoutToggle: View {
 //
 //  @Binding var mode: LayoutMode

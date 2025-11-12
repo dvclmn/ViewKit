@@ -45,7 +45,7 @@ extension DisplayString {
     //      element.toStyledString.plainString
     //    }.joinedLines()
 
-    var markdown = try? AttributedString(
+    let markdown = try? AttributedString(
       markdown: plainText,
       options: .init(
         allowsExtendedAttributes: false,
