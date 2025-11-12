@@ -8,30 +8,26 @@
 typealias PartGroup = Box.PartGroup
 
 extension Box {
-  struct PartGroup: PartConvertible {
-    var parts: [PartStructure]
-    //    var glyphs: GlyphStack
-
-    public init(parts: [PartStructure]) {
-//      let part = PartStructure(role, glyphs: glyphs)
-      self.parts = parts
-    }
+  struct PartGroup {
+    var parts: [Box.PartStructure]
+//    var glyphs: GlyphStack
 
     public init(
       role: PartRole,
       glyphs: GlyphStack
     ) {
-      let part = PartStructure(role, glyphs: glyphs)
+      let part = Box.PartStructure(role, glyphs: glyphs)
       self.parts = [part]
+    }
+    
+    public init(parts: [Box.PartStructure]) {
+      self.parts = parts
     }
 
     /// Builder init
-    init(@PartBuilder _ glyphs: () -> GlyphStack) {
-
-      //      self.glyphs = glyphs()
+    init(@FrameBuilder _ parts: () -> [Box.PartStructure]) {
+//    init(@PartBuilder _ parts: () -> GlyphStack) {
+      self.parts = parts()
     }
   }
-}
-extension Box.PartGroup {
-  func toGlyphStack() -> GlyphStack { glyphs }
 }

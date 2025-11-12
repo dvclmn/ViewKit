@@ -42,7 +42,7 @@ extension Box.FrameStructure {
       }
       
       PartGroup.doubleJoin
-      PartGroup.doubleCorner
+//      PartGroup.doubleCorner
 
     }  // END Frame
 //    .merged(with: Box.JoinType.doubleJoin)

@@ -8,8 +8,8 @@
 extension Box.PartGroup {
   //extension Box.JoinType {
 
-  static var doubleJoin: Frame {
-    Frame {
+  static var doubleJoin: PartGroup {
+    PartGroup {
       Part(.join(.leading)) {
         Row {
           GlyphType.v(.increased)

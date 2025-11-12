@@ -10,15 +10,14 @@ import SharedHelpers
 @resultBuilder
 enum FrameBuilder {
 
-  typealias BlockInput = any PartConvertible
-//  typealias BlockInput = Box.PartStructure
+  typealias BlockInput = Box.PartStructure
   typealias BlockOutput = Box.PartMap
 
   static func buildBlock(_ components: BlockInput...) -> BlockOutput {
     components.toDictionary(key: \.role, value: \.self)
   }
 
-  public static func buildArray(_ components: [BlockOutput]) -> BlockOutput {
+  static func buildArray(_ components: [BlockOutput]) -> BlockOutput {
     components.merged(keeping: .last)
   }
 
@@ -26,5 +25,17 @@ enum FrameBuilder {
   static func buildEither(second: BlockOutput) -> BlockOutput { second }
   static func buildOptional(_ component: BlockOutput?) -> BlockOutput {
     component ?? [:]
+  }
+}
+extension FrameBuilder {
+  
+  static func buildExpression(_ expression: BlockInput) -> BlockInput {
+    expression
+//    [expression.role: expression]
+  }
+  
+  static func buildExpression(_ expression: PartGroup...) -> BlockOutput {
+    let allParts: [Box.PartStructure] = expression.flatMap(\.parts)
+    return allParts.toDictionary(key: \.role, value: \.self)
   }
 }
