@@ -6,13 +6,14 @@
 //
 
 extension Box.PartStructure {
-//extension Box.PartGroup {
+  //extension Box.PartGroup {
   //extension Box.JoinType {
 
+  //  static var doubleJoin: Box.PartMap {
   static var doubleJoin: [Part] {
-//  static var doubleJoin: Frame {
+    //  static var doubleJoin: Frame {
     PartGroup {
-      
+
       Part(.join(.leading)) {
         Row {
           GlyphType.v(.increased)
@@ -34,7 +35,7 @@ extension Box.PartStructure {
           GlyphType.v(.increased)
         }
       }
-//
+      //
       Part(.join(.top)) {
         Row {
           GlyphType.h(.increased)
@@ -66,6 +67,6 @@ extension Box.PartStructure {
         }
       }
     }.parts
-    
+
   }
 }

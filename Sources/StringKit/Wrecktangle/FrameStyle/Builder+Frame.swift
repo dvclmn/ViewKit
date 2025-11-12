@@ -14,7 +14,9 @@ enum FrameBuilder {
   typealias BlockOutput = Box.PartMap
 
   static func buildBlock(_ components: BlockInput...) -> BlockOutput {
-    components.toDictionary(key: \.role, value: \.self)
+    components.toDictionary(key: \.role, value: \.self, keeping: .custom({ current, new in
+      current.merged(with: new)
+    }))
   }
 
   static func buildArray(_ components: [BlockOutput]) -> BlockOutput {
@@ -36,6 +38,11 @@ extension FrameBuilder {
 
   static func buildExpression(_ expression: BlockOutput) -> BlockOutput {
     expression
+  }
+  static func buildExpression(_ expression: [BlockInput]) -> BlockOutput {
+    expression.toDictionary(key: \.role, value: \.self, keeping: .custom({ current, new in
+      current.merged(with: new)
+    }))
   }
 }
 

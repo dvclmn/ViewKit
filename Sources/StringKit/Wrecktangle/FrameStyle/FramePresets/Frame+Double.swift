@@ -41,7 +41,9 @@ extension Box.FrameStructure {
         GlyphType.v(.standard)
       }
       
-      Part.doubleJoin
+      
+      
+//      Part.doubleJoin
       
 //      Part.doubleJoin
 //      PartGroup.doubleCorner
