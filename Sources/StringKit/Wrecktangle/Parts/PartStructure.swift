@@ -7,13 +7,6 @@
 
 public typealias Part = Box.PartStructure
 
-
-//protocol PartConvertible {
-//  func toGlyphStack() -> GlyphStack
-////  var glyphs: GlyphStack { get }
-//}
-
-
 extension Box {
   /// Needs to have nothing to do with ``Box/GlyphDesign``
   /// Used in FrameBuilders
