@@ -26,12 +26,12 @@ extension Box {
 extension Box.GlyphWeight {
 
   /// Guards against weight 'data loss'
-  func merged(with other: Self) -> Self {
-    Box.GlyphWeight(
-      x: x.merged(with: other.x),
-      y: y.merged(with: other.y)
-    )
-  }
+//  func merged(with other: Self) -> Self {
+//    Box.GlyphWeight(
+//      x: x.merged(with: other.x),
+//      y: y.merged(with: other.y)
+//    )
+//  }
 
   /// Describes the visual weight / thickness of this glyph.
   /// Usually used in conjunction with location/placement, to
@@ -43,14 +43,14 @@ extension Box.GlyphWeight {
   }
 }
 
-extension Box.GlyphWeight.WeightType {
-  func merged(with other: Self) -> Self {
-    /// Escalate to .increased if either side is increased
-    return .standard
-//    return .increased
+//extension Box.GlyphWeight.WeightType {
+//  func merged(with other: Self) -> Self {
+//    /// Escalate to .increased if either side is increased
+////    return .standard
+////    return .increased
 //    (self == .increased || other == .increased) ? .increased : .standard
-  }
-}
+//  }
+//}
 
 extension Box.GlyphWeight {
   public static let standard = Self(x: .standard, y: .standard)

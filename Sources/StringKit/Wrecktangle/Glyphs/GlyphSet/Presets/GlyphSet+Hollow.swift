@@ -8,10 +8,7 @@
 extension Box.GlyphSet {
 
   public static var hollow: Self {
-//    GlyphSet(fallback: .sharp) {
     GlyphSet(.hollow) {
-//    GlyphSet(.hollow, fallback: .sharp) {
-
       Glyph("═", .horizontal, weight: .increased)
       Glyph("─", .horizontal)
 
@@ -25,8 +22,8 @@ extension Box.GlyphSet {
       Glyph("┼", .join(.cross))
 
       Glyph("╔", .corner(.topLeading), weight: .increased)
-      Glyph("╗", .corner(.topTrailing))
-      Glyph("╚", .corner(.bottomLeading))
+      Glyph("╗", .corner(.topTrailing), weight: .increased)
+      Glyph("╚", .corner(.bottomLeading), weight: .increased)
       Glyph("╝", .corner(.bottomTrailing), weight: .increased)
     }
   }

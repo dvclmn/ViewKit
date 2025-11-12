@@ -62,7 +62,7 @@ extension Box.FrameStructure {
           GlyphType.v(.increased)
         }
       }
-      //
+      
       Part(.join(.top)) {
         Row {
           GlyphType.h(.increased)
