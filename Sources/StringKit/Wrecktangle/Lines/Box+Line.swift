@@ -16,18 +16,18 @@ extension Box {
 
     /// Init for Text Line
     public init(
-      _ textContent: String,
+      text: String,
       leading: LinePart,
       trailing: LinePart,
     ) {
       self.leading = leading
-      self.body = .text(textContent)
+      self.body = .text(text)
       self.trailing = trailing
     }
 
     /// Init for Structure Line
     public init(
-      _ repeater: LinePart,
+      repeating repeater: LinePart,
       leading: LinePart,
       trailing: LinePart,
     ) {

@@ -37,25 +37,35 @@ extension Box.Engine {
         return rowNumbersWidth
 
       case .repeatedPart:
-        let reserved = capsWidth + rowNumbersWidth
+        let reserved = capsTotalWidth + rowNumbersWidth
         let result = width - reserved
         return max(0, result)
 
       case .text:
-        let reserved = (theme.padding.width * 2) + capsWidth + rowNumbersWidth
+        let reserved = themePaddingTotal + capsTotalWidth + rowNumbersWidth
         let widthForText = width - reserved
         return max(0, widthForText)
 
       case .lineCaps:
-        return capsWidth
+        return capsTotalWidth
 
       case .fullLine:
         return self.width
     }
   }
 
-  private var rowNumbersWidth: Int { hasRowNumbers ? 2 : 0 }
-  private var capsWidth: Int { theme.frameStyle.frame.frameWidth(for: .leading).map { $0 * 2 } ?? 1 }
+  var themePaddingTotal: Int { theme.padding.width * 2 }
+
+  /// Allows space for up to 2-digit number, plus a space
+  private var rowNumbersWidth: Int { hasRowNumbers ? 3 : 0 }
+
+  /// Combines the widths of Leading and Trailing caps
+  private var capsTotalWidth: Int {
+    let leading = theme.frameStyle.frame.frameWidth(for: .leading) ?? 1
+    let trailing = theme.frameStyle.frame.frameWidth(for: .trailing) ?? 1
+    return leading + trailing
+    //    theme.frameStyle.frame.frameWidth(for: .leading).map { $0 * 2 } ?? 1
+  }
 
 }
 

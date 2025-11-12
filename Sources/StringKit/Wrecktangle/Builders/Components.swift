@@ -7,23 +7,21 @@
 
 import Foundation
 
-/// Having this as an array seems neccesary really only for the Header
-/// (at this point), as it needs to
-public typealias ComponentOutput = [Box.Line]
+public typealias Components = [Box.Line]
 
 extension Box {
   public protocol Component: Codable, Sendable, Equatable {
-    func makeLines() -> ComponentOutput
+    func makeLines() -> Components
   }
 }
 
 extension Box {
   public struct Top: Component, Codable {
     public init() {}
-    public func makeLines() -> ComponentOutput {
+    public func makeLines() -> Components {
       [
         Box.Line(
-          .horizontal(.top),
+          repeating: .horizontal(.top),
           leading: .corner(.topLeading),
           trailing: .corner(.topTrailing),
         )
@@ -33,11 +31,10 @@ extension Box {
 
   public struct Divider: Component, Codable {
     public init() {}
-    public func makeLines() -> ComponentOutput {
+    public func makeLines() -> Components {
       [
         Box.Line(
-          .horizontal(.interior),
-//          leading: .vertical(.leading),
+          repeating: .horizontal(.interior),
           leading: .join(.leading),
           trailing: .join(.trailing),
         )
@@ -47,10 +44,10 @@ extension Box {
 
   public struct Bottom: Component, Codable {
     public init() {}
-    public func makeLines() -> ComponentOutput {
+    public func makeLines() -> Components {
       [
         Box.Line(
-          .horizontal(.bottom),
+          repeating: .horizontal(.bottom),
           leading: .corner(.bottomLeading),
           trailing: .corner(.bottomTrailing),
         )
@@ -61,10 +58,10 @@ extension Box {
   public struct Text: Component, Codable {
     let content: String
     public init(_ content: String) { self.content = content }
-    public func makeLines() -> ComponentOutput {
+    public func makeLines() -> Components {
       [
         Box.Line(
-          content,
+          text: content,
           leading: .vertical(.leading),
           trailing: .vertical(.trailing),
         )
@@ -76,14 +73,14 @@ extension Box {
     let text: String
     public init(_ text: String) { self.text = text }
 
-    public func makeLines() -> ComponentOutput {
+    public func makeLines() -> Components {
       Box.Text(text).combined(with: Box.Divider())
     }
   }
 }
 
 extension Box.Component {
-  func combined(with other: any Box.Component) -> ComponentOutput {
+  func combined(with other: any Box.Component) -> Components {
     let lhsLines = self.makeLines()
     let rhsLines = other.makeLines()
     return lhsLines + rhsLines

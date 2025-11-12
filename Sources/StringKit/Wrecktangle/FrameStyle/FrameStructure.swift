@@ -8,12 +8,13 @@
 import SharedHelpers
 
 public typealias Frame = Box.FrameStructure
+
 extension Box {
+  /// Allows the grouping of Parts (described by Structure-only),
+  /// by their Role (aka Placement within the Box)
   public typealias PartMap = [Box.PartRole: Box.PartStructure]
-}
 
-extension Box {
-
+  /// Represents a composition of Parts that describe a complete Frame
   public struct FrameStructure: Sendable, Codable, Equatable, Mergable {
 
     var map: PartMap = [:]

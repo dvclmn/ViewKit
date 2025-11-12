@@ -5,27 +5,27 @@
 //  Created by Dave Coleman on 11/11/2025.
 //
 
-/// For use within the body of Frame builders
-/// Describes Structure only, not Design
+/// For use within Frame builders. Describes structure only, not design
 public typealias GlyphType = Box.GlyphStructure
+
+/// 2D array of structure-describing Glyphs
 public typealias GlyphStack = [[Box.GlyphStructure]]
 
-/// For GlyphSet builders
-/// Describes actual individual Characters (Design/appearance)
+/// For `GlyphSet` builders. Describes design of individual `Character`s
 public typealias Glyph = Box.GlyphResolved
 
 extension Box {
 
-  /// Describes enough about Structure as to be useful to
-  /// Structure, but importabtly doesn't hold on to `GlyphDesign`
-  /// at all, so is used for `FrameStyle`
+  /// Describes structure in terms of placement and weight (aka prominence).
+  /// Intentionally omits any info relating to the *design* of Glyphs, so a Frame
+  /// can declare Glyph Structure without yet being concerned with Glyph Design.
   public struct GlyphStructure: Sendable, Codable, Hashable {
     let role: GlyphRole
     let weight: Box.GlyphWeight
 
     public init(
       _ role: GlyphRole,
-      weight: Box.GlyphWeight
+      weight: Box.GlyphWeight = .standard
     ) {
       self.role = role
       self.weight = weight

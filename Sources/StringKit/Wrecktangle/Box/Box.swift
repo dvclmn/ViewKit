@@ -28,7 +28,6 @@ public struct Box: Sendable {
     self.components = content()
     self.engine = Box.Engine(config)
   }
-
 }
 
 extension Box {
