@@ -29,6 +29,7 @@ public struct BoxViewExample: View {
       Box.Header("Glyphs: \(glyphSet.design.name), Frame: \(frameStyle.name).")
       DummyContent.Strings.paragraphs[paragraphIndex].prefix(textLength).toString
     }
+    .padding(6)
     //      .environment(\.metrics, .lineNumbers)
     //      .environment(\.metrics, [])
 

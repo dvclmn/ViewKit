@@ -15,11 +15,19 @@ extension Box {
     init(glyphs: GlyphMap) {
       self.map = glyphs
     }
+    
+    init(glyphs: GlyphMap) {
+      self.map = glyphs
+    }
 
     init(@GlyphGroupBuilder _ glyphs: () -> GlyphMap) {
       self.map = glyphs()
     }
   }
+}
+
+extension Box.GlyphGroup {
+  
 }
 
 //extension Box.GlyphGroup {

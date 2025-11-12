@@ -63,6 +63,7 @@ extension EnvironmentValues {
   @Entry public var explicitSize: CGSize? = nil
   @Entry public var explicitHeight: CGFloat? = nil
   @Entry public var explicitWidth: CGFloat? = nil
+  @Entry public var explicitFontSize: CGFloat? = nil
 
   /// Useful when referring to neither height nor width specifically
   @Entry public var explicitLength: CGFloat? = nil

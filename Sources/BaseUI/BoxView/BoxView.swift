@@ -15,6 +15,7 @@ public struct BoxView: View {
   @Environment(\.metrics) private var metrics
   @Environment(\.gridWidth) private var gridWidth
   @Environment(\.gridHeight) private var gridHeight
+  @Environment(\.explicitFontSize) private var explicitFontSize
 
   @State private var characterSize: CGSize?
 
@@ -39,7 +40,7 @@ public struct BoxView: View {
     )
     .fixedSize(horizontal: true, vertical: false)
 
-    .gridSetup(.sfMono, fontSize: 13)
+    .gridSetup(.sfMono, fontSize: explicitFontSize ?? 13)
 
     .environment(\.isShowingGridGuide, false)
 
@@ -68,60 +69,66 @@ extension EnvironmentValues {
   @Entry var paragraphNumber: Int? = nil
 }
 
-
 #if DEBUG
 #Preview(traits: .size(.normal)) {
 
   ScrollView {
-    HStack(alignment: .top, spacing: 24) {
+    HStack(alignment: .top, spacing: 8) {
       //    VStack(alignment: .leading, spacing: 14) {
 
-      GroupBox("Sharp") {
-        BoxViewExample()
-          .setBoxStyle(
-            glyphs: .sharp,
-            frame: .single,
-          )
-        Divider()
-        BoxViewExample()
-          .setBoxStyle(
-            glyphs: .sharp,
-            frame: .double,
-          )
+      VStack {
+        Section("Sharp") {
+          BoxViewExample()
+            .setBoxStyle(
+              glyphs: .sharp,
+              frame: .single,
+            )
+          //          Divider()
+          BoxViewExample()
+            .setBoxStyle(
+              glyphs: .sharp,
+              frame: .double,
+            )
+        }
       }
 
-      GroupBox("Round") {
-        BoxViewExample()
-          .setBoxStyle(
-            glyphs: .rounded,
-            frame: .single,
-          )
+      VStack {
+        Section("Round") {
+          BoxViewExample()
+            .setBoxStyle(
+              glyphs: .rounded,
+              frame: .single,
+            )
 
-        Divider()
-        BoxViewExample()
-          .setBoxStyle(
-            glyphs: .rounded,
-            frame: .double,
-          )
+          //          Divider()
+          BoxViewExample()
+            .setBoxStyle(
+              glyphs: .rounded,
+              frame: .double,
+            )
+        }
       }
-      GroupBox("Hollow") {
-        BoxViewExample()
-          .setBoxStyle(
-            glyphs: .hollow,
-            frame: .single,
-          )
+      VStack {
+        Section("Hollow") {
+          BoxViewExample()
+            .setBoxStyle(
+              glyphs: .hollow,
+              frame: .single,
+            )
 
-        Divider()
-        BoxViewExample()
-          .setBoxStyle(
-            glyphs: .hollow,
-            frame: .double,
-          )
+          //          Divider()
+          BoxViewExample()
+            .setBoxStyle(
+              glyphs: .hollow,
+              frame: .double,
+            )
+        }
       }
     }
-//                .environment(\.metrics, .lineNumbers)
+    //                .environment(\.metrics, .lineNumbers)
     .environment(\.paragraphNumber, 5)
-    .setGridFrame(22, alignment: .leading)
+    .setGridFrame(18, alignment: .leading)
+    .environment(\.explicitFontSize, 11)
 
   }
   .textSelection(.enabled)

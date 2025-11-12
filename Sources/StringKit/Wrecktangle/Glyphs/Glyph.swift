@@ -21,10 +21,11 @@ extension Box {
       _ character: Character,
       _ role: Box.GlyphRole,
       weight: Box.GlyphWeight = .standard,
-      design: Box.GlyphDesign? = nil
+//      design: Box.GlyphDesign? = nil
     ) {
       self.character = character
-      self.descriptor = .fromRole(role, weight: weight, design: design)
+      self.descriptor = .fromRole(role, weight: weight)
+//      self.descriptor = .fromRole(role, weight: weight, design: design)
     }
 
     public init(
@@ -32,13 +33,13 @@ extension Box {
       _ role: Box.GlyphRole,
       x: Box.GlyphWeight.WeightType = .standard,
       y: Box.GlyphWeight.WeightType = .standard,
-      design: Box.GlyphDesign? = nil
+//      design: Box.GlyphDesign? = nil
     ) {
       self.init(
         character,
         role,
         weight: GlyphWeight(x: x, y: y),
-        design: design
+//        design: design
       )
     }
   }

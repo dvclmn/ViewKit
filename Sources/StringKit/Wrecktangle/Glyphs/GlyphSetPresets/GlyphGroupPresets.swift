@@ -5,20 +5,41 @@
 //  Created by Dave Coleman on 9/11/2025.
 //
 
-extension Box.GlyphGroup {
+import EnumMacros
+import Foundation
 
-  //  static var straights: Self {
-  //    GlyphGroup {
-  //      // MARK: - Horizontal
-  //      Glyph("━", .horizontal, weight: .increased)
-  //      Glyph("─", .horizontal)
-  //
-  //      // MARK: - Vertical
-  //      Glyph("┃", .vertical, weight: .increased)
-  //      Glyph("│", .vertical)
-  //
-  //    }
-  //  }
+extension Box.GlyphGroup {
+  public struct Presets: OptionSet, Sendable {
+    public init(rawValue: Int) {
+      self.rawValue = rawValue
+    }
+    public let rawValue: Int
+
+    public static let straightsThin = Self(rawValue: 1 << 0)
+    public static let straightsThick = Self(rawValue: 1 << 1)
+    public static let joinsThin = Self(rawValue: 1 << 2)
+    public static let joinsThick = Self(rawValue: 1 << 3)
+    public static let joinsThickExtThinInt = Self(rawValue: 1 << 4)
+    public static let cornersThinSharp = Self(rawValue: 1 << 5)
+    public static let cornersThickSharp = Self(rawValue: 1 << 6)
+
+    public static let straights: Self = [
+      .straightsThin,
+      .straightsThick
+    ]
+    public static let joins: Self = [
+      .joinsThin,
+      .joinsThick,
+      .joinsThickExtThinInt
+    ]
+    public static let corners: Self = [
+      .cornersThinSharp,
+      .cornersThickSharp
+    ]
+  }
+}
+
+extension Box.GlyphGroup {
 
   static var straights: Self {
     straightsThin.merged(with: straightsThick)
@@ -80,11 +101,11 @@ extension Box.GlyphGroup {
 
   // MARK: - All Corners
   static var corners: Box.GlyphGroup {
-    cornersThin.merged(with: cornersThick)
+    cornersSharpThin.merged(with: cornersSharpThick)
   }
 
   // MARK: - Bold Corners
-  static var cornersThick: Box.GlyphGroup {
+  static var cornersSharpThick: Box.GlyphGroup {
     GlyphGroup {
       Glyph("┏", .corner(.topLeading), weight: .increased)
       Glyph("┓", .corner(.topTrailing), weight: .increased)
@@ -94,7 +115,7 @@ extension Box.GlyphGroup {
   }
 
   // MARK: - Thin Corners
-  static var cornersThin: Box.GlyphGroup {
+  static var cornersSharpThin: Box.GlyphGroup {
     GlyphGroup {
       Glyph("┌", .corner(.topLeading))
       Glyph("┐", .corner(.topTrailing))
