@@ -43,7 +43,11 @@ extension Box {
 
 extension Box.GlyphStructure {
   func merged(with other: Self) -> Self {
-    guard role == other.role else { return self }
+    print("Merging two GlyphStructures")
+    guard role == other.role else {
+      print("Roles don't match: \(role) != \(other.role)")
+      return self
+    }
     return Box.GlyphStructure(role, weight: weight.merged(with: other.weight))
   }
 }

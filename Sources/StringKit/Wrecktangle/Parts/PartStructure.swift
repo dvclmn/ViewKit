@@ -15,6 +15,7 @@ extension Box {
     let role: PartRole
 
     /// What glyphs are used to compose this Part
+    /// Go straight to ``Box/GlyphStructure``
     let glyphs: GlyphStack
 
     public init(
@@ -39,11 +40,14 @@ extension Box {
 
 extension Box.PartStructure {
 
-  func merged(with other: Self) -> Self {
-    guard role == other.role else { return self }
-    let mergedGlyphs = self.glyphs + other.glyphs
-    return Self(role, glyphs: mergedGlyphs)
-  }
+//  func merged(with other: Self) -> Box.PartMap {
+////  func merged(with other: Self) -> Self {
+//    guard role == other.role else {
+//      return self.
+//    }
+//    let mergedGlyphs = self.glyphs + other.glyphs
+//    return Self(role, glyphs: mergedGlyphs)
+//  }
 
   public var width: Int { glyphs.width(for: .widestRow) }
   public static var blank: Self { Part(.blank, glyphs: []) }

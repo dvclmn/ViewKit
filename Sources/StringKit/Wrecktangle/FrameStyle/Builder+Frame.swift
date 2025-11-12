@@ -15,7 +15,12 @@ enum FrameBuilder {
 
   static func buildBlock(_ components: BlockInput...) -> BlockOutput {
     components.toDictionary(key: \.role, value: \.self, keeping: .custom({ current, new in
-      current.merged(with: new)
+      
+      
+//      current.glyphs.map { partRow in
+//        partRow.mer
+//      }
+//      current.merged(with: new)
     }))
   }
 
@@ -46,15 +51,15 @@ extension FrameBuilder {
   }
 }
 
-extension Array where Element == Box.PartMap {
-  func mergedParts() -> Box.PartMap {
-    merged(
-      keeping: .custom { current, new in
-        current.merged(with: new)
-      }
-    )
-  }
-}
+//extension Array where Element == Box.PartMap {
+//  func mergedParts() -> Box.PartMap {
+//    merged(
+//      keeping: .custom { current, new in
+//        current.merged(with: new)
+//      }
+//    )
+//  }
+//}
 
 extension Array where Element == [Box.GlyphRole: Box.GlyphStructure] {
   func mergedGlyphs() -> [Box.GlyphRole: Box.GlyphStructure] {

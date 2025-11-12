@@ -46,7 +46,9 @@ extension Box.GlyphWeight {
 extension Box.GlyphWeight.WeightType {
   func merged(with other: Self) -> Self {
     /// Escalate to .increased if either side is increased
-    (self == .increased || other == .increased) ? .increased : .standard
+    return .standard
+//    return .increased
+//    (self == .increased || other == .increased) ? .increased : .standard
   }
 }
 
