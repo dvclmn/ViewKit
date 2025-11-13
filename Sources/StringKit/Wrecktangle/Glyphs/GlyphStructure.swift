@@ -58,7 +58,7 @@ extension Box.GlyphStructure: CustomStringConvertible {
   }
 }
 
-extension Box.GlyphDescriptor: PrettyPrintable {
+extension Box.GlyphStructure: PrettyPrintable {
   public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
     guard depth < config.maxDepth else { return "Person {...}" }
     

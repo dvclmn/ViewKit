@@ -134,7 +134,7 @@ extension Box.Line {
     if engine.theme.frameStyle.isDouble && structure.role.isHorizontal {
       print(
         "---\nPart Original: \(structure)",
-        "\nPart Resolved: \(resolved)",
+        "\nPart Resolved: \(resolved.prettyDescription)",
         "\n---\n\n"
       )
       

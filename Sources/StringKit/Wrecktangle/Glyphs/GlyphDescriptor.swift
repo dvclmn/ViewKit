@@ -64,7 +64,7 @@ extension Box.GlyphDescriptor: PrettyPrintable {
     return """
       \(config.typeName(self))Person {
       \(nextInd)structure: \(structure.prettyDescription(config, depth: depth + 1))
-      \(nextInd)design: \(design.prettyDescription(config, depth: depth + 1))
+      \(nextInd)design: \(design.name.prettyDescription(config, depth: depth + 1))
       \(ind)}
       """
   }

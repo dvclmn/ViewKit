@@ -26,12 +26,12 @@ extension Box {
 extension Box.GlyphWeight {
 
   /// Guards against weight 'data loss'
-//  func merged(with other: Self) -> Self {
-//    Box.GlyphWeight(
-//      x: x.merged(with: other.x),
-//      y: y.merged(with: other.y)
-//    )
-//  }
+  //  func merged(with other: Self) -> Self {
+  //    Box.GlyphWeight(
+  //      x: x.merged(with: other.x),
+  //      y: y.merged(with: other.y)
+  //    )
+  //  }
 
   /// Describes the visual weight / thickness of this glyph.
   /// Usually used in conjunction with location/placement, to
@@ -58,6 +58,6 @@ extension Box.GlyphWeight {
 }
 extension Box.GlyphWeight: CustomStringConvertible {
   public var description: String {
-    "Prominence[x: \(x.rawValue), y: \(y.rawValue)]"
+    "Weight[x: \(x.rawValue), y: \(y.rawValue)]"
   }
 }

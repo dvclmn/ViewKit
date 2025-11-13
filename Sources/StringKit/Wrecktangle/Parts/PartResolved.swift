@@ -37,6 +37,23 @@ extension Box.Part {
   }
 }
 
+extension Box.Part: PrettyPrintable {
+  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+    guard depth < config.maxDepth else { return "Person {...}" }
+    
+    let ind = config.indent(depth)
+    let nextInd = config.indent(depth + 1)
+    
+    return """
+      \(config.typeName(self))Person {
+      \(nextInd)role: \(role.name.prettyDescription(config, depth: depth + 1))
+      \(nextInd)glyphs: \(glyphs.prettyDescription(config, depth: depth + 1))
+      \(ind)}
+      """
+  }
+}
+
+
 extension Box.Part: CustomStringConvertible {
   public var description: String {
     """
