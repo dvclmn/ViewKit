@@ -9,7 +9,7 @@
 enum GlyphSetBuilder {
   static func buildBlock(_ components: Box.GlyphMap...) -> Box.GlyphMap {
     components.merged(keeping: .first)
-//    Box.reduce(components)
+    //    Box.reduce(components)
   }
 
   static func buildExpression(_ expression: Glyph) -> Box.GlyphMap {

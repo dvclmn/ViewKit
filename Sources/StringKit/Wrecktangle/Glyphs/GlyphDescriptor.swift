@@ -15,7 +15,8 @@ extension Box {
 
     public init(
       _ role: GlyphRole,
-      weight: GlyphWeight = .standard,
+      weight: GlyphWeight,
+//      weight: GlyphWeight = .standard,
       design: GlyphDesign
     ) {
       self.structure = .init(role, weight: weight)

@@ -30,5 +30,4 @@ extension Box.GlyphGroup {
       Glyph("│", .vertical)
     }
   }
-
 }
