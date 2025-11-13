@@ -128,3 +128,61 @@ extension Collection where Element: Hashable {
 //    return firstResultID == self
 //  }
 //}
+
+extension Array where Element: Collection, Element.Element: CustomStringConvertible {
+  public func indented(
+    startingIndentation: Int = 0,
+    indentString: String = "\t"
+  ) -> String {
+    self.map { row in
+      /// single-level indentation for inner elements
+      let prefix = String(repeating: indentString, count: startingIndentation)
+      return row.map {
+        """
+        \(prefix)└─ \($0.description)
+        """
+        //        """
+        //        \(prefix)[
+        //        \(prefix)\(indentString)\($0.description)
+        //        \(prefix)]
+        //        """
+      }
+      .joined(separator: "\n")
+    }
+    .joined(separator: "\n")
+  }
+}
+
+//extension Collection {
+//
+//  func indented<T: CustomStringConvertible>(_ array: [T], level: Int = 0) -> String {
+//    array.map { element in
+//      let prefix = String(repeating: "  ", count: level)
+//      if let subArray = element as? [Any] {
+//        return indented(subArray, level: level + 1)
+//      } else if let value = element as? T {
+//        return prefix + "\(value)"
+//      } else {
+//        return prefix + "\(element)"
+//      }
+//    }.joined(separator: "\n")
+//  }
+/// Recursively returns an indented string representation of this collection.
+//  public func indented(indentLevel: Int = 0, indentString: String = "  ") -> String {
+//    let prefix = String(repeating: indentString, count: indentLevel)
+//
+//    return self.map { element -> String in
+//      if let subCollection = element as? any Collection {
+//        // Recurse into sub-collections
+//        return (subCollection).indented(indentLevel: indentLevel + 1, indentString: indentString)
+//      } else if let describable = element as? CustomStringConvertible {
+//        // Leaf node
+//        return prefix + describable.description
+//      } else {
+//        // Fallback for any type
+//        return prefix + "\(element)"
+//      }
+//    }
+//    .joined(separator: "--\n")
+//  }
+//}

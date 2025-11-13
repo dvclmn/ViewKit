@@ -62,15 +62,15 @@ extension FrameBuilder {
 //  }
 //}
 
-extension Array where Element == [Box.GlyphRole: Box.GlyphStructure] {
-  func mergedGlyphs() -> [Box.GlyphRole: Box.GlyphStructure] {
-    merged(keeping: .custom { $0.merged(with: $1) })
-  }
-
-  //  func mergedGlyphs() -> [Box.GlyphRole: Box.GlyphStructure] {
-  //    merged(keeping: .custom { old, new in
-  //      let thing = old
-  ////      old, new in old.merged(with: new)
-  //    })
-  //  }
-}
+//extension Array where Element == [Box.GlyphRole: Box.GlyphStructure] {
+//  func mergedGlyphs() -> [Box.GlyphRole: Box.GlyphStructure] {
+//    merged(keeping: .custom { $0.merged(with: $1) })
+//  }
+//
+//  //  func mergedGlyphs() -> [Box.GlyphRole: Box.GlyphStructure] {
+//  //    merged(keeping: .custom { old, new in
+//  //      let thing = old
+//  ////      old, new in old.merged(with: new)
+//  //    })
+//  //  }
+//}

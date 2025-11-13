@@ -39,20 +39,7 @@ extension Box {
 }
 
 extension Box.PartStructure {
-
-//  func merged(with other: Self) -> Box.PartMap {
-////  func merged(with other: Self) -> Self {
-//    guard role == other.role else {
-//      return self.
-//    }
-//    let mergedGlyphs = self.glyphs + other.glyphs
-//    return Self(role, glyphs: mergedGlyphs)
-//  }
-
-  public var width: Int { glyphs.width(for: .widestRow) }
-  public static var blank: Self { Part(.blank, glyphs: []) }
-
-  public func resolved(with design: Box.GlyphDesign) -> Box.PartResolved {
+  public func resolved(with design: Box.GlyphDesign) -> Box.Part {
     let resolvedGlyphs: [[Box.GlyphDescriptor]] = glyphs.map { row in
       row.map { glyph in
         let role = Box.GlyphRole(fromPartRole: self.role)
@@ -63,9 +50,23 @@ extension Box.PartStructure {
         )
       }
     }
-
-    return Box.PartResolved(self.role, glyphs: resolvedGlyphs)
+    
+    return Box.Part(self.role, glyphs: resolvedGlyphs)
   }
+  public var width: Int { glyphs.width(for: .widestRow) }
+  public static var blank: Self { Part(.blank, glyphs: []) }
+  
+
+//  func merged(with other: Self) -> Box.PartMap {
+////  func merged(with other: Self) -> Self {
+//    guard role == other.role else {
+//      return self.
+//    }
+//    let mergedGlyphs = self.glyphs + other.glyphs
+//    return Self(role, glyphs: mergedGlyphs)
+//  }
+
+
 
   enum Context {
     @TaskLocal static var currentRole: Box.PartRole?
@@ -103,6 +104,18 @@ extension Box.PartStructure {
 extension Box.PartStructure: CustomStringConvertible {
   public var description: String {
     //    "Part[Glyphs: \(glyphs), StringStack: \(toStringStack(with: .default))]"
-    "Part[Glyphs: \(glyphs), W: \(width)]"
+    "Part[\n\t\(role.name),\n\tGlyphs:\n\(glyphs.indented(startingIndentation: 2))\n\tWidth: \(width)\n]"
   }
 }
+
+
+//extension Array where Element: Collection, Element.Element: CustomStringConvertible {
+//  func indented() -> String {
+//    self.reduce(into: "") { partialResult, row in
+//      row.map { item in
+//        <#code#>
+//      }
+//    }
+//
+//  }
+//}

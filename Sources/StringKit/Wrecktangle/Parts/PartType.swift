@@ -55,13 +55,20 @@ extension Box {
   }
 }
 
+extension Box.CornerType {
+  var name: String { rawValue.capitalized }
+}
+extension Box.JoinType {
+  var name: String { rawValue.capitalized }
+}
+
 extension Box.PartRole {
   var name: String {
     switch self {
       case .horizontal(let loc): "horizontal/\(loc.rawValue)"
       case .vertical(let loc): "vertical/\(loc.rawValue)"
-      case .join(let joinType): "join/\(joinType.rawValue)"
-      case .corner(let cornerType): "corner/\(cornerType.rawValue)"
+      case .join(let joinType): "join/\(joinType.name)"
+      case .corner(let cornerType): "corner/\(cornerType.name)"
       case .blank: "blank"
     }
   }

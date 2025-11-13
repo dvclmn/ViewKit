@@ -9,8 +9,9 @@ import Foundation
 import SharedHelpers
 
 extension Box {
-  public struct PartResolved: Sendable, Codable, Equatable, Hashable {
+  public struct Part: Sendable, Codable, Equatable, Hashable {
     let role: PartRole
+
     let glyphs: [[GlyphDescriptor]]
 
     init(_ type: PartRole, glyphs: [[GlyphDescriptor]]) {
@@ -20,22 +21,32 @@ extension Box {
   }
 }
 
-extension Box.PartResolved {
-  static func from(_ structure: Box.PartStructure, design: Box.GlyphDesign) -> Self {
+extension Box.Part {
+  static func from(
+    _ structure: Box.PartStructure,
+    design: Box.GlyphDesign
+  ) -> Self {
     structure.resolved(with: design)
   }
 }
 
-extension Box.PartResolved {
+extension Box.Part {
 
   func toStringStack(with theme: Box.Theme) -> StringStack {
     StringStack(from: glyphs, with: theme)
   }
 }
 
-extension Box.PartResolved: CustomStringConvertible {
+extension Box.Part: CustomStringConvertible {
   public var description: String {
-    "Part[Glyphs: \(glyphs), StringStack: \(toStringStack(with: .default))]"
+    """
+    Part[
+      \(role.name),
+      Glyphs:
+    \(glyphs.indented(startingIndentation: 2))
+    ]
+    """
+    //    "Part[Glyphs: \(glyphs), StringStack: \(toStringStack(with: .default))]"
     //    "Part[Glyphs: \(glyphs), W: \(width), StringStack: \(toStringStack(with: .default))]"
   }
 }

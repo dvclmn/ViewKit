@@ -19,8 +19,8 @@ extension Box.GlyphRole {
 
   var name: String {
     switch self {
-      case .horizontal: "H"
-      case .vertical: "V"
+      case .horizontal: "Horizontal"
+      case .vertical: "Vertical"
       case .corner(let type): "Corner/\(type.rawValue)"
       case .join(let type): "Join/\(type.rawValue)"
       case .blank: "Blank"

@@ -4,6 +4,10 @@
 //
 //  Created by Dave Coleman on 9/11/2025.
 //
+import SharedHelpers
+
+/// For `GlyphSet` builders. Describes design of individual `Character`s
+public typealias Glyph = Box.Glyph
 
 extension Box {
   /// This should be what is visible *within* the `GlyphSet` builder
@@ -13,7 +17,7 @@ extension Box {
   /// }
   /// ```
   /// I think this essentially provides a slightly nicer wrapper around `GlyphMap`
-  public struct GlyphResolved: Sendable {
+  public struct Glyph: Sendable {
     let character: Character
     let descriptor: GlyphDescriptor
 
@@ -41,7 +45,22 @@ extension Box {
   }
 
 }
-extension Box.GlyphResolved {
-  static let blank = Box.GlyphResolved(.blank, .blank)
+extension Box.Glyph {
+  static let blank = Box.Glyph(.blank, .blank)
+}
 
+extension Box.Glyph: PrettyPrintable {
+  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+    guard depth < config.maxDepth else { return "Person {...}" }
+
+    let ind = config.indent(depth)
+    let nextInd = config.indent(depth + 1)
+
+    return """
+      \(config.typeName(self))Person {
+      \(nextInd)character: \(character.prettyDescription(config, depth: depth + 1))
+      \(nextInd)descriptor: \(character.prettyDescription(config, depth: depth + 1))
+      \(ind)}
+      """
+  }
 }

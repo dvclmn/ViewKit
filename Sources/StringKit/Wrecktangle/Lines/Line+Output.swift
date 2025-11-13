@@ -128,7 +128,18 @@ extension Box.Line {
     at position: Box.PositionContext
   ) -> StringStack {
     let structure = part.part(using: engine, position: position)
+    
     let resolved = structure.resolved(with: engine.glyphDesign)
+
+    if engine.theme.frameStyle.isDouble && structure.role.isHorizontal {
+      print(
+        "---\nPart Original: \(structure)",
+        "\nPart Resolved: \(resolved)",
+        "\n---\n\n"
+      )
+      
+    }
+    
     let stack = resolved.toStringStack(with: engine.theme)
     guard let count else {
       return stack

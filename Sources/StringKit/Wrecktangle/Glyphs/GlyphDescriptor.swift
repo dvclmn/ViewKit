@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedHelpers
 
 extension Box {
   public struct GlyphDescriptor: Hashable, Codable, Sendable {
@@ -43,6 +44,28 @@ extension Box.GlyphDescriptor {
 
 extension Box.GlyphDescriptor: CustomStringConvertible {
   public var description: String {
-    "GlyphType[GlyphRole/\(role.name), Weight/\(weight), Design/\(design.rawValue)]"
+    """
+    Part[
+    \(role.name),
+    Weight: 
+    ]
+    """
+
+    //    "GlyphDescriptor[GlyphRole/\(role.name), Weight/\(weight), Design/\(design.rawValue)]"
+  }
+}
+extension Box.GlyphDescriptor: PrettyPrintable {
+  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+    guard depth < config.maxDepth else { return "Person {...}" }
+    
+    let ind = config.indent(depth)
+    let nextInd = config.indent(depth + 1)
+    
+    return """
+      \(config.typeName(self))Person {
+      \(nextInd)structure: \(structure.prettyDescription(config, depth: depth + 1))
+      \(nextInd)design: \(design.prettyDescription(config, depth: depth + 1))
+      \(ind)}
+      """
   }
 }

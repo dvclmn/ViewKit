@@ -16,7 +16,6 @@ extension Box {
 
   /// Represents a composition of Parts that describe a complete Frame
   public struct FrameStructure: Sendable, Codable, Equatable {
-//  public struct FrameStructure: Sendable, Codable, Equatable, Mergable {
 
     var map: PartMap = [:]
 

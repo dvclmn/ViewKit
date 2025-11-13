@@ -5,14 +5,14 @@
 //  Created by Dave Coleman on 11/11/2025.
 //
 
+import Foundation
+import SharedHelpers
+
 /// For use within Frame builders. Describes structure only, not design
 public typealias GlyphType = Box.GlyphStructure
 
 /// 2D array of structure-describing Glyphs
 public typealias GlyphStack = [[Box.GlyphStructure]]
-
-/// For `GlyphSet` builders. Describes design of individual `Character`s
-public typealias Glyph = Box.GlyphResolved
 
 extension Box {
 
@@ -41,19 +41,35 @@ extension Box {
   }  // END Glyph structure
 }
 
-extension Box.GlyphStructure {
-  func merged(with other: Self) -> Self {
-    print("Merging two GlyphStructures")
-    guard role == other.role else {
-      print("Roles don't match: \(role) != \(other.role)")
-      return self
-    }
-    return Box.GlyphStructure(role, weight: weight.merged(with: other.weight))
-  }
-}
+//extension Box.GlyphStructure {
+//  func merged(with other: Self) -> Self {
+//    print("Merging two GlyphStructures")
+//    guard role == other.role else {
+//      print("Roles don't match: \(role) != \(other.role)")
+//      return self
+//    }
+//    return Box.GlyphStructure(role, weight: weight.merged(with: other.weight))
+//  }
+//}
 
 extension Box.GlyphStructure: CustomStringConvertible {
   public var description: String {
-    "\(role) \(weight)"
+    "GlyphStructure[\(role.name), \(weight)]"
+  }
+}
+
+extension Box.GlyphDescriptor: PrettyPrintable {
+  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+    guard depth < config.maxDepth else { return "Person {...}" }
+    
+    let ind = config.indent(depth)
+    let nextInd = config.indent(depth + 1)
+    
+    return """
+      \(config.typeName(self))Person {
+      \(nextInd)role: \(role.name.prettyDescription(config, depth: depth + 1))
+      \(nextInd)weight: \(weight.description.prettyDescription(config, depth: depth + 1))
+      \(ind)}
+      """
   }
 }
