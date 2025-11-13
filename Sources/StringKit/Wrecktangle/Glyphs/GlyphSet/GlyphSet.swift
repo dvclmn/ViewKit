@@ -31,7 +31,7 @@ extension Box {
       @GlyphSetBuilder _ glyphs: () -> GlyphMap,
     ) {
       self.design = design
-      self.glyphs = GlyphDesignContext.$currentDesign.withValue(design) { glyphs() }
+      self.glyphMap = GlyphDesignContext.$currentDesign.withValue(design) { glyphs() }
     }
 
     public init(
@@ -39,16 +39,20 @@ extension Box {
       map: GlyphMap,
     ) {
       self.design = design
-      self.glyphs = map
+      self.glyphMap = map
     }
   }
 }
 
 extension Box.GlyphSet {
   /// Lookup: given a structural role + weight, returns the design for this set
-  public func design(for role: GlyphRole, weight: GlyphWeight) -> GlyphDesign {
-    let key = GlyphKey(role: role, weight: weight)
-    return glyphMap[key] ?? GlyphDesign.defaultDesign(for: role)
+  public func design(
+    for role: Box.GlyphRole,
+    weight: Box.GlyphWeight
+  ) -> Box.GlyphDesign {
+    let key = Box.GlyphKey(role: role, weight: weight)
+    return glyphMap[key] ?? Box.GlyphDesign.sharp
+//    return glyphMap[key] ?? Box.GlyphDesign.defaultDesign(for: role)
   }
   
 //  public func resolve(_ desc: Box.GlyphDescriptor) -> Character {

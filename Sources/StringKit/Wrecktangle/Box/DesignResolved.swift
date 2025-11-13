@@ -15,47 +15,47 @@ protocol DesignResolved {
 }
 
 extension Box {
-  
+
   struct Resolver {
     let glyphSet: Box.GlyphSet
-    
+
     /// Resolve a single GlyphStructure → GlyphDescriptor
     func resolve(structure: GlyphStructure) -> GlyphDescriptor {
       let design = glyphSet.design(for: structure.role, weight: structure.weight)
-      return GlyphDescriptor(structure: structure, design: design)
+      return GlyphDescriptor(structure, design: design)
     }
-    
+
     /// Resolve an entire PartStructure → PartResolved
     func resolve(part: PartStructure) -> PartResolved {
       PartResolved(
-        role: part.role,
+        part.role,
         glyphs: part.glyphs.map { row in
           row.map { resolve(structure: $0) }
         }
       )
     }
-//    func resolve(structure: Box.GlyphStructure) -> Box.GlyphDescriptor {
-//      let design = glyphSet.design(for: structure.role, weight: structure.weight)
-//      return Box.GlyphDescriptor(structure: structure, design: design)
-//    }
-//    
-//    func resolve(part: Part<GlyphStructure>) -> Part<Box.GlyphDescriptor> {
-//      Part(role: part.role,
-//           glyphs: part.glyphs.map { row in row.map { resolve(structure: $0) } })
-//    }
+    //    func resolve(structure: Box.GlyphStructure) -> Box.GlyphDescriptor {
+    //      let design = glyphSet.design(for: structure.role, weight: structure.weight)
+    //      return Box.GlyphDescriptor(structure: structure, design: design)
+    //    }
+    //
+    //    func resolve(part: Part<GlyphStructure>) -> Part<Box.GlyphDescriptor> {
+    //      Part(role: part.role,
+    //           glyphs: part.glyphs.map { row in row.map { resolve(structure: $0) } })
+    //    }
   }
-  
-//  struct Resolver {
-//    let designSet: GlyphSet
-//
-//    func resolve(structure: GlyphStructure) -> GlyphDescriptor {
-//      let design: GlyphDesign = designSet.design
-////      GlyphDescriptor(
-////        structure,
-////        design: designSet.design(for: structure.role, weight: structure.weight)
-////      )
-//    }
-//  }
+
+  //  struct Resolver {
+  //    let designSet: GlyphSet
+  //
+  //    func resolve(structure: GlyphStructure) -> GlyphDescriptor {
+  //      let design: GlyphDesign = designSet.design
+  ////      GlyphDescriptor(
+  ////        structure,
+  ////        design: designSet.design(for: structure.role, weight: structure.weight)
+  ////      )
+  //    }
+  //  }
 }
 
 //extension Box.Part {

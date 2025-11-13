@@ -11,8 +11,8 @@ import SharedHelpers
 extension Box {
   public protocol GlyphKind: Sendable, Codable, Hashable {}
 
-  typealias PartStructure = Box.Part<Box.GlyphStructure>
-  typealias PartResolved = Box.Part<Box.GlyphDescriptor>
+  public typealias PartStructure = Box.Part<Box.GlyphStructure>
+  public typealias PartResolved = Box.Part<Box.GlyphDescriptor>
 }
 
 extension Box {
@@ -43,15 +43,15 @@ extension Box {
 }
 
 extension Box.Part {
-  static func from(
-    _ structure: Box.PartStructure,
-    design: Box.GlyphDesign
-  ) -> Self {
-    structure.resolved(with: design)
-  }
+//  static func from(
+//    _ structure: Box.PartStructure,
+//    design: Box.GlyphDesign
+//  ) -> Self {
+//    structure.resolved(with: design)
+//  }
 }
 
-extension Box.Part where T == Box.GlyphDescriptor {
+extension Box.PartResolved {
   func toStringStack(with theme: Box.Theme) -> StringStack {
     StringStack(from: glyphs, with: theme)
   }

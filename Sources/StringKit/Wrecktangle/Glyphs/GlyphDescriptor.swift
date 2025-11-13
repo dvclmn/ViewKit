@@ -12,11 +12,16 @@ extension Box {
   public struct GlyphDescriptor: DesignResolved, GlyphKind {
     let structure: GlyphStructure
     let design: GlyphDesign
+    
+    public init(_ structure: GlyphStructure, design: GlyphDesign) {
+      self.structure = structure
+      self.design = design
+    }
 
     public init(
       _ role: GlyphRole,
       weight: GlyphWeight,
-//      weight: GlyphWeight = .standard,
+      //      weight: GlyphWeight = .standard,
       design: GlyphDesign
     ) {
       self.structure = .init(role, weight: weight)

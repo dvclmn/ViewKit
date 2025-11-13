@@ -129,7 +129,9 @@ extension Box.Line {
   ) -> StringStack {
     let structure = part.part(using: engine, position: position)
     
-    let resolved = structure.resolved(with: engine.glyphDesign)
+    let resolver = Box.Resolver(glyphSet: engine.theme.glyphSet)
+    let resolved = structure.resolved(using: resolver)
+//    let resolved = structure.resolved(with: engine.glyphDesign)
 
 //    if engine.theme.frameStyle.isDouble && structure.role.isHorizontal {
 //      print(
