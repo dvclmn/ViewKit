@@ -6,7 +6,9 @@
 //
 
 extension Box {
-  public typealias GlyphMap = [GlyphDescriptor: Character]
+  public typealias GlyphMap = [GlyphKey: GlyphDesign]
+  
+//  public typealias GlyphMap = [GlyphDescriptor: Character]
 }
 
 public typealias GlyphSet = Box.GlyphSet
@@ -18,8 +20,11 @@ extension Box {
     /// This needs to be defined here, to allow the child
     /// `Glyph`s to have their `design` properties set
     /// *once*, rather than requiring each to set it per-Glyph.
-    public var design: GlyphDesign
-    public var glyphs: GlyphMap
+//    public var design: GlyphDesign
+//    public var glyphs: GlyphMap
+    
+    public let design: GlyphDesign
+    internal let glyphMap: GlyphMap
 
     public init(
       _ design: GlyphDesign,
@@ -40,10 +45,16 @@ extension Box {
 }
 
 extension Box.GlyphSet {
-  public func resolve(_ desc: Box.GlyphDescriptor) -> Character {
-//    "8"
-    glyphs[desc] ?? Box.glyphSetCharacterFallback
+  /// Lookup: given a structural role + weight, returns the design for this set
+  public func design(for role: GlyphRole, weight: GlyphWeight) -> GlyphDesign {
+    let key = GlyphKey(role: role, weight: weight)
+    return glyphMap[key] ?? GlyphDesign.defaultDesign(for: role)
   }
+  
+//  public func resolve(_ desc: Box.GlyphDescriptor) -> Character {
+////    "8"
+//    glyphs[desc] ?? Box.glyphSetCharacterFallback
+//  }
 }
 
 enum GlyphDesignContext {

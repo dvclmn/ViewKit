@@ -8,15 +8,14 @@
 import Foundation
 import SharedHelpers
 
-
 extension Box {
+  public protocol GlyphKind: Sendable, Codable, Hashable {}
+
   typealias PartStructure = Box.Part<Box.GlyphStructure>
   typealias PartResolved = Box.Part<Box.GlyphDescriptor>
 }
 
 extension Box {
-
-  public protocol GlyphKind: Sendable, Codable, Hashable {}
 
   public struct Part<T: GlyphKind>: Sendable, Codable, Hashable {
     let role: PartRole
