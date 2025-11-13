@@ -7,55 +7,71 @@
 
 import SharedHelpers
 
-public typealias Part = Box.PartStructure
+typealias Part = Box.PartStructure
 
-extension Box {
-  /// Needs to have nothing to do with ``Box/GlyphDesign``
-  /// Used in FrameBuilders
-  public struct PartStructure: Sendable, Equatable, Codable, Hashable {
-    /// What bit of the Box does this Part build
-    let role: PartRole
-
-    /// What glyphs are used to compose this Part
-    /// Go straight to ``Box/GlyphStructure``
-    let glyphs: GlyphStack
-
-    public init(
-      _ role: PartRole,
-      glyphs: GlyphStack
-    ) {
-      self.role = role
-      self.glyphs = glyphs
-    }
-
-    init(
-      _ role: PartRole,
-      @PartBuilder _ content: () -> GlyphStack
-    ) {
-      self.role = role
-      self.glyphs = Context.$currentRole.withValue(role) {
-        content()
-      }
+extension Box.PartStructure {
+  init(
+    _ role: Box.PartRole,
+    @PartBuilder _ content: () -> GlyphStack
+  ) {
+    self.role = role
+    self.glyphs = Context.$currentRole.withValue(role) {
+      content()
     }
   }
 }
 
-extension Box.PartStructure {
-  public func resolved(with design: Box.GlyphDesign) -> Box.Part {
-    let resolvedGlyphs: [[Box.GlyphDescriptor]] = glyphs.map { row in
-      row.map { glyph in
-        let role = Box.GlyphRole(fromPartRole: self.role)
-        return Box.GlyphDescriptor(
-          role,
-          weight: glyph.weight,
-          design: design
-        )
-      }
-    }
 
-    return Box.Part(self.role, glyphs: resolvedGlyphs)
-  }
+//extension Box {
+//  /// Needs to have nothing to do with ``Box/GlyphDesign``
+//  /// Used in FrameBuilders
+//  public struct PartStructure: Sendable, Equatable, Codable, Hashable {
+//    /// What bit of the Box does this Part build
+//    let role: PartRole
+//
+//    /// What glyphs are used to compose this Part
+//    /// Go straight to ``Box/GlyphStructure``
+//    let glyphs: GlyphStack
+//
+//    public init(
+//      _ role: PartRole,
+//      glyphs: GlyphStack
+//    ) {
+//      self.role = role
+//      self.glyphs = glyphs
+//    }
+//
+//    init(
+//      _ role: PartRole,
+//      @PartBuilder _ content: () -> GlyphStack
+//    ) {
+//      self.role = role
+//      self.glyphs = Context.$currentRole.withValue(role) {
+//        content()
+//      }
+//    }
+//  }
+//}
+
+extension Box.PartStructure {
+//  public func resolved(
+//    with design: Box.GlyphDesign
+//  ) -> Box.Part {
+//    let resolvedGlyphs: [[Box.GlyphDescriptor]] = glyphs.map { row in
+//      row.map { glyph in
+//        let role = Box.GlyphRole(fromPartRole: self.role)
+//        return Box.GlyphDescriptor(
+//          role,
+//          weight: glyph.weight,
+//          design: design
+//        )
+//      }
+//    }
+//
+//    return Box.Part(self.role, glyphs: resolvedGlyphs)
+//  }
   public var width: Int { glyphs.width(for: .widestRow) }
+  
   public static var blank: Self { Part(.blank, glyphs: []) }
 
   //  func merged(with other: Self) -> Box.PartMap {
@@ -107,7 +123,7 @@ extension Box.PartStructure {
 //  }
 //}
 
-extension Box.PartStructure: PrettyPrintable {
+extension Box.PartStructure {
   public func prettyBody(_ config: PrettyPrintConfig, depth: Int) -> String {
     DisplayString {
       Labeled("role", value: role.name.pretty(config, depth: depth))

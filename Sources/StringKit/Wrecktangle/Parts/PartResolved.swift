@@ -8,28 +8,39 @@
 import Foundation
 import SharedHelpers
 
-typealias PartStructure = Box.Part<Box.GlyphStructure>
-typealias PartResolved  = Box.Part<Box.GlyphDescriptor>
 
 extension Box {
-  
+  typealias PartStructure = Box.Part<Box.GlyphStructure>
+  typealias PartResolved = Box.Part<Box.GlyphDescriptor>
+}
+
+extension Box {
+
   public protocol GlyphKind: Sendable, Codable, Hashable {}
-  
+
   public struct Part<T: GlyphKind>: Sendable, Codable, Hashable {
     let role: PartRole
     let glyphs: [[T]]
+
+    public init(
+      _ role: PartRole,
+      glyphs: [[T]]
+    ) {
+      self.role = role
+      self.glyphs = glyphs
+    }
   }
-  
-//  public struct Part: Sendable, Codable, Equatable, Hashable {
-//    let role: PartRole
-//
-//    let glyphs: [[GlyphDescriptor]]
-//
-//    init(_ type: PartRole, glyphs: [[GlyphDescriptor]]) {
-//      self.role = type
-//      self.glyphs = glyphs
-//    }
-//  }
+
+  //  public struct Part: Sendable, Codable, Equatable, Hashable {
+  //    let role: PartRole
+  //
+  //    let glyphs: [[GlyphDescriptor]]
+  //
+  //    init(_ type: PartRole, glyphs: [[GlyphDescriptor]]) {
+  //      self.role = type
+  //      self.glyphs = glyphs
+  //    }
+  //  }
 }
 
 extension Box.Part {
@@ -41,15 +52,13 @@ extension Box.Part {
   }
 }
 
-extension Box.Part {
-
+extension Box.Part where T == Box.GlyphDescriptor {
   func toStringStack(with theme: Box.Theme) -> StringStack {
     StringStack(from: glyphs, with: theme)
   }
 }
 
-extension Box.Part: PrettyPrintable {
-
+extension Box.Part: PrettyPrintable where T: PrettyPrintable {
   public func prettyBody(_ config: PrettyPrintConfig, depth: Int) -> String {
     DisplayString {
       Labeled("role", value: role.pretty(config, depth: depth))
@@ -72,18 +81,17 @@ extension Box.Part: PrettyPrintable {
   //  }
 }
 
-extension Box.Part: CustomStringConvertible {
+//extension Box.Part: CustomStringConvertible {
+//  public var description: String { self }
 
-  public var description: String { self.pretty }
-
-  //    """
-  //    Part[
-  //      \(role.name),
-  //      Glyphs:
-  //    \(glyphs.indented(startingIndentation: 2))
-  //    ]
-  //    """
-  //    "Part[Glyphs: \(glyphs), StringStack: \(toStringStack(with: .default))]"
-  //    "Part[Glyphs: \(glyphs), W: \(width), StringStack: \(toStringStack(with: .default))]"
-  //  }
-}
+//    """
+//    Part[
+//      \(role.name),
+//      Glyphs:
+//    \(glyphs.indented(startingIndentation: 2))
+//    ]
+//    """
+//    "Part[Glyphs: \(glyphs), StringStack: \(toStringStack(with: .default))]"
+//    "Part[Glyphs: \(glyphs), W: \(width), StringStack: \(toStringStack(with: .default))]"
+//  }
+//}

@@ -19,24 +19,25 @@ extension Box {
     let designSet: GlyphSet
 
     func resolve(structure: GlyphStructure) -> GlyphDescriptor {
-      GlyphDescriptor(
-        structure,
-        design: designSet.design(for: structure.role, weight: structure.weight)
-      )
+      let design: GlyphDesign = designSet.design
+//      GlyphDescriptor(
+//        structure,
+//        design: designSet.design(for: structure.role, weight: structure.weight)
+//      )
     }
   }
 }
 
-extension Part {
-  func map<U>(_ transform: (GlyphKind) -> U) -> Part<U> {
-    Part<U>(role: role, glyphs: glyphs.map { $0.map(transform) })
-  }
-}
+//extension Box.Part {
+//  func map<U>(_ transform: (GlyphKind) -> U) -> Part<U> {
+//    Part<U>(role: role, glyphs: glyphs.map { $0.map(transform) })
+//  }
+//}
 
-extension Part where GlyphKind == Box.GlyphStructure {
-  func resolved(using resolver: Box.Resolver) -> Part<Box.GlyphDescriptor> {
-    Part<Box.GlyphDescriptor>(
-      role: role,
+extension Box.PartStructure {
+  func resolved(using resolver: Box.Resolver) -> Box.PartResolved {
+    Box.PartResolved(
+      role,
       glyphs: glyphs.map { row in
         row.map { resolver.resolve(structure: $0) }
       }
@@ -46,12 +47,12 @@ extension Part where GlyphKind == Box.GlyphStructure {
 
 struct PartMap<T> where T: Hashable {
   private var map: [Box.PartRole: T] = [:]
-  
+
   subscript(_ role: Box.PartRole) -> T? {
     get { map[role] }
     set { map[role] = newValue }
   }
-  
+
   mutating func merge(_ other: PartMap<T>, combine: (T, T) -> T) {
     map.merge(other.map, uniquingKeysWith: combine)
   }

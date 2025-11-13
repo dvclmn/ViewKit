@@ -12,8 +12,6 @@ extension Box.GlyphSet {
 
       Glyph.blank
       GlyphGroup.straights
-//      GlyphGroup([.straightsThin])
-//      GlyphGroup.straights
       GlyphGroup.joins
       GlyphGroup.corners
 
