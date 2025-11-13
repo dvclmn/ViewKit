@@ -20,8 +20,8 @@ extension Box.FrameStructure {
       Part(.vertical(.trailing)) { GlyphType.v(.increased) }
 
       // MARK: - Joins
-      Part(.join(.leading)) { GlyphType.join(x: .increased, y: .standard) }
-      Part(.join(.trailing)) { GlyphType.join(x: .increased, y: .standard) }
+      Part(.join(.leading)) { GlyphType.join(y: .increased) }
+      Part(.join(.trailing)) { GlyphType.join(y: .increased) }
       Part(.join(.top)) { GlyphType.join(x: .increased, y: .standard) }
       Part(.join(.bottom)) { GlyphType.join(x: .increased, y: .standard) }
       Part(.join(.cross)) { GlyphType.join(x: .increased, y: .standard) }

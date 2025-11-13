@@ -6,8 +6,8 @@
 //
 
 extension Character {
-  public static var blank: Character { "+" }
-//  public static var blank: Character { " " }
+//  public static var blank: Character { "+" }
+  public static var blank: Character { " " }
 }
 
 extension Box {

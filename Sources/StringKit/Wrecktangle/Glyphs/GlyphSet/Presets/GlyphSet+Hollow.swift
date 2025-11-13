@@ -9,6 +9,7 @@ extension Box.GlyphSet {
 
   public static var hollow: Self {
     GlyphSet(.hollow) {
+      Glyph.blank
       Glyph("═", .horizontal, weight: .increased)
       Glyph("─", .horizontal)
 

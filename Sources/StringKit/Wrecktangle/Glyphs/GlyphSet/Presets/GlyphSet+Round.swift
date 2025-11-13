@@ -15,7 +15,7 @@ extension Box.GlyphSet {
       Glyph("╯", .corner(.bottomTrailing))
 
 //      GlyphGroup.joinsThin
-//      GlyphGroup.straightsThin
+      GlyphGroup.straightsThin
 //      GlyphGroup.straightsThin
     }
   }

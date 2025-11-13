@@ -14,14 +14,14 @@ public struct BoxViewExample: View {
   @Environment(\.paragraphNumber) private var paragraphNumber
 
   let textLength: Int
-//  let paragraph: Int?
+  //  let paragraph: Int?
 
   init(
-    textLength: Int = 120,
-//    paragraph: Int? = nil
+    textLength: Int = 100,
+    //    paragraph: Int? = nil
   ) {
     self.textLength = textLength
-//    self.paragraph = paragraph
+    //    self.paragraph = paragraph
   }
   public var body: some View {
 
@@ -54,3 +54,31 @@ extension BoxViewExample {
 //    .environment(store)
 //}
 //#endif
+
+public struct BoxExampleGroup: View {
+
+  let glyphSet: Box.GlyphSet
+
+  public init(_ glyphSet: Box.GlyphSet) {
+    self.glyphSet = glyphSet
+  }
+  public var body: some View {
+
+    VStack {
+      Section(glyphSet.design.name) {
+        BoxViewExample()
+          .setBoxStyle(
+            glyphs: glyphSet,
+            frame: .single,
+          )
+        //          Divider()
+        BoxViewExample()
+          .setBoxStyle(
+            glyphs: glyphSet,
+            frame: .double,
+          )
+      }
+    }
+
+  }
+}

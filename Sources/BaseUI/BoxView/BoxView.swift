@@ -38,8 +38,8 @@ public struct BoxView: View {
         content
       }.plainText
     )
-    .fixedSize(horizontal: true, vertical: false)
-
+//    .fixedSize(horizontal: true, vertical: false)
+    .fixedSize()
     .gridSetup(.sfMono, fontSize: explicitFontSize ?? 13)
 
     .environment(\.isShowingGridGuide, false)
@@ -74,56 +74,10 @@ extension EnvironmentValues {
 
   ScrollView {
     HStack(alignment: .top, spacing: 8) {
-      //    VStack(alignment: .leading, spacing: 14) {
-
-      VStack {
-        Section("Sharp") {
-          BoxViewExample()
-            .setBoxStyle(
-              glyphs: .sharp,
-              frame: .single,
-            )
-          //          Divider()
-          BoxViewExample()
-            .setBoxStyle(
-              glyphs: .sharp,
-              frame: .double,
-            )
-        }
-      }
-
-      VStack {
-        Section("Round") {
-          BoxViewExample()
-            .setBoxStyle(
-              glyphs: .rounded,
-              frame: .single,
-            )
-
-          //          Divider()
-          BoxViewExample()
-            .setBoxStyle(
-              glyphs: .rounded,
-              frame: .double,
-            )
-        }
-      }
-      VStack {
-        Section("Hollow") {
-          BoxViewExample()
-            .setBoxStyle(
-              glyphs: .hollow,
-              frame: .single,
-            )
-
-          //          Divider()
-          BoxViewExample()
-            .setBoxStyle(
-              glyphs: .hollow,
-              frame: .double,
-            )
-        }
-      }
+      BoxExampleGroup(.sharp)
+      BoxExampleGroup(.rounded)
+      BoxExampleGroup(.hollow)
+      
     }
     //                .environment(\.metrics, .lineNumbers)
     .environment(\.paragraphNumber, 5)
