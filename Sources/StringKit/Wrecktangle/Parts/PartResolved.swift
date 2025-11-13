@@ -53,7 +53,8 @@ extension Box.Part {
 
 extension Box.PartResolved {
   func toStringStack(with theme: Box.Theme) -> StringStack {
-    StringStack(from: glyphs, with: theme)
+    
+    StringStack(from: self ,using: theme.glyphSet)
   }
 }
 

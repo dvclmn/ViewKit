@@ -21,7 +21,8 @@ extension Box {
 
     /// Resolve a single GlyphStructure → GlyphDescriptor
     func resolve(structure: GlyphStructure) -> GlyphDescriptor {
-      let design = glyphSet.design(for: structure.role, weight: structure.weight)
+      let design = glyphSet.design
+//      let design = glyphSet.design(for: structure.role, weight: structure.weight)
       return GlyphDescriptor(structure, design: design)
     }
 

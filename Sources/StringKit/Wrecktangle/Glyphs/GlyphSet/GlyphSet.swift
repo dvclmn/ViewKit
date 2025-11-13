@@ -56,18 +56,18 @@ extension Box.GlyphSet {
       weight: descriptor.structure.weight
     )
 //    return glyphMap[key]?.name ?? Box.glyphSetCharacterFallback
-        return glyphMap[key] ?? Box.glyphSetCharacterFallback
+    return glyphMap[key]?.character ?? Box.glyphSetCharacterFallback
   }
 
   /// Lookup: given a structural role + weight, returns the design for this set
-  public func design(
-    for role: Box.GlyphRole,
-    weight: Box.GlyphWeight
-  ) -> Box.GlyphDesign {
-    let key = Box.GlyphKey(role: role, weight: weight)
-    return glyphMap[key] ?? Box.GlyphDesign.default
-    //    return glyphMap[key] ?? Box.GlyphDesign.defaultDesign(for: role)
-  }
+//  public func design(
+//    for role: Box.GlyphRole,
+//    weight: Box.GlyphWeight
+//  ) -> Box.GlyphDesign {
+//    let key = Box.GlyphKey(role: role, weight: weight)
+//    return glyphMap[key] ?? Box.GlyphDesign.default
+//    //    return glyphMap[key] ?? Box.GlyphDesign.defaultDesign(for: role)
+//  }
 
   //  public func resolve(_ desc: Box.GlyphDescriptor) -> Character {
   ////    "8"

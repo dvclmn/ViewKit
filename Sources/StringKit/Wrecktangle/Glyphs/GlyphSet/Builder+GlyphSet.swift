@@ -13,8 +13,8 @@ enum GlyphSetBuilder {
     
     // Simple explicit merge: last-wins or first-wins
     components.reduce(into: [:]) { dict, component in
-      for (key, design) in component {
-        dict[key] = design // override if exists
+      for (key, glyph) in component {
+        dict[key] = glyph // override if exists
       }
     }
 //    components.merged(keeping: .first)
@@ -32,14 +32,14 @@ extension GlyphSetBuilder {
   static func buildExpression(_ glyph: Glyph) -> Box.GlyphMap {
     let key = Box.GlyphKey(role: glyph.descriptor.structure.role,
                        weight: glyph.descriptor.structure.weight)
-    return [key: glyph.descriptor.design]
+    return [key: glyph]
   }
   
   static func buildExpression(_ glyphs: [Glyph]) -> Box.GlyphMap {
     glyphs.reduce(into: [:]) { dict, glyph in
       let key = Box.GlyphKey(role: glyph.descriptor.structure.role,
                          weight: glyph.descriptor.structure.weight)
-      dict[key] = glyph.descriptor.design
+      dict[key] = glyph
     }
   }
   
