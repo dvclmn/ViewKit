@@ -17,7 +17,7 @@ extension Box {
   /// }
   /// ```
   /// I think this essentially provides a slightly nicer wrapper around `GlyphMap`
-  public struct Glyph: Sendable {
+  public struct Glyph: Sendable, Hashable, Codable {
     let character: Character
     let descriptor: GlyphDescriptor
 

@@ -6,6 +6,8 @@
 //
 
 extension Box.GlyphSet {
+  
+  public static var `default`: Self { sharp }
   public static var sharp: Self {
     GlyphSet(.sharp) {
       Glyph.blank

@@ -34,28 +34,19 @@ extension Box {
         }
       )
     }
-    //    func resolve(structure: Box.GlyphStructure) -> Box.GlyphDescriptor {
-    //      let design = glyphSet.design(for: structure.role, weight: structure.weight)
-    //      return Box.GlyphDescriptor(structure: structure, design: design)
-    //    }
-    //
-    //    func resolve(part: Part<GlyphStructure>) -> Part<Box.GlyphDescriptor> {
-    //      Part(role: part.role,
-    //           glyphs: part.glyphs.map { row in row.map { resolve(structure: $0) } })
-    //    }
   }
+}
 
-  //  struct Resolver {
-  //    let designSet: GlyphSet
-  //
-  //    func resolve(structure: GlyphStructure) -> GlyphDescriptor {
-  //      let design: GlyphDesign = designSet.design
-  ////      GlyphDescriptor(
-  ////        structure,
-  ////        design: designSet.design(for: structure.role, weight: structure.weight)
-  ////      )
-  //    }
-  //  }
+extension Box.Resolver {
+  func characters(from descriptors: [[Box.GlyphDescriptor]]) -> [[Character]] {
+    descriptors.map { row in
+      row.map { glyphSet.character(for: $0) }
+    }
+  }
+  
+  func characters(from part: Box.PartResolved) -> [[Character]] {
+    characters(from: part.glyphs)
+  }
 }
 
 //extension Box.Part {

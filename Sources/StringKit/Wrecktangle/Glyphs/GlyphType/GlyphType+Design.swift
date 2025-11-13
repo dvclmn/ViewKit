@@ -12,12 +12,13 @@ extension Box {
     case round
     
     /// Example: `╔═`
-    /// Named `hollow` to disabiguate from Frame's `double`
+    /// Named `hollow` to disambiguate from Frame's `double`
     case hollow
   }
 }
 
 extension Box.GlyphDesign {
+  public static var `default`: Self { .sharp }
   public var name: String { rawValue.capitalized }
 }
 
