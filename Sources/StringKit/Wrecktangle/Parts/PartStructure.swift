@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 10/11/2025.
 //
 
+import SharedHelpers
+
 public typealias Part = Box.PartStructure
 
 extension Box {
@@ -108,14 +110,18 @@ extension Box.PartStructure: CustomStringConvertible {
   }
 }
 
-
-//extension Array where Element: Collection, Element.Element: CustomStringConvertible {
-//  func indented() -> String {
-//    self.reduce(into: "") { partialResult, row in
-//      row.map { item in
-//        <#code#>
-//      }
-//    }
-//
-//  }
-//}
+extension Box.PartStructure: PrettyPrintable {
+  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+    guard depth < config.maxDepth else { return "\(config.typeName(self)) {...}" }
+    
+    let ind = config.indent(depth)
+    let nextInd = config.indent(depth + 1)
+    
+    return """
+      \(config.typeName(self)) {
+      \(nextInd)role: \(role.prettyDescription(config, depth: depth + 1))
+      \(nextInd)glyphs: \(glyphs.prettyDescription(config, depth: depth + 1))
+      \(ind)}
+      """
+  }
+}

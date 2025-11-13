@@ -57,7 +57,7 @@ extension Box.Glyph: PrettyPrintable {
     let nextInd = config.indent(depth + 1)
 
     return """
-      \(config.typeName(self))Person {
+      \(config.typeName(self)) {
       \(nextInd)character: \(character.prettyDescription(config, depth: depth + 1))
       \(nextInd)descriptor: \(character.prettyDescription(config, depth: depth + 1))
       \(ind)}

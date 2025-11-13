@@ -34,23 +34,3 @@ public struct Indented {
     self.content = content
   }
 }
-
-//extension Indented: StyledStringConvertible {
-//  public var toStyledString: StyledString {
-//    // Now you can access indentation depth!
-//    let depth = contentElements.map(\.indentationDepth).max() ?? 0
-//    let dynamicIndent = String(repeating: indentString, count: depth)
-//
-//    let indentedItems = contentElements.map { element in
-//      dynamicIndent + element.toStyledString
-//    }.joined("\n")
-//
-//    guard let title else { return indentedItems }
-//    return title + "\n" + indentedItems
-//  }
-//}
-
-//extension Indented: StyledStringConvertible {
-//
-//
-//}

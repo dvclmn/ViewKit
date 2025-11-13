@@ -57,6 +57,6 @@ extension Box.FrameStructure {
 
 extension Box.FrameStructure: CustomStringConvertible {
   public var description: String {
-    "Frame[parts: \(map.prettyString)]"
+    map.prettyDescription
   }
 }

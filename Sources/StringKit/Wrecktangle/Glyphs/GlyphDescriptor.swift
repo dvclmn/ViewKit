@@ -57,12 +57,12 @@ extension Box.GlyphDescriptor: CustomStringConvertible {
 extension Box.GlyphDescriptor: PrettyPrintable {
   public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
     guard depth < config.maxDepth else { return "Person {...}" }
-    
+
     let ind = config.indent(depth)
     let nextInd = config.indent(depth + 1)
-    
+
     return """
-      \(config.typeName(self))Person {
+      \(config.typeName(self)) {
       \(nextInd)structure: \(structure.prettyDescription(config, depth: depth + 1))
       \(nextInd)design: \(design.name.prettyDescription(config, depth: depth + 1))
       \(ind)}

@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public struct Labeled {
 
   public let key: String

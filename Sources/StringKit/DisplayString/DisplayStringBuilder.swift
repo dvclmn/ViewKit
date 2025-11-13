@@ -25,14 +25,6 @@ public struct DisplayStringBuilder {
   public static func buildArray(_ components: [[DisplayBlock]]) -> [DisplayBlock] {
     components.flatMap { $0 }
   }
-
-  //  private static func debugString(
-  //    components: [DisplayBlock],
-  //    function: String = #function,
-  //  ) -> String {
-  //    "\(function): \(components.count) elements"
-  //    //    let componentName = components.reduce("") { $0 + "\($1.isIndented ? "Indented" : "Plain"))"
-  //  }
 }
 
 // MARK: - buildExpression overloads
@@ -64,5 +56,4 @@ extension DisplayStringBuilder {
       )
     ]
   }
-
 }

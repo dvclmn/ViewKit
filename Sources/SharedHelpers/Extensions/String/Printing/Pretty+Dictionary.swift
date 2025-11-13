@@ -15,36 +15,37 @@ extension Dictionary: PrettyPrintable where Key: PrettyPrintable, Value: PrettyP
     guard depth < config.maxDepth else {
       return "\(config.dictPrefix)...\(config.dictSuffix)"
     }
-    
+
     guard !isEmpty else {
       return "\(config.typeName(self))\(config.dictPrefix)\(config.dictSuffix)"
     }
-    
+
     let shouldCompact = config.compactCollections && count <= config.compactThreshold
-    
-    // Sort keys for consistent output (if possible)
+
+    /// Sort keys for consistent output (if possible)
     let sortedPairs = sorted { "\($0.key)" < "\($1.key)" }
-    
+
     if shouldCompact {
       let items = sortedPairs.map { key, value in
         "\(key.prettyDescription(config, depth: depth + 1))\(config.keyValueSeparator)\(value.prettyDescription(config, depth: depth + 1))"
       }
-      return "\(config.typeName(self))\(config.dictPrefix)\(items.joined(separator: "\(config.itemSeparator) "))\(config.dictSuffix)"
+      return
+        "\(config.typeName(self))\(config.dictPrefix)\(items.joined(separator: "\(config.itemSeparator) "))\(config.dictSuffix)"
     }
-    
+
     let ind = config.indent(depth)
     let nextInd = config.indent(depth + 1)
-    
+
     let items = sortedPairs.map { key, value in
       let keyDesc = key.prettyDescription(config, depth: depth + 1)
       let valueDesc = value.prettyDescription(config, depth: depth + 1)
       return "\(nextInd)\(keyDesc)\(config.keyValueSeparator)\(valueDesc)"
     }.joined(separator: config.itemSeparator + "\n")
-    
+
     return """
-        \(config.typeName(self))\(config.dictPrefix)
-        \(items)
-        \(ind)\(config.dictSuffix)
-        """
+      \(config.typeName(self))\(config.dictPrefix)
+      \(items)
+      \(ind)\(config.dictSuffix)
+      """
   }
 }

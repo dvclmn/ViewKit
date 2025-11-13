@@ -10,7 +10,6 @@ import SwiftUI
 public struct DisplayString {
 
   private let components: [DisplayBlock]
-  //  private let components: [StyledString]
 
   /// This is the *top-level* seperator, that appears between
   /// each element in the builder (defined on a new line in
@@ -30,12 +29,10 @@ public struct DisplayString {
 extension DisplayString {
 
   public var plainText: String {
-    //    components.map(\.toStyledString.plainString).joined("  \n")
     components.map(\.toStyledString.plainString).joined(separator)
   }
 
   public var output: AttributedString {
-    //    self.output()
     components.styledOutput(separator: separator)
   }
 

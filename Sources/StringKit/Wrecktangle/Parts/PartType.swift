@@ -74,6 +74,12 @@ extension Box.PartRole {
   }
 }
 
+extension Box.PartRole: PrettyPrintable {
+  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+    self.name
+  }
+}
+
 extension Box.PartRole: CustomStringConvertible {
   public var description: String {
     return "Part/\(name)"
