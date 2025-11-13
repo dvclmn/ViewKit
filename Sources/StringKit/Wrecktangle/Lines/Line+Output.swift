@@ -131,14 +131,13 @@ extension Box.Line {
     
     let resolved = structure.resolved(with: engine.glyphDesign)
 
-    if engine.theme.frameStyle.isDouble && structure.role.isHorizontal {
-      print(
-        "---\nPart Original: \(structure.pretty)",
-        "\nPart Resolved: \(resolved.pretty)",
-        "\n---\n\n"
-      )
-      
-    }
+//    if engine.theme.frameStyle.isDouble && structure.role.isHorizontal {
+//      print(
+//        "---\nPart Original: \(structure.pretty)",
+//        "\nPart Resolved: \(resolved.pretty)",
+//        "\n---\n\n"
+//      )
+//    }
     
     let stack = resolved.toStringStack(with: engine.theme)
     guard let count else {

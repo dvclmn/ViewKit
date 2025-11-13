@@ -19,7 +19,7 @@ extension Box {
   /// Describes structure in terms of placement and weight (aka prominence).
   /// Intentionally omits any info relating to the *design* of Glyphs, so a Frame
   /// can declare Glyph Structure without yet being concerned with Glyph Design.
-  public struct GlyphStructure: Sendable, Codable, Hashable {
+  public struct GlyphStructure: GlyphKind {
     let role: GlyphRole
     let weight: Box.GlyphWeight
 

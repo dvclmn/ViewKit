@@ -8,17 +8,28 @@
 import Foundation
 import SharedHelpers
 
+typealias PartStructure = Box.Part<Box.GlyphStructure>
+typealias PartResolved  = Box.Part<Box.GlyphDescriptor>
+
 extension Box {
-  public struct Part: Sendable, Codable, Equatable, Hashable {
+  
+  public protocol GlyphKind: Sendable, Codable, Hashable {}
+  
+  public struct Part<T: GlyphKind>: Sendable, Codable, Hashable {
     let role: PartRole
-
-    let glyphs: [[GlyphDescriptor]]
-
-    init(_ type: PartRole, glyphs: [[GlyphDescriptor]]) {
-      self.role = type
-      self.glyphs = glyphs
-    }
+    let glyphs: [[T]]
   }
+  
+//  public struct Part: Sendable, Codable, Equatable, Hashable {
+//    let role: PartRole
+//
+//    let glyphs: [[GlyphDescriptor]]
+//
+//    init(_ type: PartRole, glyphs: [[GlyphDescriptor]]) {
+//      self.role = type
+//      self.glyphs = glyphs
+//    }
+//  }
 }
 
 extension Box.Part {
