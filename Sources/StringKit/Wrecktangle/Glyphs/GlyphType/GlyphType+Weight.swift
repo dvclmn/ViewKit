@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 1/11/2025.
 //
 
+import SharedHelpers
 //public typealias Prominence = Box.GlyphProminence
 
 extension Box {
@@ -60,4 +61,15 @@ extension Box.GlyphWeight: CustomStringConvertible {
   public var description: String {
     "Weight[x: \(x.rawValue), y: \(y.rawValue)]"
   }
+}
+
+extension Box.GlyphWeight: PrettyPrintable {
+  
+  public func prettyBody(_ config: PrettyPrintConfig, depth: Int) -> String {
+    DisplayString {
+      Labeled("X", value: x.rawValue.pretty)
+      Labeled("Y", value: y.rawValue.pretty(config, depth: depth))
+    }.plainText
+  }
+  
 }

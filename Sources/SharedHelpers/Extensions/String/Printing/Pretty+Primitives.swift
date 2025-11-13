@@ -10,30 +10,30 @@ import Foundation
 // MARK: - Basic Types
 
 extension String: PrettyPrintable {
-  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+  public func pretty(_ config: PrettyPrintConfig, depth: Int) -> String {
     "\(config.typeName(self))\"\(self)\""
   }
 }
 extension Character: PrettyPrintable {
-  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+  public func pretty(_ config: PrettyPrintConfig, depth: Int) -> String {
     "\(config.typeName(self))\"\(self)\""
   }
 }
 
 extension Int: PrettyPrintable {
-  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+  public func pretty(_ config: PrettyPrintConfig, depth: Int) -> String {
     "\(config.typeName(self))\(self)"
   }
 }
 
 extension Double: PrettyPrintable {
-  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+  public func pretty(_ config: PrettyPrintConfig, depth: Int) -> String {
     "\(config.typeName(self))\(self)"
   }
 }
 
 extension Bool: PrettyPrintable {
-  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+  public func pretty(_ config: PrettyPrintConfig, depth: Int) -> String {
     "\(config.typeName(self))\(self)"
   }
 }

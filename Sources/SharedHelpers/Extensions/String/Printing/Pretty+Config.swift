@@ -29,6 +29,11 @@ public struct PrettyPrintConfig: Sendable {
 }
 
 extension PrettyPrintConfig {
+  
+  public func overflowDescription<T>(for value: T) -> String {
+    "\(typeName(value)){...}"
+  }
+  
   public func indent(_ depth: Int) -> String {
     String(repeating: indentChar, count: depth * indentSize)
   }
@@ -43,12 +48,12 @@ extension PrettyPrintConfig {
 // MARK: - Optional
 
 extension Optional: PrettyPrintable where Wrapped: PrettyPrintable {
-  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+  public func pretty(_ config: PrettyPrintConfig, depth: Int) -> String {
     switch self {
       case .none:
         return "\(config.typeName(self))nil"
       case .some(let value):
-        return value.prettyDescription(config, depth: depth)
+        return value.pretty(config, depth: depth)
     }
   }
 }

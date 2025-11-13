@@ -52,23 +52,20 @@ extension Box.PartStructure {
         )
       }
     }
-    
+
     return Box.Part(self.role, glyphs: resolvedGlyphs)
   }
   public var width: Int { glyphs.width(for: .widestRow) }
   public static var blank: Self { Part(.blank, glyphs: []) }
-  
 
-//  func merged(with other: Self) -> Box.PartMap {
-////  func merged(with other: Self) -> Self {
-//    guard role == other.role else {
-//      return self.
-//    }
-//    let mergedGlyphs = self.glyphs + other.glyphs
-//    return Self(role, glyphs: mergedGlyphs)
-//  }
-
-
+  //  func merged(with other: Self) -> Box.PartMap {
+  ////  func merged(with other: Self) -> Self {
+  //    guard role == other.role else {
+  //      return self.
+  //    }
+  //    let mergedGlyphs = self.glyphs + other.glyphs
+  //    return Self(role, glyphs: mergedGlyphs)
+  //  }
 
   enum Context {
     @TaskLocal static var currentRole: Box.PartRole?
@@ -111,17 +108,10 @@ extension Box.PartStructure: CustomStringConvertible {
 }
 
 extension Box.PartStructure: PrettyPrintable {
-  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
-    guard depth < config.maxDepth else { return "\(config.typeName(self)) {...}" }
-    
-    let ind = config.indent(depth)
-    let nextInd = config.indent(depth + 1)
-    
-    return """
-      \(config.typeName(self)) {
-      \(nextInd)role: \(role.prettyDescription(config, depth: depth + 1))
-      \(nextInd)glyphs: \(glyphs.prettyDescription(config, depth: depth + 1))
-      \(ind)}
-      """
+  public func prettyBody(_ config: PrettyPrintConfig, depth: Int) -> String {
+    DisplayString {
+      Labeled("role", value: role.name.pretty)
+      Labeled("glyphs", value: glyphs.pretty(config, depth: depth))
+    }.plainText
   }
 }

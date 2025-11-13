@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Collections
 
 extension Array: PrettyPrintable where Element: PrettyPrintable {
-  public func prettyDescription(
+  public func pretty(
     _ config: PrettyPrintConfig,
     depth: Int
   ) -> String {
@@ -25,7 +25,7 @@ extension Array: PrettyPrintable where Element: PrettyPrintable {
     let shouldCompact = config.compactCollections && count <= config.compactThreshold
 
     if shouldCompact {
-      let items = map { $0.prettyDescription(config, depth: depth + 1) }
+      let items = map { $0.pretty(config, depth: depth + 1) }
       return
         "\(config.typeName(self))\(config.arrayPrefix)\(items.joined(separator: "\(config.itemSeparator) "))\(config.arraySuffix)"
     }
@@ -34,7 +34,7 @@ extension Array: PrettyPrintable where Element: PrettyPrintable {
     let nextInd = config.indent(depth + 1)
 
     let items = map { element in
-      "\(nextInd)\(element.prettyDescription(config, depth: depth + 1))"
+      "\(nextInd)\(element.pretty(config, depth: depth + 1))"
     }.joined(separator: config.itemSeparator + "\n")
 
     return """

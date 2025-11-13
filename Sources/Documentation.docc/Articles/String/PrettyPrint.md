@@ -5,7 +5,7 @@
 ///   let address: Address?
 ///   let hobbies: [String]
 ///
-///   func prettyDescription(config: PrettyPrintConfig, depth: Int) -> String {
+///   func pretty(config: PrettyPrintConfig, depth: Int) -> String {
 ///     guard depth < config.maxDepth else { return "Person {...}" }
 ///
 ///     let ind = indent(depth, config)
@@ -13,10 +13,10 @@
 ///
 ///     return """
 ///         \(typeName(self, config))Person {
-///         \(nextInd)name: \(name.prettyDescription(config: config, depth: depth + 1))
-///         \(nextInd)age: \(age.prettyDescription(config: config, depth: depth + 1))
-///         \(nextInd)address: \(address.prettyDescription(config: config, depth: depth + 1))
-///         \(nextInd)hobbies: \(hobbies.prettyDescription(config: config, depth: depth + 1))
+///         \(nextInd)name: \(name.pretty(config: config, depth: depth + 1))
+///         \(nextInd)age: \(age.pretty(config: config, depth: depth + 1))
+///         \(nextInd)address: \(address.pretty(config: config, depth: depth + 1))
+///         \(nextInd)hobbies: \(hobbies.pretty(config: config, depth: depth + 1))
 ///         \(ind)}
 ///         """
 ///   }
@@ -27,7 +27,7 @@
 ///   let city: String
 ///   let zip: String
 ///
-///   func prettyDescription(config: PrettyPrintConfig, depth: Int) -> String {
+///   func pretty(config: PrettyPrintConfig, depth: Int) -> String {
 ///     guard depth < config.maxDepth else { return "Address {...}" }
 ///
 ///     let ind = indent(depth, config)
@@ -35,9 +35,9 @@
 ///
 ///     return """
 ///         \(typeName(self, config))Address {
-///         \(nextInd)street: \(street.prettyDescription(config: config, depth: depth + 1))
-///         \(nextInd)city: \(city.prettyDescription(config: config, depth: depth + 1))
-///         \(nextInd)zip: \(zip.prettyDescription(config: config, depth: depth + 1))
+///         \(nextInd)street: \(street.pretty(config: config, depth: depth + 1))
+///         \(nextInd)city: \(city.pretty(config: config, depth: depth + 1))
+///         \(nextInd)zip: \(zip.pretty(config: config, depth: depth + 1))
 ///         \(ind)}
 ///         """
 ///   }

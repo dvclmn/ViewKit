@@ -8,7 +8,7 @@
 import Foundation
 
 extension Dictionary: PrettyPrintable where Key: PrettyPrintable, Value: PrettyPrintable {
-  public func prettyDescription(
+  public func pretty(
     _ config: PrettyPrintConfig,
     depth: Int
   ) -> String {
@@ -27,7 +27,7 @@ extension Dictionary: PrettyPrintable where Key: PrettyPrintable, Value: PrettyP
 
     if shouldCompact {
       let items = sortedPairs.map { key, value in
-        "\(key.prettyDescription(config, depth: depth + 1))\(config.keyValueSeparator)\(value.prettyDescription(config, depth: depth + 1))"
+        "\(key.pretty(config, depth: depth + 1))\(config.keyValueSeparator)\(value.pretty(config, depth: depth + 1))"
       }
       return
         "\(config.typeName(self))\(config.dictPrefix)\(items.joined(separator: "\(config.itemSeparator) "))\(config.dictSuffix)"
@@ -37,8 +37,8 @@ extension Dictionary: PrettyPrintable where Key: PrettyPrintable, Value: PrettyP
     let nextInd = config.indent(depth + 1)
 
     let items = sortedPairs.map { key, value in
-      let keyDesc = key.prettyDescription(config, depth: depth + 1)
-      let valueDesc = value.prettyDescription(config, depth: depth + 1)
+      let keyDesc = key.pretty(config, depth: depth + 1)
+      let valueDesc = value.pretty(config, depth: depth + 1)
       return "\(nextInd)\(keyDesc)\(config.keyValueSeparator)\(valueDesc)"
     }.joined(separator: config.itemSeparator + "\n")
 

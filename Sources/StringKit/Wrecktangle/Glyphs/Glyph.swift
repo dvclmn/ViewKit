@@ -50,17 +50,25 @@ extension Box.Glyph {
 }
 
 extension Box.Glyph: PrettyPrintable {
-  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
-    guard depth < config.maxDepth else { return "Person {...}" }
 
-    let ind = config.indent(depth)
-    let nextInd = config.indent(depth + 1)
-
-    return """
-      \(config.typeName(self)) {
-      \(nextInd)character: \(character.prettyDescription(config, depth: depth + 1))
-      \(nextInd)descriptor: \(character.prettyDescription(config, depth: depth + 1))
-      \(ind)}
-      """
+  public func prettyBody(_ config: PrettyPrintConfig, depth: Int) -> String {
+    DisplayString {
+      Labeled("character", value: character.pretty)
+      Labeled("descriptor", value: descriptor.pretty(config, depth: depth))
+    }.plainText
   }
+
+  //  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+  //    guard depth < config.maxDepth else { return "Person {...}" }
+  //
+  //    let ind = config.indent(depth)
+  //    let nextInd = config.indent(depth + 1)
+  //
+  //    return """
+  //      \(config.typeName(self)) {
+  //      \(nextInd)character: \(character.prettyDescription(config, depth: depth + 1))
+  //      \(nextInd)descriptor: \(character.prettyDescription(config, depth: depth + 1))
+  //      \(ind)}
+  //      """
+  //  }
 }

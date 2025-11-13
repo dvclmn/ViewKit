@@ -75,7 +75,7 @@ extension Box.PartRole {
 }
 
 extension Box.PartRole: PrettyPrintable {
-  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+  public func pretty(_ config: PrettyPrintConfig, depth: Int) -> String {
     self.name
   }
 }

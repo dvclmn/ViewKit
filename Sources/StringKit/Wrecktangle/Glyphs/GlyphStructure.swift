@@ -58,18 +58,28 @@ extension Box.GlyphStructure: CustomStringConvertible {
   }
 }
 
+//extension Box.GlyphStructure: PrettyPrintable {
+//  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
+//    guard depth < config.maxDepth else { return "Person {...}" }
+//
+//    let ind = config.indent(depth)
+//    let nextInd = config.indent(depth + 1)
+//
+//    return """
+//      \(config.typeName(self))Person {
+//      \(nextInd)role: \(role.name.prettyDescription(config, depth: depth + 1))
+//      \(nextInd)weight: \(weight.description.prettyDescription(config, depth: depth + 1))
+//      \(ind)}
+//      """
+//  }
+//}
+
 extension Box.GlyphStructure: PrettyPrintable {
-  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
-    guard depth < config.maxDepth else { return "Person {...}" }
-    
-    let ind = config.indent(depth)
-    let nextInd = config.indent(depth + 1)
-    
-    return """
-      \(config.typeName(self))Person {
-      \(nextInd)role: \(role.name.prettyDescription(config, depth: depth + 1))
-      \(nextInd)weight: \(weight.description.prettyDescription(config, depth: depth + 1))
-      \(ind)}
-      """
+
+  public func prettyBody(_ config: PrettyPrintConfig, depth: Int) -> String {
+    DisplayString {
+      Labeled("role", value: role.name.pretty)
+      Labeled("weight", value: weight.pretty(config, depth: depth))
+    }.plainText
   }
 }
