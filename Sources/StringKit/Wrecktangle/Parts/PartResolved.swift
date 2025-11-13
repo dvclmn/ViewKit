@@ -41,18 +41,18 @@ extension Box {
 }
 
 extension Box.Part {
-//  static func from(
-//    _ structure: Box.PartStructure,
-//    design: Box.GlyphDesign
-//  ) -> Self {
-//    structure.resolved(with: design)
-//  }
+  //  static func from(
+  //    _ structure: Box.PartStructure,
+  //    design: Box.GlyphDesign
+  //  ) -> Self {
+  //    structure.resolved(with: design)
+  //  }
 }
 
 extension Box.PartResolved {
   func toStringStack(with theme: Box.Theme) -> StringStack {
-    
-    StringStack(from: self ,using: theme.glyphSet)
+
+    StringStack(from: self, using: theme.glyphSet)
   }
 }
 

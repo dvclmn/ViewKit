@@ -10,10 +10,10 @@ import SharedHelpers
 @resultBuilder
 enum FrameBuilder {
 
-  typealias Components = Box.PartStructure
+  typealias Parts = Box.PartStructure
   typealias OutputMap = Box.PartMap
 
-  static func buildBlock(_ components: Components...) -> OutputMap {
+  static func buildBlock(_ components: Parts...) -> OutputMap {
     components.toDictionary(key: \.role, value: \.self, keeping: .last)
   }
 
@@ -21,19 +21,12 @@ enum FrameBuilder {
     components.merged(keeping: .last)
   }
 
-  static func buildEither(first: OutputMap) -> OutputMap { first }
-  static func buildEither(second: OutputMap) -> OutputMap { second }
-  static func buildOptional(_ component: OutputMap?) -> OutputMap {
-    component ?? [:]
-  }
+//  static func buildEither(first: OutputMap) -> OutputMap { first }
+//  static func buildEither(second: OutputMap) -> OutputMap { second }
+//  static func buildOptional(_ component: OutputMap?) -> OutputMap {
+//    component ?? [:]
+//  }
 }
 extension FrameBuilder {
-
-  static func buildExpression(_ expression: Components) -> Components {
-    expression
-  }
-
-  static func buildExpression(_ expression: OutputMap) -> OutputMap {
-    expression
-  }
+  
 }
