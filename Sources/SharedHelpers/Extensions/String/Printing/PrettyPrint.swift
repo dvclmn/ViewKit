@@ -7,6 +7,7 @@
 
 public protocol PrettyPrintable {
   func pretty(_ config: PrettyPrintConfig, depth: Int) -> String
+  func prettyBody(_ config: PrettyPrintConfig, depth: Int) -> String
 }
 
 

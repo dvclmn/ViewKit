@@ -100,17 +100,17 @@ extension Box.PartStructure {
   }
 }
 
-extension Box.PartStructure: CustomStringConvertible {
-  public var description: String {
-    //    "Part[Glyphs: \(glyphs), StringStack: \(toStringStack(with: .default))]"
-    "Part[\n\t\(role.name),\n\tGlyphs:\n\(glyphs.indented(startingIndentation: 2))\n\tWidth: \(width)\n]"
-  }
-}
+//extension Box.PartStructure: CustomStringConvertible {
+//  public var description: String {
+//    //    "Part[Glyphs: \(glyphs), StringStack: \(toStringStack(with: .default))]"
+//    "Part[\n\t\(role.name),\n\tGlyphs:\n\(glyphs.indented(startingIndentation: 2))\n\tWidth: \(width)\n]"
+//  }
+//}
 
 extension Box.PartStructure: PrettyPrintable {
   public func prettyBody(_ config: PrettyPrintConfig, depth: Int) -> String {
     DisplayString {
-      Labeled("role", value: role.name.pretty)
+      Labeled("role", value: role.name.pretty(config, depth: depth))
       Labeled("glyphs", value: glyphs.pretty(config, depth: depth))
     }.plainText
   }

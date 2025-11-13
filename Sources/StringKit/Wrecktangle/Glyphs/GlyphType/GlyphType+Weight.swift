@@ -67,7 +67,7 @@ extension Box.GlyphWeight: PrettyPrintable {
   
   public func prettyBody(_ config: PrettyPrintConfig, depth: Int) -> String {
     DisplayString {
-      Labeled("X", value: x.rawValue.pretty)
+      Labeled("X", value: x.rawValue.pretty(config, depth: depth))
       Labeled("Y", value: y.rawValue.pretty(config, depth: depth))
     }.plainText
   }

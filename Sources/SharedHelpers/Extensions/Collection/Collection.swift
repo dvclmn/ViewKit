@@ -130,6 +130,8 @@ extension Collection where Element: Hashable {
 //}
 
 extension Array where Element: Collection, Element.Element: CustomStringConvertible {
+  
+  @available(*, deprecated, message: "Prefer protocol `PrettyPrinted`")
   public func indented(
     startingIndentation: Int = 0,
     indentString: String = "\t"
