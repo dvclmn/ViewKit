@@ -7,9 +7,10 @@
 
 import Foundation
 
-public typealias Components = [Box.Line]
 
 extension Box {
+  public typealias Components = [Box.Line]
+  
   public protocol Component: Codable, Sendable, Equatable {
     func makeLines() -> Components
   }
@@ -80,7 +81,7 @@ extension Box {
 }
 
 extension Box.Component {
-  func combined(with other: any Box.Component) -> Components {
+  func combined(with other: any Box.Component) -> Box.Components {
     let lhsLines = self.makeLines()
     let rhsLines = other.makeLines()
     return lhsLines + rhsLines

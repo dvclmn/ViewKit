@@ -9,7 +9,7 @@ import Foundation
 import SharedHelpers
 
 extension Box {
-  public struct GlyphDescriptor: DesignResolved, GlyphKind {
+  public struct GlyphDescriptor: GlyphKind {
     let structure: GlyphStructure
     let design: GlyphDesign
     

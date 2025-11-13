@@ -6,23 +6,12 @@
 //
 
 extension Box {
-  public typealias GlyphMap = [GlyphKey: Glyph]
-//  public typealias GlyphMap = [GlyphKey: GlyphDesign]
-
-  //  public typealias GlyphMap = [GlyphDescriptor: Character]
-}
-
-public typealias GlyphSet = Box.GlyphSet
-
-extension Box {
 
   public struct GlyphSet: Codable, Equatable, Sendable {
 
     /// This needs to be defined here, to allow the child
     /// `Glyph`s to have their `design` properties set
     /// *once*, rather than requiring each to set it per-Glyph.
-    //    public var design: GlyphDesign
-    //    public var glyphs: GlyphMap
 
     public let design: GlyphDesign
     let glyphMap: GlyphMap
@@ -55,19 +44,19 @@ extension Box.GlyphSet {
       role: descriptor.structure.role,
       weight: descriptor.structure.weight
     )
-//    return glyphMap[key]?.name ?? Box.glyphSetCharacterFallback
+    //    return glyphMap[key]?.name ?? Box.glyphSetCharacterFallback
     return glyphMap[key]?.character ?? Box.glyphSetCharacterFallback
   }
 
   /// Lookup: given a structural role + weight, returns the design for this set
-//  public func design(
-//    for role: Box.GlyphRole,
-//    weight: Box.GlyphWeight
-//  ) -> Box.GlyphDesign {
-//    let key = Box.GlyphKey(role: role, weight: weight)
-//    return glyphMap[key] ?? Box.GlyphDesign.default
-//    //    return glyphMap[key] ?? Box.GlyphDesign.defaultDesign(for: role)
-//  }
+  //  public func design(
+  //    for role: Box.GlyphRole,
+  //    weight: Box.GlyphWeight
+  //  ) -> Box.GlyphDesign {
+  //    let key = Box.GlyphKey(role: role, weight: weight)
+  //    return glyphMap[key] ?? Box.GlyphDesign.default
+  //    //    return glyphMap[key] ?? Box.GlyphDesign.defaultDesign(for: role)
+  //  }
 
   //  public func resolve(_ desc: Box.GlyphDescriptor) -> Character {
   ////    "8"

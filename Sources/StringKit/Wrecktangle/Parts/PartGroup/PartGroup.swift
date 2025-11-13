@@ -5,8 +5,6 @@
 //  Created by Dave Coleman on 12/11/2025.
 //
 
-typealias PartGroup = Box.PartGroup
-
 extension Box {
   struct PartGroup: Sendable, Codable, Equatable {
     var parts: [Box.PartStructure] = []

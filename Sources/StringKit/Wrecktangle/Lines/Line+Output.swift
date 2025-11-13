@@ -122,17 +122,15 @@ extension Box.Line {
 
 extension Box.Line {
   static func resolvedPart(
-    _ part: LinePart,
+    _ linePart: LinePart,
     repeated count: Int? = nil,
     using engine: Box.Engine,
     at position: Box.PositionContext
   ) -> StringStack {
-    let structure = part.part(using: engine, position: position)
+    let partStructure = linePart.part(using: engine, position: position)
     
     let resolver = Box.Resolver(glyphSet: engine.theme.glyphSet)
-    let resolved = structure.resolved(using: resolver)
-//    let resolved = structure.resolved(with: engine.glyphDesign)
-
+    let resolvedPart = resolver.resolve(part: partStructure)
 //    if engine.theme.frameStyle.isDouble && structure.role.isHorizontal {
 //      print(
 //        "---\nPart Original: \(structure.pretty)",
@@ -141,7 +139,7 @@ extension Box.Line {
 //      )
 //    }
     
-    let stack = resolved.toStringStack(with: engine.theme)
+    let stack = resolvedPart.toStringStack(with: engine.theme)
     guard let count else {
       return stack
     }

@@ -11,8 +11,6 @@ import SharedHelpers
 extension Box {
   public protocol GlyphKind: Sendable, Codable, Hashable {}
 
-  public typealias PartStructure = Box.Part<Box.GlyphStructure>
-  public typealias PartResolved = Box.Part<Box.GlyphDescriptor>
 }
 
 extension Box {

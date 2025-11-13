@@ -6,8 +6,7 @@
 //
 import SharedHelpers
 
-/// For `GlyphSet` builders. Describes design of individual `Character`s
-public typealias Glyph = Box.Glyph
+
 
 extension Box {
   /// This should be what is visible *within* the `GlyphSet` builder

@@ -8,11 +8,6 @@
 import Foundation
 import SharedHelpers
 
-/// For use within Frame builders. Describes structure only, not design
-public typealias GlyphType = Box.GlyphStructure
-
-/// 2D array of structure-describing Glyphs
-public typealias GlyphStack = [[Box.GlyphStructure]]
 
 extension Box {
 

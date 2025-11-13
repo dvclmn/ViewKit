@@ -7,8 +7,6 @@
 
 import SharedHelpers
 
-typealias Part = Box.PartStructure
-
 extension Box.PartStructure {
   init(
     _ role: Box.PartRole,
@@ -22,66 +20,10 @@ extension Box.PartStructure {
 }
 
 
-//extension Box {
-//  /// Needs to have nothing to do with ``Box/GlyphDesign``
-//  /// Used in FrameBuilders
-//  public struct PartStructure: Sendable, Equatable, Codable, Hashable {
-//    /// What bit of the Box does this Part build
-//    let role: PartRole
-//
-//    /// What glyphs are used to compose this Part
-//    /// Go straight to ``Box/GlyphStructure``
-//    let glyphs: GlyphStack
-//
-//    public init(
-//      _ role: PartRole,
-//      glyphs: GlyphStack
-//    ) {
-//      self.role = role
-//      self.glyphs = glyphs
-//    }
-//
-//    init(
-//      _ role: PartRole,
-//      @PartBuilder _ content: () -> GlyphStack
-//    ) {
-//      self.role = role
-//      self.glyphs = Context.$currentRole.withValue(role) {
-//        content()
-//      }
-//    }
-//  }
-//}
-
 extension Box.PartStructure {
-//  public func resolved(
-//    with design: Box.GlyphDesign
-//  ) -> Box.Part {
-//    let resolvedGlyphs: [[Box.GlyphDescriptor]] = glyphs.map { row in
-//      row.map { glyph in
-//        let role = Box.GlyphRole(fromPartRole: self.role)
-//        return Box.GlyphDescriptor(
-//          role,
-//          weight: glyph.weight,
-//          design: design
-//        )
-//      }
-//    }
-//
-//    return Box.Part(self.role, glyphs: resolvedGlyphs)
-//  }
-  public var width: Int { glyphs.width(for: .widestRow) }
-  
-  public static var blank: Self { Part(.blank, glyphs: []) }
 
-  //  func merged(with other: Self) -> Box.PartMap {
-  ////  func merged(with other: Self) -> Self {
-  //    guard role == other.role else {
-  //      return self.
-  //    }
-  //    let mergedGlyphs = self.glyphs + other.glyphs
-  //    return Self(role, glyphs: mergedGlyphs)
-  //  }
+  public static var blank: Self { Part(.blank, glyphs: []) }
+  public var width: Int { glyphs.width(for: .widestRow) }
 
   enum Context {
     @TaskLocal static var currentRole: Box.PartRole?
@@ -115,13 +57,6 @@ extension Box.PartStructure {
     self.glyphs = [[glyph]]
   }
 }
-
-//extension Box.PartStructure: CustomStringConvertible {
-//  public var description: String {
-//    //    "Part[Glyphs: \(glyphs), StringStack: \(toStringStack(with: .default))]"
-//    "Part[\n\t\(role.name),\n\tGlyphs:\n\(glyphs.indented(startingIndentation: 2))\n\tWidth: \(width)\n]"
-//  }
-//}
 
 extension Box.PartStructure {
   public func prettyBody(_ config: PrettyPrintConfig, depth: Int) -> String {

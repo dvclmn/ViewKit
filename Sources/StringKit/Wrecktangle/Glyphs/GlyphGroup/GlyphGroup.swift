@@ -7,7 +7,7 @@
 
 import SharedHelpers
 
-typealias GlyphGroup = Box.GlyphGroup
+
 
 extension Box {
   struct GlyphGroup {

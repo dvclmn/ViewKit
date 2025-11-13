@@ -10,67 +10,30 @@ import SharedHelpers
 @resultBuilder
 enum FrameBuilder {
 
-  typealias BlockInput = Box.PartStructure
-  typealias BlockOutput = Box.PartMap
+  typealias Components = Box.PartStructure
+  typealias OutputMap = Box.PartMap
 
-  static func buildBlock(_ components: BlockInput...) -> BlockOutput {
+  static func buildBlock(_ components: Components...) -> OutputMap {
     components.toDictionary(key: \.role, value: \.self, keeping: .last)
-//    components.toDictionary(key: \.role, value: \.self, keeping: .custom({ current, new in
-//      
-//      
-////      current.glyphs.map { partRow in
-////        partRow.mer
-////      }
-//      current.merged(with: new)
-//    }))
   }
 
-  static func buildArray(_ components: [BlockOutput]) -> BlockOutput {
-//    components.mergedParts()
-        components.merged(keeping: .last)
+  static func buildArray(_ components: [OutputMap]) -> OutputMap {
+    components.merged(keeping: .last)
   }
 
-  static func buildEither(first: BlockOutput) -> BlockOutput { first }
-  static func buildEither(second: BlockOutput) -> BlockOutput { second }
-  static func buildOptional(_ component: BlockOutput?) -> BlockOutput {
+  static func buildEither(first: OutputMap) -> OutputMap { first }
+  static func buildEither(second: OutputMap) -> OutputMap { second }
+  static func buildOptional(_ component: OutputMap?) -> OutputMap {
     component ?? [:]
   }
 }
 extension FrameBuilder {
 
-  static func buildExpression(_ expression: BlockInput) -> BlockInput {
+  static func buildExpression(_ expression: Components) -> Components {
     expression
   }
 
-  static func buildExpression(_ expression: BlockOutput) -> BlockOutput {
+  static func buildExpression(_ expression: OutputMap) -> OutputMap {
     expression
   }
-//  static func buildExpression(_ expression: [BlockInput]) -> BlockOutput {
-//    expression.toDictionary(key: \.role, value: \.self, keeping: .custom({ current, new in
-//      current.merged(with: new)
-//    }))
-//  }
 }
-
-//extension Array where Element == Box.PartMap {
-//  func mergedParts() -> Box.PartMap {
-//    merged(
-//      keeping: .custom { current, new in
-//        current.merged(with: new)
-//      }
-//    )
-//  }
-//}
-
-//extension Array where Element == [Box.GlyphRole: Box.GlyphStructure] {
-//  func mergedGlyphs() -> [Box.GlyphRole: Box.GlyphStructure] {
-//    merged(keeping: .custom { $0.merged(with: $1) })
-//  }
-//
-//  //  func mergedGlyphs() -> [Box.GlyphRole: Box.GlyphStructure] {
-//  //    merged(keeping: .custom { old, new in
-//  //      let thing = old
-//  ////      old, new in old.merged(with: new)
-//  //    })
-//  //  }
-//}

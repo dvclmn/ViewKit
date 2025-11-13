@@ -7,7 +7,7 @@
 
 import EnumMacros
 
-public typealias LinePart = Box.PartRole
+
 
 extension Box {
 
