@@ -11,13 +11,13 @@ extension Box.FrameStructure {
     Frame {
       // MARK: - Horizontal
       Part(.horizontal(.top), weight: .increased)
-      Part(.horizontal(.interior))
       Part(.horizontal(.bottom)) { GlyphType.h(.increased) }
+      Part(.horizontal(.interior))
 
       // MARK: - Vertical
       Part(.vertical(.leading)) { GlyphType.v(.increased) }
-      Part(.vertical(.interior)) { GlyphType.v(.standard) }
       Part(.vertical(.trailing)) { GlyphType.v(.increased) }
+      Part(.vertical(.interior)) { GlyphType.v(.standard) }
 
       // MARK: - Joins
       Part(.join(.leading)) { GlyphType.join(y: .increased) }

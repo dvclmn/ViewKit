@@ -5,42 +5,13 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
+/// Note: Order doesn't matter in a `Frame` builder, like it
+/// does in a `Part`/`Row` builder. Definitions just need
+/// to be present, not expressed in a specific order.
 extension Box.FrameStructure {
   public static var double: Self {
     Frame {
-      Part(.horizontal(.top)) {
-        Row { GlyphType.h(.increased) }
-        Row { GlyphType.h(.standard) }
-      }
 
-      Part(.horizontal(.bottom)) {
-        Row { GlyphType.h(.standard) }
-        Row { GlyphType.h(.increased) }
-      }
-      
-      Part(.horizontal(.interior)) {
-        GlyphType.h(.standard)
-      }
-
-      // MARK: - Vertical
-      Part(.vertical(.leading)) {
-        Row {
-          GlyphType.v(.increased)
-          GlyphType.blank
-          GlyphType.v(.standard)
-        }
-      }
-      Part(.vertical(.trailing)) {
-        Row {
-          GlyphType.v(.standard)
-          GlyphType.blank
-          GlyphType.v(.increased)
-        }
-      }
-      Part(.vertical(.interior)) {
-        GlyphType.v(.standard)
-      }
-      
       Part(.join(.leading)) {
         Row {
           GlyphType.v(.increased)
@@ -51,7 +22,7 @@ extension Box.FrameStructure {
           )
         }
       }
-      
+
       Part(.join(.trailing)) {
         Row {
           GlyphType.join(
@@ -62,7 +33,7 @@ extension Box.FrameStructure {
           GlyphType.v(.increased)
         }
       }
-      
+
       Part(.join(.top)) {
         Row {
           GlyphType.h(.increased)
@@ -73,7 +44,7 @@ extension Box.FrameStructure {
           )
         }
       }
-      
+
       Part(.join(.bottom)) {
         Row {
           GlyphType.join(
@@ -84,7 +55,7 @@ extension Box.FrameStructure {
           GlyphType.h(.increased)
         }
       }
-      
+
       Part(.join(.cross)) {
         Row {
           GlyphType.join(
@@ -93,8 +64,7 @@ extension Box.FrameStructure {
           )
         }
       }
-      
-      
+
       Part(.corner(.topLeading)) {
         Row {
           GlyphType.corner(.increased)
@@ -107,7 +77,7 @@ extension Box.FrameStructure {
           GlyphType.corner(.standard)
         }
       }
-      
+
       Part(.corner(.topTrailing)) {
         Row {
           GlyphType.h(.increased)
@@ -120,42 +90,42 @@ extension Box.FrameStructure {
           GlyphType.v(.increased)
         }
       }
-      
+
       Part(.corner(.bottomLeading)) {
         Row {
           GlyphType.v(.increased)
           GlyphType.blank
           GlyphType.corner(.standard)
         }
-        
+
         Row {
           GlyphType.corner(.increased)
           GlyphType.h(.increased)
           GlyphType.h(.increased)
         }
       }
-      
+
       Part(.corner(.bottomTrailing)) {
         Row {
           GlyphType.corner(.standard)
           GlyphType.blank
           GlyphType.v(.increased)
         }
-        
+
         Row {
           GlyphType.h(.increased)
           GlyphType.h(.increased)
           GlyphType.corner(.increased)
         }
       }
-      
-//      Part.doubleJoin
-      
-//      Part.doubleJoin
-//      PartGroup.doubleCorner
+
+      //      Part.doubleJoin
+
+      //      Part.doubleJoin
+      //      PartGroup.doubleCorner
 
     }  // END Frame
-//    .merged(with: Part.doubleJoin)
-//    .merged(with: Part.doubleCorner)
+    //    .merged(with: Part.doubleJoin)
+    //    .merged(with: Part.doubleCorner)
   }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 @resultBuilder
 enum PartBuilder {
-  
+
   static func buildBlock(_ components: any RowConvertible...) -> GlyphStack {
     components.map { $0.asGlyphRow() }
   }
