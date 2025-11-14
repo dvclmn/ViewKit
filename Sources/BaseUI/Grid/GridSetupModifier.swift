@@ -23,8 +23,7 @@ public struct GridSetupModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-
-      .gridGuide(opacity: 0.2, isEnabled: isShowingGridGuide)
+//      .gridGuide(opacity: 0.2, isEnabled: isShowingGridGuide)
       .characterSize(
         mode: .noDebounce,
         shouldSetEnv: true,

@@ -22,8 +22,6 @@ public struct HSVColour: Equatable, Sendable, ColourModel, Hashable {
   public var alpha: Double
   public var name: String?
 
-  
-
   public init(
     hue: Double,
     saturation: Double,
@@ -37,18 +35,15 @@ public struct HSVColour: Equatable, Sendable, ColourModel, Hashable {
     self.brightness = brightness
     self.alpha = alpha
     self.name = name
-
   }
-
-
 }
 
 extension HSVColour: HSVAdjustable {
-  
+
   public init(fromHSV hsv: HSVColour) {
     self = hsv
   }
-  
+
   public var toHSV: HSVColour { self }
 }
 

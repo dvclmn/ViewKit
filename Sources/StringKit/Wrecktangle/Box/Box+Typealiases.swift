@@ -21,7 +21,7 @@ public typealias GlyphStack = [[Box.GlyphStructure]]
 
 public typealias LinePart = Box.PartRole
 
-typealias PartGroup = Box.PartGroup
+//typealias PartGroup = Box.PartGroup
 public typealias Part = Box.PartStructure
 
 extension Box {

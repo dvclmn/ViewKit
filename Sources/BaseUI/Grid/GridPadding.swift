@@ -49,7 +49,7 @@ public struct GridSafeAreaPaddingModifier: ViewModifier {
 }
 
 extension View {
-  
+
   public func gridPadding(
     _ edges: Edge.Set = .all,
     _ count: Int

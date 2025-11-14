@@ -17,7 +17,7 @@ import Foundation
 
 extension DummyContent {
   public enum Strings {
-    
+
     public static let conversationTitles: [String] = [
       "Swift programming",
       "Chat with friends",
@@ -45,9 +45,7 @@ extension DummyContent {
       "Study group",
       "Language practice",
     ]
-    
-    
-    
+
   }
-  
+
 }

@@ -9,18 +9,16 @@ import SwiftUI
 
 public struct ExpandingTextEditor: View {
   @Environment(\.textAlignment) private var textAlignment
+  
   @Binding var text: String
   let alignment: Alignment
-//  let content: Content
   
   public init(
     text: Binding<String>,
     alignment: Alignment = .topLeading,
-//    @ViewBuilder content: @escaping () -> Content
   ) {
     self._text = text
     self.alignment = alignment
-//    self.content = content()
   }
   
   public var body: some View {
@@ -36,8 +34,6 @@ public struct ExpandingTextEditor: View {
       )
     
       .overlay(alignment: .topLeading) {
-//        content
-        
         TextEditor(text: $text)
         /// Removes the slight default padding, to better-match `Text`
           .padding(.horizontal, -5)

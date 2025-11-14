@@ -5,14 +5,15 @@
 //  Created by Dave Coleman on 13/11/2025.
 //
 
-extension Box.PartGroup {
-  static var straightsDouble: PartGroup {
-    PartGroup {
+extension Box.PartStructure {
+//extension Box.PartGroup {
+//  static var straightsDouble: Self {
+//    PartGroup {
       
-    }
+//    }
     //    }.parts
     
-  }
+//  }
 //extension Box.PartStructure {
 //  static var straightsDouble: PartGroup {
 //    PartGroup {
