@@ -56,8 +56,8 @@ public class MarkdownSyntaxHighlighter: SyntaxHighlighter {
 
   private func highlightFencedCodeBlocks(in text: NSString, attributes: inout [NSRange: [NSAttributedString.Key: Any]])
   {
-    // Match fenced code blocks: ```language\n...\n```
-    // [\s\S] matches any character including newlines
+    /// Match fenced code blocks: ```language\n...\n```
+    /// [\s\S] matches any character including newlines
     let pattern = "```[^\\n]*\\n[\\s\\S]*?```"
     guard let regex = try? NSRegularExpression(pattern: pattern) else { return }
 
@@ -115,7 +115,7 @@ public class MarkdownSyntaxHighlighter: SyntaxHighlighter {
   }
 
   private func highlightBold(in text: NSString, attributes: inout [NSRange: [NSAttributedString.Key: Any]]) {
-    // Match bold: **text** or __text__ (not crossing newlines)
+    /// Match bold: **text** or __text__ (not crossing newlines)
     let patterns = ["\\*\\*[^*\\n]+\\*\\*", "__[^_\\n]+__"]
 
     for pattern in patterns {

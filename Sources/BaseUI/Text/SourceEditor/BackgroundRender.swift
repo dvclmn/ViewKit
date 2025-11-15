@@ -31,7 +31,7 @@ class BackgroundRenderingTextView: NSTextView {
       let boundingRect = layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
       
       /// Add padding around the text
-      let paddedRect = boundingRect.insetBy(dx: 10, dy: -4)
+      let paddedRect = boundingRect.insetBy(dx: -5, dy: -4).offsetBy(dx: 0, dy: -3)
       
       /// Create a rounded rectangle path
       let path = NSBezierPath(roundedRect: paddedRect, xRadius: 6, yRadius: 6)

@@ -13,15 +13,23 @@ class LineNumberRulerView: NSRulerView {
 
   /// Visual properties for the ruler
   private let backgroundColor = NSColor.clear
-  private let textColor = NSColor.secondaryLabelColor
-  private let font = NSFont.monospacedSystemFont(ofSize: 10, weight: .regular)
+  private let textColor = NSColor.tertiaryLabelColor
+  private let numberSize: CGFloat = 11.5
+  
+  private var font: NSFont {
+    
+    let font = NSFont.monospacedDigitSystemFont(ofSize: numberSize, weight: .regular)
+    let desc = font.fontDescriptor.withSymbolicTraits(.traitCondensed)
+    return NSFont(descriptor: desc, size: numberSize) ?? font
+  }
+//  private let font = NSFont.monospacedSystemFont(ofSize: 10, weight: .regular)
   private let padding: CGFloat = 5
 
   init(textView: NSTextView) {
     super.init(scrollView: textView.enclosingScrollView, orientation: .verticalRuler)
     self.textView = textView
     self.clientView = textView
-    
+
     /// Width of the line number gutter
     self.ruleThickness = 36
   }
@@ -36,11 +44,11 @@ class LineNumberRulerView: NSRulerView {
       let textContainer = textView.textContainer
     else { return }
 
-    // Fill the background
+    /// Fill the background
     backgroundColor.setFill()
     rect.fill()
 
-    // Draw a separator line on the right edge
+    /// Draw a separator line on the right edge
     NSColor.separatorColor.setStroke()
     let linePath = NSBezierPath()
     linePath.move(to: NSPoint(x: bounds.maxX - 0.5, y: bounds.minY))
@@ -48,7 +56,7 @@ class LineNumberRulerView: NSRulerView {
     linePath.lineWidth = 1
     linePath.stroke()
 
-    // Calculate which lines are visible in the current scroll position
+    /// Calculate which lines are visible in the current scroll position
     let visibleRect = textView.visibleRect
     let visibleGlyphRange = layoutManager.glyphRange(forBoundingRect: visibleRect, in: textContainer)
     let visibleCharRange = layoutManager.characterRange(forGlyphRange: visibleGlyphRange, actualGlyphRange: nil)
@@ -57,23 +65,23 @@ class LineNumberRulerView: NSRulerView {
     var lineNumber = 1
     var index = 0
 
-    // Walk through the text and draw line numbers for visible lines
+    /// Walk through the text and draw line numbers for visible lines
     while index < text.length {
-      // Find the range of the current line
+      /// Find the range of the current line
       let lineRange = text.lineRange(for: NSRange(location: index, length: 0))
 
-      // Check if this line intersects with the visible range
+      /// Check if this line intersects with the visible range
       if NSIntersectionRange(lineRange, visibleCharRange).length > 0 {
-        // Get the glyph range for this line
+        /// Get the glyph range for this line
         let glyphRange = layoutManager.glyphRange(forCharacterRange: lineRange, actualCharacterRange: nil)
 
-        // Calculate where this line appears vertically
+        /// Calculate where this line appears vertically
         let lineRect = layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
 
-        // Convert from text view coordinates to ruler coordinates
+        /// Convert from text view coordinates to ruler coordinates
         let lineY = lineRect.minY - visibleRect.minY
 
-        // Draw the line number
+        /// Draw the line number
         let lineNumberString = "\(lineNumber)" as NSString
         let attributes: [NSAttributedString.Key: Any] = [
           .font: font,

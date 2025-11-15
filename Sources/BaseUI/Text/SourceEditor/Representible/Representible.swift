@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 15/11/2025.
 //
 
-import SwiftUI
 import AppKit
+import SwiftUI
 
 // MARK: - NSViewRepresentable Wrapper
 
@@ -23,7 +23,7 @@ public struct SourceEditorView: NSViewRepresentable {
   public init(
     text: Binding<String>,
     cursorPosition: Binding<CursorPosition?> = .constant(nil),
-//    highlighter: SyntaxHighlighter,
+    //    highlighter: SyntaxHighlighter,
     inputBehaviors: [TextInputBehavior] = [],
     debounceInterval: TimeInterval = 0.1,
     fontSize: CGFloat = 14,
@@ -66,12 +66,12 @@ public struct SourceEditorView: NSViewRepresentable {
       height: 0
     )
     textView.font = Self.editorFont(size: fontSize)
-    
+
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineSpacing = 1.8
     textView.defaultParagraphStyle = paragraphStyle
     textView.typingAttributes.updateValue(Self.editorFont(size: fontSize), forKey: .font)
-    
+
     /// Configure for continuous wrapping
     textView.maxSize = NSSize(
       width: CGFloat.greatestFiniteMagnitude,
@@ -115,7 +115,7 @@ public struct SourceEditorView: NSViewRepresentable {
 
     /// Only update if the text has changed externally (not from typing)
     if textView.string != text {
-      
+
       /// Preserve cursor position
       let selectedRange = textView.selectedRange()
       textView.string = text
@@ -125,22 +125,22 @@ public struct SourceEditorView: NSViewRepresentable {
       context.coordinator.applyHighlighting()
     }
   }
-  
+
   public func makeCoordinator() -> Coordinator {
     Coordinator(self)
   }
 
-//  public func makeCoordinator() -> Coordinator {
-//    Coordinator(
-//      text: $text,
-//      cursorPosition: $cursorPosition,
-//      highlighter: highlighter,
-//      inputBehaviors: inputBehaviors,
-//      debounceInterval: debounceInterval,
-////      fontSize: fontSize
-//    )
-//  }
-  
+  //  public func makeCoordinator() -> Coordinator {
+  //    Coordinator(
+  //      text: $text,
+  //      cursorPosition: $cursorPosition,
+  //      highlighter: highlighter,
+  //      inputBehaviors: inputBehaviors,
+  //      debounceInterval: debounceInterval,
+  ////      fontSize: fontSize
+  //    )
+  //  }
+
   static func editorFont(
     size: CGFloat = 15,
     weight: NSFont.Weight = .regular
@@ -150,21 +150,21 @@ public struct SourceEditorView: NSViewRepresentable {
 }
 
 extension SourceEditorView {
-//  public var defaultTypingAttributes: Attributes {
-//    return [
-//      .font: defaultFont,
-//      .foregroundColor: theme.textColour.nsColour,
-//      .paragraphStyle: defaultParagraphStyle,
-//      TextBackground.inlineCode.attributeKey: false,
-//      TextBackground.codeBlock.attributeKey: false,
-//      TextBackground.highlight.attributeKey: false,
-//    ]
-//  }
-  
-//  public var defaultParagraphStyle: NSParagraphStyle {
-//    let paragraphStyle = NSMutableParagraphStyle()
-//    paragraphStyle.lineSpacing = 1.8
-//    
-//    return paragraphStyle
-//  }
+  //  public var defaultTypingAttributes: Attributes {
+  //    return [
+  //      .font: defaultFont,
+  //      .foregroundColor: theme.textColour.nsColour,
+  //      .paragraphStyle: defaultParagraphStyle,
+  //      TextBackground.inlineCode.attributeKey: false,
+  //      TextBackground.codeBlock.attributeKey: false,
+  //      TextBackground.highlight.attributeKey: false,
+  //    ]
+  //  }
+
+  //  public var defaultParagraphStyle: NSParagraphStyle {
+  //    let paragraphStyle = NSMutableParagraphStyle()
+  //    paragraphStyle.lineSpacing = 1.8
+  //
+  //    return paragraphStyle
+  //  }
 }
