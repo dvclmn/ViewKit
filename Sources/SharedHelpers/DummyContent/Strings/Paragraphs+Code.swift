@@ -9,6 +9,49 @@ extension DummyContent.Strings {
   public static let paragraphsWithCode: [String] = [
     
     """
+    # Markdown Editor Demo
+    
+    This editor supports comprehensive **Markdown** syntax highlighting.
+    
+    ## Text Formatting
+    
+    - **Bold text** with double asterisks
+    - *Italic text* with single asterisks
+    - ~~Strikethrough~~ with double tildes
+    - `inline code` with backticks
+    
+    ## Code Blocks
+    
+    ```swift
+    func greet(name: String) -> String {
+        return "Hello, \\(name)!"
+    }
+    ```
+    
+    ## Lists
+    
+    1. Numbered lists work
+    2. With auto-increment
+    3. When you press Enter
+    
+    - Bullet lists too
+    - Press Enter to continue
+    
+    ## Links and Quotes
+    
+    Check out [Markdown Guide](https://www.markdownguide.org) for more.
+    
+    > Blockquotes are styled differently
+    > and support multiple lines
+    
+    ## Try These Features
+    
+    - Select text and type ` or * to wrap it
+    - Press Enter in lists for auto-continuation
+    - Watch the line/column indicator below
+    """,
+    
+    """
     let greeting = "Hello, World!"
     var count = 42
     

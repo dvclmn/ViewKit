@@ -35,7 +35,8 @@ struct ContentView: View {
       // Editor with syntax highlighting
       SyntaxHighlightingTextView(
         text: $editorText,
-        highlighter: BasicSyntaxHighlighter(),
+        highlighter: MarkdownSyntaxHighlighter(),
+//        highlighter: BasicSyntaxHighlighter(),
         debounceInterval: 0.3,
         //        font: Font.body
       )

@@ -13,6 +13,16 @@ import SwiftUI
 /// Protocol defining how text should be analyzed and highlighted
 public protocol SyntaxHighlighter {
   func highlight(text: String) -> [NSRange: [NSAttributedString.Key: Any]]
+  
+  /// Optional: Return ranges that should have custom background rendering
+  func blockRanges(text: String) -> [NSRange]
+}
+
+extension SyntaxHighlighter {
+  // Default implementation returns no block ranges
+  func blockRanges(text: String) -> [NSRange] {
+    return []
+  }
 }
 
 // MARK: - Text Input Behavior Protocol
