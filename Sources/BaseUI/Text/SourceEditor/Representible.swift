@@ -15,7 +15,7 @@ public struct SyntaxHighlightingTextView: NSViewRepresentable {
   var highlighter: SyntaxHighlighter
   var inputBehaviors: [TextInputBehavior]
   var debounceInterval: TimeInterval = 0.3
-//  let font: Font
+  //  let font: Font
   let fontSize: CGFloat
 
   public init(
@@ -23,14 +23,14 @@ public struct SyntaxHighlightingTextView: NSViewRepresentable {
     highlighter: SyntaxHighlighter,
     inputBehaviors: [TextInputBehavior] = [],
     debounceInterval: TimeInterval = 0.3,
-//    font: Font,
-    fontSize: CGFloat = 15,
+    //    font: Font,
+    fontSize: CGFloat = 14,
   ) {
     self._text = text
     self.highlighter = highlighter
     self.inputBehaviors = inputBehaviors
     self.debounceInterval = debounceInterval
-//    self.font = font
+    //    self.font = font
     self.fontSize = fontSize
   }
 
@@ -49,10 +49,8 @@ public struct SyntaxHighlightingTextView: NSViewRepresentable {
     textView.delegate = context.coordinator
     textView.isEditable = true
     textView.isSelectable = true
-
-    
+    textView.isRichText = false
     textView.font = NSFont.monospacedSystemFont(ofSize: fontSize, weight: .regular)
-//    textView.font = NSFont.systemFont(ofSize: 12)
     textView.textColor = NSColor.labelColor
     textView.drawsBackground = false
     textView.backgroundColor = NSColor.clear
@@ -61,16 +59,21 @@ public struct SyntaxHighlightingTextView: NSViewRepresentable {
     textView.isAutomaticSpellingCorrectionEnabled = false
 
     /// Configure for continuous wrapping
-    textView.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+    textView.maxSize = NSSize(
+      width: CGFloat.greatestFiniteMagnitude,
+      height: CGFloat.greatestFiniteMagnitude
+    )
     textView.isVerticallyResizable = true
     textView.isHorizontallyResizable = false
     textView.textContainer?.widthTracksTextView = true
     textView.textContainer?.containerSize = NSSize(
-      width: scrollView.contentSize.width, height: CGFloat.greatestFiniteMagnitude)
+      width: scrollView.contentSize.width,
+      height: CGFloat.greatestFiniteMagnitude
+    )
 
     scrollView.documentView = textView
 
-    // Store the text view in the coordinator for later access
+    /// Store the text view in the coordinator for later access
     context.coordinator.textView = textView
 
     return scrollView
@@ -79,14 +82,14 @@ public struct SyntaxHighlightingTextView: NSViewRepresentable {
   public func updateNSView(_ scrollView: NSScrollView, context: Context) {
     guard let textView = scrollView.documentView as? NSTextView else { return }
 
-    // Only update if the text has changed externally (not from typing)
+    /// Only update if the text has changed externally (not from typing)
     if textView.string != text {
-      // Preserve cursor position
+      /// Preserve cursor position
       let selectedRange = textView.selectedRange()
       textView.string = text
       textView.setSelectedRange(selectedRange)
 
-      // Apply highlighting immediately for external changes
+      /// Apply highlighting immediately for external changes
       context.coordinator.applyHighlighting()
     }
   }
@@ -96,7 +99,8 @@ public struct SyntaxHighlightingTextView: NSViewRepresentable {
       text: $text,
       highlighter: highlighter,
       inputBehaviors: inputBehaviors,
-      debounceInterval: debounceInterval
+      debounceInterval: debounceInterval,
+      fontSize: fontSize
     )
   }
 

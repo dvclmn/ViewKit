@@ -11,25 +11,25 @@ struct ContentView: View {
   @State private var editorText = """
     let greeting = "Hello, World!"
     var count = 42
-    
+
     func calculate() {
         let result = count + 10
         return result
     }
-    
+
     This is some `inline code` within text.
     More code: `var x = 100`
-    
+
     Try these features:
     - Select text and type ` or * or " to wrap it
     - Press Enter after a list item (like this one)
     - Press Enter between brackets: {}
-    
+
     Keywords: let var func class struct enum if else for while return
     Numbers: 42, 3.14, 100
     Strings: "Hello" "Swift" "Test"
     """
-  
+
   var body: some View {
     VStack(spacing: 0) {
       // Editor with syntax highlighting
@@ -37,12 +37,12 @@ struct ContentView: View {
         text: $editorText,
         highlighter: BasicSyntaxHighlighter(),
         debounceInterval: 0.3,
-//        font: Font.body
+        //        font: Font.body
       )
       .frame(maxWidth: .infinity, maxHeight: .infinity)
-      
+
       Divider()
-      
+
       // Info panel
       VStack(alignment: .leading, spacing: 4) {
         HStack {
@@ -54,7 +54,7 @@ struct ContentView: View {
             .font(.caption)
             .foregroundColor(.secondary)
         }
-        
+
         Text("Features: Selection wrapping (`, *, \", [], {}, ()), Auto-indent, Markdown lists")
           .font(.caption)
           .foregroundColor(.secondary)

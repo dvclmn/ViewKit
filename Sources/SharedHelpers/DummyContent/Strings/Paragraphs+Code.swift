@@ -12,6 +12,8 @@ extension DummyContent.Strings {
     let greeting = "Hello, World!"
     var count = 42
     
+    // This is a code comment
+    /// This is a Swift DocC comment
     func calculate() {
         let result = count + 10
         return result
