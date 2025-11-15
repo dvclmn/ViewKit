@@ -33,9 +33,9 @@ struct ContentView: View {
   var body: some View {
     VStack(spacing: 0) {
       // Editor with syntax highlighting
-      SyntaxHighlightingTextView(
+      SourceEditorView(
         text: $editorText,
-        highlighter: MarkdownSyntaxHighlighter(),
+//        highlighter: MarkdownSyntaxHighlighter(),
 //        highlighter: BasicSyntaxHighlighter(),
         debounceInterval: 0.3,
         //        font: Font.body

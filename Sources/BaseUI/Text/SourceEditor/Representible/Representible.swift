@@ -6,36 +6,34 @@
 //
 
 import SwiftUI
+import AppKit
 
 // MARK: - NSViewRepresentable Wrapper
 
 @MainActor
-public struct SyntaxHighlightingTextView: NSViewRepresentable {
+public struct SourceEditorView: NSViewRepresentable {
   @Binding public var text: String
   @Binding var cursorPosition: CursorPosition?
   var highlighter: SyntaxHighlighter
   var inputBehaviors: [TextInputBehavior]
-  var debounceInterval: TimeInterval = 0.3
-  //  let font: Font
+  let debounceInterval: TimeInterval
   let fontSize: CGFloat
   var showLineNumbers: Bool
 
   public init(
     text: Binding<String>,
     cursorPosition: Binding<CursorPosition?> = .constant(nil),
-    highlighter: SyntaxHighlighter,
+//    highlighter: SyntaxHighlighter,
     inputBehaviors: [TextInputBehavior] = [],
-    debounceInterval: TimeInterval = 0.3,
-    //    font: Font,
+    debounceInterval: TimeInterval = 0.1,
     fontSize: CGFloat = 14,
     showLineNumbers: Bool = true,
   ) {
     self._text = text
     self._cursorPosition = cursorPosition
-    self.highlighter = highlighter
+    self.highlighter = MarkdownSyntaxHighlighter(fontSize: fontSize)
     self.inputBehaviors = inputBehaviors
     self.debounceInterval = debounceInterval
-    //    self.font = font
     self.fontSize = fontSize
     self.showLineNumbers = showLineNumbers
   }
@@ -55,13 +53,25 @@ public struct SyntaxHighlightingTextView: NSViewRepresentable {
     textView.delegate = context.coordinator
     textView.isEditable = true
     textView.isSelectable = true
-    textView.font = NSFont.systemFont(ofSize: 12)
+    textView.isRichText = false
     textView.textColor = NSColor.labelColor
-    textView.backgroundColor = NSColor.textBackgroundColor
+    textView.drawsBackground = false
     textView.isAutomaticQuoteSubstitutionEnabled = false
     textView.isAutomaticDashSubstitutionEnabled = false
     textView.isAutomaticSpellingCorrectionEnabled = false
-
+    textView.allowsUndo = true
+    textView.textContainer?.lineFragmentPadding = 14
+    textView.textContainerInset = NSSize(
+      width: 0,
+      height: 0
+    )
+    textView.font = Self.editorFont(size: fontSize)
+    
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.lineSpacing = 1.8
+    textView.defaultParagraphStyle = paragraphStyle
+    textView.typingAttributes.updateValue(Self.editorFont(size: fontSize), forKey: .font)
+    
     /// Configure for continuous wrapping
     textView.maxSize = NSSize(
       width: CGFloat.greatestFiniteMagnitude,
@@ -74,19 +84,6 @@ public struct SyntaxHighlightingTextView: NSViewRepresentable {
       width: scrollView.contentSize.width,
       height: CGFloat.greatestFiniteMagnitude
     )
-
-    //    let textView = NSTextView()
-    //    textView.delegate = context.coordinator
-    //    textView.isEditable = true
-    //    textView.isSelectable = true
-    //    textView.isRichText = false
-    //    textView.font = NSFont.monospacedSystemFont(ofSize: fontSize, weight: .regular)
-    //    textView.textColor = NSColor.labelColor
-    //    textView.drawsBackground = false
-    //    textView.backgroundColor = NSColor.clear
-    //    textView.isAutomaticQuoteSubstitutionEnabled = false
-    //    textView.isAutomaticDashSubstitutionEnabled = false
-    //    textView.isAutomaticSpellingCorrectionEnabled = false
 
     /// Add line numbers if enabled
     if showLineNumbers {
@@ -109,16 +106,16 @@ public struct SyntaxHighlightingTextView: NSViewRepresentable {
     ) { _ in
       scrollView.verticalRulerView?.needsDisplay = true
     }
-    
+
     return scrollView
   }
 
   public func updateNSView(_ scrollView: NSScrollView, context: Context) {
-//    guard let textView = scrollView.documentView as? NSTextView else { return }
     guard let textView = scrollView.documentView as? BackgroundRenderingTextView else { return }
 
     /// Only update if the text has changed externally (not from typing)
     if textView.string != text {
+      
       /// Preserve cursor position
       let selectedRange = textView.selectedRange()
       textView.string = text
@@ -128,24 +125,46 @@ public struct SyntaxHighlightingTextView: NSViewRepresentable {
       context.coordinator.applyHighlighting()
     }
   }
-
+  
   public func makeCoordinator() -> Coordinator {
-    Coordinator(
-      text: $text,
-      cursorPosition: $cursorPosition,
-      highlighter: highlighter,
-      inputBehaviors: inputBehaviors,
-      debounceInterval: debounceInterval,
-      fontSize: fontSize
-    )
-    
+    Coordinator(self)
+  }
+
+//  public func makeCoordinator() -> Coordinator {
 //    Coordinator(
 //      text: $text,
+//      cursorPosition: $cursorPosition,
 //      highlighter: highlighter,
 //      inputBehaviors: inputBehaviors,
 //      debounceInterval: debounceInterval,
-//      fontSize: fontSize
+////      fontSize: fontSize
 //    )
+//  }
+  
+  static func editorFont(
+    size: CGFloat = 15,
+    weight: NSFont.Weight = .regular
+  ) -> NSFont {
+    NSFont.monospacedSystemFont(ofSize: size, weight: weight)
   }
+}
 
+extension SourceEditorView {
+//  public var defaultTypingAttributes: Attributes {
+//    return [
+//      .font: defaultFont,
+//      .foregroundColor: theme.textColour.nsColour,
+//      .paragraphStyle: defaultParagraphStyle,
+//      TextBackground.inlineCode.attributeKey: false,
+//      TextBackground.codeBlock.attributeKey: false,
+//      TextBackground.highlight.attributeKey: false,
+//    ]
+//  }
+  
+//  public var defaultParagraphStyle: NSParagraphStyle {
+//    let paragraphStyle = NSMutableParagraphStyle()
+//    paragraphStyle.lineSpacing = 1.8
+//    
+//    return paragraphStyle
+//  }
 }

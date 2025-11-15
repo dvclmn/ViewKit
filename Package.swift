@@ -72,6 +72,7 @@ let package = Package(
         .module(.gestureKit),
         .module(.baseUtilities),
         .sharing,
+//        .nsui,
       ],
     ),
     .target(

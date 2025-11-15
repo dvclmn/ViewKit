@@ -19,7 +19,7 @@ public protocol SyntaxHighlighter {
 }
 
 extension SyntaxHighlighter {
-  // Default implementation returns no block ranges
+  /// Default implementation returns no block ranges
   func blockRanges(text: String) -> [NSRange] {
     return []
   }
