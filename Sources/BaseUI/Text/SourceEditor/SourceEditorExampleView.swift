@@ -36,7 +36,8 @@ struct ContentView: View {
       SyntaxHighlightingTextView(
         text: $editorText,
         highlighter: BasicSyntaxHighlighter(),
-        debounceInterval: 0.3
+        debounceInterval: 0.3,
+//        font: Font.body
       )
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       
