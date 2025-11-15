@@ -39,15 +39,16 @@ class BasicSyntaxHighlighter: SyntaxHighlighter {
   }
   
   private func highlightInlineCode(in text: NSString, attributes: inout [NSRange: [NSAttributedString.Key: Any]]) {
-    // Match text between backticks: `code`
-    let pattern = "`[^`]+`"
+    // Match text between backticks, but NOT across newlines (inline syntax only)
+    // [^`\n]+ means: one or more characters that are neither backtick nor newline
+    let pattern = "`[^`\\n]+`"
     guard let regex = try? NSRegularExpression(pattern: pattern) else { return }
     
     let matches = regex.matches(in: text as String, range: NSRange(location: 0, length: text.length))
     for match in matches {
       attributes[match.range] = [
         .foregroundColor: codeColor,
-        .font: codeFont,
+        .font: codeFont
       ]
     }
   }
@@ -67,7 +68,7 @@ class BasicSyntaxHighlighter: SyntaxHighlighter {
         if attributes[match.range] == nil {
           attributes[match.range] = [
             .foregroundColor: keywordColor,
-            .font: NSFont.systemFont(ofSize: 12, weight: .semibold),
+            .font: NSFont.systemFont(ofSize: 12, weight: .semibold)
           ]
         }
       }
@@ -75,15 +76,18 @@ class BasicSyntaxHighlighter: SyntaxHighlighter {
   }
   
   private func highlightStrings(in text: NSString, attributes: inout [NSRange: [NSAttributedString.Key: Any]]) {
-    // Match strings in double quotes
-    let pattern = "\"[^\"]*\""
+    // Match strings in double quotes, but NOT across newlines (inline syntax)
+    // [^"\n]* means: zero or more characters that are neither quote nor newline
+    let pattern = "\"[^\"\\n]*\""
     guard let regex = try? NSRegularExpression(pattern: pattern) else { return }
     
     let matches = regex.matches(in: text as String, range: NSRange(location: 0, length: text.length))
-    for match in matches where attributes[match.range] == nil {
-      attributes[match.range] = [
-        .foregroundColor: stringColor
-      ]
+    for match in matches {
+      if attributes[match.range] == nil {
+        attributes[match.range] = [
+          .foregroundColor: stringColor
+        ]
+      }
     }
   }
   
@@ -93,10 +97,12 @@ class BasicSyntaxHighlighter: SyntaxHighlighter {
     guard let regex = try? NSRegularExpression(pattern: pattern) else { return }
     
     let matches = regex.matches(in: text as String, range: NSRange(location: 0, length: text.length))
-    for match in matches where attributes[match.range] == nil {
-      attributes[match.range] = [
-        .foregroundColor: numberColor
-      ]
+    for match in matches {
+      if attributes[match.range] == nil {
+        attributes[match.range] = [
+          .foregroundColor: numberColor
+        ]
+      }
     }
   }
 }
