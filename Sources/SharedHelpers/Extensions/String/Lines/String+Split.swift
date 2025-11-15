@@ -57,21 +57,38 @@ public enum TrailingPolicy {
 ///
 /// ```
 extension String {
-  public func split(using config: SplitConfig) -> [String] {
-    /// 1. structural split
+  public func split(
+    at separator: Character,
+    emptyPolicy: EmptyFieldPolicy = .structuralOnly,
+    trailingPolicy: TrailingPolicy = .keepAll,
+    trimWhitespace: Bool = true
+  ) -> [String] {
+    let config = SplitConfig(
+      separator: separator,
+      emptyPolicy: emptyPolicy,
+      trailingPolicy: trailingPolicy,
+      trimWhitespace: trimWhitespace
+    )
+    return self.split(using: config)
+  }
+  
+  public func split(
+    using config: SplitConfig
+  ) -> [String] {
+    /// 1. Structural split
     let raw = self.split(
       separator: config.separator,
       omittingEmptySubsequences: config.emptyPolicy == .structuralOnly
     )
 
-    /// 2. content normalisation
+    /// 2. Content normalisation
     var fields = raw.map { substring in
       config.trimWhitespace
         ? substring.trimmingCharacters(in: .whitespaces)
         : String(substring)
     }
 
-    /// 3. semantic filtering
+    /// 3. Semantic filtering
     switch config.emptyPolicy {
       case .semantic:
         fields.removeAll { $0.isEmpty }
@@ -79,7 +96,7 @@ extension String {
         break
     }
 
-    /// 4. trailing rule
+    /// 4. Trailing rule
     if case .dropIfEmptyAfterTrim = config.trailingPolicy {
       if let last = fields.last, last.isEmpty {
         fields.removeLast()
