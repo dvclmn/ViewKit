@@ -8,18 +8,6 @@
 import SwiftUI
 
 extension String {
-  public var camelToSnake: String {
-    var result = ""
-    for (index, ch) in self.enumerated() {
-      if ch.isUppercase {
-        if index > 0 { result.append("_") }
-        result.append(ch.lowercased())
-      } else {
-        result.append(ch)
-      }
-    }
-    return result
-  }
 
   /// Pads the string with spaces on the right to at least the given width.
   public func padded(
@@ -28,18 +16,6 @@ extension String {
   ) -> String {
     if count >= width { return self }
     return self + String(repeating: padString, count: width - count)
-  }
-
-  public var toURL: URL? {
-    return URL(string: self)
-  }
-
-  public var toAttributed: AttributedString {
-    return AttributedString(self)
-  }
-
-  public var toMarkdownCompatible: LocalizedStringKey {
-    LocalizedStringKey(self)
   }
 
   public func combining(
@@ -53,9 +29,6 @@ extension String {
     let matches = self.matches(of: pattern)
     return matches
   }
-
-
-  public var toCharacters: [Character] { Array(self) }
 
   public var wordCount: Int {
     let words = self.split { !$0.isLetter }
@@ -88,92 +61,12 @@ extension String {
   }
 }
 
-public enum TruncationStyle {
-  case start  // "...end"
-  case middle  // "begin...end"
-  case end  // "begin..."
-}
-
-extension String {
-  /// Truncates a string to a maximum length using the specified truncation style.
-  /// The ellipsis ("...") does not count toward the maxLength.
-  ///
-  /// Examples:
-  /// - "Hello World".truncate(to: 8, style: .middle) → "Hell...orld"
-  /// - "Hello World".truncate(to: 8, style: .end) → "Hello..."
-  /// - "Hello World".truncate(to: 8, style: .start) → "...World"
-  /// - "Short".truncate(to: 10) → "Short" (unchanged)
-  /// - "".truncate(to: 10) → "(Empty)"
-  ///
-  /// - Parameters:
-  ///   - maxLength: Maximum number of content characters to show (ellipsis not counted, minimum 2)
-  ///   - style: The truncation style (.start, .middle, or .end)
-  ///   - emptyPlaceholder: Text to show when the string is empty
-  /// - Returns: Truncated string with ellipsis, or original string if shorter than maxLength
-  public func truncate(
-    to maxLength: Int = 20,
-    style: TruncationStyle = .middle,
-    emptyPlaceholder: String = "(Empty)"
-  ) -> String {
-
-    // Handle empty string
-    guard !self.isEmpty else { return emptyPlaceholder }
-
-    // Ensure minimum length for meaningful truncation
-    let minLength = 2
-    let effectiveMaxLength = max(minLength, maxLength)
-
-    // If string is short enough, return as-is
-    guard self.count > effectiveMaxLength else { return self }
-
-    let ellipsis = "..."
-
-    switch style {
-      case .start:
-        let suffix = String(self.suffix(effectiveMaxLength))
-        return "\(ellipsis)\(suffix)"
-
-      case .middle:
-        let prefixLength = effectiveMaxLength / 2
-        let suffixLength = effectiveMaxLength - prefixLength
-        let prefix = String(self.prefix(prefixLength))
-        let suffix = String(self.suffix(suffixLength))
-        return "\(prefix)\(ellipsis)\(suffix)"
-
-      case .end:
-        let prefix = String(self.prefix(effectiveMaxLength))
-        return "\(prefix)\(ellipsis)"
-    }
-  }
-
-  /// Wraps text in decorative dividers for display purposes
-  public func wrappedInDividers() -> String {
-    return "\n---\n\(self)\n---\n"
-  }
-}
-
 extension Array where Element == String {
   public func joined(_ separator: String = "") -> String {
     self.joined(separator: separator)
   }
   public func joinedLines() -> String {
     self.joined(separator: "\n")
-  }
-}
-
-extension String {
-  //extension Optional where Wrapped == String {
-  public var toDescribing: String {
-    return String(describing: self)
-  }
-}
-
-extension UUID {
-  public func truncated(
-    to maxLength: Int = 8,
-    style: TruncationStyle = .middle,
-  ) -> String {
-    self.uuidString.truncate(to: maxLength, style: style)
   }
 }
 
@@ -192,4 +85,13 @@ extension String {
     return "\(type.rawValue)\(self)\(type.rawValue)"
   }
 
+}
+
+extension UUID {
+  public func truncated(
+    to maxLength: Int = 8,
+    style: TruncationStyle = .middle,
+  ) -> String {
+    self.uuidString.truncate(to: maxLength, style: style)
+  }
 }

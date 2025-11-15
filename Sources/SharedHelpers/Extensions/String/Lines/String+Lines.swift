@@ -26,6 +26,27 @@ public enum SubsequenceStrategy {
 
 extension String {
 
+  public func substringLines(
+    separator: String = "\n",
+    subsequenceStrategy: SubsequenceStrategy = .doNotOmit,
+  ) -> [Substring] {
+    let subsequence: [Substring] = self.split(
+      separator: separator,
+      maxSplits: Int.max,
+      omittingEmptySubsequences: subsequenceStrategy.omitEmptySubsequences
+    )
+    switch subsequenceStrategy {
+      case .omitAllEmpty, .doNotOmit:
+        return subsequence
+
+      case .omitLastLineIfEmpty:
+        guard let lastLine = subsequence.last else { return subsequence }
+        let lastLineIsEmpty: Bool = lastLine.allSatisfy { $0 == " " }
+        let result = lastLineIsEmpty ? Array(subsequence.dropLast()) : subsequence
+        return result
+    }
+  }
+
   public var firstLine: String {
     let firstSubstring = self.split(separator: "\n").first ?? ""
     return String(firstSubstring)
@@ -74,25 +95,4 @@ extension String {
     return result
   }
 
-  public func substringLines(
-    subsequenceStrategy: SubsequenceStrategy = .doNotOmit,
-  ) -> [Substring] {
-    let subsequence: [Substring] = self.split(
-      separator: "\n",
-      maxSplits: Int.max,
-      omittingEmptySubsequences: subsequenceStrategy.omitEmptySubsequences
-    )
-
-    switch subsequenceStrategy {
-      case .omitAllEmpty, .doNotOmit:
-        return subsequence
-
-      case .omitLastLineIfEmpty:
-        guard let lastLine = subsequence.last else { return subsequence }
-        let lastLineIsEmpty: Bool = lastLine.allSatisfy { $0 == " " }
-        let result = lastLineIsEmpty ? Array(subsequence.dropLast()) : subsequence
-        return result
-
-    }
-  }
 }
