@@ -11,14 +11,15 @@ import SwiftUI
 // MARK: - Syntax Highlighting Protocol
 
 /// Protocol defining how text should be analyzed and highlighted
-protocol SyntaxHighlighter {
+public protocol SyntaxHighlighter {
   func highlight(text: String) -> [NSRange: [NSAttributedString.Key: Any]]
 }
 
 // MARK: - Text Input Behavior Protocol
 
 /// Protocol defining custom typing behaviors that can intercept and modify input
-protocol TextInputBehavior {
+@MainActor
+public protocol TextInputBehavior {
   /// Handles a key press event and returns true if it handled the input (preventing default behavior)
   func handleKeyPress(
     character: String,

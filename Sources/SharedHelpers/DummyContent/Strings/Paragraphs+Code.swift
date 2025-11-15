@@ -9,6 +9,28 @@ extension DummyContent.Strings {
   public static let paragraphsWithCode: [String] = [
     
     """
+    let greeting = "Hello, World!"
+    var count = 42
+    
+    func calculate() {
+        let result = count + 10
+        return result
+    }
+    
+    This is some `inline code` within text.
+    More code: `var x = 100`
+    
+    Try these features:
+    - Select text and type ` or * or " to wrap it
+    - Press Enter after a list item (like this one)
+    - Press Enter between brackets: {}
+    
+    Keywords: let var func class struct enum if else for while return
+    Numbers: 42, 3.14, 100
+    Strings: "Hello" "Swift" "Test"
+    """,
+    
+    """
     After reviewing your code, I can see a few areas where improvements can be made and why some properties like `labelDisplay` might not be updating correctly. Let's address these issues and suggest some improvements:\n\n1. Repetition between CustomButton and CustomLabel:\n   You're right that there's a lot of repetition. We can solve this by creating a protocol extension for CustomStylable that implements these common methods.\n\n2. Config not updating correctly:\n   The main issue is that you're creating a new instance of the element in each modifier method, but you're not passing the existing configuration to the new instance. This means that each modifier is working on a fresh configuration, losing previous modifications.\n\n3. Improvements and Suggestions:\n\nHere's how we can address these issues:\n\na. Create a protocol extension for CustomStylable:\n\n```swift\npublic extension CustomStylable {\n    func with<T: CustomStylable>(_ modifier: CustomStyleModifiable) -> T {\n        var newElement = self as! T\n        modifier.modify(&newElement)\n        return newElement\n    }\n\n    var iconOnly: Self { with(LabelDisplayModifier(label: .iconOnly)) }\n    var titleOnly: Self { with(LabelDisplayModifier(label: .titleOnly)) }\n    var noBackground: Self { with(BackgroundTypeModifier(backgroundType: .none)) }\n    \n    func config(_ config: ElementConfiguration) -> Self { with(ConfigurationModifier(config: config)) }\n    func size(_ size: ElementSize) -> Self { with(SizeModifier(size: size)) }\n    func label(_ label: LabelDisplay) -> Self { with(LabelDisplayModifier(label: label)) }\n    func emphasis(_ emphasis: ElementEmphasis) -> Self { with(EmphasisModifier(emphasis: emphasis)) }\n    func background(_ type: BackgroundType) -> Self { with(BackgroundTypeModifier(backgroundType: type)) }\n    func tint(_ tint: Color) -> Self { with(TintModifier(tint: tint)) }\n    func layout(_ layout: ElementLayout) -> Self { with(LayoutModifier(layout: layout)) }\n}\n```\n\nb. Update CustomButton and CustomLabel to use this extension:\n\n```swift\npublic struct CustomButton: PrimitiveButtonStyle, CustomStylable {\n    public var config: ElementConfiguration = .default\n    \n    \\/\\/ ... rest of the implementation ...\n}\n\npublic struct CustomLabel: LabelStyle, CustomStylable {\n    public var config: ElementConfiguration = .default\n    \n    \\/\\/ ... rest of the implementation ...\n}\n```\n\nc. For specialized methods like `fullWidth` for CustomButton, you can add them directly to the CustomButton extension:\n\n```swift\npublic extension CustomButton {\n    var fullWidth: CustomButton { self.layout(.fullWidth) }\n}\n```\n\nd. Update the BaseElementStyle to use the config directly:\n\n```swift\npublic struct BaseElementStyle: ViewModifier {\n    let config: ElementConfiguration\n    let strokeWidth: Double\n    \n    public func body(content: Content) -> some View {\n        content\n            .lineLimit(1)\n            .frame(\n                minWidth: config.size.length,\n                maxWidth: config.layout.width,\n                minHeight: config.size.height,\n                maxHeight: config.size.height\n            )\n            .padding(.leading, config.size.paddingLeading)\n            .padding(.trailing, config.size.paddingTrailing)\n            .background(config.emphasis.backgroundColour)\n            .background(config.tint)\n            .background(config.backgroundType.material)\n            .clipShape(.rect(cornerRadius: config.size.rounding))\n            .overlay {\n                if config.backgroundType == .rimlight {\n                    RimLightShape(strokeWidth: strokeWidth) {\n                        RoundedRectangle(cornerRadius: config.size.rounding)\n                    }\n                }\n            }\n    }\n}\n```\n\ne. Ensure that when you're using the custom button or label, you're chaining the modifiers:\n\n```swift\nButton(\"Click me\", action: {})\n    .buttonStyle(.custom.size(.large).emphasis(.strong).iconOnly)\n```\n\nThese changes should address the issues with config not updating
     """,
     

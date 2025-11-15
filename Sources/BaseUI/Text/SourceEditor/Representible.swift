@@ -13,7 +13,37 @@ import SwiftUI
 public struct SyntaxHighlightingTextView: NSViewRepresentable {
   @Binding public var text: String
   var highlighter: SyntaxHighlighter
-  var debounceInterval: TimeInterval = 0.3  // Wait 300ms after typing stops
+  var inputBehaviors: [TextInputBehavior]
+  var debounceInterval: TimeInterval = 0.3 // Wait 300ms after typing stops
+  
+  // Convenience initializer with default behaviors
+  public init(
+    text: Binding<String>,
+    highlighter: SyntaxHighlighter,
+    debounceInterval: TimeInterval = 0.3
+  ) {
+    self._text = text
+    self.highlighter = highlighter
+    self.debounceInterval = debounceInterval
+    // Include default quality-of-life behaviors
+    self.inputBehaviors = [
+      WrapSelectionBehavior(),
+//      AutoIndentBehavior()
+    ]
+  }
+  
+  // Full initializer for custom behaviors
+  public init(
+    text: Binding<String>,
+    highlighter: SyntaxHighlighter,
+    inputBehaviors: [TextInputBehavior],
+    debounceInterval: TimeInterval = 0.3
+  ) {
+    self._text = text
+    self.highlighter = highlighter
+    self.inputBehaviors = inputBehaviors
+    self.debounceInterval = debounceInterval
+  }
   
   public func makeNSView(context: Context) -> NSScrollView {
     // Create the scroll view container
@@ -40,8 +70,7 @@ public struct SyntaxHighlightingTextView: NSViewRepresentable {
     textView.isVerticallyResizable = true
     textView.isHorizontallyResizable = false
     textView.textContainer?.widthTracksTextView = true
-    textView.textContainer?.containerSize = NSSize(
-      width: scrollView.contentSize.width, height: CGFloat.greatestFiniteMagnitude)
+    textView.textContainer?.containerSize = NSSize(width: scrollView.contentSize.width, height: CGFloat.greatestFiniteMagnitude)
     
     scrollView.documentView = textView
     
@@ -67,9 +96,13 @@ public struct SyntaxHighlightingTextView: NSViewRepresentable {
   }
   
   public func makeCoordinator() -> Coordinator {
-    Coordinator(text: $text, highlighter: highlighter, debounceInterval: debounceInterval)
+    Coordinator(
+      text: $text,
+      highlighter: highlighter,
+      inputBehaviors: inputBehaviors,
+      debounceInterval: debounceInterval
+    )
   }
-  
  
 }
 
