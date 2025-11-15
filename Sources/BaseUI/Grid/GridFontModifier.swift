@@ -16,7 +16,7 @@ public struct GridFontModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .font(gridFont)
-      .monospaced()
+//      .monospaced()
       /// Prevents any compression of the spacing between characters
       .allowsTightening(false)
   }

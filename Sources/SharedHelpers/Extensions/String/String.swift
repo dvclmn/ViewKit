@@ -30,71 +30,8 @@ extension String {
     return self + String(repeating: padString, count: width - count)
   }
 
-  public enum QuotesType: String {
-    case single = "'"
-    case double = "\""
-  }
-
   public var toURL: URL? {
     return URL(string: self)
-  }
-
-  public func combining(
-    with other: String,
-    separator: String = ", "
-  ) -> String {
-    self + separator + other
-  }
-
-  public var withQuotes: String {
-    self.withQuotes(.double)
-  }
-
-  public func findMatches(for pattern: Regex<Substring>) -> [RegexMatch] {
-    let matches = self.matches(of: pattern)
-    return matches
-  }
-
-  //  public func getRange(
-  //    for attrString: AttributedString,
-  //    matching pattern: Regex<Substring>
-  //  ) -> AttributedRange? {
-  //    let matches = findMatches(for: pattern)
-  //    return attrString.getRange(for: matches)
-  //  }
-
-  //  public func getAttributedRanges
-  //  public func getAllRanges(
-  //    for attrString: AttributedString,
-  //    matching pattern: Regex<Substring>
-  //  ) -> [AttributedRange] {
-  //    let matches = findMatches(for: pattern)
-  //    return attrString.getAllRanges(for: matches)
-  //  }
-
-  //  @discardableResult
-  //  public func findRangesAndApplyAttributes(
-  //    to attrString: inout AttributedString,
-  //    matching pattern: Regex<Substring>,
-  //    attributes: AttributeContainer
-  //  ) -> [AttributedRange] {
-  //    let matches = findMatches(for: pattern)
-  //    return attrString.findRangesAndApplyAttributes(for: matches, attributes: attributes)
-  //  }
-  //
-  //  public func getAttributed(
-  //    text: AttributedString,
-  //    //    to attrString: inout AttributedString,
-  //    matching pattern: Regex<Substring>,
-  //    attributes: AttributeContainer
-  //  ) -> AttributedString {
-  //    let matches = findMatches(for: pattern)
-  //    return text.styled(matches: matches, attributes: attributes)
-  //    //    return attrString.findRangesAndApplyAttributes(for: matches, attributes: attributes)
-  //  }
-
-  public func withQuotes(_ type: QuotesType = .double) -> String {
-    return "\(type.rawValue)\(self)\(type.rawValue)"
   }
 
   public var toAttributed: AttributedString {
@@ -105,22 +42,18 @@ extension String {
     LocalizedStringKey(self)
   }
 
-  public var firstLine: String {
-    let firstSubstring = self.split(separator: "\n").first ?? ""
-    return String(firstSubstring)
+  public func combining(
+    with other: String,
+    separator: String = ", "
+  ) -> String {
+    self + separator + other
   }
 
-  /// Adds a new line to the end of the current String, unless already present
-  public var addingNewLine: String {
-    guard self.last != "\n" else {
-      return self
-    }
-    return self + "\n"
+  public func findMatches(for pattern: Regex<Substring>) -> [RegexMatch] {
+    let matches = self.matches(of: pattern)
+    return matches
   }
 
-  public func components(separatedBy separator: Character) -> [String] {
-    return self.split(separator: separator).map(String.init)
-  }
 
   public var toCharacters: [Character] { Array(self) }
 
@@ -242,4 +175,21 @@ extension UUID {
   ) -> String {
     self.uuidString.truncate(to: maxLength, style: style)
   }
+}
+
+extension String {
+
+  public enum QuotesType: String {
+    case single = "'"
+    case double = "\""
+  }
+
+  public var withQuotes: String {
+    self.withQuotes(.double)
+  }
+
+  public func withQuotes(_ type: QuotesType = .double) -> String {
+    return "\(type.rawValue)\(self)\(type.rawValue)"
+  }
+
 }

@@ -31,6 +31,22 @@ public struct MaybeLabel: View {
     self.label = quickLabel
     self.isPlain = isPlain
   }
+
+  public init(
+    _ text: String,
+    symbol: String?,
+    isPlain: Bool = false
+  ) {
+    if let symbol {
+      let quickLabel = QuickLabel(text, icon: .symbol(symbol))
+      self.label = quickLabel
+
+    } else {
+      self.label = QuickLabel(text, icon: nil)
+    }
+    self.isPlain = isPlain
+  }
+
   public var body: some View {
 
     if let icon = label.icon {

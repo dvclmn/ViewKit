@@ -11,7 +11,10 @@ public struct ImportHandler {
 
   /// Load a string from a file at a specific URL.
   /// Doesn't assume is coming from a specific Bundle
-  public static func loadString(from fileURL: URL, encoding: String.Encoding = .utf8) throws -> String {
+  public static func loadString(
+    from fileURL: URL,
+    encoding: String.Encoding = .utf8
+  ) throws -> String {
     do {
       return try String(contentsOf: fileURL, encoding: encoding)
     } catch {
@@ -23,10 +26,18 @@ public struct ImportHandler {
   public static func loadStringFromBundle(
     named fileName: String,
     withExtension fileExtension: String,
+    in subdirectory: String? = nil,
     bundle: Bundle = .main
   ) throws -> String {
-    guard let url = bundle.url(forResource: fileName, withExtension: fileExtension) else {
-      throw ImportError.resourceNotFound("\(fileName).\(fileExtension)")
+    
+    let thing = bundle.bundlePath
+    print("Bundle path: \(thing)")
+    guard let url = bundle.url(
+      forResource: fileName,
+      withExtension: fileExtension,
+      subdirectory: subdirectory
+    ) else {
+      throw ImportError.resourceNotFound("\(fileName).\(fileExtension), in subdirectory \(String(describing: subdirectory))")
     }
     return try loadString(from: url)
   }
@@ -47,7 +58,7 @@ public struct ImportHandler {
     }
   }
 
-  /// Load and decode Dat from bundle
+  /// Load and decode Data from bundle
   public static func loadData<T: Decodable>(
     named name: String,
     type: T.Type,

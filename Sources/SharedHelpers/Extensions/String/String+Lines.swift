@@ -26,6 +26,23 @@ public enum SubsequenceStrategy {
 
 extension String {
 
+  public var firstLine: String {
+    let firstSubstring = self.split(separator: "\n").first ?? ""
+    return String(firstSubstring)
+  }
+
+  /// Adds a new line to the end of the current String, unless already present
+  public var addingNewLine: String {
+    guard self.last != "\n" else {
+      return self
+    }
+    return self + "\n"
+  }
+
+  public func components(separatedBy separator: Character) -> [String] {
+    return self.split(separator: separator).map(String.init)
+  }
+
   public func lines(
     subsequenceStrategy: SubsequenceStrategy = .doNotOmit
       //    omittingEmptySubsequences: Bool = false

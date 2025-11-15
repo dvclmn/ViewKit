@@ -9,37 +9,117 @@ import SwiftUI
 
 public struct ExpandingTextEditor: View {
   @Environment(\.textAlignment) private var textAlignment
-  
-  @Binding var text: String
+
+  //  @Binding var text: AttributedString?
+  //  @Binding var plainText: String?
+  private let attributedText: Binding<AttributedString>?
+  private let plainText: Binding<String>?
+
   let alignment: Alignment
-  
+
+  //  @available(macOS 26, iOS 18, *)
+
+  //  public init(
+  //    text: Binding<AttributedString>,
+  //    plainText: Binding<String>,
+  //    alignment: Alignment = .topLeading,
+  //  ) {
+  //    if #available(macOS 26, iOS 18, *) {
+  //      self.init(text: text, alignment: alignment)
+  //    } else {
+  //      self.init(plainText: plainText, alignment: alignment)
+  //    }
+  //
+  //  }
+
   public init(
-    text: Binding<String>,
+    text: Binding<AttributedString>,
     alignment: Alignment = .topLeading,
   ) {
-    self._text = text
+    self.attributedText = text
+    self.plainText = nil
     self.alignment = alignment
   }
-  
+
+  public init(
+    plainText: Binding<String>,
+    alignment: Alignment = .topLeading,
+  ) {
+    self.attributedText = nil
+    self.plainText = plainText
+    self.alignment = alignment
+  }
+
   public var body: some View {
-    
-    Text(text)
-      .hidden()
-    
+
+    Group {
+      if let attributedText {
+        Text(attributedText.wrappedValue)
+      } else if let plainText {
+        Text(plainText.wrappedValue)
+      } else {
+        Text("No text found")
+      }
+    }
+    .hidden()
+    //    Text()
+
     /// Note: Keep this frame, with maxWidth inifinity.
     /// Seems to work nicely.
-      .frame(
-        maxWidth: .infinity,
-        alignment: .topLeading
-      )
-    
-      .overlay(alignment: .topLeading) {
-        TextEditor(text: $text)
-        /// Removes the slight default padding, to better-match `Text`
-          .padding(.horizontal, -5)
-          .textEditorStyle(.plain)
+    .frame(
+      maxWidth: .infinity,
+      alignment: .topLeading
+    )
 
+    .overlay(alignment: .topLeading) {
+
+      Group {
+        if #available(macOS 26, iOS 18, *), let attributedText {
+//          if let attributedText {
+            TextEditor(text: attributedText)
+//          } else {
+//            Text("macOS 26+ but no attributedText")
+//          }
+
+        } else if let plainText {
+          TextEditor(text: plainText)
+
+        } else if let attributedText {
+
+          /// Bridging: fallback for older platforms (lossy)
+          TextEditor(
+            text: Binding(
+              get: { String(attributedText.wrappedValue.characters) },
+              set: { attributedText.wrappedValue = AttributedString($0) }
+            ))
+        } else {
+          Text("No text found")
+        }
       }
-      .multilineTextAlignment(textAlignment ?? .leading)
+
+      /// Removes the slight default padding, to better-match `Text`
+      .padding(.horizontal, -5)
+      .textEditorStyle(.plain)
+
+    }
+    .multilineTextAlignment(textAlignment ?? .leading)
   }
+}
+
+extension ExpandingTextEditor {
+  //  private var textBinding: Binding<String> {
+  //    return Binding(
+  //      get: {
+  //        let text =
+  //        String(self.plainText?.wrappedValue.characters)
+  //      },
+  //      set: { self.text = AttributedString($0) }
+  //    )
+  ////    return Binding {
+  ////      self.text.toString
+  ////    } set: { newValue in
+  ////      self.text = newValue.toAttributed
+  ////    }
+  //
+  //  }
 }

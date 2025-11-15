@@ -13,7 +13,6 @@ import SwiftUI
 /// Character measure for unit size, injecting
 /// into environment, etc.
 public struct GridSetupModifier: ViewModifier {
-  @Environment(\.isShowingGridGuide) private var isShowingGridGuide
   let fontStyle: GridFont
   let fontSize: CGFloat
 
@@ -23,7 +22,6 @@ public struct GridSetupModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-//      .gridGuide(opacity: 0.2, isEnabled: isShowingGridGuide)
       .characterSize(
         mode: .noDebounce,
         shouldSetEnv: true,

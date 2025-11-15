@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 19/5/2025.
 //
 
-
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 //public struct StrokeColourAndWidth
 
@@ -19,7 +18,6 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   @Environment(\.backgroundMaterial) private var backgroundMaterial
   @Environment(\.strokeColour) private var strokeColour
   @Environment(\.strokeWeight) private var strokeWeight
-  
 
   let isEnabled: Bool
   let shape: S
@@ -34,8 +32,8 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
       .padding(.bottom, opticalPadding)
       .background {
         shape
-          .fill(.tint)
-//          .fill(tintColour)
+          .fill(backgroundTint)
+          //          .fill(tintColour)
           .fill(material)
           .stroke(strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)), lineWidth: strokeWeight ?? 1)
       }
@@ -44,6 +42,8 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
 }
 
 extension QuickBackgroundModifier {
+
+  private var backgroundTint: Color { tint ?? Color.clear }
 
   private var basePadding: CGFloat {
     return padding ?? layoutPadding ?? CGFloat.defaultQuickPadding

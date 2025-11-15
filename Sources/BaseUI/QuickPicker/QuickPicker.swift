@@ -17,11 +17,12 @@ public struct QuickPicker<Item: Pickable & Shortcuttable>: View {
   let hasLabeledContentWrapper: Bool
   let areShortcutsEnabled: Bool
   let maxItems: Int?
+  
   public init(
     item: Binding<Item>,
     style: QuickPickerStyle = .plain,
     hasLabeledContentWrapper: Bool = true,
-    areShortcutsEnabled: Bool = true,
+    areShortcutsEnabled: Bool = false,
     maxItems: Int? = nil  // zero = no maximum
   ) {
     self._item = item

@@ -46,6 +46,8 @@ extension EnvironmentValues {
   /// Strokes
   @Entry public var strokeColour: AnyShapeStyle? = nil
   @Entry public var strokeWeight: CGFloat? = nil
+  
+  @Entry public var isHovering: Bool = false
 
   /// See also system native values:
   /// `symbolRenderingMode` and `symbolVariants`
