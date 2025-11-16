@@ -12,7 +12,6 @@
 import SwiftUI
 import NSUI
 
-
 /// For when dealing only with Apple platforms
 /// The encoded color will be decoded on one of those platforms
 public protocol PlatformColourCodable: Codable {

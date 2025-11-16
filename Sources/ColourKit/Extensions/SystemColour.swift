@@ -104,7 +104,7 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Ha
     }
   }
 
-  public func toNSColour(using colourSpace: NSColorSpace = .deviceRGB) -> NSColor? {
+  public func toNSColor(using colourSpace: NSColorSpace = .deviceRGB) -> NSColor? {
 
     let colour =
       switch self {
@@ -136,7 +136,7 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Ha
 
 extension SystemColour {
   public var hsvAdjustment: HSVAdjustment? {
-    guard let nsColour = self.toNSColour() else { return nil }
+    guard let nsColour = self.toNSColor() else { return nil }
     let hue = nsColour.hueComponent
     let sat = nsColour.saturationComponent
     let val = nsColour.brightnessComponent

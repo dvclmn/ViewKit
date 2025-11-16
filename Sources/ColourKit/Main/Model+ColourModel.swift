@@ -62,7 +62,7 @@ extension ColourModel {
 //  public var name: String? { self.description }
 //  public var swiftUIColour: Color { self }
 //  public var alpha: Double {
-//    get { self.toNSColour.alphaComponent }
+//    get { self.toNSColor.alphaComponent }
 //    set { self = self.opacity(newValue) }
 //  }
 //}

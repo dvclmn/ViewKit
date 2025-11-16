@@ -9,7 +9,7 @@ import SwiftUI
 
 extension Color {
   public func toHSVAdustment(using colourSpace: NSColorSpace = .deviceRGB) -> HSVAdjustment? {
-    let nsColour = self.toNSColour.usingColorSpace(colourSpace)
+    let nsColour = self.toNSColor.usingColorSpace(colourSpace)
     return nsColour?.toHSVAdustment(using: colourSpace)
   }
   
@@ -22,7 +22,7 @@ extension Color {
 
 extension NSColor {
   public func toHSVAdustment(using colourSpace: NSColorSpace = .deviceRGB) -> HSVAdjustment? {
-//    let nsColour = self.toNSColour.usingColorSpace(colourSpace)
+//    let nsColour = self.toNSColor.usingColorSpace(colourSpace)
     return HSVAdjustment(h: hueComponent, s: saturationComponent, v: brightnessComponent)
   }
 }

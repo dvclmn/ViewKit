@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 23/7/2024.
 //
 
-//import NSUI
 import SwiftUI
 
 extension Array where Element == Color {
@@ -87,6 +86,6 @@ extension Color {
       opacity: randomOpacity ? .random(in: 0...1) : 1
     )
   }
-  public var toNSColour: NSColor { NSColor(self) }
+  public var toNSColor: NSColor { NSColor(self) }
 }
 
