@@ -15,6 +15,7 @@ public class MarkdownSyntaxHighlighter: SyntaxHighlighter {
 
   private let areHeadersBig: Bool = false
   package let fontSize: CGFloat
+  let monospacedFontReduction: CGFloat = 0.88
 
   public init(
     fontSize: CGFloat
@@ -54,21 +55,54 @@ public class MarkdownSyntaxHighlighter: SyntaxHighlighter {
     return ranges
   }
 
-  private func highlightFencedCodeBlocks(in text: NSString, attributes: inout [NSRange: [NSAttributedString.Key: Any]])
-  {
-    /// Match fenced code blocks: ```language\n...\n```
-    /// [\s\S] matches any character including newlines
-    let pattern = "```[^\\n]*\\n[\\s\\S]*?```"
+  private func highlightFencedCodeBlocks(
+    in text: NSString,
+    attributes: inout [NSRange: [NSAttributedString.Key: Any]]
+  ) {
+    let pattern = "```([A-Za-z0-9_+-]*)\\n([\\s\\S]*?)```"
     guard let regex = try? NSRegularExpression(pattern: pattern) else { return }
-
+    
     let matches = regex.matches(in: text as String, range: NSRange(location: 0, length: text.length))
+    
     for match in matches {
-      attributes[match.range] = [
-        .foregroundColor: codeBlockColor,
+      let blockRange = match.range(at: 0)
+      let langRange  = match.range(at: 1)
+      let bodyRange  = match.range(at: 2)
+      
+      // Base block style (background, monospaced, etc.)
+      attributes[blockRange] = [
         .font: codeFont,
+        .foregroundColor: NSColor.secondaryLabelColor,
+      ]
+      
+      // Language tag (```swift)
+      attributes[langRange] = [
+        .foregroundColor: NSColor.tertiaryLabelColor,
+      ]
+      
+      // Body
+      attributes[bodyRange] = [
+        .foregroundColor: NSColor.textColor,
       ]
     }
   }
+  
+//  private func highlightFencedCodeBlocks(in text: NSString, attributes: inout [NSRange: [NSAttributedString.Key: Any]])
+//  {
+//    /// Match fenced code blocks: ```language\n...\n```
+//    /// [\s\S] matches any character including newlines
+//    let pattern = "```([A-Za-z0-9_+-]*)\\n([\\s\\S]*?)```"
+////    let pattern = "```[^\\n]*\\n[\\s\\S]*?```"
+//    guard let regex = try? NSRegularExpression(pattern: pattern) else { return }
+//
+//    let matches = regex.matches(in: text as String, range: NSRange(location: 0, length: text.length))
+//    for match in matches {
+//      attributes[match.range] = [
+//        .foregroundColor: codeBlockColor,
+//        .font: codeFont,
+//      ]
+//    }
+//  }
 
   private func highlightHeaders(in text: NSString, attributes: inout [NSRange: [NSAttributedString.Key: Any]]) {
     // Match headers: # Header, ## Header, etc. (from start of line)

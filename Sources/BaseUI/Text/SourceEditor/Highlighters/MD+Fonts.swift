@@ -11,7 +11,8 @@ extension MarkdownSyntaxHighlighter {
   
   /// Fonts
   package var codeFont: NSFont {
-    NSFont.monospacedSystemFont(ofSize: max(1, fontSize - 1), weight: .regular)
+//    NSFont.monospacedSystemFont(ofSize: max(1, fontSize - 1), weight: .regular)
+      NSFont.monospacedSystemFont(ofSize: fontSize * monospacedFontReduction, weight: .regular)
   }
   package var boldFont: NSFont {
     NSFont.systemFont(ofSize: fontSize, weight: .bold)

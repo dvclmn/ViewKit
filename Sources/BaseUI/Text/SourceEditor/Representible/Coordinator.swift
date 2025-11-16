@@ -12,8 +12,6 @@ extension SourceEditorView {
 
   @MainActor
   public class Coordinator: NSObject, NSTextViewDelegate {
-    //    @Binding var text: String
-    //    @Binding var cursorPosition: CursorPosition?
     let parent: SourceEditorView
     weak var textView: BackgroundRenderingTextView?
 
@@ -21,30 +19,8 @@ extension SourceEditorView {
       self.parent = view
     }
 
-    //    var highlighter: SyntaxHighlighter
-    //    var inputBehaviors: [TextInputBehavior]
-    //    var debounceInterval: TimeInterval
-    //    let fontSize: CGFloat
-    //    weak var textView: NSTextView?
-
     /// Debouncing mechanism
     private var highlightWorkItem: DispatchWorkItem?
-
-    //    init(
-    //      text: Binding<String>,
-    //      cursorPosition: Binding<CursorPosition?>,
-    //      highlighter: SyntaxHighlighter,
-    //      inputBehaviors: [TextInputBehavior],
-    //      debounceInterval: TimeInterval,
-    //      //      fontSize: CGFloat,
-    //    ) {
-    //      self._text = text
-    //      self._cursorPosition = cursorPosition
-    //      self.highlighter = highlighter
-    //      self.inputBehaviors = inputBehaviors
-    //      self.debounceInterval = debounceInterval
-    //      //      self.fontSize = fontSize
-    //    }
 
     public func textDidChange(_ notification: Notification) {
       guard let textView = notification.object as? NSTextView else { return }
@@ -76,6 +52,22 @@ extension SourceEditorView {
 
       DispatchQueue.main.async {
         self.parent.cursorPosition = calculateCursorPosition(in: textView.string, range: selectedRange)
+        // Update typing attributes so new text matches existing style
+        self.syncTypingAttributes()
+      }
+    }
+    
+    private func syncTypingAttributes() {
+      guard let textView else { return }
+      
+      let loc = textView.selectedRange().location
+      guard loc <= textView.string.count, loc > 0 else { return }
+      
+      let pos = max(loc - 1, 0)
+      if pos < textView.textStorage?.length ?? 0,
+         let attrs = textView.textStorage?.attributes(at: pos, effectiveRange: nil)
+      {
+        textView.typingAttributes = attrs
       }
     }
 
@@ -131,6 +123,8 @@ extension SourceEditorView {
 
       /// Restore the cursor position
       textView.setSelectedRange(selectedRange)
+      
+      syncTypingAttributes()
 
       /// Update block background ranges
       let blockRanges = parent.highlighter.blockRanges(text: currentText)
