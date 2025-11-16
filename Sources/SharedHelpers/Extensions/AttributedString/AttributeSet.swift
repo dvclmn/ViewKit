@@ -10,6 +10,9 @@ import SwiftUI
 
 public typealias TextAttributes = [NSAttributedString.Key: Any]
 
+public typealias FontAttributes = NSFontDescriptor.AttributeName
+public typealias TraitKey = NSFontDescriptor.TraitKey
+
 public struct AttributeSet: ExpressibleByDictionaryLiteral {
 
   public var attributes: TextAttributes
