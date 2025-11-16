@@ -205,6 +205,12 @@ extension CGSize {
     let transformed = transform(self.width, self.height)
     return CGSize(width: transformed.width, height: transformed.height)
   }
+  
+  public func adjustLengths(by value: CGFloat) -> CGSize {
+    return CGSize(self.width * value, self.height * value)
+//    let transformed = transform(self.width, self.height)
+//    return CGSize(width: transformed.width, height: transformed.height)
+  }
 
   public var widthOrHeightIsZero: Bool {
     self.width.isZero || self.height.isZero

@@ -150,32 +150,3 @@ extension Font.Weight {
     }
   }
 }
-
-extension Font.Design {
-  fileprivate var nsFontDesign: NSFontDescriptor.SystemDesign {
-    switch self {
-      case .default: return .default
-      case .monospaced: return .monospaced
-      case .rounded: return .rounded
-      case .serif: return .serif
-      @unknown default: return .default
-    }
-  }
-}
-
-extension Font.Weight {
-  fileprivate var nsFontWeight: NSFont.Weight {
-    switch self {
-      case .ultraLight: return .ultraLight
-      case .thin: return .thin
-      case .light: return .light
-      case .regular: return .regular
-      case .medium: return .medium
-      case .semibold: return .semibold
-      case .bold: return .bold
-      case .heavy: return .heavy
-      case .black: return .black
-      default: return .regular
-    }
-  }
-}
