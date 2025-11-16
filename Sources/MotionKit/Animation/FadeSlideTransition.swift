@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 15/6/2024.
 //
 
-import BaseUtilities
+import CoreTools
 import SwiftUI
 
 public struct FadeSlide: ViewModifier {

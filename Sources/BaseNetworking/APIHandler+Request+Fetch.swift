@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BaseUtilities
+import CoreTools
 
 public final class APIRequest<T: Decodable> {
   let url: URL?

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BaseUtilities
+import CoreTools
 
 public struct DebugTextOverlayModifier: ViewModifier {
   @Environment(\.isEnabled) private var isEnabled

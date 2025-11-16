@@ -38,7 +38,7 @@ let package = Package(
 
     // Export-only libraries
     .library(name: "ToolKit", targets: ["ToolKit"]),
-    .library(name: "BaseUtilities", targets: ["BaseUtilities"]),
+    .library(name: "CoreTools", targets: ["CoreTools"]),
   ],
 
   // MARK: - Dependancies
@@ -58,7 +58,7 @@ let package = Package(
     .target(
       name: "BaseNetworking",
       dependencies: [
-        .module(.baseUtilities),
+        .module(.coreTools),
         .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
@@ -70,7 +70,7 @@ let package = Package(
         .module(.layoutKit),
         .module(.graphicsKit),
         .module(.gestureKit),
-        .module(.baseUtilities),
+        .module(.coreTools),
         .sharing,
 //        .nsui,
       ],
@@ -78,7 +78,7 @@ let package = Package(
     .target(
       name: "BaseModels",
       dependencies: [
-        .module(.baseUtilities),
+        .module(.coreTools),
         .sharing,
         .product(name: "IdentifiedCollections", package: "swift-identified-collections"),
       ],
@@ -113,7 +113,7 @@ let package = Package(
     .target(
       name: "GestureKit",
       dependencies: [
-        .module(.baseUtilities),
+        .module(.coreTools),
         .module(.layoutKit),
         .module(.curveKit),
       ]
@@ -128,14 +128,14 @@ let package = Package(
     .target(
       name: "LayoutKit",
       dependencies: [
-        .module(.baseUtilities)
+        .module(.coreTools)
       ]
     ),
 
     .target(
       name: "MotionKit",
       dependencies: [
-        .module(.baseUtilities)
+        .module(.coreTools)
       ]
     ),
     .target(name: "SharedHelpers"),
@@ -149,7 +149,7 @@ let package = Package(
     ),
 
     .target(
-      name: "BaseUtilities",
+      name: "CoreTools",
       dependencies: [
         .module(.sharedHelpers),
         .module(.stringKit),
@@ -230,7 +230,7 @@ enum BaseModule {
 
   /// Export-only modules
   case toolKit
-  case baseUtilities
+  case coreTools
 
   var name: String {
     switch self {
@@ -248,7 +248,7 @@ enum BaseModule {
       case .sharedHelpers: "SharedHelpers"
       case .stringKit: "StringKit"
       case .toolKit: "ToolKit"
-      case .baseUtilities: "BaseUtilities"
+      case .coreTools: "CoreTools"
     }
   }
 }

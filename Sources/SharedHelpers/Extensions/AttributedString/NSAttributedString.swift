@@ -13,7 +13,7 @@ extension NSMutableAttributedString {
   @MainActor public func setAttributeSet(
     _ attributeSet: AttributeSet,
     range: NSRange,
-    with typingAttributes: Attributes? = nil
+    with typingAttributes: TextAttributes? = nil
   ) {
 
     if let typingAttributes = typingAttributes {

@@ -8,17 +8,17 @@
 //import NSUI
 import SwiftUI
 
-public typealias Attributes = [NSAttributedString.Key: Any]
+public typealias TextAttributes = [NSAttributedString.Key: Any]
 
 public struct AttributeSet: ExpressibleByDictionaryLiteral {
 
-  public var attributes: Attributes
+  public var attributes: TextAttributes
 
-  public init(dictionaryLiteral elements: (Attributes.Key, Attributes.Value)...) {
+  public init(dictionaryLiteral elements: (TextAttributes.Key, TextAttributes.Value)...) {
     self.attributes = Dictionary(uniqueKeysWithValues: elements)
   }
 
-  public init(_ attributes: Attributes) {
+  public init(_ attributes: TextAttributes) {
     self.attributes = attributes
   }
 
@@ -26,9 +26,9 @@ public struct AttributeSet: ExpressibleByDictionaryLiteral {
     font: Font,
     foreground: Color = .primary,
     background: Color = .clear,
-    additionalAttributes: Attributes = [:]
+    additionalAttributes: TextAttributes = [:]
   ) {
-    let baseAttributes: Attributes = [
+    let baseAttributes: TextAttributes = [
       .font: font,
       .foregroundColor: foreground,
       .backgroundColor: background,
@@ -50,7 +50,7 @@ public struct AttributeSet: ExpressibleByDictionaryLiteral {
 //    self.attributes = baseAttributes.merging(additionalAttributes) { (_, new) in new }
 //  }
 
-  public subscript(_ key: Attributes.Key) -> Any? {
+  public subscript(_ key: TextAttributes.Key) -> Any? {
     get { attributes[key] }
     set { attributes[key] = newValue }
   }

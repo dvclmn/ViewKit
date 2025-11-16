@@ -6,7 +6,7 @@
 //
 
 import LayoutKit
-import BaseUtilities
+import CoreTools
 import SwiftUI
 
 enum CharacterSizeSource {
