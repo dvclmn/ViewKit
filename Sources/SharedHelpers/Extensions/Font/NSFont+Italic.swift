@@ -12,6 +12,7 @@ extension NSFont {
   public func italic() -> NSFont { withTraits(.italic) }
   public func bold() -> NSFont { withTraits(.bold) }
   public func boldItalic() -> NSFont { withTraits([.bold, .italic]) }
+  public func monospaced() -> NSFont { withTraits(.monoSpace) }
 
   private func withTraits(_ traits: NSFontDescriptor.SymbolicTraits) -> NSFont {
     let newDescriptor = self.fontDescriptor.addingAttributes([.traits: traits])

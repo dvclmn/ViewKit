@@ -10,7 +10,6 @@ import Foundation
 public struct ImportHandler {
 
   /// Load a string from a file at a specific URL.
-  /// Doesn't assume is coming from a specific Bundle
   public static func loadString(
     from fileURL: URL,
     encoding: String.Encoding = .utf8

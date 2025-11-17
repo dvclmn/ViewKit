@@ -7,12 +7,14 @@
 
 import Foundation
 
-
 extension NSRange {
   public var info: String {
     "NSRange(location: \(location), length: \(length))"
   }
 
+  public func toOptional() -> NSRange? {
+    self.location != NSNotFound ? self : nil
+  }
 
   /// This is already present in Rearrange
   //  func clamped(to maxLength: Int) -> NSRange {
@@ -30,14 +32,12 @@ extension NSRange {
   }
 }
 
-
 extension Range where Bound == String.Index {
   public func toNSRange(in string: String) -> NSRange {
     string.nsRange(from: self)
   }
 
-  public func getAttributedRange(in attrString: AttributedString) -> Range<AttributedString.Index>?
-  {
+  public func getAttributedRange(in attrString: AttributedString) -> Range<AttributedString.Index>? {
 
     /// Convert String.Index range to AttributedString.Index range
     ///
@@ -53,8 +53,18 @@ extension Range where Bound == String.Index {
 
     /// Create the AttributedString range
     ///
-    let attributedStringRange: Range<AttributedString.Index> = start ..< end
+    let attributedStringRange: Range<AttributedString.Index> = start..<end
 
     return attributedStringRange
+  }
+}
+
+extension Range {
+  /// ```
+  /// let range = Range(match.output.1.indices)`
+  /// ```
+  public init<Collection: Swift.Collection>(_ indices: DefaultIndices<Collection>)
+  where Collection.Index == Bound {
+    self = indices.startIndex..<indices.endIndex
   }
 }
