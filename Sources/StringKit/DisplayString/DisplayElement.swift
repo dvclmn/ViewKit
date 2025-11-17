@@ -10,7 +10,7 @@ import Foundation
 import SharedHelpers
 
 @CaseDetection(includesNames: true)
-public enum DisplayBlock {
+public enum DisplayBlock: StyledStringConvertible {
   case text(StyledString)
   case indented(Indented)
   //  case indented(title: String?, indent: String, content: [DisplayBlock])
@@ -24,7 +24,7 @@ public enum DisplayBlock {
   }
 }
 
-extension DisplayBlock: StyledStringConvertible {
+extension DisplayBlock {
 
   public var toStyledString: StyledString {
     switch self {
@@ -32,7 +32,7 @@ extension DisplayBlock: StyledStringConvertible {
         return styledString
 
       case .indented(let indented):
-        
+        return createIndented(for: indented)
     }
   }
 

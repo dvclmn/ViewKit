@@ -11,6 +11,8 @@ import Foundation
 /// to `StyledStringConvertible` is not needed nor read
 public struct Indented {
   public let title: String?
+  
+  @available(*, deprecated, message: "Custom index string is not supported")
   public let indentString: String
   public let content: [DisplayBlock]
 
