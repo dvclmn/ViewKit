@@ -50,7 +50,7 @@ extension DisplayStringBuilder {
       .indented(
         Indented(
           value.title,
-          indentString: value.indentString,
+//          indentString: value.indentString,
           content: value.content
         )
       )

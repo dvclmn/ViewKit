@@ -27,6 +27,10 @@ public struct DisplayString {
 }
 
 extension DisplayString {
+  
+  public func print() {
+    Swift.print(self.plainText)
+  }
 
   public var plainText: String {
     components.map(\.toStyledString.plainString).joined(separator)

@@ -74,6 +74,15 @@ extension StyledString {
 }
 
 extension StyledString {
+//  public func += (lhs: inout CGPoint, rhs: CGPoint) {
+//    lhs = lhs + rhs
+//  }
+  public static func += (lhs: inout StyledString, rhs: StyledString) {
+    lhs = lhs + rhs
+//    StyledString(lhs.styledString + rhs.styledString)
+  }
+}
+extension StyledString {
   public static func + (lhs: StyledString, rhs: StyledString) -> StyledString {
     StyledString(lhs.styledString + rhs.styledString)
   }

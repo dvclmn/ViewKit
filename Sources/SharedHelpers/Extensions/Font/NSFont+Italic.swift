@@ -9,14 +9,29 @@ import AppKit
 
 extension NSFont {
 
-  public func italic() -> NSFont { withTraits(.italic) }
-  public func bold() -> NSFont { withTraits(.bold) }
-  public func boldItalic() -> NSFont { withTraits([.bold, .italic]) }
-  public func monospaced() -> NSFont { withTraits(.monoSpace) }
-
-  private func withTraits(_ traits: NSFontDescriptor.SymbolicTraits) -> NSFont {
-    let newDescriptor = self.fontDescriptor.addingAttributes([.traits: traits])
-    return NSFont(descriptor: newDescriptor, size: 0) ?? self
+  public static func systemItalicFont(ofSize size: CGFloat) -> NSFont {
+    let system = NSFont.systemFont(ofSize: size)
+    let desc = system.fontDescriptor.withSymbolicTraits(.italic)
+    let font = NSFont(descriptor: desc, size: size) ?? system
+    return font
   }
+  
+  public static func systemBoldItalicFont(ofSize size: CGFloat) -> NSFont {
+    let system = NSFont.systemFont(ofSize: size)
+    let desc = system.fontDescriptor.withSymbolicTraits([.italic, .bold])
+    let font = NSFont(descriptor: desc, size: size) ?? system
+    return font
+  }
+//  public func italic() -> NSFont { withTraits(.italic) }
+//  public func bold() -> NSFont { withTraits(.bold) }
+//  public func boldItalic() -> NSFont { withTraits([.bold, .italic]) }
+//  public func monospaced() -> NSFont { withTraits(.monoSpace) }
+
+//  private func withTraits(_ traits: NSFontDescriptor.SymbolicTraits) -> NSFont {
+//    let newDescriptor = self.fontDescriptor
+//    newDescriptor.withSymbolicTraits(traits)
+////    let newDescriptor = self.fontDescriptor.addingAttributes([.traits: traits])
+//    return NSFont(descriptor: newDescriptor, size: 0) ?? self
+//  }
 
 }
