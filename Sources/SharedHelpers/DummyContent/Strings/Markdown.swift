@@ -13,8 +13,7 @@ public extension DummyContent.Strings {
     
     public static let smallCodeBlock: String = """
     
-    ```
-    
+    ```    
     let highlightr = Highlightr()
     highlightr?.setTheme(to: "xcode-dark-butts")
     

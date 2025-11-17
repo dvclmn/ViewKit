@@ -7,6 +7,27 @@
 
 extension DummyContent.Strings {
   public static let paragraphsWithCode: [String] = [
+    """
+    let greeting = "Hello, World!"
+    var count = 42
+    
+    func calculate() {
+        let result = count + 10
+        return result
+    }
+    
+    This is some `inline code` within text.
+    More code: `var x = 100`
+    
+    Try these features:
+    - Select text and type ` or * or " to wrap it
+    - Press Enter after a list item (like this one)
+    - Press Enter between brackets: {}
+    
+    Keywords: let var func class struct enum if else for while return
+    Numbers: 42, 3.14, 100
+    Strings: "Hello" "Swift" "Test"
+    """,
     
     """
     # Markdown Editor Demo
@@ -21,6 +42,10 @@ extension DummyContent.Strings {
     - `inline code` with backticks
     
     ## Code Blocks
+    
+    Horizontal Rule:
+    
+    ---
     
     ```swift
     func greet(name: String) -> String {
