@@ -9,6 +9,9 @@
 import AppKit
 
 extension CodableColour {
+  public func nsColor(fallback: NSColor = .textColor) -> NSColor {
+    return self.nsColor ?? fallback
+  }
 
   public var nsColor: NSColor? {
     switch self {
@@ -22,11 +25,12 @@ extension CodableColour {
           blue: model.blue,
           alpha: model.alpha
         )
-      case .hsv(let model):
+      case .hsv(let h, let s, let v):
+//      case .hsv(let model):
         return NSColor(
-          hue: model.hue,
-          saturation: model.saturation,
-          brightness: model.brightness,
+          hue: h,
+          saturation: s,
+          brightness: v,
           alpha: 1.0
         )
 

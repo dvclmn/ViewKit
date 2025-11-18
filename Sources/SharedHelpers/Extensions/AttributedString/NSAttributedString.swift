@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 6/7/2025.
 //
 
-#if canImport(AppKit)
+//#if canImport(AppKit)
 import AppKit
 
 extension NSMutableAttributedString {
@@ -23,6 +23,9 @@ extension NSMutableAttributedString {
       setAttributes(attributeSet.attributes, range: range)
     }
   }
+  
+  public var fullRange: NSRange { NSRange(location: 0, length: self.length) }
+
 }
 
-#endif
+//#endif

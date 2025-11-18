@@ -14,10 +14,12 @@
 import NSUI
 import SwiftUI
 
+public typealias Colour = CodableColour
 public enum CodableColour: Codable, Equatable, Hashable, Sendable {
   case hex(String)
   case rgb(RGBColour)
-  case hsv(HSVColour)
+  case hsv(h: Double, s: Double, v: Double)
+//  case hsv(HSVColour)
   case rgbRaw(r: Double, g: Double, b: Double)
   case system(SystemColour)
   case mix(
@@ -28,7 +30,7 @@ public enum CodableColour: Codable, Equatable, Hashable, Sendable {
 }
 
 extension CodableColour {
-  
+
   public var colour: Color? {
     switch self {
       case .hex(let hex):
@@ -50,8 +52,15 @@ extension CodableColour {
           blue: b
         )
 
-      case .hsv(let model):
-        return model.toColour
+      case .hsv(let h, let s, let v):
+//      case .hsv(let model):
+//        return model.toColour
+        return Color(
+          hue: h,
+          saturation: s,
+          brightness: v,
+          opacity: 1.0
+        )
 
       case .system(let system):
         return system.toColour

@@ -5,16 +5,16 @@
 //  Created by Dave Coleman on 11/10/2024.
 //
 
-#if canImport(AppKit)
-import AppKit
+//#if canImport(AppKit)
+//import AppKit
 
 
-public extension NSTextStorage {
-  
-  var fullRange: NSRange {
-    NSRange(location: 0, length: self.length)
-  }
- 
+//public extension NSTextStorage {
+//  
+//  var fullRange: NSRange {
+//    NSRange(location: 0, length: self.length)
+//  }
+// 
 //
 //  var nsString: NSString {
 //    let result = self.string as NSString
@@ -37,5 +37,5 @@ public extension NSTextStorage {
 //  func getSafeRange(for range: NSRange) -> NSRange {
 //    return range.clamped(to: documentLength)
 //  }
-}
-#endif
+//}
+//#endif

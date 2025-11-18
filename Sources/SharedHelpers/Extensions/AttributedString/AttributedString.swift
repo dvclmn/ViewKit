@@ -16,7 +16,8 @@ extension AttributedString {
     }
     return index(startIndex, offsetByCharacters: offset)
   }
-
+  
+  
   ///
   /// ```
   /// var output = attrString

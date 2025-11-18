@@ -104,23 +104,23 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Ha
     }
   }
 
-  public func toNSColor(using colourSpace: NSColorSpace = .deviceRGB) -> NSColor? {
+  public func toNSColor(using colourSpace: NSColorSpace = .sRGB) -> NSColor? {
 
     let colour =
       switch self {
-        case .red: NSColor.red
-        case .blue: NSColor.blue
+        case .red: NSColor.systemRed
+        case .blue: NSColor.systemBlue
         case .teal: NSColor.systemTeal
-        case .green: NSColor.green
-        case .orange: NSColor.orange
-        case .yellow: NSColor.yellow
+        case .green: NSColor.systemGreen
+        case .orange: NSColor.systemOrange
+        case .yellow: NSColor.systemYellow
         case .pink: NSColor.systemPink
-        case .purple: NSColor.purple
+        case .purple: NSColor.systemPurple
         case .indigo: NSColor.systemIndigo
         case .mint: NSColor.systemMint
-        case .cyan: NSColor.cyan
-        case .brown: NSColor.brown
-        case .gray: NSColor.gray
+        case .cyan: NSColor.systemCyan
+        case .brown: NSColor.systemBrown
+        case .gray: NSColor.systemGray
         case .black: NSColor.black
         case .white: NSColor.white
         case .clear: NSColor.clear
@@ -128,8 +128,12 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Ha
         case .secondary: NSColor.secondaryLabelColor
         case .accentColor: NSColor.controlAccentColor
       }
-
-    return colour.usingColorSpace(colourSpace)
+    guard let result = colour.usingColorSpace(colourSpace) else {
+      print("Couldn't resolve NSColor using colourspace \(colourSpace), for `SystemColour` \(self.name)")
+      return nil
+    }
+//    print("Successfully resolved NSColor for SystemColour.\(self.rawValue)")
+    return result
   }
 
 }

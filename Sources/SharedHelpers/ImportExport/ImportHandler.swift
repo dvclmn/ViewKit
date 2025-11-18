@@ -29,8 +29,8 @@ public struct ImportHandler {
     bundle: Bundle = .main
   ) throws -> String {
     
-    let thing = bundle.bundlePath
-    print("Bundle path: \(thing)")
+//    let thing = bundle.bundlePath
+//    print("Bundle path: \(thing)")
     guard let url = bundle.url(
       forResource: fileName,
       withExtension: fileExtension,
