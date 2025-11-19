@@ -31,7 +31,7 @@ extension AttributeContainer {
 
 extension AttributeContainer {
 
-  public static func strikeThrough(
+  public static func strikethrough(
     pattern: Text.LineStyle.Pattern,
     colour: Color? = Color.red
   ) -> AttributeContainer {
