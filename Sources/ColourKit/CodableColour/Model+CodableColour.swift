@@ -18,9 +18,9 @@ public typealias Colour = CodableColour
 public enum CodableColour: Codable, Equatable, Hashable, Sendable {
   case hex(String)
   case rgb(RGBColour)
-  case hsv(h: Double, s: Double, v: Double)
-//  case hsv(HSVColour)
   case rgbRaw(r: Double, g: Double, b: Double)
+  case hsv(HSVColour)
+  case hsvRaw(h: Double, s: Double, v: Double)
   case system(SystemColour)
   case mix(
     SystemColour,
