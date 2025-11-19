@@ -57,12 +57,28 @@ extension CodableColour {
           blue: b
         )
 
-      case .hsv(let h, let s, let v):
+      case .hsv(let model):
+        //        return model.toColour
+        return Color(
+          hue: model.hue,
+          saturation: model.saturation,
+          brightness: model.brightness,
+          opacity: 1.0
+        )
+      case .hsvRaw(let h, let s, let v):
         //      case .hsv(let model):
         //        return model.toColour
         return Color(
           hue: h,
           saturation: s,
+          brightness: v,
+          opacity: 1.0
+        )
+
+      case .grey(let v):
+        return Color(
+          hue: 0,
+          saturation: 0,
           brightness: v,
           opacity: 1.0
         )

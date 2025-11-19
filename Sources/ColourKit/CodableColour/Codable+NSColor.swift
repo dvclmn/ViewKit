@@ -9,7 +9,8 @@
 import AppKit
 
 extension CodableColour {
-  public func nsColor(fallback: NSColor = .textColor) -> NSColor {
+  public func nsColor(fallback: NSColor) -> NSColor {
+//  public func nsColor(fallback: NSColor = .textColor) -> NSColor {
     return self.nsColor ?? fallback
   }
 
@@ -25,8 +26,16 @@ extension CodableColour {
           blue: model.blue,
           alpha: model.alpha
         )
-      case .hsv(let h, let s, let v):
-//      case .hsv(let model):
+        
+      case .hsv(let model):
+        return NSColor(
+          hue: model.hue,
+          saturation: model.saturation,
+          brightness: model.brightness,
+          alpha: 1.0
+        )
+
+      case .hsvRaw(let h, let s, let v):
         return NSColor(
           hue: h,
           saturation: s,
@@ -39,6 +48,9 @@ extension CodableColour {
 
       case .system(let system):
         return system.toNSColor()
+
+      case .grey(let v):
+        return NSColor(cgColor: CGColor(gray: v, alpha: 1.0))
 
       case .mix(let a, let b, let t):
         guard let colorA = a.toNSColor(),

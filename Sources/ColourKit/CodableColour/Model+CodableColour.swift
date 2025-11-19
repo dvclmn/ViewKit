@@ -16,15 +16,17 @@ import SwiftUI
 
 public typealias Colour = CodableColour
 public enum CodableColour: Codable, Equatable, Hashable, Sendable {
-  case hex(String)
+  case hex(String, opacity: Double = 1)
   case rgb(RGBColour)
-  case rgbRaw(r: Double, g: Double, b: Double)
+  case rgbRaw(r: Double, g: Double, b: Double, a: Double = 1)
   case hsv(HSVColour)
-  case hsvRaw(h: Double, s: Double, v: Double)
-  case system(SystemColour)
+  case hsvRaw(h: Double, s: Double, v: Double, a: Double = 1)
+  case system(SystemColour, opacity: Double = 1)
+  case grey(Double, opacity: Double = 1) // 0 == black, 1 == white
   case mix(
     SystemColour,
     SystemColour,
-    Double = 0.5
+    Double = 0.5,
+    opacity: Double = 1
   )
 }

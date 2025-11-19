@@ -9,6 +9,14 @@ import AppKit
 
 extension NSFont {
 
+  public static func system(
+    _ style: FontStyle,
+    size: CGFloat,
+    monospaced: Bool = false
+  ) -> NSFont {
+    return style.system(size: size, monospaced: monospaced)
+  }
+
   public enum FontStyle {
     case body
     //    case code
@@ -16,48 +24,50 @@ extension NSFont {
     case bold
     case boldItalic
     case semiBold
-  }
+    //  }
 
-  public static func system(
-    _ style: FontStyle,
-    size: CGFloat,
-    monospaced: Bool = false
-  ) -> NSFont {
-    let sys = NSFont.systemFont(ofSize: size)
-    switch (style, monospaced) {
-      case (.body, true):
-        return NSFont.preferredFont(size: size, design: .monospaced)
-        
-      case (.body, false):
-        return NSFont.preferredFont(size: size)
-        
-      case (.italic, true):
-        let desc = sys.fontDescriptor.withSymbolicTraits([.italic, .monoSpace])
-        return NSFont(descriptor: desc, size: size) ?? sys
-        
-      case (.italic, false):
-        let desc = sys.fontDescriptor.withSymbolicTraits(.italic)
-        return NSFont(descriptor: desc, size: size) ?? sys
+    public func system(
+      //  public static func system(
+      //    _ style: FontStyle,
+      size: CGFloat,
+      monospaced: Bool = false
+    ) -> NSFont {
+      let sys = NSFont.systemFont(ofSize: size)
+      switch (self, monospaced) {
+        case (.body, true):
+          return NSFont.preferredFont(size: size, design: .monospaced)
 
-      case (.bold, true):
-        return NSFont.monospacedSystemFont(ofSize: size, weight: .bold)
-        
-      case (.bold, false):
-        return NSFont.boldSystemFont(ofSize: size)
+        case (.body, false):
+          return NSFont.preferredFont(size: size)
 
-      case (.boldItalic, true):
-        let desc = sys.fontDescriptor.withSymbolicTraits([.italic, .bold, .monoSpace])
-        return NSFont(descriptor: desc, size: size) ?? sys
-        
-      case (.boldItalic, false):
-        let desc = sys.fontDescriptor.withSymbolicTraits([.italic, .bold])
-        return NSFont(descriptor: desc, size: size) ?? sys
-        
-      case (.semiBold, true):
-        return NSFont.preferredFont(size: size, weight: .semibold)
-        
-      case (.semiBold, false):
-        return NSFont.preferredFont(size: size, design: .monospaced, weight: .semibold)
+        case (.italic, true):
+          let desc = sys.fontDescriptor.withSymbolicTraits([.italic, .monoSpace])
+          return NSFont(descriptor: desc, size: size) ?? sys
+
+        case (.italic, false):
+          let desc = sys.fontDescriptor.withSymbolicTraits(.italic)
+          return NSFont(descriptor: desc, size: size) ?? sys
+
+        case (.bold, true):
+          return NSFont.monospacedSystemFont(ofSize: size, weight: .bold)
+
+        case (.bold, false):
+          return NSFont.boldSystemFont(ofSize: size)
+
+        case (.boldItalic, true):
+          let desc = sys.fontDescriptor.withSymbolicTraits([.italic, .bold, .monoSpace])
+          return NSFont(descriptor: desc, size: size) ?? sys
+
+        case (.boldItalic, false):
+          let desc = sys.fontDescriptor.withSymbolicTraits([.italic, .bold])
+          return NSFont(descriptor: desc, size: size) ?? sys
+
+        case (.semiBold, true):
+          return NSFont.preferredFont(size: size, weight: .semibold)
+
+        case (.semiBold, false):
+          return NSFont.preferredFont(size: size, design: .monospaced, weight: .semibold)
+      }
     }
   }
 
