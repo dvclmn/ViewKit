@@ -38,8 +38,8 @@ extension CodableColour {
 
   public var colour: Color? {
     switch self {
-      case .hex(let hex):
-        return Color(hex: hex)
+      case .hex(let hex, let opacity):
+        return Color(hex: hex)?.opacity(opacity)
 
       case .rgb(let model):
         return Color(
@@ -49,12 +49,13 @@ extension CodableColour {
           opacity: model.alpha
         )
 
-      case .rgbRaw(let r, let g, let b):
+      case .rgbRaw(let r, let g, let b, let opacity):
         return Color(
           Color.RGBColorSpace.sRGB,
           red: r,
           green: g,
-          blue: b
+          blue: b,
+          opacity: opacity
         )
 
       case .hsv(let model):
@@ -63,31 +64,31 @@ extension CodableColour {
           hue: model.hue,
           saturation: model.saturation,
           brightness: model.brightness,
-          opacity: 1.0
+          opacity: model.alpha
         )
-      case .hsvRaw(let h, let s, let v):
+      case .hsvRaw(let h, let s, let v, let opacity):
         //      case .hsv(let model):
         //        return model.toColour
         return Color(
           hue: h,
           saturation: s,
           brightness: v,
-          opacity: 1.0
+          opacity: opacity
         )
 
-      case .grey(let v):
+      case .grey(let v, let opacity):
         return Color(
           hue: 0,
           saturation: 0,
           brightness: v,
-          opacity: 1.0
+          opacity: opacity
         )
 
-      case .system(let system):
-        return system.toColour
+      case .system(let system, let opacity):
+        return system.toColour.opacity(opacity)
 
-      case .mix(let a, let b, let t):
-        return ColourMix(a, b, mixAmount: t).colour
+      case .mix(let a, let b, let t, let opacity):
+        return ColourMix(a, b, mixAmount: t).colour.opacity(opacity)
     }
   }
 }

@@ -16,8 +16,8 @@ extension CodableColour {
 
   public var nsColor: NSColor? {
     switch self {
-      case .hex(let hex):
-        return NSColor.fromHexString(hex)
+      case .hex(let hex, let opacity):
+        return NSColor.fromHexString(hex)?.withAlphaComponent(opacity)
 
       case .rgb(let model):
         return NSColor(
@@ -32,31 +32,31 @@ extension CodableColour {
           hue: model.hue,
           saturation: model.saturation,
           brightness: model.brightness,
-          alpha: 1.0
+          alpha: model.alpha
         )
 
-      case .hsvRaw(let h, let s, let v):
+      case .hsvRaw(let h, let s, let v, let opacity):
         return NSColor(
           hue: h,
           saturation: s,
           brightness: v,
-          alpha: 1.0
+          alpha: opacity
         )
 
-      case .rgbRaw(let r, let g, let b):
-        return NSColor(red: r, green: g, blue: b, alpha: 1.0)
+      case .rgbRaw(let r, let g, let b, let opacity):
+        return NSColor(red: r, green: g, blue: b, alpha: opacity)
 
-      case .system(let system):
-        return system.toNSColor()
+      case .system(let system, let opacity):
+        return system.toNSColor()?.withAlphaComponent(opacity)
 
-      case .grey(let v):
-        return NSColor(cgColor: CGColor(gray: v, alpha: 1.0))
+      case .grey(let v, let opacity):
+        return NSColor(cgColor: CGColor(gray: v, alpha: opacity))
 
-      case .mix(let a, let b, let t):
+      case .mix(let a, let b, let t, let opacity):
         guard let colorA = a.toNSColor(),
           let colorB = b.toNSColor()
         else { return nil }
-        return colorA.blended(withFraction: t, of: colorB)
+        return colorA.blended(withFraction: t, of: colorB)?.withAlphaComponent(opacity)
     }
   }
 }
