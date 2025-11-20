@@ -8,7 +8,18 @@
 import SwiftUI
 
 extension SystemColour {
-  public var colour: Color {
+  
+  public init?(colour: Color) {
+    guard
+      let match = Self.allCases.first(where: { $0.toColour == colour })
+    else {
+      return nil
+    }
+    self = match
+  }
+
+  
+  public var toColour: Color {
     switch self {
       case .red: Color.red
       case .orange: Color.orange
@@ -35,12 +46,4 @@ extension SystemColour {
     }
   }
 
-  public init?(colour: Color) {
-    guard let match = Self.allCases.first(where: { $0.colour == colour }) else {
-      return nil
-    }
-    self = match
-  }
-  
-  
 }
