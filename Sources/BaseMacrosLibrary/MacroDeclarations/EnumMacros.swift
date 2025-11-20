@@ -94,7 +94,7 @@ public macro SetOfOptions<RawType>() = #externalMacro(
 /// }
 /// ```
 @attached(member, names: arbitrary)
-public macro OptionalInits() = #externalMacro(
+public macro Optinits() = #externalMacro(
   module: "BaseMacrosImplementation",
-  type: "OptionalInitsMacro"
+  type: "OptinitsMacro"
 )

@@ -70,11 +70,10 @@ struct CoolAnimals {
 //
 //}
 
-@OptionalInits
+@Optinits
 public enum Attribute {
-  case foreground(NSColor)
-  case font(NSFont)
-  case background(NSColor)
-  case strikeColour(NSColor)
-  case strikeStyle(NSUnderlineStyle)
+  case foreground(Int)
+  case thing(Bool)
+  case name(String)
+  case noValue
 }

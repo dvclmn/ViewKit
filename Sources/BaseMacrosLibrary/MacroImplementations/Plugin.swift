@@ -19,7 +19,7 @@ struct BaseMacrosPlugin: CompilerPlugin {
     CaseDetectionMacro.self,
     MetaEnumMacro.self,
     SetOfOptionsMacro.self,
-    OptionalInitsMacro.self,
+    OptinitsMacro.self,
   ]
 }
 
