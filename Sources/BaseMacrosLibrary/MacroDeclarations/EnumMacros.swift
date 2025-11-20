@@ -65,3 +65,36 @@ public macro SetOfOptions<RawType>() = #externalMacro(
   module: "BaseMacrosImplementation",
   type: "SetOfOptionsMacro"
 )
+
+/// Generates failable initializers for enum cases with single associated values.
+///
+/// For each enum case with a single associated value, this macro generates a failable
+/// initializer that accepts an optional parameter. The initializer returns `nil` if
+/// the parameter is `nil`, otherwise constructs the enum case.
+///
+/// Example:
+/// ```swift
+/// @OptionalCaseInits
+/// public enum Attribute {
+///   case foreground(NSColor)
+///   case font(NSFont)
+/// }
+/// ```
+///
+/// Expands to include:
+/// ```swift
+/// public init?(foreground: NSColor?) {
+///   guard let foreground else { return nil }
+///   self = .foreground(foreground)
+/// }
+///
+/// public init?(font: NSFont?) {
+///   guard let font else { return nil }
+///   self = .font(font)
+/// }
+/// ```
+@attached(member, names: arbitrary)
+public macro OptionalInits() = #externalMacro(
+  module: "BaseMacrosImplementation",
+  type: "OptionalInitsMacro"
+)

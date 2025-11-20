@@ -15,7 +15,15 @@ public enum Attribute {
   case background(NSColor)
   case strikeColour(NSColor)
   case strikeStyle(NSUnderlineStyle)
+  
+  public init?(foreground: NSColor?) {
+    guard let foreground else { return nil }
+    self = .foreground(foreground)
+  }
+}
 
+extension Attribute {
+  
   var key: NSAttributedString.Key {
     switch self {
       case .foreground: .foregroundColor
@@ -27,16 +35,17 @@ public enum Attribute {
   }
 
   /// A single-attribute dictionary
-  public var attribute: TextAttributes {
-    switch self {
-      case .foreground(let nSColor): [self.key: nSColor]
-      case .font(let nSFont): [self.key: nSFont]
-      case .background(let nSColor): [self.key: nSColor]
-      case .strikeColour(let nSColor): [self.key: nSColor]
-      case .strikeStyle(let style): [self.key: style]
-    }
-  }
-  
+  public var attribute: TextAttributes { [key: rawValue] }
+  //  public var attribute: TextAttributes {
+  //    switch self {
+  //      case .foreground(let nSColor): [self.key: nSColor]
+  //      case .font(let nSFont): [self.key: nSFont]
+  //      case .background(let nSColor): [self.key: nSColor]
+  //      case .strikeColour(let nSColor): [self.key: nSColor]
+  //      case .strikeStyle(let style): [self.key: style]
+  //    }
+  //  }
+
   public var rawValue: Any {
     switch self {
       case .foreground(let c): c
@@ -47,13 +56,16 @@ public enum Attribute {
     }
   }
 
-/// Mutates an existing attribute set
+  /// Mutates an existing attribute set
   public func update(_ attributes: inout TextAttributes) {
     attributes[self.key] = self.rawValue
   }
 }
 
 extension Attribute {
-  public static func colour(_ colour: NSColor) -> Self { .foreground(colour) }
+  public static func colour(_ colour: NSColor) -> Self {
+    .foreground(colour)
+  }
   public static func bold(_ font: NSFont) -> Self { .font(font) }
+  
 }

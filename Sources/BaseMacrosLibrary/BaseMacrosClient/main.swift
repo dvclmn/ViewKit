@@ -69,3 +69,12 @@ struct CoolAnimals {
 //  }
 //
 //}
+
+@OptionalInits
+public enum Attribute {
+  case foreground(NSColor)
+  case font(NSFont)
+  case background(NSColor)
+  case strikeColour(NSColor)
+  case strikeStyle(NSUnderlineStyle)
+}
