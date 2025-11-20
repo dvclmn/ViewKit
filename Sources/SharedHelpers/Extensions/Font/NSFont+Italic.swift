@@ -14,12 +14,14 @@ extension NSFont {
     size: CGFloat,
     monospaced: Bool = false
   ) -> NSFont {
-    return style.system(size: size, monospaced: monospaced)
+    return style.system(
+      size: size,
+      monospaced: monospaced,
+    )
   }
 
   public enum FontStyle {
     case body
-    //    case code
     case italic
     case bold
     case boldItalic
