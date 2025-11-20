@@ -27,6 +27,9 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Ha
   case clear
   case primary
   case secondary
+  case tertiary
+  case quaternary
+  case quinary
   case accentColor
 
   public init?(colour: Color) {
@@ -52,7 +55,7 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Ha
         case .primary: SystemColour.primary
         case .secondary: SystemColour.secondary
         case .accentColor: SystemColour.accentColor
-        default: nil
+//        default: nil
       }
 
     guard let result else { return nil }
@@ -80,29 +83,7 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable, Equatable, Ha
     PrimitiveColour(rawValue: self.rawValue)
   }
 
-  public var toColour: Color {
-    switch self {
-      case .red: Color.red
-      case .blue: Color.blue
-      case .teal: Color.teal
-      case .green: Color.green
-      case .orange: Color.orange
-      case .yellow: Color.yellow
-      case .pink: Color.pink
-      case .purple: Color.purple
-      case .indigo: Color.indigo
-      case .mint: Color.mint
-      case .cyan: Color.cyan
-      case .brown: Color.brown
-      case .gray: Color.gray
-      case .black: Color.black
-      case .white: Color.white
-      case .clear: Color.clear
-      case .primary: Color.primary
-      case .secondary: Color.secondary
-      case .accentColor: Color.accentColor
-    }
-  }
+ 
 
   public func toNSColor(using colourSpace: NSColorSpace = .sRGB) -> NSColor? {
 

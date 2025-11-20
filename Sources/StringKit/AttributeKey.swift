@@ -6,20 +6,25 @@
 //
 
 import AppKit
+import SharedHelpers
+import EnumMacros
 
 /// Made as a slightly more type safe alternative to
 /// `[NSAttributedString.Key: Any]`
+
+@Optinits
 public enum Attribute {
   case foreground(NSColor)
   case font(NSFont)
+//  case fontTraits(NSFontDescriptor.SymbolicTraits)
   case background(NSColor)
   case strikeColour(NSColor)
   case strikeStyle(NSUnderlineStyle)
   
-  public init?(foreground: NSColor?) {
-    guard let foreground else { return nil }
-    self = .foreground(foreground)
-  }
+//  public init?(foreground: NSColor?) {
+//    guard let foreground else { return nil }
+//    self = .foreground(foreground)
+//  }
 }
 
 extension Attribute {
@@ -27,6 +32,7 @@ extension Attribute {
   var key: NSAttributedString.Key {
     switch self {
       case .foreground: .foregroundColor
+//      case .fontTraits: .font
       case .font: .font
       case .background: .backgroundColor
       case .strikeColour: .strikethroughColor
@@ -49,6 +55,7 @@ extension Attribute {
   public var rawValue: Any {
     switch self {
       case .foreground(let c): c
+//      case .fontTraits(let traits): NSFont. NSFont(descriptor: NSFontDescriptor.), textTransform: <#T##AffineTransform?#>)
       case .font(let f): f
       case .background(let c): c
       case .strikeColour(let c): c

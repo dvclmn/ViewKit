@@ -20,7 +20,7 @@ extension NSFont {
     )
   }
 
-  public enum FontStyle {
+  public enum FontStyle: Sendable {
     case body
     case italic
     case bold
@@ -43,7 +43,9 @@ extension NSFont {
           return NSFont.preferredFont(size: size)
 
         case (.italic, true):
-          let desc = sys.fontDescriptor.withSymbolicTraits([.italic, .monoSpace])
+          let desc = sys.fontDescriptor.withSymbolicTraits([
+            .italic, .monoSpace,
+          ])
           return NSFont(descriptor: desc, size: size) ?? sys
 
         case (.italic, false):
@@ -57,18 +59,26 @@ extension NSFont {
           return NSFont.boldSystemFont(ofSize: size)
 
         case (.boldItalic, true):
-          let desc = sys.fontDescriptor.withSymbolicTraits([.italic, .bold, .monoSpace])
+          let desc = sys.fontDescriptor.withSymbolicTraits([
+            .italic, .bold, .monoSpace,
+          ])
           return NSFont(descriptor: desc, size: size) ?? sys
 
         case (.boldItalic, false):
-          let desc = sys.fontDescriptor.withSymbolicTraits([.italic, .bold])
+          let desc = sys.fontDescriptor.withSymbolicTraits([
+            .italic, .bold,
+          ])
           return NSFont(descriptor: desc, size: size) ?? sys
 
         case (.semiBold, true):
           return NSFont.preferredFont(size: size, weight: .semibold)
 
         case (.semiBold, false):
-          return NSFont.preferredFont(size: size, design: .monospaced, weight: .semibold)
+          return NSFont.preferredFont(
+            size: size,
+            design: .monospaced,
+            weight: .semibold
+          )
       }
     }
   }
