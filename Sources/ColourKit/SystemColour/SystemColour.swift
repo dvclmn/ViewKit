@@ -33,6 +33,7 @@ public enum SystemColour: String, CaseIterable, Sendable, Codable,
   case quaternary
   case quinary
   case accentColor
+  case link
 }
 
 extension SystemColour {

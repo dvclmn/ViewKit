@@ -43,6 +43,7 @@ extension SystemColour {
       case .quaternary: Color(NSColor.quaternaryLabelColor)
       case .quinary: Color(NSColor.quaternaryLabelColor.opacity(0.5))
       case .accentColor: Color.accentColor
+      case .link: Color(NSColor.linkColor)
     }
   }
 

@@ -52,6 +52,7 @@ extension SystemColour {
         case .quaternary: NSColor.quaternaryLabelColor
         case .quinary: NSColor.quinaryLabel
         case .accentColor: NSColor.controlAccentColor
+        case .link: NSColor.linkColor
       }
     guard let result = colour.usingColorSpace(colourSpace) else {
       print(

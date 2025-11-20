@@ -25,7 +25,11 @@ extension CodableColour {
   public static let clear: Self = .system(.clear)
   public static let primary: Self = .system(.primary)
   public static let secondary: Self = .system(.secondary)
+  public static let tertiary: Self = .system(.tertiary)
+  public static let quaternary: Self = .system(.quaternary)
+  public static let quinary: Self = .system(.quinary)
   public static let accentColor: Self = .system(.accentColor)
+  public static let link: Self = .system(.link)
 
   static var olive: Self {
     Colour.hsvRaw(

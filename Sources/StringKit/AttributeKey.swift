@@ -6,35 +6,29 @@
 //
 
 import AppKit
-import SharedHelpers
 import EnumMacros
+import SharedHelpers
 
 /// Made as a slightly more type safe alternative to
 /// `[NSAttributedString.Key: Any]`
 
 @Optinits
 public enum Attribute {
-  case foreground(NSColor)
+  case fore(NSColor)
   case font(NSFont)
-//  case fontTraits(NSFontDescriptor.SymbolicTraits)
-  case background(NSColor)
+  case bg(NSColor)
   case strikeColour(NSColor)
   case strikeStyle(NSUnderlineStyle)
-  
-//  public init?(foreground: NSColor?) {
-//    guard let foreground else { return nil }
-//    self = .foreground(foreground)
-//  }
+
 }
 
 extension Attribute {
-  
+
   var key: NSAttributedString.Key {
     switch self {
-      case .foreground: .foregroundColor
-//      case .fontTraits: .font
+      case .fore: .foregroundColor
       case .font: .font
-      case .background: .backgroundColor
+      case .bg: .backgroundColor
       case .strikeColour: .strikethroughColor
       case .strikeStyle: .strikethroughStyle
     }
@@ -42,22 +36,12 @@ extension Attribute {
 
   /// A single-attribute dictionary
   public var attribute: TextAttributes { [key: rawValue] }
-  //  public var attribute: TextAttributes {
-  //    switch self {
-  //      case .foreground(let nSColor): [self.key: nSColor]
-  //      case .font(let nSFont): [self.key: nSFont]
-  //      case .background(let nSColor): [self.key: nSColor]
-  //      case .strikeColour(let nSColor): [self.key: nSColor]
-  //      case .strikeStyle(let style): [self.key: style]
-  //    }
-  //  }
 
   public var rawValue: Any {
     switch self {
-      case .foreground(let c): c
-//      case .fontTraits(let traits): NSFont. NSFont(descriptor: NSFontDescriptor.), textTransform: <#T##AffineTransform?#>)
+      case .fore(let c): c
       case .font(let f): f
-      case .background(let c): c
+      case .bg(let c): c
       case .strikeColour(let c): c
       case .strikeStyle(let s): s.rawValue
     }
@@ -71,8 +55,8 @@ extension Attribute {
 
 extension Attribute {
   public static func colour(_ colour: NSColor) -> Self {
-    .foreground(colour)
+    .fore(colour)
   }
   public static func bold(_ font: NSFont) -> Self { .font(font) }
-  
+
 }
