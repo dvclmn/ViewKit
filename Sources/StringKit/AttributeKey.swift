@@ -19,7 +19,6 @@ public enum Attribute {
   case bg(NSColor)
   case strikeColour(NSColor)
   case strikeStyle(NSUnderlineStyle)
-
 }
 
 extension Attribute {

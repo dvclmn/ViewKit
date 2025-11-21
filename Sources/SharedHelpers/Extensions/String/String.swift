@@ -7,6 +7,32 @@
 
 import SwiftUI
 
+// Source - https://stackoverflow.com/a
+// Posted by Leo Dabus, modified by community. See post 'Timeline' for change history
+// Retrieved 2025-11-21, License - CC BY-SA 4.0
+extension StringProtocol {
+  public subscript(offset offset: Int) -> Element {
+    self[index(startIndex, offsetBy: offset)]
+  }
+
+  public subscript(range range: Range<Int>) -> SubSequence {
+    prefix(range.lowerBound + range.count).suffix(range.count)
+  }
+  public subscript(range range: ClosedRange<Int>) -> SubSequence {
+    prefix(range.lowerBound + range.count).suffix(range.count)
+  }
+  public subscript(range range: PartialRangeThrough<Int>) -> SubSequence {
+    prefix(range.upperBound.advanced(by: 1))
+  }
+  public subscript(range range: PartialRangeUpTo<Int>) -> SubSequence {
+    prefix(range.upperBound)
+  }
+
+  subscript(_ range: PartialRangeFrom<Int>) -> SubSequence {
+    suffix(Swift.max(0, count - range.lowerBound))
+  }
+}
+
 extension String {
 
   /// Pads the string with spaces on the right to at least the given width.
