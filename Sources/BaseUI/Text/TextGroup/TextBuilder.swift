@@ -32,8 +32,17 @@ public struct TextBuilder {
     components.flatMap { $0 }
   }
   
+}
+extension TextBuilder {
   /// Allow a single Text literal to be treated as an array of one
   public static func buildExpression(_ expression: Text) -> [Text] {
     [expression]
   }
+  
+  public static func buildExpression(_ expression: ForEach<[String], String, Text>) -> [Text] {
+    expression.data.map { string in
+      Text(string)
+    }
+  }
+  
 }

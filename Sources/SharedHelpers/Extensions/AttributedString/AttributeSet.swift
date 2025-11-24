@@ -8,6 +8,7 @@
 import SwiftUI
 
 public typealias TextAttributes = [NSAttributedString.Key: Any]
+//public typealias TextAttributes = [NSAttributedString.Key: Any]
 
 public typealias FontAttributes = NSFontDescriptor.AttributeName
 public typealias TraitKey = NSFontDescriptor.TraitKey
@@ -37,20 +38,20 @@ public struct AttributeSet: ExpressibleByDictionaryLiteral {
     ]
     self.attributes = baseAttributes.merging(additionalAttributes) { (_, new) in new }
   }
-  
-//  public init(
-//    font: NSUIFont,
-//    foreground: NSUIColor = .label,
-//    background: NSUIColor = .clear,
-//    additionalAttributes: Attributes = [:]
-//  ) {
-//    let baseAttributes: Attributes = [
-//      .font: font,
-//      .foregroundColor: foreground,
-//      .backgroundColor: background,
-//    ]
-//    self.attributes = baseAttributes.merging(additionalAttributes) { (_, new) in new }
-//  }
+
+  //  public init(
+  //    font: NSUIFont,
+  //    foreground: NSUIColor = .label,
+  //    background: NSUIColor = .clear,
+  //    additionalAttributes: Attributes = [:]
+  //  ) {
+  //    let baseAttributes: Attributes = [
+  //      .font: font,
+  //      .foregroundColor: foreground,
+  //      .backgroundColor: background,
+  //    ]
+  //    self.attributes = baseAttributes.merging(additionalAttributes) { (_, new) in new }
+  //  }
 
   public subscript(_ key: TextAttributes.Key) -> Any? {
     get { attributes[key] }
@@ -62,13 +63,13 @@ public struct AttributeSet: ExpressibleByDictionaryLiteral {
   }
 
   /// Add method to convert to AttributeContainer for SwiftUI
-//  public func toAttributeContainer() -> AttributeContainer {
-//    var container = AttributeContainer()
-//    for (key, value) in attributes {
-//      container[AttributeScopes.SwiftUIAttributes] = value
-//    }
-//    return container
-//  }
+  //  public func toAttributeContainer() -> AttributeContainer {
+  //    var container = AttributeContainer()
+  //    for (key, value) in attributes {
+  //      container[AttributeScopes.SwiftUIAttributes] = value
+  //    }
+  //    return container
+  //  }
 }
 
 extension AttributeSet: Sequence {

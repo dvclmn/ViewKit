@@ -16,6 +16,7 @@ import SharedHelpers
 public enum Attribute {
   case fore(NSColor)
   case font(NSFont)
+//  case font(NSFontDescriptor.SymbolicTraits)
   case bg(NSColor)
   case strikeColour(NSColor)
   case strikeStyle(NSUnderlineStyle)
@@ -35,6 +36,7 @@ extension Attribute {
 
   /// A single-attribute dictionary
   public var attribute: TextAttributes { [key: rawValue] }
+  
 
   public var rawValue: Any {
     switch self {
@@ -56,6 +58,6 @@ extension Attribute {
   public static func colour(_ colour: NSColor) -> Self {
     .fore(colour)
   }
-  public static func bold(_ font: NSFont) -> Self { .font(font) }
+//  public static func bold(_ font: NSFont) -> Self { .font(font) }
 
 }

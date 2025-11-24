@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 18/1/2025.
 //
 
-
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 public struct QuickPicker<Item: Pickable & Shortcuttable>: View {
   @Environment(\.explicitHeight) private var explicitHeight
@@ -17,7 +16,7 @@ public struct QuickPicker<Item: Pickable & Shortcuttable>: View {
   let hasLabeledContentWrapper: Bool
   let areShortcutsEnabled: Bool
   let maxItems: Int?
-  
+
   public init(
     item: Binding<Item>,
     style: QuickPickerStyle = .plain,
@@ -77,7 +76,5 @@ extension QuickPicker {
         }
       }
     }
-    //    .labelsHidden()
-    //    .fixedSize()
   }
 }

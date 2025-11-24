@@ -42,11 +42,13 @@ extension NSRange {
 }
 
 extension Range where Bound == String.Index {
-  public func toNSRange(in string: String) -> NSRange {
+  public func toNSRange(in string: String) -> NSRange? {
     string.nsRange(from: self)
   }
 
-  public func getAttributedRange(in attrString: AttributedString) -> Range<AttributedString.Index>? {
+  public func getAttributedRange(
+    in attrString: AttributedString
+  ) -> Range<AttributedString.Index>? {
 
     /// Convert String.Index range to AttributedString.Index range
     ///
@@ -75,5 +77,18 @@ extension Range {
   public init<Collection: Swift.Collection>(_ indices: DefaultIndices<Collection>)
   where Collection.Index == Bound {
     self = indices.startIndex..<indices.endIndex
+  }
+}
+
+extension Array where Element == Range<String.Index> {
+  public func toNSRanges(in string: String) -> [NSRange] {
+    self.compactMap { stringRange in
+      guard let range = stringRange.toNSRange(in: string) else {
+        print("Could not convert to NSRange")
+        return nil
+      }
+      return range
+
+    }
   }
 }

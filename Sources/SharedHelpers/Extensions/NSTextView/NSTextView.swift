@@ -55,5 +55,26 @@ extension NSTextView {
     /// Use `NSAttributedString`'s `substring(with:) `method
     return textStorage.attributedSubstring(from: validRange).string
   }
+  
+  public func boundingRect(
+    for range: NSRange,
+    lm layoutManager: NSLayoutManager,
+    tc textContainer: NSTextContainer,
+    
+  ) -> CGRect {
+    let glyphRange = layoutManager.glyphRange(
+      forCharacterRange: range,
+      actualCharacterRange: nil
+    )
+    
+    /// Get the bounding rect for this glyph range
+    /// This tells us where the text physically appears on screen
+    let boundingRect = layoutManager.boundingRect(
+      forGlyphRange: glyphRange,
+      in: textContainer
+    )
+    
+    return boundingRect
+  }
 
 }

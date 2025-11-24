@@ -61,7 +61,10 @@ extension String {
     return words.count
   }
 
-  public func nsRange(from range: Range<String.Index>) -> NSRange {
+  public func nsRange(from range: Range<String.Index>) -> NSRange? {
+    guard range.lowerBound >= startIndex, range.upperBound <= endIndex else {
+      return nil
+    }
     return NSRange(range, in: self)
   }
 
@@ -121,3 +124,9 @@ extension UUID {
     self.uuidString.truncate(to: maxLength, style: style)
   }
 }
+
+//extension Range where Bound == String.Index {
+//  public func toNSRange(in string: String) -> NSRange? {
+//    return string.nsRange(from: self)
+//  }
+//}
