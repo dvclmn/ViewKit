@@ -21,7 +21,6 @@ public protocol PreferenceSettable: AnyObject, Observable {
   func setPref<T>(_ keyPath: WritableKeyPath<Prefs, T>, value: T)
   func prefBinding<T>(_ keyPath: WritableKeyPath<Prefs, T>) -> Binding<T>
   func togglePref(_ keyPath: WritableKeyPath<Prefs, Bool>)
-
 }
 
 public protocol FontSizePreferences {
@@ -31,14 +30,6 @@ public protocol FontSizePreferences {
   static var defaultSize: CGFloat { get }
 }
 
-//public protocol FontSizable where PrefSetter.Prefs == Self {
-//  associatedtype PrefSetter: PreferenceSettable
-////  associatedtype Prefs
-//  var fontSize: CGFloat { get set }
-//  var fontStepSize: CGFloat { get }
-//  var fontSizeRange: ClosedRange<CGFloat> { get }
-//}
-
 @MainActor
 @CommandsBuilder
 public func FontSizeCommands<Store: FontSizeControlling>(
@@ -47,8 +38,8 @@ public func FontSizeCommands<Store: FontSizeControlling>(
 ) -> some Commands {
   let prefs = store.wrappedValue.prefs
   CommandGroup(after: .newItem) {
-    Menu("Font Size") {
 
+    Menu("Font Size") {
       Button {
         store.wrappedValue.setPref(
           \.fontSize,
@@ -78,7 +69,6 @@ public func FontSizeCommands<Store: FontSizeControlling>(
       Button {
         if prefs.fontSize != Store.Prefs.defaultSize {
           store.wrappedValue.setPref(\.fontSize, value: Store.Prefs.defaultSize)
-          //                store.setPref(\.fontSize, value: Preferences.defaultFontSize)
           //                popup.showPopup("Reset font size to default")
         }
       } label: {
@@ -90,20 +80,4 @@ public func FontSizeCommands<Store: FontSizeControlling>(
   }
 }
 
-//struct MenuCommands: Commands {
-//  @Bindable var store: AppHandler
-//  //  @FocusedBinding(\.exampleData) private var exampleData
-//  @Bindable var popup: Popup
-//
-//  var body: some Commands {
-//    InspectorCommands()
-//    SidebarCommands()
-//    ToolbarCommands()
-//    TextFormattingCommands()
-//    TextEditingCommands()
-//
-//
-//  }
-//}
 #endif
-//

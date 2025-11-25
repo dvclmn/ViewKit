@@ -17,7 +17,8 @@ public struct QuickPicker<RowContent: View, Item: Pickable & Shortcuttable>: Vie
   let hasLabeledContentWrapper: Bool
   let areShortcutsEnabled: Bool
   let maxItems: Int?
-  let rowContent: PickerOutput?
+  let rowContent: PickerOutput
+  private let hasCustomContent: Bool
 
   public init(
     item: Binding<Item>,
@@ -33,6 +34,7 @@ public struct QuickPicker<RowContent: View, Item: Pickable & Shortcuttable>: Vie
     self.areShortcutsEnabled = areShortcutsEnabled
     self.maxItems = maxItems
     self.rowContent = rowContent
+    self.hasCustomContent = true
   }
 
   public init(
@@ -42,15 +44,24 @@ public struct QuickPicker<RowContent: View, Item: Pickable & Shortcuttable>: Vie
     areShortcutsEnabled: Bool = false,
     maxItems: Int? = nil,
   ) where RowContent == EmptyView {
-    self.init(
-      item: item,
-      style: style,
-      hasLabeledContentWrapper: hasLabeledContentWrapper,
-      areShortcutsEnabled: areShortcutsEnabled,
-      maxItems: maxItems
-    ) { _, _ in
-      EmptyView()
-    }
+    self._item = item
+    self.style = style
+    self.hasLabeledContentWrapper = hasLabeledContentWrapper
+    self.areShortcutsEnabled = areShortcutsEnabled
+    self.maxItems = maxItems
+    self.rowContent = { _, _ in EmptyView() }
+    self.hasCustomContent = false
+
+    //    self.init(
+    //      item: item,
+    //      style: style,
+    //      hasLabeledContentWrapper: hasLabeledContentWrapper,
+    //      areShortcutsEnabled: areShortcutsEnabled,
+    //      maxItems: maxItems
+    //    ) { _, _ in
+    //      EmptyView()
+    //    }
+
   }
 
   public var body: some View {
@@ -98,11 +109,11 @@ extension QuickPicker {
       ForEach(Item.allCases.prefix(maxItems ?? Int.max)) { pickerItem in
 
         RowView(pickerItem) { hovering in
-
-          if let rowContent {
+          if hasCustomContent {
             rowContent(pickerItem, hovering)
           } else {
-            MaybeLabel(item.label)
+//            Text("Shrim")
+            MaybeLabel(pickerItem.label)
           }
         }
       }

@@ -95,4 +95,23 @@ extension String {
     return result
   }
 
+  public func insertingLineBreak(every characters: Int) -> String {
+    var lines: [String] = []
+    for startIdx in stride(from: 0, to: count, by: characters) {
+      let endIndex = index(startIndex, offsetBy: min(startIdx + characters, count))
+      let start = index(startIndex, offsetBy: startIdx)
+      let line = String(self[start..<endIndex])
+      lines.append(line)
+    }
+
+    return lines.joined(separator: "\n")
+    //    for (index, character) in self.enumerated() {
+    //      if index % n == 0 && index != 0 {
+    //        result += "\n"
+    //      }
+    //      result.append(character)
+    //    }
+    //    return result
+  }
+
 }
