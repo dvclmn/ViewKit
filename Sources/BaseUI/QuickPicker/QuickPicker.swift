@@ -8,7 +8,8 @@
 import SharedHelpers
 import SwiftUI
 
-public struct QuickPicker<Item: Pickable & Shortcuttable>: View {
+public struct QuickPicker<RowContent: View, Item: Pickable & Shortcuttable>: View {
+  public typealias PickerOutput = (Item, Bool) -> RowContent
   @Environment(\.explicitHeight) private var explicitHeight
 
   @Binding var item: Item
@@ -16,65 +17,101 @@ public struct QuickPicker<Item: Pickable & Shortcuttable>: View {
   let hasLabeledContentWrapper: Bool
   let areShortcutsEnabled: Bool
   let maxItems: Int?
+  let rowContent: PickerOutput?
 
   public init(
     item: Binding<Item>,
     style: QuickPickerStyle = .plain,
     hasLabeledContentWrapper: Bool = true,
     areShortcutsEnabled: Bool = false,
-    maxItems: Int? = nil  // zero = no maximum
+    maxItems: Int? = nil,
+    @ViewBuilder rowContent: @escaping PickerOutput
   ) {
     self._item = item
     self.style = style
     self.hasLabeledContentWrapper = hasLabeledContentWrapper
     self.areShortcutsEnabled = areShortcutsEnabled
     self.maxItems = maxItems
+    self.rowContent = rowContent
+  }
+
+  public init(
+    item: Binding<Item>,
+    style: QuickPickerStyle = .plain,
+    hasLabeledContentWrapper: Bool = true,
+    areShortcutsEnabled: Bool = false,
+    maxItems: Int? = nil,
+  ) where RowContent == EmptyView {
+    self.init(
+      item: item,
+      style: style,
+      hasLabeledContentWrapper: hasLabeledContentWrapper,
+      areShortcutsEnabled: areShortcutsEnabled,
+      maxItems: maxItems
+    ) { _, _ in
+      EmptyView()
+    }
   }
 
   public var body: some View {
 
-    switch style {
-      case .plain:
-        if hasLabeledContentWrapper {
-          LabeledContent {
-            PickerContent()
-          } label: {
-            MaybeLabel(Item.pickerLabel)
-              .foregroundStyle(.secondary)
+    Group {
+      switch style {
+        case .plain:
+          PlainStyle()
+
+        case .capsule:
+          ItemScrollable(
+            scrolledItem: $item,
+            axis: .horizontal,
+            showsIndicators: false
+          ) { scrollableItem in
+            MaybeLabel(item.label)
           }
-        } else {
-          PickerContent()
-        }
-
-      case .capsule:
-
-        ItemScrollable(
-          scrolledItem: $item,
-          axis: .horizontal,
-          showsIndicators: false
-        ) { scrollableItem in
-          MaybeLabel(item.label)
-          //            .setIsSelected(item == scrollableItem)
-          //            .font(.callout.weight(.medium))
-        }
-
+      }
     }
-
+    .environment(\.shortcutsEnabled, areShortcutsEnabled)
   }
 }
 
 extension QuickPicker {
+
+  @ViewBuilder
+  private func PlainStyle() -> some View {
+    if hasLabeledContentWrapper {
+      LabeledContent {
+        PickerContent()
+      } label: {
+        MaybeLabel(Item.pickerLabel)
+          .foregroundStyle(.secondary)
+      }
+    } else {
+      PickerContent()
+    }
+
+  }
+
   @ViewBuilder
   func PickerContent() -> some View {
     Picker(Item.pickerLabel.text, selection: $item) {
-      ForEach(Item.allCases.prefix(maxItems ?? 99)) { pickerItem in
-        if areShortcutsEnabled, let shortcut = pickerItem.keyboardShortcut {
-          MaybeLabel(pickerItem.label).tag(pickerItem)
-            .keyboardShortcut(shortcut)
-        } else {
-          MaybeLabel(pickerItem.label).tag(pickerItem)
+      
+      ForEach(Item.allCases.prefix(maxItems ?? Int.max)) { pickerItem in
+        
+        
+        RowView(pickerItem) { hovering in
+          
+          if let rowContent {
+            rowContent(pickerItem, hovering)
+          } else {
+            MaybeLabel(item.label)
+          }
         }
       }
     }
+  }
+
+  @ViewBuilder
+  private func ViewName() -> some View {
+
   }
 }

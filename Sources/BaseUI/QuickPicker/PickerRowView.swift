@@ -1,0 +1,53 @@
+//
+//  PickerRowView.swift
+//  BaseHelpers
+//
+//  Created by Dave Coleman on 24/11/2025.
+//
+
+import CoreTools
+import SwiftUI
+
+extension QuickPicker {
+  struct RowView<Content: View>: View {
+    @Environment(\.shortcutsEnabled) private var areShortcutsEnabled
+    @State private var isHovering: Bool = false
+
+    let item: Item
+    let content: (Bool) -> Content
+
+    init(
+      _ item: Item,
+      @ViewBuilder content: @escaping (Bool) -> Content
+        //      @ViewBuilder rowContent: @escaping PickerOutput
+    ) {
+      self.item = item
+      self.content = content
+    }
+
+    var body: some View {
+
+      content(isHovering)
+        //      Group {
+        //        if let rowContent {
+        //        } else {
+        //          
+        //        }
+        //      }
+        .tag(item)
+        .keyboardShortcut(shortcut)
+
+        .onHover { hovering in
+          self.isHovering = hovering
+        }
+
+      //      rowContent
+    }
+  }
+}
+extension QuickPicker.RowView {
+  private var shortcut: KeyboardShortcut? {
+    guard areShortcutsEnabled else { return nil }
+    return item.keyboardShortcut
+  }
+}
