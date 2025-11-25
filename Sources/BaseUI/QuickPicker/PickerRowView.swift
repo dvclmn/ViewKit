@@ -31,7 +31,7 @@ extension QuickPicker {
         //      Group {
         //        if let rowContent {
         //        } else {
-        //          
+        //
         //        }
         //      }
         .tag(item)

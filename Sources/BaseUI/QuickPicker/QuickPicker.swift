@@ -94,12 +94,11 @@ extension QuickPicker {
   @ViewBuilder
   func PickerContent() -> some View {
     Picker(Item.pickerLabel.text, selection: $item) {
-      
+
       ForEach(Item.allCases.prefix(maxItems ?? Int.max)) { pickerItem in
-        
-        
+
         RowView(pickerItem) { hovering in
-          
+
           if let rowContent {
             rowContent(pickerItem, hovering)
           } else {
