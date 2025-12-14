@@ -72,12 +72,17 @@ public struct QuickPicker<RowContent: View, Item: Pickable & Shortcuttable>: Vie
           PlainStyle()
 
         case .capsule:
-          ItemScrollable(
-            scrolledItem: $item,
-            axis: .horizontal,
-            showsIndicators: false
-          ) { scrollableItem in
-            MaybeLabel(item.label)
+          if #available(macOS 14.0, *) {
+            ItemScrollable(
+              scrolledItem: $item,
+              axis: .horizontal,
+              showsIndicators: false
+            ) { scrollableItem in
+              MaybeLabel(item.label)
+            }
+          } else {
+            Text("Need to fix")
+            // Fallback on earlier versions
           }
       }
     }

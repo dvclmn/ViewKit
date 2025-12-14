@@ -10,7 +10,7 @@ import LayoutKit
 import SwiftUI
 import SharedHelpers
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 public struct BouncyDragModifier: ViewModifier {
   @State private var store: BouncyHandler
 
@@ -28,25 +28,31 @@ public struct BouncyDragModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
 
-    content
+    if #available(macOS 14.0, *) {
+      content
       /// Generous debounce, high polling rate not required here
-      .viewSize(mode: .debounce(1)) { size in
-        store.containerSize = size
-      }
+        .viewSize(mode: .debounce(1)) { size in
+          store.containerSize = size
+        }
+      
       //      .offset(store.wigglingOffset)
-      .offset(store.dragOffset)
+        .offset(store.dragOffset)
       //      .scaleEffect(store.handleScale())
-
-      #if canImport(AppKit)
-    .onPanGesture(isEnabled: store.isInputMethodEnabled(.twoFingerPan)) { phase in
-      handlePanGesture(phase)
+      
+#if canImport(AppKit)
+        .onPanGesture(isEnabled: store.isInputMethodEnabled(.twoFingerPan)) { phase in
+          handlePanGesture(phase)
+        }
+#endif
+        .simultaneousGesture(gesture, isEnabled: store.isInputMethodEnabled(.clickAndDrag))
+        .animation(
+          .snappy(duration: 0.28, extraBounce: 0.45 * store.handleScale()),
+          value: store.dragOffset
+        )
+    } else {
+      content
+      // Fallback on earlier versions
     }
-      #endif
-      .simultaneousGesture(gesture, isEnabled: store.isInputMethodEnabled(.clickAndDrag))
-      .animation(
-        .snappy(duration: 0.28, extraBounce: 0.45 * store.handleScale()),
-        value: store.dragOffset
-      )
     //      .animation(
     //        Styles.animationSpringQuick,
     //        value: store.complexOscillation
@@ -55,7 +61,7 @@ public struct BouncyDragModifier: ViewModifier {
   }
 }
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 extension BouncyDragModifier {
 
   private func handlePanGesture(_ phase: PanPhase) {
@@ -92,7 +98,7 @@ extension BouncyDragModifier {
 
 }
 
-@available(macOS 14.0, *)
+
 extension View {
   public func bouncyDrag(
     tension: CGFloat = 180,  // Higher = stiffer

@@ -6,9 +6,7 @@
 //  Copyright © 2023 Apple. All rights reserved.
 //
 
-
 import SharedHelpers
-
 import SwiftUI
 
 /// Parts:
@@ -19,6 +17,7 @@ import SwiftUI
 /// - onEnd callback / phase
 /// - Units
 
+@available(macOS 14.0, *)
 struct SliderCustom<Label: View>: View {
   @Environment(\.explicitHeight) private var explicitHeight
   @Environment(\.cornerRounding) private var cornerRounding
@@ -77,6 +76,7 @@ struct SliderCustom<Label: View>: View {
   }
 }
 
+@available(macOS 14.0, *)
 extension SliderCustom {
 
   var trackHeightForFrame: CGFloat {

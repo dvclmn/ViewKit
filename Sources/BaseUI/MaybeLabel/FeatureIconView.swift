@@ -5,10 +5,10 @@
 //  Created by Dave Coleman on 12/8/2025.
 //
 
-
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
+//@available(macOS 14.0, *)
 public struct FeatureIconView: View {
   @Environment(\.labelDisplay) private var labelDisplay
   let icon: IconLiteral
@@ -21,6 +21,7 @@ public struct FeatureIconView: View {
   }
 }
 
+//@available(macOS 14.0, *)
 extension FeatureIconView {
   // MARK: - Initialisers
 

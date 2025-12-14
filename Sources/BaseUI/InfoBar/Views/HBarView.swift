@@ -37,6 +37,8 @@ public struct InfoBar: View {
     .background {
       Rectangle()
         .fill(.thinMaterial)
+      
+      Rectangle()
         .fill(backgroundStyle ?? AnyShapeStyle(.black.opacity(0.06)))
     }
     /// Small top highlight for contrast against background

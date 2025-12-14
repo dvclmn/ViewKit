@@ -10,6 +10,7 @@
 import SwiftUI
 import SharedHelpers
 
+@available(macOS 14.0, *)
 extension Flexi {
 
   @MainActor

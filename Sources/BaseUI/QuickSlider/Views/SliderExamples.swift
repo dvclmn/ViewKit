@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct SliderExamples: View {
 
   @State private var zoomValue: CGFloat = 2.0
@@ -30,7 +31,7 @@ public struct SliderExamples: View {
         range: zoomRange.toDoubleRange,
         type: .custom(.opacitySlider)
       )
-//      .setExplicitHeight(5)
+      //      .setExplicitHeight(5)
       .environment(\.explicitHeight, 5)
       .environment(\.trackComponents, [.thumb])
       .padding()

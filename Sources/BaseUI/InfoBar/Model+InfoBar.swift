@@ -39,7 +39,7 @@ public struct InfoBarItemsModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-      .safeAreaPadding(.bottom, Styles.infoBarHeight)
+      .paddingCompatible(.bottom, Styles.infoBarHeight)
       .onPreferenceChange(InfoBarKey.self) { newItems in
         updateIfChanged(&items, to: newItems)
         //        updateIfChanged(newItems, into: &items)

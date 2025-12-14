@@ -69,9 +69,15 @@ extension StateView {
   @ViewBuilder
   private func IconView() -> some View {
     if let icon = label.icon {
-      FeatureIconView(icon: icon, fontSize: scale(iconSize, for: controlSize))
-        .offset(y: -scale(iconSize * 1.3, for: controlSize))
-        .foregroundStyle(.secondary.opacity(0.86))
+      
+      if #available(macOS 14.0, *) {
+        FeatureIconView(icon: icon, fontSize: scale(iconSize, for: controlSize))
+          .offset(y: -scale(iconSize * 1.3, for: controlSize))
+          .foregroundStyle(.secondary.opacity(0.86))
+      } else {
+        
+        // Fallback on earlier versions
+      }
     }
   }
 
