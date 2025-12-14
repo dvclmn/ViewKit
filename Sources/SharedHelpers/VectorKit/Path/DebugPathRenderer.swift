@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct PathDebugRenderer {
   let result: PathDebugResult
   let config: PathDebugConfig
@@ -69,6 +70,7 @@ public struct PathDebugRenderer {
   }
 }
 
+@available(macOS 14.0, *)
 extension GraphicsContext {
 
   public func debugPath(

@@ -24,6 +24,7 @@ public enum KeyboardElementDisplayStyle {
   }
 }
 
+@available(macOS 14.0, *)
 extension KeyboardShortcut {
   public func displayString(
     keyStyle: KeyboardElementDisplayStyle = .symbolLiteral,

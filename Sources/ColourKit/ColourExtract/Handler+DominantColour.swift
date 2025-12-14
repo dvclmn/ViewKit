@@ -14,6 +14,7 @@ import simd
 
 @MainActor
 @Observable
+@available(macOS 14.0, *)
 public final class DominantColourHandler {
 
   public var isBusy: Bool = false
@@ -103,6 +104,7 @@ public final class DominantColourHandler {
 
 }
 
+@available(macOS 14.0, *)
 extension DominantColourHandler {
 
   public func didSetCentroids() {

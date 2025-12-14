@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct ShapeDebug<S: Shape>: View {
 
   public let shape: S
