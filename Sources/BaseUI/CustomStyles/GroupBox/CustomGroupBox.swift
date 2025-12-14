@@ -29,16 +29,26 @@ public struct CustomGroupBox: GroupBoxStyle {
       .padding(.top, Styles.sizeRegular)
       .padding(.bottom, Styles.sizeRegular + 1)
       .background {
-        RoundedRectangle(cornerRadius: cornerRounding ?? Styles.sizeTiny)
-          .fill(backgroundStyle ?? AnyShapeStyle(Color.white.opacity(0.03)))
-//          .fill(.white.opacity(emphasis == .selected ? 0.06 : 0.03))
-          .stroke(
-            Color.white.opacity(0.1),
-//            strokeConfig.colour,
-//            strokeConfig.colour.opacity(emphasis == .selected ? 1.0 : 0.6),
-            lineWidth: 1.0
-//            lineWidth: strokeConfig.thickness
-          )
+        
+        FilledShape(
+          .rect(cornerRadius: cornerRounding ?? Styles.sizeTiny),
+          backgroundStyle ?? AnyShapeStyle(Color.white.opacity(0.03)),
+          strokeColour: Color.white.opacity(0.1)
+        )
+        
+//        RoundedRectangle(cornerRadius: cornerRounding ?? Styles.sizeTiny)
+//          .fill(backgroundStyle ?? AnyShapeStyle(Color.white.opacity(0.03)))
+//        
+//        
+//        
+////          .fill(.white.opacity(emphasis == .selected ? 0.06 : 0.03))
+//          .stroke(
+//            Color.white.opacity(0.1),
+////            strokeConfig.colour,
+////            strokeConfig.colour.opacity(emphasis == .selected ? 1.0 : 0.6),
+//            lineWidth: 1.0
+////            lineWidth: strokeConfig.thickness
+//          )
           .animation(Styles.animationSpringQuickNSubtle, value: isEmphasised)
       }
     }

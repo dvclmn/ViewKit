@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 27/5/2024.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 //@available(macOS 14.0, *)
 public struct StateView<Content: View>: View {
@@ -28,19 +28,9 @@ public struct StateView<Content: View>: View {
       spacing: scale(16, for: controlSize, min: 6)
     ) {
 
-      if #available(macOS 14.0, *) {
-        TextView()
-        
+      TextView()
         /// Padding to achieve nice vertical optical centering
-          .safeAreaPadding(.top, paddingCompat)
-      } else {
-        TextView()
-        
-        /// Padding to achieve nice vertical optical centering
-          .padding(.top, paddingCompat)
-        
-        // Fallback on earlier versions
-      }
+        .paddingCompatible(.top, label.icon != nil ? scale(iconSize * 1.4, for: controlSize) : .zero)
 
       // MARK: - Message
       MessageView()
@@ -49,16 +39,13 @@ public struct StateView<Content: View>: View {
     .monospacedDigit()
     .padding(.bottom, Styles.sizeRegular)
     .padding(.horizontal, Styles.sizeRegular)
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: layoutAlignment ?? .center)
+    .frame(
+      maxWidth: .infinity, maxHeight: .infinity, alignment: layoutAlignment ?? .center)
   }
 }
 
 //@available(macOS 14.0, *)
 extension StateView {
-  
-  private var paddingCompat: CGFloat {
-    label.icon != nil ? scale(iconSize * 1.4, for: controlSize) : .zero
-  }
 
   private var iconSize: CGFloat {
     let baseIconSize: CGFloat = 46
@@ -71,9 +58,9 @@ extension StateView {
       .multilineTextAlignment(.center)
       .font(.system(size: scale(22, for: controlSize)))
       .foregroundStyle(.secondary)
-    
-    /// Pan gesture view was causing `FeatureIconView` to take
-    /// up too much space, so using overlay to keep it contained better
+
+      /// Pan gesture view was causing `FeatureIconView` to take
+      /// up too much space, so using overlay to keep it contained better
       .overlay(alignment: .top) {
         IconView()
       }
@@ -101,13 +88,12 @@ extension StateView {
 }
 
 // MARK: - Initialisers
-@available(macOS 14.0, *)
 extension StateView {
 
   public init(
     _ title: String,
     message: String? = nil,
-//    iconSize: CGFloat = 46,
+    //    iconSize: CGFloat = 46,
     @ViewBuilder additionalContent: () -> Content = { EmptyView() }
   ) {
     self.label = QuickLabel(title)
@@ -120,7 +106,7 @@ extension StateView {
     _ title: String,
     icon: IconLiteral? = nil,
     message: String? = nil,
-//    iconSize: CGFloat = 46,
+    //    iconSize: CGFloat = 46,
     @ViewBuilder additionalContent: () -> Content = { EmptyView() }
   ) {
     self.label = QuickLabel(title, icon: icon)
@@ -132,7 +118,7 @@ extension StateView {
   public init(
     label: QuickLabel,
     message: String? = nil,
-//    iconSize: CGFloat = 46,
+    //    iconSize: CGFloat = 46,
     @ViewBuilder additionalContent: () -> Content = { EmptyView() }
   ) {
     self.label = label

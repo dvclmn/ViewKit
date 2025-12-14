@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct ExpandingTextEditor: View {
   @Environment(\.textAlignment) private var textAlignment
 
@@ -106,6 +107,7 @@ public struct ExpandingTextEditor: View {
   }
 }
 
+@available(macOS 14.0, *)
 extension ExpandingTextEditor {
   //  private var textBinding: Binding<String> {
   //    return Binding(

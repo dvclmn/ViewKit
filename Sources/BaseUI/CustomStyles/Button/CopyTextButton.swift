@@ -5,13 +5,13 @@
 //  Created by Dave Coleman on 13/9/2025.
 //
 
-
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
+@available(macOS 14.0, *)
 public struct CopyTextButton: View {
   @Environment(\.popup) private var popup
-  
+
   let title: String
   let contentToCopy: String?
 
@@ -27,7 +27,7 @@ public struct CopyTextButton: View {
     Button {
       copyStringToClipboard(contentToCopy ?? title)
       popup?.showPopup("Copied to clipboard", icon: Icons.copyAlt.icon)
-      
+
     } label: {
       Label(title, systemImage: Icons.copy.icon)
         .symbolVariant(.fill)

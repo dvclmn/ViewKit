@@ -50,8 +50,13 @@ public struct PreviewableSheetBoolModifier<SheetContent: View>: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .sheet(isPresented: $isPresented) {
-        sheetContent()
-          .presentationBackground(AnyShapeStyle(backgroundMaterial ?? .thinMaterial))
+        if #available(macOS 13.3, *) {
+          sheetContent()
+            .presentationBackground(AnyShapeStyle(backgroundMaterial ?? .thinMaterial))
+        } else {
+          sheetContent()
+          // Fallback on earlier versions
+        }
       }
       .modifier(SheetMockup(isPreviewing: isPreviewing) { sheetContent() })
 
