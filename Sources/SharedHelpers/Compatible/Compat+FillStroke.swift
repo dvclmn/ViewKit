@@ -43,45 +43,57 @@ import SwiftUI
 //  }
 //}
 
-public struct FilledShape<S: InsettableShape, Style: ShapeStyle>: View {
+public struct FilledShape<
+  S: InsettableShape,
+  Style: ShapeStyle,
+  StyleStroke: ShapeStyle
+>: View {
   let shape: S
   let content: Style
-  let strokeColour: AnyShapeStyle?
+  let strokeColour: AnyShapeStyle
+//  let strokeColour: StyleStroke
+//  let strokeColour: AnyShapeStyle?
   let lineWidth: CGFloat
 
   public init(
     _ shape: S,
     _ content: Style,
-    strokeColour: AnyShapeStyle? = nil,
+    strokeColour: StyleStroke? = nil,
     lineWidth: CGFloat = 1.0
   ) {
     self.shape = shape
     self.content = content
-    self.strokeColour = strokeColour
+    
+    if let strokeColour {
+      self.strokeColour = AnyShapeStyle(strokeColour)
+    } else {
+      self.strokeColour = AnyShapeStyle(Color.clear)
+    }
+//    self.strokeColour =
     self.lineWidth = lineWidth
   }
   
-  public init(
-    _ shape: S,
-    _ content: Style,
-    strokeColour: Color? = nil,
-    lineWidth: CGFloat = 1.0
-  ) {
-    self.shape = shape
-    self.content = content
-    self.strokeColour = strokeColour.map { $0.toShapeStyle }
-    self.lineWidth = lineWidth
-  }
+//  public init(
+//    _ shape: S,
+//    _ content: Style,
+//    strokeColour: Color? = nil,
+//    lineWidth: CGFloat = 1.0
+//  ) {
+//    self.shape = shape
+//    self.content = content
+//    self.strokeColour = strokeColour.map { $0.toShapeStyle }
+//    self.lineWidth = lineWidth
+//  }
 
   public var body: some View {
     if #available(iOS 17.0, macOS 14.0, *) {
       shape
         .fill(content)
-        .stroke(strokeColour ?? AnyShapeStyle.clear, lineWidth: lineWidth)
+        .stroke(strokeColour, lineWidth: lineWidth)
 
     } else {
       shape
-        .strokeBorder(strokeColour ?? AnyShapeStyle.clear, lineWidth: lineWidth)
+        .strokeBorder(strokeColour, lineWidth: lineWidth)
         .background(shape.fill(content))
       //        .stroke(strokeColour ?? AnyShapeStyle.clear, lineWidth: lineWidth)
       //      .background(Circle().foregroundColor(Color.red))

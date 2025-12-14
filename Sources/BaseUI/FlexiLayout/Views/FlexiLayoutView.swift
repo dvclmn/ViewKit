@@ -10,9 +10,11 @@ import SharedHelpers
 import LayoutKit
 import SwiftUI
 
+@available(macOS 14.0, *)
 public enum Flexi<Content, Item>
 where Item: Sendable & Identifiable & Equatable, Item.ID: Hashable & Sendable, Content: View {}
 
+@available(macOS 14.0, *)
 extension Flexi {
 
   public typealias SingleSelect = Item.ID?
@@ -77,6 +79,7 @@ extension Flexi {
   }
 }
 
+@available(macOS 14.0, *)
 extension Flexi.LayoutView {
 
   // MARK: - Main layout view
@@ -107,6 +110,7 @@ extension Flexi.LayoutView {
 }
 
 // MARK: - Initialisers
+@available(macOS 14.0, *)
 extension Flexi.LayoutView {
 
   /// Note: The `@Binding` selection properties need to be

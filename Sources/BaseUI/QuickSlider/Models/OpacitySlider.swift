@@ -11,6 +11,7 @@ import GraphicsKit
 import SharedHelpers
 import SwiftUI
 
+@available(macOS 14.0, *)
 extension Image {
   @MainActor
   static func checkerboard(scale: CGFloat = 10) -> Image {
@@ -51,6 +52,7 @@ extension Image {
 }
 
 @MainActor
+@available(macOS 14.0, *)
 public struct OpacityShapeStyle: @preconcurrency ShapeStyle {
 
   let scale: CGFloat
@@ -62,11 +64,14 @@ public struct OpacityShapeStyle: @preconcurrency ShapeStyle {
   }
 }
 
+@available(macOS 14.0, *)
 extension ShapeStyle where Self == OpacityShapeStyle {
   public static func checkerboard(scale: CGFloat = 10) -> Self {
     OpacityShapeStyle(scale: scale)
   }
 }
+
+@available(macOS 14.0, *)
 extension AnyShapeStyle {
   public static func checkerboard(scale: CGFloat = 10) -> Self {
     AnyShapeStyle(OpacityShapeStyle(scale: scale))

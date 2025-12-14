@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 17/5/2025.
 //
 
+import SharedHelpers
 
 import SwiftUI
 
@@ -28,12 +29,15 @@ public struct SliderThumb<ThumbShape: InsettableShape>: View {
   public var body: some View {
 
     if let position {
-      shape
-        .fill(Color.gray)
-        .strokeBorder(
-          strokeGradient().opacity(0.32),
-          lineWidth: 0.5
-        )
+      
+      FilledShape(shape, Color.gray, strokeColour: strokeGradient().opacity(0.32))
+      
+//      shape
+//        .fill(Color.gray)
+//        .strokeBorder(
+//          strokeGradient().opacity(0.32),
+//          lineWidth: 0.5
+//        )
         .shadow(
           color: .black.opacity(0.5),
           radius: 0.9,

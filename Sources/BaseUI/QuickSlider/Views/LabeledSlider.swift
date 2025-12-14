@@ -5,10 +5,10 @@
 //  Created by Dave Coleman on 16/8/2025.
 //
 
-
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
+@available(macOS 14.0, *)
 public struct LabeledSlider<Content: View>: View, EnvironmentFormattable {
 
   @Binding var value: Double
