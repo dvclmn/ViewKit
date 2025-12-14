@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct KeyPressCommandModifier<CommandHandler: KeyPressCommandHandler, Command: KeyPressable>: ViewModifier where CommandHandler.Command == Command {
 
   let commandHandler: CommandHandler
@@ -29,6 +30,8 @@ public struct KeyPressCommandModifier<CommandHandler: KeyPressCommandHandler, Co
       }
   }
 }
+
+@available(macOS 14.0, *)
 extension KeyPressCommandModifier {
   private func handleKeyPress(_ key: KeyEquivalent) -> KeyPress.Result {
     if let command = Command.fromKey(key) {
@@ -38,6 +41,8 @@ extension KeyPressCommandModifier {
     return .ignored
   }
 }
+
+@available(macOS 14.0, *)
 extension View {
   public func keyPressCommands<T: KeyPressCommandHandler>(
     _ handler: T,

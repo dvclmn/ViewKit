@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+@available(macOS 14.0, *)
 extension ShapeView {
   public func quickStroke<S>(_ colour: S, _ linewidth: CGFloat) -> StrokeShapeView<Self.Content, S, Self>
   where S: ShapeStyle {
@@ -27,7 +29,7 @@ extension ShapeView {
 //  }
 }
 
-extension ShapeView where Self.Content : InsettableShape {
+//extension ShapeView where Self.Content : InsettableShape {
 //  public func strokeBorder<S>(_ content: S = .foreground, lineWidth: CGFloat = 1, antialiased: Bool = true) -> StrokeBorderShapeView<Self.Content, S, Self> where S : ShapeStyle
   
 //  public func strokeBorder(
@@ -38,4 +40,4 @@ extension ShapeView where Self.Content : InsettableShape {
 //    let strokeWidth = lineWidth ?? 1
 //    return self.stroke(colour, lineWidth: strokeWidth)
 //  }
-}
+//}

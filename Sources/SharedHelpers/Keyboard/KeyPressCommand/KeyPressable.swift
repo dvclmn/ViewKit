@@ -18,6 +18,8 @@ public protocol KeyPressable: CaseIterable {
   var keyboardShortcut: KeyboardShortcut { get }
   static func fromKey(_ key: KeyEquivalent) -> Self?
 }
+
+@available(macOS 14.0, *)
 extension KeyPressable {
   
   /// Map from key to command

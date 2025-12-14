@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct TextRender<T: TextRenderer>: ViewModifier {
 
   let renderer: T
@@ -27,6 +28,7 @@ public struct TextRender<T: TextRenderer>: ViewModifier {
     }
   }
 }
+@available(macOS 14.0, *)
 extension View where Self == Text {
   public func renderText<T: TextRenderer>(_ renderer: T) -> some View {
     self.modifier(
@@ -35,7 +37,7 @@ extension View where Self == Text {
   }
 }
 
-
+@available(macOS 14.0, *)
 extension Text.Layout {
   public var flattenedRunSlices: some RandomAccessCollection<Text.Layout.RunSlice> {
     flattenedRuns.flatMap(\.self)

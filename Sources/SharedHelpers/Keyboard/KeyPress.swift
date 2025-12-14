@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(macOS 14.0, *)
 public extension KeyPress {
   var displayString: String {
     return """
@@ -21,7 +22,7 @@ public extension KeyPress {
   }
 }
 
-
+@available(macOS 14.0, *)
 public extension KeyPress.Phases {
   var name: String {
     switch self {

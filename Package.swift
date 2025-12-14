@@ -7,7 +7,7 @@ let package = Package(
   name: "BaseHelpers",
   platforms: [
     .iOS("17.0"),
-    .macOS("14.0"),
+    .macOS("13.0"),
   ],
   products: [
     .library(

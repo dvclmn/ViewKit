@@ -30,6 +30,7 @@ extension EnvironmentValues {
   @Entry public var modifierKeys: Modifiers = []
 }
 
+@available(macOS 14.0, *)
 public typealias Keys = Set<KeyEquivalent>
 public typealias Modifiers = ModifierKeysCompatible
 

@@ -20,6 +20,7 @@ extension BinaryFloatingPoint {
 //  }
 //}
 
+@available(macOS 14.0, *)
 extension GraphicsContext {
 
   // MARK: - Quick Text Label, w/ Background and Dot
