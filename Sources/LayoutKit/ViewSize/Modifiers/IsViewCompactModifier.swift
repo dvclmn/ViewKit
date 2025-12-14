@@ -10,6 +10,7 @@ import SharedHelpers
 
 public typealias IsViewCompactHandler = (Bool) -> Void
 
+@available(macOS 14.0, *)
 public struct IsViewCompactModifier: ViewModifier {
   @Environment(\.isDebugMode) private var isDebugMode
 
@@ -34,6 +35,8 @@ public struct IsViewCompactModifier: ViewModifier {
       }
   }
 }
+
+@available(macOS 14.0, *)
 extension IsViewCompactModifier {
   @ViewBuilder
   private func DebugView() -> some View {
@@ -47,6 +50,8 @@ extension IsViewCompactModifier {
     }
   }
 }
+
+@available(macOS 14.0, *)
 extension View {
   /// This modifier will also update the `isCompactMode`
   /// Environment Value

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(macOS 14.0, *)
 public enum ShaderEffect {
   case chromaticAberration(ChromaticAberrationArgs)
   case fisheye(FisheyeArgs)

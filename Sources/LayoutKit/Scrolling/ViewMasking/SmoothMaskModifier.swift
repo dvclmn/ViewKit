@@ -5,12 +5,10 @@
 //  Created by Dave Coleman on 8/9/2025.
 //
 
-
-//import CurveKit
 import SharedHelpers
-//import SmoothStepGradient
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct SmoothMaskModifier: ViewModifier {
 
   let start: UnitPoint
@@ -38,6 +36,8 @@ public struct SmoothMaskModifier: ViewModifier {
       }  // END mask
   }
 }
+
+@available(macOS 14.0, *)
 extension View {
   public func smoothMask(
     from start: UnitPoint,

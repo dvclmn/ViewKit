@@ -10,6 +10,7 @@ import LayoutKit
 import SwiftUI
 import SharedHelpers
 
+@available(macOS 14.0, *)
 public struct BouncyDragModifier: ViewModifier {
   @State private var store: BouncyHandler
 
@@ -53,6 +54,8 @@ public struct BouncyDragModifier: ViewModifier {
 
   }
 }
+
+@available(macOS 14.0, *)
 extension BouncyDragModifier {
 
   private func handlePanGesture(_ phase: PanPhase) {
@@ -89,6 +92,7 @@ extension BouncyDragModifier {
 
 }
 
+@available(macOS 14.0, *)
 extension View {
   public func bouncyDrag(
     tension: CGFloat = 180,  // Higher = stiffer

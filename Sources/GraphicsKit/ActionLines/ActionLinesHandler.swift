@@ -9,6 +9,7 @@ import SwiftUI
 import SharedHelpers
 
 @Observable
+@available(macOS 14.0, *)
 final class ActionLineHandler {
   
   var randomGenerator: RandomValueGenerator<ActionLineVariations>

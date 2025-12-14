@@ -5,15 +5,13 @@
 //  Created by Dave Coleman on 22/5/2025.
 //
 
-
 import SharedHelpers
-//import CurveKit
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct ScrollMaskModifier: ViewModifier {
 
   @State private var scrollLocation: ScrollLocation = .start
-//  @State private var scrollLocation: ScrollLocation = .start
 
   /// Establishing that here in this Scroll masking domain,
   /// when talking about width, we mean the *horizontal* axis
@@ -64,6 +62,7 @@ public struct ScrollMaskModifier: ViewModifier {
   }
 }
 
+@available(macOS 14.0, *)
 extension ScrollMaskModifier {
 
   private var gradientSpan: UnitSpan {
@@ -120,6 +119,7 @@ extension ScrollMaskModifier {
 
 }
 
+@available(macOS 14.0, *)
 extension View {
 
   public func scrollMask(

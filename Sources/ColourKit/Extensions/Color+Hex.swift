@@ -17,6 +17,7 @@ extension Color: RGBAConvertible {
   }
 }
 
+@available(macOS 14.0, *)
 extension RGBColour: RGBAConvertible {
   public init(r: Double, g: Double, b: Double, a: Double) {
     self.init(r: r, g: g, b: b, a: a, name: nil)

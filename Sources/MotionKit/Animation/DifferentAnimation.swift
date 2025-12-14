@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct DifferentAnimationModifier: ViewModifier {
   
   @State private var tapCount = 1
@@ -95,6 +96,8 @@ public struct DifferentAnimationModifier: ViewModifier {
       }
   }
 }
+
+@available(macOS 14.0, *)
 extension View {
   public func differentAnimation() -> some View {
     self.modifier(DifferentAnimationModifier())

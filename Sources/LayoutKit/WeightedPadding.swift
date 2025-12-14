@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct WeightedPaddingModifier: ViewModifier {
   let padding: CGFloat
   let horizontalBias: CGFloat
@@ -31,6 +32,7 @@ public struct WeightedPaddingModifier: ViewModifier {
   }
 }
 
+@available(macOS 14.0, *)
 extension WeightedPaddingModifier {
   var adjustedPadding: (top: CGFloat, bottom: CGFloat, leading: CGFloat, trailing: CGFloat) {
     /// Calculate vertical padding - always the base padding value
@@ -61,6 +63,7 @@ extension WeightedPaddingModifier {
   }
 }
 
+@available(macOS 14.0, *)
 extension View {
   public func weightedPadding(
     _ padding: CGFloat,

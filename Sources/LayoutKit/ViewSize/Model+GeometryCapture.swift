@@ -24,6 +24,7 @@ public struct GeometryCapture<T: GeometryCapturable> {
   }
 }
 
+@available(macOS 14.0, *)
 extension GeometryCapture {
   public static var size: GeometryCapture<CGSize> {
     .init(type: CGSize.self) { $0.size }

@@ -8,6 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct ShadersExampleView: View {
 
   public var body: some View {
@@ -23,33 +24,33 @@ public struct ShadersExampleView: View {
         ForEach(EmojiBunch.allCases) { emoji in
           Text(emoji.emojiString)
             .font(.system(size: 140))
-//          FeatureIconView(
-//            emoji: emoji.emojiString,
-//            fontSize: 140
-//          )
-          .offset(emoji.offset(in: proxy.size, strength: 0.4))
+            //          FeatureIconView(
+            //            emoji: emoji.emojiString,
+            //            fontSize: 140
+            //          )
+            .offset(emoji.offset(in: proxy.size, strength: 0.4))
         }
 
       }
     }
     .compositingGroup()
     .shaderEffect(.chromaticAberration(.init(red: 0.9, blue: 0.8, strength: 0.5)))
-//    .layerEffect(
-//      ShaderLibrary.bundle(.module).chromaticAberration(
-//        .float(70),
-//        .float(1.0),
-//        .float(1.0),
-//      ),
-//      maxSampleOffset: .zero
-//    )
-//    .layerEffect(
-//      ShaderLibrary.bundle(.module).ripple(
-//        .float2(10, 6),
-//        .float2(1.0, 10),
-//      ),
-//      maxSampleOffset: .zero
-//    )
-//    .layerEffect(ShaderLibrary.ripple(.float2(30, 70), .float2(100, 200)), maxSampleOffset: .zero)
+    //    .layerEffect(
+    //      ShaderLibrary.bundle(.module).chromaticAberration(
+    //        .float(70),
+    //        .float(1.0),
+    //        .float(1.0),
+    //      ),
+    //      maxSampleOffset: .zero
+    //    )
+    //    .layerEffect(
+    //      ShaderLibrary.bundle(.module).ripple(
+    //        .float2(10, 6),
+    //        .float2(1.0, 10),
+    //      ),
+    //      maxSampleOffset: .zero
+    //    )
+    //    .layerEffect(ShaderLibrary.ripple(.float2(30, 70), .float2(100, 200)), maxSampleOffset: .zero)
     //    .shaderEffect(
     //      .chromaticAberration,
     //      [
@@ -58,12 +59,13 @@ public struct ShadersExampleView: View {
     //        .float(0.5),
     //      ]
     //    )
-    
+
     .frame(width: 600, height: 700)
 
   }
 }
 #if DEBUG
+@available(macOS 14.0, *)
 #Preview {
   ShadersExampleView()
 }

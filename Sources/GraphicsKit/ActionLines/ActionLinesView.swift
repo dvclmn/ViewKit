@@ -8,6 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct ActionLinesView: View {
 
   #if canImport(AppKit)
@@ -123,6 +124,7 @@ public struct ActionLinesView: View {
   }
 }
 
+@available(macOS 14.0, *)
 extension ActionLinesView {
 
   @ViewBuilder

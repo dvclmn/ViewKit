@@ -5,11 +5,10 @@
 //  Created by Dave Coleman on 11/5/2025.
 //
 
-
 import SharedHelpers
 import SwiftUI
-//import ColourKit
 
+@available(macOS 14.0, *)
 public struct ColourSquarePicker: View {
 
   @State private var dragPosition: CGPoint = .zero
@@ -55,6 +54,7 @@ public struct ColourSquarePicker: View {
   }
 }
 
+@available(macOS 14.0, *)
 extension ColourSquarePicker {
 
   func drag(in size: CGSize) -> some Gesture {

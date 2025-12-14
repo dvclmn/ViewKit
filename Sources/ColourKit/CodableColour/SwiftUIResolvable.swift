@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-
+@available(macOS 14.0, *)
 extension RGBColour: EnvironmentResolvableColour {
 
   public var toColour: Color {
@@ -47,6 +47,7 @@ extension RGBColour: EnvironmentResolvableColour {
 
 }
 
+@available(macOS 14.0, *)
 extension HSVColour: EnvironmentResolvableColour {
 
   public var toColour: Color {

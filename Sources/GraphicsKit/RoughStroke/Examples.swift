@@ -7,47 +7,43 @@
 
 import SwiftUI
 
-
+@available(macOS 14.0, *)
 struct RoughnessExampleView: View {
-  
+
   @State private var roughness: Double = 2
   @State private var segments: Double = 10
   @State private var jitter: Double = 2
-  
+
   var body: some View {
-    
-    
+
     VStack {
-      
-      
-      
+
       RoundedRectangle(cornerRadius: 10)
-//        .roughen(roughness: roughness, segments: segments, jitter: jitter)
+        //        .roughen(roughness: roughness, segments: segments, jitter: jitter)
         .fill(.mint)
         .stroke(.indigo, style: .init(lineWidth: 2))
-      
+
       Circle()
-//        .roughen(roughness: roughness, segments: segments, jitter: jitter)
+        //        .roughen(roughness: roughness, segments: segments, jitter: jitter)
         .fill(.orange)
         .stroke(.purple, style: .init(lineWidth: 2))
-      
+
       Diamond()
-//        .roughen(roughness: roughness, segments: segments, jitter: jitter)
+        //        .roughen(roughness: roughness, segments: segments, jitter: jitter)
         .fill(.brown)
         .stroke(.blue, style: .init(lineWidth: 2))
-      //            Circle()
-      //              .roughStroke(
-      //                style: .init(roughness: 2, segments: 30),
-      //                lineWidth: 2,
-      //                color: .blue
-      //              )
-      ////              .fill(.brown)
+        //            Circle()
+        //              .roughStroke(
+        //                style: .init(roughness: 2, segments: 30),
+        //                lineWidth: 2,
+        //                color: .blue
+        //              )
+        ////              .fill(.brown)
         .frame(width: 200)
-      
-      
-//      QuickSlider("Roughness", value: $roughness, range: 1...100)
-//      QuickSlider("Segments", value: $segments, range: 1...100)
-//      QuickSlider("Jitter", value: $jitter, range: 1...100)
+
+      //      QuickSlider("Roughness", value: $roughness, range: 1...100)
+      //      QuickSlider("Segments", value: $segments, range: 1...100)
+      //      QuickSlider("Jitter", value: $jitter, range: 1...100)
     }
     .padding(60)
   }
@@ -60,7 +56,7 @@ struct RoughnessExampleView: View {
 //      let path = Path { path in
 //        path.addRect(CGRect(origin: .zero, size: size))
 //      }
-//      
+//
 //      context.roughStroke(
 //        path,
 //        style: RoughStrokeStyle(roughness: 15),

@@ -7,12 +7,13 @@
 
 import Foundation
 import SwiftUI
-//import MemberwiseInit
 
+@available(macOS 14.0, *)
 protocol ShaderArgumentsConvertible {
   var arguments: [Shader.Argument] { get }
 }
 
+@available(macOS 14.0, *)
 extension ShaderArgumentsConvertible {
   static func makeArguments(_ values: Any...) -> [Shader.Argument] {
     values.map { value in
@@ -45,7 +46,7 @@ extension ShaderArgumentsConvertible {
   }
 }
 
-//@MemberwiseInit(.public)
+@available(macOS 14.0, *)
 public struct ChromaticAberrationArgs: ShaderArgumentsConvertible {
   public var red: CGFloat
   public var blue: CGFloat
@@ -56,7 +57,7 @@ public struct ChromaticAberrationArgs: ShaderArgumentsConvertible {
   }
 }
 
-//@MemberwiseInit(.public)
+@available(macOS 14.0, *)
 public struct GlitterArgs: ShaderArgumentsConvertible {
   public var origin: CGPoint
   public var spread: CGFloat
@@ -66,7 +67,7 @@ public struct GlitterArgs: ShaderArgumentsConvertible {
   }
 }
 
-//@MemberwiseInit(.public)
+@available(macOS 14.0, *)
 public struct FisheyeArgs: ShaderArgumentsConvertible {
   public var size: CGFloat
   public var strength: CGFloat

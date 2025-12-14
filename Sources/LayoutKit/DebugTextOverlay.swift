@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreTools
 
+@available(macOS 14.0, *)
 public struct DebugTextOverlayModifier: ViewModifier {
   @Environment(\.isEnabled) private var isEnabled
   
@@ -28,6 +29,7 @@ public struct DebugTextOverlayModifier: ViewModifier {
   }
 }
 
+
 public struct DebugTextStyleModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
@@ -46,6 +48,7 @@ public struct DebugTextStyleModifier: ViewModifier {
   }
 }
 
+@available(macOS 14.0, *)
 extension View {
 
   //  public func debugTextOverlay(

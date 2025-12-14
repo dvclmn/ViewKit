@@ -19,6 +19,7 @@ public enum LuminanceMethod: Sendable, Codable {
   case cielab  // CIE L* lightness
 }
 
+@available(macOS 14.0, *)
 extension HSVColour: LuminanceReadable {
 
   public func luminance(using method: LuminanceMethod = .wcag) -> Double {

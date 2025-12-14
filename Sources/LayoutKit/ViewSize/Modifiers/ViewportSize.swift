@@ -13,6 +13,7 @@ import SharedHelpers
 ///
 /// This mirrors `ViewSizeModifier` *very* closely, such that
 /// I'm not sure if it's existence is warranted.
+@available(macOS 14.0, *)
 public struct ViewportSizeModifier: ViewModifier {
   @State private var viewportSize: CGSize?
   
@@ -28,6 +29,8 @@ public struct ViewportSizeModifier: ViewModifier {
       .environment(\.viewportSize, viewportSize)
   }
 }
+
+@available(macOS 14.0, *)
 extension View {
   public func readViewportSize(
     mode debounceMode: DebounceMode,

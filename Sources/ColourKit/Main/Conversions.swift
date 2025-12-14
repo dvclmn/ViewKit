@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(macOS 14.0, *)
 extension HSVColour {
 
   public init(fromRGB r: Double, g: Double, b: Double, a: Double, name: String?) {
@@ -100,6 +101,7 @@ extension HSVColour {
 
 }
 
+@available(macOS 14.0, *)
 extension RGBColour {
 
   public init(fromHSV hsv: HSVColour) {

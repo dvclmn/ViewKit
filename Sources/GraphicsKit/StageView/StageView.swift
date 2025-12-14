@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 15/11/2024.
 //
 
-
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct StageView: View {
 
   let floorConfig: FloorAppearance
