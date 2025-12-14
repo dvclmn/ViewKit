@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreTools
 
+//@available(macOS 14.0, *)
 public struct StateView<Content: View>: View {
   @Environment(\.layoutAxis) private var layoutAxis
   @Environment(\.layoutAlignment) private var layoutAlignment
@@ -27,14 +28,19 @@ public struct StateView<Content: View>: View {
       spacing: scale(16, for: controlSize, min: 6)
     ) {
 
-      TextView()
-        /// Pan gesture view was causing `FeatureIconView` to take
-        /// up too much space, so using overlay to keep it contained better
-        .overlay(alignment: .top) {
-          IconView()
-        }
+      if #available(macOS 14.0, *) {
+        TextView()
+        
         /// Padding to achieve nice vertical optical centering
-        .safeAreaPadding(.top, label.icon != nil ? scale(iconSize * 1.4, for: controlSize) : .zero)
+          .safeAreaPadding(.top, paddingCompat)
+      } else {
+        TextView()
+        
+        /// Padding to achieve nice vertical optical centering
+          .padding(.top, paddingCompat)
+        
+        // Fallback on earlier versions
+      }
 
       // MARK: - Message
       MessageView()
@@ -47,7 +53,12 @@ public struct StateView<Content: View>: View {
   }
 }
 
+//@available(macOS 14.0, *)
 extension StateView {
+  
+  private var paddingCompat: CGFloat {
+    label.icon != nil ? scale(iconSize * 1.4, for: controlSize) : .zero
+  }
 
   private var iconSize: CGFloat {
     let baseIconSize: CGFloat = 46
@@ -60,6 +71,12 @@ extension StateView {
       .multilineTextAlignment(.center)
       .font(.system(size: scale(22, for: controlSize)))
       .foregroundStyle(.secondary)
+    
+    /// Pan gesture view was causing `FeatureIconView` to take
+    /// up too much space, so using overlay to keep it contained better
+      .overlay(alignment: .top) {
+        IconView()
+      }
   }
 
   @ViewBuilder
@@ -84,6 +101,7 @@ extension StateView {
 }
 
 // MARK: - Initialisers
+@available(macOS 14.0, *)
 extension StateView {
 
   public init(

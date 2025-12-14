@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(macOS 14.0, *)
 extension GraphicsContext {
   public func drawStitches(
     config: PatternConfiguration,

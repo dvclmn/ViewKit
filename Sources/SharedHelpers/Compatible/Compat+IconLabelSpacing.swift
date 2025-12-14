@@ -9,7 +9,7 @@ import SwiftUI
 
 extension View {
   @ViewBuilder
-  public func compatibleLabelIconSpacing(_ spacing: CGFloat) -> some View {
+  public func labelIconSpacingCompatible(_ spacing: CGFloat) -> some View {
     if #available(macOS 26, iOS 26, *) {
       labelIconToTitleSpacing(spacing)
     } else {

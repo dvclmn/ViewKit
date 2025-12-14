@@ -10,6 +10,7 @@ import SwiftUI
 
 //public struct StrokeColourAndWidth
 
+//@available(macOS 14.0, *)
 struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   @Environment(\.emphasisColour) private var emphasisColour
   @Environment(\.explicitAspectRatio) private var explicitAspectRatio
@@ -31,16 +32,36 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
       .padding(.vertical, paddingV)
       .padding(.bottom, opticalPadding)
       .background {
-        shape
-          .fill(backgroundTint)
+        if #available(macOS 14.0, *) {
+          shape
+            .fill(backgroundTint)
+            //          .fill(tintColour)
+            .fill(material)
+            .stroke(
+              strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)),
+              lineWidth: strokeWeight ?? 1)
+        } else {
+
+          shape
+            .fill(backgroundTint)
           //          .fill(tintColour)
-          .fill(material)
-          .stroke(strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)), lineWidth: strokeWeight ?? 1)
+
+          shape
+            .fill(material)
+
+          shape
+            .stroke(
+              strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)),
+              lineWidth: strokeWeight ?? 1)
+
+          // Fallback on earlier versions
+        }
       }
 
   }
 }
 
+//@available(macOS 14.0, *)
 extension QuickBackgroundModifier {
 
   private var backgroundTint: Color { tint ?? Color.clear }

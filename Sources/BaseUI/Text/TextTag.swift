@@ -10,6 +10,7 @@ import SharedHelpers
 import ColourKit
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct TextTag: View {
   @Environment(\.self) private var envSelf
   let text: String

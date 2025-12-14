@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct AppContainer<Content: View>: View {
 
   @State private var popup = Popup()

@@ -10,6 +10,7 @@ import Foundation
 import SharedHelpers
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct Tooltip: ViewModifier {
 
   @State private var isHovered = false
@@ -67,6 +68,7 @@ public struct Tooltip: ViewModifier {
   }
 }
 
+@available(macOS 14.0, *)
 extension Tooltip {
 
   private var toolTipAlignment: Alignment {
@@ -99,6 +101,7 @@ extension Tooltip {
 
 }
 
+@available(macOS 14.0, *)
 extension View {
   public func tooltip(
     _ text: String,

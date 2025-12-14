@@ -8,6 +8,7 @@
 import CoreTools
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct SizeTestView: View {
 
   let size: CGFloat
@@ -35,6 +36,7 @@ public struct SizeTestView: View {
   }
 }
 
+@available(macOS 14.0, *)
 extension SizeTestView {
   @ViewBuilder
   private func TextWithSize(_ size: CGFloat) -> some View {
@@ -46,6 +48,7 @@ extension SizeTestView {
 }
 
 #if DEBUG
+@available(macOS 14.0, *)
 #Preview {
   SizeTestView(size: 22)
 }

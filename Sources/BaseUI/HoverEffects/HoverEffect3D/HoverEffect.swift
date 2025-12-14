@@ -5,29 +5,12 @@
 //  Created by Dave Coleman on 12/11/2024.
 //
 
-
 import SharedHelpers
 import SwiftUI
 
-extension View {
-  public func hover3DEffect(
-    rounding: CGFloat = Styles.sizeSmall,
-    glintStrength: CGFloat = 0.3,
-    depthStrength: CGFloat = 8,
-    onUpdate: @escaping Hover3DOutput = { _ in }
-  ) -> some View {
-    self.modifier(
-      Hover3DModifier(
-        rounding: rounding,
-        glintStrength: glintStrength,
-        depthStrength: depthStrength,
-        onUpdate: onUpdate
-      )
-    )
-  }
-}
-
 public typealias Hover3DOutput = (Hover3DState) -> Void
+
+@available(macOS 14.0, *)
 public struct Hover3DModifier: ViewModifier {
 
   @State var isHovering: Bool = false
@@ -76,6 +59,7 @@ public struct Hover3DModifier: ViewModifier {
   }
 }
 
+@available(macOS 14.0, *)
 extension Hover3DModifier {
 
   private func sendHoverUpdate() {
@@ -171,5 +155,24 @@ extension Hover3DModifier {
     .padding(4)
     .monospacedDigit()
     .background(.black.opacity(0.6))
+  }
+}
+
+@available(macOS 14.0, *)
+extension View {
+  public func hover3DEffect(
+    rounding: CGFloat = Styles.sizeSmall,
+    glintStrength: CGFloat = 0.3,
+    depthStrength: CGFloat = 8,
+    onUpdate: @escaping Hover3DOutput = { _ in }
+  ) -> some View {
+    self.modifier(
+      Hover3DModifier(
+        rounding: rounding,
+        glintStrength: glintStrength,
+        depthStrength: depthStrength,
+        onUpdate: onUpdate
+      )
+    )
   }
 }

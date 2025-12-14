@@ -8,6 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct PopupViewModifier: ViewModifier {
   @Environment(\.popup) private var popup
 
@@ -23,6 +24,7 @@ public struct PopupViewModifier: ViewModifier {
   }
 }
 
+@available(macOS 14.0, *)
 extension View {
   public func popupView(
     debugPopup: PopupDebug,

@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 15/9/2025.
 //
 
-
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct ToolTipExampleView: View {
 
   let exampleAlignment: [Color: Alignment] = [
@@ -27,8 +27,10 @@ public struct ToolTipExampleView: View {
   public var body: some View {
 
     VStack(spacing: 60) {
-      ForEach(exampleAlignment.sorted(byKeyPath: \.value.displayName.abbreviated), id: \.value.displayName.abbreviated)
-      { colour, alignment in
+      ForEach(
+        exampleAlignment.sorted(byKeyPath: \.value.displayName.abbreviated),
+        id: \.value.displayName.abbreviated
+      ) { colour, alignment in
 
         Text("Got a ToolTip. Alignment: \(alignment.displayName.full)")
           .fixedSize(horizontal: true, vertical: false)

@@ -29,6 +29,7 @@ public struct GridPaddingModifier: ViewModifier {
 }
 
 // MARK: - Safe Area Padding
+@available(macOS 14.0, *)
 public struct GridSafeAreaPaddingModifier: ViewModifier {
   @Environment(\.unitSize) private var unitSize
 
@@ -57,6 +58,7 @@ extension View {
     self.modifier(GridPaddingModifier(edges: edges, count: count))
   }
 
+  @available(macOS 14.0, *)
   public func gridSafeAreaPadding(
     _ edges: Edge.Set = .all,
     _ count: Int

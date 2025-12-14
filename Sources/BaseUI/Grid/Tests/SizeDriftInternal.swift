@@ -35,6 +35,7 @@ enum CharacterSizeSource {
   }
 }
 
+@available(macOS 14.0, *)
 public struct SizeDriftInternal: View {
   @Environment(\.unitSize) private var unitSize
 
@@ -60,6 +61,7 @@ public struct SizeDriftInternal: View {
   }
 }
 
+@available(macOS 14.0, *)
 extension SizeDriftInternal {
 
   private var sentenceBasedSize: CGSize? {
@@ -88,6 +90,7 @@ extension SizeDriftInternal {
 }
 
 #if DEBUG
+@available(macOS 14.0, *)
 #Preview(traits: .size(.normal)) {
   SizeDriftInternal(width: 38)
 }

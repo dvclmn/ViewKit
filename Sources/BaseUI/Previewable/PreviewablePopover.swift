@@ -8,6 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
+@available(macOS 14.0, *)
 public struct PreviewablePopoverModifier<PopoverContent: View>: ViewModifier {
   @Environment(\.layoutAlignment) private var layoutAlignment
   @Environment(\.explicitSize) private var explicitSize
@@ -43,6 +44,8 @@ public struct PreviewablePopoverModifier<PopoverContent: View>: ViewModifier {
       }
   }
 }
+
+@available(macOS 14.0, *)
 extension PreviewablePopoverModifier {
   @ViewBuilder
   func PopoverView() -> some View {
@@ -50,6 +53,8 @@ extension PreviewablePopoverModifier {
     //      .padding(.top, Styles.toolbarHeightPrimary)
   }
 }
+
+@available(macOS 14.0, *)
 extension View {
   public func previewablePopover<Content>(
     _ isPresented: Binding<Bool>,

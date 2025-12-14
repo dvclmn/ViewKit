@@ -9,9 +9,11 @@
 import CoreTools
 import SwiftUI
 
+@available(macOS 14.0, *)
 public protocol FontSizeControlling: PreferenceSettable
 where Prefs: FontSizePreferences {}
 
+@available(macOS 14.0, *)
 public protocol PreferenceSettable: AnyObject, Observable {
 
   associatedtype Prefs
@@ -32,6 +34,7 @@ public protocol FontSizePreferences {
 
 @MainActor
 @CommandsBuilder
+@available(macOS 14.0, *)
 public func FontSizeCommands<Store: FontSizeControlling>(
   _ placement: CommandGroupPlacement,
   store: Bindable<Store>
