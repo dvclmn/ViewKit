@@ -7,45 +7,15 @@
 
 import SwiftUI
 
+extension Axis: AxisRepresentable {}
+
 extension Axis {
-
-  /// Important: This defaults to a``DimensionToAxisConvention``
-  /// of Width == Horizontal and Height == Vertical
-  ///
-  /// If this is not true for your domain,
-  /// then do not use the below two properties.
-  public static var width: Axis { .horizontal }
-  public static var height: Axis { .vertical }
-
-  /// Caution: This assumes a specific convention;
-  /// Width == Horizontal == Columns, and
-  /// Height == Vertical == Rows.
-  ///
-  /// If that does not apply for your use case, do not use these.
-  public static var columns: Axis { .horizontal }
-  public static var rows: Axis { .vertical }
-
   public var toAxisSet: Axis.Set {
     switch self {
       case .horizontal: [.horizontal]
       case .vertical: [.vertical]
     }
   }
-
-  public var name: String {
-    switch self {
-      case .horizontal: "X"
-      case .vertical: "Y"
-    }
-  }
-
-  public func midPoint(from rect: CGRect) -> CGFloat {
-    switch self {
-      case .horizontal: return rect.midX
-      case .vertical: return rect.midY
-    }
-  }
-  
   public var toEdgeSet: Edge.Set {
     switch self {
       case .horizontal: return .horizontal
@@ -63,6 +33,9 @@ extension Axis {
         return .vertical
     }
   }
+}
+
+extension Axis {
 
   public enum MinMax {
     case minWidth

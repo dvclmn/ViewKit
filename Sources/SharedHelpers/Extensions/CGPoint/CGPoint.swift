@@ -199,7 +199,8 @@ extension CGPoint {
         case .vertical: size.height
       }
 
-    let normalisedValue = options.contains(.normalised) ? rawLocation / viewLength : rawLocation
+    let normalisedValue =
+      options.contains(.normalised) ? rawLocation / viewLength : rawLocation
 
     let centered: CGFloat
     let result: CGFloat
@@ -416,7 +417,9 @@ extension CGPoint {
   ///        When t = 1, the result is `end`.
   ///        Values less than 0 or greater than 1 will extrapolate beyond the line segment.
   /// - Returns: A point along the line defined by `start` and `end`.
-  public static func pointAlong(from start: CGPoint, to end: CGPoint, t: CGFloat) -> CGPoint {
+  public static func pointAlong(
+    from start: CGPoint, to end: CGPoint, t: CGFloat
+  ) -> CGPoint {
     return CGPoint(
       x: start.x + (end.x - start.x) * t,
       y: start.y + (end.y - start.y) * t
