@@ -8,7 +8,9 @@
 import SwiftUI
 
 public protocol AxisExtentProviding {
-  func horizontalExtent(using convention: AxisConvention) -> CGFloat
+    associatedtype Output: BinaryFloatingPoint
+  func horizontalExtent(using convention: AxisConvention) -> Output
+  func verticalExtent(using convention: AxisConvention) -> Output
 }
 
 //public typealias AxisConvention = AxisConvention

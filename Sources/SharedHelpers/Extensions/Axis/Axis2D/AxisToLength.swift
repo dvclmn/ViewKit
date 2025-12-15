@@ -23,7 +23,7 @@ extension AxisRepresentable {
     }
   }
 
-  /// Returns the total inset length for this axis from `CGRect`,
+  /// Returns the length for this axis from `CGRect`,
   /// interpreting width/height according to the given convention.
   public func length(
     fromRect rect: CGRect,
