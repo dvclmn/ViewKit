@@ -23,7 +23,7 @@ extension AxisRepresentable {
   //    [ Self.horizontal, Self.vertical ]
   //  }
 
-  /// Important: This defaults to a``DimensionToAxisConvention``
+  /// Important: This defaults to a``AxisConvention``
   /// of Width == Horizontal and Height == Vertical
   ///
   /// If this is not true for your domain,

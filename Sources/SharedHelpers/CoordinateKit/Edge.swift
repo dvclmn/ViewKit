@@ -58,7 +58,7 @@ extension Edge {
     self.toAxis(using: .widthIsHorizontal)
   }
 
-  public func toAxis(using convention: DimensionToAxisConvention) -> Axis {
+  public func toAxis(using convention: AxisConvention) -> Axis {
     switch convention {
       case .widthIsHorizontal:
         switch self {
@@ -110,7 +110,7 @@ extension Edge {
 // horizontal
 // vertical
 extension Edge.Set {
-  public func toAxis(using convention: DimensionToAxisConvention) -> Axis? {
+  public func toAxis(using convention: AxisConvention) -> Axis? {
     switch convention {
       case .widthIsHorizontal:
         if self == .top

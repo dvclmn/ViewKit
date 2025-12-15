@@ -23,7 +23,7 @@ extension Axis {
     }
   }
 
-  // TODO: Does this make sense? Should this be incorporated with `DimensionToAxisConvention`?
+  // TODO: Does this make sense? Should this be incorporated with `AxisConvention`?
   public func getMinMax(_ axis: Axis.MinMax) -> Axis {
     switch axis {
       case .minWidth, .maxWidth:

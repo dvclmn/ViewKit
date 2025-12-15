@@ -21,7 +21,7 @@ import SwiftUI
 //  static func startGradient(
 //    axis: Axis,
 ////    scrollLocation: ScrollLocation,
-//    convention: DimensionToAxisConvention
+//    convention: AxisConvention
 //  ) -> GradientPoints {
 //    let orientation = GradientOrientation(axis: axis, convention: convention)
 //    let points = orientation.points
@@ -31,7 +31,7 @@ import SwiftUI
 //  static func endGradient(
 //    axis: Axis,
 ////    scrollLocation: ScrollLocation,
-//    convention: DimensionToAxisConvention
+//    convention: AxisConvention
 //  ) -> GradientPoints {
 //    let orientation = GradientOrientation(axis: axis, convention: convention)
 //    let points = orientation.points
@@ -41,7 +41,7 @@ import SwiftUI
 //  static func startGradient(
 //    axis: Axis,
 //    scrollLocation: ScrollLocation,
-//    convention: DimensionToAxisConvention
+//    convention: AxisConvention
 //  ) -> GradientPoints {
 //    switch (axis, convention) {
 //      case (.horizontal, .widthIsHorizontal), (.vertical, .heightIsHorizontal):
@@ -63,7 +63,7 @@ import SwiftUI
 //  static func endGradient(
 //    axis: Axis,
 //    scrollLocation: ScrollLocation,
-//    convention: DimensionToAxisConvention
+//    convention: AxisConvention
 //  ) -> GradientPoints {
 //    switch (axis, convention) {
 //      case (.horizontal, .widthIsHorizontal), (.vertical, .heightIsHorizontal):

@@ -12,7 +12,7 @@ extension AxisRepresentable {
   /// interpreting width/height according to the given convention.
   public func length(
     fromSize size: CGSize,
-    convention: DimensionToAxisConvention = .widthIsHorizontal
+    convention: AxisConvention = .widthIsHorizontal
   ) -> CGFloat {
     switch self {
       case .horizontal:
@@ -27,7 +27,7 @@ extension AxisRepresentable {
   /// interpreting width/height according to the given convention.
   public func length(
     fromRect rect: CGRect,
-    convention: DimensionToAxisConvention = .widthIsHorizontal
+    convention: AxisConvention = .widthIsHorizontal
   ) -> CGFloat {
     switch self {
       case .horizontal:
@@ -42,7 +42,7 @@ extension AxisRepresentable {
   /// interpreting leading/trailing/top/bottom according to the given convention.
   public func length(
     fromInsets edgeInsets: EdgeInsets,
-    convention: DimensionToAxisConvention = .widthIsHorizontal
+    convention: AxisConvention = .widthIsHorizontal
   ) -> CGFloat {
     switch self {
       case .horizontal:
@@ -57,7 +57,7 @@ extension AxisRepresentable {
   /// interpreting x/y according to the given convention.
   public func point(
     fromPoint point: CGPoint,
-    convention: DimensionToAxisConvention = .widthIsHorizontal
+    convention: AxisConvention = .widthIsHorizontal
   ) -> CGFloat {
     switch self {
       case .horizontal:

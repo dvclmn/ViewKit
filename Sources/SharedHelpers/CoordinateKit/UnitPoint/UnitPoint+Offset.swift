@@ -23,7 +23,7 @@ extension UnitPoint {
   }
   public func offset(
     by size: CGSize,
-    convention: DimensionToAxisConvention = .widthIsHorizontal
+    convention: AxisConvention = .widthIsHorizontal
   ) -> CGSize {
     offset(
       dx: convention.horizontalLength(size: size),

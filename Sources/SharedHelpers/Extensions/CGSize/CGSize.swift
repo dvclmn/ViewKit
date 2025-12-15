@@ -16,7 +16,7 @@ extension CGSize: @retroactive Hashable {
 
 extension CGSize {
 
-  public subscript(axis: Axis, convention: DimensionToAxisConvention = .widthIsHorizontal)
+  public subscript(axis: Axis, convention: AxisConvention = .widthIsHorizontal)
     -> CGFloat
   {
     return axis.length(fromSize: self, convention: convention)

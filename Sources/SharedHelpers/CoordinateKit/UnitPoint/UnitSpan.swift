@@ -28,7 +28,7 @@ extension UnitSpan {
 extension Axis {
   
   /// Returns the start and end UnitPoints for a gradient, given a convention relating dimensions to axis.
-  public func toGradientSpan(convention: DimensionToAxisConvention = .widthIsHorizontal) -> UnitSpan {
+  public func toGradientSpan(convention: AxisConvention = .widthIsHorizontal) -> UnitSpan {
     switch (self, convention) {
       case (.horizontal, .widthIsHorizontal), (.vertical, .heightIsHorizontal):
         return UnitSpan(start: .leading, end: .trailing)
