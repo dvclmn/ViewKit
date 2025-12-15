@@ -212,9 +212,9 @@ extension CGSize {
 //    return CGSize(width: transformed.width, height: transformed.height)
   }
 
-  public var widthOrHeightIsZero: Bool {
-    self.width.isZero || self.height.isZero
-  }
+//  public var widthOrHeightIsZero: Bool {
+//    self.width.isZero || self.height.isZero
+//  }
 
   public static func calculateMonospacedMetrics(for font: CTFont) -> CGSize {
     let spaceChar = " " as CFString

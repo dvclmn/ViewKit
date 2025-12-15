@@ -38,6 +38,24 @@ extension CGSize: PropertiesLabeled {
   }
 }
 
+extension NSRect: PropertiesLabeled {
+  public var separators: Separators {
+    Separators(propertyLabel: ": ", component: " x ")
+  }
+  
+  public var components: [LabelComponent<CGFloat>] {
+    self.origin.components + self.size.components
+//    [
+      
+//      LabelComponent("Origin", value: self.origin)
+//      LabelComponent(PropertyLabel("Width", abbreviated: "W"), value: self.width),
+//      LabelComponent(PropertyLabel("Width", abbreviated: "W"), value: self.width),
+//      LabelComponent(PropertyLabel("Height", abbreviated: "H"), value: self.height),
+//    ]
+  }
+}
+
+
 extension UnitPoint: PropertiesLabeled {
   public var separators: Separators {
     Separators(propertyLabel: ": ", component: ", ")

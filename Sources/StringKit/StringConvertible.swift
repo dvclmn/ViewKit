@@ -45,6 +45,16 @@ extension Array: StringConvertible where Element: StringConvertible {
   public var toString: String { map(\.toString).joined(separator: ", ") }
 }
 
+extension CGSize: StringConvertible {
+  public var toString: String { displayString }
+}
+
+extension NSRect: StringConvertible {
+  public var toString: String { displayString }
+}
+
+
+
 // MARK: - Alignment
 extension Alignment: StringConvertible {
   public var toString: String { self.displayName.standard }
