@@ -25,7 +25,8 @@ import Foundation
 //}
 
 public protocol AdjustableByAxis: AxisAddressable {}
-
+extension CGSize: AdjustableByAxis {}
+extension CGPoint: AdjustableByAxis {}
 
 extension AdjustableByAxis {
 
@@ -36,7 +37,7 @@ extension AdjustableByAxis {
   ) -> Self {
     setting(newValue, for: axis, convention: convention)
   }
-  
+
   public func adjust(
     _ axis: Axis2D,
     transform: (Value) -> Value,
@@ -46,7 +47,7 @@ extension AdjustableByAxis {
     let transformed = transform(current)
     return setting(transformed, for: axis, convention: convention)
   }
-  
+
   public func adjustBoth(
     transform: (Value, Value) -> (Value, Value),
     convention: AxisConvention = .default
@@ -54,51 +55,52 @@ extension AdjustableByAxis {
     let h = value(for: .horizontal, convention: convention)
     let v = value(for: .vertical, convention: convention)
     let (newH, newV) = transform(h, v)
-    
-    return self
+
+    return
+      self
       .setting(newH, for: .horizontal, convention: convention)
       .setting(newV, for: .vertical, convention: convention)
   }
-  
-//  public func adjust(
-//    _ axis: Axis2D,
-//    newValue: CGFloat,
-//    convention: AxisConvention = .default
-//  ) -> Self {
-//    switch axis {
-//      case .horizontal:
-//        return Value.init(
-//          first: <#T##BinaryFloatingPoint#>,
-//          second: <#T##BinaryFloatingPoint#>
-//        )
-////        return CGSize(width: newValue, height: self.height)
-//
-//      case .vertical:
-//        return CGSize(width: self.width, height: newValue)
-//    }
-//  }
-//
-//  /// I think this and the below (that transforms both axes)
-//  /// just allow the caller to hop in and  'do some stuff' to
-//  /// the values, before creating a new size from them.
-//  public func adjustLength(
-//    _ axis: Axis2D,
-//    transform: (CGFloat) -> CGFloat
-//  ) -> CGSize {
-//    let transformed = transform(axis.length(fromSize: self))
-//    return self.adjustLength(axis, newValue: transformed)
-//  }
-//
-//  public func adjustLengths(
-//    transform: (CGFloat, CGFloat) -> (width: CGFloat, height: CGFloat)
-//  ) -> CGSize {
-//    let transformed = transform(self.width, self.height)
-//    return CGSize(width: transformed.width, height: transformed.height)
-//  }
-//
-//  public func adjustLengths(by value: CGFloat) -> CGSize {
-//    return CGSize(self.width * value, self.height * value)
-//    //    let transformed = transform(self.width, self.height)
-//    //    return CGSize(width: transformed.width, height: transformed.height)
-//  }
+
+  //  public func adjust(
+  //    _ axis: Axis2D,
+  //    newValue: CGFloat,
+  //    convention: AxisConvention = .default
+  //  ) -> Self {
+  //    switch axis {
+  //      case .horizontal:
+  //        return Value.init(
+  //          first: <#T##BinaryFloatingPoint#>,
+  //          second: <#T##BinaryFloatingPoint#>
+  //        )
+  ////        return CGSize(width: newValue, height: self.height)
+  //
+  //      case .vertical:
+  //        return CGSize(width: self.width, height: newValue)
+  //    }
+  //  }
+  //
+  //  /// I think this and the below (that transforms both axes)
+  //  /// just allow the caller to hop in and  'do some stuff' to
+  //  /// the values, before creating a new size from them.
+  //  public func adjustLength(
+  //    _ axis: Axis2D,
+  //    transform: (CGFloat) -> CGFloat
+  //  ) -> CGSize {
+  //    let transformed = transform(axis.length(fromSize: self))
+  //    return self.adjustLength(axis, newValue: transformed)
+  //  }
+  //
+  //  public func adjustLengths(
+  //    transform: (CGFloat, CGFloat) -> (width: CGFloat, height: CGFloat)
+  //  ) -> CGSize {
+  //    let transformed = transform(self.width, self.height)
+  //    return CGSize(width: transformed.width, height: transformed.height)
+  //  }
+  //
+  //  public func adjustLengths(by value: CGFloat) -> CGSize {
+  //    return CGSize(self.width * value, self.height * value)
+  //    //    let transformed = transform(self.width, self.height)
+  //    //    return CGSize(width: transformed.width, height: transformed.height)
+  //  }
 }

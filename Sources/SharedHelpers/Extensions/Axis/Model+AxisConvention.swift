@@ -94,16 +94,14 @@ public enum AxisConvention: Sendable {
 
   // MARK: - CGPoint
 
-  /// Returns the horizontal length from a size, according to the convention.
-  public func horizontalPoint(point: CGPoint) -> CGFloat {
+  public func horizontalValue(for point: CGPoint) -> CGFloat {
     switch self {
       case .widthIsHorizontal: point.x
       case .heightIsHorizontal: point.y
     }
   }
 
-  /// Returns the vertical length from a size, according to the convention.
-  public func verticalPoint(point: CGPoint) -> CGFloat {
+  public func verticalValue(for point: CGPoint) -> CGFloat {
     switch self {
       case .widthIsHorizontal: point.y
       case .heightIsHorizontal: point.x
@@ -111,7 +109,6 @@ public enum AxisConvention: Sendable {
   }
 
   // MARK: - GridSize
-  /// Returns the horizontal length from a size, according to the convention.
   public func horizontalLength(size: GridSize) -> GridLength {
     switch self {
       case .widthIsHorizontal: size.columns
@@ -119,7 +116,6 @@ public enum AxisConvention: Sendable {
     }
   }
 
-  /// Returns the vertical length from a size, according to the convention.
   public func verticalLength(size: GridSize) -> GridLength {
     switch self {
       case .widthIsHorizontal: size.rows
@@ -128,7 +124,6 @@ public enum AxisConvention: Sendable {
   }
 
   // MARK: - CGRect
-  /// Returns the horizontal length from a size, according to the convention.
   public func horizontalLength(rect: CGRect) -> CGFloat {
     switch self {
       case .widthIsHorizontal: rect.size.width
@@ -136,7 +131,6 @@ public enum AxisConvention: Sendable {
     }
   }
 
-  /// Returns the vertical length from a size, according to the convention.
   public func verticalLength(rect: CGRect) -> CGFloat {
     switch self {
       case .widthIsHorizontal: rect.size.height

@@ -63,9 +63,9 @@ extension AxisRepresentable {
   ) -> CGFloat {
     switch self {
       case .horizontal:
-        convention.horizontalPoint(point: point)
+        convention.horizontalValue(for: point)
       case .vertical:
-        convention.verticalPoint(point: point)
+        convention.verticalValue(for: point)
       default: fatalError("Unknown axis \(self)")
     }
   }
