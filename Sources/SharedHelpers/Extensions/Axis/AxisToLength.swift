@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// The methods here attempt to answer:
+/// “Given an axis, and given a convention, which value do I want?”
 extension AxisRepresentable {
   /// Returns the length for this axis from a `CGSize`,
   /// interpreting width/height according to the given convention.

@@ -8,7 +8,7 @@
 import SwiftUI
 
 public protocol AxisExtentProviding {
-    associatedtype Output: BinaryFloatingPoint
+  associatedtype Output: BinaryFloatingPoint
   func horizontalExtent(using convention: AxisConvention) -> Output
   func verticalExtent(using convention: AxisConvention) -> Output
 }
@@ -33,23 +33,25 @@ public protocol AxisExtentProviding {
 
 /// A mapping between `Dimension` (width / height) and `Axis` (horizontal / vertical).
 ///
-/// Why this exists:
-/// - In most cases, "width" means "horizontal" and "height" means "vertical".
-/// - But occasionally this is not the case (rotated coordinate systems, swapped
-///  axes, certain drawing transforms), so it's risky to assume
-/// - This `AxisConvention` makes the convention
-/// explicit, so there's less risk of confusion
+/// This aims to answer the question:
+/// “Given this dimension-based structure, which scalar corresponds to which axis?”
 ///
-/// - `.widthIsHorizontal`:
-///     width → horizontal length
-///     height → vertical length
+/// In most cases, "width" means "horizontal" and "height" means "vertical".
+/// But occasionally this is not the case (rotated coordinate systems, swapped
+///  axes, certain drawing transforms), so it's risky to assume.
 ///
-/// - `.heightIsHorizontal`:
-///     height → horizontal length
-///     width → vertical length
+/// `AxisConvention` makes the convention explicit, so there's less risk of confusion
 ///
-/// This mapping means we can derive correct values from 'dimension-based'
-/// type like  `CGSize`, `CGPoint`, `EdgeInsets` etc
+/// `.widthIsHorizontal`:
+///    width → horizontal length
+///    height → vertical length
+///
+/// `.heightIsHorizontal`:
+///    height → horizontal length
+///    width → vertical length
+///
+/// Enables deriving correct values from types like
+/// `CGSize`, `CGPoint`, `EdgeInsets` etc
 public enum AxisConvention: Sendable {
 
   case widthIsHorizontal

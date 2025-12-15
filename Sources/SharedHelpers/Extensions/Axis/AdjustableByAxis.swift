@@ -12,6 +12,14 @@ import Foundation
 ///
 /// Uses protocol `FloatPair` as one way to address values,
 /// and likely more to come, such as `FloatTriplet` etc
+///
+/// Doesn't need to know about width/height at all.
+/// Operates purely in terms of:
+/// - Axis
+/// - Scalar values
+/// - Reconstruction
+///
+/// And lets the convention do the mapping.
 public protocol AdjustableByAxis {
   associatedtype Value: FloatPair
 }

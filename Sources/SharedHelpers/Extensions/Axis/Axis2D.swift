@@ -7,6 +7,18 @@
 
 import Foundation
 
+/// Notes on Axis stuff:
+///
+/// ## Axis
+/// - Horizontal vs vertical, a direction in space
+/// - A purely spatial concept
+/// - ``Axis2D``, ``AxisRepresentable``,  SwiftUI's `Axis`, etc
+///
+/// ## Dimension
+/// - Width vs height. Semantics
+/// - What `DimensionToAxisConvention` aims to disambiguate
+/// - Width and height = labels applied to axes via a convention
+
 /// Exists so I don't need to import SwiftUI just for an Axis type
 public enum Axis2D: Int8, CaseIterable, Codable {
   case horizontal
@@ -19,9 +31,9 @@ public protocol AxisRepresentable: Equatable, CaseIterable where AllCases == [Se
 }
 
 extension AxisRepresentable {
-  //  public static var allCases: AllCases {
-  //    [ Self.horizontal, Self.vertical ]
-  //  }
+  public static var allCases: AllCases {
+    [Self.horizontal, Self.vertical]
+  }
 
   /// Important: This defaults to a``AxisConvention``
   /// of Width == Horizontal and Height == Vertical
