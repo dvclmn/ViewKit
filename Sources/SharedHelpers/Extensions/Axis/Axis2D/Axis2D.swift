@@ -8,7 +8,7 @@
 import Foundation
 
 /// Exists so I don't need to import SwiftUI just for an Axis type
-public enum Axis2D: Int8, CaseIterable {
+public enum Axis2D: Int8, CaseIterable, Codable {
   case horizontal
   case vertical
 }

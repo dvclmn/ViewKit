@@ -30,7 +30,8 @@ extension Axis {
       case "vertical":
         self = .vertical
       default:
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid Axis value: \(value)")
+        throw DecodingError.dataCorruptedError(
+          in: container, debugDescription: "Invalid Axis value: \(value)")
     }
   }
 }
