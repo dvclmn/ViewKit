@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension Axis {
+extension AxisRepresentable {
   /// Returns the length for this axis from a `CGSize`,
   /// interpreting width/height according to the given convention.
   public func length(
@@ -16,12 +16,13 @@ extension Axis {
   ) -> CGFloat {
     switch self {
       case .horizontal:
-        return convention.horizontalLength(size: size)
+        convention.horizontalLength(size: size)
       case .vertical:
-        return convention.verticalLength(size: size)
+        convention.verticalLength(size: size)
+      default: fatalError("Unknown axis \(self)")
     }
   }
-  
+
   /// Returns the total inset length for this axis from `CGRect`,
   /// interpreting width/height according to the given convention.
   public func length(
@@ -30,12 +31,13 @@ extension Axis {
   ) -> CGFloat {
     switch self {
       case .horizontal:
-        return convention.horizontalLength(rect: rect)
+        convention.horizontalLength(rect: rect)
       case .vertical:
-        return convention.verticalLength(rect: rect)
+        convention.verticalLength(rect: rect)
+      default: fatalError("Unknown axis \(self)")
     }
   }
-  
+
   /// Returns the sum of the two *opposing* inset lengths, for this axis,
   /// interpreting leading/trailing/top/bottom according to the given convention.
   public func length(
@@ -44,12 +46,13 @@ extension Axis {
   ) -> CGFloat {
     switch self {
       case .horizontal:
-        return convention.horizontalLength(edgeInsets: edgeInsets)
+        convention.horizontalLength(edgeInsets: edgeInsets)
       case .vertical:
-        return convention.verticalLength(edgeInsets: edgeInsets)
+        convention.verticalLength(edgeInsets: edgeInsets)
+      default: fatalError("Unknown axis \(self)")
     }
   }
-  
+
   /// Returns the float value for this axis from a `CGPoint`,
   /// interpreting x/y according to the given convention.
   public func point(
@@ -58,9 +61,10 @@ extension Axis {
   ) -> CGFloat {
     switch self {
       case .horizontal:
-        return convention.horizontalPoint(point: point)
+        convention.horizontalPoint(point: point)
       case .vertical:
-        return convention.verticalPoint(point: point)
+        convention.verticalPoint(point: point)
+      default: fatalError("Unknown axis \(self)")
     }
   }
 
