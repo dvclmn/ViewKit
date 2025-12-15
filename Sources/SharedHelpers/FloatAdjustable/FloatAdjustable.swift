@@ -13,18 +13,23 @@ import Foundation
 /// Uses protocol `FloatPair` as one way to address values,
 /// and likely more to come, such as `FloatTriplet` etc
 public protocol AdjustableByAxis {
-
+  associatedtype Value: FloatPair
 }
 
-extension FloatAdjustable {
+extension AdjustableByAxis {
 
-  public func adjustLength(
+  public func adjust(
     _ axis: Axis2D,
-    newValue: CGFloat
-  ) -> CGSize {
+    newValue: CGFloat,
+    convention: AxisConvention = .default
+  ) -> Self {
     switch axis {
       case .horizontal:
-        return CGSize(width: newValue, height: self.height)
+        return Value.init(
+          first: <#T##BinaryFloatingPoint#>,
+          second: <#T##BinaryFloatingPoint#>
+        )
+//        return CGSize(width: newValue, height: self.height)
 
       case .vertical:
         return CGSize(width: self.width, height: newValue)
