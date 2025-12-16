@@ -65,7 +65,7 @@ public struct SizeDriftInternal: View {
 extension SizeDriftInternal {
 
   private var sentenceBasedSize: CGSize? {
-    return sentenceSize?.adjustLength(.horizontal) { $0 / CGFloat(self.width) }
+    return sentenceSize?.adjust(.horizontal) { $0 / CGFloat(self.width) }
   }
 
   @ViewBuilder

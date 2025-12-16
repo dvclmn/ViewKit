@@ -29,9 +29,6 @@ extension Character: StringConvertible {
 extension Double: StringConvertible {
   public var toString: String { String(self) }
 }
-extension CGFloat: StringConvertible {
-  public var toString: String { self.displayString }
-}
 
 extension Int: StringConvertible {
   public var toString: String { String(self) }
@@ -53,7 +50,13 @@ extension NSRect: StringConvertible {
   public var toString: String { displayString }
 }
 
+extension CGPoint: StringConvertible {
+  public var toString: String { displayString }
+}
 
+extension CGFloat: StringConvertible {
+  public var toString: String { displayString }
+}
 
 // MARK: - Alignment
 extension Alignment: StringConvertible {

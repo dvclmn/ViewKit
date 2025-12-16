@@ -62,6 +62,38 @@ extension AdjustableByAxis {
       .setting(newV, for: .vertical, convention: convention)
   }
 
+  /// Multiply both axes by the same factor
+  public func multiplyBoth(
+    by factor: Value,
+    //    _ axis: Axis2D,
+    //    transform: (Value) -> Value,
+    //    convention: AxisConvention = .default
+  ) -> Self {
+    //    let current = value(for: axis, convention: convention)
+    //    let transformed = transform(current)
+    //    return setting(transformed, for: axis, convention: convention)
+    return self.adjustBoth { a, b in
+      (a * factor, b * factor)
+    }
+  }
+
+  /// Multiply both axes by the same factor
+  public func divideBoth(
+    by divisor: Value,
+    //    _ axis: Axis2D,
+    //    transform: (Value) -> Value,
+    //    convention: AxisConvention = .default
+  ) -> Self {
+    //    let current = value(for: axis, convention: convention)
+    //    let transformed = transform(current)
+    //    return setting(transformed, for: axis, convention: convention)
+    return self.adjustBoth { a, b in
+      let aSafe = max(0, a / divisor)
+      let bSafe = max(0, b / divisor)
+      return (aSafe, bSafe)
+    }
+  }
+
   //  public func adjust(
   //    _ axis: Axis2D,
   //    newValue: CGFloat,

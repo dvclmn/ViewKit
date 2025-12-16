@@ -18,21 +18,6 @@ public struct ExpandingTextEditor: View {
 
   let alignment: Alignment
 
-  //  @available(macOS 26, iOS 18, *)
-
-  //  public init(
-  //    text: Binding<AttributedString>,
-  //    plainText: Binding<String>,
-  //    alignment: Alignment = .topLeading,
-  //  ) {
-  //    if #available(macOS 26, iOS 18, *) {
-  //      self.init(text: text, alignment: alignment)
-  //    } else {
-  //      self.init(plainText: plainText, alignment: alignment)
-  //    }
-  //
-  //  }
-
   public init(
     text: Binding<AttributedString>,
     alignment: Alignment = .topLeading,

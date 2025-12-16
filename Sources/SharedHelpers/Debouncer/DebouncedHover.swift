@@ -11,13 +11,13 @@ public struct DebouncedHoverViewModifier: ViewModifier {
   @State private var isHovering = false
   let enterInterval: TimeInterval
   let exitInterval: TimeInterval
-  
+
   let onHoverChange: (Bool) -> Void
 
-//  public init(interval: TimeInterval, onHoverChange: @escaping (Bool) -> Void) {
-//    self.interval = interval
-//    self.onHoverChange = onHoverChange
-//  }
+  //  public init(interval: TimeInterval, onHoverChange: @escaping (Bool) -> Void) {
+  //    self.interval = interval
+  //    self.onHoverChange = onHoverChange
+  //  }
 
   public func body(content: Content) -> some View {
     content
