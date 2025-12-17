@@ -7,11 +7,10 @@
 
 import Foundation
 import IdentifiedCollections
-
-public protocol ItemModel: Identifiable, Codable, Equatable, Hashable {}
+import CoreTools
 
 public protocol DataStore {
-  associatedtype Item: ItemModel
+  associatedtype Item: ModelBase & Identifiable
   associatedtype Config: ItemConfiguration
   var items: IdentifiedArrayOf<Item> { get set }
   var selectedItems: Set<Item.ID> { get set }
@@ -22,7 +21,7 @@ public protocol DataStore {
 }
 
 public protocol ItemConfiguration: Identifiable {
-  associatedtype Item: ItemModel
+  associatedtype Item: ModelBase & Identifiable
   var id: UUID { get }
   var itemID: Item.ID { get }
 }

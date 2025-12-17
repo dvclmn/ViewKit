@@ -6,10 +6,9 @@
 //
 
 extension MutableCollection {
+  
   public subscript(safe index: Index) -> Element? {
-    get {
-      indices.contains(index) ? self[index] : nil
-    }
+    get { indices.contains(index) ? self[index] : nil }
     set {
       guard let newValue, indices.contains(index) else { return }
       self[index] = newValue
@@ -61,21 +60,20 @@ extension Collection where Index == Int {
     }
     return (prevIdx + count) % count
   }
+  
+//  func nextValidIndex(after index: Int, in collection: some Collection) -> Int? {
+//    
+//  }
+//  func previousValidIndex(before index: Int, in collection: some Collection) -> Int? {
+//    
+//  }
+
 }
 
 extension Collection where Element: Hashable {
   /// Was called something like `isAtTop`
-  //  public func isOnlyFirstElementSelected(
-  //    currentSelection: Element.ID?
-  //  ) -> Bool {
-  //    if let currentSelection {
-  //      return self.isOnlyFirstElementSelected(currentSelection: [currentSelection])
-  //    }
-  //    return false
-  //  }
-
-  public func isOnlyFirstElementSelected(
-    for selection: Set<Element>
+  public func isOnlyFirstSelected(
+    in selection: Set<Element>
   ) -> Bool {
     guard let firstResultID = self.first else {
       return false
@@ -87,6 +85,13 @@ extension Collection where Element: Hashable {
       let firstSelected = selection.first
     else { return false }
     return firstResultID == firstSelected
+  }
+  
+  public func isOnlyElementSelected(
+    _ element: Element,
+    in selection: Set<Element>
+  ) -> Bool {
+    selection.count == 1 && selection.first == element
   }
 }
 
@@ -130,7 +135,7 @@ extension Collection where Element: Hashable {
 //}
 
 extension Array where Element: Collection, Element.Element: CustomStringConvertible {
-  
+
   @available(*, deprecated, message: "Prefer protocol `PrettyPrinted`")
   public func indented(
     startingIndentation: Int = 0,
