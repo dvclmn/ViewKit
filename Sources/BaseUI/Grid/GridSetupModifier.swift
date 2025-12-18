@@ -8,6 +8,7 @@
 import LayoutKit
 import SharedHelpers
 import SwiftUI
+import GridKit
 
 /// Aims to produce a full setup with Grid Font,
 /// Character measure for unit size, injecting

@@ -7,7 +7,7 @@
 
 import Foundation
 import SharedHelpers
-//import BaseModels
+import BaseModels
 
 public struct Box: Sendable {
   let components: [any Component]

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SharedHelpers
+import GridKit
 
 extension Box {
   public struct Theme: Sendable, Codable, Equatable {

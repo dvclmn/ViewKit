@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SharedHelpers
+import CoreTools
 
 extension Box {
   public struct GlyphDescriptor: GlyphKind {

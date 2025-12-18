@@ -74,6 +74,8 @@ let package = Package(
         .module(.graphicsKit),
         .module(.gestureKit),
         .module(.coreTools),
+        .module(.gridKit),
+        .module(.wrecktangle),
         .sharing,
         //        .nsui,
       ],
@@ -186,8 +188,7 @@ let package = Package(
     .target(
       name: "Wrecktangle",
       dependencies: [
-        .module(.sharedHelpers),
-        .module(.enumMacros),
+        .module(.coreTools),
         .module(.gridKit),
         .module(.baseModels),
       ]
