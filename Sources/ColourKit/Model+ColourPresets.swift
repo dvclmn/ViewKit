@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 extension RGBColour {
   /// Primary colors
   public static let red = RGBColour(red: 1, green: 0, blue: 0)

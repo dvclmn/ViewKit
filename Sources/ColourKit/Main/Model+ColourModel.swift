@@ -21,7 +21,7 @@ public protocol EnvironmentResolvableColour {
   )
 }
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 public protocol ColourModel: Codable {
   var colourSpace: Color.RGBColorSpace { get }
   var name: String? { get }
@@ -34,7 +34,7 @@ public protocol ColourModel: Codable {
 
 
 // MARK: - Extension methods
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 extension ColourModel {
   public mutating func opacity(_ opacity: Double) { alpha = opacity }
   public var colourSpace: Color.RGBColorSpace { .sRGB }

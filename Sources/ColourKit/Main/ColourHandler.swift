@@ -16,12 +16,12 @@ public enum ColourBorderBrightness {
   }
 }
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 extension EnvironmentValues {
   @Entry public var colourHandler: ColourHandler = .init()
 }
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 public struct ColourHandler: ColourHandlerProtocol, Sendable {
 
   /// This describes which colour is currently being used for drawing

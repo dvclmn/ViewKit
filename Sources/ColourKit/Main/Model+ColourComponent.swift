@@ -12,7 +12,7 @@ import SwiftUI
 /// structs (e.g. `RedComponent`, `HueComponent`).
 ///
 /// I ended up back with enums, and much better off for it.
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 nonisolated public protocol ColourComponent: Identifiable, CaseIterable, RawRepresentable where RawValue == String {
 
   associatedtype Model: ColourModel
@@ -40,7 +40,7 @@ nonisolated public protocol ColourComponent: Identifiable, CaseIterable, RawRepr
   func sliderTrackGradient(colour: Model) -> LinearGradient
 }
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 extension ColourComponent {
   public var id: String { self.name }
   public var name: String { rawValue.capitalized }

@@ -9,7 +9,7 @@ import ColourKit
 import Foundation
 import SharedHelpers
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 public struct GridCell: ModelBase, Identifiable {
   public var id: UUID
   //  public var id: GridPosition { position }

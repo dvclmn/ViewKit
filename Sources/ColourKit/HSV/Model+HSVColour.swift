@@ -16,7 +16,7 @@ import SwiftUI
 /// -  Luminance depends on how the three channels contribute
 ///   based on human perception.
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 public struct HSVColour: Equatable, Sendable, ColourModel, Hashable {
   public var hue: Double
   public var saturation: Double
@@ -54,7 +54,7 @@ public struct HSVColour: Equatable, Sendable, ColourModel, Hashable {
   }
 }
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 extension HSVColour: HSVAdjustable {
 
   public init(fromHSV hsv: HSVColour) {
@@ -64,7 +64,7 @@ extension HSVColour: HSVAdjustable {
   public var toHSV: HSVColour { self }
 }
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 extension HSVColour {
 
   public var toRGB: RGBColour { RGBColour(fromHSV: self) }
@@ -101,7 +101,7 @@ extension HSVColour {
   }
 }
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 public func + (lhs: HSVColour, rhs: HSVAdjustment) -> HSVColour {
   lhs.applying(adjustment: rhs)
 }
