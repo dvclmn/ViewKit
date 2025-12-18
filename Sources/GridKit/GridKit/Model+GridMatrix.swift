@@ -15,7 +15,6 @@
 
 import Foundation
 import SharedHelpers
-import StringKit
 
 public struct Grid<Cell>: GridShaped {
   public typealias Cells = [[Cell]]
@@ -228,7 +227,7 @@ extension GridMatrix {
     let rowsStrings = (0..<rows).map { rowIndex in
       (0..<columns).map { columnIndex in
         let position = GridPosition(row: rowIndex, column: columnIndex)
-        return self[at: position]?.character.toString ?? " "
+        return String(self[at: position]?.character ?? " ")
       }.joined()
     }
     return rowsStrings.joined(separator: "\n")

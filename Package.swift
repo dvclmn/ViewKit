@@ -81,6 +81,7 @@ let package = Package(
       name: "BaseModels",
       dependencies: [
         .module(.coreTools),
+        .module(.gridKit),
         .sharing,
         .product(name: "IdentifiedCollections", package: "swift-identified-collections"),
       ],
@@ -125,7 +126,7 @@ let package = Package(
       dependencies: [
         .module(.sharedHelpers),
         .module(.colourKit),
-        .module(.gridKit)
+        .module(.gridKit),
       ]
     ),
     .target(
@@ -156,6 +157,7 @@ let package = Package(
       dependencies: [
         .module(.sharedHelpers),
         .module(.enumMacros),
+        .module(.gridKit),
       ]
     ),
 
@@ -174,9 +176,10 @@ let package = Package(
         .module(.baseUI),
         .module(.baseModels),
         .module(.layoutKit),
-        .module(.enumMacros),
-        .module(.stringKit),
-        .module(.sharedHelpers),
+        .module(.coreTools)
+//        .module(.enumMacros),
+//        .module(.stringKit),
+//        .module(.sharedHelpers),
       ]
     ),
 
