@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedHelpers
 
 /// This is like `CGPoint`
 ///
@@ -18,7 +19,7 @@ import Foundation
 ///   "GridPosition cannot be negative, in either dimension."
 /// )
 /// ```
-public struct GridPosition: Hashable {
+public struct GridPosition: ModelBase {
   public let row: Int
   public let column: Int
 

@@ -56,12 +56,12 @@ public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
   }
 
   /// The 'actual' value, for the corresponding property, from the `GridCanvas` itself
-  public var dimensionsKeyPath: WritableKeyPath<GridDimensions, Int> {
-    switch self {
-      case .column: \.columns
-      case .row: \.rows
-    }
-  }
+//  public var dimensionsKeyPath: WritableKeyPath<GridDimensions, Int> {
+//    switch self {
+//      case .column: \.width
+//      case .row: \.height
+//    }
+//  }
 
   public var positionKeyPath: KeyPath<GridPosition, Int> {
     switch self {

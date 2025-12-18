@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GridKit
 
 public enum GridFillStyle {
   case fixed(columns: Int, rows: Int)

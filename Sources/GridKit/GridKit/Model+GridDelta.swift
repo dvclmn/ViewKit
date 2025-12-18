@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedHelpers
 
 public struct GridDelta: ModelBase {
   public var columns: Int
@@ -21,8 +22,8 @@ public struct GridDelta: ModelBase {
     new newDimensions: GridDimensions
   ) {
     self.init(
-      columns: newDimensions.columns - oldDimensions.columns,
-      rows: newDimensions.rows - oldDimensions.rows
+      columns: newDimensions.width - oldDimensions.width,
+      rows: newDimensions.height - oldDimensions.height
     )
   }
 }

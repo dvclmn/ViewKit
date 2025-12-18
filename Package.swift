@@ -36,6 +36,7 @@ let package = Package(
     .library(name: "CurveKit", targets: ["CurveKit"]),
     .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
     .library(name: "StringKit", targets: ["StringKit"]),
+    .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
 
     // Export-only libraries
     .library(name: "ToolKit", targets: ["ToolKit"]),
@@ -182,6 +183,15 @@ let package = Package(
 //        .module(.sharedHelpers),
       ]
     ),
+    .target(
+      name: "Wrecktangle",
+      dependencies: [
+        .module(.sharedHelpers),
+        .module(.enumMacros),
+        .module(.gridKit),
+        .module(.baseModels),
+      ]
+    ),
 
     // MARK: - BaseMacro targets
     .macro(
@@ -245,6 +255,7 @@ enum BaseModule {
   case motionKit
   case sharedHelpers
   case stringKit
+  case wrecktangle
 
   /// Export-only modules
   case toolKit
@@ -266,6 +277,9 @@ enum BaseModule {
       case .motionKit: "MotionKit"
       case .sharedHelpers: "SharedHelpers"
       case .stringKit: "StringKit"
+      case .wrecktangle: "Wrecktangle"
+        
+        /// Export-only
       case .toolKit: "ToolKit"
       case .coreTools: "CoreTools"
     }

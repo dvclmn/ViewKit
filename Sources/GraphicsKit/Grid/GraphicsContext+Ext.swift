@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 extension GraphicsContext {
   

@@ -7,6 +7,7 @@
 
 import Foundation
 import SharedHelpers
+import GridKit
 
 struct TestString {
   let text: String

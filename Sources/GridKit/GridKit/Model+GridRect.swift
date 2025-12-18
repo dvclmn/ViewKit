@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedHelpers
 
 public struct GridRect: ModelBase {
   public let origin: GridPosition
@@ -42,11 +43,11 @@ public struct GridRect: ModelBase {
     let minCol = min(a.column, b.column)
     let maxCol = max(a.column, b.column)
 
-    let origin = GridPosition(column: minCol, row: minRow)
+    let origin = GridPosition(row: minRow, column: minCol)
 
     let size = GridDimensions(
-      columns: maxCol - minCol + 1,
-      rows: maxRow - minRow + 1
+      width: maxCol - minCol + 1,
+      height: maxRow - minRow + 1
     )
 
     self.init(
@@ -122,24 +123,24 @@ extension GridRect {
 
   /// Iterates over all GridPositions within this GridRect
   public var positions: [GridPosition] {
-    (origin.row..<origin.row + size.rows).flatMap { row in
-      (origin.column..<origin.column + size.columns).map { col in
-        GridPosition(column: col, row: row)
+    (origin.row..<origin.row + size.height).flatMap { row in
+      (origin.column..<origin.column + size.width).map { col in
+        GridPosition(row: row, column: col)
       }
     }
   }
 
   public func contains(_ position: GridPosition) -> Bool {
-    let rowRange = origin.row..<(origin.row + size.rows)
-    let colRange = origin.column..<(origin.column + size.columns)
+    let rowRange = origin.row..<(origin.row + size.height)
+    let colRange = origin.column..<(origin.column + size.width)
     return rowRange.contains(position.row) && colRange.contains(position.column)
   }
 
   public var toCGRect: CGRect {
     let originPoint = origin.toCGPoint(cellSize: cellSize)
     let size = CGSize(
-      width: CGFloat(self.size.columns) * cellSize.width,
-      height: CGFloat(self.size.rows) * cellSize.height
+      width: CGFloat(self.size.width) * cellSize.width,
+      height: CGFloat(self.size.height) * cellSize.height
     )
     return CGRect(origin: originPoint, size: size)
   }

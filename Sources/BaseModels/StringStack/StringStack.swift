@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 14/9/2024.
 //
 
-import SwiftUI
 import GridKit
+import SwiftUI
 
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack: GridShaped {
@@ -15,6 +15,14 @@ public struct StringStack: GridShaped {
   public typealias Row = [Character]
 
   public var cells: Cells
+  
+  public init(cells: Cells) {
+    self.cells = cells
+  }
+}
+
+// MARK: - Convenience Initialisers
+extension StringStack {
 
   public init(_ cells: Cells) {
     let normalised = Self.normalisedRows(
@@ -25,10 +33,6 @@ public struct StringStack: GridShaped {
     )
     self.cells = normalised
   }
-}
-
-// MARK: - Convenience Initialisers
-extension StringStack {
 
   public init(_ string: String) {
     self.init(stringLiteral: string)
@@ -66,7 +70,7 @@ extension StringStack: CustomStringConvertible {
 extension StringStack: CustomDebugStringConvertible {
   public var debugDescription: String {
     string
-//    return DisplayString {
-//    }.plainText
+    //    return DisplayString {
+    //    }.plainText
   }
 }

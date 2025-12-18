@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import SharedHelpers
 
-public struct GridDimensions: Codable, Sendable, Equatable, Hashable {
+public struct GridDimensions: ModelBase {
   public let width: Int
   public let height: Int
 

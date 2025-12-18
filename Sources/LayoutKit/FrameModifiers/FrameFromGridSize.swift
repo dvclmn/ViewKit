@@ -6,6 +6,7 @@
 //
 
 import CoreTools
+import GridKit
 import SwiftUI
 
 public struct FrameFromGridSize: ViewModifier {
