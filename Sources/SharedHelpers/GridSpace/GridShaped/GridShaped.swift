@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IdentifiedCollections
 
 public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Self.Element == Self.Row {
   associatedtype Cell
@@ -15,7 +16,6 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Self.Ele
 
   init(_ cells: Cells)
 
-  //    static var normaliser: RowNormaliser<Self> { get }
   static func normalisedRows(
     _ cells: Cells,
     alignment: GridAlignment,

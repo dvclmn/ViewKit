@@ -56,7 +56,6 @@ extension GridShaped {
   }
 }
 
-
 /// Assumes horizontal joining
 public func + <T: GridShaped>(lhs: T, rhs: T) -> T {
   T.joined(lhs, rhs, along: .horizontal)

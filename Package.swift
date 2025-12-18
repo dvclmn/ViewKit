@@ -49,7 +49,8 @@ let package = Package(
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
-    .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
+    .package(
+      url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
   ],
 
   // MARK: - Targets
@@ -72,7 +73,7 @@ let package = Package(
         .module(.gestureKit),
         .module(.coreTools),
         .sharing,
-//        .nsui,
+        //        .nsui,
       ],
     ),
     .target(
@@ -138,7 +139,7 @@ let package = Package(
         .module(.coreTools)
       ]
     ),
-    .target(name: "SharedHelpers"),
+    .target(name: "SharedHelpers", dependencies: [.identifiedCollections]),
 
     .target(
       name: "StringKit",
@@ -202,6 +203,9 @@ extension Target.Dependency {
   }
   static var sharing: Self {
     .product(name: "Sharing", package: "swift-sharing")
+  }
+  static var identifiedCollections: Self {
+    .product(name: "IdentifiedCollections", package: "swift-identified-collections")
   }
   static var nsui: Self {
     .product(name: "NSUI", package: "nsui")
