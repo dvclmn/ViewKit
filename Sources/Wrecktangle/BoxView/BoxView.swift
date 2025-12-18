@@ -9,7 +9,6 @@ import CoreTools
 import LayoutKit
 import SwiftUI
 import GridKit
-import Wrecktangle
 
 @available(macOS 14.0, *)
 public struct BoxView: View {
@@ -30,6 +29,7 @@ public struct BoxView: View {
     self.content = content()
   }
 
+  #warning("Not able to use `.gridSetup()` here, need to do this somewhere!")
   public var body: some View {
     Text(
       Box(
@@ -43,7 +43,8 @@ public struct BoxView: View {
     )
 //    .fixedSize(horizontal: true, vertical: false)
     .fixedSize()
-    .gridSetup(.sfMono, fontSize: explicitFontSize ?? 13)
+    
+//    .gridSetup(.sfMono, fontSize: explicitFontSize ?? 13)
 
     .environment(\.isShowingGridGuide, false)
 
@@ -75,7 +76,8 @@ extension EnvironmentValues {
 
 #if DEBUG
 @available(macOS 14.0, *)
-#Preview(traits: .size(.normal)) {
+#Preview {
+//#Preview(traits: .size(.normal)) {
 
   ScrollView {
     HStack(alignment: .top, spacing: 8) {

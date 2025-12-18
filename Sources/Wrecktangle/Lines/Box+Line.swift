@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 8/11/2025.
 //
 
+import StringKit
+
 extension Box {
 
   /// This is strictly a Three-Part Line. Will need to introduce

@@ -6,6 +6,7 @@
 //
 
 import SharedHelpers
+import StringKit
 
 extension Box {
 
@@ -33,5 +34,6 @@ extension Box.FrameStructure {
 }
 
 extension Box.FrameStructure: CustomStringConvertible {
+//  public var description: String { map.description }
   public var description: String { map.pretty }
 }

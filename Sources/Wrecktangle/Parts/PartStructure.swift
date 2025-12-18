@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 10/11/2025.
 //
 
-import SharedHelpers
+import CoreTools
 
 extension Box.PartStructure {
   init(

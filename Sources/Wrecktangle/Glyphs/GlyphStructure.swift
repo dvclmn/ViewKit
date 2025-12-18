@@ -7,7 +7,7 @@
 
 import Foundation
 import SharedHelpers
-
+import StringKit
 
 extension Box {
 
