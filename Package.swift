@@ -125,6 +125,7 @@ let package = Package(
       dependencies: [
         .module(.sharedHelpers),
         .module(.colourKit),
+        .module(.gridKit)
       ]
     ),
     .target(
@@ -235,6 +236,7 @@ enum BaseModule {
   case curveKit
   case gestureKit
   case graphicsKit
+  case gridKit
   case layoutKit
   case motionKit
   case sharedHelpers
@@ -255,6 +257,7 @@ enum BaseModule {
       case .curveKit: "CurveKit"
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
+      case .gridKit: "GridKit"
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
       case .sharedHelpers: "SharedHelpers"

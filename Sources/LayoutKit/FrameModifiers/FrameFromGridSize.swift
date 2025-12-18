@@ -89,3 +89,19 @@ extension View {
     )
   }
 }
+
+//extension View {
+//  public func frameFromGridDimensions(
+//    _ dimensions: GridDimensions,
+//    cellSize: CGSize,
+//    alignment: Alignment = .center
+//  ) -> some View {
+//    self.modifier(
+//      FrameFromSizeModifier(
+//        width: dimensions.width(with: cellSize),
+//        height: dimensions.height(with: cellSize),
+//        alignment: alignment
+//      )
+//    )
+//  }
+//}

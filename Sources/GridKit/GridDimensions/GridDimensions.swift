@@ -5,16 +5,33 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
+import Foundation
+
 public struct GridDimensions: Codable, Sendable, Equatable, Hashable {
   public let width: Int
   public let height: Int
-  
+
   public init(width: Int, height: Int) {
+    precondition(width > 0 && height > 0, "GridDimensions cannot have zero or negative dimensions.")
     self.width = width
     self.height = height
   }
   public init(_ width: Int, _ height: Int) {
     self.init(width: width, height: height)
+  }
+}
+
+extension GridDimensions {
+  public init(
+    size: CGSize,
+    cellSize: CGSize,
+    strategy: SnapStrategy = .round
+  ) {
+    let dimensions = size.cellSnappedDimensions(
+      cellSize: cellSize,
+      strategy: strategy
+    )
+    self.init(width: dimensions.columns, height: dimensions.rows)
   }
 }
 
