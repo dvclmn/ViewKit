@@ -7,7 +7,7 @@
 
 import AppKit
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 extension ColourPair {
 
   /// Returns foreground only
@@ -64,7 +64,7 @@ extension ColourPair {
   }
 }
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 extension ColourPair {
   public enum PairType {
     case fg

@@ -14,10 +14,10 @@
 import NSUI
 import SwiftUI
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 public typealias Colour = CodableColour
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 public enum CodableColour: Codable, Equatable, Hashable, Sendable {
   case hex(String, opacity: Double = 1)
   case rgb(RGBColour)

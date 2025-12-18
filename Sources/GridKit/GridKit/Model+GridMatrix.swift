@@ -14,6 +14,8 @@
 /// From: https://github.com/eneko/Sudoku/blob/main/Sources/Matrix/Matrix.swift
 
 import Foundation
+import SharedHelpers
+import StringKit
 
 public struct Grid<Cell>: GridShaped {
   public typealias Cells = [[Cell]]
@@ -48,8 +50,10 @@ public struct GridMatrix: Sendable, Hashable, Equatable, Codable {
 extension GridMatrix {
   /// When a user starts drawing in previously empty space:
   public mutating func setCharacter(_ char: Character, at position: GridPosition) {
-    expandToInclude(position: position, blank: GridCell.createBlank(at: position))
-    self[at: position] = GridCell(character: char, position: position)
+    expandToInclude(position: position, blank: GridCell.createBlank())
+//    expandToInclude(position: position, blank: GridCell.createBlank(at: position))
+    self[at: position] = GridCell(character: char)
+//    self[at: position] = GridCell(character: char, position: position)
   }
 
   public mutating func clearCells(at positions: [GridPosition]) {
@@ -112,29 +116,33 @@ extension GridMatrix {
     for _ in 0..<count { removeRow(from: edge) }
   }
 
+  #warning("Have changed approach regarding GridPosition, no longer stored on GridCell, so will need to fix this up")
   public mutating func addRow(to edge: GridEdge) {
     switch edge {
       case .top:
         let newRow = (0..<columns).map { column in
-          GridCell.createBlank(at: .init(column: column, row: 0))
+          GridCell.createBlank()
+//          GridCell.createBlank(at: .init(row: 0, column: column))
         }
         cells.insert(contentsOf: newRow, at: 0)
         rows += 1
-        reindexPositions()
+//        reindexPositions()
 
       case .bottom:
         let newRow = (0..<columns).map { column in
-          GridCell.createBlank(at: .init(column: column, row: rows))
+          GridCell.createBlank()
+//          GridCell.createBlank(at: .init(row: rows, column: column))
         }
         cells.append(contentsOf: newRow)
         rows += 1
-        reindexPositions()
+//        reindexPositions()
 
       default:
         break  // handled elsewhere
     }
   }
 
+#warning("Have changed approach regarding GridPosition, no longer stored on GridCell, so will need to fix this up")
   public mutating func removeRow(from edge: GridEdge) {
     precondition(rows > 1, "Cannot remove last row")
 
@@ -150,7 +158,7 @@ extension GridMatrix {
 
     cells.removeSubrange(range)
     rows -= 1
-    reindexPositions()
+//    reindexPositions()
   }
 
   public mutating func addColumn(to edge: GridEdge) {
@@ -158,15 +166,18 @@ extension GridMatrix {
 
     for row in (0..<rows).reversed() {
       let column = (edge == .leading) ? 0 : columns
-      let newCell = GridCell.createBlank(at: GridPosition(column: column, row: row))
+      let newCell = GridCell.createBlank()
+//      let newCell = GridCell.createBlank(at: GridPosition(row: row, column: column))
       let insertIndex = row * columns + (edge == .leading ? 0 : columns)
       cells.insert(newCell, at: insertIndex)
     }
 
     columns += 1
-    reindexPositions()
+//    reindexPositions()
   }
-
+  
+#warning("Have changed approach regarding GridPosition, no longer stored on GridCell, so will need to fix this up")
+  
   public mutating func removeColumn(from edge: GridEdge) {
     precondition(columns > 1, "Cannot remove last column")
 
@@ -178,7 +189,7 @@ extension GridMatrix {
     }
 
     columns -= 1
-    reindexPositions()
+//    reindexPositions()
   }
 
 }
@@ -206,7 +217,7 @@ extension GridMatrix {
   }
 
   public var dimensions: GridDimensions {
-    GridDimensions(columns: columnCount, rows: rowCount)
+    GridDimensions(width: columnCount, height: rowCount)
   }
 
   public var cellCount: Int { cells.count }
@@ -216,7 +227,7 @@ extension GridMatrix {
   public var textContent: String {
     let rowsStrings = (0..<rows).map { rowIndex in
       (0..<columns).map { columnIndex in
-        let position = GridPosition(column: columnIndex, row: rowIndex)
+        let position = GridPosition(row: rowIndex, column: columnIndex)
         return self[at: position]?.character.toString ?? " "
       }.joined()
     }
@@ -224,14 +235,15 @@ extension GridMatrix {
   }
 
   /// Rewrites every cell’s `.position` to match its current matrix index.
-  public mutating func reindexPositions() {
-    for row in 0..<rows {
-      for column in 0..<columns {
-        let index = row * columns + column
-        cells[index].position = GridPosition(column: column, row: row)
-      }
-    }
-  }
+//  public mutating func reindexPositions() {
+//    for row in 0..<rows {
+//      for column in 0..<columns {
+//        let index = row * columns + column
+//        cells[index] = GridPosition(row: row, column: column)
+////        cells[index].position = GridPosition(row: row, column: column)
+//      }
+//    }
+//  }
 
   // MARK: - Subscripts
   /// Get character at specific grid position
@@ -278,7 +290,7 @@ extension GridMatrix {
     //    let columns: [[GridCell]] = self.content.allColumns
     for (rowIndex, line) in rows.enumerated() {
       for (columnIndex, char) in line.enumerated() where char.character == character {
-        positions.append(GridPosition(column: columnIndex, row: rowIndex))
+        positions.append(GridPosition(row: rowIndex, column: columnIndex))
       }
     }
     return positions
@@ -287,9 +299,9 @@ extension GridMatrix {
   /// Get all cells within specified bounds
   func cells(in bounds: GridDimensions) -> [GridCell] {
     var cells: [GridCell] = []
-    for row in 0..<bounds.rows {
-      for column in 0..<bounds.columns {
-        let position = GridPosition(column: column, row: row)
+    for row in 0..<bounds.height {
+      for column in 0..<bounds.width {
+        let position = GridPosition(row: row, column: column)
         if let cell = self[at: position] {
           cells.append(cell)
         }
@@ -314,7 +326,7 @@ extension GridMatrix {
     for row in 0..<requiredRows {
       for column in 0..<requiredColumns {
         if row < rows, column < columns {
-          let position = GridPosition(column: column, row: row)
+          let position = GridPosition(row: row, column: column)
           print("GridPosition from `expandToInclude()`: \(position)")
           guard let cell = self[at: position] else { return }
           newCells.append(cell)

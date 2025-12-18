@@ -30,11 +30,11 @@ public struct GridCell: ModelBase, Identifiable {
   }
 }
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 extension GridCell {
 
   public static func createBlank(
-    at position: GridPosition,
+//    at position: GridPosition,
     colour: RGBColour = .white,
     character: Character = " "
   ) -> GridCell {
@@ -74,7 +74,8 @@ extension GridCell {
 
     let paddingCells = (line.count..<targetWidth).map { columnIndex in
       let position = GridPosition(row: rowIndex, column: columnIndex)
-      return GridCell.createBlank(at: position)
+      return GridCell.createBlank()
+//      return GridCell.createBlank(at: position)
     }
 
     return characterCells + paddingCells

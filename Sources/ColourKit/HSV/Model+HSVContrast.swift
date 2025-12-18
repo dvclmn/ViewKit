@@ -9,7 +9,7 @@ import Foundation
 
 /// There are certain methods for interacting with `HSVAdjustment`
 /// and similar, that don't need to be on `HSVAdjustable` conformants.
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 extension HSVColour {
   
   public func contrastColour(

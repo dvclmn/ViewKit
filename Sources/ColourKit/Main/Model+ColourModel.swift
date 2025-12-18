@@ -7,14 +7,17 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
 public protocol EnvironmentResolvableColour {
   var toColour: Color { get }
+  
+  @available(macOS 14.0, *)
   init(
     colour: Color,
     environment: EnvironmentValues,
     name: String?
   )
+  
+  @available(macOS 14.0, *)
   init(
     resolved: Color.Resolved,
     name: String?

@@ -44,7 +44,7 @@ public struct ColourHandler: ColourHandlerProtocol, Sendable {
 
 }
 
-@available(macOS 14.0, *)
+//@available(macOS 14.0, *)
 extension ColourHandler {
 
   //  public func rgbSwiftUIColour(for level: ColourLevel) -> Color {
