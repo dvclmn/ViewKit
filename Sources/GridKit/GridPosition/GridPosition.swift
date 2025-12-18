@@ -65,16 +65,7 @@ extension GridPosition {
   //  var column: Int { y }
 }
 
-extension GridPosition: Comparable {
 
-  public static func < (lhs: Self, rhs: Self) -> Bool {
-    (lhs.row, lhs.column) < (rhs.row, rhs.column)
-  }
-
-  //  public static func < (lhs: GridPosition, rhs: GridPosition) -> Bool {
-  //    return (lhs.row < rhs.row) || ((lhs.row == rhs.row) && (lhs.column < rhs.column))
-  //  }
-}
 
 extension GridPosition: CustomStringConvertible {
   public var description: String {

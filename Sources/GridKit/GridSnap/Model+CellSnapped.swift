@@ -20,10 +20,7 @@ extension CGSize {
     strategy: SnapStrategy
   ) -> CGSize {
     let snappedCounts = cellSnappedDimensions(cellSize: cellSize, strategy: strategy)
-    return CGSize(
-      width: CGFloat(snappedCounts.columns) * cellSize.width,
-      height: CGFloat(snappedCounts.rows) * cellSize.height
-    )
+    return cellSize * snappedCounts
   }
 
   public func cellCount(
@@ -36,8 +33,8 @@ extension CGSize {
       strategy: strategy
     )
     return switch axis {
-      case .column: dimensions.columns
-      case .row: dimensions.rows
+      case .column: dimensions.width
+      case .row: dimensions.height
     }
   }
 
@@ -63,7 +60,7 @@ extension CGSize {
         rows = Int(rowsRaw.rounded())
     }
 
-    return GridDimensions(columns: cols, rows: rows)
+    return GridDimensions(width: cols, height: rows)
   }
 
 }

@@ -15,3 +15,13 @@ extension String {
   }
 }
 
+extension CGSize {
+  public init(fromGrid dimensions: GridDimensions) {
+    self.init(
+      width: CGFloat(dimensions.width),
+      height: CGFloat(dimensions.height)
+    )
+  }
+}
+
+

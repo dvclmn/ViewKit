@@ -59,8 +59,6 @@ public func += (lhs: inout CGSize, rhs: CGSize) {
 }
 
 // MARK: - Multiplication
-//infix operator * : MultiplicationPrecedence
-
 public func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
   return CGSize(
     width: lhs.width * rhs,
