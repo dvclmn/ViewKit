@@ -5,6 +5,9 @@
 //  Created by Dave Coleman on 18/12/2025.
 //
 
+import Foundation
+import SharedHelpers
+
 extension GridPosition {
   public static func createRow(_ rowIndex: Int, columns: Range<Int>) -> [GridPosition] {
     columns.map { GridPosition(row: rowIndex, column: $0) }
@@ -41,12 +44,12 @@ extension GridPosition {
   /// Note: zero-based count for internal representation,
   /// one-based for UI
   public static var zero: GridPosition {
-    GridPosition(column: 0, row: 0)
+    GridPosition(row: 0, column: 0)
   }
   
   /// Position starting from one, for UI
   public var displayRepresentation: GridPosition {
-    GridPosition(column: column + 1, row: row + 1)
+    GridPosition(row: row + 1, column: column + 1)
   }
   
   public var isGreaterThanZero: Bool {
@@ -67,11 +70,11 @@ extension GridPosition {
     )
   }
   
-  public func neighbour(at edge: Edge) -> GridPosition {
+  public func neighbour(at edge: GridEdge) -> GridPosition {
+//  public func neighbour(at edge: Edge) -> GridPosition {
     let delta = edge.directionVector
     return GridPosition(
-      column: max(0, column + delta.column),
-      row: max(0, row + delta.row)
+      row: max(0, row + delta.row), column: max(0, column + delta.column)
     )
   }
   
@@ -90,7 +93,7 @@ extension GridPosition {
   
   /// Basic offset methods
   public func offsetBy(row deltaRow: Int, col deltaCol: Int) -> GridPosition {
-    GridPosition(column: column + deltaCol, row: row + deltaRow)
+    GridPosition(row: row + deltaRow, column: column + deltaCol)
   }
   
   public mutating func offsetting(by delta: GridPosition) {
@@ -100,7 +103,7 @@ extension GridPosition {
   
   public mutating func offsetting(_ direction: Direction, by delta: Int = 1) {
     let (newCol, newRow) = direction.offset(x: column, y: row, by: delta)
-    let position = GridPosition(column: newCol, row: newRow)
+    let position = GridPosition(row: newRow, column: newCol)
     print("GridPosition from `offsetting(_ direction: Direction...)`: \(position)")
     self = position
   }
@@ -162,11 +165,11 @@ extension GridPosition {
     row: Int,
     in dimensions: GridDimensions
   ) -> GridPosition {
-    let (columns, rows) = (dimensions.columns, dimensions.rows)
+    let (columns, rows) = (dimensions.width, dimensions.height)
     
     let wrappedCol = (column % columns + columns) % columns
     let wrappedRow = (row % rows + rows) % rows
-    return GridPosition(column: wrappedCol, row: wrappedRow)
+    return GridPosition(row: wrappedRow, column: wrappedCol)
   }
 }
 

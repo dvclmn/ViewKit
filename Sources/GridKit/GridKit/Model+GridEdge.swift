@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 public enum GridEdge: String, ModelBase, CaseIterable {
   case top
@@ -72,5 +73,38 @@ extension GridEdge.Set {
       .filter { contains(Self($0)) }
       .map(\.name)
       .joined(separator: ", ")
+  }
+}
+
+extension GridEdge {
+  
+  /// The coordinate delta for moving in this direction
+  public var directionVector: (column: Int, row: Int) {
+    switch self {
+      case .top: return (column: 0, row: -1)
+      case .bottom: return (column: 0, row: 1)
+      case .leading: return (column: -1, row: 0)
+      case .trailing: return (column: 1, row: 0)
+    }
+  }
+  
+  public func path(in rect: CGRect) -> Path {
+    let (start, end) = rect.edgePoints(for: self)
+    return Path {
+      $0.move(to: start)
+      $0.addLine(to: end)
+    }
+  }
+  
+}
+
+extension CGRect {
+  public func edgePoints(for edge: GridEdge) -> (start: CGPoint, end: CGPoint) {
+    switch edge {
+      case .top: (CGPoint(x: minX, y: minY), CGPoint(x: maxX, y: minY))
+      case .bottom: (CGPoint(x: minX, y: maxY), CGPoint(x: maxX, y: maxY))
+      case .leading: (CGPoint(x: minX, y: minY), CGPoint(x: minX, y: maxY))
+      case .trailing: (CGPoint(x: maxX, y: minY), CGPoint(x: maxX, y: maxY))
+    }
   }
 }

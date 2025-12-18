@@ -36,19 +36,19 @@ extension GridBoundaryPoint {
       }
   }
 
-  public init(fromResizePoint point: ResizePoint) {
-    self =
-      switch point {
-        case .topLeading: .topLeading
-        case .topTrailing: .topTrailing
-        case .bottomLeading: .bottomLeading
-        case .bottomTrailing: .bottomTrailing
-        case .top: .top
-        case .trailing: .trailing
-        case .leading: .leading
-        case .bottom: .bottom
-      }
-  }
+  //  public init(fromResizePoint point: ResizePoint) {
+  //    self =
+  //      switch point {
+  //        case .topLeading: .topLeading
+  //        case .topTrailing: .topTrailing
+  //        case .bottomLeading: .bottomLeading
+  //        case .bottomTrailing: .bottomTrailing
+  //        case .top: .top
+  //        case .trailing: .trailing
+  //        case .leading: .leading
+  //        case .bottom: .bottom
+  //      }
+  //  }
 
   /// Checks whether a size delta is valid for the control point.
   public func isValidSizeDelta(
@@ -72,9 +72,11 @@ extension GridBoundaryPoint {
   ) -> Bool {
     switch self {
       case .top, .bottom:
-        return oldDimensions.columns == newDimensions.columns
+        return oldDimensions.width == newDimensions.width
+
       case .leading, .trailing:
-        return oldDimensions.rows == newDimensions.rows
+        return oldDimensions.height == newDimensions.height
+
       case .topLeading, .bottomLeading, .topTrailing, .bottomTrailing:
         /// Both axes are allowed to change at corners
         return true
@@ -168,7 +170,8 @@ extension UnitPoint {
       case .leading: .leading
 
       default:
-        fatalError("Unsupoorted unit point: \(self), for conversion to GridBoundaryPoint.")
+        fatalError(
+          "Unsupoorted unit point: \(self), for conversion to GridBoundaryPoint.")
     }
   }
 }

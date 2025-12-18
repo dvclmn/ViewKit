@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedHelpers
 
 public enum GridFont: String, ModelBase, Pickable, CaseIterable, Identifiable {
 

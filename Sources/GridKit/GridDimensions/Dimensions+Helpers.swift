@@ -35,8 +35,8 @@ extension GridDimensions {
 extension GridDimensions {
   public func position(for point: CGPoint, cellSize: CGSize) -> GridPosition {
     GridPosition(
+      row: Int(floor(point.y / cellSize.height)),
       column: Int(floor(point.x / cellSize.width)),
-      row: Int(floor(point.y / cellSize.height))
     )
   }
 }
@@ -70,7 +70,7 @@ extension GridDimensions {
   public var allPositions: [GridPosition] {
     (0..<height).flatMap { row in
       (0..<width).map { column in
-        GridPosition(column: column, row: row)
+        GridPosition(row: row, column: column)
       }
     }
   }
@@ -85,12 +85,12 @@ extension GridDimensions {
 extension GridDimensions {
   
   public static let minSize = GridDimensions(
-    columns: minCellsAlongLength,
-    rows: minCellsAlongLength
+    width: minCellsAlongLength,
+    height: minCellsAlongLength
   )
   public static let maxSize = GridDimensions(
-    columns: maxCellsAlongLength,
-    rows: maxCellsAlongLength
+    width: maxCellsAlongLength,
+    height: maxCellsAlongLength
   )
   
   public static let maxCellsAlongLength: Int = 90_000
@@ -105,14 +105,14 @@ extension GridDimensions {
   
   public var bottomRight: GridPosition? {
     guard width > 0, height > 0 else { return nil }
-    return GridPosition(column: width - 1, row: height - 1)
+    return GridPosition(row: height - 1, column: width - 1)
   }
   
   public func reducedToFit(within bounds: GridDimensions) -> GridDimensions? {
     let cols = min(self.width, bounds.width)
     let rows = min(self.height, bounds.height)
     guard cols > 0, rows > 0 else { return nil }
-    return GridDimensions(columns: cols, rows: rows)
+    return GridDimensions(width: cols, height: rows)
   }
   
   
