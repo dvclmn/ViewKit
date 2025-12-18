@@ -12,8 +12,10 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Self.Ele
   associatedtype Cell
   typealias Cells = [[Cell]]
   typealias Row = [Cell]
+  
   var cells: Cells { get set }
 
+  init(cells: Cells)
   init(_ cells: Cells)
 
   static func normalisedRows(
@@ -22,6 +24,12 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Self.Ele
     paddingCell: Cell,
     truncationCell: Cell?
   ) -> Cells
+}
+
+extension GridShaped {
+  public init(_ cells: Self.Cells) {
+    self.init(cells: cells)
+  }
 }
 
 //public enum RowValidation<T: GridShaped> {

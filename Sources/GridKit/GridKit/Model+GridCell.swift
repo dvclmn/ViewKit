@@ -5,16 +5,18 @@
 //  Created by Dave Coleman on 3/7/2025.
 //
 
+import ColourKit
 import Foundation
 import SharedHelpers
-import ColourKit
 
 @available(macOS 14.0, *)
 public struct GridCell: ModelBase, Identifiable {
   public var id: UUID
-//  public var id: GridPosition { position }
-  
-  #warning("I'll need to work out how to represent the *data* held by a Cell, if I want it to work with multiple types of content. Look to GridShape for reference.")
+  //  public var id: GridPosition { position }
+
+  #warning(
+    "I'll need to work out how to represent the *data* held by a Cell, if I want it to work with multiple types of content. Look to GridShape for reference."
+  )
   public var character: Character
   public var colour: RGBColour
 
@@ -52,7 +54,7 @@ extension GridCell {
       createRowCells(
         from: line,
         rowIndex: rowIndex,
-        targetWidth: dimensions.columns
+        targetWidth: dimensions.width
       )
     }
   }
@@ -65,13 +67,13 @@ extension GridCell {
     let characterCells = line.enumerated().map { columnIndex, character in
       GridCell(
         character: character,
-        position: GridPosition(column: columnIndex, row: rowIndex),
+        //        position: GridPosition(row: rowIndex, column: columnIndex),
         colour: .white
       )
     }
 
     let paddingCells = (line.count..<targetWidth).map { columnIndex in
-      let position = GridPosition(column: columnIndex, row: rowIndex)
+      let position = GridPosition(row: rowIndex, column: columnIndex)
       return GridCell.createBlank(at: position)
     }
 
@@ -94,17 +96,17 @@ enum GridCellError: LocalizedError {
   }
 }
 
-extension GridCell: CustomStringConvertible {
-
-  public var description: String {
-    """
-
-    GridCell: 
-      - Character \"\(character.descriptiveName)\"
-      - \(position)
-
-    """
-
-  }
-
-}
+//extension GridCell: CustomStringConvertible {
+//
+//  public var description: String {
+//    """
+//
+//    GridCell: 
+//      - Character \"\(character.descriptiveName)\"
+//      - \(position)
+//
+//    """
+//
+//  }
+//
+//}
