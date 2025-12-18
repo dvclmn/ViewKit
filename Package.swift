@@ -133,6 +133,7 @@ let package = Package(
       dependencies: [
         .module(.sharedHelpers),
         .module(.enumMacros),
+        .module(.colourKit),
       ]
     ),
     .target(

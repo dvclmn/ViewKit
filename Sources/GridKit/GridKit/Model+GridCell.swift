@@ -6,24 +6,29 @@
 //
 
 import Foundation
+import SharedHelpers
+import ColourKit
 
-public struct GridCell: ModelBaseWithID {
-  public var id: GridPosition { position }
+@available(macOS 14.0, *)
+public struct GridCell: ModelBase, Identifiable {
+  public var id: UUID
+//  public var id: GridPosition { position }
+  
+  #warning("I'll need to work out how to represent the *data* held by a Cell, if I want it to work with multiple types of content. Look to GridShape for reference.")
   public var character: Character
-  public var position: GridPosition
   public var colour: RGBColour
 
   public init(
     character: Character,
-    position: GridPosition,
     colour: RGBColour = .white
   ) {
+    self.id = UUID()
     self.character = character
-    self.position = position
     self.colour = colour
   }
 }
 
+@available(macOS 14.0, *)
 extension GridCell {
 
   public static func createBlank(
@@ -31,7 +36,7 @@ extension GridCell {
     colour: RGBColour = .white,
     character: Character = " "
   ) -> GridCell {
-    return GridCell(character: character, position: position, colour: colour)
+    return GridCell(character: character, colour: colour)
   }
 
   public var isEmpty: Bool { character == " " }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 /// Note: `GridAxis` is about how indices progress across the grid,
 /// not about how the things themselves are shaped.
