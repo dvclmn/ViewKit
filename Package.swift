@@ -138,6 +138,7 @@ let package = Package(
         .module(.sharedHelpers),
         .module(.enumMacros),
         .module(.colourKit),
+        .module(.layoutKit),
       ]
     ),
     .target(
@@ -160,29 +161,7 @@ let package = Package(
       dependencies: [
         .module(.sharedHelpers),
         .module(.enumMacros),
-        .module(.gridKit),
-      ]
-    ),
-
-    .target(
-      name: "CoreTools",
-      dependencies: [
-        .module(.sharedHelpers),
-        .module(.stringKit),
-        .module(.enumMacros),
-      ],
-    ),
-
-    .target(
-      name: "ToolKit",
-      dependencies: [
-        .module(.baseUI),
-        .module(.baseModels),
-        .module(.layoutKit),
-        .module(.coreTools)
-//        .module(.enumMacros),
-//        .module(.stringKit),
-//        .module(.sharedHelpers),
+//        .module(.gridKit),
       ]
     ),
     .target(
@@ -194,6 +173,29 @@ let package = Package(
       ]
     ),
 
+    // MARK: - Forwarding modules
+    .target(
+      name: "CoreTools",
+      dependencies: [
+        .module(.sharedHelpers),
+        .module(.stringKit),
+        .module(.enumMacros),
+      ],
+    ),
+    
+      .target(
+        name: "ToolKit",
+        dependencies: [
+          .module(.baseUI),
+          .module(.baseModels),
+          .module(.layoutKit),
+          .module(.coreTools)
+          //        .module(.enumMacros),
+          //        .module(.stringKit),
+          //        .module(.sharedHelpers),
+        ]
+      ),
+    
     // MARK: - BaseMacro targets
     .macro(
       name: "BaseMacrosImplementation",

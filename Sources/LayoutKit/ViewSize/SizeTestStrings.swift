@@ -7,11 +7,12 @@
 
 import Foundation
 import SharedHelpers
-import GridKit
 
 struct TestString {
   let text: String
-  let dimensions: GridDimensions
+  let width: Int
+  let height: Int
+//  let dimensions: GridDimensions
 
   init(
     _ text: String,
@@ -19,7 +20,9 @@ struct TestString {
     h: Int
   ) {
     self.text = text
-    self.dimensions = GridDimensions(w, h)
+    self.width = w
+    self.height = h
+//    self.dimensions = GridDimensions(w, h)
   }
 }
 
@@ -28,8 +31,8 @@ extension TestString {
   /// The size of a single Character, based on the measurement
   /// of the full Test String dimensions
   func characterSize(_ size: CGSize) -> CGSize {
-    let width = size.width / CGFloat(dimensions.width)
-    let height = size.height / CGFloat(dimensions.height)
+    let width = size.width / CGFloat(width)
+    let height = size.height / CGFloat(height)
     let result = CGSize(
       width: width.clamped(1),
       height: height.clamped(1)
