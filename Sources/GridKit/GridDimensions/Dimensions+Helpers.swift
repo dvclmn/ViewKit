@@ -104,13 +104,13 @@ extension GridDimensions {
   }
   
   public var bottomRight: GridPosition? {
-    guard columns > 0, rows > 0 else { return nil }
-    return GridPosition(column: columns - 1, row: rows - 1)
+    guard width > 0, height > 0 else { return nil }
+    return GridPosition(column: width - 1, row: height - 1)
   }
   
   public func reducedToFit(within bounds: GridDimensions) -> GridDimensions? {
-    let cols = min(self.columns, bounds.columns)
-    let rows = min(self.rows, bounds.rows)
+    let cols = min(self.width, bounds.width)
+    let rows = min(self.height, bounds.height)
     guard cols > 0, rows > 0 else { return nil }
     return GridDimensions(columns: cols, rows: rows)
   }

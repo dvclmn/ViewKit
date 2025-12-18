@@ -11,17 +11,17 @@ extension GridDimensions {
   
   // MARK: - Greater than
   public func bothGreaterThan(rhs: GridDimensions) -> Bool {
-    self.rows > rhs.rows && self.columns > rhs.columns
+    self.height > rhs.height && self.width > rhs.width
   }
   public func bothGreaterThan(rhs: Int) -> Bool {
-    self.rows > rhs && self.columns > rhs
+    self.height > rhs && self.width > rhs
   }
   
   // MARK: - Less than
   public func bothLessThan(rhs: GridDimensions) -> Bool {
-    self.rows < rhs.rows && self.columns < rhs.columns
+    self.height < rhs.height && self.width < rhs.width
   }
   public func bothLessThan(rhs: Int) -> Bool {
-    self.rows < rhs && self.columns < rhs
+    self.height < rhs && self.width < rhs
   }
 }

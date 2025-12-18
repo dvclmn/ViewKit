@@ -31,7 +31,7 @@ extension GridDimensions {
       cellSize: cellSize,
       strategy: strategy
     )
-    self.init(width: dimensions.columns, height: dimensions.rows)
+    self.init(width: dimensions.width, height: dimensions.height)
   }
 }
 
