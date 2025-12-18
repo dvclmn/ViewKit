@@ -26,7 +26,8 @@ public struct SizeDriftView: View {
 }
 #if DEBUG
 @available(macOS 14.0, *)
-#Preview(traits: .size(.wide)) {
+#Preview {
+//#Preview(traits: .size(.wide)) {
   SizeDriftView(fontSize: 28)
     .padding()
     .frame(

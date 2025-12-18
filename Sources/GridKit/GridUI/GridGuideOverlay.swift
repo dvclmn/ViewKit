@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 11/10/2025.
 //
 
-import CoreTools
+import SharedHelpers
 import SwiftUI
 
 @available(macOS 14.0, *)
@@ -19,7 +19,7 @@ public struct GridGuideOverlayModifier: ViewModifier {
   let isEnabled: Bool
 
   public func body(content: Content) -> some View {
-    content
+      content
       .overlay {
         if isEnabled {
 

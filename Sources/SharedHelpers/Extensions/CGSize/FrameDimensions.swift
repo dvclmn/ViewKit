@@ -10,7 +10,7 @@ import SwiftUI
 /// This is essentially equivalent to `CGSize`, but with optional
 /// values, to pair nicely with SwiftUI's `.frame()` modifier.
 /// I think `.frame()` lets you fall back to the layout system's
-/// proposed frame size (for that dimenion) when you pass
+/// proposed frame size (for that dimension) when you pass
 /// in an optional value.
 public struct FrameDimensions: Sendable {
   public var width: CGFloat?
@@ -80,9 +80,9 @@ extension FrameDimensions {
   }
 }
 
-extension FrameDimensions: CustomStringConvertible {
-  public var description: String {
-    return
-      "FrameDimensions[W: \(width?.displayString ?? "nil"), H: \(height?.displayString ?? "nil"), Alignment: \(alignment.displayName.abbreviated)]"
-  }
-}
+//extension FrameDimensions: CustomStringConvertible {
+//  public var description: String {
+//    return
+//      "FrameDimensions[W: \(width?.displayString ?? "nil"), H: \(height?.displayString ?? "nil"), Alignment: \(alignment.displayName.abbreviated)]"
+//  }
+//}

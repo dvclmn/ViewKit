@@ -91,7 +91,8 @@ extension SizeDriftInternal {
 
 #if DEBUG
 @available(macOS 14.0, *)
-#Preview(traits: .size(.normal)) {
+#Preview {
+//#Preview(traits: .size(.normal)) {
   SizeDriftInternal(width: 38)
 }
 #endif

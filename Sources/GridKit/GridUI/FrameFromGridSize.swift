@@ -5,8 +5,7 @@
 //  Created by Dave Coleman on 10/10/2025.
 //
 
-import CoreTools
-import GridKit
+import SharedHelpers
 import SwiftUI
 
 public struct FrameFromGridSize: ViewModifier {
@@ -57,7 +56,6 @@ extension FrameFromGridLength {
       alignment: alignment
     )
   }
-
 }
 
 extension View {
