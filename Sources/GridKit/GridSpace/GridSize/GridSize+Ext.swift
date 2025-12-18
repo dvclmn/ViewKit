@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import SharedHelpers
 //public typealias GridSizeCounts = (width: Int, height: Int)
 
 extension GridSize {
@@ -41,6 +41,24 @@ extension GridSize {
     )
   }
 }
+
+
+extension AxisConvention {
+  public func horizontalLength(size: GridSize) -> GridLength {
+    switch self {
+      case .widthIsHorizontal: size.columns
+      case .heightIsHorizontal: size.rows
+    }
+  }
+  
+  public func verticalLength(size: GridSize) -> GridLength {
+    switch self {
+      case .widthIsHorizontal: size.rows
+      case .heightIsHorizontal: size.columns
+    }
+  }
+}
+
 
 extension GridSize: CustomStringConvertible {
   public var description: String {

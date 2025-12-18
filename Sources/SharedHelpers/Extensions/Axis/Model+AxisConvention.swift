@@ -108,20 +108,7 @@ public enum AxisConvention: Sendable {
     }
   }
 
-  // MARK: - GridSize
-  public func horizontalLength(size: GridSize) -> GridLength {
-    switch self {
-      case .widthIsHorizontal: size.columns
-      case .heightIsHorizontal: size.rows
-    }
-  }
 
-  public func verticalLength(size: GridSize) -> GridLength {
-    switch self {
-      case .widthIsHorizontal: size.rows
-      case .heightIsHorizontal: size.columns
-    }
-  }
 
   // MARK: - CGRect
   public func horizontalLength(rect: CGRect) -> CGFloat {

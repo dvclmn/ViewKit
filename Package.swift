@@ -32,6 +32,7 @@ let package = Package(
     ),
     .library(name: "CanvasKit", targets: ["CanvasKit"]),
     .library(name: "ColourKit", targets: ["ColourKit"]),
+    .library(name: "GridKit", targets: ["GridKit"]),
     .library(name: "CurveKit", targets: ["CurveKit"]),
     .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
     .library(name: "StringKit", targets: ["StringKit"]),
@@ -124,6 +125,13 @@ let package = Package(
       dependencies: [
         .module(.sharedHelpers),
         .module(.colourKit),
+      ]
+    ),
+    .target(
+      name: "GridKit",
+      dependencies: [
+        .module(.sharedHelpers),
+        .module(.enumMacros),
       ]
     ),
     .target(

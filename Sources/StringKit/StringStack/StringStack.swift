@@ -24,7 +24,6 @@ public struct StringStack: GridShaped {
     )
     self.cells = normalised
   }
-
 }
 
 // MARK: - Convenience Initialisers
