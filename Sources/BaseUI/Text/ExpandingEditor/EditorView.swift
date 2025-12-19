@@ -8,14 +8,14 @@
 import SwiftUI
 
 /// Expanding Editor. Grows in height to fit preferred size for text content.
-@available(macOS 14.0, *)
-public struct Editor {
+//@available(macOS 14.0, *)
+//public struct Editor {
+//
+//}
 
-}
-
 @available(macOS 14.0, *)
-extension Editor {
-  package struct PlainText: View {
+//extension Editor {
+  package struct BaseEditorPlainText: View {
     @Binding var text: String
 
     package init(_ text: Binding<String>) {
@@ -29,11 +29,11 @@ extension Editor {
         .modifier(EditorStylesModifier())
     }
   }
-}
+//}
 
 @available(macOS 26, iOS 18, *)
-extension Editor {
-  package struct Attributed: View {
+//extension Editor {
+  package struct BaseEditorAttributed: View {
     @Binding var text: AttributedString
 
     package init(_ text: Binding<AttributedString>) {
@@ -47,7 +47,7 @@ extension Editor {
 
     }
   }
-}
+//}
 
 @available(macOS 14.0, *)
 public struct EditorStylesModifier: ViewModifier {
