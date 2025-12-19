@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+public struct Editor {
+  
+}
+
 @available(macOS 14.0, *)
 package struct EditorView: View {
   //  @Environment(AppHandler.self) private var store

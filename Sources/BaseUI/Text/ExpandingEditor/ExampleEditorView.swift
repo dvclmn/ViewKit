@@ -8,6 +8,8 @@
 import CoreTools
 import SwiftUI
 
+
+
 @available(macOS 14.0, *)
 struct ExpandingEditorExampleView: View {
   @State private var text: String = DummyContent.Strings.loremIpsum
