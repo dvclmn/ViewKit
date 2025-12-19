@@ -57,35 +57,31 @@ extension NSFont {
   /// Corresponds to SwiftUI's
   /// `Font/system(_ style:design:weight:) -> Font`
   /// Gets a system font that uses the specified style, design, and weight.
-  public static func preferredFont(
-    _ style: Font.TextStyle,
-    design: Font.Design? = nil,
-    weight: Font.Weight? = nil
-  ) -> NSFont {
-    let textStyle: NSFont.TextStyle? =
-      switch style {
-        case .largeTitle: .title1
-        case .title: .title2
-        case .headline: .headline
-        case .subheadline: .subheadline
-        case .body: .body
-        case .callout: .callout
-        case .footnote: .footnote
-        case .caption, .caption2: .caption1
-        default: nil
-      }
-    let fontSize = NSFont.systemFontSize
-    let systemFont = NSFont.systemFont(ofSize: fontSize)
-    let preferredDesc = textStyle.map {
-      NSFontDescriptor.preferredFontDescriptor(forTextStyle: $0)
-    }
-    let descriptorBase = preferredDesc ?? systemFont.fontDescriptor
-
-    let descDesignAdded = descriptorBase.withDesign(design.nsFontDesign) ?? descriptorBase
-    let descWeightAdded = descDesignAdded.addingAttributes([
-      .traits: [TraitKey.weight: weight.nsFontWeight]
-    ])
-
-    return NSFont(descriptor: descWeightAdded, size: fontSize) ?? systemFont
-  }
+//  public static func preferredFont(
+//    _ style: Font.TextStyle,
+//    design: Font.Design? = nil,
+//    weight: Font.Weight? = nil
+//  ) -> NSFont {
+//
+//    let nsStyle = style.nsTextStyle
+//    let nsDesign = design?.nsFontDesign ?? .default
+//    let nsWeight = weight?.nsFontWeight ?? .regular
+//    
+//    let fontSize = NSFont.systemFontSize
+//    let systemFont = NSFont.systemFont(ofSize: fontSize)
+//    
+//    let preferredFont = NSFont.preferredFont(forTextStyle: nsStyle)
+////    let preferredDesc = NSFontDescriptor.preferredFontDescriptor(forTextStyle: nsStyle)
+//    
+////    let descDesignAdded = preferredDesc.withDesign(nsDesign) ?? preferredDesc
+////    let descWeightAdded = descDesignAdded.addingAttributes([
+////      .traits: [TraitKey.weight: nsWeight]
+////    ])
+//    
+////    preferredFont.fontDescriptor.withDesign(nsDesign)?.addingAttributes([
+////      NSFontDescriptor.AttributeName. : Any
+////    ])
+//
+////    return NSFont(descriptor: descWeightAdded, size: fontSize) ?? systemFont
+//  }
 }

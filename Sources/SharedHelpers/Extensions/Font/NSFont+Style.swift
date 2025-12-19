@@ -7,15 +7,15 @@
 
 import AppKit
 
-extension NSFont {
-  public enum FontStyle: Sendable {
-    case body
-    case italic
-    case bold
-    case boldItalic
-    case semiBold
-  }
-}
+//extension NSFont {
+//  public enum FontStyle: Sendable {
+//    case body
+//    case italic
+//    case bold
+//    case boldItalic
+//    case semiBold
+//  }
+//}
 
 extension NSFont.FontStyle {
   public func system(

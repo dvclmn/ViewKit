@@ -16,7 +16,7 @@ public protocol PatternComponent {
   func apply(to string: inout String, remainingCount: inout Int)
 }
 
-struct ForEach: PatternComponent {
+struct PatternForEach: PatternComponent {
   let components: [PatternComponent]
   
   func apply(to string: inout String, remainingCount: inout Int) {
@@ -56,7 +56,7 @@ public extension String {
   
   init(pattern: (Character, Int)..., totalCount: Int) {
     self = String.pattern(totalCount: totalCount) {
-      ForEach(components: pattern.map { repeating($0.0, count: $0.1) })
+      PatternForEach(components: pattern.map { repeating($0.0, count: $0.1) })
     }
   }
   

@@ -83,10 +83,10 @@ extension Font.Compatible {
     } else {
       let nsFont = NSFont.preferredFont(
         style,
-        design: design,
-        weight: weight
+//        design: design,
+//        weight: weight
       )
-      return CTFon
+      return nsFont as CTFont
     }
   }
   

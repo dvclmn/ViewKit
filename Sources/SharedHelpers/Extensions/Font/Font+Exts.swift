@@ -8,21 +8,20 @@
 import SwiftUI
 
 extension Font.TextStyle {
-  package var nsFontDesign: NSFont.TextStyle {
+  package var nsTextStyle: NSFont.TextStyle {
     switch self {
-//      case .largeTitle: .title1
-//      case .title: .title2
-//      case .headline: .headline
-//      case .subheadline: .subheadline
-//      case .body: .body
-//      case .callout: .callout
-//      case .footnote: .footnote
-//      case .caption, .caption2: .caption1
-//
-//      case .title2: .title2
-//      case .title3: .title3
-//        <#code#>
-      @unknown default: .body
+      case .largeTitle: .largeTitle
+      case .title: .title1
+      case .title2: .title2
+      case .title3: .title3
+      case .headline: .headline
+      case .subheadline: .subheadline
+      case .body: .body
+      case .callout: .callout
+      case .footnote: .footnote
+      case .caption: .caption1
+      case .caption2: .caption2
+      @unknown default: fatalError("Unknown Font/TextStyle")
     }
   }
 }
