@@ -91,3 +91,17 @@ extension AttributedString {
   }
 
 }
+
+extension DisplayString {
+  
+  public static func string(for value: Any?) -> String {
+    guard let value else { return "nil" }
+    guard let convertible = value as? StringConvertible else { return String(describing: value) }
+    return convertible.toString
+  }
+  
+  public static func displayBlock(for value: Any?) -> DisplayBlock {
+    let text = string(for: value)
+    return DisplayBlock.text(StyledString(text))
+  }
+}

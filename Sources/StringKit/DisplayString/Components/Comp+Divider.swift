@@ -10,8 +10,10 @@ public struct Divider {
 //  public let key: String
   public let value: DisplayBlock
   
-  public init(value: (any StringConvertible) = "\n----------\n\n") {
-    self.value = .text(StyledString(value.toString))
+  public init(value: String = "----------\n") {
+    
+//    self.value = DisplayString.displayBlock(for: value)
+    self.value = .text(StyledString(value))
   }
 }
 

@@ -20,11 +20,12 @@ public struct Labeled {
 
   public init(
     _ key: String,
-    value: (any StringConvertible)?,
+    value: Any?,
+//    value: (any StringConvertible)?,
     separator: String = ": "
   ) {
     self.key = key
-    self.value = value.map { .text(StyledString($0.toString)) }
+    self.value = DisplayString.displayBlock(for: value)
     self.separator = separator
   }
 }
@@ -39,3 +40,4 @@ extension Labeled: StyledStringConvertible {
 
   }
 }
+
