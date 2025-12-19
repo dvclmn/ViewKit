@@ -15,9 +15,6 @@ extension Font {
 }
 
 extension NSFont {
-  
-  
-  
 
   /// System font with specified size, weight, and design.
   public static func preferredFont(
@@ -64,7 +61,9 @@ extension NSFont {
       }
     let fontSize = NSFont.systemFontSize
     let systemFont = NSFont.systemFont(ofSize: fontSize)
-    let preferredDesc = textStyle.map { NSFontDescriptor.preferredFontDescriptor(forTextStyle: $0) }
+    let preferredDesc = textStyle.map {
+      NSFontDescriptor.preferredFontDescriptor(forTextStyle: $0)
+    }
     let descriptorBase = preferredDesc ?? systemFont.fontDescriptor
 
     let descDesignAdded = descriptorBase.withDesign(design.nsFontDesign) ?? descriptorBase

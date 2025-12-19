@@ -7,6 +7,33 @@
 
 import SwiftUI
 
+@available(macOS 14.0, *)
+public struct EditorStylesModifier: ViewModifier {
+  public init() {}
+  public func body(content: Content) -> some View {
+    content
+      .padding(.horizontal, -5)
+      .textEditorStyle(.plain)
+      .scrollContentBackground(.hidden)
+
+  }
+}
+
+/// Applied to the static Text views, which exist purely to provide the desired
+/// Text View layout behaviour to the TextEditor view
+public struct LayoutTextModifier: ViewModifier {
+  public func body(content: Content) -> some View {
+    content
+      .hidden()
+      /// Note: Keep this frame, with maxWidth inifinity.
+      /// Seems to work nicely.
+      .frame(
+        maxWidth: .infinity,
+        alignment: .topLeading
+      )
+  }
+}
+
 /// Expanding Editor. Grows in height to fit preferred size for text content.
 //@available(macOS 14.0, *)
 //public struct Editor {
@@ -48,15 +75,3 @@ import SwiftUI
 //    }
 //  }
 ////}
-
-@available(macOS 14.0, *)
-public struct EditorStylesModifier: ViewModifier {
-  public init() {}
-  public func body(content: Content) -> some View {
-    content
-      .padding(.horizontal, -5)
-      .textEditorStyle(.plain)
-      .scrollContentBackground(.hidden)
-    
-  }
-}
