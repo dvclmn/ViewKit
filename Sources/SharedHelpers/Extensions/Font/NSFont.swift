@@ -60,10 +60,24 @@ extension NSFont {
   /// Gets a system font that uses the specified style, design, and weight.
   public static func preferredFont(
     for style: Font.TextStyle,
-//    design: Font.Design? = nil,
-//    weight: Font.Weight? = nil
+    design: Font.Design? = nil,
+    weight: Font.Weight? = nil
   ) -> NSFont {
-    return NSFont.preferredFont(forTextStyle: style.nsTextStyle)
+    /// First get the preferred NSFont for the given style.
+    /// Importantly, not the preferred Font Descriptor, as this seems not to work.
+    let preferred = NSFont.preferredFont(forTextStyle: style.nsTextStyle)
+    
+    /// Helpfully, we seem to be able to get the font size from this preferred Font
+    let fontSize = preferred.pointSize
+    
+    /// Which we can then pass directly to the above ``AppKit/NSFont/preferredFont(size:weight:design:)``
+    let nsFont = NSFont.preferredFont(
+      size: fontSize,
+      weight: weight,
+      design: design
+    )
+    return nsFont
+//    return NSFont.preferredFont(forTextStyle: style.nsTextStyle)
   }
 //
 //    let nsStyle = style.nsTextStyle

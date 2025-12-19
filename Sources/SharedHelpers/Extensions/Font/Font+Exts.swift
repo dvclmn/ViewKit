@@ -21,7 +21,7 @@ extension Font.TextStyle {
       case .footnote: .footnote
       case .caption: .caption1
       case .caption2: .caption2
-      @unknown default: fatalError("Unknown Font/TextStyle")
+      @unknown default: fatalError("Unknown Font.TextStyle")
     }
   }
 }
@@ -30,10 +30,10 @@ extension Font.Design {
   package var nsFontDesign: NSFontDescriptor.SystemDesign {
     switch self {
       case .default: .default
-      case .monospaced: .monospaced
-      case .rounded: .rounded
       case .serif: .serif
-      @unknown default: .default
+      case .rounded: .rounded
+      case .monospaced: .monospaced
+      @unknown default: fatalError("Unknown Font.Design")
     }
   }
 }
@@ -50,7 +50,7 @@ extension Font.Weight {
       case .bold: .bold
       case .heavy: .heavy
       case .black: .black
-      default: .regular
+      default: fatalError("Unknown Font.Weight")
     }
   }
 }

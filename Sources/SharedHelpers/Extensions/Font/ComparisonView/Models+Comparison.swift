@@ -20,13 +20,13 @@ import SwiftUI
 enum PlatformType: String, CaseIterable {
   case swiftUI
   case appKit
-  case appKitAlt
+//  case appKitAlt
 
   var name: String {
     switch self {
       case .swiftUI: "SwiftUI"
       case .appKit: "AppKit"
-      case .appKitAlt: "AppKit Alt"
+//      case .appKitAlt: "AppKit Alt"
     }
   }
 
@@ -37,15 +37,15 @@ enum PlatformType: String, CaseIterable {
     switch self {
       case .swiftUI: return Font.system(style)
       case .appKit: return Font(NSFont.preferredFont(for: style))
-      case .appKitAlt:
-        let preferred = NSFont.preferredFont(for: style)
-        let fontSize = preferred.pointSize
-        let nsFont = NSFont.preferredFont(
-          size: fontSize,
-          weight: .black,
-          design: .monospaced
-        )
-        return Font(nsFont)
+//      case .appKitAlt: return Font()
+//        let preferred = NSFont.preferredFont(for: style)
+//        let fontSize = preferred.pointSize
+//        let nsFont = NSFont.preferredFont(
+//          size: fontSize,
+//          weight: .semibold,
+//          design: .rounded
+//        )
+//        return Font(nsFont)
     }
   }
 
@@ -54,7 +54,7 @@ enum PlatformType: String, CaseIterable {
       case .swiftUI:
         return String(describing: style)
 
-      case .appKit, .appKitAlt:
+      case .appKit:
         let text = style.nsTextStyle.rawValue.split(
           separator: "TextStyle",
           maxSplits: 1,
@@ -64,7 +64,6 @@ enum PlatformType: String, CaseIterable {
         return result
 
     }
-    //    let font = self.font(for: style)
 
   }
 }
