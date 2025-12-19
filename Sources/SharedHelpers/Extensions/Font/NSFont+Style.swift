@@ -64,8 +64,8 @@ extension NSFont.FontStyle {
       case (.semiBold, false):
         return NSFont.preferredFont(
           size: size,
+          weight: .semibold,
           design: .monospaced,
-          weight: .semibold
         )
     }
   }

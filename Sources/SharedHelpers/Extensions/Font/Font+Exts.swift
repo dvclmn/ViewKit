@@ -7,6 +7,26 @@
 
 import SwiftUI
 
+extension Font.TextStyle {
+  package var nsFontDesign: NSFont.TextStyle {
+    switch self {
+//      case .largeTitle: .title1
+//      case .title: .title2
+//      case .headline: .headline
+//      case .subheadline: .subheadline
+//      case .body: .body
+//      case .callout: .callout
+//      case .footnote: .footnote
+//      case .caption, .caption2: .caption1
+//
+//      case .title2: .title2
+//      case .title3: .title3
+//        <#code#>
+      @unknown default: .body
+    }
+  }
+}
+
 extension Font.Design {
   package var nsFontDesign: NSFontDescriptor.SystemDesign {
     switch self {

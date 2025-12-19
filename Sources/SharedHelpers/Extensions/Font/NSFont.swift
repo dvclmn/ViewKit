@@ -27,7 +27,6 @@ extension NSFont {
     )
   }
 
-  
   /// Corresponds to SwiftUI's
   /// `Font/system(size:weight:design:) -> Font`
   /// Gets a system font with specified size, weight, and design.
@@ -35,27 +34,22 @@ extension NSFont {
     size: CGFloat,
     weight: Font.Weight? = nil,
     design: Font.Design? = nil
-//    size: CGFloat,
-//    design: Font.Design? = nil,
-////    design: Font.Design = .default,
-//    weight: Font.Weight? = nil
-////    weight: Font.Weight = .regular
   ) -> NSFont {
     /// Start with system font descriptor
-    let system = NSFont.systemFont(ofSize: size, weight: weight.nsFontWeight)
+    let system = NSFont.systemFont(ofSize: size, weight: weight?.nsFontWeight ?? .regular)
     let descriptor = system.fontDescriptor
 
     /// Apply design trait
-    let withDesign = descriptor.withDesign(design.nsFontDesign) ?? descriptor
+    let withDesign = descriptor.withDesign(design?.nsFontDesign ?? .default) ?? descriptor
 
-    /// Apply weight trait
-    let weighted = withDesign.addingAttributes([
-      .traits: [TraitKey.weight: weight.nsFontWeight]
-    ])
+    /// ~~Apply weight trait~~
+    /// Is this needed? If we already got the sys font of size and weight above?
+    //    let weighted = withDesign.addingAttributes([
+    //      .traits: [TraitKey.weight: weight.nsFontWeight]
+    //    ])
 
-    /// Create font with explicit size
     return NSFont(
-      descriptor: weighted,
+      descriptor: withDesign,
       size: size
     ) ?? system
   }
@@ -67,9 +61,6 @@ extension NSFont {
     _ style: Font.TextStyle,
     design: Font.Design? = nil,
     weight: Font.Weight? = nil
-//    _ style: Font.TextStyle,
-//    design: Font.Design = .default,
-//    weight: Font.Weight = .regular
   ) -> NSFont {
     let textStyle: NSFont.TextStyle? =
       switch style {
@@ -98,4 +89,3 @@ extension NSFont {
     return NSFont(descriptor: descWeightAdded, size: fontSize) ?? systemFont
   }
 }
-
