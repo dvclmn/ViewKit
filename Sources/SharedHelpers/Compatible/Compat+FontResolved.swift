@@ -81,11 +81,12 @@ extension Font.Compatible {
 //      return thing.ctFont
       return fontResolved.ctFont
     } else {
-      let nsFont = NSFont.preferredFont(
-        style,
-//        design: design,
-//        weight: weight
-      )
+//      let nsFont = NSFont.preferredFont(forTextStyle: style.nsTextStyle)
+      let nsFont = NSFont.preferredFont(for: style)
+//        style,
+////        design: design,
+////        weight: weight
+//      )
       return nsFont as CTFont
     }
   }

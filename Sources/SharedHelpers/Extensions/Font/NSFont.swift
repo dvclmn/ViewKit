@@ -16,16 +16,16 @@ extension Font {
 
 extension NSFont {
 
-  public static func system(
-    _ style: FontStyle,
-    size: CGFloat,
-    monospaced: Bool = false
-  ) -> NSFont {
-    return style.system(
-      size: size,
-      monospaced: monospaced,
-    )
-  }
+//  public static func system(
+//    _ style: FontStyle,
+//    size: CGFloat,
+//    monospaced: Bool = false
+//  ) -> NSFont {
+//    return style.system(
+//      size: size,
+//      monospaced: monospaced,
+//    )
+//  }
 
   /// Corresponds to SwiftUI's
   /// `Font/system(size:weight:design:) -> Font`
@@ -53,15 +53,18 @@ extension NSFont {
       size: size
     ) ?? system
   }
+  
 
   /// Corresponds to SwiftUI's
   /// `Font/system(_ style:design:weight:) -> Font`
   /// Gets a system font that uses the specified style, design, and weight.
-//  public static func preferredFont(
-//    _ style: Font.TextStyle,
+  public static func preferredFont(
+    for style: Font.TextStyle,
 //    design: Font.Design? = nil,
 //    weight: Font.Weight? = nil
-//  ) -> NSFont {
+  ) -> NSFont {
+    return NSFont.preferredFont(forTextStyle: style.nsTextStyle)
+  }
 //
 //    let nsStyle = style.nsTextStyle
 //    let nsDesign = design?.nsFontDesign ?? .default
