@@ -28,13 +28,13 @@ public struct HPack<Content: View>: View {
 }
 
 public struct VPack<Content: View>: View {
-  
+
   @Environment(\.unitSize) private var unitSize
-  
+
   let alignment: HorizontalAlignment
   let gridSpacing: Int
   let content: Content
-  
+
   public init(
     _ alignment: HorizontalAlignment = .center,
     _ spacing: Int = 0,
@@ -44,9 +44,12 @@ public struct VPack<Content: View>: View {
     self.gridSpacing = spacing
     self.content = content()
   }
-  
+
   public var body: some View {
-    VStack(alignment: alignment, spacing: gridSpacing.toScreenLength(along: .vertical, using: unitSize)) {
+    VStack(
+      alignment: alignment,
+      spacing: gridSpacing.toScreenLength(along: .vertical, using: unitSize)
+    ) {
       content
     }
   }

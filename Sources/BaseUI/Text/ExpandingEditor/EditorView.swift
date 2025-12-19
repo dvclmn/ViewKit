@@ -26,11 +26,7 @@ package struct EditorView: View {
 
     Group {
       if #available(macOS 26, iOS 18, *), let attributedText {
-        //          if let attributedText {
         TextEditor(text: attributedText)
-        //          } else {
-        //            Text("macOS 26+ but no attributedText")
-        //          }
 
       } else if let plainText {
         TextEditor(text: plainText)

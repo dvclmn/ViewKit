@@ -8,8 +8,6 @@
 import SwiftUI
 
 package struct TextForLayout: View {
-//  @Environment(AppHandler.self) private var store
-  
   private let attributedText: Binding<AttributedString>?
   private let plainText: Binding<String>?
   

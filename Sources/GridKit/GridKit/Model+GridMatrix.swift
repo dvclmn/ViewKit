@@ -16,15 +16,15 @@
 import Foundation
 import SharedHelpers
 
-public struct Grid<Cell>: GridShaped {
-  public typealias Cells = [[Cell]]
-  public var cells: Cells
-  
-  
-  public init(cells: Cells) {
-    self.cells = cells
-  }
-}
+//public struct Grid<Cell>: GridShaped {
+//  public typealias Cells = [[Cell]]
+//  public var cells: Cells
+//  
+//  
+//  public init(cells: Cells) {
+//    self.cells = cells
+//  }
+//}
 
 public struct GridMatrix: Sendable, Hashable, Equatable, Codable {
 

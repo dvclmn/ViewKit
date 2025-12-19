@@ -5,35 +5,9 @@
 //  Created by Dave Coleman on 31/10/2025.
 //
 
-import LayoutKit
 import CoreTools
+import LayoutKit
 import SwiftUI
-
-enum CharacterSizeSource {
-  case unitSize(CGSize?)
-  case sentence(CGSize?)
-
-  var name: String {
-    switch self {
-      case .unitSize: "Unit Size"
-      case .sentence: "Sentence"
-    }
-  }
-
-  var size: CGSize? {
-    switch self {
-      case .unitSize(let size): size
-      case .sentence(let size): size
-    }
-  }
-
-  var colour: Color {
-    switch self {
-      case .unitSize: Color.green
-      case .sentence: Color.blue
-    }
-  }
-}
 
 @available(macOS 14.0, *)
 public struct SizeDriftInternal: View {
@@ -92,7 +66,7 @@ extension SizeDriftInternal {
 #if DEBUG
 @available(macOS 14.0, *)
 #Preview {
-//#Preview(traits: .size(.normal)) {
+  //#Preview(traits: .size(.normal)) {
   SizeDriftInternal(width: 38)
 }
 #endif

@@ -23,24 +23,7 @@ extension EnvironmentValues {
   /// so prefer use of native `controlSize` in those cases/
   @Entry public var isCompactMode: Bool = false
 
-  //  public var isDebugMode: Bool {
-  //    get {
-  //      let value = viewModes.contains(.debug)
-  //      print("Reading current `isDebugMode`. Unsure if this will work as expected. Current value: \(value)")
-  //      return value
-  //    }
-  //    set {
-  //      if newValue {
-  //        print("Setting debug mode. Unsure if this will work as expected. Current value(s): \(viewModes). New value: \(newValue)")
-  //        viewModes.insert(.debug)
-  //        print("Result of insertion: \(viewModes)")
-  //      } else {
-  //        print("I guess the new `isDebugMode` value is `false`? \(newValue). Removing from viewModes: \(viewModes)")
-  //        viewModes.remove(.debug)
-  //        print("Result of removal: \(viewModes)")
-  //      }
-  //    }
-  //  }
+  @Entry public var isEditable: Bool = true
 }
 
 extension View {
