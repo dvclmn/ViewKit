@@ -7,6 +7,20 @@
 
 import SwiftUI
 
+public struct LayoutTextModifier: ViewModifier {
+  
+  public func body(content: Content) -> some View {
+    content
+      .hidden()
+    /// Note: Keep this frame, with maxWidth inifinity.
+    /// Seems to work nicely.
+      .frame(
+        maxWidth: .infinity,
+        alignment: .topLeading
+      )
+  }
+}
+
 
 //package struct TextForLayout: View {
 //  private let attributedText: Binding<AttributedString>?
@@ -35,16 +49,3 @@ import SwiftUI
 //  }
 //}
 
-public struct LayoutTextModifier: ViewModifier {
-
-  public func body(content: Content) -> some View {
-    content
-      .hidden()
-      /// Note: Keep this frame, with maxWidth inifinity.
-      /// Seems to work nicely.
-      .frame(
-        maxWidth: .infinity,
-        alignment: .topLeading
-      )
-  }
-}

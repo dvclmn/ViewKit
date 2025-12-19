@@ -25,58 +25,61 @@ extension Editor.Attributed {
 extension Editor {
   public struct PlainText: View {
     @Environment(\.textAlignment) private var textAlignment
-    
+
     @Binding var text: String
-    
+
     let alignment: Alignment
     let content: Output
-    
+
     public init(
-      text: Binding<String>,
+      _ text: Binding<String>,
       alignment: Alignment = .topLeading,
-      @ViewBuilder content: @escaping Output
+      @ViewBuilder content: @escaping Output = {
+        TextEditor(text: $0)
+          .modifier(EditorStylesModifier())
+      }
     ) {
       self._text = text
       self.alignment = alignment
+      self.content = content
     }
-    
+
     public var body: some View {
-      
-      Text(text)
+
+      Text(text)  // This is for layout only
         .modifier(LayoutTextModifier())
-//      TextForLayout(attributed: nil, plain: text)
-        .overlay(alignment: .topLeading) {
-          content($text)
-          //        EditorView(attributed: attributedText, plain: plainText)
-        }
+        .overlay(alignment: .topLeading) { content($text) }
         .multilineTextAlignment(textAlignment ?? .leading)
     }
   }
 }
 
 @available(macOS 14.0, *)
-extension ExpandingTextEditor {
-  //  private var textBinding: Binding<String> {
-  //    return Binding(
-  //      get: {
-  //        let text =
-  //        String(self.plainText?.wrappedValue.characters)
-  //      },
-  //      set: { self.text = AttributedString($0) }
-  //    )
-  ////    return Binding {
-  ////      self.text.toString
-  ////    } set: { newValue in
-  ////      self.text = newValue.toAttributed
-  ////    }
-  //
-  //  }
-}
+extension Editor {
+  public struct Attributed: View {
+    @Environment(\.textAlignment) private var textAlignment
 
-#if DEBUG
-@available(macOS 14.0, *)
-#Preview(traits: .size(.normal)) {
-  @Previewable @State var text = ""
-  ExpandingEditor(text: $text, content: <#T##() -> View#>)
+    @Binding var text: AttributedString
+
+    let alignment: Alignment
+    let content: Output
+
+    public init(
+      _ text: Binding<AttributedString>,
+      alignment: Alignment = .topLeading,
+      @ViewBuilder content: @escaping Output
+    ) {
+      self._text = text
+      self.alignment = alignment
+      self.content = content
+    }
+
+    public var body: some View {
+
+      Text(text)  // This is for layout only
+        .modifier(LayoutTextModifier())
+        .overlay(alignment: .topLeading) { content($text) }
+        .multilineTextAlignment(textAlignment ?? .leading)
+    }
+  }
 }
-#endif
