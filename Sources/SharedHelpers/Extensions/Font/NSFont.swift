@@ -16,11 +16,30 @@ extension Font {
 
 extension NSFont {
 
-  /// System font with specified size, weight, and design.
+  public static func system(
+    _ style: FontStyle,
+    size: CGFloat,
+    monospaced: Bool = false
+  ) -> NSFont {
+    return style.system(
+      size: size,
+      monospaced: monospaced,
+    )
+  }
+
+  
+  /// Corresponds to SwiftUI's
+  /// `Font/system(size:weight:design:) -> Font`
+  /// Gets a system font with specified size, weight, and design.
   public static func preferredFont(
     size: CGFloat,
-    design: Font.Design = .default,
-    weight: Font.Weight = .regular
+    weight: Font.Weight? = nil,
+    design: Font.Design? = nil
+//    size: CGFloat,
+//    design: Font.Design? = nil,
+////    design: Font.Design = .default,
+//    weight: Font.Weight? = nil
+////    weight: Font.Weight = .regular
   ) -> NSFont {
     /// Start with system font descriptor
     let system = NSFont.systemFont(ofSize: size, weight: weight.nsFontWeight)
@@ -41,11 +60,16 @@ extension NSFont {
     ) ?? system
   }
 
-  /// A rough mapping of SwiftUI `Font.TextStyle` to AppKit preferred text styles.
+  /// Corresponds to SwiftUI's
+  /// `Font/system(_ style:design:weight:) -> Font`
+  /// Gets a system font that uses the specified style, design, and weight.
   public static func preferredFont(
     _ style: Font.TextStyle,
-    design: Font.Design = .default,
-    weight: Font.Weight = .regular
+    design: Font.Design? = nil,
+    weight: Font.Weight? = nil
+//    _ style: Font.TextStyle,
+//    design: Font.Design = .default,
+//    weight: Font.Weight = .regular
   ) -> NSFont {
     let textStyle: NSFont.TextStyle? =
       switch style {
@@ -75,31 +99,3 @@ extension NSFont {
   }
 }
 
-extension Font.Design {
-  fileprivate var nsFontDesign: NSFontDescriptor.SystemDesign {
-    switch self {
-      case .default: .default
-      case .monospaced: .monospaced
-      case .rounded: .rounded
-      case .serif: .serif
-      @unknown default: .default
-    }
-  }
-}
-
-extension Font.Weight {
-  fileprivate var nsFontWeight: NSFont.Weight {
-    switch self {
-      case .ultraLight: .ultraLight
-      case .thin: .thin
-      case .light: .light
-      case .regular: .regular
-      case .medium: .medium
-      case .semibold: .semibold
-      case .bold: .bold
-      case .heavy: .heavy
-      case .black: .black
-      default: .regular
-    }
-  }
-}
