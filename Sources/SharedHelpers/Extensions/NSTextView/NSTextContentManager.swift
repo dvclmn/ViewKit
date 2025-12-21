@@ -25,11 +25,11 @@ extension NSTextContentManager {
     return NSTextRange(location: textRangeLocation, end: endLocation)
   }
   
-  public func textRange(for range: Range<String.Index>) -> NSTextRange? {
-    guard
-      let textRangeLocation = location(documentRange.location, offsetBy: range.location),
-      let endLocation = location(textRangeLocation, offsetBy: range.length)
-    else { return nil }
-    return NSTextRange(location: textRangeLocation, end: endLocation)
-  }
+//  public func textRange(for range: Range<String.Index>) -> NSTextRange? {
+//    guard
+//      let textRangeLocation = location(documentRange.location, offsetBy: range.location),
+//      let endLocation = location(textRangeLocation, offsetBy: range.length)
+//    else { return nil }
+//    return NSTextRange(location: textRangeLocation, end: endLocation)
+//  }
 }
