@@ -74,11 +74,12 @@ public struct OptinitsMacro: MemberMacro {
         let caseName = element.name.text
         let paramType = parameter.type.trimmedDescription
 
+        let parameterName = "\(caseName)Optional"
         let initializer: DeclSyntax =
           """
-          \(raw: accessLevel) init?(\(raw: caseName): \(raw: paramType)?) {
-            guard let \(raw: caseName) else { return nil }
-            self = .\(raw: caseName)(\(raw: caseName))
+          \(raw: accessLevel) init?(\(raw: parameterName): \(raw: paramType)?) {
+            guard let \(raw: parameterName) else { return nil }
+            self = .\(raw: caseName)(\(raw: parameterName))
           }
           """
 

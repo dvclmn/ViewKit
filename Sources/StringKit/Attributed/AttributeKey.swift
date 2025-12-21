@@ -17,7 +17,7 @@ extension NSFontDescriptor.SymbolicTraits: @retroactive Hashable {}
 public enum AttributeKey: Hashable {
   case fore(NSColor)
   case font(NSFont)
-  case fontTraits(NSFontDescriptor.SymbolicTraits)
+  case fontTraits(NSFontDescriptor.SymbolicTraits, current: NSFont)
   case bg(NSColor)
   case strikeColour(NSColor)
   case strikeStyle(NSUnderlineStyle)
@@ -47,7 +47,7 @@ extension AttributeKey {
     switch self {
       case .fore(let value): value
       case .font(let value): value
-      case .fontTraits(let value): value
+      case .fontTraits(let traits, _): traits
       case .bg(let value): value
       case .strikeColour(let value): value
       case .strikeStyle(let value): value.rawValue
@@ -56,18 +56,17 @@ extension AttributeKey {
 
   /// Mutates an existing attribute set.
   /// Will have no effect if self is `.fontTrait`
-  public func update(_ attributes: inout TextAttributes) {
-    //    if let isFont = attributes[.font] {
-    //
-    //    }
-    //    guard let key else {
-    //      //      print("No value for \(self) for `key`, self must be `.fontTrait`")
-    //      return
-    //    }
+  public func update(
+    _ attributes: inout TextAttributes,
+  ) {
 
     if let key {
+      /// Run for conventional keys (all except `fontTraits`)
       attributes[key] = self.rawValue
+
     } else {
+      /// Run for `fontTraits`
+      
       let newFont = constructFont(from: attributes)
       attributes[.font] = newFont
     }
@@ -75,24 +74,38 @@ extension AttributeKey {
 
   private func constructFont(from attributes: TextAttributes) -> NSFont? {
 
-    guard let traits else {
-      print("No traits found, this should only run for `self.fontTraits`")
+    guard let traitData else {
+      print("No trait data found, this should only run for `self.fontTraits`")
       return nil
     }
 
-    guard let fontValue = attributes[.font] as? NSFont else {
-      print("Couldn't retrieve/cast to NSFont for \(self)")
-      return nil
-    }
-    let size = fontValue.pointSize
-    let desc = fontValue.fontDescriptor.withSymbolicTraits(traits)
+    print("Let's check attributes first: \(attributes.names)")
+
+    let traits = traitData.0
+    let currentFont = traitData.1
+//    guard let fontAttr = attributes[.font] else {
+//      print("No attribute found for `.font`.")
+//      return nil
+//    }
+
+//    guard let fontValue = fontAttr as? NSFont else {
+//      DebugString {
+//        "Couldn't cast to NSFont, unable to build traits `\(traits.prettyDescription)`"
+//        Labeled("Attributes", value: attributes.names)
+//
+//      }
+//
+//      return nil
+//    }
+    let size = currentFont.pointSize
+    let desc = currentFont.fontDescriptor.withSymbolicTraits(traits)
     let newFont = NSFont(descriptor: desc, size: size)
     return newFont
   }
 
-  private var traits: NSFontDescriptor.SymbolicTraits? {
+  private var traitData: (NSFontDescriptor.SymbolicTraits, NSFont)? {
     switch self {
-      case .fontTraits(let traits): traits
+      case .fontTraits(let traits, let font): (traits, font)
       default: nil
     }
   }

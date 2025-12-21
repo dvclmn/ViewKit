@@ -45,6 +45,7 @@ extension Range where Bound == String.Index {
   public func toNSRange(in string: String) -> NSRange? {
     string.nsRange(from: self)
   }
+  
 
   public func getAttributedRange(
     in attrString: AttributedString

@@ -71,4 +71,12 @@ extension Regex<AnyRegexOutput>.Match {
           }.plainText
       """
   }
+  
+  
+}
+
+extension Regex.Match {
+  public func nsRange(in text: String) -> NSRange? {
+    self.range.toNSRange(in: text)
+  }
 }

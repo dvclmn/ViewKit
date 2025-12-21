@@ -16,7 +16,7 @@ extension NSMutableAttributedString {
     with typingAttributes: TextAttributes? = nil
   ) {
 
-    if let typingAttributes = typingAttributes {
+    if let typingAttributes {
       setAttributes(attributeSet.attributes, range: range)
       addAttributes(typingAttributes, range: range)
     } else {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public typealias TextAttributes = [NSAttributedString.Key: Any]
+
 //public typealias TextAttributes = [NSAttributedString.Key: Any]
 
 public typealias FontAttributes = NSFontDescriptor.AttributeName

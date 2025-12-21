@@ -45,4 +45,32 @@ extension NSFontDescriptor.SymbolicTraits {
     // 5. Instantiate the specific NSFont.
     return NSFont(descriptor: newDescriptor, size: size) ?? baseFont
   }
+  
+  public var prettyDescription: String {
+    var desc: [String] = []
+    if self.contains(.bold) {
+      desc += ["bold"]
+    }
+    if self.contains(.italic) {
+      desc += ["italic"]
+    }
+    if self.contains(.condensed) {
+      desc += ["condensed"]
+    }
+    if self.contains(.expanded) {
+      desc += ["expanded"]
+    }
+    if self.contains(.monoSpace) {
+      desc += ["monoSpace"]
+    } else {
+      desc += [String(describing: self)]
+    }
+
+    guard !desc.isEmpty else {
+      return "No traits"
+    }
+    return desc.joined(separator: ", ")
+  }
+  
+  
 }
