@@ -18,7 +18,7 @@ extension NSTextView {
   }
 
   /// Get the full bounds of the current text.
-  private var documentNSRange: NSRange {
+  public var documentNSRange: NSRange {
     NSRange(location: 0, length: textStorage?.length ?? 0)
   }
   

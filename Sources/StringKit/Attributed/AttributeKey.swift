@@ -21,6 +21,11 @@ public enum AttributeKey: Hashable {
   case bg(NSColor)
   case strikeColour(NSColor)
   case strikeStyle(NSUnderlineStyle)
+  case blockIntent(Bool)
+  // See https://developer.apple.com/documentation/appkit/nstextattachmentviewprovider
+  // For using an NSView as attachment
+  case attachment(NSTextAttachment)
+//  case blockIntent(NSPresentationIntent)
 }
 
 extension AttributeKey {
@@ -33,6 +38,9 @@ extension AttributeKey {
       case .bg: .backgroundColor
       case .strikeColour: .strikethroughColor
       case .strikeStyle: .strikethroughStyle
+        /// Or nil, for this, not sure yet
+      case .blockIntent: .presentationIntentAttributeName
+      case .attachment: .attachment
     }
   }
 
@@ -50,7 +58,9 @@ extension AttributeKey {
       case .fontTraits(let traits, _): traits
       case .bg(let value): value
       case .strikeColour(let value): value
-      case .strikeStyle(let value): value.rawValue
+      case .strikeStyle(let value): value
+      case .blockIntent(let value): value
+      case .attachment(let value): value
     }
   }
 
