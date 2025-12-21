@@ -70,10 +70,39 @@ struct CoolAnimals {
 //
 //}
 
+/// Expected output:
+/// ```
+/// public init?(thingOptional: Bool?) {
+///   guard let thingOptional else {
+///     return nil
+///   }
+///   self = .thing(thingOptional)
+/// }
+///
+/// public init?(multiOptional: String?, count: Int?) {
+///   guard let multiOptional, let count else {
+///     return nil
+///   }
+///   self = .thing(multiOptional, count: count)
+/// }
+///
+/// public init?(noLabelOptional: String?, _ b: Int?) {
+///   guard let noLabelOptional, let b else {
+///     return nil
+///   }
+///   self = .thing(noLabelOptional, b)
+/// }
+/// ```
+/// Looking at these pieces:
+/// - Only first parameter gets the "Optional" suffix
+/// - Might cheat for now and just refer to other params as A B C
 @Optinits
 public enum Attribute {
-  case foreground(Int)
   case thing(Bool)
-  case name(String)
+  case multi(String, count: Int)
+  case noLabel(Bool, Int)
+  case triple(Bool, Int, String)
+  case quadNamed(Bool, min: Int, title: String, CGFloat)
   case noValue
 }
+

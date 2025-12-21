@@ -9,6 +9,20 @@ import Foundation
 
 extension Character {
 
+  /// Returns latin alphabet letter, starting from 'a'
+  public static func letter(for index: Int) -> Character? {
+    let isInBounds = (0..<26).contains(index)
+    let startChar = Character("a").unicodeScalars.first
+    let nextScalar = startChar?.value.advanced(by: index)
+
+    guard isInBounds,
+      let nextScalar,
+      let result = UnicodeScalar(nextScalar)
+    else { return nil }
+
+    return Character(result)
+  }
+
   public var descriptiveName: String {
     switch self {
       case " ": "Space"

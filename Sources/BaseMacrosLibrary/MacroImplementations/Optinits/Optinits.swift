@@ -12,33 +12,7 @@ import SwiftSyntaxBuilder
 
 /// Generates failable initializers for enum cases with associated values,
 /// accepting optional parameters and returning nil if the parameter is nil.
-///
-/// Usage:
-/// ```swift
-/// @OptionalCaseInits
-/// public enum Attribute {
-///   case foreground(NSColor)
-///   case font(NSFont)
-/// }
-/// ```
-///
-/// Expands to:
-/// ```swift
-/// public enum Attribute {
-///   case foreground(NSColor)
-///   case font(NSFont)
-///
-///   public init?(foreground: NSColor?) {
-///     guard let foreground else { return nil }
-///     self = .foreground(foreground)
-///   }
-///
-///   public init?(font: NSFont?) {
-///     guard let font else { return nil }
-///     self = .font(font)
-///   }
-/// }
-/// ```
+/// See `BaseMacrosClient/main` for usage example.
 public struct OptinitsMacro: MemberMacro {
   public static func expansion(
     of node: AttributeSyntax,
@@ -62,32 +36,84 @@ public struct OptinitsMacro: MemberMacro {
       guard let caseDecl = member.decl.as(EnumCaseDeclSyntax.self) else {
         continue
       }
-
-      for element in caseDecl.elements {
-        guard let parameterClause = element.parameterClause,
-          parameterClause.parameters.count == 1,
-          let parameter = parameterClause.parameters.first
-        else {
-          continue
-        }
-
-        let caseName = element.name.text
-        let paramType = parameter.type.trimmedDescription
-
-        let parameterName = "\(caseName)Optional"
-        let initializer: DeclSyntax =
-          """
-          \(raw: accessLevel) init?(\(raw: parameterName): \(raw: paramType)?) {
-            guard let \(raw: parameterName) else { return nil }
-            self = .\(raw: caseName)(\(raw: parameterName))
-          }
-          """
-
-        initializers.append(initializer)
-      }
+      generateInitializers(
+        elements: caseDecl.elements,
+        accessLevel: accessLevel,
+        inits: &initializers
+      )
     }
 
     return initializers
+  }
+  
+  private static func generateInitializers(
+    elements: EnumCaseElementListSyntax,
+    accessLevel: String,
+    inits: inout [DeclSyntax]
+  ) {
+    for element in elements {
+      guard let parameters = element.parameterClause?.parameters,
+            !parameters.isEmpty
+      else {
+        // Skip enum cases with no associated values
+        continue
+      }
+
+      let caseName = element.name.text
+      
+      // Build parameter labels: first is "{caseName}Optional", rest are parameter labels or alphabet letters
+      var paramLabels: [String] = []
+//      let isSingleValue = parameters.count == 1
+      
+      for (index, param) in parameters.enumerated() {
+        if index == 0 {
+          // First parameter label is caseName + "Optional"
+          paramLabels.append("\(caseName)Optional")
+        } else {
+          // For others, use label if present, else alphabet letter
+          if let label = param.firstName?.text, !label.isEmpty {
+            paramLabels.append(label)
+          } else {
+            let letter = Character.letter(for: index) ?? "a"
+            paramLabels.append(String(letter))
+          }
+        }
+      }
+
+      // Build parameter types (trimmed description)
+      let paramTypes = parameters.map { $0.type.trimmedDescription }
+      
+      // Construct initializer parameter list as "label: Type?"
+      let initParams = zip(paramLabels, paramTypes).map { label, type in
+        "\(label): \(type)?"
+      }.joined(separator: ", ")
+      
+      // Build guard let unwrapping all parameters
+      let guardLets = paramLabels.map { label in
+        "guard let \(label) else { return nil }"
+      }.joined(separator: "\n    ")
+      
+      // Build self assignment with unwrapped parameter labels
+      let selfAssignmentParams = paramLabels.joined(separator: ", ")
+      
+      let initializer: DeclSyntax =
+        """
+        \(raw: accessLevel) init?(\(raw: initParams)) {
+          \(raw: guardLets)
+          self = .\(raw: caseName)(\(raw: selfAssignmentParams))
+        }
+        """
+      
+      inits.append(initializer)
+    }
+  }
+}
+
+private extension Character {
+  /// Returns a letter for an index starting at 0 -> 'a', 1 -> 'b', etc.
+  static func letter(for index: Int) -> Character? {
+    guard index >= 0 && index < 26 else { return nil }
+    return Character(UnicodeScalar(index + 97)!)
   }
 }
 
@@ -101,3 +127,4 @@ public struct OptinitsMacro: MemberMacro {
 //    }
 //  }
 //}
+
