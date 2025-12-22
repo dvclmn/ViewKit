@@ -22,15 +22,16 @@ extension NSFontDescriptor.SymbolicTraits: @retroactive Hashable {}
 public enum AttributeKey: Hashable {
   case fore(NSColor)
   case font(NSFont)
-  case fontTraits(NSFontDescriptor.SymbolicTraits, current: NSFont)
+  case fontTraits(FontTraits)
+  //  case fontTraits(NSFontDescriptor.SymbolicTraits, current: NSFont)
   case bg(NSColor)
   case strikeColour(NSColor)
   case strikeStyle(NSUnderlineStyle)
   case blockIntent(Bool)
-  case debug(String)  // Attach a debug note
   // See https://developer.apple.com/documentation/appkit/nstextattachmentviewprovider
   // For using an NSView as attachment
   case attachment(NSTextAttachment)
+  case debug(String)  // Attach a debug note
   //  case blockIntent(NSPresentationIntent)
 }
 
@@ -54,22 +55,19 @@ extension AttributeKey {
 
   /// A single-attribute dictionary. WIll return an empty dict
   /// if self is `.fontTrait`, as this isn't compatible.
-  public var attribute: TextAttributes {
-    //    guard let key else { return [:] }
-    return [key: value]
-  }
+  public var attribute: TextAttributes { [key: value] }
 
   public var value: Any {
     switch self {
-      case .fore(let value): value
-      case .font(let value): value
-      case .fontTraits(let traits, _): traits
-      case .bg(let value): value
-      case .strikeColour(let value): value
-      case .strikeStyle(let value): value
-      case .blockIntent(let value): value
-      case .attachment(let value): value
-      case .debug(let value): value
+      case .fore(let v): v
+      case .font(let v): v
+      case .fontTraits(let v): v
+      case .bg(let v): v
+      case .strikeColour(let v): v
+      case .strikeStyle(let v): v
+      case .blockIntent(let v): v
+      case .attachment(let v): v
+      case .debug(let v): v
     }
   }
 
@@ -80,7 +78,9 @@ extension AttributeKey {
   ) {
     switch self {
       case .fontTraits(_, _):
-        
+
+      default:
+        attributes[key] = self.value
     }
 
     if let key {
@@ -95,43 +95,6 @@ extension AttributeKey {
     }
   }
 
-  private func constructFont(from attributes: TextAttributes) -> NSFont? {
-
-    guard let traitData else {
-      print("No trait data found, this should only run for `self.fontTraits`")
-      return nil
-    }
-
-    print("Let's check attributes first: \(attributes.names)")
-
-    let traits = traitData.0
-    let currentFont = traitData.1
-    //    guard let fontAttr = attributes[.font] else {
-    //      print("No attribute found for `.font`.")
-    //      return nil
-    //    }
-
-    //    guard let fontValue = fontAttr as? NSFont else {
-    //      DebugString {
-    //        "Couldn't cast to NSFont, unable to build traits `\(traits.prettyDescription)`"
-    //        Labeled("Attributes", value: attributes.names)
-    //
-    //      }
-    //
-    //      return nil
-    //    }
-    let size = currentFont.pointSize
-    let desc = currentFont.fontDescriptor.withSymbolicTraits(traits)
-    let newFont = NSFont(descriptor: desc, size: size)
-    return newFont
-  }
-
-  private var traitData: (NSFontDescriptor.SymbolicTraits, NSFont)? {
-    switch self {
-      case .fontTraits(let traits, let font): (traits, font)
-      default: nil
-    }
-  }
 }
 
 extension AttributeKey {
