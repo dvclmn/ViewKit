@@ -40,9 +40,10 @@ extension StyledString {
     return patternPresets.reduce(StyledString("")) { partialResult, preset in
       self.applying { attr in
 
-        attr.editAttributes(matching: preset.pattern) { substring in
-          substring.mergeAttributes(preset.attributes)
-        }
+        fatalError("Need to fix this, since noticing that old typealias RegexMatch makes no sense")
+//        attr.editAttributes(matching: preset.pattern) { substring in
+//          substring.mergeAttributes(preset.attributes)
+//        }
       }
     }
   }

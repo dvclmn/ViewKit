@@ -12,7 +12,11 @@ extension Substring {
   ///
   /// This is safe to use with APIs like NSRegularExpression, NSAttributedString,
   /// and NSTextView that expect ranges based on UTF-16 code units.
-  public var nsRange: NSRange {
+  public var nsRangeUsingSubstringBase: NSRange {
     return NSRange(self.startIndex..<self.endIndex, in: self.base)
+  }
+  
+  public func nsRange(in text: String) -> NSRange {
+    return NSRange(self.startIndex..<self.endIndex, in: text)
   }
 }

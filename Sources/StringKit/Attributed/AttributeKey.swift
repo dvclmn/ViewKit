@@ -9,6 +9,7 @@ import AppKit
 import EnumMacros
 import SharedHelpers
 
+//extension TextAttributes {
 extension NSAttributedString.Key {
   public static let fontTraits = NSAttributedString.Key("fontTraits")
   public static let debug = NSAttributedString.Key("debug")
@@ -36,8 +37,6 @@ public enum AttributeKey: Hashable {
 }
 
 extension AttributeKey {
-
-  ///
   private var key: NSAttributedString.Key {
     switch self {
       case .fore: .foregroundColor
@@ -72,27 +71,10 @@ extension AttributeKey {
   }
 
   /// Mutates an existing attribute set.
-  /// Will have no effect if self is `.fontTrait`
   public func update(
     _ attributes: inout TextAttributes,
   ) {
-    switch self {
-      case .fontTraits(_, _):
-
-      default:
-        attributes[key] = self.value
-    }
-
-    if let key {
-      /// Run for conventional keys (all except `fontTraits`)
-      attributes[key] = self.value
-
-    } else {
-      /// Run for `fontTraits`
-
-      let newFont = constructFont(from: attributes)
-      attributes[.font] = newFont
-    }
+    attributes[key] = self.value
   }
 
 }
@@ -104,3 +86,7 @@ extension AttributeKey {
   //  public static func bold(_ font: NSFont) -> Self { .font(font) }
 
 }
+
+//extension TextAttributes {
+//  self.
+//}
