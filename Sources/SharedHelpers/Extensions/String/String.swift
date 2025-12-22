@@ -113,7 +113,6 @@ extension String {
   public func withQuotes(_ type: QuotesType = .double) -> String {
     return "\(type.rawValue)\(self)\(type.rawValue)"
   }
-
 }
 
 extension UUID {

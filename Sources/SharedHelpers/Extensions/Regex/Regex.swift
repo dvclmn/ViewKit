@@ -20,13 +20,29 @@ import Foundation
 /// That's why each of these has one more than it's name implies,
 /// as the first handles the whole match.
 
-/// Ranges
 public typealias AttributedRange = Range<AttributedString.Index>
 
-// MARK: - Extensions
-
 extension Regex.Match {
+
   public func nsRange(in text: String) -> NSRange? {
     self.range.toNSRange(in: text)
+  }
+
+  /// Provides the range for a specific capture group, relative to the original searched text (*not* to the match output `Substring`)
+  public func range(for keypath: KeyPath<Output, Substring>) -> Range<String.Index>? {
+    let substring = self.output[keyPath: keypath]
+    let range = substring.indexRange
+    return range
+  }
+  
+  /// Provides the range for a specific capture group
+  public func nsRange(
+    for keypath: KeyPath<Output, Substring>,
+    in originalText: String
+  ) -> NSRange? {
+    let range = self.range(for: keypath)
+    return range?.toNSRange(in: originalText)
+//    return range
+    
   }
 }
