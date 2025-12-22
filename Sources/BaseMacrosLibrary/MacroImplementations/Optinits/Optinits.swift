@@ -93,8 +93,14 @@ public struct OptinitsMacro: MemberMacro {
         "guard let \(label) else { return nil }"
       }.joined(separator: "\n    ")
       
-      // Build self assignment with unwrapped parameter labels
-      let selfAssignmentParams = paramLabels.joined(separator: ", ")
+      // Build self assignment with parameter labels if present
+      let selfAssignmentParams = zip(parameters, paramLabels).map { param, label in
+        if let name = param.firstName, name.text != "_" && !name.text.isEmpty {
+          return "\(name.text): \(label)"
+        } else {
+          return label
+        }
+      }.joined(separator: ", ")
       
       let initializer: DeclSyntax =
         """

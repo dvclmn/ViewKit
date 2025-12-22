@@ -12,7 +12,6 @@ enum CoolPlants {
   case orchid
 }
 
-
 // MARK: - Case detection
 @CaseDetection
 enum ExampleEnum {
@@ -26,13 +25,13 @@ enum ExampleEnumNames {
   case dog
   case cat
   case fish
-//  var names: String {
-//    switch self {
-//      case .dog: "Dog"
-//      case .cat: "Cat"
-//      case .fish: "Fish"
-//    }
-//  }
+  //  var names: String {
+  //    switch self {
+  //      case .dog: "Dog"
+  //      case .cat: "Cat"
+  //      case .fish: "Fish"
+  //    }
+  //  }
 }
 
 // MARK: - MetaEnum
@@ -44,7 +43,6 @@ enum AnotherEnum {
   case whale(String)
   case shark
 }
-
 
 // MARK: - SetOfOptions
 
@@ -106,3 +104,30 @@ public enum Attribute {
   case noValue
 }
 
+/// Current issue:
+///
+/// The case is:
+/// ```
+/// case quadNamed(Bool, min: Int, title: String, CGFloat)
+/// ```
+///
+/// ```
+/// The output is:
+/// public init?(quadNamedOptional: Bool?, min: Int?, title: String?, d: CGFloat?) {
+///   guard let quadNamedOptional else {
+///     return nil
+///   }
+///   guard let min else {
+///     return nil
+///   }
+///   guard let title else {
+///     return nil
+///   }
+///   guard let d else {
+///     return nil
+///   }
+///   self = .quadNamed(quadNamedOptional, min, title, d)
+/// }
+/// ```
+///
+/// The issue that `min` and `title` are missing their labels in the self assignment

@@ -51,10 +51,10 @@ extension String {
     self + separator + other
   }
 
-  public func findMatches(for pattern: Regex<Substring>) -> [RegexMatch] {
-    let matches = self.matches(of: pattern)
-    return matches
-  }
+//  public func findMatches(for pattern: Regex<Substring>) -> [RegexMatch] {
+//    let matches = self.matches(of: pattern)
+//    return matches
+//  }
 
   public var wordCount: Int {
     let words = self.split { !$0.isLetter }
@@ -72,7 +72,7 @@ extension String {
     return Range(nsRange, in: self)
   }
 
-  public func substring(with nsRange: NSRange) -> Substring? {
+  public func substring(in nsRange: NSRange) -> Substring? {
     guard let range = self.range(from: nsRange) else { return nil }
     return self[range]
   }

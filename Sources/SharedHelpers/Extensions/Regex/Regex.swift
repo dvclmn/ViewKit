@@ -19,61 +19,11 @@ import Foundation
 ///
 /// That's why each of these has one more than it's name implies,
 /// as the first handles the whole match.
-public typealias SingleCapture = Regex<(Substring, Substring)>
-public typealias DoubleCapture = Regex<(Substring, Substring, Substring)>
-public typealias TripleCapture = Regex<(Substring, Substring, Substring, Substring)>
-
-public typealias RegexMatch = Regex<Regex<Substring>.RegexOutput>.Match
 
 /// Ranges
 public typealias AttributedRange = Range<AttributedString.Index>
-public typealias DoubleCaptureRange = (AttributedRange, AttributedRange)
-public typealias TripleCaptureRange = (AttributedRange, AttributedRange, AttributedRange)
 
 // MARK: - Extensions
-
-// extension Regex<Regex.SingleCapture.RegexOutput>.Match {
-extension SingleCapture.Match {
-
-  // TODO: Need to re-write this to not depend on DisplayString
-  public var displayString: String {
-    return """
-          DisplayString {
-            Indented("Match") {
-              Labeled("Range", value: String(describing: self))
-              Labeled("Matched text", value: self.0)
-              Labeled("Captured group", value: self.1)
-            }
-            Indented("Output") {
-              Labeled("Full match", value: self.output.0)
-              Labeled("Capture", value: self.output.1)
-            }
-
-          }.plainText
-      """
-  }
-}
-
-extension Regex<AnyRegexOutput>.Match {
-  //extension Regex<Regex<Substring>.RegexOutput>.Match {
-// TODO: Need to re-write this to not depend on DisplayString
-  public var displayString: String {
-    return """
-          DisplayString {
-            Indented("Match") {
-              Labeled("Range", value: self.range)
-              Labeled("Matched text", value: self.0)
-            }
-            Indented("Output") {
-              Labeled("Full match", value: self.output)
-            }
-
-          }.plainText
-      """
-  }
-  
-  
-}
 
 extension Regex.Match {
   public func nsRange(in text: String) -> NSRange? {

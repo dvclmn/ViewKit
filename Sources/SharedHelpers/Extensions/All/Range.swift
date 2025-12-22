@@ -57,7 +57,6 @@ extension NSRange {
 /// let range: Range<String.Index> = text.range(of: "b")!
 /// let index: Int = text.distance(from: text.startIndex, to: range.lowerBound)
 /// ```
-
 extension Range where Bound == String.Index {
   public func toNSRange(in string: String) -> NSRange? {
     string.nsRange(from: self)
@@ -92,6 +91,7 @@ extension Range {
   /// ```
   /// let range = Range(match.output.1.indices)`
   /// ```
+  /// See: https://forums.swift.org/t/getting-the-range-of-a-regex-capture/83012/4
   public init<Collection: Swift.Collection>(_ indices: DefaultIndices<Collection>)
   where Collection.Index == Bound {
     self = indices.startIndex..<indices.endIndex
@@ -108,5 +108,14 @@ extension Array where Element == Range<String.Index> {
       return range
 
     }
+  }
+}
+
+extension Collection {
+  /// Meant to help with getting Regex *capture group* ranges
+  /// `match.1.output.indexRange`
+  /// See: https://forums.swift.org/t/getting-the-range-of-a-regex-capture/83012/2
+  public var indexRange: Range<Index> {
+    startIndex..<endIndex
   }
 }
