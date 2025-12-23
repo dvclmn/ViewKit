@@ -11,7 +11,7 @@ public protocol GeometryCapturable: Equatable, Sendable {}
 extension CGSize: GeometryCapturable {}
 extension CGRect: GeometryCapturable {}
 
-public struct GeometryCapture<T: GeometryCapturable> {
+public struct GeometryCapture<T: GeometryCapturable>: Sendable {
   let type: T.Type
   let transform: @Sendable (GeometryProxy) -> T
 

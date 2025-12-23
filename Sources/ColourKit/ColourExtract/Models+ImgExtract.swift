@@ -23,7 +23,7 @@ public struct Centroid {
 }
 
 /// A structure that represents a dominant color.
-public struct DominantColor: Identifiable, Comparable {
+public struct DominantColor: Identifiable, Comparable, Sendable {
   public var id = UUID()
   public let color: Color
   public let percentage: Int

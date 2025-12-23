@@ -14,10 +14,10 @@ let package = Package(
       name: "BaseMacrosLibrary",
       targets: ["EnumMacros"]
     ),
-    .executable(
-      name: "BaseMacrosClient",
-      targets: ["BaseMacrosClient"]
-    ),
+    //    .executable(
+    //      name: "BaseMacrosClient",
+    //      targets: ["BaseMacrosClient"]
+    //    ),
     .library(name: "BaseModels", targets: ["BaseModels"]),
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
     .library(
@@ -47,7 +47,7 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.0.0"),
     .package(url: "https://github.com/swiftlang/swift-syntax", from: "600.0.1"),
-    .package(url: "https://github.com/mattmassicotte/nsui", from: "1.3.0"),
+    //    .package(url: "https://github.com/mattmassicotte/nsui", from: "1.3.0"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
@@ -68,16 +68,15 @@ let package = Package(
     .target(
       name: "BaseUI",
       dependencies: [
+        .module(.coreTools),
         .module(.curveKit),
         .module(.colourKit),
         .module(.layoutKit),
         .module(.graphicsKit),
         .module(.gestureKit),
-        .module(.coreTools),
         .module(.gridKit),
         .module(.wrecktangle),
         .sharing,
-        //        .nsui,
       ],
     ),
     .target(
@@ -85,8 +84,8 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.gridKit),
+        .identifiedCollections,
         .sharing,
-        .product(name: "IdentifiedCollections", package: "swift-identified-collections"),
       ],
     ),
     .target(
@@ -101,19 +100,12 @@ let package = Package(
 
     .target(
       name: "ColourKit",
-      dependencies: [
-        .module(.sharedHelpers),
-        .module(.curveKit),
-        .nsui,
-        //        .product(name: "CasePaths", package: "swift-case-paths"),
-      ],
+      dependencies: [.module(.sharedHelpers)],
     ),
 
     .target(
       name: "CurveKit",
-      dependencies: [
-        .module(.sharedHelpers)
-      ]
+      dependencies: [.module(.sharedHelpers)]
     ),
 
     .target(
@@ -135,33 +127,31 @@ let package = Package(
     .target(
       name: "GridKit",
       dependencies: [
-        .module(.sharedHelpers),
-        .module(.enumMacros),
+        .module(.coreTools),
         .module(.colourKit),
         .module(.layoutKit),
       ]
     ),
     .target(
       name: "LayoutKit",
-      dependencies: [
-        .module(.coreTools)
-      ]
+      dependencies: [.module(.coreTools)]
     ),
 
     .target(
       name: "MotionKit",
-      dependencies: [
-        .module(.coreTools)
-      ]
+      dependencies: [.module(.coreTools)]
     ),
-    .target(name: "SharedHelpers", dependencies: [.identifiedCollections]),
+
+    .target(
+      name: "SharedHelpers",
+      dependencies: [.identifiedCollections]
+    ),
 
     .target(
       name: "StringKit",
       dependencies: [
         .module(.sharedHelpers),
         .module(.enumMacros),
-//        .module(.gridKit),
       ]
     ),
     .target(
@@ -182,20 +172,17 @@ let package = Package(
         .module(.enumMacros),
       ],
     ),
-    
-      .target(
-        name: "ToolKit",
-        dependencies: [
-          .module(.baseUI),
-          .module(.baseModels),
-          .module(.layoutKit),
-          .module(.coreTools)
-          //        .module(.enumMacros),
-          //        .module(.stringKit),
-          //        .module(.sharedHelpers),
-        ]
-      ),
-    
+
+    .target(
+      name: "ToolKit",
+      dependencies: [
+        .module(.coreTools),
+        .module(.baseUI),
+        .module(.baseModels),
+        .module(.layoutKit),
+      ]
+    ),
+
     // MARK: - BaseMacro targets
     .macro(
       name: "BaseMacrosImplementation",
@@ -281,8 +268,8 @@ enum BaseModule {
       case .sharedHelpers: "SharedHelpers"
       case .stringKit: "StringKit"
       case .wrecktangle: "Wrecktangle"
-        
-        /// Export-only
+
+      /// Export-only
       case .toolKit: "ToolKit"
       case .coreTools: "CoreTools"
     }

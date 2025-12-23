@@ -11,7 +11,7 @@
 // Credit to Natalia Panferova and Matthaus Woolard of
 // https://nilcoalescing.com/blog/EncodeAndDecodeSwiftUIColor/
 
-import NSUI
+//import NSUI
 import SwiftUI
 
 //@available(macOS 14.0, *)
