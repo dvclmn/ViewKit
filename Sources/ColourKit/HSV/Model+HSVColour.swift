@@ -105,3 +105,13 @@ extension HSVColour {
 public func + (lhs: HSVColour, rhs: HSVAdjustment) -> HSVColour {
   lhs.applying(adjustment: rhs)
 }
+
+extension HSVColour: CustomStringConvertible {
+  public var description: String {
+    let result = """
+      HSVColour[H: \(hue), S: \(saturation), V: \(brightness), Name: \(name ?? "nil")]
+      """
+    
+    return result
+  }
+}

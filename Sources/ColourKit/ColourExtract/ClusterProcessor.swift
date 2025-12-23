@@ -8,6 +8,7 @@
 import Accelerate
 import Foundation
 import SwiftUI
+import CoreTools
 
 public struct ClusteringResult: Sendable {
   public let colors: [Color]
@@ -23,17 +24,11 @@ internal struct ColorClusteringProcessor {
   let maxIterations: Int
 
   /// The main entry point for the background thread
-  func calculate(url: URL, k: Int) async throws -> ClusteringResult {
-
-    //    /// 1. Load Image and Get Planar Buffers (Red, Green, Blue)
-    //    /// Use vImage to scale the image to the working 'dimension' (e.g., 256x256)
-    //    guard let source = ThumbnailGenerator.cgImageFromURL(url) else {
-    //      throw ClusteringError.imageLoadingFailed
-    //    }
-
-    guard let sourceCGImage = ThumbnailGenerator.cgImageFromURL(url) else {
-      throw ClusteringError.imageLoadingFailed
-    }
+  func calculate(
+    url: URL,
+    k: Int,
+    sourceImage: CGImage
+  ) async throws -> ClusteringResult {
 
     // 1. Setup Formats
     var format = Self.createRGBFloatFormat()
@@ -44,7 +39,7 @@ internal struct ColorClusteringProcessor {
 
     // Create an interleaved buffer (RGB)
     let interleavedBuffer = try vImage.PixelBuffer<vImage.InterleavedFx3>(
-      cgImage: sourceCGImage,
+      cgImage: sourceImage,
       cgImageFormat: &format,
       //      size: destinationSize // vImage handles the scaling here automatically
     )
@@ -62,7 +57,7 @@ internal struct ColorClusteringProcessor {
 
     /// 2. Initialize Centroids (K-Means++)
     var centroids = initializeCentroids(r: redPixels, g: greenPixels, b: bluePixels, k: k)
-    var assignments = [Int](repeating: 0, count: pixelCount)
+    var assignments = [Int](repeating: 0, count: redPixels.count)
 
     /// 3. Main K-Means Loop
     for _ in 0..<maxIterations {
@@ -105,7 +100,10 @@ internal struct ColorClusteringProcessor {
     var currentDistances = [Float](repeating: 0, count: n)
 
     for i in 0..<k {
-      let c = centroids[i]
+      guard let c = centroids[safe: i] else {
+        print("Index \(i) out of bounds")
+        continue
+      }
 
       // Calculate (pixel - centroid)^2 for each channel
       // This is the "Lightweight" version of your distanceSquared function
@@ -146,18 +144,10 @@ extension ColorClusteringProcessor {
     b: [Float],
     k: Int
   ) -> [Centroid] {
-    //    self.centroids.removeAll()
+
     var centroids = [Centroid]()
     let pixelCount = r.count
 
-    //    let randomIndex = Int.random(in: 0..<dimension * dimension)
-    //    centroids.append(
-    //      Centroid(
-    //        red: storage.redStorage[randomIndex],
-    //        green: storage.greenStorage[randomIndex],
-    //        blue: storage.blueStorage[randomIndex])
-    //    )
-    //
     // Pick first random centroid
     let randomIndex = Int.random(in: 0..<pixelCount)
     centroids.append(

@@ -81,7 +81,7 @@ extension RGBColour {
 extension RGBColour: CustomStringConvertible {
   public var description: String {
     let result = """
-      RGBColour[R: \(self.red), G: \(self.green), B: \(self.blue), Name: \(name ?? "nil")]
+      RGBColour[R: \(red), G: \(green), B: \(blue), Name: \(name ?? "nil")]
       """
 
     return result

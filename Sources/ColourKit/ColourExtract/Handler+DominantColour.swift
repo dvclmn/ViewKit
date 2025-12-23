@@ -17,37 +17,98 @@ import simd
 @available(macOS 14.0, *)
 public final class DominantColourHandler {
   public var dominantColors: [Color] = []
-//  public var dominantColors: [DominantColor] = []
+  //  public var dominantColors: [DominantColor] = []
   public var isBusy = false
+  public var sourceImage: CGImage?
   public var quantizedImage: CGImage?
-  
+  public var k: Int = 3
+  public var imageFileURL: URL?
+
+  // Track the current task to allow cancellation
+  private var processingTask: Task<Void, Never>?
+
   /// Moves the heavy math to a separate service/actor
   private let processor = ColorClusteringProcessor(
     dimension: 256,
     maxIterations: 10
   )
 
+  public init() {}
+
 }
 
 @available(macOS 14.0, *)
 extension DominantColourHandler {
-  
-  public func processImage(at url: URL, k: Int) async {
-    isBusy = true
-    defer { isBusy = false }
-    
-    do {
-      /// Performs the heavy K-Means on a background thread
-      let result = try await Task.detached(priority: .userInitiated) {
-        return try await self.processor.calculate(url: url, k: k)
-      }.value
-      
-      self.dominantColors = result.colors
-      self.quantizedImage = result.quantizedImage
-    } catch {
-      print("Processing failed: \(error)")
+
+  // Initial setup call
+  public func setUp(_ url: URL) {
+    self.imageFileURL = url
+    self.sourceImage = ThumbnailGenerator.cgImageFromURL(url)
+    processCurrentURL()
+
+  }
+
+  public func processCurrentURL() {
+    guard let url = imageFileURL else { return }
+
+    // Cancel any existing calculation to save resources
+    processingTask?.cancel()
+
+    processingTask = Task {
+      isBusy = true
+
+      // Check for cancellation before starting heavy work
+      if Task.isCancelled { return }
+
+      do {
+        guard let sourceImage else {
+          throw ClusteringError.imageLoadingFailed
+        }
+
+        let result = try await processor.calculate(
+          url: url,
+          k: k,
+          sourceImage: sourceImage
+        )
+
+        // Final check for cancellation before updating UI
+        if !Task.isCancelled {
+          self.dominantColors = result.colors
+        }
+      } catch {
+        print("Processing error: \(error)")
+      }
+
+      isBusy = false
     }
   }
+
+  //  public func processImage(at url: URL, k: Int) async {
+  //    isBusy = true
+  //    defer { isBusy = false }
+  //
+  //    do {
+  //
+  //      guard let sourceImage = ThumbnailGenerator.cgImageFromURL(url) else {
+  //        throw ClusteringError.imageLoadingFailed
+  //      }
+  //      self.sourceImage = sourceImage
+  //
+  //      /// Performs the heavy K-Means on a background thread
+  //      let result = try await Task.detached(priority: .userInitiated) {
+  //        return try await self.processor.calculate(
+  //          url: url,
+  //          k: k,
+  //          sourceImage: sourceImage
+  //        )
+  //      }.value
+  //
+  //      self.dominantColors = result.colors
+  //      self.quantizedImage = result.quantizedImage
+  //    } catch {
+  //      print("Processing failed: \(error)")
+  //    }
+  //  }
 }
 
 //@MainActor
@@ -145,324 +206,321 @@ extension DominantColourHandler {
 @available(macOS 14.0, *)
 extension DominantColourHandler {
 
+  //  func allocateDistancesBuffer() {
+  //    print("Going to allocate distances buffer")
+  //    if distances != nil {
+  //      distances?.deallocate()
+  //    } else {
+  //      print("Distances is nil")
+  //    }
+  //    let capacity: Int = dimension * dimension * k
+  //    distances = UnsafeMutableBufferPointer<Float>.allocate(capacity: capacity)
+  //    print("Distances allocated, with capacity: \(capacity)")
+  //  }
+  //
+  //  // MARK: - Did sets
+  //  func didSetK() {
+  //    print("`k` was updated, let's run the allocation and calculation methods")
+  //    allocateDistancesBuffer()
+  //    calculateKMeans()
+  //  }
+  //
+  //  /// Iterates over the `updateCentroids` function until the solution converges or the
+  //  /// iteration count equals `maximumIterations`.
+  //  func update() {
+  //    Task {
+  //      var converged = false
+  //      var iterationCount = 0
+  //
+  //      while !converged && iterationCount < maximumIterations {
+  //        converged = updateCentroids()
+  //        iterationCount += 1
+  //      }
+  //
+  //      NSLog("Converged in \(iterationCount) iterations.")
+  //
+  //      Task { @MainActor in
+  //        dominantColors = centroids.map {
+  //          DominantColor($0, dimension: dimension)
+  //        }
+  //
+  //        updateCentroidNodes()
+  //        makeQuantizedImage()
+  //        isBusy = false
+  //      }
+  //    }
+  //  }
 
-//  func allocateDistancesBuffer() {
-//    print("Going to allocate distances buffer")
-//    if distances != nil {
-//      distances?.deallocate()
-//    } else {
-//      print("Distances is nil")
-//    }
-//    let capacity: Int = dimension * dimension * k
-//    distances = UnsafeMutableBufferPointer<Float>.allocate(capacity: capacity)
-//    print("Distances allocated, with capacity: \(capacity)")
-//  }
-//
-//  // MARK: - Did sets
-//  func didSetK() {
-//    print("`k` was updated, let's run the allocation and calculation methods")
-//    allocateDistancesBuffer()
-//    calculateKMeans()
-//  }
-//
-//  /// Iterates over the `updateCentroids` function until the solution converges or the
-//  /// iteration count equals `maximumIterations`.
-//  func update() {
-//    Task {
-//      var converged = false
-//      var iterationCount = 0
-//
-//      while !converged && iterationCount < maximumIterations {
-//        converged = updateCentroids()
-//        iterationCount += 1
-//      }
-//
-//      NSLog("Converged in \(iterationCount) iterations.")
-//
-//      Task { @MainActor in
-//        dominantColors = centroids.map {
-//          DominantColor($0, dimension: dimension)
-//        }
-//
-//        updateCentroidNodes()
-//        makeQuantizedImage()
-//        isBusy = false
-//      }
-//    }
-//  }
+  //  func distanceSquared(
+  //    x0: UnsafePointer<Float>?,
+  //    x1: Float,
+  //    y0: UnsafePointer<Float>?,
+  //    y1: Float,
+  //    z0: UnsafePointer<Float>?,
+  //    z1: Float,
+  //    n: Int,
+  //    result: UnsafeMutablePointer<Float>?
+  //  ) {
+  //    guard let x0, let y0, let z0, let result else {
+  //      print("No value for x0 / y0 / z0 / result in `distanceSquared`")
+  //      return
+  //    }
+  //    var x = subtract(a: x0, b: x1, n: n)
+  //    vDSP.square(x, result: &x)
+  //
+  //    var y = subtract(a: y0, b: y1, n: n)
+  //    vDSP.square(y, result: &y)
+  //
+  //    var z = subtract(a: z0, b: z1, n: n)
+  //    vDSP.square(z, result: &z)
+  //
+  //    vDSP_vadd(x, 1, y, 1, result, 1, vDSP_Length(n))
+  //    vDSP_vadd(result, 1, z, 1, result, 1, vDSP_Length(n))
+  //  }
 
- 
-//  func distanceSquared(
-//    x0: UnsafePointer<Float>?,
-//    x1: Float,
-//    y0: UnsafePointer<Float>?,
-//    y1: Float,
-//    z0: UnsafePointer<Float>?,
-//    z1: Float,
-//    n: Int,
-//    result: UnsafeMutablePointer<Float>?
-//  ) {
-//    guard let x0, let y0, let z0, let result else {
-//      print("No value for x0 / y0 / z0 / result in `distanceSquared`")
-//      return
-//    }
-//    var x = subtract(a: x0, b: x1, n: n)
-//    vDSP.square(x, result: &x)
-//
-//    var y = subtract(a: y0, b: y1, n: n)
-//    vDSP.square(y, result: &y)
-//
-//    var z = subtract(a: z0, b: z1, n: n)
-//    vDSP.square(z, result: &z)
-//
-//    vDSP_vadd(x, 1, y, 1, result, 1, vDSP_Length(n))
-//    vDSP_vadd(result, 1, z, 1, result, 1, vDSP_Length(n))
-//  }
+  //  func subtract(
+  //    a: UnsafePointer<Float>,
+  //    b: Float,
+  //    n: Int
+  //  ) -> [Float] {
+  //
+  //    let result = [Float](unsafeUninitializedCapacity: n) {
+  //      buffer, count in
+  //
+  //      guard let address = buffer.baseAddress else {
+  //        print("No base address for buffer")
+  //        return
+  //      }
+  //      vDSP_vsub(a, 1, [b], 0, address, 1, vDSP_Length(n))
+  //
+  //      count = n
+  //    }
+  //    return result
+  //  }
 
-//  func subtract(
-//    a: UnsafePointer<Float>,
-//    b: Float,
-//    n: Int
-//  ) -> [Float] {
-//
-//    let result = [Float](unsafeUninitializedCapacity: n) {
-//      buffer, count in
-//
-//      guard let address = buffer.baseAddress else {
-//        print("No base address for buffer")
-//        return
-//      }
-//      vDSP_vsub(a, 1, [b], 0, address, 1, vDSP_Length(n))
-//
-//      count = n
-//    }
-//    return result
-//  }
+  //  func saturate<T: FloatingPoint>(_ x: T) -> T {
+  //    return min(max(0, x), 1)
+  //  }
 
-//  func saturate<T: FloatingPoint>(_ x: T) -> T {
-//    return min(max(0, x), 1)
-//  }
+  //  func weightedRandomIndex(_ weights: UnsafeMutableBufferPointer<Float>) -> Int? {
+  //    var outputDescriptor = BNNSNDArrayDescriptor.allocateUninitialized(
+  //      scalarType: Float.self,
+  //      shape: .vector(1))
+  //
+  //    guard
+  //      let probabilities = BNNSNDArrayDescriptor(
+  //        data: weights,
+  //        shape: .vector(weights.count)
+  //      )
+  //    else {
+  //      print("Failed to create `BNNSNDArrayDescriptor` for probabilities")
+  //      return nil
+  //    }
+  //
+  //    var mutableProbabilities = probabilities
+  //
+  //    let randomGenerator = BNNSCreateRandomGenerator(
+  //      BNNSRandomGeneratorMethodAES_CTR,
+  //      nil)
+  //
+  //    BNNSRandomFillCategoricalFloat(
+  //      randomGenerator, &outputDescriptor, &mutableProbabilities, false)
+  //
+  //    defer {
+  //      BNNSDestroyRandomGenerator(randomGenerator)
+  //      outputDescriptor.deallocate()
+  //    }
+  //
+  //    guard let descriptors = outputDescriptor.makeArray(of: Float.self),
+  //      let firstDesc = descriptors.first
+  //    else {
+  //      return nil
+  //    }
+  //
+  //    return Int(firstDesc)
+  //
+  //    //    return !.first!)
+  //  }
 
-//  func weightedRandomIndex(_ weights: UnsafeMutableBufferPointer<Float>) -> Int? {
-//    var outputDescriptor = BNNSNDArrayDescriptor.allocateUninitialized(
-//      scalarType: Float.self,
-//      shape: .vector(1))
-//
-//    guard
-//      let probabilities = BNNSNDArrayDescriptor(
-//        data: weights,
-//        shape: .vector(weights.count)
-//      )
-//    else {
-//      print("Failed to create `BNNSNDArrayDescriptor` for probabilities")
-//      return nil
-//    }
-//
-//    var mutableProbabilities = probabilities
-//
-//    let randomGenerator = BNNSCreateRandomGenerator(
-//      BNNSRandomGeneratorMethodAES_CTR,
-//      nil)
-//
-//    BNNSRandomFillCategoricalFloat(
-//      randomGenerator, &outputDescriptor, &mutableProbabilities, false)
-//
-//    defer {
-//      BNNSDestroyRandomGenerator(randomGenerator)
-//      outputDescriptor.deallocate()
-//    }
-//
-//    guard let descriptors = outputDescriptor.makeArray(of: Float.self),
-//      let firstDesc = descriptors.first
-//    else {
-//      return nil
-//    }
-//
-//    return Int(firstDesc)
-//
-//    //    return !.first!)
-//  }
-
-//  func populateDistances() {
-//
-//    for centroid in centroids.enumerated() {
-//      let result: UnsafeMutablePointer<Float>? = distances?.baseAddress?.advanced(
-//        by: dimension * dimension * centroid.offset
-//      )
-//      distanceSquared(
-//        x0: storage.greenStorage.baseAddress,
-//        x1: centroid.element.green,
-//        y0: storage.blueStorage.baseAddress,
-//        y1: centroid.element.blue,
-//        z0: storage.redStorage.baseAddress,
-//        z1: centroid.element.red,
-//        n: storage.greenStorage.count,
-//        result: result
-//      )
-//    }
-//  }
+  //  func populateDistances() {
+  //
+  //    for centroid in centroids.enumerated() {
+  //      let result: UnsafeMutablePointer<Float>? = distances?.baseAddress?.advanced(
+  //        by: dimension * dimension * centroid.offset
+  //      )
+  //      distanceSquared(
+  //        x0: storage.greenStorage.baseAddress,
+  //        x1: centroid.element.green,
+  //        y0: storage.blueStorage.baseAddress,
+  //        y1: centroid.element.blue,
+  //        z0: storage.redStorage.baseAddress,
+  //        z1: centroid.element.red,
+  //        n: storage.greenStorage.count,
+  //        result: result
+  //      )
+  //    }
+  //  }
 
   /// Returns the index of the closest centroid for each color.
-//  func makeCentroidIndices() -> [Int32] {
-//    guard let distances else {
-//      print("No distances value")
-//      return []
-//    }
-//    guard
-//      let distancesDescriptor = BNNSNDArrayDescriptor(
-//        data: distances,
-//        shape: .matrixRowMajor(dimension * dimension, k)
-//      )
-//    else {
-//      print("Couldn't make the ditsnaces thingy")
-//      return []
-//    }
-//
-//    let reductionLayer = BNNS.ReductionLayer(
-//      function: .argMin,
-//      input: distancesDescriptor,
-//      output: centroidIndicesDescriptor,
-//      weights: nil)
-//
-//    try? reductionLayer?.apply(
-//      batchSize: 1,
-//      input: distancesDescriptor,
-//      output: centroidIndicesDescriptor)
-//
-//    guard let result = centroidIndicesDescriptor.makeArray(of: Int32.self) else {
-//      print("Couldn't do the  centroidIndicesDescriptor thing")
-//      return []
-//    }
-//
-//    return result
-//  }
+  //  func makeCentroidIndices() -> [Int32] {
+  //    guard let distances else {
+  //      print("No distances value")
+  //      return []
+  //    }
+  //    guard
+  //      let distancesDescriptor = BNNSNDArrayDescriptor(
+  //        data: distances,
+  //        shape: .matrixRowMajor(dimension * dimension, k)
+  //      )
+  //    else {
+  //      print("Couldn't make the ditsnaces thingy")
+  //      return []
+  //    }
+  //
+  //    let reductionLayer = BNNS.ReductionLayer(
+  //      function: .argMin,
+  //      input: distancesDescriptor,
+  //      output: centroidIndicesDescriptor,
+  //      weights: nil)
+  //
+  //    try? reductionLayer?.apply(
+  //      batchSize: 1,
+  //      input: distancesDescriptor,
+  //      output: centroidIndicesDescriptor)
+  //
+  //    guard let result = centroidIndicesDescriptor.makeArray(of: Int32.self) else {
+  //      print("Couldn't do the  centroidIndicesDescriptor thing")
+  //      return []
+  //    }
+  //
+  //    return result
+  //  }
 
   /// Updates the centroid SceneKit nodes.
   ///
   /// Synchronizes the `centroidNodes` array with the current `centroids` array to avoid out-of-bounds
   /// errors during updates. This includes adding or removing nodes to match the count of centroids.
-//  func updateCentroidNodes() {
-//    // Ensure centroidNodes array is in sync with centroids
-//    if centroidNodes.count != centroids.count {
-//      // Remove excess nodes
-//      if centroidNodes.count > centroids.count {
-//        centroidNodes.removeLast(centroidNodes.count - centroids.count)
-//      }
-//      // Add new nodes as needed
-//      while centroidNodes.count < centroids.count {
-//        let node = SCNNode()
-//        // Optionally, basic geometry for visualization
-//        node.geometry = SCNSphere(radius: 0.02)
-//        centroidNodes.append(node)
-//      }
-//    }
-//
-//    // Now update each node's position and color
-//    for centroid in centroids.enumerated() {
-//      guard centroid.offset < centroidNodes.count else {
-//        print("[updateCentroidNodes] Error: centroidNodes index out of range for offset \(centroid.offset)")
-//        continue
-//      }
-//      let red = CGFloat(saturate(centroid.element.red))
-//      let green = CGFloat(saturate(centroid.element.green))
-//      let blue = CGFloat(saturate(centroid.element.blue))
-//
-//      let node = centroidNodes[centroid.offset]
-//      node.position = .init(
-//        x: red,
-//        y: green,
-//        z: blue)
-//
-//      node.geometry?.firstMaterial?.diffuse.contents = NSColor(
-//        red: red,
-//        green: green,
-//        blue: blue,
-//        alpha: 1.0)
-//    }
-//  }
+  //  func updateCentroidNodes() {
+  //    // Ensure centroidNodes array is in sync with centroids
+  //    if centroidNodes.count != centroids.count {
+  //      // Remove excess nodes
+  //      if centroidNodes.count > centroids.count {
+  //        centroidNodes.removeLast(centroidNodes.count - centroids.count)
+  //      }
+  //      // Add new nodes as needed
+  //      while centroidNodes.count < centroids.count {
+  //        let node = SCNNode()
+  //        // Optionally, basic geometry for visualization
+  //        node.geometry = SCNSphere(radius: 0.02)
+  //        centroidNodes.append(node)
+  //      }
+  //    }
+  //
+  //    // Now update each node's position and color
+  //    for centroid in centroids.enumerated() {
+  //      guard centroid.offset < centroidNodes.count else {
+  //        print("[updateCentroidNodes] Error: centroidNodes index out of range for offset \(centroid.offset)")
+  //        continue
+  //      }
+  //      let red = CGFloat(saturate(centroid.element.red))
+  //      let green = CGFloat(saturate(centroid.element.green))
+  //      let blue = CGFloat(saturate(centroid.element.blue))
+  //
+  //      let node = centroidNodes[centroid.offset]
+  //      node.position = .init(
+  //        x: red,
+  //        y: green,
+  //        z: blue)
+  //
+  //      node.geometry?.firstMaterial?.diffuse.contents = NSColor(
+  //        red: red,
+  //        green: green,
+  //        blue: blue,
+  //        alpha: 1.0)
+  //    }
+  //  }
 
   /// Produces a quantized image based on the dominant colors.
-//  func makeQuantizedImage() {
-//    storage.redQuantizedBuffer.overwriteChannels(withScalar: 0)
-//    storage.greenQuantizedBuffer.overwriteChannels(withScalar: 0)
-//    storage.blueQuantizedBuffer.overwriteChannels(withScalar: 0)
-//
-//    populateDistances()
-//    let centroidIndices = makeCentroidIndices()
-//
-//    for centroid in centroids.enumerated() {
-//      something(centroid, indices: centroidIndices)
-//    }
-//
-//    let interleaved = vImage.PixelBuffer<vImage.InterleavedFx3>(planarBuffers: [
-//      storage.redQuantizedBuffer,
-//      storage.greenQuantizedBuffer,
-//      storage.blueQuantizedBuffer,
-//    ])
-//
-//    if let rgbImageFormat, let image = interleaved.makeCGImage(cgImageFormat: rgbImageFormat) {
-//      quantizedImage = image
-//    }
-//  }
+  //  func makeQuantizedImage() {
+  //    storage.redQuantizedBuffer.overwriteChannels(withScalar: 0)
+  //    storage.greenQuantizedBuffer.overwriteChannels(withScalar: 0)
+  //    storage.blueQuantizedBuffer.overwriteChannels(withScalar: 0)
+  //
+  //    populateDistances()
+  //    let centroidIndices = makeCentroidIndices()
+  //
+  //    for centroid in centroids.enumerated() {
+  //      something(centroid, indices: centroidIndices)
+  //    }
+  //
+  //    let interleaved = vImage.PixelBuffer<vImage.InterleavedFx3>(planarBuffers: [
+  //      storage.redQuantizedBuffer,
+  //      storage.greenQuantizedBuffer,
+  //      storage.blueQuantizedBuffer,
+  //    ])
+  //
+  //    if let rgbImageFormat, let image = interleaved.makeCGImage(cgImageFormat: rgbImageFormat) {
+  //      quantizedImage = image
+  //    }
+  //  }
 
-//  private func something(
-//    _ centroid: (offset: Int, element: Centroid),
-//    indices centroidIndices: [Int32]
-//  ) {
-//    let indices = centroidIndices.enumerated().filter {
-//      $0.element == centroid.offset
-//    }.map {
-//      Int32($0.offset)
-//    }
-//
-//    let indicesDescriptor = BNNSNDArrayDescriptor.allocate(
-//      initializingFrom: indices,
-//      shape: .vector(indices.count)
-//    )
-//
-//    defer {
-//      indicesDescriptor.deallocate()
-//    }
-//
-//    scatter(value: centroid.element.red, to: storage.redQuantizedStorage)
-//    scatter(value: centroid.element.green, to: storage.greenQuantizedStorage)
-//    scatter(value: centroid.element.blue, to: storage.blueQuantizedStorage)
-//
-//    /// Scatters the repeated `value` to the `destination` using the `indicesDescriptor`.
-//    func scatter(
-//      value: Float,
-//      to destination: UnsafeMutableBufferPointer<Float>
-//    ) {
-//      let srcDescriptor = BNNSNDArrayDescriptor.allocate(
-//        repeating: value,
-//        shape: .vector(indices.count)
-//      )
-//
-//      guard
-//        let dstDescriptor = BNNSNDArrayDescriptor(
-//          data: destination,
-//          shape: .vector(dimension * dimension)
-//        )
-//      else {
-//        print("Error with `dstDescriptor`, no value")
-//        return
-//      }
-//
-//      do {
-//        try BNNS.scatter(
-//          input: srcDescriptor,
-//          indices: indicesDescriptor,
-//          output: dstDescriptor,
-//          axis: 0,
-//          reductionFunction: .sum)
-//
-//      } catch {
-//        print("Error scattering: \(error)")
-//      }
-//
-//      srcDescriptor.deallocate()
-//    }
-//  }  // END centroid something
-
+  //  private func something(
+  //    _ centroid: (offset: Int, element: Centroid),
+  //    indices centroidIndices: [Int32]
+  //  ) {
+  //    let indices = centroidIndices.enumerated().filter {
+  //      $0.element == centroid.offset
+  //    }.map {
+  //      Int32($0.offset)
+  //    }
+  //
+  //    let indicesDescriptor = BNNSNDArrayDescriptor.allocate(
+  //      initializingFrom: indices,
+  //      shape: .vector(indices.count)
+  //    )
+  //
+  //    defer {
+  //      indicesDescriptor.deallocate()
+  //    }
+  //
+  //    scatter(value: centroid.element.red, to: storage.redQuantizedStorage)
+  //    scatter(value: centroid.element.green, to: storage.greenQuantizedStorage)
+  //    scatter(value: centroid.element.blue, to: storage.blueQuantizedStorage)
+  //
+  //    /// Scatters the repeated `value` to the `destination` using the `indicesDescriptor`.
+  //    func scatter(
+  //      value: Float,
+  //      to destination: UnsafeMutableBufferPointer<Float>
+  //    ) {
+  //      let srcDescriptor = BNNSNDArrayDescriptor.allocate(
+  //        repeating: value,
+  //        shape: .vector(indices.count)
+  //      )
+  //
+  //      guard
+  //        let dstDescriptor = BNNSNDArrayDescriptor(
+  //          data: destination,
+  //          shape: .vector(dimension * dimension)
+  //        )
+  //      else {
+  //        print("Error with `dstDescriptor`, no value")
+  //        return
+  //      }
+  //
+  //      do {
+  //        try BNNS.scatter(
+  //          input: srcDescriptor,
+  //          indices: indicesDescriptor,
+  //          output: dstDescriptor,
+  //          axis: 0,
+  //          reductionFunction: .sum)
+  //
+  //      } catch {
+  //        print("Error scattering: \(error)")
+  //      }
+  //
+  //      srcDescriptor.deallocate()
+  //    }
+  //  }  // END centroid something
 
 }

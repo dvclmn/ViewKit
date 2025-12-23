@@ -122,7 +122,7 @@ extension SliderUnified {
   func NativeSliderComponent() -> some View {
     Slider(
       value: $value,
-      in: range
+      in: range,
     ) {
       LabelComponent()
 
