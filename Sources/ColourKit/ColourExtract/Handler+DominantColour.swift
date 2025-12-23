@@ -56,6 +56,7 @@ extension DominantColourHandler {
 
     processingTask = Task {
       isBusy = true
+      defer { isBusy = false }
 
       // Check for cancellation before starting heavy work
       if Task.isCancelled { return }
@@ -78,8 +79,6 @@ extension DominantColourHandler {
       } catch {
         print("Processing error: \(error)")
       }
-
-      isBusy = false
     }
   }
 
