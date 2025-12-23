@@ -30,7 +30,7 @@ public final class DominantColourHandler {
   /// Moves the heavy math to a separate service/actor
   private let processor = ColorClusteringProcessor(
     dimension: 256,
-    maxIterations: 10
+    maxIterations: 4
   )
 
   public init() {}

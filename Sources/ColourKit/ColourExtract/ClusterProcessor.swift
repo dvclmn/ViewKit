@@ -6,9 +6,9 @@
 //
 
 import Accelerate
+import CoreTools
 import Foundation
 import SwiftUI
-import CoreTools
 
 public struct ClusteringResult: Sendable {
   public let colors: [Color]
@@ -53,20 +53,35 @@ internal struct ColorClusteringProcessor {
     let greenPixels = Array(planarBuffers[1].array)
     let bluePixels = Array(planarBuffers[2].array)
 
-    // ... (Logic to fill these arrays via vImage scale would go here)
+    print(
+      "Set up RGB pixel arrays: \(redPixels.count), \(greenPixels.count), \(bluePixels.count)"
+    )
 
     /// 2. Initialize Centroids (K-Means++)
-    var centroids = initializeCentroids(r: redPixels, g: greenPixels, b: bluePixels, k: k)
+    var centroids = initializeCentroids(
+      r: redPixels,
+      g: greenPixels,
+      b: bluePixels,
+      k: k
+    )
+
     var assignments = [Int](repeating: 0, count: redPixels.count)
 
+    print("Assignments before any work: \(assignments)")
+
     /// 3. Main K-Means Loop
-    for _ in 0..<maxIterations {
+    for i in 0..<maxIterations {
+
+      print("Beginning \(i) iteration for K-means loop")
       let previousCentroids = centroids
 
       /// Step A: Assignment (Find closest centroid for every pixel)
       assignments = assignPixelsToCentroids(
-        r: redPixels, g: greenPixels, b: bluePixels,
-        centroids: centroids, k: k
+        r: redPixels,
+        g: greenPixels,
+        b: bluePixels,
+        centroids: centroids,
+        k: k
       )
 
       /// Step B: Update (Move centroids to the average of their assigned pixels)
@@ -79,10 +94,16 @@ internal struct ColorClusteringProcessor {
       if centroidsAreConverged(old: previousCentroids, new: centroids) { break }
     }
 
+    print(
+      "K-means loop complete. Final assignments: \(assignments). Number of centroids: \(centroids.count)."
+    )
+
     // 4. Create final UI Color objects
     let finalColors = centroids.map {
       Color(red: Double($0.red), green: Double($0.green), blue: Double($0.blue))
     }
+
+    print("Final colours: \(finalColors.map(\.description))")
 
     return ClusteringResult(colors: finalColors, quantizedImage: nil)
   }
@@ -90,14 +111,21 @@ internal struct ColorClusteringProcessor {
   // MARK: - Replacing BNNS with vDSP
 
   private func assignPixelsToCentroids(
-    r: [Float], g: [Float], b: [Float], centroids: [Centroid], k: Int
+    r: [Float],
+    g: [Float],
+    b: [Float],
+    centroids: [Centroid],
+    k: Int
   ) -> [Int] {
+
+    print("Beginning process of assigning pixels to centroids")
     let n = r.count
     var closestIndices = [Int](repeating: 0, count: n)
     var minDistances = [Float](repeating: Float.greatestFiniteMagnitude, count: n)
 
-    // Temporary buffer for distance calculation
+    /// Temporary buffer for distance calculation
     var currentDistances = [Float](repeating: 0, count: n)
+    print("Set up currentDistances, about to start work: \(currentDistances)")
 
     for i in 0..<k {
       guard let c = centroids[safe: i] else {
@@ -105,8 +133,10 @@ internal struct ColorClusteringProcessor {
         continue
       }
 
-      // Calculate (pixel - centroid)^2 for each channel
-      // This is the "Lightweight" version of your distanceSquared function
+      print("Processing centroid \(i) of \(k)")
+
+      /// Calculate (pixel - centroid)^2 for each channel
+      /// This is the lightweight version of previous `distanceSquared` function
       var dr = [Float](repeating: 0, count: n)
       vDSP.add(-c.red, r, result: &dr)
       vDSP.square(dr, result: &dr)
@@ -119,11 +149,12 @@ internal struct ColorClusteringProcessor {
       vDSP.add(-c.blue, b, result: &db)
       vDSP.square(db, result: &db)
 
-      // Sum channels into currentDistances
+      /// Sum channels into currentDistances
       vDSP.add(dr, dg, result: &currentDistances)
       vDSP.add(currentDistances, db, result: &currentDistances)
 
-      // Update closestIndices if currentDistances < minDistances
+      /// Update closestIndices if `currentDistances < minDistances`
+
       for j in 0..<n {
         if currentDistances[j] < minDistances[j] {
           minDistances[j] = currentDistances[j]
@@ -131,6 +162,8 @@ internal struct ColorClusteringProcessor {
         }
       }
     }
+    print(
+      "Finished assigning pixels to centroids. `currentDistances`: \(currentDistances)")
     return closestIndices
   }
 }
@@ -145,42 +178,18 @@ extension ColorClusteringProcessor {
     k: Int
   ) -> [Centroid] {
 
+    print("Initializing centroids...")
     var centroids = [Centroid]()
     let pixelCount = r.count
 
-    // Pick first random centroid
+    /// Pick first random centroid
     let randomIndex = Int.random(in: 0..<pixelCount)
-    centroids.append(
-      Centroid(red: r[randomIndex], green: g[randomIndex], blue: b[randomIndex]))
+    print("Random index chosen: \(randomIndex)")
 
-    // Use the first row of the `distances` buffer as temporary storage.
-    //    let tmp = UnsafeMutableBufferPointer(
-    //      start: distances?.baseAddress,
-    //      count: dimension * dimension
-    //    )
-    //
-    //    /// For a simple optically pleasing result, you can just pick K random indices.
-    //    /// Or continue with your K-Means++ logic using the local arrays:
-    //
-    //    for i in 1..<k {
-    //      distanceSquared(
-    //        x0: storage.greenStorage.baseAddress, x1: centroids[i - 1].green,
-    //        y0: storage.blueStorage.baseAddress, y1: centroids[i - 1].blue,
-    //        z0: storage.redStorage.baseAddress, z1: centroids[i - 1].red,
-    //        n: storage.greenStorage.count,
-    //        result: tmp.baseAddress)
-    //
-    //      guard let weightedRandomIndex = weightedRandomIndex(tmp) else {
-    //        print("Couldn't create the next centroid.")
-    //        break
-    //      }
-    //
-    //      centroids.append(
-    //        Centroid(
-    //          red: storage.redStorage[weightedRandomIndex],
-    //          green: storage.greenStorage[weightedRandomIndex],
-    //          blue: storage.blueStorage[weightedRandomIndex]))
-    //    }
+    centroids.append(
+      Centroid(red: r[randomIndex], green: g[randomIndex], blue: b[randomIndex])
+    )
+    print("Centroids initialized: \(centroids)")
 
     return centroids
   }
@@ -192,15 +201,19 @@ extension ColorClusteringProcessor {
     assignments: [Int],
     k: Int
   ) -> [Centroid] {
-    // 1. Create buckets to store the sums and counts for each centroid
+
+    print("Updating centroids...")
+
+    /// 1. Create buckets to store the sums and counts for each centroid
     var redSums = [Float](repeating: 0, count: k)
     var greenSums = [Float](repeating: 0, count: k)
     var blueSums = [Float](repeating: 0, count: k)
     var counts = [Float](repeating: 0, count: k)
 
-    // 2. Single pass: Accumulate values
-    // While this is a loop, Swift's compiler optimizes this heavily.
+    /// 2. Single pass: Accumulate values
+    /// While this is a loop, Swift's compiler optimizes this heavily.
     for i in 0..<r.count {
+      print("Processing pixel \(i) of \(r.count)...")
       let label = assignments[i]
       redSums[label] += r[i]
       greenSums[label] += g[i]
@@ -208,9 +221,10 @@ extension ColorClusteringProcessor {
       counts[label] += 1
     }
 
-    // 3. Use vDSP to calculate the new means (Sum / Count)
-    // This replaces the old centroids with new ones
+    /// 3. Use vDSP to calculate the new means (Sum / Count)
+    /// This replaces the old centroids with new ones
     var newCentroids = [Centroid]()
+
     for i in 0..<k {
       if counts[i] > 0 {
         newCentroids.append(
@@ -220,7 +234,8 @@ extension ColorClusteringProcessor {
             blue: blueSums[i] / counts[i]
           ))
       } else {
-        // If a centroid has no pixels, keep it as is or re-randomize
+        print("Centroid had no associated pixels. `newCentroids`: \(newCentroids)")
+        /// If a centroid has no pixels, keep it as is or re-randomize
         newCentroids.append(Centroid(red: 0, green: 0, blue: 0))
       }
     }
@@ -229,9 +244,15 @@ extension ColorClusteringProcessor {
   }
 
   private func centroidsAreConverged(
-    old: [Centroid], new: [Centroid], tolerance: Float = 0.001
+    old: [Centroid],
+    new: [Centroid],
+    tolerance: Float = 0.001
   ) -> Bool {
-    guard old.count == new.count else { return false }
+    print("Checking if centroids have converged")
+    guard old.count == new.count else {
+      print("Number of centroids must match for convergence check")
+      return false
+    }
 
     var totalMovement: Float = 0
 
@@ -244,11 +265,17 @@ extension ColorClusteringProcessor {
       totalMovement += (dr * dr + dg * dg + db * db)
     }
 
-    // If the average movement per centroid is less than our tolerance, we are done
-    return (totalMovement / Float(old.count)) < (tolerance * tolerance)
+    print("Total movement: \(totalMovement)")
+
+    /// If the average movement per centroid is less than our tolerance, we are done
+    let hasConverged: Bool = (totalMovement / Float(old.count)) < (tolerance * tolerance)
+
+    print("Have the centroids converged? \(hasConverged)")
+    return hasConverged
   }
 
   static func createRGBFloatFormat() -> vImage_CGImageFormat {
+    print("Setting up RGB float format")
     guard
       let format = vImage_CGImageFormat(
         bitsPerComponent: 32,
@@ -262,6 +289,7 @@ extension ColorClusteringProcessor {
     else {
       preconditionFailure("vImage_CGImageFormat must have a value.")
     }
+    print("RGB float format set up successfully")
     return format
 
   }
