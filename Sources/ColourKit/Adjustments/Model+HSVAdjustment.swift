@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 29/6/2025.
 //
 
-import CurveKit
 import SharedHelpers
 import SwiftUI
 
@@ -20,16 +19,6 @@ public struct HSVAdjustment: Sendable, Codable, Equatable, Hashable {
   public var saturation: Double?
   public var brightness: Double?
   public let strength: Double
-  //  public init(
-  //    hue: Double? = nil,
-  ////    hue: UnitIntervalCyclic? = nil,
-  //    saturation: Double? = nil,
-  //    brightness: Double? = nil
-  //  ) {
-  //    self.hue = hue
-  //    self.saturation = saturation
-  //    self.brightness = brightness
-  //  }
 
   public init(
     hue: Double? = nil,
@@ -153,7 +142,7 @@ extension HSVAdjustment {
 public func + (lhs: HSVAdjustment, rhs: HSVAdjustment) -> HSVAdjustment {
   HSVAdjustment(
     hue: lhs.hue.combined(with: rhs.hue) {
-      $0.interpolated(towards: $1, strength: 1.0)
+      $0.interpolated(towards: $1, amount: 1.0)
     },
     saturation: lhs.saturation.combined(with: rhs.saturation, using: +),
 
@@ -179,7 +168,7 @@ extension Optional where Wrapped == Double {
       case (nil, let target?): return target
 
       case (let from?, let to?):
-        let value = from.interpolated(towards: to, strength: strength)
+        let value = from.interpolated(towards: to, amount: strength)
         return value
     }
   }

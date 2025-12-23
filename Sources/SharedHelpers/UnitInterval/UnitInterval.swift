@@ -6,8 +6,6 @@
 //
 
 import Foundation
-//import CurveKit
-//import SharedHelpers
 
 /// This represents a closed unit interval `[0,1]`
 /// Useful for percentages, opacity, normalised values.
@@ -31,12 +29,6 @@ public struct UnitInterval: ExpressibleByFloatLiteral, Sendable, Equatable, Hash
 
 extension UnitInterval: Zeroable {
   public static var zero: UnitInterval { 0.0 }
-
-  /// Standard linear interpolation
-//  public func interpolated(towards other: UnitInterval, strength: Double) -> UnitInterval {
-//    let result = lerp(from: self.value, to: other.value, strength)
-//    return UnitInterval(result)
-//  }
 }
 
 public func + (lhs: UnitInterval, rhs: Double) -> UnitInterval {

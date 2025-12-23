@@ -24,32 +24,6 @@ public struct UnitIntervalCyclic: ExpressibleByFloatLiteral, Sendable, Equatable
   }
 }
 
-
-
-//extension Optional where Wrapped == UnitIntervalCyclic {
-//
-//  /// Cyclic interpolation for hue values (shortest path around color wheel)
-//  public func interpolated(
-//    towards other: UnitIntervalCyclic?,
-//    strength: Double
-//  ) -> UnitIntervalCyclic? {
-//    switch (self, other) {
-//
-//      case (nil, nil): return nil
-//
-//      /// Keep current hue when target is nil
-//      case (let hue?, nil): return hue
-//
-//      /// Jump to target when current is nil
-//      case (nil, let target?): return target
-//
-//      case (let from?, let to?):
-//        let value = from.value.interpolated(towards: to.value, strength: strength.value)
-//        return UnitIntervalCyclic(value)
-//    }
-//  }
-//}
-
 public func + (lhs: UnitIntervalCyclic, rhs: Double) -> UnitIntervalCyclic {
   return UnitIntervalCyclic(lhs.value + rhs)
 }

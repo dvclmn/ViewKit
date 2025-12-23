@@ -37,7 +37,7 @@ public enum AttributeKey: Hashable {
 }
 
 extension AttributeKey {
-  private var key: NSAttributedString.Key {
+  public var key: NSAttributedString.Key {
     switch self {
       case .fore: .foregroundColor
       case .font: .font
@@ -54,7 +54,7 @@ extension AttributeKey {
 
   /// A single-attribute dictionary. WIll return an empty dict
   /// if self is `.fontTrait`, as this isn't compatible.
-  public var attribute: TextAttributes { [key: value] }
+  public var toTextAttributes: TextAttributes { [key: value] }
 
   public var value: Any {
     switch self {

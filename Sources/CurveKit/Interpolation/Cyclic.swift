@@ -8,6 +8,7 @@
 extension BinaryFloatingPoint {
   
   /// Interpolate shortest path around colour wheel
+  @available(*, deprecated, message: "Prefer SwiftUI's `VectorArithmetic/interpolated(towards:amount:)` instead")
   public func interpolated(
     towards other: Self,
     strength: Self
