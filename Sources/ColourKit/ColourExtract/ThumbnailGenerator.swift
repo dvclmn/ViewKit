@@ -9,7 +9,7 @@ import AppKit
 import QuickLookThumbnailing
 import SwiftUI
 
-@MainActor
+//@MainActor
 public struct ThumbnailGenerator {
   public static func downloadImageToDisk(from webURL: URL?) async -> URL? {
     guard let url = webURL else {
