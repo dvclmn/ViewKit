@@ -8,7 +8,6 @@
 import Accelerate
 import Cocoa
 import QuickLookThumbnailing
-//import SceneKit
 import SwiftUI
 import simd
 
@@ -17,21 +16,19 @@ import simd
 @available(macOS 14.0, *)
 public final class DominantColourHandler {
   public var dominantColors: [Color] = []
-  //  public var dominantColors: [DominantColor] = []
+
   public var isBusy = false
   public var sourceImage: CGImage?
   public var quantizedImage: CGImage?
   public var k: Int = 3
   public var imageFileURL: URL?
+  //  public let imagePixelRange: Range<Int> = 100..<100_000
+  public let imagePixelRange: Range<Int> = 100..<4_800_000
 
-  // Track the current task to allow cancellation
   private var processingTask: Task<Void, Never>?
 
   /// Moves the heavy math to a separate service/actor
-  private let processor = ColorClusteringProcessor(
-    dimension: 256,
-    maxIterations: 4
-  )
+  private let processor = ColorClusteringProcessor(maxIterations: 4)
 
   public init() {}
 
@@ -43,7 +40,11 @@ extension DominantColourHandler {
   // Initial setup call
   public func setUp(_ url: URL) {
     self.imageFileURL = url
-    self.sourceImage = ThumbnailGenerator.cgImageFromURL(url)
+    self.sourceImage = ThumbnailGenerator.thumbnailCGImageFromURL(
+      url,
+      maxPixelSize: imagePixelRange.upperBound
+    )
+    //    self.sourceImage = ThumbnailGenerator.cgImageFromURL(url)
     processCurrentURL()
 
   }
@@ -51,14 +52,14 @@ extension DominantColourHandler {
   public func processCurrentURL() {
     guard let url = imageFileURL else { return }
 
-    // Cancel any existing calculation to save resources
+    /// Cancel any existing calculation to save resources
     processingTask?.cancel()
 
     processingTask = Task {
       isBusy = true
       defer { isBusy = false }
 
-      // Check for cancellation before starting heavy work
+      /// Check for cancellation before starting heavy work
       if Task.isCancelled { return }
 
       do {
@@ -69,11 +70,13 @@ extension DominantColourHandler {
         let result = try await processor.calculate(
           url: url,
           k: k,
-          sourceImage: sourceImage
+          sourceImage: sourceImage,
+          pixelRange: imagePixelRange
         )
 
         // Final check for cancellation before updating UI
         if !Task.isCancelled {
+          self.quantizedImage = result.quantizedImage
           self.dominantColors = result.colors
         }
       } catch {
