@@ -59,13 +59,14 @@ extension NSRange {
 /// ```
 extension Range where Bound == String.Index {
 
-  public func withPreview(
+  public func withPreviewLines(
     in text: String,
     contextLength: Int = 30,
     highlight: (String) -> String = { "░\($0)░" }
-  ) -> String {
+  ) -> [String] {
+    //  ) -> String {
 
-    guard !text.isEmpty else { return "" }
+    guard !text.isEmpty else { return ["Empty string"] }
 
     // --- Before ---
     let beforeStart =
@@ -76,7 +77,8 @@ extension Range where Bound == String.Index {
       ) ?? text.startIndex
 
     let before = text[beforeStart..<lowerBound]
-    let beforeLines = String(before).lines().joined("\n| ")
+    let beforeLines = String(before).lines()
+
     let hasLeadingTruncation = beforeStart > text.startIndex
 
     // --- Range ---
@@ -91,22 +93,33 @@ extension Range where Bound == String.Index {
       ) ?? text.endIndex
 
     let after = text[upperBound..<afterEnd]
-    let afterLines = String(after).lines().joined("\n| ")
+    let afterLines = String(after).lines()
 
     let hasTrailingTruncation = afterEnd < text.endIndex
 
     // --- Assemble ---
-    var result = "\n|\n"
+    let trunc = "[…]"
+    var result = ["\n|"]
 
-    result += "| Range characters: \(middle.count)  |  String: \"\(middle)\"\n|\n"
-    if hasLeadingTruncation { result += "| […]" }
-    result += beforeLines
-    result += highlight(String(middle))
-    result += afterLines
-    if hasTrailingTruncation { result += "[…]" }
-    result += "\n|\n"
+    result += ["Range characters: \(middle.count)  |  String: \"\(middle)\""]
+    result += [""]
+
+    let pre = before.preprendToFirstLine(hasLeadingTruncation ? trunc : "")
+    let content = highlight(String(middle))
+    let post = after.appendToLastLine(hasTrailingTruncation ? trunc : "")
+
+    result += pre.appendToLastLine(content) + post
+    //    result += ["\n|\n"]
 
     return result
+  }
+
+  public func withPreview(
+    in text: String,
+    contextLength: Int = 30,
+    highlight: (String) -> String = { "░\($0)░" }
+  ) -> String {
+    self.withPreviewLines(in: text, contextLength: contextLength, highlight: highlight).joined("\n|  ")
   }
 
   //  public func withPreview(in text: String, length: Int = 30) -> String {

@@ -24,6 +24,18 @@ public enum SubsequenceStrategy {
   }
 }
 
+extension Array where Element == String {
+  public func preprendToFirstLine(_ element: Element) -> [Element] {
+    var result: [Element] = self
+    result[0] = element + "\(result[0])"
+    return result
+  }
+  public func appendToLastLine(_ element: Element) -> [Element] {
+    var result: [Element] = self
+    result[result.endIndex - 1] = "\(result[result.endIndex - 1])\(element)"
+    return result
+  }
+}
 
 extension String {
 
@@ -98,21 +110,21 @@ extension String {
 
   public func insertingLineBreak(every characters: Int) -> String {
     guard characters > 0 else { return self }
-    
+
     var lines: [String] = []
     var currentIndex = startIndex
-    
+
     while currentIndex < endIndex {
       let remainingDistance = distance(from: currentIndex, to: endIndex)
       let chunkSize = min(characters, remainingDistance)
-      
+
       let nextIndex = index(currentIndex, offsetBy: chunkSize)
       let line = String(self[currentIndex..<nextIndex])
       lines.append(line)
-      
+
       currentIndex = nextIndex
     }
-    
+
     return lines.joined(separator: "\n")
   }
 
