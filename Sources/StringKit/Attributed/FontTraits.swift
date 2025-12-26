@@ -12,10 +12,51 @@ extension NSFontDescriptor.SymbolicTraits: @retroactive Hashable {}
 
 /// Bit easier having this custom type, than always trying to
 /// conform `NSFontDescriptor.SymbolicTraits` to hashable etc
-public struct FontTraits: Hashable, Sendable {
+public struct FontTraits: Hashable, Sendable, CustomStringConvertible {
   let traits: NSFontDescriptor.SymbolicTraits
 
+  public var description: String {
+    let isBold = traits.contains(.bold)
+    let isItalic = traits.contains(.italic)
+    var names: [String] = []
+
+    if isBold && isItalic {
+      names.append("boldItalic")
+    } else {
+      if isBold {
+        names.append("bold")
+      }
+      if isItalic {
+        names.append("italic")
+      }
+    }
+
+    if traits.contains(.expanded) {
+      names.append("expanded")
+    }
+    if traits.contains(.condensed) {
+      names.append("condensed")
+    }
+    if traits.contains(.monoSpace) {
+      names.append("monospaced")
+    }
+    if traits.contains(.vertical) {
+      names.append("vertical")
+    }
+    if traits.contains(.UIOptimized) {
+      names.append("uiOptimized")
+    }
+    if traits.contains(.tightLeading) {
+      names.append("tightLeading")
+    }
+    if traits.contains(.looseLeading) {
+      names.append("looseLeading")
+    }
+
+    return "[" + names.joined(separator: ", ") + "]"
+  }
 }
+
 extension FontTraits {
   public init?(
     _ traits: NSFontDescriptor.SymbolicTraits?,

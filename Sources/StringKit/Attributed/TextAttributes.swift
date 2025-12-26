@@ -10,12 +10,12 @@ import SharedHelpers
 
 public struct TextAttributes {
 
-  private var typedStorage: [AnyAttributeKey.Meta: NSTextAttributes]
-  //  private var storage: [NSAttributedString.Key: Any]
+  //  private var typedStorage: [AnyAttributeKey.Meta: NSTextAttributes]
+  private var storage: [NSAttributedString.Key: Any]
 
   public init() {
-    self.typedStorage = [:]
-    //    self.storage = [:]
+    //    self.typedStorage = [:]
+    self.storage = [:]
   }
 }
 extension TextAttributes {
@@ -32,48 +32,45 @@ extension TextAttributes {
   private func anyKey<T>(for key: AttributeKey<T>) -> AnyAttributeKey.Meta? {
     let nsKey = key.nsKey
     return self.anyKey(for: nsKey)
-//    switch key {
-//      case AttributeKey<T>.foregroundColor: AnyAttributeKey.Meta.fore
-//      case .font: AnyAttributeKey.Meta.font
-//      case .fontTraits: AnyAttributeKey.Meta.fontTraits
-//      case .codeBackground: AnyAttributeKey.Meta.codeBackground
-//    }
+    //    switch key {
+    //      case AttributeKey<T>.foregroundColor: AnyAttributeKey.Meta.fore
+    //      case .font: AnyAttributeKey.Meta.font
+    //      case .fontTraits: AnyAttributeKey.Meta.fontTraits
+    //      case .codeBackground: AnyAttributeKey.Meta.codeBackground
+    //    }
   }
 }
 
 extension TextAttributes {
   public subscript<Value>(key: AttributeKey<Value>) -> Value? {
     get {
-      guard let typedKey = self.anyKey(for: key) else { return nil }
-      return typedStorage[typedKey]?[key.nsKey] as? Value
-      //      storage[key.nsKey] as? Value
+      //      guard let typedKey = self.anyKey(for: key) else { return nil }
+      //      return typedStorage[typedKey]?[key.nsKey] as? Value
+      storage[key.nsKey] as? Value
     }
     set {
-      guard let typedKey = self.anyKey(for: key) else { return }
-      typedStorage[typedKey]?[key.nsKey] = newValue
-//      storage[key.nsKey] = newValue
+      //      guard let typedKey = self.anyKey(for: key) else { return }
+      //      typedStorage[typedKey]?[key.nsKey] = newValue
+      storage[key.nsKey] = newValue
     }
   }
 
-  public func getFont(with currentFont: NSFont, scale: CGFloat = 1.0) -> NSFont? {
-    
-    let traits = typedStorage[.fontTraits] 
-    //    get {
-//    let traits = storage[.fontTraits] as? FontTraits
-    return traits?.constructFont(font: currentFont, sizeScale: scale)
-    //    }
-    //    set {
-
-    //    }
-  }
+  //  public func getFont(with currentFont: NSFont, scale: CGFloat = 1.0) -> NSFont? {
+  //
+  //    let traits = typedStorage[.fontTraits]
+  //    //    get {
+  ////    let traits = storage[.fontTraits] as? FontTraits
+  //    return traits?.constructFont(font: currentFont, sizeScale: scale)
+  //    //    }
+  //    //    set {
+  //
+  //    //    }
+  //  }
 
   public var toNSAttributes: NSTextAttributes {
-
-    //    self.storage
+    self.storage
   }
 }
-
-
 
 extension NSTextAttributes {
   public var toTextAttributes: TextAttributes? {
@@ -109,21 +106,22 @@ extension NSTextAttributes {
 extension TextAttributes: CustomStringConvertible {
   public var description: String {
     var parts: [String] = []
-    if let color = self[.foregroundColor] { parts.append("foregroundColor=\(color)") }
-    if let font = self[.font] { parts.append("font=\(font)") }
-    if let traits = self[.fontTraits] { parts.append("fontTraits=\(traits)") }
-    if let background = self[.codeBackground] { parts.append("codeBackground=\(background)") }
+    if let color = self[.foregroundColor] { parts.append("foregroundColor = \(color.accessibilityName)") }
+    if let font = self[.font] { parts.append("font = \(font)") }
+    if let traits = self[.fontTraits] { parts.append("fontTraits = \(traits)") }
+    if let background = self[.codeBackground] { parts.append("codeBackground = \(background)") }
+    
     // Include any unknown keys for debugging (optional)
-    let knownKeys: Set = [
-      AttributeKey<NSColor>.foregroundColor.nsKey,
-      AttributeKey<NSFont>.font.nsKey,
-      AttributeKey<FontTraits>.fontTraits.nsKey,
-      AttributeKey<CodeBackground>.codeBackground.nsKey,
-    ]
-    let unknowns = storage.filter { !knownKeys.contains($0.key) }
-    for (key, value) in unknowns {
-      parts.append("\(key.rawValue)=\(value)")
-    }
-    return "TextAttributes{" + parts.joined(separator: ", ") + "}"
+//    let knownKeys: Set = [
+//      AttributeKey<NSColor>.foregroundColor.nsKey,
+//      AttributeKey<NSFont>.font.nsKey,
+//      AttributeKey<FontTraits>.fontTraits.nsKey,
+//      AttributeKey<CodeBackground>.codeBackground.nsKey,
+//    ]
+//    let unknowns = storage.filter { !knownKeys.contains($0.key) }
+//    for (key, value) in unknowns {
+//      parts.append("\(key.rawValue)=\(value)")
+//    }
+    return "TextAttributes{\n  " + parts.joined(separator: "\n  ") + "\n}"
   }
 }
