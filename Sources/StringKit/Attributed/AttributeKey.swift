@@ -9,38 +9,6 @@ import AppKit
 import EnumMacros
 import SharedHelpers
 
-public struct TextAttributes {
-  private var storage: [NSAttributedString.Key: Any]
-
-  public init() {
-    self.storage = [:]
-  }
-}
-extension TextAttributes {
-  public subscript<Value>(key: AttributeKey<Value>) -> Value? {
-    get {
-      storage[key.nsKey] as? Value
-    }
-    set {
-      storage[key.nsKey] = newValue
-    }
-  }
-  public var toNSAttributes: NSTextAttributes {
-    self.storage
-  }
-}
-
-public struct AttributeKey<Value>: Sendable, Hashable {
-  let nsKey: NSAttributedString.Key
-}
-
-extension AttributeKey {
-  public static var foregroundColor: AttributeKey<NSColor> { .init(nsKey: .foregroundColor) }
-  public static var font: AttributeKey<NSFont> { .init(nsKey: .font) }
-  public static var fontTraits: AttributeKey<FontTraits> { .init(nsKey: .fontTraits) }
-  public static var codeBackground: AttributeKey<CodeBackground> { .init(nsKey: .codeBackground) }
-}
-
 /// Adding all custom keys from any old app here for now, which isn't
 /// great for sep. of concerns, but there are also not many apps using these,
 /// and makes it a lot easier in this single enum for now, rather than protocol etc
