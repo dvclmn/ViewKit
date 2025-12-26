@@ -51,7 +51,7 @@ extension AttributeContainer {
 
   public func getAttributes<S: AttributeScope>(
     for scope: KeyPath<AttributeScopes, S.Type>
-  ) -> TextAttributes? {
+  ) -> NSTextAttributes? {
     do {
       return try Dictionary(self, including: scope)
     } catch {
@@ -60,12 +60,12 @@ extension AttributeContainer {
   }
 
   #if canImport(UIKit)
-  func getAttributes() -> TextAttributes? {
+  func getAttributes() -> NSTextAttributes? {
     return getAttributes(for: \.uiKit)
   }
 
   #elseif canImport(AppKit)
-  func getAttributes() -> TextAttributes? {
+  func getAttributes() -> NSTextAttributes? {
     return getAttributes(for: \.appKit)
   }
 

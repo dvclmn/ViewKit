@@ -15,13 +15,13 @@ public typealias TraitKey = NSFontDescriptor.TraitKey
 
 public struct AttributeSet: ExpressibleByDictionaryLiteral {
 
-  public var attributes: TextAttributes
+  public var attributes: NSTextAttributes
 
-  public init(dictionaryLiteral elements: (TextAttributes.Key, TextAttributes.Value)...) {
+  public init(dictionaryLiteral elements: (NSTextAttributes.Key, NSTextAttributes.Value)...) {
     self.attributes = Dictionary(uniqueKeysWithValues: elements)
   }
 
-  public init(_ attributes: TextAttributes) {
+  public init(_ attributes: NSTextAttributes) {
     self.attributes = attributes
   }
 
@@ -29,9 +29,9 @@ public struct AttributeSet: ExpressibleByDictionaryLiteral {
     font: Font,
     foreground: Color = .primary,
     background: Color = .clear,
-    additionalAttributes: TextAttributes = [:]
+    additionalAttributes: NSTextAttributes = [:]
   ) {
-    let baseAttributes: TextAttributes = [
+    let baseAttributes: NSTextAttributes = [
       .font: font,
       .foregroundColor: foreground,
       .backgroundColor: background,
@@ -53,7 +53,7 @@ public struct AttributeSet: ExpressibleByDictionaryLiteral {
   //    self.attributes = baseAttributes.merging(additionalAttributes) { (_, new) in new }
   //  }
 
-  public subscript(_ key: TextAttributes.Key) -> Any? {
+  public subscript(_ key: NSTextAttributes.Key) -> Any? {
     get { attributes[key] }
     set { attributes[key] = newValue }
   }

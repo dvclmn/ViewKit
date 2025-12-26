@@ -7,9 +7,9 @@
 
 import AppKit
 
-public typealias TextAttributes = [NSAttributedString.Key: Any]
+public typealias NSTextAttributes = [NSAttributedString.Key: Any]
 
-extension TextAttributes {
+extension NSTextAttributes {
   public var names: String {
     //    let list:  = self.compactMap { key, value in
     //      <#code#>

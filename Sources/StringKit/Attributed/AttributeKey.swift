@@ -9,6 +9,38 @@ import AppKit
 import EnumMacros
 import SharedHelpers
 
+public struct TextAttributes {
+  private var storage: [NSAttributedString.Key: Any]
+
+  public init() {
+    self.storage = [:]
+  }
+}
+extension TextAttributes {
+  public subscript<Value>(key: AttributeKey<Value>) -> Value? {
+    get {
+      storage[key.nsKey] as? Value
+    }
+    set {
+      storage[key.nsKey] = newValue
+    }
+  }
+  public var toNSAttributes: NSTextAttributes {
+    self.storage
+  }
+}
+
+public struct AttributeKey<Value>: Sendable, Hashable {
+  let nsKey: NSAttributedString.Key
+}
+
+extension AttributeKey {
+  public static var foregroundColor: AttributeKey<NSColor> { .init(nsKey: .foregroundColor) }
+  public static var font: AttributeKey<NSFont> { .init(nsKey: .font) }
+  public static var fontTraits: AttributeKey<FontTraits> { .init(nsKey: .fontTraits) }
+  public static var codeBackground: AttributeKey<CodeBackground> { .init(nsKey: .codeBackground) }
+}
+
 /// Adding all custom keys from any old app here for now, which isn't
 /// great for sep. of concerns, but there are also not many apps using these,
 /// and makes it a lot easier in this single enum for now, rather than protocol etc
@@ -27,8 +59,8 @@ extension NSAttributedString.Key {
 /// Made as a slightly more type safe alternative to
 /// `[NSAttributedString.Key: Any]`
 @Optinits
-public enum TextAttribute: Hashable {
-  
+public enum AnyAttributeKey: Hashable {
+
   /// System keys
   case fore(NSColor)
   case font(NSFont)
@@ -36,18 +68,21 @@ public enum TextAttribute: Hashable {
   case strikeColour(NSColor)
   case strikeStyle(NSUnderlineStyle)
   case blockIntent(Bool)
-  
+
   /// See https://developer.apple.com/documentation/appkit/nstextattachmentviewprovider
   /// for info on using an NSView as attachment
   case attachment(NSTextAttachment)
-  
+
   /// Custom keys
   case debug(String)  // Attach a debug note
   case fontTraits(FontTraits)
   case codeBackground(CodeBackground)
 }
 
-extension TextAttribute {
+extension AnyAttributeKey {
+
+  //  public subscript(key: Self) ->
+
   public var key: NSAttributedString.Key {
     switch self {
       case .fore: .foregroundColor
@@ -65,7 +100,7 @@ extension TextAttribute {
   }
 
   /// Returns `self` as a single-attribute `[NSAttributedString.Key: Any]`
-  public var toTextAttribute: TextAttributes { [key: value] }
+  public var toTextAttribute: NSTextAttributes { [key: value] }
 
   public var value: Any {
     switch self {
@@ -83,7 +118,7 @@ extension TextAttribute {
   }
 }
 
-extension TextAttribute {
+extension AnyAttributeKey {
   public static func colour(_ colour: NSColor) -> Self {
     .fore(colour)
   }
