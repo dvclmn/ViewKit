@@ -9,36 +9,68 @@ import AppKit
 import SharedHelpers
 
 public struct TextAttributes {
-  private var storage: [NSAttributedString.Key: Any]
+
+  private var typedStorage: [AnyAttributeKey.Meta: NSTextAttributes]
+  //  private var storage: [NSAttributedString.Key: Any]
 
   public init() {
-    self.storage = [:]
+    self.typedStorage = [:]
+    //    self.storage = [:]
   }
 }
 extension TextAttributes {
+  //  subscript(key: AnyAttributeKey.Meta) -> NSTextAttributes? {
+  //    get {
+  //      typedStorage[key]
+  //    }
+  //    set {
+  //      typedStorage[key] = newValue
+  //    }
+  //  }
+
+  private func anyKey(for key: NSAttributedString.Key) -> AnyAttributeKey.Meta? {
+    switch key {
+      case .foregroundColor: .fore
+      case .font: .font
+      case .fontTraits: .fontTraits
+      case .codeBackground: .codeBackground
+      default: nil
+    }
+  }
+  private func anyKey<T>(for key: AttributeKey<T>) -> AnyAttributeKey.Meta? {
+    
+  }
+}
+
+extension TextAttributes {
   public subscript<Value>(key: AttributeKey<Value>) -> Value? {
     get {
-      storage[key.nsKey] as? Value
+      guard let typedKey = self.anyKey(for: <#T##NSAttributedString.Key#>)
+      typedStorage[]
+      //      storage[key.nsKey] as? Value
     }
     set {
       storage[key.nsKey] = newValue
     }
   }
+
+  public func getFont(with currentFont: NSFont, scale: CGFloat = 1.0) -> NSFont? {
+    //    get {
+    let traits = storage[.fontTraits] as? FontTraits
+    return traits?.constructFont(font: currentFont, sizeScale: scale)
+    //    }
+    //    set {
+
+    //    }
+  }
+
   public var toNSAttributes: NSTextAttributes {
-    self.storage
+
+    //    self.storage
   }
 }
 
-public struct AttributeKey<Value>: Sendable, Hashable {
-  let nsKey: NSAttributedString.Key
-}
 
-extension AttributeKey {
-  public static var foregroundColor: AttributeKey<NSColor> { .init(nsKey: .foregroundColor) }
-  public static var font: AttributeKey<NSFont> { .init(nsKey: .font) }
-  public static var fontTraits: AttributeKey<FontTraits> { .init(nsKey: .fontTraits) }
-  public static var codeBackground: AttributeKey<CodeBackground> { .init(nsKey: .codeBackground) }
-}
 
 extension NSTextAttributes {
   public var toTextAttributes: TextAttributes? {
