@@ -8,25 +8,26 @@
 import AppKit
 import SharedHelpers
 
-public struct FontTraits: Hashable {
+extension NSFontDescriptor.SymbolicTraits: @retroactive Hashable {}
+
+/// Bit easier having this custom type, than always trying to
+/// conform `NSFontDescriptor.SymbolicTraits` to hashable etc
+public struct FontTraits: Hashable, Sendable {
   let traits: NSFontDescriptor.SymbolicTraits
 
-  /// The font this will have these traits merged with it
-  let font: NSFont
 }
 extension FontTraits {
-  public init(
-    _ traits: NSFontDescriptor.SymbolicTraits,
-    current font: NSFont
+  public init?(
+    _ traits: NSFontDescriptor.SymbolicTraits?,
   ) {
-    self.traits = traits
-    self.font = font
+    guard let traits else { return nil }
+    self.init(traits: traits)
   }
 
-  private func constructFont(from attributes: TextAttributes) -> NSFont? {
-    let size = font.pointSize
-    let desc = font.fontDescriptor.withSymbolicTraits(traits)
-    let newFont = NSFont(descriptor: desc, size: size)
-    return newFont
+  public func constructFont(
+    font: NSFont,
+    sizeScale: CGFloat
+  ) -> NSFont? {
+    self.traits.constructFont(font: font, sizeScale: sizeScale)
   }
 }

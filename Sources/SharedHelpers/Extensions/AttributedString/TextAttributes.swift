@@ -24,7 +24,7 @@ extension TextAttributes {
 //      } else {
 //        partialResult += "\(key), No Value"
 //      }
-      partialResult += "\(key.prettyDescription), \(val)\n"
+      partialResult += "Key: \(key.prettyDescription), Value: \(val)\n"
 
       //      let thing = entry[ke]
     }

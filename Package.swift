@@ -100,7 +100,7 @@ let package = Package(
 
     .target(
       name: "ColourKit",
-      dependencies: [.module(.sharedHelpers)],
+      dependencies: [.module(.coreTools)],
     ),
 
     .target(

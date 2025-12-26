@@ -9,39 +9,51 @@ import AppKit
 import EnumMacros
 import SharedHelpers
 
-//extension TextAttributes {
-extension NSAttributedString.Key {
-  public static let fontTraits = NSAttributedString.Key("fontTraits")
-  public static let debug = NSAttributedString.Key("debug")
-}
+/// Adding all custom keys from any old app here for now, which isn't
+/// great for sep. of concerns, but there are also not many apps using these,
+/// and makes it a lot easier in this single enum for now, rather than protocol etc
+extension String {
+  public static var fontTraitsKey: String { "fontTraits" }
+  public static var codeBackgroundKey: String { "codeBackground" }
+  public static var debugKey: String { "debug" }
 
-extension NSFontDescriptor.SymbolicTraits: @retroactive Hashable {}
+}
+extension NSAttributedString.Key {
+  public static let fontTraits = NSAttributedString.Key(String.fontTraitsKey)
+  public static let codeBackground = NSAttributedString.Key(String.codeBackgroundKey)
+  public static let debug = NSAttributedString.Key(String.debugKey)
+}
 
 /// Made as a slightly more type safe alternative to
 /// `[NSAttributedString.Key: Any]`
 @Optinits
-public enum AttributeKey: Hashable {
+public enum TextAttribute: Hashable {
+  
+  /// System keys
   case fore(NSColor)
   case font(NSFont)
-  case fontTraits(FontTraits)
-  //  case fontTraits(NSFontDescriptor.SymbolicTraits, current: NSFont)
   case bg(NSColor)
   case strikeColour(NSColor)
   case strikeStyle(NSUnderlineStyle)
   case blockIntent(Bool)
-  // See https://developer.apple.com/documentation/appkit/nstextattachmentviewprovider
-  // For using an NSView as attachment
+  
+  /// See https://developer.apple.com/documentation/appkit/nstextattachmentviewprovider
+  /// for info on using an NSView as attachment
   case attachment(NSTextAttachment)
+  
+  /// Custom keys
   case debug(String)  // Attach a debug note
-  //  case blockIntent(NSPresentationIntent)
+  case fontTraits(FontTraits)
+  case codeBackground(CodeBackground)
 }
 
-extension AttributeKey {
+extension TextAttribute {
   public var key: NSAttributedString.Key {
     switch self {
       case .fore: .foregroundColor
       case .font: .font
       case .fontTraits: .fontTraits
+      case .codeBackground: .codeBackground
       case .bg: .backgroundColor
       case .strikeColour: .strikethroughColor
       case .strikeStyle: .strikethroughStyle
@@ -52,15 +64,15 @@ extension AttributeKey {
     }
   }
 
-  /// A single-attribute dictionary. WIll return an empty dict
-  /// if self is `.fontTrait`, as this isn't compatible.
-  public var toTextAttributes: TextAttributes { [key: value] }
+  /// Returns `self` as a single-attribute `[NSAttributedString.Key: Any]`
+  public var toTextAttribute: TextAttributes { [key: value] }
 
   public var value: Any {
     switch self {
       case .fore(let v): v
       case .font(let v): v
       case .fontTraits(let v): v
+      case .codeBackground(let v): v
       case .bg(let v): v
       case .strikeColour(let v): v
       case .strikeStyle(let v): v
@@ -69,17 +81,9 @@ extension AttributeKey {
       case .debug(let v): v
     }
   }
-
-  /// Mutates an existing attribute set.
-  public func update(
-    _ attributes: inout TextAttributes,
-  ) {
-    attributes[key] = self.value
-  }
-
 }
 
-extension AttributeKey {
+extension TextAttribute {
   public static func colour(_ colour: NSColor) -> Self {
     .fore(colour)
   }
