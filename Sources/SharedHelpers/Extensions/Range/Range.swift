@@ -58,10 +58,66 @@ extension NSRange {
 /// let index: Int = text.distance(from: text.startIndex, to: range.lowerBound)
 /// ```
 extension Range where Bound == String.Index {
+
+  public func withPreview(
+    in text: String,
+    contextLength: Int = 30,
+    highlight: (String) -> String = { "░\($0)░" }
+  ) -> String {
+
+    guard !text.isEmpty else { return "" }
+
+    // --- Before ---
+    let beforeStart =
+      text.index(
+        lowerBound,
+        offsetBy: -contextLength,
+        limitedBy: text.startIndex
+      ) ?? text.startIndex
+
+    let before = text[beforeStart..<lowerBound]
+    let beforeLines = String(before).lines().joined("\n| ")
+    let hasLeadingTruncation = beforeStart > text.startIndex
+
+    // --- Range ---
+    let middle = text[self]
+
+    // --- After ---
+    let afterEnd =
+      text.index(
+        upperBound,
+        offsetBy: contextLength,
+        limitedBy: text.endIndex
+      ) ?? text.endIndex
+
+    let after = text[upperBound..<afterEnd]
+    let afterLines = String(after).lines().joined("\n| ")
+
+    let hasTrailingTruncation = afterEnd < text.endIndex
+
+    // --- Assemble ---
+    var result = "\n|\n"
+
+    result += "| Range characters: \(middle.count)  |  String: \"\(middle)\"\n|\n"
+    if hasLeadingTruncation { result += "| […]" }
+    result += beforeLines
+    result += highlight(String(middle))
+    result += afterLines
+    if hasTrailingTruncation { result += "[…]" }
+    result += "\n|\n"
+
+    return result
+  }
+
+  //  public func withPreview(in text: String, length: Int = 30) -> String {
+  //    let prefix = text[self].prefix(length)
+  //    let suffix = text[self].suffix(length)
+  //    return "...\(prefix)\(suffix)..."
+  //  }
+
   public func toNSRange(in string: String) -> NSRange? {
     string.nsRange(from: self)
   }
-  
 
   public func getAttributedRange(
     in attrString: AttributedString

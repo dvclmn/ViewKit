@@ -64,9 +64,12 @@ extension Alignment: StringConvertible {
 }
 
 // MARK: - String, Ranges, Regex
-extension Range<String.Index>: StringConvertible {
-  public var toString: String { self.description }
-}
+//extension Range<String.Index>: StringConvertible {
+//  public var toString: String {
+//    "\(lowerBound)..<\(upperBound)"
+////    self.description
+//  }
+//}
 
 extension Substring: StringConvertible {
   public var toString: String { String(self) }

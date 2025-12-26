@@ -24,6 +24,7 @@ public enum SubsequenceStrategy {
   }
 }
 
+
 extension String {
 
   public func substringLines(
