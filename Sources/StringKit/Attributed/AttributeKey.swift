@@ -13,14 +13,16 @@ public struct AttributeKey<Value>: Sendable, Hashable {
 
 extension AttributeKey {
   init?(fromAnyKey anyKey: AnyAttributeKey.Meta) {
-    
-    self = switch anyKey {
-      case .fore: Self<NSColor>.foregroundColor
-      case .font: Self<NSFont>.font
-      case .fontTraits: Self<FontTraits>.fontTraits
-      case .codeBackground: Self<CodeBackground>.codeBackground
-      default: return nil
-    }
+    let nsKey: NSAttributedString.Key? =
+      switch anyKey {
+        case .fore: .foregroundColor
+        case .font: .font
+        case .fontTraits: .fontTraits
+        case .codeBackground: .codeBackground
+        default: nil
+      }
+    guard let nsKey else { return nil }
+    self.init(nsKey: nsKey)
   }
 }
 

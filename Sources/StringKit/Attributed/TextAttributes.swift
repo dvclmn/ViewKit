@@ -19,14 +19,6 @@ public struct TextAttributes {
   }
 }
 extension TextAttributes {
-  //  subscript(key: AnyAttributeKey.Meta) -> NSTextAttributes? {
-  //    get {
-  //      typedStorage[key]
-  //    }
-  //    set {
-  //      typedStorage[key] = newValue
-  //    }
-  //  }
 
   private func anyKey(for key: NSAttributedString.Key) -> AnyAttributeKey.Meta? {
     switch key {
@@ -38,25 +30,36 @@ extension TextAttributes {
     }
   }
   private func anyKey<T>(for key: AttributeKey<T>) -> AnyAttributeKey.Meta? {
-    
+    let nsKey = key.nsKey
+    return self.anyKey(for: nsKey)
+//    switch key {
+//      case AttributeKey<T>.foregroundColor: AnyAttributeKey.Meta.fore
+//      case .font: AnyAttributeKey.Meta.font
+//      case .fontTraits: AnyAttributeKey.Meta.fontTraits
+//      case .codeBackground: AnyAttributeKey.Meta.codeBackground
+//    }
   }
 }
 
 extension TextAttributes {
   public subscript<Value>(key: AttributeKey<Value>) -> Value? {
     get {
-      guard let typedKey = self.anyKey(for: <#T##NSAttributedString.Key#>)
-      typedStorage[]
+      guard let typedKey = self.anyKey(for: key) else { return nil }
+      return typedStorage[typedKey]?[key.nsKey] as? Value
       //      storage[key.nsKey] as? Value
     }
     set {
-      storage[key.nsKey] = newValue
+      guard let typedKey = self.anyKey(for: key) else { return }
+      typedStorage[typedKey]?[key.nsKey] = newValue
+//      storage[key.nsKey] = newValue
     }
   }
 
   public func getFont(with currentFont: NSFont, scale: CGFloat = 1.0) -> NSFont? {
+    
+    let traits = typedStorage[.fontTraits] 
     //    get {
-    let traits = storage[.fontTraits] as? FontTraits
+//    let traits = storage[.fontTraits] as? FontTraits
     return traits?.constructFont(font: currentFont, sizeScale: scale)
     //    }
     //    set {
