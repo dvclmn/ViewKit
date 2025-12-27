@@ -107,7 +107,7 @@ extension TextAttributes: CustomStringConvertible {
   public var description: String {
     var parts: [String] = []
     if let color = self[.foregroundColor] { parts.append("foregroundColor = \(color.accessibilityName)") }
-    if let font = self[.font] { parts.append("font = \(font)") }
+    if let font = self[.font] { parts.append("font = \(font.prettyDescription)") }
     if let traits = self[.fontTraits] { parts.append("fontTraits = \(traits)") }
     if let background = self[.codeBackground] { parts.append("codeBackground = \(background)") }
     
@@ -122,6 +122,15 @@ extension TextAttributes: CustomStringConvertible {
 //    for (key, value) in unknowns {
 //      parts.append("\(key.rawValue)=\(value)")
 //    }
-    return "TextAttributes{\n  " + parts.joined(separator: "\n  ") + "\n}"
+    return parts.joined(separator: "\n")
+//    return "TextAttributes{\n  " + parts.joined(separator: "\n  ") + "\n}"
+  }
+}
+
+extension NSFont {
+  public var prettyDescription: String {
+    let ptSize = pointSize
+    let name = displayName ?? fontName
+    return "\(name), at \(ptSize)pt."
   }
 }

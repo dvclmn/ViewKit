@@ -16,10 +16,16 @@ public struct FontTraits: Hashable, Sendable, CustomStringConvertible {
   let traits: NSFontDescriptor.SymbolicTraits
 
   public var description: String {
+    return self.traits.prettyDescription
+  }
+}
+extension NSFontDescriptor.SymbolicTraits {
+  public var prettyDescription: String {
+    let traits = self
     let isBold = traits.contains(.bold)
     let isItalic = traits.contains(.italic)
     var names: [String] = []
-
+    
     if isBold && isItalic {
       names.append("boldItalic")
     } else {
@@ -30,7 +36,7 @@ public struct FontTraits: Hashable, Sendable, CustomStringConvertible {
         names.append("italic")
       }
     }
-
+    
     if traits.contains(.expanded) {
       names.append("expanded")
     }
@@ -52,7 +58,7 @@ public struct FontTraits: Hashable, Sendable, CustomStringConvertible {
     if traits.contains(.looseLeading) {
       names.append("looseLeading")
     }
-
+    
     return "[" + names.joined(separator: ", ") + "]"
   }
 }
