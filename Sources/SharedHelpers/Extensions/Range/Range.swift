@@ -12,6 +12,25 @@
 import Foundation
 
 extension NSRange {
+  public func withPreview(
+    in text: String,
+    contextLength: Int = 30,
+    highlight: (String) -> String = { "░\($0)░" }
+  ) -> String {
+    guard let stringRange = toStringRange(in: text) else {
+      return "Unable to convert NSRange to Range<String.Index>"
+    }
+    return stringRange.withPreview(
+      in: text,
+      contextLength: contextLength,
+      highlight: highlight
+    )
+  }
+
+  public func toStringRange(in text: String) -> Range<String.Index>? {
+    Range(self, in: text)
+  }
+
   public var info: String {
     "NSRange(location: \(location), length: \(length))"
   }
@@ -39,6 +58,7 @@ extension NSRange {
 
     return NSRange(start..<end)
   }
+
 }
 
 /// Possibly helpful notes:
@@ -64,40 +84,40 @@ extension Range where Bound == String.Index {
     contextLength: Int = 30,
     highlight: (String) -> String = { "░\($0)░" }
   ) -> String {
-    
+
     guard !text.isEmpty else { return "" }
-    
+
     // --- Before ---
     let beforeStart =
-    text.index(
-      lowerBound,
-      offsetBy: -contextLength,
-      limitedBy: text.startIndex
-    ) ?? text.startIndex
-    
+      text.index(
+        lowerBound,
+        offsetBy: -contextLength,
+        limitedBy: text.startIndex
+      ) ?? text.startIndex
+
     let before = text[beforeStart..<lowerBound]
     let beforeLines = String(before).lines().joined("\n| ")
     let hasLeadingTruncation = beforeStart > text.startIndex
-    
+
     // --- Range ---
     let middle = text[self]
-    
+
     // --- After ---
     let afterEnd =
-    text.index(
-      upperBound,
-      offsetBy: contextLength,
-      limitedBy: text.endIndex
-    ) ?? text.endIndex
-    
+      text.index(
+        upperBound,
+        offsetBy: contextLength,
+        limitedBy: text.endIndex
+      ) ?? text.endIndex
+
     let after = text[upperBound..<afterEnd]
     let afterLines = String(after).lines().joined("\n| ")
-    
+
     let hasTrailingTruncation = afterEnd < text.endIndex
-    
+
     // --- Assemble ---
     var result = "\n|\n"
-    
+
     result += "| Range characters: \(middle.count)  |  String: \"\(middle)\"\n|\n"
     if hasLeadingTruncation { result += "| […]" }
     result += beforeLines
@@ -105,72 +125,72 @@ extension Range where Bound == String.Index {
     result += afterLines
     if hasTrailingTruncation { result += "[…]" }
     result += "\n|\n"
-    
+
     return result
   }
-  
-//  public func withPreviewLines(
-//    in text: String,
-//    contextLength: Int = 30,
-//    highlight: (String) -> String = { "░\($0)░" }
-//  ) -> [String] {
-//    //  ) -> String {
-//
-//    guard !text.isEmpty else { return ["Empty string"] }
-//
-//    // --- Before ---
-//    let beforeStart =
-//      text.index(
-//        lowerBound,
-//        offsetBy: -contextLength,
-//        limitedBy: text.startIndex
-//      ) ?? text.startIndex
-//
-//    let before = text[beforeStart..<lowerBound]
-//    let beforeLines = String(before).lines()
-//
-//    let hasLeadingTruncation = beforeStart > text.startIndex
-//
-//    // --- Range ---
-//    let middle = text[self]
-//
-//    // --- After ---
-//    let afterEnd =
-//      text.index(
-//        upperBound,
-//        offsetBy: contextLength,
-//        limitedBy: text.endIndex
-//      ) ?? text.endIndex
-//
-//    let after = text[upperBound..<afterEnd]
-//    let afterLines = String(after).lines()
-//
-//    let hasTrailingTruncation = afterEnd < text.endIndex
-//
-//    // --- Assemble ---
-//    let trunc = "[…]"
-//    var result = ["\n|"]
-//
-//    result += ["Range characters: \(middle.count)  |  String: \"\(middle)\""]
-//    result += [""]
-//
-//    let pre = before.preprendToFirstLine(hasLeadingTruncation ? trunc : "")
-//    let content = highlight(String(middle))
-//    let post = after.appendToLastLine(hasTrailingTruncation ? trunc : "")
-//
-//    result += pre.appendToLastLine(content) + post
-//    //    result += ["\n|\n"]
-//
-//    return result
-//  }
 
-//  public func withPreview(
-//    in text: String,
-//    contextLength: Int = 30,
-//    highlight: (String) -> String = { "░\($0)░" }
-//  ) -> String {
-//    self.withPreviewLines(in: text, contextLength: contextLength, highlight: highlight).joined("\n|  ")
-//  }
+  //  public func withPreviewLines(
+  //    in text: String,
+  //    contextLength: Int = 30,
+  //    highlight: (String) -> String = { "░\($0)░" }
+  //  ) -> [String] {
+  //    //  ) -> String {
+  //
+  //    guard !text.isEmpty else { return ["Empty string"] }
+  //
+  //    // --- Before ---
+  //    let beforeStart =
+  //      text.index(
+  //        lowerBound,
+  //        offsetBy: -contextLength,
+  //        limitedBy: text.startIndex
+  //      ) ?? text.startIndex
+  //
+  //    let before = text[beforeStart..<lowerBound]
+  //    let beforeLines = String(before).lines()
+  //
+  //    let hasLeadingTruncation = beforeStart > text.startIndex
+  //
+  //    // --- Range ---
+  //    let middle = text[self]
+  //
+  //    // --- After ---
+  //    let afterEnd =
+  //      text.index(
+  //        upperBound,
+  //        offsetBy: contextLength,
+  //        limitedBy: text.endIndex
+  //      ) ?? text.endIndex
+  //
+  //    let after = text[upperBound..<afterEnd]
+  //    let afterLines = String(after).lines()
+  //
+  //    let hasTrailingTruncation = afterEnd < text.endIndex
+  //
+  //    // --- Assemble ---
+  //    let trunc = "[…]"
+  //    var result = ["\n|"]
+  //
+  //    result += ["Range characters: \(middle.count)  |  String: \"\(middle)\""]
+  //    result += [""]
+  //
+  //    let pre = before.preprendToFirstLine(hasLeadingTruncation ? trunc : "")
+  //    let content = highlight(String(middle))
+  //    let post = after.appendToLastLine(hasTrailingTruncation ? trunc : "")
+  //
+  //    result += pre.appendToLastLine(content) + post
+  //    //    result += ["\n|\n"]
+  //
+  //    return result
+  //  }
+
+  //  public func withPreview(
+  //    in text: String,
+  //    contextLength: Int = 30,
+  //    highlight: (String) -> String = { "░\($0)░" }
+  //  ) -> String {
+  //    self.withPreviewLines(in: text, contextLength: contextLength, highlight: highlight).joined("\n|  ")
+  //  }
 
   //  public func withPreview(in text: String, length: Int = 30) -> String {
   //    let prefix = text[self].prefix(length)

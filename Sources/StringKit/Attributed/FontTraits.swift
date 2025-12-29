@@ -12,12 +12,31 @@ extension NSFontDescriptor.SymbolicTraits: @retroactive Hashable {}
 
 /// Bit easier having this custom type, than always trying to
 /// conform `NSFontDescriptor.SymbolicTraits` to hashable etc
-public struct FontTraits: Hashable, Sendable, CustomStringConvertible {
+public struct FontTraits: Hashable, Sendable {
   let traits: NSFontDescriptor.SymbolicTraits
+}
 
+extension FontTraits {
+  public init?(
+    _ traits: NSFontDescriptor.SymbolicTraits?,
+  ) {
+    guard let traits else { return nil }
+    self.init(traits)
+  }
+
+  public func constructFont(
+    font: NSFont,
+    sizeScale: CGFloat
+  ) -> NSFont? {
+    self.traits.constructFont(font: font, sizeScale: sizeScale)
+  }
+}
+
+extension FontTraits: CustomStringConvertible {
   public var description: String {
     return self.traits.prettyDescription
   }
+
 }
 extension NSFontDescriptor.SymbolicTraits {
   public var prettyDescription: String {
@@ -25,7 +44,7 @@ extension NSFontDescriptor.SymbolicTraits {
     let isBold = traits.contains(.bold)
     let isItalic = traits.contains(.italic)
     var names: [String] = []
-    
+
     if isBold && isItalic {
       names.append("boldItalic")
     } else {
@@ -36,7 +55,7 @@ extension NSFontDescriptor.SymbolicTraits {
         names.append("italic")
       }
     }
-    
+
     if traits.contains(.expanded) {
       names.append("expanded")
     }
@@ -58,23 +77,7 @@ extension NSFontDescriptor.SymbolicTraits {
     if traits.contains(.looseLeading) {
       names.append("looseLeading")
     }
-    
+
     return "[" + names.joined(separator: ", ") + "]"
-  }
-}
-
-extension FontTraits {
-  public init?(
-    _ traits: NSFontDescriptor.SymbolicTraits?,
-  ) {
-    guard let traits else { return nil }
-    self.init(traits: traits)
-  }
-
-  public func constructFont(
-    font: NSFont,
-    sizeScale: CGFloat
-  ) -> NSFont? {
-    self.traits.constructFont(font: font, sizeScale: sizeScale)
   }
 }

@@ -14,13 +14,13 @@ import SharedHelpers
 /// and makes it a lot easier in this single enum for now, rather than protocol etc
 extension String {
   public static var fontTraitsKey: String { "fontTraits" }
-  public static var codeBackgroundKey: String { "codeBackground" }
+//  public static var codeBackgroundKey: String { "codeBackground" }
   public static var debugKey: String { "debug" }
 
 }
 extension NSAttributedString.Key {
   public static let fontTraits = NSAttributedString.Key(String.fontTraitsKey)
-  public static let codeBackground = NSAttributedString.Key(String.codeBackgroundKey)
+//  public static let codeBackground = NSAttributedString.Key(String.codeBackgroundKey)
   public static let debug = NSAttributedString.Key(String.debugKey)
 }
 
@@ -45,7 +45,7 @@ public enum AnyAttributeKey: Hashable {
   /// Custom keys
   case debug(String)  // Attach a debug note
   case fontTraits(FontTraits)
-  case codeBackground(CodeBackground)
+//  case codeBackground(CodeBackground)
 }
 
 extension AnyAttributeKey {
@@ -57,7 +57,7 @@ extension AnyAttributeKey {
       case .fore: .foregroundColor
       case .font: .font
       case .fontTraits: .fontTraits
-      case .codeBackground: .codeBackground
+//      case .codeBackground: .codeBackground
       case .bg: .backgroundColor
       case .strikeColour: .strikethroughColor
       case .strikeStyle: .strikethroughStyle
@@ -76,7 +76,7 @@ extension AnyAttributeKey {
       case .fore(let v): v
       case .font(let v): v
       case .fontTraits(let v): v
-      case .codeBackground(let v): v
+//      case .codeBackground(let v): v
       case .bg(let v): v
       case .strikeColour(let v): v
       case .strikeStyle(let v): v

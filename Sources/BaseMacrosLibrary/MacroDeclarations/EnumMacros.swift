@@ -98,3 +98,12 @@ public macro Optinits() = #externalMacro(
   module: "BaseMacrosImplementation",
   type: "OptinitsMacro"
 )
+
+// Full credit to Daniel Sincere for this
+// `StaticMemberIterable` macro:
+// https://github.com/DanielSincere/StaticMemberIterable
+@attached(member, names: named(allStaticMembers))
+public macro StaticMemberIterable() = #externalMacro(
+  module: "BaseMacrosImplementation",
+  type: "StaticMemberIterableMacro"
+)

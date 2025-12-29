@@ -11,7 +11,7 @@ import AppKit
 //@available(macOS 14.0, *)
 extension CodableColour {
   public func nsColor(fallback: NSColor) -> NSColor {
-//  public func nsColor(fallback: NSColor = .textColor) -> NSColor {
+    //  public func nsColor(fallback: NSColor = .textColor) -> NSColor {
     return self.nsColor ?? fallback
   }
 
@@ -27,7 +27,7 @@ extension CodableColour {
           blue: model.blue,
           alpha: model.alpha
         )
-        
+
       case .hsv(let model):
         return NSColor(
           hue: model.hue,

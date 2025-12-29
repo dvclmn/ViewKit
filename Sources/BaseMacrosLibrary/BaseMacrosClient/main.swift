@@ -131,3 +131,12 @@ public enum Attribute {
 /// ```
 ///
 /// The issue that `min` and `title` are missing their labels in the self assignment
+
+
+struct MyRecord {
+  @StaticMemberIterable
+  enum Fixtures {
+    static let a = MyRecord()
+    static let b = MyRecord()
+  }
+}
