@@ -25,7 +25,7 @@ extension TextAttributes {
       case .foregroundColor: .fore
       case .font: .font
       case .fontTraits: .fontTraits
-//      case .codeBackground: .codeBackground
+      //      case .codeBackground: .codeBackground
       default: nil
     }
   }
@@ -90,9 +90,9 @@ extension NSTextAttributes {
           guard let v = value as? FontTraits else { return nil }
           result[.fontTraits] = v
 
-//        case AttributeKey<CodeBackground>.codeBackground.nsKey:
-//          guard let v = value as? CodeBackground else { return nil }
-//          result[.codeBackground] = v
+        //        case AttributeKey<CodeBackground>.codeBackground.nsKey:
+        //          guard let v = value as? CodeBackground else { return nil }
+        //          result[.codeBackground] = v
 
         default:
           // Ignore unknown keys
@@ -109,21 +109,21 @@ extension TextAttributes: CustomStringConvertible {
     if let color = self[.foregroundColor] { parts.append("foregroundColor = \(color.accessibilityName)") }
     if let font = self[.font] { parts.append("font = \(font.prettyDescription)") }
     if let traits = self[.fontTraits] { parts.append("fontTraits = \(traits)") }
-//    if let background = self[.codeBackground] { parts.append("codeBackground = \(background)") }
-    
+    //    if let background = self[.codeBackground] { parts.append("codeBackground = \(background)") }
+
     // Include any unknown keys for debugging (optional)
-//    let knownKeys: Set = [
-//      AttributeKey<NSColor>.foregroundColor.nsKey,
-//      AttributeKey<NSFont>.font.nsKey,
-//      AttributeKey<FontTraits>.fontTraits.nsKey,
-//      AttributeKey<CodeBackground>.codeBackground.nsKey,
-//    ]
-//    let unknowns = storage.filter { !knownKeys.contains($0.key) }
-//    for (key, value) in unknowns {
-//      parts.append("\(key.rawValue)=\(value)")
-//    }
+    //    let knownKeys: Set = [
+    //      AttributeKey<NSColor>.foregroundColor.nsKey,
+    //      AttributeKey<NSFont>.font.nsKey,
+    //      AttributeKey<FontTraits>.fontTraits.nsKey,
+    //      AttributeKey<CodeBackground>.codeBackground.nsKey,
+    //    ]
+    //    let unknowns = storage.filter { !knownKeys.contains($0.key) }
+    //    for (key, value) in unknowns {
+    //      parts.append("\(key.rawValue)=\(value)")
+    //    }
     return parts.joined(separator: "\n")
-//    return "TextAttributes{\n  " + parts.joined(separator: "\n  ") + "\n}"
+    //    return "TextAttributes{\n  " + parts.joined(separator: "\n  ") + "\n}"
   }
 }
 
