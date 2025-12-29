@@ -21,7 +21,7 @@ extension FontTraits {
     _ traits: NSFontDescriptor.SymbolicTraits?,
   ) {
     guard let traits else { return nil }
-    self.init(traits)
+    self.init(traits: traits)
   }
 
   public func constructFont(
