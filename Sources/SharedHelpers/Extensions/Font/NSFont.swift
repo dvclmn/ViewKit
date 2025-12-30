@@ -18,7 +18,6 @@ extension NSFont {
 
   public func italic() -> NSFont {
     let manager = NSFontManager.shared
-
     return manager.convert(
       self,
       toHaveTrait: .italicFontMask
