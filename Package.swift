@@ -144,8 +144,7 @@ let package = Package(
 
     .target(
       name: "SharedHelpers",
-      dependencies: [.identifiedCollections],
-      resources: [.process("Resources")]
+      dependencies: [.identifiedCollections]
     ),
 
     .target(

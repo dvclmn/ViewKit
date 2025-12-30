@@ -18,6 +18,37 @@ extension NSTextAttributes {
     }
     return names + "\n"
   }
+
+  public mutating func setStrike() {
+
+  }
+}
+
+public struct TextDecoration {
+  let colour: NSColor
+  let style: NSUnderlineStyle
+
+  public enum Kind {
+    case underline
+    case strikethrough
+  }
+}
+
+extension TextDecoration {
+  public func getAttributes(for kind: Kind) -> NSTextAttributes {
+    switch kind {
+      case .strikethrough:
+        [
+          .strikethroughColor: colour,
+          .strikethroughStyle: style.rawValue,
+        ]
+      case .underline:
+        [
+          .underlineColor: colour,
+          .underlineStyle: style.rawValue,
+        ]
+    }
+  }
 }
 
 extension NSAttributedString.Key {
