@@ -9,12 +9,9 @@ import AppKit
 import SharedHelpers
 
 public struct TextAttributes {
-
-  //  private var typedStorage: [AnyAttributeKey.Meta: NSTextAttributes]
   private var storage: [NSAttributedString.Key: Any]
 
   public init() {
-    //    self.typedStorage = [:]
     self.storage = [:]
   }
 }
@@ -25,7 +22,8 @@ extension TextAttributes {
       case .foregroundColor: .fore
       case .font: .font
       case .fontTraits: .fontTraits
-      //      case .codeBackground: .codeBackground
+      case .strikethroughStyle: .strikeStyle
+      case .strikethroughColor: .strikeColour
       default: nil
     }
   }

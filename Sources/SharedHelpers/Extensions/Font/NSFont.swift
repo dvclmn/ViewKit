@@ -16,16 +16,19 @@ extension Font {
 
 extension NSFont {
 
-//  public static func system(
-//    _ style: FontStyle,
-//    size: CGFloat,
-//    monospaced: Bool = false
-//  ) -> NSFont {
-//    return style.system(
-//      size: size,
-//      monospaced: monospaced,
-//    )
-//  }
+  public func italic() -> NSFont {
+    let manager = NSFontManager.shared
+
+    return manager.convert(
+      self,
+      toHaveTrait: .italicFontMask
+    )
+  }
+
+  func monospaced() -> NSFont {
+    let descriptor = fontDescriptor.withDesign(.monospaced) ?? fontDescriptor
+    return NSFont(descriptor: descriptor, size: pointSize) ?? self
+  }
 
   /// Corresponds to SwiftUI's
   /// `Font/system(size:weight:design:) -> Font`
@@ -39,25 +42,26 @@ extension NSFont {
     let system = NSFont.systemFont(ofSize: size, weight: weight?.nsFontWeight ?? .regular)
     let descriptor = system.fontDescriptor
 
-    /// Apply design trait
-    let withDesign = descriptor.withDesign(design?.nsFontDesign ?? .default) ?? descriptor
+    /// Apply design only if non-default
+    let withDesign: NSFontDescriptor
 
-    /// ~~Apply weight trait~~
-    /// Is this needed? If we already got the sys font of size and weight above?
-    //    let weighted = withDesign.addingAttributes([
-    //      .traits: [TraitKey.weight: weight.nsFontWeight]
-    //    ])
+    if let design {
+      withDesign = descriptor.withDesign(design.nsFontDesign) ?? descriptor
+    } else {
+      withDesign = descriptor
+    }
 
     return NSFont(
       descriptor: withDesign,
       size: size
     ) ?? system
   }
-  
 
   /// Corresponds to SwiftUI's
   /// `Font/system(_ style:design:weight:) -> Font`
   /// Gets a system font that uses the specified style, design, and weight.
+  ///
+  /// May not preserve some details of certain styles, not sure
   public static func preferredFont(
     for style: Font.TextStyle,
     design: Font.Design? = nil,
@@ -66,10 +70,10 @@ extension NSFont {
     /// First get the preferred NSFont for the given style.
     /// Importantly, not the preferred Font Descriptor, as this seems not to work.
     let preferred = NSFont.preferredFont(forTextStyle: style.nsTextStyle)
-    
+
     /// Helpfully, we seem to be able to get the font size from this preferred Font
     let fontSize = preferred.pointSize
-    
+
     /// Which we can then pass directly to the above ``AppKit/NSFont/preferredFont(size:weight:design:)``
     let nsFont = NSFont.preferredFont(
       size: fontSize,
@@ -77,28 +81,5 @@ extension NSFont {
       design: design
     )
     return nsFont
-//    return NSFont.preferredFont(forTextStyle: style.nsTextStyle)
   }
-//
-//    let nsStyle = style.nsTextStyle
-//    let nsDesign = design?.nsFontDesign ?? .default
-//    let nsWeight = weight?.nsFontWeight ?? .regular
-//    
-//    let fontSize = NSFont.systemFontSize
-//    let systemFont = NSFont.systemFont(ofSize: fontSize)
-//    
-//    let preferredFont = NSFont.preferredFont(forTextStyle: nsStyle)
-////    let preferredDesc = NSFontDescriptor.preferredFontDescriptor(forTextStyle: nsStyle)
-//    
-////    let descDesignAdded = preferredDesc.withDesign(nsDesign) ?? preferredDesc
-////    let descWeightAdded = descDesignAdded.addingAttributes([
-////      .traits: [TraitKey.weight: nsWeight]
-////    ])
-//    
-////    preferredFont.fontDescriptor.withDesign(nsDesign)?.addingAttributes([
-////      NSFontDescriptor.AttributeName. : Any
-////    ])
-//
-////    return NSFont(descriptor: descWeightAdded, size: fontSize) ?? systemFont
-//  }
 }
