@@ -8,7 +8,7 @@
 import AppKit
 
 extension NSFontDescriptor.SymbolicTraits {
-
+  
   /// Where `scale` is a factor to multiply the `font`s
   /// point size by, for dialling in font size by fine adjustments
   public func constructFont(
@@ -20,31 +20,31 @@ extension NSFontDescriptor.SymbolicTraits {
     let newFont = NSFont(descriptor: desc, size: size) ?? font
     return newFont
   }
-
-  public var prettyDescription: String {
-    var desc: [String] = []
-    if self.contains(.bold) {
-      desc += ["Bold"]
-    }
-    if self.contains(.italic) {
-      desc += ["Italic"]
-    }
-    if self.contains(.condensed) {
-      desc += ["Condensed"]
-    }
-    if self.contains(.expanded) {
-      desc += ["Expanded"]
-    }
-    if self.contains(.monoSpace) {
-      desc += ["Monospace"]
-    } else {
-      desc += [String(describing: self)]
-    }
-
-    guard !desc.isEmpty else {
-      return "No traits"
-    }
-    return desc.joined(separator: ", ")
-  }
-
 }
+//  public var prettyDescription: String {
+//    var desc: [String] = []
+//    if self.contains(.bold) {
+//      desc += ["Bold"]
+//    }
+//    if self.contains(.italic) {
+//      desc += ["Italic"]
+//    }
+//    if self.contains(.condensed) {
+//      desc += ["Condensed"]
+//    }
+//    if self.contains(.expanded) {
+//      desc += ["Expanded"]
+//    }
+//    if self.contains(.monoSpace) {
+//      desc += ["Monospace"]
+//    } else {
+//      desc += [String(describing: self)]
+//    }
+//
+//    guard !desc.isEmpty else {
+//      return "No traits"
+//    }
+//    return desc.joined(separator: ", ")
+//  }
+//
+

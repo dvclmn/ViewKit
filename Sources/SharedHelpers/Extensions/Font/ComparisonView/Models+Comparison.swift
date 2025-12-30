@@ -55,7 +55,7 @@ enum PlatformType: String, CaseIterable {
         return String(describing: style)
 
       case .appKit:
-        let text = style.nsTextStyle.rawValue.split(
+        let text = style.toNSTextStyle.rawValue.split(
           separator: "TextStyle",
           maxSplits: 1,
           omittingEmptySubsequences: true
