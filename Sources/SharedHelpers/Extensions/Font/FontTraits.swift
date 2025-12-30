@@ -13,20 +13,19 @@ extension NSFontDescriptor.SymbolicTraits: @retroactive Hashable {}
 /// conform `NSFontDescriptor.SymbolicTraits` to hashable etc
 public struct FontTraits: Hashable, Sendable {
   let traits: NSFontDescriptor.SymbolicTraits
+  let sizeScale: CGFloat
 }
 
 extension FontTraits {
   public init?(
     _ traits: NSFontDescriptor.SymbolicTraits?,
+    sizeScale: CGFloat = 1.0
   ) {
     guard let traits else { return nil }
-    self.init(traits: traits)
+    self.init(traits: traits, sizeScale: sizeScale)
   }
 
-  public func constructFont(
-    font: NSFont,
-    sizeScale: CGFloat
-  ) -> NSFont? {
+  public func constructFont(using font: NSFont) -> NSFont? {
     self.traits.constructFont(from: font, scale: sizeScale)
   }
 }
@@ -35,9 +34,20 @@ extension FontTraits: CustomStringConvertible {
   public var description: String {
     return self.traits.prettyDescription
   }
-
 }
 extension NSFontDescriptor.SymbolicTraits {
+
+  /// Where `scale` is a factor to multiply the `font`s
+  /// point size by, for dialling in font size by fine adjustments
+  public func constructFont(
+    from font: NSFont,
+    scale sizeScale: CGFloat = 1.0
+  ) -> NSFont {
+    let size = font.pointSize * sizeScale
+    let desc = font.fontDescriptor.withSymbolicTraits(self)
+    let newFont = NSFont(descriptor: desc, size: size) ?? font
+    return newFont
+  }
 
   public var prettyDescription: String {
     let parts =

@@ -5,22 +5,9 @@
 //  Created by Dave Coleman on 20/11/2025.
 //
 
-import AppKit
+//import AppKit
 
-extension NSFontDescriptor.SymbolicTraits {
-  
-  /// Where `scale` is a factor to multiply the `font`s
-  /// point size by, for dialling in font size by fine adjustments
-  public func constructFont(
-    from font: NSFont,
-    scale sizeScale: CGFloat = 1.0
-  ) -> NSFont {
-    let size = font.pointSize * sizeScale
-    let desc = font.fontDescriptor.withSymbolicTraits(self)
-    let newFont = NSFont(descriptor: desc, size: size) ?? font
-    return newFont
-  }
-}
+
 //  public var prettyDescription: String {
 //    var desc: [String] = []
 //    if self.contains(.bold) {
