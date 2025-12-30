@@ -11,22 +11,10 @@ public typealias NSTextAttributes = [NSAttributedString.Key: Any]
 
 extension NSTextAttributes {
   public var names: String {
-    //    let list:  = self.compactMap { key, value in
-    //      <#code#>
-    //    }
     let names: String = self.reduce(into: "") { partialResult, entry in
       let key = entry.key
       let val = entry.value
-//
-//      //      if val
-//      if self[key] != nil {
-//        partialResult += "\(key) : \(val)"
-//      } else {
-//        partialResult += "\(key), No Value"
-//      }
       partialResult += "Key: \(key.prettyDescription), Value: \(val)\n"
-
-      //      let thing = entry[ke]
     }
     return names + "\n"
   }
@@ -45,7 +33,6 @@ extension NSAttributedString.Key {
       case .inlinePresentationIntent: return "inlinePresentationIntent"
       case .languageIdentifier: return "languageIdentifier"
       case .link: return "link"
-//      case .listItemDelimiter: return "listItemDelimiter"
       case .markdownSourcePosition: return "markdownSourcePosition"
       case .paragraphStyle: return "paragraphStyle"
       case .presentationIntentAttributeName: return "presentationIntentAttributeName"

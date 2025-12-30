@@ -15,7 +15,7 @@ extension Font {
 }
 
 extension NSFont {
-
+  
   public func italic() -> NSFont {
     let manager = NSFontManager.shared
     return manager.convert(
@@ -81,4 +81,11 @@ extension NSFont {
     )
     return nsFont
   }
+  
+  public var prettyDescription: String {
+    let ptSize = pointSize
+    let name = displayName ?? fontName
+    return "\(name), at \(ptSize)pt."
+  }
+
 }
