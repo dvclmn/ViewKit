@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension Font.TextStyle {
-  package var nsTextStyle: NSFont.TextStyle {
+  package var toNSTextStyle: NSFont.TextStyle {
     switch self {
       case .largeTitle: .largeTitle
       case .title: .title1
@@ -27,7 +27,7 @@ extension Font.TextStyle {
 }
 
 extension Font.Design {
-  package var nsFontDesign: NSFontDescriptor.SystemDesign {
+  package var toNSFontDesign: NSFontDescriptor.SystemDesign {
     switch self {
       case .default: .default
       case .serif: .serif
@@ -39,7 +39,7 @@ extension Font.Design {
 }
 
 extension Font.Weight {
-  package var nsFontWeight: NSFont.Weight {
+  package var toNSFontWeight: NSFont.Weight {
     switch self {
       case .ultraLight: .ultraLight
       case .thin: .thin

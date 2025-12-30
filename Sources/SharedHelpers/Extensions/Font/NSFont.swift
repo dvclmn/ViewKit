@@ -38,14 +38,14 @@ extension NSFont {
     design: Font.Design? = nil
   ) -> NSFont {
     /// Start with system font descriptor
-    let system = NSFont.systemFont(ofSize: size, weight: weight?.nsFontWeight ?? .regular)
+    let system = NSFont.systemFont(ofSize: size, weight: weight?.toNSFontWeight ?? .regular)
     let descriptor = system.fontDescriptor
 
     /// Apply design only if non-default
     let withDesign: NSFontDescriptor
 
     if let design {
-      withDesign = descriptor.withDesign(design.nsFontDesign) ?? descriptor
+      withDesign = descriptor.withDesign(design.toNSFontDesign) ?? descriptor
     } else {
       withDesign = descriptor
     }
@@ -68,7 +68,7 @@ extension NSFont {
   ) -> NSFont {
     /// First get the preferred NSFont for the given style.
     /// Importantly, not the preferred Font Descriptor, as this seems not to work.
-    let preferred = NSFont.preferredFont(forTextStyle: style.nsTextStyle)
+    let preferred = NSFont.preferredFont(forTextStyle: style.toNSTextStyle)
 
     /// Helpfully, we seem to be able to get the font size from this preferred Font
     let fontSize = preferred.pointSize

@@ -28,7 +28,7 @@ extension FontTraits {
     font: NSFont,
     sizeScale: CGFloat
   ) -> NSFont? {
-    self.traits.constructFont(font: font, sizeScale: sizeScale)
+    self.traits.constructFont(font: <#T##NSFont#>, sizeScale: <#T##CGFloat#>)
   }
 }
 

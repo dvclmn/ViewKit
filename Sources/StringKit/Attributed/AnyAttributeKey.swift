@@ -15,13 +15,13 @@ import SharedHelpers
 extension String {
   public static var fontTraitsKey: String { "fontTraits" }
 //  public static var codeBackgroundKey: String { "codeBackground" }
-  public static var debugKey: String { "debug" }
+//  public static var debugKey: String { "debug" }
 
 }
 extension NSAttributedString.Key {
   public static let fontTraits = NSAttributedString.Key(String.fontTraitsKey)
 //  public static let codeBackground = NSAttributedString.Key(String.codeBackgroundKey)
-  public static let debug = NSAttributedString.Key(String.debugKey)
+//  public static let debug = NSAttributedString.Key(String.debugKey)
 }
 
 /// Made as a slightly more type safe alternative to
@@ -43,7 +43,7 @@ public enum AnyAttributeKey: Hashable {
   case attachment(NSTextAttachment)
 
   /// Custom keys
-  case debug(String)  // Attach a debug note
+//  case debug(String)  // Attach a debug note
   case fontTraits(FontTraits)
 //  case codeBackground(CodeBackground)
 }
@@ -64,7 +64,7 @@ extension AnyAttributeKey {
       /// Or custom, for this, not sure yet
       case .blockIntent: .presentationIntentAttributeName
       case .attachment: .attachment
-      case .debug: .debug
+//      case .debug: .debug
     }
   }
 
@@ -82,20 +82,14 @@ extension AnyAttributeKey {
       case .strikeStyle(let v): v
       case .blockIntent(let v): v
       case .attachment(let v): v
-      case .debug(let v): v
+//      case .debug(let v): v
     }
   }
 }
 
+// MARK: - Convenient helpers
 extension AnyAttributeKey {
-  
   public static func colour(_ colour: NSColor) -> Self {
     .fore(colour)
   }
-  //  public static func bold(_ font: NSFont) -> Self { .font(font) }
-
 }
-
-//extension TextAttributes {
-//  self.
-//}
