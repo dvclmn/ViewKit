@@ -7,6 +7,16 @@
 
 import AppKit
 
+/// The below custom keys are located here for access
+/// by both SharedHelpers and StringKit
+extension String {
+  public static var fontTraitsKey: String { "fontTraits" }
+  
+}
+extension NSAttributedString.Key {
+  public static let fontTraits = NSAttributedString.Key(String.fontTraitsKey)
+}
+
 extension NSFontDescriptor.SymbolicTraits: @retroactive Hashable {}
 
 /// Bit easier having this custom type, than always trying to
@@ -14,6 +24,7 @@ extension NSFontDescriptor.SymbolicTraits: @retroactive Hashable {}
 public struct FontTraits: Hashable, Sendable {
   let traits: NSFontDescriptor.SymbolicTraits
   let sizeScale: CGFloat
+  // attrs[.kern]
 }
 
 extension FontTraits {
@@ -28,6 +39,7 @@ extension FontTraits {
   public func constructFont(using font: NSFont) -> NSFont? {
     self.traits.constructFont(from: font, scale: sizeScale)
   }
+
 }
 
 extension FontTraits: CustomStringConvertible {

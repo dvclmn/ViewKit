@@ -45,7 +45,7 @@ let package = Package(
 
   // MARK: - Dependancies
   dependencies: [
-//    .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.0.0"),
+    //    .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.0.0"),
     .package(url: "https://github.com/swiftlang/swift-syntax", from: "600.0.1"),
     //    .package(url: "https://github.com/mattmassicotte/nsui", from: "1.3.0"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
@@ -144,7 +144,8 @@ let package = Package(
 
     .target(
       name: "SharedHelpers",
-      dependencies: [.identifiedCollections]
+      dependencies: [.identifiedCollections],
+      resources: [.process("Resources")]
     ),
 
     .target(
@@ -189,7 +190,7 @@ let package = Package(
       dependencies: [
         .module(.sharedHelpers),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-//        .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+        //        .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
         .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
@@ -201,11 +202,11 @@ let package = Package(
       dependencies: ["BaseMacrosImplementation"],
       path: .macrosSource + "/MacroDeclarations",
     ),
-//    .executableTarget(
-//      name: "BaseMacrosClient",
-//      dependencies: ["EnumMacros"],
-//      path: .macrosSource + "/BaseMacrosClient",
-//    ),
+    //    .executableTarget(
+    //      name: "BaseMacrosClient",
+    //      dependencies: ["EnumMacros"],
+    //      path: .macrosSource + "/BaseMacrosClient",
+    //    ),
 
   ],
 )
