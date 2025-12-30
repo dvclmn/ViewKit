@@ -9,21 +9,6 @@ import AppKit
 import EnumMacros
 import SharedHelpers
 
-/// Adding all custom keys from any old app here for now, which isn't
-/// great for sep. of concerns, but there are also not many apps using these,
-/// and makes it a lot easier in this single enum for now, rather than protocol etc
-extension String {
-  public static var fontTraitsKey: String { "fontTraits" }
-//  public static var codeBackgroundKey: String { "codeBackground" }
-//  public static var debugKey: String { "debug" }
-
-}
-extension NSAttributedString.Key {
-  public static let fontTraits = NSAttributedString.Key(String.fontTraitsKey)
-//  public static let codeBackground = NSAttributedString.Key(String.codeBackgroundKey)
-//  public static let debug = NSAttributedString.Key(String.debugKey)
-}
-
 /// Made as a slightly more type safe alternative to
 /// `[NSAttributedString.Key: Any]`
 @Optinits
@@ -43,28 +28,21 @@ public enum AnyAttributeKey: Hashable {
   case attachment(NSTextAttachment)
 
   /// Custom keys
-//  case debug(String)  // Attach a debug note
   case fontTraits(FontTraits)
-//  case codeBackground(CodeBackground)
 }
 
 extension AnyAttributeKey {
-
-  //  public subscript(key: Self) ->
 
   public var key: NSAttributedString.Key {
     switch self {
       case .fore: .foregroundColor
       case .font: .font
       case .fontTraits: .fontTraits
-//      case .codeBackground: .codeBackground
       case .bg: .backgroundColor
       case .strikeColour: .strikethroughColor
       case .strikeStyle: .strikethroughStyle
-      /// Or custom, for this, not sure yet
       case .blockIntent: .presentationIntentAttributeName
       case .attachment: .attachment
-//      case .debug: .debug
     }
   }
 
@@ -76,13 +54,11 @@ extension AnyAttributeKey {
       case .fore(let v): v
       case .font(let v): v
       case .fontTraits(let v): v
-//      case .codeBackground(let v): v
       case .bg(let v): v
       case .strikeColour(let v): v
       case .strikeStyle(let v): v
       case .blockIntent(let v): v
       case .attachment(let v): v
-//      case .debug(let v): v
     }
   }
 }
