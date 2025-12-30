@@ -8,7 +8,7 @@
 import Foundation
 
 public struct ImportHandler {
-  
+
   /// Load a string from a file at a specific URL.
   public static func loadString(
     from fileURL: URL,
@@ -20,31 +20,31 @@ public struct ImportHandler {
       throw ImportError.failedToRead(error.localizedDescription)
     }
   }
-  
+
   /// Load a file from the main or provided bundle.
-  public static func loadStringFromBundle(
+  public static func loadString(
     named fileName: String,
     withExtension fileExtension: String,
     in subdirectory: String? = nil,
     bundle: Bundle = .main
   ) throws -> String {
-    
-    //    let thing = bundle.bundlePath
-    //    print("Bundle path: \(thing)")
-    guard let url = bundle.url(
-      forResource: fileName,
-      withExtension: fileExtension,
-      subdirectory: subdirectory
-    ) else {
-      throw ImportError.resourceNotFound("\(fileName).\(fileExtension), in subdirectory \(String(describing: subdirectory))")
+    guard
+      let url = bundle.url(
+        forResource: fileName,
+        withExtension: fileExtension,
+        subdirectory: subdirectory
+      )
+    else {
+      throw ImportError.resourceNotFound(
+        "\(fileName).\(fileExtension), in subdirectory \(String(describing: subdirectory))")
     }
     return try loadString(from: url)
   }
-  
+
   /// Load and decode Data from a file URL.
   public static func loadData<T: Decodable>(
     from url: URL,
-    type: T.Type,
+    asType type: T.Type,
   ) throws -> T {
     let data = try Data(contentsOf: url)
     do {
@@ -56,21 +56,18 @@ public struct ImportHandler {
       throw ImportError.decodingFailed(error)
     }
   }
-  
+
   /// Load and decode Data from bundle
   public static func loadData<T: Decodable>(
     named name: String,
-    type: T.Type,
     withExtension ext: String,
+    asType type: T.Type,
     bundle: Bundle = .main,
   ) throws -> T {
     guard let url = bundle.url(forResource: name, withExtension: ext) else {
       print("Resource named \(name).\(ext) not found in bundle \(bundle)")
       throw ImportError.resourceNotFound("\(name).\(ext)")
     }
-    return try loadData(
-      from: url,
-      type: type
-    )
+    return try loadData(from: url, asType: type)
   }
 }
