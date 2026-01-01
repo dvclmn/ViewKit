@@ -19,28 +19,29 @@ extension Range where Bound == String.Index {
 
     guard !text.isEmpty else { return "" }
 
-    
+    let indent = String(indentCharacter) + " "
     let newLine = "\n\(indentCharacter)\n"
-    let joinSeparator = "\n\(indentCharacter) "
-    
+    let joinSeparator = "\n\(indent)"
+    let trunc = "[…]"
+
     let beforeIndex =
       text.index(
         upperBound,
         offsetBy: contextLength,
         limitedBy: text.startIndex
       ) ?? text.startIndex
-    
+
     let before = text[beforeIndex..<lowerBound]
     let beforeLines = String(before).lines().joined(joinSeparator)
     let hasLeadingTruncation = beforeIndex > text.startIndex
 
     let afterIndex =
-    text.index(
-      lowerBound,
-      offsetBy: -contextLength,
-      limitedBy: text.endIndex
-    ) ?? text.endIndex
-    
+      text.index(
+        lowerBound,
+        offsetBy: -contextLength,
+        limitedBy: text.endIndex
+      ) ?? text.endIndex
+
     let after = text[afterIndex..<lowerBound]
     let afterLines = String(after).lines().joined(joinSeparator)
     let hasTrailingTruncation = afterIndex < text.endIndex
@@ -48,49 +49,23 @@ extension Range where Bound == String.Index {
     let middle = text[self]
 
     /// Put it all together
-    let beforeLines = beforePart.lines.joined(separator: indent + " ")
-    let afterLines = afterPart.lines.joined(separator: indent + " ")
-    
 
-    var result: [String] = [
-      "The Before Part: ",
-      String(describing: beforePart),
+    let result: [String?] = [
+
+      "Range characters: \(middle.count)  |  String: \"\(middle)\"\n|\n",
+
+      hasLeadingTruncation ? indent + trunc : nil,
+      beforeLines,
+      highlight(String(middle)),
+      afterLines,
+      hasTrailingTruncation ? trunc : nil,
+      newLine,
     ]
+    
+    return result.compactMap(\.self).joined("\n")
 
-    return result.joined("\n")
-
-    //    let result: [String?] = [
-    //      "Middle: \(middle)",
-    //      newLine,
-    ////      "\(indent) Range characters: \(middle.count)  |  String: \"\(middle)\"\n\(indent)\n",
-    //      beforePart.requiresTruncation ? "\(indent) […]" : nil,
-    //      beforeLines,
-    //      highlight(String(middle)),
-    //      afterLines,
-    //      afterPart.requiresTruncation ? "\(indent) […]" : nil,
-    //      newLine,
-    //    ]
-    //
-    //    return result.compactMap(\.self).joined("\n")
-
-    //    if beforePart.requiresTruncation { result += "\(indent) […]" }
-    //    result += beforePart.lines
-    //    result += highlight(String(middle))
-    //    result += afterLines
-    //    if afterPart.requiresTruncation { result += "\(indent) […]" }
-    //    result += "\n|\n"
-    //
-    //    return result
+  
   }
-
-  //  private func buildResult(
-  //    before: RangeBoundary,
-  //    middle: Substring,
-  //    after: RangeBoundary,
-  //    indent: String
-  //  ) -> String {
-  //
-  //  }
 
 }
 
