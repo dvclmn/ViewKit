@@ -28,6 +28,20 @@ extension StringProtocol {
 }
 
 extension String {
+  
+//  public func safeIndex(
+//    _ i: String.Index,
+//    at offset: Int,
+//  ) -> String.Index? {
+//    self.index(<#T##i: Index##Index#>, offsetBy: <#T##Int#>, limitedBy: <#T##Index#>)
+////    guard let index = self[saf] else { return nil }
+////    self.index(i, offsetBy: <#T##Int#>, limitedBy: <#T##String.Index#>)
+////    .index(
+////      self[keyPath: part.boundPath],
+////      offsetBy: part.calculateOffset(contextLength),
+////      limitedBy: text.startIndex
+////    )
+//  }
 
   /// Pads the string with spaces on the right to at least the given width.
   public func padded(

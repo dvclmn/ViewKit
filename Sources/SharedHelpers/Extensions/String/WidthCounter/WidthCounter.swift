@@ -10,6 +10,9 @@ import SwiftUI
 
 public struct WidthCounter {
   let width: Int
+  public init(width: Int) {
+    self.width = width
+  }
 
   public enum Style: Sendable {
     case ruler

@@ -19,6 +19,7 @@ extension MutableCollection {
 }
 
 extension Collection {
+//extension Collection where Element == String {
 
   //  public subscript(safe index: Index) -> Element? {
   //    indices.contains(index) ? self[index] : nil

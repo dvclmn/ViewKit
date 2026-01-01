@@ -13,10 +13,10 @@ extension Range where Bound == String.Index {
   public func debugPreview(
     in text: String,
     contextLength: Int = 30,
+    indentCharacter: Character = "|",
     highlight: (String) -> String = { "░\($0)░" }
   ) -> String {
 
-    let bound = self.lowerBound
     guard !text.isEmpty else { return "" }
 
     let beforePart = RangeBoundary.make(
@@ -25,58 +25,53 @@ extension Range where Bound == String.Index {
       in: text,
       contextLength: contextLength
     )
-    
+
     let afterPart = RangeBoundary.make(
       for: .suffix,
       range: self,
       in: text,
       contextLength: contextLength
     )
-    
-    // --- Before ---
-    //    let beforeStart =
-    //    text.index(
-    //      lowerBound,
-    //      offsetBy: -contextLength,
-    //      limitedBy: text.startIndex
-    //    ) ?? text.startIndex
-    //
-    //    let before = text[beforeStart..<lowerBound]
-    //    let beforeLines = String(before).lines().joined("\n| ")
-//    let hasLeadingTruncation = beforeStart > text.startIndex
-    
 
-    // --- Range ---
     let middle = text[self]
 
-    // --- After ---
-    let afterEnd =
-      text.index(
-        upperBound,
-        offsetBy: contextLength,
-        limitedBy: text.endIndex
-      ) ?? text.endIndex
+    /// Put it all together
+    let indent = String(indentCharacter)
+    let beforeLines = beforePart.lines.joined(separator: indent + " ")
+    let afterLines = afterPart.lines.joined(separator: indent + " ")
+    let newLine = "\n\(indent)\n"
 
-    let after = text[upperBound..<afterEnd]
-    let afterLines = String(after).lines().joined("\n| ")
+    let result: [String?] = [
+      newLine,
+      "\(indent) Range characters: \(middle.count)  |  String: \"\(middle)\"\n\(indent)\n",
+      beforePart.requiresTruncation ? "\(indent) […]" : nil,
+      beforeLines,
+      highlight(String(middle)),
+      afterLines,
+      afterPart.requiresTruncation ? "\(indent) […]" : nil,
+      newLine,
+    ]
 
-    let hasTrailingTruncation = afterEnd < text.endIndex
+    return result.compactMap(\.self).joined("\n")
 
-    // --- Assemble ---
-    var result = "\n|\n"
-
-    result += "| Range characters: \(middle.count)  |  String: \"\(middle)\"\n|\n"
-    if hasLeadingTruncation { result += "| […]" }
-    result += beforeLines
-    result += highlight(String(middle))
-    result += afterLines
-    if hasTrailingTruncation { result += "[…]" }
-    result += "\n|\n"
-
-    return result
+    //    if beforePart.requiresTruncation { result += "\(indent) […]" }
+    //    result += beforePart.lines
+    //    result += highlight(String(middle))
+    //    result += afterLines
+    //    if afterPart.requiresTruncation { result += "\(indent) […]" }
+    //    result += "\n|\n"
+    //
+    //    return result
   }
 
- 
+  //  private func buildResult(
+  //    before: RangeBoundary,
+  //    middle: Substring,
+  //    after: RangeBoundary,
+  //    indent: String
+  //  ) -> String {
+  //
+  //  }
 
 }
 
@@ -108,7 +103,7 @@ extension RangeBoundary {
 }
 
 extension Range where Bound == String.Index {
-  
+
   /// `separator` is what the leading 'wall' or margin should
   /// look like for each line
   fileprivate func getLines(
@@ -116,7 +111,7 @@ extension Range where Bound == String.Index {
     for part: RangeBoundaryPart,
     contextLength: Int,
   ) -> [Substring] {
-    
+
     let targetIndex = targetIndex(
       in: text,
       for: part,
@@ -127,17 +122,23 @@ extension Range where Bound == String.Index {
     let lines = String(snippet).substringLines()
     return lines
   }
-  
+
   fileprivate func targetIndex(
     in text: String,
     for part: RangeBoundaryPart,
     contextLength: Int,
   ) -> String.Index {
-    text.index(
-      self[keyPath: part.boundPath],
-      offsetBy: part.calculateOffset(contextLength),
-      limitedBy: text.startIndex
-    ) ?? text[keyPath: part.indexPath]
+    
+    let index = text[keyPath: part.indexPath]
+    let result =
+      text.index(
+        index,
+        offsetBy: part.calculateOffset(contextLength),
+        limitedBy: text.startIndex
+      ) ?? text[keyPath: part.indexPath]
+    
+    print("Index: \(index), Target: \(result)")
+    return result
   }
 }
 

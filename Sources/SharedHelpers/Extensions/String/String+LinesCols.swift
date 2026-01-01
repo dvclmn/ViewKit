@@ -40,7 +40,7 @@ extension String {
   private func isNewLine(
     at offset: Int
   ) -> Bool {
-    self[offset: offset] == Character("\n")
+    self.element(at: offset) == "\n"
   }
 
   public func countNewlines(in range: NSRange) -> Int {
@@ -49,7 +49,7 @@ extension String {
       to: range.location + range.length
     )
   }
-    
+
   public func countNewlines(
     from start: Int,
     to end: Int

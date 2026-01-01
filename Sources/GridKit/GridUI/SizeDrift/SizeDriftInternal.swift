@@ -25,7 +25,7 @@ public struct SizeDriftInternal: View {
 
     VPack(.leading) {
       Text(DummyContent.Strings.loremIpsum.prefix(width))
-      Text(TextCore.widthCounter(width, style: .digits))
+      Text(counter.widthCounter(style: .digits))
     }
     .fixedSize()
     .viewSize(mode: .debounce(0.2)) { size in
@@ -37,6 +37,10 @@ public struct SizeDriftInternal: View {
 
 @available(macOS 14.0, *)
 extension SizeDriftInternal {
+  
+  private var counter: WidthCounter {
+    WidthCounter(width: width)
+  }
 
   private var sentenceBasedSize: CGSize? {
     return sentenceSize?.adjust(.horizontal) { $0 / CGFloat(self.width) }
