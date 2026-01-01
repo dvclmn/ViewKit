@@ -13,7 +13,6 @@ import SharedHelpers
 public enum DisplayBlock: StyledStringConvertible {
   case text(StyledString)
   case indented(Indented)
-  //  case indented(title: String?, indent: String, content: [DisplayBlock])
 
   var indentationDepth: Int {
     switch self {

@@ -48,16 +48,3 @@ extension Separators {
     public static let both: Self = [.propertyLabel, .component]
   }
 }
-
-//extension Separators.Visibility {
-//  func propertyLabelSeparator(from separators: Separators) -> String {
-//    return contains(.propertyLabel) ? separators.propertyLabelSeparator : ""
-//  }
-//
-//  func componentSeparator(
-//    from separators: Separators,
-//    isLast: Bool = false
-//  ) -> String {
-//    return (contains(.component) && !isLast) ? separators.componentSeparator : ""
-//  }
-//}

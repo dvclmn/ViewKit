@@ -28,7 +28,7 @@ extension StringProtocol {
     prefix(range.upperBound)
   }
 
-  subscript(_ range: PartialRangeFrom<Int>) -> SubSequence {
+  subscript(range: PartialRangeFrom<Int>) -> SubSequence {
     suffix(Swift.max(0, count - range.lowerBound))
   }
 }
@@ -51,10 +51,10 @@ extension String {
     self + separator + other
   }
 
-//  public func findMatches(for pattern: Regex<Substring>) -> [RegexMatch] {
-//    let matches = self.matches(of: pattern)
-//    return matches
-//  }
+  //  public func findMatches(for pattern: Regex<Substring>) -> [RegexMatch] {
+  //    let matches = self.matches(of: pattern)
+  //    return matches
+  //  }
 
   public var wordCount: Int {
     let words = self.split { !$0.isLetter }
