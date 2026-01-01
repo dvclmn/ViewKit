@@ -5,16 +5,16 @@
 //  Created by Dave Coleman on 6/10/2025.
 //
 
-import Foundation
+//import Foundation
 
-public protocol StyledStringConvertible {
-  var toStyledString: StyledString { get }
-}
-
-extension String: StyledStringConvertible {
-  public var toStyledString: StyledString { .init(self) }
-}
-
-extension AttributedString: StyledStringConvertible {
-  public var toStyledString: StyledString { .init(self) }
-}
+//public protocol StyledStringConvertible {
+//  var toStyledString: StyledString { get }
+//}
+//
+//extension String: StyledStringConvertible {
+//  public var toStyledString: StyledString { .init(self) }
+//}
+//
+//extension AttributedString: StyledStringConvertible {
+//  public var toStyledString: StyledString { .init(self) }
+//}

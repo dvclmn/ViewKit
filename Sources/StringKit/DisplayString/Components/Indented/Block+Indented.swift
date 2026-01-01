@@ -5,6 +5,29 @@
 //  Created by Dave Coleman on 17/11/2025.
 //
 
+private struct IndentedLineBuilder {
+  let indent: String
+
+  mutating func build(from elements: [String]) -> [String] {
+    var result: [String] = []
+    for (index, element) in elements.enumerated() {
+      let isLast = index == elements.count - 1
+      let lines = element.lines()
+      let prefixChar = (index == 0) ? (isLast ? "└" : "├") : (isLast ? "└" : "├")
+      for (lineIndex, line) in lines.enumerated() {
+        if lineIndex == 0 {
+          result.append(prefixChar + " " + line)
+        } else {
+          let continuationChar = isLast ? " " : "│"
+          // Indent color styling is preserved if you wish:
+          result.append(continuationChar + indent + line)
+        }
+      }
+    }
+    return result
+  }
+}
+
 extension DisplayBlock {
 
   func createIndented(for indented: Indented) -> String? {
@@ -26,52 +49,7 @@ extension DisplayBlock {
     indent: String = "  ",
     isLastElement: Bool = false
   ) -> [String] {
-
-    var result: [String] = []
-
-    for (index, element) in content.enumerated() {
-      let isLast = index == content.count - 1
-      let lines = element.lines()
-
-      /// Choose the appropriate prefix character
-      let prefixChar: String
-      if index == 0 {
-        prefixChar = isLastElement ? "└" : "├"
-      } else {
-        prefixChar = isLast ? "└" : "├"
-      }
-
-      for (lineIndex, line) in lines.enumerated() {
-        processLine(
-          line,
-          at: lineIndex,
-          isLast: isLast,
-          prefixChar: prefixChar,
-          result: &result
-        )
-      }
-
-    }
-
-    return result
-  }
-
-  private func processLine(
-    _ line: String,
-    at index: Int,
-    isLast: Bool,
-    prefixChar: String,
-    result: inout [String]
-  ) {
-    if index == 0 {
-      /// First line of element
-      let prefix = prefixChar + " "
-      result.append(prefix + line)
-    } else {
-      /// Subsequent lines - use vertical line or space for continuation
-      let continuationChar = isLast ? " " : "│"
-      let prefix = StyledString(continuationChar + indent, with: .blackOnGreen)
-      result.append(prefix + line)
-    }
+    var builder = IndentedLineBuilder(indent: indent)
+    return builder.build(from: content)
   }
 }

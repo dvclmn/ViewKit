@@ -40,18 +40,16 @@ extension DisplayStringBuilder {
     [expression]
   }
 
-  public static func buildExpression<T: StyledStringConvertible>(_ value: T) -> [DisplayBlock] {
-    [.text(value.toStyledString)]
-
-  }
+    public static func buildExpression<T: StringConvertible>(_ value: T) -> [DisplayBlock] {
+      [.text(value.toString)]
+    }
 
   public static func buildExpression(_ value: Indented) -> [DisplayBlock] {
     [
       .indented(
         Indented(
           value.title,
-//          indentString: value.indentString,
-          content: value.content
+          content: { value.content }
         )
       )
     ]

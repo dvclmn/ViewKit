@@ -109,7 +109,8 @@ extension View {
   ) -> some View {
     self.modifier(
       DebugTextOverlayModifier(
-        text: content().styledOutput(),
+        text: content().output().toAttributed,
+//        text: content().styledOutput(),
         //        value: value.flatMap().joined(separator: "\n"),
 //        isEnabled: isEnabled,
         alignment: alignment,

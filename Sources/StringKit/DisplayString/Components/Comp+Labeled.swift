@@ -30,11 +30,13 @@ public struct Labeled {
   }
 }
 
-extension Labeled: StyledStringConvertible {
-  public var toStyledString: StyledString {
+extension Labeled: StringConvertible {
+//extension Labeled: StyledStringConvertible {
+  public var toString: String {
+//  public var toStyledString: StyledString {
 
-    let labelPart = StyledString("\(key)\(separator)", with: .secondary)
-    let valuePart = value?.toStyledString ?? "nil"
+    let labelPart = "\(key)\(separator)"
+    let valuePart = value?.toString ?? "nil"
     return labelPart + valuePart
     //    return StyledString("\(key)\(separator)\(valuePart)")
 

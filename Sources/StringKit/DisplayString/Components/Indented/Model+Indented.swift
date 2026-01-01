@@ -15,7 +15,7 @@ public struct Indented {
 
   public init(
     _ title: String? = nil,
-    @DisplayStringBuilder _ content: () -> [DisplayBlock]
+    @DisplayStringBuilder content: () -> [DisplayBlock]
   ) {
     self.title = title
     self.content = content()

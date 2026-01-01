@@ -27,18 +27,20 @@ public struct DisplayString {
 }
 
 extension DisplayString {
-  
+
   public func print() {
     Swift.print(self.plainText)
   }
 
   public var plainText: String {
-    components.map(\.toStyledString.plainString).joined(separator)
+    components.compactMap(\.toString).joined(separator)
+    //    components.map(\.toString).joined(separator)
+    //    components.map(\.toStyledString.plainString).joined(separator)
   }
 
-  public var output: AttributedString {
-    components.styledOutput(separator: separator)
-  }
+  //  public var output: AttributedString {
+  //    components.styledOutput(separator: separator)
+  //  }
 
   public func markdown(language: String? = nil) -> AttributedString {
 
@@ -61,21 +63,25 @@ extension DisplayString {
     //    markdown?.transformingAttributes(\.presentationIntent) { attr in
     //      attr.value = Prese
     //    }
-    return markdown ?? output
+    return markdown ?? plainText.toAttributed
+    //    return markdown ?? output
   }
 }
 
-extension DisplayString: StyledStringConvertible {
-  public var toStyledString: StyledString {
-    StyledString(self.output)
-  }
-
-}
+//extension DisplayString: StyledStringConvertible {
+//  public var toStyledString: StyledString {
+//    StyledString(self.output)
+//  }
+//}
 
 extension Array where Element == DisplayBlock {
-  public func styledOutput(separator: String = "\n") -> AttributedString {
-    self.map(\.toStyledString.styledString).joined(separator)
+  public func output(separator: String = "\n") -> String {
+    compactMap(\.toString).joined(separator)
+    //    self.map(\.toStyledString.styledString).joined(separator)
   }
+  //  public func styledOutput(separator: String = "\n") -> AttributedString {
+  //    self.map(\.toStyledString.styledString).joined(separator)
+  //  }
 }
 
 extension AttributedString {
@@ -93,15 +99,16 @@ extension AttributedString {
 }
 
 extension DisplayString {
-  
+
   public static func string(for value: Any?) -> String {
     guard let value else { return "nil" }
     guard let convertible = value as? StringConvertible else { return String(describing: value) }
     return convertible.toString
   }
-  
+
   public static func displayBlock(for value: Any?) -> DisplayBlock {
     let text = string(for: value)
-    return DisplayBlock.text(StyledString(text))
+    return DisplayBlock.text(text)
+    //    return DisplayBlock.text(StyledString(text))
   }
 }

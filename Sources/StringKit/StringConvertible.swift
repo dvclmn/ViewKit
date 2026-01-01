@@ -71,6 +71,7 @@ extension AnyRegexOutput: StringConvertible {
   public var toString: String {
     DisplayString {
       self.summarise(key: \.name)
+      self.summarise(key: \.name)
       self.summarise(key: \.range)
       self.summarise(key: \.type)
       self.summarise(key: \.value)
