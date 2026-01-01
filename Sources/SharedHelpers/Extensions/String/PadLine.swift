@@ -12,7 +12,7 @@ public typealias StringCaps = (leading: String, trailing: String)
 
 public enum PaddedContentType {
   case text
-  case cap // Line cap / book end
+  case cap  // Line cap / book end
 }
 
 public struct LineCaps {
@@ -31,21 +31,30 @@ public struct LineCaps {
   }
 }
 
-public struct TextCore {
+extension String {
+  //public struct TextCore {
 
-  /// Renamed this from `padLine`, as I was getting confused between
-  /// this, and other similar line padding methods across BaseHelpers.
-  static public func splitAndPadLine(
-    _ text: String = "",
+  /// Splits `self` at specified
+  ///
+  /// Example result:
+  /// ```
+  ///
+  ///
+  /// ```
+  public func splitPadAndCap(
+    //    _ text: String = "",
     with paddingString: String = " ",
     toFill width: Int,
     alignment: Alignment = .center,
-    splitCharacter: Character = "@",
+    splitCharacter: Character,
     caps: LineCaps? = nil,
-    /// This is `String` in case of multi-character caps
     hasSpaceAroundText: Bool = true
   ) -> String {
 
+//    guard contains(splitCharacter) else {
+//      return self.padding(
+//        
+//    }
     /// If there is no split character present in the provided `text`, this will simply return a
     /// `[String.SubSequence]` with the full text.
     ///
@@ -67,27 +76,23 @@ public struct TextCore {
     ///
     /// Result: `^░░░░░^Two splitsx░░░░░^Split at beggining`
     /// Or, result: `Two splits^░░░░░░░░░░^Split at beggining`
-    ///
-    let splitTextChunk: [String.SubSequence] = text.split(separator: splitCharacter, omittingEmptySubsequences: true)
+    let splitChunks: [Substring] = self.split(
+      separator: splitCharacter, omittingEmptySubsequences: true
+    )
 
     /// This is the number of characters in the text content only. This will be added
     /// to the total count, including caps/padding, to compare against the
     /// `toFill width: Int` parameter.
-    ///
-    ///
-    let contentWidth: Int = splitTextChunk.reduce(0) { accumulatingResult, nextValue in
-      accumulatingResult + nextValue.count
-    }
+    let contentWidth: Int = splitChunks.characterCount
 
-    let contentIsSplit: Bool = text.contains(splitCharacter)
+    /// Aka does `self` contain any character to split on (the `splitCharacter`)
+    let contentIsSplittable: Bool = self.contains(splitCharacter)
 
     /// Cap content, space and width
-    ///
     var finalCaps: StringCaps = ("", "")
     var capsSpaceCount: (leading: Int, trailing: Int) = (0, 0)
 
     /// Building not only the cap glyphs themselves, but also the spaces if applicable
-    ///
     if let caps = caps {
 
       let capSpace = (caps.hasExtraSpaces ? "_" : "")
@@ -127,10 +132,10 @@ public struct TextCore {
     var textExtraSpace: StringCaps = ("", "")
     var textSpaceCount: (leading: Int, trailing: Int) = (0, 0)
 
-    let splitCount: Int = contentIsSplit ? splitTextChunk.count - 1 : 0
-    let splitSpaces: Int = max(0, splitCount * 2)
+    let splitCount: Int = contentIsSplittable ? splitChunks.count - 1 : 0
+    let splitSpaces: Int = Swift.max(0, splitCount * 2)
 
-    if contentIsSplit {
+    if contentIsSplittable {
 
       textExtraSpace = (textExtraSpaceCharacter, textExtraSpaceCharacter)
 
@@ -159,13 +164,13 @@ public struct TextCore {
     /// Calculates the space left after accounting for all the text content, caps, and
     /// padding — and ensures the value does not fall below zero.
     ///
-    let availableSpace = max(0, width - finalContentWidth)
+    let availableSpace = Swift.max(0, width - finalContentWidth)
 
     /// This condition applies when there was no split character found in the text,
     /// so the `alignment` argument is used to determine where the padding
     /// should be placed.
     ///
-    guard splitTextChunk.count <= 1 else {
+    guard splitChunks.count <= 1 else {
 
       /// There *was* a split character provided.
       ///
@@ -176,7 +181,7 @@ public struct TextCore {
       //      var hasLeadingSplit: Bool = false
       //      var hasTrailingSplit: Bool = false
 
-      let paddingPerSlice: Int = availableSpace / (splitTextChunk.count - 1)
+      let paddingPerSlice: Int = availableSpace / (splitChunks.count - 1)
 
       /// Suppose we have the string `Hello@World@Swift` and 10 available spaces.
       ///
@@ -207,7 +212,7 @@ public struct TextCore {
       ///
       /// This approach ensures that we use all available space and distribute it as evenly as possible between components.
       ///
-      let leftoverPadding = availableSpace % (splitTextChunk.count - 1)
+      let leftoverPadding = availableSpace % (splitChunks.count - 1)
 
       var result = finalCaps.leading
 
@@ -225,7 +230,7 @@ public struct TextCore {
       /// Index: 3 : Content:  split
       /// ```
       ///
-      for (index, textContent) in splitTextChunk.enumerated() {
+      for (index, textContent) in splitChunks.enumerated() {
 
         print("Index: \(index) : Content: \(textContent)")
 
@@ -259,7 +264,7 @@ public struct TextCore {
         ///
         /// Note: I still wasn't getting this, until I realised that
         ///
-        if index < splitTextChunk.count - 1 {
+        if index < splitChunks.count - 1 {
 
           let padding = paddingPerSlice + (index < leftoverPadding ? 1 : 0)
 
@@ -276,44 +281,44 @@ public struct TextCore {
 
       result += finalCaps.trailing
 
-//      let metrics: String = """
-//
-//
-//
-//        ---
-//
-//        Content: \(splitTextChunk)
-//        Chunk count: \(splitTextChunk.count)
-//        Text spaces: \(textSpaceCount)
-//
-//        How many splits? \(splitCount)
-//
-//        Content width: \(contentWidth)
-//        Caps: \(finalCaps), and their width: \(capsSpaceCount)
-//
-//        Provided space: \(width)
-//        Total content width inc. spaces & caps: \(finalContentWidth)
-//
-//        Remaining available width, to be padded out: \(availableSpace)
-//        ---
-//
-//
-//
-//
-//        """
+      //      let metrics: String = """
+      //
+      //
+      //
+      //        ---
+      //
+      //        Content: \(splitTextChunk)
+      //        Chunk count: \(splitTextChunk.count)
+      //        Text spaces: \(textSpaceCount)
+      //
+      //        How many splits? \(splitCount)
+      //
+      //        Content width: \(contentWidth)
+      //        Caps: \(finalCaps), and their width: \(capsSpaceCount)
+      //
+      //        Provided space: \(width)
+      //        Total content width inc. spaces & caps: \(finalContentWidth)
+      //
+      //        Remaining available width, to be padded out: \(availableSpace)
+      //        ---
+      //
+      //
+      //
+      //
+      //        """
 
-//      print(!contentIsSplit ? metrics : "")
+      //      print(!contentIsSplit ? metrics : "")
 
       return result
     }
 
-    let (leftPadding, rightPadding) = TextCore.distributePadding(for: alignment, padding: availableSpace)
+    let (leftPadding, rightPadding) = distributePadding(for: alignment, padding: availableSpace)
 
     let result =
       finalCaps.leading
       /// The first lot of padding
       + String(repeating: paddingString, count: leftPadding)
-      + textExtraSpace.leading + text + textExtraSpace.trailing
+      + textExtraSpace.leading + self + textExtraSpace.trailing
       /// The second lot of padding
       + String(repeating: paddingString, count: rightPadding)
       + finalCaps.trailing
@@ -322,16 +327,16 @@ public struct TextCore {
 
   }  // END pad line
 
-  static func distributePadding(for alignment: Alignment, padding: Int) -> (left: Int, right: Int) {
-
+  func distributePadding(
+    for alignment: Alignment,
+    padding: Int
+  ) -> (left: Int, right: Int) {
     switch alignment {
-      case .leading:
-        return (0, padding)
-      case .trailing:
-        return (padding, 0)
+      case .leading: return (0, padding)
+      case .trailing: return (padding, 0)
       default:  // .center
-        let left = max(0, padding / 2)
-        return (left, max(0, padding - left))
+        let left = Swift.max(0, padding / 2)
+        return (left, Swift.max(0, padding - left))
     }
   }
 

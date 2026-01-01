@@ -11,13 +11,13 @@ import SwiftUI
 // Posted by Leo Dabus, modified by community. See post 'Timeline' for change history
 // Retrieved 2025-11-21, License - CC BY-SA 4.0
 extension StringProtocol {
-  
+
   public func element(at offset: Int) -> Element? {
     guard offset >= 0 else { return nil }
     return index(startIndex, offsetBy: offset, limitedBy: endIndex)
       .map { self[$0] }
   }
-  
+
   public func elementClamped(at offset: Int) -> Element? {
     guard !isEmpty else { return nil }
     let clamped = Swift.max(0, Swift.min(offset, count - 1))
@@ -25,27 +25,6 @@ extension StringProtocol {
     return self[idx]
   }
 
-  
-//  public subscript(offset offset: Int) -> Element {
-//    self[index(startIndex, offsetBy: offset)]
-//  }
-//
-//  public subscript(range range: Range<Int>) -> SubSequence {
-//    prefix(range.lowerBound + range.count).suffix(range.count)
-//  }
-//  public subscript(range range: ClosedRange<Int>) -> SubSequence {
-//    prefix(range.lowerBound + range.count).suffix(range.count)
-//  }
-//  public subscript(range range: PartialRangeThrough<Int>) -> SubSequence {
-//    prefix(range.upperBound.advanced(by: 1))
-//  }
-//  public subscript(range range: PartialRangeUpTo<Int>) -> SubSequence {
-//    prefix(range.upperBound)
-//  }
-//
-//  subscript(range: PartialRangeFrom<Int>) -> SubSequence {
-//    suffix(Swift.max(0, count - range.lowerBound))
-//  }
 }
 
 extension String {
