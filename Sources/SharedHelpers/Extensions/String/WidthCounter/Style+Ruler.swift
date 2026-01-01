@@ -7,9 +7,9 @@
 
 import Foundation
 
-extension TextCore {
+extension WidthCounter {
 
-  public static func generateCompactCounter(_ width: Int) -> String {
+  public func generateCompactCounter() -> String {
     let startingFrom: Int = 0
 
     var compactLine = startingFrom.description

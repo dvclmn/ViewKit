@@ -8,16 +8,17 @@
 import Foundation
 import SwiftUI
 
-extension TextCore {
+public struct WidthCounter {
+  let width: Int
 
-  public enum WidthCounterStyle: Sendable {
+  public enum Style: Sendable {
     case ruler
     case digits
   }
 
-  public static func widthCounter(
-    _ width: Int,
-    style: WidthCounterStyle
+  public func widthCounter(
+    //    _ width: Int,
+    style: Style
   ) -> AttributedString {
 
     var result = AttributedString()
@@ -26,15 +27,15 @@ extension TextCore {
 
       case .digits:
 
-        let fullOutput = self.generateDigitCounter(width)
+        let fullOutput = self.generateDigitCounter()
         result.append(fullOutput.tens, addsLineBreak: true)
-        
+
         /// Specify `false` here so we're not left with a trailing line break
         result.append(fullOutput.ones, addsLineBreak: false)
 
       case .ruler:
 
-        let compactOutput = self.generateCompactCounter(width)
+        let compactOutput = self.generateCompactCounter()
 
         result.append(compactOutput, addsLineBreak: false)
         result.addLineBreak()
@@ -63,15 +64,19 @@ struct WidthCounterView: View {
   var body: some View {
 
     VStack(spacing: 60) {
-      Text(TextCore.widthCounter(38, style: .ruler))
-      Text(TextCore.widthCounter(38, style: .digits))
+      Text(counter.widthCounter(style: .ruler))
+      Text(counter.widthCounter(style: .digits))
     }
     .textSelection(.enabled)
     .monospaced()
     .frame(width: 400, height: 600)
     .background(.black.opacity(0.6))
   }
+  private var counter: WidthCounter {
+    WidthCounter(width: 38)
+  }
 }
+
 
 #if DEBUG
 #Preview {

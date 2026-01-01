@@ -7,8 +7,8 @@
 
 import Foundation
 
-extension TextCore {
-  public static func generateDigitCounter(_ width: Int) -> (tens: String, ones: String) {
+extension WidthCounter {
+  public func generateDigitCounter() -> (tens: String, ones: String) {
     
     let startingNumber: Int = 1
     let totalWidth = width + 1  // To make up for starting from 1
