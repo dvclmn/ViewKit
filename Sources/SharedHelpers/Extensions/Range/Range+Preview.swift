@@ -19,6 +19,20 @@ extension Range where Bound == String.Index {
     let bound = self.lowerBound
     guard !text.isEmpty else { return "" }
 
+    let beforePart = RangeBoundary.make(
+      for: .prefix,
+      range: self,
+      in: text,
+      contextLength: contextLength
+    )
+    
+    let afterPart = RangeBoundary.make(
+      for: .suffix,
+      range: self,
+      in: text,
+      contextLength: contextLength
+    )
+    
     // --- Before ---
     //    let beforeStart =
     //    text.index(
@@ -29,7 +43,8 @@ extension Range where Bound == String.Index {
     //
     //    let before = text[beforeStart..<lowerBound]
     //    let beforeLines = String(before).lines().joined("\n| ")
-    let hasLeadingTruncation = beforeStart > text.startIndex
+//    let hasLeadingTruncation = beforeStart > text.startIndex
+    
 
     // --- Range ---
     let middle = text[self]
@@ -61,37 +76,69 @@ extension Range where Bound == String.Index {
     return result
   }
 
-  private func getLines(
-    in text: String,
+ 
+
+}
+
+private struct RangeBoundary {
+  let index: String.Index
+  let lines: [Substring]
+  let requiresTruncation: Bool
+}
+
+extension RangeBoundary {
+  static func make(
     for part: RangeBoundaryPart,
-    contextLength: Int
-  ) -> [Substring] {
-
-    /// before/prefx
-    /// - lowerBound
-    /// - offset by *minus* contextLength
-    /// - limited by startIndex
-    /// - fall back to startIndex
-    /// - above..<lowerbound
-
-    /// after/suffix
-    /// - upperBound
-    /// - offset by  contextLength
-    /// - limited by endIndex
-    /// - fall back to endIndex
-    /// - upperbound..<above
-
-    let targetIndex =
-      text.index(
-        self[keyPath: part.boundPath],
-        offsetBy: part.calculateOffset(contextLength),
-        limitedBy: text.startIndex
-      ) ?? text[keyPath: part.indexPath]
-
-    let snippet = text[targetIndex..<lowerBound]
-    let lines = String(snippet).lines().joined("\n| ")
+    range: StringRange,
+    in text: String,
+    contextLength: Int,
+  ) -> RangeBoundary {
+    let targetIndex = range.targetIndex(
+      in: text,
+      for: part,
+      contextLength: contextLength
+    )
+    return RangeBoundary(
+      index: targetIndex,
+      lines: range.getLines(in: text, for: part, contextLength: contextLength),
+      requiresTruncation: part.requiresTruncation(for: targetIndex, in: text)
+    )
   }
 
+}
+
+extension Range where Bound == String.Index {
+  
+  /// `separator` is what the leading 'wall' or margin should
+  /// look like for each line
+  fileprivate func getLines(
+    in text: String,
+    for part: RangeBoundaryPart,
+    contextLength: Int,
+  ) -> [Substring] {
+    
+    let targetIndex = targetIndex(
+      in: text,
+      for: part,
+      contextLength: contextLength
+    )
+    let range = part.makeRange(from: targetIndex, in: self)
+    let snippet = text[range]
+    let lines = String(snippet).substringLines()
+    return lines
+  }
+  
+  fileprivate func targetIndex(
+    in text: String,
+    for part: RangeBoundaryPart,
+    contextLength: Int,
+  ) -> String.Index {
+    text.index(
+      self[keyPath: part.boundPath],
+      offsetBy: part.calculateOffset(contextLength),
+      limitedBy: text.startIndex
+    ) ?? text[keyPath: part.indexPath]
+  }
 }
 
 private enum RangeBoundaryPart {
@@ -105,18 +152,37 @@ extension RangeBoundaryPart {
       case .suffix: \.upperBound
     }
   }
-  
+
   var indexPath: KeyPath<String, String.Index> {
     switch self {
       case .prefix: \.startIndex
       case .suffix: \.endIndex
     }
   }
-  
+
   func calculateOffset(_ offset: Int) -> Int {
     switch self {
       case .prefix: offset * -1
       case .suffix: offset
+    }
+  }
+  func makeRange(
+    from index: StringRange.Bound,
+    in range: StringRange
+  ) -> StringRange {
+    switch self {
+      case .prefix: index..<range.lowerBound
+      case .suffix: range.upperBound..<index
+    }
+  }
+
+  func requiresTruncation(
+    for index: String.Index,
+    in text: String,
+  ) -> Bool {
+    switch self {
+      case .prefix: index > text.startIndex
+      case .suffix: index < text.endIndex
     }
   }
 }
