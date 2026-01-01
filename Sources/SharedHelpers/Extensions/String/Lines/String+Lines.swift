@@ -60,12 +60,14 @@ extension String {
     }
   }
 
+  /// Returns an empty string if `self` is empty
   public var firstLine: String {
-    let firstSubstring = self.split(separator: "\n").first ?? ""
-    return String(firstSubstring)
+    let first = split(separator: "\n").first ?? ""
+    return String(first)
   }
 
-  /// Adds a new line to the end of the current String, unless already present
+  /// Appends a newline character (`\n`) to the end of the string if it does
+  /// not already end with one. Otherwise returns the original string unchanged.
   public var addingNewLine: String {
     guard self.last != "\n" else {
       return self
@@ -96,16 +98,19 @@ extension String {
     return longestLine
   }
 
-  public func indentingEachLine(
+  public func linesIndented(
     level: Int = 1,
-    indentString: String = "\t"
+    using indentString: String = "\t"
   ) -> String {
     let indent = String(repeating: indentString, count: level)
-    let result = self.substringLines()
-      .map { indent + $0 }
-      .joined(separator: "\n")
+    let indentedLines = self.substringLines().map { indent + $0 }
+    return indentedLines.joined("\n")
+  }
 
-    return result
+  public func linesJoined(
+    _ separator: String = "\t"
+  ) -> String {
+    self.substringLines().map { String($0) }.joined(separator)
   }
 
   public func insertingLineBreak(every characters: Int) -> String {
@@ -125,7 +130,7 @@ extension String {
       currentIndex = nextIndex
     }
 
-    return lines.joined(separator: "\n")
+    return lines.joined("\n")
   }
 
 }
