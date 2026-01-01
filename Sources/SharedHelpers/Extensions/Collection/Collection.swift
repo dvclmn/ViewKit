@@ -5,32 +5,7 @@
 //  Created by Dave Coleman on 17/12/2024.
 //
 
-extension MutableCollection {
-  
-  public subscript(safe index: Index) -> Element? {
-    get { indices.contains(index) ? self[index] : nil }
-    set {
-      guard let newValue, indices.contains(index) else { return }
-      self[index] = newValue
-    }
-  }
-}
-
 extension Collection {
-
-  public subscript(safe index: Index) -> Element? {
-    indices.contains(index) ? self[index] : nil
-  }
-
-  public func hasIndex(_ offset: Int) -> Bool {
-    let startIndex = self.startIndex
-    let endIndex = self.endIndex
-    guard let index = self.index(startIndex, offsetBy: offset, limitedBy: endIndex) else {
-      return false
-    }
-    return index < endIndex
-  }
-
   public var toArray: [Element] {
     return Array(self)
   }
@@ -60,13 +35,13 @@ extension Collection where Index == Int {
     }
     return (prevIdx + count) % count
   }
-  
-//  func nextValidIndex(after index: Int, in collection: some Collection) -> Int? {
-//    
-//  }
-//  func previousValidIndex(before index: Int, in collection: some Collection) -> Int? {
-//    
-//  }
+
+  //  func nextValidIndex(after index: Int, in collection: some Collection) -> Int? {
+  //
+  //  }
+  //  func previousValidIndex(before index: Int, in collection: some Collection) -> Int? {
+  //
+  //  }
 
 }
 
@@ -86,7 +61,7 @@ extension Collection where Element: Hashable {
     else { return false }
     return firstResultID == firstSelected
   }
-  
+
   public func isOnlyElementSelected(
     _ element: Element,
     in selection: Set<Element>

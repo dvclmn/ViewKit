@@ -79,7 +79,7 @@ extension NSRange {
 /// ```
 extension Range where Bound == String.Index {
 
-  public func withPreview(
+  public func debugPreview(
     in text: String,
     contextLength: Int = 30,
     highlight: (String) -> String = { "░\($0)░" }

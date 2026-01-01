@@ -19,12 +19,9 @@ extension NSTextAttributes {
     return names + "\n"
   }
 
-  public mutating func setStrike() {
-
-  }
 }
 
-public struct TextDecoration {
+public struct TextDecoration: Sendable, Hashable {
   let colour: NSColor
   let style: NSUnderlineStyle
 
@@ -35,7 +32,26 @@ public struct TextDecoration {
 }
 
 extension TextDecoration {
-  public func getAttributes(for kind: Kind) -> NSTextAttributes {
+  
+  public static let `default`: TextDecoration = .init(colour: .red, style: .single)
+  //  public func setTextDecoration(
+  //    _ kind: TextDecoration.Kind,
+  ////    decoration: TextDecoration
+  //    attrs: inout NSTextAttributes
+  //  ) {
+  //    setTextDecoration(kind, colour: decoration.colour, style: decoration.style)
+  //  }
+
+  public func setTextDecoration(
+    _ kind: TextDecoration.Kind,
+    attrs: inout NSTextAttributes
+  ) {
+    //    let decoration = TextDecoration(colour: colour, style: style)
+    let attr = getAttributes(for: kind)
+    attrs.merge(attr, uniquingKeysWith: { _, new in new })
+  }
+
+  private func getAttributes(for kind: Kind) -> NSTextAttributes {
     switch kind {
       case .strikethrough:
         [
