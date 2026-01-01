@@ -7,18 +7,23 @@
 
 extension DisplayBlock {
 
-  func createIndented(for indented: Indented) -> StyledString {
+  func createIndented(for indented: Indented) -> String? {
+//  func createIndented(for indented: Indented) -> StyledString {
+    
+    guard !indented.content.isEmpty else { return nil }
+    let content = indented.content.compactMap(\.toString)
+    
     /// Convert all content to styled strings first
-    let convertedContent = indented.content.map { $0.toStyledString }
-    let indentedElements = indentedElements(content: convertedContent)
+//    let convertedContent = indented.content.map { $0.toStyledString }
+    let indentedElements = indentedElements(content: content)
 
     /// Join elements, making sure to indent between
-    guard !indentedElements.isEmpty else {
-      return StyledString("$", with: .highlighter)
-    }
+//    guard !indentedElements.isEmpty else {
+//      return StyledString("$", with: .highlighter)
+//    }
 
-    let result = indentedElements.reduce(into: StyledString("")) { partial, item in
-      partial += StyledString("\n") + item
+    let result = indentedElements.reduce(into: "") { partial, item in
+      partial += "\n" + item
     }
 
     /// Add title if present
@@ -29,18 +34,21 @@ extension DisplayBlock {
     return result
   }
 
-  func indentedElements(
-    content: [StyledString],
+  private func indentedElements(
+    content: [String],
+//    content: [StyledString],
     indent: String = "  ",
     isLastElement: Bool = false
-  ) -> [StyledString] {
+  ) -> [String] {
 
-    var result: [StyledString] = []
+    var result: [String] = []
+//    var result: [StyledString] = []
 
     for (index, element) in content.enumerated() {
 //      let isOnlyElement = content.count == 1 && index == 0
       let isLast = index == content.count - 1
-      let lines = element.splitByNewlines()
+      let lines = element.lines()
+//      let lines = element.splitByNewlines()
 
       /// Choose the appropriate prefix character
       let prefixChar: String
@@ -50,23 +58,38 @@ extension DisplayBlock {
         prefixChar = isLast ? "└" : "├"
       }
 
-      /// Process each line
       for (lineIndex, line) in lines.enumerated() {
-        if lineIndex == 0 {
-          /// First line of element
-          let prefix = StyledString(prefixChar + " ", with: .blackOnGreen)
-          result.append(prefix + line)
-        } else {
-          /// Subsequent lines - use vertical line or space for continuation
-          let continuationChar = isLast ? " " : "│"
-          let prefix = StyledString(continuationChar + indent, with: .blackOnGreen)
-          result.append(prefix + line)
-        }
+        processLine(
+          line,
+          at: lineIndex,
+          prefixChar: prefixChar,
+          result: &result
+        )
       }
+
     }
 
     return result
   }
+  
+  private func processLine(
+    _ line: String,
+    at index: Int,
+    prefixChar: String,
+    result: inout [String]
+  ) {
+      if index == 0 {
+        /// First line of element
+        let prefix = prefixChar + " "
+        result.append(prefix + line)
+      } else {
+        /// Subsequent lines - use vertical line or space for continuation
+        let continuationChar = isLast ? " " : "│"
+        let prefix = StyledString(continuationChar + indent, with: .blackOnGreen)
+        result.append(prefix + line)
+      }
+    }
+  
 
   //  func indentedElements(
   ////    _ indent: String,

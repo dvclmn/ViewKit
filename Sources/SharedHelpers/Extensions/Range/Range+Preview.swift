@@ -26,8 +26,8 @@ extension Range where Bound == String.Index {
 
     let beforeIndex =
       text.index(
-        upperBound,
-        offsetBy: contextLength,
+        lowerBound,
+        offsetBy: -contextLength,
         limitedBy: text.startIndex
       ) ?? text.startIndex
 
@@ -37,12 +37,12 @@ extension Range where Bound == String.Index {
 
     let afterIndex =
       text.index(
-        lowerBound,
-        offsetBy: -contextLength,
+        upperBound,
+        offsetBy: contextLength,
         limitedBy: text.endIndex
       ) ?? text.endIndex
 
-    let after = text[afterIndex..<lowerBound]
+    let after = text[upperBound..<afterIndex]
     let afterLines = String(after).lines().joined(joinSeparator)
     let hasTrailingTruncation = afterIndex < text.endIndex
 

@@ -140,39 +140,39 @@ extension Array where Element == StyledString {
 //  }
 //}
 
-extension StyledString {
-  func splitByNewlines() -> [StyledString] {
-    let string = self.plainString
-    let lines = string.substringLines()
-
-    guard lines.count > 1 else {
-      return [self]
-    }
-
-    var result: [StyledString] = []
-    var currentIndex = self.styledString.startIndex
-
-    for line in lines {
-      let lineLength = line.count
-
-      guard lineLength > 0 else {
-        result.append(StyledString("?", with: .blackOnOrange))
-        continue
-      }
-
-      let endIndex = self.styledString.index(currentIndex, offsetByCharacters: lineLength)
-      let lineAttributed = AttributedString(self.styledString[currentIndex..<endIndex])
-      result.append(StyledString(lineAttributed))
-
-      /// Move past the newline character if there is one
-      if endIndex < self.styledString.endIndex {
-        currentIndex = self.styledString.index(endIndex, offsetByCharacters: 1)
-      }
-    }
-
-    return result
-  }
-}
+//extension StyledString {
+//  func splitByNewlines() -> [StyledString] {
+//    let string = self.plainString
+//    let lines = string.substringLines()
+//
+//    guard lines.count > 1 else {
+//      return [self]
+//    }
+//
+//    var result: [StyledString] = []
+//    var currentIndex = self.styledString.startIndex
+//
+//    for line in lines {
+//      let lineLength = line.count
+//
+//      guard lineLength > 0 else {
+//        result.append(StyledString("?", with: .blackOnOrange))
+//        continue
+//      }
+//
+//      let endIndex = self.styledString.index(currentIndex, offsetByCharacters: lineLength)
+//      let lineAttributed = AttributedString(self.styledString[currentIndex..<endIndex])
+//      result.append(StyledString(lineAttributed))
+//
+//      /// Move past the newline character if there is one
+//      if endIndex < self.styledString.endIndex {
+//        currentIndex = self.styledString.index(endIndex, offsetByCharacters: 1)
+//      }
+//    }
+//
+//    return result
+//  }
+//}
 
 extension StyledString: CustomStringConvertible {
   public var description: String { plainString }
