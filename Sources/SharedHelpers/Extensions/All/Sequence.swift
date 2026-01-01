@@ -24,7 +24,20 @@ extension Sequence where Element: Hashable {
   }
 }
 
+/// Example usage:
+/// `let uniqueSyntaxes = runs.map(\.syntax).uniquedPreservingOrder()`
+extension Sequence where Element: Equatable {
+  public func uniquedPreservingOrder() -> [Element] {
+    var seen: [Element] = []
+    for element in self where !seen.contains(element) {
+      seen.append(element)
+    }
+    return seen
+  }
+}
+
 extension Sequence {
+
   public func summarise(
     key: PartialKeyPath<Element>,
     //    key: KeyPath<Element, T>,

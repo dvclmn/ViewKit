@@ -30,6 +30,7 @@ extension Array where Element == String {
     result[0] = element + "\(result[0])"
     return result
   }
+  
   public func appendToLastLine(_ element: Element) -> [Element] {
     var result: [Element] = self
     result[result.endIndex - 1] = "\(result[result.endIndex - 1])\(element)"
