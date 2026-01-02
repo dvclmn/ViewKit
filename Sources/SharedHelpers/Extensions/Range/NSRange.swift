@@ -10,7 +10,9 @@ import Foundation
 extension NSRange {
   public func debugPreview(
     in text: String,
-    contextLength: Int = 30,
+    maxRangePreviewLength: Int? = nil,
+    maxContextLength: Int = 30,
+    indentCharacter: Character = "│",
     highlight: (String) -> String = { "░\($0)░" }
   ) -> String {
     guard let stringRange = toStringRange(in: text) else {
@@ -18,28 +20,30 @@ extension NSRange {
     }
     return stringRange.debugPreview(
       in: text,
-      contextLength: contextLength,
+      maxRangePreviewLength: maxRangePreviewLength,
+      maxContextLength: maxContextLength,
+      indentCharacter: indentCharacter,
       highlight: highlight
     )
   }
-  
+
   public func toStringRange(in text: String) -> Range<String.Index>? {
     Range(self, in: text)
   }
-  
+
   public var info: String {
     "NSRange(location: \(location), length: \(length))"
   }
-  
+
   public static let zero = NSRange(location: 0, length: 0)
   public static let notFound = NSRange(location: NSNotFound, length: 0)
-  
+
   public var debugDescription: String {
     "NSRange(location: \(location), length: \(length))"
   }
-  
+
   public var max: Int { NSMaxRange(self) }
-  
+
   /// Returns an NSRange that will not exceed a limit
   ///
   /// This functions ensures that the resulting range
@@ -48,11 +52,11 @@ extension NSRange {
   /// have zero length.
   public func clamped(to limit: Int) -> NSRange {
     if location == NSNotFound { return self }
-    
+
     let start = Swift.min(location, limit)
     let end = Swift.min(max, limit)
-    
+
     return NSRange(start..<end)
   }
-  
+
 }

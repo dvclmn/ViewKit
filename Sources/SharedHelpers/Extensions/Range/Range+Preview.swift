@@ -12,7 +12,7 @@ typealias StringRange = Range<String.Index>
 extension Range where Bound == String.Index {
   public func debugPreview(
     in text: String,
-    maxRangePreviewLength: Int? = 40,
+    maxRangePreviewLength: Int? = nil,
     maxContextLength: Int = 30,
     indentCharacter: Character = "│",
     highlight: (String) -> String = { "░\($0)░" }
@@ -45,36 +45,47 @@ extension Range where Bound == String.Index {
     let after = String(text[upperBound..<afterIndex])
     let hasTrailingTruncation = afterIndex < text.endIndex
 
-    /// Range preview
     let middle = String(text[self])
 
-    let joinSeparator = "\n\(indentCharacter) "
-    let trunc = "[…]"
+    /// Range preview
+    let middlePreview: String
+    if let maxRangePreviewLength {
+      middlePreview = middle.truncate(to: maxRangePreviewLength, style: .middle)
+    } else {
+      middlePreview = middle
+    }
 
+    let trunc = "[…]"
+    let truncLeading: String? = hasLeadingTruncation ? trunc : nil
+    let truncTrailing: String? = hasTrailingTruncation ? trunc : nil
+
+    /// This is the non-truncated character count.
+    /// I may consider adding this note to the output.
     let countLabel = pluralise(
       "character",
       count: middle.count,
       countStrategy: .showCount(evenForSingle: true)
     )
 
-    let truncLeading: String? = hasLeadingTruncation ? trunc : nil
-    let truncTrailing: String? = hasTrailingTruncation ? trunc : nil
+    /// Adds a new line for pleasing text layout
+    let emptyLine = ""
 
-    /// This looks odd, but because the final join is adding the
-    /// neccessary line breaks and indent characters, we only
-    /// need a space to add a new line.
-    let lineBreak = " "
-
-    let mainContent = [truncLeading, before, highlight(String(middle)), after, truncTrailing].joinedCompact()
+    let mainContent = [
+      truncLeading,
+      before,
+      highlight(String(middlePreview)),
+      after,
+      truncTrailing,
+    ].joinedCompact()
 
     let lines = [
       "String: \"\(middle)\" (\(countLabel))",
-      lineBreak,
+      emptyLine,
       mainContent,
-      lineBreak,
+      emptyLine,
     ]
 
-    return lines.joined(joinSeparator)
+    return lines.joined("\n\(indentCharacter) ")
   }
 }
 
@@ -147,48 +158,48 @@ extension Range where Bound == String.Index {
 //  }
 //}
 
-private enum RangeBoundaryPart {
-  case prefix
-  case suffix
-}
-extension RangeBoundaryPart {
-  //  var boundPath: KeyPath<StringRange, StringRange.Bound> {
-  //    switch self {
-  //      case .prefix: \.lowerBound
-  //      case .suffix: \.upperBound
-  //    }
-  //  }
-  //
-  //  var indexPath: KeyPath<String, String.Index> {
-  //    switch self {
-  //      case .prefix: \.startIndex
-  //      case .suffix: \.endIndex
-  //    }
-  //  }
-
-  func calculateOffset(_ offset: Int) -> Int {
-    switch self {
-      case .prefix: offset * -1
-      case .suffix: offset
-    }
-  }
-  func makeRange(
-    from index: StringRange.Bound,
-    in range: StringRange
-  ) -> StringRange {
-    switch self {
-      case .prefix: index..<range.lowerBound
-      case .suffix: range.upperBound..<index
-    }
-  }
-
-  func requiresTruncation(
-    for index: String.Index,
-    in text: String,
-  ) -> Bool {
-    switch self {
-      case .prefix: index > text.startIndex
-      case .suffix: index < text.endIndex
-    }
-  }
-}
+//private enum RangeBoundaryPart {
+//  case prefix
+//  case suffix
+//}
+//extension RangeBoundaryPart {
+//  //  var boundPath: KeyPath<StringRange, StringRange.Bound> {
+//  //    switch self {
+//  //      case .prefix: \.lowerBound
+//  //      case .suffix: \.upperBound
+//  //    }
+//  //  }
+//  //
+//  //  var indexPath: KeyPath<String, String.Index> {
+//  //    switch self {
+//  //      case .prefix: \.startIndex
+//  //      case .suffix: \.endIndex
+//  //    }
+//  //  }
+//
+//  func calculateOffset(_ offset: Int) -> Int {
+//    switch self {
+//      case .prefix: offset * -1
+//      case .suffix: offset
+//    }
+//  }
+//  func makeRange(
+//    from index: StringRange.Bound,
+//    in range: StringRange
+//  ) -> StringRange {
+//    switch self {
+//      case .prefix: index..<range.lowerBound
+//      case .suffix: range.upperBound..<index
+//    }
+//  }
+//
+//  func requiresTruncation(
+//    for index: String.Index,
+//    in text: String,
+//  ) -> Bool {
+//    switch self {
+//      case .prefix: index > text.startIndex
+//      case .suffix: index < text.endIndex
+//    }
+//  }
+//}
