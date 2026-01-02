@@ -12,6 +12,7 @@ typealias StringRange = Range<String.Index>
 extension Range where Bound == String.Index {
   public func debugPreview(
     in text: String,
+    captureName: String? = nil,
     maxRangePreviewLength: Int? = nil,
     maxContextLength: Int = 30,
     indentCharacter: Character = "│",
@@ -45,15 +46,27 @@ extension Range where Bound == String.Index {
     let after = String(text[upperBound..<afterIndex])
     let hasTrailingTruncation = afterIndex < text.endIndex
 
-    let middle = String(text[self])
 
     /// Range preview
-    let middlePreview: String
+    let rangeRawText = String(text[self])
+    let rangeCharacterCount = rangeRawText.count
+    
+    var rangePreview: String
     if let maxRangePreviewLength {
-      middlePreview = middle.truncate(to: maxRangePreviewLength, style: .middle)
+      rangePreview = rangeRawText.truncate(to: maxRangePreviewLength, style: .middle)
     } else {
-      middlePreview = middle
+      rangePreview = rangeRawText
     }
+    
+    /// Range Capture name
+    let captureNameText: String
+    if let captureName {
+      captureNameText = "<\(captureName)>"
+    } else {
+      captureNameText = ""
+    }
+    
+    let highlightedRange = highlight(captureNameText + rangePreview)
 
     let trunc = "[…]"
     let truncLeading: String? = hasLeadingTruncation ? trunc : nil
@@ -63,23 +76,24 @@ extension Range where Bound == String.Index {
     /// I may consider adding this note to the output.
     let countLabel = pluralise(
       "character",
-      count: middle.count,
+      count: rangeCharacterCount,
       countStrategy: .showCount(evenForSingle: true)
     )
 
     /// Adds a new line for pleasing text layout
     let emptyLine = ""
 
+    
     let mainContent = [
       truncLeading,
       before,
-      highlight(String(middlePreview)),
+      highlightedRange,
       after,
       truncTrailing,
     ].joinedCompact()
 
     let lines = [
-      "String: \"\(middle)\" (\(countLabel))",
+      "String: \"\(rangeRawText)\" (\(countLabel))",
       emptyLine,
       mainContent,
       emptyLine,
