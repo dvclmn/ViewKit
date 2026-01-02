@@ -20,56 +20,62 @@ extension Range where Bound == String.Index {
 
     guard !text.isEmpty else { return "Text is empty." }
 
-    let joinSeparator = "\n\(indentCharacter) "
-    let trunc = "[…]"
+    /// Three main components;
+    /// - Context (text before the provided range)
+    /// - Range preview
+    /// - Context (text after range)
 
+    /// Text before
     let beforeIndex =
       text.index(
         lowerBound,
         offsetBy: -maxContextLength,
         limitedBy: text.startIndex
       ) ?? text.startIndex
-
     let before = String(text[beforeIndex..<lowerBound])
     let hasLeadingTruncation = beforeIndex > text.startIndex
 
+    /// Text after
     let afterIndex =
       text.index(
         upperBound,
         offsetBy: maxContextLength,
         limitedBy: text.endIndex
       ) ?? text.endIndex
-
     let after = String(text[upperBound..<afterIndex])
     let hasTrailingTruncation = afterIndex < text.endIndex
 
-    let middle = text[self]
+    /// Range preview
+    let middle = String(text[self])
 
-    /// Put it all together
+    let joinSeparator = "\n\(indentCharacter) "
+    let trunc = "[…]"
 
-    let charPlural = pluralise(
-      "character", count: middle.count, countStrategy: .showCount(evenForSingle: true))
+    let countLabel = pluralise(
+      "character",
+      count: middle.count,
+      countStrategy: .showCount(evenForSingle: true)
+    )
 
-    let truncLeading = hasLeadingTruncation ? trunc : nil
-    let truncTrailing = hasTrailingTruncation ? trunc : nil
-    
+    let truncLeading: String? = hasLeadingTruncation ? trunc : nil
+    let truncTrailing: String? = hasTrailingTruncation ? trunc : nil
+
     /// This looks odd, but because the final join is adding the
     /// neccessary line breaks and indent characters, we only
     /// need a space to add a new line.
     let lineBreak = " "
-    let result: [String?] = [
-      "String: \"\(middle)\" (\(charPlural))",
+
+    let mainContent = [truncLeading, before, highlight(String(middle)), after, truncTrailing].joinedCompact()
+
+    let lines = [
+      "String: \"\(middle)\" (\(countLabel))",
       lineBreak,
-      
-      /// Joins these together inline, to keep on the one line
-      [truncLeading, before, highlight(String(middle)), after, truncTrailing].joinedCompact(),
+      mainContent,
       lineBreak,
     ]
 
-    return result.compactMap(\.self).joined(joinSeparator)
-
+    return lines.joined(joinSeparator)
   }
-
 }
 
 //private struct RangeBoundary {
