@@ -13,15 +13,13 @@ extension Range where Bound == String.Index {
   public func debugPreview(
     in text: String,
     contextLength: Int = 30,
-    indentCharacter: Character = "|",
+    indentCharacter: Character = "│",
     highlight: (String) -> String = { "░\($0)░" }
   ) -> String {
 
     guard !text.isEmpty else { return "" }
 
-    let indent = String(indentCharacter) + " "
-    let newLine = "\n\(indentCharacter)\n"
-    let joinSeparator = "\n\(indent)"
+    let joinSeparator = "\n\(indentCharacter) "
     let trunc = "[…]"
 
     let beforeIndex =
@@ -31,8 +29,8 @@ extension Range where Bound == String.Index {
         limitedBy: text.startIndex
       ) ?? text.startIndex
 
-    let before = text[beforeIndex..<lowerBound]
-    let beforeLines = String(before).lines().joined(joinSeparator)
+    let before = String(text[beforeIndex..<lowerBound])
+    //    let beforeLines = String(before).lines().joined(joinSeparator)
     let hasLeadingTruncation = beforeIndex > text.startIndex
 
     let afterIndex =
@@ -42,29 +40,35 @@ extension Range where Bound == String.Index {
         limitedBy: text.endIndex
       ) ?? text.endIndex
 
-    let after = text[upperBound..<afterIndex]
-    let afterLines = String(after).lines().joined(joinSeparator)
+    let after = String(text[upperBound..<afterIndex])
+    //    let afterLines = String(after).lines().joined(joinSeparator)
     let hasTrailingTruncation = afterIndex < text.endIndex
 
     let middle = text[self]
 
     /// Put it all together
 
-    let result: [String?] = [
+    let charPlural = pluralise(
+      "character", count: middle.count, countStrategy: .showCount(evenForSingle: true))
 
-      "Range characters: \(middle.count)  |  String: \"\(middle)\"\n|\n",
-
-      hasLeadingTruncation ? indent + trunc : nil,
-      beforeLines,
-      highlight(String(middle)),
-      afterLines,
-      hasTrailingTruncation ? trunc : nil,
-      newLine,
-    ]
+    let truncLeading = hasLeadingTruncation ? trunc : nil
+    let truncTrailing = hasTrailingTruncation ? trunc : nil
     
-    return result.compactMap(\.self).joined("\n")
+    /// This looks odd, but because the final join is adding the
+    /// neccessary line breaks and indent characters, we only
+    /// need a space to add a new line.
+    let lineBreak = " "
+    let result: [String?] = [
+      "String: \"\(middle)\" (\(charPlural))",
+      lineBreak,
+      
+      /// Joins these together inline, to keep on the one line
+      [truncLeading, before, highlight(String(middle)), after, truncTrailing].joinedCompact(),
+      lineBreak,
+    ]
 
-  
+    return result.compactMap(\.self).joined(joinSeparator)
+
   }
 
 }

@@ -47,7 +47,7 @@ extension NamedAction {
   /// - Returns: Text label
   public func actionName(
     count: Int,
-    countStrategy: CountStrategy = .showCount(always: false)
+    countStrategy: CountStrategy = .showCount(evenForSingle: false)
   ) -> QuickLabel {
 //  ) -> String {
     let noun = Self.itemName

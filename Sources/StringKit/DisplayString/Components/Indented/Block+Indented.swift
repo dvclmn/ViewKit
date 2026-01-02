@@ -13,13 +13,12 @@ private struct IndentedLineBuilder {
     for (index, element) in elements.enumerated() {
       let isLast = index == elements.count - 1
       let lines = element.lines()
-      let prefixChar = (index == 0) ? (isLast ? "└" : "├") : (isLast ? "└" : "├")
+      let prefixChar = (index == 0) ? (isLast ? "└-" : "├-") : (isLast ? "└-" : "├-")
       for (lineIndex, line) in lines.enumerated() {
         if lineIndex == 0 {
           result.append(prefixChar + " " + line)
         } else {
           let continuationChar = isLast ? " " : "│"
-          // Indent color styling is preserved if you wish:
           result.append(continuationChar + indent + line)
         }
       }

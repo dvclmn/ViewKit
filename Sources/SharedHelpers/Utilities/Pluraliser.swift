@@ -14,7 +14,7 @@ import Foundation
 /// `let pluralizeWord = { $0 == 1 ? $1 : "\($1)s" }`
 
 public enum CountStrategy {
-  case showCount(always: Bool = false) // always: show "1 Game" vs "Game"
+  case showCount(evenForSingle: Bool = false) // always: show "1 Game" vs "Game"
   case hideCount
 }
 
