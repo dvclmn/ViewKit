@@ -12,12 +12,13 @@ typealias StringRange = Range<String.Index>
 extension Range where Bound == String.Index {
   public func debugPreview(
     in text: String,
-    contextLength: Int = 30,
+    maxRangePreviewLength: Int? = 40,
+    maxContextLength: Int = 30,
     indentCharacter: Character = "│",
     highlight: (String) -> String = { "░\($0)░" }
   ) -> String {
 
-    guard !text.isEmpty else { return "" }
+    guard !text.isEmpty else { return "Text is empty." }
 
     let joinSeparator = "\n\(indentCharacter) "
     let trunc = "[…]"
@@ -25,23 +26,21 @@ extension Range where Bound == String.Index {
     let beforeIndex =
       text.index(
         lowerBound,
-        offsetBy: -contextLength,
+        offsetBy: -maxContextLength,
         limitedBy: text.startIndex
       ) ?? text.startIndex
 
     let before = String(text[beforeIndex..<lowerBound])
-    //    let beforeLines = String(before).lines().joined(joinSeparator)
     let hasLeadingTruncation = beforeIndex > text.startIndex
 
     let afterIndex =
       text.index(
         upperBound,
-        offsetBy: contextLength,
+        offsetBy: maxContextLength,
         limitedBy: text.endIndex
       ) ?? text.endIndex
 
     let after = String(text[upperBound..<afterIndex])
-    //    let afterLines = String(after).lines().joined(joinSeparator)
     let hasTrailingTruncation = afterIndex < text.endIndex
 
     let middle = text[self]
