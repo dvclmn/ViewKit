@@ -11,13 +11,13 @@ extension GridShaped {
   public mutating func set(_ value: Cell.Value, at position: GridPosition) {
     expandToInclude(position: position, blank: Cell.createBlank())
     //    expandToInclude(position: position, blank: GridCell.createBlank(at: position))
-    self[at: position] = Cell(from: value)
+    self[at: position] = Cell(value)
     //    self[at: position] = GridCell(character: char, position: position)
   }
   
   public mutating func clearCells(at positions: [GridPosition]) {
     for position in positions {
-      self[at: position]?.character = " "
+      self[at: position] = nil
     }
   }
   

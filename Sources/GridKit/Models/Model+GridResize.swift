@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct GridResizeHelper {
+public struct GridResizeHelper<Grid: GridShaped> {
   let oldGeometry: GridGeometry
   let newSize: CGSize
   let boundaryPoint: GridBoundaryPoint
@@ -49,7 +49,7 @@ extension GridResizeHelper {
     return delta
   }
 
-  public func resize(_ artwork: inout GridMatrix) {
+  public func resize(_ artwork: inout Grid) {
     artwork.resize(by: resizeDelta, at: affectedEdges)
   }
 

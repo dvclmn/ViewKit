@@ -8,12 +8,6 @@
 import SwiftUI
 import CoreTools
 
-extension GridShaped {
-  public init(arrayLiteral elements: Self.Element...) {
-    self.init(elements)
-  }
-}
-
 // MARK: - Collection conformance
 extension GridShaped {
 

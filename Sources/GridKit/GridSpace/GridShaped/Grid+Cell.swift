@@ -7,15 +7,25 @@
 
 import Foundation
 
-public protocol GridCell: Identifiable {
-  associatedtype Value: Equatable
+//public protocol GridCell {
+//public protocol GridCell: Identifiable {
+//  associatedtype Value: Equatable
 
-  var value: Value { get set }
-  static func createBlank() -> Self
-  init(_ value: Value)
+//  var value: Value { get set }
+//  static func createBlank() -> Self
+//  init(_ value: Value)
+//}
+
+//public protocol GridCellInitialisable {
+//  associatedtype Value
+//}
+
+extension Character: GridCell {
+  public static func createBlank() -> Character {
+    Character("")
+  }
 }
-
-extension GridShaped where Cell.Value == Character {
+extension GridShaped where Cell == Character {
   public static func generateCells(from text: String) -> [Cell] {
     let dimensions = text.gridDimensions
     let lines = text.substringLines(subsequenceStrategy: .omitLastLineIfEmpty)
@@ -50,7 +60,7 @@ extension GridShaped where Cell.Value == Character {
     let rowsStrings = (0..<rowCount).map { rowIndex in
       (0..<columnCount).map { columnIndex in
         let position = GridPosition(row: rowIndex, column: columnIndex)
-        return String(self[at: position]?.value ?? " ")
+        return String(self[at: position] ?? " ")
       }.joined()
     }
     return rowsStrings.joinedLines()

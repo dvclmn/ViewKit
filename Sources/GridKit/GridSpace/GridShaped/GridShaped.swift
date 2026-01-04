@@ -34,6 +34,17 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element 
   ) -> Cells
 }
 
+public protocol GridCell: Equatable {
+//  static var blank: Self { get }
+  static func createBlank() -> Self
+}
+
+extension GridShaped {
+  public init(arrayLiteral elements: Self.Element...) {
+    self.init(elements)
+  }
+}
+
 extension GridShaped {
   public init(_ cells: Self.Cells) {
     self.init(cells: cells)
