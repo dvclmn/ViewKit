@@ -194,44 +194,44 @@ extension GridMatrix {
 }
 
 // MARK: - Metadata
-extension GridMatrix {
+//extension GridMatrix {
 
-  /// Get a specific row of text
-  func row(_ index: Int) -> String? {
-    guard index >= 0, index < rowCount else { return nil }
-    let row: [[GridCell]] = self.allRows
+//  /// Get a specific row of text
+//  func row(_ index: Int) -> String? {
+//    guard index >= 0, index < rowCount else { return nil }
+//    let row: [[GridCell]] = self.allRows
+//
+//    let rowCharacters = row[index].map(\.character)
+//    return String(rowCharacters)
+//  }
+//
+//  /// Get a specific column of text
+//  func column(_ index: Int) -> [Character] {
+//    guard index >= 0, index < columnCount else { return [] }
+//
+//    let column = self.column(index: index)
+//    let columnCharacters = column.map(\.character)
+//    return columnCharacters
+//
+//  }
+//
+//  public var dimensions: GridDimensions {
+//    GridDimensions(width: columnCount, height: rowCount)
+//  }
 
-    let rowCharacters = row[index].map(\.character)
-    return String(rowCharacters)
-  }
+//  public var cellCount: Int { cells.count }
+//  public var rowCount: Int { allRows.count }
+//  public var columnCount: Int { allColumns.count }
 
-  /// Get a specific column of text
-  func column(_ index: Int) -> [Character] {
-    guard index >= 0, index < columnCount else { return [] }
-
-    let column = self.column(index: index)
-    let columnCharacters = column.map(\.character)
-    return columnCharacters
-
-  }
-
-  public var dimensions: GridDimensions {
-    GridDimensions(width: columnCount, height: rowCount)
-  }
-
-  public var cellCount: Int { cells.count }
-  public var rowCount: Int { allRows.count }
-  public var columnCount: Int { allColumns.count }
-
-  public var textContent: String {
-    let rowsStrings = (0..<rows).map { rowIndex in
-      (0..<columns).map { columnIndex in
-        let position = GridPosition(row: rowIndex, column: columnIndex)
-        return String(self[at: position]?.character ?? " ")
-      }.joined()
-    }
-    return rowsStrings.joined(separator: "\n")
-  }
+//  public var textContent: String {
+//    let rowsStrings = (0..<rows).map { rowIndex in
+//      (0..<columns).map { columnIndex in
+//        let position = GridPosition(row: rowIndex, column: columnIndex)
+//        return String(self[at: position]?.character ?? " ")
+//      }.joined()
+//    }
+//    return rowsStrings.joined(separator: "\n")
+//  }
 
   /// Rewrites every cell’s `.position` to match its current matrix index.
 //  public mutating func reindexPositions() {
@@ -246,68 +246,57 @@ extension GridMatrix {
 
   // MARK: - Subscripts
   /// Get character at specific grid position
-  public subscript(at position: GridPosition) -> GridCell? {
-    get {
-      guard isValid(position: position) else { return nil }
-      return self[row: position.row, column: position.column]
-    }
-    set {
-      guard isValid(position: position), let value = newValue else { return }
-      self[row: position.row, column: position.column] = value
-    }
-  }
-  
-  public subscript(row row: Int, column column: Int) -> GridCell {
-    get {
-      cells[row * columns + column]
-    }
-    set {
-      cells[row * columns + column] = newValue
-    }
-  }
+//  public subscript(at position: GridPosition) -> GridCell? {
+//    get {
+//      guard isValid(position: position) else { return nil }
+//      return self[row: position.row, column: position.column]
+//    }
+//    set {
+//      guard isValid(position: position), let value = newValue else { return }
+//      self[row: position.row, column: position.column] = value
+//    }
+//  }
+//  
+//  public subscript(row row: Int, column column: Int) -> GridCell {
+//    get {
+//      cells[row * columns + column]
+//    }
+//    set {
+//      cells[row * columns + column] = newValue
+//    }
+//  }
 
 }
 
 // MARK: - Cell Access
-extension GridMatrix {
-
-  func cells(at positions: [GridPosition]) -> [GridCell] {
-    var cells: [GridCell] = []
-    for position in positions {
-      if let cell = self[at: position] {
-        cells.append(cell)
-      }
-    }
-    return cells
-  }
-
-  /// Get all positions containing a specific character
-  func positions(of character: Character) -> [GridPosition] {
-    var positions: [GridPosition] = []
-
-    let rows: [[GridCell]] = self.allRows
-    //    let columns: [[GridCell]] = self.content.allColumns
-    for (rowIndex, line) in rows.enumerated() {
-      for (columnIndex, char) in line.enumerated() where char.character == character {
-        positions.append(GridPosition(row: rowIndex, column: columnIndex))
-      }
-    }
-    return positions
-  }
-
-  /// Get all cells within specified bounds
-  func cells(in bounds: GridDimensions) -> [GridCell] {
-    var cells: [GridCell] = []
-    for row in 0..<bounds.height {
-      for column in 0..<bounds.width {
-        let position = GridPosition(row: row, column: column)
-        if let cell = self[at: position] {
-          cells.append(cell)
-        }
-      }
-    }
-    return cells
-  }
+//extension GridMatrix {
+//
+////  func cells(at positions: [GridPosition]) -> [GridCell] {
+////    var cells: [GridCell] = []
+////    for position in positions {
+////      if let cell = self[at: position] {
+////        cells.append(cell)
+////      }
+////    }
+////    return cells
+////  }
+//
+//  /// Get all positions containing a specific character
+//  func positions(of character: Character) -> [GridPosition] {
+//    var positions: [GridPosition] = []
+//
+//    let rows: [[GridCell]] = self.allRows
+//    //    let columns: [[GridCell]] = self.content.allColumns
+//    for (rowIndex, line) in rows.enumerated() {
+//      for (columnIndex, char) in line.enumerated() where char.character == character {
+//        positions.append(GridPosition(row: rowIndex, column: columnIndex))
+//      }
+//    }
+//    return positions
+//  }
+//
+//  /// Get all cells within specified bounds
+//
 
 //  public func isValid(position: GridPosition) -> Bool {
 //    position.row >= 0 && position.row < rows && position.column >= 0 && position.column < columns
@@ -340,55 +329,55 @@ extension GridMatrix {
 //    self.rows = requiredRows
 //  }
 
-  public var cellRange: Range<Int> {
-    return (0..<cells.count)
-  }
+//  public var cellRange: Range<Int> {
+//    return (0..<cells.count)
+//  }
 
-  public func column(index: Int) -> [GridCell] {
-    guard index >= 0 && index < columns else { return [] }
-    return stride(from: index, to: cells.count, by: columns).map { cells[$0] }
-  }
+//  public func column(index: Int) -> [GridCell] {
+//    guard index >= 0 && index < columns else { return [] }
+//    return stride(from: index, to: cells.count, by: columns).map { cells[$0] }
+//  }
 
-  public func row(index: Int) -> [GridCell] {
-    guard index >= 0 && index < rows else { return [] }
-    let start = index * columns
-    return Array(cells[start..<start + columns])
-  }
+//  public func row(index: Int) -> [GridCell] {
+//    guard index >= 0 && index < rows else { return [] }
+//    let start = index * columns
+//    return Array(cells[start..<start + columns])
+//  }
 
-  public var allRows: [[GridCell]] {
-    (0..<rows).map { row(index: $0) }
-  }
+//  public var allRows: [[GridCell]] {
+//    (0..<rows).map { row(index: $0) }
+//  }
 
-  public var allColumns: [[GridCell]] {
-    (0..<columns).map { column(index: $0) }
-  }
+//  public var allColumns: [[GridCell]] {
+//    (0..<columns).map { column(index: $0) }
+//  }
 
-  public func columnIndex(forCell index: Int) -> Int {
-    return index % columns
-  }
+//  public func columnIndex(forCell index: Int) -> Int {
+//    return index % columns
+//  }
+//
+//  public func rowIndex(forCell index: Int) -> Int {
+//    return index / rows
+//  }
+//}
 
-  public func rowIndex(forCell index: Int) -> Int {
-    return index / rows
-  }
-}
-
-extension GridMatrix: CustomStringConvertible {
-  public var description: String {
-    let result: String = """
-      /// Matrix of GridCells ///
-      Counts: Columns[\(self.columns)], Rows[\(self.rows)], Cells[\(self.cells.count)]
-      Content: \(cells)
-
-      """
-    return result
-  }
-
-}
-
-extension String {
-  static var blankArtwork: String {
-    let blankCharacter: String = " "
-    return String(repeating: "\(blankCharacter)\n", count: 6)
-
-  }
-}
+//extension GridMatrix: CustomStringConvertible {
+//  public var description: String {
+//    let result: String = """
+//      /// Matrix of GridCells ///
+//      Counts: Columns[\(self.columns)], Rows[\(self.rows)], Cells[\(self.cells.count)]
+//      Content: \(cells)
+//
+//      """
+//    return result
+//  }
+//
+//}
+//
+//extension String {
+//  static var blankArtwork: String {
+//    let blankCharacter: String = " "
+//    return String(repeating: "\(blankCharacter)\n", count: 6)
+//
+//  }
+//}

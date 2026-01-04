@@ -17,10 +17,12 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element 
   typealias Row = [Cell]
 
   var cells: Cells { get set }
+  var rows: Cells { get }
+  var columns: Cells { get }
 
   var rowCount: Int { get }
   var columnCount: Int { get }
-  
+
   init(cells: Cells)
   init(_ cells: Cells)
 
@@ -37,7 +39,6 @@ extension GridShaped {
     self.init(cells: cells)
   }
 }
-
 
 //public enum RowValidation<T: GridShaped> {
 //  case patch((T.Row, Int) -> T.Row)

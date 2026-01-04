@@ -8,17 +8,18 @@
 import Foundation
 
 public protocol GridCell: Identifiable {
-  associatedtype Value
+  associatedtype Value: Equatable
+
+  var value: Value { get set }
   static func createBlank() -> Self
   init(from value: Value)
 }
-
 
 extension GridShaped where Cell.Value == Character {
   public static func generateCells(from text: String) -> [Cell] {
     let dimensions = text.gridDimensions
     let lines = text.substringLines(subsequenceStrategy: .omitLastLineIfEmpty)
-    
+
     return lines.enumerated().flatMap {
       rowIndex,
       line in
@@ -29,30 +30,37 @@ extension GridShaped where Cell.Value == Character {
       )
     }
   }
-  
+
   private static func createRowCells(
     from line: Substring,
     rowIndex: Int,
     targetWidth: Int
   ) -> [Cell] {
-    let characterCells = line.enumerated().map { columnIndex, character in
-      Cell(from: character)
-    }
-    
+    let characterCells = line.map(Cell.init(from:))
+
     let paddingCells = (line.count..<targetWidth).map { colIndex in
       let position = GridPosition(row: rowIndex, column: colIndex)
       return Cell.createBlank()
     }
-    
+
     return characterCells + paddingCells
   }
-}
 
+  public var toText: String {
+    let rowsStrings = (0..<rowCount).map { rowIndex in
+      (0..<columnCount).map { columnIndex in
+        let position = GridPosition(row: rowIndex, column: columnIndex)
+        return String(self[at: position]?.value ?? " ")
+      }.joined()
+    }
+    return rowsStrings.joinedLines()
+  }
+}
 
 enum GridCellError: LocalizedError {
   case outOfBounds(index: Int)
   case indexOutOfRange(index: Int, count: Int)
-  
+
   var errorDescription: String? {
     switch self {
       case .outOfBounds(let index):
