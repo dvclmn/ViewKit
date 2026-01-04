@@ -6,7 +6,7 @@
 //
 
 import AppKit
-import CurveKit
+import VectorKit
 import CoreTools
 
 //import StringKit

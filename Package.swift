@@ -33,7 +33,7 @@ let package = Package(
     .library(name: "CanvasKit", targets: ["CanvasKit"]),
     .library(name: "ColourKit", targets: ["ColourKit"]),
     .library(name: "GridKit", targets: ["GridKit"]),
-    .library(name: "CurveKit", targets: ["CurveKit"]),
+    .library(name: "VectorKit", targets: ["VectorKit"]),
     .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
     .library(name: "StringKit", targets: ["StringKit"]),
     .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
@@ -94,7 +94,7 @@ let package = Package(
       name: "BaseUI",
       dependencies: [
         .module(.coreTools),
-        .module(.curveKit),
+        .module(.vectorKit),
         .module(.colourKit),
         .module(.layoutKit),
         .module(.graphicsKit),
@@ -131,7 +131,7 @@ let package = Package(
     ),
 
     .target(
-      name: "CurveKit",
+      name: "VectorKit",
       dependencies: [.module(.sharedHelpers)]
     ),
 
@@ -140,7 +140,7 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.layoutKit),
-        .module(.curveKit),
+        .module(.vectorKit),
       ]
     ),
 
@@ -242,7 +242,7 @@ enum BaseModule {
   case baseTypes
   case canvasKit
   case colourKit
-  case curveKit
+  case vectorKit
   case gestureKit
   case graphicsKit
   case gridKit
@@ -264,7 +264,7 @@ enum BaseModule {
       case .baseTypes: "BaseTypes"
       case .canvasKit: "CanvasKit"
       case .colourKit: "ColourKit"
-      case .curveKit: "CurveKit"
+      case .vectorKit: "VectorKit"
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
       case .gridKit: "GridKit"
