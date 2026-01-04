@@ -11,7 +11,7 @@ public enum DebugPoint {
   case none
   case point(Color = .orange)
   
-  var colourForPoint: Color? {
+  public var colourForPoint: Color? {
     switch self {
       case .point(let colour):
         return colour
@@ -25,7 +25,7 @@ public enum DebugTextPosition {
   case aboveOrigin
   case belowOrigin
   
-  var multiplierForYPosition: CGFloat {
+  public var multiplierForYPosition: CGFloat {
     switch self {
       case .aboveOrigin:
         return 1

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 @available(macOS 14.0, *)
 public struct PathDebugRenderer {

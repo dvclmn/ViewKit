@@ -13,6 +13,7 @@ import SharedHelpers
 /// 📣 Important: ASCII-based / original GridPosition emphatically did
 /// not allow negative values. Will need to evaluate impact of one
 /// approach or the other, and be careful about refactoring.
+///
 /// ```
 /// precondition(
 ///   row >= 0 && column >= 0,

@@ -7,6 +7,7 @@
 
 import AppKit
 import SharedHelpers
+import VectorKit
 
 /// Manages trackpad touches and maintains their history for velocity calculations
 class TrackpadTouchManager {

@@ -7,6 +7,7 @@
 
 /// For App projects, useful for single import of
 /// modules that are frequently used together.
+@_exported import Foundation
 @_exported import EnumMacros
 @_exported import BaseUI
 @_exported import BaseTypes

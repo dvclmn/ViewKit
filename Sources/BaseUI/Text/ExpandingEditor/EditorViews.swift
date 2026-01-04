@@ -25,6 +25,7 @@ extension Editor.Attributed {
 extension Editor {
   public struct PlainText: View {
     @Environment(\.textAlignment) private var textAlignment
+    @Environment(\.isDebugMode) private var isDebugMode
 
     @Binding var text: String
 

@@ -32,6 +32,10 @@ extension GridShaped {
   }
 }
 
+public protocol GridCell: Identifiable {
+  
+}
+
 //public enum RowValidation<T: GridShaped> {
 //  case patch((T.Row, Int) -> T.Row)
 //  case ignore
