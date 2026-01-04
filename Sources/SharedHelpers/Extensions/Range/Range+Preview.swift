@@ -66,7 +66,7 @@ extension Range where Bound == String.Index {
       captureNameText = ""
     }
     
-    let highlightedRange = highlight(captureNameText + rangePreview)
+    let highlightedRange = captureNameText + highlight(rangePreview)
 
     let trunc = "[…]"
     let truncLeading: String? = hasLeadingTruncation ? trunc : nil

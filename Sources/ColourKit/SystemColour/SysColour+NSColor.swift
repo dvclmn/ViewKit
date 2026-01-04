@@ -21,11 +21,12 @@ extension SystemColour {
   /// Convenience, assumes a colour space of `sRGB`
   /// Use ``toNSColor(using:)`` to select a different space
   public var toNSColor: NSColor? {
-    toNSColor(using: .sRGB)
+    toNSColorWithPossibleColorSpaceIDontKnow()
+//    toNSColor(using: .sRGB)
   }
 
-  public func toNSColor(
-    using colourSpace: NSColorSpace = .sRGB
+  public func toNSColorWithPossibleColorSpaceIDontKnow(
+//    using colourSpace: NSColorSpace = .deviceRGB
   ) -> NSColor? {
 
     let colour =
@@ -46,22 +47,24 @@ extension SystemColour {
         case .black: NSColor.black
         case .white: NSColor.white
         case .clear: NSColor.clear
-        case .primary: NSColor.labelColor
-        case .secondary: NSColor.secondaryLabelColor
+        case .primary: NSColor(.primary)
+        case .secondary: NSColor(.secondary)
+//        case .secondary: NSColor.labelColor.withAlphaComponent(0.8)
         case .tertiary: NSColor.tertiaryLabelColor
         case .quaternary: NSColor.quaternaryLabelColor
         case .quinary: NSColor.quinaryLabel
         case .accentColor: NSColor.controlAccentColor
         case .link: NSColor.linkColor
       }
-    guard let result = colour.usingColorSpace(colourSpace) else {
-      print(
-        "Couldn't resolve NSColor using colourspace \(colourSpace), for `SystemColour` \(self.name)"
-      )
-      return nil
-    }
+//    guard let result = colour.usingColorSpace(colourSpace) else {
+//      print(
+//        "Couldn't resolve NSColor using colourspace \(colourSpace), for `SystemColour` \(self.name)"
+//      )
+//      return nil
+//    }
     //    print("Successfully resolved NSColor for SystemColour.\(self.rawValue)")
-    return result
+    return colour
+//    return result
   }
 
   //  public var toNSColor: NSColor {

@@ -19,6 +19,16 @@ extension NSTextAttributes {
     return names + "\n"
   }
 
+  public mutating func setTextDecoration(
+    for kind: TextDecoration.Kind,
+    _ decoration: TextDecoration?,
+  ) {
+    guard let decoration else { return }
+    let decorationAttrs = decoration.getAttributes(for: kind)
+    merge(decorationAttrs, uniquingKeysWith: { _, new in new })
+
+  }
+
 }
 
 public struct TextDecoration: Sendable, Hashable {
@@ -32,26 +42,10 @@ public struct TextDecoration: Sendable, Hashable {
 }
 
 extension TextDecoration {
-  
+
   public static let `default`: TextDecoration = .init(colour: .red, style: .single)
-  //  public func setTextDecoration(
-  //    _ kind: TextDecoration.Kind,
-  ////    decoration: TextDecoration
-  //    attrs: inout NSTextAttributes
-  //  ) {
-  //    setTextDecoration(kind, colour: decoration.colour, style: decoration.style)
-  //  }
 
-  public func setTextDecoration(
-    _ kind: TextDecoration.Kind,
-    attrs: inout NSTextAttributes
-  ) {
-    //    let decoration = TextDecoration(colour: colour, style: style)
-    let attr = getAttributes(for: kind)
-    attrs.merge(attr, uniquingKeysWith: { _, new in new })
-  }
-
-  private func getAttributes(for kind: Kind) -> NSTextAttributes {
+  fileprivate func getAttributes(for kind: Kind) -> NSTextAttributes {
     switch kind {
       case .strikethrough:
         [

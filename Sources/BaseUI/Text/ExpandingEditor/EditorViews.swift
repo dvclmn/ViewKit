@@ -7,9 +7,9 @@
 
 import SwiftUI
 
+/// Editor namespace
 @available(macOS 14.0, *)
-public struct Editor<Content: View> {
-}
+public enum Editor<Content: View> {}
 
 @available(macOS 14.0, *)
 extension Editor.PlainText {

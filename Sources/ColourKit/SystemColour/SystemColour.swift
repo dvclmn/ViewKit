@@ -63,7 +63,7 @@ extension SystemColour {
 
 extension SystemColour {
   public var hsvAdjustment: HSVAdjustment? {
-    guard let nsColour = self.toNSColor() else { return nil }
+    guard let nsColour = self.toNSColor else { return nil }
     let hue = nsColour.hueComponent
     let sat = nsColour.saturationComponent
     let val = nsColour.brightnessComponent

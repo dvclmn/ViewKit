@@ -11,8 +11,8 @@ import AppKit
 /// by both SharedHelpers and StringKit
 extension String {
   public static var fontTraitsKey: String { "fontTraits" }
-  
 }
+
 extension NSAttributedString.Key {
   public static let fontTraits = NSAttributedString.Key(String.fontTraitsKey)
 }
@@ -24,7 +24,6 @@ extension NSFontDescriptor.SymbolicTraits: @retroactive Hashable {}
 public struct FontTraits: Hashable, Sendable {
   let traits: NSFontDescriptor.SymbolicTraits
   let sizeScale: CGFloat
-  // attrs[.kern]
 }
 
 extension FontTraits {
@@ -71,10 +70,10 @@ extension NSFontDescriptor.SymbolicTraits {
 
   private var boldItalicDescription: [String] {
     switch (contains(.bold), contains(.italic)) {
-      case (true, true): return ["Bold Italic"]
-      case (true, false): return ["Bold"]
-      case (false, true): return ["Italic"]
-      case (false, false): return []
+      case (true, true): ["Bold Italic"]
+      case (true, false): ["Bold"]
+      case (false, true): ["Italic"]
+      case (false, false): []
     }
   }
 
@@ -90,61 +89,4 @@ extension NSFontDescriptor.SymbolicTraits {
     ]
     .compactMap { contains($0.0) ? $0.1 : nil }
   }
-
-  //  public var prettyDescription: String {
-  //    let isBold = self.contains(.bold)
-  //    let isItalic = self.contains(.italic)
-  //
-  //    var desc: [String] = []
-  //
-  //
-  //    if isBold && isItalic {
-  //      desc.append("Bold Italic")
-  //    } else {
-  //      if isBold {
-  //        desc.append("Bold")
-  //      }
-  //      if isItalic {
-  //        desc.append("Italic")
-  //      }
-  //    }
-  //
-  ////    switch self {
-  ////      case let t where t.contains([.bold, .italic]):
-  //////      case let t where t.contains([.bold, .italic]):
-  ////        // Both bold and italic are present
-  ////      case let t where t.contains(.bold):
-  ////        // Only bold is present
-  ////      case let t where t.contains(.italic):
-  ////        // Only italic is present
-  ////      default:
-  ////        // Neither
-  ////    }
-  //
-  //
-  //    if self.contains(.expanded) {
-  //      desc.append("Expanded")
-  //    }
-  //    if self.contains(.condensed) {
-  //      desc.append("Condensed")
-  //    }
-  //    if self.contains(.monoSpace) {
-  //      desc.append("Monospaced")
-  //    }
-  //    if self.contains(.vertical) {
-  //      desc.append("Vertical")
-  //    }
-  //    if self.contains(.UIOptimized) {
-  //      desc.append("UI Optimized")
-  //    }
-  //    if self.contains(.tightLeading) {
-  //      desc.append("Tight Leading")
-  //    }
-  //    if self.contains(.looseLeading) {
-  //      desc.append("Loose Leading")
-  //    }
-  //
-  //
-  //    return "[" + desc.joined(separator: ", ") + "]"
-  //  }
 }

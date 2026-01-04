@@ -67,26 +67,3 @@ extension CodableColour {
     }
   }
 }
-
-//  extension CodableColour: Identifiable {
-//  public var id: String {
-//    switch self {
-//      case .hex(let string, let opacity):
-//        <#code#>
-//      case .rgb(let rGBColour):
-//        <#code#>
-//      case .rgbRaw(let r, let g, let b, let a):
-//        <#code#>
-//      case .hsv(let hSVColour):
-//        <#code#>
-//      case .hsvRaw(let h, let s, let v, let a):
-//        <#code#>
-//      case .system(let systemColour, let opacity):
-//        <#code#>
-//      case .grey(let double, let opacity):
-//        <#code#>
-//      case .mix(let systemColour, let systemColour2, let double, let opacity):
-//        <#code#>
-//    }
-//  }
-//}

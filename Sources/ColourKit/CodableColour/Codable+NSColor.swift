@@ -48,14 +48,17 @@ extension CodableColour {
         return NSColor(red: r, green: g, blue: b, alpha: opacity)
 
       case .system(let system, let opacity):
-        return system.toNSColor()?.withAlphaComponent(opacity)
+        guard opacity != 1 else {
+          return system.toNSColor
+        }
+        return system.toNSColor?.withAlphaComponent(opacity)
 
       case .grey(let v, let opacity):
         return NSColor(cgColor: CGColor(gray: v, alpha: opacity))
 
       case .mix(let a, let b, let t, let opacity):
-        guard let colorA = a.toNSColor(),
-          let colorB = b.toNSColor()
+        guard let colorA = a.toNSColor,
+          let colorB = b.toNSColor
         else { return nil }
         return colorA.blended(withFraction: t, of: colorB)?.withAlphaComponent(opacity)
     }
