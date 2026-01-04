@@ -8,17 +8,19 @@
 import GridKit
 import SwiftUI
 
-//public struct StackCell: GridCell
-
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack: GridShaped {
+//  public subscript(position: Int) -> Row {
+//    fatalError("")
+//  }
+  
 
-  public typealias Cell = UnicodeScalarLiteralType
-//  public typealias
+  public typealias Cell = Character
   public typealias Row = [Cell]
+  public typealias Element = Row
 
   public var cells: Cells
-  
+
   public init(cells: Cells) {
     self.cells = cells
   }
@@ -48,8 +50,8 @@ extension StringStack {
 }
 extension StringStack {
 
-  public var rows: [String] { cells.map { String($0) } }
-  public var string: String { rows.joined("\n") }
+  public var stringRows: [String] { cells.map { String($0) } }
+  public var string: String { stringRows.joined("\n") }
 
 }
 
@@ -76,13 +78,4 @@ extension StringStack: CustomDebugStringConvertible {
     //    return DisplayString {
     //    }.plainText
   }
-}
-
-
-
-extension Character: GridCell {
-  public init(_ value: UnicodeScalarLiteralType) {
-    self.init(unicodeScalarLiteral: value)
-  }
-  public static func createBlank() -> Character { .init("") }
 }

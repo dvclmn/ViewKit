@@ -6,6 +6,16 @@
 //
 
 extension GridShaped {
+  var rows: [Row] { cells }
+  var columns: Cells {
+    guard let firstRow = cells.first else { return [] }
+    return (0..<firstRow.count).map { col in
+      cells.map(\.self[col])
+    }
+  }
+
+  public var rowCount: Int { cells.count }
+  public var columnCount: Int { cells.first?.count ?? 0 }
 
   /// Width of the first row — the 'intended' width of a rectangular grid.
   public var canonicalWidth: Int { cells.first?.count ?? 0 }
@@ -22,15 +32,6 @@ extension GridShaped {
     cells.isEmpty || cells.allSatisfy { $0.isEmpty }
   }
 
-  public var rows: Cells { cells.map(\.self) }
-
-  public var columns: Cells {
-    guard let firstRow = cells.first else { return [] }
-    return (0..<firstRow.count).map { col in
-      cells.map(\.self[col])
-    }
-  }
-
   public var dimensions: GridDimensions { .init(width: columnCount, height: rowCount) }
 
   func cells(at positions: [GridPosition]) -> [Cell] {
@@ -43,17 +44,15 @@ extension GridShaped {
     return cells
   }
 
-  func positions(of value: Cell.Value) -> [GridPosition] {
+  func positions(of value: Cell) -> [GridPosition] {
     var positions: [GridPosition] = []
     for (rowIndex, line) in rows.enumerated() {
-      for (columnIndex, val) in line.enumerated() where val.value == value {
+      for (columnIndex, val) in line.enumerated() where val == value {
         positions.append(GridPosition(row: rowIndex, column: columnIndex))
       }
     }
     return positions
   }
-
-
 
   //  func cells(in bounds: GridDimensions) -> [GridCell] {
   //    var cells: [GridCell] = []

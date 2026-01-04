@@ -8,10 +8,10 @@
 extension GridShaped {
   
   /// When a user starts drawing in previously empty space:
-  public mutating func set(_ value: Cell.Value, at position: GridPosition) {
+  public mutating func set(_ value: Cell, at position: GridPosition) {
     expandToInclude(position: position, blank: Cell.createBlank())
     //    expandToInclude(position: position, blank: GridCell.createBlank(at: position))
-    self[at: position] = Cell(value)
+    self[at: position] = value
     //    self[at: position] = GridCell(character: char, position: position)
   }
   

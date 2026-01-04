@@ -8,14 +8,19 @@
 import SwiftUI
 import CoreTools
 
+
+
 // MARK: - Collection conformance
 extension GridShaped {
 
   public var startIndex: Int { cells.startIndex }
   public var endIndex: Int { cells.endIndex }
 
-  public subscript(position: Int) -> Row? {
-    return cells[safe: position]
+  /// This is required, by `Collection`, to be non-optional.
+  /// I believe this `position` would correspond to Row.
+  /// Consider safer alternative `subscript(row rowIndex: Int) -> Row?`
+  public subscript(position: Int) -> Row {
+    return cells[position]
   }
 
   public func index(after i: Int) -> Int {

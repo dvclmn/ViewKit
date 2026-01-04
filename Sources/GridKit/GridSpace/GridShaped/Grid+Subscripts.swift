@@ -18,19 +18,9 @@ extension GridShaped {
     }
   }
 
-  public subscript(row rowIndex: Int) -> [Cell] {
-    get { cells[rowIndex] }
-    set {
-      //      guard cells.indices.contains(rowIndex) else { return }
-      cells[safe: rowIndex] = newValue
-    }
-    //      let thing = stride(from: rowIndex, to: cells.count, by: columnCount)
-    //      let other = thing.map { i in
-
-    //        .map {
-    //        cells[$0]
-    //      }
-    //    }
+  public subscript(row rowIndex: Int) -> Row? {
+    get { cells[safe: rowIndex] }
+    set { cells[safe: rowIndex] = newValue }
   }
 
   public subscript(column columnIndex: Int) -> [Cell] {

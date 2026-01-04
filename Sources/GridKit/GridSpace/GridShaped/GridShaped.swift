@@ -11,17 +11,14 @@ import CoreTools
 /// - Should bear in mind the idea of both
 ///   a) Inherent/uncropped dimensions
 ///   b) As distinct from a user's cropped frame / view onto the grid
-public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row, Index == Int {
+//public protocol GridShaped: ExpressibleByArrayLiteral {
+public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row {
+//public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row, Index == Int {
   associatedtype Cell: GridCell
   typealias Cells = [[Cell]]
   typealias Row = [Cell]
 
   var cells: Cells { get set }
-  var rows: Cells { get }
-  var columns: Cells { get }
-
-  var rowCount: Int { get }
-  var columnCount: Int { get }
 
   init(cells: Cells)
   init(_ cells: Cells)
@@ -35,12 +32,11 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element 
 }
 
 public protocol GridCell: Equatable {
-//  static var blank: Self { get }
   static func createBlank() -> Self
 }
 
 extension GridShaped {
-  public init(arrayLiteral elements: Self.Element...) {
+  public init(arrayLiteral elements: Row...) {
     self.init(elements)
   }
 }
