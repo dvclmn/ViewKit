@@ -11,14 +11,14 @@ let package = Package(
   ],
   products: [
     .library(
-      name: "BaseMacrosLibrary",
+      name: "BaseMacros",
       targets: ["EnumMacros"]
     ),
-    //    .executable(
-    //      name: "BaseMacrosClient",
-    //      targets: ["BaseMacrosClient"]
-    //    ),
-    .library(name: "BaseModels", targets: ["BaseModels"]),
+    .executable(
+      name: "BaseMacrosClient",
+      targets: ["BaseMacrosClient"]
+    ),
+    .library(name: "BaseTypes", targets: ["BaseTypes"]),
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
     .library(
       name: "BaseUI",
@@ -55,9 +55,33 @@ let package = Package(
       url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
   ],
 
-  // MARK: - Targets
-
   targets: [
+    // MARK: - BaseMacro targets
+    .macro(
+      name: "BaseMacrosImplementation",
+      dependencies: [
+        .module(.sharedHelpers),
+        .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+        .product(name: "SwiftDiagnostics", package: "swift-syntax"),
+        .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
+      ],
+      path: .macrosSource + "/MacroImplementations",
+    ),
+
+    .target(
+      name: "EnumMacros",
+      dependencies: ["BaseMacrosImplementation"],
+      path: .macrosSource + "/MacroDeclarations",
+    ),
+
+    .executableTarget(
+      name: "BaseMacrosClient",
+      dependencies: ["EnumMacros"],
+      path: .macrosSource + "/BaseMacrosClient",
+    ),
+
+    // MARK: - Targets
+
     .target(
       name: "BaseNetworking",
       dependencies: [
@@ -65,6 +89,7 @@ let package = Package(
         .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
+
     .target(
       name: "BaseUI",
       dependencies: [
@@ -79,8 +104,9 @@ let package = Package(
         .sharing,
       ],
     ),
+
     .target(
-      name: "BaseModels",
+      name: "BaseTypes",
       dependencies: [
         .module(.coreTools),
         .module(.gridKit),
@@ -88,6 +114,7 @@ let package = Package(
         .sharing,
       ],
     ),
+
     .target(
       name: "CanvasKit",
       dependencies: [
@@ -116,6 +143,7 @@ let package = Package(
         .module(.curveKit),
       ]
     ),
+
     .target(
       name: "GraphicsKit",
       dependencies: [
@@ -124,6 +152,7 @@ let package = Package(
         .module(.gridKit),
       ]
     ),
+
     .target(
       name: "GridKit",
       dependencies: [
@@ -132,6 +161,7 @@ let package = Package(
         .module(.layoutKit),
       ]
     ),
+    
     .target(
       name: "LayoutKit",
       dependencies: [.module(.coreTools)]
@@ -154,12 +184,13 @@ let package = Package(
         .module(.enumMacros),
       ]
     ),
+    
     .target(
       name: "Wrecktangle",
       dependencies: [
         .module(.coreTools),
         .module(.gridKit),
-        .module(.baseModels),
+        .module(.baseTypes),
       ]
     ),
 
@@ -178,38 +209,14 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.baseUI),
-        .module(.baseModels),
+        .module(.baseTypes),
         .module(.layoutKit),
       ]
     ),
 
-    // MARK: - BaseMacro targets
-    .macro(
-      name: "BaseMacrosImplementation",
-      dependencies: [
-        .module(.sharedHelpers),
-        .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-        //        .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
-        .product(name: "SwiftDiagnostics", package: "swift-syntax"),
-        .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
-      ],
-      path: .macrosSource + "/MacroImplementations",
-    ),
-
-    .target(
-      name: "EnumMacros",
-      dependencies: ["BaseMacrosImplementation"],
-      path: .macrosSource + "/MacroDeclarations",
-    ),
-    //    .executableTarget(
-    //      name: "BaseMacrosClient",
-    //      dependencies: ["EnumMacros"],
-    //      path: .macrosSource + "/BaseMacrosClient",
-    //    ),
-
   ],
 )
-// MARK: - Convenient type-safe extensions
+// MARK: - Type-safe convenience extensions
 extension Target.Dependency {
   static func module(_ baseModule: BaseModule) -> Self {
     .target(name: baseModule.name)
@@ -225,16 +232,14 @@ extension Target.Dependency {
   }
 }
 extension String {
-  static var macrosSource: String { "Sources/BaseMacrosLibrary" }
+  static var macrosSource: String { "Sources/BaseMacros" }
 }
 
-/// List of common modules for convenience
 enum BaseModule {
-
   case enumMacros
   case networking
   case baseUI
-  case baseModels
+  case baseTypes
   case canvasKit
   case colourKit
   case curveKit
@@ -256,7 +261,7 @@ enum BaseModule {
       case .enumMacros: "EnumMacros"
       case .networking: "BaseNetworking"
       case .baseUI: "BaseUI"
-      case .baseModels: "BaseModels"
+      case .baseTypes: "BaseTypes"
       case .canvasKit: "CanvasKit"
       case .colourKit: "ColourKit"
       case .curveKit: "CurveKit"

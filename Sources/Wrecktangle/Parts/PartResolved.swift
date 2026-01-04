@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BaseModels
+import BaseTypes
 import CoreTools
 
 extension Box {
