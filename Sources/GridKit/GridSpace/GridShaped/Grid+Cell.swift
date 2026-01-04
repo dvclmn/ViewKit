@@ -12,7 +12,7 @@ public protocol GridCell: Identifiable {
 
   var value: Value { get set }
   static func createBlank() -> Self
-  init(from value: Value)
+  init(_ value: Value)
 }
 
 extension GridShaped where Cell.Value == Character {
@@ -36,7 +36,7 @@ extension GridShaped where Cell.Value == Character {
     rowIndex: Int,
     targetWidth: Int
   ) -> [Cell] {
-    let characterCells = line.map(Cell.init(from:))
+    let characterCells = line.map(Cell.init)
 
     let paddingCells = (line.count..<targetWidth).map { colIndex in
       let position = GridPosition(row: rowIndex, column: colIndex)
