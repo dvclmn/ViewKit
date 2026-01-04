@@ -33,6 +33,7 @@ let package = Package(
     .library(name: "CanvasKit", targets: ["CanvasKit"]),
     .library(name: "ColourKit", targets: ["ColourKit"]),
     .library(name: "GridKit", targets: ["GridKit"]),
+    .library(name: "GridUI", targets: ["GridUI"]),
     .library(name: "VectorKit", targets: ["VectorKit"]),
     .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
     .library(name: "StringKit", targets: ["StringKit"]),
@@ -161,7 +162,16 @@ let package = Package(
         .module(.layoutKit),
       ]
     ),
-    
+
+    .target(
+      name: "GridUI",
+      dependencies: [
+        .module(.coreTools),
+        .module(.layoutKit),
+        .module(.gridKit),
+      ]
+    ),
+
     .target(
       name: "LayoutKit",
       dependencies: [.module(.coreTools)]
@@ -184,7 +194,7 @@ let package = Package(
         .module(.enumMacros),
       ]
     ),
-    
+
     .target(
       name: "Wrecktangle",
       dependencies: [

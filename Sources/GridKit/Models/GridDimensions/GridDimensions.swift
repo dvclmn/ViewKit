@@ -55,3 +55,26 @@ public func + (lhs: GridDimensions, rhs: GridDimensions) -> GridDimensions {
     height: lhs.height + rhs.height
   )
 }
+
+//import SwiftUI
+//import SharedHelpers
+
+//public struct GridDimensions: ModelBase {
+//  public var columns: Int
+//  public var rows: Int
+//
+//
+//
+//}
+
+//extension GridDimensions: CustomStringConvertible {
+//  public var description: String {
+//    "Columns: \(columns) Rows: \(rows)"
+//  }
+//}
+
+//extension CGSize {
+//  public init(fromGridDimensions dimensions: GridDimensions) {
+//
+//  }
+//}

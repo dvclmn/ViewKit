@@ -26,24 +26,24 @@ import SharedHelpers
 //  }
 //}
 
-public struct GridMatrix: Sendable, Hashable, Equatable, Codable {
-
-  public var columns: Int
-  public var rows: Int
-  public var cells: [GridCell]
-
-  public init(cells: [GridCell], columns: Int) {
-    precondition(cells.count % columns == 0, "Matrix must be filled")
-    self.columns = columns
-    self.rows = cells.count / columns
-    self.cells = cells
-  }
-
-  public init(_ content: String) {
-    let cells = GridCell.generateCells(from: content)
-    self.init(cells: cells, columns: content.longestLineLength)
-  }
-}
+//public struct GridMatrix: Sendable, Hashable, Equatable, Codable {
+//
+//  public var columns: Int
+//  public var rows: Int
+//  public var cells: [GridCell]
+//
+//  public init(cells: [GridCell], columns: Int) {
+//    precondition(cells.count % columns == 0, "Matrix must be filled")
+//    self.columns = columns
+//    self.rows = cells.count / columns
+//    self.cells = cells
+//  }
+//
+//  public init(_ content: String) {
+//    let cells = GridCell.generateCells(from: content)
+//    self.init(cells: cells, columns: content.longestLineLength)
+//  }
+//}
 
 // MARK: - Edit Artwork
 extension GridMatrix {
@@ -309,36 +309,36 @@ extension GridMatrix {
     return cells
   }
 
-  public func isValid(position: GridPosition) -> Bool {
-    position.row >= 0 && position.row < rows && position.column >= 0 && position.column < columns
-  }
+//  public func isValid(position: GridPosition) -> Bool {
+//    position.row >= 0 && position.row < rows && position.column >= 0 && position.column < columns
+//  }
 
-  mutating func expandToInclude(
-    position: GridPosition,
-    blank: @autoclosure () -> GridCell
-  ) {
-    let requiredRows = position.row + 1
-    let requiredColumns = max(columns, position.column + 1)
-
-    var newCells: [GridCell] = []
-
-    for row in 0..<requiredRows {
-      for column in 0..<requiredColumns {
-        if row < rows, column < columns {
-          let position = GridPosition(row: row, column: column)
-          print("GridPosition from `expandToInclude()`: \(position)")
-          guard let cell = self[at: position] else { return }
-          newCells.append(cell)
-        } else {
-          newCells.append(blank())
-        }
-      }
-    }
-
-    self.cells = newCells
-    self.columns = requiredColumns
-    self.rows = requiredRows
-  }
+//  mutating func expandToInclude(
+//    position: GridPosition,
+//    blank: @autoclosure () -> GridCell
+//  ) {
+//    let requiredRows = position.row + 1
+//    let requiredColumns = max(columns, position.column + 1)
+//
+//    var newCells: [GridCell] = []
+//
+//    for row in 0..<requiredRows {
+//      for column in 0..<requiredColumns {
+//        if row < rows, column < columns {
+//          let position = GridPosition(row: row, column: column)
+//          print("GridPosition from `expandToInclude()`: \(position)")
+//          guard let cell = self[at: position] else { return }
+//          newCells.append(cell)
+//        } else {
+//          newCells.append(blank())
+//        }
+//      }
+//    }
+//
+//    self.cells = newCells
+//    self.columns = requiredColumns
+//    self.rows = requiredRows
+//  }
 
   public var cellRange: Range<Int> {
     return (0..<cells.count)

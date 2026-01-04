@@ -7,6 +7,34 @@
 
 import Foundation
 
+extension GridShaped {
+  func isPositionValid(_ position: GridPosition) -> Bool {
+    isRowValid(position.row) && isColumnValidAcrossAllRows(position.column)
+  }
+
+  /// Check that this row index is within the table’s bounds
+  func isRowValid(_ row: Int) -> Bool {
+    row >= 0 && row < rowCount
+  }
+
+  func isColumnIndexNonNegative(_ column: Int) -> Bool {
+    column >= 0
+  }
+
+  func isColumnValidInAnyRow(_ column: Int) -> Bool {
+    column >= 0 && rows.contains { $0.count > column }
+    //    column >= 0 && rows.contains { $0.cells.count > column }
+  }
+
+  func isColumnValidAcrossAllRows(_ column: Int) -> Bool {
+    !rows.isEmpty
+      && column >= 0
+      && column < columnCount
+      && rows.allSatisfy { $0.count > column }
+    //    !rows.isEmpty && column >= 0 && rows.allSatisfy { $0.cells.count > column }
+  }
+}
+
 public struct RowNormaliser<T: GridShaped> {
   let cells: T.Cells
   let paddingCell: T.Cell

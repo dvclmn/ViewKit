@@ -29,4 +29,17 @@ extension GridShaped {
       }
     }
   }
+  
+  public subscript(at position: GridPosition) -> Cell? {
+    get {
+      guard isValid(position: position) else { return nil }
+      return self[row: position.row, column: position.column]
+    }
+    set {
+      guard isValid(position: position), let value = newValue else { return }
+      self[row: position.row, column: position.column] = value
+    }
+  }
+  
+  
 }

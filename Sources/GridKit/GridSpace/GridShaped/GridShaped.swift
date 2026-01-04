@@ -5,16 +5,22 @@
 //  Created by Dave Coleman on 4/11/2025.
 //
 
-import Foundation
-import IdentifiedCollections
+import CoreTools
 
-public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Self.Element == Self.Row {
-  associatedtype Cell
+/// Notes:
+/// - Should bear in mind the idea of both
+///   a) Inherent/uncropped dimensions
+///   b) As distinct from a user's cropped frame / view onto the grid
+public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row, Index == Int {
+  associatedtype Cell: GridCell
   typealias Cells = [[Cell]]
   typealias Row = [Cell]
-  
+
   var cells: Cells { get set }
 
+  var rowCount: Int { get }
+  var columnCount: Int { get }
+  
   init(cells: Cells)
   init(_ cells: Cells)
 
@@ -32,9 +38,6 @@ extension GridShaped {
   }
 }
 
-public protocol GridCell: Identifiable {
-  
-}
 
 //public enum RowValidation<T: GridShaped> {
 //  case patch((T.Row, Int) -> T.Row)

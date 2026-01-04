@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreTools
 
 extension GridShaped {
   public init(arrayLiteral elements: Self.Element...) {
@@ -19,8 +20,8 @@ extension GridShaped {
   public var startIndex: Int { cells.startIndex }
   public var endIndex: Int { cells.endIndex }
 
-  public subscript(position: Int) -> Row {
-    return cells[position]
+  public subscript(position: Int) -> Row? {
+    return cells[safe: position]
   }
 
   public func index(after i: Int) -> Int {

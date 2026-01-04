@@ -12,7 +12,6 @@ import LayoutKit
 @available(macOS 14.0, *)
 public struct CharacterSizes: View {
   public var body: some View {
-
     ScrollView {
       VStack(spacing: Styles.sizeLarge) {
         CharacterSizeTest(fontSize: 12)
@@ -21,7 +20,6 @@ public struct CharacterSizes: View {
       }
       .padding()
     }
-
   }
 }
 
