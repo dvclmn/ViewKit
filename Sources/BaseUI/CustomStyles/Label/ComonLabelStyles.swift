@@ -5,8 +5,7 @@
 //  Created by Dave Coleman on 3/7/2025.
 //
 
-import EnumMacros
-import SharedHelpers
+import CoreTools
 import SwiftUI
 
 public struct CommonLabelStyleModifier: ViewModifier {

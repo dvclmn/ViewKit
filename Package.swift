@@ -95,13 +95,13 @@ let package = Package(
       name: "BaseUI",
       dependencies: [
         .module(.coreTools),
-        .module(.vectorKit),
-        .module(.colourKit),
+//        .module(.vectorKit),
+//        .module(.colourKit),
         .module(.layoutKit),
         .module(.graphicsKit),
 //        .module(.gestureKit),
-        .module(.gridKit),
-        .module(.wrecktangle),
+//        .module(.gridKit),
+//        .module(.wrecktangle),
         .sharing,
       ],
     ),
@@ -150,7 +150,7 @@ let package = Package(
       dependencies: [
         .module(.sharedHelpers),
         .module(.colourKit),
-        .module(.gridKit),
+//        .module(.gridKit),
       ]
     ),
 

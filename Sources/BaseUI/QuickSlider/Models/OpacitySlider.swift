@@ -5,8 +5,7 @@
 //  Created by Dave Coleman on 16/6/2025.
 //
 
-
-import ColourKit
+//import ColourKit
 import GraphicsKit
 import SharedHelpers
 import SwiftUI
@@ -25,8 +24,10 @@ extension Image {
             config: PatternConfiguration(
               size: scale,
               gap: scale,
-              primaryColour: RGBColour.gray(0.8),
-              secondaryColour: RGBColour.gray(0.4)
+              primaryColour: Color(white: 0.8),
+              secondaryColour: Color(white: 0.4)
+//              primaryColour: RGBColour.gray(0.8),
+//              secondaryColour: RGBColour.gray(0.4)
             ),
             in: size
           )
