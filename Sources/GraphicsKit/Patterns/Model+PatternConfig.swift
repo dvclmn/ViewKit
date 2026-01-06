@@ -22,15 +22,16 @@ public struct PatternConfiguration: Codable, Equatable, Hashable, Sendable {
   var gap: Double
   var offset: CGSize
 
-  var primaryColour: RGBColour
-  var secondaryColour: RGBColour
+  var primaryColour: CodableColour
+//  var primaryColour: RGBColour
+  var secondaryColour: CodableColour
 
   public init(
     size: Double = 30,
     gap: Double = 10,
     offset: CGSize = .zero,
-    primaryColour: RGBColour = .greyDark,
-    secondaryColour: RGBColour = .grey
+    primaryColour: CodableColour = .primary,
+    secondaryColour: CodableColour = .gray
   ) {
     self.size = size
     self.gap = gap
@@ -48,7 +49,5 @@ extension PatternConfiguration {
   public static let checkboardExample = PatternConfiguration(
     size: 20,
     gap: 10,
-    primaryColour: .greyDark,
-    secondaryColour: .white
   )
 }

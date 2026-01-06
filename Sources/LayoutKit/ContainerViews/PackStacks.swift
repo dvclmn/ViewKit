@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+/// These were originally made to directly support Int-based
+/// spacing — see `SharedHelpers` custom env value `uniSize`.
+/// This caused these 'Pack' stacks to be too closely coupled
+/// with `GridKit`, so they're now here simply as zero-spacing
+/// container views, and I'm working on a more flexible Int-based
+/// spacing thing elsewhere.
+
 public struct HPack<Content: View>: View {
 
   let alignment: VerticalAlignment
@@ -29,27 +36,19 @@ public struct HPack<Content: View>: View {
 
 public struct VPack<Content: View>: View {
 
-  @Environment(\.unitSize) private var unitSize
-
   let alignment: HorizontalAlignment
-  let gridSpacing: Int
   let content: Content
 
   public init(
     _ alignment: HorizontalAlignment = .center,
-    _ spacing: Int = 0,
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.alignment = alignment
-    self.gridSpacing = spacing
     self.content = content()
   }
 
   public var body: some View {
-    VStack(
-      alignment: alignment,
-      spacing: gridSpacing.toScreenLength(along: .vertical, using: unitSize)
-    ) {
+    VStack(alignment: alignment, spacing: 0) {
       content
     }
   }
