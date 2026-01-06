@@ -154,8 +154,8 @@ let package = Package(
       name: "GridKit",
       dependencies: [
         .module(.coreTools),
-        .module(.colourKit),
-        .module(.layoutKit),
+//        .module(.colourKit),
+//        .module(.layoutKit),
       ]
     ),
 
