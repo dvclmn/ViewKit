@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SharedHelpers
-import GestureKit
+//import GestureKit
 
 @available(macOS 14.0, *)
 public struct SliderUnified: View {

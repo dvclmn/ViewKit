@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GridKit
 
 public struct GridLineConfiguration {
   let fillStyle: GridFillStyle

@@ -8,6 +8,7 @@
 import CoreTools
 import SwiftUI
 import LayoutKit
+import GridKit
 
 @available(macOS 14.0, *)
 public struct CharacterSizes: View {

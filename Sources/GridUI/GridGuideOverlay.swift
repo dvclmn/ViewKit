@@ -11,7 +11,7 @@ import SwiftUI
 @available(macOS 14.0, *)
 public struct GridGuideOverlayModifier: ViewModifier {
   @Environment(\.unitSize) private var unitSize
-//  @Environment(\.isShowingGridGuide) private var isShowingGridGuide
+  //  @Environment(\.isShowingGridGuide) private var isShowingGridGuide
 
   private let isDrawingDebugText: Bool = false
 
@@ -19,7 +19,7 @@ public struct GridGuideOverlayModifier: ViewModifier {
   let isEnabled: Bool
 
   public func body(content: Content) -> some View {
-      content
+    content
       .overlay {
         if isEnabled {
 
@@ -58,8 +58,8 @@ public struct GridGuideOverlayModifier: ViewModifier {
             }  // END size check
           }  // END group
           .allowsHitTesting(false)
-        } // is showing check
-      } // END overlay
+        }  // is showing check
+      }  // END overlay
   }
 }
 @available(macOS 14.0, *)

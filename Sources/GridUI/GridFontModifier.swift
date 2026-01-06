@@ -7,6 +7,7 @@
 
 import SharedHelpers
 import SwiftUI
+import GridKit
 
 public struct GridFontModifier: ViewModifier {
 

@@ -21,6 +21,7 @@ import Foundation
 //}
 
 extension Character: GridCell {
+//  public var id: 
   public static func createBlank() -> Character {
     Character("")
   }

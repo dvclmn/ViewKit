@@ -15,17 +15,17 @@ extension GridShaped {
   }
 
   public var rowCount: Int { cells.count }
-  public var columnCount: Int { cells.first?.count ?? 0 }
 
   /// Width of the first row — the 'intended' width of a rectangular grid.
-  public var canonicalWidth: Int { cells.first?.count ?? 0 }
+  /// Aka the canoncial width
+  public var columnCount: Int { cells.first?.count ?? 0 }
 
-  /// This assumes a `maxWidth`(width of widest row).
+  /// This returns the `maxWidth`(width of the widest row).
   /// Use `canonicalWidth` for width of *first* row
-  public var width: Int { maxWidth }
+  public var width: Int { widestRow }
 
   /// Width of the widest row
-  public var maxWidth: Int { cells.map(\.count).max() ?? 0 }
+  public var widestRow: Int { cells.map(\.count).max() ?? 0 }
   public var height: Int { cells.count }
 
   public var isEmpty: Bool {

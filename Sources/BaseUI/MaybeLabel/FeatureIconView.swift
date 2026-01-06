@@ -17,7 +17,8 @@ public struct FeatureIconView: View {
   public var body: some View {
     IconView(icon)
       .font(.system(size: fontSize))
-      .bouncyDrag()
+    #warning("Need to bring this back")
+//      .bouncyDrag()
   }
 }
 

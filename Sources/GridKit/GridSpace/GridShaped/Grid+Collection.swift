@@ -5,10 +5,8 @@
 //  Created by Dave Coleman on 6/11/2025.
 //
 
-import SwiftUI
 import CoreTools
-
-
+import SwiftUI
 
 // MARK: - Collection conformance
 extension GridShaped {

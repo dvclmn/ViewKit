@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SharedHelpers
+import VectorKit
 
 extension GraphicsContext {
   

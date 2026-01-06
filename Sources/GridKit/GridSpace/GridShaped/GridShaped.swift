@@ -12,8 +12,7 @@ import CoreTools
 ///   a) Inherent/uncropped dimensions
 ///   b) As distinct from a user's cropped frame / view onto the grid
 //public protocol GridShaped: ExpressibleByArrayLiteral {
-public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row {
-//public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row, Index == Int {
+public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row, Index == Int {
   associatedtype Cell: GridCell
   typealias Cells = [[Cell]]
   typealias Row = [Cell]
