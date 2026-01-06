@@ -37,7 +37,7 @@ extension GridSize {
       cellSize: cellSize,
       strategy: strategy
     )
-    self.init(columns: dimensions, rows: <#T##GridLength#>)
+    self.init(columns: dimensions., rows: <#T##GridLength#>)
 //    self.init(width: dimensions.width, height: dimensions.height)
   }
 

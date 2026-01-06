@@ -108,15 +108,15 @@ extension GridBoundaryPoint {
       || self == .bottomTrailing
   }
 
-  public var gridAxis: GridAxis? {
-    if isRowEdge {
-      .row
-    } else if isColumnEdge {
-      .column
-    } else {
-      nil
-    }
-  }
+//  public var gridAxis: GridAxis? {
+//    if isRowEdge {
+//      .row
+//    } else if isColumnEdge {
+//      .column
+//    } else {
+//      nil
+//    }
+//  }
 
   public var affectedEdges: GridEdge.Set {
     switch self {

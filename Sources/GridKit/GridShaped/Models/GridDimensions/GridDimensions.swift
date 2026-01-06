@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CoreTools
+import SharedHelpers
 
 public struct GridDimensions: ModelBase {
   public let width: Int

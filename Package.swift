@@ -153,7 +153,8 @@ let package = Package(
     .target(
       name: "GridKit",
       dependencies: [
-        .module(.coreTools),
+        .module(.sharedHelpers),
+//        .module(.coreTools),
 //        .module(.colourKit),
 //        .module(.layoutKit),
       ]

@@ -13,6 +13,7 @@ public func * (lhs: CGSize, rhs: GridDimensions) -> CGSize {
   return CGSize(width: w, height: h)
 }
 
+/// Adds 
 public func + (lhs: CGSize, rhs: GridDimensions) -> CGSize {
   let w = lhs.width + CGFloat(rhs.width)
   let h = lhs.height + CGFloat(rhs.height)
