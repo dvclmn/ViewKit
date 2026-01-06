@@ -90,17 +90,17 @@ extension CGPoint: AxisAddressable {
 }
 
 extension GridPosition: AdjustableByAxis {
-  public typealias Value = Int
   
   public func value(
     for axis: Axis2D,
     convention: AxisConvention
-  ) -> CGFloat {
+  ) -> Int {
     switch axis {
       case .horizontal:
-        convention.horizontalValue(for: self)
+        convention.ho
+//        convention.horizontalValue(for: self)
       case .vertical:
-        convention.verticalValue(for: self)
+//        convention.verticalValue(for: self)
     }
   }
   

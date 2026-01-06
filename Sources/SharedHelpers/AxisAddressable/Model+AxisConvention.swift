@@ -7,30 +7,6 @@
 
 import SwiftUI
 
-public protocol AxisExtentProviding {
-  associatedtype Output: BinaryFloatingPoint
-  func horizontalExtent(using convention: AxisConvention) -> Output
-  func verticalExtent(using convention: AxisConvention) -> Output
-}
-
-//public typealias AxisConvention = AxisConvention
-//
-//public protocol AxisConventionMappable {
-//  associatedtype Output: BinaryFloatingPoint
-//  func value(for convention: AxisConvention) -> Output
-//}
-//
-//extension EdgeInsets: AxisConventionMappable {
-//  public func value(for convention: AxisConvention) -> CGFloat {
-//    switch convention {
-//      case .widthIsHorizontal:
-//        return top + bottom
-//      case .heightIsHorizontal:
-//        return leading + trailing
-//    }
-//  }
-//}
-
 /// A mapping between `Dimension` (width / height) and `Axis` (horizontal / vertical).
 ///
 /// This aims to answer the question:
@@ -108,6 +84,32 @@ public enum AxisConvention: Sendable {
     }
   }
 
+  // MARK: - GridPosition
+  
+  /// Returns the horizontal index (usually column) based on the convention.
+  public func horizontalIndex(for position: GridPosition) -> Int {
+    switch self {
+      case .widthIsHorizontal: position.column
+      case .heightIsHorizontal: position.row
+    }
+  }
+  
+  /// Returns the vertical index (usually row) based on the convention.
+  public func verticalIndex(for position: GridPosition) -> Int {
+    switch self {
+      case .widthIsHorizontal: position.row
+      case .heightIsHorizontal: position.column
+    }
+  }
+  /// Creates a GridPosition by mapping horizontal/vertical inputs to row/column storage.
+//  public func makeGridPosition(horizontal: Int, vertical: Int) -> GridPosition {
+//    switch self {
+//      case .widthIsHorizontal:
+//        return GridPosition(row: vertical, column: horizontal)
+//      case .heightIsHorizontal:
+//        return GridPosition(row: horizontal, column: vertical)
+//    }
+//  }
 
 
   // MARK: - CGRect
