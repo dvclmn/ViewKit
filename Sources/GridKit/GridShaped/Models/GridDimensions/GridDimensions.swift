@@ -22,19 +22,6 @@ public struct GridDimensions: ModelBase {
   }
 }
 
-extension GridDimensions {
-  public init(
-    size: CGSize,
-    cellSize: CGSize,
-    strategy: SnapStrategy = .round
-  ) {
-    let dimensions = size.cellSnappedDimensions(
-      cellSize: cellSize,
-      strategy: strategy
-    )
-    self.init(width: dimensions.width, height: dimensions.height)
-  }
-}
 
 extension GridDimensions: ExpressibleByIntegerLiteral {
   /// Creates an instance with the provided value for both dimensions

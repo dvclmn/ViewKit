@@ -120,22 +120,22 @@ extension Edge.Set {
           return .vertical
         }
         if self == .leading
-            || self == .trailing
-            || self == .horizontal
+          || self == .trailing
+          || self == .horizontal
         {
           return .horizontal
         }
 
       case .heightIsHorizontal:
         if self == .top
-            || self == .bottom
-            || self == .vertical
+          || self == .bottom
+          || self == .vertical
         {
           return .horizontal
         }
         if self == .leading
-            || self == .trailing
-            || self == .horizontal
+          || self == .trailing
+          || self == .horizontal
         {
           return .vertical
         }

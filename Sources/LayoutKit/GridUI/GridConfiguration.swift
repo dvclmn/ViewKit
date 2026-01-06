@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-import GridKit
+import SharedHelpers
+//import GridKit
 
 public struct GridLineConfiguration {
   let fillStyle: GridFillStyle

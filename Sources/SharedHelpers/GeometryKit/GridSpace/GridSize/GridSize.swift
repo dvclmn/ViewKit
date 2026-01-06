@@ -29,6 +29,19 @@ public struct GridSize: Hashable, Codable {
 extension GridSize {
 
   public init(
+    size: CGSize,
+    cellSize: CGSize,
+    strategy: SnapStrategy = .round
+  ) {
+    let dimensions = size.cellSnappedDimensions(
+      cellSize: cellSize,
+      strategy: strategy
+    )
+    self.init(columns: dimensions, rows: <#T##GridLength#>)
+//    self.init(width: dimensions.width, height: dimensions.height)
+  }
+
+  public init(
     width: Int,
     height: Int,
     unitSize: CGSize

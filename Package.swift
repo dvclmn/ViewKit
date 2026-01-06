@@ -33,7 +33,7 @@ let package = Package(
     .library(name: "ColourKit", targets: ["ColourKit"]),
     .library(name: "GestureKit", targets: ["GestureKit"]),
     .library(name: "GridKit", targets: ["GridKit"]),
-    .library(name: "GridUI", targets: ["GridUI"]),
+//    .library(name: "GridUI", targets: ["GridUI"]),
     .library(name: "VectorKit", targets: ["VectorKit"]),
     .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
     .library(name: "StringKit", targets: ["StringKit"]),
@@ -159,14 +159,14 @@ let package = Package(
       ]
     ),
 
-    .target(
-      name: "GridUI",
-      dependencies: [
-        .module(.coreTools),
-        .module(.layoutKit),
-        .module(.gridKit),
-      ]
-    ),
+//    .target(
+//      name: "GridUI",
+//      dependencies: [
+//        .module(.coreTools),
+//        .module(.layoutKit),
+//        .module(.gridKit),
+//      ]
+//    ),
 
     .target(
       name: "LayoutKit",

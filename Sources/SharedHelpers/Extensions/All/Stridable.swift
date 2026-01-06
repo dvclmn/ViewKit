@@ -1,9 +1,10 @@
 //
-//  Stepper.swift
+//  Stridable.swift
 //  BaseHelpers
 //
-//  Created by Dave Coleman on 15/10/2025.
+//  Created by Dave Coleman on 6/1/2026.
 //
+
 
 import Foundation
 
@@ -11,7 +12,7 @@ import Foundation
 
 extension Strideable {
   //extension Strideable where Stride: SignedNumeric & Comparable {
-
+  
   /// Steps the value by the specified amount within the given range
   /// - Parameters:
   ///   - step: The amount to step by (positive or negative)
@@ -26,14 +27,14 @@ extension Strideable {
     let oldValue = self
     let newValue = self.advanced(by: step)
     let clampedValue = min(max(newValue, range.lowerBound), range.upperBound)
-
+    
     if oldValue != clampedValue {
       onEditingChanged?(oldValue, clampedValue)
     }
-
+    
     return clampedValue
   }
-
+  
   /// Steps the value up by the specified amount within the given range
   /// - Parameters:
   ///   - step: The amount to step up by (must be positive)
@@ -47,7 +48,7 @@ extension Strideable {
   ) -> Self {
     stepping(by: step, in: range, onEditingChanged: onEditingChanged)
   }
-
+  
   /// Steps the value down by the specified amount within the given range
   /// - Parameters:
   ///   - step: The amount to step down by (must be positive, will be negated)
@@ -61,7 +62,7 @@ extension Strideable {
   ) -> Self {
     stepping(by: -step, in: range, onEditingChanged: onEditingChanged)
   }
-
+  
   /// Checks if the value can be stepped in the given direction without exceeding the range
   /// - Parameters:
   ///   - step: The step amount (positive for up, negative for down)
