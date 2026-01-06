@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SharedHelpers
+//import SharedHelpers
 //public typealias GridSizeCounts = (width: Int, height: Int)
 
 extension GridSize {
@@ -16,8 +16,6 @@ extension GridSize {
 
   public var screenWidth: CGFloat { columns.screenLength }
   public var screenHeight: CGFloat { rows.screenLength }
-
-  public var gridDimensions: GridDimensions { .init(width, height) }
 
   public var screenSize: CGSize {
     CGSize(width: columns.screenLength, height: rows.screenLength)

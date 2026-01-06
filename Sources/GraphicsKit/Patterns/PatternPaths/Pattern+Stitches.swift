@@ -26,7 +26,7 @@ extension GraphicsContext {
         path.addLine(to: CGPoint(x: x + config.size * 2, y: startY))
       }
 
-      self.stroke(path, with: .color(config.primaryColour.toColour), lineWidth: config.gap)
+      self.stroke(path, with: .color(config.primaryColour.colour ?? .brown), lineWidth: config.gap)
 
       path = Path()
       for x in stride(from: -config.size, through: size.width + config.size, by: config.size) {
@@ -35,7 +35,7 @@ extension GraphicsContext {
         path.addLine(to: CGPoint(x: x + config.size * 2, y: startY + stitchesHeight))
       }
 
-      self.stroke(path, with: .color(config.secondaryColour.toColour), lineWidth: config.gap)
+      self.stroke(path, with: .color(config.secondaryColour.colour ?? .brown), lineWidth: config.gap)
     }
   }
 

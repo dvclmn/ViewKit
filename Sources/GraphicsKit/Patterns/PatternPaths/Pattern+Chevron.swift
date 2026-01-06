@@ -57,7 +57,7 @@ extension GraphicsContext {
       }
       
       /// Draw the path with the specified line width
-      self.stroke(path, with: .color(config.primaryColour.toColour), lineWidth: lineWidth)
+      self.stroke(path, with: .color(config.primaryColour.colour ?? .brown), lineWidth: lineWidth)
     }
   }
 }
