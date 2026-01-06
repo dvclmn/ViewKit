@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 14/10/2025.
 //
 
-
 /// ## Rounding down
 ///
 /// Fit text of known width into a number of columns:
@@ -36,7 +35,7 @@
 public enum GridRounding {
   case down
   case up
-  
+
   var value: FloatingPointRoundingRule {
     switch self {
       case .down: .towardZero
