@@ -49,6 +49,27 @@ public enum AxisConvention: Sendable {
       case .heightIsHorizontal: edgeInsets.leading + edgeInsets.trailing
     }
   }
+  /// Creates `EdgeInsets` by mapping horizontal/vertical inputs
+  public func makeEdgeInsets(horizontal: CGFloat, vertical: CGFloat) -> EdgeInsets {
+    switch self {
+      case .widthIsHorizontal:
+        return EdgeInsets(
+          top: vertical,
+          leading: horizontal,
+          bottom: vertical,
+          trailing: horizontal
+        )
+
+      case .heightIsHorizontal:
+        return EdgeInsets(
+          top: horizontal,
+          leading: vertical,
+          bottom: horizontal,
+          trailing: vertical
+        )
+
+    }
+  }
 
   // MARK: - CGSize
 
@@ -67,6 +88,17 @@ public enum AxisConvention: Sendable {
       case .heightIsHorizontal: size.width
     }
   }
+  /// Creates a `CGPoint` by mapping horizontal/vertical inputs to x/y storage.
+  public func makeCGSize(horizontal: CGFloat, vertical: CGFloat) -> CGSize {
+    switch self {
+      case .widthIsHorizontal:
+        return CGSize(width: horizontal, height: vertical)
+
+      case .heightIsHorizontal:
+        return CGSize(width: vertical, height: horizontal)
+
+    }
+  }
 
   // MARK: - CGPoint
 
@@ -83,9 +115,20 @@ public enum AxisConvention: Sendable {
       case .heightIsHorizontal: point.x
     }
   }
+  /// Creates a `CGPoint` by mapping horizontal/vertical inputs to x/y storage.
+  public func makeCGPoint(horizontal: CGFloat, vertical: CGFloat) -> CGPoint {
+    switch self {
+      case .widthIsHorizontal:
+        return CGPoint(x: horizontal, y: vertical)
+
+      case .heightIsHorizontal:
+        return CGPoint(x: vertical, y: horizontal)
+
+    }
+  }
 
   // MARK: - GridPosition
-  
+
   /// Returns the horizontal index (usually column) based on the convention.
   public func horizontalIndex(for position: GridPosition) -> Int {
     switch self {
@@ -93,7 +136,7 @@ public enum AxisConvention: Sendable {
       case .heightIsHorizontal: position.row
     }
   }
-  
+
   /// Returns the vertical index (usually row) based on the convention.
   public func verticalIndex(for position: GridPosition) -> Int {
     switch self {
@@ -102,15 +145,14 @@ public enum AxisConvention: Sendable {
     }
   }
   /// Creates a GridPosition by mapping horizontal/vertical inputs to row/column storage.
-//  public func makeGridPosition(horizontal: Int, vertical: Int) -> GridPosition {
-//    switch self {
-//      case .widthIsHorizontal:
-//        return GridPosition(row: vertical, column: horizontal)
-//      case .heightIsHorizontal:
-//        return GridPosition(row: horizontal, column: vertical)
-//    }
-//  }
-
+  public func makeGridPosition(horizontal: Int, vertical: Int) -> GridPosition {
+    switch self {
+      case .widthIsHorizontal:
+        return GridPosition(row: vertical, column: horizontal)
+      case .heightIsHorizontal:
+        return GridPosition(row: horizontal, column: vertical)
+    }
+  }
 
   // MARK: - CGRect
   public func horizontalLength(rect: CGRect) -> CGFloat {
@@ -126,4 +168,15 @@ public enum AxisConvention: Sendable {
       case .heightIsHorizontal: rect.size.width
     }
   }
+  /// Creates a `CGRect` by mapping horizontal/vertical inputs
+//  public func makeCGSize(horizontal: CGFloat, vertical: CGFloat) -> CGRect {
+//    switch self {
+//      case .widthIsHorizontal:
+//        return CGSize(width: horizontal, height: vertical)
+//        
+//      case .heightIsHorizontal:
+//        return CGSize(width: vertical, height: horizontal)
+//        
+//    }
+//  }
 }

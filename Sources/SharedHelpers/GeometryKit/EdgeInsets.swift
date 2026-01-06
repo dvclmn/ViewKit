@@ -9,15 +9,8 @@ import SwiftUI
 
 extension EdgeInsets {
 
-  public static var zero: EdgeInsets {
-    EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-  }
-
   /// This permits the omission of any one of the four
   /// parameters, which the default init doesn't allow for.
-  ///
-  /// The underscores are to try and disambiguate
-  /// from the native which otherwise has the same shape
   public init(
     top: CGFloat = 0,
     left: CGFloat = 0,
@@ -32,13 +25,15 @@ extension EdgeInsets {
     )
   }
 
-  public init(horizontal: CGFloat = 0, vertical: CGFloat = 0) {
-    self.init(
-      top: vertical,
-      leading: horizontal,
-      bottom: vertical,
-      trailing: horizontal
-    )
-  }
+  public static var zero: EdgeInsets { EdgeInsets() }
+
+  //  public init(horizontal: CGFloat = 0, vertical:  sCGFloat = 0) {
+  //    self.init(
+  //      top: vertical,
+  //      leading: horizontal,
+  //      bottom: vertical,
+  //      trailing: horizontal
+  //    )
+  //  }
 
 }

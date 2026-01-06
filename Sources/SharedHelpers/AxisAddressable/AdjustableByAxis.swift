@@ -8,10 +8,7 @@
 import Foundation
 
 /// Provides a convenient adjustment mechanism
-/// for types with more than one float value
-///
-/// Uses protocol `FloatPair` as one way to address values,
-/// and likely more to come, such as `FloatTriplet` etc
+/// for types with more than one float/integer value
 ///
 /// Doesn't need to know about width/height at all.
 /// Operates purely in terms of:
@@ -25,8 +22,6 @@ import Foundation
 //}
 
 public protocol AdjustableByAxis: AxisAddressable {}
-
-
 
 extension AdjustableByAxis {
 

@@ -73,10 +73,18 @@ extension CGPoint: AxisAddressable {
     switch axis {
       case .horizontal:
         switch convention {
-          case .widthIsHorizontal: CGPoint(x: newValue, y: y)
+          case .widthIsHorizontal: convention.makeCGPoint(
+            horizontal: newValue,
+            vertical: <#T##CGFloat#>
+          )
+//          case .widthIsHorizontal: CGPoint(x: newValue, y: y)
           //            return CGSize(width: newValue, height: height)
 
-          case .heightIsHorizontal: CGPoint(x: x, y: newValue)
+          case .heightIsHorizontal: convention.makeCGPoint(
+            horizontal: <#T##CGFloat#>,
+            vertical: newValue
+          )
+//          case .heightIsHorizontal: CGPoint(x: x, y: newValue)
         //            return CGSize(width: width, height: newValue)
         }
 
@@ -97,22 +105,27 @@ extension GridPosition: AdjustableByAxis {
   ) -> Int {
     switch axis {
       case .horizontal:
-        convention.ho
+        convention.horizontalIndex(for: self)
 //        convention.horizontalValue(for: self)
       case .vertical:
+        convention.verticalIndex(for: self)
 //        convention.verticalValue(for: self)
     }
   }
   
   public func setting(
-    _ newValue: CGFloat,
+    _ newValue: Int,
     for axis: Axis2D,
     convention: AxisConvention
   ) -> Self {
     switch axis {
       case .horizontal:
         switch convention {
-          case .widthIsHorizontal: CGPoint(x: newValue, y: y)
+          case .widthIsHorizontal: convention.makeGridPosition(
+            horizontal: <#T##Int#>,
+            vertical: <#T##Int#>
+          )
+//          case .widthIsHorizontal: CGPoint(x: newValue, y: y)
             //            return CGSize(width: newValue, height: height)
             
           case .heightIsHorizontal: CGPoint(x: x, y: newValue)
