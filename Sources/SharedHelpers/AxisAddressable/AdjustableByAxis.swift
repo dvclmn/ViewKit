@@ -25,8 +25,8 @@ import Foundation
 //}
 
 public protocol AdjustableByAxis: AxisAddressable {}
-extension CGSize: AdjustableByAxis {}
-extension CGPoint: AdjustableByAxis {}
+
+
 
 extension AdjustableByAxis {
 
