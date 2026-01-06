@@ -95,13 +95,13 @@ let package = Package(
       name: "BaseUI",
       dependencies: [
         .module(.coreTools),
-//        .module(.vectorKit),
-//        .module(.colourKit),
+        //        .module(.vectorKit),
+        .module(.colourKit),
         .module(.layoutKit),
         .module(.graphicsKit),
-//        .module(.gestureKit),
-//        .module(.gridKit),
-//        .module(.wrecktangle),
+        .module(.gestureKit),
+        //        .module(.gridKit),
+        //        .module(.wrecktangle),
         .sharing,
       ],
     ),
@@ -132,11 +132,6 @@ let package = Package(
     ),
 
     .target(
-      name: "VectorKit",
-      dependencies: [.module(.sharedHelpers)]
-    ),
-
-    .target(
       name: "GestureKit",
       dependencies: [
         .module(.coreTools),
@@ -150,7 +145,8 @@ let package = Package(
       dependencies: [
         .module(.sharedHelpers),
         .module(.colourKit),
-//        .module(.gridKit),
+        .module(.vectorKit),
+        //        .module(.gridKit),
       ]
     ),
 
@@ -193,6 +189,11 @@ let package = Package(
         .module(.sharedHelpers),
         .module(.enumMacros),
       ]
+    ),
+
+    .target(
+      name: "VectorKit",
+      dependencies: [.module(.sharedHelpers)]
     ),
 
     .target(

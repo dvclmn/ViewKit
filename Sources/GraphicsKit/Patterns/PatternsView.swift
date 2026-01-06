@@ -24,8 +24,8 @@ extension PatternPreset {
       size: 5,
       gap: 2,
       offset: CGSize(width: 0, height: -2),
-      primaryColour: RGBColour.grey,
-      secondaryColour: RGBColour.white
+      primaryColour: CodableColour.gray,
+      secondaryColour: CodableColour.white
     )
   )
 
@@ -88,8 +88,8 @@ public struct PatternCanvas: View {
 extension PatternCanvas {
 
   public func patternColours(
-    _ foreground: RGBColour = .greyDark,
-    _ background: RGBColour = .white
+    _ foreground: CodableColour = .green,
+    _ background: CodableColour = .white
   ) -> Self {
     let currentStyle = self.style
     var newConfig = self.config

@@ -6,6 +6,7 @@
 //
 
 import SharedHelpers
+import GestureKit
 import SwiftUI
 
 public struct FeatureIconView: View {
@@ -16,8 +17,7 @@ public struct FeatureIconView: View {
   public var body: some View {
     IconView(icon)
       .font(.system(size: fontSize))
-    #warning("Need to bring this back")
-//      .bouncyDrag()
+      .bouncyDrag()
   }
 }
 
