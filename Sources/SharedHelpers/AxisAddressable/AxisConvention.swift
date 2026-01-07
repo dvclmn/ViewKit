@@ -90,7 +90,6 @@ extension AxisConvention {
   }
 
   // MARK: - CGPoint
-
   public func horizontalValue(for point: CGPoint) -> CGFloat {
     switch self {
       case .widthIsHorizontal: point.x
@@ -124,6 +123,28 @@ extension AxisConvention {
     switch self {
       case .widthIsHorizontal: rect.size.height
       case .heightIsHorizontal: rect.size.width
+    }
+  }
+
+  // MARK: - UnitPoint
+  public func horizontalValue(for unitPoint: UnitPoint) -> CGFloat {
+    switch self {
+      case .widthIsHorizontal: unitPoint.x
+      case .heightIsHorizontal: unitPoint.y
+    }
+  }
+
+  public func verticalValue(for unitPoint: UnitPoint) -> CGFloat {
+    switch self {
+      case .widthIsHorizontal: unitPoint.y
+      case .heightIsHorizontal: unitPoint.x
+    }
+  }
+  /// Creates a `CGPoint` by mapping horizontal/vertical inputs to x/y storage.
+  public func makeUnitPoint(h: CGFloat, v: CGFloat) -> UnitPoint {
+    switch self {
+      case .widthIsHorizontal: UnitPoint(x: h, y: v)
+      case .heightIsHorizontal: UnitPoint(x: v, y: h)
     }
   }
 }

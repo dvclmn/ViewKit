@@ -82,15 +82,16 @@ extension HitAreaLayout {
 
 extension UnitPoint {
   func hitAreaPadding(_ amount: CGFloat) -> EdgeInsets {
-    switch self {
-      case .top, .bottom:
-        return EdgeInsets(horizontal: amount)
-
-      case .leading, .trailing:
-        return EdgeInsets(top: amount, bottom: amount)
-
-      default:
-        return .zero
-    }
+    fatalError("Need to clarify logic here, for axis/convention")
+//    switch self {
+//      case .top, .bottom:
+//        return EdgeInsets(horizontal: amount)
+//
+//      case .leading, .trailing:
+//        return EdgeInsets(top: amount, bottom: amount)
+//
+//      default:
+//        return .zero
+//    }
   }
 }
