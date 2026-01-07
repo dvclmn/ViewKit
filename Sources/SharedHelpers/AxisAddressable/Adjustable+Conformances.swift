@@ -41,7 +41,6 @@ extension CGSize: AxisAddressable {
         )
     }
   }
-
 }
 
 // MARK: - CGPoint
@@ -79,8 +78,45 @@ extension CGPoint: AxisAddressable {
   }
 }
 
+
+// MARK: - UnitPoint
+extension UnitPoint: AxisAddressable {
+  
+  public func value(
+    along axis: Axis2D,
+    convention: AxisConvention
+  ) -> CGFloat {
+    switch axis {
+      case .horizontal: convention.horizontalValue(for: self)
+      case .vertical: convention.verticalValue(for: self)
+    }
+  }
+  
+  public func setting(
+    _ newValue: CGFloat,
+    along axis: Axis2D,
+    convention: AxisConvention
+  ) -> Self {
+    switch axis {
+      case .horizontal:
+        /// Keep the current vertical, update horizontal
+        return convention.makeUnitPoint(
+          h: newValue,
+          v: convention.verticalValue(for: self)
+        )
+      case .vertical:
+        /// Keep the current horizontal, update vertical
+        return convention.makeUnitPoint(
+          h: convention.horizontalValue(for: self),
+          v: newValue
+        )
+    }
+  }
+}
+
+
 // MARK: - GridPosition
-extension GridPosition: AdjustableByGridAxis {
+extension GridPosition: GridAxisAddressable {
 
   public func value(along axis: Axis2D, convention: GridAxisConvention) -> Int {
     switch axis {
@@ -110,7 +146,7 @@ extension GridPosition: AdjustableByGridAxis {
 
 }
 
-extension GridSize: AdjustableByGridAxis {
+extension GridSize: GridAxisAddressable {
 
   public func value(along axis: Axis2D, convention: GridAxisConvention) -> GridLength {
     switch axis {
@@ -133,41 +169,6 @@ extension GridSize: AdjustableByGridAxis {
       case .vertical:
         return convention.makeGridSize(
           h: convention.horizontalLength(gridSize: self),
-          v: newValue
-        )
-    }
-  }
-}
-
-// MARK: - UnitPoint
-extension UnitPoint: AxisAddressable {
-
-  public func value(
-    along axis: Axis2D,
-    convention: AxisConvention
-  ) -> CGFloat {
-    switch axis {
-      case .horizontal: convention.horizontalValue(for: self)
-      case .vertical: convention.verticalValue(for: self)
-    }
-  }
-
-  public func setting(
-    _ newValue: CGFloat,
-    along axis: Axis2D,
-    convention: AxisConvention
-  ) -> Self {
-    switch axis {
-      case .horizontal:
-        /// Keep the current vertical, update horizontal
-        return convention.makeUnitPoint(
-          h: newValue,
-          v: convention.verticalValue(for: self)
-        )
-      case .vertical:
-        /// Keep the current horizontal, update vertical
-        return convention.makeUnitPoint(
-          h: convention.horizontalValue(for: self),
           v: newValue
         )
     }

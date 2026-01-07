@@ -41,8 +41,6 @@ extension GridSize {
   }
 }
 
-
-
 public func * (lhs: CGSize, rhs: GridSize) -> CGSize {
   let w = lhs.width * CGFloat(rhs.width)
   let h = lhs.height * CGFloat(rhs.height)
