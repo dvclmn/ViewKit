@@ -33,6 +33,14 @@ extension Axis {
         return .vertical
     }
   }
+  
+  
+  public var toAxis2D: Axis2D {
+    switch self {
+      case .horizontal: .horizontal
+      case .vertical: .vertical
+    }
+  }
 }
 
 extension Axis {

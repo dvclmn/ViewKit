@@ -27,10 +27,16 @@ public struct GridLength: Hashable, Codable {
     self.unit = unit
   }
 
-  public init?(_ count: Int, axis: Axis, unitSize: CGSize?) {
-    self.count = count
+  public init?(
+    _ count: Int,
+    axis: Axis,
+    convention: AxisConvention = .default,
+    unitSize: CGSize?
+  ) {
     guard let unitSize else { return nil }
-    self.unit = axis.length(fromSize: unitSize)
+    let unitLength = unitSize.length(along: axis.toAxis2D, convention: convention)
+    self.count = count
+    self.unit = unitLength
   }
 
   public init?(

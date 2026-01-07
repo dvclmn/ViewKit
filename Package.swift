@@ -228,6 +228,12 @@ let package = Package(
         .module(.layoutKit),
       ]
     ),
+    
+    // MARK: - Forwarding modules
+    .testTarget(
+      name: "SharedHelpersTests",
+      dependencies: [.module(.sharedHelpers)]
+    ),
 
   ],
 )

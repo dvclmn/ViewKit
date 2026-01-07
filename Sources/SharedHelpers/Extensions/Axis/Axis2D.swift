@@ -23,6 +23,7 @@ import Foundation
 public enum Axis2D: Int8, CaseIterable, Codable {
   case horizontal
   case vertical
+
 }
 
 public protocol AxisRepresentable: Equatable, CaseIterable where AllCases == [Self] {
