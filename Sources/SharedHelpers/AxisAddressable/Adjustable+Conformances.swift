@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-// MARK: - Adjustable
-extension CGSize: AdjustableByAxis {}
-extension CGPoint: AdjustableByAxis {}
-
 // MARK: - Addressable
 extension CGSize: AxisAddressable {
 

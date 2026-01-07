@@ -1,43 +1,14 @@
 //
-//  Model+AxisConvention.swift
+//  Convention+Helpers.swift
 //  BaseHelpers
 //
-//  Created by Dave Coleman on 11/9/2025.
+//  Created by Dave Coleman on 7/1/2026.
 //
 
 import SwiftUI
 
-/// A mapping between `Dimension` (width / height) and `Axis` (horizontal / vertical).
-///
-/// This aims to answer the question:
-/// “Given this dimension-based structure, which scalar corresponds to which axis?”
-///
-/// In most cases, "width" means "horizontal" and "height" means "vertical".
-/// But occasionally this is not the case (rotated coordinate systems, swapped
-///  axes, certain drawing transforms), so it's risky to assume.
-///
-/// `AxisConvention` makes the convention explicit, so there's less risk of confusion
-///
-/// `.widthIsHorizontal`:
-///    width → horizontal length
-///    height → vertical length
-///
-/// `.heightIsHorizontal`:
-///    height → horizontal length
-///    width → vertical length
-///
-/// Enables deriving correct values from types like
-/// `CGSize`, `CGPoint`, `EdgeInsets` etc
-public enum AxisConvention: Sendable {
-
-  case widthIsHorizontal
-  case heightIsHorizontal
-
-  public static let `default`: Self = .widthIsHorizontal
-}
-
 extension AxisConvention {
-
+  
   // MARK: - EdgeInsets
   public func horizontalLength(edgeInsets: EdgeInsets) -> CGFloat {
     switch self {
@@ -45,7 +16,7 @@ extension AxisConvention {
       case .heightIsHorizontal: edgeInsets.top + edgeInsets.bottom
     }
   }
-
+  
   public func verticalLength(edgeInsets: EdgeInsets) -> CGFloat {
     switch self {
       case .widthIsHorizontal: edgeInsets.top + edgeInsets.bottom
@@ -62,9 +33,9 @@ extension AxisConvention {
       case .heightIsHorizontal: EdgeInsets(top: h, leading: v, bottom: h, trailing: v)
     }
   }
-
+  
   // MARK: - CGSize
-
+  
   /// Returns the horizontal length from a size, according to the convention.
   public func horizontalLength(size: CGSize) -> CGFloat {
     switch self {
@@ -72,7 +43,7 @@ extension AxisConvention {
       case .heightIsHorizontal: size.height
     }
   }
-
+  
   /// Returns the vertical length from a size, according to the convention.
   public func verticalLength(size: CGSize) -> CGFloat {
     switch self {
@@ -85,10 +56,10 @@ extension AxisConvention {
     switch self {
       case .widthIsHorizontal: CGSize(width: h, height: v)
       case .heightIsHorizontal: CGSize(width: v, height: h)
-
+        
     }
   }
-
+  
   // MARK: - CGPoint
   public func horizontalValue(for point: CGPoint) -> CGFloat {
     switch self {
@@ -96,7 +67,7 @@ extension AxisConvention {
       case .heightIsHorizontal: point.y
     }
   }
-
+  
   public func verticalValue(for point: CGPoint) -> CGFloat {
     switch self {
       case .widthIsHorizontal: point.y
@@ -110,7 +81,7 @@ extension AxisConvention {
       case .heightIsHorizontal: CGPoint(x: v, y: h)
     }
   }
-
+  
   // MARK: - CGRect
   public func horizontalLength(rect: CGRect) -> CGFloat {
     switch self {
@@ -118,14 +89,14 @@ extension AxisConvention {
       case .heightIsHorizontal: rect.size.height
     }
   }
-
+  
   public func verticalLength(rect: CGRect) -> CGFloat {
     switch self {
       case .widthIsHorizontal: rect.size.height
       case .heightIsHorizontal: rect.size.width
     }
   }
-
+  
   // MARK: - UnitPoint
   public func horizontalValue(for unitPoint: UnitPoint) -> CGFloat {
     switch self {
@@ -133,7 +104,7 @@ extension AxisConvention {
       case .heightIsHorizontal: unitPoint.y
     }
   }
-
+  
   public func verticalValue(for unitPoint: UnitPoint) -> CGFloat {
     switch self {
       case .widthIsHorizontal: unitPoint.y
@@ -147,4 +118,73 @@ extension AxisConvention {
       case .heightIsHorizontal: UnitPoint(x: v, y: h)
     }
   }
+}
+
+// MARK: - Grid Axis
+extension GridAxisConvention {
+  
+  /// Returns the horizontal index (usually column) based on the convention.
+  public func horizontalValue(for position: GridPosition) -> Int {
+    switch self {
+      case .columnIsHorizontal: position.column
+      case .rowIsHorizontal: position.row
+    }
+  }
+  
+  /// Returns the vertical index (usually row) based on the convention.
+  public func verticalValue(for position: GridPosition) -> Int {
+    switch self {
+      case .columnIsHorizontal: position.row
+      case .rowIsHorizontal: position.column
+    }
+  }
+  
+  /// Creates a GridPosition by mapping horizontal/vertical inputs to row/column storage.
+  public func makeGridPosition(h: Int, v: Int) -> GridPosition {
+    switch self {
+      case .columnIsHorizontal: GridPosition(row: v, column: h)
+      case .rowIsHorizontal: GridPosition(row: h, column: v)
+    }
+  }
+  
+  // MARK: - GridSize
+  
+  /// Returns the horizontal length from a size, according to the convention.
+  public func horizontalLength(gridSize: GridSize) -> GridLength {
+    switch self {
+      case .columnIsHorizontal: gridSize.columns
+      case .rowIsHorizontal: gridSize.rows
+    }
+  }
+  
+  /// Returns the vertical length from a size, according to the convention.
+  public func verticalLength(gridSize: GridSize) -> GridLength {
+    switch self {
+      case .columnIsHorizontal: gridSize.rows
+      case .rowIsHorizontal: gridSize.columns
+    }
+  }
+  
+  public func makeGridSize(h: GridLength, v: GridLength) -> GridSize {
+    switch self {
+      case .columnIsHorizontal: GridSize(columns: h, rows: v)
+      case .rowIsHorizontal: GridSize(columns: v, rows: h)
+        
+    }
+  }
+  
+  //  public func makeGridSize(
+  //    h: CGFloat,
+  //    v: CGFloat,
+  //    unitSize: CGSize
+  //  ) -> GridSize {
+  //    switch self {
+  //      case .columnIsHorizontal:
+  //        return GridSize(columns: h, rows: v)
+  //
+  //      case .rowIsHorizontal:
+  //        return GridSize(columns: v, rows: h)
+  //
+  //    }
+  //  }
 }

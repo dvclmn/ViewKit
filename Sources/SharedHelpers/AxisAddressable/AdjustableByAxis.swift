@@ -22,6 +22,10 @@ import Foundation
 public protocol AdjustableByAxis: AxisAddressable {}
 public protocol AdjustableByGridAxis: GridAxisAddressable {}
 
+// MARK: - Adjustable
+extension CGSize: AdjustableByAxis {}
+extension CGPoint: AdjustableByAxis {}
+
 extension AdjustableByAxis {
 
   public func adjust(
