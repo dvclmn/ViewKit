@@ -34,6 +34,9 @@ public enum AxisConvention: Sendable {
   case heightIsHorizontal
 
   public static let `default`: Self = .widthIsHorizontal
+}
+
+extension AxisConvention {
 
   // MARK: - EdgeInsets
   public func horizontalLength(edgeInsets: EdgeInsets) -> CGFloat {
@@ -122,63 +125,6 @@ public enum AxisConvention: Sendable {
 
       case .heightIsHorizontal:
         return CGPoint(x: vertical, y: horizontal)
-
-    }
-  }
-
-  // MARK: - GridPosition
-
-  /// Returns the horizontal index (usually column) based on the convention.
-  public func horizontalIndex(for position: GridPosition) -> Int {
-    switch self {
-      case .widthIsHorizontal: position.column
-      case .heightIsHorizontal: position.row
-    }
-  }
-
-  /// Returns the vertical index (usually row) based on the convention.
-  public func verticalIndex(for position: GridPosition) -> Int {
-    switch self {
-      case .widthIsHorizontal: position.row
-      case .heightIsHorizontal: position.column
-    }
-  }
-  /// Creates a GridPosition by mapping horizontal/vertical inputs to row/column storage.
-  public func makeGridPosition(horizontal: Int, vertical: Int) -> GridPosition {
-    switch self {
-      case .widthIsHorizontal:
-        return GridPosition(row: vertical, column: horizontal)
-      case .heightIsHorizontal:
-        return GridPosition(row: horizontal, column: vertical)
-    }
-  }
-
-  // MARK: - GridSize
-
-  /// Returns the horizontal length from a size, according to the convention.
-  public func horizontalLength(gridSize: GridSize) -> GridLength {
-    switch self {
-      case .widthIsHorizontal: gridSize.columns
-      case .heightIsHorizontal: gridSize.rows
-    }
-  }
-
-  /// Returns the vertical length from a size, according to the convention.
-  public func verticalLength(gridSize: GridSize) -> GridLength {
-    switch self {
-      case .widthIsHorizontal: gridSize.rows
-      case .heightIsHorizontal: gridSize.columns
-    }
-  }
-
-  /// Creates a `CGPoint` by mapping horizontal/vertical inputs to x/y storage.
-  public func makeGridSize(horizontal: GridLength, vertical: GridLength) -> GridSize {
-    switch self {
-      case .widthIsHorizontal:
-        return GridSize(columns: horizontal, rows: vertical)
-        
-      case .heightIsHorizontal:
-        return GridSize(columns: vertical, rows: horizontal)
 
     }
   }

@@ -1,0 +1,89 @@
+//
+//  GridAxisConvention.swift
+//  BaseHelpers
+//
+//  Created by Dave Coleman on 7/1/2026.
+//
+
+/// This exists alongside `AxisConvention`, to represent index
+/// space, where `AxisConvention` represents 'dimension' space
+///
+/// In a standard grid, Columns represent the horizontal index (X)
+/// and Rows represent the vertical index (Y)
+public enum GridAxisMapping {
+  case columnIsHorizontal
+  case rowIsHorizontal
+}
+
+extension GridAxisMapping {
+
+  public var rowAxis: Axis2D {
+    switch self {
+      case .columnIsHorizontal: .vertical
+      case .rowIsHorizontal: .horizontal
+    }
+  }
+
+  public var columnAxis: Axis2D {
+    switch self {
+      case .columnIsHorizontal: .horizontal
+      case .rowIsHorizontal: .vertical
+    }
+  }
+}
+
+extension GridAxisMapping {
+
+  /// Returns the horizontal index (usually column) based on the convention.
+  public func horizontalIndex(for position: GridPosition) -> Int {
+    switch self {
+      case .columnIsHorizontal: position.column
+      case .rowIsHorizontal: position.row
+    }
+  }
+
+  /// Returns the vertical index (usually row) based on the convention.
+  public func verticalIndex(for position: GridPosition) -> Int {
+    switch self {
+      case .columnIsHorizontal: position.row
+      case .rowIsHorizontal: position.column
+    }
+  }
+  /// Creates a GridPosition by mapping horizontal/vertical inputs to row/column storage.
+  public func makeGridPosition(horizontal: Int, vertical: Int) -> GridPosition {
+    switch self {
+      case .columnIsHorizontal: GridPosition(row: vertical, column: horizontal)
+      case .rowIsHorizontal: GridPosition(row: horizontal, column: vertical)
+    }
+  }
+
+  // MARK: - GridSize
+
+  /// Returns the horizontal length from a size, according to the convention.
+  public func horizontalLength(gridSize: GridSize) -> GridLength {
+    switch self {
+      case .columnIsHorizontal: gridSize.columns
+      case .rowIsHorizontal: gridSize.rows
+    }
+  }
+
+  /// Returns the vertical length from a size, according to the convention.
+  public func verticalLength(gridSize: GridSize) -> GridLength {
+    switch self {
+      case .columnIsHorizontal: gridSize.rows
+      case .rowIsHorizontal: gridSize.columns
+    }
+  }
+
+  /// Creates a `CGPoint` by mapping horizontal/vertical inputs to x/y storage.
+  public func makeGridSize(horizontal: GridLength, vertical: GridLength) -> GridSize {
+    switch self {
+      case .columnIsHorizontal:
+        return GridSize(columns: horizontal, rows: vertical)
+
+      case .rowIsHorizontal:
+        return GridSize(columns: vertical, rows: horizontal)
+
+    }
+  }
+}
