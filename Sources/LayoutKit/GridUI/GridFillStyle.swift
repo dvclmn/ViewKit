@@ -11,14 +11,4 @@ import SharedHelpers
 public enum GridFillStyle {
   case fixed(columns: Int, rows: Int)
   case fill(size: CGSize)
-  
-  public func size(with unitSize: CGSize) -> GridSize? {
-    switch self {
-      case .fixed(let columns, let rows):
-        GridSize(width: columns, height: rows, unitSize: unitSize)
-        
-      case .fill(let size):
-        GridSize(fromSize: size, unitSize: unitSize)
-    }
-  }
 }

@@ -5,8 +5,9 @@
 //  Created by Dave Coleman on 14/10/2025.
 //
 
-import SwiftUI
 import SharedHelpers
+import SwiftUI
+
 //import GridKit
 
 public struct GridLineConfiguration {
@@ -14,7 +15,7 @@ public struct GridLineConfiguration {
   let cellSize: CGSize
   let colour: Color
   let strokeThickness: CGFloat
-  
+
   public init(
     fillSize: CGSize,
     cellSize: CGSize,
@@ -22,12 +23,12 @@ public struct GridLineConfiguration {
     strokeThickness: CGFloat = 1.0,
   ) {
     self.fillStyle = .fill(size: fillSize)
-    
+
     self.cellSize = cellSize
     self.colour = colour
     self.strokeThickness = strokeThickness
   }
-  
+
   public init(
     columnCount: Int,
     rowCount: Int,
@@ -43,9 +44,16 @@ public struct GridLineConfiguration {
 }
 
 extension GridLineConfiguration {
+  
   public var gridSize: GridSize? {
     let unitSize = self.cellSize
-    let size = fillStyle.size(with: unitSize)
-    return size
+
+    return switch fillStyle {
+      case .fixed(let columns, let rows):
+        GridSize(width: columns, height: rows, unitSize: unitSize)
+
+      case .fill(let size):
+        GridSize(fromSize: size, unitSize: unitSize)
+    }
   }
 }
