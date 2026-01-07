@@ -23,11 +23,14 @@ extension UnitPoint {
   }
   public func offset(
     by size: CGSize,
-    convention: AxisConvention = .widthIsHorizontal
+    mapping: AxisMapping = .default,
+//    convention: AxisConvention = .widthIsHorizontal
   ) -> CGSize {
     offset(
-      dx: convention.horizontalLength(size: size),
-      dy: convention.verticalLength(size: size)
+      dx: size.value(along: .horizontal, mapping: mapping),
+      dy: size.value(along: .vertical, mapping: mapping),
+//      dx: convention.horizontalLength(size: size),
+//      dy: convention.verticalLength(size: size)
     )
   }
   

@@ -37,18 +37,18 @@ extension GridPosition {
   /// Canvas Space
   ///
   /// `point` must already be mapped to local Canvas space
-//  public init(
-//    point: CGPoint,
-//    cellSize: CGSize
-//  ) {
-//    /// `floor()` here maps a continuous coordinate to the
-//    /// nearest lower integer, effectively identifying which grid cell
-//    /// the point belongs to.
-//    let col = Int(floor(point.x / cellSize.width))
-//    let row = Int(floor(point.y / cellSize.height))
-//
-//    self.init(row: row, column: col)
-//  }
+  //  public init(
+  //    point: CGPoint,
+  //    cellSize: CGSize
+  //  ) {
+  //    /// `floor()` here maps a continuous coordinate to the
+  //    /// nearest lower integer, effectively identifying which grid cell
+  //    /// the point belongs to.
+  //    let col = Int(floor(point.x / cellSize.width))
+  //    let row = Int(floor(point.y / cellSize.height))
+  //
+  //    self.init(row: row, column: col)
+  //  }
 
   public init(_ row: Int, _ column: Int) {
     self.row = row
@@ -58,8 +58,6 @@ extension GridPosition {
   //  var row: Int { x }
   //  var column: Int { y }
 }
-
-
 
 extension GridPosition: CustomStringConvertible {
   public var description: String {

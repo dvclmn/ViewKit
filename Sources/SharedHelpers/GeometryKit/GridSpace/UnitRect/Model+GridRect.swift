@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SharedHelpers
 
 public struct GridRect: ModelBase {
   public let origin: GridPosition

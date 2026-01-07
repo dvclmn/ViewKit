@@ -76,6 +76,6 @@ public struct GridGeometry: Sendable, Equatable {
   }
 
   public var canvasSize: CGSize {
-    dimensions.toCGSize(withCellSize: unitSize)
+    dimensions.screenSize(using: unitSize)
   }
 }

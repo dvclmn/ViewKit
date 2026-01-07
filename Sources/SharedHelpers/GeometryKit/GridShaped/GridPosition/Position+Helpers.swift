@@ -36,12 +36,13 @@ extension GridPosition {
     cellSize: CGSize
   ) -> GridPosition? {
 
-    /// The grid size conversion is *only* to check whether the point is contained.
-    /// The cellSize is not used to construct the
-    let gridSize = dimensions.toUnitSize(unitSize: cellSize)
-    let containsPoint = gridSize.contains(point: point)
-    
-    let position = GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
+    fatalError("Needs implementation")
+//    /// The grid size conversion is *only* to check whether the point is contained.
+//    /// The cellSize is not used to construct the
+//    let gridSize = dimensions.toUnitSize(unitSize: cellSize)
+//    let containsPoint = gridSize.contains(point: point)
+//    
+//    let position = GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
 //    guard dimensions.contains(point: point, cellSize: cellSize) else { return nil }
 //    return GridPosition(point: point, cellSize: cellSize)
   }
