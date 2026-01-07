@@ -29,7 +29,7 @@ extension AdjustableByAxis {
     newValue: Value,
     convention: AxisConvention = .default
   ) -> Self {
-    setting(newValue, for: axis, convention: convention)
+    setting(newValue, along: axis, convention: convention)
   }
 
   public func adjust(
@@ -37,9 +37,9 @@ extension AdjustableByAxis {
     transform: (Value) -> Value,
     convention: AxisConvention = .default
   ) -> Self {
-    let current = value(for: axis, convention: convention)
+    let current = value(along: axis, convention: convention)
     let transformed = transform(current)
-    return setting(transformed, for: axis, convention: convention)
+    return setting(transformed, along: axis, convention: convention)
   }
 
 }
@@ -51,21 +51,21 @@ extension AdjustableByAxis where Value: BinaryFloatingPoint {
     return self.adjustBoth { ($0 * factor, $1 * factor) }
   }
 
-//  public func multiplyBoth(
-//    by factorProvider: Self,
-//    //        _ axis: Axis2D,
-//    //    transform: (Value) -> Value,
-//    convention: AxisConvention = .default
-//  ) -> Self {
-//    //    let current = value(for: axis, convention: convention)
-//    //    let transformed = transform(current)
-//    //    return setting(transformed, for: axis, convention: convention)
-//    let factorA = factorProvider.value(for: .horizontal, convention: convention)
-//    let factorB = factorProvider.value(for: .vertical, convention: convention)
-//    return self.adjustBoth(convention: convention) { a, b in
-//      (a * factorA, b * factorB)
-//    }
-//  }
+  //  public func multiplyBoth(
+  //    by factorProvider: Self,
+  //    //        _ axis: Axis2D,
+  //    //    transform: (Value) -> Value,
+  //    convention: AxisConvention = .default
+  //  ) -> Self {
+  //    //    let current = value(for: axis, convention: convention)
+  //    //    let transformed = transform(current)
+  //    //    return setting(transformed, for: axis, convention: convention)
+  //    let factorA = factorProvider.value(for: .horizontal, convention: convention)
+  //    let factorB = factorProvider.value(for: .vertical, convention: convention)
+  //    return self.adjustBoth(convention: convention) { a, b in
+  //      (a * factorA, b * factorB)
+  //    }
+  //  }
 
   /// Multiply both axes by the same factor
   public func divideBoth(by divisor: Value) -> Self {
@@ -76,24 +76,24 @@ extension AdjustableByAxis where Value: BinaryFloatingPoint {
     }
   }
 
-//  public func divideBoth(
-//    by divisorProvider: Self,
-//    //        _ axis: Axis2D,
-//    //    transform: (Value) -> Value,
-//    convention: AxisConvention = .default
-//  ) -> Self {
-//    //    let current = value(for: axis, convention: convention)
-//    //    let transformed = transform(current)
-//    //    return setting(transformed, for: axis, convention: convention)
-//    let divisorA = divisorProvider.value(for: .horizontal, convention: convention)
-//    let divisorB = divisorProvider.value(for: .vertical, convention: convention)
-//    //    let needsDivision = self.value(for: axis, convention: convention)
-//    return self.adjustBoth(convention: convention) { a, b in
-//      let aSafe = Swift.max(0, a / divisorA)
-//      let bSafe = Swift.max(0, b / divisorB)
-//      return (aSafe, bSafe)
-//    }
-//  }
+  //  public func divideBoth(
+  //    by divisorProvider: Self,
+  //    //        _ axis: Axis2D,
+  //    //    transform: (Value) -> Value,
+  //    convention: AxisConvention = .default
+  //  ) -> Self {
+  //    //    let current = value(for: axis, convention: convention)
+  //    //    let transformed = transform(current)
+  //    //    return setting(transformed, for: axis, convention: convention)
+  //    let divisorA = divisorProvider.value(for: .horizontal, convention: convention)
+  //    let divisorB = divisorProvider.value(for: .vertical, convention: convention)
+  //    //    let needsDivision = self.value(for: axis, convention: convention)
+  //    return self.adjustBoth(convention: convention) { a, b in
+  //      let aSafe = Swift.max(0, a / divisorA)
+  //      let bSafe = Swift.max(0, b / divisorB)
+  //      return (aSafe, bSafe)
+  //    }
+  //  }
 
   /// Have made this a private-only helper for the above, because I was concerned that the whole
   /// convention thing is not even enforced here, which seems like a recipe for disaster.
@@ -101,12 +101,12 @@ extension AdjustableByAxis where Value: BinaryFloatingPoint {
     convention: AxisConvention = .default,
     transform: (Value, Value) -> (Value, Value),
   ) -> Self {
-    let h = value(for: .horizontal, convention: convention)
-    let v = value(for: .vertical, convention: convention)
+    let h = value(along: .horizontal, convention: convention)
+    let v = value(along: .vertical, convention: convention)
     let (newH, newV) = transform(h, v)
 
-    let result = self.setting(newH, for: .horizontal, convention: convention)
-      .setting(newV, for: .vertical, convention: convention)
+    let result = self.setting(newH, along: .horizontal, convention: convention)
+      .setting(newV, along: .vertical, convention: convention)
     return result
   }
 }

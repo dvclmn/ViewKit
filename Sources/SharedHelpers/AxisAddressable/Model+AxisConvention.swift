@@ -53,7 +53,10 @@ extension AxisConvention {
     }
   }
   /// Creates `EdgeInsets` by mapping horizontal/vertical inputs
-  public func makeEdgeInsets(h: CGFloat, v: CGFloat) -> EdgeInsets {
+  public func makeEdgeInsets(
+    h: CGFloat,
+    v: CGFloat
+  ) -> EdgeInsets {
     switch self {
       case .widthIsHorizontal: EdgeInsets(top: v, leading: h, bottom: v, trailing: h)
       case .heightIsHorizontal: EdgeInsets(top: h, leading: v, bottom: h, trailing: v)
