@@ -14,14 +14,6 @@ extension CGPoint: AdjustableByAxis {}
 // MARK: - Addressable
 extension CGSize: AxisAddressable {
 
-  /// Adds a method with naming more suited to CGSize specifically
-  public func length(
-    along axis: Axis2D,
-    convention: AxisConvention = .default
-  ) -> CGFloat {
-    self.value(along: axis, convention: convention)
-  }
-
   public func value(
     along axis: Axis2D,
     convention: AxisConvention

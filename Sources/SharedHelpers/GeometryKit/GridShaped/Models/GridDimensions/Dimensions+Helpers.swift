@@ -9,36 +9,15 @@ import Foundation
 
 // MARK: - Containment Methods
 extension GridDimensions {
-  /// Checks if a point (in pixel coordinates) falls within the grid bounds
-  public func contains(point: CGPoint, cellSize: CGSize) -> Bool {
-    let gridSize = toCGSize(withCellSize: cellSize)
-    return point.x >= 0
-    && point.y >= 0
-    && point.x < gridSize.width
-    && point.y < gridSize.height
-  }
   
-  /// Checks if a grid position is within valid bounds
-  public func contains(position: GridPosition) -> Bool {
-    return position.column >= 0 && position.column < width && position.row >= 0 && position.row < height
-  }
-  
-  /// Convenience method: converts point to position and checks if it's valid
-  public func containsValidPosition(for point: CGPoint, cellSize: CGSize) -> Bool {
-    let gridPosition = position(for: point, cellSize: cellSize)
-    return contains(position: gridPosition)
-  }
+  /// These have moved to GridSize.
+
 }
 
 
 // MARK: - Coordinate Conversion
 extension GridDimensions {
-  public func position(for point: CGPoint, cellSize: CGSize) -> GridPosition {
-    GridPosition(
-      row: Int(floor(point.y / cellSize.height)),
-      column: Int(floor(point.x / cellSize.width)),
-    )
-  }
+  
 }
 
 // MARK: - Size Calculations

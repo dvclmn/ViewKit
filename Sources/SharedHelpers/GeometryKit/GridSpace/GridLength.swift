@@ -20,11 +20,11 @@ public struct GridLength: Hashable, Codable {
 
   /// Prefer use of ``gridLength``, to better pair with ``screenLength``
   private var count: Int
-  public var unit: CGFloat
+  public var unitLength: CGFloat
 
-  public init(count: Int, unit: CGFloat) {
+  public init(count: Int, unitLength: CGFloat) {
     self.count = count
-    self.unit = unit
+    self.unitLength = unitLength
   }
 
   public init?(
@@ -36,7 +36,7 @@ public struct GridLength: Hashable, Codable {
     guard let unitSize else { return nil }
     let unitLength = unitSize.length(along: axis.toAxis2D, convention: convention)
     self.count = count
-    self.unit = unitLength
+    self.unitLength = unitLength
   }
 
   public init?(
@@ -49,7 +49,7 @@ public struct GridLength: Hashable, Codable {
       return nil
     }
     self.count = count
-    self.unit = unit
+    self.unitLength = unit
   }
 }
 
@@ -59,12 +59,12 @@ extension GridLength {
   public var screenLength: CGFloat { screenLength() }
 
   public func screenLength(fallback: CGFloat = 0) -> CGFloat {
-    count.toScreenLength(using: unit) ?? fallback
+    count.toScreenLength(using: unitLength) ?? fallback
   }
 
   public func clamped(min: Int, max: Int) -> Self {
     let newCount = self.count.clamped(min, max)
-    return GridLength(count: newCount, unit: self.unit)
+    return GridLength(count: newCount, unitLength: self.unitLength)
   }
 }
 

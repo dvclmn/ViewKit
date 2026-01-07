@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 //import SharedHelpers
 //public typealias GridSizeCounts = (width: Int, height: Int)
 
@@ -34,11 +35,13 @@ extension GridSize {
 
   private var unitSize: CGSize {
     return CGSize(
-      width: columns.unit,
-      height: rows.unit
+      width: columns.unitLength,
+      height: rows.unitLength
     )
   }
 }
+
+
 
 public func * (lhs: CGSize, rhs: GridSize) -> CGSize {
   let w = lhs.width * CGFloat(rhs.width)
@@ -59,10 +62,9 @@ public func - (lhs: CGSize, rhs: GridSize) -> CGSize {
   return CGSize(width: w, height: h)
 }
 
-
 extension GridSize: CustomStringConvertible {
   public var description: String {
-//    let scrWidth: String = screenWidth.formatted()
+    //    let scrWidth: String = screenWidth.formatted()
     return "W: \(screenWidth) (\(width))\nH: \(screenHeight) (\(height))"
   }
 }

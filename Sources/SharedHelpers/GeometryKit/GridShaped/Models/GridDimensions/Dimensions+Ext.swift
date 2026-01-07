@@ -16,12 +16,15 @@ extension String {
 }
 
 extension CGSize {
-  public init(fromGrid dimensions: GridDimensions) {
-    self.init(
-      width: CGFloat(dimensions.width),
-      height: CGFloat(dimensions.height)
-    )
-  }
+  /// This seems silly, not sure when I'll need to create a tiny CGSize
+  /// like this, from small integer numbers.
+  /// More likely to need functionality like from GridSize, using a unitsize.
+//  public init(fromGrid dimensions: GridDimensions) {
+//    self.init(
+//      width: CGFloat(dimensions.width),
+//      height: CGFloat(dimensions.height)
+//    )
+//  }
 }
 
 

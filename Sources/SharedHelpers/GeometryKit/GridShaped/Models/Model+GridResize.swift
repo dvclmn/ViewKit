@@ -27,15 +27,16 @@ public struct GridResizeHelper<Grid: GridShaped> {
 }
 extension GridResizeHelper {
 
-  var cellSize: CGSize { oldGeometry.cellSize }
+  var unitSize: CGSize { oldGeometry.unitSize }
 
   public var resizeDelta: GridDelta {
 
     let oldDimensions = oldGeometry.dimensions
-    let newDimensions = GridDimensions(
-      size: newSize,
-      cellSize: cellSize,
-    )
+    let newDimensions = GridDimensions(<#T##width: Int##Int#>, <#T##height: Int##Int#>)
+//    let newDimensions = GridDimensions(
+//      size: newSize,
+//      cellSize: cellSize,
+//    )
     assert(
       boundaryPoint
         .isValidSizeDelta(
@@ -58,7 +59,7 @@ extension GridResizeHelper {
 
 // MARK: - Grid Geometry
 public struct GridGeometry: Sendable, Equatable {
-  public let cellSize: CGSize
+  public let unitSize: CGSize // Aka Cell size
   public let dimensions: GridDimensions
 
   public static let zero = GridGeometry(
@@ -70,11 +71,11 @@ public struct GridGeometry: Sendable, Equatable {
     cellSize: CGSize,
     dimensions: GridDimensions
   ) {
-    self.cellSize = cellSize
+    self.unitSize = cellSize
     self.dimensions = dimensions
   }
 
   public var canvasSize: CGSize {
-    dimensions.toCGSize(withCellSize: cellSize)
+    dimensions.toCGSize(withCellSize: unitSize)
   }
 }

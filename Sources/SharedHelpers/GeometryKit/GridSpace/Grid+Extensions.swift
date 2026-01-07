@@ -104,20 +104,7 @@ extension CGSize {
     rounding: GridRounding = .down
   ) -> GridSize? {
     GridSize(fromSize: self, unitSize: unitSize, rounding: rounding)
-//    guard let gridWidth = self.width.toGridCount(using: unitSize.width, rounding: rounding),
-//      let gridHeight = self.height.toGridCount(using: unitSize.height, rounding: rounding)
-//    else { return nil }
-//    return GridSize(width: gridWidth, height: gridHeight, unitSize: unitSize)
   }
-
-  //  public func toGridDimensions(
-  //    using unitSize: CGSize,
-  //    rounding: GridRounding = .down
-  //  ) -> GridDimensions? {
-  //    let size = self.toGridSize(using: unitSize, rounding: rounding)
-  //    return size?.gridDimensions
-  //  }
-
 }
 
 extension Optional where Wrapped == CGSize {
@@ -125,8 +112,6 @@ extension Optional where Wrapped == CGSize {
     _ count: Int,
     along axis: Axis2D,
   ) -> CGFloat? {
-    //    guard let unitSize = self else { return nil }
-    //    return unitSize.to
     return count.toScreenLength(along: axis, using: self)
   }
 }
