@@ -5,14 +5,18 @@
 //  Created by Dave Coleman on 7/1/2026.
 //
 
+import Foundation
+
 /// This exists alongside `AxisConvention`, to represent index
 /// space, where `AxisConvention` represents 'dimension' space
 ///
 /// In a standard grid, Columns represent the horizontal index (X)
 /// and Rows represent the vertical index (Y)
-public enum GridAxisConvention {
+public enum GridAxisConvention: Sendable {
   case columnIsHorizontal
   case rowIsHorizontal
+
+  public static let `default`: Self = .columnIsHorizontal
 }
 
 extension GridAxisConvention {
@@ -76,15 +80,26 @@ extension GridAxisConvention {
     }
   }
 
-  /// Creates a `CGPoint` by mapping horizontal/vertical inputs to x/y storage.
   public func makeGridSize(h: GridLength, v: GridLength) -> GridSize {
     switch self {
-      case .columnIsHorizontal:
-        return GridSize(columns: h, rows: v)
-
-      case .rowIsHorizontal:
-        return GridSize(columns: v, rows: h)
+      case .columnIsHorizontal: GridSize(columns: h, rows: v)
+      case .rowIsHorizontal: GridSize(columns: v, rows: h)
 
     }
   }
+
+  //  public func makeGridSize(
+  //    h: CGFloat,
+  //    v: CGFloat,
+  //    unitSize: CGSize
+  //  ) -> GridSize {
+  //    switch self {
+  //      case .columnIsHorizontal:
+  //        return GridSize(columns: h, rows: v)
+  //
+  //      case .rowIsHorizontal:
+  //        return GridSize(columns: v, rows: h)
+  //
+  //    }
+  //  }
 }

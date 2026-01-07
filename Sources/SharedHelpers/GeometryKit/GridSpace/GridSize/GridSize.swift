@@ -10,7 +10,8 @@ import Foundation
 /// Equivalent to `CGSize`
 public struct GridSize: Hashable, Codable {
 
-  /// Columns == Width
+  /// Columns == Width is the more common convention.
+  ///
   public var columns: GridLength
 
   /// Rows == Height
@@ -28,36 +29,36 @@ public struct GridSize: Hashable, Codable {
 // MARK: - Initialisers
 extension GridSize {
 
-  public init(
-    size: CGSize,
-    cellSize: CGSize,
-    strategy: SnapStrategy = .round,
-    convention: AxisConvention = .default
-  ) {
-    
-    let sizeRaw = size.divideBoth(by: cellSize, convention: convention)
-    //    let sizeRaw = self.adjustBoth(convention: convention) { h, v in
-    //      return (h / cellSize.width, v / cellSize.length)
-    //    }
-    
-    //    let colsRaw = sizeRaw.length(along: , convention: convention)
-    //    let colsRaw = sizeRaw.width / cellSize.width
-    //    let rowsRaw = sizeRaw.height / cellSize.height
-    
-    let width: Int = strategy.snapped(sizeRaw.width)
-    let height: Int = strategy.snapped(sizeRaw.height)
-
-    self.init(width: width, height: height, unitSize: cellSize)
-//    let dimensions = size.cellSnappedSize(
-//      cellSize: cellSize,
-//      strategy: strategy
-//    )
-//    
-//    self.init(width: <#T##Int#>, height: <#T##Int#>, unitSize: <#T##CGSize#>)
-    
-//    self.init(width: <#T##Int#>, height: <#T##Int#>, unitSize: <#T##CGSize#>)
-//    self.init(width: dimensions.width, height: dimensions.height)
-  }
+  //  public init(
+  //    size: CGSize,
+  //    cellSize: CGSize,
+  //    strategy: SnapStrategy = .round,
+  //    convention: AxisConvention = .default
+  //  ) {
+  //
+  //    let sizeRaw = size.divideBoth(by: cellSize, convention: convention)
+  //    //    let sizeRaw = self.adjustBoth(convention: convention) { h, v in
+  //    //      return (h / cellSize.width, v / cellSize.length)
+  //    //    }
+  //
+  //    //    let colsRaw = sizeRaw.length(along: , convention: convention)
+  //    //    let colsRaw = sizeRaw.width / cellSize.width
+  //    //    let rowsRaw = sizeRaw.height / cellSize.height
+  //
+  //    let width: Int = strategy.snapped(sizeRaw.width)
+  //    let height: Int = strategy.snapped(sizeRaw.height)
+  //
+  //    self.init(width: width, height: height, unitSize: cellSize)
+  ////    let dimensions = size.cellSnappedSize(
+  ////      cellSize: cellSize,
+  ////      strategy: strategy
+  ////    )
+  ////
+  ////    self.init(width: <#T##Int#>, height: <#T##Int#>, unitSize: <#T##CGSize#>)
+  //
+  ////    self.init(width: <#T##Int#>, height: <#T##Int#>, unitSize: <#T##CGSize#>)
+  ////    self.init(width: dimensions.width, height: dimensions.height)
+  //  }
 
   public init(
     width: Int,
@@ -73,24 +74,26 @@ extension GridSize {
   public init?(
     fromSize size: CGSize?,
     unitSize: CGSize?,
-    rounding: GridRounding = .down
+    rounding: GridRounding = .down,
   ) {
 
-    guard let size, let unitSize else { return nil }
-    let width = size.toGridCount(
-      along: .horizontal,
-      using: unitSize,
-      rounding: rounding
-    )
+    /// Note: no need for `GridAxisConvention` here, as the input `size`
+    /// and the `uniSize`'s axes are being operated on consistently, not
+    /// being mixed around etc.
 
-    let height = size.toGridCount(
-      along: .vertical,
-      using: unitSize,
-      rounding: rounding
-    )
-    guard let width, let height else { return nil }
+    guard let size,
+      let unitSize,
+      let gridWidth = size.width.toGridCount(
+        using: unitSize.width,
+        rounding: rounding
+      ),
+      let gridHeight = size.height.toGridCount(
+        using: unitSize.height,
+        rounding: rounding
+      )
+    else { return nil }
 
-    self.init(width: width, height: height, unitSize: unitSize)
+    self.init(width: gridWidth, height: gridHeight, unitSize: unitSize)
   }
 
 }

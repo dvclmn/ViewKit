@@ -32,7 +32,7 @@ let package = Package(
     .library(name: "CanvasKit", targets: ["CanvasKit"]),
     .library(name: "ColourKit", targets: ["ColourKit"]),
     .library(name: "GestureKit", targets: ["GestureKit"]),
-    .library(name: "GridKit", targets: ["GridKit"]),
+//    .library(name: "GridKit", targets: ["GridKit"]),
 //    .library(name: "GridUI", targets: ["GridUI"]),
     .library(name: "VectorKit", targets: ["VectorKit"]),
     .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
@@ -110,7 +110,7 @@ let package = Package(
       name: "BaseTypes",
       dependencies: [
         .module(.coreTools),
-        .module(.gridKit),
+//        .module(.gridKit),
         .identifiedCollections,
         .sharing,
       ],
@@ -150,15 +150,15 @@ let package = Package(
       ]
     ),
 
-    .target(
-      name: "GridKit",
-      dependencies: [
-        .module(.sharedHelpers),
-//        .module(.coreTools),
-//        .module(.colourKit),
-//        .module(.layoutKit),
-      ]
-    ),
+//    .target(
+//      name: "GridKit",
+//      dependencies: [
+//        .module(.sharedHelpers),
+////        .module(.coreTools),
+////        .module(.colourKit),
+////        .module(.layoutKit),
+//      ]
+//    ),
 
 //    .target(
 //      name: "GridUI",
@@ -204,7 +204,7 @@ let package = Package(
       name: "Wrecktangle",
       dependencies: [
         .module(.coreTools),
-        .module(.gridKit),
+//        .module(.gridKit),
         .module(.baseTypes),
       ]
     ),
@@ -260,7 +260,7 @@ enum BaseModule {
   case vectorKit
   case gestureKit
   case graphicsKit
-  case gridKit
+//  case gridKit
   case layoutKit
   case motionKit
   case sharedHelpers
@@ -282,7 +282,7 @@ enum BaseModule {
       case .vectorKit: "VectorKit"
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
-      case .gridKit: "GridKit"
+//      case .gridKit: "GridKit"
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
       case .sharedHelpers: "SharedHelpers"

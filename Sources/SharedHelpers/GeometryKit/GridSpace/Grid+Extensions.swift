@@ -21,14 +21,6 @@ extension BinaryFloatingPoint {
   ///   - unitSize: The size that defines a new reference point, where width == 1 unit wide, and height == 1 unit high
   ///   - rounding: Whether to round up or down, when converting floats to integers
   /// - Returns: An integer that represents the number of 'units' that can fit along the length of `self`
-  //  public func toGridCount(
-  //    along axis: Axis,
-  //    using unitSize: CGSize,
-  //    rounding: GridRounding = .down
-  //  ) -> Int? {
-  //    let unitLength = axis.length(fromSize: unitSize)
-  //    return self.toGridCount(using: unitLength, rounding: rounding)
-  //  }
 
   public func toGridCount(
     using unitLength: CGFloat,
@@ -43,15 +35,6 @@ extension BinaryFloatingPoint {
     self > 0 && unitLength > 0 && unitLength.isFinite
   }
 
-  //  public func snappedToGrid(
-  //    along axis: Axis,
-  //    using unitSize: CGSize,
-  //    rounding: GridRounding = .down
-  //  ) -> Self {
-  //    let unitLength = axis.length(fromSize: unitSize)
-  //    return self.snappedToGrid(using: unitLength, rounding: rounding)
-  //  }
-  //
   /// Returns `self`, but having gone through the `toGridCount`
   /// process, and then `toScreenLength`, resulting in a value
   /// that's still a float, but now 'quantised' to the integer equivalent
@@ -82,11 +65,12 @@ extension Int {
   }
 
   public func toScreenLength(
-    along axis: Axis,
+    along axis: Axis2D,
+    convention: AxisConvention = .default,
     using unitSize: CGSize?,
   ) -> CGFloat? {
     guard let unitSize else { return nil }
-    let length = axis.length(fromSize: unitSize)
+    let length = unitSize.length(along: axis, convention: convention)
     return toScreenLength(using: length)
   }
 
@@ -103,12 +87,15 @@ extension CGSize {
 
   /// The axis is justified here, as we need to specify the edge for `self`
   public func toGridCount(
-    along axis: Axis,
+    along axis: Axis2D,
+    convention: AxisConvention = .default,
     using unitSize: CGSize,
     rounding: GridRounding = .down
   ) -> Int? {
-    let lengthOfSelf = axis.length(fromSize: self)
-    let unitLength = axis.length(fromSize: unitSize)
+
+    /// Ensures the same convention is used for extracting both length values
+    let lengthOfSelf = self.length(along: axis, convention: convention)
+    let unitLength = unitSize.length(along: axis, convention: convention)
     return lengthOfSelf.toGridCount(using: unitLength, rounding: rounding)
   }
 
@@ -116,29 +103,30 @@ extension CGSize {
     using unitSize: CGSize,
     rounding: GridRounding = .down
   ) -> GridSize? {
-    guard let gridWidth = self.width.toGridCount(using: unitSize.width, rounding: rounding),
-      let gridHeight = self.height.toGridCount(using: unitSize.height, rounding: rounding)
-    else { return nil }
-    return GridSize(width: gridWidth, height: gridHeight, unitSize: unitSize)
+    GridSize(fromSize: self, unitSize: unitSize, rounding: rounding)
+//    guard let gridWidth = self.width.toGridCount(using: unitSize.width, rounding: rounding),
+//      let gridHeight = self.height.toGridCount(using: unitSize.height, rounding: rounding)
+//    else { return nil }
+//    return GridSize(width: gridWidth, height: gridHeight, unitSize: unitSize)
   }
 
-//  public func toGridDimensions(
-//    using unitSize: CGSize,
-//    rounding: GridRounding = .down
-//  ) -> GridDimensions? {
-//    let size = self.toGridSize(using: unitSize, rounding: rounding)
-//    return size?.gridDimensions
-//  }
+  //  public func toGridDimensions(
+  //    using unitSize: CGSize,
+  //    rounding: GridRounding = .down
+  //  ) -> GridDimensions? {
+  //    let size = self.toGridSize(using: unitSize, rounding: rounding)
+  //    return size?.gridDimensions
+  //  }
 
 }
 
 extension Optional where Wrapped == CGSize {
   public func gridLength(
     _ count: Int,
-    along axis: Axis = .horizontal,
+    along axis: Axis2D,
   ) -> CGFloat? {
-//    guard let unitSize = self else { return nil }
-//    return unitSize.to
+    //    guard let unitSize = self else { return nil }
+    //    return unitSize.to
     return count.toScreenLength(along: axis, using: self)
   }
 }

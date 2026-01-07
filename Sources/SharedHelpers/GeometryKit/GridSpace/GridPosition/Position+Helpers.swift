@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SharedHelpers
 
 extension GridPosition {
   //  public static func createRow(_ rowIndex: Int, columns: Range<Int>) -> [GridPosition] {
@@ -48,7 +47,8 @@ extension GridPosition {
 
   /// Position starting from one, for UI
   public var displayRepresentation: GridPosition {
-    self + 1
+    GridPosition(row: row + 1, column: column + 1)
+//    self + 1
   }
 
   public var isGreaterThanZero: Bool {
