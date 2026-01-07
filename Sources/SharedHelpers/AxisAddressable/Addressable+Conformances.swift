@@ -7,28 +7,6 @@
 
 import SwiftUI
 
-extension CGSize: AxisAddressable {
-  public var identityComponent: CGFloat {
-    get { width }
-    set { width = newValue }
-  }
-  public var transposedComponent: CGFloat {
-    get { height }
-    set { height = newValue }
-  }
-}
-
-extension GridPosition: AxisAddressable {
-  public var identityComponent: Int {
-    get { column }
-    set { column = newValue }
-  }
-  public var transposedComponent: Int {
-    get { row }
-    set { row = newValue }
-  }
-}
-
 extension AxisAddressable where Component: BinaryFloatingPoint {
   /// A helper for when you want to create a new instance from H/V values
   public static func make(
@@ -44,9 +22,77 @@ extension AxisAddressable where Component: BinaryFloatingPoint {
   }
 }
 
+// MARK: - Conformances
+
+extension CGSize: AxisAddressable {
+  public var identityComponent: CGFloat {
+    get { width }
+    set { width = newValue }
+  }
+  public var transposedComponent: CGFloat {
+    get { height }
+    set { height = newValue }
+  }
+}
+
+extension CGRect: AxisAddressable {
+  public var identityComponent: CGFloat {
+    get { size.width }
+    set { size.width = newValue }
+  }
+  public var transposedComponent: CGFloat {
+    get { size.height }
+    set { size.height = newValue }
+  }
+}
+
+extension CGPoint: AxisAddressable {
+  public var identityComponent: CGFloat {
+    get { x }
+    set { x = newValue }
+  }
+  public var transposedComponent: CGFloat {
+    get { y }
+    set { y = newValue }
+  }
+}
+
+extension UnitPoint: AxisAddressable {
+  public var identityComponent: CGFloat {
+    get { x }
+    set { x = newValue }
+  }
+  public var transposedComponent: CGFloat {
+    get { y }
+    set { y = newValue }
+  }
+}
+
+extension GridPosition: AxisAddressable {
+  public var identityComponent: Int {
+    get { column }
+    set { column = newValue }
+  }
+  public var transposedComponent: Int {
+    get { row }
+    set { row = newValue }
+  }
+}
+
+extension GridSize: AxisAddressable {
+  public var identityComponent: GridLength {
+    get { columns }
+    set { columns = newValue }
+  }
+  public var transposedComponent: GridLength {
+    get { rows }
+    set { rows = newValue }
+  }
+}
+
 extension EdgeInsets: AxisAddressable {
   public typealias Component = CGFloat
-  
+
   /// Treat the "Primary/Identity" storage as the Lead/Trail pair
   public var identityComponent: CGFloat {
     get { leading + trailing }
@@ -58,7 +104,7 @@ extension EdgeInsets: AxisAddressable {
       trailing = half
     }
   }
-  
+
   /// Treat the "Secondary/Transposed" storage as the Top/Bottom pair
   public var transposedComponent: CGFloat {
     get { top + bottom }
@@ -144,7 +190,7 @@ extension EdgeInsets: AxisAddressable {
 //
 //// MARK: - UnitPoint
 //extension UnitPoint: AxisAddressable {
-//  
+//
 //  public func value(
 //    along axis: Axis2D,
 //    convention: AxisConvention
@@ -154,7 +200,7 @@ extension EdgeInsets: AxisAddressable {
 //      case .vertical: convention.verticalValue(for: self)
 //    }
 //  }
-//  
+//
 //  public func setting(
 //    _ newValue: CGFloat,
 //    along axis: Axis2D,

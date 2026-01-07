@@ -10,10 +10,11 @@ import SharedHelpers
 
 public struct FrameFromGridLength: ViewModifier {
   @Environment(\.unitSize) private var unitSize
+  @Environment(\.axisMapping) private var axisMapping
   
   let axis: Axis
   let length: Int
-  let convention: AxisConvention
+//  let convention: AxisConvention
   let alignment: Alignment
   
   public func body(content: Content) -> some View {

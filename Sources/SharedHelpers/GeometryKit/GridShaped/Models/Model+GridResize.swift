@@ -30,24 +30,24 @@ extension GridResizeHelper {
   var unitSize: CGSize { oldGeometry.unitSize }
 
   public var resizeDelta: GridDelta {
-
-    let oldDimensions = oldGeometry.dimensions
-    let newDimensions = GridDimensions(<#T##width: Int##Int#>, <#T##height: Int##Int#>)
-//    let newDimensions = GridDimensions(
-//      size: newSize,
-//      cellSize: cellSize,
+fatalError("WIP, needs to be completed after changes to GridSize/GridDimensions")
+//    let oldDimensions = oldGeometry.dimensions
+//    let newDimensions = GridDimensions(<#T##width: Int##Int#>, <#T##height: Int##Int#>)
+////    let newDimensions = GridDimensions(
+////      size: newSize,
+////      cellSize: cellSize,
+////    )
+//    assert(
+//      boundaryPoint
+//        .isValidSizeDelta(
+//          from: oldDimensions,
+//          to: newDimensions
+//        ),
+//      "Invalid size delta for boundary point"
 //    )
-    assert(
-      boundaryPoint
-        .isValidSizeDelta(
-          from: oldDimensions,
-          to: newDimensions
-        ),
-      "Invalid size delta for boundary point"
-    )
-    let delta = GridDelta(old: oldDimensions, new: newDimensions)
-
-    return delta
+//    let delta = GridDelta(old: oldDimensions, new: newDimensions)
+//
+//    return delta
   }
 
   public func resize(_ artwork: inout Grid) {

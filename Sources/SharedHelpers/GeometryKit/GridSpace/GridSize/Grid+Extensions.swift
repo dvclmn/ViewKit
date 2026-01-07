@@ -66,7 +66,8 @@ extension Int {
 
   public func toScreenLength(
     along axis: Axis2D,
-    convention: AxisConvention = .default,
+    mapping: AxisMapping = .default,
+//    convention: AxisConvention = .default,
     using unitSize: CGSize?,
   ) -> CGFloat? {
     guard let unitSize else { return nil }

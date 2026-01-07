@@ -110,6 +110,11 @@ extension EnvironmentValues {
   /// Read more: ``GridSize``
   @Entry public var unitSize: CGSize? = nil
   
+  /// App-wide / project-wide mapping convention, for which
+  /// property on a type should be considered the identity vs transposed.
+  /// See ``AxisAddressable``
+  @Entry public var axisMapping: AxisMapping = .identity
+  
   /// Meant as a debug helper, for when I'm not sure who is
   /// consuming this View, or what it's context is.
   @Entry public var viewDescription: String? = nil

@@ -5,7 +5,8 @@
 //  Created by Dave Coleman on 13/10/2025.
 //
 
-import SwiftUI
+//import SwiftUI
+import Foundation
 
 /// Notes:
 /// - `unit` means the original capture of View geometry (such as the
@@ -29,8 +30,9 @@ public struct GridLength: Hashable, Codable {
 
   public init?(
     _ count: Int,
-    axis: Axis,
-    convention: AxisConvention = .default,
+    axis: Axis2D,
+    mapping: AxisMapping = .default,
+//    convention: AxisConvention = .default,
     unitSize: CGSize?
   ) {
     guard let unitSize else { return nil }
@@ -41,38 +43,15 @@ public struct GridLength: Hashable, Codable {
 
   public init?(
     screenLength: CGFloat?,
-    unit: CGFloat?,
+    unitLength: CGFloat?,
     rounding: GridRounding = .down
   ) {
-    guard let screenLength, let unit else { return nil }
-    guard let count = screenLength.toGridCount(using: unit, rounding: rounding) else {
+    guard let screenLength, let unitLength else { return nil }
+    guard let count = screenLength.toGridCount(using: unitLength, rounding: rounding) else {
       return nil
     }
     self.count = count
-    self.unitLength = unit
+    self.unitLength = unitLength
   }
 }
 
-extension GridLength {
-
-  public var gridLength: Int { count }
-  public var screenLength: CGFloat { screenLength() }
-
-  public func screenLength(fallback: CGFloat = 0) -> CGFloat {
-    count.toScreenLength(using: unitLength) ?? fallback
-  }
-
-  public func clamped(min: Int, max: Int) -> Self {
-    let newCount = self.count.clamped(min, max)
-    return GridLength(count: newCount, unitLength: self.unitLength)
-  }
-}
-
-extension GridLength: Comparable {
-  public static func < (
-    lhs: GridLength,
-    rhs: GridLength
-  ) -> Bool {
-    lhs.count < rhs.count
-  }
-}
