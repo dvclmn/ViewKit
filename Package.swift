@@ -171,7 +171,10 @@ let package = Package(
 
     .target(
       name: "LayoutKit",
-      dependencies: [.module(.coreTools)]
+      dependencies: [
+        .module(.coreTools),
+        .module(.vectorKit),
+      ]
     ),
 
     .target(
