@@ -53,12 +53,7 @@ extension AxisMapping {
   
   @available(*, deprecated, renamed: "transposed", message: "Renamed for clarity, please use `.identity` instead")
   public static let primaryIsVertical: Self = .transposed
-  
-  @available(*, deprecated, renamed: "identity", message: "Renamed for clarity, please use `.identity` instead")
-  public static let widthIsHorizontal: Self = .identity
-  
-  @available(*, deprecated, renamed: "transposed", message: "Renamed for clarity, please use `.identity` instead")
-  public static let heightIsHorizontal: Self = .transposed
+
 }
 
 /// A mapping between `Dimension` (width / height) and `Axis` (horizontal / vertical).
@@ -82,10 +77,15 @@ extension AxisMapping {
 ///
 /// Enables deriving correct values from types like
 /// `CGSize`, `CGPoint`, `EdgeInsets` etc
-//public enum AxisConvention: Sendable {
+public enum AxisConvention: Sendable {
+
+  @available(*, deprecated, renamed: "identity", message: "Renamed for clarity, please use `.identity` instead")
+  public static let widthIsHorizontal: Self = { fatalError("Use AxisMapping.identity instead") }()
+  
+  @available(*, deprecated, renamed: "transposed", message: "Renamed for clarity, please use `.identity` instead")
+  public static let heightIsHorizontal: Self = { fatalError("Use AxisMapping.identity instead") }()
+}
 //
-//  case widthIsHorizontal
-//  case heightIsHorizontal
 //
 //  public static let `default`: Self = .widthIsHorizontal
 //}

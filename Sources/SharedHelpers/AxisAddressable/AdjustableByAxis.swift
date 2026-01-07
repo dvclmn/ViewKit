@@ -19,8 +19,7 @@ import Foundation
 /// - Reconstruction
 ///
 /// And lets the convention do the mapping.
-public protocol AdjustableByAxis: AxisAddressable {}
-public protocol AdjustableByGridAxis: GridAxisAddressable {}
+public protocol AdjustableByAxis: AxisKeyPathCompatible {}
 
 // MARK: - Adjustable
 extension CGSize: AdjustableByAxis {}
@@ -30,44 +29,46 @@ extension AdjustableByAxis {
 
   public func adjust(
     _ axis: Axis2D,
-    newValue: Value,
-    convention: AxisConvention = .default
+    newValue: Component,
+    mapping: AxisMapping = .default,
+//    convention: AxisConvention = .default
   ) -> Self {
-    setting(newValue, along: axis, convention: convention)
+    setting(newValue, along: axis, mapping: mapping)
   }
 
   public func adjust(
     _ axis: Axis2D,
-    transform: (Value) -> Value,
-    convention: AxisConvention = .default
+    transform: (Component) -> Component,
+    mapping: AxisMapping = .default,
+//    convention: AxisConvention = .default
   ) -> Self {
-    let current = value(along: axis, convention: convention)
+    let current = value(along: axis, mapping: mapping)
     let transformed = transform(current)
-    return setting(transformed, along: axis, convention: convention)
+    return setting(transformed, along: axis, mapping: mapping)
   }
 
 }
 
-extension AdjustableByAxis where Value: BinaryFloatingPoint {
+extension AdjustableByAxis where Component: BinaryFloatingPoint {
 
   /// Multiply both axes by the same factor
-  public func multiplyBoth(by factor: Value) -> Self {
+  public func multiplyBoth(by factor: Component) -> Self {
     return self.adjustBoth { ($0 * factor, $1 * factor) }
   }
 
   public func multiplyBoth(
     by factorProvider: Self,
     using axis: Axis2D,
-    convention: AxisConvention = .default
+    mapping: AxisMapping = .default,
   ) -> Self {
-    let factor = factorProvider.value(along: axis, convention: convention)
-    return self.adjustBoth(convention: convention) { a, b in
+    let factor = factorProvider.value(along: axis, mapping: mapping)
+    return self.adjustBoth(mapping: mapping) { a, b in
       (a * factor, b * factor)
     }
   }
 
   /// Multiply both axes by the same factor
-  public func divideBoth(by divisor: Value) -> Self {
+  public func divideBoth(by divisor: Component) -> Self {
     return self.adjustBoth { a, b in
       let aSafe = max(0, a / divisor)
       let bSafe = max(0, b / divisor)
@@ -78,11 +79,11 @@ extension AdjustableByAxis where Value: BinaryFloatingPoint {
   public func divideBoth(
     by divisorProvider: Self,
     using axis: Axis2D,
-    convention: AxisConvention = .default
+    mapping: AxisMapping = .default,
   ) -> Self {
 
-    let divisor = divisorProvider.value(along: axis, convention: convention)
-    return self.adjustBoth(convention: convention) { a, b in
+    let divisor = divisorProvider.value(along: axis, mapping: mapping)
+    return self.adjustBoth(mapping: mapping) { a, b in
       let aSafe = Swift.max(0, a / divisor)
       let bSafe = Swift.max(0, b / divisor)
       return (aSafe, bSafe)
@@ -92,15 +93,15 @@ extension AdjustableByAxis where Value: BinaryFloatingPoint {
   /// Have made this a private-only helper for the above, because I was concerned that the whole
   /// convention thing is not even enforced here, which seems like a recipe for disaster.
   private func adjustBoth(
-    convention: AxisConvention = .default,
-    transform: (Value, Value) -> (Value, Value),
+    mapping: AxisMapping = .default,
+    transform: (Component, Component) -> (Component, Component),
   ) -> Self {
-    let h = value(along: .horizontal, convention: convention)
-    let v = value(along: .vertical, convention: convention)
+    let h = value(along: .horizontal, mapping: mapping)
+    let v = value(along: .vertical, mapping: mapping)
     let (newH, newV) = transform(h, v)
 
-    let result = self.setting(newH, along: .horizontal, convention: convention)
-      .setting(newV, along: .vertical, convention: convention)
+    let result = self.setting(newH, along: .horizontal, mapping: mapping)
+      .setting(newV, along: .vertical, mapping: mapping)
     return result
   }
 }

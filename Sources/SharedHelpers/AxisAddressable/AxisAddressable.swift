@@ -21,9 +21,9 @@ public protocol AxisKeyPathCompatible {
 extension AxisKeyPathCompatible {
   public func value(
     along axis: Axis2D,
-    mapping: AxisMapping = .identity
+    mapping: AxisMapping = .default,
   ) -> Component {
-    // Resolve which KeyPath to use based on the axis and the mapping
+    /// Resolve which KeyPath to use based on the axis and the mapping
     let keyPath = mapping.resolve(
       primary: Self.primaryKey,
       secondary: Self.secondaryKey,

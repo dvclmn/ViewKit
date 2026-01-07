@@ -16,6 +16,7 @@ public struct ScrollMaskModifier: ViewModifier {
   /// Establishing that here in this Scroll masking domain,
   /// when talking about width, we mean the *horizontal* axis
   private let axisConvention: AxisConvention = .widthIsHorizontal
+  
 
   let axis: Axis
   let areasToMask: ScrollMaskArea
