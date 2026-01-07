@@ -34,6 +34,10 @@ extension AxisRepresentable {
   public static var allCases: AllCases {
     [Self.horizontal, Self.vertical]
   }
+  
+  public var other: Axis2D {
+    self == .horizontal ? .vertical : .horizontal
+  }
 
   /// Important: This defaults to a``AxisConvention``
   /// of Width == Horizontal and Height == Vertical

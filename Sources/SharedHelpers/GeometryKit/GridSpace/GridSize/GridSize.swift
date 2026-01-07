@@ -31,13 +31,31 @@ extension GridSize {
   public init(
     size: CGSize,
     cellSize: CGSize,
-    strategy: SnapStrategy = .round
+    strategy: SnapStrategy = .round,
+    convention: AxisConvention = .default
   ) {
-    let dimensions = size.cellSnappedDimensions(
-      cellSize: cellSize,
-      strategy: strategy
-    )
-    self.init(columns: dimensions., rows: <#T##GridLength#>)
+    
+    let sizeRaw = size.divideBoth(by: cellSize, convention: convention)
+    //    let sizeRaw = self.adjustBoth(convention: convention) { h, v in
+    //      return (h / cellSize.width, v / cellSize.length)
+    //    }
+    
+    //    let colsRaw = sizeRaw.length(along: , convention: convention)
+    //    let colsRaw = sizeRaw.width / cellSize.width
+    //    let rowsRaw = sizeRaw.height / cellSize.height
+    
+    let width: Int = strategy.snapped(sizeRaw.width)
+    let height: Int = strategy.snapped(sizeRaw.height)
+
+    self.init(width: width, height: height, unitSize: cellSize)
+//    let dimensions = size.cellSnappedSize(
+//      cellSize: cellSize,
+//      strategy: strategy
+//    )
+//    
+//    self.init(width: <#T##Int#>, height: <#T##Int#>, unitSize: <#T##CGSize#>)
+    
+//    self.init(width: <#T##Int#>, height: <#T##Int#>, unitSize: <#T##CGSize#>)
 //    self.init(width: dimensions.width, height: dimensions.height)
   }
 

@@ -7,60 +7,73 @@
 
 import Foundation
 
-public enum SnapStrategy {
-  case floor
-  case ceil
-  case round
-}
 
 extension CGSize {
 
-  public func quantisedCanvasSize(
-    cellSize: CGSize,
+  /// Converts `self` to
+  public func quantised(
+    using cellSize: CGSize,
     strategy: SnapStrategy
   ) -> CGSize {
-    let snappedCounts = cellSnappedDimensions(cellSize: cellSize, strategy: strategy)
+    let snappedCounts = cellSnappedSize(cellSize: cellSize, strategy: strategy)
     return cellSize * snappedCounts
   }
 
   public func cellCount(
-    alongAxis axis: GridAxis,
+    alongAxis axis: Axis2D,
     cellSize: CGSize,
-    strategy: SnapStrategy
+    strategy: SnapStrategy,
+    convention: AxisConvention = .default
   ) -> Int {
-    let dimensions = cellSnappedDimensions(
+    let dimensions = cellSnappedSize(
       cellSize: cellSize,
       strategy: strategy
     )
-    return switch axis {
-      case .column: dimensions.width
-      case .row: dimensions.height
-    }
+    let length = dimensions.value(for: axis, convention: convention)
+    return length.gridLength
+//    let conventionalAxis =
+//    return switch axis {
+//      case .column: dimensions.width
+//      case .row: dimensions.height
+//    }
   }
 
-  public func cellSnappedDimensions(
+  public func cellSnappedSize(
     cellSize: CGSize,
-    strategy: SnapStrategy
-  ) -> GridDimensions {
-    let colsRaw = self.width / cellSize.width
-    let rowsRaw = self.height / cellSize.height
+    strategy: SnapStrategy,
+    convention: AxisConvention = .default
+  ) -> GridSize {
+//  ) -> GridDimensions {
+    
+//    let sizeRaw = self.divideBoth(by: cellSize, convention: convention)
+////    let sizeRaw = self.adjustBoth(convention: convention) { h, v in
+////      return (h / cellSize.width, v / cellSize.length)
+////    }
+//    
+////    let colsRaw = sizeRaw.length(along: <#T##Axis2D#>, convention: convention)
+////    let colsRaw = sizeRaw.width / cellSize.width
+////    let rowsRaw = sizeRaw.height / cellSize.height
+//
+//    let width: Int = strategy.snapped(sizeRaw.width)
+//    let height: Int = strategy.snapped(sizeRaw.height)
 
-    let cols: Int
-    let rows: Int
+//    switch strategy {
+//      case .floor:
+//        cols = Int(floor(colsRaw))
+//        rows = Int(floor(rowsRaw))
+//        
+//      case .ceil:
+//        cols = Int(ceil(colsRaw))
+//        rows = Int(ceil(rowsRaw))
+//        
+//      case .round:
+//        cols = Int(colsRaw.rounded())
+//        rows = Int(rowsRaw.rounded())
+//    }
 
-    switch strategy {
-      case .floor:
-        cols = Int(floor(colsRaw))
-        rows = Int(floor(rowsRaw))
-      case .ceil:
-        cols = Int(ceil(colsRaw))
-        rows = Int(ceil(rowsRaw))
-      case .round:
-        cols = Int(colsRaw.rounded())
-        rows = Int(rowsRaw.rounded())
-    }
-
-    return GridDimensions(width: cols, height: rows)
+    return GridSize(size: self, cellSize: cellSize, strategy: strategy, convention: convention)
+//    return GridSize(width: width, height: height, unitSize: cellSize)
+//    return GridDimensions(width: cols, height: rows)
   }
 
 }

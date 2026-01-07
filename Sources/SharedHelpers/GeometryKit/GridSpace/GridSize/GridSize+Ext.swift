@@ -40,21 +40,23 @@ extension GridSize {
   }
 }
 
+public func * (lhs: CGSize, rhs: GridSize) -> CGSize {
+  let w = lhs.width * CGFloat(rhs.width)
+  let h = lhs.height * CGFloat(rhs.height)
+  return CGSize(width: w, height: h)
+}
 
-extension AxisConvention {
-  public func horizontalLength(size: GridSize) -> GridLength {
-    switch self {
-      case .widthIsHorizontal: size.columns
-      case .heightIsHorizontal: size.rows
-    }
-  }
-  
-  public func verticalLength(size: GridSize) -> GridLength {
-    switch self {
-      case .widthIsHorizontal: size.rows
-      case .heightIsHorizontal: size.columns
-    }
-  }
+/// Adds
+public func + (lhs: CGSize, rhs: GridSize) -> CGSize {
+  let w = lhs.width + CGFloat(rhs.width)
+  let h = lhs.height + CGFloat(rhs.height)
+  return CGSize(width: w, height: h)
+}
+
+public func - (lhs: CGSize, rhs: GridSize) -> CGSize {
+  let w = lhs.width - CGFloat(rhs.width)
+  let h = lhs.height - CGFloat(rhs.height)
+  return CGSize(width: w, height: h)
 }
 
 

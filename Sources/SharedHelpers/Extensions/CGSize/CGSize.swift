@@ -16,12 +16,7 @@ extension CGSize: @retroactive Hashable {
 
 extension CGSize {
 
-  public subscript(axis: Axis, convention: AxisConvention = .widthIsHorizontal)
-    -> CGFloat
-  {
-    return axis.length(fromSize: self, convention: convention)
-  }
-
+  
   /// Euclidean magnitude of the vector?
   public var length: CGFloat { sqrt(width * width + height * height) }
 
@@ -57,11 +52,24 @@ extension CGSize {
     return min(width, height)
   }
 
-  public func length(for axis: Axis) -> CGFloat {
-    return switch axis {
-      case .horizontal: width
-      case .vertical: height
-    }
+//  public subscript(axis: Axis, convention: AxisConvention = .widthIsHorizontal)
+//  -> CGFloat
+//  {
+//    return axis.length(fromSize: self, convention: convention)
+//  }
+
+  
+  public func length(
+    along axis: Axis2D,
+    convention: AxisConvention = .default
+  ) -> CGFloat {
+    self.value(for: axis, convention: convention)
+//    self.length(for: <#T##Axis2D#>)
+//    axis.length(fromSize: self, convention: convention)
+//    return switch axis {
+//      case .horizontal: width
+//      case .vertical: height
+//    }
   }
 
   public func point(for unitPoint: UnitPoint) -> CGPoint {

@@ -67,7 +67,6 @@ public enum AxisConvention: Sendable {
           bottom: horizontal,
           trailing: vertical
         )
-
     }
   }
 
@@ -154,6 +153,36 @@ public enum AxisConvention: Sendable {
     }
   }
 
+  // MARK: - GridSize
+
+  /// Returns the horizontal length from a size, according to the convention.
+  public func horizontalLength(gridSize: GridSize) -> GridLength {
+    switch self {
+      case .widthIsHorizontal: gridSize.columns
+      case .heightIsHorizontal: gridSize.rows
+    }
+  }
+
+  /// Returns the vertical length from a size, according to the convention.
+  public func verticalLength(gridSize: GridSize) -> GridLength {
+    switch self {
+      case .widthIsHorizontal: gridSize.rows
+      case .heightIsHorizontal: gridSize.columns
+    }
+  }
+
+  /// Creates a `CGPoint` by mapping horizontal/vertical inputs to x/y storage.
+  public func makeGridSize(horizontal: GridLength, vertical: GridLength) -> GridSize {
+    switch self {
+      case .widthIsHorizontal:
+        return GridSize(columns: horizontal, rows: vertical)
+        
+      case .heightIsHorizontal:
+        return GridSize(columns: vertical, rows: horizontal)
+
+    }
+  }
+
   // MARK: - CGRect
   public func horizontalLength(rect: CGRect) -> CGFloat {
     switch self {
@@ -169,14 +198,14 @@ public enum AxisConvention: Sendable {
     }
   }
   /// Creates a `CGRect` by mapping horizontal/vertical inputs
-//  public func makeCGSize(horizontal: CGFloat, vertical: CGFloat) -> CGRect {
-//    switch self {
-//      case .widthIsHorizontal:
-//        return CGSize(width: horizontal, height: vertical)
-//        
-//      case .heightIsHorizontal:
-//        return CGSize(width: vertical, height: horizontal)
-//        
-//    }
-//  }
+  //  public func makeCGSize(horizontal: CGFloat, vertical: CGFloat) -> CGRect {
+  //    switch self {
+  //      case .widthIsHorizontal:
+  //        return CGSize(width: horizontal, height: vertical)
+  //
+  //      case .heightIsHorizontal:
+  //        return CGSize(width: vertical, height: horizontal)
+  //
+  //    }
+  //  }
 }
