@@ -11,14 +11,11 @@ public protocol AxisAddressable {
 
   associatedtype Value
 
-  func value(
-    for axis: Axis2D,
-    convention: AxisConvention
-  ) -> Value
+  func value(along axis: Axis2D, convention: AxisConvention) -> Value
 
   func setting(
     _ value: Value,
-    for axis: Axis2D,
+    along axis: Axis2D,
     convention: AxisConvention
   ) -> Self
 }
@@ -27,14 +24,11 @@ public protocol GridAxisAddressable {
 
   associatedtype Value
 
-  func value(
-    for axis: Axis2D,
-    convention: GridAxisConvention
-  ) -> Value
+  func value(along axis: Axis2D, convention: GridAxisConvention) -> Value
 
   func setting(
     _ value: Value,
-    for axis: Axis2D,
+    along axis: Axis2D,
     convention: GridAxisConvention
   ) -> Self
 }

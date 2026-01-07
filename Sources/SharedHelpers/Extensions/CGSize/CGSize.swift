@@ -59,18 +59,6 @@ extension CGSize {
 //  }
 
   
-  public func length(
-    along axis: Axis2D,
-    convention: AxisConvention = .default
-  ) -> CGFloat {
-    self.value(for: axis, convention: convention)
-//    self.length(for: <#T##Axis2D#>)
-//    axis.length(fromSize: self, convention: convention)
-//    return switch axis {
-//      case .horizontal: width
-//      case .vertical: height
-//    }
-  }
 
   public func point(for unitPoint: UnitPoint) -> CGPoint {
     unitPoint.toCGPoint(in: self)

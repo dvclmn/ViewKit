@@ -14,19 +14,28 @@ extension CGPoint: AdjustableByAxis {}
 // MARK: - Addressable
 extension CGSize: AxisAddressable {
 
+  /// Adds a method with naming more suited to CGSize specifically
+  public func length(
+    along axis: Axis2D,
+    convention: AxisConvention = .default
+  ) -> CGFloat {
+    self.value(along: axis, convention: convention)
+  }
+
   public func value(
-    for axis: Axis2D,
+    along axis: Axis2D,
     convention: AxisConvention
   ) -> CGFloat {
     switch axis {
-      case .horizontal: convention.horizontalLength(size: self)
+      case .horizontal:
+        convention.horizontalLength(size: self)
       case .vertical: convention.verticalLength(size: self)
     }
   }
 
   public func setting(
     _ newValue: CGFloat,
-    for axis: Axis2D,
+    along axis: Axis2D,
     convention: AxisConvention
   ) -> Self {
     switch axis {
@@ -47,6 +56,7 @@ extension CGSize: AxisAddressable {
         }
     }
   }
+  
 }
 
 extension CGPoint: AxisAddressable {
@@ -81,48 +91,48 @@ extension CGPoint: AxisAddressable {
         )
     }
   }
-  
-//  public func setting(
-//    _ newValue: CGFloat,
-//    for axis: Axis2D,
-//    convention: AxisConvention
-//  ) -> Self {
-//    switch axis {
-//      case .horizontal:
-//        switch convention {
-//          case .widthIsHorizontal: convention.makeCGPoint(
-//            horizontal: newValue,
-//            vertical: <#T##CGFloat#>
-//          )
-////          case .widthIsHorizontal: CGPoint(x: newValue, y: y)
-//          //            return CGSize(width: newValue, height: height)
-//
-//          case .heightIsHorizontal: convention.makeCGPoint(
-//            horizontal: <#T##CGFloat#>,
-//            vertical: newValue
-//          )
-////          case .heightIsHorizontal: CGPoint(x: x, y: newValue)
-//        //            return CGSize(width: width, height: newValue)
-//        }
-//
-//      case .vertical:
-//        switch convention {
-//          case .widthIsHorizontal: CGPoint(x: x, y: newValue)
-//          case .heightIsHorizontal: CGPoint(x: newValue, y: y)
-//        }
-//    }
-//  }
+
+  //  public func setting(
+  //    _ newValue: CGFloat,
+  //    for axis: Axis2D,
+  //    convention: AxisConvention
+  //  ) -> Self {
+  //    switch axis {
+  //      case .horizontal:
+  //        switch convention {
+  //          case .widthIsHorizontal: convention.makeCGPoint(
+  //            horizontal: newValue,
+  //            vertical: <#T##CGFloat#>
+  //          )
+  ////          case .widthIsHorizontal: CGPoint(x: newValue, y: y)
+  //          //            return CGSize(width: newValue, height: height)
+  //
+  //          case .heightIsHorizontal: convention.makeCGPoint(
+  //            horizontal: <#T##CGFloat#>,
+  //            vertical: newValue
+  //          )
+  ////          case .heightIsHorizontal: CGPoint(x: x, y: newValue)
+  //        //            return CGSize(width: width, height: newValue)
+  //        }
+  //
+  //      case .vertical:
+  //        switch convention {
+  //          case .widthIsHorizontal: CGPoint(x: x, y: newValue)
+  //          case .heightIsHorizontal: CGPoint(x: newValue, y: y)
+  //        }
+  //    }
+  //  }
 }
 
 extension GridPosition: AdjustableByAxis {
-  
+
   public func value(for axis: Axis2D, convention: AxisConvention) -> Int {
     switch axis {
       case .horizontal: return convention.horizontalIndex(for: self)
-      case .vertical:   return convention.verticalIndex(for: self)
+      case .vertical: return convention.verticalIndex(for: self)
     }
   }
-  
+
   public func setting(
     _ newValue: Int,
     for axis: Axis2D,
@@ -145,14 +155,14 @@ extension GridPosition: AdjustableByAxis {
 }
 
 extension GridSize: AdjustableByAxis {
-  
+
   public func value(for axis: Axis2D, convention: AxisConvention) -> GridLength {
     switch axis {
       case .horizontal: return convention.horizontalLength(gridSize: self)
-      case .vertical:   return convention.verticalLength(gridSize: self)
+      case .vertical: return convention.verticalLength(gridSize: self)
     }
   }
-  
+
   public func setting(
     _ newValue: GridLength,
     for axis: Axis2D,
@@ -171,5 +181,5 @@ extension GridSize: AdjustableByAxis {
         )
     }
   }
-  
+
 }
