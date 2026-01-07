@@ -36,7 +36,8 @@ public struct GridLength: Hashable, Codable {
     unitSize: CGSize?
   ) {
     guard let unitSize else { return nil }
-    let unitLength = unitSize.length(along: axis.toAxis2D, convention: convention)
+    let unitLength = unitSize.value(along: axis, mapping: mapping)
+//    let unitLength = unitSize.length(along: axis, convention: convention)
     self.count = count
     self.unitLength = unitLength
   }

@@ -36,13 +36,13 @@ extension CGSize {
     radius: CGFloat,
     tension: CGFloat
   ) -> CGSize {
-    let distance = self.length
+    let distance = self.magnitude
     guard distance > 0 else { return .zero }
     let scaled = distance.scaledDistance(
       radius: radius,
       tension: tension
     )
-    return self.normalisedLength * scaled
+    return self.normalisedMagnitude * scaled
   }
 
   /// Applies independent tension to X and Y components

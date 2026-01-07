@@ -17,11 +17,20 @@ extension CGSize: @retroactive Hashable {
 extension CGSize {
 
   /// Euclidean magnitude of the vector?
+  @available(
+    *, deprecated, renamed: "magnitude",
+    message: "Renamed to avoid confusion with Axis mapping methods, please use 'magnitude'"
+  )
   public var length: CGFloat { sqrt(width * width + height * height) }
+  public var magnitude: CGFloat { sqrt(width * width + height * height) }
 
-  public var normalisedLength: CGSize {
-    return length > 0 ? self / length : .zero
-  }
+  @available(
+    *, deprecated, renamed: "normalisedMagnitude",
+    message: "Renamed to avoid confusion with Axis mapping methods, please use 'normalisedMagnitude'"
+  )
+  public var normalisedLength: CGSize { length > 0 ? self / length : .zero }
+  public var normalisedMagnitude: CGSize { magnitude > 0 ? self / magnitude : .zero }
+
   // MARK: - Initialisers
 
   public init(fromLength length: CGFloat) {
@@ -51,12 +60,6 @@ extension CGSize {
     return min(width, height)
   }
 
-  //  public subscript(axis: Axis, convention: AxisConvention = .widthIsHorizontal)
-  //  -> CGFloat
-  //  {
-  //    return axis.length(fromSize: self, convention: convention)
-  //  }
-
   public func point(for unitPoint: UnitPoint) -> CGPoint {
     unitPoint.toCGPoint(in: self)
   }
@@ -68,14 +71,6 @@ extension CGSize {
       height: (self.height - childSize.height) / 2
     )
   }
-
-  /// Returns the child size that would produce the given centring offset within this container.
-  //  public func childSize(fromCenteringOffset offset: CGSize) -> CGSize {
-  //    return CGSize(
-  //      width: self.width - (offset.width * 2),
-  //      height: self.height - (offset.height * 2)
-  //    )
-  //  }
 
   /// Returns a new size reduced evenly on all four sides by the specified inset value, and clamped to min value of `0`.
   /// - Parameter inset: The amount to inset from all edges. Width and height are each reduced by 2x this value, 1x for each opposing side
@@ -92,32 +87,6 @@ extension CGSize {
     let height = self.height.clamped(length)
     return CGSize(width: width, height: height)
   }
-
-  // TODO: I want to see if and where I need to use these, to make sure behaviour is predictable and standardised enough.
-  //  public func clamped(
-  //    max maxSize: CGSize,
-  //    min minSize: CGSize
-  //  ) -> CGSize {
-  //    let clampedWidth: CGFloat = width.clamped(
-  //      minSize.width,
-  //      maxSize.width
-  //    )
-  //    let clampedHeight: CGFloat = height.clamped(
-  //      minSize.height,
-  //      maxSize.height
-  //    )
-  //    return CGSize(width: clampedWidth, height: clampedHeight)
-  //  }
-
-  //  public func clamped(
-  //    max maxValue: CGFloat,
-  //    min minValue: CGFloat
-  //  ) -> CGSize {
-  //    let maxSize = CGSize(fromLength: maxValue)
-  //    let minSize = CGSize(fromLength: minValue)
-  //
-  //    return self.clamped(max: maxSize, min: minSize)
-  //  }
 
   /// Returns the centre point of the size
   public var midpoint: CGPoint {
@@ -170,26 +139,22 @@ extension CGSize {
     return width.isNaN || height.isNaN
   }
 
-  //  public var widthOrHeightIsZero: Bool {
-  //    self.width.isZero || self.height.isZero
-  //  }
-
-  public static func calculateMonospacedMetrics(for font: CTFont) -> CGSize {
-    let spaceChar = " " as CFString
-    var glyphRect = CGRect.zero
-    let glyph = CTFontGetGlyphWithName(font, spaceChar)
-    CTFontGetBoundingRectsForGlyphs(
-      font,
-      .horizontal,
-      [glyph],
-      &glyphRect,
-      1
-    )
-
-    let advance = CTFontGetAdvancesForGlyphs(font, .horizontal, [glyph], nil, 1)
-    let lineHeight = CTFontGetAscent(font) + CTFontGetDescent(font)
-
-    return CGSize(width: CGFloat(advance), height: lineHeight)
-  }
+//  public static func calculateMonospacedMetrics(for font: CTFont) -> CGSize {
+//    let spaceChar = " " as CFString
+//    var glyphRect = CGRect.zero
+//    let glyph = CTFontGetGlyphWithName(font, spaceChar)
+//    CTFontGetBoundingRectsForGlyphs(
+//      font,
+//      .horizontal,
+//      [glyph],
+//      &glyphRect,
+//      1
+//    )
+//
+//    let advance = CTFontGetAdvancesForGlyphs(font, .horizontal, [glyph], nil, 1)
+//    let lineHeight = CTFontGetAscent(font) + CTFontGetDescent(font)
+//
+//    return CGSize(width: CGFloat(advance), height: lineHeight)
+//  }
 
 }

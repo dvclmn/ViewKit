@@ -18,23 +18,23 @@ extension CGSize {
     in containerSize: CGSize,
     strategy: PlacementStrategy = .centerWithOverflow
   ) -> CGRect {
-    
+
     switch strategy {
-        
+
       case .centerWithOverflow:
         return centeredRect(in: containerSize, with: self)
-        
+
       case .scaleToFit:
         let scaledSize = self.aspectFitSize(in: containerSize)
         return centeredRect(in: containerSize, with: scaledSize)
-        
+
       case .scaleToFill:
         let scaledSize = self.aspectFillSize(in: containerSize)
         return centeredRect(in: containerSize, with: scaledSize)
-        
+
       case .topLeft:
         return CGRect(origin: .zero, size: self)
-        
+
       case .topRight:
         return CGRect(
           x: containerSize.width - width,
@@ -42,7 +42,7 @@ extension CGSize {
           width: width,
           height: height
         )
-        
+
       case .bottomLeft:
         return CGRect(
           x: 0,
@@ -50,7 +50,7 @@ extension CGSize {
           width: width,
           height: height
         )
-        
+
       case .bottomRight:
         return CGRect(
           x: containerSize.width - width,
@@ -69,23 +69,23 @@ extension CGSize {
     let y = (containerSize.height - size.height) / 2
     return CGRect(x: x, y: y, width: size.width, height: size.height)
   }
-  
+
   private func aspectFitSize(in containerSize: CGSize) -> CGSize {
     let widthRatio = containerSize.width / width
     let heightRatio = containerSize.height / height
     let scale = min(widthRatio, heightRatio)
-    
+
     return CGSize(width: width * scale, height: height * scale)
   }
-  
+
   private func aspectFillSize(in containerSize: CGSize) -> CGSize {
     let widthRatio = containerSize.width / width
     let heightRatio = containerSize.height / height
     let scale = max(widthRatio, heightRatio)
-    
+
     return CGSize(width: width * scale, height: height * scale)
   }
-  
+
 }
 
 extension CGSize {
@@ -107,5 +107,5 @@ extension CGSize {
     case bottomRight
     /// Return nil if the view doesn't fit (original behavior)
   }
-  
+
 }
