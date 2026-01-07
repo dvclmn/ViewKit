@@ -21,8 +21,8 @@ import SharedHelpers
 /// )
 /// ```
 public struct GridPosition: ModelBase {
-  public let row: Int
-  public let column: Int
+  public var row: Int
+  public var column: Int
 
   public init(row: Int, column: Int) {
     self.row = row

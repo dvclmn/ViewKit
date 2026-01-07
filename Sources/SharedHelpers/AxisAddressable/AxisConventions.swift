@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+public enum AxisMapping: Sendable {
+  /// The first component (width, x, column) is horizontal.
+  case primaryIsHorizontal
+  /// The first component (width, x, column) is vertical.
+  case primaryIsVertical
+  
+  public static let `default`: Self = .primaryIsHorizontal
+}
+
 /// A mapping between `Dimension` (width / height) and `Axis` (horizontal / vertical).
 ///
 /// This aims to answer the question:
