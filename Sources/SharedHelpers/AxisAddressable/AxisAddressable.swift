@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Note: this requires that conforming types have mutable (var) properties
 public protocol AxisKeyPathCompatible {
   associatedtype Component
 

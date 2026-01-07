@@ -7,32 +7,70 @@
 
 import SwiftUI
 
-extension CGSize: AxisCompatible {
-  public var naturalComponents: (primary: CGFloat, secondary: CGFloat) { (width, height) }
-  public static func create(primary: CGFloat, secondary: CGFloat) -> Self {
-    CGSize(width: primary, height: secondary)
-  }
+public typealias Path<S, V> = WritableKeyPath<S, V>
+
+extension CGSize: AxisKeyPathCompatible {
+  public static var primaryKey: Path<Self, CGFloat> { \.width }
+  public static var secondaryKey: Path<Self, CGFloat> { \.height }
 }
 
-extension GridPosition: AxisCompatible {
-  public var naturalComponents: (primary: Int, secondary: Int) { (column, row) }
-  public static func create(primary: Int, secondary: Int) -> Self {
-    GridPosition(row: secondary, column: primary)
-  }
+extension CGRect: AxisKeyPathCompatible {
+  public static var primaryKey: Path<Self, CGFloat> { \.size.width }
+  public static var secondaryKey: Path<Self, CGFloat> { \.size.height }
 }
 
-extension EdgeInsets: AxisCompatible {
-  /// We define the natural components as the Lead/Trail (H) and Top/Bottom (V)
-  public var naturalComponents: (primary: CGFloat, secondary: CGFloat) {
-    /// Using single edges as the "representative" values
-    (leading, top)
-  }
-  
-  public static func create(primary: CGFloat, secondary: CGFloat) -> Self {
-    /// primary = horizontal (leading/trailing), secondary = vertical (top/bottom)
-    EdgeInsets(top: secondary, leading: primary, bottom: secondary, trailing: primary)
-  }
+extension CGPoint: AxisKeyPathCompatible {
+  public static var primaryKey: Path<Self, CGFloat> { \.x }
+  public static var secondaryKey: Path<Self, CGFloat> { \.y }
 }
+
+extension UnitPoint: AxisKeyPathCompatible {
+  public static var primaryKey: Path<Self, CGFloat> { \.x }
+  public static var secondaryKey: Path<Self, CGFloat> { \.y }
+}
+
+// MARK: - Index-based conformace
+extension GridPosition: AxisKeyPathCompatible {
+  public static var primaryKey: Path<Self, Int> { \.column }
+  public static var secondaryKey: Path<Self, Int> { \.row }
+}
+
+extension GridSize: AxisKeyPathCompatible {
+  public static var primaryKey: Path<Self, GridLength> { \.columns }
+  public static var secondaryKey: Path<Self, GridLength> { \.rows }
+}
+
+extension GridDimensions: AxisKeyPathCompatible {
+  public static var primaryKey: Path<Self, Int> { \.width }
+  public static var secondaryKey: Path<Self, Int> { \.height }
+}
+
+//extension CGSize: AxisCompatible {
+//  public var naturalComponents: (primary: CGFloat, secondary: CGFloat) { (width, height) }
+//  public static func create(primary: CGFloat, secondary: CGFloat) -> Self {
+//    CGSize(width: primary, height: secondary)
+//  }
+//}
+//
+//extension GridPosition: AxisCompatible {
+//  public var naturalComponents: (primary: Int, secondary: Int) { (column, row) }
+//  public static func create(primary: Int, secondary: Int) -> Self {
+//    GridPosition(row: secondary, column: primary)
+//  }
+//}
+//
+//extension EdgeInsets: AxisCompatible {
+//  /// We define the natural components as the Lead/Trail (H) and Top/Bottom (V)
+//  public var naturalComponents: (primary: CGFloat, secondary: CGFloat) {
+//    /// Using single edges as the "representative" values
+//    (leading, top)
+//  }
+//
+//  public static func create(primary: CGFloat, secondary: CGFloat) -> Self {
+//    /// primary = horizontal (leading/trailing), secondary = vertical (top/bottom)
+//    EdgeInsets(top: secondary, leading: primary, bottom: secondary, trailing: primary)
+//  }
+//}
 
 //extension AxisAddressable where Component: BinaryFloatingPoint {
 //  /// A helper for when you want to create a new instance from H/V values

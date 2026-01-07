@@ -8,8 +8,8 @@
 import Foundation
 
 public struct GridDimensions: ModelBase {
-  public let width: Int
-  public let height: Int
+  public var width: Int
+  public var height: Int
 
   public init(width: Int, height: Int) {
     precondition(width > 0 && height > 0, "GridDimensions cannot have zero or negative dimensions.")
