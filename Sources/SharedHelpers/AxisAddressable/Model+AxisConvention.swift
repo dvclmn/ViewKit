@@ -53,23 +53,10 @@ extension AxisConvention {
     }
   }
   /// Creates `EdgeInsets` by mapping horizontal/vertical inputs
-  public func makeEdgeInsets(horizontal: CGFloat, vertical: CGFloat) -> EdgeInsets {
+  public func makeEdgeInsets(h: CGFloat, v: CGFloat) -> EdgeInsets {
     switch self {
-      case .widthIsHorizontal:
-        return EdgeInsets(
-          top: vertical,
-          leading: horizontal,
-          bottom: vertical,
-          trailing: horizontal
-        )
-
-      case .heightIsHorizontal:
-        return EdgeInsets(
-          top: horizontal,
-          leading: vertical,
-          bottom: horizontal,
-          trailing: vertical
-        )
+      case .widthIsHorizontal: EdgeInsets(top: v, leading: h, bottom: v, trailing: h)
+      case .heightIsHorizontal: EdgeInsets(top: h, leading: v, bottom: h, trailing: v)
     }
   }
 
@@ -91,13 +78,10 @@ extension AxisConvention {
     }
   }
   /// Creates a `CGPoint` by mapping horizontal/vertical inputs to x/y storage.
-  public func makeCGSize(horizontal: CGFloat, vertical: CGFloat) -> CGSize {
+  public func makeCGSize(h: CGFloat, v: CGFloat) -> CGSize {
     switch self {
-      case .widthIsHorizontal:
-        return CGSize(width: horizontal, height: vertical)
-
-      case .heightIsHorizontal:
-        return CGSize(width: vertical, height: horizontal)
+      case .widthIsHorizontal: CGSize(width: h, height: v)
+      case .heightIsHorizontal: CGSize(width: v, height: h)
 
     }
   }
@@ -118,14 +102,10 @@ extension AxisConvention {
     }
   }
   /// Creates a `CGPoint` by mapping horizontal/vertical inputs to x/y storage.
-  public func makeCGPoint(horizontal: CGFloat, vertical: CGFloat) -> CGPoint {
+  public func makeCGPoint(h: CGFloat, v: CGFloat) -> CGPoint {
     switch self {
-      case .widthIsHorizontal:
-        return CGPoint(x: horizontal, y: vertical)
-
-      case .heightIsHorizontal:
-        return CGPoint(x: vertical, y: horizontal)
-
+      case .widthIsHorizontal: CGPoint(x: h, y: v)
+      case .heightIsHorizontal: CGPoint(x: v, y: h)
     }
   }
 
@@ -143,15 +123,4 @@ extension AxisConvention {
       case .heightIsHorizontal: rect.size.width
     }
   }
-  /// Creates a `CGRect` by mapping horizontal/vertical inputs
-  //  public func makeCGSize(horizontal: CGFloat, vertical: CGFloat) -> CGRect {
-  //    switch self {
-  //      case .widthIsHorizontal:
-  //        return CGSize(width: horizontal, height: vertical)
-  //
-  //      case .heightIsHorizontal:
-  //        return CGSize(width: vertical, height: horizontal)
-  //
-  //    }
-  //  }
 }

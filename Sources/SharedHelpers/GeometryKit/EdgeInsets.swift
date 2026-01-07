@@ -27,13 +27,4 @@ extension EdgeInsets {
 
   public static var zero: EdgeInsets { EdgeInsets() }
 
-  //  public init(horizontal: CGFloat = 0, vertical:  sCGFloat = 0) {
-  //    self.init(
-  //      top: vertical,
-  //      leading: horizontal,
-  //      bottom: vertical,
-  //      trailing: horizontal
-  //    )
-  //  }
-
 }

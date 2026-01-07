@@ -8,7 +8,9 @@
 import Foundation
 
 public protocol AxisAddressable {
+
   associatedtype Value
+
   func value(
     for axis: Axis2D,
     convention: AxisConvention
@@ -18,5 +20,21 @@ public protocol AxisAddressable {
     _ value: Value,
     for axis: Axis2D,
     convention: AxisConvention
+  ) -> Self
+}
+
+public protocol GridAxisAddressable {
+
+  associatedtype Value
+
+  func value(
+    for axis: Axis2D,
+    convention: GridAxisConvention
+  ) -> Value
+
+  func setting(
+    _ value: Value,
+    for axis: Axis2D,
+    convention: GridAxisConvention
   ) -> Self
 }

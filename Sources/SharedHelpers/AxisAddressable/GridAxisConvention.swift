@@ -10,12 +10,12 @@
 ///
 /// In a standard grid, Columns represent the horizontal index (X)
 /// and Rows represent the vertical index (Y)
-public enum GridAxisMapping {
+public enum GridAxisConvention {
   case columnIsHorizontal
   case rowIsHorizontal
 }
 
-extension GridAxisMapping {
+extension GridAxisConvention {
 
   public var rowAxis: Axis2D {
     switch self {
@@ -32,10 +32,10 @@ extension GridAxisMapping {
   }
 }
 
-extension GridAxisMapping {
+extension GridAxisConvention {
 
   /// Returns the horizontal index (usually column) based on the convention.
-  public func horizontalIndex(for position: GridPosition) -> Int {
+  public func horizontalValue(for position: GridPosition) -> Int {
     switch self {
       case .columnIsHorizontal: position.column
       case .rowIsHorizontal: position.row
@@ -43,17 +43,18 @@ extension GridAxisMapping {
   }
 
   /// Returns the vertical index (usually row) based on the convention.
-  public func verticalIndex(for position: GridPosition) -> Int {
+  public func verticalValue(for position: GridPosition) -> Int {
     switch self {
       case .columnIsHorizontal: position.row
       case .rowIsHorizontal: position.column
     }
   }
+
   /// Creates a GridPosition by mapping horizontal/vertical inputs to row/column storage.
-  public func makeGridPosition(horizontal: Int, vertical: Int) -> GridPosition {
+  public func makeGridPosition(h: Int, v: Int) -> GridPosition {
     switch self {
-      case .columnIsHorizontal: GridPosition(row: vertical, column: horizontal)
-      case .rowIsHorizontal: GridPosition(row: horizontal, column: vertical)
+      case .columnIsHorizontal: GridPosition(row: v, column: h)
+      case .rowIsHorizontal: GridPosition(row: h, column: v)
     }
   }
 
@@ -76,13 +77,13 @@ extension GridAxisMapping {
   }
 
   /// Creates a `CGPoint` by mapping horizontal/vertical inputs to x/y storage.
-  public func makeGridSize(horizontal: GridLength, vertical: GridLength) -> GridSize {
+  public func makeGridSize(h: GridLength, v: GridLength) -> GridSize {
     switch self {
       case .columnIsHorizontal:
-        return GridSize(columns: horizontal, rows: vertical)
+        return GridSize(columns: h, rows: v)
 
       case .rowIsHorizontal:
-        return GridSize(columns: vertical, rows: horizontal)
+        return GridSize(columns: v, rows: h)
 
     }
   }

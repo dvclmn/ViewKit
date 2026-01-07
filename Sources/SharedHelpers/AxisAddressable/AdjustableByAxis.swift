@@ -20,6 +20,7 @@ import Foundation
 ///
 /// And lets the convention do the mapping.
 public protocol AdjustableByAxis: AxisAddressable {}
+public protocol AdjustableByGridAxis: GridAxisAddressable {}
 
 extension AdjustableByAxis {
 
