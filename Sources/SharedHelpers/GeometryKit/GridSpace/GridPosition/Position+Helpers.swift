@@ -8,6 +8,7 @@
 import Foundation
 
 extension GridPosition {
+  
   //  public static func createRow(_ rowIndex: Int, columns: Range<Int>) -> [GridPosition] {
   //    columns.map { GridPosition(row: rowIndex, column: $0) }
   //  }
@@ -35,8 +36,14 @@ extension GridPosition {
     cellSize: CGSize
   ) -> GridPosition? {
 
-    guard dimensions.contains(point: point, cellSize: cellSize) else { return nil }
-    return GridPosition(point: point, cellSize: cellSize)
+    /// The grid size conversion is *only* to check whether the point is contained.
+    /// The cellSize is not used to construct the
+    let gridSize = dimensions.toGridSize(unitSize: cellSize)
+    let containsPoint = gridSize.contains(point: point)
+    
+    let position = GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
+//    guard dimensions.contains(point: point, cellSize: cellSize) else { return nil }
+//    return GridPosition(point: point, cellSize: cellSize)
   }
 
   /// Note: zero-based count for internal representation,

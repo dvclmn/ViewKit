@@ -77,13 +77,12 @@ extension AxisMapping {
 ///
 /// Enables deriving correct values from types like
 /// `CGSize`, `CGPoint`, `EdgeInsets` etc
+@available(*, deprecated, renamed: "AxisMapping", message: "Renamed for clarity, please use `AxisMapping` instead")
 public enum AxisConvention: Sendable {
-
-  @available(*, deprecated, renamed: "identity", message: "Renamed for clarity, please use `.identity` instead")
-  public static let widthIsHorizontal: Self = { fatalError("Use AxisMapping.identity instead") }()
   
-  @available(*, deprecated, renamed: "transposed", message: "Renamed for clarity, please use `.identity` instead")
-  public static let heightIsHorizontal: Self = { fatalError("Use AxisMapping.identity instead") }()
+  case widthIsHorizontal
+  case heightIsHorizontal
+
 }
 //
 //

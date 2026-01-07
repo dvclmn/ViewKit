@@ -26,16 +26,23 @@ extension GridSize {
   }
 
   /// Convenience method: converts point to position and checks if it's valid
-  public func containsValidPosition(for point: CGPoint) -> Bool {
-    let gridPosition = position(for: point, cellSize: cellSize)
-    return contains(position: gridPosition)
-  }
+//  public func containsValidPosition(for point: CGPoint) -> Bool {
+//    let gridPosition = position(for: point)
+//    return contains(position: gridPosition)
+//  }
   
   public func position(
     for point: CGPoint,
-    convention: AxisConvention
+    rounding: GridRounding = .down,
+    mapping: AxisMapping = .default,
   ) -> GridPosition {
-    let row = convention.makeCGPoint(h: <#T##CGFloat#>, v: <#T##CGFloat#>)
+    
+    let row = point.value(along: .horizontal, mapping: mapping)
+    let col = point.value(along: .vertical, mapping: mapping)
+    
+    return GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
+//    fatalError("Needs implementation after refactor of GridSize/AxisMapping")
+//    let row = convention.makeCGPoint(h: <#T##CGFloat#>, v: <#T##CGFloat#>)
 //    GridPosition(
 //      row: Int(floor(point.y / cellSize.height)),
 //      column: Int(floor(point.x / cellSize.width)),

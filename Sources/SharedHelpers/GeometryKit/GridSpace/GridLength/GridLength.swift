@@ -20,7 +20,7 @@ import Foundation
 public struct GridLength: Hashable, Codable {
 
   /// Prefer use of ``gridLength``, to better pair with ``screenLength``
-  private var count: Int
+  package var count: Int
   public var unitLength: CGFloat
 
   public init(count: Int, unitLength: CGFloat) {

@@ -21,7 +21,6 @@ public struct GridDimensions: ModelBase {
   }
 }
 
-
 extension GridDimensions: ExpressibleByIntegerLiteral {
   /// Creates an instance with the provided value for both dimensions
   public init(integerLiteral value: Int) {
@@ -30,6 +29,11 @@ extension GridDimensions: ExpressibleByIntegerLiteral {
 }
 
 extension GridDimensions {
+
+  public func toGridSize(unitSize: CGSize) -> GridSize {
+    GridSize(width: width, height: height, unitSize: unitSize)
+  }
+
   public var doubled: GridDimensions {
     GridDimensions(width: width * 2, height: height * 2)
   }

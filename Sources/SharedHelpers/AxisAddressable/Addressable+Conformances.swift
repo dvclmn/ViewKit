@@ -7,42 +7,40 @@
 
 import SwiftUI
 
-public typealias Path<S, V> = WritableKeyPath<S, V>
-
 extension CGSize: AxisKeyPathCompatible {
-  public static var primaryKey: Path<Self, CGFloat> { \.width }
-  public static var secondaryKey: Path<Self, CGFloat> { \.height }
+  public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.width }
+  public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.height }
 }
 
 extension CGRect: AxisKeyPathCompatible {
-  public static var primaryKey: Path<Self, CGFloat> { \.size.width }
-  public static var secondaryKey: Path<Self, CGFloat> { \.size.height }
+  public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.size.width }
+  public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.size.height }
 }
 
 extension CGPoint: AxisKeyPathCompatible {
-  public static var primaryKey: Path<Self, CGFloat> { \.x }
-  public static var secondaryKey: Path<Self, CGFloat> { \.y }
+  public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.x }
+  public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.y }
 }
 
 extension UnitPoint: AxisKeyPathCompatible {
-  public static var primaryKey: Path<Self, CGFloat> { \.x }
-  public static var secondaryKey: Path<Self, CGFloat> { \.y }
+  public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.x }
+  public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.y }
 }
 
 // MARK: - Index-based conformace
 extension GridPosition: AxisKeyPathCompatible {
-  public static var primaryKey: Path<Self, Int> { \.column }
-  public static var secondaryKey: Path<Self, Int> { \.row }
+  public static var primaryKey: WritableKeyPath<Self, Int> { \.column }
+  public static var secondaryKey: WritableKeyPath<Self, Int> { \.row }
 }
 
 extension GridSize: AxisKeyPathCompatible {
-  public static var primaryKey: Path<Self, GridLength> { \.columns }
-  public static var secondaryKey: Path<Self, GridLength> { \.rows }
+  public static var primaryKey: WritableKeyPath<Self, GridLength> { \.columns }
+  public static var secondaryKey: WritableKeyPath<Self, GridLength> { \.rows }
 }
 
 extension GridDimensions: AxisKeyPathCompatible {
-  public static var primaryKey: Path<Self, Int> { \.width }
-  public static var secondaryKey: Path<Self, Int> { \.height }
+  public static var primaryKey: WritableKeyPath<Self, Int> { \.width }
+  public static var secondaryKey: WritableKeyPath<Self, Int> { \.height }
 }
 
 //extension CGSize: AxisCompatible {

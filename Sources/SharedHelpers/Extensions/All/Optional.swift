@@ -68,9 +68,9 @@ extension Optional where Wrapped == CGSize {
     set { _boundSize = newValue }
   }
 
-  public func length(for axis: Axis2D, convention: AxisConvention = .default) -> CGFloat? {
-    self?.length(along: axis, convention: convention)
-  }
+//  public func length(for axis: Axis2D, convention: AxisConvention = .default) -> CGFloat? {
+//    self?.length(along: axis, convention: convention)
+//  }
 }
 
 //func ??<Bool>(lhs: Binding<Optional<Bool>>, rhs: Bool) -> Binding<Bool> {

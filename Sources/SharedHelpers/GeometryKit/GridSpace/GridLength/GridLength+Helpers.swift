@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 7/1/2026.
 //
 
+import Foundation
+
 extension GridLength {
   public var gridLength: Int { count }
   public var screenLength: CGFloat { screenLength() }

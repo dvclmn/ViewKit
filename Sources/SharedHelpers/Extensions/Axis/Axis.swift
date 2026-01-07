@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension Axis: AxisRepresentable {}
+//extension Axis: AxisRepresentable {}
 
 extension Axis {
   public var toAxisSet: Axis.Set {
@@ -33,8 +33,7 @@ extension Axis {
         return .vertical
     }
   }
-  
-  
+
   public var toAxis2D: Axis2D {
     switch self {
       case .horizontal: .horizontal
