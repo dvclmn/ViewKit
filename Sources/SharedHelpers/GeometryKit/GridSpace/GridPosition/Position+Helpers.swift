@@ -38,7 +38,7 @@ extension GridPosition {
 
     /// The grid size conversion is *only* to check whether the point is contained.
     /// The cellSize is not used to construct the
-    let gridSize = dimensions.toGridSize(unitSize: cellSize)
+    let gridSize = dimensions.toUnitSize(unitSize: cellSize)
     let containsPoint = gridSize.contains(point: point)
     
     let position = GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)

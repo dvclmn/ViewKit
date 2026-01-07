@@ -8,7 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
-public struct FrameFromGridSize: ViewModifier {
+public struct FrameFromUnitSize: ViewModifier {
   @Environment(\.unitSize) private var unitSize
 
   let width: Int?
@@ -28,13 +28,13 @@ public struct FrameFromGridSize: ViewModifier {
 
 extension View {
 
-  public func frameFromGridSize(
+  public func frameFromUnitSize(
     width: Int?,
     height: Int?,
     alignment: Alignment = .center
   ) -> some View {
     self.modifier(
-      FrameFromGridSize(
+      FrameFromUnitSize(
         width: width,
         height: height,
         alignment: alignment

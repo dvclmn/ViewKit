@@ -33,7 +33,7 @@ extension GridPosition: AxisKeyPathCompatible {
   public static var secondaryKey: WritableKeyPath<Self, Int> { \.row }
 }
 
-extension GridSize: AxisKeyPathCompatible {
+extension UnitSize: AxisKeyPathCompatible {
   public static var primaryKey: WritableKeyPath<Self, GridLength> { \.columns }
   public static var secondaryKey: WritableKeyPath<Self, GridLength> { \.rows }
 }
@@ -142,7 +142,7 @@ extension GridDimensions: AxisKeyPathCompatible {
 //  }
 //}
 //
-//extension GridSize: AxisAddressable {
+//extension UnitSize: AxisAddressable {
 //  public var identityComponent: GridLength {
 //    get { columns }
 //    set { columns = newValue }
@@ -318,7 +318,7 @@ extension GridDimensions: AxisKeyPathCompatible {
 //
 //}
 //
-//extension GridSize: GridAxisAddressable {
+//extension UnitSize: GridAxisAddressable {
 //
 //  public func value(along axis: Axis2D, convention: GridAxisConvention) -> GridLength {
 //    switch axis {
@@ -334,12 +334,12 @@ extension GridDimensions: AxisKeyPathCompatible {
 //  ) -> Self {
 //    switch axis {
 //      case .horizontal:
-//        return convention.makeGridSize(
+//        return convention.makeUnitSize(
 //          h: newValue,
 //          v: convention.verticalLength(gridSize: self)
 //        )
 //      case .vertical:
-//        return convention.makeGridSize(
+//        return convention.makeUnitSize(
 //          h: convention.horizontalLength(gridSize: self),
 //          v: newValue
 //        )

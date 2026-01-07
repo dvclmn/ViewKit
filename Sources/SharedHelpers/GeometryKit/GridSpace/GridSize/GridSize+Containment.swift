@@ -1,5 +1,5 @@
 //
-//  GridSize+Containment.swift
+//  UnitSize+Containment.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 7/1/2026.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension GridSize {
+extension UnitSize {
   /// Checks if a point (in pixel coordinates) falls within the grid bounds
   public func contains(point: CGPoint) -> Bool {
     //  public func contains(point: CGPoint, cellSize: CGSize) -> Bool {
@@ -41,7 +41,7 @@ extension GridSize {
     let col = point.value(along: .vertical, mapping: mapping)
     
     return GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
-//    fatalError("Needs implementation after refactor of GridSize/AxisMapping")
+//    fatalError("Needs implementation after refactor of UnitSize/AxisMapping")
 //    let row = convention.makeCGPoint(h: <#T##CGFloat#>, v: <#T##CGFloat#>)
 //    GridPosition(
 //      row: Int(floor(point.y / cellSize.height)),

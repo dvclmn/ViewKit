@@ -35,7 +35,7 @@ import SwiftUI
 //  public var body: some View {
 //    Text(textOutput)
 ////            .fixedSize()
-//      .frameFromGridSize(width: gridWidth, height: gridHeight)
+//      .frameFromUnitSize(width: gridWidth, height: gridHeight)
 //      .gridSetup(.sfMono, fontSize: 20)
 //
 //      .environment(\.isShowingGridGuide, true)

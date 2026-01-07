@@ -30,8 +30,8 @@ extension GridDimensions: ExpressibleByIntegerLiteral {
 
 extension GridDimensions {
 
-  public func toGridSize(unitSize: CGSize) -> GridSize {
-    GridSize(width: width, height: height, unitSize: unitSize)
+  public func toUnitSize(unitSize: CGSize) -> UnitSize {
+    UnitSize(width: width, height: height, unitSize: unitSize)
   }
 
   public var doubled: GridDimensions {

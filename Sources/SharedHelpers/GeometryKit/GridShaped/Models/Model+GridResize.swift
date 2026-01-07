@@ -30,7 +30,7 @@ extension GridResizeHelper {
   var unitSize: CGSize { oldGeometry.unitSize }
 
   public var resizeDelta: GridDelta {
-fatalError("WIP, needs to be completed after changes to GridSize/GridDimensions")
+fatalError("WIP, needs to be completed after changes to UnitSize/GridDimensions")
 //    let oldDimensions = oldGeometry.dimensions
 //    let newDimensions = GridDimensions(<#T##width: Int##Int#>, <#T##height: Int##Int#>)
 ////    let newDimensions = GridDimensions(

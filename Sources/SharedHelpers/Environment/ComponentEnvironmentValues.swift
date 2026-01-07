@@ -107,7 +107,7 @@ extension EnvironmentValues {
   /// as `characterSize`, derived from the width and height
   /// of a monospaced font glyph.
   ///
-  /// Read more: ``GridSize``
+  /// Read more: ``UnitSize``
   @Entry public var unitSize: CGSize? = nil
   
   /// App-wide / project-wide mapping convention, for which

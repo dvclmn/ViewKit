@@ -1,5 +1,5 @@
 //
-//  GridSize+Ext.swift
+//  UnitSize+Ext.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 14/10/2025.
@@ -8,9 +8,9 @@
 import Foundation
 
 //import SharedHelpers
-//public typealias GridSizeCounts = (width: Int, height: Int)
+//public typealias UnitSizeCounts = (width: Int, height: Int)
 
-extension GridSize {
+extension UnitSize {
 
   public var width: Int { columns.gridLength }
   public var height: Int { rows.gridLength }
@@ -24,9 +24,9 @@ extension GridSize {
 
   public func adjustCounts(
     transform: (Int, Int) -> (width: Int, height: Int)
-  ) -> GridSize? {
+  ) -> UnitSize? {
     let transformed = transform(columns.gridLength, rows.gridLength)
-    return GridSize(
+    return UnitSize(
       width: transformed.width,
       height: transformed.height,
       unitSize: unitSize
@@ -41,26 +41,26 @@ extension GridSize {
   }
 }
 
-public func * (lhs: CGSize, rhs: GridSize) -> CGSize {
+public func * (lhs: CGSize, rhs: UnitSize) -> CGSize {
   let w = lhs.width * CGFloat(rhs.width)
   let h = lhs.height * CGFloat(rhs.height)
   return CGSize(width: w, height: h)
 }
 
 /// Adds
-public func + (lhs: CGSize, rhs: GridSize) -> CGSize {
+public func + (lhs: CGSize, rhs: UnitSize) -> CGSize {
   let w = lhs.width + CGFloat(rhs.width)
   let h = lhs.height + CGFloat(rhs.height)
   return CGSize(width: w, height: h)
 }
 
-public func - (lhs: CGSize, rhs: GridSize) -> CGSize {
+public func - (lhs: CGSize, rhs: UnitSize) -> CGSize {
   let w = lhs.width - CGFloat(rhs.width)
   let h = lhs.height - CGFloat(rhs.height)
   return CGSize(width: w, height: h)
 }
 
-extension GridSize: CustomStringConvertible {
+extension UnitSize: CustomStringConvertible {
   public var description: String {
     //    let scrWidth: String = screenWidth.formatted()
     return "W: \(screenWidth) (\(width))\nH: \(screenHeight) (\(height))"

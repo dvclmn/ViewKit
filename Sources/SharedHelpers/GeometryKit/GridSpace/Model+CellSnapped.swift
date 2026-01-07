@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// I thiiink these are all covered by GridSize/GridLength APIs
+/// I thiiink these are all covered by UnitSize/GridLength APIs
 //extension CGSize {
 //
 //  /// Converts `self` to
@@ -42,7 +42,7 @@ import Foundation
 //    cellSize: CGSize,
 //    strategy: SnapStrategy,
 //    convention: AxisConvention = .default
-//  ) -> GridSize {
+//  ) -> UnitSize {
 //    //  ) -> GridDimensions {
 //
 //    //    let sizeRaw = self.divideBoth(by: cellSize, convention: convention)
@@ -71,8 +71,8 @@ import Foundation
 //    //        rows = Int(rowsRaw.rounded())
 //    //    }
 //
-//    return GridSize(size: self, cellSize: cellSize, strategy: strategy, convention: convention)
-//    //    return GridSize(width: width, height: height, unitSize: cellSize)
+//    return UnitSize(size: self, cellSize: cellSize, strategy: strategy, convention: convention)
+//    //    return UnitSize(width: width, height: height, unitSize: cellSize)
 //    //    return GridDimensions(width: cols, height: rows)
 //  }
 //

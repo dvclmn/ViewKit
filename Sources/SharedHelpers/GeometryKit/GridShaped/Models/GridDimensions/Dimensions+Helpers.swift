@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Containment Methods
 extension GridDimensions {
   
-  /// These have moved to GridSize.
+  /// These have moved to UnitSize.
 
 }
 

@@ -43,15 +43,15 @@ public struct GridLineConfiguration {
 
 extension GridLineConfiguration {
   
-  public var gridSize: GridSize? {
+  public var gridSize: UnitSize? {
     let unitSize = self.cellSize
 
     return switch fillStyle {
       case .fixed(let columns, let rows):
-        GridSize(width: columns, height: rows, unitSize: unitSize)
+        UnitSize(width: columns, height: rows, unitSize: unitSize)
 
       case .fill(let size):
-        GridSize(fromSize: size, unitSize: unitSize)
+        UnitSize(fromSize: size, unitSize: unitSize)
     }
   }
 }

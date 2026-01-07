@@ -1,5 +1,5 @@
 //
-//  GridSize.swift
+//  UnitSize.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 14/10/2025.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// Equivalent to `CGSize`
-public struct GridSize: Hashable, Codable {
+public struct UnitSize: Hashable, Codable {
 
   /// Columns == Width is the more common convention.
   ///
@@ -27,7 +27,7 @@ public struct GridSize: Hashable, Codable {
 }
 
 // MARK: - Initialisers
-extension GridSize {
+extension UnitSize {
 
   public init(
     width: Int,

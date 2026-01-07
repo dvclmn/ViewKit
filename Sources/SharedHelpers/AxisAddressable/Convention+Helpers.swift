@@ -147,10 +147,10 @@ import SwiftUI
 //    }
 //  }
 //  
-//  // MARK: - GridSize
+//  // MARK: - UnitSize
 //  
 //  /// Returns the horizontal length from a size, according to the convention.
-//  public func horizontalLength(gridSize: GridSize) -> GridLength {
+//  public func horizontalLength(gridSize: UnitSize) -> GridLength {
 //    switch self {
 //      case .columnIsHorizontal: gridSize.columns
 //      case .rowIsHorizontal: gridSize.rows
@@ -158,32 +158,32 @@ import SwiftUI
 //  }
 //  
 //  /// Returns the vertical length from a size, according to the convention.
-//  public func verticalLength(gridSize: GridSize) -> GridLength {
+//  public func verticalLength(gridSize: UnitSize) -> GridLength {
 //    switch self {
 //      case .columnIsHorizontal: gridSize.rows
 //      case .rowIsHorizontal: gridSize.columns
 //    }
 //  }
 //  
-//  public func makeGridSize(h: GridLength, v: GridLength) -> GridSize {
+//  public func makeUnitSize(h: GridLength, v: GridLength) -> UnitSize {
 //    switch self {
-//      case .columnIsHorizontal: GridSize(columns: h, rows: v)
-//      case .rowIsHorizontal: GridSize(columns: v, rows: h)
+//      case .columnIsHorizontal: UnitSize(columns: h, rows: v)
+//      case .rowIsHorizontal: UnitSize(columns: v, rows: h)
 //        
 //    }
 //  }
 //  
-//  //  public func makeGridSize(
+//  //  public func makeUnitSize(
 //  //    h: CGFloat,
 //  //    v: CGFloat,
 //  //    unitSize: CGSize
-//  //  ) -> GridSize {
+//  //  ) -> UnitSize {
 //  //    switch self {
 //  //      case .columnIsHorizontal:
-//  //        return GridSize(columns: h, rows: v)
+//  //        return UnitSize(columns: h, rows: v)
 //  //
 //  //      case .rowIsHorizontal:
-//  //        return GridSize(columns: v, rows: h)
+//  //        return UnitSize(columns: v, rows: h)
 //  //
 //  //    }
 //  //  }

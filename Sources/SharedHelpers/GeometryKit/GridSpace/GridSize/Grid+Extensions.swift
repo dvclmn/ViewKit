@@ -100,11 +100,11 @@ extension CGSize {
     return lengthOfSelf.toGridCount(using: unitLength, rounding: rounding)
   }
 
-  public func toGridSize(
+  public func toUnitSize(
     using unitSize: CGSize,
     rounding: GridRounding = .down
-  ) -> GridSize? {
-    GridSize(fromSize: self, unitSize: unitSize, rounding: rounding)
+  ) -> UnitSize? {
+    UnitSize(fromSize: self, unitSize: unitSize, rounding: rounding)
   }
 }
 

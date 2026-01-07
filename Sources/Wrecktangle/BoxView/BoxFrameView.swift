@@ -88,7 +88,7 @@ import SwiftUI
 //      Text(boxText)
 //        .fixedSize()
 //    }
-//    //      .frameFromGridSize(width: w, height: h, alignment: alignment)
+//    //      .frameFromUnitSize(width: w, height: h, alignment: alignment)
 //  }
 //  private var dimensions: GridDimensions? {
 //    guard let unitSize else { return nil }
