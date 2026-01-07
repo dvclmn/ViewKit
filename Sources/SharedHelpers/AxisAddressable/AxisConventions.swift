@@ -8,15 +8,45 @@
 import SwiftUI
 
 public enum AxisMapping: Sendable {
+  /// # Primary is Horizontal
   /// Normal: Width/Column is Horizontal, Height/Row is Vertical.
   /// Previously: `primaryIsHorizontal` / `widthIsHorizontal`
   case identity
   
+  /// # Primary is Vertical
   /// Flipped: Width/Column is Vertical, Height/Row is Horizontal.
   /// Previously: `primaryIsVertical` / `heightIsHorizontal`
   case transposed
   
   public static let `default`: Self = .identity
+
+  /// Routes a request to the correct component based on mapping and axis.
+  public func select<T>(primary: T, secondary: T, for axis: Axis2D) -> T {
+    switch (self, axis) {
+      case (.identity, .horizontal), (.transposed, .vertical):   return primary
+      case (.identity, .vertical),   (.transposed, .horizontal): return secondary
+    }
+  }
+  
+  /// Reconstructs a pair in the correct order for the type's storage.
+  public func pair<T>(h: T, v: T) -> (primary: T, secondary: T) {
+    switch self {
+      case .identity:   return (h, v)
+      case .transposed: return (v, h)
+    }
+  }
+  
+  func resolve<T>(primary: T, secondary: T, for axis: Axis2D) -> T {
+//  func resolve<T, V>(primary: T, secondary: T, for axis: Axis2D) -> T {
+    switch (self, axis) {
+      case (.identity, .horizontal), (.transposed, .vertical):   return primary
+      case (.identity, .vertical),   (.transposed, .horizontal): return secondary
+    }
+  }
+}
+
+// MARK: - Deprecations
+extension AxisMapping {
   
   @available(*, deprecated, renamed: "identity", message: "Renamed for clarity, please use `.identity` instead")
   public static let primaryIsHorizontal: Self = .identity

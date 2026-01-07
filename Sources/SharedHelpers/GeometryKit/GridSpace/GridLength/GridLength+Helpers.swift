@@ -6,9 +6,6 @@
 //
 
 extension GridLength {
-  
-  public var zero: Self { .init(count: <#T##Int#>, unitLength: <#T##CGFloat#>) }
-  
   public var gridLength: Int { count }
   public var screenLength: CGFloat { screenLength() }
   

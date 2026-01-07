@@ -7,48 +7,116 @@
 
 import Foundation
 
-public protocol AxisAddressable {
+public protocol AxisKeyPathCompatible {
   associatedtype Component
 
-  /// The first storage component (e.g., width, x, column)
-  var identityComponent: Component { get set }
-  
-  /// The second storage component (e.g., height, y, row)
-  var transposedComponent: Component { get set }
-  
-  static var zero: Self { get }
+  /// The KeyPath to the first storage slot (e.g., .width, .x, .column)
+  static var primaryKey: WritableKeyPath<Self, Component> { get }
+
+  /// The KeyPath to the second storage slot (e.g., .height, .y, .row)
+  static var secondaryKey: WritableKeyPath<Self, Component> { get }
 }
 
-extension AxisAddressable {
-  /// Unified getter for any axis-addressable type
+extension AxisKeyPathCompatible {
   public func value(
     along axis: Axis2D,
-    mapping: AxisMapping = .default
+    mapping: AxisMapping = .identity
   ) -> Component {
-    switch (axis, mapping) {
-      case (.horizontal, .identity), (.vertical, .transposed):
-        return identityComponent
-      case (.vertical, .identity), (.horizontal, .transposed):
-        return transposedComponent
-    }
+    // Resolve which KeyPath to use based on the axis and the mapping
+    let keyPath = mapping.resolve(
+      primary: Self.primaryKey,
+      secondary: Self.secondaryKey,
+      for: axis
+    )
+    return self[keyPath: keyPath]
   }
 
-  /// Unified setter that returns a new instance
   public func setting(
-    _ value: Component,
+    _ newValue: Component,
     along axis: Axis2D,
-    mapping: AxisMapping = .default
+    mapping: AxisMapping = .identity
   ) -> Self {
     var copy = self
-    switch (axis, mapping) {
-      case (.horizontal, .identity), (.vertical, .transposed):
-        copy.identityComponent = value
-      case (.vertical, .identity), (.horizontal, .transposed):
-        copy.transposedComponent = value
-    }
+    let keyPath = mapping.resolve(
+      primary: Self.primaryKey,
+      secondary: Self.secondaryKey,
+      for: axis
+    )
+    copy[keyPath: keyPath] = newValue
     return copy
   }
 }
+
+//public protocol AxisCompatible {
+//  associatedtype Component
+//
+//  /// Returns (width, height), (x, y), or (col, row)
+//  var naturalComponents: (primary: Component, secondary: Component) { get }
+//
+//  /// Creates a new instance from natural components
+//  static func create(primary: Component, secondary: Component) -> Self
+//}
+//
+//extension AxisCompatible {
+//  public func value(along axis: Axis2D, mapping: AxisMapping = .identity) -> Component {
+//    let components = self.naturalComponents
+//    return mapping.select(primary: components.primary, secondary: components.secondary, for: axis)
+//  }
+//
+//  public func setting(_ newValue: Component, along axis: Axis2D, mapping: AxisMapping = .identity) -> Self {
+//    let current = self.naturalComponents
+//
+//    // Use the mapping to decide if 'newValue' replaces primary or secondary
+//    let h = mapping.select(primary: newValue, secondary: current.secondary, for: .horizontal)
+//    let v = mapping.select(primary: current.primary, secondary: newValue, for: .vertical)
+//
+//    let final = mapping.pair(h: h, v: v)
+//    return Self.create(primary: final.primary, secondary: final.secondary)
+//  }
+//}
+
+//public protocol AxisAddressable {
+//  associatedtype Component
+//
+//  /// The first storage component (e.g., width, x, column)
+//  var identityComponent: Component { get set }
+//
+//  /// The second storage component (e.g., height, y, row)
+//  var transposedComponent: Component { get set }
+//
+//  static var zero: Self { get }
+//}
+
+//extension AxisAddressable {
+//  /// Unified getter for any axis-addressable type
+//  public func value(
+//    along axis: Axis2D,
+//    mapping: AxisMapping = .default
+//  ) -> Component {
+//    switch (axis, mapping) {
+//      case (.horizontal, .identity), (.vertical, .transposed):
+//        return identityComponent
+//      case (.vertical, .identity), (.horizontal, .transposed):
+//        return transposedComponent
+//    }
+//  }
+//
+//  /// Unified setter that returns a new instance
+//  public func setting(
+//    _ value: Component,
+//    along axis: Axis2D,
+//    mapping: AxisMapping = .default
+//  ) -> Self {
+//    var copy = self
+//    switch (axis, mapping) {
+//      case (.horizontal, .identity), (.vertical, .transposed):
+//        copy.identityComponent = value
+//      case (.vertical, .identity), (.horizontal, .transposed):
+//        copy.transposedComponent = value
+//    }
+//    return copy
+//  }
+//}
 
 //public protocol AxisAddressable {
 //

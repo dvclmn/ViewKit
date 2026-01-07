@@ -12,7 +12,6 @@ import Foundation
 
 extension GridSize {
 
-  public var zero: GridSize { GridSize(columns: <#T##GridLength#>, rows: <#T##GridLength#>) }
   public var width: Int { columns.gridLength }
   public var height: Int { rows.gridLength }
 

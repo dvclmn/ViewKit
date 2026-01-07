@@ -7,114 +7,141 @@
 
 import SwiftUI
 
-extension AxisAddressable where Component: BinaryFloatingPoint {
-  /// A helper for when you want to create a new instance from H/V values
-  public static func make(
-    h: Component,
-    v: Component,
-    mapping: AxisMapping = .identity
-  ) -> Self {
-    /// Create a dummy instance and then use unified 'setting' logic
-    /// This ensures the mapping is applied consistently.
-    return Self.zero
-      .setting(h, along: .horizontal, mapping: mapping)
-      .setting(v, along: .vertical, mapping: mapping)
+extension CGSize: AxisCompatible {
+  public var naturalComponents: (primary: CGFloat, secondary: CGFloat) { (width, height) }
+  public static func create(primary: CGFloat, secondary: CGFloat) -> Self {
+    CGSize(width: primary, height: secondary)
   }
 }
 
-// MARK: - Conformances
-
-extension CGSize: AxisAddressable {
-  public var identityComponent: CGFloat {
-    get { width }
-    set { width = newValue }
-  }
-  public var transposedComponent: CGFloat {
-    get { height }
-    set { height = newValue }
+extension GridPosition: AxisCompatible {
+  public var naturalComponents: (primary: Int, secondary: Int) { (column, row) }
+  public static func create(primary: Int, secondary: Int) -> Self {
+    GridPosition(row: secondary, column: primary)
   }
 }
 
-extension CGRect: AxisAddressable {
-  public var identityComponent: CGFloat {
-    get { size.width }
-    set { size.width = newValue }
+extension EdgeInsets: AxisCompatible {
+  /// We define the natural components as the Lead/Trail (H) and Top/Bottom (V)
+  public var naturalComponents: (primary: CGFloat, secondary: CGFloat) {
+    /// Using single edges as the "representative" values
+    (leading, top)
   }
-  public var transposedComponent: CGFloat {
-    get { size.height }
-    set { size.height = newValue }
-  }
-}
-
-extension CGPoint: AxisAddressable {
-  public var identityComponent: CGFloat {
-    get { x }
-    set { x = newValue }
-  }
-  public var transposedComponent: CGFloat {
-    get { y }
-    set { y = newValue }
+  
+  public static func create(primary: CGFloat, secondary: CGFloat) -> Self {
+    /// primary = horizontal (leading/trailing), secondary = vertical (top/bottom)
+    EdgeInsets(top: secondary, leading: primary, bottom: secondary, trailing: primary)
   }
 }
 
-extension UnitPoint: AxisAddressable {
-  public var identityComponent: CGFloat {
-    get { x }
-    set { x = newValue }
-  }
-  public var transposedComponent: CGFloat {
-    get { y }
-    set { y = newValue }
-  }
-}
-
-extension GridPosition: AxisAddressable {
-  public var identityComponent: Int {
-    get { column }
-    set { column = newValue }
-  }
-  public var transposedComponent: Int {
-    get { row }
-    set { row = newValue }
-  }
-}
-
-extension GridSize: AxisAddressable {
-  public var identityComponent: GridLength {
-    get { columns }
-    set { columns = newValue }
-  }
-  public var transposedComponent: GridLength {
-    get { rows }
-    set { rows = newValue }
-  }
-}
-
-extension EdgeInsets: AxisAddressable {
-  public typealias Component = CGFloat
-
-  /// Treat the "Primary/Identity" storage as the Lead/Trail pair
-  public var identityComponent: CGFloat {
-    get { leading + trailing }
-    set {
-      /// When setting a total, distribute it evenly.
-      /// Note: Consider preserving the existing ratio
-      let half = newValue / 2
-      leading = half
-      trailing = half
-    }
-  }
-
-  /// Treat the "Secondary/Transposed" storage as the Top/Bottom pair
-  public var transposedComponent: CGFloat {
-    get { top + bottom }
-    set {
-      let half = newValue / 2
-      top = half
-      bottom = half
-    }
-  }
-}
+//extension AxisAddressable where Component: BinaryFloatingPoint {
+//  /// A helper for when you want to create a new instance from H/V values
+//  public static func make(
+//    h: Component,
+//    v: Component,
+//    mapping: AxisMapping = .identity
+//  ) -> Self {
+//    /// Create a dummy instance and then use unified 'setting' logic
+//    /// This ensures the mapping is applied consistently.
+//    return Self.zero
+//      .setting(h, along: .horizontal, mapping: mapping)
+//      .setting(v, along: .vertical, mapping: mapping)
+//  }
+//}
+//
+//// MARK: - Conformances
+//
+//extension CGSize: AxisAddressable {
+//  public var identityComponent: CGFloat {
+//    get { width }
+//    set { width = newValue }
+//  }
+//  public var transposedComponent: CGFloat {
+//    get { height }
+//    set { height = newValue }
+//  }
+//}
+//
+//extension CGRect: AxisAddressable {
+//  public var identityComponent: CGFloat {
+//    get { size.width }
+//    set { size.width = newValue }
+//  }
+//  public var transposedComponent: CGFloat {
+//    get { size.height }
+//    set { size.height = newValue }
+//  }
+//}
+//
+//extension CGPoint: AxisAddressable {
+//  public var identityComponent: CGFloat {
+//    get { x }
+//    set { x = newValue }
+//  }
+//  public var transposedComponent: CGFloat {
+//    get { y }
+//    set { y = newValue }
+//  }
+//}
+//
+//extension UnitPoint: AxisAddressable {
+//  public var identityComponent: CGFloat {
+//    get { x }
+//    set { x = newValue }
+//  }
+//  public var transposedComponent: CGFloat {
+//    get { y }
+//    set { y = newValue }
+//  }
+//}
+//
+//extension GridPosition: AxisAddressable {
+//  public var identityComponent: Int {
+//    get { column }
+//    set { column = newValue }
+//  }
+//  public var transposedComponent: Int {
+//    get { row }
+//    set { row = newValue }
+//  }
+//}
+//
+//extension GridSize: AxisAddressable {
+//  public var identityComponent: GridLength {
+//    get { columns }
+//    set { columns = newValue }
+//  }
+//  public var transposedComponent: GridLength {
+//    get { rows }
+//    set { rows = newValue }
+//  }
+//}
+//
+//extension EdgeInsets: AxisAddressable {
+//  public typealias Component = CGFloat
+//
+//  /// Treat the "Primary/Identity" storage as the Lead/Trail pair
+//  public var identityComponent: CGFloat {
+//    get { leading + trailing }
+//    set {
+//      /// When setting a total, distribute it evenly.
+//      /// Note: Consider preserving the existing ratio
+//      let half = newValue / 2
+//      leading = half
+//      trailing = half
+//    }
+//  }
+//
+//  /// Treat the "Secondary/Transposed" storage as the Top/Bottom pair
+//  public var transposedComponent: CGFloat {
+//    get { top + bottom }
+//    set {
+//      let half = newValue / 2
+//      top = half
+//      bottom = half
+//    }
+//  }
+//}
 
 // MARK: - Addressable
 //extension CGSize: AxisAddressable {
