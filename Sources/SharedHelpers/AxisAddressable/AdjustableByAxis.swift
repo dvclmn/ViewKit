@@ -51,21 +51,16 @@ extension AdjustableByAxis where Value: BinaryFloatingPoint {
     return self.adjustBoth { ($0 * factor, $1 * factor) }
   }
 
-  //  public func multiplyBoth(
-  //    by factorProvider: Self,
-  //    //        _ axis: Axis2D,
-  //    //    transform: (Value) -> Value,
-  //    convention: AxisConvention = .default
-  //  ) -> Self {
-  //    //    let current = value(for: axis, convention: convention)
-  //    //    let transformed = transform(current)
-  //    //    return setting(transformed, for: axis, convention: convention)
-  //    let factorA = factorProvider.value(for: .horizontal, convention: convention)
-  //    let factorB = factorProvider.value(for: .vertical, convention: convention)
-  //    return self.adjustBoth(convention: convention) { a, b in
-  //      (a * factorA, b * factorB)
-  //    }
-  //  }
+  public func multiplyBoth(
+    by factorProvider: Self,
+    using axis: Axis2D,
+    convention: AxisConvention = .default
+  ) -> Self {
+    let factor = factorProvider.value(along: axis, convention: convention)
+    return self.adjustBoth(convention: convention) { a, b in
+      (a * factor, b * factor)
+    }
+  }
 
   /// Multiply both axes by the same factor
   public func divideBoth(by divisor: Value) -> Self {
@@ -76,24 +71,19 @@ extension AdjustableByAxis where Value: BinaryFloatingPoint {
     }
   }
 
-  //  public func divideBoth(
-  //    by divisorProvider: Self,
-  //    //        _ axis: Axis2D,
-  //    //    transform: (Value) -> Value,
-  //    convention: AxisConvention = .default
-  //  ) -> Self {
-  //    //    let current = value(for: axis, convention: convention)
-  //    //    let transformed = transform(current)
-  //    //    return setting(transformed, for: axis, convention: convention)
-  //    let divisorA = divisorProvider.value(for: .horizontal, convention: convention)
-  //    let divisorB = divisorProvider.value(for: .vertical, convention: convention)
-  //    //    let needsDivision = self.value(for: axis, convention: convention)
-  //    return self.adjustBoth(convention: convention) { a, b in
-  //      let aSafe = Swift.max(0, a / divisorA)
-  //      let bSafe = Swift.max(0, b / divisorB)
-  //      return (aSafe, bSafe)
-  //    }
-  //  }
+  public func divideBoth(
+    by divisorProvider: Self,
+    using axis: Axis2D,
+    convention: AxisConvention = .default
+  ) -> Self {
+
+    let divisor = divisorProvider.value(along: axis, convention: convention)
+    return self.adjustBoth(convention: convention) { a, b in
+      let aSafe = Swift.max(0, a / divisor)
+      let bSafe = Swift.max(0, b / divisor)
+      return (aSafe, bSafe)
+    }
+  }
 
   /// Have made this a private-only helper for the above, because I was concerned that the whole
   /// convention thing is not even enforced here, which seems like a recipe for disaster.

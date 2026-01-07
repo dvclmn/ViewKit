@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 6/1/2026.
 //
 
-import Foundation
+import SwiftUI
 
 // MARK: - Adjustable
 extension CGSize: AdjustableByAxis {}
@@ -149,5 +149,39 @@ extension GridSize: AdjustableByGridAxis {
         )
     }
   }
+}
 
+// MARK: - UnitPoint
+extension UnitPoint: AxisAddressable {
+
+  public func value(
+    along axis: Axis2D,
+    convention: AxisConvention
+  ) -> CGFloat {
+    switch axis {
+      case .horizontal: convention.horizontalValue(for: self)
+      case .vertical: convention.verticalValue(for: self)
+    }
+  }
+
+  public func setting(
+    _ newValue: CGFloat,
+    along axis: Axis2D,
+    convention: AxisConvention
+  ) -> Self {
+    switch axis {
+      case .horizontal:
+        /// Keep the current vertical, update horizontal
+        return convention.makeUnitPoint(
+          h: newValue,
+          v: convention.verticalValue(for: self)
+        )
+      case .vertical:
+        /// Keep the current horizontal, update vertical
+        return convention.makeUnitPoint(
+          h: convention.horizontalValue(for: self),
+          v: newValue
+        )
+    }
+  }
 }
