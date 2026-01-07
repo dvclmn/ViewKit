@@ -9,32 +9,42 @@ import Foundation
 
 public protocol AxisAddressable {
   associatedtype Component
-  
+
   /// The first storage component (e.g., width, x, column)
-  var primaryComponent: Component { get set }
+  var identityComponent: Component { get set }
+  
   /// The second storage component (e.g., height, y, row)
-  var secondaryComponent: Component { get set }
+  var transposedComponent: Component { get set }
+  
+  static var zero: Self { get }
 }
 
 extension AxisAddressable {
   /// Unified getter for any axis-addressable type
-  public func value(along axis: Axis2D, mapping: AxisMapping = .primaryIsHorizontal) -> Component {
+  public func value(
+    along axis: Axis2D,
+    mapping: AxisMapping = .default
+  ) -> Component {
     switch (axis, mapping) {
-      case (.horizontal, .primaryIsHorizontal), (.vertical, .primaryIsVertical):
-        return primaryComponent
-      case (.vertical, .primaryIsHorizontal), (.horizontal, .primaryIsVertical):
-        return secondaryComponent
+      case (.horizontal, .identity), (.vertical, .transposed):
+        return identityComponent
+      case (.vertical, .identity), (.horizontal, .transposed):
+        return transposedComponent
     }
   }
-  
+
   /// Unified setter that returns a new instance
-  public func setting(_ value: Component, along axis: Axis2D, mapping: AxisMapping = .primaryIsHorizontal) -> Self {
+  public func setting(
+    _ value: Component,
+    along axis: Axis2D,
+    mapping: AxisMapping = .default
+  ) -> Self {
     var copy = self
     switch (axis, mapping) {
-      case (.horizontal, .primaryIsHorizontal), (.vertical, .primaryIsVertical):
-        copy.primaryComponent = value
-      case (.vertical, .primaryIsHorizontal), (.horizontal, .primaryIsVertical):
-        copy.secondaryComponent = value
+      case (.horizontal, .identity), (.vertical, .transposed):
+        copy.identityComponent = value
+      case (.vertical, .identity), (.horizontal, .transposed):
+        copy.transposedComponent = value
     }
     return copy
   }

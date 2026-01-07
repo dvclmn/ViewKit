@@ -8,24 +8,65 @@
 import SwiftUI
 
 extension CGSize: AxisAddressable {
-  public var primaryComponent: CGFloat {
+  public var identityComponent: CGFloat {
     get { width }
     set { width = newValue }
   }
-  public var secondaryComponent: CGFloat {
+  public var transposedComponent: CGFloat {
     get { height }
     set { height = newValue }
   }
 }
 
 extension GridPosition: AxisAddressable {
-  public var primaryComponent: Int {
+  public var identityComponent: Int {
     get { column }
     set { column = newValue }
   }
-  public var secondaryComponent: Int {
+  public var transposedComponent: Int {
     get { row }
     set { row = newValue }
+  }
+}
+
+extension AxisAddressable where Component: BinaryFloatingPoint {
+  /// A helper for when you want to create a new instance from H/V values
+  public static func make(
+    h: Component,
+    v: Component,
+    mapping: AxisMapping = .identity
+  ) -> Self {
+    /// Create a dummy instance and then use unified 'setting' logic
+    /// This ensures the mapping is applied consistently.
+    return Self.zero
+      .setting(h, along: .horizontal, mapping: mapping)
+      .setting(v, along: .vertical, mapping: mapping)
+  }
+}
+
+extension EdgeInsets: AxisAddressable {
+  public typealias Component = CGFloat
+  
+  /// Treat the "Primary/Identity" storage as the Lead/Trail pair
+  public var identityComponent: CGFloat {
+    get { leading + trailing }
+    set {
+      /// When setting a total, distribute it evenly.
+      /// Note: Consider preserving the existing ratio
+      let half = newValue / 2
+      leading = half
+      trailing = half
+    }
+  }
+  
+  /// Treat the "Secondary/Transposed" storage as the Top/Bottom pair
+  public var transposedComponent: CGFloat {
+    get { top + bottom }
+    set {
+      let half = newValue / 2
+      top = half
+      bottom = half
+    }
   }
 }
 

@@ -8,12 +8,27 @@
 import SwiftUI
 
 public enum AxisMapping: Sendable {
-  /// The first component (width, x, column) is horizontal.
-  case primaryIsHorizontal
-  /// The first component (width, x, column) is vertical.
-  case primaryIsVertical
+  /// Normal: Width/Column is Horizontal, Height/Row is Vertical.
+  /// Previously: `primaryIsHorizontal` / `widthIsHorizontal`
+  case identity
   
-  public static let `default`: Self = .primaryIsHorizontal
+  /// Flipped: Width/Column is Vertical, Height/Row is Horizontal.
+  /// Previously: `primaryIsVertical` / `heightIsHorizontal`
+  case transposed
+  
+  public static let `default`: Self = .identity
+  
+  @available(*, deprecated, renamed: "identity", message: "Renamed for clarity, please use `.identity` instead")
+  public static let primaryIsHorizontal: Self = .identity
+  
+  @available(*, deprecated, renamed: "transposed", message: "Renamed for clarity, please use `.identity` instead")
+  public static let primaryIsVertical: Self = .transposed
+  
+  @available(*, deprecated, renamed: "identity", message: "Renamed for clarity, please use `.identity` instead")
+  public static let widthIsHorizontal: Self = .identity
+  
+  @available(*, deprecated, renamed: "transposed", message: "Renamed for clarity, please use `.identity` instead")
+  public static let heightIsHorizontal: Self = .transposed
 }
 
 /// A mapping between `Dimension` (width / height) and `Axis` (horizontal / vertical).
@@ -37,56 +52,56 @@ public enum AxisMapping: Sendable {
 ///
 /// Enables deriving correct values from types like
 /// `CGSize`, `CGPoint`, `EdgeInsets` etc
-public enum AxisConvention: Sendable {
-
-  case widthIsHorizontal
-  case heightIsHorizontal
-
-  public static let `default`: Self = .widthIsHorizontal
-}
-
-extension AxisConvention {
-
-  public var widthAxis: Axis2D {
-    switch self {
-      case .widthIsHorizontal: .horizontal
-      case .heightIsHorizontal: .vertical
-    }
-  }
-
-  public var heightAxis: Axis2D {
-    switch self {
-      case .widthIsHorizontal: .vertical
-      case .heightIsHorizontal: .horizontal
-    }
-  }
-}
-
-/// This exists alongside `AxisConvention`, to represent index
-/// space, where `AxisConvention` represents 'dimension' space
-///
-/// In a standard grid, Columns typically represent the horizontal index (X)
-/// and Rows represent the vertical index (Y)
-public enum GridAxisConvention: Sendable {
-  case columnIsHorizontal
-  case rowIsHorizontal
-
-  public static let `default`: Self = .columnIsHorizontal
-}
-
-extension GridAxisConvention {
-
-  public var rowAxis: Axis2D {
-    switch self {
-      case .columnIsHorizontal: .vertical
-      case .rowIsHorizontal: .horizontal
-    }
-  }
-
-  public var columnAxis: Axis2D {
-    switch self {
-      case .columnIsHorizontal: .horizontal
-      case .rowIsHorizontal: .vertical
-    }
-  }
-}
+//public enum AxisConvention: Sendable {
+//
+//  case widthIsHorizontal
+//  case heightIsHorizontal
+//
+//  public static let `default`: Self = .widthIsHorizontal
+//}
+//
+//extension AxisConvention {
+//
+//  public var widthAxis: Axis2D {
+//    switch self {
+//      case .widthIsHorizontal: .horizontal
+//      case .heightIsHorizontal: .vertical
+//    }
+//  }
+//
+//  public var heightAxis: Axis2D {
+//    switch self {
+//      case .widthIsHorizontal: .vertical
+//      case .heightIsHorizontal: .horizontal
+//    }
+//  }
+//}
+//
+///// This exists alongside `AxisConvention`, to represent index
+///// space, where `AxisConvention` represents 'dimension' space
+/////
+///// In a standard grid, Columns typically represent the horizontal index (X)
+///// and Rows represent the vertical index (Y)
+//public enum GridAxisConvention: Sendable {
+//  case columnIsHorizontal
+//  case rowIsHorizontal
+//
+//  public static let `default`: Self = .columnIsHorizontal
+//}
+//
+//extension GridAxisConvention {
+//
+//  public var rowAxis: Axis2D {
+//    switch self {
+//      case .columnIsHorizontal: .vertical
+//      case .rowIsHorizontal: .horizontal
+//    }
+//  }
+//
+//  public var columnAxis: Axis2D {
+//    switch self {
+//      case .columnIsHorizontal: .horizontal
+//      case .rowIsHorizontal: .vertical
+//    }
+//  }
+//}
