@@ -5,10 +5,10 @@
 //  Created by Dave Coleman on 18/12/2025.
 //
 
-import Foundation
+import SwiftUI
 
 extension GridPosition {
-  
+
   //  public static func createRow(_ rowIndex: Int, columns: Range<Int>) -> [GridPosition] {
   //    columns.map { GridPosition(row: rowIndex, column: $0) }
   //  }
@@ -37,14 +37,14 @@ extension GridPosition {
   ) -> GridPosition? {
 
     fatalError("Needs implementation")
-//    /// The grid size conversion is *only* to check whether the point is contained.
-//    /// The cellSize is not used to construct the
-//    let gridSize = dimensions.toUnitSize(unitSize: cellSize)
-//    let containsPoint = gridSize.contains(point: point)
-//    
-//    let position = GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
-//    guard dimensions.contains(point: point, cellSize: cellSize) else { return nil }
-//    return GridPosition(point: point, cellSize: cellSize)
+    //    /// The grid size conversion is *only* to check whether the point is contained.
+    //    /// The cellSize is not used to construct the
+    //    let gridSize = dimensions.toUnitSize(unitSize: cellSize)
+    //    let containsPoint = gridSize.contains(point: point)
+    //
+    //    let position = GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
+    //    guard dimensions.contains(point: point, cellSize: cellSize) else { return nil }
+    //    return GridPosition(point: point, cellSize: cellSize)
   }
 
   /// Note: zero-based count for internal representation,
@@ -56,7 +56,7 @@ extension GridPosition {
   /// Position starting from one, for UI
   public var displayRepresentation: GridPosition {
     GridPosition(row: row + 1, column: column + 1)
-//    self + 1
+    //    self + 1
   }
 
   public var isGreaterThanZero: Bool {
@@ -70,11 +70,25 @@ extension GridPosition {
   /// Converts grid position to canvas-space point
   /// - Parameter cellSize: The size of each grid cell
   /// - Returns: The top-left point of the cell in canvas coordinates
-  public func toCGPoint(cellSize: CGSize) -> CGPoint {
-    CGPoint(
-      x: CGFloat(column) * cellSize.width,
-      y: CGFloat(row) * cellSize.height
+  //  public func toCGPoint(cellSize: CGSize) -> CGPoint {
+  //    CGPoint(
+  //      x: CGFloat(column) * cellSize.width,
+  //      y: CGFloat(row) * cellSize.height
+  //    )
+  //  }
+
+  public func toUnitPoint(using unitSize: CGSize) -> UnitPoint? {
+    guard let x = row.toScreenLength(using: unitSize.width),
+      let y = column.toScreenLength(using: unitSize.height)
+    else { return nil }
+    return UnitPoint(
+      x: x,
+      y: y
     )
+    //    CGPoint(
+    //      x: CGFloat(column) * cellSize.width,
+    //      y: CGFloat(row) * cellSize.height
+    //    )
   }
 
   public func neighbour(at edge: GridEdge) -> GridPosition {

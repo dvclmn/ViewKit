@@ -17,7 +17,7 @@ import Foundation
 /// which equals 8 × 9pt = 72pt (screen-space).”
 ///
 /// Settled on the names now, which is Grid length, and Screen length
-public struct GridLength: Hashable, Codable {
+public struct UnitLength: Hashable, Codable, Sendable {
 
   /// Prefer use of ``gridLength``, to better pair with ``screenLength``
   package var count: Int

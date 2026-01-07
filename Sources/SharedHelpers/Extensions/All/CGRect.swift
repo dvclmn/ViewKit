@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-public enum RectCorner {
-  case topLeading, topTrailing, bottomLeading, bottomTrailing
-}
+//public enum RectCorner {
+//  case topLeading, topTrailing, bottomLeading, bottomTrailing
+//}
 
 /// ```
 /// ● = origin
@@ -51,14 +51,14 @@ extension CGRect {
     Path(self)
   }
 
-  public func point(for corner: RectCorner) -> CGPoint {
-    switch corner {
-      case .topLeading: CGPoint(x: minX, y: minY)
-      case .topTrailing: CGPoint(x: maxX, y: minY)
-      case .bottomLeading: CGPoint(x: minX, y: maxY)
-      case .bottomTrailing: CGPoint(x: maxX, y: maxY)
-    }
-  }
+//  public func point(for corner: RectCorner) -> CGPoint {
+//    switch corner {
+//      case .topLeading: CGPoint(x: minX, y: minY)
+//      case .topTrailing: CGPoint(x: maxX, y: minY)
+//      case .bottomLeading: CGPoint(x: minX, y: maxY)
+//      case .bottomTrailing: CGPoint(x: maxX, y: maxY)
+//    }
+//  }
 
   /// Get a CGPoint at the specified UnitPoint within this rect
   public func point(at unitPoint: UnitPoint) -> CGPoint {

@@ -75,6 +75,26 @@ extension Int {
     return toScreenLength(using: length)
   }
 
+  //  public func toScreenSize(
+  //    //    along axis: Axis2D,
+  //    //    mapping: AxisMapping = .default,
+  //    //    convention: AxisConvention = .default,
+  //    using unitSize: CGSize?,
+  //  ) -> CGSize? {
+  //
+  //    guard let unitSize else { return nil }
+  //
+  //    let width = unitSize.width
+  //    let height = unitSize.height
+  //    guard isValidState(with: width),
+  //      isValidState(with: height)
+  //    else { return nil }
+  //
+  //    toScreenLength(using: <#T##CGFloat#>)
+  //    //    let length = unitSize.value(along: axis, mapping: mapping)
+  //    //    return toScreenLength(using: length)
+  //  }
+
   private func isValidState(with unitLength: CGFloat) -> Bool {
     //    print("Checking if Int of value `\(self)` is valid for conversion with unit length \(unitLength)")
     let result = self >= 0 && unitLength > 0 && unitLength.isFinite
@@ -83,6 +103,7 @@ extension Int {
 
   }
 }
+
 
 extension CGSize {
 

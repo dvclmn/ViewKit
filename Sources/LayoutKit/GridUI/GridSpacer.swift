@@ -21,7 +21,7 @@ public struct GridSpacer: View {
   public var body: some View {
     
     Spacer()
-      .frameFromGridLength(
+      .frameFromUnitLength(
         axis: axis,
         length: count,
       )

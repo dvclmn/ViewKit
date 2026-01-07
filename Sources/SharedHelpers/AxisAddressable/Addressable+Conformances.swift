@@ -34,8 +34,13 @@ extension GridPosition: AxisKeyPathCompatible {
 }
 
 extension UnitSize: AxisKeyPathCompatible {
-  public static var primaryKey: WritableKeyPath<Self, GridLength> { \.columns }
-  public static var secondaryKey: WritableKeyPath<Self, GridLength> { \.rows }
+  public static var primaryKey: WritableKeyPath<Self, UnitLength> { \.columns }
+  public static var secondaryKey: WritableKeyPath<Self, UnitLength> { \.rows }
+}
+
+extension UnitRect: AxisKeyPathCompatible {
+  public static var primaryKey: WritableKeyPath<Self, UnitLength> { \.size.columns }
+  public static var secondaryKey: WritableKeyPath<Self, UnitLength> { \.size.rows }
 }
 
 extension GridDimensions: AxisKeyPathCompatible {
@@ -143,11 +148,11 @@ extension GridDimensions: AxisKeyPathCompatible {
 //}
 //
 //extension UnitSize: AxisAddressable {
-//  public var identityComponent: GridLength {
+//  public var identityComponent: UnitLength {
 //    get { columns }
 //    set { columns = newValue }
 //  }
-//  public var transposedComponent: GridLength {
+//  public var transposedComponent: UnitLength {
 //    get { rows }
 //    set { rows = newValue }
 //  }

@@ -1,5 +1,5 @@
 //
-//  GridLength+Helpers.swift
+//  UnitLength+Helpers.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 7/1/2026.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension GridLength {
+extension UnitLength {
   public var gridLength: Int { count }
   public var screenLength: CGFloat { screenLength() }
   
@@ -17,14 +17,14 @@ extension GridLength {
   
   public func clamped(min: Int, max: Int) -> Self {
     let newCount = self.count.clamped(min, max)
-    return GridLength(count: newCount, unitLength: self.unitLength)
+    return UnitLength(count: newCount, unitLength: self.unitLength)
   }
 }
 
-extension GridLength: Comparable {
+extension UnitLength: Comparable {
   public static func < (
-    lhs: GridLength,
-    rhs: GridLength
+    lhs: UnitLength,
+    rhs: UnitLength
   ) -> Bool {
     lhs.count < rhs.count
   }

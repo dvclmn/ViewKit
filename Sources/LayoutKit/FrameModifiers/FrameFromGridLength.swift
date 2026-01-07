@@ -8,7 +8,7 @@
 import SwiftUI
 import SharedHelpers
 
-public struct FrameFromGridLength: ViewModifier {
+public struct FrameFromUnitLength: ViewModifier {
   @Environment(\.unitSize) private var unitSize
   @Environment(\.axisMapping) private var axisMapping
   
@@ -26,7 +26,7 @@ public struct FrameFromGridLength: ViewModifier {
       )
   }
 }
-extension FrameFromGridLength {
+extension FrameFromUnitLength {
   
   private var dimensions: FrameDimensions {
     guard let unitSize else { return nil }
@@ -50,14 +50,14 @@ extension FrameFromGridLength {
 
 extension View {
   
-  public func frameFromGridLength(
+  public func frameFromUnitLength(
     axis: Axis = .horizontal,
     length: Int,
     alignment: Alignment = .center,
     convention: AxisConvention = .default,
   ) -> some View {
     self.modifier(
-      FrameFromGridLength(
+      FrameFromUnitLength(
         axis: axis,
         length: length,
         convention: convention,

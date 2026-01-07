@@ -8,18 +8,18 @@
 import Foundation
 
 /// Equivalent to `CGSize`
-public struct UnitSize: Hashable, Codable {
+public struct UnitSize: Hashable, Codable, Sendable {
 
   /// Columns == Width is the more common convention.
   ///
-  public var columns: GridLength
+  public var columns: UnitLength
 
   /// Rows == Height
-  public var rows: GridLength
+  public var rows: UnitLength
 
   public init(
-    columns: GridLength,
-    rows: GridLength,
+    columns: UnitLength,
+    rows: UnitLength,
   ) {
     self.columns = columns
     self.rows = rows
@@ -35,8 +35,8 @@ extension UnitSize {
     unitSize: CGSize
   ) {
     self.init(
-      columns: GridLength(count: width, unitLength: unitSize.width),
-      rows: GridLength(count: height, unitLength: unitSize.height),
+      columns: UnitLength(count: width, unitLength: unitSize.width),
+      rows: UnitLength(count: height, unitLength: unitSize.height),
     )
   }
 
