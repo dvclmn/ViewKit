@@ -13,6 +13,7 @@ import Foundation
 
 extension UnitSize {
 
+  public var dimensions: GridDimensions { GridDimensions(intWidth, intHeight) }
   public var intWidth: Int { width.gridLength }
   public var intHeight: Int { height.gridLength }
 

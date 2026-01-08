@@ -28,7 +28,7 @@ public enum GridFont: String, ModelBase, Pickable, CaseIterable, Identifiable {
   public static let baseFontSize: CGFloat = 15
 
   /// Provides effective aspect ratio, to calculate unit size
-  private var size: CGSize {
+  public var baseSize: CGSize {
     switch self {
       case .menlo: CGSize(9.04, 18)
       case .sfMono: CGSize(9.27, 18)

@@ -12,16 +12,16 @@ extension EdgeInsets {
   /// This permits the omission of any one of the four
   /// parameters, which the default init doesn't allow for.
   public init(
-    top: CGFloat = 0,
-    left: CGFloat = 0,
+    topWithDefaults top: CGFloat = 0,
+    leading: CGFloat = 0,
     bottom: CGFloat = 0,
-    right: CGFloat = 0
+    trailing: CGFloat = 0
   ) {
     self.init(
       top: top,
-      leading: left,
+      leading: leading,
       bottom: bottom,
-      trailing: right
+      trailing: trailing
     )
   }
 

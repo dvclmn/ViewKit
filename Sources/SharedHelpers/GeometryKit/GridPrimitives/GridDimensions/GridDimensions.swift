@@ -29,7 +29,9 @@ extension GridDimensions: ExpressibleByIntegerLiteral {
 }
 
 extension GridDimensions {
-
+  public init(fromUnitSize unitSize: UnitSize) {
+    self.init(unitSize.intWidth, unitSize.intHeight)
+  }
 }
 
 public func + (lhs: GridDimensions, rhs: GridDimensions) -> GridDimensions {

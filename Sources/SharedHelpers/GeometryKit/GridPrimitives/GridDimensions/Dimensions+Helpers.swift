@@ -17,6 +17,7 @@ extension GridDimensions {
   private func toUnitSize(with unitSize: CGSize) -> UnitSize {
     UnitSize(width: width, height: height, unitSize: unitSize)
   }
+  
 
   /// These have moved to UnitSize.
   /// Checks if a point (in pixel coordinates) falls within the grid bounds

@@ -105,7 +105,7 @@ extension Int {
 }
 
 extension CGPoint {
-  
+
   /// Returns the relative UnitPoint (not snapped) within a given size.
   ///
   /// Usage:
@@ -121,24 +121,24 @@ extension CGPoint {
     rounding: GridRounding = .none,
     fallback: UnitPoint = .center
   ) -> UnitPoint {
-    
+
     guard size.isGreaterThanOrEqualToZero else { return fallback }
-    
+
     let rawX = x / size.width
     let rawY = y / size.height
-    
+
     let valX = rounding.roundedIfNeeded(rawX)
     let valY = rounding.roundedIfNeeded(rawY)
-//    if let rounding {
-//      let valX = x.rounded(rounding.rule)
-//    }
-    
+    //    if let rounding {
+    //      let valX = x.rounded(rounding.rule)
+    //    }
+
     return UnitPoint(x: valX, y: valY)
   }
-//
-//  public func toUnitPoint(in unitSize: CGSize) -> UnitPoint {
-//    
-//  }
+  //
+  //  public func toUnitPoint(in unitSize: CGSize) -> UnitPoint {
+  //
+  //  }
   //  public init(
   //    point: CGPoint,
   //    cellSize: CGSize
@@ -153,7 +153,6 @@ extension CGPoint {
   //  }
 }
 
-
 extension CGSize {
 
   /// The axis is justified here, as we need to specify the edge for `self`
@@ -163,7 +162,6 @@ extension CGSize {
     mapping: AxisMapping = .default,
     rounding: GridRounding = .down
   ) -> Int? {
-
     /// Ensures the same convention is used for extracting both length values
     let lengthOfSelf = self.value(along: axis, mapping: mapping)
     let unitLength = unitSize.value(along: axis, mapping: mapping)
@@ -175,6 +173,13 @@ extension CGSize {
     rounding: GridRounding = .down
   ) -> UnitSize? {
     UnitSize(fromSize: self, unitSize: unitSize, rounding: rounding)
+  }
+  
+  public func snapped(
+    using unitSize: CGSize,
+    rounding: GridRounding = .down
+  ) -> CGSize? {
+    toUnitSize(using: unitSize, rounding: rounding)?.screenSize
   }
 }
 

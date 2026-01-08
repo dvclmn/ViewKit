@@ -65,15 +65,15 @@ extension UnitSize {
   }
 
   public init(
-    grid: GridDimensions,
+    dimensions: GridDimensions,
     unitSize: CGSize
   ) {
     self.width = UnitLength(
-      magnitude: grid.width,
+      magnitude: dimensions.width,
       unitLength: unitSize.width
     )
     self.height = UnitLength(
-      magnitude: grid.height,
+      magnitude: dimensions.height,
       unitLength: unitSize.height
     )
   }

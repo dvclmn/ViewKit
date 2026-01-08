@@ -51,7 +51,8 @@ fatalError("WIP, needs to be completed after changes to UnitSize/GridDimensions"
 //    return delta
   }
 
-  public func resize(_ artwork: inout any GridShaped) {
+  public func resize<T: GridShaped>(_ artwork: inout T) {
+//  public func resize(_ artwork: inout any GridShaped) {
     artwork.resize(by: resizeDelta, at: affectedEdges)
   }
 

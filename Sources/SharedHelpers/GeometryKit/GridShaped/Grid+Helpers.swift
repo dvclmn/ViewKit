@@ -5,7 +5,16 @@
 //  Created by Dave Coleman on 6/11/2025.
 //
 
+import Foundation
+
 extension GridShaped {
+  
+  public func unitSize(
+    cellSize: CGSize
+  ) -> UnitSize {
+    UnitSize(dimensions: dimensions, unitSize: cellSize)
+  }
+  
   var rows: [Row] { cells }
   var columns: Cells {
     guard let firstRow = cells.first else { return [] }
@@ -14,6 +23,12 @@ extension GridShaped {
     }
   }
 
+  /// The total number of cells in the grid, whether empty or not
+  public var cellCount: Int { rowCount * columnCount }
+  
+  /// The total number of non-empty cells in the grid
+  public var cellCountRagged: Int { cells.reduce(0) { $0 + $1.count } }
+  
   public var rowCount: Int { cells.count }
 
   /// Width of the first row — the 'intended' width of a rectangular grid.
@@ -43,8 +58,13 @@ extension GridShaped {
     }
     return cells
   }
+  
+//  func position(for value: Cell) -> GridPosition? {
+////    let row = value.
+////     let cell = self[]
+//  }
 
-  func positions(of value: Cell) -> [GridPosition] {
+  public func positions(of value: Cell) -> [GridPosition] {
     var positions: [GridPosition] = []
     for (rowIndex, line) in rows.enumerated() {
       for (columnIndex, val) in line.enumerated() where val == value {

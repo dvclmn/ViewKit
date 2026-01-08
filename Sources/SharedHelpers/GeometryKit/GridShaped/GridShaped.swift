@@ -9,7 +9,7 @@
 /// - Should bear in mind the idea of both
 ///   a) Inherent/uncropped dimensions
 ///   b) As distinct from a user's cropped frame / view onto the grid
-//public protocol GridShaped: ExpressibleByArrayLiteral {
+
 public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row, Index == Int {
   associatedtype Cell: GridCell
   typealias Cells = [[Cell]]
@@ -29,7 +29,12 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element 
 }
 
 public protocol GridCell: Equatable {
+  //public protocol GridCell<Base>: Equatable {
+  //  associatedtype Base: GridShaped
+  //  var base: Grid { get }
   static func createBlank() -> Self
+  //  func position() -> GridPosition
+  //  func position(in grid: Self) -> GridPosition
 }
 
 extension GridShaped {

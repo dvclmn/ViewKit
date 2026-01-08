@@ -10,10 +10,6 @@ import SharedHelpers
 
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack: GridShaped {
-//  public subscript(position: Int) -> Row {
-//    fatalError("")
-//  }
-  
 
   public typealias Cell = Character
   public typealias Row = [Cell]
