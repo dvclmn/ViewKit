@@ -17,7 +17,7 @@ extension UnitLength {
   
   public func clamped(min: Int, max: Int) -> Self {
     let newCount = self.magnitude.clamped(min, max)
-    return UnitLength(count: newCount, unitLength: self.unitLength)
+    return UnitLength(magnitude: newCount, unitLength: self.unitLength)
   }
 }
 

@@ -19,12 +19,12 @@ public struct UnitPosition: Hashable, Codable, Sendable {
 }
 
 extension UnitPosition {
-  
+
   public init(_ x: UnitLength, _ y: UnitLength) {
     self.x = x
     self.y = y
   }
-  
+
   public init?(
     fromCGPoint point: CGPoint,
     unitSize: CGSize,
@@ -33,7 +33,7 @@ extension UnitPosition {
     guard let gridX = point.x.toGridCount(using: unitSize.width, rounding: rounding),
       let gridY = point.y.toGridCount(using: unitSize.height, rounding: rounding)
     else { return nil }
-    
+
     let x = UnitLength(
       magnitude: gridX,
       unitLength: unitSize.width
