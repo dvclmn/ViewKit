@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum GridBoundaryPoint {
+public enum GridBoundaryPoint: String, CaseIterable, Identifiable {
 
   /// Row edges
   case top
@@ -25,31 +25,94 @@ public enum GridBoundaryPoint {
 }
 
 extension GridBoundaryPoint {
-
+  
   public init(fromEdge edge: GridEdge) {
     self =
-      switch edge {
-        case .top: .top
-        case .trailing: .trailing
-        case .bottom: .bottom
-        case .leading: .leading
-      }
+    switch edge {
+      case .top: .top
+      case .trailing: .trailing
+      case .bottom: .bottom
+      case .leading: .leading
+    }
   }
+  
+  public init(fromUnitPoint unitPoint: UnitPoint) {
+    self =
+    switch unitPoint {
+      case .topLeading: .topLeading
+      case .topTrailing: .topTrailing
+      case .bottomLeading: .bottomLeading
+      case .bottomTrailing: .bottomTrailing
+        
+      case .top: .top
+      case .trailing: .trailing
+      case .leading: .leading
+      case .bottom: .bottom
+        
+      default: fatalError("Unsupported unit point: \(unitPoint)")
+    }
+  }
+}
 
-  //  public init(fromResizePoint point: ResizePoint) {
-  //    self =
-  //      switch point {
-  //        case .topLeading: .topLeading
-  //        case .topTrailing: .topTrailing
-  //        case .bottomLeading: .bottomLeading
-  //        case .bottomTrailing: .bottomTrailing
-  //        case .top: .top
-  //        case .trailing: .trailing
-  //        case .leading: .leading
-  //        case .bottom: .bottom
-  //      }
-  //  }
+extension GridBoundaryPoint {
+  
+  public var name: String { rawValue }
 
+  public var id: String { rawValue }
+  
+  public var toAlignment: Alignment {
+    toUnitPoint.toAlignment
+  }
+  
+  public var toLayoutAxis: Axis? {
+    if toUnitPoint.isHorizontalEdge {
+      return .horizontal
+    } else if toUnitPoint.isVerticalEdge {
+      return .vertical
+    } else {
+      return nil
+    }
+  }
+  
+  public var debugColour: Color {
+    toUnitPoint.debugColour
+  }
+  
+  public var toUnitPoint: UnitPoint {
+    switch self {
+      case .topLeading: UnitPoint.topLeading
+      case .topTrailing: UnitPoint.topTrailing
+      case .bottomLeading: UnitPoint.bottomLeading
+      case .bottomTrailing: UnitPoint.bottomTrailing
+        
+      case .top: UnitPoint.top
+      case .trailing: UnitPoint.trailing
+      case .leading: UnitPoint.leading
+      case .bottom: UnitPoint.bottom
+    }
+  }
+  
+  public var toCompatPointerStyle: PointerStyleCompatible {
+    let style = PointerStyleCompatible.frameResize(
+      position: self.toCompatFrameResizePosition,
+      directions: .all
+    )
+    return style
+  }
+  
+  public var toCompatFrameResizePosition: FrameResizePositionCompatible {
+    switch self {
+      case .topLeading: .topLeading
+      case .topTrailing: .topTrailing
+      case .bottomLeading: .bottomLeading
+      case .bottomTrailing: .bottomTrailing
+      case .top: .top
+      case .trailing: .trailing
+      case .leading: .leading
+      case .bottom: .bottom
+    }
+  }
+  
   /// Checks whether a size delta is valid for the control point.
   public func isValidSizeDelta(
     from oldSize: CGSize,
@@ -73,32 +136,32 @@ extension GridBoundaryPoint {
     switch self {
       case .top, .bottom:
         return oldSize.width == newSize.width
-        
+
       case .leading, .trailing:
         return oldSize.height == newSize.height
-        
+
       case .topLeading, .bottomLeading, .topTrailing, .bottomTrailing:
         /// Both axes are allowed to change at corners
         return true
     }
   }
-  
-//  public func isValidSizeDelta(
-//    from oldDimensions: GridDimensions,
-//    to newDimensions: GridDimensions
-//  ) -> Bool {
-//    switch self {
-//      case .top, .bottom:
-//        return oldDimensions.width == newDimensions.width
-//
-//      case .leading, .trailing:
-//        return oldDimensions.height == newDimensions.height
-//
-//      case .topLeading, .bottomLeading, .topTrailing, .bottomTrailing:
-//        /// Both axes are allowed to change at corners
-//        return true
-//    }
-//  }
+
+  //  public func isValidSizeDelta(
+  //    from oldDimensions: GridDimensions,
+  //    to newDimensions: GridDimensions
+  //  ) -> Bool {
+  //    switch self {
+  //      case .top, .bottom:
+  //        return oldDimensions.width == newDimensions.width
+  //
+  //      case .leading, .trailing:
+  //        return oldDimensions.height == newDimensions.height
+  //
+  //      case .topLeading, .bottomLeading, .topTrailing, .bottomTrailing:
+  //        /// Both axes are allowed to change at corners
+  //        return true
+  //    }
+  //  }
 
   public var gridEdge: GridEdge? {
     switch self {
@@ -125,15 +188,15 @@ extension GridBoundaryPoint {
       || self == .bottomTrailing
   }
 
-//  public var gridAxis: GridAxis? {
-//    if isRowEdge {
-//      .row
-//    } else if isColumnEdge {
-//      .column
-//    } else {
-//      nil
-//    }
-//  }
+  //  public var gridAxis: GridAxis? {
+  //    if isRowEdge {
+  //      .row
+  //    } else if isColumnEdge {
+  //      .column
+  //    } else {
+  //      nil
+  //    }
+  //  }
 
   public var affectedEdges: GridEdge.Set {
     switch self {

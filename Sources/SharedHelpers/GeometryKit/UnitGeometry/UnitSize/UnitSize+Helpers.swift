@@ -48,7 +48,7 @@ extension UnitSize {
     )
   }
 
-  private var unitSize: CGSize {
+  public var unitSize: CGSize {
     return CGSize(
       width: width.unitLength,
       height: height.unitLength

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct GridResizeHelper<Grid: GridShaped> {
+public struct GridResizeHelper {
   let oldSize: UnitSize
   let newSize: CGSize
   let boundaryPoint: GridBoundaryPoint
@@ -51,7 +51,7 @@ fatalError("WIP, needs to be completed after changes to UnitSize/GridDimensions"
 //    return delta
   }
 
-  public func resize(_ artwork: inout Grid) {
+  public func resize(_ artwork: inout any GridShaped) {
     artwork.resize(by: resizeDelta, at: affectedEdges)
   }
 
