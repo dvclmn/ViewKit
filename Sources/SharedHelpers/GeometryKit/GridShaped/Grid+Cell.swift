@@ -7,25 +7,10 @@
 
 import Foundation
 
-//public protocol GridCell {
-//public protocol GridCell: Identifiable {
-//  associatedtype Value: Equatable
-
-//  var value: Value { get set }
-//  static func createBlank() -> Self
-//  init(_ value: Value)
-//}
-
-//public protocol GridCellInitialisable {
-//  associatedtype Value
-//}
-
 extension Character: GridCell {
-//  public var id: 
-  public static func createBlank() -> Character {
-    Character("")
-  }
+  public static func createBlank() -> Character { Character("") }
 }
+
 extension GridShaped where Cell == Character {
   public static func generateCells(from text: String) -> [Cell] {
     let dimensions = text.gridDimensions
