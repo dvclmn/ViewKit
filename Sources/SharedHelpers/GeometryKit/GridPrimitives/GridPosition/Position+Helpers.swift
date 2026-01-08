@@ -9,14 +9,6 @@ import SwiftUI
 
 extension GridPosition {
 
-  //  public static func createRow(_ rowIndex: Int, columns: Range<Int>) -> [GridPosition] {
-  //    columns.map { GridPosition(row: rowIndex, column: $0) }
-  //  }
-  //
-  //  public static func createColumn(_ columnIndex: Int, rows: Range<Int>) -> [GridPosition] {
-  //    rows.map { GridPosition(row: $0, column: columnIndex) }
-  //  }
-
   /// Returns a position guaranteed to be within the provided dimensions.
   /// Returns `0` for a row/column if it falls outside these dimensions.
   /// Not suitable for cases where you *only want a position* if it falls inside.
@@ -25,7 +17,7 @@ extension GridPosition {
   ) -> GridPosition {
     let clampedColumn = max(0, min(dimensions.width - 1, column))
     let clampedRow = max(0, min(dimensions.height - 1, row))
-    return GridPosition(row: clampedRow, column: clampedColumn)
+    return GridPosition(column: clampedColumn, row: clampedRow)
   }
 
   /// Creates a GridPosition only if contained within the
@@ -50,12 +42,12 @@ extension GridPosition {
   /// Note: zero-based count for internal representation,
   /// one-based for user-facing UI
   public static var zero: GridPosition {
-    GridPosition(row: 0, column: 0)
+    GridPosition(column: 0, row: 0)
   }
 
   /// Position starting from one, for UI
   public var displayRepresentation: GridPosition {
-    GridPosition(row: row + 1, column: column + 1)
+    GridPosition(column: column + 1, row: row + 1)
     //    self + 1
   }
 
@@ -90,7 +82,7 @@ extension GridPosition {
     //      y: CGFloat(row) * cellSize.height
     //    )
   }
-  
+
   public func toScreenPoint(
     using unitSize: CGSize
   ) -> CGPoint {
@@ -104,7 +96,8 @@ extension GridPosition {
     //  public func neighbour(at edge: Edge) -> GridPosition {
     let delta = edge.directionVector
     return GridPosition(
-      row: max(0, row + delta.row), column: max(0, column + delta.column)
+      column: max(0, column + delta.column),
+      row: max(0, row + delta.row),
     )
   }
 
@@ -123,7 +116,10 @@ extension GridPosition {
 
   /// Basic offset methods
   public func offsetBy(row deltaRow: Int, col deltaCol: Int) -> GridPosition {
-    GridPosition(row: row + deltaRow, column: column + deltaCol)
+    GridPosition(
+      column: column + deltaCol,
+      row: row + deltaRow,
+    )
   }
 
   public mutating func offsetting(by delta: GridPosition) {
@@ -133,7 +129,7 @@ extension GridPosition {
 
   public mutating func offsetting(_ direction: Direction, by delta: Int = 1) {
     let (newCol, newRow) = direction.offset(x: column, y: row, by: delta)
-    let position = GridPosition(row: newRow, column: newCol)
+    let position = GridPosition(column: newCol, row: newRow)
     print("GridPosition from `offsetting(_ direction: Direction...)`: \(position)")
     self = position
   }
@@ -199,6 +195,6 @@ extension GridPosition {
 
     let wrappedCol = (column % columns + columns) % columns
     let wrappedRow = (row % rows + rows) % rows
-    return GridPosition(row: wrappedRow, column: wrappedCol)
+    return GridPosition(column: wrappedCol, row: wrappedRow)
   }
 }

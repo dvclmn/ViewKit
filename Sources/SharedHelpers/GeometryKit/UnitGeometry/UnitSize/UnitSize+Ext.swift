@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 14/10/2025.
 //
 
+import CoreGraphics
 import Foundation
 
 //import SharedHelpers
@@ -15,11 +16,18 @@ extension UnitSize {
   public var intWidth: Int { width.gridLength }
   public var intHeight: Int { height.gridLength }
 
-  public var screenWidth: CGFloat { width.screenLength }
-  public var screenHeight: CGFloat { height.screenLength }
+  public var screenWidth: CGFloat { width.screenLength() }
+  public var screenHeight: CGFloat { height.screenLength() }
 
-  public var screenSize: CGSize {
-    CGSize(width: width.screenLength, height: height.screenLength)
+  public var screenSize: CGSize? {
+    guard let lengthW = width.screenLength, let lengthH = height.screenLength else {
+      return nil
+    }
+    return CGSize(width: lengthW, height: lengthH)
+  }
+
+  public func screenSize(fallback: CGSize = CGSize.zero) -> CGSize {
+    screenSize ?? fallback
   }
 
   public func adjustCounts(
@@ -41,24 +49,24 @@ extension UnitSize {
   }
 }
 
-public func * (lhs: CGSize, rhs: UnitSize) -> CGSize {
-  let w = lhs.width * CGFloat(rhs.width)
-  let h = lhs.height * CGFloat(rhs.height)
-  return CGSize(width: w, height: h)
-}
+//public func * (lhs: CGSize, rhs: UnitSize) -> CGSize {
+//  let w = lhs.width * CGFloat(rhs.width)
+//  let h = lhs.height * CGFloat(rhs.height)
+//  return CGSize(width: w, height: h)
+//}
 
 /// Adds
-public func + (lhs: CGSize, rhs: UnitSize) -> CGSize {
-  let w = lhs.width + CGFloat(rhs.width)
-  let h = lhs.height + CGFloat(rhs.height)
-  return CGSize(width: w, height: h)
-}
-
-public func - (lhs: CGSize, rhs: UnitSize) -> CGSize {
-  let w = lhs.width - CGFloat(rhs.width)
-  let h = lhs.height - CGFloat(rhs.height)
-  return CGSize(width: w, height: h)
-}
+//public func + (lhs: CGSize, rhs: UnitSize) -> CGSize {
+//  let w = lhs.width + CGFloat(rhs.width)
+//  let h = lhs.height + CGFloat(rhs.height)
+//  return CGSize(width: w, height: h)
+//}
+//
+//public func - (lhs: CGSize, rhs: UnitSize) -> CGSize {
+//  let w = lhs.width - CGFloat(rhs.width)
+//  let h = lhs.height - CGFloat(rhs.height)
+//  return CGSize(width: w, height: h)
+//}
 
 extension UnitSize: CustomStringConvertible {
   public var description: String {
