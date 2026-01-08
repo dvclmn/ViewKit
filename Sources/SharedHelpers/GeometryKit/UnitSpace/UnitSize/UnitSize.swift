@@ -12,17 +12,17 @@ public struct UnitSize: Hashable, Codable, Sendable {
 
   /// Columns == Width is the more common convention.
   ///
-  public var columns: UnitLength
+  public var width: UnitLength
 
   /// Rows == Height
-  public var rows: UnitLength
+  public var height: UnitLength
 
   public init(
-    columns: UnitLength,
-    rows: UnitLength,
+    width: UnitLength,
+    height: UnitLength,
   ) {
-    self.columns = columns
-    self.rows = rows
+    self.width = width
+    self.height = height
   }
 }
 
@@ -35,8 +35,8 @@ extension UnitSize {
     unitSize: CGSize
   ) {
     self.init(
-      columns: UnitLength(count: width, unitLength: unitSize.width),
-      rows: UnitLength(count: height, unitLength: unitSize.height),
+      columns: UnitLength(magnitude: width, unitLength: unitSize.width),
+      rows: UnitLength(magnitude: height, unitLength: unitSize.height),
     )
   }
 
@@ -62,6 +62,20 @@ extension UnitSize {
     else { return nil }
 
     self.init(width: gridWidth, height: gridHeight, unitSize: unitSize)
+  }
+
+  public init(
+    grid: GridDimensions,
+    unitSize: CGSize
+  ) {
+    self.width = UnitLength(
+      magnitude: grid.width,
+      unitLength: unitSize.width
+    )
+    self.height = UnitLength(
+      magnitude: grid.height,
+      unitLength: unitSize.height
+    )
   }
 
 }

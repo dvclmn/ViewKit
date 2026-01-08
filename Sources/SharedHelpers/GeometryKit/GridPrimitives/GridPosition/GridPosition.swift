@@ -36,6 +36,8 @@ public struct GridPosition: ModelBase {
 }
 
 extension GridPosition {
+  
+  
 
   /// `cellSize` is the width and height in points
   /// of a single cell in the current `GridCanvas`.

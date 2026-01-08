@@ -90,6 +90,15 @@ extension GridPosition {
     //      y: CGFloat(row) * cellSize.height
     //    )
   }
+  
+  public func toScreenPoint(
+    using unitSize: CGSize
+  ) -> CGPoint {
+    CGPoint(
+      x: CGFloat(column) * unitSize.width,
+      y: CGFloat(row) * unitSize.height
+    )
+  }
 
   public func neighbour(at edge: GridEdge) -> GridPosition {
     //  public func neighbour(at edge: Edge) -> GridPosition {

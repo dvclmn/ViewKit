@@ -12,20 +12,20 @@ import Foundation
 
 extension UnitSize {
 
-  public var width: Int { columns.gridLength }
-  public var height: Int { rows.gridLength }
+  public var intWidth: Int { width.gridLength }
+  public var intHeight: Int { height.gridLength }
 
-  public var screenWidth: CGFloat { columns.screenLength }
-  public var screenHeight: CGFloat { rows.screenLength }
+  public var screenWidth: CGFloat { width.screenLength }
+  public var screenHeight: CGFloat { height.screenLength }
 
   public var screenSize: CGSize {
-    CGSize(width: columns.screenLength, height: rows.screenLength)
+    CGSize(width: width.screenLength, height: height.screenLength)
   }
 
   public func adjustCounts(
     transform: (Int, Int) -> (width: Int, height: Int)
   ) -> UnitSize? {
-    let transformed = transform(columns.gridLength, rows.gridLength)
+    let transformed = transform(width.gridLength, height.gridLength)
     return UnitSize(
       width: transformed.width,
       height: transformed.height,
@@ -35,8 +35,8 @@ extension UnitSize {
 
   private var unitSize: CGSize {
     return CGSize(
-      width: columns.unitLength,
-      height: rows.unitLength
+      width: width.unitLength,
+      height: height.unitLength
     )
   }
 }

@@ -7,33 +7,22 @@
 
 import Foundation
 
-/// ## Rounding down
+/// ## Rounding options for fitting measurements into grid columns
 ///
-/// Fit text of known width into a number of columns:
-/// Only fully contained glyphs should count
+/// When aligning text or hit-testing within a fixed cell grid, it is important
+/// to round values consistently to avoid overflow or underflow beyond the grid edges.
 ///
-/// Hit-testing a click in a cell grid:
-/// The “cell index” should never overflow beyond the edge.
-/// `down` underestimates safely
+/// - `.down`
+///   Rounds toward zero (truncates) to ensure values never exceed the grid bounds.
+/// - `.up`
+///   Rounds upward (ceiling) to cover all visible pixels or reserve space for partial overlap.
+/// - `.none`
+///   Leaves the value unchanged.
 ///
-/// Measuring the size of text and converting back to cell count:
-/// Want an integer that represents the last fully visible cell
-///
-/// ## Rounding up
-///
-/// There are a few niche cases where
-/// `.toNearestOrAwayFromZero` or `.up` might be appropriate:
-///
-/// 1.  Visual alignment correction
-/// e.g. if your grid lines must cover all visible pixels,
-/// not just the fully occupied ones.
-///
-/// 2.  Text measurement for expansion
-/// e.g. if you’re allocating cells to fit a given string, and partial
-/// overlap still needs to “reserve” space.
-///
-/// Read more in Bear notes:
-/// bear://x-callback-url/open-note?id=81CB760B-1F34-4C93-9A5E-D6246A9E81C9
+/// Use cases include:
+/// - Text measurement conversions to integer cell counts
+/// - Hit-testing cell indices without overflow
+/// - Visual alignment corrections and expansions
 public enum GridRounding {
   case down
   case up
@@ -42,22 +31,53 @@ public enum GridRounding {
   private var rule: FloatingPointRoundingRule? {
     switch self {
       case .down: .towardZero
-      case .up: .toNearestOrAwayFromZero
+      case .up: .up
       case .none: nil
     }
   }
 
+  /// Returns a CGFloat rounded using the selected GridRounding rule, or unchanged if `.none`.
   public func roundedIfNeeded(_ value: CGFloat) -> CGFloat {
     guard let rule else {
       return value
     }
     return value.rounded(rule)
   }
+
+  /// Returns an integer by rounding the value using the selected GridRounding rule.
+  public func roundedInt(_ value: CGFloat) -> Int {
+    guard let rule else { return Int(value) }
+    return Int(value.rounded(rule))
+  }
+  
+  public func fractionalPart(_ value: CGFloat) -> CGFloat {
+    return value - value.rounded(.towardZero)
+  }
 }
 
 extension BinaryFloatingPoint {
+  /// Returns a floating-point value rounded using the specified GridRounding rule.
+  ///
+  /// Example:
+  /// ```
+  /// let value: Double = 5.7
+  /// let roundedDown = value.rounded(using: .down) // 5.0
+  /// let roundedUp = value.rounded(using: .up)     // 6.0
+  /// ```
   public func rounded(using gridRounding: GridRounding) -> Self {
     let rounded = gridRounding.roundedIfNeeded(CGFloat(self))
     return Self(rounded)
+  }
+
+  /// Returns an integer rounded using the specified GridRounding rule.
+  ///
+  /// Example:
+  /// ```
+  /// let value: Double = 5.7
+  /// let intDown = value.roundedInt(using: .down) // 5
+  /// let intUp = value.roundedInt(using: .up)     // 6
+  /// ```
+  public func roundedInt(using gridRounding: GridRounding) -> Int {
+    return gridRounding.roundedInt(CGFloat(self))
   }
 }

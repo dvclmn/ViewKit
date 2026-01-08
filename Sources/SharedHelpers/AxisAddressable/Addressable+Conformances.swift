@@ -34,13 +34,13 @@ extension GridPosition: AxisKeyPathCompatible {
 }
 
 extension UnitSize: AxisKeyPathCompatible {
-  public static var primaryKey: WritableKeyPath<Self, UnitLength> { \.columns }
-  public static var secondaryKey: WritableKeyPath<Self, UnitLength> { \.rows }
+  public static var primaryKey: WritableKeyPath<Self, UnitLength> { \.width }
+  public static var secondaryKey: WritableKeyPath<Self, UnitLength> { \.height }
 }
 
 extension UnitRect: AxisKeyPathCompatible {
-  public static var primaryKey: WritableKeyPath<Self, UnitLength> { \.size.columns }
-  public static var secondaryKey: WritableKeyPath<Self, UnitLength> { \.size.rows }
+  public static var primaryKey: WritableKeyPath<Self, UnitLength> { \.size.width }
+  public static var secondaryKey: WritableKeyPath<Self, UnitLength> { \.size.height }
 }
 
 extension GridDimensions: AxisKeyPathCompatible {

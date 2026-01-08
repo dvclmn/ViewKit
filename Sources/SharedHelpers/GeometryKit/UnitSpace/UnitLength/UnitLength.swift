@@ -20,16 +20,16 @@ import Foundation
 public struct UnitLength: Hashable, Codable, Sendable {
 
   /// Prefer use of ``gridLength``, to better pair with ``screenLength``
-  package var count: Int
+  package var magnitude: Int
   public var unitLength: CGFloat
 
-  public init(count: Int, unitLength: CGFloat) {
-    self.count = count
+  public init(magnitude: Int, unitLength: CGFloat) {
+    self.magnitude = magnitude
     self.unitLength = unitLength
   }
 
   public init?(
-    _ count: Int,
+    _ magnitude: Int,
     axis: Axis2D,
     mapping: AxisMapping = .default,
     //    convention: AxisConvention = .default,
@@ -38,7 +38,7 @@ public struct UnitLength: Hashable, Codable, Sendable {
     guard let unitSize else { return nil }
     let unitLength = unitSize.value(along: axis, mapping: mapping)
     //    let unitLength = unitSize.length(along: axis, convention: convention)
-    self.count = count
+    self.magnitude = magnitude
     self.unitLength = unitLength
   }
 
@@ -51,7 +51,7 @@ public struct UnitLength: Hashable, Codable, Sendable {
     guard let count = screenLength.toGridCount(using: unitLength, rounding: rounding) else {
       return nil
     }
-    self.count = count
+    self.magnitude = count
     self.unitLength = unitLength
   }
 }
