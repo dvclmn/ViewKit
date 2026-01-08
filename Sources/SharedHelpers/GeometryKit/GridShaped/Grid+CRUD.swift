@@ -33,7 +33,7 @@ extension GridShaped {
     for row in 0..<requiredRows {
       for column in 0..<requiredColumns {
         if row < rowCount, column < columnCount {
-          let position = GridPosition(row: row, column: column)
+          let position = GridPosition(column: column, row: row)
           print("GridPosition from `expandToInclude()`: \(position)")
           guard let cell = self[at: position] else { return }
           newCells.append(cell)

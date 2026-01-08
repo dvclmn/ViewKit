@@ -24,13 +24,18 @@ extension GridDimensions {
     point: CGPoint,
     unitSize: CGSize
   ) -> Bool {
-    let size = toUnitSize(with:)
+    let size = toUnitSize(with: unitSize)
+    guard let width = size.screenWidth,
+          let height = size.screenHeight
+    else { return false }
     //  public func contains(point: CGPoint, cellSize: CGSize) -> Bool {
     //    let gridSize = toCGSize(withCellSize: cellSize)
     return point.x >= 0
       && point.y >= 0
-      && point.x < screenWidth(using: unitSize)
-      && point.y < screenHeight(using: unitSize)
+    && point.x < width
+//      && point.x < screenWidth(using: unitSize)
+      && point.y < height
+//      && point.y < screenHeight(using: unitSize)
   }
   /// Checks if a grid position is within valid bounds
   public func contains(position: GridPosition) -> Bool {
@@ -145,7 +150,7 @@ extension GridDimensions {
 
   public var bottomRight: GridPosition? {
     guard width > 0, height > 0 else { return nil }
-    return GridPosition(row: height - 1, column: width - 1)
+    return GridPosition(column: width - 1, row: height - 1)
   }
 
   public func reducedToFit(within bounds: GridDimensions) -> GridDimensions? {

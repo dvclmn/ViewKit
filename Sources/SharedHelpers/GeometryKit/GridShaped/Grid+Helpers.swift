@@ -48,7 +48,7 @@ extension GridShaped {
     var positions: [GridPosition] = []
     for (rowIndex, line) in rows.enumerated() {
       for (columnIndex, val) in line.enumerated() where val == value {
-        positions.append(GridPosition(row: rowIndex, column: columnIndex))
+        positions.append(GridPosition(column: columnIndex, row: rowIndex))
       }
     }
     return positions

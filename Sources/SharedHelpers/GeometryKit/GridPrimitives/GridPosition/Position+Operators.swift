@@ -6,7 +6,7 @@
 //
 
 public func + (lhs: GridPosition, rhs: GridPosition) -> GridPosition {
-  return GridPosition(row: lhs.row + rhs.row, column: lhs.column + rhs.column)
+  return GridPosition(column: lhs.column + rhs.column, row: lhs.row + rhs.row)
 }
 
 extension GridPosition: Comparable {
