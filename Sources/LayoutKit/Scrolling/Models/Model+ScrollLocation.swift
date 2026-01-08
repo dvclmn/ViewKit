@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 /// Chosen terms `start` and `end` to provide the flexibility to
 /// be referring to both horizontal or vertical `ScrollView`s
@@ -22,13 +23,19 @@ public enum ScrollLocation: String, Sendable {
   @available(macOS 15.0, iOS 18.0, *)
   public init(
     fromGeometry geometry: ScrollGeometry,
-    withAxis axis: Axis,
+    withAxis axis: Axis2D,
+    mapping: AxisMapping = .default,
     tolerance: CGFloat = 2.0
   ) {
 
-    let containerLength = axis.length(fromSize: geometry.containerSize)
-    let contentLength = axis.length(fromSize: geometry.contentSize)
-    let insetsLength = axis.length(fromInsets: geometry.contentInsets)
+    let containerLength = geometry.containerSize.value(along: axis, mapping: mapping)
+    let contentLength = geometry.contentSize.value(along: axis, mapping: mapping)
+    let insetsLength = geometry.contentInsets.value(along: axis, mapping: mapping)
+    let offsetLength = geometry.contentOffset.value(along: axis, mapping: mapping)
+    
+//    let containerLength = axis.length(fromSize: geometry.containerSize)
+//    let contentLength = axis.length(fromSize: geometry.contentSize)
+//    let insetsLength = axis.length(fromInsets: geometry.contentInsets)
 
     let isWithinBounds = contentLength <= containerLength
 
@@ -37,14 +44,14 @@ public enum ScrollLocation: String, Sendable {
     if isWithinBounds { self = .contained }
 
     /// I think it is working
-    let contentOffsetLength: CGFloat = axis.length(fromSize: geometry.contentOffset.toCGSize)
+    
 
     /// The total scrollable length = full content size - visible container size
     let maxOffset: CGFloat = contentLength - containerLength - insetsLength
 
     /// Determine position
-    let isAtStart = contentOffsetLength <= tolerance
-    let isAtEnd = contentOffsetLength >= (maxOffset - tolerance)
+    let isAtStart = offsetLength <= tolerance
+    let isAtEnd = offsetLength >= (maxOffset - tolerance)
 
     if isAtStart {
       self = .start

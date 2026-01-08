@@ -7,6 +7,34 @@
 
 import SwiftUI
 
+extension Edge.Set {
+  
+//  public func toAxis() -> Axis2D {
+//    
+//    let isHorizontal: Bool = self == .horizontal
+//   
+//    if self == .horizontal {
+//      return CGFloat(count) * unitSize.width
+//    } else if self == .vertical {
+//      return CGFloat(count) * unitSize.height
+//    } else if self == .top || self == .bottom {
+//      // Top/bottom are vertical
+//      return CGFloat(count) * unitSize.height
+//    } else if self == .leading || self == .trailing {
+//      // Leading/trailing are horizontal
+//      return CGFloat(count) * unitSize.width
+//    } else if self == .all {
+//      // Ambiguous, pick one (horizontal)
+//      return CGFloat(count) * unitSize.width
+//    } else {
+//      return nil
+//    }
+//    
+//    
+//  }
+  
+}
+
 extension Edge {
 
   public static let zero: Double = 0.00
@@ -57,8 +85,8 @@ extension Edge {
 //  public var toAxis: Axis {
 //    self.toAxis(using: .widthIsHorizontal)
 //  }
-
-//  public func toAxis(using convention: AxisConvention) -> Axis {
+//
+//  public func toAxis(using mapping: AxisMapping = .default) -> Axis {
 //    switch convention {
 //      case .widthIsHorizontal:
 //        switch self {

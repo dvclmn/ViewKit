@@ -33,13 +33,10 @@ extension FrameFromUnitLength {
     
     let screenLength = length.toScreenLength(
       along: axis.toAxis2D,
-      convention: convention,
+      mapping: axisMapping,
       using: unitSize
     )
-    //    let unitLength = axis.toAxis2D
-    //    let unitLength = axis.length(fromSize: unitSize)
-//    guard let length = length.toScreenLength(using: unitLength) else { return nil }
-    
+
     return FrameDimensions(
       fromLength: screenLength,
       axis: axis.toAxisSet,
@@ -54,13 +51,12 @@ extension View {
     axis: Axis = .horizontal,
     length: Int,
     alignment: Alignment = .center,
-    convention: AxisConvention = .default,
+//    convention: AxisConvention = .default,
   ) -> some View {
     self.modifier(
       FrameFromUnitLength(
         axis: axis,
         length: length,
-        convention: convention,
         alignment: alignment
       )
     )

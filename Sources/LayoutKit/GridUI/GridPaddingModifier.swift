@@ -72,6 +72,13 @@ private func gridPaddingLength(
   count: Int,
   unitSize: CGSize?
 ) -> CGFloat? {
-  guard let axis = edges.toAxis(using: .widthIsHorizontal) else { return nil }
-  return count.toScreenLength(along: axis, using: unitSize)
+  
+  fatalError("Not sure how to properly define Edges and Axis here")
+  
+  /// Maybe there's a way to not require the middle part of having to weirdly convert to
+  /// an Axis. Maybe can just convert count to screenLength and be done with it?
+  
+//  guard let axis = edges.to else { return nil }
+//  guard let axis = edges.toAxis(using: .widthIsHorizontal) else { return nil }
+//  return count.toScreenLength(along: axis, using: unitSize)
 }
