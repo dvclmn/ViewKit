@@ -20,13 +20,19 @@ import Foundation
 /// )
 /// ```
 public struct GridPosition: ModelBase {
-  public var row: Int
   public var column: Int
+  public var row: Int
 
-  public init(row: Int, column: Int) {
-    self.row = row
+  public init(column: Int, row: Int) {
     self.column = column
+    self.row = row
   }
+  
+//  @available(*, deprecated, renamed: "init(column:row:)", message: "Use init signature with (column:row:), to better fit with overall column-first convention.")
+//  public init(row: Int, column: Int) {
+//    self.column = column
+//    self.row = row
+//  }
 }
 
 extension GridPosition {

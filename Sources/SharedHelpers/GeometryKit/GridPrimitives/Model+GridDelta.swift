@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SharedHelpers
 
 public struct GridDelta: ModelBase {
   public var columns: Int

@@ -50,7 +50,7 @@ extension GridShaped where Cell == Character {
     let characterCells = line.map(Cell.init)
 
     let paddingCells = (line.count..<targetWidth).map { colIndex in
-      let position = GridPosition(row: rowIndex, column: colIndex)
+      let position = GridPosition(column: colIndex, row: rowIndex)
       return Cell.createBlank()
     }
 
@@ -60,7 +60,7 @@ extension GridShaped where Cell == Character {
   public var toText: String {
     let rowsStrings = (0..<rowCount).map { rowIndex in
       (0..<columnCount).map { columnIndex in
-        let position = GridPosition(row: rowIndex, column: columnIndex)
+        let position = GridPosition(column: columnIndex, row: rowIndex)
         return String(self[at: position] ?? " ")
       }.joined()
     }
