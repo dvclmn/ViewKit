@@ -9,11 +9,11 @@ import Foundation
 
 public struct UnitRect: ModelBase {
 
-  public var origin: GridPosition
+  public var origin: UnitPosition
   public var size: UnitSize
 
   public init(
-    origin: GridPosition,
+    origin: UnitPosition,
     size: UnitSize,
   ) {
     self.origin = origin
@@ -50,7 +50,7 @@ public struct UnitRect: ModelBase {
     let minCol = min(a.column, b.column)
     let maxCol = max(a.column, b.column)
 
-    let origin = GridPosition(row: minRow, column: minCol)
+    let origin = GridPosition(column: minCol, row: minRow)
 
     let dimensions = GridDimensions(
       width: maxCol - minCol + 1,
