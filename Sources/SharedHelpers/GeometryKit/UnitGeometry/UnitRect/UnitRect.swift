@@ -40,17 +40,17 @@ public struct UnitRect: ModelBase {
     to b: GridPosition,
     unitSize: CGSize
   ) {
-    
+
     let minRow = min(a.row, b.row)
     let maxRow = max(a.row, b.row)
     let minCol = min(a.column, b.column)
     let maxCol = max(a.column, b.column)
-    
+
     let origin = UnitPosition(
       x: UnitLength(count: minCol, unitLength: unitSize.width),
       y: UnitLength(count: minRow, unitLength: unitSize.height)
     )
-    
+
     let size = UnitSize(
       width: UnitLength(
         count: maxCol - minCol + 1,
@@ -61,21 +61,20 @@ public struct UnitRect: ModelBase {
         unitLength: unitSize.height
       )
     )
-    
+
     self.init(origin: origin, size: size)
   }
-  
+
   public init(
     fromRect rect: CGRect,
     unitSize: CGSize,
     rounding: GridRounding = .down,
   ) {
-    
+
     let standardisedRect = rect.standardized
     let unitSize = standardisedRect.size.toUnitSize(using: unitSize, rounding: rounding)
-    
-    
-//    let (a, b) = Self.gridPositions(from: rect, unitSize: unitSize)
+
+    //    let (a, b) = Self.gridPositions(from: rect, unitSize: unitSize)
     self.init(startPosition: a, endPosition: b, unitSize: unitSize)
   }
 
@@ -107,18 +106,18 @@ public struct UnitRect: ModelBase {
 }
 
 extension UnitRect {
-  
+
   public var standardised: UnitRect {
     let x0 = origin.x.magnitude
     let y0 = origin.y.magnitude
     let x1 = x0 + size.width.magnitude
     let y1 = y0 + size.height.magnitude
-    
+
     let minX = min(x0, x1)
     let minY = min(y0, y1)
     let maxX = max(x0, x1)
     let maxY = max(y0, y1)
-    
+
     return UnitRect(
       origin: UnitPosition(
         x: UnitLength(magnitude: minX, unitLength: origin.x.unitLength),
@@ -133,64 +132,51 @@ extension UnitRect {
 
   /// Converts a rect and cell size into a pair of GridPositions.
   /// Always uses top-leading and bottom-trailing corners.
-  public init(
+  public init?(
     from rect: CGRect,
     unitSize: CGSize,
     rounding: GridRounding = .down
   ) {
-    
+
     let standardised = rect.standardized
-    
-//    let origin = UnitPosition(
-//      x: UnitLength(
-//        magnitude: standardised.origin.x
-//          .toGridCount(using: unitSize.width, rounding: rounding)!,
-//        unitLength: unitSize.width
-//      ),
-//      y: UnitLength(
-//        magnitude: standardised.origin.y
-//          .toGridCount(using: unitSize.height, rounding: rounding)!,
-//        unitLength: unitSize.height
-//      )
-//    )
-    
-    let size = UnitSize(
-      width: UnitLength(
-        magnitude: standardised.size.width
-          .toGridCount(using: unitSize.width, rounding: rounding)!,
-        unitLength: unitSize.width
+
+    guard
+      let origin = UnitPosition(
+        fromCGPoint: standardised.origin,
+        unitSize: unitSize,
+        rounding: rounding
       ),
-      height: UnitLength(
-        magnitude: standardised.size.height
-          .toGridCount(using: unitSize.height, rounding: rounding)!,
-        unitLength: unitSize.height
+      let size = UnitSize(
+        fromSize: standardised.size,
+        unitSize: unitSize,
+        rounding: rounding
       )
-    )
-    
+    else { return nil }
+
     self.init(origin: origin, size: size)
   }
-//    public static func gridPositions(
-//      from rect: CGRect,
-//      unitSize: CGSize,
-//      rounding: GridRounding = .down
-//    ) -> (GridPosition, GridPosition) {
-//      
-//      let unitRect = UnitRect(fromRect: <#T##CGRect#>, unitSize: <#T##CGSize#>)
-//      
-//      
-////      let standardised = rect.standardized
-////      let a = GridPosition(point: standardised.origin, cellSize: cellSize)
-////      let b = GridPosition(point: standardised.point(for: .bottomTrailing), cellSize: cellSize)
-////      let a =
-////      let pointA = standardised.origin
-////      let pointB = standardised.point(at: .bottomTrailing)
-////      
-////      let row = pointA.
-////      
-////      let posA = GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
-//      
-////      return (a, b)
-//    }
+  //    public static func gridPositions(
+  //      from rect: CGRect,
+  //      unitSize: CGSize,
+  //      rounding: GridRounding = .down
+  //    ) -> (GridPosition, GridPosition) {
+  //
+  //      let unitRect = UnitRect(fromRect: <#T##CGRect#>, unitSize: <#T##CGSize#>)
+  //
+  //
+  ////      let standardised = rect.standardized
+  ////      let a = GridPosition(point: standardised.origin, cellSize: cellSize)
+  ////      let b = GridPosition(point: standardised.point(for: .bottomTrailing), cellSize: cellSize)
+  ////      let a =
+  ////      let pointA = standardised.origin
+  ////      let pointB = standardised.point(at: .bottomTrailing)
+  ////
+  ////      let row = pointA.
+  ////
+  ////      let posA = GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
+  //
+  ////      return (a, b)
+  //    }
 
   /// Same as `gridPositions(from:)` but returns nil if either position
   /// falls outside of bounds.
@@ -211,19 +197,9 @@ extension UnitRect {
   }
 
   /// Iterates over all GridPositions within this UnitRect
-  public var positions: [GridPosition] {
-    (origin.row..<origin.row + size.height).flatMap { row in
-      (origin.column..<origin.column + size.width).map { col in
-        GridPosition(row: row, column: col)
-      }
-    }
-  }
+ 
 
-  public func contains(_ position: GridPosition) -> Bool {
-    let rowRange = origin.row..<(origin.row + size.height)
-    let colRange = origin.column..<(origin.column + size.width)
-    return rowRange.contains(position.row) && colRange.contains(position.column)
-  }
+
 
   public var toCGRect: CGRect {
     let originPoint = origin.toCGPoint(cellSize: cellSize)

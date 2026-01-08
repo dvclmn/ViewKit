@@ -21,11 +21,3 @@ extension UnitLength {
   }
 }
 
-extension UnitLength: Comparable {
-  public static func < (
-    lhs: UnitLength,
-    rhs: UnitLength
-  ) -> Bool {
-    lhs.magnitude < rhs.magnitude
-  }
-}

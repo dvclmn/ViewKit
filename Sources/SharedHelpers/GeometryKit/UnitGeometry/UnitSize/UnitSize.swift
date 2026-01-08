@@ -35,8 +35,8 @@ extension UnitSize {
     unitSize: CGSize
   ) {
     self.init(
-      columns: UnitLength(magnitude: width, unitLength: unitSize.width),
-      rows: UnitLength(magnitude: height, unitLength: unitSize.height),
+      width: UnitLength(magnitude: width, unitLength: unitSize.width),
+      height: UnitLength(magnitude: height, unitLength: unitSize.height),
     )
   }
 

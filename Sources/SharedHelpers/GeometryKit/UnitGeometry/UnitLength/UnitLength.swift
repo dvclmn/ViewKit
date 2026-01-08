@@ -19,7 +19,6 @@ import Foundation
 /// Settled on the names now, which is Grid length, and Screen length
 public struct UnitLength: Hashable, Codable, Sendable {
 
-  /// Prefer use of ``gridLength``, to better pair with ``screenLength``
   package var magnitude: Int
   public var unitLength: CGFloat
 
