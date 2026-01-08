@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 14/9/2024.
 //
 
-import GridKit
 import SwiftUI
+import SharedHelpers
 
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack: GridShaped {

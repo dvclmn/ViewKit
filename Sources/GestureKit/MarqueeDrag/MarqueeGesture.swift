@@ -30,7 +30,7 @@ struct MarqueeDragGesture: Gesture {
           didUpdateRect(.drag(rect: newRect))
           
         } else {
-          didUpdateRect(.tap(location: newRect.point(for: .bottomTrailing)))
+          didUpdateRect(.tap(location: newRect.point(at: .bottomTrailing)))
         }
 
       }

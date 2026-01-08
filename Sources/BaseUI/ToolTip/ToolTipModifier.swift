@@ -75,7 +75,10 @@ extension Tooltip {
     alignment.forTooltip
   }
 
-  private func totalOffset(for axis: Axis) -> CGFloat {
+  private func totalOffset(
+    for axis: Axis2D,
+    mapping: AxisMapping = .default
+  ) -> CGFloat {
     /// Note: The below `defaultOffset` bakes in a
     /// slight horizontal inset, just as it felt more pleasing.
     /// This excludes `leading` and `trailing`, where the inset
@@ -91,7 +94,7 @@ extension Tooltip {
     let unitPoint = toolTipAlignment.toUnitPoint()
 
     let finalOffset = unitPoint.offset(by: totalOffset)
-    return finalOffset[axis]
+    return finalOffset.value(along: axis, mapping: mapping)
 
   }
 

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 public struct ScrollContext: Equatable, Sendable {
   /// Size of the entire content, which may be smaller
@@ -27,7 +28,8 @@ public struct ScrollContext: Equatable, Sendable {
 extension ScrollContext {
   public init(
     fromGeometry geometry: ScrollGeometry,
-    withAxis axis: Axis,
+    withAxis axis: Axis2D,
+//    withAxis axis: Axis,
     tolerance: CGFloat = 2.0
   ) {
     self.location = ScrollLocation(
