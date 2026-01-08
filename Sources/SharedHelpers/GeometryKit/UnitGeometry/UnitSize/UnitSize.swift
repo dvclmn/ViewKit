@@ -77,5 +77,12 @@ extension UnitSize {
       unitLength: unitSize.height
     )
   }
+  
+  public init(magnitudeA: Int, magnitudeB: Int, other: UnitSize) {
+    self.init(
+      width: UnitLength(magnitude: magnitudeA, unitLength: other.width.unitLength),
+      height: UnitLength(magnitude: magnitudeB, unitLength: other.height.unitLength)
+    )
+  }
 
 }

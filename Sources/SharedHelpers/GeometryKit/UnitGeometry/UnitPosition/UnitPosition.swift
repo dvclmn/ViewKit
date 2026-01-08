@@ -44,4 +44,15 @@ extension UnitPosition {
     )
     self.init(x, y)
   }
+  
+  public init(
+    minX: Int,
+    minY: Int,
+    other: UnitPosition
+  ) {
+    self.init(
+      x: UnitLength(magnitude: minX, unitLength: other.x.unitLength),
+      y: UnitLength(magnitude: minY, unitLength: other.y.unitLength)
+    )
+  }
 }

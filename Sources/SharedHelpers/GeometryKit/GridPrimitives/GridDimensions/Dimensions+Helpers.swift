@@ -72,17 +72,17 @@ extension GridDimensions {
 
 // MARK: - Size Calculations
 extension GridDimensions {
-  public func screenWidth(using unitSize: CGSize) -> CGFloat {
-    toUnitSize(with: unitSize).screenWidth
-  }
-
-  public func screenHeight(using unitSize: CGSize) -> CGFloat {
-    toUnitSize(with: unitSize).screenHeight
-  }
-
-  public func screenSize(using unitSize: CGSize) -> CGSize {
-    toUnitSize(with: unitSize).screenSize
-  }
+//  public func screenWidth(using unitSize: CGSize) -> CGFloat {
+//    toUnitSize(with: unitSize).screenWidth
+//  }
+//
+//  public func screenHeight(using unitSize: CGSize) -> CGFloat {
+//    toUnitSize(with: unitSize).screenHeight
+//  }
+//
+//  public func screenSize(using unitSize: CGSize) -> CGSize {
+//    toUnitSize(with: unitSize).screenSize
+//  }
 
   //  public func width(with cellSize: CGSize) -> CGFloat {
   //    CGFloat(width) * cellSize.width
@@ -111,7 +111,7 @@ extension GridDimensions {
   public var allPositions: [GridPosition] {
     (0..<height).flatMap { row in
       (0..<width).map { column in
-        GridPosition(row: row, column: column)
+        GridPosition(column: column, row: row)
       }
     }
   }

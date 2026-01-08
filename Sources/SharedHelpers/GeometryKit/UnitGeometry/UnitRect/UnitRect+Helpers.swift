@@ -71,29 +71,6 @@ extension UnitRect {
 // MARK: - Helpers
 extension UnitRect {
 
-  public var standardised: UnitRect {
-    let x0 = origin.x.magnitude
-    let y0 = origin.y.magnitude
-    let x1 = x0 + size.width.magnitude
-    let y1 = y0 + size.height.magnitude
-
-    let minX = min(x0, x1)
-    let minY = min(y0, y1)
-    let maxX = max(x0, x1)
-    let maxY = max(y0, y1)
-
-    return UnitRect(
-      origin: UnitPosition(
-        x: UnitLength(magnitude: minX, unitLength: origin.x.unitLength),
-        y: UnitLength(magnitude: minY, unitLength: origin.y.unitLength)
-      ),
-      size: UnitSize(
-        width: UnitLength(magnitude: maxX - minX, unitLength: size.width.unitLength),
-        height: UnitLength(magnitude: maxY - minY, unitLength: size.height.unitLength)
-      )
-    )
-  }
-
   /// Iterates over all `GridPositions` within this `UnitRect`
   public func gridPositions() -> [GridPosition] {
     return rowRange.flatMap { row in
@@ -117,4 +94,36 @@ extension UnitRect {
     let width = size.width.magnitude
     return startCol..<(startCol + width)
   }
+}
+
+extension UnitRect {
+
+  public var standardised: UnitRect {
+    let x0 = origin.x.magnitude
+    let y0 = origin.y.magnitude
+    let x1 = x0 + size.width.magnitude
+    let y1 = y0 + size.height.magnitude
+
+    let minX = min(x0, x1)
+    let minY = min(y0, y1)
+    let maxX = max(x0, x1)
+    let maxY = max(y0, y1)
+
+    let magW = maxX - minX
+    let magH = maxY - minY
+    
+    return UnitRect(
+      origin: UnitPosition(
+        minX: minX,
+        minY: minY,
+        other: origin
+      ),
+      size: UnitSize(
+        magnitudeA: magW,
+        magnitudeB: magH,
+        other: size
+      )
+    )
+  }
+
 }
