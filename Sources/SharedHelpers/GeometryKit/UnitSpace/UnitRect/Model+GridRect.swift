@@ -65,8 +65,17 @@ public struct UnitRect: ModelBase {
 //    )
   }
 
-  public init(fromRect rect: CGRect, unitSize: CGSize) {
-    let (a, b) = Self.gridPositions(from: rect, unitSize: unitSize)
+  public init(
+    fromRect rect: CGRect,
+    unitSize: CGSize,
+    rounding: GridRounding = .down,
+  ) {
+    
+    let standardisedRect = rect.standardized
+    let unitSize = standardisedRect.size.toUnitSize(using: unitSize, rounding: rounding)
+    
+    
+//    let (a, b) = Self.gridPositions(from: rect, unitSize: unitSize)
     self.init(startPosition: a, endPosition: b, unitSize: unitSize)
   }
 
@@ -107,6 +116,7 @@ extension UnitRect {
       rounding: GridRounding = .down
     ) -> (GridPosition, GridPosition) {
       
+      let unitRect = UnitRect(fromRect: <#T##CGRect#>, unitSize: <#T##CGSize#>)
       
       
 //      let standardised = rect.standardized

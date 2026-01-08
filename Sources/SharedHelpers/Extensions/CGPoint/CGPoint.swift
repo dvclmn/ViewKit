@@ -43,20 +43,7 @@ extension CGPoint {
   //  }
   //
 
-  /// Returns the relative UnitPoint (not snapped) within a given size.
-  ///
-  /// Usage:
-  /// ```
-  /// let point = CGPoint(x: 10, y: 5)
-  /// let frameSize = CGSize(width: 100, height: 100)
-  ///
-  /// let closestAnchor = point.nearestAnchor(in: frameSize)
-  /// print(closestAnchor)  // Might print `.topLeading` if point is near (0,0)
-  /// ```
-  public func toUnitPoint(in size: CGSize) -> UnitPoint {
-    guard size.isGreaterThanOrEqualToZero else { return .center }
-    return UnitPoint(x: x / size.width, y: y / size.height)
-  }
+
 
   /// Returns a new CGPoint aligned relative to a container of the given size,
   /// using a unit point as the anchor.

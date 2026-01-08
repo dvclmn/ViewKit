@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 14/10/2025.
 //
 
+import Foundation
+
 /// ## Rounding down
 ///
 /// Fit text of known width into a number of columns:
@@ -35,11 +37,27 @@
 public enum GridRounding {
   case down
   case up
+  case none
 
-  var value: FloatingPointRoundingRule {
+  private var rule: FloatingPointRoundingRule? {
     switch self {
       case .down: .towardZero
       case .up: .toNearestOrAwayFromZero
+      case .none: nil
     }
+  }
+
+  public func roundedIfNeeded(_ value: CGFloat) -> CGFloat {
+    guard let rule else {
+      return value
+    }
+    return value.rounded(rule)
+  }
+}
+
+extension BinaryFloatingPoint {
+  public func rounded(using gridRounding: GridRounding) -> Self {
+    let rounded = gridRounding.roundedIfNeeded(CGFloat(self))
+    return Self(rounded)
   }
 }

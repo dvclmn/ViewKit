@@ -30,9 +30,6 @@ extension GridDimensions: ExpressibleByIntegerLiteral {
 
 extension GridDimensions {
 
-  public var doubled: GridDimensions {
-    GridDimensions(width: width * 2, height: height * 2)
-  }
 }
 
 public func + (lhs: GridDimensions, rhs: GridDimensions) -> GridDimensions {

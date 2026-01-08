@@ -32,12 +32,12 @@ public struct UnitLength: Hashable, Codable, Sendable {
     _ count: Int,
     axis: Axis2D,
     mapping: AxisMapping = .default,
-//    convention: AxisConvention = .default,
+    //    convention: AxisConvention = .default,
     unitSize: CGSize?
   ) {
     guard let unitSize else { return nil }
     let unitLength = unitSize.value(along: axis, mapping: mapping)
-//    let unitLength = unitSize.length(along: axis, convention: convention)
+    //    let unitLength = unitSize.length(along: axis, convention: convention)
     self.count = count
     self.unitLength = unitLength
   }
@@ -55,4 +55,3 @@ public struct UnitLength: Hashable, Codable, Sendable {
     self.unitLength = unitLength
   }
 }
-

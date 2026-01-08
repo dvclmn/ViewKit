@@ -10,6 +10,10 @@ import Foundation
 // MARK: - Containment Methods
 extension GridDimensions {
 
+  public var doubled: GridDimensions {
+    GridDimensions(width: width * 2, height: height * 2)
+  }
+  
   private func toUnitSize(with unitSize: CGSize) -> UnitSize {
     UnitSize(width: width, height: height, unitSize: unitSize)
   }
