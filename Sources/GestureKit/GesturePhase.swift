@@ -8,7 +8,7 @@
 import AppKit
 
 // From NSEvent.Phase
-public enum GesturePhase: String {
+public enum GesturePhase: String, Sendable {
   case began
   case stationary
   case changed

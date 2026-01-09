@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-public enum ZoomPhase {
-  case inactive
-  case active(magnification: CGFloat)
-  case ended
-}
 
+//public enum ZoomPhase {
+//  case inactive
+//  case active(magnification: CGFloat)
+//  case ended
+//}
 
 public struct ZoomViewModifier: ViewModifier {
 
@@ -23,14 +23,13 @@ public struct ZoomViewModifier: ViewModifier {
   @Binding var zoom: CGFloat
   let zoomRange: ClosedRange<CGFloat>
   let isEnabled: Bool
-  let didUpdateZoom: (ZoomPhase) -> Void
+  let didUpdateZoom: (ZoomState) -> Void
 
   public func body(content: Content) -> some View {
     content
       .simultaneousGesture(zoomGesture(), isEnabled: isEnabled)
   }
 }
-
 
 extension ZoomViewModifier {
 
@@ -59,13 +58,12 @@ extension ZoomViewModifier {
   }
 }
 
-
 extension View {
   public func onZoomGesture(
     zoom: Binding<CGFloat>,
     zoomRange: ClosedRange<CGFloat>,
     isEnabled: Bool = true,
-    didUpdateZoom: @escaping (ZoomPhase) -> Void = { _ in }
+    didUpdateZoom: @escaping (ZoomState) -> Void = { _ in }
   ) -> some View {
     self.modifier(
       ZoomViewModifier(
