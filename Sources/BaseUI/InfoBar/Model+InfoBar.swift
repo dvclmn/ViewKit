@@ -5,18 +5,17 @@
 //  Created by Dave Coleman on 7/7/2025.
 //
 
-
 import SharedHelpers
 import SwiftUI
 
 // MARK: - PreferenceKey and Reduce Function
-public typealias InfoBarItems = [InfoBarItem]
+//public typealias InfoBarItems = [InfoBarItem]
 
 public struct InfoBarKey: PreferenceKey {
 
-  public static let defaultValue: InfoBarItems = []
+  public static let defaultValue: [InfoBarItem] = []
 
-  public static func reduce(value: inout InfoBarItems, nextValue: () -> InfoBarItems) {
+  public static func reduce(value: inout [InfoBarItem], nextValue: () -> [InfoBarItem]) {
     let new = nextValue()
     guard !new.isEmpty else { return }
     for item in new where !value.contains(where: { $0.id == item.id }) {
@@ -27,7 +26,7 @@ public struct InfoBarKey: PreferenceKey {
 
 // MARK: - Modifier for Child Views, to add to InfoBar
 extension View {
-  public func addInfoBarItems(_ items: InfoBarItems) -> some View {
+  public func addInfoBarItems(_ items: [InfoBarItem]) -> some View {
     return self.preference(key: InfoBarKey.self, value: items)
   }
 }
@@ -35,14 +34,14 @@ extension View {
 // MARK: - Modifier for Root View, to recieve data and Display bar
 public struct InfoBarItemsModifier: ViewModifier {
 
-  @State private var items: InfoBarItems = []
+  @State private var items: [InfoBarItem] = []
 
   public func body(content: Content) -> some View {
     content
       .paddingCompatible(.bottom, Styles.infoBarHeight)
       .onPreferenceChange(InfoBarKey.self) { newItems in
         updateIfChanged(&items, to: newItems)
-        //        updateIfChanged(newItems, into: &items)
+
       }
       .overlay(alignment: .bottom) {
         InfoBar(items: items)

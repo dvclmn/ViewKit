@@ -5,17 +5,19 @@
 //  Created by Dave Coleman on 9/12/2024.
 //
 
-
 import SharedHelpers
 import SwiftUI
 
 public struct InfoBar: View {
   @Environment(\.backgroundStyle) private var backgroundStyle
+  @Environment(\.modifierKeys) private var modifierKeys
 
-  let items: [String: [InfoBarItem]]
+//  let items: [String: any InfoBarSection]
+  let items: [SectionKey: [InfoBarItem]]
 
-  public init(items: InfoBarItems) {
-    let grouped = Dictionary(grouping: items, by: \.section)
+  public init(items: [InfoBarItem]) {
+//  public init(items: any InfoBarSection) {
+    let grouped = Dictionary(grouping: items, by: \.sectionKey)
     self.items = grouped
   }
 
@@ -25,6 +27,7 @@ public struct InfoBar: View {
         ForEach(items.sorted(byKeyPath: \.key), id: \.key) { key, items in
           InfoBarSectionView(sectionTitle: key, items: items)
         }  // END foreach
+        InfoBarSectionView(sectionTitle: "Modifiers", items: [modifiersItem])
         Spacer()
       } else {
         NoItems("No items to display")
@@ -37,7 +40,7 @@ public struct InfoBar: View {
     .background {
       Rectangle()
         .fill(.thinMaterial)
-      
+
       Rectangle()
         .fill(backgroundStyle ?? AnyShapeStyle(.black.opacity(0.06)))
     }
@@ -58,6 +61,13 @@ public struct InfoBar: View {
   }
 }
 extension InfoBar {
+  
+  private var modifiersItem: InfoBarItem {
+    InfoBarItem(
+      label: QuickLabel("Modifiers", symbol: "keyboard"),
+      content: modifierKeys.displayName(elements: .icon, separator: "", emptyText: "")
+    )
+  }
 
   @ViewBuilder
   func NoItems(_ reasonText: String) -> some View {
