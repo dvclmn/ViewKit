@@ -29,6 +29,10 @@ public final class GestureHandler {
 }
 
 extension GestureHandler {
+  
+  public var zoomLevel: CGFloat { zoom.value }
+  public var panOffset: CGSize { pan.value }
+  public var rotation: Angle { rotate.value }
 
   public func update(_ kind: GestureKind) {
     switch kind {
