@@ -8,8 +8,9 @@
 import SwiftUI
 import SharedHelpers
 
-@Observable
-public final class GestureHandler {
+//@Observable
+public struct GestureHandler {
+//public final class GestureHandler {
   var pan: PanState
   var zoom: ZoomState
   var rotate: RotateState
@@ -39,14 +40,23 @@ extension GestureHandler {
   public var panOffset: CGSize { pan.value }
   public var rotation: Angle { rotate.value }
 
-  public func update(_ kind: GestureKind) {
+  public mutating func update(
+//  public func update(
+    _ kind: GestureKind,
+    geometry: CanvasGeometry
+  ) {
     switch kind {
       case .pan(let state):
         pan = pan.translated(by: state.offset)
           .withPhase(state.phase)
 
-      case .zoom(let state):
-        zoom = state
+      case .zoom(let adjustment):
+//        guard let geometry else { return }
+        zoom = adjustment.resolve(
+          current: zoom,
+          artwork: geometry.canvasSize,
+          viewport: geometry.viewportSize
+        )
 
       case .rotate(let state):
         rotate = state
@@ -58,7 +68,8 @@ extension GestureHandler {
     updateIfChanged(&interactions.interaction, to: kind.interactionType)
   }
 
-  public func reset(_ kind: GestureKind.Meta) {
+  public mutating func reset(_ kind: GestureKind.Meta) {
+//  public func reset(_ kind: GestureKind.Meta) {
     switch kind {
       case .pan: pan = .initial
       case .zoom: zoom = .initial

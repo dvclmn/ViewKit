@@ -10,11 +10,13 @@ import SwiftUI
 public struct PanZoomModifier: ViewModifier {
   @State private var handler: GestureHandler = .init()
 
+  let geometry: CanvasGeometry?
   public func body(content: Content) -> some View {
     content
       .overlay {
         PanGestureView { state in
-          handler.update(.pan(state))
+          guard let geometry else { return }
+          handler.update(.pan(state), geometry: geometry)
         }
       }
       .simultaneousGesture(
@@ -22,7 +24,9 @@ public struct PanZoomModifier: ViewModifier {
           zoomRange: handler.zoomRange,
           isEnabled: true,
           didUpdateZoom: { state in
-            handler.update(.zoom(state))
+            guard let geometry else { return }
+            let adjustment = ZoomAdjustment.zoom(state.zoom)
+            handler.update(.zoom(adjustment), geometry: geometry)
           }
         ),
         isEnabled: true
@@ -31,7 +35,7 @@ public struct PanZoomModifier: ViewModifier {
   }
 }
 extension View {
-  public func panAndZoom() -> some View {
-    self.modifier(PanZoomModifier())
+  public func panAndZoom(geometry: CanvasGeometry?) -> some View {
+    self.modifier(PanZoomModifier(geometry: geometry))
   }
 }

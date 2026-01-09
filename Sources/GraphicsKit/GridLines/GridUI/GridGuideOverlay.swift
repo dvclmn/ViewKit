@@ -29,12 +29,20 @@ public struct GridGuideOverlayModifier: ViewModifier {
                 size in
 
                 context.drawGridLines(
-                  config: .init(
-                    fillSize: size,
+                  config: GridConfiguration(
+                    fillStyle: .fill(size: size),
                     cellSize: unitSize,
                     colour: .cyan.opacity(opacity),
-                    strokeThickness: 1
+                    lineWidth: 1.0,
+                    pan: .zero,
+                    density: .half
                   ),
+//                  config: .init(
+//                    fillSize: size,
+//                    cellSize: unitSize,
+//                    colour: .cyan.opacity(opacity),
+//                    strokeThickness: 1
+//                  ),
                   containerSize: size,
                   canvasZoom: 1.0
                 )

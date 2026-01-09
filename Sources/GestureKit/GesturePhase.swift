@@ -26,7 +26,8 @@ import CoreTools
 @MetaEnum
 public enum GestureKind {
   case pan(PanState)
-  case zoom(ZoomState)
+  case zoom(ZoomAdjustment)
+//  case zoom(ZoomState)
   case rotate(RotateState)
   case select
   case resize

@@ -10,8 +10,10 @@ import Foundation
 public enum ZoomAdjustment {
   case initial  // 100% / no zoom
   case zoom(CGFloat)
-  case fit(CanvasGeometry)
-  case fill(CanvasGeometry)
+  case fit
+//  case fit(CanvasGeometry)
+  case fill
+//  case fill(CanvasGeometry)
 }
 
 extension ZoomAdjustment {

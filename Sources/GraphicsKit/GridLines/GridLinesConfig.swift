@@ -11,22 +11,24 @@ import SwiftUI
 public struct GridConfiguration {
   public let fillStyle: GridFillStyle
   public let cellSize: CGSize
-  public let color: Color
+  public let colour: Color
   public let lineWidth: CGFloat
-  public let pan: CGPoint
+  public let pan: CGSize
+//  public let pan: CGPoint
   public let density: DisplayDensity
   
   public init(
     fillStyle: GridFillStyle,
     cellSize: CGSize,
-    color: Color,
+    colour: Color,
     lineWidth: CGFloat,
-    pan: CGPoint,
+    pan: CGSize,
+//    pan: CGPoint,
     density: DisplayDensity
   ) {
     self.fillStyle = fillStyle
     self.cellSize = cellSize
-    self.color = color
+    self.colour = colour
     self.lineWidth = lineWidth
     self.pan = pan
     self.density = density
