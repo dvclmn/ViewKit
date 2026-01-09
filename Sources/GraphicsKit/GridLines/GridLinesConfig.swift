@@ -9,18 +9,34 @@ import SharedHelpers
 import SwiftUI
 
 public struct GridConfiguration {
-  let fillStyle: GridFillStyle
-  let cellSize: CGSize
-  let color: Color
-  let lineWidth: CGFloat
-  let pan: CGPoint
-  let density: DisplayDensity
+  public let fillStyle: GridFillStyle
+  public let cellSize: CGSize
+  public let color: Color
+  public let lineWidth: CGFloat
+  public let pan: CGPoint
+  public let density: DisplayDensity
+  
+  public init(
+    fillStyle: GridFillStyle,
+    cellSize: CGSize,
+    color: Color,
+    lineWidth: CGFloat,
+    pan: CGPoint,
+    density: DisplayDensity
+  ) {
+    self.fillStyle = fillStyle
+    self.cellSize = cellSize
+    self.color = color
+    self.lineWidth = lineWidth
+    self.pan = pan
+    self.density = density
+  }
 
 }
 
 extension GridConfiguration {
   // Determine if we should even draw based on the second implementation's logic
-  var shouldDrawLines: Bool {
+  public var shouldDrawLines: Bool {
     density.isShowingCellMarkers
   }
   public var gridSize: UnitSize? {

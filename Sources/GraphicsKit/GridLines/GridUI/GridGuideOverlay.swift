@@ -8,7 +8,6 @@
 import SharedHelpers
 import SwiftUI
 
-
 public struct GridGuideOverlayModifier: ViewModifier {
   @Environment(\.unitSize) private var unitSize
   //  @Environment(\.isShowingGridGuide) private var isShowingGridGuide
@@ -82,7 +81,6 @@ extension GridGuideOverlayModifier {
     }
   }
 }
-
 
 extension View {
 
