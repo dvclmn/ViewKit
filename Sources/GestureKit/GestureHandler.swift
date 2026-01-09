@@ -8,9 +8,21 @@
 import SwiftUI
 
 @Observable
-final class GestureHandler {
-  var pan: PanState = .initial
-  var zoom: ZoomState = .initial
+public final class GestureHandler {
+  var pan: PanState
+  var zoom: ZoomState
+  
+  let zoomRange: ClosedRange<CGFloat>
+  
+  public init(
+    pan: PanState  = .initial,
+    zoom: ZoomState = .initial,
+    zoomRange: ClosedRange<CGFloat>  = 0.1...8
+  ) {
+    self.pan = pan
+    self.zoom = zoom
+    self.zoomRange = zoomRange
+  }
 }
 
 extension GestureHandler {

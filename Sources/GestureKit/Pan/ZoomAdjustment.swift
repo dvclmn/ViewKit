@@ -15,7 +15,7 @@ public enum ZoomAdjustment {
 }
 
 extension ZoomAdjustment {
-  
+
   /// ```
   /// state = adjustment
   ///   .resolve(current: state, artwork: artwork, viewport: viewport)
@@ -30,12 +30,12 @@ extension ZoomAdjustment {
   ) -> ZoomState {
     switch self {
       case .initial:
-        return ZoomState(zoom: 1.0, phase: .inactive)
+        return ZoomState.initial
 
       case .zoom(let delta):
         return ZoomState(
           zoom: current.zoom * delta,
-          phase: .active
+          phase: .changed
         )
 
       case .fit:

@@ -8,10 +8,38 @@
 import AppKit
 import CoreTools
 
+/// # Touch Gestures
+/// - Zoom
+/// - Pan
+/// - Rotation
+///
+/// # Drag Gestures
+/// - Pan
+/// - Select
+/// - Resize
+/// - Tap (considered zero-length drag)
+///
+/// Tool-based (should only be allowed when x tool is selected)
+/// - Pan (Drag)
+/// - Select
+/// - Resize
 @MetaEnum
 public enum GestureKind {
   case pan(PanState)
   case zoom(ZoomState)
+  case select
+  case resize
+  case none
+  
+  public var name: String {
+    switch self {
+      case .pan: "Pan"
+      case .zoom: "Zoom"
+      case .select: "Select"
+      case .resize: "Resize"
+      case .none: "None"
+    }
+  }
 }
 
 public enum ZoomPhase: Sendable {
@@ -19,7 +47,6 @@ public enum ZoomPhase: Sendable {
   case active
   case ended
 }
-
 
 // From NSEvent.Phase
 public enum GesturePhase: String, Sendable {
@@ -50,7 +77,7 @@ extension GesturePhase {
       default: rawValue.capitalized
     }
   }
-  
+
   var isInteractive: Bool {
     switch self {
       case .began, .changed: true

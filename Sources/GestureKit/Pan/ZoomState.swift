@@ -8,30 +8,38 @@
 import Foundation
 import SharedHelpers
 
-public struct ZoomState: Sendable {
-  let zoom: CGFloat
-  let phase: ZoomPhase
-  let zoomRange: ClosedRange<CGFloat>
+public struct ZoomState: GestureStateProtocol, Sendable {
+  public let value: CGFloat
+  public let phase: GesturePhase
 
-  static let initial: Self = .init()
+  public static let initial: Self = .init()
 
   public init(
     zoom: CGFloat = 1.0,
-    phase: ZoomPhase = .inactive,
-    range: ClosedRange<CGFloat> = 0.1...8
+    phase: GesturePhase = .none
+      //    phase: ZoomPhase = .inactive,
   ) {
-    self.zoom = zoom
+    self.value = zoom
     self.phase = phase
-    self.zoomRange = range
+    //    self.zoomRange = range
   }
 }
 
 extension ZoomState {
-  public var percentage: CGFloat { zoom * 100 }
-  public var isActive: Bool { phase == .active }
 
-  func withPhase(_ newPhase: ZoomPhase) -> Self {
-    .init(zoom: zoom, phase: newPhase)
+  var zoom: CGFloat { value }
+
+  func clamped(in range: ClosedRange<CGFloat>) -> ZoomState {
+    ZoomState(
+      zoom: zoom.clamped(to: range),
+      phase: phase
+    )
+  }
+
+  public var percentage: CGFloat { zoom * 100 }
+
+  public func withPhase(_ newPhase: GesturePhase) -> Self {
+    Self(zoom: value, phase: newPhase)
   }
 
   public func artworkSizeInView(_ artwork: CGSize) -> CGSize { artwork * zoom }
@@ -57,4 +65,3 @@ extension ZoomState {
     )
   }
 }
-

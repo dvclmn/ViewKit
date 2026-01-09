@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct PanZoomModifier: ViewModifier {
   @State private var handler: GestureHandler = .init()
-  
+
   public func body(content: Content) -> some View {
     content
       .overlay {
@@ -17,12 +17,21 @@ public struct PanZoomModifier: ViewModifier {
           handler.update(.pan(state))
         }
       }
-      .simultaneousGesture(zoomGesture(), isEnabled: true)
-    
+      .simultaneousGesture(
+        ZoomGesture(
+          zoomRange: handler.zoomRange,
+          isEnabled: true,
+          didUpdateZoom: { state in
+            handler.update(.zoom(state))
+          }
+        ),
+        isEnabled: true
+      )
+
   }
 }
-//extension View {
-//  public func example() -> some View {
-//    self.modifier(ExampleModifier())
-//  }
-//}
+extension View {
+  public func panAndZoom() -> some View {
+    self.modifier(ExampleModifier())
+  }
+}

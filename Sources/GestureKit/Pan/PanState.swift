@@ -9,32 +9,34 @@ import CoreGraphics
 import Foundation
 import SharedHelpers
 
-public struct PanState: Sendable {
-  var offset: CGSize
-  var phase: GesturePhase
+public struct PanState: GestureStateProtocol, Sendable {
+  public let value: CGSize
+  public let phase: GesturePhase
 
-  static let initial: Self = .init()
+  public static let initial: Self = .init()
 
   public init(
     offset: CGSize = .zero,
     phase: GesturePhase = .none
   ) {
-    self.offset = offset
+    self.value = offset
     self.phase = phase
   }
 }
 extension PanState {
-  
+
+  var offset: CGSize { value }
+
   func clamped(
     artwork: CGSize,
     viewport: CGSize,
     zoom: ZoomState
   ) -> Self {
     let scaledArtwork = artwork * zoom.zoom
-    
+
     let maxX = max((scaledArtwork.width - viewport.width) / 2, 0)
     let maxY = max((scaledArtwork.height - viewport.height) / 2, 0)
-    
+
     return Self(
       offset: CGSize(
         width: offset.width.clamped(to: -maxX...maxX),
@@ -60,18 +62,8 @@ extension PanState {
   /// )
   ///
   /// ```
-  func viewOffset(zoom: ZoomState) -> CGSize {
-    offset * zoom.zoom
-  }
-
-  func artworkOffset(zoom: ZoomState) -> CGSize {
-    offset / zoom.zoom
-  }
-
-  var isActive: Bool { phase.isInteractive }
-//    let activeStates: Set<GesturePhase> = [.began, .changed, .stationary]
-//    return activeStates.contains(phase)
-//  }
+  func viewOffset(zoom: ZoomState) -> CGSize { offset * zoom.zoom }
+  func artworkOffset(zoom: ZoomState) -> CGSize { offset / zoom.zoom }
 
   /// ```
   /// pan = pan
@@ -89,8 +81,8 @@ extension PanState {
     )
   }
 
-  func withPhase(_ phase: GesturePhase) -> Self {
-    Self(offset: offset, phase: phase)
+  public func withPhase(_ newPhase: GesturePhase) -> Self {
+    Self(offset: offset, phase: newPhase)
   }
   //  mutating func update(phase: GesturePhase) {
   //
