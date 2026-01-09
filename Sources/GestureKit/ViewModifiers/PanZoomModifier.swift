@@ -32,6 +32,6 @@ public struct PanZoomModifier: ViewModifier {
 }
 extension View {
   public func panAndZoom() -> some View {
-    self.modifier(ExampleModifier())
+    self.modifier(PanZoomModifier())
   }
 }

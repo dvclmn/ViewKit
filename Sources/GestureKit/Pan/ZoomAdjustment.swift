@@ -10,8 +10,8 @@ import Foundation
 public enum ZoomAdjustment {
   case initial  // 100% / no zoom
   case zoom(CGFloat)
-  case fit
-  case fill
+  case fit(CanvasGeometry)
+  case fill(CanvasGeometry)
 }
 
 extension ZoomAdjustment {
@@ -32,29 +32,43 @@ extension ZoomAdjustment {
       case .initial:
         return ZoomState.initial
 
-      case .zoom(let delta):
-        return ZoomState(
-          zoom: current.zoom * delta,
-          phase: .changed
-        )
+      case .zoom(let level):
+        return ZoomState(zoom: level, phase: .changed)
 
-      case .fit:
-        return ZoomState(
-          zoom: ZoomState.fitScale(
-            artwork: artwork,
-            viewport: viewport
-          ),
-          phase: .ended
+      case .fit(let geometry):
+        let values = Self.scaleValues(
+          artwork: geometry.canvasSize,
+          viewport: geometry.viewportSize
         )
+        return ZoomState(zoom: min(values.0, values.1), phase: .ended)
 
-      case .fill:
-        return ZoomState(
-          zoom: ZoomState.fillScale(
-            artwork: artwork,
-            viewport: viewport
-          ),
-          phase: .ended
+      case .fill(let geometry):
+        let values = Self.scaleValues(
+          artwork: geometry.canvasSize,
+          viewport: geometry.viewportSize
         )
+        return ZoomState(zoom: max(values.0, values.1), phase: .ended)
+
     }
+  }
+
+  public static func scaleValues(
+    artwork: CGSize,
+    viewport: CGSize,
+    padding: CGFloat = 40
+  ) -> (CGFloat, CGFloat) {
+    /// Calculate available space after padding
+    let viewportAvailable = viewport.adjustBoth { $0 - (padding * 2) }
+
+    return (
+      viewportAvailable.width / artwork.width,
+      viewportAvailable.height / artwork.height
+    )
+
+    //    return min(
+    //      viewportAvailable.width / artwork.width,
+    //      viewportAvailable.height / artwork.height
+    //    )
+
   }
 }

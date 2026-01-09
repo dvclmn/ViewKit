@@ -27,6 +27,7 @@ import CoreTools
 public enum GestureKind {
   case pan(PanState)
   case zoom(ZoomState)
+  case rotate(RotateState)
   case select
   case resize
   case none
@@ -35,6 +36,7 @@ public enum GestureKind {
     switch self {
       case .pan: "Pan"
       case .zoom: "Zoom"
+      case .rotate: "Rotate"
       case .select: "Select"
       case .resize: "Resize"
       case .none: "None"
@@ -42,11 +44,11 @@ public enum GestureKind {
   }
 }
 
-public enum ZoomPhase: Sendable {
-  case inactive
-  case active
-  case ended
-}
+//public enum ZoomPhase: Sendable {
+//  case inactive
+//  case active
+//  case ended
+//}
 
 // From NSEvent.Phase
 public enum GesturePhase: String, Sendable {
