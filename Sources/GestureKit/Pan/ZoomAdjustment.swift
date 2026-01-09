@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 9/1/2026.
 //
 
+import Foundation
+
 public enum ZoomAdjustment {
   case initial  // 100% / no zoom
   case zoom(CGFloat)
@@ -13,6 +15,14 @@ public enum ZoomAdjustment {
 }
 
 extension ZoomAdjustment {
+  
+  /// ```
+  /// state = adjustment
+  ///   .resolve(current: state, artwork: artwork, viewport: viewport)
+  ///   .clamped()
+  ///   .withPhase(.active)
+  ///
+  ///   ```
   func resolve(
     current: ZoomState,
     artwork: CGSize,

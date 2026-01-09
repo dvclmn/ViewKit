@@ -58,8 +58,3 @@ extension ZoomState {
   }
 }
 
-public enum ZoomPhase: Sendable {
-  case inactive
-  case active
-  case ended
-}

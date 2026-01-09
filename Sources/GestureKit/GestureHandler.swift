@@ -14,6 +14,19 @@ final class GestureHandler {
 }
 
 extension GestureHandler {
+
+  public func update(_ kind: GestureKind) {
+    switch kind {
+      case .pan(let state):
+
+        pan = pan.translated(by: state.offset)
+          .withPhase(state.phase)
+
+      case .zoom(let state):
+        zoom = state
+    }
+  }
+
   public func reset(_ kind: GestureKind.Meta) {
     switch kind {
       case .pan:
@@ -23,14 +36,14 @@ extension GestureHandler {
     }
   }
 
-  public func update(_ kind: GestureKind) {
-    switch kind {
-      case .pan(let state):
-        pan.translate(by: state.offset)
-        pan.updatePhase(to: state.phase)
-
-      case .zoom(let zoomState):
-        zoom = zoomState
-    }
-  }
+  //  public func update(_ kind: GestureKind) {
+  //    switch kind {
+  //      case .pan(let state):
+  //        pan.translate(by: state.offset)
+  //        pan.updatePhase(to: state.phase)
+  //
+  //      case .zoom(let zoomState):
+  //        zoom = zoomState
+  //    }
+  //  }
 }

@@ -14,6 +14,13 @@ public enum GestureKind {
   case zoom(ZoomState)
 }
 
+public enum ZoomPhase: Sendable {
+  case inactive
+  case active
+  case ended
+}
+
+
 // From NSEvent.Phase
 public enum GesturePhase: String, Sendable {
   case began
@@ -41,6 +48,13 @@ extension GesturePhase {
     switch self {
       case .mayBegin: "May Begin"
       default: rawValue.capitalized
+    }
+  }
+  
+  var isInteractive: Bool {
+    switch self {
+      case .began, .changed: true
+      default: false
     }
   }
 }
