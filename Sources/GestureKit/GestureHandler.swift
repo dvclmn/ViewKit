@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 @Observable
 public final class GestureHandler {
@@ -13,7 +14,9 @@ public final class GestureHandler {
   var zoom: ZoomState
   var rotate: RotateState
 
-  let zoomRange: ClosedRange<CGFloat>
+  public var interactions: InteractionHandler = .init()
+  
+  public let zoomRange: ClosedRange<CGFloat>
 
   public init(
     pan: PanState = .initial,
@@ -30,7 +33,9 @@ public final class GestureHandler {
 
 extension GestureHandler {
   
-  public var zoomLevel: CGFloat { zoom.value }
+  /// Clamped
+  public var zoomLevel: CGFloat { zoom.clamped(in: zoomRange).value }
+  public var zoomPercent: CGFloat { zoom.percentage }
   public var panOffset: CGSize { pan.value }
   public var rotation: Angle { rotate.value }
 
@@ -48,6 +53,9 @@ extension GestureHandler {
         
       default: break
     }
+    
+    /// Update current interaction
+    updateIfChanged(&interactions.interaction, to: kind.interactionType)
   }
 
   public func reset(_ kind: GestureKind.Meta) {
@@ -58,15 +66,4 @@ extension GestureHandler {
       default: break
     }
   }
-
-  //  public func update(_ kind: GestureKind) {
-  //    switch kind {
-  //      case .pan(let state):
-  //        pan.translate(by: state.offset)
-  //        pan.updatePhase(to: state.phase)
-  //
-  //      case .zoom(let zoomState):
-  //        zoom = zoomState
-  //    }
-  //  }
 }

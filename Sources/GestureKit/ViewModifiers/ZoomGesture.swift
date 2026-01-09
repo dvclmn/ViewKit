@@ -11,7 +11,7 @@ struct ZoomGesture: Gesture {
 
   @GestureState private var magnification: CGFloat = 1
   @State private var currentZoom: CGFloat?
-  @State private var phase: GesturePhase = .inactive
+  @State private var phase: GesturePhase = .none
 
   let initialZoom: CGFloat?
   let zoomRange: ClosedRange<CGFloat>

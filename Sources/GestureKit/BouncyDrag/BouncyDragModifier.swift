@@ -39,11 +39,11 @@ public struct BouncyDragModifier: ViewModifier {
         .offset(store.dragOffset)
       //      .scaleEffect(store.handleScale())
       
-#if canImport(AppKit)
-        .onPanGesture(isEnabled: store.isInputMethodEnabled(.twoFingerPan)) { phase in
-//          handlePanGesture(phase)
-        }
-#endif
+//#if canImport(AppKit)
+//        .onPanGesture(isEnabled: store.isInputMethodEnabled(.twoFingerPan)) { phase in
+////          handlePanGesture(phase)
+//        }
+//#endif
         .simultaneousGesture(gesture, isEnabled: store.isInputMethodEnabled(.clickAndDrag))
         .animation(
           .snappy(duration: 0.28, extraBounce: 0.45 * store.handleScale()),

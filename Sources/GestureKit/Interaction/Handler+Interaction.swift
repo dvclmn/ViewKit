@@ -18,10 +18,8 @@ public struct InteractionHandler {
   /// This forces the caller to define which is allowed.
   /// If not defined, none will work.
   public var allowedDragGesture: GestureKind.Meta = .none
-  //#if canImport(AppKit)
   public var keysHeld: Keys = []
   public var modifiersHeld: Modifiers = []
 
   let keysToWatch: Set<KeyEquivalent> = [.space]
-  //#endif
 }

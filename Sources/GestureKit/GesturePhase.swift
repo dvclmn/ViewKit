@@ -44,6 +44,21 @@ public enum GestureKind {
   }
 }
 
+extension GestureKind {
+  
+  /// This probably should be scrutinised more
+  public var interactionType: Interaction {
+    switch self {
+      case .pan: .gesturePan
+      case .zoom: .gestureZoom
+      case .rotate: .gestureRotate
+      case .select: .dragSelect
+      case .resize: .dragResize
+      case .none: .none
+    }
+  }
+}
+
 //public enum ZoomPhase: Sendable {
 //  case inactive
 //  case active
