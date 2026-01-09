@@ -11,25 +11,19 @@ import AppKit
 // MARK: - Custom NSView for Pan Tracking
 public class PanTrackingNSView: NSView {
 
-  var didUpdatePanGesture: PanGestureOutput
+  var didUpdatePan: PanGestureOutput
 
   public init(
     didUpdatePanGesture: @escaping PanGestureOutput
   ) {
-    self.didUpdatePanGesture = didUpdatePanGesture
+    self.didUpdatePan = didUpdatePanGesture
     super.init(frame: .zero)
-    self.setupView()
   }
-
+  
   required init?(coder: NSCoder) {
-    self.didUpdatePanGesture = { _ in }
-    super.init(coder: coder)
+    fatalError("init(coder:) has not been implemented")
   }
 
-  private func setupView() {
-    //    print("Set up `PanTrackingView`")
-    //    wantsLayer = true
-  }
 
   // MARK: - Two-Finger Pan via ScrollWheel
   public override func scrollWheel(with event: NSEvent) {
@@ -54,13 +48,13 @@ public class PanTrackingNSView: NSView {
         return
     }
 
-    didUpdatePanGesture(panPhase)
+    didUpdatePan(panPhase)
   }
 
   public override func mouseExited(with event: NSEvent) {
     print("Mouse exited with event: \(event)")
     super.mouseExited(with: event)
-    didUpdatePanGesture(.inactive)
+    didUpdatePan(.inactive)
   }
 }
 #endif

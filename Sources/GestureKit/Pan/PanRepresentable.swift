@@ -12,11 +12,13 @@ public typealias PanGestureOutput = (PanPhase) -> Void
 
 // MARK: - SwiftUI Representable
 public struct PanGestureView: NSViewRepresentable {
-  let onPanGesture: PanGestureOutput
+  @Binding var handler: PanGestureHandler
+//  let onPanGesture: PanGestureOutput
 
-  public init(onPanGesture: @escaping PanGestureOutput) {
-    self.onPanGesture = onPanGesture
-  }
+//  public init(onPanGesture: @escaping PanGestureOutput) {
+//    
+//    self.onPanGesture = onPanGesture
+//  }
 
   public func makeNSView(context: Context) -> PanTrackingNSView {
     let view = PanTrackingNSView { panOutput in
