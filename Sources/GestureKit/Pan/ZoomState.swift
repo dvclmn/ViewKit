@@ -17,11 +17,9 @@ public struct ZoomState: GestureStateProtocol, Sendable {
   public init(
     zoom: CGFloat = 1.0,
     phase: GesturePhase = .none
-      //    phase: ZoomPhase = .inactive,
   ) {
     self.value = zoom
     self.phase = phase
-    //    self.zoomRange = range
   }
 }
 
@@ -45,40 +43,4 @@ extension ZoomState {
   public func artworkSizeInView(_ artwork: CGSize) -> CGSize { artwork * zoom }
   public func viewSizeInArtwork(_ viewport: CGSize) -> CGSize { viewport / zoom }
 
-  public static func zoomScale(for type: ZoomAdjustment) -> CGFloat {
-    //    let newZoom: CGFloat
-    switch type {
-      case .initial:
-        return CGFloat.zero
-
-      case .zoom(let level):
-        return level
-
-      case .fit(let geometry):
-        let values = Self.scaleValues(
-          artwork: geometry.canvasSize,
-          viewport: geometry.viewportSize
-        )
-        return min(values.0, values.1)
-
-      case .fill(let geometry):
-        let values = Self.scaleValues(
-          artwork: geometry.canvasSize,
-          viewport: geometry.viewportSize
-        )
-        return max(values.0, values.1)
-    }
-  }
-
-  
-
-  //  public static func fillScale(
-  //    artwork: CGSize,
-  //    viewport: CGSize
-  //  ) -> CGFloat {
-  //    max(
-  //      viewport.width / artwork.width,
-  //      viewport.height / artwork.height
-  //    )
-  //  }
 }

@@ -27,7 +27,10 @@ extension GraphicsContext {
       cellSize: zoomed,
       containerSize: containerSize
     )
-    self.stroke(path, with: .color(config.colour), lineWidth: config.strokeThickness)
+    self.stroke(
+      path,
+      with: .color(config.colour),
+      lineWidth: config.strokeThickness
+    )
   }
-
 }
