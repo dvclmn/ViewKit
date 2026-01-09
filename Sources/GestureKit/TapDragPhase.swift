@@ -13,15 +13,15 @@ public enum TapDragPhase: Equatable, Sendable {
   case drag(rect: CGRect)
   case tap(location: CGPoint)
   case ended
-  
+
   public var isDragging: Bool {
     if case .drag(_) = self { true } else { false }
   }
-  
+
   public var isTapping: Bool {
     if case .tap(_) = self { true } else { false }
   }
-  
+
   public var unMappedDragRect: CGRect? {
     switch self {
       case .drag(let rect): rect
@@ -29,7 +29,7 @@ public enum TapDragPhase: Equatable, Sendable {
       case .ended: nil
     }
   }
-  
+
   public var unMappedTapLocation: CGPoint? {
     switch self {
       case .drag(_): nil

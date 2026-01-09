@@ -30,7 +30,6 @@ public struct PanGestureView: NSViewRepresentable {
     return view
   }
 
-  public func updateNSView(_ nsView: PanTrackingNSView, context: Context) {
-  }
+  public func updateNSView(_ nsView: PanTrackingNSView, context: Context) {}
 }
 #endif

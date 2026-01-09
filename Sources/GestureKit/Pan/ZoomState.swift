@@ -27,21 +27,15 @@ public struct ZoomState: Sendable {
 }
 
 extension ZoomState {
-  public var percentage: CGFloat {
-    zoom * 100
+  public var percentage: CGFloat { zoom * 100 }
+  public var isActive: Bool { phase == .active }
+
+  func withPhase(_ newPhase: ZoomPhase) -> Self {
+    .init(zoom: zoom, phase: newPhase)
   }
 
-  public var isActive: Bool {
-    phase == .active
-  }
-
-  public func artworkSizeInView(_ artwork: CGSize) -> CGSize {
-    artwork * zoom
-  }
-
-  public func viewSizeInArtwork(_ viewport: CGSize) -> CGSize {
-    viewport / zoom
-  }
+  public func artworkSizeInView(_ artwork: CGSize) -> CGSize { artwork * zoom }
+  public func viewSizeInArtwork(_ viewport: CGSize) -> CGSize { viewport / zoom }
 
   public static func fitScale(
     artwork: CGSize,
