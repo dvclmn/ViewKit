@@ -53,7 +53,7 @@ extension GridShaped where Cell == Character {
     return characterCells + paddingCells
   }
 
-  public var toText: String {
+  public var toString: String {
     let rowsStrings = (0..<rowCount).map { rowIndex in
       (0..<columnCount).map { columnIndex in
         let position = GridPosition(column: columnIndex, row: rowIndex)
@@ -62,6 +62,7 @@ extension GridShaped where Cell == Character {
     }
     return rowsStrings.joinedLines()
   }
+  
 }
 
 enum GridCellError: LocalizedError {

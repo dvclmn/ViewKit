@@ -86,23 +86,7 @@ extension UnitRect {
   ////      return (a, b)
   //    }
 
-  /// Same as `gridPositions(from:)` but returns nil if either position
-  /// falls outside of bounds.
-  //  public static func gridPositionsIfContained(
-  //    in bounds: GridDimensions,
-  //    from rect: CGRect,
-  //    cellSize: CGSize
-  //  ) -> (GridPosition, GridPosition)? {
-  //    let standardised = rect.standardized
-  //    guard
-  //      let a = GridPosition.createIfContained(within: bounds, at: standardised.origin, cellSize: cellSize),
-  //      let b = GridPosition.createIfContained(
-  //        within: bounds, at: standardised.point(for: .bottomTrailing), cellSize: cellSize)
-  //    else {
-  //      return nil
-  //    }
-  //    return (a, b)
-  //  }
+  
 
   /// Iterates over all GridPositions within this UnitRect
 
@@ -122,15 +106,41 @@ extension UnitRect {
   //
   //  }
 
-//  public static func createIfContained(
-//    within bounds: GridDimensions,
-//    fromRect rect: CGRect,
-//    cellSize: CGSize
-//  ) -> Self? {
-//    guard let (a, b) = gridPositionsIfContained(in: bounds, from: rect, cellSize: cellSize)
-//    else { return nil }
-//
+  public static func createIfContained(
+    within bounds: GridDimensions,
+    fromRect rect: CGRect,
+    unitSize: CGSize
+  ) -> Self? {
+    guard let (a, b) = gridPositionsIfContained(in: bounds, from: rect, cellSize: unitSize)
+    else { return nil }
+
+    return UnitRect(from: a, to: b, unitSize: unitSize)
 //    return UnitRect(startPosition: a, endPosition: b, cellSize: cellSize)
-//  }
+  }
+  
+  /// Same as `gridPositions(from:)` but returns nil if either position
+  /// falls outside of bounds.
+  public static func gridPositionsIfContained(
+    in bounds: GridDimensions,
+    from rect: CGRect,
+    cellSize: CGSize
+  ) -> (GridPosition, GridPosition)? {
+    let standardised = rect.standardized
+    guard
+      let a = GridPosition.createIfContained(
+        within: bounds,
+        at: standardised.origin,
+        cellSize: cellSize
+      ),
+      let b = GridPosition.createIfContained(
+        within: bounds,
+        at: standardised.point(at: .bottomTrailing),
+        cellSize: cellSize
+      )
+    else {
+      return nil
+    }
+    return (a, b)
+  }
 
 }

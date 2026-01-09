@@ -13,11 +13,10 @@ extension GridDimensions {
   public var doubled: GridDimensions {
     GridDimensions(width: width * 2, height: height * 2)
   }
-  
-  private func toUnitSize(with unitSize: CGSize) -> UnitSize {
+
+  public func toUnitSize(with unitSize: CGSize) -> UnitSize {
     UnitSize(width: width, height: height, unitSize: unitSize)
   }
-  
 
   /// These have moved to UnitSize.
   /// Checks if a point (in pixel coordinates) falls within the grid bounds
@@ -27,16 +26,16 @@ extension GridDimensions {
   ) -> Bool {
     let size = toUnitSize(with: unitSize)
     guard let width = size.screenWidth,
-          let height = size.screenHeight
+      let height = size.screenHeight
     else { return false }
     //  public func contains(point: CGPoint, cellSize: CGSize) -> Bool {
     //    let gridSize = toCGSize(withCellSize: cellSize)
     return point.x >= 0
       && point.y >= 0
-    && point.x < width
-//      && point.x < screenWidth(using: unitSize)
+      && point.x < width
+      //      && point.x < screenWidth(using: unitSize)
       && point.y < height
-//      && point.y < screenHeight(using: unitSize)
+    //      && point.y < screenHeight(using: unitSize)
   }
   /// Checks if a grid position is within valid bounds
   public func contains(position: GridPosition) -> Bool {
@@ -52,23 +51,23 @@ extension GridDimensions {
   //    return contains(position: gridPosition)
   //  }
 
-//  public func position(
-//    for point: CGPoint,
-//    rounding: GridRounding = .down,
-//    mapping: AxisMapping = .default,
-//  ) -> GridPosition {
-//
-//    let row = point.value(along: .horizontal, mapping: mapping)
-//    let col = point.value(along: .vertical, mapping: mapping)
-//
-//    return GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
-//    //    fatalError("Needs implementation after refactor of UnitSize/AxisMapping")
-//    //    let row = convention.makeCGPoint(h: <#T##CGFloat#>, v: <#T##CGFloat#>)
-//    //    GridPosition(
-//    //      row: Int(floor(point.y / cellSize.height)),
-//    //      column: Int(floor(point.x / cellSize.width)),
-//    //    )
-//  }
+  //  public func position(
+  //    for point: CGPoint,
+  //    rounding: GridRounding = .down,
+  //    mapping: AxisMapping = .default,
+  //  ) -> GridPosition {
+  //
+  //    let row = point.value(along: .horizontal, mapping: mapping)
+  //    let col = point.value(along: .vertical, mapping: mapping)
+  //
+  //    return GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
+  //    //    fatalError("Needs implementation after refactor of UnitSize/AxisMapping")
+  //    //    let row = convention.makeCGPoint(h: <#T##CGFloat#>, v: <#T##CGFloat#>)
+  //    //    GridPosition(
+  //    //      row: Int(floor(point.y / cellSize.height)),
+  //    //      column: Int(floor(point.x / cellSize.width)),
+  //    //    )
+  //  }
 }
 
 // MARK: - Coordinate Conversion
@@ -78,17 +77,17 @@ extension GridDimensions {
 
 // MARK: - Size Calculations
 extension GridDimensions {
-//  public func screenWidth(using unitSize: CGSize) -> CGFloat {
-//    toUnitSize(with: unitSize).screenWidth
-//  }
-//
-//  public func screenHeight(using unitSize: CGSize) -> CGFloat {
-//    toUnitSize(with: unitSize).screenHeight
-//  }
-//
-//  public func screenSize(using unitSize: CGSize) -> CGSize {
-//    toUnitSize(with: unitSize).screenSize
-//  }
+  //  public func screenWidth(using unitSize: CGSize) -> CGFloat {
+  //    toUnitSize(with: unitSize).screenWidth
+  //  }
+  //
+  //  public func screenHeight(using unitSize: CGSize) -> CGFloat {
+  //    toUnitSize(with: unitSize).screenHeight
+  //  }
+  //
+  //  public func screenSize(using unitSize: CGSize) -> CGSize {
+  //    toUnitSize(with: unitSize).screenSize
+  //  }
 
   //  public func width(with cellSize: CGSize) -> CGFloat {
   //    CGFloat(width) * cellSize.width

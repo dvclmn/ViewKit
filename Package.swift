@@ -7,7 +7,7 @@ let package = Package(
   name: "BaseHelpers",
   platforms: [
     .iOS("17.0"),
-    .macOS("13.0"),
+    .macOS("14.0"),
   ],
   products: [
     .library(
@@ -29,7 +29,7 @@ let package = Package(
         "MotionKit",
       ]
     ),
-    .library(name: "CanvasKit", targets: ["CanvasKit"]),
+//    .library(name: "CanvasKit", targets: ["CanvasKit"]),
     .library(name: "ColourKit", targets: ["ColourKit"]),
     .library(name: "GestureKit", targets: ["GestureKit"]),
 //    .library(name: "GridKit", targets: ["GridKit"]),
@@ -116,15 +116,15 @@ let package = Package(
       ],
     ),
 
-    .target(
-      name: "CanvasKit",
-      dependencies: [
-        .module(.baseUI),
-        .module(.sharedHelpers),
-        .module(.gestureKit),
-        .sharing,
-      ],
-    ),
+//    .target(
+//      name: "CanvasKit",
+//      dependencies: [
+//        .module(.baseUI),
+//        .module(.sharedHelpers),
+//        .module(.gestureKit),
+//        .sharing,
+//      ],
+//    ),
 
     .target(
       name: "ColourKit",
@@ -261,7 +261,7 @@ enum BaseModule {
   case networking
   case baseUI
   case baseTypes
-  case canvasKit
+//  case canvasKit
   case colourKit
   case vectorKit
   case gestureKit
@@ -283,7 +283,7 @@ enum BaseModule {
       case .networking: "BaseNetworking"
       case .baseUI: "BaseUI"
       case .baseTypes: "BaseTypes"
-      case .canvasKit: "CanvasKit"
+//      case .canvasKit: "CanvasKit"
       case .colourKit: "ColourKit"
       case .vectorKit: "VectorKit"
       case .gestureKit: "GestureKit"

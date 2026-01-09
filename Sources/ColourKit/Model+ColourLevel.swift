@@ -8,7 +8,6 @@
 import SwiftUI
 import SharedHelpers
 
-//@available(macOS 14.0, *)
 public protocol ColourHandlerProtocol {
   var foregroundRGB: RGBColour { get set }
   var backgroundRGB: RGBColour { get set }
