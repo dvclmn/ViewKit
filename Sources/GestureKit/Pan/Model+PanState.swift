@@ -9,8 +9,8 @@ import Foundation
 import CoreGraphics
 
 public struct PanState: Sendable {
-  let offset: CGSize
-  let phase: GesturePhase
+  var offset: CGSize
+  var phase: GesturePhase
   
   static let initial: Self = .init()
   
@@ -20,6 +20,21 @@ public struct PanState: Sendable {
   ) {
     self.offset = offset
     self.phase = phase
+  }
+}
+extension PanState {
+//  mutating func update(phase: GesturePhase) {
+//    
+//  }
+  mutating func translate(by delta: CGSize) {
+    offset.width -= delta.width
+    offset.height -= delta.height
+  }
+  
+  mutating func updatePhase(to new: GesturePhase) {
+    phase = new
+//    offset.width -= delta.width
+//    offset.height -= delta.height
   }
 }
 

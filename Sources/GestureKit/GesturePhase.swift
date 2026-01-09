@@ -6,6 +6,13 @@
 //
 
 import AppKit
+import CoreTools
+
+@MetaEnum
+public enum GestureKind {
+  case pan(PanState)
+  case zoom(ZoomState)
+}
 
 // From NSEvent.Phase
 public enum GesturePhase: String, Sendable {

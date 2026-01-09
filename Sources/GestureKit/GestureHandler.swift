@@ -15,27 +15,47 @@ final class GestureHandler {
   var zoom: ZoomState = .initial
 }
 
-public struct PanHandler {
-  public var pan: CGSize = .zero
+extension GestureHandler {
+  public func reset(_ kind: GestureKind.Meta) {
+    switch kind {
+    case .pan:
+      pan = .initial
+    case .zoom:
+      zoom = .initial
+    }
+//    pan = .zero
+  }
   
-  public init() {}
+  public func update(_ kind: GestureKind) {
+    switch kind {
+    case .pan(let state):
+      pan.translate(by: state.offset)
+      pan.updatePhase(to: state.phase)
+      
+    case .zoom(let zoomState):
+      zoom = zoomState
+    }
+//    pan = newOffset
+  }
+  
+//  public mutating func applyPanDelta(_ delta: CGSize) {
+//    pan.width += delta.width
+//    pan.height += delta.height
+//  }
 }
 
-extension PanHandler {
+
+
+//public struct PanHandler {
+//  public var pan: CGSize = .zero
+//  
+//  public init() {}
+//}
+//
+//extension PanHandler {
   
-  public mutating func reset() {
-    pan = .zero
-  }
   
-  public mutating func update(_ newOffset: CGSize) {
-    pan = newOffset
-  }
-  
-  public mutating func applyPanDelta(_ delta: CGSize) {
-    pan.width += delta.width
-    pan.height += delta.height
-  }
-}
+//}
 
 
 //@Observable
