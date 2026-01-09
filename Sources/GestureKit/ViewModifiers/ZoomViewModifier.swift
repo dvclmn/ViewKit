@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-
-//public enum ZoomPhase {
-//  case inactive
-//  case active(magnification: CGFloat)
-//  case ended
-//}
-
 public struct ZoomViewModifier: ViewModifier {
 
   @GestureState private var magnification: CGFloat = 1
@@ -21,6 +14,7 @@ public struct ZoomViewModifier: ViewModifier {
   @State private var initialZoom: CGFloat?
 
   @Binding var zoom: CGFloat
+  
   let zoomRange: ClosedRange<CGFloat>
   let isEnabled: Bool
   let didUpdateZoom: (ZoomState) -> Void

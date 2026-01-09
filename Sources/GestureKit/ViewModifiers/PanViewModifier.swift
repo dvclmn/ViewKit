@@ -11,21 +11,21 @@ import SwiftUI
 public struct PanGestureModifier: ViewModifier {
 
   let isEnabled: Bool
-#warning("Temporarily switched off")
+//#warning("Temporarily switched off")
 //  let action: () -> Void
 
   public func body(content: Content) -> some View {
     /// Keeping this as a GeometryReader as layout
     /// gets messed up without it
-    ZStack {
-      //    GeometryReader { _ in
+//    ZStack {
       content
       if isEnabled {
         PanGestureView { phase in
 //          action(phase)
+          
         }
       }
-    }
+//    }
   }
 }
 extension View {

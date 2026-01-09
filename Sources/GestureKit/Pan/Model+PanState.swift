@@ -38,14 +38,3 @@ extension PanState {
   }
 }
 
-public struct ZoomState: Sendable {
-  let zoom: CGFloat
-  let phase: GesturePhase
-  
-  static let initial: Self = .init()
-  
-  public init(zoom: CGFloat = 1.0, phase: GesturePhase = .none) {
-    self.zoom = zoom
-    self.phase = phase
-  }
-}
