@@ -9,7 +9,7 @@ import SwiftUI
 
 import SharedHelpers
 
-@available(macOS 14.0, *)
+
 public struct PopupExampleView: View {
   @Environment(\.popup) private var popup
   public var body: some View {
@@ -34,7 +34,7 @@ public struct PopupExampleView: View {
 //  
 //}
 #if DEBUG
-@available(macOS 14.0, *)
+
 #Preview {
   PopupExampleView()
     .environment(Popup())

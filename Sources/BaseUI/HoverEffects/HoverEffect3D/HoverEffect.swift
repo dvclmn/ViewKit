@@ -10,7 +10,7 @@ import SwiftUI
 
 public typealias Hover3DOutput = (Hover3DState) -> Void
 
-@available(macOS 14.0, *)
+
 public struct Hover3DModifier: ViewModifier {
 
   @State var isHovering: Bool = false
@@ -59,7 +59,7 @@ public struct Hover3DModifier: ViewModifier {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension Hover3DModifier {
 
   private func sendHoverUpdate() {
@@ -158,7 +158,7 @@ extension Hover3DModifier {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension View {
   public func hover3DEffect(
     rounding: CGFloat = Styles.sizeSmall,

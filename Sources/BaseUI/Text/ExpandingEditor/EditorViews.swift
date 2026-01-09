@@ -8,20 +8,20 @@
 import SwiftUI
 
 /// Editor namespace
-@available(macOS 14.0, *)
+
 public enum Editor<Content: View> {}
 
-@available(macOS 14.0, *)
+
 extension Editor.PlainText {
   public typealias Output = (Binding<String>) -> Content
 }
 
-@available(macOS 14.0, *)
+
 extension Editor.Attributed {
   public typealias Output = (Binding<AttributedString>) -> Content
 }
 
-@available(macOS 14.0, *)
+
 extension Editor {
   public struct PlainText: View {
     @Environment(\.textAlignment) private var textAlignment
@@ -55,7 +55,7 @@ extension Editor {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension Editor {
   public struct Attributed: View {
     @Environment(\.textAlignment) private var textAlignment

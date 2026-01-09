@@ -13,7 +13,7 @@ public enum ZoomPhase {
   case ended
 }
 
-@available(macOS 14.0, *)
+
 public struct ZoomViewModifier: ViewModifier {
 
   @GestureState private var magnification: CGFloat = 1
@@ -31,7 +31,7 @@ public struct ZoomViewModifier: ViewModifier {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension ZoomViewModifier {
 
   func zoomGesture() -> some Gesture {
@@ -59,7 +59,7 @@ extension ZoomViewModifier {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension View {
   public func onZoomGesture(
     zoom: Binding<CGFloat>,

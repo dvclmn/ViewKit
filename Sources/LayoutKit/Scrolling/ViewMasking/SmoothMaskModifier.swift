@@ -8,7 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 public struct SmoothMaskModifier: ViewModifier {
 
   let start: UnitPoint
@@ -37,7 +37,7 @@ public struct SmoothMaskModifier: ViewModifier {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension View {
   public func smoothMask(
     from start: UnitPoint,

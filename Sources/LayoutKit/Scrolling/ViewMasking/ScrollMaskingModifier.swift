@@ -8,7 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 public struct ScrollMaskModifier: ViewModifier {
 
   @State private var scrollLocation: ScrollLocation = .start
@@ -63,7 +63,7 @@ public struct ScrollMaskModifier: ViewModifier {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension ScrollMaskModifier {
 
   private var gradientSpan: UnitSpan {
@@ -120,7 +120,7 @@ extension ScrollMaskModifier {
 
 }
 
-@available(macOS 14.0, *)
+
 extension View {
 
   public func scrollMask(

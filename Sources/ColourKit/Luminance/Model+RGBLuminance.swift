@@ -7,7 +7,7 @@
 
 import Foundation
 
-//@available(macOS 14.0, *)
+//
 extension RGBColour {
   public func toXYZ() -> XYZColour {
     // Step 1: Linearise sRGB

@@ -206,7 +206,7 @@ import SwiftUI
 //}
 //
 //#if DEBUG
-//@available(macOS 14.0, *)
+//
 //#Preview {
 //
 //  TabView {

@@ -8,7 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 public struct GridGuideOverlayModifier: ViewModifier {
   @Environment(\.unitSize) private var unitSize
   //  @Environment(\.isShowingGridGuide) private var isShowingGridGuide
@@ -62,7 +62,7 @@ public struct GridGuideOverlayModifier: ViewModifier {
       }  // END overlay
   }
 }
-@available(macOS 14.0, *)
+
 extension GridGuideOverlayModifier {
   private func debugText(
     size: CGSize,
@@ -83,7 +83,7 @@ extension GridGuideOverlayModifier {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension View {
 
   public func gridGuide(

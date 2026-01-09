@@ -8,7 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 public struct ShadersExampleView: View {
 
   public var body: some View {
@@ -65,7 +65,7 @@ public struct ShadersExampleView: View {
   }
 }
 #if DEBUG
-@available(macOS 14.0, *)
+
 #Preview {
   ShadersExampleView()
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 public struct ToolTipExampleView: View {
 
   let exampleAlignment: [Color: Alignment] = [

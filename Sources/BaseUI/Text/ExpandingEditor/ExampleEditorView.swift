@@ -8,7 +8,7 @@
 import CoreTools
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 struct ExpandingEditorExampleView: View {
   @State private var text: String = DummyContent.Strings.loremIpsum
   var body: some View {
@@ -26,7 +26,7 @@ struct ExpandingEditorExampleView: View {
   }
 }
 #if DEBUG
-@available(macOS 14.0, *)
+
 #Preview(traits: .size(.normal)) {
   ExpandingEditorExampleView()
 }
@@ -34,7 +34,7 @@ struct ExpandingEditorExampleView: View {
 
 
 /// This defaults to providing native `TextEditor`, not BYO Editor
-//@available(macOS 14.0, *)
+//
 //public struct ExpandingEditor: View {
 //  @Environment(\.textAlignment) private var textAlignment
 //  @Binding var text: String
@@ -58,7 +58,7 @@ struct ExpandingEditorExampleView: View {
 //  }
 //}
 //#if DEBUG
-//@available(macOS 14.0, *)
+//
 //#Preview(traits: .size(.normal)) {
 //  @Previewable @State var store = AppHandler()
 //  ExampleView()

@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 extension Set where Element == KeyEquivalent {
   public var isHoldingSpace: Bool {
     self.contains(.space)
   }
 }
 
-@available(macOS 14.0, *)
+
 extension KeyEquivalent {
 
   public func name(isAbbreviated: Bool = false) -> String {

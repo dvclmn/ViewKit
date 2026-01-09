@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 struct HoverEffectExampleView: View {
 
   var body: some View {

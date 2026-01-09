@@ -8,7 +8,7 @@
 import CoreTools
 import SwiftUI
 
-//@available(macOS 14.0, *)
+//
 public struct StateView<Content: View>: View {
   @Environment(\.layoutAxis) private var layoutAxis
   @Environment(\.layoutAlignment) private var layoutAlignment
@@ -44,7 +44,7 @@ public struct StateView<Content: View>: View {
   }
 }
 
-//@available(macOS 14.0, *)
+//
 extension StateView {
 
   private var iconSize: CGFloat {

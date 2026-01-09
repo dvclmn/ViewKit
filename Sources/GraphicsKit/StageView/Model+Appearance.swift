@@ -8,7 +8,7 @@
 import Foundation
 import SharedHelpers
 
-@available(macOS 14.0, *)
+
 public struct FloorAppearance: Sendable, Codable, Equatable, Hashable {
   
   public var pattern: PatternConfiguration

@@ -18,13 +18,13 @@ import SwiftUI
 ///
 /// ```
 ///
-@available(macOS 14.0, *)
+
 struct PopupKey: @preconcurrency EnvironmentKey {
   @MainActor
   static let defaultValue: Popup? = Popup()
 }
 
-@available(macOS 14.0, *)
+
 extension EnvironmentValues {
   public var popup: Popup? {
     get { self[PopupKey.self] }

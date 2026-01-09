@@ -10,7 +10,7 @@ import SwiftUI
 
 public typealias SliderOutput = (SliderPhase) -> Void
 
-@available(macOS 14.0, *)
+
 public struct QuickSlider: View, EnvironmentFormattable {
   @Environment(\.sliderControlSize) private var sliderControlSize
   @Environment(\.formatValue) private var formatValue

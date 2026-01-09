@@ -9,7 +9,7 @@ import SwiftUI
 
 @MainActor
 @Observable
-@available(macOS 14.0, *)
+
 public final class Popup: Sendable {
 
   var popupMessage: PopupMessage? = nil
@@ -22,7 +22,7 @@ public final class Popup: Sendable {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension Popup {
 
   public func showPopup(

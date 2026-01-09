@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 public struct EditorStylesModifier: ViewModifier {
   public init() {}
   public func body(content: Content) -> some View {
@@ -35,12 +35,12 @@ public struct LayoutTextModifier: ViewModifier {
 }
 
 /// Expanding Editor. Grows in height to fit preferred size for text content.
-//@available(macOS 14.0, *)
+//
 //public struct Editor {
 //
 //}
 
-//@available(macOS 14.0, *)
+//
 ////extension Editor {
 //  package struct BaseEditorPlainText: View {
 //    @Binding var text: String

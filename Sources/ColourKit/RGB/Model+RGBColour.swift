@@ -8,7 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
-//@available(macOS 14.0, *)
+//
 public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable,
   ColourModel, HSVAdjustable
 {
@@ -46,7 +46,7 @@ public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable,
   }
 
 }
-@available(macOS 14.0, *)
+
 extension RGBColour {
   public init(fromSystem system: SystemColour, env: EnvironmentValues) {
     self.init(
@@ -57,7 +57,7 @@ extension RGBColour {
   }
 }
 
-//@available(macOS 14.0, *)
+//
 extension RGBColour {
 
   public var toHSV: HSVColour { HSVColour(fromRGB: self) }
@@ -77,7 +77,7 @@ extension RGBColour {
   }
 }
 
-//@available(macOS 14.0, *)
+//
 extension RGBColour: CustomStringConvertible {
   public var description: String {
     let result = """

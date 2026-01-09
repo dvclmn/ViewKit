@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-//@available(macOS 14.0, *)
+//
 public enum RGBComponent: String, ColourComponent {
 
   public typealias Model = RGBColour

@@ -8,7 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 public struct LabeledSlider<Content: View>: View, EnvironmentFormattable {
 
   @Binding var value: Double

@@ -10,7 +10,7 @@ import SwiftUI
 //import Grainient
 //import SharedHelpers
 
-@available(macOS 14.0, *)
+
 extension PreviewTrait where T == Preview.ViewTraits {
   public static func size(_ width: PreviewWidth, _ height: PreviewHeight = .normal) -> Self {
     .fixedLayout(width: width.value, height: height.value)

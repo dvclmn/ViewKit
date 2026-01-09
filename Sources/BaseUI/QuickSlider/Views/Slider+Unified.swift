@@ -9,7 +9,7 @@ import SwiftUI
 import SharedHelpers
 //import GestureKit
 
-@available(macOS 14.0, *)
+
 public struct SliderUnified: View {
   @Environment(\.sliderControlSize) private var controlSize
   @Environment(\.sliderComponents) private var sliderComponents
@@ -61,7 +61,7 @@ public struct SliderUnified: View {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension SliderUnified {
 
   @ViewBuilder

@@ -10,7 +10,7 @@ import LayoutKit
 import SwiftUI
 import GridKit
 
-@available(macOS 14.0, *)
+
 public struct BoxView: View {
   @Environment(\.glyphSet) private var glyphSet
   @Environment(\.frameStyle) private var frameStyle
@@ -58,7 +58,7 @@ public struct BoxView: View {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension BoxView {
 
   private var theme: Box.Theme {
@@ -75,7 +75,7 @@ extension EnvironmentValues {
 }
 
 #if DEBUG
-@available(macOS 14.0, *)
+
 #Preview {
 //#Preview(traits: .size(.normal)) {
 

@@ -8,7 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 public struct CharacterSizeModifier: ViewModifier {
   @Environment(\.unitSize) private var unitSize
 

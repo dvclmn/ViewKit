@@ -9,7 +9,7 @@ import ColourKit
 import CoreGraphics
 import Foundation
 
-@available(macOS 14.0, *)
+
 public struct PatternConfiguration: Codable, Equatable, Hashable, Sendable {
 
   /// This is a generic reference to the 'main' quality of the pattern,
@@ -41,7 +41,7 @@ public struct PatternConfiguration: Codable, Equatable, Hashable, Sendable {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension PatternConfiguration {
 
   public static let `default`: PatternConfiguration = .init()

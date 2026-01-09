@@ -9,7 +9,7 @@ import LayoutKit
 import SwiftUI
 import SharedHelpers
 
-@available(macOS 14.0, *)
+
 extension Flexi {
   struct ListView: View {
     @Environment(FlexiHandler<Item>.self) private var store
@@ -45,7 +45,7 @@ extension Flexi {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension Flexi.ListView {
   @ViewBuilder
   private func GroupedContent() -> some View {

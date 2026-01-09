@@ -9,7 +9,7 @@ import SharedHelpers
 import SwiftUI
 import LayoutKit
 
-@available(macOS 14.0, *)
+
 extension Flexi {
   public struct GridItem: View {
     @Environment(FlexiHandler<Item>.self) private var store

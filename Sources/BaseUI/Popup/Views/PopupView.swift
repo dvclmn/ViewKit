@@ -11,7 +11,7 @@ import SwiftUI
 import SharedHelpers
 
 @MainActor
-@available(macOS 14.0, *)
+
 public struct PopupView: View {
 
   @Environment(\.popup) private var popup
@@ -105,7 +105,7 @@ public struct PopupView: View {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension PopupView {
   
   var isShowingIndicator: Bool {

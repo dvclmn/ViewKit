@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-//@available(macOS 14.0, *)
+//
 //extension Shape {
 //  public func fillCompatible<S>(_ content: S) -> some View where S: ShapeStyle {
 //    if #available(iOS 17.0, macOS 14.0, *) {

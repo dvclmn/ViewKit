@@ -10,12 +10,12 @@
 import SwiftUI
 import SharedHelpers
 
-@available(macOS 14.0, *)
+
 extension Flexi {
 
   @MainActor
   @Observable
-  @available(macOS 14.0, *)
+  
   final class GridHandler {
 
     var itemFrames: [Item.ID: CGRect] = [:]
@@ -56,7 +56,7 @@ extension Flexi {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension Flexi.GridHandler {
   
   var columnCount: Int? {

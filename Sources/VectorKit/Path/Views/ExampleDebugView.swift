@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 struct PathDebugExampleView: View {
 
   var body: some View {
@@ -54,7 +54,7 @@ struct PathDebugExampleView: View {
 }
 
 #if DEBUG
-@available(macOS 14.0, *)
+
 #Preview {
   PathDebugExampleView()
 }

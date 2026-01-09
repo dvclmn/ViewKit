@@ -9,7 +9,7 @@
 import SwiftUI
 import SharedHelpers
 
-@available(macOS 14.0, *)
+
 extension LabelStyle where Self == ShortcutLabel {
   public static var shortcut: Self { Self(shortcut: nil, displayStyle: .alt) }
 
@@ -24,7 +24,7 @@ extension LabelStyle where Self == ShortcutLabel {
   }
 }
 
-@available(macOS 14.0, *)
+
 public struct ShortcutLabel: LabelStyle {
   @Environment(\.keyDisplayStyle) private var keyDisplayStyle
   @Environment(\.modifierDisplayStyle) private var modifierDisplayStyle
@@ -69,7 +69,7 @@ public struct ShortcutLabel: LabelStyle {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension ShortcutLabel {
   private var style: ShortcutLabelStyle {
     return displayStyle ?? shortcutLabelStyle

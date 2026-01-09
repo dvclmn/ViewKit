@@ -10,21 +10,21 @@ import SwiftUI
 public protocol EnvironmentResolvableColour {
   var toColour: Color { get }
   
-  @available(macOS 14.0, *)
+  
   init(
     colour: Color,
     environment: EnvironmentValues,
     name: String?
   )
   
-  @available(macOS 14.0, *)
+  
   init(
     resolved: Color.Resolved,
     name: String?
   )
 }
 
-//@available(macOS 14.0, *)
+//
 public protocol ColourModel: Codable {
   var colourSpace: Color.RGBColorSpace { get }
   var name: String? { get }
@@ -37,7 +37,7 @@ public protocol ColourModel: Codable {
 
 
 // MARK: - Extension methods
-//@available(macOS 14.0, *)
+//
 extension ColourModel {
   public mutating func opacity(_ opacity: Double) { alpha = opacity }
   public var colourSpace: Color.RGBColorSpace { .sRGB }

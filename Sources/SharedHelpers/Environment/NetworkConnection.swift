@@ -14,7 +14,7 @@ extension EnvironmentValues {
 
 @MainActor
 @Observable
-@available(macOS 14.0, *)
+
 public final class NetworkMonitor {
   private let networkMonitor = NWPathMonitor()
   private let workerQueue = DispatchQueue(label: "Monitor")
@@ -31,7 +31,7 @@ public final class NetworkMonitor {
   }
 }
 
-@available(macOS 14.0, *)
+
 public struct NetworkConnectionModifier: ViewModifier {
 
   @State private var monitor: NetworkMonitor = .init()
@@ -42,7 +42,7 @@ public struct NetworkConnectionModifier: ViewModifier {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension View {
   public func monitorNetworkConnection() -> some View {
     self.modifier(NetworkConnectionModifier())

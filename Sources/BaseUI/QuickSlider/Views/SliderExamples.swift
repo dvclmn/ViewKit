@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 public struct SliderExamples: View {
 
   @State private var zoomValue: CGFloat = 2.0

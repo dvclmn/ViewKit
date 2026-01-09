@@ -9,7 +9,7 @@ import CoreTools
 import SwiftUI
 import LayoutKit
 
-@available(macOS 14.0, *)
+
 extension Flexi {
 
   public enum GridFocus: Hashable {
@@ -102,7 +102,7 @@ extension Flexi {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension Flexi.GridView {
 
   private var debugText: AttributedString {

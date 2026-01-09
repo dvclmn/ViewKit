@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// I make no claim over the logic behind this solution.
 
-@available(macOS 14.0, *)
+
 extension View {
 
   public func bindModel<HandlerValue: _Bindable, ViewValue: _Bindable>(
@@ -25,7 +25,7 @@ extension View {
   }
 }
 
-@available(macOS 14.0, *)
+
 private struct Bind<HandlerValue: _Bindable, ViewValue: _Bindable>: ViewModifier
 where HandlerValue.Value == ViewValue.Value, HandlerValue.Value: Equatable {
   let handlerValue: HandlerValue

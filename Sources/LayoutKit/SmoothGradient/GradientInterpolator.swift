@@ -17,7 +17,7 @@ import UIKit
 import AppKit
 #endif
 
-@available(macOS 14.0, *)
+
 struct GradientInterpolator {
   #if canImport(UIKit)
   /// Alias of UIColor.
@@ -67,7 +67,7 @@ struct GradientInterpolator {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension GradientInterpolator {
   private static func makeDynamicColor(_ block: @escaping () -> PlatformColor) -> PlatformColor {
     #if canImport(UIKit)

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 struct PlatformFontsView: View {
   var body: some View {
 
@@ -29,7 +29,7 @@ struct PlatformFontsView: View {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension PlatformFontsView {
 
   private var exampleText: String {
@@ -59,7 +59,7 @@ extension PlatformFontsView {
   }
 }
 
-@available(macOS 14.0, *)
+
 #Preview {
   PlatformFontsView()
     .padding(4)

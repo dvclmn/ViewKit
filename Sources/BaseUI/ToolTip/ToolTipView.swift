@@ -8,7 +8,7 @@
 import SharedHelpers
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 struct ToolTipView: View {
 
   @Environment(\.itemColour) private var itemColour

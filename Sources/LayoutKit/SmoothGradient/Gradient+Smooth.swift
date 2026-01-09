@@ -64,7 +64,7 @@ extension Gradient {
 
 // MARK: - Factory
 
-@available(macOS 14.0, *)
+
 extension Gradient {
   private static func makeSmoothStepGradient(
     from: Stop,

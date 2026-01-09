@@ -11,7 +11,7 @@ import SwiftUI
 // TODO: Consider using GestureKit for gestures
 
 #if canImport(AppKit)
-@available(macOS 14.0, *)
+
 extension ActionLinesView {
   func dragGesture(
     in size: CGSize,

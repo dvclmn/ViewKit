@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 11/10/2025.
 //
 
-//@available(macOS 14.0, *)
+//
 nonisolated public protocol HSVAdjustable: ColourModel, LuminanceReadable {
 
   var toHSV: HSVColour { get }
@@ -20,7 +20,7 @@ nonisolated public protocol HSVAdjustable: ColourModel, LuminanceReadable {
   func contrastColour(modification: ColourModification?) -> Self
 }
 
-//@available(macOS 14.0, *)
+//
 extension HSVAdjustable {
   
   public func contrastColour(

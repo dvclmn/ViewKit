@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 struct RoughnessExampleView: View {
 
   @State private var roughness: Double = 2

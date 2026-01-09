@@ -8,7 +8,7 @@
 import CoreTools
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 public struct BoxViewExample: View {
   @Environment(\.glyphSet) private var glyphSet
   @Environment(\.frameStyle) private var frameStyle
@@ -37,7 +37,7 @@ public struct BoxViewExample: View {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension BoxViewExample {
   private var paragraphIndex: Int {
     guard let paragraphNumber else {
@@ -57,7 +57,7 @@ extension BoxViewExample {
 //}
 //#endif
 
-@available(macOS 14.0, *)
+
 public struct BoxExampleGroup: View {
 
   let glyphSet: Box.GlyphSet

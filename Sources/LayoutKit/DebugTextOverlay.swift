@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreTools
 
-@available(macOS 14.0, *)
+
 public struct DebugTextOverlayModifier: ViewModifier {
   @Environment(\.isEnabled) private var isEnabled
   
@@ -48,7 +48,7 @@ public struct DebugTextStyleModifier: ViewModifier {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension View {
 
   //  public func debugTextOverlay(

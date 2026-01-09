@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// Note: This is an alias for `[Text.LayoutKey.AnchoredLayout]`
-@available(macOS 14.0, *)
+
 extension Text.LayoutKey.Value {
   public var lineCount: Int {
     return self.reduce(0) { partialResult, anchoredLayout -> Int in

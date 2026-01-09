@@ -9,7 +9,7 @@ import SharedHelpers
 import SwiftUI
 
 // MARK: - View Extension
-@available(macOS 14.0, *)
+
 extension View {
   /// Previously had default value for `debounceMode`, but this felt
   /// too risky for domains that may be tripped up by immediate vs debounced

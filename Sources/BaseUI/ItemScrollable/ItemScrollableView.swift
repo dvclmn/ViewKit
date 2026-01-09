@@ -9,7 +9,7 @@ import LayoutKit
 import SharedHelpers
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 public struct ItemScrollable<Content: View, Item: Pickable & Shortcuttable>: View {
   //  @Environment(\.strokeConfig) private var strokeConfig
   //  @Environment(\.labelConfig) private var labelForeground

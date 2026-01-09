@@ -10,13 +10,13 @@
 import SwiftUI
 import ColourKit
 
-@available(macOS 14.0, *)
+
 public struct PatternPreset: Sendable {
   let style: PatternStyle
   let config: PatternConfiguration
 }
 
-@available(macOS 14.0, *)
+
 extension PatternPreset {
   public static let opacityCheckerboard = PatternPreset(
     style: .checkerboard,
@@ -31,7 +31,7 @@ extension PatternPreset {
 
 }
 
-@available(macOS 14.0, *)
+
 public struct PatternCanvas: View {
 
   let style: PatternStyle
@@ -84,7 +84,7 @@ public struct PatternCanvas: View {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension PatternCanvas {
 
   public func patternColours(

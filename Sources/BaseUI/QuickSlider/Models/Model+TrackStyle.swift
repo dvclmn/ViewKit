@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 public enum SliderType {
   case native
   case custom(TrackFillStyle)
 }
 
-@available(macOS 14.0, *)
+
 public struct TrackFillStyle {
   let fill: AnyShapeStyle
   /// This could drive more complex fills,
@@ -33,7 +33,7 @@ public struct TrackFillStyle {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension TrackFillStyle {
   
   public static var clearBG: TrackFillStyle {

@@ -12,7 +12,7 @@ import SwiftUI
 
 @MainActor
 @Observable
-@available(macOS 14.0, *)
+
 final public class UndoHandler<Value> {
 
   var binding: Binding<Value>?

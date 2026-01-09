@@ -16,7 +16,7 @@ public protocol ColourHandlerProtocol {
   var background: Color { get }
 }
 
-//@available(macOS 14.0, *)
+//
 public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable {
   public typealias Item = Self
   

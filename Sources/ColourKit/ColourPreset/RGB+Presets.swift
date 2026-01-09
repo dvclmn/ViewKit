@@ -15,7 +15,7 @@ import Foundation
 //  }
 //}
 
-//@available(macOS 14.0, *)
+//
 extension RGBColour {
   public enum Xcode {
     // MARK: - Main Editor Colors

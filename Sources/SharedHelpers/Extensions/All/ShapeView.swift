@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-@available(macOS 14.0, *)
+
 extension ShapeView {
   public func quickStroke<S>(_ colour: S, _ linewidth: CGFloat) -> StrokeShapeView<Self.Content, S, Self>
   where S: ShapeStyle {

@@ -10,7 +10,7 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 struct UndoProvider<WrappedView, Value>: View where WrappedView: View {
   @Environment(\.undoManager) var undoManager
 
@@ -41,7 +41,7 @@ struct UndoProvider<WrappedView, Value>: View where WrappedView: View {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension UndoProvider {
   var interceptedBinding: Binding<Value> {
     Binding {

@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreTools
 
-@available(macOS 14.0, *)
+
 struct TextGroupExample: View {
   
   var body: some View {
@@ -51,7 +51,7 @@ struct TextGroupExample: View {
   }
 }
 #if DEBUG
-@available(macOS 14.0, *)
+
 #Preview {
   TextGroupExample()
 }

@@ -11,7 +11,7 @@ import SwiftUI
 /// Aims to produce a full setup with Grid Font,
 /// Character measure for unit size, injecting
 /// into environment, etc.
-@available(macOS 14.0, *)
+
 public struct GridSetupModifier: ViewModifier {
   let fontStyle: GridFont
   let fontSize: CGFloat
@@ -31,7 +31,7 @@ public struct GridSetupModifier: ViewModifier {
 
   }
 }
-@available(macOS 14.0, *)
+
 extension View {
   public func gridSetup(
     _ fontStyle: GridFont,

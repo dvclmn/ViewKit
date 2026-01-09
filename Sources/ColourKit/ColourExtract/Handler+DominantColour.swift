@@ -13,7 +13,7 @@ import simd
 
 @Observable
 @MainActor
-@available(macOS 14.0, *)
+
 public final class DominantColourHandler {
   public var dominantColors: [Color] = []
 
@@ -34,7 +34,7 @@ public final class DominantColourHandler {
 
 }
 
-@available(macOS 14.0, *)
+
 extension DominantColourHandler {
 
   // Initial setup call
@@ -115,7 +115,7 @@ extension DominantColourHandler {
 
 //@MainActor
 //@Observable
-//@available(macOS 14.0, *)
+//
 //public final class DominantColourHandler {
 //
 //  public var isBusy: Bool = false
@@ -205,7 +205,7 @@ extension DominantColourHandler {
 //
 //}
 
-@available(macOS 14.0, *)
+
 extension DominantColourHandler {
 
   //  func allocateDistancesBuffer() {

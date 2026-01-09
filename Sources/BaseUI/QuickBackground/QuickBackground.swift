@@ -10,7 +10,7 @@ import SwiftUI
 
 //public struct StrokeColourAndWidth
 
-//@available(macOS 14.0, *)
+//
 struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   @Environment(\.emphasisColour) private var emphasisColour
   @Environment(\.explicitAspectRatio) private var explicitAspectRatio
@@ -61,7 +61,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   }
 }
 
-//@available(macOS 14.0, *)
+//
 extension QuickBackgroundModifier {
 
   private var backgroundTint: Color { tint ?? Color.clear }

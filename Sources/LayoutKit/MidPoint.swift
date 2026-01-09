@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
+
 public struct MidpointModifier: ViewModifier {
 
   @State private var viewSize: CGSize = .zero
@@ -26,7 +26,7 @@ public struct MidpointModifier: ViewModifier {
   }
 }
 
-@available(macOS 14.0, *)
+
 extension View {
   public func midpointIndicator(
     colour: Color = .cyan
