@@ -11,7 +11,8 @@ import SwiftUI
 public struct PanGestureModifier: ViewModifier {
 
   let isEnabled: Bool
-  let action: (PanPhase) -> Void
+#warning("Temporarily switched off")
+//  let action: () -> Void
 
   public func body(content: Content) -> some View {
     /// Keeping this as a GeometryReader as layout
@@ -21,7 +22,7 @@ public struct PanGestureModifier: ViewModifier {
       content
       if isEnabled {
         PanGestureView { phase in
-          action(phase)
+//          action(phase)
         }
       }
     }
@@ -35,7 +36,7 @@ extension View {
     self.modifier(
       PanGestureModifier(
         isEnabled: isEnabled,
-        action: action
+//        action: action
       )
     )
   }

@@ -41,7 +41,7 @@ public struct BouncyDragModifier: ViewModifier {
       
 #if canImport(AppKit)
         .onPanGesture(isEnabled: store.isInputMethodEnabled(.twoFingerPan)) { phase in
-          handlePanGesture(phase)
+//          handlePanGesture(phase)
         }
 #endif
         .simultaneousGesture(gesture, isEnabled: store.isInputMethodEnabled(.clickAndDrag))
@@ -64,23 +64,24 @@ public struct BouncyDragModifier: ViewModifier {
 //
 extension BouncyDragModifier {
 
-  private func handlePanGesture(_ phase: PanPhase) {
-    switch phase {
-      case .active(let delta):
-        store.inputMethod = .twoFingerPan
-        let deltaOffset = store.dragOffset + delta
-        let offset = deltaOffset.applyTension(
-          area: .widthAndHeight(store.containerSize),
-          tension: store.tension
-        )
-        store.dragOffset = offset
-
-      case .ended(_), .cancelled:
-        store.reset()
-
-      case .inactive: break
-    }
-  }
+#warning("Temporarily switched off")
+//  private func handlePanGesture(_ phase: PanPhase) {
+//    switch phase {
+//      case .active(let delta):
+//        store.inputMethod = .twoFingerPan
+//        let deltaOffset = store.dragOffset + delta
+//        let offset = deltaOffset.applyTension(
+//          area: .widthAndHeight(store.containerSize),
+//          tension: store.tension
+//        )
+//        store.dragOffset = offset
+//
+//      case .ended(_), .cancelled:
+//        store.reset()
+//
+//      case .inactive: break
+//    }
+//  }
 
   var gesture: some Gesture {
     DragGesture(minimumDistance: 1)

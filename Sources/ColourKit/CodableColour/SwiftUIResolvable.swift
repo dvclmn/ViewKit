@@ -21,8 +21,7 @@ extension RGBColour: EnvironmentResolvableColour {
   }
 }
 
-
-extension RGBColour: EnvironmentResolvableColour {
+extension RGBColour {
   public init(
     colour: Color,
     environment: EnvironmentValues,
@@ -61,8 +60,7 @@ extension HSVColour: EnvironmentResolvableColour {
   }
 }
 
-
-extension HSVColour: EnvironmentResolvableColour {
+extension HSVColour {
 
   public init(
     colour: Color,

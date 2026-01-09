@@ -8,12 +8,13 @@
 #if canImport(AppKit)
 import SwiftUI
 
-public typealias PanGestureOutput = (PanPhase) -> Void
+public typealias PanGestureOutput = (PanState) -> Void
+//public typealias PanGestureOutput = (PanPhase) -> Void
 
 // MARK: - SwiftUI Representable
 public struct PanGestureView: NSViewRepresentable {
-  @Binding var handler: PanGestureHandler
-//  let onPanGesture: PanGestureOutput
+//  @Binding var handler: PanGestureHandler
+  let onPanGesture: PanGestureOutput
 
 //  public init(onPanGesture: @escaping PanGestureOutput) {
 //    
@@ -21,7 +22,8 @@ public struct PanGestureView: NSViewRepresentable {
 //  }
 
   public func makeNSView(context: Context) -> PanTrackingNSView {
-    let view = PanTrackingNSView { panOutput in
+    let view = PanTrackingNSView()
+    view.didUpdatePan = { panOutput in
       onPanGesture(panOutput)
     }
 
