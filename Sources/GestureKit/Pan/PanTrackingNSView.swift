@@ -36,24 +36,9 @@ public class PanTrackingNSView: NSView {
 //    print("Current delta: \(delta)")
 //    print("NSEvent Phase: \(event.phase)")
 //    print("NSEvent Momentum Phase: \(event.momentumPhase)\n\n")
-    
-    /// Map `NSEvent.Phase` to `PanPhase`
-//    let panPhase: PanPhase
-//    switch event.phase {
-//      case .began:
-//        panPhase = .active(delta: delta)
-////        panPhase = .active(delta: delta)
-//      case .changed:
-//        panPhase = .active(delta: delta)
-//      case .ended:
-//        panPhase = .ended(finalDelta: delta)
-//      case .cancelled:
-//        panPhase = .cancelled
-//      default:
-//        /// For stationary or other phases, may not want to trigger
-//        return
-//    }
-    let state = PanState(offset: delta, phase: .inactive)
+
+    let phase = GesturePhase(from: event.momentumPhase)
+    let state = PanState(offset: delta, phase: phase)
 
     didUpdatePan(state)
   }
