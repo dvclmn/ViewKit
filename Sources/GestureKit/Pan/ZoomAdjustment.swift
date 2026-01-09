@@ -37,17 +37,17 @@ extension ZoomAdjustment {
       case .zoom(let level):
         return ZoomState(zoom: level, phase: .changed)
 
-      case .fit(let geometry):
+      case .fit:
         let values = Self.scaleValues(
-          artwork: geometry.canvasSize,
-          viewport: geometry.viewportSize
+          artwork: artwork,
+          viewport: viewport
         )
         return ZoomState(zoom: min(values.0, values.1), phase: .ended)
 
-      case .fill(let geometry):
+      case .fill:
         let values = Self.scaleValues(
-          artwork: geometry.canvasSize,
-          viewport: geometry.viewportSize
+          artwork: artwork,
+          viewport: viewport
         )
         return ZoomState(zoom: max(values.0, values.1), phase: .ended)
 
