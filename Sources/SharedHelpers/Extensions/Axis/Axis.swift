@@ -16,8 +16,8 @@ extension Axis {
   }
   public var toEdgeSet: Edge.Set {
     switch self {
-      case .horizontal: return .horizontal
-      case .vertical: return .vertical
+      case .horizontal: .horizontal
+      case .vertical: .vertical
     }
   }
 
@@ -43,12 +43,6 @@ extension Axis {
 
   }
 
-  public var toAxis2D: Axis2D {
-    switch self {
-      case .horizontal: .horizontal
-      case .vertical: .vertical
-    }
-  }
 }
 
 extension Axis {
@@ -60,4 +54,9 @@ extension Axis {
     case maxHeight
   }
 
+}
+
+public enum AlignmentForAxis {
+  case horizontal(HorizontalAlignment)
+  case vertical(VerticalAlignment)
 }

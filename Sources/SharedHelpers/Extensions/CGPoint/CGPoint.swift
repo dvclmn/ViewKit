@@ -9,42 +9,23 @@ import SwiftUI
 
 extension CGPoint {
 
-  // MARK: - UnitPoint
-  public func debugColour(unitPoint: UnitPoint, in size: CGSize) -> Color {
-    guard self.isNear(unitPoint: unitPoint, in: size) else {
-      return Color.clear
-    }
-    return unitPoint.debugColour
+  public init(fromSize size: CGSize) {
+    self.init(x: size.width, y: size.height)
   }
 
-  public func isNear(
-    unitPoint: UnitPoint,
-    in size: CGSize,
-    threshold: CGFloat = 10
-  ) -> Bool {
-    let targetPoint = unitPoint.toCGPoint(in: size)
-    return self.distance(to: targetPoint) <= threshold
+  public init(fromLength length: CGFloat) {
+    self.init(x: length, y: length)
   }
 
-  public var isGreaterThanOrEqualToZero: Bool {
-    return x >= 0 && y >= 0
+  public init(_ x: CGFloat, _ y: CGFloat) {
+    self.init(x: x, y: y)
   }
-
-  public var isGreaterThanZero: Bool {
-    return x > 0 && y > 0
+  public var toCGSize: CGSize {
+    return CGSize(width: self.x, height: self.y)
   }
+}
 
-  //  public func toUnitPoint(in size: CGSize) -> UnitPoint {
-  //    guard size.isPositive else {
-  //      return .center
-  //    }
-  //
-  //    return UnitPoint(x: x / size.width, y: y / size.height)
-  //  }
-  //
-
-
-
+extension CGPoint {
   /// Returns a new CGPoint aligned relative to a container of the given size,
   /// using a unit point as the anchor.
   ///
@@ -108,104 +89,22 @@ extension CGPoint {
       .bottomLeading, .bottom, .bottomTrailing,
     ]
 
-    func distanceSquared(from a: UnitPoint, to b: UnitPoint) -> CGFloat {
-      let dx = a.x - b.x
-      let dy = a.y - b.y
-      return dx * dx + dy * dy
-    }
-
     return anchors.min(by: {
       distanceSquared(from: relative, to: $0) < distanceSquared(from: relative, to: $1)
     }) ?? .center
   }
 
-  public init(fromSize size: CGSize) {
-    self.init(x: size.width, y: size.height)
+  func distanceSquared(from a: UnitPoint, to b: UnitPoint) -> CGFloat {
+    let dx = a.x - b.x
+    let dy = a.y - b.y
+    return dx * dx + dy * dy
   }
-  public init(fromLength length: CGFloat) {
-    self.init(x: length, y: length)
-  }
+}
 
-  public func isWithin(size: CGSize) -> Bool {
-    return self.x >= 0
-      || self.x < size.width
-      || self.y >= 0
-      || self.y < size.height
-  }
-
-  /// Assumes top-left anchor for origin
-  public func isWithin(_ rect: CGRect) -> Bool {
-    let isXWithin: Bool = self.x >= rect.leadingEdge && self.x <= rect.trailingEdge
-    let isYWithin: Bool = self.y >= rect.topEdge && self.y <= rect.bottomEdge
-
-    return isXWithin && isYWithin
-  }
+extension CGPoint {
 
   public static let quickPreset01 = CGPoint(x: 100, y: 50)
   public static let quickPreset02 = CGPoint(x: 80, y: 120)
-
-  // MARK: - Stretch out an Axis
-  public struct StretchOptions: OptionSet, Sendable {
-    public let rawValue: Int
-    static let normalised = StretchOptions(rawValue: 1 << 0)
-    public static let clamped = StretchOptions(rawValue: 1 << 0)
-
-    public init(rawValue: Int) {
-      self.rawValue = rawValue
-    }
-  }
-
-  public func centredIn(size: CGSize) -> CGPoint {
-    let centred: CGSize = size / 2
-    return self - centred
-  }
-
-  /// Map cursorX to a stretched range
-  ///
-  /// The utility of this may not be obvious at first glance, so here's a simple example.
-  /// For my `.hover3DEffect()` modifier, I wanted the range of movement
-  /// (along the x axis) for the 'glint' effect, to be *wider* than the pointer's actual
-  /// range, across the surface of the view. This maps an axis of a CGPoint to be wider
-  /// (or narrower) than the original.
-  public func stretchedPosition(
-    _ axis: Axis,
-    in size: CGSize,
-    stretchFactor: CGFloat,
-    options: StretchOptions = []
-  ) -> CGFloat {
-
-    let rawLocation: CGFloat =
-      switch axis {
-        case .horizontal: self.x
-        case .vertical: self.y
-      }
-
-    let viewLength: CGFloat =
-      switch axis {
-        case .horizontal: size.width
-        case .vertical: size.height
-      }
-
-    let normalisedValue =
-      options.contains(.normalised) ? rawLocation / viewLength : rawLocation
-
-    let centered: CGFloat
-    let result: CGFloat
-
-    if options.contains(.normalised) {
-      centered = normalisedValue - 0.5
-      result = centered * stretchFactor + 0.5
-    } else {
-      centered = rawLocation - (viewLength / 2)
-      result = centered * stretchFactor + (viewLength / 2)
-    }
-
-    if options.contains(.clamped) {
-      return result.clamped(to: 0...1)
-    }
-
-    return result
-  }
 
   public var normalised: CGPoint {
     guard length > 0 else { return .zero }
@@ -215,10 +114,13 @@ extension CGPoint {
     )
   }
 
-  public var length: CGFloat {
-    /// Previously: `sqrt(x * x + y * y)`
-    hypot(x, y)
+  public func centredIn(size: CGSize) -> CGPoint {
+    let centred: CGSize = size / 2
+    return self - centred
   }
+
+  /// Previously: `sqrt(x * x + y * y)`
+  public var length: CGFloat { hypot(x, y) }
 
   /// Below is equivalent to a previous version, which used
   /// `sqrt(pow(x - point.x, 2) + pow(y - point.y, 2))`
@@ -245,106 +147,6 @@ extension CGPoint {
     Angle(radians: angleInRadians(from: p1, to: p2))
   }
 
-  /// Hint: use extension `toCGRect` on `CGSize` for convenient
-  /// conversion, if origin is `zero`.
-  public func mapped(to destination: CGRect) -> CGPoint {
-    let result = CGPoint(
-      x: destination.origin.x + (self.x * destination.width),
-      y: destination.origin.y + (self.y * destination.height)
-    )
-    return result
-  }
-
-  public func remapped(from oldRect: CGRect, to newRect: CGRect) -> CGPoint {
-    let normalisedX = (self.x - oldRect.minX) / oldRect.width
-    let normalisedY = (self.y - oldRect.minY) / oldRect.height
-
-    let newX = newRect.minX + (normalisedX * newRect.width)
-    let newY = newRect.minY + (normalisedY * newRect.height)
-
-    return CGPoint(x: newX, y: newY)
-  }
-
-  public func mapPoint(
-    from source: CGRect,
-    to destination: CGRect,
-    mode: ResizeMode = .fit
-  ) -> CGPoint {
-    switch mode {
-      case .stretch:
-        return stretchMap(from: source, to: destination)
-      case .fit:
-        return aspectFitMap(from: source, to: destination)
-      case .fill:
-        return aspectFillMap(from: source, to: destination)
-    }
-  }
-
-  private func stretchMap(from source: CGRect, to destination: CGRect) -> CGPoint {
-    let scaleX = destination.width / source.width
-    let scaleY = destination.height / source.height
-
-    let translatedX = (self.x - source.minX) * scaleX + destination.minX
-    let translatedY = (self.y - source.minY) * scaleY + destination.minY
-
-    return CGPoint(x: translatedX, y: translatedY)
-  }
-
-  private func aspectFitMap(from source: CGRect, to destination: CGRect) -> CGPoint {
-    let fittedRect = aspectMappedRect(from: source, to: destination, fill: false)
-    return stretchMap(from: source, to: fittedRect)
-  }
-
-  private func aspectFillMap(from source: CGRect, to destination: CGRect) -> CGPoint {
-    let filledRect = aspectMappedRect(from: source, to: destination, fill: true)
-    return stretchMap(from: source, to: filledRect)
-  }
-
-  private func aspectMappedRect(
-    from source: CGRect,
-    to destination: CGRect,
-    fill: Bool
-  ) -> CGRect {
-    let sourceAspect = source.width / source.height
-    let destAspect = destination.width / destination.height
-
-    var scale: CGFloat
-    var size: CGSize
-    var origin: CGPoint
-
-    if (fill && sourceAspect < destAspect) || (!fill && sourceAspect > destAspect) {
-      // Width-constrained
-      scale = destination.width / source.width
-      size = CGSize(width: destination.width, height: source.height * scale)
-      origin = CGPoint(
-        x: destination.minX,
-        y: destination.minY + (destination.height - size.height) / 2
-      )
-    } else {
-      // Height-constrained
-      scale = destination.height / source.height
-      size = CGSize(width: source.width * scale, height: destination.height)
-      origin = CGPoint(
-        x: destination.minX + (destination.width - size.width) / 2,
-        y: destination.minY
-      )
-    }
-
-    return CGRect(origin: origin, size: size)
-  }
-
-  public var toCGSize: CGSize {
-    return CGSize(width: self.x, height: self.y)
-  }
-
-  //  @available(*, deprecated, message: "Not sure this makes sense, consider revising.")
-  //  public func clamp(toMax maxValue: CGFloat) -> CGPoint {
-  //    return CGPoint(
-  //      x: max(-maxValue, min(maxValue, self.x)),
-  //      y: max(-maxValue, min(maxValue, self.y))
-  //    )
-  //  }
-
   public func delta(
     from lastPosition: CGPoint,
     sensitivity: CGFloat = 1.0
@@ -355,22 +157,6 @@ extension CGPoint {
     )
 
     return result
-  }
-
-  public var isZero: Bool {
-    x.isZero && y.isZero
-  }
-
-  public var isFinite: Bool {
-    x.isFinite && y.isFinite
-  }
-
-  public var hasValidValue: Bool {
-    return !isNan && isFinite
-  }
-
-  public var isNan: Bool {
-    x.isNaN || y.isNaN
   }
 
   public static func midPoint(
@@ -461,134 +247,3 @@ extension CGPoint {
   }
 
 }
-
-// MARK: - Subtraction
-
-public func - (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
-  return CGPoint(
-    x: lhs.x - rhs.x,
-    y: lhs.y - rhs.y
-  )
-}
-
-public func - (lhs: CGPoint, rhs: CGSize) -> CGPoint {
-  return CGPoint(
-    x: lhs.x - rhs.width,
-    y: lhs.y - rhs.height
-  )
-}
-
-public func - (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
-  return CGPoint(
-    x: lhs.x - rhs,
-    y: lhs.y - rhs
-  )
-}
-
-// MARK: - Addition
-
-public func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
-  return CGPoint(
-    x: lhs.x + rhs.x,
-    y: lhs.y + rhs.y
-  )
-}
-
-public func + (lhs: CGPoint, rhs: CGSize) -> CGPoint {
-  return CGPoint(
-    x: lhs.x + rhs.width,
-    y: lhs.y + rhs.height
-  )
-}
-
-public func + (lhs: CGSize, rhs: CGPoint) -> CGPoint {
-  return CGPoint(
-    x: lhs.width + rhs.x,
-    y: lhs.height + rhs.y
-  )
-}
-
-public func + (lhs: CGSize, rhs: CGPoint) -> CGSize {
-  return CGSize(
-    width: lhs.width + rhs.x,
-    height: lhs.height + rhs.y
-  )
-}
-
-public func + (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
-  return CGPoint(
-    x: lhs.x + rhs,
-    y: lhs.y + rhs
-  )
-}
-
-// MARK: - Addition in place
-public func += (lhs: inout CGPoint, rhs: CGPoint) {
-  lhs = lhs + rhs
-}
-
-public func += (lhs: inout CGPoint, rhs: CGSize) {
-  lhs = lhs + rhs
-}
-
-// MARK: - Minus Equals
-
-public func -= (lhs: inout CGPoint, rhs: CGPoint) {
-  lhs = lhs - rhs
-}
-
-public func -= (lhs: inout CGPoint, rhs: CGSize) {
-  lhs = lhs - rhs
-}
-
-// MARK: - Multiplication
-
-public func * (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
-  return CGPoint(
-    x: lhs.x * rhs.x,
-    y: lhs.y * rhs.y
-  )
-}
-
-public func * (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
-  return CGPoint(
-    x: lhs.x * rhs,
-    y: lhs.y * rhs
-  )
-}
-public func * (lhs: CGPoint, rhs: CGSize) -> CGPoint {
-  return CGPoint(
-    x: lhs.x * rhs.width,
-    y: lhs.y * rhs.height
-  )
-}
-
-public func / (lhs: CGPoint, rhs: CGSize) -> CGPoint {
-  precondition(rhs.width != 0 && rhs.height != 0, "Cannot divide by zero size")
-  return CGPoint(
-    x: lhs.x / rhs.width,
-    y: lhs.y / rhs.height
-  )
-}
-public func / (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
-  precondition(rhs != 0 && rhs != 0, "Cannot divide by zero size")
-  return CGPoint(
-    x: lhs.x / rhs,
-    y: lhs.y / rhs
-  )
-}
-
-// MARK: - Plus Equals
-
-// MARK: - Greater than
-/// These can be too ambiguous (use of `||` or `&&`?)
-/// See `CGSize` for better approach
-//public func > (lhs: CGPoint, rhs: CGPoint) -> Bool {
-//  lhs.x > rhs.x || lhs.y > rhs.y
-//}
-//
-//// MARK: - Less than
-//
-//public func < (lhs: CGPoint, rhs: CGPoint) -> Bool {
-//  lhs.x < rhs.x || lhs.y < rhs.y
-//}

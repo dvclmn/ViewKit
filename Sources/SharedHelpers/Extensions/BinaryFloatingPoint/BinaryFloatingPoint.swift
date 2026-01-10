@@ -9,12 +9,15 @@ import SwiftUI
 
 public var twoPi: CGFloat { .pi * 2 }
 
-/// Looking for `clamp` methods? See `Extrensions/Comparable`
+/// Looking for `clamp` methods? See `Extensions/Comparable`
 extension BinaryFloatingPoint {
-  
+
   public var toAngle: Angle { .degrees(Double(self)) }
 
-  public func incrementing(by amount: Self, in range: ClosedRange<Self>? = nil) -> Self {
+  public func incrementing(
+    by amount: Self,
+    in range: ClosedRange<Self>? = nil
+  ) -> Self {
     var result = self + amount
     if let range {
       result = min(max(result, range.lowerBound), range.upperBound)
@@ -25,13 +28,6 @@ extension BinaryFloatingPoint {
   public mutating func increment(by amount: Self, in range: ClosedRange<Self>? = nil) {
     self = incrementing(by: amount, in: range)
   }
-
-  public var toDouble: Double { Double(self) }
-  public var toFloat: Float { Float(self) }
-
-//  public var toUnitInterval: Double { return Double(self) }
-
-//  public var toUnitIntervalCyclic: UnitIntervalCyclic { return UnitIntervalCyclic(Double(self)) }
 
   /// Map distance to a scaled distance using atan
   public func scaledDistance(
@@ -59,25 +55,18 @@ extension BinaryFloatingPoint {
   public var bump: Self {
     let nextFib = self * 1.618
     /// Approximate next Fibonacci number
-    return (self + nextFib) / 2/// Midpoint between current and next
+    return (self + nextFib) / 2  // Midpoint between current and next
   }
 
   public var bumpDown: Self {
     let prevFib = self * 0.618
     /// Approximate previous Fibonacci number using the inverse of the golden ratio
-    return (self + prevFib) / 2/// Midpoint between current and previous
+    return (self + prevFib) / 2  // Midpoint between current and previous
   }
 
   public var halved: Self { self / 2 }
-
-  public var clampedToPositive: Self {
-    clamped(.zero, .infinity)
-  }
-
-  public var clampedZeroToOne: Self {
-    return self.clamped(0, 1)
-    //    return min(1.0, max(0.0, self))
-  }
+  public var clampedToPositive: Self { clamped(0, .infinity) }
+  public var clampedZeroToOne: Self { clamped(0, 1) }
 
   /// Calculates height from width using the given aspect ratio
   /// - Parameter aspectRatio: The aspect ratio (width / height)
@@ -90,7 +79,7 @@ extension BinaryFloatingPoint {
   public static func angleDelta(_ angle1: Self, _ angle2: Self) -> Self {
     var delta = angle1 - angle2
 
-    // Normalize to [-π, π] range
+    /// Normalize to [-π, π] range
     while delta > .pi { delta -= 2 * .pi }
     while delta < -.pi { delta += 2 * .pi }
 
@@ -102,6 +91,5 @@ extension BinaryFloatingPoint {
   ) -> CGFloat {
     sin(phaseAtPosition * 7.3) * 0.3 + cos(phaseAtPosition * 13.7) * 0.2
   }
-
 
 }

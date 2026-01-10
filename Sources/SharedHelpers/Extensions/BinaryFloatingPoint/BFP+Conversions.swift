@@ -16,4 +16,8 @@ extension BinaryFloatingPoint {
     return .pi * 2 * frequency
   }
   
+  public var toDouble: Double { Double(self) }
+  public var toFloat: Float { Float(self) }
+
+  
 }

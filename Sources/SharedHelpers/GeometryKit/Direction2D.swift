@@ -47,6 +47,8 @@ extension Direction2D {
     return axis.isHorizontal ? offset.width : offset.height
   }
 
+  /// Consider similarities (possibly merging etc), based on extension
+  /// `CGPoint/repositioned(to:in:)`
   public func positioned(
     from origin: CGPoint,
     alignment: Alignment,

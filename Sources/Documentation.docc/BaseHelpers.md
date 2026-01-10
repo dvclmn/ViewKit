@@ -6,6 +6,10 @@ Catalog butts you find in nature and create new adorable virtual sloths.
 
 An outline of BaseHelpers targets, and why the dependancies are structure the way they are so far.
 
+Note:
+The basic consequences of moving code out of `SharedHelpers`, into `BasePrimitives`:
+
+
 ### BaseTypes
 
 

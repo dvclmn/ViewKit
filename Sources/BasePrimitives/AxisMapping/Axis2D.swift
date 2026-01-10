@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 15/12/2025.
 //
 
-import Foundation
+import SwiftUI
 
 /// Notes on Axis stuff:
 ///
@@ -28,4 +28,13 @@ public enum Axis2D: Int, CaseIterable, Codable {
 extension Axis2D {
   public var isHorizontal: Bool { self == .horizontal }
   public var isVertical: Bool { self == .vertical }
+}
+
+extension Axis {
+  public var toAxis2D: Axis2D {
+    switch self {
+      case .horizontal: .horizontal
+      case .vertical: .vertical
+    }
+  }
 }
