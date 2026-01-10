@@ -27,22 +27,6 @@ extension UnitPoint: AxisKeyPathCompatible {
   public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.y }
 }
 
-//extension Edge: AxisKeyPathCompatible {
-//  public static var primaryKey: WritableKeyPath<Self, Edge.Set> { \.horizontal }
-//  public static var secondaryKey: WritableKeyPath<Self, Edge.Set> { \.y }
-//  
-//  //  /// We define the natural components as the Lead/Trail (H) and Top/Bottom (V)
-//  //  public var naturalComponents: (primary: CGFloat, secondary: CGFloat) {
-//  //    /// Using single edges as the "representative" values
-//  //    (leading, top)
-//  //  }
-//  //
-//  //  public static func create(primary: CGFloat, secondary: CGFloat) -> Self {
-//  //    /// primary = horizontal (leading/trailing), secondary = vertical (top/bottom)
-//  //    EdgeInsets(top: secondary, leading: primary, bottom: secondary, trailing: primary)
-//  //  }
-//}
-
 extension EdgeInsets: AxisKeyPathCompatible {
   public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.horizontalUniform }
   public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.verticalUniform }

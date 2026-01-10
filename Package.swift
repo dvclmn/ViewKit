@@ -39,7 +39,7 @@ let package = Package(
     .library(name: "VectorKit", targets: ["VectorKit"]),
 
     //    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
-    .library(name: "StringKit", targets: ["StringKit"]),
+//    .library(name: "StringKit", targets: ["StringKit"]),
     .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
 
     // Export-only libraries
@@ -64,7 +64,7 @@ let package = Package(
     .macro(
       name: "BaseMacrosImplementation",
       dependencies: [
-        .module(.primitives),
+//        .module(.primitives),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
@@ -90,7 +90,6 @@ let package = Package(
       name: "SharedHelpers",
       dependencies: [
         .module(.coreTools),
-        //        .module(.gridKit),
         .identifiedCollections,
         .sharing,
       ],
@@ -158,13 +157,13 @@ let package = Package(
       dependencies: [.module(.coreTools)]
     ),
 
-    .target(
-      name: "StringKit",
-      dependencies: [
-        .module(.sharedHelpers),
-        .module(.enumMacros),
-      ]
-    ),
+//    .target(
+//      name: "StringKit",
+//      dependencies: [
+//        .module(.sharedHelpers),
+//        .module(.enumMacros),
+//      ]
+//    ),
 
     .target(
       name: "VectorKit",
@@ -242,7 +241,7 @@ enum BaseModule {
   case layoutKit
   case motionKit
 
-  case stringKit
+//  case stringKit
   case wrecktangle
 
   /// Export-only modules
@@ -268,7 +267,7 @@ enum BaseModule {
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
 
-      case .stringKit: "StringKit"
+//      case .stringKit: "StringKit"
       case .wrecktangle: "Wrecktangle"
 
       /// Export-only
