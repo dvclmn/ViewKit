@@ -105,7 +105,8 @@ extension Flexi {
 
 extension Flexi.GridView {
 
-  private var debugText: AttributedString {
+  private var debugText: String {
+//  private var debugText: AttributedString {
     return DisplayString {
       "## I'm a heading"
       DummyContent.Strings.paragraphs[3]
@@ -114,9 +115,7 @@ extension Flexi.GridView {
         //        Labeled("Grid config", value: config.description)
         config.description
       }
-    }
-    .markdown()
-    //    .output
+    }.plainText
     //    .monospaced(.callout)
 
   }

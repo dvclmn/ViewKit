@@ -42,30 +42,30 @@ extension DisplayString {
   //    components.styledOutput(separator: separator)
   //  }
 
-  public func markdown(language: String? = nil) -> AttributedString {
+//  public func markdown(language: String? = nil) -> AttributedString {
 
     //    let string = components.map { element in
     //      element.toStyledString.plainString
     //    }.joinedLines()
 
-    let markdown = try? AttributedString(
-      markdown: plainText,
-      options: .init(
-        allowsExtendedAttributes: false,
-        interpretedSyntax: .full,
-        failurePolicy: .throwError,
-        languageCode: language,
-        appliesSourcePositionAttributes: false
-      ),
-      baseURL: nil
-    )
+//    let markdown = try? AttributedString(
+//      markdown: plainText,
+//      options: .init(
+//        allowsExtendedAttributes: false,
+//        interpretedSyntax: .full,
+//        failurePolicy: .throwError,
+//        languageCode: language,
+//        appliesSourcePositionAttributes: false
+//      ),
+//      baseURL: nil
+//    )
 
     //    markdown?.transformingAttributes(\.presentationIntent) { attr in
     //      attr.value = Prese
     //    }
-    return markdown ?? plainText.toAttributed
+//    return markdown ?? plainText.toAttributed
     //    return markdown ?? output
-  }
+//  }
 }
 
 //extension DisplayString: StyledStringConvertible {
