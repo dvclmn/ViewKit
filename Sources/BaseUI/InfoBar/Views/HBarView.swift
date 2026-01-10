@@ -13,7 +13,7 @@ public struct InfoBar: View {
   @Environment(\.modifierKeys) private var modifierKeys
 
 //  let items: [String: any InfoBarSection]
-  let items: [SectionKey: [InfoBarItem]]
+  let items: [String: [InfoBarItem]]
 
   public init(items: [InfoBarItem]) {
 //  public init(items: any InfoBarSection) {
@@ -64,6 +64,7 @@ extension InfoBar {
   
   private var modifiersItem: InfoBarItem {
     InfoBarItem(
+      sectionKey: "Modifiers",
       label: QuickLabel("Modifiers", symbol: "keyboard"),
       content: modifierKeys.displayName(elements: .icon, separator: "", emptyText: "")
     )

@@ -85,24 +85,24 @@ public struct InfoBarExampleView: View {
   }
 }
 
-extension InfoBarExampleView {
-  var infobarItems: [InfoBarItem] {
-
-    //    let items: [CanvasInfoItem] = [.pan, .zoomPercent, .interaction]
-    //    let items = ExampleItem.allCases
-    //    return items.map { item in
-    //      return InfoBarItem(
-    //        section: ExampleItem.sectionTitle,
-    //        label: QuickLabel(item.title, icon: item.icon),
-    //        content: item.content(
-    //          canvasHandler,
-    //          modifiers: modifierKeys
-    //        )
-    //        //        content: content(item)
-    //      )
-    //    }
-  }
-}
+//extension InfoBarExampleView {
+//  var infobarItems: [InfoBarItem] {
+//
+//    //    let items: [CanvasInfoItem] = [.pan, .zoomPercent, .interaction]
+//    //    let items = ExampleItem.allCases
+//    //    return items.map { item in
+//    //      return InfoBarItem(
+//    //        section: ExampleItem.sectionTitle,
+//    //        label: QuickLabel(item.title, icon: item.icon),
+//    //        content: item.content(
+//    //          canvasHandler,
+//    //          modifiers: modifierKeys
+//    //        )
+//    //        //        content: content(item)
+//    //      )
+//    //    }
+//  }
+//}
 
 #if DEBUG
 @available(macOS 15, iOS 18, *)
@@ -111,7 +111,7 @@ extension InfoBarExampleView {
 }
 #endif
 
-struct ExampleStore {
+public struct ExampleStore {
   var currentPressure: CGFloat? = 0
   var isPointerLocked: Bool = false
   var isInDrawingMode: Bool = false
@@ -136,7 +136,7 @@ public enum ExampleItem: String, Sendable, InfoBarSection {
   case clickedDown
   case pressure
 
-  public static var section: String { "Example" }
+  public static var sectionTitle: String { "Example" }
 
   public var label: QuickLabel { QuickLabel(self.name) }
 
@@ -165,6 +165,27 @@ public enum ExampleItem: String, Sendable, InfoBarSection {
       case .pointerLocked: "Pointer Locked"
       case .clickedDown: "Clicked Down"
       case .pressure: "Pressure"
+    }
+  }
+  
+  public static func buildItems(from source: ExampleStore) -> [InfoBarItem] {
+    
+
+    allCases.map { item in
+      InfoBarItem(
+        sectionKey: sectionTitle,
+        label: item.label,
+        content: item.content(source)
+      )
+    }
+  }
+  
+  func content(_ source: ExampleStore) -> String {
+    //  func content(_ handler: CanvasHandler, modifiers: Modifiers) -> AttributedString {
+    switch self {
+      case .counts: source.touchCount.toString
+      case .strokeCountCompleted: source.strokeCountCompleted.toString
+      default: "unknown"
     }
   }
 

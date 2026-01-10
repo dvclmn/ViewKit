@@ -10,20 +10,32 @@ import SharedHelpers
 
 public protocol InfoBarSection: CaseIterable {
 //  associatedtype Item = AllCases.Element
+//  associatedtype Key = String
   associatedtype Source
+  typealias Items = [Self.AllCases.Element]
   //  var elements: [Self.AllCases.Element] { get }
+  
+  var items: Items { get }
+  
+  /// Will fall back to all Cases if not supplied
+  var defaultItems: Items? { get }
   static var sectionTitle: String { get }
 //  var label: QuickLabel { get }
 //  var content: AttributedString { get }
 
 //  func buildItems() -> [InfoBarItem]
   static func buildItems(from source: Source) -> [InfoBarItem]
+//  static func buildItems(from source: Source) -> [InfoBarItem]
 //  static func makeItem(from element: Item) -> InfoBarItem
 }
 //public protocol InfoBarItemProtocol {
 //}
 
 extension InfoBarSection {
+  
+  public var items: Items { defaultItems ?? Self.allCases.toArray }
+  public var defaultItems: Items? { nil }
+  
 //  public func buildItems() -> [InfoBarItem] {
 //    Self.allCases.map { item in
 //      InfoBarItem(
@@ -43,10 +55,15 @@ extension InfoBarSection {
 
 }
 
-
+//extension InfoBarItem {
+//  static
+//}
 
 public struct InfoBarItem: Identifiable, Equatable, Hashable, Sendable {
+//public struct InfoBarItem<Section: InfoBarSection>: Identifiable, Equatable, Hashable where Section.Key: Hashable {
   public var id: String { label.text }
+//  public let sectionKey: any InfoBarSection
+//  public let sectionKey: Section.Key
   public let sectionKey: String
 //  public let sectionKey: InfoBar.SectionKey
   public let label: QuickLabel
@@ -54,6 +71,7 @@ public struct InfoBarItem: Identifiable, Equatable, Hashable, Sendable {
 
   public init(
     sectionKey: String,
+//    sectionKey: Section.Key,
     label: QuickLabel,
     content: AttributedString,
   ) {
@@ -65,6 +83,7 @@ public struct InfoBarItem: Identifiable, Equatable, Hashable, Sendable {
 
   public init(
     sectionKey: String,
+//    sectionKey: Section.Key,
     label: QuickLabel,
     content: String,
   ) {

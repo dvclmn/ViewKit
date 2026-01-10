@@ -5,15 +5,14 @@
 //  Created by Dave Coleman on 11/8/2025.
 //
 
-import SwiftUI
 import CoreTools
-
+import SwiftUI
 
 public struct DebugTextOverlayModifier: ViewModifier {
   @Environment(\.isEnabled) private var isEnabled
-  
+
+  /// Note: In various places
   let text: AttributedString
-//  let isEnabled: Bool
   let alignment: Alignment
   let padding: (Edge.Set, CGFloat?)
   public func body(content: Content) -> some View {
@@ -28,7 +27,6 @@ public struct DebugTextOverlayModifier: ViewModifier {
       }
   }
 }
-
 
 public struct DebugTextStyleModifier: ViewModifier {
 
@@ -48,35 +46,16 @@ public struct DebugTextStyleModifier: ViewModifier {
   }
 }
 
-
 extension View {
-
-  //  public func debugTextOverlay(
-  //    _ text: String,
-  //    isEnabled: Bool = true,
-  //    alignment: Alignment = .topLeading,
-  //    padding: (Edge.Set, CGFloat?) = (.all, nil)
-  //  ) -> some View {
-  //    self.modifier(
-  //      DebugTextOverlayModifier(
-  //        text: AttributedString(text),
-  //        isEnabled: isEnabled,
-  //        alignment: alignment,
-  //        padding: padding
-  //      )
-  //    )
-  //  }
-
   public func debugTextOverlay(
     _ text: AttributedString,
-//    isEnabled: Bool = true,
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil)
   ) -> some View {
     self.modifier(
       DebugTextOverlayModifier(
         text: text,
-//        isEnabled: isEnabled,
+        //        isEnabled: isEnabled,
         alignment: alignment,
         padding: padding
       )
@@ -85,7 +64,6 @@ extension View {
 
   public func debugTextOverlay(
     _ text: String...,
-    isEnabled: Bool = true,
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil)
   ) -> some View {
@@ -93,16 +71,15 @@ extension View {
       DebugTextOverlayModifier(
         text: AttributedString(text.joined(separator: "\n")),
         //        value: value.flatMap().joined(separator: "\n"),
-//        isEnabled: isEnabled,
+        //        isEnabled: isEnabled,
         alignment: alignment,
         padding: padding
       )
     )
   }
-  
+
   public func debugTextOverlay(
-//    _ text: String...,
-    isEnabled: Bool = true,
+    //    _ text: String...,
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil),
     @DisplayStringBuilder _ content: () -> [DisplayBlock]
@@ -110,9 +87,6 @@ extension View {
     self.modifier(
       DebugTextOverlayModifier(
         text: content().output().toAttributed,
-//        text: content().styledOutput(),
-        //        value: value.flatMap().joined(separator: "\n"),
-//        isEnabled: isEnabled,
         alignment: alignment,
         padding: padding
       )
