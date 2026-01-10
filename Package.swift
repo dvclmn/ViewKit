@@ -18,7 +18,9 @@ let package = Package(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
     ),
-    .library(name: "BaseTypes", targets: ["BaseTypes"]),
+    .library(name: "BaseHelpers", targets: ["BaseHelpers"]),
+    .library(name: "BasePrimitives", targets: ["BasePrimitives"]),
+//    .library(name: "BaseTypes", targets: ["BaseTypes"]),
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
     .library(
       name: "BaseUI",
@@ -35,7 +37,8 @@ let package = Package(
 //    .library(name: "GridKit", targets: ["GridKit"]),
 //    .library(name: "GridUI", targets: ["GridUI"]),
     .library(name: "VectorKit", targets: ["VectorKit"]),
-    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
+    
+//    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
     .library(name: "StringKit", targets: ["StringKit"]),
     .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
 
