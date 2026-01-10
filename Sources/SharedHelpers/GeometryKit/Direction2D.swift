@@ -45,14 +45,6 @@ extension Direction2D {
   ) -> CGFloat {
     let offset = offset(distance: distance, radial: radialDirection)
     return axis.isHorizontal ? offset.width : offset.height
-//    let multiplier: CGFloat = (radialDirection == .outward) ? 1 : -1
-//    let offset: CGFloat = axis.isHorizontal ? x : y
-//
-//    return offset * distance * multiplier
-    //    CGSize(
-    //      width: x * distance * multiplier,
-    //      height: y * distance * multiplier
-    //    )
   }
 
   public func positioned(
@@ -97,12 +89,12 @@ extension Alignment {
   ) -> CGSize {
     direction.offset(distance: distance, radial: radialDirection)
   }
-  
+
   public func offset(
     axis: Axis2D,
     distance: CGFloat,
     radial radialDirection: RadialDirection = .outward
-  ) -> CGSize {
+  ) -> CGFloat {
     direction.offset(axis: axis, distance: distance, radial: radialDirection)
   }
 
@@ -116,9 +108,31 @@ extension ViewDimensions {
     //    distance: CGFloat,
     radial radialDirection: RadialDirection = .outward
   ) -> CGFloat {
-    let length = axis.isHorizontal ? self.width : self.height
-    let offset = alignment.offset(distance: <#T##CGFloat#>, radial: <#T##RadialDirection#>)
-    return self[alignment]
+
+    let viewLength = axis.isHorizontal ? self.width : self.height
+    let offsetAmount: CGFloat = viewLength * magnitude
+    let offset = alignment.offset(
+      axis: axis,
+      distance: offsetAmount,
+      radial: radialDirection
+    )
+    return axis.isHorizontal
+      ? self[alignment.horizontal] + offset
+      : self[alignment.vertical] + offset
+
     //    direction.offset(distance: distance, radial: radialDirection)
+  }
+  
+  private func getAlignment(
+    _ alignment: Alignment,
+//    for axis: Axis2D
+  ) -> Alignment {
+    let toFlip: [Alignment] = [.leading, .trailing, .top, .bottom]
+    return toFlip.contains(alignment) ? alignment.opposite : alignment
+//    switch alignment {
+//      case .leading, .trailing, .top, .bottom:
+//        return alignment.opposite
+//     
+//    }
   }
 }

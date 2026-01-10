@@ -37,9 +37,26 @@ public struct Tooltip: ViewModifier {
           isShowing: isShowing
         )
         .environment(\.itemColour, colour)
-        .offset(alignment.offset(distance: 10, radial: .outward))
-//
-//        .alignmentGuide(toolTipAlignment.horizontal) { d in
+//        .offset(alignment.offset(distance: 10, radial: .outward))
+
+        
+        .alignmentGuide(toolTipAlignment.horizontal) { dimensions in
+          dimensions.offset(
+            for: toolTipAlignment,
+            axis: .horizontal,
+            magnitude: 1.2,
+            radial: .outward
+          )
+        }
+        
+//        .alignmentGuide(toolTipAlignment.vertical) { dimensions in
+//          dimensions.offset(
+//            for: .top,
+//            axis: .vertical,
+//            magnitude: 1.2,
+//            radial: .outward
+//          )
+//        }
 //          /// Horizontal positioning
 //          switch toolTipAlignment.horizontal {
 //            case .leading:
