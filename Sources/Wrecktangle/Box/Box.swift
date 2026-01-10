@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import BasePrimitives
-import BaseTypes
+import CoreTools
 
 public struct Box: Sendable {
   let components: [any Component]

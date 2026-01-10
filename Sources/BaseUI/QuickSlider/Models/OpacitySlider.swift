@@ -114,7 +114,8 @@ public struct OpacitySlider: View {
     .overlay {
       ForEach(0..<9) { opacityInt in
         Button("Set opacity to \(opacityInt * 10)%") {
-          value = opacityInt.toOpacity
+          fatalError("Working on this")
+//          value = opacityInt.toOpacity
           //          guard let activeLayerID = store.artworkHandler.activeLayerID else { return }
           //          artwork.wrappedValue.layers[id: activeLayerID]?.setOpacity(using: opacityLevel)
         }

@@ -51,10 +51,12 @@ extension APIRequest {
       guard let bodyString = body as? String else {
         return "\(body ?? "nil")"
       }
-      return bodyString.indentingEachLine(level: 1, indentString: "  | ")
+      fatalError("Need to look into the latest indentation implementation now")
+//      return bodyString.indentingEachLine(level: 1, indentString: "  | ")
     }()
 
-    let headersAdjusted = headers?.displayString() ?? "nil"
+    let headersAdjusted = headers?.debugDescription ?? "nil"
+//    let headersAdjusted = headers?.displayString() ?? "nil"
 
     let result: String = """
 

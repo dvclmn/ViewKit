@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 5/11/2025.
 //
 
-import Foundation
-import BaseTypes
 import CoreTools
+import Foundation
 
 extension Box {
   public protocol GlyphKind: Sendable, Codable, Hashable {}

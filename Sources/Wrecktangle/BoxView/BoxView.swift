@@ -6,10 +6,8 @@
 //
 
 import CoreTools
-import LayoutKit
+//import LayoutKit
 import SwiftUI
-import GridKit
-
 
 public struct BoxView: View {
   @Environment(\.glyphSet) private var glyphSet
@@ -41,10 +39,10 @@ public struct BoxView: View {
         content
       }.plainText
     )
-//    .fixedSize(horizontal: true, vertical: false)
+    //    .fixedSize(horizontal: true, vertical: false)
     .fixedSize()
-    
-//    .gridSetup(.sfMono, fontSize: explicitFontSize ?? 13)
+
+    //    .gridSetup(.sfMono, fontSize: explicitFontSize ?? 13)
 
     .environment(\.isShowingGridGuide, false)
 
@@ -57,7 +55,6 @@ public struct BoxView: View {
 
   }
 }
-
 
 extension BoxView {
 
@@ -77,14 +74,14 @@ extension EnvironmentValues {
 #if DEBUG
 
 #Preview {
-//#Preview(traits: .size(.normal)) {
+  //#Preview(traits: .size(.normal)) {
 
   ScrollView {
     HStack(alignment: .top, spacing: 8) {
       BoxExampleGroup(.sharp)
       BoxExampleGroup(.rounded)
       BoxExampleGroup(.hollow)
-      
+
     }
     //                .environment(\.metrics, .lineNumbers)
     .environment(\.paragraphNumber, 5)

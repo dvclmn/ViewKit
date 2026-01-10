@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-import BasePrimitives
-import GridKit
+import CoreTools
 
 extension Box {
   public struct Theme: Sendable, Codable, Equatable {

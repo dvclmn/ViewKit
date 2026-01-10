@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreTools
-import BaseTypes
 
 extension Box.Line {
 
