@@ -91,28 +91,7 @@ extension GridBoundaryPoint {
       case .bottom: UnitPoint.bottom
     }
   }
-  
-  public var toCompatPointerStyle: PointerStyleCompatible {
-    let style = PointerStyleCompatible.frameResize(
-      position: self.toCompatFrameResizePosition,
-      directions: .all
-    )
-    return style
-  }
-  
-  public var toCompatFrameResizePosition: FrameResizePositionCompatible {
-    switch self {
-      case .topLeading: .topLeading
-      case .topTrailing: .topTrailing
-      case .bottomLeading: .bottomLeading
-      case .bottomTrailing: .bottomTrailing
-      case .top: .top
-      case .trailing: .trailing
-      case .leading: .leading
-      case .bottom: .bottom
-    }
-  }
-  
+
   /// Checks whether a size delta is valid for the control point.
   public func isValidSizeDelta(
     from oldSize: CGSize,

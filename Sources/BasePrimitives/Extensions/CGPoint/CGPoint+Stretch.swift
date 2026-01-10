@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 10/1/2026.
 //
 
-import Foundation
+import SwiftUI
 
 // MARK: - Stretch out an Axis
 public struct StretchOptions: OptionSet, Sendable {
@@ -69,7 +69,7 @@ extension CGPoint {
   public func mapPoint(
     from source: CGRect,
     to destination: CGRect,
-    mode: ResizeMode = .fit
+    mode: ContentMode = .fit
   ) -> CGPoint {
     switch mode {
       case .stretch: stretchMap(from: source, to: destination)

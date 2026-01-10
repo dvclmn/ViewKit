@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BasePrimitives
 
 public enum FrameResizePositionCompatible: Int8, CaseIterable, Sendable {
   case top
@@ -103,3 +104,27 @@ extension PointerStyleCompatible {
 #endif
 }
 
+extension GridBoundaryPoint {
+  
+  var toCompatPointerStyle: PointerStyleCompatible {
+    let style = PointerStyleCompatible.frameResize(
+      position: self.toCompatFrameResizePosition,
+      directions: .all
+    )
+    return style
+  }
+  
+  var toCompatFrameResizePosition: FrameResizePositionCompatible {
+    switch self {
+      case .topLeading: .topLeading
+      case .topTrailing: .topTrailing
+      case .bottomLeading: .bottomLeading
+      case .bottomTrailing: .bottomTrailing
+      case .top: .top
+      case .trailing: .trailing
+      case .leading: .leading
+      case .bottom: .bottom
+    }
+  }
+  
+}

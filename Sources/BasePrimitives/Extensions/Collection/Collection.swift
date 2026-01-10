@@ -35,14 +35,6 @@ extension Collection where Index == Int {
     }
     return (prevIdx + count) % count
   }
-
-  //  func nextValidIndex(after index: Int, in collection: some Collection) -> Int? {
-  //
-  //  }
-  //  func previousValidIndex(before index: Int, in collection: some Collection) -> Int? {
-  //
-  //  }
-
 }
 
 extension Collection where Element: Hashable {

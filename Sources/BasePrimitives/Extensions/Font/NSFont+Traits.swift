@@ -5,36 +5,36 @@
 //  Created by Dave Coleman on 20/11/2025.
 //
 
-import AppKit
-import EnumMacros
+//import AppKit
+//import EnumMacros
 
-extension NSFont {
-
-  @SetOfOptions<Int>
-  struct Traits {
-    enum Options: Int {
-      case italic
-      case bold
-      case semiBold
-      case monospace
-      case rounded
-    }
-  }
-}
-
-extension NSFont.Traits.Options {
-  var toSymbolicTraits: NSFontDescriptor.SymbolicTraits? {
-    switch self {
-      case .italic: .italic
-      case .bold: .bold
-      case .semiBold: nil
-      case .monospace: .monoSpace
-      case .rounded: nil
-    }
-  }
-  
-  
-}
+//extension NSFont {
+//
+//  @SetOfOptions<Int>
+//  struct Traits {
+//    enum Options: Int {
+//      case italic
+//      case bold
+//      case semiBold
+//      case monospace
+//      case rounded
+//    }
+//  }
+//}
+//
+//extension NSFont.Traits.Options {
+//  var toSymbolicTraits: NSFontDescriptor.SymbolicTraits? {
+//    switch self {
+//      case .italic: .italic
+//      case .bold: .bold
+//      case .semiBold: nil
+//      case .monospace: .monoSpace
+//      case .rounded: nil
+//    }
+//  }
+//  
+//  
+//}
 
 //  public var prettyDescription: String {
 //    var desc: [String] = []

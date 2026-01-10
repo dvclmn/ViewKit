@@ -28,10 +28,11 @@ extension UnitPoint {
   ) -> CGFloat {
     let axisValue = value(along: axis, mapping: mapping)
     
-    if let radialDirection {
-      radialDirection.is
-    }
-    
+    fatalError("Need to be finished")
+//    if let radialDirection {
+//      radialDirection.is
+//    }
+//    
     // No explicit radial direction: infer based on position relative to center (0.5)
     if axisValue < 0.5 { return +1 }
     if axisValue > 0.5 { return -1 }

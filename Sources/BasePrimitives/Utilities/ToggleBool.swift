@@ -137,3 +137,19 @@ extension Dictionary where Value: Any {
     }
   }
 }
+
+
+extension Dictionary where Value == Bool {
+  /// Toggles the value for the given key.
+  /// If the key does not exist, it's assumed to be `false` and set to `true`.
+  @discardableResult
+  public mutating func toggleValue(
+    forKey key: Key,
+    fallBack: Bool = false
+  ) -> Bool {
+    let newValue = !(self[key] ?? fallBack)
+    self[key] = newValue
+    return newValue
+    //    self[key] = !(self[key] ?? fallBack)
+  }
+}

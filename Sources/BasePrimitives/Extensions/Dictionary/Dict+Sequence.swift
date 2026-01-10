@@ -5,16 +5,15 @@
 //  Created by Dave Coleman on 12/11/2025.
 //
 
-
 // MARK: - Dictionary operations
 extension Sequence {
-  
+
   public func groupedDictionary<K: Hashable>(
     by keyPath: KeyPath<Element, K>
   ) -> [K: [Element]] {
     Dictionary(grouping: self, by: { $0[keyPath: keyPath] })
   }
-  
+
   /// Safely creates a dictionary from this sequence
   public func toDictionary<Key: Hashable, Value>(
     key: KeyPath<Element, Key>,

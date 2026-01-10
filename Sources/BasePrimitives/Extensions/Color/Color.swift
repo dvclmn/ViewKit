@@ -7,52 +7,7 @@
 
 import SwiftUI
 
-extension Array where Element == Color {
-  
-//  /// Mix an array of colours into a single colour by repeatedly blending.
-  public func mixMultiple(
-    //    _ colours: [Color],
-    by fraction: Double = 0.5,
-    fallback: Color = .clear
-  ) -> Color {
-    guard let first = self.first else { return fallback }
-    return self.dropFirst().reduce(first) { accumulated, next in
-      accumulated.mixCompatible(with: next, by: fraction)
-    }
-  }
-}
-
 extension Color {
-
-  //  public var namedColour: NamedColour? {
-  //    return NamedColour.allCases.first { $0.colour.toColour == self }
-  //  }
-
-  //  public func complementary(
-  //    strength: Double = 1.0,
-  //    environment: EnvironmentValues
-  //  ) -> Color {
-  //
-  //    let hsvColour = HSVColour(colour: self, environment: environment, name: self.colourName)
-  //    let complementary = hsvColour.complementary(strength: strength)
-  //    return complementary.swiftUIColour
-  //  }
-
-  //  public func mixCompatible(
-  //    with rhs: Color,
-  //    by fraction: Double,
-  //    in colorSpace: Gradient.ColorSpace = .perceptual
-  //  ) -> Color {
-  //    guard #available(macOS 15, iOS 18, *) else {
-  //      return self
-  //    }
-  //    return self.mix(
-  //      with: rhs,
-  //      by: fraction,
-  //      in: colorSpace
-  //    )
-  //  }
-
   public var toShapeStyle: AnyShapeStyle { AnyShapeStyle(self) }
 }
 

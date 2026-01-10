@@ -9,15 +9,15 @@ import Foundation
 
 extension Dictionary where Key: CustomStringConvertible, Value: CustomStringConvertible {
 
-  public func displayString() -> String {
-    guard !self.isEmpty else { return "nil" }
-
-    let formattedPairs = self.map { key, value in
-      "  | \"\(key)\": \"\(value)\""
-    }
-
-    return "\n" + formattedPairs.joined(separator: "\n")
-  }
+//  public func displayString() -> String {
+//    guard !self.isEmpty else { return "nil" }
+//
+//    let formattedPairs = self.map { key, value in
+//      "  | \"\(key)\": \"\(value)\""
+//    }
+//
+//    return "\n" + formattedPairs.joined(separator: "\n")
+//  }
 }
 
 extension Dictionary {
@@ -47,7 +47,7 @@ extension Dictionary {
   ) where Value == [S.Element] {
     self.init(grouping: values, by: { $0[keyPath: keyPath] })
   }
-  
+
 }
 
 extension Dictionary where Value: Sequence {
@@ -59,20 +59,6 @@ extension Dictionary where Value: Sequence {
   }
 }
 
-extension Dictionary where Value == Bool {
-  /// Toggles the value for the given key.
-  /// If the key does not exist, it's assumed to be `false` and set to `true`.
-  @discardableResult
-  public mutating func toggleValue(
-    forKey key: Key,
-    fallBack: Bool = false
-  ) -> Bool {
-    let newValue = !(self[key] ?? fallBack)
-    self[key] = newValue
-    return newValue
-    //    self[key] = !(self[key] ?? fallBack)
-  }
-}
 
 extension Dictionary {
   public subscript(optionalKey key: Key?) -> Value? {
