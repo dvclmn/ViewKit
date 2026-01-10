@@ -17,81 +17,62 @@ extension UnitPoint {
       height: Self.directionMultiplier(for: y) * dy
     )
   }
-  
+
   public func offset(by amount: CGFloat) -> CGSize {
     offset(dx: amount, dy: amount)
   }
   public func offset(
     by size: CGSize,
     mapping: AxisMapping = .default,
-//    convention: AxisConvention = .widthIsHorizontal
+    //    convention: AxisConvention = .widthIsHorizontal
   ) -> CGSize {
     offset(
       dx: size.value(along: .horizontal, mapping: mapping),
       dy: size.value(along: .vertical, mapping: mapping),
-//      dx: convention.horizontalLength(size: size),
-//      dy: convention.verticalLength(size: size)
+      //      dx: convention.horizontalLength(size: size),
+      //      dy: convention.verticalLength(size: size)
     )
   }
-  
+
   private static func directionMultiplier(for coordinate: CGFloat) -> CGFloat {
     coordinate < 0.5 ? +1 : coordinate > 0.5 ? -1 : 0
   }
-  
-  /// If left nil, the radial direction will be inferred from `self`,
-  /// using a product of the origin (0.5) and the provided coordinate's value
-  private func directionMultiplier(
-    for axis: Axis2D,
-    mapping: AxisMapping = .default,
-    radial radialDirection: RadialDirection? = nil
-  ) -> CGFloat {
-    let axisValue = value(along: axis, mapping: mapping)
-    
-    if let radialDirection {
-      
-    }
-    
-    // No explicit radial direction: infer based on position relative to center (0.5)
-    if axisValue < 0.5 { return +1 }
-    if axisValue > 0.5 { return -1 }
-    return 0
-    
-  }
-  
-  private func directionMultiplier(
-    for axis: Axis2D,
-    mapping: AxisMapping = .default,
-    radial radialDirection: RadialDirection? = nil
-  ) -> CGFloat {
-    // Choose the relevant coordinate (x for horizontal, y for vertical) in UnitPoint space [0,1]
-    let coordinate: CGFloat
-    switch axis {
-      case .horizontal:
-        coordinate = self.x
-      case .vertical:
-        coordinate = self.y
-    }
-    
-    // If a radial direction is specified, honor it explicitly.
-    if let radialDirection {
-      switch radialDirection {
-        case .outward:
-          // Outward means push away from the center, so sign depends on which side of the center we are on.
-          if coordinate < 0.5 { return +1 }
-          if coordinate > 0.5 { return -1 }
-          return 0
-        case .inward:
-          // Inward means pull toward the center, invert the outward logic.
-          if coordinate < 0.5 { return -1 }
-          if coordinate > 0.5 { return +1 }
-          return 0
-      }
-    }
-    
-    // No explicit radial direction: infer based on position relative to center (0.5)
-    if coordinate < 0.5 { return +1 }
-    if coordinate > 0.5 { return -1 }
-    return 0
-  }
-  
+
+
+  //  private func directionMultiplier(
+  //    for axis: Axis2D,
+  //    mapping: AxisMapping = .default,
+  //    radial radialDirection: RadialDirection? = nil
+  //  ) -> CGFloat {
+  //    // Choose the relevant coordinate (x for horizontal, y for vertical) in UnitPoint space [0,1]
+  //    let coordinate: CGFloat
+  //    switch axis {
+  //      case .horizontal:
+  //        coordinate = self.x
+  //      case .vertical:
+  //        coordinate = self.y
+  //    }
+  //
+  //    // If a radial direction is specified, honor it explicitly.
+  //    if let radialDirection {
+  //      switch radialDirection {
+  //        case .outward:
+  //          // Outward means push away from the center, so sign depends on which side of the center we are on.
+  //          if coordinate < 0.5 { return +1 }
+  //          if coordinate > 0.5 { return -1 }
+  //          return 0
+  //        case .inward:
+  //          // Inward means pull toward the center, invert the outward logic.
+  //          if coordinate < 0.5 { return -1 }
+  //          if coordinate > 0.5 { return +1 }
+  //          return 0
+  //      }
+  //    }
+  //
+  //    // No explicit radial direction: infer based on position relative to center (0.5)
+  //    if coordinate < 0.5 { return +1 }
+  //    if coordinate > 0.5 { return -1 }
+  //    return 0
+  //  }
+
 }

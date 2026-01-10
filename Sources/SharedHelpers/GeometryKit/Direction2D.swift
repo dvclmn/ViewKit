@@ -59,12 +59,6 @@ extension Direction2D {
       y: origin.y + delta.height
     )
   }
-
-}
-
-public enum RadialDirection: Sendable {
-  case outward
-  case inward
 }
 
 extension Alignment {
