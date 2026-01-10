@@ -111,28 +111,30 @@ extension ViewDimensions {
 
     let viewLength = axis.isHorizontal ? self.width : self.height
     let offsetAmount: CGFloat = viewLength * magnitude
-    let offset = alignment.offset(
+    let targetAlignment = getAlignment(alignment)
+    let offset = targetAlignment.offset(
       axis: axis,
       distance: offsetAmount,
       radial: radialDirection
     )
     return axis.isHorizontal
-      ? self[alignment.horizontal] + offset
-      : self[alignment.vertical] + offset
+      ? self[targetAlignment.horizontal] + offset
+      : self[targetAlignment.vertical] + offset
 
     //    direction.offset(distance: distance, radial: radialDirection)
   }
-  
+
   private func getAlignment(
     _ alignment: Alignment,
-//    for axis: Axis2D
+    //    for axis: Axis2D
   ) -> Alignment {
+    let excluded: [Alignment] = [.center]
     let toFlip: [Alignment] = [.leading, .trailing, .top, .bottom]
     return toFlip.contains(alignment) ? alignment.opposite : alignment
-//    switch alignment {
-//      case .leading, .trailing, .top, .bottom:
-//        return alignment.opposite
-//     
-//    }
+    //    switch alignment {
+    //      case .leading, .trailing, .top, .bottom:
+    //        return alignment.opposite
+    //
+    //    }
   }
 }
