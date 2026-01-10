@@ -7,12 +7,11 @@
 
 import SwiftUI
 
+/// System-provided Env values for reference:
+/// https://developer.apple.com/documentation/swiftui/environmentvalues/
+/// Note: Many of the below are optional, allowing the caller
+/// to provide a fallback meaningful to their domain.
 extension EnvironmentValues {
-  /// See here for a list of system-provided Env values:
-  /// https://developer.apple.com/documentation/swiftui/environmentvalues/
-  ///
-  /// Note: Many of the below are optional, allowing the calling
-  /// View to provide a meaningful fallback.
 
   /// View layout
   /// See `LayoutKit` for `layoutMode`
