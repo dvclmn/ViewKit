@@ -19,9 +19,11 @@ extension EnvironmentValues {
   @Entry public var layoutAlignment: Alignment? = nil
   @Entry public var textAlignment: TextAlignment? = nil
 
-  /// Use this for *actual* spacing (`VStack`/`HStack` etc),
-  /// For padding, prefer below `layoutPadding`.
+  /// Use this for spacing specifically (`VStack`/`HStack` etc)
+  /// For padding, prefer `layoutPadding`.
   @Entry public var layoutSpacing: CGFloat? = nil
+  
+  /// If addressing spacing, prefer `layoutSpacing`.
   @Entry public var layoutPadding: CGFloat? = nil
 
   /// Useful for targeting the inside of nested scroll views

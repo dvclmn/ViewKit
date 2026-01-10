@@ -10,7 +10,6 @@ import Foundation
 import SharedHelpers
 import SwiftUI
 
-
 public struct Tooltip: ViewModifier {
 
   @State private var isHovered = false
@@ -37,18 +36,9 @@ public struct Tooltip: ViewModifier {
           isShowing: isShowing
         )
         .environment(\.itemColour, colour)
-        
-        .alignmentGuide(toolTipAlignment.horizontal) { d in
 
-          /// Horizontal positioning
-          switch toolTipAlignment.horizontal {
-            case .leading:
-              return d[.trailing] + totalOffset(for: .horizontal)  // Place tooltip to the left
-            case .trailing:
-              return d[.leading] + totalOffset(for: .horizontal)  // Place tooltip to the right
-            default:  // center
-              return d[HorizontalAlignment.center] + totalOffset(for: .horizontal)
-          }
+        .alignmentGuide(toolTipAlignment.horizontal) { dimensions in
+         guidesH(dimensions)
         }
         .alignmentGuide(toolTipAlignment.vertical) { d in
           /// Vertical positioning
@@ -68,14 +58,28 @@ public struct Tooltip: ViewModifier {
   }
 }
 
-
 extension Tooltip {
-
-  private var toolTipAlignment: Alignment {
+  
+  nonisolated private func guides(
+    for axis: Axis,
+    _ dimensions: ViewDimensions
+  ) -> CGFloat {
+    /// Horizontal positioning
+    switch toolTipAlignment.horizontal {
+      case .leading:
+        dimensions[.trailing] + totalOffset(for: .horizontal)  // Place tooltip to the left
+      case .trailing:
+        dimensions[.leading] + totalOffset(for: .horizontal)  // Place tooltip to the right
+      default:  // center
+        dimensions[HorizontalAlignment.center] + totalOffset(for: .horizontal)
+    }
+  }
+  
+  nonisolated private var toolTipAlignment: Alignment {
     alignment.forTooltip
   }
 
-  private func totalOffset(
+  nonisolated private func totalOffset(
     for axis: Axis2D,
     mapping: AxisMapping = .default
   ) -> CGFloat {
@@ -103,7 +107,6 @@ extension Tooltip {
   }
 
 }
-
 
 extension View {
   public func tooltip(
