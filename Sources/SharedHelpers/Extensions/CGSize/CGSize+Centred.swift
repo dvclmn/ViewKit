@@ -89,23 +89,28 @@ extension CGSize {
 }
 
 extension CGSize {
+  
   /// Strategy for handling views that are larger than their container
   public enum PlacementStrategy {
     /// Center the view within the container, allowing overflow
     case centerWithOverflow
+    
     /// Scale the view proportionally to fit within the container
     case scaleToFit
+    
     /// Scale the view to fill the container, potentially cropping content
     case scaleToFill
+    
     /// Align to top-left corner, allowing overflow
     case topLeft
+    
     /// Align to top-right corner, allowing overflow
     case topRight
+    
     /// Align to bottom-left corner, allowing overflow
     case bottomLeft
+    
     /// Align to bottom-right corner, allowing overflow
     case bottomRight
-    /// Return nil if the view doesn't fit (original behavior)
   }
-
 }

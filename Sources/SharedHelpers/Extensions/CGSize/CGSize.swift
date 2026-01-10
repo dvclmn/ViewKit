@@ -15,6 +15,17 @@ extension CGSize: @retroactive Hashable {
 }
 
 extension CGSize {
+  public init(fromLength length: CGFloat) {
+    self.init(width: length, height: length)
+  }
+  
+  public init(_ width: CGFloat, _ height: CGFloat) {
+    self.init(width: width, height: height)
+  }
+
+}
+
+extension CGSize {
 
   /// Euclidean magnitude of the vector?
   @available(
@@ -31,38 +42,11 @@ extension CGSize {
   public var normalisedLength: CGSize { length > 0 ? self / length : .zero }
   public var normalisedMagnitude: CGSize { magnitude > 0 ? self / magnitude : .zero }
 
-  // MARK: - Initialisers
-
-  public init(fromLength length: CGFloat) {
-    self.init(width: length, height: length)
-  }
-
-  public init(_ width: CGFloat, _ height: CGFloat) {
-    self.init(width: width, height: height)
-  }
-
-  // MARK: - Conversions
-
-  public var toCGRectZeroOrigin: CGRect {
-    CGRect(origin: .zero, size: self)
-  }
-
-  public var toCGPoint: CGPoint {
-    CGPoint(x: width, y: height)
-  }
 
   // MARK: - General
 
-  public var longestDimension: CGFloat {
-    return max(width, height)
-  }
-  public var shortestDimension: CGFloat {
-    return min(width, height)
-  }
-
-  public func point(for unitPoint: UnitPoint) -> CGPoint {
-    unitPoint.toCGPoint(in: self)
-  }
+  public var longestDimension: CGFloat { max(width, height) }
+  public var shortestDimension: CGFloat { min(width, height) }
 
   /// Returns the offset needed to centre a child of the given size within this container.
   public func centeringOffset(forChild childSize: CGSize) -> CGSize {
