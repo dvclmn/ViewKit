@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 public struct FrameFromUnitLength: ViewModifier {
   @Environment(\.unitSize) private var unitSize

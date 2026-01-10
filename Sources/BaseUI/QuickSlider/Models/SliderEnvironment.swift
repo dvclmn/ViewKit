@@ -7,7 +7,7 @@
 
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 public typealias FormatValue = (Double) -> String
 

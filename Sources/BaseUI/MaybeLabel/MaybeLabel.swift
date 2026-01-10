@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 28/2/2025.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 public struct MaybeLabel: View {

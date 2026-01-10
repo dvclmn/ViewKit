@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 import LayoutKit
 
 public protocol ListLayoutMode: View {}

@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 18/1/2025.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 public struct QuickPicker<RowContent: View, Item: Pickable & Shortcuttable>: View {

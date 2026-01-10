@@ -7,7 +7,7 @@
 
 //
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 public struct QuickTabView<TabItem: LabeledItem, Content: View>: View
 where TabItem: CaseIterable, TabItem.AllCases: RandomAccessCollection {

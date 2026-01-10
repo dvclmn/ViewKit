@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 8/5/2025.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 public typealias ViewSizeOutput<T> = (T) -> Void

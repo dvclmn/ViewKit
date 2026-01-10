@@ -6,7 +6,7 @@
 //
 
 import EnumMacros
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 extension Box {

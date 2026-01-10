@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SharedHelpers
+import BasePrimitives
 
 public protocol InfoBarSection: CaseIterable {
 //  associatedtype Item = AllCases.Element

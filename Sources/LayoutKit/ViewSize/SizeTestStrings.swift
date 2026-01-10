@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SharedHelpers
+import BasePrimitives
 
 struct TestString {
   let text: String

@@ -7,7 +7,7 @@
 
 import EnumMacros
 import Foundation
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 public struct Tooltip: ViewModifier {

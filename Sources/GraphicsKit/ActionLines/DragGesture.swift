@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 25/11/2024.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 // TODO: Consider using GestureKit for gestures

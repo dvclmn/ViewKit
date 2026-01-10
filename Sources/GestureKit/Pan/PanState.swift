@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import Foundation
-import SharedHelpers
+import BasePrimitives
 
 public struct PanState: GestureStateProtocol, Sendable {
   public let value: CGSize

@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 12/11/2024.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 public typealias Hover3DOutput = (Hover3DState) -> Void

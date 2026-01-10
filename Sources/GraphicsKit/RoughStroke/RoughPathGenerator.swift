@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 // TODO: I want to keep this, but cannot figure out main-actor whatevers
 //public struct RoughPathGenerator {

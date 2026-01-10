@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 6/11/2024.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 public struct TextGroup: View {

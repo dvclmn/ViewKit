@@ -8,7 +8,7 @@
 //import BaseUI
 
 import LayoutKit
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 struct InfoBarSectionView: View {

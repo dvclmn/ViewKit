@@ -7,7 +7,7 @@
 
 //import BaseUI
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 
 public struct CodeLoadingView: View {

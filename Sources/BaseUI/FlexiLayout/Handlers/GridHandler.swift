@@ -8,7 +8,7 @@
 #if os(macOS)
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 
 extension Flexi {

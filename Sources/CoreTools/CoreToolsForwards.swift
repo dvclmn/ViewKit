@@ -11,5 +11,5 @@
 /// Lower-level / more pared-down, compared to ToolKit
 @_exported import Foundation
 @_exported import StringKit
-@_exported import SharedHelpers
+@_exported import BasePrimitives
 @_exported import EnumMacros

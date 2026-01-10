@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SharedHelpers
+import BasePrimitives
 
 public struct ZoomState: GestureStateProtocol, Sendable {
   public let value: CGFloat

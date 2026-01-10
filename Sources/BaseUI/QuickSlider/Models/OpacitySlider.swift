@@ -7,7 +7,7 @@
 
 import ColourKit
 import GraphicsKit
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 

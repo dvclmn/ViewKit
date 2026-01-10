@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 21/10/2025.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 struct ToolTipView: View {

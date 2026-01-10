@@ -7,7 +7,7 @@
 
 import Testing
 
-@testable import SharedHelpers
+@testable import BasePrimitives
 
 struct Test {
 

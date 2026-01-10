@@ -7,7 +7,7 @@
 
 import LayoutKit
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 
 extension Flexi {

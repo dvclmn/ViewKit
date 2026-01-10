@@ -7,7 +7,7 @@
 
 // ⚠️ Has dependancy: `updateIfChanged`
 //import SwiftUI
-//import SharedHelpers
+//import BasePrimitives
 
 //extension View {
 //  public func bind<Value: Equatable>(

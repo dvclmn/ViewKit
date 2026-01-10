@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SharedHelpers
+import BasePrimitives
 import BaseTypes
 
 public struct Box: Sendable {

@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 10/11/2024.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 public typealias SliderOutput = (SliderPhase) -> Void

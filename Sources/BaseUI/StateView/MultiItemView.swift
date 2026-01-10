@@ -6,7 +6,7 @@
 //
 
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 public struct MultiItemView<DataContent: View, Additional: View, Data: Collection & ExpressibleByArrayLiteral>: View

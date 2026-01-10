@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 24/8/2024.
 //
 
-import SharedHelpers
+import BasePrimitives
 import StringKit
 
 extension Box {

@@ -7,7 +7,7 @@
 
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 public struct InfoBarItemView: View {
   @Environment(\.isShowingSectionHeader) private var isShowingSectionHeader

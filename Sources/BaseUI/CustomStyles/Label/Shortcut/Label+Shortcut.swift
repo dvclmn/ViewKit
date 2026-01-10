@@ -7,7 +7,7 @@
 
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 
 extension LabelStyle where Self == ShortcutLabel {

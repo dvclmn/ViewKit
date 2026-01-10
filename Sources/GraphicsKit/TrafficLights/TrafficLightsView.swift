@@ -7,7 +7,7 @@
 
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 public struct TrafficLightsModifier: ViewModifier {
   public func body(content: Content) -> some View {

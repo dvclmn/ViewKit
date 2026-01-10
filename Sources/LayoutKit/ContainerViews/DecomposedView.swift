@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 9/6/2025.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 public struct DecomposedView<Content: View>: View {

@@ -7,7 +7,7 @@
 
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 public struct ContextMenuPreviewModifier<MenuContent: View>: ViewModifier {
   @Environment(\.explicitSize) private var explicitSize

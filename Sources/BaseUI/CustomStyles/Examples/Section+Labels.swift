@@ -6,7 +6,7 @@
 //
 
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 public struct Section_Labels: View {

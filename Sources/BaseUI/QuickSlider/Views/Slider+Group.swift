@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-import SharedHelpers
+import BasePrimitives
 
 public struct SliderGroup<Sliders: View>: View {
   //  @Environment(\.sliderControlSize) var sliderControlSize

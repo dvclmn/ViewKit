@@ -6,7 +6,7 @@
 //  Copyright © 2023 Apple. All rights reserved.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 /// Parts:

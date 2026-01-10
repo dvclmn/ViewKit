@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 29/6/2025.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 /// Represents a *delta* adjustment in HSV space

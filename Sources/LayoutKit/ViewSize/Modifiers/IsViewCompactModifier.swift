@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 public typealias IsViewCompactHandler = (Bool) -> Void
 

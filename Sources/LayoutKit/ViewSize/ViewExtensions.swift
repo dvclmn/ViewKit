@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 // MARK: - View Extension

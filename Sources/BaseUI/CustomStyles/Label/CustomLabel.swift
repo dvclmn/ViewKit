@@ -6,7 +6,7 @@
 //
 
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 extension LabelStyle where Self == CustomLabel {

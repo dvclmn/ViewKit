@@ -42,7 +42,7 @@ public func + (lhs: GridDimensions, rhs: GridDimensions) -> GridDimensions {
 }
 
 //import SwiftUI
-//import SharedHelpers
+//import BasePrimitives
 
 //public struct GridDimensions: ModelBase {
 //  public var columns: Int

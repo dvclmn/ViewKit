@@ -7,7 +7,7 @@
 
 import EnumMacros
 import Foundation
-import SharedHelpers
+import BasePrimitives
 
 @CaseDetection(includesNames: true)
 public enum DisplayBlock {

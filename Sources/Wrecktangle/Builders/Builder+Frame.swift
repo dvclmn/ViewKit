@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 7/11/2025.
 //
 
-import SharedHelpers
+import BasePrimitives
 
 @resultBuilder
 enum FrameBuilder {

@@ -7,7 +7,7 @@
 //
 
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 public struct CustomTextFieldStyle: @preconcurrency TextFieldStyle {

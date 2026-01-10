@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 31/10/2025.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftUI
 
 public struct GridFontModifier: ViewModifier {

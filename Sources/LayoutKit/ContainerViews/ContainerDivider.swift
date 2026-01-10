@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 public struct ContainerDivider: View {
   @Environment(\.explicitWidth) private var explicitWidth

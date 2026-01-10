@@ -6,7 +6,7 @@
 //
 
 import AppKit
-import SharedHelpers
+import BasePrimitives
 import VectorKit
 
 /// Manages trackpad touches and maintains their history for velocity calculations

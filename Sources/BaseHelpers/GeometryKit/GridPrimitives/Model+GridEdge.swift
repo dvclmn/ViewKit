@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 public enum GridEdge: String, ModelBase, CaseIterable {
   case top

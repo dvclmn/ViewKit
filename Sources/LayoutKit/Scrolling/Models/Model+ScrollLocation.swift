@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 /// Chosen terms `start` and `end` to provide the flexibility to
 /// be referring to both horizontal or vertical `ScrollView`s

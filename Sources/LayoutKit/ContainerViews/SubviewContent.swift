@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SharedHelpers
+import BasePrimitives
 
 @available(macOS 15.0, iOS 18.0, *)
 public struct SubviewContent: View {

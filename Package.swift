@@ -18,9 +18,9 @@ let package = Package(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
     ),
-    .library(name: "BaseHelpers", targets: ["BaseHelpers"]),
+    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
     .library(name: "BasePrimitives", targets: ["BasePrimitives"]),
-//    .library(name: "BaseTypes", targets: ["BaseTypes"]),
+    //    .library(name: "BaseTypes", targets: ["BaseTypes"]),
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
     .library(
       name: "BaseUI",
@@ -31,14 +31,14 @@ let package = Package(
         "MotionKit",
       ]
     ),
-//    .library(name: "CanvasKit", targets: ["CanvasKit"]),
+    //    .library(name: "CanvasKit", targets: ["CanvasKit"]),
     .library(name: "ColourKit", targets: ["ColourKit"]),
     .library(name: "GestureKit", targets: ["GestureKit"]),
-//    .library(name: "GridKit", targets: ["GridKit"]),
-//    .library(name: "GridUI", targets: ["GridUI"]),
+    //    .library(name: "GridKit", targets: ["GridKit"]),
+    //    .library(name: "GridUI", targets: ["GridUI"]),
     .library(name: "VectorKit", targets: ["VectorKit"]),
-    
-//    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
+
+    //    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
     .library(name: "StringKit", targets: ["StringKit"]),
     .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
 
@@ -64,7 +64,7 @@ let package = Package(
     .macro(
       name: "BaseMacrosImplementation",
       dependencies: [
-        .module(.sharedHelpers),
+        .module(.primitives),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
@@ -87,6 +87,17 @@ let package = Package(
     // MARK: - Targets
 
     .target(
+      name: "SharedHelpers",
+      dependencies: [
+        .module(.coreTools),
+        //        .module(.gridKit),
+        .identifiedCollections,
+        .sharing,
+      ],
+
+    ),
+
+    .target(
       name: "BaseNetworking",
       dependencies: [
         .module(.coreTools),
@@ -95,39 +106,21 @@ let package = Package(
     ),
 
     .target(
+      name: "BasePrimitives",
+      dependencies: [],
+    ),
+
+    .target(
       name: "BaseUI",
       dependencies: [
         .module(.coreTools),
-        //        .module(.vectorKit),
         .module(.colourKit),
         .module(.layoutKit),
         .module(.graphicsKit),
         .module(.gestureKit),
-        //        .module(.gridKit),
-        //        .module(.wrecktangle),
         .sharing,
       ],
     ),
-
-    .target(
-      name: "BaseTypes",
-      dependencies: [
-        .module(.coreTools),
-//        .module(.gridKit),
-        .identifiedCollections,
-        .sharing,
-      ],
-    ),
-
-//    .target(
-//      name: "CanvasKit",
-//      dependencies: [
-//        .module(.baseUI),
-//        .module(.sharedHelpers),
-//        .module(.gestureKit),
-//        .sharing,
-//      ],
-//    ),
 
     .target(
       name: "ColourKit",
@@ -149,28 +142,8 @@ let package = Package(
         .module(.sharedHelpers),
         .module(.colourKit),
         .module(.vectorKit),
-        //        .module(.gridKit),
       ]
     ),
-
-//    .target(
-//      name: "GridKit",
-//      dependencies: [
-//        .module(.sharedHelpers),
-////        .module(.coreTools),
-////        .module(.colourKit),
-////        .module(.layoutKit),
-//      ]
-//    ),
-
-//    .target(
-//      name: "GridUI",
-//      dependencies: [
-//        .module(.coreTools),
-//        .module(.layoutKit),
-//        .module(.gridKit),
-//      ]
-//    ),
 
     .target(
       name: "LayoutKit",
@@ -183,11 +156,6 @@ let package = Package(
     .target(
       name: "MotionKit",
       dependencies: [.module(.coreTools)]
-    ),
-
-    .target(
-      name: "SharedHelpers",
-      dependencies: [.identifiedCollections]
     ),
 
     .target(
@@ -206,9 +174,8 @@ let package = Package(
     .target(
       name: "Wrecktangle",
       dependencies: [
-        .module(.coreTools),
-//        .module(.gridKit),
-        .module(.baseTypes),
+        .module(.coreTools)
+        //        .module(.baseTypes),
       ]
     ),
 
@@ -227,11 +194,11 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.baseUI),
-        .module(.baseTypes),
+        //        .module(.baseTypes),
         .module(.layoutKit),
       ]
     ),
-    
+
     // MARK: - Forwarding modules
     .testTarget(
       name: "SharedHelpersTests",
@@ -260,19 +227,21 @@ extension String {
 }
 
 enum BaseModule {
+  case sharedHelpers
+  case primitives
   case enumMacros
   case networking
   case baseUI
-  case baseTypes
-//  case canvasKit
+  //  case baseTypes
+  //  case canvasKit
   case colourKit
   case vectorKit
   case gestureKit
   case graphicsKit
-//  case gridKit
+  //  case gridKit
   case layoutKit
   case motionKit
-  case sharedHelpers
+
   case stringKit
   case wrecktangle
 
@@ -282,19 +251,23 @@ enum BaseModule {
 
   var name: String {
     switch self {
+        /// Keeping this as SharedHelpers for now, for ease
+        /// May rename to BaseHelpers later
+      case .sharedHelpers: "SharedHelpers"
+      case .primitives: "BasePrimitives"
       case .enumMacros: "EnumMacros"
       case .networking: "BaseNetworking"
       case .baseUI: "BaseUI"
-      case .baseTypes: "BaseTypes"
-//      case .canvasKit: "CanvasKit"
+      //      case .baseTypes: "BaseTypes"
+      //      case .canvasKit: "CanvasKit"
       case .colourKit: "ColourKit"
       case .vectorKit: "VectorKit"
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
-//      case .gridKit: "GridKit"
+      //      case .gridKit: "GridKit"
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
-      case .sharedHelpers: "SharedHelpers"
+
       case .stringKit: "StringKit"
       case .wrecktangle: "Wrecktangle"
 
