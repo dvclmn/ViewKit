@@ -20,7 +20,6 @@ let package = Package(
     ),
     .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
     .library(name: "BasePrimitives", targets: ["BasePrimitives"]),
-    //    .library(name: "BaseTypes", targets: ["BaseTypes"]),
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
     .library(
       name: "BaseUI",
@@ -31,15 +30,12 @@ let package = Package(
         "MotionKit",
       ]
     ),
-    //    .library(name: "CanvasKit", targets: ["CanvasKit"]),
+
     .library(name: "ColourKit", targets: ["ColourKit"]),
     .library(name: "GestureKit", targets: ["GestureKit"]),
-    //    .library(name: "GridKit", targets: ["GridKit"]),
-    //    .library(name: "GridUI", targets: ["GridUI"]),
     .library(name: "VectorKit", targets: ["VectorKit"]),
 
-    //    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
-//    .library(name: "StringKit", targets: ["StringKit"]),
+    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
     .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
 
     // Export-only libraries
@@ -55,8 +51,8 @@ let package = Package(
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
-    .package(
-      url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
+    //    .package(
+    //      url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
   ],
 
   targets: [
@@ -64,7 +60,7 @@ let package = Package(
     .macro(
       name: "BaseMacrosImplementation",
       dependencies: [
-//        .module(.primitives),
+        //        .module(.primitives),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
@@ -85,16 +81,6 @@ let package = Package(
     ),
 
     // MARK: - Targets
-
-    .target(
-      name: "SharedHelpers",
-      dependencies: [
-        .module(.coreTools),
-        .identifiedCollections,
-        .sharing,
-      ],
-
-    ),
 
     .target(
       name: "BaseNetworking",
@@ -123,7 +109,9 @@ let package = Package(
 
     .target(
       name: "ColourKit",
-      dependencies: [.module(.coreTools)],
+      dependencies: [
+        .module(.coreTools)
+      ],
     ),
 
     .target(
@@ -138,7 +126,7 @@ let package = Package(
     .target(
       name: "GraphicsKit",
       dependencies: [
-        .module(.sharedHelpers),
+        .module(.coreTools),
         .module(.colourKit),
         .module(.vectorKit),
       ]
@@ -154,27 +142,32 @@ let package = Package(
 
     .target(
       name: "MotionKit",
-      dependencies: [.module(.coreTools)]
+      dependencies: [
+        .module(.coreTools)
+      ]
     ),
 
-//    .target(
-//      name: "StringKit",
-//      dependencies: [
-//        .module(.sharedHelpers),
-//        .module(.enumMacros),
-//      ]
-//    ),
+    .target(
+      name: "SharedHelpers",
+      dependencies: [
+        .module(.primitives),
+        .module(.enumMacros),
+        //        .identifiedCollections,
+        .sharing,
+      ],
+    ),
 
     .target(
       name: "VectorKit",
-      dependencies: [.module(.sharedHelpers)]
+      dependencies: [
+        .module(.coreTools)
+      ]
     ),
 
     .target(
       name: "Wrecktangle",
       dependencies: [
         .module(.coreTools)
-        //        .module(.baseTypes),
       ]
     ),
 
@@ -182,8 +175,8 @@ let package = Package(
     .target(
       name: "CoreTools",
       dependencies: [
+        .module(.primitives),
         .module(.sharedHelpers),
-//        .module(.stringKit),
         .module(.enumMacros),
       ],
     ),
@@ -193,9 +186,8 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.baseUI),
-        //        .module(.baseTypes),
-        .module(.layoutKit),
-      ]
+        //        .module(.layoutKit),
+      ],
     ),
 
     // MARK: - Forwarding modules
@@ -214,9 +206,9 @@ extension Target.Dependency {
   static var sharing: Self {
     .product(name: "Sharing", package: "swift-sharing")
   }
-  static var identifiedCollections: Self {
-    .product(name: "IdentifiedCollections", package: "swift-identified-collections")
-  }
+  //  static var identifiedCollections: Self {
+  //    .product(name: "IdentifiedCollections", package: "swift-identified-collections")
+  //  }
   static var nsui: Self {
     .product(name: "NSUI", package: "nsui")
   }
@@ -241,7 +233,7 @@ enum BaseModule {
   case layoutKit
   case motionKit
 
-//  case stringKit
+  //  case stringKit
   case wrecktangle
 
   /// Export-only modules
@@ -250,8 +242,8 @@ enum BaseModule {
 
   var name: String {
     switch self {
-        /// Keeping this as SharedHelpers for now, for ease
-        /// May rename to BaseHelpers later
+      /// Keeping this as SharedHelpers for now, for ease
+      /// May rename to BaseHelpers later
       case .sharedHelpers: "SharedHelpers"
       case .primitives: "BasePrimitives"
       case .enumMacros: "EnumMacros"
@@ -267,7 +259,7 @@ enum BaseModule {
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
 
-//      case .stringKit: "StringKit"
+      //      case .stringKit: "StringKit"
       case .wrecktangle: "Wrecktangle"
 
       /// Export-only

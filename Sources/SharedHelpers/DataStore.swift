@@ -6,13 +6,14 @@
 //
 
 import Foundation
-import IdentifiedCollections
+//import IdentifiedCollections
 import CoreTools
 
 public protocol DataStore {
   associatedtype Item: ModelBase & Identifiable
   associatedtype Config: ItemConfiguration
-  var items: IdentifiedArrayOf<Item> { get set }
+  var items: [Item] { get set }
+//  var items: IdentifiedArrayOf<Item> { get set }
   var selectedItems: Set<Item.ID> { get set }
   var configs: [Item.ID: Config] { get set }
   
