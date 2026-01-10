@@ -183,7 +183,7 @@ let package = Package(
       name: "CoreTools",
       dependencies: [
         .module(.sharedHelpers),
-        .module(.stringKit),
+//        .module(.stringKit),
         .module(.enumMacros),
       ],
     ),

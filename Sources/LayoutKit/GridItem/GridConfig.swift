@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import StringKit
+import CoreTools
 
 /// Note: this is specifically geared toward `LazyVGrid`,
 /// `LazyHGrid` is not supported.

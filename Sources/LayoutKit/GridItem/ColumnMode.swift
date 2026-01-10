@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import StringKit
+import CoreTools
 
 extension ColumnConfig {
 
