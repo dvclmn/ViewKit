@@ -16,16 +16,40 @@ import Foundation
 /// ```
 /// /(?<styleTarget>x|y|X|Y|:\s|,\s|W|H|Column|COL|Row|ROW|ROWS|COLS)/
 /// ```
+/// This little domain is basically attempting to identify common patterns
+/// in bits of UI throughout my apps. And then assign meaning and
+/// regex patterns to them, to automatically highlight them according
+/// to their purpose etc.
 
-public struct StyledPattern {
-  public let pattern: Regex<Substring>
+public struct StyledKeywords {
+  /// Will need to determine a way for the regex to know what is
+  /// a keyword, and what is just a normal letter in a sentence etc.
+  public static let keyWords: [String] = [
+    "x", "y",
+    "X", "Y",
+    "w", "h",
+    "W", "H",
+    
+    ":", ",",
 
-  /// For more styles and info, see
-  /// `BaseHelpers/Extensions/AttributedString/AttributeContainer`
-  public let attributes: AttributeContainer
+    "Row", "ROW",
+    "Rows", "ROWS",
 
-  public init(_ pattern: Regex<Substring>, attributes: AttributeContainer) {
-    self.pattern = pattern
-    self.attributes = attributes
-  }
+    "Column", "COL",
+    "Columns", "COLS",
+
+  ]
 }
+
+//public struct StyledPattern {
+//  public let pattern: Regex<Substring>
+//
+//  /// For more styles and info, see
+//  /// `BaseHelpers/Extensions/AttributedString/AttributeContainer`
+//  public let attributes: AttributeContainer
+//
+//  public init(_ pattern: Regex<Substring>, attributes: AttributeContainer) {
+//    self.pattern = pattern
+//    self.attributes = attributes
+//  }
+//}
