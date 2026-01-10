@@ -24,3 +24,8 @@ public enum Axis2D: Int, CaseIterable, Codable {
   case horizontal
   case vertical
 }
+
+extension Axis2D {
+  public var isHorizontal: Bool { self == .horizontal }
+  public var isVertical: Bool { self == .vertical }
+}

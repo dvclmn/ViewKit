@@ -37,7 +37,24 @@ extension Direction2D {
       height: y * distance * multiplier
     )
   }
-  
+
+  public func offset(
+    axis: Axis2D,
+    distance: CGFloat,
+    radial radialDirection: RadialDirection = .outward
+  ) -> CGFloat {
+    let offset = offset(distance: distance, radial: radialDirection)
+    return axis.isHorizontal ? offset.width : offset.height
+//    let multiplier: CGFloat = (radialDirection == .outward) ? 1 : -1
+//    let offset: CGFloat = axis.isHorizontal ? x : y
+//
+//    return offset * distance * multiplier
+    //    CGSize(
+    //      width: x * distance * multiplier,
+    //      height: y * distance * multiplier
+    //    )
+  }
+
   public func positioned(
     from origin: CGPoint,
     alignment: Alignment,
@@ -80,5 +97,28 @@ extension Alignment {
   ) -> CGSize {
     direction.offset(distance: distance, radial: radialDirection)
   }
+  
+  public func offset(
+    axis: Axis2D,
+    distance: CGFloat,
+    radial radialDirection: RadialDirection = .outward
+  ) -> CGSize {
+    direction.offset(axis: axis, distance: distance, radial: radialDirection)
+  }
 
+}
+
+extension ViewDimensions {
+  public func offset(
+    for alignment: Alignment,
+    axis: Axis2D,
+    magnitude: CGFloat,  // As a factor, e.g. 0.2
+    //    distance: CGFloat,
+    radial radialDirection: RadialDirection = .outward
+  ) -> CGFloat {
+    let length = axis.isHorizontal ? self.width : self.height
+    let offset = alignment.offset(distance: <#T##CGFloat#>, radial: <#T##RadialDirection#>)
+    return self[alignment]
+    //    direction.offset(distance: distance, radial: radialDirection)
+  }
 }
