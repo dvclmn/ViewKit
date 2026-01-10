@@ -29,6 +29,7 @@ public struct Tooltip: ViewModifier {
         }
       }  // END hover
 
+//      .overlay(alignment: .toolTip) {
       .overlay(alignment: toolTipAlignment) {
 
         ToolTipView(
@@ -36,6 +37,7 @@ public struct Tooltip: ViewModifier {
           isShowing: isShowing
         )
         .environment(\.itemColour, colour)
+        
 
 //        .alignmentGuide(toolTipAlignment.horizontal) { dimensions in
 //          guidesH(dimensions)

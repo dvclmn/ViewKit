@@ -9,8 +9,8 @@ import SharedHelpers
 import SwiftUI
 
 struct ToolTipView: View {
-
   @Environment(\.itemColour) private var itemColour
+  
   private let style: ToolTipStyle = .capsule
 
   let text: String
@@ -23,16 +23,17 @@ struct ToolTipView: View {
           .fixedSize(horizontal: true, vertical: false)
           .foregroundStyle(.primary.opacity(0.85))
           //          .font(.body)
-//          .padding(.horizontal, Styles.sizeMicro)
-//          .padding(.vertical, Styles.sizeNano)
-//          .quickBackground(
-//            shape: .capsule,
-//            //            shape: style.isCapsule ? .capsule : .rect(cornerRadius: CGFloat.defaultQuickRounding),
-//            tint: itemColour ?? Color.black.opacity(0.6)
-//          )
-          .background(.regularMaterial)
-          .background(.tint.secondary)
-          .clipShape(.rounded)
+          .padding(.horizontal, 2)
+          .padding(.vertical, 1)
+          .quickBackground(
+            shape: .capsule,
+            //            shape: style.isCapsule ? .capsule : .rect(cornerRadius: CGFloat.defaultQuickRounding),
+            tint: itemColour ?? Color.black.opacity(0.6)
+          )
+//          .background(.regularMaterial)
+
+//          .background(itemColour ?? Color.black.opacity(0.6))
+//          .clipShape(.rounded)
 
       }
     }

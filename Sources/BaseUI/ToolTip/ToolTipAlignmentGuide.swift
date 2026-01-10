@@ -14,8 +14,12 @@ struct ToolTipHorizontalAlignment: AlignmentID {
 //      case let thing where thing
 //    }
     
-    
-    return .zero
+    if context[.leading] == 0 {
+      return 50
+    } else {
+      return 0
+    }
+//    return context
     
 //      dimensions[.trailing] + totalOffset(for: .horizontal)  // Place tooltip to the left
     
@@ -53,7 +57,15 @@ extension ToolTipHorizontalAlignment {
 }
 
 extension HorizontalAlignment {
-  static let firstThird = HorizontalAlignment(ToolTipHorizontalAlignment.self)
+  static let toolTip = HorizontalAlignment(ToolTipHorizontalAlignment.self)
+}
+
+extension VerticalAlignment {
+  static let toolTip = VerticalAlignment(ToolTipHorizontalAlignment.self)
+}
+
+extension Alignment {
+  static let toolTip = Alignment(horizontal: .toolTip, vertical: .toolTip)
 }
 
 //nonisolated private func guides(

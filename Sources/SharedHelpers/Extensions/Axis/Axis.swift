@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-//extension Axis: AxisRepresentable {}
-
 extension Axis {
   public var toAxisSet: Axis.Set {
     switch self {
@@ -22,18 +20,28 @@ extension Axis {
       case .vertical: return .vertical
     }
   }
-  
-  // TODO: Does this make sense? Should this be incorporated with `AxisConvention`?
-  public func getMinMax(_ axis: Axis.MinMax) -> Axis {
-    switch axis {
-      case .minWidth, .maxWidth:
-        return .horizontal
 
-      case .minHeight, .maxHeight:
-        return .vertical
+  public func getMinMax(_ axis: Axis.MinMax, mapping: AxisMapping = .default) -> Axis {
+    switch mapping {
+      case .identity:
+        switch axis {
+          case .minWidth, .maxWidth:
+            return .horizontal
+
+          case .minHeight, .maxHeight:
+            return .vertical
+        }
+      case .transposed:
+        switch axis {
+          case .minWidth, .maxWidth:
+            return .vertical
+
+          case .minHeight, .maxHeight:
+            return .horizontal
+        }
     }
+
   }
-  
 
   public var toAxis2D: Axis2D {
     switch self {
