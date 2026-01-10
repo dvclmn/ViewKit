@@ -82,7 +82,7 @@ extension CGSize {
   }
 
   public func aspectRatio(
-    mode: ContentMode,
+    mode: ContentSizeMode,
     intoSize size: CGSize
   ) -> CGSize {
     if self == .zero {

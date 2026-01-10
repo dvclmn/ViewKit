@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import BasePrimitives
 
 extension DummyContent {
 
@@ -95,7 +96,7 @@ extension DummyContent.Animal {
 
       /// Create new QuickLabel with the original attributedText and role, but new icon
       let newLabel = QuickLabel(
-        attributedText: animal.label.attributedText,
+        animal.label.attributedText,
         icon: newIcon,
         role: animal.label.role
       )

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BasePrimitives
+import CoreTools
 
 extension BinaryFloatingPoint {
   func removingZoomPercent(_ zoomPercent: Self) -> Self {

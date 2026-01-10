@@ -12,38 +12,21 @@
 import Foundation
 
 extension CountableClosedRange where Bound == Int {
-  
+
   public func attributedRange(for attrString: AttributedString) -> Range<AttributedString.Index>? {
     let start = attrString.index(at: self.lowerBound)
     let end = attrString.index(at: self.upperBound + 1)
-    
+
     guard let start, let end else { return nil }
     return start..<end
   }
 }
-
 
 extension Range where Bound == String.Index {
 
   public func toNSRange(in string: String) -> NSRange? {
     string.nsRange(from: self)
   }
-
-//  func substringTruncation(
-//    context: Int,
-//    in text: String
-//  ) -> (String, Bool) {
-//    let start = text.index(self.lowerBound, offsetBy: -context, limitedBy: text.startIndex) ?? text.startIndex
-//    let end = text.index(self.upperBound, offsetBy: context, limitedBy: text.endIndex) ?? text.endIndex
-//    let truncatedLeading = start > text.startIndex
-//    let truncatedTrailing = end < text.endIndex
-//    
-//    
-//    return (
-//      String(text[start..<self.lowerBound]) + String(text[self.upperBound..<end]),
-//      truncatedLeading || truncatedTrailing
-//    )
-//  }
 
   public func getAttributedRange(
     in attrString: AttributedString

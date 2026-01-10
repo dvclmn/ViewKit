@@ -8,7 +8,7 @@
 import Foundation
 
 /// An attempt to describe types that hold onto two or more float values
-/// Certainly relies on a predictable/conventional order
+/// Relies on a predictable/conventional order
 //public protocol MultiFloat {
 //  init(newValue: CGFloat...)
 //}

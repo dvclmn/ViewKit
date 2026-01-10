@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 10/10/2025.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
-
 
 public struct CharacterAndViewSizeModifier: ViewModifier {
   @Environment(\.font) private var font

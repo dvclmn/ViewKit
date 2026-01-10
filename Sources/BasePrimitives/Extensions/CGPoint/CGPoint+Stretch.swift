@@ -69,7 +69,7 @@ extension CGPoint {
   public func mapPoint(
     from source: CGRect,
     to destination: CGRect,
-    mode: ContentMode = .fit
+    mode: ContentSizeMode = .fit
   ) -> CGPoint {
     switch mode {
       case .stretch: stretchMap(from: source, to: destination)

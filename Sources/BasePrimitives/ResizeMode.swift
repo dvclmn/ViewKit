@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ContentMode {
+public enum ContentSizeMode {
   /// Fill destination rect exactly, even if aspect ratio is distorted
   case stretch
   

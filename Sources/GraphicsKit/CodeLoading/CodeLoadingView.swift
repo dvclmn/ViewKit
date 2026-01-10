@@ -5,14 +5,12 @@
 //  Created by Dave Coleman on 21/11/2024.
 //
 
-//import BaseUI
+import CoreTools
 import SwiftUI
-import BasePrimitives
-
 
 public struct CodeLoadingView: View {
 
-//  @State private var randomGenerator = RandomValueGenerator<Double>(seed: 12345)
+  //  @State private var randomGenerator = RandomValueGenerator<Double>(seed: 12345)
   @State private var randomValues: [String: Double] = [:]
 
   public var config: CodeLoadingConfiguration
@@ -49,32 +47,31 @@ public struct CodeLoadingView: View {
 }
 
 extension CodeLoadingView {
-  
+
   // When the view initializes or config changes, pre-compute all random values
   func precomputeRandomValues() {
     var generator = SeededGenerator(seed: config.seed)
-    
+
     // Clear existing values
     randomValues = [:]
-    
+
     // Estimate how many random values we'll need
     let totalLines = estimateTotalLines()
-    
+
     // Generate all the random values we'll need
     for lineIndex in 0..<totalLines {
-      for segmentIndex in 0..<50 { // Use a reasonable maximum number of segments
+      for segmentIndex in 0..<50 {  // Use a reasonable maximum number of segments
         let key = "line_\(lineIndex)_segment_\(segmentIndex)"
         randomValues[key] = Double.random(in: config.word.lengthRange, using: &generator)
       }
     }
   }
-  
+
   // Helper to estimate total lines (adjust based on your config)
   private func estimateTotalLines() -> Int {
     // Simple estimation based on config
-    return config.objectCount * 10 // Adjust based on your actual needs
+    return config.objectCount * 10  // Adjust based on your actual needs
   }
-  
 
   private func drawCodeBlock(
     _ context: GraphicsContext,
@@ -163,12 +160,11 @@ extension CodeLoadingView {
 
       let isLastSegment = segmentIndex == approximateSegments - 1
       let remainingWidth = endX - currentX
-      
-      
+
       // Use pre-computed random value - no mutation during drawing
       let cacheKey = "line_\(lineIndex)_segment_\(segmentIndex)"
       let randomValue = randomValues[cacheKey] ?? config.word.lengthRange.lowerBound
-      
+
       let segmentWidth: Double
       if isLastSegment {
         segmentWidth = min(remainingWidth, randomValue)
@@ -178,30 +174,28 @@ extension CodeLoadingView {
           remainingWidth / Double(approximateSegments - segmentIndex)
         )
       }
-      
-      
 
-//      /// Calculate segment width
-//      let segmentWidth: Double
-//      if isLastSegment {
-//        segmentWidth = min(
-//          remainingWidth,
-//          randomGenerator.generate(
-//            count: 1,
-//            parameters: RandomisationParameters(ranges: [config.word.lengthRange]),
-//            cacheKey: "line_\(lineIndex)_segment_\(segmentIndex)"
-//          )
-//        )
-//      } else {
-//        segmentWidth = min(
-//          randomGenerator.generate(
-//            count: 1,
-//            parameters: RandomisationParameters(ranges: [config.word.lengthRange]),
-//            cacheKey: "line_\(lineIndex)_segment_\(segmentIndex)"
-//          ),
-//          remainingWidth / Double(approximateSegments - segmentIndex)
-//        )
-//      }
+      //      /// Calculate segment width
+      //      let segmentWidth: Double
+      //      if isLastSegment {
+      //        segmentWidth = min(
+      //          remainingWidth,
+      //          randomGenerator.generate(
+      //            count: 1,
+      //            parameters: RandomisationParameters(ranges: [config.word.lengthRange]),
+      //            cacheKey: "line_\(lineIndex)_segment_\(segmentIndex)"
+      //          )
+      //        )
+      //      } else {
+      //        segmentWidth = min(
+      //          randomGenerator.generate(
+      //            count: 1,
+      //            parameters: RandomisationParameters(ranges: [config.word.lengthRange]),
+      //            cacheKey: "line_\(lineIndex)_segment_\(segmentIndex)"
+      //          ),
+      //          remainingWidth / Double(approximateSegments - segmentIndex)
+      //        )
+      //      }
 
       if segmentWidth > 0 && currentX + segmentWidth <= size.width {
         let rect = CGRect(
@@ -213,7 +207,7 @@ extension CodeLoadingView {
         let roundedRect = Path(roundedRect: rect, cornerRadius: config.word.rounding)
 
         context.fill(roundedRect, with: .color(.pink))
-//        context.fill(roundedRect, with: .color(config.word.type.swatch.swiftUIColour))
+        //        context.fill(roundedRect, with: .color(config.word.type.swatch.swiftUIColour))
       }
 
       currentX += segmentWidth + spacing

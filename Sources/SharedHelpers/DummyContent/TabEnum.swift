@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BasePrimitives
 
 public enum ExampleTab: String, Pickable, Shortcuttable {
   

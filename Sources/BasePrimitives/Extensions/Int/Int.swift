@@ -8,20 +8,21 @@
 import Foundation
 
 extension Int {
-  
-  public var doubled: Int { self * 2 }
 
-  public var toOpacity: Double {
-    let newValue: Double
-    if self == 0 {
-      newValue = 1  // aka 100%
-    } else {
-      /// E.g. converts input of `4` to `0.4`, as opacity here is
-      /// expressed as `0-1`
-      newValue = (Double(self) / 10)
-    }
-    return newValue
-  }
+  public var doubled: Int { self * 2 }
+  public var halved: Int { self / 2 }
+
+  //  public var toOpacity: Double {
+  //    let newValue: Double
+  //    if self == 0 {
+  //      newValue = 1  // aka 100%
+  //    } else {
+  //      /// E.g. converts input of `4` to `0.4`, as opacity here is
+  //      /// expressed as `0-1`
+  //      newValue = (Double(self) / 10)
+  //    }
+  //    return newValue
+  //  }
 
   /// Convert `self` (a value in seconds) and convert to H, M and S
   /// ```
@@ -35,23 +36,10 @@ extension Int {
     return (h, m, s)
   }
 
-  private static let numberFormatter: NumberFormatter = {
-    let formatter = NumberFormatter()
-    formatter.numberStyle = .decimal
-    return formatter
-  }()
-
-  public var formattedString: String {
-    return Int.numberFormatter.string(from: NSNumber(value: self)) ?? String(self)
-  }
   /// A Boolean value indicating whether the integer is even.
-  public var isEven: Bool {
-    self % 2 == 0
-  }
+  public var isEven: Bool { self % 2 == 0 }
 
-  public var asCGFloat: CGFloat {
-    CGFloat(self)
-  }
+  public var toCGFloat: CGFloat { CGFloat(self) }
 
   public func isWithin(_ collection: some Collection) -> Bool {
     let startIndex = collection.startIndex
@@ -72,34 +60,29 @@ extension Int {
   public var columnType: NumberMagnitude {
     let absoluteValue = abs(self)
 
-    switch absoluteValue {
-      case 0..<10:
-        return .ones
-      case 10..<100:
-        return .tens
-      case 100..<1000:
-        return .hundreds
-      case 1000..<10000:
-        return .thousands
-      case 10000..<100000:
-        return .tenThousands
-      case 100000..<1_000_000:
-        return .hundredThousands
-      case 1_000_000..<1_000_000_000:
-        return .millions
-      default:
-        return .billions
+    return switch absoluteValue {
+      case 0..<10: .ones
+      case 10..<100: .tens
+      case 100..<1000: .hundreds
+      case 1000..<10000: .thousands
+      case 10000..<100000: .tenThousands
+      case 100000..<1_000_000: .hundredThousands
+      case 1_000_000..<1_000_000_000: .millions
+      default: .billions
     }
   }
 
-  public var numberOfDigits: Int {
-    String(abs(self)).count
-  }
+  public var numberOfDigits: Int { String(abs(self)).count }
 
 }
 
+extension UInt32 {
+  public var toInt: Int { Int(self) }
+}
+
+
 extension Int64 {
-  public func getString() -> String {
+  public func toString() -> String {
     String(self)
   }
 }

@@ -8,6 +8,7 @@
 #if DEBUG
 
 import SwiftUI
+import BasePrimitives
 
 public struct DebugFrameModifier: ViewModifier {
 

@@ -5,11 +5,12 @@
 //  Created by Dave Coleman on 25/2/2025.
 //
 
-
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
-public struct MultiItemView<DataContent: View, Additional: View, Data: Collection & ExpressibleByArrayLiteral>: View
+public struct MultiItemView<
+  DataContent: View, Additional: View, Data: Collection & ExpressibleByArrayLiteral
+>: View
 where Data.Element: Identifiable, Data.Element.ID: Hashable {
 
   public typealias ItemID = Data.Element.ID

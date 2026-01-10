@@ -8,6 +8,7 @@
 #if DEBUG
 
 import SwiftUI
+import BasePrimitives
 
 public struct ViewDescriptionModifier: ViewModifier {
   @Environment(\.viewDescription) private var viewDescription
