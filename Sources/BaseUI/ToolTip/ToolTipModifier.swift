@@ -37,20 +37,20 @@ public struct Tooltip: ViewModifier {
         )
         .environment(\.itemColour, colour)
 
-        .alignmentGuide(toolTipAlignment.horizontal) { dimensions in
-         guidesH(dimensions)
-        }
-        .alignmentGuide(toolTipAlignment.vertical) { d in
-          /// Vertical positioning
-          switch toolTipAlignment.vertical {
-            case .top:
-              return d[.bottom] + totalOffset(for: .vertical)  // Place tooltip above
-            case .bottom:
-              return d[.top] + totalOffset(for: .vertical)  // Place tooltip below
-            default:  // center
-              return d[VerticalAlignment.center] + totalOffset(for: .vertical)
-          }
-        }
+//        .alignmentGuide(toolTipAlignment.horizontal) { dimensions in
+//          guidesH(dimensions)
+//        }
+//        .alignmentGuide(toolTipAlignment.vertical) { d in
+//          /// Vertical positioning
+//          switch toolTipAlignment.vertical {
+//            case .top:
+//              return d[.bottom] + totalOffset(for: .vertical)  // Place tooltip above
+//            case .bottom:
+//              return d[.top] + totalOffset(for: .vertical)  // Place tooltip below
+//            default:  // center
+//              return d[VerticalAlignment.center] + totalOffset(for: .vertical)
+//          }
+//        }
         .allowsHitTesting(false)
 
         //          .animation(Styles.animationEased, value: isShowing)
@@ -59,52 +59,15 @@ public struct Tooltip: ViewModifier {
 }
 
 extension Tooltip {
-  
-  nonisolated private func guides(
-    for axis: Axis,
-    _ dimensions: ViewDimensions
-  ) -> CGFloat {
-    /// Horizontal positioning
-    switch toolTipAlignment.horizontal {
-      case .leading:
-        dimensions[.trailing] + totalOffset(for: .horizontal)  // Place tooltip to the left
-      case .trailing:
-        dimensions[.leading] + totalOffset(for: .horizontal)  // Place tooltip to the right
-      default:  // center
-        dimensions[HorizontalAlignment.center] + totalOffset(for: .horizontal)
-    }
-  }
-  
+
+
   nonisolated private var toolTipAlignment: Alignment {
     alignment.forTooltip
   }
 
-  nonisolated private func totalOffset(
-    for axis: Axis2D,
-    mapping: AxisMapping = .default
-  ) -> CGFloat {
-    /// Note: The below `defaultOffset` bakes in a
-    /// slight horizontal inset, just as it felt more pleasing.
-    /// This excludes `leading` and `trailing`, where the inset
-    /// would cause overlap with the content.
 
-    let excludedAlignments: [Alignment] = [.leading, .trailing]
-    let hasInset: Bool = !excludedAlignments.contains(toolTipAlignment)
-    let insetH: CGFloat = hasInset ? -14 : 12
 
-    let defaultOffset = CGSize(insetH, 10)
-    let totalOffset: CGSize = defaultOffset
-
-    let unitPoint = toolTipAlignment.toUnitPoint()
-
-    let finalOffset = unitPoint.offset(by: totalOffset)
-    return finalOffset.value(along: axis, mapping: mapping)
-
-  }
-
-  private var isShowing: Bool {
-    isHovered || isShowingForDebug
-  }
+  private var isShowing: Bool { isHovered || isShowingForDebug }
 
 }
 

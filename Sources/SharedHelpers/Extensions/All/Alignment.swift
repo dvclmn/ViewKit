@@ -22,22 +22,12 @@ extension Alignment {
     }
   }
 
-  /// Returns a sensible corresponding `UnitPoint`, with optional
-  /// fallback. Text baseline alignments are ignored and use the fallback.
+  /// Returns a sensible corresponding `UnitPoint`, with fallback.
+  /// Text baseline alignments are ignored and use the fallback.
   public func toUnitPoint(fallback: UnitPoint = .center) -> UnitPoint {
 
     switch self {
-//      case .topLeading: .topLeading
-//      case .top: .top
-//      case .topTrailing: .topTrailing
-//      case .trailing: .trailing
-//      case .bottomTrailing: .bottomTrailing
-//      case .bottom: .bottom
-//      case .bottomLeading: .bottomLeading
-//      case .leading: .leading
-////      case .center: .center
-//        
-//      case .center:
+
       case .leading: .leading
       case .trailing: .trailing
       case .top: .top
@@ -46,13 +36,7 @@ extension Alignment {
       case .topTrailing: .topTrailing
       case .bottomLeading: .bottomLeading
       case .bottomTrailing: .bottomTrailing
-//      case .centerFirstTextBaseline: .leading
-//      case .centerLastTextBaseline: .leading
-//      case .leadingFirstTextBaseline: .leading
-//      case .leadingLastTextBaseline: .leading
-//      case .trailingFirstTextBaseline: .leading
-//      case .trailingLastTextBaseline: .leading
-        
+
       default: fallback
     }
   }
@@ -82,23 +66,29 @@ extension Alignment {
 
       case .centerFirstTextBaseline:
         return (
-          "Cent.FTB", "Center First Text Baseline", "Center First Text Baseline (H: Center + V: FirstTextBaseline)"
+          "Cent.FTB", "Center First Text Baseline",
+          "Center First Text Baseline (H: Center + V: FirstTextBaseline)"
         )
 
       case .centerLastTextBaseline:
-        return ("Cent.LTB", "Center Last Text Baseline", "Center Last Text Baseline (H: Center + V: LastTextBaseline)")
+        return (
+          "Cent.LTB", "Center Last Text Baseline",
+          "Center Last Text Baseline (H: Center + V: LastTextBaseline)"
+        )
 
       case .leading:
         return ("Lead", "Leading", "Leading (H: Leading + V: Center)")
 
       case .leadingFirstTextBaseline:
         return (
-          "Lead.FTB", "Leading First Text Baseline", "Leading First Text Baseline (H: Leading + V: FirstTextBaseline)"
+          "Lead.FTB", "Leading First Text Baseline",
+          "Leading First Text Baseline (H: Leading + V: FirstTextBaseline)"
         )
 
       case .leadingLastTextBaseline:
         return (
-          "Lead.LTB", "Leading Last Text Baseline", "Leading Last Text Baseline (H: Leading + V: LastTextBaseline)"
+          "Lead.LTB", "Leading Last Text Baseline",
+          "Leading Last Text Baseline (H: Leading + V: LastTextBaseline)"
         )
 
       case .trailing:
@@ -112,7 +102,8 @@ extension Alignment {
 
       case .trailingLastTextBaseline:
         return (
-          "Trail.LTB", "Trailing Last Text Baseline", "Trailing Last Text Baseline (H: Trailing + V: LastTextBaseline)"
+          "Trail.LTB", "Trailing Last Text Baseline",
+          "Trailing Last Text Baseline (H: Trailing + V: LastTextBaseline)"
         )
 
       default:
@@ -120,17 +111,37 @@ extension Alignment {
     }
   }
 
+  //  /// Returns `.center` as default if case is unknown
+  //  public var opposite: HorizontalAlignment {
+  //    switch self {
+  //      case .leading: .trailing
+  //      case .trailing: .leading
+  //      case .listRowSeparatorLeading: .listRowSeparatorTrailing
+  //      case .listRowSeparatorTrailing: .listRowSeparatorLeading
+  //      default: .center
+  //    }
+  //  }
   public var opposite: Alignment {
     switch self {
+
       case .topLeading: .bottomTrailing
       case .top: .bottom
       case .topTrailing: .bottomLeading
-      case .trailing: .leading
-      case .bottomTrailing: .topLeading
-      case .bottom: .top
-      case .bottomLeading: .topTrailing
       case .leading: .trailing
       case .center: .center
+      case .trailing: .leading
+      case .bottomLeading: .topTrailing
+      case .bottom: .top
+      case .bottomTrailing: .topLeading
+
+      /// Text baseline variants map by flipping vertical while keeping horizontal mirrored
+      case .leadingFirstTextBaseline: .trailingLastTextBaseline
+      case .centerFirstTextBaseline: .centerLastTextBaseline
+      case .trailingFirstTextBaseline: .leadingLastTextBaseline
+      case .leadingLastTextBaseline: .trailingFirstTextBaseline
+      case .centerLastTextBaseline: .centerFirstTextBaseline
+      case .trailingLastTextBaseline: .leadingFirstTextBaseline
+
       default: .center
     }
   }
@@ -149,16 +160,6 @@ extension HorizontalAlignment {
     }
   }
 
-  /// Returns `.center` as default if case is unknown
-  public var opposite: HorizontalAlignment {
-    switch self {
-      case .leading: .trailing
-      case .trailing: .leading
-      case .listRowSeparatorLeading: .listRowSeparatorTrailing
-      case .listRowSeparatorTrailing: .listRowSeparatorLeading
-      default: .center
-    }
-  }
 }
 extension VerticalAlignment {
   public var displayName: String {
@@ -181,13 +182,13 @@ extension VerticalAlignment {
       default: .center
     }
   }
-  
-//  public var toTextAlignment: TextAlignment {
-//    switch self {
-//      case .leading: .leading
-//      case .center: .center
-//      case .bottom: .trailing
-//      default: .leading
-//    }
-//  }
+
+  //  public var toTextAlignment: TextAlignment {
+  //    switch self {
+  //      case .leading: .leading
+  //      case .center: .center
+  //      case .bottom: .trailing
+  //      default: .leading
+  //    }
+  //  }
 }

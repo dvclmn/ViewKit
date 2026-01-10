@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 1/10/2025.
 //
 
-
 import SwiftUI
 
 extension Alignment {
@@ -18,7 +17,7 @@ extension Alignment {
       default: self
     }
   }
-  
+
   var toolTipUnitPoint: UnitPoint? {
     switch self {
       case .leading: return UnitPoint(x: 0, y: 0.5)
@@ -30,7 +29,11 @@ extension Alignment {
       case .bottomLeading: return .bottomLeading
       case .bottomTrailing: return .bottomTrailing
       case .center: return .center
-      default: return nil // baseline cases
+      default: return nil  // baseline cases
     }
   }
+}
+
+extension ViewDimensions {
+
 }

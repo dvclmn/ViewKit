@@ -22,7 +22,7 @@ extension Axis {
       case .vertical: return .vertical
     }
   }
-
+  
   // TODO: Does this make sense? Should this be incorporated with `AxisConvention`?
   public func getMinMax(_ axis: Axis.MinMax) -> Axis {
     switch axis {
@@ -33,6 +33,7 @@ extension Axis {
         return .vertical
     }
   }
+  
 
   public var toAxis2D: Axis2D {
     switch self {

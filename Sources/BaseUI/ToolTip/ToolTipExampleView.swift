@@ -26,7 +26,7 @@ public struct ToolTipExampleView: View {
 
   public var body: some View {
 
-    VStack(spacing: 60) {
+    VStack(spacing: 30) {
       ForEach(
         exampleAlignment.sorted(byKeyPath: \.value.displayName.abbreviated),
         id: \.value.displayName.abbreviated
@@ -35,6 +35,7 @@ public struct ToolTipExampleView: View {
         Text("Got a ToolTip. Alignment: \(alignment.displayName.full)")
           .fixedSize(horizontal: true, vertical: false)
           .foregroundStyle(colour.opacityMid)
+          .padding()
           .tooltip(
             "\(alignment.displayName.standard)",
             //            offset: alignment == .bottom ? CGSize(30, 60) : .zero,
@@ -43,6 +44,9 @@ public struct ToolTipExampleView: View {
             color: colour.opacityLow
               //                        color: .blue
           )
+          
+          .background(colour.opacityFaint)
+//          .font(.caption)
 
       }
     }
@@ -51,8 +55,8 @@ public struct ToolTipExampleView: View {
 }
 #if DEBUG
 @available(macOS 15, iOS 18, *)
-#Preview(traits: .size(.normal)) {
+#Preview(traits: .size(.narrow)) {
   ToolTipExampleView()
-    .padding(140)
+    .padding(80)
 }
 #endif
