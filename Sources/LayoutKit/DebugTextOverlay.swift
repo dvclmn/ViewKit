@@ -10,6 +10,7 @@ import SwiftUI
 
 public struct DebugTextOverlayModifier: ViewModifier {
   @Environment(\.isEnabled) private var isEnabled
+  
 
   let text: String
 //  let text: AttributedString
@@ -30,11 +31,13 @@ public struct DebugTextOverlayModifier: ViewModifier {
             .background(.regularMaterial)
 //            .background(.black.opacityLow)
           
+//            .background(TintShapeStyle())
             .background(.tint.opacityLow)
             .clipShape(.rect(cornerRadius: 3))
             .padding()
             .safeAreaPadding(padding.0, padding.1)
             .allowsHitTesting(false)
+            
         }
       }
   }

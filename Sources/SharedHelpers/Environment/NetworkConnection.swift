@@ -14,7 +14,6 @@ extension EnvironmentValues {
 
 @MainActor
 @Observable
-
 public final class NetworkMonitor {
   private let networkMonitor = NWPathMonitor()
   private let workerQueue = DispatchQueue(label: "Monitor")

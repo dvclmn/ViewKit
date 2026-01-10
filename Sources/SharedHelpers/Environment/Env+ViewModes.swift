@@ -26,8 +26,8 @@ extension EnvironmentValues {
   @Entry public var isEditable: Bool = true
 }
 
-extension View {
-  public func isDebugMode(_ mode: Bool) -> some View {
-    self.environment(\.isDebugMode, mode)
-  }
-}
+//extension View {
+//  public func isDebugMode(_ mode: Bool) -> some View {
+//    self.environment(\.isDebugMode, mode)
+//  }
+//}
