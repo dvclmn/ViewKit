@@ -14,22 +14,6 @@ import SwiftUI
 /// to provide a fallback meaningful to their domain.
 extension EnvironmentValues {
 
-  /// Icons
-  @Entry public var iconColour: AnyShapeStyle? = nil
-  @Entry public var iconWeight: Font.Weight? = nil
-  @Entry public var iconFontSize: CGFloat? = nil
-
-  /// Labels
-  @Entry public var labelColour: AnyShapeStyle? = nil
-  @Entry public var itemColour: Color? = nil
-  @Entry public var labelWeight: Font.Weight? = nil
-
-  /// This is useful because SwiftUI exposes control over display of
-  /// icon and label elements in the form of the `LabelStyle` protocol.
-  /// So when using custom label styles, setting e.g. `labelStyle(iconOnly)`
-  /// will override the custom style. This works around that.
-  @Entry public var labelDisplay: LabelDisplay? = nil
-
   /// Note: This is here because support for `labelsVisibility`
   /// is for macOS 15.0+ only
   /// Update: Have removed in favour of adding `hidden`
@@ -39,17 +23,6 @@ extension EnvironmentValues {
   /// Strokes
   @Entry public var strokeColour: AnyShapeStyle? = nil
   @Entry public var strokeWeight: CGFloat? = nil
-
-  /// See also system native values:
-  /// `symbolRenderingMode` and `symbolVariants`
-
-  /// The below exists because native `symbolVariants`
-  /// is not optional, and it's useful to make these optional
-  /// to provide per-View fallbacks
-
-  /// An optional counterpart to native `symbolVariant`
-  /// (note the plural), which is non-optional.
-  //  @Entry public var symbolVariant: SymbolVariants? = nil
 
   // MARK: - Sizing overrides
   /// As opposed to the above more *specific* naming such as icon{x},
@@ -72,6 +45,7 @@ extension EnvironmentValues {
   @Entry public var helpText: String = ""
   @Entry public var cornerRounding: CGFloat? = nil
 
+  /// Perhaps the below two can be merged.
   @Entry public var explicitColour: (any ShapeStyle)? = nil
   @Entry public var emphasisColour: AnyShapeStyle? = nil
 
@@ -95,9 +69,15 @@ extension EnvironmentValues {
 
   @Entry public var opacityDim: CGFloat? = nil
   @Entry public var isHovering: Bool = false
-  
-  
+
   /// Meant as a debug helper, for when I'm not sure who is
   /// consuming this View, or what it's context is.
   @Entry public var viewDescription: String? = nil
+
+  /// This is expected to represent a single, self-contained View,
+  /// not including any native components like Toolbar or Inspector.
+  ///
+  /// I guess like in a graphics app, so maybe this is a bit domain-specific
+  @Entry public var viewportSize: CGSize? = nil
+  @Entry public var isScrollAtStart: Bool = true
 }

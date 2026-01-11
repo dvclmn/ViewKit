@@ -11,5 +11,8 @@ extension View {
   public func backgroundTint<S>(_ tint: S?) -> some View where S: ShapeStyle {
     self.environment(\.explicitColour, tint)
   }
-}
 
+  public func isDebugMode(_ mode: Bool) -> some View {
+    self.environment(\.isDebugMode, mode)
+  }
+}
