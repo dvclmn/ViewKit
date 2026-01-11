@@ -20,7 +20,8 @@ import Foundation
 @MetaEnum
 public enum PointerPhase: Equatable, Sendable {
   case drag(rect: CGRect)
-  case tap(location: CGPoint, modifiers: Modifiers?)
+  case tap(location: CGPoint)
+//  case tap(location: CGPoint, modifiers: Modifiers?)
   case hover(location: CGPoint)
   case ended
   case inactive

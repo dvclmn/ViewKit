@@ -23,3 +23,4 @@ public struct InteractionHandler {
 
   let keysToWatch: Set<KeyEquivalent> = [.space]
 }
+

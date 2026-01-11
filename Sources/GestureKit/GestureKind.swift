@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 11/1/2026.
 //
 
+import SwiftUI
 import CoreTools
 
 /// # Touch Gestures
@@ -22,10 +23,11 @@ import CoreTools
 /// - Pan (Drag)
 /// - Select
 /// - Resize
-//@MetaEnum
+@MetaEnum
 public enum GestureKind {
-  case pinchAndZoom
-  case twoFingerPan
+  case zoom(CGFloat)
+  case pan(CGSize)
+  case rotate(Angle)
   //  case pan(PanState)
   //  case zoom(ZoomAdjustment)
   //  //  case zoom(ZoomState)
@@ -34,18 +36,18 @@ public enum GestureKind {
   //  case resize
   //  case none
 
-  public var name: String {
-    switch self {
-      case .pinchAndZoom: "Pinch and Zoom"
-      case .twoFingerPan: "Two Finger Pan"
-    //      case .pan: "Pan"
-    //      case .zoom: "Zoom"
-    //      case .rotate: "Rotate"
-    //      case .select: "Select"
-    //      case .resize: "Resize"
-    //      case .none: "None"
-    }
-  }
+//  public var name: String {
+//    switch self {
+////      case .pinchAndZoom: "Pinch and Zoom"
+////      case .twoFingerPan: "Two Finger Pan"
+//    //      case .pan: "Pan"
+//    //      case .zoom: "Zoom"
+//    //      case .rotate: "Rotate"
+//    //      case .select: "Select"
+//    //      case .resize: "Resize"
+//    //      case .none: "None"
+//    }
+//  }
 }
 
 //extension GestureKind {
