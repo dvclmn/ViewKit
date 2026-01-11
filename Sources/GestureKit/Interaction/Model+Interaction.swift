@@ -5,9 +5,16 @@
 //  Created by Dave Coleman on 9/7/2025.
 //
 
+import CoreTools
 import SwiftUI
 
-enum InteractionKind {
+struct Interaction {
+  let kind: InteractionKind
+  let phase: InteractionPhase
+  let modifiers: Modifiers?
+}
+
+enum InteractionKind: Sendable {
   case tap(CGPoint)
   case tapAndDrag(CGRect)
   case tapRanges(Set<Range<Int>>)  // For multi-select

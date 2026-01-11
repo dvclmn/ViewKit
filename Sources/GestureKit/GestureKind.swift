@@ -24,7 +24,7 @@ import CoreTools
 /// - Select
 /// - Resize
 @MetaEnum
-public enum GestureKind {
+public enum GestureKind: Sendable {
   case zoom(CGFloat)
   case pan(CGSize)
   case rotate(Angle)

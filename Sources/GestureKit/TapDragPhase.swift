@@ -15,37 +15,37 @@ import Foundation
 /// e.g. a Selection (range between taps) kind.
 /// Could replace DrawString's `InteractionKind`
 ///
-@CaseDetection
-@AssociatedValues
-@MetaEnum
-public enum PointerPhase: Equatable, Sendable {
-  case drag(rect: CGRect)
-  case tap(location: CGPoint)
-//  case tap(location: CGPoint, modifiers: Modifiers?)
-  case hover(location: CGPoint)
-  case ended
-  case inactive
-}
+//@CaseDetection
+//@AssociatedValues
+//@MetaEnum
+//public enum PointerPhase: Equatable, Sendable {
+//  case drag(rect: CGRect)
+//  case tap(location: CGPoint)
+////  case tap(location: CGPoint, modifiers: Modifiers?)
+//  case hover(location: CGPoint)
+//  case ended
+//  case inactive
+//}
+//
+//public struct PointerInteraction: Sendable {
+//  let phase: PointerPhase
+//  let modifiers: Modifiers?
+//  
+//  public init(
+//    phase: PointerPhase,
+//    modifiers: Modifiers? = nil
+//  ) {
+//    self.phase = phase
+//    self.modifiers = modifiers
+//  }
+//}
 
-public struct PointerInteraction: Sendable {
-  let phase: PointerPhase
-  let modifiers: Modifiers?
-  
-  public init(
-    phase: PointerPhase,
-    modifiers: Modifiers? = nil
-  ) {
-    self.phase = phase
-    self.modifiers = modifiers
-  }
-}
-
-struct Thing {
-  let phase: Phase
-//  let action: Action
-  let interaction: Interaction
-  let modifiers: Modifiers?
-}
+//struct Thing {
+//  let phase: Phase
+////  let action: Action
+//  let interaction: Interaction
+//  let modifiers: Modifiers?
+//}
 
 
 //extension PointerInteraction.Options {

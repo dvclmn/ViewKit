@@ -8,35 +8,17 @@
 import AppKit
 import CoreTools
 
-extension Interaction {
-  public enum Phase: String, Sendable {
-    case began
-    case stationary
-    case changed
-    case ended
-    case cancelled
-    case mayBegin
-    case none
-  }
+public enum InteractionPhase: String, Sendable {
+  case began
+  case stationary
+  case changed
+  case ended
+  case cancelled
+  case mayBegin
+  case none
 }
 
-//public enum ZoomPhase: Sendable {
-//  case inactive
-//  case active
-//  case ended
-//}
-
-// From NSEvent.Phase
-//public enum GesturePhase: String, Sendable {
-//  case began
-//  case stationary
-//  case changed
-//  case ended
-//  case cancelled
-//  case mayBegin
-//  case none
-//}
-extension Interaction.Phase {
+extension InteractionPhase {
   public init(from nsEventPhase: NSEvent.Phase) {
     self =
       switch nsEventPhase {
@@ -49,6 +31,8 @@ extension Interaction.Phase {
         default: .none
       }
   }
+}
+extension InteractionPhase {
   public var name: String {
     switch self {
       case .mayBegin: "May Begin"
@@ -56,27 +40,10 @@ extension Interaction.Phase {
     }
   }
 
-  var isInteractive: Bool {
+  var isActive: Bool {
     switch self {
       case .began, .changed: true
       default: false
     }
   }
 }
-
-//public struct Phase : OptionSet, @unchecked Sendable {
-//
-//  public init(rawValue: UInt)
-//
-//  public static var began: NSEvent.Phase { get }
-//
-//  public static var stationary: NSEvent.Phase { get }
-//
-//  public static var changed: NSEvent.Phase { get }
-//
-//  public static var ended: NSEvent.Phase { get }
-//
-//  public static var cancelled: NSEvent.Phase { get }
-//
-//  public static var mayBegin: NSEvent.Phase { get }
-//  }
