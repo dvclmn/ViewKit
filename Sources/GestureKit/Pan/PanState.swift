@@ -9,18 +9,19 @@ import CoreGraphics
 import Foundation
 import BasePrimitives
 
-public struct PanState: GestureStateProtocol, Sendable {
+public struct PanState: Sendable {
+//public struct PanState: GestureStateProtocol, Sendable {
   public let value: CGSize
-  public let phase: Interaction.Phase
+//  public let phase: Interaction.Phase
 
   public static let initial: Self = .init()
 
   public init(
     offset: CGSize = .zero,
-    phase: Interaction.Phase = .none
+//    phase: Interaction.Phase = .none
   ) {
     self.value = offset
-    self.phase = phase
+//    self.phase = phase
   }
 }
 extension PanState {
@@ -42,7 +43,7 @@ extension PanState {
         width: offset.width.clamped(to: -maxX...maxX),
         height: offset.height.clamped(to: -maxY...maxY)
       ),
-      phase: phase
+//      phase: phase
     )
   }
 
@@ -53,7 +54,7 @@ extension PanState {
   ///     pan = .centred
   ///   }
   /// ```
-  static var centered: Self { .init(offset: .zero, phase: .ended) }
+  static var centered: Self { .init(offset: .zero) }
 
   /// ```
   /// context.translateBy(
@@ -76,14 +77,13 @@ extension PanState {
       offset: CGSize(
         width: offset.width - delta.width,
         height: offset.height - delta.height
-      ),
-      phase: phase
+      )
     )
   }
 
-  public func withPhase(_ newPhase: Interaction.Phase) -> Self {
-    Self(offset: offset, phase: newPhase)
-  }
+//  public func withPhase(_ newPhase: Interaction.Phase) -> Self {
+//    Self(offset: offset, phase: newPhase)
+//  }
   //  mutating func update(phase: GesturePhase) {
   //
   //  }

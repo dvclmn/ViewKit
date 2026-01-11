@@ -29,3 +29,9 @@ public enum GestureKind: Sendable {
   case pan(CGSize) // Aka two finger swipe
   case rotate(Angle) // Two finger turn
 }
+
+/// This should be turned into a protocol or something in future
+extension GestureKind {
+  
+}
+

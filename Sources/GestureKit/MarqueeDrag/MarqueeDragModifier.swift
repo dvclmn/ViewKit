@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreTools
 
 public struct MarqueeDragModifier: ViewModifier {
   @Environment(\.shouldRenderDragRect) private var shouldRenderDragRect
@@ -13,7 +14,7 @@ public struct MarqueeDragModifier: ViewModifier {
 
   let isEnabled: Bool
   let dragThreshold: CGFloat
-  let didUpdateRect: (PointerPhase) -> Void
+  let didUpdateRect: (InteractionKind) -> Void
 
   public func body(content: Content) -> some View {
     content
@@ -33,7 +34,7 @@ extension View {
   public func marqueeDrag(
     isEnabled: Bool = true,
     dragThreshold: CGFloat = 5,
-    didUpdateRect: @escaping (PointerPhase) -> Void = { _ in }
+    didUpdateRect: @escaping (InteractionKind) -> Void = { _ in }
   ) -> some View {
     self.modifier(
       MarqueeDragModifier(
