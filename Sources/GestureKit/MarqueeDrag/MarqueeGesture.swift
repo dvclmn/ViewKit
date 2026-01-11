@@ -11,7 +11,7 @@ import SwiftUI
 struct MarqueeDragGesture: Gesture {
   @Binding var rect: CGRect?
   let dragThreshold: CGFloat
-  let didUpdateRect: (TapDragPhase) -> Void
+  let didUpdateRect: (PointerPhase) -> Void
 
   var body: some Gesture {
     /// IMPORTANT: `minimumDistance` must be set to zero,

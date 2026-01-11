@@ -14,7 +14,7 @@ public struct MarqueeDragModifier: ViewModifier {
 
   let isEnabled: Bool
   let dragThreshold: CGFloat
-  let didUpdateRect: (TapDragPhase) -> Void
+  let didUpdateRect: (PointerPhase) -> Void
 
   public func body(content: Content) -> some View {
     content
@@ -30,7 +30,7 @@ extension View {
   public func marqueeDrag(
     isEnabled: Bool = true,
     dragThreshold: CGFloat = 5,
-    didUpdateRect: @escaping (TapDragPhase) -> Void = { _ in }
+    didUpdateRect: @escaping (PointerPhase) -> Void = { _ in }
   ) -> some View {
     self.modifier(
       MarqueeDragModifier(
