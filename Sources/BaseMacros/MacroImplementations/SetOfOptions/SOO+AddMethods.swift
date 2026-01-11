@@ -82,13 +82,19 @@ extension SetOfOptionsMacro: MemberMacro {
 
     // MARK: - String Value
     let snakeConditional: String = "isSnakeCase"
-
-    let stringSwitchCases = trimmedCases.map { enumCase in
-      let camel = enumCase
+    
+    let stringSwitchCases = caseElements.map { element in
+      let camel = element.name.text
       let snake = camel.camelToSnake
-
-      return "  case .\(enumCase): \(snakeConditional) ? \"\(snake)\" : \"\(camel)\""
-    }.joined(separator: "\n  ")
+      
+      /// If both versions are identical, just return the raw string
+      if camel == snake {
+        return "  case .\(camel): \"\(camel)\""
+      } else {
+        /// Otherwise, provide the ternary conditional
+        return "  case .\(camel): \(snakeConditional) ? \"\(snake)\" : \"\(camel)\""
+      }
+    }.joined(separator: "\n    ")
 
     let optionSetStringBuilder: String = trimmedCases.map { element in
       """
@@ -97,7 +103,7 @@ extension SetOfOptionsMacro: MemberMacro {
       }
       """
     }.joined(separator: "\n  ")
-
+    
     /// Example of `OptionSet` `.all`:
     ///
     /// ```swift
