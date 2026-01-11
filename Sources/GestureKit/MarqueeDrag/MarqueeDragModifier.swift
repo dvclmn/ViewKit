@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 9/7/2025.
 //
 
-
 import SwiftUI
 
 public struct MarqueeDragModifier: ViewModifier {
@@ -19,7 +18,11 @@ public struct MarqueeDragModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .simultaneousGesture(
-        MarqueeDragGesture(rect: $rect, dragThreshold: dragThreshold, didUpdateRect: didUpdateRect),
+        MarqueeDragGesture(
+          rect: $rect,
+          dragThreshold: dragThreshold,
+          didUpdateRect: didUpdateRect
+        ),
         isEnabled: isEnabled
       )
 

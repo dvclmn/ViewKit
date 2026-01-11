@@ -5,13 +5,13 @@
 //  Created by Dave Coleman on 3/8/2025.
 //
 
-
+import CoreTools
 import SwiftUI
 
 struct MarqueeDragGesture: Gesture {
   @Binding var rect: CGRect?
   let dragThreshold: CGFloat
-  let didUpdateRect: (PointerPhase) -> Void
+  let didUpdateRect: (InteractionKind) -> Void
 
   var body: some Gesture {
     /// IMPORTANT: `minimumDistance` must be set to zero,
@@ -19,24 +19,25 @@ struct MarqueeDragGesture: Gesture {
     /// disambiguated via `dragThreshold`
     DragGesture(minimumDistance: 0)
 
-      .onChanged { gestureValue in
+      .onChanged { value in
 
-        let newRect = gestureValue.toRect
+        let newRect = value.toRect
         rect = newRect
 
-        let isDrag: Bool = gestureValue.translation.eitherDimensionIsGreaterThan(dragThreshold)
+        let isDrag: Bool = value.translation.eitherDimensionIsGreaterThan(dragThreshold)
 
         if isDrag {
-          didUpdateRect(.drag(rect: newRect))
-          
+          didUpdateRect(.drag(newRect))
+
         } else {
-          didUpdateRect(.tap(location: newRect.point(at: .bottomTrailing)))
+          let location = newRect.point(at: .bottomTrailing)
+          didUpdateRect(.tap(location))
+          //          didUpdateRect(.tap(location: newRect.point(at: .bottomTrailing)))
         }
 
       }
       .onEnded { gestureValue in
-
-        didUpdateRect(.ended)
+        didUpdateRect(.none)
 
         /// Resetting this value ensures we can start from a *new*
         /// last-recorded corner, for the next gesture.
