@@ -5,20 +5,21 @@
 //  Created by Dave Coleman on 7/5/2025.
 //
 
-
+import CoreTools
 import SwiftUI
 
 public struct TouchIndicatorsView: View {
 
   let mappedTouches: [TouchPoint]
   //  let touches: [MappedTouchPoint]
-  let mappingStrategy: TrackpadMapStrategy
+  let mappingStrategy: ContentSizeMode
+  //  let mappingStrategy: TrackpadMapStrategy
   let containerSize: CGSize
   let indicatorDiameter: CGFloat = 40
 
   public init(
     mappedTouches: [TouchPoint],
-    mappingStrategy: TrackpadMapStrategy,
+    mappingStrategy: ContentSizeMode,
     //    mappingSize: CGSize,
     containerSize: CGSize,
   ) {
@@ -47,8 +48,8 @@ public struct TouchIndicatorsView: View {
       }
       //      .angledLine(between: touches, mappingRect: mappingRect)
       .frame(
-        width: mappingStrategy.size(for: containerSize).width,
-        height: mappingStrategy.size(for: containerSize).height
+        width: mappingSize.width,
+        height: mappingSize.height
       )
       .position(containerSize.midpoint)
     }
@@ -57,6 +58,14 @@ public struct TouchIndicatorsView: View {
 }
 
 extension TouchIndicatorsView {
+  
+  private var mappingSize: CGSize {
+    mappingStrategy.size(
+      for: containerSize,
+      aspectRatio: CGSize.trackpadAspectRatio,
+      insets: .zero
+    )
+  }
 
   @ViewBuilder
   func TouchLabel(_ touch: TouchPoint) -> some View {
@@ -95,8 +104,8 @@ extension TouchIndicatorsView {
     isDuplicateID(touch) ? Color.red : Color.blue.opacity(0.7)
   }
 
-  func touchPosition(_ touch: TouchPoint) -> CGPoint {
-    //  func touchPosition(_ touch: MappedTouchPoint) -> CGPoint {
-    touch.position.mapped(to: mappingStrategy.size(for: containerSize).toCGRectZeroOrigin)
-  }
+//  func touchPosition(_ touch: TouchPoint) -> CGPoint {
+//    //  func touchPosition(_ touch: MappedTouchPoint) -> CGPoint {
+//    touch.position.mapped(to: mappingStrategy.size(for: containerSize).toCGRectZeroOrigin)
+//  }
 }

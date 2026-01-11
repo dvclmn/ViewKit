@@ -25,7 +25,8 @@ import SwiftUI
 /// - Resize
 @MetaEnum
 public enum GestureKind: Sendable {
-  case zoom(ZoomOperation)  // Aka pinch and zoom
+  case zoom(CGFloat)  // Aka pinch and zoom
+//  case zoom(ZoomOperation)  // Aka pinch and zoom
   case pan(CGSize)  // Aka two finger swipe
   case rotate(Angle)  // Two finger turn
 }

@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 9/1/2026.
 //
 
+import CoreTools
 import SwiftUI
 
 public struct PanZoomModifier: ViewModifier {
@@ -14,9 +15,10 @@ public struct PanZoomModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .overlay {
-        PanGestureView { state in
+        PanGestureView { offset, phase in
           guard let geometry else { return }
-          handler.update(.pan(state), geometry: geometry)
+          handler.update(.pan(offset), phase: phase, geometry: geometry)
+          //          handler.update(.pan(state), geometry: geometry)
         }
       }
       .simultaneousGesture(
@@ -26,7 +28,8 @@ public struct PanZoomModifier: ViewModifier {
           didUpdateZoom: { state in
             guard let geometry else { return }
             let adjustment = ZoomOperation.zoom(state.zoom)
-            handler.update(.zoom(adjustment), geometry: geometry)
+            
+//            handler.update(.zoom(adjustment), geometry: geometry)
           }
         ),
         isEnabled: true

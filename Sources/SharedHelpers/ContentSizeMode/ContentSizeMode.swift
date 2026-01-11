@@ -5,22 +5,22 @@
 //  Created by Dave Coleman on 8/10/2025.
 //
 
-import SwiftUI
-import EnumMacros
 import BasePrimitives
+import EnumMacros
+import SwiftUI
 
 @MetaEnum
 @CaseDetection
 public enum ContentSizeMode {
   /// Fill destination rect exactly, even if aspect ratio is distorted
   case stretch
-  
+
   /// Contain: scale uniformly to fit within destination (aspect ratio preserved)
   case fit
-  
+
   /// Cover: scale uniformly to cover entire destination (aspect ratio preserved, may clip)
   case fill
-  
+
   case fixed(CGFloat, axis: Axis)
 }
 
@@ -30,7 +30,7 @@ extension ContentSizeMode {
     aspectRatio: CGFloat,
     insets: EdgeInsets = .zero
   ) -> CGSize {
-    
+
     let sizeWithInsets: CGSize = containerSize.inset(by: insets)
     switch self {
       case .fit:
@@ -40,37 +40,35 @@ extension ContentSizeMode {
           width: sizeWithInsets.width,
           height: sizeWithInsets.width * aspectRatio
         )
-        if widthBased.height <= sizeWithInsets.height {
-          return widthBased
-        } else {
+        guard widthBased.height <= sizeWithInsets.height else {
           return CGSize(
             width: sizeWithInsets.height / aspectRatio,
             height: sizeWithInsets.height
           )
         }
-        
+        return widthBased
+
       case .fill:
         // Scale uniformly to cover container (preserve aspect ratio, may clip)
         // Compare container ratio (h/w) to content aspectRatio (h/w)
         let containerRatio = sizeWithInsets.height / sizeWithInsets.width
-        if containerRatio > aspectRatio {
-          // Container is taller than content → match height
-          return CGSize(
-            width: sizeWithInsets.height / aspectRatio,
-            height: sizeWithInsets.height
-          )
-        } else {
+        guard containerRatio > aspectRatio else {
           // Container is wider than content → match width
           return CGSize(
             width: sizeWithInsets.width,
             height: sizeWithInsets.width * aspectRatio
           )
         }
-        
+        // Container is taller than content → match height
+        return CGSize(
+          width: sizeWithInsets.height / aspectRatio,
+          height: sizeWithInsets.height
+        )
+
       case .stretch:
         // Fill the container exactly, ignoring aspect ratio
         return sizeWithInsets
-        
+
       case .fixed(let length, let axis):
         // Fix one axis length, derive the other from aspectRatio (h/w)
         switch axis {

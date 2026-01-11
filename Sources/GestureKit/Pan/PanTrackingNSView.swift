@@ -12,7 +12,7 @@ import CoreTools
 // MARK: - Custom NSView for Pan Tracking
 public class PanTrackingNSView: NSView {
 
-  var didUpdatePan: PanGestureOutput = { _ in }
+  var didUpdatePan: PanGestureOutput = { _, _ in }
 
 //  public init(
 //    didUpdatePanGesture: @escaping PanGestureOutput
@@ -39,9 +39,9 @@ public class PanTrackingNSView: NSView {
 //    print("NSEvent Momentum Phase: \(event.momentumPhase)\n\n")
 
     let phase = InteractionPhase(from: event.momentumPhase)
-    let state = PanState(offset: delta, phase: phase)
+//    let state = PanState(offset: delta, phase: phase)
 
-    didUpdatePan(state)
+    didUpdatePan(delta, phase)
   }
 
 //  public override func mouseExited(with event: NSEvent) {

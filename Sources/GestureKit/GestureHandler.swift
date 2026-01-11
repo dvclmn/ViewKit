@@ -9,7 +9,7 @@ import CoreTools
 import SwiftUI
 
 public struct GestureHandler {
-  
+
   /// Each of these only hold a single value, but helps having
   /// the gesture=specific methods separated out
   var pan: PanState
@@ -17,7 +17,7 @@ public struct GestureHandler {
   var rotate: RotateState
 
   var phase: InteractionPhase = .none
-//  public var interactions: InteractionHandler = .init()
+  //  public var interactions: InteractionHandler = .init()
 
   public let zoomRange: ClosedRange<CGFloat>
 
@@ -44,29 +44,34 @@ extension GestureHandler {
 
   public mutating func update(
     _ kind: GestureKind,
+    phase: InteractionPhase,
     geometry: CanvasGeometry
   ) {
+    /// Update with new phase
+    self.phase = phase
+
     switch kind {
       case .pan(let value):
-        pan = pan.translated(by: value.offset)
-        phase =
-//          .withPhase(state.phase)
+        pan = pan.translated(by: value)
+
+      //          .withPhase(state.phase)
 
       case .zoom(let value):
-        zoom = value.resolve(
-          current: zoom,
+        let newZoom: CGFloat = value.resolve(
+          //          current: zoom,
           artwork: geometry.canvasSize,
           viewport: geometry.viewportSize
         )
+        zoom = ZoomState(zoom: newZoom)
 
       case .rotate(let value):
-        rotate = value
+        rotate = RotateState(rotation: value)
 
-      default: break
+//      default: break
     }
 
     /// Update current interaction
-    updateIfChanged(&interactions.interaction, to: kind.interactionType)
+//    updateIfChanged(&interactions.interaction, to: kind.interactionType)
   }
 
   public mutating func reset(_ kind: GestureKind.Meta) {
@@ -74,7 +79,7 @@ extension GestureHandler {
       case .pan: pan = .initial
       case .zoom: zoom = .initial
       case .rotate: rotate = .initial
-      default: break
+//      default: break
     }
   }
 }

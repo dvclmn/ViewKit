@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ZoomOperation {
+public enum ZoomOperation: Sendable {
   case initial  // 100% / no zoom
   case zoom(CGFloat)
   case fit
@@ -25,8 +25,8 @@ extension ZoomOperation {
   ///   .withPhase(.active)
   ///
   ///   ```
-  func resolve(
-    currentZoom: CGFloat,
+  public func resolve(
+//    current zoom: CGFloat,
 //    current: ZoomState,
     artwork: CGSize,
     viewport: CGSize
