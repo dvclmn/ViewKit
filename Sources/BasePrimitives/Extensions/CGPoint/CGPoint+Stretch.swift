@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 // MARK: - Stretch out an Axis
 public struct StretchOptions: OptionSet, Sendable {
   public let rawValue: Int
@@ -66,18 +67,7 @@ extension CGPoint {
     return result
   }
 
-  public func mapPoint(
-    from source: CGRect,
-    to destination: CGRect,
-    mode: ContentSizeMode = .fit
-  ) -> CGPoint {
-    switch mode {
-      case .stretch: stretchMap(from: source, to: destination)
-      case .fit: aspectFitMap(from: source, to: destination)
-      case .fill: aspectFillMap(from: source, to: destination)
-      case .fixed: fatalError("Not yet supported")
-    }
-  }
+
 
   /// Hint: use extension `toCGRect` on `CGSize` for convenient
   /// conversion, if origin is `zero`.
@@ -99,57 +89,6 @@ extension CGPoint {
     return CGPoint(x: newX, y: newY)
   }
 
-  private func aspectFitMap(from source: CGRect, to destination: CGRect) -> CGPoint {
-    let fittedRect = aspectMappedRect(from: source, to: destination, fill: false)
-    return stretchMap(from: source, to: fittedRect)
-  }
-
-  private func aspectFillMap(from source: CGRect, to destination: CGRect) -> CGPoint {
-    let filledRect = aspectMappedRect(from: source, to: destination, fill: true)
-    return stretchMap(from: source, to: filledRect)
-  }
-
-  private func aspectMappedRect(
-    from source: CGRect,
-    to destination: CGRect,
-    fill: Bool
-  ) -> CGRect {
-    let sourceAspect = source.width / source.height
-    let destAspect = destination.width / destination.height
-
-    var scale: CGFloat
-    var size: CGSize
-    var origin: CGPoint
-
-    if (fill && sourceAspect < destAspect) || (!fill && sourceAspect > destAspect) {
-      // Width-constrained
-      scale = destination.width / source.width
-      size = CGSize(width: destination.width, height: source.height * scale)
-      origin = CGPoint(
-        x: destination.minX,
-        y: destination.minY + (destination.height - size.height) / 2
-      )
-    } else {
-      // Height-constrained
-      scale = destination.height / source.height
-      size = CGSize(width: source.width * scale, height: destination.height)
-      origin = CGPoint(
-        x: destination.minX + (destination.width - size.width) / 2,
-        y: destination.minY
-      )
-    }
-
-    return CGRect(origin: origin, size: size)
-  }
-
-  private func stretchMap(from source: CGRect, to destination: CGRect) -> CGPoint {
-    let scaleX = destination.width / source.width
-    let scaleY = destination.height / source.height
-
-    let translatedX = (self.x - source.minX) * scaleX + destination.minX
-    let translatedY = (self.y - source.minY) * scaleY + destination.minY
-
-    return CGPoint(x: translatedX, y: translatedY)
-  }
+  
 
 }

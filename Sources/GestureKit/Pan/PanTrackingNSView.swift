@@ -7,6 +7,7 @@
 
 #if canImport(AppKit)
 import AppKit
+import CoreTools
 
 // MARK: - Custom NSView for Pan Tracking
 public class PanTrackingNSView: NSView {
@@ -37,7 +38,7 @@ public class PanTrackingNSView: NSView {
 //    print("NSEvent Phase: \(event.phase)")
 //    print("NSEvent Momentum Phase: \(event.momentumPhase)\n\n")
 
-    let phase = Interaction.Phase(from: event.momentumPhase)
+    let phase = InteractionPhase(from: event.momentumPhase)
     let state = PanState(offset: delta, phase: phase)
 
     didUpdatePan(state)

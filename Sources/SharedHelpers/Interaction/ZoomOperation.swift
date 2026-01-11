@@ -1,5 +1,5 @@
 //
-//  ZoomAdjustment.swift
+//  ZoomOperation.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 9/1/2026.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ZoomAdjustment {
+public enum ZoomOperation {
   case initial  // 100% / no zoom
   case zoom(CGFloat)
   case fit
@@ -16,7 +16,7 @@ public enum ZoomAdjustment {
 //  case fill(CanvasGeometry)
 }
 
-extension ZoomAdjustment {
+extension ZoomOperation {
 
   /// ```
   /// state = adjustment
@@ -26,30 +26,31 @@ extension ZoomAdjustment {
   ///
   ///   ```
   func resolve(
-    current: ZoomState,
+    currentZoom: CGFloat,
+//    current: ZoomState,
     artwork: CGSize,
     viewport: CGSize
-  ) -> ZoomState {
+  ) -> CGFloat {
+//  ) -> ZoomState {
     switch self {
-      case .initial:
-        return ZoomState.initial
-
-      case .zoom(let level):
-        return ZoomState(zoom: level, phase: .changed)
+      case .initial: return .zero
+      case .zoom(let level): return level
+//        return ZoomState(zoom: level, phase: .changed)
 
       case .fit:
         let values = Self.scaleValues(
           artwork: artwork,
           viewport: viewport
         )
-        return ZoomState(zoom: min(values.0, values.1), phase: .ended)
+        return min(values.0, values.1)
+//        return ZoomState(zoom: min(values.0, values.1), phase: .ended)
 
       case .fill:
         let values = Self.scaleValues(
           artwork: artwork,
           viewport: viewport
         )
-        return ZoomState(zoom: max(values.0, values.1), phase: .ended)
+        return max(values.0, values.1)
 
     }
   }

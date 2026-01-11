@@ -5,14 +5,18 @@
 //  Created by Dave Coleman on 9/1/2026.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
 public struct GestureHandler {
+  
+  /// Each of these only hold a single value, but helps having
+  /// the gesture=specific methods separated out
   var pan: PanState
   var zoom: ZoomState
   var rotate: RotateState
 
+  var phase: InteractionPhase = .none
 //  public var interactions: InteractionHandler = .init()
 
   public let zoomRange: ClosedRange<CGFloat>
@@ -43,19 +47,20 @@ extension GestureHandler {
     geometry: CanvasGeometry
   ) {
     switch kind {
-      case .pan(let state):
-        pan = pan.translated(by: state.offset)
-          .withPhase(state.phase)
+      case .pan(let value):
+        pan = pan.translated(by: value.offset)
+        phase =
+//          .withPhase(state.phase)
 
-      case .zoom(let adjustment):
-        zoom = adjustment.resolve(
+      case .zoom(let value):
+        zoom = value.resolve(
           current: zoom,
           artwork: geometry.canvasSize,
           viewport: geometry.viewportSize
         )
 
-      case .rotate(let state):
-        rotate = state
+      case .rotate(let value):
+        rotate = value
 
       default: break
     }

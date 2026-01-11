@@ -25,7 +25,7 @@ public struct PanZoomModifier: ViewModifier {
           isEnabled: true,
           didUpdateZoom: { state in
             guard let geometry else { return }
-            let adjustment = ZoomAdjustment.zoom(state.zoom)
+            let adjustment = ZoomOperation.zoom(state.zoom)
             handler.update(.zoom(adjustment), geometry: geometry)
           }
         ),

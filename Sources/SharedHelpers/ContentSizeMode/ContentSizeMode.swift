@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
-import
+import EnumMacros
 
-@Meta
+@MetaEnum
+@CaseDetection
 public enum ContentSizeMode {
   /// Fill destination rect exactly, even if aspect ratio is distorted
   case stretch
@@ -19,7 +20,7 @@ public enum ContentSizeMode {
   /// Cover: scale uniformly to cover entire destination (aspect ratio preserved, may clip)
   case fill
   
-  case fixed(CGFloat, axis: Axis2D)
+  case fixed(CGFloat, axis: Axis)
 }
 
 extension ContentSizeMode {

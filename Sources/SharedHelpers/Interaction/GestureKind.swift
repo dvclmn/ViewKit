@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 11/1/2026.
 //
 
-import SwiftUI
 import EnumMacros
+import SwiftUI
 
 /// # Touch Gestures
 /// - Zoom
@@ -25,13 +25,12 @@ import EnumMacros
 /// - Resize
 @MetaEnum
 public enum GestureKind: Sendable {
-  case zoom(CGFloat) // Aka pinch and zoom
-  case pan(CGSize) // Aka two finger swipe
-  case rotate(Angle) // Two finger turn
+  case zoom(ZoomOperation)  // Aka pinch and zoom
+  case pan(CGSize)  // Aka two finger swipe
+  case rotate(Angle)  // Two finger turn
 }
 
 /// This should be turned into a protocol or something in future
 extension GestureKind {
-  
-}
 
+}

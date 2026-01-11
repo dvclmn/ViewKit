@@ -10,18 +10,12 @@ import Foundation
 import BasePrimitives
 
 public struct PanState: Sendable {
-//public struct PanState: GestureStateProtocol, Sendable {
   public let value: CGSize
-//  public let phase: Interaction.Phase
 
   public static let initial: Self = .init()
 
-  public init(
-    offset: CGSize = .zero,
-//    phase: Interaction.Phase = .none
-  ) {
+  public init( offset: CGSize = .zero) {
     self.value = offset
-//    self.phase = phase
   }
 }
 extension PanState {
@@ -42,8 +36,7 @@ extension PanState {
       offset: CGSize(
         width: offset.width.clamped(to: -maxX...maxX),
         height: offset.height.clamped(to: -maxY...maxY)
-      ),
-//      phase: phase
+      )
     )
   }
 
