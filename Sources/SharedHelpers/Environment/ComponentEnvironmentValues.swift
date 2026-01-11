@@ -14,27 +14,6 @@ import BasePrimitives
 /// to provide a fallback meaningful to their domain.
 extension EnvironmentValues {
 
-  /// View layout
-  /// See `LayoutKit` for `layoutMode`
-  @Entry public var layoutAxis: Axis? = nil
-  @Entry public var layoutAlignment: Alignment? = nil
-  @Entry public var textAlignment: TextAlignment? = nil
-
-  /// Use this for spacing specifically (`VStack`/`HStack` etc)
-  /// For padding, prefer `layoutPadding`.
-  @Entry public var layoutSpacing: CGFloat? = nil
-  
-  /// If addressing spacing, prefer `layoutSpacing`.
-  @Entry public var layoutPadding: CGFloat? = nil
-
-  /// Useful for targeting the inside of nested scroll views
-  /// Note: using name `safePadding` to disambiguate from `safeAreaPadding`
-  @Entry public var safePadding: EdgeInsets? = nil
-
-  /// For things like weighted padding, giving more
-  /// breathing room to the X axis etc
-  @Entry public var horizontalBias: CGFloat? = nil
-
   /// Icons
   @Entry public var iconColour: AnyShapeStyle? = nil
   @Entry public var iconWeight: Font.Weight? = nil
@@ -44,6 +23,18 @@ extension EnvironmentValues {
   @Entry public var labelColour: AnyShapeStyle? = nil
   @Entry public var itemColour: Color? = nil
   @Entry public var labelWeight: Font.Weight? = nil
+  
+  
+  /// This is useful because SwiftUI exposes control over display of
+  /// icon and label elements in the form of the `LabelStyle` protocol.
+  /// So when using custom label styles, setting e.g. `labelStyle(iconOnly)`
+  /// will override the custom style. This works around that.
+  @Entry public var labelDisplay: LabelDisplay? = nil
+  
+  
+  /// Note: This is here because support for `labelsVisibility`
+  /// is for macOS 15.0+ only
+  @Entry public var labelHidden: Bool = false
 
   /// Strokes
   @Entry public var strokeColour: AnyShapeStyle? = nil
@@ -79,9 +70,6 @@ extension EnvironmentValues {
   @Entry public var explicitAspectRatio: CGFloat? = nil
   @Entry public var explicitContentMode: ContentMode? = nil
 
-  /// Note: This is here because support for `labelsVisibility`
-  /// is for macOS 15.0+ only
-  @Entry public var labelHidden: Bool = false
 
   @Entry public var helpText: String = ""
   @Entry public var cornerRounding: CGFloat? = nil
@@ -114,13 +102,10 @@ extension EnvironmentValues {
   
   /// App-wide / project-wide mapping convention, for which
   /// property on a type should be considered the identity vs transposed.
+  /// Aka whether width maps to horizontal, or rows to vertical, etc etc.
   /// See ``AxisAddressable``
   @Entry public var axisMapping: AxisMapping = .identity
-  
-  /// Meant as a debug helper, for when I'm not sure who is
-  /// consuming this View, or what it's context is.
-  @Entry public var viewDescription: String? = nil
-  
+
   @Entry public var opacityDim: CGFloat? = nil
   
 }

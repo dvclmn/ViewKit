@@ -65,6 +65,10 @@ public struct CustomLabel: LabelStyle {
           configuration.title
             .commonLabelStyles(for: .title, display: internalLabelDisplay)
         }
+        
+      case .hidden:
+        LabelBase(configuration)
+          .labelsHidden()
 
       case .none:
         LabelBase(configuration)

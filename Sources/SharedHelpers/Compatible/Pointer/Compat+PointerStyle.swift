@@ -106,7 +106,7 @@ extension PointerStyleCompatible {
 
 extension GridBoundaryPoint {
   
-  var toCompatPointerStyle: PointerStyleCompatible {
+  public var toCompatPointerStyle: PointerStyleCompatible {
     let style = PointerStyleCompatible.frameResize(
       position: self.toCompatFrameResizePosition,
       directions: .all

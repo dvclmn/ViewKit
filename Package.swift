@@ -18,7 +18,6 @@ let package = Package(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
     ),
-    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
     .library(name: "BasePrimitives", targets: ["BasePrimitives"]),
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
     .library(
