@@ -73,6 +73,16 @@ extension CGSize {
     )
   }
 
+  /// Returns a new size reduced by the specified edge insets,
+  /// and clamped to a minimum value of `0` for each dimension.
+  /// - Parameter insets: The per-edge insets to apply. Width is reduced by `left + right`, height by `top + bottom`.
+  /// - Returns: A new CGSize with the insets applied
+  public func inset(by insets: EdgeInsets) -> CGSize {
+    let newWidth = max(0, width - (insets.leading + insets.trailing))
+    let newHeight = max(0, height - (insets.top + insets.bottom))
+    return CGSize(width: newWidth, height: newHeight)
+  }
+
   public func clampBothDimensions(toMin length: CGFloat) -> CGSize {
     let width = self.width.clamped(length)
     let height = self.height.clamped(length)

@@ -30,8 +30,7 @@ extension InteractionPhase {
         default: .none
       }
   }
-}
-extension InteractionPhase {
+
   public var name: String {
     switch self {
       case .mayBegin: "May Begin"

@@ -6,10 +6,8 @@
 //
 
 import AppKit
-import VectorKit
 import CoreTools
-
-//import StringKit
+import VectorKit
 
 public struct TouchPoint: TimestampedPosition, Identifiable, Sendable, Hashable, Equatable, Codable {
   public let id: Int
@@ -63,7 +61,7 @@ public struct TouchPoint: TimestampedPosition, Identifiable, Sendable, Hashable,
     )
     self.init(
       id: touchID,
-      phase: phase.toDomainPhase,
+      phase: TouchPhase(from: phase),
       position: position,
       timestamp: timestamp,
       velocity: .zero,  // This will be enriched in next step

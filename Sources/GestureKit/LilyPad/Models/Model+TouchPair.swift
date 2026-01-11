@@ -5,8 +5,20 @@
 //  Created by Dave Coleman on 11/5/2025.
 //
 
-
 import SwiftUI
+
+//public struct TrackpadGesture: Identifiable, Hashable, Sendable {
+//  public let id: UUID
+//  public let type: GestureType
+//  public let phase: TrackpadGesturePhase
+//  public let touches: TouchPair
+//
+////  public static let none = TrackpadGesture(
+////    id: UUID(),
+////    type: .none,
+////        phase: .none
+////  )
+//}
 
 //public struct TouchPair: Sendable, Hashable {
 //  public let first: MappedTouchPoint
@@ -22,25 +34,25 @@ import SwiftUI
 //
 //  public init?(_ touches: [MappedTouchPoint], strictReferencePair: TouchPair) {
 //    guard touches.count == 2 else { return nil }
-//    
+//
 //    let lookup = Dictionary(uniqueKeysWithValues: touches.map { ($0.id, $0) })
-//    
+//
 //    guard let first = lookup[strictReferencePair.first.id],
 //          let second = lookup[strictReferencePair.second.id] else {
 //      return nil
 //    }
-//    
+//
 //    self.first = first
 //    self.second = second
 //  }
 //}
 //
 //extension TouchPair {
-//  
+//
 //  public static func timestampSortedTouches(
 //    _ touches: [MappedTouchPoint],
 //  ) -> TouchPair {
-//    
+//
 //    let sorted = touches.sorted {
 //      $0.timestamp == $1.timestamp ? $0.id < $1.id : $0.timestamp < $1.timestamp
 //    }
@@ -69,7 +81,7 @@ import SwiftUI
 //  public var angleInRadiansBetween: CGFloat {
 //    CGPoint.angleInRadians(from: p1, to: p2)
 //  }
-//  
+//
 //  func distance(to other: TouchPair) -> CGFloat {
 //    self.midPointBetween.distance(to: other.midPointBetween)
 //  }
@@ -81,13 +93,13 @@ import SwiftUI
 //    let firstDesc = TouchPoint.generateDescription(for: self.first)
 //    let secondDesc = TouchPoint.generateDescription(for: self.second)
 //    return """
-//    
-//    
+//
+//
 //    First Point: \(firstDesc)
-//    
+//
 //    Second Point: \(secondDesc)
-//    
-//    
+//
+//
 //    """
 //  }
 //}
