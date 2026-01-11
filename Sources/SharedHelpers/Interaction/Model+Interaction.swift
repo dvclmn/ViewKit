@@ -14,7 +14,9 @@ import BasePrimitives
 /// - Draw
 /// - Pan/Zoom/Rotate canvas
 public struct Interaction {
-  let kind: InteractionKind
+  let kind: InteractionKind.Meta
   let phase: InteractionPhase
+  
+//  let keysHeld: Keys = []
   let modifiers: Modifiers?
 }

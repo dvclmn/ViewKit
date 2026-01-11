@@ -8,10 +8,13 @@
 import CoreTools
 import SwiftUI
 
+public typealias MarqueeDragOutput = (InteractionKind, InteractionPhase) -> Void
+
 struct MarqueeDragGesture: Gesture {
   @Binding var rect: CGRect?
   let dragThreshold: CGFloat
-  let didUpdateRect: (InteractionKind) -> Void
+  let didUpdateRect: MarqueeDragOutput
+//  let didUpdateRect: (InteractionKind) -> Void
 
   var body: some Gesture {
     /// IMPORTANT: `minimumDistance` must be set to zero,
@@ -27,17 +30,17 @@ struct MarqueeDragGesture: Gesture {
         let isDrag: Bool = value.translation.eitherDimensionIsGreaterThan(dragThreshold)
 
         if isDrag {
-          didUpdateRect(.drag(newRect))
+          didUpdateRect(.drag(newRect), .changed)
 
         } else {
           let location = newRect.point(at: .bottomTrailing)
-          didUpdateRect(.tap(location))
+          didUpdateRect(.tap(location), .changed)
           //          didUpdateRect(.tap(location: newRect.point(at: .bottomTrailing)))
         }
 
       }
       .onEnded { gestureValue in
-        didUpdateRect(.none)
+        didUpdateRect(.none, .ended)
 
         /// Resetting this value ensures we can start from a *new*
         /// last-recorded corner, for the next gesture.

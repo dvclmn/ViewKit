@@ -22,5 +22,21 @@ public enum InteractionKind: Sendable {
 
   case hover(CGPoint)
   case none
+}
 
+extension InteractionKind.Meta {
+  func keyPath() -> PartialKeyPath<InteractionHandler>? {
+//  func keyPath<T>() ->  WritableKeyPath<InteractionHandler, T?>? {
+    switch self {
+      case .tap: \.tapLocation
+      case .drag: \.dragRect
+      case .tapRanges: nil
+      case .longPress: nil
+      case .gestureZoom: \.zoom
+      case .gesturePan: \.pan
+      case .gestureRotate: \.rotation
+      case .hover: \.hoverLocation
+      case .none: nil
+    }
+  }
 }

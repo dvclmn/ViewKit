@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 9/7/2025.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 public struct MarqueeDragModifier: ViewModifier {
   @Environment(\.shouldRenderDragRect) private var shouldRenderDragRect
@@ -14,7 +14,7 @@ public struct MarqueeDragModifier: ViewModifier {
 
   let isEnabled: Bool
   let dragThreshold: CGFloat
-  let didUpdateRect: (InteractionKind) -> Void
+  let didUpdateRect: MarqueeDragOutput
 
   public func body(content: Content) -> some View {
     content
@@ -26,7 +26,6 @@ public struct MarqueeDragModifier: ViewModifier {
         ),
         isEnabled: isEnabled
       )
-
       .modifier(DrawMarqueeModifier(rect: rect, isEnabled: shouldRenderDragRect))
   }
 }
@@ -34,7 +33,7 @@ extension View {
   public func marqueeDrag(
     isEnabled: Bool = true,
     dragThreshold: CGFloat = 5,
-    didUpdateRect: @escaping (InteractionKind) -> Void = { _ in }
+    didUpdateRect: @escaping MarqueeDragOutput = { _, _ in }
   ) -> some View {
     self.modifier(
       MarqueeDragModifier(
