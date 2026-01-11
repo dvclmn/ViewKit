@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BasePrimitives
+import CoreTools
 
 public struct ZoomState: GestureStateProtocol, Sendable {
   public let value: CGFloat

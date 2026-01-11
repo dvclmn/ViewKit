@@ -75,6 +75,7 @@ extension CGPoint {
       case .stretch: stretchMap(from: source, to: destination)
       case .fit: aspectFitMap(from: source, to: destination)
       case .fill: aspectFillMap(from: source, to: destination)
+      case .fixed: fatalError("Not yet supported")
     }
   }
 

@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+import
 
+@Meta
 public enum ContentSizeMode {
   /// Fill destination rect exactly, even if aspect ratio is distorted
   case stretch

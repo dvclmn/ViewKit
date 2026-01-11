@@ -8,11 +8,11 @@
 import SwiftUI
 
 extension CGSize {
-//  public static let trackpad = CGSize(
-//    width: 700,
-//    height: 438
-//  )
-  
+  //  public static let trackpad = CGSize(
+  //    width: 700,
+  //    height: 438
+  //  )
+
   public static let trackpadAspectRatio: CGFloat = 10.0 / 16.0
   public static var trackpadSize: CGSize {
     let width: CGFloat = 700
@@ -48,7 +48,7 @@ extension CGSize {
 //}
 //
 //extension TrackpadMapStrategy {
-// 
+//
 //
 //  //  public static generateSize
 //}
