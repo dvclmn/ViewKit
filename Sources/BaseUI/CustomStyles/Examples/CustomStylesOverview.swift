@@ -5,10 +5,9 @@
 //  Created by Dave Coleman on 20/9/2025.
 //
 
-
-import SwiftUI
-import BasePrimitives
+import CoreTools
 import LayoutKit
+import SwiftUI
 
 extension EnvironmentValues {
   @Entry public var randomIcon: String = Icons.binoculars.icon
@@ -20,7 +19,7 @@ public struct CustomStylesOverview: View {
   public var body: some View {
     ScrollView {
 
-//      VStack(alignment: .leading) {
+      //      VStack(alignment: .leading) {
       DecomposedView(
         .section,
         layoutType: .vstack(alignment: .leading),
@@ -41,8 +40,8 @@ public struct CustomStylesOverview: View {
                 ExampleLabel("Label Display")
                   .labelStyle(.base)
                   .environment(\.labelDisplay, style)
-                
-                /// This ensures the `stacked` label display looks right
+
+                  /// This ensures the `stacked` label display looks right
                   .environment(\.layoutSpacing, Styles.sizeSmall)
               }
               Divider()
@@ -50,7 +49,6 @@ public struct CustomStylesOverview: View {
           }
         }
         .containerValueBool(.hasDividers, false)
-        
 
         Section_Buttons()
 

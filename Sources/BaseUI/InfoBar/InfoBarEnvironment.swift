@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreTools
 
 extension EnvironmentValues {
   @Entry public var sectionLabelDisplay: LabelDisplay? = nil

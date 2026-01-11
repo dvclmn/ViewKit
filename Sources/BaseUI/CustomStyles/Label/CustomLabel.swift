@@ -5,8 +5,7 @@
 //  Created by Dave Coleman on 30/4/2024.
 //
 
-
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
 extension LabelStyle where Self == CustomLabel {
@@ -65,7 +64,7 @@ public struct CustomLabel: LabelStyle {
           configuration.title
             .commonLabelStyles(for: .title, display: internalLabelDisplay)
         }
-        
+
       case .hidden:
         LabelBase(configuration)
           .labelsHidden()
@@ -78,7 +77,7 @@ public struct CustomLabel: LabelStyle {
 }
 
 extension CustomLabel {
-  
+
   private var internalLabelDisplay: LabelDisplay? {
     explicitLabelDisplay ?? labelDisplay
   }

@@ -5,18 +5,16 @@
 //  Created by Dave Coleman on 9/1/2026.
 //
 
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
-//@Observable
 public struct GestureHandler {
-//public final class GestureHandler {
   var pan: PanState
   var zoom: ZoomState
   var rotate: RotateState
 
   public var interactions: InteractionHandler = .init()
-  
+
   public let zoomRange: ClosedRange<CGFloat>
 
   public init(
@@ -33,7 +31,7 @@ public struct GestureHandler {
 }
 
 extension GestureHandler {
-  
+
   /// Clamped
   public var zoomLevel: CGFloat { zoom.clamped(in: zoomRange).value }
   public var zoomPercent: CGFloat { zoom.percentage }
@@ -41,7 +39,6 @@ extension GestureHandler {
   public var rotation: Angle { rotate.value }
 
   public mutating func update(
-//  public func update(
     _ kind: GestureKind,
     geometry: CanvasGeometry
   ) {
@@ -51,7 +48,6 @@ extension GestureHandler {
           .withPhase(state.phase)
 
       case .zoom(let adjustment):
-//        guard let geometry else { return }
         zoom = adjustment.resolve(
           current: zoom,
           artwork: geometry.canvasSize,
@@ -60,16 +56,15 @@ extension GestureHandler {
 
       case .rotate(let state):
         rotate = state
-        
+
       default: break
     }
-    
+
     /// Update current interaction
     updateIfChanged(&interactions.interaction, to: kind.interactionType)
   }
 
   public mutating func reset(_ kind: GestureKind.Meta) {
-//  public func reset(_ kind: GestureKind.Meta) {
     switch kind {
       case .pan: pan = .initial
       case .zoom: zoom = .initial

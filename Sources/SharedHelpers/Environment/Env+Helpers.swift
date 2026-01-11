@@ -6,3 +6,10 @@
 //
 
 import SwiftUI
+
+extension View {
+  public func backgroundTint<S>(_ tint: S?) -> some View where S: ShapeStyle {
+    self.environment(\.explicitColour, tint)
+  }
+}
+

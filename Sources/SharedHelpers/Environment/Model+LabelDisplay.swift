@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import EnumMacros
 
 @CaseDetection
 public enum LabelDisplay: String, CaseIterable, Identifiable, Equatable, Sendable {
