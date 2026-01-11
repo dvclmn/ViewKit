@@ -46,7 +46,8 @@ extension EnvironmentValues {
   @Entry public var cornerRounding: CGFloat? = nil
 
   /// Perhaps the below two can be merged.
-  @Entry public var explicitColour: (any ShapeStyle)? = nil
+  @Entry public var explicitColour: AnyShapeStyle? = nil
+//  @Entry public var explicitColour: (any ShapeStyle)? = nil
   @Entry public var emphasisColour: AnyShapeStyle? = nil
 
   @Entry public var buttonRole: ButtonRole? = nil

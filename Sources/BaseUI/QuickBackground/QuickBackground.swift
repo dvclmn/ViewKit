@@ -17,12 +17,13 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   @Environment(\.layoutPadding) private var layoutPadding
   @Environment(\.horizontalBias) private var horizontalBias
   @Environment(\.backgroundMaterial) private var backgroundMaterial
+  @Environment(\.explicitColour) private var explicitColour
   @Environment(\.strokeColour) private var strokeColour
   @Environment(\.strokeWeight) private var strokeWeight
 
   let isEnabled: Bool
   let shape: S
-  let tint: Color?
+//  let tint: Color?
   let padding: CGFloat?
   let hasOpticalAdjustment: Bool
 
@@ -34,7 +35,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
       .background {
         if #available(macOS 14.0, *) {
           shape
-            .fill(backgroundTint)
+            .fill(explicitColour ?? )
             //          .fill(tintColour)
             .fill(material)
             .stroke(
@@ -43,7 +44,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
         } else {
 
           shape
-            .fill(backgroundTint)
+            .fill(explicitColour)
           //          .fill(tintColour)
 
           shape
@@ -63,8 +64,10 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
 
 //
 extension QuickBackgroundModifier {
-
-  private var backgroundTint: Color { tint ?? Color.clear }
+  
+  private var backgroundTint: Color {
+    explicitColour ?? Color.clear
+  }
 
   private var basePadding: CGFloat {
     return padding ?? layoutPadding ?? CGFloat.defaultQuickPadding
@@ -81,10 +84,10 @@ extension QuickBackgroundModifier {
     return AnyShapeStyle(backgroundMaterial ?? .regularMaterial)
   }
 
-  private var tintColour: AnyShapeStyle {
-    guard isEnabled else { return .clear }
-    return tint?.toShapeStyle ?? emphasisColour ?? Color.defaultQuickTint.toShapeStyle
-  }
+//  private var tintColour: AnyShapeStyle {
+//    guard isEnabled else { return .clear }
+//    return tint?.toShapeStyle ?? emphasisColour ?? Color.defaultQuickTint.toShapeStyle
+//  }
 }
 
 extension View {
@@ -93,7 +96,7 @@ extension View {
   public func quickBackground<S: Shape>(
     shape: S = .rect(cornerRadius: CGFloat.defaultQuickRounding),
     padding: CGFloat? = nil,
-    tint: Color = Color.defaultQuickTint,
+//    tint: Color = Color.defaultQuickTint,
     isEnabled: Bool = true,
     hasOpticalAdjustment: Bool = true
   ) -> some View {
@@ -101,7 +104,7 @@ extension View {
       QuickBackgroundModifier(
         isEnabled: isEnabled,
         shape: shape,
-        tint: tint,
+//        tint: tint,
         padding: padding,
         hasOpticalAdjustment: hasOpticalAdjustment,
       )
@@ -110,7 +113,7 @@ extension View {
 
   public func quickBackground(
     rounding: CGFloat,
-    tint: Color = Color.defaultQuickTint,
+//    tint: Color = Color.defaultQuickTint,
     isEnabled: Bool = true,
     hasOpticalAdjustment: Bool = true
   ) -> some View {
@@ -118,7 +121,7 @@ extension View {
       QuickBackgroundModifier(
         isEnabled: isEnabled,
         shape: .rect(cornerRadius: rounding),
-        tint: tint,
+//        tint: tint,
         padding: nil,
         hasOpticalAdjustment: hasOpticalAdjustment,
       )
@@ -127,7 +130,7 @@ extension View {
 
   public func quickBackground(
     padding: CGFloat,
-    tint: Color = Color.defaultQuickTint,
+//    tint: Color = Color.defaultQuickTint,
     isEnabled: Bool = true,
     hasOpticalAdjustment: Bool = true
   ) -> some View {
@@ -135,7 +138,7 @@ extension View {
       QuickBackgroundModifier(
         isEnabled: isEnabled,
         shape: .rect(cornerRadius: Styles.sizeTiny),
-        tint: tint,
+//        tint: tint,
         padding: padding,
         hasOpticalAdjustment: hasOpticalAdjustment,
       )

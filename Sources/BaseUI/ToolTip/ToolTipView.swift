@@ -9,7 +9,7 @@ import BasePrimitives
 import SwiftUI
 
 struct ToolTipView: View {
-  @Environment(\.itemColour) private var itemColour
+  @Environment(\.explicitColour) private var explicitColour
   
   private let style: ToolTipStyle = .capsule
 
@@ -28,11 +28,11 @@ struct ToolTipView: View {
           .quickBackground(
             shape: .capsule,
             //            shape: style.isCapsule ? .capsule : .rect(cornerRadius: CGFloat.defaultQuickRounding),
-            tint: itemColour ?? Color.black.opacity(0.6)
+            tint: AnyShapeStyle(explicitColour) ?? AnyShapeStyle(Color.black.opacity(0.6))
           )
 //          .background(.regularMaterial)
 
-//          .background(itemColour ?? Color.black.opacity(0.6))
+//          .background(explicitColour ?? Color.black.opacity(0.6))
 //          .clipShape(.rounded)
 
       }
