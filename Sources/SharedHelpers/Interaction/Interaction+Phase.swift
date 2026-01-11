@@ -6,7 +6,6 @@
 //
 
 import AppKit
-import CoreTools
 
 public enum InteractionPhase: String, Sendable {
   case began

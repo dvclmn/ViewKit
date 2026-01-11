@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import EnumMacros
 
+@MetaEnum
 enum InteractionKind: Sendable {
   case tap(CGPoint)
   case tapAndDrag(CGRect)

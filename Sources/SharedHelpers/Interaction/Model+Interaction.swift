@@ -5,8 +5,16 @@
 //  Created by Dave Coleman on 9/7/2025.
 //
 
-import CoreTools
 import SwiftUI
+import BasePrimitives
+
+//public protocol Interaction {
+//  var kind: InteractionKind { get }
+//  var phase: InteractionPhase { get set }
+//  var modifiers: Modifiers? { get set }
+//}
+
+//public protocol InteractionKind
 
 struct Interaction {
   let kind: InteractionKind
@@ -14,13 +22,12 @@ struct Interaction {
   let modifiers: Modifiers?
 }
 
-
 //public struct InputMethods: OptionSet, Sendable, Hashable {
 //  public init(rawValue: Int) {
 //    self.rawValue = rawValue
 //  }
 //  public let rawValue: Int
-//  
+//
 //  static public let touchGesture = InputMethods(rawValue: 1 << 0)
 //  static public let dragGesture = InputMethods(rawValue: 1 << 1)
 //  static public let tap = InputMethods(rawValue: 1 << 2)
@@ -56,4 +63,3 @@ struct Interaction {
 //    }
 //  }
 //}
-
