@@ -7,6 +7,7 @@
 
 import SwiftUI
 import EnumMacros
+import BasePrimitives
 
 @MetaEnum
 @CaseDetection
@@ -27,45 +28,51 @@ extension ContentSizeMode {
   public func size(
     for containerSize: CGSize,
     aspectRatio: CGFloat,
-    insets: EdgeInsets
+    insets: EdgeInsets = .zero
   ) -> CGSize {
     
     let sizeWithInsets: CGSize = containerSize.inset(by: insets)
-//    let insetSize: CGSize = containerSize.inset(by: viewportEdgeInset)
     switch self {
       case .fit:
+        // Scale uniformly to fit within container (preserve aspect ratio)
+        // aspectRatio is defined as height/width
         let widthBased = CGSize(
           width: sizeWithInsets.width,
           height: sizeWithInsets.width * aspectRatio
         )
-        
-        guard widthBased.height <= containerSize.height else {
+        if widthBased.height <= sizeWithInsets.height {
+          return widthBased
+        } else {
           return CGSize(
             width: sizeWithInsets.height / aspectRatio,
             height: sizeWithInsets.height
           )
         }
-        return widthBased
         
       case .fill:
+        // Scale uniformly to cover container (preserve aspect ratio, may clip)
+        // Compare container ratio (h/w) to content aspectRatio (h/w)
         let containerRatio = sizeWithInsets.height / sizeWithInsets.width
-        guard containerRatio > aspectRatio else {
-          /// Container is wider than trackpad → match width
+        if containerRatio > aspectRatio {
+          // Container is taller than content → match height
+          return CGSize(
+            width: sizeWithInsets.height / aspectRatio,
+            height: sizeWithInsets.height
+          )
+        } else {
+          // Container is wider than content → match width
           return CGSize(
             width: sizeWithInsets.width,
             height: sizeWithInsets.width * aspectRatio
           )
         }
-        /// Container is taller than trackpad → match height
-        return CGSize(
-          width: sizeWithInsets.height / aspectRatio,
-          height: sizeWithInsets.height
-        )
         
       case .stretch:
+        // Fill the container exactly, ignoring aspect ratio
         return sizeWithInsets
         
       case .fixed(let length, let axis):
+        // Fix one axis length, derive the other from aspectRatio (h/w)
         switch axis {
           case .horizontal:
             let width = length

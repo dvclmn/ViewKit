@@ -11,29 +11,60 @@ import BasePrimitives
 extension CGSize {
   public func aspectRatio(
     mode: ContentSizeMode,
-    intoSize size: CGSize
+    intoSize size: CGSize,
+    insets: EdgeInsets = .zero
   ) -> CGSize {
-    if self == .zero {
-      return self
-    }
-    let widthRatio = size.width / self.width
-    let heightRatio = size.height / self.height
-    
-    /// Handle stretch mode separately since it doesn't preserve aspect ratio
-    if mode.isStretch { return size }
-    
-    let ratio: CGFloat =
-    switch mode {
-      case .fit: min(widthRatio, heightRatio)
-      case .fill: max(widthRatio, heightRatio)
-      case .stretch: 1.0
-      case .fixed(<#T##CGFloat#>, axis: <#T##Axis#>)
-    }
-    
-    return CGSize(
-      width: self.width * ratio,
-      height: self.height * ratio
+    // Guard against degenerate sizes
+    if isZero || size.isZero { return .zero }
+
+    // aspectRatio is defined as height/width for the content size
+    let contentAspect = self.height / self.width
+
+    return mode.size(
+      for: size,
+      aspectRatio: contentAspect,
+      insets: insets
     )
+    
+//    return thing
+//    switch mode {
+//    case .stretch:
+//      // Ignore aspect ratio, stretch to fill destination
+//      return size
+//
+//    case .fit:
+//      // Uniformly scale to fit within destination
+//      let widthBased = CGSize(width: size.width, height: size.width * contentAspect)
+//      if widthBased.height <= size.height {
+//        return widthBased
+//      } else {
+//        return CGSize(width: size.height / contentAspect, height: size.height)
+//      }
+//
+//    case .fill:
+//      // Uniformly scale to cover destination (may clip)
+//      let containerAspect = size.height / size.width
+//      if containerAspect > contentAspect {
+//        // Container taller than content → match height
+//        return CGSize(width: size.height / contentAspect, height: size.height)
+//      } else {
+//        // Container wider than content → match width
+//        return CGSize(width: size.width, height: size.width * contentAspect)
+//      }
+//
+//    case .fixed(let length, let axis):
+//      // Fix one axis length, derive the other from aspect ratio (h/w)
+//      switch axis {
+//      case .horizontal:
+//        let width = length
+//        let height = length * contentAspect
+//        return CGSize(width: width, height: height)
+//      case .vertical:
+//        let height = length
+//        let width = length / contentAspect
+//        return CGSize(width: width, height: height)
+//      }
+//    }
   }
 }
 
@@ -104,3 +135,4 @@ extension CGPoint {
     return CGPoint(x: translatedX, y: translatedY)
   }
 }
+
