@@ -5,15 +5,12 @@
 //  Created by Dave Coleman on 5/9/2025.
 //
 
-
 import BasePrimitives
 import LayoutKit
 import SwiftUI
 
-
 public enum Flexi<Content, Item>
 where Item: Sendable & Identifiable & Equatable, Item.ID: Hashable & Sendable, Content: View {}
-
 
 extension Flexi {
 
@@ -79,7 +76,6 @@ extension Flexi {
   }
 }
 
-
 extension Flexi.LayoutView {
 
   // MARK: - Main layout view
@@ -100,10 +96,12 @@ extension Flexi.LayoutView {
     switch store.selectionMode {
       case .single:
         assert(
-          store.multiSelection.isEmpty, "`multiSelection: Set<Item.ID>` cannot be used in single selection mode.")
+          store.multiSelection.isEmpty,
+          "`multiSelection: Set<Item.ID>` cannot be used in single selection mode.")
 
       case .multi:
-        assert(store.singleSelection == nil, "`singleSelection: Item.ID?` cannot be used in multi selection mode.")
+        assert(
+          store.singleSelection == nil, "`singleSelection: Item.ID?` cannot be used in multi selection mode.")
 
     }
   }

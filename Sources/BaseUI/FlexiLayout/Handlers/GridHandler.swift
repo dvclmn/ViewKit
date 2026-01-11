@@ -10,23 +10,22 @@
 import SwiftUI
 import BasePrimitives
 
-
 extension Flexi {
 
   @MainActor
   @Observable
-  
+
   final class GridHandler {
 
     var itemFrames: [Item.ID: CGRect] = [:]
     var itemSpacing: CGFloat? = nil
     var viewSize: CGSize? = nil
 
-//    var gridContext: GridContext<Item>?
-  
+    //    var gridContext: GridContext<Item>?
+
     var selected: Set<Item.ID> = []
     var modifiers: Modifiers = []
-    
+
     /// The bounding box of the active selection
     var selectionRect: CGRect?
     var isDragging: Bool = false
@@ -56,30 +55,29 @@ extension Flexi {
   }
 }
 
-
 extension Flexi.GridHandler {
-  
+
   var columnCount: Int? {
     guard let viewWidth = viewSize?.width,
-          let itemWidth,
-          let itemSpacing
+      let itemWidth,
+      let itemSpacing
     else { return nil }
     let columnCount = Int(floor((viewWidth + itemSpacing) / (itemWidth + itemSpacing)))
     return columnCount
   }
-  
+
   /// This relies on the Grid items all being the same size
   var itemWidth: CGFloat? {
     let rects = itemFrames.values
     guard let widthOfFirst = rects.first?.width else { return nil }
-    
+
     /// Small tolerance for floating-point precision issues
     let tolerance: CGFloat = 0.5
-    
+
     guard rects.allSatisfy({ abs($0.width - widthOfFirst) <= tolerance }) else {
       return nil
     }
-    
+
     return widthOfFirst
   }
 
@@ -89,34 +87,34 @@ extension Flexi.GridHandler {
     data: [Item]
   ) -> Item.ID? {
     guard let currentIndex = data.firstIndex(where: { $0.id == currentID }),
-          let columnCount
+      let columnCount
     else { return nil }
-    
+
     let row = currentIndex / columnCount
     let col = currentIndex % columnCount
     var newIndex: Int?
-    
+
     switch direction {
       case .left:
         if col > 0 { newIndex = currentIndex - 1 }
-        
+
       case .right:
         if col < columnCount - 1, currentIndex + 1 < data.count {
           newIndex = currentIndex + 1
         }
-        
+
       case .up:
         if row > 0 {
           newIndex = currentIndex - columnCount
         }
-        
+
       case .down:
         let downIndex = currentIndex + columnCount
         if downIndex < data.count {
           newIndex = downIndex
         }
     }
-    
+
     return newIndex.map { data[$0].id }
   }
 
@@ -158,7 +156,7 @@ extension Flexi.GridHandler {
       selected.wrappedValue = newSelection
     }
   }
-  
+
   func handleTap(
     itemID: Item.ID,
     data: [Item],
@@ -169,64 +167,64 @@ extension Flexi.GridHandler {
     guard let tappedIndex = data.firstIndex(where: { $0.id == itemID }) else {
       return
     }
-    
+
     /// Update the last clicked item ID
     lastClickedItemID = itemID
-    
+
     /// Handle different modifier key combinations
     if modifiers.contains(.command) {
       /// Command key: Toggle selection of individual item
       handleCommandKey(id: itemID)
-      
+
     } else if modifiers.contains(.shift) {
       handleShiftKey(id: itemID, data: data, tappedIndex: tappedIndex)
-      
+
     } else {
       /// No modifiers: Clear selection and select just this item
       selected = [itemID]
-      
+
       /// Without modifiers, we reset the anchor point to this new item
       fixedAnchorItemID = itemID
     }
   }
-  
+
   private func handleCommandKey(id: Item.ID) {
     if selected.contains(id) {
       selected.remove(id)
     } else {
       selected.insert(id)
     }
-    
+
     /// Command clicks update both anchor points to enable
     /// subsequent shift-selections from this item
     fixedAnchorItemID = id
-    
+
   }
-  
+
   private func handleShiftKey(
     id: Item.ID,
     data: [Item],
     tappedIndex: Int,
   ) {
-    
+
     /// Shift key: Select a range from the fixed anchor point to the current item
     if let anchorID = fixedAnchorItemID,
-       let anchorIndex = data.firstIndex(where: { $0.id == anchorID })
+      let anchorIndex = data.firstIndex(where: { $0.id == anchorID })
     {
-      
+
       /// Start with existing command-selected items
       var newSelection = modifiers.contains(.command) ? selected : []
-      
+
       let minIndex = min(tappedIndex, anchorIndex)
       let maxIndex = max(tappedIndex, anchorIndex)
-      
+
       /// Add all items in the range to the selection
       for index in minIndex...maxIndex {
         newSelection.insert(data[index].id)
       }
-      
+
       selected = newSelection
-      
+
       /// Important: Don't update the fixed anchor during shift-selection
       /// This allows the range to be expanded/contracted on subsequent shift-clicks
     } else {
@@ -234,13 +232,12 @@ extension Flexi.GridHandler {
       selected = [id]
       fixedAnchorItemID = id
     }
-    
+
   }
 
 }
 
 #endif
-
 
 extension Array where Element: Identifiable {
   func indexMap() -> [Element.ID: Int] {

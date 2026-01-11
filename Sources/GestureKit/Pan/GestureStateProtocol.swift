@@ -8,10 +8,10 @@
 public protocol GestureStateProtocol {
   associatedtype Value
   var value: Value { get }
-  var phase: GesturePhase { get }
+  var phase: Interaction.Phase { get }
   
   static var initial: Self { get }
-  func withPhase(_ newPhase: GesturePhase) -> Self
+  func withPhase(_ newPhase: Interaction.Phase) -> Self
   var isActive: Bool { get }
 //  func clamped(to range: ClosedRange<Value>) -> Self
 }

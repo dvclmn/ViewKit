@@ -10,13 +10,13 @@ import SwiftUI
 public struct RotateState: GestureStateProtocol, Sendable {
   public let value: Angle
 //  let zoom: CGFloat
-  public let phase: GesturePhase
+  public let phase: Interaction.Phase
   
   public static let initial: Self = .init()
   
   public init(
     rotation: Angle = .zero,
-    phase: GesturePhase = .none
+    phase: Interaction.Phase = .none
   ) {
     self.value = rotation
     self.phase = phase
@@ -25,7 +25,7 @@ public struct RotateState: GestureStateProtocol, Sendable {
 }
 
 extension RotateState {
-  public func withPhase(_ newPhase: GesturePhase) -> Self {
+  public func withPhase(_ newPhase: Interaction.Phase) -> Self {
     Self(rotation: value, phase: newPhase)
   }
 }

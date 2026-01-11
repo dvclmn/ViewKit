@@ -8,59 +8,17 @@
 import AppKit
 import CoreTools
 
-/// # Touch Gestures
-/// - Zoom
-/// - Pan
-/// - Rotation
-///
-/// # Drag Gestures
-/// - Pan
-/// - Select
-/// - Resize
-/// - Tap (considered zero-length drag)
-///
-/// Tool-based (should only be allowed when x tool is selected)
-/// - Pan (Drag)
-/// - Select
-/// - Resize
-@MetaEnum
-public enum GestureKind {
-  case pan(PanState)
-  case zoom(ZoomAdjustment)
-//  case zoom(ZoomState)
-  case rotate(RotateState)
-  case select
-  case resize
-  case none
-  
-  public var name: String {
-    switch self {
-      case .pan: "Pan"
-      case .zoom: "Zoom"
-      case .rotate: "Rotate"
-      case .select: "Select"
-      case .resize: "Resize"
-      case .none: "None"
-    }
+extension Interaction {
+  public enum Phase: String, Sendable {
+    case began
+    case stationary
+    case changed
+    case ended
+    case cancelled
+    case mayBegin
+    case none
   }
 }
-
-extension GestureKind {
-  
-  /// This probably should be scrutinised more
-  public var interactionType: Interaction {
-    switch self {
-      case .pan: .gesturePan
-      case .zoom: .gestureZoom
-      case .rotate: .gestureRotate
-      case .select: .dragSelect
-      case .resize: .dragResize
-      case .none: .none
-    }
-  }
-}
-
-
 
 //public enum ZoomPhase: Sendable {
 //  case inactive
@@ -69,16 +27,16 @@ extension GestureKind {
 //}
 
 // From NSEvent.Phase
-public enum GesturePhase: String, Sendable {
-  case began
-  case stationary
-  case changed
-  case ended
-  case cancelled
-  case mayBegin
-  case none
-}
-extension GesturePhase {
+//public enum GesturePhase: String, Sendable {
+//  case began
+//  case stationary
+//  case changed
+//  case ended
+//  case cancelled
+//  case mayBegin
+//  case none
+//}
+extension Interaction.Phase {
   public init(from nsEventPhase: NSEvent.Phase) {
     self =
       switch nsEventPhase {

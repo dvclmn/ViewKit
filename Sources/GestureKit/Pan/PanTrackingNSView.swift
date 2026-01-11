@@ -37,7 +37,7 @@ public class PanTrackingNSView: NSView {
 //    print("NSEvent Phase: \(event.phase)")
 //    print("NSEvent Momentum Phase: \(event.momentumPhase)\n\n")
 
-    let phase = GesturePhase(from: event.momentumPhase)
+    let phase = Interaction.Phase(from: event.momentumPhase)
     let state = PanState(offset: delta, phase: phase)
 
     didUpdatePan(state)

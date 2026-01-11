@@ -11,13 +11,13 @@ import BasePrimitives
 
 public struct PanState: GestureStateProtocol, Sendable {
   public let value: CGSize
-  public let phase: GesturePhase
+  public let phase: Interaction.Phase
 
   public static let initial: Self = .init()
 
   public init(
     offset: CGSize = .zero,
-    phase: GesturePhase = .none
+    phase: Interaction.Phase = .none
   ) {
     self.value = offset
     self.phase = phase
@@ -81,7 +81,7 @@ extension PanState {
     )
   }
 
-  public func withPhase(_ newPhase: GesturePhase) -> Self {
+  public func withPhase(_ newPhase: Interaction.Phase) -> Self {
     Self(offset: offset, phase: newPhase)
   }
   //  mutating func update(phase: GesturePhase) {

@@ -10,13 +10,13 @@ import BasePrimitives
 
 public struct ZoomState: GestureStateProtocol, Sendable {
   public let value: CGFloat
-  public let phase: GesturePhase
+  public let phase: Interaction.Phase
 
   public static let initial: Self = .init()
 
   public init(
     zoom: CGFloat = 1.0,
-    phase: GesturePhase = .none
+    phase: Interaction.Phase = .none
   ) {
     self.value = zoom
     self.phase = phase
@@ -36,7 +36,7 @@ extension ZoomState {
 
   public var percentage: CGFloat { zoom * 100 }
 
-  public func withPhase(_ newPhase: GesturePhase) -> Self {
+  public func withPhase(_ newPhase: Interaction.Phase) -> Self {
     Self(zoom: value, phase: newPhase)
   }
 
