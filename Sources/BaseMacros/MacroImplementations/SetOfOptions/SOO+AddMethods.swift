@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 18/9/2025.
 //
 
-//import BasePrimitives
+import MacroToolkit
 import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxBuilder
@@ -22,7 +22,6 @@ extension SetOfOptionsMacro: MemberMacro {
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
 
-    // Decode the expansion arguments
     guard
       let (_, optionsEnum, rawType) = decodeExpansion(
         of: attribute,
@@ -32,7 +31,7 @@ extension SetOfOptionsMacro: MemberMacro {
       )
     else { return [] }
 
-    // Extract case elements
+    /// Extract case elements
     let caseElements: [EnumCaseElementSyntax] = optionsEnum.memberBlock.members.flatMap { member in
       guard let caseDecl = member.decl.as(EnumCaseDeclSyntax.self) else {
         return [EnumCaseElementSyntax]()
@@ -40,11 +39,10 @@ extension SetOfOptionsMacro: MemberMacro {
       return Array(caseDecl.elements)
     }
 
-    // Get access control modifier
+    /// Get access control modifier
     let access = decl.modifiers.first(where: \.isPublicAccessLevel)
 
     guard isUsingBuilderForOutput else {
-
       return output(
         enum: optionsEnum,
         elements: caseElements,
@@ -52,8 +50,7 @@ extension SetOfOptionsMacro: MemberMacro {
         rawType: rawType
       )
     }
-
-    // Build members
+    /// Using the Builder style for output
     return buildOptionSetMembers(
       caseElements: caseElements,
       enumName: optionsEnum.name,
@@ -68,35 +65,35 @@ extension SetOfOptionsMacro: MemberMacro {
     elements caseElements: [EnumCaseElementSyntax],
     access: DeclModifierListSyntax.Element?,
     rawType: TypeSyntax
-      //    access: TokenSyntax?
   ) -> [DeclSyntax] {
-    
+
+    let trimmedCases: [String] = caseElements.map { $0.name.text }
+
+    // MARK: - Raw Value methods
     let primary: [DeclSyntax] = [
-      //      "\(access)typealias RawValue = \(rawType)",
       "\(access)let rawValue: \(rawType)",
-      //      "\(access)init() { self.rawValue = 0 }",
       "\(access)init(rawValue: \(rawType)) { self.rawValue = rawValue }",
     ]
 
-    let staticVars = caseElements.map { (element) -> DeclSyntax in
-      """
-        \(access)static let \(element.name): Self = Self(rawValue: 1 << \(optionsEnum.name).\(element.name).rawValue)
-      """
+    // MARK: - Option Set static members
+    let staticVars = trimmedCases.map { (element) -> DeclSyntax in
+      "\(access)static let \(raw: element): Self = Self(rawValue: 1 << \(optionsEnum.name).\(raw: element).rawValue)"
     }
 
+    // MARK: - String Value
     let snakeConditional: String = "isSnakeCase"
 
-    let stringSwitchCases = caseElements.map { enumCase in
-      let camel = enumCase.name.text
+    let stringSwitchCases = trimmedCases.map { enumCase in
+      let camel = enumCase
       let snake = camel.camelToSnake
 
-      return "  case .\(enumCase.name): \(snakeConditional) ? \"\(snake)\" : \"\(camel)\""
+      return "  case .\(enumCase): \(snakeConditional) ? \"\(snake)\" : \"\(camel)\""
     }.joined(separator: "\n  ")
 
-    let optionSetStringBuilder: String = caseElements.map { el in
+    let optionSetStringBuilder: String = trimmedCases.map { element in
       """
-      if self.contains(.\(el.name)) {
-        strings.append(Self.stringValue(for: \(optionsEnum.name).\(el.name), \(snakeConditional): \(snakeConditional)))
+      if self.contains(.\(element)) {
+        strings.append(Self.stringValue(for: \(optionsEnum.name).\(element), \(snakeConditional): \(snakeConditional)))
       }
       """
     }.joined(separator: "\n  ")
@@ -115,7 +112,7 @@ extension SetOfOptionsMacro: MemberMacro {
     /// ]
     /// ```
 
-    let allCasesList = caseElements.map { ".\($0.name)" }.joined(separator: ",\n  ")
+    let allCasesList = trimmedCases.map { ".\($0)" }.joined(separator: ",\n  ")
 
     let extraDecls: [DeclSyntax] = [
       /// OptionSet `.all` added here

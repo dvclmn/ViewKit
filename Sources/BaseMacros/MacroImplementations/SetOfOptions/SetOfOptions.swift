@@ -23,10 +23,7 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 public struct SetOfOptionsMacro {
-  /// Decodes the arguments to the macro expansion.
-  ///
-  /// - Returns: the important arguments used by the various roles of this
-  /// macro inhabits, or nil if an error occurred.
+
   static func decodeExpansion(
     of attribute: AttributeSyntax,
     attachedTo decl: some DeclGroupSyntax,
@@ -99,6 +96,3 @@ public struct SetOfOptionsMacro {
     return (structDecl, optionsEnum, rawType)
   }
 }
-
-
-

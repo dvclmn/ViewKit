@@ -52,8 +52,8 @@ enum AnotherEnum {
 struct CoolAnimals {
   enum Options: Int {
     case bat
-    case frog
-    case ape
+    case frog // Test comment
+    case apeWithCamelCase
   }
 }
 
