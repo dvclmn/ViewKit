@@ -17,7 +17,7 @@ public struct PanZoomModifier: ViewModifier {
       .overlay {
         PanGestureView { offset, phase in
           guard let geometry else { return }
-          handler.update(.pan(offset), phase: phase, geometry: geometry)
+          handler.update(.gesturePan(offset), phase: phase, geometry: geometry)
           //          handler.update(.pan(state), geometry: geometry)
         }
       }
@@ -27,7 +27,7 @@ public struct PanZoomModifier: ViewModifier {
           isEnabled: true,
           didUpdateZoom: { zoom, phase in
             guard let geometry, let zoom else { return }
-            handler.update(.zoom(zoom), phase: phase, geometry: geometry)
+            handler.update(.gestureZoom(zoom), phase: phase, geometry: geometry)
 //            let adjustment = ZoomOperation.zoom(state.zoom)
             
 //            handler.update(.zoom(adjustment), geometry: geometry)

@@ -9,6 +9,7 @@ import EnumMacros
 import SwiftUI
 
 @MetaEnum
+@AssociatedValues
 public enum InteractionKind: Sendable {
   case tap(CGPoint)
   case drag(CGRect)  // Aka tap and drag
