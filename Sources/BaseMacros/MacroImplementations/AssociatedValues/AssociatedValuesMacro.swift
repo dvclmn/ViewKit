@@ -23,19 +23,30 @@ struct AssociatedValuesMacro: MemberMacro {
         return nil
       }
 
-      let variableNames = associatedValue
-        .parameters
+      let parameters = associatedValue.parameters
+      let isSingleValue = parameters.count == 1
+      
+      /// 1. Determine the return type string
+      /// If single: just the type (e.g., `CGRect`)
+      /// If multiple: the full parameter clause (e.g., `(x: Int, y: Int)`)
+      let typeString: String
+      if isSingleValue, let firstParam = parameters.first {
+        typeString = "\(firstParam.type)"
+      } else {
+        typeString = "\(associatedValue)"
+      }
+      
+      /// 2. Generate internal variable names for the pattern match
+      let variableNames = parameters
         .enumerated()
-        .map { index, _ in
-          "v\(index)"
-        }
+        .map { index, _ in "v\(index)" }
         .joined(separator: ", ")
-
+      
       return DeclSyntax(
-        try VariableDeclSyntax("\(declaration.modifiers)var \(element.name)Value: \(raw: associatedValue)?") {
+        try VariableDeclSyntax("\(declaration.modifiers)var \(element.name)Value: \(raw: typeString)?") {
           try IfExprSyntax("if case let .\(element.name)(\(raw: variableNames)) = self") {
-            if associatedValue.parameters.count == 1 {
-              "return \(raw: variableNames)"
+            if isSingleValue {
+              "return v0"
             } else {
               "return (\(raw: variableNames))"
             }
@@ -44,5 +55,6 @@ struct AssociatedValuesMacro: MemberMacro {
         }
       )
     }
+
   }
 }
