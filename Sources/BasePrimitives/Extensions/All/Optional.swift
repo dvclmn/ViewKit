@@ -68,10 +68,16 @@ extension Optional where Wrapped == CGSize {
     set { _boundSize = newValue }
   }
 
-//  public func length(for axis: Axis2D, convention: AxisConvention = .default) -> CGFloat? {
-//    self?.length(along: axis, convention: convention)
-//  }
+  //  public func length(for axis: Axis2D, convention: AxisConvention = .default) -> CGFloat? {
+  //    self?.length(along: axis, convention: convention)
+  //  }
 }
+
+//extension Optional where Wrapped == Color {
+//  public var toShapeStyle: AnyShapeStyle? {
+//    self.map { $0.toShapeStyle }
+//  }
+//}
 
 //func ??<Bool>(lhs: Binding<Optional<Bool>>, rhs: Bool) -> Binding<Bool> {
 //    Binding(

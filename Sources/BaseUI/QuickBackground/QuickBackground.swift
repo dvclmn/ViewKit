@@ -35,8 +35,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
       .background {
         if #available(macOS 14.0, *) {
           shape
-            .fill(explicitColour ?? )
-            //          .fill(tintColour)
+            .fill(backgroundColour)
             .fill(material)
             .stroke(
               strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)),
@@ -44,7 +43,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
         } else {
 
           shape
-            .fill(explicitColour)
+            .fill(backgroundColour)
           //          .fill(tintColour)
 
           shape
@@ -64,11 +63,9 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
 
 //
 extension QuickBackgroundModifier {
-  
-  private var backgroundTint: Color {
-    explicitColour ?? Color.clear
+  private var backgroundColour: AnyShapeStyle {
+    explicitColour.withFallback(.black.opacity(0.6))
   }
-
   private var basePadding: CGFloat {
     return padding ?? layoutPadding ?? CGFloat.defaultQuickPadding
   }

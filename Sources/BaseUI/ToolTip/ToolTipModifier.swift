@@ -36,7 +36,8 @@ public struct Tooltip: ViewModifier {
           text: text,
           isShowing: isShowing
         )
-        .environment(\.explicitColour, colour)
+        .backgroundTint(colour)
+//        .environment(\.explicitColour, colour)
 //        .offset(alignment.offset(distance: 10, radial: .outward))
 
         

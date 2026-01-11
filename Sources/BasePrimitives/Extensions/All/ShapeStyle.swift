@@ -11,11 +11,14 @@ extension ShapeStyle where Self == Color {
   public static var random: Color { Color.random }
 }
 
-extension Optional where Wrapped: ShapeStyle {
-  public func fallingBack(to fallback: Color) -> Self {
-    //    guard let colour = fallback as? Wrapped else {
-    //      self?.
-    //    }
-    self ?? (fallback as! Wrapped)
+extension Optional where Wrapped == AnyShapeStyle {
+  public func withFallback(_ colour: Color) -> AnyShapeStyle {
+    self ?? AnyShapeStyle(colour)
   }
+//  public func fallingBack(to fallback: Color) -> Self {
+//    //    guard let colour = fallback as? Wrapped else {
+//    //      self?.
+//    //    }
+//    self ?? (fallback as! Wrapped)
+//  }
 }
