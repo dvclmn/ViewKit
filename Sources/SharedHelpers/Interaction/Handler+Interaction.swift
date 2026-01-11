@@ -13,14 +13,11 @@ public struct InteractionHandler {
   /// Important: There is a difference between handling the
   /// current active interaction, and handling which interactions
   /// are allowed to be initiated at any given time.
-//  public var interaction: Interaction = .none
-  
   var current: Interaction? = nil
 
   /// This forces the caller to define which is allowed.
   /// If not defined, none will work.
   public var allowed: InteractionKind = .none
-//  public var allowedDragGesture: GestureKind.Meta = .none
   public var keysHeld: Keys = []
   public var modifiersHeld: Modifiers = []
 
