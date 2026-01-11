@@ -6,15 +6,19 @@
 //
 
 import EnumMacros
-import Foundation
+import SwiftUI
 
 @MetaEnum
 public enum InteractionKind: Sendable {
   case tap(CGPoint)
-  case drag(CGRect) // Aka tap and drag
+  case drag(CGRect)  // Aka tap and drag
   case tapRanges(Set<Range<Int>>)  // For multi-select
   case longPress(CGPoint)
-  case gesture(GestureKind)
+
+  case gestureZoom(CGFloat)  // Aka pinch and zoom
+  case gesturePan(CGSize)  // Aka two finger swipe
+  case gestureRotate(Angle)  // Two finger turn
+
   case hover(CGPoint)
   case none
 

@@ -23,15 +23,29 @@ import SwiftUI
 /// - Pan (Drag)
 /// - Select
 /// - Resize
-@MetaEnum
-public enum GestureKind: Sendable {
-  case zoom(CGFloat)  // Aka pinch and zoom
-//  case zoom(ZoomOperation)  // Aka pinch and zoom
-  case pan(CGSize)  // Aka two finger swipe
-  case rotate(Angle)  // Two finger turn
-}
-
-/// This should be turned into a protocol or something in future
-extension GestureKind {
-
-}
+//@MetaEnum
+//public enum GestureKind: Sendable {
+//  case zoom(CGFloat)  // Aka pinch and zoom
+////  case zoom(ZoomOperation)  // Aka pinch and zoom
+//  case pan(CGSize)  // Aka two finger swipe
+//  case rotate(Angle)  // Two finger turn
+//}
+//
+///// This should be turned into a protocol or something in future
+//extension GestureKind {
+//
+//}
+//
+//extension GestureKind.Meta {
+//  public init?(from interaction: InteractionKind.Meta) {
+//    switch interaction {
+//      case .tap: .
+//      case .drag:
+//      case .tapRanges:
+//      case .longPress:
+//      case .gesture:
+//      case .hover:
+//
+//    }
+//  }
+//}

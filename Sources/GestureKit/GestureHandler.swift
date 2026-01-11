@@ -57,21 +57,23 @@ extension GestureHandler {
       //          .withPhase(state.phase)
 
       case .zoom(let value):
-        let newZoom: CGFloat = value.resolve(
-          //          current: zoom,
-          artwork: geometry.canvasSize,
-          viewport: geometry.viewportSize
-        )
-        zoom = ZoomState(zoom: newZoom)
+        /// Will need to save this in case I somehow route the
+        /// zoom action kind that I want
+        //        let newZoom: CGFloat = value.resolve(
+        //          //          current: zoom,
+        //          artwork: geometry.canvasSize,
+        //          viewport: geometry.viewportSize
+        //        )
+        zoom = ZoomState(zoom: value)
 
       case .rotate(let value):
         rotate = RotateState(rotation: value)
 
-//      default: break
+    //      default: break
     }
 
     /// Update current interaction
-//    updateIfChanged(&interactions.interaction, to: kind.interactionType)
+    //    updateIfChanged(&interactions.interaction, to: kind.interactionType)
   }
 
   public mutating func reset(_ kind: GestureKind.Meta) {
@@ -79,7 +81,7 @@ extension GestureHandler {
       case .pan: pan = .initial
       case .zoom: zoom = .initial
       case .rotate: rotate = .initial
-//      default: break
+    //      default: break
     }
   }
 }

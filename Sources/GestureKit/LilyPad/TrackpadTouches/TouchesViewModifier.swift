@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 7/5/2025.
 //
 
-
+import CoreTools
 import SwiftUI
 
 //public typealias TouchesModifierOutput = (TouchEventData?) -> Void
@@ -14,10 +14,10 @@ import SwiftUI
 public struct TrackpadTouchesModifier: ViewModifier {
 
   @State private var localMappedTouches: Set<TouchPoint> = []
-//  @State private var localMappedTouches: Set<MappedTouchPoint> = []
+  //  @State private var localMappedTouches: Set<MappedTouchPoint> = []
 
   let isEnabled: Bool
-  let mapStrategy: TrackpadMapStrategy
+  let mapStrategy: ContentSizeMode
   let shouldShowIndicators: Bool
   let touchUpdates: TouchOutput
 
@@ -32,7 +32,7 @@ public struct TrackpadTouchesModifier: ViewModifier {
         )
       }
       if isEnabled {
-        TrackpadTouchesView(//          shouldUseVelocity: true
+        TrackpadTouchesView(  //          shouldUseVelocity: true
         ) { touchOutput in
 
           if shouldShowIndicators {
@@ -40,7 +40,7 @@ public struct TrackpadTouchesModifier: ViewModifier {
             /// Handle touches for local views
             let mappedTouchBuilder = MappedTouchPointsBuilder(
               touches: touchOutput,
-              in: mapStrategy.size(for: proxy.size)
+              in: mapStrategy.size(for: proxy.size, aspectRatio: CGSize.trackpadAspectRatio)
             )
             let mapped = mappedTouchBuilder.mappedTouches
             self.localMappedTouches = mapped
@@ -60,7 +60,7 @@ extension View {
 
   public func touches(
     isEnabled: Bool = true,
-    mapStrategy: TrackpadMapStrategy,
+    mapStrategy: ContentSizeMode,
     showIndicators: Bool = true,
     touchUpdates: @escaping TouchOutput
   ) -> some View {

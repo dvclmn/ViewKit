@@ -17,10 +17,16 @@ public struct InteractionHandler {
 
   /// This forces the caller to define which is allowed.
   /// If not defined, none will work.
-  public var allowed: InteractionKind = .none
+  public var allowed: InteractionKind.Meta
   public var keysHeld: Keys = []
   public var modifiersHeld: Modifiers = []
 
   let keysToWatch: Set<KeyEquivalent> = [.space]
+  
+  public init(
+    allowed: InteractionKind.Meta = .none,
+  ) {
+    self.allowed = allowed
+  }
 }
 
