@@ -47,6 +47,40 @@ public struct InteractionHandler {
 
 extension InteractionHandler {
 
+  func panClamped(
+    artwork: CGSize,
+    viewport: CGSize,
+  ) -> CGSize {
+    let scaledArtwork = artwork * zoom
+
+    let maxX = max((scaledArtwork.width - viewport.width) / 2, 0)
+    let maxY = max((scaledArtwork.height - viewport.height) / 2, 0)
+
+    return CGSize(
+      width: pan.width.clamped(to: -maxX...maxX),
+      height: pan.height.clamped(to: -maxY...maxY)
+    )
+  }
+
+  public var zoomPercentage: CGFloat { zoom * 100 }
+  func zoomClamped(in range: ClosedRange<CGFloat>) -> CGFloat {
+    zoom.clamped(to: range)
+  }
+
+  func panTranslated(by delta: CGSize) -> CGSize {
+    CGSize(
+      width: self.pan.width - delta.width,
+      height: self.pan.height - delta.height
+    )
+
+  }
+
+  var viewOffset: CGSize { pan * zoom }
+  var artworkOffset: CGSize { pan / zoom }
+
+  public func artworkSizeInView(_ artwork: CGSize) -> CGSize { artwork * zoom }
+  public func viewSizeInArtwork(_ viewport: CGSize) -> CGSize { viewport / zoom }
+
   public func isAllowed(_ kind: InteractionKind.Meta) -> Bool {
     self.allowed == kind
   }

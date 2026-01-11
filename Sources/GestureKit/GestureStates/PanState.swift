@@ -9,36 +9,36 @@ import CoreGraphics
 import Foundation
 import BasePrimitives
 
-public struct PanState: Sendable {
-  public let value: CGSize
+//public struct PanState: Sendable {
+//  public let value: CGSize
+//
+//  public static let initial: Self = .init()
+//
+//  public init( offset: CGSize = .zero) {
+//    self.value = offset
+//  }
+//}
+//extension PanState {
+//
+//  var offset: CGSize { value }
 
-  public static let initial: Self = .init()
-
-  public init( offset: CGSize = .zero) {
-    self.value = offset
-  }
-}
-extension PanState {
-
-  var offset: CGSize { value }
-
-  func clamped(
-    artwork: CGSize,
-    viewport: CGSize,
-    zoom: ZoomState
-  ) -> Self {
-    let scaledArtwork = artwork * zoom.zoom
-
-    let maxX = max((scaledArtwork.width - viewport.width) / 2, 0)
-    let maxY = max((scaledArtwork.height - viewport.height) / 2, 0)
-
-    return Self(
-      offset: CGSize(
-        width: offset.width.clamped(to: -maxX...maxX),
-        height: offset.height.clamped(to: -maxY...maxY)
-      )
-    )
-  }
+//  func clamped(
+//    artwork: CGSize,
+//    viewport: CGSize,
+//    zoom: ZoomState
+//  ) -> Self {
+//    let scaledArtwork = artwork * zoom.zoom
+//
+//    let maxX = max((scaledArtwork.width - viewport.width) / 2, 0)
+//    let maxY = max((scaledArtwork.height - viewport.height) / 2, 0)
+//
+//    return Self(
+//      offset: CGSize(
+//        width: offset.width.clamped(to: -maxX...maxX),
+//        height: offset.height.clamped(to: -maxY...maxY)
+//      )
+//    )
+//  }
 
   /// ```
   /// case .zoom(let zoomState):
@@ -47,7 +47,7 @@ extension PanState {
   ///     pan = .centred
   ///   }
   /// ```
-  static var centered: Self { .init(offset: .zero) }
+//  static var centered: Self { .init(offset: .zero) }
 
   /// ```
   /// context.translateBy(
@@ -56,8 +56,7 @@ extension PanState {
   /// )
   ///
   /// ```
-  func viewOffset(zoom: ZoomState) -> CGSize { offset * zoom.zoom }
-  func artworkOffset(zoom: ZoomState) -> CGSize { offset / zoom.zoom }
+ 
 
   /// ```
   /// pan = pan
@@ -65,14 +64,7 @@ extension PanState {
   ///   .withPhase(state.phase)
   ///
   /// ```
-  func translated(by delta: CGSize) -> Self {
-    Self(
-      offset: CGSize(
-        width: offset.width - delta.width,
-        height: offset.height - delta.height
-      )
-    )
-  }
+ 
 
 //  public func withPhase(_ newPhase: Interaction.Phase) -> Self {
 //    Self(offset: offset, phase: newPhase)
@@ -90,4 +82,4 @@ extension PanState {
   ////    offset.width -= delta.width
   ////    offset.height -= delta.height
   //  }
-}
+//}

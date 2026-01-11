@@ -27,7 +27,7 @@ public struct PanZoomModifier: ViewModifier {
           isEnabled: true,
           didUpdateZoom: { zoom, phase in
             guard let geometry, let zoom else { return }
-            handler.update(.gestureZoom(zoom), phase: phase, geometry: geometry)
+//            handler.update(.gestureZoom(zoom), phase: phase, geometry: geometry)
 //            let adjustment = ZoomOperation.zoom(state.zoom)
             
 //            handler.update(.zoom(adjustment), geometry: geometry)
