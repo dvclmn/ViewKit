@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 11/8/2025.
 //
 
-
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
 struct SliderHandler {
 
@@ -17,7 +16,7 @@ struct SliderHandler {
 
   let label: QuickLabel
   let range: ClosedRange<CGFloat>
-  
+
   var thumbHandler: ThumbHandler
 
   /// Including vertical hit area buffer
@@ -31,7 +30,7 @@ struct SliderHandler {
   ) {
     self.range = range
     self.label = label
-    
+
     let thumbHandler = ThumbHandler(sliderRange: range)
     self.thumbHandler = thumbHandler
   }
@@ -48,9 +47,7 @@ extension SliderHandler {
 
   var isDragging: Bool { phase == .dragging }
 
-  private var isGeometryReady: Bool {
-    trackSize.areBothDimensionsGreaterThan(.zero)
-  }
+  private var isGeometryReady: Bool { trackSize.isGreaterThanZero }
 
   /// Do not include the hit area buffer in `trackHeight`
   mutating func updateTrackSize(
@@ -76,35 +73,35 @@ extension SliderHandler {
     return newValue
   }
 
-//  var thumbDiameter: CGFloat {
-//    //  func thumbDiameter(with controlSize: ControlSize) -> CGFloat {
-//    //    switch controlSize {
-//    //      case .small: return 12
-//    return 16
-//    //      default: return 16
-//    //    }
-//  }
+  //  var thumbDiameter: CGFloat {
+  //    //  func thumbDiameter(with controlSize: ControlSize) -> CGFloat {
+  //    //    switch controlSize {
+  //    //      case .small: return 12
+  //    return 16
+  //    //      default: return 16
+  //    //    }
+  //  }
 
-//  func thumbPosition(
-//    for value: CGFloat
-//  ) -> CGPoint? {
-//
-//    guard isGeometryReady else { return nil }
-//
-//    /// Normalised here is essentially: “How far along the slider should the
-//    /// thumb be, in proportion to its full track length?”
-//    let normalised: CGFloat = value.normalised(from: range)
-//
-//    /// Remove some length from the beginning/end of the draggable width,
-//    /// so the Thumb doesn't hand awkwardly out the edges of the track.
-//    let horizontalPadding: CGFloat = thumbDiameter * 0.4
-//    let adjustedWidth = trackSize.width - (horizontalPadding * 2)
-//
-//    let x = horizontalPadding + (normalised * adjustedWidth)
-//    let y = trackSize.height / 2
-//
-//    return CGPoint(x: x, y: y)
-//  }
+  //  func thumbPosition(
+  //    for value: CGFloat
+  //  ) -> CGPoint? {
+  //
+  //    guard isGeometryReady else { return nil }
+  //
+  //    /// Normalised here is essentially: “How far along the slider should the
+  //    /// thumb be, in proportion to its full track length?”
+  //    let normalised: CGFloat = value.normalised(from: range)
+  //
+  //    /// Remove some length from the beginning/end of the draggable width,
+  //    /// so the Thumb doesn't hand awkwardly out the edges of the track.
+  //    let horizontalPadding: CGFloat = thumbDiameter * 0.4
+  //    let adjustedWidth = trackSize.width - (horizontalPadding * 2)
+  //
+  //    let x = horizontalPadding + (normalised * adjustedWidth)
+  //    let y = trackSize.height / 2
+  //
+  //    return CGPoint(x: x, y: y)
+  //  }
 
   func fillWidth(for value: CGFloat) -> CGFloat? {
 

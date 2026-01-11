@@ -10,10 +10,11 @@ import SwiftUI
 
 public struct DebugTextOverlayModifier: ViewModifier {
   @Environment(\.isEnabled) private var isEnabled
+  @Environment(\.explicitColour) private var explicitColour
   
 
   let text: String
-//  let text: AttributedString
+  //  let text: AttributedString
   let alignment: Alignment
   let padding: (Edge.Set, CGFloat?)
   public func body(content: Content) -> some View {
@@ -23,21 +24,21 @@ public struct DebugTextOverlayModifier: ViewModifier {
           Text(text)
             .fixedSize(horizontal: true, vertical: false)
             .font(.caption)
-          //      .foregroundStyle(.primary.opacity(0.8))
+            //      .foregroundStyle(.primary.opacity(0.8))
             .monospaced()
-          //      .monospacedDigit()
+            //      .monospacedDigit()
             .padding(.horizontal, 6)
             .padding(.vertical, 4)
             .background(.regularMaterial)
-//            .background(.black.opacityLow)
-          
-//            .background(TintShapeStyle())
-            .background(.tint.opacityLow)
+            //            .background(.black.opacityLow)
+
+            //            .background(TintShapeStyle())
+            .background(explicitColour.withFallback(.clear).opacityLow)
             .clipShape(.rect(cornerRadius: 3))
             .padding()
             .safeAreaPadding(padding.0, padding.1)
             .allowsHitTesting(false)
-            
+
         }
       }
   }
@@ -58,7 +59,7 @@ extension View {
       )
     )
   }
-  
+
   public func debugTextOverlay(
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil),

@@ -9,6 +9,52 @@ import Foundation
 
 extension CGSize {
 
+  /// Returns true if both width and height are greater than zero
+  public var isGreaterThanZero: Bool {
+    width > 0 && height > 0
+  }
+
+  /// Returns true if both width and height are greater than or equal to zero
+  public var isGreaterThanOrEqualToZero: Bool {
+    width >= 0 && height >= 0
+  }
+
+  /// Returns true if either width or height is zero or negative
+  public var isLessThanOrEqualToZero: Bool {
+    !isGreaterThanZero
+  }
+
+  // MARK: - Either dimension
+  public func eitherDimensionIsGreaterThan(_ value: CGFloat) -> Bool {
+    compareDimensions(to: value, using: >, matchMode: .any)
+  }
+  public func eitherDimensionIsGreaterThan(_ other: CGSize) -> Bool {
+    compareDimensions(to: other, using: >, matchMode: .any)
+  }
+  public func eitherDimensionIsLessThan(_ value: CGFloat) -> Bool {
+    compareDimensions(to: value, using: <, matchMode: .any)
+  }
+  public func eitherDimensionIsLessThan(_ other: CGSize) -> Bool {
+    compareDimensions(to: other, using: <, matchMode: .any)
+  }
+
+  // MARK: - Both dimensions
+  public func bothDimensionsAreGreaterThan(_ value: CGFloat) -> Bool {
+    compareDimensions(to: value, using: >, matchMode: .both)
+  }
+  public func bothDimensionsAreGreaterThan(_ other: CGSize) -> Bool {
+    compareDimensions(to: other, using: >, matchMode: .both)
+  }
+  public func bothDimensionsAreLessThan(_ value: CGFloat) -> Bool {
+    compareDimensions(to: value, using: <, matchMode: .both)
+  }
+  public func bothDimensionsAreLessThan(_ other: CGSize) -> Bool {
+    compareDimensions(to: other, using: <, matchMode: .both)
+  }
+}
+
+extension CGSize {
+
   enum DimensionMatchMode {
     case any
     case both
@@ -29,77 +75,23 @@ extension CGSize {
     let widthResult = comparison(width, CGFloat(value))
     let heightResult = comparison(height, CGFloat(value))
 
-    switch matchMode {
-      case .any:
-        return widthResult || heightResult
-      case .both:
-        return widthResult && heightResult
+    return switch matchMode {
+      case .any: widthResult || heightResult
+      case .both: widthResult && heightResult
     }
   }
 
   private func compareDimensions(
-    to other: CGSize,
+    to other: Self,
     using comparison: (CGFloat, CGFloat) -> Bool,
     matchMode: DimensionMatchMode
   ) -> Bool {
     let widthResult = comparison(width, other.width)
     let heightResult = comparison(height, other.height)
 
-    switch matchMode {
-      case .any:
-        return widthResult || heightResult
-      case .both:
-        return widthResult && heightResult
+    return switch matchMode {
+      case .any: widthResult || heightResult
+      case .both: widthResult && heightResult
     }
-  }
-}
-
-extension CGSize {
-
-  /// Returns true if both width and height are greater than zero
-  public var isGreaterThanZero: Bool {
-    width > 0 && height > 0
-  }
-
-  /// Returns true if both width and height are greater than or equal to zero
-  public var isGreaterThanOrEqualToZero: Bool {
-    width >= 0 && height >= 0
-  }
-
-  /// Returns true if either width or height is zero or negative
-  public var isLessThanOrEqualToZero: Bool {
-    !isGreaterThanZero
-  }
-
-  public func isEitherDimensionGreaterThan(_ value: CGFloat) -> Bool {
-    compareDimensions(to: value, using: >, matchMode: .any)
-  }
-
-  public func areBothDimensionsGreaterThan(_ value: CGFloat) -> Bool {
-    compareDimensions(to: value, using: >, matchMode: .both)
-  }
-
-  public func isEitherDimensionLessThan(_ value: CGFloat) -> Bool {
-    compareDimensions(to: value, using: <, matchMode: .any)
-  }
-
-  public func areBothDimensionsLessThan(_ value: CGFloat) -> Bool {
-    compareDimensions(to: value, using: <, matchMode: .both)
-  }
-
-  public func isEitherDimensionGreaterThan(_ other: CGSize) -> Bool {
-    compareDimensions(to: other, using: >, matchMode: .any)
-  }
-
-  public func areBothDimensionsGreaterThan(_ other: CGSize) -> Bool {
-    compareDimensions(to: other, using: >, matchMode: .both)
-  }
-
-  public func isEitherDimensionLessThan(_ other: CGSize) -> Bool {
-    compareDimensions(to: other, using: <, matchMode: .any)
-  }
-
-  public func areBothDimensionsLessThan(_ other: CGSize) -> Bool {
-    compareDimensions(to: other, using: <, matchMode: .both)
   }
 }

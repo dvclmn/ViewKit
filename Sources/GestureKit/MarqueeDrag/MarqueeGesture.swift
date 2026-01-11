@@ -24,7 +24,7 @@ struct MarqueeDragGesture: Gesture {
         let newRect = gestureValue.toRect
         rect = newRect
 
-        let isDrag: Bool = gestureValue.translation.isEitherDimensionGreaterThan(dragThreshold)
+        let isDrag: Bool = gestureValue.translation.eitherDimensionIsGreaterThan(dragThreshold)
 
         if isDrag {
           didUpdateRect(.drag(rect: newRect))

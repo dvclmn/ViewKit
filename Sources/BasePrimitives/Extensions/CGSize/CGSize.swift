@@ -18,7 +18,7 @@ extension CGSize {
   public init(fromLength length: CGFloat) {
     self.init(width: length, height: length)
   }
-  
+
   public init(_ width: CGFloat, _ height: CGFloat) {
     self.init(width: width, height: height)
   }
@@ -42,21 +42,28 @@ extension CGSize {
   public var normalisedLength: CGSize { length > 0 ? self / length : .zero }
   public var normalisedMagnitude: CGSize { magnitude > 0 ? self / magnitude : .zero }
 
-
   // MARK: - General
 
   public var longestDimension: CGFloat { max(width, height) }
   public var shortestDimension: CGFloat { min(width, height) }
 
   /// Returns the offset needed to centre a child of the given size within this container.
+  /// Aka: The vector from container origin to child origin that equalises margins.
+  /// Negative offsets indicate the child is larger than the container and will overflow equally on all sides.
   public func centeringOffset(forChild childSize: CGSize) -> CGSize {
+    guard
+      width.isFinite, height.isFinite,
+      childSize.width.isFinite, childSize.height.isFinite
+    else { return .zero }
+
     return CGSize(
-      width: (self.width - childSize.width) / 2,
-      height: (self.height - childSize.height) / 2
+      width: (width - childSize.width) / 2,
+      height: (height - childSize.height) / 2
     )
   }
 
-  /// Returns a new size reduced evenly on all four sides by the specified inset value, and clamped to min value of `0`.
+  /// Returns a new size reduced evenly on all four sides by the specified inset value,
+  /// and clamped to min value of `0`.
   /// - Parameter inset: The amount to inset from all edges. Width and height are each reduced by 2x this value, 1x for each opposing side
   /// - Returns: A new CGSize with the inset applied
   public func inset(by inset: CGFloat) -> CGSize {
@@ -123,22 +130,22 @@ extension CGSize {
     return width.isNaN || height.isNaN
   }
 
-//  public static func calculateMonospacedMetrics(for font: CTFont) -> CGSize {
-//    let spaceChar = " " as CFString
-//    var glyphRect = CGRect.zero
-//    let glyph = CTFontGetGlyphWithName(font, spaceChar)
-//    CTFontGetBoundingRectsForGlyphs(
-//      font,
-//      .horizontal,
-//      [glyph],
-//      &glyphRect,
-//      1
-//    )
-//
-//    let advance = CTFontGetAdvancesForGlyphs(font, .horizontal, [glyph], nil, 1)
-//    let lineHeight = CTFontGetAscent(font) + CTFontGetDescent(font)
-//
-//    return CGSize(width: CGFloat(advance), height: lineHeight)
-//  }
+  //  public static func calculateMonospacedMetrics(for font: CTFont) -> CGSize {
+  //    let spaceChar = " " as CFString
+  //    var glyphRect = CGRect.zero
+  //    let glyph = CTFontGetGlyphWithName(font, spaceChar)
+  //    CTFontGetBoundingRectsForGlyphs(
+  //      font,
+  //      .horizontal,
+  //      [glyph],
+  //      &glyphRect,
+  //      1
+  //    )
+  //
+  //    let advance = CTFontGetAdvancesForGlyphs(font, .horizontal, [glyph], nil, 1)
+  //    let lineHeight = CTFontGetAscent(font) + CTFontGetDescent(font)
+  //
+  //    return CGSize(width: CGFloat(advance), height: lineHeight)
+  //  }
 
 }

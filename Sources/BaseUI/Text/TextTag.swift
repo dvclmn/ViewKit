@@ -47,8 +47,8 @@ public struct TextTag: View {
       .quickBackground(
         shape: .rect(cornerRadius: Styles.sizeTiny),
         padding: 2,
-        tint: colour.toColour,
       )
+      .backgroundTint(colour.toColour)
       .environment(\.strokeColour, colour.toColour.toShapeStyle)
       .environment(\.strokeWeight, 1)
   }

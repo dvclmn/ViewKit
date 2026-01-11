@@ -27,7 +27,7 @@ public struct ThumbHandler {
     trackSize: CGSize
   ) -> CGPoint? {
 
-    guard trackSize.areBothDimensionsGreaterThan(.zero) else { return nil }
+    guard trackSize.isGreaterThanZero else { return nil }
     //    guard isGeometryReady else { return nil }
 
     /// Normalised here is essentially: “How far along the slider should the
