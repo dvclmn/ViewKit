@@ -13,7 +13,7 @@ public struct GestureHandler {
   var zoom: ZoomState
   var rotate: RotateState
 
-  public var interactions: InteractionHandler = .init()
+//  public var interactions: InteractionHandler = .init()
 
   public let zoomRange: ClosedRange<CGFloat>
 

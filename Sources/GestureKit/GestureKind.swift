@@ -25,9 +25,9 @@ import CoreTools
 /// - Resize
 @MetaEnum
 public enum GestureKind: Sendable {
-  case zoom(CGFloat)
-  case pan(CGSize)
-  case rotate(Angle)
+  case zoom(CGFloat) // Aka pinch and zoom
+  case pan(CGSize) // Aka two finger swipe
+  case rotate(Angle) // Two finger turn
   //  case pan(PanState)
   //  case zoom(ZoomAdjustment)
   //  //  case zoom(ZoomState)
@@ -35,7 +35,10 @@ public enum GestureKind: Sendable {
   //  case select
   //  case resize
   //  case none
+}
 
+extension GestureKind {
+  
 //  public var name: String {
 //    switch self {
 ////      case .pinchAndZoom: "Pinch and Zoom"
@@ -49,18 +52,3 @@ public enum GestureKind: Sendable {
 //    }
 //  }
 }
-
-//extension GestureKind {
-//
-//  /// This probably should be scrutinised more
-//  public var interactionType: Interaction {
-//    switch self {
-//      case .pan: .gesturePan
-//      case .zoom: .gestureZoom
-//      case .rotate: .gestureRotate
-//      case .select: .dragSelect
-//      case .resize: .dragResize
-//      case .none: .none
-//    }
-//  }
-//}
