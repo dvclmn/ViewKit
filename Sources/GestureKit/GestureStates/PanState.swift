@@ -17,8 +17,8 @@ import Foundation
 //}
 
 public struct PanGestureStream {
-  var translation: CGSize
-  var phase: InteractionPhase
+  private(set) var translation: CGSize
+  private(set) var phase: InteractionPhase
 
   public static var centered: Self { .init(.zero) }
 
@@ -32,7 +32,13 @@ public struct PanGestureStream {
 }
 
 extension PanGestureStream {
-//  public mutating func update(_ other: Self) {
+  
+  public var pan: CGSize {
+//    precondition(current.isGreaterThanZero, "Zoom must be greater than zero.")
+    return translation
+  }
+  
+  //  public mutating func update(_ other: Self) {
   public mutating func update(_ delta: CGSize, phase: InteractionPhase) {
     translation.width -= delta.width
     translation.height -= delta.height

@@ -24,9 +24,9 @@ public struct PanGestureView: NSViewRepresentable {
 
   public func makeNSView(context: Context) -> PanTrackingNSView {
     let view = PanTrackingNSView()
-    view.didUpdatePan = { stream in
-      print("Running from PanGestureView: \(stream)")
-      onPanGesture(stream)
+    view.didUpdatePan = { delta, phase in
+//      print("Running from PanGestureView: \(stream)")
+      onPanGesture(delta, phase)
     }
 
     return view
