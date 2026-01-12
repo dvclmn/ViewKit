@@ -8,12 +8,6 @@
 import CoreTools
 import Foundation
 
-public struct PanGestureStream {
-  var translation: CGSize = .zero
-  var phase: InteractionPhase = .none
-  
-  static var centered: Self { .init(translation: .zero) }
-}
 
 public struct MagnificationStream {
   var current: CGFloat = 1

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PointerInteraction {
+public enum PointerInteraction {
   case tap(CGPoint)
   case drag(CGRect)
   case hover(CGPoint)

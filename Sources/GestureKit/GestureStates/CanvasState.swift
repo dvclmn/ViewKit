@@ -5,12 +5,7 @@
 //  Created by Dave Coleman on 12/1/2026.
 //
 
-struct CanvasState {
-  var transform: CanvasTransform
-  
-  var activeMarquee: CGRect?
-  var selection: Set<ItemID>
-}
+//import CoreTools
 
 //public protocol CanvasState {
 //  var zoom: CGFloat { get set }

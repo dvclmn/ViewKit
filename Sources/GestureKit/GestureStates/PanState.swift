@@ -16,16 +16,32 @@ import Foundation
 //  static let initial: Self = .init()
 //}
 
+public struct PanGestureStream {
+  public var translation: CGSize
+  var phase: InteractionPhase
+
+  public static var centered: Self { .init(translation: .zero) }
+
+  public init(
+    translation: CGSize = .zero,
+    phase: InteractionPhase = .none
+  ) {
+    self.translation = translation
+    self.phase = phase
+  }
+}
+
 extension PanGestureStream {
-  mutating func update(_ delta: CGSize) {
+  public mutating func update(_ delta: CGSize, phase: InteractionPhase) {
     translation.width -= delta.width
     translation.height -= delta.height
+    self.phase = phase
   }
 
-  func clamped(
+  public func clamped(
     to geometry: CanvasGeometry,
-    zoom: CGSize
-  ) -> Self {
+    zoom: CGFloat
+  ) -> CGSize {
     let artwork = geometry.canvasSize
     let viewport = geometry.viewportSize
     let scaledArtwork = artwork * zoom
@@ -33,12 +49,11 @@ extension PanGestureStream {
     let maxX = max((scaledArtwork.width - viewport.width) / 2, 0)
     let maxY = max((scaledArtwork.height - viewport.height) / 2, 0)
 
-    return Self(
-      translation: CGSize(
-        width: translation.width.clamped(to: -maxX...maxX),
-        height: translation.height.clamped(to: -maxY...maxY)
-      )
+    return CGSize(
+      width: translation.width.clamped(to: -maxX...maxX),
+      height: translation.height.clamped(to: -maxY...maxY)
     )
+
   }
 }
 

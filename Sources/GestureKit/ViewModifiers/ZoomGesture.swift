@@ -5,31 +5,29 @@
 //  Created by Dave Coleman on 9/1/2026.
 //
 
-import SwiftUI
 import CoreTools
-
-public typealias ZoomGestureOutput = (CGFloat, InteractionPhase) -> Void
+import SwiftUI
 
 struct ZoomGesture: Gesture {
 
   @GestureState private var magnification: CGFloat = 1
   @State private var currentZoom: CGFloat?
-//  @State private var phase: InteractionPhase = .none
+  //  @State private var phase: InteractionPhase = .none
 
   let initialZoom: CGFloat?
-//  let zoomRange: ClosedRange<CGFloat>
+  //  let zoomRange: ClosedRange<CGFloat>
   let isEnabled: Bool
-  let didUpdateZoom: ZoomGestureOutput
-//  let didUpdateZoom: (ZoomState) -> Void
+  let didUpdateZoom: ZoomOutput
+  //  let didUpdateZoom: (ZoomState) -> Void
 
   init(
     initialZoom: CGFloat? = nil,
-//    zoomRange: ClosedRange<CGFloat>,
+    //    zoomRange: ClosedRange<CGFloat>,
     isEnabled: Bool,
-    didUpdateZoom: @escaping ZoomGestureOutput
+    didUpdateZoom: @escaping ZoomOutput
   ) {
     self.initialZoom = initialZoom
-//    self.zoomRange = zoomRange
+    //    self.zoomRange = zoomRange
     self.isEnabled = isEnabled
     self.didUpdateZoom = didUpdateZoom
   }
@@ -48,13 +46,13 @@ struct ZoomGesture: Gesture {
 
         let newZoom = (currentZoom) * value.magnification
         //        let clampedZoom = newZoom.clamped(to: zoomRange)
-//        phase = .changed
+        //        phase = .changed
         didUpdateZoom(newZoom, .changed)
       }
       .onEnded { _ in
-//        phase = .ended
+        //        phase = .ended
         currentZoom = nil
-//        didUpdateZoom(.initial)
+        //        didUpdateZoom(.initial)
         didUpdateZoom(.zero, .ended)
       }
   }

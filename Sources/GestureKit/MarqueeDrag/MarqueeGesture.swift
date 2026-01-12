@@ -8,7 +8,7 @@
 import CoreTools
 import SwiftUI
 
-public typealias MarqueeDragOutput = (InteractionKind, InteractionPhase) -> Void
+public typealias MarqueeDragOutput = (PointerStream, InteractionPhase) -> Void
 
 struct MarqueeDragGesture: Gesture {
   @Binding var rect: CGRect?

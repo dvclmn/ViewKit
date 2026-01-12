@@ -8,7 +8,7 @@
 import CoreTools
 import Foundation
 
-struct PointerStream {
+public struct PointerStream {
   let start: CGPoint
   var current: CGPoint
   var phase: InteractionPhase
@@ -18,7 +18,7 @@ struct PointerStream {
 
 extension PointerStream {
 
-  func interaction() -> PointerInteraction? {
+  public func interaction() -> PointerInteraction? {
     switch phase {
       case .changed: isDrag ? .drag(rect) : nil
       case .ended: isDrag ? .drag(rect) : .tap(start)
@@ -27,18 +27,18 @@ extension PointerStream {
     }
   }
 
-  var translation: CGSize {
+  public var translation: CGSize {
     CGSize(
       width: current.x - start.x,
       height: current.y - start.y
     )
   }
 
-  var isDrag: Bool {
+  public var isDrag: Bool {
     hypot(translation.width, translation.height) >= dragThreshold
   }
 
-  var rect: CGRect {
+  public var rect: CGRect {
     CGRect(origin: start, size: translation).standardized
   }
 }
