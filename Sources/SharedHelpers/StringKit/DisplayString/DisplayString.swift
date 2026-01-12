@@ -7,17 +7,6 @@
 
 import SwiftUI
 
-/// - Parameters:
-///   - separator: Text that separates each individual block element within the builder
-///   - content: The contents of the DisplayString
-/// - Returns: A joined String, delimited by the provided separator.
-//public func DisplayString(
-//  _ separator: String = "\n",
-//  @DisplayStringBuilder _ content: () -> [DisplayBlock]
-//) -> String {
-//  let blocks = content()
-//  return blocks.output(separator: separator)
-//}
 
 public struct DisplayString {
   
@@ -37,6 +26,15 @@ public struct DisplayString {
     self.components = content()
   }
 }
+
+public func DisplayStringText(
+  _ separator: String = "\n",
+  @DisplayStringBuilder _ content: () -> [DisplayBlock]
+) -> String {
+  let blocks = content()
+  return blocks.output(separator: separator)
+}
+
 
 extension DisplayString {
   public var text: String { components.output(separator: separator) }
