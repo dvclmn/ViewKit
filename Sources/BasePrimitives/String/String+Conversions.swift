@@ -27,7 +27,7 @@ extension String {
 
   public var toCharacters: [Character] { Array(self) }
 
-  public var camelToSnake: String {
+  public var camelCaseToSnakeCase: String {
     var result = ""
     for (index, ch) in self.enumerated() {
       if ch.isUppercase {

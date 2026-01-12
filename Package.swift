@@ -59,7 +59,7 @@ let package = Package(
     .macro(
       name: "BaseMacrosImplementation",
       dependencies: [
-        //        .module(.primitives),
+                .module(.primitives),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),

@@ -9,6 +9,7 @@ import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
+import BasePrimitives
 
 extension Array where Element == EnumCaseElementSyntax {
   func staticOptionSetVariables(
@@ -29,7 +30,7 @@ extension Array where Element == EnumCaseElementSyntax {
   func stringSwitchCases(snakeConditional: String) -> String {
     self.map { enumCase in
       let camel = enumCase.name.text
-      let snake = camel.camelToSnake
+      let snake = camel.camelCaseToSnakeCase
       return "  case .\(enumCase.name): \(snakeConditional) ? \"\(snake)\" : \"\(camel)\""
     }.joined(separator: "\n  ")
   }
@@ -48,17 +49,17 @@ extension Array where Element == EnumCaseElementSyntax {
   }
 }
 
-extension String {
-  var camelToSnake: String {
-    var result = ""
-    for (index, ch) in self.enumerated() {
-      if ch.isUppercase {
-        if index > 0 { result.append("_") }
-        result.append(ch.lowercased())
-      } else {
-        result.append(ch)
-      }
-    }
-    return result
-  }
-}
+//extension String {
+//  var camelToSnake: String {
+//    var result = ""
+//    for (index, ch) in self.enumerated() {
+//      if ch.isUppercase {
+//        if index > 0 { result.append("_") }
+//        result.append(ch.lowercased())
+//      } else {
+//        result.append(ch)
+//      }
+//    }
+//    return result
+//  }
+//}

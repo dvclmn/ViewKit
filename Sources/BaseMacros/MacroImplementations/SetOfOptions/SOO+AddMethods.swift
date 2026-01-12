@@ -10,6 +10,7 @@ import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
+import BasePrimitives
 
 extension SetOfOptionsMacro: MemberMacro {
 
@@ -85,7 +86,7 @@ extension SetOfOptionsMacro: MemberMacro {
     
     let stringSwitchCases = caseElements.map { element in
       let camel = element.name.text
-      let snake = camel.camelToSnake
+      let snake = camel.camelCaseToSnakeCase
       
       /// If both versions are identical, just return the raw string
       if camel == snake {

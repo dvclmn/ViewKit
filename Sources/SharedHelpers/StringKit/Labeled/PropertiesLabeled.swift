@@ -8,19 +8,19 @@
 import Foundation
 
 public protocol PropertiesLabeled {
-  associatedtype Value: StringConvertible
+//  associatedtype Value: StringConvertible
 
-  var components: [LabelComponent<Value>] { get }
+  var components: [LabelComponent] { get }
   var separators: Separators { get }
 }
 
-public struct LabelComponent<T: StringConvertible> {
+public struct LabelComponent {
   public let label: PropertyLabel
-  public let value: T
+  public let value: any StringConvertible
 
   public init(
     _ label: PropertyLabel,
-    value: T
+    value: any StringConvertible
   ) {
     self.label = label
     self.value = value

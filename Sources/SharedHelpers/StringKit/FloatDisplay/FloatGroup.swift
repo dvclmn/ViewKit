@@ -10,7 +10,7 @@ import Foundation
 /// Types like `CGPoint` that have float properties.
 /// May be a pair, like `CGPoint`'s `x` and `y`,
 /// or more, like `CGRect`
-extension PropertiesLabeled where Value: FloatString {
+extension PropertiesLabeled {
 
   /// Default for convenience
   public var displayString: String { displayString() }

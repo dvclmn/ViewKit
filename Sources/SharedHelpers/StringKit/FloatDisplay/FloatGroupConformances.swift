@@ -17,7 +17,7 @@ extension CGPoint: PropertiesLabeled {
     Separators(propertyLabel: ": ", component: ", ")
   }
 
-  public var components: [LabelComponent<CGFloat>] {
+  public var components: [LabelComponent] {
     [
       LabelComponent("X", value: self.x),
       LabelComponent("Y", value: self.y),
@@ -30,7 +30,7 @@ extension CGSize: PropertiesLabeled {
     Separators(propertyLabel: ": ", component: " x ")
   }
 
-  public var components: [LabelComponent<CGFloat>] {
+  public var components: [LabelComponent] {
     [
       LabelComponent(PropertyLabel("Width", abbreviated: "W"), value: self.width),
       LabelComponent(PropertyLabel("Height", abbreviated: "H"), value: self.height),
@@ -43,7 +43,7 @@ extension NSRect: PropertiesLabeled {
     Separators(propertyLabel: ": ", component: " x ")
   }
   
-  public var components: [LabelComponent<CGFloat>] {
+  public var components: [LabelComponent] {
     self.origin.components + self.size.components
 //    [
       
@@ -61,7 +61,7 @@ extension UnitPoint: PropertiesLabeled {
     Separators(propertyLabel: ": ", component: ", ")
   }
 
-  public var components: [LabelComponent<CGFloat>] {
+  public var components: [LabelComponent] {
     [
       LabelComponent("X", value: self.x),
       LabelComponent("Y", value: self.y),
@@ -74,7 +74,7 @@ extension CGVector: PropertiesLabeled {
     Separators(propertyLabel: ": ", component: " x ")
   }
 
-  public var components: [LabelComponent<CGFloat>] {
+  public var components: [LabelComponent] {
     [
       LabelComponent("DX", value: self.dx),
       LabelComponent("DY", value: self.dy),
