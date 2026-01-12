@@ -15,6 +15,10 @@ public enum DisplayBlock {
   case indented(Indented)
 }
 
+protocol DisplayRenderable {
+  func render(using format: DisplayFormat) -> String
+}
+
 extension DisplayBlock {
   var indentationDepth: Int {
     switch self {
@@ -24,12 +28,23 @@ extension DisplayBlock {
     }
   }
 
-  public var toString: String? {
+//  public var toString: String? {
+//    switch self {
+//      case .text(let text): text
+//      case .indented(let indented): createIndented(for: indented)
+//    }
+//  }
+  func render(using format: DisplayFormat) -> String {
     switch self {
-      case .text(let text): text
-      case .indented(let indented): createIndented(for: indented)
+      case .text(let text):
+        text
+        
+      case .indented(let indented):
+        indented.render(using: format)
     }
   }
 }
+
+
 
 

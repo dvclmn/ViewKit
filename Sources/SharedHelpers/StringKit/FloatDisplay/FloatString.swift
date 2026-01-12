@@ -12,7 +12,7 @@ public typealias NumberGrouping = FloatingPointFormatStyle<Double>.Configuration
 public protocol FloatString: StringConvertible {
   associatedtype Value: BinaryFloatingPoint
   var value: Value { get }
-  
+
   /// This is an early formatting pass, just to get the decimal places and other
   /// numeric/float based formatting sorted, before other touches, which happen
   /// within ``PropertiesLabeled/displayString(places:grouping:labelStyle:separators:)``
@@ -59,4 +59,12 @@ extension Double: FloatString {
 }
 extension CGFloat: FloatString {
   public var value: Self { self }
+}
+
+
+extension BinaryFloatingPoint {
+  public func toPercentString(within range: ClosedRange<Self>) -> String {
+    let percent = Double(toPercent(within: range))
+    return String(percent.displayString(places: 0) + "%")
+  }
 }
