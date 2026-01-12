@@ -16,7 +16,7 @@ public protocol FloatString: StringConvertible {
   /// This is an early formatting pass, just to get the decimal places and other
   /// numeric/float based formatting sorted, before other touches, which happen
   /// within ``PropertiesLabeled/displayString(places:grouping:labelStyle:separators:)``
-  func floatString(
+  func displayString(
     places: Int,
     grouping: NumberGrouping
   ) -> String
@@ -29,9 +29,13 @@ public protocol FloatString: StringConvertible {
 extension FloatString {
 
   /// `StringConvertible` conformance
-  public var toString: String { self.floatString() }
+  public var toString: String { self.displayString() }
 
-  public func floatString(
+  /// A convenience that just returns the `displayString()`
+  /// method with it's default values
+  public var displayString: String { self.displayString() }
+
+  public func displayString(
     places: Int = 2,
     grouping: NumberGrouping = .automatic
   ) -> String {
@@ -44,6 +48,7 @@ extension FloatString {
       .number.precision(.fractionLength(places))
         .grouping(grouping)
     )
+
     return formatted
   }
 

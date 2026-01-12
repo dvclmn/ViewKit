@@ -47,5 +47,4 @@ extension DisplayBlock {
     guard let convertible = value as? StringConvertible else { return String(describing: value) }
     return convertible.toString
   }
-  
 }
