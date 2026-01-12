@@ -9,11 +9,11 @@ import Foundation
 
 public struct LabelComponent {
   public let label: PropertyLabel
-  public let value: any FloatString
+  public let value: any FloatRenderable
   
   public init(
     _ label: PropertyLabel,
-    value: any FloatString
+    value: any FloatRenderable
   ) {
     self.label = label
     self.value = value

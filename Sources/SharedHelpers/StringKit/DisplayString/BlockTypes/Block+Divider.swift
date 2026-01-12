@@ -14,14 +14,20 @@ public struct Divider {
     self.value = .text(value)
   }
 }
+extension Divider: DisplayRenderable{
+  func render(using format: DisplayFormat) -> String {
+    value.render(using: format)
+  }
+}
 
-extension Divider: StringConvertible {
+extension Divider: StringRenderable {
   public var toString: String {
+    render(using: .default)
     //    let labelPart = StyledString("\(key)\(separator)", with: .secondary)
     //    let valuePart = value?.toStyledString ?? "nil"
     //    return labelPart + valuePart
 
-    return value.toString ?? ""
+//    return value.toString ?? ""
     //    return StyledString(value ?? fallback)
     //    return StyledString("\(key)\(separator)\(valuePart)")
 

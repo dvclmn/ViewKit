@@ -1,5 +1,5 @@
 //
-//  StringConvertible.swift
+//  StringRenderable.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 6/10/2025.
@@ -7,67 +7,67 @@
 
 import SwiftUI
 
-public protocol StringConvertible {
+public protocol StringRenderable {
   var toString: String { get }
 }
 
 // MARK: - Strings
-extension String: StringConvertible {
+extension String: StringRenderable {
   public var toString: String { self }
 }
 
-extension AttributedString: StringConvertible {
+extension AttributedString: StringRenderable {
   public var toString: String { String(self.characters) }
 }
 
-extension Character: StringConvertible {
+extension Character: StringRenderable {
   public var toString: String { String(self) }
 }
 
 // MARK: - Primitives
 
-extension Double: StringConvertible {
+extension Double: StringRenderable {
   public var toString: String { String(self) }
 }
 
-extension Int: StringConvertible {
+extension Int: StringRenderable {
   public var toString: String { String(self) }
 }
 
-extension Bool: StringConvertible {
+extension Bool: StringRenderable {
   public var toString: String { self ? "true" : "false" }
 }
 
-extension Array: StringConvertible where Element: StringConvertible {
+extension Array: StringRenderable where Element: StringRenderable {
   public var toString: String { map(\.toString).joined(separator: ", ") }
 }
 
-extension CGSize: StringConvertible {
+extension CGSize: StringRenderable {
   public var toString: String { displayString }
 }
 
-extension NSRect: StringConvertible {
+extension NSRect: StringRenderable {
   public var toString: String { displayString }
 }
 
-extension CGPoint: StringConvertible {
+extension CGPoint: StringRenderable {
   public var toString: String { displayString }
 }
 
-extension CGFloat: StringConvertible {
+extension CGFloat: StringRenderable {
   public var toString: String { displayString }
 }
 
 // MARK: - Alignment
-extension Alignment: StringConvertible {
+extension Alignment: StringRenderable {
   public var toString: String { self.displayName.standard }
 }
 
-extension Substring: StringConvertible {
+extension Substring: StringRenderable {
   public var toString: String { String(self) }
 }
 
-extension AnyRegexOutput: StringConvertible {
+extension AnyRegexOutput: StringRenderable {
   public var toString: String {
     DisplayString {
       self.summarise(key: \.name)

@@ -29,3 +29,11 @@ public struct Indented {
 //    self.content = content
 //  }
 }
+
+extension Indented: DisplayRenderable {
+  func render(using format: DisplayFormat) -> String {
+    createIndented(format: format) ?? ""
+//    createIndented(for: indented)
+  }
+}
+

@@ -32,7 +32,7 @@ public struct SeparatorVisibility: OptionSet, Sendable {
 //  ///
 //  /// Who handles this separator?
 //  /// The type that holds onto both a `PropertyLabel`
-//  /// and a `value: any StringConvertible`.
+//  /// and a `value: any StringRenderable`.
 //  /// This is often a single `Component`
 //  let propertyLabelSeparator: String
 //

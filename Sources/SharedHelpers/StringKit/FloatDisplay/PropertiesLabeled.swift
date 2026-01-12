@@ -12,7 +12,7 @@ public protocol PropertiesLabeled {
   /// A component is a key+value pair, where the
   /// key is the property's text label ``PropertyLabel``,
   /// and the value is the floating point value of that property,
-  /// conforming to ``StringConvertible``.
+  /// conforming to ``StringRenderable``.
   ///
   /// E.g. `Width` paired with `10.5`
   ///

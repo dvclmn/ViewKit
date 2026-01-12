@@ -90,12 +90,12 @@ This one seems important too, but interestingly it doesn't *have* to be part of 
 /// the place that can be configured. Not the builder itself.
 /// ```
 /// public struct DisplayString {
-///   let content: [any StringConvertible]
+///   let content: [any StringRenderable]
 ///   let separator: String
 ///
 ///   public init(
 ///     separator: String = .defaultComponentSeparator,
-///     @DisplayStringBuilder _ content: () -> [any StringConvertible]
+///     @DisplayStringBuilder _ content: () -> [any StringRenderable]
 ///   ) {
 ///     self.separator = separator
 ///     self.content = content()

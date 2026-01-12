@@ -29,9 +29,14 @@ public struct Labeled {
   }
 }
 
-extension Labeled: StringConvertible {
-  public var toString: String {
-    let valuePart = value?.toString ?? "nil"
+extension Labeled: StringRenderable {
+  public var toString: String { render(using: .default) }
+}
+
+extension Labeled: DisplayRenderable {
+  func render(using format: DisplayFormat) -> String {
+    let valuePart = value?.render(using: format) ?? "nil"
+//    let valuePart = value?.toString ?? "nil"
     return key + separator + valuePart
   }
 }
@@ -44,7 +49,7 @@ extension DisplayBlock {
   
   private static func string(for value: Any?) -> String {
     guard let value else { return "nil" }
-    guard let convertible = value as? StringConvertible else { return String(describing: value) }
+    guard let convertible = value as? StringRenderable else { return String(describing: value) }
     return convertible.toString
   }
 }

@@ -10,4 +10,6 @@ public struct DisplayFormat {
   public var grouping: NumberGrouping = .automatic
   public var labelStyle: PropertyLabel.Style = .standard
   public var separatorVisibility: SeparatorVisibility = .both
+  
+  public static var `default`: DisplayFormat { .init() }
 }

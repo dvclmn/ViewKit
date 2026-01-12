@@ -5,16 +5,14 @@
 //  Created by Dave Coleman on 24/9/2024.
 //
 
-
 import Foundation
-
 
 /// Credit: Sparkle swift package
 /// Some logic I found in Sparkle:
 /// `let pluralizeWord = { $0 == 1 ? $1 : "\($1)s" }`
 
 public enum CountStrategy {
-  case showCount(evenForSingle: Bool = false) // always: show "1 Game" vs "Game"
+  case showCount(evenForSingle: Bool = false)  // always: show "1 Game" vs "Game"
   case hideCount
 }
 
@@ -28,28 +26,27 @@ public enum CountStrategy {
 
 public func pluralise(
   _ noun: String,
-//  verb: String,
+  //  verb: String,
   count: Int,
   countStrategy: CountStrategy = .hideCount,
   irregularPlural: String? = nil
-//  showEllipsis: Bool = false
+    //  showEllipsis: Bool = false
 ) -> String {
-  
+
   let pluralForm = irregularPlural ?? noun + "s"
   switch countStrategy {
     case .showCount(let always):
-      if count == 1 {
-        return always ? "1 \(noun)" : noun
-      } else {
+      guard count == 1 else {
         return "\(count) \(pluralForm)"
       }
+      return always ? "1 \(noun)" : noun
     case .hideCount:
       return count == 1 ? noun : pluralForm
   }
-//
-//  let result = verb + " " + pluralise(noun, count: count, countStrategy: countStrategy)
-//
-//  return showEllipsis ? result + "..." : result
+  //
+  //  let result = verb + " " + pluralise(noun, count: count, countStrategy: countStrategy)
+  //
+  //  return showEllipsis ? result + "..." : result
 }
 
 public func pluralise(

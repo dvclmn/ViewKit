@@ -5,6 +5,36 @@
 //  Created by Dave Coleman on 17/11/2025.
 //
 
+extension Indented {
+  //extension DisplayBlock {
+  func createIndented(
+    //    for indented: Indented,
+    format: DisplayFormat
+  ) -> String? {
+    //    guard !content.isEmpty else { return nil }
+
+    let content = content.map {
+      $0.render(using: format)
+    }
+    let elements = indentedElements(content: content)
+
+    let result = elements.reduce(into: "") { partial, item in
+      partial += "\n" + item
+    }
+    /// Add title if present
+    return (title ?? "") + result
+  }
+
+  private func indentedElements(
+    content: [String],
+    indent: String = "  ",
+    isLastElement: Bool = false
+  ) -> [String] {
+    var builder = IndentedLineBuilder(indent: indent)
+    return builder.build(from: content)
+  }
+}
+
 private struct IndentedLineBuilder {
   let indent: String
 
@@ -24,31 +54,5 @@ private struct IndentedLineBuilder {
       }
     }
     return result
-  }
-}
-
-extension DisplayBlock {
-
-  func createIndented(for indented: Indented) -> String? {
-    guard !indented.content.isEmpty else { return nil }
-
-    let content = indented.content.compactMap(\.toString)
-    let indentedElements = indentedElements(content: content)
-
-    let result = indentedElements.reduce(into: "") { partial, item in
-      partial += "\n" + item
-    }
-
-    /// Add title if present
-    return (indented.title ?? "") + result
-  }
-
-  private func indentedElements(
-    content: [String],
-    indent: String = "  ",
-    isLastElement: Bool = false
-  ) -> [String] {
-    var builder = IndentedLineBuilder(indent: indent)
-    return builder.build(from: content)
   }
 }

@@ -40,7 +40,7 @@ extension DisplayStringBuilder {
     [expression]
   }
 
-    public static func buildExpression<T: StringConvertible>(_ value: T) -> [DisplayBlock] {
+    public static func buildExpression<T: StringRenderable>(_ value: T) -> [DisplayBlock] {
       [.text(value.toString)]
     }
 

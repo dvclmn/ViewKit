@@ -10,7 +10,7 @@ import EnumMacros
 import Foundation
 
 @CaseDetection(includesNames: true)
-public enum DisplayBlock {
+public enum DisplayBlock: DisplayRenderable {
   case text(String)
   case indented(Indented)
 }
@@ -28,23 +28,19 @@ extension DisplayBlock {
     }
   }
 
-//  public var toString: String? {
-//    switch self {
-//      case .text(let text): text
-//      case .indented(let indented): createIndented(for: indented)
-//    }
-//  }
+  //  public var toString: String? {
+  //    switch self {
+  //      case .text(let text): text
+  //      case .indented(let indented):
+  //    }
+  //  }
   func render(using format: DisplayFormat) -> String {
     switch self {
       case .text(let text):
         text
-        
+
       case .indented(let indented):
         indented.render(using: format)
     }
   }
 }
-
-
-
-
