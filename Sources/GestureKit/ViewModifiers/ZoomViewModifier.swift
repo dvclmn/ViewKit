@@ -8,7 +8,7 @@
 import CoreTools
 import SwiftUI
 
-public typealias ZoomOutput = (MagnificationStream) -> Void
+public typealias ZoomOutput = (ZoomStream) -> Void
 
 public struct ZoomModifier: ViewModifier {
   //  @Environment(\.modifierKeys) private var modifierKeys

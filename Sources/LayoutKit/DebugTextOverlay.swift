@@ -9,11 +9,12 @@ import CoreTools
 import SwiftUI
 
 public struct DebugTextOverlayModifier: ViewModifier {
-  @Environment(\.isEnabled) private var isEnabled
+//  @Environment(\.isEnabled) private var isEnabled
   @Environment(\.explicitColour) private var explicitColour
   
 
   let text: String
+  let isEnabled: Bool
   //  let text: AttributedString
   let alignment: Alignment
   let padding: (Edge.Set, CGFloat?)
@@ -48,12 +49,14 @@ extension View {
 
   public func debugTextOverlay(
     _ text: String...,
+    isEnabled: Bool = true,
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil)
   ) -> some View {
     self.modifier(
       DebugTextOverlayModifier(
         text: text.joined(separator: "\n"),
+        isEnabled: isEnabled,
         alignment: alignment,
         padding: padding
       )
@@ -61,6 +64,7 @@ extension View {
   }
 
   public func debugTextOverlay(
+    isEnabled: Bool = true,
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil),
     displayString: () -> DisplayString
@@ -69,6 +73,7 @@ extension View {
     self.modifier(
       DebugTextOverlayModifier(
         text: displayString().text,
+        isEnabled: isEnabled,
         alignment: alignment,
         padding: padding
       )
@@ -76,6 +81,7 @@ extension View {
   }
   
   public func debugTextOverlay(
+    isEnabled: Bool = true,
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil),
     @DisplayStringBuilder _ content: () -> [DisplayBlock]
@@ -83,6 +89,7 @@ extension View {
     self.modifier(
       DebugTextOverlayModifier(
         text: content().output(),
+        isEnabled: isEnabled,
         alignment: alignment,
         padding: padding
       )

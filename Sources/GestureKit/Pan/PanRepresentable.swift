@@ -9,13 +9,13 @@
 import SwiftUI
 import CoreTools
 
-public typealias PanGestureOutput = (CGSize, InteractionPhase) -> Void
+//public typealias PanGestureOutput = (CGSize, InteractionPhase) -> Void
 //public typealias PanGestureOutput = (PanPhase) -> Void
 
 // MARK: - SwiftUI Representable
 public struct PanGestureView: NSViewRepresentable {
 //  @Binding var handler: PanGestureHandler
-  let onPanGesture: PanGestureOutput
+  let onPanGesture: PanOutput
 
 //  public init(onPanGesture: @escaping PanGestureOutput) {
 //    
@@ -24,8 +24,9 @@ public struct PanGestureView: NSViewRepresentable {
 
   public func makeNSView(context: Context) -> PanTrackingNSView {
     let view = PanTrackingNSView()
-    view.didUpdatePan = { offset, phase in
-      onPanGesture(offset, phase)
+    view.didUpdatePan = { stream in
+      print("Running from PanGestureView: \(stream)")
+      onPanGesture(stream)
     }
 
     return view

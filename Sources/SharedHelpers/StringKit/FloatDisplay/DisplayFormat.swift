@@ -5,11 +5,25 @@
 //  Created by Dave Coleman on 12/1/2026.
 //
 
+import Foundation
+
 public struct DisplayFormat {
-  public var decimalPlaces: Int = 2
-  public var grouping: NumberGrouping = .automatic
-  public var labelStyle: PropertyLabel.Style = .standard
-  public var separatorVisibility: SeparatorVisibility = .both
+  public var decimalPlaces: Int
+  public var grouping: NumberGrouping
+  public var labelStyle: PropertyLabel.Style
+  public var separatorVisibility: SeparatorVisibility
   
   public static var `default`: DisplayFormat { .init() }
+  
+  public init(
+    decimalPlaces: Int = 2,
+    grouping: NumberGrouping = .automatic,
+    labelStyle: PropertyLabel.Style = .standard,
+    separatorVisibility: SeparatorVisibility = .both
+  ) {
+    self.decimalPlaces = decimalPlaces
+    self.grouping = grouping
+    self.labelStyle = labelStyle
+    self.separatorVisibility = separatorVisibility
+  }
 }

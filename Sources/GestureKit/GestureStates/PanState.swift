@@ -17,7 +17,7 @@ import Foundation
 //}
 
 public struct PanGestureStream {
-  public var translation: CGSize
+  var translation: CGSize
   var phase: InteractionPhase
 
   public static var centered: Self { .init(.zero) }
@@ -32,6 +32,7 @@ public struct PanGestureStream {
 }
 
 extension PanGestureStream {
+//  public mutating func update(_ other: Self) {
   public mutating func update(_ delta: CGSize, phase: InteractionPhase) {
     translation.width -= delta.width
     translation.height -= delta.height

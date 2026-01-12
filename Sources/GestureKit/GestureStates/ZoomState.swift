@@ -8,20 +8,31 @@
 import CoreTools
 import Foundation
 
+public struct ZoomStream {
+  var current: CGFloat
+  var phase: InteractionPhase
 
-public struct MagnificationStream {
-  var current: CGFloat = 1
-  var phase: InteractionPhase = .none
-  
-  public init(_ current: CGFloat, phase: InteractionPhase) {
+  public static var `default`: Self { .init() }
+
+  public init(
+    _ current: CGFloat = 1.0,
+    phase: InteractionPhase = .none
+  ) {
     self.current = current
     self.phase = phase
   }
 }
 
-extension MagnificationStream {
+extension ZoomStream {
+  
+  public var zoom: CGFloat {
+    precondition(current.isGreaterThanZero, "Zoom must be greater than zero.")
+    return current
+  }
+  
   public func interaction(previous: CGFloat) -> TransformInteraction? {
     guard phase == .changed else { return nil }
     return .zoom(delta: current - previous)
   }
+  
 }

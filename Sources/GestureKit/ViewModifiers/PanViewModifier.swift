@@ -25,27 +25,15 @@ public struct PanGestureModifier: ViewModifier {
     /// gets messed up without it
     //    ZStack {
     content
+      //      .overlay(.red.tertiary)
+      //      .onTapGesture {
+      //        print("Tapped at \(Date.debug)")
+      //      }
       .overlay {
-        PanGestureView { offset, phase in
-          panDidChange(PanGestureStream(offset, phase: phase))
-          //          panStream
-          //          guard let geometry else { return }
-          //          interactions.updateGesture(
-          //            .gesturePan(offset),
-          //            phase: phase,
-          //            modifiers: modifierKeys
-          //          )
-          //          handler.update(.gesturePan(offset), phase: phase, geometry: geometry)
-          //          handler.update(.pan(state), geometry: geometry)
+        if isEnabled {
+          PanGestureView { panDidChange($0) }
         }
       }
-    //      if isEnabled {
-    //        PanGestureView { phase in
-    ////          action(phase)
-    //
-    //        }
-    //      }
-    //    }
   }
 }
 extension View {
@@ -57,7 +45,6 @@ extension View {
       PanGestureModifier(
         isEnabled: isEnabled,
         panDidChange: panDidChange
-        //        action: action
       )
     )
   }

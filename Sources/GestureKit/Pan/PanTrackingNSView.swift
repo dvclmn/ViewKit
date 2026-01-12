@@ -12,7 +12,7 @@ import CoreTools
 // MARK: - Custom NSView for Pan Tracking
 public class PanTrackingNSView: NSView {
 
-  var didUpdatePan: PanGestureOutput = { _, _ in }
+  var didUpdatePan: PanOutput = { _ in }
 
 //  public init(
 //    didUpdatePanGesture: @escaping PanGestureOutput
@@ -28,6 +28,7 @@ public class PanTrackingNSView: NSView {
 
   // MARK: - Two-Finger Pan via ScrollWheel
   public override func scrollWheel(with event: NSEvent) {
+//    print("Received a scrollWheel event: \(event)")
     guard event.hasPreciseScrollingDeltas else { return }
     let deltaX = event.scrollingDeltaX
     let deltaY = event.scrollingDeltaY
@@ -39,9 +40,11 @@ public class PanTrackingNSView: NSView {
 //    print("NSEvent Momentum Phase: \(event.momentumPhase)\n\n")
 
     let phase = InteractionPhase(from: event.momentumPhase)
+    
+    let panStream = PanGestureStream(delta, phase: phase)
 //    let state = PanState(offset: delta, phase: phase)
 
-    didUpdatePan(delta, phase)
+    didUpdatePan(panStream)
   }
 
 //  public override func mouseExited(with event: NSEvent) {
