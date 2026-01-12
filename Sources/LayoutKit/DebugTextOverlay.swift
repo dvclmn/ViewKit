@@ -63,6 +63,21 @@ extension View {
   public func debugTextOverlay(
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil),
+    displayString: () -> DisplayString
+//    @DisplayStringBuilder _ content: () -> [DisplayBlock]
+  ) -> some View {
+    self.modifier(
+      DebugTextOverlayModifier(
+        text: displayString().text,
+        alignment: alignment,
+        padding: padding
+      )
+    )
+  }
+  
+  public func debugTextOverlay(
+    alignment: Alignment = .topLeading,
+    padding: (Edge.Set, CGFloat?) = (.all, nil),
     @DisplayStringBuilder _ content: () -> [DisplayBlock]
   ) -> some View {
     self.modifier(

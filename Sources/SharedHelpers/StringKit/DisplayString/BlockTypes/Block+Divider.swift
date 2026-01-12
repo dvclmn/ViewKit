@@ -6,8 +6,6 @@
 //
 
 public struct Divider {
-
-  //  public let key: String
   public let value: DisplayBlock
 
   public init(value: String = "----------\n") {
@@ -20,16 +18,6 @@ extension Divider: DisplayRenderable{
   }
 }
 
-extension Divider: StringRenderable {
-  public var toString: String {
-    render(using: .default)
-    //    let labelPart = StyledString("\(key)\(separator)", with: .secondary)
-    //    let valuePart = value?.toStyledString ?? "nil"
-    //    return labelPart + valuePart
-
-//    return value.toString ?? ""
-    //    return StyledString(value ?? fallback)
-    //    return StyledString("\(key)\(separator)\(valuePart)")
-
-  }
-}
+//extension Divider: StringRenderable {
+//  public var toString: String { render(using: .default) }
+//}

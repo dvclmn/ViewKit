@@ -59,7 +59,7 @@ extension DisplayString {
     )
   }
   
-  func decimalPlaces(_ places: Int) -> DisplayString {
+  public func decimalPlaces(_ places: Int) -> DisplayString {
     var newFormat = format
     newFormat.decimalPlaces = places
     

@@ -29,9 +29,9 @@ public struct Labeled {
   }
 }
 
-extension Labeled: StringRenderable {
-  public var toString: String { render(using: .default) }
-}
+//extension Labeled: StringRenderable {
+//  public var toString: String { render(using: .default) }
+//}
 
 extension Labeled: DisplayRenderable {
   func render(using format: DisplayFormat) -> String {
