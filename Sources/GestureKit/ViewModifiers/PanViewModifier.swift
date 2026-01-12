@@ -10,7 +10,8 @@ import SwiftUI
 
 #if canImport(AppKit)
 
-public typealias PanOutput = (CGSize, InteractionPhase) -> Void
+public typealias PanOutput = (PanGestureStream) -> Void
+//public typealias PanOutput = (CGSize, InteractionPhase) -> Void
 
 public struct PanGestureModifier: ViewModifier {
 
@@ -26,7 +27,7 @@ public struct PanGestureModifier: ViewModifier {
     content
       .overlay {
         PanGestureView { offset, phase in
-          panDidChange(offset, phase)
+          panDidChange(PanGestureStream(offset, phase: phase))
           //          panStream
           //          guard let geometry else { return }
           //          interactions.updateGesture(

@@ -20,10 +20,10 @@ public struct PanGestureStream {
   public var translation: CGSize
   var phase: InteractionPhase
 
-  public static var centered: Self { .init(translation: .zero) }
+  public static var centered: Self { .init(.zero) }
 
   public init(
-    translation: CGSize = .zero,
+    _ translation: CGSize = .zero,
     phase: InteractionPhase = .none
   ) {
     self.translation = translation

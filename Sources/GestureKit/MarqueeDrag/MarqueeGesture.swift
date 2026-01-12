@@ -8,7 +8,7 @@
 import CoreTools
 import SwiftUI
 
-public typealias MarqueeDragOutput = (PointerStream, InteractionPhase) -> Void
+public typealias MarqueeDragOutput = (PointerStream) -> Void
 
 struct MarqueeDragGesture: Gesture {
   @Binding var rect: CGRect?
@@ -30,7 +30,13 @@ struct MarqueeDragGesture: Gesture {
         let isDrag: Bool = value.translation.eitherDimensionIsGreaterThan(dragThreshold)
 
         if isDrag {
-          didUpdateRect(.drag(newRect), .changed)
+          let stream = PointerStream(
+            start: value.startLocation,
+            current: value.predictedEndLocation,
+            phase: .changed
+          )
+          didUpdateRect(., <#T##InteractionPhase#>)
+//          didUpdateRect(.drag(newRect), .changed)
 
         } else {
           let location = newRect.point(at: .bottomTrailing)
