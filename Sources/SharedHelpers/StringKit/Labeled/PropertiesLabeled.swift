@@ -8,7 +8,6 @@
 import Foundation
 
 public protocol PropertiesLabeled {
-//  associatedtype Value: StringConvertible
 
   /// A component is a key+value pair, where the
   /// key is the property's text label ``PropertyLabel``,
@@ -25,8 +24,7 @@ public protocol PropertiesLabeled {
   /// Text separating each Label+Value pairing.
   /// E.g. the comma `,` in `X: 10, Y: -20`
   var separator: String { get }
-//  var separators: Separators { get }
-//  var style: PropertyLabel.Style { get }
+
 }
 
 public struct LabelComponent {

@@ -26,28 +26,19 @@ extension PropertiesLabeled {
 
     let labels = components.map { component in
 
-      let labelString: String? = component.label.stringValue(from: labelStyle)
+      let labelString =
+        component.label.stringValue(
+          from: labelStyle,
+          hasSeparator: separatorVisibility.contains(.propertyLabel)
+        ) ?? ""
       let valueString: String = component.value.floatString(places: places, grouping: grouping)
 
-      /// Only include property label separator if that option is present
-      let hasSeparator =
-        separatorVisibility.contains(.propertyLabel)
-        && !labelStyle.isNone
-      let propertyLabelSeparator = hasSeparator ? separators.propertyLabelSeparator : ""
-
-      return labelString + propertyLabelSeparator + valueString
+      return labelString + valueString
     }
 
     /// Only include component separator if that option is present
-    let hasSeparator =
-      separatorVisibility.contains(.component)
-    let componentSeparator = hasSeparator ? separators.componentSeparator : ""
-
-    let joinedResult = labels.joined(separator: componentSeparator)
-    return joinedResult
+    let separatorIfNeeded = separatorVisibility.contains(.component) ? separator : ""
+    return labels.joined(separatorIfNeeded)
   }
 
-//  private func valueString(for component: LabelComponent) -> String? {
-//    guard let thing = component.value else { return nil }
-//  }
 }

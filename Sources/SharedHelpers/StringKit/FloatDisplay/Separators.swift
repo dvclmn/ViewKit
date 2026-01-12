@@ -19,6 +19,10 @@ public struct SeparatorVisibility: OptionSet, Sendable {
   public static let component = Self(rawValue: 1 << 1)
   public static let both: Self = [.propertyLabel, .component]
 }
+
+//extension SeparatorVisibility {
+//  public var hasSeparator: Bool { !isEmpty }
+//}
 //}
 
 //public struct Separators {
