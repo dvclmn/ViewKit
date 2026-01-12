@@ -22,6 +22,5 @@ extension EnvironmentValues {
   /// declaration, but at times more granular view sizing control is needed,
   /// so prefer use of native `controlSize` in those cases/
   @Entry public var isCompactMode: Bool = false
-
   @Entry public var isEditable: Bool = true
 }

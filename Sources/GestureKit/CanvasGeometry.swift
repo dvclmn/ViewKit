@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import Foundation
+import CoreTools
 
 public struct CanvasGeometry: Sendable, Equatable {
   public var viewportSize: CGSize
@@ -25,4 +26,12 @@ public struct CanvasGeometry: Sendable, Equatable {
 
 extension CanvasGeometry {
   public var isEitherZero: Bool { viewportSize.isZero || canvasSize.isZero }
+}
+extension CanvasGeometry: CustomStringConvertible {
+  public var description: String {
+    DisplayString {
+      Labeled("Viewport", value: viewportSize.displayString(places: 1, labelStyle: .abbreviated))
+      Labeled("Canvas", value: canvasSize.displayString)
+    }.plainText
+  }
 }
