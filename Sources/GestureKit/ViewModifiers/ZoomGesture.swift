@@ -9,28 +9,24 @@ import CoreTools
 import SwiftUI
 
 struct ZoomGesture: Gesture {
-//  @Environment(\.canvasZoom) var canvasZoom
+  @Environment(\.canvasZoomRange) private var zoomRange
   @GestureState private var magnification: CGFloat = 1
-  @State private var currentZoom: CGFloat?
-  //  @State private var phase: InteractionPhase = .none
+  @State private var initialZoom: CGFloat?
+  @Binding var zoom: ZoomStream
+  
+//  let initialZoom: CGFloat?
+//  let isEnabled: Bool
+//  let didUpdateZoom: ZoomOutput
 
-  let initialZoom: CGFloat?
-  //  let zoomRange: ClosedRange<CGFloat>
-  let isEnabled: Bool
-  let didUpdateZoom: ZoomOutput
-  //  let didUpdateZoom: (ZoomState) -> Void
-
-  init(
-    initialZoom: CGFloat? = nil,
-    //    zoomRange: ClosedRange<CGFloat>,
-    isEnabled: Bool,
-    didUpdateZoom: @escaping ZoomOutput
-  ) {
-    self.initialZoom = initialZoom
-    //    self.zoomRange = zoomRange
-    self.isEnabled = isEnabled
-    self.didUpdateZoom = didUpdateZoom
-  }
+//  init(
+//    initialZoom: CGFloat? = nil,
+//    isEnabled: Bool,
+////    didUpdateZoom: @escaping ZoomOutput
+//  ) {
+//    self.initialZoom = initialZoom
+//    self.isEnabled = isEnabled
+////    self.didUpdateZoom = didUpdateZoom
+//  }
 
   var body: some Gesture {
     MagnifyGesture()
@@ -39,22 +35,19 @@ struct ZoomGesture: Gesture {
       }
       .onChanged { value in
 
-        if currentZoom == nil {
-          currentZoom = initialZoom
+        if initialZoom == nil {
+          initialZoom = zoom.zoom(clampedTo: zoomRange ?? 0...10)
         }
-        guard let currentZoom else { return }
+        guard let initialZoom else { return }
 
-        let newZoom = (currentZoom) * value.magnification
-        //        let clampedZoom = newZoom.clamped(to: zoomRange)
-        //        phase = .changed
-        didUpdateZoom(newZoom, .changed)
+        let newZoom = initialZoom * value.magnification
+        zoom = ZoomStream(newZoom, phase: .changed)
 //        didUpdateZoom(newZoom, .changed)
       }
-      .onEnded { _ in
-        //        phase = .ended
-        currentZoom = nil
-        //        didUpdateZoom(.initial)
-        didUpdateZoom(.zero, .ended)
+      .onEnded { value in
+        initialZoom = nil
+        zoom.phase = .ended
+//        zoom = ZoomStream(newZoom, phase: .changed)
 //        didUpdateZoom(.zero, .ended)
       }
   }

@@ -25,11 +25,11 @@ public struct ZoomStream {
 
 extension ZoomStream {
   
-  public var zoom: CGFloat {
-    precondition(current.isGreaterThanZero, "Zoom must be greater than zero.")
-    return current
+  public func zoom(clampedTo range: ClosedRange<CGFloat>) -> CGFloat {
+//    precondition(current.isGreaterThanZero, "Zoom must be greater than zero.")
+    return current.clamped(to: range)
   }
-  
+
   public mutating func update(_ level: CGFloat, phase: InteractionPhase) {
     self.current = level
 //    translation.width += delta.width
