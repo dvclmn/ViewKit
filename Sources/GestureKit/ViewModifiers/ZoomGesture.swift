@@ -9,7 +9,7 @@ import CoreTools
 import SwiftUI
 
 struct ZoomGesture: Gesture {
-
+//  @Environment(\.canvasZoom) var canvasZoom
   @GestureState private var magnification: CGFloat = 1
   @State private var currentZoom: CGFloat?
   //  @State private var phase: InteractionPhase = .none
@@ -47,14 +47,14 @@ struct ZoomGesture: Gesture {
         let newZoom = (currentZoom) * value.magnification
         //        let clampedZoom = newZoom.clamped(to: zoomRange)
         //        phase = .changed
-        didUpdateZoom(ZoomStream(newZoom, phase: .changed))
+        didUpdateZoom(newZoom, .changed)
 //        didUpdateZoom(newZoom, .changed)
       }
       .onEnded { _ in
         //        phase = .ended
         currentZoom = nil
         //        didUpdateZoom(.initial)
-        didUpdateZoom(ZoomStream(.zero, phase: .ended))
+        didUpdateZoom(.zero, .ended)
 //        didUpdateZoom(.zero, .ended)
       }
   }

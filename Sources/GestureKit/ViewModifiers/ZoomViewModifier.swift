@@ -8,10 +8,10 @@
 import CoreTools
 import SwiftUI
 
-public typealias ZoomOutput = (ZoomStream) -> Void
+public typealias ZoomOutput = (CGFloat, InteractionPhase) -> Void
+//public typealias ZoomOutput = (ZoomStream) -> Void
 
 public struct ZoomModifier: ViewModifier {
-  //  @Environment(\.modifierKeys) private var modifierKeys
   //  @State private var handler: GestureHandler = .init()
   //  @Binding var interactions: InteractionHandler
 
@@ -36,8 +36,8 @@ public struct ZoomModifier: ViewModifier {
       //        }
       //      }
       .simultaneousGesture(
-        ZoomGesture(initialZoom: initialZoom, isEnabled: true) { stream in
-          zoomDidChange(stream)
+        ZoomGesture(initialZoom: initialZoom, isEnabled: true) { zoom, phase in
+          zoomDidChange(zoom, phase)
 //          zoomDidChange(zoom, phase)
           //          zoom,
           //          phase in

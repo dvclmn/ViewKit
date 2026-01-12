@@ -30,6 +30,13 @@ extension ZoomStream {
     return current
   }
   
+  public mutating func update(_ level: CGFloat, phase: InteractionPhase) {
+    self.current = level
+//    translation.width += delta.width
+//    translation.height += delta.height
+    self.phase = phase
+  }
+  
   public func interaction(previous: CGFloat) -> TransformInteraction? {
     guard phase == .changed else { return nil }
     return .zoom(delta: current - previous)
