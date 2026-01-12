@@ -40,14 +40,12 @@ public struct PropertyLabel {
 }
 
 extension PropertyLabel: ExpressibleByStringLiteral {
-
   public init(stringLiteral value: String) {
     self.init(value)
   }
 }
 
 extension PropertyLabel {
-
   public func stringValue(
     from style: PropertyLabel.Style,
     hasSeparator: Bool = true
@@ -60,7 +58,6 @@ extension PropertyLabel {
       }
     let separator: String? = hasSeparator ? self.separator : nil
     return [labelText, separator].compactMap(\.self).joined()
-    //    return style.labelString(for: self)
   }
 
   @CaseDetection
@@ -68,15 +65,5 @@ extension PropertyLabel {
     case none
     case standard
     case abbreviated
-
-    //    /// This will be composed together with float values
-    //    /// within `DisplayString/formatted()`.
-    //    /// Returning nil allows expressing "No label please"
-    //    public func labelString(
-    //      for label: PropertyLabel,
-    //      hasSeparator: Bool = true
-    //    ) -> String? {
-    //
-    //    }
   }
 }
