@@ -61,7 +61,7 @@ extension Box.Part: PrettyPrintable where T: PrettyPrintable {
     DisplayString {
       Labeled("role", value: role.pretty(config, depth: depth))
       Labeled("glyphs", value: glyphs.pretty(config, depth: depth))
-    }.plainText
+    }.text
   }
 
   //  public func pretty(_ config: PrettyPrintConfig, depth: Int) -> String {

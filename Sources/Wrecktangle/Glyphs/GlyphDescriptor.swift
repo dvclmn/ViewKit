@@ -66,7 +66,7 @@ extension Box.GlyphDescriptor: PrettyPrintable {
     DisplayString {
       Labeled("structure", value: structure.pretty(config, depth: depth))
       Labeled("design", value: design.name.pretty(config, depth: depth))
-    }.plainText
+    }.text
   }
 
   //  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {

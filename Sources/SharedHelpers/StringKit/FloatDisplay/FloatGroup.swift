@@ -7,43 +7,10 @@
 
 import Foundation
 
-
-//public protocol FloatGroup: PropertiesLabeled {
-//  var components: [Component] { get }
-//  var separators: Separators { get }
-//  
-//  /// It's worth noting that whilst this looks repetitious,
-//  /// looking at `FloatDisplay.DisplayString`'s
-//  /// method of the same name, this is geared towards
-//  /// groups specifically, having the concept of
-//  /// `labelStyle` and `separators`
-//  func displayString(
-//    places: Int,
-//    grouping: Grouping,
-//    labelStyle: PropertyLabel.Style,
-//    separators: Separators.Visibility
-//  ) -> String
-//}
-
-
-//public protocol FloatGroup: PropertiesLabeled where Component == FloatComponent {
-//  func displayString(
-//    places: Int,
-//    grouping: Grouping,
-//    labelStyle: PropertyLabel.Style,
-//    separators: Separators.Visibility
-//  ) -> String
-//}
-
-
-//extension FloatGroup {
-
 /// Types like `CGPoint` that have float properties.
 /// May be a pair, like `CGPoint`'s `x` and `y`,
 /// or more, like `CGRect`
-
 extension PropertiesLabeled where Value: FloatString {
-//extension PropertiesLabeled where Component: FloatLabeledComponent {
 
   /// Default for convenience
   public var displayString: String { displayString() }
@@ -52,7 +19,7 @@ extension PropertiesLabeled where Value: FloatString {
   /// function signature, for flexibility
   public func displayString(
     places: Int = 2,
-    grouping: Grouping = .automatic,
+    grouping: NumberGrouping = .automatic,
     labelStyle: PropertyLabel.Style = .standard,
     separators separatorVisibility: Separators.Visibility = .both
   ) -> String {

@@ -73,6 +73,6 @@ extension Box.GlyphStructure: PrettyPrintable {
     DisplayString {
       Labeled("role", value: role.name.pretty)
       Labeled("weight", value: weight.pretty(config, depth: depth))
-    }.plainText
+    }.text
   }
 }

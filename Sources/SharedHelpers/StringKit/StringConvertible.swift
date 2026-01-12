@@ -75,6 +75,6 @@ extension AnyRegexOutput: StringConvertible {
       self.summarise(key: \.range)
       self.summarise(key: \.type)
       self.summarise(key: \.value)
-    }.plainText
+    }.text
   }
 }

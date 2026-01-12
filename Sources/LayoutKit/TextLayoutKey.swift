@@ -70,7 +70,7 @@
 //          headerLine
 //          rowsText.joined("\n")
 //          "\n"
-//        }.plainText
+//        }.text
 //
 ////    return (["\n"] + [headerLine] + rowsText).joined(separator: "\n")
 //  }

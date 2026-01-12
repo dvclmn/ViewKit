@@ -11,5 +11,5 @@ public func DebugString(
   let displayString = DisplayString {
     content()
   }
-  print(displayString.plainText + "\n")
+  print(displayString.text + "\n")
 }

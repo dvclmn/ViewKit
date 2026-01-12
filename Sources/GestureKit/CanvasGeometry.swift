@@ -32,6 +32,6 @@ extension CanvasGeometry: CustomStringConvertible {
     DisplayString {
       Labeled("Viewport", value: viewportSize.displayString(places: 1, labelStyle: .abbreviated))
       Labeled("Canvas", value: canvasSize.displayString)
-    }.plainText
+    }.text
   }
 }

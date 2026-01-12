@@ -69,7 +69,7 @@ extension Box.GlyphWeight: PrettyPrintable {
     DisplayString {
       Labeled("X", value: x.rawValue.pretty(config, depth: depth))
       Labeled("Y", value: y.rawValue.pretty(config, depth: depth))
-    }.plainText
+    }.text
   }
   
 }

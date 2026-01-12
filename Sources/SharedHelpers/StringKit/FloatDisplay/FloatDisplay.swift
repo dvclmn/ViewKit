@@ -7,12 +7,8 @@
 
 import SwiftUI
 
-//public enum FloatDisplay {}
+public typealias NumberGrouping = FloatingPointFormatStyle<Double>.Configuration.Grouping
 
-public typealias Grouping = FloatingPointFormatStyle<Double>.Configuration.Grouping
-
-//extension FloatDisplay {
-//}
 public protocol FloatString: StringConvertible {
   associatedtype Value: BinaryFloatingPoint
   var value: Value { get }
@@ -22,7 +18,7 @@ public protocol FloatString: StringConvertible {
   /// formatting sorted, before other touches.
   func displayString(
     places: Int,
-    grouping: Grouping
+    grouping: NumberGrouping
   ) -> String
 }
 
@@ -41,7 +37,7 @@ extension FloatString {
 
   public func displayString(
     places: Int = 2,
-    grouping: Grouping = .automatic
+    grouping: NumberGrouping = .automatic
   ) -> String {
 
     /// Manually converting from the more ambiguous `BinaryFloatingPoint`,

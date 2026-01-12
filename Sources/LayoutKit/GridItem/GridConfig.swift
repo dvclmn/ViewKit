@@ -63,7 +63,7 @@ extension GridConfig: CustomStringConvertible {
         "Alignnment: \(alignmentGrid.displayName))"
 
       }
-    }.plainText
+    }.text
 
     //    """
     //    GridConfig [

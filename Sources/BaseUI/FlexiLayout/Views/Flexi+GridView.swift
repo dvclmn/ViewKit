@@ -115,7 +115,7 @@ extension Flexi.GridView {
         //        Labeled("Grid config", value: config.description)
         config.description
       }
-    }.plainText
+    }.text
     //    .monospaced(.callout)
 
   }

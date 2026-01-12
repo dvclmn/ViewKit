@@ -63,6 +63,6 @@ extension Box.PartStructure {
     DisplayString {
       Labeled("role", value: role.name.pretty(config, depth: depth))
       Labeled("glyphs", value: glyphs.pretty(config, depth: depth))
-    }.plainText
+    }.text
   }
 }

@@ -52,6 +52,6 @@ extension Box.Line: CustomStringConvertible {
       body.description
       leading.description
       trailing.description
-    }.plainText
+    }.text
   }
 }

@@ -37,7 +37,7 @@ public struct BoxView: View {
         metrics: metrics
       ) {
         content
-      }.plainText
+      }.text
     )
     //    .fixedSize(horizontal: true, vertical: false)
     .fixedSize()

@@ -53,7 +53,7 @@ extension Box.Glyph: PrettyPrintable {
     DisplayString {
       Labeled("character", value: character.pretty)
       Labeled("descriptor", value: descriptor.pretty(config, depth: depth))
-    }.plainText
+    }.text
   }
 
   //  public func prettyDescription(_ config: PrettyPrintConfig, depth: Int) -> String {
