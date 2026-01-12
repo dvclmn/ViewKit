@@ -36,7 +36,7 @@ extension PropertiesLabeled {
   //  var labelStyle: PropertyLabel.Style { .standard }
   //  var separatorVisibility: SeparatorVisibility { .both }
 
-  func render(using format: DisplayFormat) -> String {
+  public func render(using format: DisplayFormat) -> String {
     let sepVis = format.separatorVisibility
     let labels = components.map { component in
 

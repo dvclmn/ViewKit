@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 3/10/2025.
 //
 
-import Foundation
 import BasePrimitives
+import Foundation
 
 @resultBuilder
 public struct DisplayStringBuilder {
@@ -40,9 +40,21 @@ extension DisplayStringBuilder {
     [expression]
   }
 
-    public static func buildExpression<T: StringRenderable>(_ value: T) -> [DisplayBlock] {
-      [.text(value.toString)]
-    }
+  public static func buildExpression(_ value: any FloatRenderable) -> [DisplayBlock] {
+    [.float(value)]
+  }
+
+  public static func buildExpression(_ value: any PropertiesLabeled) -> [DisplayBlock] {
+    [.floatGroup(value)]
+  }
+
+  public static func buildExpression(_ value: String) -> [DisplayBlock] {
+    [.text(value)]
+  }
+
+  public static func buildExpression<T: StringRenderable>(_ value: T) -> [DisplayBlock] {
+    [.text(value.toString)]
+  }
 
   public static func buildExpression(_ value: Indented) -> [DisplayBlock] {
     [

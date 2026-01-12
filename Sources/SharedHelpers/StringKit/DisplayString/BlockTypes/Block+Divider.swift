@@ -13,7 +13,7 @@ public struct Divider {
   }
 }
 extension Divider: DisplayRenderable{
-  func render(using format: DisplayFormat) -> String {
+  public func render(using format: DisplayFormat) -> String {
     value.render(using: format)
   }
 }

@@ -31,7 +31,7 @@ public struct Indented {
 }
 
 extension Indented: DisplayRenderable {
-  func render(using format: DisplayFormat) -> String {
+  public func render(using format: DisplayFormat) -> String {
     createIndented(format: format) ?? ""
 //    createIndented(for: indented)
   }
