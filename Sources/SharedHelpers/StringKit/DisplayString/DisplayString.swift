@@ -17,7 +17,7 @@ public struct DisplayString {
   /// a new line character `"\n"`
   private let separator: String
   private let format: DisplayFormat
-  
+
   public init(
     _ components: [DisplayBlock],
     separator: String,
@@ -31,7 +31,7 @@ public struct DisplayString {
 }
 
 extension DisplayString {
-  
+
   public init(
     _ separator: String = "\n",
     format: DisplayFormat = .default,
@@ -58,11 +58,22 @@ extension DisplayString {
       format: format
     )
   }
-  
+
   public func decimalPlaces(_ places: Int) -> DisplayString {
     var newFormat = format
     newFormat.decimalPlaces = places
-    
+
+    return DisplayString(
+      components,
+      separator: separator,
+      format: newFormat,
+    )
+  }
+
+  public func labelStyle(_ style: PropertyLabel.Style) -> DisplayString {
+    var newFormat = format
+    newFormat.labelStyle = style
+
     return DisplayString(
       components,
       separator: separator,

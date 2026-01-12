@@ -40,6 +40,10 @@ extension DisplayStringBuilder {
     [expression]
   }
 
+  public static func buildExpression(_ value: any DisplayRenderable) -> [DisplayBlock] {
+    [.display(value)]
+  }
+  
   public static func buildExpression(_ value: any FloatRenderable) -> [DisplayBlock] {
     [.float(value)]
   }

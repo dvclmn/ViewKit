@@ -56,24 +56,9 @@ extension FloatRenderable {
       using: DisplayFormat(
         decimalPlaces: places,
         grouping: grouping,
-        labelStyle: .standard,
-        separatorVisibility: .both
       )
     )
   }
-  //
-  //    /// Manually converting from the more ambiguous `BinaryFloatingPoint`,
-  //    /// to `Double`, so the compiler knows exactly what we're dealing with
-  //    let valueToFormat = Double(value)
-  //
-  //    let formatted = valueToFormat.formatted(
-  //      .number.precision(.fractionLength(places))
-  //        .grouping(grouping)
-  //    )
-  //
-  //    return formatted
-  //  }
-
 }
 // MARK: - Conformances
 extension Double: FloatRenderable {

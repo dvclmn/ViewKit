@@ -47,13 +47,13 @@ extension Labeled {
 //  public var toString: String { render(using: .default) }
 //}
 
-//extension Labeled: DisplayRenderable {
-//  func render(using format: DisplayFormat) -> String {
-//    let valuePart = value?.render(using: format) ?? "nil"
-////    let valuePart = value?.toString ?? "nil"
-//    return key + separator + valuePart
-//  }
-//}
+extension Labeled: DisplayRenderable {
+  public func render(using format: DisplayFormat) -> String {
+    let valuePart = value?.render(using: format) ?? "nil"
+//    let valuePart = value?.toString ?? "nil"
+    return key + separator + valuePart
+  }
+}
 
 extension DisplayBlock {
 
