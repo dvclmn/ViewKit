@@ -39,9 +39,6 @@ extension InteractionPhase {
   }
 
   var isActive: Bool {
-    switch self {
-      case .began, .changed: true
-      default: false
-    }
+    self == .began || self == .changed
   }
 }

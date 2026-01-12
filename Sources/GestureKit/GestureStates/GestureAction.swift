@@ -18,20 +18,15 @@ public protocol GestureAction: Sendable {
   mutating func update(_ newValue: Value)
 }
 
-public protocol CanvasState {
-  var zoom: CGFloat { get set }
-  var pan: CGSize { get set }
-  var rotation: Angle { get set }
-  
-  var tapLocation: CGPoint? { get set }
-  var hoverLocation: CGPoint? { get set }
+
+
+/// Derived
+enum TransformInteraction {
+  case zoom(delta: CGFloat)
+  case pan(delta: CGSize)
+  case rotate(delta: Angle)
 }
 
-enum TransformInteraction {
-  case pan(CGSize)
-  case zoom(CGFloat)
-  case rotate(Angle)
-}
 
 
 //public struct PointerState {
