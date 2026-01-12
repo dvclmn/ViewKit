@@ -29,19 +29,3 @@ extension Pickable {
     return QuickLabel(words)
   }
 }
-
-extension String {
-  var camelCaseToWords: String {
-    // Handle both upper camel case (PatternType) and lower camel case (patternType)
-    let pattern = "(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])"
-    let regex = try? NSRegularExpression(pattern: pattern, options: [])
-    let range = NSRange(location: 0, length: self.count)
-
-    let spaced =
-      regex?
-      .stringByReplacingMatches(in: self, options: [], range: range, withTemplate: " ")
-      .capitalized ?? self
-
-    return spaced
-  }
-}
