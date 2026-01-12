@@ -17,6 +17,9 @@ public struct PointerStream {
 }
 
 extension PointerStream {
+  public static var initial: Self {
+    .init(start: .zero, current: .zero, phase: .ended)
+  }
 
   public func interaction() -> PointerInteraction? {
     switch phase {

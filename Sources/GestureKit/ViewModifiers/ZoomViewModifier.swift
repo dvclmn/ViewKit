@@ -5,42 +5,40 @@
 //  Created by Dave Coleman on 24/6/2025.
 //
 
-import SwiftUI
-
-
 import CoreTools
 import SwiftUI
 
-public typealias ZoomOutput = (CGFloat, InteractionPhase) -> Void
+public typealias ZoomOutput = (MagnificationStream) -> Void
 
 public struct ZoomModifier: ViewModifier {
   //  @Environment(\.modifierKeys) private var modifierKeys
   //  @State private var handler: GestureHandler = .init()
   //  @Binding var interactions: InteractionHandler
-  
+
   let initialZoom: CGFloat
   let isEnabled: Bool
   let zoomDidChange: ZoomOutput
   //  let geometry: CanvasGeometry?
   public func body(content: Content) -> some View {
     content
-    //      .overlay {
-    //        PanGestureView {
-    //          offset,
-    //          phase in
-    //          //          guard let geometry else { return }
-    //          interactions.updateGesture(
-    //            .gesturePan(offset),
-    //            phase: phase,
-    //            modifiers: modifierKeys
-    //          )
-    ////          handler.update(.gesturePan(offset), phase: phase, geometry: geometry)
-    //          //          handler.update(.pan(state), geometry: geometry)
-    //        }
-    //      }
+      //      .overlay {
+      //        PanGestureView {
+      //          offset,
+      //          phase in
+      //          //          guard let geometry else { return }
+      //          interactions.updateGesture(
+      //            .gesturePan(offset),
+      //            phase: phase,
+      //            modifiers: modifierKeys
+      //          )
+      ////          handler.update(.gesturePan(offset), phase: phase, geometry: geometry)
+      //          //          handler.update(.pan(state), geometry: geometry)
+      //        }
+      //      }
       .simultaneousGesture(
-        ZoomGesture(initialZoom: initialZoom, isEnabled: true) { zoom, phase in
-          zoomDidChange(zoom, phase)
+        ZoomGesture(initialZoom: initialZoom, isEnabled: true) { stream in
+          zoomDidChange(stream)
+//          zoomDidChange(zoom, phase)
           //          zoom,
           //          phase in
           //          interactions.updateGesture(
@@ -62,7 +60,7 @@ public struct ZoomModifier: ViewModifier {
         //        ),
         isEnabled: true
       )
-    
+
   }
 }
 extension View {
@@ -84,7 +82,6 @@ extension View {
   //  }
 }
 
-
 //public struct ZoomViewModifier: ViewModifier {
 //
 //  @GestureState private var magnification: CGFloat = 1
@@ -92,7 +89,7 @@ extension View {
 //  @State private var initialZoom: CGFloat?
 //
 //  @Binding var zoom: CGFloat
-//  
+//
 //  let zoomRange: ClosedRange<CGFloat>
 //  let isEnabled: Bool
 //  let didUpdateZoom: (ZoomState) -> Void

@@ -20,10 +20,10 @@ public struct MarqueeDragModifier: ViewModifier {
     content
       .simultaneousGesture(
         MarqueeDragGesture(
-          rect: $rect,
-          dragThreshold: dragThreshold,
-          didUpdateRect: didUpdateRect
-        ),
+          dragThreshold: dragThreshold
+        ) { stream in
+          self.rect = stream.rect
+        },
         isEnabled: isEnabled
       )
       .modifier(DrawMarqueeModifier(rect: rect, isEnabled: shouldRenderDragRect))
@@ -33,7 +33,7 @@ extension View {
   public func marqueeDrag(
     isEnabled: Bool = true,
     dragThreshold: CGFloat = 5,
-    didUpdateRect: @escaping MarqueeDragOutput = { _, _ in }
+    didUpdateRect: @escaping MarqueeDragOutput = { _ in }
   ) -> some View {
     self.modifier(
       MarqueeDragModifier(

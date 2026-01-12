@@ -11,10 +11,10 @@ import SwiftUI
 public typealias MarqueeDragOutput = (PointerStream) -> Void
 
 struct MarqueeDragGesture: Gesture {
-  @Binding var rect: CGRect?
+  //  @Binding var rect: CGRect?
   let dragThreshold: CGFloat
   let didUpdateRect: MarqueeDragOutput
-//  let didUpdateRect: (InteractionKind) -> Void
+  //  let didUpdateRect: (InteractionKind) -> Void
 
   var body: some Gesture {
     /// IMPORTANT: `minimumDistance` must be set to zero,
@@ -24,35 +24,38 @@ struct MarqueeDragGesture: Gesture {
 
       .onChanged { value in
 
-        let newRect = value.toRect
-        rect = newRect
+//        let newRect = value.toRect
 
-        let isDrag: Bool = value.translation.eitherDimensionIsGreaterThan(dragThreshold)
+        /// I think this is just updating for the Marquee rect drawing
+        //        rect = newRect
 
-        if isDrag {
-          let stream = PointerStream(
-            start: value.startLocation,
-            current: value.predictedEndLocation,
-            phase: .changed
-          )
-          didUpdateRect(., <#T##InteractionPhase#>)
-//          didUpdateRect(.drag(newRect), .changed)
+        //        let isDrag: Bool = value.translation.eitherDimensionIsGreaterThan(dragThreshold)
 
-        } else {
-          let location = newRect.point(at: .bottomTrailing)
-          didUpdateRect(.tap(location), .changed)
-          //          didUpdateRect(.tap(location: newRect.point(at: .bottomTrailing)))
-        }
+        let stream = PointerStream(
+          start: value.startLocation,
+          current: value.predictedEndLocation,
+          phase: .changed
+        )
+        didUpdateRect(stream)
+//        if isDrag {
+//          //          didUpdateRect(.drag(newRect), .changed)
+//
+//        } else {
+//          let location = newRect.point(at: .bottomTrailing)
+//          didUpdateRect(.tap(location), .changed)
+//          //          didUpdateRect(.tap(location), .changed)
+//          //          didUpdateRect(.tap(location: newRect.point(at: .bottomTrailing)))
+//        }
 
       }
       .onEnded { gestureValue in
-        didUpdateRect(.none, .ended)
+        didUpdateRect(.initial)
 
         /// Resetting this value ensures we can start from a *new*
         /// last-recorded corner, for the next gesture.
         ///
         /// Failing to set this to `nil` would result in a stale value
-        rect = nil
+        //        rect = nil
       }
   }
 }

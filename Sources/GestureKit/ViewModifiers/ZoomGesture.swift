@@ -47,13 +47,15 @@ struct ZoomGesture: Gesture {
         let newZoom = (currentZoom) * value.magnification
         //        let clampedZoom = newZoom.clamped(to: zoomRange)
         //        phase = .changed
-        didUpdateZoom(newZoom, .changed)
+        didUpdateZoom(MagnificationStream(newZoom, phase: .changed))
+//        didUpdateZoom(newZoom, .changed)
       }
       .onEnded { _ in
         //        phase = .ended
         currentZoom = nil
         //        didUpdateZoom(.initial)
-        didUpdateZoom(.zero, .ended)
+        didUpdateZoom(MagnificationStream(.zero, phase: .ended))
+//        didUpdateZoom(.zero, .ended)
       }
   }
 }
