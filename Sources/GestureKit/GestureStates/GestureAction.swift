@@ -8,26 +8,22 @@
 import CoreTools
 import SwiftUI
 
-public protocol GestureAction: Sendable {
-  associatedtype Value  // E.g. CGSize for pan
-  var value: Value { get set }
-  var kind: InteractionKind.Meta { get }
-
-  /// A value for 'at rest'
-  static var initial: Self { get }
-  mutating func update(_ newValue: Value)
-}
-
-
-
 /// Derived
-enum TransformInteraction {
+public enum TransformInteraction {
   case zoom(delta: CGFloat)
   case pan(delta: CGSize)
   case rotate(delta: Angle)
 }
 
-
+//public protocol GestureAction: Sendable {
+//  associatedtype Value  // E.g. CGSize for pan
+//  var value: Value { get set }
+//  var kind: InteractionKind.Meta { get }
+//
+//  /// A value for 'at rest'
+//  static var initial: Self { get }
+//  mutating func update(_ newValue: Value)
+//}
 
 //public struct PointerState {
 //  var action: PointerAction = .none

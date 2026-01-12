@@ -20,8 +20,8 @@ extension PointerStream {
 
   func interaction() -> PointerInteraction? {
     switch phase {
-      case .changed: isDrag ? .drag(rect): nil
-      case .ended: isDrag ? .drag(rect): .tap(start)
+      case .changed: isDrag ? .drag(rect) : nil
+      case .ended: isDrag ? .drag(rect) : .tap(start)
       case .stationary: .hover(current)
       default: nil
     }
@@ -43,11 +43,7 @@ extension PointerStream {
   }
 }
 
-enum PointerInteraction {
-  case tap(CGPoint)
-  case drag(CGRect)
-  case hover(CGPoint)
-}
+
 
 //struct PointerStream {
 //  var start: CGPoint

@@ -9,20 +9,18 @@ import CoreGraphics
 import CoreTools
 import Foundation
 
-struct PanState: GestureAction {
-  var value: CGSize = .zero
-  var kind: InteractionKind.Meta = .gesturePan
+//struct PanState: GestureAction {
+//  var value: CGSize = .zero
+//  var kind: InteractionKind.Meta = .gesturePan
+//
+//  static let initial: Self = .init()
+//}
 
-  static let initial: Self = .init()
-}
-
-extension PanState {
-  mutating func update(_ newValue: CGSize) {
-    value.width -= newValue.width
-    value.height -= newValue.height
+extension PanGestureStream {
+  mutating func update(_ delta: CGSize) {
+    translation.width -= delta.width
+    translation.height -= delta.height
   }
-  
-  static var centered: Self { .init(value: .zero) }
 
   func clamped(
     to geometry: CanvasGeometry,
@@ -36,9 +34,9 @@ extension PanState {
     let maxY = max((scaledArtwork.height - viewport.height) / 2, 0)
 
     return Self(
-      value: CGSize(
-        width: value.width.clamped(to: -maxX...maxX),
-        height: value.height.clamped(to: -maxY...maxY)
+      translation: CGSize(
+        width: translation.width.clamped(to: -maxX...maxX),
+        height: translation.height.clamped(to: -maxY...maxY)
       )
     )
   }
