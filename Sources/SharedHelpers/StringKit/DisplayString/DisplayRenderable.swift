@@ -5,6 +5,6 @@
 //  Created by Dave Coleman on 12/1/2026.
 //
 
-protocol DisplayRenderable {
+public protocol DisplayRenderable {
   func render(using format: DisplayFormat) -> String
 }

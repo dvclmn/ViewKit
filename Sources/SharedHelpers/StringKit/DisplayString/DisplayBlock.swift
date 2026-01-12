@@ -16,7 +16,7 @@ public enum DisplayBlock {
 }
 
 extension DisplayBlock: DisplayRenderable {
-  func render(using format: DisplayFormat) -> String {
+  public func render(using format: DisplayFormat) -> String {
     switch self {
       case .text(let text):
         text

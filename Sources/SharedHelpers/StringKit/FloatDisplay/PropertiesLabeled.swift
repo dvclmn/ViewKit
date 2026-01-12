@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol PropertiesLabeled {
+public protocol PropertiesLabeled: DisplayRenderable {
 
   /// A component is a key+value pair, where the
   /// key is the property's text label ``PropertyLabel``,
@@ -32,6 +32,31 @@ public protocol PropertiesLabeled {
 /// or more, like `CGRect`
 extension PropertiesLabeled {
 
+  //  #warning("Temporarily hard-coding these")
+  //  var labelStyle: PropertyLabel.Style { .standard }
+  //  var separatorVisibility: SeparatorVisibility { .both }
+
+  func render(using format: DisplayFormat) -> String {
+    let sepVis = format.separatorVisibility
+    let labels = components.map { component in
+
+      let labelString =
+        component.label.stringValue(
+          from: format.labelStyle,
+          hasSeparator: sepVis.contains(.propertyLabel)
+        ) ?? ""
+
+      let valueString: String = component.value.render(using: format)
+      //      let valueString: String = component.value.displayString(places: places, grouping: grouping)
+
+      return labelString + valueString
+    }
+
+    /// Only include component separator if that option is present
+    let separatorIfNeeded = sepVis.contains(.component) ? separator : ""
+    return labels.joined(separatorIfNeeded)
+  }
+
   /// Default for convenience
   public var displayString: String { displayString() }
 
@@ -43,22 +68,14 @@ extension PropertiesLabeled {
     labelStyle: PropertyLabel.Style = .standard,
     separators separatorVisibility: SeparatorVisibility = .both
   ) -> String {
-
-    let labels = components.map { component in
-
-      let labelString =
-        component.label.stringValue(
-          from: labelStyle,
-          hasSeparator: separatorVisibility.contains(.propertyLabel)
-        ) ?? ""
-      let valueString: String = component.value.displayString(places: places, grouping: grouping)
-
-      return labelString + valueString
-    }
-
-    /// Only include component separator if that option is present
-    let separatorIfNeeded = separatorVisibility.contains(.component) ? separator : ""
-    return labels.joined(separatorIfNeeded)
+    render(
+      using: DisplayFormat(
+        decimalPlaces: places,
+        grouping: grouping,
+        labelStyle: labelStyle,
+        separatorVisibility: separatorVisibility
+      )
+    )
   }
 
 }

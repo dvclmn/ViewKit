@@ -18,6 +18,21 @@ public struct Labeled {
   /// Result: X: 10
   public let separator: String
 
+
+}
+
+extension Labeled {
+  public init(
+    _ key: String,
+    value: any PropertiesLabeled,
+    separator: String = ": "
+  ) {
+    self.key = key
+    self.value = DisplayBlock.
+//    self.value = DisplayBlock.displayBlock(for: value)
+    self.separator = separator
+  }
+  
   public init(
     _ key: String,
     value: Any?,
@@ -29,17 +44,17 @@ public struct Labeled {
   }
 }
 
-//extension Labeled: StringRenderable {
-//  public var toString: String { render(using: .default) }
-//}
-
-extension Labeled: DisplayRenderable {
-  func render(using format: DisplayFormat) -> String {
-    let valuePart = value?.render(using: format) ?? "nil"
-//    let valuePart = value?.toString ?? "nil"
-    return key + separator + valuePart
-  }
+extension Labeled: StringRenderable {
+  public var toString: String { render(using: .default) }
 }
+
+//extension Labeled: DisplayRenderable {
+//  func render(using format: DisplayFormat) -> String {
+//    let valuePart = value?.render(using: format) ?? "nil"
+////    let valuePart = value?.toString ?? "nil"
+//    return key + separator + valuePart
+//  }
+//}
 
 extension DisplayBlock {
   public static func displayBlock(for value: Any?) -> DisplayBlock {
