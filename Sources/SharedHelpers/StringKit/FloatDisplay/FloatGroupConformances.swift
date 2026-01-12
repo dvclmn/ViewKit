@@ -13,10 +13,10 @@ extension CGPoint: PropertiesLabeled {
 //  typealias Value = FloatString
   //  public typealias Component = FloatComponent
 
-  public var separators: Separators {
-    Separators(propertyLabel: ": ", component: ", ")
-  }
-
+//  public var separators: Separators {
+//    Separators(propertyLabel: ": ", component: ", ")
+//  }
+  public var separator: String { ", " }
   public var components: [LabelComponent] {
     [
       LabelComponent("X", value: self.x),
@@ -26,10 +26,10 @@ extension CGPoint: PropertiesLabeled {
 }
 
 extension CGSize: PropertiesLabeled {
-  public var separators: Separators {
-    Separators(propertyLabel: ": ", component: " x ")
-  }
-
+//  public var separators: Separators {
+//    Separators(propertyLabel: ": ", component: " x ")
+//  }
+  public var separator: String { ", " }
   public var components: [LabelComponent] {
     [
       LabelComponent(PropertyLabel("Width", abbreviated: "W"), value: self.width),
@@ -39,10 +39,10 @@ extension CGSize: PropertiesLabeled {
 }
 
 extension NSRect: PropertiesLabeled {
-  public var separators: Separators {
-    Separators(propertyLabel: ": ", component: " x ")
-  }
-  
+//  public var separators: Separators {
+//    Separators(propertyLabel: ": ", component: " x ")
+//  }
+  public var separator: String { ", " }
   public var components: [LabelComponent] {
     self.origin.components + self.size.components
 //    [
@@ -57,10 +57,10 @@ extension NSRect: PropertiesLabeled {
 
 
 extension UnitPoint: PropertiesLabeled {
-  public var separators: Separators {
-    Separators(propertyLabel: ": ", component: ", ")
-  }
-
+//  public var separators: Separators {
+//    Separators(propertyLabel: ": ", component: ", ")
+//  }
+  public var separator: String { ", " }
   public var components: [LabelComponent] {
     [
       LabelComponent("X", value: self.x),
@@ -70,10 +70,10 @@ extension UnitPoint: PropertiesLabeled {
 }
 
 extension CGVector: PropertiesLabeled {
-  public var separators: Separators {
-    Separators(propertyLabel: ": ", component: " x ")
-  }
-
+//  public var separators: Separators {
+//    Separators(propertyLabel: ": ", component: " x ")
+//  }
+  public var separator: String { ", " }
   public var components: [LabelComponent] {
     [
       LabelComponent("DX", value: self.dx),

@@ -21,13 +21,13 @@ extension PropertiesLabeled {
     places: Int = 2,
     grouping: NumberGrouping = .automatic,
     labelStyle: PropertyLabel.Style = .standard,
-    separators separatorVisibility: Separators.Visibility = .both
+    separators separatorVisibility: SeparatorVisibility = .both
   ) -> String {
 
     let labels = components.map { component in
 
-      let labelString = component.label.stringValue(from: labelStyle) ?? ""
-      let valueString = component.value.displayString(places: places, grouping: grouping)
+      let labelString: String? = component.label.stringValue(from: labelStyle)
+      let valueString: String = component.value.floatString(places: places, grouping: grouping)
 
       /// Only include property label separator if that option is present
       let hasSeparator =
@@ -47,4 +47,7 @@ extension PropertiesLabeled {
     return joinedResult
   }
 
+//  private func valueString(for component: LabelComponent) -> String? {
+//    guard let thing = component.value else { return nil }
+//  }
 }

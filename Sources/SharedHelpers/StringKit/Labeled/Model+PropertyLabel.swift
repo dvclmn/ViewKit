@@ -22,11 +22,20 @@ public struct PropertyLabel {
   let label: String
 
   /// A more concise version, such as `W` instead of `Width`
-  let abbreviated: String
+  let abbreviated: String?
 
-  public init(_ label: String, abbreviated: String? = nil) {
+  /// Text separating the property's label from it's float value
+  /// E.g. the colon in `Width: ` or `X: `
+  let separator: String
+
+  public init(
+    _ label: String,
+    abbreviated: String? = nil,
+    separator: String = ": "
+  ) {
     self.label = label
-    self.abbreviated = abbreviated ?? label
+    self.abbreviated = abbreviated
+    self.separator = separator
   }
 }
 
@@ -39,8 +48,19 @@ extension PropertyLabel: ExpressibleByStringLiteral {
 
 extension PropertyLabel {
 
-  public func stringValue(from style: PropertyLabel.Style) -> String? {
-    return style.labelString(for: self)
+  public func stringValue(
+    from style: PropertyLabel.Style,
+    hasSeparator: Bool = true
+  ) -> String? {
+    let labelText: String? =
+      switch style {
+        case .none: nil
+        case .standard: self.label
+        case .abbreviated: self.abbreviated
+      }
+    let separator: String? = hasSeparator ? self.separator : nil
+    return [labelText, separator].compactMap(\.self).joined()
+    //    return style.labelString(for: self)
   }
 
   @CaseDetection
@@ -49,22 +69,14 @@ extension PropertyLabel {
     case standard
     case abbreviated
 
-    public var keyPath: KeyPath<PropertyLabel, String>? {
-      switch self {
-        case .none: nil
-        case .standard: \.label
-        case .abbreviated: \.abbreviated
-      }
-    }
-
-    /// This will be composed together with float values
-    /// within `DisplayString/formatted()`.
-    /// Returning nil allows expressing "No label please"
-    public func labelString(
-      for label: PropertyLabel
-    ) -> String? {
-      guard let keyPath else { return nil }
-      return label[keyPath: keyPath]
-    }
+    //    /// This will be composed together with float values
+    //    /// within `DisplayString/formatted()`.
+    //    /// Returning nil allows expressing "No label please"
+    //    public func labelString(
+    //      for label: PropertyLabel,
+    //      hasSeparator: Bool = true
+    //    ) -> String? {
+    //
+    //    }
   }
 }
