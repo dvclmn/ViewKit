@@ -7,33 +7,29 @@
 
 import SwiftUI
 
-public struct DisplayString {
-
-  private let components: [DisplayBlock]
-
-  /// This is the *top-level* seperator, that appears between
-  /// each element in the builder (defined on a new line in
-  /// the source code). Defaults to and is frequently set to
-  /// a new line character `"\n"`
-  private let separator: String
-
-  public init(
-    _ separator: String = "\n",
-    @DisplayStringBuilder _ content: () -> [DisplayBlock]
-  ) {
-    self.separator = separator
-    self.components = content()
-  }
+/// - Parameters:
+///   - separator: Text that separates each individual block element within the builder
+///   - content: The contents of the DisplayString
+/// - Returns: A joined String, delimited by the provided separator.
+public func DisplayString(
+  _ separator: String = "\n",
+  @DisplayStringBuilder _ content: () -> [DisplayBlock]
+) -> String {
+  let blocks = content()
+  return blocks.compactMap(\.toString).joined(separator)
+  
 }
 
-extension DisplayString {
-
-  public func print() {
-    Swift.print(self.plainText)
+extension DisplayBlock {
+  public static func string(for value: Any?) -> String {
+    guard let value else { return "nil" }
+    guard let convertible = value as? StringConvertible else { return String(describing: value) }
+    return convertible.toString
   }
-
-  public var plainText: String {
-    components.compactMap(\.toString).joined(separator)
+  
+  public static func displayBlock(for value: Any?) -> DisplayBlock {
+    let text = string(for: value)
+    return DisplayBlock.text(text)
   }
 }
 
@@ -52,16 +48,3 @@ extension AttributedString {
 
 }
 
-extension DisplayString {
-
-  public static func string(for value: Any?) -> String {
-    guard let value else { return "nil" }
-    guard let convertible = value as? StringConvertible else { return String(describing: value) }
-    return convertible.toString
-  }
-
-  public static func displayBlock(for value: Any?) -> DisplayBlock {
-    let text = string(for: value)
-    return DisplayBlock.text(text)
-  }
-}

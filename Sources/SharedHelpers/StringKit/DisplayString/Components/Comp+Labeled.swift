@@ -25,7 +25,7 @@ public struct Labeled {
     separator: String = ": "
   ) {
     self.key = key
-    self.value = DisplayString.displayBlock(for: value)
+    self.value = DisplayBlock.displayBlock(for: value)
     self.separator = separator
   }
 }
