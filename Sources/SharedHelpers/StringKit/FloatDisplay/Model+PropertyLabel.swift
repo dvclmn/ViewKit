@@ -56,7 +56,8 @@ extension PropertyLabel {
         case .standard: self.label
         case .abbreviated: self.abbreviated
       }
-    let separator: String? = hasSeparator ? self.separator : nil
+    let shouldRenderSep: Bool = hasSeparator && style != .none
+    let separator: String? = shouldRenderSep ? self.separator : nil
     return [labelText, separator].compactMap(\.self).joined()
   }
 

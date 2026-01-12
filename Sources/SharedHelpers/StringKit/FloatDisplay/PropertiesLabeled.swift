@@ -32,10 +32,6 @@ public protocol PropertiesLabeled: DisplayRenderable {
 /// or more, like `CGRect`
 extension PropertiesLabeled {
 
-  //  #warning("Temporarily hard-coding these")
-  //  var labelStyle: PropertyLabel.Style { .standard }
-  //  var separatorVisibility: SeparatorVisibility { .both }
-
   public func render(using format: DisplayFormat) -> String {
     let sepVis = format.separatorVisibility
     let labels = components.map { component in
@@ -47,7 +43,6 @@ extension PropertiesLabeled {
         ) ?? ""
 
       let valueString: String = component.value.render(using: format)
-      //      let valueString: String = component.value.displayString(places: places, grouping: grouping)
 
       return labelString + valueString
     }
