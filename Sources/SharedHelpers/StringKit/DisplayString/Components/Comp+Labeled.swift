@@ -21,7 +21,6 @@ public struct Labeled {
   public init(
     _ key: String,
     value: Any?,
-//    value: (any StringConvertible)?,
     separator: String = ": "
   ) {
     self.key = key
@@ -31,15 +30,22 @@ public struct Labeled {
 }
 
 extension Labeled: StringConvertible {
-//extension Labeled: StyledStringConvertible {
   public var toString: String {
-//  public var toStyledString: StyledString {
-
-    let labelPart = "\(key)\(separator)"
     let valuePart = value?.toString ?? "nil"
-    return labelPart + valuePart
-    //    return StyledString("\(key)\(separator)\(valuePart)")
-
+    return key + separator + valuePart
   }
 }
 
+extension DisplayBlock {
+  public static func displayBlock(for value: Any?) -> DisplayBlock {
+    let text = string(for: value)
+    return DisplayBlock.text(text)
+  }
+  
+  private static func string(for value: Any?) -> String {
+    guard let value else { return "nil" }
+    guard let convertible = value as? StringConvertible else { return String(describing: value) }
+    return convertible.toString
+  }
+  
+}
