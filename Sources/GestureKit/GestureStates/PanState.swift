@@ -6,8 +6,43 @@
 //
 
 import CoreGraphics
+import CoreTools
 import Foundation
-import BasePrimitives
+
+struct PanState: GestureAction {
+  var value: CGSize = .zero
+  var kind: InteractionKind.Meta = .gesturePan
+
+  static let initial: Self = .init()
+}
+
+extension PanState {
+  mutating func update(_ newValue: CGSize) {
+    value.width -= newValue.width
+    value.height -= newValue.height
+  }
+  
+  static var centered: Self { .init(value: .zero) }
+
+  func clamped(
+    to geometry: CanvasGeometry,
+    zoom: CGSize
+  ) -> Self {
+    let artwork = geometry.canvasSize
+    let viewport = geometry.viewportSize
+    let scaledArtwork = artwork * zoom
+
+    let maxX = max((scaledArtwork.width - viewport.width) / 2, 0)
+    let maxY = max((scaledArtwork.height - viewport.height) / 2, 0)
+
+    return Self(
+      value: CGSize(
+        width: value.width.clamped(to: -maxX...maxX),
+        height: value.height.clamped(to: -maxY...maxY)
+      )
+    )
+  }
+}
 
 //public struct PanState: Sendable {
 //  public let value: CGSize
@@ -40,46 +75,44 @@ import BasePrimitives
 //    )
 //  }
 
-  /// ```
-  /// case .zoom(let zoomState):
-  ///   zoom = zoomState
-  ///   if zoomState.phase == .ended {
-  ///     pan = .centred
-  ///   }
-  /// ```
+/// ```
+/// case .zoom(let zoomState):
+///   zoom = zoomState
+///   if zoomState.phase == .ended {
+///     pan = .centred
+///   }
+/// ```
 //  static var centered: Self { .init(offset: .zero) }
 
-  /// ```
-  /// context.translateBy(
-  ///   x: pan.viewOffset(zoom: zoom).width,
-  ///   y: pan.viewOffset(zoom: zoom).height
-  /// )
-  ///
-  /// ```
- 
+/// ```
+/// context.translateBy(
+///   x: pan.viewOffset(zoom: zoom).width,
+///   y: pan.viewOffset(zoom: zoom).height
+/// )
+///
+/// ```
 
-  /// ```
-  /// pan = pan
-  ///   .translated(by: state.offset)
-  ///   .withPhase(state.phase)
-  ///
-  /// ```
- 
+/// ```
+/// pan = pan
+///   .translated(by: state.offset)
+///   .withPhase(state.phase)
+///
+/// ```
 
 //  public func withPhase(_ newPhase: Interaction.Phase) -> Self {
 //    Self(offset: offset, phase: newPhase)
 //  }
-  //  mutating func update(phase: GesturePhase) {
-  //
-  //  }
-  //  mutating func translate(by delta: CGSize) {
-  //    offset.width -= delta.width
-  //    offset.height -= delta.height
-  //  }
-  //
-  //  mutating func updatePhase(to new: GesturePhase) {
-  //    phase = new
-  ////    offset.width -= delta.width
-  ////    offset.height -= delta.height
-  //  }
+//  mutating func update(phase: GesturePhase) {
+//
+//  }
+//  mutating func translate(by delta: CGSize) {
+//    offset.width -= delta.width
+//    offset.height -= delta.height
+//  }
+//
+//  mutating func updatePhase(to new: GesturePhase) {
+//    phase = new
+////    offset.width -= delta.width
+////    offset.height -= delta.height
+//  }
 //}

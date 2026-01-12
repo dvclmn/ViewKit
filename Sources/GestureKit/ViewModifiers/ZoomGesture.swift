@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreTools
 
-public typealias ZoomGestureOutput = (CGFloat?, InteractionPhase) -> Void
+public typealias ZoomGestureOutput = (CGFloat, InteractionPhase) -> Void
 
 struct ZoomGesture: Gesture {
 
@@ -17,19 +17,19 @@ struct ZoomGesture: Gesture {
 //  @State private var phase: InteractionPhase = .none
 
   let initialZoom: CGFloat?
-  let zoomRange: ClosedRange<CGFloat>
+//  let zoomRange: ClosedRange<CGFloat>
   let isEnabled: Bool
   let didUpdateZoom: ZoomGestureOutput
 //  let didUpdateZoom: (ZoomState) -> Void
 
   init(
     initialZoom: CGFloat? = nil,
-    zoomRange: ClosedRange<CGFloat>,
+//    zoomRange: ClosedRange<CGFloat>,
     isEnabled: Bool,
     didUpdateZoom: @escaping ZoomGestureOutput
   ) {
     self.initialZoom = initialZoom
-    self.zoomRange = zoomRange
+//    self.zoomRange = zoomRange
     self.isEnabled = isEnabled
     self.didUpdateZoom = didUpdateZoom
   }
@@ -55,7 +55,7 @@ struct ZoomGesture: Gesture {
 //        phase = .ended
         currentZoom = nil
 //        didUpdateZoom(.initial)
-        didUpdateZoom(nil, .ended)
+        didUpdateZoom(.zero, .ended)
       }
   }
 }

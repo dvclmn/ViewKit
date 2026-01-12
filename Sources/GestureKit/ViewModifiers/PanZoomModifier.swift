@@ -9,37 +9,55 @@ import CoreTools
 import SwiftUI
 
 public struct PanZoomModifier: ViewModifier {
-  @State private var handler: GestureHandler = .init()
-
-  let geometry: CanvasGeometry?
+  @Environment(\.modifierKeys) private var modifierKeys
+//  @State private var handler: GestureHandler = .init()
+  @Binding var interactions: InteractionHandler
+  
+//  let geometry: CanvasGeometry?
   public func body(content: Content) -> some View {
     content
       .overlay {
-        PanGestureView { offset, phase in
-          guard let geometry else { return }
-          handler.update(.gesturePan(offset), phase: phase, geometry: geometry)
+        PanGestureView {
+          offset,
+          phase in
+          //          guard let geometry else { return }
+          interactions.updateGesture(
+            .gesturePan(offset),
+            phase: phase,
+            modifiers: modifierKeys
+          )
+//          handler.update(.gesturePan(offset), phase: phase, geometry: geometry)
           //          handler.update(.pan(state), geometry: geometry)
         }
       }
       .simultaneousGesture(
-        ZoomGesture(
-          zoomRange: handler.zoomRange,
-          isEnabled: true,
-          didUpdateZoom: { zoom, phase in
-            guard let geometry, let zoom else { return }
-//            handler.update(.gestureZoom(zoom), phase: phase, geometry: geometry)
-//            let adjustment = ZoomOperation.zoom(state.zoom)
-            
-//            handler.update(.zoom(adjustment), geometry: geometry)
-          }
-        ),
+        ZoomGesture(isEnabled: true) {
+          zoom,
+          phase in
+          interactions.updateGesture(
+            .gestureZoom(zoom),
+            phase: phase,
+            modifiers: modifierKeys
+          )
+        },
+//        ZoomGesture(
+//          zoomRange: handler.zoomRange,
+//          isEnabled: true,
+//          didUpdateZoom: { zoom, phase in
+//            guard let geometry, let zoom else { return }
+////            handler.update(.gestureZoom(zoom), phase: phase, geometry: geometry)
+////            let adjustment = ZoomOperation.zoom(state.zoom)
+//            
+////            handler.update(.zoom(adjustment), geometry: geometry)
+//          }
+//        ),
         isEnabled: true
       )
 
   }
 }
 extension View {
-  public func panAndZoom(geometry: CanvasGeometry?) -> some View {
-    self.modifier(PanZoomModifier(geometry: geometry))
+  public func panAndZoom(interactions: Binding<InteractionHandler>) -> some View {
+    self.modifier(PanZoomModifier(interactions: interactions))
   }
 }
