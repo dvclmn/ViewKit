@@ -10,10 +10,15 @@ import Foundation
 
 @MetaEnum
 public enum PointerInteraction {
-  //  case tap
-  //  case drag
-  //  case hover
-  case tap(CGPoint)
+  
+  /// Interesting: Unable to properly represent a Tap (press down, press up),
+  /// whilst also detecting Drag (will have to think more about this), using
+  /// the current method which is to handle all this in the `onChanged`
+  /// of a DragGesture. So have changed to `pressing`, which is more accurate.
+  case pressing(CGPoint)
+//  case tap(CGPoint)
+  
+  /// This should come *already* standardised, from in the modifier
   case drag(CGRect)
   case hover(CGPoint)
   case none
@@ -52,7 +57,7 @@ extension PointerState {
     phase: InteractionPhase
   ) {
     switch interaction {
-      case .tap(let point): setTap(at: point)
+      case .pressing(let point): setTap(at: point)
       case .drag(let rect): setDragIfPermitted(with: rect)
       case .hover(let point): setHover(at: point)
       case .none: reset()
@@ -70,7 +75,7 @@ extension PointerState {
   private mutating func setTap(at location: CGPoint) {
     current = location
     start = nil
-    interactionKind = .tap
+    interactionKind = .pressing
   }
 
   private mutating func setHover(at location: CGPoint) {
