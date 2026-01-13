@@ -8,7 +8,12 @@
 import SwiftUI
 
 extension DragGesture.Value {
-  public var toRect: CGRect {
-    CGRect.boundingRect(from: startLocation, to: location)
+  /// Will return `predictedEndLocation` for the end location,
+  /// if `usingPredicated` is true. Otherwise will return `location`
+  public func toRect(usingPredicated: Bool = true) -> CGRect {
+    CGRect.boundingRect(
+      from: startLocation,
+      to: usingPredicated ? predictedEndLocation : location
+    )
   }
 }

@@ -5,11 +5,18 @@
 //  Created by Dave Coleman on 15/12/2025.
 //
 
+import Foundation
+import BasePrimitives
+
 public func DebugString(
+  timestamped: Bool = true,
   @DisplayStringBuilder _ content: () -> [DisplayBlock]
 ) {
-  let displayString = DisplayString {
-    content()
-  }
-  print(displayString.text + "\n")
+  print(
+    DisplayString {
+      content()
+      timestamped ? " at \(Date.debug) " : ""
+      "\n"
+    }.text
+  )
 }

@@ -9,7 +9,6 @@ import CoreTools
 import SwiftUI
 
 public struct DebugTextOverlayModifier: ViewModifier {
-//  @Environment(\.isEnabled) private var isEnabled
   @Environment(\.explicitColour) private var explicitColour
   
 

@@ -5,11 +5,14 @@
 //  Created by Dave Coleman on 13/7/2025.
 //
 
+import LayoutKit
+import SharedHelpers
 import SwiftUI
 
 public struct DrawMarqueeModifier: ViewModifier {
+  @Environment(\.isDebugMode) var isDebugMode
   let rect: CGRect?
-  
+
   public func body(content: Content) -> some View {
     content
       .overlay {
@@ -19,12 +22,11 @@ public struct DrawMarqueeModifier: ViewModifier {
               context.stroke(rect.path, with: .color(.pink))
             }
             .allowsHitTesting(false)
-
-            //            Text("Origin: \(rect.origin.displayString(places: 0))")
-            //              .font(.caption)
-            //              .quickBackground()
+            .debugTextOverlay(
+              "Origin: \(rect.origin.displayString(places: 0))",
+              isEnabled: isDebugMode
+            )
           }
-
         }  // END rect check, is enabled
       }  // END overlay
   }
