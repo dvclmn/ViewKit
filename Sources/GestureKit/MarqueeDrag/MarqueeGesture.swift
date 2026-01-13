@@ -24,7 +24,7 @@ struct MarqueeDragGesture: Gesture {
 
       .onChanged { value in
 
-//        let newRect = value.toRect
+        //        let newRect = value.toRect
 
         /// I think this is just updating for the Marquee rect drawing
         //        rect = newRect
@@ -37,15 +37,15 @@ struct MarqueeDragGesture: Gesture {
           phase: .changed
         )
         didUpdateRect(stream)
-//        if isDrag {
-//          //          didUpdateRect(.drag(newRect), .changed)
-//
-//        } else {
-//          let location = newRect.point(at: .bottomTrailing)
-//          didUpdateRect(.tap(location), .changed)
-//          //          didUpdateRect(.tap(location), .changed)
-//          //          didUpdateRect(.tap(location: newRect.point(at: .bottomTrailing)))
-//        }
+        //        if isDrag {
+        //          //          didUpdateRect(.drag(newRect), .changed)
+        //
+        //        } else {
+        //          let location = newRect.point(at: .bottomTrailing)
+        //          didUpdateRect(.tap(location), .changed)
+        //          //          didUpdateRect(.tap(location), .changed)
+        //          //          didUpdateRect(.tap(location: newRect.point(at: .bottomTrailing)))
+        //        }
 
       }
       .onEnded { gestureValue in

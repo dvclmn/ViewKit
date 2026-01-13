@@ -22,7 +22,8 @@ public struct MarqueeDragModifier: ViewModifier {
         MarqueeDragGesture(
           dragThreshold: dragThreshold
         ) { stream in
-          self.rect = stream.rect
+          
+//          self.rect = stream.rect
         },
         isEnabled: isEnabled
       )

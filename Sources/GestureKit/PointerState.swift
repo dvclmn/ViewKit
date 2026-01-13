@@ -45,31 +45,45 @@ extension PointerState {
     phase: InteractionPhase
   ) {
     switch interaction {
-      case .tap(let point):
-        setTap(at: point)
-
-      case .drag(let rect):
-        guard isDragPermitted(for: rect.size) else {
-          setTap(at: rect.origin)
-        }
-        setDrag(with: rect)
-
-      case .hover(let point):
-
-      case .none:
-
+      case .tap(let point): setTap(at: point)
+      case .drag(let rect): setDragIfPermitted(with: rect)
+      case .hover(let point): setHover(at: point)
+      case .none: reset()
     }
     self.phase = phase
   }
-  
-  private mutating func setTap(at location: CGPoint) {
-    self.current = location
-    self.start = nil
+
+  private mutating func reset() {
+    current = nil
+    start = nil
+    interactionKind = .none
+    phase = .none
   }
-  
-  private mutating func setDrag(with rect: CGRect) {
-    self.current = location
-    self.start = nil
+
+  private mutating func setTap(at location: CGPoint) {
+    current = location
+    start = nil
+    interactionKind = .tap
+  }
+
+  private mutating func setHover(at location: CGPoint) {
+    current = location
+    start = nil
+    interactionKind = .hover
+  }
+
+  private mutating func setDragIfPermitted(with rect: CGRect) {
+
+    guard isDragPermitted(for: rect.size) else {
+      setTap(at: rect.origin)
+      return
+    }
+
+    /// On first drag event, if `start` is nil, capture the origin as the start.
+    if start == nil { start = rect.origin }
+    /// Update current to the far corner of the rect so translation reflects size.
+    current = CGPoint(x: rect.maxX, y: rect.maxY)
+    interactionKind = .drag
   }
 
   public var translation: CGSize? {
