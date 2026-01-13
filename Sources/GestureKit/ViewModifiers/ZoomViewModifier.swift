@@ -30,7 +30,6 @@ extension ZoomModifier {
         state = value.magnification
       }
       .onChanged { value in
-
         if initialZoom == nil {
           initialZoom = zoom.zoom(clampedTo: zoomRange ?? 0...10)
         }
@@ -41,7 +40,7 @@ extension ZoomModifier {
       }
       .onEnded { value in
         initialZoom = nil
-        zoom.phase = .ended
+        zoom.withPhase(.ended)
       }
   }
 }

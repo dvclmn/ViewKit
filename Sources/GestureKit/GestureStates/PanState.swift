@@ -13,8 +13,6 @@ public struct PanState {
   private(set) var translation: CGSize
   private(set) var phase: InteractionPhase
 
-  public static var centered: Self { .init(.zero) }
-
   public init(
     _ translation: CGSize = .zero,
     phase: InteractionPhase = .none
@@ -25,10 +23,10 @@ public struct PanState {
 }
 
 extension PanState {
+  public static var centered: Self { .init(.zero) }
   
   public var pan: CGSize {translation}
   
-
   public mutating func update(_ delta: CGSize, phase: InteractionPhase) {
     translation.width += delta.width
     translation.height += delta.height
