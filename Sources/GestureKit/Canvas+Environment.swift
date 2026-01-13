@@ -10,13 +10,15 @@ import SwiftUI
 
 extension EnvironmentValues {
   @Entry public var canvasSize: CGSize = .zero
+  @Entry public var isResizingCanvas: Bool = false
+
   @Entry public var canvasPan: CGSize = .zero
   @Entry public var canvasZoom: CGFloat = 1.0
   @Entry public var canvasZoomRange: ClosedRange<CGFloat>? = nil
   @Entry public var canvasRotation: Angle = .zero
   
-  @Entry public var isResizingCanvas: Bool = false
-  
+  @Entry public var dragRect: CGRect? = nil
+  @Entry public var shouldRenderDragRect: Bool = true
 //  @Entry public var interaction: PointerPhase? = nil
 //  @Entry public var isHoverEnabled: Bool = true
 //  @Entry public var isDragEnabled: Bool = true

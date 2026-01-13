@@ -19,6 +19,7 @@ extension Comparable {
   /// `min` == `lowerBound`
   /// `max` == `upperBound`
   public func clamped(_ lower: Self, _ upper: Self) -> Self {
+    guard lower < upper else { return self }
     return Swift.min(upper, Swift.max(lower, self))
   }
 

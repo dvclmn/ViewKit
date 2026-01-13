@@ -7,17 +7,13 @@
 
 import SwiftUI
 
-extension EnvironmentValues {
-  @Entry public var shouldRenderDragRect: Bool = true
-}
-
 public struct DrawMarqueeModifier: ViewModifier {
   let rect: CGRect?
-  let isEnabled: Bool
+  
   public func body(content: Content) -> some View {
     content
       .overlay {
-        if let rect, isEnabled {
+        if let rect {
           ZStack {
             Canvas { context, size in
               context.stroke(rect.path, with: .color(.pink))
@@ -39,6 +35,6 @@ extension View {
     rect: CGRect?,
     isEnabled: Bool
   ) -> some View {
-    self.modifier(DrawMarqueeModifier(rect: rect, isEnabled: isEnabled))
+    self.modifier(DrawMarqueeModifier(rect: rect))
   }
 }

@@ -24,27 +24,18 @@ public struct ZoomState {
 }
 
 extension ZoomState {
-  
+
   public mutating func withPhase(_ phase: InteractionPhase) {
-//    var result = self
     self.phase = phase
   }
 
   public func zoom(clampedTo range: ClosedRange<CGFloat>) -> CGFloat {
-    //    precondition(current.isGreaterThanZero, "Zoom must be greater than zero.")
-    return current.clamped(to: range)
+    current.clamped(to: range)
   }
 
   public mutating func update(_ level: CGFloat, phase: InteractionPhase) {
     self.current = level
-    //    translation.width += delta.width
-    //    translation.height += delta.height
     self.phase = phase
-  }
-
-  public func interaction(previous: CGFloat) -> TransformInteraction? {
-    guard phase == .changed else { return nil }
-    return .zoom(delta: current - previous)
   }
 
 }

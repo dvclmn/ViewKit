@@ -20,16 +20,15 @@ public struct MarqueeDragModifier: ViewModifier {
     content
       .simultaneousGesture(
         MarqueeDragGesture(
-          dragThreshold: dragThreshold
-        ) { stream in
-          
-//          self.rect = stream.rect
-        },
+          dragThreshold: dragThreshold,
+          didUpdateRect: didUpdateRect,
+        ),
         isEnabled: isEnabled
       )
       .modifier(DrawMarqueeModifier(rect: rect, isEnabled: shouldRenderDragRect))
   }
 }
+
 extension View {
   public func marqueeDrag(
     isEnabled: Bool = true,

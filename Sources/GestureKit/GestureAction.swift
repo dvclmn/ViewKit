@@ -9,11 +9,11 @@ import CoreTools
 import SwiftUI
 
 /// Derived
-public enum TransformInteraction {
-  case zoom(delta: CGFloat)
-  case pan(delta: CGSize)
-  case rotate(delta: Angle)
-}
+//public enum TransformInteraction {
+//  case zoom(delta: CGFloat)
+//  case pan(delta: CGSize)
+//  case rotate(delta: Angle)
+//}
 
 //public protocol GestureAction: Sendable {
 //  associatedtype Value  // E.g. CGSize for pan
