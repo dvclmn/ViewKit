@@ -177,7 +177,7 @@
 //  }
 //
 //  private func mapped(_ step: CGFloat) -> CGFloat {
-//    step.mappedNonLinearly(
+//    step.nonLinearMapped(
 //      from: inputRange,
 //      to: outputRange,
 //      curve: curve,

@@ -24,7 +24,7 @@ extension BinaryFloatingPoint {
   ///
   /// E.g.:
   /// ```
-  /// let scaled = value.mappedNonLinearly(
+  /// let scaled = value.nonLinearMapped(
   ///   from: 0...100,
   ///   to: 10...50,
   ///   curve: .exponential,
@@ -58,14 +58,11 @@ extension BinaryFloatingPoint {
   ///   to: Double(normalised)
   /// ) * strength
   /// ```
-  public func mappedNonLinearly(
+  public func nonLinearMapped(
     from inputRange: ClosedRange<Self> = 0...1,
     to outputRange: ClosedRange<Self>,
     curve: CurveFunction = .quartic,
     ease: EaseDirection = .in,
-    //    curve: CurveType = .shaped(.logar, .inOut),
-    //    curve: CurveFunction = .linear,
-    //    ease: Ease = .none,
     clampedToInputRange clamped: Bool = true
   ) -> Self {
     

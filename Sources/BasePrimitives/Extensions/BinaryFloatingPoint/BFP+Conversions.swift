@@ -10,9 +10,13 @@ import Foundation
 extension BinaryFloatingPoint {
 
   public func toPercent(within range: ClosedRange<Self>) -> Self {
-    let normalised: Double = Double(self.normalised(in: range))
-    return Self(normalised * 100)
+    self.normalised(in: range) * 100
   }
+
+  //  public func toPercent(within range: ClosedRange<Self>) -> Self {
+  //    let normalised: Double = Double(self.normalised(in: range))
+  //    return Self(normalised * 100)
+  //  }
 
   public var degreesToRadians: Self { self * .pi / 180 }
   public var radiansToDegrees: Self { self * 180 / .pi }
@@ -29,42 +33,38 @@ extension BinaryFloatingPoint {
     clampedTo range: ClosedRange<Self>? = nil,
     sensitivity: Self? = nil
   ) -> Self {
-    guard zoom.isGreaterThanZero, (range?.isGreaterThanZero ?? false) else {
+    guard zoom.isGreaterThanZero, range?.isGreaterThanZero ?? false else {
       return self
     }
-//    guard let range else {
-//      return self / zoom
-//    }
-    
+    //    guard let range else {
+    //      return self / zoom
+    //    }
+
     let effectiveZoom = range.map { zoom.clamped(to: $0) } ?? zoom
-    
+
     if let sensitivity {
       let s = sensitivity.clamped(to: 0...1)
       return self * Self(pow(Double(effectiveZoom), Double(s - 1)))
     }
-    
-    return self / effectiveZoom
-//    let clampedZoom = zoom.clamped(to: range)
 
-//    if let sensitivity {
-//      let clampedSensitivity = sensitivity.clamped(to: 0...1)
-//      let compensation = Self(
-//        pow(Double(clampedZoom), Double(clampedSensitivity - 1))
-//      )
-//      return self * compensation
-////      let exponent = clampedSensitivity - 1
-////      return self * Self(pow(Double(clampedZoom), Double(exponent)))
-////      return self * Self(pow(Double(zoom), Double(clampedSensitivity) - 1))
-//    }
-//
-//    return self / clampedZoom
+    return self / effectiveZoom
+    //    let clampedZoom = zoom.clamped(to: range)
+
+    //    if let sensitivity {
+    //      let clampedSensitivity = sensitivity.clamped(to: 0...1)
+    //      let compensation = Self(
+    //        pow(Double(clampedZoom), Double(clampedSensitivity - 1))
+    //      )
+    //      return self * compensation
+    ////      let exponent = clampedSensitivity - 1
+    ////      return self * Self(pow(Double(clampedZoom), Double(exponent)))
+    ////      return self * Self(pow(Double(zoom), Double(clampedSensitivity) - 1))
+    //    }
+    //
+    //    return self / clampedZoom
   }
 
   /// This removes a zoom range which has been normalised from 0-1
-  public func removingZoomPercent(_ zoomPercent: Self) -> Self {
-    let result = Double(self) / pow(1 + Double(zoomPercent), 1)
-    return Self(result)
-  }
 
   /// Applies non-linear zoom scaling to provide better control at different zoom levels
   /// - Parameters:
@@ -82,18 +82,24 @@ extension BinaryFloatingPoint {
     curve: Double = 1.5
   ) -> Double {
 
+    guard range.isGreaterThanZero,
+      curve > 0
+    else { return zoom }
+
     let upper = range.upperBound
     let lower = range.lowerBound
 
-    /// Clamp the zoom level to the valid range
-    let clamped = zoom.clamped(to: range)
-
     /// Normalize the zoom level to 0...1 range
-    let normalised = (clamped - lower) / (upper - lower)
+    /// This method also clamps to range
+    let normalised = zoom.normalised(in: range)
 
     /// Calculate threshold positions in normalized space
-    let lowThresholdNorm = (lowSensitivityThreshold - lower) / (upper - lower)
-    let highThresholdNorm = (highSensitivityThreshold - lower) / (upper - lower)
+    /// Ensure no unexpected invalid values by clamping
+    let low = lowSensitivityThreshold.clamped(to: range)
+    let high = highSensitivityThreshold.clamped(to: range)
+
+    let lowThresholdNorm = (low - lower) / (upper - lower)
+    let highThresholdNorm = (high - lower) / (upper - lower)
 
     let transformedZoom: Double
 
@@ -102,15 +108,18 @@ extension BinaryFloatingPoint {
       let localNorm = normalised / lowThresholdNorm
 
       /// Use curve to slow down response
-      let expanded = pow(localNorm, curve)
+      let slowed = CGFloat(curve).slowResponse(localNorm)
 
-      transformedZoom = expanded * lowThresholdNorm
+      transformedZoom = slowed * lowThresholdNorm
 
     } else if normalised >= highThresholdNorm {
       /// High zoom range: increase sensitivity (compress the curve - faster response)
       let localNorm = (normalised - highThresholdNorm) / (1.0 - highThresholdNorm)
-      let compressed = pow(localNorm, 1.0 / curve)  // Inverse curve for faster response
-      transformedZoom = highThresholdNorm + compressed * (1.0 - highThresholdNorm)
+
+      /// Inverse curve for faster response
+      let faster = CGFloat(curve).fastResponse(localNorm)
+      //      let compressed = pow(localNorm, 1.0 / curve)
+      transformedZoom = highThresholdNorm + faster * (1.0 - highThresholdNorm)
 
     } else {
       /// Middle range: linear scaling
@@ -133,10 +142,20 @@ extension BinaryFloatingPoint {
     range: ClosedRange<Double>,
     sensitivity: Double = 1.3
   ) -> Double {
-
+    guard sensitivity > 0 else { return zoom }
     let normalised = zoom.normalised(in: range)
     let transformed = pow(normalised, sensitivity)
     return transformed.denormalised(in: range)
   }
+
+}
+
+extension CGFloat {
+
+  /// Where self is the curve
+  func slowResponse(_ x: Self) -> Self { pow(x, self) }
+
+  /// Where self is the curve
+  func fastResponse(_ x: Self) -> Self { pow(x, 1 / self) }
 
 }
