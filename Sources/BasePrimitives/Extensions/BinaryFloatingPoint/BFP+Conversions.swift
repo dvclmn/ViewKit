@@ -29,17 +29,35 @@ extension BinaryFloatingPoint {
     clampedTo range: ClosedRange<Self>? = nil,
     sensitivity: Self? = nil
   ) -> Self {
-    guard let range else {
-      return self / zoom
+    guard zoom.isGreaterThanZero, (range?.isGreaterThanZero ?? false) else {
+      return self
     }
-    let clampedZoom = zoom.clamped(to: range)
-
+//    guard let range else {
+//      return self / zoom
+//    }
+    
+    let effectiveZoom = range.map { zoom.clamped(to: $0) } ?? zoom
+    
     if let sensitivity {
-      let clampedSensitivity = sensitivity.clamped(to: 0...1)
-      return self * Self(pow(Double(zoom), Double(clampedSensitivity) - 1))
+      let s = sensitivity.clamped(to: 0...1)
+      return self * Self(pow(Double(effectiveZoom), Double(s - 1)))
     }
+    
+    return self / effectiveZoom
+//    let clampedZoom = zoom.clamped(to: range)
 
-    return self / clampedZoom
+//    if let sensitivity {
+//      let clampedSensitivity = sensitivity.clamped(to: 0...1)
+//      let compensation = Self(
+//        pow(Double(clampedZoom), Double(clampedSensitivity - 1))
+//      )
+//      return self * compensation
+////      let exponent = clampedSensitivity - 1
+////      return self * Self(pow(Double(clampedZoom), Double(exponent)))
+////      return self * Self(pow(Double(zoom), Double(clampedSensitivity) - 1))
+//    }
+//
+//    return self / clampedZoom
   }
 
   /// This removes a zoom range which has been normalised from 0-1
@@ -115,21 +133,10 @@ extension BinaryFloatingPoint {
     range: ClosedRange<Double>,
     sensitivity: Double = 1.3
   ) -> Double {
-    let lower = range.lowerBound
-    let upper = range.upperBound
 
-    //    let clamped = zoom.clamped(to: range)
-    //    let normalised = (clamped - lower) / (upper - lower)
     let normalised = zoom.normalised(in: range)
     let transformed = pow(normalised, sensitivity)
     return transformed.denormalised(in: range)
-    //    return transformed * (upper - lower) + lower
   }
-
-  //  private func clampedAndNormalised(in range: ClosedRange<Self>) -> Self {
-  //    let clamped = clamped(to: range)
-  //    let normalised = (clamped - range.lowerBound) / (range.upperBound - range.lowerBound)
-  //    return normalised
-  //  }
 
 }
