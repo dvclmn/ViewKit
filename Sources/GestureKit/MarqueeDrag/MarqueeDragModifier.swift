@@ -60,14 +60,16 @@ extension MarqueeDragModifier {
           dragOrigin = value.startLocation
         }
         
+        guard let origin = dragOrigin else { return }
         
         let rect = CGRect(
-          origin: dragOrigin!,
+          origin: origin,
           size: CGSize(
-            width: value.location.x - dragOrigin!.x,
-            height: value.location.y - dragOrigin!.y
+            width: value.location.x - origin.x,
+            height: value.location.y - origin.y
           )
-        ).standardized
+        )
+//        ).standardized
         
         switch intent {
           case .undecided:

@@ -20,6 +20,8 @@ public enum PointerInteraction {
 }
 
 public struct PointerState {
+  
+//  private(set) var rect: CGRect?
 
   /// Aka Drag rect origin point. If a drag is detected, this is the origin.
   /// *Does not* refer to a tap/hover location
@@ -41,6 +43,7 @@ extension PointerState {
   }
   
   public static var initial: Self {
+//    .init(rect: .zero, phase: .ended)
     .init(start: .zero, current: .zero, phase: .ended)
   }
 
