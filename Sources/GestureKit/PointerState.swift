@@ -32,10 +32,14 @@ public struct PointerState {
   private(set) var interactionKind: PointerInteraction.Meta = .none
   var phase: InteractionPhase
 
-  let dragThreshold: CGFloat = 4
+ public let dragThreshold: CGFloat = 4
 }
 
 extension PointerState {
+  public var currentInteraction: PointerInteraction.Meta {
+    interactionKind
+  }
+  
   public static var initial: Self {
     .init(start: .zero, current: .zero, phase: .ended)
   }
