@@ -26,6 +26,8 @@ public struct CanvasGeometry: Sendable, Equatable {
 
 extension CanvasGeometry {
   public var isEitherZero: Bool { viewportSize.isZero || canvasSize.isZero }
+ 
+  
 }
 extension CanvasGeometry: CustomStringConvertible {
   public var description: String {
@@ -39,4 +41,6 @@ extension CanvasGeometry: CustomStringConvertible {
     .text
       
   }
+  
+  
 }

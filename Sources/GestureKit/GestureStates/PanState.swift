@@ -26,6 +26,13 @@ extension PanState {
   public static var centered: Self { .init(.zero) }
   
   public var pan: CGSize {translation}
+
+  public mutating func update(newValue: CGSize, phase: InteractionPhase) {
+    translation = newValue
+//    translation.width += delta.width
+//    translation.height += delta.height
+    self.phase = phase
+  }
   
   public mutating func update(_ delta: CGSize, phase: InteractionPhase) {
     translation.width += delta.width

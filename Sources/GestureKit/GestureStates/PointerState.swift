@@ -8,6 +8,7 @@
 import CoreTools
 import SwiftUI
 
+@CaseDetection
 @MetaEnum
 public enum PointerInteraction {
 
@@ -36,15 +37,34 @@ public struct PointerState {
   /// a tap/hover. If non-nil, this is the part of the rect anchored to the pointer
   private(set) var current: CGPoint?
 
-  private(set) var interactionKind: PointerInteraction.Meta = .none
+  private(set) var kind: PointerInteraction.Meta = .none
   var phase: InteractionPhase
 
   public let dragThreshold: CGFloat = 4
 }
 
 extension PointerState {
+
+  public func getInteraction() -> PointerInteraction? {
+    switch kind {
+      case .drag:
+        guard kind.isDrag, let dragRect else { return nil }
+        return .drag(dragRect)
+
+      case .pressing:
+        guard kind.isPressing, let current else { return nil }
+        return .pressing(current)
+
+      case .hover:
+        guard kind.isHover, let current else { return nil }
+        return .hover(current)
+
+      case .none: return nil
+    }
+  }
+
   public var currentInteraction: PointerInteraction.Meta {
-    interactionKind
+    kind
   }
 
   public static var initial: Self {
@@ -77,20 +97,20 @@ extension PointerState {
   private mutating func reset() {
     current = nil
     start = nil
-    interactionKind = .none
+    kind = .none
     phase = .none
   }
 
   private mutating func setTap(at location: CGPoint) {
     current = location
     start = nil
-    interactionKind = .pressing
+    kind = .pressing
   }
 
   private mutating func setHover(at location: CGPoint) {
     current = location
     start = nil
-    interactionKind = .hover
+    kind = .hover
   }
 
   private mutating func setDragIfPermitted(with rect: CGRect) {
@@ -104,7 +124,7 @@ extension PointerState {
     if start == nil { start = rect.origin }
     /// Update current to the far corner of the rect so translation reflects size.
     current = CGPoint(x: rect.maxX, y: rect.maxY)
-    interactionKind = .drag
+    kind = .drag
   }
 
   public var translation: CGSize? {
