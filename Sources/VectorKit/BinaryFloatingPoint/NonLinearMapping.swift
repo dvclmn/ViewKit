@@ -9,6 +9,8 @@ import Foundation
 import BasePrimitives
 
 extension BinaryFloatingPoint {
+  
+  
 
   /// Maps `self`  into a derived value (e.g. corner radius or padding),
   /// favouring non-linear mapping via a curve.
