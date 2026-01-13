@@ -12,7 +12,7 @@ public struct RotateState: Sendable {
   public let value: Angle
   private(set) var phase: InteractionPhase
   
-  public static let initial: Self = .init()
+  public static let zero: Self = .init()
   
   public init(
     _ rotation: Angle = .zero,

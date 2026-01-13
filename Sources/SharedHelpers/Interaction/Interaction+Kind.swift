@@ -8,6 +8,7 @@
 import EnumMacros
 import SwiftUI
 
+
 //@MetaEnum
 //@AssociatedValues
 //public enum InteractionKind: Sendable {

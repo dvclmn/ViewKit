@@ -8,45 +8,60 @@
 import CoreTools
 import Foundation
 
-public struct PointerStream {
-  let start: CGPoint
-  var current: CGPoint
+public enum PointerInteraction {
+  //  case tap
+  //  case drag
+  //  case hover
+  case tap(CGPoint)
+  case drag(CGRect)
+  case hover(CGPoint)
+}
+
+public struct PointerState {
+  /// If a drag is detected, this is the origin
+  let start: CGPoint?
+
+  /// Current pointer location. If `start` is `nil`,
+  var current: CGPoint?
+
   var phase: InteractionPhase
 
   let dragThreshold: CGFloat = 4
 }
 
-extension PointerStream {
+extension PointerState {
   public static var initial: Self {
     .init(start: .zero, current: .zero, phase: .ended)
   }
 
-  public func interaction() -> PointerInteraction? {
-    switch phase {
-      case .changed: isDrag ? .drag(rect) : nil
-      case .ended: isDrag ? .drag(rect) : .tap(start)
-      case .stationary: .hover(current)
-      default: nil
-    }
-  }
+  //  public var interactionKind: PointerInteraction? {
+  //    switch phase {
+  //      case .changed: isDrag ? .drag : nil
+  //      case .ended: isDrag ? .drag : .tap
+  //      case .stationary: .hover(current)
+  ////      default: nil
+  //    }
+  //  }
 
-  public var translation: CGSize {
-    CGSize(
+  public var translation: CGSize? {
+    guard let current, let start else { return nil }
+    let result = CGSize(
       width: current.x - start.x,
       height: current.y - start.y
     )
+    let isValidDrag = hypot(result.width, result.height) >= dragThreshold
+    return isValidDrag ? result : nil
   }
 
-  public var isDrag: Bool {
-    hypot(translation.width, translation.height) >= dragThreshold
-  }
+  /// Returns true if the current pointer state indicates that it is of
+  /// type Drag; not a Tap, nor a Hover
+  public var isDrag: Bool { translation != nil }
 
-  public var rect: CGRect {
-    CGRect(origin: start, size: translation).standardized
+  public var dragRect: CGRect? {
+    guard let translation, let start else { return nil }
+    return CGRect(origin: start, size: translation).standardized
   }
 }
-
-
 
 //struct PointerStream {
 //  var start: CGPoint
