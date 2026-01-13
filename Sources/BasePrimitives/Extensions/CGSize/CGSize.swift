@@ -82,6 +82,10 @@ extension CGSize {
     let newHeight = max(0, height - (insets.top + insets.bottom))
     return CGSize(width: newWidth, height: newHeight)
   }
+  
+  public var diagonalLength: CGFloat {
+    hypot(width, height)
+  }
 
   public func clampBothDimensions(toMin length: CGFloat) -> CGSize {
     let width = self.width.clamped(length)

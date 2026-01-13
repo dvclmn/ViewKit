@@ -103,7 +103,8 @@ extension PointerState {
   /// Returns true if the current pointer state indicates that it is of
   /// type Drag; not a Tap, nor a Hover
   private func isDragPermitted(for translation: CGSize) -> Bool {
-    hypot(translation.width, translation.height) >= dragThreshold
+    translation.diagonalLength >= dragThreshold
+//    hypot(translation.width, translation.height) >= dragThreshold
   }
 
   public var dragRect: CGRect? {

@@ -8,13 +8,15 @@
 import CoreTools
 import SwiftUI
 
-public typealias MarqueeDragOutput = (CGRect?, InteractionPhase) -> Void
+public typealias MarqueeDragOutput = (PointerInteraction, InteractionPhase) -> Void
 //public typealias MarqueeDragOutput = (PointerState) -> Void
 
 public struct MarqueeDragModifier: ViewModifier {
   @Environment(\.shouldRenderDragRect) private var shouldRenderDragRect
-  @GestureState private var tapOrDragState: CGRect?
-  //  @GestureState private var tapOrDragState: CGPoint?
+  //  @GestureState private var tapOrDragState: CGRect?
+//  @GestureState private var tapLocation: CGPoint?
+  @State private var latestStartLocation: CGPoint?
+  @State private var latestInteraction: PointerInteraction.Meta = .none
   @State private var rectToRender: CGRect?
 
   let isEnabled: Bool
@@ -23,7 +25,8 @@ public struct MarqueeDragModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-      .gesture(tapOrDragGesture)
+      .gesture(dragGesture)
+      //      .gesture(tapOrDragGesture)
       .modifier(DrawMarqueeModifier(rect: rectIfNeeded))
   }
 }
@@ -34,38 +37,55 @@ extension MarqueeDragModifier {
     shouldRenderDragRect ? rectToRender : nil
   }
 
-  private var tapOrDragGesture: some Gesture {
-    ExclusiveGesture(tapGesture, dragGesture)
-      .updating($tapOrDragState) { value, state, _ in
-        print("`tapOrDragGesture`: Value\n\(value), State (CGRect): \(state?.displayString, default: "nil")")
-      }
-      .onEnded { value in
-        print("The Exclusive gesture ended: \(value)")
-      }
-      
-  }
+  //  private var tapOrDragGesture: some Gesture {
+  //    ExclusiveGesture(tapGesture, dragGesture)
+  //      .updating($tapOrDragState) { value, state, _ in
+  //        print("`tapOrDragGesture`: Value\n\(value), State (CGRect): \(state?.displayString, default: "nil")")
+  //      }
+  //      .onEnded { value in
+  //        print("The Exclusive gesture ended: \(value)")
+  //      }
 
-  private var tapGesture: some Gesture {
-    TapGesture()
-      .onEnded { value in
-        print("The *Tap* gesture of the TorD Gesture ended: \(value)")
-      }
-  }
+  //  }
+
+  //  private var tapGesture: some Gesture {
+  //    Tap
+  //    TapGesture()
+  //      .updating($tapLocation) { something, state, _ in
+  ////        something
+  //        print("Tap Location State: \(state?.displayString, default: "nil")")
+  //      }
+  //      .onEnded { value in
+  ////        didUpdateRect(.tap(value), .changed)
+  //        print("The *Tap* gesture of the TorD Gesture ended: \(value). What is this value??")
+  //      }
+  //  }
 
   private var dragGesture: some Gesture {
     /// IMPORTANT: `minimumDistance` must be set to zero,
     /// to allow both Drag *and* Tap detection. These are
     /// disambiguated via `dragThreshold`
-    DragGesture(minimumDistance: dragThreshold)
+    DragGesture(minimumDistance: 0)
+      //    DragGesture(minimumDistance: dragThreshold)
 
       .onChanged { value in
         let newRect = value.toRect(usingPredicated: true)
-        rectToRender = newRect
-        didUpdateRect(newRect, .changed)
+        let isDrag = newRect.size.diagonalLength >= dragThreshold
 
+        if isDrag {
+          latestInteraction = .drag
+          rectToRender = newRect
+          didUpdateRect(.drag(newRect), .changed)
+
+        } else {
+          latestInteraction = .tap
+          rectToRender = nil
+          didUpdateRect(.tap(value.location), .changed)
+        }
       }
       .onEnded { gestureValue in
-        didUpdateRect(nil, .ended)
+        print("")
+        didUpdateRect(.none, .ended)
         rectToRender = nil
       }
   }
