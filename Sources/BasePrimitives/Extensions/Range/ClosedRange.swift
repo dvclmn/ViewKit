@@ -7,6 +7,12 @@
 
 import Foundation
 
+extension ClosedRange {
+  public var isZero: Bool { lowerBound == upperBound }
+  public var isGreaterThanZero: Bool { lowerBound < upperBound }
+  public var isGreaterThanOrEqualToZero: Bool { lowerBound <= upperBound }
+  
+}
 extension ClosedRange where Bound == CGFloat {
   public var toDoubleRange: ClosedRange<Double> {
     Double(self.lowerBound)...Double(self.upperBound)

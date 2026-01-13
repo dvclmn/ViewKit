@@ -9,6 +9,11 @@ import Foundation
 
 extension BinaryFloatingPoint {
 
+  /// Returns zero if range width is zero
+  public func normalised(in range: ClosedRange<Self>) -> Self {
+    normalisedIfValid(in: range) ?? 0
+  }
+
   /// Normalise converts a value in a range to `0.0` to `1.0`:
   /// `fraction = (position - min) / (max - min) ()`
   ///
@@ -18,24 +23,24 @@ extension BinaryFloatingPoint {
 
   /// Converts a value in the given range into a fraction between 0.0 and 1.0.
   /// Values below/above the range will be clamped.
-  public func normalised(in range: ClosedRange<Self>) -> Self {
-    precondition(
-      range.lowerBound < range.upperBound,
-      "Range must have a positive width."
-    )
+  public func normalisedIfValid(in range: ClosedRange<Self>) -> Self? {
+    guard range.isGreaterThanZero else { return nil }
+
     /// See clamping helpers at `BaseHelpers/Extensions/All/Comparable`
     let clamped = clamped(to: range)
     return (clamped - range.lowerBound) / (range.upperBound - range.lowerBound)
   }
 
+  /// Returns zero if range width is zero
+  public func denormalised(in range: ClosedRange<Self>) -> Self {
+    denormalisedIfValid(in: range) ?? 0
+  }
+  
   /// Converts a normalized fraction (between 0.0 and 1.0)
   /// back to a value within the given range.
   /// Fractions outside 0.0-1.0 will extend beyond the range proportionally.
-  public func denormalised(in range: ClosedRange<Self>) -> Self {
-    precondition(
-      range.lowerBound < range.upperBound,
-      "Range must have a positive width."
-    )
+  public func denormalisedIfValid(in range: ClosedRange<Self>) -> Self? {
+    guard range.isGreaterThanZero else { return nil }
     return range.lowerBound + self * (range.upperBound - range.lowerBound)
   }
 

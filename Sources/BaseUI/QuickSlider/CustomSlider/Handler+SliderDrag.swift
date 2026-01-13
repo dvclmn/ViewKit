@@ -67,7 +67,7 @@ extension SliderHandler {
 
     let percentage = clamped / trackSize.width
 
-    let newValue = percentage.denormalised(to: range)
+    let newValue = percentage.denormalised(in: range)
     //    let newValue = range.lowerBound + (percentage * (range.upperBound - range.lowerBound))
 
     return newValue
@@ -109,7 +109,7 @@ extension SliderHandler {
 
     /// Normalised here is essentially: “How far along the slider should the
     /// thumb be, in proportion to its full track length?”
-    let normalised: CGFloat = value.normalised(from: range)
+    let normalised: CGFloat = value.normalised(in: range)
 
     return normalised * trackSize.width
   }

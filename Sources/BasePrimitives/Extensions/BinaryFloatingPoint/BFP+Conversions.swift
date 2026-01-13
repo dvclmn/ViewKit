@@ -10,7 +10,7 @@ import Foundation
 extension BinaryFloatingPoint {
 
   public func toPercent(within range: ClosedRange<Self>) -> Self {
-    let normalised: Double = Double(self.normalised(from: range))
+    let normalised: Double = Double(self.normalised(in: range))
     return Self(normalised * 100)
   }
 
@@ -20,37 +20,34 @@ extension BinaryFloatingPoint {
   public static func omega(frequency: Self) -> Self {
     return .pi * 2 * frequency
   }
-  
+
   public var toDouble: Double { Double(self) }
   public var toFloat: Float { Float(self) }
 
   public func removingZoom(
     _ zoom: Self,
-    clampedTo range: ClosedRange<Self>? = nil
+    clampedTo range: ClosedRange<Self>? = nil,
+    sensitivity: Self? = nil
   ) -> Self {
     guard let range else {
       return self / zoom
     }
     let clampedZoom = zoom.clamped(to: range)
+
+    if let sensitivity {
+      let clampedSensitivity = sensitivity.clamped(to: 0...1)
+      return self * Self(pow(Double(zoom), Double(clampedSensitivity) - 1))
+    }
+
     return self / clampedZoom
   }
-  
+
   /// This removes a zoom range which has been normalised from 0-1
-  func removingZoomPercent(_ zoomPercent: Self) -> Self {
+  public func removingZoomPercent(_ zoomPercent: Self) -> Self {
     let result = Double(self) / pow(1 + Double(zoomPercent), 1)
     return Self(result)
   }
-  
-  public init(
-    _ value: Self,
-    removingZoom zoom: Self,
-    with sensitivity: Self = 0.5
-  ) {
-    let clampedSensitivity = Double(sensitivity.clamped(to: 0...1))
-    let adjusted = value * Self(pow(Double(zoom), clampedSensitivity - 1))
-    self.init(adjusted)
-  }
-  
+
   /// Applies non-linear zoom scaling to provide better control at different zoom levels
   /// - Parameters:
   ///   - zoomLevel: The current zoom level (0.1...60)
@@ -66,46 +63,47 @@ extension BinaryFloatingPoint {
     highSensitivityThreshold: Double = 5.0,
     curve: Double = 1.5
   ) -> Double {
-    
+
     let upper = range.upperBound
     let lower = range.lowerBound
-    
+
     /// Clamp the zoom level to the valid range
     let clamped = zoom.clamped(to: range)
-    
+
     /// Normalize the zoom level to 0...1 range
     let normalised = (clamped - lower) / (upper - lower)
-    
+
     /// Calculate threshold positions in normalized space
     let lowThresholdNorm = (lowSensitivityThreshold - lower) / (upper - lower)
     let highThresholdNorm = (highSensitivityThreshold - lower) / (upper - lower)
-    
+
     let transformedZoom: Double
-    
+
     if normalised <= lowThresholdNorm {
       /// Low zoom range: reduce sensitivity (expand the curve - slower response)
       let localNorm = normalised / lowThresholdNorm
-      
+
       /// Use curve to slow down response
       let expanded = pow(localNorm, curve)
-      
+
       transformedZoom = expanded * lowThresholdNorm
-      
+
     } else if normalised >= highThresholdNorm {
       /// High zoom range: increase sensitivity (compress the curve - faster response)
       let localNorm = (normalised - highThresholdNorm) / (1.0 - highThresholdNorm)
       let compressed = pow(localNorm, 1.0 / curve)  // Inverse curve for faster response
       transformedZoom = highThresholdNorm + compressed * (1.0 - highThresholdNorm)
-      
+
     } else {
       /// Middle range: linear scaling
       transformedZoom = normalised
     }
-    
+
     /// Convert back to actual zoom range
-    return transformedZoom * (upper - lower) + lower
+    return transformedZoom.denormalised(in: range)
+    //    return transformedZoom * (upper - lower) + lower
   }
-  
+
   /// Simplified non-linear zoom scaling using a single curve parameter
   /// - Parameters:
   ///   - zoom: The current zoom level
@@ -119,19 +117,19 @@ extension BinaryFloatingPoint {
   ) -> Double {
     let lower = range.lowerBound
     let upper = range.upperBound
-    
+
     //    let clamped = zoom.clamped(to: range)
     //    let normalised = (clamped - lower) / (upper - lower)
     let normalised = zoom.normalised(in: range)
     let transformed = pow(normalised, sensitivity)
-    
-    return transformed * (upper - lower) + lower
+    return transformed.denormalised(in: range)
+    //    return transformed * (upper - lower) + lower
   }
-  
-//  private func clampedAndNormalised(in range: ClosedRange<Self>) -> Self {
-//    let clamped = clamped(to: range)
-//    let normalised = (clamped - range.lowerBound) / (range.upperBound - range.lowerBound)
-//    return normalised
-//  }
-  
+
+  //  private func clampedAndNormalised(in range: ClosedRange<Self>) -> Self {
+  //    let clamped = clamped(to: range)
+  //    let normalised = (clamped - range.lowerBound) / (range.upperBound - range.lowerBound)
+  //    return normalised
+  //  }
+
 }

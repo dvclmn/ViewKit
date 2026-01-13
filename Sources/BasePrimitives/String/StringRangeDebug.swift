@@ -36,7 +36,7 @@ extension String {
     options: RangeDebugOptions = .init()
   ) -> String {
 
-    guard range.lowerBound <= range.upperBound else {
+    guard range.isGreaterThanOrEqualToZero else {
       return "⚠️ Invalid range"
     }
 

@@ -32,7 +32,7 @@ public struct ThumbHandler {
 
     /// Normalised here is essentially: “How far along the slider should the
     /// thumb be, in proportion to its full track length?”
-    let normalised: CGFloat = value.normalised(from: sliderRange)
+    let normalised: CGFloat = value.normalised(in: sliderRange)
 
     /// Remove some length from the beginning/end of the draggable width,
     /// so the Thumb doesn't hand awkwardly out the edges of the track.
