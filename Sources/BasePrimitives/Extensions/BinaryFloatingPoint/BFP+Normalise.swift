@@ -18,19 +18,20 @@ extension BinaryFloatingPoint {
 
   /// Converts a value in the given range into a fraction between 0.0 and 1.0.
   /// Values below/above the range will be clamped.
-  public func normalised(from range: ClosedRange<Self>) -> Self {
+  public func normalised(in range: ClosedRange<Self>) -> Self {
     precondition(
       range.lowerBound < range.upperBound,
       "Range must have a positive width."
     )
-    let clampedValue = min(max(self, range.lowerBound), range.upperBound)
-    return (clampedValue - range.lowerBound) / (range.upperBound - range.lowerBound)
+    /// See clamping helpers at `BaseHelpers/Extensions/All/Comparable`
+    let clamped = clamped(to: range)
+    return (clamped - range.lowerBound) / (range.upperBound - range.lowerBound)
   }
 
   /// Converts a normalized fraction (between 0.0 and 1.0)
   /// back to a value within the given range.
   /// Fractions outside 0.0-1.0 will extend beyond the range proportionally.
-  public func denormalised(to range: ClosedRange<Self>) -> Self {
+  public func denormalised(in range: ClosedRange<Self>) -> Self {
     precondition(
       range.lowerBound < range.upperBound,
       "Range must have a positive width."

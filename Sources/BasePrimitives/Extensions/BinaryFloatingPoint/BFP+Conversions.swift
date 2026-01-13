@@ -122,16 +122,16 @@ extension BinaryFloatingPoint {
     
     //    let clamped = zoom.clamped(to: range)
     //    let normalised = (clamped - lower) / (upper - lower)
-    let normalised = zoom.clampedAndNormalised(in: range)
+    let normalised = zoom.normalised(in: range)
     let transformed = pow(normalised, sensitivity)
     
     return transformed * (upper - lower) + lower
   }
   
-  private func clampedAndNormalised(in range: ClosedRange<Self>) -> Self {
-    let clamped = clamped(to: range)
-    let normalised = (clamped - range.lowerBound) / (range.upperBound - range.lowerBound)
-    return normalised
-  }
+//  private func clampedAndNormalised(in range: ClosedRange<Self>) -> Self {
+//    let clamped = clamped(to: range)
+//    let normalised = (clamped - range.lowerBound) / (range.upperBound - range.lowerBound)
+//    return normalised
+//  }
   
 }
