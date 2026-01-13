@@ -8,7 +8,7 @@
 import CoreTools
 import Foundation
 
-public struct ZoomStream {
+public struct ZoomState {
   var current: CGFloat
   var phase: InteractionPhase
 
@@ -23,7 +23,7 @@ public struct ZoomStream {
   }
 }
 
-extension ZoomStream {
+extension ZoomState {
   
   public func zoom(clampedTo range: ClosedRange<CGFloat>) -> CGFloat {
 //    precondition(current.isGreaterThanZero, "Zoom must be greater than zero.")

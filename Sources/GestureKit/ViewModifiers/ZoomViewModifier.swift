@@ -11,25 +11,46 @@ import SwiftUI
 public typealias ZoomOutput = (CGFloat, InteractionPhase) -> Void
 
 public struct ZoomModifier: ViewModifier {
-//  let initialZoom: CGFloat
-  @Binding var zoom: ZoomStream
+  @Environment(\.canvasZoomRange) private var zoomRange
+  @GestureState private var magnification: CGFloat = 1
+  @State private var initialZoom: CGFloat?
+  
+  @Binding var zoom: ZoomState
   let isEnabled: Bool
-//  let zoomDidChange: ZoomOutput
 
   public func body(content: Content) -> some View {
     content
-      .simultaneousGesture(
-        ZoomGesture(zoom: $zoom),
-//        ZoomGesture(initialZoom: initialZoom, isEnabled: true) { zoom, phase in
-//          zoomDidChange(zoom, phase)
-//        },
-        isEnabled: isEnabled
-      )
+      .simultaneousGesture(zoomGesture, isEnabled: isEnabled)
+  }
+}
+extension ZoomModifier {
+  private var zoomGesture: some Gesture {
+    MagnifyGesture()
+      .updating($magnification) { value, state, _ in
+        state = value.magnification
+      }
+      .onChanged { value in
+        
+        if initialZoom == nil {
+          initialZoom = zoom.zoom(clampedTo: zoomRange ?? 0...10)
+        }
+        guard let initialZoom else { return }
+        
+        let newZoom = initialZoom * value.magnification
+        zoom = ZoomState(newZoom, phase: .changed)
+        //        didUpdateZoom(newZoom, .changed)
+      }
+      .onEnded { value in
+        initialZoom = nil
+        zoom.phase = .ended
+        //        zoom = ZoomStream(newZoom, phase: .changed)
+        //        didUpdateZoom(.zero, .ended)
+      }
   }
 }
 extension View {
   public func zoomGesture(
-    zoom: Binding<ZoomStream>,
+    zoom: Binding<ZoomState>,
 //    initialZoom: CGFloat,
     isEnabled: Bool = true,
 //    _ zoomDidChange: @escaping ZoomOutput

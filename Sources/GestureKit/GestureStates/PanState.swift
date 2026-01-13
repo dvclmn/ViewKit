@@ -9,7 +9,7 @@ import CoreGraphics
 import CoreTools
 import Foundation
 
-public struct PanGestureStream {
+public struct PanState {
   private(set) var translation: CGSize
   private(set) var phase: InteractionPhase
 
@@ -24,7 +24,7 @@ public struct PanGestureStream {
   }
 }
 
-extension PanGestureStream {
+extension PanState {
   
   public var pan: CGSize {translation}
   

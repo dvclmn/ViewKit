@@ -10,25 +10,15 @@ import SwiftUI
 
 #if canImport(AppKit)
 
-//public typealias PanOutput = (PanGestureStream) -> Void
 public typealias PanOutput = (CGSize, InteractionPhase) -> Void
 
 public struct PanGestureModifier: ViewModifier {
 
   let isEnabled: Bool
-  //  @Binding var panStream: PanGestureStream
-  //#warning("Temporarily switched off")
   let panDidChange: PanOutput
 
   public func body(content: Content) -> some View {
-    /// Keeping this as a GeometryReader as layout
-    /// gets messed up without it
-    //    ZStack {
     content
-      //      .overlay(.red.tertiary)
-      //      .onTapGesture {
-      //        print("Tapped at \(Date.debug)")
-      //      }
       .overlay {
         if isEnabled {
           PanGestureView { delta, phase in
