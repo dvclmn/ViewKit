@@ -8,6 +8,13 @@
 import CoreTools
 import SwiftUI
 
+private enum DragIntent {
+  case undecided
+  case tap
+  case drag
+}
+
+
 public typealias MarqueeDragOutput = (PointerInteraction, InteractionPhase) -> Void
 //public typealias MarqueeDragOutput = (PointerState) -> Void
 
@@ -15,8 +22,12 @@ public struct MarqueeDragModifier: ViewModifier {
   @Environment(\.shouldRenderDragRect) private var shouldRenderDragRect
   //  @GestureState private var tapOrDragState: CGRect?
 //  @GestureState private var tapLocation: CGPoint?
-  @State private var latestStartLocation: CGPoint?
-  @State private var latestInteraction: PointerInteraction.Meta = .none
+//  @State private var latestStartLocation: CGPoint?
+  
+  @State private var intent: DragIntent = .undecided
+  @State private var dragOrigin: CGPoint?
+  
+//  @State private var latestInteraction: PointerInteraction.Meta = .none
   @State private var rectToRender: CGRect?
 
   let isEnabled: Bool
@@ -37,56 +48,70 @@ extension MarqueeDragModifier {
     shouldRenderDragRect ? rectToRender : nil
   }
 
-  //  private var tapOrDragGesture: some Gesture {
-  //    ExclusiveGesture(tapGesture, dragGesture)
-  //      .updating($tapOrDragState) { value, state, _ in
-  //        print("`tapOrDragGesture`: Value\n\(value), State (CGRect): \(state?.displayString, default: "nil")")
-  //      }
-  //      .onEnded { value in
-  //        print("The Exclusive gesture ended: \(value)")
-  //      }
-
-  //  }
-
-  //  private var tapGesture: some Gesture {
-  //    Tap
-  //    TapGesture()
-  //      .updating($tapLocation) { something, state, _ in
-  ////        something
-  //        print("Tap Location State: \(state?.displayString, default: "nil")")
-  //      }
-  //      .onEnded { value in
-  ////        didUpdateRect(.tap(value), .changed)
-  //        print("The *Tap* gesture of the TorD Gesture ended: \(value). What is this value??")
-  //      }
-  //  }
-
   private var dragGesture: some Gesture {
     /// IMPORTANT: `minimumDistance` must be set to zero,
     /// to allow both Drag *and* Tap detection. These are
     /// disambiguated via `dragThreshold`
     DragGesture(minimumDistance: 0)
-      //    DragGesture(minimumDistance: dragThreshold)
 
       .onChanged { value in
-        let newRect = value.toRect(usingPredicated: true)
-        let isDrag = newRect.size.diagonalLength >= dragThreshold
-
-        if isDrag {
-          latestInteraction = .drag
-          rectToRender = newRect
-          didUpdateRect(.drag(newRect), .changed)
-
-        } else {
-          latestInteraction = .tap
-          rectToRender = nil
-          didUpdateRect(.tap(value.location), .changed)
+        
+        if dragOrigin == nil {
+          dragOrigin = value.startLocation
         }
+        
+        
+        let rect = CGRect(
+          origin: dragOrigin!,
+          size: CGSize(
+            width: value.location.x - dragOrigin!.x,
+            height: value.location.y - dragOrigin!.y
+          )
+        ).standardized
+        
+        switch intent {
+          case .undecided:
+            if rect.size.diagonalLength >= dragThreshold {
+              intent = .drag
+//              latestInteraction = .drag
+            } else {
+              intent = .tap
+//              latestInteraction = .tap
+            }
+            
+          case .tap:
+            didUpdateRect(.tap(value.location), .changed)
+            return
+            
+          case .drag:
+            rectToRender = rect
+            didUpdateRect(.drag(rect), .changed)
+        }
+        
+//        let newRect = value.toRect(usingPredicated: true)
+//        let isDrag = newRect.size.diagonalLength >= dragThreshold
+//
+//        if isDrag {
+//          latestInteraction = .drag
+//          rectToRender = newRect
+//          didUpdateRect(.drag(newRect), .changed)
+//
+//        } else {
+//          latestInteraction = .tap
+//          rectToRender = nil
+//          didUpdateRect(.tap(value.location), .changed)
+//        }
       }
       .onEnded { gestureValue in
-        print("")
+        
         didUpdateRect(.none, .ended)
         rectToRender = nil
+        intent = .undecided
+        dragOrigin = nil
+        
+//        print("")
+//        didUpdateRect(.none, .ended)
+//        rectToRender = nil
       }
   }
 }
