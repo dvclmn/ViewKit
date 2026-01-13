@@ -34,8 +34,6 @@ struct CumulativeDragTracker {
   func computeOffset(translation: CGSize) -> CGSize? {
     guard let initialOffset else { return nil }
 
-    //    let width = initialOffset.width + translation.width
-
     switch axisMode {
       case .both:
         return CGSize(

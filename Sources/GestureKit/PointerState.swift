@@ -6,18 +6,18 @@
 //
 
 import CoreTools
-import Foundation
+import SwiftUI
 
 @MetaEnum
 public enum PointerInteraction {
-  
+
   /// Interesting: Unable to properly represent a Tap (press down, press up),
   /// whilst also detecting Drag (will have to think more about this), using
   /// the current method which is to handle all this in the `onChanged`
   /// of a DragGesture. So have changed to `pressing`, which is more accurate.
   case pressing(CGPoint)
-//  case tap(CGPoint)
-  
+  //  case tap(CGPoint)
+
   /// This should come *already* standardised, from in the modifier
   case drag(CGRect)
   case hover(CGPoint)
@@ -25,8 +25,8 @@ public enum PointerInteraction {
 }
 
 public struct PointerState {
-  
-//  private(set) var rect: CGRect?
+
+  //  private(set) var rect: CGRect?
 
   /// Aka Drag rect origin point. If a drag is detected, this is the origin.
   /// *Does not* refer to a tap/hover location
@@ -39,16 +39,16 @@ public struct PointerState {
   private(set) var interactionKind: PointerInteraction.Meta = .none
   var phase: InteractionPhase
 
- public let dragThreshold: CGFloat = 4
+  public let dragThreshold: CGFloat = 4
 }
 
 extension PointerState {
   public var currentInteraction: PointerInteraction.Meta {
     interactionKind
   }
-  
+
   public static var initial: Self {
-//    .init(rect: .zero, phase: .ended)
+    //    .init(rect: .zero, phase: .ended)
     .init(start: .zero, current: .zero, phase: .ended)
   }
 
@@ -63,6 +63,15 @@ extension PointerState {
       case .none: reset()
     }
     self.phase = phase
+  }
+
+  public mutating func update(hoverPhase phase: HoverPhase) {
+    switch phase {
+      case .active(let location):
+        update(.hover(location), phase: .changed)
+      case .ended:
+        update(.none, phase: .ended)
+    }
   }
 
   private mutating func reset() {
@@ -112,7 +121,7 @@ extension PointerState {
   /// type Drag; not a Tap, nor a Hover
   private func isDragPermitted(for translation: CGSize) -> Bool {
     translation.diagonalLength >= dragThreshold
-//    hypot(translation.width, translation.height) >= dragThreshold
+    //    hypot(translation.width, translation.height) >= dragThreshold
   }
 
   public var dragRect: CGRect? {
