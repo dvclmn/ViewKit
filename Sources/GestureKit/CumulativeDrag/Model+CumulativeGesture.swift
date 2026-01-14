@@ -5,11 +5,10 @@
 //  Created by Dave Coleman on 8/7/2025.
 //
 
-
 import SwiftUI
 
 struct CumulativeDragGesture: Gesture {
-  @Binding var tracker: CumulativeDragTracker
+  @Binding var tracker: CumulativeDragController
   @Binding var offset: CGSize
   let minDragDistance: CGFloat
   let isDragging: (Bool) -> Void

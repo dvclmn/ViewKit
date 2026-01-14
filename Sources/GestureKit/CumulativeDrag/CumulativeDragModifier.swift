@@ -11,7 +11,8 @@ import SwiftUI
 /// how far it has been dragged, so the *drag distance accumulates*.
 struct CumulativeDragGestureModifier: ViewModifier {
 
-  @State private var tracker = CumulativeDragTracker(axisMode: .both)
+//  @State private var tracker = CumulativeDragTracker(axisMode: .both)
+  @State private var tracker = CumulativeDragController(axes: .all, strategy: .external)
   @Binding var offset: CGSize
   let isEnabled: Bool
   let minDragDistance: CGFloat
@@ -19,14 +20,35 @@ struct CumulativeDragGestureModifier: ViewModifier {
 
   func body(content: Content) -> some View {
     content
-      .gesture(
-        CumulativeDragGesture(
-          tracker: $tracker,
-          offset: $offset,
-          minDragDistance: minDragDistance,
-          isDragging: isDragging
-        )
-      )
+      .gesture(dragGesture, isEnabled: isEnabled)
+        
+//        CumulativeDragGesture(
+//          tracker: $tracker,
+//          offset: $offset,
+//          minDragDistance: minDragDistance,
+//          isDragging: isDragging
+//        )
+//      )
+  }
+}
+
+extension CumulativeDragGestureModifier {
+  private var dragGesture: some Gesture {
+    DragGesture(minimumDistance: minDragDistance)
+    .onChanged { gestureValue in
+      
+      tracker.begin(with: offset)
+      
+//      tracker.beginIfNeeded(latestValue: offset)
+//      guard let newOffset = tracker.computeOffset(translation: gestureValue.translation) else { return }
+//      offset = newOffset
+//      isDragging(true)
+    }
+    
+    .onEnded { gestureValue in
+      tracker.end()
+      isDragging(false)
+    }
   }
 }
 
