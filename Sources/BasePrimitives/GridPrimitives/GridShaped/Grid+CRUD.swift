@@ -6,7 +6,7 @@
 //
 
 extension GridShaped {
-  
+
   /// When a user starts drawing in previously empty space:
   public mutating func set(_ value: Cell, at position: GridPosition) {
     expandToInclude(position: position, blank: Cell.createBlank())
@@ -14,22 +14,22 @@ extension GridShaped {
     self[at: position] = value
     //    self[at: position] = GridCell(character: char, position: position)
   }
-  
+
   public mutating func clearCells(at positions: [GridPosition]) {
     for position in positions {
       self[at: position] = nil
     }
   }
-  
+
   public mutating func expandToInclude(
     position: GridPosition,
     blank: @autoclosure () -> Cell
   ) {
     let requiredRows = position.row + 1
     let requiredColumns = Swift.max(columnCount, position.column + 1)
-    
+
     var newCells: [Cell] = []
-    
+
     for row in 0..<requiredRows {
       for column in 0..<requiredColumns {
         if row < rowCount, column < columnCount {
@@ -42,33 +42,35 @@ extension GridShaped {
         }
       }
     }
-    
+
     fatalError("Not yet implemented")
-    
-#warning("Need to separate inherent dimensions from user-defined 'frame'")
+
+    #warning("Need to separate inherent dimensions from user-defined 'frame'")
     //    self.cells = newCells
     //    self.columns = requiredColumns
     //    self.rows = requiredRows
   }
 
-
   public mutating func resize(
     by amount: GridDimensions,
     at edges: GridEdge.Set
   ) {
+    let rows = amount.rows
+    let columns = amount.columns
+
     for edge in GridEdge.allCases where edges.contains(GridEdge.Set(edge)) {
       switch edge.gridAxis {
         case .vertical:
-          if amount.rows > 0 {
-            addRows(to: edge, count: delta.rows)
-          } else if delta.rows < 0 {
-            removeRows(from: edge, count: -delta.rows)
+          if rows > 0 {
+            addRows(to: edge, count: rows)
+          } else if rows < 0 {
+            removeRows(from: edge, count: -rows)
           }
         case .horizontal:
-          if delta.columns > 0 {
-            addColumns(to: edge, count: delta.columns)
-          } else if delta.columns < 0 {
-            removeColumns(from: edge, count: -delta.columns)
+          if amount.columns > 0 {
+            addColumns(to: edge, count: columns)
+          } else if columns < 0 {
+            removeColumns(from: edge, count: -columns)
           }
       }
     }
@@ -79,7 +81,7 @@ extension GridShaped {
     at boundaryPoint: GridBoundaryPoint
   ) {
     let edges = boundaryPoint.affectedEdges
-    self.resize(by: delta, at: edges)
+    self.resize(by: amount, at: edges)
   }
 
   mutating func addColumns(to edge: GridEdge, count: Int = 1) {

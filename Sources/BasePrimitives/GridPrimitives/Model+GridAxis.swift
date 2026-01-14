@@ -29,6 +29,9 @@ public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
   case horizontal  // Column
   case vertical  // Row
 
+  public static var column: Self { .horizontal }
+  public static var row: Self { .vertical }
+  
   public var id: String { rawValue }
 
   public var locationKeyPath: WritableKeyPath<CGPoint, CGFloat> {

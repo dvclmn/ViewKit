@@ -11,6 +11,9 @@ public struct GridDimensions: ModelBase {
   public var width: Int
   public var height: Int
 
+  public var columns: Int { width }
+  public var rows: Int { height }
+
   public init(width: Int, height: Int) {
     precondition(width > 0 && height > 0, "GridDimensions cannot have zero or negative dimensions.")
     self.width = width
