@@ -10,7 +10,7 @@ import SwiftUI
 
 public struct InfoBarExampleView: View {
 
-  let store = ExampleStore()
+  let store = SampleContent.ExampleDataStore()
 
   public var body: some View {
 

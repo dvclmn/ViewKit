@@ -8,17 +8,20 @@
 import Foundation
 
 public protocol LabeledItem: Equatable, Hashable, Codable, Identifiable {
-  var id: String { get }
+//  associatedtype
+  var id: Self.ID { get }
   var label: QuickLabel { get }
   var blurb: String? { get }
 }
 
 extension LabeledItem {
-  public var id: String { self.label.text }
   public var blurb: String? { nil }
 }
 
 extension LabeledItem where Self: RawRepresentable, Self.RawValue == String {
+  public var id: String { rawValue }
   public var label: QuickLabel { .init(rawValue.capitalized) }
   public var name: String { rawValue.capitalized }
 }
+
+//extension LabeledItem where Self: Ca

@@ -20,40 +20,37 @@ extension InfoBarSection where Self: CaseIterable {
   }
 }
 
-public struct InfoBarItem: Identifiable, Equatable, Hashable, Sendable {
-  //public struct InfoBarItem<Section: InfoBarSection>: Identifiable, Equatable, Hashable where Section.Key: Hashable {
+public struct InfoBarItem: LabeledItem, Identifiable, Sendable {
   public let id: UUID
-//  public var id: String { label.text }
   public let sectionKey: String
   public let label: QuickLabel
   public let content: String
-//  public let content: AttributedString
 
   public init(
     sectionKey: String,
     //    sectionKey: Section.Key,
     label: QuickLabel,
     content: String
-//    content: AttributedString,
+      //    content: AttributedString,
   ) {
-        self.id = UUID()
+    self.id = UUID()
     self.sectionKey = sectionKey
     self.label = label
     self.content = content
   }
 
-//  public init(
-//    sectionKey: String,
-//    //    sectionKey: Section.Key,
-//    label: QuickLabel,
-//    content: String,
-//  ) {
-//    self.init(
-//      sectionKey: sectionKey,
-//      label: label,
-//      content: AttributedString(content)
-//    )
-//  }
+  //  public init(
+  //    sectionKey: String,
+  //    //    sectionKey: Section.Key,
+  //    label: QuickLabel,
+  //    content: String,
+  //  ) {
+  //    self.init(
+  //      sectionKey: sectionKey,
+  //      label: label,
+  //      content: AttributedString(content)
+  //    )
+  //  }
 
   //  public static let empty = InfoBarItem(
   //    sectionKey: "Section",
