@@ -207,14 +207,14 @@ extension CumulativeDragController {
   ///   - translation: The drag translation delta.
   /// - Returns: The new offset respecting the axis mode.
   private func applyAxis(base: CGSize, translation: CGSize) -> CGSize {
-    axes.computeOffset(from: base, with: translation)
-    //    switch axes {
-    //      case .both:
-    //        return CGSize(width: base.width + translation.width, height: base.height + translation.height)
-    //      case .horizontal:
-    //        return CGSize(width: base.width + translation.width, height: base.height)
-    //      case .vertical:
-    //        return CGSize(width: base.width, height: base.height + translation.height)
-    //    }
+    //    axes.computeOffset(from: base, with: translation)
+    switch axes {
+      case .horizontal:
+        return CGSize(width: base.width + translation.width, height: base.height)
+      case .vertical:
+        return CGSize(width: base.width, height: base.height + translation.height)
+      default:
+        return CGSize(width: base.width + translation.width, height: base.height + translation.height)
+    }
   }
 }

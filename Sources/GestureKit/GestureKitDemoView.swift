@@ -14,37 +14,51 @@ struct GestureKitDemoView: View {
 
   var body: some View {
 
-    Text("Hello")
-      .padding(40)
-      .frame(width: 600, height: 700)
-      .background(.black.opacity(0.6))
+    ZStack {
 
-      .debugTextOverlay("Interaction: \(interactionKind?.referenceName, default: "None")")
+      Text("Hello")
+        .padding(40)
+        .frame(width: 600, height: 700)
+        .background(.black.opacity(0.6))
 
-      //      .onTapGesture { location in
-      //        interactionKind = .tap(location)
-      //      }
+      Capsule().fill(.brown)
+        .frame(width: 300, height: 100)
+        .offset(offset)
+        .cumulativeDrag(
+          $offset,
+          isEnabled: true,
+          minDragDistance: 4
+        ) { dragging in
+          interactionKind = dragging ? .drag(.zero, .changed) : nil
+        }
+    }
 
-      .marqueeDrag(dragThreshold: 10) { interaction in
-        self.interactionKind = interaction
-      }
-//      .gesture(
-//        ExclusiveGesture(
-//          TapGesture()
-//            .onEnded { location in
-//              <#code#>
-//            },
-//          DragGesture(minimumDistance: 10)
-//            .onChanged { value in
-//              // Logic for "Y" (The Drag)
-//              offset = value.translation
-//              interactionKind = .drag(value.toRect(from: value.startLocation, end: .predicted))
-//            }
-//            .onEnded { _ in
-//              interactionKind = .none
-//            }
-//        )
-//      )
+    .debugTextOverlay("Interaction: \(interactionKind?.referenceName, default: "None")")
+
+    //      .onTapGesture { location in
+    //        interactionKind = .tap(location)
+    //      }
+
+    //      .marqueeDrag(dragThreshold: 10) { interaction in
+    //        self.interactionKind = interaction
+    //      }
+    //      .gesture(
+    //        ExclusiveGesture(
+    //          TapGesture()
+    //            .onEnded { location in
+    //              <#code#>
+    //            },
+    //          DragGesture(minimumDistance: 10)
+    //            .onChanged { value in
+    //              // Logic for "Y" (The Drag)
+    //              offset = value.translation
+    //              interactionKind = .drag(value.toRect(from: value.startLocation, end: .predicted))
+    //            }
+    //            .onEnded { _ in
+    //              interactionKind = .none
+    //            }
+    //        )
+    //      )
     //      .gesture(
     //        DragGesture(minimumDistance: 10)
     //          .exclusively(before: TapGesture())
