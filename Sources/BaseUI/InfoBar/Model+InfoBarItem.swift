@@ -8,33 +8,50 @@
 import BasePrimitives
 import Foundation
 
+/// This is made with an enum in mind.
 public protocol InfoBarSection {
   associatedtype Source
-  associatedtype Item: InfoBarItemProtocol
+
+  /// Provided per-case, e.g. for `case canvasSize`:
+  /// `QuickLabel("Canvas Size")`
+  var label: QuickLabel { get }
   static var sectionTitle: String { get }
-  func makeItem(from source: Source) -> Item
+
+  func getContent(from source: Source) -> String
 }
 
 extension InfoBarSection where Self: CaseIterable {
-  public static func items(from source: Source) -> [Item] {
-    Self.allCases.map { $0.makeItem(from: source) }
+
+  public func items(from source: Source) -> [InfoBarItem] {
+    Self.allCases.map { thing in
+      InfoBarItem(
+        sectionKey: Self.sectionTitle,
+        label: self.label,
+        content: getContent(from: source)
+      )
+    }
   }
 }
 
-public protocol InfoBarItemProtocol: LabeledItem {
-//  var id: UUID { get }
-  var sectionKey: String { get }
-//  var label: QuickLabel { get }
-  var content: String { get }
-}
+//public protocol InfoBarItemProtocol: LabeledItem {
+////  var id: UUID { get }
+////  var sectionKey: String { get }
+////  var label: QuickLabel { get }
+//  var content: String { get }
+//}
+//extension InfoBarSection where Self.Item == InfoBarItem {
+//
+//}
 
-
-public struct InfoBarItem: InfoBarItemProtocol {
+public struct InfoBarItem: LabeledItem, Sendable {
+  //public struct InfoBarItem: InfoBarItemProtocol {
   public let id: UUID
   public let sectionKey: String
   public let label: QuickLabel
   public let content: String
-  
+}
+
+extension InfoBarItem {
   public init(
     sectionKey: String,
     label: QuickLabel,
@@ -46,6 +63,7 @@ public struct InfoBarItem: InfoBarItemProtocol {
     self.content = content
   }
 }
+
 //
 //  public init(
 //    sectionKey: String,

@@ -10,7 +10,7 @@ import Foundation
 
 extension SampleContent.ExampleItem: InfoBarSection {
 
-  public func makeItem(from source: SampleContent.ExampleDataStore) -> InfoBarItem {
+  public func makeItem(from source: SampleContent.ExampleDataStore) -> String {
     let displayFormat: DisplayFormat = .init(
       decimalPlaces: 0,
       labelStyle: .none,
