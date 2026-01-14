@@ -69,7 +69,7 @@ struct CumulativeDragTracker {
   func computeOffset(translation: CGSize) -> CGSize? {
     guard let initialOffset else { return nil }
     return axes.computeOffset(from: initialOffset, with: translation)
-    
+
   }
 
   /// Ends tracking and clears the anchor.

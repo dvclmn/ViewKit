@@ -86,6 +86,7 @@ struct CumulativeDragController {
   /// The chosen ownership strategy.
   let strategy: Strategy
 
+  
   /// The anchor point corresponding to the offset at drag start.
   private var anchor: CGPoint?
 

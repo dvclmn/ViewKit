@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CumulativeDragGesture: Gesture {
-  @Binding var tracker: CumulativeDragController
+  @Binding var tracker: CumulativeDragTracker
   @Binding var offset: CGSize
   let minDragDistance: CGFloat
   let isDragging: (Bool) -> Void
