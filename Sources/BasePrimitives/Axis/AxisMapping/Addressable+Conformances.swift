@@ -32,6 +32,12 @@ extension EdgeInsets: AxisKeyPathCompatible {
   public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.verticalUniform }
 }
 
+extension Axis: AxisKeyPathCompatible {
+  public static var primaryKey: WritableKeyPath<Self, Self> { \.horizontal }
+  public static var secondaryKey: WritableKeyPath<Self, Self> { \.vertical }
+}
+
+
 // MARK: - Index-based conformace
 extension GridPosition: AxisKeyPathCompatible {
   public static var primaryKey: WritableKeyPath<Self, Int> { \.column }
@@ -52,6 +58,8 @@ extension GridDimensions: AxisKeyPathCompatible {
   public static var primaryKey: WritableKeyPath<Self, Int> { \.width }
   public static var secondaryKey: WritableKeyPath<Self, Int> { \.height }
 }
+
+
 
 //extension CGSize: AxisCompatible {
 //  public var naturalComponents: (primary: CGFloat, secondary: CGFloat) { (width, height) }

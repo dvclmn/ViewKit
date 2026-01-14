@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Go to 
 public enum AxisMapping: Sendable {
   /// # Primary is Horizontal
   /// Normal: Width/Column is Horizontal, Height/Row is Vertical.
@@ -37,7 +38,6 @@ public enum AxisMapping: Sendable {
   }
   
   func resolve<T>(primary: T, secondary: T, for axis: GridAxis) -> T {
-//  func resolve<T, V>(primary: T, secondary: T, for axis: GridAxis) -> T {
     switch (self, axis) {
       case (.identity, .horizontal), (.transposed, .vertical):   return primary
       case (.identity, .vertical),   (.transposed, .horizontal): return secondary

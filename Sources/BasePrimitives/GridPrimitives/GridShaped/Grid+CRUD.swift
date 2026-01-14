@@ -53,13 +53,13 @@ extension GridShaped {
 
 
   public mutating func resize(
-    by delta: GridDelta,
+    by amount: GridDimensions,
     at edges: GridEdge.Set
   ) {
     for edge in GridEdge.allCases where edges.contains(GridEdge.Set(edge)) {
       switch edge.gridAxis {
         case .vertical:
-          if delta.rows > 0 {
+          if amount.rows > 0 {
             addRows(to: edge, count: delta.rows)
           } else if delta.rows < 0 {
             removeRows(from: edge, count: -delta.rows)
