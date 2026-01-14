@@ -131,11 +131,6 @@ public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
 
     }
   }
-  
-  public func pathTest() -> String {
-    let thing: KeyPath<Self, Self> = \Self.Cases.horizontal
-  }
-    
 
   public func hasOverflow(
     canvasFrameInViewport: CGRect?,

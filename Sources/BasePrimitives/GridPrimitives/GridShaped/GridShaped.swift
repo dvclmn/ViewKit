@@ -29,12 +29,7 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element 
 }
 
 public protocol GridCell: Equatable {
-  //public protocol GridCell<Base>: Equatable {
-  //  associatedtype Base: GridShaped
-  //  var base: Grid { get }
   static func createBlank() -> Self
-  //  func position() -> GridPosition
-  //  func position(in grid: Self) -> GridPosition
 }
 
 extension GridShaped {

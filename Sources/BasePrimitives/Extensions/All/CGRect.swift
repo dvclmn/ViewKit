@@ -51,14 +51,14 @@ extension CGRect {
     Path(self)
   }
 
-//  public func point(for corner: RectCorner) -> CGPoint {
-//    switch corner {
-//      case .topLeading: CGPoint(x: minX, y: minY)
-//      case .topTrailing: CGPoint(x: maxX, y: minY)
-//      case .bottomLeading: CGPoint(x: minX, y: maxY)
-//      case .bottomTrailing: CGPoint(x: maxX, y: maxY)
-//    }
-//  }
+  //  public func point(for corner: RectCorner) -> CGPoint {
+  //    switch corner {
+  //      case .topLeading: CGPoint(x: minX, y: minY)
+  //      case .topTrailing: CGPoint(x: maxX, y: minY)
+  //      case .bottomLeading: CGPoint(x: minX, y: maxY)
+  //      case .bottomTrailing: CGPoint(x: maxX, y: maxY)
+  //    }
+  //  }
 
   /// Get a CGPoint at the specified UnitPoint within this rect
   public func point(at unitPoint: UnitPoint) -> CGPoint {
@@ -127,7 +127,6 @@ extension CGRect {
   /// -  The dimensions (`width` and `height`) are used in conjunction with the
   /// `origin` to determine the rectangle's boundaries (`maxX` and `maxY`).
 
-
   // MARK: - Common UnitPoint Positions as CGPoints
 
   /// Top-left corner (minX, minY)
@@ -163,46 +162,43 @@ extension CGRect {
   public var topEdge: CGFloat { minY }
   public var bottomEdge: CGFloat { maxY }
 
-  
   // Dimensions
   public var horizontal: ClosedRange<CGFloat> { minX...maxX }
   public var vertical: ClosedRange<CGFloat> { minY...maxY }
 
   // Initialization helpers
-//  public static func between(point1: CGPoint, point2: CGPoint) -> CGRect {
-//    let minX = min(point1.x, point2.x)
-//    let minY = min(point1.y, point2.y)
-//    let maxX = max(point1.x, point2.x)
-//    let maxY = max(point1.y, point2.y)
-//
-//    return CGRect(
-//      x: minX,
-//      y: minY,
-//      width: maxX - minX,
-//      height: maxY - minY
-//    )
-//  }
+  //  public static func between(point1: CGPoint, point2: CGPoint) -> CGRect {
+  //    let minX = min(point1.x, point2.x)
+  //    let minY = min(point1.y, point2.y)
+  //    let maxX = max(point1.x, point2.x)
+  //    let maxY = max(point1.y, point2.y)
+  //
+  //    return CGRect(
+  //      x: minX,
+  //      y: minY,
+  //      width: maxX - minX,
+  //      height: maxY - minY
+  //    )
+  //  }
 
   /// Returns a rectangle that encompasses both this rectangle and the provided rectangle
   public func expanded(toInclude rect: CGRect) -> CGRect {
     return union(rect)  // Use built-in union method
   }
-  
+
   /// Creates a rectangle from two points, ensuring positive width and height
   /// Useful for drag operations like marquee selection where the drag direction is unknown
   ///
   /// Note: previous methods `reversible`, `fromPoints(_:_:)`,
   /// `between(point1:point2:)`
   public static func boundingRect(
-    from start: CGPoint,
-    to end: CGPoint
+    from start: CGPoint, to end: CGPoint
   ) -> CGRect {
-    return CGRect(
-      x: min(start.x, end.x),
-      y: min(start.y, end.y),
-      width: abs(end.x - start.x),
-      height: abs(end.y - start.y)
+    let size = CGSize(
+      width: end.x - start.x,
+      height: end.y - start.y
     )
+    return CGRect(origin: start, size: size).standardized
   }
 
   /// Creates a rectangle with the given size, centered within the container size
