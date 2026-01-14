@@ -8,7 +8,17 @@
 import CoreTools
 import Foundation
 
+extension SampleContent {
+  public enum ExampleSectionKey: InfoBarSectionKey {
+    public static let title = "Example Section"
+  }
+
+}
+
 extension SampleContent.ExampleItem: InfoBarSection {
+  public typealias Source = SampleContent.ExampleDataStore
+
+  public typealias SectionKey = SampleContent.ExampleSectionKey
 
   public func getContent(
     from source: SampleContent.ExampleDataStore,

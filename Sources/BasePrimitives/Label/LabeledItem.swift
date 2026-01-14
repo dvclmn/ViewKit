@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol LabeledItem: Identifiable, Equatable, Hashable, Codable {
+public protocol LabeledItem: Identifiable, Equatable, Hashable {
 //  associatedtype
   var id: Self.ID { get }
   var label: QuickLabel { get }

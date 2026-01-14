@@ -15,7 +15,7 @@ public protocol InfoBarSection: LabeledItem {
   /// Provided per-case, e.g. for `case canvasSize`:
   /// `QuickLabel("Canvas Size")`
   var label: QuickLabel { get }
-  static var sectionKey: SectionKey { get }
+//  static var sectionKey: SectionKey { get }
 
   func getContent(
     from source: Source,
@@ -28,10 +28,11 @@ extension InfoBarSection where Self: CaseIterable {
   public static func items(
     from source: Source,
     format: DisplayFormat = .default
-  ) -> [InfoBarItem<SectionKey>] {
+  ) -> [InfoBarItem] {
     Self.allCases.map { thing in
       InfoBarItem(
-        sectionKey: Self.sectionKey,
+        sectionKey: InfoBarSectionID(SectionKey.self),
+//        sectionKey: Self.sectionKey,
         label: thing.label,
         content: thing.getContent(from: source, format: format)
       )
@@ -49,10 +50,11 @@ extension InfoBarSection where Self: CaseIterable {
 //
 //}
 
-public struct InfoBarItem<Key: InfoBarSectionKey>: LabeledItem, Sendable {
-  //public struct InfoBarItem: InfoBarItemProtocol {
+
+//public struct InfoBarItem<Key: InfoBarSectionKey>: LabeledItem, Sendable {
+  public struct InfoBarItem: LabeledItem, Sendable {
   public let id: UUID
-  public let sectionKey: Key
+  public let sectionKey: InfoBarSectionID
   //  public let sectionKey: AnyInfoBarSectionKey
   //  public let sectionKey: String
   public let label: QuickLabel
@@ -61,7 +63,7 @@ public struct InfoBarItem<Key: InfoBarSectionKey>: LabeledItem, Sendable {
 
 extension InfoBarItem {
   public init(
-    sectionKey: Key,
+    sectionKey: InfoBarSectionID,
     label: QuickLabel,
     content: String
   ) {

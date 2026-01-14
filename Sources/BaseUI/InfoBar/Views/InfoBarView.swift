@@ -12,8 +12,9 @@ public struct InfoBar: View {
   @Environment(\.backgroundStyle) private var backgroundStyle
   @Environment(\.modifierKeys) private var modifierKeys
 
+  let items: [InfoBarSectionID: [InfoBarItem]]
   //  let items: [String: any InfoBarSection]
-  let items: [String: [InfoBarItem]]
+  //  let items: [String: [InfoBarItem]]
 
   public init(items: [InfoBarItem]) {
     //  public init(items: any InfoBarSection) {
@@ -24,10 +25,12 @@ public struct InfoBar: View {
   public var body: some View {
     HStack(alignment: .firstTextBaseline, spacing: 0) {
       if !items.isEmpty {
-        ForEach(items.sorted(byKeyPath: \.key), id: \.key) { key, items in
-          InfoBarSectionView(sectionTitle: key, items: items)
+        ForEach(
+          items.sorted(byKeyPath: \.key.title), id: \.key
+        ) { key, items in
+          InfoBarSectionView(sectionTitle: key.title, items: items)
         }  // END foreach
-        InfoBarSectionView(sectionTitle: "Modifiers", items: [modifiersItem])
+        InfoBarSectionView(sectionTitle: "Modifiers", items: [.modifiersSection(modifierKeys)])
         Spacer()
       } else {
         NoItems("No items to display")
@@ -60,15 +63,8 @@ public struct InfoBar: View {
 
   }
 }
-extension InfoBar {
 
-  private var modifiersItem: InfoBarItem {
-    InfoBarItem(
-      sectionKey: "Modifiers",
-      label: QuickLabel("Modifiers", symbol: "keyboard"),
-      content: modifierKeys.displayName(elements: .icon, separator: "", emptyText: "")
-    )
-  }
+extension InfoBar {
 
   @ViewBuilder
   func NoItems(_ reasonText: String) -> some View {
