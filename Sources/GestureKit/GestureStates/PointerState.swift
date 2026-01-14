@@ -20,60 +20,55 @@ public struct PointerState {
   /// a tap/hover. If non-nil, this is the part of the rect anchored to the pointer
   private(set) var current: CGPoint?
 
-  private(set) var kind: PointerInteraction.Meta = .none
+  private(set) var kind: PointerInteraction.Meta?
+  
+  /// Mostly used, I think, for Dragging, not so much hover or tap?
   var phase: InteractionPhase
 
-  public let dragThreshold: CGFloat = 4
+  public let dragThreshold: CGFloat = 6
 }
 
 extension PointerState {
 
+  /// This packages up the output neatly for the caller to work with
   public func getInteraction() -> PointerInteraction? {
     switch kind {
       case .drag:
-        guard kind.isDrag, let dragRect else { return nil }
-        return .drag(dragRect)
+        guard let kind, kind.isDrag, let dragRect else { return nil }
+        return .drag(dragRect, phase)
 
       case .tap:
-        guard kind.isTap, let current else { return nil }
+        guard let kind, kind.isTap, let current else { return nil }
         return .tap(current)
 
       case .hover:
-        guard kind.isHover, let current else { return nil }
-        return .hover(current)
+        guard let kind, kind.isHover, let current else { return nil }
+        return .hover(current, phase)
 
       case .none: return nil
     }
   }
 
-  public var currentInteraction: PointerInteraction.Meta {
-    kind
-  }
+  public var currentInteraction: PointerInteraction.Meta? { kind }
 
   public static var initial: Self {
-    //    .init(rect: .zero, phase: .ended)
-    .init(start: .zero, current: .zero, phase: .ended)
+    .init(start: .zero, current: .zero, phase: .none)
   }
 
-  public mutating func update(
-    _ interaction: PointerInteraction,
-    phase: InteractionPhase
-  ) {
+  public mutating func update(_ interaction: PointerInteraction) {
     switch interaction {
       case .tap(let point): setTap(at: point)
-      case .drag(let rect): setDragIfPermitted(with: rect)
-      case .hover(let point): setHover(at: point)
-      case .none: reset()
+      case .drag(let rect, let phase): setDragIfPermitted(with: rect, phase: phase)
+      case .hover(let point, let phase): setHover(at: point, phase: phase)
     }
-    self.phase = phase
   }
 
   public mutating func update(hoverPhase phase: HoverPhase) {
     switch phase {
       case .active(let location):
-        update(.hover(location), phase: .changed)
+        update(.hover(location, .changed))
       case .ended:
-        update(.none, phase: .ended)
+        update(.hover(.zero, .ended))
     }
   }
 
@@ -88,16 +83,20 @@ extension PointerState {
     current = location
     start = nil
     kind = .tap
+    self.phase = .none
   }
 
-  private mutating func setHover(at location: CGPoint) {
+  private mutating func setHover(at location: CGPoint, phase: InteractionPhase) {
     current = location
     start = nil
     kind = .hover
+    self.phase = phase
   }
 
-  private mutating func setDragIfPermitted(with rect: CGRect) {
-
+  private mutating func setDragIfPermitted(
+    with rect: CGRect,
+    phase: InteractionPhase
+  ) {
     guard isDragPermitted(for: rect.size) else {
       setTap(at: rect.origin)
       return
@@ -108,6 +107,7 @@ extension PointerState {
     /// Update current to the far corner of the rect so translation reflects size.
     current = CGPoint(x: rect.maxX, y: rect.maxY)
     kind = .drag
+    self.phase = phase
   }
 
   public var translation: CGSize? {
