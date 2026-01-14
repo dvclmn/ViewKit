@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct ExpandingEditorExampleView: View {
-  @State private var text: String = DummyContent.Strings.loremIpsum
+  @State private var text: String = SampleContent.Strings.loremIpsum
   var body: some View {
     
     VStack {

@@ -103,7 +103,7 @@ import SwiftUI
 ////
 ////    BoxView {
 ////      Text("I'm a SwiftUI View")
-////      Text(DummyContent.Strings.paragraphs[8].toAttributed)
+////      Text(SampleContent.Strings.paragraphs[8].toAttributed)
 ////    }
 ////
 ////    //        .gridFrame(42)

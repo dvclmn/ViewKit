@@ -8,7 +8,7 @@
 import Foundation
 import BasePrimitives
 
-extension DummyContent {
+extension SampleContent {
 
   public struct Animal: Identifiable, Equatable, Sendable, LabeledItem {
     public let id: UUID
@@ -30,7 +30,7 @@ extension DummyContent {
   }
 }
 
-extension DummyContent.Animal {
+extension SampleContent.Animal {
 
   public static func withEmojis(fallback: IconLiteral = .emoji("🐾")) -> [Self] {
     return mapWithIcons(iconEmoji, transform: { $0 }, fallback: fallback)
@@ -84,7 +84,7 @@ extension DummyContent.Animal {
 }
 
 /// Generic helper method compatible with QuickLabel structure
-extension DummyContent.Animal {
+extension SampleContent.Animal {
   static func mapWithIcons<T>(
     _ icons: [T],
     transform: (T) -> IconLiteral,
@@ -112,7 +112,7 @@ extension DummyContent.Animal {
 
 }
 
-extension DummyContent.Animal {
+extension SampleContent.Animal {
   public enum Category: String, Sendable, Codable, Equatable, Hashable {
     case predator
     case cute

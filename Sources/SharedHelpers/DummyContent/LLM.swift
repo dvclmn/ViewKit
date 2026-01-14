@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension DummyContent {
+extension SampleContent {
   
   public struct LLM: Identifiable, Codable, Sendable {
     

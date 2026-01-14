@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension DummyContent.Strings {
+extension SampleContent.Strings {
 
   public struct Markdown {
 

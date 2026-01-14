@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension DummyContent {
+extension SampleContent {
   
   // Actually realised this was pretty domain-specific to
   // ShadersExampleView, so leaving for now

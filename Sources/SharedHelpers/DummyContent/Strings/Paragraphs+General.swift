@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 28/2/2025.
 //
 
-extension DummyContent.Strings {
+extension SampleContent.Strings {
   public static let paragraphs: [String] = [
     """
     Could you come up with a function for me, for SwiftUI, that will generate a paragraph or two, with some tweakable parameters for paragprah count, and word count? I dont mind what the words are, they jsut need to look like natural language. Feel free to even supply actual static blocks of strings — actually let’s do that. I will build a library of parapgraphcs, as `[String]`, and can you write me up a function that simply selects one of the paragraphis (i.e. items in the array), and returns it?

@@ -1,5 +1,5 @@
 //
-//  DummyContent.Strings.swift
+//  SampleContent.Strings.swift
 //  Banksia
 //
 //  Created by Dave Coleman on 11/4/2024.
@@ -15,7 +15,7 @@
 
 import Foundation
 
-extension DummyContent {
+extension SampleContent {
   public enum Strings {
 
     public static let conversationTitles: [String] = [

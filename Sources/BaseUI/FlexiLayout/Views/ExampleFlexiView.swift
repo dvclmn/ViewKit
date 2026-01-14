@@ -8,11 +8,11 @@
 
 //import SwiftUI
 
-//extension DummyContent.Animal: FlexiItem {}
+//extension SampleContent.Animal: FlexiItem {}
 //
 //public struct ExampleFlexiView: View {
 //
-//  @State private var data = DummyContent.Animal.withSymbols()
+//  @State private var data = SampleContent.Animal.withSymbols()
 //
 //  public var body: some View {
 //

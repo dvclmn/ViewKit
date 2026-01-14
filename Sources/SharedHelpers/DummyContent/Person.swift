@@ -8,7 +8,7 @@
 import Foundation
 import BasePrimitives
 
-extension DummyContent {
+extension SampleContent {
 
   struct Person: Identifiable {
     let id = UUID()

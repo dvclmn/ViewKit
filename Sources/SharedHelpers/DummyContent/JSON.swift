@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 21/9/2025.
 //
 
-extension DummyContent {
+extension SampleContent {
   public enum JSON {
     public static let array01: String = """
       [

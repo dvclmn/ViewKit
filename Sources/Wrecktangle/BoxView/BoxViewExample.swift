@@ -28,7 +28,7 @@ public struct BoxViewExample: View {
 
     BoxView {
       Box.Header("Glyphs: \(glyphSet.design.name), Frame: \(frameStyle.name).")
-      DummyContent.Strings.paragraphs[paragraphIndex].prefix(textLength).toString
+      SampleContent.Strings.paragraphs[paragraphIndex].prefix(textLength).toString
     }
     .padding(6)
     //      .environment(\.metrics, .lineNumbers)
@@ -41,7 +41,7 @@ public struct BoxViewExample: View {
 extension BoxViewExample {
   private var paragraphIndex: Int {
     guard let paragraphNumber else {
-      let range = 0..<(DummyContent.Strings.paragraphs.count - 1)
+      let range = 0..<(SampleContent.Strings.paragraphs.count - 1)
       return range.randomElement() ?? 0
 
     }

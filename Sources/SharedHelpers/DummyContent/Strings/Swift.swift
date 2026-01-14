@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 12/10/2024.
 //
 
-extension DummyContent.Strings {
+extension SampleContent.Strings {
 
   public enum Swift {
 

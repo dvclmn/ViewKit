@@ -109,7 +109,7 @@ extension Flexi.GridView {
 //  private var debugText: AttributedString {
     return DisplayString {
       "## I'm a heading"
-      DummyContent.Strings.paragraphs[3]
+      SampleContent.Strings.paragraphs[3]
       Indented("## Flexi+GridView") {
         Labeled("Column count", value: self.columnCount?.toString)
         //        Labeled("Grid config", value: config.description)
@@ -137,7 +137,7 @@ extension Flexi.GridView {
 //@available(macOS 15, iOS 18, *)
 //#Preview(traits: .size(.normal)) {
 //
-//  @Previewable @State var store: FlexiHandler<DummyContent.Animal> = .init(mode: .single)
+//  @Previewable @State var store: FlexiHandler<SampleContent.Animal> = .init(mode: .single)
 //
 //  /// Column maths
 //  ///
@@ -145,7 +145,7 @@ extension Flexi.GridView {
 //  /// - Number of columns
 //  /// - Item spacing (horizontal) – multiplied by no. columns -1
 //
-//  Flexi.GridView(data: DummyContent.Animal.data) { item in
+//  Flexi.GridView(data: SampleContent.Animal.data) { item in
 //    Rectangle()
 //      .fill(Color.blue.quinary)
 //      .frameWithAspectRatio(0.8)

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension DummyContent {
+extension SampleContent {
   
   public enum Actions: String, CaseIterable, Identifiable {
     case exit

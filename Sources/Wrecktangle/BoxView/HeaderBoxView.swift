@@ -79,7 +79,7 @@ import SwiftUI
 //  VStack(spacing: 14) {
 //
 //    //    BoxTextView("I love boxes made of text") {
-//    //      DummyContent.Strings.paragraphs[8].toAttributed
+//    //      SampleContent.Strings.paragraphs[8].toAttributed
 //    //    }
 //    //    .setGridFrame(42)
 //    GroupBox("Top Only") {

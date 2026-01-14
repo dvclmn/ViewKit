@@ -70,7 +70,7 @@ struct CustomGroupBoxView: View {
           .aspectRatio(1, contentMode: .fit)
           .frame(maxWidth: 60)
 
-        Text(DummyContent.Strings.paragraphs[6])
+        Text(SampleContent.Strings.paragraphs[6])
       }
       .frame(maxWidth: .infinity, alignment: .leading)
     }

@@ -12,7 +12,7 @@ public enum ProgrammingLanguage: String, CaseIterable {
   case typescript
 }
 
-extension DummyContent.Strings {
+extension SampleContent.Strings {
   public static func code(language: ProgrammingLanguage) -> [String] {
     switch language {
       case .swift:

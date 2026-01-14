@@ -1,5 +1,5 @@
 //
-//  DummyContent.swift
+//  SampleContent.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 21/9/2025.
@@ -12,4 +12,4 @@ import Foundation
 /// ``JSON`` A basic JSON sample
 /// ``SearchableItem`` Fuzzy search model
 //@MainActor
-public enum DummyContent {}
+public enum SampleContent {}

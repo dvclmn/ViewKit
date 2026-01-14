@@ -33,14 +33,14 @@ struct TextGroupExample: View {
       
       TextGroup {
         
-        Text(DummyContent.Strings.paragraphs[3])
+        Text(SampleContent.Strings.paragraphs[3])
           .foregroundStyle(.green)
         
         Text("Hello")
           .foregroundColor(.red)
           .fontWeight(.bold)
         
-        Text(DummyContent.Strings.paragraphs[1])
+        Text(SampleContent.Strings.paragraphs[1])
           .foregroundColor(.blue)
           .italic()
         

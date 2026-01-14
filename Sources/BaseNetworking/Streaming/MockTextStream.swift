@@ -25,7 +25,7 @@ public struct MockStreamingService: Sendable {
 
   /// Get a random sample response
   func randomResponse() -> String {
-    DummyContent.Strings.paragraphs.randomElement() ?? DummyContent.Strings.paragraphs[0]
+    SampleContent.Strings.paragraphs.randomElement() ?? SampleContent.Strings.paragraphs[0]
   }
 
   /// Core chunking function used by both stream types

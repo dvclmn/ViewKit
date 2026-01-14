@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 28/2/2025.
 //
 
-extension DummyContent.Strings {
+extension SampleContent.Strings {
   public static let paragraphsWithCode: [String] = [
     """
     let greeting = "Hello, World!"
