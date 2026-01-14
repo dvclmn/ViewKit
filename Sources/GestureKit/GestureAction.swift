@@ -9,23 +9,25 @@ import CoreTools
 import SwiftUI
 
 public protocol CanvasGestureState: Sendable {
+
   /// E.g. CGSize for pan
   associatedtype Value
 
   var value: Value { get set }
   var phase: InteractionPhase { get set }
 
+  init(_ value: Value, phase: InteractionPhase)
+
   /// A value for 'at rest'
   static var initialValue: Value { get }
 
   mutating func update(_ newValue: Value, phase: InteractionPhase)
   mutating func updatePhase(_ phase: InteractionPhase)
-
-  init(_ value: Value, phase: InteractionPhase)
 }
 
 extension CanvasGestureState {
-  
+  public var isActive: Bool { phase.isActive }
+
   public static var initial: Self {
     .init(Self.initialValue, phase: .none)
   }
@@ -34,6 +36,7 @@ extension CanvasGestureState {
     self.value = newValue
     self.phase = phase
   }
+
   public mutating func updatePhase(_ phase: InteractionPhase) {
     self.phase = phase
   }

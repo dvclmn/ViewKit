@@ -12,72 +12,7 @@ import SwiftUI
 /// 1. External source-of-truth mode: stateless, relying on external current offset state.
 /// 2. Internal owned state mode: stateful, owning and accumulating offset internally.
 ///
-/// This controller manages the lifecycle of drag offset tracking, with axis constraints,
-/// anchoring at drag start, and accumulation of translation deltas.
-///
-///
-/// ## Strategy Enum
-/// - `external`: The controller accepts the current external offset at drag start and computes
-///   new offsets based on translation deltas. No internal state is owned.
-/// - `internal(initial: CGSize)`: The controller owns the offset state starting from the given initial value,
-///   updating it internally during drag.
-///
-///
-/// ## Usage
-///
-/// Use the `begin(with:)` method at the start of a drag gesture to anchor the offset.
-/// - For `.external` strategy, pass the current external offset as `currentExternalValue`.
-/// - For `.internal` strategy, `currentExternalValue` is ignored.
-///
-/// Use the `update(translation:)` method to apply new translation deltas and get the updated offset.
-///
-/// Call `end()` to clear the anchor at the end of a drag.
-///
-/// If the external state jumps unexpectedly mid-drag in `.external` mode,
-/// call `reanchor(to:)` to reset the anchor and avoid jumps.
-///
-/// In `.internal` mode, use `resetInternal(to:)` to replace the owned offset value,
-/// optionally syncing the anchor if a drag is in progress.
-///
-///
-/// ## Axis Behavior
-///
-/// The offset accumulation respects the configured `AxisMode`:
-/// - `.both`: accumulate both width and height.
-/// - `.horizontal`: accumulate only width, keep height fixed.
-/// - `.vertical`: accumulate only height, keep width fixed.
-///
-///
-/// ## Notes
-///
-/// - This controller consolidates the behavior of the previous separate trackers into one,
-///   enabling flexible ownership and better resilience to external state changes.
-/// - When using `.external` mode, you must provide the current offset explicitly at drag start.
-/// - Be mindful to call `reanchor(to:)` if the external model changes mid-gesture to prevent drift.
-///
-///
-/// ## Example Integration with SwiftUI Gesture:
-///
-/// ```swift
-/// @State private var offset: CGSize = .zero
-/// @GestureState private var dragTranslation: CGSize = .zero
-///
-/// var body: some View {
-///   let dragController = CumulativeDragController(axisMode: .both, strategy: .external)
-///   let dragGesture = DragGesture()
-///     .onChanged { value in
-///       dragController.begin(with: offset)
-///       offset = dragController.update(translation: value.translation)
-///     }
-///     .onEnded { _ in
-///       dragController.end()
-///     }
-///
-///   Rectangle()
-///     .offset(offset)
-///     .gesture(dragGesture)
-///
-/// ```
+
 struct CumulativeDragController {
 
   /// The axis/axes along which drag offsets are accumulated.
@@ -137,19 +72,19 @@ extension CumulativeDragController {
         anchor = CGPoint(x: currentValue.width, y: currentValue.height)
     }
   }
-//  mutating func begin(with currentExternalValue: CGSize? = nil) {
-//    switch strategy {
-//      case .external:
-//        guard let currentExternalValue else {
-//          fatalError(
-//            "CumulativeDragController: begin(with:) requires currentExternalValue for external strategy")
-//        }
-//        anchor = CGPoint(fromSize: currentExternalValue)
-//
-//      case .internal:
-//        anchor = CGPoint(fromSize: currentValue)
-//    }
-//  }
+  //  mutating func begin(with currentExternalValue: CGSize? = nil) {
+  //    switch strategy {
+  //      case .external:
+  //        guard let currentExternalValue else {
+  //          fatalError(
+  //            "CumulativeDragController: begin(with:) requires currentExternalValue for external strategy")
+  //        }
+  //        anchor = CGPoint(fromSize: currentExternalValue)
+  //
+  //      case .internal:
+  //        anchor = CGPoint(fromSize: currentValue)
+  //    }
+  //  }
 
   /// Updates the offset by applying the given translation delta, respecting axis constraints,
   /// and returns the updated offset.
@@ -158,10 +93,10 @@ extension CumulativeDragController {
   /// - Returns: The accumulated offset.
   mutating func update(translation: CGSize) -> CGSize {
     guard let anchor = anchor else { return value }
-    
+
     let base = CGSize(width: anchor.x, height: anchor.y)
     let updated = applyAxis(base: base, translation: translation)
-    
+
     switch strategy {
       case .external:
         lastComputedValue = updated
@@ -170,25 +105,25 @@ extension CumulativeDragController {
     }
     return updated
   }
-//  mutating func update(translation: CGSize) -> CGSize {
-//    guard let anchor = anchor else {
-//      /// If not anchored, just return current value
-//      return value
-//    }
-//
-//    let base = CGSize(width: anchor.x, height: anchor.y)
-//    let updated = applyAxis(base: base, translation: translation)
-//
-//    switch strategy {
-//      case .external:
-//        lastComputedValue = updated
-//        return updated
-//      case .internal:
-//        currentValue = updated
-//        lastComputedValue = updated
-//        return updated
-//    }
-//  }
+  //  mutating func update(translation: CGSize) -> CGSize {
+  //    guard let anchor = anchor else {
+  //      /// If not anchored, just return current value
+  //      return value
+  //    }
+  //
+  //    let base = CGSize(width: anchor.x, height: anchor.y)
+  //    let updated = applyAxis(base: base, translation: translation)
+  //
+  //    switch strategy {
+  //      case .external:
+  //        lastComputedValue = updated
+  //        return updated
+  //      case .internal:
+  //        currentValue = updated
+  //        lastComputedValue = updated
+  //        return updated
+  //    }
+  //  }
 
   /// Ends tracking and clears the anchor.
   mutating func end() {

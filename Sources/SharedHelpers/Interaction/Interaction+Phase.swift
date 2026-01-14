@@ -38,7 +38,7 @@ extension InteractionPhase {
     }
   }
 
-  var isActive: Bool {
+  public var isActive: Bool {
     self == .began || self == .changed
   }
 }
