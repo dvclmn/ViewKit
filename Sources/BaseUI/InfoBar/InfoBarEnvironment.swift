@@ -23,7 +23,8 @@ public enum InfoBarElement {
 }
 
 extension View {
-  public func setInfoBarLabelDisplay(
+  public func infoBarStyle(
+//  public func setInfoBarLabelDisplay(
     for element: InfoBarElement,
     _ display: LabelDisplay
   ) -> some View {

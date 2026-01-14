@@ -5,14 +5,12 @@
 //  Created by Dave Coleman on 7/7/2025.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
 // MARK: - PreferenceKey and Reduce Function
 
 public struct InfoBarKey: PreferenceKey {
-
-  //  public static let defaultValue: [String: InfoBarItem] = [:]
   public static let defaultValue: [InfoBarItem] = []
 
   public static func reduce(value: inout [InfoBarItem], nextValue: () -> [InfoBarItem]) {
@@ -26,15 +24,15 @@ public struct InfoBarKey: PreferenceKey {
 
 // MARK: - Modifier for Child Views, to add to InfoBar
 extension View {
-  public func addInfoBarItems<T>(_ items: T.Type, source: T.Source) -> some View
+  public func addInfoBarItems<T>(
+    _ items: T.Type,
+    source: T.Source,
+    format: DisplayFormat = .default
+  ) -> some View
   where T: InfoBarSection & CaseIterable {
     return self.preference(
       key: InfoBarKey.self,
-      value: items.items(from: source, format: .default)
+      value: items.items(from: source, format: format)
     )
   }
-
-  //  public func addInfoBarItems(_ items: [InfoBarItem]) -> some View {
-  //    return self.preference(key: InfoBarKey.self, value: items)
-  //  }
 }

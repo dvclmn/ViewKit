@@ -13,8 +13,6 @@ public struct DisplayFormat {
   public var labelStyle: PropertyLabel.Style
   public var separatorVisibility: SeparatorVisibility
   
-  public static var `default`: DisplayFormat { .init() }
-  
   public init(
     decimalPlaces: Int = 2,
     grouping: NumberGrouping = .automatic,
@@ -26,4 +24,17 @@ public struct DisplayFormat {
     self.labelStyle = labelStyle
     self.separatorVisibility = separatorVisibility
   }
+}
+
+extension DisplayFormat {
+  public static var `default`: DisplayFormat { .init() }
+  public static var short: DisplayFormat {
+    .init(
+      decimalPlaces: 0,
+      grouping: .automatic,
+      labelStyle: .abbreviated,
+      separatorVisibility: .component
+    )
+  }
+  
 }
