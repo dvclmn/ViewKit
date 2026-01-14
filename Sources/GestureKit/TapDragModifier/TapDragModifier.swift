@@ -40,7 +40,7 @@ public struct UnifiedDragModifier: ViewModifier {
         }
       }
       .gesture(dragGesture, isEnabled: isEnabled)
-//      .modifier(DrawMarqueeModifier(rect: rectIfNeeded))
+      .modifier(DrawMarqueeModifier(rect: dragState.))
   }
 }
 extension UnifiedDragModifier {

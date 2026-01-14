@@ -40,48 +40,9 @@ extension DragState {
         assertionFailure("Invalid drag transition")
     }
   }
-  //  mutating func handleDragChange(
-  //    _ value: DragGesture.Value,
-  //    behavior: DragBehavior
-  //  ) {
-  //    switch (self, behavior) {
-  //
-  //      case (.marquee(var state), .marquee(let onUpdate)):
-  //        state.update(with: value, onUpdate: onUpdate)
-  //        self = .marquee(state)
-  //
-  //      case (.cumulative(var state), .cumulative(let offset, _, let onDragging)):
-  //        state.update(
-  //          translation: value.translation,
-  //          offset: offset,
-  //          onDragging: onDragging
-  //        )
-  //        self = .cumulative(state)
-  //
-  //      default:
-  //        assertionFailure("Mismatched DragState and DragBehavior")
-  //    }
-  //  }
-
-  //  mutating func handleDragEnd(behavior: DragBehavior) {
-  //    switch (self, behavior) {
-  //
-  //      case (.marquee(var state), .marquee(let onUpdate)):
-  //        state.end(onUpdate: onUpdate)
-  //        self = .marquee(state)
-  //
-  //      case (.cumulative(var state), .cumulative(_, _, let onDragging)):
-  //        state.end(onDragging: onDragging)
-  //        self = .cumulative(state)
-  //
-  //      default:
-  //        assertionFailure("Mismatched DragState and DragBehavior")
-  //    }
-  //  }
-
+  
   mutating func handleDragEnd(behavior: DragBehavior) {
     switch (self, behavior) {
-
       case (.marquee(.dragging), .marquee(let onUpdate)):
         onUpdate(nil)
         self = .marquee(.idle)
@@ -91,41 +52,14 @@ extension DragState {
         onDragging(false)
         self = .cumulative(.idle(controller: controller))
 
-      default:
-        break
+      default: break
     }
   }
-
-  //  mutating func handleDragEnd(behavior: DragBehavior) {
-  //    switch (self, behavior) {
-  //      case (.marquee, .marquee(let onUpdate)):
-  //        onUpdate(nil)
-  //        self = .marquee(origin: nil)
-  //
-  //      case (.cumulative(var controller), .cumulative(_, _, let onDragging)):
-  //        controller.end()
-  //        self = .cumulative(controller: controller)
-  //        onDragging(false)
-  //
-  //      default:
-  //        break
-  //    }
-  //  }
 
   static func initial(for behavior: DragBehavior) -> DragState {
     switch behavior {
       case .marquee: .marquee(.idle)
-
-      //        return .marquee(.dragging(origin: .zero))
-      //        return .marquee(MarqueeDragState(origin: nil))
-
       case .cumulative(_, let axes, _): .cumulative(.idle(controller: .init(axes: axes, strategy: .external)))
-    //        return .cumulative(
-    //          CumulativeDragState(
-    //            controller: .init(axes: axes, strategy: .external)
-    //          )
-    //        )
-
     }
   }
 }
