@@ -28,22 +28,22 @@ public struct InfoBar: View {
           ForEach(
             items.sorted(byKeyPath: \.key.title), id: \.key
           ) { key, items in
-            
+
             InfoBarSectionView(sectionTitle: key.title, items: items)
-            
+
           }  // END foreach
           InfoBarSectionView(
             sectionTitle: "Modifiers",
             items: [.modifiersSection(modifierKeys)]
           )
-          
+
           Spacer()
         } else {
           NoItems("No items to display")
         }
       }  // END hstack
+      .safeAreaPadding(.horizontal, Styles.sizeTiny)
     }
-    //    .safeAreaPadding(.horizontal, Styles.sizeTiny)
     .scrollBounceBehavior(.basedOnSize)
     .scrollIndicators(.hidden)
 

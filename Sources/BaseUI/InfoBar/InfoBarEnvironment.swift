@@ -28,6 +28,7 @@ extension View {
     for element: InfoBarElement,
     _ display: LabelDisplay
   ) -> some View {
+//    self.environment(\.sectionLabelDisplay, display)
     self.environment(element.isSection ? \.sectionLabelDisplay : \.itemLabelDisplay, display)
   }
 }

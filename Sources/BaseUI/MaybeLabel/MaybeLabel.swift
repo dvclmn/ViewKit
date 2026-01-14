@@ -16,8 +16,12 @@ public struct MaybeLabel: View {
 
   public var body: some View {
 
-    MainLabelView()
-
+    if !isHidden {
+      MainLabelView()
+    } else {
+      EmptyView()
+        .accessibilityLabel(label.text)
+    }
   }
 }
 
@@ -32,9 +36,7 @@ extension MaybeLabel {
       Label {
         Text(label.text)
       } icon: {
-
         /// Icon-specific styles in here
-
         if isPlain {
           IconView(icon)
         } else {
@@ -44,17 +46,7 @@ extension MaybeLabel {
       }
 
     } else {
-      if isHidden {
-        Label {
-          Text(label.text)
-        } icon: {
-          EmptyView()
-        }
-        .labelsHidden()
-
-      } else {
-        Text(label.text)
-      }
+      Text(label.text)
     }
   }
 }

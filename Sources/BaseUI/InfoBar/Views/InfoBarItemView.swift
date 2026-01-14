@@ -11,7 +11,7 @@ import SwiftUI
 public struct InfoBarItemView: View {
   @Environment(\.isShowingSectionHeader) private var isShowingSectionHeader
   @Environment(\.itemLabelDisplay) private var itemLabelDisplay
-  
+
   @State private var isHoveringItem: Bool = false
 
   let item: InfoBarItem
@@ -22,11 +22,15 @@ public struct InfoBarItemView: View {
     /// the HBar item content. When set to display Icon-only,
     /// the `item.content` can deceptively look like the
     /// Label text, but it is not, it is seperate.
-    HStack(spacing: Styles.sizeMicro) {
+    HStack(spacing: Styles.sizeTiny) {
       MaybeLabel(item.label)
         .environment(\.labelDisplay, itemLabelDisplay)
-      
+        .padding(.leading, Styles.sizeTiny)
+
       Text(item.content)
+
+      Divider().opacity(0.6)
+        .padding(.leading, Styles.sizeNano)
     }
 
     .onHover { hovering in

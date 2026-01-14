@@ -21,23 +21,23 @@ struct InfoBarSectionView: View {
 
     DecomposedView(.section, axis: .horizontal) {
       Section {
-        HStack {
+        /// This is the HStack (and spacing) between *whole* individual InfoBar Items.
+        HStack(spacing: 0) {
           ForEach(items) { item in
             InfoBarItemView(item: item)
-              .environment(\.labelDisplay, .iconOnly)
           }
         }
-        .padding(.horizontal, Styles.sizeSmall)
 
         .labelStyle(.base)
 
       } header: {
         MaybeLabel(sectionTitle)
-          .environment(\.labelDisplay, .hidden)
+          .environment(\.labelDisplay, sectionLabelDisplay)
           .fontWeight(.semibold)
           .frame(maxHeight: .infinity)
           .padding(.horizontal, Styles.sizeTiny.bump)
           .background(.black.opacity(0.4))
+
           .overlay(alignment: .trailing) {
             Rectangle()
               .fill(.white.opacity(0.07))
@@ -47,5 +47,6 @@ struct InfoBarSectionView: View {
       }
     }
     .containerValueBool(.hasSpacers, false)
+    .containerValueBool(.hasDividers, false)
   }
 }
