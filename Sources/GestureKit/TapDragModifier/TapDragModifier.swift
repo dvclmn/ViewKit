@@ -28,17 +28,19 @@ public struct UnifiedDragModifier: ViewModifier {
     self.includeTapGesture = includeTapGesture
 
     /// Initialize state based on behavior
-    switch behavior {
-      case .marquee:
-        self._dragState = State(initialValue: .marquee(origin: nil))
-        
-      case .cumulative(_, let axes, _):
-        self._dragState = State(
-          initialValue: .cumulative(
-            controller: CumulativeDragController(axes: axes, strategy: .external)
-          )
-        )
-    }
+    self._dragState = State(initialValue: .initial(for: behavior))
+
+//    switch behavior {
+//      case .marquee:
+//        self._dragState = State(initialValue: .marquee(origin: nil))
+//        
+//      case .cumulative(_, let axes, _):
+//        self._dragState = State(
+//          initialValue: .cumulative(
+//            controller: CumulativeDragController(axes: axes, strategy: .external)
+//          )
+//        )
+//    }
   }
 
   public func body(content: Content) -> some View {
@@ -49,7 +51,7 @@ public struct UnifiedDragModifier: ViewModifier {
         }
       }
       .gesture(dragGesture, isEnabled: isEnabled)
-      .modifier(DrawMarqueeModifier(rect: rectIfNeeded))
+//      .modifier(DrawMarqueeModifier(rect: rectIfNeeded))
   }
 }
 extension UnifiedDragModifier {
@@ -59,7 +61,9 @@ extension UnifiedDragModifier {
         dragState.handleDragChange(value, behavior: behavior)
       }
       .onEnded { _ in
-        dragState.handleDragEnd(behavior: behavior)
+        dragState
+//        dragState.handleDragChange(<#T##value: DragGesture.Value##DragGesture.Value#>, behavior: <#T##DragBehavior#>)
+//        dragState.handleDragEnd(behavior: behavior)
       }
   }
 }
