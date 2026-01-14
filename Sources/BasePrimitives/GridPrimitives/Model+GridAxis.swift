@@ -23,11 +23,8 @@ import SwiftUI
 ///
 /// ```
 public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
-  /// Horizontal
-  case column
-
-  /// Vertical
-  case row
+  case column // Horizontal
+  case row // Vertical
 
   public static let fixedLength: CGFloat = 18
 

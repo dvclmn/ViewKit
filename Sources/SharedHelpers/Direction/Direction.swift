@@ -5,38 +5,44 @@
 //  Created by Dave Coleman on 3/7/2025.
 //
 
+import EnumMacros
 import SwiftUI
 
+@CaseDetection
 /// This type assumes a top-left origin
 public enum Direction: String, CaseIterable, Identifiable {
   case up
   case down
   case left
   case right
+}
 
+extension Direction {
+  @CaseDetection
   public enum Vertical {
     case up
     case down
 
-    public var isUp: Bool { self == .up }
-    public var isDown: Bool { self == .down }
-    public var opposite: Self { self == .up ? .down : .up }
+    public var opposite: Self { isUp ? .down : .up }
   }
+}
+
+extension Direction {
 
   public var id: String { rawValue }
 
   /// +1 or -1 multiplier, for 1D movement
   public var scalar: Int {
     switch self {
-      case .up, .left: return -1
-      case .down, .right: return 1
+      case .up, .left: -1
+      case .down, .right: 1
     }
   }
 
   public var axis: Axis {
     switch self {
-      case .up, .down: return .vertical
-      case .left, .right: return .horizontal
+      case .up, .down: .vertical
+      case .left, .right: .horizontal
     }
   }
 
@@ -48,19 +54,19 @@ public enum Direction: String, CaseIterable, Identifiable {
   /// A helper to apply direction to a tuple (for 2D scenarios)
   public func offset(x: Int, y: Int, by delta: Int = 1) -> (x: Int, y: Int) {
     switch self {
-      case .up: return (x, y - delta)
-      case .down: return (x, y + delta)
-      case .left: return (x - delta, y)
-      case .right: return (x + delta, y)
+      case .up: (x, y - delta)
+      case .down: (x, y + delta)
+      case .left: (x - delta, y)
+      case .right: (x + delta, y)
     }
   }
 
   public var keyEquivalent: KeyEquivalent {
     switch self {
-      case .up: return .upArrow
-      case .down: return .downArrow
-      case .left: return .leftArrow
-      case .right: return .rightArrow
+      case .up: .upArrow
+      case .down: .downArrow
+      case .left: .leftArrow
+      case .right: .rightArrow
     }
   }
 }
