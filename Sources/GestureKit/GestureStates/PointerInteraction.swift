@@ -11,7 +11,7 @@ import CoreTools
 @CaseDetection(includesNames: true)
 public enum PointerInteraction {
 
-  /// Tap doesn't have a phase, like Drag/Hover do
+  /// Tap doesn't so much have a phase, like Drag/Hover do
   /// Mostly geared towards triggering an event
   case tap(CGPoint)
 
@@ -26,8 +26,3 @@ public enum PointerInteraction {
   /// from the presence of a value. Nil == .ended
   case hover(CGPoint?)
 }
-
-//public struct DragState {
-//  private(set) var current: CGFloat
-//  private(set) var phase: InteractionPhase
-//}

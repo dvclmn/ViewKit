@@ -17,5 +17,4 @@ extension CumulativeDragController {
     /// The controller owns the offset starting from the given initial value.
     case `internal`(initial: CGSize)
   }
-
 }

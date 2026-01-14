@@ -11,14 +11,11 @@ import SwiftUI
 /// A unified drag offset controller supporting two strategies:
 /// 1. External source-of-truth mode: stateless, relying on external current offset state.
 /// 2. Internal owned state mode: stateful, owning and accumulating offset internally.
-///
-
 struct CumulativeDragController {
 
   /// The axis/axes along which drag offsets are accumulated.
   let axes: GridAxis.Set
 
-  /// The chosen ownership strategy.
   let strategy: Strategy
 
   /// The anchor point corresponding to the offset at drag start.
