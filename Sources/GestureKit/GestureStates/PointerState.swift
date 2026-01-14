@@ -34,9 +34,9 @@ extension PointerState {
         guard kind.isDrag, let dragRect else { return nil }
         return .drag(dragRect)
 
-      case .pressing:
-        guard kind.isPressing, let current else { return nil }
-        return .pressing(current)
+      case .tap:
+        guard kind.isTap, let current else { return nil }
+        return .tap(current)
 
       case .hover:
         guard kind.isHover, let current else { return nil }
@@ -60,7 +60,7 @@ extension PointerState {
     phase: InteractionPhase
   ) {
     switch interaction {
-      case .pressing(let point): setTap(at: point)
+      case .tap(let point): setTap(at: point)
       case .drag(let rect): setDragIfPermitted(with: rect)
       case .hover(let point): setHover(at: point)
       case .none: reset()
@@ -87,7 +87,7 @@ extension PointerState {
   private mutating func setTap(at location: CGPoint) {
     current = location
     start = nil
-    kind = .pressing
+    kind = .tap
   }
 
   private mutating func setHover(at location: CGPoint) {

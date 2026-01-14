@@ -51,18 +51,19 @@ extension MarqueeDragModifier {
           dragOrigin = value.startLocation
 
           /// Register a 'press'
-          didUpdateRect(.pressing(value.startLocation), .began)
+          didUpdateRect(.tap(value.startLocation), .began)
         }
 
         guard let origin = dragOrigin else { return }
 
-        let rect = CGRect(
-          origin: origin,
-          size: CGSize(
-            width: value.location.x - origin.x,
-            height: value.location.y - origin.y
-          )
-        ).standardized
+        let rect = value.toRect(from: origin, end: .predicted)
+//        CGRect(
+//          origin: origin,
+//          size: CGSize(
+//            width: value.location.x - origin.x,
+//            height: value.location.y - origin.y
+//          )
+//        ).standardized
 
         let isDragPermitted = rect.size.diagonalLength >= dragThreshold
 
