@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedHelpers
 
 public protocol GeometryCapturable: Equatable, Sendable {}
 extension CGSize: GeometryCapturable {}

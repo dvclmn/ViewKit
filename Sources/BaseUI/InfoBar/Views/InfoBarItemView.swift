@@ -29,7 +29,7 @@ public struct InfoBarItemView: View {
       /// including the very first item
         .padding(.leading, Styles.sizeTiny)
 
-      Text(item.content)
+      Text(String(describing: item.content))
         /// Taking the edge off the brightness
         .opacity(0.9)
         .monospacedDigit()

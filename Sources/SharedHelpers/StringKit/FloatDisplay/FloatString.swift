@@ -9,7 +9,7 @@ import SwiftUI
 
 public typealias NumberGrouping = FloatingPointFormatStyle<Double>.Configuration.Grouping
 
-public protocol FloatRenderable: StringRenderable {
+public protocol FloatRenderable: StringRenderable, Sendable {
   associatedtype Value: BinaryFloatingPoint
   var value: Value { get }
   func render(using format: DisplayFormat) -> String

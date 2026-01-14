@@ -8,21 +8,33 @@
 import CoreTools
 import Foundation
 
-public struct InfoBarItem: LabeledItem {
+public struct InfoBarItem: LabeledItem, Sendable, Equatable {
   public let id: UUID
   public let sectionKey: InfoBarSectionID
   public let label: QuickLabel
-  
+
   /// Could one day consider making this more strongly typed,
   /// for content-specific styling such as display format for Floats etc
-//  public let content: String
-  public let content: DisplayBlock
+  ///
+  /// Update: Performance in e.g. CanvasKit suffered dramatically
+  /// once I implemented this as DisplayBlock
+  public let content: String
+//  public let content: DisplayBlock
 }
-extension InfoBarItem {
-  public var plainText: String {
-    content
-  }
-}
+
+//extension InfoBarItem: Equatable {
+//  public static func == (lhs: InfoBarItem, rhs: InfoBarItem) -> Bool {
+//    lhs.id == rhs.id
+//      && lhs.sectionKey == rhs.sectionKey
+//      && lhs.label == rhs.label
+//      && lhs.text(.default) == rhs.text(.default)
+//  }
+//}
+//extension InfoBarItem {
+//  public func text(_ format: DisplayFormat = .default) -> String {
+//    content.render(using: format)
+//  }
+//}
 extension InfoBarItem {
   public enum ContentKind {
     case text(String)
@@ -31,17 +43,17 @@ extension InfoBarItem {
 }
 
 extension InfoBarItem {
-  public init(
-    sectionKey: InfoBarSectionID,
-    label: QuickLabel,
-    content: DisplayBlock
-  ) {
-    self.id = UUID()
-    self.sectionKey = sectionKey
-    self.label = label
-    self.content = content
-  }
-  
+//  public init(
+//    sectionKey: InfoBarSectionID,
+//    label: QuickLabel,
+//    content: DisplayBlock
+//  ) {
+//    self.id = UUID()
+//    self.sectionKey = sectionKey
+//    self.label = label
+//    self.content = content
+//  }
+
   public init(
     sectionKey: InfoBarSectionID,
     label: QuickLabel,
@@ -50,6 +62,7 @@ extension InfoBarItem {
     self.id = UUID()
     self.sectionKey = sectionKey
     self.label = label
-    self.content = .text(text)
+    self.content = text
+//    self.content = .text(text)
   }
 }

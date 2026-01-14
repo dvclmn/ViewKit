@@ -40,7 +40,7 @@ extension ZoomModifier {
       }
       .onEnded { value in
         initialZoom = nil
-        zoom.withPhase(.ended)
+        zoom.updatePhase(.ended)
       }
   }
 }

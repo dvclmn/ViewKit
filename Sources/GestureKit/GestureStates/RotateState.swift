@@ -5,26 +5,25 @@
 //  Created by Dave Coleman on 9/1/2026.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
-public struct RotateState: Sendable {
-  public let value: Angle
-  private(set) var phase: InteractionPhase
-  
-  public static let zero: Self = .init()
-  
+public struct RotateState: CanvasGestureState {
+  public static var initialValue: Angle { .zero }
+  public var value: Angle
+  public var phase: InteractionPhase
+
   public init(
-    _ rotation: Angle = .zero,
+    _ value: Angle = .zero,
     phase: InteractionPhase = .none
   ) {
-    self.value = rotation
-     self.phase = phase
+    self.value = value
+    self.phase = phase
   }
 }
 
 extension RotateState {
-//  public func withPhase(_ newPhase: Interaction.Phase) -> Self {
-//    Self(rotation: value, phase: newPhase)
-//  }
+  //  public func withPhase(_ newPhase: Interaction.Phase) -> Self {
+  //    Self(rotation: value, phase: newPhase)
+  //  }
 }

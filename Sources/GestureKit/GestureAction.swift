@@ -8,32 +8,42 @@
 import CoreTools
 import SwiftUI
 
-/// Derived
-//public enum TransformInteraction {
-//  case zoom(delta: CGFloat)
-//  case pan(delta: CGSize)
-//  case rotate(delta: Angle)
-//}
+public protocol CanvasGestureState: Sendable {
+  /// E.g. CGSize for pan
+  associatedtype Value
 
-//public protocol GestureAction: Sendable {
-//  associatedtype Value  // E.g. CGSize for pan
-//  var value: Value { get set }
-//  var kind: InteractionKind.Meta { get }
-//
-//  /// A value for 'at rest'
-//  static var initial: Self { get }
-//  mutating func update(_ newValue: Value)
-//}
+  var value: Value { get set }
+  var phase: InteractionPhase { get set }
 
-//public struct PointerState {
-//  var action: PointerAction = .none
-//  var location: CGPoint?
-//  var dragRect: CGRect?
-//}
-//
-//public enum PointerAction {
-//  case tap
-//  case drag
-//  case hover
-//  case none
-//}
+  /// A value for 'at rest'
+  static var initialValue: Value { get }
+
+  mutating func update(_ newValue: Value, phase: InteractionPhase)
+  mutating func updatePhase(_ phase: InteractionPhase)
+
+  init(_ value: Value, phase: InteractionPhase)
+}
+
+extension CanvasGestureState {
+  
+  public static var initial: Self {
+    .init(Self.initialValue, phase: .none)
+  }
+
+  public mutating func update(_ newValue: Value, phase: InteractionPhase) {
+    self.value = newValue
+    self.phase = phase
+  }
+  public mutating func updatePhase(_ phase: InteractionPhase) {
+    self.phase = phase
+  }
+}
+
+extension CanvasGestureState where Value == CGSize {
+
+  public mutating func updateDelta(_ delta: Value, phase: InteractionPhase) {
+    self.value.width += delta.width
+    self.value.height += delta.height
+    self.phase = phase
+  }
+}

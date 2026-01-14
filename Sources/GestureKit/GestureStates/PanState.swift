@@ -9,36 +9,24 @@ import CoreGraphics
 import CoreTools
 import Foundation
 
-public struct PanState {
-  private(set) var translation: CGSize
-  private(set) var phase: InteractionPhase
-
+public struct PanState: CanvasGestureState {
+  public static var initialValue: CGSize { .zero }
+  public var value: CGSize
+  public var phase: InteractionPhase
+//
   public init(
-    _ translation: CGSize = .zero,
+    _ value: CGSize = .zero,
     phase: InteractionPhase = .none
   ) {
-    self.translation = translation
+    self.value = value
     self.phase = phase
   }
 }
 
 extension PanState {
   public static var centered: Self { .init(.zero) }
-  
-  public var pan: CGSize {translation}
 
-  public mutating func update(newValue: CGSize, phase: InteractionPhase) {
-    translation = newValue
-//    translation.width += delta.width
-//    translation.height += delta.height
-    self.phase = phase
-  }
-  
-  public mutating func update(_ delta: CGSize, phase: InteractionPhase) {
-    translation.width += delta.width
-    translation.height += delta.height
-    self.phase = phase
-  }
+  public var pan: CGSize { value }
 
   public func clamped(
     to geometry: CanvasGeometry,
@@ -52,8 +40,8 @@ extension PanState {
     let maxY = max((scaledArtwork.height - viewport.height) / 2, 0)
 
     return CGSize(
-      width: translation.width.clamped(to: -maxX...maxX),
-      height: translation.height.clamped(to: -maxY...maxY)
+      width: value.width.clamped(to: -maxX...maxX),
+      height: value.height.clamped(to: -maxY...maxY)
     )
   }
 }

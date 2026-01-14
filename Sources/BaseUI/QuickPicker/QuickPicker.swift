@@ -8,7 +8,7 @@
 import BasePrimitives
 import SwiftUI
 
-public struct QuickPicker<RowContent: View, Item: Pickable & Shortcuttable>: View {
+public struct QuickPicker<RowContent: View, Item: Pickable & Shortcuttable & Hashable>: View {
   public typealias PickerOutput = (Item, Bool) -> RowContent
   @Environment(\.explicitHeight) private var explicitHeight
 

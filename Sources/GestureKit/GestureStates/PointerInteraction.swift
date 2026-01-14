@@ -21,7 +21,7 @@ public enum PointerInteraction {
   /// value to scale up and down, or dragging a Pan offset,
   /// a Layer position, etc.
   case drag(CGRect, InteractionPhase)
-  
+
   /// Doesn't require an explicit phase; phase is inferred
   /// from the presence of a value. Nil == .ended
   case hover(CGPoint?)

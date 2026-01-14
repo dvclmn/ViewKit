@@ -9,7 +9,7 @@
 import SwiftUI
 import BasePrimitives
 
-public struct QuickTabView<TabItem: LabeledItem, Content: View>: View
+public struct QuickTabView<TabItem: LabeledItem & Hashable, Content: View>: View
 where TabItem: CaseIterable, TabItem.AllCases: RandomAccessCollection {
 
   @Binding var tab: TabItem

@@ -5,12 +5,11 @@
 //  Created by Dave Coleman on 21/5/2025.
 //
 
-import LayoutKit
 import BasePrimitives
+import LayoutKit
 import SwiftUI
 
-
-public struct ItemScrollable<Content: View, Item: Pickable & Shortcuttable>: View {
+public struct ItemScrollable<Content: View, Item: Pickable & Shortcuttable & Equatable>: View {
   //  @Environment(\.strokeConfig) private var strokeConfig
   //  @Environment(\.labelConfig) private var labelForeground
   //  @Environment(\.isItemSelected) private var isItemSelected

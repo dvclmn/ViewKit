@@ -38,7 +38,7 @@ extension InfoBarSection where Self: CaseIterable {
       InfoBarItem(
         sectionKey: InfoBarSectionID(SectionKey.self),
         label: thing.label,
-        content: thing.getContent(from: source, format: format)
+        text: thing.getContent(from: source, format: format)
       )
     }
   }

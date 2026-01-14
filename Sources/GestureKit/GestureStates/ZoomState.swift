@@ -8,34 +8,24 @@
 import CoreTools
 import Foundation
 
-public struct ZoomState {
-  private(set) var current: CGFloat
-  private(set) var phase: InteractionPhase
+public struct ZoomState: CanvasGestureState {
 
-  public static var `default`: Self { .init() }
+  public static var initialValue: CGFloat { 1.0 }
+  public var value: CGFloat
+  public var phase: InteractionPhase
 
   public init(
-    _ current: CGFloat = 1.0,
+    _ value: CGFloat = 1.0,
     phase: InteractionPhase = .none
   ) {
-    self.current = current
+    self.value = value
     self.phase = phase
   }
 }
 
 extension ZoomState {
 
-  public mutating func withPhase(_ phase: InteractionPhase) {
-    self.phase = phase
-  }
-
   public func zoom(clampedTo range: ClosedRange<CGFloat>) -> CGFloat {
-    current.clamped(to: range)
+    value.clamped(to: range)
   }
-
-  public mutating func update(_ level: CGFloat, phase: InteractionPhase) {
-    self.current = level
-    self.phase = phase
-  }
-
 }

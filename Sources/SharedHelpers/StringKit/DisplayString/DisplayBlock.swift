@@ -10,7 +10,7 @@ import EnumMacros
 import Foundation
 
 @CaseDetection(includesNames: true)
-public enum DisplayBlock {
+public enum DisplayBlock: Sendable {
 
   case text(String)
   case indented(Indented)
@@ -30,44 +30,7 @@ extension DisplayBlock: DisplayRenderable {
       case .display(let value): value.render(using: format)
     }
   }
-
-  //  public func render(using format: DisplayFormat) -> String {
-  //    switch self {
-  //      case .text(let text):
-  //        text
-  //
-  //      case .indented(let indented):
-  //        indented.render(using: format)
-  //    }
-  //  }
 }
-//extension DisplayBlock: Equatable, Hashable {
-//  public static func == (lhs: DisplayBlock, rhs: DisplayBlock) -> Bool {
-//    switch (lhs, rhs) {
-//      case (.text(let a), .text(let b)):
-//        return a == b
-//      case (.indented(let a), .indented(let b)):
-//        return a == b
-//      default:
-//        // Existential cases can't be meaningfully compared
-//        return false
-//    }
-//  }
-//
-//  public func hash(into hasher: inout Hasher) {
-//    switch self {
-//      case .text(let value):
-//        hasher.combine(0)
-//        hasher.combine(value)
-//      case .indented(let indented):
-//        hasher.combine(1)
-//        hasher.combine(indented)
-//      default:
-//        // Existential cases: hash as a constant
-//        hasher.combine(-1)
-//    }
-//  }
-//}
 
 extension DisplayBlock {
   var indentationDepth: Int {
@@ -78,12 +41,4 @@ extension DisplayBlock {
       default: 0
     }
   }
-
-  //  public var toString: String? {
-  //    switch self {
-  //      case .text(let text): text
-  //      case .indented(let indented):
-  //    }
-  //  }
-
 }
