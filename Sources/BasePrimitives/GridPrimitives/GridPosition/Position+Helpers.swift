@@ -26,23 +26,23 @@ extension GridPosition {
     within dimensions: GridDimensions,
     at point: CGPoint,
     cellSize: CGSize,
-//    rounding: GridRounding = .down
+    //    rounding: GridRounding = .down
   ) -> GridPosition? {
 
     let col = Int(floor(point.x / cellSize.width))
     let row = Int(floor(point.y / cellSize.height))
     let candidate = GridPosition(column: col, row: row)
     return dimensions.contains(position: candidate) ? candidate : nil
-    
-//    fatalError("Needs implementation")
-        /// The grid size conversion is *only* to check whether the point is contained.
-        /// The cellSize is not used to construct the
-//        let gridSize = dimensions.toUnitSize(unitSize: cellSize)
-//        let containsPoint = gridSize.contains(point: point)
-//    
-//        let position = GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
-//        guard dimensions.contains(point: point, cellSize: cellSize) else { return nil }
-//        return GridPosition(point: point, cellSize: cellSize)
+
+    //    fatalError("Needs implementation")
+    /// The grid size conversion is *only* to check whether the point is contained.
+    /// The cellSize is not used to construct the
+    //        let gridSize = dimensions.toUnitSize(unitSize: cellSize)
+    //        let containsPoint = gridSize.contains(point: point)
+    //
+    //        let position = GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
+    //        guard dimensions.contains(point: point, cellSize: cellSize) else { return nil }
+    //        return GridPosition(point: point, cellSize: cellSize)
   }
 
   /// Note: zero-based count for internal representation,
@@ -106,7 +106,6 @@ extension GridPosition {
       row: max(0, row + delta.row),
     )
   }
-  
 
   public func toCGRect(cellSize: CGSize) -> CGRect {
     CGRect(
@@ -134,36 +133,22 @@ extension GridPosition {
     self = current + delta
   }
 
-  public mutating func offsetting(_ direction: Direction, by delta: Int = 1) {
-    let (newCol, newRow) = direction.offset(x: column, y: row, by: delta)
-    let position = GridPosition(column: newCol, row: newRow)
-    print("GridPosition from `offsetting(_ direction: Direction...)`: \(position)")
-    self = position
-  }
-
   public func isValidWithin(dimensions: GridDimensions) -> Bool {
     return dimensions.contains(position: self)
   }
 
-  public func moved(
-    in direction: Direction,
-    by delta: Int = 1,
-    gridDimensions: GridDimensions
+  /// Column and Row as 'raw' `Int`s are used here, intead of a `GridPosition`,
+  /// as `GridPosition` cannot represent negative values
+  public static func wrapped(
+    column: Int,
+    row: Int,
+    in dimensions: GridDimensions
   ) -> GridPosition {
-    let offset = direction.offset(x: column, y: row, by: delta)
+    let (columns, rows) = (dimensions.width, dimensions.height)
 
-    /// Wrap raw x/y before creating the new GridPosition, otherwise
-    /// the position could get initialised with a negative number
-    let wrappedPosition = GridPosition.wrapped(
-      column: offset.x,
-      row: offset.y,
-      in: gridDimensions
-    )
-    return wrappedPosition
-    //    let wrappedCol = (offset.x % gridDimensions.columns + gridDimensions.columns) % gridDimensions.columns
-    //    let wrappedRow = (offset.y % gridDimensions.rows + gridDimensions.rows) % gridDimensions.rows
-    //
-    //    return GridPosition(column: wrappedCol, row: wrappedRow)
+    let wrappedCol = (column % columns + columns) % columns
+    let wrappedRow = (row % rows + rows) % rows
+    return GridPosition(column: wrappedCol, row: wrappedRow)
   }
 
   //  public func moved(
@@ -191,17 +176,4 @@ extension GridPosition {
   //    return GridPosition(column: wrappedCol, row: wrappedRow)
   //  }
 
-  /// Column and Row as 'raw' `Int`s are used here, intead of a `GridPosition`,
-  /// as `GridPosition` cannot represent negative values
-  public static func wrapped(
-    column: Int,
-    row: Int,
-    in dimensions: GridDimensions
-  ) -> GridPosition {
-    let (columns, rows) = (dimensions.width, dimensions.height)
-
-    let wrappedCol = (column % columns + columns) % columns
-    let wrappedRow = (row % rows + rows) % rows
-    return GridPosition(column: wrappedCol, row: wrappedRow)
-  }
 }

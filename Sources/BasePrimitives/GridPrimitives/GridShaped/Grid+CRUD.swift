@@ -58,13 +58,13 @@ extension GridShaped {
   ) {
     for edge in GridEdge.allCases where edges.contains(GridEdge.Set(edge)) {
       switch edge.gridAxis {
-        case .row:
+        case .vertical:
           if delta.rows > 0 {
             addRows(to: edge, count: delta.rows)
           } else if delta.rows < 0 {
             removeRows(from: edge, count: -delta.rows)
           }
-        case .column:
+        case .horizontal:
           if delta.columns > 0 {
             addColumns(to: edge, count: delta.columns)
           } else if delta.columns < 0 {

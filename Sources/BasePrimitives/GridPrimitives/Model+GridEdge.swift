@@ -6,18 +6,17 @@
 //
 
 import SwiftUI
-import BasePrimitives
 
 public enum GridEdge: String, ModelBase, CaseIterable {
   case top
   case trailing
   case bottom
   case leading
-  
+
   public var isRowEdge: Bool {
     self == .top || self == .bottom
   }
-  
+
   public var isColumnEdge: Bool {
     self == .leading || self == .trailing
   }
@@ -36,8 +35,8 @@ public enum GridEdge: String, ModelBase, CaseIterable {
 
   public var gridAxis: GridAxis {
     switch self {
-      case .top, .bottom: return .row
-      case .leading, .trailing: return .column
+      case .top, .bottom: .vertical
+      case .leading, .trailing: .horizontal
     }
   }
 
@@ -77,7 +76,7 @@ extension GridEdge.Set {
 }
 
 extension GridEdge {
-  
+
   /// The coordinate delta for moving in this direction
   public var directionVector: (column: Int, row: Int) {
     switch self {
@@ -87,7 +86,7 @@ extension GridEdge {
       case .trailing: return (column: 1, row: 0)
     }
   }
-  
+
   public func path(in rect: CGRect) -> Path {
     let (start, end) = rect.edgePoints(for: self)
     return Path {
@@ -95,7 +94,7 @@ extension GridEdge {
       $0.addLine(to: end)
     }
   }
-  
+
 }
 
 extension CGRect {
