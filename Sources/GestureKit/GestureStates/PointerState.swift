@@ -29,6 +29,9 @@ public struct PointerState {
 }
 
 extension PointerState {
+  public var isDragging: Bool {
+    (kind?.isDrag ?? false) && phase.isActive
+  }
 
   /// This packages up the output neatly for the caller to work with
   public var interactionData: PointerInteraction? {
@@ -55,7 +58,8 @@ extension PointerState {
     .init(start: .zero, current: .zero, phase: .none)
   }
 
-  public mutating func update(_ interaction: PointerInteraction) {
+  public mutating func update(_ interaction: PointerInteraction?) {
+    guard let interaction else { return }
     switch interaction {
       case .tap(let point): setTap(at: point)
       case .drag(let rect, let phase): setDragIfPermitted(with: rect, phase: phase)
