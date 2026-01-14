@@ -5,73 +5,34 @@
 //  Created by Dave Coleman on 7/7/2025.
 //
 
-import Foundation
 import BasePrimitives
+import Foundation
 
-public protocol InfoBarSection: CaseIterable {
-//  associatedtype Item = AllCases.Element
-//  associatedtype Key = String
+public protocol InfoBarSection {
   associatedtype Source
-  typealias Items = [Self.AllCases.Element]
-  //  var elements: [Self.AllCases.Element] { get }
-  
-  var items: Items { get }
-  
-  /// Will fall back to all Cases if not supplied
-  var defaultItems: Items? { get }
   static var sectionTitle: String { get }
-//  var label: QuickLabel { get }
-//  var content: AttributedString { get }
-
-//  func buildItems() -> [InfoBarItem]
-  static func buildItems(from source: Source) -> [InfoBarItem]
-//  static func buildItems(from source: Source) -> [InfoBarItem]
-//  static func makeItem(from element: Item) -> InfoBarItem
-}
-//public protocol InfoBarItemProtocol {
-//}
-
-extension InfoBarSection {
-  
-  public var items: Items { defaultItems ?? Self.allCases.toArray }
-  public var defaultItems: Items? { nil }
-  
-//  public func buildItems() -> [InfoBarItem] {
-//    Self.allCases.map { item in
-//      InfoBarItem(
-////        section: Self.section,
-//        label: label,
-//        content: content
-//      )
-//    }
-//    //    for item in Self.allCases {
-//    //
-//    //    }
-//  }
-
-//  public static func makeItem(from element: ExampleItem) -> InfoBarItem {
-//    InfoBarItem(section: <#T##String#>, label: <#T##QuickLabel#>, content: <#T##AttributedString#>)
-//  }
-
+  func makeItem(from source: Source) -> InfoBarItem
 }
 
-//extension InfoBarItem {
-//  static
-//}
+extension InfoBarSection where Self: CaseIterable {
+  public static func items(from source: Source) -> [InfoBarItem] {
+    Self.allCases.map { $0.makeItem(from: source) }
+  }
+}
 
 public struct InfoBarItem: Identifiable, Equatable, Hashable, Sendable {
-//public struct InfoBarItem<Section: InfoBarSection>: Identifiable, Equatable, Hashable where Section.Key: Hashable {
+  //public struct InfoBarItem<Section: InfoBarSection>: Identifiable, Equatable, Hashable where Section.Key: Hashable {
   public var id: String { label.text }
-//  public let sectionKey: any InfoBarSection
-//  public let sectionKey: Section.Key
+  //  public let sectionKey: any InfoBarSection
+  //  public let sectionKey: Section.Key
   public let sectionKey: String
-//  public let sectionKey: InfoBar.SectionKey
+  //  public let sectionKey: InfoBar.SectionKey
   public let label: QuickLabel
   public let content: AttributedString
 
   public init(
     sectionKey: String,
-//    sectionKey: Section.Key,
+    //    sectionKey: Section.Key,
     label: QuickLabel,
     content: AttributedString,
   ) {
@@ -83,7 +44,7 @@ public struct InfoBarItem: Identifiable, Equatable, Hashable, Sendable {
 
   public init(
     sectionKey: String,
-//    sectionKey: Section.Key,
+    //    sectionKey: Section.Key,
     label: QuickLabel,
     content: String,
   ) {
@@ -94,11 +55,11 @@ public struct InfoBarItem: Identifiable, Equatable, Hashable, Sendable {
     )
   }
 
-//  public static let empty = InfoBarItem(
-//    sectionKey: "Section",
-//    label: QuickLabel("Default label"),
-//    content: ""
-//  )
+  //  public static let empty = InfoBarItem(
+  //    sectionKey: "Section",
+  //    label: QuickLabel("Default label"),
+  //    content: ""
+  //  )
 }
 
 extension InfoBarItem: CustomStringConvertible {
