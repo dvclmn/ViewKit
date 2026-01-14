@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 //import CasePaths
 
 /// Note: `GridAxis` is about how indices progress across the grid,
@@ -25,14 +26,38 @@ import SwiftUI
 ///
 /// ```
 //@CasePathable
+
 public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
   case horizontal  // Column
   case vertical  // Row
 
   public static var column: Self { .horizontal }
   public static var row: Self { .vertical }
-  
+
+}
+
+extension GridAxis {
+  public struct Set: OptionSet, Sendable {
+    public init(rawValue: Int) {
+      self.rawValue = rawValue
+    }
+    public let rawValue: Int
+
+    public static let horizontal = Self(rawValue: 1 << 0)
+    public static let vertical = Self(rawValue: 1 << 1)
+    public static let all: Self = [.horizontal, .vertical]
+  }
+}
+
+extension GridAxis {
   public var id: String { rawValue }
+
+  public var toSet: GridAxis.Set {
+    switch self {
+      case .horizontal: [.horizontal]
+      case .vertical: [.vertical]
+    }
+  }
 
   public var locationKeyPath: WritableKeyPath<CGPoint, CGFloat> {
     switch self {

@@ -39,7 +39,6 @@ public enum GridEdge: String, ModelBase, CaseIterable {
       case .leading, .trailing: .horizontal
     }
   }
-
 }
 
 extension GridEdge {

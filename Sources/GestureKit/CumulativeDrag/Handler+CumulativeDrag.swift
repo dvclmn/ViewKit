@@ -8,154 +8,6 @@
 import BasePrimitives
 import SwiftUI
 
-enum AxisMode {
-  case both
-  case horizontal
-  case vertical
-}
-
-///
-/// A stateless drag offset tracker designed to work with an external source-of-truth value.
-///
-/// This tracker anchors at the initial drag offset (captured externally) and accumulates
-/// translation deltas based on the configured axis mode (horizontal, vertical, or both).
-///
-/// Usage:
-/// - Begin tracking by calling `beginIfNeeded(latestValue:)` passing the current external offset.
-/// - Call `computeOffset(translation:)` during drag updates to get the new offset based on the accumulated drag.
-/// - Call `end()` to reset the internal anchor.
-///
-/// Lifecycle & Behavior:
-/// - This struct does not own the offset state; it assumes an external state (e.g., SwiftUI state or model)
-///   is the source-of-truth and provides the initial offset when a drag begins.
-/// - It only tracks the offset relative to the anchor established at drag start.
-/// - Because it relies solely on the external initial offset, if the external state updates outside of this tracker's
-///   lifecycle (e.g., mid-drag), the internal anchor may become stale and cause jumpy or incorrect offset calculations.
-///
-/// Pros:
-/// - Simple, stateless approach.
-/// - Clear separation of responsibilities: external manages state, tracker manages accumulation logic.
-/// - Supports axis-specific offset accumulation.
-///
-/// Cons:
-/// - Susceptible to staleness if external source-of-truth changes unexpectedly during a drag.
-/// - Requires careful synchronization with external state.
-///
-/// When to Use:
-/// - When drag offset state is maintained externally and only need a helper to accumulate deltas.
-/// - When your drag updates are fully controlled by an external SwiftUI state or model.
-///
-struct CumulativeDragTracker {
-  /// The initial offset at the start of the drag gesture, serving as the anchor point.
-  private var initialOffset: CGSize?
-
-  /// The axis mode limiting drag accumulation: horizontal, vertical, or both axes.
-  let axisMode: AxisMode
-
-  /// Creates a new tracker configured with the given axis mode.
-  /// - Parameter axisMode: The axis along which drag offsets should be accumulated.
-  public init(
-    axisMode: AxisMode
-  ) {
-    self.axisMode = axisMode
-  }
-
-  /// Begins tracking if not already started by capturing the external drag offset as the anchor.
-  /// - Parameter latestValue: The current external offset value at drag start.
-  mutating func beginIfNeeded(latestValue: CGSize) {
-    if initialOffset == nil {
-      initialOffset = latestValue
-    }
-  }
-
-  /// Computes the current offset by accumulating the translation on top of the anchor,
-  /// respecting the configured axis mode.
-  /// - Parameter translation: The latest drag translation delta.
-  /// - Returns: The accumulated offset if tracking has begun, or nil if not anchored.
-  func computeOffset(translation: CGSize) -> CGSize? {
-    guard let initialOffset else { return nil }
-
-    switch axisMode {
-      case .both:
-        return CGSize(
-          width: initialOffset.width + translation.width,
-          height: initialOffset.height + translation.height)
-      case .horizontal:
-        return CGSize(
-          width: initialOffset.width + translation.width,
-          height: initialOffset.height)
-      case .vertical:
-        return CGSize(
-          width: initialOffset.width,
-          height: initialOffset.height + translation.height)
-    }
-  }
-
-  /// Ends tracking and clears the anchor.
-  mutating func end() {
-    initialOffset = nil
-  }
-}
-
-///
-/// A stateful drag offset tracker that owns and accumulates offset state internally,
-/// anchoring at the start of a drag and accumulating translation deltas.
-///
-/// This tracker manages its own current offset state (`currentValue`) and an internal anchor
-/// point corresponding to the drag start. It resists external state changes during a gesture,
-/// and is designed for use cases where the state is locally owned and not externally driven.
-///
-/// Usage:
-/// - Call `beginIfNeeded()` at drag start to establish the anchor from the current value.
-/// - Call `update(with:)` with translation deltas to update and get the new offset.
-/// - Call `end()` to reset the anchor at gesture end.
-///
-/// Lifecycle & Behavior:
-/// - This struct owns the offset state internally, so it will not reflect external changes
-///   to offset during a drag gesture.
-/// - To synchronize with external models, the model should update this tracker’s `currentValue`
-///   outside of active drags, or the tracker should be re-initialized.
-///
-/// Pros:
-/// - Self-contained state ownership prevents staleness due to external updates during a drag.
-/// - Simple API for local drag state tracking.
-///
-/// Cons:
-/// - Does not automatically sync with external models during a drag gesture.
-/// - Requires explicit synchronization for external changes.
-///
-/// When to Use:
-/// - When you want the drag offset state managed internally and isolated from external changes.
-/// - When drag gestures are local and do not depend on external offset state.
-///
-struct CumulativeDragInternalStateTracker {
-  /// The current accumulated offset value owned by this tracker.
-  var currentValue: CGSize = .zero
-
-  /// The anchor point corresponding to the offset at drag start.
-  private var anchor: CGPoint?
-
-  /// Begins tracking by anchoring at the current offset value if not already anchored.
-  mutating func beginIfNeeded() {
-    if anchor == nil {
-      anchor = CGPoint(fromSize: currentValue)
-    }
-  }
-
-  /// Updates the current offset by applying the given translation delta relative to the anchor.
-  /// - Parameter translation: The current drag translation delta.
-  /// - Returns: The updated accumulated offset.
-  mutating func update(with translation: CGSize) -> CGSize {
-    guard let anchor = anchor else { return currentValue }
-    currentValue = translation + anchor
-    return currentValue
-  }
-
-  /// Ends tracking and clears the anchor.
-  mutating func end() {
-    anchor = nil
-  }
-}
 ///
 /// A unified drag offset controller supporting two strategies:
 /// 1. External source-of-truth mode: stateless, relying on external current offset state.
@@ -239,7 +91,7 @@ struct CumulativeDragController {
   }
 
   /// The axis along which drag offsets are accumulated.
-  let axisMode: AxisMode
+  let axes: GridAxis.Set
 
   /// The chosen ownership strategy.
   let strategy: Strategy
@@ -258,13 +110,13 @@ struct CumulativeDragController {
   /// - Parameters:
   ///   - axisMode: Axis constraints for offset accumulation.
   ///   - strategy: Ownership strategy.
-  init(axisMode: AxisMode, strategy: Strategy) {
-    self.axisMode = axisMode
+  init(axes: GridAxis.Set, strategy: Strategy) {
+    self.axes = axes
     self.strategy = strategy
     switch strategy {
       case .external:
         self.currentValue = .zero
-      case let .internal(initial):
+      case .internal(let initial):
         self.currentValue = initial
     }
   }
@@ -290,7 +142,8 @@ struct CumulativeDragController {
     switch strategy {
       case .external:
         guard let externalValue = currentExternalValue else {
-          fatalError("CumulativeDragController: begin(with:) requires currentExternalValue for external strategy")
+          fatalError(
+            "CumulativeDragController: begin(with:) requires currentExternalValue for external strategy")
         }
         anchor = CGPoint(fromSize: externalValue)
       case .internal:
@@ -363,7 +216,7 @@ struct CumulativeDragController {
   ///   - translation: The drag translation delta.
   /// - Returns: The new offset respecting the axis mode.
   private func applyAxis(base: CGSize, translation: CGSize) -> CGSize {
-    switch axisMode {
+    switch axes {
       case .both:
         return CGSize(width: base.width + translation.width, height: base.height + translation.height)
       case .horizontal:
@@ -373,4 +226,3 @@ struct CumulativeDragController {
     }
   }
 }
-
