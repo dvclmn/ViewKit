@@ -12,7 +12,6 @@ import SwiftUI
 /// how far it has been dragged, so the *drag distance accumulates*.
 struct CumulativeDragGestureModifier: ViewModifier {
 
-  //  @State private var trackerOld = CumulativeDragTracker(axes: .all)
   @State private var tracker: CumulativeDragController
   @Binding var offset: CGSize
   let isEnabled: Bool
@@ -37,15 +36,6 @@ struct CumulativeDragGestureModifier: ViewModifier {
 
   func body(content: Content) -> some View {
     content
-      //      .gesture(
-      //        CumulativeDragGesture(
-      //          tracker: $trackerOld,
-      //          offset: $offset,
-      //          minDragDistance: minDragDistance,
-      //          isDragging: isDragging
-      //        ),
-      //        isEnabled: isEnabled
-      //      )
       .gesture(dragGesture, isEnabled: isEnabled)
   }
 }
@@ -55,19 +45,15 @@ extension CumulativeDragGestureModifier {
     DragGesture(minimumDistance: minDragDistance)
       .onChanged { value in
 
-        // 1. Only anchor once at the very beginning of this specific drag
+        /// 1. Only anchor once at the very beginning of this specific drag
         if tracker.anchor == nil {
           tracker.begin(with: offset)
         }
 
-        // 2. Update the binding using the stable anchor
+        /// 2. Update the binding using the stable anchor
         offset = tracker.update(translation: value.translation)
 
         isDragging(true)
-        //      tracker.beginIfNeeded(latestValue: offset)
-        //      guard let newOffset = tracker.computeOffset(translation: gestureValue.translation) else { return }
-        //      offset = newOffset
-        //      isDragging(true)
       }
 
       .onEnded { gestureValue in
@@ -76,28 +62,6 @@ extension CumulativeDragGestureModifier {
       }
   }
 }
-
-/// Constrained to horizontal axis
-//struct CumulativeHorizontalDragGestureModifier: ViewModifier {
-//  @State private var tracker = CumulativeDragTracker(axisMode: .horizontal)
-//  @Binding var offset: CGFloat
-//  let isDragging: (Bool) -> Void
-//
-//  func body(content: Content) -> some View {
-//    content
-//      .gesture(
-//        CumulativeDragGesture(
-//          tracker: $tracker,
-//          offset: Binding(
-//            get: { CGSize(width: offset, height: 0) },
-//            set: { offset = $0.width }
-//          ),
-//          minDragDistance: 0,
-//          isDragging: isDragging
-//        )
-//      )
-//  }
-//}
 
 extension View {
   public func cumulativeDrag(
@@ -115,16 +79,4 @@ extension View {
       )
     )
   }
-
-  //  func cumulativeHorizontalDrag(
-  //    _ offset: Binding<CGFloat>,
-  //    isDragging: @escaping (Bool) -> Void = { _ in }
-  //  ) -> some View {
-  //    self.modifier(
-  //      CumulativeHorizontalDragGestureModifier(
-  //        offset: offset,
-  //        isDragging: isDragging
-  //      )
-  //    )
-  //  }
 }
