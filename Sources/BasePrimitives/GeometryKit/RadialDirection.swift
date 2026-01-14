@@ -22,7 +22,7 @@ extension UnitPoint {
   /// If left nil, the radial direction will be inferred from `self`,
   /// using a product of the origin (0.5) and the provided coordinate's value
   func directionMultiplier(
-    for axis: Axis2D,
+    for axis: GridAxis,
     mapping: AxisMapping = .default,
     radial radialDirection: RadialDirection? = nil
   ) -> CGFloat {

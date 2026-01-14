@@ -109,7 +109,7 @@ extension Tooltip {
   }
 
   nonisolated private func totalOffset(
-    for axis: Axis2D,
+    for axis: GridAxis,
     viewSize: CGSize,
     mapping: AxisMapping = .default
   ) -> CGFloat {

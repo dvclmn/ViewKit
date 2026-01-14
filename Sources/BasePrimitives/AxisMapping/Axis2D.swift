@@ -20,21 +20,14 @@ import SwiftUI
 /// - Width and height = labels applied to axes via a convention
 
 /// Exists so I don't need to import SwiftUI just for an Axis type
-public enum Axis2D: Int, CaseIterable, Codable {
-  case horizontal
-  case vertical
-}
+//public enum Axis2D: Int, CaseIterable, Codable {
+//  case horizontal
+//  case vertical
+//}
+//
+//extension Axis2D {
+//  public var isHorizontal: Bool { self == .horizontal }
+//  public var isVertical: Bool { self == .vertical }
+//}
+//
 
-extension Axis2D {
-  public var isHorizontal: Bool { self == .horizontal }
-  public var isVertical: Bool { self == .vertical }
-}
-
-extension Axis {
-  public var toAxis2D: Axis2D {
-    switch self {
-      case .horizontal: .horizontal
-      case .vertical: .vertical
-    }
-  }
-}

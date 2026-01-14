@@ -26,7 +26,7 @@ public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
   case horizontal  // Column
   case vertical  // Row
 
-//  public static let fixedLength: CGFloat = 18
+  //  public static let fixedLength: CGFloat = 18
 
   public var id: String { rawValue }
 
@@ -43,6 +43,9 @@ public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
       case .vertical: \.height
     }
   }
+
+  public var isHorizontal: Bool { self == .horizontal }
+  public var isVertical: Bool { self == .vertical }
 
   public var opposing: Self {
     switch self {
@@ -66,12 +69,12 @@ public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
     }
   }
 
-//  public var numberingFrameSize: (CGFloat?, CGFloat?) {
-//    return switch self {
-//      case .horizontal: (nil, Self.fixedLength)
-//      case .vertical: (Self.fixedLength, nil)
-//    }
-//  }
+  //  public var numberingFrameSize: (CGFloat?, CGFloat?) {
+  //    return switch self {
+  //      case .horizontal: (nil, Self.fixedLength)
+  //      case .vertical: (Self.fixedLength, nil)
+  //    }
+  //  }
 
   public var cellNumberTextAlignment: UnitPoint {
     switch self {
@@ -174,6 +177,15 @@ extension GridAxis {
     switch self {
       case .horizontal: "Horizontal"
       case .vertical: "Vertical"
+    }
+  }
+}
+
+extension Axis {
+  public var toGridAxis: GridAxis {
+    switch self {
+      case .horizontal: .horizontal
+      case .vertical: .vertical
     }
   }
 }

@@ -29,7 +29,7 @@ public struct UnitLength: Hashable, Codable, Sendable {
 
   public init?(
     _ magnitude: Int,
-    axis: Axis2D,
+    axis: GridAxis,
     mapping: AxisMapping = .default,
     //    convention: AxisConvention = .default,
     unitSize: CGSize?

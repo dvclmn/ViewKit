@@ -21,7 +21,7 @@ public enum AxisMapping: Sendable {
   public static let `default`: Self = .identity
 
   /// Routes a request to the correct component based on mapping and axis.
-  public func select<T>(primary: T, secondary: T, for axis: Axis2D) -> T {
+  public func select<T>(primary: T, secondary: T, for axis: GridAxis) -> T {
     switch (self, axis) {
       case (.identity, .horizontal), (.transposed, .vertical):   return primary
       case (.identity, .vertical),   (.transposed, .horizontal): return secondary
@@ -36,8 +36,8 @@ public enum AxisMapping: Sendable {
     }
   }
   
-  func resolve<T>(primary: T, secondary: T, for axis: Axis2D) -> T {
-//  func resolve<T, V>(primary: T, secondary: T, for axis: Axis2D) -> T {
+  func resolve<T>(primary: T, secondary: T, for axis: GridAxis) -> T {
+//  func resolve<T, V>(primary: T, secondary: T, for axis: GridAxis) -> T {
     switch (self, axis) {
       case (.identity, .horizontal), (.transposed, .vertical):   return primary
       case (.identity, .vertical),   (.transposed, .horizontal): return secondary

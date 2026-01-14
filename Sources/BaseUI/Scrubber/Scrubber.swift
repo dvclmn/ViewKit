@@ -96,7 +96,7 @@ extension Scrubber {
   func digitDragGesture(for axis: Axis) -> some Gesture {
     DragGesture(minimumDistance: 0)
       .onChanged { gestureValue in
-        let delta = gestureValue.translation.value(along: axis.toAxis2D, mapping: .default) * dragSensitivity
+        let delta = gestureValue.translation.value(along: axis.toGridAxis, mapping: .default) * dragSensitivity
 //        let delta = gestureValue.translation.length(for: axis) * dragSensitivity
         let newValue = initialValue + delta
         let result: CGFloat

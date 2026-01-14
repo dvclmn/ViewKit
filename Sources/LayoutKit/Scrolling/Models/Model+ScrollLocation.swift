@@ -23,7 +23,7 @@ public enum ScrollLocation: String, Sendable {
   @available(macOS 15.0, iOS 18.0, *)
   public init(
     fromGeometry geometry: ScrollGeometry,
-    withAxis axis: Axis2D,
+    withAxis axis: GridAxis,
     mapping: AxisMapping = .default,
     tolerance: CGFloat = 2.0
   ) {

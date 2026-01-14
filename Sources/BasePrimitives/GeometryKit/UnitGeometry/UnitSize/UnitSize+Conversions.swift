@@ -65,7 +65,7 @@ extension Int {
   }
 
   public func toScreenLength(
-    along axis: Axis2D,
+    along axis: GridAxis,
     mapping: AxisMapping = .default,
     //    convention: AxisConvention = .default,
     using unitSize: CGSize?,
@@ -76,7 +76,7 @@ extension Int {
   }
 
   //  public func toScreenSize(
-  //    //    along axis: Axis2D,
+  //    //    along axis: GridAxis,
   //    //    mapping: AxisMapping = .default,
   //    //    convention: AxisConvention = .default,
   //    using unitSize: CGSize?,
@@ -157,7 +157,7 @@ extension CGSize {
 
   /// The axis is justified here, as we need to specify the edge for `self`
   public func toGridCount(
-    along axis: Axis2D,
+    along axis: GridAxis,
     using unitSize: CGSize,
     mapping: AxisMapping = .default,
     rounding: GridRounding = .down
@@ -186,7 +186,7 @@ extension CGSize {
 extension Optional where Wrapped == CGSize {
   public func gridLength(
     _ count: Int,
-    along axis: Axis2D,
+    along axis: GridAxis,
   ) -> CGFloat? {
     return count.toScreenLength(along: axis, using: self)
   }

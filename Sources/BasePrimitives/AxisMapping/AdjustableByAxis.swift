@@ -28,7 +28,7 @@ extension CGPoint: AdjustableByAxis {}
 extension AdjustableByAxis {
 
   public func adjust(
-    _ axis: Axis2D,
+    _ axis: GridAxis,
     newValue: Component,
     mapping: AxisMapping = .default
   ) -> Self {
@@ -36,7 +36,7 @@ extension AdjustableByAxis {
   }
 
   public func adjust(
-    _ axis: Axis2D,
+    _ axis: GridAxis,
     transform: (Component) -> Component,
     mapping: AxisMapping = .default
   ) -> Self {
@@ -73,7 +73,7 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
 
   public func multiplyBoth(
     by factorProvider: Self,
-    using axis: Axis2D,
+    using axis: GridAxis,
     mapping: AxisMapping = .default
   ) -> Self {
     let factor = factorProvider.value(along: axis, mapping: mapping)
@@ -92,7 +92,7 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
 
   public func divideBoth(
     by divisorProvider: Self,
-    using axis: Axis2D,
+    using axis: GridAxis,
     mapping: AxisMapping = .default
   ) -> Self {
     let divisor = divisorProvider.value(along: axis, mapping: mapping)

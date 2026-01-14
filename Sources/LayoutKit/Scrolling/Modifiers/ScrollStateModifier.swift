@@ -36,7 +36,7 @@ public struct ScrollStateModifier: ViewModifier {
         .onScrollGeometryChange(for: ScrollContext.self) { geometry in
           return ScrollContext(
             fromGeometry: geometry,
-            withAxis: axis.toAxis2D,
+            withAxis: axis.toGridAxis,
             tolerance: tolerance
           )
 

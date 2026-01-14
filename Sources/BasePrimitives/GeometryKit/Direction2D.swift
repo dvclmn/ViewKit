@@ -39,7 +39,7 @@ extension Direction2D {
   }
 
   public func offset(
-    axis: Axis2D,
+    axis: GridAxis,
     distance: CGFloat,
     radial radialDirection: RadialDirection = .outward
   ) -> CGFloat {
@@ -87,7 +87,7 @@ extension Alignment {
   }
 
   public func offset(
-    axis: Axis2D,
+    axis: GridAxis,
     distance: CGFloat,
     radial radialDirection: RadialDirection = .outward
   ) -> CGFloat {
@@ -99,7 +99,7 @@ extension Alignment {
 extension ViewDimensions {
   public func offset(
     for alignment: Alignment,
-    axis: Axis2D,
+    axis: GridAxis,
     magnitude: CGFloat,  // As a factor, e.g. 0.2
     //    distance: CGFloat,
     radial radialDirection: RadialDirection = .outward
@@ -122,7 +122,7 @@ extension ViewDimensions {
 
   private func getAlignment(
     _ alignment: Alignment,
-    //    for axis: Axis2D
+    //    for axis: GridAxis
   ) -> Alignment {
     let excluded: [Alignment] = [.center]
     let toFlip: [Alignment] = [.leading, .trailing, .top, .bottom]

@@ -20,7 +20,7 @@ public protocol AxisKeyPathCompatible {
 
 extension AxisKeyPathCompatible {
   public func value(
-    along axis: Axis2D,
+    along axis: GridAxis,
     mapping: AxisMapping = .default,
   ) -> Component {
     /// Resolve which KeyPath to use based on the axis and the mapping
@@ -34,7 +34,7 @@ extension AxisKeyPathCompatible {
 
   public func setting(
     _ newValue: Component,
-    along axis: Axis2D,
+    along axis: GridAxis,
     mapping: AxisMapping = .identity
   ) -> Self {
     var copy = self
