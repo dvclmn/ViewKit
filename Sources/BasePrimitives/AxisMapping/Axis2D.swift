@@ -7,17 +7,6 @@
 
 import SwiftUI
 
-/// Notes on Axis stuff:
-///
-/// ## Axis
-/// - Horizontal vs vertical, a direction in space
-/// - A purely spatial concept
-/// - ``Axis2D``, ``AxisRepresentable``,  SwiftUI's `Axis`, etc
-///
-/// ## Dimension
-/// - Width vs height. Semantics
-/// - What `DimensionToAxisConvention` aims to disambiguate
-/// - Width and height = labels applied to axes via a convention
 
 /// Exists so I don't need to import SwiftUI just for an Axis type
 //public enum Axis2D: Int, CaseIterable, Codable {

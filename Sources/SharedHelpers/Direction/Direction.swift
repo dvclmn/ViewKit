@@ -18,16 +18,6 @@ public enum Direction: String, CaseIterable, Identifiable {
 }
 
 extension Direction {
-  @CaseDetection
-  public enum Vertical {
-    case up
-    case down
-
-    public var opposite: Self { isUp ? .down : .up }
-  }
-}
-
-extension Direction {
 
   public var id: String { rawValue }
 
@@ -39,7 +29,7 @@ extension Direction {
     }
   }
 
-  public var axis: Axis {
+  public var toAxis: Axis {
     switch self {
       case .up, .down: .vertical
       case .left, .right: .horizontal
@@ -52,13 +42,39 @@ extension Direction {
   }
 
   /// A helper to apply direction to a tuple (for 2D scenarios)
-  public func offset(x: Int, y: Int, by delta: Int = 1) -> (x: Int, y: Int) {
-    switch self {
-      case .up: (x, y - delta)
-      case .down: (x, y + delta)
-      case .left: (x - delta, y)
-      case .right: (x + delta, y)
+  public func offset( x: Int, y: Int, by delta: Int = 1) -> (x: Int, y: Int) {
+    switch toAxis {
+      case .vertical:
+        return (x, y + scalar * delta)
+      case .horizontal:
+        return (x + scalar * delta, y)
     }
+  }
+
+  /// A helper to apply direction to a tuple of CGFloats (for 2D scenarios in layout/geometry)
+  public func offset(
+    x: CGFloat,
+    y: CGFloat,
+    by delta: CGFloat = 1
+  ) -> (x: CGFloat, y: CGFloat) {
+    switch toAxis {
+      case .vertical:
+        return (x, y + CGFloat(scalar) * delta)
+      case .horizontal:
+        return (x + CGFloat(scalar) * delta, y)
+    }
+  }
+
+  /// Advance a single coordinate along this direction's axis by `delta`.
+  /// If the axis doesn't match (e.g., advancing x on a vertical direction), the value is returned unchanged.
+  public func advance(x: Int, by delta: Int = 1) -> Int {
+    guard toAxis == .horizontal else { return x }
+    return x + scalar * delta
+  }
+
+  public func advance(y: Int, by delta: Int = 1) -> Int {
+    guard toAxis == .vertical else { return y }
+    return y + scalar * delta
   }
 
   public var keyEquivalent: KeyEquivalent {
@@ -70,3 +86,4 @@ extension Direction {
     }
   }
 }
+

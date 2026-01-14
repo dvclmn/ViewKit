@@ -10,7 +10,8 @@ import SwiftUI
 /// Note: `GridAxis` is about how indices progress across the grid,
 /// not about how the things themselves are shaped.
 ///
-/// Even though a column is (in isolation) a 'vertical thing'.
+/// Even though a column is (in my brain) usually a 'vertical thing', in
+/// terms of indices, it is horizontal.
 ///
 /// ```
 ///    x →  0   1   2
@@ -25,8 +26,6 @@ import SwiftUI
 public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
   case horizontal  // Column
   case vertical  // Row
-
-  //  public static let fixedLength: CGFloat = 18
 
   public var id: String { rawValue }
 
