@@ -8,17 +8,17 @@
 import CoreTools
 import SwiftUI
 
-private enum DragIntent {
-  case undecided
-  case dragging
-}
+//private enum DragIntent {
+//  case undecided
+//  case dragging
+//}
 
-public typealias MarqueeDragOutput = (PointerInteraction, InteractionPhase) -> Void
+public typealias MarqueeDragOutput = (PointerInteraction?) -> Void
 
 public struct MarqueeDragModifier: ViewModifier {
   @Environment(\.shouldRenderDragRect) private var shouldRenderDragRect
 
-  @State private var intent: DragIntent = .undecided
+//  @State private var intent: DragIntent = .undecided
   @State private var dragOrigin: CGPoint?
   @State private var rectToRender: CGRect?
 
@@ -51,19 +51,19 @@ extension MarqueeDragModifier {
           dragOrigin = value.startLocation
 
           /// Register a 'press'
-          didUpdateRect(.tap(value.startLocation), .began)
+          didUpdateRect(.tap(value.startLocation))
         }
 
         guard let origin = dragOrigin else { return }
 
         let rect = value.toRect(from: origin, end: .predicted)
-//        CGRect(
-//          origin: origin,
-//          size: CGSize(
-//            width: value.location.x - origin.x,
-//            height: value.location.y - origin.y
-//          )
-//        ).standardized
+        //        CGRect(
+        //          origin: origin,
+        //          size: CGSize(
+        //            width: value.location.x - origin.x,
+        //            height: value.location.y - origin.y
+        //          )
+        //        ).standardized
 
         let isDragPermitted = rect.size.diagonalLength >= dragThreshold
 
@@ -73,13 +73,13 @@ extension MarqueeDragModifier {
 
         if intent == .dragging {
           rectToRender = rect
-          didUpdateRect(.drag(rect), .changed)
+          didUpdateRect(.drag(rect, .changed))
         }
       }
 
       .onEnded { value in
 
-        didUpdateRect(.none, .ended)
+        didUpdateRect(nil)
 
         rectToRender = nil
         intent = .undecided
@@ -92,7 +92,7 @@ extension View {
   public func marqueeDrag(
     isEnabled: Bool = true,
     dragThreshold: CGFloat = 5,
-    didUpdateRect: @escaping MarqueeDragOutput = { _, _ in }
+    didUpdateRect: @escaping MarqueeDragOutput = { _ in }
   ) -> some View {
     self.modifier(
       MarqueeDragModifier(

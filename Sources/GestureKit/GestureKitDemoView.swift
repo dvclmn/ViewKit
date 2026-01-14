@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GestureKitDemoView: View {
 
-  @State private var interactionKind: PointerInteraction = .none
+  @State private var interactionKind: PointerInteraction?
   @State private var offset = CGSize.zero
 
   var body: some View {
@@ -19,12 +19,13 @@ struct GestureKitDemoView: View {
       .frame(width: 600, height: 700)
       .background(.black.opacity(0.6))
 
-      .debugTextOverlay("Interaction: ", interactionKind.referenceName)
+      .debugTextOverlay("Interaction: \(interactionKind?.referenceName, default: "None")")
 
       //      .onTapGesture { location in
       //        interactionKind = .tap(location)
       //      }
 
+      .marqueeDrag()
 //      .gesture(
 //        ExclusiveGesture(
 //          TapGesture()
