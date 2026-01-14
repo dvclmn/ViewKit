@@ -96,7 +96,8 @@ extension SampleContent.Animal {
 
       /// Create new QuickLabel with the original attributedText and role, but new icon
       let newLabel = QuickLabel(
-        animal.label.attributedText,
+        animal.label.text,
+//        animal.label.attributedText,
         icon: newIcon,
         role: animal.label.role
       )

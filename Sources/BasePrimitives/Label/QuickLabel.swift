@@ -8,25 +8,52 @@
 import SwiftUI
 
 public struct QuickLabel: Sendable, Codable, Equatable, Hashable {
-  public var attributedText: AttributedString
+  public var text: String
+  //  public var attributedText: AttributedString
   public let icon: IconLiteral?
   public let role: Role?
 
-  public var text: String {
-    return String(attributedText.characters)
-  }
+  //  public var text: String {
+  //    return String(attributedText.characters)
+  //  }
 }
 
 // MARK: - Initialisers
 extension QuickLabel {
 
   /// Attributed String
+  //  public init(
+  //    _ text: AttributedString,
+  //    icon: IconLiteral? = nil,
+  //    role: Role? = nil
+  //  ) {
+  //    self.attributedText = text
+  //    self.icon = icon
+  //    self.role = role
+  //  }
+
+  /// This doesn't have a default of `nil` for `symbol`,
+  /// to disambiguate from ``QuickLabel/init(_:icon:role:)``
+  //  public init(
+  //    _ text: AttributedString,
+  //    symbol symbolString: String?,
+  //    role: Role? = nil
+  //  ) {
+  //    self.init(
+  //      text,
+  //      icon: symbolString.map { IconLiteral.symbol($0) },
+  //      role: role
+  //    )
+  //  }
+
+  /// Plain String
   public init(
-    _ text: AttributedString,
+    _ text: String,
     icon: IconLiteral? = nil,
     role: Role? = nil
   ) {
-    self.attributedText = text
+    self.text = text
+    //    self.attributedText = AttributedString(text)
     self.icon = icon
     self.role = role
   }
@@ -34,37 +61,12 @@ extension QuickLabel {
   /// This doesn't have a default of `nil` for `symbol`,
   /// to disambiguate from ``QuickLabel/init(_:icon:role:)``
   public init(
-    _ text: AttributedString,
+    _ text: String,
     symbol symbolString: String?,
     role: Role? = nil
   ) {
     self.init(
       text,
-      icon: symbolString.map { IconLiteral.symbol($0) },
-      role: role
-    )
-  }
-  
-  /// Plain String
-  public init(
-    _ text: String,
-    icon: IconLiteral? = nil,
-    role: Role? = nil
-  ) {
-    self.attributedText = AttributedString(text)
-    self.icon = icon
-    self.role = role
-  }
-  
-  /// This doesn't have a default of `nil` for `symbol`,
-  /// to disambiguate from ``QuickLabel/init(_:icon:role:)``
-  public init(
-    _ text: String,
-    symbol symbolString: String?,
-    role: Role? = nil
-  ) {
-    self.init(
-      AttributedString(text),
       icon: symbolString.map { IconLiteral.symbol($0) },
       role: role
     )
@@ -94,7 +96,8 @@ extension QuickLabel {
 
 extension QuickLabel: ExpressibleByStringLiteral {
   public init(stringLiteral value: String) {
-    self.init(AttributedString(value))
+    self.init(value)
+//    self.init(AttributedString(value))
   }
 }
 

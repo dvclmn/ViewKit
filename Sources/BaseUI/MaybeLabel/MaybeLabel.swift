@@ -51,7 +51,7 @@ public struct MaybeLabel: View {
 
     if let icon = label.icon {
       Label {
-        Text(label.attributedText)
+        Text(label.text)
       } icon: {
 
         /// Icon-specific styles in here
@@ -65,7 +65,7 @@ public struct MaybeLabel: View {
       }
 
     } else {
-      Text(label.attributedText)
+      Text(label.text)
     }
   }
 }

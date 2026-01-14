@@ -9,12 +9,14 @@ import CoreTools
 import Foundation
 
 /// This is made with an enum in mind.
-public protocol InfoBarSection: LabeledItem {
+public protocol InfoBarSection {
   associatedtype Source
   associatedtype SectionKey: InfoBarSectionKey
   /// Provided per-case, e.g. for `case canvasSize`:
   /// `QuickLabel("Canvas Size")`
-  var label: QuickLabel { get }
+//  var label: QuickLabel { get }
+  var title: String { get }
+  var icon: IconLiteral { get }
 //  static var sectionKey: SectionKey { get }
 
   func getContent(
@@ -23,8 +25,14 @@ public protocol InfoBarSection: LabeledItem {
   ) -> String
 }
 
-extension InfoBarSection where Self: CaseIterable {
+extension InfoBarSection {
+  public var label: QuickLabel { .init(title, icon: icon) }
+}
 
+extension InfoBarSection where Self: RawRepresentable, Self.RawValue == String {
+  public var text: String { rawValue.capitalized }
+}
+extension InfoBarSection where Self: CaseIterable {
   public static func items(
     from source: Source,
     format: DisplayFormat = .default
