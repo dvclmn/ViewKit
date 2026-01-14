@@ -11,11 +11,11 @@ import Foundation
 /// This is made with an enum in mind.
 public protocol InfoBarSection: LabeledItem {
   associatedtype Source
-
+  associatedtype SectionKey: InfoBarSectionKey
   /// Provided per-case, e.g. for `case canvasSize`:
   /// `QuickLabel("Canvas Size")`
   var label: QuickLabel { get }
-  static var sectionTitle: String { get }
+  static var sectionKey: SectionKey { get }
 
   func getContent(
     from source: Source,
@@ -28,10 +28,10 @@ extension InfoBarSection where Self: CaseIterable {
   public static func items(
     from source: Source,
     format: DisplayFormat = .default
-  ) -> [InfoBarItem] {
+  ) -> [InfoBarItem<SectionKey>] {
     Self.allCases.map { thing in
       InfoBarItem(
-        sectionKey: Self.sectionTitle,
+        sectionKey: Self.sectionKey,
         label: thing.label,
         content: thing.getContent(from: source, format: format)
       )
@@ -49,17 +49,19 @@ extension InfoBarSection where Self: CaseIterable {
 //
 //}
 
-public struct InfoBarItem: LabeledItem, Sendable {
+public struct InfoBarItem<Key: InfoBarSectionKey>: LabeledItem, Sendable {
   //public struct InfoBarItem: InfoBarItemProtocol {
   public let id: UUID
-  public let sectionKey: String
+  public let sectionKey: Key
+  //  public let sectionKey: AnyInfoBarSectionKey
+  //  public let sectionKey: String
   public let label: QuickLabel
   public let content: String
 }
 
 extension InfoBarItem {
   public init(
-    sectionKey: String,
+    sectionKey: Key,
     label: QuickLabel,
     content: String
   ) {
