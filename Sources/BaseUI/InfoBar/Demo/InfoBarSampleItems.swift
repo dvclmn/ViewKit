@@ -24,7 +24,7 @@ extension SampleContent.ExampleItem: InfoBarSection {
 
     return InfoBarItem(
       sectionKey: Self.sectionTitle,
-      label: self.,
+      label: self.labe,
       content: text ?? "nil"
     )
   }

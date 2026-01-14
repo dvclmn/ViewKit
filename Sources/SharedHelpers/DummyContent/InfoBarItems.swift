@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import BasePrimitives
 
 extension SampleContent {
   public struct ExampleDataStore {
@@ -41,7 +42,7 @@ extension SampleContent {
 }
 
 extension SampleContent {
-  public enum ExampleItem: String, Sendable {
+  public enum ExampleItem: String, LabeledItem, Sendable {
     case counts
     case strokeCountCompleted
     case touchModeActive
