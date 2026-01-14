@@ -30,17 +30,6 @@ public struct UnifiedDragModifier: ViewModifier {
     /// Initialize state based on behavior
     self._dragState = State(initialValue: .initial(for: behavior))
 
-//    switch behavior {
-//      case .marquee:
-//        self._dragState = State(initialValue: .marquee(origin: nil))
-//        
-//      case .cumulative(_, let axes, _):
-//        self._dragState = State(
-//          initialValue: .cumulative(
-//            controller: CumulativeDragController(axes: axes, strategy: .external)
-//          )
-//        )
-//    }
   }
 
   public func body(content: Content) -> some View {
@@ -61,7 +50,7 @@ extension UnifiedDragModifier {
         dragState.handleDragChange(value, behavior: behavior)
       }
       .onEnded { _ in
-        dragState
+        dragState.handleDragEnd(behavior: behavior)
 //        dragState.handleDragChange(<#T##value: DragGesture.Value##DragGesture.Value#>, behavior: <#T##DragBehavior#>)
 //        dragState.handleDragEnd(behavior: behavior)
       }

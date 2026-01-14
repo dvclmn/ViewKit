@@ -8,7 +8,7 @@
 import CoreTools
 import SwiftUI
 
-//public typealias MarqueeDragOutput = (PointerInteraction?) -> Void
+//
 //
 //public struct MarqueeDragModifier: ViewModifier {
 //  @Environment(\.shouldRenderDragRect) private var shouldRenderDragRect
