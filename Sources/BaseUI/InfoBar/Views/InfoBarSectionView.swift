@@ -33,6 +33,7 @@ struct InfoBarSectionView: View {
 
       } header: {
         MaybeLabel(sectionTitle)
+          .environment(\.labelDisplay, .hidden)
           .fontWeight(.semibold)
           .frame(maxHeight: .infinity)
           .padding(.horizontal, Styles.sizeTiny.bump)

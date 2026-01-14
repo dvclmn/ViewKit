@@ -14,6 +14,54 @@ public struct MaybeLabel: View {
   let label: QuickLabel
   let isPlain: Bool
 
+  public var body: some View {
+
+    MainLabelView()
+
+  }
+}
+
+extension MaybeLabel {
+  private var isHidden: Bool {
+    labelDisplay?.isHidden ?? false
+  }
+
+  @ViewBuilder
+  private func MainLabelView() -> some View {
+    if let icon = label.icon {
+      Label {
+        Text(label.text)
+      } icon: {
+
+        /// Icon-specific styles in here
+
+        if isPlain {
+          IconView(icon)
+        } else {
+          IconView(icon)
+            .commonLabelStyles(for: .icon, display: labelDisplay)
+        }
+      }
+
+    } else {
+      if isHidden {
+        Label {
+          Text(label.text)
+        } icon: {
+          EmptyView()
+        }
+        .labelsHidden()
+
+      } else {
+        Text(label.text)
+      }
+    }
+  }
+}
+
+// MARK: - Initialisers
+extension MaybeLabel {
+
   public init(
     _ label: QuickLabel,
     isPlain: Bool = false
@@ -45,27 +93,5 @@ public struct MaybeLabel: View {
       self.label = QuickLabel(text, icon: nil)
     }
     self.isPlain = isPlain
-  }
-
-  public var body: some View {
-
-    if let icon = label.icon {
-      Label {
-        Text(label.text)
-      } icon: {
-
-        /// Icon-specific styles in here
-
-        if isPlain {
-          IconView(icon)
-        } else {
-          IconView(icon)
-            .commonLabelStyles(for: .icon, display: labelDisplay)
-        }
-      }
-
-    } else {
-      Text(label.text)
-    }
   }
 }
