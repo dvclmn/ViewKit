@@ -8,7 +8,7 @@
 import CoreTools
 import SwiftUI
 
-public typealias ZoomOutput = (CGFloat, InteractionPhase) -> Void
+//public typealias ZoomOutput = (CGFloat, InteractionPhase) -> Void
 
 public struct ZoomModifier: ViewModifier {
   @Environment(\.canvasZoomRange) private var zoomRange

@@ -16,9 +16,18 @@ public enum PointerInteraction {
   case tap(CGPoint)
 
   /// This CGRect should arrive here *already* standardised
+  /// **Worth noting**:
+  /// A Pointer Drag can drag 'anything'; it may cause a zoom
+  /// value to scale up and down, or dragging a Pan offset,
+  /// a Layer position, etc.
   case drag(CGRect, InteractionPhase)
   
   /// Doesn't require an explicit phase; phase is inferred
   /// from the presence of a value. Nil == .ended
   case hover(CGPoint?)
 }
+
+//public struct DragState {
+//  private(set) var current: CGFloat
+//  private(set) var phase: InteractionPhase
+//}
