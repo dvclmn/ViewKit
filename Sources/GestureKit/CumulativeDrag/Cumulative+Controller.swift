@@ -86,9 +86,8 @@ struct CumulativeDragController {
   /// The chosen ownership strategy.
   let strategy: Strategy
 
-  
   /// The anchor point corresponding to the offset at drag start.
-  private var anchor: CGPoint?
+  private(set) var anchor: CGPoint?
 
   /// The current offset value owned by this controller in internal mode.
   /// Mirrors the owned value; unused in external mode except for API consistency.
@@ -132,16 +131,25 @@ extension CumulativeDragController {
   mutating func begin(with currentExternalValue: CGSize? = nil) {
     switch strategy {
       case .external:
-        guard let currentExternalValue else {
-          fatalError(
-            "CumulativeDragController: begin(with:) requires currentExternalValue for external strategy")
-        }
-        anchor = CGPoint(fromSize: currentExternalValue)
-
+        guard let val = currentExternalValue else { return }
+        anchor = CGPoint(x: val.width, y: val.height)
       case .internal:
-        anchor = CGPoint(fromSize: currentValue)
+        anchor = CGPoint(x: currentValue.width, y: currentValue.height)
     }
   }
+//  mutating func begin(with currentExternalValue: CGSize? = nil) {
+//    switch strategy {
+//      case .external:
+//        guard let currentExternalValue else {
+//          fatalError(
+//            "CumulativeDragController: begin(with:) requires currentExternalValue for external strategy")
+//        }
+//        anchor = CGPoint(fromSize: currentExternalValue)
+//
+//      case .internal:
+//        anchor = CGPoint(fromSize: currentValue)
+//    }
+//  }
 
   /// Updates the offset by applying the given translation delta, respecting axis constraints,
   /// and returns the updated offset.
@@ -149,24 +157,38 @@ extension CumulativeDragController {
   /// - Parameter translation: The latest drag translation delta.
   /// - Returns: The accumulated offset.
   mutating func update(translation: CGSize) -> CGSize {
-    guard let anchor = anchor else {
-      /// If not anchored, just return current value
-      return value
-    }
-
+    guard let anchor = anchor else { return value }
+    
     let base = CGSize(width: anchor.x, height: anchor.y)
     let updated = applyAxis(base: base, translation: translation)
-
+    
     switch strategy {
       case .external:
         lastComputedValue = updated
-        return updated
       case .internal:
         currentValue = updated
-        lastComputedValue = updated
-        return updated
     }
+    return updated
   }
+//  mutating func update(translation: CGSize) -> CGSize {
+//    guard let anchor = anchor else {
+//      /// If not anchored, just return current value
+//      return value
+//    }
+//
+//    let base = CGSize(width: anchor.x, height: anchor.y)
+//    let updated = applyAxis(base: base, translation: translation)
+//
+//    switch strategy {
+//      case .external:
+//        lastComputedValue = updated
+//        return updated
+//      case .internal:
+//        currentValue = updated
+//        lastComputedValue = updated
+//        return updated
+//    }
+//  }
 
   /// Ends tracking and clears the anchor.
   mutating func end() {

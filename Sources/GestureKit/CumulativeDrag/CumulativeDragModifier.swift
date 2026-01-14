@@ -12,7 +12,7 @@ import SwiftUI
 /// how far it has been dragged, so the *drag distance accumulates*.
 struct CumulativeDragGestureModifier: ViewModifier {
 
-  @State private var trackerOld = CumulativeDragTracker(axes: .all)
+  //  @State private var trackerOld = CumulativeDragTracker(axes: .all)
   @State private var tracker: CumulativeDragController
   @Binding var offset: CGSize
   let isEnabled: Bool
@@ -28,7 +28,7 @@ struct CumulativeDragGestureModifier: ViewModifier {
   ) {
     self._offset = offset
     self._tracker = State(
-      initialValue: CumulativeDragController(axes: axes, strategy: .internal(initial: offset.wrappedValue))
+      initialValue: CumulativeDragController(axes: axes, strategy: .external)
     )
     self.isEnabled = isEnabled
     self.minDragDistance = minDragDistance
@@ -37,16 +37,16 @@ struct CumulativeDragGestureModifier: ViewModifier {
 
   func body(content: Content) -> some View {
     content
-      .gesture(
-        CumulativeDragGesture(
-          tracker: $trackerOld,
-          offset: $offset,
-          minDragDistance: minDragDistance,
-          isDragging: isDragging
-        ),
-        isEnabled: isEnabled
-      )
-//      .gesture(dragGesture, isEnabled: isEnabled)
+      //      .gesture(
+      //        CumulativeDragGesture(
+      //          tracker: $trackerOld,
+      //          offset: $offset,
+      //          minDragDistance: minDragDistance,
+      //          isDragging: isDragging
+      //        ),
+      //        isEnabled: isEnabled
+      //      )
+      .gesture(dragGesture, isEnabled: isEnabled)
   }
 }
 
@@ -55,8 +55,14 @@ extension CumulativeDragGestureModifier {
     DragGesture(minimumDistance: minDragDistance)
       .onChanged { value in
 
-        tracker.begin(with: offset)
+        // 1. Only anchor once at the very beginning of this specific drag
+        if tracker.anchor == nil {
+          tracker.begin(with: offset)
+        }
+
+        // 2. Update the binding using the stable anchor
         offset = tracker.update(translation: value.translation)
+
         isDragging(true)
         //      tracker.beginIfNeeded(latestValue: offset)
         //      guard let newOffset = tracker.computeOffset(translation: gestureValue.translation) else { return }
