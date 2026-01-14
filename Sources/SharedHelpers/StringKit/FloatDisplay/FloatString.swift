@@ -22,36 +22,18 @@ public protocol FloatRenderable: StringRenderable {
 extension FloatRenderable {
 
   public func render(using format: DisplayFormat = .default) -> String {
-    let toFormat = Double(value)
-//    let intLength: Range<Int>
-//
-//    if let integerLength = format.integerLength {
-//      intLength = integerLength..<integerLength
-//    } else {
-//      intLength = 1..<Int.max
-//    }
-
-    return toFormat.formatted(
+    Double(value).formatted(
       .number
         .precision(
-          //          .integerAndFractionLength(
-          //            integerLimits: Ra,
-          //            fractionLimits:
-          //          )
-
-          //          .fractionLength(format.decimalPlaces)
-
           .integerAndFractionLength(
             integer: format.integerLength ?? 0,
             fraction: format.decimalPlaces
           )
-          //          .integerAndFractionLength(
-          //            integerLimits: intLength,
-          //            fractionLimits: format.decimalPlaces
-          //          )
         )
-
         .grouping(format.grouping)
+//        .sign(strategy: .automatic)
+//        .sign(strategy: .never)
+//        .sign(strategy: .always(includingZero: true))
     )
   }
 

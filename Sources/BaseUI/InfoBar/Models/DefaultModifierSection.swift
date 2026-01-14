@@ -17,7 +17,7 @@ extension InfoBarItem {
     InfoBarItem(
       sectionKey: InfoBarSectionID(ModifiersSectionKey.self),
       label: QuickLabel("Modifiers", symbol: "keyboard"),
-      content: modifiers?.displayName(
+      text: modifiers?.displayName(
         elements: .icon,
         separator: "",
         emptyText: ""

@@ -11,11 +11,9 @@ import Foundation
 
 @CaseDetection(includesNames: true)
 public enum DisplayBlock {
-  case text(String)
 
+  case text(String)
   case indented(Indented)
-  //  case text(String)
-  //  case indented(Indented)
   case float(any FloatRenderable)
   case floatGroup(any PropertiesLabeled)
   case display(any DisplayRenderable)
@@ -43,11 +41,38 @@ extension DisplayBlock: DisplayRenderable {
   //    }
   //  }
 }
+//extension DisplayBlock: Equatable, Hashable {
+//  public static func == (lhs: DisplayBlock, rhs: DisplayBlock) -> Bool {
+//    switch (lhs, rhs) {
+//      case (.text(let a), .text(let b)):
+//        return a == b
+//      case (.indented(let a), .indented(let b)):
+//        return a == b
+//      default:
+//        // Existential cases can't be meaningfully compared
+//        return false
+//    }
+//  }
+//
+//  public func hash(into hasher: inout Hasher) {
+//    switch self {
+//      case .text(let value):
+//        hasher.combine(0)
+//        hasher.combine(value)
+//      case .indented(let indented):
+//        hasher.combine(1)
+//        hasher.combine(indented)
+//      default:
+//        // Existential cases: hash as a constant
+//        hasher.combine(-1)
+//    }
+//  }
+//}
 
 extension DisplayBlock {
   var indentationDepth: Int {
     switch self {
-//      case .text, .float, .floatGroup, .display: 0
+      //      case .text, .float, .floatGroup, .display: 0
       case .indented(let indented):
         1 + (indented.content.map(\.indentationDepth).max() ?? 0)
       default: 0

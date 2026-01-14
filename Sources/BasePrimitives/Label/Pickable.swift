@@ -16,7 +16,7 @@ where Self: CaseIterable, Self.AllCases: RandomAccessCollection {
   func isSelected(current: Self) -> Bool
 }
 
-extension Pickable {
+extension Pickable where Self: Equatable {
   public func isSelected(current: Self) -> Bool {
     return self == current
   }
