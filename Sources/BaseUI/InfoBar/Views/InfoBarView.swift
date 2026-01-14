@@ -13,33 +13,38 @@ public struct InfoBar: View {
   @Environment(\.modifierKeys) private var modifierKeys
 
   let items: [InfoBarSectionID: [InfoBarItem]]
-  //  let items: [String: any InfoBarSection]
-  //  let items: [String: [InfoBarItem]]
 
   public init(items: [InfoBarItem]) {
-    //  public init(items: any InfoBarSection) {
     let grouped = Dictionary(grouping: items, by: \.sectionKey)
     self.items = grouped
   }
 
   public var body: some View {
-    HStack(alignment: .firstTextBaseline, spacing: 0) {
-      if !items.isEmpty {
-        ForEach(
-          items.sorted(byKeyPath: \.key.title), id: \.key
-        ) { key, items in
-          InfoBarSectionView(sectionTitle: key.title, items: items)
-        }  // END foreach
-        InfoBarSectionView(sectionTitle: "Modifiers", items: [.modifiersSection(modifierKeys)])
-        Spacer()
-      } else {
-        NoItems("No items to display")
-      }
-    }  // END hstack
-    //    .padding(.horizontal, Styles.sizeSmall)
+
+    ScrollView(.horizontal) {
+
+      HStack(alignment: .firstTextBaseline, spacing: 0) {
+        if !items.isEmpty {
+          ForEach(
+            items.sorted(byKeyPath: \.key.title), id: \.key
+          ) { key, items in
+            InfoBarSectionView(sectionTitle: key.title, items: items)
+          }  // END foreach
+          InfoBarSectionView(sectionTitle: "Modifiers", items: [.modifiersSection(modifierKeys)])
+          Spacer()
+        } else {
+          NoItems("No items to display")
+        }
+      }  // END hstack
+    }
+//    .safeAreaPadding(.horizontal, Styles.sizeTiny)
+    .scrollBounceBehavior(.basedOnSize)
+    .scrollIndicators(.hidden)
+
     .font(.caption)
     .fontWeight(.medium)
     .frame(height: Styles.infoBarHeight)
+
     .background {
       Rectangle()
         .fill(.thinMaterial)
