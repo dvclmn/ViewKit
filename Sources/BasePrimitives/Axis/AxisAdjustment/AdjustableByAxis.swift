@@ -19,7 +19,7 @@ import Foundation
 /// - Reconstruction
 ///
 /// And lets the convention do the mapping.
-public protocol AdjustableByAxis: AxisKeyPathCompatible {}
+public protocol AdjustableByAxis: AxisKeyPathWritable {}
 
 // MARK: - Adjustable
 extension CGSize: AdjustableByAxis {}

@@ -18,6 +18,11 @@ public protocol AxisKeyPathWritable: AxisKeyPathReadable {
   static var secondaryKey: WritableKeyPath<Self, Component> { get }
 }
 
+extension AxisKeyPathWritable {
+  public static var primaryKey: KeyPath<Self, Component> { primaryKey }
+  public static var secondaryKey: KeyPath<Self, Component> { secondaryKey }
+}
+
 public protocol AxisKeyPathReadable {
   associatedtype Component
 

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+//import CasePaths
 
 /// Note: `GridAxis` is about how indices progress across the grid,
 /// not about how the things themselves are shaped.
@@ -23,6 +24,7 @@ import SwiftUI
 ///       │   │   │   │   row 2
 ///
 /// ```
+//@CasePathable
 public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
   case horizontal  // Column
   case vertical  // Row
@@ -126,6 +128,11 @@ public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
 
     }
   }
+  
+  public func pathTest() -> String {
+    let thing: KeyPath<Self, Self> = \Self.Cases.horizontal
+  }
+    
 
   public func hasOverflow(
     canvasFrameInViewport: CGRect?,

@@ -6,60 +6,58 @@
 //
 
 import SwiftUI
+//import CasePaths
 
-extension CGSize: AxisKeyPathCompatible {
+extension CGSize: AxisKeyPathWritable {
   public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.width }
   public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.height }
 }
 
-extension CGRect: AxisKeyPathCompatible {
+extension CGRect: AxisKeyPathWritable {
   public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.size.width }
   public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.size.height }
 }
 
-extension CGPoint: AxisKeyPathCompatible {
+extension CGPoint: AxisKeyPathWritable {
   public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.x }
   public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.y }
 }
 
-extension UnitPoint: AxisKeyPathCompatible {
+extension UnitPoint: AxisKeyPathWritable {
   public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.x }
   public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.y }
 }
 
-extension EdgeInsets: AxisKeyPathCompatible {
+extension EdgeInsets: AxisKeyPathWritable {
   public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.horizontalUniform }
   public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.verticalUniform }
 }
 
-extension Axis: AxisKeyPathCompatible {
-  public static var primaryKey: WritableKeyPath<Self, Self> { \.horizontal }
-  public static var secondaryKey: WritableKeyPath<Self, Self> { \.vertical }
-}
-
-
 // MARK: - Index-based conformace
-extension GridPosition: AxisKeyPathCompatible {
+extension GridPosition: AxisKeyPathWritable {
   public static var primaryKey: WritableKeyPath<Self, Int> { \.column }
   public static var secondaryKey: WritableKeyPath<Self, Int> { \.row }
 }
 
-extension UnitSize: AxisKeyPathCompatible {
+extension UnitSize: AxisKeyPathWritable {
   public static var primaryKey: WritableKeyPath<Self, UnitLength> { \.width }
   public static var secondaryKey: WritableKeyPath<Self, UnitLength> { \.height }
 }
 
-extension UnitRect: AxisKeyPathCompatible {
+extension UnitRect: AxisKeyPathWritable {
   public static var primaryKey: WritableKeyPath<Self, UnitLength> { \.size.width }
   public static var secondaryKey: WritableKeyPath<Self, UnitLength> { \.size.height }
 }
 
-extension GridDimensions: AxisKeyPathCompatible {
+extension GridDimensions: AxisKeyPathWritable {
   public static var primaryKey: WritableKeyPath<Self, Int> { \.width }
   public static var secondaryKey: WritableKeyPath<Self, Int> { \.height }
 }
 
-
+//extension GridAxis: AxisKeyPathReadable {
+//  public static var primaryKey: KeyPath<Self, Void> { \Self.Cases.horizontal }
+//  public static var secondaryKey: KeyPath<Self, Void> { \Self.Cases.vertical }
+//}
 
 //extension CGSize: AxisCompatible {
 //  public var naturalComponents: (primary: CGFloat, secondary: CGFloat) { (width, height) }

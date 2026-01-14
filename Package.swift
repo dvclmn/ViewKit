@@ -50,6 +50,7 @@ let package = Package(
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
+//    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
     //    .package(
     //      url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
   ],
@@ -59,7 +60,7 @@ let package = Package(
     .macro(
       name: "BaseMacrosImplementation",
       dependencies: [
-                .module(.primitives),
+        .module(.primitives),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
@@ -91,7 +92,7 @@ let package = Package(
 
     .target(
       name: "BasePrimitives",
-      dependencies: [],
+//      dependencies: [.casePaths],
     ),
 
     .target(
@@ -204,6 +205,9 @@ extension Target.Dependency {
   }
   static var sharing: Self {
     .product(name: "Sharing", package: "swift-sharing")
+  }
+  static var casePaths: Self {
+    .product(name: "CasePaths", package: "swift-case-paths")
   }
   //  static var identifiedCollections: Self {
   //    .product(name: "IdentifiedCollections", package: "swift-identified-collections")

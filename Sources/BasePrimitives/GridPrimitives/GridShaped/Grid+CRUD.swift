@@ -75,7 +75,7 @@ extension GridShaped {
   }
 
   public mutating func resize(
-    by delta: GridDelta,
+    by amount: GridDimensions,
     at boundaryPoint: GridBoundaryPoint
   ) {
     let edges = boundaryPoint.affectedEdges
