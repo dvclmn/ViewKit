@@ -8,17 +8,11 @@
 import CoreTools
 import SwiftUI
 
-//private enum DragIntent {
-//  case undecided
-//  case dragging
-//}
-
 public typealias MarqueeDragOutput = (PointerInteraction?) -> Void
 
 public struct MarqueeDragModifier: ViewModifier {
   @Environment(\.shouldRenderDragRect) private var shouldRenderDragRect
 
-  //  @State private var intent: DragIntent = .undecided
   @State private var dragOrigin: CGPoint?
   @State private var rectToRender: CGRect?
 
