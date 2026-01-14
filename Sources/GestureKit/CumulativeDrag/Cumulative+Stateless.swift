@@ -68,29 +68,32 @@ struct CumulativeDragTracker {
   /// - Returns: The accumulated offset if tracking has begun, or nil if not anchored.
   func computeOffset(translation: CGSize) -> CGSize? {
     guard let initialOffset else { return nil }
-
-    return switch axes {
-      case .all:
-        initialOffset + translation
-
-      case .horizontal:
-        CGSize(
-          width: initialOffset.width + translation.width,
-          height: initialOffset.height
-        )
-
-      case .vertical:
-        CGSize(
-          width: initialOffset.width,
-          height: initialOffset.height + translation.height
-        )
-
-      default: nil
-    }
+    return axes.computeOffset(from: initialOffset, with: translation)
+    
   }
 
   /// Ends tracking and clears the anchor.
   mutating func end() {
     initialOffset = nil
+  }
+}
+
+extension GridAxis.Set {
+  func computeOffset(from base: CGSize, with translation: CGSize) -> CGSize {
+    switch self {
+      case .horizontal:
+        CGSize(
+          width: base.width + translation.width,
+          height: base.height
+        )
+
+      case .vertical:
+        CGSize(
+          width: base.width,
+          height: base.height + translation.height
+        )
+      default:  // Aka `all`
+        base + translation
+    }
   }
 }

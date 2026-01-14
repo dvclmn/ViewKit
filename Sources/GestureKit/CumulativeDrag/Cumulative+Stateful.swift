@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreTools
 
 ///
 /// A stateful drag offset tracker that owns and accumulates offset state internally,

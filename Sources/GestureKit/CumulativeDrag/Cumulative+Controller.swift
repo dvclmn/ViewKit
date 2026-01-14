@@ -8,7 +8,6 @@
 import BasePrimitives
 import SwiftUI
 
-///
 /// A unified drag offset controller supporting two strategies:
 /// 1. External source-of-truth mode: stateless, relying on external current offset state.
 /// 2. Internal owned state mode: stateful, owning and accumulating offset internally.
@@ -77,20 +76,11 @@ import SwiftUI
 ///   Rectangle()
 ///     .offset(offset)
 ///     .gesture(dragGesture)
-/// ```
 ///
+/// ```
 struct CumulativeDragController {
-  /// Strategy determining whether the controller owns its state or relies on an external source.
-  enum Strategy {
-    /// External source-of-truth mode.
-    /// The controller accepts the current offset at drag start.
-    case external
-    /// Internal owned state mode.
-    /// The controller owns the offset starting from the given initial value.
-    case `internal`(initial: CGSize)
-  }
 
-  /// The axis along which drag offsets are accumulated.
+  /// The axis/axes along which drag offsets are accumulated.
   let axes: GridAxis.Set
 
   /// The chosen ownership strategy.
@@ -106,6 +96,10 @@ struct CumulativeDragController {
   /// The last computed offset value in external mode.
   private var lastComputedValue: CGSize?
 
+}
+
+extension CumulativeDragController {
+
   /// Creates a new controller with the specified axis mode and strategy.
   /// - Parameters:
   ///   - axisMode: Axis constraints for offset accumulation.
@@ -114,10 +108,8 @@ struct CumulativeDragController {
     self.axes = axes
     self.strategy = strategy
     switch strategy {
-      case .external:
-        self.currentValue = .zero
-      case .internal(let initial):
-        self.currentValue = initial
+      case .external: self.currentValue = .zero
+      case .internal(let initial): self.currentValue = initial
     }
   }
 
@@ -127,10 +119,8 @@ struct CumulativeDragController {
   /// - For `.internal` strategy, returns the owned offset value.
   var value: CGSize {
     switch strategy {
-      case .external:
-        return lastComputedValue ?? .zero
-      case .internal:
-        return currentValue
+      case .external: lastComputedValue ?? .zero
+      case .internal: currentValue
     }
   }
 
@@ -141,11 +131,12 @@ struct CumulativeDragController {
   mutating func begin(with currentExternalValue: CGSize? = nil) {
     switch strategy {
       case .external:
-        guard let externalValue = currentExternalValue else {
+        guard let currentExternalValue else {
           fatalError(
             "CumulativeDragController: begin(with:) requires currentExternalValue for external strategy")
         }
-        anchor = CGPoint(fromSize: externalValue)
+        anchor = CGPoint(fromSize: currentExternalValue)
+
       case .internal:
         anchor = CGPoint(fromSize: currentValue)
     }
@@ -158,7 +149,7 @@ struct CumulativeDragController {
   /// - Returns: The accumulated offset.
   mutating func update(translation: CGSize) -> CGSize {
     guard let anchor = anchor else {
-      // If not anchored, just return current value
+      /// If not anchored, just return current value
       return value
     }
 
@@ -193,7 +184,7 @@ struct CumulativeDragController {
     guard case .internal = strategy else { return }
     currentValue = newValue
     if anchor != nil {
-      // Update anchor to match newValue so translation remains consistent
+      /// Update anchor to match newValue so translation remains consistent
       anchor = CGPoint(fromSize: newValue)
     }
   }
@@ -216,13 +207,14 @@ struct CumulativeDragController {
   ///   - translation: The drag translation delta.
   /// - Returns: The new offset respecting the axis mode.
   private func applyAxis(base: CGSize, translation: CGSize) -> CGSize {
-    switch axes {
-      case .both:
-        return CGSize(width: base.width + translation.width, height: base.height + translation.height)
-      case .horizontal:
-        return CGSize(width: base.width + translation.width, height: base.height)
-      case .vertical:
-        return CGSize(width: base.width, height: base.height + translation.height)
-    }
+    axes.computeOffset(from: base, with: translation)
+    //    switch axes {
+    //      case .both:
+    //        return CGSize(width: base.width + translation.width, height: base.height + translation.height)
+    //      case .horizontal:
+    //        return CGSize(width: base.width + translation.width, height: base.height)
+    //      case .vertical:
+    //        return CGSize(width: base.width, height: base.height + translation.height)
+    //    }
   }
 }
