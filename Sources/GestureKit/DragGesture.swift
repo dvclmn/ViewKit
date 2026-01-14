@@ -8,14 +8,24 @@
 import SwiftUI
 
 extension DragGesture.Value {
+
+  public enum EndLocationKind {
+    case standard
+    case predicted
+  }
   /// Will return `predictedEndLocation` for the end location,
   /// if `usingPredicated` is true. Otherwise will return `location`
+  ///
+  /// Note: Using explicit parameter for `start`, in case this comes from
+  /// a stored start location, rather than the 'live' one from the Gesture.
   public func toRect(
-    usingPredicated: Bool = true
+    from start: CGPoint,
+    end locationKind: EndLocationKind,
+    //    usingPredicated: Bool = true
   ) -> CGRect {
     CGRect.boundingRect(
-      from: startLocation,
-      to: usingPredicated ? predictedEndLocation : location
+      from: start,
+      to: locationKind == .predicted ? predictedEndLocation : location
     )
   }
 }
