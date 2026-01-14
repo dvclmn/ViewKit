@@ -25,7 +25,9 @@ struct GestureKitDemoView: View {
       //        interactionKind = .tap(location)
       //      }
 
-      .marqueeDrag()
+      .marqueeDrag(dragThreshold: 10) { interaction in
+        self.interactionKind = interaction
+      }
 //      .gesture(
 //        ExclusiveGesture(
 //          TapGesture()

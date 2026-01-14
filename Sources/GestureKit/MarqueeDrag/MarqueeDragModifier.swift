@@ -18,7 +18,7 @@ public typealias MarqueeDragOutput = (PointerInteraction?) -> Void
 public struct MarqueeDragModifier: ViewModifier {
   @Environment(\.shouldRenderDragRect) private var shouldRenderDragRect
 
-//  @State private var intent: DragIntent = .undecided
+  //  @State private var intent: DragIntent = .undecided
   @State private var dragOrigin: CGPoint?
   @State private var rectToRender: CGRect?
 
@@ -28,6 +28,10 @@ public struct MarqueeDragModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
+      .onTapGesture { location in
+        didUpdateRect(.tap(location))
+        //            interactionKind = .tap(location)
+      }
       .gesture(dragGesture)
       .modifier(DrawMarqueeModifier(rect: rectIfNeeded))
   }
@@ -40,49 +44,23 @@ extension MarqueeDragModifier {
   }
 
   private var dragGesture: some Gesture {
-    /// IMPORTANT: `minimumDistance` must be set to zero,
-    /// to allow both Drag *and* Tap detection. These are
-    /// disambiguated via `dragThreshold`
-    DragGesture(minimumDistance: 0)
+    DragGesture(minimumDistance: dragThreshold)
 
       .onChanged { value in
 
         if dragOrigin == nil {
           dragOrigin = value.startLocation
-
-          /// Register a 'press'
-          didUpdateRect(.tap(value.startLocation))
         }
-
         guard let origin = dragOrigin else { return }
+        let rect = value.toRect(from: origin, end: .standard)
 
-        let rect = value.toRect(from: origin, end: .predicted)
-        //        CGRect(
-        //          origin: origin,
-        //          size: CGSize(
-        //            width: value.location.x - origin.x,
-        //            height: value.location.y - origin.y
-        //          )
-        //        ).standardized
-
-        let isDragPermitted = rect.size.diagonalLength >= dragThreshold
-
-        if intent != .dragging && isDragPermitted {
-          intent = .dragging
-        }
-
-        if intent == .dragging {
-          rectToRender = rect
-          didUpdateRect(.drag(rect, .changed))
-        }
+        rectToRender = rect
+        didUpdateRect(.drag(rect, .changed))
       }
 
-      .onEnded { value in
-
+      .onEnded { _ in
         didUpdateRect(nil)
-
         rectToRender = nil
-        intent = .undecided
         dragOrigin = nil
       }
   }
