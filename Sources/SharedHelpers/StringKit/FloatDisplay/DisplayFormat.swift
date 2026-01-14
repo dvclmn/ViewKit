@@ -40,4 +40,9 @@ extension DisplayFormat {
     )
   }
 
+  public func with(integerLength: Int) -> Self {
+    var copy = self
+    copy.integerLength = integerLength
+    return copy
+  }
 }

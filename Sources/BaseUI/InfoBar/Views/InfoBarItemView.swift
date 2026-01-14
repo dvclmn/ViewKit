@@ -32,6 +32,7 @@ public struct InfoBarItemView: View {
       Text(item.content)
         /// Taking the edge off the brightness
         .opacity(0.9)
+        .monospacedDigit()
 
       Divider().opacity(0.6)
       /// Adds breathing room between the end of the content and its trailing Divider
