@@ -9,7 +9,7 @@ import BasePrimitives
 import SwiftUI
 
 public struct InfoBarItemsModifier: ViewModifier {
-  //  @Environment(\.isEnabled) private var isEnabled
+
   @State private var items: [InfoBarItem] = []
 
   let isEnabled: Bool

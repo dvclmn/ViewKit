@@ -12,7 +12,7 @@ import SwiftUI
 
 public struct InfoBarKey: PreferenceKey {
 
-//  public static let defaultValue: [String: InfoBarItem] = [:]
+  //  public static let defaultValue: [String: InfoBarItem] = [:]
   public static let defaultValue: [InfoBarItem] = []
 
   public static func reduce(value: inout [InfoBarItem], nextValue: () -> [InfoBarItem]) {
@@ -26,8 +26,15 @@ public struct InfoBarKey: PreferenceKey {
 
 // MARK: - Modifier for Child Views, to add to InfoBar
 extension View {
-  public func addInfoBarItems(_ items: [InfoBarItem]) -> some View {
-    return self.preference(key: InfoBarKey.self, value: items)
+  public func addInfoBarItems<T>(_ items: T.Type, source: T.Source) -> some View
+  where T: InfoBarSection & CaseIterable {
+    return self.preference(
+      key: InfoBarKey.self,
+      value: items.items(from: source, format: .default)
+    )
   }
-}
 
+  //  public func addInfoBarItems(_ items: [InfoBarItem]) -> some View {
+  //    return self.preference(key: InfoBarKey.self, value: items)
+  //  }
+}

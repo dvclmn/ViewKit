@@ -10,34 +10,16 @@ import Foundation
 
 extension SampleContent.ExampleItem: InfoBarSection {
 
-  public func makeItem(from source: SampleContent.ExampleDataStore) -> String {
-    let displayFormat: DisplayFormat = .init(
-      decimalPlaces: 0,
-      labelStyle: .none,
-      separatorVisibility: .component
-    )
-    let text: String? =
-      switch self {
-        case .clickedDown: source.isClicked.description
-        default: nil
-      }
+  public func getContent(
+    from source: SampleContent.ExampleDataStore,
+    format: DisplayFormat
+  ) -> String {
 
-    return InfoBarItem(
-      sectionKey: Self.sectionTitle,
-      label: self.labe,
-      content: text ?? "nil"
-    )
-  }
-
-  public static func buildItems(from source: ExampleStore) -> [InfoBarItem] {
-
-    allCases.map { item in
-      InfoBarItem(
-        sectionKey: sectionTitle,
-        label: item.label,
-        content: item.content(source)
-      )
+    return switch self {
+      case .clickedDown: source.isClicked.description
+      default: "nil"
     }
+
   }
 
   //  func makeItem(from source: CanvasHandler) -> BaseUI.InfoBarItem {

@@ -12,11 +12,11 @@ public struct InfoBar: View {
   @Environment(\.backgroundStyle) private var backgroundStyle
   @Environment(\.modifierKeys) private var modifierKeys
 
-//  let items: [String: any InfoBarSection]
+  //  let items: [String: any InfoBarSection]
   let items: [String: [InfoBarItem]]
 
   public init(items: [InfoBarItem]) {
-//  public init(items: any InfoBarSection) {
+    //  public init(items: any InfoBarSection) {
     let grouped = Dictionary(grouping: items, by: \.sectionKey)
     self.items = grouped
   }
@@ -61,7 +61,7 @@ public struct InfoBar: View {
   }
 }
 extension InfoBar {
-  
+
   private var modifiersItem: InfoBarItem {
     InfoBarItem(
       sectionKey: "Modifiers",

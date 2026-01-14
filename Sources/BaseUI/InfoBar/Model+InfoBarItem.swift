@@ -5,11 +5,11 @@
 //  Created by Dave Coleman on 7/7/2025.
 //
 
-import BasePrimitives
+import CoreTools
 import Foundation
 
 /// This is made with an enum in mind.
-public protocol InfoBarSection {
+public protocol InfoBarSection: LabeledItem {
   associatedtype Source
 
   /// Provided per-case, e.g. for `case canvasSize`:
@@ -17,17 +17,23 @@ public protocol InfoBarSection {
   var label: QuickLabel { get }
   static var sectionTitle: String { get }
 
-  func getContent(from source: Source) -> String
+  func getContent(
+    from source: Source,
+    format: DisplayFormat
+  ) -> String
 }
 
 extension InfoBarSection where Self: CaseIterable {
 
-  public func items(from source: Source) -> [InfoBarItem] {
+  public static func items(
+    from source: Source,
+    format: DisplayFormat = .default
+  ) -> [InfoBarItem] {
     Self.allCases.map { thing in
       InfoBarItem(
         sectionKey: Self.sectionTitle,
-        label: self.label,
-        content: getContent(from: source)
+        label: thing.label,
+        content: thing.getContent(from: source, format: format)
       )
     }
   }

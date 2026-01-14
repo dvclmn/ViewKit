@@ -7,8 +7,8 @@
 
 //import BaseUI
 
-import LayoutKit
 import BasePrimitives
+import LayoutKit
 import SwiftUI
 
 struct InfoBarSectionView: View {
