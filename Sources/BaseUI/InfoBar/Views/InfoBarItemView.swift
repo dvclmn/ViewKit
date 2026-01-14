@@ -25,11 +25,16 @@ public struct InfoBarItemView: View {
     HStack(spacing: Styles.sizeTiny) {
       MaybeLabel(item.label)
         .environment(\.labelDisplay, itemLabelDisplay)
+      /// Some leading padding here brings the icon in from the edge a bit,
+      /// including the very first item
         .padding(.leading, Styles.sizeTiny)
 
       Text(item.content)
+        /// Taking the edge off the brightness
+        .opacity(0.9)
 
       Divider().opacity(0.6)
+      /// Adds breathing room between the end of the content and its trailing Divider
         .padding(.leading, Styles.sizeNano)
     }
 

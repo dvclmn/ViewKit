@@ -10,18 +10,8 @@ import SwiftUI
 public typealias NumberGrouping = FloatingPointFormatStyle<Double>.Configuration.Grouping
 
 public protocol FloatRenderable: StringRenderable {
-  //public protocol FloatString: StringRenderable {
   associatedtype Value: BinaryFloatingPoint
   var value: Value { get }
-
-  /// This is an early formatting pass, just to get the decimal places and other
-  /// numeric/float based formatting sorted, before other touches, which happen
-  /// within ``PropertiesLabeled/displayString(places:grouping:labelStyle:separators:)``
-  //  func displayString(
-  //    places: Int,
-  //    grouping: NumberGrouping
-  //  ) -> String
-
   func render(using format: DisplayFormat) -> String
 }
 
@@ -33,9 +23,34 @@ extension FloatRenderable {
 
   public func render(using format: DisplayFormat = .default) -> String {
     let toFormat = Double(value)
+//    let intLength: Range<Int>
+//
+//    if let integerLength = format.integerLength {
+//      intLength = integerLength..<integerLength
+//    } else {
+//      intLength = 1..<Int.max
+//    }
+
     return toFormat.formatted(
       .number
-        .precision(.fractionLength(format.decimalPlaces))
+        .precision(
+          //          .integerAndFractionLength(
+          //            integerLimits: Ra,
+          //            fractionLimits:
+          //          )
+
+          //          .fractionLength(format.decimalPlaces)
+
+          .integerAndFractionLength(
+            integer: format.integerLength ?? 0,
+            fraction: format.decimalPlaces
+          )
+          //          .integerAndFractionLength(
+          //            integerLimits: intLength,
+          //            fractionLimits: format.decimalPlaces
+          //          )
+        )
+
         .grouping(format.grouping)
     )
   }

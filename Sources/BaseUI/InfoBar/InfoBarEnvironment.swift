@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 9/7/2025.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 extension EnvironmentValues {
   @Entry public var sectionLabelDisplay: LabelDisplay? = nil
@@ -16,7 +16,7 @@ extension EnvironmentValues {
 public enum InfoBarElement {
   case section
   case item
-  
+
   var isSection: Bool {
     self == .section
   }
@@ -24,11 +24,9 @@ public enum InfoBarElement {
 
 extension View {
   public func infoBarStyle(
-//  public func setInfoBarLabelDisplay(
     for element: InfoBarElement,
     _ display: LabelDisplay
   ) -> some View {
-//    self.environment(\.sectionLabelDisplay, display)
     self.environment(element.isSection ? \.sectionLabelDisplay : \.itemLabelDisplay, display)
   }
 }

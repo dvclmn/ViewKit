@@ -28,7 +28,7 @@ public struct IconView: View {
 
         case .customSymbol(_):
           //        case .customSymbol(let customSymbol):
-          Text("Icon not implemented")
+          Text("Custom Symbol not implemented")
       //          Image(
       //            ImageResource(
       //              name: customSymbol.reference,
@@ -37,6 +37,6 @@ public struct IconView: View {
       //          )
       }
     }
-    
+
   }
 }

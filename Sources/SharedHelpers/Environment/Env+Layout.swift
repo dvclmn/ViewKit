@@ -34,14 +34,12 @@ extension EnvironmentValues {
   /// of the same name, in BaseHelpers' Compatible collection.
   @Entry public var isShowingSectionHeader: Bool = true
   @Entry public var isBackgroundHidden: Bool = false
-  
-  
+
   /// Character columns here refers to a fixed number of characters
   /// (usually monospaced for consistency) in a horizontal line,
   /// usually for the purpose of achieving a predictable layout
   /// with working with varying character counts.
   /// See ``TextColumns`` for an example.
   @Entry public var maxCharacterColumns: Int = 5
-
 
 }
