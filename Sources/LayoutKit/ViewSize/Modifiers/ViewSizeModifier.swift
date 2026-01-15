@@ -14,7 +14,6 @@ public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
 
   @State private var debouncer: AsyncDebouncer?
 
-  let debounceInterval: CGFloat
   let capture: GeometryCapture<Capture>
   let valueOutput: ViewSizeOutput<Capture>
 
@@ -24,15 +23,7 @@ public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
     mode: DebounceMode,
     valueOutput: @escaping ViewSizeOutput<Capture>
   ) {
-    switch mode {
-      case .debounce(let interval):
-        self._debouncer = State(initialValue: AsyncDebouncer())
-        self.debounceInterval = interval
-        
-      case .noDebounce:
-        self._debouncer = State(initialValue: nil)
-        self.debounceInterval = 0
-    }
+    self._debouncer = mode.createDebouncer()
     self.capture = capture
     self.valueOutput = valueOutput
   }
@@ -49,7 +40,7 @@ public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
 
         Task {
           if let debouncer {
-            debouncer.execute(interval: debounceInterval) { @MainActor in
+            debouncer.execute { @MainActor in
 //              print("Geometry change with debouncing.")
               valueOutput(newValue)
             }

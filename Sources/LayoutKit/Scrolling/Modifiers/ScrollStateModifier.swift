@@ -10,25 +10,24 @@ import SwiftUI
 
 public struct ScrollStateModifier: ViewModifier {
 
-  @State private var debouncer: AsyncDebouncer
+//  @State private var debouncer: AsyncDebouncer
+  @State private var debouncer: AsyncDebouncer?
   @State private var hasUpdatedScrollLocation: Bool = false
 
   /// Only supports one Axis at a time
   let axis: Axis
   let tolerance: CGFloat
   let didUpdateScrollContext: (ScrollContext) -> Void
-  let debounceInterval: CGFloat
 
   public init(
     axis: Axis,
     tolerance: CGFloat,
-    debounceInterval: CGFloat,
+    debounceInterval: TimeInterval,
     didUpdateScrollContext: @escaping (ScrollContext) -> Void
   ) {
     self.axis = axis
     self.tolerance = tolerance
-    self._debouncer = State(initialValue: AsyncDebouncer())
-    self.debounceInterval = debounceInterval
+    self._debouncer = State(initialValue: AsyncDebouncer(interval: debounceInterval))
     self.didUpdateScrollContext = didUpdateScrollContext
   }
 
@@ -58,7 +57,7 @@ public struct ScrollStateModifier: ViewModifier {
             return didUpdateScrollContext(newValue)
           }
           Task {
-            debouncer.execute(interval: debounceInterval) { @MainActor in
+            await debouncer.execute { @MainActor in
               if oldValue != newValue {
                 return didUpdateScrollContext(newValue)
               }
