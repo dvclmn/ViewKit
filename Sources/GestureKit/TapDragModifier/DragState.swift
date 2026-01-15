@@ -8,6 +8,36 @@
 import CoreTools
 import SwiftUI
 
+@Observable
+final class DragState {
+//  @Binding var offset: CGSize
+  var behaviour: DragBehavior
+  var phase: DragPhase
+  
+  init(
+//    offset: CGSize,
+    behaviour: DragBehavior,
+    phase: DragPhase
+  ) {
+//    self.offset = offset
+    self.behaviour = behaviour
+    self.phase = phase
+  }
+}
+
+extension DragState {
+  init(behavior: DragBehavior) {
+    
+  }
+//  static func initial(for behavior: DragBehavior, offset: CGSize) -> DragState {
+//    switch behavior {
+//      case .marquee:
+//        DragState(behaviour: behavior, phase: .)
+////      case .marquee: .marquee(.idle)
+////      case .cumulative(_, let axes, _): .cumulative(.idle(controller: .init(axes: axes, strategy: .external)))
+//    }
+//  }
+}
 extension DragState {
 
   mutating func handleDragChange(
@@ -55,12 +85,7 @@ extension DragState {
     }
   }
 
-  static func initial(for behavior: DragBehavior) -> DragState {
-    switch behavior {
-      case .marquee: .marquee(.idle)
-      case .cumulative(_, let axes, _): .cumulative(.idle(controller: .init(axes: axes, strategy: .external)))
-    }
-  }
+
 }
 
 //enum DragState {

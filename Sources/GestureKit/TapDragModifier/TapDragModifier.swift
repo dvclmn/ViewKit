@@ -16,26 +16,31 @@ import SwiftUI
 /// - Marquee sent drag back via callback, now Binding
 /// - Cumulative used Binding for drag offset
 
+public typealias DragUpdate = (Bool) -> Void
+public typealias TapUpdate = (CGPoint) -> Void
+
 public struct UnifiedDragModifier: ViewModifier {
-  
-//  @Binding var offset: CGSize
+
+  @State private var dragState: DragState
+
+  @Binding var offset: CGSize
   let behavior: DragBehavior
   let isEnabled: Bool
   let minimumDistance: CGFloat
-  let includeTapGesture: Bool
-
-  @State private var dragState: DragState
+  let didUpdateTap: TapUpdate
+  //  let includeTapGesture: Bool
 
   init(
     behavior: DragBehavior,
     isEnabled: Bool = true,
     minimumDistance: CGFloat = 5,
-    includeTapGesture: Bool = false
+    didUpdateTap: @escaping TapUpdate
+    //    includeTapGesture: Bool = false
   ) {
     self.behavior = behavior
     self.isEnabled = isEnabled
     self.minimumDistance = minimumDistance
-    self.includeTapGesture = includeTapGesture
+    //    self.includeTapGesture = includeTapGesture
 
     /// Initialize state based on behavior
     self._dragState = State(initialValue: .initial(for: behavior))
@@ -44,12 +49,12 @@ public struct UnifiedDragModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .onTapGesture { location in
-        if includeTapGesture, case .marquee(let onUpdate) = behavior {
-          onUpdate(.tap(location))
-        }
+
+        onUpdate(.tap(location))
+        //        }
       }
       .gesture(dragGesture, isEnabled: isEnabled)
-//      .drawMarqueeRect(rect: canvasHandler.pointerState.dragRect, isEnabled: true)
+    //      .drawMarqueeRect(rect: canvasHandler.pointerState.dragRect, isEnabled: true)
 
   }
 }
@@ -68,35 +73,47 @@ extension UnifiedDragModifier {
 }
 
 extension View {
-  public func marqueeDrag(
-    isEnabled: Bool = true,
-    minimumDistance: CGFloat = 5,
-    includeTap: Bool = true,
-    onUpdate: @escaping (PointerInteraction?) -> Void
+  public func tapDragGesture(
+    
   ) -> some View {
-    self.modifier(
-      UnifiedDragModifier(
-        behavior: .marquee(onUpdate: onUpdate),
-        isEnabled: isEnabled,
-        minimumDistance: minimumDistance,
-        includeTapGesture: includeTap
-      )
-    )
+        self.modifier(
+          UnifiedDragModifier(
+            behavior: .marquee(onUpdate: onUpdate),
+            isEnabled: isEnabled,
+            minimumDistance: minimumDistance,
+            includeTapGesture: includeTap
+          )
+        )
   }
-
-  public func cumulativeDrag(
-    _ offset: Binding<CGSize>,
-    axes: GridAxis.Set = .all,
-    isEnabled: Bool = true,
-    minimumDistance: CGFloat = 5,
-    onDragging: @escaping (Bool) -> Void = { _ in }
-  ) -> some View {
-    self.modifier(
-      UnifiedDragModifier(
-        behavior: .cumulative(offset: offset, axes: axes, onDragging: onDragging),
-        isEnabled: isEnabled,
-        minimumDistance: minimumDistance
-      )
-    )
-  }
+//  public func marqueeDrag(
+//    isEnabled: Bool = true,
+//    minimumDistance: CGFloat = 5,
+//    includeTap: Bool = true,
+//    onUpdate: @escaping (PointerInteraction?) -> Void
+//  ) -> some View {
+//    self.modifier(
+//      UnifiedDragModifier(
+//        behavior: .marquee(onUpdate: onUpdate),
+//        isEnabled: isEnabled,
+//        minimumDistance: minimumDistance,
+//        includeTapGesture: includeTap
+//      )
+//    )
+//  }
+//
+//  public func cumulativeDrag(
+//    _ offset: Binding<CGSize>,
+//    axes: GridAxis.Set = .all,
+//    isEnabled: Bool = true,
+//    minimumDistance: CGFloat = 5,
+//    onDragging: @escaping (Bool) -> Void = { _ in }
+//  ) -> some View {
+//    self.modifier(
+//      UnifiedDragModifier(
+//        behavior: .cumulative(offset: offset, axes: axes, onDragging: onDragging),
+//        isEnabled: isEnabled,
+//        minimumDistance: minimumDistance
+//      )
+//    )
+//  }
 }
