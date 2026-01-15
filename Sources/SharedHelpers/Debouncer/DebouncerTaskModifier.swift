@@ -20,13 +20,13 @@ public struct DebouncedTaskViewModifier<ID: Equatable>: ViewModifier {
   ) {
     self.id = id
     self.interval = interval
-    self._debouncer = State(initialValue: AsyncDebouncer(interval: interval))
+    self._debouncer = State(initialValue: AsyncDebouncer())
     self.action = action
   }
   public func body(content: Content) -> some View {
     content
       .task(id: id) {
-        await debouncer.execute { @MainActor in
+        debouncer.execute(interval: interval) { @MainActor in
           await action()
         }
       }

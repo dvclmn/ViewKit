@@ -17,16 +17,18 @@ public struct ScrollStateModifier: ViewModifier {
   let axis: Axis
   let tolerance: CGFloat
   let didUpdateScrollContext: (ScrollContext) -> Void
+  let debounceInterval: CGFloat
 
   public init(
     axis: Axis,
     tolerance: CGFloat,
-    debounceInterval: TimeInterval,
+    debounceInterval: CGFloat,
     didUpdateScrollContext: @escaping (ScrollContext) -> Void
   ) {
     self.axis = axis
     self.tolerance = tolerance
-    self._debouncer = State(initialValue: AsyncDebouncer(interval: debounceInterval))
+    self._debouncer = State(initialValue: AsyncDebouncer())
+    self.debounceInterval = debounceInterval
     self.didUpdateScrollContext = didUpdateScrollContext
   }
 
@@ -56,7 +58,7 @@ public struct ScrollStateModifier: ViewModifier {
             return didUpdateScrollContext(newValue)
           }
           Task {
-            await debouncer.execute { @MainActor in
+            debouncer.execute(interval: debounceInterval) { @MainActor in
               if oldValue != newValue {
                 return didUpdateScrollContext(newValue)
               }

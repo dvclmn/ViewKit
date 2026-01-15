@@ -5,10 +5,12 @@
 //  Created by Dave Coleman on 11/1/2026.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
 public struct InfoBarItemsModifier: ViewModifier {
+
+  @State private var debouncer = AsyncDebouncer()
 
   @State private var items: [InfoBarItem] = []
 
@@ -18,9 +20,12 @@ public struct InfoBarItemsModifier: ViewModifier {
     content
       .paddingCompatible(.bottom, isEnabled ? Styles.infoBarHeight : nil)
       .onPreferenceChange(InfoBarKey.self) { newItems in
-        guard isEnabled else { return }
-        updateIfChanged(&items, to: newItems)
-
+        Task {
+          debouncer.execute { @MainActor in
+            guard isEnabled else { return }
+            updateIfChanged(&items, to: newItems)
+          }
+        }
       }
       .overlay(alignment: .bottom) {
         if isEnabled {

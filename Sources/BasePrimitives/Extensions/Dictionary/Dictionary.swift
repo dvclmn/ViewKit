@@ -45,6 +45,7 @@ extension Dictionary {
     grouping values: S,
     by keyPath: KeyPath<S.Element, Key>
   ) where Value == [S.Element] {
+//    print("Performed a grouping operation for \(Array(values).count) values, at \(Date.debug)")
     self.init(grouping: values, by: { $0[keyPath: keyPath] })
   }
 
