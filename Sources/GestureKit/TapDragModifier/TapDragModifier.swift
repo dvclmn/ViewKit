@@ -24,12 +24,13 @@ public struct UnifiedDragModifier: ViewModifier {
   @State private var dragState: DragState
   @State private var rectToDraw: CGRect?
 
-  @Binding var offset: CGSize
+  @Binding var dragRect: CGRect
+//  @Binding var offset: CGSize
   let behavior: DragBehavior
   let isEnabled: Bool
   let minimumDistance: CGFloat
   let didUpdateTap: TapUpdate
-  let didUpdateDrag: DragUpdate
+  let isDragging: DragUpdate
 
   init(
     behavior: DragBehavior,
@@ -43,10 +44,10 @@ public struct UnifiedDragModifier: ViewModifier {
     self.isEnabled = isEnabled
     self.minimumDistance = minimumDistance
     self.didUpdateTap = didUpdateTap
-    self.didUpdateDrag = didUpdateDrag
+    self.isDragging = didUpdateDrag
 
     /// Initialize state based on behavior
-    self._dragState = State(initialValue: .initial(for: behavior))
+    self._dragState = State(initialValue: DragState(behavior))
   }
 
   public func body(content: Content) -> some View {
@@ -65,7 +66,7 @@ extension UnifiedDragModifier {
         /// 1. Only anchor once at the very beginning of this specific drag
         if dragState.anchor == nil {
           dragState.begin(
-            with: behavior.isMarquee ? value.startLocation : offset.toCGPoint
+            with: behavior.isMarquee ? value.startLocation : dragRect.
           )
         }
         
@@ -81,12 +82,15 @@ extension UnifiedDragModifier {
         
         /// Accrue approach
         /// 2. Update the binding using the stable anchor
-        offset = tracker.update(translation: value.translation)
-        
+        offset = dragState.update(value)
         isDragging(true)
+        
       }
     
       .onEnded { value in
+        
+        dragState.end()
+        isDragging(true)
         // Marquee:
 //        didUpdateRect(nil)
 //        rectToRender = nil

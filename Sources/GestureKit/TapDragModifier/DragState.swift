@@ -9,28 +9,65 @@ import CoreTools
 import SwiftUI
 
 struct DragState {
+
+  let behaviour: DragBehavior.Meta
   /// Common to both behaviours
-  var rect: CGRect
+  //  var rect: CGRect
 
   /// The start location of the offset, captured at drag start
-  private(set) var anchor: CGPoint?
+  private(set) var anchor: CGSize?
+//  private(set) var anchor: CGPoint?
 
   /// The last computed offset value
   private var lastComputedValue: CGSize?
 
   /// Probably ignored for marquee?
-  let axes: GridAxis.Set = .all
+  let axes: GridAxis.Set
 
   /// Carries the logic unique to each behaviour
   //  let phase: DragPhase
 
   /// Notify the modifier whether a drag is occuring
-  let isDragging: DragUpdate
+  //  var isDragging: Bool
+  //  let isDragging: DragUpdate
+
+  init(
+    _ behaviour: DragBehavior,
+    //    axes: GridAxis.Set
+  ) {
+
+    switch behaviour {
+      case .marquee: self.axes = .all
+      case .continuous(let axes): self.axes = axes
+    }
+    self.behaviour = DragBehavior.Meta(behaviour)
+    //    self.axes = behaviour.continuousValue ?? .all
+  }
 }
+
+//extension DragState {
+//
+//  static func initial(
+//    behaviour: DragBehavior,
+//    axes: GridAxis.Set,
+////    for behaviour: DragBehavior,
+////    offset: CGSize
+//  ) -> DragState {
+//    DragState(behaviour: behaviour, axes: axes)
+////    self.behavioud =
+////    switch behavior {
+////      case .marquee:
+////      case .:
+////        DragState(beha.vio., phase: .)
+//        //      case .marquee: .marquee(.idle)
+//        //      case .cumulative(_, let axes, _): .cumulative(.idle(controller: .init(axes: axes, strategy: .external)))
+////    }
+//  }
+//}
 
 extension DragState {
 
-  var value: CGSize { lastComputedValue ?? .zero }
+  //  var value: CGSize { lastComputedValue ?? .zero }
 
   /// For this, marquee wants the `Gesture.Value` start location
   /// Continuous wants the latest `Binding<CGSize>` offset value.
@@ -39,17 +76,32 @@ extension DragState {
     anchor = val
   }
 
-  mutating func update(_ gestureValue: DragGesture.Value) -> CGSize {
-    //  mutating func update(translation: CGSize) -> CGSize {
-    guard let anchor = anchor else { return value }
+  mutating func update(
+    _ gestureValue: DragGesture.Value,
+    behaviour: DragBehavior.Meta
+  ) -> CGRect? {
 
-    let marqueeRect = gestureValue.toRect(from: anchor, end: .standard)
+    let newRect: CGRect
+    switch behaviour {
+      case .marquee:
+        guard let anchor else { return nil }
+        newRect = gestureValue.toRect(from: anchor, end: .standard)
 
-    let base = anchor.toCGSize
-    let updated = applyAxis(base: base, translation: gestureValue.translation)
-    lastComputedValue = updated
-    isDragging(true)
-    return updated
+      case .continuous:
+        guard let anchor else {
+          return lastComputedValue?.toCGRectZeroOrigin ?? .zero
+        }
+        let base = anchor.toCGSize
+        let size = applyAxis(base: base, translation: gestureValue.translation)
+        newRect = CGRect(origin: .zero, size: size)
+    }
+
+    lastComputedValue = newRect.size
+    return newRect
+  }
+
+  mutating func end() {
+    anchor = nil
   }
 
   private func applyAxis(base: CGSize, translation: CGSize) -> CGSize {
@@ -72,20 +124,7 @@ extension DragState {
     }
   }
 }
-//
-//  static func initial(
-//    for behaviour: DragBehavior,
-////    offset: CGSize
-//  ) -> DragState {
-//    switch behavior {
-//      case .marquee:
-//      case .:
-////        DragState(beha.vio., phase: .)
-//        //      case .marquee: .marquee(.idle)
-//        //      case .cumulative(_, let axes, _): .cumulative(.idle(controller: .init(axes: axes, strategy: .external)))
-//    }.
-//  }
-//}
+
 extension DragState {
 
   //  mutating func handleDragChange(
