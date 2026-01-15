@@ -30,14 +30,12 @@ extension Task where Success == Never, Failure == Never {
       }
     }
   }
-}
 
-extension Task {
-  @MainActor
-  public static func debounceIfNeeded(
+  @MainActor public static func debounceIfNeeded(
     _ debouncer: AsyncDebouncer?,
-    action: @escaping @Sendable () -> Void
+    action: @escaping () -> Void
   ) {
+
     if let debouncer {
       debouncer.execute { @MainActor in
         action()

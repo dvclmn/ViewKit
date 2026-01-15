@@ -7,15 +7,15 @@
 
 import Foundation
 
-//@discardableResult
-//public func updateIfChanged<T: Equatable>(
-//  _ target: inout T,
-//  to newValue: T
-//) -> Bool {
-//  guard target != newValue else { return false }
-//  target = newValue
-//  return true
-//}
+@discardableResult
+public func updateIfChanged<T: Equatable>(
+  _ target: inout T,
+  to newValue: T
+) -> Bool {
+  guard target != newValue else { return false }
+  target = newValue
+  return true
+}
 
 @discardableResult
 public func updateIfChanged<T: Equatable>(
@@ -27,11 +27,22 @@ public func updateIfChanged<T: Equatable>(
   return true
 }
 
+/// ```
+/// performIfChanged(oldValue, newValue,
+///   perform: didUpdateScrollContext(newValue)
+/// )
+/// ```
+/// Or with an explicit closure
+/// ```
+/// performIfChanged(oldValue, newValue) {
+///   didUpdateScrollContext(newValue)
+/// )
+/// ```
 @discardableResult
 public func performIfChanged<T: Equatable>(
   _ oldValue: T,
   _ newValue: T,
-  perform: @autoclosure () -> Void
+  perform: @autoclosure @Sendable () -> Void
 ) -> Bool {
   guard oldValue != newValue else { return false }
   perform()
@@ -102,13 +113,13 @@ public func updateIfChangedWithOptionalRoot<Root, Value: Equatable>(
 ///   print("Zoom changed, do something")
 /// }
 /// ```
-@discardableResult
-public func runIfChanged<T: Equatable>(
-  _ newValue: T,
-  comparedTo currentValue: T,
-  perform action: () -> Void
-) -> Bool {
-  guard newValue != currentValue else { return false }
-  action()
-  return true
-}
+//@discardableResult
+//public func runIfChanged<T: Equatable>(
+//  _ newValue: T,
+//  comparedTo currentValue: T,
+//  perform action: () -> Void
+//) -> Bool {
+//  guard newValue != currentValue else { return false }
+//  action()
+//  return true
+//}

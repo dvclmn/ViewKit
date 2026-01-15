@@ -58,9 +58,11 @@ public struct ScrollStateModifier: ViewModifier {
           }
           
           Task.debounceIfNeeded(debouncer) {
-            if oldValue != newValue {
-                              return didUpdateScrollContext(newValue)
-                            }
+            performIfChanged(oldValue, newValue, perform: didUpdateScrollContext(newValue))
+//            if oldValue != newValue {
+//                              return didUpdateScrollContext(newValue)
+//                            }
+            
           }
           
 //          Task {
@@ -89,14 +91,16 @@ extension View {
   public func getScrollContext(
     axis: Axis,
     tolerance: CGFloat = 2.0,
-    debounceInterval: TimeInterval = 0.2,
+    debounce: DebounceMode = .debounce(0.2),
+//    debounceInterval: TimeInterval = 0.2,
     didUpdateScrollContext: @escaping (ScrollContext) -> Void
   ) -> some View {
     self.modifier(
       ScrollStateModifier(
         axis: axis,
         tolerance: tolerance,
-        debounceInterval: debounceInterval,
+        debounce: debounce,
+//        debounceInterval: debounceInterval,
         didUpdateScrollContext: didUpdateScrollContext
       )
     )

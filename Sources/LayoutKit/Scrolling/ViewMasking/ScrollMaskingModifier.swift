@@ -8,15 +8,13 @@
 import BasePrimitives
 import SwiftUI
 
-
 public struct ScrollMaskModifier: ViewModifier {
 
   @State private var scrollLocation: ScrollLocation = .start
 
   /// Establishing that here in this Scroll masking domain,
   /// when talking about width, we mean the *horizontal* axis
-  private let axisConvention: AxisConvention = .widthIsHorizontal
-  
+  private let axisConvention: AxisMapping = .identity
 
   let axis: Axis
   let areasToMask: ScrollMaskArea
@@ -56,13 +54,12 @@ public struct ScrollMaskModifier: ViewModifier {
         .animation(Styles.animationQuickNSmooth, value: isEndMasked)
 
       }  // END mask
-      .getScrollContext(axis: .vertical, debounceInterval: debounceInterval) { context in
+      .getScrollContext(axis: .vertical, debounce: .debounce(debounceInterval)) { context in
         print("Scroll location: \(context.location)")
         self.scrollLocation = context.location
       }
   }
 }
-
 
 extension ScrollMaskModifier {
 
@@ -119,7 +116,6 @@ extension ScrollMaskModifier {
   }
 
 }
-
 
 extension View {
 

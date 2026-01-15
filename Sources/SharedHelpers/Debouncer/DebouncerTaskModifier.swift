@@ -10,7 +10,7 @@ import SwiftUI
 public struct DebouncedTaskViewModifier<ID: Equatable>: ViewModifier {
   @State private var debouncer: AsyncDebouncer
   let id: ID
-  let interval: TimeInterval
+//  let interval: TimeInterval
   let action: () async -> Void
   
   public init(
@@ -19,14 +19,14 @@ public struct DebouncedTaskViewModifier<ID: Equatable>: ViewModifier {
     action: @escaping @Sendable () async -> Void
   ) {
     self.id = id
-    self.interval = interval
-    self._debouncer = State(initialValue: AsyncDebouncer())
+//    self.interval = interval
+    self._debouncer = State(initialValue: AsyncDebouncer(interval: interval))
     self.action = action
   }
   public func body(content: Content) -> some View {
     content
       .task(id: id) {
-        debouncer.execute(interval: interval) { @MainActor in
+        debouncer.execute { @MainActor in
           await action()
         }
       }
