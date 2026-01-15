@@ -9,8 +9,6 @@ import CoreTools
 import SwiftUI
 
 public struct ScrollStateModifier: ViewModifier {
-
-//  @State private var debouncer: AsyncDebouncer
   @State private var debouncer: AsyncDebouncer?
   @State private var hasUpdatedScrollLocation: Bool = false
 
@@ -22,12 +20,14 @@ public struct ScrollStateModifier: ViewModifier {
   public init(
     axis: Axis,
     tolerance: CGFloat,
-    debounceInterval: TimeInterval,
+    debounce: DebounceMode,
+//    debounceInterval: TimeInterval,
     didUpdateScrollContext: @escaping (ScrollContext) -> Void
   ) {
     self.axis = axis
     self.tolerance = tolerance
-    self._debouncer = State(initialValue: AsyncDebouncer(interval: debounceInterval))
+    self._debouncer = debounce.createDebouncer()
+//    self._debouncer = State(initialValue: AsyncDebouncer(interval: debounceInterval))
     self.didUpdateScrollContext = didUpdateScrollContext
   }
 
@@ -56,13 +56,20 @@ public struct ScrollStateModifier: ViewModifier {
             hasUpdatedScrollLocation = true
             return didUpdateScrollContext(newValue)
           }
-          Task {
-            await debouncer.execute { @MainActor in
-              if oldValue != newValue {
-                return didUpdateScrollContext(newValue)
-              }
-            }
-          }  // END task
+          
+          Task.debounceIfNeeded(debouncer) {
+            if oldValue != newValue {
+                              return didUpdateScrollContext(newValue)
+                            }
+          }
+          
+//          Task {
+//            debouncer?.execute { @MainActor in
+//              if oldValue != newValue {
+//                return didUpdateScrollContext(newValue)
+//              }
+//            }
+//          }  // END task
         }
     } else {
       /// Falling back to plain old View for macOS 14 and lower

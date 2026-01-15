@@ -22,12 +22,28 @@ import Foundation
 /// ```
 ///
 
-public extension Task where Success == Never, Failure == Never {
-  static func delay(seconds: Double, on queue: DispatchQueue = .main) async {
+extension Task where Success == Never, Failure == Never {
+  public static func delay(seconds: Double, on queue: DispatchQueue = .main) async {
     await withCheckedContinuation { continuation in
       queue.asyncAfter(deadline: .now() + seconds) {
         continuation.resume()
       }
+    }
+  }
+}
+
+extension Task {
+  @MainActor
+  public static func debounceIfNeeded(
+    _ debouncer: AsyncDebouncer?,
+    action: @escaping @Sendable () -> Void
+  ) {
+    if let debouncer {
+      debouncer.execute { @MainActor in
+        action()
+      }
+    } else {
+      action()
     }
   }
 }
