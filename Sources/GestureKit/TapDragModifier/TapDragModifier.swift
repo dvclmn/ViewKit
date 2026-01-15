@@ -29,7 +29,6 @@ public struct UnifiedDragModifier: ViewModifier {
 
     /// Initialize state based on behavior
     self._dragState = State(initialValue: .initial(for: behavior))
-
   }
 
   public func body(content: Content) -> some View {
@@ -40,7 +39,7 @@ public struct UnifiedDragModifier: ViewModifier {
         }
       }
       .gesture(dragGesture, isEnabled: isEnabled)
-      .modifier(DrawMarqueeModifier(rect: dragState.))
+
   }
 }
 extension UnifiedDragModifier {
@@ -51,8 +50,8 @@ extension UnifiedDragModifier {
       }
       .onEnded { _ in
         dragState.handleDragEnd(behavior: behavior)
-//        dragState.handleDragChange(<#T##value: DragGesture.Value##DragGesture.Value#>, behavior: <#T##DragBehavior#>)
-//        dragState.handleDragEnd(behavior: behavior)
+        //        dragState.handleDragChange(<#T##value: DragGesture.Value##DragGesture.Value#>, behavior: <#T##DragBehavior#>)
+        //        dragState.handleDragEnd(behavior: behavior)
       }
   }
 }

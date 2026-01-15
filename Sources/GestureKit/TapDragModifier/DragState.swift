@@ -36,11 +36,10 @@ extension DragState {
         offset.wrappedValue = controller.update(translation: value.translation)
         self = .cumulative(.dragging(controller: controller))
 
-      default:
-        assertionFailure("Invalid drag transition")
+      default: assertionFailure("Invalid drag transition")
     }
   }
-  
+
   mutating func handleDragEnd(behavior: DragBehavior) {
     switch (self, behavior) {
       case (.marquee(.dragging), .marquee(let onUpdate)):
@@ -61,53 +60,6 @@ extension DragState {
       case .marquee: .marquee(.idle)
       case .cumulative(_, let axes, _): .cumulative(.idle(controller: .init(axes: axes, strategy: .external)))
     }
-  }
-}
-
-struct MarqueeDragState {
-  var origin: CGPoint?
-}
-extension MarqueeDragState {
-
-  mutating func update(
-    with value: DragGesture.Value,
-    onUpdate: MarqueeUpdate
-  ) {
-    let origin = origin ?? value.startLocation
-    self.origin = origin
-
-    let rect = value.toRect(from: origin, end: .standard)
-    onUpdate(.drag(rect, .changed))
-  }
-
-  mutating func end(onUpdate: (MarqueeUpdate?) -> Void) {
-    onUpdate(nil)
-    origin = nil
-  }
-}
-
-struct CumulativeDragState {
-  var controller: CumulativeDragController
-}
-
-extension CumulativeDragState {
-
-  mutating func update(
-    translation: CGSize,
-    offset: Binding<CGSize>,
-    onDragging: (Bool) -> Void
-  ) {
-    if controller.anchor == nil {
-      controller.begin(with: offset.wrappedValue)
-    }
-
-    offset.wrappedValue = controller.update(translation: translation)
-    onDragging(true)
-  }
-
-  mutating func end(onDragging: (Bool) -> Void) {
-    controller.end()
-    onDragging(false)
   }
 }
 
