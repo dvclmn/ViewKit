@@ -19,7 +19,6 @@ extension QuickPicker {
     init(
       _ item: Item,
       @ViewBuilder content: @escaping (Bool) -> Content
-        //      @ViewBuilder rowContent: @escaping PickerOutput
     ) {
       self.item = item
       self.content = content
@@ -28,20 +27,12 @@ extension QuickPicker {
     var body: some View {
 
       content(isHovering)
-        //      Group {
-        //        if let rowContent {
-        //        } else {
-        //
-        //        }
-        //      }
         .tag(item)
         .keyboardShortcut(shortcut)
 
         .onHover { hovering in
           self.isHovering = hovering
         }
-
-      //      rowContent
     }
   }
 }

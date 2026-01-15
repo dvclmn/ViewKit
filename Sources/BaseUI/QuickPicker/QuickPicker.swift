@@ -8,7 +8,9 @@
 import BasePrimitives
 import SwiftUI
 
-public struct QuickPicker<RowContent: View, Item: Pickable & Shortcuttable & Hashable>: View {
+public struct QuickPicker<RowContent: View, Item>: View
+where Item: Pickable & Shortcuttable & Hashable {
+
   public typealias PickerOutput = (Item, Bool) -> RowContent
   @Environment(\.explicitHeight) private var explicitHeight
 
@@ -20,10 +22,72 @@ public struct QuickPicker<RowContent: View, Item: Pickable & Shortcuttable & Has
   let rowContent: PickerOutput
   private let hasCustomContent: Bool
 
+  public var body: some View {
+
+    Group {
+      switch style {
+        case .plain:
+          PlainStyle()
+
+        case .capsule:
+          ItemScrollable(
+            scrolledItem: $item,
+            axis: .horizontal,
+            showsIndicators: false
+          ) { scrollableItem in
+            MaybeLabel(item.label)
+          }
+      }
+    }
+    .environment(\.shortcutsEnabled, areShortcutsEnabled)
+  }
+}
+
+extension QuickPicker {
+  
+  private var items: Item.AllCases.SubSequence {
+    Item.allCases.prefix(maxItems ?? Int.max)
+  }
+
+  @ViewBuilder
+  private func PlainStyle() -> some View {
+    if hasLabeledContentWrapper {
+      LabeledContent {
+        PickerContent()
+      } label: {
+        MaybeLabel(Item.pickerLabel)
+          .foregroundStyle(.secondary)
+      }
+    } else {
+      PickerContent()
+    }
+  }
+
+  @ViewBuilder
+  func PickerContent() -> some View {
+    Picker(Item.pickerLabel.text, selection: $item) {
+
+      ForEach(items) { pickerItem in
+
+        RowView(pickerItem) { hovering in
+          if hasCustomContent {
+            rowContent(pickerItem, hovering)
+          } else {
+            MaybeLabel(pickerItem.label)
+          }
+        }
+      }
+    }
+  }
+}
+
+// MARK: - Initialisers
+extension QuickPicker {
+
   public init(
     item: Binding<Item>,
     style: QuickPickerStyle = .plain,
-    hasLabeledContentWrapper: Bool = true,
+    hasLabeledContentWrapper: Bool = false,
     areShortcutsEnabled: Bool = false,
     maxItems: Int? = nil,
     @ViewBuilder rowContent: @escaping PickerOutput
@@ -40,7 +104,7 @@ public struct QuickPicker<RowContent: View, Item: Pickable & Shortcuttable & Has
   public init(
     item: Binding<Item>,
     style: QuickPickerStyle = .plain,
-    hasLabeledContentWrapper: Bool = true,
+    hasLabeledContentWrapper: Bool = false,
     areShortcutsEnabled: Bool = false,
     maxItems: Int? = nil,
   ) where RowContent == EmptyView {
@@ -61,72 +125,6 @@ public struct QuickPicker<RowContent: View, Item: Pickable & Shortcuttable & Has
     //    ) { _, _ in
     //      EmptyView()
     //    }
-
-  }
-
-  public var body: some View {
-
-    Group {
-      switch style {
-        case .plain:
-          PlainStyle()
-
-        case .capsule:
-          if #available(macOS 14.0, *) {
-            ItemScrollable(
-              scrolledItem: $item,
-              axis: .horizontal,
-              showsIndicators: false
-            ) { scrollableItem in
-              MaybeLabel(item.label)
-            }
-          } else {
-            Text("Need to fix")
-            // Fallback on earlier versions
-          }
-      }
-    }
-    .environment(\.shortcutsEnabled, areShortcutsEnabled)
-  }
-}
-
-extension QuickPicker {
-
-  @ViewBuilder
-  private func PlainStyle() -> some View {
-    if hasLabeledContentWrapper {
-      LabeledContent {
-        PickerContent()
-      } label: {
-        MaybeLabel(Item.pickerLabel)
-          .foregroundStyle(.secondary)
-      }
-    } else {
-      PickerContent()
-    }
-
-  }
-
-  @ViewBuilder
-  func PickerContent() -> some View {
-    Picker(Item.pickerLabel.text, selection: $item) {
-
-      ForEach(Item.allCases.prefix(maxItems ?? Int.max)) { pickerItem in
-
-        RowView(pickerItem) { hovering in
-          if hasCustomContent {
-            rowContent(pickerItem, hovering)
-          } else {
-//            Text("Shrim")
-            MaybeLabel(pickerItem.label)
-          }
-        }
-      }
-    }
-  }
-
-  @ViewBuilder
-  private func ViewName() -> some View {
 
   }
 }

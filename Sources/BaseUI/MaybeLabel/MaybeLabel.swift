@@ -40,6 +40,7 @@ extension MaybeLabel {
         if isPlain {
           IconView(icon)
         } else {
+
           IconView(icon)
             .commonLabelStyles(for: .icon, display: labelDisplay)
         }

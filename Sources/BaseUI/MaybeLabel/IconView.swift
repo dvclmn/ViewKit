@@ -20,15 +20,9 @@ public struct IconView: View {
   public var body: some View {
     Group {
       switch icon {
-        case .emoji(let emojiString):
-          Text(emojiString)
-
-        case .symbol(let symbolString):
-          Image(systemName: symbolString)
-
-        case .customSymbol(_):
-          //        case .customSymbol(let customSymbol):
-          Text("Custom Symbol not implemented")
+        case .emoji(let emojiString): Text(emojiString)
+        case .symbol(let symbolString): Image(systemName: symbolString)
+        case .customSymbol(_): Text("Custom Symbol not implemented")
       //          Image(
       //            ImageResource(
       //              name: customSymbol.reference,
@@ -37,6 +31,5 @@ public struct IconView: View {
       //          )
       }
     }
-
   }
 }
