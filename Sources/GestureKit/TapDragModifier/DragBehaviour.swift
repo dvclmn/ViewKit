@@ -10,11 +10,16 @@ import SwiftUI
 
 public enum DragBehavior {
   /// Transient rectangle from drag origin to current point
-  case marquee
+  case marquee(drawMarquee: Bool)
 
   /// Accumulated offset that persists across drags
   case continuous(axes: GridAxis.Set = .all)
 }
+
+//enum DragState {
+//  case marquee(MarqueePhase)
+//  case cumulative(CumulativePhase)
+//}
 
 enum DragPhase {
   case marquee(MarqueePhase)
@@ -32,7 +37,6 @@ enum CumulativePhase {
   case dragging(controller: CumulativeDragController)
 }
 
-
 //public enum DragBehavior {
 //  /// Transient rectangle from drag origin to current point
 //  case marquee(onUpdate: MarqueeUpdate)
@@ -49,4 +53,3 @@ enum CumulativePhase {
 //  case idle
 //  case active
 //}
-

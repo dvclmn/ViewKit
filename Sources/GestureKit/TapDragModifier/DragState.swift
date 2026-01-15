@@ -8,35 +8,31 @@
 import CoreTools
 import SwiftUI
 
-@Observable
-final class DragState {
-//  @Binding var offset: CGSize
-  var behaviour: DragBehavior
-  var phase: DragPhase
+struct DragState {
+  var offset: CGSize
+  let behaviour: DragBehavior
   
-  init(
-//    offset: CGSize,
-    behaviour: DragBehavior,
-    phase: DragPhase
-  ) {
-//    self.offset = offset
-    self.behaviour = behaviour
-    self.phase = phase
-  }
+  /// The start location of the offset, captured when the drag begins
+  private(set) var anchor: CGPoint?
+
+  /// The last computed offset value in external mode.
+  private var lastComputedValue: CGSize?
 }
 
 extension DragState {
-  init(behavior: DragBehavior) {
-    
+
+  static func initial(
+    for behaviour: DragBehavior,
+//    offset: CGSize
+  ) -> DragState {
+    switch behavior {
+      case .marquee: 
+      case .:
+//        DragState(beha.vio., phase: .)
+        //      case .marquee: .marquee(.idle)
+        //      case .cumulative(_, let axes, _): .cumulative(.idle(controller: .init(axes: axes, strategy: .external)))
+    }.
   }
-//  static func initial(for behavior: DragBehavior, offset: CGSize) -> DragState {
-//    switch behavior {
-//      case .marquee:
-//        DragState(behaviour: behavior, phase: .)
-////      case .marquee: .marquee(.idle)
-////      case .cumulative(_, let axes, _): .cumulative(.idle(controller: .init(axes: axes, strategy: .external)))
-//    }
-//  }
 }
 extension DragState {
 
