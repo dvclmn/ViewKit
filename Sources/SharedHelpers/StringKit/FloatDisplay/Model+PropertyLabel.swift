@@ -54,7 +54,8 @@ extension PropertyLabel {
       switch style {
         case .none: nil
         case .standard: self.label
-        case .abbreviated: self.abbreviated
+          /// Abbreviated will fall back to using Standard Label
+        case .abbreviated: self.abbreviated ?? self.label
       }
     let shouldRenderSep: Bool = hasSeparator && style != .none
     let separator: String? = shouldRenderSep ? self.separator : nil
