@@ -53,7 +53,7 @@ public struct UnifiedDragModifier: ViewModifier {
     content
       .onTapGesture { didUpdateTap($0) }
       .gesture(dragGesture, isEnabled: isEnabled)
-          .drawMarqueeRect(rect: rectToDraw, isEnabled: true)
+      .drawMarqueeRect(rect: rectToDraw, isEnabled: true)
 
   }
 }
@@ -61,17 +61,43 @@ extension UnifiedDragModifier {
   private var dragGesture: some Gesture {
     DragGesture(minimumDistance: minimumDistance)
       .onChanged { value in
+
+        /// 1. Only anchor once at the very beginning of this specific drag
+        if dragState.anchor == nil {
+          dragState.begin(
+            with: behavior.isMarquee ? value.startLocation : offset.toCGPoint
+          )
+        }
         
-//        if dragOrigin == nil {
-//          dragOrigin = value.startLocation
-//        }
-//        guard let origin = dragOrigin else { return }
-//        let rect = value.toRect(from: origin, end: .standard)
-//        
-//        rectToRender = rect
-//        didUpdateRect(.drag(rect, .changed))
+        
+        /// Marquee approach:
+        //        guard let origin = dragOrigin else { return }
+        //        let rect = value.toRect(from: origin, end: .standard)
+        //
+        //        rectToRender = rect
+        //        didUpdateRect(.drag(rect, .changed))
         //        dragState.handleDragChange(value, behavior: behavior)
+        
+        
+        /// Accrue approach
+        /// 2. Update the binding using the stable anchor
+        offset = tracker.update(translation: value.translation)
+        
+        isDragging(true)
       }
+    
+      .onEnded { value in
+        // Marquee:
+//        didUpdateRect(nil)
+//        rectToRender = nil
+//        dragOrigin = nil
+        
+        // Acrue:
+//        tracker.end()
+//        isDragging(false)
+      }
+    
+    
       .onEnded { _ in
         //        dragState.handleDragEnd(behavior: behavior)
         //        dragState.handleDragChange(<#T##value: DragGesture.Value##DragGesture.Value#>, behavior: <#T##DragBehavior#>)

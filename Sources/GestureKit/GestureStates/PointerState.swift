@@ -10,15 +10,18 @@ import SwiftUI
 
 public struct PointerState {
 
+  
   //  private(set) var rect: CGRect?
 
   /// Aka Drag rect origin point. If a drag is detected, this is the origin.
   /// *Does not* refer to a tap/hover location
-  private(set) var start: CGPoint?
+  private(set) var tap: CGPoint?
 
   /// Current pointer location. If `start` is `nil`, this is likely
   /// a tap/hover. If non-nil, this is the part of the rect anchored to the pointer
-  private(set) var current: CGPoint?
+  private(set) var hover: CGPoint?
+  
+  private(set) var rect: CGRect?
 
   private(set) var kind: PointerInteraction.Meta?
 
@@ -41,12 +44,12 @@ extension PointerState {
         return .drag(dragRect, phase)
 
       case .tap:
-        guard let kind, kind.isTap, let current else { return nil }
-        return .tap(current)
+        guard let kind, kind.isTap, let hover else { return nil }
+        return .tap(hover)
 
       case .hover:
-        guard let kind, kind.isHover, let current else { return nil }
-        return .hover(current)
+        guard let kind, kind.isHover, let hover else { return nil }
+        return .hover(hover)
 
       case .none: return nil
     }
@@ -55,7 +58,7 @@ extension PointerState {
   public var currentInteraction: PointerInteraction.Meta? { kind }
 
   public static var initial: Self {
-    .init(start: .zero, current: .zero, phase: .none)
+    .init(tap: .zero, hover: .zero, phase: .none)
   }
 
   public mutating func update(_ interaction: PointerInteraction?) {
@@ -75,22 +78,22 @@ extension PointerState {
   }
 
   private mutating func reset() {
-    current = nil
-    start = nil
+    hover = nil
+    tap = nil
     kind = .none
     phase = .none
   }
 
   private mutating func setTap(at location: CGPoint) {
-    current = location
-    start = nil
+    hover = location
+    tap = nil
     kind = .tap
     self.phase = .none
   }
 
   private mutating func setHover(at location: CGPoint?) {
-    current = location
-    start = nil
+    hover = location
+    tap = nil
     kind = .hover
     if location == nil {
       self.phase = .none
@@ -102,23 +105,23 @@ extension PointerState {
     phase: InteractionPhase
   ) {
     guard isDragPermitted(for: rect.size) else {
-      setTap(at: rect.origin)
+//      setTap(at: rect.origin)
       return
     }
 
     /// On first drag event, if `start` is nil, capture the origin as the start.
-    if start == nil { start = rect.origin }
+    if tap == nil { tap = rect.origin }
     /// Update current to the far corner of the rect so translation reflects size.
-    current = CGPoint(x: rect.maxX, y: rect.maxY)
+    hover = CGPoint(x: rect.maxX, y: rect.maxY)
     kind = .drag
     self.phase = phase
   }
 
   public var translation: CGSize? {
-    guard let current, let start else { return nil }
+    guard let hover, let tap else { return nil }
     let result = CGSize(
-      width: current.x - start.x,
-      height: current.y - start.y
+      width: hover.x - tap.x,
+      height: hover.y - tap.y
     )
     let isValidDrag = isDragPermitted(for: result)
     return isValidDrag ? result : nil
@@ -132,7 +135,8 @@ extension PointerState {
   }
 
   public var dragRect: CGRect? {
-    guard let translation, let start else { return nil }
-    return CGRect(origin: start, size: translation).standardized
+    rect?.standardized
+//    guard let translation, let start else { return nil }
+//    return CGRect(origin: start, size: translation).standardized
   }
 }

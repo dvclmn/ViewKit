@@ -8,6 +8,18 @@
 import CoreTools
 import SwiftUI
 
+public enum DragType {
+  case marquee
+  case continuous
+}
+
+//public enum DragStartInfo {
+//  case marquee(DragGesture.Value)
+//  case accrued(CGSize)
+//}
+
+@MetaEnum
+@CaseDetection
 public enum DragBehavior {
   /// Transient rectangle from drag origin to current point
   case marquee(drawMarquee: Bool)
