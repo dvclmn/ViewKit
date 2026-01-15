@@ -9,44 +9,53 @@ import CoreTools
 import SwiftUI
 
 struct DragState {
-  var offset: CGSize
-  let behaviour: DragBehavior
+  /// Common to both behaviours
+  var rect: CGRect
   
-  /// The start location of the offset, captured when the drag begins
+  /// The start location of the offset, captured at drag start
   private(set) var anchor: CGPoint?
-
-  /// The last computed offset value in external mode.
+  
+  /// The last computed offset value
   private var lastComputedValue: CGSize?
+
+  /// Probably ignored for marquee?
+  let axes: GridAxis.Set = .all
+
+  /// Carries the logic unique to each behaviour
+//  let phase: DragPhase
+  
+  /// Notify the modifier whether a drag is occuring
+  let isDragging: DragUpdate
 }
 
-extension DragState {
-
-  static func initial(
-    for behaviour: DragBehavior,
-//    offset: CGSize
-  ) -> DragState {
-    switch behavior {
-      case .marquee: 
-      case .:
-//        DragState(beha.vio., phase: .)
-        //      case .marquee: .marquee(.idle)
-        //      case .cumulative(_, let axes, _): .cumulative(.idle(controller: .init(axes: axes, strategy: .external)))
-    }.
-  }
-}
+//extension DragState {
+//
+//  static func initial(
+//    for behaviour: DragBehavior,
+////    offset: CGSize
+//  ) -> DragState {
+//    switch behavior {
+//      case .marquee:
+//      case .:
+////        DragState(beha.vio., phase: .)
+//        //      case .marquee: .marquee(.idle)
+//        //      case .cumulative(_, let axes, _): .cumulative(.idle(controller: .init(axes: axes, strategy: .external)))
+//    }.
+//  }
+//}
 extension DragState {
 
   mutating func handleDragChange(
     _ value: DragGesture.Value,
     behavior: DragBehavior
   ) {
-    switch (self, behavior) {
+    switch (phase, behavior) {
 
-      case (.marquee(.idle), .marquee(let onUpdate)):
+      case (.marquee(.idle), .marquee(_)):
         let origin = value.startLocation
         let rect = value.toRect(from: origin, end: .standard)
-        onUpdate(.drag(rect, .changed))
-        self = .marquee(.dragging(origin: origin))
+        self.rect = rect
+        self.isDragging(true)
 
       case (.marquee(.dragging(let origin)), .marquee(let onUpdate)):
         let rect = value.toRect(from: origin, end: .standard)
@@ -80,7 +89,6 @@ extension DragState {
       default: break
     }
   }
-
 
 }
 
