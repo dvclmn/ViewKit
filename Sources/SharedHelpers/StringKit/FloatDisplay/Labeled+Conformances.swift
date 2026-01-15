@@ -11,16 +11,10 @@ extension CGPoint: PropertiesLabeled {
   public var separator: String { ", " }
   public var components: [LabelComponent] {
     [
-      .init(PropertyLabel("Width", abbreviated: "W"), value: width),
-      .init(PropertyLabel("Height", abbreviated: "H"), value: height),
+      .init("X", value: x),
+      .init("Y", value: y),
     ]
   }
-//  public var components: [LabelComponent] {
-//    [
-//      .init("X", value: x),
-//      .init("Y", value: y),
-//    ]
-//  }
 }
 
 extension CGSize: PropertiesLabeled {

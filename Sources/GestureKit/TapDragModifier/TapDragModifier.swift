@@ -53,9 +53,9 @@ public struct UnifiedDragModifier: ViewModifier {
       .onTapGesture { didUpdateTap($0) }
       .gesture(dragGesture, isEnabled: isEnabled)
       .drawMarqueeRect(rect: dragRect, isEnabled: behaviour.isMarquee)
-      .onAppear {
-        print("`UnifiedDragModifier` appeared. Drag rect value: \(dragRect?.render(using: .short), default: "nil")")
-      }
+//      .onAppear {
+//        print("`UnifiedDragModifier` appeared. Drag rect value: \(dragRect?.render(using: .short), default: "nil")")
+//      }
 
   }
 }
@@ -71,7 +71,7 @@ extension UnifiedDragModifier {
           dragState.begin(
             /// IMPORTANT: Not sure if I should use `dragRect.origin`,
             /// or the *size* (and convert to CGPoint)
-            with: behaviour.isMarquee ? value.startLocation : dragRect?.origin
+            with: behaviour.isMarquee ? value.startLocation : dragRect?.size.toCGPoint
           )
         }
 
@@ -94,7 +94,6 @@ extension UnifiedDragModifier {
         if behaviour.isMarquee {
           dragRect = nil
         }
-
         dragState.end()
         //        isDragging(true)
         // Marquee:

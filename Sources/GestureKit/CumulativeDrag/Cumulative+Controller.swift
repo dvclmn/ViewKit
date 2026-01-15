@@ -31,6 +31,21 @@ struct CumulativeDragController {
 }
 
 extension CumulativeDragController {
+  
+  
+  /// Begins tracking by anchoring at the current offset value.
+  ///
+  /// - Parameter currentExternalValue: The current external offset value.
+  ///   Required for `.external` strategy; ignored for `.internal`.
+  mutating func begin(with currentExternalValue: CGSize? = nil) {
+    switch strategy {
+      case .external:
+        guard let val = currentExternalValue else { return }
+        anchor = CGPoint(x: val.width, y: val.height)
+      case .internal:
+        anchor = CGPoint(x: currentValue.width, y: currentValue.height)
+    }
+  }
 
   /// Creates a new controller with the specified axis mode and strategy.
   /// - Parameters:
@@ -56,19 +71,6 @@ extension CumulativeDragController {
     }
   }
 
-  /// Begins tracking by anchoring at the current offset value.
-  ///
-  /// - Parameter currentExternalValue: The current external offset value.
-  ///   Required for `.external` strategy; ignored for `.internal`.
-  mutating func begin(with currentExternalValue: CGSize? = nil) {
-    switch strategy {
-      case .external:
-        guard let val = currentExternalValue else { return }
-        anchor = CGPoint(x: val.width, y: val.height)
-      case .internal:
-        anchor = CGPoint(x: currentValue.width, y: currentValue.height)
-    }
-  }
   //  mutating func begin(with currentExternalValue: CGSize? = nil) {
   //    switch strategy {
   //      case .external:

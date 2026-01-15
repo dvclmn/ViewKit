@@ -67,7 +67,7 @@ struct DragGestureState {
 
 extension DragGestureState {
 
-  //  var value: CGSize { lastComputedValue ?? .zero }
+    var value: CGRect { lastComputedValue?.toCGRectZeroOrigin ?? .zero }
 
   /// For this, marquee wants the `Gesture.Value` start location
   /// Continuous wants the latest `Binding<CGSize>` offset value.
@@ -79,30 +79,36 @@ extension DragGestureState {
   /// It's important for marquee to be able to expres `nil`
   mutating func update(
     _ gestureValue: DragGesture.Value,
-    //    behaviour: DragBehavior,
   ) -> CGRect? {
-
-    let newRect: CGRect
+    
     switch behaviour {
       case .marquee:
         guard let anchor else { return nil }
-        newRect = gestureValue.toRect(from: anchor, end: .standard)
+        let newRect = gestureValue.toRect(from: anchor, end: .standard)
+        lastComputedValue = newRect.size
+        return newRect
 
       case .continuous:
+//        print("Handling update for `.continuous` Drag gesture at \(Date.debug)")
         guard let anchor else {
-          return lastComputedValue?.toCGRectZeroOrigin ?? .zero
+          print("No anchor found, returning current value: \(value.displayString)")
+          return value
         }
+        
+//        print("\(#file)/\(#function) Did find anchor: \(anchor.displayString) at \(Date.debug)")
+        
         let base = anchor.toCGSize
         let size = applyAxis(
           behaviour.axes,
           base: base,
           translation: gestureValue.translation
         )
-        newRect = CGRect(origin: .zero, size: size)
+
+        lastComputedValue = size
+        return CGRect(origin: .zero, size: size)
     }
 
-    lastComputedValue = newRect.size
-    return newRect
+
   }
 
   mutating func end() {
