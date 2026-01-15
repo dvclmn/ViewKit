@@ -21,11 +21,11 @@ public typealias TapUpdate = (CGPoint) -> Void
 
 public struct UnifiedDragModifier: ViewModifier {
 
-  @State private var dragState: DragState
-  @State private var rectToDraw: CGRect?
+  @State private var dragState: DragGestureState
+  //  @State private var rectToDraw: CGRect?
 
   @Binding var dragRect: CGRect
-//  @Binding var offset: CGSize
+  //  @Binding var offset: CGSize
   let behavior: DragBehavior
   let isEnabled: Bool
   let minimumDistance: CGFloat
@@ -33,6 +33,7 @@ public struct UnifiedDragModifier: ViewModifier {
   let isDragging: DragUpdate
 
   init(
+    rect: Binding<CGRect>,
     behavior: DragBehavior,
     isEnabled: Bool = true,
     minimumDistance: CGFloat = 5,
@@ -40,6 +41,7 @@ public struct UnifiedDragModifier: ViewModifier {
     didUpdateDrag: @escaping DragUpdate,
 
   ) {
+    self._dragRect = rect
     self.behavior = behavior
     self.isEnabled = isEnabled
     self.minimumDistance = minimumDistance
@@ -47,14 +49,14 @@ public struct UnifiedDragModifier: ViewModifier {
     self.isDragging = didUpdateDrag
 
     /// Initialize state based on behavior
-    self._dragState = State(initialValue: DragState(behavior))
+    self._dragState = State(initialValue: DragGestureState())
   }
 
   public func body(content: Content) -> some View {
     content
       .onTapGesture { didUpdateTap($0) }
       .gesture(dragGesture, isEnabled: isEnabled)
-      .drawMarqueeRect(rect: rectToDraw, isEnabled: true)
+      .drawMarqueeRect(rect: dragRect, isEnabled: behavior.isMarquee)
 
   }
 }
@@ -66,11 +68,12 @@ extension UnifiedDragModifier {
         /// 1. Only anchor once at the very beginning of this specific drag
         if dragState.anchor == nil {
           dragState.begin(
-            with: behavior.isMarquee ? value.startLocation : dragRect.
+            /// IMPORTANT: Not sure if I should use `dragRect.origin`,
+            /// or the *size* (and convert to CGPoint)
+            with: behavior.isMarquee ? value.startLocation : dragRect.origin
           )
         }
-        
-        
+
         /// Marquee approach:
         //        guard let origin = dragOrigin else { return }
         //        let rect = value.toRect(from: origin, end: .standard)
@@ -78,30 +81,28 @@ extension UnifiedDragModifier {
         //        rectToRender = rect
         //        didUpdateRect(.drag(rect, .changed))
         //        dragState.handleDragChange(value, behavior: behavior)
-        
-        
+
         /// Accrue approach
         /// 2. Update the binding using the stable anchor
-        offset = dragState.update(value)
+        //        offset = dragState.update(value)
+        dragRect = dragState.update(value, behaviour: behavior)
         isDragging(true)
-        
       }
-    
+
       .onEnded { value in
-        
+
         dragState.end()
         isDragging(true)
         // Marquee:
-//        didUpdateRect(nil)
-//        rectToRender = nil
-//        dragOrigin = nil
-        
+        //        didUpdateRect(nil)
+        //        rectToRender = nil
+        //        dragOrigin = nil
+
         // Acrue:
-//        tracker.end()
-//        isDragging(false)
+        //        tracker.end()
+        //        isDragging(false)
       }
-    
-    
+
       .onEnded { _ in
         //        dragState.handleDragEnd(behavior: behavior)
         //        dragState.handleDragChange(<#T##value: DragGesture.Value##DragGesture.Value#>, behavior: <#T##DragBehavior#>)
@@ -112,6 +113,7 @@ extension UnifiedDragModifier {
 
 extension View {
   public func tapDragGesture(
+    rect: Binding<CGRect>,
     behavior: DragBehavior,
     isEnabled: Bool = true,
     minimumDistance: CGFloat = 5,
@@ -120,6 +122,7 @@ extension View {
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
+        rect: rect,
         behavior: behavior,
         isEnabled: isEnabled,
         minimumDistance: minimumDistance,

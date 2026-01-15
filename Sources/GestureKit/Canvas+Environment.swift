@@ -17,7 +17,7 @@ extension EnvironmentValues {
   @Entry public var canvasZoomRange: ClosedRange<CGFloat>?
   @Entry public var canvasRotation: Angle = .zero
   
-  @Entry public var pointerState: PointerState = .initial
+//  @Entry public var pointerState: PointerState = .initial
 //  @Entry public var tapLocation: CGPoint?
 //  @Entry public var hoverLocation: CGPoint?
 //  @Entry public var dragRect: CGRect?

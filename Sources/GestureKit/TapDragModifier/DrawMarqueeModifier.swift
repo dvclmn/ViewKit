@@ -12,11 +12,12 @@ import SwiftUI
 public struct DrawMarqueeModifier: ViewModifier {
   @Environment(\.isDebugMode) var isDebugMode
   let rect: CGRect?
+  let isEnabled: Bool
 
   public func body(content: Content) -> some View {
     content
       .overlay {
-        if let rect {
+        if isEnabled, let rect {
           ZStack {
             Canvas { context, size in
               context.stroke(rect.path, with: .color(.pink))
@@ -37,6 +38,6 @@ extension View {
     rect: CGRect?,
     isEnabled: Bool
   ) -> some View {
-    self.modifier(DrawMarqueeModifier(rect: rect))
+    self.modifier(DrawMarqueeModifier(rect: rect, isEnabled: isEnabled))
   }
 }

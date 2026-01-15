@@ -8,21 +8,21 @@
 import CoreTools
 import SwiftUI
 
-struct DragState {
+struct DragGestureState {
 
-  let behaviour: DragBehavior.Meta
+  //  let behaviour: DragBehavior.Meta
   /// Common to both behaviours
   //  var rect: CGRect
 
   /// The start location of the offset, captured at drag start
-  private(set) var anchor: CGSize?
-//  private(set) var anchor: CGPoint?
+  private(set) var anchor: CGPoint?
+  //  private(set) var anchor: CGPoint?
 
   /// The last computed offset value
   private var lastComputedValue: CGSize?
 
   /// Probably ignored for marquee?
-  let axes: GridAxis.Set
+//  let axes: GridAxis.Set
 
   /// Carries the logic unique to each behaviour
   //  let phase: DragPhase
@@ -32,15 +32,15 @@ struct DragState {
   //  let isDragging: DragUpdate
 
   init(
-    _ behaviour: DragBehavior,
-    //    axes: GridAxis.Set
+//    _ behaviour: DragBehavior,
+//        axes: GridAxis.Set
   ) {
 
-    switch behaviour {
-      case .marquee: self.axes = .all
-      case .continuous(let axes): self.axes = axes
-    }
-    self.behaviour = DragBehavior.Meta(behaviour)
+//    switch behaviour {
+//      case .marquee: self.axes = .all
+//      case .continuous(let axes): self.axes = axes
+//    }
+//    self.behaviour = DragBehavior.Meta(behaviour)
     //    self.axes = behaviour.continuousValue ?? .all
   }
 }
@@ -65,7 +65,7 @@ struct DragState {
 //  }
 //}
 
-extension DragState {
+extension DragGestureState {
 
   //  var value: CGSize { lastComputedValue ?? .zero }
 
@@ -78,13 +78,13 @@ extension DragState {
 
   mutating func update(
     _ gestureValue: DragGesture.Value,
-    behaviour: DragBehavior.Meta
-  ) -> CGRect? {
+    behaviour: DragBehavior,
+  ) -> CGRect {
 
     let newRect: CGRect
     switch behaviour {
       case .marquee:
-        guard let anchor else { return nil }
+        guard let anchor else { return .zero }
         newRect = gestureValue.toRect(from: anchor, end: .standard)
 
       case .continuous:
@@ -92,7 +92,11 @@ extension DragState {
           return lastComputedValue?.toCGRectZeroOrigin ?? .zero
         }
         let base = anchor.toCGSize
-        let size = applyAxis(base: base, translation: gestureValue.translation)
+        let size = applyAxis(
+          behaviour.axes,
+          base: base,
+          translation: gestureValue.translation
+        )
         newRect = CGRect(origin: .zero, size: size)
     }
 
@@ -104,7 +108,11 @@ extension DragState {
     anchor = nil
   }
 
-  private func applyAxis(base: CGSize, translation: CGSize) -> CGSize {
+  private func applyAxis(
+    _ axes: GridAxis.Set,
+    base: CGSize,
+    translation: CGSize
+  ) -> CGSize {
     switch axes {
       case .horizontal:
         CGSize(
@@ -125,7 +133,7 @@ extension DragState {
   }
 }
 
-extension DragState {
+extension DragGestureState {
 
   //  mutating func handleDragChange(
   //    _ value: DragGesture.Value,

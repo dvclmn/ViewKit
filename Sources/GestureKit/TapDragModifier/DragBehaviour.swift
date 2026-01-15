@@ -20,12 +20,20 @@ public enum DragType {
 
 @MetaEnum
 @CaseDetection
+//@AssociatedValues
 public enum DragBehavior {
   /// Transient rectangle from drag origin to current point
   case marquee(drawMarquee: Bool)
 
   /// Accumulated offset that persists across drags
   case continuous(axes: GridAxis.Set = .all)
+
+  public var axes: GridAxis.Set {
+    if case .continuous(let axes) = self {
+      return axes
+    }
+    return .all
+  }
 }
 
 //enum DragState {
