@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DragGestureState {
 
-  //  let behaviour: DragBehavior.Meta
+  let behaviour: DragBehavior
   /// Common to both behaviours
   //  var rect: CGRect
 
@@ -22,7 +22,7 @@ struct DragGestureState {
   private var lastComputedValue: CGSize?
 
   /// Probably ignored for marquee?
-//  let axes: GridAxis.Set
+  //  let axes: GridAxis.Set
 
   /// Carries the logic unique to each behaviour
   //  let phase: DragPhase
@@ -32,15 +32,15 @@ struct DragGestureState {
   //  let isDragging: DragUpdate
 
   init(
-//    _ behaviour: DragBehavior,
-//        axes: GridAxis.Set
+    _ behaviour: DragBehavior,
+    //        axes: GridAxis.Set
   ) {
-
-//    switch behaviour {
-//      case .marquee: self.axes = .all
-//      case .continuous(let axes): self.axes = axes
-//    }
-//    self.behaviour = DragBehavior.Meta(behaviour)
+    self.behaviour = behaviour
+    //    switch behaviour {
+    //      case .marquee: self.axes = .all
+    //      case .continuous(let axes): self.axes = axes
+    //    }
+    //    self.behaviour = DragBehavior.Meta(behaviour)
     //    self.axes = behaviour.continuousValue ?? .all
   }
 }
@@ -76,15 +76,16 @@ extension DragGestureState {
     anchor = val
   }
 
+  /// It's important for marquee to be able to expres `nil`
   mutating func update(
     _ gestureValue: DragGesture.Value,
-    behaviour: DragBehavior,
-  ) -> CGRect {
+    //    behaviour: DragBehavior,
+  ) -> CGRect? {
 
     let newRect: CGRect
     switch behaviour {
       case .marquee:
-        guard let anchor else { return .zero }
+        guard let anchor else { return nil }
         newRect = gestureValue.toRect(from: anchor, end: .standard)
 
       case .continuous:
@@ -105,7 +106,16 @@ extension DragGestureState {
   }
 
   mutating func end() {
+//  mutating func end() -> CGRect? {
+    
     anchor = nil
+//    switch DragBehavior.Meta(behaviour) {
+//      case .marquee:
+//        return nil
+//        
+//      case .continuous:
+////        return lastComputedValue.
+//    }
   }
 
   private func applyAxis(

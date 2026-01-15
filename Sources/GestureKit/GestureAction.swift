@@ -33,6 +33,7 @@ extension CanvasGestureState {
   }
 
   public mutating func update(_ newValue: Value, phase: InteractionPhase) {
+    print("Updating `CanvasGestureState` with value \(newValue) and phase \(phase)")
     self.value = newValue
     self.phase = phase
   }
