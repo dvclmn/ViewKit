@@ -10,7 +10,7 @@ import SwiftUI
 
 public struct InfoBarItemsModifier: ViewModifier {
 
-  @State private var debouncer = AsyncDebouncer(interval: 0.4)
+  @State private var debouncer = AsyncDebouncer(interval: 0.2)
 
   @State private var items: [InfoBarItem] = []
 

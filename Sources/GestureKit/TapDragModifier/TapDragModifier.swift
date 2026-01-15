@@ -8,7 +8,17 @@
 import CoreTools
 import SwiftUI
 
+/// Goals for unified Tap/Drag modifier
+/// - Send tap via callback
+/// - Binding CGSize for offset
+///
+/// Previous separate modifiers
+/// - Marquee sent drag back via callback, now Binding
+/// - Cumulative used Binding for drag offset
+
 public struct UnifiedDragModifier: ViewModifier {
+  
+//  @Binding var offset: CGSize
   let behavior: DragBehavior
   let isEnabled: Bool
   let minimumDistance: CGFloat
@@ -39,6 +49,7 @@ public struct UnifiedDragModifier: ViewModifier {
         }
       }
       .gesture(dragGesture, isEnabled: isEnabled)
+//      .drawMarqueeRect(rect: canvasHandler.pointerState.dragRect, isEnabled: true)
 
   }
 }

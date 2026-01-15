@@ -42,7 +42,7 @@ public func updateIfChanged<T: Equatable>(
 public func performIfChanged<T: Equatable>(
   _ oldValue: T,
   _ newValue: T,
-  perform: @autoclosure @Sendable () -> Void
+  perform: @autoclosure () -> Void
 ) -> Bool {
   guard oldValue != newValue else { return false }
   perform()

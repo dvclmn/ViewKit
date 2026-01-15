@@ -21,13 +21,11 @@ public struct ScrollStateModifier: ViewModifier {
     axis: Axis,
     tolerance: CGFloat,
     debounce: DebounceMode,
-//    debounceInterval: TimeInterval,
     didUpdateScrollContext: @escaping (ScrollContext) -> Void
   ) {
     self.axis = axis
     self.tolerance = tolerance
     self._debouncer = debounce.createDebouncer()
-//    self._debouncer = State(initialValue: AsyncDebouncer(interval: debounceInterval))
     self.didUpdateScrollContext = didUpdateScrollContext
   }
 
@@ -56,22 +54,10 @@ public struct ScrollStateModifier: ViewModifier {
             hasUpdatedScrollLocation = true
             return didUpdateScrollContext(newValue)
           }
-          
+
           Task.debounceIfNeeded(debouncer) {
             performIfChanged(oldValue, newValue, perform: didUpdateScrollContext(newValue))
-//            if oldValue != newValue {
-//                              return didUpdateScrollContext(newValue)
-//                            }
-            
           }
-          
-//          Task {
-//            debouncer?.execute { @MainActor in
-//              if oldValue != newValue {
-//                return didUpdateScrollContext(newValue)
-//              }
-//            }
-//          }  // END task
         }
     } else {
       /// Falling back to plain old View for macOS 14 and lower
@@ -92,7 +78,7 @@ extension View {
     axis: Axis,
     tolerance: CGFloat = 2.0,
     debounce: DebounceMode = .debounce(0.2),
-//    debounceInterval: TimeInterval = 0.2,
+    //    debounceInterval: TimeInterval = 0.2,
     didUpdateScrollContext: @escaping (ScrollContext) -> Void
   ) -> some View {
     self.modifier(
@@ -100,7 +86,7 @@ extension View {
         axis: axis,
         tolerance: tolerance,
         debounce: debounce,
-//        debounceInterval: debounceInterval,
+        //        debounceInterval: debounceInterval,
         didUpdateScrollContext: didUpdateScrollContext
       )
     )
