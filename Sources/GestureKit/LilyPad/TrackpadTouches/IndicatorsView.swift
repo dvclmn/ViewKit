@@ -72,7 +72,7 @@ extension TouchIndicatorsView {
     //  func TouchLabel(_ touch: MappedTouchPoint) -> some View {
     HStack {
       Text(touch.position.displayString)
-      Text("\nPhase: " + touch.phase.rawValue)
+//      Text("\nPhase: " + touch.phase.rawValue)
       //      if isDuplicateID(touch) {
       //        Text("\nDuplicate ID")
       //          .foregroundStyle(.red)

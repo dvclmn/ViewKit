@@ -56,14 +56,25 @@ public class TrackpadTouchesNSView: NSView {
     /// Rather than trying to squeeze it in every touch event
     didUpdatePressure(CGFloat(event.pressure))
     
-    let nsTouches = event.allTouches()
-
+    // Use matching: .any to ensure we track touches even when they start resting
+    let nsTouches = event.touches(matching: .any, in: self)
+    
     let processedTouches = touchManager.processCapturedTouches(
       nsTouches,
       timestamp: event.timestamp,
+      in: self // Pass the view for coordinate conversion
     )
     
     didUpdateTouches(processedTouches)
+//
+//    let nsTouches = event.allTouches()
+//
+//    let processedTouches = touchManager.processCapturedTouches(
+//      nsTouches,
+//      timestamp: event.timestamp,
+//    )
+//    
+//    didUpdateTouches(processedTouches)
 
   }
 
