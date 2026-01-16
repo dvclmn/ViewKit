@@ -11,24 +11,16 @@ import SwiftUI
 public struct TouchIndicatorsView: View {
 
   let mappedTouches: [TouchPoint]
-  //  let touches: [MappedTouchPoint]
   let mappingStrategy: ContentSizeMode
-  //  let mappingStrategy: TrackpadMapStrategy
   let containerSize: CGSize
   let indicatorDiameter: CGFloat = 40
 
   public init(
     mappedTouches: [TouchPoint],
     mappingStrategy: ContentSizeMode,
-    //    mappingSize: CGSize,
     containerSize: CGSize,
   ) {
-    //    if isPreview {
-    //      let mapped = MappedTouchPoint.examplePoints(mappingRect: mappingRect)
-    //      self.touches = mapped
-    //    } else {
     self.mappedTouches = mappedTouches
-    //    }
     self.mappingStrategy = mappingStrategy
     self.containerSize = containerSize
   }
@@ -36,10 +28,14 @@ public struct TouchIndicatorsView: View {
   public var body: some View {
 
     if mappedTouches.count > 0 {
-      ForEach(mappedTouches) { touch in
+      ForEach(Array(mappedTouches.enumerated()), id: \.element) { index, touch in
         Circle()
           .fill(indicatorColour(touch))
           .frame(width: indicatorDiameter)
+          .overlay {
+            Text("\(index + 1)")
+              .font(.title2)
+          }
           .overlay(alignment: .bottom) {
             /// Displays info above each individual touch location
             TouchLabel(touch)
@@ -58,7 +54,7 @@ public struct TouchIndicatorsView: View {
 }
 
 extension TouchIndicatorsView {
-  
+
   private var mappingSize: CGSize {
     mappingStrategy.size(
       for: containerSize,
@@ -69,26 +65,14 @@ extension TouchIndicatorsView {
 
   @ViewBuilder
   func TouchLabel(_ touch: TouchPoint) -> some View {
-    //  func TouchLabel(_ touch: MappedTouchPoint) -> some View {
-    HStack {
-      Text(touch.position.displayString)
-//      Text("\nPhase: " + touch.phase.rawValue)
-      //      if isDuplicateID(touch) {
-      //        Text("\nDuplicate ID")
-      //          .foregroundStyle(.red)
-      //          .fontWeight(.bold)
-      //      }
-    }
-    .monospaced()
-    .font(.caption2)
-    .fixedSize()
-    //    .quickBackground()
-    //    .quickBackground(padding: Styles.sizeNano, colour: AnyShapeStyle(.black.opacity(0.6)))
-    .offset(y: -indicatorDiameter * 1.15)
+    Text(touch.position.displayString(places: 0))
+      .monospaced()
+      .font(.caption2)
+      .fixedSize()
+      .offset(y: -indicatorDiameter * 1.15)
   }
 
   func isDuplicateID(_ touch: TouchPoint) -> Bool {
-    //  func isDuplicateID(_ touch: MappedTouchPoint) -> Bool {
     let matchingIdsCount =
       mappedTouches.filter { point in
         point.id == touch.id
@@ -100,12 +84,6 @@ extension TouchIndicatorsView {
   }
 
   func indicatorColour(_ touch: TouchPoint) -> Color {
-    //  func indicatorColour(_ touch: MappedTouchPoint) -> Color {
     isDuplicateID(touch) ? Color.red : Color.blue.opacity(0.7)
   }
-
-//  func touchPosition(_ touch: TouchPoint) -> CGPoint {
-//    //  func touchPosition(_ touch: MappedTouchPoint) -> CGPoint {
-//    touch.position.mapped(to: mappingStrategy.size(for: containerSize).toCGRectZeroOrigin)
-//  }
 }

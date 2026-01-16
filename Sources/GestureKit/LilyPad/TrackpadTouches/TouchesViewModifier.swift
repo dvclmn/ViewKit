@@ -9,8 +9,8 @@ import CoreTools
 import SwiftUI
 
 public struct TrackpadTouchesModifier: ViewModifier {
-  @Environment(\.viewportSize) private var viewportSize
-  @State private var localMappedTouches: Set<TouchPoint> = []
+  @State private var localTouches: [TouchPoint] = []
+//  @State private var localMappedTouches: Set<TouchPoint> = []
 
   let isEnabled: Bool
   let mapStrategy: ContentSizeMode
@@ -23,34 +23,24 @@ public struct TrackpadTouchesModifier: ViewModifier {
       content
       if isEnabled && shouldShowIndicators {
         TouchIndicatorsView(
-          mappedTouches: localMappedTouches.toArray,
+          mappedTouches: localTouches.toArray,
           mappingStrategy: mapStrategy,
           containerSize: proxy.size,
         )
       }
       if isEnabled {
-        TrackpadTouchesView() { touchOutput in
+        TrackpadTouchesView { touchOutput in
 
           if shouldShowIndicators {
-            //            let touches = eventData?.touches ?? []
-            /// Handle touches for local views
-//            let mappedTouchBuilder = MappedTouchPointsBuilder(
-//              touches: touchOutput,
-//              in: mapStrategy.size(for: proxy.size, aspectRatio: CGSize.trackpadAspectRatio)
-//            )
-//            let mapped = mappedTouchBuilder.mappedTouches
-            self.localMappedTouches = touchOutput
+            self.localTouches = touchOutput
           }
-
           didUpdateTouches(touchOutput)
 
-          /// Handle touches for View using the modifier
-          //          touchUpdates(touches)
         } didUpdatePressure: { pressure in
-          
-        } // touches view
-        .background(.cyan.opacity(0.1))
-        .debugTextOverlay("No viewport size", isEnabled: viewportSize == nil)
+          didUpdatePressure(pressure)
+        }  // touches view
+        //        .background(.cyan.opacity(0.1))
+//        .debugTextOverlay("No viewport size", isEnabled: viewportSize == nil)
       }  // END isEnabled check
     }  // END geo reader
   }
@@ -62,7 +52,7 @@ extension View {
     mapStrategy: ContentSizeMode,
     showIndicators: Bool = true,
     didUpdateTouches: @escaping TouchesUpdate,
-  didUpdatePressure: @escaping PressureUpdate = { _ in }
+    didUpdatePressure: @escaping PressureUpdate = { _ in }
   ) -> some View {
     self.modifier(
       TrackpadTouchesModifier(

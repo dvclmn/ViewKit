@@ -30,7 +30,8 @@ class TrackpadTouchManager {
     _ nsTouches: Set<NSTouch>,
     timestamp: TimeInterval,
     in space: CoordinateSpace
-  ) -> Set<TouchPoint> {
+  ) -> [TouchPoint] {
+//  ) -> Set<TouchPoint> {
     var results = Set<TouchPoint>()
 
     for touch in nsTouches {
@@ -75,7 +76,7 @@ class TrackpadTouchManager {
         ))
     }
 
-    return results
+    return results.sorted(byKeyPath: \.id)
   }
 
   private func handlePrevState(

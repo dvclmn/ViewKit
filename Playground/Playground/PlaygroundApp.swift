@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ToolKit
 
 @main
 struct PlaygroundApp: App {
@@ -14,6 +15,7 @@ struct PlaygroundApp: App {
     WindowGroup {
       ContentView()
         .environment(store)
+//        .readViewportSize(mode: .debounce(0.2))
     }
   }
 }

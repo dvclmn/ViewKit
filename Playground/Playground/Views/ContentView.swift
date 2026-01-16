@@ -25,6 +25,10 @@ struct ContentView: View {
   }
 }
 
-#Preview {
+#if DEBUG
+#Preview(traits: .size(.normal)) {
+  @Previewable @State var store = AppHandler()
   ContentView()
+    .environment(store)
 }
+#endif

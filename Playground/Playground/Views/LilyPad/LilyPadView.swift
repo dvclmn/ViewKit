@@ -14,15 +14,19 @@ struct LilyPadDemoView: View {
   @State private var pressure: String = "No pressure"
   @State private var touches: String = "No touches"
 
-  @State private var points: [CGPoint] = [.quickPreset01, .quickPreset02, .quickPreset03]
+  //  @State private var points: [CGPoint] = [.quickPreset01, .quickPreset02, .quickPreset03]
 
   var body: some View {
 
     Text("Hello")
       .padding(40)
-      .frame(width: 600, height: 700)
+      .frame(
+        maxWidth: .infinity,
+        maxHeight: .infinity,
+      )
+//      .frame(width: 600, height: 700)
       .overlay {
-        Canvas { context, size in
+        Canvas(rendersAsynchronously: false) { context, size in
           var path = Path()
           if let first = points.first {
             path.move(to: first)
@@ -32,16 +36,6 @@ struct LilyPadDemoView: View {
           }
           context.stroke(path, with: .color(.blue), lineWidth: 3)
         }
-        //        Canvas(
-        //          rendersAsynchronously: true) { context, size in
-        //              let path = Path { p in
-        //                for stroke in drawing {
-        //                p.move(to: stroke.position)
-        //                p.
-        //              }
-        //            }
-        //            context.stroke(path, with: <#T##GraphicsContext.Shading#>, lineWidth: <#T##CGFloat#>)
-        //          }
       }
       .touches(
         isEnabled: true,
@@ -50,25 +44,30 @@ struct LilyPadDemoView: View {
       ) { touches in
 
         if let current = touches.first {
-          points.append(current.position)
+          store.setDrawing(\.points) {
+            $0.append(current.position)
+          }
         }
-        //        self.touches = touches.reduce(
-        //          into: "",
-        //          { partialResult, point in
-        //            partialResult +=
-        //              DisplayString {
-        //                Labeled("Position", value: point.position.displayString)
-        //                Labeled("Velocity", value: point.velocity.displayString)
-        //                Labeled("Magnitude", value: point.magnitude.displayString)
-        //              }.text
-        //          })
-      } didUpdatePressure: { pressure in
-        self.pressure = pressure.displayString
-      }
 
-//      .debugTextOverlay(pressure, touches)
+      }
+      .printInfo(.applicationSupport)
+
+    //      .debugTextOverlay(pressure, touches)
+      .toolbar {
+        ToolbarItem {
+          Button("Clear") {
+            store.setDrawing(\.points, value: [])
+          }
+          .keyboardShortcut(.delete, modifiers: [])
+        }
+      }
   }
 }
+
+extension LilyPadDemoView {
+  private var points: [CGPoint] { store.drawing.points }
+}
+
 #if DEBUG
 #Preview(traits: .size(.normal)) {
   @Previewable @State var store = AppHandler()

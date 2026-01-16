@@ -6,11 +6,11 @@
 //
 
 import AppKit
+
 //import CoreTools
 //import VectorKit
 
-
-/// // Example logic for your drawing engine
+/// // Example logic for drawing engine
 /// ```
 /// func calculateWidth(speed: CGFloat) -> CGFloat {
 ///   let baseWidth: CGFloat = 10.0
@@ -21,14 +21,12 @@ import AppKit
 /// }
 /// ```
 public struct TouchPoint: Identifiable, Hashable {
-  public let id: Int        // From NSTouch.identity
-//  public let id: UUID        // From NSTouch.identity
-//  public let id: AnyHashable        // From NSTouch.identity
-  public let position: CGPoint      // View-space or Normalized
-  public let velocity: CGVector     // Points per second
-  public let magnitude: CGFloat     // Scalar speed
+  public let id: Int  // From NSTouch.identity
+  public let position: CGPoint  // View-space or Normalized
+  public let velocity: CGVector  // Points per second
+  public let magnitude: CGFloat  // Scalar speed
   public let isResting: Bool
-  
+
   public init(
     id: Int,
     position: CGPoint,

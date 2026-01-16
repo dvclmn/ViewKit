@@ -8,7 +8,8 @@
 #if canImport(AppKit)
 import SwiftUI
 
-public typealias TouchesUpdate = (Set<TouchPoint>) -> Void
+public typealias TouchesUpdate = ([TouchPoint]) -> Void
+//public typealias TouchesUpdate = (Set<TouchPoint>) -> Void
 public typealias PressureUpdate = (CGFloat) -> Void
 
 struct TrackpadTouchesView: NSViewRepresentable {
