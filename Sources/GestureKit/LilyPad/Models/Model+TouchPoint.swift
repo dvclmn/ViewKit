@@ -17,7 +17,7 @@ public struct TouchPoint: TimestampedPosition, Identifiable, Sendable, Hashable,
   public var position: CGPoint
   public let timestamp: TimeInterval
   public let velocity: CGVector
-  public let pressure: CGFloat
+//  public let pressure: CGFloat
   public let deviceSize: CGSize
   public let isResting: Bool
 
@@ -29,7 +29,7 @@ public struct TouchPoint: TimestampedPosition, Identifiable, Sendable, Hashable,
     position: CGPoint,
     timestamp: TimeInterval,
     velocity: CGVector,
-    pressure: CGFloat,
+//    pressure: CGFloat,
     deviceSize: CGSize,
     isResting: Bool,
     mappedSize: CGSize? = nil
@@ -39,7 +39,7 @@ public struct TouchPoint: TimestampedPosition, Identifiable, Sendable, Hashable,
     self.position = position
     self.timestamp = timestamp
     self.velocity = velocity
-    self.pressure = pressure
+//    self.pressure = pressure
     self.deviceSize = deviceSize
     self.isResting = isResting
     self.mappedSize = mappedSize
@@ -51,7 +51,7 @@ public struct TouchPoint: TimestampedPosition, Identifiable, Sendable, Hashable,
     touchID: Int,
     phase: NSTouch.Phase,
     timestamp: TimeInterval,  // From NSEvent.timestamp
-    pressure: CGFloat,
+//    pressure: CGFloat,
     deviceSize: CGSize,
     isResting: Bool,
   ) {
@@ -65,7 +65,7 @@ public struct TouchPoint: TimestampedPosition, Identifiable, Sendable, Hashable,
       position: position,
       timestamp: timestamp,
       velocity: .zero,  // This will be enriched in next step
-      pressure: pressure,
+//      pressure: pressure,
       deviceSize: deviceSize,
       isResting: isResting,
     )
@@ -84,7 +84,7 @@ extension TouchPoint {
       position: clickTouch.position,
       timestamp: clickTouch.timestamp,
       velocity: clickTouch.velocity,
-      pressure: clickTouch.pressure,
+//      pressure: clickTouch.pressure,
       deviceSize: clickTouch.deviceSize,
       isResting: clickTouch.isResting,
       mappedSize: CGSize(width: 1, height: 1)
@@ -105,7 +105,7 @@ extension TouchPoint {
       position: updatedPosition,
       timestamp: current.timestamp,
       velocity: current.velocity,
-      pressure: current.pressure,
+//      pressure: current.pressure,
       deviceSize: current.deviceSize,
       isResting: current.isResting,
       mappedSize: mappedSize,
@@ -119,7 +119,7 @@ extension TouchPoint {
       position: position,
       timestamp: timestamp,
       velocity: velocity,
-      pressure: pressure,
+//      pressure: pressure,
       deviceSize: deviceSize,
       isResting: isResting
     )
@@ -138,7 +138,6 @@ extension TouchPoint {
         - Position: \(touch.position.displayString)
         - Timestamp: \(touch.timestamp.displayString)
         - Velocity: \(touch.velocity.displayString)
-        - Pressure: \(touch.pressure.displayString)
         - Device Size: \(touch.deviceSize.displayString)
         - Is Resting?: \(touch.isResting)
       /////

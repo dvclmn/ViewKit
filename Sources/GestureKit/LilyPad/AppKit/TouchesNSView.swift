@@ -13,12 +13,12 @@ public class TrackpadTouchesNSView: NSView {
   /// Touch manager to handle touch tracking and velocity calculation
   private let touchManager = TrackpadTouchManager()
 
-  let didUpdateTouches: TouchOutput
+  let didUpdateTouches: TouchesUpdate
 
   private var latestPressure: CGFloat = 1.0
 
   public init(
-    didUpdateTouches: @escaping TouchOutput
+    didUpdateTouches: @escaping TouchesUpdate
   ) {
     self.didUpdateTouches = didUpdateTouches
     super.init(frame: .zero)
@@ -36,7 +36,7 @@ public class TrackpadTouchesNSView: NSView {
     allowedTouchTypes = [.indirect]
 
     
-//    self.pressureConfiguration = NSPressureConfiguration(pressureBehavior: .primaryGeneric)
+    self.pressureConfiguration = NSPressureConfiguration(pressureBehavior: .primaryGeneric)
 
     /// Include stationary touches in the updates
     wantsRestingTouches = true
@@ -67,7 +67,6 @@ public class TrackpadTouchesNSView: NSView {
   public override func touchesMoved(with event: NSEvent) {
     processFirstTouches(with: event)
   }
-
   public override func touchesEnded(with event: NSEvent) {
     processFirstTouches(with: event)
   }

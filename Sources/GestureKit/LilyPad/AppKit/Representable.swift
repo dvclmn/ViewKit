@@ -8,15 +8,15 @@
 #if canImport(AppKit)
 import SwiftUI
 
-public typealias TouchOutput = (Set<TouchPoint>) -> Void
+public typealias TouchesUpdate = (Set<TouchPoint>) -> Void
+public typealias PressureUpdate = (CGFloat) -> Void
 
-// MARK: - SwiftUI Representable
-/// SwiftUI wrapper for the trackpad touches view
 public struct TrackpadTouchesView: NSViewRepresentable {
 
-  private var onTouchesUpdate: TouchOutput?
+  private var onTouchesUpdate: TouchesUpdate?
+  private var onPressureUpdate: PressureUpdate?
 
-  public init(onTouchesUpdate: TouchOutput? = nil) {
+  public init(onTouchesUpdate: TouchesUpdate? = nil) {
     self.onTouchesUpdate = onTouchesUpdate
   }
 

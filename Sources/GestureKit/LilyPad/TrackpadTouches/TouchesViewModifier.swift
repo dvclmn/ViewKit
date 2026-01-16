@@ -8,23 +8,20 @@
 import CoreTools
 import SwiftUI
 
-//public typealias TouchesModifierOutput = (TouchEventData?) -> Void
-//public typealias TouchesModifierOutput = (Set<TouchPoint>) -> Void
-
 public struct TrackpadTouchesModifier: ViewModifier {
 
   @State private var localMappedTouches: Set<TouchPoint> = []
-  //  @State private var localMappedTouches: Set<MappedTouchPoint> = []
 
   let isEnabled: Bool
   let mapStrategy: ContentSizeMode
   let shouldShowIndicators: Bool
-  let touchUpdates: TouchOutput
+  let didUpdateTouches: TouchesUpdate
+  let didUpdatePressure: PressureUpdate
 
   public func body(content: Content) -> some View {
     GeometryReader { proxy in
       content
-      if shouldShowIndicators {
+      if isEnabled && shouldShowIndicators {
         TouchIndicatorsView(
           mappedTouches: localMappedTouches.toArray,
           mappingStrategy: mapStrategy,
@@ -32,8 +29,7 @@ public struct TrackpadTouchesModifier: ViewModifier {
         )
       }
       if isEnabled {
-        TrackpadTouchesView(  //          shouldUseVelocity: true
-        ) { touchOutput in
+        TrackpadTouchesView() { touchOutput in
 
           if shouldShowIndicators {
             //            let touches = eventData?.touches ?? []
@@ -46,7 +42,7 @@ public struct TrackpadTouchesModifier: ViewModifier {
             self.localMappedTouches = mapped
           }
 
-          touchUpdates(touchOutput)
+          didUpdateTouches(touchOutput)
 
           /// Handle touches for View using the modifier
           //          touchUpdates(touches)
@@ -62,7 +58,7 @@ extension View {
     isEnabled: Bool = true,
     mapStrategy: ContentSizeMode,
     showIndicators: Bool = true,
-    touchUpdates: @escaping TouchOutput
+    touchUpdates: @escaping TouchesUpdate
   ) -> some View {
     self.modifier(
       TrackpadTouchesModifier(

@@ -69,7 +69,7 @@ class TrackpadTouchManager {
         touchID: touchId,
         phase: phase,
         timestamp: timestamp,
-        pressure: pressure,
+//        pressure: pressure,
         deviceSize: nsTouch.deviceSize,
         isResting: nsTouch.isResting
       )
