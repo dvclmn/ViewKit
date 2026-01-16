@@ -28,6 +28,20 @@ public struct TouchPoint: Identifiable, Hashable {
   public let velocity: CGVector     // Points per second
   public let magnitude: CGFloat     // Scalar speed
   public let isResting: Bool
+  
+  public init(
+    id: Int,
+    position: CGPoint,
+    velocity: CGVector,
+    magnitude: CGFloat,
+    isResting: Bool = false
+  ) {
+    self.id = id
+    self.position = position
+    self.velocity = velocity
+    self.magnitude = magnitude
+    self.isResting = isResting
+  }
 }
 
 struct TouchState {

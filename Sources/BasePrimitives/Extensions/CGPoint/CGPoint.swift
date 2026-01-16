@@ -105,6 +105,7 @@ extension CGPoint {
 
   public static let quickPreset01 = CGPoint(x: 100, y: 50)
   public static let quickPreset02 = CGPoint(x: 80, y: 120)
+  public static let quickPreset03 = CGPoint(x: 20, y: 220)
 
   public var normalised: CGPoint {
     guard length > 0 else { return .zero }

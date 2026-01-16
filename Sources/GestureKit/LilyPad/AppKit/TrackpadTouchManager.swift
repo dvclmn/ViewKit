@@ -30,8 +30,6 @@ class TrackpadTouchManager {
     _ nsTouches: Set<NSTouch>,
     timestamp: TimeInterval,
     in space: CoordinateSpace
-      //    viewSize: CGSize
-
   ) -> Set<TouchPoint> {
     var results = Set<TouchPoint>()
 
@@ -45,10 +43,15 @@ class TrackpadTouchManager {
       var velocity = CGVector.zero
 
       if let previous = history[id] {
-
+        handlePrevState(
+          previous,
+          current: currentPos,
+          timestamp: timestamp,
+          velocity: &velocity
+        )
       }
 
-      // 4. Store State for next frame
+      /// 4. Store State for next frame
       if touch.phase == .ended || touch.phase == .cancelled {
         history.removeValue(forKey: id)
       } else {
@@ -59,7 +62,7 @@ class TrackpadTouchManager {
         )
       }
 
-      // 5. Create the output point
+      /// 5. Create the output point
       let magnitude = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
 
       results.insert(
@@ -74,15 +77,15 @@ class TrackpadTouchManager {
 
     return results
   }
-  
+
   private func handlePrevState(
     _ previousState: TouchState,
-    pos currentPosition: CGPoint,
+    current currentPosition: CGPoint,
     timestamp: TimeInterval,
     velocity: inout CGVector,
   ) {
     let dt = CGFloat(timestamp - previousState.lastTimestamp)
-    
+
     if dt > 0 {
       velocity = CGVector.smoothed(
         previous: previousState.smoothedVelocity,
@@ -91,27 +94,12 @@ class TrackpadTouchManager {
         factor: smoothingFactor,
         dt: dt
       )
-      /// Raw velocity: distance / time
-//      let rawVelocity = CGVector(
-//        dx: (currentPosition.x - prev.lastPosition.x) / dt,
-//        dy: (currentPosition.y - prev.lastPosition.y) / dt
-//      )
-//      
-////      let thing =
-//      /// 3. Apply Exponential Smoothing (Low-Pass Filter)
-//      /// `new = (old * (1 - alpha)) + (new * alpha)`
-//
-//      velocity = CGVector(
-//        dx: (prev.smoothedVelocity.dx * (1 - smoothingFactor)) + (rawVelocity.dx * smoothingFactor),
-//        dy: (prev.smoothedVelocity.dy * (1 - smoothingFactor)) + (rawVelocity.dy * smoothingFactor)
-//      )
     }
   }
 
   private func currentPos(
     for touch: NSTouch,
     in space: CoordinateSpace,
-    //    in size: CGSize
   ) -> CGPoint {
     let normalised = touch.normalizedPosition
     return switch space {
