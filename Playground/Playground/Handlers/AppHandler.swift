@@ -11,6 +11,7 @@ import SwiftUI
 @Observable
 final class AppHandler {
   @ObservationIgnored @Shared(.drawing) var drawing
+  var isDrawingEnabled: Bool = false
 }
 extension AppHandler {
   func setDrawing<T>(

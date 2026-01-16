@@ -28,6 +28,11 @@ struct TrackpadTouchesView: NSViewRepresentable {
     return view
   }
 
-  public func updateNSView(_ nsView: TrackpadTouchesNSView, context: Context) {}
+  public func updateNSView(_ nsView: TrackpadTouchesNSView, context: Context) {
+
+    /// Forward changes from SwiftUI to the NSView
+    nsView.setDrawingMode(isActive: isDrawingEnabled)
+
+  }
 }
 #endif

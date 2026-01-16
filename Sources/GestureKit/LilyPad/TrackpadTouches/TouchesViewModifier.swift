@@ -9,7 +9,7 @@ import CoreTools
 import SwiftUI
 
 public struct TrackpadTouchesModifier: ViewModifier {
-//  @State private var localTouches: [TouchPoint] = []
+  //  @State private var localTouches: [TouchPoint] = []
   @State private var localTouches: Set<TouchPoint> = []
 
   let isEnabled: Bool
@@ -28,20 +28,19 @@ public struct TrackpadTouchesModifier: ViewModifier {
           containerSize: proxy.size,
         )
       }
-      if isEnabled {
-        TrackpadTouchesView { touchOutput in
-
+      TrackpadTouchesView(isDrawingEnabled: isEnabled) { touchOutput in
+        if isEnabled {
           if shouldShowIndicators {
             self.localTouches = touchOutput
           }
           didUpdateTouches(touchOutput)
-
-        } didUpdatePressure: { pressure in
-          didUpdatePressure(pressure)
-        }  // touches view
-        //        .background(.cyan.opacity(0.1))
-//        .debugTextOverlay("No viewport size", isEnabled: viewportSize == nil)
-      }  // END isEnabled check
+        }
+      } didUpdatePressure: { pressure in
+        didUpdatePressure(pressure)
+      }  // touches view
+      //        .background(.cyan.opacity(0.1))
+      //        .debugTextOverlay("No viewport size", isEnabled: viewportSize == nil)
+      //      }  // END isEnabled check
     }  // END geo reader
   }
 }

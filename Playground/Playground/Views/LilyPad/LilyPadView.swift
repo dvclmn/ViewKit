@@ -17,7 +17,9 @@ struct LilyPadDemoView: View {
   //  @State private var points: [CGPoint] = [.quickPreset01, .quickPreset02, .quickPreset03]
 
   var body: some View {
-    Text("Hello")
+    
+    @Bindable var store = store
+    Text("Is drawing enabled? \(store.isDrawingEnabled.description)")
       .padding(40)
       .frame(
         maxWidth: .infinity,
@@ -38,7 +40,7 @@ struct LilyPadDemoView: View {
         }
       }
       .touches(
-        isEnabled: true,
+        isEnabled: store.isDrawingEnabled,
         mapStrategy: .fill,
         showIndicators: true
       ) { touches in
@@ -59,6 +61,9 @@ struct LilyPadDemoView: View {
             store.setDrawing(\.points, value: [])
           }
           .keyboardShortcut(.delete, modifiers: [])
+        }
+        ToolbarItem {
+          Toggle("Toggle Drawing", isOn: $store.isDrawingEnabled)
         }
       }
   }
