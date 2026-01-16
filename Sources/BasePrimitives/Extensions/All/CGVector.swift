@@ -7,7 +7,68 @@
 
 import Foundation
 
+//extension CGFloat {
+//  public func smoothed(
+//    factor: CGFloat = 0.2,
+//    raw velocityRaw: CGVector,
+//    previous smoothed: CGVector,
+//  ) -> CGFloat {
+//
+//
+////    (smoothed.dx * (1 - factor)) + (velocityRaw.dx * smoothingFactor)
+//  }
+////  public func smoothed(
+////    factor: CGFloat = 0.2,
+////    raw velocityRaw: CGVector,
+////    previous smoothed: CGVector,
+////  ) -> CGFloat {
+////
+////    (smoothed.dx * (1 - factor)) + (velocityRaw.dx * smoothingFactor)
+////  }
+//}
+
 extension CGVector {
+
+  /// Raw/simple velocity
+  public static func velocity(
+    from previous: CGPoint,
+    to current: CGPoint,
+    dt deltaTime: CGFloat,
+  ) -> CGVector {
+    let delta = (current - previous) / deltaTime
+    return CGVector(dx: delta.x, dy: delta.y)
+  }
+}
+
+extension CGVector {
+
+  public static func smoothed(
+    previous smoothed: CGVector,
+    prevPosition: CGPoint,
+    currentPosition: CGPoint,
+    factor: CGFloat = 0.2,
+    dt deltaTime: CGFloat
+  ) -> Self {
+    let raw = CGVector.velocity(
+      from: prevPosition,
+      to: currentPosition,
+      dt: deltaTime
+    )
+
+    return smoothed.adjustBoth(with: raw) { _, prev, next in
+      (prev * (1 - factor)) + (next * factor)
+    }
+    //    let raw = CGVector.velocity(
+    //      from: prevPosition,
+    //      to: currentPosition,
+    //      dt: deltaTime
+    //    )
+    //    return CGVector(
+    //      dx: (smoothed.dx * (1 - factor)) + (raw.dx * factor),
+    //      dy: (smoothed.dy * (1 - factor)) + (raw.dy * factor)
+    //    )
+
+  }
 
   /// Performs vector magnitude limiting while preserving direction
   /// Could apply to:

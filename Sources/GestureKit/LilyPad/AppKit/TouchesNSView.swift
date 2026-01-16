@@ -72,7 +72,7 @@ public class TrackpadTouchesNSView: NSView {
     let processedTouches = touchManager.processCapturedTouches(
       nsTouches,
       timestamp: event.timestamp,
-      viewSize: self.frame.size,
+      in: .view(frame.size),
 //      in: self // Pass the view for coordinate conversion
     )
     

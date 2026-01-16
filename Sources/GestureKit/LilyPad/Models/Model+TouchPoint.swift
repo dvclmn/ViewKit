@@ -30,7 +30,7 @@ public struct TouchPoint: Identifiable, Hashable {
   public let isResting: Bool
 }
 
-internal struct TouchState {
+struct TouchState {
   var lastPosition: CGPoint
   var lastTimestamp: TimeInterval
   var smoothedVelocity: CGVector = .zero

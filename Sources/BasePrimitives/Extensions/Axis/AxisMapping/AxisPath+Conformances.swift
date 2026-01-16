@@ -22,6 +22,10 @@ extension CGPoint: AxisKeyPathWritable {
   public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.x }
   public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.y }
 }
+extension CGVector: AxisKeyPathWritable {
+  public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.dx }
+  public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.dy }
+}
 
 extension UnitPoint: AxisKeyPathWritable {
   public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.x }

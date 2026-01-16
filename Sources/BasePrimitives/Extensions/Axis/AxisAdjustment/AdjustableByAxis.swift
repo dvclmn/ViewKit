@@ -24,6 +24,7 @@ public protocol AdjustableByAxis: AxisKeyPathWritable {}
 // MARK: - Adjustable
 extension CGSize: AdjustableByAxis {}
 extension CGPoint: AdjustableByAxis {}
+extension CGVector: AdjustableByAxis {}
 
 extension AdjustableByAxis {
 
