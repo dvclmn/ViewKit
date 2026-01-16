@@ -9,7 +9,7 @@ import CoreTools
 import SwiftUI
 
 public struct TrackpadTouchesModifier: ViewModifier {
-
+  @Environment(\.viewportSize) private var viewportSize
   @State private var localMappedTouches: Set<TouchPoint> = []
 
   let isEnabled: Bool
@@ -34,12 +34,12 @@ public struct TrackpadTouchesModifier: ViewModifier {
           if shouldShowIndicators {
             //            let touches = eventData?.touches ?? []
             /// Handle touches for local views
-            let mappedTouchBuilder = MappedTouchPointsBuilder(
-              touches: touchOutput,
-              in: mapStrategy.size(for: proxy.size, aspectRatio: CGSize.trackpadAspectRatio)
-            )
-            let mapped = mappedTouchBuilder.mappedTouches
-            self.localMappedTouches = mapped
+//            let mappedTouchBuilder = MappedTouchPointsBuilder(
+//              touches: touchOutput,
+//              in: mapStrategy.size(for: proxy.size, aspectRatio: CGSize.trackpadAspectRatio)
+//            )
+//            let mapped = mappedTouchBuilder.mappedTouches
+            self.localMappedTouches = touchOutput
           }
 
           didUpdateTouches(touchOutput)
@@ -50,6 +50,7 @@ public struct TrackpadTouchesModifier: ViewModifier {
           
         } // touches view
         .background(.cyan.opacity(0.1))
+        .debugTextOverlay("No viewport size", isEnabled: viewportSize == nil)
       }  // END isEnabled check
     }  // END geo reader
   }

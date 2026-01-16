@@ -6,6 +6,7 @@
 //
 
 import AppKit
+import CoreTools
 
 /// The underlying AppKit NSView that captures raw trackpad touches
 public class TrackpadTouchesNSView: NSView {
@@ -38,7 +39,6 @@ public class TrackpadTouchesNSView: NSView {
     /// Direct == touches made directly onto a screen, like a Wacom
     /// Indirect == touches made on a device like a trackpad
     allowedTouchTypes = [.indirect]
-
     
 //    self.pressureConfiguration = NSPressureConfiguration(pressureBehavior: .primaryGeneric)
 
@@ -50,19 +50,30 @@ public class TrackpadTouchesNSView: NSView {
   private func processTouches(with event: NSEvent) {
 
     /// What if I require option to be held?
-    guard event.modifierFlags.contains(.option) else { return }
+//    guard event.modifierFlags.contains(.option) else { return }
     
     /// My gut says this should be enough to handle pressure right here.
     /// Rather than trying to squeeze it in every touch event
-    didUpdatePressure(CGFloat(event.pressure))
+//    didUpdatePressure(CGFloat(event.pressure))
+//    didUpdatePressure(latestPressure)
     
     // Use matching: .any to ensure we track touches even when they start resting
-    let nsTouches = event.touches(matching: .any, in: self)
+//    let nsTouches = event.touches(matching: .any, in: self)
+    
+    DebugString {
+      Labeled("Event type", value: event.type)
+      Labeled("Event location", value: event.locationInWindow)
+    }
+    
+//    guard event.type == .gesture
+    let nsTouches = event.allTouches()
+//    let nsTouches = event.touches(for: self)
     
     let processedTouches = touchManager.processCapturedTouches(
       nsTouches,
       timestamp: event.timestamp,
-      in: self // Pass the view for coordinate conversion
+      viewSize: self.frame.size,
+//      in: self // Pass the view for coordinate conversion
     )
     
     didUpdateTouches(processedTouches)
@@ -79,6 +90,7 @@ public class TrackpadTouchesNSView: NSView {
   }
 
   // MARK: - Touch Event Handlers
+
   public override func touchesBegan(with event: NSEvent) {
     processTouches(with: event)
   }
@@ -91,9 +103,9 @@ public class TrackpadTouchesNSView: NSView {
   public override func touchesCancelled(with event: NSEvent) {
     processTouches(with: event)
   }
-//  public override func pressureChange(with event: NSEvent) {
-//    latestPressure = CGFloat(event.pressure)
-//  }
+  public override func pressureChange(with event: NSEvent) {
+    didUpdatePressure(CGFloat(event.pressure))
+  }
 }
 
 extension NSTouch {

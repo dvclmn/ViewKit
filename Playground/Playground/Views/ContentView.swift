@@ -6,19 +6,25 @@
 //
 
 import SwiftUI
+import ToolKit
+
+enum PlaygroundTab: String, LabeledItem, CaseIterable, Hashable {
+  case home
+  case lilypad
+}
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+  @State private var tab: PlaygroundTab = .lilypad
+  var body: some View {
+    QuickTabView(tab: $tab) { tab in
+      switch tab {
+        case .home: Text("Home")
+        case .lilypad: LilyPadDemoView()
+      }
     }
+  }
 }
 
 #Preview {
-    ContentView()
+  ContentView()
 }

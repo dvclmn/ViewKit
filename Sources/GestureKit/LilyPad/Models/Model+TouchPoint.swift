@@ -21,7 +21,8 @@ import AppKit
 /// }
 /// ```
 public struct TouchPoint: Identifiable, Hashable {
-  public let id: UUID        // From NSTouch.identity
+  public let id: Int        // From NSTouch.identity
+//  public let id: UUID        // From NSTouch.identity
 //  public let id: AnyHashable        // From NSTouch.identity
   public let position: CGPoint      // View-space or Normalized
   public let velocity: CGVector     // Points per second
