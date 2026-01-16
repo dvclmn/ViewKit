@@ -45,6 +45,7 @@ extension MaybeLabel {
             .commonLabelStyles(for: .icon, display: labelDisplay)
         }
       }
+      
 
     } else {
       Text(label.text)

@@ -21,7 +21,6 @@ public struct FeatureIconView: View {
   }
 }
 
-
 extension FeatureIconView {
   // MARK: - Initialisers
 

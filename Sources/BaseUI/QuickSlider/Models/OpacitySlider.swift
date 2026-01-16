@@ -5,11 +5,10 @@
 //  Created by Dave Coleman on 16/6/2025.
 //
 
+import BasePrimitives
 import ColourKit
 import GraphicsKit
-import BasePrimitives
 import SwiftUI
-
 
 extension Image {
   @MainActor
@@ -24,8 +23,8 @@ extension Image {
             config: PatternConfiguration(
               size: scale,
               gap: scale,
-//              primaryColour: Color(white: 0.8),
-//              secondaryColour: Color(white: 0.4)
+              //              primaryColour: Color(white: 0.8),
+              //              secondaryColour: Color(white: 0.4)
               primaryColour: CodableColour.gray,
               secondaryColour: CodableColour.white
             ),
@@ -65,13 +64,11 @@ public struct OpacityShapeStyle: @preconcurrency ShapeStyle {
   }
 }
 
-
 extension ShapeStyle where Self == OpacityShapeStyle {
   public static func checkerboard(scale: CGFloat = 10) -> Self {
     OpacityShapeStyle(scale: scale)
   }
 }
-
 
 extension AnyShapeStyle {
   public static func checkerboard(scale: CGFloat = 10) -> Self {
@@ -91,38 +88,39 @@ public struct OpacitySlider: View {
   public var body: some View {
 
     Group {
-      EmptyView()
-      //      SimpleSlider(
-      //        "Opacity",
-      //        value: $value,
-      //        range: 0...1
-      //        //        formatValue: <#T##FormatSliderValue?#>,
-      //        //        didChangeSlider: <#T##SliderOutput#>
-      //      ) {
-      //        PatternCanvas(preset: .opacityCheckerboard)
-      //        LinearGradient(colors: [.clear, .white], startPoint: .leading, endPoint: .trailing)
-      //      }
+      //      EmptyView()
+//      QuickSlider(
+//        "Opacity",
+//        value: $value,
+//        range: 0...1
+//          //        formatValue: <#T##FormatSliderValue?#>,
+//          //        didChangeSlider: <#T##SliderOutput#>
+//      ) { thing in
+//        PatternCanvas(preset: .opacityCheckerboard)
+//        LinearGradient(colors: [.clear, .white], startPoint: .leading, endPoint: .trailing)
+//      }
 
-      //      SliderCustom($value, range: 0...1) {
-      //        PatternCanvas(preset: .opacityCheckerboard)
-      //        LinearGradient(colors: [.clear, .white], startPoint: .leading, endPoint: .trailing)
-      //      }
+//      SliderCustom(value: $value, store: <#T##Binding<SliderHandler>#>, style: <#T##TrackFillStyle#>, label: <#T##() -> View#>)
+//      SliderCustom($value, range: 0...1) {
+//        PatternCanvas(preset: .opacityCheckerboard)
+//        LinearGradient(colors: [.clear, .white], startPoint: .leading, endPoint: .trailing)
+//      }
     }
     .compositingGroup()
     .opacity(isEnabled ? 1.0 : 0.4)
 
-    .overlay {
-      ForEach(0..<9) { opacityInt in
-        Button("Set opacity to \(opacityInt * 10)%") {
-          fatalError("Working on this")
-//          value = opacityInt.toOpacity
-          //          guard let activeLayerID = store.artworkHandler.activeLayerID else { return }
-          //          artwork.wrappedValue.layers[id: activeLayerID]?.setOpacity(using: opacityLevel)
-        }
-        .keyboardShortcut(.init(Character(opacityInt.toString)), modifiers: [])
-      }
-      .hidden()
-    }
+//    .overlay {
+//      ForEach(0..<9) { opacityInt in
+//        Button("Set opacity to \(opacityInt * 10)%") {
+////          fatalError("Working on this")
+//          //          value = opacityInt.toOpacity
+//          //          guard let activeLayerID = store.artworkHandler.activeLayerID else { return }
+//          //          artwork.wrappedValue.layers[id: activeLayerID]?.setOpacity(using: opacityLevel)
+//        }
+//        .keyboardShortcut(.init(Character(opacityInt.toString)), modifiers: [])
+//      }
+//      .hidden()
+//    }
 
   }
 }

@@ -29,13 +29,15 @@ public struct CommonLabelStyleModifier: ViewModifier {
         content
       }
     }  // END group
-    .foregroundStyle(labelPart.isIcon ? finalIconStyle : AnyShapeStyle(.primary))
+    /// This and the below `symbolRenderingMode` are mucking with
+    /// the control I have over render modes out in the view using MayBae Label
+//    .foregroundStyle(labelPart.isIcon ? finalIconStyle : AnyShapeStyle(.primary))
     .fontWeight(elementWeight)
 
     /// Note: Choosing not to set `.symbolVariant()` here. Prefer setting this high
     /// up in the View hierarchy, and overriding with `.environment(_:_:)`.
     /// This saves needing a shadow `symbolVariant` Env value
-    .symbolRenderingMode(symbolRenderingMode ?? .hierarchical)
+//    .symbolRenderingMode(symbolRenderingMode ?? .hierarchical)
 
   }
 }

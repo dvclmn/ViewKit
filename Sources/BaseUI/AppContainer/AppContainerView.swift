@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 public struct AppContainer<Content: View>: View {
 
   @State private var popup = Popup()
@@ -24,6 +23,8 @@ public struct AppContainer<Content: View>: View {
     content
       .environment(\.popup, popup)
       .popupView(debugPopup: .none)
+//      .environment(\.popup, popup)
+    
       #if canImport(AppKit)
     .readModifierKeys()
       #endif

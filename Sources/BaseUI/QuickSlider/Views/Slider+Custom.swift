@@ -17,7 +17,6 @@ import SwiftUI
 /// - onEnd callback / phase
 /// - Units
 
-
 struct SliderCustom<Label: View>: View {
   @Environment(\.explicitHeight) private var explicitHeight
   @Environment(\.cornerRounding) private var cornerRounding
@@ -75,7 +74,6 @@ struct SliderCustom<Label: View>: View {
     }
   }
 }
-
 
 extension SliderCustom {
 

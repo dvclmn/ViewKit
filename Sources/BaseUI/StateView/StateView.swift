@@ -40,7 +40,10 @@ public struct StateView<Content: View>: View {
     .padding(.bottom, Styles.sizeRegular)
     .padding(.horizontal, Styles.sizeRegular)
     .frame(
-      maxWidth: .infinity, maxHeight: .infinity, alignment: layoutAlignment ?? .center)
+      maxWidth: .infinity,
+      maxHeight: .infinity,
+      alignment: layoutAlignment ?? .center
+    )
   }
 }
 
@@ -69,13 +72,13 @@ extension StateView {
   @ViewBuilder
   private func IconView() -> some View {
     if let icon = label.icon {
-      
+
       if #available(macOS 14.0, *) {
         FeatureIconView(icon: icon, fontSize: scale(iconSize, for: controlSize))
           .offset(y: -scale(iconSize * 1.3, for: controlSize))
           .foregroundStyle(.secondary.opacity(0.86))
       } else {
-        
+
         // Fallback on earlier versions
       }
     }

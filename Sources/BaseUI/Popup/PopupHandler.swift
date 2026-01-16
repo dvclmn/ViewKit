@@ -9,7 +9,6 @@ import SwiftUI
 
 @MainActor
 @Observable
-
 public final class Popup: Sendable {
 
   var popupMessage: PopupMessage? = nil
@@ -21,7 +20,6 @@ public final class Popup: Sendable {
     self.popupMessage = message
   }
 }
-
 
 extension Popup {
 
@@ -72,9 +70,9 @@ extension Popup {
         do {
           try await Task.sleep(for: .seconds(duration))
           await hidePopup()
-          
+
         } catch {
-          
+
         }
       }
 

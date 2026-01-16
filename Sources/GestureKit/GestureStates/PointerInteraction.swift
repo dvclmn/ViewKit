@@ -6,6 +6,7 @@
 //
 
 import CoreTools
+import Foundation
 
 @MetaEnum
 @CaseDetection(includesNames: true)
