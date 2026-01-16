@@ -10,7 +10,7 @@ import SwiftUI
 
 @Observable
 final class AppHandler {
-
+  @ObservationIgnored @Shared(.drawing) var drawing
 }
 
 //extension AppHandler {
@@ -31,4 +31,3 @@ final class AppHandler {
 //    }
 //  }
 //}
-

@@ -62,7 +62,7 @@ extension View {
     mapStrategy: ContentSizeMode,
     showIndicators: Bool = true,
     didUpdateTouches: @escaping TouchesUpdate,
-    didUpdatePressure: @escaping PressureUpdate
+  didUpdatePressure: @escaping PressureUpdate = { _ in }
   ) -> some View {
     self.modifier(
       TrackpadTouchesModifier(
