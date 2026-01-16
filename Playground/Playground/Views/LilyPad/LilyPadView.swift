@@ -14,18 +14,19 @@ struct LilyPadDemoView: View {
   @State private var pressure: String = "No pressure"
   @State private var touches: String = "No touches"
 
+  @FocusState private var isFocused: Bool
   //  @State private var points: [CGPoint] = [.quickPreset01, .quickPreset02, .quickPreset03]
 
   var body: some View {
-    
+
     @Bindable var store = store
-    Text("Is drawing enabled? \(store.isDrawingEnabled.description)")
+    Text("Is drawing enabled? \(isDrawingEnabled.description)")
       .padding(40)
       .frame(
         maxWidth: .infinity,
         maxHeight: .infinity,
       )
-//      .frame(width: 600, height: 700)
+      //      .frame(width: 600, height: 700)
       .overlay {
         Canvas(rendersAsynchronously: false) { context, size in
           var path = Path()
@@ -40,7 +41,7 @@ struct LilyPadDemoView: View {
         }
       }
       .touches(
-        isEnabled: store.isDrawingEnabled,
+        isEnabled: isDrawingEnabled,
         mapStrategy: .fill,
         showIndicators: true
       ) { touches in
@@ -53,8 +54,14 @@ struct LilyPadDemoView: View {
 
       }
       .printInfo(.applicationSupport)
+      .focusable()
+      .focused($isFocused)
+      .onExitCommand {
+        print("Pressed Esc, drawing mode turned off")
+        store.isDrawingEnabled = false
+      }
 
-    //      .debugTextOverlay(pressure, touches)
+      //      .debugTextOverlay(pressure, touches)
       .toolbar {
         ToolbarItem {
           Button("Clear") {
@@ -66,11 +73,22 @@ struct LilyPadDemoView: View {
           Toggle("Toggle Drawing", isOn: $store.isDrawingEnabled)
         }
       }
+//      .background(isDrawingEnabled ? )
+      .task(id: isDrawingEnabled) {
+        if isDrawingEnabled {
+          self.isFocused = true
+        } else {
+          self.isFocused = false
+        }
+      }
+      .debugTextOverlay("View focused", isEnabled: isFocused)
   }
 }
 
 extension LilyPadDemoView {
   
+  private var isDrawingEnabled: Bool { store.isDrawingEnabled }
+
   private func points(every n: Int = 2) -> [CGPoint] {
     let points = store.drawing.points
     let strideIndices = stride(from: 0, to: points.count, by: n)
