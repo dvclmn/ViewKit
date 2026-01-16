@@ -7,119 +7,119 @@
 
 import Foundation
 
-extension TouchPoint {
-  
-  private static let mockDeviceSize: CGSize = .init(width: 700, height: 438)
-
-  public static let exampleGroup: [TouchPoint] = [
-    example01,
-    example02,
-    topLeading,
-    topTrailing,
-    bottomLeading,
-    bottomTrailing,
-  ]
-
-  public static let example01 = TouchPoint(
-    id: 1,
-    phase: .ended,
-    position: CGPoint(
-      x: 0.2,
-      y: 0.6
-    ),
-    timestamp: 1,
-    velocity: CGVector(
-      dx: 2,
-      dy: 9
-    ),
-    pressure: 0.5,
-    deviceSize: mockDeviceSize,
-    isResting: false
-  )
-  
-  public static let example02 = TouchPoint(
-    id: 2,
-    phase: .ended,
-    position: CGPoint(
-      x: 0.4,
-      y: 0.4
-    ),
-    timestamp: 2,
-    velocity: CGVector(
-      dx: 2,
-      dy: 9
-    ),
-    pressure: 0.2,
-    deviceSize: mockDeviceSize,
-    isResting: false
-  )
-  
-  public static let topLeading = TouchPoint(
-    id: 3,
-    phase: .ended,
-    position: CGPoint(
-      x: 0,
-      y: 0
-    ),
-    timestamp: 6,
-    velocity: CGVector(
-      dx: 2,
-      dy: 9
-    ),
-    pressure: 0.5,
-    deviceSize: mockDeviceSize,
-    isResting: false
-  )
-  
-  public static let topTrailing = TouchPoint(
-    id: 4,
-    phase: .ended,
-    position: CGPoint(
-      x: 1.0,
-      y: 0
-    ),
-    timestamp: 10,
-    velocity: CGVector(
-      dx: 2,
-      dy: 9
-    ),
-    pressure: 0.5,
-    deviceSize: mockDeviceSize,
-    isResting: false
-  )
-  public static let bottomLeading = TouchPoint(
-    id: 5,
-    phase: .ended,
-    position: CGPoint(
-      x: 0,
-      y: 1.0
-    ),
-    timestamp: 16,
-    velocity: CGVector(
-      dx: 2,
-      dy: 9
-    ),
-    pressure: 0.5,
-    deviceSize: mockDeviceSize,
-    isResting: false
-  )
-  public static let bottomTrailing = TouchPoint(
-    id: 6,
-    phase: .ended,
-    position: CGPoint(
-      x: 1.0,
-      y: 1.0
-    ),
-    timestamp: 19,
-    velocity: CGVector(
-      dx: 2,
-      dy: 9
-    ),
-    pressure: 0.5,
-    deviceSize: mockDeviceSize,
-    isResting: false
-  )
-  
+//extension TouchPoint {
+//
+//  private static let mockDeviceSize: CGSize = .init(width: 700, height: 438)
+//
+//  public static let exampleGroup: [TouchPoint] = [
+//    example01,
+//    example02,
+//    topLeading,
+//    topTrailing,
+//    bottomLeading,
+//    bottomTrailing,
+//  ]
+//
+//  public static let example01 = TouchPoint(
+//    id: 1,
+//    phase: .ended,
+//    position: CGPoint(
+//      x: 0.2,
+//      y: 0.6
+//    ),
+//    timestamp: 1,
+//    velocity: CGVector(
+//      dx: 2,
+//      dy: 9
+//    ),
+//    pressure: 0.5,
+//    deviceSize: mockDeviceSize,
+//    isResting: false
+//  )
+//
+//  public static let example02 = TouchPoint(
+//    id: 2,
+//    phase: .ended,
+//    position: CGPoint(
+//      x: 0.4,
+//      y: 0.4
+//    ),
+//    timestamp: 2,
+//    velocity: CGVector(
+//      dx: 2,
+//      dy: 9
+//    ),
+//    pressure: 0.2,
+//    deviceSize: mockDeviceSize,
+//    isResting: false
+//  )
+//
+//  public static let topLeading = TouchPoint(
+//    id: 3,
+//    phase: .ended,
+//    position: CGPoint(
+//      x: 0,
+//      y: 0
+//    ),
+//    timestamp: 6,
+//    velocity: CGVector(
+//      dx: 2,
+//      dy: 9
+//    ),
+//    pressure: 0.5,
+//    deviceSize: mockDeviceSize,
+//    isResting: false
+//  )
+//
+//  public static let topTrailing = TouchPoint(
+//    id: 4,
+//    phase: .ended,
+//    position: CGPoint(
+//      x: 1.0,
+//      y: 0
+//    ),
+//    timestamp: 10,
+//    velocity: CGVector(
+//      dx: 2,
+//      dy: 9
+//    ),
+//    pressure: 0.5,
+//    deviceSize: mockDeviceSize,
+//    isResting: false
+//  )
+//  public static let bottomLeading = TouchPoint(
+//    id: 5,
+//    phase: .ended,
+//    position: CGPoint(
+//      x: 0,
+//      y: 1.0
+//    ),
+//    timestamp: 16,
+//    velocity: CGVector(
+//      dx: 2,
+//      dy: 9
+//    ),
+//    pressure: 0.5,
+//    deviceSize: mockDeviceSize,
+//    isResting: false
+//  )
+//  public static let bottomTrailing = TouchPoint(
+//    id: 6,
+//    phase: .ended,
+//    position: CGPoint(
+//      x: 1.0,
+//      y: 1.0
+//    ),
+//    timestamp: 19,
+//    velocity: CGVector(
+//      dx: 2,
+//      dy: 9
+//    ),
+//    pressure: 0.5,
+//    deviceSize: mockDeviceSize,
+//    isResting: false
+//  )
+//}
 //  // MARK: - Spiral Pattern (60 points)
 //  public static let spiralPoints: [TouchPoint] = [
 //    TouchPoint(
@@ -1784,4 +1784,4 @@ extension TouchPoint {
 //    ),
 //  ]
 //
-}
+//}
