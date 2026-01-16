@@ -14,11 +14,14 @@ public typealias PressureUpdate = (CGFloat) -> Void
 
 struct TrackpadTouchesView: NSViewRepresentable {
 
+  /// This will invoke the cursor hiding and freezing
+  let isDrawingEnabled: Bool
   var didUpdateTouches: TouchesUpdate
   var didUpdatePressure: PressureUpdate
 
   public func makeNSView(context: Context) -> TrackpadTouchesNSView {
     let view = TrackpadTouchesNSView(
+      isDrawingEnabled: isDrawingEnabled,
       didUpdateTouches: didUpdateTouches,
       didUpdatePressure: didUpdatePressure
     )

@@ -14,25 +14,36 @@ public class TrackpadTouchesNSView: NSView {
   /// Touch manager to handle touch tracking and velocity calculation
   private let touchManager = TrackpadTouchManager()
 
+  let isDrawingEnabled: Bool
   let didUpdateTouches: TouchesUpdate
   let didUpdatePressure: PressureUpdate
 
   private var latestPressure: CGFloat = 1.0
 
-  public init(
-    didUpdateTouches: @escaping TouchesUpdate,
-    didUpdatePressure: @escaping PressureUpdate
-  ) {
-    self.didUpdateTouches = didUpdateTouches
-    self.didUpdatePressure = didUpdatePressure
-    super.init(frame: .zero)
-    self.setupView()
-  }
+    public init(
+      isDrawingEnabled: Bool,
+      didUpdateTouches: @escaping TouchesUpdate,
+      didUpdatePressure: @escaping PressureUpdate
+    ) {
+      self.isDrawingEnabled = isDrawingEnabled
+      self.didUpdateTouches = didUpdateTouches
+      self.didUpdatePressure = didUpdatePressure
+      super.init(frame: .zero)
+      self.setupView()
+    }
 
   required init?(coder: NSCoder) {
-    self.didUpdateTouches = { _ in }
-    self.didUpdatePressure = { _ in }
-    super.init(coder: coder)
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  func setDrawingMode(active: Bool) {
+    if active {
+      NSCursor.hide()
+      CGAssociateMouseAndMouseCursorPosition(false)
+    } else {
+      NSCursor.unhide()
+      CGAssociateMouseAndMouseCursorPosition(true)
+    }
   }
 
   private func setupView() {

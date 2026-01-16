@@ -1,5 +1,5 @@
 //
-//  PointerLock.swift
+//  PointerHide.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 3/5/2025.
@@ -9,76 +9,90 @@
 import AppKit
 import SwiftUI
 
-import SwiftUI
-
-//@Observable
-//final public class PointerHideHandler {
-//  public var isHidden: Bool = false {
-//    didSet {
-//      print("`isHidden` changed to \(isHidden)")
-//      if oldValue != isHidden {
-//        updateCursor()
-//      }
-//    }
-//  }
-//  
-//  public init(isHidden: Bool = false) {
-//    self.isHidden = isHidden
-//  }
-//  
-//  private func updateCursor() {
-//    if isHidden {
-//      NSCursor.hide()
-//      CGAssociateMouseAndMouseCursorPosition(0)
-//    } else {
-//      CGAssociateMouseAndMouseCursorPosition(1)
-//      NSCursor.unhide()
-//      NSCursor.arrow.set()
-//    }
-//  }
-//}
-
 public struct PointerHideModifier: ViewModifier {
+
+  let behaviour: PointerBehaviour
+  let newPosition: CGPoint?
   
-
-  let isHidden: Bool
-
+  public init(behaviour: PointerBehaviour, newPosition: CGPoint? = nil) {
+    self.behaviour = behaviour
+    self.newPosition = newPosition
+  }
+  
   public func body(content: Content) -> some View {
     content
-//      .onChange(of: isHidden, initial: true) { oldValue, newValue in
-//        if oldValue == true {
-//          
-//        }
-//      }
-      .task(id: isHidden) {
-        print("`pointerHide()` Ran task")
-        Task { @MainActor in
-          if isHidden {
-            print("Mouse set to Hidden")
+      .task(id: behaviour) {
+        // Apply requested behaviours when the task starts
+        await MainActor.run {
+          if behaviour.contains(.hide) {
             NSCursor.hide()
-            /// Arresting the mouse too, so it doesn't cause mischief whilst hidden
+          }
+          if behaviour.contains(.lock) {
+            // Arrest pointer (0 = false)
             CGAssociateMouseAndMouseCursorPosition(0)
-
-          } else {
-            print("Mouse set to Showing")
-
-            /// Releasing the mouse, just in case
-            CGAssociateMouseAndMouseCursorPosition(1)
-            NSCursor.unhide()
-            NSCursor.arrow.set()
+          }
+          if let newPosition {
+            CGWarpMouseCursorPosition(newPosition)
           }
         }
       }
+      .onDisappear {
+        // On disappear, ensure we restore state
+        restorePointerState()
+      }
+      .onChange(of: behaviour) { _, _ in
+        // When behaviour changes, restore then re-apply new behaviour to keep stacks balanced
+        restorePointerState()
+      }
+  }
+  
+  @MainActor
+  private func restorePointerState() {
+    // Unlock if previously locked
+    if behaviour.contains(.lock) {
+      CGAssociateMouseAndMouseCursorPosition(1)
+    }
+    // Unhide as many times as we might have hidden. Using one unhide here relies on balanced usage at call-sites.
+    if behaviour.contains(.hide) {
+      NSCursor.unhide()
+      NSCursor.arrow.set()
+    }
   }
 }
-extension PointerHideModifier {
-//  private func
-}
+
 extension View {
-  public func pointerHide(isHidden: Bool = true) -> some View {
-    self.modifier(
-      PointerHideModifier(isHidden: isHidden)
-    )
+  /// Apply pointer behaviour(s): hide, lock, or both. Optionally warp to a new position.
+  public func pointer(behaviour: PointerBehaviour = .all, newPosition: CGPoint? = nil) -> some View {
+    self.modifier(PointerHideModifier(behaviour: behaviour, newPosition: newPosition))
+  }
+
+  /// Convenience: hide only
+  public func pointerHide(_ hidden: Bool = true) -> some View {
+    if hidden {
+      return self.modifier(PointerHideModifier(behaviour: [.hide], newPosition: nil))
+    } else {
+      return self
+    }
+  }
+
+  /// Convenience: lock only, with optional warp
+  public func pointerLock(_ locked: Bool = true, to newPosition: CGPoint? = nil) -> some View {
+    if locked {
+      return self.modifier(PointerHideModifier(behaviour: [.lock], newPosition: newPosition))
+    } else {
+      return self
+    }
   }
 }
 #endif
+
+public struct PointerBehaviour: OptionSet, Sendable {
+  public init(rawValue: Int) {
+    self.rawValue = rawValue
+  }
+  public let rawValue: Int
+  
+  public static let hide = Self(rawValue: 1 << 0)
+  public static let lock = Self(rawValue: 1 << 1)
+  public static let all: Self = [.hide, .lock]
+}

@@ -17,7 +17,6 @@ struct LilyPadDemoView: View {
   //  @State private var points: [CGPoint] = [.quickPreset01, .quickPreset02, .quickPreset03]
 
   var body: some View {
-
     Text("Hello")
       .padding(40)
       .frame(
