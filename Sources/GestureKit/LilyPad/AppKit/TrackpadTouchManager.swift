@@ -34,7 +34,6 @@ class TrackpadTouchManager {
   func processCapturedTouches(
     _ nsTouches: Set<NSTouch>,
     timestamp: TimeInterval,
-    pressure: CGFloat
   ) -> Set<TouchPoint> {
     //  ) -> TouchEventData {
 

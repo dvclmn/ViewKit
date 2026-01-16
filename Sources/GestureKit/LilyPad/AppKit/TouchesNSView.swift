@@ -14,19 +14,23 @@ public class TrackpadTouchesNSView: NSView {
   private let touchManager = TrackpadTouchManager()
 
   let didUpdateTouches: TouchesUpdate
+  let didUpdatePressure: PressureUpdate
 
   private var latestPressure: CGFloat = 1.0
 
   public init(
-    didUpdateTouches: @escaping TouchesUpdate
+    didUpdateTouches: @escaping TouchesUpdate,
+    didUpdatePressure: @escaping PressureUpdate
   ) {
     self.didUpdateTouches = didUpdateTouches
+    self.didUpdatePressure = didUpdatePressure
     super.init(frame: .zero)
     self.setupView()
   }
 
   required init?(coder: NSCoder) {
     self.didUpdateTouches = { _ in }
+    self.didUpdatePressure = { _ in }
     super.init(coder: coder)
   }
 
@@ -36,24 +40,27 @@ public class TrackpadTouchesNSView: NSView {
     allowedTouchTypes = [.indirect]
 
     
-    self.pressureConfiguration = NSPressureConfiguration(pressureBehavior: .primaryGeneric)
+//    self.pressureConfiguration = NSPressureConfiguration(pressureBehavior: .primaryGeneric)
 
     /// Include stationary touches in the updates
     wantsRestingTouches = true
 
   }
 
-  private func processFirstTouches(with event: NSEvent) {
+  private func processTouches(with event: NSEvent) {
 
+    /// What if I require option to be held?
+    guard event.modifierFlags.contains(.option) else { return }
+    
+    /// My gut says this should be enough to handle pressure right here.
+    /// Rather than trying to squeeze it in every touch event
+    didUpdatePressure(CGFloat(event.pressure))
+    
     let nsTouches = event.allTouches()
 
-    /// Note: Could create a pressure decay model
-    /// Avoid pressure values staying artificially high after a hard press,
-    /// Could implement a lightweight decay or smoothing filter (e.g., exponential smoothing toward 1.0 when idle).
     let processedTouches = touchManager.processCapturedTouches(
       nsTouches,
       timestamp: event.timestamp,
-      pressure: latestPressure  // pass latest known
     )
     
     didUpdateTouches(processedTouches)
@@ -62,20 +69,20 @@ public class TrackpadTouchesNSView: NSView {
 
   // MARK: - Touch Event Handlers
   public override func touchesBegan(with event: NSEvent) {
-    processFirstTouches(with: event)
+    processTouches(with: event)
   }
   public override func touchesMoved(with event: NSEvent) {
-    processFirstTouches(with: event)
+    processTouches(with: event)
   }
   public override func touchesEnded(with event: NSEvent) {
-    processFirstTouches(with: event)
+    processTouches(with: event)
   }
   public override func touchesCancelled(with event: NSEvent) {
-    processFirstTouches(with: event)
+    processTouches(with: event)
   }
-  public override func pressureChange(with event: NSEvent) {
-    latestPressure = CGFloat(event.pressure)
-  }
+//  public override func pressureChange(with event: NSEvent) {
+//    latestPressure = CGFloat(event.pressure)
+//  }
 }
 
 extension NSTouch {

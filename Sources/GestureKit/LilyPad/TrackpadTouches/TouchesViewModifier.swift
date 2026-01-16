@@ -46,7 +46,9 @@ public struct TrackpadTouchesModifier: ViewModifier {
 
           /// Handle touches for View using the modifier
           //          touchUpdates(touches)
-        }  // touches view
+        } didUpdatePressure: { pressure in
+          
+        } // touches view
         .background(.cyan.opacity(0.1))
       }  // END isEnabled check
     }  // END geo reader
@@ -58,14 +60,16 @@ extension View {
     isEnabled: Bool = true,
     mapStrategy: ContentSizeMode,
     showIndicators: Bool = true,
-    touchUpdates: @escaping TouchesUpdate
+    didUpdateTouches: @escaping TouchesUpdate,
+    didUpdatePressure: @escaping PressureUpdate
   ) -> some View {
     self.modifier(
       TrackpadTouchesModifier(
         isEnabled: isEnabled,
         mapStrategy: mapStrategy,
         shouldShowIndicators: showIndicators,
-        touchUpdates: touchUpdates
+        didUpdateTouches: didUpdateTouches,
+        didUpdatePressure: didUpdatePressure,
       )
     )
   }

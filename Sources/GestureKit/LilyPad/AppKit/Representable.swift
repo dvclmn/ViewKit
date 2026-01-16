@@ -11,19 +11,16 @@ import SwiftUI
 public typealias TouchesUpdate = (Set<TouchPoint>) -> Void
 public typealias PressureUpdate = (CGFloat) -> Void
 
-public struct TrackpadTouchesView: NSViewRepresentable {
+struct TrackpadTouchesView: NSViewRepresentable {
 
-  private var onTouchesUpdate: TouchesUpdate?
-  private var onPressureUpdate: PressureUpdate?
-
-  public init(onTouchesUpdate: TouchesUpdate? = nil) {
-    self.onTouchesUpdate = onTouchesUpdate
-  }
+  var didUpdateTouches: TouchesUpdate
+  var didUpdatePressure: PressureUpdate
 
   public func makeNSView(context: Context) -> TrackpadTouchesNSView {
-    let view = TrackpadTouchesNSView { touchOutput in
-      onTouchesUpdate?(touchOutput)
-    }
+    let view = TrackpadTouchesNSView(
+      didUpdateTouches: didUpdateTouches,
+      didUpdatePressure: didUpdatePressure
+    )
     return view
   }
 
