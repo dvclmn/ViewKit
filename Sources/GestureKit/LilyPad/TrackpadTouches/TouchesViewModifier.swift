@@ -9,8 +9,8 @@ import CoreTools
 import SwiftUI
 
 public struct TrackpadTouchesModifier: ViewModifier {
-  @State private var localTouches: [TouchPoint] = []
-//  @State private var localMappedTouches: Set<TouchPoint> = []
+//  @State private var localTouches: [TouchPoint] = []
+  @State private var localTouches: Set<TouchPoint> = []
 
   let isEnabled: Bool
   let mapStrategy: ContentSizeMode

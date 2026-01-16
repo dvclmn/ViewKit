@@ -28,9 +28,10 @@ struct LilyPadDemoView: View {
       .overlay {
         Canvas(rendersAsynchronously: false) { context, size in
           var path = Path()
-          if let first = points.first {
+          let pts = points(every: 2)
+          if let first = pts.first {
             path.move(to: first)
-            for pt in points.dropFirst() {
+            for pt in pts.dropFirst() {
               path.addLine(to: pt)
             }
           }
@@ -65,7 +66,13 @@ struct LilyPadDemoView: View {
 }
 
 extension LilyPadDemoView {
-  private var points: [CGPoint] { store.drawing.points }
+  
+  private func points(every n: Int = 2) -> [CGPoint] {
+    let points = store.drawing.points
+    let strideIndices = stride(from: 0, to: points.count, by: n)
+    return strideIndices.map { points[$0] }
+  }
+
 }
 
 #if DEBUG
