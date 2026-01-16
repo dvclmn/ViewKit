@@ -27,8 +27,6 @@ public struct TrackpadTouchesView: NSViewRepresentable {
     return view
   }
 
-  public func updateNSView(_ nsView: TrackpadTouchesNSView, context: Context) {
-
-  }
+  public func updateNSView(_ nsView: TrackpadTouchesNSView, context: Context) {}
 }
 #endif

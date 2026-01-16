@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct PlaygroundApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+  @State private var store = AppHandler()
+  var body: some Scene {
+    WindowGroup {
+      ContentView()
+        .environment(store)
     }
+  }
 }

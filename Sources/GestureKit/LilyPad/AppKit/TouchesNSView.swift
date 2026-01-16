@@ -35,7 +35,8 @@ public class TrackpadTouchesNSView: NSView {
     /// Indirect == touches made on a device like a trackpad
     allowedTouchTypes = [.indirect]
 
-    self.pressureConfiguration = NSPressureConfiguration(pressureBehavior: .primaryGeneric)
+    
+//    self.pressureConfiguration = NSPressureConfiguration(pressureBehavior: .primaryGeneric)
 
     /// Include stationary touches in the updates
     wantsRestingTouches = true

@@ -6,6 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F6AC38792F1A4B2D00C08D90 /* ColourKit in Frameworks */ = {isa = PBXBuildFile; productRef = F6AC38782F1A4B2D00C08D90 /* ColourKit */; };
+		F6AC387B2F1A4B2D00C08D90 /* CoreTools in Frameworks */ = {isa = PBXBuildFile; productRef = F6AC387A2F1A4B2D00C08D90 /* CoreTools */; };
+		F6AC387D2F1A4B2D00C08D90 /* GestureKit in Frameworks */ = {isa = PBXBuildFile; productRef = F6AC387C2F1A4B2D00C08D90 /* GestureKit */; };
+		F6AC387F2F1A4B2D00C08D90 /* ToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = F6AC387E2F1A4B2D00C08D90 /* ToolKit */; };
+		F6AC38812F1A4B2D00C08D90 /* VectorKit in Frameworks */ = {isa = PBXBuildFile; productRef = F6AC38802F1A4B2D00C08D90 /* VectorKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		F6336A082F1A23B2002AB2F9 /* Playground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Playground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +31,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6AC38792F1A4B2D00C08D90 /* ColourKit in Frameworks */,
+				F6AC387F2F1A4B2D00C08D90 /* ToolKit in Frameworks */,
+				F6AC38812F1A4B2D00C08D90 /* VectorKit in Frameworks */,
+				F6AC387D2F1A4B2D00C08D90 /* GestureKit in Frameworks */,
+				F6AC387B2F1A4B2D00C08D90 /* CoreTools in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,6 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				F6336A0A2F1A23B2002AB2F9 /* Playground */,
+				F6AC38772F1A4B2D00C08D90 /* Frameworks */,
 				F6336A092F1A23B2002AB2F9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +57,13 @@
 				F6336A082F1A23B2002AB2F9 /* Playground.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F6AC38772F1A4B2D00C08D90 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -65,6 +86,11 @@
 			);
 			name = Playground;
 			packageProductDependencies = (
+				F6AC38782F1A4B2D00C08D90 /* ColourKit */,
+				F6AC387A2F1A4B2D00C08D90 /* CoreTools */,
+				F6AC387C2F1A4B2D00C08D90 /* GestureKit */,
+				F6AC387E2F1A4B2D00C08D90 /* ToolKit */,
+				F6AC38802F1A4B2D00C08D90 /* VectorKit */,
 			);
 			productName = Playground;
 			productReference = F6336A082F1A23B2002AB2F9 /* Playground.app */;
@@ -333,6 +359,29 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F6AC38782F1A4B2D00C08D90 /* ColourKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ColourKit;
+		};
+		F6AC387A2F1A4B2D00C08D90 /* CoreTools */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CoreTools;
+		};
+		F6AC387C2F1A4B2D00C08D90 /* GestureKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GestureKit;
+		};
+		F6AC387E2F1A4B2D00C08D90 /* ToolKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ToolKit;
+		};
+		F6AC38802F1A4B2D00C08D90 /* VectorKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VectorKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F6336A002F1A23B2002AB2F9 /* Project object */;
 }

@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import ToolKit
 
-struct ExampleView: View {
+struct LilyPadDemoView: View {
   @Environment(AppHandler.self) private var store
   var body: some View {
     
@@ -19,10 +20,9 @@ struct ExampleView: View {
   }
 }
 #if DEBUG
-@available(macOS 14.0, *)
 #Preview(traits: .size(.normal)) {
   @Previewable @State var store = AppHandler()
-  ExampleView()
+  LilyPadDemoView()
     .environment(store)
 }
 #endif

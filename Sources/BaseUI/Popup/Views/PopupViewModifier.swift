@@ -9,16 +9,18 @@ import BasePrimitives
 import SwiftUI
 
 public struct PopupViewModifier: ViewModifier {
-  @Environment(\.popup) private var popup
+  
+  @State private var popup = Popup()
 
   let debugPopup: PopupDebug
   let alignment: Alignment
 
   public func body(content: Content) -> some View {
     content
+      .environment(\.popup, popup)
       .overlay(alignment: alignment) {
         PopupView(
-          debugPopup.message ?? popup?.popupMessage
+          debugPopup.message ?? popup.popupMessage
         )
         .padding(Styles.sizeRegular)
       }
@@ -26,7 +28,7 @@ public struct PopupViewModifier: ViewModifier {
 }
 
 extension View {
-  public func popupView(
+  public func popup(
     debugPopup: PopupDebug = .none,
     alignment: Alignment = .top
   ) -> some View {

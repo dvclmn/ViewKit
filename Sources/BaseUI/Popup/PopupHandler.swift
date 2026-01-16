@@ -14,9 +14,7 @@ public final class Popup: Sendable {
   var popupMessage: PopupMessage? = nil
   private var popupTask: Task<Void, Never>? = nil
 
-  public init(
-    message: PopupMessage? = nil
-  ) {
+  public init(message: PopupMessage? = nil) {
     self.popupMessage = message
   }
 }

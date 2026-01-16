@@ -75,8 +75,8 @@ extension EnvironmentValues {
   /// consuming this View, or what it's context is.
   @Entry public var viewDescription: String? = nil
 
-  /// This is expected to represent a single, self-contained View,
-  /// not including any native components like Toolbar or Inspector.
+  /// This is primarily expected to represent the whole window of an app,
+  /// minus any base UI components like Toolbar or Inspector.
   ///
   /// I guess like in a graphics app, so maybe this is a bit domain-specific
   @Entry public var viewportSize: CGSize? = nil

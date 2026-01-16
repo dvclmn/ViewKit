@@ -9,8 +9,6 @@ import SwiftUI
 
 public struct AppContainer<Content: View>: View {
 
-  @State private var popup = Popup()
-
   let content: Content
 
   public init(
@@ -21,10 +19,8 @@ public struct AppContainer<Content: View>: View {
 
   public var body: some View {
     content
-      .environment(\.popup, popup)
-      .popupView(debugPopup: .none)
-//      .environment(\.popup, popup)
-    
+      .popup(debugPopup: .none)
+
       #if canImport(AppKit)
     .readModifierKeys()
       #endif

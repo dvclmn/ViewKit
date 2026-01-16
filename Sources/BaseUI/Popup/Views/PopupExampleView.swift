@@ -22,7 +22,7 @@ public struct PopupExampleView: View {
     .padding(40)
     .frame(width: 600, height: 700)
     .background(.black.opacity(0.6))
-    .popupView(debugPopup: .none)
+    .popup(debugPopup: .none)
 //      .onAppear {
 //        popup.showPopup(examplePopup)
 //      }
