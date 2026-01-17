@@ -10,28 +10,28 @@ import VectorKit
 
 struct LilyPadCanvasView: View {
   @Environment(AppHandler.self) private var store
-  
+
   let activeStroke: ActiveStroke?
   let strokes: [Stroke]
   var body: some View {
-    
+
     Canvas { context, size in
-      
+
       let stride = context.environment.strokeDensity
-      
+
       var path = Path()
       var pathActive = Path()
-      
+
       for stroke in strokes {
         stroke.sampledPoints(every: stride).processPath(type: .smooth, path: &path)
       }
-      
+
       if let activeStroke {
         activeStroke.sampledPoints(every: stride).processPath(type: .smooth, path: &pathActive)
       }
-      
+
       //          path.addDot(at: <#T##CGPoint#>, radius: <#T##CGFloat#>, using: <#T##DebugPathElement#>)
-      
+
       //          for stroke in strokes {
       //            let pts = stroke.sampledPoints(every: stride)
       //            guard let first = pts.first else { continue }
@@ -51,14 +51,14 @@ struct LilyPadCanvasView: View {
       //              }
       //            }
       //          }
-        
+
       let lineWidth = 3.0
       //          let lineWidth = store.pressure * 3
       context.stroke(path, with: .color(.brown), lineWidth: lineWidth)
       context.stroke(pathActive, with: .color(.purple), lineWidth: lineWidth)
-      
+
     }
-    
+
   }
 }
 

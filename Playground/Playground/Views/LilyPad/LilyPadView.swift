@@ -61,15 +61,13 @@ struct LilyPadDemoView: View {
           Toggle("Toggle Drawing", isOn: $store.isDrawingEnabled)
         }
       }
-    
-    
 
       .addInfoBarItems(LilyPadInfoItem.self, source: store, format: .short)
       .infoBarView()
       .environment(\.strokeDensity, store.strokeDensity)
-    
-      .inspector(isPresented: $store.isInspectorPresented) {
 
+      .inspector(isPresented: $store.isInspectorPresented) {
+        LilyInspectorView()
       }
     //      .background(isDrawingEnabled ? )
     //      .task(id: isDrawingEnabled) {

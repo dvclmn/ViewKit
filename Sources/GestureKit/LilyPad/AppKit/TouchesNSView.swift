@@ -10,6 +10,9 @@ import CoreTools
 
 /// The underlying AppKit NSView that captures raw trackpad touches
 public class TrackpadTouchesNSView: NSView {
+  
+  var onTouchesChanged: ((Set<TouchPoint>) -> Void)?
+  var onPressureChanged: ((CGFloat) -> Void)?
   // Opt into first responder so we can receive key events (e.g., Esc) and ensure focus during drawing
   //  public override var acceptsFirstResponder: Bool { true }
   //  public override func becomeFirstResponder() -> Bool { true }
@@ -18,12 +21,12 @@ public class TrackpadTouchesNSView: NSView {
   /// Touch manager to handle touch tracking and velocity calculation
   private let touchManager = TrackpadTouchManager()
 
-  private(set) var isDrawingEnabled: Bool
-  //  let isDrawingEnabled: Bool
-  let didUpdateTouches: TouchesUpdate
-  let didUpdatePressure: PressureUpdate
+//  private(set) var isDrawingEnabled: Bool
+//  //  let isDrawingEnabled: Bool
+//  let didUpdateTouches: TouchesUpdate
+//  let didUpdatePressure: PressureUpdate
 
-  private var latestPressure: CGFloat = 1.0
+//  private var latestPressure: CGFloat = 1.0
 
   //  private func disableDrawingMode()
   //  {
@@ -32,13 +35,13 @@ public class TrackpadTouchesNSView: NSView {
   //  }
 
   public init(
-    isDrawingEnabled: Bool,
-    didUpdateTouches: @escaping TouchesUpdate,
-    didUpdatePressure: @escaping PressureUpdate
+//    isDrawingEnabled: Bool,
+//    didUpdateTouches: @escaping TouchesUpdate,
+//    didUpdatePressure: @escaping PressureUpdate
   ) {
-    self.isDrawingEnabled = isDrawingEnabled
-    self.didUpdateTouches = didUpdateTouches
-    self.didUpdatePressure = didUpdatePressure
+//    self.isDrawingEnabled = isDrawingEnabled
+//    self.didUpdateTouches = didUpdateTouches
+//    self.didUpdatePressure = didUpdatePressure
     super.init(frame: .zero)
     self.setupView()
 
@@ -109,6 +112,14 @@ public class TrackpadTouchesNSView: NSView {
     pressureConfiguration = NSPressureConfiguration(pressureBehavior: .primaryGeneric)
     pressureConfiguration?.set()
 
+  }
+  
+  // Call these when events occur:
+  private func emitTouches(_ touches: Set<TouchPoint>) {
+    onTouchesChanged?(touches)
+  }
+  private func emitPressure(_ pressure: CGFloat) {
+    onPressureChanged?(pressure)
   }
 
   private func processTouches(with event: NSEvent) {
