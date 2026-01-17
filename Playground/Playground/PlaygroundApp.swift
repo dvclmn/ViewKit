@@ -17,5 +17,11 @@ struct PlaygroundApp: App {
         .environment(store)
 //        .readViewportSize(mode: .debounce(0.2))
     }
+    .commands {
+      CommandGroup(after: .newItem) {
+        Toggle("Toggle Drawing", isOn: $store.isDrawingEnabled)
+          .keyboardShortcut("a", modifiers: .shift)
+      }
+    }
   }
 }

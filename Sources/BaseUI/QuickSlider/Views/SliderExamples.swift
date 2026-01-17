@@ -56,7 +56,7 @@ public struct SliderExamples: View {
       .background(.brown.quinary)
 
       QuickSlider(
-        "Compact Slider",
+        "Bar Slider",
         value: $zoomValue.toBindingDouble,
         range: zoomRange.toDoubleRange,
         type: .custom(.clearBG)
@@ -87,7 +87,7 @@ public struct SliderExamples: View {
 //  VStack {
 //    Form {
 //      Section("Slider Preview") {
-//        SimpleSlider(
+//        QuickSlider(
 //          "First",
 //          value: $value,
 //          range: 0.1...20,
@@ -95,7 +95,7 @@ public struct SliderExamples: View {
 //        )
 //        .environment(\.sliderDefaultValue, 2.2)
 //
-//        SimpleSlider(
+//        QuickSlider(
 //          "Second",
 //          value: $value,
 //          range: 0.1...20,
@@ -104,7 +104,7 @@ public struct SliderExamples: View {
 //        )
 //        .environment(\.sliderDefaultValue, 2.2)
 //
-//        SimpleSlider(
+//        QuickSlider(
 //          "Third (no label)",
 //          value: $value,
 //          range: 0.1...20,
@@ -116,7 +116,7 @@ public struct SliderExamples: View {
 //    .formStyle(.grouped)
 //
 //    VStack {
-//      SimpleSlider(
+//      QuickSlider(
 //        "Fourth",
 //        value: $value,
 //        range: 1...10,
@@ -124,7 +124,7 @@ public struct SliderExamples: View {
 //      )
 //      .environment(\.sliderDefaultValue, 2.2)
 //
-//      SimpleSlider(
+//      QuickSlider(
 //        "Fifth",
 //        value: $value,
 //        range: 1...10,
@@ -132,7 +132,7 @@ public struct SliderExamples: View {
 //
 //      )
 //
-//      SimpleSlider(
+//      QuickSlider(
 //        "Sixth (no label)",
 //        value: $value,
 //        range: 1...10,

@@ -27,6 +27,18 @@ public func updateIfChanged<T: Equatable>(
   return true
 }
 
+@discardableResult
+public func updateIfNil<T: Equatable>(
+  _ target: inout T?,
+  to newValue: T
+) -> Bool {
+  if target == nil {
+    target = newValue
+    return true
+  }
+  return false
+}
+
 /// ```
 /// performIfChanged(oldValue, newValue,
 ///   perform: didUpdateScrollContext(newValue)
@@ -48,6 +60,22 @@ public func performIfChanged<T: Equatable>(
   perform()
   return true
 }
+
+//@discardableResult
+//public func performIfNil<T: Equatable>(
+//  _ oldValue: T?,
+//  _ newValue: T,
+//  perform: @autoclosure () -> Void
+//) -> Bool {
+//  if oldValue == nil {
+//    oldValue = newValue
+//    return true
+//  }
+//  return false
+////  guard oldValue != newValue else { return false }
+////  perform()
+////  return true
+//}
 
 
 @discardableResult

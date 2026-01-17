@@ -1,5 +1,5 @@
 //
-//  SimpleSliderModifier.swift
+//  QuickSliderModifier.swift
 //  Components
 //
 //  Created by Dave Coleman on 17/11/2024.

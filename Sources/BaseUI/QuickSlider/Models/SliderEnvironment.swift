@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 29/5/2025.
 //
 
-
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
 public typealias FormatValue = (Double) -> String
 
@@ -24,13 +23,13 @@ extension EnvironmentValues {
   @Entry public var sliderRange: ClosedRange<Double> = 0...1
   @Entry public var sliderDefaultValue: Double? = nil
   @Entry public var sliderLabel: QuickLabel = QuickLabel("New label")
-//  @Entry public var sliderValueFormat: SliderValueFormat = .plain
+  //  @Entry public var sliderValueFormat: SliderValueFormat = .plain
 
   @Entry public var formatValue: FormatValue = { "\($0.displayString)" }
 }
 
 public protocol EnvironmentFormattable {
-  
+
 }
 
 extension View where Self: EnvironmentFormattable {
@@ -39,7 +38,7 @@ extension View where Self: EnvironmentFormattable {
   }
 }
 
-//extension View where Self == SimpleSlider {
+//extension View where Self == QuickSlider {
 //  public func setSliderControlSize(_ size: ControlSize) -> some View {
 //    self.environment(\.sliderControlSize, size)
 //  }
@@ -50,7 +49,7 @@ extension View where Self: EnvironmentFormattable {
 //}
 //
 //// MARK: - For Slider Groups
-//extension View where Self == SliderGroup<SimpleSlider> {
+//extension View where Self == SliderGroup<QuickSlider> {
 //  public func setSliderControlSize(_ size: ControlSize) -> some View {
 //    self.environment(\.sliderControlSize, size)
 //  }

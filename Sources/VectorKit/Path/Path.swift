@@ -26,7 +26,7 @@ extension Path {
 
   public init(
     fromPoints points: [CGPoint],
-    type: PathType = .line,
+    type: PathStyle = .line,
     shouldDropFirst: Bool = true
   ) {
     self = points.toPath(type: type, shouldDropFirst: shouldDropFirst)
@@ -60,10 +60,24 @@ extension Path {
     }
   }
 
-  public mutating func addDot(
+//  public mutating func addDot(
+//    at point: CGPoint,
+//    radius: CGFloat,
+//    using type: DebugPathElement
+//  ) {
+//    let rect = CGRect(
+//      x: point.x - radius / 2,
+//      y: point.y - radius / 2,
+//      width: radius,
+//      height: radius
+//    )
+//    addPath(type.shape.shapePath(in: rect))
+//  }
+  
+  public mutating func addShape(
     at point: CGPoint,
     radius: CGFloat,
-    using type: DebugPathElement
+    using shape: PointShape = .circle
   ) {
     let rect = CGRect(
       x: point.x - radius / 2,
@@ -71,7 +85,8 @@ extension Path {
       width: radius,
       height: radius
     )
-    addPath(type.shape.shapePath(in: rect))
+    shape.updatePath(in: rect, path: &self)
+//    addPath(shape.shapePath(in: rect))
   }
 
   public mutating func addConnections(
@@ -83,6 +98,7 @@ extension Path {
       move(to: start)
       addLine(to: controlPoints[0])
       move(to: controlPoints[0])
+      
     } else if controlPoints.count == 2 {
       move(to: start)
       addLine(to: controlPoints[0])

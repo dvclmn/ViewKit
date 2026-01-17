@@ -24,7 +24,9 @@ extension Path {
       let info = DebugPathInfo(element: element, previousPoint: lastNodePoint)
 
       for (type, point) in info.pointsToMark {
-        debugPaths[type, default: Path()].addDot(at: point, radius: radius, using: type)
+        debugPaths[type, default: Path()]
+          .addShape(at: point, radius: radius, using: type.shape)
+//        debugPaths[type, default: Path()].addDot(at: point, radius: radius, using: type)
         labelPoints.append(LabelledPoint(point: point, element: type))
       }
 

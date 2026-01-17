@@ -10,11 +10,11 @@ import BasePrimitives
 
 public struct PathDebugConfig {
 
-  public let pathStyle: PathStyle
+  public let pathStyle: LineStyle
   public let labelFontSize: CGFloat
 
   public init(
-    pathStyle: PathStyle = .init(),
+    pathStyle: LineStyle = .init(),
     labelFontSize: CGFloat = 11,
   ) {
     self.pathStyle = pathStyle
@@ -22,7 +22,7 @@ public struct PathDebugConfig {
   }
 }
 
-public struct PathStyle {
+public struct LineStyle {
   public let fillColour: Color
   public let strokeColour: Color
   public let linewidth: CGFloat

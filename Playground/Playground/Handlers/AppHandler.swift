@@ -17,7 +17,7 @@ final class AppHandler {
   var strokeDensity: Int = 3 // Stride
   var pressure: CGFloat = 1
   var isDrawingEnabled: Bool = false
-  var pathStyle: PathType = .smooth
+  var pathStyle: PathStyleConfig = .smooth
   var isInspectorPresented: Bool = true
 }
 extension AppHandler {
@@ -45,9 +45,6 @@ extension AppHandler {
 //    }
 //  }
 }
-
-
-extension PathType: @retroactive Pickable {}
 
 
 //extension AppHandler {

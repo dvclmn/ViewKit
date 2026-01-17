@@ -7,15 +7,15 @@
 
 #if canImport(AppKit)
 import SwiftUI
+import BasePrimitives
 
-//public typealias TouchesUpdate = ([TouchPoint]) -> Void
 public typealias TouchesUpdate = (Set<TouchPoint>) -> Void
 public typealias PressureUpdate = (CGFloat) -> Void
 
 struct TrackpadTouchesView: NSViewRepresentable {
 
   /// This will invoke the cursor hiding and freezing
-  @Binding var isDrawingEnabled: Bool
+  var isDrawingEnabled: Bool
   var didUpdateTouches: TouchesUpdate
   var didUpdatePressure: PressureUpdate
 
@@ -31,8 +31,10 @@ struct TrackpadTouchesView: NSViewRepresentable {
 
   public func updateNSView(_ nsView: TrackpadTouchesNSView, context: Context) {
 
-    /// Forward changes from SwiftUI to the NSView
-    nsView.setDrawingMode(isActive: isDrawingEnabled)
+    if nsView.lastKnownDrawingMode != isDrawingEnabled {
+      nsView.setDrawingMode(isActive: isDrawingEnabled)
+      nsView.lastKnownDrawingMode = isDrawingEnabled
+    }
   }
 }
 #endif

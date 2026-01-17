@@ -15,15 +15,20 @@ struct LilyPadCanvasView: View {
   let strokes: [Stroke]
   var body: some View {
 
-    Canvas { context, size in
-
+    Canvas {
+      context,
+      size in
+      
       let stride = context.environment.strokeDensity
-
+      
       var path = Path()
       var pathActive = Path()
-
+      
       for stroke in strokes {
-        stroke.sampledPoints(every: stride).processPath(type: .smooth, path: &path)
+        stroke.sampledPoints(every: stride).processPath(
+          type: store.pathStyle.toPathStyle,
+          path: &path
+        )
       }
 
       if let activeStroke {

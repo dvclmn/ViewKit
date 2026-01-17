@@ -19,6 +19,31 @@ public struct QuickSlider: View, EnvironmentFormattable {
   let type: SliderType
   let didChangeSlider: SliderOutput
 
+  public var body: some View {
+    
+    /// No longer based on Compact mode, but whether a track view is passed
+    SliderUnified(
+      value: $value,
+      store: $store,
+      type: type
+    )
+    .environment(\.sliderLabel, store.label)
+    .environment(\.sliderRange, store.range.toDoubleRange)
+
+    .onAppear {
+      if store.didChangeSlider == nil {
+        store.didChangeSlider = didChangeSlider
+      }
+
+      if store.formatValue == nil {
+        store.formatValue = formatValue
+      }
+    }
+  }
+}
+
+// MARK: - Initialisers
+extension QuickSlider {
   public init(
     _ title: String,
     value: Binding<Double>,
@@ -54,26 +79,5 @@ public struct QuickSlider: View, EnvironmentFormattable {
     self.type = type
     self.didChangeSlider = didChangeSlider
 
-  }
-
-  public var body: some View {
-    /// No longer based on Compact mode, but whether a track view is passed
-    SliderUnified(
-      value: $value,
-      store: $store,
-      type: type
-    )
-    .environment(\.sliderLabel, store.label)
-    .environment(\.sliderRange, store.range.toDoubleRange)
-
-    .onAppear {
-      if store.didChangeSlider == nil {
-        store.didChangeSlider = didChangeSlider
-      }
-
-      if store.formatValue == nil {
-        store.formatValue = formatValue
-      }
-    }
   }
 }

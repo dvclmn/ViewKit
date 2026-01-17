@@ -30,6 +30,8 @@ struct LilyPadDemoView: View {
       )
       .overlay {
         LilyPadCanvasView(activeStroke: store.activeStroke, strokes: store.drawing.strokes)
+
+        // DONT FOR GET TO TREMOVE THIS
       }
       .touches(
         //        isEnabled: true,
@@ -58,8 +60,22 @@ struct LilyPadDemoView: View {
           .keyboardShortcut(.delete, modifiers: [])
         }
         ToolbarItem {
-          Toggle("Toggle Drawing", isOn: $store.isDrawingEnabled)
+          if store.isDrawingEnabled {
+            Button("Exit Drawing Mode") {
+              store.isDrawingEnabled = false
+            }
+            .keyboardShortcut(.escape, modifiers: [])
+            .tint(.purple)
+
+          } else {
+            Button("Enter Drawing Mode") {
+              store.isDrawingEnabled = true
+            }
+          }
+          //          Toggle("Toggle Drawing", isOn: $store.isDrawingEnabled)
+
         }
+
       }
 
       .addInfoBarItems(LilyPadInfoItem.self, source: store, format: .short)
@@ -82,6 +98,11 @@ struct LilyPadDemoView: View {
 }
 
 extension LilyPadDemoView {
+
+  //  private var toggleDrawing: KeyboardShortcut {
+  //
+  //  }
+
   private func handleTouches(_ touches: Set<TouchPoint>) {
     guard let touch = touches.first else { return }
 
@@ -136,7 +157,7 @@ extension LilyPadDemoView {
     .onAppear {
       guard
         let artwork = try? ImportHandler.loadData(
-          named: "lilypadDrawing",
+          named: "lilypadDrawing02",
           withExtension: "json",
           asType: DrawingData.self
         )

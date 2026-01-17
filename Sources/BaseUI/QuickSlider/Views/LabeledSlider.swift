@@ -8,7 +8,6 @@
 import BasePrimitives
 import SwiftUI
 
-
 public struct LabeledSlider<Content: View>: View, EnvironmentFormattable {
 
   @Binding var value: Double

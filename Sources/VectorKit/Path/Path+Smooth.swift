@@ -6,18 +6,21 @@
 //
 
 import SwiftUI
+import EnumMacros
 
-public enum PathType: String, Sendable, Hashable, Codable, CaseIterable, Identifiable {
+@CaseDetection
+@AssociatedValues
+public enum PathStyle {
   case line
   case smooth
-  
-  public var id: String { rawValue }
+  case stamped(shape: PointShape, radius: CGFloat)
+  //  public var id: String { rawValue }
 }
 
 extension Array where Element == CGPoint {
 
   public func toPath(
-    type: PathType = .line,
+    type: PathStyle = .line,
     shouldDropFirst: Bool = true
   ) -> Path {
     Path { path in
@@ -26,7 +29,7 @@ extension Array where Element == CGPoint {
   }
 
   public func processPath(
-    type: PathType = .line,
+    type: PathStyle = .line,
     shouldDropFirst: Bool = true,
     path: inout Path
   ) {
@@ -36,9 +39,17 @@ extension Array where Element == CGPoint {
           shouldDropFirst: shouldDropFirst,
           path: &path
         )
-        
+
       case .smooth:
         processSmoothPath(path: &path)
+
+      case .stamped(let shape, let radius):
+        processStampedPath(
+          shouldDropFirst: shouldDropFirst,
+          shape: shape,
+          radius: radius,
+          path: &path
+        )
     }
   }
 
@@ -50,6 +61,21 @@ extension Array where Element == CGPoint {
     let lines = shouldDropFirst ? Array(self.dropFirst()) : self
     path.move(to: firstPoint)
     path.addLines(lines)
+  }
+
+  private func processStampedPath(
+    shouldDropFirst: Bool = true,
+    shape: PointShape,
+    radius: CGFloat,
+    path: inout Path
+  ) {
+    guard let firstPoint = self.first else { return }
+    let lines = shouldDropFirst ? Array(self.dropFirst()) : self
+    path.move(to: firstPoint)
+    for point in lines {
+      path.addShape(at: point, radius: radius, using: shape)
+    }
+    //    path.addLines(lines)
   }
 
   /// Alternative: Smooth curved path using quadratic curves

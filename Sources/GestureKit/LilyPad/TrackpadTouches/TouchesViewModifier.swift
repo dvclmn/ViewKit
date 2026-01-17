@@ -28,12 +28,14 @@ public struct TrackpadTouchesModifier: ViewModifier {
         )
       }
       TrackpadTouchesView(isDrawingEnabled: isEnabled) { touchOutput in
-//        if isEnabled {
-          if shouldShowIndicators {
-            self.localTouches = touchOutput
-          }
+        //        if isEnabled {
+        if shouldShowIndicators {
+          self.localTouches = touchOutput
+        }
+        if isEnabled {
           didUpdateTouches(touchOutput)
-//        }
+        }
+        //        }
       } didUpdatePressure: { pressure in
         didUpdatePressure(pressure)
       }

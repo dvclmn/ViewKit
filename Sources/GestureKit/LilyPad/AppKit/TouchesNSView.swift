@@ -10,14 +10,13 @@ import CoreTools
 
 /// The underlying AppKit NSView that captures raw trackpad touches
 public class TrackpadTouchesNSView: NSView {
-
+  
+  var lastKnownDrawingMode: Bool = false
   var onTouchesChanged: TouchesUpdate
   var onPressureChanged: PressureUpdate
 
   /// Touch manager to handle touch tracking and velocity calculation
   private let touchManager = TrackpadTouchManager()
-
-  //  private(set) var isDrawingEnabled: Bool
 
   public init(
     _ onTouchesChanged: @escaping TouchesUpdate,
@@ -36,15 +35,15 @@ public class TrackpadTouchesNSView: NSView {
   // Called from SwiftUI's updateNSView whenever the binding changes.
   public func setDrawingMode(isActive: Bool) {
     if isActive {
-      print("Hiding the pointer")
-      NSCursor.hide()
-      CGWarpMouseCursorPosition(frame.midpoint)
+      print("Hiding the pointer via AppKit")
+//      CGWarpMouseCursorPosition(frame.midpoint)
       CGAssociateMouseAndMouseCursorPosition(0)
+      NSCursor.hide()
 
     } else {
-      print("Showing the pointer")
-      NSCursor.unhide()
+      print("Showing the pointer via AppKit")
       CGAssociateMouseAndMouseCursorPosition(1)
+      NSCursor.unhide()
 
     }
     // Update pressure, reset touch manager, etc.
@@ -64,12 +63,6 @@ public class TrackpadTouchesNSView: NSView {
   }
 
   // MARK: - Events
-  private func emitTouches(_ touches: Set<TouchPoint>) {
-    onTouchesChanged?(touches)
-  }
-  private func emitPressure(_ pressure: CGFloat) {
-    onPressureChanged?(pressure)
-  }
 
   private func processTouches(with event: NSEvent) {
 
@@ -86,23 +79,7 @@ public class TrackpadTouchesNSView: NSView {
       in: .view(frame.size),
     )
 
-    onTouchesChanged?(processedTouches)
-  }
-
-  private func debugEventStream(_ event: NSEvent) {
-    /// Properties that I know produce the assertion failures:
-    /// `event.associatedEventsMask`
-    DebugString {
-      Indented("Event information") {
-        //        Labeled("Phase", value: event.phase)
-        //        Labeled("Momentum phase", value: event.momentumPhase)
-        //        Labeled("Type", value: event.type)
-        //        Labeled("Sub-type", value: event.subtype)
-        Labeled("Location", value: event.locationInWindow)
-        //        Labeled("Window", value: event.window)
-
-      }
-    }
+    onTouchesChanged(processedTouches)
   }
 
   private func processPressureChange(with event: NSEvent) {
@@ -112,7 +89,7 @@ public class TrackpadTouchesNSView: NSView {
     //      Labeled("Pressure stage", value: event.stage)
     //      Labeled("Pressure stage transition", value: event.stageTransition)
     //    }
-    onPressureChanged?(pressure)
+    onPressureChanged(pressure)
   }
 
   // MARK: - Touch Event Handlers
@@ -131,6 +108,22 @@ public class TrackpadTouchesNSView: NSView {
   }
   public override func pressureChange(with event: NSEvent) {
     processPressureChange(with: event)
+  }
+
+  private func debugEventStream(_ event: NSEvent) {
+    /// Properties that I know produce the assertion failures:
+    /// `event.associatedEventsMask`
+    DebugString {
+      Indented("Event information") {
+        //        Labeled("Phase", value: event.phase)
+        //        Labeled("Momentum phase", value: event.momentumPhase)
+        //        Labeled("Type", value: event.type)
+        //        Labeled("Sub-type", value: event.subtype)
+        Labeled("Location", value: event.locationInWindow)
+        //        Labeled("Window", value: event.window)
+
+      }
+    }
   }
 
   //  public override func keyDown(with event: NSEvent) {

@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 12/7/2025.
 //
 
-import SwiftUI
 import BasePrimitives
-
+import SwiftUI
 
 public struct PathDebugRenderer {
   let result: PathDebugResult
@@ -38,7 +37,7 @@ public struct PathDebugRenderer {
 
       context.drawDebugText(
         label.point.debugDescription,
-//        label.point.displayString(places: 0, labelStyle: .none),
+        //        label.point.displayString(places: 0, labelStyle: .none),
         at: label.point,
         positioned: .aboveOrigin,
         colour: .primary,
@@ -70,7 +69,6 @@ public struct PathDebugRenderer {
     }
   }
 }
-
 
 extension GraphicsContext {
 

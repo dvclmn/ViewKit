@@ -7,12 +7,10 @@
 
 import SwiftUI
 
-
 public enum SliderType {
   case native
   case custom(TrackFillStyle)
 }
-
 
 public struct TrackFillStyle {
   let fill: AnyShapeStyle
@@ -21,7 +19,7 @@ public struct TrackFillStyle {
   /// checkerboard of Opacity Slider
   let foreground: AnyShapeStyle
   let background: AnyShapeStyle
-  
+
   public init(
     fill: AnyShapeStyle? = AnyShapeStyle(Color.accentColor),
     foreground: AnyShapeStyle? = nil,
@@ -33,9 +31,8 @@ public struct TrackFillStyle {
   }
 }
 
-
 extension TrackFillStyle {
-  
+
   public static var clearBG: TrackFillStyle {
     TrackFillStyle(
       fill: AnyShapeStyle(Color.accentColor),
@@ -51,5 +48,5 @@ extension TrackFillStyle {
       background: .checkerboard()
     )
   }
-  
+
 }
