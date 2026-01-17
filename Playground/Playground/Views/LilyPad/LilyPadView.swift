@@ -14,7 +14,7 @@ struct LilyPadDemoView: View {
   @State private var pressure: String = "No pressure"
   @State private var touches: String = "No touches"
 
-  @FocusState private var isFocused: Bool
+  //  @FocusState private var isFocused: Bool
   //  @State private var points: [CGPoint] = [.quickPreset01, .quickPreset02, .quickPreset03]
 
   var body: some View {
@@ -28,9 +28,11 @@ struct LilyPadDemoView: View {
       )
       //      .frame(width: 600, height: 700)
       .overlay {
-        Canvas(rendersAsynchronously: false) { context, size in
+        Canvas { context, size in
+          //        Canvas(rendersAsynchronously: false) { context, size in
           var path = Path()
-          let pts = points(every: 2)
+          let pts = points
+          //          let pts = points(every: 2)
           if let first = pts.first {
             path.move(to: first)
             for pt in pts.dropFirst() {
@@ -41,25 +43,32 @@ struct LilyPadDemoView: View {
         }
       }
       .touches(
-        isEnabled: isDrawingEnabled,
+//        isEnabled: true,
+                isEnabled: isDrawingEnabled,
         mapStrategy: .fill,
         showIndicators: true
       ) { touches in
 
+//        store.setDrawing(\.points) {
+//          $0.append(touches.map(\.position))
+//        }
         if let current = touches.first {
+//          print("Got current: \(current.position)")
           store.setDrawing(\.points) {
             $0.append(current.position)
           }
+        } else {
+//          print("No thing")
         }
 
       }
-      .printInfo(.applicationSupport)
-      .focusable()
-      .focused($isFocused)
-      .onExitCommand {
-        print("Pressed Esc, drawing mode turned off")
-        store.isDrawingEnabled = false
-      }
+      //      .printInfo(.applicationSupport)
+      //      .focusable()
+      //      .focused($isFocused)
+      //      .onExitCommand {
+      //        print("Pressed Esc, drawing mode turned off")
+      //        store.isDrawingEnabled = false
+      //      }
 
       //      .debugTextOverlay(pressure, touches)
       .toolbar {
@@ -73,22 +82,23 @@ struct LilyPadDemoView: View {
           Toggle("Toggle Drawing", isOn: $store.isDrawingEnabled)
         }
       }
-//      .background(isDrawingEnabled ? )
-      .task(id: isDrawingEnabled) {
-        if isDrawingEnabled {
-          self.isFocused = true
-        } else {
-          self.isFocused = false
-        }
-      }
-      .debugTextOverlay("View focused", isEnabled: isFocused)
+    //      .background(isDrawingEnabled ? )
+    //      .task(id: isDrawingEnabled) {
+    //        if isDrawingEnabled {
+    //          self.isFocused = true
+    //        } else {
+    //          self.isFocused = false
+    //        }
+    //      }
+    //      .debugTextOverlay("View focused", isEnabled: isFocused)
   }
 }
 
 extension LilyPadDemoView {
-  
+
   private var isDrawingEnabled: Bool { store.isDrawingEnabled }
 
+  private var points: [CGPoint] { store.drawing.points }
   private func points(every n: Int = 2) -> [CGPoint] {
     let points = store.drawing.points
     let strideIndices = stride(from: 0, to: points.count, by: n)

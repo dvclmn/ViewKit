@@ -56,27 +56,29 @@ public class TrackpadTouchesNSView: NSView {
   //  }
 
   public func setDrawingMode(isActive: Bool) {
-    print("Running `setDrawingMode`. Is drawing mode on? \(isActive)")
-    guard isActive != isDrawingEnabled else { return }
+    guard isActive != isDrawingEnabled else {
+      return
+    }
+    print("Running `setDrawingMode`. Drawing mode was \(isDrawingEnabled), is now \(isActive).")
     isDrawingEnabled = isActive
 
-//    if isActive {
-//      // Ensure this view is the first responder so it receives touch and key events
-//      self.window?.makeFirstResponder(self)
-//
-//      print("Info: \(self.becomeFirstResponder())")
-//
-//      print("Hiding the pointer")
-//      NSCursor.hide()
-//      CGWarpMouseCursorPosition(frame.midpoint)
-//      CGAssociateMouseAndMouseCursorPosition(0)
-//      
-//    } else {
-//      print("Showing the pointer")
-//      NSCursor.unhide()
-//      CGAssociateMouseAndMouseCursorPosition(1)
-//      
-//    }
+    //        if isActive {
+    // Ensure this view is the first responder so it receives touch and key events
+    //          self.window?.makeFirstResponder(self)
+    //
+    //          print("Info: \(self.becomeFirstResponder())")
+    //
+    //          print("Hiding the pointer")
+    //          NSCursor.hide()
+    //          CGWarpMouseCursorPosition(frame.midpoint)
+    //          CGAssociateMouseAndMouseCursorPosition(0)
+
+    //        } else {
+    //          print("Showing the pointer")
+    //          NSCursor.unhide()
+    //          CGAssociateMouseAndMouseCursorPosition(1)
+
+    //        }
 
     // Do any other "xyz" side effects here, e.g.:
     // - adjust pressure configuration
@@ -103,17 +105,22 @@ public class TrackpadTouchesNSView: NSView {
 
     /// Include stationary touches in the updates
     wantsRestingTouches = true
+    
+    pressureConfiguration = NSPressureConfiguration(pressureBehavior: .primaryGeneric)
+    pressureConfiguration?.set()
 
   }
 
   private func processTouches(with event: NSEvent) {
 
+    
     /// What if I require option to be held?
     //    guard event.modifierFlags.contains(.option) else { return }
 
     //    DebugString {
     //      Labeled("Event type", value: event.type)
     //      Labeled("Event location", value: event.locationInWindow)
+    //      Labeled("Event phase", value: event.phase)
     //    }
 
     let nsTouches = event.allTouches()
@@ -125,38 +132,50 @@ public class TrackpadTouchesNSView: NSView {
     )
 
     didUpdateTouches(processedTouches)
-
   }
+  
+  private func processPressureChange(with event: NSEvent) {
+    let pressure = CGFloat(event.pressure)
+    DebugString {
+      Labeled("Pressure amount", value: pressure)
+      Labeled("Pressure stage", value: event.stage)
+      Labeled("Pressure stage transition", value: event.stageTransition)
+    }
+//    didUpdatePressure(pressure)
+  }
+  
+  
 
   // MARK: - Touch Event Handlers
 
-  public override func touchesBegan(with event: NSEvent) {
-    processTouches(with: event)
-  }
-  public override func touchesMoved(with event: NSEvent) {
-    processTouches(with: event)
-  }
-  public override func touchesEnded(with event: NSEvent) {
-    processTouches(with: event)
-  }
-  public override func touchesCancelled(with event: NSEvent) {
-    processTouches(with: event)
-  }
-  public override func pressureChange(with event: NSEvent) {
-    didUpdatePressure(CGFloat(event.pressure))
-  }
-
-//  public override func keyDown(with event: NSEvent) {
-//    /// 53 is the virtual key code for Escape.
-//    /// Also check charactersIgnoringModifiers for robustness.
-//    if event.keyCode == 53 || event.charactersIgnoringModifiers == String(UnicodeScalar(27)) {
-//      setDrawingMode(isActive: false)
-//      return
-//    }
-//    super.keyDown(with: event)
+//  public override func touchesBegan(with event: NSEvent) {
+//    processTouches(with: event)
 //  }
+//  public override func touchesMoved(with event: NSEvent) {
+//    processTouches(with: event)
+//  }
+//  public override func touchesEnded(with event: NSEvent) {
+//    processTouches(with: event)
+//  }
+//  public override func touchesCancelled(with event: NSEvent) {
+//    processTouches(with: event)
+//  }
+  
+  public override func pressureChange(with event: NSEvent) {
+    processPressureChange(with: event)
+  }
 
-//  public override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
+  //  public override func keyDown(with event: NSEvent) {
+  //    /// 53 is the virtual key code for Escape.
+  //    /// Also check charactersIgnoringModifiers for robustness.
+  //    if event.keyCode == 53 || event.charactersIgnoringModifiers == String(UnicodeScalar(27)) {
+  //      setDrawingMode(isActive: false)
+  //      return
+  //    }
+  //    super.keyDown(with: event)
+  //  }
+
+  //  public override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
 }
 
 extension NSTouch {
