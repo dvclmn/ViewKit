@@ -62,6 +62,11 @@ extension SliderHandler {
     let heightIncBuffer: CGFloat = trackHeight + hitAreaBuffer
     trackSize = CGSize(width: viewWidth, height: heightIncBuffer)
   }
+  
+  func updatePhase(_ phase: SliderPhase) {
+    self.phase = phase
+    self.didChangeSlider?(phase)
+  }
 
   func handleDragChange(_ gestureValue: DragGesture.Value) -> CGFloat {
     let location = gestureValue.location.x
@@ -76,6 +81,16 @@ extension SliderHandler {
     //    let newValue = range.lowerBound + (percentage * (range.upperBound - range.lowerBound))
 
     return newValue
+  }
+  
+  func fillWidth() -> CGFloat? {
+    
+    guard isGeometryReady else { return nil }
+    
+    /// Normalised here is essentially: “How far along the slider should the
+    /// thumb be, in proportion to its full track length?”
+    let normalised: CGFloat = value.normalised(in: range.toDoubleRange)
+    return normalised * trackSize.width
   }
 
   //  var thumbDiameter: CGFloat {
@@ -108,14 +123,5 @@ extension SliderHandler {
   //    return CGPoint(x: x, y: y)
   //  }
 
-  func fillWidth(for value: CGFloat) -> CGFloat? {
 
-    guard isGeometryReady else { return nil }
-
-    /// Normalised here is essentially: “How far along the slider should the
-    /// thumb be, in proportion to its full track length?”
-    let normalised: CGFloat = value.normalised(in: range)
-
-    return normalised * trackSize.width
-  }
 }

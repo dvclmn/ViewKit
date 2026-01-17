@@ -30,20 +30,11 @@ public struct SliderComponents: OptionSet, Sendable {
   public static let all: Self = [.label, .slider, .units]
 }
 
-//public enum SliderValueFormat {
-//  case plain
-//  case percentage
-//}
-
 public enum SliderPhase {
   case dragging
   case idle
 
-  public init(fromOnEditingChanged value: Bool) {
-    if value {
-      self = .dragging
-    } else {
-      self = .idle
-    }
+  public init(fromOnEditingChanged editingDidChange: Bool) {
+    self = editingDidChange ? .dragging : .idle
   }
 }

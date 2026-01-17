@@ -41,6 +41,7 @@ extension EnvironmentValues {
   /// See also `viewAspectRatio()` in BaseHelpers
   @Entry public var explicitAspectRatio: CGFloat? = nil
   @Entry public var explicitContentMode: ContentMode? = nil
+  @Entry public var explicitControlSize: ControlSize? = nil
 
   @Entry public var helpText: String = ""
   @Entry public var cornerRounding: CGFloat? = nil

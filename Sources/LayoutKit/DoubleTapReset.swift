@@ -9,9 +9,6 @@ import SwiftUI
 
 public struct DoubleTapModifier: ViewModifier {
   
-//  @Binding var value: Double
-//  let defaultValue: Double?
-  
   private let action: () -> Void
   
   /// For backwards compatibility
@@ -70,7 +67,6 @@ extension View {
   ) -> some View {
     self.modifier(DoubleTapModifier(action: action))
   }
-  
   
 //  public func onDoubleTap(
 //    _ value: Binding<Double>,

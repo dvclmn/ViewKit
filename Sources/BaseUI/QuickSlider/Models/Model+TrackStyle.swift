@@ -32,7 +32,6 @@ public struct TrackFillStyle {
 }
 
 extension TrackFillStyle {
-
   public static var clearBG: TrackFillStyle {
     TrackFillStyle(
       fill: AnyShapeStyle(Color.accentColor),
@@ -43,7 +42,11 @@ extension TrackFillStyle {
     TrackFillStyle(
       fill: nil,
       foreground: AnyShapeStyle(
-        LinearGradient(colors: [.clear, .white], startPoint: .leading, endPoint: .trailing)
+        LinearGradient(
+          colors: [.clear, .white],
+          startPoint: .leading,
+          endPoint: .trailing
+        )
       ),
       background: .checkerboard()
     )

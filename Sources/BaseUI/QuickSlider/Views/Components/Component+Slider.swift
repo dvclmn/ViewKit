@@ -8,18 +8,15 @@
 import SwiftUI
 
 struct Component_Slider: View {
-  @Environment(\.sliderStyle) private var style
+  @Environment(\.sliderStyle) private var sliderStyle
   @Environment(\.sliderComponents) private var sliderComponents
   @Environment(\.sliderHandler) private var store
-  @Environment(\.sliderDefaultValue) private var defaultValue
-
-  //  @Binding var value: Double
-//  let style: SliderStyle
+  @Environment(\.sliderDefaultValue) private var sliderDefaultValue
 
   var body: some View {
     @Bindable var store = store
 
-    switch style {
+    switch sliderStyle {
       // MARK: - Native Slider
       case .native:
         if sliderComponents.contains(.label) {
@@ -55,9 +52,9 @@ extension Component_Slider {
 
     } onEditingChanged: { editing in
       let phase = SliderPhase(fromOnEditingChanged: editing)
-      store.phase = phase
-      store.didChangeSlider?(phase)
-//      store.triggerDidChangeSlider(phase)
+      store.updatePhase(phase)
+//      store.phase = phase
+//      store.didChangeSlider?(phase)
     }
   }
 
@@ -65,7 +62,7 @@ extension Component_Slider {
   func LabelComponent() -> some View {
     @Bindable var store = store
     MaybeLabel(store.label)
-      .onDoubleTap($store.value, defaultValue: defaultValue)
+      .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
       .font(.body)
     //      .lineLimit(1)
 

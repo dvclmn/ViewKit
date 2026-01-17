@@ -25,19 +25,15 @@ struct SliderCustom<Label: View>: View {
 
   @State private var isHovering: Bool = false
 
-  //  @Binding var value: Double
-  //  @Binding var store: SliderHandler
   let style: TrackFillStyle
   @ViewBuilder let label: Label
 
   public var body: some View {
 
     HStack {
-
       label
 
       GeometryReader { proxy in
-
         ZStack {
           // MARK: - Track
           SliderTrack(in: proxy.size)
@@ -58,9 +54,7 @@ struct SliderCustom<Label: View>: View {
         }  // END zstack
         .frame(maxWidth: .infinity)
         .contentShape(.rect)
-        .onHover { hovering in
-          isHovering = hovering
-        }
+        .onHover { isHovering = $0 }
         .task(id: trackHeight) {
           store.updateTrackSize(
             viewWidth: proxy.size.width,
@@ -91,12 +85,14 @@ extension SliderCustom {
     return DragGesture(minimumDistance: 0)
       .onChanged { gestureValue in
         store.value = store.handleDragChange(gestureValue)
-        store.phase = .dragging
-        store.didChangeSlider?(.dragging)
+        store.updatePhase(.dragging)
+//        store.phase = .dragging
+//        store.didChangeSlider?(.dragging)
       }
       .onEnded { _ in
-        store.phase = .idle
-        store.didChangeSlider?(.idle)
+        store.updatePhase(.idle)
+//        store.phase = .idle
+//        store.didChangeSlider?(.idle)
       }
   }
 
@@ -104,11 +100,8 @@ extension SliderCustom {
     switch trackComponents {
 
       /// Aka has fill *only*
-      case .fill:
-        return AnyShape(.rect(cornerRadius: cornerRounding ?? Styles.sizeTiny))
-
-      default:
-        return AnyShape(.capsule)
+      case .fill: AnyShape(.rect(cornerRadius: cornerRounding ?? Styles.sizeTiny))
+      default: AnyShape(.capsule)
     }
   }
 
@@ -123,7 +116,7 @@ extension SliderCustom {
     .frame(height: trackHeight)
 
     .overlay(alignment: .leading) {
-      if let width = store.fillWidth(for: store.value) {
+      if let width = store.fillWidth() {
         Rectangle()
           .fill(style.fill.opacity(isHovering ? 1.0 : 0.6))
           .frame(width: width)

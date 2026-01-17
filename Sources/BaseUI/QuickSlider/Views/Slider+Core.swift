@@ -11,23 +11,14 @@ import SwiftUI
 public struct SliderCore: View {
   @Environment(\.sliderHandler) private var store
 
-  @Environment(\.sliderControlSize) private var controlSize
+  @Environment(\.explicitControlSize) private var explicitControlSize
   @Environment(\.sliderComponents) private var sliderComponents
 
-  //  @Environment(\.sliderRange) private var range
   @Environment(\.sliderStyle) private var style
-  //  @Environment(\.sliderLabel) private var label
   @Environment(\.formatValue) private var formatValue
-  @Environment(\.sliderDefaultValue) private var defaultValue
-
-  @Environment(\.explicitHeight) private var explicitHeight
-  @Environment(\.cornerRounding) private var cornerRounding
+  @Environment(\.sliderDefaultValue) private var sliderDefaultValue
 
   @State private var isHovering: Bool = false
-
-  //  @Binding var value: Double
-
-  //  let type: SliderStyle
 
   public var body: some View {
     @Bindable var store = store
@@ -44,29 +35,21 @@ public struct SliderCore: View {
 
               HapticPreset.boundaryReached.hapticPreset(
                 for: store.range.toDoubleRange,
-                with: defaultValue,
+                with: sliderDefaultValue,
                 oldValue,
                 newValue
               )
             }
-            .controlSize(controlSize)
+            .controlSize(explicitControlSize ?? .regular)
         }
 
         // MARK: - Units
         if sliderComponents.contains(.units) {
           TextColumns {
-
             Text(formatValue(store.value))
-            //            if let formatted =  {
-            //            if let formatted = store.formatValue?(value) {
-            //              Text(formatted)
-            //            } else {
-            //              Text(store.value.displayString)
-            //            }
           }
           .textSelection(.disabled)
-          .onDoubleTap($store.value, defaultValue: defaultValue)
-
+          .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
         }
       }
     }  // END grid row
