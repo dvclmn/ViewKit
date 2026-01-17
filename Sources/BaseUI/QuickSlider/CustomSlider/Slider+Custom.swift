@@ -21,11 +21,12 @@ struct SliderCustom<Label: View>: View {
   @Environment(\.explicitHeight) private var explicitHeight
   @Environment(\.cornerRounding) private var cornerRounding
   @Environment(\.trackComponents) private var trackComponents
+  @Environment(\.sliderHandler) private var store
 
   @State private var isHovering: Bool = false
 
-  @Binding var value: Double
-  @Binding var store: SliderHandler
+  //  @Binding var value: Double
+  //  @Binding var store: SliderHandler
   let style: TrackFillStyle
   @ViewBuilder let label: Label
 
@@ -48,7 +49,7 @@ struct SliderCustom<Label: View>: View {
               //              store: $store.thumbHandler,
               //              value: value,
               position: store.thumbHandler.thumbPosition(
-                forSliderValue: value,
+                forSliderValue: store.value,
                 trackSize: store.trackSize
               ),
               shape: .circle,
@@ -89,7 +90,7 @@ extension SliderCustom {
 
     return DragGesture(minimumDistance: 0)
       .onChanged { gestureValue in
-        value = store.handleDragChange(gestureValue)
+        store.value = store.handleDragChange(gestureValue)
         store.phase = .dragging
         store.didChangeSlider?(.dragging)
       }
@@ -122,7 +123,7 @@ extension SliderCustom {
     .frame(height: trackHeight)
 
     .overlay(alignment: .leading) {
-      if let width = store.fillWidth(for: value) {
+      if let width = store.fillWidth(for: store.value) {
         Rectangle()
           .fill(style.fill.opacity(isHovering ? 1.0 : 0.6))
           .frame(width: width)

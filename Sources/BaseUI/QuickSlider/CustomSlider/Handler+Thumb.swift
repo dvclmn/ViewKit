@@ -8,20 +8,20 @@
 import SwiftUI
 
 public struct ThumbHandler {
-  let thumbDiameter: CGFloat
-  let sliderRange: ClosedRange<CGFloat>
+  var thumbDiameter: CGFloat = 16.0
+  var sliderRange: ClosedRange<CGFloat> = 0...1
 
-  public init(
-    thumbDiameter: CGFloat = 16,
-    sliderRange: ClosedRange<CGFloat>,
-  ) {
-    self.thumbDiameter = thumbDiameter
-    self.sliderRange = sliderRange
-  }
-
-  //  public mutating func updateTrackSize(_ size: CGSize) {
-  //    self.trackSize = size
+  //  public init(
+  //    thumbDiameter: CGFloat = 16,
+  //    sliderRange: ClosedRange<CGFloat>,
+  //  ) {
+  //    self.thumbDiameter = thumbDiameter
+  //    self.sliderRange = sliderRange
   //  }
+}
+
+extension ThumbHandler {
+
   public func thumbPosition(
     forSliderValue value: CGFloat,
     trackSize: CGSize
@@ -49,5 +49,4 @@ public struct ThumbHandler {
   //    trackSize.areBothDimensionsGreaterThan(.zero)
   //  }
 
-  
 }

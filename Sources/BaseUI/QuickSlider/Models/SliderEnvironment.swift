@@ -26,6 +26,7 @@ extension EnvironmentValues {
   //  @Entry public var sliderValueFormat: SliderValueFormat = .plain
 
   @Entry public var formatValue: FormatValue = { "\($0.displayString)" }
+  @Entry var sliderHandler: SliderHandler = .init()
 }
 
 /// This is in use by e.g.

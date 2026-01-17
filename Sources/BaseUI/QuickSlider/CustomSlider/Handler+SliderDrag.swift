@@ -8,25 +8,31 @@
 import BasePrimitives
 import SwiftUI
 
-struct SliderHandler {
+@Observable
+final class SliderHandler {
+  //struct SliderHandler {
+  var value: Double = 1.0
+  var label: QuickLabel = .init("")
+  var range: ClosedRange<CGFloat> = 0...1
 
   var phase: SliderPhase = .idle
   var didChangeSlider: SliderOutput?
   var formatValue: FormatValue?
 
-  let label: QuickLabel
-  let range: ClosedRange<CGFloat>
-
-  var thumbHandler: ThumbHandler
+  var thumbHandler: ThumbHandler = .init()
 
   /// Including vertical hit area buffer
   var trackSize: CGSize = .zero
   let hitAreaBuffer: CGFloat = 16
   let fallbackHeight: CGFloat = 5
 
-  public init(
+  public init() {}
+}
+
+extension SliderHandler {
+  func setUp(
     range: ClosedRange<CGFloat>,
-    label: QuickLabel,
+    label: QuickLabel
   ) {
     self.range = range
     self.label = label
@@ -34,23 +40,21 @@ struct SliderHandler {
     let thumbHandler = ThumbHandler(sliderRange: range)
     self.thumbHandler = thumbHandler
   }
-}
 
-extension SliderHandler {
-
-  func triggerDidChangeSlider(_ phase: SliderPhase) {
-    didChangeSlider?(phase)
-  }
-  func triggerFormatValue(_ value: Double) -> String? {
-    formatValue?(value)
-  }
+//  func triggerDidChangeSlider(_ phase: SliderPhase) {
+//    didChangeSlider?(phase)
+//  }
+//  func triggerFormatValue() -> String? {
+////  func triggerFormatValue(_ value: Double) -> String? {
+//    formatValue?(value)
+//  }
 
   var isDragging: Bool { phase == .dragging }
 
   private var isGeometryReady: Bool { trackSize.isGreaterThanZero }
 
   /// Do not include the hit area buffer in `trackHeight`
-  mutating func updateTrackSize(
+  func updateTrackSize(
     viewWidth: CGFloat,
     trackHeight: CGFloat
   ) {
@@ -58,7 +62,7 @@ extension SliderHandler {
     trackSize = CGSize(width: viewWidth, height: heightIncBuffer)
   }
 
-  mutating func handleDragChange(_ gestureValue: DragGesture.Value) -> CGFloat {
+  func handleDragChange(_ gestureValue: DragGesture.Value) -> CGFloat {
     let location = gestureValue.location.x
 
     /// Location clamped so it cannot go outside

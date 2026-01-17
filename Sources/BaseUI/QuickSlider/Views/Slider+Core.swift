@@ -9,6 +9,8 @@ import BasePrimitives
 import SwiftUI
 
 public struct SliderCore: View {
+  @Environment(\.sliderHandler) private var store
+
   @Environment(\.sliderControlSize) private var controlSize
   @Environment(\.sliderComponents) private var sliderComponents
 
@@ -21,20 +23,20 @@ public struct SliderCore: View {
 
   @State private var isHovering: Bool = false
 
-  @Binding var value: Double
-  @Binding var store: SliderHandler
+//  @Binding var value: Double
+
   let type: SliderStyle
 
   public var body: some View {
-
+    @Bindable var store = store
     GridRow {
       HStack {
         // MARK: - Slider
         if sliderComponents.contains(.slider) {
 
-          SliderComponent()
+          Component_Slider(style: type)
             .frame(minWidth: 80)
-            .sensoryFeedback(.alignment, trigger: value) {
+            .sensoryFeedback(.alignment, trigger: store.value) {
               oldValue,
               newValue in
 
@@ -50,7 +52,16 @@ public struct SliderCore: View {
 
         // MARK: - Units
         if sliderComponents.contains(.units) {
-          UnitsComponent()
+          TextColumns {
+            if let formatted = store.formatValue?(value) {
+              Text(formatted)
+            } else {
+              Text(value.displayString)
+            }
+          }
+          .textSelection(.disabled)
+          .onDoubleTap($value, defaultValue: defaultValue)
+
         }
       }
     }  // END grid row
@@ -59,74 +70,5 @@ public struct SliderCore: View {
 }
 
 extension SliderCore {
-
-  @ViewBuilder
-  func LabelComponent() -> some View {
-    MaybeLabel(label)
-      .onDoubleTap($value, defaultValue: defaultValue)
-      .font(.body)
-    //      .lineLimit(1)
-
-    /// This can cause fuzzy text, in certain situations
-    //      .fixedSize(horizontal: true, vertical: false)
-  }
-
-  @ViewBuilder
-  func SliderComponent() -> some View {
-
-    switch type {
-      // MARK: - Native Slider
-      case .native:
-        if sliderComponents.contains(.label) {
-          NativeSliderComponent()
-        } else {
-          NativeSliderComponent()
-            .labelsHidden()
-        }
-
-      // MARK: - Custom Slider
-      case .custom(let style):
-        SliderCustom(
-          value: $value,
-          store: $store,
-          style: style
-        ) {
-          if sliderComponents.contains(.label) {
-            LabelComponent()
-          } else {
-            EmptyView()
-          }
-        }
-    }
-  }
-
-  @ViewBuilder
-  func UnitsComponent() -> some View {
-    TextColumns {
-      if let formatted = store.formatValue?(value) {
-        Text(formatted)
-      } else {
-        Text(value.displayString)
-      }
-    }
-    .textSelection(.disabled)
-    .onDoubleTap($value, defaultValue: defaultValue)
-
-  }
-
-  @ViewBuilder
-  func NativeSliderComponent() -> some View {
-    Slider(
-      value: $value,
-      in: range,
-    ) {
-      LabelComponent()
-
-    } onEditingChanged: { editing in
-      let phase = SliderPhase(fromOnEditingChanged: editing)
-      store.phase = phase
-      store.triggerDidChangeSlider(phase)
-    }
-  }
 
 }

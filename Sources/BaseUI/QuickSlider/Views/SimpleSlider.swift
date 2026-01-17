@@ -15,20 +15,14 @@ public struct QuickSlider: View, EnvironmentFormattable {
   @Environment(\.formatValue) private var formatValue
 
   @State private var store: SliderHandler
+
   @Binding var value: Double
   let type: SliderStyle
   let didChangeSlider: SliderOutput
 
   public var body: some View {
 
-    /// No longer based on Compact mode, but whether a track view is passed
-    SliderCore(
-      value: $value,
-      store: $store,
-      type: type
-    )
-    .environment(\.sliderLabel, store.label)
-    .environment(\.sliderRange, store.range.toDoubleRange)
+    SliderCore(type: type)
 
     .onAppear {
       if store.didChangeSlider == nil {
@@ -39,6 +33,11 @@ public struct QuickSlider: View, EnvironmentFormattable {
         store.formatValue = formatValue
       }
     }
+    .bindModel($store.value, to: $value)
+    
+    .environment(\.sliderLabel, store.label)
+    .environment(\.sliderRange, store.range.toDoubleRange)
+    .environment(\.sliderHandler, store)
   }
 }
 
