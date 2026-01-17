@@ -12,7 +12,8 @@ import SwiftUI
 final class AppHandler {
   @ObservationIgnored @Shared(.drawing) var drawing
   var activeStroke: ActiveStroke?
-  
+  var strokeDensity: Int = 3 // Stride
+  var pressure: CGFloat = 1
   var isDrawingEnabled: Bool = false
 }
 extension AppHandler {

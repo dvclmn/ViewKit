@@ -186,25 +186,3 @@ public class TrackpadTouchesNSView: NSView {
 
   //  public override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
 }
-
-extension NSTouch {
-  func debuggingString(
-    timestamp: TimeInterval,
-    pressure: CGFloat
-  ) -> String {
-    """
-    ////
-    Received `NSTouch`
-      - Phase: \(self.phase)
-      - ID: \(self.identity)
-      - ID Hash: \(self.identity.hash)
-      - Is Resting: \(self.isResting)
-      - Device: \(self.device.debugDescription)
-      - Device Size: \(self.deviceSize)
-
-      From NSEvent:
-      - Timestamp: \(timestamp)
-      - Pressure: \(pressure)
-    """
-  }
-}

@@ -33,28 +33,54 @@ struct LilyPadDemoView: View {
 
         Canvas { context, size in
 
+          let stride = store.strokeDensity
+
           var path = Path()
           var pathActive = Path()
 
-          /// Draw completed strokes
-          for stroke in store.drawing.strokes {
-            guard let first = stroke.points.first else { continue }
+          for stroke in strokes {
+            let pts = stroke.sampledPoints(every: stride)
+            guard let first = pts.first else { continue }
+
             path.move(to: first)
-            for pt in stroke.points.dropFirst() {
+            for pt in pts.dropFirst() {
               path.addLine(to: pt)
             }
           }
 
-          /// Draw active stroke (if any)
-          if let active = store.activeStroke, let first = active.points.first {
-            pathActive.move(to: first)
-            for pt in active.points.dropFirst() {
-              pathActive.addLine(to: pt)
+          if let active = activeStroke {
+            let pts = active.sampledPoints(every: stride)
+            if let first = pts.first {
+              pathActive.move(to: first)
+              for pt in pts.dropFirst() {
+                pathActive.addLine(to: pt)
+              }
             }
           }
 
-          context.stroke(path, with: .color(.brown), lineWidth: 3)
-          context.stroke(pathActive, with: .color(.purple), lineWidth: 3)
+          
+
+          //
+          //          /// Draw completed strokes
+          //          for stroke in store.drawing.strokes {
+          //            guard let first = stroke.points.first else { continue }
+          //            path.move(to: first)
+          //            for pt in stroke.points.dropFirst() {
+          //              path.addLine(to: pt)
+          //            }
+          //          }
+          //
+          //          /// Draw active stroke (if any)
+          //          if let active = store.activeStroke, let first = active.points.first {
+          //            pathActive.move(to: first)
+          //            for pt in active.points.dropFirst() {
+          //              pathActive.addLine(to: pt)
+          //            }
+          //          }
+
+          let lineWidth = store.pressure * 3
+          context.stroke(path, with: .color(.brown), lineWidth: lineWidth)
+          context.stroke(pathActive, with: .color(.purple), lineWidth: lineWidth)
 
           //          //        Canvas(rendersAsynchronously: false) { context, size in
           //          var path = Path()
@@ -118,6 +144,8 @@ struct LilyPadDemoView: View {
         //          print("No thing")
         //        }
 
+      } didUpdatePressure: { pressure in
+        store.pressure = pressure
       }
       .printInfo(.applicationSupport)
       //      .focusable()
@@ -157,7 +185,8 @@ struct LilyPadDemoView: View {
 extension LilyPadDemoView {
 
   private var isDrawingEnabled: Bool { store.isDrawingEnabled }
-  private var strokes: [Stroke] { store.drawing.strokes.toArray }
+  private var activeStroke: ActiveStroke? { store.activeStroke }
+  private var strokes: [Stroke] { store.drawing.strokes }
 
 }
 
@@ -167,17 +196,19 @@ extension LilyPadDemoView {
   LilyPadDemoView()
     .environment(store)
     .onAppear {
-      guard let artwork = try? ImportHandler.loadData(
-        named: "lilypadDrawing",
-        withExtension: "json",
-        asType: DrawingData.self
-      ) else {
+      guard
+        let artwork = try? ImportHandler.loadData(
+          named: "lilypadDrawing",
+          withExtension: "json",
+          asType: DrawingData.self
+        )
+      else {
         print("Couldn't load test data")
         return
       }
-      
+
       store.setDrawing(\.self, value: artwork)
-      
+
     }
 }
 #endif
