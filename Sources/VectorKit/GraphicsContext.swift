@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 8/10/2025.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 extension BinaryFloatingPoint {
   func removingZoomPercent(_ zoomPercent: Self) -> Self {
@@ -20,7 +20,6 @@ extension BinaryFloatingPoint {
 //    return String(firstSubstring)
 //  }
 //}
-
 
 extension GraphicsContext {
 
@@ -49,7 +48,7 @@ extension GraphicsContext {
       let labelCharacterWidth = CGFloat(text.firstLine.count) * approximateCharacterWidth
       return labelCharacterWidth.removingZoomPercent(zoom)
     }()
-    
+
     let labelHeightUnZoomed: CGFloat = fontSizeUnZoomed * 1.5
     let labelSize = CGSize(width: labelWidthUnZoomed, height: labelHeightUnZoomed)
 
@@ -63,7 +62,7 @@ extension GraphicsContext {
         dx: 0, dy: (labelHeightUnZoomed * 1.2) * debugTextPosition.multiplierForYPosition),
       size: labelSize
     )
-//    self.fill(labelRect.path, with: .color(Color.gray))
+    //    self.fill(labelRect.path, with: .color(Color.gray))
     self.draw(text, at: labelRect.midpoint)
 
     /// Draw dot at provided point, if needed

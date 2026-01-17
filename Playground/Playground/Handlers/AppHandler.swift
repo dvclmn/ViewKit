@@ -7,6 +7,8 @@
 
 import Sharing
 import SwiftUI
+import VectorKit
+import CoreTools
 
 @Observable
 final class AppHandler {
@@ -15,6 +17,8 @@ final class AppHandler {
   var strokeDensity: Int = 3 // Stride
   var pressure: CGFloat = 1
   var isDrawingEnabled: Bool = false
+  var pathStyle: PathType = .smooth
+  var isInspectorPresented: Bool = true
 }
 extension AppHandler {
   func setDrawing<T>(
@@ -41,6 +45,9 @@ extension AppHandler {
 //    }
 //  }
 }
+
+
+extension PathType: @retroactive Pickable {}
 
 
 //extension AppHandler {

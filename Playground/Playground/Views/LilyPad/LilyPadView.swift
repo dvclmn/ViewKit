@@ -9,6 +9,7 @@ import GestureKit
 import Sharing
 import SwiftUI
 import ToolKit
+import VectorKit
 
 struct LilyPadDemoView: View {
   @Environment(AppHandler.self) private var store
@@ -22,80 +23,13 @@ struct LilyPadDemoView: View {
   var body: some View {
 
     @Bindable var store = store
-    Text("Is drawing enabled? \(isDrawingEnabled.description)")
-      .padding(40)
+    Color.black.opacity(0.8)
       .frame(
         maxWidth: .infinity,
         maxHeight: .infinity,
       )
-      //      .frame(width: 600, height: 700)
       .overlay {
-
-        Canvas { context, size in
-
-          let stride = store.strokeDensity
-
-          var path = Path()
-          var pathActive = Path()
-
-          for stroke in strokes {
-            let pts = stroke.sampledPoints(every: stride)
-            guard let first = pts.first else { continue }
-
-            path.move(to: first)
-            for pt in pts.dropFirst() {
-              path.addLine(to: pt)
-            }
-          }
-
-          if let active = activeStroke {
-            let pts = active.sampledPoints(every: stride)
-            if let first = pts.first {
-              pathActive.move(to: first)
-              for pt in pts.dropFirst() {
-                pathActive.addLine(to: pt)
-              }
-            }
-          }
-
-          
-
-          //
-          //          /// Draw completed strokes
-          //          for stroke in store.drawing.strokes {
-          //            guard let first = stroke.points.first else { continue }
-          //            path.move(to: first)
-          //            for pt in stroke.points.dropFirst() {
-          //              path.addLine(to: pt)
-          //            }
-          //          }
-          //
-          //          /// Draw active stroke (if any)
-          //          if let active = store.activeStroke, let first = active.points.first {
-          //            pathActive.move(to: first)
-          //            for pt in active.points.dropFirst() {
-          //              pathActive.addLine(to: pt)
-          //            }
-          //          }
-
-          let lineWidth = store.pressure * 3
-          context.stroke(path, with: .color(.brown), lineWidth: lineWidth)
-          context.stroke(pathActive, with: .color(.purple), lineWidth: lineWidth)
-
-          //          //        Canvas(rendersAsynchronously: false) { context, size in
-          //          var path = Path()
-          //          /// IMPORTANT: This is flatmpaiing for now, but will need to
-          //          /// handle sep. strokes later
-          //          let pts = strokes.flatMap(\.points)
-          //          //          let pts = points(every: 2)
-          //          if let first = pts.first {
-          //            path.move(to: first)
-          //            for pt in pts.dropFirst() {
-          //              path.addLine(to: pt)
-          //            }
-          //          }
-          //          context.stroke(path, with: .color(.blue), lineWidth: 3)
-        }
+        LilyPadCanvasView(activeStroke: store.activeStroke, strokes: store.drawing.strokes)
       }
       .touches(
         //        isEnabled: true,
@@ -103,47 +37,7 @@ struct LilyPadDemoView: View {
         mapStrategy: .fill,
         showIndicators: true
       ) { touches in
-
-        // Typically you'll filter to a single touch for drawing
-        guard let touch = touches.first else { return }
-
-        switch touch.phase {
-
-          case .began:
-            store.activeStroke = ActiveStroke(
-              id: UUID(),
-              points: [touch.position]
-            )
-
-          case .changed:
-            store.activeStroke?.points.append(touch.position)
-
-          case .ended, .cancelled:
-            if let stroke = store.activeStroke {
-              store.$drawing.withLock {
-                $0.strokes.append(Stroke(id: stroke.id, points: stroke.points))
-              }
-              store.activeStroke = nil
-            }
-
-          default:
-            break
-        }
-
-        //        store.setDrawing(\.points) {
-        //          $0.append(touches.map(\.position))
-        //        }
-        //        let points: [CGPoint]
-        //        if let current = touches.first {
-        //          print("Got current: \(current.position)")
-        //          store.setDrawing(\.strokes) {
-        //            $0.insert(Stroke(points: current.position))
-        //          }
-
-        //        } else {
-        //          print("No thing")
-        //        }
-
+        handleTouches(touches)
       } didUpdatePressure: { pressure in
         store.pressure = pressure
       }
@@ -167,9 +61,16 @@ struct LilyPadDemoView: View {
           Toggle("Toggle Drawing", isOn: $store.isDrawingEnabled)
         }
       }
+    
+    
 
       .addInfoBarItems(LilyPadInfoItem.self, source: store, format: .short)
       .infoBarView()
+      .environment(\.strokeDensity, store.strokeDensity)
+    
+      .inspector(isPresented: $store.isInspectorPresented) {
+
+      }
     //      .background(isDrawingEnabled ? )
     //      .task(id: isDrawingEnabled) {
     //        if isDrawingEnabled {
@@ -183,10 +84,49 @@ struct LilyPadDemoView: View {
 }
 
 extension LilyPadDemoView {
+  private func handleTouches(_ touches: Set<TouchPoint>) {
+    guard let touch = touches.first else { return }
+
+    switch touch.phase {
+
+      case .began:
+        store.activeStroke = ActiveStroke(
+          id: UUID(),
+          points: [touch.position]
+        )
+
+      case .changed:
+        store.activeStroke?.points.append(touch.position)
+
+      case .ended, .cancelled:
+        if let stroke = store.activeStroke {
+          store.$drawing.withLock {
+            $0.strokes.append(Stroke(id: stroke.id, points: stroke.points))
+          }
+          store.activeStroke = nil
+        }
+
+      default:
+        break
+    }
+
+    //        store.setDrawing(\.points) {
+    //          $0.append(touches.map(\.position))
+    //        }
+    //        let points: [CGPoint]
+    //        if let current = touches.first {
+    //          print("Got current: \(current.position)")
+    //          store.setDrawing(\.strokes) {
+    //            $0.insert(Stroke(points: current.position))
+    //          }
+
+    //        } else {
+    //          print("No thing")
+    //        }
+
+  }
 
   private var isDrawingEnabled: Bool { store.isDrawingEnabled }
-  private var activeStroke: ActiveStroke? { store.activeStroke }
-  private var strokes: [Stroke] { store.drawing.strokes }
 
 }
 

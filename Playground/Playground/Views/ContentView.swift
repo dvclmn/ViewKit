@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ToolKit
+import VectorKit
 
 enum PlaygroundTab: String, LabeledItem, CaseIterable, Hashable {
   case home
@@ -14,14 +15,17 @@ enum PlaygroundTab: String, LabeledItem, CaseIterable, Hashable {
 }
 
 struct ContentView: View {
+  @Environment(AppHandler.self) private var store
   @State private var tab: PlaygroundTab = .lilypad
   var body: some View {
+    @Bindable var store = store
     QuickTabView(tab: $tab) { tab in
       switch tab {
         case .home: Text("Home")
         case .lilypad: LilyPadDemoView()
       }
     }
+    
   }
 }
 
