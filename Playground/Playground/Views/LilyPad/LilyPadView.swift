@@ -159,13 +159,6 @@ extension LilyPadDemoView {
   private var isDrawingEnabled: Bool { store.isDrawingEnabled }
   private var strokes: [Stroke] { store.drawing.strokes.toArray }
 
-  //  private var points: [CGPoint] { store.drawing.points }
-  //  private func points(every n: Int = 2) -> [CGPoint] {
-  //    let points = store.drawing.points
-  //    let strideIndices = stride(from: 0, to: points.count, by: n)
-  //    return strideIndices.map { points[$0] }
-  //  }
-
 }
 
 #if DEBUG
