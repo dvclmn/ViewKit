@@ -5,12 +5,10 @@
 //  Created by Dave Coleman on 11/8/2025.
 //
 
-import SwiftUI
 import BasePrimitives
-//import GestureKit
+import SwiftUI
 
-
-public struct SliderUnified: View {
+public struct SliderCore: View {
   @Environment(\.sliderControlSize) private var controlSize
   @Environment(\.sliderComponents) private var sliderComponents
 
@@ -20,13 +18,12 @@ public struct SliderUnified: View {
 
   @Environment(\.explicitHeight) private var explicitHeight
   @Environment(\.cornerRounding) private var cornerRounding
-  @Environment(\.trackComponents) private var trackComponents
 
   @State private var isHovering: Bool = false
 
   @Binding var value: Double
   @Binding var store: SliderHandler
-  let type: SliderType
+  let type: SliderStyle
 
   public var body: some View {
 
@@ -61,8 +58,7 @@ public struct SliderUnified: View {
   }
 }
 
-
-extension SliderUnified {
+extension SliderCore {
 
   @ViewBuilder
   func LabelComponent() -> some View {

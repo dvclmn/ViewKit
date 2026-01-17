@@ -14,7 +14,7 @@ public struct LabeledSlider<Content: View>: View, EnvironmentFormattable {
   let range: ClosedRange<Double>
   let label: QuickLabel
   let blurb: String?
-  let type: SliderType
+  let type: SliderStyle
   let additionalContent: Content
   let didChangeSlider: SliderOutput
   /// Doesn't yet support passing through `didChangeSlider`
@@ -23,7 +23,7 @@ public struct LabeledSlider<Content: View>: View, EnvironmentFormattable {
     value: Binding<Double>,
     range: ClosedRange<Double>,
     blurb: String? = nil,
-    type: SliderType = .native,
+    type: SliderStyle = .native,
     @ViewBuilder additionalContent: @escaping () -> Content = { EmptyView() },
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum SliderType {
+public enum SliderStyle {
   case native
   case custom(TrackFillStyle)
 }

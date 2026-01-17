@@ -5,9 +5,6 @@
 //  Created by Dave Coleman on 1/11/2024.
 //
 
-
-
-// import MemberwiseInit
 import SwiftUI
 
 public struct TrackComponents: OptionSet, Sendable {
@@ -15,7 +12,7 @@ public struct TrackComponents: OptionSet, Sendable {
     self.rawValue = rawValue
   }
   public let rawValue: Int
-  
+
   public static let fill = Self(rawValue: 1 << 0)
   public static let thumb = Self(rawValue: 1 << 1)
   public static let all: Self = [.fill, .thumb]
@@ -41,7 +38,7 @@ public struct SliderComponents: OptionSet, Sendable {
 public enum SliderPhase {
   case dragging
   case idle
-  
+
   public init(fromOnEditingChanged value: Bool) {
     if value {
       self = .dragging

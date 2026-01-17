@@ -28,9 +28,8 @@ extension EnvironmentValues {
   @Entry public var formatValue: FormatValue = { "\($0.displayString)" }
 }
 
-public protocol EnvironmentFormattable {
-
-}
+/// This is in use by e.g.
+public protocol EnvironmentFormattable {}
 
 extension View where Self: EnvironmentFormattable {
   public func formatSliderValue(_ format: @escaping FormatValue) -> some View {

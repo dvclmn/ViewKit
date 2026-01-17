@@ -16,6 +16,27 @@ public struct SliderExamples: View {
   public var body: some View {
 
     VStack {
+      LabeledSlider(
+        "Labeled Slider",
+        value: $zoomValue.toBindingDouble,
+        range: zoomRange.toDoubleRange,
+        blurb: nil,
+        type: .native) {
+          Button("Tap") {}
+        } didChangeSlider: { phase in
+          print("Slider phase: \(phase)")
+        }
+
+//      QuickSlider(
+//        "Labeled Slider",
+//        value: $zoomValue.toBindingDouble,
+//        range: zoomRange.toDoubleRange,
+//        type: .custom(.clearBG)
+//      )
+//      .environment(\.trackComponents, [.fill])
+//      .environment(\.explicitHeight, 34)
+//      .padding()
+//      .background(.blue.quinary)
 
       QuickSlider(
         "Simple Slider",

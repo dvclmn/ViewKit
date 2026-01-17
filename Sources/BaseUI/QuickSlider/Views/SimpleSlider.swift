@@ -16,13 +16,13 @@ public struct QuickSlider: View, EnvironmentFormattable {
 
   @State private var store: SliderHandler
   @Binding var value: Double
-  let type: SliderType
+  let type: SliderStyle
   let didChangeSlider: SliderOutput
 
   public var body: some View {
-    
+
     /// No longer based on Compact mode, but whether a track view is passed
-    SliderUnified(
+    SliderCore(
       value: $value,
       store: $store,
       type: type
@@ -48,7 +48,7 @@ extension QuickSlider {
     _ title: String,
     value: Binding<Double>,
     range: ClosedRange<Double>,
-    type: SliderType = .native,
+    type: SliderStyle = .native,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
     self.init(
@@ -64,7 +64,7 @@ extension QuickSlider {
     label: QuickLabel,
     value: Binding<Double>,
     range: ClosedRange<Double>,
-    type: SliderType = .native,
+    type: SliderStyle = .native,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
 

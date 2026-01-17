@@ -60,6 +60,8 @@ public struct Scrubber: View {
       height: digitWidth * 1.8,
       alignment: .trailing
     )
+    
+    .quickBackground(padding: 8)
 //    .quickBackground(padding: 2, colour: AnyShapeStyle(.white.opacity(isHovered ? 0.06 : 0)))
 //    .setStroke(style: AnyShapeStyle(Color.white.opacity(isHovered ? 0.11 : 0)))
     .environment(\.strokeColour, AnyShapeStyle(Color.white.opacity(isHovered ? 0.11 : 0)))
