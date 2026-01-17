@@ -105,7 +105,7 @@ public class TrackpadTouchesNSView: NSView {
 
     /// Include stationary touches in the updates
     wantsRestingTouches = true
-    
+
     pressureConfiguration = NSPressureConfiguration(pressureBehavior: .primaryGeneric)
     pressureConfiguration?.set()
 
@@ -113,15 +113,23 @@ public class TrackpadTouchesNSView: NSView {
 
   private func processTouches(with event: NSEvent) {
 
-    
     /// What if I require option to be held?
     //    guard event.modifierFlags.contains(.option) else { return }
 
-    //    DebugString {
-    //      Labeled("Event type", value: event.type)
-    //      Labeled("Event location", value: event.locationInWindow)
-    //      Labeled("Event phase", value: event.phase)
-    //    }
+    /// Properties that I know produce the assertion failures:
+    /// `event.associatedEventsMask`
+    DebugString {
+      Indented("Event information") {
+        Labeled("Phase", value: event.phase)
+        Labeled("Type", value: event.type)
+        Labeled("Sub-type", value: event.subtype)
+        Labeled("Location", value: event.locationInWindow)
+        Labeled("Precise scrolling deltas?", value: event.hasPreciseScrollingDeltas)
+        Labeled("Momentum phase", value: event.momentumPhase)
+        Labeled("Window", value: event.window)
+
+      }
+    }
 
     let nsTouches = event.allTouches()
 
@@ -133,34 +141,32 @@ public class TrackpadTouchesNSView: NSView {
 
     didUpdateTouches(processedTouches)
   }
-  
+
   private func processPressureChange(with event: NSEvent) {
     let pressure = CGFloat(event.pressure)
-    DebugString {
-      Labeled("Pressure amount", value: pressure)
-      Labeled("Pressure stage", value: event.stage)
-      Labeled("Pressure stage transition", value: event.stageTransition)
-    }
-//    didUpdatePressure(pressure)
+    //    DebugString {
+    //      Labeled("Pressure amount", value: pressure)
+    //      Labeled("Pressure stage", value: event.stage)
+    //      Labeled("Pressure stage transition", value: event.stageTransition)
+    //    }
+    didUpdatePressure(pressure)
   }
-  
-  
 
   // MARK: - Touch Event Handlers
 
-//  public override func touchesBegan(with event: NSEvent) {
-//    processTouches(with: event)
-//  }
-//  public override func touchesMoved(with event: NSEvent) {
-//    processTouches(with: event)
-//  }
-//  public override func touchesEnded(with event: NSEvent) {
-//    processTouches(with: event)
-//  }
-//  public override func touchesCancelled(with event: NSEvent) {
-//    processTouches(with: event)
-//  }
-  
+  public override func touchesBegan(with event: NSEvent) {
+    processTouches(with: event)
+  }
+  public override func touchesMoved(with event: NSEvent) {
+    processTouches(with: event)
+  }
+  public override func touchesEnded(with event: NSEvent) {
+    processTouches(with: event)
+  }
+  public override func touchesCancelled(with event: NSEvent) {
+    processTouches(with: event)
+  }
+
   public override func pressureChange(with event: NSEvent) {
     processPressureChange(with: event)
   }
