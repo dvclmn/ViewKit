@@ -14,8 +14,9 @@ public struct SliderCore: View {
   @Environment(\.sliderControlSize) private var controlSize
   @Environment(\.sliderComponents) private var sliderComponents
 
-  @Environment(\.sliderRange) private var range
-  @Environment(\.sliderLabel) private var label
+  //  @Environment(\.sliderRange) private var range
+  @Environment(\.sliderStyle) private var style
+  //  @Environment(\.sliderLabel) private var label
   @Environment(\.formatValue) private var formatValue
   @Environment(\.sliderDefaultValue) private var defaultValue
 
@@ -24,9 +25,9 @@ public struct SliderCore: View {
 
   @State private var isHovering: Bool = false
 
-//  @Binding var value: Double
+  //  @Binding var value: Double
 
-  let type: SliderStyle
+  //  let type: SliderStyle
 
   public var body: some View {
     @Bindable var store = store
@@ -35,14 +36,14 @@ public struct SliderCore: View {
         // MARK: - Slider
         if sliderComponents.contains(.slider) {
 
-          Component_Slider(style: type)
+          Component_Slider()
             .frame(minWidth: 80)
             .sensoryFeedback(.alignment, trigger: store.value) {
               oldValue,
               newValue in
 
               HapticPreset.boundaryReached.hapticPreset(
-                for: range,
+                for: store.range.toDoubleRange,
                 with: defaultValue,
                 oldValue,
                 newValue
@@ -54,14 +55,14 @@ public struct SliderCore: View {
         // MARK: - Units
         if sliderComponents.contains(.units) {
           TextColumns {
-            
+
             Text(formatValue(store.value))
-//            if let formatted =  {
-//            if let formatted = store.formatValue?(value) {
-//              Text(formatted)
-//            } else {
-//              Text(store.value.displayString)
-//            }
+            //            if let formatted =  {
+            //            if let formatted = store.formatValue?(value) {
+            //              Text(formatted)
+            //            } else {
+            //              Text(store.value.displayString)
+            //            }
           }
           .textSelection(.disabled)
           .onDoubleTap($store.value, defaultValue: defaultValue)

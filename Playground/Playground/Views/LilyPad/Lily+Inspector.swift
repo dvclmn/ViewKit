@@ -36,7 +36,6 @@ struct LilyInspectorView: View {
         "Stroke Density",
         value: $store.strokeDensity.toBindingDouble,
         range: 1...50,
-        type: .native
       )
     }
     .formStyle(.grouped)

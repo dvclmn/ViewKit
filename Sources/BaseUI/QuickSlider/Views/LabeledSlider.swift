@@ -51,7 +51,6 @@ public struct LabeledSlider<Content: View>: View, EnvironmentFormattable {
           label: label,
           value: $value,
           range: range,
-          type: type,
           didChangeSlider: didChangeSlider
         )
         .labelsHidden()

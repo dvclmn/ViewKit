@@ -30,6 +30,7 @@ final class SliderHandler {
 }
 
 extension SliderHandler {
+  
   func setUp(
     range: ClosedRange<CGFloat>,
     label: QuickLabel

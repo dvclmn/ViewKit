@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct Component_Slider: View {
+  @Environment(\.sliderStyle) private var style
   @Environment(\.sliderComponents) private var sliderComponents
   @Environment(\.sliderHandler) private var store
   @Environment(\.sliderDefaultValue) private var defaultValue
 
   //  @Binding var value: Double
-  let style: SliderStyle
+//  let style: SliderStyle
 
   var body: some View {
     @Bindable var store = store

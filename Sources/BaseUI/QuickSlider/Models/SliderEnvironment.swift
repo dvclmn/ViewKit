@@ -20,9 +20,11 @@ extension EnvironmentValues {
   @Entry public var sliderComponents: SliderComponents = [.label, .slider, .units]
   @Entry public var trackComponents: TrackComponents = [.thumb]
 
-  @Entry public var sliderRange: ClosedRange<Double> = 0...1
+//  @Entry public var sliderRange: ClosedRange<Double> = 0...1
   @Entry public var sliderDefaultValue: Double? = nil
-  @Entry public var sliderLabel: QuickLabel = QuickLabel("New label")
+//  @Entry public var sliderLabel: QuickLabel = QuickLabel("New label")
+  
+  @Entry public var sliderStyle: SliderStyle = .native
   //  @Entry public var sliderValueFormat: SliderValueFormat = .plain
 
   @Entry public var formatValue: FormatValue = { "\($0.displayString)" }
@@ -35,6 +37,9 @@ public protocol EnvironmentFormattable {}
 extension View where Self: EnvironmentFormattable {
   public func formatSliderValue(_ format: @escaping FormatValue) -> some View {
     self.environment(\.formatValue, format)
+  }
+  public func sliderStyle(_ style:SliderStyle) -> some View {
+    self.environment(\.sliderStyle, style)
   }
 }
 

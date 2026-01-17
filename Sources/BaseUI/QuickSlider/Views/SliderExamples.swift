@@ -50,8 +50,9 @@ public struct SliderExamples: View {
         "Opacity Slider",
         value: $zoomValue.toBindingDouble,
         range: zoomRange.toDoubleRange,
-        type: .custom(.opacitySlider)
       )
+      .sliderStyle(.custom(.opacitySlider))
+      
       //      .setExplicitHeight(5)
       .environment(\.explicitHeight, 5)
       .environment(\.trackComponents, [.thumb])
@@ -80,8 +81,9 @@ public struct SliderExamples: View {
         "Bar Slider",
         value: $zoomValue.toBindingDouble,
         range: zoomRange.toDoubleRange,
-        type: .custom(.clearBG)
       )
+      .sliderStyle(.custom(.clearBG))
+      
       .environment(\.trackComponents, [.fill])
       .environment(\.explicitHeight, 34)
       .padding()
