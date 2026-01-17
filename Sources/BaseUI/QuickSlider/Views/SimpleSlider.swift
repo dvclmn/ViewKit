@@ -14,7 +14,7 @@ public struct QuickSlider: View, EnvironmentFormattable {
   @Environment(\.sliderControlSize) private var sliderControlSize
   @Environment(\.formatValue) private var formatValue
 
-  @State private var store: SliderHandler
+  @State private var store: SliderHandler = .init()
 
   @Binding var value: Double
   let type: SliderStyle
@@ -29,9 +29,9 @@ public struct QuickSlider: View, EnvironmentFormattable {
         store.didChangeSlider = didChangeSlider
       }
 
-      if store.formatValue == nil {
-        store.formatValue = formatValue
-      }
+//      if store.formatValue == nil {
+//        store.formatValue = formatValue
+//      }
     }
     .bindModel($store.value, to: $value)
     
@@ -68,12 +68,12 @@ extension QuickSlider {
   ) {
 
     /// Get handler started with the slider `range`
-    self._store = State(
-      initialValue: SliderHandler(
-        range: range.toCGFloatRange,
-        label: label,
-      )
-    )
+//    self._store = State(
+//      initialValue: SliderHandler()
+////        range: range.toCGFloatRange,
+////        label: label,
+////)
+//    )
     self._value = value
     self.type = type
     self.didChangeSlider = didChangeSlider

@@ -16,6 +16,7 @@ public struct SliderCore: View {
 
   @Environment(\.sliderRange) private var range
   @Environment(\.sliderLabel) private var label
+  @Environment(\.formatValue) private var formatValue
   @Environment(\.sliderDefaultValue) private var defaultValue
 
   @Environment(\.explicitHeight) private var explicitHeight
@@ -53,14 +54,17 @@ public struct SliderCore: View {
         // MARK: - Units
         if sliderComponents.contains(.units) {
           TextColumns {
-            if let formatted = store.formatValue?(value) {
-              Text(formatted)
-            } else {
-              Text(value.displayString)
-            }
+            
+            Text(formatValue(store.value))
+//            if let formatted =  {
+//            if let formatted = store.formatValue?(value) {
+//              Text(formatted)
+//            } else {
+//              Text(store.value.displayString)
+//            }
           }
           .textSelection(.disabled)
-          .onDoubleTap($value, defaultValue: defaultValue)
+          .onDoubleTap($store.value, defaultValue: defaultValue)
 
         }
       }

@@ -17,7 +17,7 @@ final class SliderHandler {
 
   var phase: SliderPhase = .idle
   var didChangeSlider: SliderOutput?
-  var formatValue: FormatValue?
+//  var formatValue: FormatValue?
 
   var thumbHandler: ThumbHandler = .init()
 
