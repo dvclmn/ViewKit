@@ -116,20 +116,7 @@ public class TrackpadTouchesNSView: NSView {
     /// What if I require option to be held?
     //    guard event.modifierFlags.contains(.option) else { return }
 
-    /// Properties that I know produce the assertion failures:
-    /// `event.associatedEventsMask`
-    DebugString {
-      Indented("Event information") {
-        Labeled("Phase", value: event.phase)
-        Labeled("Type", value: event.type)
-        Labeled("Sub-type", value: event.subtype)
-        Labeled("Location", value: event.locationInWindow)
-        Labeled("Precise scrolling deltas?", value: event.hasPreciseScrollingDeltas)
-        Labeled("Momentum phase", value: event.momentumPhase)
-        Labeled("Window", value: event.window)
-
-      }
-    }
+//    debugEventStream(event)
 
     let nsTouches = event.allTouches()
 
@@ -140,6 +127,22 @@ public class TrackpadTouchesNSView: NSView {
     )
 
     didUpdateTouches(processedTouches)
+  }
+  
+  private func debugEventStream(_ event: NSEvent) {
+    /// Properties that I know produce the assertion failures:
+    /// `event.associatedEventsMask`
+    DebugString {
+      Indented("Event information") {
+        //        Labeled("Phase", value: event.phase)
+        //        Labeled("Momentum phase", value: event.momentumPhase)
+        //        Labeled("Type", value: event.type)
+        //        Labeled("Sub-type", value: event.subtype)
+        Labeled("Location", value: event.locationInWindow)
+        //        Labeled("Window", value: event.window)
+        
+      }
+    }
   }
 
   private func processPressureChange(with event: NSEvent) {

@@ -6,8 +6,7 @@
 //
 
 import AppKit
-
-//import CoreTools
+import CoreTools
 //import VectorKit
 
 /// // Example logic for drawing engine
@@ -25,6 +24,7 @@ public struct TouchPoint: Identifiable, Hashable {
   public let position: CGPoint  // View-space or Normalized
   public let velocity: CGVector  // Points per second
   public let magnitude: CGFloat  // Scalar speed
+  public let phase: InteractionPhase
   public let isResting: Bool
 
   public init(
@@ -32,12 +32,14 @@ public struct TouchPoint: Identifiable, Hashable {
     position: CGPoint,
     velocity: CGVector,
     magnitude: CGFloat,
+    phase: InteractionPhase,
     isResting: Bool = false
   ) {
     self.id = id
     self.position = position
     self.velocity = velocity
     self.magnitude = magnitude
+    self.phase = phase
     self.isResting = isResting
   }
 }

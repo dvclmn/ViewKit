@@ -30,7 +30,7 @@ class TrackpadTouchManager {
     _ nsTouches: Set<NSTouch>,
     timestamp: TimeInterval,
     in space: CoordinateSpace
-//  ) -> [TouchPoint] {
+      //  ) -> [TouchPoint] {
   ) -> Set<TouchPoint> {
     var results = Set<TouchPoint>()
 
@@ -72,12 +72,12 @@ class TrackpadTouchManager {
           position: currentPos,
           velocity: velocity,
           magnitude: magnitude,
+          phase: InteractionPhase(from: touch.phase),
           isResting: touch.isResting
         ))
     }
 
     return results
-//    return results.sorted(byKeyPath: \.id)
   }
 
   private func handlePrevState(

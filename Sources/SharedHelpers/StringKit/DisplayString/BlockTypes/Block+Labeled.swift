@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 4/10/2025.
 //
 
-import Foundation
+import AppKit
 
 public struct Labeled {
 
@@ -50,7 +50,7 @@ extension Labeled {
 extension Labeled: DisplayRenderable {
   public func render(using format: DisplayFormat) -> String {
     let valuePart = value?.render(using: format) ?? "nil"
-//    let valuePart = value?.toString ?? "nil"
+    //    let valuePart = value?.toString ?? "nil"
     return key + separator + valuePart
   }
 }
@@ -60,19 +60,22 @@ extension DisplayBlock {
   static func semantic(for value: Any?) -> DisplayBlock {
     switch value {
       case let result as any PropertiesLabeled:
-        return .floatGroup(result)
+        .floatGroup(result)
 
       case let result as any FloatRenderable:
-        return .float(result)
+        .float(result)
 
       case let result as String:
-        return .text(result)
+        .text(result)
+        
+      case let result as NSEvent.Phase:
+        .text(result.description)
 
       case nil:
-        return .text("nil")
+        .text("nil")
 
       default:
-        return .text(String(describing: value))
+        .text(String(describing: value))
     }
   }
 

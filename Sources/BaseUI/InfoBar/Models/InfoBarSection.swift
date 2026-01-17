@@ -13,7 +13,7 @@ public protocol InfoBarSection {
   associatedtype SectionKey: InfoBarSectionKey
 
   /// title and icon provided per-case
-  var title: String { get }
+  var labelText: String { get }
   var icon: IconLiteral { get }
 
   func getContent(
@@ -23,7 +23,7 @@ public protocol InfoBarSection {
 }
 
 extension InfoBarSection {
-  public var label: QuickLabel { .init(title, icon: icon) }
+  public var label: QuickLabel { .init(labelText, icon: icon) }
 }
 
 extension InfoBarSection where Self: RawRepresentable, Self.RawValue == String {

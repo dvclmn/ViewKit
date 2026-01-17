@@ -54,7 +54,7 @@ extension SampleContent {
 
     public var id: String { self.rawValue }
 
-    public var title: String {
+    public var labelText: String {
       switch self {
         case .counts: "Counts"
         case .strokeCountCompleted: "Strokes (Completed)"

@@ -7,6 +7,12 @@
 
 import Foundation
 
+/// Example use:
+/// ```
+/// public enum ExampleSectionKey: InfoBarSectionKey {
+///   public static let title = "Example Section"
+/// }
+/// ```
 public protocol InfoBarSectionKey: Hashable, Sendable {
   static var title: String { get }
 }

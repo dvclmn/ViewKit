@@ -14,7 +14,7 @@ extension SharedKey where Self == FileStorageKey<DrawingData>.Default {
       .fileStorage(
         .applicationSupportDirectory.appending(component: "lilypadDrawing.json")
       ),
-      default: DrawingData(points: [])
+      default: DrawingData(strokes: [])
     ]
   }
 }

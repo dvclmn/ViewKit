@@ -11,6 +11,8 @@ import SwiftUI
 @Observable
 final class AppHandler {
   @ObservationIgnored @Shared(.drawing) var drawing
+  var activeStroke: ActiveStroke?
+  
   var isDrawingEnabled: Bool = false
 }
 extension AppHandler {

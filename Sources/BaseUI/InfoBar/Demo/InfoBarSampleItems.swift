@@ -12,7 +12,6 @@ extension SampleContent {
   public enum ExampleSectionKey: InfoBarSectionKey {
     public static let title = "Example Section"
   }
-
 }
 
 extension SampleContent.ExampleItem: InfoBarSection {
@@ -21,12 +20,12 @@ extension SampleContent.ExampleItem: InfoBarSection {
 
   public var icon: IconLiteral {
     switch self {
-      case .counts: .fromPreset(.binoculars)
-      case .strokeCountCompleted: .fromPreset(.binoculars)
-      case .touchModeActive: .fromPreset(.binoculars)
-      case .pointerLocked: .fromPreset(.binoculars)
-      case .clickedDown: .fromPreset(.binoculars)
-      case .pressure: .fromPreset(.binoculars)
+      case .counts: .preset(.binoculars)
+      case .strokeCountCompleted: .preset(.binoculars)
+      case .touchModeActive: .preset(.binoculars)
+      case .pointerLocked: .preset(.binoculars)
+      case .clickedDown: .preset(.binoculars)
+      case .pressure: .preset(.binoculars)
     }
   }
   
