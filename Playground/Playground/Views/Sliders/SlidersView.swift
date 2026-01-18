@@ -14,7 +14,8 @@ struct SlidersDemoView: View {
   var body: some View {
 
     TextScrubber(
-      $value,
+      "Radius",
+      value: $value,
       range: 1...30,
       step: 5,
       dragSensitivity: 0.2

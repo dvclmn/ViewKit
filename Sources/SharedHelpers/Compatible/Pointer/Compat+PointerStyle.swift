@@ -44,7 +44,10 @@ public enum PointerStyleCompatible: Sendable {
   case rowResize
   
 //#if canImport(AppKit)
-  case frameResize(position: FrameResizePositionCompatible, directions: FrameResizeDirectionCompatible = .all)  //(position: FrameResizePosition, directions: FrameResizeDirection.Set = .all) -> PointerStyle
+  case frameResize(
+    position: FrameResizePositionCompatible,
+    directions: FrameResizeDirectionCompatible = .all
+  )  //(position: FrameResizePosition, directions: FrameResizeDirection.Set = .all) -> PointerStyle
   case image(Image, hotSpot: UnitPoint)  // (_ image: Image, hotSpot: UnitPoint) -> PointerStyle
 //#endif
 }

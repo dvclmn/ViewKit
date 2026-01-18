@@ -13,6 +13,7 @@ public struct TextScrubber: View, ValueFormattable {
   @Environment(\.formatValue) private var formatValue
   @Environment(\.layoutAxis) private var layoutAxis
   @Environment(\.layoutAlignment) private var layoutAlignment
+  @Environment(\.layoutSpacing) private var layoutSpacing
   @Environment(\.modifierKeys) private var modifierKeys
   @Environment(\.maxCharacterColumns) private var maxCharacterColumns
 
@@ -21,10 +22,16 @@ public struct TextScrubber: View, ValueFormattable {
   @State private var initialValue: CGFloat
   @GestureState private var dragDelta: CGFloat = .zero
 
+  @State private var numberFormatter: NumberFormatter = {
+    var nf = NumberFormatter()
+    nf.numberStyle = .decimal
+    return nf
+  }()
+
+  let title: String
   @Binding var value: Double
   let range: ClosedRange<Double>?
   let step: Double?
-  //  let digitCount: Int
   let dragSensitivity: CGFloat
   let onDoubleTap: () -> Void
 
@@ -32,28 +39,49 @@ public struct TextScrubber: View, ValueFormattable {
   @ScaledMetric(wrappedValue: 6, relativeTo: .callout) var digitWidth: CGFloat
 
   public init(
-    _ value: Binding<Double>,
+    _ title: String,
+    value: Binding<Double>,
     range: ClosedRange<Double>? = nil,
     step: Double? = nil,
-    //    digitCount: Int = 3,
-    dragSensitivity: CGFloat,
+    dragSensitivity: CGFloat = 0.2,
     onDoubleTap: @escaping () -> Void = {}
   ) {
+    self.title = title
     self._value = value
     self._initialValue = State(initialValue: CGFloat(value.wrappedValue))
     self.range = range
     self.step = step
-    //    self.digitCount = digitCount
     self.dragSensitivity = dragSensitivity
     self.onDoubleTap = onDoubleTap
   }
 
   public var body: some View {
-    HStack(spacing: 0) {
-      TextColumns {
-        Text(labelString)
-          .monospacedDigit()
+    HStack(spacing: layoutSpacing) {
+
+      LabeledContent(title) {
+        ValueEditor()
+        if let step {
+          Stepper(
+            title,
+            value: $value.clampedIfNeeded(to: range),
+            step: step
+          ) { editingDidChange in
+
+          }
+          /// Don't need extra label, this Stepper is in a broader labeled View
+          .labelsHidden()
+        }
       }
+
+      //      TextColumns {
+      //        Text(labelString)
+      //          .foregroundStyle(.blue)
+      //          .monospacedDigit()
+      //
+      //      }
+      //      .overlay {
+      //        TextField(title, value: $value, formatter: numberFormatter)
+      //      }
       //      Text(labelString)
       //        .fixedSize(horizontal: true, vertical: false)
       //        .monospacedDigit()
@@ -66,8 +94,9 @@ public struct TextScrubber: View, ValueFormattable {
     .sensoryFeedback(.alignment, trigger: value) {
       oldValue,
       newValue in
-      /// If no step provided, no haptics will occur
-      guard let step else { return false }
+      /// If no step provided, no haptics will occur.
+      /// Only allow haptic feedback when actively dragging
+      guard let step, isDragging else { return false }
       return HapticPreset.perStep(step).shouldFire(oldValue, newValue)
     }
     //    .frame(
@@ -75,12 +104,12 @@ public struct TextScrubber: View, ValueFormattable {
     //      height: digitWidth * 1.8,
     //      alignment: .trailing
     //    )
-    .quickBackground(padding: 8)
+    //    .quickBackground(padding: 8)
     .backgroundTint(isDragging ? Color.accentColor.opacity(0.1) : nil)
     .animation(Styles.animationQuickNSmooth, value: isDragging)
 
     .environment(\.strokeColour, AnyShapeStyle(Color.white.opacity(isHovered ? 0.11 : 0)))
-    .setPointerStyle(.frameResize(position: .leading, directions: .all))
+
     .onDoubleTap { onDoubleTap() }
     .gesture(digitDragGesture(for: layoutAxis ?? .horizontal))
     .onHover { isHovered = $0 }
@@ -97,6 +126,60 @@ public struct TextScrubber: View, ValueFormattable {
 
 extension TextScrubber {
 
+  @ViewBuilder
+  private func ValueEditor() -> some View {
+    if isHoldingOption {
+      Text(value.toString)
+        //      Text(formattedString)
+        .setPointerStyle(.frameResize(position: .leading, directions: .all))
+    } else {
+      TextField(title, value: $value, formatter: numberFormatter)
+        .onKeyPress(
+          keys: [.upArrow, .downArrow],
+          phases: .all
+        ) { press in
+          if press.key == .upArrow {
+            return updateValue(.up)
+
+          } else if press.key == .downArrow {
+            return updateValue(.down)
+
+          } else {
+            return .ignored
+          }
+
+        }
+    }
+
+  }
+
+  private var isHoldingOption: Bool { modifierKeys == .option }
+
+  private func updateValue(
+    _ direction: Direction,
+    //    modifiers: EventModifiers
+  ) -> KeyPress.Result {
+    let stepSize: CGFloat = {
+      if modifierKeys == .command {
+        100
+      } else if modifierKeys == .shift {
+        10
+      } else {
+        1
+      }
+    }()
+    switch direction {
+      case .up:
+        value += stepSize
+      case .down:
+        value -= stepSize
+      case .left, .right:
+        print("\(direction) not supported for this action.")
+        return .ignored
+    }
+    return .handled
+  }
+
   private var isDragging: Bool { dragDelta != .zero }
 
   private var sensitivity: CGFloat {
@@ -104,7 +187,7 @@ extension TextScrubber {
     let isModeChanged = modifierKeys == .option && !isDragging
     return isModeChanged ? reducedSensitivity : dragSensitivity
   }
-  private var labelString: String { formatValue(value) }
+  private var formattedString: String { formatValue(value) }
 
   /// Stable baseline
   /// When drag begins → baseline is fixed
@@ -118,7 +201,6 @@ extension TextScrubber {
             along: axis.toGridAxis,
             mapping: .default
           )
-
         dragDelta = translation * sensitivity
       }
       .onChanged { _ in
@@ -136,5 +218,28 @@ extension TextScrubber {
     } ?? proposed
   }
 
+}
+#endif
+
+#if DEBUG
+#Preview(traits: .size(.normal)) {
+  @Previewable @State var value: Double = 5.0
+  VStack {
+    TextScrubber(
+      "My Title",
+      value: $value,
+      range: 1...20,
+      step: 5
+    )
+
+    TextScrubber(
+      "Another one",
+      value: $value,
+      range: 1...20,
+      step: 10
+    )
+  }
+  .padding(80)
+  .background(.black.secondary)
 }
 #endif
