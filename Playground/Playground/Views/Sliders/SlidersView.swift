@@ -17,7 +17,6 @@ struct SlidersDemoView: View {
       "Radius",
       value: $value,
       range: 1...30,
-      step: 5,
       dragSensitivity: 0.2
     )
     .formatValue { $0.displayString(places: 0) }

@@ -24,27 +24,21 @@ public struct TextScrubber: View, ValueFormattable {
   @State private var initialValue: CGFloat
   @GestureState private var dragDelta: CGFloat = .zero
 
-  @State private var numberFormatter: NumberFormatter = {
-    var nf = NumberFormatter()
-    nf.numberStyle = .decimal
-    return nf
-  }()
-
   let title: String
   @Binding var value: Double
   let range: ClosedRange<Double>?
-  let step: Double?
+
+  /// Have turned off step, at least for now, and focusing on the
+  /// increments of 1, 10 and 100.
+  //  let step: Double?
   let dragSensitivity: CGFloat
   let onDoubleTap: () -> Void
-
-  /// The `6` represents a single character width, at a `callout` size
-  @ScaledMetric(wrappedValue: 6, relativeTo: .callout) var digitWidth: CGFloat
 
   public init(
     _ title: String,
     value: Binding<Double>,
     range: ClosedRange<Double>? = nil,
-    step: Double? = nil,
+    //    step: Double? = nil,
     dragSensitivity: CGFloat = 0.2,
     onDoubleTap: @escaping () -> Void = {}
   ) {
@@ -52,7 +46,7 @@ public struct TextScrubber: View, ValueFormattable {
     self._value = value
     self._initialValue = State(initialValue: CGFloat(value.wrappedValue))
     self.range = range
-    self.step = step
+    //    self.step = step
     self.dragSensitivity = dragSensitivity
     self.onDoubleTap = onDoubleTap
   }
@@ -64,11 +58,12 @@ public struct TextScrubber: View, ValueFormattable {
         ValueEditor()
           .monospacedDigit()
 
-        if let step, isStepperShowing {
+        if isStepperShowing {
+          //        if let step, isStepperShowing {
           Stepper(
             title,
             value: $value.clampedIfNeeded(to: range),
-            step: step
+            step: stepSize,
           ) { editingDidChange in
 
           }
@@ -76,41 +71,15 @@ public struct TextScrubber: View, ValueFormattable {
           .labelsHidden()
         }
       }
-      
-      
-
-      //      TextColumns {
-      //        Text(labelString)
-      //          .foregroundStyle(.blue)
-      //          .monospacedDigit()
-      //
-      //      }
-      //      .overlay {
-      //        TextField(title, value: $value, formatter: numberFormatter)
-      //      }
-      //      Text(labelString)
-      //        .fixedSize(horizontal: true, vertical: false)
-      //        .monospacedDigit()
-      //        .frame(
-      //          width: digitWidth * CGFloat(digitCount),
-      //          height: digitWidth * 1.8,
-      //          alignment: .trailing
-      //        )
     }
     .sensoryFeedback(.alignment, trigger: value) {
       oldValue,
       newValue in
       /// If no step provided, no haptics will occur.
       /// Only allow haptic feedback when actively dragging
-      guard let step, isDragging else { return false }
-      return HapticPreset.perStep(step).shouldFire(oldValue, newValue)
+      guard isDragging else { return false }
+      return HapticPreset.perStep(stepSize).shouldFire(oldValue, newValue)
     }
-    //    .frame(
-    //      width: totalWidth,
-    //      height: digitWidth * 1.8,
-    //      alignment: .trailing
-    //    )
-    //    .quickBackground(padding: 8)
     .backgroundTint(isDragging ? Color.accentColor.opacity(0.1) : nil)
     .animation(Styles.animationQuickNSmooth, value: isDragging)
 
@@ -131,6 +100,10 @@ public struct TextScrubber: View, ValueFormattable {
 }
 
 extension TextScrubber {
+  
+  private var valueBinding: Binding<Double> {
+    $value.clampedIfNeeded(to: range)
+  }
 
   private var places: Int { 2 }
   //  private var places: NumberFormatStyleConfiguration.Precision { .fractionLength(0...2) }
@@ -172,8 +145,8 @@ extension TextScrubber {
     isDebugMode || modifierKeys == .option
   }
 
-  private func updateValue(_ direction: Direction) -> KeyPress.Result {
-    let stepSize: CGFloat = {
+  private var stepSize: CGFloat {
+    return {
       if modifierKeys == .command {
         100
       } else if modifierKeys == .shift {
@@ -182,6 +155,10 @@ extension TextScrubber {
         1
       }
     }()
+  }
+
+  private func updateValue(_ direction: Direction) -> KeyPress.Result {
+
     switch direction {
       case .up:
         value += stepSize
@@ -201,6 +178,7 @@ extension TextScrubber {
     let isModeChanged = modifierKeys == .option && !isDragging
     return isModeChanged ? reducedSensitivity : dragSensitivity
   }
+  
   private var formattedString: String { formatValue(value) }
 
   /// Stable baseline
@@ -243,17 +221,17 @@ extension TextScrubber {
       "My Title",
       value: $value,
       range: 1...20,
-      step: 5
+      //      step: 5
     )
 
     TextScrubber(
       "My Title",
       value: $value,
       range: 1...20,
-      step: 5
+      //      step: 5
     )
     .environment(\.isDebugMode, true)
-    
+
     TextColumns(6, alignment: .center) {
       Text("123456")
         .monospaced()
