@@ -11,6 +11,8 @@ public struct TextColumns<Content: View>: View {
   @Environment(\.maxCharacterColumns) private var maxCharacterColumns
   @Environment(\.isDebugMode) private var isDebugMode
 
+  @State private var characterSize: CGSize?
+  
   let columnCount: Int?
   let alignment: Alignment
   let content: Content
@@ -33,9 +35,12 @@ public struct TextColumns<Content: View>: View {
     Text(characters)
       .monospaced()
       .hidden()
-      
+//      .frame(minWidth: screenWidth)
       .gridGuide(opacity: 0.3, isEnabled: isDebugMode)
-      .setCharacterUnitSize(mode: .debounce(0.2))
+      .setGridDimensions(columnWidth, height: 1)
+      .characterSize(mode: .debounce(0.2), shouldSetEnv: true) { size in
+        self.characterSize = size
+      }
 
       /// Displays content within character-count-based confines
       .overlay(alignment: alignment) {
@@ -47,8 +52,10 @@ public struct TextColumns<Content: View>: View {
   }
 }
 extension TextColumns {
+  
+  private var columnWidth: Int { columnCount ?? maxCharacterColumns }
+  
   private var characters: String {
-    let count = columnCount ?? maxCharacterColumns
-    return String(repeating: "0", count: min(count, maxCharacterColumns))
+    return String(repeating: "0", count: min(columnWidth, maxCharacterColumns))
   }
 }

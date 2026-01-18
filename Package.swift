@@ -137,6 +137,7 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.vectorKit),
+        .module(.graphicsKit),
       ]
     ),
 

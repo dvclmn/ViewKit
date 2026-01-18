@@ -62,6 +62,7 @@ extension EnvironmentValues {
   ///
   /// Read more: ``UnitSize``
   @Entry public var unitSize: CGSize? = nil
+  @Entry public var gridDimensions: GridDimensions? = nil
 
   /// App-wide / project-wide mapping convention, for which
   /// property on a type should be considered the identity vs transposed.
@@ -91,5 +92,11 @@ public protocol ValueFormattable {}
 extension View where Self: ValueFormattable {
   public func formatValue(_ format: @escaping (Double) -> String) -> some View {
     self.environment(\.formatValue, format)
+  }
+}
+
+extension View {
+  public func setGridDimensions(_ width: Int, height: Int) -> some View {
+    self.environment(\.gridDimensions, GridDimensions(width, height))
   }
 }

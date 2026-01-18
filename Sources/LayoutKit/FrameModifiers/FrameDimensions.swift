@@ -5,7 +5,28 @@
 //  Created by Dave Coleman on 30/7/2025.
 //
 
+import BasePrimitives
 import SwiftUI
+
+public struct FrameGridDimensions {
+  public var width: Int?
+  public var height: Int?
+  public var alignment: Alignment
+
+  public init(width: Int? = nil, height: Int? = nil, alignment: Alignment = .center) {
+    self.width = width
+    self.height = height
+    self.alignment = alignment
+  }
+
+  public init(from gridDimensions: GridDimensions?, alignment: Alignment = .center) {
+    self.init(
+      width: gridDimensions?.width,
+      height: gridDimensions?.height,
+      alignment: alignment
+    )
+  }
+}
 
 /// This is essentially equivalent to `CGSize`, but with optional
 /// values, to pair nicely with SwiftUI's `.frame()` modifier.
@@ -69,7 +90,12 @@ public struct FrameDimensions: Sendable {
 
 extension FrameDimensions: ExpressibleByNilLiteral {
   public init(nilLiteral: ()) {
-    self.init()
+    self.init(width: nil, height: nil)
+  }
+}
+extension FrameGridDimensions: ExpressibleByNilLiteral {
+  public init(nilLiteral: ()) {
+    self.init(width: nil, height: nil)
   }
 }
 
@@ -79,6 +105,21 @@ extension FrameDimensions {
     return CGSize(width: width, height: height)
   }
 }
+
+extension FrameGridDimensions {
+  public func toFrameDimensions(
+    with unitSize: CGSize?
+  ) -> FrameDimensions {
+    guard let unitSize, let width, let height else { return nil }
+    let w = width.toScreenLength(using: unitSize.width)
+    let h = height.toScreenLength(using: unitSize.height)
+    return FrameDimensions(width: w, height: h)
+    //    guard let width, let height else { return nil }
+    //    return CGSize(width: width, height: height)
+  }
+}
+
+
 
 //extension FrameDimensions: CustomStringConvertible {
 //  public var description: String {

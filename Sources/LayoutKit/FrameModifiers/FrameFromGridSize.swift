@@ -25,8 +25,32 @@ public struct FrameFromUnitSize: ViewModifier {
   }
 }
 
-
 extension View {
+
+  public func frameFromGridDimensions(
+    gridDimensions: FrameGridDimensions
+  ) -> some View {
+    self.modifier(
+      FrameFromUnitSize(
+        width: gridDimensions.width,
+        height: gridDimensions.height,
+        alignment: gridDimensions.alignment
+      )
+    )
+  }
+
+  public func frameFromGridDimensions(
+    gridDimensions: GridDimensions,
+    alignment: Alignment = .center
+  ) -> some View {
+    self.modifier(
+      FrameFromUnitSize(
+        width: gridDimensions.width,
+        height: gridDimensions.height,
+        alignment: alignment
+      )
+    )
+  }
 
   public func frameFromUnitSize(
     width: Int?,
@@ -42,19 +66,3 @@ extension View {
     )
   }
 }
-
-//extension View {
-//  public func frameFromGridDimensions(
-//    _ dimensions: GridDimensions,
-//    cellSize: CGSize,
-//    alignment: Alignment = .center
-//  ) -> some View {
-//    self.modifier(
-//      FrameFromSizeModifier(
-//        width: dimensions.width(with: cellSize),
-//        height: dimensions.height(with: cellSize),
-//        alignment: alignment
-//      )
-//    )
-//  }
-//}

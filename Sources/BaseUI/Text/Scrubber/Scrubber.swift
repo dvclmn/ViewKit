@@ -255,7 +255,8 @@ extension TextScrubber {
     .environment(\.isDebugMode, true)
     
     TextColumns(6, alignment: .center) {
-      Text("Some text")
+      Text("123456")
+        .monospaced()
     }
     .environment(\.isDebugMode, true)
   }

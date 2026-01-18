@@ -81,6 +81,21 @@ extension View {
       )
     )
   }
+  
+  public func frameFromDimensions(
+    _ dimensions: FrameDimensions
+  ) -> some View {
+    self.modifier(
+      FrameFromSizeModifier(
+        dimensions: dimensions
+        //        axis: nil,
+        //        size: size,
+        //        width: size?.width,
+        //        height: size?.height,
+        //        alignment: alignment
+      )
+    )
+  }
 //  public func frameFromSize(
 //    _ dimensions: FrameDimensions?,
 //    alignment: Alignment = .center
