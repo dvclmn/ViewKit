@@ -85,6 +85,17 @@ extension EnvironmentValues {
   @Entry public var isScrollAtStart: Bool = true
 
   @Entry public var formatValue: (Double) -> String = { $0.displayString }
+  
+  /// E.g. 3 places: `10.056` or one place: `10.1`
+  /// See `Foundation/NumberFormatStyleConfiguration/Precision`
+  /// This imposes a fixed number (no min or max) of places.
+  @Entry public var fractionLength: Int? = nil
+  
+  /// E.g. 3 places: `023.6` or two places: `23.6`
+  /// As implied in the name, this won't impose an upper limit,
+  /// only ensure there are at least 'x' integers
+  @Entry public var minIntegerLength: Int? = nil
+  
 }
 
 public protocol ValueFormattable {}

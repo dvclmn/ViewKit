@@ -9,25 +9,24 @@ import SwiftUI
 
 #if canImport(AppKit)
 
+extension KBShortcut {
 
-public extension KBShortcut {
+  public enum Modifier: ShortcutKey, CaseIterable, Identifiable, Sendable {
 
-  enum Modifier: ShortcutKey, CaseIterable, Identifiable, Sendable {
-    
     public static let allCases: [KBShortcut.Modifier] = [.shift, .option, .command, .control, .capsLock]
-    
+
     case shift
     case option
     case command
     case control
     case capsLock
-    
+
     public var id: String { name }
-    
+
     public var name: String {
       self.symbolName
     }
-    
+
     public var symbolName: String {
       switch self {
         case .shift: "shift"
@@ -37,7 +36,7 @@ public extension KBShortcut {
         case .capsLock: "capslock"
       }
     }
-    
+
     public var symbolLiteral: Character {
       switch self {
         case .shift: "􀆝"
@@ -47,11 +46,11 @@ public extension KBShortcut {
         case .capsLock: "􀆡"
       }
     }
-    
+
     public var type: KBShortcut.KeyType {
       .modifier
     }
-    
+
     public var appKit: NSEvent.ModifierFlags {
       switch self {
         case .shift: .shift
@@ -61,7 +60,7 @@ public extension KBShortcut {
         case .capsLock: .capsLock
       }
     }
-    
+
     public var swiftUI: EventModifiers {
       switch self {
         case .shift: .shift
@@ -71,7 +70,7 @@ public extension KBShortcut {
         case .capsLock: .capsLock
       }
     }
-    
+
     static func from(_ modifierFlags: NSEvent.ModifierFlags) -> [Modifier] {
       var modifiers: [Modifier] = []
       if modifierFlags.contains(.command) { modifiers.append(.command) }
@@ -81,7 +80,7 @@ public extension KBShortcut {
       if modifierFlags.contains(.capsLock) { modifiers.append(.capsLock) }
       return modifiers
     }
-    
+
   }
 }
 #endif

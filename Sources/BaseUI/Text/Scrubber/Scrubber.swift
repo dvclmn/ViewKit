@@ -12,16 +12,17 @@ import SwiftUI
 public struct TextScrubber: View, ValueFormattable {
   @Environment(\.formatValue) private var formatValue
   @Environment(\.layoutAxis) private var layoutAxis
-  @Environment(\.layoutAlignment) private var layoutAlignment
   @Environment(\.layoutSpacing) private var layoutSpacing
   @Environment(\.modifierKeys) private var modifierKeys
   @Environment(\.maxCharacterColumns) private var maxCharacterColumns
   @Environment(\.isDebugMode) private var isDebugMode
+  @Environment(\.fractionLength) private var fractionLength
   @Environment(\.isStepperShowing) private var isStepperShowing
 
-  @State private var isHovered: Bool = false
+  //  @State private var isHovered: Bool = false
 
-  @State private var initialValue: CGFloat
+  @State private var store: ScrubberHandler
+  //  @State private var initialValue: CGFloat
   @GestureState private var dragDelta: CGFloat = .zero
 
   let title: String
@@ -44,7 +45,8 @@ public struct TextScrubber: View, ValueFormattable {
   ) {
     self.title = title
     self._value = value
-    self._initialValue = State(initialValue: CGFloat(value.wrappedValue))
+    self._store = State(initialValue: ScrubberHandler(initialValue: value.wrappedValue))
+    //    self._initialValue = State(initialValue: CGFloat(value.wrappedValue))
     self.range = range
     //    self.step = step
     self.dragSensitivity = dragSensitivity
@@ -56,17 +58,13 @@ public struct TextScrubber: View, ValueFormattable {
 
       LabeledContent(title) {
         ValueEditor()
-          .monospacedDigit()
 
         if isStepperShowing {
-          //        if let step, isStepperShowing {
           Stepper(
             title,
-            value: $value.clampedIfNeeded(to: range),
+            value: valueClamped,
             step: stepSize,
-          ) { editingDidChange in
-
-          }
+          )
           /// Don't need extra label, this Stepper is in a broader labeled View
           .labelsHidden()
         }
@@ -83,34 +81,37 @@ public struct TextScrubber: View, ValueFormattable {
     .backgroundTint(isDragging ? Color.accentColor.opacity(0.1) : nil)
     .animation(Styles.animationQuickNSmooth, value: isDragging)
 
-    .environment(\.strokeColour, AnyShapeStyle(Color.white.opacity(isHovered ? 0.11 : 0)))
+    .environment(\.strokeColour, AnyShapeStyle(Color.white.opacity(store.isHovered ? 0.11 : 0)))
 
     .onDoubleTap { onDoubleTap() }
     .gesture(digitDragGesture(for: layoutAxis ?? .horizontal))
-    .onHover { isHovered = $0 }
+    .onHover { store.isHovered = $0 }
 
     /// Handle case where `value` changes externally
     .task(id: value) {
+      /// Keep store in sync
+      store.value = value
+
+      /// Maintain fresh initial state, if changed
       if dragDelta == .zero {
-        initialValue = value
+        updateIfChanged(&store.initialValue, to: value)
       }
     }
-
+    .task(id: range) { store.range = range }
   }
 }
 
 extension TextScrubber {
-  
-  private var valueBinding: Binding<Double> {
+  private var formattedString: String { formatValue(value) }
+
+  private var valueClamped: Binding<Double> {
     $value.clampedIfNeeded(to: range)
   }
-
-  private var places: Int { 2 }
   //  private var places: NumberFormatStyleConfiguration.Precision { .fractionLength(0...2) }
 
   @ViewBuilder
   private func ValueEditor() -> some View {
-    Text(value.displayString(places: places))
+    Text(valueClamped.wrappedValue.displayString(places: fractionLength ?? 0))
       .allowsHitTesting(isHoldingOption)
       .opacity(isHoldingOption ? 1 : 0)
       .setPointerStyle(.frameResize(position: .leading, directions: .all))
@@ -118,27 +119,10 @@ extension TextScrubber {
 
       .overlay {
         if !isHoldingOption {
-          TextField(title, value: $value, format: .number.precision(.fractionLength(places)))
-            .labelsHidden()
-            //      TextField(title, value: $value, formatter: numberFormatter)
-            .onKeyPress(
-              keys: [.upArrow, .downArrow],
-              phases: .all
-            ) { press in
-              if press.key == .upArrow {
-                return updateValue(.up)
-
-              } else if press.key == .downArrow {
-                return updateValue(.down)
-
-              } else {
-                return .ignored
-              }
-
-            }
+          IncrementTextField(title: title, value: valueClamped)
         }
       }
-
+      .monospacedDigit()
   }
 
   private var isHoldingOption: Bool {
@@ -157,20 +141,6 @@ extension TextScrubber {
     }()
   }
 
-  private func updateValue(_ direction: Direction) -> KeyPress.Result {
-
-    switch direction {
-      case .up:
-        value += stepSize
-      case .down:
-        value -= stepSize
-      case .left, .right:
-        print("\(direction) not supported for this action.")
-        return .ignored
-    }
-    return .handled
-  }
-
   private var isDragging: Bool { dragDelta != .zero }
 
   private var sensitivity: CGFloat {
@@ -178,8 +148,6 @@ extension TextScrubber {
     let isModeChanged = modifierKeys == .option && !isDragging
     return isModeChanged ? reducedSensitivity : dragSensitivity
   }
-  
-  private var formattedString: String { formatValue(value) }
 
   /// Stable baseline
   /// When drag begins → baseline is fixed
