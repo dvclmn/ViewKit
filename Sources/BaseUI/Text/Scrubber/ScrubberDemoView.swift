@@ -11,14 +11,11 @@ struct ScrubberDemoView: View {
   @State private var value: Double = 2.0
   var body: some View {
 
-    Scrubber(
+    TextScrubber(
       $value,
       range: 1...10,
       digitCount: 10,
       dragSensitivity: 0.4,
-      formatted: { val in
-        "Formatted: \(val.displayString(places: 0))"
-      },
       onDoubleTap: {
         print("Double Tapped")
       }

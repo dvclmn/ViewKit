@@ -5,16 +5,17 @@
 //  Created by Dave Coleman on 10/11/2024.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
 public typealias SliderOutput = (SliderPhase) -> Void
 
-public struct QuickSlider: View, EnvironmentFormattable {
+public struct QuickSlider: View, ValueFormattable, SliderStylable {
   @State private var store: SliderHandler = .init()
 
   @Binding var value: Double
-//  let type: SliderStyle
+  let label: QuickLabel
+  let range: ClosedRange<Double>
   let didChangeSlider: SliderOutput
 
   public var body: some View {
@@ -25,9 +26,9 @@ public struct QuickSlider: View, EnvironmentFormattable {
           store.didChangeSlider = didChangeSlider
         }
       }
+      .task(id: label) { store.label = label }
+      .task(id: range) { store.range = range }
       .bindModel($store.value, to: $value)
-
-//      .environment(\.sliderRange, store.range.toDoubleRange)
       .environment(\.sliderHandler, store)
   }
 }
@@ -38,7 +39,6 @@ extension QuickSlider {
     _ title: String,
     value: Binding<Double>,
     range: ClosedRange<Double>,
-//    type: SliderStyle = .native,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
     self.init(
@@ -53,20 +53,11 @@ extension QuickSlider {
     label: QuickLabel,
     value: Binding<Double>,
     range: ClosedRange<Double>,
-//    type: SliderStyle = .native,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
-
-    /// Get handler started with the slider `range`
-    //    self._store = State(
-    //      initialValue: SliderHandler()
-    ////        range: range.toCGFloatRange,
-    ////        label: label,
-    ////)
-    //    )
+    self.label = label
     self._value = value
-//    self.type = type
+    self.range = range
     self.didChangeSlider = didChangeSlider
-
   }
 }

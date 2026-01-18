@@ -46,7 +46,7 @@ extension Component_Slider {
     @Bindable var store = store
     Slider(
       value: $store.value,
-      in: store.range.toDoubleRange,
+      in: store.range,
     ) {
       LabelComponent()
 

@@ -8,7 +8,7 @@
 import BasePrimitives
 import SwiftUI
 
-public struct LabeledSlider<Content: View>: View, EnvironmentFormattable {
+public struct LabeledSlider<Content: View>: View, SliderStylable {
 
   @Binding var value: Double
   let range: ClosedRange<Double>
@@ -18,6 +18,7 @@ public struct LabeledSlider<Content: View>: View, EnvironmentFormattable {
   let additionalContent: Content
   let didChangeSlider: SliderOutput
   /// Doesn't yet support passing through `didChangeSlider`
+  
   public init(
     _ label: String,
     value: Binding<Double>,
@@ -27,13 +28,6 @@ public struct LabeledSlider<Content: View>: View, EnvironmentFormattable {
     @ViewBuilder additionalContent: @escaping () -> Content = { EmptyView() },
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
-    /// Get handler started with the slider `range`
-    //    self._store = State(
-    //      initialValue: SliderHandler(
-    //        range: range.toCGFloatRange,
-    //        label: QuickLabel(label),
-    //      )
-    //    )
     self._value = value
     self.range = range
     self.label = QuickLabel(label)

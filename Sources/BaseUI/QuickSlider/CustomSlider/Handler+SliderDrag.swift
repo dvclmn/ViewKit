@@ -13,7 +13,7 @@ final class SliderHandler {
   //struct SliderHandler {
   var value: Double = 1.0
   var label: QuickLabel = .init("")
-  var range: ClosedRange<CGFloat> = 0...1
+  var range: ClosedRange<Double> = 0...1
 
   var phase: SliderPhase = .idle
   var didChangeSlider: SliderOutput?
@@ -31,16 +31,19 @@ final class SliderHandler {
 
 extension SliderHandler {
   
-  func setUp(
-    range: ClosedRange<CGFloat>,
-    label: QuickLabel
-  ) {
-    self.range = range
-    self.label = label
-
-    let thumbHandler = ThumbHandler(sliderRange: range)
-    self.thumbHandler = thumbHandler
-  }
+//  func updateRange() {
+//    self.range = range
+//  }
+//  func setUp(
+//    range: ClosedRange<Double>,
+//    label: QuickLabel
+//  ) {
+//    self.range = range
+//    self.label = label
+//
+//    let thumbHandler = ThumbHandler(sliderRange: range)
+//    self.thumbHandler = thumbHandler
+//  }
 
 //  func triggerDidChangeSlider(_ phase: SliderPhase) {
 //    didChangeSlider?(phase)
@@ -77,7 +80,7 @@ extension SliderHandler {
 
     let percentage = clamped / trackSize.width
 
-    let newValue = percentage.denormalised(in: range)
+    let newValue = percentage.denormalised(in: range.toCGFloatRange)
     //    let newValue = range.lowerBound + (percentage * (range.upperBound - range.lowerBound))
 
     return newValue
@@ -89,7 +92,7 @@ extension SliderHandler {
     
     /// Normalised here is essentially: “How far along the slider should the
     /// thumb be, in proportion to its full track length?”
-    let normalised: CGFloat = value.normalised(in: range.toDoubleRange)
+    let normalised: CGFloat = value.normalised(in: range)
     return normalised * trackSize.width
   }
 

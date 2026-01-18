@@ -48,7 +48,7 @@ extension EnvironmentValues {
 
   /// Perhaps the below two can be merged.
   @Entry public var explicitColour: AnyShapeStyle? = nil
-//  @Entry public var explicitColour: (any ShapeStyle)? = nil
+  //  @Entry public var explicitColour: (any ShapeStyle)? = nil
   @Entry public var emphasisColour: AnyShapeStyle? = nil
 
   @Entry public var buttonRole: ButtonRole? = nil
@@ -82,4 +82,14 @@ extension EnvironmentValues {
   /// I guess like in a graphics app, so maybe this is a bit domain-specific
   @Entry public var viewportSize: CGSize? = nil
   @Entry public var isScrollAtStart: Bool = true
+
+  @Entry public var formatValue: (Double) -> String = { $0.displayString }
+}
+
+public protocol ValueFormattable {}
+
+extension View where Self: ValueFormattable {
+  public func formatValue(_ format: @escaping (Double) -> String) -> some View {
+    self.environment(\.formatValue, format)
+  }
 }

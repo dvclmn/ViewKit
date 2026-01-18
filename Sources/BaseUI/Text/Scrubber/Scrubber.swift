@@ -8,8 +8,9 @@
 import SwiftUI
 
 #if canImport(AppKit)
-public struct Scrubber: View {
+public struct TextScrubber: View {
 //  @Environment(\.layoutConfig) private var layoutConfig
+  @Environment(\.formatValue) private var formatValue
   @Environment(\.layoutAxis) private var layoutAxis
   @Environment(\.layoutAlignment) private var layoutAlignment
   
@@ -22,7 +23,7 @@ public struct Scrubber: View {
   let range: ClosedRange<Double>?
   let digitCount: Int
   let dragSensitivity: CGFloat
-  let formatted: (Double) -> String
+//  let formatted: (Double) -> String
   let onDoubleTap: () -> Void
 
   /// The `6` represents a single character width, at a `callout` size
@@ -33,14 +34,14 @@ public struct Scrubber: View {
     range: ClosedRange<Double>? = nil,
     digitCount: Int = 3,
     dragSensitivity: CGFloat,
-    formatted: @escaping (Double) -> String,
+//    formatted: @escaping (Double) -> String,
     onDoubleTap: @escaping () -> Void
   ) {
     self._value = value
     self.range = range
     self.digitCount = digitCount
     self.dragSensitivity = dragSensitivity
-    self.formatted = formatted
+//    self.formatted = formatted
     self.onDoubleTap = onDoubleTap
   }
 
@@ -77,12 +78,13 @@ public struct Scrubber: View {
       initialValue = value
     }
     .task(id: value) {
-      self.labelString = formatted(value)
+      self.labelString = formatValue(value)
+//      self.labelString = formatted(value)
     }
   }
 }
 
-extension Scrubber {
+extension TextScrubber {
 
   var totalWidth: CGFloat {
     /// The digits, plus room for one character for

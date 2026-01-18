@@ -46,6 +46,7 @@ struct SliderCustom<Label: View>: View {
               //              value: value,
               position: store.thumbHandler.thumbPosition(
                 forSliderValue: store.value,
+                range: store.range.toCGFloatRange,
                 trackSize: store.trackSize
               ),
               shape: .circle,

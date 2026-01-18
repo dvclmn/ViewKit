@@ -8,8 +8,6 @@
 import BasePrimitives
 import SwiftUI
 
-public typealias FormatValue = (Double) -> String
-
 /// These are `QuickSlider` specific, and should replace what was
 /// previously handled by `@StyleConfig`.
 ///
@@ -22,17 +20,14 @@ extension EnvironmentValues {
   @Entry public var sliderDefaultValue: Double? = nil
   @Entry public var sliderStyle: SliderStyle = .native
 
-  @Entry public var formatValue: FormatValue = { "\($0.displayString)" }
+  
   @Entry var sliderHandler: SliderHandler = .init()
 }
 
-/// This is in use by e.g.
-public protocol EnvironmentFormattable {}
+/// This is in use by e.g. `QuickSlider`, `LabeledSlider`
+public protocol SliderStylable {}
 
-extension View where Self: EnvironmentFormattable {
-  public func formatSliderValue(_ format: @escaping FormatValue) -> some View {
-    self.environment(\.formatValue, format)
-  }
+extension View where Self: SliderStylable {
   public func sliderStyle(_ style:SliderStyle) -> some View {
     self.environment(\.sliderStyle, style)
   }

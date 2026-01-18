@@ -34,7 +34,7 @@ public struct SliderCore: View {
               newValue in
 
               HapticPreset.boundaryReached.hapticPreset(
-                for: store.range.toDoubleRange,
+                for: store.range,
                 with: sliderDefaultValue,
                 oldValue,
                 newValue
