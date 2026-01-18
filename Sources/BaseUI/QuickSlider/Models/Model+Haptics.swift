@@ -20,9 +20,11 @@ public typealias HapticCondition = @Sendable (Double, Double) -> Bool
 
 public enum HapticPreset: Sendable {
   case none
-  case boundaryReached
-  case boundaryAndCentre
-  case boundaryAndDefault
+  case boundary(HapticBoundary)
+//  case boundaryReached
+//  case boundaryAndCentre
+//  case boundaryAndDefault
+  case perStep(Int)
   case custom(HapticCondition)
   
   func hapticPreset(
@@ -37,7 +39,8 @@ public enum HapticPreset: Sendable {
       case .none:
         return false
         
-      case .boundaryReached:
+      case .boundary(let settings):
+//      case .boundaryReached:
         return newValue == range.lowerBound || newValue == range.upperBound
         
       case .boundaryAndCentre:
@@ -49,10 +52,40 @@ public enum HapticPreset: Sendable {
         || newValue == range.upperBound
         || (defaultValue.map { abs(newValue - $0) <= wiggleRoom } ?? false)
         
+      case .perStep(let step):
+        return
+        
       case .custom(let condition):
         return condition(oldValue, newValue)
         
     }
   }
   
+}
+
+public struct HapticBoundary: Sendable {
+  let range: ClosedRange<CGFloat>
+  let markers: HapticMarkers
+  
+  public init(_ range: ClosedRange<CGFloat>, markers: HapticMarkers) {
+    self.range = range
+    self.markers = markers
+  }
+}
+extension HapticBoundary {
+  public static func boundaryReached(_ range: ClosedRange<CGFloat>) -> Self {
+    Self(range, markers: .boundary)
+  }
+}
+
+public struct HapticMarkers: OptionSet, Sendable {
+  public init(rawValue: Int) {
+    self.rawValue = rawValue
+  }
+  public let rawValue: Int
+  
+  public static let boundary = Self(rawValue: 1 << 0)
+  public static let centre = Self(rawValue: 1 << 1)
+  public static let defaultValue = Self(rawValue: 1 << 2)
+
 }

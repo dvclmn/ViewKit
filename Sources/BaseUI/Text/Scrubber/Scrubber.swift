@@ -5,10 +5,11 @@
 //  Created by Dave Coleman on 15/6/2025.
 //
 
+import CoreTools
 import SwiftUI
 
 #if canImport(AppKit)
-public struct TextScrubber: View {
+public struct TextScrubber: View, ValueFormattable {
   @Environment(\.formatValue) private var formatValue
   @Environment(\.layoutAxis) private var layoutAxis
   @Environment(\.layoutAlignment) private var layoutAlignment
@@ -38,7 +39,7 @@ public struct TextScrubber: View {
     range: ClosedRange<Double>? = nil,
     digitCount: Int = 3,
     dragSensitivity: CGFloat,
-    onDoubleTap: @escaping () -> Void
+    onDoubleTap: @escaping () -> Void = {}
   ) {
     self._value = value
     self._initialValue = State(initialValue: CGFloat(value.wrappedValue))
@@ -113,23 +114,6 @@ extension TextScrubber {
       .onEnded { _ in
         initialValue = CGFloat(value)
       }
-    //      .onChanged { gestureValue in
-    //        let delta =
-    //          gestureValue.translation.value(along: axis.toGridAxis, mapping: .default) * dragSensitivity
-    //        //        let delta = gestureValue.translation.length(for: axis) * dragSensitivity
-    //        let newValue = initialValue + delta
-    //        let result: CGFloat
-    //
-    //        if let range {
-    //          result = newValue.clamped(to: range.toCGFloatRange)
-    //        } else {
-    //          result = newValue
-    //        }
-    //        value = result
-    //      }
-    //      .onEnded { _ in
-    //        initialValue = value
-    //      }
   }
 
   func clampedValue(from baseline: CGFloat, delta: CGFloat) -> CGFloat {

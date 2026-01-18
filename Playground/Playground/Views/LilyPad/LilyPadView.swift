@@ -23,7 +23,7 @@ struct LilyPadDemoView: View {
   var body: some View {
 
     @Bindable var store = store
-    Color.black.opacity(0.8)
+    Color.clear
       .frame(
         maxWidth: .infinity,
         maxHeight: .infinity,

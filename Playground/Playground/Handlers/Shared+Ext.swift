@@ -19,13 +19,13 @@ extension SharedKey where Self == FileStorageKey<DrawingData>.Default {
   }
 }
 
-//extension SharedKey where Self == FileStorageKey<Preferences>.Default {
-//  static var preferences: Self {
-//    Self[
-//      .fileStorage(
-//        .applicationSupportDirectory.appending(component: "preferences.json")
-//      ),
-//      default: Preferences()
-//    ]
-//  }
-//}
+extension SharedKey where Self == FileStorageKey<Preferences>.Default {
+  static var preferences: Self {
+    Self[
+      .fileStorage(
+        .applicationSupportDirectory.appending(component: "preferences.json")
+      ),
+      default: Preferences()
+    ]
+  }
+}

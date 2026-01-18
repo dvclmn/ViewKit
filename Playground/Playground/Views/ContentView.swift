@@ -9,23 +9,26 @@ import SwiftUI
 import ToolKit
 import VectorKit
 
-enum PlaygroundTab: String, LabeledItem, CaseIterable, Hashable {
+enum PlaygroundTab: String, LabeledItem, CaseIterable, Hashable, Codable {
   case home
   case lilypad
+  case sliders
 }
 
 struct ContentView: View {
   @Environment(AppHandler.self) private var store
-  @State private var tab: PlaygroundTab = .lilypad
+  
   var body: some View {
     @Bindable var store = store
-    QuickTabView(tab: $tab) { tab in
+    QuickTabView(tab: store.prefBinding(\.tab)) { tab in
       switch tab {
         case .home: Text("Home")
         case .lilypad: LilyPadDemoView()
+        case .sliders: SlidersDemoView()
       }
     }
-    
+    .background(Color.black.opacity(0.7))
+
   }
 }
 
@@ -34,5 +37,8 @@ struct ContentView: View {
   @Previewable @State var store = AppHandler()
   ContentView()
     .environment(store)
+    .onAppear {
+      store.setPref(\.tab, value: .sliders)
+    }
 }
 #endif

@@ -15,11 +15,9 @@ struct ScrubberDemoView: View {
       $value,
       range: 1...10,
       digitCount: 10,
-      dragSensitivity: 0.4,
-      onDoubleTap: {
-        print("Double Tapped")
-      }
+      dragSensitivity: 0.4
     )
+    .formatValue { $0.displayString(places: 0) }
     .padding(40)
     .frame(width: 600, height: 700)
     .background(.black.opacity(0.6))
