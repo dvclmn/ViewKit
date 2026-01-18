@@ -16,7 +16,8 @@ public struct TextScrubber: View, ValueFormattable {
   @Environment(\.layoutSpacing) private var layoutSpacing
   @Environment(\.modifierKeys) private var modifierKeys
   @Environment(\.maxCharacterColumns) private var maxCharacterColumns
-
+  @Environment(\.isDebugMode) private var isDebugMode
+  
   @State private var isHovered: Bool = false
 
   @State private var initialValue: CGFloat
@@ -126,14 +127,18 @@ public struct TextScrubber: View, ValueFormattable {
 
 extension TextScrubber {
 
+  private var places: Int { 2 }
+//  private var places: NumberFormatStyleConfiguration.Precision { .fractionLength(0...2) }
+
   @ViewBuilder
   private func ValueEditor() -> some View {
     if isHoldingOption {
-      Text(value.toString)
+      Text(value.displayString(places: places))
         //      Text(formattedString)
         .setPointerStyle(.frameResize(position: .leading, directions: .all))
     } else {
-      TextField(title, value: $value, formatter: numberFormatter)
+      TextField(title, value: $value, format: .number.precision(.fractionLength(places)))
+//      TextField(title, value: $value, formatter: numberFormatter)
         .onKeyPress(
           keys: [.upArrow, .downArrow],
           phases: .all
@@ -153,7 +158,9 @@ extension TextScrubber {
 
   }
 
-  private var isHoldingOption: Bool { modifierKeys == .option }
+  private var isHoldingOption: Bool {
+    isDebugMode || modifierKeys == .option
+  }
 
   private func updateValue(
     _ direction: Direction,
@@ -233,11 +240,12 @@ extension TextScrubber {
     )
 
     TextScrubber(
-      "Another one",
+      "My Title",
       value: $value,
       range: 1...20,
-      step: 10
+      step: 5
     )
+    .environment(\.isDebugMode, true)
   }
   .padding(80)
   .background(.black.secondary)
