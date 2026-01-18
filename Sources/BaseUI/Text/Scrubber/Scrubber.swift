@@ -13,8 +13,16 @@ public struct TextScrubber: View {
   @Environment(\.layoutAxis) private var layoutAxis
   @Environment(\.layoutAlignment) private var layoutAlignment
 
-  @State private var initialValue: CGFloat
   @State private var isHovered: Bool = false
+
+  /// Stable baseline
+  /// When drag begins → baseline is fixed
+  /// While dragging → delta changes continuously
+  /// When drag ends / cancels → delta resets automatically to .zero
+  @State private var initialValue: CGFloat
+
+  /// Ephemeral delta
+  @GestureState private var dragDelta: CGFloat = .zero
 
   @Binding var value: Double
   let range: ClosedRange<Double>?
@@ -62,11 +70,19 @@ public struct TextScrubber: View {
     .onDoubleTap { onDoubleTap() }
     .gesture(digitDragGesture(for: layoutAxis ?? .horizontal))
     .onHover { isHovered = $0 }
+
+    /// Handle case where `value` changes externally
+    .task(id: value) {
+      if dragDelta == .zero {
+        initialValue = value
+      }
+    }
+
   }
 }
 
 extension TextScrubber {
-  
+
   private var labelString: String { formatValue(value) }
 
   var totalWidth: CGFloat {
@@ -82,22 +98,45 @@ extension TextScrubber {
 
   func digitDragGesture(for axis: Axis) -> some Gesture {
     DragGesture(minimumDistance: 0)
-      .onChanged { gestureValue in
-        let delta =
-          gestureValue.translation.value(along: axis.toGridAxis, mapping: .default) * dragSensitivity
-        //        let delta = gestureValue.translation.length(for: axis) * dragSensitivity
-        let newValue = initialValue + delta
-        let result: CGFloat
-        if let range {
-          result = newValue.clamped(to: range.toCGFloatRange)
-        } else {
-          result = newValue
-        }
-        value = result
+      .updating($dragDelta) { gestureValue, dragDelta, _ in
+        let translation =
+          gestureValue.translation.value(
+            along: axis.toGridAxis,
+            mapping: .default
+          )
+
+        dragDelta = translation * dragSensitivity
+      }
+      .onChanged { _ in
+        value = clampedValue(from: initialValue, delta: dragDelta)
       }
       .onEnded { _ in
-        initialValue = value
+        initialValue = CGFloat(value)
       }
+    //      .onChanged { gestureValue in
+    //        let delta =
+    //          gestureValue.translation.value(along: axis.toGridAxis, mapping: .default) * dragSensitivity
+    //        //        let delta = gestureValue.translation.length(for: axis) * dragSensitivity
+    //        let newValue = initialValue + delta
+    //        let result: CGFloat
+    //
+    //        if let range {
+    //          result = newValue.clamped(to: range.toCGFloatRange)
+    //        } else {
+    //          result = newValue
+    //        }
+    //        value = result
+    //      }
+    //      .onEnded { _ in
+    //        initialValue = value
+    //      }
+  }
+
+  func clampedValue(from baseline: CGFloat, delta: CGFloat) -> CGFloat {
+    let proposed = baseline + delta
+    return range.map {
+      proposed.clamped(to: $0.toCGFloatRange)
+    } ?? proposed
   }
 
 }
