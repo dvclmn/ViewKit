@@ -53,11 +53,11 @@ extension Range where Bound == String.Index {
 }
 
 extension Range {
-  
+
   public var isZero: Bool { lowerBound == upperBound }
   public var isGreaterThanZero: Bool { lowerBound < upperBound }
   public var isGreaterThanOrEqualToZero: Bool { lowerBound <= upperBound }
-  
+
   /// ```
   /// let range = Range(match.output.1.indices)`
   /// ```

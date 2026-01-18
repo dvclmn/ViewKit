@@ -16,12 +16,11 @@ struct SlidersDemoView: View {
     TextScrubber(
       $value,
       range: 1...30,
-      digitCount: 3,
-      dragSensitivity: 0.1
+      step: 5,
+      dragSensitivity: 0.2
     )
     .formatValue { $0.displayString(places: 0) }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-
   }
 }
 

@@ -20,53 +20,61 @@ public typealias HapticCondition = @Sendable (Double, Double) -> Bool
 
 public enum HapticPreset: Sendable {
   case none
-  case boundary(HapticBoundary)
-//  case boundaryReached
-//  case boundaryAndCentre
-//  case boundaryAndDefault
-  case perStep(Int)
+  case boundary(ClosedRange<CGFloat>)
+  case boundaryAndCentre(ClosedRange<CGFloat>)
+  case boundaryAndDefault(ClosedRange<CGFloat>, defaultValue: CGFloat)
+  //  case boundary(HapticBoundary)
+  //  case boundaryReached
+  //  case boundaryAndCentre
+  //  case boundaryAndDefault
+  case perStep(CGFloat)
+//  case perStep(Int)
   case custom(HapticCondition)
-  
+
   func hapticPreset(
-    for range: ClosedRange<Double>,
-    with defaultValue: Double? = nil,
+    //    for range: ClosedRange<Double>,
+    //    with defaultValue: Double? = nil,
     _ oldValue: Double,
     _ newValue: Double
   ) -> Bool {
-    
+
     let wiggleRoom: Double = 0.005
     switch self {
-      case .none:
-        return false
-        
-      case .boundary(let settings):
-//      case .boundaryReached:
+      case .none: return false
+
+      case .boundary(let range):
         return newValue == range.lowerBound || newValue == range.upperBound
-        
-      case .boundaryAndCentre:
+
+      case .boundaryAndCentre(let range):
         return newValue == range.lowerBound || newValue == range.upperBound
-        || newValue == (range.upperBound - range.lowerBound) / 2
-        
-      case .boundaryAndDefault:
+          || newValue == (range.upperBound - range.lowerBound) / 2
+
+      case .boundaryAndDefault(let range, let defaultValue):
         return newValue == range.lowerBound
-        || newValue == range.upperBound
-        || (defaultValue.map { abs(newValue - $0) <= wiggleRoom } ?? false)
-        
+          || newValue == range.upperBound
+          || abs(newValue - defaultValue) <= wiggleRoom
+
       case .perStep(let step):
-        return
-        
+        /// Trigger haptic when crossing integer step boundaries.
+        /// Interpret `step` as the number of discrete segments across the value's domain (e.g., 0...1).
+        /// Quantize both old and new values into step buckets and fire when the bucket changes.
+        guard step > 0 else { return false }
+        let oldBucket = Int(floor(oldValue * step))
+        let newBucket = Int(floor(newValue * step))
+        return oldBucket != newBucket
+
       case .custom(let condition):
         return condition(oldValue, newValue)
-        
+
     }
   }
-  
+
 }
 
 public struct HapticBoundary: Sendable {
   let range: ClosedRange<CGFloat>
   let markers: HapticMarkers
-  
+
   public init(_ range: ClosedRange<CGFloat>, markers: HapticMarkers) {
     self.range = range
     self.markers = markers
@@ -83,7 +91,7 @@ public struct HapticMarkers: OptionSet, Sendable {
     self.rawValue = rawValue
   }
   public let rawValue: Int
-  
+
   public static let boundary = Self(rawValue: 1 << 0)
   public static let centre = Self(rawValue: 1 << 1)
   public static let defaultValue = Self(rawValue: 1 << 2)

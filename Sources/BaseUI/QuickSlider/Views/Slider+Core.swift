@@ -33,12 +33,18 @@ public struct SliderCore: View {
               oldValue,
               newValue in
 
-              HapticPreset.boundaryReached.hapticPreset(
-                for: store.range,
-                with: sliderDefaultValue,
-                oldValue,
-                newValue
+              let preset = HapticPreset.boundaryAndDefault(
+                store.range.toCGFloatRange,
+                /// Fall back to centre-style haptic trigger
+                defaultValue: sliderDefaultValue ?? store.range.halfway
               )
+              return preset.hapticPreset(oldValue, newValue)
+//              HapticPreset.boundaryAndDefault().hapticPreset(
+//                for: ,
+//                with: sliderDefaultValue,
+//                oldValue,
+//                newValue
+//              )
             }
             .controlSize(explicitControlSize ?? .regular)
         }

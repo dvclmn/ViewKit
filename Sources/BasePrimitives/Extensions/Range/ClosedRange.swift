@@ -11,7 +11,7 @@ extension ClosedRange {
   public var isZero: Bool { lowerBound == upperBound }
   public var isGreaterThanZero: Bool { lowerBound < upperBound }
   public var isGreaterThanOrEqualToZero: Bool { lowerBound <= upperBound }
-  
+
 }
 extension ClosedRange where Bound == CGFloat {
   public var toDoubleRange: ClosedRange<Double> {
@@ -84,4 +84,7 @@ extension ClosedRange where Bound: BinaryFloatingPoint {
     lowerBound + (upperBound - lowerBound) * percent
   }
 
+  public var halfway: Self.Bound {
+    (upperBound + lowerBound) / 2
+  }
 }

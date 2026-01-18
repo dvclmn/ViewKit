@@ -27,6 +27,7 @@ public struct TextScrubber: View, ValueFormattable {
 
   @Binding var value: Double
   let range: ClosedRange<Double>?
+  let step: Double?
   let digitCount: Int
   let dragSensitivity: CGFloat
   let onDoubleTap: () -> Void
@@ -37,6 +38,7 @@ public struct TextScrubber: View, ValueFormattable {
   public init(
     _ value: Binding<Double>,
     range: ClosedRange<Double>? = nil,
+    step: Double? = nil,
     digitCount: Int = 3,
     dragSensitivity: CGFloat,
     onDoubleTap: @escaping () -> Void = {}
@@ -44,6 +46,7 @@ public struct TextScrubber: View, ValueFormattable {
     self._value = value
     self._initialValue = State(initialValue: CGFloat(value.wrappedValue))
     self.range = range
+    self.step = step
     self.digitCount = digitCount
     self.dragSensitivity = dragSensitivity
     self.onDoubleTap = onDoubleTap
@@ -59,6 +62,26 @@ public struct TextScrubber: View, ValueFormattable {
           height: digitWidth * 1.8,
           alignment: .trailing
         )
+    }
+    .sensoryFeedback(.alignment, trigger: value) {
+      oldValue,
+      newValue in
+      
+      /// If no step provided, no haptics will occur
+      guard let step else { return false }
+      let preset = HapticPreset.perStep(step)
+//      let preset = HapticPreset.boundaryAndDefault(
+//        store.range.toCGFloatRange,
+//        /// Fall back to centre-style haptic trigger
+//        defaultValue: sliderDefaultValue ?? store.range.halfway
+//      )
+      return preset.hapticPreset(oldValue, newValue)
+      //              HapticPreset.boundaryAndDefault().hapticPreset(
+      //                for: ,
+      //                with: sliderDefaultValue,
+      //                oldValue,
+      //                newValue
+      //              )
     }
     .frame(
       width: totalWidth,
