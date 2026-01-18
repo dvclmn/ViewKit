@@ -23,10 +23,6 @@ public enum HapticPreset: Sendable {
   case boundary(ClosedRange<CGFloat>)
   case boundaryAndCentre(ClosedRange<CGFloat>)
   case boundaryAndDefault(ClosedRange<CGFloat>, defaultValue: CGFloat)
-  //  case boundary(HapticBoundary)
-  //  case boundaryReached
-  //  case boundaryAndCentre
-  //  case boundaryAndDefault
   case perStep(CGFloat)
 //  case perStep(Int)
   case custom(HapticCondition)
@@ -55,12 +51,11 @@ public enum HapticPreset: Sendable {
           || abs(newValue - defaultValue) <= wiggleRoom
 
       case .perStep(let step):
-        /// Trigger haptic when crossing integer step boundaries.
-        /// Interpret `step` as the number of discrete segments across the value's domain (e.g., 0...1).
-        /// Quantize both old and new values into step buckets and fire when the bucket changes.
         guard step > 0 else { return false }
-        let oldBucket = Int(floor(oldValue * step))
-        let newBucket = Int(floor(newValue * step))
+        
+        let oldBucket = Int(floor(oldValue / step))
+        let newBucket = Int(floor(newValue / step))
+        
         return oldBucket != newBucket
 
       case .custom(let condition):
@@ -71,29 +66,29 @@ public enum HapticPreset: Sendable {
 
 }
 
-public struct HapticBoundary: Sendable {
-  let range: ClosedRange<CGFloat>
-  let markers: HapticMarkers
-
-  public init(_ range: ClosedRange<CGFloat>, markers: HapticMarkers) {
-    self.range = range
-    self.markers = markers
-  }
-}
-extension HapticBoundary {
-  public static func boundaryReached(_ range: ClosedRange<CGFloat>) -> Self {
-    Self(range, markers: .boundary)
-  }
-}
-
-public struct HapticMarkers: OptionSet, Sendable {
-  public init(rawValue: Int) {
-    self.rawValue = rawValue
-  }
-  public let rawValue: Int
-
-  public static let boundary = Self(rawValue: 1 << 0)
-  public static let centre = Self(rawValue: 1 << 1)
-  public static let defaultValue = Self(rawValue: 1 << 2)
-
-}
+//public struct HapticBoundary: Sendable {
+//  let range: ClosedRange<CGFloat>
+//  let markers: HapticMarkers
+//
+//  public init(_ range: ClosedRange<CGFloat>, markers: HapticMarkers) {
+//    self.range = range
+//    self.markers = markers
+//  }
+//}
+//extension HapticBoundary {
+//  public static func boundaryReached(_ range: ClosedRange<CGFloat>) -> Self {
+//    Self(range, markers: .boundary)
+//  }
+//}
+//
+//public struct HapticMarkers: OptionSet, Sendable {
+//  public init(rawValue: Int) {
+//    self.rawValue = rawValue
+//  }
+//  public let rawValue: Int
+//
+//  public static let boundary = Self(rawValue: 1 << 0)
+//  public static let centre = Self(rawValue: 1 << 1)
+//  public static let defaultValue = Self(rawValue: 1 << 2)
+//
+//}
