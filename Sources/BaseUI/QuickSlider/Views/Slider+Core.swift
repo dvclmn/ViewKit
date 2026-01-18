@@ -38,7 +38,7 @@ public struct SliderCore: View {
                 /// Fall back to centre-style haptic trigger
                 defaultValue: sliderDefaultValue ?? store.range.halfway
               )
-              return preset.hapticPreset(oldValue, newValue)
+              return preset.shouldFire(oldValue, newValue)
 //              HapticPreset.boundaryAndDefault().hapticPreset(
 //                for: ,
 //                with: sliderDefaultValue,

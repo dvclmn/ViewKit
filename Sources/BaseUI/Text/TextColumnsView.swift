@@ -13,15 +13,10 @@ public struct TextColumns<Content: View>: View {
   let columnCount: Int?
   let content: Content
 
+  /// Will use environment's `maxCharacterColumns` if no
+  /// value provided for `columnCount`
   public init(
-    @ViewBuilder content: @escaping () -> Content
-  ) {
-    self.columnCount = nil
-    self.content = content()
-  }
-
-  public init(
-    _ columnCount: Int,
+    _ columnCount: Int? = nil,
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.columnCount = columnCount
@@ -30,9 +25,12 @@ public struct TextColumns<Content: View>: View {
 
   public var body: some View {
 
+    /// `Text` view will not be shown, for layout only
     Text(characters)
       .monospaced()
       .hidden()
+    
+    /// Displays content within character-count-based confines
       .overlay(alignment: .trailing) {
         content
           .lineLimit(1)
@@ -43,6 +41,7 @@ public struct TextColumns<Content: View>: View {
 }
 extension TextColumns {
   private var characters: String {
-    return String(repeating: "0", count: columnCount ?? maxCharacterColumns)
+    let count = columnCount ?? maxCharacterColumns
+    return String(repeating: "0", count: min(count, maxCharacterColumns))
   }
 }

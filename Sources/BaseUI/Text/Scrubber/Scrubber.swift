@@ -13,22 +13,18 @@ public struct TextScrubber: View, ValueFormattable {
   @Environment(\.formatValue) private var formatValue
   @Environment(\.layoutAxis) private var layoutAxis
   @Environment(\.layoutAlignment) private var layoutAlignment
+  @Environment(\.modifierKeys) private var modifierKeys
+  @Environment(\.maxCharacterColumns) private var maxCharacterColumns
 
   @State private var isHovered: Bool = false
 
-  /// Stable baseline
-  /// When drag begins → baseline is fixed
-  /// While dragging → delta changes continuously
-  /// When drag ends / cancels → delta resets automatically to .zero
   @State private var initialValue: CGFloat
-
-  /// Ephemeral delta
   @GestureState private var dragDelta: CGFloat = .zero
 
   @Binding var value: Double
   let range: ClosedRange<Double>?
   let step: Double?
-  let digitCount: Int
+  //  let digitCount: Int
   let dragSensitivity: CGFloat
   let onDoubleTap: () -> Void
 
@@ -39,7 +35,7 @@ public struct TextScrubber: View, ValueFormattable {
     _ value: Binding<Double>,
     range: ClosedRange<Double>? = nil,
     step: Double? = nil,
-    digitCount: Int = 3,
+    //    digitCount: Int = 3,
     dragSensitivity: CGFloat,
     onDoubleTap: @escaping () -> Void = {}
   ) {
@@ -47,48 +43,42 @@ public struct TextScrubber: View, ValueFormattable {
     self._initialValue = State(initialValue: CGFloat(value.wrappedValue))
     self.range = range
     self.step = step
-    self.digitCount = digitCount
+    //    self.digitCount = digitCount
     self.dragSensitivity = dragSensitivity
     self.onDoubleTap = onDoubleTap
   }
 
   public var body: some View {
     HStack(spacing: 0) {
-      Text(labelString)
-        .fixedSize(horizontal: true, vertical: false)
-        .monospacedDigit()
-        .frame(
-          width: digitWidth * CGFloat(digitCount),
-          height: digitWidth * 1.8,
-          alignment: .trailing
-        )
+      TextColumns {
+        Text(labelString)
+          .monospacedDigit()
+      }
+      //      Text(labelString)
+      //        .fixedSize(horizontal: true, vertical: false)
+      //        .monospacedDigit()
+      //        .frame(
+      //          width: digitWidth * CGFloat(digitCount),
+      //          height: digitWidth * 1.8,
+      //          alignment: .trailing
+      //        )
     }
     .sensoryFeedback(.alignment, trigger: value) {
       oldValue,
       newValue in
-      
       /// If no step provided, no haptics will occur
       guard let step else { return false }
-      let preset = HapticPreset.perStep(step)
-//      let preset = HapticPreset.boundaryAndDefault(
-//        store.range.toCGFloatRange,
-//        /// Fall back to centre-style haptic trigger
-//        defaultValue: sliderDefaultValue ?? store.range.halfway
-//      )
-      return preset.hapticPreset(oldValue, newValue)
-      //              HapticPreset.boundaryAndDefault().hapticPreset(
-      //                for: ,
-      //                with: sliderDefaultValue,
-      //                oldValue,
-      //                newValue
-      //              )
+      return HapticPreset.perStep(step).shouldFire(oldValue, newValue)
     }
-    .frame(
-      width: totalWidth,
-      height: digitWidth * 1.8,
-      alignment: .trailing
-    )
+    //    .frame(
+    //      width: totalWidth,
+    //      height: digitWidth * 1.8,
+    //      alignment: .trailing
+    //    )
     .quickBackground(padding: 8)
+    .backgroundTint(isDragging ? Color.accentColor.opacity(0.1) : nil)
+    .animation(Styles.animationQuickNSmooth, value: isDragging)
+
     .environment(\.strokeColour, AnyShapeStyle(Color.white.opacity(isHovered ? 0.11 : 0)))
     .setPointerStyle(.frameResize(position: .leading, directions: .all))
     .onDoubleTap { onDoubleTap() }
@@ -107,19 +97,19 @@ public struct TextScrubber: View, ValueFormattable {
 
 extension TextScrubber {
 
+  private var isDragging: Bool { dragDelta != .zero }
+
+  private var sensitivity: CGFloat {
+    let reducedSensitivity: CGFloat = dragSensitivity * 0.35
+    let isModeChanged = modifierKeys == .option && !isDragging
+    return isModeChanged ? reducedSensitivity : dragSensitivity
+  }
   private var labelString: String { formatValue(value) }
 
-  var totalWidth: CGFloat {
-    /// The digits, plus room for one character for
-    // TODO: Needs to be properly calculated
-    let unitsCharacterWidth: Int = 1
-    //    let unitsCharacterWidth: Int = unit.count
-    let count: Int = digitCount + unitsCharacterWidth
-    /// Little extra as well in case of a negative sign `-`
-    let negativeSign: CGFloat = digitWidth * 0.5
-    return digitWidth * CGFloat(count) + negativeSign
-  }
-
+  /// Stable baseline
+  /// When drag begins → baseline is fixed
+  /// While dragging → delta changes continuously
+  /// When drag ends / cancels → delta resets automatically to .zero
   func digitDragGesture(for axis: Axis) -> some Gesture {
     DragGesture(minimumDistance: 0)
       .updating($dragDelta) { gestureValue, dragDelta, _ in
@@ -129,7 +119,7 @@ extension TextScrubber {
             mapping: .default
           )
 
-        dragDelta = translation * dragSensitivity
+        dragDelta = translation * sensitivity
       }
       .onChanged { _ in
         value = clampedValue(from: initialValue, delta: dragDelta)

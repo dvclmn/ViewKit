@@ -15,6 +15,7 @@ struct PlaygroundApp: App {
     WindowGroup {
       ContentView()
         .environment(store)
+        .readModifierKeys()
 //        .readViewportSize(mode: .debounce(0.2))
     }
     .commands {

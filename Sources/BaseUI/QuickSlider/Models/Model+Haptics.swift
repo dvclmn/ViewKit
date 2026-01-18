@@ -27,7 +27,7 @@ public enum HapticPreset: Sendable {
 //  case perStep(Int)
   case custom(HapticCondition)
 
-  func hapticPreset(
+  func shouldFire(
     //    for range: ClosedRange<Double>,
     //    with defaultValue: Double? = nil,
     _ oldValue: Double,

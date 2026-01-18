@@ -14,7 +14,6 @@ struct ScrubberDemoView: View {
     TextScrubber(
       $value,
       range: 1...10,
-      digitCount: 10,
       dragSensitivity: 0.4
     )
     .formatValue { $0.displayString(places: 0) }
