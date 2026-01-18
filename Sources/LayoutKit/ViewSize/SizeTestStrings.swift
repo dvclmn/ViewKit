@@ -13,7 +13,8 @@ struct TestString {
   /// The string to test, to derive character width and height
   let text: String
 
-  /// Manually specify the number of characters along the x and y
+  /// Manually specify the number of characters along the
+  /// x and y (width and height).
   /// This saves the CPU from needing to calculate this
   let width: Int
   let height: Int
@@ -35,8 +36,8 @@ extension TestString {
     let width = textBoundingSize.width / CGFloat(width)
     let height = textBoundingSize.height / CGFloat(height)
     let result = CGSize(
-      width: width.clamped(1),
-      height: height.clamped(1)
+      width: max(1, width),
+      height: max(1, height)
     )
     return result
   }

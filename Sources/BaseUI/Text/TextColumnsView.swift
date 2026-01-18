@@ -33,8 +33,10 @@ public struct TextColumns<Content: View>: View {
     Text(characters)
       .monospaced()
       .hidden()
-      .gridGuide(opacity: 0.3, isEnabled: true)
-//      .border(isDebugMode ? Color.green.opacity(0.3) : .clear)
+      
+      .gridGuide(opacity: 0.3, isEnabled: isDebugMode)
+      .setCharacterUnitSize(mode: .debounce(0.2))
+
       /// Displays content within character-count-based confines
       .overlay(alignment: alignment) {
         content

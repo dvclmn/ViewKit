@@ -15,49 +15,40 @@ public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
   @State private var debouncer: AsyncDebouncer?
 
   let capture: GeometryCapture<Capture>
+  let isEnabled: Bool
   let valueOutput: ViewSizeOutput<Capture>
 
   // MARK: - Initialiser
   public init(
     capture: GeometryCapture<Capture>,
     mode: DebounceMode,
+    isEnabled: Bool,
     valueOutput: @escaping ViewSizeOutput<Capture>
   ) {
     self._debouncer = mode.createDebouncer()
     self.capture = capture
+    self.isEnabled = isEnabled
     self.valueOutput = valueOutput
   }
 
   // MARK: - View Modifier
   public func body(content: Content) -> some View {
-    
+
     content
       .onGeometryChange(for: capture.type) { proxy in
-        return capture.transform(proxy)
+        capture.transform(proxy)
 
       } action: { newValue in
-        //        updateIfChanged(&newCapture, to: newValue)
-
-        Task {
-          if let debouncer {
-            debouncer.execute { @MainActor in
-//              print("Geometry change with debouncing.")
-              valueOutput(newValue)
-            }
-          } else {
-//            print("Geometry change, *no* debouncing.")
+        guard isEnabled else { return }
+        
+        if let debouncer {
+          debouncer.execute { @MainActor in
             valueOutput(newValue)
           }
+        } else {
+          valueOutput(newValue)
         }
-      }
 
-    //      .onAppear {
-    //        sleepyTask(interval: 0.4) { @MainActor in
-    //          if let newCapture {
-    //            valueOutput(newCapture)
-    //          }
-    //        }
-    //
-    //      }
+      }
   }
 }

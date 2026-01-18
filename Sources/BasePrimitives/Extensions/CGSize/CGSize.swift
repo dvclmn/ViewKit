@@ -88,8 +88,8 @@ extension CGSize {
   }
 
   public func clampBothDimensions(toMin length: CGFloat) -> CGSize {
-    let width = self.width.clamped(length)
-    let height = self.height.clamped(length)
+    let width = max(length, width)
+    let height = max(length, height)
     return CGSize(width: width, height: height)
   }
 

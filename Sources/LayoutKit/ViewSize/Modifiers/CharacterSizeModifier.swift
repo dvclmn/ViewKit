@@ -10,9 +10,7 @@ import SwiftUI
 
 public struct CharacterSizeModifier: ViewModifier {
   @Environment(\.unitSize) private var unitSize
-
   @State private var characterSize: CGSize?
-
   private let testString = TestString.example01
 
   let debounceMode: DebounceMode
@@ -26,14 +24,15 @@ public struct CharacterSizeModifier: ViewModifier {
           .fixedSize()
           .monospaced()
           .allowsTightening(false)
-          .viewSize(mode: debounceMode) { size in
+          .viewSize(mode: debounceMode, isEnabled: unitSize == nil) { size in
 
-            /// This derives a single glyph size from the larger
-            /// test string being used. The aim being to obtain a more
-            /// accurate size, by averaging out any glyph differences
+            /// This derives a single glyph size from the test string
+            /// being used. The aim being to obtain a more accurate
+            /// size, by averaging out any glyph differences / having
+            /// a larger sample size
             let charSize = testString.singleCharacterSize(in: size)
 
-            /// This value can be used either via the callback,
+            /// This value can be used either via the `sizeDidChange` callback,
             /// or by directly updating the `unitSize` env value
             if shouldSetEnv {
               /// This updates the env value
@@ -52,9 +51,7 @@ public struct CharacterSizeModifier: ViewModifier {
           .allowsHitTesting(false)
 
       }
-      //      .environment(\.unitSize, characterSize)
-      .environment(\.unitSize, characterSize)
-    //      .environment(\.unitSize, shouldSetEnv ? characterSize : unitSize)
+      .environment(\.unitSize, characterSize ?? unitSize)
 
   }
 }

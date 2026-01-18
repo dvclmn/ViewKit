@@ -27,5 +27,5 @@ public func scale(
   min: CGFloat = 0
 ) -> CGFloat {
   let result = value * controlSize.scaleFactor * strength
-  return result.clamped(min)
+  return max(min, result)
 }

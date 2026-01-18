@@ -5,11 +5,10 @@
 //  Created by Dave Coleman on 19/5/2025.
 //
 
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
 public typealias IsViewCompactHandler = (Bool) -> Void
-
 
 public struct IsViewCompactModifier: ViewModifier {
   @Environment(\.isDebugMode) private var isDebugMode
@@ -36,7 +35,6 @@ public struct IsViewCompactModifier: ViewModifier {
   }
 }
 
-
 extension IsViewCompactModifier {
   @ViewBuilder
   private func DebugView() -> some View {
@@ -50,7 +48,6 @@ extension IsViewCompactModifier {
     }
   }
 }
-
 
 extension View {
   /// This modifier will also update the `isCompactMode`

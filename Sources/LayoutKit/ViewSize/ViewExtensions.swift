@@ -16,12 +16,14 @@ extension View {
   public func viewSize<T: GeometryCapturable>(
     capture: GeometryCapture<T> = .size,
     mode debounceMode: DebounceMode,
+    isEnabled: Bool = true,
     valueOutput: @escaping ViewSizeOutput<T>,
   ) -> some View {
     self.modifier(
       ViewSizeModifier(
         capture: capture,
         mode: debounceMode,
+        isEnabled: isEnabled,
         valueOutput: valueOutput
       )
     )

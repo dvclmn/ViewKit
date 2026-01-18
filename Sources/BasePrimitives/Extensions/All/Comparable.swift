@@ -23,9 +23,9 @@ extension Comparable {
     return Swift.min(upper, Swift.max(lower, self))
   }
 
-  public func clamped(_ lower: Self) -> Self {
-    return Swift.max(lower, self)
-  }
+//  public func clamped(_ lower: Self) -> Self {
+//    return Swift.max(lower, self)
+//  }
 
 }
 
