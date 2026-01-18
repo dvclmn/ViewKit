@@ -17,7 +17,8 @@ public struct TextScrubber: View, ValueFormattable {
   @Environment(\.modifierKeys) private var modifierKeys
   @Environment(\.maxCharacterColumns) private var maxCharacterColumns
   @Environment(\.isDebugMode) private var isDebugMode
-  
+  @Environment(\.isStepperShowing) private var isStepperShowing
+
   @State private var isHovered: Bool = false
 
   @State private var initialValue: CGFloat
@@ -61,7 +62,9 @@ public struct TextScrubber: View, ValueFormattable {
 
       LabeledContent(title) {
         ValueEditor()
-        if let step {
+          .monospacedDigit()
+
+        if let step, isStepperShowing {
           Stepper(
             title,
             value: $value.clampedIfNeeded(to: range),
@@ -73,6 +76,8 @@ public struct TextScrubber: View, ValueFormattable {
           .labelsHidden()
         }
       }
+      
+      
 
       //      TextColumns {
       //        Text(labelString)
@@ -128,33 +133,38 @@ public struct TextScrubber: View, ValueFormattable {
 extension TextScrubber {
 
   private var places: Int { 2 }
-//  private var places: NumberFormatStyleConfiguration.Precision { .fractionLength(0...2) }
+  //  private var places: NumberFormatStyleConfiguration.Precision { .fractionLength(0...2) }
 
   @ViewBuilder
   private func ValueEditor() -> some View {
-    if isHoldingOption {
-      Text(value.displayString(places: places))
-        //      Text(formattedString)
-        .setPointerStyle(.frameResize(position: .leading, directions: .all))
-    } else {
-      TextField(title, value: $value, format: .number.precision(.fractionLength(places)))
-//      TextField(title, value: $value, formatter: numberFormatter)
-        .onKeyPress(
-          keys: [.upArrow, .downArrow],
-          phases: .all
-        ) { press in
-          if press.key == .upArrow {
-            return updateValue(.up)
+    Text(value.displayString(places: places))
+      .allowsHitTesting(isHoldingOption)
+      .opacity(isHoldingOption ? 1 : 0)
+      .setPointerStyle(.frameResize(position: .leading, directions: .all))
+      .padding(.horizontal, Styles.sizeSmall)
 
-          } else if press.key == .downArrow {
-            return updateValue(.down)
+      .overlay {
+        if !isHoldingOption {
+          TextField(title, value: $value, format: .number.precision(.fractionLength(places)))
+            .labelsHidden()
+            //      TextField(title, value: $value, formatter: numberFormatter)
+            .onKeyPress(
+              keys: [.upArrow, .downArrow],
+              phases: .all
+            ) { press in
+              if press.key == .upArrow {
+                return updateValue(.up)
 
-          } else {
-            return .ignored
-          }
+              } else if press.key == .downArrow {
+                return updateValue(.down)
 
+              } else {
+                return .ignored
+              }
+
+            }
         }
-    }
+      }
 
   }
 
@@ -162,10 +172,7 @@ extension TextScrubber {
     isDebugMode || modifierKeys == .option
   }
 
-  private func updateValue(
-    _ direction: Direction,
-    //    modifiers: EventModifiers
-  ) -> KeyPress.Result {
+  private func updateValue(_ direction: Direction) -> KeyPress.Result {
     let stepSize: CGFloat = {
       if modifierKeys == .command {
         100
@@ -231,7 +238,7 @@ extension TextScrubber {
 #if DEBUG
 #Preview(traits: .size(.normal)) {
   @Previewable @State var value: Double = 5.0
-  VStack {
+  VStack(spacing: Styles.sizeMedium) {
     TextScrubber(
       "My Title",
       value: $value,
@@ -246,7 +253,13 @@ extension TextScrubber {
       step: 5
     )
     .environment(\.isDebugMode, true)
+    
+    TextColumns(6, alignment: .center) {
+      Text("Some text")
+    }
+    .environment(\.isDebugMode, true)
   }
+  .font(.title)
   .padding(80)
   .background(.black.secondary)
 }

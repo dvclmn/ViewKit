@@ -9,17 +9,21 @@ import SwiftUI
 
 public struct TextColumns<Content: View>: View {
   @Environment(\.maxCharacterColumns) private var maxCharacterColumns
+  @Environment(\.isDebugMode) private var isDebugMode
 
   let columnCount: Int?
+  let alignment: Alignment
   let content: Content
 
   /// Will use environment's `maxCharacterColumns` if no
   /// value provided for `columnCount`
   public init(
     _ columnCount: Int? = nil,
+    alignment: Alignment = .center,
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.columnCount = columnCount
+    self.alignment = alignment
     self.content = content()
   }
 
@@ -29,9 +33,10 @@ public struct TextColumns<Content: View>: View {
     Text(characters)
       .monospaced()
       .hidden()
-    
-    /// Displays content within character-count-based confines
-      .overlay(alignment: .trailing) {
+      .gridGuide(opacity: 0.3, isEnabled: true)
+//      .border(isDebugMode ? Color.green.opacity(0.3) : .clear)
+      /// Displays content within character-count-based confines
+      .overlay(alignment: alignment) {
         content
           .lineLimit(1)
           .fixedSize()

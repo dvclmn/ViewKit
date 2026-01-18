@@ -31,7 +31,7 @@ public struct CharacterSizeModifier: ViewModifier {
             /// This derives a single glyph size from the larger
             /// test string being used. The aim being to obtain a more
             /// accurate size, by averaging out any glyph differences
-            let charSize = testString.characterSize(size)
+            let charSize = testString.singleCharacterSize(in: size)
 
             /// This value can be used either via the callback,
             /// or by directly updating the `unitSize` env value

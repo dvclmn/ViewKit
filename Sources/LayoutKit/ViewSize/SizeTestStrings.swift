@@ -5,24 +5,25 @@
 //  Created by Dave Coleman on 31/10/2025.
 //
 
-import Foundation
 import BasePrimitives
+import Foundation
 
 struct TestString {
+
+  /// The string to test, to derive character width and height
   let text: String
+
+  /// Manually specify the number of characters along the x and y
+  /// This saves the CPU from needing to calculate this
   let width: Int
   let height: Int
-//  let dimensions: GridDimensions
 
   init(
-    _ text: String,
-    w: Int,
-    h: Int
+    _ text: String, w: Int, h: Int
   ) {
     self.text = text
     self.width = w
     self.height = h
-//    self.dimensions = GridDimensions(w, h)
   }
 }
 
@@ -30,9 +31,9 @@ extension TestString {
 
   /// The size of a single Character, based on the measurement
   /// of the full Test String dimensions
-  func characterSize(_ size: CGSize) -> CGSize {
-    let width = size.width / CGFloat(width)
-    let height = size.height / CGFloat(height)
+  func singleCharacterSize(in textBoundingSize: CGSize) -> CGSize {
+    let width = textBoundingSize.width / CGFloat(width)
+    let height = textBoundingSize.height / CGFloat(height)
     let result = CGSize(
       width: width.clamped(1),
       height: height.clamped(1)

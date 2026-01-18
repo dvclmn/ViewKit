@@ -37,12 +37,12 @@ public struct GridGuideOverlayModifier: ViewModifier {
                     pan: .zero,
                     density: .half
                   ),
-//                  config: .init(
-//                    fillSize: size,
-//                    cellSize: unitSize,
-//                    colour: .cyan.opacity(opacity),
-//                    strokeThickness: 1
-//                  ),
+                  //                  config: .init(
+                  //                    fillSize: size,
+                  //                    cellSize: unitSize,
+                  //                    colour: .cyan.opacity(opacity),
+                  //                    strokeThickness: 1
+                  //                  ),
                   containerSize: size,
                   canvasZoom: 1.0
                 )
