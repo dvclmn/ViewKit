@@ -9,21 +9,17 @@ import SwiftUI
 
 #if canImport(AppKit)
 public struct TextScrubber: View {
-//  @Environment(\.layoutConfig) private var layoutConfig
   @Environment(\.formatValue) private var formatValue
   @Environment(\.layoutAxis) private var layoutAxis
   @Environment(\.layoutAlignment) private var layoutAlignment
-  
-  @State private var initialValue: CGFloat = .zero
-  @State private var isHovered: Bool = false
 
-  @State private var labelString: String = ""
+  @State private var initialValue: CGFloat
+  @State private var isHovered: Bool = false
 
   @Binding var value: Double
   let range: ClosedRange<Double>?
   let digitCount: Int
   let dragSensitivity: CGFloat
-//  let formatted: (Double) -> String
   let onDoubleTap: () -> Void
 
   /// The `6` represents a single character width, at a `callout` size
@@ -34,14 +30,13 @@ public struct TextScrubber: View {
     range: ClosedRange<Double>? = nil,
     digitCount: Int = 3,
     dragSensitivity: CGFloat,
-//    formatted: @escaping (Double) -> String,
     onDoubleTap: @escaping () -> Void
   ) {
     self._value = value
+    self._initialValue = State(initialValue: CGFloat(value.wrappedValue))
     self.range = range
     self.digitCount = digitCount
     self.dragSensitivity = dragSensitivity
-//    self.formatted = formatted
     self.onDoubleTap = onDoubleTap
   }
 
@@ -61,30 +56,18 @@ public struct TextScrubber: View {
       height: digitWidth * 1.8,
       alignment: .trailing
     )
-    
     .quickBackground(padding: 8)
-//    .quickBackground(padding: 2, colour: AnyShapeStyle(.white.opacity(isHovered ? 0.06 : 0)))
-//    .setStroke(style: AnyShapeStyle(Color.white.opacity(isHovered ? 0.11 : 0)))
     .environment(\.strokeColour, AnyShapeStyle(Color.white.opacity(isHovered ? 0.11 : 0)))
     .setPointerStyle(.frameResize(position: .leading, directions: .all))
-    .onDoubleTap {
-      onDoubleTap()
-    }
+    .onDoubleTap { onDoubleTap() }
     .gesture(digitDragGesture(for: layoutAxis ?? .horizontal))
-    .onHover { hovered in
-      isHovered = hovered
-    }
-    .onAppear {
-      initialValue = value
-    }
-    .task(id: value) {
-      self.labelString = formatValue(value)
-//      self.labelString = formatted(value)
-    }
+    .onHover { isHovered = $0 }
   }
 }
 
 extension TextScrubber {
+  
+  private var labelString: String { formatValue(value) }
 
   var totalWidth: CGFloat {
     /// The digits, plus room for one character for
@@ -100,8 +83,9 @@ extension TextScrubber {
   func digitDragGesture(for axis: Axis) -> some Gesture {
     DragGesture(minimumDistance: 0)
       .onChanged { gestureValue in
-        let delta = gestureValue.translation.value(along: axis.toGridAxis, mapping: .default) * dragSensitivity
-//        let delta = gestureValue.translation.length(for: axis) * dragSensitivity
+        let delta =
+          gestureValue.translation.value(along: axis.toGridAxis, mapping: .default) * dragSensitivity
+        //        let delta = gestureValue.translation.length(for: axis) * dragSensitivity
         let newValue = initialValue + delta
         let result: CGFloat
         if let range {
