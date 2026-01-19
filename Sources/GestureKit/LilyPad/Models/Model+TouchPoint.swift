@@ -7,9 +7,8 @@
 
 import AppKit
 import CoreTools
-//import VectorKit
 
-/// // Example logic for drawing engine
+/// Example logic for drawing engine
 /// ```
 /// func calculateWidth(speed: CGFloat) -> CGFloat {
 ///   let baseWidth: CGFloat = 10.0
