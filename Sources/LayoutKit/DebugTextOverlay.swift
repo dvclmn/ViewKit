@@ -10,7 +10,6 @@ import SwiftUI
 
 public struct DebugTextOverlayModifier: ViewModifier {
   @Environment(\.explicitColour) private var explicitColour
-  
 
   let text: String
   let isEnabled: Bool
@@ -38,7 +37,6 @@ public struct DebugTextOverlayModifier: ViewModifier {
             .padding()
             .safeAreaPadding(padding.0, padding.1)
             .allowsHitTesting(false)
-
         }
       }
   }
@@ -67,7 +65,7 @@ extension View {
     alignment: Alignment = .topLeading,
     padding: (Edge.Set, CGFloat?) = (.all, nil),
     displayString: () -> DisplayString
-//    @DisplayStringBuilder _ content: () -> [DisplayBlock]
+      //    @DisplayStringBuilder _ content: () -> [DisplayBlock]
   ) -> some View {
     self.modifier(
       DebugTextOverlayModifier(
@@ -78,7 +76,7 @@ extension View {
       )
     )
   }
-  
+
   public func debugTextOverlay(
     isEnabled: Bool = true,
     alignment: Alignment = .topLeading,

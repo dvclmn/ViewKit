@@ -43,7 +43,7 @@ struct LilyPadDemoView: View {
       } didUpdatePressure: { pressure in
         store.pressure = pressure
       }
-      .printInfo(.applicationSupport)
+//      .printInfo(.applicationSupport)
       //      .focusable()
       //      .focused($isFocused)
       //      .onExitCommand {

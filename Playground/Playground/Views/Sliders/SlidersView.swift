@@ -13,13 +13,30 @@ struct SlidersDemoView: View {
   @State private var value: Double = 5
   var body: some View {
 
-    TextScrubber(
-      "Radius",
-      value: $value,
-      range: 1...30,
-    )
-    .formatValue { $0.displayString(places: 0) }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    VStack(alignment: .leading) {
+      TextScrubber(
+        "Radius",
+        value: $value,
+        range: 1...30,
+      )
+      .formatValue { $0.displayString(places: 0) }
+      .isDebugMode(true)
+      .padding(24)
+      
+
+      Form {
+        TextScrubber(
+          "Radius",
+          value: $value,
+          range: 1...30,
+        )
+        .formatValue { $0.displayString(places: 0) }
+      }
+      .formStyle(.grouped)
+    }
+    .padding(.top, 40)
+
+//    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
   }
 }
 
@@ -27,9 +44,10 @@ extension SlidersDemoView {
 
 }
 #if DEBUG
-#Preview(traits: .size(.normal)) {
+#Preview(traits: .size(.narrow)) {
   //  @Previewable @State var store = AppHandler()
   SlidersDemoView()
+    .background(Color.black.quaternary)
   //    .environment(store)
 }
 #endif

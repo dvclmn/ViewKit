@@ -35,13 +35,13 @@ public class TrackpadTouchesNSView: NSView {
   // Called from SwiftUI's updateNSView whenever the binding changes.
   public func setDrawingMode(isActive: Bool) {
     if isActive {
-      print("Hiding the pointer via AppKit")
+//      print("Hiding the pointer via AppKit")
 //      CGWarpMouseCursorPosition(frame.midpoint)
       CGAssociateMouseAndMouseCursorPosition(0)
       NSCursor.hide()
 
     } else {
-      print("Showing the pointer via AppKit")
+//      print("Showing the pointer via AppKit")
       CGAssociateMouseAndMouseCursorPosition(1)
       NSCursor.unhide()
 
