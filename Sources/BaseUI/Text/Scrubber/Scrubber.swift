@@ -51,11 +51,9 @@ public struct TextScrubber: View, ValueFormattable {
     HStack(spacing: layoutSpacing) {
 
       LabeledContent(title) {
-        ValueEditor()
+//        ValueEditor()
 
-        if isStepperShowing {
-          StepperView()
-        }
+        
       }
     }
     //    .sensoryFeedback(.alignment, trigger: value) {
@@ -98,55 +96,12 @@ extension TextScrubber {
   //  }
   //  private var places: NumberFormatStyleConfiguration.Precision { .fractionLength(0...2) }
 
-  @ViewBuilder
-  private func ValueEditor() -> some View {
+//  @ViewBuilder
+//  private func ValueEditor() -> some View {
+//
+//  }
 
-    /// This is both providing layout (TextField is overlaid),
-    /// and also a draggable, non-editable view of the value
-    Text(store.valueString(places: fractionLength))
-      //    Text(valueClamped.wrappedValue.displayString(places: fractionLength ?? 0))
-      .allowsHitTesting(isHoldingOption)
-      .opacity(isHoldingOption ? 1 : 0)
-      .setPointerStyle(.frameResize(position: .leading, directions: .all))
-      .padding(.horizontal, Styles.sizeSmall)
 
-      .overlay {
-        if !isHoldingOption {
-          IncrementTextField(
-            store: store,
-            title: title,
-            //            value: valueClamped
-          )
-        }
-      }
-      .monospacedDigit()
-  }
-
-  /// Note: Native Stepper does not support varied increments
-  /// based on modifier keys, will need to do this manually.
-  @ViewBuilder
-  private func StepperView() -> some View {
-    Group {
-      if let range {
-        Stepper(
-          title,
-          value: $value,
-          in: range,
-          step: strategy.stepSize
-        )
-
-      } else {
-        Stepper(
-          title,
-          value: $value,
-          step: strategy.stepSize
-        )
-      }
-    }  // END group
-    /// Don't need extra label, this Stepper is in a broader labeled View
-    .labelsHidden()
-
-  }
 
   private var isHoldingOption: Bool {
     isDebugMode || modifierKeys == .option

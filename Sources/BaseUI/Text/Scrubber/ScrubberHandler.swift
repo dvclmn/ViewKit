@@ -14,20 +14,21 @@ final class ScrubberHandler {
   var range: ClosedRange<Double>?
   var strategy: ScrubStrategy = .continuous
   
-  var initialValue: CGFloat
+  var initialValue: Double
 
   var isHovered: Bool = false
 
-  init(initialValue: CGFloat) {
+  init(initialValue: Double) {
     self.initialValue = initialValue
   }
 }
 
 extension ScrubberHandler {
 
-  func stepSize(modifiers: Modifiers) -> CGFloat {
-    let increments = NumericIncrements.standard
-    return increments.stepSize(for: modifiers)
+  /// This returns a 1/10/100 increment based on modifiers,
+  /// unless a specific `stepped` Strategy is selected
+  func stepSize(modifiers: Modifiers) -> Double {
+    strategy.stepSize(with: modifiers)
   }
 
   func valueString(places: Int?) -> String {
