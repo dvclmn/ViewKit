@@ -12,20 +12,20 @@ import SwiftUI
 public struct TextScrubber: View, ValueFormattable {
   @Environment(\.formatValue) private var formatValue
   @Environment(\.layoutAxis) private var layoutAxis
-  @Environment(\.layoutSpacing) private var layoutSpacing
+
   @Environment(\.modifierKeys) private var modifierKeys
   @Environment(\.maxCharacterColumns) private var maxCharacterColumns
   @Environment(\.isDebugMode) private var isDebugMode
 
   @State private var store: ScrubberHandler
-  @GestureState private var dragDelta: CGFloat = .zero
+  
 
   let title: String
   @Binding var value: Double
   let range: ClosedRange<Double>?
 
   let strategy: ScrubStrategy
-  let dragSensitivity: CGFloat
+//  let dragSensitivity: CGFloat
   let onDoubleTap: () -> Void
 
   public init(
@@ -33,48 +33,26 @@ public struct TextScrubber: View, ValueFormattable {
     value: Binding<Double>,
     range: ClosedRange<Double>? = nil,
     strategy: ScrubStrategy = .continuous,
-    dragSensitivity: CGFloat = 0.2,
+//    dragSensitivity: CGFloat = 0.2,
     onDoubleTap: @escaping () -> Void = {}
   ) {
     self.title = title
     self._value = value
     self.strategy = strategy
-    self._store = State(initialValue: ScrubberHandler(initialValue: value.wrappedValue))
+    self._store = State(
+      initialValue: ScrubberHandler(initialValue: value.wrappedValue)
+    )
     self.range = range
-    self.dragSensitivity = dragSensitivity
+//    self.dragSensitivity = dragSensitivity
     self.onDoubleTap = onDoubleTap
   }
 
   public var body: some View {
-    HStack(spacing: layoutSpacing) {
-
-      LabeledContent(title) {
-        //        ValueEditor()
-
-      }
+    LabeledContent(store.title) {
+      ScrubberCore(store: store)
     }
-    .sensoryFeedback(.alignment, trigger: value) {
-      oldValue,
-      newValue in
-      /// If no step provided, no haptics will occur.
-      /// Only allow haptic feedback when actively dragging
-      guard isDragging else { return false }
-      return HapticPreset.perStep(stepSize).shouldFire(oldValue, newValue)
-    }
-    .backgroundTint(isDragging ? Color.accentColor.opacity(0.1) : nil)
-    .animation(Styles.animationQuickNSmooth, value: isDragging)
-
-    .environment(\.strokeColour, AnyShapeStyle(Color.white.opacity(store.isHovered ? 0.11 : 0)))
-
-    .onDoubleTap { onDoubleTap() }
-    .gesture(digitDragGesture(for: layoutAxis ?? .horizontal))
-    .onHover { store.isHovered = $0 }
-
     /// Handle case where `value` changes externally
     .task(id: value) {
-      /// Keep store in sync
-      store.value = value
-
       /// Maintain fresh initial state, if changed
       if dragDelta == .zero {
         updateIfChanged(&store.initialValue, to: value)
@@ -108,42 +86,9 @@ extension TextScrubber {
   //    isDebugMode || modifierKeys == .option
   //  }
 
-  private var isDragging: Bool { dragDelta != .zero }
+  
 
-  private var sensitivity: CGFloat {
-    let reducedSensitivity: CGFloat = dragSensitivity * 0.35
-    let isModeChanged = modifierKeys == .option && !isDragging
-    return isModeChanged ? reducedSensitivity : dragSensitivity
-  }
-
-  /// Stable baseline
-  /// When drag begins → baseline is fixed
-  /// While dragging → delta changes continuously
-  /// When drag ends / cancels → delta resets automatically to .zero
-  func digitDragGesture(for axis: Axis) -> some Gesture {
-    DragGesture(minimumDistance: 0)
-      .updating($dragDelta) { gestureValue, dragDelta, _ in
-        let translation =
-          gestureValue.translation.value(
-            along: axis.toGridAxis,
-            mapping: .default
-          )
-        dragDelta = translation * sensitivity
-      }
-      .onChanged { _ in
-        value = clampedValue(from: store.initialValue, delta: dragDelta)
-      }
-      .onEnded { _ in
-        store.initialValue = CGFloat(value)
-      }
-  }
-
-  func clampedValue(from baseline: CGFloat, delta: CGFloat) -> CGFloat {
-    let proposed = baseline + delta
-    return range.map {
-      proposed.clamped(to: $0.toCGFloatRange)
-    } ?? proposed
-  }
+  
 
 }
 #endif

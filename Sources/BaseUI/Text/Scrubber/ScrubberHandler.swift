@@ -15,12 +15,14 @@ final class ScrubberHandler {
   var range: ClosedRange<Double>?
   var strategy: ScrubStrategy = .continuous
   
-  var initialValue: Double
+//  var initialValue: Double
 
   var isHovered: Bool = false
 
-  init(initialValue: Double) {
-    self.initialValue = initialValue
+  init(
+//    initialValue: Double
+  ) {
+//    self.initialValue = initialValue
   }
 }
 
