@@ -31,6 +31,10 @@ struct SlidersDemoView: View {
           range: 1...30,
         )
         .formatValue { $0.displayString(places: 0) }
+        
+        Text("Plain Text view")
+        
+        TextField("TextField label", text: .constant("And some example contents"))
       }
       .formStyle(.grouped)
     }

@@ -12,29 +12,19 @@ import SwiftUI
 #if canImport(AppKit)
 public struct TextScrubber: View, ValueFormattable {
   @Environment(\.isDebugMode) private var isDebugMode
-  //  @Environment(\.formatValue) private var formatValue
-  //  @Environment(\.layoutAxis) private var layoutAxis
-
-  //  @Environment(\.modifierKeys) private var modifierKeys
-  //  @Environment(\.maxCharacterColumns) private var maxCharacterColumns
 
   @State private var store: ScrubberHandler
 
   let title: String
   @Binding var value: Double
   let range: ClosedRange<Double>?
-
   let strategy: ScrubStrategy
-  //  let dragSensitivity: CGFloat
-  //  let onDoubleTap: () -> Void
 
   public init(
     _ title: String,
     value: Binding<Double>,
     range: ClosedRange<Double>? = nil,
     strategy: ScrubStrategy = .continuous,
-    //    dragSensitivity: CGFloat = 0.2,
-    //    onDoubleTap: @escaping () -> Void = {}
   ) {
     self.title = title
     self._value = value
@@ -43,8 +33,6 @@ public struct TextScrubber: View, ValueFormattable {
       initialValue: ScrubberHandler(initialValue: value.wrappedValue)
     )
     self.range = range
-    //    self.dragSensitivity = dragSensitivity
-    //    self.onDoubleTap = onDoubleTap
   }
 
   public var body: some View {
