@@ -8,44 +8,6 @@
 import CoreTools
 import SwiftUI
 
-@CaseDetection
-@AssociatedValues
-@MetaEnum
-public enum PathStyle: Sendable, Hashable, Codable {
-  case line
-  case smooth
-  case stamped(shape: PointShape, radius: CGFloat)
-  //  case stamped(shape: PointShape, radius: CGFloat, range: ClosedRange<Double>)
-  //  public var id: String { rawValue }
-
-}
-
-extension PathStyle {
-//  var stampedRadius: CGFloat? {
-//    if case let .stamped(_, radius) = self {
-//      return radius
-//    }
-//    return nil
-//  }
-
-  mutating func updateStampRadius(_ newValue: CGFloat) {
-    guard case let .stamped(shape, _) = self else { return }
-    self = .stamped(shape: shape, radius: newValue)
-  }
-  
-  mutating func updateStampShape(_ newValue: PointShape) {
-    guard case let .stamped(_, radius) = self else { return }
-    self = .stamped(shape: newValue, radius: radius)
-  }
-}
-
-
-extension PathStyle.Meta: Pickable, Identifiable {
-  public var id: String { name }
-  public static var pickerLabel: QuickLabel { "Path Style" }
-  public var label: QuickLabel { .init(self.name) }
-}
-
 extension Array where Element == CGPoint {
 
   public func toPath(

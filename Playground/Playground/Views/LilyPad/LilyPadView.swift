@@ -10,6 +10,7 @@ import Sharing
 import SwiftUI
 import ToolKit
 import VectorKit
+import LilyPad
 
 struct LilyPadDemoView: View {
   @Environment(AppHandler.self) private var store
@@ -110,27 +111,28 @@ extension LilyPadDemoView {
     /// This currently only handles a single finger
     guard let touch = touches.first else { return }
 
-    switch touch.phase {
-      case .began:
-        store.activeStroke = ActiveStroke(
-          id: UUID(),
-          points: [touch.position]
-        )
-
-      case .changed:
-        store.activeStroke?.points.append(touch.position)
-
-      case .ended, .cancelled:
-        if let stroke = store.activeStroke {
-          store.$drawing.withLock {
-            $0.strokes.append(Stroke(id: stroke.id, points: stroke.points))
-          }
-          store.activeStroke = nil
-        }
-
-      default:
-        break
-    }
+    #warning("Need to bring this back")
+//    switch touch.phase {
+//      case .began:
+//        store.activeStroke = ActiveStroke(
+//          id: UUID(),
+//          points: [touch.position]
+//        )
+//
+//      case .changed:
+//        store.activeStroke?.points.append(touch.position)
+//
+//      case .ended, .cancelled:
+//        if let stroke = store.activeStroke {
+//          store.$drawing.withLock {
+//            $0.strokes.append(Stroke(id: stroke.id, points: stroke.points))
+//          }
+//          store.activeStroke = nil
+//        }
+//
+//      default:
+//        break
+//    }
 
     //        store.setDrawing(\.points) {
     //          $0.append(touches.map(\.position))
