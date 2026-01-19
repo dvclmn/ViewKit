@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F6685A6E2F1A89AE00A8ED5C /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = F6685A6D2F1A89AE00A8ED5C /* Sharing */; };
+		F66865552F1E95E800A8ED5C /* LilyPad in Frameworks */ = {isa = PBXBuildFile; productRef = F66865542F1E95E800A8ED5C /* LilyPad */; };
 		F6AC38792F1A4B2D00C08D90 /* ColourKit in Frameworks */ = {isa = PBXBuildFile; productRef = F6AC38782F1A4B2D00C08D90 /* ColourKit */; };
 		F6AC387B2F1A4B2D00C08D90 /* CoreTools in Frameworks */ = {isa = PBXBuildFile; productRef = F6AC387A2F1A4B2D00C08D90 /* CoreTools */; };
 		F6AC387D2F1A4B2D00C08D90 /* GestureKit in Frameworks */ = {isa = PBXBuildFile; productRef = F6AC387C2F1A4B2D00C08D90 /* GestureKit */; };
@@ -33,6 +34,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6AC38792F1A4B2D00C08D90 /* ColourKit in Frameworks */,
+				F66865552F1E95E800A8ED5C /* LilyPad in Frameworks */,
 				F6AC387F2F1A4B2D00C08D90 /* ToolKit in Frameworks */,
 				F6AC38812F1A4B2D00C08D90 /* VectorKit in Frameworks */,
 				F6685A6E2F1A89AE00A8ED5C /* Sharing in Frameworks */,
@@ -94,6 +96,7 @@
 				F6AC387E2F1A4B2D00C08D90 /* ToolKit */,
 				F6AC38802F1A4B2D00C08D90 /* VectorKit */,
 				F6685A6D2F1A89AE00A8ED5C /* Sharing */,
+				F66865542F1E95E800A8ED5C /* LilyPad */,
 			);
 			productName = Playground;
 			productReference = F6336A082F1A23B2002AB2F9 /* Playground.app */;
@@ -384,6 +387,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F6685A6C2F1A89AE00A8ED5C /* XCRemoteSwiftPackageReference "swift-sharing" */;
 			productName = Sharing;
+		};
+		F66865542F1E95E800A8ED5C /* LilyPad */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LilyPad;
 		};
 		F6AC38782F1A4B2D00C08D90 /* ColourKit */ = {
 			isa = XCSwiftPackageProductDependency;

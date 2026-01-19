@@ -1,8 +1,8 @@
 //
 //  StrokeHandler.swift
-//  Playground
+//  BaseHelpers
 //
-//  Created by Dave Coleman on 17/1/2026.
+//  Created by Dave Coleman on 19/1/2026.
 //
 
 import Foundation
@@ -35,10 +35,9 @@ protocol PointPath {
   var points: [CGPoint] { get }
 }
 extension Stroke: PointPath {}
-extension ActiveStroke: PointPath {}
+//extension ActiveStroke: PointPath {}
 
 extension PointPath {
-  
   func sampledPoints(every stride: Int) -> [CGPoint] {
     points.sampled(every: stride)
   }
