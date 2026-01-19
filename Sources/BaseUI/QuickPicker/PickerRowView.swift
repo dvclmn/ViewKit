@@ -28,7 +28,7 @@ extension QuickPicker {
 
       content(isHovering)
         .tag(item)
-//        .keyboardShortcut(shortcut)
+        //        .keyboardShortcut(shortcut)
 
         .onHover { hovering in
           self.isHovering = hovering
@@ -38,8 +38,8 @@ extension QuickPicker {
 }
 extension QuickPicker.RowView {
   #warning("Need to fix Shortcuttable back up")
-//  private var shortcut: KeyboardShortcut? {
-//    guard areShortcutsEnabled else { return nil }
-//    return item.keyboardShortcut
-//  }
+  //  private var shortcut: KeyboardShortcut? {
+  //    guard areShortcutsEnabled else { return nil }
+  //    return item.keyboardShortcut
+  //  }
 }

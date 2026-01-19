@@ -11,7 +11,7 @@ import SwiftUI
 @CaseDetection
 @AssociatedValues
 @MetaEnum
-public enum PathStyle: Sendable, Hashable, Codable, Pickable {
+public enum PathStyle: Sendable, Hashable, Codable {
   case line
   case smooth
   case stamped(shape: PointShape, radius: CGFloat)
