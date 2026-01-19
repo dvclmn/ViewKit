@@ -38,14 +38,6 @@ public struct TextScrubber: View, ValueFormattable {
   public var body: some View {
     LabeledContent(store.title) {
       ScrubberCore(store: store)
-//      VStack {
-        
-//        if isDebugMode {
-//          Text(DisplayString {
-//            Labeled("Range", value: store.range)
-//          }.text)
-//        }
-//      }
     }
     
     /// Handle case where `value` changes externally
@@ -63,7 +55,6 @@ public struct TextScrubber: View, ValueFormattable {
     .task(id: title) { store.title = title }
     .task(id: range) { store.range = range }
     .task(id: strategy) { store.strategy = strategy }
-
   }
 }
 

@@ -16,7 +16,7 @@ final class ScrubberHandler {
   var strategy: ScrubStrategy = .continuous
 
   var isDragging: Bool = false
-  
+
   /// For gesture state
   var initialValue: Double
 
@@ -45,26 +45,60 @@ extension ScrubberHandler {
     return value.clamped(to: range)
   }
 
-  func updateValue(
-    _ direction: Direction,
-    modifiers: Modifiers
-  ) {
-    let delta = stepSize(modifiers: modifiers)
-    let val = direction.apply(to: value, by: delta).clampedIfNeeded(to: range)
-    self.value = val
-  }
+  //  func updateValue(
+  //    _ direction: Direction,
+  //    modifiers: Modifiers
+  //  ) {
+  //
+  //  }
 
   //  var valueClampedBinding: Binding<Double> {
   //    value.clampedIfNeeded(to: range)
   //  }
 
   func handleKeyPress(
-    _ direction: Direction,
+    key: KeyEquivalent,
+    //    _ direction: Direction,
     modifiers: Modifiers
   ) -> KeyPress.Result {
-    guard direction.isVertical else { return .ignored }
-    updateValue(direction, modifiers: modifiers)
+
+    guard let direction = key.toDirection,
+      direction.isVertical
+    else { return .ignored }
+
+    let delta = stepSize(modifiers: modifiers)
+    
+    guard let val = key.apply(delta, to: value) else {
+      return .ignored
+    }
+
+    guard let range else {
+      self.value = val
+      return .handled
+    }
+    guard range.contains(val) else {
+      return .ignored
+    }
+    self.value = val.clamped(to: range)
     return .handled
   }
+}
 
+extension KeyEquivalent {
+
+  func apply(_ delta: Double, to value: Double) -> Double? {
+    switch self {
+      case .upArrow: value + delta
+      case .downArrow: value - delta
+      default: nil
+    }
+  }
+
+  var toDirection: Direction? {
+    switch self {
+      case .upArrow: .up
+      case .downArrow: .down
+      default: nil
+    }
+  }
 }

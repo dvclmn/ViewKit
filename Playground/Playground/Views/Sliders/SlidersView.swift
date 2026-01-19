@@ -30,11 +30,21 @@ struct SlidersDemoView: View {
           value: $value,
           range: 1...30,
         )
-        .formatValue { $0.displayString(places: 0) }
+        .environment(\.fractionLength, 2)
+//        .formatValue { $0.displayString(places: 0) }
         
         Text("Plain Text view")
         
+        LabeledContent("Labeled Item") {
+          Picker("A Picker example", selection: .constant(ExampleTab.blarm)) {
+            ForEach(ExampleTab.allCases) { tab in
+              Text(tab.name).tag(tab)
+            }
+          }
+          .labelsHidden()
+        }
         TextField("TextField label", text: .constant("And some example contents"))
+        
       }
       .formStyle(.grouped)
     }
