@@ -30,9 +30,9 @@ final class ScrubberHandler {
 }
 
 extension ScrubberHandler {
-  
-  func rangePhase() -> RangePhase {
-    
+
+  var dragRangePhase: RangePhase {
+    RangePhase.phase(value: value, range: range, isDragging: isDragging)
   }
   
   func isDragReady(_ isDebugMode: Bool, modifiers: Modifiers) -> Bool {

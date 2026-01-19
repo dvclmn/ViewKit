@@ -36,7 +36,8 @@ struct ScrubberCore: View {
             RoundedRectangle(cornerRadius: 7)
               .fill(Color.black.tertiary.opacity(isDraggableAndHovered ? 1.0 : 0.6))
               .stroke(Color.white.opacity(isDraggableAndHovered ? 0.1 : 0.03), lineWidth: 1)
-              .offset(x: )
+              .offset(x: offsetThing)
+              .animation(Styles.animationSpringExtraBouncy, value: store.dragRangePhase)
           }
         }
 
@@ -90,6 +91,25 @@ struct ScrubberCore: View {
 }
 
 extension ScrubberCore {
+  
+  private var offsetThing: CGFloat {
+    let base: CGFloat = switch store.dragRangePhase {
+      case .idle:
+          .zero
+      case .nearBoundary(let boundary, let proximity):
+        switch boundary {
+          case .leading: -proximity
+          case .trailing: proximity
+        }
+      case .overshooting(let boundary, let distance):
+        switch boundary {
+          case .leading: -distance
+          case .trailing: distance
+        }
+    }
+    
+    return base * 10
+  }
   
 //  private var isPullingLeft: Bool {
 //    /// This isn't a 'thing' with a range
