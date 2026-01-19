@@ -58,35 +58,46 @@ extension ScrubberHandler {
 
   func handleKeyPress(
     key: KeyEquivalent,
-    //    _ direction: Direction,
     modifiers: Modifiers
   ) -> KeyPress.Result {
-
-    guard let direction = key.toDirection,
-      direction.isVertical
-    else { return .ignored }
-
+    
     let delta = stepSize(modifiers: modifiers)
     
-    guard let val = key.apply(delta, to: value) else {
+    guard let newValue = key.applying(delta, to: value) else {
       return .ignored
     }
-
-    guard let range else {
-      self.value = val
-      return .handled
-    }
-    guard range.contains(val) else {
-      return .ignored
-    }
-    self.value = val.clamped(to: range)
+    
+    value = range.map { newValue.clamped(to: $0) } ?? newValue
     return .handled
   }
+
+  
+//  func handleKeyPress(
+//    key: KeyEquivalent,
+//    modifiers: Modifiers
+//  ) -> KeyPress.Result {
+//
+//    let delta = stepSize(modifiers: modifiers)
+//
+//    guard let val = key.apply(delta, to: value) else {
+//      return .ignored
+//    }
+//
+//    guard let range else {
+//      self.value = val
+//      return .handled
+//    }
+//    guard range.contains(val) else {
+//      return .ignored
+//    }
+//    self.value = val.clamped(to: range)
+//    return .handled
+//  }
 }
 
 extension KeyEquivalent {
 
-  func apply(_ delta: Double, to value: Double) -> Double? {
+  func applying(_ delta: Double, to value: Double) -> Double? {
     switch self {
       case .upArrow: value + delta
       case .downArrow: value - delta

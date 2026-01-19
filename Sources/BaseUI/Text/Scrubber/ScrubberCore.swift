@@ -24,8 +24,8 @@ struct ScrubberCore: View {
       /// and also a draggable, non-editable view of the value
       Text(store.valueString(places: fractionLength))
         //    Text(valueClamped.wrappedValue.displayString(places: fractionLength ?? 0))
-        .allowsHitTesting(modifierKeys.isHoldingOption)
-        .opacity(modifierKeys.isHoldingOption ? 1 : 0)
+        .allowsHitTesting(isDraggable)
+        .opacity(isDraggable ? 1 : 0)
         .setPointerStyle(.frameResize(position: .leading, directions: .all))
         .padding(.horizontal, Styles.sizeSmall)
         .environment(\.strokeColour, AnyShapeStyle(Color.white.opacity(store.isHovered ? 0.11 : 0)))
@@ -45,8 +45,9 @@ struct ScrubberCore: View {
         }
         //        .onDoubleTap { onDoubleTap() }
         .overlay {
-          if !modifierKeys.isHoldingOption {
+          if !isDraggable {
             IncrementTextField(store: store)
+              .border(Color.green.opacity(0.3))
           }
         }
         .monospacedDigit()
@@ -61,6 +62,10 @@ struct ScrubberCore: View {
 }
 
 extension ScrubberCore {
+  
+  private var isDraggable: Bool {
+    isDebugMode && store.isDragging
+  }
 
   /// Note: Native Stepper does not support varied increments
   /// based on modifier keys, will need to do this manually.

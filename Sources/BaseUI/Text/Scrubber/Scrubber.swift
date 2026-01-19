@@ -48,7 +48,7 @@ public struct TextScrubber: View, ValueFormattable {
     //      }
     //    }
     /// This uses `bindModel`, as it needs to flow both ways
-    .bindModel($store.value, to: $value)
+    .bindModel($store.value, to: $value.clampedIfNeeded(to: range))
 
     /// These are one-way only (from outside, into this View),
     /// so using `task` is fine
@@ -56,37 +56,5 @@ public struct TextScrubber: View, ValueFormattable {
     .task(id: range) { store.range = range }
     .task(id: strategy) { store.strategy = strategy }
   }
-}
-
-#endif
-
-#if DEBUG
-#Preview(traits: .size(.normal)) {
-  @Previewable @State var value: Double = 5.0
-  VStack(spacing: Styles.sizeMedium) {
-    TextScrubber(
-      "My Title",
-      value: $value,
-      range: 1...20,
-      //      step: 5
-    )
-
-    TextScrubber(
-      "My Title",
-      value: $value,
-      range: 1...20,
-      //      step: 5
-    )
-    .environment(\.isDebugMode, true)
-
-    TextColumns(6, alignment: .center) {
-      Text("123456")
-        .monospaced()
-    }
-    .environment(\.isDebugMode, true)
-  }
-  .font(.title)
-  .padding(80)
-  .background(.black.secondary)
 }
 #endif

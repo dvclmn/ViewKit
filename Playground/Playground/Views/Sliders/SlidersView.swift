@@ -20,7 +20,6 @@ struct SlidersDemoView: View {
         range: 1...30,
       )
       .formatValue { $0.displayString(places: 0) }
-      .isDebugMode(true)
       .padding(24)
       
 
@@ -32,6 +31,14 @@ struct SlidersDemoView: View {
         )
         .environment(\.fractionLength, 2)
 //        .formatValue { $0.displayString(places: 0) }
+        
+        TextScrubber(
+          "Option held",
+          value: $value,
+          range: 1...30,
+        )
+        .isDebugMode(true)
+//        .environment(\.fractionLength, 2)
         
         Text("Plain Text view")
         
