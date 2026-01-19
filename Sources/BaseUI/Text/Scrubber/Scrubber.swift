@@ -19,19 +19,14 @@ public struct TextScrubber: View, ValueFormattable {
   @Environment(\.fractionLength) private var fractionLength
   @Environment(\.isStepperShowing) private var isStepperShowing
 
-  //  @State private var isHovered: Bool = false
-
   @State private var store: ScrubberHandler
-  //  @State private var initialValue: CGFloat
   @GestureState private var dragDelta: CGFloat = .zero
 
   let title: String
   @Binding var value: Double
   let range: ClosedRange<Double>?
 
-  /// Have turned off step, at least for now, and focusing on the
-  /// increments of 1, 10 and 100.
-  //  let step: Double?
+  let strategy: ScrubStrategy
   let dragSensitivity: CGFloat
   let onDoubleTap: () -> Void
 
@@ -39,16 +34,15 @@ public struct TextScrubber: View, ValueFormattable {
     _ title: String,
     value: Binding<Double>,
     range: ClosedRange<Double>? = nil,
-    //    step: Double? = nil,
+    strategy: ScrubStrategy = .continuous,
     dragSensitivity: CGFloat = 0.2,
     onDoubleTap: @escaping () -> Void = {}
   ) {
     self.title = title
     self._value = value
+    self.strategy = strategy
     self._store = State(initialValue: ScrubberHandler(initialValue: value.wrappedValue))
-    //    self._initialValue = State(initialValue: CGFloat(value.wrappedValue))
     self.range = range
-    //    self.step = step
     self.dragSensitivity = dragSensitivity
     self.onDoubleTap = onDoubleTap
   }
@@ -60,24 +54,18 @@ public struct TextScrubber: View, ValueFormattable {
         ValueEditor()
 
         if isStepperShowing {
-          Stepper(
-            title,
-            value: valueClamped,
-            step: store.stepSize(modifiers: modifierKeys),
-          )
-          /// Don't need extra label, this Stepper is in a broader labeled View
-          .labelsHidden()
+          StepperView()
         }
       }
     }
-    .sensoryFeedback(.alignment, trigger: value) {
-      oldValue,
-      newValue in
-      /// If no step provided, no haptics will occur.
-      /// Only allow haptic feedback when actively dragging
-      guard isDragging else { return false }
-      return HapticPreset.perStep(stepSize).shouldFire(oldValue, newValue)
-    }
+    //    .sensoryFeedback(.alignment, trigger: value) {
+    //      oldValue,
+    //      newValue in
+    //      /// If no step provided, no haptics will occur.
+    //      /// Only allow haptic feedback when actively dragging
+    //      guard isDragging else { return false }
+    //      return HapticPreset.perStep(stepSize).shouldFire(oldValue, newValue)
+    //    }
     .backgroundTint(isDragging ? Color.accentColor.opacity(0.1) : nil)
     .animation(Styles.animationQuickNSmooth, value: isDragging)
 
@@ -98,24 +86,25 @@ public struct TextScrubber: View, ValueFormattable {
       }
     }
     .task(id: range) { store.range = range }
+    .task(id: strategy) { store.strategy = strategy }
   }
 }
 
 extension TextScrubber {
   private var formattedString: String { formatValue(value) }
 
-//  private var valueClamped: Binding<Double> {
-//    $value.clampedIfNeeded(to: range)
-//  }
+  //  private var valueClamped: Binding<Double> {
+  //    $value.clampedIfNeeded(to: range)
+  //  }
   //  private var places: NumberFormatStyleConfiguration.Precision { .fractionLength(0...2) }
 
   @ViewBuilder
   private func ValueEditor() -> some View {
-    
+
     /// This is both providing layout (TextField is overlaid),
     /// and also a draggable, non-editable view of the value
     Text(store.valueString(places: fractionLength))
-//    Text(valueClamped.wrappedValue.displayString(places: fractionLength ?? 0))
+      //    Text(valueClamped.wrappedValue.displayString(places: fractionLength ?? 0))
       .allowsHitTesting(isHoldingOption)
       .opacity(isHoldingOption ? 1 : 0)
       .setPointerStyle(.frameResize(position: .leading, directions: .all))
@@ -124,19 +113,44 @@ extension TextScrubber {
       .overlay {
         if !isHoldingOption {
           IncrementTextField(
+            store: store,
             title: title,
-//            value: valueClamped
+            //            value: valueClamped
           )
         }
       }
       .monospacedDigit()
   }
 
+  /// Note: Native Stepper does not support varied increments
+  /// based on modifier keys, will need to do this manually.
+  @ViewBuilder
+  private func StepperView() -> some View {
+    Group {
+      if let range {
+        Stepper(
+          title,
+          value: $value,
+          in: range,
+          step: strategy.stepSize
+        )
+
+      } else {
+        Stepper(
+          title,
+          value: $value,
+          step: strategy.stepSize
+        )
+      }
+    }  // END group
+    /// Don't need extra label, this Stepper is in a broader labeled View
+    .labelsHidden()
+
+  }
+
   private var isHoldingOption: Bool {
     isDebugMode || modifierKeys == .option
   }
-
-
 
   private var isDragging: Bool { dragDelta != .zero }
 
@@ -208,4 +222,3 @@ extension TextScrubber {
   .background(.black.secondary)
 }
 #endif
-

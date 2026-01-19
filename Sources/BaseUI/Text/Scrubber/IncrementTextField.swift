@@ -20,20 +20,19 @@ struct IncrementTextField: View {
       format: .number.precision(.fractionLength(fractionLength ?? 0))
     )
     .labelsHidden()
-    .onKeyPress(
-      keys: [.upArrow, .downArrow],
-      phases: .all
-    ) { press in
-      if press.key == .upArrow {
-        return updateValue(.up)
-
-      } else if press.key == .downArrow {
-        return updateValue(.down)
-
-      } else {
-        return .ignored
-      }
-    }
-
+//    .onKeyPress(
+//      keys: [.upArrow, .downArrow],
+//      phases: .all
+//    ) { press in
+//      if press.key == .upArrow {
+//        return updateValue(.up)
+//
+//      } else if press.key == .downArrow {
+//        return updateValue(.down)
+//
+//      } else {
+//        return .ignored
+//      }
+//    }
   }
 }

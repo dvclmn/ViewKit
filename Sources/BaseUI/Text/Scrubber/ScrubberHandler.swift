@@ -12,6 +12,8 @@ import SwiftUI
 final class ScrubberHandler {
   var value: Double = .zero
   var range: ClosedRange<Double>?
+  var strategy: ScrubStrategy = .continuous
+  
   var initialValue: CGFloat
 
   var isHovered: Bool = false
@@ -41,9 +43,7 @@ extension ScrubberHandler {
     modifiers: Modifiers
   ) {
     let delta = stepSize(modifiers: modifiers)
-
     let val = direction.apply(to: value, by: delta).clampedIfNeeded(to: range)
-
     self.value = val
   }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum IncrementTier: Int, CaseIterable {
+public enum IncrementGranularity: Int, CaseIterable {
   case fine
   case medium
   case coarse
@@ -24,7 +24,7 @@ public struct IncrementSteps: Sendable {
     coarse: 100
   )
 
-  public subscript(_ tier: IncrementTier) -> CGFloat {
+  public subscript(_ tier: IncrementGranularity) -> CGFloat {
     switch tier {
       case .fine: return fine
       case .medium: return medium
@@ -44,7 +44,7 @@ public struct ModifierIncrementMapping: Sendable {
     coarse: .command
   )
 
-  public func tier(for modifiers: Modifiers) -> IncrementTier {
+  public func tier(for modifiers: Modifiers) -> IncrementGranularity {
     if modifiers.contains(coarse) { return .coarse }
     if modifiers.contains(medium) { return .medium }
     return .fine
