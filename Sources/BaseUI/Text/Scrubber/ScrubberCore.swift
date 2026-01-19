@@ -91,9 +91,15 @@ struct ScrubberCore: View {
 
 extension ScrubberCore {
   
-  private var isPullingLeft: Bool {
-    store.
-  }
+//  private var isPullingLeft: Bool {
+//    /// This isn't a 'thing' with a range
+//    guard let range = store.range else { return false }
+//    let minCap = 2.0
+//    let totalWidth = store.value - (minCap * 2)
+//    guard range.contains((minCap * 2) + )
+//    let buffer = max()
+//    store.isDragging &&
+//  }
 
   private var isDraggableAndHovered: Bool {
     isDraggable && store.isHovered

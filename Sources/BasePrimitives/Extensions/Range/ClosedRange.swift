@@ -87,4 +87,6 @@ extension ClosedRange where Bound: BinaryFloatingPoint {
   public var halfway: Self.Bound {
     (upperBound + lowerBound) / 2
   }
+
+  public var length: Self.Bound { upperBound - lowerBound }
 }

@@ -89,3 +89,9 @@ extension Collection {
     startIndex..<endIndex
   }
 }
+
+extension Range where Bound: BinaryFloatingPoint {
+  public var length: Self.Bound {
+    upperBound - lowerBound
+  }
+}
