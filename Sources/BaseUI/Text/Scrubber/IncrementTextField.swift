@@ -9,14 +9,14 @@ import SwiftUI
 
 struct IncrementTextField: View {
   @Environment(\.fractionLength) private var fractionLength
-
+  @Bindable var store: ScrubberHandler
   let title: String
-  @Binding var value: Double
+//  @Binding var value: Double
   var body: some View {
 
     TextField(
       title,
-      value: $value,
+      value: $store.value,
       format: .number.precision(.fractionLength(fractionLength ?? 0))
     )
     .labelsHidden()

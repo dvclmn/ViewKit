@@ -63,7 +63,7 @@ public struct TextScrubber: View, ValueFormattable {
           Stepper(
             title,
             value: valueClamped,
-            step: stepSize,
+            step: store.stepSize(modifiers: modifierKeys),
           )
           /// Don't need extra label, this Stepper is in a broader labeled View
           .labelsHidden()
@@ -104,14 +104,18 @@ public struct TextScrubber: View, ValueFormattable {
 extension TextScrubber {
   private var formattedString: String { formatValue(value) }
 
-  private var valueClamped: Binding<Double> {
-    $value.clampedIfNeeded(to: range)
-  }
+//  private var valueClamped: Binding<Double> {
+//    $value.clampedIfNeeded(to: range)
+//  }
   //  private var places: NumberFormatStyleConfiguration.Precision { .fractionLength(0...2) }
 
   @ViewBuilder
   private func ValueEditor() -> some View {
-    Text(valueClamped.wrappedValue.displayString(places: fractionLength ?? 0))
+    
+    /// This is both providing layout (TextField is overlaid),
+    /// and also a draggable, non-editable view of the value
+    Text(store.valueString(places: fractionLength))
+//    Text(valueClamped.wrappedValue.displayString(places: fractionLength ?? 0))
       .allowsHitTesting(isHoldingOption)
       .opacity(isHoldingOption ? 1 : 0)
       .setPointerStyle(.frameResize(position: .leading, directions: .all))
@@ -119,7 +123,10 @@ extension TextScrubber {
 
       .overlay {
         if !isHoldingOption {
-          IncrementTextField(title: title, value: valueClamped)
+          IncrementTextField(
+            title: title,
+//            value: valueClamped
+          )
         }
       }
       .monospacedDigit()
@@ -129,17 +136,7 @@ extension TextScrubber {
     isDebugMode || modifierKeys == .option
   }
 
-  private var stepSize: CGFloat {
-    return {
-      if modifierKeys == .command {
-        100
-      } else if modifierKeys == .shift {
-        10
-      } else {
-        1
-      }
-    }()
-  }
+
 
   private var isDragging: Bool { dragDelta != .zero }
 
@@ -164,10 +161,10 @@ extension TextScrubber {
         dragDelta = translation * sensitivity
       }
       .onChanged { _ in
-        value = clampedValue(from: initialValue, delta: dragDelta)
+        value = clampedValue(from: store.initialValue, delta: dragDelta)
       }
       .onEnded { _ in
-        initialValue = CGFloat(value)
+        store.initialValue = CGFloat(value)
       }
   }
 
@@ -211,3 +208,4 @@ extension TextScrubber {
   .background(.black.secondary)
 }
 #endif
+

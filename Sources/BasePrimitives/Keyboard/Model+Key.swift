@@ -12,7 +12,6 @@ import SwiftUI
 extension KBShortcut {
 
   /// These are the **non-Modifier** keys
-
   public enum Key: ShortcutKey, CaseIterable {
     static public let allCases: [Self] = [
       .character("a"),

@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 public struct EditorStylesModifier: ViewModifier {
   public init() {}
   public func body(content: Content) -> some View {

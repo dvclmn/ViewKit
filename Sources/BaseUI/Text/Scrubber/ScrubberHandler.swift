@@ -23,26 +23,40 @@ final class ScrubberHandler {
 
 extension ScrubberHandler {
 
+  func stepSize(modifiers: Modifiers) -> CGFloat {
+    let increments = NumericIncrements.standard
+    return increments.stepSize(for: modifiers)
+  }
+
+  func valueString(places: Int?) -> String {
+    valueClamped.displayString(places: places ?? 0)
+  }
   var valueClamped: Double {
     guard let range else { return value }
     return value.clamped(to: range)
   }
-  
-//  var valueClampedBinding: Binding<Double> {
-//    value.clampedIfNeeded(to: range)
-//  }
 
-  func updateValue(_ direction: Direction) -> KeyPress.Result {
+  func updateValue(
+    _ direction: Direction,
+    modifiers: Modifiers
+  ) {
+    let delta = stepSize(modifiers: modifiers)
 
-    switch direction {
-      case .up:
-        value += stepSize
-      case .down:
-        value -= stepSize
-      case .left, .right:
-        print("\(direction) not supported for this action.")
-        return .ignored
-    }
+    let val = direction.apply(to: value, by: delta).clampedIfNeeded(to: range)
+
+    self.value = val
+  }
+
+  //  var valueClampedBinding: Binding<Double> {
+  //    value.clampedIfNeeded(to: range)
+  //  }
+
+  func handleKeyPress(
+    _ direction: Direction,
+    modifiers: Modifiers
+  ) -> KeyPress.Result {
+    guard direction.isVertical else { return .ignored }
+    updateValue(direction, modifiers: modifiers)
     return .handled
   }
 

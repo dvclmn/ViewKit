@@ -30,7 +30,6 @@ extension EnvironmentValues {
   @Entry public var modifierKeys: Modifiers = []
 }
 
-
 public typealias Keys = Set<KeyEquivalent>
 public typealias Modifiers = ModifierKeysCompatible
 
