@@ -13,13 +13,23 @@ struct SlidersDemoView: View {
   @State private var value: Double = 5
   var body: some View {
 
-    VStack(alignment: .leading) {
-      TextScrubber(
-        "Radius",
-        value: $value,
-        range: 1...30,
-      )
-      .formatValue { $0.displayString(places: 0) }
+    VStack(alignment: .trailing) {
+      Group {
+        TextScrubber(
+          "Radius",
+          value: $value,
+          range: 1...30,
+        )
+        .isDebugMode(false)
+        
+        TextScrubber(
+          "Debug scrubber",
+          value: $value,
+          range: 1...30,
+        )
+        .formatValue { $0.displayString(places: 0) }
+        .isDebugMode(true)
+      } // END group
       .padding(24)
       
 
@@ -29,6 +39,7 @@ struct SlidersDemoView: View {
           value: $value,
           range: 1...30,
         )
+        .isDebugMode(false)
         .environment(\.fractionLength, 2)
 //        .formatValue { $0.displayString(places: 0) }
         

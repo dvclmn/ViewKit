@@ -6,24 +6,38 @@
 //
 
 import SwiftUI
+import CoreTools
 
 struct IncrementTextField: View {
   @Environment(\.fractionLength) private var fractionLength
   @Environment(\.modifierKeys) private var modifierKeys
+  @Environment(\.isDebugMode) private var isDebugMode
+  
   @Bindable var store: ScrubberHandler
   var body: some View {
 
     TextField(
       store.title,
       value: $store.value,
-      format: .number.precision(.fractionLength(fractionLength ?? 0))
+//      value: isDraggable ? .constant(nil) : $store.value,
+      format: .number.precision(.fractionLength(fractionLength ?? 0)),
+      prompt: isDraggable ? Text("") : nil,
     )
     .labelsHidden()
+    
+    .allowsHitTesting(!isDraggable)
+    
     .onKeyPress(keys: [.upArrow, .downArrow]) { press in
       store.handleKeyPress(
         key: press.key,
         modifiers: modifierKeys
       )
     }
+  }
+}
+
+extension IncrementTextField {
+  private var isDraggable: Bool {
+    (isPreview && isDebugMode) || modifierKeys.isHoldingOption
   }
 }

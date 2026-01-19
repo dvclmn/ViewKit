@@ -11,8 +11,6 @@ import SwiftUI
 
 #if canImport(AppKit)
 public struct TextScrubber: View, ValueFormattable {
-  @Environment(\.isDebugMode) private var isDebugMode
-
   @State private var store: ScrubberHandler
 
   let title: String
@@ -39,14 +37,14 @@ public struct TextScrubber: View, ValueFormattable {
     LabeledContent(store.title) {
       ScrubberCore(store: store)
     }
-    
+
     /// Handle case where `value` changes externally
-    //    .task(id: value) {
-    //      /// Maintain fresh initial state, if changed
-    //      if dragDelta == .zero {
-    //        updateIfChanged(&store.initialValue, to: value)
-    //      }
-    //    }
+//    .task(id: value) {
+//      /// Maintain fresh initial state, if changed
+//      if dragDelta == .zero {
+//        updateIfChanged(&store.initialValue, to: value)
+//      }
+//    }
     /// This uses `bindModel`, as it needs to flow both ways
     .bindModel($store.value, to: $value.clampedIfNeeded(to: range))
 

@@ -17,8 +17,6 @@ extension View {
   }
 
   public func isDebugMode(_ mode: Bool) -> some View {
-    #if DEBUG
     self.environment(\.isDebugMode, mode)
-    #endif
   }
 }

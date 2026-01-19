@@ -30,6 +30,10 @@ final class ScrubberHandler {
 }
 
 extension ScrubberHandler {
+  
+  func isDragReady(_ isDebugMode: Bool, modifiers: Modifiers) -> Bool {
+    (isPreview && isDebugMode) || modifiers.isHoldingOption
+  }
 
   /// This returns a 1/10/100 increment based on modifiers,
   /// unless a specific `stepped` Strategy is selected
@@ -38,9 +42,9 @@ extension ScrubberHandler {
   }
 
   func valueString(places: Int?) -> String {
-    valueClamped.displayString(places: places ?? 0)
+    valueClampedIfNeeded.displayString(places: places ?? 0)
   }
-  var valueClamped: Double {
+  var valueClampedIfNeeded: Double {
     guard let range else { return value }
     return value.clamped(to: range)
   }

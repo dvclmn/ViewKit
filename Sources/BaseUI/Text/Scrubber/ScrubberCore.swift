@@ -23,17 +23,22 @@ struct ScrubberCore: View {
       /// This is both providing layout (TextField is overlaid),
       /// and also a draggable, non-editable view of the value
       Text(store.valueString(places: fractionLength))
+        /// This allows the drag behaviour to work correctly
+        .textSelection(.disabled)
         //    Text(valueClamped.wrappedValue.displayString(places: fractionLength ?? 0))
-        .allowsHitTesting(isDraggable)
+
         .opacity(isDraggable ? 1 : 0)
-        .setPointerStyle(.frameResize(position: .leading, directions: .all))
         .padding(.horizontal, Styles.sizeSmall)
-        .environment(\.strokeColour, AnyShapeStyle(Color.white.opacity(store.isHovered ? 0.11 : 0)))
+        //        .environment(\.strokeColour, AnyShapeStyle(Color.white.opacity(store.isHovered ? 0.11 : 0)))
+        .foregroundStyle(.blue)
+
         //        .backgroundTint(isDragging ? Color.accentColor.opacity(0.1) : nil)
         //        .animation(Styles.animationQuickNSmooth, value: isDragging)
-
+        .contentShape(.rect)
+        .allowsHitTesting(isDraggable)
+        .setPointerStyle(.frameResize(position: .leading, directions: .all))
         .onHover { store.isHovered = $0 }
-        .gesture(ScrubDragGesture(store: store))
+        .gesture(ScrubDragGesture(store: store), isEnabled: isDraggable)
         .sensoryFeedback(.alignment, trigger: store.value) {
           oldValue,
           newValue in
@@ -44,27 +49,41 @@ struct ScrubberCore: View {
           return preset.shouldFire(oldValue, newValue)
         }
         //        .onDoubleTap { onDoubleTap() }
+
         .overlay {
-          if !isDraggable {
-            IncrementTextField(store: store)
-              .border(Color.green.opacity(0.3))
-          }
+          //          if !isDraggable {
+          IncrementTextField(store: store)
+          //          }
         }
         .monospacedDigit()
 
+        .background {
+          if isDraggable {
+            Rectangle().fill(Color.black.tertiary)
+          }
+        }
+
       if components.contains(.stepper) {
         StepperView()
+          .disabled(isDraggable)
+        //        if isDraggable {
+        //          Image(systemName: "arrow.left.and.right")
+        //            .font(.title2)
+        //            .foregroundStyle(.tertiary)
+        //        } else {
+        //          StepperView()
+        //
+        //        }
       }
     }  // END hstack
 
-    
   }
 }
 
 extension ScrubberCore {
-  
+
   private var isDraggable: Bool {
-    isDebugMode && store.isDragging
+    (isPreview && isDebugMode) || modifierKeys.isHoldingOption
   }
 
   /// Note: Native Stepper does not support varied increments

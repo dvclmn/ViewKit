@@ -36,7 +36,6 @@ struct ScrubDragGesture: Gesture {
       }
       .onChanged { _ in
         store.value = clampedValue(from: store.initialValue, delta: dragDelta)
-        
         updateIfChanged(&store.isDragging, to: true)
       }
       .onEnded { _ in
