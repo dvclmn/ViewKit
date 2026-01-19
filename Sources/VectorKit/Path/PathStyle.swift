@@ -8,13 +8,12 @@
 import CoreTools
 import SwiftUI
 
-enum PathStyleKind: String, CaseIterable, Pickable {
-  static var pickerLabel: QuickLabel { "Path Style" }
-
-  case line
-  case smooth
-  case stamped
-}
+//enum PathStyleKind: String, CaseIterable, Pickable {
+//  static var pickerLabel: QuickLabel { "Path Style" }
+//  case line
+//  case smooth
+//  case stamped
+//}
 
 @CaseDetection
 @AssociatedValues
@@ -22,24 +21,19 @@ enum PathStyleKind: String, CaseIterable, Pickable {
 public enum PathStyle: Sendable, Hashable, Codable {
   case line
   case smooth
-  case stamped(StampedConfig)
+  case stamped(shape: PointShape, radius: CGFloat)
   //  case stamped(shape: PointShape, radius: CGFloat, range: ClosedRange<Double>)
   //  public var id: String { rawValue }
 
-  public static var stampedDefault: Self { .stamped(.init()) }
+  public static var stampedDefault: Self { .stamped(shape: .circle, radius: 3) }
 }
 
 extension PathStyle {
-  var kind: PathStyleKind {
-    switch self {
-      case .line: .line
-      case .smooth: .smooth
-      case .stamped: .stamped
-    }
-  }
 
-  static func make(
-    kind: PathStyleKind,
+  public var kind: PathStyle.Meta { Self.Meta(self) }
+
+  public static func make(
+    kind: PathStyle.Meta,
     preserving old: PathStyle?
   ) -> PathStyle {
     switch kind {
@@ -56,17 +50,17 @@ extension PathStyle {
         return .stamped(shape: shape, radius: radius)
     }
   }
-  
-  var stampedConfig: Binding<StampedConfig>? {
-    guard case let .stamped(shape, radius) = self else { return nil }
-    
-    return Binding(
-      get: { StampedConfig(shape: shape, radius: radius) },
-      set: { new in
-        self = .stamped(shape: new.shape, radius: new.radius)
-      }
-    )
-  }
+
+  //  var stampedConfig: Binding<StampedConfig>? {
+  //    guard case let .stamped(shape, radius) = self else { return nil }
+  //
+  //    return Binding(
+  //      get: { StampedConfig(shape: shape, radius: radius) },
+  //      set: { new in
+  //        self = .stamped(shape: new.shape, radius: new.radius)
+  //      }
+  //    )
+  //  }
 
   //  var stampedRadius: CGFloat? {
   //    if case let .stamped(_, radius) = self {
