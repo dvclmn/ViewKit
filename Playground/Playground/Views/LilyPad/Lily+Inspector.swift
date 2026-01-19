@@ -12,7 +12,7 @@ import VectorKit
 struct LilyInspectorView: View {
   @Environment(AppHandler.self) private var store
 
-  let formatter: NumberFormatter = .init()
+//  let formatter: NumberFormatter = .init()
 
   var body: some View {
     @Bindable var store = store
@@ -25,7 +25,13 @@ struct LilyInspectorView: View {
         //      if let radius = Binding(radiusBinding) {
         if store.pathStyle.style.isStamped {
           QuickPicker(item: $store.pathStyle.shape)
-          TextField("Radius", value: $store.pathStyle.radius, formatter: formatter)
+          TextScrubber(
+            "Radius",
+            value: $store.pathStyle.radius,
+            range: store.pathStyle.range,
+            strategy: .continuous
+          )
+//          TextField("Radius", value: $store.pathStyle.radius, formatter: formatter)
         }
         //        TextField("Radius", value: radius, format: .)
         //      }
@@ -46,7 +52,7 @@ struct LilyInspectorView: View {
 
 extension LilyInspectorView {
 
-  private var styleBinding: Binding<PathStylePicker> {
+  private var styleBinding: Binding<PathStyle.Meta> {
     Binding {
       store.pathStyle.style
       //      PathStylePicker(from: store.pathStyle)

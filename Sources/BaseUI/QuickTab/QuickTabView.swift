@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 13/2/2025.
 //
 
-//
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
 public struct QuickTabView<TabItem: LabeledItem & Hashable, Content: View>: View
 where TabItem: CaseIterable, TabItem.AllCases: RandomAccessCollection {

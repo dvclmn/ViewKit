@@ -9,7 +9,8 @@ import BasePrimitives
 import LayoutKit
 import SwiftUI
 
-public struct ItemScrollable<Content: View, Item: Pickable & Shortcuttable & Equatable>: View {
+public struct ItemScrollable<Content: View, Item: Pickable & Equatable>: View {
+//public struct ItemScrollable<Content: View, Item: Pickable & Shortcuttable & Equatable>: View {
   //  @Environment(\.strokeConfig) private var strokeConfig
   //  @Environment(\.labelConfig) private var labelForeground
   //  @Environment(\.isItemSelected) private var isItemSelected
@@ -57,9 +58,11 @@ public struct ItemScrollable<Content: View, Item: Pickable & Shortcuttable & Equ
           spacing: Styles.sizeMicro
         ) {
           ForEach(items) { item in
-            OptionalShortcutView(item.keyboardShortcut) {
-              ItemButton(scrolledItem: $scrolledItem, item: item, content: content)
-            }
+#warning("Need to fix Shortcuttable back up")
+            Text("Need to fix shortcuts")
+//            OptionalShortcutView(item.keyboardShortcut) {
+//              ItemButton(scrolledItem: $scrolledItem, item: item, content: content)
+//            }
           }  // END forach
         }  // END dynamic layout
         .scrollTargetLayout()

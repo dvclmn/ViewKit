@@ -9,15 +9,9 @@ import SwiftUI
 import ToolKit
 import VectorKit
 
-enum PlaygroundTab: String, LabeledItem, CaseIterable, Hashable, Codable {
-  case home
-  case lilypad
-  case sliders
-}
-
 struct ContentView: View {
   @Environment(AppHandler.self) private var store
-  
+
   var body: some View {
     @Bindable var store = store
     QuickTabView(tab: store.prefBinding(\.tab)) { tab in
@@ -28,7 +22,6 @@ struct ContentView: View {
       }
     }
     .background(Color.black.opacity(0.7))
-
   }
 }
 
@@ -38,7 +31,22 @@ struct ContentView: View {
   ContentView()
     .environment(store)
     .onAppear {
-      store.setPref(\.tab, value: .sliders)
+      store.setPref(\.tab, value: .lilypad)
+
+      guard
+        let artwork = try? ImportHandler.loadData(
+          named: "lilypadDrawing02",
+          withExtension: "json",
+          asType: DrawingData.self
+        )
+      else {
+        print("Couldn't load test data")
+        return
+      }
+
+      store.setDrawing(\.self, value: artwork)
+      
+
     }
 }
 #endif

@@ -43,7 +43,7 @@ struct LilyPadDemoView: View {
       } didUpdatePressure: { pressure in
         store.pressure = pressure
       }
-//      .printInfo(.applicationSupport)
+      //      .printInfo(.applicationSupport)
       //      .focusable()
       //      .focused($isFocused)
       //      .onExitCommand {
@@ -154,20 +154,6 @@ extension LilyPadDemoView {
   @Previewable @State var store = AppHandler()
   LilyPadDemoView()
     .environment(store)
-    .onAppear {
-      guard
-        let artwork = try? ImportHandler.loadData(
-          named: "lilypadDrawing02",
-          withExtension: "json",
-          asType: DrawingData.self
-        )
-      else {
-        print("Couldn't load test data")
-        return
-      }
 
-      store.setDrawing(\.self, value: artwork)
-
-    }
 }
 #endif

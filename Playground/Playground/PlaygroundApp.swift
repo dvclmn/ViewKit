@@ -16,13 +16,19 @@ struct PlaygroundApp: App {
       ContentView()
         .environment(store)
         .readModifierKeys()
-//        .readViewportSize(mode: .debounce(0.2))
+      //        .readViewportSize(mode: .debounce(0.2))
     }
     .commands {
       CommandGroup(after: .newItem) {
         Toggle("Toggle Drawing", isOn: $store.isDrawingEnabled)
           .keyboardShortcut("a", modifiers: .shift)
       }
+
+//      store.preferences.tab.tabShortcut { tab in
+//        Task { @MainActor in
+//          store.setPref(\.tab, value: tab)
+//        }
+//      }
     }
   }
 }

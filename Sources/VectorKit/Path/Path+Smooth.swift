@@ -5,16 +5,25 @@
 //  Created by Dave Coleman on 17/1/2026.
 //
 
+import CoreTools
 import SwiftUI
-import EnumMacros
 
 @CaseDetection
 @AssociatedValues
+@MetaEnum
 public enum PathStyle {
   case line
   case smooth
   case stamped(shape: PointShape, radius: CGFloat)
+//  case stamped(shape: PointShape, radius: CGFloat, range: ClosedRange<Double>)
   //  public var id: String { rawValue }
+
+}
+
+extension PathStyle.Meta: Pickable, Identifiable {
+  public var id: String { name }
+  public static var pickerLabel: QuickLabel { "Path Style" }
+  public var label: QuickLabel { .init(self.name) }
 }
 
 extension Array where Element == CGPoint {
@@ -44,6 +53,7 @@ extension Array where Element == CGPoint {
         processSmoothPath(path: &path)
 
       case .stamped(let shape, let radius):
+//      case .stamped(let shape, let radius, let range):
         processStampedPath(
           shouldDropFirst: shouldDropFirst,
           shape: shape,

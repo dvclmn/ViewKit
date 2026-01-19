@@ -12,8 +12,8 @@ import CoreTools
 
 @Observable
 final class AppHandler {
-  @ObservationIgnored @Shared(.drawing) var drawing
-  @ObservationIgnored @Shared(.preferences) var preferences
+  @ObservationIgnored @Shared(.drawing) var drawing: DrawingData
+  @ObservationIgnored @Shared(.preferences) var preferences: Preferences
   
   var activeStroke: ActiveStroke?
   var strokeDensity: Int = 3 // Stride

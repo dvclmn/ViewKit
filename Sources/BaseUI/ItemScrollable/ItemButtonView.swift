@@ -9,7 +9,8 @@
 import BasePrimitives
 import SwiftUI
 
-struct ItemButton<Content: View, Item: Pickable & Shortcuttable>: View {
+struct ItemButton<Content: View, Item: Pickable>: View {
+//struct ItemButton<Content: View, Item: Pickable & Shortcuttable>: View {
 
   @Binding var scrolledItem: Item
   let item: Item

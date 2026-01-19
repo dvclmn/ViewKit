@@ -9,7 +9,8 @@ import BasePrimitives
 import SwiftUI
 
 public struct QuickPicker<RowContent: View, Item>: View
-where Item: Pickable & Shortcuttable & Hashable {
+where Item: Pickable & Hashable {
+//where Item: Pickable & Shortcuttable & Hashable {
 
   public typealias PickerOutput = (Item, Bool) -> RowContent
   @Environment(\.explicitHeight) private var explicitHeight

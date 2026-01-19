@@ -8,7 +8,7 @@
 import SwiftUI
 import BasePrimitives
 
-public enum ExampleTab: String, Pickable, Shortcuttable {
+public enum ExampleTab: String, Pickable {
   
   public static let pickerLabel: QuickLabel = QuickLabel("Example Tab")
   case blim

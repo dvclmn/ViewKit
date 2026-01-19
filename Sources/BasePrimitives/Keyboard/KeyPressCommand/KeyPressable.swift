@@ -32,19 +32,3 @@ extension KeyPressable {
     return nil
   }
 }
-
-public protocol Shortcuttable {
-  var keyboardShortcut: KeyboardShortcut? { get }
-}
-
-extension Shortcuttable where Self: CaseIterable & Equatable, Self.AllCases.Index == Int {
-  public var keyboardShortcut: KeyboardShortcut? {
-    guard let index = Self.allCases.firstIndex(of: self), index < 9 else {
-      return nil
-    }
-    return KeyboardShortcut(
-      KeyEquivalent(Character(String(index + 1))),
-      modifiers: .command
-    )
-  }
-}

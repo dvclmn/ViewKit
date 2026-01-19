@@ -28,7 +28,7 @@ struct ActiveStroke {
 
 nonisolated struct Stroke: Hashable, Codable {
   let id: UUID
-  var phase: InteractionPhase = .none
+//  var phase: InteractionPhase = .none
   let points: [CGPoint]
   
   enum CodingKeys: String, CodingKey {
@@ -45,7 +45,7 @@ nonisolated struct Stroke: Hashable, Codable {
 }
 
 extension Stroke {
-  mutating func setPhase(_ phase: InteractionPhase) {
-    self.phase = phase
-  }
+//  mutating func setPhase(_ phase: InteractionPhase) {
+//    self.phase = phase
+//  }
 }

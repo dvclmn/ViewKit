@@ -25,5 +25,3 @@ extension LabeledItem where Self: RawRepresentable, Self.RawValue == String {
   public var label: QuickLabel { .init(rawValue.capitalized) }
   public var name: String { rawValue.capitalized }
 }
-
-//extension LabeledItem where Self: Ca
