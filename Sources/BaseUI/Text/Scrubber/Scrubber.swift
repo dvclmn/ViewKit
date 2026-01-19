@@ -26,7 +26,7 @@ public struct TextScrubber: View, ValueFormattable {
 
   let strategy: ScrubStrategy
 //  let dragSensitivity: CGFloat
-  let onDoubleTap: () -> Void
+//  let onDoubleTap: () -> Void
 
   public init(
     _ title: String,
@@ -34,7 +34,7 @@ public struct TextScrubber: View, ValueFormattable {
     range: ClosedRange<Double>? = nil,
     strategy: ScrubStrategy = .continuous,
 //    dragSensitivity: CGFloat = 0.2,
-    onDoubleTap: @escaping () -> Void = {}
+//    onDoubleTap: @escaping () -> Void = {}
   ) {
     self.title = title
     self._value = value
@@ -44,7 +44,7 @@ public struct TextScrubber: View, ValueFormattable {
     )
     self.range = range
 //    self.dragSensitivity = dragSensitivity
-    self.onDoubleTap = onDoubleTap
+//    self.onDoubleTap = onDoubleTap
   }
 
   public var body: some View {
@@ -52,12 +52,12 @@ public struct TextScrubber: View, ValueFormattable {
       ScrubberCore(store: store)
     }
     /// Handle case where `value` changes externally
-    .task(id: value) {
-      /// Maintain fresh initial state, if changed
-      if dragDelta == .zero {
-        updateIfChanged(&store.initialValue, to: value)
-      }
-    }
+//    .task(id: value) {
+//      /// Maintain fresh initial state, if changed
+//      if dragDelta == .zero {
+//        updateIfChanged(&store.initialValue, to: value)
+//      }
+//    }
     /// This uses `bindModel`, as it needs to flow both ways
     .bindModel($store.value, to: $value)
 

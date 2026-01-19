@@ -29,16 +29,22 @@ extension ScrubStrategy {
   }
 }
 
-extension HapticPreset {
-  public static func scrubPreset(
-    from scrubStrategy: ScrubStrategy,
-    in range: ClosedRange<Double>,
-    envOverride: Self?
-  ) -> Self {
+extension ScrubStrategy {
+  public func scrubPreset(
+    //    from scrubStrategy: ScrubStrategy,
+    in range: ClosedRange<Double>?,
+    envOverride: HapticPreset?
+  ) -> HapticPreset {
     if let envOverride { return envOverride }
-    return switch scrubStrategy {
-      case .continuous: .boundary(range)
-      case .stepped(let value): .perStep(value)
+    switch self {
+      case .continuous:
+        guard let range else {
+          return HapticPreset.none
+        }
+        return HapticPreset.boundary(range)
+        
+      case .stepped(let value):
+        return HapticPreset.perStep(value)
     }
   }
 }

@@ -31,23 +31,20 @@ struct ScrubberCore: View {
 //        .animation(Styles.animationQuickNSmooth, value: isDragging)
       
         .onHover { store.isHovered = $0 }
-        .gesture(digitDragGesture(for: layoutAxis ?? .horizontal))
+        .gesture(ScrubDragGesture(store: store))
         .sensoryFeedback(.alignment, trigger: store.value) {
           oldValue,
           newValue in
           /// If no step provided, no haptics will occur.
           /// Only allow haptic feedback when actively dragging
-          guard store.is else { return false }
-          return HapticPreset.perStep(stepSize).shouldFire(oldValue, newValue)
+          guard store.isDragging else { return false }
+          let preset = store.strategy.scrubPreset(in: store.range, envOverride: nil)
+          return preset.shouldFire(oldValue, newValue)
         }
-        .onDoubleTap { onDoubleTap() }
+//        .onDoubleTap { onDoubleTap() }
         .overlay {
           if !modifierKeys.isHoldingOption {
-            IncrementTextField(
-              store: store,
-              title: store.title,
-              //            value: valueClamped
-            )
+            IncrementTextField(store: store)
           }
         }
         .monospacedDigit()
@@ -78,8 +75,8 @@ extension ScrubberCore {
         
       } else {
         Stepper(
-          title,
-          value: $value,
+          store.title,
+          value: $store.value,
           step: store.stepSize(modifiers: modifierKeys)
         )
       }

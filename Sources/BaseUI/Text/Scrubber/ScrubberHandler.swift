@@ -14,15 +14,18 @@ final class ScrubberHandler {
   var value: Double = .zero
   var range: ClosedRange<Double>?
   var strategy: ScrubStrategy = .continuous
+
+  var isDragging: Bool = false
   
-//  var initialValue: Double
+  /// For gesture state
+  var initialValue: Double
 
   var isHovered: Bool = false
 
   init(
-//    initialValue: Double
+    initialValue: Double
   ) {
-//    self.initialValue = initialValue
+    self.initialValue = initialValue
   }
 }
 

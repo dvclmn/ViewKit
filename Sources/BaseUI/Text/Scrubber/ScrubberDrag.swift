@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ScrubDragGesture: Gesture {
   @Environment(\.modifierKeys) private var modifierKeys
-  @State private var initialValue: Double = .zero
+//  @State private var initialValue: Double
   @GestureState private var dragDelta: CGFloat = .zero
 
   /// May consider making these configurable in future
@@ -35,10 +35,13 @@ struct ScrubDragGesture: Gesture {
         dragDelta = translation * sensitivity
       }
       .onChanged { _ in
-        store.value = clampedValue(from: initialValue, delta: dragDelta)
+        store.value = clampedValue(from: store.initialValue, delta: dragDelta)
+        
+        updateIfChanged(&store.isDragging, to: true)
       }
       .onEnded { _ in
-        initialValue = CGFloat(store.value)
+        store.initialValue = CGFloat(store.value)
+        store.isDragging = false
       }
   }
 

@@ -34,7 +34,7 @@ public struct SliderCore: View {
               newValue in
 
               let preset = HapticPreset.boundaryAndDefault(
-                store.range.toCGFloatRange,
+                store.range,
                 /// Fall back to centre-style haptic trigger
                 defaultValue: sliderDefaultValue ?? store.range.halfway
               )
