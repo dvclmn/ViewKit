@@ -1,44 +1,36 @@
 //
-//  StrokeHandler.swift
+//  TouchesHandler.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 19/1/2026.
 //
 
-import Foundation
+import CoreTools
+import SwiftUI
 
-extension Array where Element == CGPoint {
-  
-  /// Returns a view of every `stride`-th point, always including the first.
-  func sampled(every stride: Int) -> [CGPoint] {
-    guard stride > 1, count > 1 else { return self }
-    
-    var result: [CGPoint] = []
-    result.reserveCapacity(count / stride + 1)
-    
-    var i = 0
-    while i < count {
-      result.append(self[i])
-      i += stride
-    }
-    
-    // Optional: ensure last point is included
-    if let last = last, result.last != last {
-      result.append(last)
-    }
-    
-    return result
-  }
+public typealias Strokes = [StrokeConfig: Stroke]
+public typealias Points = [PointStyle: CGPoint]
+
+//@Observable
+public struct DrawingData: Codable, Sendable {
+  //public struct StrokeHandler {
+  //final class StrokeHandler {
+
+  /// This should always use the app's active stroke style settings
+  public var active: Stroke?
+  public var phase: InteractionPhase = .none
+
+  public var strokes: Strokes = [:]
+  //  public var strokes: [Stroke] = []
+
+  public init() {}
 }
 
-protocol PointPath {
-  var points: [CGPoint] { get }
-}
-extension Stroke: PointPath {}
-//extension ActiveStroke: PointPath {}
-
-extension PointPath {
-  func sampledPoints(every stride: Int) -> [CGPoint] {
-    points.sampled(every: stride)
+extension DrawingData {
+  public var pointCount: Int {
+    strokes.reduce(into: 0) { partialResult, dict in
+      //      partialResult += dict.value.
+    }
   }
+  public var strokeCount: Int { strokes.count }
 }

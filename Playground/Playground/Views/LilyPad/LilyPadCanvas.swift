@@ -5,34 +5,41 @@
 //  Created by Dave Coleman on 17/1/2026.
 //
 
+import LilyPad
 import SwiftUI
 import VectorKit
 
 struct LilyPadCanvasView: View {
   @Environment(AppHandler.self) private var store
 
-  let activeStroke: ActiveStroke?
-  let strokes: [Stroke]
+  //  let activeStroke: Stroke?
+  //  let strokes: [Stroke]
   var body: some View {
 
     Canvas {
       context,
       size in
-      
+
       let stride = context.environment.strokeDensity
-      
+
       var path = Path()
       var pathActive = Path()
-      
-      for stroke in strokes {
-        stroke.sampledPoints(every: stride).processPath(
-          type: store.pathStyle.toPathStyle,
-          path: &path
-        )
+
+      for stroke in store.drawing.strokes {
+        stroke.value
+//          .rawPoints
+                    .sampledPoints(every: stride)
+          .processPath(
+            type: stroke.key.style,
+            //          type: store.pathStyle.toPathStyle,
+            path: &path
+          )
       }
 
-      if let activeStroke {
-        activeStroke.sampledPoints(every: stride).processPath(type: .smooth, path: &pathActive)
+      if let active = store.drawing.active {
+        active
+          .sampledPoints(every: stride)
+          .processPath(type: store.strokeStyle.style, path: &pathActive)
       }
 
       //          path.addDot(at: <#T##CGPoint#>, radius: <#T##CGFloat#>, using: <#T##DebugPathElement#>)

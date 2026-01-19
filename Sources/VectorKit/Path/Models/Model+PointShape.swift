@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreTools
 
-public enum PointShape: String, Pickable, Identifiable, CaseIterable {
+public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, CaseIterable, Codable {
   case square
   case circle
   case cross

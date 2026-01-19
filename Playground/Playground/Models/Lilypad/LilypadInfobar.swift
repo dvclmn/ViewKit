@@ -6,6 +6,7 @@
 //
 
 import ToolKit
+import LilyPad
 
 public enum LilyPadSectionKey: InfoBarSectionKey {
   public static let title = "Example Section"

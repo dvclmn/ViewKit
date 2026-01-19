@@ -7,7 +7,7 @@
 
 import AppKit
 
-public enum InteractionPhase: String, Sendable {
+public enum InteractionPhase: String, Sendable, Codable {
   case began
   case stationary
   case changed  // NSTouch = moved

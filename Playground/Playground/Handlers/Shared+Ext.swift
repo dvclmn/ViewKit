@@ -7,6 +7,7 @@
 
 import Foundation
 import Sharing
+import LilyPad
 
 extension SharedKey where Self == FileStorageKey<DrawingData>.Default {
   static var drawing: Self {
@@ -14,7 +15,7 @@ extension SharedKey where Self == FileStorageKey<DrawingData>.Default {
       .fileStorage(
         .applicationSupportDirectory.appending(component: "lilypadDrawing.json")
       ),
-      default: DrawingData(strokes: [])
+      default: DrawingData()
     ]
   }
 }

@@ -6,15 +6,24 @@
 //
 
 import Foundation
+import ColourKit
 
-public typealias Points = [PointStyle: CGPoint]
-
-public struct PointStyle: Hashable {
+public struct PointStyle: Hashable, Sendable, Codable {
   let colour: RGBColour
   let radius: CGFloat
+  
+  public init(
+    colour: RGBColour,
+    radius: CGFloat = 2.0
+  ) {
+    self.colour = colour
+    self.radius = radius
+  }
 }
 
-struct StrokePoint {
-  let point: CGPoint
+extension PointStyle {
+  public static func basic(with colour: RGBColour) -> Self {
+    Self(colour: colour)
+  }
+//  public static let `default`: Self = .init(colour: .black, radius: 3)
 }
-

@@ -29,7 +29,7 @@ struct LilyPadDemoView: View {
         maxHeight: .infinity,
       )
       .overlay {
-        LilyPadCanvasView(activeStroke: store.activeStroke, strokes: store.drawing.strokes)
+        LilyPadCanvasView()
 
         // DONT FOR GET TO TREMOVE THIS
       }
@@ -40,9 +40,10 @@ struct LilyPadDemoView: View {
         showIndicators: true
       ) { touches in
         handleTouches(touches)
-      } didUpdatePressure: { pressure in
-        store.pressure = pressure
       }
+//    didUpdatePressure: { pressure in
+//        store.pressure = pressure
+//      }
       //      .printInfo(.applicationSupport)
       //      .focusable()
       //      .focused($isFocused)
@@ -55,7 +56,8 @@ struct LilyPadDemoView: View {
       .toolbar {
         ToolbarItem {
           Button("Clear") {
-            store.setDrawing(\.strokes, value: [])
+            store.setDrawing(\.strokes, value: [:])
+//            store.setDrawing(\.strokes, value: [])
           }
           .keyboardShortcut(.delete, modifiers: [])
         }
@@ -80,7 +82,7 @@ struct LilyPadDemoView: View {
 
       .addInfoBarItems(LilyPadInfoItem.self, source: store, format: .short)
       .infoBarView()
-      .environment(\.strokeDensity, store.strokeDensity)
+//      .environment(\.strokeDensity, store.strokeStyle.style)
 
       .inspector(isPresented: $store.isInspectorPresented) {
         LilyInspectorView()

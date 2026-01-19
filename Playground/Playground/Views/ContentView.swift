@@ -8,6 +8,7 @@
 import SwiftUI
 import ToolKit
 import VectorKit
+import LilyPad
 
 struct ContentView: View {
   @Environment(AppHandler.self) private var store

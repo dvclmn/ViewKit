@@ -9,17 +9,20 @@ import Sharing
 import SwiftUI
 import VectorKit
 import CoreTools
+import LilyPad
 
 @Observable
 final class AppHandler {
   @ObservationIgnored @Shared(.drawing) var drawing: DrawingData
   @ObservationIgnored @Shared(.preferences) var preferences: Preferences
   
-  var activeStroke: ActiveStroke?
-  var strokeDensity: Int = 3 // Stride
-  var pressure: CGFloat = 1
+  var strokeStyle: StrokeConfig = .init()
+//  var strokeHandler: StrokeHandler = .init()
+//  var activeStroke: Stroke?
+//  var strokeDensity: Int = 3 // Stride
+//  var pressure: CGFloat = 1
   var isDrawingEnabled: Bool = false
-  var pathStyle: PathStyleConfig = .smooth
+//  var pathStyle: PathStyleConfig = .smooth
   var isInspectorPresented: Bool = true
 }
 extension AppHandler {
