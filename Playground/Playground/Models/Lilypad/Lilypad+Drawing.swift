@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreTools
+import GestureKit
 
 nonisolated struct DrawingData: Sendable, Codable {
   /// Storing as array to preserve order that strokes were laid down

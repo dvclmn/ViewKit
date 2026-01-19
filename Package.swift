@@ -32,9 +32,9 @@ let package = Package(
 
     .library(name: "ColourKit", targets: ["ColourKit"]),
     .library(name: "GestureKit", targets: ["GestureKit"]),
-    .library(name: "VectorKit", targets: ["VectorKit"]),
-
+    .library(name: "LilyPad", targets: ["LilyPad"]),
     .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
+    .library(name: "VectorKit", targets: ["VectorKit"]),
     .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
 
     // Export-only libraries
@@ -50,7 +50,7 @@ let package = Package(
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
-//    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
+    //    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
     //    .package(
     //      url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
   ],
@@ -92,7 +92,7 @@ let package = Package(
 
     .target(
       name: "BasePrimitives",
-//      dependencies: [.casePaths],
+      //      dependencies: [.casePaths],
     ),
 
     .target(
@@ -145,6 +145,16 @@ let package = Package(
       name: "MotionKit",
       dependencies: [
         .module(.coreTools)
+      ]
+    ),
+
+    .target(
+      name: "LilyPad",
+      dependencies: [
+        .module(.coreTools),
+        .module(.gestureKit),
+        .module(.colourKit),
+        .module(.coreTools),
       ]
     ),
 
@@ -235,6 +245,7 @@ enum BaseModule {
   case graphicsKit
   //  case gridKit
   case layoutKit
+  case lilypad
   case motionKit
 
   //  case stringKit
@@ -261,6 +272,7 @@ enum BaseModule {
       case .graphicsKit: "GraphicsKit"
       //      case .gridKit: "GridKit"
       case .layoutKit: "LayoutKit"
+      case .lilypad: "LilyPad"
       case .motionKit: "MotionKit"
 
       //      case .stringKit: "StringKit"

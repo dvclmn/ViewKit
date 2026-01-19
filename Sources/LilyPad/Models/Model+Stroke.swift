@@ -5,7 +5,11 @@
 //  Created by Dave Coleman on 19/1/2026.
 //
 
-nonisolated struct Stroke: Hashable, Codable {
+import Foundation
+
+
+
+struct Stroke: Hashable, Codable {
   let id: UUID
   //  var phase: InteractionPhase = .none
   let points: [CGPoint]

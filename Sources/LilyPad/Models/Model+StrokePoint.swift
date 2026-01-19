@@ -6,11 +6,10 @@
 //
 
 import Foundation
-import ColourKit
 
-public typealias
+public typealias Points = [PointStyle: CGPoint]
 
-struct PointStyle {
+public struct PointStyle: Hashable {
   let colour: RGBColour
   let radius: CGFloat
 }
