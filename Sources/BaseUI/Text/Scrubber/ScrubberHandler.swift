@@ -10,6 +10,7 @@ import SwiftUI
 
 @Observable
 final class ScrubberHandler {
+  var title: String = ""
   var value: Double = .zero
   var range: ClosedRange<Double>?
   var strategy: ScrubStrategy = .continuous

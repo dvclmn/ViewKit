@@ -44,9 +44,13 @@ public struct ModifierKeysCompatible: OptionSet, Sendable, Hashable {
   public static let control = Self(rawValue: 1 << 2)
   public static let option = Self(rawValue: 1 << 3)
   public static let command = Self(rawValue: 1 << 4)
-
 }
 
+extension ModifierKeysCompatible {
+ public var isHoldingOption: Bool { contains(.option) }
+ public var isHoldingShift: Bool { contains(.shift) }
+ public var isHoldingCommand: Bool { contains(.command) }
+}
 extension ModifierKeysCompatible {
   #if canImport(AppKit)
   public init(from appKitKey: NSEvent.ModifierFlags) {

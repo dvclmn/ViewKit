@@ -8,11 +8,23 @@
 import SwiftUI
 
 extension EnvironmentValues {
-  @Entry var isStepperShowing: Bool = true
+  @Entry var scrubberComponents: ScrubberComponents = .all
 }
 
 extension View {
-  func stepperVisibility(_ isVisible: Bool) -> some View {
-    self.environment(\.isStepperShowing, isVisible)
+  func stepperComponents(_ components: ScrubberComponents) -> some View {
+    self.environment(\.scrubberComponents, components)
   }
+}
+
+public struct ScrubberComponents: OptionSet, Sendable {
+  public init(rawValue: Int) {
+    self.rawValue = rawValue
+  }
+  public let rawValue: Int
+  
+  public static let stepper = Self(rawValue: 1 << 0)
+  public static let dragAdjustment = Self(rawValue: 1 << 1)
+  public static let editableText = Self(rawValue: 1 << 2)
+  public static let all: Self = [.stepper, .dragAdjustment, .editableText]
 }

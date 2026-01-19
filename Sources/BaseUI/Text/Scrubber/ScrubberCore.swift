@@ -6,8 +6,14 @@
 //
 
 import SwiftUI
+import CoreTools
 
 struct ScrubberCore: View {
+  @Environment(\.fractionLength) private var fractionLength
+  @Environment(\.scrubberComponents) private var components
+  @Environment(\.modifierKeys) private var modifierKeys
+  
+  @Bindable var store: ScrubberHandler
   var body: some View {
     
     // MARK: - Text Editor
@@ -15,23 +21,23 @@ struct ScrubberCore: View {
     /// and also a draggable, non-editable view of the value
     Text(store.valueString(places: fractionLength))
     //    Text(valueClamped.wrappedValue.displayString(places: fractionLength ?? 0))
-      .allowsHitTesting(isHoldingOption)
-      .opacity(isHoldingOption ? 1 : 0)
+      .allowsHitTesting(modifierKeys.isHoldingOption)
+      .opacity(modifierKeys.isHoldingOption ? 1 : 0)
       .setPointerStyle(.frameResize(position: .leading, directions: .all))
       .padding(.horizontal, Styles.sizeSmall)
     
       .overlay {
-        if !isHoldingOption {
+        if !modifierKeys.isHoldingOption {
           IncrementTextField(
             store: store,
-            title: title,
+            title: store.title,
             //            value: valueClamped
           )
         }
       }
       .monospacedDigit()
     
-    if isStepperShowing {
+    if components.contains(.stepper) {
       StepperView()
     }
     
@@ -44,10 +50,10 @@ extension ScrubberCore {
   @ViewBuilder
   private func StepperView() -> some View {
     Group {
-      if let range {
+      if let range = store.range {
         Stepper(
-          title,
-          value: $value,
+          store.title,
+          value: $store.value,
           in: range,
           step: store.stepSize(modifiers: modifierKeys)
         )

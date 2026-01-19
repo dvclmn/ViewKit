@@ -11,10 +11,10 @@ public typealias HapticCondition = @Sendable (Double, Double) -> Bool
 
 public enum HapticPreset: Sendable {
   case none
-  case boundary(ClosedRange<CGFloat>)
-  case boundaryAndCentre(ClosedRange<CGFloat>)
-  case boundaryAndDefault(ClosedRange<CGFloat>, defaultValue: CGFloat)
-  case perStep(CGFloat)
+  case boundary(ClosedRange<Double>)
+  case boundaryAndCentre(ClosedRange<Double>)
+  case boundaryAndDefault(ClosedRange<Double>, defaultValue: Double)
+  case perStep(Double)
   case custom(HapticCondition)
 
   func shouldFire(_ oldValue: Double, _ newValue: Double) -> Bool {
@@ -49,3 +49,4 @@ public enum HapticPreset: Sendable {
     }
   }
 }
+

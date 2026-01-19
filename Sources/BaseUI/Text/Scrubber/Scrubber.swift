@@ -16,8 +16,6 @@ public struct TextScrubber: View, ValueFormattable {
   @Environment(\.modifierKeys) private var modifierKeys
   @Environment(\.maxCharacterColumns) private var maxCharacterColumns
   @Environment(\.isDebugMode) private var isDebugMode
-  @Environment(\.fractionLength) private var fractionLength
-  @Environment(\.isStepperShowing) private var isStepperShowing
 
   @State private var store: ScrubberHandler
   @GestureState private var dragDelta: CGFloat = .zero
@@ -51,19 +49,18 @@ public struct TextScrubber: View, ValueFormattable {
     HStack(spacing: layoutSpacing) {
 
       LabeledContent(title) {
-//        ValueEditor()
+        //        ValueEditor()
 
-        
       }
     }
-    //    .sensoryFeedback(.alignment, trigger: value) {
-    //      oldValue,
-    //      newValue in
-    //      /// If no step provided, no haptics will occur.
-    //      /// Only allow haptic feedback when actively dragging
-    //      guard isDragging else { return false }
-    //      return HapticPreset.perStep(stepSize).shouldFire(oldValue, newValue)
-    //    }
+    .sensoryFeedback(.alignment, trigger: value) {
+      oldValue,
+      newValue in
+      /// If no step provided, no haptics will occur.
+      /// Only allow haptic feedback when actively dragging
+      guard isDragging else { return false }
+      return HapticPreset.perStep(stepSize).shouldFire(oldValue, newValue)
+    }
     .backgroundTint(isDragging ? Color.accentColor.opacity(0.1) : nil)
     .animation(Styles.animationQuickNSmooth, value: isDragging)
 
@@ -83,6 +80,12 @@ public struct TextScrubber: View, ValueFormattable {
         updateIfChanged(&store.initialValue, to: value)
       }
     }
+    /// This uses `bindModel`, as it needs to flow both ways
+    .bindModel($store.value, to: $value)
+
+    /// These are one-way only (from outside, into this View),
+    /// so using `task` is fine
+    .task(id: title) { store.title = title }
     .task(id: range) { store.range = range }
     .task(id: strategy) { store.strategy = strategy }
   }
@@ -96,16 +99,14 @@ extension TextScrubber {
   //  }
   //  private var places: NumberFormatStyleConfiguration.Precision { .fractionLength(0...2) }
 
-//  @ViewBuilder
-//  private func ValueEditor() -> some View {
-//
-//  }
+  //  @ViewBuilder
+  //  private func ValueEditor() -> some View {
+  //
+  //  }
 
-
-
-  private var isHoldingOption: Bool {
-    isDebugMode || modifierKeys == .option
-  }
+  //  private var isHoldingOption: Bool {
+  //    isDebugMode || modifierKeys == .option
+  //  }
 
   private var isDragging: Bool { dragDelta != .zero }
 
