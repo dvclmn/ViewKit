@@ -20,32 +20,10 @@ extension DrawingData {
   var strokeCount: Int { strokes.count }
 }
 
-struct ActiveStroke {
-  let id: UUID
-  var points: [CGPoint]
-}
+//struct ActiveStroke {
+//  let id: UUID
+//  var points: [CGPoint]
+//}
 
 
-nonisolated struct Stroke: Hashable, Codable {
-  let id: UUID
-//  var phase: InteractionPhase = .none
-  let points: [CGPoint]
-  
-  enum CodingKeys: String, CodingKey {
-    case id, points
-  }
-  
-  init(
-    id: UUID = UUID(),
-    points: [CGPoint]
-  ) {
-    self.id = id
-    self.points = points
-  }
-}
 
-extension Stroke {
-//  mutating func setPhase(_ phase: InteractionPhase) {
-//    self.phase = phase
-//  }
-}

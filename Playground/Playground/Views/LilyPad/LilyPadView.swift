@@ -104,10 +104,11 @@ extension LilyPadDemoView {
   //  }
 
   private func handleTouches(_ touches: Set<TouchPoint>) {
+    
+    /// This currently only handles a single finger
     guard let touch = touches.first else { return }
 
     switch touch.phase {
-
       case .began:
         store.activeStroke = ActiveStroke(
           id: UUID(),
