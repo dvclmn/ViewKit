@@ -10,6 +10,8 @@ import ToolKit
 
 struct SlidersDemoView: View {
   //  @Environment(AppHandler.self) private var store
+  @State private var testDebugMode: Bool = false
+  
   @State private var value: Double = 5
   var body: some View {
 
@@ -28,7 +30,7 @@ struct SlidersDemoView: View {
           range: 1...30,
         )
         .formatValue { $0.displayString(places: 0) }
-        .isDebugMode(true)
+        .isDebugMode(testDebugMode)
       } // END group
       .padding(24)
       
@@ -40,7 +42,7 @@ struct SlidersDemoView: View {
           range: 1...30,
         )
         .isDebugMode(false)
-        .environment(\.fractionLength, 2)
+//        .environment(\.fractionLength, 2)
 //        .formatValue { $0.displayString(places: 0) }
         
         TextScrubber(
@@ -48,7 +50,7 @@ struct SlidersDemoView: View {
           value: $value,
           range: 1...30,
         )
-        .isDebugMode(true)
+        .isDebugMode(testDebugMode)
 //        .environment(\.fractionLength, 2)
         
         Text("Plain Text view")
@@ -67,7 +69,12 @@ struct SlidersDemoView: View {
       .formStyle(.grouped)
     }
     .padding(.top, 40)
-
+    
+    .onAppear {
+      sleepyTask { @MainActor in
+        self.testDebugMode = true
+      }
+    }
 //    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
   }
 }

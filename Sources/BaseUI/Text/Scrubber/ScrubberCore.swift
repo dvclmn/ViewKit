@@ -18,24 +18,44 @@ struct ScrubberCore: View {
 
   @Bindable var store: ScrubberHandler
   var body: some View {
-    HStack(spacing: layoutSpacing) {
+    HStack(spacing: isDraggable ? 4 : layoutSpacing) {
       // MARK: - Text Editor
       /// This is both providing layout (TextField is overlaid),
       /// and also a draggable, non-editable view of the value
       Text(store.valueString(places: fractionLength))
         /// This allows the drag behaviour to work correctly
         .textSelection(.disabled)
-        //    Text(valueClamped.wrappedValue.displayString(places: fractionLength ?? 0))
-
+        .foregroundStyle(.primary)
         .opacity(isDraggable ? 1 : 0)
-        .padding(.horizontal, Styles.sizeSmall)
+
+        .frame(minWidth: 30, alignment: .trailing)
+        .padding(.horizontal, 4)
+        .padding(.vertical, Styles.sizeTiny)
+        .background {
+          if isDraggable {
+            RoundedRectangle(cornerRadius: 7)
+              .fill(Color.black.tertiary.opacity(isDraggableAndHovered ? 1.0 : 0.6))
+              .stroke(Color.white.opacity(isDraggableAndHovered ? 0.1 : 0.03), lineWidth: 1)
+              .offset(x: )
+          }
+        }
+
         //        .environment(\.strokeColour, AnyShapeStyle(Color.white.opacity(store.isHovered ? 0.11 : 0)))
-        .foregroundStyle(.blue)
+        /// Just for debug reference for now
+        //        .foregroundStyle(.blue.secondary)
 
         //        .backgroundTint(isDragging ? Color.accentColor.opacity(0.1) : nil)
         //        .animation(Styles.animationQuickNSmooth, value: isDragging)
-        .contentShape(.rect)
+        //        .contentShape(.rect)
         .allowsHitTesting(isDraggable)
+
+        .overlay {
+          if !isDraggable {
+            IncrementTextField(store: store)
+          }
+          //        .allowsHitTesting(isDraggable)
+        }
+
         .setPointerStyle(.frameResize(position: .leading, directions: .all))
         .onHover { store.isHovered = $0 }
         .gesture(ScrubDragGesture(store: store), isEnabled: isDraggable)
@@ -50,18 +70,7 @@ struct ScrubberCore: View {
         }
         //        .onDoubleTap { onDoubleTap() }
 
-        .overlay {
-          //          if !isDraggable {
-          IncrementTextField(store: store)
-          //          }
-        }
         .monospacedDigit()
-
-        .background {
-          if isDraggable {
-            Rectangle().fill(Color.black.tertiary)
-          }
-        }
 
       if components.contains(.stepper) {
         StepperView()
@@ -81,6 +90,14 @@ struct ScrubberCore: View {
 }
 
 extension ScrubberCore {
+  
+  private var isPullingLeft: Bool {
+    store.
+  }
+
+  private var isDraggableAndHovered: Bool {
+    isDraggable && store.isHovered
+  }
 
   private var isDraggable: Bool {
     (isPreview && isDebugMode) || modifierKeys.isHoldingOption
