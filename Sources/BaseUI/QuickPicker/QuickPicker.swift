@@ -47,13 +47,14 @@ where Item: Pickable & Hashable {
           PlainStyle()
 
         case .capsule:
-          ItemScrollable(
-            scrolledItem: $item,
-            axis: .horizontal,
-            showsIndicators: false
-          ) { scrollableItem in
-            MaybeLabel(item.label)
-          }
+          Text("Not currently available")
+//          ItemScrollable(
+//            scrolledItem: $item,
+//            axis: .horizontal,
+//            showsIndicators: false
+//          ) { scrollableItem in
+//            MaybeLabel(item.label)
+//          }
       }
     }
     .environment(\.shortcutsEnabled, areShortcutsEnabled)
