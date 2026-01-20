@@ -43,7 +43,7 @@ struct LilyPadDemoView: View {
       mapStrategy: .fill,
       showIndicators: store.isDrawingEnabled
     ) { touches in
-      print("Touches? \(touches)")
+//      print("Touches? \(touches)")
       handleTouches(touches)
     }
 

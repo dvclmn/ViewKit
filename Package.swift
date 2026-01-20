@@ -103,6 +103,7 @@ let package = Package(
         .module(.layoutKit),
         .module(.graphicsKit),
         .module(.gestureKit),
+        .module(.vectorKit),
         .sharing,
       ],
     ),

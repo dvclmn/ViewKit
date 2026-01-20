@@ -13,11 +13,25 @@ public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, Case
   case circle
   case cross
   case triangle
-
+  case none
+  
   public var id: String { rawValue }
   
   public var name: String { rawValue.capitalized }
+  
+  public var icon: String {
+    switch self {
+      case .square: "square.fill"
+      case .circle: "circle.fill"
+      case .cross: "circle.fill"
+      case .triangle: "circle.fill"
+      case .none: "circle.slash"
+        //        case .diamond: "diamond.fill"
+    }
+  }
+}
 
+extension PointShape {
   public func updatePath(
     in rect: CGRect,
     path: inout Path
@@ -44,6 +58,8 @@ public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, Case
         path.move(to: CGPoint(x: center.x - radius * 0.707, y: center.y + radius * 0.707))
         path.addLine(to: CGPoint(x: center.x, y: center.y - radius))
         path.addLine(to: CGPoint(x: center.x + radius * 0.707, y: center.y + radius * 0.707))
+        
+      case .none: break
     }
   }
 }

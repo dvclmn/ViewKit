@@ -43,10 +43,10 @@ struct LilyPadCanvasView: View {
           let colour = config.colour.toColour
           let lineWidth = config.lineWidth
 
-          DebugString {
-            Labeled("Colour", value: colour)
-            Labeled("Line width", value: lineWidth)
-          }
+//          DebugString {
+//            Labeled("Colour", value: colour)
+//            Labeled("Line width", value: lineWidth)
+//          }
 
           context.stroke(path, with: .color(colour), lineWidth: lineWidth)
 
