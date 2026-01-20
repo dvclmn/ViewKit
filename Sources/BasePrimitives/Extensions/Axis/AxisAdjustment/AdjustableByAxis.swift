@@ -38,7 +38,7 @@ extension AdjustableByAxis {
 
   public func adjust(
     _ axis: GridAxis,
-    transform: (Component) -> Component,
+    _ transform: (Component) -> Component,
     mapping: AxisMapping = .default
   ) -> Self {
     let current = value(along: axis, mapping: mapping)
@@ -48,6 +48,48 @@ extension AdjustableByAxis {
 }
 
 extension AdjustableByAxis where Component: BinaryFloatingPoint {
+
+  public func adjustBoth(
+    using op: (Component, Component) -> Component,
+    with other: Self,
+    mapping: AxisMapping = .default
+  ) -> Self {
+    adjustBoth(mapping: mapping) { h, v in
+      let otherH = other.value(along: .horizontal, mapping: mapping)
+      let otherV = other.value(along: .vertical, mapping: mapping)
+
+      return (
+        op(h, otherH),
+        op(v, otherV)
+      )
+    }
+  }
+
+  public func adjustBoth(
+    using op: (Component, Component) -> Component,
+    with other: Self,
+    along axis: GridAxis,
+    mapping: AxisMapping = .default
+  ) -> Self {
+    let factor = other.value(along: axis, mapping: mapping)
+
+    return adjustBoth(mapping: mapping) { h, v in
+      (op(h, factor), op(v, factor))
+    }
+  }
+
+  //  public func adjustBoth(
+  //    using op: (Component, Component) -> Component,
+  //    with other: Self,
+  //    mapping: AxisMapping = .default
+  //  ) -> Self {
+  //    let a = value(along: .horizontal, mapping: mapping)
+  //    let b = other.value(along: .horizontal, mapping: mapping)
+  //
+  //    return adjustBoth(mapping: mapping) {
+  //      (op($0, a), op($1, b))
+  //    }
+  //  }
 
   /// Apply the same unary transform to both axes independently
   public func adjustBoth(
@@ -68,9 +110,9 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
 
   /// Multiply both axes by the same factor
   /// Mapping is not required here, transform is symmetrical
-  public func multiplyBoth(by factor: Component) -> Self {
-    return self.adjustBoth { $0 * factor }
-  }
+  //  public func multiplyBoth(by factor: Component) -> Self {
+  //    return self.adjustBoth { $0 * factor }
+  //  }
 
   public func multiplyBoth(
     by factorProvider: Self,
@@ -108,7 +150,7 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
   /// The transform receives (h, v) and returns (newH, newV)
   private func adjustBoth(
     mapping: AxisMapping = .default,
-    transform: (Component, Component) -> (Component, Component)
+    _ transform: (Component, Component) -> (Component, Component)
   ) -> Self {
     let h = value(along: .horizontal, mapping: mapping)
     let v = value(along: .vertical, mapping: mapping)

@@ -11,10 +11,10 @@ import GraphicsKit
 
 public struct Stroke: Hashable, Codable, Sendable {
   public let id: UUID
-  
+
   /// Temporarily setting this to a more simple `[CGPoint]`
   public var points: [CGPoint]
-//  public var points: Points
+  //  public var points: Points
 }
 
 extension Stroke {
@@ -26,7 +26,7 @@ extension Stroke {
   ) {
     self.id = UUID()
     self.points = points
-//    self.points = Stroke.makePoints(from: points, colour: colour)
+    //    self.points = Stroke.makePoints(from: points, colour: colour)
   }
 }
 
@@ -34,14 +34,17 @@ extension Stroke {
 
   public static var examples: [Stroke] {
     [
-      Stroke(points: .generateSpiral(start: .quickPreset03.adjust(.horizontal, transform: +)), colour: .brown),
+      Stroke(
+        points: .generateSpiral(
+          start: .quickPreset03.adjust(.horizontal, { $0 + 100 })
+        ), colour: .brown),
       Stroke(points: [.quickPreset01, .quickPreset02], colour: .blue),
-//      Stroke(points: .generateSpiral(start: .quickPreset03), colour: .brown),
+      //      Stroke(points: .generateSpiral(start: .quickPreset03), colour: .brown),
     ]
   }
 
   public var rawPoints: [CGPoint] { points }
-//  public var rawPoints: [CGPoint] { points.values.toArray }
+  //  public var rawPoints: [CGPoint] { points.values.toArray }
 
   public func sampledPoints(every stride: Int) -> [CGPoint] {
     rawPoints.sampled(every: stride)
