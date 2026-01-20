@@ -5,24 +5,24 @@
 //  Created by Dave Coleman on 27/1/2025.
 //
 
+import CoreTools
+import LilyPad
 import Sharing
 import SwiftUI
 import VectorKit
-import CoreTools
-import LilyPad
 
 @Observable
 final class AppHandler {
   @ObservationIgnored @Shared(.drawing) var drawing: DrawingData
   @ObservationIgnored @Shared(.preferences) var preferences: Preferences
-  
+
   var strokeStyle: StrokeConfig = .init()
-//  var strokeHandler: StrokeHandler = .init()
-//  var activeStroke: Stroke?
-//  var strokeDensity: Int = 3 // Stride
-//  var pressure: CGFloat = 1
+  //  var strokeHandler: StrokeHandler = .init()
+  //  var activeStroke: Stroke?
+  //  var strokeDensity: Int = 3 // Stride
+  //  var pressure: CGFloat = 1
   var isDrawingEnabled: Bool = false
-//  var pathStyle: PathStyleConfig = .smooth
+  //  var pathStyle: PathStyleConfig = .smooth
   var isInspectorPresented: Bool = true
 }
 extension AppHandler {
@@ -32,16 +32,22 @@ extension AppHandler {
   ) {
     self.$drawing.withLock { $0[keyPath: keyPath] = value }
   }
-  
+
+  func setDrawing(
+//    _ keyPath: WritableKeyPath<DrawingData, T>,
+    perform: (inout DrawingData) -> Void
+  ) {
+    self.$drawing.withLock { perform(&$0) }
+  }
+
   func setDrawing<T>(
     _ keyPath: WritableKeyPath<DrawingData, T>,
-    perform: (inout T) -> Void
+    value: () -> T
   ) {
-    self.$drawing.withLock { perform(&$0[keyPath: keyPath]) }
+    self.$drawing.withLock { $0[keyPath: keyPath] = value() }
   }
 
 }
-
 
 extension AppHandler {
   func setPref<T>(

@@ -10,25 +10,22 @@ import Foundation
 
 public struct Stroke: Hashable, Codable, Sendable {
   public let id: UUID
-  public let points: Points
+  public var points: Points
 }
 
 extension Stroke {
+
   public init(
-    id: UUID = UUID(),
+    //    id: UUID = UUID(),
     points: [CGPoint],
     colour: RGBColour
   ) {
-    self.id = id
-
-    let defaultStyled: Points = Dictionary(
-      uniqueKeysWithValues: points.map { point in
-        let style = PointStyle.basic(with: colour)
-        return (style, point)
-      }
-    )
-    self.points = defaultStyled
+    self.id = UUID()
+    self.points = Stroke.makePoints(from: points, colour: colour)
   }
+}
+
+extension Stroke {
 
   public var rawPoints: [CGPoint] { points.values.toArray }
 

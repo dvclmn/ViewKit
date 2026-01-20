@@ -111,28 +111,37 @@ extension LilyPadDemoView {
     /// This currently only handles a single finger
     guard let touch = touches.first else { return }
 
-    #warning("Need to bring this back")
-//    switch touch.phase {
-//      case .began:
-//        store.activeStroke = ActiveStroke(
-//          id: UUID(),
-//          points: [touch.position]
-//        )
-//
-//      case .changed:
-//        store.activeStroke?.points.append(touch.position)
-//
-//      case .ended, .cancelled:
+//    #warning("Need to bring this back")
+    switch touch.phase {
+      case .began:
+        store.setDrawing(\.active) {
+          Stroke(points: [touch.position], colour: store.strokeStyle.colour)
+        }
+
+      case .changed:
+        store.setDrawing { drawing in
+          drawing.active?.addPoints([touch.position])
+//          drawing.active?.points.updateValue(<#T##value: CGPoint##CGPoint#>, forKey: <#T##PointStyle#>)
+        }
+
+      case .ended, .cancelled:
+        
+        if let stroke = store.drawing.active {
+          store.setDrawing { drawing in
+            drawing.addStrokes([stroke])
+            store.setDrawing(\.active, value: nil)
+          }
+        }
 //        if let stroke = store.activeStroke {
 //          store.$drawing.withLock {
 //            $0.strokes.append(Stroke(id: stroke.id, points: stroke.points))
 //          }
 //          store.activeStroke = nil
 //        }
-//
-//      default:
-//        break
-//    }
+
+      default:
+        break
+    }
 
     //        store.setDrawing(\.points) {
     //          $0.append(touches.map(\.position))
@@ -154,11 +163,11 @@ extension LilyPadDemoView {
 
 }
 
-#if DEBUG
-#Preview(traits: .size(.normal)) {
-  @Previewable @State var store = AppHandler()
-  LilyPadDemoView()
-    .environment(store)
-
-}
-#endif
+//#if DEBUG
+//#Preview(traits: .size(.normal)) {
+//  @Previewable @State var store = AppHandler()
+//  LilyPadDemoView()
+//    .environment(store)
+//
+//}
+//#endif

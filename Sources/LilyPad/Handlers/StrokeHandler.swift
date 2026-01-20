@@ -29,7 +29,7 @@ public struct DrawingData: Codable, Sendable {
 extension DrawingData {
   public var pointCount: Int {
     strokes.reduce(into: 0) { partialResult, dict in
-      //      partialResult += dict.value.
+      partialResult += dict.value.points.count
     }
   }
   public var strokeCount: Int { strokes.count }
