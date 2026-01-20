@@ -27,11 +27,16 @@ struct LilyInspectorView: View {
       Section("Line Style") {
 
         Picker("Style", selection: styleBinding) {
+
+          //          ForEach(PathStyle.Cases()., id: \.self) { path in
+          //          ForEach(PathStyle.allCasePaths, id: \.self) { path in
+
+          //          }
           ForEach(PathStyle.Meta.allCases) { meta in
             Text(meta.name).tag(meta)
           }
         }
-                .pickerStyle(.segmented)
+        .pickerStyle(.segmented)
 
         //
         ////          Text("Line").tag(PathStyle.Meta.line)
@@ -39,10 +44,10 @@ struct LilyInspectorView: View {
         ////          Text("Stamped").tag(PathStyle.Meta.stamped)
         //        }
 
-        if store.strokeStyle.style.isStamped, let radius = Binding(radiusBinding) {
+        if store.strokeStyle.style.isStamped {
           TextScrubber(
             "Radius",
-            value: radius,
+            value: radiusBinding,
             range: 0.1...40,
             strategy: .continuous
           )
@@ -74,23 +79,40 @@ extension LilyInspectorView {
     Binding(
       get: { store.strokeStyle.style.kind },
       set: { newMeta in
-        store.strokeStyle.style = PathStyle.make(kind: newMeta, preserving: store.strokeStyle.style)
+        let current = store.strokeStyle.style
+        store.strokeStyle.style = PathStyle.make(kind: newMeta, preserving: current)
+
+        //        store.strokeStyle.style = PathStyle.make(kind: newMeta, preserving: store.strokeStyle.style)
       }
     )
   }
-  
-  private var radiusBinding: Binding<Double?> {
+
+  //  private var styleBinding: Binding<PathStyle> {
+  //    Binding(
+  //      get: { store.strokeStyle.style },
+  //      set: { newMeta in
+  //        store.strokeStyle.style = newMeta
+  //
+  //        //        store.strokeStyle.style = PathStyle.make(kind: newMeta, preserving: store.strokeStyle.style)
+  //      }
+  //    )
+  //  }
+
+  private var radiusBinding: Binding<Double> {
     //    private var shapeBinding: Binding<PointShape?> {
     Binding {
-      store.strokeStyle.style[case: \.stamped]?.radius
+      store.strokeStyle.style[case: \.stamped]?.radius ?? 1.0
       //        store.strokeStyle.style.stampedValue?.shape
       //      store.strokeStyle.style.kind
     } set: { newValue in
-      guard let newValue else { return }
-      guard let shape = store.strokeStyle.style[case: \.stamped]?.shape else { return  }
-      store.strokeStyle.style[case: \.stamped] = StampedConfig(shape: shape, radius: newValue)
-      
-//      store.strokeStyle.style.modify(\.stamped) { $0.radius = newValue }
+      //      guard let newValue else { return }
+      //      guard let shape = store.strokeStyle.style[case: \.stamped]?.shape else { return  }
+      guard let shape = store.strokeStyle.style[case: \.stamped]?.shape else { return }
+//      let values: (PointShape, Double) = ()
+      store.strokeStyle.style[case: \.stamped] = (shape, newValue)
+      //      store.strokeStyle.style[case: \.stamped] = StampedConfig(shape: shape, radius: newValue)
+
+      //      store.strokeStyle.style.modify(\.stamped) { $0.radius = newValue }
       //        store.strokeStyle.style.updateStampShape(new)
       //      store.strokeStyle.style = PathStyle.make(
       //        kind: $0,
@@ -119,8 +141,6 @@ extension LilyInspectorView {
   //  private var shapeBinding: Binding<PointShape>? {
   //    store.strokeStyle.style.
   //  }
-
-
 
   //  private var styleBinding: Binding<PathStyle> {
   //    Binding {

@@ -13,13 +13,13 @@ import SwiftUI
 @AssociatedValues
 @MetaEnum
 @CasePathable
-public enum PathStyle: Sendable, Hashable, Codable, Equatable, Pickable {
+public enum PathStyle: Sendable, Hashable, Codable, Equatable {
   public static var pickerLabel: QuickLabel { "Path Style" }
   case line
   case smooth
-  case stamped(StampedConfig)
+  case stamped(shape: PointShape, radius: Double)
+  //  case stamped(StampedConfig)
 
-  //  case stamped(shape: PointShape, radius: CGFloat)
   //  case stamped(shape: PointShape, radius: CGFloat, range: ClosedRange<Double>)
   //  public var id: String { rawValue }
 
@@ -34,30 +34,30 @@ public enum PathStyle: Sendable, Hashable, Codable, Equatable, Pickable {
   ///
   /// And then, as well, there's the route where the case could be
   /// written with a default too, like `case stamped(StampedConfig = .init())`
-  public static var stampedDefault: Self { .stamped(.init()) }
+  public static var stampedDefault: Self { .stamped(shape: .circle, radius: 3.0) }
 }
 
 extension PathStyle {
-  
-  public var id: UUID {
-    switch self {
-      case .line: UUID(fromInt: 1)
-      case .smooth: UUID(fromInt: 1)
-      case .stamped(let config): config.id
-    }
-  }
-  
-  public var label: QuickLabel {
-    switch self {
-      case .line: .init("Line")
-      case .smooth: .init("Smooth")
-      case .stamped(let config): .init("Stamp (\(config.shape.name)), radius: \(config.radius.toString))")
-    }
-  }
 
-  public static func stamped(_ shape: PointShape, radius: CGFloat) -> Self {
-    .stamped(.init(shape: shape, radius: radius))
-  }
+  //  public var id: UUID {
+  //    switch self {
+  //      case .line: UUID(fromInt: 1)
+  //      case .smooth: UUID(fromInt: 1)
+  //      case .stamped(let config): config.id
+  //    }
+  //  }
+
+  //  public var label: QuickLabel {
+  //    switch self {
+  //      case .line: .init("Line")
+  //      case .smooth: .init("Smooth")
+  //      case .stamped(let config): .init("Stamp (\(config.shape.name)), radius: \(config.radius.toString))")
+  //    }
+  //  }
+
+  //  public static func stamped(_ shape: PointShape, radius: CGFloat) -> Self {
+  //    .stamped(.init(shape: shape, radius: radius))
+  //  }
 
   public var kind: PathStyle.Meta { Self.Meta(self) }
 
@@ -73,10 +73,11 @@ extension PathStyle {
         return .smooth
 
       case .stamped:
-        guard case .stamped(let config) = old else {
+        guard case .stamped(let shape, let radius) = old else {
+          //        guard case .stamped(let config) = old else {
           return .stampedDefault
         }
-        return .stamped(config)
+        return .stamped(shape: shape, radius: radius)
     }
   }
 
