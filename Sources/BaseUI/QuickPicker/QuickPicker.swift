@@ -85,10 +85,16 @@ extension QuickPicker {
 
       ForEach(allItems) { pickerItem in
 
+        
         RowView(pickerItem) { hovering in
           if rowContent != nil {
             rowContent?(pickerItem, hovering)
           } else {
+            
+//            VStack {
+//              Text("Item Type: \(String(describing: pickerItem.self))")
+//              Text("All Items Type: \(String(describing: allItems.self))")
+//            }
             MaybeLabel(pickerItem.label)
           }
         }
@@ -111,7 +117,9 @@ extension QuickPicker where Item: CaseIterable {
     /// This init is able to populate `allItems` automatically,
     /// using `CaseIterable`'s `allCases`.
 
-    self.allItems = Item.allCases.prefix(maxItems ?? Int.max).toArray
+    let all = Item.allCases.prefix(maxItems ?? Int.max).toArray
+    print("All items: \(dump(all))")
+    self.allItems = all
 
     self.style = style
     self.hasLabeledContentWrapper = hasLabeledContentWrapper

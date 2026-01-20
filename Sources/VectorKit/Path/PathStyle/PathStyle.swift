@@ -91,7 +91,7 @@ extension PathStyle {
   //  }
 }
 
-extension PathStyle.Meta: Pickable, Identifiable {
+extension PathStyle.Meta: Pickable, Identifiable, CaseIterable {
   public var id: String { name }
   public static var pickerLabel: QuickLabel { "Path Style" }
   public var label: QuickLabel { .init(self.name) }

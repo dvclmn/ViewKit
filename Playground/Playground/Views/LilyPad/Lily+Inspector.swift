@@ -25,30 +25,38 @@ struct LilyInspectorView: View {
     Form {
 
       Section("Line Style") {
-
-        //        QuickPicker(item: $store.strokeStyle.style, allItems: [
+        //        QuickPicker(item: styleBinding, allItems: PathStyle.Meta.allCases)
+        //          .pickerStyle(.radioGroup)
+        //          .pickerStyle(.segmented)
         //
-        //        ])
-        //        QuickPicker(item: $store.strokeStyle.style)
-        //        QuickPicker(item: $store.pathStyle.style)
-        //      QuickPicker(item: $store.pathStyle)
-        //      if let radius = Binding(radiusBinding) {
+        Picker("Style", selection: styleBinding) {
 
-        if store.strokeStyle.style.isStamped {
+          ForEach(PathStyle.Meta.allCases) { meta in
+            Text(meta.name).tag(meta)
+          }
+        }
+        //        .pickerStyle(.segmented)
+
+        //
+        ////          Text("Line").tag(PathStyle.Meta.line)
+        ////          Text("Smooth").tag(PathStyle.Meta.smooth)
+        ////          Text("Stamped").tag(PathStyle.Meta.stamped)
+        //        }
+
+        if store.strokeStyle.style.isStamped, let radius = Binding(radiusBinding) {
           //        if store.pathStyle.style.isStamped {
 
-          //          if let shape = Binding(shapeBinding) {
-          //            QuickPicker(item: shape)
-          //          }
+          //                      QuickPicker(item: shape)
+          TextScrubber(
+            "Radius",
+            value: radius,
+            range: 0.1...40,
+            strategy: .continuous
+          )
+
           //          QuickPicker(item: $store.strokeStyle.style)
 
-          //          TextScrubber(
-          //            "Radius",
-          //            value: $store.pathStyle.radius,
-          //            range: store.pathStyle.range,
-          //            strategy: .continuous
-          //          )
-          //          TextField("Radius", value: $store.pathStyle.radius, formatter: formatter)
+          //                    TextField("Radius", value: $store.pathStyle.radius, formatter: formatter)
         }
         //        TextField("Radius", value: radius, format: .)
         //      }
@@ -69,40 +77,52 @@ struct LilyInspectorView: View {
 
 extension LilyInspectorView {
 
-  private var styleBinding: Binding<PathStyle> {
-    Binding {
-      store.strokeStyle.style
-    } set: { newValue in
-      store.strokeStyle.style = newValue
-    }
-
-    //    Binding {
-    //      store.strokeStyle.style.kind
-    //    } set: {
-    //      store.strokeStyle.style = PathStyle.make(
-    //        kind: $0,
-    //        preserving: store.strokeStyle.style
-    //      )
-    //    }
+  private var styleBinding: Binding<PathStyle.Meta> {
+    Binding(
+      get: { store.strokeStyle.style.kind },
+      set: { newMeta in
+        store.strokeStyle.style = PathStyle.make(kind: newMeta, preserving: store.strokeStyle.style)
+      }
+    )
   }
+
+  //  private var styleBinding: Binding<PathStyle> {
+  //    Binding {
+  //      store.strokeStyle.style
+  //    } set: { newValue in
+  //      store.strokeStyle.style = newValue
+  //    }
+  //
+  //    //    Binding {
+  //    //      store.strokeStyle.style.kind
+  //    //    } set: {
+  //    //      store.strokeStyle.style = PathStyle.make(
+  //    //        kind: $0,
+  //    //        preserving: store.strokeStyle.style
+  //    //      )
+  //    //    }
+  //  }
 
   //  private var shapeBinding: Binding<PointShape>? {
   //    store.strokeStyle.style.
   //  }
 
-  //  private var shapeBinding: Binding<PointShape?> {
-  //    Binding {
-  //      store.strokeStyle.style.stampedValue?.shape
-  ////      store.strokeStyle.style.kind
-  //    } set: {
-  //      guard let new = $0 else { return }
-  //      store.strokeStyle.style.updateStampShape(new)
-  ////      store.strokeStyle.style = PathStyle.make(
-  ////        kind: $0,
-  ////        preserving: store.strokeStyle.style
-  ////      )
-  //    }
-  //  }
+  private var radiusBinding: Binding<Double?> {
+    //    private var shapeBinding: Binding<PointShape?> {
+    Binding {
+      store.strokeStyle.style[case: \.stamped]?.radius
+      //        store.strokeStyle.style.stampedValue?.shape
+      //      store.strokeStyle.style.kind
+    } set: { newValue in
+      guard let newValue else { return }
+      store.strokeStyle.style.modify(\.stamped) { $0.radius = newValue }
+      //        store.strokeStyle.style.updateStampShape(new)
+      //      store.strokeStyle.style = PathStyle.make(
+      //        kind: $0,
+      //        preserving: store.strokeStyle.style
+      //      )
+    }
+  }
 
   //  private var styleBinding: Binding<PathStyle> {
   //    Binding {

@@ -6,11 +6,11 @@
 //
 
 import GestureKit
+import LilyPad
 import Sharing
 import SwiftUI
 import ToolKit
 import VectorKit
-import LilyPad
 
 struct LilyPadDemoView: View {
   @Environment(AppHandler.self) private var store
@@ -31,87 +31,33 @@ struct LilyPadDemoView: View {
       )
       .overlay {
         LilyPadCanvasView()
-
-        // DONT FOR GET TO TREMOVE THIS
       }
       .touches(
-        //        isEnabled: true,
         isEnabled: isDrawingEnabled,
         mapStrategy: .fill,
         showIndicators: true
       ) { touches in
         handleTouches(touches)
       }
-//    didUpdatePressure: { pressure in
-//        store.pressure = pressure
-//      }
-      //      .printInfo(.applicationSupport)
-      //      .focusable()
-      //      .focused($isFocused)
-      //      .onExitCommand {
-      //        print("Pressed Esc, drawing mode turned off")
-      //        store.isDrawingEnabled = false
-      //      }
 
-      //      .debugTextOverlay(pressure, touches)
-      .toolbar {
-        ToolbarItem {
-          Button("Clear") {
-            store.setDrawing(\.strokes, value: [:])
-//            store.setDrawing(\.strokes, value: [])
-          }
-          .keyboardShortcut(.delete, modifiers: [])
-        }
-        ToolbarItem {
-          if store.isDrawingEnabled {
-            Button("Exit Drawing Mode") {
-              store.isDrawingEnabled = false
-            }
-            .keyboardShortcut(.escape, modifiers: [])
-            .tint(.purple)
-
-          } else {
-            Button("Enter Drawing Mode") {
-              store.isDrawingEnabled = true
-            }
-          }
-          //          Toggle("Toggle Drawing", isOn: $store.isDrawingEnabled)
-
-        }
-
-      }
+      .toolbar { ToolbarView() }
 
       .addInfoBarItems(LilyPadInfoItem.self, source: store, format: .short)
       .infoBarView()
-//      .environment(\.strokeDensity, store.strokeStyle.style)
 
       .inspector(isPresented: $store.isInspectorPresented) {
         LilyInspectorView()
       }
-    //      .background(isDrawingEnabled ? )
-    //      .task(id: isDrawingEnabled) {
-    //        if isDrawingEnabled {
-    //          self.isFocused = true
-    //        } else {
-    //          self.isFocused = false
-    //        }
-    //      }
-    //      .debugTextOverlay("View focused", isEnabled: isFocused)
   }
 }
 
 extension LilyPadDemoView {
 
-  //  private var toggleDrawing: KeyboardShortcut {
-  //
-  //  }
-
   private func handleTouches(_ touches: Set<TouchPoint>) {
-    
+
     /// This currently only handles a single finger
     guard let touch = touches.first else { return }
 
-//    #warning("Need to bring this back")
     switch touch.phase {
       case .began:
         store.setDrawing(\.active) {
@@ -121,41 +67,20 @@ extension LilyPadDemoView {
       case .changed:
         store.setDrawing { drawing in
           drawing.active?.addPoints([touch.position])
-//          drawing.active?.points.updateValue(<#T##value: CGPoint##CGPoint#>, forKey: <#T##PointStyle#>)
         }
 
       case .ended, .cancelled:
-        
+
         if let stroke = store.drawing.active {
           store.setDrawing { drawing in
             drawing.addStrokes([stroke])
             store.setDrawing(\.active, value: nil)
           }
         }
-//        if let stroke = store.activeStroke {
-//          store.$drawing.withLock {
-//            $0.strokes.append(Stroke(id: stroke.id, points: stroke.points))
-//          }
-//          store.activeStroke = nil
-//        }
 
       default:
         break
     }
-
-    //        store.setDrawing(\.points) {
-    //          $0.append(touches.map(\.position))
-    //        }
-    //        let points: [CGPoint]
-    //        if let current = touches.first {
-    //          print("Got current: \(current.position)")
-    //          store.setDrawing(\.strokes) {
-    //            $0.insert(Stroke(points: current.position))
-    //          }
-
-    //        } else {
-    //          print("No thing")
-    //        }
 
   }
 

@@ -22,6 +22,12 @@ public struct DrawingData: Codable, Sendable {
 
   public var strokes: Strokes = [:]
   //  public var strokes: [Stroke] = []
+  
+  enum CodingKeys: CodingKey {
+//    case active
+//    case phase
+    case strokes
+  }
 
   public init() {}
 }
