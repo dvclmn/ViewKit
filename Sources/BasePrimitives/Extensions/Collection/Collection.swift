@@ -11,28 +11,52 @@ extension Collection {
   }
 }
 
-extension Collection where Index == Int {
-  public func nextIndex(
-    after index: Int,
-    wrapping: Bool = true
-  ) -> Int? {
+extension Collection {
+  public func nextIndex(after index: Int, wrapping: Bool = true) -> Int? {
+    /// Handle empty collection to prevent division by zero
+    guard count > 0 else { return nil }
+    
     let nextIdx = index + 1
-    guard wrapping else {
-      return nextIdx < count ? nextIdx : nil
+    if nextIdx < count {
+      return nextIdx
+    } else {
+      return wrapping ? 0 : nil
     }
-    return nextIdx % count
   }
-
-  public func previousIndex(
-    before index: Int,
-    wrapping: Bool = true
-  ) -> Int? {
+  
+  public func previousIndex(before index: Int, wrapping: Bool = true) -> Int? {
+    guard count > 0 else { return nil }
+    
     let prevIdx = index - 1
-    guard wrapping else {
-      return prevIdx >= 0 ? prevIdx : nil
+    if prevIdx >= 0 {
+      return prevIdx
+    } else {
+      /// Standard way to wrap negative indices: (index - 1 + count) % count
+      return wrapping ? count - 1 : nil
     }
-    return (prevIdx + count) % count
   }
+  
+//  public func nextIndex(
+//    after index: Int,
+//    wrapping: Bool = true
+//  ) -> Int? {
+//    let nextIdx = index + 1
+//    guard wrapping else {
+//      return nextIdx < count ? nextIdx : nil
+//    }
+//    return nextIdx % count
+//  }
+//
+//  public func previousIndex(
+//    before index: Int,
+//    wrapping: Bool = true
+//  ) -> Int? {
+//    let prevIdx = index - 1
+//    guard wrapping else {
+//      return prevIdx >= 0 ? prevIdx : nil
+//    }
+//    return (prevIdx + count) % count
+//  }
 }
 
 extension Collection where Element: Hashable {
