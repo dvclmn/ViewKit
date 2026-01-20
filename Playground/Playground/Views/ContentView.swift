@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 16/1/2026.
 //
 
-internal import ColourKit
+import ColourKit
 import GraphicsKit
 import LilyPad
 import SwiftUI
@@ -49,7 +49,9 @@ struct ContentView: View {
       //
       //      store.setDrawing(\.self, value: artwork)
       store.strokeStyle.style = .stamped(shape: .circle, radius: 3.0)
-
+      store.setDrawing {
+        $0.strokes = .exampleStyled
+      }
     }
 }
 #endif

@@ -18,10 +18,6 @@ public enum PathStyle: Sendable, Hashable, Codable, Equatable {
   case line
   case smooth
   case stamped(shape: PointShape, radius: Double)
-  //  case stamped(StampedConfig)
-
-  //  case stamped(shape: PointShape, radius: CGFloat, range: ClosedRange<Double>)
-  //  public var id: String { rawValue }
 
   /// A few tricky things here; this does provide a default for
   /// the `stamped` value, but doesn't provide any static access

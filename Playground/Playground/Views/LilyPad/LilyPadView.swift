@@ -26,9 +26,9 @@ struct LilyPadDemoView: View {
 
     @Bindable var store = store
 
-    CanvasView(canvasSize: CGSize(200, 300), showsInfoBar: false) {
+//    CanvasView(canvasSize: CGSize(200, 300), showsInfoBar: false) {
       LilyPadCanvasView()
-    }
+//    }
     //    Color.clear
     //      .frame(
     //        maxWidth: .infinity,
@@ -41,7 +41,7 @@ struct LilyPadDemoView: View {
     .touches(
       isEnabled: store.isDrawingEnabled,
       mapStrategy: .fill,
-      showIndicators: true
+      showIndicators: store.isDrawingEnabled
     ) { touches in
       print("Touches? \(touches)")
       handleTouches(touches)
@@ -56,12 +56,6 @@ struct LilyPadDemoView: View {
       LilyInspectorView()
     }
 
-    .onAppear {
-
-      store.setDrawing {
-        $0.addStrokes(Stroke.examples)
-      }
-    }
   }
 }
 
@@ -75,7 +69,7 @@ extension LilyPadDemoView {
     switch touch.phase {
       case .began:
         store.setDrawing(\.active) {
-          Stroke(points: [touch.position], colour: store.strokeStyle.colour)
+          Stroke(points: [touch.position])
         }
 
       case .changed:

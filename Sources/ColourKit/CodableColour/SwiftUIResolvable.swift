@@ -19,6 +19,10 @@ extension RGBColour: EnvironmentResolvableColour {
       opacity: alpha
     )
   }
+  
+  public func toCGColour(in env: EnvironmentValues) -> CGColor? {
+    toColour.resolve(in: env).cgColor
+  }
 }
 
 extension RGBColour {

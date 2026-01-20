@@ -5,11 +5,11 @@
 //  Created by Dave Coleman on 20/1/2026.
 //
 
-import Foundation
+//import Foundation
 
 // Look into this macro:
 // https://github.com/aibobrov/EnumPath
-extension PathStyle {
+//extension PathStyle {
   /// A "stable" property for the radius, even if not currently in the `stamped` case
   /// This allows a e.g. Stepper to bind to something without the code crashing
 //  var radius: CGFloat {
@@ -38,4 +38,4 @@ extension PathStyle {
 //      }
 //    }
 //  }
-}
+//}

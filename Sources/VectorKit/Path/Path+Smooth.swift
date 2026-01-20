@@ -34,13 +34,13 @@ extension Array where Element == CGPoint {
       case .smooth:
         processSmoothPath(path: &path)
 
-      case .stamped(let config):
-//      case .stamped(let shape, let radius):
+//      case .stamped(let config):
+      case .stamped(let shape, let radius):
         //      case .stamped(let shape, let radius, let range):
         processStampedPath(
           shouldDropFirst: shouldDropFirst,
-          shape: config.shape,
-          radius: config.radius,
+          shape: shape,
+          radius: radius,
           path: &path
         )
     }

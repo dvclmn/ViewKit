@@ -29,28 +29,13 @@ public struct TrackpadTouchesModifier: ViewModifier {
       }
       if isEnabled {
         TrackpadTouchesView(isDrawingEnabled: isEnabled) { touchOutput in
-          //        if isEnabled {
+          didUpdateTouches(touchOutput)
+
           if shouldShowIndicators {
             self.localTouches = touchOutput
           }
-          
-          didUpdateTouches(touchOutput)
-          //        if isEnabled {
-          //          print("Touches enabled. Output: \(touchOutput). \(Date.debug)")
-          //          didUpdateTouches(touchOutput)
-          //        } else {
-          //          print("Touches not enabled \(Date.debug)")
-          //        }
-          //        }
         }
-        //      didUpdatePressure: { pressure in
-        //        didUpdatePressure(pressure)
-        //      }        
       }
-
-      //        .background(.cyan.opacity(0.1))
-      //        .debugTextOverlay("No viewport size", isEnabled: viewportSize == nil)
-      //      }  // END isEnabled check
     }  // END geo reader
   }
 }
