@@ -12,37 +12,28 @@ public protocol CaseCyclable: CaseIterable, Equatable, Sendable where AllCases: 
 }
 
 extension CaseCyclable {
-
-  /// Shared navigation helper for moving to the next/previous case with optional wrapping
-  private func _move(_ direction: _Direction, wrapping: Bool) -> Self {
+  public func toNext(wrapping: Bool = true) -> Self {
     let cases = Self.allCases
+    /// Find current position
     guard let currentIndex else { return Self.defaultCase }
 
-    switch direction {
-    case .forward:
-      let nextIndex = cases.index(after: currentIndex)
-      if nextIndex == cases.endIndex {
-        return wrapping ? (cases.first ?? Self.defaultCase) : self
-      } else {
-        return cases[nextIndex]
-      }
+    let nextIndex = cases.index(after: currentIndex)
 
-    case .backward:
-      if currentIndex == cases.startIndex {
-        return wrapping ? (cases.last ?? Self.defaultCase) : self
-      } else {
-        let prevIndex = cases.index(before: currentIndex)
-        return cases[prevIndex]
-      }
+    guard nextIndex != cases.endIndex else {
+      return wrapping ? (cases.first ?? Self.defaultCase) : self
     }
-  }
-
-  public func toNext(wrapping: Bool = true) -> Self {
-    _move(.forward, wrapping: wrapping)
+    return cases[nextIndex]
   }
 
   public func toPrevious(wrapping: Bool = true) -> Self {
-    _move(.backward, wrapping: wrapping)
+    let cases = Self.allCases
+    guard let currentIndex else { return Self.defaultCase }
+
+    guard currentIndex != cases.startIndex else {
+      return wrapping ? (cases.last ?? Self.defaultCase) : self
+    }
+    let prevIndex = cases.index(before: currentIndex)
+    return cases[prevIndex]
   }
 
   private var currentIndex: Self.AllCases.Index? {
@@ -53,19 +44,4 @@ extension CaseCyclable {
 extension CaseCyclable {
   public var isAtBeginning: Bool { self == Self.allCases.first }
   public var isAtEnd: Bool { self == Self.allCases.last }
-  //
-  //  public func toNext(wrapping: Bool = true) -> Self {
-  //    Self.allCases.nextElement(after: self, wrapping: wrapping) ?? Self.defaultCase
-  //  }
-  //
-  //  public func toPrevious(wrapping: Bool = true) -> Self {
-  //    Self.allCases.previousElement(before: self, wrapping: wrapping) ?? Self.defaultCase
-  //  }
-  //
-  //  public mutating func moveForward(wrapping: Bool = true) {
-  //    self = toNext(wrapping: wrapping)
-  //  }
-  //  public mutating func moveBackward(wrapping: Bool = true) {
-  //    self = toPrevious(wrapping: wrapping)
-  //  }
 }
