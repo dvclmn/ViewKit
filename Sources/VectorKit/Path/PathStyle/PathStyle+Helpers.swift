@@ -7,12 +7,16 @@
 
 import Foundation
 
+// Look into this macro:
+// https://github.com/aibobrov/EnumPath
 extension PathStyle {
   /// A "stable" property for the radius, even if not currently in the `stamped` case
   /// This allows a e.g. Stepper to bind to something without the code crashing
   var radius: CGFloat {
     get {
-      if case .stamped(let config) = self { return config.radius }
+      if case .stamped(let config) = self {
+        return config.radius
+      }
       return Self.stampedDefault
     }
     set {

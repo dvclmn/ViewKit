@@ -7,7 +7,6 @@
 
 import Foundation
 
-// Note: This previously had a conformance to LabeledItem
 public protocol CaseCyclable: CaseIterable, Equatable, Sendable
 where
 AllCases: RandomAccessCollection,
@@ -35,4 +34,3 @@ extension CaseCyclable {
     self = toPrevious(wrapping: wrapping)
   }
 }
-

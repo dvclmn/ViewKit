@@ -12,8 +12,6 @@ extension Collection {
 }
 
 extension Collection where Index == Int {
-
-  /// Core index calculation logic - reusable across different collection types
   public func nextIndex(
     after index: Int,
     wrapping: Bool = true

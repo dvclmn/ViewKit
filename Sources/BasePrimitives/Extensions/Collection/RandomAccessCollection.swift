@@ -8,7 +8,6 @@
 import Foundation
 
 extension RandomAccessCollection where Element: Equatable, Index == Int {
-
   public func nextElement(
     after element: Element,
     wrapping: Bool = true
