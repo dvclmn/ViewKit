@@ -13,7 +13,6 @@ public protocol CaseCyclable: CaseIterable, Equatable, Sendable where AllCases: 
 
 extension CaseCyclable {
   public func toNext(wrapping: Bool = true) -> Self {
-    let cases = Self.allCases
     /// Find current position
     guard let currentIndex else { return Self.defaultCase }
 
@@ -26,7 +25,6 @@ extension CaseCyclable {
   }
 
   public func toPrevious(wrapping: Bool = true) -> Self {
-    let cases = Self.allCases
     guard let currentIndex else { return Self.defaultCase }
 
     guard currentIndex != cases.startIndex else {
@@ -39,6 +37,9 @@ extension CaseCyclable {
   private var currentIndex: Self.AllCases.Index? {
     Self.allCases.firstIndex(of: self)
   }
+
+  private var cases: Self.AllCases { Self.allCases }
+
 }
 
 extension CaseCyclable {
