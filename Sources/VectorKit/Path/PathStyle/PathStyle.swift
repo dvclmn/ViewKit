@@ -8,27 +8,36 @@
 import CoreTools
 import SwiftUI
 
-//enum PathStyleKind: String, CaseIterable, Pickable {
-//  static var pickerLabel: QuickLabel { "Path Style" }
-//  case line
-//  case smooth
-//  case stamped
-//}
-
 @CaseDetection
 @AssociatedValues
 @MetaEnum
 public enum PathStyle: Sendable, Hashable, Codable {
   case line
   case smooth
-  case stamped(shape: PointShape, radius: CGFloat)
+  case stamped(StampedConfig)
+  //  case stamped(shape: PointShape, radius: CGFloat)
   //  case stamped(shape: PointShape, radius: CGFloat, range: ClosedRange<Double>)
   //  public var id: String { rawValue }
 
-  public static var stampedDefault: Self { .stamped(shape: .circle, radius: 3) }
+  /// A few tricky things here; this does provide a default for
+  /// the `stamped` value, but doesn't provide any static access
+  /// to the values inside `StampedConfig`...
+  ///
+  /// Additionally, do I make this default here, or do I just require
+  /// that the associated value itself has a default value —
+  /// like that `StampedConfig` has an init with default values
+  /// for each parameter?
+  ///
+  /// And then, as well, there's the route where the case could be
+  /// written with a default too, like `case stamped(StampedConfig = .init())`
+  public static var stampedDefault: Self { .stamped(.init()) }
 }
 
 extension PathStyle {
+
+  public static func stamped(_ shape: PointShape, radius: CGFloat) -> Self {
+    .stamped(.init(shape: shape, radius: radius))
+  }
 
   public var kind: PathStyle.Meta { Self.Meta(self) }
 
@@ -44,30 +53,12 @@ extension PathStyle {
         return .smooth
 
       case .stamped:
-        guard case .stamped(let shape, let radius) = old else {
+        guard case .stamped(let config) = old else {
           return .stampedDefault
         }
-        return .stamped(shape: shape, radius: radius)
+        return .stamped(config)
     }
   }
-
-  //  var stampedConfig: Binding<StampedConfig>? {
-  //    guard case let .stamped(shape, radius) = self else { return nil }
-  //
-  //    return Binding(
-  //      get: { StampedConfig(shape: shape, radius: radius) },
-  //      set: { new in
-  //        self = .stamped(shape: new.shape, radius: new.radius)
-  //      }
-  //    )
-  //  }
-
-  //  var stampedRadius: CGFloat? {
-  //    if case let .stamped(_, radius) = self {
-  //      return radius
-  //    }
-  //    return nil
-  //  }
 
   public mutating func updateStampRadius(_ newValue: CGFloat) {
     guard case .stamped(let shape, _) = self else { return }
