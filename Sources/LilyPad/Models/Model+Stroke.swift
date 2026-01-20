@@ -34,7 +34,7 @@ extension Stroke {
 
   public static var examples: [Stroke] {
     [
-      Stroke(points: .generateSpiral(), colour: .brown),
+      Stroke(points: .generateSpiral(start: .quickPreset03.adjust(.horizontal, transform: +)), colour: .brown),
       Stroke(points: [.quickPreset01, .quickPreset02], colour: .blue),
 //      Stroke(points: .generateSpiral(start: .quickPreset03), colour: .brown),
     ]

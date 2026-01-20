@@ -26,7 +26,7 @@ struct LilyPadDemoView: View {
 
     @Bindable var store = store
 
-    CanvasView(canvasSize: CGSize(200, 300)) {
+    CanvasView(canvasSize: CGSize(200, 300), showsInfoBar: false) {
       LilyPadCanvasView()
     }
     //    Color.clear
