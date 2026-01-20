@@ -5,10 +5,10 @@
 //  Created by Dave Coleman on 16/8/2025.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
-public struct LabeledSlider<Content: View>: View, SliderStylable {
+public struct LabeledSlider<Content: View>: View, SliderStylable, ValueFormattable {
 
   @Binding var value: Double
   let range: ClosedRange<Double>

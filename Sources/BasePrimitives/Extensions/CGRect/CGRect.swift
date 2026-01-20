@@ -39,6 +39,33 @@ extension CGRect {
     )
     return CGRect(origin: origin, size: size)
   }
+  
+  public func aligned(
+    in container: CGRect,
+    to anchor: UnitPoint = .center
+  ) -> CGRect {
+    let baseOrigin = aligned(in: container.size, to: anchor).origin
+    let origin = CGPoint(
+      x: container.minX + baseOrigin.x,
+      y: container.minY + baseOrigin.y
+    )
+    return CGRect(origin: origin, size: size)
+  }
+
+//  func aligned(
+//    in container: CGRect,
+//    to anchor: UnitPoint = .center
+//  ) -> CGRect {
+//    let base = aligned(in: container.size, to: anchor)
+//    let originAdjusted = container.midpoint + base.origin
+//    return CGRect(origin: originAdjusted, size: size)
+////    let origin = CGPoint(
+////      x: container.origin.x + (container.size.width - width) * anchor.x,
+////      y: container.origin.y + (container.size.height - height) * anchor.y
+////    )
+////    return CGRect(origin: origin, size: size)
+//  }
+
 
   /// Returns a rectangle that encompasses both this rectangle and the provided rectangle
   public func expanded(toInclude rect: CGRect) -> CGRect {

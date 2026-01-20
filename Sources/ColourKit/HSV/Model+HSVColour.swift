@@ -17,7 +17,8 @@ import SwiftUI
 ///   based on human perception.
 
 //
-public struct HSVColour: Equatable, Sendable, ColourModel, Hashable {
+public struct HSVColour: Identifiable, Equatable, Sendable, ColourModel, Hashable {
+  public let id: UUID
   public var hue: Double
   public var saturation: Double
   public var brightness: Double
@@ -31,7 +32,7 @@ public struct HSVColour: Equatable, Sendable, ColourModel, Hashable {
     alpha: Double = 1.0,
     name: String? = nil
   ) {
-
+    self.id = UUID()
     self.hue = hue
     self.saturation = saturation
     self.brightness = brightness
@@ -111,7 +112,7 @@ extension HSVColour: CustomStringConvertible {
     let result = """
       HSVColour[H: \(hue), S: \(saturation), V: \(brightness), Name: \(name ?? "nil")]
       """
-    
+
     return result
   }
 }

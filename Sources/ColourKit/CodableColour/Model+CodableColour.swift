@@ -17,8 +17,7 @@ import SwiftUI
 //
 public typealias Colour = CodableColour
 
-//
-public enum CodableColour: Codable, Equatable, Hashable, Sendable {
+public enum CodableColour: Codable, Equatable, Hashable, Sendable, Identifiable {
   case hex(String, opacity: Double = 1)
   case rgb(RGBColour)
   case rgbRaw(r: Double, g: Double, b: Double, a: Double = 1)
@@ -35,6 +34,8 @@ public enum CodableColour: Codable, Equatable, Hashable, Sendable {
 }
 
 extension CodableColour {
+  public var id: Self { self }
+  
   public init?(fromPrimitive primitiveColour: PrimitiveColour) {
     guard let colour = primitiveColour.toSystemColour else { return nil }
     self = CodableColour.system(colour, opacity: 1.0)

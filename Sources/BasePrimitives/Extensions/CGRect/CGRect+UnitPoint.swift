@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 /// ```
 /// ● = origin
 ///
@@ -44,10 +43,11 @@ import SwiftUI
 
 extension CGRect {
 
-  
   /// Get a UnitPoint representing where a CGPoint falls within this rect
   /// - Parameter point: The CGPoint to convert
   /// - Returns: The normalized UnitPoint (may be outside 0.0-1.0 if point is outside rect)
+  ///
+  /// Note: Assumes origin top-left, y increasing downward, as it is in SwiftUI
   public func unitPoint(for point: CGPoint) -> UnitPoint {
     return UnitPoint(
       x: width > 0 ? (point.x - minX) / width : 0,
@@ -56,6 +56,9 @@ extension CGRect {
   }
 
   /// Get a CGPoint at the specified UnitPoint within this rect
+  /// The inverse of ``unitPoint(for:)``
+  ///
+  /// Note: Assumes origin top-left, y increasing downward, as it is in SwiftUI
   public func point(at unitPoint: UnitPoint) -> CGPoint {
     return CGPoint(
       x: minX + (unitPoint.x * width),
@@ -116,7 +119,10 @@ extension CGRect {
   public var bottomEdge: CGFloat { maxY }
 
   // Dimensions
+  #warning("TODO: Needs to be passed through the AxisMapping pipeline, to be safer")
   public var horizontal: ClosedRange<CGFloat> { minX...maxX }
+  
+#warning("TODO: Needs to be passed through the AxisMapping pipeline, to be safer")
   public var vertical: ClosedRange<CGFloat> { minY...maxY }
 
 }

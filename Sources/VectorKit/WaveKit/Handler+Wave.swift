@@ -17,7 +17,7 @@ public final class WaveHandler {
   public var lastComputedSampleCount: Int = 0
   public var isHovering: Bool = false
 
-  @ObservationIgnored let emphasisPadding: CGFloat = Styles.sizeSmall
+  @ObservationIgnored public let emphasisPadding: CGFloat = Styles.sizeSmall
   
   public init(){}
 }
