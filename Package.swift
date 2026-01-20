@@ -154,6 +154,7 @@ let package = Package(
         .module(.coreTools),
         .module(.gestureKit),
         .module(.colourKit),
+        .casePaths
       ]
     ),
 

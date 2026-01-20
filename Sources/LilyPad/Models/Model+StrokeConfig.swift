@@ -8,11 +8,14 @@
 import ColourKit
 import Foundation
 import VectorKit
+import CasePaths
 
 public struct StrokeConfig: Sendable, Hashable, Codable {
   public let colour: RGBColour
   public let lineWidth: CGFloat
   public var style: PathStyle
+  
+  public var lastKnownRadius: Double?
 
   public init(
     colour: RGBColour = .brown,
@@ -31,6 +34,9 @@ extension StrokeConfig {
     //    self = Self(style: newStyle, shape: shape, radius: radius)
   }
   
+  public var styleRadius: Double {
+    style[case: \.stamped]?.radius ?? lastKnownRadius ?? 1.0
+  }
 
 }
 
