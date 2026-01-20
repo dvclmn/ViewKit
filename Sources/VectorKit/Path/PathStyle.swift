@@ -69,12 +69,12 @@ extension PathStyle {
   //    return nil
   //  }
 
-  mutating func updateStampRadius(_ newValue: CGFloat) {
+  public mutating func updateStampRadius(_ newValue: CGFloat) {
     guard case .stamped(let shape, _) = self else { return }
     self = .stamped(shape: shape, radius: newValue)
   }
 
-  mutating func updateStampShape(_ newValue: PointShape) {
+  public mutating func updateStampShape(_ newValue: PointShape) {
     guard case .stamped(_, let radius) = self else { return }
     self = .stamped(shape: newValue, radius: radius)
   }

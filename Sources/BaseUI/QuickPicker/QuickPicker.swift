@@ -10,7 +10,7 @@ import SwiftUI
 
 public struct QuickPicker<RowContent: View, Item>: View
 where Item: Pickable & Hashable {
-//where Item: Pickable & Shortcuttable & Hashable {
+  //where Item: Pickable & Shortcuttable & Hashable {
 
   public typealias PickerOutput = (Item, Bool) -> RowContent
   @Environment(\.explicitHeight) private var explicitHeight
@@ -20,8 +20,24 @@ where Item: Pickable & Hashable {
   let hasLabeledContentWrapper: Bool
   let areShortcutsEnabled: Bool
   let maxItems: Int?
-  let rowContent: PickerOutput
-  private let hasCustomContent: Bool
+  let rowContent: PickerOutput?
+
+  public init(
+    item: Binding<Item>,
+    style: QuickPickerStyle = .plain,
+    hasLabeledContentWrapper: Bool = false,
+    areShortcutsEnabled: Bool = false,
+    maxItems: Int? = nil,
+  @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
+  ) where RowContent == EmptyView {
+    self._item = item
+    self.style = style
+    self.hasLabeledContentWrapper = hasLabeledContentWrapper
+    self.areShortcutsEnabled = areShortcutsEnabled
+    self.maxItems = maxItems
+    self.rowContent = rowContent
+  }
+  //  private let hasCustomContent: Bool
 
   public var body: some View {
 
@@ -45,7 +61,7 @@ where Item: Pickable & Hashable {
 }
 
 extension QuickPicker {
-  
+
   private var items: Item.AllCases.SubSequence {
     Item.allCases.prefix(maxItems ?? Int.max)
   }
@@ -71,8 +87,8 @@ extension QuickPicker {
       ForEach(items) { pickerItem in
 
         RowView(pickerItem) { hovering in
-          if hasCustomContent {
-            rowContent(pickerItem, hovering)
+          if rowContent != nil {
+            rowContent?(pickerItem, hovering)
           } else {
             MaybeLabel(pickerItem.label)
           }
@@ -82,50 +98,74 @@ extension QuickPicker {
   }
 }
 
+//extension QuickPicker {
+//  public init?(
+//    item: Binding<Item>?,
+//    style: QuickPickerStyle = .plain,
+//    hasLabeledContentWrapper: Bool = false,
+//    areShortcutsEnabled: Bool = false,
+//    maxItems: Int? = nil,
+//    @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
+//  ) where RowContent == EmptyView {
+//    guard let item else { return nil }
+//    self.init(
+//      item: item,
+//      style: style,
+//      hasLabeledContentWrapper: hasLabeledContentWrapper,
+//      areShortcutsEnabled: areShortcutsEnabled,
+//      maxItems: maxItems,
+//      rowContent: rowContent
+//    )
+//  }
+//}
+
 // MARK: - Initialisers
-extension QuickPicker {
+//extension QuickPicker where RowContent == EmptyView {
+  
+//  public init
 
-  public init(
-    item: Binding<Item>,
-    style: QuickPickerStyle = .plain,
-    hasLabeledContentWrapper: Bool = false,
-    areShortcutsEnabled: Bool = false,
-    maxItems: Int? = nil,
-    @ViewBuilder rowContent: @escaping PickerOutput
-  ) {
-    self._item = item
-    self.style = style
-    self.hasLabeledContentWrapper = hasLabeledContentWrapper
-    self.areShortcutsEnabled = areShortcutsEnabled
-    self.maxItems = maxItems
-    self.rowContent = rowContent
-    self.hasCustomContent = true
-  }
+  //  public init(
+  //    item: Binding<Item>,
+  //    style: QuickPickerStyle = .plain,
+  //    hasLabeledContentWrapper: Bool = false,
+  //    areShortcutsEnabled: Bool = false,
+  //    maxItems: Int? = nil,
+  //    @ViewBuilder rowContent: @escaping PickerOutput? = nil
+  //  ) {
+  //    self._item = item
+  //    self.style = style
+  //    self.hasLabeledContentWrapper = hasLabeledContentWrapper
+  //    self.areShortcutsEnabled = areShortcutsEnabled
+  //    self.maxItems = maxItems
+  //    self.rowContent = rowContent
+  //    self.hasCustomContent = true
+  //  }
 
-  public init(
-    item: Binding<Item>,
-    style: QuickPickerStyle = .plain,
-    hasLabeledContentWrapper: Bool = false,
-    areShortcutsEnabled: Bool = false,
-    maxItems: Int? = nil,
-  ) where RowContent == EmptyView {
-    self._item = item
-    self.style = style
-    self.hasLabeledContentWrapper = hasLabeledContentWrapper
-    self.areShortcutsEnabled = areShortcutsEnabled
-    self.maxItems = maxItems
-    self.rowContent = { _, _ in EmptyView() }
-    self.hasCustomContent = false
+  //  public init(
+  //    item: Binding<Item>,
+  //    style: QuickPickerStyle = .plain,
+  //    hasLabeledContentWrapper: Bool = false,
+  //    areShortcutsEnabled: Bool = false,
+  //    maxItems: Int? = nil,
+  //  ) where RowContent == EmptyView {
+  //    self._item = item
+  //    self.style = style
+  //    self.hasLabeledContentWrapper = hasLabeledContentWrapper
+  //    self.areShortcutsEnabled = areShortcutsEnabled
+  //    self.maxItems = maxItems
+  //    self.rowContent = { _, _ in EmptyView() }
+  //    self.hasCustomContent = false
+  //
+  //    //    self.init(
+  //    //      item: item,
+  //    //      style: style,
+  //    //      hasLabeledContentWrapper: hasLabeledContentWrapper,
+  //    //      areShortcutsEnabled: areShortcutsEnabled,
+  //    //      maxItems: maxItems
+  //    //    ) { _, _ in
+  //    //      EmptyView()
+  //    //    }
+  //
+  //  }
 
-    //    self.init(
-    //      item: item,
-    //      style: style,
-    //      hasLabeledContentWrapper: hasLabeledContentWrapper,
-    //      areShortcutsEnabled: areShortcutsEnabled,
-    //      maxItems: maxItems
-    //    ) { _, _ in
-    //      EmptyView()
-    //    }
-
-  }
-}
+//}

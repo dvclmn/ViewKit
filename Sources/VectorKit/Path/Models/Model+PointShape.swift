@@ -5,15 +5,15 @@
 //  Created by Dave Coleman on 12/7/2025.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, CaseIterable, Codable {
   case square
   case circle
   case cross
   case triangle
-  
+
   public var id: String { rawValue }
 
   public func updatePath(
@@ -28,10 +28,10 @@ public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, Case
     switch self {
       case .square:
         path.addRect(rect)
-        
+
       case .circle:
         path.addEllipse(in: rect)
-        
+
       case .cross:
         path.move(to: CGPoint(x: center.x - radius, y: center.y))
         path.addLine(to: CGPoint(x: center.x + radius, y: center.y))

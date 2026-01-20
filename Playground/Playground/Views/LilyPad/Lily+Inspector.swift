@@ -34,8 +34,11 @@ struct LilyInspectorView: View {
         if store.strokeStyle.style.isStamped {
           //        if store.pathStyle.style.isStamped {
 
-                    QuickPicker(item: $stampShape)
-//          QuickPicker(item: $store.strokeStyle.style)
+          if let shape = Binding(shapeBinding) {
+            QuickPicker(item: shape)
+            
+          }
+          //          QuickPicker(item: $store.strokeStyle.style)
 
           //          TextScrubber(
           //            "Radius",
@@ -67,28 +70,26 @@ extension LilyInspectorView {
   private var styleBinding: Binding<PathStyle.Meta> {
     Binding {
       store.strokeStyle.style.kind
-      //      store.pathStyle.style
-      //      PathStylePicker(from: store.pathStyle)
     } set: {
       store.strokeStyle.style = PathStyle.make(
         kind: $0,
         preserving: store.strokeStyle.style
       )
-      //      let new: PathStyle? = {
-      //        switch newValue {
-      //          case .line: return .line
-      //          case .smooth: return .smooth
-      //          case .stamped:
-      //            guard let stampRadius, let stampShape else { return nil }
-      //            return .stamped(shape: stampShape, radius: stampRadius)
-      //
-      //        }
-      //      }()
-      //
-      //      guard let new else { return }
-      //      store.strokeStyle.updateStyle(new)
     }
-
+  }
+  
+  private var shapeBinding: Binding<PointShape?> {
+    Binding {
+      store.strokeStyle.style.stampedValue?.shape
+//      store.strokeStyle.style.kind
+    } set: {
+      guard let new = $0 else { return }
+      store.strokeStyle.style.updateStampShape(new)
+//      store.strokeStyle.style = PathStyle.make(
+//        kind: $0,
+//        preserving: store.strokeStyle.style
+//      )
+    }
   }
 
   //  private var styleBinding: Binding<PathStyle> {
