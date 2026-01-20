@@ -15,6 +15,8 @@ where Item: Pickable & Hashable {
   public typealias PickerOutput = (Item, Bool) -> RowContent
   @Environment(\.explicitHeight) private var explicitHeight
 
+  let allItems: [Item]
+
   @Binding var item: Item
   let style: QuickPickerStyle
   let hasLabeledContentWrapper: Bool
@@ -24,6 +26,7 @@ where Item: Pickable & Hashable {
 
   public init(
     item: Binding<Item>,
+    allItems: [Item],
     style: QuickPickerStyle = .plain,
     hasLabeledContentWrapper: Bool = false,
     areShortcutsEnabled: Bool = false,
@@ -31,6 +34,7 @@ where Item: Pickable & Hashable {
     @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
   ) where RowContent == EmptyView {
     self._item = item
+    self.allItems = allItems
     self.style = style
     self.hasLabeledContentWrapper = hasLabeledContentWrapper
     self.areShortcutsEnabled = areShortcutsEnabled
@@ -48,27 +52,20 @@ where Item: Pickable & Hashable {
 
         case .capsule:
           Text("Not currently available")
-//          ItemScrollable(
-//            scrolledItem: $item,
-//            axis: .horizontal,
-//            showsIndicators: false
-//          ) { scrollableItem in
-//            MaybeLabel(item.label)
-//          }
+      //          ItemScrollable(
+      //            scrolledItem: $item,
+      //            axis: .horizontal,
+      //            showsIndicators: false
+      //          ) { scrollableItem in
+      //            MaybeLabel(item.label)
+      //          }
       }
     }
     .environment(\.shortcutsEnabled, areShortcutsEnabled)
   }
 }
 
-extension QuickPicker where Item: CaseIterable {
-  private var items: Item.AllCases.SubSequence {
-    Item.allCases.prefix(maxItems ?? Int.max)
-  }
-  
-}
 extension QuickPicker {
-
 
   @ViewBuilder
   private func PlainStyle() -> some View {
@@ -88,7 +85,7 @@ extension QuickPicker {
   func PickerContent() -> some View {
     Picker(Item.pickerLabel.text, selection: $item) {
 
-      ForEach(items) { pickerItem in
+      ForEach(allItems) { pickerItem in
 
         RowView(pickerItem) { hovering in
           if rowContent != nil {
@@ -100,6 +97,31 @@ extension QuickPicker {
       }
     }
   }
+}
+
+extension QuickPicker where Item: CaseIterable {
+  public init(
+    item: Binding<Item>,
+    style: QuickPickerStyle = .plain,
+    hasLabeledContentWrapper: Bool = false,
+    areShortcutsEnabled: Bool = false,
+    maxItems: Int? = nil,
+    @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
+  ) where RowContent == EmptyView {
+    self._item = item
+
+    /// This init is able to populate `allItems` automatically,
+    /// using `CaseIterable`'s `allCases`.
+
+    self.allItems = Item.allCases.prefix(maxItems ?? Int.max).toArray
+
+    self.style = style
+    self.hasLabeledContentWrapper = hasLabeledContentWrapper
+    self.areShortcutsEnabled = areShortcutsEnabled
+    self.maxItems = maxItems
+    self.rowContent = rowContent
+  }
+
 }
 
 //extension QuickPicker {

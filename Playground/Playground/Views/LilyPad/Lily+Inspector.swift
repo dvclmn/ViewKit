@@ -26,7 +26,9 @@ struct LilyInspectorView: View {
 
       Section("Line Style") {
 
-        QuickPicker(item: $store.strokeStyle.style)
+//        QuickPicker(item: $store.strokeStyle.style, allItems: [
+//
+//        ])
         //        QuickPicker(item: $store.strokeStyle.style)
         //        QuickPicker(item: $store.pathStyle.style)
         //      QuickPicker(item: $store.pathStyle)

@@ -56,12 +56,12 @@ struct SlidersDemoView: View {
         Text("Plain Text view")
         
         LabeledContent("Labeled Item") {
-          Picker("A Picker example", selection: .constant(ExampleTab.blarm)) {
-            ForEach(ExampleTab.allCases) { tab in
-              Text(tab.name).tag(tab)
-            }
-          }
-          .labelsHidden()
+//          Picker("A Picker example", selection: .constant(ExampleTab.blarm)) {
+//            ForEach(ExampleTab.allCases) { tab in
+//              Text(tab.name).tag(tab)
+//            }
+//          }
+//          .labelsHidden()
         }
         TextField("TextField label", text: .constant("And some example contents"))
         
