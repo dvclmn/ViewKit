@@ -26,21 +26,21 @@ struct LilyPadCanvasView: View {
       var pathActive = Path()
 
       for stroke in store.drawing.strokes {
-        stroke.value
-//          .rawPoints
-                    .sampledPoints(every: stride)
+        stroke.key
+          //          .rawPoints
+          .sampledPoints(every: stride)
           .processPath(
-            type: stroke.key.style,
+            type: stroke.value.style,
             //          type: store.pathStyle.toPathStyle,
             path: &path
           )
       }
 
-      if let active = store.drawing.active {
-        active
-          .sampledPoints(every: stride)
-          .processPath(type: store.strokeStyle.style, path: &pathActive)
-      }
+      //      if let active = store.drawing.active {
+      //        active
+      //          .sampledPoints(every: stride)
+      //          .processPath(type: store.strokeStyle.style, path: &pathActive)
+      //      }
 
       //          path.addDot(at: <#T##CGPoint#>, radius: <#T##CGFloat#>, using: <#T##DebugPathElement#>)
 

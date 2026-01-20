@@ -8,14 +8,12 @@
 import CoreTools
 import SwiftUI
 
-public typealias Strokes = [StrokeConfig: Stroke]
-public typealias Points = [PointStyle: CGPoint]
+public typealias Strokes = [Stroke: StrokeConfig]
+//public typealias Strokes = [StrokeConfig: Stroke]
+//public typealias Points = [PointStyle: CGPoint]
 
 //@Observable
 public struct DrawingData: Codable, Sendable {
-  //public struct StrokeHandler {
-  //final class StrokeHandler {
-
   /// This should always use the app's active stroke style settings
   public var active: Stroke?
   public var phase: InteractionPhase = .none
@@ -35,7 +33,7 @@ public struct DrawingData: Codable, Sendable {
 extension DrawingData {
   public var pointCount: Int {
     strokes.reduce(into: 0) { partialResult, dict in
-      partialResult += dict.value.points.count
+      partialResult += dict.key.points.count
     }
   }
   public var strokeCount: Int { strokes.count }

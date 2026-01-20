@@ -6,7 +6,22 @@
 //
 
 import Foundation
+import CoreGraphics
 
+extension Array where Element == CGPoint {
+  public static func generateSpiral(
+    start: CGPoint = .zero,
+    turns: CGFloat = 1.5,
+    maxRadius: CGFloat = 50,
+    pointCount: Int = 60
+  ) -> [CGPoint] {
+    return start.generateSpiral(
+      turns: turns,
+      maxRadius: maxRadius,
+      pointCount: pointCount
+    )
+  }
+}
 extension CGPoint {
 
   /// Generate a spiral as an array of points, starting from this point as center

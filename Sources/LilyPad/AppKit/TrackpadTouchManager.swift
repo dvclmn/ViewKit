@@ -66,15 +66,18 @@ class TrackpadTouchManager {
       /// 5. Create the output point
       let magnitude = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
 
-      results.insert(
-        TouchPoint(
-          id: id,
-          position: currentPos,
-          velocity: velocity,
-          magnitude: magnitude,
-          phase: InteractionPhase(from: touch.phase),
-          isResting: touch.isResting
-        ))
+      let newTouchPoint = TouchPoint(
+        id: id,
+        position: currentPos,
+        velocity: velocity,
+        magnitude: magnitude,
+        phase: InteractionPhase(from: touch.phase),
+        isResting: touch.isResting
+      )
+
+      print("Created new: \(newTouchPoint)")
+
+      results.insert(newTouchPoint)
     }
 
     return results

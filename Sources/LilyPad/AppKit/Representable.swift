@@ -17,24 +17,24 @@ struct TrackpadTouchesView: NSViewRepresentable {
   /// This will invoke the cursor hiding and freezing
   var isDrawingEnabled: Bool
   var didUpdateTouches: TouchesUpdate
-  var didUpdatePressure: PressureUpdate
+//  var didUpdatePressure: PressureUpdate
 
   public func makeNSView(context: Context) -> TrackpadTouchesNSView {
 
     let view = TrackpadTouchesNSView(
       didUpdateTouches,
-      didUpdatePressure
+//      didUpdatePressure
     )
-    view.setDrawingMode(isActive: isDrawingEnabled)
+//    view.setDrawingMode(isActive: isDrawingEnabled)
     return view
   }
 
   public func updateNSView(_ nsView: TrackpadTouchesNSView, context: Context) {
 
-    if nsView.lastKnownDrawingMode != isDrawingEnabled {
-      nsView.setDrawingMode(isActive: isDrawingEnabled)
-      nsView.lastKnownDrawingMode = isDrawingEnabled
-    }
+//    if nsView.lastKnownDrawingMode != isDrawingEnabled {
+//      nsView.setDrawingMode(isActive: isDrawingEnabled)
+//      nsView.lastKnownDrawingMode = isDrawingEnabled
+//    }
   }
 }
 #endif

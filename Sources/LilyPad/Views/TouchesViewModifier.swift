@@ -32,13 +32,19 @@ public struct TrackpadTouchesModifier: ViewModifier {
         if shouldShowIndicators {
           self.localTouches = touchOutput
         }
-        if isEnabled {
-          didUpdateTouches(touchOutput)
-        }
+        
+        didUpdateTouches(touchOutput)
+//        if isEnabled {
+//          print("Touches enabled. Output: \(touchOutput). \(Date.debug)")
+//          didUpdateTouches(touchOutput)
+//        } else {
+//          print("Touches not enabled \(Date.debug)")
+//        }
         //        }
-      } didUpdatePressure: { pressure in
-        didUpdatePressure(pressure)
       }
+//      didUpdatePressure: { pressure in
+//        didUpdatePressure(pressure)
+//      }
 
       //        .background(.cyan.opacity(0.1))
       //        .debugTextOverlay("No viewport size", isEnabled: viewportSize == nil)

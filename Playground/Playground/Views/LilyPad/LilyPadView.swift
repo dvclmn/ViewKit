@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 16/1/2026.
 //
 
+import CanvasKit
 import GestureKit
 import LilyPad
 import Sharing
@@ -24,30 +25,43 @@ struct LilyPadDemoView: View {
   var body: some View {
 
     @Bindable var store = store
-    Color.clear
-      .frame(
-        maxWidth: .infinity,
-        maxHeight: .infinity,
-      )
-      .overlay {
-        LilyPadCanvasView()
-      }
-      .touches(
-        isEnabled: isDrawingEnabled,
-        mapStrategy: .fill,
-        showIndicators: true
-      ) { touches in
-        handleTouches(touches)
-      }
 
-      .toolbar { ToolbarView() }
+    CanvasView(canvasSize: CGSize(200, 300)) {
+      LilyPadCanvasView()
+    }
+    //    Color.clear
+    //      .frame(
+    //        maxWidth: .infinity,
+    //        maxHeight: .infinity,
+    //      )
 
-      .addInfoBarItems(LilyPadInfoItem.self, source: store, format: .short)
-      .infoBarView()
+    //      .overlay {
 
-      .inspector(isPresented: $store.isInspectorPresented) {
-        LilyInspectorView()
+    //      }
+    .touches(
+      isEnabled: store.isDrawingEnabled,
+      mapStrategy: .fill,
+      showIndicators: true
+    ) { touches in
+      print("Touches? \(touches)")
+      handleTouches(touches)
+    }
+
+    .toolbar { ToolbarView() }
+
+    .addInfoBarItems(LilyPadInfoItem.self, source: store, format: .short)
+    .infoBarView()
+
+    .inspector(isPresented: $store.isInspectorPresented) {
+      LilyInspectorView()
+    }
+
+    .onAppear {
+
+      store.setDrawing {
+        $0.addStrokes(Stroke.examples)
       }
+    }
   }
 }
 
@@ -66,16 +80,16 @@ extension LilyPadDemoView {
 
       case .changed:
         store.setDrawing { drawing in
-          drawing.active?.addPoints([touch.position])
+          drawing.active?.points.append(touch.position)
+          //          drawing.active?.addPoints([touch.position])
         }
 
       case .ended, .cancelled:
-
         if let stroke = store.drawing.active {
           store.setDrawing { drawing in
             drawing.addStrokes([stroke])
-            store.setDrawing(\.active, value: nil)
           }
+          store.setDrawing(\.active, value: nil)
         }
 
       default:
@@ -83,8 +97,6 @@ extension LilyPadDemoView {
     }
 
   }
-
-  private var isDrawingEnabled: Bool { store.isDrawingEnabled }
 
 }
 

@@ -26,17 +26,13 @@ struct LilyInspectorView: View {
 
       Section("Line Style") {
 
-        Picker("Style", selection: styleBinding) {
-
-          //          ForEach(PathStyle.Cases()., id: \.self) { path in
-          //          ForEach(PathStyle.allCasePaths, id: \.self) { path in
-
-          //          }
+//        Text("Current Stroke Config: " + store.strokeStyle.description)
+//          .monospaced()
+        Picker("Style", selection: styleKindBinding) {
           ForEach(PathStyle.Meta.allCases) { meta in
             Text(meta.name).tag(meta)
           }
         }
-        .pickerStyle(.segmented)
 
         //
         ////          Text("Line").tag(PathStyle.Meta.line)
@@ -45,16 +41,35 @@ struct LilyInspectorView: View {
         //        }
 
         if store.strokeStyle.style.isStamped {
-          TextScrubber(
-            "Radius",
-            value: radiusBinding,
-            range: 0.1...40,
-            strategy: .continuous
-          )
 
-          //          QuickPicker(item: $store.strokeStyle.style)
+          if let shapeBinding = $store.strokeStyle.style[dynamicMember: \.stamped]?.shape {
+            //          if let shapeBinding = styleBinding[dynamicMember: \.stamped]?.shape {
+            //          if let shapeBinding = styleBinding[dynamicMember: \.stamped]?.shape {
+            Picker("Shape", selection: shapeBinding) {
+              ForEach(PointShape.allCases) { shape in
+                Text(shape.name).tag(shape)
+              }
+            }
+          }
+          
+          if let radiusBinding = $store.strokeStyle.style[dynamicMember: \.stamped]?.radius {
+                        TextScrubber(
+                          "Radius",
+                          value: radiusBinding,
+                          range: 0.1...40,
+                          strategy: .continuous
+                        )
+                        .formatValue { value in
+                          value.displayString(places: 2)
+                        }
+            
+          }
 
-          //                    TextField("Radius", value: $store.pathStyle.radius, formatter: formatter)
+          //          if let thing = styleBinding[dynamicMember: \.stamped]?.radius {
+          //            //          if let rad = Binding(styleBinding) {
+          //
+          //          }
+
         }
         //        TextField("Radius", value: radius, format: .)
         //      }
@@ -67,6 +82,7 @@ struct LilyInspectorView: View {
       //        range: 1...50,
       //      )
     }
+    .pickerStyle(.segmented)
     .formStyle(.grouped)
     //    .animation(Styles.animationSpringQuickNSubtle, value: store.pathStyle.style.isStamped)
 
@@ -74,27 +90,78 @@ struct LilyInspectorView: View {
 }
 
 extension LilyInspectorView {
-
-  private var styleBinding: Binding<PathStyle.Meta> {
+  
+  private var styleKindBinding: Binding<PathStyle.Meta> {
     Binding(
       get: {
         let kind = store.strokeStyle.style.kind
-        DebugString {
-          Indented("PathStyle 'kind' getter") {
-            Labeled("Whole PathStyle", value: store.strokeStyle.style)
-            Labeled("New 'kind'", value: kind)
-          }
-        }
+//        DebugString {
+//          Indented("PathStyle 'kind' getter") {
+//            Labeled("Whole PathStyle", value: store.strokeStyle.style)
+//            Labeled("New 'kind'", value: kind)
+//          }
+//        }
         return kind
       },
       set: { newMeta in
         let current = store.strokeStyle.style
         store.strokeStyle.style = PathStyle.make(kind: newMeta, preserving: current)
-
+        
         //        store.strokeStyle.style = PathStyle.make(kind: newMeta, preserving: store.strokeStyle.style)
       }
     )
   }
+
+
+  //  private var styleBinding: Binding<PathStyle> {
+  //    Binding(
+  //      get: {
+  //        let kind = store.strokeStyle.style
+  //        //        DebugString {
+  //        //          Indented("PathStyle 'kind' getter") {
+  //        //            Labeled("Whole PathStyle", value: store.strokeStyle.style)
+  //        //            Labeled("New 'kind'", value: kind)
+  //        //          }
+  //        //        }
+  //        return kind
+  //      },
+  //      set: { newValue in
+  //        let current = store.strokeStyle.style
+  //        store.strokeStyle.style = PathStyle.make(kind: current.kind, preserving: current)
+  //
+  //        //        store.strokeStyle.style = PathStyle.make(kind: newMeta, preserving: store.strokeStyle.style)
+  //      }
+  //    )
+  //  }
+
+  //  private func styleBinding<T>(
+  //    _ casePath: WritableKeyPath<Case<PathStyle>, T>,
+  ////    _ casePath: AnyCasePath<PathStyle, T>
+  //  ) -> Binding<T> {
+  //    //    private var shapeBinding: Binding<PointShape?> {
+  //    Binding {
+  //
+  //      let radius = store.strokeStyle.style[case: casePath]
+  ////      DebugString {
+  ////        Indented("Radius getter") {
+  ////          Labeled("Whole PathStyle", value: store.strokeStyle.style)
+  ////          Labeled("New Radius Value", value: radius)
+  ////        }
+  ////      }
+  //      guard let radius = radius as? T else { fatalError("Hello") }
+  //      return radius
+  //
+  //    } set: { newValue in
+  //
+  ////      guard let shape = store.strokeStyle.style[case: \.stamped]?.shape else { return }
+  ////      store.strokeStyle.style[case: \.stamped] = (shape, newValue)
+  ////
+  ////      if store.strokeStyle.lastKnownRadius == nil {
+  ////        store.strokeStyle.lastKnownRadius = newValue
+  ////      }
+  //    }
+  //  }
+
 
   //  private var styleBinding: Binding<PathStyle> {
   //    Binding(
@@ -107,41 +174,28 @@ extension LilyInspectorView {
   //    )
   //  }
 
-  private var radiusBinding: Binding<Double> {
-    //    private var shapeBinding: Binding<PointShape?> {
-    Binding {
-      let radius = store.strokeStyle.styleRadius
-      DebugString {
-        Indented("Radius getter") {
-          Labeled("Whole PathStyle", value: store.strokeStyle.style)
-          Labeled("New Radius Value", value: radius)
-        }
-      }
-      return radius
-      //        store.strokeStyle.style.stampedValue?.shape
-      //      store.strokeStyle.style.kind
-    } set: { newValue in
-      
-      //      guard let newValue else { return }
-      //      guard let shape = store.strokeStyle.style[case: \.stamped]?.shape else { return  }
-      guard let shape = store.strokeStyle.style[case: \.stamped]?.shape else { return }
-//      let values: (PointShape, Double) = ()
-      store.strokeStyle.style[case: \.stamped] = (shape, newValue)
-      
-      if store.strokeStyle.lastKnownRadius == nil {
-        store.strokeStyle.lastKnownRadius = newValue
-      }
-      
-      //      store.strokeStyle.style[case: \.stamped] = StampedConfig(shape: shape, radius: newValue)
-
-      //      store.strokeStyle.style.modify(\.stamped) { $0.radius = newValue }
-      //        store.strokeStyle.style.updateStampShape(new)
-      //      store.strokeStyle.style = PathStyle.make(
-      //        kind: $0,
-      //        preserving: store.strokeStyle.style
-      //      )
-    }
-  }
+  //  private var radiusBinding: Binding<Double> {
+  //    //    private var shapeBinding: Binding<PointShape?> {
+  //    Binding {
+  //      let radius = store.strokeStyle.styleRadius
+  //      DebugString {
+  //        Indented("Radius getter") {
+  //          Labeled("Whole PathStyle", value: store.strokeStyle.style)
+  //          Labeled("New Radius Value", value: radius)
+  //        }
+  //      }
+  //      return radius
+  //
+  //    } set: { newValue in
+  //
+  //      guard let shape = store.strokeStyle.style[case: \.stamped]?.shape else { return }
+  //      store.strokeStyle.style[case: \.stamped] = (shape, newValue)
+  //
+  //      if store.strokeStyle.lastKnownRadius == nil {
+  //        store.strokeStyle.lastKnownRadius = newValue
+  //      }
+  //    }
+  //  }
 
   //  private var styleBinding: Binding<PathStyle> {
   //    Binding {
@@ -205,5 +259,8 @@ extension LilyInspectorView {
   LilyInspectorView()
     .environment(store)
     .frame(maxWidth: 300)
+    .onAppear {
+      store.strokeStyle.style = .stamped(shape: .circle, radius: 3.0)
+    }
 }
 #endif

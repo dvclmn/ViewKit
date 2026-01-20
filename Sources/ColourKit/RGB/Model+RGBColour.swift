@@ -80,10 +80,13 @@ extension RGBColour {
 //
 extension RGBColour: CustomStringConvertible {
   public var description: String {
-    let result = """
-      RGBColour[R: \(red), G: \(green), B: \(blue), Name: \(name ?? "nil")]
+    guard let name else {
+      return """
+        R: \(red), G: \(green), B: \(blue)
+        """
+    }
+    return """
+      RGBColour: \(name)
       """
-
-    return result
   }
 }

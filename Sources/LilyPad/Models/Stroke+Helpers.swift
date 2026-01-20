@@ -15,7 +15,7 @@ extension DrawingData {
     Dictionary(uniqueKeysWithValues: strokes.map { stroke in
       let config = StrokeConfig()
 //      let style = PointStyle.basic(with: colour)
-      return (config, stroke)
+      return (stroke, config)
     })
   }
   
@@ -32,23 +32,23 @@ extension DrawingData {
 
 extension Stroke {
   // If you pass a colour, we create a basic style for each point.
-  static func makePoints(from points: [CGPoint], colour: RGBColour) -> Points {
-    Dictionary(uniqueKeysWithValues: points.map { point in
-      let style = PointStyle.basic(with: colour)
-      return (style, point)
-    })
-  }
+//  static func makePoints(from points: [CGPoint], colour: RGBColour) -> Points {
+//    Dictionary(uniqueKeysWithValues: points.map { point in
+//      let style = PointStyle.basic(with: colour)
+//      return (point, style)
+//    })
+//  }
   
   
-  public mutating func addPoints(_ points: [CGPoint]) {
-    let new = Self.makePoints(from: points, colour: RGBColour.brown)
-    self.points.merge(new) { _, new in
-      new
-    }
-    //    self.points.merge(points) { current, new in
-    //      new
-    //    }
-  }
+//  public mutating func addPoints(_ points: [CGPoint]) {
+//    let new = Self.makePoints(from: points, colour: RGBColour.brown)
+//    self.points.merge(new) { _, new in
+//      new
+//    }
+//    //    self.points.merge(points) { current, new in
+//    //      new
+//    //    }
+//  }
 
   
   // If you already have a style, apply that style to all points.

@@ -10,20 +10,20 @@ import CoreTools
 
 /// The underlying AppKit NSView that captures raw trackpad touches
 public class TrackpadTouchesNSView: NSView {
-  
-  var lastKnownDrawingMode: Bool = false
+
+//  var lastKnownDrawingMode: Bool = false
   var onTouchesChanged: TouchesUpdate
-  var onPressureChanged: PressureUpdate
+//  var onPressureChanged: PressureUpdate
 
   /// Touch manager to handle touch tracking and velocity calculation
   private let touchManager = TrackpadTouchManager()
 
   public init(
     _ onTouchesChanged: @escaping TouchesUpdate,
-    _ onPressureChanged: @escaping PressureUpdate
+//    _ onPressureChanged: @escaping PressureUpdate
   ) {
     self.onTouchesChanged = onTouchesChanged
-    self.onPressureChanged = onPressureChanged
+//    self.onPressureChanged = onPressureChanged
     super.init(frame: .zero)
     self.setupView()
   }
@@ -33,21 +33,21 @@ public class TrackpadTouchesNSView: NSView {
   }
 
   // Called from SwiftUI's updateNSView whenever the binding changes.
-  public func setDrawingMode(isActive: Bool) {
-    if isActive {
-//      print("Hiding the pointer via AppKit")
-//      CGWarpMouseCursorPosition(frame.midpoint)
-      CGAssociateMouseAndMouseCursorPosition(0)
-      NSCursor.hide()
-
-    } else {
-//      print("Showing the pointer via AppKit")
-      CGAssociateMouseAndMouseCursorPosition(1)
-      NSCursor.unhide()
-
-    }
-    // Update pressure, reset touch manager, etc.
-  }
+//  public func setDrawingMode(isActive: Bool) {
+//    if isActive {
+//      //      print("Hiding the pointer via AppKit")
+//      //      CGWarpMouseCursorPosition(frame.midpoint)
+//      CGAssociateMouseAndMouseCursorPosition(0)
+//      NSCursor.hide()
+//
+//    } else {
+//      //      print("Showing the pointer via AppKit")
+//      CGAssociateMouseAndMouseCursorPosition(1)
+//      NSCursor.unhide()
+//
+//    }
+//    // Update pressure, reset touch manager, etc.
+//  }
 
   private func setupView() {
     /// Direct == touches made directly onto a screen, like a Wacom
@@ -57,8 +57,8 @@ public class TrackpadTouchesNSView: NSView {
     /// Include stationary touches in the updates
     wantsRestingTouches = true
 
-    pressureConfiguration = NSPressureConfiguration(pressureBehavior: .primaryGeneric)
-    pressureConfiguration?.set()
+//    pressureConfiguration = NSPressureConfiguration(pressureBehavior: .primaryGeneric)
+//    pressureConfiguration?.set()
 
   }
 
@@ -82,15 +82,15 @@ public class TrackpadTouchesNSView: NSView {
     onTouchesChanged(processedTouches)
   }
 
-  private func processPressureChange(with event: NSEvent) {
-    let pressure = CGFloat(event.pressure)
-    //    DebugString {
-    //      Labeled("Pressure amount", value: pressure)
-    //      Labeled("Pressure stage", value: event.stage)
-    //      Labeled("Pressure stage transition", value: event.stageTransition)
-    //    }
-    onPressureChanged(pressure)
-  }
+//  private func processPressureChange(with event: NSEvent) {
+//    let pressure = CGFloat(event.pressure)
+//    //    DebugString {
+//    //      Labeled("Pressure amount", value: pressure)
+//    //      Labeled("Pressure stage", value: event.stage)
+//    //      Labeled("Pressure stage transition", value: event.stageTransition)
+//    //    }
+//    onPressureChanged(pressure)
+//  }
 
   // MARK: - Touch Event Handlers
 
@@ -106,9 +106,9 @@ public class TrackpadTouchesNSView: NSView {
   public override func touchesCancelled(with event: NSEvent) {
     processTouches(with: event)
   }
-  public override func pressureChange(with event: NSEvent) {
-    processPressureChange(with: event)
-  }
+//  public override func pressureChange(with event: NSEvent) {
+//    processPressureChange(with: event)
+//  }
 
   private func debugEventStream(_ event: NSEvent) {
     /// Properties that I know produce the assertion failures:

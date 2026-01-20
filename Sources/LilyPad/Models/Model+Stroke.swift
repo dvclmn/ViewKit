@@ -7,10 +7,14 @@
 
 import ColourKit
 import Foundation
+import GraphicsKit
 
 public struct Stroke: Hashable, Codable, Sendable {
   public let id: UUID
-  public var points: Points
+  
+  /// Temporarily setting this to a more simple `[CGPoint]`
+  public var points: [CGPoint]
+//  public var points: Points
 }
 
 extension Stroke {
@@ -21,13 +25,23 @@ extension Stroke {
     colour: RGBColour
   ) {
     self.id = UUID()
-    self.points = Stroke.makePoints(from: points, colour: colour)
+    self.points = points
+//    self.points = Stroke.makePoints(from: points, colour: colour)
   }
 }
 
 extension Stroke {
 
-  public var rawPoints: [CGPoint] { points.values.toArray }
+  public static var examples: [Stroke] {
+    [
+      Stroke(points: .generateSpiral(), colour: .brown),
+      Stroke(points: [.quickPreset01, .quickPreset02], colour: .blue),
+//      Stroke(points: .generateSpiral(start: .quickPreset03), colour: .brown),
+    ]
+  }
+
+  public var rawPoints: [CGPoint] { points }
+//  public var rawPoints: [CGPoint] { points.values.toArray }
 
   public func sampledPoints(every stride: Int) -> [CGPoint] {
     rawPoints.sampled(every: stride)
