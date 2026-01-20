@@ -45,4 +45,7 @@ extension CaseCyclable {
 extension CaseCyclable {
   public var isAtBeginning: Bool { self == Self.allCases.first }
   public var isAtEnd: Bool { self == Self.allCases.last }
+
+  public mutating func next(wrapping: Bool = true) { self = toNext(wrapping: wrapping) }
+  public mutating func previous(wrapping: Bool = true) { self = toPrevious(wrapping: wrapping) }
 }

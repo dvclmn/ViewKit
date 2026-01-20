@@ -9,6 +9,7 @@ import LilyPad
 import SwiftUI
 import ToolKit
 import VectorKit
+import CasePaths
 
 struct LilyInspectorView: View {
   @Environment(AppHandler.self) private var store
@@ -25,7 +26,7 @@ struct LilyInspectorView: View {
 
       Section("Line Style") {
 
-        QuickPicker(item: styleBinding)
+        QuickPicker(item: $store.strokeStyle.style)
         //        QuickPicker(item: $store.strokeStyle.style)
         //        QuickPicker(item: $store.pathStyle.style)
         //      QuickPicker(item: $store.pathStyle)
@@ -34,10 +35,11 @@ struct LilyInspectorView: View {
         if store.strokeStyle.style.isStamped {
           //        if store.pathStyle.style.isStamped {
 
-          if let shape = Binding(shapeBinding) {
-            QuickPicker(item: shape)
-            
-          }
+          
+          
+//          if let shape = Binding(shapeBinding) {
+//            QuickPicker(item: shape)
+//          }
           //          QuickPicker(item: $store.strokeStyle.style)
 
           //          TextScrubber(
@@ -66,31 +68,43 @@ struct LilyInspectorView: View {
 }
 
 extension LilyInspectorView {
-
-  private var styleBinding: Binding<PathStyle.Meta> {
-    Binding {
-      store.strokeStyle.style.kind
-    } set: {
-      store.strokeStyle.style = PathStyle.make(
-        kind: $0,
-        preserving: store.strokeStyle.style
-      )
-    }
-  }
   
-  private var shapeBinding: Binding<PointShape?> {
+
+  private var styleBinding: Binding<PathStyle> {
     Binding {
-      store.strokeStyle.style.stampedValue?.shape
-//      store.strokeStyle.style.kind
-    } set: {
-      guard let new = $0 else { return }
-      store.strokeStyle.style.updateStampShape(new)
-//      store.strokeStyle.style = PathStyle.make(
-//        kind: $0,
-//        preserving: store.strokeStyle.style
-//      )
+      store.strokeStyle.style
+    } set: { newValue in
+      store.strokeStyle.style = newValue
     }
+
+    //    Binding {
+    //      store.strokeStyle.style.kind
+    //    } set: {
+    //      store.strokeStyle.style = PathStyle.make(
+    //        kind: $0,
+    //        preserving: store.strokeStyle.style
+    //      )
+    //    }
   }
+
+  
+//  private var shapeBinding: Binding<PointShape>? {
+//    store.strokeStyle.style.
+//  }
+  
+//  private var shapeBinding: Binding<PointShape?> {
+//    Binding {
+//      store.strokeStyle.style.stampedValue?.shape
+////      store.strokeStyle.style.kind
+//    } set: {
+//      guard let new = $0 else { return }
+//      store.strokeStyle.style.updateStampShape(new)
+////      store.strokeStyle.style = PathStyle.make(
+////        kind: $0,
+////        preserving: store.strokeStyle.style
+////      )
+//    }
+//  }
 
   //  private var styleBinding: Binding<PathStyle> {
   //    Binding {

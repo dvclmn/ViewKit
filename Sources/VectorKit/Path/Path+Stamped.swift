@@ -7,11 +7,13 @@
 
 import Foundation
 
-public struct StampedConfig: Sendable, Hashable, Codable {
-  let shape: PointShape
-  let radius: CGFloat
+public struct StampedConfig: Identifiable, Sendable, Hashable, Equatable, Codable {
+  public let id: UUID
+  public let shape: PointShape
+  public let radius: CGFloat
 
   public init(shape: PointShape = .circle, radius: CGFloat = 3) {
+    self.id = UUID()
     self.shape = shape
     self.radius = radius
   }

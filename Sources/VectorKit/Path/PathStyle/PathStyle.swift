@@ -5,16 +5,20 @@
 //  Created by Dave Coleman on 19/1/2026.
 //
 
+import CasePaths
 import CoreTools
 import SwiftUI
 
 @CaseDetection
 @AssociatedValues
 @MetaEnum
-public enum PathStyle: Sendable, Hashable, Codable {
+@CasePathable
+public enum PathStyle: Sendable, Hashable, Codable, Equatable, Pickable {
+  public static var pickerLabel: QuickLabel { "Path Style" }
   case line
   case smooth
   case stamped(StampedConfig)
+
   //  case stamped(shape: PointShape, radius: CGFloat)
   //  case stamped(shape: PointShape, radius: CGFloat, range: ClosedRange<Double>)
   //  public var id: String { rawValue }
@@ -34,6 +38,22 @@ public enum PathStyle: Sendable, Hashable, Codable {
 }
 
 extension PathStyle {
+  
+  public var id: UUID {
+    switch self {
+      case .line: UUID(fromInt: 1)
+      case .smooth: UUID(fromInt: 1)
+      case .stamped(let config): config.id
+    }
+  }
+  
+  public var label: QuickLabel {
+    switch self {
+      case .line: .init("Line")
+      case .smooth: .init("Smooth")
+      case .stamped(let config): .init("Stamp (\(config.shape.name)), radius: \(config.radius.toString))")
+    }
+  }
 
   public static func stamped(_ shape: PointShape, radius: CGFloat) -> Self {
     .stamped(.init(shape: shape, radius: radius))
@@ -60,15 +80,15 @@ extension PathStyle {
     }
   }
 
-  public mutating func updateStampRadius(_ newValue: CGFloat) {
-    guard case .stamped(let shape, _) = self else { return }
-    self = .stamped(shape: shape, radius: newValue)
-  }
-
-  public mutating func updateStampShape(_ newValue: PointShape) {
-    guard case .stamped(_, let radius) = self else { return }
-    self = .stamped(shape: newValue, radius: radius)
-  }
+  //  public mutating func updateStampRadius(_ newValue: CGFloat) {
+  //    guard case .stamped(let shape, _) = self else { return }
+  //    self = .stamped(shape: shape, radius: newValue)
+  //  }
+  //
+  //  public mutating func updateStampShape(_ newValue: PointShape) {
+  //    guard case .stamped(_, let radius) = self else { return }
+  //    self = .stamped(shape: newValue, radius: radius)
+  //  }
 }
 
 extension PathStyle.Meta: Pickable, Identifiable {

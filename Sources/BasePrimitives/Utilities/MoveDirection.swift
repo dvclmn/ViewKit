@@ -10,7 +10,7 @@ import SwiftUI
 public enum MoveDirection: String, LabeledItem, Sendable {
   case next
   case previous
-  
+
   public static let forward: Self = .next
   public static let backward: Self = .previous
 
@@ -28,7 +28,7 @@ public enum MoveDirection: String, LabeledItem, Sendable {
     current: T.Element,
     collection: T,
     wrapping: Bool = true
-  ) -> T.Element? where T: RandomAccessCollection, T.Element: Equatable, T.Index == Int {
+  ) -> T.Element? where T: BidirectionalCollection, T.Element: Equatable {
     switch self {
       case .next:
         collection.nextElement(

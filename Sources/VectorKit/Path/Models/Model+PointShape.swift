@@ -15,6 +15,8 @@ public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, Case
   case triangle
 
   public var id: String { rawValue }
+  
+  public var name: String { rawValue.capitalized }
 
   public func updatePath(
     in rect: CGRect,

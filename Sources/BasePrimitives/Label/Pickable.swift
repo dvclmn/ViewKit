@@ -7,8 +7,8 @@
 
 import Foundation
 
-public protocol Pickable: LabeledItem
-where Self: CaseIterable, Self.AllCases: RandomAccessCollection {
+public protocol Pickable: LabeledItem {
+//where Self: CaseIterable, Self.AllCases: RandomAccessCollection {
 
   /// A label that describes the purpose of the whole enum.
   /// E.g. "View Mode", or "Inspector Tab"

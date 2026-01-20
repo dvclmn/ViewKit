@@ -28,7 +28,7 @@ where Item: Pickable & Hashable {
     hasLabeledContentWrapper: Bool = false,
     areShortcutsEnabled: Bool = false,
     maxItems: Int? = nil,
-  @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
+    @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
   ) where RowContent == EmptyView {
     self._item = item
     self.style = style
@@ -60,11 +60,14 @@ where Item: Pickable & Hashable {
   }
 }
 
-extension QuickPicker {
-
+extension QuickPicker where Item: CaseIterable {
   private var items: Item.AllCases.SubSequence {
     Item.allCases.prefix(maxItems ?? Int.max)
   }
+  
+}
+extension QuickPicker {
+
 
   @ViewBuilder
   private func PlainStyle() -> some View {
@@ -121,51 +124,51 @@ extension QuickPicker {
 
 // MARK: - Initialisers
 //extension QuickPicker where RowContent == EmptyView {
-  
+
 //  public init
 
-  //  public init(
-  //    item: Binding<Item>,
-  //    style: QuickPickerStyle = .plain,
-  //    hasLabeledContentWrapper: Bool = false,
-  //    areShortcutsEnabled: Bool = false,
-  //    maxItems: Int? = nil,
-  //    @ViewBuilder rowContent: @escaping PickerOutput? = nil
-  //  ) {
-  //    self._item = item
-  //    self.style = style
-  //    self.hasLabeledContentWrapper = hasLabeledContentWrapper
-  //    self.areShortcutsEnabled = areShortcutsEnabled
-  //    self.maxItems = maxItems
-  //    self.rowContent = rowContent
-  //    self.hasCustomContent = true
-  //  }
+//  public init(
+//    item: Binding<Item>,
+//    style: QuickPickerStyle = .plain,
+//    hasLabeledContentWrapper: Bool = false,
+//    areShortcutsEnabled: Bool = false,
+//    maxItems: Int? = nil,
+//    @ViewBuilder rowContent: @escaping PickerOutput? = nil
+//  ) {
+//    self._item = item
+//    self.style = style
+//    self.hasLabeledContentWrapper = hasLabeledContentWrapper
+//    self.areShortcutsEnabled = areShortcutsEnabled
+//    self.maxItems = maxItems
+//    self.rowContent = rowContent
+//    self.hasCustomContent = true
+//  }
 
-  //  public init(
-  //    item: Binding<Item>,
-  //    style: QuickPickerStyle = .plain,
-  //    hasLabeledContentWrapper: Bool = false,
-  //    areShortcutsEnabled: Bool = false,
-  //    maxItems: Int? = nil,
-  //  ) where RowContent == EmptyView {
-  //    self._item = item
-  //    self.style = style
-  //    self.hasLabeledContentWrapper = hasLabeledContentWrapper
-  //    self.areShortcutsEnabled = areShortcutsEnabled
-  //    self.maxItems = maxItems
-  //    self.rowContent = { _, _ in EmptyView() }
-  //    self.hasCustomContent = false
-  //
-  //    //    self.init(
-  //    //      item: item,
-  //    //      style: style,
-  //    //      hasLabeledContentWrapper: hasLabeledContentWrapper,
-  //    //      areShortcutsEnabled: areShortcutsEnabled,
-  //    //      maxItems: maxItems
-  //    //    ) { _, _ in
-  //    //      EmptyView()
-  //    //    }
-  //
-  //  }
+//  public init(
+//    item: Binding<Item>,
+//    style: QuickPickerStyle = .plain,
+//    hasLabeledContentWrapper: Bool = false,
+//    areShortcutsEnabled: Bool = false,
+//    maxItems: Int? = nil,
+//  ) where RowContent == EmptyView {
+//    self._item = item
+//    self.style = style
+//    self.hasLabeledContentWrapper = hasLabeledContentWrapper
+//    self.areShortcutsEnabled = areShortcutsEnabled
+//    self.maxItems = maxItems
+//    self.rowContent = { _, _ in EmptyView() }
+//    self.hasCustomContent = false
+//
+//    //    self.init(
+//    //      item: item,
+//    //      style: style,
+//    //      hasLabeledContentWrapper: hasLabeledContentWrapper,
+//    //      areShortcutsEnabled: areShortcutsEnabled,
+//    //      maxItems: maxItems
+//    //    ) { _, _ in
+//    //      EmptyView()
+//    //    }
+//
+//  }
 
 //}

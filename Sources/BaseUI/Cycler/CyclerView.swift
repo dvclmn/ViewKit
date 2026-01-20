@@ -27,7 +27,7 @@ public struct Cycler<Item: CaseCyclable, Label: View>: View {
   public var body: some View {
 
     Button {
-      item.moveForward()
+      item.next()
     } label: {
       label(item)
       //      MaybeLabel(item.label)

@@ -94,6 +94,6 @@ extension ColourHandler {
   }
 
   public mutating func swapColours() {
-    activeColourLevel.moveForward()
+    activeColourLevel.next()
   }
 }
