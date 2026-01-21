@@ -18,8 +18,10 @@ let package = Package(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
     ),
+    
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
     .library(name: "BasePrimitives", targets: ["BasePrimitives"]),
+    
     .library(
       name: "BaseUI",
       targets: [
@@ -27,6 +29,7 @@ let package = Package(
         "LayoutKit",
       ]
     ),
+    
     .library(
       name: "GraphicsKit",
       targets: [
@@ -37,8 +40,7 @@ let package = Package(
         "VectorKit",
       ]
     ),
-    //    .library(name: "CanvasKit", targets: ["CanvasKit"]),
-
+    
     .library(
       name: "GestureKit",
       targets: [
@@ -46,6 +48,7 @@ let package = Package(
         "LilyPad",
       ]
     ),
+    
     .library(
       name: "SharedHelpers",
       targets: [

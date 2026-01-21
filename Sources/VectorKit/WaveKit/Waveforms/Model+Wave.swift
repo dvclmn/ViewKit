@@ -7,10 +7,11 @@
 
 import GameplayKit
 import SwiftUI
+import CoreTools
 
-public protocol WaveBase: Sendable, Codable, Equatable, Hashable {
+//public protocol WaveBase: Sendable, Codable, Equatable, Hashable {
 //  associatedtype Colour: CodableColour
-}
+//}
 
 /// The advantages of this “elapsed-only” engine:
 /// - Waves are fully self-contained: frequency, amplitude,
@@ -26,7 +27,7 @@ public protocol WaveBase: Sendable, Codable, Equatable, Hashable {
 /// The user has the choice to either specify a per-Wave
 /// cycles value here, or there is also a global setting
 /// if they are happy to keep it the same for all Waves.
-public struct Wave: WaveBase, Identifiable {
+public struct Wave: Sendable, Identifiable {
 //  public typealias Colour = T
   
   public let id: UUID
