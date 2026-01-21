@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 19/8/2025.
 //
 
+import CoreTools
 import GameplayKit
 import SwiftUI
-import CoreTools
 
 //public protocol WaveBase: Sendable, Codable, Equatable, Hashable {
 //  associatedtype Colour: CodableColour
@@ -25,37 +25,32 @@ import CoreTools
 /// cycles value here, or there is also a global setting
 /// if they are happy to keep it the same for all Waves.
 public struct Wave: Sendable, Identifiable {
-  
+
   public let id: UUID
   public var frequency: SmoothedProperty
   public var amplitude: SmoothedProperty
   public var phaseOffset: SmoothedProperty
   public var noise: SmoothedProperty
-//  public var cyclesAcross: CGFloat
-//  public var colour: T
 
   public init(
     id: UUID = UUID(),
     frequency: CGFloat,
     amplitude: CGFloat,
     phaseOffset: CGFloat = 0,
-//    cyclesAcross: CGFloat = 2,
-//    colour: T
+    noise: CGFloat = 0
   ) {
     self.id = id
     self.frequency = SmoothedProperty(frequency)
     self.amplitude = SmoothedProperty(amplitude)
     self.phaseOffset = SmoothedProperty(phaseOffset)
-    self.noise = SmoothedProperty(.zero)
-//    self.cyclesAcross = cyclesAcross
-//    self.colour = colour
-
+    self.noise = SmoothedProperty(noise)
   }
 }
 
 extension Wave {
 
-  private var omega: CGFloat { frequency.displayed * 2 * .pi }
+  private var omega: CGFloat { frequency.displayed.omega }
+  
   private func phase(elapsed: CGFloat) -> CGFloat {
     omega * elapsed + phaseOffset.displayed
   }

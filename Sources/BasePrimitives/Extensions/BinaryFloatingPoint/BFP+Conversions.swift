@@ -17,15 +17,17 @@ extension BinaryFloatingPoint {
   //    let normalised: Double = Double(self.normalised(in: range))
   //    return Self(normalised * 100)
   //  }
-  
+
   public var toDurationInSeconds: Duration { Duration.seconds(Double(self)) }
 
   public var degreesToRadians: Self { self * .pi / 180 }
   public var radiansToDegrees: Self { self * 180 / .pi }
 
-  public static func omega(frequency: Self) -> Self {
-    return .pi * 2 * frequency
-  }
+  /// Where `self` is the frequency
+  public var omega: Self { self * .pi * 2 }
+  //  public static func omega(frequency: Self) -> Self {
+  //    return .pi * 2 * frequency
+  //  }
 
   public var toDouble: Double { Double(self) }
   public var toFloat: Float { Float(self) }
