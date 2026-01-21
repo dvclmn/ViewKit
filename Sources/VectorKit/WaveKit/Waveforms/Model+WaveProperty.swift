@@ -55,10 +55,10 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
 
   public var keyPath: WritableKeyPath<Wave, SmoothedProperty> {
     switch self {
-      case .amplitude: \.amplitude
-      case .frequency: \.frequency
-      case .phaseOffset: \.phaseOffset
-      case .noise: \.noise
+      case .amplitude: \.amplitudeSmoothed
+      case .frequency: \.frequencySmoothed
+      case .phaseOffset: \.phaseOffsetSmoothed
+      case .noise: \.noiseSmoothed
 
     }
   }

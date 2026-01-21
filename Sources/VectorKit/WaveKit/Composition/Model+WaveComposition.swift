@@ -10,7 +10,7 @@ import Foundation
 /// Encapsulates the “how do these waves combine?” logic.
 /// Simply has the ability to take in 2 or more Waves, and
 /// create a combined/single Composition.
-public struct WaveComposition: Sendable {
+public struct WaveComposition: Sendable, Codable {
   var waves: [Wave.ID]
   var mode: WaveBlendMode
 
@@ -81,7 +81,7 @@ extension WaveComposition {
   }
 }
 
-public enum WaveBlendMode: String, Sendable {
+public enum WaveBlendMode: String, Sendable, Codable {
   case add
   case multiply
   case max

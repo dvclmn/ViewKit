@@ -7,6 +7,7 @@
 
 import CoreTools
 import GameplayKit
+//import MetaCodable
 import SwiftUI
 
 //public protocol WaveBase: Sendable, Codable, Equatable, Hashable {
@@ -24,13 +25,15 @@ import SwiftUI
 /// The user has the choice to either specify a per-Wave
 /// cycles value here, or there is also a global setting
 /// if they are happy to keep it the same for all Waves.
+
 public struct Wave: Sendable, Identifiable {
 
   public let id: UUID
-  public var frequency: SmoothedProperty
-  public var amplitude: SmoothedProperty
-  public var phaseOffset: SmoothedProperty
-  public var noise: SmoothedProperty
+
+  public var frequencySmoothed: SmoothedProperty
+  public var amplitudeSmoothed: SmoothedProperty
+  public var phaseOffsetSmoothed: SmoothedProperty
+  public var noiseSmoothed: SmoothedProperty
 
   public init(
     id: UUID = UUID(),
@@ -40,50 +43,76 @@ public struct Wave: Sendable, Identifiable {
     noise: CGFloat = 0
   ) {
     self.id = id
-    self.frequency = SmoothedProperty(frequency)
-    self.amplitude = SmoothedProperty(amplitude)
-    self.phaseOffset = SmoothedProperty(phaseOffset)
-    self.noise = SmoothedProperty(noise)
+    self.frequencySmoothed = SmoothedProperty(frequency)
+    self.amplitudeSmoothed = SmoothedProperty(amplitude)
+    self.phaseOffsetSmoothed = SmoothedProperty(phaseOffset)
+    self.noiseSmoothed = SmoothedProperty(noise)
+  }
+}
+
+extension Wave: Codable {
+
+  private enum CodingKeys: String, CodingKey {
+    case id
+    case frequencySmoothed
+    case amplitudeSmoothed
+    case phaseOffsetSmoothed
+    case noiseSmoothed
+  }
+
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(id, forKey: .id)
+    try container.encode(frequencySmoothed.displayed, forKey: .frequencySmoothed)
+    try container.encode(amplitudeSmoothed.displayed, forKey: .amplitudeSmoothed)
+    try container.encode(phaseOffsetSmoothed.displayed, forKey: .phaseOffsetSmoothed)
+    try container.encode(noiseSmoothed.displayed, forKey: .noiseSmoothed)
+  }
+
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    self.id = try container.decode(UUID.self, forKey: .id)
+
+    let f = try container.decode(CGFloat.self, forKey: .frequencySmoothed)
+    let a = try container.decode(CGFloat.self, forKey: .amplitudeSmoothed)
+    let p = try container.decode(CGFloat.self, forKey: .phaseOffsetSmoothed)
+    let n = try container.decode(CGFloat.self, forKey: .noiseSmoothed)
+
+    /// Rehydrate SmoothedProperty from a single scalar.
+    self.frequencySmoothed = SmoothedProperty(f)
+    self.amplitudeSmoothed = SmoothedProperty(a)
+    self.phaseOffsetSmoothed = SmoothedProperty(p)
+    self.noiseSmoothed = SmoothedProperty(n)
   }
 }
 
 extension Wave {
 
-  private var omega: CGFloat { frequency.displayed.omega }
-  
+  public var frequency: CGFloat { frequencySmoothed.target }
+  public var amplitude: CGFloat { amplitudeSmoothed.target }
+  public var phaseOffset: CGFloat { phaseOffsetSmoothed.target }
+  public var noise: CGFloat { noiseSmoothed.target }
+
+  private var omega: CGFloat { frequency.omega }
+
   private func phase(elapsed: CGFloat) -> CGFloat {
-    omega * elapsed + phaseOffset.displayed
+    omega * elapsed + phaseOffset
   }
 
   /// Smooth parameters towards target each tick
   public mutating func updateProperties(dt: CGFloat, smoothing: CGFloat) {
-    frequency.update(dt: dt, smoothing: smoothing)
-    amplitude.update(dt: dt, smoothing: smoothing)
-    phaseOffset.update(dt: dt, smoothing: smoothing)
+    frequencySmoothed.update(dt: dt, smoothing: smoothing)
+    amplitudeSmoothed.update(dt: dt, smoothing: smoothing)
+    phaseOffsetSmoothed.update(dt: dt, smoothing: smoothing)
+    noiseSmoothed.update(dt: dt, smoothing: smoothing)
   }
 
   /// Evaluate wave value at given elapsed time (seconds since start)
   public func value(elapsed: CGFloat) -> CGFloat {
     let phase = self.phase(elapsed: elapsed)
     let sinPhase = sin(phase)
-    return amplitude.displayed * sinPhase
+    return amplitude * sinPhase
   }
-
-  /// For WaveShape
-  //  func valueAt(
-  //    x: CGFloat,
-  //    in rect: CGRect,
-  //    elapsed: CGFloat,
-  //    shouldOffsetPhase: Bool = true,
-  //  ) -> CGFloat {
-  //    let omega = frequency.displayed * 2 * .pi
-  //    let offset: CGFloat = shouldOffsetPhase ? phaseOffset.displayed : 0
-  //    let temporalPhase = omega * elapsed + offset
-  //    let kx = (2 * .pi * cyclesAcross) / rect.width
-  //    let spatialPhase = kx * (x - rect.minX)
-  //    let raw = sin(temporalPhase + spatialPhase)
-  //    return amplitude.displayed * raw
-  //  }
 
   private static var validRange: ClosedRange<CGFloat> { -1...1 }
 

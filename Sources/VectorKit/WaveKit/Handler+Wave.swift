@@ -37,6 +37,7 @@ extension WaveHandler {
   public func recomputeStatic(
     for size: CGSize,
     wave: Wave,
+    cyclesAcross: CGFloat,
     sampleCount: Int
   ) {
     guard sampleCount > 1 else {
@@ -50,7 +51,8 @@ extension WaveHandler {
     xPositions = (0..<sampleCount).map { CGFloat($0) * step }
 
     /// Spatial phases
-    let kx = size.width > 0 ? (2 * .pi * wave.cyclesAcross) / size.width : 0
+    let kx = size.width > 0 ? (2 * .pi * cyclesAcross) / size.width : 0
+//    let kx = size.width > 0 ? (2 * .pi * wave.cyclesAcross) / size.width : 0
     spatialPhases = xPositions.map { kx * $0 }
 
     /// Horizon path
