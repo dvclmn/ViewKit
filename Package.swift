@@ -24,13 +24,21 @@ let package = Package(
       name: "BaseUI",
       targets: [
         "BaseUI",
-        "GraphicsKit",
         "LayoutKit",
-        "MotionKit",
       ]
     ),
-    .library(name: "CanvasKit", targets: ["CanvasKit"]),
-    .library(name: "ColourKit", targets: ["ColourKit"]),
+    .library(
+      name: "GraphicsKit",
+      targets: [
+        "GraphicsKit",
+        "ColourKit",
+        "MotionKit",
+        "CanvasKit",
+        "VectorKit",
+      ]
+    ),
+    //    .library(name: "CanvasKit", targets: ["CanvasKit"]),
+
     .library(
       name: "GestureKit",
       targets: [
@@ -42,7 +50,6 @@ let package = Package(
       name: "SharedHelpers",
       targets: [
         "SharedHelpers",
-        "VectorKit",
         "Wrecktangle",
       ]
     ),
@@ -218,7 +225,7 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.baseUI),
-        .module(.colourKit),
+        .module(.graphicsKit),
       ],
     ),
 
@@ -253,23 +260,19 @@ extension String {
 }
 
 enum BaseModule {
-  case sharedHelpers
-  case primitives
   case enumMacros
   case networking
+  case primitives
   case baseUI
-  //  case baseTypes
-  //  case canvasKit
+  case canvasKit
   case colourKit
-  case vectorKit
   case gestureKit
   case graphicsKit
-  //  case gridKit
   case layoutKit
   case lilypad
   case motionKit
-
-  //  case stringKit
+  case sharedHelpers
+  case vectorKit
   case wrecktangle
 
   /// Export-only modules
@@ -278,25 +281,19 @@ enum BaseModule {
 
   var name: String {
     switch self {
-      /// Keeping this as SharedHelpers for now, for ease
-      /// May rename to BaseHelpers later
-      case .sharedHelpers: "SharedHelpers"
-      case .primitives: "BasePrimitives"
       case .enumMacros: "EnumMacros"
       case .networking: "BaseNetworking"
+      case .primitives: "BasePrimitives"
       case .baseUI: "BaseUI"
-      //      case .baseTypes: "BaseTypes"
-      //      case .canvasKit: "CanvasKit"
+      case .canvasKit: "CanvasKit"
       case .colourKit: "ColourKit"
-      case .vectorKit: "VectorKit"
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
-      //      case .gridKit: "GridKit"
       case .layoutKit: "LayoutKit"
       case .lilypad: "LilyPad"
       case .motionKit: "MotionKit"
-
-      //      case .stringKit: "StringKit"
+      case .sharedHelpers: "SharedHelpers"
+      case .vectorKit: "VectorKit"
       case .wrecktangle: "Wrecktangle"
 
       /// Export-only
