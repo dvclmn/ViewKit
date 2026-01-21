@@ -7,7 +7,10 @@
 
 import SwiftUI
 
-public struct WaveAppearance: WaveBase {
+/// `cyclesAcross` is a bit like a Wave 'zoom level'. How much
+/// of the Wave we see in a View's width. Does not effect
+/// the outputted wave `value` at all.
+public struct WaveAppearance {
   let path: PathConfiguration
   let points: PointStyle
   let cyclesAcross: CGFloat
@@ -26,7 +29,7 @@ public struct WaveAppearance: WaveBase {
   }
 }
 
-public struct PathConfiguration: WaveBase {
+public struct PathConfiguration {
   let lineWidth: CGFloat
 //  let strokeStyle: StrokeStyle
 //  let smoothing: PathSmoothing

@@ -7,10 +7,6 @@
 
 import Foundation
 
-/// Was considering attaching this smoothed property concept
-/// directly to a Wave property, like freq, amp, etc.
-///
-/// But have decided to keep it uncoupled.
 public struct SmoothedProperty: Sendable {
   public var target: CGFloat
   public var displayed: CGFloat
@@ -19,24 +15,24 @@ public struct SmoothedProperty: Sendable {
     self.target = initial
     self.displayed = initial
   }
+}
+
+extension SmoothedProperty {
 
   public mutating func setTarget(_ newValue: CGFloat) {
     self.target = newValue
   }
-  
+
   public mutating func snapUpdate(_ newValue: CGFloat) {
     self.update(dt: 0, smoothing: 0)
   }
-  
-  public mutating func update(
-    dt: CGFloat,
-    smoothing timeConstant: CGFloat
-  ) {
-    displayed = displayed.smoothed(
+
+  public mutating func update(dt: CGFloat, smoothing timeConstant: CGFloat) {
+    let current = displayed
+    displayed = current.smoothed(
       towards: target,
       dt: dt,
       timeConstant: timeConstant
     )
   }
 }
-

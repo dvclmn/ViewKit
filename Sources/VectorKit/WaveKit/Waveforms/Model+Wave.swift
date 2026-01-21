@@ -19,23 +19,19 @@ import CoreTools
 /// - No need for global phase wrapping: just pass elapsed time forward.
 /// - Flexibility: if you later add modulation (e.g. frequency envelopes),
 ///   it’s easy because each wave already computes its own phase internally.
-///
-/// `cyclesAcross` is a bit like a Wave 'zoom level'. How much
-/// of the Wave we see in a View's width. Does not effect
-/// the outputted wave `value` at all.
+
 //
 /// The user has the choice to either specify a per-Wave
 /// cycles value here, or there is also a global setting
 /// if they are happy to keep it the same for all Waves.
 public struct Wave: Sendable, Identifiable {
-//  public typealias Colour = T
   
   public let id: UUID
   public var frequency: SmoothedProperty
   public var amplitude: SmoothedProperty
   public var phaseOffset: SmoothedProperty
   public var noise: SmoothedProperty
-  public var cyclesAcross: CGFloat
+//  public var cyclesAcross: CGFloat
 //  public var colour: T
 
   public init(
@@ -43,7 +39,7 @@ public struct Wave: Sendable, Identifiable {
     frequency: CGFloat,
     amplitude: CGFloat,
     phaseOffset: CGFloat = 0,
-    cyclesAcross: CGFloat = 2,
+//    cyclesAcross: CGFloat = 2,
 //    colour: T
   ) {
     self.id = id
@@ -51,7 +47,7 @@ public struct Wave: Sendable, Identifiable {
     self.amplitude = SmoothedProperty(amplitude)
     self.phaseOffset = SmoothedProperty(phaseOffset)
     self.noise = SmoothedProperty(.zero)
-    self.cyclesAcross = cyclesAcross
+//    self.cyclesAcross = cyclesAcross
 //    self.colour = colour
 
   }
