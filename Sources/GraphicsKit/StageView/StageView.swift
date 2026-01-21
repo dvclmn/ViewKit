@@ -5,11 +5,11 @@
 //  Created by Dave Coleman on 15/11/2024.
 //
 
+import CoreTools
 import SwiftUI
 
-
 public struct StageView: View {
-
+  
   let floorConfig: FloorAppearance
   let viewSize: CGSize
 
@@ -76,6 +76,10 @@ public struct StageView: View {
       }  // END mask
       .drawingGroup()
   }
+}
+
+extension StageView {
+
 }
 
 //#if DEBUG
