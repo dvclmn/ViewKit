@@ -22,7 +22,7 @@ public struct AnimationTimeline<Content: View>: View {
   public init(
 //    isPaused: Bool = false,
     @ViewBuilder content: @escaping () -> Content,
-    didUpdateClock: @escaping TimelineOutput = { _ in },
+//    didUpdateClock: @escaping TimelineOutput = { _ in },
   ) {
 //    self.isPaused = isPaused
     self.content = content()
