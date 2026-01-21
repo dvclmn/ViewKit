@@ -54,7 +54,6 @@ extension EnvironmentValues {
   @Entry public var buttonRole: ButtonRole?
   @Entry public var isFocusable: Bool = true
   @Entry public var isBackgroundExtensionEnabled: Bool = false
-  @Entry public var isAnimationEnabled: Bool = false
 
   /// This originated from SumBuddy, where it was referred to
   /// as `characterSize`, derived from the width and height
@@ -99,6 +98,7 @@ extension EnvironmentValues {
   @Entry public var isPaused: Bool = true
   @Entry public var frameRate: FrameRate = .unlocked
   @Entry public var animationClock: TimeInterval?
+  @Entry public var isAnimationEnabled: Bool = false
   
 }
 

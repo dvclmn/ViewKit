@@ -17,7 +17,7 @@ public struct AnimationTimeline<Content: View>: View {
 
 //  let isPaused: Bool
   let content: Content
-  let didUpdateClock: TimelineOutput
+//  let didUpdateClock: TimelineOutput
 
   public init(
 //    isPaused: Bool = false,
@@ -26,7 +26,7 @@ public struct AnimationTimeline<Content: View>: View {
   ) {
 //    self.isPaused = isPaused
     self.content = content()
-    self.didUpdateClock = didUpdateClock
+//    self.didUpdateClock = didUpdateClock
   }
 
   public var body: some View {
@@ -39,40 +39,10 @@ public struct AnimationTimeline<Content: View>: View {
     ) { context in
       content
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .task(id: context.date.timeIntervalSinceReferenceDate) {
-          didUpdateClock(context.date.timeIntervalSinceReferenceDate)
-        }
+        .environment(\.animationClock, context.date.timeIntervalSinceReferenceDate)
+//        .task(id: context.date.timeIntervalSinceReferenceDate) {
+//          didUpdateClock(context.date.timeIntervalSinceReferenceDate)
+//        }
     }
   }
 }
-
-//public struct TimelineHandler {
-
-//  var isPaused: Bool = false
-
-//  var frameRate: FrameRate = .fps60
-
-/// Internal timekeeping
-//  private var lastTime: CFTimeInterval?
-//}
-
-//extension TimelineHandler {
-//  mutating func tick(
-//    now: CFTimeInterval,
-////    didUpdateClock: TimelineOutput
-//  ) -> CGFloat {
-//
-//    print("Tick happened?")
-//    /// Compute dt
-//    let delta: CGFloat
-//    guard let last = lastTime else {
-//      return .zero
-//    }
-//    delta = max(0, CGFloat(now - last))
-//    lastTime = now
-//
-//    return delta
-////    didUpdateClock(delta)
-//  }
-//}
-
