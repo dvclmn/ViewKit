@@ -7,11 +7,10 @@
 
 #include <metal_stdlib>
 #include <SwiftUI/SwiftUI_Metal.h>
+
 using namespace metal;
 
-float oscillate(float f) {
-    return 0.5 * (sin(f) + 1);
-}
+#include "ShaderHelpers.h"
 
 [[ stitchable ]]
 half4 timeVaryingColor(float2 position, half4 color, float2 size, float time) {

@@ -43,21 +43,3 @@ extension ShaderArgumentsConvertible {
     }
   }
 }
-
-public struct GlitterArgs: ShaderArgumentsConvertible {
-  public var origin: CGPoint
-  public var spread: CGFloat
-
-  var arguments: [Shader.Argument] {
-    Self.makeArguments(origin, spread)
-  }
-}
-
-public struct FisheyeArgs: ShaderArgumentsConvertible {
-  public var size: CGFloat
-  public var strength: CGFloat
-
-  var arguments: [Shader.Argument] {
-    Self.makeArguments(size, strength)
-  }
-}

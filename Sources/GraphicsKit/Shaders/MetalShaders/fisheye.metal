@@ -8,7 +8,6 @@
 #include <metal_stdlib>
 using namespace metal;
 
-
 [[ stitchable ]] float2 fisheye(float2 position, float2 size, float strength) {
   // Convert position to normalised coordinates (-1 to 1)
   float2 center = size / 2.0;

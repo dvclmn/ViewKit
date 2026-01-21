@@ -10,7 +10,7 @@ import SwiftUI
 public enum ShaderEffect {
   case chromaticAberration(ChromaticAberrationArgs)
   case fisheye(FisheyeArgs)
-  case filmGrain
+//  case filmGrain
   //  case glitter(GlitterArgs)
   //  case wavyBlur
   //  case ripple
@@ -20,6 +20,7 @@ public enum ShaderEffect {
     switch self {
       case .chromaticAberration: "chromaticAberration"
       case .fisheye: "fisheye"
+//      case .filmGrain: "filmGrain"
     //      case .wavyBlur: "wavyBlur"
     //      case .ripple: "ripple"
     //      case .psych: "psych"

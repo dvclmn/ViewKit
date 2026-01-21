@@ -8,11 +8,7 @@
 #include <metal_stdlib>
 using namespace metal;
 
-// Pseudo-random number generator
-float2 random2(float2 p) {
-  return fract(sin(float2(dot(p,float2(127.1,311.7)),
-                          dot(p,float2(269.5,183.3))))*43758.5453);
-}
+#include "ShaderHelpers.h"
 
 [[ stitchable ]]
 half4 filmGrain(float2 position,
@@ -25,14 +21,14 @@ half4 filmGrain(float2 position,
   float2 normalizedPos = position / grainSize;
   
   // Get random value based on position and time
-  float2 random = random2(normalizedPos + float2(time * 0.1));
+  float2 random = randomAlt(normalizedPos + float2(time * 0.1));
   float noise = random.x;
   
   // Generate colored noise
   float3 coloredNoise = float3(
-                               random2(normalizedPos + float2(time * 0.11)).x,
-                               random2(normalizedPos + float2(time * 0.12)).x,
-                               random2(normalizedPos + float2(time * 0.13)).x
+                               randomAlt(normalizedPos + float2(time * 0.11)).x,
+                               randomAlt(normalizedPos + float2(time * 0.12)).x,
+                               randomAlt(normalizedPos + float2(time * 0.13)).x
                                );
   
   // Mix between monochrome and colored noise

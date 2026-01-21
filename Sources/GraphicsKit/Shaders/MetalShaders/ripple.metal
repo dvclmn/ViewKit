@@ -9,7 +9,11 @@
 #include <SwiftUI/SwiftUI_Metal.h>
 using namespace metal;
 
-[[stitchable]] half4 ripple(float2 position, SwiftUI::Layer layer, float2 l, float2 v) {
+[[stitchable]] half4 ripple(
+                            float2 position,
+                            SwiftUI::Layer layer,
+                            float2 l,
+                            float2 v) {
   // Compute the motion vector with a falloff based on distance
   float2 m = -v * pow(clamp(1 - length(l - position) / 190, 0.0, 1.0), 2) * 1.5;
   

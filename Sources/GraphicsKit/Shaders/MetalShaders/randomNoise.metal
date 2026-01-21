@@ -9,41 +9,10 @@
 #include <SwiftUI/SwiftUI_Metal.h>
 using namespace metal;
 
-// Hash function for more controllable randomness
-float hash(float2 p, float time) {
-  // Include time in the hash to create more dynamic randomness
-  p += float2(sin(time), cos(time)) * 0.1;
-  p = fract(p * float2(123.34, 456.21));
-  p += dot(p, p + 45.32);
-  return fract(p.x * p.y);
-}
-
-float smoothNoise(float2 p, float time, float turbulence) {
-  float2 i = floor(p);
-  float2 f = fract(p);
-  
-  // More dynamic time-based variation
-  float2 randomOffset = float2(
-                               
-                               sin(time * 5.0 + i.x * 10.0) * turbulence,
-                               cos(time * 4.0 + i.y * 10.0) * turbulence
-                               );
-  
-  // Smooth interpolation with added randomness
-  float2 u = f * f * (3.0 - 2.0 * f) + randomOffset;
-  
-  return mix(
-             mix(hash(i, time), hash(i + float2(1, 0), time), u.x),
-             mix(hash(i + float2(0, 1), time), hash(i + float2(1, 1), time), u.x),
-             u.y
-             );
-}
-
+#include "ShaderHelpers.h"
 
 [[ stitchable ]]
 half4 randomNoise(
-                  
-                  
                   float2 position,
                   SwiftUI::Layer layer,
                   half4 color,
