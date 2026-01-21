@@ -9,6 +9,8 @@ import CasePaths
 import CoreTools
 import SwiftUI
 
+/// The below `stamped` case replaces what
+/// VectorKit's `PointStyle` used to handle
 @CaseDetection
 @AssociatedValues
 @MetaEnum

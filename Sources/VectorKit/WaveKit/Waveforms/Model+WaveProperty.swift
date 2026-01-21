@@ -7,43 +7,9 @@
 
 import Foundation
 
-protocol WavePropertyBase: Sendable, CaseIterable, Equatable, Identifiable {}
-
-// MARK: - Shape Properties
-//public enum WaveShapeProperty: String, WavePropertyBase {
-//  case cyclesAcross
-//
-//  public var id: String { rawValue }
-//
-//  public var name: (full: String, abbreviated: String) {
-//    switch self {
-//      case .cyclesAcross: ("Cycles Across", "Cycles")
-//    }
-//  }
-//
-//  public var defaultValue: CGFloat {
-//    switch self {
-//      case .cyclesAcross: 2.0
-//    }
-//  }
-//
-////  var targetKeyPath: WritableKeyPath<WaveProperties.Shape, CGFloat> {
-////    switch self {
-////      case .cyclesAcross: \.targetCyclesAcross
-////    }
-////  }
-////
-////  var displayedKeyPath: WritableKeyPath<WaveProperties.Shape, CGFloat> {
-////    switch self {
-////      case .cyclesAcross: \.displayedCyclesAcross
-////    }
-////  }
-//}
-
-// MARK: - Engine Properties
-public enum WaveProperty: String, WavePropertyBase {
+public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
   
-  public static let allCases: [WaveProperty] = [.amplitude, .frequency, .phaseOffset]
+  public static let allCases: [WaveAttribute] = [.amplitude, .frequency, .phaseOffset]
 
   /// How visually apparent is the oscillation effect. Aka strength
   case amplitude
