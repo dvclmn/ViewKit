@@ -6,7 +6,6 @@
 //
 
 import CoreTools
-//import LayoutKit
 import SwiftUI
 
 public struct BoxView: View {
@@ -37,7 +36,7 @@ public struct BoxView: View {
         metrics: metrics
       ) {
         content
-      }.text
+      }.plainText
     )
     //    .fixedSize(horizontal: true, vertical: false)
     .fixedSize()

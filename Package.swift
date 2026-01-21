@@ -46,8 +46,6 @@ let package = Package(
         "Wrecktangle",
       ]
     ),
-    //    .library(name: "VectorKit", targets: ["VectorKit"]),
-    //    .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
 
     // Export-only libraries
     .library(name: "ToolKit", targets: ["ToolKit"]),
@@ -120,6 +118,16 @@ let package = Package(
       ],
     ),
 
+    // Note: The only target that depends on BaseUI
+    .target(
+      name: "CanvasKit",
+      dependencies: [
+        .module(.coreTools),
+        .module(.gestureKit),
+        .module(.baseUI),
+      ],
+    ),
+
     .target(
       name: "ColourKit",
       dependencies: [
@@ -155,13 +163,6 @@ let package = Package(
     ),
 
     .target(
-      name: "MotionKit",
-      dependencies: [
-        .module(.coreTools)
-      ]
-    ),
-
-    .target(
       name: "LilyPad",
       dependencies: [
         .module(.coreTools),
@@ -172,11 +173,17 @@ let package = Package(
     ),
 
     .target(
+      name: "MotionKit",
+      dependencies: [
+        .module(.coreTools)
+      ]
+    ),
+
+    .target(
       name: "SharedHelpers",
       dependencies: [
         .module(.primitives),
         .module(.enumMacros),
-        //        .identifiedCollections,
         .sharing,
       ],
     ),
@@ -211,7 +218,7 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.baseUI),
-        //        .module(.layoutKit),
+        .module(.colourKit),
       ],
     ),
 

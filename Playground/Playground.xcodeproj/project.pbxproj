@@ -8,15 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		F6685A6E2F1A89AE00A8ED5C /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = F6685A6D2F1A89AE00A8ED5C /* Sharing */; };
-		F66865552F1E95E800A8ED5C /* LilyPad in Frameworks */ = {isa = PBXBuildFile; productRef = F66865542F1E95E800A8ED5C /* LilyPad */; };
 		F66865582F1F7CB700A8ED5C /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = F66865572F1F7CB700A8ED5C /* CasePaths */; };
 		F668655A2F1F7CB700A8ED5C /* CasePathsCore in Frameworks */ = {isa = PBXBuildFile; productRef = F66865592F1F7CB700A8ED5C /* CasePathsCore */; };
-		F668655F2F1FC1CB00A8ED5C /* CanvasKit in Frameworks */ = {isa = PBXBuildFile; productRef = F668655E2F1FC1CB00A8ED5C /* CanvasKit */; };
-		F6AC38792F1A4B2D00C08D90 /* ColourKit in Frameworks */ = {isa = PBXBuildFile; productRef = F6AC38782F1A4B2D00C08D90 /* ColourKit */; };
 		F6AC387B2F1A4B2D00C08D90 /* CoreTools in Frameworks */ = {isa = PBXBuildFile; productRef = F6AC387A2F1A4B2D00C08D90 /* CoreTools */; };
-		F6AC387D2F1A4B2D00C08D90 /* GestureKit in Frameworks */ = {isa = PBXBuildFile; productRef = F6AC387C2F1A4B2D00C08D90 /* GestureKit */; };
 		F6AC387F2F1A4B2D00C08D90 /* ToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = F6AC387E2F1A4B2D00C08D90 /* ToolKit */; };
-		F6AC38812F1A4B2D00C08D90 /* VectorKit in Frameworks */ = {isa = PBXBuildFile; productRef = F6AC38802F1A4B2D00C08D90 /* VectorKit */; };
+		F6E54A162F20CF5B0009AE44 /* CanvasKit in Frameworks */ = {isa = PBXBuildFile; productRef = F6E54A152F20CF5B0009AE44 /* CanvasKit */; };
+		F6E54A182F20CF800009AE44 /* GestureKit in Frameworks */ = {isa = PBXBuildFile; productRef = F6E54A172F20CF800009AE44 /* GestureKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,15 +33,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6AC38792F1A4B2D00C08D90 /* ColourKit in Frameworks */,
-				F66865552F1E95E800A8ED5C /* LilyPad in Frameworks */,
 				F6AC387F2F1A4B2D00C08D90 /* ToolKit in Frameworks */,
-				F6AC38812F1A4B2D00C08D90 /* VectorKit in Frameworks */,
+				F6E54A182F20CF800009AE44 /* GestureKit in Frameworks */,
 				F6685A6E2F1A89AE00A8ED5C /* Sharing in Frameworks */,
-				F668655F2F1FC1CB00A8ED5C /* CanvasKit in Frameworks */,
+				F6E54A162F20CF5B0009AE44 /* CanvasKit in Frameworks */,
 				F668655A2F1F7CB700A8ED5C /* CasePathsCore in Frameworks */,
 				F66865582F1F7CB700A8ED5C /* CasePaths in Frameworks */,
-				F6AC387D2F1A4B2D00C08D90 /* GestureKit in Frameworks */,
 				F6AC387B2F1A4B2D00C08D90 /* CoreTools in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,16 +90,13 @@
 			);
 			name = Playground;
 			packageProductDependencies = (
-				F6AC38782F1A4B2D00C08D90 /* ColourKit */,
 				F6AC387A2F1A4B2D00C08D90 /* CoreTools */,
-				F6AC387C2F1A4B2D00C08D90 /* GestureKit */,
 				F6AC387E2F1A4B2D00C08D90 /* ToolKit */,
-				F6AC38802F1A4B2D00C08D90 /* VectorKit */,
 				F6685A6D2F1A89AE00A8ED5C /* Sharing */,
-				F66865542F1E95E800A8ED5C /* LilyPad */,
 				F66865572F1F7CB700A8ED5C /* CasePaths */,
 				F66865592F1F7CB700A8ED5C /* CasePathsCore */,
-				F668655E2F1FC1CB00A8ED5C /* CanvasKit */,
+				F6E54A152F20CF5B0009AE44 /* CanvasKit */,
+				F6E54A172F20CF800009AE44 /* GestureKit */,
 			);
 			productName = Playground;
 			productReference = F6336A082F1A23B2002AB2F9 /* Playground.app */;
@@ -406,10 +397,6 @@
 			package = F6685A6C2F1A89AE00A8ED5C /* XCRemoteSwiftPackageReference "swift-sharing" */;
 			productName = Sharing;
 		};
-		F66865542F1E95E800A8ED5C /* LilyPad */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = LilyPad;
-		};
 		F66865572F1F7CB700A8ED5C /* CasePaths */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F66865562F1F7CB700A8ED5C /* XCRemoteSwiftPackageReference "swift-case-paths" */;
@@ -420,29 +407,21 @@
 			package = F66865562F1F7CB700A8ED5C /* XCRemoteSwiftPackageReference "swift-case-paths" */;
 			productName = CasePathsCore;
 		};
-		F668655E2F1FC1CB00A8ED5C /* CanvasKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CanvasKit;
-		};
-		F6AC38782F1A4B2D00C08D90 /* ColourKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ColourKit;
-		};
 		F6AC387A2F1A4B2D00C08D90 /* CoreTools */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CoreTools;
-		};
-		F6AC387C2F1A4B2D00C08D90 /* GestureKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = GestureKit;
 		};
 		F6AC387E2F1A4B2D00C08D90 /* ToolKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ToolKit;
 		};
-		F6AC38802F1A4B2D00C08D90 /* VectorKit */ = {
+		F6E54A152F20CF5B0009AE44 /* CanvasKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = VectorKit;
+			productName = CanvasKit;
+		};
+		F6E54A172F20CF800009AE44 /* GestureKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GestureKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

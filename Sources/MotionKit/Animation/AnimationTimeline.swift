@@ -6,22 +6,25 @@
 //
 
 import SwiftUI
+import CoreTools
 
 public typealias TimelineOutput = (_ now: TimeInterval) -> Void
 
 public struct AnimationTimeline<Content: View>: View {
+  @Environment(\.isPaused) private var isPaused
+  @Environment(\.frameRate) private var frameRate
   //  @State private var store = TimelineHandler()
 
-  let isPaused: Bool
+//  let isPaused: Bool
   let content: Content
   let didUpdateClock: TimelineOutput
 
   public init(
-    isPaused: Bool = false,
+//    isPaused: Bool = false,
     @ViewBuilder content: @escaping () -> Content,
     didUpdateClock: @escaping TimelineOutput = { _ in },
   ) {
-    self.isPaused = isPaused
+//    self.isPaused = isPaused
     self.content = content()
     self.didUpdateClock = didUpdateClock
   }
@@ -30,7 +33,7 @@ public struct AnimationTimeline<Content: View>: View {
 
     TimelineView(
       .animation(
-        //        minimumInterval: store.frameRate.value?.toDouble,
+        minimumInterval: frameRate.rate,
         paused: isPaused
       )
     ) { context in
@@ -73,16 +76,3 @@ public struct AnimationTimeline<Content: View>: View {
 //  }
 //}
 
-public enum FrameRate {
-  case fps60
-  case fps120
-  case unlocked
-
-  public var value: CGFloat? {
-    switch self {
-      case .fps60: 1 / 60
-      case .fps120: 1 / 120
-      case .unlocked: nil
-    }
-  }
-}

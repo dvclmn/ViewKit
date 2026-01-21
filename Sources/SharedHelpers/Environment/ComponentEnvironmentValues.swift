@@ -21,37 +21,37 @@ extension EnvironmentValues {
   //  @Entry public var labelHidden: Bool = false
 
   /// Strokes
-  @Entry public var strokeColour: AnyShapeStyle? = nil
-  @Entry public var strokeWeight: CGFloat? = nil
+  @Entry public var strokeColour: AnyShapeStyle?
+  @Entry public var strokeWeight: CGFloat?
 
   // MARK: - Sizing overrides
   /// As opposed to the above more *specific* naming such as icon{x},
   /// stroke{x}, these explicit{x} properties can be applied to anything.
-  @Entry public var explicitSize: CGSize? = nil
-  @Entry public var explicitHeight: CGFloat? = nil
-  @Entry public var explicitWidth: CGFloat? = nil
-  @Entry public var explicitFontSize: CGFloat? = nil
+  @Entry public var explicitSize: CGSize?
+  @Entry public var explicitHeight: CGFloat?
+  @Entry public var explicitWidth: CGFloat?
+  @Entry public var explicitFontSize: CGFloat?
 
   /// Useful when referring to neither height nor width specifically
-  @Entry public var explicitLength: CGFloat? = nil
-  @Entry public var explicitRange: ClosedRange<CGFloat>? = nil
+  @Entry public var explicitLength: CGFloat?
+  @Entry public var explicitRange: ClosedRange<CGFloat>?
 
   /// Helpful article on `aspectRatio`
   /// https://alejandromp.com/development/blog/image-aspectratio-without-frames/
   /// See also `viewAspectRatio()` in BaseHelpers
-  @Entry public var explicitAspectRatio: CGFloat? = nil
-  @Entry public var explicitContentMode: ContentMode? = nil
-  @Entry public var explicitControlSize: ControlSize? = nil
+  @Entry public var explicitAspectRatio: CGFloat?
+  @Entry public var explicitContentMode: ContentMode?
+  @Entry public var explicitControlSize: ControlSize?
 
   @Entry public var helpText: String = ""
-  @Entry public var cornerRounding: CGFloat? = nil
+  @Entry public var cornerRounding: CGFloat?
 
   /// Perhaps the below two can be merged.
-  @Entry public var explicitColour: AnyShapeStyle? = nil
+  @Entry public var explicitColour: AnyShapeStyle?
   //  @Entry public var explicitColour: (any ShapeStyle)? = nil
-  @Entry public var emphasisColour: AnyShapeStyle? = nil
+  @Entry public var emphasisColour: AnyShapeStyle?
 
-  @Entry public var buttonRole: ButtonRole? = nil
+  @Entry public var buttonRole: ButtonRole?
   @Entry public var isFocusable: Bool = true
   @Entry public var isBackgroundExtensionEnabled: Bool = false
   @Entry public var isAnimationEnabled: Bool = false
@@ -61,8 +61,8 @@ extension EnvironmentValues {
   /// of a monospaced font glyph.
   ///
   /// Read more: ``UnitSize``
-  @Entry public var unitSize: CGSize? = nil
-  @Entry public var gridDimensions: GridDimensions? = nil
+  @Entry public var unitSize: CGSize?
+  @Entry public var gridDimensions: GridDimensions?
 
   /// App-wide / project-wide mapping convention, for which
   /// property on a type should be considered the identity vs transposed.
@@ -70,18 +70,18 @@ extension EnvironmentValues {
   /// See ``AxisAddressable``
   @Entry public var axisMapping: AxisMapping = .identity
 
-  @Entry public var opacityDim: CGFloat? = nil
+  @Entry public var opacityDim: CGFloat?
   @Entry public var isHovering: Bool = false
 
   /// Meant as a debug helper, for when I'm not sure who is
   /// consuming this View, or what it's context is.
-  @Entry public var viewDescription: String? = nil
+  @Entry public var viewDescription: String?
 
   /// This is primarily expected to represent the whole window of an app,
   /// minus any base UI components like Toolbar or Inspector.
   ///
   /// I guess like in a graphics app, so maybe this is a bit domain-specific
-  @Entry public var viewportSize: CGSize? = nil
+  @Entry public var viewportSize: CGSize?
   @Entry public var isScrollAtStart: Bool = true
 
   @Entry public var formatValue: (Double) -> String = { $0.displayString }
@@ -89,12 +89,16 @@ extension EnvironmentValues {
   /// E.g. 3 places: `10.056` or one place: `10.1`
   /// See `Foundation/NumberFormatStyleConfiguration/Precision`
   /// This imposes a fixed number (no min or max) of places.
-  @Entry public var fractionLength: Int? = nil
+  @Entry public var fractionLength: Int?
   
   /// E.g. 3 places: `023.6` or two places: `23.6`
   /// As implied in the name, this won't impose an upper limit,
   /// only ensure there are at least 'x' integers
-  @Entry public var minIntegerLength: Int? = nil
+  @Entry public var minIntegerLength: Int?
+  
+  @Entry public var isPaused: Bool = true
+  @Entry public var frameRate: FrameRate = .unlocked
+  @Entry public var animationClock: TimeInterval?
   
 }
 

@@ -1,0 +1,25 @@
+//
+//  FrameRate.swift
+//  BaseHelpers
+//
+//  Created by Dave Coleman on 21/1/2026.
+//
+
+import Foundation
+
+public enum FrameRate: Int {
+  case fps24 = 24
+  case fps30 = 30
+  case fps60 = 60
+  case fps120 = 120
+  
+  /// System determines appropriate update interval
+  case unlocked = 0
+
+  public var rate: TimeInterval? {
+    switch self {
+      case .unlocked: nil
+      default: 1 / TimeInterval(rawValue)
+    }
+  }
+}
