@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-
 public enum ShaderEffect {
   case chromaticAberration(ChromaticAberrationArgs)
   case fisheye(FisheyeArgs)
+  case filmGrain
   //  case glitter(GlitterArgs)
   //  case wavyBlur
   //  case ripple
@@ -44,7 +44,7 @@ public enum ShaderEffect {
       arguments: arguments
     )
   }
-  
+
   /// Shader function signatures for usage type:
   ///
   /// ## `layerEffect`:
