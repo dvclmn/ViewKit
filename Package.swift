@@ -18,8 +18,8 @@ let package = Package(
       name: "BaseMacrosClient",
       targets: ["BaseMacrosClient"]
     ),
-    .library(name: "BasePrimitives", targets: ["BasePrimitives"]),
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
+    .library(name: "BasePrimitives", targets: ["BasePrimitives"]),
     .library(
       name: "BaseUI",
       targets: [
@@ -29,13 +29,25 @@ let package = Package(
         "MotionKit",
       ]
     ),
-
+    .library(name: "CanvasKit", targets: ["CanvasKit"]),
     .library(name: "ColourKit", targets: ["ColourKit"]),
-    .library(name: "GestureKit", targets: ["GestureKit"]),
-    .library(name: "LilyPad", targets: ["LilyPad"]),
-    .library(name: "SharedHelpers", targets: ["SharedHelpers"]),
-    .library(name: "VectorKit", targets: ["VectorKit"]),
-    .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
+    .library(
+      name: "GestureKit",
+      targets: [
+        "GestureKit",
+        "LilyPad",
+      ]
+    ),
+    .library(
+      name: "SharedHelpers",
+      targets: [
+        "SharedHelpers",
+        "VectorKit",
+        "Wrecktangle",
+      ]
+    ),
+    //    .library(name: "VectorKit", targets: ["VectorKit"]),
+    //    .library(name: "Wrecktangle", targets: ["Wrecktangle"]),
 
     // Export-only libraries
     .library(name: "ToolKit", targets: ["ToolKit"]),
@@ -155,7 +167,7 @@ let package = Package(
         .module(.coreTools),
         .module(.gestureKit),
         .module(.colourKit),
-        .casePaths
+        .casePaths,
       ]
     ),
 
@@ -173,7 +185,7 @@ let package = Package(
       name: "VectorKit",
       dependencies: [
         .module(.coreTools),
-        .casePaths
+        .casePaths,
       ]
     ),
 
