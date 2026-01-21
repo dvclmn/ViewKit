@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SmoothedProperty: Sendable {
+public struct SmoothedProperty: Sendable, Hashable {
   public var target: CGFloat
   public var displayed: CGFloat
 

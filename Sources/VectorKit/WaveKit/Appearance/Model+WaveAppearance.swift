@@ -10,7 +10,7 @@ import SwiftUI
 /// `cyclesAcross` is a bit like a Wave 'zoom level'. How much
 /// of the Wave we see in a View's width. Does not effect
 /// the outputted wave `value` at all.
-public struct WaveAppearance {
+public struct WaveAppearance: Sendable, Codable {
   //  let path: PathConfiguration
   let lineWidth: CGFloat
   let pathStyle: PathStyle
