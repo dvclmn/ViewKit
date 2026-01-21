@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 15/8/2025.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 public typealias TimelineOutput = (_ now: TimeInterval) -> Void
 
@@ -15,18 +15,19 @@ public struct AnimationTimeline<Content: View>: View {
   @Environment(\.frameRate) private var frameRate
   //  @State private var store = TimelineHandler()
 
-//  let isPaused: Bool
-  let content: Content
-//  let didUpdateClock: TimelineOutput
+  //  let isPaused: Bool
+  let content: (TimeInterval) -> Content
+  //  let content: Content
+  //  let didUpdateClock: TimelineOutput
 
   public init(
-//    isPaused: Bool = false,
-    @ViewBuilder content: @escaping () -> Content,
-//    didUpdateClock: @escaping TimelineOutput = { _ in },
+    //    isPaused: Bool = false,
+  @ViewBuilder content: @escaping (TimeInterval) -> Content = { _ in EmptyView() }, 
+    //    didUpdateClock: @escaping TimelineOutput = { _ in },
   ) {
-//    self.isPaused = isPaused
-    self.content = content()
-//    self.didUpdateClock = didUpdateClock
+    //    self.isPaused = isPaused
+    self.content = content
+    //    self.didUpdateClock = didUpdateClock
   }
 
   public var body: some View {
@@ -37,12 +38,12 @@ public struct AnimationTimeline<Content: View>: View {
         paused: isPaused
       )
     ) { context in
-      content
+      content(context.date.timeIntervalSinceReferenceDate)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(\.animationClock, context.date.timeIntervalSinceReferenceDate)
-//        .task(id: context.date.timeIntervalSinceReferenceDate) {
-//          didUpdateClock(context.date.timeIntervalSinceReferenceDate)
-//        }
+      //        .task(id: context.date.timeIntervalSinceReferenceDate) {
+      //          didUpdateClock(context.date.timeIntervalSinceReferenceDate)
+      //        }
     }
   }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol WaveAnimatable: Codable {
+public protocol WaveAnimatable: Codable {
   // Should the modulation be applied?
   var isEnabled: Bool { get }
   // How big the effect is (in points)
@@ -28,7 +28,7 @@ protocol WaveAnimatable: Codable {
 }
 
 extension WaveAnimatable {
-  func modulation(effectiveTime: TimeInterval, normalisedIndex: Double) -> CGFloat {
+  public func modulation(effectiveTime: TimeInterval, normalisedIndex: Double) -> CGFloat {
     guard isEnabled else { return 0 }
     let argument = effectiveTime * speed +
     normalisedIndex * (2 * .pi * cycles) +
@@ -38,11 +38,11 @@ extension WaveAnimatable {
 }
 
 
-struct WaveModulator: WaveAnimatable, Codable {
-  var isEnabled: Bool
-  var amplitude: CGFloat
-  var speed: Double
-  var phase: Double
-  var cycles: Double
+public struct WaveModulator: WaveAnimatable, Codable {
+  public var isEnabled: Bool
+  public var amplitude: CGFloat
+  public var speed: Double
+  public var phase: Double
+  public var cycles: Double
 }
 
