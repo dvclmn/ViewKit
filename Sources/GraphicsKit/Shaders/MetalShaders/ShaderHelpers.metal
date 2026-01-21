@@ -26,25 +26,25 @@ float hash(float2 p, float time) {
   return fract(p.x * p.y);
 }
 
-inline float hash(float2 p) {
+float hash(float2 p) {
   // Use a fixed time or 0.0 to make it stable
   return hash(p, 0.0);
 }
 
-inline float hashAlt(float n) { return fract(sin(n) * 43758.5453); }
+float hashAlt(float n) { return fract(sin(n) * 43758.5453); }
 
 
 // MARK: - Random noise
-inline float random(float2 st) {
+float random(float2 st) {
   return fract(sin(dot(st, float2(12.9898, 78.233))) * 43758.5453123);
 }
 
 // Pseudo-random number generator
-inline float2 randomAlt(float2 p) {
+float2 randomAlt(float2 p) {
   return fract(sin(float2(dot(p, float2(127.1, 311.7)), dot(p, float2(269.5, 183.3)))) * 43758.5453);
 }
 
-inline float smoothNoise(float2 p, float time, float turbulence) {
+float smoothNoise(float2 p, float time, float turbulence) {
   float2 i = floor(p);
   float2 f = fract(p);
   
@@ -79,9 +79,9 @@ float noiseAlt(float2 st) {
 
 // MARK: - Movement
 
-inline float oscillate(float f) { return 0.5 * (sin(f) + 1); }
+float oscillate(float f) { return 0.5 * (sin(f) + 1); }
 
-inline float2 rotate(float2 v, float a) {
+float2 rotate(float2 v, float a) {
   float s = sin(a);
   float c = cos(a);
   float2x2 m = float2x2(c, -s, s, c);
