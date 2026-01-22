@@ -29,7 +29,7 @@ public struct InfoBarItemsModifier: ViewModifier {
       }
       .overlay(alignment: .bottom) {
         if isEnabled {
-          InfoBar(items: items)
+          InfoBarView(items: items)
         }
       }
 

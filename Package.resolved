@@ -1,5 +1,5 @@
 {
-  "originHash" : "e7230f2783a8e6c11e3c3dab10204db30583b9a4e94b9484c994aeda8bc1e31a",
+  "originHash" : "dcdc7082646d5eb81401f2582c06e321ffac48085e089a482946f5ab4d8a0ecf",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -17,6 +17,24 @@
       "state" : {
         "revision" : "5e1b02b6a9dac2a759a1d5dbc175c86bd192a608",
         "version" : "24.0.0"
+      }
+    },
+    {
+      "identity" : "metacodable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftyLab/MetaCodable",
+      "state" : {
+        "revision" : "c2a6cc907e2f95463ba8f2b55432bd2aee8a4bfd",
+        "version" : "1.6.0"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser.git",
+      "state" : {
+        "revision" : "c5d11a805e765f52ba34ec7284bd4fcd6ba68615",
+        "version" : "1.7.0"
       }
     },
     {

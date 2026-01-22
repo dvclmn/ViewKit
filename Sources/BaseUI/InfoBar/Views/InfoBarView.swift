@@ -8,7 +8,7 @@
 import BasePrimitives
 import SwiftUI
 
-public struct InfoBar: View {
+public struct InfoBarView: View {
   @Environment(\.backgroundStyle) private var backgroundStyle
   @Environment(\.modifierKeys) private var modifierKeys
 
@@ -75,7 +75,7 @@ public struct InfoBar: View {
   }
 }
 
-extension InfoBar {
+extension InfoBarView {
 
   @ViewBuilder
   func NoItems(_ reasonText: String) -> some View {

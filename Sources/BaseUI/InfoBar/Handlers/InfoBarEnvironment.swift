@@ -13,13 +13,10 @@ extension EnvironmentValues {
   @Entry public var itemLabelDisplay: LabelDisplay? = nil
 }
 
+@CaseDetection
 public enum InfoBarElement {
   case section
   case item
-
-  var isSection: Bool {
-    self == .section
-  }
 }
 
 extension View {
@@ -27,6 +24,8 @@ extension View {
     for element: InfoBarElement,
     _ display: LabelDisplay
   ) -> some View {
-    self.environment(element.isSection ? \.sectionLabelDisplay : \.itemLabelDisplay, display)
+    self.environment(
+      element.isSection ? \.sectionLabelDisplay : \.itemLabelDisplay, display
+    )
   }
 }

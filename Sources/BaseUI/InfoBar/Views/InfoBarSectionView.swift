@@ -27,7 +27,6 @@ struct InfoBarSectionView: View {
             InfoBarItemView(item: item)
           }
         }
-
         .labelStyle(.base)
 
       } header: {

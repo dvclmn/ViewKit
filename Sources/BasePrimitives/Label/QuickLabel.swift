@@ -41,31 +41,9 @@ extension QuickLabel {
   }
 }
 
-extension QuickLabel {
-  /// Turn this into a factory method at some point?
-  //  public init(
-  //    _ bool: Bool,
-  //    _ textTrue: String,
-  //    _ iconTrue: IconLiteral? = nil,
-  //    _ textFalse: String = "",
-  //    _ iconFalse: IconLiteral? = nil,
-  //    role: Role? = nil
-  //  ) {
-  //    if bool {
-  //      self.attributedText = AttributedString(textTrue)
-  //      self.icon = iconTrue
-  //    } else {
-  //      self.attributedText = AttributedString(textFalse)
-  //      self.icon = iconFalse
-  //    }
-  //    self.role = role
-  //  }
-}
-
 extension QuickLabel: ExpressibleByStringLiteral {
   public init(stringLiteral value: String) {
     self.init(value)
-    //    self.init(AttributedString(value))
   }
 }
 
@@ -74,6 +52,7 @@ extension QuickLabel: CustomStringConvertible {
     return "QuickLabel[\"\(text)\", icon: \"\(icon?.toString ?? "")\"]"
   }
 }
+
 extension QuickLabel {
 
   public enum Role: Equatable, Sendable, Codable {

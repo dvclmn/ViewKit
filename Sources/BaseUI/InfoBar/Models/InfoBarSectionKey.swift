@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// A type safe way to declare a section for a group of Info bar items.
+/// This is then used in ``InfoBar``
 /// Example use:
 /// ```
 /// public enum ExampleSectionKey: InfoBarSectionKey {
