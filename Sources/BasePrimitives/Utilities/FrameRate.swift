@@ -8,6 +8,8 @@
 import Foundation
 
 public enum FrameRate: Int {
+  case fps08 = 8
+  case fps15 = 15
   case fps24 = 24
   case fps30 = 30
   case fps60 = 60

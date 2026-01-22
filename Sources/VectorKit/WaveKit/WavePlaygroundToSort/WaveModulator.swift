@@ -12,7 +12,11 @@ public struct WaveModulator: Sendable, Codable, Equatable {
   public var cycles: Double
   public var wave: Wave
 
-  public init(isEnabled: Bool, cycles: Double, wave: Wave) {
+  public init(
+    isEnabled: Bool,
+    cycles: Double,
+    wave: Wave
+  ) {
     self.isEnabled = isEnabled
     self.cycles = cycles
     self.wave = wave
