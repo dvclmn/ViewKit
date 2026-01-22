@@ -8,10 +8,10 @@
 import Foundation
 
 public struct SmoothedProperty: Sendable, Hashable {
-  public var target: CGFloat
-  public var displayed: CGFloat
+  public var target: Double
+  public var displayed: Double
 
-  public init(_ initial: CGFloat) {
+  public init(_ initial: Double) {
     self.target = initial
     self.displayed = initial
   }
@@ -19,15 +19,18 @@ public struct SmoothedProperty: Sendable, Hashable {
 
 extension SmoothedProperty {
 
-  public mutating func setTarget(_ newValue: CGFloat) {
+  public mutating func setTarget(_ newValue: Double) {
     self.target = newValue
   }
 
-  public mutating func snapUpdate(_ newValue: CGFloat) {
+  public mutating func snapToValue(_ newValue: Double) {
     self.update(dt: 0, smoothing: 0)
   }
 
-  public mutating func update(dt: CGFloat, smoothing timeConstant: CGFloat) {
+  public mutating func update(
+    dt: CGFloat,
+    smoothing timeConstant: Double
+  ) {
     let current = displayed
     displayed = current.smoothed(
       towards: target,
