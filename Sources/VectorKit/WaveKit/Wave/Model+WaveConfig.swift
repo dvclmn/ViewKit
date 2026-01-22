@@ -5,12 +5,13 @@
 //  Created by Dave Coleman on 1/2/2025.
 //
 
-import Foundation
 import ColourKit
+import Foundation
 
 public struct WaveConfig: Codable, Sendable, Equatable {
   public var colour: RGBColour
-  
+  public var colourSecondary: RGBColour
+
   /// The base circle radius.
   public var circleRadius: Double
 
@@ -39,9 +40,12 @@ public struct WaveConfig: Codable, Sendable, Equatable {
 
   public init(
     colour: RGBColour = .purple,
+    colourSecondary: RGBColour = .orange,
     circleRadius: Double = 25,
     count: Int = 60,
     height: Double = 300,
+    spacing: Double = 16,
+    shouldMaintainHeight: Bool = true,
     horizontalWave: WaveModulator = .init(
       isEnabled: true,
       amp: 70,
@@ -49,19 +53,16 @@ public struct WaveConfig: Codable, Sendable, Equatable {
       phase: 0.4,
       cycles: 3
     ),
-    spacing: Double = 16,
     spacingWave: WaveModulator =
-      WaveModulator(
+      .init(
         isEnabled: true,
         amp: 10,
         freq: 1,
         phase: 0,
         cycles: 3
       ),
-
-    shouldMaintainHeight: Bool = true,
     radiusWave: WaveModulator =
-      WaveModulator(
+      .init(
         isEnabled: true,
         amp: 5,
         freq: 1,
@@ -70,6 +71,7 @@ public struct WaveConfig: Codable, Sendable, Equatable {
       )
   ) {
     self.colour = colour
+    self.colourSecondary = colourSecondary
     self.circleRadius = circleRadius
     self.horizontalWave = horizontalWave
     self.spacing = spacing

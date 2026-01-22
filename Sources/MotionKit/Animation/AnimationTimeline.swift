@@ -8,12 +8,12 @@
 import CoreTools
 import SwiftUI
 
-public typealias TimelineOutput = (_ now: TimeInterval) -> Void
+//public typealias TimelineOutput = (_ now: TimeInterval) -> Void
 
 public struct AnimationTimeline<Content: View>: View {
   @Environment(\.isPaused) private var isPaused
   @Environment(\.frameRate) private var frameRate
-  
+
   let content: (TimeInterval) -> Content
 
   public init(
@@ -34,9 +34,6 @@ public struct AnimationTimeline<Content: View>: View {
       content(context.date.timeIntervalSinceReferenceDate)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(\.animationClock, context.date.timeIntervalSinceReferenceDate)
-      //        .task(id: context.date.timeIntervalSinceReferenceDate) {
-      //          didUpdateClock(context.date.timeIntervalSinceReferenceDate)
-      //        }
     }
   }
 }
