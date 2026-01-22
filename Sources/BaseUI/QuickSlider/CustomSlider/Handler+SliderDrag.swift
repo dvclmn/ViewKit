@@ -13,6 +13,7 @@ final class SliderHandler {
   var value: Double
   var label: QuickLabel
   var range: ClosedRange<Double>
+  var step: Double?
 
   var phase: SliderPhase = .idle
   var didChangeSlider: SliderOutput?

@@ -16,14 +16,14 @@ public struct SliderExamples: View {
   public var body: some View {
     VStack(spacing: Styles.sizeMedium) {
 
-      SliderGroup {
+      SliderGroup("Group title") {
 
         QuickSlider(
           "Simple Slider",
           value: $zoomValue.toBindingDouble,
           range: zoomRange.toDoubleRange,
         )
-        .sliderStyle(.native, components: .noLabel)
+//        .sliderStyle(.native, components: .noLabel)
         //      .padding()
         //      .background(.mint.quinary)
 
@@ -80,7 +80,7 @@ public struct SliderExamples: View {
     } // END main vstack
     .padding()
     .frame(maxWidth: 320)
-    .isDebugMode(true)
+//    .isDebugMode(true)
 
   }
 }

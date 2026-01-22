@@ -17,6 +17,7 @@ public struct SliderCore: View {
   @Environment(\.sliderStyle) private var style
   @Environment(\.formatValue) private var formatValue
   @Environment(\.sliderDefaultValue) private var sliderDefaultValue
+  @Environment(\.isDebugMode) private var isDebugMode
 
   @State private var isHovering: Bool = false
 
@@ -28,18 +29,19 @@ public struct SliderCore: View {
 
       Component_Slider()
         //            .frame(minWidth: 80)
-        .frame(maxWidth: .infinity)
-        .sensoryFeedback(.alignment, trigger: store.value) {
-          handleHaptics($0, $1)
-        }
-        .controlSize(explicitControlSize ?? .regular)
+//        .frame(maxWidth: .infinity)
+//        .sensoryFeedback(.alignment, trigger: store.value) {
+//          handleHaptics($0, $1)
+//        }
+//        .controlSize(explicitControlSize ?? .regular)
     }
 
     // MARK: - Units
     if sliderComponents.contains(.units) {
-      TextColumns(alignment: .trailing) {
+//      TextColumns(alignment: .trailing) {
         Text(formatValue(store.value))
-      }
+//      }
+//      .debugFrame("Native + Units", .brown, isEnabled: isDebugMode)
       .textSelection(.disabled)
       .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
     }
@@ -54,6 +56,5 @@ extension SliderCore {
       return HapticPreset.boundary(store.range).shouldFire(old, new)
     }
     return HapticPreset.boundaryAndDefault(store.range, defaultValue: defaultVal).shouldFire(old, new)
-
   }
 }

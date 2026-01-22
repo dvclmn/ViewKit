@@ -22,6 +22,7 @@ struct Component_Slider: View {
       // MARK: - Native Slider
       case .native:
         if sliderComponents.contains(.label) {
+          LabelComponent()
           NativeSliderComponent()
             .debugFrame("Native + Label", .green, isEnabled: isDebugMode)
 
@@ -37,12 +38,9 @@ struct Component_Slider: View {
           if sliderComponents.contains(.label) {
             LabelComponent()
               .debugFrame("Custom + Label", .pink, isEnabled: isDebugMode)
-          } else {
-            EmptyView()
-              .debugFrame("Custom + NO Label", .purple, isEnabled: isDebugMode)
           }
         }
-        
+
     }
   }
 }
@@ -52,26 +50,39 @@ extension Component_Slider {
   @ViewBuilder
   func NativeSliderComponent() -> some View {
     @Bindable var store = store
-    Slider(
-      value: $store.value,
-      in: store.range,
-    ) {
-      LabelComponent()
-
-    } onEditingChanged: { editing in
-      let phase = SliderPhase(fromOnEditingChanged: editing)
-      store.updatePhase(phase)
-      //      store.phase = phase
-      //      store.didChangeSlider?(phase)
+    
+    if let step = store.step {
+      Slider(
+        value: $store.value,
+        in: store.range,
+        step: store.step ?? 1
+      ) { editing in
+        let phase = SliderPhase(fromOnEditingChanged: editing)
+        store.updatePhase(phase)
+        //      store.phase = phase
+        //      store.didChangeSlider?(phase)
+      }
+    } else {
+      Slider(
+        value: $store.value,
+        in: store.range,
+        step: store.step ?? 1
+      ) { editing in
+        let phase = SliderPhase(fromOnEditingChanged: editing)
+        store.updatePhase(phase)
+        //      store.phase = phase
+        //      store.didChangeSlider?(phase)
+      }
     }
+
   }
 
   @ViewBuilder
   func LabelComponent() -> some View {
     @Bindable var store = store
     MaybeLabel(store.label)
-      .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
-      .font(.body)
+    //      .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
+    //      .font(.body)
     //      .lineLimit(1)
 
     /// This can cause fuzzy text, in certain situations
