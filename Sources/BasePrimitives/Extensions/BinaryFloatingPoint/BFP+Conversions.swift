@@ -24,6 +24,7 @@ extension BinaryFloatingPoint {
   public var radiansToDegrees: Self { self * 180 / .pi }
 
   /// Where `self` is the frequency
+  /// `ω = 2πf`
   public var omega: Self { self * .pi * 2 }
   //  public static func omega(frequency: Self) -> Self {
   //    return .pi * 2 * frequency

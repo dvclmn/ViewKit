@@ -13,6 +13,31 @@ public struct Wave: WaveShaped, Sendable, Identifiable, Hashable, Codable {
   public var amplitude: Double
   public var phase: Double
 
+  public init(
+    id: UUID = UUID(),
+    frequency: Double,
+    amplitude: Double,
+    phase: Double
+  ) {
+    self.id = id
+    self.frequency = frequency
+    self.amplitude = amplitude
+    self.phase = phase
+  }
+}
+
+extension Wave {
+  public init(
+    freq: Double,
+    amp: Double,
+    phase: Double,
+  ) {
+    self.init(
+      frequency: freq,
+      amplitude: amp,
+      phase: phase
+    )
+  }
 }
 
 public struct NoisyWave: Sendable, Hashable {

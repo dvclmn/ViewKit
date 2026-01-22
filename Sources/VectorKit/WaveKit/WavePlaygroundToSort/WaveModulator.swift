@@ -8,11 +8,34 @@
 import Foundation
 
 public struct WaveModulator: Sendable, Codable {
- let isEnable: Bool
+  let isEnabled: Bool
   let cycles: Double
   let wave: Wave
-  
+
+  public init(isEnabled: Bool, cycles: Double, wave: Wave) {
+    self.isEnabled = isEnabled
+    self.cycles = cycles
+    self.wave = wave
+  }
 }
+
+extension WaveModulator {
+  public init(
+    isEnabled: Bool = true,
+    amp: Double,
+    freq: Double,
+    phase: Double,
+    cycles: Double,
+  ) {
+    let wave = Wave(freq: freq, amp: amp, phase: phase)
+    self.init(
+      isEnabled: isEnabled,
+      cycles: cycles,
+      wave: wave
+    )
+  }
+}
+
 //  let isEnabled: Bool
 //  let amplitude: CGFloat
 //  let frequency: CGFloat  // Aka speed
