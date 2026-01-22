@@ -16,9 +16,9 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
   @State private var store: SliderHandler
 
   @Binding var value: Double
-  let label: QuickLabel
-  let range: ClosedRange<Double>
-  let didChangeSlider: SliderOutput
+  //  let label: QuickLabel
+  //  let range: ClosedRange<Double>
+  //  let didChangeSlider: SliderOutput
 
   public var body: some View {
 
@@ -36,13 +36,15 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
         }
       }
     }
-    .onAppear {
-      if store.didChangeSlider == nil {
-        store.didChangeSlider = didChangeSlider
-      }
-    }
-    .task(id: label) { store.label = label }
-    .task(id: range) { store.range = range }
+    //    .onAppear {
+    //      if store.didChangeSlider == nil {
+    //        store.didChangeSlider = didChangeSlider
+    //      }
+    //    }
+    //    .task(id: label) { store.label = label }
+    //    .task(id: range) { store.range = range }
+    //    .task(id: step) { store.range = range }
+    //    .task(id: range) { store.range = range }
     .bindModel($store.value, to: $value)
     .environment(\.sliderHandler, store)
   }
@@ -50,18 +52,19 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
 
 // MARK: - Initialisers
 extension QuickSlider {
-  
-  
+
   public init(
     _ title: String,
     value: Binding<Double>,
     range: ClosedRange<Double>,
+    step: Double? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
     self.init(
       label: QuickLabel(title),
       value: value,
       range: range,
+      step: step,
       didChangeSlider: didChangeSlider
     )
   }
@@ -70,18 +73,21 @@ extension QuickSlider {
     label: QuickLabel,
     value: Binding<Double>,
     range: ClosedRange<Double>,
+    step: Double? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
-    self.label = label
+    //    self.label = label
     self._value = value
-    self.range = range
+    //    self.range = range
     self._store = State(
       initialValue: SliderHandler(
         value: value.wrappedValue,
         label: label,
-        range: range
+        range: range,
+        step: step,
+        didChangeSlider: didChangeSlider
       )
     )
-    self.didChangeSlider = didChangeSlider
+    //    self.didChangeSlider = didChangeSlider
   }
 }

@@ -24,56 +24,31 @@ public struct SliderCore: View {
   public var body: some View {
     @Bindable var store = store
 
-    // MARK: - Slider
+    // MARK: - Units
+    if sliderComponents.contains(.label) {
+      LabelComponent()
+    }
 
-    
-    
     switch sliderStyle {
-        
+
       // MARK: - Native Slider
       case .native:
-        if sliderComponents.contains(.label) {
-          LabelComponent()
-          NativeSliderComponent()
-
-        } else {
-          NativeSliderComponent()
-            .labelsHidden()
-            .debugFrame("Native + NO Label", .orange, isEnabled: isDebugMode)
-        }
+        NativeSliderComponent()
+          .labelsHidden()
 
       // MARK: - Custom Slider
       case .custom(let style):
-        if sliderComponents.contains(.label) {
-          LabelComponent()
-          SliderCustom(style: style)
-        } else {
-          SliderCustom(style: style)
-        }
-    //        {
-    //          if sliderComponents.contains(.label) {
-    //              .debugFrame("Custom + Label", .pink, isEnabled: isDebugMode)
-    //          }
-    //        }
-
+        SliderCustom(style: style)
     }
-
-    //    if sliderComponents.contains(.track) {
-
-    //      Component_Slider()
-    //            .frame(minWidth: 80)
-    //        .frame(maxWidth: .infinity)
-            
-    //    }
 
     // MARK: - Units
     if sliderComponents.contains(.units) {
-      //      TextColumns(alignment: .trailing) {
-      Text(formatValue(store.value))
-        //      }
-        //      .debugFrame("Native + Units", .brown, isEnabled: isDebugMode)
-        .textSelection(.disabled)
-        .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
+      TextColumns(alignment: .trailing) {
+        Text(formatValue(store.value))
+      }
+      .textSelection(.disabled)
+      .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
+      .contextMenu { ContextMenuItems() }
     }
 
   }
@@ -93,6 +68,24 @@ extension SliderCore {
   private func handleOnEdit(_ didEdit: Bool) {
     let phase = SliderPhase(fromOnEditingChanged: didEdit)
     store.updatePhase(phase)
+  }
+
+  @ViewBuilder
+  private func ContextMenuItems() -> some View {
+    Button {
+      copyStringToClipboard(store.value.toString)
+    } label: {
+      Label("Copy", systemImage: Icons.copy.icon)
+    }
+
+    if let sliderDefaultValue {
+      Divider()
+      Button {
+        store.value = sliderDefaultValue
+      } label: {
+        Label("Reset to Default", systemImage: Icons.refresh.icon)
+      }
+    }
   }
 
   @ViewBuilder

@@ -33,6 +33,7 @@ public struct SliderExamples: View {
           range: zoomRange.toDoubleRange,
         )
         .sliderStyle(.custom(.opacitySlider))
+        .environment(\.sliderDefaultValue, 1.0)
 
         //      .setExplicitHeight(5)
         //      .environment(\.explicitHeight, 5)

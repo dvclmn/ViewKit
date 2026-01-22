@@ -30,10 +30,14 @@ final class SliderHandler {
     value: Double,
     label: QuickLabel,
     range: ClosedRange<Double>,
+    step: Double?,
+    didChangeSlider: SliderOutput?
   ) {
     self.value = value
     self.label = label
     self.range = range
+    self.step = step
+    self.didChangeSlider = didChangeSlider
   }
 }
 
