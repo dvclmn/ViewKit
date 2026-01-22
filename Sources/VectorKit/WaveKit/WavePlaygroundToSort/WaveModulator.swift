@@ -8,9 +8,9 @@
 import Foundation
 
 public struct WaveModulator: Sendable, Codable {
-  let isEnabled: Bool
-  let cycles: Double
-  let wave: Wave
+  public let isEnabled: Bool
+  public let cycles: Double
+  public let wave: Wave
 
   public init(isEnabled: Bool, cycles: Double, wave: Wave) {
     self.isEnabled = isEnabled
@@ -20,6 +20,18 @@ public struct WaveModulator: Sendable, Codable {
 }
 
 extension WaveModulator {
+  
+  public func modulation(
+    effectiveTime: TimeInterval,
+    normalisedIndex: Double
+  ) -> CGFloat {
+    wave.modulation(
+      effectiveTime: effectiveTime,
+      normalisedIndex: normalisedIndex,
+      cycles: cycles
+    )
+  }
+  
   public init(
     isEnabled: Bool = true,
     amp: Double,

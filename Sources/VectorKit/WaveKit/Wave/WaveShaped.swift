@@ -54,6 +54,10 @@ extension WaveShaped {
   ///   - normalisedIndex: A position along some domain, scaled into [0, 1]
   ///   - cycles: <#cycles description#>
   /// - Returns: <#description#>
+  ///
+
+  
+  
   public func modulation(
     effectiveTime: TimeInterval,
     normalisedIndex: Double,
