@@ -12,8 +12,8 @@ public struct WaveParameterAdjuster {
   private var lastPhase: Double
   private var lastSpacingWaveSpeed: Double
   
-  private(set) var horizontalWaveTimeOffset: TimeInterval
-  private(set) var spacingWaveTimeOffset: TimeInterval
+  private(set) public var horizontalWaveTimeOffset: TimeInterval
+  private(set) public var spacingWaveTimeOffset: TimeInterval
   
   public init(
     initialFrequency: Double = 1.0,

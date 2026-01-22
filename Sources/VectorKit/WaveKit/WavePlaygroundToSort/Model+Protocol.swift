@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol WaveAnimatable: Codable {
+public protocol WaveAnimatable: Codable, Sendable {
   // Should the modulation be applied?
   var isEnabled: Bool { get }
   // How big the effect is (in points)

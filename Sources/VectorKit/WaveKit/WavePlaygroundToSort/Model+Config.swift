@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct WaveConfig: Codable {
+public struct WaveConfig: Codable, Sendable {
   // The base circle radius.
   public var circleRadius: CGFloat = 15
 

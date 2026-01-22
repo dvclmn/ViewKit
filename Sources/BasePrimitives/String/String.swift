@@ -43,6 +43,14 @@ extension String {
   ////    )
   //  }
 
+  public var capitalizingFirstLetter: String {
+    return prefix(1).uppercased() + dropFirst()
+  }
+
+  public mutating func capitalizeFirstLetter() {
+    self = self.capitalizingFirstLetter
+  }
+
   /// Pads the string with spaces on the right to at least the given width.
   public func padded(
     to width: Int,
