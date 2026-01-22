@@ -36,6 +36,7 @@ public struct AnimationTimeline<Content: View>: View {
       .animation(
         minimumInterval: frameRate.rate,
         paused: isPaused
+//        paused: isPaused.wrappedValue
       )
     ) { context in
       content(context.date.timeIntervalSinceReferenceDate)

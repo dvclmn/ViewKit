@@ -7,10 +7,10 @@
 
 import Foundation
 
-public struct WaveModulator: Sendable, Codable {
-  public let isEnabled: Bool
-  public let cycles: Double
-  public let wave: Wave
+public struct WaveModulator: Sendable, Codable, Equatable {
+  public var isEnabled: Bool
+  public var cycles: Double
+  public var wave: Wave
 
   public init(isEnabled: Bool, cycles: Double, wave: Wave) {
     self.isEnabled = isEnabled

@@ -29,6 +29,20 @@ public struct Wave: WaveShaped, Sendable, Identifiable, Hashable, Codable {
   }
 }
 
+//extension Wave: RawRepresentable {
+//  public init?(rawValue: String) {
+//    <#code#>
+//  }
+//  
+//  public var rawValue: String {
+//    <#code#>
+//  }
+//  
+//  public typealias RawValue = String
+//  
+//  
+//}
+
 extension Wave {
   public init(
     freq: Double,
