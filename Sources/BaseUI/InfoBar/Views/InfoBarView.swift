@@ -12,11 +12,13 @@ public struct InfoBarView: View {
   @Environment(\.backgroundStyle) private var backgroundStyle
   @Environment(\.modifierKeys) private var modifierKeys
 
-  let items: [InfoBarSectionID: [InfoBarItem]]
+  let sections: [GroupedSection]
+//  let items: [InfoBarSectionID: [InfoBarItem]]
 
-  public init(items: [InfoBarItem]) {
-    let grouped = Dictionary(grouping: items, by: \.sectionKey)
-    self.items = grouped
+  public init(sections: [GroupedSection]) {
+//    let grouped = Dictionary(grouping: items, by: \.sectionKey)
+//    self.items = grouped
+    self.sections = sections
   }
 
   public var body: some View {
@@ -24,12 +26,10 @@ public struct InfoBarView: View {
     ScrollView(.horizontal) {
 
       HStack(alignment: .firstTextBaseline, spacing: 0) {
-        if !items.isEmpty {
-          ForEach(
-            items.sorted(byKeyPath: \.key.title), id: \.key
-          ) { key, items in
+        if !sections.isEmpty {
+          ForEach(sections) { section in
 
-            InfoBarSectionView(sectionTitle: key.title, items: items)
+            InfoBarSectionView(sectionTitle: section.title, items: section.items)
 
           }  // END foreach
           InfoBarSectionView(

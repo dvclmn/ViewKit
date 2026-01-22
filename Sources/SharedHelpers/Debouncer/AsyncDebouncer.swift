@@ -24,7 +24,7 @@ public final class AsyncDebouncer {
   }
 
   @MainActor
-  public func execute(action: @escaping @Sendable () async -> Void) {
+  public func executeAsync(action: @escaping @Sendable () async -> Void) {
     /// Cancel any previous task
     task?.cancel()
 
@@ -34,6 +34,14 @@ public final class AsyncDebouncer {
         await action()
       }
     }
+  }
+  
+  @MainActor
+  public func execute(action: @escaping @Sendable () -> Void) {
+    Task {
+      self.executeAsync(action: action)
+    }
+    
   }
   deinit {
     task?.cancel()

@@ -8,7 +8,7 @@
 import CoreTools
 import Foundation
 
-public struct InfoBarItem: LabeledItem, Sendable, Equatable {
+public struct InfoBarItem: LabeledItem, Sendable, Equatable, Hashable {
   public let id: UUID
   public let sectionKey: InfoBarSectionID
   public let label: QuickLabel
