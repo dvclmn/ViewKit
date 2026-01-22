@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import ColourKit
 
 public struct WaveConfig: Codable, Sendable, Equatable {
+  public var colour: RGBColour
+  
   /// The base circle radius.
   public var circleRadius: Double
 
@@ -35,6 +38,7 @@ public struct WaveConfig: Codable, Sendable, Equatable {
   public var radiusWave: WaveModulator
 
   public init(
+    colour: RGBColour = .purple,
     circleRadius: Double = 25,
     count: Int = 60,
     height: Double = 300,
@@ -65,6 +69,7 @@ public struct WaveConfig: Codable, Sendable, Equatable {
         cycles: 3
       )
   ) {
+    self.colour = colour
     self.circleRadius = circleRadius
     self.horizontalWave = horizontalWave
     self.spacing = spacing
