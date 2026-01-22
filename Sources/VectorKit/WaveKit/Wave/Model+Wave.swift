@@ -12,17 +12,20 @@ public struct Wave: WaveShaped, Sendable, Identifiable, Hashable, Codable {
   public var frequency: Double
   public var amplitude: Double
   public var phase: Double
+  public var waveform: Waveform
 
   public init(
     id: UUID = UUID(),
     frequency: Double,
     amplitude: Double,
-    phase: Double
+    phase: Double,
+    waveform: Waveform,
   ) {
     self.id = id
     self.frequency = frequency
     self.amplitude = amplitude
     self.phase = phase
+    self.waveform = waveform
   }
 }
 
@@ -31,11 +34,13 @@ extension Wave {
     freq: Double,
     amp: Double,
     phase: Double,
+    waveform: Waveform = .sine
   ) {
     self.init(
       frequency: freq,
       amplitude: amp,
-      phase: phase
+      phase: phase,
+      waveform: waveform,
     )
   }
 }
