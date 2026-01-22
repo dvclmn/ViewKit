@@ -11,6 +11,7 @@ import SwiftUI
 extension EnvironmentValues {
   @Entry public var sectionLabelDisplay: LabelDisplay? = nil
   @Entry public var itemLabelDisplay: LabelDisplay? = nil
+  @Entry public var isInfoBarPresent: Bool = false
 }
 
 @CaseDetection

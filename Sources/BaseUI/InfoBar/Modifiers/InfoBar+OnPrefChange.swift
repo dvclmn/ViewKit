@@ -9,7 +9,7 @@ import CoreTools
 import SwiftUI
 
 public struct InfoBarItemsModifier: ViewModifier {
-
+  @Environment(\.isInfoBarPresent) private var isInfoBarPresent
   @State private var debouncer = AsyncDebouncer(interval: 0.2)
   @State private var sections: [GroupedSection] = []
 
@@ -19,25 +19,40 @@ public struct InfoBarItemsModifier: ViewModifier {
     content
       .paddingCompatible(.bottom, isEnabled ? Styles.infoBarHeight : nil)
       .onPreferenceChange(InfoBarKey.self) { newItems in
+        guard shouldDisplay else { return }
         debouncer.executeAsync {
           await handlePreferenceChange(newItems)
         }
 
       }
       .overlay(alignment: .bottom) {
-        if isEnabled {
+        if shouldDisplay {
           InfoBarView(sections: sections)
         }
+      }
+
+      /// Tell all children that an InfoBar is now present
+      .environment(\.isInfoBarPresent, isEnabled)
+
+      .onAppear {
+        #if DEBUG
+        if isEnabled && isInfoBarPresent {
+          print(
+            "⚠️ Optimization Warning: Duplicate InfoBarModifier detected at this view level. Child InfoBar is being suppressed."
+          )
+        }
+        #endif
       }
 
   }
 }
 
 extension InfoBarItemsModifier {
-  
+
+  private var shouldDisplay: Bool { isEnabled && !isInfoBarPresent }
+
   private func handlePreferenceChange(_ newItems: [InfoBarItem]) {
 
-    guard isEnabled else { return }
     /// Now this only runs when `newItems` actually changes
     let grouped = Dictionary(grouping: newItems, by: \.sectionKey)
 
