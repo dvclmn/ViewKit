@@ -20,7 +20,7 @@ import SwiftUI
 struct SliderCustom<Label: View>: View {
   @Environment(\.explicitHeight) private var explicitHeight
   @Environment(\.cornerRounding) private var cornerRounding
-  @Environment(\.trackComponents) private var trackComponents
+  @Environment(\.sliderComponents) private var sliderComponents
   @Environment(\.sliderHandler) private var store
 
   @State private var isHovering: Bool = false
@@ -40,7 +40,7 @@ struct SliderCustom<Label: View>: View {
           SliderTrack(in: proxy.size)
 
           // MARK: - Thumb
-          if trackComponents.contains(.thumb) {
+          if sliderComponents.contains(.thumb) {
             /// Slider thumb
             SliderThumb(
               //              store: $store.thumbHandler,
@@ -96,10 +96,10 @@ extension SliderCustom {
   }
 
   var clipShape: AnyShape {
-    switch trackComponents {
+    switch sliderComponents {
 
       /// Aka has fill *only*
-      case .fill: AnyShape(.rect(cornerRadius: cornerRounding ?? Styles.sizeTiny))
+      case .track: AnyShape(.rect(cornerRadius: cornerRounding ?? Styles.sizeTiny))
       default: AnyShape(.capsule)
     }
   }

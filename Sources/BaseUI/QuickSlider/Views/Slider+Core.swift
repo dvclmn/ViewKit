@@ -24,7 +24,7 @@ public struct SliderCore: View {
     @Bindable var store = store
 
     // MARK: - Slider
-    if sliderComponents.contains(.slider) {
+    if sliderComponents.contains(.track) {
 
       Component_Slider()
         //            .frame(minWidth: 80)

@@ -13,8 +13,7 @@ struct Component_Slider: View {
   @Environment(\.sliderComponents) private var sliderComponents
   @Environment(\.sliderHandler) private var store
   @Environment(\.sliderDefaultValue) private var sliderDefaultValue
-
-  let isInternalDebugMode: Bool = true
+  @Environment(\.isDebugMode) private var isDebugMode
 
   var body: some View {
     @Bindable var store = store
@@ -24,12 +23,12 @@ struct Component_Slider: View {
       case .native:
         if sliderComponents.contains(.label) {
           NativeSliderComponent()
-            .debugFrame("Native + Label", .green, isEnabled: isInternalDebugMode)
+            .debugFrame("Native + Label", .green, isEnabled: isDebugMode)
 
         } else {
           NativeSliderComponent()
             .labelsHidden()
-            .debugFrame("Native + NO Label", .orange, isEnabled: isInternalDebugMode)
+            .debugFrame("Native + NO Label", .orange, isEnabled: isDebugMode)
         }
 
       // MARK: - Custom Slider
@@ -37,10 +36,10 @@ struct Component_Slider: View {
         SliderCustom(style: style) {
           if sliderComponents.contains(.label) {
             LabelComponent()
-              .debugFrame("Custom + Label", .pink, isEnabled: isInternalDebugMode)
+              .debugFrame("Custom + Label", .pink, isEnabled: isDebugMode)
           } else {
             EmptyView()
-              .debugFrame("Custom + NO Label", .purple, isEnabled: isInternalDebugMode)
+              .debugFrame("Custom + NO Label", .purple, isEnabled: isDebugMode)
           }
         }
         

@@ -23,6 +23,7 @@ public struct SliderExamples: View {
           value: $zoomValue.toBindingDouble,
           range: zoomRange.toDoubleRange,
         )
+        .sliderStyle(.native, components: .noLabel)
         //      .padding()
         //      .background(.mint.quinary)
 
@@ -53,7 +54,7 @@ public struct SliderExamples: View {
           value: $zoomValue.toBindingDouble,
           range: zoomRange.toDoubleRange,
         )
-        .sliderStyle(.native, components: [.fill, .thumb])
+        .sliderStyle(.native, components: [.track, .thumb])
         //      .environment(\.explicitHeight, 20)
         //      .padding()
         //      .background(.brown.quinary)
@@ -75,10 +76,11 @@ public struct SliderExamples: View {
         value: $zoomValue.toBindingDouble,
         range: zoomRange.toDoubleRange,
       )
-      .sliderStyle(.custom(.clearBG), components: [.fill])
+      .sliderStyle(.custom(.clearBG), components: [.track, .units])
     } // END main vstack
     .padding()
     .frame(maxWidth: 320)
+    .isDebugMode(true)
 
   }
 }
