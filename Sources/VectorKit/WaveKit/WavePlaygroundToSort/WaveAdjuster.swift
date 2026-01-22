@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct WaveParameterAdjuster {
+public struct WaveAttributeState {
   private var lastFrequency: Double
   private var lastPhase: Double
   private var lastSpacingWaveSpeed: Double
