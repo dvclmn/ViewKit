@@ -8,7 +8,7 @@
 import CoreTools
 
 public enum ModifiersSectionKey: InfoBarSectionKey {
-  public static let title = "Canvas"
+  public static let title = "Modifiers"
 }
 
 extension InfoBarItem {

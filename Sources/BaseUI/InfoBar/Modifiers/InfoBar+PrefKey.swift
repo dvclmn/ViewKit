@@ -14,17 +14,25 @@ public struct InfoBarKey: PreferenceKey {
   public static let defaultValue: [InfoBarItem] = []
 
   public static func reduce(value: inout [InfoBarItem], nextValue: () -> [InfoBarItem]) {
+    
     let next = nextValue()
     if next.isEmpty { return }
     
+    /// Efficiently filter out duplicates using the Hashable conformance
+    let existingIDs = Set(value.map(\.id))
+    value.append(contentsOf: next.filter { !existingIDs.contains($0.id) })
+    
+//    let next = nextValue()
+//    if next.isEmpty { return }
+    
     /// Use a Set of IDs for O(1) lookups during the reduction
-    var existingIDs = Set(value.map(\.id))
-    for item in next {
-      if !existingIDs.contains(item.id) {
-        value.append(item)
-        existingIDs.insert(item.id)
-      }
-    }
+//    var existingIDs = Set(value.map(\.id))
+//    for item in next {
+//      if !existingIDs.contains(item.id) {
+//        value.append(item)
+//        existingIDs.insert(item.id)
+//      }
+//    }
 //    let new = nextValue()
 //    guard !new.isEmpty else { return }
 //    for item in new where !value.contains(where: { $0.id == item.id }) {

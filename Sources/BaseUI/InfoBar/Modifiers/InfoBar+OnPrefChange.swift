@@ -12,7 +12,6 @@ public struct InfoBarItemsModifier: ViewModifier {
 
   @State private var debouncer = AsyncDebouncer(interval: 0.2)
   @State private var sections: [GroupedSection] = []
-//  @State private var items: [InfoBarItem] = []
 
   let isEnabled: Bool
   public func body(content: Content) -> some View {

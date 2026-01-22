@@ -13,12 +13,17 @@ public struct InfoBarView: View {
   @Environment(\.modifierKeys) private var modifierKeys
 
   let sections: [GroupedSection]
+  let showingModifiersSection: Bool
 //  let items: [InfoBarSectionID: [InfoBarItem]]
 
-  public init(sections: [GroupedSection]) {
+  public init(
+    sections: [GroupedSection],
+    showingModifiersSection: Bool = false
+  ) {
 //    let grouped = Dictionary(grouping: items, by: \.sectionKey)
 //    self.items = grouped
     self.sections = sections
+    self.showingModifiersSection = showingModifiersSection
   }
 
   public var body: some View {
@@ -28,14 +33,14 @@ public struct InfoBarView: View {
       HStack(alignment: .firstTextBaseline, spacing: 0) {
         if !sections.isEmpty {
           ForEach(sections) { section in
-
             InfoBarSectionView(sectionTitle: section.title, items: section.items)
-
           }  // END foreach
-          InfoBarSectionView(
-            sectionTitle: "Modifiers",
-            items: [.modifiersSection(modifierKeys)]
-          )
+          if showingModifiersSection {
+            InfoBarSectionView(
+              sectionTitle: "Modifiers",
+              items: [.modifiersSection(modifierKeys)]
+            )
+          }
 
           Spacer()
         } else {
