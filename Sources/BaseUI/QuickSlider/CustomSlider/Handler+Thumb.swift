@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct ThumbHandler {
-  var thumbDiameter: CGFloat = 16.0
+  var thumbDiameter: Double = 16.0
 //  var sliderRange: ClosedRange<CGFloat> = 0...1
 
   //  public init(
@@ -23,8 +23,8 @@ public struct ThumbHandler {
 extension ThumbHandler {
 
   public func thumbPosition(
-    forSliderValue value: CGFloat,
-    range: ClosedRange<CGFloat>,
+    forSliderValue value: Double,
+    range: ClosedRange<Double>,
     trackSize: CGSize
   ) -> CGPoint? {
 
@@ -33,11 +33,11 @@ extension ThumbHandler {
 
     /// Normalised here is essentially: “How far along the slider should the
     /// thumb be, in proportion to its full track length?”
-    let normalised: CGFloat = value.normalised(in: range)
+    let normalised = value.normalised(in: range)
 
     /// Remove some length from the beginning/end of the draggable width,
     /// so the Thumb doesn't hand awkwardly out the edges of the track.
-    let horizontalPadding: CGFloat = thumbDiameter * 0.4
+    let horizontalPadding = thumbDiameter * 0.4
     let adjustedWidth = trackSize.width - (horizontalPadding * 2)
 
     let x = horizontalPadding + (normalised * adjustedWidth)

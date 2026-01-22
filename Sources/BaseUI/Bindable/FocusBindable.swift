@@ -40,25 +40,18 @@ where HandlerValue.Value == ViewValue.Value, HandlerValue.Value: Equatable {
         self.hasAppeared = true
         guard self.viewValue.wrappedValue != self.handlerValue.wrappedValue else { return }
         self.viewValue.wrappedValue = self.handlerValue.wrappedValue
-//        print(
-//          "View focus value `\(self.viewValue.wrappedValue)` updated to match Model focus value `\(self.handlerValue.wrappedValue)`."
-//        )
       }
+    
       .onChange(of: self.handlerValue.wrappedValue) { _, newValue in
         guard self.viewValue.wrappedValue != newValue
         else { return }
         self.viewValue.wrappedValue = newValue
-//        print(
-//          "Model focus value changed. Updated View focus value (previously `\(self.viewValue.wrappedValue)`) to match: `\(newValue)`."
-//        )
       }
+    
       .onChange(of: self.viewValue.wrappedValue) { _, newValue in
         guard self.handlerValue.wrappedValue != newValue
         else { return }
         self.handlerValue.wrappedValue = newValue
-//        print(
-//          "View focus value changed. Updated Model focus value (previously `\(self.handlerValue.wrappedValue)`) to match: `\(newValue)`."
-//        )
       }
   }
 }

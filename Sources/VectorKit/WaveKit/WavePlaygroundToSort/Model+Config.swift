@@ -11,6 +11,13 @@ public struct WaveConfig: Codable, Sendable, Equatable {
   /// The base circle radius.
   public var circleRadius: CGFloat
 
+  /// The total number of circles (affects normalisation but not the wave shapes).
+  public var count: Int
+
+  /// When shouldMaintainHeight is true, no matter what count is,
+  /// these circles are “packed” into this height.
+  public var height: CGFloat
+  
   /// Horizontal left/right motion parameters.
   public var horizontalWave: WaveModulator
 
@@ -22,19 +29,16 @@ public struct WaveConfig: Codable, Sendable, Equatable {
   ///  over a fixed height, and then the breathing effect is added.)
   public var spacingWave: WaveModulator
 
-  /// When shouldMaintainHeight is true, no matter what count is,
-  /// these circles are “packed” into this height.
-  public var height: CGFloat
-  public var shouldMaintainHeight: Bool
 
-  /// The total number of circles (affects normalisation but not the wave shapes).
-  public var count: Int
+  public var shouldMaintainHeight: Bool
 
   /// New: a modulation for the circle radius (so the circles can “pulse”).
   public var radiusWave: WaveModulator
 
   public init(
-    circleRadius: CGFloat = 15,
+    circleRadius: CGFloat = 25,
+    count: Int = 60,
+    height: CGFloat = 300,
     horizontalWave: WaveModulator = .init(
       isEnabled: true,
       amp: 70,
@@ -51,9 +55,8 @@ public struct WaveConfig: Codable, Sendable, Equatable {
         phase: 0,
         cycles: 3
       ),
-    height: CGFloat = 100,
-    shouldMaintainHeight: Bool = false,
-    count: Int = 20,
+    
+    shouldMaintainHeight: Bool = true,
     radiusWave: WaveModulator =
       WaveModulator(
         isEnabled: true,

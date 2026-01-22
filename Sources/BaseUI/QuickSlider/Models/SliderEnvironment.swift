@@ -21,7 +21,7 @@ extension EnvironmentValues {
   @Entry public var sliderStyle: SliderStyle = .native
 
   
-  @Entry var sliderHandler: SliderHandler = .init()
+  @Entry var sliderHandler: SliderHandler = .init(value: 1.0, label: "", range: 0...1)
 }
 
 /// This is in use by e.g. `QuickSlider`, `LabeledSlider`

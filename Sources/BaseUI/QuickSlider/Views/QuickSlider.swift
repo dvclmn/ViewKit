@@ -11,7 +11,7 @@ import SwiftUI
 public typealias SliderOutput = (SliderPhase) -> Void
 
 public struct QuickSlider: View, ValueFormattable, SliderStylable {
-  @State private var store: SliderHandler = .init()
+  @State private var store: SliderHandler
 
   @Binding var value: Double
   let label: QuickLabel
@@ -58,6 +58,13 @@ extension QuickSlider {
     self.label = label
     self._value = value
     self.range = range
+    self._store = State(
+      initialValue: SliderHandler(
+        value: value.wrappedValue,
+        label: label,
+        range: range
+      )
+    )
     self.didChangeSlider = didChangeSlider
   }
 }

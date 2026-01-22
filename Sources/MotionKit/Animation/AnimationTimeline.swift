@@ -13,21 +13,13 @@ public typealias TimelineOutput = (_ now: TimeInterval) -> Void
 public struct AnimationTimeline<Content: View>: View {
   @Environment(\.isPaused) private var isPaused
   @Environment(\.frameRate) private var frameRate
-  //  @State private var store = TimelineHandler()
-
-  //  let isPaused: Bool
+  
   let content: (TimeInterval) -> Content
-  //  let content: Content
-  //  let didUpdateClock: TimelineOutput
 
   public init(
-    //    isPaused: Bool = false,
-  @ViewBuilder content: @escaping (TimeInterval) -> Content = { _ in EmptyView() }, 
-    //    didUpdateClock: @escaping TimelineOutput = { _ in },
+    @ViewBuilder content: @escaping (TimeInterval) -> Content,
   ) {
-    //    self.isPaused = isPaused
     self.content = content
-    //    self.didUpdateClock = didUpdateClock
   }
 
   public var body: some View {
@@ -36,7 +28,7 @@ public struct AnimationTimeline<Content: View>: View {
       .animation(
         minimumInterval: frameRate.rate,
         paused: isPaused
-//        paused: isPaused.wrappedValue
+          //        paused: isPaused.wrappedValue
       )
     ) { context in
       content(context.date.timeIntervalSinceReferenceDate)
