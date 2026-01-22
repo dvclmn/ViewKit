@@ -29,6 +29,7 @@ public struct SliderGroup<Sliders: View>: View, ValueFormattable {
           .padding(.bottom, Styles.sizeSmall)
       }
       content
+        .environment(\.isWithinSliderGroup, true)
     }
   }
 }

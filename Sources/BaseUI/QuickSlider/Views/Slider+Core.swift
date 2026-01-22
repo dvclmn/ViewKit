@@ -22,27 +22,29 @@ public struct SliderCore: View {
 
   public var body: some View {
     @Bindable var store = store
-    GridRow {
-      // MARK: - Slider
-      if sliderComponents.contains(.slider) {
 
-        Component_Slider()
-          //            .frame(minWidth: 80)
-          .sensoryFeedback(.alignment, trigger: store.value) {
-            handleHaptics($0, $1)
-          }
-          .controlSize(explicitControlSize ?? .regular)
-      }
+    // MARK: - Slider
+    if sliderComponents.contains(.slider) {
 
-      // MARK: - Units
-      if sliderComponents.contains(.units) {
-        TextColumns(alignment: .trailing) {
-          Text(formatValue(store.value))
+      Component_Slider()
+        //            .frame(minWidth: 80)
+        .frame(maxWidth: .infinity)
+        .sensoryFeedback(.alignment, trigger: store.value) {
+          handleHaptics($0, $1)
         }
-        .textSelection(.disabled)
-        .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
+        .controlSize(explicitControlSize ?? .regular)
+    }
+
+    // MARK: - Units
+    if sliderComponents.contains(.units) {
+      TextColumns(alignment: .trailing) {
+        Text(formatValue(store.value))
       }
-    }  // END grid row
+      .textSelection(.disabled)
+      .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
+    }
+
+    
   }
 }
 

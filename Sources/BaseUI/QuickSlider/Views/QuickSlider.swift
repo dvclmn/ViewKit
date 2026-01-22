@@ -11,6 +11,7 @@ import SwiftUI
 public typealias SliderOutput = (SliderPhase) -> Void
 
 public struct QuickSlider: View, ValueFormattable, SliderStylable {
+  @Environment(\.isWithinSliderGroup) private var isWithinSliderGroup
   @State private var store: SliderHandler
 
   @Binding var value: Double
@@ -21,16 +22,28 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
   public var body: some View {
 
     /// Handles slider Label, Track, and Units display
-    SliderCore()
-      .onAppear {
-        if store.didChangeSlider == nil {
-          store.didChangeSlider = didChangeSlider
+
+    Group {
+      if isWithinSliderGroup {
+        GridRow {
+          SliderCore()
+        }
+
+      } else {
+        HStack {
+          SliderCore()
         }
       }
-      .task(id: label) { store.label = label }
-      .task(id: range) { store.range = range }
-      .bindModel($store.value, to: $value)
-      .environment(\.sliderHandler, store)
+    }
+    .onAppear {
+      if store.didChangeSlider == nil {
+        store.didChangeSlider = didChangeSlider
+      }
+    }
+    .task(id: label) { store.label = label }
+    .task(id: range) { store.range = range }
+    .bindModel($store.value, to: $value)
+    .environment(\.sliderHandler, store)
   }
 }
 

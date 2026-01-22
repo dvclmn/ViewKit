@@ -20,7 +20,8 @@ extension EnvironmentValues {
   @Entry public var sliderDefaultValue: Double? = nil
   @Entry public var sliderStyle: SliderStyle = .native
 
-  
+  @Entry var isWithinSliderGroup: Bool = false
+
   @Entry var sliderHandler: SliderHandler = .init(value: 1.0, label: "", range: 0...1)
 }
 
@@ -28,7 +29,11 @@ extension EnvironmentValues {
 public protocol SliderStylable {}
 
 extension View where Self: SliderStylable {
-  public func sliderStyle(_ style:SliderStyle) -> some View {
+  public func sliderStyle(
+    _ style: SliderStyle = .native,
+    components: TrackComponents = .all
+  ) -> some View {
     self.environment(\.sliderStyle, style)
+      .environment(\.trackComponents, components)
   }
 }

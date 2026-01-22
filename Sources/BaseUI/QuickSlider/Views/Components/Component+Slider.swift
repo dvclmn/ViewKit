@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 17/1/2026.
 //
 
+import CoreTools
 import SwiftUI
 
 struct Component_Slider: View {
@@ -12,6 +13,8 @@ struct Component_Slider: View {
   @Environment(\.sliderComponents) private var sliderComponents
   @Environment(\.sliderHandler) private var store
   @Environment(\.sliderDefaultValue) private var sliderDefaultValue
+
+  let isInternalDebugMode: Bool = true
 
   var body: some View {
     @Bindable var store = store
@@ -21,9 +24,12 @@ struct Component_Slider: View {
       case .native:
         if sliderComponents.contains(.label) {
           NativeSliderComponent()
+            .debugFrame("Native + Label", .green, isEnabled: isInternalDebugMode)
+
         } else {
           NativeSliderComponent()
             .labelsHidden()
+            .debugFrame("Native + NO Label", .orange, isEnabled: isInternalDebugMode)
         }
 
       // MARK: - Custom Slider
@@ -31,10 +37,13 @@ struct Component_Slider: View {
         SliderCustom(style: style) {
           if sliderComponents.contains(.label) {
             LabelComponent()
+              .debugFrame("Custom + Label", .pink, isEnabled: isInternalDebugMode)
           } else {
             EmptyView()
+              .debugFrame("Custom + NO Label", .purple, isEnabled: isInternalDebugMode)
           }
         }
+        
     }
   }
 }
@@ -53,8 +62,8 @@ extension Component_Slider {
     } onEditingChanged: { editing in
       let phase = SliderPhase(fromOnEditingChanged: editing)
       store.updatePhase(phase)
-//      store.phase = phase
-//      store.didChangeSlider?(phase)
+      //      store.phase = phase
+      //      store.didChangeSlider?(phase)
     }
   }
 

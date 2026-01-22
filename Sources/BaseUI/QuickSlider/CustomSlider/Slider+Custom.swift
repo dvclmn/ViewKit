@@ -26,6 +26,7 @@ struct SliderCustom<Label: View>: View {
   @State private var isHovering: Bool = false
 
   let style: TrackFillStyle
+
   @ViewBuilder let label: Label
 
   public var body: some View {
@@ -56,6 +57,7 @@ struct SliderCustom<Label: View>: View {
         .frame(maxWidth: .infinity)
         .contentShape(.rect)
         .onHover { isHovering = $0 }
+
         .task(id: trackHeight) {
           store.updateTrackSize(
             viewWidth: proxy.size.width,
@@ -87,13 +89,9 @@ extension SliderCustom {
       .onChanged { gestureValue in
         store.value = store.handleDragChange(gestureValue)
         store.updatePhase(.dragging)
-//        store.phase = .dragging
-//        store.didChangeSlider?(.dragging)
       }
       .onEnded { _ in
         store.updatePhase(.idle)
-//        store.phase = .idle
-//        store.didChangeSlider?(.idle)
       }
   }
 

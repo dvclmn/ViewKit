@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreTools
 
 public struct SliderExamples: View {
 
@@ -13,33 +14,9 @@ public struct SliderExamples: View {
   private let zoomRange: ClosedRange<CGFloat> = 0.1...20
 
   public var body: some View {
-    VStack {
+    VStack(spacing: Styles.sizeMedium) {
 
-      //    Form {
       SliderGroup {
-        //    VStack {
-        //      LabeledSlider(
-        //        "Labeled Slider",
-        //        value: $zoomValue.toBindingDouble,
-        //        range: zoomRange.toDoubleRange,
-        //        blurb: nil,
-        //        type: .native
-        //      ) {
-        //        Button("Tap") {}
-        //      } didChangeSlider: { phase in
-        //        print("Slider phase: \(phase)")
-        //      }
-
-        //      QuickSlider(
-        //        "Labeled Slider",
-        //        value: $zoomValue.toBindingDouble,
-        //        range: zoomRange.toDoubleRange,
-        //        type: .custom(.clearBG)
-        //      )
-        //      .environment(\.trackComponents, [.fill])
-        //      .environment(\.explicitHeight, 34)
-        //      .padding()
-        //      .background(.blue.quinary)
 
         QuickSlider(
           "Simple Slider",
@@ -58,7 +35,7 @@ public struct SliderExamples: View {
 
         //      .setExplicitHeight(5)
         //      .environment(\.explicitHeight, 5)
-        .environment(\.trackComponents, [.thumb])
+//        .environment(\.trackComponents, [.thumb])
         //      .padding()
         //      .background(.purple.quinary)
 
@@ -67,20 +44,21 @@ public struct SliderExamples: View {
           value: $zoomValue.toBindingDouble,
           range: zoomRange.toDoubleRange,
         )
-        .environment(\.sliderComponents, [.slider, .label])
+//        .environment(\.sliderComponents, [.slider, .label])
         //      .padding()
         //      .background(.yellow.quinary)
 
         QuickSlider(
-          "Compact Slider",
+          "Compact",
           value: $zoomValue.toBindingDouble,
           range: zoomRange.toDoubleRange,
         )
+        .sliderStyle(.native, components: [.fill, .thumb])
         //      .environment(\.explicitHeight, 20)
         //      .padding()
         //      .background(.brown.quinary)
 
-        .environment(\.trackComponents, [.fill])
+        
         //      .environment(\.explicitHeight, 34)
         //      .padding()
         //      .background(.blue.quinary)
@@ -89,16 +67,18 @@ public struct SliderExamples: View {
       .formatValue { $0.displayString(places: 1) }
       .environment(\.maxCharacterColumns, 4)
       //    .formStyle(.grouped)
-      .padding()
-      .frame(maxWidth: 290)
+      
+      Divider()
 
       QuickSlider(
         "Bar Slider",
         value: $zoomValue.toBindingDouble,
         range: zoomRange.toDoubleRange,
       )
-      .sliderStyle(.custom(.clearBG))
-    }
+      .sliderStyle(.custom(.clearBG), components: [.fill])
+    } // END main vstack
+    .padding()
+    .frame(maxWidth: 320)
 
   }
 }
