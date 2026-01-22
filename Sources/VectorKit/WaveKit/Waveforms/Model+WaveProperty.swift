@@ -53,7 +53,7 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
     }
   }
 
-  public var keyPath: WritableKeyPath<Wave, SmoothedProperty> {
+  public var keyPath: WritableKeyPath<WaveLegacy, SmoothedProperty> {
     switch self {
       case .amplitude: \.amplitudeSmoothed
       case .frequency: \.frequencySmoothed

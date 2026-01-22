@@ -11,11 +11,11 @@ import Foundation
 /// Simply has the ability to take in 2 or more Waves, and
 /// create a combined/single Composition.
 public struct WaveComposition: Sendable, Codable {
-  var waves: [Wave.ID]
+  var waves: [WaveLegacy.ID]
   var mode: WaveBlendMode
 
   public init(
-    waves: [Wave.ID] = [],
+    waves: [WaveLegacy.ID] = [],
     mode: WaveBlendMode = .add
   ) {
     self.waves = waves
@@ -27,7 +27,7 @@ extension WaveComposition {
 
   public static let empty: WaveComposition = .init()
 
-  public func wavesForEffect(from library: [Wave]) -> [Wave] {
+  public func wavesForEffect(from library: [WaveLegacy]) -> [WaveLegacy] {
 //    let ws = waves.compactMap { id in library.first { $0.id == id } }
 //    let waveLibrary = Dictionary(uniqueKeysWithValues: library.map { ($0.id, $0) })
 //    return waves.compactMap { ws[$0] }
@@ -38,7 +38,7 @@ extension WaveComposition {
 
   public func value(
     elapsed: CGFloat,
-    waveLibrary library: [Wave]
+    waveLibrary library: [WaveLegacy]
   ) -> CGFloat {
 
 //    let wavesForEffect = wavesForEffect(from: library)

@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Wave: Codable {
+extension WaveLegacy: Codable {
   
   private enum CodingKeys: String, CodingKey {
     case id

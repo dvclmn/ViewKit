@@ -36,7 +36,7 @@ extension WaveHandler {
 
   public func recomputeStatic(
     for size: CGSize,
-    wave: Wave,
+    wave: WaveLegacy,
     cyclesAcross: CGFloat,
     sampleCount: Int
   ) {
