@@ -69,7 +69,10 @@ public struct AnimatedShaderModifier: ViewModifier {
 
 @available(macOS 14, iOS 17, *)
 extension View {
-  public func shaderEffect(_ effect: ShaderEffect, isEnabled: Bool = true) -> some View {
+  public func shaderEffect(
+    _ effect: ShaderEffect,
+    isEnabled: Bool = true
+  ) -> some View {
     self.modifier(ShaderModifier(effect: effect, isEnabled: isEnabled))
   }
 //  public func shaderEffect(_ effect: ShaderEffect, _ args: [Shader.Argument]) -> some View {

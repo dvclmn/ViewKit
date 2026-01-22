@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-public struct GlitterArgs: ShaderArgumentsConvertible {
-  public var origin: CGPoint
-  public var spread: CGFloat
-
-  var arguments: [Shader.Argument] {
-    Self.makeArguments(origin, spread)
-  }
-}
+//public struct GlitterArgs: ShaderArgumentsConvertible {
+//  public var origin: CGPoint
+//  public var spread: CGFloat
+//
+//  var arguments: [Shader.Argument] {
+//    Self.makeArguments(origin, spread)
+//  }
+//}

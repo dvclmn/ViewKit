@@ -77,6 +77,14 @@ extension Binding where Value == CGRect {
     }
   }
 }
+extension Binding where Value == Bool {
+  public var reversed: Binding<Bool> {
+    return .init(
+      get: { !self.wrappedValue },
+      set: { self.wrappedValue = !$0 }
+    )
+  }
+}
 
 // MARK: - OptionSet
 extension Binding where Value: OptionSet & Sendable, Value.Element == Value {

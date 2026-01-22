@@ -5,22 +5,32 @@
 //  Created by Dave Coleman on 13/8/2025.
 //
 
+import CoreTools
 import SwiftUI
 
 public enum ShaderEffect {
-  case chromaticAberration(ChromaticAberrationArgs)
-  case fisheye(FisheyeArgs)
-//  case filmGrain
-  //  case glitter(GlitterArgs)
+  case chromaticAberration(r: CGFloat, b: CGFloat, strength: CGFloat)
+  //  case chromaticAberration(ChromaticAberrationArgs)
+  case fisheye(size: CGFloat, strength: CGFloat)
+  case glitter(origin: UnitPoint, spread: CGFloat, viewSize: CGSize)
+  //  case fisheye(FisheyeArgs)
+  //  case filmGrain
   //  case wavyBlur
   //  case ripple
   //  case psych
 
+  /// This refers to the name of the function in the `.metal` shader file.
+  /// E.g. "chromaticAberration" refers to:
+  /// ```
+  /// [[ stitchable ]]
+  /// half4 chromaticAberration(float2 position...)
+  /// ```
   public var reference: String {
     switch self {
       case .chromaticAberration: "chromaticAberration"
       case .fisheye: "fisheye"
-//      case .filmGrain: "filmGrain"
+      case .glitter: "glitter"
+    //      case .filmGrain: "filmGrain"
     //      case .wavyBlur: "wavyBlur"
     //      case .ripple: "ripple"
     //      case .psych: "psych"
@@ -30,8 +40,14 @@ public enum ShaderEffect {
   public var arguments: [Shader.Argument] {
 
     switch self {
-      case .chromaticAberration(let args): args.arguments
-      case .fisheye(let args): args.arguments
+      case .chromaticAberration(let r, let g, let strength):
+        [.float(r), .float(g), .float(strength)]
+
+      case .fisheye(let size, let strength):
+        [.float(size), .float(strength)]
+
+      case .glitter(let origin, let spread, let viewSize):
+        [.float2(origin.toCGPoint(in: viewSize)), .float(spread)]
     }
 
   }
@@ -78,6 +94,7 @@ public enum ShaderEffect {
     switch self {
       case .chromaticAberration: .layerEffect
       case .fisheye: .distortionEffect
+      case .glitter: .layerEffect
     }
   }
 
