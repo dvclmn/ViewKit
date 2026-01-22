@@ -7,75 +7,90 @@
 
 import SwiftUI
 
-
 public struct SliderExamples: View {
 
   @State private var zoomValue: CGFloat = 2.0
   private let zoomRange: ClosedRange<CGFloat> = 0.1...20
 
   public var body: some View {
-
     VStack {
-      LabeledSlider(
-        "Labeled Slider",
-        value: $zoomValue.toBindingDouble,
-        range: zoomRange.toDoubleRange,
-        blurb: nil,
-        type: .native) {
-          Button("Tap") {}
-        } didChangeSlider: { phase in
-          print("Slider phase: \(phase)")
-        }
 
-//      QuickSlider(
-//        "Labeled Slider",
-//        value: $zoomValue.toBindingDouble,
-//        range: zoomRange.toDoubleRange,
-//        type: .custom(.clearBG)
-//      )
-//      .environment(\.trackComponents, [.fill])
-//      .environment(\.explicitHeight, 34)
-//      .padding()
-//      .background(.blue.quinary)
+      //    Form {
+      SliderGroup {
+        //    VStack {
+        //      LabeledSlider(
+        //        "Labeled Slider",
+        //        value: $zoomValue.toBindingDouble,
+        //        range: zoomRange.toDoubleRange,
+        //        blurb: nil,
+        //        type: .native
+        //      ) {
+        //        Button("Tap") {}
+        //      } didChangeSlider: { phase in
+        //        print("Slider phase: \(phase)")
+        //      }
 
-      QuickSlider(
-        "Simple Slider",
-        value: $zoomValue.toBindingDouble,
-        range: zoomRange.toDoubleRange,
-      )
+        //      QuickSlider(
+        //        "Labeled Slider",
+        //        value: $zoomValue.toBindingDouble,
+        //        range: zoomRange.toDoubleRange,
+        //        type: .custom(.clearBG)
+        //      )
+        //      .environment(\.trackComponents, [.fill])
+        //      .environment(\.explicitHeight, 34)
+        //      .padding()
+        //      .background(.blue.quinary)
+
+        QuickSlider(
+          "Simple Slider",
+          value: $zoomValue.toBindingDouble,
+          range: zoomRange.toDoubleRange,
+        )
+        //      .padding()
+        //      .background(.mint.quinary)
+
+        QuickSlider(
+          "Opacity Slider",
+          value: $zoomValue.toBindingDouble,
+          range: zoomRange.toDoubleRange,
+        )
+        .sliderStyle(.custom(.opacitySlider))
+
+        //      .setExplicitHeight(5)
+        //      .environment(\.explicitHeight, 5)
+        .environment(\.trackComponents, [.thumb])
+        //      .padding()
+        //      .background(.purple.quinary)
+
+        QuickSlider(
+          "No Units",
+          value: $zoomValue.toBindingDouble,
+          range: zoomRange.toDoubleRange,
+        )
+        .environment(\.sliderComponents, [.slider, .label])
+        //      .padding()
+        //      .background(.yellow.quinary)
+
+        QuickSlider(
+          "Compact Slider",
+          value: $zoomValue.toBindingDouble,
+          range: zoomRange.toDoubleRange,
+        )
+        //      .environment(\.explicitHeight, 20)
+        //      .padding()
+        //      .background(.brown.quinary)
+
+        .environment(\.trackComponents, [.fill])
+        //      .environment(\.explicitHeight, 34)
+        //      .padding()
+        //      .background(.blue.quinary)
+
+      }
+      .formatValue { $0.displayString(places: 1) }
+      .environment(\.maxCharacterColumns, 4)
+      //    .formStyle(.grouped)
       .padding()
-      .background(.mint.quinary)
-
-      QuickSlider(
-        "Opacity Slider",
-        value: $zoomValue.toBindingDouble,
-        range: zoomRange.toDoubleRange,
-      )
-      .sliderStyle(.custom(.opacitySlider))
-      
-      //      .setExplicitHeight(5)
-      .environment(\.explicitHeight, 5)
-      .environment(\.trackComponents, [.thumb])
-      .padding()
-      .background(.purple.quinary)
-
-      QuickSlider(
-        "No Units",
-        value: $zoomValue.toBindingDouble,
-        range: zoomRange.toDoubleRange,
-      )
-      .environment(\.sliderComponents, [.slider, .label])
-      .padding()
-      .background(.yellow.quinary)
-
-      QuickSlider(
-        "Compact Slider",
-        value: $zoomValue.toBindingDouble,
-        range: zoomRange.toDoubleRange,
-      )
-      .environment(\.explicitHeight, 20)
-      .padding()
-      .background(.brown.quinary)
+      .frame(maxWidth: 290)
 
       QuickSlider(
         "Bar Slider",
@@ -83,15 +98,7 @@ public struct SliderExamples: View {
         range: zoomRange.toDoubleRange,
       )
       .sliderStyle(.custom(.clearBG))
-      
-      .environment(\.trackComponents, [.fill])
-      .environment(\.explicitHeight, 34)
-      .padding()
-      .background(.blue.quinary)
-
     }
-    .padding()
-    .frame(maxWidth: 290)
 
   }
 }

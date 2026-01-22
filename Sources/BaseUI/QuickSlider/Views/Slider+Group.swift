@@ -5,14 +5,10 @@
 //  Created by Dave Coleman on 7/5/2025.
 //
 
-
+import CoreTools
 import SwiftUI
 
-import BasePrimitives
-
-public struct SliderGroup<Sliders: View>: View {
-  //  @Environment(\.sliderControlSize) var sliderControlSize
-
+public struct SliderGroup<Sliders: View>: View, ValueFormattable {
   let title: String?
   let content: Sliders
 
@@ -28,20 +24,11 @@ public struct SliderGroup<Sliders: View>: View {
     Grid(alignment: .leading) {
       if let title {
         Text(title)
-          //          .textCase(.uppercase)
           .font(.callout.weight(.medium))
           .foregroundStyle(.secondary)
           .padding(.bottom, Styles.sizeSmall)
       }
       content
     }
-
   }
 }
-//#if DEBUG
-//@available(macOS 15, iOS 18, *)
-//#Preview(traits: .size(.normal)) {
-//  SliderGroup()
-//}
-//#endif
-//

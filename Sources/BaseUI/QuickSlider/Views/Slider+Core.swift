@@ -23,46 +23,35 @@ public struct SliderCore: View {
   public var body: some View {
     @Bindable var store = store
     GridRow {
-      HStack {
-        // MARK: - Slider
-        if sliderComponents.contains(.slider) {
+      // MARK: - Slider
+      if sliderComponents.contains(.slider) {
 
-          Component_Slider()
-            .frame(minWidth: 80)
-            .sensoryFeedback(.alignment, trigger: store.value) {
-              oldValue,
-              newValue in
-
-              let preset = HapticPreset.boundaryAndDefault(
-                store.range,
-                /// Fall back to centre-style haptic trigger
-                defaultValue: sliderDefaultValue ?? store.range.halfway
-              )
-              return preset.shouldFire(oldValue, newValue)
-//              HapticPreset.boundaryAndDefault().hapticPreset(
-//                for: ,
-//                with: sliderDefaultValue,
-//                oldValue,
-//                newValue
-//              )
-            }
-            .controlSize(explicitControlSize ?? .regular)
-        }
-
-        // MARK: - Units
-        if sliderComponents.contains(.units) {
-          TextColumns {
-            Text(formatValue(store.value))
+        Component_Slider()
+          //            .frame(minWidth: 80)
+          .sensoryFeedback(.alignment, trigger: store.value) {
+            handleHaptics($0, $1)
           }
-          .textSelection(.disabled)
-          .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
+          .controlSize(explicitControlSize ?? .regular)
+      }
+
+      // MARK: - Units
+      if sliderComponents.contains(.units) {
+        TextColumns(alignment: .trailing) {
+          Text(formatValue(store.value))
         }
+        .textSelection(.disabled)
+        .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
       }
     }  // END grid row
-
   }
 }
 
 extension SliderCore {
+  private func handleHaptics(_ old: Double, _ new: Double) -> Bool {
+    guard let defaultVal = sliderDefaultValue else {
+      return HapticPreset.boundary(store.range).shouldFire(old, new)
+    }
+    return HapticPreset.boundaryAndDefault(store.range, defaultValue: defaultVal).shouldFire(old, new)
 
+  }
 }

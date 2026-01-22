@@ -12,7 +12,7 @@ public struct TextColumns<Content: View>: View {
   @Environment(\.isDebugMode) private var isDebugMode
 
   @State private var characterSize: CGSize?
-  
+
   let columnCount: Int?
   let alignment: Alignment
   let content: Content
@@ -35,7 +35,7 @@ public struct TextColumns<Content: View>: View {
     Text(characters)
       .monospaced()
       .hidden()
-//      .frame(minWidth: screenWidth)
+      //      .frame(minWidth: screenWidth)
       .gridGuide(opacity: 0.3, isEnabled: isDebugMode)
       .setGridDimensions(columnWidth, height: 1)
       .characterSize(mode: .debounce(0.2), shouldSetEnv: true) { size in
@@ -52,9 +52,9 @@ public struct TextColumns<Content: View>: View {
   }
 }
 extension TextColumns {
-  
+
   private var columnWidth: Int { columnCount ?? maxCharacterColumns }
-  
+
   private var characters: String {
     return String(repeating: "0", count: min(columnWidth, maxCharacterColumns))
   }

@@ -20,6 +20,7 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
 
   public var body: some View {
 
+    /// Handles slider Label, Track, and Units display
     SliderCore()
       .onAppear {
         if store.didChangeSlider == nil {
