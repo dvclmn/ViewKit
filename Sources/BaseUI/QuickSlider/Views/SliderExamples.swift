@@ -55,6 +55,7 @@ public struct SliderExamples: View {
           range: zoomRange.toDoubleRange,
         )
         .sliderStyle(.native, components: [.track, .thumb])
+        .gridCellColumns(3)
         //      .environment(\.explicitHeight, 20)
         //      .padding()
         //      .background(.brown.quinary)

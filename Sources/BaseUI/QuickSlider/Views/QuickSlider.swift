@@ -12,6 +12,7 @@ public typealias SliderOutput = (SliderPhase) -> Void
 
 public struct QuickSlider: View, ValueFormattable, SliderStylable {
   @Environment(\.isWithinSliderGroup) private var isWithinSliderGroup
+  @Environment(\.sliderComponents) private var sliderComponents
   @State private var store: SliderHandler
 
   @Binding var value: Double
@@ -49,6 +50,8 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
 
 // MARK: - Initialisers
 extension QuickSlider {
+  
+  
   public init(
     _ title: String,
     value: Binding<Double>,

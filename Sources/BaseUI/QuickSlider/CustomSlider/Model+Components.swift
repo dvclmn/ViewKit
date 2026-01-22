@@ -34,6 +34,13 @@ public struct SliderComponents: OptionSet, Sendable {
   public static let noUnits: Self = [label, .track, .thumb]
 }
 
+extension SliderComponents {
+  var count: Int {
+    /// There are 4 total options, so will cap it out at 4
+    max(0, min(4, rawValue.nonzeroBitCount))
+  }
+}
+
 public enum SliderPhase {
   case dragging
   case idle
