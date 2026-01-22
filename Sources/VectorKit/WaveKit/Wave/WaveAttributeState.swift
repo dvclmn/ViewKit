@@ -30,23 +30,48 @@ public struct WaveAttributeState {
     self.phaseOriginTime = 0.0
     self.spacingWaveTimeOffset = 0.0
   }
+}
+
+extension WaveAttributeState {
+
+  /// Compute effective phase including time, normalizedIndex, and cycles
+  public func effectivePhase(
+    currentTime: TimeInterval,
+    normalisedIndex: Double,
+    cycles: Double,
+    frequency: Double? = nil,
+    phaseOffset: Double? = nil
+  ) -> Double {
+    let f = frequency ?? lastFrequency
+    let p = phaseOffset ?? lastPhase
+    let effectiveTime = currentTime - phaseOriginTime
+    let phase = effectiveTime * f + normalisedIndex * cycles + p
+    return phase - floor(phase)  // wrap into [0,1)
+  }
 
   /// Updates frequency while maintaining visual continuity
+  /// The invariant is that (`effectiveTime * frequency + phase`) remains unchanged.
   /// - Parameters:
   ///   - frequency: The new frequency value
   ///   - currentPhase: The current phase value
-  // Updates frequency while preserving the horizontal time–based argument.
-  // The invariant is that (effectiveTime * frequency + phase) remains unchanged.
   public mutating func updateFrequency(to frequency: Double, currentPhase: Double) {
     let now = Date().timeIntervalSinceReferenceDate
     let effectiveTime = now - phaseOriginTime
-    // Preserve the current horizontal component.
     let currentArg = effectiveTime * lastFrequency + currentPhase
-    // Solve for new effectiveTime such that newEffectiveTime * frequency + currentPhase equals currentArg.
     let newEffectiveTime = (currentArg - currentPhase) / frequency
     phaseOriginTime = now - newEffectiveTime
     lastFrequency = frequency
   }
+  //  public mutating func updateFrequency(to frequency: Double, currentPhase: Double) {
+  //    let now = Date().timeIntervalSinceReferenceDate
+  //    let effectiveTime = now - phaseOriginTime
+  //    // Preserve the current horizontal component.
+  //    let currentArg = effectiveTime * lastFrequency + currentPhase
+  //    // Solve for new effectiveTime such that newEffectiveTime * frequency + currentPhase equals currentArg.
+  //    let newEffectiveTime = (currentArg - currentPhase) / frequency
+  //    phaseOriginTime = now - newEffectiveTime
+  //    lastFrequency = frequency
+  //  }
 
   /// Updates phase while maintaining visual continuity
   /// - Parameters:
@@ -56,7 +81,6 @@ public struct WaveAttributeState {
   public mutating func updatePhase(to phase: Double, currentFrequency: Double) {
     let now = Date().timeIntervalSinceReferenceDate
     let effectiveTime = now - phaseOriginTime
-    // Preserve the existing time–dependent value.
     let currentArg = effectiveTime * currentFrequency + lastPhase
     let newEffectiveTime = (currentArg - phase) / currentFrequency
     phaseOriginTime = now - newEffectiveTime
