@@ -8,17 +8,18 @@
 import Foundation
 
 public struct WaveConfig: Codable, Sendable {
-  // The base circle radius.
+  /// The base circle radius.
   public var circleRadius: CGFloat = 15
 
-  // Horizontal left/right motion parameters.
+  /// Horizontal left/right motion parameters.
   public var horizontalWave: WaveModulator =
     WaveModulator(
       isEnabled: true,
-      amplitude: 70,
-      speed: 2,
+      amp: 70,
+      freq: 2,
       phase: 0.4,
-      cycles: 3)
+      cycles: 3
+    )
 
   // Vertical spacing between circles (used when shouldMaintainHeight == false).
   public var spacing: CGFloat = 16
@@ -29,8 +30,8 @@ public struct WaveConfig: Codable, Sendable {
   public var spacingWave: WaveModulator =
     WaveModulator(
       isEnabled: true,
-      amplitude: 10,
-      speed: 1,
+      amp: 10,
+      freq: 1,
       phase: 0,
       cycles: 3)
   // When shouldMaintainHeight is true, no matter what count is,
@@ -45,11 +46,11 @@ public struct WaveConfig: Codable, Sendable {
   public var radiusWave: WaveModulator =
     WaveModulator(
       isEnabled: true,
-      amplitude: 5,
-      speed: 1,
+      amp: 5,
+      freq: 1,
       phase: 0,
       cycles: 3)
-  
+
   public init() {}
 }
 
