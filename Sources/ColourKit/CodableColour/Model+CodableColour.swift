@@ -11,10 +11,8 @@
 // Credit to Natalia Panferova and Matthaus Woolard of
 // https://nilcoalescing.com/blog/EncodeAndDecodeSwiftUIColor/
 
-//import NSUI
 import SwiftUI
 
-//
 public typealias Colour = CodableColour
 
 public enum CodableColour: Codable, Equatable, Hashable, Sendable, Identifiable {
@@ -35,7 +33,7 @@ public enum CodableColour: Codable, Equatable, Hashable, Sendable, Identifiable 
 
 extension CodableColour {
   public var id: Self { self }
-  
+
   public init?(fromPrimitive primitiveColour: PrimitiveColour) {
     guard let colour = primitiveColour.toSystemColour else { return nil }
     self = CodableColour.system(colour, opacity: 1.0)

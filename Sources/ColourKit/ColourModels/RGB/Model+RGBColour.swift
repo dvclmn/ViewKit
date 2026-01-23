@@ -34,7 +34,7 @@ public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable,
     self.name = name
   }
 }
-// MARK: - Initialiser
+// MARK: - Initialisers
 extension RGBColour {
 
   public init(
@@ -42,7 +42,7 @@ extension RGBColour {
     g: Double,
     b: Double,
     a: Double = 1.0,
-    name: String?
+    name: String? = nil
   ) {
     self.init(red: r, green: g, blue: b, alpha: a, name: name)
   }

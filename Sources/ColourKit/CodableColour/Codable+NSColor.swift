@@ -8,7 +8,6 @@
 #if canImport(AppKit)
 import AppKit
 
-//
 extension CodableColour {
   public func nsColor(fallback: NSColor) -> NSColor {
     //  public func nsColor(fallback: NSColor = .textColor) -> NSColor {
