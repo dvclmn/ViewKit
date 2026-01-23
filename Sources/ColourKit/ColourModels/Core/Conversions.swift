@@ -7,7 +7,6 @@
 
 import Foundation
 
-//
 extension HSVColour {
 
   public init(fromRGB r: Double, g: Double, b: Double, a: Double, name: String?) {
@@ -59,49 +58,8 @@ extension HSVColour {
     )
   }
 
-  //  public init(fromRGB rgb: RGBColour) {
-  //
-  //    let rd: CGFloat = rgb.red
-  //    let gd: CGFloat = rgb.green
-  //    let bd: CGFloat = rgb.blue
-  //
-  //    let maxV: CGFloat = max(rd, max(gd, bd))
-  //    let minV: CGFloat = min(rd, min(gd, bd))
-  //    let delta: CGFloat = maxV - minV
-  //
-  //    var h: CGFloat = 0
-  //    var s: CGFloat = 0
-  //    let b: CGFloat = maxV
-  //
-  //    s = (maxV == 0) ? 0 : (delta / maxV)
-  //
-  //    if maxV == minV {
-  //      h = 0
-  //    } else {
-  //      if maxV == rd {
-  //        h = (gd - bd) / delta + (gd < bd ? 6 : 0)
-  //      } else if maxV == gd {
-  //        h = (bd - rd) / delta + 2
-  //      } else if maxV == bd {
-  //        h = (rd - gd) / delta + 4
-  //      }
-  //
-  //      h /= 6
-  //    }
-  //
-  //    self.init(
-  //      hue: h,
-  //      saturation: s,
-  //      brightness: b,
-  //      alpha: rgb.alpha,
-  //      name: rgb.name
-  //    )
-  //
-  //  }
-
 }
 
-//
 extension RGBColour {
 
   public init(fromHSV hsv: HSVColour) {

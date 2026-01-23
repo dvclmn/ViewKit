@@ -59,7 +59,6 @@ extension RGBColour {
   }
 }
 
-//
 extension RGBColour {
 
   public var toHSV: HSVColour { HSVColour(fromRGB: self) }

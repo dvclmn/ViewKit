@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 11/10/2025.
 //
 
-//
 nonisolated public protocol HSVAdjustable: ColourModel, LuminanceReadable {
 
   var toHSV: HSVColour { get }

@@ -5,6 +5,11 @@
 //  Created by Dave Coleman on 23/1/2026.
 //
 
+import Foundation
+
+extension RGBColour {
+  public static let aliceBlue: RGBColour = .init(hex: "f0f8ff")
+}
 
   "aliceblue": "#f0f8ff",
   "antiquewhite": "#faebd7",

@@ -8,7 +8,6 @@
 import BasePrimitives
 import SwiftUI
 
-//
 public struct ColourSquarePicker: View {
 
   @State private var dragPosition: CGPoint = .zero

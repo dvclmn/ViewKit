@@ -7,23 +7,6 @@
 
 import SwiftUI
 
-public protocol RGBAConvertible {
-  init(r: Double, g: Double, b: Double, a: Double)
-}
-
-extension Color: RGBAConvertible {
-  /// Important: Assumes `SwiftUI/RGBColorSpace/sRGB` colour space
-  public init(r: Double, g: Double, b: Double, a: Double) {
-    self.init(.sRGB, red: r, green: g, blue: b, opacity: a)
-  }
-}
-
-extension RGBColour: RGBAConvertible {
-  public init(r: Double, g: Double, b: Double, a: Double) {
-    self.init(r: r, g: g, b: b, a: a)
-  }
-}
-
 extension RGBAConvertible {
 
   /// Create a `Color` instance from a hex string in SwiftUI.

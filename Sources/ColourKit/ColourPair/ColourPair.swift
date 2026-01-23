@@ -7,7 +7,6 @@
 
 import AppKit
 
-//
 public struct ColourPair: Sendable, Codable, Hashable {
   public let foreground: CodableColour
   public let background: CodableColour?

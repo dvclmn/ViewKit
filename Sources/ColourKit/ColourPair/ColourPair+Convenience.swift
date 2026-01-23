@@ -7,7 +7,6 @@
 
 import AppKit
 
-//
 extension ColourPair {
 
   /// Returns foreground only
@@ -18,8 +17,6 @@ extension ColourPair {
       case .fg: foreground.nsColor
       case .bg: background?.nsColor
     }
-    //  public func nsColour(_ keyPath: KeyPath<Self, CodableColour?>) -> NSColor? {
-    //    return self[keyPath: keyPath]?.nsColor
   }
 
   public var nsColourPair: (fore: NSColor, bg: NSColor)? {
@@ -27,12 +24,6 @@ extension ColourPair {
       let bg = background?.nsColor
     else { return nil }
     return (fg, bg)
-    //    switch member {
-    //      case .fg: foreground.nsColor
-    //      case .bg: background?.nsColor
-    //    }
-    //  public func nsColour(_ keyPath: KeyPath<Self, CodableColour?>) -> NSColor? {
-    //    return self[keyPath: keyPath]?.nsColor
   }
 
   /// Initialises a `ColourPair` from a single
@@ -52,7 +43,6 @@ extension ColourPair {
       b: fg.blueComponent
     )
     let bgRGB: CodableColour? = bg.map {
-      //    if let background {
       CodableColour.rgbRaw(
         r: $0.redComponent,
         g: $0.greenComponent,
@@ -60,11 +50,9 @@ extension ColourPair {
       )
     }
     self.init(fgRGB, background: bgRGB)
-    //    self.init(.rgbRaw(r: r, g: g, b: b))
   }
 }
 
-//
 extension ColourPair {
   public enum PairType {
     case fg
