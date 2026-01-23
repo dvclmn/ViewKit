@@ -13,7 +13,8 @@ public struct QuickPicker<RowContent: View, Item>: View where Item: Pickable & H
   public typealias PickerOutput = (Item, Bool) -> RowContent
   @Environment(\.explicitHeight) private var explicitHeight
 
-  let allItems: [Item]
+  @State private var allItems: [Item]
+//  let allItems: [Item]
 
   @Binding var item: Item
   let style: QuickPickerStyle
@@ -32,7 +33,7 @@ public struct QuickPicker<RowContent: View, Item>: View where Item: Pickable & H
     @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
   ) where RowContent == EmptyView {
     self._item = item
-    self.allItems = allItems
+    self._allItems = State(initialValue: allItems)
     self.style = style
     self.hasLabeledContentWrapper = hasLabeledContentWrapper
     self.areShortcutsEnabled = areShortcutsEnabled
@@ -103,7 +104,7 @@ extension QuickPicker {
   }
 }
 
-extension QuickPicker where Item: CaseIterable {
+extension QuickPicker where Item: CaseIterable, Item.AllCases == [Item] {
   public init(
     item: Binding<Item>,
     style: QuickPickerStyle = .plain,
@@ -116,10 +117,7 @@ extension QuickPicker where Item: CaseIterable {
 
     /// This init is able to populate `allItems` automatically,
     /// using `CaseIterable`'s `allCases`.
-
-    let all = Item.allCases.prefix(maxItems ?? Int.max).toArray
-    print("All items: \(dump(all))")
-    self.allItems = all
+    self._allItems = State(initialValue: Item.allCases)
 
     self.style = style
     self.hasLabeledContentWrapper = hasLabeledContentWrapper

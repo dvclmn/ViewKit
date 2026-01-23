@@ -12,7 +12,7 @@ public enum ActionLine {}
 
 extension ActionLine {
 
-  public struct Configuration {
+  public struct Configuration: Equatable {
 
     public var density: Double
 

@@ -67,6 +67,15 @@ extension HSVColour: HSVAdjustable {
 
 //
 extension HSVColour {
+  
+  public var hueOnly: Self {
+    Self(
+      hue: hue,
+      saturation: 1.0,
+      brightness: 1.0,
+      alpha: 1.0,
+    )
+  }
 
   public var toRGB: RGBColour { RGBColour(fromHSV: self) }
 

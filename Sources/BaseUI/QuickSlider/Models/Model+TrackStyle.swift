@@ -55,7 +55,39 @@ extension TrackFillStyle {
     TrackFillStyle(
       fill: nil,
       foreground: nil,
+//      background: nil
       background: AnyShapeStyle(LinearGradient.rainbow())
+    )
+  }
+  
+  public static func saturation(_ hue: Double) -> TrackFillStyle {
+//  public static func saturation(_ hue: Color) -> TrackFillStyle {
+    TrackFillStyle(
+      fill: nil,
+      foreground: nil,
+      //      background: nil
+      background: AnyShapeStyle(
+        LinearGradient(
+          colors: [.gray, Color(hue: hue, saturation: 1.0, brightness: 1.0)],
+          startPoint: .leading,
+          endPoint: .trailing
+        )
+      )
+    )
+  }
+  public static func brightness(_ hue: Double) -> TrackFillStyle {
+//  public static func brightness(_ hue: Color) -> TrackFillStyle {
+    TrackFillStyle(
+      fill: nil,
+      foreground: nil,
+      //      background: nil
+      background: AnyShapeStyle(
+        LinearGradient(
+          colors: [.black, Color(hue: hue, saturation: 1.0, brightness: 1.0)],
+          startPoint: .leading,
+          endPoint: .trailing
+        )
+      )
     )
   }
 

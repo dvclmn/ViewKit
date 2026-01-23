@@ -22,6 +22,19 @@ public struct ActionLineVariations: RandomGeneratable {
   public let boundary: [Double]
   public let density: Int
 
+  public init(
+    baseAngles: [Double] = [],
+    boundary: [Double] = [],
+    density: Int = 10
+  ) {
+    self.baseAngles = baseAngles
+    self.boundary = boundary
+    self.density = density
+  }
+}
+
+extension ActionLineVariations {
+
   /// Computed properties based on parameters
   public func processedAngles(
     coverage: Double,

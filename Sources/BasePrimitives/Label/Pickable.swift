@@ -21,6 +21,10 @@ extension Pickable where Self: Equatable {
   }
 }
 
+extension Pickable where Self: CaseIterable, Self.AllCases == [Self] {
+  public var allItems: [Self] { Self.allCases }
+}
+
 extension Pickable {
   public static var pickerLabel: QuickLabel {
     let typeName = String(describing: Self.self)

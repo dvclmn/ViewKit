@@ -60,6 +60,7 @@ extension ClosedRange where Bound == Int {
 extension ClosedRange where Bound: BinaryFloatingPoint {
   
   public static var phaseRange: Self { 0...1 * .pi }
+  public static var unitRange: Self { 0...1 }
 
   /// Returns the fractional position of the given value within the range.
   /// The inverse operation of the above `value(atPercent:)`

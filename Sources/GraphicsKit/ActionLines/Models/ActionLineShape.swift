@@ -9,7 +9,7 @@ import Foundation
 
 extension ActionLine {
 
-  public struct Shape {
+  public struct Shape: Equatable {
     
     public var radius: Double
     public var position: CGPoint?

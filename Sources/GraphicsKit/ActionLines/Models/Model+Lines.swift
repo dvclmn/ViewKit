@@ -9,7 +9,7 @@ import ColourKit
 import SwiftUI
 
 extension ActionLine {
-  public struct Style {
+  public struct Style: Equatable {
     public var colour: HSVColour
     
     public var width: Double

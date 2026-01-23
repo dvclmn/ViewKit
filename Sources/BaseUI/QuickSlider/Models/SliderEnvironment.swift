@@ -15,7 +15,6 @@ import SwiftUI
 /// in the global values as well.
 extension EnvironmentValues {
   @Entry public var sliderComponents: SliderComponents = .all
-//  @Entry public var trackComponents: TrackComponents = [.thumb]
 
   @Entry public var sliderDefaultValue: Double? = nil
   @Entry public var sliderStyle: SliderStyle = .native
