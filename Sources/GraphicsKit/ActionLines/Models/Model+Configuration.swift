@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct ActionLineConfigurations {
+public struct ActionLineConfiguration {
 
   public var density: Double
   public var radialCoverage: Double
@@ -39,7 +39,7 @@ public struct ActionLineConfigurations {
   }
 }
 
-extension ActionLineConfigurations {
+extension ActionLineConfiguration {
 
   /// Normalized rotation (0.0 to 1.0, represents one full turn)
   public var rotation: Double {
@@ -55,7 +55,7 @@ extension ActionLineConfigurations {
   }
 }
 
-extension ActionLineConfigurations {
+extension ActionLineConfiguration {
 
   /// Linear interpolation helper
   private func lerp(_ start: Double, _ end: Double, _ t: Double) -> Double {
