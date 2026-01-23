@@ -8,7 +8,6 @@
 import BasePrimitives
 import SwiftUI
 
-//
 public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable,
   ColourModel, HSVAdjustable
 {
@@ -34,6 +33,9 @@ public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable,
     self.alpha = alpha
     self.name = name
   }
+}
+// MARK: - Initialiser
+extension RGBColour {
 
   public init(
     r: Double,
@@ -45,10 +47,10 @@ public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable,
     self.init(red: r, green: g, blue: b, alpha: a, name: name)
   }
 
-}
-
-extension RGBColour {
-  public init(fromSystem system: SystemColour, env: EnvironmentValues) {
+  public init(
+    fromSystem system: SystemColour,
+    env: EnvironmentValues
+  ) {
     self.init(
       colour: system.toColour,
       environment: env,

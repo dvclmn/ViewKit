@@ -16,7 +16,18 @@ extension Binding where Value == CGFloat {
     )
   }
 }
-
+//extension Binding {
+//  @MainActor
+//  public func keyPathBinding(
+//    keyPath: ReferenceWritableKeyPath<Value, Double>
+//  ) -> Binding<Double> {
+//    Binding {
+//      self.wrappedValue[keyPath: keyPath]
+//    } set: {
+//      self[keyPath: keyPath] = $0
+//    }
+//  }
+//}
 extension Binding where Value == Double {
   /// Convert `Double` Binding to `CGFloat` Binding
   public var toBindingFloat: Binding<CGFloat> {
@@ -37,7 +48,6 @@ extension Binding where Value == Int {
   }
 }
 
-
 extension Binding where Value: BinaryFloatingPoint & Sendable {
   public func clampedIfNeeded(to range: ClosedRange<Value>?) -> Binding<Value> {
     guard let range else { return self }
@@ -47,8 +57,6 @@ extension Binding where Value: BinaryFloatingPoint & Sendable {
     )
   }
 }
-
-
 
 // MARK: - Binding CGRect
 extension Binding where Value == CGRect {
@@ -86,6 +94,26 @@ extension Binding where Value == Bool {
   }
 }
 
+
+//extension Binding {
+//  @MainActor
+//  public func keyPathBinding<T>(
+//    keyPath: ReferenceWritableKeyPath<Value, T>
+//  ) -> Binding<T> {
+//    Binding<T> {
+//      self[keyPath: keyPath]
+//    } set: {
+//      self[keyPath: keyPath] = $0
+//    }
+//  }
+//  //  public var reversed: Binding<Bool> {
+//  //    return .init(
+//  //      get: { !self.wrappedValue },
+//  //      set: { self.wrappedValue = !$0 }
+//  //    )
+//  //  }
+//}
+
 // MARK: - OptionSet
 extension Binding where Value: OptionSet & Sendable, Value.Element == Value {
   /// Returns a Boolean binding that toggles the presence of a single option in the set.
@@ -111,7 +139,7 @@ extension Binding where Value: OptionSet & Sendable, Value.Element == Value {
 //  public var getSize: CGSize {
 //    return self.wrappedValue.size
 //  }
-//  
+//
 //  public var toBindingOrigin: Binding<CGPoint> {
 //    return Binding<CGPoint> {
 //      return self.wrappedValue.origin
@@ -120,7 +148,7 @@ extension Binding where Value: OptionSet & Sendable, Value.Element == Value {
 //      self.wrappedValue = CGRect(origin: newValue, size: currentSize)
 //    }
 //  }
-//  
+//
 //  public var toBindingSize: Binding<CGSize> {
 //    return Binding<CGSize> {
 //      return self.wrappedValue.size

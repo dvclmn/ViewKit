@@ -25,18 +25,22 @@ public struct ShaderModifier: ViewModifier {
 
           case .distortionEffect:
             content
-              .distortionEffect(effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled)
+              .distortionEffect(
+                effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled
+              )
 
           case .layerEffect:
             content
-              .layerEffect(effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled)
+              .layerEffect(
+                effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled
+              )
 
           default:
             content
-
         }
       }
-      .drawingGroup()
+      /// Have removed this, as usually this is taken care of externally
+      //      .drawingGroup()
 
     } else {
       content
@@ -75,11 +79,10 @@ extension View {
   ) -> some View {
     self.modifier(ShaderModifier(effect: effect, isEnabled: isEnabled))
   }
-//  public func shaderEffect(_ effect: ShaderEffect, _ args: [Shader.Argument]) -> some View {
-//    self.modifier(AnimatedShaderModifier(shader: effect, arguments: args))
-//  }
+  //  public func shaderEffect(_ effect: ShaderEffect, _ args: [Shader.Argument]) -> some View {
+  //    self.modifier(AnimatedShaderModifier(shader: effect, arguments: args))
+  //  }
 }
-
 
 //public struct WavyBlur: ViewModifier {
 //  private let startDate = Date()
@@ -95,7 +98,7 @@ extension View {
 //              )
 //            )
 //            .scaleEffect(10)
-//          
+//
 //        }
 //        //                .blur(radius: 6, opaque: true)
 //        .brightness(-0.30)
@@ -113,7 +116,6 @@ extension View {
 //    modifier(WavyBlur())
 //  }
 //}
-
 
 //public struct ChromaticAbberation: ViewModifier {
 //

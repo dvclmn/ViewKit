@@ -11,8 +11,8 @@ import SwiftUI
 extension GraphicsContext {
 
   public func drawChevron(
-    config: PatternConfiguration,
-    size: CGSize
+    _ config: PatternConfiguration,
+    in size: CGSize
   ) {
     /// The vertical distance between peaks and valleys of a single zig-zag
     let zigZagHeight = config.size * 2

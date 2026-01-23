@@ -18,22 +18,24 @@ public struct WaveConfig: Codable, Sendable, Equatable {
   /// The total number of circles (affects normalisation but not the wave shapes).
   public var count: Int
 
-  /// When shouldMaintainHeight is true, no matter what count is,
-  /// these circles are “packed” into this height.
-  public var height: Double
+  /// ~~When shouldMaintainHeight is true, no matter what count is,
+  /// these circles are “packed” into this height.~~
+  ///
+  /// How much of the vertical space the total wave takes up
+  public var compressionFactor: Double
 
   /// Horizontal left/right motion parameters.
   public var horizontalWave: WaveModulator
 
   /// Vertical spacing between circles (used when shouldMaintainHeight == false).
-  public var spacing: Double
+//  public var spacing: Double
 
   /// Breathing (spacing) wave: modulates the vertical position.
   /// (When shouldMaintainHeight is true, the circles are laid out
   ///  over a fixed height, and then the breathing effect is added.)
   public var spacingWave: WaveModulator
 
-  public var shouldMaintainHeight: Bool
+//  public var shouldMaintainHeight: Bool
 
   /// New: a modulation for the circle radius (so the circles can “pulse”).
   public var radiusWave: WaveModulator
@@ -43,9 +45,9 @@ public struct WaveConfig: Codable, Sendable, Equatable {
     colourSecondary: RGBColour = .orange,
     circleRadius: Double = 25,
     count: Int = 60,
-    height: Double = 300,
-    spacing: Double = 16,
-    shouldMaintainHeight: Bool = true,
+    compressionFactor: Double = 300,
+//    spacing: Double = 16,
+//    shouldMaintainHeight: Bool = true,
     horizontalWave: WaveModulator = .init(
       isEnabled: true,
       amp: 70,
@@ -74,10 +76,10 @@ public struct WaveConfig: Codable, Sendable, Equatable {
     self.colourSecondary = colourSecondary
     self.circleRadius = circleRadius
     self.horizontalWave = horizontalWave
-    self.spacing = spacing
+//    self.spacing = spacing
     self.spacingWave = spacingWave
-    self.height = height
-    self.shouldMaintainHeight = shouldMaintainHeight
+    self.compressionFactor = compressionFactor
+//    self.shouldMaintainHeight = shouldMaintainHeight
     self.count = count
     self.radiusWave = radiusWave
   }

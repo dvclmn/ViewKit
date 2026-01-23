@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-extension EnvironmentValues {
-  @Entry public var colourModification: ColourModification? = nil
-  @Entry public var colourModificationStrength: ModificationStrengthPreset? = nil
-  @Entry public var colourPurpose: ColourPurpose? = nil
-  @Entry public var colourChroma: ColourChroma? = nil
-}
-
 /// Where `HSVAdjustment` models hue, saturation and brightness
 /// levels to add to an `HSVColour`, `ColourModification`
 /// models the *way* these values are added. Strength, saturation presets, etc.
@@ -53,25 +46,25 @@ extension ColourModification {
     chroma: ColourChroma?
   ) -> ColourModification {
     var newModification: ColourModification = .zero
-    
+
     if let modification {
       newModification = modification
     }
-    
+
     if let strength {
       newModification.strength = strength
     }
-    
+
     if let purpose {
       newModification.purpose = purpose
     }
-    
+
     if let chroma {
       newModification.chroma = chroma
     }
-    
+
     return newModification
-    
+
   }
 }
 

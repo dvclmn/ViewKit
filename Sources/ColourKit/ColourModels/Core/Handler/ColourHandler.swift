@@ -7,21 +7,7 @@
 
 import SwiftUI
 
-public enum ColourBorderBrightness {
-  case dark
-  case light
 
-  public init(from luminance: Double) {
-    self = luminance > 0.86 ? .dark : .light
-  }
-}
-
-//
-extension EnvironmentValues {
-  @Entry public var colourHandler: ColourHandler = .init()
-}
-
-//
 public struct ColourHandler: ColourHandlerProtocol, Sendable {
 
   /// This describes which colour is currently being used for drawing

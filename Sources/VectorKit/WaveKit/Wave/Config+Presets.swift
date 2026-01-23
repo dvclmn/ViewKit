@@ -15,9 +15,9 @@ extension WaveConfig {
       colourSecondary: .orange,
       circleRadius: 25,
       count: 60,
-      height: 300,
-      spacing: 16,
-      shouldMaintainHeight: true,
+      compressionFactor: 0.1,
+//      spacing: 16,
+//      shouldMaintainHeight: true,
       horizontalWave: .init(
         isEnabled: true,
         amp: 70,
@@ -48,9 +48,9 @@ extension WaveConfig {
       colourSecondary: .brown,
       circleRadius: 7,
       count: 70,
-      height: 700,
-      spacing: 16,
-      shouldMaintainHeight: true,
+      compressionFactor: 0.9,
+//      spacing: 16,
+//      shouldMaintainHeight: true,
       
       horizontalWave: .init(
         isEnabled: true,

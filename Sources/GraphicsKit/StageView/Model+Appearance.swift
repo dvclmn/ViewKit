@@ -5,12 +5,11 @@
 //  Created by Dave Coleman on 12/8/2025.
 //
 
-import Foundation
 import BasePrimitives
-
+import Foundation
 
 public struct FloorAppearance: Sendable, Codable, Equatable, Hashable {
-  
+
   public var pattern: PatternConfiguration
   public var degrees: Double
   public var perspective: Double

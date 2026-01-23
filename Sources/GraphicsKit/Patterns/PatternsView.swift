@@ -7,15 +7,13 @@
 
 //#if canImport(AppKit)
 
-import SwiftUI
 import ColourKit
-
+import SwiftUI
 
 public struct PatternPreset: Sendable {
   let style: PatternStyle
   let config: PatternConfiguration
 }
-
 
 extension PatternPreset {
   public static let opacityCheckerboard = PatternPreset(
@@ -30,7 +28,6 @@ extension PatternPreset {
   )
 
 }
-
 
 public struct PatternCanvas: View {
 
@@ -59,31 +56,30 @@ public struct PatternCanvas: View {
       context,
       size in
       context.drawPattern(style, in: size)
-//      switch style {
-//        case .checkerboard:
-//          context.drawCheckerboard(
-//            config: config,
-//            size: size,
-//            offset: config.offset
-//          )
-//
-//        case .chevron:
-//          context.drawChevron(config: config, size: size)
-//
-//        case .stitches:
-//          context.drawStitches(config: config, size: size)
-//
-//        case .waves:
-//          context.drawWaves(config: config, size: size)
-//
-//        case .stripes:
-//          context.drawStripes(config: config, size: size)
-//
-//      }
+      //      switch style {
+      //        case .checkerboard:
+      //          context.drawCheckerboard(
+      //            config: config,
+      //            size: size,
+      //            offset: config.offset
+      //          )
+      //
+      //        case .chevron:
+      //          context.drawChevron(config: config, size: size)
+      //
+      //        case .stitches:
+      //          context.drawStitches(config: config, size: size)
+      //
+      //        case .waves:
+      //          context.drawWaves(config: config, size: size)
+      //
+      //        case .stripes:
+      //          context.drawStripes(config: config, size: size)
+      //
+      //      }
     }
   }
 }
-
 
 extension PatternCanvas {
 

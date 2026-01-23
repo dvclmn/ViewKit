@@ -62,29 +62,30 @@ public enum ShaderEffect {
     )
   }
 
-  /// Shader function signatures for usage type:
+  /// Shader function signatures for usage type.
+  /// All assume `[[ stitchable ]]` is already included.
   ///
-  /// ## `layerEffect`:
+  /// ## layerEffect:
   /// ```
-  /// [[ stitchable ]] half4 name(
+  /// half4 name(
   ///   float2 position,
   ///   SwiftUI::Layer layer,
   ///   args...
   /// )
   /// ```
   ///
-  /// ## `colorEffect`:
+  /// ## colorEffect:
   /// ```
-  /// [[ stitchable ]] half4 name(
+  /// half4 name(
   ///   float2 position,
   ///   half4 color,
   ///   args...
   /// )
   /// ```
   ///
-  /// ## `distortionEffect`:
+  /// ## distortionEffect:
   /// ```
-  /// [[ stitchable ]] float2 name(
+  /// float2 name(
   ///   float2 position,
   ///   args...
   /// )
@@ -97,31 +98,4 @@ public enum ShaderEffect {
       case .glitter: .layerEffect
     }
   }
-
-  /// Expected argument *types*, not values
-  //  public var argumentTypes: [ShaderArgType] {
-  //    switch self {
-  //      case .chromaticAberration:
-  //        return []
-  //      case .glitter:
-  //        return [.float]
-  //      case .wavyBlur:
-  //        return [.float, .float2]
-  //      case .ripple:
-  //        return [.float2, .float2]
-  //    }
-  //  }
-
-  //  public var arguments: [ShaderArg] {
-  //    switch self {
-  //      case .chromaticAberration:
-  //        []
-  //      case .glitter:
-  //
-  //      case .wavyBlur:
-  //        <#code#>
-  //      case .ripple:
-  //        <#code#>
-  //    }
-  //  }
 }

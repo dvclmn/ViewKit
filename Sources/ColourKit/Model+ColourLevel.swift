@@ -16,7 +16,6 @@ public protocol ColourHandlerProtocol {
   var background: Color { get }
 }
 
-//
 public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable {
   public typealias Item = Self
   

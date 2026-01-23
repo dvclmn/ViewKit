@@ -9,7 +9,6 @@ import ColourKit
 import CoreGraphics
 import Foundation
 
-
 public struct PatternConfiguration: Codable, Equatable, Hashable, Sendable {
 
   /// This is a generic reference to the 'main' quality of the pattern,
@@ -22,16 +21,15 @@ public struct PatternConfiguration: Codable, Equatable, Hashable, Sendable {
   var gap: Double
   var offset: CGSize
 
-  var primaryColour: CodableColour
-//  var primaryColour: RGBColour
-  var secondaryColour: CodableColour
+  var primaryColour: RGBColour
+  var secondaryColour: RGBColour
 
   public init(
     size: Double = 30,
     gap: Double = 10,
     offset: CGSize = .zero,
-    primaryColour: CodableColour = .primary,
-    secondaryColour: CodableColour = .gray
+    primaryColour: RGBColour = .primary,
+    secondaryColour: RGBColour = .gray
   ) {
     self.size = size
     self.gap = gap
@@ -40,7 +38,6 @@ public struct PatternConfiguration: Codable, Equatable, Hashable, Sendable {
     self.secondaryColour = secondaryColour
   }
 }
-
 
 extension PatternConfiguration {
 

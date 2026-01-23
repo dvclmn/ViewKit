@@ -9,13 +9,15 @@ import CoreTools
 import SwiftUI
 
 public struct StageView: View {
-  
+  @Environment(\.viewportSize) private var viewportSize
   let floorConfig: FloorAppearance
-  let viewSize: CGSize
+
+  /// Optional override to the environment view size
+  let viewSize: CGSize?
 
   public init(
     floorConfig: FloorAppearance = .init(),
-    viewSize: CGSize
+    viewSize: CGSize? = nil
   ) {
     self.floorConfig = floorConfig
     self.viewSize = viewSize
@@ -24,8 +26,6 @@ public struct StageView: View {
   public var body: some View {
 
     PatternCanvas(.checkerboard, config: floorConfig.pattern)
-
-      //      .opacity(floorConfig.opacity)
 
       /// This `rotation3DEffect` is dedicated to driving the Yaw only
       .rotation3DEffect(
@@ -68,8 +68,8 @@ public struct StageView: View {
             RadialGradient(
               colors: [.black, .clear],
               center: .center,
-              startRadius: viewSize.width * 0.3,
-              endRadius: viewSize.width * 0.65
+              startRadius: sizeOfView.width * 0.3,
+              endRadius: sizeOfView.width * 0.65
             )
           }
         }
@@ -79,7 +79,7 @@ public struct StageView: View {
 }
 
 extension StageView {
-
+  private var sizeOfView: CGSize { viewSize ?? viewportSize ?? CGSize(200, 200) }
 }
 
 //#if DEBUG

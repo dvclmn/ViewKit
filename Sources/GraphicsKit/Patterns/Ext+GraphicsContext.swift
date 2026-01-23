@@ -17,31 +17,26 @@ extension GraphicsContext {
     in size: CGSize
   ) {
     switch pattern {
-      case .checkerboard:
-        return drawCheckerboard(
+      case .checkerboard: drawCheckerboard(
           config: config,
           size: size
         )
-      case .chevron:
-        return drawChevron(
-          config: config,
-          size: size
-        )
-
-      case .stitches:
-        return drawStitches(
+      case .chevron: drawChevron(
           config: config,
           size: size
         )
 
-      case .waves:
-        return drawWaves(
+      case .stitches: drawStitches(
           config: config,
           size: size
         )
 
-      case .stripes:
-        return drawStripes(
+      case .waves: drawWaves(
+          config: config,
+          size: size
+        )
+
+      case .stripes: drawStripes(
           config: config,
           size: size
         )

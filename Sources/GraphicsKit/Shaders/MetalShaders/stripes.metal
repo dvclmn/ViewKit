@@ -12,7 +12,6 @@ using namespace metal;
 // Abstract:
 // A shader that applies stripes of multiple colors
 // to a shape when using it as a SwiftUI `ShapeStyle`.
-
 [[ stitchable ]]
 half4 stripes(
               float2 position,

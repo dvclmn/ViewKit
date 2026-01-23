@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-
 extension GraphicsContext {
   public func drawStitches(
-    config: PatternConfiguration,
+    _ config: PatternConfiguration,
     size: CGSize
   ) {
+    
     let stitchesHeight = config.size * 2
     let repetitions = Int(ceil(size.height / stitchesHeight)) + 1
 

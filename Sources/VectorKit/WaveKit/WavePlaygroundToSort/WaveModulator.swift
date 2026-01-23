@@ -24,18 +24,18 @@ public struct WaveModulator: Sendable, Codable, Equatable {
 }
 
 extension WaveModulator {
-  
-  public func modulation(
+  public func modulationIfEnabled(
     effectiveTime: TimeInterval,
     normalisedIndex: Double
   ) -> CGFloat {
-    wave.modulation(
+    guard isEnabled else { return 1 }
+    return wave.modulation(
       effectiveTime: effectiveTime,
       normalisedIndex: normalisedIndex,
       cycles: cycles
     )
   }
-  
+
   public init(
     isEnabled: Bool = true,
     amp: Double,
