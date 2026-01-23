@@ -28,13 +28,13 @@ public struct StageView: View {
 //    floorConfig: FloorAppearance = .init(),
     viewSize: CGSize? = nil
   ) {
-    self.floorConfig = FloorAppearance(pattern: pattern.config)
+    self.floorConfig = FloorAppearance(pattern: pattern)
     self.viewSize = viewSize
   }
 
   public var body: some View {
 
-    PatternCanvas(.stripes, config: floorConfig.pattern)
+    PatternCanvas(floorConfig.pattern.style, config: floorConfig.pattern.config)
 
       /// This `rotation3DEffect` is dedicated to driving the Yaw only
       .rotation3DEffect(

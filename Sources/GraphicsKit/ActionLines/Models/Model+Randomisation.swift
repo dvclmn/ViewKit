@@ -24,7 +24,7 @@ public struct ActionLineVariations: RandomGeneratable {
     return
       baseAngles
       .prefix(targetCount)
-      .map { $0 + (rotation * 2 * .pi) }
+      .map { $0 + rotation.omega }
   }
 
   public static func generate(

@@ -11,7 +11,7 @@ struct ActionLineShape {
   var radius: Double
   var position: CGPoint? = nil
   var variation: Double = 0.0
-  // Future properties:
+  /// Future properties:
   // var capStyle: CapStyle
   // var thickness: Double
 }

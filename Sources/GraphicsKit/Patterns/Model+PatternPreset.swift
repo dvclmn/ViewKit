@@ -10,7 +10,7 @@ import Foundation
 import CasePaths
 
 @dynamicMemberLookup
-public struct PatternPreset: Sendable, Codable {
+public struct PatternPreset: Sendable, Codable, Equatable, Hashable {
   let style: PatternStyle
   let config: PatternConfiguration
   

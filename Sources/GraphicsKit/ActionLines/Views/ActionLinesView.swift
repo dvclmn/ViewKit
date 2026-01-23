@@ -8,12 +8,10 @@
 import BasePrimitives
 import SwiftUI
 
-
 public struct ActionLinesView: View {
 
-  #if canImport(AppKit)
   @Environment(\.modifierKeys) private var modifiers
-  #endif
+
   @State var handler: ActionLineHandler = .init()
 
   @State var isDragging = false
@@ -117,13 +115,12 @@ public struct ActionLinesView: View {
 
       /// Controls
       ActionControlsView()
-        //        .padding()
-//        .background(.black.opacityLow)
+      //        .padding()
+      //        .background(.black.opacityLow)
 
     }
   }
 }
-
 
 extension ActionLinesView {
 
@@ -169,14 +166,16 @@ extension ActionLinesView {
         )
 
         // Use cached variations
-        let innerVariation = innerDistance * handler.lines.innerShape.variation * variations.boundaryInner[index]
+        let innerVariation =
+          innerDistance * handler.lines.innerShape.variation * variations.boundaryInner[index]
         let actualInnerPoint = CGPoint(
           x: baseInnerPoint.x + cos(angle) * innerVariation,
           y: baseInnerPoint.y + sin(angle) * innerVariation
         )
 
         let outerVariation =
-          (outerDistance - innerDistance) * handler.lines.outerShape.variation * variations.boundaryOuter[index]
+          (outerDistance - innerDistance) * handler.lines.outerShape.variation
+          * variations.boundaryOuter[index]
         let actualOuterPoint = CGPoint(
           x: outerPoint.x + cos(angle) * outerVariation,
           y: outerPoint.y + sin(angle) * outerVariation

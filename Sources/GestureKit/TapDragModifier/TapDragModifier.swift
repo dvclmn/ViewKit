@@ -62,6 +62,7 @@ public struct UnifiedDragModifier: ViewModifier {
 extension UnifiedDragModifier {
   private var behaviour: DragBehavior { dragState.behaviour }
 
+  // TODO: Add modifiers, to get different behaviour based on e.g. holding Option, Command, etc
   private var dragGesture: some Gesture {
     DragGesture(minimumDistance: minimumDistance)
       .onChanged { value in
