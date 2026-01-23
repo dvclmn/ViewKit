@@ -9,18 +9,18 @@ import CoreTools
 import SwiftUI
 
 @Observable
-final class ActionLineHandler {
+public final class ActionLineHandler {
 
-  var randomGenerator: RandomValueGenerator<ActionLineVariations>
+  public var randomGenerator: RandomValueGenerator<ActionLineVariations>
   private var cachedVariations: ActionLineVariations?
-  var lines: ActionLineConfigurations
+  public var lines: ActionLineConfigurations
 
-  init(seed: UInt64 = 0) {
+  public init(seed: UInt64 = 0) {
     self.randomGenerator = RandomValueGenerator(seed: seed)
     self.lines = ActionLineConfigurations()
   }
 
-  func getVariations() -> ActionLineVariations {
+  public func getVariations() -> ActionLineVariations {
     /// Only regenerate if density changes or we don't have cached values
     if cachedVariations?.density != Int(lines.density) || cachedVariations == nil {
       cachedVariations = randomGenerator.generate(
@@ -32,12 +32,12 @@ final class ActionLineHandler {
     return cachedVariations!
   }
 
-  func reset(withSeed seed: UInt64) {
+  public func reset(withSeed seed: UInt64) {
     randomGenerator = RandomValueGenerator(seed: seed)
     cachedVariations = nil
   }
 
-  static func distanceToEdge(
+  public static func distanceToEdge(
     from center: CGPoint,
     angle: Double,
     in size: CGSize,
@@ -103,7 +103,7 @@ final class ActionLineHandler {
     }
   }  // END distance to edge
 
-  static func drawTrianglePath(
+  public static func drawTrianglePath(
     from start: CGPoint,
     to end: CGPoint,
     in context: GraphicsContext,

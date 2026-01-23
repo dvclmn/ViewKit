@@ -10,8 +10,15 @@ import SwiftUI
 public struct ActionLineStyle {
   var color: Color
   var width: Double
-  var blendMode: BlendMode = .normal
-  var opacity: Double = 1.0
+  var blendMode: BlendMode
+  var opacity: Double
+  
+  public init(color: Color, width: Double, blendMode: BlendMode = .normal, opacity: Double = 1) {
+    self.color = color
+    self.width = width
+    self.blendMode = blendMode
+    self.opacity = opacity
+  }
 }
 
 public enum BoundaryShape: Hashable, CaseIterable {

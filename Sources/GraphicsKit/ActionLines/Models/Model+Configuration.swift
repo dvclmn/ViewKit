@@ -7,31 +7,54 @@
 
 import SwiftUI
 
-struct ActionLineShape {
+public struct ActionLineShape {
   var radius: Double
-  var position: CGPoint? = nil
-  var variation: Double = 0.0
+  var position: CGPoint?
+  var variation: Double
   /// Future properties:
   // var capStyle: CapStyle
   // var thickness: Double
+  
+  public init(radius: Double, position: CGPoint? = nil, variation: Double = 0) {
+    self.radius = radius
+    self.position = position
+    self.variation = variation
+  }
 }
 
-struct ActionLineConfigurations {
+public struct ActionLineConfigurations {
   
-  var density: Double = 50
-  var radialCoverage: Double = 1.0
+  public var density: Double
+  public var radialCoverage: Double
   
-  var lineStyle: ActionLineStyle = .init(color: .black, width: 2)
+  public var lineStyle: ActionLineStyle
   
-  var outerShape: ActionLineShape = .init(radius: 1.0)
-  var innerShape: ActionLineShape = .init(radius: 0.2)
+  public var outerShape: ActionLineShape
+  public var innerShape: ActionLineShape
   
-  var boundaryShape: BoundaryShape = .square
+  public var boundaryShape: BoundaryShape
   
-  
-  // MARK: - Rotation
   /// Internal storage uses radians for calculations
   private var _rotation: Double = 0.0
+  
+  public init(
+    density: Double = 50,
+    radialCoverage: Double = 1.0,
+    lineStyle: ActionLineStyle = .init(color: .black, width: 2),
+    outerShape: ActionLineShape = .init(radius: 1.0),
+    innerShape: ActionLineShape = .init(radius: 0.2),
+    boundaryShape: BoundaryShape = .square,
+  ) {
+    self.density = density
+    self.radialCoverage = radialCoverage
+    self.lineStyle = lineStyle
+    self.outerShape = outerShape
+    self.innerShape = innerShape
+    self.boundaryShape = boundaryShape
+  }
+}
+
+extension ActionLineConfigurations {
   
   /// Normalized rotation (0.0 to 1.0, represents one full turn)
   var rotation: Double {
