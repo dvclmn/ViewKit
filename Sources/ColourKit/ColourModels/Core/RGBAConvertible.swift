@@ -17,9 +17,3 @@ extension Color: RGBAConvertible {
     self.init(.sRGB, red: r, green: g, blue: b, opacity: a)
   }
 }
-
-extension RGBColour: RGBAConvertible {
-//  public init(r: Double, g: Double, b: Double, a: Double, name: String? = nil) {
-//    self.init(r: r, g: g, b: b, a: a, name: name)
-//  }
-}
