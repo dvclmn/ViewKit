@@ -5,42 +5,47 @@
 //  Created by Dave Coleman on 25/11/2024.
 //
 
-import SwiftUI
 import ColourKit
+import SwiftUI
 
-public struct ActionLineConfiguration {
+public enum ActionLine {}
 
-  public var density: Double
-  public var radialCoverage: Double
+extension ActionLine {
 
-  public var lineStyle: ActionLineStyle
+  public struct Configuration {
 
-  public var outerShape: ActionLineShape
-  public var innerShape: ActionLineShape
+    public var density: Double
 
-  public var boundaryShape: BoundaryShape
+    /// Like a clock / radial wipe transition shape
+    public var radialCoverage: Double
 
-  /// Internal storage uses radians for calculations
-  private var _rotation: Double = 0.0
+    public var lineStyle: Style
 
-  public init(
-    density: Double = 50,
-    radialCoverage: Double = 1.0,
-    lineStyle: ActionLineStyle = .init(colour: .init(fromRGB: .black), width: 2),
-    outerShape: ActionLineShape = .init(radius: 1.0),
-    innerShape: ActionLineShape = .init(radius: 0.2),
-    boundaryShape: BoundaryShape = .square,
-  ) {
-    self.density = density
-    self.radialCoverage = radialCoverage
-    self.lineStyle = lineStyle
-    self.outerShape = outerShape
-    self.innerShape = innerShape
-    self.boundaryShape = boundaryShape
+    public var outerShape: ActionLineShape
+    public var innerShape: ActionLineShape
+
+    //    public var boundaryShape: BoundaryShape
+
+    /// Internal storage uses radians for calculations
+    private var _rotation: Double = 0.0
+
+    public init(
+      density: Double = 50,
+      radialCoverage: Double = 1.0,
+      lineStyle: Style = .init(colour: .init(fromRGB: .black), width: 2),
+      outerShape: ActionLineShape = .init(radius: 1.0),
+      innerShape: ActionLineShape = .init(radius: 0.2),
+    ) {
+      self.density = density
+      self.radialCoverage = radialCoverage
+      self.lineStyle = lineStyle
+      self.outerShape = outerShape
+      self.innerShape = innerShape
+    }
   }
 }
 
-extension ActionLineConfiguration {
+extension ActionLine.Configuration {
 
   /// Normalized rotation (0.0 to 1.0, represents one full turn)
   public var rotation: Double {
@@ -56,7 +61,7 @@ extension ActionLineConfiguration {
   }
 }
 
-extension ActionLineConfiguration {
+extension ActionLine.Configuration {
 
   /// Linear interpolation helper
   private func lerp(_ start: Double, _ end: Double, _ t: Double) -> Double {
