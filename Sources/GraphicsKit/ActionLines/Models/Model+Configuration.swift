@@ -7,36 +7,21 @@
 
 import SwiftUI
 
-public struct ActionLineShape {
-  public var radius: Double
-  public var position: CGPoint?
-  public var variation: Double
-  /// Future properties:
-  // var capStyle: CapStyle
-  // var thickness: Double
-  
-  public init(radius: Double, position: CGPoint? = nil, variation: Double = 0) {
-    self.radius = radius
-    self.position = position
-    self.variation = variation
-  }
-}
-
 public struct ActionLineConfigurations {
-  
+
   public var density: Double
   public var radialCoverage: Double
-  
+
   public var lineStyle: ActionLineStyle
-  
+
   public var outerShape: ActionLineShape
   public var innerShape: ActionLineShape
-  
+
   public var boundaryShape: BoundaryShape
-  
+
   /// Internal storage uses radians for calculations
   private var _rotation: Double = 0.0
-  
+
   public init(
     density: Double = 50,
     radialCoverage: Double = 1.0,
@@ -55,9 +40,9 @@ public struct ActionLineConfigurations {
 }
 
 extension ActionLineConfigurations {
-  
+
   /// Normalized rotation (0.0 to 1.0, represents one full turn)
-  var rotation: Double {
+  public var rotation: Double {
     get { _rotation / (2 * .pi) }
     set {
       _rotation = (newValue * 2 * .pi).truncatingRemainder(dividingBy: 2 * .pi)
@@ -76,6 +61,5 @@ extension ActionLineConfigurations {
   private func lerp(_ start: Double, _ end: Double, _ t: Double) -> Double {
     start + (end - start) * t
   }
-  
-}
 
+}

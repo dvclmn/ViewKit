@@ -13,13 +13,13 @@ public struct ActionLineVariations: RandomGeneratable {
   public typealias Value = Double
 
   /// Base random values (only regenerated when density or seed changes)
-  let baseAngles: [Double]  // Full set of angles for 2π
-  let boundaryInner: [Double]  // Variation values
-  let boundaryOuter: [Double]  // Variation values
-  let density: Int
+  public let baseAngles: [Double]  // Full set of angles for 2π
+  public let boundaryInner: [Double]  // Variation values
+  public let boundaryOuter: [Double]  // Variation values
+  public let density: Int
 
   /// Computed properties based on parameters
-  func processedAngles(coverage: Double, rotation: Double) -> [Double] {
+  public func processedAngles(coverage: Double, rotation: Double) -> [Double] {
     let targetCount = Int(Double(density) * coverage)
     return
       baseAngles

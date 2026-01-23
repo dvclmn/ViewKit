@@ -58,7 +58,7 @@ public protocol ClampedGestureState: CanvasGestureState {
   ) -> CGSize
 }
 
-extension ClampedGestureState {
+extension ClampedGestureState where Value == CGSize {
   public func clamped(
     to geometry: CanvasGeometry,
     zoom: CGFloat
