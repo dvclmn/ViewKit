@@ -8,6 +8,7 @@
 import BasePrimitives
 import Foundation
 
+// TODO: Need to be clearer about what these properties do/mean
 public struct FloorAppearance: Sendable, Codable, Equatable, Hashable {
 
   public var pattern: PatternConfiguration
@@ -19,7 +20,7 @@ public struct FloorAppearance: Sendable, Codable, Equatable, Hashable {
   public var yaw: Double
 
   public init(
-    pattern: PatternConfiguration = .checkboardExample,
+    pattern: PatternConfiguration = .checkboard,
     degrees: Double = 30,
     perspective: Double = 3,
     width: Double = 2,
@@ -35,4 +36,16 @@ public struct FloorAppearance: Sendable, Codable, Equatable, Hashable {
     self.zoom = zoom
     self.yaw = yaw
   }
+}
+
+extension FloorAppearance {
+  public static let checkerboard: Self = .init(
+    pattern: .checkboard,
+    degrees: 0,
+    perspective: 1,
+    width: 100,
+    depth: 0.2,
+    zoom: 1.0,
+    yaw: 1.0
+  )
 }

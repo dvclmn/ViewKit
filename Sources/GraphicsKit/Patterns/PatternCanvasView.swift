@@ -10,32 +10,10 @@
 import ColourKit
 import SwiftUI
 
-public struct PatternPreset: Sendable {
-  let style: PatternStyle
-  let config: PatternConfiguration
-}
-
-extension PatternPreset {
-  public static let opacityCheckerboard = PatternPreset(
-    style: .checkerboard,
-    config: PatternConfiguration(
-      size: 5,
-      gap: 2,
-      offset: CGSize(width: 0, height: -2),
-      primaryColour: CodableColour.gray,
-      secondaryColour: CodableColour.white
-    )
-  )
-
-}
-
 public struct PatternCanvas: View {
 
   let style: PatternStyle
   let config: PatternConfiguration
-  /// I'm not sure it makes sense to pass in size? Can this be inferred from
-  /// just, how large the parent/calling view is?
-  //  let viewSize: CGSize?
 
   public init(
     _ style: PatternStyle,
@@ -56,27 +34,6 @@ public struct PatternCanvas: View {
       context,
       size in
       context.drawPattern(style, in: size)
-      //      switch style {
-      //        case .checkerboard:
-      //          context.drawCheckerboard(
-      //            config: config,
-      //            size: size,
-      //            offset: config.offset
-      //          )
-      //
-      //        case .chevron:
-      //          context.drawChevron(config: config, size: size)
-      //
-      //        case .stitches:
-      //          context.drawStitches(config: config, size: size)
-      //
-      //        case .waves:
-      //          context.drawWaves(config: config, size: size)
-      //
-      //        case .stripes:
-      //          context.drawStripes(config: config, size: size)
-      //
-      //      }
     }
   }
 }
@@ -84,8 +41,8 @@ public struct PatternCanvas: View {
 extension PatternCanvas {
 
   public func patternColours(
-    _ foreground: CodableColour = .green,
-    _ background: CodableColour = .white
+    _ foreground: RGBColour,
+    _ background: RGBColour,
   ) -> Self {
     let currentStyle = self.style
     var newConfig = self.config
@@ -123,4 +80,3 @@ extension PatternCanvas {
     return PatternCanvas(currentStyle, config: newConfig)
   }
 }
-//#endif

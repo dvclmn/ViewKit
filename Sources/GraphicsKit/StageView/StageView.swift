@@ -75,16 +75,17 @@ public struct StageView: View {
         }
       }  // END mask
       .drawingGroup()
+//      .debugTextOverlay("No viewport size", isEnabled: noViewSizeProvided)
   }
 }
 
 extension StageView {
-  private var sizeOfView: CGSize { viewSize ?? viewportSize ?? CGSize(200, 200) }
+  private var noViewSizeProvided: Bool { viewSize == nil && viewportSize == nil }
+  private var sizeOfView: CGSize? { viewSize ?? viewportSize }
 }
 
-//#if DEBUG
-//@available(macOS 15, iOS 18, *)
-//#Preview(traits: .size(.normal)) {
-//  StageView(floorConfig: .init(), viewSize: .trackpad)
-//}
-//#endif
+#if DEBUG
+#Preview {
+  StageView()
+}
+#endif

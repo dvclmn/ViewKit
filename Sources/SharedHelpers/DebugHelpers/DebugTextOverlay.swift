@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 11/8/2025.
 //
 
-import CoreTools
 import SwiftUI
 
 public struct DebugTextOverlayModifier: ViewModifier {

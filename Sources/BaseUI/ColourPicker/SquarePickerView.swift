@@ -7,6 +7,7 @@
 
 import BasePrimitives
 import SwiftUI
+import ColourKit
 
 public struct ColourSquarePicker: View {
 
@@ -28,8 +29,8 @@ public struct ColourSquarePicker: View {
   }
 
   public var body: some View {
-    GeometryReader { geo in
-      let size = geo.size
+    GeometryReader { proxy in
+      let size = proxy.size
 
       ZStack {
         /// Square gradient area

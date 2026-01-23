@@ -25,8 +25,8 @@ extension Image {
               gap: scale,
               //              primaryColour: Color(white: 0.8),
               //              secondaryColour: Color(white: 0.4)
-              primaryColour: CodableColour.gray,
-              secondaryColour: CodableColour.white
+              primaryColour: .gray,
+              secondaryColour: .white
             ),
             in: size
           )
