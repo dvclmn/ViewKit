@@ -15,7 +15,8 @@ public struct ZoomModifier: ViewModifier {
   @GestureState private var magnification: CGFloat = 1
   @State private var initialZoom: CGFloat?
 
-  @Binding var zoom: ZoomState
+  @Binding var zoom: Double
+//  @Binding var zoom: ZoomState
   let isEnabled: Bool
 
   public func body(content: Content) -> some View {
@@ -31,22 +32,25 @@ extension ZoomModifier {
       }
       .onChanged { value in
         if initialZoom == nil {
-          initialZoom = zoom.zoom(clampedTo: zoomRange ?? 0...10)
+          initialZoom = zoom
+//          initialZoom = zoom.zoom(clampedTo: zoomRange ?? 0...10)
         }
         guard let initialZoom else { return }
 
         let newZoom = initialZoom * value.magnification
-        zoom = ZoomState(newZoom, phase: .changed)
+        zoom = newZoom
+//        zoom = ZoomState(newZoom, phase: .changed)
       }
       .onEnded { value in
         initialZoom = nil
-        zoom.updatePhase(.ended)
+//        zoom.updatePhase(.ended)
       }
   }
 }
 extension View {
   public func zoomGesture(
-    zoom: Binding<ZoomState>,
+    zoom: Binding<Double>,
+//    zoom: Binding<ZoomState>,
     isEnabled: Bool = true,
   ) -> some View {
     self.modifier(
@@ -56,4 +60,15 @@ extension View {
       )
     )
   }
+//  public func zoomGesture(
+//    zoom: Binding<Double>,
+//    isEnabled: Bool = true,
+//  ) -> some View {
+//    self.modifier(
+//      ZoomModifier(
+//        zoom: Bin,
+//        isEnabled: isEnabled,
+//      )
+//    )
+//  }
 }

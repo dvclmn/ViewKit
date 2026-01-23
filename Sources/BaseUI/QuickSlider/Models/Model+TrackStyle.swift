@@ -75,15 +75,14 @@ extension TrackFillStyle {
       )
     )
   }
-  public static func brightness(_ hue: Double) -> TrackFillStyle {
-//  public static func brightness(_ hue: Color) -> TrackFillStyle {
+  public static func brightness(_ colour: Color) -> TrackFillStyle {
     TrackFillStyle(
       fill: nil,
       foreground: nil,
       //      background: nil
       background: AnyShapeStyle(
         LinearGradient(
-          colors: [.black, Color(hue: hue, saturation: 1.0, brightness: 1.0)],
+          colors: [.black, colour],
           startPoint: .leading,
           endPoint: .trailing
         )

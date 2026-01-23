@@ -85,20 +85,19 @@ extension QuickPicker {
     Picker(Item.pickerLabel.text, selection: $item) {
 
       ForEach(allItems) { pickerItem in
-
         
-        RowView(pickerItem) { hovering in
-          if rowContent != nil {
-            rowContent?(pickerItem, hovering)
-          } else {
+//        RowView(pickerItem) { hovering in
+//          if rowContent != nil {
+//            rowContent?(pickerItem, hovering)
+//          } else {
             
 //            VStack {
 //              Text("Item Type: \(String(describing: pickerItem.self))")
 //              Text("All Items Type: \(String(describing: allItems.self))")
 //            }
-            MaybeLabel(pickerItem.label)
-          }
-        }
+            MaybeLabel(pickerItem.label).tag(pickerItem)
+//          }
+//        }
       }
     }
   }

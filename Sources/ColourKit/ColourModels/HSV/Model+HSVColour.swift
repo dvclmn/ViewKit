@@ -76,6 +76,14 @@ extension HSVColour {
       alpha: 1.0,
     )
   }
+  public var hueSatOnly: Self {
+    Self(
+      hue: hue,
+      saturation: saturation,
+      brightness: 1.0,
+      alpha: 1.0,
+    )
+  }
 
   public var toRGB: RGBColour { RGBColour(fromHSV: self) }
 

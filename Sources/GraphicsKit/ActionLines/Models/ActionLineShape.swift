@@ -6,14 +6,15 @@
 //
 
 import Foundation
+import CoreGraphics
 
 extension ActionLine {
 
   public struct Shape: Equatable {
-    
+
     public var radius: Double
-    public var position: CGPoint?
-    
+    public var position: CGPoint
+
     /// A randomised value controlling visual 'rag' quality,
     /// for boundary action line edges?
     public var variation: Double
@@ -21,10 +22,10 @@ extension ActionLine {
     /// Future properties:
     // var capStyle: CapStyle
     // var thickness: Double
-    
+
     public init(
       radius: Double,
-      position: CGPoint? = nil,
+      position: CGPoint = .zero,
       variation: Double = 0,
       shape: BoundaryShape = .circle
     ) {
