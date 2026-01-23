@@ -52,7 +52,6 @@ extension Image {
 }
 
 @MainActor
-
 public struct OpacityShapeStyle: @preconcurrency ShapeStyle {
 
   let scale: CGFloat
@@ -76,54 +75,54 @@ extension AnyShapeStyle {
   }
 }
 
-public struct OpacitySlider: View {
-  @Environment(\.isEnabled) private var isEnabled
-
-  @Binding var value: Double
-
-  public init(value: Binding<Double>) {
-    self._value = value
-  }
-
-  public var body: some View {
-
-    Group {
-      //      EmptyView()
-//      QuickSlider(
-//        "Opacity",
-//        value: $value,
-//        range: 0...1
-//          //        formatValue: <#T##FormatSliderValue?#>,
-//          //        didChangeSlider: <#T##SliderOutput#>
-//      ) { thing in
-//        PatternCanvas(preset: .opacityCheckerboard)
-//        LinearGradient(colors: [.clear, .white], startPoint: .leading, endPoint: .trailing)
-//      }
-
-//      SliderCustom(value: $value, store: <#T##Binding<SliderHandler>#>, style: <#T##TrackFillStyle#>, label: <#T##() -> View#>)
-//      SliderCustom($value, range: 0...1) {
-//        PatternCanvas(preset: .opacityCheckerboard)
-//        LinearGradient(colors: [.clear, .white], startPoint: .leading, endPoint: .trailing)
-//      }
-    }
-    .compositingGroup()
-    .opacity(isEnabled ? 1.0 : 0.4)
-
-//    .overlay {
-//      ForEach(0..<9) { opacityInt in
-//        Button("Set opacity to \(opacityInt * 10)%") {
-////          fatalError("Working on this")
-//          //          value = opacityInt.toOpacity
-//          //          guard let activeLayerID = store.artworkHandler.activeLayerID else { return }
-//          //          artwork.wrappedValue.layers[id: activeLayerID]?.setOpacity(using: opacityLevel)
-//        }
-//        .keyboardShortcut(.init(Character(opacityInt.toString)), modifiers: [])
-//      }
-//      .hidden()
+//public struct OpacitySlider: View {
+//  @Environment(\.isEnabled) private var isEnabled
+//
+//  @Binding var value: Double
+//
+//  public init(value: Binding<Double>) {
+//    self._value = value
+//  }
+//
+//  public var body: some View {
+//
+//    Group {
+//      //      EmptyView()
+////      QuickSlider(
+////        "Opacity",
+////        value: $value,
+////        range: 0...1
+////          //        formatValue: <#T##FormatSliderValue?#>,
+////          //        didChangeSlider: <#T##SliderOutput#>
+////      ) { thing in
+////        PatternCanvas(preset: .opacityCheckerboard)
+////        LinearGradient(colors: [.clear, .white], startPoint: .leading, endPoint: .trailing)
+////      }
+//
+////      SliderCustom(value: $value, store: <#T##Binding<SliderHandler>#>, style: <#T##TrackFillStyle#>, label: <#T##() -> View#>)
+////      SliderCustom($value, range: 0...1) {
+////        PatternCanvas(preset: .opacityCheckerboard)
+////        LinearGradient(colors: [.clear, .white], startPoint: .leading, endPoint: .trailing)
+////      }
 //    }
-
-  }
-}
+//    .compositingGroup()
+//    .opacity(isEnabled ? 1.0 : 0.4)
+//
+////    .overlay {
+////      ForEach(0..<9) { opacityInt in
+////        Button("Set opacity to \(opacityInt * 10)%") {
+//////          fatalError("Working on this")
+////          //          value = opacityInt.toOpacity
+////          //          guard let activeLayerID = store.artworkHandler.activeLayerID else { return }
+////          //          artwork.wrappedValue.layers[id: activeLayerID]?.setOpacity(using: opacityLevel)
+////        }
+////        .keyboardShortcut(.init(Character(opacityInt.toString)), modifiers: [])
+////      }
+////      .hidden()
+////    }
+//
+//  }
+//}
 //#if DEBUG
 //@available(macOS 15, iOS 18, *)
 //#Preview(traits: .size(.normal)) {

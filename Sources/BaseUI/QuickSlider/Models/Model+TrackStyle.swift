@@ -51,5 +51,12 @@ extension TrackFillStyle {
       background: .checkerboard()
     )
   }
+  public static var hueRainbow: TrackFillStyle {
+    TrackFillStyle(
+      fill: nil,
+      foreground: nil,
+      background: AnyShapeStyle(LinearGradient.rainbow())
+    )
+  }
 
 }

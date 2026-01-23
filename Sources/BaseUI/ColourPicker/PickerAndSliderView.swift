@@ -35,21 +35,14 @@ public struct SquareColourPicker: View {
     ZStack {
       /// Square gradient area
       PickerSquare(hue: colour.hue)
-        .gesture(drag(in: CGSize(fromLength: size)))
+        .clipShape(.rect(cornerRadius: Styles.sizeSmall))
+        .padding(insetAmount / 2)
+//        .border(Color.green.opacity(0.3))
+        .gesture(drag(in: CGSize(fromLength: sizePlusInset)))
 
     }
-    .frame(width: size, height: size)
-    //    .viewSize(
-    //      capture: .size,
-    //      mode: .debounce(0.4),
-    //      isEnabled: true,
-    //      valueOutput: { viewSize = $0 }
-    //    )
-
-    //    }
-    //    .aspectRatio(1, contentMode: .fit)
-    //      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-    .clipShape(.rect(cornerRadius: Styles.sizeSmall))
+    .frame(width: sizePlusInset, height: sizePlusInset)
+//    .border(Color.brown.opacity(0.3))
     .overlay {
 
       /// Thumb
@@ -57,20 +50,34 @@ public struct SquareColourPicker: View {
         .strokeBorder(.white.opacity(0.2), lineWidth: 1)
         .background(Circle().fill(.gray))
         .frame(width: thumbSize, height: thumbSize)
-        .position(
-          
-        )  // y is inverted
+//        .border(Color.red.opacity(0.3))
+      
+        .offset(CGSize(fromLength: insetAmount / 2))
+//        .border(Color.orange.opacity(0.3))
+      
+        .position(thumbPosition)
+//        .border(Color.yellow.opacity(0.3))
+      
         .allowsHitTesting(false)
     }
 
   }
 }
 extension SquareColourPicker {
-  
+  private var sizePlusInset: CGFloat { size + insetAmount }
+  private var sizeMinusInset: CGFloat { size - insetAmount }
+  private var insetAmount: CGFloat {
+    thumbSize / 2
+    //    size * 0.05
+  }
+
+  /// y is inverted
   private var thumbPosition: CGPoint {
-    CGPoint(
-      x: colour.saturation * size,
-      y: (1 - colour.brightness) * size
+    return CGPoint(
+      x: colour.saturation * (size),
+//      x: colour.saturation * (sizeMinusInset),
+      y: (1 - colour.brightness) * (size)
+//      y: (1 - colour.brightness) * (sizeMinusInset)
     )
   }
 
@@ -79,6 +86,7 @@ extension SquareColourPicker {
       .updating($isDragging) { _, state, _ in state = true }
       .onChanged { value in
         let location = value.location
+//        let location = value.location + (insetAmount / 2)
 
         let clampedX = min(max(location.x, 0), size.width)
         let clampedY = min(max(location.y, 0), size.height)

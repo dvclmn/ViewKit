@@ -26,6 +26,7 @@ struct SliderCustom: View {
 
   @State private var isHovering: Bool = false
 
+  let thumbDiameter: CGFloat = 16
   let style: TrackFillStyle
 
 //  @ViewBuilder let label: Label
@@ -42,11 +43,14 @@ struct SliderCustom: View {
 
           // MARK: - Thumb
           if sliderComponents.contains(.thumb) {
+            
             /// Slider thumb
             SliderThumb(
+              diameter: thumbDiameter,
               //              store: $store.thumbHandler,
               //              value: value,
-              position: store.thumbHandler.thumbPosition(
+              position: store.thumbPosition(
+                diameter: thumbDiameter,
                 forSliderValue: store.value,
                 range: store.range,
                 trackSize: store.trackSize

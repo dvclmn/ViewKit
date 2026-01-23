@@ -17,9 +17,8 @@ final class SliderHandler {
 
   var phase: SliderPhase = .idle
   var didChangeSlider: SliderOutput?
-  //  var formatValue: FormatValue?
 
-  var thumbHandler: ThumbHandler = .init()
+//  var thumbHandler: ThumbHandler = .init()
 
   /// Including vertical hit area buffer
   var trackSize: CGSize = .zero
@@ -42,28 +41,6 @@ final class SliderHandler {
 }
 
 extension SliderHandler {
-
-  //  func updateRange() {
-  //    self.range = range
-  //  }
-  //  func setUp(
-  //    range: ClosedRange<Double>,
-  //    label: QuickLabel
-  //  ) {
-  //    self.range = range
-  //    self.label = label
-  //
-  //    let thumbHandler = ThumbHandler(sliderRange: range)
-  //    self.thumbHandler = thumbHandler
-  //  }
-
-  //  func triggerDidChangeSlider(_ phase: SliderPhase) {
-  //    didChangeSlider?(phase)
-  //  }
-  //  func triggerFormatValue() -> String? {
-  ////  func triggerFormatValue(_ value: Double) -> String? {
-  //    formatValue?(value)
-  //  }
 
   var isDragging: Bool { phase == .dragging }
 
@@ -89,11 +66,8 @@ extension SliderHandler {
     /// Location clamped so it cannot go outside
     /// the bounds of the track
     let clamped = location.clamped(0, trackSize.width)
-
     let percentage = clamped / trackSize.width
-
     let newValue = percentage.denormalised(in: range.toCGFloatRange)
-    //    let newValue = range.lowerBound + (percentage * (range.upperBound - range.lowerBound))
 
     return newValue
   }
@@ -107,35 +81,30 @@ extension SliderHandler {
     let normalised: CGFloat = value.normalised(in: range)
     return normalised * trackSize.width
   }
-
-  //  var thumbDiameter: CGFloat {
-  //    //  func thumbDiameter(with controlSize: ControlSize) -> CGFloat {
-  //    //    switch controlSize {
-  //    //      case .small: return 12
-  //    return 16
-  //    //      default: return 16
-  //    //    }
-  //  }
-
-  //  func thumbPosition(
-  //    for value: CGFloat
-  //  ) -> CGPoint? {
-  //
-  //    guard isGeometryReady else { return nil }
-  //
-  //    /// Normalised here is essentially: “How far along the slider should the
-  //    /// thumb be, in proportion to its full track length?”
-  //    let normalised: CGFloat = value.normalised(from: range)
-  //
-  //    /// Remove some length from the beginning/end of the draggable width,
-  //    /// so the Thumb doesn't hand awkwardly out the edges of the track.
-  //    let horizontalPadding: CGFloat = thumbDiameter * 0.4
-  //    let adjustedWidth = trackSize.width - (horizontalPadding * 2)
-  //
-  //    let x = horizontalPadding + (normalised * adjustedWidth)
-  //    let y = trackSize.height / 2
-  //
-  //    return CGPoint(x: x, y: y)
-  //  }
+  
+  public func thumbPosition(
+    diameter: CGFloat,
+    forSliderValue value: Double,
+    range: ClosedRange<Double>,
+    trackSize: CGSize
+  ) -> CGPoint? {
+    
+    guard trackSize.isGreaterThanZero else { return nil }
+    //    guard isGeometryReady else { return nil }
+    
+    /// Normalised here is essentially: “How far along the slider should the
+    /// thumb be, in proportion to its full track length?”
+    let normalised = value.normalised(in: range)
+    
+    /// Remove some length from the beginning/end of the draggable width,
+    /// so the Thumb doesn't hand awkwardly out the edges of the track.
+    let horizontalPadding = diameter * 0.4
+    let adjustedWidth = trackSize.width - (horizontalPadding * 2)
+    
+    let x = horizontalPadding + (normalised * adjustedWidth)
+    let y = trackSize.height / 2
+    
+    return CGPoint(x: x, y: y)
+  }
 
 }
