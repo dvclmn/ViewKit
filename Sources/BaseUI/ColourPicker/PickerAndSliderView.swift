@@ -10,34 +10,15 @@ import CoreTools
 import SwiftUI
 
 public struct SquareColourPicker: View {
-  //  @Environment(AppHandler.self) private var store
-
   @State private var dragPosition: CGPoint = .zero
   @GestureState private var isDragging = false
 
   @Binding var colour: HSVColour
-  //  let hue: Double
-  //  @Binding var saturation: Double
-  //  @Binding var brightness: Double
 
-  public init(
-    _ colour: Binding<HSVColour>
-    //    hue: Double,
-    //    saturation: Binding<Double>,
-    //    brightness: Binding<Double>,
-  ) {
+  public init(_ colour: Binding<HSVColour>) {
     self._colour = colour
-    //    self.hue = hue
-    //    self._saturation = saturation
-    //    self._brightness = brightness
   }
-  //  public init(
-  //    _ colour: Binding<HSVColour>
-  //  ) {
-  //    self.hue = hue
-  //    self._saturation = saturation
-  //    self._brightness = brightness
-  //  }
+  
   public var body: some View {
 
     GeometryReader { proxy in

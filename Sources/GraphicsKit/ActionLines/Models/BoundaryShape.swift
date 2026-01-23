@@ -29,13 +29,13 @@ extension ActionLine.BoundaryKind {
     }
   }
   
-  public func variation(
-    at index: Int,
-    from variations: ActionLineVariations
-  ) -> Double {
-    switch self {
-      case .inner: return variations.boundaryInner[index]
-      case .outer: return variations.boundaryOuter[index]
-    }
-  }
+//  public func variation(
+//    at index: Int,
+//    from variations: ActionLineVariations
+//  ) -> Double {
+//    switch self {
+//      case .inner: return variations.boundaryInner[index]
+//      case .outer: return variations.boundaryOuter[index]
+//    }
+//  }
 }
