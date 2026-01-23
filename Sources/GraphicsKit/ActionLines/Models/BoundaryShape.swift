@@ -20,3 +20,22 @@ public enum BoundaryShape: String, Hashable, CaseIterable, Identifiable, Pickabl
     }
   }
 }
+
+extension ActionLine.BoundaryKind {
+  public func shape(from config: ActionLine.Configuration) -> ActionLine.Shape {
+    switch self {
+      case .inner: return config.innerShape
+      case .outer: return config.outerShape
+    }
+  }
+  
+  public func variation(
+    at index: Int,
+    from variations: ActionLineVariations
+  ) -> Double {
+    switch self {
+      case .inner: return variations.boundaryInner[index]
+      case .outer: return variations.boundaryOuter[index]
+    }
+  }
+}
