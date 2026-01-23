@@ -5,70 +5,84 @@
 //  Created by Dave Coleman on 23/1/2026.
 //
 
-import SwiftUI
 import ColourKit
+import CoreTools
+import SwiftUI
 
-struct SquareColourPicker: View {
-//  @Environment(AppHandler.self) private var store
-  
-  
+public struct SquareColourPicker: View {
+  //  @Environment(AppHandler.self) private var store
+
   @State private var dragPosition: CGPoint = .zero
   @GestureState private var isDragging = false
 
-  let hue: Double
-  @Binding var saturation: Double
-  @Binding var brightness: Double
+  @Binding var colour: HSVColour
+  //  let hue: Double
+  //  @Binding var saturation: Double
+  //  @Binding var brightness: Double
 
   public init(
-    hue: Double,
-    saturation: Binding<Double>,
-    brightness: Binding<Double>,
+    _ colour: Binding<HSVColour>
+    //    hue: Double,
+    //    saturation: Binding<Double>,
+    //    brightness: Binding<Double>,
   ) {
-    self.hue = hue
-    self._saturation = saturation
-    self._brightness = brightness
+    self._colour = colour
+    //    self.hue = hue
+    //    self._saturation = saturation
+    //    self._brightness = brightness
   }
-  var body: some View {
-    
+  //  public init(
+  //    _ colour: Binding<HSVColour>
+  //  ) {
+  //    self.hue = hue
+  //    self._saturation = saturation
+  //    self._brightness = brightness
+  //  }
+  public var body: some View {
+
     GeometryReader { proxy in
       let size = proxy.size
-      
+
       ZStack {
         /// Square gradient area
-        PickerSquare(colour: <#T##Binding<HSVColour>#>)
+        PickerSquare(hue: colour.hue)
           .gesture(drag(in: size))
-        
+
         /// Thumb
         Circle()
           .strokeBorder(.white, lineWidth: 2)
           .background(Circle().fill(.black))
           .frame(width: 16, height: 16)
           .position(
-            x: saturation * size.width,
-            y: (1 - brightness) * size.height
+            x: colour.saturation * size.width,
+            y: (1 - colour.brightness) * size.height
           )  // y is inverted
           .allowsHitTesting(false)
       }
     }
     .aspectRatio(1, contentMode: .fit)
     .clipShape(.rect(cornerRadius: Styles.sizeSmall))
-    
+
   }
 }
 extension SquareColourPicker {
-  
+
   func drag(in size: CGSize) -> some Gesture {
     DragGesture(minimumDistance: 0)
       .updating($isDragging) { _, state, _ in state = true }
       .onChanged { value in
         let location = value.location
-        
+
         let clampedX = min(max(location.x, 0), size.width)
         let clampedY = min(max(location.y, 0), size.height)
-        
-        saturation = clampedX / size.width
-        brightness = 1 - (clampedY / size.height)  // inverted y axis
+
+        colour.saturation = clampedX / size.width
+        colour.brightness = 1 - (clampedY / size.height)  // inverted y axis
       }
   }
-  
+
+}
+
+extension SquareColourPicker {
+
 }

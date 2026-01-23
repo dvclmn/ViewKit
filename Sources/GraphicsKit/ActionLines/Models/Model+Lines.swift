@@ -6,20 +6,22 @@
 //
 
 import SwiftUI
+import ColourKit
 
 public struct ActionLineStyle {
-  public var color: Color
+  public var colour: HSVColour
+//  public var color: Color
   public var width: Double
   public var blendMode: BlendMode
   public var opacity: Double
   
   public init(
-    color: Color,
+    colour: HSVColour,
     width: Double,
     blendMode: BlendMode = .normal,
     opacity: Double = 1
   ) {
-    self.color = color
+    self.colour = colour
     self.width = width
     self.blendMode = blendMode
     self.opacity = opacity

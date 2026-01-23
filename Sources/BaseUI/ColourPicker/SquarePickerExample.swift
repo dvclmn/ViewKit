@@ -9,38 +9,36 @@ import SwiftUI
 import ColourKit
 
 struct HSVPickerExample: View {
-  @State private var hue: Double = 0.6
-  @State private var saturation: Double = 1.0
-  @State private var brightness: Double = 1.0
+//  @State private var hue: Double = 0.6
+//  @State private var saturation: Double = 1.0
+//  @State private var brightness: Double = 1.0
+  
+  @State private var colour: HSVColour = .init(fromRGB: .orange)
   
   var body: some View {
     VStack {
-      ColourSquarePicker(
-        hue: hue,
-        saturation: $saturation,
-        brightness: $brightness
-      )
+      SquareColourPicker($colour)
       .frame(width: 200, height: 200)
       
-      Slider(value: $hue, in: 0...1)
+      Slider(value: $colour.hue, in: 0...1)
         .padding()
       
       RoundedRectangle(cornerRadius: 8)
-        .fill(currentColour.toColour)
+        .fill(colour.toColour)
         .frame(height: 50)
         .padding()
     }
   }
 }
 
-extension HSVPickerExample {
-  var currentColour: HSVColour {
-    HSVColour(
-      hue: hue,
-      saturation: saturation,
-      brightness: brightness)
-  }
-}
+//extension HSVPickerExample {
+//  var currentColour: HSVColour {
+//    HSVColour(
+//      hue: hue,
+//      saturation: saturation,
+//      brightness: brightness)
+//  }
+//}
 #if DEBUG
 @available(macOS 15, iOS 18, *)
 #Preview(traits: .size(.normal)) {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ColourKit
 
 public struct ActionLineConfiguration {
 
@@ -25,7 +26,7 @@ public struct ActionLineConfiguration {
   public init(
     density: Double = 50,
     radialCoverage: Double = 1.0,
-    lineStyle: ActionLineStyle = .init(color: .black, width: 2),
+    lineStyle: ActionLineStyle = .init(colour: .init(fromRGB: .black), width: 2),
     outerShape: ActionLineShape = .init(radius: 1.0),
     innerShape: ActionLineShape = .init(radius: 0.2),
     boundaryShape: BoundaryShape = .square,

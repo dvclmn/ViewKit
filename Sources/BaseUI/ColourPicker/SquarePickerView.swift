@@ -9,11 +9,10 @@ import BasePrimitives
 import ColourKit
 import SwiftUI
 
-public struct PickerSquare: View {
-
-  //  @Binding var colour: HSVColour
+struct PickerSquare: View {
   let hue: Double
-  public var body: some View {
+  var body: some View {
+    
     ZStack {
       Rectangle()
         .fill(
