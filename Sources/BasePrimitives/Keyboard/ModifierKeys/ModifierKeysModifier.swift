@@ -20,6 +20,9 @@ public struct ModifierKeysModifier: ViewModifier {
           self.modifierKeys = Modifiers(from: new)
         }
         .environment(\.modifierKeys, modifierKeys)
+        .task(id: modifierKeys) {
+          print("Modifier keys changed: \(modifierKeys.description)")
+        }
 
     } else {
       #if canImport(AppKit)

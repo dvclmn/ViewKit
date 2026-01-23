@@ -32,7 +32,11 @@ extension ActionLine {
     public init(
       density: Double = 50,
       radialCoverage: Double = 1.0,
-      lineStyle: Style = .init(colour: .init(h: 0.1, s: 0.1, v: 0.6), width: 2),
+      lineStyle: Style = .init(
+        colour: .init(h: 0.1, s: 0.1, v: 0.6),
+        shape: .wave,
+        width: 12
+      ),
       outerShape: Shape = .init(radius: 1.0),
       innerShape: Shape = .init(radius: 0.2),
     ) {

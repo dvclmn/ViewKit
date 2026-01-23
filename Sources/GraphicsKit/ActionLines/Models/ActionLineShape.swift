@@ -26,7 +26,7 @@ extension ActionLine {
     public init(
       radius: Double,
       position: CGPoint = .zero,
-      variation: Double = 0,
+      variation: Double = 1,
       shape: BoundaryShape = .circle
     ) {
       self.radius = radius

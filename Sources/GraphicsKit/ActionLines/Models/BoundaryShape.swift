@@ -7,7 +7,10 @@
 
 import CoreTools
 
-public enum BoundaryShape: String, Hashable, CaseIterable, Identifiable, Pickable {
+public enum BoundaryShape: String, Hashable, CaseIterable, Identifiable, Pickable, Sendable {
+  
+  public static let active: [Self] = [.circle, .square]
+  
   case square
   case circle
   case matchViewport

@@ -33,7 +33,7 @@ extension EnvironmentValues {
 public typealias Keys = Set<KeyEquivalent>
 public typealias Modifiers = ModifierKeysCompatible
 
-public struct ModifierKeysCompatible: OptionSet, Sendable, Hashable {
+public struct ModifierKeysCompatible: OptionSet, Sendable, Hashable, Equatable {
   public init(rawValue: Int) {
     self.rawValue = rawValue
   }
