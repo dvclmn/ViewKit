@@ -9,7 +9,7 @@ import CoreGraphics
 import CoreTools
 import Foundation
 
-public struct PanState: CanvasGestureState {
+public struct PanState: CanvasGestureState, ClampedGestureState {
   public static var initialValue: CGSize { .zero }
   public var value: CGSize
   public var phase: InteractionPhase
@@ -28,20 +28,5 @@ extension PanState {
 
   public var pan: CGSize { value }
 
-  public func clamped(
-    to geometry: CanvasGeometry,
-    zoom: CGFloat
-  ) -> CGSize {
-    let artwork = geometry.canvasSize
-    let viewport = geometry.viewportSize
-    let scaledArtwork = artwork * zoom
 
-    let maxX = max((scaledArtwork.width - viewport.width) / 2, 0)
-    let maxY = max((scaledArtwork.height - viewport.height) / 2, 0)
-
-    return CGSize(
-      width: value.width.clamped(to: -maxX...maxX),
-      height: value.height.clamped(to: -maxY...maxY)
-    )
-  }
 }

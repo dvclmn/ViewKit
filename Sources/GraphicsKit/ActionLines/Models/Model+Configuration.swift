@@ -8,9 +8,9 @@
 import SwiftUI
 
 public struct ActionLineShape {
-  var radius: Double
-  var position: CGPoint?
-  var variation: Double
+  public var radius: Double
+  public var position: CGPoint?
+  public var variation: Double
   /// Future properties:
   // var capStyle: CapStyle
   // var thickness: Double

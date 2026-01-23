@@ -44,10 +44,35 @@ extension CanvasGestureState {
 }
 
 extension CanvasGestureState where Value == CGSize {
-
   public mutating func updateDelta(_ delta: Value, phase: InteractionPhase) {
     self.value.width += delta.width
     self.value.height += delta.height
     self.phase = phase
+  }
+}
+
+public protocol ClampedGestureState: CanvasGestureState {
+  func clamped(
+    to geometry: CanvasGeometry,
+    zoom: CGFloat
+  ) -> CGSize
+}
+
+extension ClampedGestureState {
+  public func clamped(
+    to geometry: CanvasGeometry,
+    zoom: CGFloat
+  ) -> CGSize {
+    let artwork = geometry.canvasSize
+    let viewport = geometry.viewportSize
+    let scaledArtwork = artwork * zoom
+    
+    let maxX = max((scaledArtwork.width - viewport.width) / 2, 0)
+    let maxY = max((scaledArtwork.height - viewport.height) / 2, 0)
+    
+    return CGSize(
+      width: value.width.clamped(to: -maxX...maxX),
+      height: value.height.clamped(to: -maxY...maxY)
+    )
   }
 }

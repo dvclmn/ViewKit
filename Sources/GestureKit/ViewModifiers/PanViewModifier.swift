@@ -10,6 +10,7 @@ import SwiftUI
 
 #if canImport(AppKit)
 
+/// Note: This size comes as deltas, which will need to be accrued
 public typealias PanOutput = (CGSize, InteractionPhase) -> Void
 
 public struct PanGestureModifier: ViewModifier {
