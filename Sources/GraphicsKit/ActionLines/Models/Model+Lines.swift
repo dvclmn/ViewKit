@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-struct ActionLineStyle {
+public struct ActionLineStyle {
   var color: Color
   var width: Double
   var blendMode: BlendMode = .normal
   var opacity: Double = 1.0
 }
 
-enum BoundaryShape: Hashable, CaseIterable {
+public enum BoundaryShape: Hashable, CaseIterable {
   case square
   case circle
 
-  var name: String {
+  public var name: String {
     switch self {
       case .square: "Square"
       case .circle: "Circle"
@@ -26,7 +26,7 @@ enum BoundaryShape: Hashable, CaseIterable {
   }
 }
 
-enum ActionLineParameter: Identifiable, CaseIterable {
+public enum ActionLineParameter: Identifiable, CaseIterable {
   
   case outerRadius
   case outerVariation
@@ -39,9 +39,9 @@ enum ActionLineParameter: Identifiable, CaseIterable {
   case radialCoverage
   case rotation
   
-  var id: String { self.name }
+  public var id: String { self.name }
   
-  var name: String {
+  public var name: String {
     switch self {
       case .outerRadius: "Outer Radius"
       case .outerVariation: "Outer Variation"
@@ -56,7 +56,7 @@ enum ActionLineParameter: Identifiable, CaseIterable {
     }
   }
   
-  var range: ClosedRange<Double> {
+  public var range: ClosedRange<Double> {
     switch self {
 
         /// Going to keep the lower bound at `0`, as I dont feel the 'wrapping in on itself' effect is useful,
