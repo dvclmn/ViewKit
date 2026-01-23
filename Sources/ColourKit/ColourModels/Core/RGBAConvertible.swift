@@ -8,18 +8,18 @@
 import SwiftUI
 
 public protocol RGBAConvertible {
-  init(r: Double, g: Double, b: Double, a: Double)
+  init(r: Double, g: Double, b: Double, a: Double, name: String?)
 }
 
 extension Color: RGBAConvertible {
   /// Important: Assumes `SwiftUI/RGBColorSpace/sRGB` colour space
-  public init(r: Double, g: Double, b: Double, a: Double) {
+  public init(r: Double, g: Double, b: Double, a: Double, name: String? = nil) {
     self.init(.sRGB, red: r, green: g, blue: b, opacity: a)
   }
 }
 
 extension RGBColour: RGBAConvertible {
-  public init(r: Double, g: Double, b: Double, a: Double) {
-    self.init(r: r, g: g, b: b, a: a)
-  }
+//  public init(r: Double, g: Double, b: Double, a: Double, name: String? = nil) {
+//    self.init(r: r, g: g, b: b, a: a, name: name)
+//  }
 }

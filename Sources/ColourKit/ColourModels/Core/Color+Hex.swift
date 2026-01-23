@@ -24,7 +24,7 @@ extension RGBAConvertible {
   ///
   /// 8-digit hex (ARGB)
   /// `let transparentGreen = Color(hex: "8000FF00")`
-  public init?(hex: String) {
+  public init?(hex: String, name: String? = nil) {
 
     /// Clean up the hex string (removing `#` if present etc)
     let hexSanitized = hex.toSanitisedHex
@@ -55,7 +55,7 @@ extension RGBAConvertible {
     } else {
       return nil
     }
-    self.init(r: r, g: g, b: b, a: a)
+    self.init(r: r, g: g, b: b, a: a, name: name)
   }
 }
 

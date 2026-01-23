@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension Color {
-//extension ShapeStyle where Self == Color {
+  //extension ShapeStyle where Self == Color {
   public func mixCompatible(
     with rhs: Self,
     by fraction: Double,
@@ -23,15 +23,11 @@ extension Color {
       in: colorSpace
     )
   }
-
 }
 
-
 extension Array where Element == Color {
-  
-  //  /// Mix an array of colours into a single colour by repeatedly blending.
+  /// Mix an array of colours into a single colour by repeatedly blending.
   public func mixMultiple(
-    //    _ colours: [Color],
     by fraction: Double = 0.5,
     fallback: Color = .clear
   ) -> Color {
