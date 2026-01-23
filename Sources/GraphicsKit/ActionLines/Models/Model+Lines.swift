@@ -13,7 +13,12 @@ public struct ActionLineStyle {
   public var blendMode: BlendMode
   public var opacity: Double
   
-  public init(color: Color, width: Double, blendMode: BlendMode = .normal, opacity: Double = 1) {
+  public init(
+    color: Color,
+    width: Double,
+    blendMode: BlendMode = .normal,
+    opacity: Double = 1
+  ) {
     self.color = color
     self.width = width
     self.blendMode = blendMode
