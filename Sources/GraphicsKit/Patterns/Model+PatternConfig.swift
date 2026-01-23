@@ -28,7 +28,7 @@ public struct PatternConfiguration: Codable, Equatable, Hashable, Sendable {
     size: Double = 30,
     gap: Double = 10,
     offset: CGSize = .zero,
-    primaryColour: RGBColour = .primary,
+    primaryColour: RGBColour = .white,
     secondaryColour: RGBColour = .gray
   ) {
     self.size = size

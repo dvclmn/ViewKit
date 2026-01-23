@@ -8,8 +8,6 @@
 import SwiftUI
 
 extension GraphicsContext {
-
-  // MARK: - Patterns
   public func drawPattern(
     _ pattern: PatternStyle,
     config: PatternConfiguration = .default,

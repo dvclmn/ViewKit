@@ -46,6 +46,16 @@ extension RGBColour {
   ) {
     self.init(red: r, green: g, blue: b, alpha: a, name: name)
   }
+  
+  public init(
+    _ r: Double,
+    _ g: Double,
+    _ b: Double,
+    a: Double = 1.0,
+    name: String? = nil
+  ) {
+    self.init(red: r, green: g, blue: b, alpha: a, name: name)
+  }
 
   public init(
     fromSystem system: SystemColour,
