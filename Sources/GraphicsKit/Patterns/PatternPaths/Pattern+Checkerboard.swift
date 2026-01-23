@@ -22,9 +22,9 @@ extension GraphicsContext {
         let y = CGFloat(row) * config.size + config.offset.height.truncatingRemainder(dividingBy: config.size)
 
         let rect = CGRect(x: x, y: y, width: config.size, height: config.size)
-        let color =
-          (row + col).isMultiple(of: 2) ? config.primaryColour.colour : config.secondaryColour.colour
-        self.fill(Path(rect), with: .color(color ?? Color.brown))
+        let colour =
+          (row + col).isMultiple(of: 2) ? config.primaryColour.toColour : config.secondaryColour.toColour
+        self.fill(Path(rect), with: .color(colour))
       }
     }
   }

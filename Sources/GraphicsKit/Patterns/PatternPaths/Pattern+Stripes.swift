@@ -11,8 +11,8 @@ import SwiftUI
 extension GraphicsContext {
 
   public func drawStripes(
-    config: PatternConfiguration,
-    size: CGSize
+    _ config: PatternConfiguration,
+    in size: CGSize
   ) {
     let stripeWidth = config.size + config.gap
     let repetitions = Int(ceil(size.width / stripeWidth)) + 1
@@ -20,7 +20,7 @@ extension GraphicsContext {
     for i in 0..<repetitions {
       let x = CGFloat(i) * stripeWidth
       let rect = CGRect(x: x, y: 0, width: config.size, height: size.height)
-      let color = i.isMultiple(of: 2) ? config.primaryColour.colour ?? .brown : config.secondaryColour.colour ?? .brown
+      let color = i.isMultiple(of: 2) ? config.primaryColour.toColour : config.secondaryColour.toColour
       self.fill(Path(rect), with: .color(color))
     }
   }

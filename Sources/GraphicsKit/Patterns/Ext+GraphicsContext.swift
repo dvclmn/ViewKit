@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 extension GraphicsContext {
 
   // MARK: - Patterns
@@ -17,31 +16,11 @@ extension GraphicsContext {
     in size: CGSize
   ) {
     switch pattern {
-      case .checkerboard: drawCheckerboard(
-          config: config,
-          size: size
-        )
-      case .chevron: drawChevron(
-          config: config,
-          size: size
-        )
-
-      case .stitches: drawStitches(
-          config: config,
-          size: size
-        )
-
-      case .waves: drawWaves(
-          config: config,
-          size: size
-        )
-
-      case .stripes: drawStripes(
-          config: config,
-          size: size
-        )
-
+      case .checkerboard: drawCheckerboard(config, in: size)
+      case .chevron: drawChevron(config, in: size)
+      case .stitches: drawStitches(config, in: size)
+      case .waves: drawWaves(config, in: size)
+      case .stripes: drawStripes(config, in: size)
     }
   }
-
 }

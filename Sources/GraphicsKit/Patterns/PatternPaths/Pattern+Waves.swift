@@ -11,8 +11,8 @@ import SwiftUI
 extension GraphicsContext {
 
   public func drawWaves(
-    config: PatternConfiguration,
-    size: CGSize
+    _ config: PatternConfiguration,
+    in size: CGSize
   ) {
     let waveHeight = config.size
     let repetitions = Int(ceil(size.height / waveHeight)) + 1
@@ -30,7 +30,7 @@ extension GraphicsContext {
         )
       }
 
-      self.stroke(path, with: .color(config.primaryColour.colour ?? .brown), lineWidth: config.gap)
+      self.stroke(path, with: .color(config.primaryColour.toColour), lineWidth: config.gap)
 
       /// Second wave, offset
       path = Path()
@@ -43,7 +43,7 @@ extension GraphicsContext {
         )
       }
 
-      self.stroke(path, with: .color(config.secondaryColour.colour ?? .brown), lineWidth: config.gap)
+      self.stroke(path, with: .color(config.secondaryColour.toColour), lineWidth: config.gap)
     }
   }
 }
