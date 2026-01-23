@@ -6,7 +6,10 @@
 //
 
 import Foundation
+import CasePaths
 
+@CasePathable
+@dynamicMemberLookup
 public enum PatternStyle: CaseIterable, Identifiable, Codable, Sendable {
   case checkerboard
   case chevron

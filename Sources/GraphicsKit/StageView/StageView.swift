@@ -22,10 +22,19 @@ public struct StageView: View {
     self.floorConfig = floorConfig
     self.viewSize = viewSize
   }
+  
+  public init(
+    pattern: PatternPreset,
+//    floorConfig: FloorAppearance = .init(),
+    viewSize: CGSize? = nil
+  ) {
+    self.floorConfig = FloorAppearance(pattern: pattern.config)
+    self.viewSize = viewSize
+  }
 
   public var body: some View {
 
-    PatternCanvas(.checkerboard, config: floorConfig.pattern)
+    PatternCanvas(.stripes, config: floorConfig.pattern)
 
       /// This `rotation3DEffect` is dedicated to driving the Yaw only
       .rotation3DEffect(
@@ -57,24 +66,25 @@ public struct StageView: View {
 
       .scaleEffect(x: floorConfig.width, y: floorConfig.depth, anchor: .center)
 
-      .mask {
-        ZStack {
-          LinearGradient(
-            colors: [.black, .clear],
-            startPoint: .bottom,
-            endPoint: .center
-          )
-          .mask {
-            RadialGradient(
-              colors: [.black, .clear],
-              center: .center,
-              startRadius: sizeOfView.width * 0.3,
-              endRadius: sizeOfView.width * 0.65
-            )
-          }
-        }
-      }  // END mask
-      .drawingGroup()
+//      .mask {
+        
+//        ZStack {
+//          LinearGradient(
+//            colors: [.black, .clear],
+//            startPoint: .bottom,
+//            endPoint: .center
+//          )
+//          .mask {
+//            RadialGradient(
+//              colors: [.black, .clear],
+//              center: .center,
+//              startRadius: sizeOfView.width * 0.3,
+//              endRadius: sizeOfView.width * 0.65
+//            )
+//          }
+//        }
+//      }  // END mask
+//      .drawingGroup()
 //      .debugTextOverlay("No viewport size", isEnabled: noViewSizeProvided)
   }
 }
@@ -87,5 +97,6 @@ extension StageView {
 #if DEBUG
 #Preview {
   StageView()
+    .frame(width: 400, height: 680)
 }
 #endif

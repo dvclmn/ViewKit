@@ -11,7 +11,8 @@ import Foundation
 // TODO: Need to be clearer about what these properties do/mean
 public struct FloorAppearance: Sendable, Codable, Equatable, Hashable {
 
-  public var pattern: PatternConfiguration
+  public var pattern: PatternPreset
+//  public var pattern: PatternConfiguration
   public var degrees: Double
   public var perspective: Double
   public var width: Double
@@ -20,7 +21,10 @@ public struct FloorAppearance: Sendable, Codable, Equatable, Hashable {
   public var yaw: Double
 
   public init(
-    pattern: PatternConfiguration = .checkboard,
+    pattern: PatternPreset = .init(
+      style: .checkerboard,
+      config: .default
+    ),
     degrees: Double = 30,
     perspective: Double = 3,
     width: Double = 2,
@@ -40,7 +44,7 @@ public struct FloorAppearance: Sendable, Codable, Equatable, Hashable {
 
 extension FloorAppearance {
   public static let checkerboard: Self = .init(
-    pattern: .checkboard,
+    pattern: .init(),
     degrees: 0,
     perspective: 1,
     width: 100,

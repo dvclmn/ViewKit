@@ -5,15 +5,32 @@
 //  Created by Dave Coleman on 23/1/2026.
 //
 
-import Foundation
 import ColourKit
+import Foundation
+import CasePaths
 
-public struct PatternPreset: Sendable {
+@dynamicMemberLookup
+public struct PatternPreset: Sendable, Codable {
   let style: PatternStyle
   let config: PatternConfiguration
+  
+  public init(
+    style: PatternStyle = .checkerboard,
+    config: PatternConfiguration = .default
+  ) {
+    self.style = style
+    self.config = config
+  }
 }
 
 extension PatternPreset {
+  subscript(dynamicMember keyPath: CaseKeyPath<PatternStyle, PatternStyle>) -> PatternStyle? {
+    style[case: keyPath]
+    //  subscript(dynamicMember keyPath: WritableKeyPath<PatternStyle, PatternStyle>) -> PatternStyle {
+    //  subscript dynamicMember keyPath: WritableKeyPath<PatternConfiguration, Any> {
+    //    style[case: <#T##KeyPath<Case<PatternStyle>, Case<PatternStyle>>#>]
+  }
+
   public static let opacityCheckerboard = PatternPreset(
     style: .checkerboard,
     config: PatternConfiguration(
@@ -24,5 +41,5 @@ extension PatternPreset {
       secondaryColour: .white
     )
   )
-  
+
 }

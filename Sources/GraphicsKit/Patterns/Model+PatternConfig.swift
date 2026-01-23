@@ -11,9 +11,8 @@ import Foundation
 
 public struct PatternConfiguration: Codable, Equatable, Hashable, Sendable {
 
-  /// This is a generic reference to the 'main' quality of the pattern,
-  /// that makes sense to receive a size. This is not an ideal approach,
-  /// and could afford to be improved upon / made clearer
+  /// This is a generic reference to the 'main' size-y quality of the pattern,
+  /// that makes sense to receive a size. Not ideal/clear, needs improvement.
   var size: Double
 
   /// Again, a generic value for whatever most represents a 'gap',
@@ -41,5 +40,4 @@ public struct PatternConfiguration: Codable, Equatable, Hashable, Sendable {
 
 extension PatternConfiguration {
   public static let `default`: PatternConfiguration = .init()
-  public static let checkboard = PatternConfiguration(size: 20, gap: 10)
 }
