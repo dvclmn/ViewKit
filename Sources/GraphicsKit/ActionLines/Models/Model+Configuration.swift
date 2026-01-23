@@ -21,8 +21,8 @@ extension ActionLine {
 
     public var lineStyle: Style
 
-    public var outerShape: ActionLineShape
-    public var innerShape: ActionLineShape
+    public var outerShape: Shape
+    public var innerShape: Shape
 
     //    public var boundaryShape: BoundaryShape
 
@@ -33,8 +33,8 @@ extension ActionLine {
       density: Double = 50,
       radialCoverage: Double = 1.0,
       lineStyle: Style = .init(colour: .init(fromRGB: .black), width: 2),
-      outerShape: ActionLineShape = .init(radius: 1.0),
-      innerShape: ActionLineShape = .init(radius: 0.2),
+      outerShape: Shape = .init(radius: 1.0),
+      innerShape: Shape = .init(radius: 0.2),
     ) {
       self.density = density
       self.radialCoverage = radialCoverage

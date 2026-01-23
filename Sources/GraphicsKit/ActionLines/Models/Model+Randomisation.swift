@@ -19,7 +19,10 @@ public struct ActionLineVariations: RandomGeneratable {
   public let density: Int
 
   /// Computed properties based on parameters
-  public func processedAngles(coverage: Double, rotation: Double) -> [Double] {
+  public func processedAngles(
+    coverage: Double,
+    rotation: Double
+  ) -> [Double] {
     let targetCount = Int(Double(density) * coverage)
     return
       baseAngles
@@ -31,7 +34,8 @@ public struct ActionLineVariations: RandomGeneratable {
     count: Int,
     using generator: inout RandomNumberGenerator,
     parameters: RandomisationParameters
-  ) -> ActionLineVariations {
+  ) -> Self {
+    
     /// Generate base angles for full coverage
     let baseAngles = (0..<count).map { _ in
       Double.random(in: 0...(2 * .pi), using: &generator)
