@@ -9,8 +9,9 @@ import Foundation
 
 /// A cache system for storing and retrieving randomly generated values.
 ///
-/// The cache uses a combination of count and parameters to create unique keys for storing values,
-/// ensuring consistent results for identical inputs within the same session.
+/// The cache uses a combination of count and parameters to create
+/// unique keys for storing values, ensuring consistent results for identical
+/// inputs within the same session.
 public struct RandomCache<T: RandomGeneratable> {
   private var values: [String: T] = [:]
   private var generator: RandomNumberGenerator

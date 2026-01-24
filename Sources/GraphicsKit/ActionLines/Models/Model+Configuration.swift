@@ -34,7 +34,7 @@ extension ActionLine {
       radialCoverage: Double = 1.0,
       lineStyle: Style = .init(
         colour: .init(h: 0.1, s: 0.1, v: 0.6),
-        shape: .wave,
+        shape: .diamond,
         width: 12
       ),
       outerShape: Shape = .init(radius: 1.0),

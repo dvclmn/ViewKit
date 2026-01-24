@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// A high-level interface for generating and caching random values.
+/// An interface for generating and caching random values.
 ///
 /// This generator provides a convenient way to work with cached random values
 /// while abstracting away the details of cache management.

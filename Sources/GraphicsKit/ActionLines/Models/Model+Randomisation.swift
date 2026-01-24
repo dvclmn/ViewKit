@@ -12,12 +12,8 @@ public struct ActionLineVariations: RandomGeneratable {
 
   public typealias Value = Double
 
-  /// Base random values (only regenerated when density or seed changes)
-  //  public let baseAngles: [Double]  // Full set of angles for 2π
-  //  public let boundaryInner: [Double]  // Variation values
-  //  public let boundaryOuter: [Double]  // Variation values
-  //  public let density: Int
-
+  /// Base random values, `baseAngles` and `boundary`
+  /// Only regenerated when density or seed changes
   public let baseAngles: [Double]
   public let boundary: [Double]
   public let density: Int

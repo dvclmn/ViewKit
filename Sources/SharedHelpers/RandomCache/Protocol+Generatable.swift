@@ -9,13 +9,16 @@ import Foundation
 
 /// A protocol that defines types capable of generating random values.
 ///
-/// Types conforming to `RandomGeneratable` must implement a method to generate random values
-/// based on specified parameters and a random number generator.
+/// Types conforming to `RandomGeneratable` must implement a
+/// method to generate random values based on specified parameters
+/// and a random number generator.
 ///
-/// - Note: The associated `Value` type must conform to `BinaryFloatingPoint` to ensure
-///         compatibility with floating-point random operations.
-///
+/// Note: `GraphicsKit/ActionLineVariations` is a good
+/// example of this system in use.
 nonisolated public protocol RandomGeneratable {
+  
+  /// Conformance to `BinaryFloatingPoint` neccessary to ensure
+  /// compatibility with floating-point random operations.
   associatedtype Value: BinaryFloatingPoint
   
   /// Generates a new instance with random values.
@@ -26,7 +29,7 @@ nonisolated public protocol RandomGeneratable {
   /// - Returns: A new instance containing the generated random values.
   static func generate(
     count: Int,
-    using generator: inout RandomNumberGenerator,
+    using generator: inout any RandomNumberGenerator,
     parameters: RandomisationParameters
   ) -> Self
 }
