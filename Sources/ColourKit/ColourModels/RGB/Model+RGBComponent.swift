@@ -89,6 +89,10 @@ public enum RGBComponent: String, ColourComponent {
         end = base.opacity(1.0)
     }
 
-    return LinearGradient(colors: [start, end], startPoint: .leading, endPoint: .trailing)
+    return LinearGradient(
+      colors: [start, end],
+      startPoint: .leading,
+      endPoint: .trailing
+    )
   }
 }

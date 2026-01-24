@@ -16,7 +16,8 @@ public struct QuickerPicker<SelectionValue: Hashable & Identifiable & NamedItem>
 
   @State private var items: [SelectionValue]
 
-  let title: LocalizedStringKey
+  let title: String
+//  let title: LocalizedStringKey
   @Binding var selection: SelectionValue
   
   /// This is simply for when I don't want to use the default
@@ -66,7 +67,8 @@ extension QuickerPicker where SelectionValue: CaseIterable, SelectionValue.AllCa
 //  }
 
   public init(
-    _ title: LocalizedStringKey,
+    _ title: String,
+//    _ title: LocalizedStringKey,
     selection: Binding<SelectionValue>,
     //    @ViewBuilder additionalContent: @escaping () -> AdditionalContent = { EmptyView() }
       ) {

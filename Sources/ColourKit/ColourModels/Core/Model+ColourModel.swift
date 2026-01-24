@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreTools
 
 public protocol ColourModel: Codable {
   var colourSpace: Color.RGBColorSpace { get }
@@ -19,4 +20,10 @@ public protocol ColourModel: Codable {
 extension ColourModel {
   public mutating func opacity(_ opacity: Double) { alpha = opacity }
   public var colourSpace: Color.RGBColorSpace { .sRGB }
+}
+
+@CaseDetection
+public enum ColourModelKind {
+  case rgb
+  case hsv
 }

@@ -17,7 +17,7 @@ public struct RGBColourSliders: View {
   //  let pickerSize: CGFloat
 
   public init(
-    colour: Binding<HSVColour>,
+    colour: Binding<RGBColour>,
     //    pickerSize: CGFloat = 120
   ) {
     self._colour = colour
@@ -25,37 +25,29 @@ public struct RGBColourSliders: View {
   }
   public var body: some View {
 
-    DisclosureGroup("Picker", isExpanded: $isColourPickerExpanded) {
-      SquareColourPicker($colour, size: pickerSize)
+    SliderGroup {
+      QuickSlider(
+        "R",
+        value: $colour.red,
+        range: .unitRange
+      )
+      .sliderStyle(.custom(.rgb(colour, for: .red)))
+
+      QuickSlider(
+        "G",
+        value: $colour.green,
+        range: .unitRange
+      )
+      .sliderStyle(.custom(.rgb(colour, for: .green)))
+
+      QuickSlider(
+        "B",
+        value: $colour.blue,
+        range: .unitRange
+      )
+      .sliderStyle(.custom(.rgb(colour, for: .blue)))
+
     }
 
-    DisclosureGroup(
-      "Sliders",
-      isExpanded: $areColourSlidersExpanded
-    ) {
-      SliderGroup {
-        QuickSlider(
-          "Hue",
-          value: $colour.hue,
-          range: .unitRange
-        )
-        .sliderStyle(.custom(.hueRainbow))
-
-        QuickSlider(
-          "Saturation",
-          value: $colour.saturation,
-          range: .unitRange
-        )
-        .sliderStyle(.custom(.saturation(colour.saturation)))
-
-        QuickSlider(
-          "Brightness",
-          value: $colour.brightness,
-          range: .unitRange
-        )
-        .sliderStyle(.custom(.brightness(colour.hueSatOnly.toColour)))
-      }
-    }
-    .disclosureGroupStyle(.custom)
   }
 }

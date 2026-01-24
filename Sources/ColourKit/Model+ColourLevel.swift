@@ -17,7 +17,7 @@ public protocol ColourHandlerProtocol {
 }
 
 @CaseDetection
-public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable {
+public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable, NamedItem, Pickable, Identifiable {
   public typealias Item = Self
   
   public static let defaultCase: ColourLevel = .foreground
@@ -25,12 +25,19 @@ public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable {
   case foreground
   case background
   
+  public var id: String { rawValue }
+  public var name: String { rawValue.capitalized }
+  
   public func keyPathRGB<T: ColourHandlerProtocol>() -> WritableKeyPath<T, RGBColour> {
     switch self {
       case .foreground: \.foregroundRGB
       case .background: \.backgroundRGB
     }
   }
+  
+//  public func label(_ thing: () -> String) {
+//    
+//  }
   //  public func keyPathHSV<T: ColourHandlerProtocol>() -> KeyPath<T, HSVColour> {
   //    switch self {
   //      case .foreground: \.foregroundHSV
@@ -51,9 +58,9 @@ public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable {
   //    //    }
   //  }
   
-  public var isForeground: Bool {
-    return self == .foreground
-  }
+//  public var isForeground: Bool {
+//    return self == .foreground
+//  }
   //  public func isSelected(_ handler: ColourHandler) -> Bool {
   //    return self == handler[keyPath: keyPathSelected]
   //  }
