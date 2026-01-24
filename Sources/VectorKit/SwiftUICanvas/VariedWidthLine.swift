@@ -15,7 +15,7 @@ extension Path {
   ///   - widthAt: Closure that returns the half-width at a given parametric position (0...1)
   ///   - samples: Number of samples along the path for smooth curves
   /// - Returns: A closed path that can be filled
-  public func variableWidthPath(
+  public static func variableWidthPath(
     spine: Path,
     widthAt: @escaping (Double) -> CGFloat,
     samples: Int = 50
@@ -135,6 +135,10 @@ extension Path {
     profile: WidthProfile,
     samples: Int = 50
   ) -> Path {
-    variableWidthPath(spine: spine, widthAt: { profile.width(at: $0) }, samples: samples)
+    Self.variableWidthPath(
+      spine: spine,
+      widthAt: { profile.width(at: $0)
+      },
+      samples: samples)
   }
 }
