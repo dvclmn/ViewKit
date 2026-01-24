@@ -27,7 +27,7 @@ extension ActionLine {
     public var shape: BoundaryShape
 
     public init(
-      radius: Double = 6,
+      radius: Double = 0.5,
       position: CGPoint = .zero,
       variation: Double = 1,
       colour: HSVColour = .gray(0.5),

@@ -61,7 +61,7 @@ extension LinePathContext {
     let cycles = style.cycles
     let amplitude = style.width
     let samples = style.sampleCount
-    
+
     let dx = end.x - start.x
     let dy = end.y - start.y
 
@@ -82,12 +82,12 @@ extension LinePathContext {
       if i == 0 {
         spinePath.move(to: pt)
       } else {
-        
-//        spinePath.addShape(at: pt, radius: 6, using: .circle)
-//        spinePath.addQuadCurve(
-//          to: pt,
-//          control: pt.shifted(dx: 3, dy: 3)
-//        )
+
+        //        spinePath.addShape(at: pt, radius: 6, using: .circle)
+        //        spinePath.addQuadCurve(
+        //          to: pt,
+        //          control: pt.shifted(dx: 3, dy: 3)
+        //        )
         spinePath.addLine(to: pt)
       }
     }

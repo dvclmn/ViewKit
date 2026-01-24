@@ -6,7 +6,6 @@
 //
 
 import CoreTools
-import GraphicsKit
 import SwiftUI
 
 public struct ActionLineHandler {
@@ -17,6 +16,10 @@ public struct ActionLineHandler {
     in size: CGSize,
     with boundaryShape: BoundaryShape
   ) -> Double {
+    
+    let effectiveSize = size.adjustBoth { length in
+      max(0.1, length)
+    }
 
     /// This converts the angle into `x` and `y` components using trigonometry
     /// These values represent the direction vector, always having a length of `1` (unit vector)
@@ -36,7 +39,7 @@ public struct ActionLineHandler {
         let distanceToVertical =
           switch dx {
             case 0: Double.infinity
-            case let x where x > 0: (size.width - center.x) / dx
+            case let x where x > 0: (effectiveSize.width - center.x) / dx
             default: -center.x / dx
           }
 
@@ -48,7 +51,7 @@ public struct ActionLineHandler {
         let distanceToHorizontal =
           switch dy {
             case 0: Double.infinity
-            case let y where y > 0: (size.height - center.y) / dy
+            case let y where y > 0: (effectiveSize.height - center.y) / dy
             default: -center.y / dy
           }
 
@@ -63,7 +66,7 @@ public struct ActionLineHandler {
         ///
         /// Note: Here is an alternative method, where circle encompasses the rectangle:
         /// `let radius = sqrt(pow(size.width / 2, 2) + pow(size.height / 2, 2))`
-        return min(size.width, size.height) / 2
+        return min(effectiveSize.width, effectiveSize.height) / 2
 
       case .matchViewport:
         fatalError("Not yet implemented")
