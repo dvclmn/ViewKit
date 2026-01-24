@@ -21,10 +21,8 @@ extension ActionLine {
 
     public var lineStyle: Style
 
-    public var outerShape: Shape
-    public var innerShape: Shape
-
-    //    public var boundaryShape: BoundaryShape
+    public var outerShape: BoundaryStyle
+    public var innerShape: BoundaryStyle
 
     /// Internal storage uses radians for calculations
     private var _rotation: Double = 0.0
@@ -33,12 +31,16 @@ extension ActionLine {
       density: Double = 50,
       radialCoverage: Double = 1.0,
       lineStyle: Style = .init(
-        colour: .init(h: 0.1, s: 0.1, v: 0.6),
         shape: .diamond,
         width: 12
       ),
-      outerShape: Shape = .init(radius: 1.0),
-      innerShape: Shape = .init(radius: 0.2),
+      outerShape: BoundaryStyle = .init(
+        radius: 1.0,
+        colour: HSVColour(h: 0.3, s: 0.1, v: 0.4),
+      ),
+      innerShape: BoundaryStyle = .init(
+        radius: 0.2
+      ),
     ) {
       self.density = density
       self.radialCoverage = radialCoverage

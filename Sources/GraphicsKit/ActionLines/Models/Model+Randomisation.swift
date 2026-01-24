@@ -63,32 +63,4 @@ extension ActionLineVariations {
       density: count
     )
   }
-
-  //  public static func generate(
-  //    count: Int,
-  //    using generator: inout RandomNumberGenerator,
-  //    parameters: RandomisationParameters
-  //  ) -> Self {
-  //
-  //    /// Generate base angles for full coverage
-  //    let baseAngles = (0..<count).map { _ in
-  //      Double.random(in: 0...(2 * .pi), using: &generator)
-  //    }.sorted()
-  //
-  //    /// Generate boundary variations
-  //    let innerVariations = (0..<count).map { _ in
-  //      Double.random(in: -1.0...1.0, using: &generator)
-  //    }
-  //
-  //    let outerVariations = (0..<count).map { _ in
-  //      Double.random(in: -1.0...1.0, using: &generator)
-  //    }
-  //
-  //    return ActionLineVariations(
-  //      baseAngles: baseAngles,
-  //      boundaryInner: innerVariations,
-  //      boundaryOuter: outerVariations,
-  //      density: count
-  //    )
-  //  }
 }

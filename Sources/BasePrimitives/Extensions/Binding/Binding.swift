@@ -58,7 +58,6 @@ extension Binding where Value: BinaryFloatingPoint & Sendable {
   }
 }
 
-
 extension Binding where Value == Bool {
   public var reversed: Binding<Bool> {
     return .init(
@@ -81,6 +80,17 @@ extension Binding where Value: OptionSet & Sendable, Value.Element == Value {
           wrappedValue.remove(element)
         }
       }
+    )
+  }
+}
+
+extension Binding {
+  //extension Binding where Self: Sendable, Value: Sendable {
+  @MainActor
+  public func createBinding(_ keyPath: ReferenceWritableKeyPath<Self, Value>) -> Binding<Value> {
+    return Binding(
+      get: { self[keyPath: keyPath] },
+      set: { self[keyPath: keyPath] = $0 }
     )
   }
 }

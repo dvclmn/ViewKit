@@ -5,12 +5,17 @@
 //  Created by Dave Coleman on 23/1/2026.
 //
 
-import SwiftUI
+import ColourKit
 import CoreGraphics
+import SwiftUI
+import CoreTools
+import CasePaths
 
+/// Ideas for future properties:
+/// - capStyle
 extension ActionLine {
 
-  public struct Shape: Equatable {
+  public struct BoundaryStyle: Equatable {
 
     public var radius: Double
     public var position: CGPoint
@@ -18,17 +23,14 @@ extension ActionLine {
     /// A randomised value controlling visual 'rag' quality,
     /// for boundary action line edges?
     public var variation: Double
-    public var colour: Color
+    public var colour: HSVColour
     public var shape: BoundaryShape
-    /// Future properties:
-    // var capStyle: CapStyle
-    // var thickness: Double
 
     public init(
-      radius: Double,
+      radius: Double = 6,
       position: CGPoint = .zero,
       variation: Double = 1,
-      colour: Color,
+      colour: HSVColour = .gray(0.5),
       shape: BoundaryShape = .circle
     ) {
       self.radius = radius
@@ -38,16 +40,27 @@ extension ActionLine {
       self.shape = shape
     }
   }
-
 }
 
 extension ActionLine {
-  public enum BoundaryKind: String {
+  @CaseDetection
+//  @CasePathable
+//  @dynamicMemberLookup
+  public enum BoundaryKind: String, CaseIterable, Identifiable, NamedItem {
     case inner
     case outer
+    
+    public var id: String { rawValue }
+    public var name: String { rawValue.capitalized }
+    
+    public var path: WritableKeyPath<ActionLine.Configuration, BoundaryStyle> {
+//    public var path: ReferenceWritableKeyPath<ActionLine.Configuration, BoundaryStyle> {
+//    public var path: ReferenceWritableKeyPath<Binding<ActionLine.Configuration>, BoundaryStyle> {
+//    public var path: WritableKeyPath<Binding<ActionLine.Configuration>, BoundaryStyle> {
+      switch self {
+        case .inner: \.innerShape
+        case .outer: \.outerShape
+      }
+    }
   }
-}
-
-extension ActionLine.BoundaryKind {
-  public var name: String { rawValue.capitalized }
 }

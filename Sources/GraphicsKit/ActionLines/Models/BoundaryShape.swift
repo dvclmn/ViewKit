@@ -25,7 +25,7 @@ public enum BoundaryShape: String, Hashable, CaseIterable, Identifiable, Pickabl
 }
 
 extension ActionLine.BoundaryKind {
-  public func shape(from config: ActionLine.Configuration) -> ActionLine.Shape {
+  public func shape(from config: ActionLine.Configuration) -> ActionLine.BoundaryStyle {
     switch self {
       case .inner: config.innerShape
       case .outer: config.outerShape

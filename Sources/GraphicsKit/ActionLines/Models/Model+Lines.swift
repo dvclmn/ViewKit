@@ -11,7 +11,6 @@ import CoreTools
 
 extension ActionLine {
   public struct Style: Equatable {
-    public var colour: HSVColour
     
     public var width: Double
     public var blendMode: BlendMode
@@ -20,13 +19,11 @@ extension ActionLine {
     public var shape: LineShape
     
     public init(
-      colour: HSVColour,
       shape: LineShape,
       width: Double,
       blendMode: BlendMode = .normal,
       opacity: Double = 1
     ) {
-      self.colour = colour
       self.shape = shape
       self.width = width
       self.blendMode = blendMode
