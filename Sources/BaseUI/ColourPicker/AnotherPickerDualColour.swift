@@ -12,7 +12,7 @@ public struct DualHSVPicker: View {
   @Binding var primaryColour: HSVColour
   @Binding var secondaryColour: HSVColour
   @Binding var activeColour: ColourLevel
-//  let activeColour: ColourLevel
+  //  let activeColour: ColourLevel
   let pickerSize: CGFloat
 
   public init(
@@ -31,7 +31,7 @@ public struct DualHSVPicker: View {
 
     QuickerPicker(activeColour.name, selection: $activeColour)
       .pickerStyle(.segmented)
-    
+
     AnotherColourPicker(
       colour: activeColour.isForeground
         ? $primaryColour

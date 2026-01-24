@@ -70,6 +70,15 @@ extension RGBColour {
 }
 
 extension RGBColour {
+  
+  public static func from255(
+    _ r: Int,
+    _ g: Int,
+    _ b: Int,
+    name: String? = nil
+  ) -> RGBColour {
+    .init(Double(r) / 255, Double(g) / 255, Double(b) / 255, name: name)
+  }
 
   public var toHSV: HSVColour { HSVColour(fromRGB: self) }
 
