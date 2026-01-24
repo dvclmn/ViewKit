@@ -7,18 +7,11 @@
 
 import ColourKit
 import CoreTools
+import GraphicsKit
 import SwiftUI
 
-//@Observable
-//final class ColourSwitchHandler {
-//  let activeLevel: ColourLevel = .foreground
-//}
-
 public struct ColourLevelSwitch<Colour: ColourModel & EnvironmentResolvableColour>: View {
-
   @Environment(\.modifierKeys) private var modifierKeys
-
-  //  @State private var store = ColourSwitchHandler()
   @State private var isHovering: Bool = false
 
   @Binding var level: ColourLevel
@@ -28,18 +21,22 @@ public struct ColourLevelSwitch<Colour: ColourModel & EnvironmentResolvableColou
   let diameter: CGFloat
   let overlapFactor: CGFloat
 
+  let mode: SwitchMode
+
   public init(
     level: Binding<ColourLevel>,
     foreground: Binding<Colour>,
     background: Binding<Colour>,
     diameter: CGFloat,
-    overlapFactor: CGFloat
+    overlapFactor: CGFloat,
+    mode: SwitchMode
   ) {
     self._level = level
     self._foreground = foreground
     self._background = background
     self.diameter = diameter
     self.overlapFactor = overlapFactor
+    self.mode = mode
   }
 
   public var body: some View {
@@ -77,23 +74,37 @@ extension ColourLevelSwitch {
     Button {
       level = colourLevel
     } label: {
-      ColourLevelView(
-        level: colourLevel,
-        foreground: foreground,
-        background: background,
-        diameter: diameter,
-        overlapFactor: overlapFactor
-      )
+      ZStack {
+        PatternCanvas(preset: .opacityCheckerboard)
+        switch colourLevel {
+          case .foreground: foreground.toColour
+          case .background: background.toColour
+        }
+      }
+      .frameFromSquare(diameter)
+      .clipShape(.circle)
+      .overlay {
+        if isActive(colourLevel) {
+          Circle().fill(.clear).stroke(.white, lineWidth: 1)
+        }
+      }
+      //      ColourLevelView(
+      //        level: colourLevel,
+      //        foreground: foreground,
+      //        background: background,
+      //        diameter: diameter,
+      //        overlapFactor: overlapFactor
+      //      )
     }
     .buttonStyle(.plain)
-    .offset(x: isActive(level) ? -swatchOverlap : swatchOverlap)
-    .zIndex(isActive(level) ? 2 : 1)
-    .accessibilityLabel(Text("Edit \(level.name) Colour"))
+    .offset(x: isActive(colourLevel) ? -swatchOverlap : swatchOverlap)
+    .zIndex(isActive(colourLevel) ? 2 : 1)
+    .accessibilityLabel(Text("Edit \(colourLevel.name) Colour"))
     .animation(
       .snappy(duration: 0.22, extraBounce: 0.13),
-      value: level
+      value: colourLevel
     )
-    .id(level)
+    .id(colourLevel)
   }
 
   var swatchPairTotalWidth: CGFloat {

@@ -11,10 +11,9 @@ import GraphicsKit
 import SwiftUI
 
 public struct ColourLevelView<Colour: ColourModel & EnvironmentResolvableColour>: View {
-  //  @Environment(AppHandler.self) private var store
+
   @Environment(\.modifierKeys) private var modifierKeys
 
-  //  @Binding var level: ColourLevel
   let level: ColourLevel
   let foreground: Colour
   let background: Colour
@@ -22,10 +21,6 @@ public struct ColourLevelView<Colour: ColourModel & EnvironmentResolvableColour>
   let overlapFactor: CGFloat
 
   public var body: some View {
-
-    //    Button {
-    //      store.colourHandler.focusedColourLevel = level
-    //    } label: {
 
     ZStack {
       PatternCanvas(preset: .opacityCheckerboard)
@@ -37,12 +32,9 @@ public struct ColourLevelView<Colour: ColourModel & EnvironmentResolvableColour>
     .frameFromSquare(diameter)
     .clipShape(.circle)
     .overlay {
-      Circle()
-        .fill(.clear)
-        .stroke(.pink, lineWidth: 1)
+      Circle().fill(.clear).stroke(.white, lineWidth: 1)
     }
-    
-    
+
     //    .onAppear {
     //      if isPreview {
     //        store.colourHandler.foregroundRGB.opacity(0.3)
@@ -54,28 +46,34 @@ public struct ColourLevelView<Colour: ColourModel & EnvironmentResolvableColour>
   }
 }
 extension ColourLevelView {
+  private func isActive(_ colour: Colour) -> Bool {
+    switch level {
+      case .foreground: colour == foreground 
+      case .background: colour == background
+    }
+  }
 
-//  var tapGesture: some Gesture {
-//    TapGesture()
-//      .onEnded { _ in
-//
-//      }
-//  }
-//
-//  var isHoldingOption: Bool {
-//    return modifierKeys.contains(.option)
-//  }
+  //  var tapGesture: some Gesture {
+  //    TapGesture()
+  //      .onEnded { _ in
+  //
+  //      }
+  //  }
+  //
+  //  var isHoldingOption: Bool {
+  //    return modifierKeys.contains(.option)
+  //  }
 
   // MARK: - Main States
   //  var isHovered: Bool {
   //    return store.colourHandler.hoveredColourLevel == level && !isHoldingOption
   //  }
-//  var isFocused: Bool {
-//    store.colourHandler.focusedColourLevel == level
-//  }
-//  var isActive: Bool {
-//    store.colourHandler.activeColourLevel == level
-//  }
+  //  var isFocused: Bool {
+  //    store.colourHandler.focusedColourLevel == level
+  //  }
+  //  var isActive: Bool {
+  //    store.colourHandler.activeColourLevel == level
+  //  }
 
   //  var swatchSize: CGFloat {
   //    isHovered ? store.swatchDiameter + 2 : store.swatchDiameter
@@ -122,14 +120,13 @@ extension ColourLevelView {
   //    //    store.colourHandler.selectedColour.contrastingBorderColour().toColour
   //  }
 
-//  func zIndex(_ level: ColourLevel) -> Double {
-//    guard store.isColourLevelActive(level) else {
-//      return 1
-//    }
-//    return 2
-//  }
+  //  func zIndex(_ level: ColourLevel) -> Double {
+  //    guard store.isColourLevelActive(level) else {
+  //      return 1
+  //    }
+  //    return 2
+  //  }
 
- 
 }
 //#if DEBUG
 //@available(macOS 15, iOS 18, *)

@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreTools
 
-public protocol ColourModel: Codable {
+public protocol ColourModel: Codable, Equatable {
   var colourSpace: Color.RGBColorSpace { get }
   var name: String? { get }
   var alpha: Double { get set }
