@@ -5,10 +5,8 @@
 //  Created by Dave Coleman on 24/1/2026.
 //
 
-import CoreTools
-import SwiftUI
 import ColourKit
-
+import CoreTools
 import SwiftUI
 
 //@Observable
@@ -16,17 +14,17 @@ import SwiftUI
 //  let activeLevel: ColourLevel = .foreground
 //}
 
-public struct ColourLevelSwitch<Colour: ColourModel>: View {
+public struct ColourLevelSwitch<Colour: ColourModel & EnvironmentResolvableColour>: View {
 
   @Environment(\.modifierKeys) private var modifierKeys
-  
-//  @State private var store = ColourSwitchHandler()
+
+  //  @State private var store = ColourSwitchHandler()
   @State private var isHovering: Bool = false
 
   @Binding var level: ColourLevel
   @Binding var foreground: Colour
   @Binding var background: Colour
-  
+
   let diameter: CGFloat
   let overlapFactor: CGFloat
 
@@ -38,6 +36,8 @@ public struct ColourLevelSwitch<Colour: ColourModel>: View {
     overlapFactor: CGFloat
   ) {
     self._level = level
+    self._foreground = foreground
+    self._background = background
     self.diameter = diameter
     self.overlapFactor = overlapFactor
   }
@@ -45,19 +45,13 @@ public struct ColourLevelSwitch<Colour: ColourModel>: View {
   public var body: some View {
 
     ZStack {
-      Button {
-        level = .background
-      } label: {
-        ColourLevelView(level: .background)
-      }
-
-      ColourLevelView(level: .background)
-      ColourLevelView(level: .foreground)
+      Level(.foreground)
+      Level(.background)
     }
     .allowsHitTesting(!modifierKeys.isHoldingOption)
     .frame(width: swatchPairTotalWidth)
     .onHover { isHovering = $0 }
-    
+
     .overlay(alignment: .leading) {
       if isHovering && modifierKeys.isHoldingOption {
         Label("Swap Foreground and Background", systemImage: "arrow.uturn.right")
@@ -71,12 +65,36 @@ public struct ColourLevelSwitch<Colour: ColourModel>: View {
           .allowsHitTesting(false)
       }
     }
-//    .gesture(tapSwapGesture, isEnabled: isHoldingOption)
+    //    .gesture(tapSwapGesture, isEnabled: isHoldingOption)
     .padding(.horizontal, Styles.sizeRegular.bump)
 
   }
 }
 extension ColourLevelSwitch {
+
+  @ViewBuilder
+  private func Level(_ colourLevel: ColourLevel) -> some View {
+    Button {
+      level = colourLevel
+    } label: {
+      ColourLevelView(
+        level: colourLevel,
+        foreground: foreground,
+        background: background,
+        diameter: diameter,
+        overlapFactor: overlapFactor
+      )
+    }
+    .buttonStyle(.plain)
+    .offset(x: isActive(level) ? -swatchOverlap : swatchOverlap)
+    .zIndex(isActive(level) ? 2 : 1)
+    .accessibilityLabel(Text("Edit \(level.name) Colour"))
+    .animation(
+      .snappy(duration: 0.22, extraBounce: 0.13),
+      value: level
+    )
+    .id(level)
+  }
 
   var swatchPairTotalWidth: CGFloat {
     /// *Both* swatches are drawn in toward one another by
@@ -84,12 +102,20 @@ extension ColourLevelSwitch {
     (diameter * 2) - (overlapFactor * diameter / 2)
   }
 
-//  var tapSwapGesture: some Gesture {
-//    TapGesture()
-//      .onEnded { _ in
-//        store.colourHandler.swapColours()
-//      }
-//  }
+  private var swatchOverlap: CGFloat {
+    diameter * overlapFactor
+  }
+
+  private func isActive(_ colourLevel: ColourLevel) -> Bool {
+    colourLevel == level
+  }
+
+  //  var tapSwapGesture: some Gesture {
+  //    TapGesture()
+  //      .onEnded { _ in
+  //        store.colourHandler.swapColours()
+  //      }
+  //  }
 
   //  var isHoldingOption: Bool {
   //    return modifierKeys.contains(.option)
@@ -99,3 +125,7 @@ extension ColourLevelSwitch {
   //    store.colourHandler.hoveredColourLevel != nil && isHoldingOption
   //  }
 }
+
+//extension ColourLevel {
+//  func isActive()
+//}

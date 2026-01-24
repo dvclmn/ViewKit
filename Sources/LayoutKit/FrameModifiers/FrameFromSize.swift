@@ -66,6 +66,22 @@ extension View {
     )
   }
   
+  /// Sets a frame with same value for width and height
+  public func frameFromSquare(
+    _ length: CGFloat?,
+    alignment: Alignment = .center
+  ) -> some View {
+    self.modifier(
+      FrameFromSizeModifier(
+        dimensions: FrameDimensions(
+          fromLength: length,
+          axis: [.horizontal, .vertical],
+          alignment: alignment
+        )
+      )
+    )
+  }
+  
   public func frameFromSize(
     _ size: CGSize?,
     alignment: Alignment = .center

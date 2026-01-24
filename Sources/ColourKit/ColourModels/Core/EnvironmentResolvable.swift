@@ -9,22 +9,21 @@ import SwiftUI
 
 public protocol EnvironmentResolvableColour {
   var toColour: Color { get }
-  
+
   init(
     colour: Color,
     environment: EnvironmentValues,
     name: String?
   )
-  
+
   init(
     resolved: Color.Resolved,
     name: String?
   )
 }
 
-
 extension RGBColour: EnvironmentResolvableColour {
-  
+
   public var toColour: Color {
     Color(
       colourSpace,
@@ -34,7 +33,7 @@ extension RGBColour: EnvironmentResolvableColour {
       opacity: alpha
     )
   }
-  
+
   public func toCGColour(in env: EnvironmentValues) -> CGColor? {
     toColour.resolve(in: env).cgColor
   }
@@ -52,7 +51,7 @@ extension RGBColour {
       name: name
     )
   }
-  
+
   public init(
     resolved: Color.Resolved,
     name: String?
@@ -79,7 +78,7 @@ extension HSVColour: EnvironmentResolvableColour {
 }
 
 extension HSVColour {
-  
+
   public init(
     colour: Color,
     environment: EnvironmentValues,
@@ -88,7 +87,7 @@ extension HSVColour {
     let resolved = colour.resolve(in: environment)
     self.init(resolved: resolved, name: name)
   }
-  
+
   public init(
     resolved: Color.Resolved,
     name: String?

@@ -10,12 +10,14 @@ import CoreTools
 import GraphicsKit
 import SwiftUI
 
-public struct ColourLevelView: View {
+public struct ColourLevelView<Colour: ColourModel & EnvironmentResolvableColour>: View {
   //  @Environment(AppHandler.self) private var store
   @Environment(\.modifierKeys) private var modifierKeys
 
   //  @Binding var level: ColourLevel
   let level: ColourLevel
+  let foreground: Colour
+  let background: Colour
   let diameter: CGFloat
   let overlapFactor: CGFloat
 
@@ -27,29 +29,25 @@ public struct ColourLevelView: View {
 
     ZStack {
       PatternCanvas(preset: .opacityCheckerboard)
-
-      //        Rectangle()
-      //          .fill(store.colourHandler.rgbSwiftUIColour(for: level))
+      switch level {
+        case .foreground: foreground.toColour
+        case .background: background.toColour
+      }
     }
-    .frame(width: store.swatchDiameter, height: store.swatchDiameter)
+    .frameFromSquare(diameter)
     .clipShape(.circle)
     .overlay {
       Circle()
         .fill(.clear)
         .stroke(.pink, lineWidth: 1)
     }
-    //    }  // END button
-    .buttonStyle(.plain)
-    .offset(x: swatchOffset(level))
-    .zIndex(zIndex(level))
-    .accessibilityLabel(Text("Edit \(level.name) Colour"))
-    .animation(.snappy(duration: 0.22, extraBounce: 0.13), value: store.colourHandler.activeColourLevel)
-    .id(level)
-    .onAppear {
-      if isPreview {
-        store.colourHandler.foregroundRGB.opacity(0.3)
-      }
-    }
+    
+    
+    //    .onAppear {
+    //      if isPreview {
+    //        store.colourHandler.foregroundRGB.opacity(0.3)
+    //      }
+    //    }
 
     //      .border(Color.green.opacity(0.3))
 
@@ -57,27 +55,27 @@ public struct ColourLevelView: View {
 }
 extension ColourLevelView {
 
-  var tapGesture: some Gesture {
-    TapGesture()
-      .onEnded { _ in
-
-      }
-  }
-
-  var isHoldingOption: Bool {
-    return modifierKeys.contains(.option)
-  }
+//  var tapGesture: some Gesture {
+//    TapGesture()
+//      .onEnded { _ in
+//
+//      }
+//  }
+//
+//  var isHoldingOption: Bool {
+//    return modifierKeys.contains(.option)
+//  }
 
   // MARK: - Main States
   //  var isHovered: Bool {
   //    return store.colourHandler.hoveredColourLevel == level && !isHoldingOption
   //  }
-  var isFocused: Bool {
-    store.colourHandler.focusedColourLevel == level
-  }
-  var isActive: Bool {
-    store.colourHandler.activeColourLevel == level
-  }
+//  var isFocused: Bool {
+//    store.colourHandler.focusedColourLevel == level
+//  }
+//  var isActive: Bool {
+//    store.colourHandler.activeColourLevel == level
+//  }
 
   //  var swatchSize: CGFloat {
   //    isHovered ? store.swatchDiameter + 2 : store.swatchDiameter
@@ -124,21 +122,14 @@ extension ColourLevelView {
   //    //    store.colourHandler.selectedColour.contrastingBorderColour().toColour
   //  }
 
-  func zIndex(_ level: ColourLevel) -> Double {
-    guard store.isColourLevelActive(level) else {
-      return 1
-    }
-    return 2
-  }
+//  func zIndex(_ level: ColourLevel) -> Double {
+//    guard store.isColourLevelActive(level) else {
+//      return 1
+//    }
+//    return 2
+//  }
 
-  func swatchOffset(_ level: ColourLevel) -> CGFloat {
-
-    let offset = store.swatchOverlap
-    guard store.isColourLevelActive(level) else {
-      return offset
-    }
-    return -offset
-  }
+ 
 }
 //#if DEBUG
 //@available(macOS 15, iOS 18, *)
