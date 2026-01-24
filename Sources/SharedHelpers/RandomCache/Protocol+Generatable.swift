@@ -33,3 +33,17 @@ nonisolated public protocol RandomGeneratable {
     parameters: RandomisationParameters<Value>
   ) -> Self
 }
+
+extension RandomGeneratable where Value.RawSignificand: FixedWidthInteger {
+  public static func generate(
+    count: Int,
+    using generator: inout RandomNumberGenerator,
+    parameters: RandomisationParameters<Value>
+  ) -> Value {
+    /// Generate a single random value using the provided range
+    guard let range = parameters.ranges.first else {
+      return 0
+    }
+    return Value.random(in: range, using: &generator)
+  }
+}
