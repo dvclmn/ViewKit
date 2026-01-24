@@ -25,24 +25,24 @@ public struct UnifiedDragModifier: ViewModifier {
 
   @Binding var dragRect: CGRect?
   let isEnabled: Bool
+  let tapCount: Int
   let minimumDistance: CGFloat
   let didUpdateTap: TapUpdate
 
   init(
     rect: Binding<CGRect?>,
     behavior: DragBehavior,
-    isEnabled: Bool = true,
-    minimumDistance: CGFloat = 5,
+    isEnabled: Bool,
+    tapCount: Int,
+    minimumDistance: CGFloat,
     didUpdateTap: @escaping TapUpdate,
-    //    didUpdateDrag: @escaping DragUpdate,
 
   ) {
     self._dragRect = rect
-    //    self.behavior = behavior
     self.isEnabled = isEnabled
+    self.tapCount = tapCount
     self.minimumDistance = minimumDistance
     self.didUpdateTap = didUpdateTap
-    //    self.isDragging = didUpdateDrag
 
     /// Initialize state based on behavior
     self._dragState = State(initialValue: DragGestureState(behavior))
@@ -50,12 +50,9 @@ public struct UnifiedDragModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-      .onTapGesture { didUpdateTap($0) }
+      .onTapGesture(count: tapCount) { didUpdateTap($0) }
       .gesture(dragGesture, isEnabled: isEnabled)
       .drawMarqueeRect(rect: dragRect, isEnabled: behaviour.isMarquee)
-//      .onAppear {
-//        print("`UnifiedDragModifier` appeared. Drag rect value: \(dragRect?.render(using: .short), default: "nil")")
-//      }
 
   }
 }
@@ -114,51 +111,20 @@ extension View {
   public func tapDragGesture(
     rect: Binding<CGRect?>,
     behavior: DragBehavior,
+    tapCount: Int = 1,
     isEnabled: Bool = true,
     minimumDistance: CGFloat = 5,
     didUpdateTap: @escaping TapUpdate = { _ in },
-    //    didUpdateDrag: @escaping DragUpdate = { _ in },
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
         rect: rect,
         behavior: behavior,
         isEnabled: isEnabled,
+        tapCount: tapCount,
         minimumDistance: minimumDistance,
         didUpdateTap: didUpdateTap,
-        //        didUpdateDrag: didUpdateDrag
       )
     )
   }
-  //  public func marqueeDrag(
-  //    isEnabled: Bool = true,
-  //    minimumDistance: CGFloat = 5,
-  //    includeTap: Bool = true,
-  //    onUpdate: @escaping (PointerInteraction?) -> Void
-  //  ) -> some View {
-  //    self.modifier(
-  //      UnifiedDragModifier(
-  //        behavior: .marquee(onUpdate: onUpdate),
-  //        isEnabled: isEnabled,
-  //        minimumDistance: minimumDistance,
-  //        includeTapGesture: includeTap
-  //      )
-  //    )
-  //  }
-  //
-  //  public func cumulativeDrag(
-  //    _ offset: Binding<CGSize>,
-  //    axes: GridAxis.Set = .all,
-  //    isEnabled: Bool = true,
-  //    minimumDistance: CGFloat = 5,
-  //    onDragging: @escaping (Bool) -> Void = { _ in }
-  //  ) -> some View {
-  //    self.modifier(
-  //      UnifiedDragModifier(
-  //        behavior: .cumulative(offset: offset, axes: axes, onDragging: onDragging),
-  //        isEnabled: isEnabled,
-  //        minimumDistance: minimumDistance
-  //      )
-  //    )
-  //  }
 }
