@@ -5,11 +5,11 @@
 //  Created by Dave Coleman on 23/1/2026.
 //
 
+import CasePaths
 import ColourKit
 import CoreGraphics
-import SwiftUI
 import CoreTools
-import CasePaths
+import SwiftUI
 
 /// Ideas for future properties:
 /// - capStyle
@@ -44,19 +44,19 @@ extension ActionLine {
 
 extension ActionLine {
   @CaseDetection
-//  @CasePathable
-//  @dynamicMemberLookup
+  //  @CasePathable
+  //  @dynamicMemberLookup
   public enum BoundaryKind: String, CaseIterable, Identifiable, NamedItem {
     case inner
     case outer
-    
+
     public var id: String { rawValue }
     public var name: String { rawValue.capitalized }
-    
+
     public var path: WritableKeyPath<ActionLine.Configuration, BoundaryStyle> {
-//    public var path: ReferenceWritableKeyPath<ActionLine.Configuration, BoundaryStyle> {
-//    public var path: ReferenceWritableKeyPath<Binding<ActionLine.Configuration>, BoundaryStyle> {
-//    public var path: WritableKeyPath<Binding<ActionLine.Configuration>, BoundaryStyle> {
+      //    public var path: ReferenceWritableKeyPath<ActionLine.Configuration, BoundaryStyle> {
+      //    public var path: ReferenceWritableKeyPath<Binding<ActionLine.Configuration>, BoundaryStyle> {
+      //    public var path: WritableKeyPath<Binding<ActionLine.Configuration>, BoundaryStyle> {
       switch self {
         case .inner: \.innerShape
         case .outer: \.outerShape

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BasePrimitives
+import CoreTools
 
 public protocol ColourHandlerProtocol {
   var foregroundRGB: RGBColour { get set }
@@ -16,6 +16,7 @@ public protocol ColourHandlerProtocol {
   var background: Color { get }
 }
 
+@CaseDetection
 public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable {
   public typealias Item = Self
   

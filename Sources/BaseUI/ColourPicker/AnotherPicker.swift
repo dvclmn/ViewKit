@@ -5,23 +5,30 @@
 //  Created by Dave Coleman on 24/1/2026.
 //
 
-import SwiftUI
 import ColourKit
+import SwiftUI
 
-struct AnotherColourPicker: View {
-//  @Environment(AppHandler.self) private var store
+public struct AnotherColourPicker: View {
+  //  @Environment(AppHandler.self) private var store
+  @AppStorage("isColourPickerExpanded") var isColourPickerExpanded: Bool = false
+  @AppStorage("areColourSlidersExpanded") var areColourSlidersExpanded: Bool = true
+
   @Binding var colour: HSVColour
-  var body: some View {
-    
+  let pickerSize: CGFloat
+
+  public init(
+    colour: Binding<HSVColour>,
+    pickerSize: CGFloat = 120
+  ) {
+    self._colour = colour
+    self.pickerSize = pickerSize
+  }
+  public var body: some View {
+
     DisclosureGroup("Picker", isExpanded: $isColourPickerExpanded) {
-      SquareColourPicker(
-        activeColour.isInner
-        ? $config.innerShape.colour
-        : $config.outerShape.colour,
-        size: 120
-      )
+      SquareColourPicker($colour, size: pickerSize)
     }
-    
+
     DisclosureGroup(
       "Sliders",
       isExpanded: $areColourSlidersExpanded
@@ -29,61 +36,26 @@ struct AnotherColourPicker: View {
       SliderGroup {
         QuickSlider(
           "Hue",
-          value:
-            activeColour.isInner
-          ? $config.innerShape.colour.hue
-          : $config.outerShape.colour.hue,
+          value: $colour.hue,
           range: .unitRange
         )
         .sliderStyle(.custom(.hueRainbow))
-        
+
         QuickSlider(
           "Saturation",
-          value:
-            activeColour.isInner
-          ? $config.innerShape.colour.saturation
-          : $config.outerShape.colour.saturation,
+          value: $colour.saturation,
           range: .unitRange
         )
-        .sliderStyle(
-          .custom(
-            .saturation(
-              activeColour.isInner
-              ? config.innerShape.colour.saturation
-              : config.outerShape.colour.saturation
-            )
-          )
-        )
-        
+        .sliderStyle(.custom(.saturation(colour.saturation)))
+
         QuickSlider(
           "Brightness",
-          value:
-            activeColour.isInner
-          ? $config.innerShape.colour.brightness
-          : $config.outerShape.colour.brightness,
+          value: $colour.brightness,
           range: .unitRange
         )
-        .sliderStyle(
-          .custom(
-            .brightness(
-              activeColour.isInner
-              ? config.innerShape.colour.hueSatOnly.toColour
-              : config.outerShape.colour.hueSatOnly.toColour
-            )
-          )
-        )
+        .sliderStyle(.custom(.brightness(colour.hueSatOnly.toColour)))
       }
     }
+    .disclosureGroupStyle(.custom)
   }
 }
-
-//extension ExampleView {
-//  
-//}
-//#if DEBUG
-//#Preview(traits: .size(.normal)) {
-//  @Previewable @State var store = AppHandler()
-//  ExampleView()
-//    .environment(store)
-//}
-//#endif
