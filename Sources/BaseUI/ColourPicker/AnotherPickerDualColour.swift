@@ -30,7 +30,6 @@ public struct DualHSVPicker: View {
   public var body: some View {
 
     QuickerPicker(activeColour.name, selection: $activeColour)
-      .pickerStyle(.segmented)
 
     AnotherColourPicker(
       colour: activeColour.isForeground
@@ -61,7 +60,6 @@ public struct DualRGBPicker: View {
   public var body: some View {
 
     QuickerPicker(activeColour.name, selection: $activeColour)
-      .pickerStyle(.segmented)
 
     RGBColourSliders(
       colour: activeColour.isForeground
