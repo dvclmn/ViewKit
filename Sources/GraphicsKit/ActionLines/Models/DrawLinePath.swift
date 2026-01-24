@@ -42,10 +42,10 @@ extension LinePathContext {
       let angle = atan2(end.y - start.y, end.x - start.x)
       let perpAngle: Double = angle + Double.pi / 2
       let mid = CGPoint(x: (start.x + end.x) / 2, y: (start.y + end.y) / 2)
-      
+
       let perpOffsetX = cos(perpAngle) * style.minWidth
       let perpOffsetY = sin(perpAngle) * style.maxWidth
-      
+
       let perp1 = CGPoint(x: mid.x + perpOffsetX, y: mid.y + perpOffsetY)
       let perp2 = CGPoint(x: mid.x - perpOffsetX, y: mid.y - perpOffsetY)
       path.move(to: start)
@@ -58,9 +58,10 @@ extension LinePathContext {
 
   var wavy: Path {
 
-    let cycles = 2.0
+    let cycles = style.cycles
     let amplitude = style.width
-    let samples = 40
+    let samples = style.sampleCount
+    
     let dx = end.x - start.x
     let dy = end.y - start.y
 
@@ -81,6 +82,12 @@ extension LinePathContext {
       if i == 0 {
         spinePath.move(to: pt)
       } else {
+        
+//        spinePath.addShape(at: pt, radius: 6, using: .circle)
+//        spinePath.addQuadCurve(
+//          to: pt,
+//          control: pt.shifted(dx: 3, dy: 3)
+//        )
         spinePath.addLine(to: pt)
       }
     }
@@ -88,7 +95,10 @@ extension LinePathContext {
     /// Create variable-width path with tapered ends
     return Path().variableWidthPath(
       spine: spinePath,
-      profile: .tapered(min: style.minWidth, max: style.maxWidth),
+      profile: .tapered(
+        min: style.minWidth,
+        max: style.maxWidth
+      ),
       samples: samples
     )
   }

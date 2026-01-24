@@ -8,9 +8,23 @@
 import Foundation
 import Sharing
 
-public typealias AppStorageShared<T: Sendable> = AppStorageKey<T>.Default
-public typealias FileStorageShared<T: Sendable> = FileStorageKey<T>.Default
-public typealias MemoryShared<T: Sendable> = InMemoryKey<T>.Default
+//public typealias AppStorageShared<T: Sendable> = AppStorageKey<T>.Default
+//public typealias FileStorageShared<T: Sendable> = FileStorageKey<T>.Default
+//public typealias MemoryShared<T: Sendable> = InMemoryKey<T>.Default
+
+extension SharedKey {
+  public static func storage<T: Codable>(
+    _ name: String,
+    defaultValue: T
+  ) -> Self where Self == FileStorageKey<T>.Default {
+    Self[
+      .fileStorage(
+        .applicationSupportDirectory.appending(component: name)
+      ),
+      default: defaultValue
+    ]
+  }
+}
 
 /// Example usage:
 /// ```
@@ -26,7 +40,7 @@ public typealias MemoryShared<T: Sendable> = InMemoryKey<T>.Default
 //  default defaultValue: @autoclosure @escaping @Sendable () -> T
 //) -> some SharedKey<T>
 //where T == FileStorageKey<T> {
-//  
+//
 //  Self[
 //    .fileStorage(file.url),
 //    default: defaultValue()
@@ -36,15 +50,15 @@ public typealias MemoryShared<T: Sendable> = InMemoryKey<T>.Default
 public struct SharedFile {
   public let name: String
   public let type: SharedFileType
-  
+
   public init(_ name: String, type: SharedFileType = .json) {
     self.name = name
     self.type = type
   }
-  
+
   public var url: URL {
     .applicationSupportDirectory
-    .appending(component: "\(name).\(type.rawValue)")
+      .appending(component: "\(name).\(type.rawValue)")
   }
 }
 
@@ -72,11 +86,9 @@ public struct SharedFile {
 //  }
 //}
 
-
 public enum SharedFileType: String {
   case json
 }
-
 
 //extension SharedReaderKey {
 //  public static func make<T>(

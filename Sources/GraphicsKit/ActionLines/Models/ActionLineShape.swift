@@ -15,7 +15,7 @@ import CasePaths
 /// - capStyle
 extension ActionLine {
 
-  public struct BoundaryStyle: Equatable {
+  public struct BoundaryStyle: Equatable, Sendable, Codable {
 
     public var radius: Double
     public var position: CGPoint

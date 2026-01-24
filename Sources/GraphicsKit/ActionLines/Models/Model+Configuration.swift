@@ -12,7 +12,7 @@ public enum ActionLine {}
 
 extension ActionLine {
 
-  public struct Configuration: Equatable {
+  public struct Configuration: Equatable, Sendable, Codable {
 
     public var density: Double
 
@@ -32,7 +32,8 @@ extension ActionLine {
       radialCoverage: Double = 1.0,
       lineStyle: Style = .init(
         shape: .diamond,
-        width: 12
+        minWidth: 1,
+        maxWidth: 12
       ),
       outerShape: BoundaryStyle = .init(
         radius: 1.0,
