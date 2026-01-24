@@ -86,4 +86,11 @@ public enum LineShape: String, CaseIterable, Identifiable {
   
   public var id: String { rawValue }
   public var name: String { rawValue.capitalized }
+  public var icon: String {
+    switch self {
+      case .triangle: "triangle"
+      case .diamond: "diamond"
+      case .wave: "water.waves"
+    }
+  }
 }

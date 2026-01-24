@@ -18,7 +18,6 @@ import SwiftUI
 /// - Units
 
 struct SliderCustom: View {
-//struct SliderCustom<Label: View>: View {
   @Environment(\.explicitHeight) private var explicitHeight
   @Environment(\.cornerRounding) private var cornerRounding
   @Environment(\.sliderComponents) private var sliderComponents
@@ -29,12 +28,7 @@ struct SliderCustom: View {
   let thumbDiameter: CGFloat = 16
   let style: TrackFillStyle
 
-//  @ViewBuilder let label: Label
-
   public var body: some View {
-
-//    HStack {
-//      label
 
       GeometryReader { proxy in
         ZStack {
@@ -74,8 +68,6 @@ struct SliderCustom: View {
 
       /// Prevents the geo reader from taking up more space than it really needs
       .frame(height: trackHeightForFrame)
-//    }
-//    .frame(maxWidth: .infinity)
   }
 }
 

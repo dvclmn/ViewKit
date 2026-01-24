@@ -16,17 +16,13 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
   @State private var store: SliderHandler
 
   @Binding var value: Double
-  //  let label: QuickLabel
-  //  let range: ClosedRange<Double>
-  //  let didChangeSlider: SliderOutput
 
   public var body: some View {
-
-    /// Handles slider Label, Track, and Units display
 
     Group {
       if isWithinSliderGroup {
         GridRow {
+          /// Handles slider Label, Track, and Units display
           SliderCore()
         }
 
@@ -36,15 +32,6 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
         }
       }
     }
-    //    .onAppear {
-    //      if store.didChangeSlider == nil {
-    //        store.didChangeSlider = didChangeSlider
-    //      }
-    //    }
-    //    .task(id: label) { store.label = label }
-    //    .task(id: range) { store.range = range }
-    //    .task(id: step) { store.range = range }
-    //    .task(id: range) { store.range = range }
     .bindModel($store.value, to: $value)
     .environment(\.sliderHandler, store)
   }
@@ -76,9 +63,7 @@ extension QuickSlider {
     step: Double? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
-    //    self.label = label
     self._value = value
-    //    self.range = range
     self._store = State(
       initialValue: SliderHandler(
         value: value.wrappedValue,
@@ -88,6 +73,5 @@ extension QuickSlider {
         didChangeSlider: didChangeSlider
       )
     )
-    //    self.didChangeSlider = didChangeSlider
   }
 }
