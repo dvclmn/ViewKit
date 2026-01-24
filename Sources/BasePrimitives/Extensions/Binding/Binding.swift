@@ -12,7 +12,7 @@ extension Binding where Value == CGFloat {
   public var toBindingDouble: Binding<Double> {
     Binding<Double>(
       get: { Double(wrappedValue) },
-      set: { wrappedValue = CGFloat($0) }
+      set: { wrappedValue = Value($0) }
     )
   }
 }
@@ -33,7 +33,7 @@ extension Binding where Value == Double {
   public var toBindingFloat: Binding<CGFloat> {
     Binding<CGFloat>(
       get: { CGFloat(wrappedValue) },
-      set: { wrappedValue = Double($0) }
+      set: { wrappedValue = Value($0) }
     )
   }
 }
@@ -43,7 +43,7 @@ extension Binding where Value == Int {
   public var toBindingDouble: Binding<Double> {
     Binding<Double>(
       get: { Double(wrappedValue) },
-      set: { wrappedValue = Int($0) }
+      set: { wrappedValue = Value($0) }
     )
   }
 }
@@ -57,6 +57,8 @@ extension Binding where Value: BinaryFloatingPoint & Sendable {
     )
   }
 }
+
+
 
 extension Binding where Value == Bool {
   public var reversed: Binding<Bool> {
@@ -84,13 +86,13 @@ extension Binding where Value: OptionSet & Sendable, Value.Element == Value {
   }
 }
 
-extension Binding {
-  //extension Binding where Self: Sendable, Value: Sendable {
-  @MainActor
-  public func createBinding(_ keyPath: ReferenceWritableKeyPath<Self, Value>) -> Binding<Value> {
-    return Binding(
-      get: { self[keyPath: keyPath] },
-      set: { self[keyPath: keyPath] = $0 }
-    )
-  }
-}
+//extension Binding {
+//  //extension Binding where Self: Sendable, Value: Sendable {
+//  @MainActor
+//  public func createBinding(_ keyPath: ReferenceWritableKeyPath<Self, Value>) -> Binding<Value> {
+//    return Binding(
+//      get: { self[keyPath: keyPath] },
+//      set: { self[keyPath: keyPath] = $0 }
+//    )
+//  }
+//}

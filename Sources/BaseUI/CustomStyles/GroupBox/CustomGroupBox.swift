@@ -35,19 +35,6 @@ public struct CustomGroupBox: GroupBoxStyle {
           strokeColour: Color.white.opacity(0.1)
         )
 
-        //        RoundedRectangle(cornerRadius: cornerRounding ?? Styles.sizeTiny)
-        //          .fill(backgroundStyle ?? AnyShapeStyle(Color.white.opacity(0.03)))
-        //
-        //
-        //
-        ////          .fill(.white.opacity(emphasis == .selected ? 0.06 : 0.03))
-        //          .stroke(
-        //            Color.white.opacity(0.1),
-        ////            strokeConfig.colour,
-        ////            strokeConfig.colour.opacity(emphasis == .selected ? 1.0 : 0.6),
-        //            lineWidth: 1.0
-        ////            lineWidth: strokeConfig.thickness
-        //          )
         .animation(Styles.animationSpringQuickNSubtle, value: isEmphasised)
       }
     }
@@ -59,29 +46,3 @@ extension GroupBoxStyle where Self == CustomGroupBox {
     CustomGroupBox()
   }
 }
-
-struct CustomGroupBoxView: View {
-
-  var body: some View {
-
-    GroupBox("Start Point") {
-      HStack {
-        Rectangle()
-          .aspectRatio(1, contentMode: .fit)
-          .frame(maxWidth: 60)
-
-        Text(SampleContent.Strings.paragraphs[6])
-      }
-      .frame(maxWidth: .infinity, alignment: .leading)
-    }
-    .groupBoxStyle(.custom)
-    .padding(120)
-
-  }
-}
-#if DEBUG
-@available(macOS 15, iOS 18, *)
-#Preview(traits: .size(.normal)) {
-  CustomGroupBoxView()
-}
-#endif

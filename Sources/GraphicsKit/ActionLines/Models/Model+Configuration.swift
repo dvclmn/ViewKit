@@ -36,7 +36,7 @@ extension ActionLine {
       ),
       outerShape: BoundaryStyle = .init(
         radius: 1.0,
-        colour: HSVColour(h: 0.3, s: 0.1, v: 0.4),
+        colour: HSVColour(h: 0.25, s: 0.6, v: 0.5),
       ),
       innerShape: BoundaryStyle = .init(
         radius: 0.2

@@ -22,6 +22,13 @@ public enum BoundaryShape: String, Hashable, CaseIterable, Identifiable, Pickabl
       case .matchViewport: "Viewport"
     }
   }
+  public var icon: String {
+    switch self {
+      case .square: "square"
+      case .circle: "circle"
+      case .matchViewport: "macwindow"
+    }
+  }
 }
 
 extension ActionLine.BoundaryKind {

@@ -37,14 +37,10 @@ public enum HSVComponent: String, ColourComponent, Sendable {
 
   public var set: (inout HSVColour, Double) -> Void {
     switch self {
-      case .hue:
-        { $0.hue = Double($1) }
-      case .saturation:
-        { $0.saturation = Double($1) }
-      case .brightness:
-        { $0.brightness = Double($1) }
-      case .alpha:
-        { $0.alpha = Double($1) }
+      case .hue: { $0.hue = Double($1) }
+      case .saturation: { $0.saturation = Double($1) }
+      case .brightness: { $0.brightness = Double($1) }
+      case .alpha: { $0.alpha = Double($1) }
     }
   }
 
