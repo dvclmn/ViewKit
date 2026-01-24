@@ -8,8 +8,6 @@
 import CoreTools
 import SwiftUI
 
-// TODO: I want to keep this, but cannot figure out main-actor whatevers
-
 /// Defines the characteristics of a rough stroke
 public struct RoughPathStyle: Sendable {
   var roughness: CGFloat
@@ -47,7 +45,7 @@ public struct RoughPathVariations: RandomGeneratable, Sendable {
   public static func generate(
     count: Int,
     using generator: inout any RandomNumberGenerator,
-    parameters: RandomisationParameters
+    parameters: RandomisationParameters<Value>
   ) -> RoughPathVariations {
     let roughness = parameters.additionalParams["roughness"] as? CGFloat ?? 10
     let jitter = parameters.additionalParams["jitter"] as? CGFloat ?? 1.0

@@ -46,7 +46,7 @@ extension ActionLineVariations {
   public static func generate(
     count: Int,
     using generator: inout RandomNumberGenerator,
-    parameters: RandomisationParameters
+    parameters: RandomisationParameters<Value>
   ) -> Self {
 
     let baseAngles = (0..<count).map { _ in

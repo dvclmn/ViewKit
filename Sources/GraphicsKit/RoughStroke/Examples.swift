@@ -31,23 +31,28 @@ struct RoughnessExampleView: View {
         .roughen(roughness: roughness, segments: segments, jitter: jitter)
         .fill(.brown)
         .stroke(.blue, style: .init(lineWidth: 2))
-      Circle()
-        .roughStroke(
-          style: .init(roughness: 2, segments: 30),
-          lineWidth: 2,
-          color: .blue
-        )
+//      Circle()
+//        .roughStroke(
+//          style: .init(roughness: 2, segments: 30),
+//          lineWidth: 2,
+//          color: .blue
+//        )
         //              .fill(.brown)
         .frame(width: 200)
 
-      QuickSlider("Roughness", value: $roughness, range: 1...100)
-      QuickSlider("Segments", value: $segments, range: 1...100)
-      QuickSlider("Jitter", value: $jitter, range: 1...100)
+//      QuickSlider("Roughness", value: $roughness, range: 1...100)
+//      QuickSlider("Segments", value: $segments, range: 1...100)
+//      QuickSlider("Jitter", value: $jitter, range: 1...100)
     }
     .padding(60)
   }
 }
 
+#if DEBUG
+#Preview {
+  RoughnessExampleView()
+}
+#endif
 //// In a Canvas
 //struct CanvasExample: View {
 //  var body: some View {

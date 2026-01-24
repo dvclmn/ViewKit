@@ -7,11 +7,10 @@
 
 import SwiftUI
 
-// TODO: I want to keep this, but cannot figure out main-actor whatevers
-nonisolated public struct RoughPath<S: Shape>: Shape {
+public struct RoughPath<S: Shape>: Shape {
   let sourceShape: S
   let style: RoughPathStyle
-  
+
   public init(
     _ source: S,
     style: RoughPathStyle
@@ -19,20 +18,20 @@ nonisolated public struct RoughPath<S: Shape>: Shape {
     self.sourceShape = source
     self.style = style
   }
-  
-  @MainActor public func path(in rect: CGRect) -> Path {
+
+  public func path(in rect: CGRect) -> Path {
     let path = sourceShape.path(in: rect)
-    
+
     var generator = RoughPathGenerator(style: style)
     var roughPath = generator.roughenPath(path)
-    
+
     roughPath.closeSubpath()
     return roughPath
   }
 }
 
-public extension Shape {
-  func roughen(
+extension Shape {
+  public func roughen(
     roughness: CGFloat = 10,
     segments: CGFloat = 20,
     jitter: CGFloat = 4
@@ -52,7 +51,7 @@ public extension Shape {
 extension GraphicsContext {
   public mutating func roughStroke(
     _ path: Path,
-    style: RoughStrokeStyle,
+    style: RoughPathStyle,
     color: Color = .black,
     lineWidth: CGFloat = 1
   ) {

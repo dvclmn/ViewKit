@@ -8,7 +8,6 @@
 import CoreTools
 import SwiftUI
 
-// TODO: I want to keep this, but cannot figure out main-actor whatevers
 public struct RoughPathGenerator {
   private let style: RoughPathStyle
   private var randomGenerator: RandomValueGenerator<RoughPathVariations>

@@ -30,7 +30,7 @@ public struct RandomCache<T: RandomGeneratable> {
   /// - Returns: The cached or newly generated values.
   public mutating func values(
     count: Int,
-    parameters: RandomisationParameters,
+    parameters: RandomisationParameters<T.Value>,
     cacheKey: String? = nil
   ) -> T {
     let key = cacheKey ?? "\(count)_\(parameters.hashValue)"

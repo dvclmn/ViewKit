@@ -28,7 +28,7 @@ public struct RandomValueGenerator<T: RandomGeneratable> {
   /// - Returns: The generated or cached values.
   public mutating func generate(
     count: Int,
-    parameters: RandomisationParameters,
+    parameters: RandomisationParameters<T.Value>,
     cacheKey: String? = nil
   ) -> T {
     cache.values(

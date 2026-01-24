@@ -30,6 +30,6 @@ nonisolated public protocol RandomGeneratable {
   static func generate(
     count: Int,
     using generator: inout any RandomNumberGenerator,
-    parameters: RandomisationParameters
+    parameters: RandomisationParameters<Value>
   ) -> Self
 }
