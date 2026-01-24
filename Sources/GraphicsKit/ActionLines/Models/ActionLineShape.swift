@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 23/1/2026.
 //
 
-import Foundation
+import SwiftUI
 import CoreGraphics
 
 extension ActionLine {
@@ -18,6 +18,7 @@ extension ActionLine {
     /// A randomised value controlling visual 'rag' quality,
     /// for boundary action line edges?
     public var variation: Double
+    public var colour: Color
     public var shape: BoundaryShape
     /// Future properties:
     // var capStyle: CapStyle
@@ -27,11 +28,13 @@ extension ActionLine {
       radius: Double,
       position: CGPoint = .zero,
       variation: Double = 1,
+      colour: Color,
       shape: BoundaryShape = .circle
     ) {
       self.radius = radius
       self.position = position
       self.variation = variation
+      self.colour = colour
       self.shape = shape
     }
   }

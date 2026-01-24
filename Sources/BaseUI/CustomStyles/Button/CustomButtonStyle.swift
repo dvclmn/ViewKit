@@ -6,11 +6,9 @@
 //
 //
 
-
 import Foundation
 import SwiftUI
 
-//
 extension PrimitiveButtonStyle where Self == BasePlainButton {
   @available(*, deprecated, renamed: "base", message: "Prefer more accurately named 'base'.")
   public static var custom: Self { Self() }
