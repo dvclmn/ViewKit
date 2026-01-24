@@ -21,7 +21,9 @@ nonisolated public protocol RandomGeneratable {
   /// compatibility with floating-point random operations.
   associatedtype Value: BinaryFloatingPoint
   
-  /// Generates a new instance with random values.
+  /// Defines *how* a conforming type produces random data
+  /// The core, stateless randomization engine. It’s deterministic for the same
+  /// seed and parameters, and doesn’t care about caching.
   /// - Parameters:
   ///   - count: The number of random values to generate.
   ///   - generator: The random number generator to use.
@@ -34,12 +36,15 @@ nonisolated public protocol RandomGeneratable {
   ) -> Self
 }
 
+/// Constraint `where Value.RawSignificand: FixedWidthInteger`
+/// seems to allow 'seeing' that `random(in:using:)` method
 extension RandomGeneratable where Value.RawSignificand: FixedWidthInteger {
   public static func generate(
     count: Int,
     using generator: inout RandomNumberGenerator,
     parameters: RandomisationParameters<Value>
   ) -> Value {
+    
     /// Generate a single random value using the provided range
     guard let range = parameters.ranges.first else {
       return 0

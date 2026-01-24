@@ -21,6 +21,7 @@ public struct RandomValueGenerator<T: RandomGeneratable> {
   }
   
   /// Generates or retrieves cached random values.
+  /// Delegates actual random generation to `RandomGeneratable`
   /// - Parameters:
   ///   - count: The number of random values needed.
   ///   - parameters: Parameters influencing the generation.

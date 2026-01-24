@@ -28,13 +28,13 @@ extension DragGestureState {
   var value: CGRect { lastComputedValue?.toCGRectZeroOrigin ?? .zero }
 
   /// For this, marquee wants the `Gesture.Value` start location
-  /// Continuous wants the latest `Binding<CGSize>` offset value.
+  /// Continuous wants the latest `Binding<CGRect>` offset value.
   mutating func begin(with currentExternalValue: CGPoint? = nil) {
-    guard let val = currentExternalValue else { return }
-    anchor = val
+    anchor = currentExternalValue
   }
 
   /// It's important for marquee to be able to expres `nil`
+  /// This is also why the main binding is `Binding<CGRect?>`
   mutating func update(
     _ gestureValue: DragGesture.Value,
   ) -> CGRect? {
@@ -51,7 +51,6 @@ extension DragGestureState {
           print("No anchor found, returning current value: \(value.displayString)")
           return value
         }
-
         let base = anchor.toCGSize
         let size = applyAxis(
           behaviour.axes,
@@ -60,6 +59,7 @@ extension DragGestureState {
         )
 
         lastComputedValue = size
+        
         return CGRect(origin: .zero, size: size)
     }
 

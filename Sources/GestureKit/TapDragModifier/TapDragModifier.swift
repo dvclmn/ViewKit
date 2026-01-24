@@ -69,7 +69,9 @@ extension UnifiedDragModifier {
 
             /// IMPORTANT: Not sure if I should use `dragRect.origin`,
             /// or the *size* (and convert to CGPoint)
-            with: behaviour.isMarquee ? value.startLocation : dragRect?.size.toCGPoint
+            with: behaviour.isMarquee
+              ? value.startLocation
+              : dragRect?.size.toCGPoint
           )
         }
 
@@ -97,6 +99,26 @@ extension View {
     self.modifier(
       UnifiedDragModifier(
         rect: rect,
+        behavior: behavior,
+        isEnabled: isEnabled,
+        tapCount: tapCount,
+        minimumDistance: minimumDistance,
+        didUpdateTap: didUpdateTap,
+      )
+    )
+  }
+
+  public func tapDragGesture(
+    translation: Binding<CGSize?>,
+    behavior: DragBehavior,
+    tapCount: Int = 1,
+    isEnabled: Bool = true,
+    minimumDistance: CGFloat = 5,
+    didUpdateTap: @escaping TapUpdate = { _ in },
+  ) -> some View {
+    self.modifier(
+      UnifiedDragModifier(
+        rect: translation.toBindingRect,
         behavior: behavior,
         isEnabled: isEnabled,
         tapCount: tapCount,

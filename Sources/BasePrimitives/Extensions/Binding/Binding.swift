@@ -58,33 +58,7 @@ extension Binding where Value: BinaryFloatingPoint & Sendable {
   }
 }
 
-// MARK: - Binding CGRect
-extension Binding where Value == CGRect {
-  public var getOrigin: CGPoint {
-    return self.wrappedValue.origin
-  }
-  public var getSize: CGSize {
-    return self.wrappedValue.size
-  }
 
-  public var toBindingOrigin: Binding<CGPoint> {
-    return Binding<CGPoint> {
-      return self.wrappedValue.origin
-    } set: { newValue in
-      let currentSize: CGSize = self.wrappedValue.size
-      self.wrappedValue = CGRect(origin: newValue, size: currentSize)
-    }
-  }
-
-  public var toBindingSize: Binding<CGSize> {
-    return Binding<CGSize> {
-      return self.wrappedValue.size
-    } set: { newValue in
-      let currentOrigin: CGPoint = self.wrappedValue.origin
-      self.wrappedValue = CGRect(origin: currentOrigin, size: newValue)
-    }
-  }
-}
 extension Binding where Value == Bool {
   public var reversed: Binding<Bool> {
     return .init(
@@ -93,26 +67,6 @@ extension Binding where Value == Bool {
     )
   }
 }
-
-
-//extension Binding {
-//  @MainActor
-//  public func keyPathBinding<T>(
-//    keyPath: ReferenceWritableKeyPath<Value, T>
-//  ) -> Binding<T> {
-//    Binding<T> {
-//      self[keyPath: keyPath]
-//    } set: {
-//      self[keyPath: keyPath] = $0
-//    }
-//  }
-//  //  public var reversed: Binding<Bool> {
-//  //    return .init(
-//  //      get: { !self.wrappedValue },
-//  //      set: { self.wrappedValue = !$0 }
-//  //    )
-//  //  }
-//}
 
 // MARK: - OptionSet
 extension Binding where Value: OptionSet & Sendable, Value.Element == Value {
@@ -130,55 +84,3 @@ extension Binding where Value: OptionSet & Sendable, Value.Element == Value {
     )
   }
 }
-
-// MARK: - Binding CGPoint
-//extension Binding where Value == CGPoint {
-//  public var toBinding: CGPoint {
-//    return self.wrappedValue.origin
-//  }
-//  public var getSize: CGSize {
-//    return self.wrappedValue.size
-//  }
-//
-//  public var toBindingOrigin: Binding<CGPoint> {
-//    return Binding<CGPoint> {
-//      return self.wrappedValue.origin
-//    } set: { newValue in
-//      let currentSize: CGSize = self.wrappedValue.size
-//      self.wrappedValue = CGRect(origin: newValue, size: currentSize)
-//    }
-//  }
-//
-//  public var toBindingSize: Binding<CGSize> {
-//    return Binding<CGSize> {
-//      return self.wrappedValue.size
-//    } set: { newValue in
-//      let currentOrigin: CGPoint = self.wrappedValue.origin
-//      self.wrappedValue = CGRect(origin: currentOrigin, size: newValue)
-//    }
-//  }
-//}
-
-//public extension Binding {
-//
-//  static func convert<TInt, TFloat>(_ intBinding: Binding<TInt>) -> Binding<TFloat>
-//  where TInt: BinaryInteger & Sendable,
-//        TFloat: BinaryFloatingPoint, TFloat.Stride: BinaryFloatingPoint {
-//
-//          Binding<TFloat> (
-//            get: { TFloat(intBinding.wrappedValue) },
-//            set: { intBinding.wrappedValue = TInt($0) }
-//          )
-//        }
-//
-//  static func convert<TFloat, TInt>(_ floatBinding: Binding<TFloat>) -> Binding<TInt>
-//  where TFloat: BinaryFloatingPoint & Sendable,
-//        TFloat.Stride: BinaryFloatingPoint,
-//        TInt: BinaryInteger {
-//
-//          Binding<TInt> (
-//            get: { TInt(floatBinding.wrappedValue) },
-//            set: { floatBinding.wrappedValue = TFloat($0) }
-//          )
-//        }
-//}

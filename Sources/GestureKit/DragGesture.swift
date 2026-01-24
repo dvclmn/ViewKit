@@ -21,7 +21,6 @@ extension DragGesture.Value {
   public func toRect(
     from start: CGPoint,
     end locationKind: EndLocationKind,
-    //    usingPredicated: Bool = true
   ) -> CGRect {
     CGRect.boundingRect(
       from: start,

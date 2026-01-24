@@ -1,0 +1,61 @@
+//
+//  Binding+CGRect.swift
+//  BaseHelpers
+//
+//  Created by Dave Coleman on 24/1/2026.
+//
+
+import SwiftUI
+
+// MARK: - Binding CGRect
+extension Binding where Value == CGRect {
+  public var getOrigin: CGPoint {
+    return self.wrappedValue.origin
+  }
+  public var getSize: CGSize {
+    return self.wrappedValue.size
+  }
+
+  public var toBindingOrigin: Binding<CGPoint> {
+    return Binding<CGPoint> {
+      return self.wrappedValue.origin
+    } set: { newValue in
+      let currentSize: CGSize = self.wrappedValue.size
+      self.wrappedValue = CGRect(origin: newValue, size: currentSize)
+    }
+  }
+
+  public var toBindingSize: Binding<CGSize> {
+    return Binding<CGSize> {
+      wrappedValue.size
+    } set: {
+      let currentOrigin = wrappedValue.origin
+      wrappedValue = CGRect(origin: currentOrigin, size: $0)
+    }
+  }
+}
+
+// MARK: - Binding CGSize
+extension Binding where Value == CGSize {
+  /// This ignores the rect's anchor, so leaves it at `zero`
+  /// Just focuses on the rect's `size`
+  public var toBindingRect: Binding<CGRect> {
+    return Binding<CGRect> {
+      wrappedValue.toCGRectZeroOrigin
+    } set: {
+      wrappedValue = $0.size
+    }
+  }
+}
+
+extension Binding where Value == CGSize? {
+  /// This ignores the rect's anchor, so leaves it at `zero`
+  /// Just focuses on the rect's `size`
+  public var toBindingRect: Binding<CGRect?> {
+    return Binding<CGRect?> {
+      wrappedValue?.toCGRectZeroOrigin
+    } set: {
+      wrappedValue = $0?.size
+    }
+  }
+}
