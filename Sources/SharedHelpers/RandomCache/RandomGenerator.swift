@@ -27,7 +27,7 @@ public struct RandomValueGenerator<T: RandomGeneratable> {
   ///   - parameters: Parameters influencing the generation.
   ///   - cacheKey: Optional custom key for caching.
   /// - Returns: The generated or cached values.
-  public mutating func generate(
+  public mutating func cachedValue(
     count: Int,
     parameters: RandomisationParameters<T.Value>,
     cacheKey: String? = nil

@@ -7,14 +7,15 @@
 
 import SwiftUI
 
-extension GraphicsContext {
+extension Path {
+//extension GraphicsContext {
   /// Creates a closed path with variable width along a spine path
   /// - Parameters:
   ///   - spine: The center path to follow
   ///   - widthAt: Closure that returns the half-width at a given parametric position (0...1)
   ///   - samples: Number of samples along the path for smooth curves
   /// - Returns: A closed path that can be filled
-  func variableWidthPath(
+  public func variableWidthPath(
     spine: Path,
     widthAt: @escaping (Double) -> CGFloat,
     samples: Int = 50
@@ -106,7 +107,7 @@ extension GraphicsContext {
 }
 
 // Convenience extension for common taper functions
-extension GraphicsContext {
+extension Path {
   /// Common width profiles for variable-width paths
   public enum WidthProfile {
     case constant(CGFloat)

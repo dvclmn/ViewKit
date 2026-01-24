@@ -12,7 +12,6 @@ import Foundation
 /// This structure holds both numeric ranges and additional parameters that may affect
 /// the random generation process.
 public struct RandomisationParameters<T: BinaryFloatingPoint>: Hashable {
-//public struct RandomisationParameters<T: BinaryFloatingPoint>: Hashable {
   
   /// Ranges that define the bounds for random value generation.
   public var ranges: [ClosedRange<T>]

@@ -20,15 +20,16 @@ public struct RoughPathGenerator {
 
   private mutating func getVariations(forPointCount count: Int) -> RoughPathVariations? {
     if cachedVariations?.pointCount != count || cachedVariations == nil {
-      cachedVariations = randomGenerator.generate(
+      let params = RandomisationParameters(
+        ranges: [-style.roughness...style.roughness],
+        additionalParams: [
+          "roughness": style.roughness,
+          "jitter": style.jitter,
+        ]
+      )
+      cachedVariations = randomGenerator.cachedValue(
         count: count,
-        parameters: .init(
-          ranges: [-style.roughness...style.roughness],
-          additionalParams: [
-            "roughness": style.roughness,
-            "jitter": style.jitter,
-          ]
-        )
+        parameters: params
       )
     }
     return cachedVariations
