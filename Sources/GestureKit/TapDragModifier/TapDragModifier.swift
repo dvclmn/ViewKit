@@ -16,7 +16,6 @@ import SwiftUI
 /// - Marquee sent drag back via callback, now Binding
 /// - Cumulative used Binding for drag offset
 
-public typealias DragUpdate = (Bool) -> Void
 public typealias TapUpdate = (CGPoint) -> Void
 
 public struct UnifiedDragModifier: ViewModifier {
@@ -64,28 +63,17 @@ extension UnifiedDragModifier {
     DragGesture(minimumDistance: minimumDistance)
       .onChanged { value in
 
-        /// 1. Only anchor once at the very beginning of this specific drag
+        /// Only anchor once at the very beginning of this specific drag
         if dragState.anchor == nil {
           dragState.begin(
+
             /// IMPORTANT: Not sure if I should use `dragRect.origin`,
             /// or the *size* (and convert to CGPoint)
             with: behaviour.isMarquee ? value.startLocation : dragRect?.size.toCGPoint
           )
         }
 
-        /// Marquee approach:
-        //        guard let origin = dragOrigin else { return }
-        //        let rect = value.toRect(from: origin, end: .standard)
-        //
-        //        rectToRender = rect
-        //        didUpdateRect(.drag(rect, .changed))
-        //        dragState.handleDragChange(value, behavior: behavior)
-
-        /// Accrue approach
-        /// 2. Update the binding using the stable anchor
-        //        offset = dragState.update(value)
         dragRect = dragState.update(value)
-        //        isDragging(true)
       }
 
       .onEnded { value in
@@ -93,17 +81,7 @@ extension UnifiedDragModifier {
           dragRect = nil
         }
         dragState.end()
-        //        isDragging(true)
-        // Marquee:
-        //        didUpdateRect(nil)
-        //        rectToRender = nil
-        //        dragOrigin = nil
-
-        // Acrue:
-        //        tracker.end()
-        //        isDragging(false)
       }
-
   }
 }
 
