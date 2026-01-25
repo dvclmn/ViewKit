@@ -10,12 +10,12 @@ import SwiftUI
 
 public typealias SliderOutput = (SliderPhase) -> Void
 
-public struct QuickSlider: View, ValueFormattable, SliderStylable {
+public struct QuickSlider<Value: BinaryFloatingPoint>: View, ValueFormattable, SliderStylable {
   @Environment(\.isWithinSliderGroup) private var isWithinSliderGroup
   @Environment(\.sliderComponents) private var sliderComponents
-  @State private var store: SliderHandler
+  @State private var store: SliderHandler<Value>
 
-  @Binding var value: Double
+  @Binding var value: Value
 
   public var body: some View {
 
@@ -74,4 +74,21 @@ extension QuickSlider {
       )
     )
   }
+  
+  /// For Binding to CGFloat more conveniently
+//  public init(
+//    _ title: String,
+//    value: Binding<Double>,
+//    range: ClosedRange<Double>,
+//    step: Double? = nil,
+//    didChangeSlider: @escaping SliderOutput = { _ in },
+//  ) {
+//    self.init(
+//      label: QuickLabel(title),
+//      value: value,
+//      range: range,
+//      step: step,
+//      didChangeSlider: didChangeSlider
+//    )
+//  }
 }

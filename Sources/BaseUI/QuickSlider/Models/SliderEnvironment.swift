@@ -21,7 +21,7 @@ extension EnvironmentValues {
 
   @Entry var isWithinSliderGroup: Bool = false
 
-  @Entry var sliderHandler: SliderHandler = .init(
+  @Entry var sliderHandler: SliderHandler<CGFloat> = .init(
     value: 1.0,
     label: "",
     range: 0...1,

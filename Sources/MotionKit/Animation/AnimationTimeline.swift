@@ -27,7 +27,7 @@ public struct AnimationTimeline<Content: View>: View {
     TimelineView(
       .animation(
         minimumInterval: frameRate.rate,
-        paused: isPaused
+        paused: isPaused.wrappedValue
           //        paused: isPaused.wrappedValue
       )
     ) { context in

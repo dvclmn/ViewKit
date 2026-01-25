@@ -9,10 +9,10 @@ import ColourKit
 import Foundation
 
 public struct PointStyle: Sendable, Codable, Equatable {
-  public let colour: RGBColour
-  public let colourSecondary: RGBColour?
-  public let radius: CGFloat
-  public let shape: PointShape
+  public var colour: RGBColour
+  public var colourSecondary: RGBColour?
+  public var radius: CGFloat
+  public var shape: PointShape
   
   public init(
     colour: RGBColour = .brown,
