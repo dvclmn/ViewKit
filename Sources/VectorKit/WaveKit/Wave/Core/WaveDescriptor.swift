@@ -5,22 +5,6 @@
 //  Created by Dave Coleman on 25/1/2026.
 //
 
-//extension BreathingWave {
-//
-//  struct SubWave {
-//    let isEnabled: Bool
-//
-//  }
-//}
-
-//struct  {
-//  let wave: Wave
-////  let lineStyle: LineStyle
-////  let pointStyle: PointStyle
-//  let cycles: Int
-//
-//}
-
 /// A type safe way to define a `WaveDescriptor`.
 /// OR, could just use ID?
 /// ```
@@ -33,8 +17,7 @@ public protocol WaveDescriptorKey: Hashable, Sendable {
 }
 
 /// Suitable for stacking waves together for cool effects
-public struct WaveDescriptor: Identifiable, Hashable, Sendable, Codable {
-
+public struct WaveDescriptor: Identifiable, Hashable, Sendable, Codable, Equatable {
   public var id: Wave.ID { wave.id }
   let wave: Wave
   let config: WaveConfig
@@ -45,9 +28,6 @@ public struct WaveDescriptor: Identifiable, Hashable, Sendable, Codable {
   ) {
     self.wave = wave
     self.config = config
-//    self.isEnabled = isEnabled
-//    self.cycles = cycles
-//    self.sampleCount = sampleCount
   }
   
   public init(
@@ -62,21 +42,5 @@ public struct WaveDescriptor: Identifiable, Hashable, Sendable, Codable {
       sampleCount: sampleCount
     )
     self.init(wave: wave, config: config)
-  }
-}
-
-public struct WaveConfig: Hashable, Sendable, Codable {
-  let isEnabled: Bool
-  let cycles: Int
-  let sampleCount: Int
-  
-  public init(
-    isEnabled: Bool = true,
-    cycles: Int = 3,
-    sampleCount: Int = 30,
-  ) {
-    self.isEnabled = isEnabled
-    self.cycles = cycles
-    self.sampleCount = sampleCount
   }
 }

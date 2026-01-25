@@ -15,7 +15,7 @@ import Foundation
 //  let colours: [RGBColour]
 //}
 
-public struct LineStyle: Sendable, Codable {
+public struct LineStyle: Sendable, Codable, Equatable {
   let colour: RGBColour
   let colourSecondary: RGBColour?
   let lineWidth: CGFloat
@@ -31,7 +31,7 @@ public struct LineStyle: Sendable, Codable {
   }
 }
 
-public struct PointStyle: Sendable, Codable {
+public struct PointStyle: Sendable, Codable, Equatable {
   let colour: RGBColour
   let colourSecondary: RGBColour?
   let radius: CGFloat

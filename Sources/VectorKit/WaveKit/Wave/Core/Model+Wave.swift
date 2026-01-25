@@ -12,7 +12,7 @@ import Foundation
 /// - Time (The Motor): This is handled by your ContinuousParameter. It constantly moves the wave forward.
 /// - Space (The Coordinate): This is your normalisedIndex. In a SwiftUI Path or Canvas, 0.0 might be the left edge and 1.0 the right edge.
 /// - Cycles: This is how many "humps" of the wave fit into that space.
-public struct Wave: Sendable, Identifiable, Hashable, Codable {
+public struct Wave: Sendable, Identifiable, Hashable, Equatable, Codable {
 //public struct Wave: WaveShaped, Sendable, Identifiable, Hashable, Codable {
   public let id: UUID
   public var frequency: CGFloat
