@@ -5,10 +5,10 @@
 //  Created by Dave Coleman on 22/1/2026.
 //
 
-import ColourKit
-import Foundation
-
-extension WaveStack {
+//import ColourKit
+//import Foundation
+//
+//extension WaveStack {
 //extension BreathingWave {
 //  public static var standard: Self {
 //    .init(
@@ -74,4 +74,4 @@ extension WaveStack {
 //      )
 //    )
 //  }
-}
+//}
