@@ -8,12 +8,12 @@
 import Foundation
 
 public struct AnimatedWave {
-  var wave: any WaveShaped
+  var wave: Wave
   var state: ContinuousParameter
   //  var state: WaveState
 
   public init(
-    wave: any WaveShaped,
+    wave: Wave,
     state: ContinuousParameter
   ) {
     self.wave = wave
@@ -22,6 +22,31 @@ public struct AnimatedWave {
 }
 
 extension AnimatedWave {
+  
+  public func modulation(
+    currentTime: TimeInterval = Date().timeIntervalSinceReferenceDate,
+    normalisedIndex: CGFloat,
+    cycles: CGFloat
+  ) -> CGFloat {
+    // 1. Get the time-based phase (The "Motor")
+    let tPhase = state.temporalPhase(at: currentTime, frequency: wave.frequency)
+    
+    // 2. Add spatial distribution (The "Coordinates")
+    let sPhase = Double(normalisedIndex * cycles)
+    
+    // 3. Add the static offset (The "Initial Phase")
+    let staticPhase = Double(wave.phase)
+    
+    // Total phase wrapped into [0, 1]
+    let totalPhase = tPhase + sPhase + staticPhase
+    let wrappedPhase = totalPhase - floor(totalPhase)
+    
+    // 4. Sample the waveform
+    let value = wave.waveform.sample(phase: wrappedPhase)
+    return CGFloat(wave.amplitude * value)
+  }
+  
+}
   /// ```
   /// var wave = Wave(frequency: 0.5, amplitude: 50, waveform: .sine)
   /// var state = WaveAttributeState(initialFrequency: wave.frequency, initialPhase: wave.phase)
@@ -35,25 +60,25 @@ extension AnimatedWave {
   ///
   /// ```
   /// Get the modulation value for a given time and normalized index
-  public func modulation(
-    currentTime: TimeInterval = Date().timeIntervalSinceReferenceDate,
-    normalisedIndex: CGFloat,
-    cycles: CGFloat
-  ) -> CGFloat {
-    let phase = state.effectivePhase(
-      currentTime: currentTime,
-      frequency: wave.frequency
-    )
-    //    let phase = state.effectivePhase(
-    //      currentTime: currentTime,
-    //      normalisedIndex: normalisedIndex,
-    //      cycles: cycles,
-    //      frequency: wave.frequency,
-    //      phaseOffset: wave.phase
-    //    )
-    let value = wave.waveform.sample(phase: phase)
-    return CGFloat(wave.amplitude * value)
-  }
+//  public func modulation(
+//    currentTime: TimeInterval = Date().timeIntervalSinceReferenceDate,
+//    normalisedIndex: CGFloat,
+//    cycles: CGFloat
+//  ) -> CGFloat {
+//    let phase = state.effectivePhase(
+//      currentTime: currentTime,
+//      frequency: wave.frequency
+//    )
+//    //    let phase = state.effectivePhase(
+//    //      currentTime: currentTime,
+//    //      normalisedIndex: normalisedIndex,
+//    //      cycles: cycles,
+//    //      frequency: wave.frequency,
+//    //      phaseOffset: wave.phase
+//    //    )
+//    let value = wave.waveform.sample(phase: phase)
+//    return CGFloat(wave.amplitude * value)
+//  }
 
   /// `value = A · sin(ωt + φ)`
   ///
@@ -65,24 +90,24 @@ extension AnimatedWave {
   /// `2 * .pi * frequency * time`
   /// Means I am converting cycles per second → radians per second
   /// Which sine requires, because `sin()` lives in radians.
-  public func modulation(
-    for wave: any WaveShaped,
-    effectiveTime: TimeInterval,
-    normalisedIndex: CGFloat,
-    cycles: CGFloat
-  ) -> CGFloat {
+//  public func modulation(
+//    for wave: any WaveShaped,
+//    effectiveTime: TimeInterval,
+//    normalisedIndex: CGFloat,
+//    cycles: CGFloat
+//  ) -> CGFloat {
+//
+//    let freq = wave.frequency
+//    let phase =
+//      effectiveTime * wave.frequency  // temporal advance
+//      + normalisedIndex * cycles  // spatial distribution
+//      + wave.phase  // static offset
+//
+//    let value = wave.waveform.sample(phase: phase)
+//    return wave.amplitude * value
+//  }
 
-    let freq = wave.frequency
-    let phase =
-      effectiveTime * wave.frequency  // temporal advance
-      + normalisedIndex * cycles  // spatial distribution
-      + wave.phase  // static offset
-
-    let value = wave.waveform.sample(phase: phase)
-    return wave.amplitude * value
-  }
-
-}
+//}
 
 //  mutating func getPointsAlongPath(time: CGFloat, size: CGSize, resolution: Int = 100) -> [(CGPoint, CGFloat)] {
 //    var points: [(CGPoint, CGFloat)] = []

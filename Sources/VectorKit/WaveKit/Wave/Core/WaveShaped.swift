@@ -12,9 +12,9 @@ import Foundation
 /// **Frequency** – how fast phase advances
 /// **Amplitude** – how large the output is
 /// **Domain** – what variable drives phase (time, space, index)
-public protocol WaveShaped {
-  var frequency: CGFloat { get }
-  var amplitude: CGFloat { get }
-  var phase: CGFloat { get }  // phase offset, in cycles
-  var waveform: Waveform { get }
-}
+//public protocol WaveShaped {
+//  var frequency: CGFloat { get }
+//  var amplitude: CGFloat { get }
+//  var phase: CGFloat { get }  // phase offset, in cycles
+//  var waveform: Waveform { get }
+//}

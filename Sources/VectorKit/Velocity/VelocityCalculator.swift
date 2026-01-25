@@ -142,11 +142,14 @@ extension VelocityCalculator {
   /// Generate exponential decay weights
   /// - Parameter count: Number of weights to generate
   /// - Parameter decayFactor: How quickly weights decrease (0.5 = half each step)
-  public static func exponentialWeights(count: Int, decayFactor: CGFloat = 0.7) -> [CGFloat] {
+  public static func exponentialWeights(
+    count: Int,
+    decayFactor: CGFloat = 0.7
+  ) -> [CGFloat] {
     guard count > 0 else { return [] }
 
-    var weights = (0..<count).map { i in
-      pow(decayFactor, CGFloat(i))
+    var weights: [CGFloat] = (0..<count).map { i in
+      CGFloat(pow(decayFactor, CGFloat(i)))
     }
 
     /// Normalize so they sum to 1.0

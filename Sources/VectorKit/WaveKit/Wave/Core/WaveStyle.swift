@@ -21,9 +21,9 @@ public struct LineStyle {
   let lineWidth: CGFloat
 
   public init(
-    colour: RGBColour,
-    colourSecondary: RGBColour?,
-    lineWidth: CGFloat
+    colour: RGBColour = .gray,
+    colourSecondary: RGBColour? = nil,
+    lineWidth: CGFloat = 3.0
   ) {
     self.colour = colour
     self.colourSecondary = colourSecondary
@@ -36,4 +36,16 @@ public struct PointStyle {
   let colourSecondary: RGBColour?
   let radius: CGFloat
   let shape: PointShape
+  
+  public init(
+    colour: RGBColour = .brown,
+    colourSecondary: RGBColour? = nil,
+    radius: CGFloat = 9.0,
+    shape: PointShape = .circle
+  ) {
+    self.colour = colour
+    self.colourSecondary = colourSecondary
+    self.radius = radius
+    self.shape = shape
+  }
 }

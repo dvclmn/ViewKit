@@ -13,46 +13,71 @@ import Foundation
 ///
 /// Look to this now instead of `WaveAttributeState`
 public struct ContinuousParameter {
-  private var origin: TimeInterval
-  private var lastValue: CGFloat
+  private var origin: TimeInterval = 0
+  
+  public init(){}
+}
 
-  public init(initialValue: CGFloat = 0.0, initialOrigin: TimeInterval = 0.0) {
-    self.lastValue = initialValue
-    self.origin = initialOrigin
+extension ContinuousParameter {
+  
+  /// Calculates the time-based phase (0...1) for a given frequency.
+  public func temporalPhase(at now: TimeInterval, frequency: Double) -> Double {
+    let effectiveTime = now - origin
+    let phase = effectiveTime * frequency
+    return phase - floor(phase) // Wrap to [0, 1)
   }
+  
+  /// The "Magic" method: Adjusts the origin so that when frequency changes,
+  /// the phase remains identical at this exact moment.
+  public mutating func sync(at now: TimeInterval, oldFrequency: Double, newFrequency: Double) {
+    if newFrequency == 0 { return }
+    let currentEffectiveTime = now - origin
+    let currentProgress = currentEffectiveTime * oldFrequency
+    
+    // Solve: newEffectiveTime * newFrequency = currentProgress
+    let newEffectiveTime = currentProgress / newFrequency
+    self.origin = now - newEffectiveTime
+  }
+}
+//  private var lastValue: CGFloat
+
+//  public init(initialValue: CGFloat = 0.0, initialOrigin: TimeInterval = 0.0) {
+//    self.lastValue = initialValue
+//    self.origin = initialOrigin
+//  }
 
   /// Computes the "virtual time" needed to keep the output constant
   /// when a parameter (like frequency) changes.
-  public mutating func sync(
-    to newValue: CGFloat,
-    at now: TimeInterval,
-    currentRate: CGFloat
-  ) {
-    let currentEffectiveTime = effectiveTime(at: now)
-    let currentArgument = currentEffectiveTime * currentRate
-
-    /// Solve for newEffectiveTime: `(newTime * newValue) == currentArgument`
-    let newEffectiveTime =
-      newValue != 0
-      ? currentArgument / newValue
-      : 0
-    self.origin = now - newEffectiveTime
-    self.lastValue = newValue
-  }
-
-  public func effectiveTime(at now: TimeInterval) -> TimeInterval {
-    now - origin
-  }
-
-  public func effectivePhase(
-    currentTime: TimeInterval,
-    frequency: CGFloat
-  ) -> CGFloat {
-    let t = effectiveTime(at: currentTime)
-    let phase = t * frequency
-    return phase - floor(phase)
-  }
-}
+//  public mutating func sync(
+//    to newValue: CGFloat,
+//    at now: TimeInterval,
+//    currentRate: CGFloat
+//  ) {
+//    let currentEffectiveTime = effectiveTime(at: now)
+//    let currentArgument = currentEffectiveTime * currentRate
+//
+//    /// Solve for newEffectiveTime: `(newTime * newValue) == currentArgument`
+//    let newEffectiveTime =
+//      newValue != 0
+//      ? currentArgument / newValue
+//      : 0
+//    self.origin = now - newEffectiveTime
+//    self.lastValue = newValue
+//  }
+//
+//  public func effectiveTime(at now: TimeInterval) -> TimeInterval {
+//    now - origin
+//  }
+//
+//  public func effectivePhase(
+//    currentTime: TimeInterval,
+//    frequency: CGFloat
+//  ) -> CGFloat {
+//    let t = effectiveTime(at: currentTime)
+//    let phase = t * frequency
+//    return phase - floor(phase)
+//  }
+//}
 
 /// This is still fairly 'breathing' specific, hoping to simplify further
 //public struct WaveState {
