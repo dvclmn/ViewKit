@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Double {
+extension BinaryFloatingPoint {
 
   /// Smoothly approaches `target` using exponential smoothing
   /// - Parameters:
@@ -39,7 +39,7 @@ extension Double {
     /// exp(-timeRatio) represents how much of the OLD value to retain
     /// When timeRatio is small (`dt << τ`), decay ≈ 1 (keep most of old value)
     /// When timeRatio is large (`dt >> τ`), decay ≈ 0 (discard old value)
-    let exponentialDecay = exp(-timeRatio)
+    let exponentialDecay = Self(exp(Double(-timeRatio)))
 
     /// Calculate the smoothing factor (learning rate)
     /// This represents how much to move toward the target

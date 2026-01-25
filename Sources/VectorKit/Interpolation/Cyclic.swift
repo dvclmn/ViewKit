@@ -18,6 +18,6 @@ extension BinaryFloatingPoint {
   }
   
   /// Useful for Hue
-  public var degrees: Double { Double(self * 360) }
+  public var degrees: Self { self * 360 }
 //  public init(degrees: Double) { Double(degrees / 360) }
 }

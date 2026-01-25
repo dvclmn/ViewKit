@@ -12,16 +12,16 @@ import Foundation
 /// and ensures transitions between different rates/offsets are seamless.
 public struct ContinuousParameter {
   private var origin: TimeInterval
-  private var lastValue: Double
+  private var lastValue: CGFloat
   
-  public init(initialValue: Double = 0.0, initialOrigin: TimeInterval = 0.0) {
+  public init(initialValue: CGFloat = 0.0, initialOrigin: TimeInterval = 0.0) {
     self.lastValue = initialValue
     self.origin = initialOrigin
   }
   
   /// Computes the "virtual time" needed to keep the output constant
   /// when a parameter (like frequency) changes.
-  public mutating func sync(to newValue: Double, at now: TimeInterval, currentRate: Double) {
+  public mutating func sync(to newValue: CGFloat, at now: TimeInterval, currentRate: CGFloat) {
     let currentEffectiveTime = now - origin
     let currentArgument = currentEffectiveTime * currentRate
     
@@ -37,7 +37,7 @@ public struct ContinuousParameter {
 }
 
   /// This is still fairly 'breathing' specific, hoping to simplify further
-public struct WaveAttributeState {
+public struct WaveState {
   // We track the "Temporal Progress" of different wave components
   private var primaryPhaseState = ContinuousParameter()
   private var spacingState = ContinuousParameter()
@@ -45,12 +45,12 @@ public struct WaveAttributeState {
   // You no longer need separate "lastFrequency" and "lastPhase" variables
   // inside here if you pass them into the sync methods.
   
-  public mutating func updatePrimary(frequency: Double, at now: TimeInterval) {
+  public mutating func updatePrimary(frequency: CGFloat, at now: TimeInterval) {
     // This handles the "visual continuity" logic internally
     primaryPhaseState.sync(to: frequency, at: now, currentRate: frequency)
   }
   
-  public func effectivePhase(currentTime: TimeInterval, frequency: Double) -> Double {
+  public func effectivePhase(currentTime: TimeInterval, frequency: CGFloat) -> CGFloat {
     let t = primaryPhaseState.effectiveTime(at: currentTime)
     let phase = t * frequency
     return phase - floor(phase)

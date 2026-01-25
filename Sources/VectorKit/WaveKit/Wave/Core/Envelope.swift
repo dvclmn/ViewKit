@@ -8,12 +8,12 @@
 import Foundation
 
 public struct Envelope {
-  var attack: Double
-  var decay: Double
-  var sustain: Double
-  var release: Double
+  var attack: CGFloat
+  var decay: CGFloat
+  var sustain: CGFloat
+  var release: CGFloat
   
-  public func getValue(at time: Double, triggered: Bool) -> Double {
+  public func getValue(at time: CGFloat, triggered: Bool) -> CGFloat {
     /// Basic ADSR implementation
     if !triggered { return 0 }
     

@@ -19,7 +19,7 @@ public enum PathStyle: Sendable, Hashable, Codable, Equatable {
   public static var pickerLabel: QuickLabel { "Path Style" }
   case line
   case smooth
-  case stamped(shape: PointShape, radius: Double)
+  case stamped(shape: PointShape, radius: CGFloat)
 
   /// A few tricky things here; this does provide a default for
   /// the `stamped` value, but doesn't provide any static access

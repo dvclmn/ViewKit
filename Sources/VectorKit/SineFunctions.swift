@@ -14,8 +14,8 @@ public struct Sine {
   ///
   /// If you want a custom range [min, max]:
   /// ```
-  /// let min: Double = 10
-  /// let max: Double = 20
+  /// let min: CGFloat = 10
+  /// let max: CGFloat = 20
   /// let customRange = normalised * (max - min) + min
   /// ```
   ///
@@ -28,14 +28,14 @@ public struct Sine {
   /// let modifiedSine = sin(interval * angularFrequency) * amplitude
   /// ```
 
-  public static func getSineWave(from interval: TimeInterval, frequency: Double = 0.2) -> Double {
+  public static func getSineWave(from interval: TimeInterval, frequency: CGFloat = 0.2) -> CGFloat {
     
     /// 2. Define your frequency (controls speed of oscillation)
     /// Lower numbers = slower oscillation
     /// Higher numbers = faster oscillation
     
     /// 3. Create the angular frequency (radians per second)
-    let angularFrequency = 2 * Double.pi * frequency
+    let angularFrequency = 2 * CGFloat.pi * frequency
     
     /// 4. Calculate the sine wave
     let sine = sin(interval * angularFrequency)
@@ -47,7 +47,7 @@ public struct Sine {
     
   }
   
-  public static func getSineWave(from date: Date, frequency: Double = 0.2) -> Double {
+  public static func getSineWave(from date: Date, frequency: CGFloat = 0.2) -> CGFloat {
     /// 1. Get the time interval (seconds since reference date)
     let interval = date.timeIntervalSinceReferenceDate
     

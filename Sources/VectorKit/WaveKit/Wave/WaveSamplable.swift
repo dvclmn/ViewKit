@@ -48,8 +48,8 @@ extension WaveSamplable {
   public func modulation(
     for wave: any WaveShaped,
     effectiveTime: TimeInterval,
-    normalisedIndex: Double,
-    cycles: Double
+    normalisedIndex: CGFloat,
+    cycles: CGFloat
   ) -> CGFloat {
     
     let phase =

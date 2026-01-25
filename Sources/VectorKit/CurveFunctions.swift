@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol CurveApplicable {
-  func apply(to x: Double) -> Double
+  func apply(to x: CGFloat) -> CGFloat
 }
 
 public enum CurveFunction: String, CaseIterable, Identifiable, Sendable {
@@ -51,7 +51,7 @@ public enum CurveFunction: String, CaseIterable, Identifiable, Sendable {
 
   /// Applies the curve to a normalised input in the range `0...1`,
   /// returning a normalised output in `0...1`.
-  public func apply(to x: Double, easing: EaseDirection = .in) -> Double {
+  public func apply(to x: CGFloat, easing: EaseDirection = .in) -> CGFloat {
     let function = EasingFunction(self, easing)
     return function.value(for: x)
 //    let clamped = max(0, min(1, x))
@@ -87,16 +87,16 @@ public enum CurveFunction: String, CaseIterable, Identifiable, Sendable {
   }
 
   public func value(
-    at position: Double,
-    min: Double,
-    max: Double,
+    at position: CGFloat,
+    min: CGFloat,
+    max: CGFloat,
     steps: Int? = nil
-  ) -> Double {
+  ) -> CGFloat {
     let y = apply(to: position)  // normalised 0...1 curve output
     var mapped = min + (max - min) * y
 
     if let steps, steps > 1 {
-      let stepSize = (max - min) / Double(steps - 1)
+      let stepSize = (max - min) / CGFloat(steps - 1)
       mapped = round(mapped / stepSize) * stepSize
     }
 

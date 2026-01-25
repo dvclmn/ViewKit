@@ -17,7 +17,7 @@ public enum Waveform: String, Sendable, Codable, Hashable {
 extension Waveform {
   /// the “wave shape function” — only depends on phase
   /// phase `∈ [0, 1)`
-  public func sample(phase: Double) -> Double {
+  public func sample(phase: CGFloat) -> CGFloat {
     let p = phase - floor(phase)  // wrap to [0, 1)
 
     return switch self {

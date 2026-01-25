@@ -27,15 +27,15 @@ public struct VelocityCalculator {
   /// > Your original shows an interesting pattern - it peaks in the middle then drops.
   /// > Might be better for smoothing out very recent noise while still favoring recent data
   /// > My suggestion uses pure recency bias; best for responsive, real-time tracking
-  public static let defaultWeights: [Double] = [0.4, 0.3, 0.2, 0.1]
+  public static let defaultWeights: [CGFloat] = [0.4, 0.3, 0.2, 0.1]
 
-  private let maxVelocity: Double
+  private let maxVelocity: CGFloat
   private let minTimeDelta: TimeInterval
   private let maxHistoryDepth: Int
   private let minPointsForWeighted: Int
 
   public init(
-    maxVelocity: Double = 400.0,
+    maxVelocity: CGFloat = 400.0,
     minTimeDelta: TimeInterval = 0.001,
     maxHistoryDepth: Int = 10,
     minPointsForWeighted: Int = 3
@@ -48,7 +48,7 @@ public struct VelocityCalculator {
 
   public func computeWeightedVelocity<T: TimestampedPosition>(
     from history: [T],
-    weights: [Double] = defaultWeights
+    weights: [CGFloat] = defaultWeights
   ) -> CGVector {
 
     /// Edge case: empty or insufficient history
@@ -71,9 +71,9 @@ public struct VelocityCalculator {
     let recentHistory = Array(history.suffix(maxHistoryDepth))
 
     /// Calculate weighted average with explicit recency bias
-    var weightedDx: Double = 0
-    var weightedDy: Double = 0
-    var totalWeight: Double = 0
+    var weightedDx: CGFloat = 0
+    var weightedDy: CGFloat = 0
+    var totalWeight: CGFloat = 0
 
     /// Process consecutive pairs, starting from most recent
     for i in 1..<recentHistory.count {
@@ -142,11 +142,11 @@ extension VelocityCalculator {
   /// Generate exponential decay weights
   /// - Parameter count: Number of weights to generate
   /// - Parameter decayFactor: How quickly weights decrease (0.5 = half each step)
-  public static func exponentialWeights(count: Int, decayFactor: Double = 0.7) -> [Double] {
+  public static func exponentialWeights(count: Int, decayFactor: CGFloat = 0.7) -> [CGFloat] {
     guard count > 0 else { return [] }
 
     var weights = (0..<count).map { i in
-      pow(decayFactor, Double(i))
+      pow(decayFactor, CGFloat(i))
     }
 
     /// Normalize so they sum to 1.0
@@ -159,11 +159,11 @@ extension VelocityCalculator {
   }
 
   /// Generate linear decay weights (most recent gets highest weight)
-  public static func linearWeights(count: Int) -> [Double] {
+  public static func linearWeights(count: Int) -> [CGFloat] {
     guard count > 0 else { return [] }
 
     let weights = (0..<count).map { i in
-      Double(count - i)
+      CGFloat(count - i)
     }
 
     let sum = weights.reduce(0, +)

@@ -7,18 +7,18 @@
 
 import Foundation
 
-public struct AnimatedWave {
-  var wave: any WaveShaped
-  var state: WaveAttributeState
-
-  public init(
-    wave: any WaveShaped,
-    state: WaveAttributeState
-  ) {
-    self.wave = wave
-    self.state = state
-  }
-}
+//public struct AnimatedWave {
+//  var wave: any WaveShaped
+//  var state: WaveState
+//
+//  public init(
+//    wave: any WaveShaped,
+//    state: WaveState
+//  ) {
+//    self.wave = wave
+//    self.state = state
+//  }
+//}
 
 extension AnimatedWave {
   /// ```
@@ -36,8 +36,8 @@ extension AnimatedWave {
   /// Get the modulation value for a given time and normalized index
   public func modulation(
     currentTime: TimeInterval = Date().timeIntervalSinceReferenceDate,
-    normalisedIndex: Double,
-    cycles: Double
+    normalisedIndex: CGFloat,
+    cycles: CGFloat
   ) -> CGFloat {
     let phase = state.effectivePhase(
       currentTime: currentTime,
@@ -51,14 +51,14 @@ extension AnimatedWave {
   }
 }
 
-//  mutating func getPointsAlongPath(time: Double, size: CGSize, resolution: Int = 100) -> [(CGPoint, Double)] {
-//    var points: [(CGPoint, Double)] = []
+//  mutating func getPointsAlongPath(time: CGFloat, size: CGSize, resolution: Int = 100) -> [(CGPoint, CGFloat)] {
+//    var points: [(CGPoint, CGFloat)] = []
 //
 //    // Update smoothed parameters
 //    update(at: time)
 //
 //    for i in 0..<resolution {
-//      let progress = Double(i) / Double(resolution - 1)
+//      let progress = CGFloat(i) / CGFloat(resolution - 1)
 //      let x = progress * size.width
 //
 //      // Use smoothed parameters for calculations

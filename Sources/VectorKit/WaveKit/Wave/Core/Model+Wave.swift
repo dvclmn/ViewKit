@@ -9,16 +9,16 @@ import Foundation
 
 public struct Wave: WaveShaped, Sendable, Identifiable, Hashable, Codable {
   public let id: UUID
-  public var frequency: Double
-  public var amplitude: Double
-  public var phase: Double
+  public var frequency: CGFloat
+  public var amplitude: CGFloat
+  public var phase: CGFloat
   public var waveform: Waveform
 
   public init(
     id: UUID = UUID(),
-    frequency: Double,
-    amplitude: Double,
-    phase: Double,
+    frequency: CGFloat,
+    amplitude: CGFloat,
+    phase: CGFloat,
     waveform: Waveform,
   ) {
     self.id = id
@@ -45,9 +45,9 @@ public struct Wave: WaveShaped, Sendable, Identifiable, Hashable, Codable {
 
 extension Wave {
   public init(
-    freq: Double,
-    amp: Double,
-    phase: Double,
+    freq: CGFloat,
+    amp: CGFloat,
+    phase: CGFloat,
     waveform: Waveform = .sine
   ) {
     self.init(
@@ -61,5 +61,5 @@ extension Wave {
 
 public struct NoisyWave: Sendable, Hashable {
   public let wave: Wave
-  public var noise: Double
+  public var noise: CGFloat
 }

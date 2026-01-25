@@ -6,6 +6,15 @@
 //
 
 import Foundation
+import CoreTools
+
+@MetaEnum
+public enum WaveComponent {
+  case line
+  case points
+  case labels
+  case phaseGhost
+}
 
 public struct WaveComponents: OptionSet, Sendable {
   public init(rawValue: Int) {
@@ -20,7 +29,7 @@ public struct WaveComponents: OptionSet, Sendable {
   public static let all: Self = [.line, .points, .labels, phaseGhost]
 }
 
-public enum WaveViewStyle: Equatable {
-  case standard
-  case preview(maxHeight: CGFloat = 50)
-}
+//public enum WaveViewStyle: Equatable {
+//  case standard
+//  case preview(maxHeight: CGFloat = 50)
+//}

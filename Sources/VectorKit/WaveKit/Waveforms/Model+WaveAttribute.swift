@@ -83,7 +83,7 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
   //    }
   //  }
 
-  public var range: ClosedRange<Double> {
+  public var range: ClosedRange<CGFloat> {
     switch self {
       case .amplitude: 0.01...60
       case .frequency: 0.01...20

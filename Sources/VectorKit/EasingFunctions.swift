@@ -12,7 +12,7 @@ enum EasingCurve {
   case easeInBack
   case easeInElastic
   
-  func curveFunction(_ x: Double) -> Double {
+  func curveFunction(_ x: CGFloat) -> CGFloat {
     
     switch self {
       case .easeInOutCubic:
@@ -29,7 +29,7 @@ enum EasingCurve {
       case .easeInElastic:
         
         /// How many cycles of oscillation occur during the animation
-        let elasticFrequency = (2 * Double.pi) / 3
+        let elasticFrequency = (2 * CGFloat.pi) / 3
         
         if x == 0 { return 0 }
         if x == 1 { return 1 }

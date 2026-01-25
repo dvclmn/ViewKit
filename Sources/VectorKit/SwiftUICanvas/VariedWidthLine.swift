@@ -17,7 +17,7 @@ extension Path {
   /// - Returns: A closed path that can be filled
   public static func variableWidthPath(
     spine: Path,
-    widthAt: @escaping (Double) -> CGFloat,
+    widthAt: @escaping (CGFloat) -> CGFloat,
     samples: Int
   ) -> Path {
     var resultPath = Path()
@@ -26,7 +26,7 @@ extension Path {
     var spinePoints: [(point: CGPoint, tangent: CGPoint)] = []
 
     for i in 0...samples {
-      let t = Double(i) / Double(samples)
+      let t = CGFloat(i) / CGFloat(samples)
 
       /// Get point at parameter t - handle edge cases
       let trimmedPath = spine.trimmedPath(from: 0, to: max(0.0001, t))
@@ -68,7 +68,7 @@ extension Path {
     var rightSide: [CGPoint] = []
 
     for i in 0..<spinePoints.count {
-      let t = Double(i) / Double(max(1, spinePoints.count - 1))
+      let t = CGFloat(i) / CGFloat(max(1, spinePoints.count - 1))
       let halfWidth = widthAt(t)
       let point = spinePoints[i].point
       let tangent = spinePoints[i].tangent
@@ -111,9 +111,9 @@ extension Path {
   public enum WidthProfile {
     case constant(CGFloat)
     case tapered(min: CGFloat, max: CGFloat)
-    case custom((Double) -> CGFloat)
+    case custom((CGFloat) -> CGFloat)
 
-    public func width(at t: Double) -> CGFloat {
+    public func width(at t: CGFloat) -> CGFloat {
       switch self {
         case .constant(let w):
           return w / 2

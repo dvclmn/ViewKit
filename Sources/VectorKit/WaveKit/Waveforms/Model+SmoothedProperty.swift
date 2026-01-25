@@ -9,10 +9,10 @@ import CoreTools
 import Foundation
 
 public struct SmoothedProperty: Sendable, Hashable {
-  public var target: Double
-  public var displayed: Double
+  public var target: CGFloat
+  public var displayed: CGFloat
 
-  public init(_ initial: Double) {
+  public init(_ initial: CGFloat) {
     self.target = initial
     self.displayed = initial
   }
@@ -20,17 +20,17 @@ public struct SmoothedProperty: Sendable, Hashable {
 
 extension SmoothedProperty {
 
-  public mutating func setTarget(_ newValue: Double) {
+  public mutating func setTarget(_ newValue: CGFloat) {
     self.target = newValue
   }
 
-  public mutating func snapToValue(_ newValue: Double) {
+  public mutating func snapToValue(_ newValue: CGFloat) {
     self.update(dt: 0, smoothing: 0)
   }
 
   public mutating func update(
     dt: CGFloat,
-    smoothing timeConstant: Double
+    smoothing timeConstant: CGFloat
   ) {
     let current = displayed
     displayed = current.smoothed(

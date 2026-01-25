@@ -39,7 +39,7 @@ extension EasingFunction {
   /// Calculates the interpolated value for a given time.
   /// - Parameter x: A value between 0.0 (start) and 1.0 (end).
   /// - Returns: The interpolated value, often but not always between 0.0 and 1.0 (e.g., `back` can overshoot).
-  public func value(for x: Double, overshoot: Double = 1.70158) -> Double {
+  public func value(for x: CGFloat, overshoot: CGFloat = 1.70158) -> CGFloat {
     /// Ensure input is within the standard `[0, 1]` range
     let t = max(0, min(1, x))
 
@@ -212,7 +212,7 @@ extension EasingFunction {
 
   // MARK: - Bounce Implementation
 
-  private func bounceOut(_ t: Double) -> Double {
+  private func bounceOut(_ t: CGFloat) -> CGFloat {
     let n1 = 7.5625
     let d1 = 2.75
 
@@ -230,11 +230,11 @@ extension EasingFunction {
     }
   }
 
-  private func bounceIn(_ t: Double) -> Double {
+  private func bounceIn(_ t: CGFloat) -> CGFloat {
     return 1 - bounceOut(1 - t)
   }
 
-  private func bounceInOut(_ t: Double) -> Double {
+  private func bounceInOut(_ t: CGFloat) -> CGFloat {
     return t < 0.5
       ? (1 - bounceOut(1 - 2 * t)) / 2
       : (1 + bounceOut(2 * t - 1)) / 2
@@ -243,15 +243,15 @@ extension EasingFunction {
   // MARK: - Elastic Implementation
 
   private func elastic(
-    _ t: Double,
+    _ t: CGFloat,
     direction: EaseDirection,
-    amplitude: Double = 1,
-    period: Double = 0.3
-  ) -> Double {
+    amplitude: CGFloat = 1,
+    period: CGFloat = 0.3
+  ) -> CGFloat {
     guard t != 0, t != 1 else { return t }
 
     /// Convert period to angular frequency constant
-    let c = (2 * Double.pi) / period
+    let c = (2 * CGFloat.pi) / period
 
     switch direction {
       case .in:
@@ -263,7 +263,7 @@ extension EasingFunction {
       case .inOut:
         /// The inOut variant typically uses a different period factor
         let periodInOut = period * 1.5
-        let cInOut = (2 * Double.pi) / periodInOut
+        let cInOut = (2 * CGFloat.pi) / periodInOut
         guard t < 0.5 else {
           return (pow(2, -20 * t + 10) * sin((20 * t - 11.125) * cInOut)) / 2 + 1
         }
@@ -271,21 +271,21 @@ extension EasingFunction {
     }
   }
 
-  //  private func elasticIn(_ t: Double) -> Double {
+  //  private func elasticIn(_ t: CGFloat) -> CGFloat {
   //    guard t != 0, t != 1 else { return t }
-  //    let c4 = (2 * Double.pi) / 3
+  //    let c4 = (2 * CGFloat.pi) / 3
   //    return -pow(2, 10 * (t - 1)) * sin((t * 10 - 10.75) * c4)
   //  }
   //
-  //  private func elasticOut(_ t: Double) -> Double {
+  //  private func elasticOut(_ t: CGFloat) -> CGFloat {
   //    guard t != 0, t != 1 else { return t }
-  //    let c4 = (2 * Double.pi) / 3
+  //    let c4 = (2 * CGFloat.pi) / 3
   //    return pow(2, -10 * t) * sin((t * 10 - 0.75) * c4) + 1
   //  }
   //
-  //  private func elasticInOut(_ t: Double) -> Double {
+  //  private func elasticInOut(_ t: CGFloat) -> CGFloat {
   //    guard t != 0, t != 1 else { return t }
-  //    let c5 = (2 * Double.pi) / 4.5
+  //    let c5 = (2 * CGFloat.pi) / 4.5
   //    if t < 0.5 {
   //      return -(pow(2, 20 * t - 10) * sin((20 * t - 11.125) * c5)) / 2
   //    } else {

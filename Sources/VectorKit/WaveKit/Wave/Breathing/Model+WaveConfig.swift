@@ -13,7 +13,7 @@ public struct WaveConfig: Codable, Sendable, Equatable {
   public var colourSecondary: RGBColour
 
   /// The base circle radius.
-  public var circleRadius: Double
+  public var circleRadius: CGFloat
 
   /// The total number of circles (affects normalisation but not the wave shapes).
   public var count: Int
@@ -22,13 +22,13 @@ public struct WaveConfig: Codable, Sendable, Equatable {
   /// these circles are “packed” into this height.~~
   ///
   /// How much of the vertical space the total wave takes up
-  public var compressionFactor: Double
+  public var compressionFactor: CGFloat
 
   /// Horizontal left/right motion parameters.
   public var horizontalWave: WaveModulator
 
   /// Vertical spacing between circles (used when shouldMaintainHeight == false).
-//  public var spacing: Double
+//  public var spacing: CGFloat
 
   /// Breathing (spacing) wave: modulates the vertical position.
   /// (When shouldMaintainHeight is true, the circles are laid out
@@ -44,17 +44,17 @@ public struct WaveConfig: Codable, Sendable, Equatable {
   public init(
     colour: RGBColour,
     colourSecondary: RGBColour,
-    circleRadius: Double,
+    circleRadius: CGFloat,
     count: Int,
-    compressionFactor: Double,
+    compressionFactor: CGFloat,
     horizontalWave: WaveModulator,
     verticalWave: WaveModulator,
     radiusWave: WaveModulator
 //    colour: RGBColour = .purple,
 //    colourSecondary: RGBColour = .orange,
-//    circleRadius: Double = 25,
+//    circleRadius: CGFloat = 25,
 //    count: Int = 60,
-//    compressionFactor: Double = 300,
+//    compressionFactor: CGFloat = 300,
 //    horizontalWave: WaveModulator = .init(
 //      isEnabled: true,
 //      amp: 70,
