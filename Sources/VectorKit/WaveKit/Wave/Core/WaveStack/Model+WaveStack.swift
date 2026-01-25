@@ -31,22 +31,22 @@ extension WaveStack {
 
 // MARK: - Codable handling
 extension WaveStack {
-  
+
   /// Converts current state to a Codable projection
   @MainActor
   public func codable() -> CodableWaveStack {
     var result: [String: WaveDescriptor] = [:]
-    
+
     // We iterate the registry to see what keys we care about encoding
     for (codingKey, keyType) in WaveKeyRegistry.all {
       // We use the subscript to get the current value (or default)
       let value = storage[ObjectIdentifier(keyType)] as? WaveDescriptor ?? keyType.defaultValue
       result[codingKey] = value
     }
-    
-    return CodableWaveStack(waves: result)
+
+    return CodableWaveStack(result)
   }
-  
+
   @MainActor
   public mutating func apply(_ projection: CodableWaveStack) {
     for (key, descriptor) in projection.waves {
@@ -58,11 +58,11 @@ extension WaveStack {
   fileprivate mutating func setValue(_ value: WaveDescriptor, for keyType: any CodableWaveKey.Type) {
     storage[ObjectIdentifier(keyType)] = value
   }
-  
+
   public func snapshot<K: CodableWaveKey>(_ key: K.Type) -> (String, WaveDescriptor) {
     (K.codingKey, self[K.self])
   }
-  
+
   public mutating func restore<K: CodableWaveKey>(
     _ key: K.Type,
     from dict: [String: WaveDescriptor]
@@ -71,24 +71,6 @@ extension WaveStack {
       self[K.self] = value
     }
   }
-  
-//  public func codable() -> CodableWaveStack {
-//    var result: [String: WaveDescriptor] = [:]
-//
-//    for (id, value) in storage {
-//      if let entry = value as? any CodableWaveKey {
-//        result[entry.codingKey] = entry.waveLayer
-//      }
-//    }
-//
-//    return CodableWaveStack(waves: result)
-//  }
-//
-//  mutating func apply(_ codable: CodableWaveStack) {
-//    for (key, layer) in codable.waves {
-//      applyDecodedWave(key: key, layer: layer)
-//    }
-//  }
 }
 
 /// ```
@@ -107,6 +89,40 @@ extension WaveStack {
     self[key] = value
   }
 }
+
+@MainActor
+public enum WaveKeyRegistry {
+  private(set) static var all: [String: any CodableWaveKey.Type] = [:]
+
+  public static func register<K: CodableWaveKey>(_ key: K.Type) {
+    all[K.codingKey] = key
+  }
+
+  /// Helper to apply a descriptor to a stack using the type-erased key
+  static func apply(descriptor: WaveDescriptor, key: String, to stack: inout WaveStack) {
+    guard let keyType = all[key] else { return }
+    stack.setValue(descriptor, for: keyType)
+  }
+}
+
+//  public func codable() -> CodableWaveStack {
+//    var result: [String: WaveDescriptor] = [:]
+//
+//    for (id, value) in storage {
+//      if let entry = value as? any CodableWaveKey {
+//        result[entry.codingKey] = entry.waveLayer
+//      }
+//    }
+//
+//    return CodableWaveStack(waves: result)
+//  }
+//
+//  mutating func apply(_ codable: CodableWaveStack) {
+//    for (key, layer) in codable.waves {
+//      applyDecodedWave(key: key, layer: layer)
+//    }
+//  }
+//}
 
 /// Important:
 /// How is `BreathingWave` different to a wave, if at all?

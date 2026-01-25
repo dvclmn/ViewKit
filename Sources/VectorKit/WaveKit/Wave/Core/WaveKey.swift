@@ -59,20 +59,8 @@ public protocol CodableWaveKey: WaveKey where Value == WaveDescriptor {
 ///   }
 /// }
 /// ```
-@MainActor
-public enum WaveKeyRegistry {
-  private(set) static var all: [String: any CodableWaveKey.Type] = [:]
-  
-  public static func register<K: CodableWaveKey>(_ key: K.Type) {
-    all[K.codingKey] = key
-  }
-  
-  /// Helper to apply a descriptor to a stack using the type-erased key
-  static func apply(descriptor: WaveDescriptor, key: String, to stack: inout WaveStack) {
-    guard let keyType = all[key] else { return }
-    stack.setValue(descriptor, for: keyType)
-  }
-}
+//@MainActor
+
 //@MainActor
 //public enum WaveKeyRegistry: Sendable {
 //  public static var all: [String: any CodableWaveKey.Type] = [:]
