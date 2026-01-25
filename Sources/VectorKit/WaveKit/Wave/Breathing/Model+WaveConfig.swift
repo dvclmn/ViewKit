@@ -11,13 +11,19 @@ import Foundation
 /// Important:
 /// How is `BreathingWave` different to a wave, if at all?
 /// Maybe it more just contains waves?
-public struct BreathingWave: Codable, Sendable, Equatable {
+public struct WaveStack: Codable, Sendable, Equatable {
+//public struct BreathingWave: Codable, Sendable, Equatable {
   
 //  public var colour: RGBColour
 //  public var colourSecondary: RGBColour
+  
+  let lineStyle: LineStyle
+  let pointStyle: PointStyle
+  
+  let waves: [Wave.ID: WaveDescriptor]
 
   /// The base circle radius.
-  public var circleRadius: CGFloat
+//  public var circleRadius: CGFloat
 
   /// The total number of circles (affects normalisation but not the wave shapes).
   /// Could also be thought of as sample count

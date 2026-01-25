@@ -9,13 +9,13 @@ import ColourKit
 import Foundation
 
 /// What is being coloured though
-public struct WaveStyle {
-  /// Could these be thought of as like the equivalents in Gradient?
-  /// How are these displayed? Running along the length of the wave?
-  let colours: [RGBColour]
-}
+//public struct WaveStyle {
+//  /// Could these be thought of as like the equivalents in Gradient?
+//  /// How are these displayed? Running along the length of the wave?
+//  let colours: [RGBColour]
+//}
 
-public struct LineStyle {
+public struct LineStyle: Sendable, Codable {
   let colour: RGBColour
   let colourSecondary: RGBColour?
   let lineWidth: CGFloat
@@ -31,12 +31,12 @@ public struct LineStyle {
   }
 }
 
-public struct PointStyle {
+public struct PointStyle: Sendable, Codable {
   let colour: RGBColour
   let colourSecondary: RGBColour?
   let radius: CGFloat
   let shape: PointShape
-  
+
   public init(
     colour: RGBColour = .brown,
     colourSecondary: RGBColour? = nil,
