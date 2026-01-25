@@ -8,85 +8,133 @@
 import Foundation
 
 /// `Result=(CurrentTime−Origin)⋅Rate+Offset`
-///
-/// A runtime complement to `WaveShaped`
-/// `WaveShaped` describes what a wave is (frequency, amplitude, phase, waveform)
-/// `WaveAttributeState` tracks how to evaluate it smoothly over time
+/// Manages a value that evolves over time (like phase or rotation)
+/// and ensures transitions between different rates/offsets are seamless.
+public struct ContinuousParameter {
+  private var origin: TimeInterval
+  private var lastValue: Double
+  
+  public init(initialValue: Double = 0.0, initialOrigin: TimeInterval = 0.0) {
+    self.lastValue = initialValue
+    self.origin = initialOrigin
+  }
+  
+  /// Computes the "virtual time" needed to keep the output constant
+  /// when a parameter (like frequency) changes.
+  public mutating func sync(to newValue: Double, at now: TimeInterval, currentRate: Double) {
+    let currentEffectiveTime = now - origin
+    let currentArgument = currentEffectiveTime * currentRate
+    
+    // Solve for newEffectiveTime: (newTime * newValue) == currentArgument
+    let newEffectiveTime = newValue != 0 ? currentArgument / newValue : 0
+    self.origin = now - newEffectiveTime
+    self.lastValue = newValue
+  }
+  
+  public func effectiveTime(at now: TimeInterval) -> TimeInterval {
+    now - origin
+  }
+}
+
+  /// This is still fairly 'breathing' specific, hoping to simplify further
 public struct WaveAttributeState {
-  private var lastFrequency: Double
-  private var lastPhase: Double
-  private var lastSpacingWaveSpeed: Double
-
-  /// this is the “time that corresponds to phase = 0” (or the origin of your phase calculation).
-  private(set) public var phaseOriginTime: TimeInterval
-  private(set) public var verticalWaveTimeOffset: TimeInterval
-
-  public init(
-    initialFrequency: Double = 1.0,
-    initialPhase: Double = 0.0,
-    initialSpacingWaveSpeed: Double = 1.0
-  ) {
-    self.lastFrequency = initialFrequency
-    self.lastPhase = initialPhase
-    self.lastSpacingWaveSpeed = initialSpacingWaveSpeed
-    self.phaseOriginTime = 0.0
-    self.verticalWaveTimeOffset = 0.0
+  // We track the "Temporal Progress" of different wave components
+  private var primaryPhaseState = ContinuousParameter()
+  private var spacingState = ContinuousParameter()
+  
+  // You no longer need separate "lastFrequency" and "lastPhase" variables
+  // inside here if you pass them into the sync methods.
+  
+  public mutating func updatePrimary(frequency: Double, at now: TimeInterval) {
+    // This handles the "visual continuity" logic internally
+    primaryPhaseState.sync(to: frequency, at: now, currentRate: frequency)
+  }
+  
+  public func effectivePhase(currentTime: TimeInterval, frequency: Double) -> Double {
+    let t = primaryPhaseState.effectiveTime(at: currentTime)
+    let phase = t * frequency
+    return phase - floor(phase)
   }
 }
 
-extension WaveAttributeState {
-
-  /// Compute effective phase including time, normalizedIndex, and cycles
-  public func effectivePhase(
-    currentTime: TimeInterval,
-    normalisedIndex: Double,
-    cycles: Double,
-    frequency: Double? = nil,
-    phaseOffset: Double? = nil
-  ) -> Double {
-    let f = frequency ?? lastFrequency
-    let p = phaseOffset ?? lastPhase
-    let effectiveTime = currentTime - phaseOriginTime
-    let phase = effectiveTime * f + normalisedIndex * cycles + p
-    return phase - floor(phase)  // wrap into [0,1)
-  }
-
-  /// Updates frequency while maintaining visual continuity
-  /// The invariant is that (`effectiveTime * frequency + phase`) remains unchanged.
-  /// - Parameters:
-  ///   - frequency: The new frequency value
-  ///   - currentPhase: The current phase value
-  public mutating func updateFrequency(to frequency: Double, currentPhase: Double) {
-    let now = Date().timeIntervalSinceReferenceDate
-    let effectiveTime = now - phaseOriginTime
-    let currentArg = effectiveTime * lastFrequency + currentPhase
-    let newEffectiveTime = (currentArg - currentPhase) / frequency
-    phaseOriginTime = now - newEffectiveTime
-    lastFrequency = frequency
-  }
-
-  /// Updates phase while maintaining visual continuity
-  /// - Parameters:
-  ///   - phase: The new phase value
-  ///   - currentFrequency: The current frequency value
-  public mutating func updatePhase(to phase: Double, currentFrequency: Double) {
-    let now = Date().timeIntervalSinceReferenceDate
-    let effectiveTime = now - phaseOriginTime
-    let currentArg = effectiveTime * currentFrequency + lastPhase
-    let newEffectiveTime = (currentArg - phase) / currentFrequency
-    phaseOriginTime = now - newEffectiveTime
-    lastPhase = phase
-  }
-
-  /// Updates spacingWaveSpeed for the vertical (breathing) effect.
-  /// For the spacing wave, the time-dependent term is effectiveTime * spacingWaveSpeed.
-  public mutating func updateSpacingWaveSpeed(to newSpeed: Double) {
-    let now = Date().timeIntervalSinceReferenceDate
-    let effectiveTime = now - verticalWaveTimeOffset
-    let currentArg = effectiveTime * lastSpacingWaveSpeed
-    let newEffectiveTime = currentArg / newSpeed
-    verticalWaveTimeOffset = now - newEffectiveTime
-    lastSpacingWaveSpeed = newSpeed
-  }
-
-}
+///// A runtime complement to `WaveShaped`
+///// `WaveShaped` describes what a wave is (frequency, amplitude, phase, waveform)
+///// `WaveAttributeState` tracks how to evaluate it smoothly over time
+//public struct WaveAttributeState {
+//  private var lastFrequency: Double
+//  private var lastPhase: Double
+//  private var lastSpacingWaveSpeed: Double
+//
+//  /// this is the “time that corresponds to phase = 0” (or the origin of your phase calculation).
+//  private(set) public var phaseOriginTime: TimeInterval
+//  private(set) public var verticalWaveTimeOffset: TimeInterval
+//
+//  public init(
+//    initialFrequency: Double = 1.0,
+//    initialPhase: Double = 0.0,
+//    initialSpacingWaveSpeed: Double = 1.0
+//  ) {
+//    self.lastFrequency = initialFrequency
+//    self.lastPhase = initialPhase
+//    self.lastSpacingWaveSpeed = initialSpacingWaveSpeed
+//    self.phaseOriginTime = 0.0
+//    self.verticalWaveTimeOffset = 0.0
+//  }
+//}
+//
+//extension WaveAttributeState {
+//
+//  /// Compute effective phase including time, normalizedIndex, and cycles
+//  public func effectivePhase(
+//    currentTime: TimeInterval,
+//    normalisedIndex: Double,
+//    cycles: Double,
+//    frequency: Double? = nil,
+//    phaseOffset: Double? = nil
+//  ) -> Double {
+//    let f = frequency ?? lastFrequency
+//    let p = phaseOffset ?? lastPhase
+//    let effectiveTime = currentTime - phaseOriginTime
+//    let phase = effectiveTime * f + normalisedIndex * cycles + p
+//    return phase - floor(phase)  // wrap into [0,1)
+//  }
+//
+//  /// Updates frequency while maintaining visual continuity
+//  /// The invariant is that (`effectiveTime * frequency + phase`) remains unchanged.
+//  /// - Parameters:
+//  ///   - frequency: The new frequency value
+//  ///   - currentPhase: The current phase value
+//  public mutating func updateFrequency(to frequency: Double, currentPhase: Double) {
+//    let now = Date().timeIntervalSinceReferenceDate
+//    let effectiveTime = now - phaseOriginTime
+//    let currentArg = effectiveTime * lastFrequency + currentPhase
+//    let newEffectiveTime = (currentArg - currentPhase) / frequency
+//    phaseOriginTime = now - newEffectiveTime
+//    lastFrequency = frequency
+//  }
+//
+//  /// Updates phase while maintaining visual continuity
+//  /// - Parameters:
+//  ///   - phase: The new phase value
+//  ///   - currentFrequency: The current frequency value
+//  public mutating func updatePhase(to phase: Double, currentFrequency: Double) {
+//    let now = Date().timeIntervalSinceReferenceDate
+//    let effectiveTime = now - phaseOriginTime
+//    let currentArg = effectiveTime * currentFrequency + lastPhase
+//    let newEffectiveTime = (currentArg - phase) / currentFrequency
+//    phaseOriginTime = now - newEffectiveTime
+//    lastPhase = phase
+//  }
+//
+//  /// Updates spacingWaveSpeed for the vertical (breathing) effect.
+//  /// For the spacing wave, the time-dependent term is effectiveTime * spacingWaveSpeed.
+//  public mutating func updateSpacingWaveSpeed(to newSpeed: Double) {
+//    let now = Date().timeIntervalSinceReferenceDate
+//    let effectiveTime = now - verticalWaveTimeOffset
+//    let currentArg = effectiveTime * lastSpacingWaveSpeed
+//    let newEffectiveTime = currentArg / newSpeed
+//    verticalWaveTimeOffset = now - newEffectiveTime
+//    lastSpacingWaveSpeed = newSpeed
+//  }
+//
+//}
