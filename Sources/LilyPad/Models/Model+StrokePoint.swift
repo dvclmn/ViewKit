@@ -7,19 +7,19 @@
 
 import Foundation
 import ColourKit
-
-public struct PointStyle: Hashable, Sendable, Codable {
-  let colour: RGBColour
-  let radius: CGFloat
-  
-  public init(
-    colour: RGBColour,
-    radius: CGFloat = 2.0
-  ) {
-    self.colour = colour
-    self.radius = radius
-  }
-}
+import VectorKit
+//public struct PointStyle: Hashable, Sendable, Codable {
+//  let colour: RGBColour
+//  let radius: CGFloat
+//  
+//  public init(
+//    colour: RGBColour,
+//    radius: CGFloat = 2.0
+//  ) {
+//    self.colour = colour
+//    self.radius = radius
+//  }
+//}
 
 extension PointStyle {
   public static func basic(with colour: RGBColour) -> Self {

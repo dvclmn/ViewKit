@@ -10,8 +10,8 @@ import CoreTools
 
 @MetaEnum
 public enum WaveComponent {
-  case line
-  case points
+  case line(LineStyle)
+  case points(PointStyle)
   case labels
   case phaseGhost
 }

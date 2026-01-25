@@ -5,52 +5,54 @@
 //  Created by Dave Coleman on 1/2/2025.
 //
 
-import Foundation
 
-public struct WaveModulator: Sendable, Codable, Equatable {
-  public var isEnabled: Bool
-  public var cycles: CGFloat
-  public var wave: Wave
 
-  public init(
-    isEnabled: Bool,
-    cycles: CGFloat,
-    wave: Wave
-  ) {
-    self.isEnabled = isEnabled
-    self.cycles = cycles
-    self.wave = wave
-  }
-}
+//import Foundation
 
-extension WaveModulator {
-  public func modulationIfEnabled(
-    effectiveTime: TimeInterval,
-    normalisedIndex: CGFloat
-  ) -> CGFloat {
-    guard isEnabled else { return 1 }
-    return wave.modulation(
-      effectiveTime: effectiveTime,
-      normalisedIndex: normalisedIndex,
-      cycles: cycles
-    )
-  }
+//public struct WaveModulator: Sendable, Codable, Equatable {
+//  public var isEnabled: Bool
+//  public var cycles: CGFloat
+//  public var wave: Wave
+//
+//  public init(
+//    isEnabled: Bool,
+//    cycles: CGFloat,
+//    wave: Wave
+//  ) {
+//    self.isEnabled = isEnabled
+//    self.cycles = cycles
+//    self.wave = wave
+//  }
+//}
 
-  public init(
-    isEnabled: Bool = true,
-    amp: CGFloat,
-    freq: CGFloat,
-    phase: CGFloat,
-    cycles: CGFloat,
-  ) {
-    let wave = Wave(freq: freq, amp: amp, phase: phase)
-    self.init(
-      isEnabled: isEnabled,
-      cycles: cycles,
-      wave: wave
-    )
-  }
-}
+//extension WaveModulator {
+//  public func modulationIfEnabled(
+//    effectiveTime: TimeInterval,
+//    normalisedIndex: CGFloat
+//  ) -> CGFloat {
+//    guard isEnabled else { return 1 }
+//    return wave.modulation(
+//      effectiveTime: effectiveTime,
+//      normalisedIndex: normalisedIndex,
+//      cycles: cycles
+//    )
+//  }
+//
+//  public init(
+//    isEnabled: Bool = true,
+//    amp: CGFloat,
+//    freq: CGFloat,
+//    phase: CGFloat,
+//    cycles: CGFloat,
+//  ) {
+//    let wave = Wave(freq: freq, amp: amp, phase: phase)
+//    self.init(
+//      isEnabled: isEnabled,
+//      cycles: cycles,
+//      wave: wave
+//    )
+//  }
+//}
 
 //  let isEnabled: Bool
 //  let amplitude: CGFloat

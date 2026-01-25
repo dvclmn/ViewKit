@@ -7,18 +7,19 @@
 
 import Foundation
 
-//public struct AnimatedWave {
-//  var wave: any WaveShaped
-//  var state: WaveState
-//
-//  public init(
-//    wave: any WaveShaped,
-//    state: WaveState
-//  ) {
-//    self.wave = wave
-//    self.state = state
-//  }
-//}
+public struct AnimatedWave {
+  var wave: any WaveShaped
+  var state: ContinuousParameter
+  //  var state: WaveState
+
+  public init(
+    wave: any WaveShaped,
+    state: ContinuousParameter
+  ) {
+    self.wave = wave
+    self.state = state
+  }
+}
 
 extension AnimatedWave {
   /// ```
@@ -41,14 +42,46 @@ extension AnimatedWave {
   ) -> CGFloat {
     let phase = state.effectivePhase(
       currentTime: currentTime,
-      normalisedIndex: normalisedIndex,
-      cycles: cycles,
-      frequency: wave.frequency,
-      phaseOffset: wave.phase
+      frequency: wave.frequency
     )
+    //    let phase = state.effectivePhase(
+    //      currentTime: currentTime,
+    //      normalisedIndex: normalisedIndex,
+    //      cycles: cycles,
+    //      frequency: wave.frequency,
+    //      phaseOffset: wave.phase
+    //    )
     let value = wave.waveform.sample(phase: phase)
     return CGFloat(wave.amplitude * value)
   }
+
+  /// `value = A · sin(ωt + φ)`
+  ///
+  /// `A` = amplitude
+  /// `ω` = angular frequency (omega)
+  /// `t` = time
+  /// `φ` = phase offset
+  ///
+  /// `2 * .pi * frequency * time`
+  /// Means I am converting cycles per second → radians per second
+  /// Which sine requires, because `sin()` lives in radians.
+  public func modulation(
+    for wave: any WaveShaped,
+    effectiveTime: TimeInterval,
+    normalisedIndex: CGFloat,
+    cycles: CGFloat
+  ) -> CGFloat {
+
+    let freq = wave.frequency
+    let phase =
+      effectiveTime * wave.frequency  // temporal advance
+      + normalisedIndex * cycles  // spatial distribution
+      + wave.phase  // static offset
+
+    let value = wave.waveform.sample(phase: phase)
+    return wave.amplitude * value
+  }
+
 }
 
 //  mutating func getPointsAlongPath(time: CGFloat, size: CGSize, resolution: Int = 100) -> [(CGPoint, CGFloat)] {

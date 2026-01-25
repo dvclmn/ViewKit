@@ -16,12 +16,14 @@ public struct WaveConfig: Codable, Sendable, Equatable {
   public var circleRadius: CGFloat
 
   /// The total number of circles (affects normalisation but not the wave shapes).
+  /// Could also be thought of as sample count
   public var count: Int
 
   /// ~~When shouldMaintainHeight is true, no matter what count is,
   /// these circles are “packed” into this height.~~
   ///
   /// How much of the vertical space the total wave takes up
+  /// Aka vertical frequency
   public var compressionFactor: CGFloat
 
   /// Horizontal left/right motion parameters.

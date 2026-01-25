@@ -16,47 +16,20 @@ public struct Wave: WaveShaped, Sendable, Identifiable, Hashable, Codable {
 
   public init(
     id: UUID = UUID(),
-    frequency: CGFloat,
-    amplitude: CGFloat,
-    phase: CGFloat,
-    waveform: Waveform,
-  ) {
-    self.id = id
-    self.frequency = frequency
-    self.amplitude = amplitude
-    self.phase = phase
-    self.waveform = waveform
-  }
-}
-
-//extension Wave: RawRepresentable {
-//  public init?(rawValue: String) {
-//    <#code#>
-//  }
-//  
-//  public var rawValue: String {
-//    <#code#>
-//  }
-//  
-//  public typealias RawValue = String
-//  
-//  
-//}
-
-extension Wave {
-  public init(
     freq: CGFloat,
     amp: CGFloat,
     phase: CGFloat,
-    waveform: Waveform = .sine
+    form: Waveform = .sine
   ) {
-    self.init(
-      frequency: freq,
-      amplitude: amp,
-      phase: phase,
-      waveform: waveform,
-    )
+    self.id = id
+    self.frequency = freq
+    self.amplitude = amp
+    self.phase = phase
+    self.waveform = form
   }
+}
+
+extension Wave {
 }
 
 public struct NoisyWave: Sendable, Hashable {

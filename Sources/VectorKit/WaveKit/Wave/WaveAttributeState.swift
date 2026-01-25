@@ -10,52 +10,69 @@ import Foundation
 /// `Result=(CurrentTime−Origin)⋅Rate+Offset`
 /// Manages a value that evolves over time (like phase or rotation)
 /// and ensures transitions between different rates/offsets are seamless.
+///
+/// Look to this now instead of `WaveAttributeState`
 public struct ContinuousParameter {
   private var origin: TimeInterval
   private var lastValue: CGFloat
-  
+
   public init(initialValue: CGFloat = 0.0, initialOrigin: TimeInterval = 0.0) {
     self.lastValue = initialValue
     self.origin = initialOrigin
   }
-  
+
   /// Computes the "virtual time" needed to keep the output constant
   /// when a parameter (like frequency) changes.
-  public mutating func sync(to newValue: CGFloat, at now: TimeInterval, currentRate: CGFloat) {
-    let currentEffectiveTime = now - origin
+  public mutating func sync(
+    to newValue: CGFloat,
+    at now: TimeInterval,
+    currentRate: CGFloat
+  ) {
+    let currentEffectiveTime = effectiveTime(at: now)
     let currentArgument = currentEffectiveTime * currentRate
-    
-    // Solve for newEffectiveTime: (newTime * newValue) == currentArgument
-    let newEffectiveTime = newValue != 0 ? currentArgument / newValue : 0
+
+    /// Solve for newEffectiveTime: `(newTime * newValue) == currentArgument`
+    let newEffectiveTime =
+      newValue != 0
+      ? currentArgument / newValue
+      : 0
     self.origin = now - newEffectiveTime
     self.lastValue = newValue
   }
-  
+
   public func effectiveTime(at now: TimeInterval) -> TimeInterval {
     now - origin
   }
-}
 
-  /// This is still fairly 'breathing' specific, hoping to simplify further
-public struct WaveState {
-  // We track the "Temporal Progress" of different wave components
-  private var primaryPhaseState = ContinuousParameter()
-  private var spacingState = ContinuousParameter()
-  
-  // You no longer need separate "lastFrequency" and "lastPhase" variables
-  // inside here if you pass them into the sync methods.
-  
-  public mutating func updatePrimary(frequency: CGFloat, at now: TimeInterval) {
-    // This handles the "visual continuity" logic internally
-    primaryPhaseState.sync(to: frequency, at: now, currentRate: frequency)
-  }
-  
-  public func effectivePhase(currentTime: TimeInterval, frequency: CGFloat) -> CGFloat {
-    let t = primaryPhaseState.effectiveTime(at: currentTime)
+  public func effectivePhase(
+    currentTime: TimeInterval,
+    frequency: CGFloat
+  ) -> CGFloat {
+    let t = effectiveTime(at: currentTime)
     let phase = t * frequency
     return phase - floor(phase)
   }
 }
+
+/// This is still fairly 'breathing' specific, hoping to simplify further
+//public struct WaveState {
+//  /// Track the "Temporal Progress" of different wave components
+//  private var primaryPhaseState = ContinuousParameter()
+//  private var spacingState = ContinuousParameter()
+//
+//  /// You no longer need separate "lastFrequency" and "lastPhase" variables
+//  /// inside here if you pass them into the sync methods.
+//  public mutating func updatePrimary(frequency: CGFloat, at now: TimeInterval) {
+//    // This handles the "visual continuity" logic internally
+//    primaryPhaseState.sync(to: frequency, at: now, currentRate: frequency)
+//  }
+//
+//  public func effectivePhase(currentTime: TimeInterval, frequency: CGFloat) -> CGFloat {
+//    let t = primaryPhaseState.effectiveTime(at: currentTime)
+//    let phase = t * frequency
+//    return phase - floor(phase)
+//  }
+//}
 
 ///// A runtime complement to `WaveShaped`
 ///// `WaveShaped` describes what a wave is (frequency, amplitude, phase, waveform)

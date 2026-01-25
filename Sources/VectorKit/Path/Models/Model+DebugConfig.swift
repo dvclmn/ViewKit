@@ -22,18 +22,18 @@ public struct PathDebugConfig {
   }
 }
 
-public struct LineStyle {
-  public let fillColour: Color
-  public let strokeColour: Color
-  public let linewidth: CGFloat
-
-  public init(
-    fillColour: Color = .indigo.opacityLow,
-    strokeColour: Color = .cyan,
-    linewidth: CGFloat = 1
-  ) {
-    self.fillColour = fillColour
-    self.strokeColour = strokeColour
-    self.linewidth = linewidth
-  }
-}
+//public struct LineStyle {
+//  public let fillColour: Color
+//  public let strokeColour: Color
+//  public let linewidth: CGFloat
+//
+//  public init(
+//    fillColour: Color = .indigo.opacityLow,
+//    strokeColour: Color = .cyan,
+//    linewidth: CGFloat = 1
+//  ) {
+//    self.fillColour = fillColour
+//    self.strokeColour = strokeColour
+//    self.linewidth = linewidth
+//  }
+//}
