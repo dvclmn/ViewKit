@@ -8,17 +8,18 @@
 import Foundation
 
 public struct WaveConfig: Hashable, Sendable, Codable {
-  let isEnabled: Bool
-  let cycles: Int
-  let sampleCount: Int
-  let interpolation: WaveInterpolation
+  public let isEnabled: Bool
+  public let cycles: CGFloat
+//  public let cycles: Int
+  public let sampleCount: Int
+  public let interpolation: WaveInterpolation
   /// From old `WaveAppearance`
   //  static var windowOptions: [CGFloat] { [1, 2, 4, 8, 12, 24, 30] }
   //  static var timeRange: ClosedRange<CGFloat> { 1...30 }
   
   public init(
     isEnabled: Bool = true,
-    cycles: Int = 3,
+    cycles: CGFloat = 3,
     sampleCount: Int = 30,
     interpolation: WaveInterpolation = .cubic,
   ) {

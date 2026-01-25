@@ -6,10 +6,12 @@
 //
 
 /// Suitable for stacking waves together for cool effects
+@dynamicMemberLookup
 public struct WaveDescriptor: Identifiable, Hashable, Sendable, Codable, Equatable {
   public var id: Wave.ID { wave.id }
-  let wave: Wave
-  let config: WaveConfig
+  public var wave: Wave
+//  public let wave: Wave
+  public let config: WaveConfig
 
   public init(
     wave: Wave,
@@ -33,7 +35,16 @@ public struct WaveDescriptor: Identifiable, Hashable, Sendable, Codable, Equatab
 //    self.init(wave: wave, config: config)
 //  }
 }
-
+extension WaveDescriptor {
+  
+  public subscript<T>(dynamicMember keyPath: WritableKeyPath<Wave, T>) -> T {
+    get { self.wave[keyPath: keyPath]}
+    set { self.wave[keyPath: keyPath] = newValue }
+//    set { config[keyPath: keyPath] = newValue as! WaveConfig..SubSequence }
+  }
+  
+  public func makeAnimated() -> AnimatedWave { AnimatedWave(wave: self.wave) }
+}
 extension WaveDescriptor {
   public static let example01: Self = .init(
     wave: .example01,

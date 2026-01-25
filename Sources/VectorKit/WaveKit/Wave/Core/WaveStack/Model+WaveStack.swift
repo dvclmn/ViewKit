@@ -13,6 +13,7 @@ import Foundation
 /// `stack[Fundamental.self].wave.phase += delta`
 /// `stack[Fundamental.self].settings.isEnabled.toggle()`
 //@dynamicMemberLookup
+//public struct WaveStack<Value>: @unchecked Sendable {
 public struct WaveStack: @unchecked Sendable {
   private var storage: [ObjectIdentifier: Any] = [:]
 
@@ -20,6 +21,15 @@ public struct WaveStack: @unchecked Sendable {
 }
 
 extension WaveStack {
+  //extension WaveStack where Value == WaveDescriptor {
+  //  public subscript<T>(dynamicMember keyPath: KeyPath<Self, T>) {
+  //
+  //  }
+  //  public subscript<K: WaveKey>(_ key: K.Type) -> K.Value where K.Value == WaveDescriptor {
+  //    get { storage[ObjectIdentifier(key)] as? K.Value ?? K.defaultValue }
+  //    set { storage[ObjectIdentifier(key)] = newValue }
+  //  }
+
   //  public subscript<T>(dynamicMember keyPath: KeyPath<Self, T>) {
   //
   //  }
@@ -27,13 +37,14 @@ extension WaveStack {
     get { storage[ObjectIdentifier(key)] as? K.Value ?? K.defaultValue }
     set { storage[ObjectIdentifier(key)] = newValue }
   }
+
 }
 
 // MARK: - Codable handling
 extension WaveStack {
 
   /// Converts current state to a Codable projection
-  @MainActor
+//  @MainActor
   public func codable() -> CodableWaveStack {
     var result: [String: WaveDescriptor] = [:]
 
@@ -47,7 +58,7 @@ extension WaveStack {
     return CodableWaveStack(result)
   }
 
-  @MainActor
+//  @MainActor
   public mutating func apply(_ projection: CodableWaveStack) {
     for (key, descriptor) in projection.waves {
       WaveKeyRegistry.apply(descriptor: descriptor, key: key, to: &self)
@@ -90,16 +101,20 @@ extension WaveStack {
   }
 }
 
-@MainActor
+//@MainActor
 public enum WaveKeyRegistry {
-  private(set) static var all: [String: any CodableWaveKey.Type] = [:]
+  nonisolated(unsafe) private(set) static var all: [String: any CodableWaveKey.Type] = [:]
 
   public static func register<K: CodableWaveKey>(_ key: K.Type) {
     all[K.codingKey] = key
   }
 
   /// Helper to apply a descriptor to a stack using the type-erased key
-  static func apply(descriptor: WaveDescriptor, key: String, to stack: inout WaveStack) {
+  static func apply(
+    descriptor: WaveDescriptor,
+    key: String,
+    to stack: inout WaveStack
+  ) {
     guard let keyType = all[key] else { return }
     stack.setValue(descriptor, for: keyType)
   }

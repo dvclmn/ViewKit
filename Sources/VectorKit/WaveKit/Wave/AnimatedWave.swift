@@ -8,16 +8,13 @@
 import Foundation
 
 public struct AnimatedWave {
-  var wave: Wave
-  var state: ContinuousParameter
+  public var wave: Wave
+  public var state: ContinuousParameter
   //  var state: WaveState
 
-  public init(
-    wave: Wave,
-    state: ContinuousParameter
-  ) {
+  public init(wave: Wave) {
     self.wave = wave
-    self.state = state
+    self.state = ContinuousParameter()
   }
 }
 

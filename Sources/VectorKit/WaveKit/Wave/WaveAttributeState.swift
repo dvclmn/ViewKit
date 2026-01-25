@@ -21,7 +21,13 @@ public struct ContinuousParameter {
 extension ContinuousParameter {
   
   /// Calculates the time-based phase (0...1) for a given frequency.
-  public func temporalPhase(at now: TimeInterval, frequency: Double) -> Double {
+  /// Previous form on `WaveAttributeState`:
+  /// `effectivePhase`
+  /// `let effectiveTime = currentTime - phaseOriginTime`
+  public func temporalPhase(
+    at now: TimeInterval,
+    frequency: Double
+  ) -> Double {
     let effectiveTime = now - origin
     let phase = effectiveTime * frequency
     return phase - floor(phase) // Wrap to [0, 1)
