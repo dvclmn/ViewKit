@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 19/8/2025.
 //
 
+import CoreTools
 import Foundation
 
 public struct SmoothedProperty: Sendable, Hashable {
@@ -37,5 +38,20 @@ extension SmoothedProperty {
       dt: dt,
       timeConstant: timeConstant
     )
+  }
+}
+
+extension Array where Element == SmoothedProperty {
+  public mutating func updateAll(
+    dt: CGFloat,
+    timeConstant: CGFloat,
+    smoothing: CGFloat
+  ) {
+    for index in self.indices {
+      self[safe: index]?.update(
+        dt: timeConstant,
+        smoothing: smoothing
+      )
+    }
   }
 }

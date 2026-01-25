@@ -16,8 +16,6 @@ extension WaveConfig {
       circleRadius: 25,
       count: 60,
       compressionFactor: 0.1,
-//      spacing: 16,
-//      shouldMaintainHeight: true,
       horizontalWave: .init(
         isEnabled: true,
         amp: 70,
@@ -25,7 +23,7 @@ extension WaveConfig {
         phase: 0.4,
         cycles: 3
       ),
-      spacingWave: .init(
+      verticalWave: .init(
         isEnabled: true,
         amp: 10,
         freq: 1,
@@ -59,7 +57,7 @@ extension WaveConfig {
         phase: 0.4,
         cycles: 4
       ),
-      spacingWave: .init(
+      verticalWave: .init(
         isEnabled: true,
         amp: 10,
         freq: 1,

@@ -42,28 +42,39 @@ public struct ColourLevelSwitch<Colour: ColourModel & EnvironmentResolvableColou
   public var body: some View {
 
     ZStack {
-      Level(.foreground)
-      Level(.background)
+      switch mode {
+        case .switcher:
+          Level(.foreground)
+          Level(.background)
+
+        case .single:
+          switch level {
+            case .foreground: Level(.foreground)
+            case .background: Level(.background)
+          }
+      }
     }
     .allowsHitTesting(!modifierKeys.isHoldingOption)
     .frame(width: swatchPairTotalWidth)
+    
     .onHover { isHovering = $0 }
 
-    .overlay(alignment: .leading) {
-      if isHovering && modifierKeys.isHoldingOption {
-        Label("Swap Foreground and Background", systemImage: "arrow.uturn.right")
-          .fontWeight(.medium)
-          .foregroundStyle(
-            .pink
-            //            store.colourHandler.contrastingSwiftUIColour(for: .foreground, using: .contrastPreset(.highContrast), includesAlpha: false)
-            //            store.colourHandler.selectedColour.contrastingBorderColour(using: .highContrast).nativeColour(includesAlpha: false)
-          )
-          .frame(width: diameter)
-          .allowsHitTesting(false)
-      }
-    }
+    //    .overlay(alignment: .leading) {
+    //      if isHovering && modifierKeys.isHoldingOption {
+    //        Label("Swap Foreground and Background", systemImage: "arrow.uturn.right")
+    //          .fontWeight(.medium)
+    //          .foregroundStyle(
+    //            .pink
+    //            //            store.colourHandler.contrastingSwiftUIColour(for: .foreground, using: .contrastPreset(.highContrast), includesAlpha: false)
+    //            //            store.colourHandler.selectedColour.contrastingBorderColour(using: .highContrast).nativeColour(includesAlpha: false)
+    //          )
+    //          .frame(width: diameter)
+    //          .allowsHitTesting(false)
+    //      }
+    //    }
     //    .gesture(tapSwapGesture, isEnabled: isHoldingOption)
-    .padding(.horizontal, Styles.sizeRegular.bump)
+//    .padding(.horizontal, Styles.sizeRegular.bump)
+    
 
   }
 }
@@ -84,10 +95,11 @@ extension ColourLevelSwitch {
       .frameFromSquare(diameter)
       .clipShape(.circle)
       .overlay {
-        if isActive(colourLevel) {
+        if isActiveAndSwitchMode(colourLevel) {
           Circle().fill(.clear).stroke(.white, lineWidth: 1)
         }
       }
+      
       //      ColourLevelView(
       //        level: colourLevel,
       //        foreground: foreground,
@@ -95,16 +107,21 @@ extension ColourLevelSwitch {
       //        diameter: diameter,
       //        overlapFactor: overlapFactor
       //      )
+      
+      .offset(x: offsetAmount(colourLevel))
+      .zIndex(isActiveAndSwitchMode(colourLevel) ? 2 : 1)
+      .accessibilityLabel(Text("Edit \(colourLevel.name) Colour"))
+      .animation(
+        .snappy(duration: 0.22, extraBounce: 0.13),
+        value: colourLevel
+      )
+      .id(colourLevel)
+      
+//      .contentShape(.rect)
+      
     }
+//    .border(Color.green.opacity(0.3))
     .buttonStyle(.plain)
-    .offset(x: isActive(colourLevel) ? -swatchOverlap : swatchOverlap)
-    .zIndex(isActive(colourLevel) ? 2 : 1)
-    .accessibilityLabel(Text("Edit \(colourLevel.name) Colour"))
-    .animation(
-      .snappy(duration: 0.22, extraBounce: 0.13),
-      value: colourLevel
-    )
-    .id(colourLevel)
   }
 
   var swatchPairTotalWidth: CGFloat {
@@ -113,10 +130,19 @@ extension ColourLevelSwitch {
     (diameter * 2) - (overlapFactor * diameter / 2)
   }
 
+  private func offsetAmount(_ colourLevel: ColourLevel) -> CGFloat {
+    guard mode.isSwitcher else { return .zero }
+   return isActive(colourLevel) ? -swatchOverlap : swatchOverlap
+  }
+  
   private var swatchOverlap: CGFloat {
     diameter * overlapFactor
   }
 
+  private func isActiveAndSwitchMode(_ colourLevel: ColourLevel) -> Bool {
+    colourLevel == level && mode.isSwitcher
+  }
+  
   private func isActive(_ colourLevel: ColourLevel) -> Bool {
     colourLevel == level
   }

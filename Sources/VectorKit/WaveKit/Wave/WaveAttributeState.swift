@@ -17,7 +17,7 @@ public struct WaveAttributeState {
 
   /// this is the “time that corresponds to phase = 0” (or the origin of your phase calculation).
   private(set) public var phaseOriginTime: TimeInterval
-  private(set) public var spacingWaveTimeOffset: TimeInterval
+  private(set) public var verticalWaveTimeOffset: TimeInterval
 
   public init(
     initialFrequency: Double = 1.0,
@@ -28,7 +28,7 @@ public struct WaveAttributeState {
     self.lastPhase = initialPhase
     self.lastSpacingWaveSpeed = initialSpacingWaveSpeed
     self.phaseOriginTime = 0.0
-    self.spacingWaveTimeOffset = 0.0
+    self.verticalWaveTimeOffset = 0.0
   }
 }
 
@@ -62,16 +62,6 @@ extension WaveAttributeState {
     phaseOriginTime = now - newEffectiveTime
     lastFrequency = frequency
   }
-  //  public mutating func updateFrequency(to frequency: Double, currentPhase: Double) {
-  //    let now = Date().timeIntervalSinceReferenceDate
-  //    let effectiveTime = now - phaseOriginTime
-  //    // Preserve the current horizontal component.
-  //    let currentArg = effectiveTime * lastFrequency + currentPhase
-  //    // Solve for new effectiveTime such that newEffectiveTime * frequency + currentPhase equals currentArg.
-  //    let newEffectiveTime = (currentArg - currentPhase) / frequency
-  //    phaseOriginTime = now - newEffectiveTime
-  //    lastFrequency = frequency
-  //  }
 
   /// Updates phase while maintaining visual continuity
   /// - Parameters:
@@ -87,14 +77,14 @@ extension WaveAttributeState {
     lastPhase = phase
   }
 
-  // Updates spacingWaveSpeed for the vertical (breathing) effect.
-  // For the spacing wave, the time-dependent term is effectiveTime * spacingWaveSpeed.
+  /// Updates spacingWaveSpeed for the vertical (breathing) effect.
+  /// For the spacing wave, the time-dependent term is effectiveTime * spacingWaveSpeed.
   public mutating func updateSpacingWaveSpeed(to newSpeed: Double) {
     let now = Date().timeIntervalSinceReferenceDate
-    let effectiveTime = now - spacingWaveTimeOffset
+    let effectiveTime = now - verticalWaveTimeOffset
     let currentArg = effectiveTime * lastSpacingWaveSpeed
     let newEffectiveTime = currentArg / newSpeed
-    spacingWaveTimeOffset = now - newEffectiveTime
+    verticalWaveTimeOffset = now - newEffectiveTime
     lastSpacingWaveSpeed = newSpeed
   }
 

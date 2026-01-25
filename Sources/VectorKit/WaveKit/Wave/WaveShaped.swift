@@ -37,7 +37,7 @@ extension WaveShaped {
   /// you can use this value directly.
   ///
   /// ## More on `normalisedIndex`
-  /// It is not time — it is space (or structure).
+  /// A normalised index is not time — it is space / structure
   ///
   /// Multiplying it by cycles answers this:
   /// "Across this domain, how many full oscillations should exist?"
@@ -54,10 +54,6 @@ extension WaveShaped {
   ///   - normalisedIndex: A position along some domain, scaled into [0, 1]
   ///   - cycles: <#cycles description#>
   /// - Returns: <#description#>
-  ///
-
-  
-  
   public func modulation(
     effectiveTime: TimeInterval,
     normalisedIndex: Double,
