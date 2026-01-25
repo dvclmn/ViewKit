@@ -41,24 +41,38 @@ extension ClosedRange where Bound == CGFloat {
   public func split(by stepSize: Bound) -> [Bound] {
     Array(stride(from: lowerBound, through: upperBound, by: stepSize))
   }
-
 }
 extension ClosedRange where Bound == Double {
   public var toCGFloatRange: ClosedRange<CGFloat> {
-    CGFloat(self.lowerBound)...CGFloat(self.upperBound)
+    CGFloat(lowerBound)...CGFloat(upperBound)
   }
 }
+
+
+
 extension ClosedRange where Bound == Int {
   public var toDoubleRange: ClosedRange<Double> {
-    Double(self.lowerBound)...CGFloat(self.upperBound)
+    Double(lowerBound)...CGFloat(upperBound)
   }
   public var toCGFloatRange: ClosedRange<CGFloat> {
-    CGFloat(self.lowerBound)...CGFloat(self.upperBound)
+    CGFloat(lowerBound)...CGFloat(upperBound)
+  }
+  public func toBinaryFloatingPointRange<T: BinaryFloatingPoint>() -> ClosedRange<T> {
+    T(lowerBound)...T(upperBound)
+  }
+}
+
+extension ClosedRange where Bound: BinaryFloatingPoint & Sendable {
+  public var toFloatRange: ClosedRange<CGFloat> {
+    CGFloat(lowerBound)...CGFloat(upperBound)
+  }
+  public var toIntRange: ClosedRange<Int> {
+    Int(lowerBound)...Int(upperBound)
   }
 }
 
 extension ClosedRange where Bound: BinaryFloatingPoint {
-  
+
   public static var phaseRange: Self { 0...1 * .pi }
   public static var unitRange: Self { 0...1 }
 

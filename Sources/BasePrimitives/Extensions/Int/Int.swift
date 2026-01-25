@@ -12,34 +12,8 @@ extension Int {
   public var doubled: Int { self * 2 }
   public var halved: Int { self / 2 }
 
-  //  public var toOpacity: Double {
-  //    let newValue: Double
-  //    if self == 0 {
-  //      newValue = 1  // aka 100%
-  //    } else {
-  //      /// E.g. converts input of `4` to `0.4`, as opacity here is
-  //      /// expressed as `0-1`
-  //      newValue = (Double(self) / 10)
-  //    }
-  //    return newValue
-  //  }
-
-  /// Convert `self` (a value in seconds) and convert to H, M and S
-  /// ```
-  /// let seconds: Int = 26700
-  /// let (h,m,s) = seconds.toHoursMinutesSeconds
-  /// ```
-  public var toHoursMinutesSeconds: (h: Int, m: Int, s: Int) {
-    let h = self / 3600
-    let m = (self % 3600) / 60
-    let s = (self % 3600) % 60
-    return (h, m, s)
-  }
-
   /// A Boolean value indicating whether the integer is even.
   public var isEven: Bool { self % 2 == 0 }
-
-  public var toCGFloat: CGFloat { CGFloat(self) }
 
   public func isWithin(_ collection: some Collection) -> Bool {
     let startIndex = collection.startIndex
@@ -74,17 +48,6 @@ extension Int {
 
   public var numberOfDigits: Int { String(abs(self)).count }
 
-}
-
-extension UInt32 {
-  public var toInt: Int { Int(self) }
-}
-
-
-extension Int64 {
-  public func toString() -> String {
-    String(self)
-  }
 }
 
 public enum NumberMagnitude: String {

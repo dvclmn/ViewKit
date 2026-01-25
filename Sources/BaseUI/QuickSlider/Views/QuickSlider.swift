@@ -10,10 +10,10 @@ import SwiftUI
 
 public typealias SliderOutput = (SliderPhase) -> Void
 
-public struct QuickSlider<Value: BinaryFloatingPoint>: View, ValueFormattable, SliderStylable {
+public struct QuickSlider<Value: BinaryFloatingPoint & Sendable>: View, ValueFormattable, SliderStylable {
   @Environment(\.isWithinSliderGroup) private var isWithinSliderGroup
   @Environment(\.sliderComponents) private var sliderComponents
-  @State private var store: SliderHandler<Value>
+  @State private var store: SliderHandler
 
   @Binding var value: Value
 
@@ -32,7 +32,7 @@ public struct QuickSlider<Value: BinaryFloatingPoint>: View, ValueFormattable, S
         }
       }
     }
-    .bindModel($store.value, to: $value)
+    .bindModel($store.value, to: $value.toBindingFloat)
     .environment(\.sliderHandler, store)
   }
 }
@@ -42,9 +42,9 @@ extension QuickSlider {
 
   public init(
     _ title: String,
-    value: Binding<Double>,
-    range: ClosedRange<Double>,
-    step: Double? = nil,
+    value: Binding<Value>,
+    range: ClosedRange<Value>,
+    step: Value? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
     self.init(
@@ -58,24 +58,42 @@ extension QuickSlider {
 
   public init(
     label: QuickLabel,
-    value: Binding<Double>,
-    range: ClosedRange<Double>,
-    step: Double? = nil,
+    value: Binding<Value>,
+    range: ClosedRange<Value>,
+    step: Value? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
     self._value = value
     self._store = State(
       initialValue: SliderHandler(
-        value: value.wrappedValue,
+        value: CGFloat(value.wrappedValue),
         label: label,
-        range: range,
-        step: step,
+        range: range.toFloatRange,
+        step: step.toFloatIfPresent,
         didChangeSlider: didChangeSlider
       )
     )
   }
   
-  /// For Binding to CGFloat more conveniently
+  /// For Binding to Int more conveniently
+  public init(
+    _ title: String,
+    intValue: Binding<Int>,
+    range: ClosedRange<Int>,
+    step: Int? = nil,
+    didChangeSlider: @escaping SliderOutput = { _ in },
+  ) where Value == CGFloat {
+    self.init(
+      label: QuickLabel(title),
+      value: intValue.toBindingFloat,
+//      value: intValue.toBindingBinaryFloatingPoint(),
+      range: range.toCGFloatRange,
+      step: step?.toCGFloat,
+      didChangeSlider: didChangeSlider
+    )
+  }
+  
+  
 //  public init(
 //    _ title: String,
 //    value: Binding<Double>,

@@ -7,42 +7,26 @@
 
 import SwiftUI
 
-extension Binding where Value == CGFloat {
-  /// Convert `CGFloat` Binding to `Double` Binding
+extension Binding where Value == Int {
+  /// Convert `Int` Binding to `Double` Binding
   public var toBindingDouble: Binding<Double> {
     Binding<Double>(
       get: { Double(wrappedValue) },
       set: { wrappedValue = Value($0) }
     )
   }
-}
-//extension Binding {
-//  @MainActor
-//  public func keyPathBinding(
-//    keyPath: ReferenceWritableKeyPath<Value, Double>
-//  ) -> Binding<Double> {
-//    Binding {
-//      self.wrappedValue[keyPath: keyPath]
-//    } set: {
-//      self[keyPath: keyPath] = $0
-//    }
-//  }
-//}
-extension Binding where Value == Double {
-  /// Convert `Double` Binding to `CGFloat` Binding
+  /// Convert `Int` Binding to `Double` Binding
   public var toBindingFloat: Binding<CGFloat> {
     Binding<CGFloat>(
       get: { CGFloat(wrappedValue) },
       set: { wrappedValue = Value($0) }
     )
   }
-}
 
-extension Binding where Value == Int {
   /// Convert `Int` Binding to `Double` Binding
-  public var toBindingDouble: Binding<Double> {
-    Binding<Double>(
-      get: { Double(wrappedValue) },
+  public func toBindingBinaryFloatingPoint<T: BinaryFloatingPoint & Sendable>() -> Binding<T> {
+    Binding<T>(
+      get: { T(wrappedValue) },
       set: { wrappedValue = Value($0) }
     )
   }
@@ -56,10 +40,29 @@ extension Binding where Value: BinaryFloatingPoint & Sendable {
       set: { wrappedValue = $0.clamped(to: range) }
     )
   }
+
+  public var toBindingFloat: Binding<CGFloat> {
+    Binding<CGFloat>(
+      get: { CGFloat(wrappedValue) },
+      set: { wrappedValue = Value($0) }
+    )
+  }
+  public var toBindingDouble: Binding<Double> {
+    Binding<Double>(
+      get: { Double(wrappedValue) },
+      set: { wrappedValue = Value($0) }
+    )
+  }
+
 }
-
-
-
+extension Binding where Value == ClosedRange<Int> {
+  public func toBindingBinaryFloatingPoint<T: BinaryFloatingPoint & Sendable>() -> Binding<ClosedRange<T>> {
+    Binding<ClosedRange<T>>(
+      get: { wrappedValue.toBinaryFloatingPointRange() },
+      set: { wrappedValue = $0.toIntRange }
+    )
+  }
+}
 extension Binding where Value == Bool {
   public var reversed: Binding<Bool> {
     return .init(
@@ -85,6 +88,37 @@ extension Binding where Value: OptionSet & Sendable, Value.Element == Value {
     )
   }
 }
+
+//extension Binding where Value == CGFloat {
+//  /// Convert `CGFloat` Binding to `Double` Binding
+//  public var toBindingDouble: Binding<Double> {
+//    Binding<Double>(
+//      get: { Double(wrappedValue) },
+//      set: { wrappedValue = Value($0) }
+//    )
+//  }
+//}
+//extension Binding {
+//  @MainActor
+//  public func keyPathBinding(
+//    keyPath: ReferenceWritableKeyPath<Value, Double>
+//  ) -> Binding<Double> {
+//    Binding {
+//      self.wrappedValue[keyPath: keyPath]
+//    } set: {
+//      self[keyPath: keyPath] = $0
+//    }
+//  }
+//}
+//extension Binding where Value == Double {
+//  /// Convert `Double` Binding to `CGFloat` Binding
+//  public var toBindingFloat: Binding<CGFloat> {
+//    Binding<CGFloat>(
+//      get: { CGFloat(wrappedValue) },
+//      set: { wrappedValue = Value($0) }
+//    )
+//  }
+//}
 
 //extension Binding {
 //  //extension Binding where Self: Sendable, Value: Sendable {

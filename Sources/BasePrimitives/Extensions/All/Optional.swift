@@ -20,6 +20,12 @@ extension Optional {
   }
 }
 
+extension Optional where Wrapped: BinaryFloatingPoint {
+  public var toFloatIfPresent: CGFloat? {
+    map { CGFloat($0) }
+  }
+}
+
 //extension Optional where Wrapped == Bool {
 ////extension Optional where Wrapped == Binding<Bool?> {
 //  public func fallback(_ value: Bool) -> Binding<Bool> {

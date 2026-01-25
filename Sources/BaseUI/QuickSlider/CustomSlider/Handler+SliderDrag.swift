@@ -30,8 +30,8 @@ final class SliderHandler {
   public init(
     value: CGFloat,
     label: QuickLabel,
-    range: ClosedRange<Value>,
-    step: Value?,
+    range: ClosedRange<CGFloat>,
+    step: CGFloat?,
     didChangeSlider: SliderOutput?
   ) {
     self.value = value
@@ -62,32 +62,32 @@ extension SliderHandler {
     self.didChangeSlider?(phase)
   }
 
-  func handleDragChange(_ gestureValue: DragGesture.Value) -> Value {
+  func handleDragChange(_ gestureValue: DragGesture.Value) -> CGFloat {
     let location: CGFloat = gestureValue.location.x
 
     /// Location clamped so it cannot go outside
     /// the bounds of the track
     let clamped = location.clamped(0, trackSize.width)
     let percentage = clamped / trackSize.width
-    let newValue = Value(percentage).denormalised(in: range)
+    let newValue = percentage.denormalised(in: range)
 
     return newValue
   }
 
-  func fillWidth() -> Value? {
+  func fillWidth() -> CGFloat? {
 
     guard isGeometryReady else { return nil }
 
     /// Normalised here is essentially: “How far along the slider should the
     /// thumb be, in proportion to its full track length?”
     let normalised = value.normalised(in: range)
-    return normalised * Value(trackSize.width)
+    return normalised * trackSize.width
   }
   
   public func thumbPosition(
-    diameter: Value,
-    forSliderValue value: Value,
-    range: ClosedRange<Value>,
+    diameter: CGFloat,
+    forSliderValue value: CGFloat,
+    range: ClosedRange<CGFloat>,
     trackSize: CGSize
   ) -> CGPoint? {
     
@@ -101,12 +101,12 @@ extension SliderHandler {
     /// Remove some length from the beginning/end of the draggable width,
     /// so the Thumb doesn't hand awkwardly out the edges of the track.
     let horizontalPadding = diameter * 0.4
-    let adjustedWidth = Value(trackSize.width) - (horizontalPadding * 2)
+    let adjustedWidth = trackSize.width - (horizontalPadding * 2)
     
     let x = horizontalPadding + (normalised * adjustedWidth)
     let y = trackSize.height / 2
     
-    return CGPoint(x: CGFloat(x), y: CGFloat(y))
+    return CGPoint(x: x, y: y)
   }
 
 }

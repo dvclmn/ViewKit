@@ -47,7 +47,7 @@ public struct SliderCore: View {
         Text(formatValue(store.value))
       }
       .textSelection(.disabled)
-      .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
+      .onDoubleTap($store.value.toBindingDouble, defaultValue: sliderDefaultValue)
       .contextMenu { ContextMenuItems() }
     }
 
@@ -60,9 +60,9 @@ extension SliderCore {
 
   private func handleHaptics(_ old: Double, _ new: Double) -> Bool {
     guard let defaultVal = sliderDefaultValue else {
-      return HapticPreset.boundary(store.range).shouldFire(old, new)
+      return HapticPreset.boundary(store.range.toDoubleRange).shouldFire(old, new)
     }
-    return HapticPreset.boundaryAndDefault(store.range, defaultValue: defaultVal).shouldFire(old, new)
+    return HapticPreset.boundaryAndDefault(store.range.toDoubleRange, defaultValue: defaultVal).shouldFire(old, new)
   }
 
   private func handleOnEdit(_ didEdit: Bool) {
@@ -117,7 +117,7 @@ extension SliderCore {
     @Bindable var store = store
     MaybeLabel(store.label)
 
-      .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
+      .onDoubleTap($store.value.toBindingDouble, defaultValue: sliderDefaultValue)
     //      .font(.body)
     //      .lineLimit(1)
 

@@ -10,8 +10,8 @@
 public struct WaveDescriptor: Identifiable, Hashable, Sendable, Codable, Equatable {
   public var id: Wave.ID { wave.id }
   public var wave: Wave
-//  public let wave: Wave
-  public let config: WaveConfig
+  //  public let wave: Wave
+  public var config: WaveConfig
 
   public init(
     wave: Wave,
@@ -21,28 +21,28 @@ public struct WaveDescriptor: Identifiable, Hashable, Sendable, Codable, Equatab
     self.config = config
   }
 
-//  public init(
-//    wave: Wave,
-//    isEnabled: Bool = true,
-//    cycles: Int = 3,
-//    sampleCount: Int = 30,
-//  ) {
-//    let config = WaveConfig(
-//      isEnabled: isEnabled,
-//      cycles: cycles,
-//      sampleCount: sampleCount
-//    )
-//    self.init(wave: wave, config: config)
-//  }
+  //  public init(
+  //    wave: Wave,
+  //    isEnabled: Bool = true,
+  //    cycles: Int = 3,
+  //    sampleCount: Int = 30,
+  //  ) {
+  //    let config = WaveConfig(
+  //      isEnabled: isEnabled,
+  //      cycles: cycles,
+  //      sampleCount: sampleCount
+  //    )
+  //    self.init(wave: wave, config: config)
+  //  }
 }
 extension WaveDescriptor {
-  
+
   public subscript<T>(dynamicMember keyPath: WritableKeyPath<Wave, T>) -> T {
-    get { self.wave[keyPath: keyPath]}
+    get { self.wave[keyPath: keyPath] }
     set { self.wave[keyPath: keyPath] = newValue }
-//    set { config[keyPath: keyPath] = newValue as! WaveConfig..SubSequence }
+    //    set { config[keyPath: keyPath] = newValue as! WaveConfig..SubSequence }
   }
-  
+
   public func makeAnimated() -> AnimatedWave { AnimatedWave(wave: self.wave) }
 }
 extension WaveDescriptor {
