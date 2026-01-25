@@ -50,3 +50,32 @@ extension AnimatedWave {
     return CGFloat(wave.amplitude * value)
   }
 }
+
+//  mutating func getPointsAlongPath(time: Double, size: CGSize, resolution: Int = 100) -> [(CGPoint, Double)] {
+//    var points: [(CGPoint, Double)] = []
+//
+//    // Update smoothed parameters
+//    update(at: time)
+//
+//    for i in 0..<resolution {
+//      let progress = Double(i) / Double(resolution - 1)
+//      let x = progress * size.width
+//
+//      // Use smoothed parameters for calculations
+//      let y = baseWaveform.getValue(
+//        at: time,
+//        frequency: smoothedFrequency.value,
+//        amplitude: smoothedAmplitude.value,
+//        phaseOffset: smoothedPhase.value + progress
+//      )
+//
+//      let point = CGPoint(
+//        x: x,
+//        y: size.height / 2 + CGFloat(y) * size.height / 3
+//      )
+//
+//      points.append((point, progress))
+//    }
+//
+//    return points
+//  }
