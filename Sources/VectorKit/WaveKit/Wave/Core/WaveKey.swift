@@ -36,25 +36,34 @@ protocol OrderedWaveKey: WaveKey {
   static var order: Int { get }
 }
 
-
-
-/// A type safe way to define a `WaveDescriptor`.
-/// OR, could just use ID?
 /// ```
-/// public enum ExampleWaveKey: WaveDescriptorKey {
-///   public static let myWave = "My Wave Descriptor"
+/// enum Fundamental: CodableWaveKey {
+///   static let codingKey = "fundamental"
+///   static let defaultValue = WaveLayer(...)
 /// }
 /// ```
-//public protocol WaveDescriptorKey: Hashable, Sendable {
-//  static var waveKey: String { get }
-//}
-//
-//public struct WaveDescriptorID: Hashable, Sendable {
-//  private let id: ObjectIdentifier
-//  public let waveKey: String
-//
-//  public init<K: WaveDescriptorKey>(_ key: K.Type) {
-//    self.id = ObjectIdentifier(key)
-//    self.waveKey = key.waveKey
-//  }
-//}
+protocol CodableWaveKey: WaveKey {
+  static var codingKey: String { get }
+}
+
+/// Usage (once, at app startup):
+/// ```
+/// WaveKeyRegistry.register(Fundamental.self)
+/// WaveKeyRegistry.register(Harmonic2.self)
+/// ```
+///
+/// ```
+/// for (codingKey, layer) in decoded.waves {
+///   if let keyType = WaveKeyRegistry.all[codingKey] {
+///     stack[keyType] = layer
+///   }
+/// }
+/// ```
+@MainActor
+enum WaveKeyRegistry: Sendable {
+  static var all: [String: any CodableWaveKey.Type] = [:]
+  
+  static func register<K: CodableWaveKey>(_ key: K.Type) {
+    all[K.codingKey] = key
+  }
+}

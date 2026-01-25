@@ -13,14 +13,16 @@ import Foundation
 /// `stack[Fundamental.self].wave.phase += delta`
 /// `stack[Fundamental.self].settings.isEnabled.toggle()`
 //@dynamicMemberLookup
-public struct WaveStack {
+public struct WaveStack: @unchecked Sendable {
   private var storage: [ObjectIdentifier: Any] = [:]
+
+  public init() {}
 }
 
 extension WaveStack {
-//  public subscript<T>(dynamicMember keyPath: KeyPath<Self, T>) {
-//    
-//  }
+  //  public subscript<T>(dynamicMember keyPath: KeyPath<Self, T>) {
+  //
+  //  }
   public subscript<K: WaveKey>(_ key: K.Type) -> K.Value {
     get { storage[ObjectIdentifier(key)] as? K.Value ?? K.defaultValue }
     set { storage[ObjectIdentifier(key)] = newValue }
