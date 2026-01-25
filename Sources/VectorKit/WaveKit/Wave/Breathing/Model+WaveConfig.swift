@@ -8,9 +8,13 @@
 import ColourKit
 import Foundation
 
-public struct WaveConfig: Codable, Sendable, Equatable {
-  public var colour: RGBColour
-  public var colourSecondary: RGBColour
+/// Important:
+/// How is `BreathingWave` different to a wave, if at all?
+/// Maybe it more just contains waves?
+public struct BreathingWave: Codable, Sendable, Equatable {
+  
+//  public var colour: RGBColour
+//  public var colourSecondary: RGBColour
 
   /// The base circle radius.
   public var circleRadius: CGFloat

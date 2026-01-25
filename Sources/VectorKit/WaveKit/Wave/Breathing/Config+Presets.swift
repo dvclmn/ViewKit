@@ -8,7 +8,7 @@
 import ColourKit
 import Foundation
 
-extension WaveConfig {
+extension BreathingWave {
   public static var standard: Self {
     .init(
       colour: .purple,
