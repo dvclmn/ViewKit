@@ -19,6 +19,15 @@ public struct WaveStack: @unchecked Sendable {
   public init() {}
 }
 
+public struct CodableWaveStack: Codable {
+  public var waves: [String: WaveDescriptor]
+  
+  public init(_ waves: [String : WaveDescriptor]) {
+    self.waves = waves
+  }
+}
+
+
 extension WaveStack {
   //  public subscript<T>(dynamicMember keyPath: KeyPath<Self, T>) {
   //
@@ -27,6 +36,41 @@ extension WaveStack {
     get { storage[ObjectIdentifier(key)] as? K.Value ?? K.defaultValue }
     set { storage[ObjectIdentifier(key)] = newValue }
   }
+}
+
+// MARK: - Codable handling
+extension WaveStack {
+
+  public func snapshot<K: CodableWaveKey>(_ key: K.Type) -> (String, WaveDescriptor) {
+    (K.codingKey, self[K.self])
+  }
+  
+  public mutating func restore<K: CodableWaveKey>(
+    _ key: K.Type,
+    from dict: [String: WaveDescriptor]
+  ) {
+    if let value = dict[K.codingKey] {
+      self[K.self] = value
+    }
+  }
+  
+//  public func codable() -> CodableWaveStack {
+//    var result: [String: WaveDescriptor] = [:]
+//
+//    for (id, value) in storage {
+//      if let entry = value as? any CodableWaveKey {
+//        result[entry.codingKey] = entry.waveLayer
+//      }
+//    }
+//
+//    return CodableWaveStack(waves: result)
+//  }
+//
+//  mutating func apply(_ codable: CodableWaveStack) {
+//    for (key, layer) in codable.waves {
+//      applyDecodedWave(key: key, layer: layer)
+//    }
+//  }
 }
 
 /// ```

@@ -32,7 +32,7 @@ public protocol WaveKey {
 }
 
 /// Perhaps for later
-protocol OrderedWaveKey: WaveKey {
+public protocol OrderedWaveKey: WaveKey {
   static var order: Int { get }
 }
 
@@ -42,7 +42,7 @@ protocol OrderedWaveKey: WaveKey {
 ///   static let defaultValue = WaveLayer(...)
 /// }
 /// ```
-protocol CodableWaveKey: WaveKey {
+public protocol CodableWaveKey: WaveKey {
   static var codingKey: String { get }
 }
 
@@ -60,10 +60,10 @@ protocol CodableWaveKey: WaveKey {
 /// }
 /// ```
 @MainActor
-enum WaveKeyRegistry: Sendable {
-  static var all: [String: any CodableWaveKey.Type] = [:]
+public enum WaveKeyRegistry: Sendable {
+  public static var all: [String: any CodableWaveKey.Type] = [:]
   
-  static func register<K: CodableWaveKey>(_ key: K.Type) {
+  public static func register<K: CodableWaveKey>(_ key: K.Type) {
     all[K.codingKey] = key
   }
 }
