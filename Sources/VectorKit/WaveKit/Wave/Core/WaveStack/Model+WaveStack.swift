@@ -19,15 +19,6 @@ public struct WaveStack: @unchecked Sendable {
   public init() {}
 }
 
-public struct CodableWaveStack: Codable {
-  public var waves: [String: WaveDescriptor]
-  
-  public init(_ waves: [String : WaveDescriptor]) {
-    self.waves = waves
-  }
-}
-
-
 extension WaveStack {
   //  public subscript<T>(dynamicMember keyPath: KeyPath<Self, T>) {
   //
@@ -40,7 +31,34 @@ extension WaveStack {
 
 // MARK: - Codable handling
 extension WaveStack {
+  
+  /// Converts current state to a Codable projection
+  @MainActor
+  public func codable() -> CodableWaveStack {
+    var result: [String: WaveDescriptor] = [:]
+    
+    // We iterate the registry to see what keys we care about encoding
+    for (codingKey, keyType) in WaveKeyRegistry.all {
+      // We use the subscript to get the current value (or default)
+      let value = storage[ObjectIdentifier(keyType)] as? WaveDescriptor ?? keyType.defaultValue
+      result[codingKey] = value
+    }
+    
+    return CodableWaveStack(waves: result)
+  }
+  
+  @MainActor
+  public mutating func apply(_ projection: CodableWaveStack) {
+    for (key, descriptor) in projection.waves {
+      WaveKeyRegistry.apply(descriptor: descriptor, key: key, to: &self)
+    }
+  }
 
+  // Internal helper for the registry to inject values
+  fileprivate mutating func setValue(_ value: WaveDescriptor, for keyType: any CodableWaveKey.Type) {
+    storage[ObjectIdentifier(keyType)] = value
+  }
+  
   public func snapshot<K: CodableWaveKey>(_ key: K.Type) -> (String, WaveDescriptor) {
     (K.codingKey, self[K.self])
   }
