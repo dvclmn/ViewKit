@@ -81,10 +81,3 @@ extension WaveComposition {
   }
 }
 
-public enum WaveBlendMode: String, Sendable, Codable {
-  case add
-  case multiply
-  case max
-  case min
-  //  case weighted([CGFloat])  // optional weights
-}

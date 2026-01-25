@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// `Result=(CurrentTime−Origin)⋅Rate+Offset`
+///
 /// A runtime complement to `WaveShaped`
 /// `WaveShaped` describes what a wave is (frequency, amplitude, phase, waveform)
 /// `WaveAttributeState` tracks how to evaluate it smoothly over time
@@ -67,7 +69,6 @@ extension WaveAttributeState {
   /// - Parameters:
   ///   - phase: The new phase value
   ///   - currentFrequency: The current frequency value
-  // Updates phase while preserving continuity.
   public mutating func updatePhase(to phase: Double, currentFrequency: Double) {
     let now = Date().timeIntervalSinceReferenceDate
     let effectiveTime = now - phaseOriginTime
