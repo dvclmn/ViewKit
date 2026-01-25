@@ -44,3 +44,15 @@ public struct WaveDescriptor: Identifiable, Hashable, Sendable, Codable, Equatab
     self.init(wave: wave, config: config)
   }
 }
+
+extension WaveDescriptor {
+  public static let example01: Self = .init(
+    wave: .example01,
+    config: .init()
+  )
+  
+  public static let example02: Self = .init(
+    wave: .example02,
+    config: WaveConfig(cycles: 10, sampleCount: 10)
+  )
+}

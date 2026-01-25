@@ -13,7 +13,7 @@ import Foundation
 /// - Space (The Coordinate): This is your normalisedIndex. In a SwiftUI Path or Canvas, 0.0 might be the left edge and 1.0 the right edge.
 /// - Cycles: This is how many "humps" of the wave fit into that space.
 public struct Wave: Sendable, Identifiable, Hashable, Equatable, Codable {
-//public struct Wave: WaveShaped, Sendable, Identifiable, Hashable, Codable {
+  //public struct Wave: WaveShaped, Sendable, Identifiable, Hashable, Codable {
   public let id: UUID
   public var frequency: CGFloat
   public var amplitude: CGFloat
@@ -36,6 +36,19 @@ public struct Wave: Sendable, Identifiable, Hashable, Equatable, Codable {
 }
 
 extension Wave {
+  public static let example01: Self = .init(
+    freq: 3,
+    amp: 8,
+    phase: 0,
+    form: .sine
+  )
+  
+  public static let example02: Self = .init(
+    freq: 10,
+    amp: 30,
+    phase: 0,
+    form: .sine
+  )
 }
 
 public struct NoisyWave: Sendable, Hashable {
