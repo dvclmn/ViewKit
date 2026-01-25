@@ -17,7 +17,7 @@ public struct WaveConfig: Hashable, Sendable, Codable {
     isEnabled: Bool = true,
     cycles: Int = 3,
     sampleCount: Int = 30,
-    interpolation: WaveInterpolation,
+    interpolation: WaveInterpolation = .cubic,
   ) {
     self.isEnabled = isEnabled
     self.cycles = cycles

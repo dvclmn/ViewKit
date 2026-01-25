@@ -8,65 +8,94 @@
 import ColourKit
 import Foundation
 
-/// Important:
-/// How is `BreathingWave` different to a wave, if at all?
-/// Maybe it more just contains waves?
-public struct WaveStack: Codable, Sendable, Equatable {
-  //public struct BreathingWave: Codable, Sendable, Equatable {
-  
-  //  public var colour: RGBColour
-  //  public var colourSecondary: RGBColour
-  
-  let lineStyle: LineStyle
-  let pointStyle: PointStyle
-  
-  /// I don't think a stack has a 'main' wave? I dunno?
-  //  let stackConfig: WaveConfig
-  
-  let waves: [Wave.ID: WaveDescriptor]
-  
-  public init(
-    lineStyle: LineStyle = .init(),
-    pointStyle: PointStyle = .init(),
-    waves: [Wave.ID : WaveDescriptor] = [:]
-  ) {
-    self.lineStyle = lineStyle
-    self.pointStyle = pointStyle
-    self.waves = waves
+/// Rough equivalent to `EnvironmentValues`
+///
+/// `stack[Fundamental.self].wave.phase += delta`
+/// `stack[Fundamental.self].settings.isEnabled.toggle()`
+public struct WaveStack {
+  private var storage: [ObjectIdentifier: Any] = [:]
+
+  public subscript<K: WaveKey>(_ key: K.Type) -> K.Value {
+    get { storage[ObjectIdentifier(key)] as? K.Value ?? K.defaultValue }
+    set { storage[ObjectIdentifier(key)] = newValue }
   }
 }
 
+/// ```
+/// stack.update(Fundamental.self) {
+///   $0.wave.amplitude += 0.05
+///   $0.wave.phase += delta
+/// }
+/// ```
+extension WaveStack {
+  mutating func update<K: WaveKey>(
+    _ key: K.Type,
+    _ body: (inout K.Value) -> Void
+  ) {
+    var value = self[key]
+    body(&value)
+    self[key] = value
+  }
+}
 
-  /// The base circle radius.
+/// Important:
+/// How is `BreathingWave` different to a wave, if at all?
+/// Maybe it more just contains waves?
+//public struct WaveStack: Codable, Sendable, Equatable {
+//  //public struct BreathingWave: Codable, Sendable, Equatable {
+//
+//  //  public var colour: RGBColour
+//  //  public var colourSecondary: RGBColour
+//
+//  let lineStyle: LineStyle
+//  let pointStyle: PointStyle
+//
+//  /// I don't think a stack has a 'main' wave? I dunno?
+//  //  let stackConfig: WaveConfig
+//
+//  let waves: [Wave.ID: WaveDescriptor]
+//
+//  public init(
+//    lineStyle: LineStyle = .init(),
+//    pointStyle: PointStyle = .init(),
+//    waves: [Wave.ID : WaveDescriptor] = [:]
+//  ) {
+//    self.lineStyle = lineStyle
+//    self.pointStyle = pointStyle
+//    self.waves = waves
+//  }
+//}
+
+/// The base circle radius.
 //  public var circleRadius: CGFloat
 
-  /// The total number of circles (affects normalisation but not the wave shapes).
-  /// Could also be thought of as sample count
-  /// This is now ``WaveConfig/sampleCount``
+/// The total number of circles (affects normalisation but not the wave shapes).
+/// Could also be thought of as sample count
+/// This is now ``WaveConfig/sampleCount``
 //  public var count: Int
 
-  /// ~~When shouldMaintainHeight is true, no matter what count is,
-  /// these circles are “packed” into this height.~~
-  ///
-  /// How much of the vertical space the total wave takes up
-  /// Aka vertical frequency
+/// ~~When shouldMaintainHeight is true, no matter what count is,
+/// these circles are “packed” into this height.~~
+///
+/// How much of the vertical space the total wave takes up
+/// Aka vertical frequency
 //  public var compressionFactor: CGFloat
 
-  /// Horizontal left/right motion parameters.
+/// Horizontal left/right motion parameters.
 //  public var horizontalWave: WaveModulator
 
-  /// Vertical spacing between circles (used when shouldMaintainHeight == false).
+/// Vertical spacing between circles (used when shouldMaintainHeight == false).
 //  public var spacing: CGFloat
 
-  /// Breathing (spacing) wave: modulates the vertical position.
-  /// (When shouldMaintainHeight is true, the circles are laid out
-  ///  over a fixed height, and then the breathing effect is added.)
+/// Breathing (spacing) wave: modulates the vertical position.
+/// (When shouldMaintainHeight is true, the circles are laid out
+///  over a fixed height, and then the breathing effect is added.)
 //  public var verticalWave: WaveModulator
 //  public var spacingWave: WaveModulator
 
 //  public var shouldMaintainHeight: Bool
 
-  /// New: a modulation for the circle radius (so the circles can “pulse”).
+/// New: a modulation for the circle radius (so the circles can “pulse”).
 //  public var radiusWave: WaveModulator
 
 //  public init(

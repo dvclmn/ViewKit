@@ -7,6 +7,37 @@
 
 import Foundation
 
+/// Each wave key:
+/// declares that it participates
+/// declares what kind of value it carries
+/// declares its default
+/// ```
+/// enum Fundamental: WaveKey {
+///   static let defaultValue = WaveLayer(
+///     wave: Wave(frequency: 1, amplitude: 1, phase: 0, waveform: .sine),
+///     settings: .init(isEnabled: true)
+///   )
+/// }
+///
+/// enum Harmonic2: WaveKey {
+///   static let defaultValue = WaveLayer(
+///     wave: Wave(frequency: 2, amplitude: 0.3, phase: 0, waveform: .sine),
+///     settings: .init(isEnabled: true)
+///   )
+/// }
+/// ```
+public protocol WaveKey {
+  associatedtype Value
+  static var defaultValue: Value { get }
+}
+
+/// Perhaps for later
+protocol OrderedWaveKey: WaveKey {
+  static var order: Int { get }
+}
+
+
+
 /// A type safe way to define a `WaveDescriptor`.
 /// OR, could just use ID?
 /// ```
@@ -14,24 +45,16 @@ import Foundation
 ///   public static let myWave = "My Wave Descriptor"
 /// }
 /// ```
-public protocol WaveDescriptorKey: Hashable, Sendable {
-  static var waveKey: String { get }
-}
-
-public struct WaveDescriptorID: Hashable, Sendable {
-  private let id: ObjectIdentifier
-  public let waveKey: String
-
-  public init<K: WaveDescriptorKey>(_ key: K.Type) {
-    self.id = ObjectIdentifier(key)
-    self.waveKey = key.waveKey
-  }
-
-  //  public static func == (lhs: Self, rhs: Self) -> Bool {
-  //    lhs.id == rhs.id
-  //  }
-  //
-  //  public func hash(into hasher: inout Hasher) {
-  //    hasher.combine(id)
-  //  }
-}
+//public protocol WaveDescriptorKey: Hashable, Sendable {
+//  static var waveKey: String { get }
+//}
+//
+//public struct WaveDescriptorID: Hashable, Sendable {
+//  private let id: ObjectIdentifier
+//  public let waveKey: String
+//
+//  public init<K: WaveDescriptorKey>(_ key: K.Type) {
+//    self.id = ObjectIdentifier(key)
+//    self.waveKey = key.waveKey
+//  }
+//}
