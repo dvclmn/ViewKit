@@ -25,13 +25,13 @@ public struct Wave: Sendable, Identifiable, Hashable, Equatable, Codable {
     freq: CGFloat,
     amp: CGFloat,
     phase: CGFloat,
-    form: Waveform = .sine
+    waveform: Waveform = .sine
   ) {
     self.id = id
     self.frequency = freq
     self.amplitude = amp
     self.phase = phase
-    self.waveform = form
+    self.waveform = waveform
   }
 }
 
@@ -40,14 +40,14 @@ extension Wave {
     freq: 3,
     amp: 8,
     phase: 0,
-    form: .sine
+    waveform: .sine
   )
   
   public static let example02: Self = .init(
     freq: 10,
     amp: 30,
     phase: 0,
-    form: .sine
+    waveform: .sine
   )
 }
 

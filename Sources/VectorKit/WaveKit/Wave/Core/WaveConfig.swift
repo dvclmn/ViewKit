@@ -12,6 +12,9 @@ public struct WaveConfig: Hashable, Sendable, Codable {
   let cycles: Int
   let sampleCount: Int
   let interpolation: WaveInterpolation
+  /// From old `WaveAppearance`
+  //  static var windowOptions: [CGFloat] { [1, 2, 4, 8, 12, 24, 30] }
+  //  static var timeRange: ClosedRange<CGFloat> { 1...30 }
   
   public init(
     isEnabled: Bool = true,

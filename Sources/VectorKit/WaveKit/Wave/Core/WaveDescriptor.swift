@@ -19,19 +19,19 @@ public struct WaveDescriptor: Identifiable, Hashable, Sendable, Codable, Equatab
     self.config = config
   }
 
-  public init(
-    wave: Wave,
-    isEnabled: Bool = true,
-    cycles: Int = 3,
-    sampleCount: Int = 30,
-  ) {
-    let config = WaveConfig(
-      isEnabled: isEnabled,
-      cycles: cycles,
-      sampleCount: sampleCount
-    )
-    self.init(wave: wave, config: config)
-  }
+//  public init(
+//    wave: Wave,
+//    isEnabled: Bool = true,
+//    cycles: Int = 3,
+//    sampleCount: Int = 30,
+//  ) {
+//    let config = WaveConfig(
+//      isEnabled: isEnabled,
+//      cycles: cycles,
+//      sampleCount: sampleCount
+//    )
+//    self.init(wave: wave, config: config)
+//  }
 }
 
 extension WaveDescriptor {

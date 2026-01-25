@@ -16,8 +16,8 @@ public struct PathDebugRenderer {
   public func draw(in context: GraphicsContext) {
     context.stroke(
       result.original,
-      with: .color(config.pathStyle.strokeColour),
-      lineWidth: config.pathStyle.linewidth)
+      with: .color(config.lineStyle.colour.toColour),
+      lineWidth: config.lineStyle.lineWidth)
 
     /// Draw paths and points
     for (element, path) in result.debugPaths {
@@ -27,7 +27,7 @@ public struct PathDebugRenderer {
         context.stroke(
           result.connections,
           with: .color(element.displayColour),
-          lineWidth: config.pathStyle.linewidth
+          lineWidth: config.lineStyle.lineWidth
         )
       }
     }
@@ -53,11 +53,11 @@ public struct PathDebugRenderer {
     ZStack {
       /// Original path
       result.original
-        .stroke(config.pathStyle.strokeColour, lineWidth: config.pathStyle.linewidth)
+        .stroke(config.lineStyle.colour.toColour, lineWidth: config.lineStyle.lineWidth)
 
       /// Connection lines
       result.connections
-        .stroke(DebugPathElement.connection.displayColour, lineWidth: config.pathStyle.linewidth)
+        .stroke(DebugPathElement.connection.displayColour, lineWidth: config.lineStyle.lineWidth)
 
       /// Control points
       result.controlPoints

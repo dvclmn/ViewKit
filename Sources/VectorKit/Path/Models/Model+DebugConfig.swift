@@ -7,17 +7,21 @@
 
 import SwiftUI
 import BasePrimitives
+import ColourKit
 
 public struct PathDebugConfig {
 
-  public let pathStyle: LineStyle
+  public let lineStyle: LineStyle
+  public let fillColour: RGBColour
   public let labelFontSize: CGFloat
 
   public init(
-    pathStyle: LineStyle = .init(),
+    lineStyle: LineStyle = .init(),
+    fillColour: RGBColour = .orange,
     labelFontSize: CGFloat = 11,
   ) {
-    self.pathStyle = pathStyle
+    self.lineStyle = lineStyle
+    self.fillColour = fillColour
     self.labelFontSize = labelFontSize
   }
 }

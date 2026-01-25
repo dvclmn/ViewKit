@@ -23,7 +23,7 @@ public struct ShapeDebug<S: Shape>: View {
 
   public var body: some View {
     shape
-      .fill(config.pathStyle.fillColour)
+      .fill(config.fillColour.toColour)
       .overlay {
         GeometryReader { proxy in
           let rect = proxy.frame(in: .local)
