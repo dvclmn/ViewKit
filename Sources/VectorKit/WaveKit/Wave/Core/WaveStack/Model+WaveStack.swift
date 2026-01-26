@@ -16,7 +16,7 @@ import Foundation
 #warning("Try out dynamic lookup")
 //@dynamicMemberLookup
 public struct WaveStack: @unchecked Sendable {
-  private var storage: [ObjectIdentifier: Any] = [:]
+  private var storage: [ObjectIdentifier: ConfiguredWave] = [:]
 
   public init() {}
 }

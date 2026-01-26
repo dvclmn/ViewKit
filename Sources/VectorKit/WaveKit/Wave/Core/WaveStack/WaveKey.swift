@@ -21,9 +21,14 @@ import Foundation
 /// }
 /// ```
 public protocol WaveKey {
-  associatedtype Value
-  static var defaultValue: Value { get }
+  static var codingKey: String { get }
+  static var defaultValue: ConfiguredWave { get }
 }
+
+//public protocol WaveKey {
+//  associatedtype Value
+//  static var defaultValue: Value { get }
+//}
 
 /// ```
 /// enum Fundamental: CodableWaveKey {
@@ -31,9 +36,9 @@ public protocol WaveKey {
 ///   static let defaultValue = ConfiguredWave(...)
 /// }
 /// ```
-public protocol CodableWaveKey: WaveKey where Value == ConfiguredWave {
-  static var codingKey: String { get }
-}
+//public protocol CodableWaveKey: WaveKey where Value == ConfiguredWave {
+//  static var codingKey: String { get }
+//}
 
 /// Perhaps for later
 public protocol OrderedWaveKey: WaveKey {
