@@ -16,7 +16,7 @@ public struct ConfiguredWave: Identifiable, Hashable, Sendable, Codable, Equatab
   public var config: WaveConfig
 
   public init(
-    wave: Wave,
+    _ wave: Wave,
     config: WaveConfig = .init()
   ) {
     self.wave = wave
@@ -35,12 +35,12 @@ extension ConfiguredWave {
 }
 extension ConfiguredWave {
   public static let example01: Self = .init(
-    wave: .example01,
+    .example01,
     config: .init()
   )
 
   public static let example02: Self = .init(
-    wave: .example02,
+    .example02,
     config: WaveConfig(cycles: 10, sampleCount: 10)
   )
 }
