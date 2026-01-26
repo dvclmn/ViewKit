@@ -8,9 +8,10 @@
 import Foundation
 
 public struct WaveConfig: Hashable, Sendable, Codable {
-  public var isEnabled: Bool
+  /// Will change this to live closer to the UI
+  /// e.g. in a `WaveLayer`, `WaveSlot`, or `MixerChannel`
+//  public var isEnabled: Bool
   public var cycles: CGFloat
-//  public let cycles: Int
   public var sampleCount: Int
   public var interpolation: WaveInterpolation
   /// From old `WaveAppearance`
@@ -18,12 +19,12 @@ public struct WaveConfig: Hashable, Sendable, Codable {
   //  static var timeRange: ClosedRange<CGFloat> { 1...30 }
   
   public init(
-    isEnabled: Bool = true,
+//    isEnabled: Bool = true,
     cycles: CGFloat = 3,
     sampleCount: Int = 30,
     interpolation: WaveInterpolation = .cubic,
   ) {
-    self.isEnabled = isEnabled
+//    self.isEnabled = isEnabled
     self.cycles = cycles
     self.sampleCount = sampleCount
     self.interpolation = interpolation

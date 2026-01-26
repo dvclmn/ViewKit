@@ -42,8 +42,8 @@ extension WaveDescriptor {
     set { self.wave[keyPath: keyPath] = newValue }
     //    set { config[keyPath: keyPath] = newValue as! WaveConfig..SubSequence }
   }
-
-  public func makeAnimated() -> AnimatedWave { AnimatedWave(wave: self.wave) }
+/// Bad, don't do this
+//  public func makeAnimated() -> AnimatedWave { AnimatedWave(wave: self.wave) }
 }
 extension WaveDescriptor {
   public static let example01: Self = .init(

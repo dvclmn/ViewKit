@@ -7,44 +7,74 @@
 
 import Foundation
 
-/// `Result=(CurrentTime−Origin)⋅Rate+Offset`
+/// `Result = (CurrentTime – Origin) * Rate + Offset`
 /// Manages a value that evolves over time (like phase or rotation)
 /// and ensures transitions between different rates/offsets are seamless.
 ///
 /// Look to this now instead of `WaveAttributeState`
-public struct ContinuousParameter {
-  private var origin: TimeInterval = 0
-  
-  public init(){}
-}
+public struct ContinuousParameter: Sendable {
+  private var lastSyncTime: TimeInterval = 0
+  private var accumulatedPhase: Double = 0
+  private var lastFrequency: Double = 0
 
-extension ContinuousParameter {
-  
-  /// Calculates the time-based phase (0...1) for a given frequency.
-  /// Previous form on `WaveAttributeState`:
-  /// `effectivePhase`
-  /// `let effectiveTime = currentTime - phaseOriginTime`
-  public func temporalPhase(
-    at now: TimeInterval,
-    frequency: Double
-  ) -> Double {
-    let effectiveTime = now - origin
-    let phase = effectiveTime * frequency
-    return phase - floor(phase) // Wrap to [0, 1)
+  public init() {}
+
+  /// Call this ONCE per frame before your drawing loop.
+  /// It updates the internal phase based on how much time has passed.
+  public mutating func update(at now: TimeInterval, frequency: Double) {
+    if lastSyncTime == 0 { lastSyncTime = now }
+
+    let deltaTime = now - lastSyncTime
+    // Phase += Time * Frequency
+    accumulatedPhase += deltaTime * lastFrequency
+
+    // Save for next time
+    lastSyncTime = now
+    lastFrequency = frequency
   }
-  
-  /// The "Magic" method: Adjusts the origin so that when frequency changes,
-  /// the phase remains identical at this exact moment.
-  public mutating func sync(at now: TimeInterval, oldFrequency: Double, newFrequency: Double) {
-    if newFrequency == 0 { return }
-    let currentEffectiveTime = now - origin
-    let currentProgress = currentEffectiveTime * oldFrequency
-    
-    // Solve: newEffectiveTime * newFrequency = currentProgress
-    let newEffectiveTime = currentProgress / newFrequency
-    self.origin = now - newEffectiveTime
+
+  /// Returns the current phase [0, 1)
+  public var currentPhase: Double {
+    accumulatedPhase - floor(accumulatedPhase)
   }
 }
+//public struct ContinuousParameter {
+//  private var origin: TimeInterval = 0
+//
+//  public init() {}
+//}
+//
+//extension ContinuousParameter {
+//
+//  /// Calculates the time-based phase (0...1) for a given frequency.
+//  /// Previous form on `WaveAttributeState`:
+//  /// `effectivePhase`
+//  /// `let effectiveTime = currentTime - phaseOriginTime`
+//  public func temporalPhase(
+//    at now: TimeInterval,
+//    frequency: Double
+//  ) -> Double {
+//    let effectiveTime = now - origin
+//    let phase = effectiveTime * frequency
+//    return phase - floor(phase)  // Wrap to [0, 1)
+//  }
+//
+//  /// The "Magic" method: Adjusts the origin so that when frequency changes,
+//  /// the phase remains identical at this exact moment.
+//  public mutating func sync(
+//    at now: TimeInterval,
+//    oldFrequency: Double,
+//    newFrequency: Double
+//  ) {
+//    if newFrequency == 0 { return }
+//    let currentEffectiveTime = now - origin
+//    let currentProgress = currentEffectiveTime * oldFrequency
+//
+//    // Solve: newEffectiveTime * newFrequency = currentProgress
+//    let newEffectiveTime = currentProgress / newFrequency
+//    self.origin = now - newEffectiveTime
+//  }
+//}
 //  private var lastValue: CGFloat
 
 //  public init(initialValue: CGFloat = 0.0, initialOrigin: TimeInterval = 0.0) {
@@ -52,8 +82,8 @@ extension ContinuousParameter {
 //    self.origin = initialOrigin
 //  }
 
-  /// Computes the "virtual time" needed to keep the output constant
-  /// when a parameter (like frequency) changes.
+/// Computes the "virtual time" needed to keep the output constant
+/// when a parameter (like frequency) changes.
 //  public mutating func sync(
 //    to newValue: CGFloat,
 //    at now: TimeInterval,

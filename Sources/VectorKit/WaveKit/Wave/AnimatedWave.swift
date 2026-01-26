@@ -9,41 +9,71 @@ import Foundation
 
 public struct AnimatedWave {
   public var wave: Wave
-  public var state: ContinuousParameter
-  //  var state: WaveState
-
-  public init(wave: Wave) {
-    self.wave = wave
-    self.state = ContinuousParameter()
-  }
-}
-
-extension AnimatedWave {
+  public var cycles: Double
   
-  public func modulation(
-    currentTime: TimeInterval = Date().timeIntervalSinceReferenceDate,
-    normalisedIndex: CGFloat,
-    cycles: CGFloat
-  ) -> CGFloat {
-    // 1. Get the time-based phase (The "Motor")
-    let tPhase = state.temporalPhase(at: currentTime, frequency: wave.frequency)
+  public init(wave: Wave, cycles: Double) {
+    self.wave = wave
+    self.cycles = cycles
+  }
+  
+  /// Evaluates the wave at a specific point in space.
+  /// - Parameters:
+  ///   - state: The persistent ContinuousParameter for this specific wave.
+  ///   - index: The normalisedIndex (0...1) of the current point.
+  public func sample(state: ContinuousParameter, at index: Double) -> CGFloat {
+    // 1. Get the time-based phase from our persistent state
+    let temporalPhase = state.currentPhase
     
-    // 2. Add spatial distribution (The "Coordinates")
-    let sPhase = Double(normalisedIndex * cycles)
+    // 2. Add spatial phase (cycles) and static offset (wave.phase)
+    let spatialPhase = index * cycles
+    let staticOffset = wave.phase
     
-    // 3. Add the static offset (The "Initial Phase")
-    let staticPhase = Double(wave.phase)
-    
-    // Total phase wrapped into [0, 1]
-    let totalPhase = tPhase + sPhase + staticPhase
+    let totalPhase = temporalPhase + spatialPhase + staticOffset
     let wrappedPhase = totalPhase - floor(totalPhase)
     
-    // 4. Sample the waveform
+    // 3. Run it through the waveform math
     let value = wave.waveform.sample(phase: wrappedPhase)
     return CGFloat(wave.amplitude * value)
   }
-  
 }
+
+//public struct AnimatedWave {
+//  public var wave: Wave
+//  public var state: ContinuousParameter
+//  //  var state: WaveState
+//
+//  public init(wave: Wave) {
+//    self.wave = wave
+//    self.state = ContinuousParameter()
+//  }
+//}
+//
+//extension AnimatedWave {
+//  
+//  public func modulation(
+//    currentTime: TimeInterval = Date().timeIntervalSinceReferenceDate,
+//    normalisedIndex: CGFloat,
+//    cycles: CGFloat
+//  ) -> CGFloat {
+//    // 1. Get the time-based phase (The "Motor")
+//    let tPhase = state.temporalPhase(at: currentTime, frequency: wave.frequency)
+//    
+//    // 2. Add spatial distribution (The "Coordinates")
+//    let sPhase = Double(normalisedIndex * cycles)
+//    
+//    // 3. Add the static offset (The "Initial Phase")
+//    let staticPhase = Double(wave.phase)
+//    
+//    // Total phase wrapped into [0, 1]
+//    let totalPhase = tPhase + sPhase + staticPhase
+//    let wrappedPhase = totalPhase - floor(totalPhase)
+//    
+//    // 4. Sample the waveform
+//    let value = wave.waveform.sample(phase: wrappedPhase)
+//    return CGFloat(wave.amplitude * value)
+//  }
+//  
+//}
   /// ```
   /// var wave = Wave(frequency: 0.5, amplitude: 50, waveform: .sine)
   /// var state = WaveAttributeState(initialFrequency: wave.frequency, initialPhase: wave.phase)

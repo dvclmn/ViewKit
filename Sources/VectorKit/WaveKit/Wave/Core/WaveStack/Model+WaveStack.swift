@@ -14,6 +14,7 @@ import Foundation
 /// `stack[Fundamental.self].settings.isEnabled.toggle()`
 //@dynamicMemberLookup
 //public struct WaveStack<Value>: @unchecked Sendable {
+
 public struct WaveStack: @unchecked Sendable {
   private var storage: [ObjectIdentifier: Any] = [:]
 
@@ -21,6 +22,10 @@ public struct WaveStack: @unchecked Sendable {
 }
 
 extension WaveStack {
+  public subscript<K: WaveKey>(_ key: K.Type) -> K.Value {
+    get { storage[ObjectIdentifier(key)] as? K.Value ?? K.defaultValue }
+    set { storage[ObjectIdentifier(key)] = newValue }
+  }
   //extension WaveStack where Value == WaveDescriptor {
   //  public subscript<T>(dynamicMember keyPath: KeyPath<Self, T>) {
   //
@@ -33,10 +38,6 @@ extension WaveStack {
   //  public subscript<T>(dynamicMember keyPath: KeyPath<Self, T>) {
   //
   //  }
-  public subscript<K: WaveKey>(_ key: K.Type) -> K.Value {
-    get { storage[ObjectIdentifier(key)] as? K.Value ?? K.defaultValue }
-    set { storage[ObjectIdentifier(key)] = newValue }
-  }
 
 }
 
