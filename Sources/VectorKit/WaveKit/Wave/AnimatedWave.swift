@@ -21,17 +21,17 @@ public struct AnimatedWave {
   ///   - state: The persistent ContinuousParameter for this specific wave.
   ///   - index: The normalisedIndex (0...1) of the current point.
   public func sample(state: ContinuousParameter, at index: Double) -> CGFloat {
-    // 1. Get the time-based phase from our persistent state
+    /// 1. Get the time-based phase from our persistent state
     let temporalPhase = state.currentPhase
     
-    // 2. Add spatial phase (cycles) and static offset (wave.phase)
+    /// 2. Add spatial phase (cycles) and static offset (wave.phase)
     let spatialPhase = index * cycles
     let staticOffset = wave.phase
     
     let totalPhase = temporalPhase + spatialPhase + staticOffset
     let wrappedPhase = totalPhase - floor(totalPhase)
     
-    // 3. Run it through the waveform math
+    /// 3. Run it through the waveform math. Wrap and Sample
     let value = wave.waveform.sample(phase: wrappedPhase)
     return CGFloat(wave.amplitude * value)
   }

@@ -24,7 +24,7 @@ extension WaveStack {
   /// ```
   public mutating func update<K: WaveKey>(
     _ key: K.Type,
-    _ body: (inout K.Value) -> Void
+    _ body: (inout ConfiguredWave) -> Void
   ) {
     var value = self[key]
     body(&value)
@@ -38,7 +38,7 @@ extension WaveStack {
   /// ```
   public mutating func update<K: WaveKey, T>(
     _ key: K.Type,
-    path: WritableKeyPath<K.Value, T>,
+    path: WritableKeyPath<ConfiguredWave, T>,
     newValue: T
   ) {
     var value = self[key]
@@ -54,16 +54,10 @@ extension Binding where Value == WaveStack {
   public func subBinding<K: WaveKey, T>(
     for key: K.Type,
     path: WritableKeyPath<ConfiguredWave, T>
-  ) -> Binding<T> where K.Value == ConfiguredWave {
+  ) -> Binding<T> {
     Binding<T>(
-      get: {
-        /// Get the wave from the stack, then the specific property via KeyPath
-        let wave = self.wrappedValue[key]
-        return wave[keyPath: path]
-      },
-      set: { newValue in
-        wrappedValue.update(key, path: path, newValue: newValue)
-      }
+      get: { wrappedValue[key][keyPath: path] },
+      set: { wrappedValue.update(key, path: path, newValue: $0) }
     )
   }
 }
