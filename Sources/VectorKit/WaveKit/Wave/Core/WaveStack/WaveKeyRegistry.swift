@@ -28,6 +28,26 @@ import Foundation
 //  ]
 //}
 
+//extension WaveStack {
+//  func snapshot() -> CodableWaveStack {
+//    var result: [String: ConfiguredWave] = [:]
+//
+//    for entry in WaveRegistry.all {
+//      result[entry.codingKey] = self[keyPath: entry.path]
+//    }
+//
+//    return CodableWaveStack(result)
+//  }
+//
+//  mutating func restore(from snapshot: CodableWaveStack) {
+//    for entry in WaveRegistry.all {
+//      if let wave = snapshot.waves[entry.codingKey] {
+//        self[keyPath: entry.path] = wave
+//      }
+//    }
+//  }
+//}
+
 /// Usage (once, at app startup):
 /// ```
 /// WaveKeyRegistry.register(Fundamental.self)

@@ -26,80 +26,25 @@ extension WaveStack {
     get { storage[ObjectIdentifier(key)] ?? key.defaultValue }
     set { storage[ObjectIdentifier(key)] = newValue }
   }
-//  public subscript<K: WaveKey>(_ key: K.Type) -> K.Value {
-//    get { storage[ObjectIdentifier(key)] as? K.Value ?? K.defaultValue }
-//    set { storage[ObjectIdentifier(key)] = newValue }
-//  }
-
-//  public func getConfiguredWave<K: WaveKey>(_ key: K.Type) -> ConfiguredWave? {
-//    self[key] as? ConfiguredWave
-//  }
-}
-
-// MARK: - Codable handling
-extension WaveStack {
-
-//  public mutating func apply(_ projection: CodableWaveStack) {
-//    for (key, wave) in projection.waves {
-//      WaveKeyRegistry.apply(wave, key: key, to: &self)
-//    }
-//  }
-
-  func snapshot() -> CodableWaveStack {
-    var result: [String: ConfiguredWave] = [:]
-    
-    for entry in WaveRegistry.all {
-      result[entry.codingKey] = self[keyPath: entry.path]
-    }
-    
-    return CodableWaveStack(result)
-  }
-  
-  mutating func restore(from snapshot: CodableWaveStack) {
-    for entry in WaveRegistry.all {
-      if let wave = snapshot.waves[entry.codingKey] {
-        self[keyPath: entry.path] = wave
-      }
-    }
-  }
-
-
-  
-//  public func snapshot<K: WaveKey>(_ key: K.Type) -> (String, ConfiguredWave) {
-//    (K.codingKey, self[K.self])
-//  }
-
-//  public mutating func restore<K: WaveKey>(
-//    _ key: K.Type,
-//    from dict: [String: ConfiguredWave]
-//  ) {
-//    if let value = dict[K.codingKey] {
-//      self[K.self] = value
-//    }
-//  }
-}
-
-extension WaveStack {
 
   /// Internal helper for ``WaveKeyRegistry`` to inject values
-//  fileprivate mutating func setValue(
-//    _ value: ConfiguredWave,
-//    for keyType: any CodableWaveKey.Type
-//  ) {
-//    storage[ObjectIdentifier(keyType)] = value
-//  }
-
+  fileprivate mutating func setValue(
+    _ value: ConfiguredWave,
+    for keyType: any WaveKey.Type
+  ) {
+    storage[ObjectIdentifier(keyType)] = value
+  }
 }
 
-//extension WaveKeyRegistry {
-//
-//  /// Helper to apply a descriptor to a stack using the type-erased key
-//  static func apply(
-//    _ wave: ConfiguredWave,
-//    key: String,
-//    to stack: inout WaveStack
-//  ) {
-//    guard let keyType = all[key] else { return }
-//    stack.setValue(wave, for: keyType)
-//  }
-//}
+extension WaveKeyRegistry {
+
+  /// Helper to apply a descriptor to a stack using the type-erased key
+  static func apply(
+    _ wave: ConfiguredWave,
+    key: String,
+    to stack: inout WaveStack
+  ) {
+    guard let keyType = all[key] else { return }
+    stack.setValue(wave, for: keyType)
+  }
+}
