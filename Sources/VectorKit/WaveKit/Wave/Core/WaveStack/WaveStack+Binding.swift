@@ -9,13 +9,13 @@ import SwiftUI
 
 extension Binding where Value == WaveStack {
   
-  /// Creates a binding to a specific property of a WaveDescriptor stored in the stack
+  /// Creates a binding to a specific property of a ConfiguredWave stored in the stack
   @MainActor
   public func subBinding<K: WaveKey, T>(
     for key: K.Type,
-    path: WritableKeyPath<WaveDescriptor, T>
-  ) -> Binding<T> where K.Value == WaveDescriptor {
-//  ) -> Binding<T> where K.Value == WaveDescriptor {
+    path: WritableKeyPath<ConfiguredWave, T>
+  ) -> Binding<T> where K.Value == ConfiguredWave {
+//  ) -> Binding<T> where K.Value == ConfiguredWave {
     Binding<T>(
       get: {
         /// Get the descriptor from the stack, then the specific property via KeyPath

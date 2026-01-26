@@ -8,9 +8,9 @@
 import Foundation
 
 public struct CodableWaveStack: Codable {
-  public var waves: [String: WaveDescriptor]
+  public var waves: [String: ConfiguredWave]
 
-  public init(_ waves: [String: WaveDescriptor]) {
+  public init(_ waves: [String: ConfiguredWave]) {
     self.waves = waves
   }
 }

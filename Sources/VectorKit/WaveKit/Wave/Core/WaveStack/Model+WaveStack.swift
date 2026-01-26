@@ -26,11 +26,11 @@ extension WaveStack {
     get { storage[ObjectIdentifier(key)] as? K.Value ?? K.defaultValue }
     set { storage[ObjectIdentifier(key)] = newValue }
   }
-  //extension WaveStack where Value == WaveDescriptor {
+  //extension WaveStack where Value == ConfiguredWave {
   //  public subscript<T>(dynamicMember keyPath: KeyPath<Self, T>) {
   //
   //  }
-  //  public subscript<K: WaveKey>(_ key: K.Type) -> K.Value where K.Value == WaveDescriptor {
+  //  public subscript<K: WaveKey>(_ key: K.Type) -> K.Value where K.Value == ConfiguredWave {
   //    get { storage[ObjectIdentifier(key)] as? K.Value ?? K.defaultValue }
   //    set { storage[ObjectIdentifier(key)] = newValue }
   //  }
@@ -47,12 +47,12 @@ extension WaveStack {
   /// Converts current state to a Codable projection
 //  @MainActor
   public func codable() -> CodableWaveStack {
-    var result: [String: WaveDescriptor] = [:]
+    var result: [String: ConfiguredWave] = [:]
 
     // We iterate the registry to see what keys we care about encoding
     for (codingKey, keyType) in WaveKeyRegistry.all {
       // We use the subscript to get the current value (or default)
-      let value = storage[ObjectIdentifier(keyType)] as? WaveDescriptor ?? keyType.defaultValue
+      let value = storage[ObjectIdentifier(keyType)] as? ConfiguredWave ?? keyType.defaultValue
       result[codingKey] = value
     }
 
@@ -67,17 +67,17 @@ extension WaveStack {
   }
 
   // Internal helper for the registry to inject values
-  fileprivate mutating func setValue(_ value: WaveDescriptor, for keyType: any CodableWaveKey.Type) {
+  fileprivate mutating func setValue(_ value: ConfiguredWave, for keyType: any CodableWaveKey.Type) {
     storage[ObjectIdentifier(keyType)] = value
   }
 
-  public func snapshot<K: CodableWaveKey>(_ key: K.Type) -> (String, WaveDescriptor) {
+  public func snapshot<K: CodableWaveKey>(_ key: K.Type) -> (String, ConfiguredWave) {
     (K.codingKey, self[K.self])
   }
 
   public mutating func restore<K: CodableWaveKey>(
     _ key: K.Type,
-    from dict: [String: WaveDescriptor]
+    from dict: [String: ConfiguredWave]
   ) {
     if let value = dict[K.codingKey] {
       self[K.self] = value
@@ -112,7 +112,7 @@ public enum WaveKeyRegistry {
 
   /// Helper to apply a descriptor to a stack using the type-erased key
   static func apply(
-    descriptor: WaveDescriptor,
+    descriptor: ConfiguredWave,
     key: String,
     to stack: inout WaveStack
   ) {
@@ -122,7 +122,7 @@ public enum WaveKeyRegistry {
 }
 
 //  public func codable() -> CodableWaveStack {
-//    var result: [String: WaveDescriptor] = [:]
+//    var result: [String: ConfiguredWave] = [:]
 //
 //    for (id, value) in storage {
 //      if let entry = value as? any CodableWaveKey {
@@ -155,12 +155,12 @@ public enum WaveKeyRegistry {
 //  /// I don't think a stack has a 'main' wave? I dunno?
 //  //  let stackConfig: WaveConfig
 //
-//  let waves: [Wave.ID: WaveDescriptor]
+//  let waves: [Wave.ID: ConfiguredWave]
 //
 //  public init(
 //    lineStyle: LineStyle = .init(),
 //    pointStyle: PointStyle = .init(),
-//    waves: [Wave.ID : WaveDescriptor] = [:]
+//    waves: [Wave.ID : ConfiguredWave] = [:]
 //  ) {
 //    self.lineStyle = lineStyle
 //    self.pointStyle = pointStyle

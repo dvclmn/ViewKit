@@ -1,5 +1,5 @@
 //
-//  WaveDescriptorKey.swift
+//  ConfiguredWaveKey.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 25/1/2026.
@@ -42,7 +42,7 @@ public protocol OrderedWaveKey: WaveKey {
 ///   static let defaultValue = WaveLayer(...)
 /// }
 /// ```
-public protocol CodableWaveKey: WaveKey where Value == WaveDescriptor {
+public protocol CodableWaveKey: WaveKey where Value == ConfiguredWave {
   static var codingKey: String { get }
 }
 

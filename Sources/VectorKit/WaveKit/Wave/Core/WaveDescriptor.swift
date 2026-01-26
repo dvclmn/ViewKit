@@ -7,9 +7,11 @@
 
 /// Suitable for stacking waves together for cool effects
 @dynamicMemberLookup
-public struct WaveDescriptor: Identifiable, Hashable, Sendable, Codable, Equatable {
+public struct ConfiguredWave: Identifiable, Hashable, Sendable, Codable, Equatable {
   public var id: Wave.ID { wave.id }
-  public var wave: Wave
+  
+  /// Private, deferring to dynamic lookup for property access
+  private var wave: Wave
   //  public let wave: Wave
   public var config: WaveConfig
 
@@ -20,22 +22,8 @@ public struct WaveDescriptor: Identifiable, Hashable, Sendable, Codable, Equatab
     self.wave = wave
     self.config = config
   }
-
-  //  public init(
-  //    wave: Wave,
-  //    isEnabled: Bool = true,
-  //    cycles: Int = 3,
-  //    sampleCount: Int = 30,
-  //  ) {
-  //    let config = WaveConfig(
-  //      isEnabled: isEnabled,
-  //      cycles: cycles,
-  //      sampleCount: sampleCount
-  //    )
-  //    self.init(wave: wave, config: config)
-  //  }
 }
-extension WaveDescriptor {
+extension ConfiguredWave {
 
   public subscript<T>(dynamicMember keyPath: WritableKeyPath<Wave, T>) -> T {
     get { self.wave[keyPath: keyPath] }
@@ -45,7 +33,7 @@ extension WaveDescriptor {
 /// Bad, don't do this
 //  public func makeAnimated() -> AnimatedWave { AnimatedWave(wave: self.wave) }
 }
-extension WaveDescriptor {
+extension ConfiguredWave {
   public static let example01: Self = .init(
     wave: .example01,
     config: .init()
