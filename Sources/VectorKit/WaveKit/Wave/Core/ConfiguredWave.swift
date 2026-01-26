@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 25/1/2026.
 //
 
-/// Suitable for stacking waves together for cool effects
+/// Previously handled by now-removed `WaveModulator`
 @dynamicMemberLookup
 public struct ConfiguredWave: Identifiable, Hashable, Sendable, Codable, Equatable {
   public var id: Wave.ID { wave.id }

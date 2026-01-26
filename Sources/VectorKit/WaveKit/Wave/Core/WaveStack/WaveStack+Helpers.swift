@@ -9,12 +9,12 @@ import SwiftUI
 
 extension WaveStack {
 
-//  public func get<K: WaveKey>(
-//    _ key: K.Type,
-//    path: WritableKeyPath<K.Value, T>,
-//  ) -> K.Value {
-//
-//  }
+  //  public func get<K: WaveKey>(
+  //    _ key: K.Type,
+  //    path: WritableKeyPath<K.Value, T>,
+  //  ) -> K.Value {
+  //
+  //  }
 
   /// ```
   /// stack.update(Fundamental.self) {
@@ -45,7 +45,6 @@ extension WaveStack {
     value[keyPath: path] = newValue
     self[key] = value
   }
-
 }
 
 extension Binding where Value == WaveStack {

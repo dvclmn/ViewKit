@@ -50,8 +50,12 @@ extension WaveStack {
     /// Iterate the registry to see what keys we care about encoding
     for (codingKey, keyType) in WaveKeyRegistry.all {
 
+      /// Note: `ObjectIdentifier` is deterministic,
+      /// which is why it works to initialise for checking here
+      let key = ObjectIdentifier(keyType)
+      
       /// Use the subscript to get the current value (or default)
-      let value = storage[ObjectIdentifier(keyType)] as? ConfiguredWave ?? keyType.defaultValue
+      let value = storage[key] as? ConfiguredWave ?? keyType.defaultValue
       result[codingKey] = value
     }
     return CodableWaveStack(result)
