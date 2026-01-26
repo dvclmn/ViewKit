@@ -7,13 +7,25 @@
 
 import CoreTools
 import SwiftUI
+import CasePaths
 
-public enum ShaderEffect {
-  case chromaticAberration(r: CGFloat, b: CGFloat, strength: CGFloat)
-  //  case chromaticAberration(ChromaticAberrationArgs)
-  case fisheye(size: CGFloat, strength: CGFloat)
-  case glitter(origin: UnitPoint, spread: CGFloat, viewSize: CGSize)
-  //  case fisheye(FisheyeArgs)
+@CasePathable
+public enum ShaderEffect: Sendable, Codable {
+  case chromaticAberration(
+    r: CGFloat,
+    b: CGFloat,
+    strength: CGFloat
+  )
+  case fisheye(
+    size: CGFloat,
+    strength: CGFloat
+  )
+  
+  case glitter(
+    origin: UnitPoint,
+    spread: CGFloat,
+    viewSize: CGSize
+  )
   //  case filmGrain
   //  case wavyBlur
   //  case ripple

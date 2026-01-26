@@ -22,7 +22,7 @@ public struct CustomStylesOverview: View {
       //      VStack(alignment: .leading) {
       DecomposedView(
         .section,
-        layoutType: .vstack(alignment: .leading),
+        layout: .vstack(alignment: .leading),
         //        layoutType: .grid(alignment: .topLeading, horizontalSpacing: Styles.sizeSmall),
         spacing: Styles.sizeRegular
       ) {

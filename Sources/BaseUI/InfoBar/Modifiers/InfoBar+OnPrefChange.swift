@@ -17,7 +17,7 @@ public struct InfoBarItemsModifier: ViewModifier {
   public func body(content: Content) -> some View {
 
     content
-      .paddingCompatible(.bottom, isEnabled ? Styles.infoBarHeight : nil)
+      .safePaddingCompatible(.bottom, isEnabled ? Styles.infoBarHeight : nil)
       .onPreferenceChange(InfoBarKey.self) { newItems in
         guard shouldDisplay else { return }
         debouncer.executeAsync {

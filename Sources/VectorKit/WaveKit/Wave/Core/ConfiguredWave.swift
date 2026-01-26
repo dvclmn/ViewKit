@@ -11,8 +11,8 @@ public struct ConfiguredWave: Identifiable, Hashable, Sendable, Codable, Equatab
   public var id: Wave.ID { wave.id }
   
   /// Private, deferring to dynamic lookup for property access
-  private var wave: Wave
-  //  public let wave: Wave
+//  private var wave: Wave
+    public var wave: Wave
   public var config: WaveConfig
 
   public init(

@@ -9,36 +9,24 @@ import BasePrimitives
 import SwiftUI
 
 public struct DecomposedView<Content: View>: View {
+  @Environment(\.layoutType) private var layoutType
 
   let subviewType: SubViewType
-  let layoutType: LayoutType
+  let layoutTypeOverride: LayoutType?
   let spacing: CGFloat?
   let content: Content
 
+  /// Will fall back to environment `LayoutType` if no value provided for `layout`
   public init(
     _ subviewType: SubViewType,
-    layoutType: LayoutType,
+    layout: LayoutType? = nil,
     spacing: CGFloat? = nil,
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.subviewType = subviewType
-    self.layoutType = layoutType
+    self.layoutTypeOverride = layout
     self.spacing = spacing
     self.content = content()
-  }
-
-  public init(
-    _ subviewType: SubViewType,
-    axis: Axis?,
-    spacing: CGFloat? = nil,
-    @ViewBuilder content: @escaping () -> Content
-  ) {
-    self.init(
-      subviewType,
-      layoutType: LayoutType(fromAxis: axis),
-      spacing: spacing,
-      content: content
-    )
   }
 
   public var body: some View {
@@ -51,7 +39,7 @@ public struct DecomposedView<Content: View>: View {
           // MARK: - SubViews
           case .subview:
             Group(subviews: content) { subviewCollection in
-              DynamicStack(layoutType: layoutType, spacing: spacing) {
+              DynamicStack(layoutType: layoutIfPresent, spacing: spacing) {
                 SubviewContent(collection: subviewCollection, spacing: spacing)
               }
             }
@@ -59,20 +47,40 @@ public struct DecomposedView<Content: View>: View {
           // MARK: - Sections
           case .section:
             Group(sections: content) { sectionCollection in
-              DynamicStack(layoutType: layoutType, spacing: spacing) {
+              DynamicStack(layoutType: layoutIfPresent, spacing: spacing) {
                 SectionContent(collection: sectionCollection, spacing: spacing)
               }
             }
         }  // END switch
       }  // END group
-      /// This passes the axis through to the Section/Subview's `DynamicStack`
-      //      .environment(\.layoutAxis, axis)
-      .environment(\.layoutType, layoutType)
+
     } else {
       // MARK: - All OS versions below macOS 15
-      DynamicStack(layoutType: layoutType, spacing: spacing) {
+      DynamicStack(layoutType: layoutIfPresent, spacing: spacing) {
         content
       }
     }  // END if available check
   }
+}
+extension DecomposedView {
+  private var layoutIfPresent: LayoutType {
+    layoutTypeOverride ?? layoutType
+  }
+}
+// MARK: - Additional inits
+extension DecomposedView {
+  public init(
+    _ subviewType: SubViewType,
+    axis: Axis?,
+    spacing: CGFloat? = nil,
+    @ViewBuilder content: @escaping () -> Content
+  ) {
+    self.init(
+      subviewType,
+      layout: LayoutType(fromAxis: axis),
+      spacing: spacing,
+      content: content
+    )
+  }
+
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 extension View {
   @ViewBuilder
-  public func paddingCompatible(
+  public func safePaddingCompatible(
     _ edges: Edge.Set = .all,
     _ length: CGFloat? = nil
   ) -> some View {

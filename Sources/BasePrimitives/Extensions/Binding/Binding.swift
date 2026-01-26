@@ -89,6 +89,32 @@ extension Binding where Value: OptionSet & Sendable, Value.Element == Value {
   }
 }
 
+
+extension Binding {
+  /// Returns a Boolean binding that toggles the Bool for the given Key in the Dictionary
+  @MainActor
+  public func bindingBool<T>(key: T) -> Binding<Bool>
+  where Value == Dictionary<T, Bool>, T: Hashable {
+    Binding<Bool> {
+      wrappedValue[key] ?? false
+    } set: {
+      wrappedValue[key] = $0
+    }
+  }
+//  func contains(_ element: Value) -> Binding<Bool> {
+//    Binding<Bool>(
+//      get: { wrappedValue.contains(element) },
+//      set: { isIncluded in
+//        if isIncluded {
+//          wrappedValue.insert(element)
+//        } else {
+//          wrappedValue.remove(element)
+//        }
+//      }
+//    )
+//  }
+}
+
 //extension Binding where Value == CGFloat {
 //  /// Convert `CGFloat` Binding to `Double` Binding
 //  public var toBindingDouble: Binding<Double> {

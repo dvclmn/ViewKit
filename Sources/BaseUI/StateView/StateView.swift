@@ -6,11 +6,11 @@
 //
 
 import CoreTools
+import LayoutKit
 import SwiftUI
 
-//
 public struct StateView<Content: View>: View {
-  @Environment(\.layoutAxis) private var layoutAxis
+  @Environment(\.layoutType) private var layoutType
   @Environment(\.layoutAlignment) private var layoutAlignment
   @Environment(\.isCompactMode) private var isCompact
   @Environment(\.iconFontSize) private var iconFontSize
@@ -23,18 +23,21 @@ public struct StateView<Content: View>: View {
 
   public var body: some View {
 
+    DecomposedView(.subview) {
+      // MARK: - Title
+      TitleView()
+        /// Padding to achieve nice vertical optical centering
+        .safePaddingCompatible(.top, paddingLength)
+
+      // MARK: - Message
+      MessageView()
+      additionalContent
+    }
     VStack(
       alignment: layoutAlignment?.horizontal ?? .center,
       spacing: scale(16, for: controlSize, min: 6)
     ) {
 
-      TextView()
-        /// Padding to achieve nice vertical optical centering
-        .paddingCompatible(.top, label.icon != nil ? scale(iconSize * 1.4, for: controlSize) : .zero)
-
-      // MARK: - Message
-      MessageView()
-      additionalContent
     }
     .monospacedDigit()
     .padding(.bottom, Styles.sizeRegular)
@@ -47,16 +50,20 @@ public struct StateView<Content: View>: View {
   }
 }
 
-//
 extension StateView {
 
+  private var paddingLength: CGFloat {
+    label.icon != nil
+      ? scale(iconSize * 1.4, for: controlSize)
+      : .zero
+  }
   private var iconSize: CGFloat {
     let baseIconSize: CGFloat = 46
     return iconFontSize ?? baseIconSize
   }
 
   @ViewBuilder
-  private func TextView() -> some View {
+  private func TitleView() -> some View {
     Text(label.text.toMarkdownCompatible)
       .multilineTextAlignment(.center)
       .font(.system(size: scale(22, for: controlSize)))

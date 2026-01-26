@@ -10,7 +10,7 @@ import BasePrimitives
 
 @available(macOS 15.0, iOS 18.0, *)
 public struct SectionContent: View {
-  @Environment(\.layoutAxis) private var layoutAxis
+//  @Environment(\.layoutAxis) private var layoutAxis
   @Environment(\.layoutType) private var layoutType
   @Environment(\.layoutSpacing) private var layoutSpacing
 

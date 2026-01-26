@@ -44,7 +44,7 @@ extension WaveKeyRegistry {
     key: String,
     to stack: inout WaveStack
   ) {
-    guard let keyType = all[key] else { return }
+    guard let keyType = registeredTypes[key] else { return }
     stack.setValue(wave, for: keyType)
   }
 }

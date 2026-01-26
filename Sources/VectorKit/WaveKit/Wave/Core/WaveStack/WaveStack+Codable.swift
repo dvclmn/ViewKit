@@ -22,7 +22,7 @@ extension WaveStack {
     var result: [String: ConfiguredWave] = [:]
 
     /// Iterate the registry to see what keys we care about encoding
-    for (codingKey, keyType) in WaveKeyRegistry.all {
+    for (codingKey, keyType) in WaveKeyRegistry.registeredTypes {
 
       let value = self[keyType]
       result[codingKey] = value

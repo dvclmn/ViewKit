@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// This is here and not `SharedHelpers` because it relies on `LayoutKit`
 extension EnvironmentValues {
   @Entry public var layoutType: LayoutType = .passthrough
 }
