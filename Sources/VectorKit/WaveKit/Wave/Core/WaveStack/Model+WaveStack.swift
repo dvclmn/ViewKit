@@ -34,41 +34,33 @@ extension WaveStack {
   //    get { storage[ObjectIdentifier(key)] as? K.Value ?? K.defaultValue }
   //    set { storage[ObjectIdentifier(key)] = newValue }
   //  }
-
+  
   //  public subscript<T>(dynamicMember keyPath: KeyPath<Self, T>) {
   //
   //  }
-
 }
 
 // MARK: - Codable handling
 extension WaveStack {
 
   /// Converts current state to a Codable projection
-//  @MainActor
   public func codable() -> CodableWaveStack {
     var result: [String: ConfiguredWave] = [:]
 
-    // We iterate the registry to see what keys we care about encoding
+    /// Iterate the registry to see what keys we care about encoding
     for (codingKey, keyType) in WaveKeyRegistry.all {
-      // We use the subscript to get the current value (or default)
+
+      /// Use the subscript to get the current value (or default)
       let value = storage[ObjectIdentifier(keyType)] as? ConfiguredWave ?? keyType.defaultValue
       result[codingKey] = value
     }
-
     return CodableWaveStack(result)
   }
 
-//  @MainActor
   public mutating func apply(_ projection: CodableWaveStack) {
-    for (key, descriptor) in projection.waves {
-      WaveKeyRegistry.apply(descriptor: descriptor, key: key, to: &self)
+    for (key, wave) in projection.waves {
+      WaveKeyRegistry.apply(wave, key: key, to: &self)
     }
-  }
-
-  // Internal helper for the registry to inject values
-  fileprivate mutating func setValue(_ value: ConfiguredWave, for keyType: any CodableWaveKey.Type) {
-    storage[ObjectIdentifier(keyType)] = value
   }
 
   public func snapshot<K: CodableWaveKey>(_ key: K.Type) -> (String, ConfiguredWave) {
@@ -85,24 +77,7 @@ extension WaveStack {
   }
 }
 
-/// ```
-/// stack.update(Fundamental.self) {
-///   $0.wave.amplitude += 0.05
-///   $0.wave.phase += delta
-/// }
-/// ```
-extension WaveStack {
-  mutating func update<K: WaveKey>(
-    _ key: K.Type,
-    _ body: (inout K.Value) -> Void
-  ) {
-    var value = self[key]
-    body(&value)
-    self[key] = value
-  }
-}
-
-//@MainActor
+// MARK: - Registry
 public enum WaveKeyRegistry {
   nonisolated(unsafe) private(set) static var all: [String: any CodableWaveKey.Type] = [:]
 
@@ -112,11 +87,22 @@ public enum WaveKeyRegistry {
 
   /// Helper to apply a descriptor to a stack using the type-erased key
   static func apply(
-    descriptor: ConfiguredWave,
+    _ wave: ConfiguredWave,
     key: String,
     to stack: inout WaveStack
   ) {
     guard let keyType = all[key] else { return }
-    stack.setValue(descriptor, for: keyType)
+    stack.setValue(wave, for: keyType)
+  }
+}
+
+extension WaveStack {
+
+  /// Internal helper for `WaveKeyRegistry` to inject values
+  fileprivate mutating func setValue(
+    _ value: ConfiguredWave,
+    for keyType: any CodableWaveKey.Type
+  ) {
+    storage[ObjectIdentifier(keyType)] = value
   }
 }
