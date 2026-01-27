@@ -12,7 +12,7 @@ using namespace metal;
 [[ stitchable ]]
 half4 chromaticAberration(float2 position,
                           SwiftUI::Layer layer,
-                          float2 center,       // center point (usually view center)
+                          float2 viewSize,
                           float redDistance,
                           float redAngle,      // in radians
                           float blueDistance,
@@ -27,11 +27,37 @@ half4 chromaticAberration(float2 position,
 //  let centerIf = layer.
 //  float2 center = float2(0.5, 0.5); // center of a normalized layer
 //  float2 fromCenter = position - center;
+  float2 center = viewSize * 0.5;
   float2 fromCenter = position - center;
   float distanceFromCenter = length(fromCenter);
   
   // Use a cubic falloff for subtle effect near center, stronger near edges
-  float radialMultiplier = 1.0 + pow(distanceFromCenter, 1.0) * radialStrength;
+//  float radialMultiplier = 1.0 + pow(distanceFromCenter, 1.0) * radialStrength;
+  
+  
+  
+  // Example: no distortion for the inner 20% of the distance to the edge
+  float deadZone = 0.2;
+  float maxDist = length(center); // for normalized space, or adjust for aspect ratio
+  float normalizedDist = distanceFromCenter / maxDist;
+  
+  if (normalizedDist < deadZone) {
+    // No distortion, just return original color
+    return original_color;
+  }
+  
+  // Only start distortion after deadZone
+  float t = clamp((normalizedDist - deadZone) / (1.0 - deadZone), 0.0, 1.0);
+  // t is 0 inside dead zone, 1 at the edge
+  
+  float exponent = 2.0;
+  
+  // Apply your exponential/cubic/etc. curve to t for fine control
+  float effectStrength = pow(t, exponent); // e.g., exponent = 2.0 or 3.0
+  
+  float radialMultiplier = 1.0 + effectStrength * radialStrength;
+  
+  
   
   // Calculate offset vectors with radial scaling
   float2 redOffset = float2(cos(redAngle), sin(redAngle)) * redDistance * radialMultiplier;

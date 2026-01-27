@@ -13,6 +13,7 @@ extension ShaderEffect {
     b: 2.4,
     strength: 2.0,
     radialStrength: 0.5,
-    center: CGPoint(x: 30, y: 60)
+    viewSize: CGSize(300, 700)
+//    center: CGPoint(x: 30, y: 60)
   )
 }

@@ -19,7 +19,7 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     b: CGFloat,
     strength: CGFloat,
     radialStrength: CGFloat,
-    center: CGPoint,
+    viewSize: CGSize,
   )
   case fisheye(
     size: CGFloat,
@@ -38,10 +38,32 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   )
 }
 
-extension ShaderEffect.Meta: Sendable, Codable {
+extension ShaderEffect {
+  public var arguments: [Shader.Argument] {
+    switch self {
+      /// Haven't yet exposed all shader controls to this case
+      case .chromaticAberration(let r, let b, let strength, let radialStrength, let viewSize):
+        [
+          .float2(viewSize),
+          .float(r),
+          .float(-0.7),
+          .float(b),
+          .float(-0.7),
+          .float(radialStrength),
+          .float(strength),
+        ]
 
+      case .fisheye(let size, let strength):
+        [.float(size), .float(strength)]
+
+      case .glitter(let origin, let spread, let viewSize):
+        [.float2(origin.toCGPoint(in: viewSize)), .float(spread)]
+
+      case .ripplePush(let l, let v):
+        [.float2(l), .float2(v)]
+    }
+  }
 }
-
 extension ShaderEffect {
   //  case filmGrain
   //  case wavyBlur
@@ -91,33 +113,6 @@ extension ShaderEffect {
     lhs.reference == rhs.reference
   }
 
-  public var arguments: [Shader.Argument] {
-
-    switch self {
-      /// Haven't yet exposed all shader controls to this case
-      case .chromaticAberration(let r, let b, let strength, let radialStrength, let center):
-        [
-          .float2(center),
-          .float(r),
-          .float(-0.7),
-          .float(b),
-          .float(-0.7),
-          .float(radialStrength),
-          .float(strength),
-        ]
-
-      case .fisheye(let size, let strength):
-        [.float(size), .float(strength)]
-
-      case .glitter(let origin, let spread, let viewSize):
-        [.float2(origin.toCGPoint(in: viewSize)), .float(spread)]
-
-      case .ripplePush(let l, let v):
-        [.float2(l), .float2(v)]
-    }
-
-  }
-
   public var shader: Shader {
     return Shader(
       function: ShaderFunction(
@@ -165,13 +160,3 @@ extension ShaderEffect {
     }
   }
 }
-
-//extension Array where Element == ShaderEffect {
-//  public func getEffect(of kind: Element.Meta) -> Element? {
-//    first(where: { ShaderEffect.Meta($0) == kind })
-//  }
-//
-////  public mutating func setEffect<T>(of kind: Element.Meta) -> Element? {
-////    first(where: { ShaderEffect.Meta($0) == kind })
-////  }
-//}
