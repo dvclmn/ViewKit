@@ -9,9 +9,9 @@ import ColourKit
 import Foundation
 
 public struct LineStyle: Sendable, Codable, Equatable {
-  public let colour: RGBColour
-  public let colourSecondary: RGBColour?
-  public let lineWidth: CGFloat
+  public var colour: RGBColour
+  public var colourSecondary: RGBColour?
+  public var lineWidth: CGFloat
 
   public init(
     colour: RGBColour = .gray,

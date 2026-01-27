@@ -9,7 +9,18 @@ import SwiftUI
 
 public struct QuickDisclosureStyle: DisclosureGroupStyle {
   public func makeBody(configuration: Configuration) -> some View {
-    VStack {
+    Section {
+      //    VStack {
+
+      if configuration.isExpanded {
+        configuration.content
+      } else {
+        Text("Content hidden")
+          .font(.caption2)
+          .foregroundStyle(.tertiary)
+          .italic()
+      }
+    } header: {
       Button {
         configuration.isExpanded.toggle()
 
@@ -33,13 +44,14 @@ public struct QuickDisclosureStyle: DisclosureGroupStyle {
         .contentShape(Rectangle())
       }
       .buttonStyle(.plain)
-      if configuration.isExpanded {
-        configuration.content
-      }
+      //      configuration.label
     }
   }
 }
 
 extension DisclosureGroupStyle where Self == QuickDisclosureStyle {
+  public static var sectioned: Self { Self() }
+
+  @available(*, deprecated, renamed: "sectioned", message: "Prefer the more clearly nameded 'sectioned'")
   public static var custom: Self { Self() }
 }

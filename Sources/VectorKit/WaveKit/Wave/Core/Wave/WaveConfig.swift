@@ -12,6 +12,9 @@ public struct WaveConfig: Hashable, Sendable, Codable {
   /// e.g. in a `WaveLayer`, `WaveSlot`, or `MixerChannel`
 //  public var isEnabled: Bool
   public var cycles: CGFloat
+  public var dashes: Int
+  public var dashePhase: CGFloat
+  
   public var sampleCount: Int
   public var interpolation: WaveInterpolation
   /// From old `WaveAppearance`
@@ -21,11 +24,15 @@ public struct WaveConfig: Hashable, Sendable, Codable {
   public init(
 //    isEnabled: Bool = true,
     cycles: CGFloat = 3,
+    dashes: Int = 0,
+    dashePhase: CGFloat = 0,
     sampleCount: Int = 30,
     interpolation: WaveInterpolation = .cubic,
   ) {
 //    self.isEnabled = isEnabled
     self.cycles = cycles
+    self.dashes = dashes
+    self.dashePhase = dashePhase
     self.sampleCount = sampleCount
     self.interpolation = interpolation
   }
@@ -34,8 +41,26 @@ public struct WaveConfig: Hashable, Sendable, Codable {
 
 /// Note: See Swift Charts `InterpolationMethod`, possibly helpful
 /// https://developer.apple.com/documentation/charts/interpolationmethod
-public enum WaveInterpolation: Sendable, Equatable, Codable {
+public enum WaveInterpolation: String, Sendable, Equatable, Codable, CaseIterable, Identifiable {
   case catmullRom
   case linear
   case cubic
+  
+  public var id: String { rawValue }
+  
+  public var name: String {
+    switch self {
+      case .catmullRom: "Catmull-Rom"
+      default: rawValue.capitalized
+    }
+  }
+}
+
+extension PathStyle {
+  public init(from waveInterpolation: WaveInterpolation) {
+    self = switch waveInterpolation {
+      case .linear: .line
+      case .cubic, .catmullRom: .smooth
+    }
+  }
 }

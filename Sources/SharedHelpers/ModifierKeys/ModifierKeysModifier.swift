@@ -12,17 +12,18 @@ public struct ModifierKeysModifier: ViewModifier {
 
   @State private var modifierKeys = Modifiers()
 
+  let keysToWatch: EventModifiers?
   public func body(content: Content) -> some View {
 
     if #available(macOS 15, iOS 18, *) {
       content
-        .onModifierKeysChanged(mask: .defaultKeys, initial: true) { old, new in
+        .onModifierKeysChanged(mask: keysToWatch ?? .defaultKeys, initial: true) { old, new in
           self.modifierKeys = Modifiers(from: new)
         }
         .environment(\.modifierKeys, modifierKeys)
-        .task(id: modifierKeys) {
-          print("Modifier keys changed: \(modifierKeys.description)")
-        }
+      //        .task(id: modifierKeys) {
+      //          print("Modifier keys changed: \(modifierKeys.description)")
+      //        }
 
     } else {
       #if canImport(AppKit)
@@ -43,12 +44,13 @@ public struct ModifierKeysModifier: ViewModifier {
 }
 
 extension View {
-  public func readModifierKeys() -> some View {
-    #if canImport(AppKit)
-    self.modifier(ModifierKeysModifier())
-    #elseif canImport(UIKit)
-    self
-    #endif
+  /// Falls back to default mask, if no value supplied for `keysToWatch`
+  public func readModifierKeys(_ keysToWatch: EventModifiers? = nil) -> some View {
+//    #if canImport(AppKit)
+    self.modifier(ModifierKeysModifier(keysToWatch: keysToWatch))
+//    #elseif canImport(UIKit)
+//    self
+//    #endif
   }
 }
 #endif

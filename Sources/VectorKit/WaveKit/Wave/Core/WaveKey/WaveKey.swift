@@ -21,6 +21,7 @@ import Foundation
 /// }
 /// ```
 public protocol WaveKey {
+  static var title: String { get }
   static var codingKey: String { get }
   static var defaultValue: ConfiguredWave { get }
 }

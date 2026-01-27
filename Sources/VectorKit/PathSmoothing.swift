@@ -9,10 +9,8 @@ import Foundation
 
 /// Not currently used by Animation Playground,
 /// but seems handy enough to keep around
-
-// TODO: Turned off due to annoying 'Main actor-isolated default value in a nonisolated context', but should fix later
 public enum PathSmoothing: Sendable, Codable, Equatable, Hashable, CaseIterable, Identifiable {
-  
+
   public static let allCases: [PathSmoothing] = [
     .linear,
     .quadCurve,
@@ -50,5 +48,5 @@ public struct CatmullRomConfiguration: Sendable, Codable, Equatable, Hashable {
     self.tension = tension
     self.alpha = alpha
   }
-//  public static let standard: CatmullRomConfiguration = CatmullRomConfiguration()
+  //  public static let standard: CatmullRomConfiguration = CatmullRomConfiguration()
 }

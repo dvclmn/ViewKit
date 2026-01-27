@@ -9,8 +9,10 @@ import CoreTools
 import SwiftUI
 import CasePaths
 
+@MetaEnum
+@CaseDetection
 @CasePathable
-public enum ShaderEffect: Sendable, Codable {
+public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   case chromaticAberration(
     r: CGFloat,
     b: CGFloat,
@@ -26,6 +28,13 @@ public enum ShaderEffect: Sendable, Codable {
     spread: CGFloat,
     viewSize: CGSize
   )
+}
+
+extension ShaderEffect.Meta: Sendable, Codable {
+  
+}
+
+extension ShaderEffect {
   //  case filmGrain
   //  case wavyBlur
   //  case ripple
@@ -47,6 +56,19 @@ public enum ShaderEffect: Sendable, Codable {
     //      case .ripple: "ripple"
     //      case .psych: "psych"
     }
+  }
+  
+  /// Using the reference as the ID ensures that 'fisheye'
+  /// is always the same 'item' in a ForEach, regardless of its settings.
+  public var id: String { reference }
+  
+  /// Custom Hashable to ensure "one of each" in a Set
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(reference)
+  }
+  
+  public static func == (lhs: ShaderEffect, rhs: ShaderEffect) -> Bool {
+    lhs.reference == rhs.reference
   }
 
   public var arguments: [Shader.Argument] {
@@ -111,3 +133,14 @@ public enum ShaderEffect: Sendable, Codable {
     }
   }
 }
+
+
+//extension Array where Element == ShaderEffect {
+//  public func getEffect(of kind: Element.Meta) -> Element? {
+//    first(where: { ShaderEffect.Meta($0) == kind })
+//  }
+//  
+////  public mutating func setEffect<T>(of kind: Element.Meta) -> Element? {
+////    first(where: { ShaderEffect.Meta($0) == kind })
+////  }
+//}

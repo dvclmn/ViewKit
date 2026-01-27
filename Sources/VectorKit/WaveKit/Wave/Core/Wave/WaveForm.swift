@@ -7,11 +7,14 @@
 
 import Foundation
 
-public enum Waveform: String, Sendable, Codable, Hashable {
+public enum Waveform: String, Sendable, Codable, Hashable, CaseIterable, Identifiable {
   case sine
   case triangle
   case square
   case sawtooth
+  
+  public var id: String { rawValue }
+  public var name: String { rawValue.capitalized }
 }
 
 extension Waveform {

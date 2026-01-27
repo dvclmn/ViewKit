@@ -26,14 +26,18 @@ import SwiftUI
 /// ```
 
 //#if canImport(AppKit)
+
+/// AppKit modifiers: `NSEvent.ModifierFlags`
+/// SwiftUI modifier: `EventModifiers`
 extension EnvironmentValues {
   @Entry public var modifierKeys: Modifiers = []
 }
 
 public typealias Keys = Set<KeyEquivalent>
-public typealias Modifiers = ModifierKeysCompatible
+public typealias Modifiers = ModifierKeys
 
-public struct ModifierKeysCompatible: OptionSet, Sendable, Hashable, Equatable {
+/// A simple bridge between AppKit and SwiftUI modifier keys
+public struct ModifierKeys: OptionSet, Sendable, Hashable, Equatable {
   public init(rawValue: Int) {
     self.rawValue = rawValue
   }
@@ -46,24 +50,27 @@ public struct ModifierKeysCompatible: OptionSet, Sendable, Hashable, Equatable {
   public static let command = Self(rawValue: 1 << 4)
 }
 
-extension ModifierKeysCompatible {
- public var isHoldingOption: Bool { contains(.option) }
- public var isHoldingShift: Bool { contains(.shift) }
- public var isHoldingCommand: Bool { contains(.command) }
+extension ModifierKeys {
+  public var isHoldingCapsLock: Bool { contains(.capsLock) }
+  public var isHoldingShift: Bool { contains(.shift) }
+  public var isHoldingControl: Bool { contains(.control) }
+  public var isHoldingOption: Bool { contains(.option) }
+  public var isHoldingCommand: Bool { contains(.command) }
 }
-extension ModifierKeysCompatible {
+
+// MARK: - Initialisers
+extension ModifierKeys {
   #if canImport(AppKit)
   public init(from appKitKey: NSEvent.ModifierFlags) {
     self = appKitKey.toCompatibleModifier
   }
   #endif
-
   struct ModifierMetadata: Hashable {
     let name: String
     let symbol: String
   }
 
-  private static let metadata: [ModifierKeysCompatible: ModifierMetadata] = [
+  private static let metadata: [ModifierKeys: ModifierMetadata] = [
     .shift: .init(name: "Shift", symbol: "􀆝"),
     .control: .init(name: "Control", symbol: "􀆍"),
     .option: .init(name: "Option", symbol: "􀆕"),
@@ -71,8 +78,8 @@ extension ModifierKeysCompatible {
     .capsLock: .init(name: "Caps Lock", symbol: "􀆡"),
   ]
 
-  private var individualOptions: [ModifierKeysCompatible] {
-    Self.metadata.keys.filter { contains($0) }
+  private var individualOptions: [ModifierKeys] {
+    ModifierKeys.metadata.keys.filter { contains($0) }
   }
 
   public func displayName(
@@ -81,7 +88,7 @@ extension ModifierKeysCompatible {
     emptyText: String = "None"
   ) -> String {
     let components: [String] = individualOptions.compactMap { option in
-      guard let meta = Self.metadata[option] else { return nil }
+      guard let meta = ModifierKeys.metadata[option] else { return nil }
 
       switch elements {
         case .name:
@@ -100,26 +107,26 @@ extension ModifierKeysCompatible {
 
 }
 
-extension ModifierKeysCompatible: CustomStringConvertible {
+extension ModifierKeys: CustomStringConvertible {
   public var description: String { displayName(elements: .name) }
 }
 
-@available(macOS 15, iOS 18, *)
-extension ModifierKeysCompatible {
+//@available(macOS 15, iOS 18, *)
+extension ModifierKeys {
   public init(from swiftUIKey: EventModifiers) {
     self = swiftUIKey.toCompatibleModifier
   }
 }
 
-@available(macOS 15, iOS 18, *)
+//@available(macOS 15, iOS 18, *)
 extension EventModifiers {
 
   public static var defaultKeys: Self {
     [.command, .shift, .option, .control, .capsLock]
   }
 
-  public var toCompatibleModifier: ModifierKeysCompatible {
-    var result: ModifierKeysCompatible = []
+  public var toCompatibleModifier: ModifierKeys {
+    var result: ModifierKeys = []
     if contains(.shift) { result.insert(.shift) }
     if contains(.control) { result.insert(.control) }
     if contains(.option) { result.insert(.option) }
@@ -131,8 +138,8 @@ extension EventModifiers {
 
 #if canImport(AppKit)
 extension NSEvent.ModifierFlags {
-  public var toCompatibleModifier: ModifierKeysCompatible {
-    var result: ModifierKeysCompatible = []
+  public var toCompatibleModifier: ModifierKeys {
+    var result: ModifierKeys = []
     if contains(.shift) { result.insert(.shift) }
     if contains(.control) { result.insert(.control) }
     if contains(.option) { result.insert(.option) }

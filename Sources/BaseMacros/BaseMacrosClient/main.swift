@@ -52,7 +52,7 @@ enum AnotherEnum {
 struct CoolAnimals {
   enum Options: Int {
     case bat
-    case frog // Test comment
+    case frog  // Test comment
     case apeWithCamelCase
   }
 }
@@ -131,7 +131,6 @@ public enum Attribute {
 /// ```
 ///
 /// The issue that `min` and `title` are missing their labels in the self assignment
-
 
 struct MyRecord {
   @StaticMemberIterable
