@@ -65,9 +65,8 @@ extension HSVColour: HSVAdjustable {
   public var toHSV: HSVColour { self }
 }
 
-//
 extension HSVColour {
-  
+
   public var hueOnly: Self {
     Self(
       hue: hue,
@@ -133,5 +132,3 @@ extension HSVColour: CustomStringConvertible {
     return result
   }
 }
-
-

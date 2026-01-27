@@ -37,7 +37,7 @@ extension TrackFillStyle {
     )
   }
 
-  public static func saturation(_ hue: Double) -> TrackFillStyle {
+  public static func saturation(hue: Double) -> TrackFillStyle {
     //  public static func saturation(_ hue: Color) -> TrackFillStyle {
     TrackFillStyle(
       fill: nil,

@@ -18,6 +18,8 @@ import SwiftUI
 //  public static let all: Self = [.fill, .thumb]
 //}
 
+
+
 public struct SliderComponents: OptionSet, Sendable {
   public init(rawValue: Int) {
     self.rawValue = rawValue

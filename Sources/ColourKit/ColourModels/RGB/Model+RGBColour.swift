@@ -18,11 +18,17 @@ public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable,
   public var alpha: Double
 
   public var name: String?
+  
+  /// 8-bit integers (0–255)
+  public let is255: Bool
 
+  /// Values are expected to be normalised
+  // TODO: Add check for 0-255 vs normalised [0-1] values
   public init(
     red: Double,
     green: Double,
     blue: Double,
+    is255: Bool = false,
     alpha: Double = 1.0,
     name: String? = nil
   ) {
@@ -32,6 +38,7 @@ public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable,
     self.blue = blue
     self.alpha = alpha
     self.name = name
+    self.is255 = is255
   }
 }
 // MARK: - Initialisers
@@ -42,7 +49,7 @@ extension RGBColour {
     g: Double,
     b: Double,
     a: Double = 1.0,
-    name: String? = nil
+    name: String? = nil,
   ) {
     self.init(red: r, green: g, blue: b, alpha: a, name: name)
   }
@@ -71,13 +78,26 @@ extension RGBColour {
 
 extension RGBColour {
   
+  public var areAllComponentsNormalised: Bool {
+    red.isWithin(.unitRange)
+    && green.isWithin(.unitRange)
+    && blue.isWithin(.unitRange)
+  }
+  
   public static func from255(
     _ r: Int,
     _ g: Int,
     _ b: Int,
     name: String? = nil
   ) -> RGBColour {
-    .init(Double(r) / 255, Double(g) / 255, Double(b) / 255, name: name)
+    self.init(
+      red: Double(r / 255),
+      green: Double(g / 255),
+      blue: Double(b / 255),
+      is255: true,
+      alpha: 1.0,
+      name: name
+    )
   }
 
   public var toHSV: HSVColour { HSVColour(fromRGB: self) }

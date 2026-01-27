@@ -9,14 +9,14 @@ import ColourKit
 import Foundation
 
 public struct PointStyle: Sendable, Codable, Equatable {
-  public var colour: RGBColour
-  public var colourSecondary: RGBColour?
+  public var colour: HSVColour
+  public var colourSecondary: HSVColour?
   public var radius: CGFloat
   public var shape: PointShape
   
   public init(
-    colour: RGBColour = .brown,
-    colourSecondary: RGBColour? = nil,
+    colour: HSVColour = .brown,
+    colourSecondary: HSVColour? = .purple,
     radius: CGFloat = 9.0,
     shape: PointShape = .circle
   ) {

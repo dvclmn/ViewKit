@@ -10,17 +10,22 @@ import SwiftUI
 
 public struct HueSlider<Value: BinaryFloatingPoint & Sendable>: View {
 
+  let title: String?
   @Binding var hue: Value
 //  @Binding var colour: HSVColour
   
-  public init(hue: Binding<Value>) {
+  public init(
+    _ title: String? = nil,
+    hue: Binding<Value>
+  ) {
 //  public init(colour: Binding<HSVColour>) {
+    self.title = title
     self._hue = hue
   }
   public var body: some View {
 
     QuickSlider(
-      "Hue",
+      title ?? "Hue",
       value: $hue,
       range: .unitRange
     )

@@ -9,13 +9,13 @@ import ColourKit
 import Foundation
 
 public struct LineStyle: Sendable, Codable, Equatable {
-  public var colour: RGBColour
-  public var colourSecondary: RGBColour?
+  public var colour: HSVColour
+  public var colourSecondary: HSVColour?
   public var lineWidth: CGFloat
 
   public init(
-    colour: RGBColour = .gray,
-    colourSecondary: RGBColour? = nil,
+    colour: HSVColour = .green,
+    colourSecondary: HSVColour? = .orange,
     lineWidth: CGFloat = 3.0
   ) {
     self.colour = colour

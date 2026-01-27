@@ -33,29 +33,8 @@ public struct AnotherColourPicker: View {
       "Sliders",
       isExpanded: $areColourSlidersExpanded
     ) {
-      SliderGroup {
-        QuickSlider(
-          "Hue",
-          value: $colour.hue,
-          range: .unitRange
-        )
-        .sliderStyle(.custom(.hueRainbow))
-
-        QuickSlider(
-          "Saturation",
-          value: $colour.saturation,
-          range: .unitRange
-        )
-        .sliderStyle(.custom(.saturation(colour.saturation)))
-
-        QuickSlider(
-          "Brightness",
-          value: $colour.brightness,
-          range: .unitRange
-        )
-        .sliderStyle(.custom(.brightness(colour.hueSatOnly.toColour)))
-      }
+      HSVSliderGroup($colour)
     }
-    .disclosureGroupStyle(.custom)
+    .disclosureGroupStyle(.sectioned)
   }
 }

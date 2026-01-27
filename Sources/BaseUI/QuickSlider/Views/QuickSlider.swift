@@ -74,7 +74,7 @@ extension QuickSlider {
       )
     )
   }
-  
+
   /// For Binding to Int more conveniently
   public init(
     _ title: String,
@@ -86,27 +86,26 @@ extension QuickSlider {
     self.init(
       label: QuickLabel(title),
       value: intValue.toBindingFloat,
-//      value: intValue.toBindingBinaryFloatingPoint(),
+      //      value: intValue.toBindingBinaryFloatingPoint(),
       range: range.toCGFloatRange,
       step: step?.toCGFloat,
       didChangeSlider: didChangeSlider
     )
   }
-  
-  
-//  public init(
-//    _ title: String,
-//    value: Binding<Double>,
-//    range: ClosedRange<Double>,
-//    step: Double? = nil,
-//    didChangeSlider: @escaping SliderOutput = { _ in },
-//  ) {
-//    self.init(
-//      label: QuickLabel(title),
-//      value: value,
-//      range: range,
-//      step: step,
-//      didChangeSlider: didChangeSlider
-//    )
-//  }
+
+  //  public init(
+  //    _ title: String,
+  //    value: Binding<Double>,
+  //    range: ClosedRange<Double>,
+  //    step: Double? = nil,
+  //    didChangeSlider: @escaping SliderOutput = { _ in },
+  //  ) {
+  //    self.init(
+  //      label: QuickLabel(title),
+  //      value: value,
+  //      range: range,
+  //      step: step,
+  //      didChangeSlider: didChangeSlider
+  //    )
+  //  }
 }

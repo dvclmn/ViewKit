@@ -22,7 +22,7 @@ import VectorKit
 //}
 
 extension PointStyle {
-  public static func basic(with colour: RGBColour) -> Self {
+  public static func basic(with colour: HSVColour) -> Self {
     Self(colour: colour)
   }
 //  public static let `default`: Self = .init(colour: .black, radius: 3)

@@ -12,6 +12,7 @@ import CasePaths
 @MetaEnum
 @CaseDetection
 @CasePathable
+@dynamicMemberLookup
 public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   case chromaticAberration(
     r: CGFloat,
@@ -55,6 +56,16 @@ extension ShaderEffect {
     //      case .wavyBlur: "wavyBlur"
     //      case .ripple: "ripple"
     //      case .psych: "psych"
+    }
+  }
+  
+  public var meta: Self.Meta { ShaderEffect.Meta(self) }
+  
+  public var name: String {
+    switch self {
+      case .chromaticAberration: "Chromatic Abberation"
+      case .fisheye: "Fish-eye"
+      case .glitter: "Glitter"
     }
   }
   

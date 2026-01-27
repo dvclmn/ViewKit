@@ -16,6 +16,10 @@ public enum WaveComponent {
   case phaseGhost
 }
 
+//extension WaveComponent.Meta {
+//  public func stylePath: WritableKeyPath<>
+//}
+
 public struct WaveComponents: OptionSet, Sendable {
   public init(rawValue: Int) {
     self.rawValue = rawValue
