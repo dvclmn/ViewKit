@@ -17,11 +17,12 @@ extension InfoBarItem {
     InfoBarItem(
       sectionKey: InfoBarSectionID(ModifiersSectionKey.self),
       label: QuickLabel("Modifiers", symbol: "keyboard"),
-      text: modifiers?.displayName(
-        elements: .icon,
-        separator: "",
-        emptyText: ""
-      ) ?? ""
+      text: "Need to fix"
+//        modifiers?.displayName(
+//        elements: .icon,
+//        separator: "",
+//        emptyText: ""
+//      ) ?? ""
     )
   }
 }

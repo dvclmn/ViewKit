@@ -9,6 +9,11 @@ import Foundation
 
 extension Int {
 
+  public func normalisedIndex(for count: Int) -> CGFloat {
+    count > 1
+      ? Double(self) / Double(count - 1)
+      : 0
+  }
   public var doubled: Int { self * 2 }
   public var halved: Int { self / 2 }
 
