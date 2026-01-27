@@ -9,8 +9,8 @@ import Foundation
 
 extension ShaderEffect {
   public static let chromaticPresetA: ShaderEffect = .chromaticAberration(
-    r: 0.3,
-    b: 0.2,
-    strength: 0.5
+    r: -1.8,
+    b: 2.4,
+    strength: 2.0
   )
 }

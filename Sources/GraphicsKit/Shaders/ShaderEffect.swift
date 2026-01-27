@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 13/8/2025.
 //
 
+import CasePaths
 import CoreTools
 import SwiftUI
-import CasePaths
 
 @MetaEnum
 @CaseDetection
@@ -23,7 +23,7 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     size: CGFloat,
     strength: CGFloat
   )
-  
+
   case glitter(
     origin: UnitPoint,
     spread: CGFloat,
@@ -32,7 +32,7 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
 }
 
 extension ShaderEffect.Meta: Sendable, Codable {
-  
+
 }
 
 extension ShaderEffect {
@@ -58,9 +58,9 @@ extension ShaderEffect {
     //      case .psych: "psych"
     }
   }
-  
+
   public var meta: Self.Meta { ShaderEffect.Meta(self) }
-  
+
   public var name: String {
     switch self {
       case .chromaticAberration: "Chromatic Abberation"
@@ -68,16 +68,16 @@ extension ShaderEffect {
       case .glitter: "Glitter"
     }
   }
-  
+
   /// Using the reference as the ID ensures that 'fisheye'
   /// is always the same 'item' in a ForEach, regardless of its settings.
   public var id: String { reference }
-  
+
   /// Custom Hashable to ensure "one of each" in a Set
   public func hash(into hasher: inout Hasher) {
     hasher.combine(reference)
   }
-  
+
   public static func == (lhs: ShaderEffect, rhs: ShaderEffect) -> Bool {
     lhs.reference == rhs.reference
   }
@@ -85,8 +85,15 @@ extension ShaderEffect {
   public var arguments: [Shader.Argument] {
 
     switch self {
-      case .chromaticAberration(let r, let g, let strength):
-        [.float(r), .float(g), .float(strength)]
+      /// Haven't yet exposed all shader controls to this case
+      case .chromaticAberration(let r, let b, let strength):
+        [
+          .float(r),
+          .float(-0.7),
+          .float(b),
+          .float(-0.7),
+          .float(strength),
+        ]
 
       case .fisheye(let size, let strength):
         [.float(size), .float(strength)]
@@ -145,12 +152,11 @@ extension ShaderEffect {
   }
 }
 
-
 //extension Array where Element == ShaderEffect {
 //  public func getEffect(of kind: Element.Meta) -> Element? {
 //    first(where: { ShaderEffect.Meta($0) == kind })
 //  }
-//  
+//
 ////  public mutating func setEffect<T>(of kind: Element.Meta) -> Element? {
 ////    first(where: { ShaderEffect.Meta($0) == kind })
 ////  }

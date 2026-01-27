@@ -60,7 +60,8 @@ extension Path {
     using points: [CGPoint],
     interpolation: WaveInterpolation
   ) -> Path {
-    switch interpolation {
+    guard !points.isEmpty else { return Path() }
+    return switch interpolation {
       case .linear: makeLinearPath(points: points)
       case .cubic: makeCubicPath(points: points)
       case .catmullRom: makeCatmullRomPath(points: points)
