@@ -13,51 +13,44 @@ using namespace metal;
 half4 chromaticAberration(float2 position,
                           SwiftUI::Layer layer,
                           float2 viewSize,
-                          float redDistance,
-                          float redAngle,      // in radians
-                          float blueDistance,
-                          float blueAngle,     // in radians
-                          float radialStrength, // how much the effect increases from center
-                          float strength) {
+                          float strength,
+                          float radialStrength) // how much the effect increases from center
+{
   
   half4 original_color = layer.sample(position);
   half4 new_color = original_color;
-  
-  // Calculate distance from center (normalized)
-//  let centerIf = layer.
-//  float2 center = float2(0.5, 0.5); // center of a normalized layer
-//  float2 fromCenter = position - center;
+
+  // Calculate midpoint
   float2 center = viewSize * 0.5;
   float2 fromCenter = position - center;
   float distanceFromCenter = length(fromCenter);
-  
-  // Use a cubic falloff for subtle effect near center, stronger near edges
-//  float radialMultiplier = 1.0 + pow(distanceFromCenter, 1.0) * radialStrength;
-  
-  
-  
+
   // Example: no distortion for the inner 20% of the distance to the edge
   float deadZone = 0.2;
   float maxDist = length(center); // for normalized space, or adjust for aspect ratio
-  float normalizedDist = distanceFromCenter / maxDist;
+  float normalisedDist = distanceFromCenter / maxDist;
   
-  if (normalizedDist < deadZone) {
+  if (normalisedDist < deadZone) {
     // No distortion, just return original color
     return original_color;
   }
   
   // Only start distortion after deadZone
-  float t = clamp((normalizedDist - deadZone) / (1.0 - deadZone), 0.0, 1.0);
+  float t = clamp((normalisedDist - deadZone) / (1.0 - deadZone), 0.0, 1.0);
   // t is 0 inside dead zone, 1 at the edge
   
   float exponent = 2.0;
   
   // Apply your exponential/cubic/etc. curve to t for fine control
-  float effectStrength = pow(t, exponent); // e.g., exponent = 2.0 or 3.0
+  float effectStrength = pow(t, exponent);
   
   float radialMultiplier = 1.0 + effectStrength * radialStrength;
   
-  
+  // Hard coded for now, as I may not need them
+  float redDistance = 1;
+  float redAngle = 0;
+  float blueDistance = -1;
+  float blueAngle = 0;
   
   // Calculate offset vectors with radial scaling
   float2 redOffset = float2(cos(redAngle), sin(redAngle)) * redDistance * radialMultiplier;

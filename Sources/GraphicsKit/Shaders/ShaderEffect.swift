@@ -15,11 +15,9 @@ import SwiftUI
 @dynamicMemberLookup
 public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   case chromaticAberration(
-    r: CGFloat,
-    b: CGFloat,
-    strength: CGFloat,
-    radialStrength: CGFloat,
     viewSize: CGSize,
+    strength: CGFloat,  // Aka opacity
+    radialStrength: CGFloat,
   )
   case fisheye(
     size: CGFloat,
@@ -42,15 +40,11 @@ extension ShaderEffect {
   public var arguments: [Shader.Argument] {
     switch self {
       /// Haven't yet exposed all shader controls to this case
-      case .chromaticAberration(let r, let b, let strength, let radialStrength, let viewSize):
+      case .chromaticAberration(let viewSize, let strength, let radialStrength):
         [
           .float2(viewSize),
-          .float(r),
-          .float(-0.7),
-          .float(b),
-          .float(-0.7),
-          .float(radialStrength),
           .float(strength),
+          .float(radialStrength),
         ]
 
       case .fisheye(let size, let strength):
