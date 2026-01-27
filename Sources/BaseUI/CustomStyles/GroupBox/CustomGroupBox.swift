@@ -12,6 +12,7 @@ public struct CustomGroupBox: GroupBoxStyle {
   @Environment(\.cornerRounding) private var cornerRounding
   @Environment(\.isEmphasised) private var isEmphasised
   @Environment(\.backgroundStyle) private var backgroundStyle
+  @Environment(\.layoutPadding) private var layoutPadding
 
   public init() {}
 
@@ -20,17 +21,21 @@ public struct CustomGroupBox: GroupBoxStyle {
     VStack(alignment: .leading, spacing: Styles.sizeSmall) {
       configuration.label
         .foregroundStyle(.secondary)
+        .font(.callout)
 
       VStack(alignment: .leading, spacing: Styles.sizeRegular) {
         configuration.content
       }
-      .padding(.horizontal, Styles.sizeRegular)
-      .padding(.top, Styles.sizeRegular)
-      .padding(.bottom, Styles.sizeRegular + 1)
+      .padding(.horizontal, padding.h)
+      .padding(.top, padding.top)
+      .padding(.bottom, padding.bottom)
+      //      .padding(.horizontal, layoutPadding ?? Styles.sizeRegular)
+      //      .padding(.top, layoutPadding ?? Styles.sizeRegular)
+      //      .padding(.bottom, (layoutPadding ?? Styles.sizeRegular) + 1)
       .background {
 
         FilledShape(
-          .rect(cornerRadius: cornerRounding ?? Styles.sizeTiny),
+          .rect(cornerRadius: cornerRounding ?? Styles.sizeSmall),
           backgroundStyle ?? AnyShapeStyle(Color.white.opacity(0.03)),
           strokeColour: Color.white.opacity(0.1)
         )
@@ -41,8 +46,17 @@ public struct CustomGroupBox: GroupBoxStyle {
   }
 }
 
-extension GroupBoxStyle where Self == CustomGroupBox {
-  public static var custom: CustomGroupBox {
-    CustomGroupBox()
+extension CustomGroupBox {
+  private var padding: (h: CGFloat, top: CGFloat, bottom: CGFloat) {
+    let base: CGFloat = layoutPadding ?? Styles.sizeRegular
+    return (
+      h: max(0, base * 1.35),
+      top: max(0, base),
+      bottom: max(0, base * 1.2),
+    )
   }
+}
+
+extension GroupBoxStyle where Self == CustomGroupBox {
+  public static var custom: CustomGroupBox { CustomGroupBox() }
 }
