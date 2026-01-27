@@ -29,6 +29,11 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     spread: CGFloat,
     viewSize: CGSize
   )
+
+  case ripplePush(
+    l: CGPoint,
+    v: CGPoint
+  )
 }
 
 extension ShaderEffect.Meta: Sendable, Codable {
@@ -52,6 +57,7 @@ extension ShaderEffect {
       case .chromaticAberration: "chromaticAberration"
       case .fisheye: "fisheye"
       case .glitter: "glitter"
+      case .ripplePush: "ripplePush"
     //      case .filmGrain: "filmGrain"
     //      case .wavyBlur: "wavyBlur"
     //      case .ripple: "ripple"
@@ -66,6 +72,7 @@ extension ShaderEffect {
       case .chromaticAberration: "Chromatic Abberation"
       case .fisheye: "Fish-eye"
       case .glitter: "Glitter"
+      case .ripplePush: "Ripple Push"
     }
   }
 
@@ -88,10 +95,12 @@ extension ShaderEffect {
       /// Haven't yet exposed all shader controls to this case
       case .chromaticAberration(let r, let b, let strength):
         [
+          .float2(CGPoint(x: 10, y: 30)),
           .float(r),
           .float(-0.7),
           .float(b),
           .float(-0.7),
+          .float(3.0),
           .float(strength),
         ]
 
@@ -100,6 +109,9 @@ extension ShaderEffect {
 
       case .glitter(let origin, let spread, let viewSize):
         [.float2(origin.toCGPoint(in: viewSize)), .float(spread)]
+        
+      case .ripplePush(let l, let v):
+        [.float2(l), .float2(v)]
     }
 
   }
@@ -146,7 +158,7 @@ extension ShaderEffect {
   public var usageType: Shader.UsageType {
     switch self {
       case .chromaticAberration: .layerEffect
-      case .fisheye: .distortionEffect
+      case .fisheye, .ripplePush: .distortionEffect
       case .glitter: .layerEffect
     }
   }

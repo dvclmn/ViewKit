@@ -11,6 +11,7 @@ import SwiftUI
 public struct ShaderModifier: ViewModifier {
 
   let effect: ShaderEffect
+  let maxOffset: CGSize
   let isEnabled: Bool
 
   public func body(content: Content) -> some View {
@@ -25,15 +26,11 @@ public struct ShaderModifier: ViewModifier {
 
           case .distortionEffect:
             content
-              .distortionEffect(
-                effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled
-              )
+              .distortionEffect(effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled)
 
           case .layerEffect:
             content
-              .layerEffect(
-                effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled
-              )
+              .layerEffect(effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled)
 
           default:
             content
@@ -75,9 +72,16 @@ public struct AnimatedShaderModifier: ViewModifier {
 extension View {
   public func shaderEffect(
     _ effect: ShaderEffect,
+    maxOffset: CGSize = .zero,
     isEnabled: Bool = true
   ) -> some View {
-    self.modifier(ShaderModifier(effect: effect, isEnabled: isEnabled))
+    self.modifier(
+      ShaderModifier(
+        effect: effect,
+        maxOffset: maxOffset,
+        isEnabled: isEnabled
+      )
+    )
   }
   //  public func shaderEffect(_ effect: ShaderEffect, _ args: [Shader.Argument]) -> some View {
   //    self.modifier(AnimatedShaderModifier(shader: effect, arguments: args))

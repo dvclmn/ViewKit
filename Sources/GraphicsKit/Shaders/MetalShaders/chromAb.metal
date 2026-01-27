@@ -9,32 +9,31 @@
 #include <SwiftUI/SwiftUI_Metal.h>
 using namespace metal;
 
-
-//half4 chromaticAberration(float2 position,
-//                          SwiftUI::Layer layer,
-//                          float red,
-//                          float blue,
-//                          float strength) {
-//
-
 [[ stitchable ]]
 half4 chromaticAberration(float2 position,
                           SwiftUI::Layer layer,
+                          float2 center,       // center point (usually view center)
                           float redDistance,
                           float redAngle,      // in radians
                           float blueDistance,
                           float blueAngle,     // in radians
+                          float radialStrength, // how much the effect increases from center
                           float strength) {
   
-  // Store the origin colour
   half4 original_color = layer.sample(position);
-  
-  // Create a new color variable to store the modified color
   half4 new_color = original_color;
   
-  // Calculate offset vectors from angle and distance
-  float2 redOffset = float2(cos(redAngle), sin(redAngle)) * redDistance;
-  float2 blueOffset = float2(cos(blueAngle), sin(blueAngle)) * blueDistance;
+  // Calculate distance from center (normalized)
+//  let centerIf = layer.
+  float2 fromCenter = position - center;
+  float distanceFromCenter = length(fromCenter);
+  
+  // Calculate the radial multiplier (increases with distance)
+  float radialMultiplier = 1.0 + (distanceFromCenter * radialStrength);
+  
+  // Calculate offset vectors with radial scaling
+  float2 redOffset = float2(cos(redAngle), sin(redAngle)) * redDistance * radialMultiplier;
+  float2 blueOffset = float2(cos(blueAngle), sin(blueAngle)) * blueDistance * radialMultiplier;
   
   new_color.r = layer.sample(position + redOffset).r;
   new_color.g = layer.sample(position).g;
@@ -44,23 +43,31 @@ half4 chromaticAberration(float2 position,
   
   return blended_color;
 }
+
+
+//half4 chromaticAberration(float2 position,
+//                          SwiftUI::Layer layer,
+//                          float redDistance,
+//                          float redAngle,      // in radians
+//                          float blueDistance,
+//                          float blueAngle,     // in radians
+//                          float strength) {
+//  
 //  // Store the origin colour
 //  half4 original_color = layer.sample(position);
 //  
 //  // Create a new color variable to store the modified color
 //  half4 new_color = original_color;
 //  
-//  // we modify the color by shifting the red and blue channels.
-//  new_color.r = layer.sample(position - float2(red, -red)).r;
+//  // Calculate offset vectors from angle and distance
+//  float2 redOffset = float2(cos(redAngle), sin(redAngle)) * redDistance;
+//  float2 blueOffset = float2(cos(blueAngle), sin(blueAngle)) * blueDistance;
 //  
-//  // green is optional, but we can use it to create a more realistic effect.
+//  new_color.r = layer.sample(position + redOffset).r;
 //  new_color.g = layer.sample(position).g;
+//  new_color.b = layer.sample(position + blueOffset).b;
 //  
-//  new_color.b = layer.sample(position - float2(blue, -blue)).b;
-//  
-//  // blend the original color with the new color based on the strength factor.
 //  half4 blended_color = mix(original_color, new_color, strength);
 //  
 //  return blended_color;
 //}
-
