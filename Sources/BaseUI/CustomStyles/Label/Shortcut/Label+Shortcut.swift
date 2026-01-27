@@ -53,13 +53,14 @@ public struct ShortcutLabel: LabelStyle {
         .environment(\.labelDisplay, style.isAlt ? .titleOnly : .titleAndIcon)
 
       if let shortcut = shortcut ?? envShortcut {
-        Text(
-          shortcut.displayString(
-            keyStyle: keyDisplayStyle,
-            modifierStyle: modifierDisplayStyle
-          )
-        )
-        .foregroundStyle(.primary.opacity(0.9))
+        Text("Binrg this back")
+//        Text(
+//          shortcut.displayString(
+//            keyStyle: keyDisplayStyle,
+//            modifierStyle: modifierDisplayStyle
+//          )
+//        )
+//        .foregroundStyle(.primary.opacity(0.9))
       }
     }
     .opacity(isEnabled ? 1.0 : 0.35)

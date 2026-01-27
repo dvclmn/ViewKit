@@ -7,24 +7,23 @@
 
 import SwiftUI
 
-
-public extension KeyPress {
-  var displayString: String {
+extension KeyPress {
+//  \(self.key.symbolCapitalised)\(self.modifiers.symbols)
+  public var displayString: String {
     return """
-    
-    Key Press:
-    ----------
-    \(self.key.symbolCapitalised)\(self.modifiers.symbols)
-    Phase: \(phase.name)
-    Characters: \(self.characters)
-    
-    """
+
+      Key Press:
+      ----------
+      
+      Phase: \(phase.name)
+      Characters: \(self.characters)
+
+      """
   }
 }
 
-
-public extension KeyPress.Phases {
-  var name: String {
+extension KeyPress.Phases {
+  public var name: String {
     switch self {
       case .down: "Down"
       case .repeat: "Repeat"

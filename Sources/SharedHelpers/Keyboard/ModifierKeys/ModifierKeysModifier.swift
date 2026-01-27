@@ -30,12 +30,14 @@ public struct ModifierKeysModifier: ViewModifier {
 
   @State private var modifierKeys = Modifiers()
 
+  let defaultKeys: EventModifiers = [.command, .shift, .option, .control, .capsLock]
+
   let keysToWatch: EventModifiers?
   public func body(content: Content) -> some View {
 
     if #available(macOS 15, iOS 18, *) {
       content
-        .onModifierKeysChanged(mask: keysToWatch ?? .defaultKeys, initial: true) { old, new in
+        .onModifierKeysChanged(mask: keysToWatch ?? defaultKeys, initial: true) { old, new in
           self.modifierKeys = Modifiers(from: new)
         }
         .environment(\.modifierKeys, modifierKeys)
@@ -64,11 +66,11 @@ public struct ModifierKeysModifier: ViewModifier {
 extension View {
   /// Falls back to default mask, if no value supplied for `keysToWatch`
   public func readModifierKeys(_ keysToWatch: EventModifiers? = nil) -> some View {
-//    #if canImport(AppKit)
+    //    #if canImport(AppKit)
     self.modifier(ModifierKeysModifier(keysToWatch: keysToWatch))
-//    #elseif canImport(UIKit)
-//    self
-//    #endif
+    //    #elseif canImport(UIKit)
+    //    self
+    //    #endif
   }
 }
 #endif

@@ -62,8 +62,6 @@ extension ModifierKeys {
   public var isHoldingCommand: Bool { contains(.command) }
 }
 
-
-
 /// A simple bridge between AppKit and SwiftUI modifier keys
 //public struct ModifierKeys: OptionSet, Sendable, Hashable, Equatable {
 //  public init(rawValue: Int) {
@@ -87,7 +85,7 @@ extension ModifierKeys {
 //}
 
 // MARK: - Initialisers
-extension ModifierKeys {
+//extension ModifierKeys {
 
   //  struct ModifierMetadata: Hashable {
   //    let name: String
@@ -106,47 +104,16 @@ extension ModifierKeys {
   //    ModifierKeys.metadata.keys.filter { contains($0) }
   //  }
 
-}
+//}
 
-// MARK: - Conversions
-extension EventModifiers {
 
-  public static var defaultKeys: Self {
-    [.command, .shift, .option, .control, .capsLock]
-  }
-
-  public var toCompatibleModifier: ModifierKeys {
-    var result: ModifierKeys = []
-    if contains(.shift) { result.insert(.shift) }
-    if contains(.control) { result.insert(.control) }
-    if contains(.option) { result.insert(.option) }
-    if contains(.command) { result.insert(.command) }
-    if contains(.capsLock) { result.insert(.capsLock) }
-    return result
-  }
-}
-
-#if canImport(AppKit)
-extension NSEvent.ModifierFlags {
-  public var toCompatibleModifier: ModifierKeys {
-    var result: ModifierKeys = []
-    if contains(.shift) { result.insert(.shift) }
-    if contains(.control) { result.insert(.control) }
-    if contains(.option) { result.insert(.option) }
-    if contains(.command) { result.insert(.command) }
-    if contains(.capsLock) { result.insert(.capsLock) }
-    return result
-  }
-}
-#endif
-
-public struct ModifierDisplayElement: OptionSet, Sendable {
-  public init(rawValue: Int) {
-    self.rawValue = rawValue
-  }
-  public let rawValue: Int
-
-  public static let name = Self(rawValue: 1 << 0)
-  public static let icon = Self(rawValue: 1 << 1)
-  public static let both: Self = [.name, .icon]
-}
+//public struct ModifierDisplayElement: OptionSet, Sendable {
+//  public init(rawValue: Int) {
+//    self.rawValue = rawValue
+//  }
+//  public let rawValue: Int
+//
+//  public static let name = Self(rawValue: 1 << 0)
+//  public static let icon = Self(rawValue: 1 << 1)
+//  public static let both: Self = [.name, .icon]
+//}
