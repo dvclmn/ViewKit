@@ -13,9 +13,9 @@ public enum WaveInterpolation: String, Sendable, Equatable, Codable, CaseIterabl
   case linear
   case cubic
   case catmullRom
-  
+
   public var id: String { rawValue }
-  
+
   public var name: String {
     switch self {
       case .catmullRom: "Catmull-Rom"
@@ -59,77 +59,69 @@ extension Path {
   public static func makePath(
     using points: [CGPoint],
     interpolation: WaveInterpolation
-  ) -> Path? {
-    guard !points.isEmpty else { return nil }
-    
-    var path = Path()
-    
+  ) -> Path {
     switch interpolation {
-      case .linear:
-        return makeLinearPath(points: points)
-        
-      case .cubic:
-        return makeCubicPath(points: points)
-        
-      case .catmullRom:
-        return makeCatmullRomPath(points: points)
+      case .linear: makeLinearPath(points: points)
+      case .cubic: makeCubicPath(points: points)
+      case .catmullRom: makeCatmullRomPath(points: points)
     }
   }
-  
+
   // MARK: - Linear Interpolation
-  
+
   /// Creates a path by connecting points with straight lines
   /// This is the fastest method, ideal when smoothness isn't required
-  private static func makeLinearPath(points: [CGPoint]) -> Path? {
-    guard !points.isEmpty else { return nil }
-    
+  private static func makeLinearPath(points: [CGPoint]) -> Path {
+    //    guard !points.isEmpty else { return nil }
+
     var path = Path()
     path.move(to: points[0])
-    
+
     for i in 1..<points.count {
       path.addLine(to: points[i])
     }
-    
+
     return path
   }
-  
+
   // MARK: - Cubic Bezier Interpolation
-  
+
   /// Creates a smooth path using cubic Bezier curves
   /// Control points are calculated to create smooth transitions between segments
   /// This provides good smoothness with reasonable performance
-  private static func makeCubicPath(points: [CGPoint]) -> Path? {
+  private static func makeCubicPath(points: [CGPoint]) -> Path {
     guard points.count >= 2 else { return makeLinearPath(points: points) }
-    
+
     var path = Path()
     path.move(to: points[0])
-    
+
     if points.count == 2 {
       path.addLine(to: points[1])
       return path
     }
-    
+
     // Calculate control points for smooth curves
     let controlPoints = calculateCubicControlPoints(points: points)
-    
+
     for i in 0..<points.count - 1 {
       let endPoint = points[i + 1]
       let cp1 = controlPoints.first[i]
       let cp2 = controlPoints.second[i]
-      
+
       path.addCurve(to: endPoint, control1: cp1, control2: cp2)
     }
-    
+
     return path
   }
-  
+
   /// Calculates control points for cubic Bezier interpolation
   /// Uses a simplified algorithm that ensures C1 continuity (smooth first derivative)
-  private static func calculateCubicControlPoints(points: [CGPoint]) -> (first: [CGPoint], second: [CGPoint]) {
+  private static func calculateCubicControlPoints(points: [CGPoint]) -> (first: [CGPoint], second: [CGPoint])
+  {
     let n = points.count - 1
-    var firstControlPoints = [CGPoint]()
-    var secondControlPoints = [CGPoint]()
-    
+    var firstControlPoints: [CGPoint] = []
+    var secondControlPoints: [CGPoint] = []
+
     // Use a simplified method: place control points at 1/3 and 2/3 of the way
     // between consecutive points, adjusted for smoothness
     for i in 0..<n {
@@ -137,34 +129,34 @@ extension Path {
       let p1 = points[i]
       let p2 = points[i + 1]
       let p3 = i < n - 1 ? points[i + 2] : points[i + 1]
-      
+
       // Calculate direction vectors for smoothness
       let d1x = p2.x - p0.x
       let d1y = p2.y - p0.y
       let d2x = p3.x - p1.x
       let d2y = p3.y - p1.y
-      
+
       // First control point (1/3 along, adjusted by direction)
       let cp1 = CGPoint(
         x: p1.x + d1x * 0.25,
         y: p1.y + d1y * 0.25
       )
-      
+
       // Second control point (2/3 along, adjusted by direction)
       let cp2 = CGPoint(
         x: p2.x - d2x * 0.25,
         y: p2.y - d2y * 0.25
       )
-      
+
       firstControlPoints.append(cp1)
       secondControlPoints.append(cp2)
     }
-    
+
     return (firstControlPoints, secondControlPoints)
   }
-  
+
   // MARK: - Catmull-Rom Spline Interpolation
-  
+
   /// Creates a smooth path using Catmull-Rom splines
   /// This method guarantees the curve passes through all control points
   /// and provides excellent smoothness with good performance
@@ -176,35 +168,35 @@ extension Path {
   ///
   /// The algorithm uses the parametric form with tension parameter (default 0.5)
   /// which determines how tight the curves are around the control points
-  private static func makeCatmullRomPath(points: [CGPoint], tension: CGFloat = 0.5) -> Path? {
+  private static func makeCatmullRomPath(points: [CGPoint], tension: CGFloat = 0.5) -> Path {
     guard points.count >= 2 else { return makeLinearPath(points: points) }
-    
+
     var path = Path()
     path.move(to: points[0])
-    
+
     if points.count == 2 {
       path.addLine(to: points[1])
       return path
     }
-    
+
     // For Catmull-Rom, we need at least 4 points to define each curve segment
     // We'll duplicate the first and last points to handle endpoints
-    var extendedPoints = [CGPoint]()
-    extendedPoints.append(points[0]) // Duplicate first point
+    var extendedPoints: [CGPoint] = []
+    extendedPoints.append(points[0])  // Duplicate first point
     extendedPoints.append(contentsOf: points)
-    extendedPoints.append(points[points.count - 1]) // Duplicate last point
-    
+    extendedPoints.append(points[points.count - 1])  // Duplicate last point
+
     // Number of segments to subdivide each spline (higher = smoother but slower)
     // For real-time rendering, 8-12 is a good balance
     let subdivisions = 10
-    
+
     // Generate curve segments between each pair of control points
     for i in 1..<extendedPoints.count - 2 {
       let p0 = extendedPoints[i - 1]
       let p1 = extendedPoints[i]
       let p2 = extendedPoints[i + 1]
       let p3 = extendedPoints[i + 2]
-      
+
       // Generate points along this curve segment
       for j in 1...subdivisions {
         let t = CGFloat(j) / CGFloat(subdivisions)
@@ -212,10 +204,10 @@ extension Path {
         path.addLine(to: point)
       }
     }
-    
+
     return path
   }
-  
+
   /// Calculates a point on a Catmull-Rom spline
   /// - Parameters:
   ///   - p0: Point before the start of the segment
@@ -237,23 +229,19 @@ extension Path {
     // This is the standard formulation that ensures C1 continuity
     let t2 = t * t
     let t3 = t2 * t
-    
+
     // Calculate x coordinate using Catmull-Rom basis functions
-    let x = tension * (
-      (2 * p1.x) +
-      (-p0.x + p2.x) * t +
-      (2 * p0.x - 5 * p1.x + 4 * p2.x - p3.x) * t2 +
-      (-p0.x + 3 * p1.x - 3 * p2.x + p3.x) * t3
-    )
-    
+    let x =
+      tension
+      * ((2 * p1.x) + (-p0.x + p2.x) * t + (2 * p0.x - 5 * p1.x + 4 * p2.x - p3.x) * t2
+        + (-p0.x + 3 * p1.x - 3 * p2.x + p3.x) * t3)
+
     // Calculate y coordinate using Catmull-Rom basis functions
-    let y = tension * (
-      (2 * p1.y) +
-      (-p0.y + p2.y) * t +
-      (2 * p0.y - 5 * p1.y + 4 * p2.y - p3.y) * t2 +
-      (-p0.y + 3 * p1.y - 3 * p2.y + p3.y) * t3
-    )
-    
+    let y =
+      tension
+      * ((2 * p1.y) + (-p0.y + p2.y) * t + (2 * p0.y - 5 * p1.y + 4 * p2.y - p3.y) * t2
+        + (-p0.y + 3 * p1.y - 3 * p2.y + p3.y) * t3)
+
     return CGPoint(x: x, y: y)
   }
 }
@@ -267,12 +255,12 @@ extension Path {
   public struct PathBuilder {
     private var subdivisions: Int
     private var tension: CGFloat
-    
+
     public init(subdivisions: Int = 10, tension: CGFloat = 0.5) {
       self.subdivisions = subdivisions
       self.tension = tension
     }
-    
+
     /// Builds a path with the configured settings
     public func buildPath(using points: [CGPoint], interpolation: WaveInterpolation) -> Path? {
       switch interpolation {
@@ -286,4 +274,3 @@ extension Path {
     }
   }
 }
-
