@@ -25,11 +25,13 @@ half4 chromaticAberration(float2 position,
   
   // Calculate distance from center (normalized)
 //  let centerIf = layer.
+//  float2 center = float2(0.5, 0.5); // center of a normalized layer
+//  float2 fromCenter = position - center;
   float2 fromCenter = position - center;
   float distanceFromCenter = length(fromCenter);
   
-  // Calculate the radial multiplier (increases with distance)
-  float radialMultiplier = 1.0 + (distanceFromCenter * radialStrength);
+  // Use a cubic falloff for subtle effect near center, stronger near edges
+  float radialMultiplier = 1.0 + pow(distanceFromCenter, 1.0) * radialStrength;
   
   // Calculate offset vectors with radial scaling
   float2 redOffset = float2(cos(redAngle), sin(redAngle)) * redDistance * radialMultiplier;
@@ -71,3 +73,4 @@ half4 chromaticAberration(float2 position,
 //  
 //  return blended_color;
 //}
+

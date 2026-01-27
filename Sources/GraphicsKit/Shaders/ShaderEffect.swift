@@ -17,7 +17,9 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   case chromaticAberration(
     r: CGFloat,
     b: CGFloat,
-    strength: CGFloat
+    strength: CGFloat,
+    radialStrength: CGFloat,
+    center: CGPoint,
   )
   case fisheye(
     size: CGFloat,
@@ -93,14 +95,14 @@ extension ShaderEffect {
 
     switch self {
       /// Haven't yet exposed all shader controls to this case
-      case .chromaticAberration(let r, let b, let strength):
+      case .chromaticAberration(let r, let b, let strength, let radialStrength, let center):
         [
-          .float2(CGPoint(x: 10, y: 30)),
+          .float2(center),
           .float(r),
           .float(-0.7),
           .float(b),
           .float(-0.7),
-          .float(3.0),
+          .float(radialStrength),
           .float(strength),
         ]
 
@@ -109,7 +111,7 @@ extension ShaderEffect {
 
       case .glitter(let origin, let spread, let viewSize):
         [.float2(origin.toCGPoint(in: viewSize)), .float(spread)]
-        
+
       case .ripplePush(let l, let v):
         [.float2(l), .float2(v)]
     }

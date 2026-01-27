@@ -34,13 +34,15 @@ public struct ShadersExampleView: View {
       }
     }
     .compositingGroup()
-    .shaderEffect(
-      .chromaticAberration(
-        r: 0.9,
-        b: 0.8,
-        strength: 0.5
-      )
-    )
+//    .shaderEffect(
+//      .chromaticAberration(
+//        r: 0.9,
+//        b: 0.8,
+//        strength: 0.5,
+//        radialStrength: ,
+//        center:
+//      )
+//    )
 //    .shaderEffect(.chromaticAberration(.init(red: 0.9, blue: 0.8, strength: 0.5)))
     //    .layerEffect(
     //      ShaderLibrary.bundle(.module).chromaticAberration(
