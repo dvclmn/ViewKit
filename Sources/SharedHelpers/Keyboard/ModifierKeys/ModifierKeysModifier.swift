@@ -8,6 +8,24 @@
 import SwiftUI
 
 #if canImport(AppKit)
+
+/// Important: Don't forget to provide the entry point for the modifier:
+///
+/// ```
+/// import SwiftUI
+///
+/// @main
+/// struct ExampleApp: App {
+///
+///   var body: some Scene {
+///     WindowGroup {
+///       ContentView()
+///         .readModifierKeys() // <- Here
+///     }
+///   }
+/// }
+/// ```
+
 public struct ModifierKeysModifier: ViewModifier {
 
   @State private var modifierKeys = Modifiers()

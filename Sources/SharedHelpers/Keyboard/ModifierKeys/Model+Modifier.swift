@@ -5,19 +5,7 @@
 //  Created by Dave Coleman on 8/9/2024.
 //
 
-import EnumMacros
 import SwiftUI
-
-@SetOfOptions
-public struct TestModifiers {
-  enum Options: Int {
-    case shift
-    case option
-    case command
-    case control
-    case capsLock
-  }
-}
 
 #if canImport(AppKit)
 
@@ -39,25 +27,7 @@ extension KBShortcut {
       self.symbolName
     }
 
-    public var symbolName: String {
-      switch self {
-        case .shift: "shift"
-        case .option: "option"
-        case .command: "command"
-        case .control: "control"
-        case .capsLock: "capslock"
-      }
-    }
 
-    public var symbolLiteral: Character {
-      switch self {
-        case .shift: "􀆝"
-        case .option: "􀆕"
-        case .command: "􀆔"
-        case .control: "􀆍"
-        case .capsLock: "􀆡"
-      }
-    }
 
     public var type: KBShortcut.KeyType {
       .modifier

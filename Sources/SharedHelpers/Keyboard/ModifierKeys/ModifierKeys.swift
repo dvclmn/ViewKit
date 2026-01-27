@@ -5,25 +5,8 @@
 //  Created by Dave Coleman on 23/7/2024.
 //
 
-import Foundation
+import EnumMacros
 import SwiftUI
-
-/// Important: Don't forget to provide the entry point for the modifier:
-///
-/// ```
-/// import SwiftUI
-///
-/// @main
-/// struct ExampleApp: App {
-///
-///   var body: some Scene {
-///     WindowGroup {
-///       ContentView()
-///         .readModifierKeys() // <- Here
-///     }
-///   }
-/// }
-/// ```
 
 //#if canImport(AppKit)
 
@@ -36,21 +19,42 @@ extension EnvironmentValues {
 public typealias Keys = Set<KeyEquivalent>
 public typealias Modifiers = ModifierKeys
 
-/// A simple bridge between AppKit and SwiftUI modifier keys
-public struct ModifierKeys: OptionSet, Sendable, Hashable, Equatable {
-  public init(rawValue: Int) {
-    self.rawValue = rawValue
+/// Probably only use this if bridging is actually needed
+@SetOfOptions<Int>
+public struct ModifierKeys: Sendable {
+  public enum Options: Int, CaseIterable, Identifiable, Hashable, Equatable {
+    case shift
+    case option
+    case command
+    case control
+    case capsLock
   }
-  public let rawValue: Int
-
-  public static let capsLock = Self(rawValue: 1 << 0)
-  public static let shift = Self(rawValue: 1 << 1)
-  public static let control = Self(rawValue: 1 << 2)
-  public static let option = Self(rawValue: 1 << 3)
-  public static let command = Self(rawValue: 1 << 4)
 }
 
 extension ModifierKeys {
+  #if canImport(AppKit)
+  public init(from appKitKey: NSEvent.ModifierFlags) {
+    var result: ModifierKeys = []
+    if appKitKey.contains(.shift) { result.insert(.shift) }
+    if appKitKey.contains(.control) { result.insert(.control) }
+    if appKitKey.contains(.option) { result.insert(.option) }
+    if appKitKey.contains(.command) { result.insert(.command) }
+    if appKitKey.contains(.capsLock) { result.insert(.capsLock) }
+    self = result
+    //    self = appKitKey.toCompatibleModifier
+  }
+  #endif
+
+  public init(from swiftUIKey: EventModifiers) {
+    var result: ModifierKeys = []
+    if swiftUIKey.contains(.shift) { result.insert(.shift) }
+    if swiftUIKey.contains(.control) { result.insert(.control) }
+    if swiftUIKey.contains(.option) { result.insert(.option) }
+    if swiftUIKey.contains(.command) { result.insert(.command) }
+    if swiftUIKey.contains(.capsLock) { result.insert(.capsLock) }
+    self = result
+  }
+
   public var isHoldingCapsLock: Bool { contains(.capsLock) }
   public var isHoldingShift: Bool { contains(.shift) }
   public var isHoldingControl: Bool { contains(.control) }
@@ -58,67 +62,75 @@ extension ModifierKeys {
   public var isHoldingCommand: Bool { contains(.command) }
 }
 
+extension ModifierKeys.Options {
+  public var id: Int { rawValue }
+
+  public var name: String {
+    switch self {
+      case .shift: "Shift"
+      case .option: "Option"
+      case .command: "Command"
+      case .control: "Control"
+      case .capsLock: "Caps Lock"
+    }
+  }
+
+  public var symbolLiteral: Character {
+    switch self {
+      case .shift: "􀆝"
+      case .option: "􀆕"
+      case .command: "􀆔"
+      case .control: "􀆍"
+      case .capsLock: "􀆡"
+    }
+  }
+}
+
+/// A simple bridge between AppKit and SwiftUI modifier keys
+//public struct ModifierKeys: OptionSet, Sendable, Hashable, Equatable {
+//  public init(rawValue: Int) {
+//    self.rawValue = rawValue
+//  }
+//  public let rawValue: Int
+//
+//  public static let capsLock = Self(rawValue: 1 << 0)
+//  public static let shift = Self(rawValue: 1 << 1)
+//  public static let control = Self(rawValue: 1 << 2)
+//  public static let option = Self(rawValue: 1 << 3)
+//  public static let command = Self(rawValue: 1 << 4)
+//}
+//
+//extension ModifierKeys {
+//  public var isHoldingCapsLock: Bool { contains(.capsLock) }
+//  public var isHoldingShift: Bool { contains(.shift) }
+//  public var isHoldingControl: Bool { contains(.control) }
+//  public var isHoldingOption: Bool { contains(.option) }
+//  public var isHoldingCommand: Bool { contains(.command) }
+//}
+
 // MARK: - Initialisers
 extension ModifierKeys {
-  #if canImport(AppKit)
-  public init(from appKitKey: NSEvent.ModifierFlags) {
-    self = appKitKey.toCompatibleModifier
-  }
-  #endif
-  struct ModifierMetadata: Hashable {
-    let name: String
-    let symbol: String
-  }
 
-  private static let metadata: [ModifierKeys: ModifierMetadata] = [
-    .shift: .init(name: "Shift", symbol: "􀆝"),
-    .control: .init(name: "Control", symbol: "􀆍"),
-    .option: .init(name: "Option", symbol: "􀆕"),
-    .command: .init(name: "Command", symbol: "􀆔"),
-    .capsLock: .init(name: "Caps Lock", symbol: "􀆡"),
-  ]
+  //  struct ModifierMetadata: Hashable {
+  //    let name: String
+  //    let symbol: String
+  //  }
 
-  private var individualOptions: [ModifierKeys] {
-    ModifierKeys.metadata.keys.filter { contains($0) }
-  }
+  //  private static let metadata: [ModifierKeys: ModifierMetadata] = [
+  //    .shift: .init(name: "Shift", symbol: "􀆝"),
+  //    .control: .init(name: "Control", symbol: "􀆍"),
+  //    .option: .init(name: "Option", symbol: "􀆕"),
+  //    .command: .init(name: "Command", symbol: "􀆔"),
+  //    .capsLock: .init(name: "Caps Lock", symbol: "􀆡"),
+  //  ]
 
-  public func displayName(
-    elements: ModifierDisplayElement,
-    separator: String = " + ",
-    emptyText: String = "None"
-  ) -> String {
-    let components: [String] = individualOptions.compactMap { option in
-      guard let meta = ModifierKeys.metadata[option] else { return nil }
-
-      switch elements {
-        case .name:
-          return meta.name
-        case .icon:
-          return meta.symbol
-        case .both:
-          return "\(meta.symbol) \(meta.name)"
-        default:
-          return nil
-      }
-    }
-
-    return components.isEmpty ? emptyText : components.joined(separator: separator)
-  }
+  //  private var individualOptions: [ModifierKeys] {
+  //    ModifierKeys.metadata.keys.filter { contains($0) }
+  //  }
 
 }
 
-extension ModifierKeys: CustomStringConvertible {
-  public var description: String { displayName(elements: .name) }
-}
-
-//@available(macOS 15, iOS 18, *)
-extension ModifierKeys {
-  public init(from swiftUIKey: EventModifiers) {
-    self = swiftUIKey.toCompatibleModifier
-  }
-}
-
-//@available(macOS 15, iOS 18, *)
+// MARK: - Conversions
 extension EventModifiers {
 
   public static var defaultKeys: Self {
