@@ -5,7 +5,19 @@
 //  Created by Dave Coleman on 8/9/2024.
 //
 
+import EnumMacros
 import SwiftUI
+
+@SetOfOptions
+public struct TestModifiers {
+  enum Options: Int {
+    case shift
+    case option
+    case command
+    case control
+    case capsLock
+  }
+}
 
 #if canImport(AppKit)
 
