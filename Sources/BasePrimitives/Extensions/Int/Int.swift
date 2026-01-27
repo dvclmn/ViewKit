@@ -9,6 +9,7 @@ import Foundation
 
 extension Int {
 
+  /// Could also be called `fractionalPosition` or `unitPosition`
   public func normalisedIndex(for count: Int) -> CGFloat {
     count > 1
       ? Double(self) / Double(count - 1)

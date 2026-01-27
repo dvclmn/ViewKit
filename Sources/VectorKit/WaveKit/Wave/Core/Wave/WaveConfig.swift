@@ -37,4 +37,3 @@ public struct WaveConfig: Hashable, Sendable, Codable {
     self.interpolation = interpolation
   }
 }
-

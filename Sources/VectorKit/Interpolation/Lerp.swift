@@ -7,14 +7,26 @@
 
 import Foundation
 
-//
-//  Lerp.swift
-//
-//  Written by Ramon Torres
-//  Placed under public domain.
-//
+/// Convenience extensions
+extension BinaryFloatingPoint {
+  
+  public func lerp(from a: Self, to b: Self) -> Self {
+    lerpGlobal(from: a, to: b, self)
+  }
+  
+  public func lerpHue(
+    from: Self,
+    to: Self,
+    strength: Self
+  ) -> Self {
+    let delta = ((to - from + 540).truncatingRemainder(dividingBy: 360)) - 180
+    return (from + delta * strength).truncatingRemainder(dividingBy: 360)
+  }
+}
+
 
 /// Code courtesy of https://rtorres.me/blog/lerp-swift/
+/// Written by Ramon Torres
 /// Linearly interpolates between two values.
 ///
 /// Interpolates between the values `v0` and `v1` by a factor `t`.
@@ -25,7 +37,7 @@ import Foundation
 ///   - t: The interpolation factor. Between `0` and `1`.
 /// - Returns: The interpolated value.
 @inline(__always)
-public func lerp<V: BinaryFloatingPoint, T: BinaryFloatingPoint>(from v0: V, to v1: V, _ t: T) -> V {
+public func lerpGlobal<V: BinaryFloatingPoint, T: BinaryFloatingPoint>(from v0: V, to v1: V, _ t: T) -> V {
   return v0 + V(t) * (v1 - v0)
 }
 
@@ -41,8 +53,8 @@ public func lerp<V: BinaryFloatingPoint, T: BinaryFloatingPoint>(from v0: V, to 
 @inline(__always)
 public func lerp<T: BinaryFloatingPoint>(from p0: CGPoint, to p1: CGPoint, _ t: T) -> CGPoint {
   return CGPoint(
-    x: lerp(from: p0.x, to: p1.x, t),
-    y: lerp(from: p0.y, to: p1.y, t)
+    x: lerpGlobal(from: p0.x, to: p1.x, t),
+    y: lerpGlobal(from: p0.y, to: p1.y, t)
   )
 }
 
@@ -58,8 +70,8 @@ public func lerp<T: BinaryFloatingPoint>(from p0: CGPoint, to p1: CGPoint, _ t: 
 @inline(__always)
 public func lerp<T: BinaryFloatingPoint>(from s0: CGSize, to s1: CGSize, _ t: T) -> CGSize {
   return CGSize(
-    width: lerp(from: s0.width, to: s1.width, t),
-    height: lerp(from: s0.height, to: s1.height, t)
+    width: lerpGlobal(from: s0.width, to: s1.width, t),
+    height: lerpGlobal(from: s0.height, to: s1.height, t)
   )
 }
 
@@ -95,15 +107,3 @@ public func inverseLerp<V: BinaryFloatingPoint, T: BinaryFloatingPoint>(_ v0: V,
   return T((v - v0) / (v1 - v0))
 }
 
-// swiftlint:enable identifier_name
-
-extension BinaryFloatingPoint {
-  public func lerpHue(
-    from: Self,
-    to: Self,
-    strength: Self
-  ) -> Self {
-    let delta = ((to - from + 540).truncatingRemainder(dividingBy: 360)) - 180
-    return (from + delta * strength).truncatingRemainder(dividingBy: 360)
-  }
-}

@@ -68,11 +68,11 @@ extension ActionLine.Configuration {
   }
 }
 
-extension ActionLine.Configuration {
-
-  /// Linear interpolation helper
-  private func lerp(_ start: Double, _ end: Double, _ t: Double) -> Double {
-    start + (end - start) * t
-  }
-
-}
+//extension ActionLine.Configuration {
+//
+//  /// Linear interpolation helper
+//  private func lerp(_ start: Double, _ end: Double, _ t: Double) -> Double {
+//    start + (end - start) * t
+//  }
+//
+//}
