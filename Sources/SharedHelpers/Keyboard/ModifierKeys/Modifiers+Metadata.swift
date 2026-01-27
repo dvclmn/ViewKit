@@ -7,6 +7,30 @@
 
 import Foundation
 
+extension ModifierKeys.Options {
+  public var id: Int { rawValue }
+  
+  public var name: String {
+    switch self {
+      case .shift: "Shift"
+      case .option: "Option"
+      case .command: "Command"
+      case .control: "Control"
+      case .capsLock: "Caps Lock"
+    }
+  }
+  
+  public var symbolLiteral: Character {
+    switch self {
+      case .shift: "􀆝"
+      case .option: "􀆕"
+      case .command: "􀆔"
+      case .control: "􀆍"
+      case .capsLock: "􀆡"
+    }
+  }
+}
+
 extension Modifiers {
   #warning("Bring this back, just fiddling with modifiers")
   //  public func displayName(

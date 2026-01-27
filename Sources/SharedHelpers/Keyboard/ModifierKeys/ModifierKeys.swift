@@ -62,29 +62,7 @@ extension ModifierKeys {
   public var isHoldingCommand: Bool { contains(.command) }
 }
 
-extension ModifierKeys.Options {
-  public var id: Int { rawValue }
 
-  public var name: String {
-    switch self {
-      case .shift: "Shift"
-      case .option: "Option"
-      case .command: "Command"
-      case .control: "Control"
-      case .capsLock: "Caps Lock"
-    }
-  }
-
-  public var symbolLiteral: Character {
-    switch self {
-      case .shift: "􀆝"
-      case .option: "􀆕"
-      case .command: "􀆔"
-      case .control: "􀆍"
-      case .capsLock: "􀆡"
-    }
-  }
-}
 
 /// A simple bridge between AppKit and SwiftUI modifier keys
 //public struct ModifierKeys: OptionSet, Sendable, Hashable, Equatable {
