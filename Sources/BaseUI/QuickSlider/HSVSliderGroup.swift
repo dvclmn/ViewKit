@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ColourKit
+import CoreTools
 
 public struct HSVSliderGroup: View {
 
@@ -40,6 +41,7 @@ public struct HSVSliderGroup: View {
       .sliderStyle(.custom(.brightness(colour.hueSatOnly.toColour)))
     }
     .environment(\.maxCharacterColumns, 4)
+    .environment(\.layoutSpacing, 4)
     
 
   }

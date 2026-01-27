@@ -5,12 +5,14 @@
 //  Created by Dave Coleman on 24/1/2026.
 //
 
+import CoreTools
 import SwiftUI
 
 public struct QuickDisclosureStyle: DisclosureGroupStyle {
   public func makeBody(configuration: Configuration) -> some View {
-    Section {
-      //    VStack {
+
+    VStack(spacing: Styles.sizeSmall) {
+      //      .offset(y: -Styles.sizeRegular)
 
       if configuration.isExpanded {
         configuration.content
@@ -20,31 +22,31 @@ public struct QuickDisclosureStyle: DisclosureGroupStyle {
           .foregroundStyle(.tertiary)
           .italic()
       }
-    } header: {
+    }
+    .padding(.top, Styles.sizeMedium)
+
+    .overlay(alignment: .topTrailing) {
       Button {
         configuration.isExpanded.toggle()
 
       } label: {
-        HStack(alignment: .firstTextBaseline) {
-          configuration.label
-            .foregroundStyle(configuration.isExpanded ? .primary : .secondary)
+        //          configuration.label
+        //            .foregroundStyle(configuration.isExpanded ? .primary : .secondary)
 
-          Spacer()
+        Text(configuration.isExpanded ? "Hide" : "Show")
+          .foregroundColor(
+            configuration.isExpanded
+              ? .secondary.opacity(0.5)
+              : .secondary.opacity(0.8)
+          )
+          .font(.caption.weight(.medium))
+          .textCase(.uppercase)
+          .animation(nil, value: configuration.isExpanded)
 
-          Text(configuration.isExpanded ? "Hide" : "Show")
-            .foregroundColor(
-              configuration.isExpanded
-                ? .secondary.opacity(0.5)
-                : .secondary.opacity(0.8)
-            )
-            .font(.caption.weight(.medium))
-            .textCase(.uppercase)
-            .animation(nil, value: configuration.isExpanded)
-        }
-        .contentShape(Rectangle())
-      }
+          .contentShape(.rect)
+
+      }  // END button
       .buttonStyle(.plain)
-      //      configuration.label
     }
   }
 }

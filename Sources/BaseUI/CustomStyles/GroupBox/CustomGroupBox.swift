@@ -29,17 +29,13 @@ public struct CustomGroupBox: GroupBoxStyle {
       .padding(.horizontal, padding.h)
       .padding(.top, padding.top)
       .padding(.bottom, padding.bottom)
-      //      .padding(.horizontal, layoutPadding ?? Styles.sizeRegular)
-      //      .padding(.top, layoutPadding ?? Styles.sizeRegular)
-      //      .padding(.bottom, (layoutPadding ?? Styles.sizeRegular) + 1)
-      .background {
 
+      .background {
         FilledShape(
           .rect(cornerRadius: cornerRounding ?? Styles.sizeSmall),
           backgroundStyle ?? AnyShapeStyle(Color.white.opacity(0.03)),
           strokeColour: Color.white.opacity(0.1)
         )
-
         .animation(Styles.animationSpringQuickNSubtle, value: isEmphasised)
       }
     }
