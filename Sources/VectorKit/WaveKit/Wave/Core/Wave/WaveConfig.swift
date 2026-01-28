@@ -10,7 +10,7 @@ import Foundation
 public struct WaveConfig: Hashable, Sendable, Codable {
   public var cycles: Float
   public var dashes: Int
-  public var dashePhase: Float
+  public var dashPhase: Float
 
   public var sampleCount: Int
   public var interpolation: WaveInterpolation
@@ -18,13 +18,13 @@ public struct WaveConfig: Hashable, Sendable, Codable {
   public init(
     cycles: Float = 3,
     dashes: Int = 0,
-    dashePhase: Float = 0,
+    dashPhase: Float = 0,
     sampleCount: Int = 30,
     interpolation: WaveInterpolation = .cubic,
   ) {
     self.cycles = cycles
     self.dashes = dashes
-    self.dashePhase = dashePhase
+    self.dashPhase = dashPhase
     self.sampleCount = sampleCount
     self.interpolation = interpolation
   }
