@@ -14,29 +14,42 @@ import Foundation
 /// Look to this now instead of `WaveAttributeState`
 public struct ContinuousParameter: Sendable {
   private var lastSyncTime: TimeInterval = 0
-  private var accumulatedPhase: Double = 0
-  private var lastFrequency: Double = 0
+  private var accumulatedPhase: Float = 0
+//  private var lastFrequency: Double = 0
 
   public init() {}
-
-  /// Call this ONCE per frame before your drawing loop.
-  /// It updates the internal phase based on how much time has passed.
-  public mutating func update(at now: TimeInterval, frequency: Double) {
+  
+  /// Call this once per frame (main thread). Use `frequency` for integration.
+  public mutating func update(at now: TimeInterval, frequency: Float) {
     if lastSyncTime == 0 { lastSyncTime = now }
-
     let deltaTime = now - lastSyncTime
-    // Phase += Time * Frequency
-    accumulatedPhase += deltaTime * lastFrequency
-
-    // Save for next time
+    accumulatedPhase += Float(deltaTime) * frequency
     lastSyncTime = now
-    lastFrequency = frequency
   }
-
-  /// Returns the current phase [0, 1)
-  public var currentPhase: Double {
+  
+  /// Normalised phase in cycles [0,1).
+  public var currentPhase: Float {
     accumulatedPhase - floor(accumulatedPhase)
   }
+  
+  /// Call this ONCE per frame before your drawing loop.
+  /// It updates the internal phase based on how much time has passed.
+//  public mutating func update(at now: TimeInterval, frequency: Double) {
+//    if lastSyncTime == 0 { lastSyncTime = now }
+//
+//    let deltaTime = now - lastSyncTime
+//    // Phase += Time * Frequency
+//    accumulatedPhase += deltaTime * lastFrequency
+//
+//    // Save for next time
+//    lastSyncTime = now
+//    lastFrequency = frequency
+//  }
+//
+//  /// Returns the current phase [0, 1)
+//  public var currentPhase: Double {
+//    accumulatedPhase - floor(accumulatedPhase)
+//  }
 }
 //public struct ContinuousParameter {
 //  private var origin: TimeInterval = 0

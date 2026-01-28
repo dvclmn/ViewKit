@@ -9,9 +9,9 @@ import Foundation
 
 public struct AnimatedWave {
   public var wave: Wave
-  public var cycles: Double
+  public var cycles: Float
   
-  public init(wave: Wave, cycles: Double) {
+  public init(wave: Wave, cycles: Float) {
     self.wave = wave
     self.cycles = cycles
   }
@@ -19,13 +19,13 @@ public struct AnimatedWave {
   /// Evaluates the wave at a specific point in space.
   /// - Parameters:
   ///   - state: The persistent ContinuousParameter for this specific wave.
-  ///   - index: The normalisedIndex (0...1) of the current point.
-  public func sample(state: ContinuousParameter, at index: Double) -> CGFloat {
+  ///   - normalisedIndex: The normalisedIndex (0...1) of the current point.
+  public func sample(state: ContinuousParameter, at normalisedIndex: Float) -> Float {
     /// 1. Get the time-based phase from our persistent state
     let temporalPhase = state.currentPhase
     
     /// 2. Add spatial phase (cycles) and static offset (wave.phase)
-    let spatialPhase = index * cycles
+    let spatialPhase = normalisedIndex * cycles
     let staticOffset = wave.phase
     
     let totalPhase = temporalPhase + spatialPhase + staticOffset

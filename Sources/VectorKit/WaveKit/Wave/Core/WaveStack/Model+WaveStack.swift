@@ -14,10 +14,13 @@ import Foundation
 /// `stack[Fundamental.self].settings.isEnabled.toggle()`
 //#warning("Try out dynamic lookup")
 //@dynamicMemberLookup
-public struct WaveStack: @unchecked Sendable {
+public struct WaveStack: @unchecked Sendable, Equatable, Identifiable {
+  public let id: UUID
   private var storage: [ObjectIdentifier: ConfiguredWave] = [:]
 
-  public init() {}
+  public init() {
+    self.id = UUID()
+  }
 }
 
 extension WaveStack {
