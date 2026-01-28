@@ -22,10 +22,9 @@ public struct StageView: View {
     self.floorConfig = floorConfig
     self.viewSize = viewSize
   }
-  
+
   public init(
     pattern: PatternPreset,
-//    floorConfig: FloorAppearance = .init(),
     viewSize: CGSize? = nil
   ) {
     self.floorConfig = FloorAppearance(pattern: pattern)
@@ -66,26 +65,26 @@ public struct StageView: View {
 
       .scaleEffect(x: floorConfig.width, y: floorConfig.depth, anchor: .center)
 
-//      .mask {
-        
-//        ZStack {
-//          LinearGradient(
-//            colors: [.black, .clear],
-//            startPoint: .bottom,
-//            endPoint: .center
-//          )
-//          .mask {
-//            RadialGradient(
-//              colors: [.black, .clear],
-//              center: .center,
-//              startRadius: sizeOfView.width * 0.3,
-//              endRadius: sizeOfView.width * 0.65
-//            )
-//          }
-//        }
-//      }  // END mask
-//      .drawingGroup()
-//      .debugTextOverlay("No viewport size", isEnabled: noViewSizeProvided)
+    //      .mask {
+
+    //        ZStack {
+    //          LinearGradient(
+    //            colors: [.black, .clear],
+    //            startPoint: .bottom,
+    //            endPoint: .center
+    //          )
+    //          .mask {
+    //            RadialGradient(
+    //              colors: [.black, .clear],
+    //              center: .center,
+    //              startRadius: sizeOfView.width * 0.3,
+    //              endRadius: sizeOfView.width * 0.65
+    //            )
+    //          }
+    //        }
+    //      }  // END mask
+    //      .drawingGroup()
+    //      .debugTextOverlay("No viewport size", isEnabled: noViewSizeProvided)
   }
 }
 

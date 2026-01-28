@@ -13,7 +13,7 @@ final class Engine: NSObject {
   private let handler: (Timestamps) -> Void
   private var lastTimestamp: CFTimeInterval?
 
-  init(handler: @escaping @Sendable (Timestamps) -> Void) {
+  init(handler: @escaping (Timestamps) -> Void) {
     self.handler = handler
     super.init()
 
@@ -38,9 +38,9 @@ final class Engine: NSObject {
         //          delta: <#T##CFTimeInterval#>
         //        )
 
-//        Task {
+        Task { @MainActor in
           engine.emit(timestamp: ts, target: target)
-//        }
+        }
 
         //        Task { @MainActor in
         //          engine.handler(pair)

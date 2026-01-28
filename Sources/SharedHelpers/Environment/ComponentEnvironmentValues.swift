@@ -102,6 +102,7 @@ extension EnvironmentValues {
   @Entry public var isAnimationEnabled: Bool = false
   
   @Entry public var isInspectorPresented: Binding<Bool> = .constant(false)
+  @Entry public var columnVisibility: Binding<NavigationSplitViewVisibility> = .constant(.automatic)
 }
 
 public protocol ValueFormattable {}

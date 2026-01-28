@@ -15,15 +15,15 @@ public protocol NamedItem {
   var name: String { get }
 }
 
-extension LabeledItem where Self: NamedItem, Self: RawRepresentable, Self.RawValue == String {
-  public var label: QuickLabel { .init(name) }
-}
-
 // MARK: - Icon
 /// Indicates that the item has an `icon` property, and so can
 /// have a label synthesised automically for it
 public protocol IconItem {
   var icon: IconLiteral { get }
+}
+
+extension LabeledItem where Self: NamedItem, Self: RawRepresentable, Self.RawValue == String {
+  public var label: QuickLabel { .init(name) }
 }
 
 extension LabeledItem where Self: NamedItem & IconItem {
