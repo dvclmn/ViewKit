@@ -23,7 +23,7 @@ extension Image {
             config: PatternConfiguration(
               size: scale,
               gap: scale,
-              primaryColour: .gray,
+              primaryColour: .brown,
               secondaryColour: .white
             ),
             in: size

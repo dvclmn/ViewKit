@@ -10,7 +10,7 @@ import Foundation
 
 @CasePathable
 @dynamicMemberLookup
-public enum PatternStyle: CaseIterable, Identifiable, Codable, Sendable {
+public enum PatternStyle: String, CaseIterable, Identifiable, Codable, Sendable {
   case checkerboard
   case chevron
   case stitches
@@ -23,11 +23,7 @@ public enum PatternStyle: CaseIterable, Identifiable, Codable, Sendable {
 
   public var name: String {
     switch self {
-      case .checkerboard: "Checkerboard"
-      case .chevron: "Chevron"
-      case .stitches: "Stitches"
-      case .waves: "Waves"
-      case .stripes: "Stripes"
+      default: rawValue.capitalized
     }
   }
 }

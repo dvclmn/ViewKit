@@ -20,15 +20,15 @@ public struct PatternConfiguration: Codable, Equatable, Hashable, Sendable {
   var gap: Double
   var offset: CGSize
 
-  var primaryColour: RGBColour
-  var secondaryColour: RGBColour
+  var primaryColour: HSVColour
+  var secondaryColour: HSVColour
 
   public init(
     size: Double = 30,
     gap: Double = 10,
     offset: CGSize = .zero,
-    primaryColour: RGBColour = .white,
-    secondaryColour: RGBColour = .gray
+    primaryColour: HSVColour = .white,
+    secondaryColour: HSVColour = .brown
   ) {
     self.size = size
     self.gap = gap

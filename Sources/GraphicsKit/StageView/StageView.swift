@@ -33,35 +33,41 @@ public struct StageView: View {
 
   public var body: some View {
 
-    PatternCanvas(floorConfig.pattern.style, config: floorConfig.pattern.config)
+    ZStack {
+      PatternCanvas(floorConfig.pattern.style, config: floorConfig.pattern.config)
 
-      /// This `rotation3DEffect` is dedicated to driving the Yaw only
-      .rotation3DEffect(
-        .degrees(floorConfig.yaw),
-        axis: (x: 0, y: 0, z: 1),
-        anchor: .center,
-        anchorZ: 0,
-        perspective: 0
-      )
+        /// This `rotation3DEffect` is dedicated to driving the Yaw only
+        .rotation3DEffect(
+          .degrees(floorConfig.yaw),
+          axis: (x: 0, y: 0, z: 1),
+          anchor: .center,
+          anchorZ: 0,
+          perspective: 0
+        )
+        
 
-      /// - Parameters:
-      ///   - angle: The angle by which to rotate the view's content.
-      ///   - axis: The axis of rotation, specified as a tuple with named
-      ///     elements for each of the three spatial dimensions.
-      ///   - anchor: A two dimensional unit point within the view about which to
-      ///     perform the rotation. The default value is ``UnitPoint/center``.
-      ///   - anchorZ: The location on the z-axis around which to rotate the
-      ///     content. The default is `0`.
-      ///   - perspective: The relative vanishing point for the rotation. The
-      ///     default is `1`.
-      .rotation3DEffect(
-        .degrees(floorConfig.degrees),
-        /// Keeping `y` at `0` — I want the horizon to stay flat.
-        axis: (x: 1, y: 0, z: 0),
-        anchor: .center,
-        anchorZ: floorConfig.zoom,
-        perspective: floorConfig.perspective
-      )
+        /// - Parameters:
+        ///   - angle: The angle by which to rotate the view's content.
+        ///   - axis: The axis of rotation, specified as a tuple with named
+        ///     elements for each of the three spatial dimensions.
+        ///   - anchor: A two dimensional unit point within the view about which to
+        ///     perform the rotation. The default value is ``UnitPoint/center``.
+        ///   - anchorZ: The location on the z-axis around which to rotate the
+        ///     content. The default is `0`.
+        ///   - perspective: The relative vanishing point for the rotation. The
+        ///     default is `1`.
+        .rotation3DEffect(
+          .degrees(floorConfig.degrees),
+          /// Keeping `y` at `0` — I want the horizon to stay flat.
+          axis: (x: 1, y: 0, z: 0),
+          anchor: .center,
+          anchorZ: floorConfig.zoom,
+          perspective: floorConfig.perspective
+        )
+      
+      
+    }
+    .compositingGroup()
 
       .scaleEffect(x: floorConfig.width, y: floorConfig.depth, anchor: .center)
 

@@ -41,8 +41,8 @@ public struct PatternCanvas: View {
 extension PatternCanvas {
 
   public func patternColours(
-    _ foreground: RGBColour,
-    _ background: RGBColour,
+    _ foreground: HSVColour,
+    _ background: HSVColour,
   ) -> Self {
     let currentStyle = self.style
     var newConfig = self.config

@@ -37,7 +37,7 @@ extension PatternPreset {
       size: 5,
       gap: 2,
       offset: CGSize(width: 0, height: -2),
-      primaryColour: .gray,
+      primaryColour: .brown,
       secondaryColour: .white
     )
   )
