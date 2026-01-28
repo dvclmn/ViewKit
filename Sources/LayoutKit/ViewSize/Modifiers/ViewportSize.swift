@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 10/8/2025.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 /// A Viewport is considered to be a single, self-contained View,
 /// not including any native components like Toolbar or Inspector.
@@ -16,7 +16,7 @@ import CoreTools
 
 public struct ViewportSizeModifier: ViewModifier {
   @State private var viewportSize: CGSize?
-  
+
   let mode: DebounceMode
   let didUpdateSize: ViewSizeOutput<CGSize>?
 
@@ -29,7 +29,6 @@ public struct ViewportSizeModifier: ViewModifier {
       .environment(\.viewportSize, viewportSize)
   }
 }
-
 
 extension View {
   public func readViewportSize(
