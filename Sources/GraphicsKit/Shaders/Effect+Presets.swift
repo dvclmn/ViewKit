@@ -14,4 +14,9 @@ extension ShaderEffect {
     radialStrength: 3.0,
 //    center: CGPoint(x: 30, y: 60)
   )
+  
+  public static let fisheyePresetA: ShaderEffect = .fisheye(
+    viewSize: CGSize(400, 200),
+    strength: 10
+  )
 }

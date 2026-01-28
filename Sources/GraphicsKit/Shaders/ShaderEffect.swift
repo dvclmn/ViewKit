@@ -20,7 +20,7 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     radialStrength: CGFloat,
   )
   case fisheye(
-    size: CGFloat,
+    viewSize: CGSize,
     strength: CGFloat
   )
 
@@ -47,8 +47,8 @@ extension ShaderEffect {
           .float(radialStrength),
         ]
 
-      case .fisheye(let size, let strength):
-        [.float(size), .float(strength)]
+      case .fisheye(let viewSize, let strength):
+        [.float2(viewSize), .float(strength)]
 
       case .glitter(let origin, let spread, let viewSize):
         [.float2(origin.toCGPoint(in: viewSize)), .float(spread)]
@@ -149,7 +149,8 @@ extension ShaderEffect {
   public var usageType: Shader.UsageType {
     switch self {
       case .chromaticAberration: .layerEffect
-      case .fisheye, .ripplePush: .distortionEffect
+      case .ripplePush: .distortionEffect
+      case .fisheye: .distortionEffect
       case .glitter: .layerEffect
     }
   }

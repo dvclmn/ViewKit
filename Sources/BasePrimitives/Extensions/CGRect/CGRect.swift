@@ -9,6 +9,13 @@ import SwiftUI
 
 extension CGRect {
 
+  public var isStandardized: Bool {
+    return !isNull && !isInfinite
+      && origin.x.isFinite && origin.y.isFinite
+      && width.isFinite && height.isFinite
+      && width >= 0 && height >= 0
+  }
+
   public var path: Path { Path(self) }
 
   public func edgePoints(for edge: Edge) -> (start: CGPoint, end: CGPoint) {
@@ -39,7 +46,7 @@ extension CGRect {
     )
     return CGRect(origin: origin, size: size)
   }
-  
+
   public func aligned(
     in container: CGRect,
     to anchor: UnitPoint = .center
@@ -52,20 +59,19 @@ extension CGRect {
     return CGRect(origin: origin, size: size)
   }
 
-//  func aligned(
-//    in container: CGRect,
-//    to anchor: UnitPoint = .center
-//  ) -> CGRect {
-//    let base = aligned(in: container.size, to: anchor)
-//    let originAdjusted = container.midpoint + base.origin
-//    return CGRect(origin: originAdjusted, size: size)
-////    let origin = CGPoint(
-////      x: container.origin.x + (container.size.width - width) * anchor.x,
-////      y: container.origin.y + (container.size.height - height) * anchor.y
-////    )
-////    return CGRect(origin: origin, size: size)
-//  }
-
+  //  func aligned(
+  //    in container: CGRect,
+  //    to anchor: UnitPoint = .center
+  //  ) -> CGRect {
+  //    let base = aligned(in: container.size, to: anchor)
+  //    let originAdjusted = container.midpoint + base.origin
+  //    return CGRect(origin: originAdjusted, size: size)
+  ////    let origin = CGPoint(
+  ////      x: container.origin.x + (container.size.width - width) * anchor.x,
+  ////      y: container.origin.y + (container.size.height - height) * anchor.y
+  ////    )
+  ////    return CGRect(origin: origin, size: size)
+  //  }
 
   /// Returns a rectangle that encompasses both this rectangle and the provided rectangle
   public func expanded(toInclude rect: CGRect) -> CGRect {
