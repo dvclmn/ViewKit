@@ -6,6 +6,7 @@
 //
 
 import AppKit
+import CoreTools
 
 /// ```
 /// var clock = FixedStepClock(step: 1.0 / 30.0)
@@ -17,17 +18,27 @@ import AppKit
 ///   }
 /// }
 /// ```
+@MainActor
 public struct FixedStepClock {
-  let step: CFTimeInterval
+  let step: CFTimeInterval?
   private(set) var accumulator: CFTimeInterval = 0
+
+  public init(framerate: FrameRate = .fps60) {
+    self.step = framerate.rate
+  }
 
   public mutating func advance(delta: CFTimeInterval) -> Bool {
     accumulator += delta
-    if accumulator >= step {
+    if let step, accumulator >= step {
       accumulator -= step
       return true
     }
     return false
+//    if accumulator >= step {
+//      accumulator -= step
+//      return true
+//    }
+//    return false
   }
 }
 

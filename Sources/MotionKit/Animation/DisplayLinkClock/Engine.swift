@@ -9,21 +9,22 @@ import AppKit
 
 @MainActor
 final class Engine: NSObject {
-  private var displayLink: CVDisplayLink?
+  private var link: CVDisplayLink?
   private let handler: (Timestamps) -> Void
+  private var lastTimestamp: CFTimeInterval?
 
-  init(handler: @escaping (Timestamps) -> Void) {
+  init(handler: @escaping @Sendable (Timestamps) -> Void) {
     self.handler = handler
     super.init()
 
-    var link: CVDisplayLink?
-    CVDisplayLinkCreateWithActiveCGDisplays(&link)
-    displayLink = link
+    var displayLink: CVDisplayLink?
+    CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
+    link = displayLink
 
-    guard let displayLink else { return }
+    guard let link else { return }
 
     CVDisplayLinkSetOutputCallback(
-      displayLink,
+      link,
       { _, now, outputTime, _, _, context in
         guard let context else { return kCVReturnSuccess }
         let engine = Unmanaged<Engine>.fromOpaque(context).takeUnretainedValue()
@@ -31,27 +32,44 @@ final class Engine: NSObject {
         let ts = CVTime.seconds(now.pointee)
         let target = CVTime.seconds(outputTime.pointee)
 
-        let pair = Timestamps(
-          timestamp: ts,
-          targetTimestamp: target
-        )
+        //        let pair = Timestamps(
+        //          timestamp: ts,
+        //          targetTimestamp: target,
+        //          delta: <#T##CFTimeInterval#>
+        //        )
 
-        Task { @MainActor in
-          engine.handler(pair)
-        }
+//        Task {
+          engine.emit(timestamp: ts, target: target)
+//        }
+
+        //        Task { @MainActor in
+        //          engine.handler(pair)
+        //        }
 
         return kCVReturnSuccess
       },
       Unmanaged.passUnretained(self).toOpaque()
     )
 
-    CVDisplayLinkStart(displayLink)
+    CVDisplayLinkStart(link)
   }
 
   func stop() {
-    if let displayLink {
-      CVDisplayLinkStop(displayLink)
+    if let link {
+      CVDisplayLinkStop(link)
     }
-    displayLink = nil
+    link = nil
+  }
+
+  private func emit(timestamp: CFTimeInterval, target: CFTimeInterval) {
+    let delta = lastTimestamp.map { timestamp - $0 } ?? 0
+    lastTimestamp = timestamp
+
+    handler(
+      .init(
+        timestamp: timestamp,
+        targetTimestamp: target,
+        delta: delta
+      ))
   }
 }

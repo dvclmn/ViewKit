@@ -10,7 +10,7 @@ import AppKit
 @MainActor
 public enum DisplayClock {
 
-  public static func timestamps() -> AsyncStream<Timestamps> {
+  public static func frames() -> AsyncStream<Timestamps> {
     AsyncStream { continuation in
       let engine = Engine { stamps in
         continuation.yield(stamps)
@@ -25,11 +25,20 @@ public enum DisplayClock {
 
 @MainActor
 public struct Timestamps: Sendable {
+//  public let timestamp: CFTimeInterval
+//  public let targetTimestamp: CFTimeInterval
+  
   public let timestamp: CFTimeInterval
   public let targetTimestamp: CFTimeInterval
+  public let delta: CFTimeInterval
 
-  public init(timestamp: CFTimeInterval, targetTimestamp: CFTimeInterval) {
+  public init(
+    timestamp: CFTimeInterval,
+    targetTimestamp: CFTimeInterval,
+    delta: CFTimeInterval
+  ) {
     self.timestamp = timestamp
     self.targetTimestamp = targetTimestamp
+    self.delta = delta
   }
 }

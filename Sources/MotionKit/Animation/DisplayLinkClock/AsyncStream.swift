@@ -17,7 +17,7 @@ extension AsyncSequence where Element == Timestamps {
   @MainActor
   public func throttled(to fps: Double) -> AsyncStream<Element> {
     AsyncStream { continuation in
-      Task { @MainActor in
+      Task {
         let minInterval = 1.0 / fps
         var lastEmission: CFTimeInterval?
 
