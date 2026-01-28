@@ -13,19 +13,21 @@ import Foundation
 /// }
 /// ```
 
-extension AsyncSequence where Element == DisplayClock.Timestamps {
-  func throttled(to fps: Double) -> AsyncStream<Element> {
+extension AsyncSequence where Element == Timestamps {
+  @MainActor
+  public func throttled(to fps: Double) -> AsyncStream<Element> {
     AsyncStream { continuation in
-      Task {
+      Task { @MainActor in
         let minInterval = 1.0 / fps
         var lastEmission: CFTimeInterval?
-        
-        for await value in self {
+
+        for try await value in self {
           if let last = lastEmission,
-             value.timestamp - last < minInterval {
+            value.timestamp - last < minInterval
+          {
             continue
           }
-          
+
           lastEmission = value.timestamp
           continuation.yield(value)
         }
