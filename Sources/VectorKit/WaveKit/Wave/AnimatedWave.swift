@@ -33,7 +33,7 @@ public struct AnimatedWave {
     
     /// 3. Run it through the waveform math. Wrap and Sample
     let value = wave.waveform.sample(phase: wrappedPhase)
-    return CGFloat(wave.amplitude * value)
+    return wave.amplitude * value
   }
 }
 
