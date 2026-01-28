@@ -12,7 +12,6 @@ import Foundation
 ///
 /// `stack[Fundamental.self].wave.phase += delta`
 /// `stack[Fundamental.self].settings.isEnabled.toggle()`
-//public struct WaveStack<Value>: @unchecked Sendable {
 //#warning("Try out dynamic lookup")
 //@dynamicMemberLookup
 public struct WaveStack: @unchecked Sendable {
@@ -22,16 +21,7 @@ public struct WaveStack: @unchecked Sendable {
 }
 
 extension WaveStack {
-  
-//  public subscript<T>(dynamicMember keyPath: WritableKeyPath<ConfiguredWave, T>) -> T {
-//    get {
-//      self[]
-//    }
-////    get { storage[ObjectIdentifier(key)] ?? key.defaultValue }
-////    set { storage[ObjectIdentifier(key)] = newValue }
-//  }
-  
-  
+
   public subscript<K: WaveKey>(_ key: K.Type) -> ConfiguredWave {
     get { storage[ObjectIdentifier(key)] ?? key.defaultValue }
     set { storage[ObjectIdentifier(key)] = newValue }
@@ -48,7 +38,7 @@ extension WaveStack {
 
 extension WaveKeyRegistry {
 
-  /// Helper to apply a descriptor to a stack using the type-erased key
+  /// Helper to apply a `ConfiguredWave` to a stack using the type-erased key
   static func apply(
     _ wave: ConfiguredWave,
     key: String,

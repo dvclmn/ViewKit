@@ -6,6 +6,13 @@
 //
 
 import SwiftUI
+import Sharing
+
+//extension Binding {
+//  public func toSharedBinding<T>() -> Binding<T> {
+//    
+//  }
+//}
 
 extension Binding where Value == Int {
   /// Convert `Int` Binding to `Double` Binding

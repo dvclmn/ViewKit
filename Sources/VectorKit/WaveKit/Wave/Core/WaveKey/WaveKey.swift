@@ -15,31 +15,16 @@ import Foundation
 /// ```
 /// enum Fundamental: WaveKey {
 ///   static let defaultValue = ConfiguredWave(
-///     Wave(frequency: 1, amplitude: 1, phase: 0, waveform: .sine),
+///     Wave(freq: 1, amp: 1, phase: 0, waveform: .sine),
 ///     config: WaveConfig(isEnabled: true)
 ///   )
 /// }
 /// ```
-public protocol WaveKey {
-  static var title: String { get }
+public protocol WaveKey: Hashable {
   static var codingKey: String { get }
+  static var displayName: String { get }
   static var defaultValue: ConfiguredWave { get }
 }
-
-//public protocol WaveKey {
-//  associatedtype Value
-//  static var defaultValue: Value { get }
-//}
-
-/// ```
-/// enum Fundamental: CodableWaveKey {
-///   static let codingKey = "fundamental"
-///   static let defaultValue = ConfiguredWave(...)
-/// }
-/// ```
-//public protocol CodableWaveKey: WaveKey where Value == ConfiguredWave {
-//  static var codingKey: String { get }
-//}
 
 /// Perhaps for later
 public protocol OrderedWaveKey: WaveKey {

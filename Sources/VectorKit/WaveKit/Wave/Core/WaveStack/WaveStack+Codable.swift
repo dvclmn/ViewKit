@@ -30,20 +30,6 @@ extension WaveStack {
     return CodableWaveStack(result)
   }
 
-  /// Not sure if this is useful
-  //  public func snapshot<K: WaveKey>(_ key: K.Type) -> (String, ConfiguredWave) {
-  //    (K.codingKey, self[K.self])
-  //  }
-
-//  public mutating func restore<K: WaveKey>(
-//    _ key: K.Type,
-//    from dict: [String: ConfiguredWave]
-//  ) {
-//    if let value = dict[K.codingKey] {
-//      self[K.self] = value
-//    }
-//  }
-
   public mutating func restore(from snapshot: CodableWaveStack) {
     for (key, wave) in snapshot.waves {
       WaveKeyRegistry.apply(wave, key: key, to: &self)

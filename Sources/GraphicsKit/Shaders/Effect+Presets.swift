@@ -10,8 +10,8 @@ import Foundation
 extension ShaderEffect {
   public static let chromaticPresetA: ShaderEffect = .chromaticAberration(
     viewSize: CGSize(300, 700),
-    strength: 2.0,
-    radialStrength: 3.5,
+    strength: 1.6,
+    radialStrength: 3.0,
 //    center: CGPoint(x: 30, y: 60)
   )
 }
