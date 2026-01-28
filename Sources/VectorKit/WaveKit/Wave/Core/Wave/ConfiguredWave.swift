@@ -9,10 +9,7 @@
 @dynamicMemberLookup
 public struct ConfiguredWave: Identifiable, Hashable, Sendable, Codable, Equatable {
   public var id: Wave.ID { wave.id }
-  
-  /// Private, deferring to dynamic lookup for property access
-//  private var wave: Wave
-    public var wave: Wave
+  public var wave: Wave
   public var config: WaveConfig
 
   public init(
@@ -28,10 +25,9 @@ extension ConfiguredWave {
   public subscript<T>(dynamicMember keyPath: WritableKeyPath<Wave, T>) -> T {
     get { self.wave[keyPath: keyPath] }
     set { self.wave[keyPath: keyPath] = newValue }
-    //    set { config[keyPath: keyPath] = newValue as! WaveConfig..SubSequence }
   }
-/// Bad, don't do this
-//  public func makeAnimated() -> AnimatedWave { AnimatedWave(wave: self.wave) }
+  /// Bad, don't do this
+  //  public func makeAnimated() -> AnimatedWave { AnimatedWave(wave: self.wave) }
 }
 extension ConfiguredWave {
   public static let example01: Self = .init(
