@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MetaCodable
 
 public struct CodableWaveStack: Codable {
   public var waves: [String: ConfiguredWave]
@@ -37,3 +38,32 @@ extension WaveStack {
   }
 
 }
+
+//struct WaveStackCoder: MetaCodable.HelperCoder {
+//  /// Decode from the serializable projection back to the type-safe stack
+//  func decode(from decoder: Decoder) throws -> WaveStack {
+//    let snapshot = try CodableWaveStack(from: decoder)
+//    var stack = WaveStack()
+//    stack.restore(from: snapshot)
+//    return stack
+//  }
+//
+//  /// Encode the type-safe stack to its serializable projection
+//  func encode(_ value: WaveStack, to encoder: Encoder) throws {
+//    try value.snapshot().encode(to: encoder)
+//  }
+//}
+//
+//// If MetaCodable requires it to be Sendable (check your version):
+//extension WaveStackCoder: Sendable {}
+//
+//struct FailableWaveKeyCoder: MetaCodable.HelperCoder {
+//  func decode(from decoder: Decoder) throws -> AnyWaveKey? {
+//    // Returns nil instead of throwing for unknown keys
+//    // Useful for forward compatibility
+//    guard let type = WaveKeyRegistry.lookup(identifier) else {
+//      return nil // Or log and return a placeholder
+//    }
+//    return AnyWaveKey(type)
+//  }
+//}
