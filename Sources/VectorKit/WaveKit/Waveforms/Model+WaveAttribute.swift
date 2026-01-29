@@ -63,15 +63,15 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
     }
   }
 
-  public var keyPath: WritableKeyPath<WaveLegacy, SmoothedProperty> {
-    switch self {
-      case .amplitude: \.amplitudeSmoothed
-      case .frequency: \.frequencySmoothed
-      case .phase: \.phaseOffsetSmoothed
-      case .noise: \.noiseSmoothed
-
-    }
-  }
+//  public var keyPath: WritableKeyPath<WaveLegacy, SmoothedProperty> {
+//    switch self {
+//      case .amplitude: \.amplitudeSmoothed
+//      case .frequency: \.frequencySmoothed
+//      case .phase: \.phaseOffsetSmoothed
+//      case .noise: \.noiseSmoothed
+//
+//    }
+//  }
 
   //  @MainActor
   //  public var displayedKeyPath: WritableKeyPath<WaveProperties.Engine, CGFloat> {
@@ -119,4 +119,4 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
   //    }
   //  }
 }
-public var twoPi: CGFloat { .pi * 2 }
+//public var twoPi: CGFloat { .pi * 2 }

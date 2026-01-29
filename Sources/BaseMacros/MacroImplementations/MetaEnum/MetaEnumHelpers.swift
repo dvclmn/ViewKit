@@ -58,7 +58,7 @@ extension MetaEnumMacro {
   func makeMetaEnum() -> [DeclSyntax] {
 
     let meta: DeclSyntax = """
-      \(raw: access) enum Meta {
+      \(raw: access) enum Meta: String, CaseIterable {
       \(raw: caseDecls)
       \(makeMetaInit())
       \(caseNames)

@@ -26,6 +26,7 @@ public macro CaseDetection(includesNames: Bool = false) =
 
 // MARK: - MetaEnum
 @attached(member, names: named(Meta))
+//@attached(extension, conformances: RawRepresentable, CaseIterable)
 /// Not going to try to pass arguments for now
 public macro MetaEnum() = #externalMacro(
 //public macro MetaEnum(includesCaseDetection: Bool = true) = #externalMacro(

@@ -11,15 +11,12 @@ struct WaveformPathGenerator {
 
   /// Creates a path from points using the specified style
   static func createPath(
-    from points: [CGPoint], interpolation: PathInterpolationConfig = .defaultConfig(for: .linear)
+    from points: [CGPoint], interpolation: WaveInterpolation = .cubic
   ) -> Path {
-    switch interpolation.type {
-      case .linear:
-        return points.toPath(type: .line)
-      case .quadCurve:
-        return createQuadCurvePath(from: points)
-      case .catmullRom:
-        return createCatmullRomPath(from: points, tension: interpolation.tension)
+    switch interpolation {
+      case .linear: points.toPath(type: .line)
+      case .cubic, .quad: createQuadCurvePath(from: points)
+      case .catmullRom: createCatmullRomPath(from: points, tension: interpolation.tension)
     }
   }
 

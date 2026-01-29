@@ -21,7 +21,7 @@ extension SetOfOptionsMacro: ExtensionMacro {
   ) throws -> [ExtensionDeclSyntax] {
     /// Decode the expansion arguments.
     guard
-      let (structDecl, _, _) = decodeExpansion(
+      let (structDecl, optionsEnum, _) = decodeExpansion(
         of: node,
         attachedTo: declaration,
         in: context,
@@ -31,15 +31,12 @@ extension SetOfOptionsMacro: ExtensionMacro {
 
     /// Check for existing conformances
     var hasOptionSet = false
-//    var hasSendable = false
 
     if let inheritedTypes = structDecl.inheritanceClause?.inheritedTypes {
       for inherited in inheritedTypes {
         let typeName = inherited.type.trimmedDescription
         if typeName == "OptionSet" {
           hasOptionSet = true
-//        } else if typeName == "Sendable" {
-//          hasSendable = true
         }
       }
     }
@@ -49,9 +46,6 @@ extension SetOfOptionsMacro: ExtensionMacro {
     if !hasOptionSet {
       conformances.append("OptionSet")
     }
-//    if !hasSendable {
-//      conformances.append("Sendable")
-//    }
 
     /// If all conformances are already present, don't add an extension
     guard !conformances.isEmpty else {
@@ -60,7 +54,8 @@ extension SetOfOptionsMacro: ExtensionMacro {
 
     /// Create extension with only the missing conformances
     let conformanceList = conformances.joined(separator: ", ")
-    return [try ExtensionDeclSyntax("nonisolated extension \(type): \(raw: conformanceList) {}")]
+    return [
+      try ExtensionDeclSyntax("nonisolated extension \(type): \(raw: conformanceList) {}"),
+    ]
   }
 }
-

@@ -5,14 +5,17 @@
 //  Created by Dave Coleman on 27/1/2026.
 //
 import SwiftUI
+import CoreTools
 
 /// Defines the interpolation method for creating smooth paths from discrete points
 /// Note: See Swift Charts `InterpolationMethod`, possibly helpful
 /// https://developer.apple.com/documentation/charts/interpolationmethod
-public enum WaveInterpolation: String, Sendable, Equatable, Codable, CaseIterable, Identifiable {
+@MetaEnum
+public enum WaveInterpolation: Sendable, Equatable, Codable, Identifiable {
   case linear
   case cubic
-  case catmullRom
+  case quad
+  case catmullRom(CatmullRomConfiguration)
 
   public var id: String { rawValue }
 
