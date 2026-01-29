@@ -11,18 +11,18 @@ import CoreTools
 /// Note: See Swift Charts `InterpolationMethod`, possibly helpful
 /// https://developer.apple.com/documentation/charts/interpolationmethod
 @MetaEnum
-public enum WaveInterpolation: Sendable, Equatable, Codable, Identifiable {
+public enum WaveInterpolation: Sendable, Equatable, Codable {
   case linear
   case cubic
   case quad
   case catmullRom(CatmullRomConfiguration)
 
-  public var id: String { rawValue }
+//  public var id: String { rawValue }
 
   public var name: String {
     switch self {
       case .catmullRom: "Catmull-Rom"
-      default: rawValue.capitalized
+      default: Self.Meta(self).name
     }
   }
 }

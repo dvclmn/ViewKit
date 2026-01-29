@@ -37,7 +37,8 @@ public enum PathSmoothing: Sendable, Codable, Equatable, Hashable, CaseIterable,
   }
 }
 
-public struct CatmullRomConfiguration: Sendable, Codable, Equatable, Hashable {
+public struct CatmullRomConfiguration: Sendable, Codable, Equatable, Hashable, Identifiable {
+  public let id: UUID
   let tension: CGFloat
   let alpha: CGFloat  // Future: centripetal/chordal parameterization
   //  var endpointHandling: EndpointHandling = .clamp
@@ -45,6 +46,7 @@ public struct CatmullRomConfiguration: Sendable, Codable, Equatable, Hashable {
     tension: CGFloat = 0.5,
     alpha: CGFloat = 0.5
   ) {
+    self.id = UUID()
     self.tension = tension
     self.alpha = alpha
   }

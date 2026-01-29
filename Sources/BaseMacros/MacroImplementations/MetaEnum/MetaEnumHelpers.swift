@@ -23,11 +23,15 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-public struct MetaEnumMacro {
+//public struct MetaEnumMacro {
 
+struct MetaEnumBuilder {
   let detectedEnum: Enum
   let parentParamName: TokenSyntax
   let caseDetection: CaseDetectionMacro
+}
+
+extension MetaEnumBuilder {
 
   init(
     node: AttributeSyntax,
@@ -49,7 +53,7 @@ public struct MetaEnumMacro {
   }
 }
 
-extension MetaEnumMacro {
+extension MetaEnumBuilder {
 
   var parentTypeName: String { detectedEnum.identifier }
   var access: String { detectedEnum.accessLevel?.name ?? "" }
@@ -58,10 +62,11 @@ extension MetaEnumMacro {
   func makeMetaEnum() -> [DeclSyntax] {
 
     let meta: DeclSyntax = """
-      \(raw: access) enum Meta: String, CaseIterable {
+      \(raw: access) enum Meta: String, CaseIterable, Identifiable {
       \(raw: caseDecls)
       \(makeMetaInit())
       \(caseNames)
+      \(idProperty)
       \(raw: detections)
       }
       """
@@ -88,8 +93,8 @@ extension MetaEnumMacro {
       """
   }
 
+  /// ## Meta enum declaration
   /// ```
-  /// // Meta enum declaration
   /// enum Meta {
   ///   case bird
   ///   case whale
@@ -103,8 +108,8 @@ extension MetaEnumMacro {
       .joined(separator: "\n")
   }
 
+  /// ## Initialiser
   /// ```
-  /// // Initialiser
   ///   init(_ abc123: ParentEnum) {
   ///     switch abc123 {
   ///       case .bird:
@@ -135,6 +140,22 @@ extension MetaEnumMacro {
           \(raw: cases)
         }
       }
+      """
+  }
+
+  /// ## ID property
+  /// ```
+  /// var id: String { rawValue }
+  /// ```
+  var idProperty: DeclSyntax {
+
+    //    let cases = childCases.map { childCase in
+    //      "case .\(childCase.identifier): \"\(childCase.identifier.capitalized)\""
+    //    }.joined(separator: "\n")
+
+    return
+      """
+      \(raw: access) var id: String { rawValue }
       """
   }
 
