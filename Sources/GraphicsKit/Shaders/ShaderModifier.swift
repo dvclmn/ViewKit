@@ -46,27 +46,27 @@ public struct ShaderModifier: ViewModifier {
   }
 }
 
-@available(macOS 14, iOS 17, *)
-public struct AnimatedShaderModifier: ViewModifier {
-
-  let shader: ShaderEffect
-  let arguments: [Shader.Argument]
-
-  public func body(content: Content) -> some View {
-    content
-      .layerEffect(
-        Shader(
-          function: ShaderFunction(
-            library: ShaderLibrary.bundle(.module),
-            name: shader.reference
-          ),
-          arguments: arguments
-        ),
-        maxSampleOffset: .zero
-      )
-      .drawingGroup()
-  }
-}
+//@available(macOS 14, iOS 17, *)
+//public struct AnimatedShaderModifier: ViewModifier {
+//
+//  let shader: ShaderEffect
+//  let arguments: [Shader.Argument]
+//
+//  public func body(content: Content) -> some View {
+//    content
+//      .layerEffect(
+//        Shader(
+//          function: ShaderFunction(
+//            library: ShaderLibrary.bundle(.module),
+//            name: shader.reference
+//          ),
+//          arguments: arguments
+//        ),
+//        maxSampleOffset: .zero
+//      )
+////      .drawingGroup()
+//  }
+//}
 
 @available(macOS 14, iOS 17, *)
 extension View {

@@ -16,7 +16,10 @@ extension ShaderEffect {
   )
   
   public static let fisheyePresetA: ShaderEffect = .fisheye(
-    viewSize: CGSize(400, 200),
-    strength: 10
+    origin: CGPoint(200, 300),
+    radius: 10,
+    strength: 2
   )
+  
+  public static let psychPresetA: ShaderEffect = .psych(time: Date.now.timeIntervalSinceReferenceDate)
 }

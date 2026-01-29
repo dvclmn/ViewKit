@@ -16,16 +16,16 @@ import Foundation
 /// - Cycles: This is how many "humps" of the wave fit into that space.
 public struct Wave: Sendable, Identifiable, Hashable, Equatable, Codable {
   public let id: UUID
-  public var frequency: Float
-  public var amplitude: Float
-  public var phase: Float
+  public var frequency: CGFloat
+  public var amplitude: CGFloat
+  public var phase: CGFloat
   public var waveform: Waveform
 
   public init(
     id: UUID = UUID(),
-    freq: Float,
-    amp: Float,
-    phase: Float,
+    freq: CGFloat,
+    amp: CGFloat,
+    phase: CGFloat,
     waveform: Waveform = .sine
   ) {
     self.id = id
@@ -54,5 +54,5 @@ extension Wave {
 
 public struct NoisyWave: Sendable, Hashable {
   public let wave: Wave
-  public var noise: Float
+  public var noise: CGFloat
 }

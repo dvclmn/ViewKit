@@ -20,7 +20,8 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     radialStrength: CGFloat,
   )
   case fisheye(
-    viewSize: CGSize,
+    origin: CGPoint,
+    radius: CGFloat,
     strength: CGFloat
   )
 
@@ -30,9 +31,20 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     viewSize: CGSize
   )
 
+  case filmGrain(
+    time: CGFloat,
+    size: CGFloat,
+    intensity: CGFloat,
+    colour: CGFloat
+  )
+
   case ripplePush(
     l: CGPoint,
     v: CGPoint
+  )
+
+  case psych(
+    time: CGFloat
   )
 }
 
@@ -47,14 +59,20 @@ extension ShaderEffect {
           .float(radialStrength),
         ]
 
-      case .fisheye(let viewSize, let strength):
-        [.float2(viewSize), .float(strength)]
+      case .fisheye(let origin, let radius, let strength):
+        [.boundingRect, .float2(origin), .float(radius), .float(strength)]
 
       case .glitter(let origin, let spread, let viewSize):
         [.float2(origin.toCGPoint(in: viewSize)), .float(spread)]
 
       case .ripplePush(let l, let v):
         [.float2(l), .float2(v)]
+
+      case .psych(let time):
+        [.boundingRect, .float(time)]
+
+      case .filmGrain(let time, let size, let intensity, let colour):
+        [.float(time), .float(size), .float(intensity), .float(colour)]
     }
   }
 }
@@ -76,7 +94,8 @@ extension ShaderEffect {
       case .fisheye: "fisheye"
       case .glitter: "glitter"
       case .ripplePush: "ripplePush"
-    //      case .filmGrain: "filmGrain"
+      case .psych: "psych"
+      case .filmGrain: "filmGrain"
     //      case .wavyBlur: "wavyBlur"
     //      case .ripple: "ripple"
     //      case .psych: "psych"
@@ -91,6 +110,8 @@ extension ShaderEffect {
       case .fisheye: "Fish-eye"
       case .glitter: "Glitter"
       case .ripplePush: "Ripple Push"
+      case .psych: "Psych"
+      case .filmGrain: "Film Grain"
     }
   }
 
@@ -117,6 +138,10 @@ extension ShaderEffect {
     )
   }
 
+  /// Tip: `colorEffect` operates on individual pixel colors in isolation, whereas
+  /// `layerEffect` provides access to the entire view layer, making it possible
+  /// to sample neighboring pixels. Hence the `maxOffset` parameter.
+  ///
   /// Shader function signatures for usage type.
   /// All assume `[[ stitchable ]]` is already included.
   ///
@@ -152,6 +177,8 @@ extension ShaderEffect {
       case .ripplePush: .distortionEffect
       case .fisheye: .distortionEffect
       case .glitter: .layerEffect
+      case .psych: .colorEffect
+      case .filmGrain: .colorEffect
     }
   }
 }
