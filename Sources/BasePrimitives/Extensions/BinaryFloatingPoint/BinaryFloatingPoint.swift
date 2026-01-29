@@ -12,8 +12,6 @@ public var twoPi: CGFloat { .pi * 2 }
 /// Looking for `clamp` methods? See `Extensions/Comparable`
 extension BinaryFloatingPoint {
 
-  public var toAngle: Angle { .degrees(Double(self)) }
-
   public func incrementing(
     by amount: Self,
     in range: ClosedRange<Self>? = nil

@@ -9,7 +9,7 @@ import Foundation
 import CoreTools
 
 @MetaEnum
-public enum WaveComponent {
+public enum WaveDisplayComponent {
   case line(LineStyle)
   case points(PointStyle)
   case labels
@@ -20,7 +20,7 @@ public enum WaveComponent {
 //  public func stylePath: WritableKeyPath<>
 //}
 
-public struct WaveComponents: OptionSet, Sendable {
+public struct WaveDisplayComponents: OptionSet, Sendable {
   public init(rawValue: Int) {
     self.rawValue = rawValue
   }

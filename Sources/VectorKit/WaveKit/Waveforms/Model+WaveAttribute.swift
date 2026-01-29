@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import CoreTools
 
+@CaseDetection
 public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
   
-  public static let allCases: [WaveAttribute] = [.amplitude, .frequency, .phaseOffset]
+  public static let allCases: [WaveAttribute] = [.amplitude, .frequency, .phase]
 
   /// How visually apparent is the oscillation effect. Aka strength
   case amplitude
@@ -17,7 +19,7 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
   /// How rapidly does the oscillation occur. Aka speed
   case frequency
 
-  case phaseOffset
+  case phase
 
   /// How much irregularity is introduced into the overall wave / movement
   case noise
@@ -28,7 +30,7 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
     switch self {
       case .amplitude: ("Amplitude", "Amp")
       case .frequency: ("Frequency", "Freq")
-      case .phaseOffset: ("Phase Offset", "Phase")
+      case .phase: ("Phase Offset", "Phase")
       case .noise: ("Noise", "Noise")
     }
   }
@@ -37,8 +39,16 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
     switch self {
       case .amplitude: 20
       case .frequency: 1.0
-      case .phaseOffset: 0.0
+      case .phase: 0.0
       case .noise: 0.0
+    }
+  }
+  public var defaultRange: ClosedRange<CGFloat> {
+    switch self {
+      case .amplitude: 0...20
+      case .frequency: 0...4
+      case .phase: .unitRange
+      case .noise: 0...20
     }
   }
 
@@ -47,7 +57,7 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
       case .amplitude: "cellularbars"  // lines.measurement.horizontal, speaker.wave.2
       case .frequency: "waveform.path.ecg"
       //      case .phase: "point.forward.to.point.capsulepath"
-      case .phaseOffset: "eye"  // glowplug, scribble
+      case .phase: "eye"  // glowplug, scribble
       case .noise: "dice"  // glowplug, scribble
     //      case .cyclesAcross: "eye"
     }
@@ -57,7 +67,7 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
     switch self {
       case .amplitude: \.amplitudeSmoothed
       case .frequency: \.frequencySmoothed
-      case .phaseOffset: \.phaseOffsetSmoothed
+      case .phase: \.phaseOffsetSmoothed
       case .noise: \.noiseSmoothed
 
     }
@@ -88,7 +98,7 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
       case .amplitude: 0.01...60
       case .frequency: 0.01...20
       //      case .cyclesAcross: 0.1...10.0
-      case .phaseOffset: 0...twoPi
+      case .phase: 0...twoPi
       case .noise: 0...4
     }
   }
