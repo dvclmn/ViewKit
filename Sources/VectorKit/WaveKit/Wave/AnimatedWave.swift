@@ -9,9 +9,9 @@ import Foundation
 
 public struct AnimatedWave {
   public var wave: Wave
-  public var cycles: Float
+  public var cycles: CGFloat
   
-  public init(wave: Wave, cycles: Float) {
+  public init(wave: Wave, cycles: CGFloat) {
     self.wave = wave
     self.cycles = cycles
   }
@@ -20,7 +20,7 @@ public struct AnimatedWave {
   /// - Parameters:
   ///   - state: The persistent ContinuousParameter for this specific wave.
   ///   - normalisedIndex: The normalisedIndex (0...1) of the current point.
-  public func sample(state: ContinuousParameter, at normalisedIndex: Float) -> Float {
+  public func sample(state: ContinuousParameter, at normalisedIndex: CGFloat) -> CGFloat {
     /// 1. Get the time-based phase from our persistent state
     let temporalPhase = state.currentPhase
     

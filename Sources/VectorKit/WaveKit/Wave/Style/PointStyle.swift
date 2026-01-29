@@ -11,13 +11,13 @@ import Foundation
 public struct PointStyle: Sendable, Codable, Equatable {
   public var colour: HSVColour
   public var colourSecondary: HSVColour?
-  public var radius: Float
+  public var radius: CGFloat
   public var shape: PointShape
   
   public init(
     colour: HSVColour = .brown,
     colourSecondary: HSVColour? = .purple,
-    radius: Float = 9.0,
+    radius: CGFloat = 9.0,
     shape: PointShape = .circle
   ) {
     self.colour = colour

@@ -32,6 +32,7 @@ extension BinaryFloatingPoint {
 
   public var toDouble: Double { Double(self) }
   public var toFloat: Float { Float(self) }
+  public var toCGFloat: CGFloat { CGFloat(self) }
 
   public func removingZoom(
     _ zoom: Self,
@@ -41,9 +42,6 @@ extension BinaryFloatingPoint {
     guard zoom.isGreaterThanZero, range?.isGreaterThanZero ?? false else {
       return self
     }
-    //    guard let range else {
-    //      return self / zoom
-    //    }
 
     let effectiveZoom = range.map { zoom.clamped(to: $0) } ?? zoom
 
@@ -53,20 +51,6 @@ extension BinaryFloatingPoint {
     }
 
     return self / effectiveZoom
-    //    let clampedZoom = zoom.clamped(to: range)
-
-    //    if let sensitivity {
-    //      let clampedSensitivity = sensitivity.clamped(to: 0...1)
-    //      let compensation = Self(
-    //        pow(Double(clampedZoom), Double(clampedSensitivity - 1))
-    //      )
-    //      return self * compensation
-    ////      let exponent = clampedSensitivity - 1
-    ////      return self * Self(pow(Double(clampedZoom), Double(exponent)))
-    ////      return self * Self(pow(Double(zoom), Double(clampedSensitivity) - 1))
-    //    }
-    //
-    //    return self / clampedZoom
   }
 
   /// This removes a zoom range which has been normalised from 0-1

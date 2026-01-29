@@ -8,17 +8,17 @@
 import Foundation
 
 public struct WaveConfig: Hashable, Sendable, Codable {
-  public var cycles: Float
+  public var cycles: CGFloat
   public var dashes: Int
-  public var dashPhase: Float
+  public var dashPhase: CGFloat
 
   public var sampleCount: Int
   public var interpolation: WaveInterpolation
 
   public init(
-    cycles: Float = 3,
+    cycles: CGFloat = 3,
     dashes: Int = 0,
-    dashPhase: Float = 0,
+    dashPhase: CGFloat = 0,
     sampleCount: Int = 30,
     interpolation: WaveInterpolation = .cubic,
   ) {
