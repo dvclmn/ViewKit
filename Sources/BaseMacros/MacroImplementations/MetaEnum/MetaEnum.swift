@@ -23,7 +23,6 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import MacroToolkit
 
-//extension MetaEnumMacro: MemberMacro {
 public struct MetaEnumMacro: MemberMacro {
   public static func expansion(
     of node: AttributeSyntax,

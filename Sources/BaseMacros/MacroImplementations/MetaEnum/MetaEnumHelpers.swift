@@ -23,15 +23,10 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-//public struct MetaEnumMacro {
-
 struct MetaEnumBuilder {
   let detectedEnum: Enum
   let parentParamName: TokenSyntax
   let caseDetection: CaseDetectionMacro
-}
-
-extension MetaEnumBuilder {
 
   init(
     node: AttributeSyntax,
@@ -53,25 +48,33 @@ extension MetaEnumBuilder {
   }
 }
 
+// MARK: - Enum building result
+extension MetaEnumBuilder {
+
+  func makeMetaEnum() -> [DeclSyntax] {
+    [
+      DeclSyntax("\(raw: access) var meta: Self.Meta {.init(self)}"),
+      DeclSyntax("\(raw: access) enum Meta: String, CaseIterable, Identifiable {"),
+      DeclSyntax(stringLiteral: caseDecls),
+      DeclSyntax(makeMetaInit()),
+      DeclSyntax(caseNames),
+      DeclSyntax("\(raw: access) var id: String {rawValue}"),
+//      DeclSyntax(idProperty),
+      DeclSyntax(stringLiteral: detections),
+      DeclSyntax("}"),
+
+      
+
+    ]
+    //    return meta
+  }
+}
+
 extension MetaEnumBuilder {
 
   var parentTypeName: String { detectedEnum.identifier }
   var access: String { detectedEnum.accessLevel?.name ?? "" }
   var childCases: [EnumCase] { detectedEnum.cases }
-
-  func makeMetaEnum() -> [DeclSyntax] {
-
-    let meta: DeclSyntax = """
-      \(raw: access) enum Meta: String, CaseIterable, Identifiable {
-      \(raw: caseDecls)
-      \(makeMetaInit())
-      \(caseNames)
-      \(idProperty)
-      \(raw: detections)
-      }
-      """
-    return [meta]
-  }
 
   func makeMetaInit() -> DeclSyntax {
     let caseStatements =
@@ -140,22 +143,6 @@ extension MetaEnumBuilder {
           \(raw: cases)
         }
       }
-      """
-  }
-
-  /// ## ID property
-  /// ```
-  /// var id: String { rawValue }
-  /// ```
-  var idProperty: DeclSyntax {
-
-    //    let cases = childCases.map { childCase in
-    //      "case .\(childCase.identifier): \"\(childCase.identifier.capitalized)\""
-    //    }.joined(separator: "\n")
-
-    return
-      """
-      \(raw: access) var id: String { rawValue }
       """
   }
 
