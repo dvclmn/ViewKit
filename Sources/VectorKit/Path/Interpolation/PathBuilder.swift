@@ -36,25 +36,25 @@ import SwiftUI
 /// High-performance variant using pre-allocated buffers
 /// Use this when you're generating paths repeatedly in a hot path
 /// and can reuse the PathBuilder instance
-public struct PathBuilder {
-  private var subdivisions: Int
-  private var tension: CGFloat
-
-  public init(subdivisions: Int = 10, tension: CGFloat = 0.5) {
-    self.subdivisions = subdivisions
-    self.tension = tension
-  }
-
-  /// Builds a path with the configured settings
-  public func buildPath(
-    using points: [CGPoint],
-    interpolation: WaveInterpolation
-  ) -> Path? {
-    switch interpolation {
-      case .linear: Path.makeLinearPath(points: points)
-      case .cubic: Path.makeCubicPath(points: points)
-      //      case .quad: Path.makeCubicPath(points: points)
-      case .catmullRom: Path.makeCatmullRomPath(points: points, tension: tension)
-    }
-  }
-}
+//public struct PathBuilder {
+//  private var subdivisions: Int
+//  private var tension: CGFloat
+//
+//  public init(subdivisions: Int = 10, tension: CGFloat = 0.5) {
+//    self.subdivisions = subdivisions
+//    self.tension = tension
+//  }
+//
+//  /// Builds a path with the configured settings
+//  public func buildPath(
+//    using points: [CGPoint],
+//    interpolation: WaveInterpolation
+//  ) -> Path? {
+//    switch interpolation {
+//      case .linear: Path.makeLinearPath(points: points)
+//      case .cubic: Path.makeCubicPath(points: points)
+//      //      case .quad: Path.makeCubicPath(points: points)
+//      case .catmullRom: Path.makeCatmullRomPath(points: points, tension: tension)
+//    }
+//  }
+//}

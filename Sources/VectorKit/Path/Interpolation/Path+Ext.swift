@@ -21,7 +21,7 @@ extension Path {
     return switch interpolation {
       case .linear: makeLinearPath(points: points)
       case .cubic: makeCubicPath(points: points)
-      case .catmullRom: makeCatmullRomPath(points: points)
+      case .catmullRom(let variant): catmullRom(points: points, variant: variant)
     }
   }
 

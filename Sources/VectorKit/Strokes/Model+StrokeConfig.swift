@@ -18,7 +18,7 @@ public struct StrokeConfiguration: Hashable, Sendable, Codable {
   /// high vs low speeds
   var speedSensitivity: Double = 3
   
-  var curveType: CatmullRomTypeMetadata = .none
+  var curveType: CatmullRom.SplineVariant = .centripetal
 
   /// Both used in `StrokeEngine/shouldAddPoint`
   var minDistanceBeforeAddingPoint: Double = 90

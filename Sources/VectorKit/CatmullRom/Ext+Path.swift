@@ -13,7 +13,7 @@ extension Path {
   /// Uses cubic Bézier conversion for optimal rendering performance.
   public static func catmullRom(
     points: [CGPoint],
-    variant: CatmullRomVariant = .centripetal,
+    variant: CatmullRom.SplineVariant = .centripetal,
     closed: Bool = false
   ) -> Path {
     guard points.count >= 2 else { return Path() }
@@ -64,7 +64,7 @@ extension Path {
   /// Samples points along the spline for hit-testing or vertex buffers
   public static func sampleCatmullRom(
     points: [CGPoint],
-    variant: CatmullRomVariant = .centripetal,
+    variant: CatmullRom.SplineVariant = .centripetal,
     closed: Bool = false,
     samplesPerSegment: Int = 10
   ) -> [CGPoint] {

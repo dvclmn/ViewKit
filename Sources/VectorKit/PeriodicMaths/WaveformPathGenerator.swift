@@ -11,12 +11,17 @@ struct WaveformPathGenerator {
 
   /// Creates a path from points using the specified style
   static func createPath(
-    from points: [CGPoint], interpolation: WaveInterpolation = .cubic
+    from points: [CGPoint],
+    interpolation: WaveInterpolation = .cubic
   ) -> Path {
     switch interpolation {
       case .linear: points.toPath(type: .line)
-      case .cubic, .quad: createQuadCurvePath(from: points)
-      case .catmullRom: createCatmullRomPath(from: points, tension: interpolation.tension)
+      case .cubic: createQuadCurvePath(from: points)
+      case .catmullRom(let variant): Path.catmullRom(
+        points: points,
+        variant: variant,
+        closed: true
+      )
     }
   }
 
@@ -62,8 +67,8 @@ struct MovementVector {
     chaos: Double = 0.3
   ) -> CGPoint {
     // Use different frequency offsets for x and y to create more organic movement
-    let x = Double.oscillate(in: range, frequency: frequency * 1.0, chaos: chaos)
-    let y = Double.oscillate(in: range, frequency: frequency * 1.3, chaos: chaos)
+    let x = Double.oscillate(in: range, frequency: frequency * 1.0, noise: chaos)
+    let y = Double.oscillate(in: range, frequency: frequency * 1.3, noise: chaos)
     return CGPoint(x: x, y: y)
   }
 

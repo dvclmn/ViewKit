@@ -52,7 +52,7 @@ extension CatmullRom.SplineVariant {
       case .uniform: "eye"
       case .chordal: "eye"
       case .centripetal: "eye"
-      case .none: "eye"
+//      case .none: "eye"
     }
   }
 }

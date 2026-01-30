@@ -20,7 +20,7 @@ public struct CatmullRom {
   public static func point(
     p0: CGPoint, p1: CGPoint, p2: CGPoint, p3: CGPoint,
     t: CGFloat,
-    variant: CatmullRomVariant = .centripetal
+    variant: CatmullRom.SplineVariant = .centripetal
   ) -> CGPoint {
     // For uniform, we can use the optimized basis function form
     if variant == .uniform {
@@ -50,7 +50,7 @@ public struct CatmullRom {
   public static func scalar(
     v0: CGFloat, v1: CGFloat, v2: CGFloat, v3: CGFloat,
     t: CGFloat,
-    variant: CatmullRomVariant = .centripetal
+    variant: CatmullRom.SplineVariant = .centripetal
   ) -> CGFloat {
     if variant == .uniform {
       // Optimized uniform basis
@@ -78,7 +78,7 @@ public struct CatmullRom {
   /// This is the most efficient way to draw C-R splines in Core Graphics.
   public static func toCubicBezier(
     p0: CGPoint, p1: CGPoint, p2: CGPoint, p3: CGPoint,
-    variant: CatmullRomVariant = .centripetal
+    variant: CatmullRom.SplineVariant = .centripetal
   ) -> (c1: CGPoint, c2: CGPoint) {
     let alpha = variant.alpha
 

@@ -76,7 +76,7 @@ struct PathInterpolationBenchmark {
       let points = generateTestPoints(count: count)
 
       // Benchmark each method
-      for method in [WaveInterpolation.linear, .cubic, .catmullRom] {
+      for method in [WaveInterpolation.linear, .cubic, .catmullRom(.centripetal)] {
         let iterations = count < 100 ? 1000 : 500
         let result = benchmark(method: method, points: points, iterations: iterations)
         results.append(result)
@@ -199,7 +199,7 @@ struct BenchmarkView: View {
 
       var newResults: [PathInterpolationBenchmark.BenchmarkResult] = []
 
-      for method in [WaveInterpolation.linear, .cubic, .catmullRom] {
+      for method in [WaveInterpolation.linear, .cubic, .catmullRom(.centripetal)] {
         let result = PathInterpolationBenchmark.benchmark(
           method: method,
           points: points,
@@ -338,7 +338,7 @@ struct PerformanceChart: View {
 
 struct RealtimePerformanceView: View {
   @State private var points: [CGPoint] = []
-  @State private var selectedMethod: WaveInterpolation = .catmullRom
+  @State private var selectedMethod: WaveInterpolation = .catmullRom(.centripetal)
   @State private var frameTime: TimeInterval = 0
   @State private var fps: Double = 0
 
@@ -417,7 +417,7 @@ struct RealtimePerformanceView: View {
         Picker("Method", selection: $selectedMethod) {
           Text("Linear").tag(WaveInterpolation.linear)
           Text("Cubic").tag(WaveInterpolation.cubic)
-          Text("Catmull-Rom").tag(WaveInterpolation.catmullRom)
+          Text("Catmull-Rom").tag(WaveInterpolation.catmullRom(.centripetal))
         }
         .pickerStyle(.segmented)
 

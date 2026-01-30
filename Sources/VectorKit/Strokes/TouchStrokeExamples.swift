@@ -67,7 +67,7 @@ import SwiftUI
 //  }
 //}
 
-extension TouchStrokeCompleted {
+//extension TouchStrokeCompleted {
   
 //  public static func examples(
 //    _ examples: [TouchStrokeExample] = [.spiral],
@@ -100,4 +100,4 @@ extension TouchStrokeCompleted {
 //    
 //    return strokes
 //  }
-}
+//}

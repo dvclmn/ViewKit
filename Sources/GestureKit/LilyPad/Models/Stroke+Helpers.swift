@@ -5,32 +5,32 @@
 //  Created by Dave Coleman on 20/1/2026.
 //
 
-import Foundation
-import ColourKit
+//import Foundation
+//import ColourKit
 
-extension DrawingData {
-  static func makeStrokes(
-    from strokes: [Stroke],
-  ) -> Strokes {
-    Dictionary(uniqueKeysWithValues: strokes.map { stroke in
-      let config = StrokeConfig()
-//      let style = PointStyle.basic(with: colour)
-      return (stroke, config)
-    })
-  }
-  
-  public mutating func addStrokes(_ strokes: [Stroke]) {
-    let new = Self.makeStrokes(from: strokes)
-    self.strokes.merge(new) { _, new in
-      new
-    }
-    //    self.points.merge(points) { current, new in
-    //      new
-    //    }
-  }
-}
+//extension DrawingData {
+//  static func makeStrokes(
+//    from strokes: [Stroke],
+//  ) -> Strokes {
+//    Dictionary(uniqueKeysWithValues: strokes.map { stroke in
+//      let config = StrokeConfig()
+////      let style = PointStyle.basic(with: colour)
+//      return (stroke, config)
+//    })
+//  }
+//  
+//  public mutating func addStrokes(_ strokes: [Stroke]) {
+//    let new = Self.makeStrokes(from: strokes)
+//    self.strokes.merge(new) { _, new in
+//      new
+//    }
+//    //    self.points.merge(points) { current, new in
+//    //      new
+//    //    }
+//  }
+//}
 
-extension Stroke {
+//extension Stroke {
   // If you pass a colour, we create a basic style for each point.
 //  static func makePoints(from points: [CGPoint], colour: RGBColour) -> Points {
 //    Dictionary(uniqueKeysWithValues: points.map { point in
@@ -57,4 +57,4 @@ extension Stroke {
 //      (style, point)
 //    })
 //  }
-}
+//}

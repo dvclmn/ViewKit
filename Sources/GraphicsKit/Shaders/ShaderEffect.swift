@@ -102,7 +102,7 @@ extension ShaderEffect {
     }
   }
 
-  public var meta: Self.Meta { ShaderEffect.Meta(self) }
+//  public var meta: Self.Meta { ShaderEffect.Meta(self) }
 
   public var name: String {
     switch self {

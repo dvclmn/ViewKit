@@ -36,12 +36,13 @@ public struct LineGraphView: View {
 
       if isSmoothPath {
         /// Build smooth path
-        path = Path.catmullRomPath(
-          points: points,
-          tension: 0.5,
-          closed: false,
-          samples: 12
-        )
+        path = Path.catmullRom(points: points, variant: .uniform, closed: false)
+//          .catmullRomPath(
+//          points: points,
+//          tension: 0.5,
+//          closed: false,
+//          samples: 12
+//        )
       } else {
         path = Path(fromPoints: points, shouldDropFirst: false)
       }
