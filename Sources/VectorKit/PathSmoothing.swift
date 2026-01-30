@@ -7,48 +7,32 @@
 
 import Foundation
 
-/// Not currently used by Animation Playground,
-/// but seems handy enough to keep around
-public enum PathSmoothing: Sendable, Codable, Equatable, Hashable, CaseIterable, Identifiable {
-
-  public static let allCases: [PathSmoothing] = [
-    .linear,
-    .quadCurve,
-    .catmullRom(),
-  ]
-
-  case linear
-  case quadCurve
-  case catmullRom(CatmullRomConfiguration = .init())
-
-  public var id: String {
-    self.name
-  }
-
-  public var name: String {
-    switch self {
-      case .linear:
-        return "Linear"
-      case .quadCurve:
-        return "Quadratic"
-      case .catmullRom:
-        return "Catmull-Rom"
-    }
-  }
-}
-
-public struct CatmullRomConfiguration: Sendable, Codable, Equatable, Hashable, Identifiable {
-  public let id: UUID
-  let tension: CGFloat
-  let alpha: CGFloat  // Future: centripetal/chordal parameterization
-  //  var endpointHandling: EndpointHandling = .clamp
-  public init(
-    tension: CGFloat = 0.5,
-    alpha: CGFloat = 0.5
-  ) {
-    self.id = UUID()
-    self.tension = tension
-    self.alpha = alpha
-  }
-  //  public static let standard: CatmullRomConfiguration = CatmullRomConfiguration()
-}
+/// Deprecated by ``WaveInterpolation``
+//public enum PathSmoothing: Sendable, Codable, Equatable, Hashable, CaseIterable, Identifiable {
+//
+//  public static let allCases: [PathSmoothing] = [
+//    .linear,
+//    .quadCurve,
+//    .catmullRom(),
+//  ]
+//
+//  case linear
+//  case quadCurve
+//  case catmullRom(CatmullRomConfiguration = .init())
+//
+//  public var id: String {
+//    self.name
+//  }
+//
+//  public var name: String {
+//    switch self {
+//      case .linear:
+//        return "Linear"
+//      case .quadCurve:
+//        return "Quadratic"
+//      case .catmullRom:
+//        return "Catmull-Rom"
+//    }
+//  }
+//}
+//
