@@ -168,22 +168,14 @@ extension CatmullRom.Spline {
     let tau = t1 + (t2 - t1) * t
 
     /// Perform the recursive interpolation (De Casteljau-like)
-    let A1 = interpolate(p0, p1, (tau - t0) / (t1 - t0))
-    let A2 = interpolate(p1, p2, (tau - t1) / (t2 - t1))
-    let A3 = interpolate(p2, p3, (tau - t2) / (t3 - t2))
+    let A1 = p0.lerp(to: p1, t: (tau - t0) / (t1 - t0))
+    let A2 = p1.lerp(to: p2, t: (tau - t1) / (t2 - t1))
+    let A3 = p2.lerp(to: p3, t: (tau - t2) / (t3 - t2))
 
-    let B1 = interpolate(A1, A2, (tau - t1) / (t2 - t1))
-    let B2 = interpolate(A2, A3, (tau - t2) / (t3 - t2))
+    let B1 = A1.lerp(to: A2, t: (tau - t1) / (t2 - t1))
+    let B2 = A2.lerp(to: A3, t: (tau - t2) / (t3 - t2))
 
-    return interpolate(B1, B2, (tau - t2) / (t3 - t2))
-  }
-
-  /// Linear interpolation helper
-  private static func interpolate(_ p0: CGPoint, _ p1: CGPoint, _ t: CGFloat) -> CGPoint {
-    CGPoint(
-      x: p0.x + (p1.x - p0.x) * t,
-      y: p0.y + (p1.y - p0.y) * t
-    )
+    return B1.lerp(to: B2, t: (tau - t2) / (t3 - t2))
   }
 
   private func isValidSegmentIndex(

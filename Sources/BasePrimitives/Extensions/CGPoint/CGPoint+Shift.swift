@@ -9,6 +9,24 @@ import Foundation
 
 extension CGPoint {
   
+  /// Moves a point toward a target by a fixed absolute distance.
+  /// Great for constant-speed movement.
+  public func moveTowards(_ target: CGPoint, distance: CGFloat) -> CGPoint {
+    let dx = target.x - self.x
+    let dy = target.y - self.y
+    let totalDistance = sqrt(dx * dx + dy * dy)
+    
+    /// Safety check: If we are already there or the distance is 0, just return self.
+    if totalDistance == 0 || distance == 0 { return self }
+    
+    /// If the distance to move is greater than the actual distance,
+    /// we might want to cap it to the target (optional).
+    let safeDistance = min(distance, totalDistance)
+    
+    let t = safeDistance / totalDistance
+    return self.lerp(to: target, t: t)
+  }
+  
   /// Shift right (increases x)
   public func shiftedRight(_ distance: CGFloat) -> CGPoint {
     return CGPoint(x: self.x + distance, y: self.y)

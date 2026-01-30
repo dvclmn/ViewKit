@@ -119,24 +119,46 @@ extension CGPoint {
   //  public var isNormalised: Bool {
   //    return x >= 0.0 && x <= 1.0 && y >= 0.0 && y <= 1.0
   //  }
+}
 
-  public func delta(
-    from lastPosition: CGPoint,
-    sensitivity: CGFloat = 1.0
-  ) -> CGPoint {
-    let result = CGPoint(
-      x: (self.x - lastPosition.x) * sensitivity,
-      y: (self.y - lastPosition.y) * sensitivity
+extension CGPoint {
+
+  /// Standard Linear Interpolation (Lerp)
+  /// Aligns with VectorArithmetic's logic.
+  public func lerp(to end: CGPoint, t: CGFloat) -> CGPoint {
+    CGPoint(
+      x: x.interpolated(towards: end.x, amount: t),
+      y: y.interpolated(towards: end.y, amount: t)
     )
-
-    return result
   }
+  
+  /// Calculate the scaled movement from a previous point.
+  /// Renamed from 'delta' to be more descriptive.
+  public func scaledOffset(from lastPosition: CGPoint, sensitivity: CGFloat) -> CGVector {
+    CGVector(
+      dx: (self.x - lastPosition.x) * sensitivity,
+      dy: (self.y - lastPosition.y) * sensitivity
+    )
+  }
+
+  //  public func delta(
+  //    from lastPosition: CGPoint,
+  //    sensitivity: CGFloat = 1.0
+  //  ) -> CGPoint {
+  //    let result = CGPoint(
+  //      x: (self.x - lastPosition.x) * sensitivity,
+  //      y: (self.y - lastPosition.y) * sensitivity
+  //    )
+  //
+  //    return result
+  //  }
 
   public static func midPoint(
     from p1: CGPoint,
     to p2: CGPoint
   ) -> CGPoint {
-    return pointAlong(from: p1, to: p2, t: 0.5)
+    p1.lerp(to: p2, t: 0.5)
+//    return pointAlong(from: p1, to: p2, t: 0.5)
   }
 
   /// Find a point along the line between two points
@@ -154,23 +176,6 @@ extension CGPoint {
   ///
   /// ```
 
-  /// Returns a point along the line defined by `start` and `end`.
-  /// - Parameters:
-  ///   - start: The starting point of the line.
-  ///   - end: The ending point of the line.
-  ///   - t: A factor determining the point's position along the line.
-  ///        When t = 0, the result is `start`.
-  ///        When t = 1, the result is `end`.
-  ///        Values less than 0 or greater than 1 will extrapolate beyond the line segment.
-  /// - Returns: A point along the line defined by `start` and `end`.
-  public static func pointAlong(
-    from start: CGPoint, to end: CGPoint, t: CGFloat
-  ) -> CGPoint {
-    return CGPoint(
-      x: start.x + (end.x - start.x) * t,
-      y: start.y + (end.y - start.y) * t
-    )
-  }
 
   /// Returns a point along the line from this point to `end`.
   /// - Parameters:
@@ -180,9 +185,9 @@ extension CGPoint {
   ///        When t = 1, the result is `end`.
   ///        Values less than 0 or greater than 1 will extrapolate beyond the line segment.
   /// - Returns: A point along the line from this point to `end`.
-  public func pointAlong(to end: CGPoint, t: CGFloat) -> CGPoint {
-    return CGPoint.pointAlong(from: self, to: end, t: t)
-  }
+//  public func pointAlong(to end: CGPoint, t: CGFloat) -> CGPoint {
+//    return CGPoint.pointAlong(from: self, to: end, t: t)
+//  }
 
   /// Returns a point at a specified distance along the line defined by `start` and `end`.
   /// - Parameters:
@@ -190,33 +195,33 @@ extension CGPoint {
   ///   - end: The ending point of the line.
   ///   - distance: The absolute distance from the `start` point.
   /// - Returns: A point along the line defined by `start` and `end` at the specified distance.
-  public static func pointAlong(
-    from start: CGPoint,
-    to end: CGPoint,
-    distance: CGFloat
-  ) -> CGPoint {
-    let dx = end.x - start.x
-    let dy = end.y - start.y
-    let totalDistance = sqrt(dx * dx + dy * dy)
-
-    /// Calculate the unit vector in the direction from start to end
-    let unitVectorX = dx / totalDistance
-    let unitVectorY = dy / totalDistance
-
-    /// Calculate the new point at the specified distance
-    return CGPoint(
-      x: start.x + unitVectorX * distance,
-      y: start.y + unitVectorY * distance
-    )
-  }
+//  public static func pointAlong(
+//    from start: CGPoint,
+//    to end: CGPoint,
+//    distance: CGFloat
+//  ) -> CGPoint {
+//    let dx = end.x - start.x
+//    let dy = end.y - start.y
+//    let totalDistance = sqrt(dx * dx + dy * dy)
+//
+//    /// Calculate the unit vector in the direction from start to end
+//    let unitVectorX = dx / totalDistance
+//    let unitVectorY = dy / totalDistance
+//
+//    /// Calculate the new point at the specified distance
+//    return CGPoint(
+//      x: start.x + unitVectorX * distance,
+//      y: start.y + unitVectorY * distance
+//    )
+//  }
 
   /// Returns a point at a specified distance along the line from this point to `end`.
   /// - Parameters:
   ///   - end: The ending point of the line.
   ///   - distance: The absolute distance from this point.
   /// - Returns: A point along the line from this point to `end` at the specified distance.
-  public func pointAlong(to end: CGPoint, distance: CGFloat) -> CGPoint {
-    return CGPoint.pointAlong(from: self, to: end, distance: distance)
-  }
+//  public func pointAlong(to end: CGPoint, distance: CGFloat) -> CGPoint {
+//    return CGPoint.pointAlong(from: self, to: end, distance: distance)
+//  }
 
 }
