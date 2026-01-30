@@ -45,7 +45,7 @@ let package = Package(
       name: "GestureKit",
       targets: [
         "GestureKit",
-        "LilyPad",
+//        "LilyPad",
       ]
     ),
 
@@ -152,6 +152,7 @@ let package = Package(
         .module(.coreTools),
         .module(.layoutKit),
         .module(.vectorKit),
+        .casePaths,
       ]
     ),
 
@@ -174,15 +175,15 @@ let package = Package(
       ]
     ),
 
-    .target(
-      name: "LilyPad",
-      dependencies: [
-        .module(.coreTools),
-        .module(.gestureKit),
-        .module(.colourKit),
-        .casePaths,
-      ]
-    ),
+//    .target(
+//      name: "LilyPad",
+//      dependencies: [
+//        .module(.coreTools),
+//        .module(.gestureKit),
+//        .module(.colourKit),
+//        .casePaths,
+//      ]
+//    ),
 
     .target(
       name: "MotionKit",
@@ -277,7 +278,7 @@ enum BaseModule {
   case gestureKit
   case graphicsKit
   case layoutKit
-  case lilypad
+//  case lilypad
   case motionKit
   case sharedHelpers
   case vectorKit
@@ -298,7 +299,7 @@ enum BaseModule {
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
       case .layoutKit: "LayoutKit"
-      case .lilypad: "LilyPad"
+//      case .lilypad: "LilyPad"
       case .motionKit: "MotionKit"
       case .sharedHelpers: "SharedHelpers"
       case .vectorKit: "VectorKit"
