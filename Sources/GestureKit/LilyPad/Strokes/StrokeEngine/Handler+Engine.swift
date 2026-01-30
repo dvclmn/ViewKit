@@ -12,12 +12,15 @@ struct StrokeEngine {
 
   static func generatePathFromStroke(
     points: [VelocityPoint],
+    strokeWidthRange range: ClosedRange<CGFloat>,
+//    pressure: CGFloat?,
+    sensitivity: CGFloat,
 //    points: [CGPoint],
 //    velocity: CGVector,
 //    pressure: CGFloat,
 //    points: [TouchPoint],
 //    points: [MappedTouchPoint],
-    config: StrokeConfiguration
+//    config: StrokeConfiguration
   ) -> Path {
 
     guard let firstPoint = points.first else {
@@ -49,13 +52,14 @@ struct StrokeEngine {
 //    pressure: CGFloat,
     _ point: VelocityPoint,
 //    _ point: MappedTouchPoint,
-    config: StrokeConfiguration,
+//    config: StrokeConfiguration,
     variableWidthPath: inout VariableWidthPath
   ) {
     let width: CGFloat = StrokeWidthHandler.calculateStrokeWidth(
       speed: point.velocity.speed,
+      in: <#T##ClosedRange<CGFloat>#>
       pressure: point.pressure,
-      config: config
+//      config: config
     )
 
     variableWidthPath.addPoint(

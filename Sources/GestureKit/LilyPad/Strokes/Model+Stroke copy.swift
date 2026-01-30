@@ -75,11 +75,11 @@ extension Stroke {
 }
 
 extension Strokes {
-  public static var exampleStyled: Self {
-    [
-      .example01: .example01,
-      .example02: .example02,
-      .example03: .example03,
-    ]
-  }
+//  public static var exampleStyled: Self {
+//    [
+//      .example01: .example01,
+//      .example02: .example02,
+//      .example03: .example03,
+//    ]
+//  }
 }
