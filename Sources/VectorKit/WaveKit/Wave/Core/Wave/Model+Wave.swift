@@ -16,21 +16,21 @@ import Foundation
 /// - Cycles: This is how many "humps" of the wave fit into that space.
 public struct Wave: Sendable, Identifiable, Hashable, Equatable, Codable {
   public let id: UUID
-  public var frequency: CGFloat
   public var amplitude: CGFloat
+  public var frequency: CGFloat
   public var phase: CGFloat
   public var waveform: Waveform
 
   public init(
     id: UUID = UUID(),
-    freq: CGFloat,
     amp: CGFloat,
+    freq: CGFloat,
     phase: CGFloat,
     waveform: Waveform = .sine
   ) {
     self.id = id
-    self.frequency = freq
     self.amplitude = amp
+    self.frequency = freq
     self.phase = phase
     self.waveform = waveform
   }
@@ -38,15 +38,15 @@ public struct Wave: Sendable, Identifiable, Hashable, Equatable, Codable {
 
 extension Wave {
   public static let example01: Self = .init(
-    freq: 3,
     amp: 8,
+    freq: 3,
     phase: 0,
     waveform: .sine
   )
   
   public static let example02: Self = .init(
-    freq: 10,
     amp: 30,
+    freq: 10,
     phase: 0,
     waveform: .sine
   )

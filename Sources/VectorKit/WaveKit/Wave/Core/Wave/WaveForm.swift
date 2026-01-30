@@ -22,14 +22,14 @@ extension Waveform {
   /// phase `∈ [0, 1)`
   public func sample(
     phase: CGFloat,
-//    isFastMode: Bool = true
+    //    isFastMode: Bool = true
   ) -> CGFloat {
     let p = Float(phase.truncatingRemainder(dividingBy: 1))
     return CGFloat(FastWaveSampler.value(for: self, at: p))
     //    let p = phase - floor(phase)  // wrap to [0, 1)
-//    return isFastMode
-//      ?
-//      : WaveSampler.value(for: self, at: p)
+    //    return isFastMode
+    //      ?
+    //      : WaveSampler.value(for: self, at: p)
   }
 
 }

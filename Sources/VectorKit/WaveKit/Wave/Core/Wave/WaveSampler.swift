@@ -16,9 +16,9 @@ import SwiftUI
 // MARK: - Phase Handling
 @inlinable
 func normalizedPhase(_ phase: Float) -> Float {
-  // Corrects negative phases and floating-point overflow
+  /// Corrects negative phases and floating-point overflow
   let p = phase - floor(phase)
-  // Clamp 1.0 to 0.0 (rare, but possible with floating point error)
+  /// Clamp 1.0 to 0.0 (rare, but possible with floating point error)
   return p >= 1.0 ? 0 : p
 }
 
@@ -29,7 +29,7 @@ public struct FastWaveSampler {
   @usableFromInline static let tableMask = tableSize - 1
   @usableFromInline static let tableSizeF = Float(tableSize)
 
-  // Linearly interpolated sine table (better than nearest-neighbor)
+  /// Linearly interpolated sine table (better than nearest-neighbor)
   @usableFromInline static let sineTable: [Float] = (0...tableSize).map { i in
     sin(Float(i) * 2 * .pi / tableSizeF)
   }
@@ -69,8 +69,8 @@ public struct FastWaveSampler {
         vForce.sin(scaled, result: &result)
 
       default:
-        // For geometric waves, manual SIMD or simple map is fastest
-        // (could also use vDSP for the triangle/sawtooth math)
+        /// For geometric waves, manual SIMD or simple map is fastest
+        /// (could also use vDSP for the triangle/sawtooth math)
         for i in phases.indices {
           result[i] = value(for: waveform, at: phases[i])
         }

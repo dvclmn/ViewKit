@@ -7,35 +7,16 @@
 
 import Foundation
 
-public struct AnimatedWave {
-  public var wave: Wave
-  public var cycles: CGFloat
-  
-  public init(wave: Wave, cycles: CGFloat) {
-    self.wave = wave
-    self.cycles = cycles
-  }
-  
-  /// Evaluates the wave at a specific point in space.
-  /// - Parameters:
-  ///   - state: The persistent ContinuousParameter for this specific wave.
-  ///   - normalisedIndex: The normalisedIndex (0...1) of the current point.
-  public func sample(state: ContinuousParameter, at normalisedIndex: CGFloat) -> CGFloat {
-    /// 1. Get the time-based phase from our persistent state
-    let temporalPhase = state.currentPhase
-    
-    /// 2. Add spatial phase (cycles) and static offset (wave.phase)
-    let spatialPhase = normalisedIndex * cycles
-    let staticOffset = wave.phase
-    
-    let totalPhase = temporalPhase + spatialPhase + staticOffset
-    let wrappedPhase = totalPhase - floor(totalPhase)
-    
-    /// 3. Run it through the waveform math. Wrap and Sample
-    let value = wave.waveform.sample(phase: wrappedPhase)
-    return wave.amplitude * value
-  }
-}
+//public struct AnimatedWave {
+//  public var wave: Wave
+//  public var cycles: CGFloat
+//  
+//  public init(wave: Wave, cycles: CGFloat) {
+//    self.wave = wave
+//    self.cycles = cycles
+//  }
+//
+//}
 
 //public struct AnimatedWave {
 //  public var wave: Wave

@@ -15,8 +15,7 @@ import Foundation
 public struct ContinuousParameter: Sendable {
   private var lastSyncTime: TimeInterval = 0
   private var accumulatedPhase: CGFloat = 0
-//  private var lastFrequency: Double = 0
-
+  
   public init() {}
   
   /// Call this once per frame (main thread). Use `frequency` for integration.
@@ -31,6 +30,8 @@ public struct ContinuousParameter: Sendable {
   public var currentPhase: CGFloat {
     accumulatedPhase - floor(accumulatedPhase)
   }
+}
+
   
   /// Call this ONCE per frame before your drawing loop.
   /// It updates the internal phase based on how much time has passed.
@@ -50,7 +51,7 @@ public struct ContinuousParameter: Sendable {
 //  public var currentPhase: Double {
 //    accumulatedPhase - floor(accumulatedPhase)
 //  }
-}
+//}
 //public struct ContinuousParameter {
 //  private var origin: TimeInterval = 0
 //
