@@ -9,47 +9,51 @@ import Foundation
 
 /// A representation of a Catmull-Rom spline with various construction options
 /// A single user stroke, from beginning to end, can be represented by a single spline.
-public struct CatmullRomSpline {
-  /// The control points that define the spline
-  private let points: [CGPoint]
-  private let segment: CatmullRomSegment
-  public let controlPoints: [CGPoint]
+extension CatmullRom {
+  public struct Spline {
+    /// The control points that define the spline
+    private let points: [CGPoint]
+    private let segment: CatmullRom.Segment
+    public let controlPoints: [CGPoint]
 
-  /// The parameterization type to use
-  private let type: CatmullRomType
+    /// The parameterization type to use
+    private let type: CatmullRomType
 
-  /// The tension parameter for uniform splines (default is 0.5)
-  private let tension: CGFloat
-
-  public var segments: [CatmullRomSegment] {
-    guard controlPoints.hasFourPoints else { return [] }
-    //    return CatmullRomSegment(points: controlPoints)
-    return (0..<controlPoints.count - 3).map {
-      CatmullRomSegment(
-        p0: controlPoints[$0],
-        p1: controlPoints[$0 + 1],
-        p2: controlPoints[$0 + 2],
-        p3: controlPoints[$0 + 3]
-      )
-    }
+    /// The tension parameter for uniform splines (default is 0.5)
+    private let tension: CGFloat
   }
+}
+
+extension CatmullRom.Spline {
+//  public var segments: [CatmullRomSegment] {
+//    guard controlPoints.hasFourPoints else { return [] }
+//    //    return CatmullRomSegment(points: controlPoints)
+//    return (0..<controlPoints.count - 3).map {
+//      CatmullRomSegment(
+//        p0: controlPoints[$0],
+//        p1: controlPoints[$0 + 1],
+//        p2: controlPoints[$0 + 2],
+//        p3: controlPoints[$0 + 3]
+//      )
+//    }
+//  }
+
+//  public init?(
+//    points: [CGPoint],
+//    type: CatmullRomType = .centripetal,
+//    tension: CGFloat = 0.5
+//  ) {
+//    guard let segment = CatmullRom.Segment(points: points) else {
+//      return nil
+//    }
+//    self.segment = segment
+//    self.type = type
+//    self.tension = max(0, min(1, tension))
+//  }
 
   public init?(
-    points: [CGPoint],
-    type: CatmullRomType = .centripetal,
-    tension: CGFloat = 0.5
-  ) {
-    guard let segment = CatmullRomSegment(points: points) else {
-      return nil
-    }
-    self.segment = segment
-    self.type = type
-    self.tension = max(0, min(1, tension))
-  }
-
-  public init?(
-    segment: CatmullRomSegment,
-    type: CatmullRomType = .centripetal,
+    segment: CatmullRom.Segment,
+    type: CatmullRom.SplineVariant = .centripetal,
     tension: CGFloat = 0.5
   ) {
     self.segment = segment

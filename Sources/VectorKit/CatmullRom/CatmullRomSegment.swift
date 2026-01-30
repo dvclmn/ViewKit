@@ -10,48 +10,53 @@ import Foundation
 /// Important: A full spline (`CatmullRomSpline`) can be any number of points,
 /// and represents the users **full stroke**, from beginning to end.
 ///
-/// A segment (`CatmullRomSegment`) is  sequence of (in my case) 4 points,
-/// where `p1` and `p2` are interpolated, using the data of `p0` and `p3`
-public struct CatmullRomSegment {
-
-  public let p0: CGPoint
-  public let p1: CGPoint
-  public let p2: CGPoint
-  public let p3: CGPoint
-
-  // MARK: - Standard init
-  public init(p0: CGPoint, p1: CGPoint, p2: CGPoint, p3: CGPoint) {
-    self.p0 = p0
-    self.p1 = p1
-    self.p2 = p2
-    self.p3 = p3
-  }
-
-  // MARK: - Initialise from an array of points
-  public init?(points: [CGPoint]) {
-
-    guard points.hasFourPoints else {
-      print("Error: CatmullRomSpline requires at least 4 control points")
-      return nil
+/// A segment (`CatmullRomSegment`) is  sequence of 4 points,
+/// where `p1` and `p2` are interpolated using the data of `p0` and `p3`
+extension CatmullRom {
+  public struct Segment {
+    
+    public let p0: CGPoint
+    public let p1: CGPoint
+    public let p2: CGPoint
+    public let p3: CGPoint
+    
+    // MARK: - Standard init
+    public init(p0: CGPoint, p1: CGPoint, p2: CGPoint, p3: CGPoint) {
+      self.p0 = p0
+      self.p1 = p1
+      self.p2 = p2
+      self.p3 = p3
     }
-    self.init(
-      p0: points[0],
-      p1: points[1],
-      p2: points[2],
-      p3: points[3]
-    )
   }
+}
+
+extension CatmullRom.Segment {
+
+  /// This seems like a recipe for errors, dunno
+  //  public init?(points: [CGPoint]) {
+  //
+  //    guard points.count >= 4 else {
+  //      print("Error: CatmullRomSpline requires at least 4 control points")
+  //      return nil
+  //    }
+  //    self.init(
+  //      p0: points[0],
+  //      p1: points[1],
+  //      p2: points[2],
+  //      p3: points[3]
+  //    )
+  //  }
 
   public func interpolate(
     at t: CGFloat,
-    type: CatmullRomType = .centripetal,
+    type: CatmullRom.SplineVariant = .centripetal,
     tension: CGFloat = 0.5
   ) -> CGPoint {
     switch type {
       case .uniform:
-        return CatmullRomSpline.catmullRomUniform(p0, p1, p2, p3, t, tension: tension)
+        return CatmullRom.Spline.catmullRomUniform(p0, p1, p2, p3, t, tension: tension)
       case .chordal, .centripetal:
-        return CatmullRomSpline.catmullRomParameterized(p0, p1, p2, p3, t, type: type)
+        return CatmullRom.Spline.catmullRomParameterized(p0, p1, p2, p3, t, type: type)
     }
   }
 
@@ -90,8 +95,8 @@ public struct CatmullRomSegment {
 
 }
 
-extension Array where Element == CGPoint {
-  public var hasFourPoints: Bool {
-    return count == 4
-  }
-}
+//extension Array where Element == CGPoint {
+//  public var hasFourPoints: Bool {
+//    return count == 4
+//  }
+//}
