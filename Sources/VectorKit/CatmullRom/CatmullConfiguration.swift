@@ -11,7 +11,7 @@ public struct CatmullRomConfiguration: Sendable, Codable, Equatable, Hashable, I
   public let id: UUID
   let tension: CGFloat
   let alpha: CGFloat  // Future: centripetal/chordal parameterization
-                      //  var endpointHandling: EndpointHandling = .clamp
+  //  var endpointHandling: EndpointHandling = .clamp
   public init(
     tension: CGFloat = 0.5,
     alpha: CGFloat = 0.5
@@ -22,4 +22,3 @@ public struct CatmullRomConfiguration: Sendable, Codable, Equatable, Hashable, I
   }
   //  public static let standard: CatmullRomConfiguration = CatmullRomConfiguration()
 }
-

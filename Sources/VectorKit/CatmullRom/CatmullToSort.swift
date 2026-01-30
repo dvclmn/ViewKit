@@ -8,34 +8,6 @@
 import SwiftUI
 import CoreTools
 
-public enum CatmullRomTypeMetadata: String, Pickable, Codable, Sendable {
-  public static var pickerLabel: QuickLabel { .init("Catmull-Rom Type") }
-  
-  case uniform
-  case chordal
-  case centripetal
-  case none
-  
-  public var name: String { self.rawValue.capitalized }
-  
-  public var toSplineType: CatmullRomType? {
-    switch self {
-      case .uniform: .uniform
-      case .chordal: .chordal
-      case .centripetal: .centripetal
-      default: nil
-    }
-  }
-  
-  public var icon: String {
-    switch self {
-      case .uniform: "eye"
-      case .chordal: "eye"
-      case .centripetal: "eye"
-      case .none: "eye"
-    }
-  }
-}
 
 extension Path {
   // MARK: - Catmull-Rom Spline Interpolation
@@ -51,7 +23,10 @@ extension Path {
   ///
   /// The algorithm uses the parametric form with tension parameter (default 0.5)
   /// which determines how tight the curves are around the control points
-  package static func makeCatmullRomPath(points: [CGPoint], tension: CGFloat = 0.5) -> Path {
+  package static func makeCatmullRomPath(
+    points: [CGPoint],
+    tension: CGFloat = 0.5
+  ) -> Path {
     guard points.count >= 2 else { return makeLinearPath(points: points) }
     
     var path = Path()

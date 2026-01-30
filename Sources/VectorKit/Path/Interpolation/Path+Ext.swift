@@ -21,9 +21,6 @@ extension Path {
     return switch interpolation {
       case .linear: makeLinearPath(points: points)
       case .cubic: makeCubicPath(points: points)
-      //      case .quad:
-      //        #warning("Need to implement quad")
-      //        makeCubicPath(points: points)
       case .catmullRom: makeCatmullRomPath(points: points)
     }
   }

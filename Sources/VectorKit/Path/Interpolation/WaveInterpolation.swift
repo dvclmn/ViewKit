@@ -14,7 +14,6 @@ import SwiftUI
 public enum WaveInterpolation: Sendable, Equatable, Codable, Hashable {
   case linear
   case cubic
-//  case quad
   case catmullRom(CatmullRomConfiguration)
 
   public var name: String {
