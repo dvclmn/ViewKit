@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 // MARK: - Stretch out an Axis
 public struct StretchOptions: OptionSet, Sendable {
   public let rawValue: Int
@@ -67,8 +66,6 @@ extension CGPoint {
     return result
   }
 
-
-
   /// Hint: use extension `toCGRect` on `CGSize` for convenient
   /// conversion, if origin is `zero`.
   public func mapped(to destination: CGRect) -> CGPoint {
@@ -88,7 +85,5 @@ extension CGPoint {
 
     return CGPoint(x: newX, y: newY)
   }
-
-  
 
 }

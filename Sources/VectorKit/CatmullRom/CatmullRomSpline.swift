@@ -9,88 +9,88 @@ import Foundation
 
 /// A representation of a Catmull-Rom spline with various construction options
 /// A single user stroke, from beginning to end, can be represented by a single spline.
-extension CatmullRom {
-  public struct Spline {
-    /// The control points that define the spline
-    private let points: [CGPoint]
-    private let segment: CatmullRom.Segment
-    public let controlPoints: [CGPoint]
-
-    /// The parameterization type to use
-    private let type: CatmullRomType
-
-    /// The tension parameter for uniform splines (default is 0.5)
-    private let tension: CGFloat
-  }
-}
+//extension CatmullRom {
+//  public struct Spline {
+//    /// The control points that define the spline
+//    private let points: [CGPoint]
+//    private let segment: CatmullRom.Segment
+//    public let controlPoints: [CGPoint]
+//
+//    /// The parameterization type to use
+//    private let type: CatmullRomType
+//
+//    /// The tension parameter for uniform splines (default is 0.5)
+//    private let tension: CGFloat
+//  }
+//}
 
 extension CatmullRom.Spline {
-//  public var segments: [CatmullRomSegment] {
-//    guard controlPoints.hasFourPoints else { return [] }
-//    //    return CatmullRomSegment(points: controlPoints)
-//    return (0..<controlPoints.count - 3).map {
-//      CatmullRomSegment(
-//        p0: controlPoints[$0],
-//        p1: controlPoints[$0 + 1],
-//        p2: controlPoints[$0 + 2],
-//        p3: controlPoints[$0 + 3]
-//      )
-//    }
-//  }
+  //  public var segments: [CatmullRomSegment] {
+  //    guard controlPoints.hasFourPoints else { return [] }
+  //    //    return CatmullRomSegment(points: controlPoints)
+  //    return (0..<controlPoints.count - 3).map {
+  //      CatmullRomSegment(
+  //        p0: controlPoints[$0],
+  //        p1: controlPoints[$0 + 1],
+  //        p2: controlPoints[$0 + 2],
+  //        p3: controlPoints[$0 + 3]
+  //      )
+  //    }
+  //  }
 
-//  public init?(
-//    points: [CGPoint],
-//    type: CatmullRomType = .centripetal,
-//    tension: CGFloat = 0.5
-//  ) {
-//    guard let segment = CatmullRom.Segment(points: points) else {
-//      return nil
-//    }
-//    self.segment = segment
-//    self.type = type
-//    self.tension = max(0, min(1, tension))
-//  }
+  //  public init?(
+  //    points: [CGPoint],
+  //    type: CatmullRomType = .centripetal,
+  //    tension: CGFloat = 0.5
+  //  ) {
+  //    guard let segment = CatmullRom.Segment(points: points) else {
+  //      return nil
+  //    }
+  //    self.segment = segment
+  //    self.type = type
+  //    self.tension = max(0, min(1, tension))
+  //  }
 
-  public init?(
-    segment: CatmullRom.Segment,
-    type: CatmullRom.SplineVariant = .centripetal,
-    tension: CGFloat = 0.5
-  ) {
-    self.segment = segment
-    self.type = type
-    self.tension = max(0, min(1, tension))
-  }
+  //  public init?(
+  //    segment: CatmullRom.Segment,
+  //    type: CatmullRom.SplineVariant = .centripetal,
+  //    tension: CGFloat = 0.5
+  //  ) {
+  //    self.segment = segment
+  //    self.type = type
+  //    self.tension = max(0, min(1, tension))
+  //  }
 
   /// Evaluates the spline at the given parameter value
   /// - Parameters:
   ///   - t: The parameter value (normalized between 0 and 1)
   ///   - segmentIndex: The index of the segment to evaluate (default is 0)
   /// - Returns: The interpolated point on the spline
-  public func evaluate(
-    at t: CGFloat,
-    segmentIndex: Int = 0
-  ) -> CGPoint? {
-    /// Ensure the segment index is valid
-
-    guard isValidSegmentIndex(segmentIndex, pointCount: points.count) else {
-      print("Error evaluating, invalid segment index \(segmentIndex), with point count \(points.count).")
-      return nil
-    }
-
-    // Get the four control points for the segment
-    let p0 = points[segmentIndex]
-    let p1 = points[segmentIndex + 1]
-    let p2 = points[segmentIndex + 2]
-    let p3 = points[segmentIndex + 3]
-
-    // Use the appropriate interpolation method based on type
-    switch type {
-      case .uniform:
-        return Self.catmullRomUniform(p0, p1, p2, p3, t, tension: tension)
-      case .centripetal, .chordal:
-        return Self.catmullRomParameterized(p0, p1, p2, p3, t, type: type)
-    }
-  }
+  //  public func evaluate(
+  //    at t: CGFloat,
+  //    segmentIndex: Int = 0
+  //  ) -> CGPoint? {
+  //    /// Ensure the segment index is valid
+  //
+  //    guard isValidSegmentIndex(segmentIndex, pointCount: points.count) else {
+  //      print("Error evaluating, invalid segment index \(segmentIndex), with point count \(points.count).")
+  //      return nil
+  //    }
+  //
+  //    // Get the four control points for the segment
+  //    let p0 = points[segmentIndex]
+  //    let p1 = points[segmentIndex + 1]
+  //    let p2 = points[segmentIndex + 2]
+  //    let p3 = points[segmentIndex + 3]
+  //
+  //    // Use the appropriate interpolation method based on type
+  //    switch type {
+  //      case .uniform:
+  //        return Self.catmullRomUniform(p0, p1, p2, p3, t, tension: tension)
+  //      case .centripetal, .chordal:
+  //        return Self.catmullRomParameterized(p0, p1, p2, p3, t, type: type)
+  //    }
+  //  }
 
   /// Generates points along the entire spline at the specified resolution
   /// - Parameter resolution: The number of points to generate per segment
@@ -98,9 +98,9 @@ extension CatmullRom.Spline {
   public func generatePoints(resolution: Int = 20) -> [CGPoint] {
     var result: [CGPoint] = []
 
-    // For each potential segment in the spline
+    /// For each potential segment in the spline
     for segmentIndex in 0...(points.count - 4) {
-      // Generate points along this segment
+      /// Generate points along this segment
       for step in 0..<resolution {
         let t = CGFloat(step) / CGFloat(resolution - 1)
         if let point = evaluate(at: t, segmentIndex: segmentIndex) {
@@ -144,7 +144,7 @@ extension CatmullRom.Spline {
   }
 
   /// Parameterized Catmull-Rom using De Casteljau-style algorithm
-  public static func catmullRomParameterized(
+  public static func catmullRom(
     _ p0: CGPoint,
     _ p1: CGPoint,
     _ p2: CGPoint,
@@ -152,28 +152,22 @@ extension CatmullRom.Spline {
     _ t: CGFloat,
     type: CatmullRomType
   ) -> CGPoint {
-    let alpha: CGFloat
-    switch type {
-      case .uniform: alpha = 0.0  // Shouldn't reach here, but safe fallback
-      case .chordal: alpha = 1.0
-      case .centripetal: alpha = 0.5
-    }
 
-    func tj(_ ti: CGFloat, _ pi: CGPoint, _ pj: CGPoint) -> CGFloat {
+    func nextKnotValue(_ ti: CGFloat, _ pi: CGPoint, _ pj: CGPoint) -> CGFloat {
       let dx = pj.x - pi.x
       let dy = pj.y - pi.y
-      return pow(dx * dx + dy * dy, alpha * 0.5) + ti
+      return pow(dx * dx + dy * dy, type.alpha * 0.5) + ti
     }
 
     let t0: CGFloat = 0
-    let t1 = tj(t0, p0, p1)
-    let t2 = tj(t1, p1, p2)
-    let t3 = tj(t2, p2, p3)
+    let t1 = nextKnotValue(t0, p0, p1)
+    let t2 = nextKnotValue(t1, p1, p2)
+    let t3 = nextKnotValue(t2, p2, p3)
 
-    // Map t in [0, 1] to τ in [t1, t2]
+    /// Map t in [0, 1] to τ in [t1, t2]
     let tau = t1 + (t2 - t1) * t
 
-    // Perform the recursive interpolation (De Casteljau-like)
+    /// Perform the recursive interpolation (De Casteljau-like)
     let A1 = interpolate(p0, p1, (tau - t0) / (t1 - t0))
     let A2 = interpolate(p1, p2, (tau - t1) / (t2 - t1))
     let A3 = interpolate(p2, p3, (tau - t2) / (t3 - t2))

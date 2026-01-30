@@ -38,6 +38,13 @@ extension CatmullRom {
 
 extension CatmullRom.SplineVariant {
 
+  public var alpha: CGFloat {
+    switch self {
+      case .uniform: 0
+      case .centripetal: 0.5
+      case .chordal: 1
+    }
+  }
   public var name: String { self.rawValue.capitalized }
 
   public var icon: String {

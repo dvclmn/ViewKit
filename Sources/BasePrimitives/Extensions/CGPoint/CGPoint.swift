@@ -8,24 +8,6 @@
 import SwiftUI
 
 extension CGPoint {
-
-  public init(fromSize size: CGSize) {
-    self.init(x: size.width, y: size.height)
-  }
-
-  public init(fromLength length: CGFloat) {
-    self.init(x: length, y: length)
-  }
-
-  public init(_ x: CGFloat, _ y: CGFloat) {
-    self.init(x: x, y: y)
-  }
-  public var toCGSize: CGSize {
-    return CGSize(width: self.x, height: self.y)
-  }
-}
-
-extension CGPoint {
   /// Returns a new CGPoint aligned relative to a container of the given size,
   /// using a unit point as the anchor.
   ///
@@ -107,13 +89,14 @@ extension CGPoint {
   public static let quickPreset02 = CGPoint(x: 80, y: 120)
   public static let quickPreset03 = CGPoint(x: 20, y: 220)
 
-  public var normalised: CGPoint {
-    guard length > 0 else { return .zero }
-    return CGPoint(
-      x: x / length,
-      y: y / length
-    )
-  }
+  /// What does this really mean/do?
+  //  public var normalised: CGPoint {
+  //    guard length > 0 else { return .zero }
+  //    return CGPoint(
+  //      x: x / length,
+  //      y: y / length
+  //    )
+  //  }
 
   public func centredIn(size: CGSize) -> CGPoint {
     let centred: CGSize = size / 2
@@ -133,20 +116,9 @@ extension CGPoint {
   }
 
   /// Returns true if both x and y coordinates are in the range [0.0, 1.0]
-  public var isNormalised: Bool {
-    return x >= 0.0 && x <= 1.0 && y >= 0.0 && y <= 1.0
-  }
-
-  public static func angleInRadians(
-    from p1: CGPoint,
-    to p2: CGPoint
-  ) -> CGFloat {
-    atan2(p2.y - p1.y, p2.x - p1.x)
-  }
-
-  public static func angle(from p1: CGPoint, to p2: CGPoint) -> Angle {
-    Angle(radians: angleInRadians(from: p1, to: p2))
-  }
+  //  public var isNormalised: Bool {
+  //    return x >= 0.0 && x <= 1.0 && y >= 0.0 && y <= 1.0
+  //  }
 
   public func delta(
     from lastPosition: CGPoint,
