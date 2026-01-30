@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 4/5/2025.
 //
 
-import Foundation
+//import Foundation
 
 /// A representation of a Catmull-Rom spline with various construction options
 /// A single user stroke, from beginning to end, can be represented by a single spline.
@@ -24,7 +24,7 @@ import Foundation
 //  }
 //}
 
-extension CatmullRom.Spline {
+//extension CatmullRom.Spline {
   //  public var segments: [CatmullRomSegment] {
   //    guard controlPoints.hasFourPoints else { return [] }
   //    //    return CatmullRomSegment(points: controlPoints)
@@ -95,107 +95,107 @@ extension CatmullRom.Spline {
   /// Generates points along the entire spline at the specified resolution
   /// - Parameter resolution: The number of points to generate per segment
   /// - Returns: An array of points along the spline
-  public func generatePoints(resolution: Int = 20) -> [CGPoint] {
-    var result: [CGPoint] = []
-    
-    /// For each potential segment in the spline
-    for segmentIndex in 0...(points.count - 4) {
-      /// Generate points along this segment
-      for step in 0..<resolution {
-        let t = CGFloat(step) / CGFloat(resolution - 1)
-        if let point = evaluate(at: t, segmentIndex: segmentIndex) {
-          result.append(point)
-        }
-      }
-    }
-    
-    return result
-  }
-  
-  // MARK: - Private Implementation Methods
-  
-  /// The original tensor-based Catmull-Rom interpolation (uniform parameterization)
-  public static func catmullRomUniform(
-    _ p0: CGPoint,
-    _ p1: CGPoint,
-    _ p2: CGPoint,
-    _ p3: CGPoint,
-    _ t: CGFloat,
-    tension: CGFloat
-  ) -> CGPoint {
-    let t2 = t * t
-    let t3 = t2 * t
-    
-    // Tension factor
-    let a = 2 * t3 - 3 * t2 + 1
-    let b = -2 * t3 + 3 * t2
-    let c = t3 - 2 * t2 + t
-    let d = t3 - t2
-    
-    // Adjust c and d with tension parameter
-    let adjustedC = c * tension
-    let adjustedD = d * tension
-    
-    // Calculate the x and y coordinates
-    let x = a * p1.x + b * p2.x + adjustedC * (p2.x - p0.x) + adjustedD * (p3.x - p1.x)
-    let y = a * p1.y + b * p2.y + adjustedC * (p2.y - p0.y) + adjustedD * (p3.y - p1.y)
-    
-    return CGPoint(x: x, y: y)
-  }
-  
-  /// Parameterized Catmull-Rom using De Casteljau-style algorithm
-  public static func catmullRom(
-    _ p0: CGPoint,
-    _ p1: CGPoint,
-    _ p2: CGPoint,
-    _ p3: CGPoint,
-    _ t: CGFloat,
-    type: CatmullRomType
-  ) -> CGPoint {
-    
-    func nextKnotValue(_ ti: CGFloat, _ pi: CGPoint, _ pj: CGPoint) -> CGFloat {
-      let dx = pj.x - pi.x
-      let dy = pj.y - pi.y
-      return pow(dx * dx + dy * dy, type.alpha * 0.5) + ti
-    }
-    
-    let t0: CGFloat = 0
-    let t1 = nextKnotValue(t0, p0, p1)
-    let t2 = nextKnotValue(t1, p1, p2)
-    let t3 = nextKnotValue(t2, p2, p3)
-    
-    /// Map t in [0, 1] to τ in [t1, t2]
-    let tau = t1 + (t2 - t1) * t
-    
-    /// Perform the recursive interpolation (De Casteljau-like)
-    let A1 = p0.lerp(to: p1, t: (tau - t0) / (t1 - t0))
-    let A2 = p1.lerp(to: p2, t: (tau - t1) / (t2 - t1))
-    let A3 = p2.lerp(to: p3, t: (tau - t2) / (t3 - t2))
-    
-    let B1 = A1.lerp(to: A2, t: (tau - t1) / (t2 - t1))
-    let B2 = A2.lerp(to: A3, t: (tau - t2) / (t3 - t2))
-    
-    return B1.lerp(to: B2, t: (tau - t2) / (t3 - t2))
-  }
-  
-  private func isValidSegmentIndex(
-    _ index: Int,
-    pointCount: Int
-  ) -> Bool {
-    return index >= 0 && index + 3 < pointCount
-  }
-  
-  /// Uniform Catmull-Rom interpolation for scalar values
-  public static func catmullRomScalarUniform(
-    _ v0: CGFloat, _ v1: CGFloat, _ v2: CGFloat, _ v3: CGFloat, _ t: CGFloat
-  ) -> CGFloat {
-    let t2 = t * t
-    let t3 = t2 * t
-    
-    return 0.5
-    * (2 * v1 + (v2 - v0) * t + (2 * v0 - 5 * v1 + 4 * v2 - v3) * t2 + (3 * v1 - v0 - 3 * v2 + v3) * t3)
-  }
-}
+//  public func generatePoints(resolution: Int = 20) -> [CGPoint] {
+//    var result: [CGPoint] = []
+//    
+//    /// For each potential segment in the spline
+//    for segmentIndex in 0...(points.count - 4) {
+//      /// Generate points along this segment
+//      for step in 0..<resolution {
+//        let t = CGFloat(step) / CGFloat(resolution - 1)
+//        if let point = evaluate(at: t, segmentIndex: segmentIndex) {
+//          result.append(point)
+//        }
+//      }
+//    }
+//    
+//    return result
+//  }
+//  
+//  // MARK: - Private Implementation Methods
+//  
+//  /// The original tensor-based Catmull-Rom interpolation (uniform parameterization)
+//  public static func catmullRomUniform(
+//    _ p0: CGPoint,
+//    _ p1: CGPoint,
+//    _ p2: CGPoint,
+//    _ p3: CGPoint,
+//    _ t: CGFloat,
+//    tension: CGFloat
+//  ) -> CGPoint {
+//    let t2 = t * t
+//    let t3 = t2 * t
+//    
+//    // Tension factor
+//    let a = 2 * t3 - 3 * t2 + 1
+//    let b = -2 * t3 + 3 * t2
+//    let c = t3 - 2 * t2 + t
+//    let d = t3 - t2
+//    
+//    // Adjust c and d with tension parameter
+//    let adjustedC = c * tension
+//    let adjustedD = d * tension
+//    
+//    // Calculate the x and y coordinates
+//    let x = a * p1.x + b * p2.x + adjustedC * (p2.x - p0.x) + adjustedD * (p3.x - p1.x)
+//    let y = a * p1.y + b * p2.y + adjustedC * (p2.y - p0.y) + adjustedD * (p3.y - p1.y)
+//    
+//    return CGPoint(x: x, y: y)
+//  }
+//  
+//  /// Parameterized Catmull-Rom using De Casteljau-style algorithm
+//  public static func catmullRom(
+//    _ p0: CGPoint,
+//    _ p1: CGPoint,
+//    _ p2: CGPoint,
+//    _ p3: CGPoint,
+//    _ t: CGFloat,
+//    type: CatmullRomType
+//  ) -> CGPoint {
+//    
+//    func nextKnotValue(_ ti: CGFloat, _ pi: CGPoint, _ pj: CGPoint) -> CGFloat {
+//      let dx = pj.x - pi.x
+//      let dy = pj.y - pi.y
+//      return pow(dx * dx + dy * dy, type.alpha * 0.5) + ti
+//    }
+//    
+//    let t0: CGFloat = 0
+//    let t1 = nextKnotValue(t0, p0, p1)
+//    let t2 = nextKnotValue(t1, p1, p2)
+//    let t3 = nextKnotValue(t2, p2, p3)
+//    
+//    /// Map t in [0, 1] to τ in [t1, t2]
+//    let tau = t1 + (t2 - t1) * t
+//    
+//    /// Perform the recursive interpolation (De Casteljau-like)
+//    let A1 = p0.lerp(to: p1, t: (tau - t0) / (t1 - t0))
+//    let A2 = p1.lerp(to: p2, t: (tau - t1) / (t2 - t1))
+//    let A3 = p2.lerp(to: p3, t: (tau - t2) / (t3 - t2))
+//    
+//    let B1 = A1.lerp(to: A2, t: (tau - t1) / (t2 - t1))
+//    let B2 = A2.lerp(to: A3, t: (tau - t2) / (t3 - t2))
+//    
+//    return B1.lerp(to: B2, t: (tau - t2) / (t3 - t2))
+//  }
+//  
+//  private func isValidSegmentIndex(
+//    _ index: Int,
+//    pointCount: Int
+//  ) -> Bool {
+//    return index >= 0 && index + 3 < pointCount
+//  }
+//  
+//  /// Uniform Catmull-Rom interpolation for scalar values
+//  public static func catmullRomScalarUniform(
+//    _ v0: CGFloat, _ v1: CGFloat, _ v2: CGFloat, _ v3: CGFloat, _ t: CGFloat
+//  ) -> CGFloat {
+//    let t2 = t * t
+//    let t3 = t2 * t
+//    
+//    return 0.5
+//    * (2 * v1 + (v2 - v0) * t + (2 * v0 - 5 * v1 + 4 * v2 - v3) * t2 + (3 * v1 - v0 - 3 * v2 + v3) * t3)
+//  }
+//}
 
 //  // MARK: - Public Properties
 //

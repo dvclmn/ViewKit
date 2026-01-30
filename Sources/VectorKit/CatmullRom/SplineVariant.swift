@@ -8,7 +8,7 @@
 import CoreTools
 import Foundation
 
-public enum CatmullRom {}
+//public enum CatmullRom {}
 
 extension CatmullRom {
 
