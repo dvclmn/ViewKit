@@ -5,15 +5,17 @@
 //  Created by Dave Coleman on 5/5/2025.
 //
 
-import ToolKit
-import GestureKit
-import Sharing
+//import Sharing
 import SwiftUI
 
 struct StrokeEngine {
 
   static func generatePathFromStroke(
-    points: [TouchPoint],
+    points: [VelocityPoint],
+//    points: [CGPoint],
+//    velocity: CGVector,
+//    pressure: CGFloat,
+//    points: [TouchPoint],
 //    points: [MappedTouchPoint],
     config: StrokeConfiguration
   ) -> Path {
@@ -22,16 +24,18 @@ struct StrokeEngine {
       print("No points from which to create a Path")
       return Path()
     }
-    guard points.count > 1 else {
+//    guard points.count > 1 else {
       /// Otherwise, we can artifically add something that will give a 'dot'
-      let singleDotPoints: [CGPoint] = firstPoint.position.generateGoldenSpiral(turns: 2, scale: config.averageStrokeWidth, pointCount: 28)
-      return singleDotPoints.toPath()
-    }
+//      let singleDotPoints: [CGPoint] = firstPoint.generateGoldenSpiral(turns: 2, scale: config.averageStrokeWidth, pointCount: 28)
+//      return singleDotPoints.toPath()
+//    }
     var variableWidthPath = VariableWidthPath()
 
     for point in points {
       processSinglePoint(
         point,
+//        velocity: velocity,
+//        pressure: pressure,
         config: config,
         variableWidthPath: &variableWidthPath
       )
@@ -40,7 +44,10 @@ struct StrokeEngine {
   }
 
   private static func processSinglePoint(
-    _ point: TouchPoint,
+//    _ point: CGPoint,
+//    velocity: CGVector,
+//    pressure: CGFloat,
+    _ point: VelocityPoint,
 //    _ point: MappedTouchPoint,
     config: StrokeConfiguration,
     variableWidthPath: inout VariableWidthPath

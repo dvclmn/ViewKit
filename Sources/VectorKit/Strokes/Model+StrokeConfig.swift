@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ToolKit
 
 public struct StrokeConfiguration: Hashable, Sendable, Codable {
   

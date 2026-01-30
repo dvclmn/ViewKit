@@ -7,7 +7,6 @@
 
 import ColourKit
 import Foundation
-import GraphicsKit
 
 public struct Stroke: Hashable, Codable, Sendable {
   public let id: UUID

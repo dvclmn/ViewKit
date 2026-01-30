@@ -5,10 +5,7 @@
 //  Created by Dave Coleman on 5/5/2025.
 //
 
-import ToolKit
 import Foundation
-import GestureKit
-import VectorKit
 
 struct StrokeWidthHandler {
 
@@ -89,31 +86,32 @@ struct StrokeWidthHandler {
     return widthResult
   }
 
-  static func interpolatedWidth(
-    segment: CatmullRomSegment,
-    touchPoints: [TouchPoint],
-    pointIndex: Int,
-    t: CGFloat,
-    config: StrokeConfiguration
-  ) -> CGFloat? {
-    guard pointIndex + 3 < touchPoints.count else {
-      print(
-        "Width interpolation error: \"pointIndex + 3\" (\(pointIndex + 3)) was not less than \"touchPoints.count\" (\(touchPoints.count))."
-      )
-      return nil
-    }
-
-    /// Grab the four corresponding width values
-    let widths: [CGFloat] = (pointIndex..<pointIndex + 4)
-      .map { index in
-        let point = touchPoints[index]
-        return StrokeWidthHandler.calculateStrokeWidth(
-          speed: point.velocity.speed,
-          pressure: point.pressure,
-          config: config
-        )
-      }
-
-    return segment.interpolateScalar(values: widths, at: t)
-  }
+//  static func interpolatedWidth(
+//    segment: CatmullRomSegment,
+//    touchPoints: [TouchPoint],
+//    pointIndex: Int,
+//    t: CGFloat,
+//    config: StrokeConfiguration
+//  ) -> CGFloat? {
+//    guard pointIndex + 3 < touchPoints.count else {
+//      print(
+//        "Width interpolation error: \"pointIndex + 3\" (\(pointIndex + 3)) was not less than \"touchPoints.count\" (\(touchPoints.count))."
+//      )
+//      return nil
+//    }
+//
+//    /// Grab the four corresponding width values
+//    let widths: [CGFloat] = (pointIndex..<pointIndex + 4)
+//      .map { index in
+//        let point = touchPoints[index]
+//        return StrokeWidthHandler.calculateStrokeWidth(
+//          speed: point.velocity.speed,
+//          pressure: point.pressure,
+//          config: config
+//        )
+//      }
+//
+//    let thing =
+//    return segment.interpolateScalar(values: widths, at: t)
+//  }
 }

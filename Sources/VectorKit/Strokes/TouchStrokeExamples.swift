@@ -6,9 +6,6 @@
 //
 
 import SwiftUI
-import GestureKit
-import ToolKit
-import IdentifiedCollections
 
 //public enum TouchStrokeExample {
 //  case spiral

@@ -14,7 +14,7 @@ import SwiftUI
 public enum WaveInterpolation: Sendable, Equatable, Codable, Hashable {
   case linear
   case cubic
-  case catmullRom(CatmullRomConfiguration)
+  case catmullRom(CatmullRom.SplineVariant)
 
   public var name: String {
     switch self {

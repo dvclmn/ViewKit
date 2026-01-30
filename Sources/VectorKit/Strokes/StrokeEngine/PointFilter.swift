@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import GestureKit
 
 public struct PointFilter {
 
@@ -38,7 +37,7 @@ public struct PointFilter {
   /// - Returns: true if the point should be added to the stroke
   public static func shouldAddPoint(
     from last: CGPoint?,
-    to current: TouchPoint,
+    to current: VelocityPoint,
 //    to current: MappedTouchPoint,
     config: StrokeConfiguration
   ) -> Bool {
