@@ -7,18 +7,31 @@
 
 import SwiftUI
 
-import SwiftUI
-
 @Observable
-final class WaveGenerator {
+public final class WaveGenerator {
   var points: [CGPoint] = []
   var path: Path = .init()
-  var interpolation: WaveInterpolation = .linear
-  var usesAltCubicMethod: Bool = false
-//  private var cachedControlPoints: [CGPoint]?
+  var interpolation: WaveInterpolation
+  var usesAltCubicMethod: Bool
+  //  private var cachedControlPoints: [CGPoint]?
+  
+  public init(
+    interpolation: WaveInterpolation = .cubic,
+    usesAltCubicMethod: Bool = false
+  ) {
+    self.interpolation = interpolation
+    self.usesAltCubicMethod = usesAltCubicMethod
+  }
 }
 
 extension WaveGenerator {
+  public func getPath(using points: [CGPoint], interpolation: WaveInterpolation) -> Path {
+    self.points = points
+    self.interpolation = interpolation
+    editPath()
+    return path
+  }
+  
   public func resetAll() {
     resetPath()
     resetPoints()
@@ -29,7 +42,7 @@ extension WaveGenerator {
   public func resetPoints() {
     points.removeAll()
   }
-  
+
   var hasTwoOrMorePoints: Bool { points.count >= 2 }
 }
 
@@ -43,7 +56,7 @@ extension WaveGenerator {
 //    points = newPoints
 //    cachedControlPoints = nil // Invalidate on change
 //  }
-//  
+//
 //  var controlPoints: [CGPoint] {
 //    if let cached = cachedControlPoints { return cached }
 //    let computed = calculateCubicControlPoints(from: points)

@@ -13,15 +13,12 @@ extension WaveGenerator {
   ///   - points: Array of points to interpolate
   ///   - interpolation: The interpolation method to use
   /// - Returns: A new Path object, or nil if insufficient points
-  public func
-    editPath(  //    path: inout Path,
-    //  public static func makePath(
-    //    using points: [CGPoint],
-    //    interpolation: WaveInterpolation
-    )
-  {
+  public func editPath() {
     //  ) -> Path {
+    resetPath()
+
     guard !points.isEmpty else { return }
+
     return switch interpolation {
       case .linear: linearPath()
       case .cubic: usesAltCubicMethod ? createCubicCurvePath() : cubicPath()
@@ -39,8 +36,6 @@ extension WaveGenerator {
   /// Creates a path by connecting points with straight lines
   /// This is the fastest method, ideal when smoothness isn't required
   package func linearPath() {
-
-    resetPath()
     //    var path = Path()
     path.move(to: points[0])
 
@@ -59,7 +54,6 @@ extension WaveGenerator {
     guard hasTwoOrMorePoints else {
       return linearPath()
     }
-    resetPath()
 
     path.move(to: points[0])
 
