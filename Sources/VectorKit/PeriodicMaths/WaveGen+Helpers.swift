@@ -7,28 +7,33 @@
 
 import SwiftUI
 
-extension WaveGenerator {
+extension WavePathGenerator {
   /// Creates a path from a collection of points using the specified interpolation method
   /// - Parameters:
   ///   - points: Array of points to interpolate
   ///   - interpolation: The interpolation method to use
   /// - Returns: A new Path object, or nil if insufficient points
-  public func updatePath() {
+  public func updatePath(with interpolation: WaveInterpolation) {
+//  public func updatePath(with wave: ConfiguredWave) {
     //  ) -> Path {
     resetPath()
 
     guard !points.isEmpty else { return }
 
     return switch interpolation {
-      case .linear: linearPath()
-      case .cubic: usesAltCubicMethod ? createCubicCurvePath() : cubicPath()
-      case .quadratic: createQuadCurvePath()
+      case .linear:
+        linearPath()
+
+      case .cubic:
+        usesAltCubicMethod ? createCubicCurvePath() : cubicPath()
+
+      case .quadratic:
+        createQuadCurvePath()
+
       case .catmullRom(let variant, let tension, let samples):
-        catmullRomAlt(tension: tension, closed: false, samples: samples)
-//        catmullRom(
-//          variant: variant,
-//          closed: false
-//        )
+        catmullRomAlt02(variant: variant, tension: tension, closed: false, samples: samples)
+    //        catmullRomAlt(tension: tension, closed: false, samples: samples)
+    //        catmullRom(variant: variant, closed: false)
     }
   }
 

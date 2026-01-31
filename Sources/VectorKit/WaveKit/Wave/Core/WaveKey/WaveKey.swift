@@ -25,8 +25,15 @@ public protocol WaveKey: Hashable {
   static var displayName: String { get }
   static var defaultValue: ConfiguredWave { get }
 }
+//extension WaveKey {
+//
+//}
 
 /// Perhaps for later
 public protocol OrderedWaveKey: WaveKey {
   static var order: Int { get }
 }
+
+//public struct RegisteredWaves {
+//  
+//}

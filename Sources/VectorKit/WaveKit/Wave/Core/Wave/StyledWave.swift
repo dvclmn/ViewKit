@@ -31,6 +31,8 @@ extension StyledWave {
     self.config = configuredWave.config
     self.style = style
   }
+  
+  public var configuredWave: ConfiguredWave { .init(wave, config: config) }
 }
 
 extension StyledWave {

@@ -8,33 +8,35 @@
 import SwiftUI
 
 @Observable
-public final class WaveGenerator {
+public final class WavePathGenerator {
   public var points: [CGPoint] = []
   public var path: Path = .init()
-  public var interpolation: WaveInterpolation
-  public var usesAltCubicMethod: Bool
+//  public var interpolation: WaveInterpolation
+  public var usesAltCubicMethod: Bool = false
   //  private var cachedControlPoints: [CGPoint]?
 
   public init(
-    interpolation: WaveInterpolation = .cubic,
-    usesAltCubicMethod: Bool = false
+//    wave: ConfiguredWave
+//    interpolation: WaveInterpolation = .cubic,
+//    usesAltCubicMethod: Bool = false
   ) {
-    self.interpolation = interpolation
-    self.usesAltCubicMethod = usesAltCubicMethod
+//    self.wave = wave
+//    self.interpolation = interpolation
+//    self.usesAltCubicMethod = usesAltCubicMethod
   }
 }
 
-extension WaveGenerator {
-  public func updateInterpolation(_ newInterpolation: WaveInterpolation) {
-    interpolation = newInterpolation
-    updatePath()
-  }
-  public func getPath(using points: [CGPoint], interpolation: WaveInterpolation) -> Path {
-    self.points = points
-    self.interpolation = interpolation
-    updatePath()
-    return path
-  }
+extension WavePathGenerator {
+//  public func updateInterpolation(_ newInterpolation: WaveInterpolation) {
+//    interpolation = newInterpolation
+//    updatePath()
+//  }
+//  public func getPath(using points: [CGPoint]) -> Path {
+//    self.points = points
+////    self.interpolation = interpolation
+//    updatePath()
+//    return path
+//  }
 
   public func resetAll() {
     resetPath()
@@ -70,7 +72,7 @@ extension WaveGenerator {
 //  }
 //}
 
-extension WaveGenerator {
+extension WavePathGenerator {
 
   /// Creates a path from points using the specified style
   //  public func editPath(

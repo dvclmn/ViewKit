@@ -95,8 +95,9 @@ extension EnvironmentValues {
   /// only ensure there are at least 'x' integers
   @Entry public var minIntegerLength: Int?
   
+  /// Important: For these binding env values, don't forget to actually
+  /// initialise them somewhere in the app, to establish their source of truth
   @Entry public var isPaused: Binding<Bool> = .constant(true)
-//  @Entry public var isPaused: Bool = true
   @Entry public var frameRate: Binding<FrameRate> = .constant(.unlocked)
   @Entry public var animationClock: TimeInterval?
   @Entry public var isAnimationEnabled: Bool = false
