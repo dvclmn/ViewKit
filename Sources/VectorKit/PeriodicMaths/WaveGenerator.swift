@@ -25,10 +25,14 @@ public final class WaveGenerator {
 }
 
 extension WaveGenerator {
+  public func updateInterpolation(_ newInterpolation: WaveInterpolation) {
+    interpolation = newInterpolation
+    updatePath()
+  }
   public func getPath(using points: [CGPoint], interpolation: WaveInterpolation) -> Path {
     self.points = points
     self.interpolation = interpolation
-    editPath()
+    updatePath()
     return path
   }
 

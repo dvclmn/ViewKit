@@ -26,6 +26,15 @@ extension CGPoint {
 }
 
 extension CGPoint {
+  
+  public var invertedY: CGPoint {
+    CGPoint(x: x, y: -y)
+  }
+  
+  public var invertedX: CGPoint {
+    CGPoint(x: -x, y: y)
+  }
+  
   public static func angleInRadians(
     from p1: CGPoint,
     to p2: CGPoint

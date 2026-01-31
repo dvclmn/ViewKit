@@ -13,7 +13,7 @@ extension WaveGenerator {
   ///   - points: Array of points to interpolate
   ///   - interpolation: The interpolation method to use
   /// - Returns: A new Path object, or nil if insufficient points
-  public func editPath() {
+  public func updatePath() {
     //  ) -> Path {
     resetPath()
 
@@ -23,11 +23,12 @@ extension WaveGenerator {
       case .linear: linearPath()
       case .cubic: usesAltCubicMethod ? createCubicCurvePath() : cubicPath()
       case .quadratic: createQuadCurvePath()
-      case .catmullRom(let variant):
-        catmullRom(
-          variant: variant,
-          closed: false
-        )
+      case .catmullRom(let variant, let tension, let samples):
+        catmullRomAlt(tension: tension, closed: false, samples: samples)
+//        catmullRom(
+//          variant: variant,
+//          closed: false
+//        )
     }
   }
 
@@ -36,7 +37,7 @@ extension WaveGenerator {
   /// Creates a path by connecting points with straight lines
   /// This is the fastest method, ideal when smoothness isn't required
   package func linearPath() {
-    //    var path = Path()
+
     path.move(to: points[0])
 
     for i in 1..<points.count {

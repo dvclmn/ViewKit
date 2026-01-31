@@ -6,17 +6,18 @@
 //
 
 import SwiftUI
+import CoreTools
 
 extension WaveGenerator {
 
   /// Creates a smooth Catmull-Rom spline through the given points.
   /// Uses cubic Bézier conversion for optimal rendering performance.
   package func catmullRom(
-    //    points: [CGPoint],
     variant: CatmullRom.SplineVariant = .centripetal,
+    tension: CGFloat = 0.5,
     closed: Bool = false
   ) {
-    guard hasTwoOrMorePoints else { return }
+    guard hasTwoOrMorePoints else { return linearPath() }
     if points.count == 2 {
       path.move(to: points[0])
       path.addLine(to: points[1])
@@ -100,53 +101,179 @@ extension WaveGenerator {
     extended.append(points[points.count - 1])
     return extended
   }
+  //}
+  //extension Path {
+  //
+  package func catmullRomAlt(
+    //    points: [CGPoint],
+    tension: CGFloat = 0.5,
+    closed: Bool = false,
+    samples: Int = 16
+  ) {
+    //    var path = Path()
+    //    guard points.count > 1 else { return path }
+    guard hasTwoOrMorePoints else { return linearPath() }
+
+    let n = points.count
+
+    // Start at first point
+    path.move(to: points[0])
+
+    for i in 0..<n - 1 {
+      var p0 = points[(i - 1 + n) % n]
+      let p1 = points[i]
+      let p2 = points[(i + 1) % n]
+      var p3 = points[(i + 2) % n]
+
+      // For open curves, don't wrap around
+      if !closed {
+        if i == 0 { p0 = p1 }
+        if i == n - 2 { p3 = p2 }
+      }
+
+      // Sample the curve between p1 and p2
+      for j in 1...samples {
+        let t = CGFloat(j) / CGFloat(samples)
+        let tt = t * t
+        let ttt = tt * t
+
+        let q0 = -tension * ttt + 2 * tension * tt - tension * t
+        let q1 = (2 - tension) * ttt + (tension - 3) * tt + 1
+        let q2 = (tension - 2) * ttt + (3 - 2 * tension) * tt + tension * t
+        let q3 = tension * ttt - tension * tt
+
+        let x = q0 * p0.x + q1 * p1.x + q2 * p2.x + q3 * p3.x
+        let y = q0 * p0.y + q1 * p1.y + q2 * p2.y + q3 * p3.y
+
+        path.addLine(to: CGPoint(x: x, y: y))
+      }
+    }
+
+    //    return path
+  }
+
+  // This catmull rom code courtesy of
+  // https://github.com/andrelind/swift-catmullrom/tree/master
+  package func catmullRomAlt02(
+    //    points: [CGPoint],
+    variant: CatmullRom.SplineVariant,
+    tension: CGFloat = 0.5,
+    closed: Bool = false,
+    samples: Int = 16
+  ) {
+
+    //    convenience init?(catmullRomPoints: [CGPoint], closed: Bool, alpha: CGFloat) {
+    //      self.init()
+
+    if points.count < 4 {
+      return linearPath()
+    }
+    let alpha = variant.alpha
+
+    let startIndex = closed ? 0 : 1
+    let endIndex = closed ? points.count : points.count - 2
+
+    for i in startIndex..<endIndex {
+      let p0 = points[i - 1 < 0 ? points.count - 1 : i - 1]
+      let p1 = points[i]
+      let p2 = points[(i + 1) % points.count]
+      let p3 = points[(i + 1) % points.count + 1]
+
+      let d1 = (p1 - p0).length()
+      let d2 = p2.deltaTo(p1).length()
+      let d3 = p3.deltaTo(p2).length()
+      
+//      let d1 = p1.deltaTo(p0).length()
+//      let d2 = p2.deltaTo(p1).length()
+//      let d3 = p3.deltaTo(p2).length()
+
+      var b1 = p2 * pow(d1, 2 * alpha)
+//      var b1 = p2.multiplyBy(pow(d1, 2 * alpha))
+      b1 = b1.deltaTo(p0.multiplyBy(pow(d2, 2 * alpha)))
+      b1 = b1.addTo(
+        p1.multiplyBy(2 * pow(d1, 2 * alpha) + 3 * pow(d1, alpha) * pow(d2, alpha) + pow(d2, 2 * alpha)))
+      b1 = b1.multiplyBy(1.0 / (3 * pow(d1, alpha) * (pow(d1, alpha) + pow(d2, alpha))))
+
+      var b2 = p1.multiplyBy(pow(d3, 2 * alpha))
+      b2 = b2.deltaTo(p3.multiplyBy(pow(d2, 2 * alpha)))
+      b2 = b2.addTo(
+        p2.multiplyBy(2 * pow(d3, 2 * alpha) + 3 * pow(d3, alpha) * pow(d2, alpha) + pow(d2, 2 * alpha)))
+      b2 = b2.multiplyBy(1.0 / (3 * pow(d3, alpha) * (pow(d3, alpha) + pow(d2, alpha))))
+
+      if i == startIndex {
+        moveToPoint(p1)
+      }
+
+      curveToPoint(p2, controlPoint1: b1, controlPoint2: b2)
+      addCurveToPoint(p2, controlPoint1: b1, controlPoint2: b2)
+
+    }
+
+    if closed {
+      closePath()
+    }
+  }
+
 }
-//extension Path {
-//
-//  public static func catmullRomPath(
-//    points: [CGPoint],
-//    tension: CGFloat = 0.5,
-//    closed: Bool = false,
-//    samples: Int = 16
-//  ) -> Path {
-//    var path = Path()
-//    guard points.count > 1 else { return path }
-//
-//    let n = points.count
-//
-//    // Start at first point
-//    path.move(to: points[0])
-//
-//    for i in 0..<n - 1 {
-//      var p0 = points[(i - 1 + n) % n]
-//      let p1 = points[i]
-//      let p2 = points[(i + 1) % n]
-//      var p3 = points[(i + 2) % n]
-//
-//      // For open curves, don't wrap around
-//      if !closed {
-//        if i == 0 { p0 = p1 }
-//        if i == n - 2 { p3 = p2 }
-//      }
-//
-//      // Sample the curve between p1 and p2
-//      for j in 1...samples {
-//        let t = CGFloat(j) / CGFloat(samples)
-//        let tt = t * t
-//        let ttt = tt * t
-//
-//        let q0 = -tension * ttt + 2 * tension * tt - tension * t
-//        let q1 = (2 - tension) * ttt + (tension - 3) * tt + 1
-//        let q2 = (tension - 2) * ttt + (3 - 2 * tension) * tt + tension * t
-//        let q3 = tension * ttt - tension * tt
-//
-//        let x = q0 * p0.x + q1 * p1.x + q2 * p2.x + q3 * p3.x
-//        let y = q0 * p0.y + q1 * p1.y + q2 * p2.y + q3 * p3.y
-//
-//        path.addLine(to: CGPoint(x: x, y: y))
-//      }
-//    }
-//
-//    return path
+
+extension CGPoint {
+//  func translate(x: CGFloat, _ y: CGFloat) -> CGPoint {
+//    return CGPointMake(self.x + x, self.y + y)
 //  }
-//}
+//
+//  func translateX(x: CGFloat) -> CGPoint {
+//    return CGPointMake(self.x + x, self.y)
+//  }
+//
+//  func translateY(y: CGFloat) -> CGPoint {
+//    return CGPointMake(self.x, self.y + y)
+//  }
+
+//  func invertY() -> CGPoint {
+//    return CGPointMake(self.x, -self.y)
+//  }
+
+  func xAxis() -> CGPoint {
+    return CGPointMake(0, self.y)
+  }
+
+  func yAxis() -> CGPoint {
+    return CGPointMake(self.x, 0)
+  }
+
+  func addTo(a: CGPoint) -> CGPoint {
+    return CGPointMake(self.x + a.x, self.y + a.y)
+  }
+
+//  func deltaTo(a: CGPoint) -> CGPoint {
+//    return CGPointMake(self.x - a.x, self.y - a.y)
+//  }
+
+  func multiplyBy(value: CGFloat) -> CGPoint {
+    return CGPointMake(self.x * value, self.y * value)
+  }
+
+  func length() -> CGFloat {
+    return CGFloat(
+      sqrt(
+        CDouble(
+          self.x * self.x + self.y * self.y
+        )))
+  }
+
+  func normalize() -> CGPoint {
+    let l = self.length()
+    return CGPointMake(self.x / l, self.y / l)
+  }
+
+  static func fromString(string: String) -> CGPoint {
+    var s = string.stringByReplacingOccurrencesOfString("{", withString: "")
+    s = s.stringByReplacingOccurrencesOfString("}", withString: "")
+    s = s.stringByReplacingOccurrencesOfString(" ", withString: "")
+
+    let x = NSString(string: s.componentsSeparatedByString(",").first! as String).doubleValue
+    let y = NSString(string: s.componentsSeparatedByString(",").last! as String).doubleValue
+
+    return CGPointMake(CGFloat(x), CGFloat(y))
+  }
+}

@@ -27,11 +27,11 @@ extension CatmullRom {
   /// This tends to produce very wide, sweeping curves.
   ///
   /// In short: Alpha handles the geometry of the path (preventing loops), while tension handles the stiffness of the path.
-  public enum SplineVariant: String, Pickable, Codable, Sendable {
+  public enum SplineVariant: String, Pickable, Codable, Sendable, CaseIterable, Identifiable {
     case uniform
     case centripetal
     case chordal
-
+    public var id: String { rawValue }
     public static var pickerLabel: QuickLabel { "Catmull-Rom Type" }
   }
 }
@@ -52,7 +52,7 @@ extension CatmullRom.SplineVariant {
       case .uniform: "eye"
       case .chordal: "eye"
       case .centripetal: "eye"
-//      case .none: "eye"
+    //      case .none: "eye"
     }
   }
 }

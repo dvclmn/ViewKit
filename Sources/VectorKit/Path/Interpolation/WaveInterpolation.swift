@@ -13,19 +13,21 @@ import SwiftUI
 /// Note: See Swift Charts `InterpolationMethod`, possibly helpful
 /// https://developer.apple.com/documentation/charts/interpolationmethod
 @MetaEnum
+@CaseDetection
 @CasePathable
-public enum WaveInterpolation: Sendable, Equatable, Codable, Hashable, Identifiable {
+public enum WaveInterpolation: Sendable, Equatable, Codable, Hashable, Identifiable, CaseIterable {
+  public static let allCases: [WaveInterpolation] = [.linear, .cubic, .quadratic, .catmullRom(.centripetal)]
   case linear
   case cubic
   case quadratic
-  case catmullRom(CatmullRom.SplineVariant)
+  case catmullRom(CatmullRom.SplineVariant, tension: CGFloat = 0.5, samples: Int = 14)
 
   public var id: String {
     switch self {
       case .linear: "linear"
       case .cubic: "cubic"
       case .quadratic: "quadratic"
-      case .catmullRom(let variant): "catmullRom.\(variant.rawValue)"
+      case .catmullRom(let variant, _, _): "catmullRom.\(variant.rawValue)"
     }
   }
   public var name: String {
