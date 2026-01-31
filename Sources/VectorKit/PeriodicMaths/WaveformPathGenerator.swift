@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WaveformPathGenerator {
+extension WaveInterpolation {
 
   /// Creates a path from points using the specified style
   static func createPath(
@@ -17,7 +17,7 @@ struct WaveformPathGenerator {
     switch interpolation {
       case .linear: points.toPath(type: .line)
       case .cubic: createQuadCurvePath(from: points)
-      case .catmullRom(let variant): Path.catmullRom(
+      case .catmullRom(let variant): catmullRom(
         points: points,
         variant: variant,
         closed: true
@@ -54,6 +54,66 @@ struct WaveformPathGenerator {
       }
     }
   }
+  
+  /// Smooth path using cubic Bézier curves
+  private static func createCubicCurvePath(from points: [CGPoint]) -> Path {
+    Path { path in
+      guard points.count >= 2 else { return }
+      
+      path.move(to: points[0])
+      
+      // Not enough points for cubic smoothing → fall back to lines
+      guard points.count >= 4 else {
+        for p in points.dropFirst() {
+          path.addLine(to: p)
+        }
+        return
+      }
+      
+      for i in 0 ..< points.count - 3 {
+        let p0 = points[i]
+        let p1 = points[i + 1]
+        let p2 = points[i + 2]
+        let p3 = points[i + 3]
+        
+        let (c1, c2) = cubicControls(p0: p0, p1: p1, p2: p2, p3: p3)
+        
+        path.addCurve(
+          to: p2,
+          control1: c1,
+          control2: c2
+        )
+      }
+      
+      /// Add final line to last point
+      if let last = points.last {
+        path.addLine(to: last)
+      }
+    }
+  }
+  
+  private static func cubicControls(
+    p0: CGPoint,
+    p1: CGPoint,
+    p2: CGPoint,
+    p3: CGPoint
+  ) -> (CGPoint, CGPoint) {
+    
+    // Quarter influence, mirroring your quad logic
+    let c1 = CGPoint(
+      x: p1.x + (p2.x - p0.x) / 6,
+      y: p1.y + (p2.y - p0.y) / 6
+    )
+    
+    let c2 = CGPoint(
+      x: p2.x - (p3.x - p1.x) / 6,
+      y: p2.y - (p3.y - p1.y) / 6
+    )
+    
+    return (c1, c2)
+  }
+
+
 
   
 }

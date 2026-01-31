@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+//extension CGPoint: @retroactive Hashable {
+//  public var hashValue: Int { x.hashValue << 32 ^ y.hashValue }
+//}
+
+//public func == (lhs: CGPoint, rhs: CGPoint) -> Bool {
+//  return lhs.distance(to: rhs) < 0.000001
+//}
+
 extension Array where Element == CGPoint {
 
   /// Returns a view of every `stride`-th point, always including the first.
@@ -134,9 +142,14 @@ extension CGPoint {
   /// `sqrt(pow(x - point.x, 2) + pow(y - point.y, 2))`
   ///
   /// This calculates Euclidean distance (straight-line distance)
-  public func distance(to p2: CGPoint) -> CGFloat {
-    let p1: CGPoint = self
-    return hypot(p2.x - p1.x, p2.y - p1.y)
+  //  public func distance(to other: CGPoint) -> CGFloat {
+  //    return hypot(other.x - x, other.y - y)
+  //  }
+
+  public func distance(to other: CGPoint) -> CGFloat {
+    let dx = CGFloat(x - other.x)
+    let dy = CGFloat(y - other.y)
+    return sqrt((dx * dx) + (dy * dy))
   }
 
   /// Returns true if both x and y coordinates are in the range [0.0, 1.0]

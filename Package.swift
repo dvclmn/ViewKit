@@ -72,6 +72,7 @@ let package = Package(
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
+    .package(url: "https://github.com/quantumOrange/CubicSpline", branch: "main"),
     //    .package(
     //      url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
   ],
@@ -208,6 +209,7 @@ let package = Package(
         .module(.colourKit),
         .casePaths,
         .product(name: "MetaCodable", package: "MetaCodable"),
+        .product(name: "CubicSpline", package: "CubicSpline"),
 
       ]
     ),

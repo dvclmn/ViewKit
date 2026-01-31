@@ -7,27 +7,24 @@
 
 import SwiftUI
 
-extension Path {
+extension WaveGenerator {
 
   /// Creates a smooth Catmull-Rom spline through the given points.
   /// Uses cubic Bézier conversion for optimal rendering performance.
-  public static func catmullRom(
+  public mutating func catmullRom(
     points: [CGPoint],
     variant: CatmullRom.SplineVariant = .centripetal,
     closed: Bool = false
-  ) -> Path {
-    guard points.count >= 2 else { return Path() }
+  ) {
+    guard points.count >= 2 else { return }
     if points.count == 2 {
-      return Path {
-        $0.move(to: points[0])
-        $0.addLine(to: points[1])
-      }
+      move(to: points[0])
+      addLine(to: points[1])
     }
 
-    var path = Path()
-    let pts = closed ? points : extendEndpoints(points)
+    let pts = closed ? points : Self.extendEndpoints(points)
 
-    path.move(to: pts[1])  // Start at first actual point
+    move(to: pts[1])  // Start at first actual point
 
     for i in 1..<pts.count - 2 {
       let p0 = pts[i - 1]
@@ -40,7 +37,7 @@ extension Path {
         variant: variant
       )
 
-      path.addCurve(to: p2, control1: c1, control2: c2)
+      self.addCurve(to: p2, control1: c1, control2: c2)
     }
 
     if closed {
@@ -49,16 +46,16 @@ extension Path {
         p0: pts[pts.count - 2], p1: pts[pts.count - 1], p2: pts[0], p3: pts[1],
         variant: variant
       )
-      path.addCurve(to: pts[0], control1: c1, control2: c2)
+      self.addCurve(to: pts[0], control1: c1, control2: c2)
 
       let (c1b, c2b) = CatmullRom.toCubicBezier(
         p0: pts[pts.count - 1], p1: pts[0], p2: pts[1], p3: pts[2],
         variant: variant
       )
-      path.addCurve(to: pts[1], control1: c1b, control2: c2b)
+      self.addCurve(to: pts[1], control1: c1b, control2: c2b)
     }
 
-    return path
+    //    return path
   }
 
   /// Samples points along the spline for hit-testing or vertex buffers
@@ -95,6 +92,7 @@ extension Path {
   // MARK: - Helpers
 
   private static func extendEndpoints(_ points: [CGPoint]) -> [CGPoint] {
+    //  private static func extendEndpoints(_ points: [CGPoint]) -> [CGPoint] {
     // For open curves, duplicate endpoints so the curve starts/ends at the first/last point
     // You could also mirror them here if you want different endpoint behavior
     var extended = points
