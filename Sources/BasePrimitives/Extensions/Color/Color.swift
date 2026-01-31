@@ -22,6 +22,10 @@ enum OpacityPreset: CGFloat {
 }
 
 extension Color {
+  
+  public func toCGColor(using environment: EnvironmentValues) -> CGColor{
+    resolve(in: environment).cgColor
+  }
 
   public var opacityBarelyThere: Color { opacity(OpacityPreset.opacityBarelyThere.rawValue) }
   public var opacityFaint: Color { opacity(OpacityPreset.opacityFaint.rawValue) }

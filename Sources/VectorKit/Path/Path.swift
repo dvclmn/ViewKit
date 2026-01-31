@@ -8,6 +8,8 @@
 import SwiftUI
 
 extension Path {
+  
+  public var toCGPath: CGPath { self.cgPath }
 
   public mutating func move(to unitPoint: UnitPoint, in size: CGSize) {
     let point = unitPoint.toCGPoint(in: size)

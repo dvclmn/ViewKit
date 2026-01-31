@@ -7,8 +7,9 @@
 
 import Foundation
 
-public enum FrameRate: Int {
+public enum FrameRate: Int, CaseIterable, Identifiable {
   case fps8 = 8
+  case unlocked = 0
   case fps15 = 15
   case fps24 = 24
   case fps30 = 30
@@ -16,8 +17,13 @@ public enum FrameRate: Int {
   case fps120 = 120
   
   /// System determines appropriate update interval
-  case unlocked = 0
+}
 
+extension FrameRate {
+  public var id: Int { rawValue }
+  
+  public var isUnlocked: Bool { self == .unlocked }
+  
   public var rate: TimeInterval? {
     switch self {
       case .unlocked: nil
