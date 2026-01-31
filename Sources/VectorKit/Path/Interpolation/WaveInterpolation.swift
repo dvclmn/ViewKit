@@ -15,6 +15,7 @@ import SwiftUI
 @MetaEnum
 @CaseDetection
 @CasePathable
+@dynamicMemberLookup
 public enum WaveInterpolation: Sendable, Equatable, Codable, Hashable, Identifiable, CaseIterable {
   public static let allCases: [WaveInterpolation] = [.linear, .cubic, .quadratic, .catmullRom(.centripetal)]
   case linear
@@ -34,6 +35,19 @@ public enum WaveInterpolation: Sendable, Equatable, Codable, Hashable, Identifia
     switch self {
       case .catmullRom: "Catmull-Rom"
       default: self.meta.name
+    }
+  }
+  
+}
+
+extension WaveInterpolation {
+  /// Trying out allowing init from a meta enum, for cases with no assoc. values
+  public init?(fromMeta meta: Self.Meta) {
+    switch meta {
+      case .linear: self = .linear
+      case .cubic: self = .cubic
+      case .quadratic: self = .quadratic
+      case .catmullRom: return nil
     }
   }
 }

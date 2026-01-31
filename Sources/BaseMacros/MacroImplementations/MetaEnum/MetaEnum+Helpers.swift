@@ -23,32 +23,6 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-struct MetaEnumBuilder {
-  let detectedEnum: Enum
-  let parentParamName: TokenSyntax
-  let caseDetection: CaseDetectionMacro
-
-  init(
-    node: AttributeSyntax,
-    decl: some DeclGroupSyntax,
-    context: some MacroExpansionContext,
-  ) throws {
-
-    guard let enumDecl = decl as? EnumDeclSyntax else {
-      throw MacroError("@MetaEnum can only be attached to enum declarations")
-    }
-    self.detectedEnum = Enum(enumDecl)
-
-    self.caseDetection = try CaseDetectionMacro(
-      node: node,
-      decl: decl
-    )
-
-    self.parentParamName = context.makeUniqueName("parent")
-  }
-}
-
-// MARK: - Enum building result
 extension MetaEnumBuilder {
 
   func makeMetaEnum() -> [DeclSyntax] {
@@ -59,33 +33,24 @@ extension MetaEnumBuilder {
       DeclSyntax(makeMetaInit()),
       DeclSyntax(caseNames),
       DeclSyntax("\(raw: access) var id: String {rawValue}"),
-//      DeclSyntax(idProperty),
       DeclSyntax(stringLiteral: detections),
       DeclSyntax("}"),
-
-      
-
     ]
-    //    return meta
   }
 }
 
 extension MetaEnumBuilder {
-
-  var parentTypeName: String { detectedEnum.identifier }
-  var access: String { detectedEnum.accessLevel?.name ?? "" }
-  var childCases: [EnumCase] { detectedEnum.cases }
 
   func makeMetaInit() -> DeclSyntax {
     let caseStatements =
       childCases
       .map { childCase in
         """
-          case .\(childCase.identifier):
-            self = .\(childCase.identifier)
+          case .\(childCase.name):
+            self = .\(childCase.name)
         """
       }
-      .joined(separator: "\n")
+//      .joined(separator: "\n")
 
     return """
       \(raw: access) init(_ \(parentParamName): \(raw: parentTypeName)) {
@@ -95,6 +60,16 @@ extension MetaEnumBuilder {
       }
       """
   }
+
+//  private func hasAssociatedValues(_ case: EnumCase) -> Bool {
+//        childCases.
+//    //    childCases.map { item in
+//    //      if let associatedValue = item._syntax.parameterClause {
+//    //        let parameters = Array(associatedValue.parameters)
+//    //          .map(EnumCaseAssociatedValueParameter.init)
+//    //        return .associatedValue(parameters)
+//    //    }
+//  }
 
   /// ## Meta enum declaration
   /// ```
@@ -106,7 +81,7 @@ extension MetaEnumBuilder {
     return
       childCases
       .map { childCase in
-        "  case \(childCase.identifier)"
+        "  case \(childCase.name)"
       }
       .joined(separator: "\n")
   }
@@ -133,7 +108,7 @@ extension MetaEnumBuilder {
   var caseNames: DeclSyntax {
 
     let cases = childCases.map { childCase in
-      "case .\(childCase.identifier): \"\(childCase.identifier.capitalized)\""
+      "case .\(childCase.name): \"\(childCase.name.capitalized)\""
     }.joined(separator: "\n")
 
     return
