@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 27/1/2026.
 //
 
-import SwiftUI
-import CoreTools
 import CasePaths
+import CoreTools
+import SwiftUI
 
 /// Defines the interpolation method for creating smooth paths from discrete points
 /// Note: See Swift Charts `InterpolationMethod`, possibly helpful
@@ -17,11 +17,14 @@ import CasePaths
 public enum WaveInterpolation: Sendable, Equatable, Codable, Hashable, Identifiable {
   case linear
   case cubic
+  case quadratic
   case catmullRom(CatmullRom.SplineVariant)
+
   public var id: String {
     switch self {
       case .linear: "linear"
       case .cubic: "cubic"
+      case .quadratic: "quadratic"
       case .catmullRom(let variant): "catmullRom.\(variant.rawValue)"
     }
   }

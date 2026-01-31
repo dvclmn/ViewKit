@@ -13,22 +13,23 @@ extension WaveGenerator {
   ///   - points: Array of points to interpolate
   ///   - interpolation: The interpolation method to use
   /// - Returns: A new Path object, or nil if insufficient points
-  public mutating func editPath(
-    //    path: inout Path,
+  public func
+    editPath(  //    path: inout Path,
     //  public static func makePath(
-//    using points: [CGPoint],
-//    interpolation: WaveInterpolation
-  ) {
+    //    using points: [CGPoint],
+    //    interpolation: WaveInterpolation
+    )
+  {
     //  ) -> Path {
     guard !points.isEmpty else { return }
     return switch interpolation {
-      case .linear: linearPath(points: points)
-      //      case .cubic: cubicPath(points: points)
-      case .cubic: cubicPath(points: points)
+      case .linear: linearPath()
+      case .cubic: usesAltCubicMethod ? createCubicCurvePath() : cubicPath()
+      case .quadratic: createQuadCurvePath()
       case .catmullRom(let variant):
         catmullRom(
-          points: points,
-          variant: variant
+          variant: variant,
+          closed: false
         )
     }
   }
@@ -37,16 +38,16 @@ extension WaveGenerator {
 
   /// Creates a path by connecting points with straight lines
   /// This is the fastest method, ideal when smoothness isn't required
-  package func linearPath(points: [CGPoint]) {
+  package func linearPath() {
 
+    resetPath()
     //    var path = Path()
-    self.move(to: points[0])
+    path.move(to: points[0])
 
     for i in 1..<points.count {
-      self.addLine(to: points[i])
+      path.addLine(to: points[i])
     }
 
-    //    return self
   }
 
   // MARK: - Cubic Bezier Interpolation
@@ -54,34 +55,35 @@ extension WaveGenerator {
   /// Creates a smooth path using cubic Bezier curves
   /// Control points are calculated to create smooth transitions between segments
   /// This provides good smoothness with reasonable performance
-  package mutating func cubicPath(points: [CGPoint]) {
-    guard points.count >= 2 else { return linearPath(points: points) }
+  package func cubicPath() {
+    guard hasTwoOrMorePoints else {
+      return linearPath()
+    }
+    resetPath()
 
-    //    var path = Path()
-    move(to: points[0])
+    path.move(to: points[0])
 
     if points.count == 2 {
-      addLine(to: points[1])
+      path.addLine(to: points[1])
       return
     }
 
     /// Calculate control points for smooth curves
-    //    let controlPoints = calculateCubicControlPoints(points: points)
+    let controlPoints = calculateCubicControlPoints()
 
     for i in 0..<points.count - 1 {
       let endPoint = points[i + 1]
-      //      let cp1 = controlPoints.first[i]
-      //      let cp2 = controlPoints.second[i]
+      let cp1 = controlPoints.first[i]
+      let cp2 = controlPoints.second[i]
 
-      addCurve(to: <#T##CGPoint#>, control1: <#T##CGPoint#>, control2: <#T##CGPoint#>)
+      path.addCurve(to: endPoint, control1: cp1, control2: cp2)
       //      path.addCurve(to: endPoint, control1: cp1, control2: cp2)
     }
   }
 
   /// Calculates control points for cubic Bezier interpolation
   /// Uses a simplified algorithm that ensures C1 continuity (smooth first derivative)
-  package static func calculateCubicControlPoints(points: [CGPoint]) -> (first: [CGPoint], second: [CGPoint])
-  {
+  package func calculateCubicControlPoints() -> (first: [CGPoint], second: [CGPoint]) {
     let n = points.count - 1
     var firstControlPoints: [CGPoint] = []
     var secondControlPoints: [CGPoint] = []

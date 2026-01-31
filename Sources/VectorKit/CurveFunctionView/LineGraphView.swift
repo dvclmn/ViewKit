@@ -34,8 +34,9 @@ public struct LineGraphView: View {
       var path: Path = .init()
 
       if isSmoothPath {
+        fatalError("Need to re-link this with catmull implementation")
         /// Build smooth path
-        path.catmullRom(points: points, variant: .uniform, closed: false)
+//        path.catmullRom(points: points, variant: .uniform, closed: false)
 //        path = Path.catmullRom(points: points, variant: .uniform, closed: false)
         //          .catmullRomPath(
         //          points: points,

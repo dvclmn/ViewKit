@@ -45,10 +45,11 @@ struct PathInterpolationBenchmark {
     iterations: Int = 1000
   ) -> BenchmarkResult {
     let startTime = CFAbsoluteTimeGetCurrent()
-
-    for _ in 0..<iterations {
-      _ = Path.makePath(using: points, interpolation: method)
-    }
+    #warning("Fix this")
+    fatalError("Just working on path stuff hold on")
+    //    for _ in 0..<iterations {
+    //      _ = Path.makePath(using: points, interpolation: method)
+    //    }
 
     let endTime = CFAbsoluteTimeGetCurrent()
     let totalTime = endTime - startTime
@@ -350,8 +351,10 @@ struct RealtimePerformanceView: View {
       Canvas { context, size in
         let startTime = CFAbsoluteTimeGetCurrent()
 
-        let path = Path.makePath(using: points, interpolation: selectedMethod)
-        context.stroke(path, with: .color(.blue), lineWidth: 2)
+#warning("Fix this")
+        fatalError("Just working on path stuff hold on")
+//        let path = Path.makePath(using: points, interpolation: selectedMethod)
+//        context.stroke(path, with: .color(.blue), lineWidth: 2)
 
         // Draw points
         for point in points {

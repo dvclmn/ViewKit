@@ -11,20 +11,20 @@ extension WaveGenerator {
 
   /// Creates a smooth Catmull-Rom spline through the given points.
   /// Uses cubic Bézier conversion for optimal rendering performance.
-  public mutating func catmullRom(
-    points: [CGPoint],
+  package func catmullRom(
+    //    points: [CGPoint],
     variant: CatmullRom.SplineVariant = .centripetal,
     closed: Bool = false
   ) {
-    guard points.count >= 2 else { return }
+    guard hasTwoOrMorePoints else { return }
     if points.count == 2 {
-      move(to: points[0])
-      addLine(to: points[1])
+      path.move(to: points[0])
+      path.addLine(to: points[1])
     }
 
     let pts = closed ? points : Self.extendEndpoints(points)
 
-    move(to: pts[1])  // Start at first actual point
+    path.move(to: pts[1])  // Start at first actual point
 
     for i in 1..<pts.count - 2 {
       let p0 = pts[i - 1]
@@ -37,22 +37,22 @@ extension WaveGenerator {
         variant: variant
       )
 
-      self.addCurve(to: p2, control1: c1, control2: c2)
+      path.addCurve(to: p2, control1: c1, control2: c2)
     }
 
     if closed {
-      // Close the loop by handling the wrap-around segments
+      /// Close the loop by handling the wrap-around segments
       let (c1, c2) = CatmullRom.toCubicBezier(
         p0: pts[pts.count - 2], p1: pts[pts.count - 1], p2: pts[0], p3: pts[1],
         variant: variant
       )
-      self.addCurve(to: pts[0], control1: c1, control2: c2)
+      path.addCurve(to: pts[0], control1: c1, control2: c2)
 
       let (c1b, c2b) = CatmullRom.toCubicBezier(
         p0: pts[pts.count - 1], p1: pts[0], p2: pts[1], p3: pts[2],
         variant: variant
       )
-      self.addCurve(to: pts[1], control1: c1b, control2: c2b)
+      path.addCurve(to: pts[1], control1: c1b, control2: c2b)
     }
 
     //    return path
