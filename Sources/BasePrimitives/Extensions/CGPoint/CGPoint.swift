@@ -134,6 +134,11 @@ extension CGPoint {
     let centred: CGSize = size / 2
     return self - centred
   }
+  
+  func normalise() -> CGPoint {
+    let l = length
+    return CGPoint(x / l, y / l)
+  }
 
   /// Previously: `sqrt(x * x + y * y)`
   public var length: CGFloat { hypot(x, y) }
@@ -156,9 +161,7 @@ extension CGPoint {
   //  public var isNormalised: Bool {
   //    return x >= 0.0 && x <= 1.0 && y >= 0.0 && y <= 1.0
   //  }
-}
 
-extension CGPoint {
 
   /// Standard Linear Interpolation (Lerp)
   /// Aligns with VectorArithmetic's logic.

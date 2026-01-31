@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 7/10/2025.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 extension WaveGenerator {
 
@@ -179,101 +179,34 @@ extension WaveGenerator {
       let p2 = points[(i + 1) % points.count]
       let p3 = points[(i + 1) % points.count + 1]
 
-      let d1 = (p1 - p0).length()
-      let d2 = p2.deltaTo(p1).length()
-      let d3 = p3.deltaTo(p2).length()
-      
-//      let d1 = p1.deltaTo(p0).length()
-//      let d2 = p2.deltaTo(p1).length()
-//      let d3 = p3.deltaTo(p2).length()
+      let d1 = (p1 - p0).length
+      let d2 = (p2 - p1).length
+      let d3 = (p3 - p2).length
 
       var b1 = p2 * pow(d1, 2 * alpha)
-//      var b1 = p2.multiplyBy(pow(d1, 2 * alpha))
-      b1 = b1.deltaTo(p0.multiplyBy(pow(d2, 2 * alpha)))
-      b1 = b1.addTo(
-        p1.multiplyBy(2 * pow(d1, 2 * alpha) + 3 * pow(d1, alpha) * pow(d2, alpha) + pow(d2, 2 * alpha)))
-      b1 = b1.multiplyBy(1.0 / (3 * pow(d1, alpha) * (pow(d1, alpha) + pow(d2, alpha))))
+      b1 = b1 - (p0 * pow(d2, 2 * alpha))
 
-      var b2 = p1.multiplyBy(pow(d3, 2 * alpha))
-      b2 = b2.deltaTo(p3.multiplyBy(pow(d2, 2 * alpha)))
-      b2 = b2.addTo(
-        p2.multiplyBy(2 * pow(d3, 2 * alpha) + 3 * pow(d3, alpha) * pow(d2, alpha) + pow(d2, 2 * alpha)))
-      b2 = b2.multiplyBy(1.0 / (3 * pow(d3, alpha) * (pow(d3, alpha) + pow(d2, alpha))))
+      b1 = b1 + (p1 * (2 * pow(d1, 2 * alpha) + 3 * pow(d1, alpha) * pow(d2, alpha) + pow(d2, 2 * alpha)))
+      b1 = b1 * (1.0 / (3 * pow(d1, alpha) * (pow(d1, alpha) + pow(d2, alpha))))
+
+      var b2 = p1 * (pow(d3, 2 * alpha))
+      b2 = b2 - (p3 * (pow(d2, 2 * alpha)))
+      b2 = b2 + (p2 * (2 * pow(d3, 2 * alpha) + 3 * pow(d3, alpha) * pow(d2, alpha) + pow(d2, 2 * alpha)))
+      b2 = b2 * (1.0 / (3 * pow(d3, alpha) * (pow(d3, alpha) + pow(d2, alpha))))
 
       if i == startIndex {
-        moveToPoint(p1)
+        path.move(to: p1)
+        //        moveToPoint(p1)
       }
 
-      curveToPoint(p2, controlPoint1: b1, controlPoint2: b2)
-      addCurveToPoint(p2, controlPoint1: b1, controlPoint2: b2)
+      path.addCurve(to: p2, control1: b1, control2: b2)
+      //      curveToPoint(p2, controlPoint1: b1, controlPoint2: b2)
+      //      addCurveToPoint(p2, controlPoint1: b1, controlPoint2: b2)
 
     }
 
     if closed {
-      closePath()
+      path.closeSubpath()
     }
-  }
-
-}
-
-extension CGPoint {
-//  func translate(x: CGFloat, _ y: CGFloat) -> CGPoint {
-//    return CGPointMake(self.x + x, self.y + y)
-//  }
-//
-//  func translateX(x: CGFloat) -> CGPoint {
-//    return CGPointMake(self.x + x, self.y)
-//  }
-//
-//  func translateY(y: CGFloat) -> CGPoint {
-//    return CGPointMake(self.x, self.y + y)
-//  }
-
-//  func invertY() -> CGPoint {
-//    return CGPointMake(self.x, -self.y)
-//  }
-
-  func xAxis() -> CGPoint {
-    return CGPointMake(0, self.y)
-  }
-
-  func yAxis() -> CGPoint {
-    return CGPointMake(self.x, 0)
-  }
-
-  func addTo(a: CGPoint) -> CGPoint {
-    return CGPointMake(self.x + a.x, self.y + a.y)
-  }
-
-//  func deltaTo(a: CGPoint) -> CGPoint {
-//    return CGPointMake(self.x - a.x, self.y - a.y)
-//  }
-
-  func multiplyBy(value: CGFloat) -> CGPoint {
-    return CGPointMake(self.x * value, self.y * value)
-  }
-
-  func length() -> CGFloat {
-    return CGFloat(
-      sqrt(
-        CDouble(
-          self.x * self.x + self.y * self.y
-        )))
-  }
-
-  func normalize() -> CGPoint {
-    let l = self.length()
-    return CGPointMake(self.x / l, self.y / l)
-  }
-
-  static func fromString(string: String) -> CGPoint {
-    var s = string.stringByReplacingOccurrencesOfString("{", withString: "")
-    s = s.stringByReplacingOccurrencesOfString("}", withString: "")
-    s = s.stringByReplacingOccurrencesOfString(" ", withString: "")
-
-    let x = NSString(string: s.componentsSeparatedByString(",").first! as String).doubleValue
-    let y = NSString(string: s.componentsSeparatedByString(",").last! as String).doubleValue
-
-    return CGPointMake(CGFloat(x), CGFloat(y))
   }
 }
