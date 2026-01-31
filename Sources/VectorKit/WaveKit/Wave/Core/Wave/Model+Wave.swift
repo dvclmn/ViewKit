@@ -43,7 +43,7 @@ extension Wave {
     phase: 0,
     waveform: .sine
   )
-  
+
   public static let example02: Self = .init(
     amp: 30,
     freq: 10,

@@ -8,7 +8,7 @@
 import ColourKit
 import Foundation
 
-public struct PointStyle: Sendable, Codable, Equatable {
+public struct PointStyle: Sendable, Codable, Equatable, Hashable {
   public var colour: HSVColour
   public var colourSecondary: HSVColour?
   public var radius: CGFloat

@@ -11,34 +11,37 @@ import Foundation
 /// If applying a ``WaveStyle`` to *multiple* Waves, prefer holding an instance
 /// of `WaveStyle` alongside the Waves, rather than using this type.
 @dynamicMemberLookup
-public struct StyledWave {
-  public var wave: ConfiguredWave
+public struct StyledWave: Wavable, Hashable, Sendable, Codable, Equatable, Identifiable {
+  public var id: Wave.ID { wave.id }
+  public var wave: Wave
+  //  public var configuredWave: ConfiguredWave
+  public var config: WaveConfig
   public var style: WaveStyle
 
-  public init(wave: ConfiguredWave, style: WaveStyle) {
+  public init(wave: Wave, config: WaveConfig, style: WaveStyle) {
     self.wave = wave
+    self.config = config
+    self.style = style
+  }
+}
+
+extension StyledWave {
+  public init(configuredWave: ConfiguredWave, style: WaveStyle) {
+    self.wave = configuredWave.wave
+    self.config = configuredWave.config
     self.style = style
   }
 }
 
 extension StyledWave {
   public subscript<T>(dynamicMember keyPath: WritableKeyPath<Wave, T>) -> T {
-    get { self.wave.wave[keyPath: keyPath] }
-    set { self.wave.wave[keyPath: keyPath] = newValue }
-  }
-  
-  public init(
-    wave: Wave,
-    config: WaveConfig,
-    style: WaveStyle
-  ) {
-    self.wave = ConfiguredWave(wave, config: config)
-    self.style = style
+    get { self.wave[keyPath: keyPath] }
+    set { self.wave[keyPath: keyPath] = newValue }
   }
 
-  public var config: WaveConfig { wave.config }
+  //  public var config: WaveConfig { configuredWave.config }
   public var dotRadius: CGFloat { style.pointStyle.radius }
-  public func sample(state: ContinuousParameter, at normalisedIndex: CGFloat) -> CGFloat {
-    wave.sample(state: state, at: normalisedIndex)
-  }
+//  public func sample(state: ContinuousParameter, at normalisedIndex: CGFloat) -> CGFloat {
+//    configuredWave.sample(state: state, at: normalisedIndex)
+//  }
 }

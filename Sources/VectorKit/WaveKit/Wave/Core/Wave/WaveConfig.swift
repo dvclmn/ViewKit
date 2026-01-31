@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct WaveConfig: Hashable, Sendable, Codable {
+public struct WaveConfig: Hashable, Sendable, Codable, Equatable {
   public var cycles: CGFloat
   public var dashes: Int
   public var dashPhase: CGFloat

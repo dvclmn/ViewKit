@@ -11,7 +11,7 @@ import Foundation
 
 //import GraphicsKit
 
-public struct WaveStyle: Sendable, Codable {
+public struct WaveStyle: Sendable, Codable, Equatable, Hashable {
   public var lineStyle: LineStyle
   public var pointStyle: PointStyle
 

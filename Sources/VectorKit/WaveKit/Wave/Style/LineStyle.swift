@@ -8,7 +8,7 @@
 import ColourKit
 import Foundation
 
-public struct LineStyle: Sendable, Codable, Equatable {
+public struct LineStyle: Sendable, Codable, Equatable, Hashable {
   public var colour: HSVColour
   public var colourSecondary: HSVColour?
   public var lineWidth: CGFloat
