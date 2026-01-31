@@ -26,14 +26,19 @@ import SwiftSyntaxMacros
 extension MetaEnumBuilder {
 
   func makeMetaEnum() -> [DeclSyntax] {
+    //    metaCases
     [
       DeclSyntax("\(raw: access) var meta: Self.Meta {.init(self)}"),
+
+      // Beginning of Meta enum declaration
       DeclSyntax("\(raw: access) enum Meta: String, CaseIterable, Identifiable {"),
-      DeclSyntax(stringLiteral: caseDecls),
+      DeclSyntax(stringLiteral: metaCases),
       DeclSyntax(makeMetaInit()),
       DeclSyntax(caseNames),
       DeclSyntax("\(raw: access) var id: String {rawValue}"),
       DeclSyntax(stringLiteral: detections),
+
+      // End brace for Meta enum
       DeclSyntax("}"),
     ]
   }
@@ -50,7 +55,7 @@ extension MetaEnumBuilder {
             self = .\(childCase.name)
         """
       }
-//      .joined(separator: "\n")
+      .joined(separator: "\n")
 
     return """
       \(raw: access) init(_ \(parentParamName): \(raw: parentTypeName)) {
@@ -61,15 +66,11 @@ extension MetaEnumBuilder {
       """
   }
 
-//  private func hasAssociatedValues(_ case: EnumCase) -> Bool {
-//        childCases.
-//    //    childCases.map { item in
-//    //      if let associatedValue = item._syntax.parameterClause {
-//    //        let parameters = Array(associatedValue.parameters)
-//    //          .map(EnumCaseAssociatedValueParameter.init)
-//    //        return .associatedValue(parameters)
-//    //    }
-//  }
+  var hasAnyAssociatedValues: Bool {
+    childCases.contains(where: \.hasAssociatedValues)
+  }
+
+  //  var metaToParentInitIfNeeded
 
   /// ## Meta enum declaration
   /// ```
@@ -77,13 +78,21 @@ extension MetaEnumBuilder {
   ///   case bird
   ///   case whale
   /// […]
-  private var caseDecls: String {
-    return
-      childCases
-      .map { childCase in
-        "  case \(childCase.name)"
-      }
-      .joined(separator: "\n")
+  private var metaCases: String {
+    //  private var metaCases: [DeclSyntax] {
+    childCases
+      .map {
+        "  case \($0.name)"
+      }.joined("\n")
+    //      .joined(separator: "\n")
+    //    return detectedEnum.cases.compactMap {
+    //      DeclSyntax($0._syntax.trimmed)
+    //    }
+    //          childCases
+    //          .reduce(into: DeclSyntax("")) { partial, childCase in
+    //            partial = partial.with(\., <#T##value: T##T#>) + DeclSyntax("  case \(raw: childCase.name)")
+    //          }
+    //          .joined(separator: "\n")
   }
 
   /// ## Initialiser
