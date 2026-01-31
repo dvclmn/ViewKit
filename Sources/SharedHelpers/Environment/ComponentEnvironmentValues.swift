@@ -97,7 +97,7 @@ extension EnvironmentValues {
   
   @Entry public var isPaused: Binding<Bool> = .constant(true)
 //  @Entry public var isPaused: Bool = true
-  @Entry public var frameRate: FrameRate = .unlocked
+  @Entry public var frameRate: Binding<FrameRate> = .constant(.unlocked)
   @Entry public var animationClock: TimeInterval?
   @Entry public var isAnimationEnabled: Bool = false
   
