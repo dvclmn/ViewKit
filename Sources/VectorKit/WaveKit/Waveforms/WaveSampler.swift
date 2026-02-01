@@ -9,6 +9,7 @@ import Accelerate
 import CoreTools
 import Foundation
 import SwiftUI
+import Darwin
 
 // MARK: - High-Performance Sampler
 public struct WaveSampler<T: WaveFloat> {
@@ -38,11 +39,17 @@ public struct WaveSampler<T: WaveFloat> {
     for i in 0...tableSize { // inclusive to add the wrap sample
       // Explicitly lift `i` to `T` to avoid integer/generic arithmetic ambiguity.
       let angle = (T(i) * twoPi) / denom
-      table.append(sin(angle))
+      let sinAngle = 
+      table.append(sinAngle)
     }
     return table
   }
 
+  /// Note: Scalar calls: Calling sin repeatedly per-sample can be relatively expensive.
+  /// A lookup table with linear interpolation is extremely fast for single-sample access.
+  /// So for scalar sampling (one value(for:at:) at a time), this use of `sineTable`
+  /// is often faster and predictable.
+  ///
   /// Returns the waveform value for a given phase in turns.
   /// - Parameters:
   ///   - waveform: The waveform shape to sample.
@@ -58,8 +65,8 @@ public struct WaveSampler<T: WaveFloat> {
     let p = T.normalisedPhase(phase)
 
     return switch waveform {
-      case .sine:
-        sineLookup(p)
+      case .sine: sineLookup(p)
+        
       case .triangle:
         // Standard: -1 → 1 → -1, peaks at 0.25 and 0.75
         T(1) - T(4) * abs(p - T(0.5))
