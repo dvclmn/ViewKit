@@ -52,18 +52,7 @@ extension ScrubberHandler {
     guard let range else { return value }
     return value.clamped(to: range)
   }
-
-  //  func updateValue(
-  //    _ direction: Direction,
-  //    modifiers: Modifiers
-  //  ) {
-  //
-  //  }
-
-  //  var valueClampedBinding: Binding<Double> {
-  //    value.clampedIfNeeded(to: range)
-  //  }
-
+  
   func handleKeyPress(
     key: KeyEquivalent,
     modifiers: Modifiers

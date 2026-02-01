@@ -56,7 +56,6 @@ extension ZoomModifier {
         }
 
         let newZoom = effectiveZoom(value)
-        //        let newZoom = effectiveZoom(value).clampedIfNeeded(to: zoomRange)
 
         internalZoom = newZoom
         externalZoom?.wrappedValue = Double(newZoom)  // optional sync

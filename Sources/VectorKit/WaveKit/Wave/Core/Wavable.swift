@@ -25,8 +25,8 @@ extension Wavable {
   ///   - normalisedIndex: The normalisedIndex (0...1) of the current point.
   public func sample(
     state: ContinuousParameter,
-    at normalisedIndex: CGFloat
-  ) -> CGFloat {
+    at normalisedIndex: Float
+  ) -> Float {
     /// 1. Get the time-based phase from our persistent state
     let temporalPhase = state.currentPhase
 

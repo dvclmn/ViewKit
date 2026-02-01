@@ -9,13 +9,7 @@ import Accelerate
 import Foundation
 import SwiftUI
 
-@inlinable
-func normalisedPhase(_ phase: Float) -> Float {
-  /// Corrects negative phases and floating-point overflow
-  let p = phase - floor(phase)
-  /// Clamp 1.0 to 0.0 (rare, but possible with floating point error)
-  return p >= 1.0 ? 0 : p
-}
+
 
 // MARK: - High-Performance Sampler
 public struct FastWaveSampler {
