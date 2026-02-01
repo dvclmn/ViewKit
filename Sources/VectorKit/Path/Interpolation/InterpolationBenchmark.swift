@@ -77,7 +77,7 @@ struct PathInterpolationBenchmark {
       let points = generateTestPoints(count: count)
 
       // Benchmark each method
-      for method in [WaveInterpolation.linear, .cubic, .catmullRom(.centripetal)] {
+      for method in WaveInterpolation.allCases {
         let iterations = count < 100 ? 1000 : 500
         let result = benchmark(method: method, points: points, iterations: iterations)
         results.append(result)
@@ -200,7 +200,7 @@ struct BenchmarkView: View {
 
       var newResults: [PathInterpolationBenchmark.BenchmarkResult] = []
 
-      for method in [WaveInterpolation.linear, .cubic, .catmullRom(.centripetal)] {
+      for method in WaveInterpolation.allCases {
         let result = PathInterpolationBenchmark.benchmark(
           method: method,
           points: points,
@@ -417,12 +417,13 @@ struct RealtimePerformanceView: View {
           }
         }
 
-        Picker("Method", selection: $selectedMethod) {
-          Text("Linear").tag(WaveInterpolation.linear)
-          Text("Cubic").tag(WaveInterpolation.cubic)
-          Text("Catmull-Rom").tag(WaveInterpolation.catmullRom(.centripetal))
-        }
-        .pickerStyle(.segmented)
+//        Picker("Method", selection: $selectedMethod) {
+//
+//          Text("Linear").tag(WaveInterpolation.linear)
+//          Text("Cubic").tag(WaveInterpolation.cubic())
+//          Text("Catmull-Rom").tag(WaveInterpolation.catmullRom(.centripetal))
+//        }
+//        .pickerStyle(.segmented)
 
         HStack {
           Button("Clear") {

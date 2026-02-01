@@ -17,7 +17,7 @@ public struct WaveConfig<T: WaveFloat>: Hashable, Sendable, Codable, Equatable {
   public init(
     cycles: T = 3,
     sampleCount: Int = 30,
-    interpolation: WaveInterpolation = .cubic,
+    interpolation: WaveInterpolation = .cubic(),
     noise: T = 0
   ) {
     self.cycles = cycles

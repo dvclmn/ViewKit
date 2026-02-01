@@ -17,9 +17,9 @@ import SwiftUI
 @CasePathable
 @dynamicMemberLookup
 public enum WaveInterpolation: Sendable, Equatable, Codable, Hashable, Identifiable, CaseIterable {
-  public static let allCases: [WaveInterpolation] = [.linear, .cubic, .quadratic, .catmullRom(.centripetal)]
+  public static let allCases: [WaveInterpolation] = [.linear, .cubic(), .quadratic, .catmullRom(.centripetal)]
   case linear
-  case cubic
+  case cubic(tension: CGFloat = 0)
   case quadratic
   case catmullRom(CatmullRom.SplineVariant, tension: CGFloat = 0.5, samples: Int = 14)
 

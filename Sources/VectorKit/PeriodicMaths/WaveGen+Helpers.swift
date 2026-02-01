@@ -22,8 +22,8 @@ extension WavePathGenerator {
       case .linear:
         linearPath()
 
-      case .cubic:
-        usesAltCubicMethod ? createCubicCurvePath() : cubicPath()
+      case .cubic(let tension): cubicPath(tension: tension)
+//        usesAltCubicMethod ? createCubicCurvePath() : cubicPath()
 
       case .quadratic:
         createQuadCurvePath()
