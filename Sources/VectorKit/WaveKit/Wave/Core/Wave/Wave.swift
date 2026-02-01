@@ -19,18 +19,18 @@ import Foundation
 /// - The `normalisedIndex`
 /// - In a SwiftUI Canvas, 0.0 might be the left edge and 1.0 the right edge;
 ///   and Cycles is how many "humps" of the wave fit into that space.
-public struct Wave: Sendable, Identifiable, Hashable, Equatable, Codable {
+public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, Codable {
   public let id: UUID
-  public var amplitude: CGFloat
-  public var frequency: CGFloat
-  public var phase: CGFloat
+  public var amplitude: T
+  public var frequency: T
+  public var phase: T
   public var waveform: Waveform
 
   public init(
     id: UUID = UUID(),
-    amp: CGFloat,
-    freq: CGFloat,
-    phase: CGFloat,
+    amp: T,
+    freq: T,
+    phase: T,
     waveform: Waveform = .sine
   ) {
     self.id = id
@@ -42,17 +42,21 @@ public struct Wave: Sendable, Identifiable, Hashable, Equatable, Codable {
 }
 
 extension Wave {
-  public static let example01: Self = .init(
-    amp: 8,
-    freq: 3,
-    phase: 0,
-    waveform: .sine
-  )
+  public static var example01: Self {
+    .init(
+      amp: 8,
+      freq: 3,
+      phase: 0,
+      waveform: .sine
+    )
+  }
 
-  public static let example02: Self = .init(
-    amp: 30,
-    freq: 10,
-    phase: 0,
-    waveform: .sine
-  )
+  public static var example02: Self {
+    .init(
+      amp: 30,
+      freq: 10,
+      phase: 0,
+      waveform: .sine
+    )
+  }
 }

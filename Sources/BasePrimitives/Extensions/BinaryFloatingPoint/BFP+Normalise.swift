@@ -9,6 +9,7 @@ import Foundation
 
 extension BinaryFloatingPoint {
 
+  /// Could also be called `normalisedCycles`?
   /// Corrects negative phases and floating-point overflow
   /// `floor` returns the greatest integer less than or equal to `phase`
   /// `phase - floor(phase)` computes the fractional part of phase.
@@ -20,7 +21,7 @@ extension BinaryFloatingPoint {
   ///   negative phases into the [0, 1) interval.
   /// - If phase is an integer (e.g., `3.0`), `p = 0.0`.
   @inlinable
-  public func normalisedCycles(_ phase: Self) -> Self {
+  public static func normalisedPhase(_ phase: Self) -> Self {
     let p = phase - floor(phase)
 
     /// Clamp 1.0 to 0.0 (rare, but possible with floating point error)
@@ -28,7 +29,7 @@ extension BinaryFloatingPoint {
   }
   
   @inlinable
-  public func normalisedRadians(_ radians: Self) -> Self {
+  public static func normalisedRadians(_ radians: Self) -> Self {
     let tau = Self.pi * 2
     let r = radians.truncatingRemainder(dividingBy: tau)
     

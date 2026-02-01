@@ -7,17 +7,17 @@
 
 import Foundation
 
-public struct WaveConfig: Hashable, Sendable, Codable, Equatable {
-  public var cycles: CGFloat
+public struct WaveConfig<T: WaveFloat>: Hashable, Codable, Equatable {
+  public var cycles: T
   public var sampleCount: Int
   public var interpolation: WaveInterpolation
-  public var noise: CGFloat
+  public var noise: T
 
   public init(
-    cycles: CGFloat = 3,
+    cycles: T = 3,
     sampleCount: Int = 30,
     interpolation: WaveInterpolation = .cubic,
-    noise: CGFloat = 0
+    noise: T = 0
   ) {
     self.cycles = cycles
     self.sampleCount = sampleCount

@@ -9,12 +9,13 @@ import Foundation
 
 @dynamicMemberLookup
 public protocol Wavable {
-  var wave: Wave { get set }
-  var config: WaveConfig { get set }
+  associatedtype Value: WaveFloat
+  var wave: Wave<Value> { get set }
+  var config: WaveConfig<Value> { get set }
 }
 
 extension Wavable {
-  public subscript<T>(dynamicMember keyPath: WritableKeyPath<Wave, T>) -> T {
+  public subscript<T>(dynamicMember keyPath: WritableKeyPath<Wave<Value>, T>) -> T{
     get { self.wave[keyPath: keyPath] }
     set { self.wave[keyPath: keyPath] = newValue }
   }
@@ -24,9 +25,9 @@ extension Wavable {
   ///   - state: The persistent ContinuousParameter for this specific wave.
   ///   - normalisedIndex: The normalisedIndex (0...1) of the current point.
   public func sample(
-    state: ContinuousParameter,
-    at normalisedIndex: Float
-  ) -> Float {
+    state: ContinuousParameter<Value>,
+    at normalisedIndex: Value
+  ) -> Value {
     /// 1. Get the time-based phase from our persistent state
     let temporalPhase = state.currentPhase
 

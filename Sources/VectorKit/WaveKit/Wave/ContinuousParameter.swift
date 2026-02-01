@@ -12,22 +12,22 @@ import Foundation
 /// and ensures transitions between different rates/offsets are seamless.
 /// Domain‑specific to oscillation.
 /// Look to this now instead of `WaveAttributeState`
-public struct ContinuousParameter: Sendable {
+public struct ContinuousParameter<T: WaveFloat> {
   private var lastSyncTime: TimeInterval = 0
-  private var accumulatedPhase: Float = 0
+  private var accumulatedPhase: T = 0
 
   public init() {}
 
   /// Call this once per frame (main thread). Use `frequency` for integration.
-  public mutating func update(at now: TimeInterval, frequency: Float) {
+  public mutating func update(at now: TimeInterval, frequency: T) {
     if lastSyncTime == 0 { lastSyncTime = now }
     let deltaTime = now - lastSyncTime
-    accumulatedPhase += Float(deltaTime) * frequency
+    accumulatedPhase += T(deltaTime) * frequency
     lastSyncTime = now
   }
 
   /// Normalised phase in cycles [0,1).
-  public var currentPhase: Float {
+  public var currentPhase: T {
     accumulatedPhase - floor(accumulatedPhase)
   }
 }

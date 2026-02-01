@@ -6,20 +6,22 @@
 //
 
 import Accelerate
+import CoreTools
 import Foundation
 import SwiftUI
-import CoreTools
 
 // MARK: - High-Performance Sampler
-public struct FastWaveSampler {
-  @usableFromInline static let tableBits = 11  // 2048 entries
-  @usableFromInline static let tableSize = 1 << tableBits  // 2048
-  @usableFromInline static let tableMask = tableSize - 1
-  @usableFromInline static let tableSizeF = Float(tableSize)
+public struct WaveSampler<T: WaveFloat> {
+  @usableFromInline static var tableBits: Int { 11 }  // 2048 entries
+  @usableFromInline static var tableSize: Int { 1 << tableBits }  // 2048
+  @usableFromInline static var tableMask: Int { tableSize - 1 }
+  @usableFromInline static var tableSizeF: T { T(tableSize) }
 
   /// Linearly interpolated sine table (better than nearest-neighbor)
-  @usableFromInline static let sineTable: [Float] = (0...tableSize).map { i in
-    sin(Float(i) * 2 * .pi / tableSizeF)
+  @usableFromInline static var sineTable: [T] {
+    (0...tableSize).map { i in
+      sin(T(i) * 2 * .pi / tableSizeF)
+    }
   }
 
   /// Returns the waveform value at the given phase.
@@ -28,9 +30,9 @@ public struct FastWaveSampler {
   @inlinable
   public static func value(
     for waveform: Waveform,
-    at phase: Float
-  ) -> Float {
-    let p = normalisedPhase(phase)
+    at phase: T
+  ) -> T {
+    let p = T.normalisedPhase(phase)
 
     return switch waveform {
       case .sine: sineLookup(p)
@@ -45,18 +47,36 @@ public struct FastWaveSampler {
     }
   }
 
+  @inlinable
+  static func sineLookup(_ phase: T) -> T {
+    let scaled = phase * tableSizeF
+    let index = Int(scaled)
+    let fraction = scaled - T(index)
+
+    let i0 = index & tableMask
+    let i1 = (i0 + 1) & tableMask
+
+    // Linear interpolation between neighbors
+    let y0 = sineTable[i0]
+    let y1 = sineTable[i1]
+    return y0 + fraction * (y1 - y0)
+  }
+
+}
+
+extension WaveSampler where T == Float {
   /// Vectorized evaluation for Canvas paths (huge performance win)
   public static func values(
     for waveform: Waveform,
-    phases: [Float]
-  ) -> [Float] {
-    var result = [Float](repeating: 0, count: phases.count)
+    phases: [T]
+  ) -> [T] {
+    var result = [T](repeating: 0, count: phases.count)
 
     switch waveform {
       case .sine:
         /// Use Accelerate for true vectorized sin (faster than lookup tables on modern chips)
-        var scaled = [Float](repeating: 0, count: phases.count)
-        let twoPi: Float = 2.0 * .pi
+        var scaled = [T](repeating: 0, count: phases.count)
+        let twoPi: T = 2.0 * .pi
         vDSP.multiply(twoPi, phases, result: &scaled)
         vForce.sin(scaled, result: &result)
 
@@ -71,46 +91,32 @@ public struct FastWaveSampler {
     return result
   }
 
-  @inlinable
-  static func sineLookup(_ phase: Float) -> Float {
-    let scaled = phase * tableSizeF
-    let index = Int(scaled)
-    let fraction = scaled - Float(index)
-
-    let i0 = index & tableMask
-    let i1 = (i0 + 1) & tableMask
-
-    // Linear interpolation between neighbors
-    let y0 = sineTable[i0]
-    let y1 = sineTable[i1]
-    return y0 + fraction * (y1 - y0)
-  }
 }
 
 // MARK: - Phase Accumulator (for smooth animation)
-public struct WavePhaseAccumulator {
-  private var phase: Float = 0
-  public var frequency: Float
-  public var sampleRate: Float  // For time-based animation, use display link FPS
-
-  public init(frequency: Float, sampleRate: Float = 60) {
-    self.frequency = frequency
-    self.sampleRate = sampleRate
-  }
-
-  /// Call every frame to get progressive phase (avoids floating-point drift from large time values)
-  public mutating func advance() -> Float {
-    phase += frequency / sampleRate
-    if phase > 1_000_000 {  // Reset to prevent precision loss over long animations
-      phase = normalisedPhase(phase)
-    }
-    return phase
-  }
-
-  public mutating func reset() {
-    phase = 0
-  }
-}
+//public struct WavePhaseAccumulator {
+//  private var phase: T = 0
+//  public var frequency: T
+//  public var sampleRate: T  // For time-based animation, use display link FPS
+//
+//  public init(frequency: T, sampleRate: T = 60) {
+//    self.frequency = frequency
+//    self.sampleRate = sampleRate
+//  }
+//
+//  /// Call every frame to get progressive phase (avoids floating-point drift from large time values)
+//  public mutating func advance() -> T {
+//    phase += frequency / sampleRate
+//    if phase > 1_000_000 {  // Reset to prevent precision loss over long animations
+//      phase = normalisedPhase(phase)
+//    }
+//    return phase
+//  }
+//
+//  public mutating func reset() {
+//    phase = 0
+//  }
+//}
 
 // MARK: - SwiftUI Canvas Usage
 //struct WaveformView: View {
