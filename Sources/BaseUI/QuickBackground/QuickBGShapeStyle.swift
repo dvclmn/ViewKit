@@ -7,6 +7,24 @@
 
 import SwiftUI
 
+extension ShapeStyle where Self == TintedMaterial {
+  public static var tintedMaterial: Self { .init() }
+  public static func tintedMaterial(_ tint: Color) -> Self {
+    .init(tint: tint)
+  }
+}
+
+public struct TintedMaterial: ShapeStyle {
+  let tint: Color
+  
+  public init(tint: Color = .primary) {
+    self.tint = tint
+  }
+  public func resolve(in environment: EnvironmentValues) -> some ShapeStyle {
+    FillShapeStyle()
+  }
+}
+
 //public struct TintedMaterial: ShapeStyle {
 //  let image: Image?
 ////  let colour: Color

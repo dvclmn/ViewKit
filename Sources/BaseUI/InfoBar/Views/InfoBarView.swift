@@ -55,14 +55,16 @@ public struct InfoBarView: View {
     .font(.caption)
     .fontWeight(.medium)
     .frame(height: Styles.infoBarHeight)
+    
+    .background(.tintedMaterial, ignoresSafeAreaEdges: .horizontal)
 
-    .background {
-      Rectangle()
-        .fill(.thinMaterial)
-
-      Rectangle()
-        .fill(backgroundStyle ?? AnyShapeStyle(.black.opacity(0.06)))
-    }
+//    .background {
+//      Rectangle()
+//        .fill(.thinMaterial)
+//
+//      Rectangle()
+//        .fill(backgroundStyle ?? AnyShapeStyle(.black.opacity(0.06)))
+//    }
     /// Small top highlight for contrast against background
     .overlay(alignment: .top) {
       Rectangle()

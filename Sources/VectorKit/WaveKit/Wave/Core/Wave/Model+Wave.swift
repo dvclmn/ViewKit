@@ -52,7 +52,7 @@ extension Wave {
   )
 }
 
-public struct NoisyWave: Sendable, Hashable {
-  public let wave: Wave
-  public var noise: CGFloat
-}
+//public struct NoisyWave: Sendable, Hashable {
+//  public let wave: Wave
+//  public var noise: CGFloat
+//}
