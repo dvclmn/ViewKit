@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MetaCodable
+import CoreTools
 
 public struct CodableWaveStack: Codable {
   public var waves: [String: ConfiguredWave]
@@ -20,50 +20,27 @@ extension WaveStack {
 
   /// Converts current state to a Codable projection
   public func snapshot() -> CodableWaveStack {
+    print("Preparing a `CodableWaveStack` snapshot at \(Date.debug).")
     var result: [String: ConfiguredWave] = [:]
 
     /// Iterate the registry to see what keys we care about encoding
     for (codingKey, keyType) in WaveKeyRegistry.registeredTypes {
-
+      print("Checking key: \(codingKey), type: \(keyType)...")
       let value = self[keyType]
       result[codingKey] = value
     }
+    print("Found \(result.count) wave(s): \(result.keys.sorted())")
     return CodableWaveStack(result)
   }
 
   public mutating func restore(from snapshot: CodableWaveStack) {
+    print("Restoring from `CodableWaveStack` at \(Date.debug). Found \(snapshot.waves.count) wave(s): \(snapshot.waves.keys.sorted())")
+    
     for (key, wave) in snapshot.waves {
+      print("Applying wave for key: \(key)")
       WaveKeyRegistry.apply(wave, key: key, to: &self)
     }
+    print("Restore complete at \(Date.debug)")
   }
-
 }
 
-//struct WaveStackCoder: MetaCodable.HelperCoder {
-//  /// Decode from the serializable projection back to the type-safe stack
-//  func decode(from decoder: Decoder) throws -> WaveStack {
-//    let snapshot = try CodableWaveStack(from: decoder)
-//    var stack = WaveStack()
-//    stack.restore(from: snapshot)
-//    return stack
-//  }
-//
-//  /// Encode the type-safe stack to its serializable projection
-//  func encode(_ value: WaveStack, to encoder: Encoder) throws {
-//    try value.snapshot().encode(to: encoder)
-//  }
-//}
-//
-//// If MetaCodable requires it to be Sendable (check your version):
-//extension WaveStackCoder: Sendable {}
-//
-//struct FailableWaveKeyCoder: MetaCodable.HelperCoder {
-//  func decode(from decoder: Decoder) throws -> AnyWaveKey? {
-//    // Returns nil instead of throwing for unknown keys
-//    // Useful for forward compatibility
-//    guard let type = WaveKeyRegistry.lookup(identifier) else {
-//      return nil // Or log and return a placeholder
-//    }
-//    return AnyWaveKey(type)
-//  }
-//}
