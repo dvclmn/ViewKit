@@ -30,21 +30,20 @@ public final class AsyncDebouncer {
 
     task = Task {
       try? await Task.sleep(for: interval)
-      if !Task.isCancelled {
-        await action()
-      }
+      if Task.isCancelled { return }
+      await action()
+
     }
   }
-  
+
   @MainActor
   public func execute(action: @escaping @Sendable () -> Void) {
     Task {
       self.executeAsync(action: action)
     }
-    
+
   }
   deinit {
     task?.cancel()
   }
 }
-

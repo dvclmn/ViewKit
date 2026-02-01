@@ -24,11 +24,12 @@ public struct Smoothed<T: BinaryFloatingPoint>: Hashable {
 extension Smoothed {
 
   public mutating func setTarget(_ newValue: T) {
-    self.target = newValue
+    target = newValue
   }
 
   public mutating func snapToValue(_ newValue: T) {
-    self.update(dt: 0, smoothing: 0)
+    target = newValue
+    displayed = newValue
   }
 
   public mutating func update(
@@ -44,17 +45,13 @@ extension Smoothed {
   }
 }
 
-extension Array where Element == Smoothed {
-  public mutating func updateAll(
+extension Array {
+  public mutating func updateAll<T: BinaryFloatingPoint>(
     dt: T,
-    timeConstant: T,
-    smoothing: T
-  ) {
+    smoothing timeConstant: T,
+  ) where Element == Smoothed<T> {
     for index in self.indices {
-      self[safe: index]?.update(
-        dt: timeConstant,
-        smoothing: smoothing
-      )
+      self[safe: index]?.update(dt: dt, smoothing: timeConstant)
     }
   }
 }

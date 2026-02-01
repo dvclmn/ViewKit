@@ -7,26 +7,24 @@
 
 import SwiftUI
 
+@MainActor
 @propertyWrapper
 public struct DebouncedState<Value: Equatable>: DynamicProperty {
   @State private var immediate: Value
   @State private var debounced: Value
   @State private var task: Task<Void, Never>?
-  
-  private let delay: Duration
-  private let applyOnMainActor: Bool
-  
+
+  private let interval: Duration
+
   public init(
     wrappedValue: Value,
-    delay: Duration = .milliseconds(250),
-    applyOnMainActor: Bool = true
+    interval: TimeInterval = 0.2,
   ) {
     self._immediate = State(initialValue: wrappedValue)
     self._debounced = State(initialValue: wrappedValue)
-    self.delay = delay
-    self.applyOnMainActor = applyOnMainActor
+    self.interval = Duration.seconds(interval)
   }
-  
+
   /// Updates immediately (what controls should write to).
   public var wrappedValue: Value {
     get { immediate }
@@ -36,10 +34,10 @@ public struct DebouncedState<Value: Equatable>: DynamicProperty {
       scheduleDebounce(to: newValue)
     }
   }
-  
+
   /// Debounced value (what your expensive work should read).
   public var projectedValue: Value { debounced }
-  
+
   /// A Binding to the immediate value (handy for TextField/Slider).
   public var binding: Binding<Value> {
     Binding(
@@ -47,32 +45,28 @@ public struct DebouncedState<Value: Equatable>: DynamicProperty {
       set: { wrappedValue = $0 }
     )
   }
-  
+
   /// Immediately commit the current value (skip delay).
   public func flush() {
     task?.cancel()
     task = nil
     debounced = immediate
   }
-  
+
   /// Cancel any pending debounced update.
   public func cancelPending() {
     task?.cancel()
     task = nil
   }
-  
+
+  @MainActor
   private func scheduleDebounce(to newValue: Value) {
     task?.cancel()
-    
-    task = Task { [delay, applyOnMainActor] in
-      try? await Task.sleep(for: delay)
+
+    task = Task {
+      try? await Task.sleep(for: interval)
       if Task.isCancelled { return }
-      
-      if applyOnMainActor {
-        await MainActor.run { debounced = newValue }
-      } else {
-        debounced = newValue
-      }
+      debounced = newValue
     }
   }
 }
