@@ -32,7 +32,7 @@ The Benefit: This is much more robust. If the frequency changes, the next "slice
 
 You mentioned the "push and pull" of the system. This change in ContinuousParameter forced a change in Ownership.
 
-In your previous setup, AnimatedWave was likely trying to be "smart"—holding onto its own state. But in SwiftUI, Views are transient. If your WaveCanvasThing re-renders, a computed property like private var mainAnimated: AnimatedWave { ... } creates a brand new object. If that object holds the state, your wave resets to zero every frame, causing a "flicker" or a frozen wave.
+In your previous setup, AnimatedWave was likely trying to be "smart"—holding onto its own state. But in SwiftUI, Views are transient. If your BreathingWaveCanvas re-renders, a computed property like private var mainAnimated: AnimatedWave { ... } creates a brand new object. If that object holds the state, your wave resets to zero every frame, causing a "flicker" or a frozen wave.
 
 The shift we made was this:
 

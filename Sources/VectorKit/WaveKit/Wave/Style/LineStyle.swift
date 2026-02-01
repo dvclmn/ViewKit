@@ -8,7 +8,7 @@
 import ColourKit
 import Foundation
 
-public struct LineStyle<T: WaveFloat>: Codable, Equatable, Hashable {
+public struct LineStyle<T: WaveFloat>: Codable, Sendable, Equatable, Hashable {
   public var colour: HSVColour
   public var colourSecondary: HSVColour?
   public var lineWidth: T

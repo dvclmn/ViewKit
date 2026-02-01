@@ -68,6 +68,9 @@ extension Double: FloatRenderable {
 extension CGFloat: FloatRenderable {
   public var value: Self { self }
 }
+extension Float: FloatRenderable {
+  public var value: Self { self }
+}
 
 extension BinaryFloatingPoint {
   public func toPercentString(within range: ClosedRange<Self>) -> String {

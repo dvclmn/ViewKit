@@ -8,6 +8,10 @@
 import SwiftUI
 
 extension CGRect {
+  
+  public init(x: Float, y: Float, width: Float, height: Float) {
+    self.init(x: Double(x), y: Double(y), width: Double(width), height: Double(height))
+  }
 
   public var isStandardized: Bool {
     return !isNull && !isInfinite

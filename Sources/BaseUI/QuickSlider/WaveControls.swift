@@ -10,11 +10,11 @@ import VectorKit
 
 public struct WaveControls: View {
   @Binding var wave: FloatWave
-  let ranges: (WaveAttribute) -> ClosedRange<CGFloat>?
+  let ranges: (WaveAttribute) -> ClosedRange<Float>?
   
   public init(
     wave: Binding<FloatWave>,
-    ranges: @escaping (WaveAttribute) -> ClosedRange<CGFloat>? = { _ in nil }
+    ranges: @escaping (WaveAttribute) -> ClosedRange<Float>? = { _ in nil }
   ) {
     self._wave = wave
     self.ranges = ranges

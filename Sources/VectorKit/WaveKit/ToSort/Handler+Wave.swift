@@ -10,14 +10,14 @@ import SwiftUI
 
 @Observable
 public final class WaveHandler {
-  public var xPositions: [CGFloat] = []
-  public var spatialPhases: [CGFloat] = []
+  public var xPositions: [Float] = []
+  public var spatialPhases: [Float] = []
   public var baseLinePath: Path = .init()
   public var lastComputedSize: CGSize = .zero
   public var lastComputedSampleCount: Int = 0
   public var isHovering: Bool = false
 
-  @ObservationIgnored public let emphasisPadding: CGFloat = Styles.sizeSmall
+  @ObservationIgnored public let emphasisPadding: Float = 8
   
   public init(){}
 }
@@ -37,7 +37,7 @@ extension WaveHandler {
   public func recomputeStatic(
     for size: CGSize,
     wave: FloatWave,
-    cyclesAcross: CGFloat,
+    cyclesAcross: Float,
     sampleCount: Int
   ) {
     guard sampleCount > 1 else {
@@ -45,13 +45,16 @@ extension WaveHandler {
       spatialPhases = []
       return
     }
+    
+    let width = Float(size.width)
+//    let height = Float(size.height)
 
     /// X positions - ensure we don't divide by zero
-    let step = size.width / CGFloat(sampleCount - 1)
-    xPositions = (0..<sampleCount).map { CGFloat($0) * step }
+    let step = width / Float(sampleCount - 1)
+    xPositions = (0..<sampleCount).map { Float($0) * step }
 
     /// Spatial phases
-    let kx = size.width > 0 ? (2 * .pi * cyclesAcross) / size.width : 0
+    let kx = size.width > 0 ? (2 * .pi * cyclesAcross) / width : 0
 //    let kx = size.width > 0 ? (2 * .pi * wave.cyclesAcross) / size.width : 0
     spatialPhases = xPositions.map { kx * $0 }
 
@@ -68,10 +71,10 @@ extension WaveHandler {
 
   /// Generates both normal and ghost points in a single pass
   public func generateWavePoints(
-    normalPhase: CGFloat,
-    ghostPhase: CGFloat?,
-    amp: CGFloat,
-    viewHeight: CGFloat,
+    normalPhase: Float,
+    ghostPhase: Float?,
+    amp: Float,
+    viewHeight: Float,
     //    size: CGSize,
     sampleCount: Int
   ) -> (normal: [CGPoint], ghost: [CGPoint]?) {

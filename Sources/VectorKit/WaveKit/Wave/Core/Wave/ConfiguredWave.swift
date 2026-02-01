@@ -8,7 +8,7 @@
 import Foundation
 
 /// Previously handled by now-removed `WaveModulator`
-public struct ConfiguredWave: Wavable, Identifiable, Hashable, Codable, Equatable {
+public struct ConfiguredWave: Wavable, Sendable, Identifiable, Hashable, Codable, Equatable {
   public typealias Value = Float
   public var id: FloatWave.ID { wave.id }
   public var wave: FloatWave

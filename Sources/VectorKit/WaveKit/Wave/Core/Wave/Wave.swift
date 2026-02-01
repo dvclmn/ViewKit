@@ -44,6 +44,8 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
 }
 
 extension Wave {
+  public var omega: T { frequency.omega }
+
   public static var example01: Self {
     .init(
       amp: 8,

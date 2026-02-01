@@ -15,12 +15,12 @@ extension CGSize: @retroactive Hashable {
 }
 
 extension CGSize {
-  public init(fromLength length: CGFloat) {
-    self.init(width: length, height: length)
+  public init<T: BinaryFloatingPoint>(fromLength length: T) {
+    self.init(width: CGFloat(length), height: CGFloat(length))
   }
 
-  public init(_ width: CGFloat, _ height: CGFloat) {
-    self.init(width: width, height: height)
+  public init<T: BinaryFloatingPoint>(_ width: T, _ height: T) {
+    self.init(width: CGFloat(width), height: CGFloat(height))
   }
 
 }

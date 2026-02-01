@@ -10,7 +10,7 @@ import CoreTools
 import Foundation
 public typealias FloatWaveStyle = WaveStyle<Float>
 
-public struct WaveStyle<T: WaveFloat>: Codable, Equatable, Hashable {
+public struct WaveStyle<T: WaveFloat>: Codable, Sendable, Equatable, Hashable {
   public var lineStyle: LineStyle<T>
   public var pointStyle: PointStyle<T>
 
