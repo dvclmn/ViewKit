@@ -11,16 +11,16 @@ import Foundation
 public struct LineStyle: Sendable, Codable, Equatable, Hashable {
   public var colour: HSVColour
   public var colourSecondary: HSVColour?
-  public var lineWidth: CGFloat
+  public var lineWidth: Float
   public var dashes: Int
-  public var dashPhase: CGFloat
+  public var dashPhase: Float
 
   public init(
     colour: HSVColour = .green,
     colourSecondary: HSVColour? = .orange,
-    lineWidth: CGFloat = 3.0,
+    lineWidth: Float = 3.0,
     dashes: Int = 0,
-    dashPhase: CGFloat = 0,
+    dashPhase: Float = 0,
   ) {
     self.colour = colour
     self.colourSecondary = colourSecondary
