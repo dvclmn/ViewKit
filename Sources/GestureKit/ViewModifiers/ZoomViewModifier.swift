@@ -14,7 +14,7 @@ public struct ZoomModifier: ViewModifier {
   @Environment(\.canvasZoomRange) private var zoomRange
   @Environment(\.modifierKeys) private var modifierKeys
 
-  @GestureState private var magnification: CGFloat = 1
+//  @GestureState private var magnification: CGFloat = 1
   @State private var initialZoom: CGFloat?
   @State private var internalZoom: CGFloat  // <- source of truth
 
@@ -46,31 +46,50 @@ extension ZoomModifier {
 
   private var zoomGesture: some Gesture {
     MagnifyGesture()
-      .updating($magnification) { value, state, _ in
-        state = value.magnification
-      }
       .onChanged { value in
-
-        if initialZoom == nil {
-          initialZoom = internalZoom  // <- always valid
-        }
-
-        let newZoom = effectiveZoom(value)
-
+        // value.magnification is absolute since gesture start.
+        // Convert to incremental delta:
+        let delta = value.magnification / lastMagnification
+        lastMagnification = value.magnification
+        
+        let newZoom = (internalZoom * delta).clamped(to: zoomRange)
+        
         internalZoom = newZoom
-        externalZoom?.wrappedValue = Double(newZoom)  // optional sync
+        externalZoom?.wrappedValue = Double(newZoom)
         _ = didUpdateZoom(newZoom, .changed)
-
       }
       .onEnded { value in
-
-        let finalZoom = effectiveZoom(value)
-
-        //        internalZoom = finalZoom
-        externalZoom?.wrappedValue = Double(finalZoom)
-        initialZoom = nil
-        internalZoom = didUpdateZoom(finalZoom, .ended) ?? finalZoom
+        lastMagnification = 1
+        
+        let final = internalZoom.clamped(to: zoomRange)
+        externalZoom?.wrappedValue = Double(final)
+        internalZoom = didUpdateZoom(final, .ended) ?? final
       }
+//      .updating($magnification) { value, state, _ in
+//        state = value.magnification
+//      }
+//      .onChanged { value in
+//
+//        if initialZoom == nil {
+//          initialZoom = internalZoom  // <- always valid
+//        }
+//
+//        let newZoom = effectiveZoom(value)
+//
+//        internalZoom = newZoom
+//        externalZoom?.wrappedValue = Double(newZoom)  // optional sync
+//        _ = didUpdateZoom(newZoom, .changed)
+//
+//      }
+//      .onEnded { value in
+//
+//        let finalZoom = effectiveZoom(value)
+//
+//        //        internalZoom = finalZoom
+//        externalZoom?.wrappedValue = Double(finalZoom)
+//        initialZoom = nil
+//        internalZoom = didUpdateZoom(finalZoom, .ended) ?? finalZoom
+//      }
   }
 }
 extension ZoomModifier {
