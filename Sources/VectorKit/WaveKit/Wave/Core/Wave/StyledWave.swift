@@ -16,9 +16,9 @@ public struct StyledWave: Wavable, Hashable, Codable, Equatable, Identifiable {
   public var id: Wave<Value>.ID { wave.id }
   public var wave: Wave<Value>
   public var config: WaveConfig<Value>
-  public var style: WaveStyle
+  public var style: WaveStyle<Value>
 
-  public init(_ wave: Wave<Value>, config: WaveConfig<Value>, style: WaveStyle) {
+  public init(_ wave: Wave<Value>, config: WaveConfig<Value>, style: WaveStyle<Value>) {
     self.wave = wave
     self.config = config
     self.style = style
@@ -26,7 +26,7 @@ public struct StyledWave: Wavable, Hashable, Codable, Equatable, Identifiable {
 }
 
 extension StyledWave {
-  public init(configuredWave: ConfiguredWave, style: WaveStyle) {
+  public init(configuredWave: ConfiguredWave, style: WaveStyle<Value>) {
     self.wave = configuredWave.wave
     self.config = configuredWave.config
     self.style = style

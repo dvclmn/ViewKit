@@ -12,21 +12,44 @@ import SwiftUI
 
 // MARK: - High-Performance Sampler
 public struct WaveSampler<T: WaveFloat> {
-  @usableFromInline static var tableBits: Int { 11 }  // 2048 entries
-  @usableFromInline static var tableSize: Int { 1 << tableBits }  // 2048
+  // MARK: Lookup table configuration
+  /// Number of bits used to address entries in the sine lookup table.
+  /// 11 bits -> 2048 addressable entries (plus one extra for interpolation wrap).
+  @usableFromInline static var tableBits: Int { 11 }
+
+  /// Total number of addressable entries in the lookup table (2^tableBits).
+  @usableFromInline static var tableSize: Int { 1 << tableBits }
+
+  /// Bitmask for wrapping table indices (e.g., `(index) & tableMask`).
   @usableFromInline static var tableMask: Int { tableSize - 1 }
+
+  /// Table size as a generic floating-point value.
   @usableFromInline static var tableSizeF: T { T(tableSize) }
 
-  /// Linearly interpolated sine table (better than nearest-neighbor)
+  // MARK: Sine table storage
+  /// Lazily computed sine lookup table with an extra sample for linear interpolation.
+  /// The extra element duplicates the first to simplify wrap-around.
   @usableFromInline static var sineTable: [T] {
-    (0...tableSize).map { i in
-      sin(T(i) * 2 * .pi / tableSizeF)
+    // Build once per generic instantiation `T`.
+    var table = [T]()
+    table.reserveCapacity(tableSize + 1)
+    let twoPi = T(2) * .pi
+    let denom = tableSizeF
+    for i in 0...tableSize { // inclusive to add the wrap sample
+      // Explicitly lift `i` to `T` to avoid integer/generic arithmetic ambiguity.
+      let angle = (T(i) * twoPi) / denom
+      table.append(sin(angle))
     }
+    return table
   }
 
-  /// Returns the waveform value at the given phase.
-  /// No need to pre-normalise the value for phase; it will be
-  /// normalised for you to the range `[0, 1)`
+  /// Returns the waveform value for a given phase in turns.
+  /// - Parameters:
+  ///   - waveform: The waveform shape to sample.
+  ///   - phase: A phase value in arbitrary units; it will be normalized to [0, 1).
+  ///            Interpret 1.0 as one full turn (2π radians). Values outside [0, 1)
+  ///            are wrapped safely before lookup.
+  /// - Returns: The waveform sample in the range [-1, 1].
   @inlinable
   public static func value(
     for waveform: Waveform,
@@ -35,22 +58,24 @@ public struct WaveSampler<T: WaveFloat> {
     let p = T.normalisedPhase(phase)
 
     return switch waveform {
-      case .sine: sineLookup(p)
-
-      /// Standard: -1 → 1 → -1, peaks at 0.25 and 0.75
-      case .triangle: 1.0 - 4.0 * abs(p - 0.5)
-
-      /// Linear ramp: -1 → 1, discontinuity at integers
-      case .sawtooth: 2.0 * p - 1.0
-
-      case .square: p < 0.5 ? 1.0 : -1.0
+      case .sine:
+        sineLookup(p)
+      case .triangle:
+        // Standard: -1 → 1 → -1, peaks at 0.25 and 0.75
+        T(1) - T(4) * abs(p - T(0.5))
+      case .sawtooth:
+        // Linear ramp: -1 → 1, discontinuity at integers
+        T(2) * p - T(1)
+      case .square:
+        p < T(0.5) ? T(1) : T(-1)
     }
   }
 
   @inlinable
   static func sineLookup(_ phase: T) -> T {
+    // Scale phase in [0, 1) to table space and split into integer/fractional parts.
     let scaled = phase * tableSizeF
-    let index = Int(scaled)
+    let index = Int(floor(max(T(0), scaled)))
     let fraction = scaled - T(index)
 
     let i0 = index & tableMask
@@ -84,7 +109,8 @@ extension WaveSampler where T == Float {
         /// For geometric waves, manual SIMD or simple map is fastest
         /// (could also use vDSP for the triangle/sawtooth math)
         for i in phases.indices {
-          result[i] = value(for: waveform, at: phases[i])
+          let p = phases[i]
+          result[i] = value(for: waveform, at: p)
         }
     }
 
@@ -158,3 +184,4 @@ extension WaveSampler where T == Float {
 //    }
 //  }
 //}
+
