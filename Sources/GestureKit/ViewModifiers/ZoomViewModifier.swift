@@ -9,7 +9,7 @@ import CoreTools
 import SwiftUI
 
 public typealias ZoomUpdate = (CGFloat, InteractionPhase) -> CGFloat?
-//public typealias ZoomUpdate = (CGFloat, InteractionPhase) -> Void
+
 public struct ZoomModifier: ViewModifier {
   @Environment(\.canvasZoomRange) private var zoomRange
   @Environment(\.modifierKeys) private var modifierKeys
@@ -81,7 +81,7 @@ extension ZoomModifier {
 }
 extension View {
 
-  // Stateful + binding sync
+  /// Stateful + binding sync
   public func zoomGesture(
     zoom: Binding<Double>,
     isEnabled: Bool = true,
@@ -97,7 +97,7 @@ extension View {
     )
   }
 
-  // Pure internal state + callback
+  /// Pure internal state + callback
   public func zoomGesture(
     initial: CGFloat,
     isEnabled: Bool = true,
