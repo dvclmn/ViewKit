@@ -10,7 +10,7 @@ import Foundation
 /// `Result = (CurrentTime – Origin) * Rate + Offset`
 /// Manages a value that evolves over time (like phase or rotation)
 /// and ensures transitions between different rates/offsets are seamless.
-///
+/// Domain‑specific to oscillation.
 /// Look to this now instead of `WaveAttributeState`
 public struct ContinuousParameter: Sendable {
   private var lastSyncTime: TimeInterval = 0

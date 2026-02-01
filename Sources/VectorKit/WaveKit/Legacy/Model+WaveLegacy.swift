@@ -26,58 +26,58 @@ import SwiftUI
 /// cycles value here, or there is also a global setting
 /// if they are happy to keep it the same for all Waves.
 
-public struct WaveLegacy: Sendable, Identifiable, Hashable {
-
-  public let id: UUID
-
-  public var frequencySmoothed: SmoothedProperty
-  public var amplitudeSmoothed: SmoothedProperty
-  public var phaseOffsetSmoothed: SmoothedProperty
-  public var noiseSmoothed: SmoothedProperty
-
-  public init(
-    id: UUID = UUID(),
-    frequency: CGFloat,
-    amplitude: CGFloat,
-    phaseOffset: CGFloat = 0,
-    noise: CGFloat = 0
-  ) {
-    self.id = id
-    self.frequencySmoothed = SmoothedProperty(frequency)
-    self.amplitudeSmoothed = SmoothedProperty(amplitude)
-    self.phaseOffsetSmoothed = SmoothedProperty(phaseOffset)
-    self.noiseSmoothed = SmoothedProperty(noise)
-  }
-}
-
-extension WaveLegacy {
-
-  public var frequency: CGFloat { frequencySmoothed.target }
-  public var amplitude: CGFloat { amplitudeSmoothed.target }
-  public var phaseOffset: CGFloat { phaseOffsetSmoothed.target }
-  public var noise: CGFloat { noiseSmoothed.target }
-
-  public var omega: CGFloat { frequency.omega }
-
-  private func phase(elapsed: CGFloat) -> CGFloat {
-    omega * elapsed + phaseOffset
-  }
-
-  /// Smooth parameters towards target each tick
-  public mutating func updateProperties(dt: CGFloat, smoothing: CGFloat) {
-    frequencySmoothed.update(dt: dt, smoothing: smoothing)
-    amplitudeSmoothed.update(dt: dt, smoothing: smoothing)
-    phaseOffsetSmoothed.update(dt: dt, smoothing: smoothing)
-    noiseSmoothed.update(dt: dt, smoothing: smoothing)
-  }
-
-  /// Evaluate wave value at given elapsed time (seconds since start)
-  public func value(elapsed: CGFloat) -> CGFloat {
-    let phase = self.phase(elapsed: elapsed)
-    let sinPhase = sin(phase)
-    return amplitude * sinPhase
-  }
-
-  private static var validRange: ClosedRange<CGFloat> { -1...1 }
-
-}
+//public struct WaveLegacy: Sendable, Identifiable, Hashable {
+//
+//  public let id: UUID
+//
+//  public var frequencySmoothed: SmoothedProperty
+//  public var amplitudeSmoothed: SmoothedProperty
+//  public var phaseOffsetSmoothed: SmoothedProperty
+//  public var noiseSmoothed: SmoothedProperty
+//
+//  public init(
+//    id: UUID = UUID(),
+//    frequency: CGFloat,
+//    amplitude: CGFloat,
+//    phaseOffset: CGFloat = 0,
+//    noise: CGFloat = 0
+//  ) {
+//    self.id = id
+//    self.frequencySmoothed = SmoothedProperty(frequency)
+//    self.amplitudeSmoothed = SmoothedProperty(amplitude)
+//    self.phaseOffsetSmoothed = SmoothedProperty(phaseOffset)
+//    self.noiseSmoothed = SmoothedProperty(noise)
+//  }
+//}
+//
+//extension WaveLegacy {
+//
+//  public var frequency: CGFloat { frequencySmoothed.target }
+//  public var amplitude: CGFloat { amplitudeSmoothed.target }
+//  public var phaseOffset: CGFloat { phaseOffsetSmoothed.target }
+//  public var noise: CGFloat { noiseSmoothed.target }
+//
+//  public var omega: CGFloat { frequency.omega }
+//
+//  private func phase(elapsed: CGFloat) -> CGFloat {
+//    omega * elapsed + phaseOffset
+//  }
+//
+//  /// Smooth parameters towards target each tick
+//  public mutating func updateProperties(dt: CGFloat, smoothing: CGFloat) {
+//    frequencySmoothed.update(dt: dt, smoothing: smoothing)
+//    amplitudeSmoothed.update(dt: dt, smoothing: smoothing)
+//    phaseOffsetSmoothed.update(dt: dt, smoothing: smoothing)
+//    noiseSmoothed.update(dt: dt, smoothing: smoothing)
+//  }
+//
+//  /// Evaluate wave value at given elapsed time (seconds since start)
+//  public func value(elapsed: CGFloat) -> CGFloat {
+//    let phase = self.phase(elapsed: elapsed)
+//    let sinPhase = sin(phase)
+//    return amplitude * sinPhase
+//  }
+//
+//  private static var validRange: ClosedRange<CGFloat> { -1...1 }
+//
+//}

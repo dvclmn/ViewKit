@@ -9,29 +9,31 @@ import CoreTools
 import Foundation
 
 /// These just never seem to work — like ``ContinuousParameter``
-public struct SmoothedProperty: Sendable, Hashable {
-  public var target: CGFloat
-  public var displayed: CGFloat
+/// Filtering (low‑pass) of any scalar input.
+/// Domain‑agnostic (works for amplitude, frequency, noise, etc.).
+public struct Smoothed<T: BinaryFloatingPoint>: Hashable {
+  public var target: T
+  public var displayed: T
 
-  public init(_ initial: CGFloat) {
+  public init(_ initial: T) {
     self.target = initial
     self.displayed = initial
   }
 }
 
-extension SmoothedProperty {
+extension Smoothed {
 
-  public mutating func setTarget(_ newValue: CGFloat) {
+  public mutating func setTarget(_ newValue: T) {
     self.target = newValue
   }
 
-  public mutating func snapToValue(_ newValue: CGFloat) {
+  public mutating func snapToValue(_ newValue: T) {
     self.update(dt: 0, smoothing: 0)
   }
 
   public mutating func update(
-    dt: CGFloat,
-    smoothing timeConstant: CGFloat
+    dt: T,
+    smoothing timeConstant: T
   ) {
     let current = displayed
     displayed = current.smoothed(
@@ -42,11 +44,11 @@ extension SmoothedProperty {
   }
 }
 
-extension Array where Element == SmoothedProperty {
+extension Array where Element == Smoothed {
   public mutating func updateAll(
-    dt: CGFloat,
-    timeConstant: CGFloat,
-    smoothing: CGFloat
+    dt: T,
+    timeConstant: T,
+    smoothing: T
   ) {
     for index in self.indices {
       self[safe: index]?.update(

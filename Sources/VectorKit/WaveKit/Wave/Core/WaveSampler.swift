@@ -8,8 +8,7 @@
 import Accelerate
 import Foundation
 import SwiftUI
-
-
+import CoreTools
 
 // MARK: - High-Performance Sampler
 public struct FastWaveSampler {
@@ -33,7 +32,7 @@ public struct FastWaveSampler {
   ) -> Float {
     let p = normalisedPhase(phase)
 
-   return switch waveform {
+    return switch waveform {
       case .sine: sineLookup(p)
 
       /// Standard: -1 → 1 → -1, peaks at 0.25 and 0.75
