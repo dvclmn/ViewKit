@@ -13,7 +13,7 @@ extension WavePathGenerator {
   ///   - points: Array of points to interpolate
   ///   - interpolation: The interpolation method to use
   /// - Returns: A new Path object, or nil if insufficient points
-  public func updatePath(with interpolation: WaveInterpolation) {
+  public mutating func updatePath(with interpolation: WaveInterpolation) {
     resetPath()
 
     guard !points.isEmpty else { return }
@@ -39,7 +39,7 @@ extension WavePathGenerator {
 
   /// Creates a path by connecting points with straight lines
   /// This is the fastest method, ideal when smoothness isn't required
-  package func linearPath() {
+  package mutating func linearPath() {
 
     path.move(to: points[0])
 

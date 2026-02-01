@@ -12,7 +12,7 @@ extension WavePathGenerator {
   /// Smooth path using cubic Bézier curves derived from Catmull–Rom.
   ///
   /// - Parameter tension: 0 = standard Catmull–Rom smoothing, 1 = straight lines.
-  package func cubicPath(tension: CGFloat = 0) {
+  package mutating func cubicPath(tension: CGFloat = 0) {
     guard points.count >= 2 else { return }
 
     path.move(to: points[0])

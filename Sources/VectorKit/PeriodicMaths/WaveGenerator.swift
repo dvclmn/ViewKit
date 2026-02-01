@@ -7,26 +7,27 @@
 
 import SwiftUI
 
-@Observable
-public final class WavePathGenerator {
+//@Observable
+public struct WavePathGenerator {
+  //public final class WavePathGenerator {
   public var points: [CGPoint] = []
   public var path: Path = .init()
-  public var usesAltCubicMethod: Bool = true
   //  private var cachedControlPoints: [CGPoint]?
 
   public
-    init(){}
+    init()
+  {}
 }
 
 extension WavePathGenerator {
-  public func resetAll() {
+  public mutating func resetAll() {
     resetPath()
     resetPoints()
   }
-  public func resetPath() {
+  public mutating func resetPath() {
     path = .init()
   }
-  public func resetPoints() {
+  public mutating func resetPoints() {
     points.removeAll()
   }
 
@@ -69,7 +70,7 @@ extension WavePathGenerator {
   //  }
 
   /// Smooth path using quadratic Bézier curves
-  package func createQuadCurvePath() {
+  package mutating func createQuadCurvePath() {
 
     guard points.count >= 2 else { return }
 
@@ -97,7 +98,6 @@ extension WavePathGenerator {
     }
 
   }
-
 
 }
 

@@ -12,7 +12,7 @@ extension WavePathGenerator {
 
   /// Creates a smooth Catmull-Rom spline through the given points.
   /// Uses cubic Bézier conversion for optimal rendering performance.
-  package func catmullRom(
+  package mutating func catmullRom(
     variant: CatmullRom.SplineVariant = .centripetal,
     tension: CGFloat = 0.5,
     closed: Bool = false
@@ -104,7 +104,7 @@ extension WavePathGenerator {
   //}
   //extension Path {
   //
-  package func catmullRomAlt(
+  package mutating func catmullRomAlt(
     //    points: [CGPoint],
     tension: CGFloat = 0.5,
     closed: Bool = false,
@@ -154,7 +154,7 @@ extension WavePathGenerator {
 
   // This catmull rom code courtesy of
   // https://github.com/andrelind/swift-catmullrom/tree/master
-  package func catmullRomAlt02(
+  package mutating func catmullRomAlt02(
     variant: CatmullRom.SplineVariant,
     tension: CGFloat = 0.5,
     closed: Bool = false,
