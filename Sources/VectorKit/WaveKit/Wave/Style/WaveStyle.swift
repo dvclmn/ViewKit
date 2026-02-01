@@ -9,13 +9,13 @@ import ColourKit
 import CoreTools
 import Foundation
 
-public struct WaveStyle: Sendable, Codable, Equatable, Hashable {
-  public var lineStyle: LineStyle
-  public var pointStyle: PointStyle
+public struct WaveStyle<T: WaveFloat>: Codable, Equatable, Hashable {
+  public var lineStyle: LineStyle<T>
+  public var pointStyle: PointStyle<T>
 
   public init(
-    line: LineStyle = .init(),
-    point: PointStyle = .init(),
+    line: LineStyle<T> = .init(),
+    point: PointStyle<T> = .init(),
   ) {
     self.lineStyle = line
     self.pointStyle = point

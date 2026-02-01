@@ -8,19 +8,19 @@
 import ColourKit
 import Foundation
 
-public struct LineStyle: Sendable, Codable, Equatable, Hashable {
+public struct LineStyle<T: WaveFloat>: Codable, Equatable, Hashable {
   public var colour: HSVColour
   public var colourSecondary: HSVColour?
-  public var lineWidth: Float
+  public var lineWidth: T
   public var dashes: Int
-  public var dashPhase: Float
+  public var dashPhase: T
 
   public init(
     colour: HSVColour = .green,
     colourSecondary: HSVColour? = .orange,
-    lineWidth: Float = 3.0,
+    lineWidth: T = 3.0,
     dashes: Int = 0,
-    dashPhase: Float = 0,
+    dashPhase: T = 0,
   ) {
     self.colour = colour
     self.colourSecondary = colourSecondary
@@ -31,9 +31,11 @@ public struct LineStyle: Sendable, Codable, Equatable, Hashable {
 }
 
 extension LineStyle {
-  public static let example: Self = .init(
-    colour: .green,
-    colourSecondary: .brown,
-    lineWidth: 3.0,
-  )
+  public static var example: Self {
+    .init(
+      colour: .green,
+      colourSecondary: .brown,
+      lineWidth: 3.0,
+    )
+  }
 }

@@ -8,16 +8,16 @@
 import ColourKit
 import Foundation
 
-public struct PointStyle: Sendable, Codable, Equatable, Hashable {
+public struct PointStyle<T: WaveFloat>: Sendable, Codable, Equatable, Hashable {
   public var colour: HSVColour
   public var colourSecondary: HSVColour?
-  public var radius: Float
+  public var radius: T
   public var shape: PointShape
   
   public init(
     colour: HSVColour = .brown,
     colourSecondary: HSVColour? = .purple,
-    radius: Float = 9.0,
+    radius: T = 9.0,
     shape: PointShape = .circle
   ) {
     self.colour = colour
@@ -28,10 +28,12 @@ public struct PointStyle: Sendable, Codable, Equatable, Hashable {
 }
 
 extension PointStyle {
-  public static let example: Self = .init(
-    colour: .purple,
-    colourSecondary: .orange,
-    radius: 3.0,
-    shape: .circle
-  )
+  public static var example: Self {
+    .init(
+      colour: .purple,
+      colourSecondary: .orange,
+      radius: 3.0,
+      shape: .circle
+    )
+  }
 }
