@@ -17,7 +17,7 @@ public final class WaveHandler {
   public var lastComputedSampleCount: Int = 0
   public var isHovering: Bool = false
 
-  @ObservationIgnored public let emphasisPadding: Float = 8
+  @ObservationIgnored public let emphasisPadding: CGFloat = 8
   
   public init(){}
 }
@@ -97,11 +97,11 @@ extension WaveHandler {
       let spatialPhase = spatialPhases[i]
 
       let yNormal = centerY + amp * sin(normalPhase + spatialPhase)
-      normalPoints.append(CGPoint(x: x, y: yNormal))
+      normalPoints.append(CGPoint(floatX: x, floatY: yNormal))
 
       if let gPhase = ghostPhase {
         let yGhost = centerY + amp * sin(gPhase + spatialPhase)
-        ghostPoints?.append(CGPoint(x: x, y: yGhost))
+        ghostPoints?.append(CGPoint(floatX: x, floatY: yGhost))
       }
     }
 

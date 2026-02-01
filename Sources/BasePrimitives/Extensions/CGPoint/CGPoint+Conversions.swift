@@ -8,8 +8,8 @@
 import SwiftUI
 
 extension CGPoint {
-  public init(x: Float, y: Float) {
-    self.init(x: Double(x), y: Double(y))
+  public init(floatX: Float, floatY: Float) {
+    self.init(x: Double(floatX), y: Double(floatY))
   }
   
   public init(fromSize size: CGSize) {
