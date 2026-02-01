@@ -10,6 +10,7 @@ import Foundation
 extension BinaryFloatingPoint {
 
   /// Returns zero if range width is zero
+  @inline(__always)
   public func normalised(in range: ClosedRange<Self>) -> Self {
     normalisedIfValid(in: range) ?? 0
   }

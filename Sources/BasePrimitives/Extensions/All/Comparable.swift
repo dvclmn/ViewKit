@@ -10,12 +10,12 @@ import Foundation
 extension Comparable {
 
   /// Returns `self` clamped to the provided range.
-  /// - Precondition: The range must be valid (i.e., lowerBound <= upperBound).
-  /// Note: This is *not* the same as normalising
+  /// Note to self: This is *not* the same as normalising.
+  /// For normalisation see `BFP+Normalise`
   public func clamped(to range: ClosedRange<Self>) -> Self {
     return clamped(range.lowerBound, range.upperBound)
   }
-  
+
   public func clampedIfNeeded(to range: ClosedRange<Self>?) -> Self {
     guard let range else { return self }
     return clamped(range.lowerBound, range.upperBound)
@@ -27,11 +27,6 @@ extension Comparable {
     guard lower < upper else { return self }
     return Swift.min(upper, Swift.max(lower, self))
   }
-
-//  public func clamped(_ lower: Self) -> Self {
-//    return Swift.max(lower, self)
-//  }
-
 }
 
 extension Comparable where Self: BinaryFloatingPoint {

@@ -9,13 +9,8 @@ import Accelerate
 import Foundation
 import SwiftUI
 
-//public enum Waveform: CaseIterable {
-//  case sine, triangle, sawtooth, square
-//}
-
-// MARK: - Phase Handling
 @inlinable
-func normalizedPhase(_ phase: Float) -> Float {
+func normalisedPhase(_ phase: Float) -> Float {
   /// Corrects negative phases and floating-point overflow
   let p = phase - floor(phase)
   /// Clamp 1.0 to 0.0 (rare, but possible with floating point error)
@@ -34,22 +29,26 @@ public struct FastWaveSampler {
     sin(Float(i) * 2 * .pi / tableSizeF)
   }
 
-  /// Single value evaluation (useful for markers or specific points)
+  /// Returns the waveform value at the given phase.
+  /// No need to pre-normalise the value for phase; it will be
+  /// normalised for you to the range `[0, 1)`
   @inlinable
-  public static func value(for waveform: Waveform, at phase: Float) -> Float {
-    let p = normalizedPhase(phase)
+  public static func value(
+    for waveform: Waveform,
+    at phase: Float
+  ) -> Float {
+    let p = normalisedPhase(phase)
 
-    switch waveform {
-      case .sine:
-        return sineLookup(p)
-      case .triangle:
-        // Standard: -1 → 1 → -1, peaks at 0.25 and 0.75
-        return 1.0 - 4.0 * abs(p - 0.5)
-      case .sawtooth:
-        // Linear ramp: -1 → 1, discontinuity at integers
-        return 2.0 * p - 1.0
-      case .square:
-        return p < 0.5 ? 1.0 : -1.0
+   return switch waveform {
+      case .sine: sineLookup(p)
+
+      /// Standard: -1 → 1 → -1, peaks at 0.25 and 0.75
+      case .triangle: 1.0 - 4.0 * abs(p - 0.5)
+
+      /// Linear ramp: -1 → 1, discontinuity at integers
+      case .sawtooth: 2.0 * p - 1.0
+
+      case .square: p < 0.5 ? 1.0 : -1.0
     }
   }
 
@@ -110,7 +109,7 @@ public struct WavePhaseAccumulator {
   public mutating func advance() -> Float {
     phase += frequency / sampleRate
     if phase > 1_000_000 {  // Reset to prevent precision loss over long animations
-      phase = normalizedPhase(phase)
+      phase = normalisedPhase(phase)
     }
     return phase
   }

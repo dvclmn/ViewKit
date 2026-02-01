@@ -24,12 +24,6 @@ public struct WaveStack: @unchecked Sendable, Equatable, Identifiable {
 }
 
 extension WaveStack {
-
-//  public subscript<K: WaveKey>(dynamicMember keyPath: K.Type) -> ConfiguredWave {
-//    get { storage[ObjectIdentifier(key)] ?? key.defaultValue }
-//    set { storage[ObjectIdentifier(key)] = newValue }
-//  }
-  
   public subscript<K: WaveKey>(_ key: K.Type) -> ConfiguredWave {
     get { storage[ObjectIdentifier(key)] ?? key.defaultValue }
     set { storage[ObjectIdentifier(key)] = newValue }

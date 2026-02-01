@@ -14,7 +14,6 @@ public protocol Wavable {
 }
 
 extension Wavable {
-
   public subscript<T>(dynamicMember keyPath: WritableKeyPath<Wave, T>) -> T {
     get { self.wave[keyPath: keyPath] }
     set { self.wave[keyPath: keyPath] = newValue }

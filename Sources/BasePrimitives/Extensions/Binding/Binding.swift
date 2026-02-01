@@ -40,13 +40,13 @@ extension Binding where Value == Int {
 }
 
 extension Binding where Value: BinaryFloatingPoint & Sendable {
-  public func clampedIfNeeded(to range: ClosedRange<Value>?) -> Binding<Value> {
-    guard let range else { return self }
-    return Binding<Value>(
-      get: { wrappedValue.clamped(to: range) },
-      set: { wrappedValue = $0.clamped(to: range) }
-    )
-  }
+//  public func clampedIfNeeded(to range: ClosedRange<Value>?) -> Binding<Value> {
+//    guard let range else { return self }
+//    return Binding<Value>(
+//      get: { wrappedValue.clamped(to: range) },
+//      set: { wrappedValue = $0.clamped(to: range) }
+//    )
+//  }
 
   public var toBindingFloat: Binding<CGFloat> {
     Binding<CGFloat>(

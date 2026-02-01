@@ -8,16 +8,12 @@
 import Foundation
 
 /// Previously handled by now-removed `WaveModulator`
-//@dynamicMemberLookup
-public struct ConfiguredWave: Identifiable, Hashable, Sendable, Codable, Equatable, Wavable {
+public struct ConfiguredWave: Wavable, Identifiable, Hashable, Sendable, Codable, Equatable {
   public var id: Wave.ID { wave.id }
   public var wave: Wave
   public var config: WaveConfig
 
-  public init(
-    _ wave: Wave,
-    config: WaveConfig = .init()
-  ) {
+  public init(_ wave: Wave, config: WaveConfig = .init()) {
     self.wave = wave
     self.config = config
   }

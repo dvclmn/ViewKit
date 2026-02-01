@@ -33,9 +33,9 @@ import Foundation
 /// }
 /// ```
 public enum WaveKeyRegistry {
-  
+
   nonisolated(unsafe)
-  public static var registeredTypes: [String: any WaveKey.Type] = [:]
+    public static var registeredTypes: [String: any WaveKey.Type] = [:]
 
   public static func register<T: WaveKey>(_ type: T.Type) {
     registeredTypes[T.codingKey] = type

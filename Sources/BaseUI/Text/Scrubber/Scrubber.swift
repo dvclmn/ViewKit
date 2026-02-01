@@ -38,15 +38,17 @@ public struct TextScrubber: View, ValueFormattable {
       ScrubberCore(store: store)
     }
 
-    /// Handle case where `value` changes externally
-//    .task(id: value) {
-//      /// Maintain fresh initial state, if changed
-//      if dragDelta == .zero {
-//        updateIfChanged(&store.initialValue, to: value)
-//      }
-//    }
     /// This uses `bindModel`, as it needs to flow both ways
-    .bindModel($store.value, to: $value.clampedIfNeeded(to: range))
+    .bindModel(
+      $store.value,
+      to: Binding {
+        guard let range else { return self.value }
+        return self.value.clamped(to: range)
+      } set: {
+        guard let range else { return }
+        self.value = $0.clamped(to: range)
+      }
+    )
 
     /// These are one-way only (from outside, into this View),
     /// so using `task` is fine

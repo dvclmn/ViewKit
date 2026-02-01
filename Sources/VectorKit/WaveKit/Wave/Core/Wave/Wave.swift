@@ -8,12 +8,17 @@
 import Foundation
 
 /// Think of a wave as having two "engines" that determine its position:
-/// Time (when you are) and Space (where you are).
 ///
-/// - Time (The Motor): This is handled by your ContinuousParameter. It constantly moves the wave forward.
-/// - Space (The Coordinate): This is your normalisedIndex. In a SwiftUI Path or Canvas,
-///   0.0 might be the left edge and 1.0 the right edge.
-/// - Cycles: This is how many "humps" of the wave fit into that space.
+/// ## Time (When you are)
+/// - The Motor
+/// - Handled by ``ContinuousParameter``
+/// - Constantly moves the wave forward.
+///
+/// ## Space (Where you are)
+/// - The Coordinate
+/// - The `normalisedIndex`
+/// - In a SwiftUI Canvas, 0.0 might be the left edge and 1.0 the right edge;
+///   and Cycles is how many "humps" of the wave fit into that space.
 public struct Wave: Sendable, Identifiable, Hashable, Equatable, Codable {
   public let id: UUID
   public var amplitude: CGFloat
@@ -51,8 +56,3 @@ extension Wave {
     waveform: .sine
   )
 }
-
-//public struct NoisyWave: Sendable, Hashable {
-//  public let wave: Wave
-//  public var noise: CGFloat
-//}
