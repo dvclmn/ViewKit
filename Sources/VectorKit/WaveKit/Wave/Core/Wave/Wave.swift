@@ -7,6 +7,8 @@
 
 import Foundation
 
+public typealias FloatWave = Wave<Float>
+
 /// Think of a wave as having two "engines" that determine its position:
 ///
 /// ## Time (When you are)

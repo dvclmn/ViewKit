@@ -13,12 +13,12 @@ import Foundation
 public struct StyledWave: Wavable, Hashable, Codable, Equatable, Identifiable {
   public typealias Value = Float
   
-  public var id: Wave<Value>.ID { wave.id }
-  public var wave: Wave<Value>
-  public var config: WaveConfig<Value>
-  public var style: WaveStyle<Value>
+  public var id: FloatWave.ID { wave.id }
+  public var wave: FloatWave
+  public var config: FloatWaveConfig
+  public var style: FloatWaveStyle
 
-  public init(_ wave: Wave<Value>, config: WaveConfig<Value>, style: WaveStyle<Value>) {
+  public init(_ wave: FloatWave, config: FloatWaveConfig, style: FloatWaveStyle) {
     self.wave = wave
     self.config = config
     self.style = style
@@ -26,7 +26,7 @@ public struct StyledWave: Wavable, Hashable, Codable, Equatable, Identifiable {
 }
 
 extension StyledWave {
-  public init(configuredWave: ConfiguredWave, style: WaveStyle<Value>) {
+  public init(configuredWave: ConfiguredWave, style: FloatWaveStyle) {
     self.wave = configuredWave.wave
     self.config = configuredWave.config
     self.style = style

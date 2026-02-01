@@ -35,7 +35,7 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
     }
   }
 
-  public var defaultValue: CGFloat {
+  public var defaultValue: Float {
     switch self {
       case .amplitude: 20
       case .frequency: 1.0
@@ -43,7 +43,7 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
       case .noise: 0.0
     }
   }
-  public var defaultRange: ClosedRange<CGFloat> {
+  public var defaultRange: ClosedRange<Float> {
     switch self {
       case .amplitude: 0...20
       case .frequency: 0...4

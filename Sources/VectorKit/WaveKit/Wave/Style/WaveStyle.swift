@@ -8,6 +8,7 @@
 import ColourKit
 import CoreTools
 import Foundation
+public typealias FloatWaveStyle = WaveStyle<Float>
 
 public struct WaveStyle<T: WaveFloat>: Codable, Equatable, Hashable {
   public var lineStyle: LineStyle<T>

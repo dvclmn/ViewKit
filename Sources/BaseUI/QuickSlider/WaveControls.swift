@@ -9,11 +9,11 @@ import SwiftUI
 import VectorKit
 
 public struct WaveControls: View {
-  @Binding var wave: Wave
+  @Binding var wave: FloatWave
   let ranges: (WaveAttribute) -> ClosedRange<CGFloat>?
   
   public init(
-    wave: Binding<Wave>,
+    wave: Binding<FloatWave>,
     ranges: @escaping (WaveAttribute) -> ClosedRange<CGFloat>? = { _ in nil }
   ) {
     self._wave = wave

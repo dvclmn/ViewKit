@@ -7,14 +7,28 @@
 
 import Foundation
 
-public struct Oscillator<T: WaveFloat> {
+public struct Oscillator {
   public var waveform: Waveform
-  var freq: Smoothed<T>
-  var amp: Smoothed<T>
-  var phaseOffset: Smoothed<T>
-  var phase: ContinuousParameter<T>
+  var freq: SmoothedFloat
+  var amp: SmoothedFloat
+  var phaseOffset: SmoothedFloat
+  var phase: ContinuousFloat
 
-  mutating func tick(now: TimeInterval, dt: T, smoothing: T) -> T {
+  //  public init(
+  //    waveform: Waveform,
+  //    freq: Smoothed<T>,
+  //    amp: Smoothed<T>,
+  //    phaseOffset: Smoothed<T>,
+  //    phase: ContinuousParameter<T>
+  //  ) {
+  //    self.waveform = waveform
+  //    self.freq = freq
+  //    self.amp = amp
+  //    self.phaseOffset = phaseOffset
+  //    self.phase = phase
+  //  }
+
+  mutating func tick(now: TimeInterval, dt: Float, smoothing: Float) -> Float {
     /// 1) Smooth the inputs
     freq.update(dt: dt, smoothing: smoothing)
     amp.update(dt: dt, smoothing: smoothing)
@@ -25,23 +39,10 @@ public struct Oscillator<T: WaveFloat> {
 
     /// 3) Sample waveform using WaveSampler
     // Convert phase to a scalar in [0, 1) expected by the sampler, then apply phase offset in turns
-    let basePhase: T = phase.currentPhase
+    let basePhase: Float = phase.currentPhase
     let shiftedPhase = basePhase + phaseOffset.displayed
-    let sample = WaveSampler<T>.value(for: waveform, at: shiftedPhase)
+    let sample = Sampler.value(for: waveform, at: shiftedPhase)
     return amp.displayed * sample
   }
 
-  public init(
-    waveform: Waveform,
-    freq: Smoothed<T>,
-    amp: Smoothed<T>,
-    phaseOffset: Smoothed<T>,
-    phase: ContinuousParameter<T>
-  ) {
-    self.waveform = waveform
-    self.freq = freq
-    self.amp = amp
-    self.phaseOffset = phaseOffset
-    self.phase = phase
-  }
 }

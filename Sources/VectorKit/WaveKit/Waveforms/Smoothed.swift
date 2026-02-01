@@ -8,6 +8,8 @@
 import CoreTools
 import Foundation
 
+public typealias SmoothedFloat = Smoothed<Float>
+
 /// These just never seem to work — like ``ContinuousParameter``
 /// Filtering (low‑pass) of any scalar input.
 /// Domain‑agnostic (works for amplitude, frequency, noise, etc.).
@@ -56,9 +58,8 @@ extension Array {
   }
 }
 
-
 extension BinaryFloatingPoint {
-  
+
   /// Smoothly approaches `target` using exponential smoothing
   /// - Parameters:
   ///   - target: The target value to approach
@@ -80,30 +81,29 @@ extension BinaryFloatingPoint {
     /// Very small time constants would cause erratic behavior
     guard dt > 0 else { return target }
     guard timeConstant > 0.001 else { return target }
-    
+
     /// Calculate the ratio of elapsed time to time constant
     /// This determines how much "decay" should occur
     let timeRatio = dt / timeConstant
-    
+
     /// Calculate exponential decay factor
     /// exp(-timeRatio) represents how much of the OLD value to retain
     /// When timeRatio is small (`dt << τ`), decay ≈ 1 (keep most of old value)
     /// When timeRatio is large (`dt >> τ`), decay ≈ 0 (discard old value)
     let exponentialDecay = Self(exp(Double(-timeRatio)))
-    
+
     /// Calculate the smoothing factor (learning rate)
     /// This represents how much to move toward the target
     /// alpha = 0 means no movement, alpha = 1 means jump directly to target
     let alpha = 1 - exponentialDecay
-    
+
     /// Interpolate between current value and target
     /// `self + (target - self) * alpha` is equivalent to:
     /// `self * (1 - alpha) + target * alpha`
     let difference = target - self
     let adjustment = difference * alpha
-    
+
     return self + adjustment
   }
 
 }
-

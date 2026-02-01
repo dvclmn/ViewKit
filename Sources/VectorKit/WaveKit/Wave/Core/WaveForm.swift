@@ -19,8 +19,8 @@ public enum Waveform: String, Sendable, Codable, Hashable, CaseIterable, Identif
 
 extension Waveform {
   /// No need to provide a pre-normalised value for `phase`.
-  /// This will be handled in ``FastWaveSampler/value(for:at:)``
-  public func sample<T: WaveFloat>(phase: T) -> T {
+  /// This will be handled in ``WaveSampler/value(for:at:)``
+  public func sample(phase: Float) -> Float {
     WaveSampler.value(for: self, at: phase)
   }
 }
