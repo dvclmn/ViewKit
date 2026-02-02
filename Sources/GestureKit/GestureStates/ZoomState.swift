@@ -24,7 +24,7 @@ public struct ZoomState: CanvasGestureState {
 }
 
 extension ZoomState {
-
+/// Note: Zoom already clamped at the gesture level
   public func zoom(clampedTo range: ClosedRange<CGFloat>) -> CGFloat {
     value.clamped(to: range)
   }

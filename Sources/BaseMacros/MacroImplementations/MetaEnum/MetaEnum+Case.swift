@@ -12,13 +12,14 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 struct MetaEnumCase {
-  let childCase: EnumCase
+  let enumCase: EnumCase
 }
 
 extension MetaEnumCase {
-  var name: String { childCase.identifier }
-  
+
+  var name: String { enumCase.identifier }
+
   var hasAssociatedValues: Bool {
-    childCase._syntax.parameterClause != nil
+    enumCase._syntax.parameterClause != nil
   }
 }

@@ -40,5 +40,12 @@ extension MetaEnumBuilder {
   var parentTypeName: String { detectedEnum.identifier }
   var access: String { detectedEnum.accessLevel?.name ?? "" }
   var childCases: [MetaEnumCase] { detectedEnum.cases.map(MetaEnumCase.init) }
+  
+  func casesList(_ valueForCase: (MetaEnumCase) -> String) -> String {
+    childCases
+      .map { "case .\($0.name): \(valueForCase($0))" }
+      .joined(separator: "\n")
+    //    return DeclSyntax(stringLiteral: cases)
+  }
 //  var childCases: [EnumCase] { detectedEnum.cases }
 }

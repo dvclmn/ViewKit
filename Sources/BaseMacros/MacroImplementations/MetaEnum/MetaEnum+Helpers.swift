@@ -26,9 +26,10 @@ import SwiftSyntaxMacros
 extension MetaEnumBuilder {
 
   func makeMetaEnum() -> [DeclSyntax] {
-    //    metaCases
     [
+      // Properties on Parent
       DeclSyntax("\(raw: access) var meta: Self.Meta {.init(self)}"),
+      DeclSyntax("\(raw: access) var hasAssociatedValues: Bool {.init(self)}"),
       DeclSyntax(metaToParentInit),
 
       // Beginning of Meta enum declaration
@@ -49,27 +50,45 @@ extension MetaEnumBuilder {
 extension MetaEnumBuilder {
 
   func makeMetaInit() -> DeclSyntax {
-    let caseStatements =
-      childCases
-      .map { childCase in
-        """
-          case .\(childCase.name):
-            self = .\(childCase.name)
-        """
-      }
-      .joined(separator: "\n")
+
+    let cases = casesList { item in
+      "self = .\(item.name)"
+    }
+    //    let caseStatements =
+    //      childCases
+    //      .map { childCase in
+    //        """
+    //          \()
+    //
+    //        """
+    //      }
+    //      .joined(separator: "\n")
 
     return """
       \(raw: access) init(_ \(parentParamName): \(raw: parentTypeName)) {
         switch \(parentParamName) {
-      \(raw: caseStatements)
+      \(raw: cases)
         }
       }
       """
   }
 
+  func hasAssociatedValues(_ case: EnumCase) -> Bool {
+    childCases.contains(where: \.hasAssociatedValues)
+  }
+
   var hasAnyAssociatedValues: Bool {
     childCases.contains(where: \.hasAssociatedValues)
+  }
+
+  private var associatedValuesCheck: DeclSyntax {
+    """
+    \(raw: access) init?(fromMeta meta: Self.Meta) {
+      switch meta {
+    \(raw: casesList())
+      }
+    }
+    """
   }
 
   /// ```
@@ -82,28 +101,19 @@ extension MetaEnumBuilder {
   ///   }
   /// }
   /// ```
-
   private var metaToParentInit: DeclSyntax {
-    //    guard !hasAnyAssociatedValues else
-
-    let caseStatements =
-      childCases
-      .map { "case .\($0.name): \(caseResult($0))" }
-      .joined(separator: "\n")
-
-    return """
-      \(raw: access) init?(fromMeta meta: Self.Meta) {
-        switch meta {
-      \(raw: caseStatements)
-        }
+    """
+    \(raw: access) init?(fromMeta meta: Self.Meta) {
+      switch meta {
+    \(raw: casesList(caseResult($0)))
       }
-      """
+    }
+    """
   }
-  
+
   private var metaToParentConvenience: DeclSyntax {
     "\(raw: access) var parent: \(raw: parentTypeName)? { .init(fromMeta: self) } "
   }
-  
 
   private func caseResult(_ item: MetaEnumCase) -> String {
     item.hasAssociatedValues
@@ -119,9 +129,8 @@ extension MetaEnumBuilder {
   /// […]
   private var metaCases: String {
     childCases
-      .map {
-        "  case \($0.name)"
-      }.joined("\n")
+      .map { "  case \($0.name)" }
+      .joined("\n")
   }
 
   /// ## Initialiser

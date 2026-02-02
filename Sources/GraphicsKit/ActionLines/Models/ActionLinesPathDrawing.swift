@@ -8,7 +8,7 @@
 import CoreTools
 import SwiftUI
 
-public struct ActionLineHandler {
+extension ActionLine {
 
   public static func distanceToEdge(
     from center: CGPoint,
