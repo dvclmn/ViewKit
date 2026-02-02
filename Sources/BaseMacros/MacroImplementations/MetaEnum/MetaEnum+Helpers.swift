@@ -98,11 +98,37 @@ extension MetaEnumBuilder {
   ///   }
   /// }
   /// ```
+  /// Note: Could try using this to generate more defaults:
+  /// https://github.com/alschmut/SwiftBuildableMacro?tab=readme-ov-file#builder-default-values
   private var metaToParentInit: DeclSyntax {
     let cases = casesList { item in
-      item.hasAssociatedValues
-        ? "return nil"
-        : "self = .\(item.name)"
+      if !item.hasAssociatedValues {
+        return "self = .\(item.name)"
+      }
+
+      /// Attempt to construct using default values for associated parameters, if all are present
+      let defaults = item.defaultValueIfPresent
+      guard let paramClause = item.enumCase._syntax.parameterClause else {
+        return "return nil"
+      }
+
+      // Only proceed if every parameter has a default value
+      let allHaveDefaults = paramClause.parameters.allSatisfy { $0.defaultValue != nil }
+      guard allHaveDefaults else {
+        return "return nil"
+      }
+
+      // Build an argument list using the default value expressions
+      let argumentList: String = paramClause.parameters.compactMap { param in
+        // Prefer using the parameter's first name if available
+        let label = param.firstName?.text ?? "_"
+        if let value = param.defaultValue?.value {
+          return "\(label): \(value)"
+        }
+        return nil
+      }.joined(separator: ", ")
+
+      return "self = .\(item.name)(\(argumentList))"
     }
 
     return """
@@ -188,3 +214,4 @@ extension MetaEnumBuilder {
       """
   }
 }
+

@@ -23,13 +23,9 @@ extension MetaEnumCase {
     enumCase._syntax.parameterClause != nil
   }
   
-  var defaultValueIfPresent: [DeclSyntax] {
-    //    guard hasAssociatedValues else { return false }
+  var defaultValueIfPresent: [InitializerClauseSyntax] {
     guard let assocValues = enumCase._syntax.parameterClause else { return [] }
-    var values = [DeclSyntax]()
-    for param in assocValues.parameters {
-      values.append(param.defaultValue)
-    }
+    return assocValues.parameters.compactMap { $0.defaultValue }
   }
 //  var associatedValueHasDefaultValue: Bool {
 //    //    guard hasAssociatedValues else { return false }
@@ -37,3 +33,4 @@ extension MetaEnumCase {
 //    return assocValues.parameters.contains(where: { $0.defaultValue != nil })
 //  }
 }
+

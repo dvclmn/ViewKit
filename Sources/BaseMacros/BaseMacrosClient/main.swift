@@ -41,6 +41,7 @@ enum ExampleEnumNames {
 enum AnotherEnum {
   case bird(Int)
   case whale(String)
+  case crane(CGFloat = 3.0)
   case shark
 }
 
