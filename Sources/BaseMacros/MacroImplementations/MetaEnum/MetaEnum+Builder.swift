@@ -45,7 +45,6 @@ extension MetaEnumBuilder {
     childCases.contains(where: \.hasAssociatedValues)
   }
 
-  
   /// For usage in properties — not the original declarations of cases.
   ///
   /// So, used for this:
