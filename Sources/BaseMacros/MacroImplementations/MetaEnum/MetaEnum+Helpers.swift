@@ -29,7 +29,7 @@ extension MetaEnumBuilder {
     [
       // Properties on Parent
       DeclSyntax("\(raw: access) var meta: Self.Meta {.init(self)}"),
-      DeclSyntax("\(raw: access) var hasAssociatedValues: Bool {.init(self)}"),
+      DeclSyntax(hasAssociatedValuesProperty),
       DeclSyntax(metaToParentInit),
     ]
 
@@ -62,6 +62,17 @@ extension MetaEnumBuilder {
 
 extension MetaEnumBuilder {
 
+  /// ## Initialiser
+  /// ```
+  ///   init(_ abc123: ParentEnum) {
+  ///     switch abc123 {
+  ///       case .bird:
+  ///         self = .bird
+  ///       case .whale:
+  ///         self = .whale
+  ///     }
+  ///   }
+  ///
   private var makeMetaInit: DeclSyntax {
     let cases = casesList { item in
       "self = .\(item.name)"
@@ -107,10 +118,6 @@ extension MetaEnumBuilder {
     "\(raw: access) var parent: \(raw: parentTypeName)? { .init(fromMeta: self) } "
   }
 
-  //  private func caseResult(_ item: MetaEnumCase) -> String {
-  //
-  //  }
-
   /// ## Meta enum declaration
   /// ```
   /// enum Meta {
@@ -118,24 +125,11 @@ extension MetaEnumBuilder {
   ///   case whale
   /// […]
   private var metaCases: DeclSyntax {
-    let cases =
-      childCases
+    childCases
       .map { "  case \($0.name)" }
       .joined("\n")
-    return DeclSyntax(stringLiteral: cases)
+      .toDeclSyntax
   }
-
-  /// ## Initialiser
-  /// ```
-  ///   init(_ abc123: ParentEnum) {
-  ///     switch abc123 {
-  ///       case .bird:
-  ///         self = .bird
-  ///       case .whale:
-  ///         self = .whale
-  ///     }
-  ///   }
-  ///
 
   /// ## Case Names
   /// ```
@@ -145,10 +139,9 @@ extension MetaEnumBuilder {
   /// }
   /// ```
   var metaNameProperty: DeclSyntax {
-
-    let cases = childCases.map { childCase in
-      "case .\(childCase.name): \"\(childCase.name.capitalized)\""
-    }.joined(separator: "\n")
+    let cases = casesList {
+      "\"\($0.name.capitalized)\""
+    }
 
     return
       """
@@ -161,7 +154,6 @@ extension MetaEnumBuilder {
   }
 
   var metaIDProperty: DeclSyntax { "\(raw: access) var id: String {rawValue}" }
-
   /// ## Case Detection
   ///
   /// ```
@@ -179,5 +171,20 @@ extension MetaEnumBuilder {
       .map(String.init)
       .joined(separator: "\n")
       .toDeclSyntax
+  }
+
+  var hasAssociatedValuesProperty: DeclSyntax {
+    let cases = casesList {
+      "\($0.hasAssociatedValues ? "true" : "false")"
+    }
+
+    return
+      """
+      \(raw: access) var hasAssociatedValues: Bool {
+        switch self {
+          \(raw: cases)
+        }
+      }
+      """
   }
 }
