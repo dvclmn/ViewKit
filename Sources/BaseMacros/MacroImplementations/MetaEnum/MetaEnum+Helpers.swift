@@ -31,38 +31,41 @@ extension MetaEnumBuilder {
       DeclSyntax("\(raw: access) var meta: Self.Meta {.init(self)}"),
       DeclSyntax("\(raw: access) var hasAssociatedValues: Bool {.init(self)}"),
       DeclSyntax(metaToParentInit),
+    ]
 
       // Beginning of Meta enum declaration
-      DeclSyntax("\(raw: access) enum Meta: String, CaseIterable, Identifiable {"),
-      DeclSyntax(stringLiteral: metaCases),
-      DeclSyntax(makeMetaInit()),
-      DeclSyntax(caseNames),
-      DeclSyntax("\(raw: access) var id: String {rawValue}"),
-      DeclSyntax(metaToParentConvenience),
-      DeclSyntax(stringLiteral: detections),
+      + [DeclSyntax("\(raw: access) enum Meta: String, CaseIterable, Identifiable {")]
+
+      + metaEnumInternals
 
       // End brace for Meta enum
-      DeclSyntax("}"),
+      + [DeclSyntax("}")]
+
+  }
+
+  private var metaEnumInternals: [DeclSyntax] {
+    [
+      /// Lists out the canonical Meta case declarations
+      DeclSyntax(metaCases),
+
+      /// Creates initialiser allowing creation of a Meta enum from parent
+      DeclSyntax(makeMetaInit),
+
+      DeclSyntax(metaNameProperty),
+      DeclSyntax(metaIDProperty),
+      DeclSyntax(metaToParentConvenience),
+      DeclSyntax(caseDetections),
     ]
+
   }
 }
 
 extension MetaEnumBuilder {
 
-  func makeMetaInit() -> DeclSyntax {
-
+  private var makeMetaInit: DeclSyntax {
     let cases = casesList { item in
       "self = .\(item.name)"
     }
-    //    let caseStatements =
-    //      childCases
-    //      .map { childCase in
-    //        """
-    //          \()
-    //
-    //        """
-    //      }
-    //      .joined(separator: "\n")
 
     return """
       \(raw: access) init(_ \(parentParamName): \(raw: parentTypeName)) {
@@ -73,24 +76,7 @@ extension MetaEnumBuilder {
       """
   }
 
-  func hasAssociatedValues(_ case: EnumCase) -> Bool {
-    childCases.contains(where: \.hasAssociatedValues)
-  }
-
-  var hasAnyAssociatedValues: Bool {
-    childCases.contains(where: \.hasAssociatedValues)
-  }
-
-  private var associatedValuesCheck: DeclSyntax {
-    """
-    \(raw: access) init?(fromMeta meta: Self.Meta) {
-      switch meta {
-    \(raw: casesList())
-      }
-    }
-    """
-  }
-
+  /// Target output:
   /// ```
   /// public init?(fromMeta meta: Self.Meta) {
   ///   switch meta {
@@ -102,24 +88,28 @@ extension MetaEnumBuilder {
   /// }
   /// ```
   private var metaToParentInit: DeclSyntax {
-    """
-    \(raw: access) init?(fromMeta meta: Self.Meta) {
-      switch meta {
-    \(raw: casesList(caseResult($0)))
-      }
+    let cases = casesList { item in
+      item.hasAssociatedValues
+        ? "return nil"
+        : "self = .\(item.name)"
     }
-    """
+
+    return """
+      \(raw: access) init?(fromMeta meta: Self.Meta) {
+        switch meta {
+      \(raw: cases)
+        }
+      }
+      """
   }
 
   private var metaToParentConvenience: DeclSyntax {
     "\(raw: access) var parent: \(raw: parentTypeName)? { .init(fromMeta: self) } "
   }
 
-  private func caseResult(_ item: MetaEnumCase) -> String {
-    item.hasAssociatedValues
-      ? "return nil"
-      : "self = .\(item.name)"
-  }
+  //  private func caseResult(_ item: MetaEnumCase) -> String {
+  //
+  //  }
 
   /// ## Meta enum declaration
   /// ```
@@ -127,10 +117,12 @@ extension MetaEnumBuilder {
   ///   case bird
   ///   case whale
   /// […]
-  private var metaCases: String {
-    childCases
+  private var metaCases: DeclSyntax {
+    let cases =
+      childCases
       .map { "  case \($0.name)" }
       .joined("\n")
+    return DeclSyntax(stringLiteral: cases)
   }
 
   /// ## Initialiser
@@ -152,7 +144,7 @@ extension MetaEnumBuilder {
   ///   case .whale: "Whale"
   /// }
   /// ```
-  var caseNames: DeclSyntax {
+  var metaNameProperty: DeclSyntax {
 
     let cases = childCases.map { childCase in
       "case .\(childCase.name): \"\(childCase.name.capitalized)\""
@@ -168,6 +160,8 @@ extension MetaEnumBuilder {
       """
   }
 
+  var metaIDProperty: DeclSyntax { "\(raw: access) var id: String {rawValue}" }
+
   /// ## Case Detection
   ///
   /// ```
@@ -180,9 +174,10 @@ extension MetaEnumBuilder {
   /// […]
   ///
   /// ```
-  var detections: String {
-    caseDetection.makeCaseDetector().map { item in
-      "\(item)"
-    }.joined(separator: "\n")
+  var caseDetections: DeclSyntax {
+    caseDetection.makeCaseDetector()
+      .map(String.init)
+      .joined(separator: "\n")
+      .toDeclSyntax
   }
 }

@@ -49,6 +49,12 @@ extension Array where Element == EnumCaseElementSyntax {
   }
 }
 
+extension String {
+  public var toDeclSyntax: DeclSyntax {
+    DeclSyntax(stringLiteral: self)
+  }
+}
+
 //extension String {
 //  var camelToSnake: String {
 //    var result = ""

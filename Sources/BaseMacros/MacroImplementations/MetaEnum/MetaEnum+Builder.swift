@@ -40,12 +40,32 @@ extension MetaEnumBuilder {
   var parentTypeName: String { detectedEnum.identifier }
   var access: String { detectedEnum.accessLevel?.name ?? "" }
   var childCases: [MetaEnumCase] { detectedEnum.cases.map(MetaEnumCase.init) }
+
+  var hasAnyAssociatedValues: Bool {
+    childCases.contains(where: \.hasAssociatedValues)
+  }
+
   
+  /// For usage in properties — not the original declarations of cases.
+  ///
+  /// So, used for this:
+  /// ```
+  /// var someProperty: Bool {
+  ///   case .whale: someValue
+  ///   ...
+  ///
+  /// ```
+  ///
+  /// *Not* for this:
+  /// ```
+  /// enum SomeEnum {
+  ///   case whale
+  ///   ...
+  ///
+  /// ``
   func casesList(_ valueForCase: (MetaEnumCase) -> String) -> String {
     childCases
       .map { "case .\($0.name): \(valueForCase($0))" }
       .joined(separator: "\n")
-    //    return DeclSyntax(stringLiteral: cases)
   }
-//  var childCases: [EnumCase] { detectedEnum.cases }
 }
