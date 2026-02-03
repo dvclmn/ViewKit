@@ -18,6 +18,12 @@ public struct DebugTextOverlayModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
+      .onPreferenceChange(DebugTextKey.self) { newText in
+        print("Running `DebugTextKey` `onPreferenceChange` at \(Date.debug)")
+        print("New text is: \(newText)")
+        guard isEnabled else { return }
+        self.gatheredText = newText.joined(separator: "\n")
+      }
       .overlay(alignment: alignment) {
         if let gatheredText, isEnabled {
           Text(gatheredText)
@@ -40,49 +46,8 @@ public struct DebugTextOverlayModifier: ViewModifier {
         }
       }
 
-      .onPreferenceChange(DebugTextKey.self) { newText in
-        guard isEnabled else { return }
-        //        debouncer.execute {
-        handlePreferenceChange(newText)
-        //        }
-
-      }
   }
 }
-
-extension DebugTextOverlayModifier {
-
-  private func handlePreferenceChange(_ newItems: DebugTextKey.Value) {
-
-    self.gatheredText = newItems.joined(separator: "\n")
-    /// Now this only runs when `newItems` actually changes
-    //    let grouped = Dictionary(grouping: newItems, by: \.sectionKey)
-
-    /// Group and Sort once
-    //    self.sections = grouped.map { (key, items) in
-    //      GroupedSection(id: key, title: key.title, items: items)
-    //    }.sorted { $0.title < $1.title }
-
-  }
-}
-//extension View {
-//
-//  /// Display any debug text provided in child views
-//  public func displayDebugText(
-//    isEnabled: Bool = true,
-//    alignment: Alignment = .topLeading,
-//    padding: (Edge.Set, CGFloat?) = (.all, nil)
-//  ) -> some View {
-//    self.modifier(
-//      DebugTextOverlayModifier(
-//        text: text.joined(separator: "\n"),
-//        isEnabled: isEnabled,
-//        alignment: alignment,
-//        padding: padding
-//      )
-//    )
-//  }
-//}
 
 /// Maybe the below stay as the legacy version? Just need to work
 /// out how to display or not display stuff
@@ -96,45 +61,10 @@ extension View {
   ) -> some View {
     self.modifier(
       DebugTextOverlayModifier(
-        //        text: text.joined(separator: "\n"),
         isEnabled: isEnabled,
         alignment: alignment,
         padding: padding
       )
     )
-
   }
-
-  //  public func debugTextOverlay(
-  //    isEnabled: Bool = true,
-  //    alignment: Alignment = .topLeading,
-  //    padding: (Edge.Set, CGFloat?) = (.all, nil),
-  //    displayString: () -> DisplayString
-  //      //    @DisplayStringBuilder _ content: () -> [DisplayBlock]
-  //  ) -> some View {
-  //    self.modifier(
-  //      DebugTextOverlayModifier(
-  //        text: displayString().text,
-  //        isEnabled: isEnabled,
-  //        alignment: alignment,
-  //        padding: padding
-  //      )
-  //    )
-  //  }
-  //
-  //  public func debugTextOverlay(
-  //    isEnabled: Bool = true,
-  //    alignment: Alignment = .topLeading,
-  //    padding: (Edge.Set, CGFloat?) = (.all, nil),
-  //    @DisplayStringBuilder _ content: () -> [DisplayBlock]
-  //  ) -> some View {
-  //    self.modifier(
-  //      DebugTextOverlayModifier(
-  //        text: content().output(),
-  //        isEnabled: isEnabled,
-  //        alignment: alignment,
-  //        padding: padding
-  //      )
-  //    )
-  //  }
 }

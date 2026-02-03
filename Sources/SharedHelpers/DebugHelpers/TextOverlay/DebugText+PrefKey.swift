@@ -15,6 +15,8 @@ public struct DebugTextKey: PreferenceKey {
 
     let next = nextValue()
     if next.isEmpty { return }
+    print("Running `DebugTextKey` reduce at \(Date.debug)")
+    print("\n\nCurrent value: \(value). \n\nNew data: \(next)\n\n")
 
     /// Build a set of what we already have
     var seen = Set(value)
@@ -29,7 +31,7 @@ public struct DebugTextKey: PreferenceKey {
 
 extension View {
   public func addDebugText(
-    _ text: String...,
+    _ text: [String],
     isEnabled: Bool = true
   ) -> some View {
     return self.preference(
@@ -37,34 +39,49 @@ extension View {
       value: isEnabled ? text : []
     )
   }
+  
+  public func addDebugText(
+    _ text: String...,
+    isEnabled: Bool = true
+  ) -> some View {
+    self.addDebugText(text, isEnabled: isEnabled)
+//    return self.preference(
+//      key: DebugTextKey.self,
+//      value: isEnabled ? text : []
+//    )
+  }
 
   public func addDebugText(
-    _ text: String, isEnabled: Bool = true
+    _ text: String,
+    isEnabled: Bool = true
   ) -> some View {
-    return self.preference(
-      key: DebugTextKey.self,
-      value: isEnabled ? [text] : []
-    )
+    self.addDebugText([text], isEnabled: isEnabled)
+//    return self.preference(
+//      key: DebugTextKey.self,
+//      value: isEnabled ? [text] : []
+//    )
   }
 
   public func addDebugText(
     displayString: () -> DisplayString,
     isEnabled: Bool = true
   ) -> some View {
-    return self.preference(
-      key: DebugTextKey.self,
-      value: isEnabled ? displayString().lines : []
-    )
+    self.addDebugText(displayString().lines, isEnabled: isEnabled)
+//    return self.preference(
+//      key: DebugTextKey.self,
+//      value: isEnabled ? displayString().lines : []
+//    )
   }
 
   public func addDebugText(
     @DisplayStringBuilder _ content: () -> [DisplayBlock],
     isEnabled: Bool = true
   ) -> some View {
-    return self.preference(
-      key: DebugTextKey.self,
-      value: isEnabled ? content().lines() : []
-    )
+    self.addDebugText(content().lines(), isEnabled: isEnabled)
+//    return self.preference(
+//      key: DebugTextKey.self,
+//      value: isEnabled ? content().lines() : []
+//    )
   }
 
 }

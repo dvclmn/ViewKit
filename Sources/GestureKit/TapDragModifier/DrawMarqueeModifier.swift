@@ -23,7 +23,7 @@ public struct DrawMarqueeModifier: ViewModifier {
               context.stroke(rect.path, with: .color(.pink))
             }
             .allowsHitTesting(false)
-            .debugTextOverlay(
+            .addDebugText(
               "Origin: \(rect.origin.displayString(places: 0))",
               isEnabled: isDebugMode
             )

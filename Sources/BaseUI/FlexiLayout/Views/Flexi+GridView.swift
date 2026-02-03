@@ -89,7 +89,7 @@ extension Flexi {
 
       }  // END scroll
       .scrollPosition(id: $store.scrolledID)
-      .debugTextOverlay(debugText)
+      .addDebugText(debugText)
       .getScrollContext(
         axis: .vertical
       ) { context in

@@ -33,7 +33,7 @@ struct GestureKitDemoView: View {
         }
     }
 
-    .debugTextOverlay("Interaction: \(interactionKind?.referenceName, default: "None")")
+    .addDebugText("Interaction: \(interactionKind?.referenceName, default: "None")")
 
     //      .onTapGesture { location in
     //        interactionKind = .tap(location)
