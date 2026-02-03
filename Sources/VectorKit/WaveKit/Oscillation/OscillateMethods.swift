@@ -48,8 +48,8 @@ public func oscillateAround(
 
 /// Returns a new CGPoint whose selected axis is oscillated around the provided base value.
 @inlinable
-public func oscillating(
-  point: CGPoint,
+public func oscillating<T: AdjustableByAxis>(
+  value: T,
   axis: GridAxis,
   mapping: AxisMapping = .default,
   //  axis: SpatialAxis,
@@ -58,15 +58,15 @@ public func oscillating(
   frequency: Float = 1.0,
   phase: Float = 0.0,
   baseOverride: Float? = nil
-) -> CGPoint {
-  point.adjust(axis, mapping: mapping) {
+) -> some AdjustableByAxis where T.Component: BinaryFloatingPoint {
+  value.adjust(axis, mapping: mapping) {
     oscillate(
       time: time,
       base: baseOverride ?? Float($0),
       amplitude: amplitude,
       frequency: frequency,
       phase: phase
-    ).toCGFloat
+    )
   }
   //  p.adjust(axis, using: ., mapping: mapping)
   //  let oscillated = oscillate(
