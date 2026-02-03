@@ -8,17 +8,6 @@
 import SharedHelpers
 import SwiftUI
 
-//public struct Geometries: OptionSet, Sendable {
-//  public init(rawValue: Int) {
-//    self.rawValue = rawValue
-//  }
-//  public let rawValue: Int
-//
-//  public static let size = Self(rawValue: 1 << 0)
-//  public static let scrollFrame = Self(rawValue: 1 << 1)
-//  public static let safeInsets = Self(rawValue: 1 << 2)
-//}
-
 public struct SizeAndSafeInsets: Equatable, Sendable {
   let size: CGSize
   let safeInsets: EdgeInsets
