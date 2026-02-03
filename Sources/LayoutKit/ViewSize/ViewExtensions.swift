@@ -8,8 +8,7 @@
 import CoreTools
 import SwiftUI
 
-// MARK: - View Extension
-
+// MARK: - View size modifiers
 extension View {
   /// Previously had default value for `debounceMode`, but this felt
   /// too risky for domains that may be tripped up by immediate vs debounced
@@ -28,6 +27,10 @@ extension View {
       )
     )
   }
+}
+
+// MARK: - Character Size modifiers
+extension View {
 
   /// Find the size of a single character of a (usually
   /// monospaced) font. Optionally read the container view
