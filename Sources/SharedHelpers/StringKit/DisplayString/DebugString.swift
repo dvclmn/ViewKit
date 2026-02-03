@@ -9,7 +9,7 @@ import Foundation
 import BasePrimitives
 
 public func DebugString(
-  timestamped: Bool = true,
+  timestamped: Bool = false,
   @DisplayStringBuilder _ content: () -> [DisplayBlock]
 ) {
   print(

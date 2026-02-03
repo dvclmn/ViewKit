@@ -148,7 +148,7 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
 
   /// Apply a binary transform that can coordinate both axes together
   /// The transform receives (h, v) and returns (newH, newV)
-  private func adjustBoth(
+  public func adjustBoth(
     mapping: AxisMapping = .default,
     _ transform: (Component, Component) -> (Component, Component)
   ) -> Self {

@@ -21,7 +21,7 @@ public struct InfoBarItemsModifier: ViewModifier {
 //      .safePaddingCompatible(.bottom, isEnabled ? Styles.infoBarHeight : nil)
       .onPreferenceChange(InfoBarKey.self) { newItems in
         guard shouldDisplay else { return }
-        debouncer.executeAsync {
+        debouncer.execute {
           await handlePreferenceChange(newItems)
         }
 

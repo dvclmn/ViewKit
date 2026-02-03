@@ -37,7 +37,7 @@ extension Task where Success == Never, Failure == Never {
   ) {
 
     if let debouncer {
-      debouncer.executeAsync { @MainActor in
+      debouncer.execute { @MainActor in
         action()
       }
     } else {

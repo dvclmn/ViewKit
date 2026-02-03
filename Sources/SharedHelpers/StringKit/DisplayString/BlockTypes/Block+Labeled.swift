@@ -65,8 +65,9 @@ extension DisplayBlock {
       case let result as any FloatRenderable:
         .float(result)
 
-      case let result as String:
-        .text(result)
+      case let result as StringRenderable:
+//      case let result as String:
+          .text(result.toString)
         
       case let result as NSEvent.Phase:
         .text(result.description)

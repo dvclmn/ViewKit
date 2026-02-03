@@ -26,7 +26,7 @@ public struct DebouncedTaskViewModifier<ID: Equatable>: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .task(id: id) {
-        debouncer.executeAsync { @MainActor in
+        debouncer.execute { @MainActor in
           await action()
         }
       }

@@ -21,6 +21,11 @@ extension UnitPoint {
   public func offset(by amount: CGFloat) -> CGSize {
     offset(dx: amount, dy: amount)
   }
+  
+  public func offset(by other: Self) -> Self {
+    offset(dx: other.x, dy: other.y)
+  }
+
   public func offset(
     by size: CGSize,
     mapping: AxisMapping = .default,

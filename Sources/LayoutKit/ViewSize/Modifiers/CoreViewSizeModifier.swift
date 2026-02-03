@@ -42,7 +42,7 @@ public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
         guard isEnabled else { return }
         
         if let debouncer {
-          debouncer.executeAsync { @MainActor in
+          debouncer.execute { @MainActor in
             valueOutput(newValue)
           }
         } else {
