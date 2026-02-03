@@ -10,7 +10,7 @@ import Foundation
 /// Encapsulates the “how do these waves combine?” logic.
 /// Simply has the ability to take in 2 or more Waves, and
 /// create a combined/single Composition.
-public struct WaveComposition: Sendable, Codable {
+public struct WaveComposition<T: WaveFloat>: Sendable, Codable {
   var waves: [FloatWave.ID]
   var mode: WaveBlendMode
 
@@ -37,9 +37,9 @@ extension WaveComposition {
   }
 
   public func value(
-    elapsed: Float,
+    elapsed: T,
     waveLibrary library: [FloatWave]
-  ) -> Float {
+  ) -> T {
 
     //    let wavesForEffect = wavesForEffect(from: library)
     //    let waveValues: [CGFloat] = wavesForEffect.map { wave in

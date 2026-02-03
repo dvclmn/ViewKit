@@ -10,6 +10,7 @@ import CoreTools
 import Darwin
 import Foundation
 import SwiftUI
+import CoreGraphics
 
 public typealias Sampler = WaveSampler<Double>
 //public typealias Sampler = WaveSampler<Float>
@@ -42,7 +43,30 @@ public struct WaveSampler<T: WaveFloat> {
 
 }
 
-extension WaveSampler where T == Float {
+//extension WaveSampler where T == Float {
+//  private func sineAngle(
+//    index: Int,
+//    twoPi: T,
+//    denom: T
+//  ) -> T {
+//    let angle: T = (T(index) * twoPi) / denom
+//    return sin(angle)
+//  }
+//}
+//extension WaveSampler where T == Double {
+//  private func sineAngle(
+//    index: Int,
+//    twoPi: T,
+//    denom: T
+//  ) -> T {
+//    let angle: T = (T(index) * twoPi) / denom
+//    return sin(angle)
+//  }
+//}
+  
+//extension WaveSampler where T == Double {
+//extension WaveSampler where T == Float {
+extension WaveSampler {
   // MARK: Sine table storage
   /// Lazily computed sine lookup table with an extra sample for linear interpolation.
   /// The extra element duplicates the first to simplify wrap-around.
@@ -57,7 +81,8 @@ extension WaveSampler where T == Float {
     /// Explicitly lift `i` to `T` to avoid integer/generic arithmetic ambiguity.
     for i in 0...tableSize {
       let angle: T = (T(i) * twoPi) / denom
-      let sinAngle = sin(angle)
+//      let sinAngle = sineAngle(index: i, twoPi: twoPi, denom: denom)
+      let sinAngle = T.wf_sin(angle)
       //      let sinAngle = T(Darwin.sin(Float(angle)))
       table.append(sinAngle)
     }
@@ -82,10 +107,10 @@ extension WaveSampler where T == Float {
     at phase: T
   ) -> T {
     let p = T.normalisedPhase(phase)
-
+    
     return switch waveform {
       case .sine: sineLookup(p)
-
+        
       case .triangle:
         // Standard: -1 → 1 → -1, peaks at 0.25 and 0.75
         T(1) - T(4) * abs(p - T(0.5))
@@ -96,23 +121,25 @@ extension WaveSampler where T == Float {
         p < T(0.5) ? T(1) : T(-1)
     }
   }
-
+  
   @inlinable
   static func sineLookup(_ phase: T) -> T {
     /// Scale phase in [0, 1) to table space and split into integer/fractional parts.
     let scaled = phase * tableSizeF
     let index = Int(floor(max(T(0), scaled)))
     let fraction = scaled - T(index)
-
+    
     let i0 = index & tableMask
     let i1 = (i0 + 1) & tableMask
-
+    
     // Linear interpolation between neighbors
     let y0 = sineTable[i0]
     let y1 = sineTable[i1]
     return y0 + fraction * (y1 - y0)
   }
 }
+
+
 
 //extension WaveSampler where T == Double {
 //  public static func values(for waveform: Waveform, phases: [T]) -> [T] {
