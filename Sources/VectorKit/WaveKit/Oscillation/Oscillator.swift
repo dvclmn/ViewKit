@@ -66,7 +66,12 @@ public struct OscillatorSmoothed {
   //    self.phase = phase
   //  }
 
-  mutating func tick(now: TimeInterval, dt: Float, smoothing: Float) -> Float {
+  mutating func tick(
+    now: TimeInterval,
+    dt: Double,
+    smoothing: Double
+  ) -> Double {
+//  mutating func tick(now: TimeInterval, dt: Float, smoothing: Float) -> Float {
     /// 1) Smooth the inputs
     freq.update(dt: dt, smoothing: smoothing)
     amp.update(dt: dt, smoothing: smoothing)
@@ -77,7 +82,7 @@ public struct OscillatorSmoothed {
 
     /// 3) Sample waveform using WaveSampler
     // Convert phase to a scalar in [0, 1) expected by the sampler, then apply phase offset in turns
-    let basePhase: Float = phase.currentPhase
+    let basePhase: Double = phase.currentPhase
     let shiftedPhase = basePhase + phaseOffset.displayed
     let sample = Sampler.value(for: waveform, at: shiftedPhase)
     return amp.displayed * sample

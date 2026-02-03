@@ -7,7 +7,8 @@
 
 import Foundation
 
-public typealias ContinuousFloat = ContinuousParameter<Float>
+public typealias ContinuousFloat = ContinuousParameter<Double>
+//public typealias ContinuousFloat = ContinuousParameter<Float>
 
 /// `Result = (CurrentTime – Origin) * Rate + Offset`
 /// Manages a value that evolves over time (like phase or rotation)

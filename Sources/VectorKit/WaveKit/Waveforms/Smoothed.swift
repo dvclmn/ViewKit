@@ -8,7 +8,8 @@
 import CoreTools
 import Foundation
 
-public typealias SmoothedFloat = Smoothed<Float>
+public typealias SmoothedFloat = Smoothed<Double>
+//public typealias SmoothedFloat = Smoothed<Float>
 
 /// These just never seem to work — like ``ContinuousParameter``
 /// Filtering (low‑pass) of any scalar input.

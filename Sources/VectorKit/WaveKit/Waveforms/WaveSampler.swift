@@ -11,7 +11,8 @@ import Darwin
 import Foundation
 import SwiftUI
 
-public typealias Sampler = WaveSampler<Float>
+public typealias Sampler = WaveSampler<Double>
+//public typealias Sampler = WaveSampler<Float>
 
 /// Uses `Float` internally
 ///
@@ -41,7 +42,6 @@ public struct WaveSampler<T: WaveFloat> {
 
 }
 
-//extension WaveSampler {
 extension WaveSampler where T == Float {
   // MARK: Sine table storage
   /// Lazily computed sine lookup table with an extra sample for linear interpolation.
