@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import CoreTools
 
-public protocol WaveFloat: BinaryFloatingPoint, Sendable, Codable {
+public protocol WaveFloat: BinaryFloatingPoint, Sendable, Codable, StringRenderable, FloatRenderable {
   static func wf_sin(_ x: Self) -> Self
 }
 //extension Float: WaveFloat {}
@@ -25,4 +26,13 @@ extension Double: WaveFloat {
 extension CGFloat: WaveFloat {
   public static func wf_sin(_ x: CGFloat) -> CGFloat { Darwin.sin(x) }
   // Alternatively: return CGFloat(Foundation.sin(Double(x)))
+}
+
+extension CGPoint {
+  public init<T: WaveFloat>(fromWaveFloat x: T, y: T) {
+    self.init(
+      x: CGFloat(x),
+      y: CGFloat(y)
+    )
+  }
 }

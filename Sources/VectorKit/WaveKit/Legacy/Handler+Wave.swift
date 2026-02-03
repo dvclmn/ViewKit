@@ -9,17 +9,17 @@ import BasePrimitives
 import SwiftUI
 
 @Observable
-public final class WaveHandler {
-  public var xPositions: [Float] = []
-  public var spatialPhases: [Float] = []
+public final class WaveHandler<T: WaveFloat> {
+  public var xPositions: [T] = []
+  public var spatialPhases: [T] = []
   public var baseLinePath: Path = .init()
   public var lastComputedSize: CGSize = .zero
   public var lastComputedSampleCount: Int = 0
   public var isHovering: Bool = false
 
   @ObservationIgnored public let emphasisPadding: CGFloat = 8
-  
-  public init(){}
+
+  public init() {}
 }
 
 extension WaveHandler {
@@ -36,8 +36,8 @@ extension WaveHandler {
 
   public func recomputeStatic(
     for size: CGSize,
-    wave: FloatWave,
-    cyclesAcross: Float,
+    wave: Wave<T>,
+    cyclesAcross: T,
     sampleCount: Int
   ) {
     guard sampleCount > 1 else {
@@ -45,17 +45,17 @@ extension WaveHandler {
       spatialPhases = []
       return
     }
-    
-    let width = Float(size.width)
-//    let height = Float(size.height)
+
+    let width = T(size.width)
+    //    let height = Float(size.height)
 
     /// X positions - ensure we don't divide by zero
-    let step = width / Float(sampleCount - 1)
-    xPositions = (0..<sampleCount).map { Float($0) * step }
+    let step = width / T(sampleCount - 1)
+    xPositions = (0..<sampleCount).map { T($0) * step }
 
     /// Spatial phases
     let kx = size.width > 0 ? (2 * .pi * cyclesAcross) / width : 0
-//    let kx = size.width > 0 ? (2 * .pi * wave.cyclesAcross) / size.width : 0
+    //    let kx = size.width > 0 ? (2 * .pi * wave.cyclesAcross) / size.width : 0
     spatialPhases = xPositions.map { kx * $0 }
 
     /// Horizon path
@@ -71,10 +71,10 @@ extension WaveHandler {
 
   /// Generates both normal and ghost points in a single pass
   public func generateWavePoints(
-    normalPhase: Float,
-    ghostPhase: Float?,
-    amp: Float,
-    viewHeight: Float,
+    normalPhase: T,
+    ghostPhase: T?,
+    amp: T,
+    viewHeight: T,
     //    size: CGSize,
     sampleCount: Int
   ) -> (normal: [CGPoint], ghost: [CGPoint]?) {
@@ -96,12 +96,23 @@ extension WaveHandler {
       let x = xPositions[i]
       let spatialPhase = spatialPhases[i]
 
-      let yNormal = centerY + amp * sin(normalPhase + spatialPhase)
-      normalPoints.append(CGPoint(floatX: x, floatY: yNormal))
+      let yNormal = centerY + amp * T.wf_sin(normalPhase + spatialPhase)
+      //      let yNormal = centerY + amp * sin(normalPhase + spatialPhase)
+      normalPoints.append(
+        CGPoint(
+          fromWaveFloat: x,
+          y: yNormal
+        )
+      )
 
       if let gPhase = ghostPhase {
-        let yGhost = centerY + amp * sin(gPhase + spatialPhase)
-        ghostPoints?.append(CGPoint(floatX: x, floatY: yGhost))
+        let yGhost = centerY + amp * T.wf_sin(gPhase + spatialPhase)
+        ghostPoints?.append(
+          CGPoint(
+            fromWaveFloat: x,
+            y: yGhost
+          )
+        )
       }
     }
 
