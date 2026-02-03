@@ -12,10 +12,11 @@ public struct HasViewportSizeCheckModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-      .debugTextOverlay(
-        "No viewport size value in environment", isEnabled: viewportSize == nil, alignment: .topLeading
+      .addDebugText(
+        "No viewport size value in environment",
+        isEnabled: viewportSize == nil
       )
-      .backgroundTint(viewportSize == nil ? .red : .black)
+//      .backgroundTint(viewportSize == nil ? .red : .black)
   }
 }
 

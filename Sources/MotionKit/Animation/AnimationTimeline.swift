@@ -37,6 +37,6 @@ public struct AnimationTimeline<Content: View>: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(\.animationClock, context.date.timeIntervalSinceReferenceDate)
     }
-    .debugTextOverlay("Timeline is Paused", isEnabled: isNotifyingPaused && isPaused.wrappedValue)
+    .addDebugText("Timeline is Paused", isEnabled: isNotifyingPaused && isPaused.wrappedValue)
   }
 }

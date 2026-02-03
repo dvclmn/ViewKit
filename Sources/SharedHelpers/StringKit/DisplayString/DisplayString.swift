@@ -59,6 +59,14 @@ extension DisplayString {
     )
   }
 
+  public var lines: [String] {
+    components.map { $0.render(using: format) }
+    //    components.output(
+    //      separator: separator,
+    //      format: format
+    //    )
+  }
+
   public func decimalPlaces(_ places: Int) -> DisplayString {
     var newFormat = format
     newFormat.decimalPlaces = places
@@ -87,8 +95,11 @@ extension Array where Element == DisplayBlock {
     separator: String = "\n",
     format: DisplayFormat = .default
   ) -> String {
+    lines(format: format).joined(separator)
+  }
+
+  public func lines(format: DisplayFormat = .default) -> [String] {
     map { $0.render(using: format) }
-      .joined(separator)
   }
 }
 
