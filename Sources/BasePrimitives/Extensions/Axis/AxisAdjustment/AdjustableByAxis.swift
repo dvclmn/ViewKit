@@ -39,8 +39,8 @@ extension AdjustableByAxis {
 
   public func adjust(
     _ axis: GridAxis,
+    mapping: AxisMapping = .default,
     _ transform: (Component) -> Component,
-    mapping: AxisMapping = .default
   ) -> Self {
     let current = value(along: axis, mapping: mapping)
     let transformed = transform(current)

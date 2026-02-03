@@ -7,7 +7,45 @@
 
 import Foundation
 
+/// A reusable oscillator you can hold onto and query with a time value.
 public struct Oscillator {
+  public var amplitude: Float
+  public var frequency: Float
+  public var phase: Float
+  
+  /// Oscillation occurs around this baseline value
+  public var base: Float
+
+  public init(
+    base: Float = 0,
+    amplitude: Float = 1,
+    frequency: Float = 1,
+    phase: Float = 0
+  ) {
+    self.base = base
+    self.amplitude = amplitude
+    self.frequency = frequency
+    self.phase = phase
+  }
+
+  @inlinable
+  public func value(at time: TimeInterval) -> Float {
+    oscillate(
+      time: time,
+      base: base,
+      amplitude: amplitude,
+      frequency: frequency,
+      phase: phase
+    )
+  }
+
+  @inlinable
+  public func valueCGFloat(at time: TimeInterval) -> CGFloat {
+    CGFloat(value(at: time))
+  }
+}
+
+public struct OscillatorSmoothed {
   public var waveform: Waveform
   var freq: SmoothedFloat
   var amp: SmoothedFloat

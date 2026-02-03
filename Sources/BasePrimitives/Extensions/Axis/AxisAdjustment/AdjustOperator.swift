@@ -35,6 +35,6 @@ extension AdjustableByAxis {
     using operation: Operation<Component>,
     mapping: AxisMapping = .default
   ) -> Self {
-    adjust(axis, operation.apply, mapping: mapping)
+    adjust(axis, mapping: mapping, operation.apply)
   }
 }
