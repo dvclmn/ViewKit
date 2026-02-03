@@ -21,10 +21,10 @@ extension UnitPoint {
   public func offset(by amount: CGFloat) -> CGSize {
     offset(dx: amount, dy: amount)
   }
-  
-  public func offset(by other: Self) -> Self {
-    offset(dx: other.x, dy: other.y)
-  }
+
+//  public func offset(by other: Self) -> Self {
+//    offset(dx: other.x, dy: other.y)
+//  }
 
   public func offset(
     by size: CGSize,
@@ -42,7 +42,6 @@ extension UnitPoint {
   private static func directionMultiplier(for coordinate: CGFloat) -> CGFloat {
     coordinate < 0.5 ? +1 : coordinate > 0.5 ? -1 : 0
   }
-
 
   //  private func directionMultiplier(
   //    for axis: Axis2D,

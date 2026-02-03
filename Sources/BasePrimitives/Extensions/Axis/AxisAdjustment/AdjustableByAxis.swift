@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 15/12/2025.
 //
 
-import Foundation
+import SwiftUI
 
 /// Provides a convenient adjustment mechanism
 /// for types with more than one float/integer value
@@ -24,6 +24,7 @@ public protocol AdjustableByAxis: AxisKeyPathWritable {}
 // MARK: - Adjustable
 extension CGSize: AdjustableByAxis {}
 extension CGPoint: AdjustableByAxis {}
+extension UnitPoint: AdjustableByAxis {}
 extension CGVector: AdjustableByAxis {}
 
 extension AdjustableByAxis {
