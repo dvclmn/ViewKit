@@ -136,7 +136,7 @@ public func oscillating(
 // MARK: - Oscillator type
 
 /// A reusable oscillator you can hold onto and query with a time value.
-public struct Oscillator {
+public struct OscillatorAlt {
   public var amplitude: Double
   public var frequency: Double
   public var phase: Double
