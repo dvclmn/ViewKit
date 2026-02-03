@@ -10,8 +10,8 @@ import CoreTools
 
 @MetaEnum
 public enum WaveDisplayComponent {
-  case line(LineStyle<Float>)
-  case points(PointStyle<Float>)
+  case line(FloatLineStyle)
+  case points(FloatPointStyle)
   case labels
   case phaseGhost
 }

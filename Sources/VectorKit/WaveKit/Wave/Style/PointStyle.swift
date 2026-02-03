@@ -8,6 +8,9 @@
 import ColourKit
 import Foundation
 
+public typealias FloatPointStyle = PointStyle<Double>
+//public typealias FloatPointStyle = PointStyle<Float>
+
 public struct PointStyle<T: WaveFloat>: Sendable, Codable, Equatable, Hashable {
   public var colour: HSVColour
   public var colourSecondary: HSVColour?

@@ -5,12 +5,12 @@
 //  Created by Dave Coleman on 4/11/2024.
 //
 
-import Foundation
 import CoreTools
+import Foundation
 
 @CaseDetection
 public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
-  
+
   public static let allCases: [WaveAttribute] = [.amplitude, .frequency, .phase]
 
   /// How visually apparent is the oscillation effect. Aka strength
@@ -35,7 +35,8 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
     }
   }
 
-  public var defaultValue: Float {
+  public var defaultValue: Double {
+//  public var defaultValue: Float {
     switch self {
       case .amplitude: 20
       case .frequency: 1.0
@@ -43,7 +44,7 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
       case .noise: 0.0
     }
   }
-  public var defaultRange: ClosedRange<Float> {
+  public var defaultRange: ClosedRange<Double> {
     switch self {
       case .amplitude: 0...20
       case .frequency: 0...4
@@ -63,15 +64,15 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
     }
   }
 
-//  public var keyPath: WritableKeyPath<WaveLegacy, SmoothedProperty> {
-//    switch self {
-//      case .amplitude: \.amplitudeSmoothed
-//      case .frequency: \.frequencySmoothed
-//      case .phase: \.phaseOffsetSmoothed
-//      case .noise: \.noiseSmoothed
-//
-//    }
-//  }
+  //  public var keyPath: WritableKeyPath<WaveLegacy, SmoothedProperty> {
+  //    switch self {
+  //      case .amplitude: \.amplitudeSmoothed
+  //      case .frequency: \.frequencySmoothed
+  //      case .phase: \.phaseOffsetSmoothed
+  //      case .noise: \.noiseSmoothed
+  //
+  //    }
+  //  }
 
   //  @MainActor
   //  public var displayedKeyPath: WritableKeyPath<WaveProperties.Engine, CGFloat> {
@@ -93,7 +94,7 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
   //    }
   //  }
 
-  public var range: ClosedRange<CGFloat> {
+  public var range: ClosedRange<Double> {
     switch self {
       case .amplitude: 0.01...60
       case .frequency: 0.01...20

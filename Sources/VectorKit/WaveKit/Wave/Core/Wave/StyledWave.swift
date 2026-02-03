@@ -11,7 +11,8 @@ import Foundation
 /// If applying a ``WaveStyle`` to *multiple* Waves, prefer holding an instance
 /// of `WaveStyle` alongside the Waves, rather than using this type.
 public struct StyledWave: Wavable, Hashable, Codable, Equatable, Identifiable {
-  public typealias Value = Float
+  public typealias Value = Double
+//  public typealias Value = Float
   
   public var id: FloatWave.ID { wave.id }
   public var wave: FloatWave

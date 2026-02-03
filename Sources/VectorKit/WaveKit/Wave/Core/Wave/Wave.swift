@@ -7,7 +7,8 @@
 
 import Foundation
 
-public typealias FloatWave = Wave<Float>
+public typealias FloatWave = Wave<Double>
+//public typealias FloatWave = Wave<Float>
 
 /// Think of a wave as having two "engines" that determine its position:
 ///

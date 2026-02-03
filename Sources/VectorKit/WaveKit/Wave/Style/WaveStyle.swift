@@ -8,15 +8,16 @@
 import ColourKit
 import CoreTools
 import Foundation
+
 public typealias FloatWaveStyle = WaveStyle<Float>
 
 public struct WaveStyle<T: WaveFloat>: Codable, Sendable, Equatable, Hashable {
-  public var lineStyle: LineStyle<T>
-  public var pointStyle: PointStyle<T>
+  public var lineStyle: FloatLineStyle
+  public var pointStyle: FloatPointStyle
 
   public init(
-    line: LineStyle<T> = .init(),
-    point: PointStyle<T> = .init(),
+    line: FloatLineStyle = .init(),
+    point: FloatPointStyle = .init(),
   ) {
     self.lineStyle = line
     self.pointStyle = point

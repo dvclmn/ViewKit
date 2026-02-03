@@ -19,7 +19,7 @@ import Foundation
 @inlinable
 public func oscillate(
   time: Double,
-//  time: TimeInterval,
+  //  time: TimeInterval,
   base: Double,
   amplitude: Double,
   frequency: Double = 1.0,
@@ -29,7 +29,7 @@ public func oscillate(
   let result = base + amplitude * sin(frequency.omega * time + phase)
   DebugString("Oscillation", indented: true) {
     Labeled("Time", value: time)
-//    Labeled("Float Time", value: Float(time))
+    //    Labeled("Float Time", value: Float(time))
     Labeled("Base Value", value: base)
     Labeled("Amp", value: amplitude)
     Labeled("Freq", value: frequency)
@@ -48,7 +48,7 @@ public func oscillateAround(
   center: Double,
   range: Double,
   time: Double,
-//  time: TimeInterval,
+  //  time: TimeInterval,
   frequency: Double = 1.0,
   phase: Double = 0.0
 ) -> Double {
@@ -68,7 +68,7 @@ public func oscillating(
   axis: GridAxis,
   mapping: AxisMapping = .default,
   time: Double,
-//  time: TimeInterval,
+  //  time: TimeInterval,
   amplitude: Double,
   frequency: Double = 1.0,
   phase: Double = 0.0,
@@ -113,7 +113,7 @@ public func oscillating(
   axis: GridAxis,
   mapping: AxisMapping = .default,
   time: Double,
-//  time: TimeInterval,
+  //  time: TimeInterval,
   amplitude: Double,
   frequency: Double = 1.0,
   phase: Double = 0.0,

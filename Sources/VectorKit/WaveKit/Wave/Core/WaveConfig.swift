@@ -6,7 +6,8 @@
 //
 
 import Foundation
-public typealias FloatWaveConfig = WaveConfig<Float>
+public typealias FloatWaveConfig = WaveConfig<Double>
+//public typealias FloatWaveConfig = WaveConfig<Float>
 
 public struct WaveConfig<T: WaveFloat>: Hashable, Sendable, Codable, Equatable {
   public var cycles: T
