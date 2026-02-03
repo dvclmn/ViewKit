@@ -13,6 +13,20 @@ public struct SizeAndSafeInsets: Equatable, Sendable {
   let safeInsets: EdgeInsets
 }
 
+extension SizeAndSafeInsets {
+  public var rect: CGRect {
+    let width = size.width - (safeInsets.leading + safeInsets.trailing)
+    let height = size.height - (safeInsets.top + safeInsets.bottom)
+
+    return CGRect(
+      x: safeInsets.leading,
+      y: safeInsets.top,
+      width: width,
+      height: height
+    )
+  }
+}
+
 public protocol GeometryCapturable: Equatable, Sendable {}
 extension CGSize: GeometryCapturable {}
 extension CGRect: GeometryCapturable {}

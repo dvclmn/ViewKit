@@ -13,39 +13,51 @@ import SwiftUI
 ///
 /// This
 public struct EnvironmentViewportSizeModifier: ViewModifier {
-  //  @Environment(\.isDebugMode) private var isDebugMode
+
+  @State private var viewportRect: CGRect?
   @State private var viewportSize: CGSize?
+
+  /// Keeping this internal for now
+  let respectsSafeArea: Bool = true
 
   let mode: DebounceMode
   let showsIndicator: Bool
-  let didUpdateSize: ViewSizeOutput<CGSize>?
 
   public func body(content: Content) -> some View {
     content
-      .viewSize(mode: mode) { size in
-        self.viewportSize = size
-        didUpdateSize?(size)
+      .viewSize(
+        capture: .sizeAndSafeInsets,
+        //        capture: respectsSafeArea ? .sizeAndSafeInsets : .size,
+        mode: mode
+      ) { geometry in
+        self.viewportRect = geometry.rect
+        self.viewportSize = geometry.size
       }
-      .border(Color.green.opacity(0.3))
       .viewportSizeIndicator(isEnabled: showsIndicator)
+
+      /// This captures both a size and a rect; a size for ease, and the rect for safe area awareness
       .environment(\.viewportSize, viewportSize)
+      .environment(\.viewportRect, viewportRect)
   }
 }
 
 extension View {
+  /// This now returns a CGRect to allow describing safe area insets,
+  /// which wasn't possible with previous CGSize
+  ///
+  /// If a callback is needed, see ``viewSize(capture:mode:isEnabled:valueOutput:)``
   public func readViewportSize(
     mode debounceMode: DebounceMode,
     showsIndicator: Bool = false,
-    didUpdateSize: ViewSizeOutput<CGSize>? = nil,
   ) -> some View {
     self.modifier(
       EnvironmentViewportSizeModifier(
         mode: debounceMode,
-        showsIndicator: showsIndicator,
-        didUpdateSize: didUpdateSize
+        showsIndicator: showsIndicator
       )
     )
   }
+
   fileprivate func viewportSizeIndicator(isEnabled: Bool = true) -> some View {
     self.modifier(ViewportSizeIndicatorModifier(isEnabled: isEnabled))
   }

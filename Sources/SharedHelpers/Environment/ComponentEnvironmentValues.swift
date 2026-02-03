@@ -79,8 +79,11 @@ extension EnvironmentValues {
   /// This is primarily expected to represent the whole window of an app,
   /// minus any base UI components like Toolbar or Inspector.
   ///
-  /// I guess like in a graphics app, so maybe this is a bit domain-specific
+  /// Useful as long as its companion modifier
+  /// `readViewportSize(mode:showsIndicator:didUpdateSize)`
+  /// is placed on the view the caller regards as the viewport area
   @Entry public var viewportSize: CGSize?
+  @Entry public var viewportRect: CGRect?
   @Entry public var isScrollAtStart: Bool = true
 
   @Entry public var formatValue: (Double) -> String = { $0.displayString }
