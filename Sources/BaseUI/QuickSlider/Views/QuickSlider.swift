@@ -68,8 +68,8 @@ extension QuickSlider {
       initialValue: SliderHandler(
         value: CGFloat(value.wrappedValue),
         label: label,
-        range: range.toFloatRange,
-        step: step.toFloatIfPresent,
+        range: range.toCGFloatRange,
+        step: step.toCGFloatIfPresent,
         didChangeSlider: didChangeSlider
       )
     )

@@ -7,7 +7,14 @@
 
 import SwiftUI
 
-public var twoPi: CGFloat { .pi * 2 }
+//public var twoPi: CGFloat { .pi * 2 }
+//public var twoPiDouble: Double { .pi * 2 }
+//public var twoPiCGFloat: CGFloat { .pi * 2 }
+//public var twoPiFloat: Float { .pi * 2 }
+
+public func twoPi<T: BinaryFloatingPoint>() -> T {
+  T.pi * 2
+}
 
 /// Looking for `clamp` methods? See `Extensions/Comparable`
 extension BinaryFloatingPoint {
@@ -45,8 +52,8 @@ extension BinaryFloatingPoint {
   }
 
   public func wrapPhase(_ phase: CGFloat) -> CGFloat {
-    var r = phase.truncatingRemainder(dividingBy: twoPi)
-    if r < 0 { r += twoPi }  // keep in [0, 2π)
+    var r = phase.truncatingRemainder(dividingBy: twoPi())
+    if r < 0 { r += twoPi() }  // keep in [0, 2π)
     return r
   }
 

@@ -9,9 +9,9 @@ import CoreTools
 import Foundation
 
 @CaseDetection
-public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
+public enum WaveAttribute<T: WaveFloat>: String, Sendable, CaseIterable, Identifiable {
 
-  public static let allCases: [WaveAttribute] = [.amplitude, .frequency, .phase]
+  public static var allCases: [Self] { [.amplitude, .frequency, .phase] }
 
   /// How visually apparent is the oscillation effect. Aka strength
   case amplitude
@@ -35,7 +35,7 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
     }
   }
 
-  public var defaultValue: Double {
+  public var defaultValue: T {
 //  public var defaultValue: Float {
     switch self {
       case .amplitude: 20
@@ -44,7 +44,7 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
       case .noise: 0.0
     }
   }
-  public var defaultRange: ClosedRange<Double> {
+  public var defaultRange: ClosedRange<T> {
     switch self {
       case .amplitude: 0...20
       case .frequency: 0...4
@@ -94,12 +94,12 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
   //    }
   //  }
 
-  public var range: ClosedRange<Double> {
+  public var range: ClosedRange<T> {
     switch self {
       case .amplitude: 0.01...60
       case .frequency: 0.01...20
       //      case .cyclesAcross: 0.1...10.0
-      case .phase: 0...twoPi
+      case .phase: 0...twoPi()
       case .noise: 0...4
     }
   }

@@ -21,7 +21,7 @@ extension Optional {
 }
 
 extension Optional where Wrapped: BinaryFloatingPoint {
-  public var toFloatIfPresent: CGFloat? {
+  public var toCGFloatIfPresent: CGFloat? {
     map { CGFloat($0) }
   }
 }

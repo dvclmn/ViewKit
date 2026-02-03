@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+
 //import Sharing
 
 //extension Binding {
 //  public func toSharedBinding<T>() -> Binding<T> {
-//    
+//
 //  }
 //}
 
@@ -40,13 +41,13 @@ extension Binding where Value == Int {
 }
 
 extension Binding where Value: BinaryFloatingPoint & Sendable {
-//  public func clampedIfNeeded(to range: ClosedRange<Value>?) -> Binding<Value> {
-//    guard let range else { return self }
-//    return Binding<Value>(
-//      get: { wrappedValue.clamped(to: range) },
-//      set: { wrappedValue = $0.clamped(to: range) }
-//    )
-//  }
+  //  public func clampedIfNeeded(to range: ClosedRange<Value>?) -> Binding<Value> {
+  //    guard let range else { return self }
+  //    return Binding<Value>(
+  //      get: { wrappedValue.clamped(to: range) },
+  //      set: { wrappedValue = $0.clamped(to: range) }
+  //    )
+  //  }
 
   public var toBindingFloat: Binding<CGFloat> {
     Binding<CGFloat>(
@@ -96,30 +97,29 @@ extension Binding where Value: OptionSet & Sendable, Value.Element == Value {
   }
 }
 
-
 extension Binding {
   /// Returns a Boolean binding that toggles the Bool for the given Key in the Dictionary
   @MainActor
   public func bindingBool<T>(key: T) -> Binding<Bool>
-  where Value == Dictionary<T, Bool>, T: Hashable {
+  where Value == [T: Bool], T: Hashable {
     Binding<Bool> {
       wrappedValue[key] ?? false
     } set: {
       wrappedValue[key] = $0
     }
   }
-//  func contains(_ element: Value) -> Binding<Bool> {
-//    Binding<Bool>(
-//      get: { wrappedValue.contains(element) },
-//      set: { isIncluded in
-//        if isIncluded {
-//          wrappedValue.insert(element)
-//        } else {
-//          wrappedValue.remove(element)
-//        }
-//      }
-//    )
-//  }
+  //  func contains(_ element: Value) -> Binding<Bool> {
+  //    Binding<Bool>(
+  //      get: { wrappedValue.contains(element) },
+  //      set: { isIncluded in
+  //        if isIncluded {
+  //          wrappedValue.insert(element)
+  //        } else {
+  //          wrappedValue.remove(element)
+  //        }
+  //      }
+  //    )
+  //  }
 }
 
 //extension Binding where Value == CGFloat {

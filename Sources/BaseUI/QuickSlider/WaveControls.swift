@@ -8,13 +8,13 @@
 import SwiftUI
 import VectorKit
 
-public struct WaveControls: View {
-  @Binding var wave: FloatWave
-  let ranges: (WaveAttribute) -> ClosedRange<Float>?
+public struct WaveControls<T: WaveFloat>: View {
+  @Binding var wave: Wave<T>
+  let ranges: (WaveAttribute<T>) -> ClosedRange<T>?
   
   public init(
-    wave: Binding<FloatWave>,
-    ranges: @escaping (WaveAttribute) -> ClosedRange<Float>? = { _ in nil }
+    wave: Binding<Wave<T>>,
+    ranges: @escaping (WaveAttribute<T>) -> ClosedRange<T>? = { _ in nil }
   ) {
     self._wave = wave
     self.ranges = ranges
@@ -24,20 +24,20 @@ public struct WaveControls: View {
     SliderGroup {
       QuickSlider(
         "Amplitude",
-        value: $wave.amplitude,
-        range: ranges(.amplitude) ?? 0...1
+        value: $wave.amplitude.toBindingDouble,
+        range: ranges(.amplitude)?.toDoubleRange ?? 0.0...1.0
       )
       
       QuickSlider(
         "Frequency",
-        value: $wave.frequency,
-        range: ranges(.frequency) ?? 0...1
+        value: $wave.frequency.toBindingDouble,
+        range: ranges(.frequency)?.toDoubleRange ?? 0.0...1.0
       )
       
       QuickSlider(
         "Phase",
-        value: $wave.phase,
-        range: ranges(.phase) ?? .unitRange
+        value: $wave.phase.toBindingDouble,
+        range: ranges(.phase)?.toDoubleRange ?? .unitRange
       )
     }
     

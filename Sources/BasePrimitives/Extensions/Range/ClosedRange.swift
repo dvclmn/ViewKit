@@ -63,8 +63,11 @@ extension ClosedRange where Bound == Int {
 }
 
 extension ClosedRange where Bound: BinaryFloatingPoint & Sendable {
-  public var toFloatRange: ClosedRange<CGFloat> {
+  public var toCGFloatRange: ClosedRange<CGFloat> {
     CGFloat(lowerBound)...CGFloat(upperBound)
+  }
+  public var toDoubleRange: ClosedRange<Double> {
+    Double(lowerBound)...Double(upperBound)
   }
   public var toIntRange: ClosedRange<Int> {
     Int(lowerBound)...Int(upperBound)
