@@ -6,7 +6,7 @@
 //
 
 import ColourKit
-import Foundation
+import SwiftUI
 
 /// Rough equivalent to `EnvironmentValues`
 ///
@@ -14,7 +14,7 @@ import Foundation
 /// `stack[Fundamental.self].settings.isEnabled.toggle()`
 //#warning("Try out dynamic lookup")
 //@dynamicMemberLookup
-public struct WaveStack: @unchecked Sendable, Equatable, Identifiable {
+public struct WaveStack: @unchecked Sendable, Equatable, Identifiable, Hashable {
   public let id: UUID
   private var storage: [ObjectIdentifier: ConfiguredWave] = [:]
 
@@ -48,5 +48,20 @@ extension WaveKeyRegistry {
   ) {
     guard let keyType = registeredTypes[key] else { return }
     stack.setValue(wave, for: keyType)
+  }
+}
+
+extension Binding where Value == WaveStack {
+  @MainActor
+  public func waveBinding<K: WaveKey, T>(
+    _ key: K.Type,
+    _ keyPath: WritableKeyPath<ConfiguredWave, T>
+  ) -> Binding<T> {
+    Binding<T> {
+      wrappedValue[key][keyPath: keyPath]
+    } set: { newValue in
+      wrappedValue.update(key, path: keyPath, newValue: newValue)
+    }
+
   }
 }

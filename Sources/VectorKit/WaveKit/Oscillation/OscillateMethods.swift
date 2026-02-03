@@ -18,25 +18,40 @@ import Foundation
 /// - Returns: The oscillated value at the given time.
 @inlinable
 public func oscillate(
-  time: TimeInterval,
-  base: Float,
-  amplitude: Float,
-  frequency: Float = 1.0,
-  phase: Float = 0.0
-) -> Float {
+  time: Double,
+//  time: TimeInterval,
+  base: Double,
+  amplitude: Double,
+  frequency: Double = 1.0,
+  phase: Double = 0.0
+) -> Double {
   /// `y(t) = base + amplitude * sin(2π f t + phase)`
-  return base + amplitude * sin(frequency.omega * Float(time) + phase)
+  let result = base + amplitude * sin(frequency.omega * time + phase)
+  DebugString("Oscillation", indented: true) {
+    Labeled("Time", value: time)
+//    Labeled("Float Time", value: Float(time))
+    Labeled("Base Value", value: base)
+    Labeled("Amp", value: amplitude)
+    Labeled("Freq", value: frequency)
+    Labeled("Omega", value: frequency.omega)
+    Labeled("Phase", value: phase)
+    Divider()
+    Labeled("Result", value: result)
+    Divider()
+  }
+  return result
 }
 
 /// Oscillates around a center value within a +/- range.
 @inlinable
 public func oscillateAround(
-  center: Float,
-  range: Float,
-  time: TimeInterval,
-  frequency: Float = 1.0,
-  phase: Float = 0.0
-) -> Float {
+  center: Double,
+  range: Double,
+  time: Double,
+//  time: TimeInterval,
+  frequency: Double = 1.0,
+  phase: Double = 0.0
+) -> Double {
   oscillate(time: time, base: center, amplitude: range, frequency: frequency, phase: phase)
 }
 
@@ -48,25 +63,25 @@ public func oscillateAround(
 
 /// Returns a new CGPoint whose selected axis is oscillated around the provided base value.
 @inlinable
-public func oscillating<T: AdjustableByAxis>(
-  value: T,
+public func oscillating(
+  value: CGPoint,
   axis: GridAxis,
   mapping: AxisMapping = .default,
-  //  axis: SpatialAxis,
-  time: TimeInterval,
-  amplitude: Float,
-  frequency: Float = 1.0,
-  phase: Float = 0.0,
-  baseOverride: Float? = nil
-) -> some AdjustableByAxis where T.Component: BinaryFloatingPoint {
+  time: Double,
+//  time: TimeInterval,
+  amplitude: Double,
+  frequency: Double = 1.0,
+  phase: Double = 0.0,
+  baseOverride: Double? = nil
+) -> CGPoint {
   value.adjust(axis, mapping: mapping) {
     oscillate(
       time: time,
-      base: baseOverride ?? Float($0),
+      base: baseOverride ?? $0,
       amplitude: amplitude,
       frequency: frequency,
       phase: phase
-    )
+    ).toCGFloat
   }
   //  p.adjust(axis, using: ., mapping: mapping)
   //  let oscillated = oscillate(
@@ -94,27 +109,25 @@ public func oscillating<T: AdjustableByAxis>(
 /// Returns a new CGSize whose selected axis is oscillated around the provided base value.
 @inlinable
 public func oscillating(
-  size: CGSize,
-  axis: SpatialAxis,
-  time: TimeInterval,
-  amplitude: CGFloat,
-  frequency: CGFloat = 1.0,
-  phase: CGFloat = 0.0,
-  baseOverride: CGFloat? = nil
+  value: CGSize,
+  axis: GridAxis,
+  mapping: AxisMapping = .default,
+  time: Double,
+//  time: TimeInterval,
+  amplitude: Double,
+  frequency: Double = 1.0,
+  phase: Double = 0.0,
+  baseOverride: Double? = nil
 ) -> CGSize {
-  var s = size
-  switch axis {
-    case .width:
-      let base = baseOverride ?? size.width
-      s.width = oscillate(time: time, base: base, amplitude: amplitude, frequency: frequency, phase: phase)
-    case .height:
-      let base = baseOverride ?? size.height
-      s.height = oscillate(time: time, base: base, amplitude: amplitude, frequency: frequency, phase: phase)
-    case .x, .y:
-      // Not applicable to CGSize, leave unchanged
-      break
+  value.adjust(axis, mapping: mapping) {
+    oscillate(
+      time: time,
+      base: baseOverride ?? $0,
+      amplitude: amplitude,
+      frequency: frequency,
+      phase: phase
+    ).toCGFloat
   }
-  return s
 }
 
 // MARK: - Oscillator type

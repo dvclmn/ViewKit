@@ -9,13 +9,19 @@ import Foundation
 import BasePrimitives
 
 public func DebugString(
+  _ title: String? = nil,
+  indented: Bool = false,
   timestamped: Bool = false,
   @DisplayStringBuilder _ content: () -> [DisplayBlock]
 ) {
   print(
     DisplayString {
-      content()
-      timestamped ? " at \(Date.debug) " : ""
+      if indented {
+        Indented(title, content: content)
+      } else {
+        content()
+      }
+      timestamped ? "\(Date.debug) " : ""
       "\n"
     }.text
   )

@@ -9,18 +9,18 @@ import Foundation
 
 /// A reusable oscillator you can hold onto and query with a time value.
 public struct Oscillator {
-  public var amplitude: Float
-  public var frequency: Float
-  public var phase: Float
+  public var amplitude: Double
+  public var frequency: Double
+  public var phase: Double
   
   /// Oscillation occurs around this baseline value
-  public var base: Float
+  public var base: Double
 
   public init(
-    base: Float = 0,
-    amplitude: Float = 1,
-    frequency: Float = 1,
-    phase: Float = 0
+    base: Double = 0,
+    amplitude: Double = 1,
+    frequency: Double = 1,
+    phase: Double = 0
   ) {
     self.base = base
     self.amplitude = amplitude
@@ -29,7 +29,7 @@ public struct Oscillator {
   }
 
   @inlinable
-  public func value(at time: TimeInterval) -> Float {
+  public func value(at time: TimeInterval) -> Double {
     oscillate(
       time: time,
       base: base,
