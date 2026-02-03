@@ -33,14 +33,13 @@ public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
 
   // MARK: - View Modifier
   public func body(content: Content) -> some View {
-
     content
       .onGeometryChange(for: capture.type) { proxy in
         capture.transform(proxy)
 
       } action: { newValue in
         guard isEnabled else { return }
-        
+
         if let debouncer {
           debouncer.execute { @MainActor in
             valueOutput(newValue)
@@ -48,7 +47,6 @@ public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
         } else {
           valueOutput(newValue)
         }
-
       }
   }
 }

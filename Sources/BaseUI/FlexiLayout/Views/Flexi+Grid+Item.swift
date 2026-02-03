@@ -26,7 +26,10 @@ extension Flexi {
       ZStack {
         content(item)
           .id(item.id)
-          .viewSize(capture: .frameInScrollView, mode: .debounce()) { frame in
+          .viewSize(
+            capture: .frameInScrollView(axis: .vertical),
+            mode: .debounce()
+          ) { frame in
             updateIfChanged(&gridHandler.itemFrames[item.id], to: frame)
           }
         //          .overlay {

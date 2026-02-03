@@ -5,12 +5,13 @@
 //  Created by Dave Coleman on 9/9/2025.
 //
 
-import SwiftUI
 import SharedHelpers
+import SwiftUI
 
 public protocol GeometryCapturable: Equatable, Sendable {}
 extension CGSize: GeometryCapturable {}
 extension CGRect: GeometryCapturable {}
+extension EdgeInsets: GeometryCapturable {}
 
 public struct GeometryCapture<T: GeometryCapturable>: Sendable {
   let type: T.Type
@@ -25,15 +26,21 @@ public struct GeometryCapture<T: GeometryCapturable>: Sendable {
   }
 }
 
-
 extension GeometryCapture {
   public static var size: GeometryCapture<CGSize> {
     .init(type: CGSize.self) { $0.size }
   }
 
-  public static var frameInScrollView: GeometryCapture<CGRect> {
+  public static func frameInScrollView(axis: Axis = .vertical) -> GeometryCapture<CGRect> {
     .init(type: CGRect.self) {
-      $0.frame(in: .scrollView(axis: .vertical))
+      $0.frame(in: .scrollView(axis: axis))
+    }
+  }
+
+  public static var safeAreaInsets: GeometryCapture<EdgeInsets> {
+    .init(type: EdgeInsets.self) {
+      $0.safeAreaInsets
+      //      $0.frame(in: .scrollView(axis: axis))
     }
   }
 }
