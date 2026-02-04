@@ -7,23 +7,28 @@
 
 import Foundation
 
-extension WaveShaped {
+extension Wave {
+
+  public var phaseRadians: T { phase }
+
+  public var unitPhase: T { Self.wrapUnit(Self.radiansToUnit(phase)) }
+
   @inline(__always)
-  static func wrapToTwoPi(_ x: Value) -> Value {
-    let twoPi = Value.twoPi
+  public static func wrapToTwoPi(_ x: T) -> T {
+    let twoPi = (T.twoPi)
     let y = x.truncatingRemainder(dividingBy: twoPi)
     return y < 0 ? y + twoPi : y
   }
 
   @inline(__always)
-  static func wrapUnit(_ u: Value) -> Value {
+  public static func wrapUnit(_ u: T) -> T {
     let y = u - floor(u)
     return y < 0 ? y + 1 : y
   }
 
   @inline(__always)
-  static func unitToRadians(_ u: Value) -> Value { u * Value.twoPi }
+  static func unitToRadians(_ u: T) -> T { u * T.twoPi }
 
   @inline(__always)
-  static func radiansToUnit(_ r: Value) -> Value { r / Value.twoPi }
+  static func radiansToUnit(_ r: T) -> T { r / T.twoPi }
 }

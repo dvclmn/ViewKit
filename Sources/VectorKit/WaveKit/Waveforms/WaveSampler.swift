@@ -80,16 +80,18 @@ extension WaveSampler {
     for waveform: Waveform,
     at phase: T
   ) -> T {
-    let p = T.normalisedPhase(phase)
-    value(for: <#T##Waveform#>, phaseRadians: <#T##WaveFloat#>)
+    let p = Wave.wrapUnit(phase)
+//    let p = Wave.wrapToTwoPi(phase)
+    //    let p = T.normalisedPhase(phase)
+    return value(for: waveform, phaseRadians: p)
   }
-    
+
   /// `phaseRadians` must already be wrapped to 2π radians
-    @inlinable
-    public static func value(
-      for waveform: Waveform,
-      phaseRadians: T
-    ) -> T {
+  @inlinable
+  public static func value(
+    for waveform: Waveform,
+    phaseRadians: T
+  ) -> T {
     let p = phaseRadians
 
     return switch waveform {

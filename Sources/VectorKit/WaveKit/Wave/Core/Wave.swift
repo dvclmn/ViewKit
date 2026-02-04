@@ -21,11 +21,19 @@ public typealias FloatWave = Wave<Double>
 /// - The `normalisedIndex`
 /// - In a SwiftUI Canvas, 0.0 might be the left edge and 1.0 the right edge;
 ///   and Cycles is how many "humps" of the wave fit into that space.
-public struct Wave<T: WaveFloat>: WaveShaped, Sendable, Identifiable, Hashable, Equatable, Codable {
+public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, Codable {
   public let id: UUID
   public var amplitude: T
   public var frequency: T
-  private(set) var phase: T
+  
+  // Stored backing value in radians
+  private var _phase: T
+  
+  public var phase: T {
+    get {  }
+    set { }
+  }
+//  private(set) var phase: T
   public var waveform: Waveform
 
   public init(
@@ -51,10 +59,6 @@ extension Wave {
   public mutating func advancePhaseRadians(by delta: T) {
     phase = Self.wrapToTwoPi(phase + delta)
   }
-
-  public var phaseRadians: T { phase }
-
-  public var unitPhase: T { Self.wrapUnit(Self.radiansToUnit(phase)) }
 
   public mutating func setUnitPhase(_ u: T) {
     phase = Self.wrapToTwoPi(Self.unitToRadians(Self.wrapUnit(u)))

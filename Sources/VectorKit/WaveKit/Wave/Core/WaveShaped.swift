@@ -23,9 +23,9 @@ public protocol WaveShaped {
 }
 
 extension WaveShaped {
-  public subscript<T>(dynamicMember keyPath: WritableKeyPath<Self, T>) -> T {
-    get { self[keyPath: keyPath] }
-    set { self[keyPath: keyPath] = newValue }
+  public subscript<T>(dynamicMember keyPath: WritableKeyPath<Wave<Value>, T>) -> T {
+    get { self.wave[keyPath: keyPath] }
+    set { self.wave[keyPath: keyPath] = newValue }
   }
 
   /// Evaluates the wave at a specific point in space.
@@ -49,7 +49,7 @@ extension WaveShaped {
     let wrappedPhase = totalPhase - floor(totalPhase)
 
     /// 3. Run it through the waveform math. Wrap and Sample
-    let value = wave.waveform.sample(phase: Float(wrappedPhase))
-    return wave.amplitude * Self.Value(value)
+    let value = wave.waveform.sample(phase: wrappedPhase)
+    return wave.amplitude * value
   }
 }
