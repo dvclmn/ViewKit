@@ -14,8 +14,8 @@ public struct PanGestureView: NSViewRepresentable {
 
   public func makeNSView(context: Context) -> PanTrackingNSView {
     let view = PanTrackingNSView()
-    view.didUpdatePan = { delta, phase in
-      onPanGesture(delta, phase)
+    view.didUpdatePan = { delta, phase, modifiers in
+      onPanGesture(delta, phase, modifiers)
     }
     return view
   }

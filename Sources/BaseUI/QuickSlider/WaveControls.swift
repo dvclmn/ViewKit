@@ -36,7 +36,7 @@ public struct WaveControls<T: WaveFloat>: View {
       
       QuickSlider(
         "Phase",
-        value: $wave.phase.toBindingDouble,
+        value: $wave.phaseRadians.toBindingDouble,
         range: ranges(.phase)?.toDoubleRange ?? .unitRange
       )
     }

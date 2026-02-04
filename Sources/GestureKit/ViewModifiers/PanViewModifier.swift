@@ -11,7 +11,8 @@ import SwiftUI
 #if canImport(AppKit)
 
 /// Note: This size comes as deltas, which will need to be accrued
-public typealias PanOutput = (CGSize, InteractionPhase) -> Void
+/// Modifiers == 'modifiers held'
+public typealias PanOutput = (CGSize, InteractionPhase, Modifiers) -> Void
 
 public struct PanGestureModifier: ViewModifier {
 
@@ -22,8 +23,8 @@ public struct PanGestureModifier: ViewModifier {
     content
       .overlay {
         if isEnabled {
-          PanGestureView { delta, phase in
-            panDidChange(delta, phase)
+          PanGestureView { delta, phase, modifiers in
+            panDidChange(delta, phase, modifiers)
           }
         }
       }

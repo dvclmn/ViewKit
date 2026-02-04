@@ -43,7 +43,7 @@ extension WaveShaped {
 
     /// 2. Add spatial phase (cycles) and static offset (wave.phase)
     let spatialPhase = normalisedIndex * config.cycles
-    let staticOffset = wave.phase
+    let staticOffset = wave.phaseRadians
 
     let totalPhase = temporalPhase + spatialPhase + staticOffset
     let wrappedPhase = totalPhase - floor(totalPhase)

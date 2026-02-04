@@ -8,11 +8,6 @@
 import Foundation
 
 extension Wave {
-
-  public var phaseRadians: T { phase }
-
-  public var unitPhase: T { Self.wrapUnit(Self.radiansToUnit(phase)) }
-
   @inline(__always)
   public static func wrapToTwoPi(_ x: T) -> T {
     let twoPi = (T.twoPi)

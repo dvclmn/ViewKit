@@ -50,7 +50,7 @@ public struct ModifierKeysModifier: ViewModifier {
       content
         .onAppear {
           NSEvent.addLocalMonitorForEvents(matching: [.flagsChanged]) { event in
-            self.modifierKeys = Modifiers(from: event.modifierFlags)
+            self.modifierKeys = Modifiers(from: event)
             return event
           }
         }

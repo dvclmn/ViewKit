@@ -33,13 +33,15 @@ public struct ModifierKeys: Sendable {
 
 extension ModifierKeys {
   #if canImport(AppKit)
-  public init(from appKitKey: NSEvent.ModifierFlags) {
+  public init(from event: NSEvent) {
+    let flags = event.modifierFlags
+//  public init(from appKitKey: NSEvent.ModifierFlags) {
     var result: ModifierKeys = []
-    if appKitKey.contains(.shift) { result.insert(.shift) }
-    if appKitKey.contains(.control) { result.insert(.control) }
-    if appKitKey.contains(.option) { result.insert(.option) }
-    if appKitKey.contains(.command) { result.insert(.command) }
-    if appKitKey.contains(.capsLock) { result.insert(.capsLock) }
+    if flags.contains(.shift) { result.insert(.shift) }
+    if flags.contains(.control) { result.insert(.control) }
+    if flags.contains(.option) { result.insert(.option) }
+    if flags.contains(.command) { result.insert(.command) }
+    if flags.contains(.capsLock) { result.insert(.capsLock) }
     self = result
     //    self = appKitKey.toCompatibleModifier
   }

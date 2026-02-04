@@ -25,15 +25,23 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
   public let id: UUID
   public var amplitude: T
   public var frequency: T
-  
-  // Stored backing value in radians
+
+  /// Stored backing value in radians
   private var _phase: T
-  
-  public var phase: T {
-    get {  }
-    set { }
+
+  /// Expose phase in radians with get/set
+  public var phaseRadians: T {
+    get { _phase }
+    set { _phase = Self.wrapToTwoPi(newValue) }
   }
-//  private(set) var phase: T
+
+  /// Expose unit phase [0, 1) with get/set
+  public var unitPhase: T {
+    get { Self.radiansToUnit(_phase) }
+    set { _phase = Self.unitToRadians(Self.wrapUnit(newValue)) }
+  }
+
+  //  private(set) var phase: T
   public var waveform: Waveform
 
   public init(
@@ -46,27 +54,20 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
     self.id = id
     self.amplitude = amp
     self.frequency = freq
-    self.phase = Self.wrapToTwoPi(phase)
+    self._phase = Self.wrapToTwoPi(phase)
     self.waveform = waveform
   }
 }
 
 extension Wave {
-  public mutating func setPhaseRadians(_ newPhase: T) {
-    phase = Self.wrapToTwoPi(newPhase)
-  }
 
   public mutating func advancePhaseRadians(by delta: T) {
-    phase = Self.wrapToTwoPi(phase + delta)
-  }
-
-  public mutating func setUnitPhase(_ u: T) {
-    phase = Self.wrapToTwoPi(Self.unitToRadians(Self.wrapUnit(u)))
+    phaseRadians = Self.wrapToTwoPi(phaseRadians + delta)
   }
 
   public mutating func advanceUnitPhase(by du: T) {
     let newUnit = Self.wrapUnit(unitPhase + du)
-    phase = Self.unitToRadians(newUnit)
+    phaseRadians = Self.unitToRadians(newUnit)
   }
 }
 
