@@ -25,7 +25,7 @@ extension Path {
 
       for (type, point) in info.pointsToMark {
         debugPaths[type, default: Path()]
-          .addShape(at: point, radius: radius, using: type.shape)
+          .addShape(at: point, using: type.shape, radius: radius)
 //        debugPaths[type, default: Path()].addDot(at: point, radius: radius, using: type)
         labelPoints.append(LabelledPoint(point: point, element: type))
       }

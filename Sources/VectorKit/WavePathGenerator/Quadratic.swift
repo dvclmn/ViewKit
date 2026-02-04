@@ -17,22 +17,17 @@ extension WavePathGenerator {
   /// t: 0 = flowing (midpoint), 1 = corner-aware (3-point influenced)
   package mutating func processQuadratic(
     midpoint midpointFactor: Double = 0.5,
-    cornerBias t: Double = 0.5
+    cornerBias t: Double = 0.5,
+    path: inout Path,
+    stamped: Stamped = { _, _, _ in }
   ) {
-    let n = points.count
-    guard n >= 2 else { return }
+    let count = points.count
+    if preparePathForNonLinearIfNeeded(path: &path) { return }
 
     let t = max(0, min(1, t))
 
-    path.move(to: points[0])
-
-    if n == 2 {
-      path.addLine(to: points[1])
-      return
-    }
-
     /// Curves to midpoints, controls blended between two policies.
-    for i in 0..<(n - 2) {
+    for i in 0..<(count - 2) {
       let p0 = points[i]
       let p1 = points[i + 1]
       let p2 = points[i + 2]
@@ -54,23 +49,16 @@ extension WavePathGenerator {
     }
 
     /// Finish smoothly to the last point (avoid a final straight-line kink).
-    path.addQuadCurve(to: points[n - 1], control: points[n - 2])
+    path.addQuadCurve(to: points[count - 1], control: points[count - 2])
   }
 
   // MARK: - Alternate simpler method
-  package func processQuadraticSimple(
+  package mutating func processQuadraticSimple(
     midpointFactor: Double = 0.5,
     path: inout Path
   ) {
     let count = points.count
-    guard count > 1 else { return }
-
-    path.move(to: points[0])
-
-    if count == 2 {
-      path.addLine(to: points[1])
-      return
-    }
+    if preparePathForNonLinearIfNeeded(path: &path) { return }
 
     for i in 1..<(count - 1) {
       let current = points[i]

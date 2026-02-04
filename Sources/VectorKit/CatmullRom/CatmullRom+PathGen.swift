@@ -9,19 +9,18 @@ import CoreTools
 import SwiftUI
 
 extension WavePathGenerator {
+  
 
   /// Creates a smooth Catmull-Rom spline through the given points.
   /// Uses cubic Bézier conversion for optimal rendering performance.
   package mutating func catmullRom(
     variant: CatmullRom.SplineVariant = .centripetal,
     tension: CGFloat = 0.5,
-    closed: Bool = false
+    closed: Bool = false,
+    path: inout Path,
+    stamped: Stamped = { _, _, _ in }
   ) {
-    guard hasTwoOrMorePoints else { return linearPath() }
-    if points.count == 2 {
-      path.move(to: points[0])
-      path.addLine(to: points[1])
-    }
+    if preparePathForNonLinearIfNeeded(path: &path) { return }
 
     let pts = closed ? points : Self.extendEndpoints(points)
 

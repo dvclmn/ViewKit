@@ -24,14 +24,13 @@ extension WavePathGenerator {
 
   package mutating func processLinear(
     shouldDropFirst: Bool = true,
-    path: in
-    stamped: (_ index: Int?, _ point: CGPoint) -> Void
+    path: inout Path,
+    stamped: Stamped = { _, _, _ in }
   ) {
     guard let firstPoint = points.first else { return }
     let allPoints = shouldDropFirst ? Array(points.dropFirst()) : points
     path.move(to: firstPoint)
     for point in allPoints {
-
       path.addLine(to: point)
 
     }
