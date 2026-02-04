@@ -12,9 +12,9 @@ import SwiftUI
 final class SliderHandler {
 //final class SliderHandler<Value: BinaryFloatingPoint> {
   
-  var value: CGFloat
+  var value: Double
   var label: QuickLabel
-  var range: ClosedRange<CGFloat>
+  var range: ClosedRange<Double>
 //  var step: CGFloat?
   var step: StepStyle
 
@@ -25,14 +25,14 @@ final class SliderHandler {
 
   /// Including vertical hit area buffer
   var trackSize: CGSize = .zero
-  let hitAreaBuffer: CGFloat = 16
-  let fallbackHeight: CGFloat = 5
+  let hitAreaBuffer: Double = 16
+  let fallbackHeight: Double = 5
 
   public init(
-    value: CGFloat,
+    value: Double,
     label: QuickLabel,
-    range: ClosedRange<CGFloat>,
-    step: CGFloat?,
+    range: ClosedRange<Double>,
+    step: Double?,
     didChangeSlider: SliderOutput?
   ) {
     self.value = value
@@ -51,10 +51,10 @@ extension SliderHandler {
 
   /// Do not include the hit area buffer in `trackHeight`
   func updateTrackSize(
-    viewWidth: CGFloat,
-    trackHeight: CGFloat
+    viewWidth: Double,
+    trackHeight: Double
   ) {
-    let heightIncBuffer: CGFloat = trackHeight + hitAreaBuffer
+    let heightIncBuffer: Double = trackHeight + hitAreaBuffer
     trackSize = CGSize(width: viewWidth, height: heightIncBuffer)
   }
 
@@ -63,8 +63,8 @@ extension SliderHandler {
     self.didChangeSlider?(phase)
   }
 
-  func handleDragChange(_ gestureValue: DragGesture.Value) -> CGFloat {
-    let location: CGFloat = gestureValue.location.x
+  func handleDragChange(_ gestureValue: DragGesture.Value) -> Double {
+    let location: Double = gestureValue.location.x
 
     /// Location clamped so it cannot go outside
     /// the bounds of the track
@@ -75,7 +75,7 @@ extension SliderHandler {
     return newValue
   }
 
-  func fillWidth() -> CGFloat? {
+  func fillWidth() -> Double? {
 
     guard isGeometryReady else { return nil }
 
@@ -86,9 +86,9 @@ extension SliderHandler {
   }
   
   public func thumbPosition(
-    diameter: CGFloat,
-    forSliderValue value: CGFloat,
-    range: ClosedRange<CGFloat>,
+    diameter: Double,
+    forSliderValue value: Double,
+    range: ClosedRange<Double>,
     trackSize: CGSize
   ) -> CGPoint? {
     
