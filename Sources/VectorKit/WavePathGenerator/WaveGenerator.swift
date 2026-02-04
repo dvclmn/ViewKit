@@ -32,7 +32,7 @@ extension WavePathGenerator {
     switch interpolation {
       case .linear: processLinear(shouldDropFirst: true)
         
-      case .cubic(let tension): cubicPath(tension: tension)
+      case .cubic(let tension): processCubic(tension: tension)
         //        usesAltCubicMethod ? createCubicCurvePath() : cubicPath()
         
       case .quadratic(let midpoint, let bias):
