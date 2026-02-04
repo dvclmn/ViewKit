@@ -20,7 +20,7 @@ extension WavePathGenerator {
 
     return switch interpolation {
       case .linear:
-        linearPath()
+        processLinearPath(shouldDropFirst: true)
 
       case .cubic(let tension): cubicPath(tension: tension)
 //        usesAltCubicMethod ? createCubicCurvePath() : cubicPath()
@@ -39,14 +39,11 @@ extension WavePathGenerator {
 
   /// Creates a path by connecting points with straight lines
   /// This is the fastest method, ideal when smoothness isn't required
-  package mutating func linearPath() {
-
-    path.move(to: points[0])
-
-    for i in 1..<points.count {
-      path.addLine(to: points[i])
-    }
-
+  package mutating func processLinearPath(shouldDropFirst: Bool = true) {
+    guard let firstPoint = points.first else { return }
+    let lines = shouldDropFirst ? Array(points.dropFirst()) : points
+    path.move(to: firstPoint)
+    path.addLines(lines)
   }
 
   // MARK: - Cubic Bezier Interpolation

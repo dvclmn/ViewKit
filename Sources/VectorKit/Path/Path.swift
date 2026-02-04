@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension Path {
-  
+
   public var toCGPath: CGPath { self.cgPath }
 
   public mutating func move(to unitPoint: UnitPoint, in size: CGSize) {
@@ -62,20 +62,20 @@ extension Path {
     }
   }
 
-//  public mutating func addDot(
-//    at point: CGPoint,
-//    radius: CGFloat,
-//    using type: DebugPathElement
-//  ) {
-//    let rect = CGRect(
-//      x: point.x - radius / 2,
-//      y: point.y - radius / 2,
-//      width: radius,
-//      height: radius
-//    )
-//    addPath(type.shape.shapePath(in: rect))
-//  }
-  
+  //  public mutating func addDot(
+  //    at point: CGPoint,
+  //    radius: CGFloat,
+  //    using type: DebugPathElement
+  //  ) {
+  //    let rect = CGRect(
+  //      x: point.x - radius / 2,
+  //      y: point.y - radius / 2,
+  //      width: radius,
+  //      height: radius
+  //    )
+  //    addPath(type.shape.shapePath(in: rect))
+  //  }
+
   public mutating func addShape(
     at point: CGPoint,
     radius: CGFloat,
@@ -88,7 +88,7 @@ extension Path {
       height: radius
     )
     shape.updatePath(in: rect, path: &self)
-//    addPath(shape.shapePath(in: rect))
+    //    addPath(shape.shapePath(in: rect))
   }
 
   public mutating func addConnections(
@@ -100,7 +100,7 @@ extension Path {
       move(to: start)
       addLine(to: controlPoints[0])
       move(to: controlPoints[0])
-      
+
     } else if controlPoints.count == 2 {
       move(to: start)
       addLine(to: controlPoints[0])

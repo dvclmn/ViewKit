@@ -10,39 +10,35 @@ import SwiftUI
 @available(macOS 14, iOS 17, *)
 public struct ShaderModifier: ViewModifier {
 
-  let effect: ShaderEffect
+  let effect: ShaderEffect?
   let maxOffset: CGSize
   let isEnabled: Bool
 
   public func body(content: Content) -> some View {
 
-    if #available(macOS 15, iOS 18, *) {
-      Group {
-        switch effect.usageType {
+    if #available(macOS 15, iOS 18, *), let effect {
 
-          case .colorEffect:
-            content
-              .colorEffect(effect.shader, isEnabled: isEnabled)
+      switch effect.usageType {
 
-          case .distortionEffect:
-            content
-              .distortionEffect(effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled)
+        case .colorEffect:
+          content
+            .colorEffect(effect.shader, isEnabled: isEnabled)
 
-          case .layerEffect:
-            content
-              .layerEffect(effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled)
+        case .distortionEffect:
+          content
+            .distortionEffect(effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled)
 
-          default:
-            content
-        }
+        case .layerEffect:
+          content
+            .layerEffect(effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled)
+
+        default:
+          content
       }
-      /// Have removed this, as usually this is taken care of externally
-      //      .drawingGroup()
 
     } else {
       content
     }
-
   }
 }
 
@@ -71,7 +67,7 @@ public struct ShaderModifier: ViewModifier {
 @available(macOS 14, iOS 17, *)
 extension View {
   public func shaderEffect(
-    _ effect: ShaderEffect,
+    _ effect: ShaderEffect?,
     maxOffset: CGSize = .zero,
     isEnabled: Bool = true
   ) -> some View {

@@ -27,18 +27,18 @@ public func oscillate(
 ) -> Double {
   /// `y(t) = base + amplitude * sin(2π f t + phase)`
   let result = base + amplitude * sin(frequency.omega * time + phase)
-  DebugString("Oscillation", indented: true) {
-    Labeled("Time", value: time)
-    //    Labeled("Float Time", value: Float(time))
-    Labeled("Base Value", value: base)
-    Labeled("Amp", value: amplitude)
-    Labeled("Freq", value: frequency)
-    Labeled("Omega", value: frequency.omega)
-    Labeled("Phase", value: phase)
-    Divider()
-    Labeled("Result", value: result)
-    Divider()
-  }
+//  DebugString("Oscillation", indented: true) {
+//    Labeled("Time", value: time)
+//    //    Labeled("Float Time", value: Float(time))
+//    Labeled("Base Value", value: base)
+//    Labeled("Amp", value: amplitude)
+//    Labeled("Freq", value: frequency)
+//    Labeled("Omega", value: frequency.omega)
+//    Labeled("Phase", value: phase)
+//    Divider()
+//    Labeled("Result", value: result)
+//    Divider()
+//  }
   return result
 }
 

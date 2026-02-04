@@ -15,7 +15,7 @@ import SwiftUI
 @dynamicMemberLookup
 public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   case chromaticAberration(
-    viewSize: CGSize,
+//    viewSize: CGSize,
     strength: CGFloat,  // Aka opacity
     radialStrength: CGFloat,
   )
@@ -52,9 +52,9 @@ extension ShaderEffect {
   public var arguments: [Shader.Argument] {
     switch self {
       /// Haven't yet exposed all shader controls to this case
-      case .chromaticAberration(let viewSize, let strength, let radialStrength):
+      case .chromaticAberration(let strength, let radialStrength):
         [
-          .float2(viewSize),
+          .boundingRect,
           .float(strength),
           .float(radialStrength),
         ]

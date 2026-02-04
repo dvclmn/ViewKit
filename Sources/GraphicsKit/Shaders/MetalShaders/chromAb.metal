@@ -12,7 +12,7 @@ using namespace metal;
 [[ stitchable ]]
 half4 chromaticAberration(float2 position,
                           SwiftUI::Layer layer,
-                          float2 viewSize,
+                          float4 bounds,
                           float strength,
                           float radialStrength) // how much the effect increases from center
 {
@@ -20,8 +20,19 @@ half4 chromaticAberration(float2 position,
   half4 original_color = layer.sample(position);
   half4 new_color = original_color;
 
+//  float2 viewSize = bounds
   // Calculate midpoint
-  float2 center = viewSize * 0.5;
+  
+  // Extract the size (width, height) from bounds
+  float2 viewSize = bounds.zw;
+  
+  // If you also need the origin:
+  float2 origin = bounds.xy;
+  
+  // Center in layer coordinates:
+  float2 center = origin + viewSize * 0.5;
+  
+//  float2 center = viewSize * 0.5;
   float2 fromCenter = position - center;
   float distanceFromCenter = length(fromCenter);
 

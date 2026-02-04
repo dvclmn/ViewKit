@@ -34,9 +34,7 @@ extension Array where Element == CGPoint {
       case .smooth:
         processSmoothPath(path: &path)
 
-      //      case .stamped(let config):
       case .stamped(let shape, let radius):
-        //      case .stamped(let shape, let radius, let range):
         processStampedPath(
           shouldDropFirst: shouldDropFirst,
           shape: shape,
@@ -46,15 +44,15 @@ extension Array where Element == CGPoint {
     }
   }
 
-  private func processLinePath(
-    shouldDropFirst: Bool = true,
-    path: inout Path
-  ) {
-    guard let firstPoint = self.first else { return }
-    let lines = shouldDropFirst ? Array(self.dropFirst()) : self
-    path.move(to: firstPoint)
-    path.addLines(lines)
-  }
+//  private func processLinePath(
+//    shouldDropFirst: Bool = true,
+//    path: inout Path
+//  ) {
+//    guard let firstPoint = self.first else { return }
+//    let lines = shouldDropFirst ? Array(self.dropFirst()) : self
+//    path.move(to: firstPoint)
+//    path.addLines(lines)
+//  }
 
   private func processStampedPath(
     shouldDropFirst: Bool = true,
