@@ -15,19 +15,19 @@ import SwiftUI
 /// in the global values as well.
 extension EnvironmentValues {
   @Entry public var sliderComponents: SliderComponents = .all
-
   @Entry public var sliderDefaultValue: Double? = nil
   @Entry public var sliderStyle: SliderStyle = .native
+  @Entry public var stepStyle: StepStyle = .native
 
   @Entry var isWithinSliderGroup: Bool = false
 
-  @Entry var sliderHandler: SliderHandler = .init(
-    value: 1.0,
-    label: "",
-    range: 0...1,
-    step: nil,
-    didChangeSlider: { _ in }
-  )
+//  @Entry var sliderHandler: SliderHandler = .init(
+//    value: 1.0,
+//    label: "",
+//    range: 0...1,
+//    step: nil,
+//    didChangeSlider: { _ in }
+//  )
 }
 
 /// This is in use by e.g. `QuickSlider`, `LabeledSlider`
@@ -42,3 +42,4 @@ extension View where Self: SliderStylable {
       .environment(\.sliderComponents, components)
   }
 }
+

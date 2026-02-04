@@ -9,12 +9,11 @@ import BasePrimitives
 import SwiftUI
 
 public struct SliderCore: View {
-  @Environment(\.sliderHandler) private var store
-  @Environment(\.sliderStyle) private var sliderStyle
+  @Environment(SliderHandler.self) private var store
   @Environment(\.explicitControlSize) private var explicitControlSize
   @Environment(\.sliderComponents) private var sliderComponents
 
-  @Environment(\.sliderStyle) private var style
+  @Environment(\.stepStyle) private var stepStyle
   @Environment(\.formatValue) private var formatValue
   @Environment(\.sliderDefaultValue) private var sliderDefaultValue
   @Environment(\.isDebugMode) private var isDebugMode
@@ -29,17 +28,17 @@ public struct SliderCore: View {
       LabelComponent()
     }
 
-    switch sliderStyle {
-
-      // MARK: - Native Slider
-      case .native:
-        NativeSliderComponent()
-          .labelsHidden()
-
-      // MARK: - Custom Slider
-      case .custom(let style):
-        SliderCustom(style: style)
+    SliderTrackView()
+    
+    switch stepStyle {
+        
     }
+    Stepper(
+      <#T##title: StringProtocol##StringProtocol#>,
+      value: <#T##Binding<Strideable>#>,
+      step: <#T##Comparable & SignedNumeric#>,
+      onEditingChanged: <#T##(Bool) -> Void#>
+    )
 
     // MARK: - Units
     if sliderComponents.contains(.units) {
@@ -62,12 +61,8 @@ extension SliderCore {
     guard let defaultVal = sliderDefaultValue else {
       return HapticPreset.boundary(store.range.toDoubleRange).shouldFire(old, new)
     }
-    return HapticPreset.boundaryAndDefault(store.range.toDoubleRange, defaultValue: defaultVal).shouldFire(old, new)
-  }
-
-  private func handleOnEdit(_ didEdit: Bool) {
-    let phase = SliderPhase(fromOnEditingChanged: didEdit)
-    store.updatePhase(phase)
+    return HapticPreset.boundaryAndDefault(store.range.toDoubleRange, defaultValue: defaultVal).shouldFire(
+      old, new)
   }
 
   @ViewBuilder
@@ -84,30 +79,6 @@ extension SliderCore {
         store.value = sliderDefaultValue
       } label: {
         Label("Reset to Default", systemImage: Icons.refresh.icon)
-      }
-    }
-  }
-
-  @ViewBuilder
-  func NativeSliderComponent() -> some View {
-    @Bindable var store = store
-
-    Group {
-      if let step = store.step {
-        Slider(
-          value: $store.value,
-          in: store.range,
-          step: step
-        ) { editing in
-          handleOnEdit(editing)
-        }
-      } else {
-        Slider(
-          value: $store.value,
-          in: store.range,
-        ) { editing in
-          handleOnEdit(editing)
-        }
       }
     }
   }

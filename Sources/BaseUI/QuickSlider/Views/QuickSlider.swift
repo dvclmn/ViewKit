@@ -33,7 +33,7 @@ public struct QuickSlider<Value: BinaryFloatingPoint & Sendable>: View, ValueFor
       }
     }
     .bindModel($store.value, to: $value.toBindingFloat)
-    .environment(\.sliderHandler, store)
+    .environment(store)
   }
 }
 

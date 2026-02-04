@@ -21,7 +21,7 @@ struct SliderCustom: View {
   @Environment(\.explicitHeight) private var explicitHeight
   @Environment(\.cornerRounding) private var cornerRounding
   @Environment(\.sliderComponents) private var sliderComponents
-  @Environment(\.sliderHandler) private var store
+  @Environment(SliderHandler.self) private var store
 
   @State private var isHovering: Bool = false
 

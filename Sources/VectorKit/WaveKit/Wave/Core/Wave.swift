@@ -60,6 +60,23 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
 }
 
 extension Wave {
+  
+  public mutating func update(
+    _ newValue: T,
+    in range: ClosedRange<T>? = nil,
+    keyPath: WritableKeyPath<Self, T>
+  ) {
+    self[keyPath: keyPath] = newValue.clampedIfNeeded(to: range)
+  }
+  
+  public mutating func updateDelta(
+    _ newDelta: T,
+    in range: ClosedRange<T>? = nil,
+    keyPath: WritableKeyPath<Self, T>
+  ) {
+    let adjustment = self[keyPath: keyPath] + newDelta
+    update(adjustment, in: range, keyPath: keyPath)
+  }
 
   public mutating func advancePhaseRadians(by delta: T) {
     phaseRadians = Self.wrapToTwoPi(phaseRadians + delta)

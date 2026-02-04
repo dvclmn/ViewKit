@@ -15,7 +15,8 @@ final class SliderHandler {
   var value: CGFloat
   var label: QuickLabel
   var range: ClosedRange<CGFloat>
-  var step: CGFloat?
+//  var step: CGFloat?
+  var step: StepStyle
 
   var phase: SliderPhase = .idle
   var didChangeSlider: SliderOutput?
