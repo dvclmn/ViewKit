@@ -44,15 +44,15 @@ extension Array where Element == CGPoint {
     }
   }
 
-//  private func processLinePath(
-//    shouldDropFirst: Bool = true,
-//    path: inout Path
-//  ) {
-//    guard let firstPoint = self.first else { return }
-//    let lines = shouldDropFirst ? Array(self.dropFirst()) : self
-//    path.move(to: firstPoint)
-//    path.addLines(lines)
-//  }
+  //  private func processLinePath(
+  //    shouldDropFirst: Bool = true,
+  //    path: inout Path
+  //  ) {
+  //    guard let firstPoint = self.first else { return }
+  //    let lines = shouldDropFirst ? Array(self.dropFirst()) : self
+  //    path.move(to: firstPoint)
+  //    path.addLines(lines)
+  //  }
 
   private func processStampedPath(
     shouldDropFirst: Bool = true,
@@ -70,35 +70,27 @@ extension Array where Element == CGPoint {
   }
 
   /// Alternative: Smooth curved path using quadratic curves
-  private func processSmoothPath(
-    path: inout Path
-  ) {
-    guard self.count > 1 else { return }
+  private func processSmoothPath(path: inout Path) {
+    guard count > 1 else { return }
 
     path.move(to: self[0])
 
-    if self.count == 2 {
+    if count == 2 {
       path.addLine(to: self[1])
       return
     }
 
-    /// Create smooth curves between points
-    for i in 1..<self.count {
+    for i in 1..<(count - 1) {
       let current = self[i]
-
-      if i == self.count - 1 {
-        /// Last point - just draw line
-        path.addLine(to: current)
-
-      } else {
-        /// Use next point to create control point for smooth curve
-        let next = self[i + 1]
-        let controlPoint = CGPoint(
-          x: (current.x + next.x) / 2,
-          y: (current.y + next.y) / 2
-        )
-        path.addQuadCurve(to: controlPoint, control: current)
-      }
+      let next = self[i + 1]
+      let mid = CGPoint(
+        x: (current.x + next.x) * 0.5,
+        y: (current.y + next.y) * 0.5)
+      path.addQuadCurve(to: mid, control: current)
     }
+
+    /// Finish with a quad curve to the last point
+    path.addQuadCurve(to: self[count - 1], control: self[count - 2])
   }
+  
 }
