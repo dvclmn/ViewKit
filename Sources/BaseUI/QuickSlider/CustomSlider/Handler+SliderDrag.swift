@@ -16,7 +16,7 @@ final class SliderHandler {
   var label: QuickLabel
   var range: ClosedRange<Double>
 //  var step: CGFloat?
-  var step: StepStyle
+  var step: StepStyle<Double> = .none
 
   var phase: SliderPhase = .idle
   var didChangeSlider: SliderOutput?
@@ -32,7 +32,7 @@ final class SliderHandler {
     value: Double,
     label: QuickLabel,
     range: ClosedRange<Double>,
-    step: Double?,
+    step: StepStyle<Double>,
     didChangeSlider: SliderOutput?
   ) {
     self.value = value

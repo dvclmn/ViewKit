@@ -24,7 +24,7 @@ extension Binding where Value == Int {
     )
   }
   /// Convert `Int` Binding to `Double` Binding
-  public var toBindingFloat: Binding<CGFloat> {
+  public var toBindingCGFloat: Binding<CGFloat> {
     Binding<CGFloat>(
       get: { CGFloat(wrappedValue) },
       set: { wrappedValue = Value($0) }
@@ -49,7 +49,7 @@ extension Binding where Value: BinaryFloatingPoint & Sendable {
   //    )
   //  }
 
-  public var toBindingFloat: Binding<CGFloat> {
+  public var toBindingCGFloat: Binding<CGFloat> {
     Binding<CGFloat>(
       get: { CGFloat(wrappedValue) },
       set: { wrappedValue = Value($0) }

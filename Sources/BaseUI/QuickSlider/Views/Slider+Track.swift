@@ -12,6 +12,7 @@ struct SliderTrackView: View {
   @Environment(SliderHandler.self) private var store
   @Environment(\.sliderStyle) private var sliderStyle
 
+  let step: Double?
   var body: some View {
 
     switch sliderStyle {
@@ -21,7 +22,8 @@ struct SliderTrackView: View {
         @Bindable var store = store
 
         Group {
-          if let step = store.step {
+          if let step {
+//          if let step = store.step {
             Slider(
               value: $store.value,
               in: store.range,

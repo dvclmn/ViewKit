@@ -32,7 +32,7 @@ public struct QuickSlider<Value: BinaryFloatingPoint & Sendable>: View, ValueFor
         }
       }
     }
-    .bindModel($store.value, to: $value.toBindingFloat)
+    .bindModel($store.value, to: $value.toBindingDouble)
     .environment(store)
   }
 }
@@ -68,8 +68,8 @@ extension QuickSlider {
       initialValue: SliderHandler(
         value: CGFloat(value.wrappedValue),
         label: label,
-        range: range.toCGFloatRange,
-        step: step.toCGFloatIfPresent,
+        range: range.toDoubleRange,
+        step: StepStyle(fromOptionalValue: step.map { Double($0) }),
         didChangeSlider: didChangeSlider
       )
     )
@@ -82,13 +82,12 @@ extension QuickSlider {
     range: ClosedRange<Int>,
     step: Int? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
-  ) where Value == CGFloat {
+  ) where Value == Double {
     self.init(
       label: QuickLabel(title),
-      value: intValue.toBindingFloat,
-      //      value: intValue.toBindingBinaryFloatingPoint(),
-      range: range.toCGFloatRange,
-      step: step?.toCGFloat,
+      value: intValue.toBindingDouble,
+      range: range.toDoubleRange,
+      step: step?.toDouble,
       didChangeSlider: didChangeSlider
     )
   }

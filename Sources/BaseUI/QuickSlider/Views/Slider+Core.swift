@@ -13,7 +13,7 @@ public struct SliderCore: View {
   @Environment(\.explicitControlSize) private var explicitControlSize
   @Environment(\.sliderComponents) private var sliderComponents
 
-  @Environment(\.stepStyle) private var stepStyle
+  //  @Environment(\.stepStyle) private var stepStyle
   @Environment(\.formatValue) private var formatValue
   @Environment(\.sliderDefaultValue) private var sliderDefaultValue
   @Environment(\.isDebugMode) private var isDebugMode
@@ -28,17 +28,21 @@ public struct SliderCore: View {
       LabelComponent()
     }
 
-    SliderTrackView()
-    
-    switch stepStyle {
-        
+    switch store.step {
+      case .native(stepSize: let size):
+        SliderTrackView(step: size)
+
+      case .stepper(stepSize: let size):
+        SliderTrackView(step: nil)
+        Stepper(
+          store.label.text,
+          value: $store.value,
+          step: size,
+        )
+
+      case .none:
+        SliderTrackView(step: nil)
     }
-    Stepper(
-      <#T##title: StringProtocol##StringProtocol#>,
-      value: <#T##Binding<Strideable>#>,
-      step: <#T##Comparable & SignedNumeric#>,
-      onEditingChanged: <#T##(Bool) -> Void#>
-    )
 
     // MARK: - Units
     if sliderComponents.contains(.units) {

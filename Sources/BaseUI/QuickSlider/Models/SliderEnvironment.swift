@@ -17,7 +17,7 @@ extension EnvironmentValues {
   @Entry public var sliderComponents: SliderComponents = .all
   @Entry public var sliderDefaultValue: Double? = nil
   @Entry public var sliderStyle: SliderStyle = .native
-  @Entry public var stepStyle: StepStyle = .native
+//  @Entry public var stepStyle: StepStyle = .native
 
   @Entry var isWithinSliderGroup: Bool = false
 
