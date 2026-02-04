@@ -15,9 +15,9 @@ enum QuadSmoothingStyle {
 extension WavePathGenerator {
 
   /// t: 0 = flowing (midpoint), 1 = corner-aware (3-point influenced)
-  func processQuadPath(
-    path: inout Path,
-    cornerBias t: CGFloat = 0.5
+  package mutating func processQuadratic(
+    midpointFactor: Double = 0.5,
+    cornerBias t: Double = 0.5
   ) {
     let n = points.count
     guard n >= 2 else { return }
@@ -55,6 +55,34 @@ extension WavePathGenerator {
 
     /// Finish smoothly to the last point (avoid a final straight-line kink).
     path.addQuadCurve(to: points[n - 1], control: points[n - 2])
+  }
+
+  // MARK: - Alternate simpler method
+  package func processQuadraticSimple(
+    midpointFactor: Double = 0.5,
+    path: inout Path
+  ) {
+    let count = points.count
+    guard count > 1 else { return }
+
+    path.move(to: points[0])
+
+    if count == 2 {
+      path.addLine(to: points[1])
+      return
+    }
+
+    for i in 1..<(count - 1) {
+      let current = points[i]
+      let next = points[i + 1]
+      let mid = CGPoint(
+        x: (current.x + next.x) * midpointFactor,
+        y: (current.y + next.y) * midpointFactor)
+      path.addQuadCurve(to: mid, control: current)
+    }
+
+    /// Finish with a quad curve to the last point
+    path.addQuadCurve(to: points[count - 1], control: points[count - 2])
   }
 
   /// Smooth path using quadratic Bézier curves

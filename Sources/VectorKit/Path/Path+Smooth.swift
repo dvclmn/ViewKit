@@ -60,30 +60,6 @@ extension Array where Element == CGPoint {
   }
 
   /// Smooth curved path using quadratic curves
-  private func processSmoothPath(
-    midpointFactor: Double = 0.5,
-    path: inout Path
-  ) {
-    guard count > 1 else { return }
-
-    path.move(to: self[0])
-
-    if count == 2 {
-      path.addLine(to: self[1])
-      return
-    }
-
-    for i in 1..<(count - 1) {
-      let current = self[i]
-      let next = self[i + 1]
-      let mid = CGPoint(
-        x: (current.x + next.x) * midpointFactor,
-        y: (current.y + next.y) * midpointFactor)
-      path.addQuadCurve(to: mid, control: current)
-    }
-
-    /// Finish with a quad curve to the last point
-    path.addQuadCurve(to: self[count - 1], control: self[count - 2])
-  }
+  
   
 }

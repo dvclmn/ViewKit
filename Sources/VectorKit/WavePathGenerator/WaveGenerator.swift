@@ -9,6 +9,7 @@ import SwiftUI
 
 public struct WavePathGenerator {
   public var points: [CGPoint] = []
+  var path: Path = .init()
   //  private var cachedControlPoints: [CGPoint]?
 
   public init(points: [CGPoint] = []) {
@@ -17,6 +18,36 @@ public struct WavePathGenerator {
 }
 
 extension WavePathGenerator {
+  
+  /// Creates a path from a collection of points using the specified interpolation method
+  /// - Parameters:
+  ///   - points: Array of points to interpolate
+  ///   - interpolation: The interpolation method to use
+  /// - Returns: A new Path object, or nil if insufficient points
+  public mutating func path(
+    with interpolation: WaveInterpolation
+  ) -> Path {
+    guard !points.isEmpty else { return Path() }
+    
+    switch interpolation {
+      case .linear: processLinear(shouldDropFirst: true)
+        
+      case .cubic(let tension): cubicPath(tension: tension)
+        //        usesAltCubicMethod ? createCubicCurvePath() : cubicPath()
+        
+      case .quadratic(let midpoint, let bias):
+        processQuadPath(path: &path, cornerBias: bias)
+        //        createQuadCurvePath()
+        
+      case .catmullRom(let variant, let tension, let samples):
+        catmullRomAlt02(variant: variant, tension: tension, closed: false, samples: samples)
+        //        catmullRomAlt(tension: tension, closed: false, samples: samples)
+        //        catmullRom(variant: variant, closed: false)
+        
+    }
+    return self.path
+  }
+  
 //  public mutating func resetAll() {
 //    resetPath()
 //    resetPoints()
