@@ -19,7 +19,7 @@ extension WavePathGenerator {
     midpoint midpointFactor: Double = 0.5,
     cornerBias t: Double = 0.5,
     path: inout Path,
-    stamped: Stamped = { _, _, _ in }
+    stamped: Stamper = { _, _, _ in }
   ) {
     let count = points.count
     if preparePathForNonLinearIfNeeded(path: &path) { return }
@@ -46,6 +46,7 @@ extension WavePathGenerator {
         y: cA.y + (cB.y - cA.y) * t)
 
       path.addQuadCurve(to: end, control: control)
+      stamped(i, end, &path)
     }
 
     /// Finish smoothly to the last point (avoid a final straight-line kink).

@@ -15,7 +15,7 @@ extension WavePathGenerator {
   package mutating func processCubic(
     tension: CGFloat = 0,
     path: inout Path,
-    stamped: Stamped = { _, _, _ in }
+    stamped: Stamper = { _, _, _ in }
   ) {
     let count = points.count
     if preparePathForNonLinearIfNeeded(path: &path) { return }
@@ -48,6 +48,7 @@ extension WavePathGenerator {
       )
 
       path.addCurve(to: p2, control1: c1, control2: c2)
+      stamped(i, p2, &path)
     }
   }
 }

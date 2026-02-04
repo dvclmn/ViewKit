@@ -17,7 +17,7 @@ extension WavePathGenerator {
     tension: CGFloat = 0.5,
     closed: Bool = false,
     path: inout Path,
-    stamped: Stamped = { _, _, _ in }
+    stamped: Stamper = { _, _, _ in }
   ) {
     if preparePathForNonLinearIfNeeded(path: &path) { return }
 
@@ -37,6 +37,7 @@ extension WavePathGenerator {
       )
 
       path.addCurve(to: p2, control1: c1, control2: c2)
+      stamped(i, p2, &path)
     }
 
     if closed {
@@ -108,7 +109,7 @@ extension WavePathGenerator {
     closed: Bool = false,
     samples: Int = 16,
     path: inout Path,
-    stamped: Stamped = { _, _, _ in }
+    stamped: Stamper = { _, _, _ in }
   ) {
     //    var path = Path()
     //    guard points.count > 1 else { return path }
@@ -147,6 +148,7 @@ extension WavePathGenerator {
 
         path.addLine(to: CGPoint(x: x, y: y))
       }
+      stamped(i, p2, &path)
     }
 
     //    return path
@@ -160,7 +162,7 @@ extension WavePathGenerator {
     closed: Bool = false,
     samples: Int = 16,
     path: inout Path,
-    stamped: Stamped = { _, _, _ in }
+    stamped: Stamper = { _, _, _ in }
   ) {
     let handled = preparePathForNonLinearIfNeeded(
       path: &path,
@@ -169,26 +171,13 @@ extension WavePathGenerator {
     )
     if handled { return }
 
-//    let handled = preparePathForNonLinearIfNeeded(
-//      path: &path,
-//      minimumRequiredPoints: 4,
-//      fallback: { path, pts in
-//        // If you want a custom fallback here, otherwise omit and get default polyline
-//        for i in 1..<pts.count {
-//          path.addLine(to: pts[i])
-//        }
-//      }
-//    )
-//    if handled { return }
-//    if points.count < 4 {
-//      return linearPath()
-//    }
     let alpha = variant.alpha
 
     let startIndex = closed ? 0 : 1
     let endIndex = closed ? points.count : points.count - 2
 
     for i in startIndex..<endIndex {
+
       let p0 = points[i - 1 < 0 ? points.count - 1 : i - 1]
       let p1 = points[i]
       let p2 = points[(i + 1) % points.count]
@@ -214,6 +203,7 @@ extension WavePathGenerator {
       }
 
       path.addCurve(to: p2, control1: b1, control2: b2)
+      stamped(i, p2, &path)
     }
 
     if closed {
