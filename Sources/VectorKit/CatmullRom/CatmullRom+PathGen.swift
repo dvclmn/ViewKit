@@ -165,14 +165,21 @@ extension WavePathGenerator {
     let handled = preparePathForNonLinearIfNeeded(
       path: &path,
       minimumRequiredPoints: 4,
-      fallback: { path, pts in
-        // If you want a custom fallback here, otherwise omit and get default polyline
-        for i in 1..<pts.count {
-          path.addLine(to: pts[i])
-        }
-      }
+      fallback: .defaultLinear
     )
     if handled { return }
+
+//    let handled = preparePathForNonLinearIfNeeded(
+//      path: &path,
+//      minimumRequiredPoints: 4,
+//      fallback: { path, pts in
+//        // If you want a custom fallback here, otherwise omit and get default polyline
+//        for i in 1..<pts.count {
+//          path.addLine(to: pts[i])
+//        }
+//      }
+//    )
+//    if handled { return }
 //    if points.count < 4 {
 //      return linearPath()
 //    }

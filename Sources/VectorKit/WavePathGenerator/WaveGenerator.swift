@@ -54,7 +54,8 @@ extension WavePathGenerator {
           variant: variant,
           tension: tension,
           closed: false,
-          samples: samples
+          samples: samples,
+          path: &path
         )
 
     }
@@ -64,7 +65,6 @@ extension WavePathGenerator {
   public mutating func path(with style: PathStyle) -> Path {
     //    self.stamp = style.stamped
     let stamper = makeStampClosure(from: style.stamped)
-
     return path(with: style.interpolation)
   }
 
@@ -83,7 +83,7 @@ extension WavePathGenerator {
   package mutating func preparePathForNonLinearIfNeeded(
     path: inout Path,
     minimumRequiredPoints: Int = 3,
-    fallback: ((inout Path, [CGPoint]) -> Void)? = nil
+    fallback: NonLinearPathFallback? = nil
   ) -> Bool {
     let count = points.count
     guard count >= 1 else { return true }  // nothing to draw
@@ -99,17 +99,98 @@ extension WavePathGenerator {
       return true
     }
 
-    /// 3 or more points => caller continues to build non-linear path
+    /// If there are 3+ points but fewer than the minimum for the chosen interpolation,
+    /// use fallback if provided, then early-return.
+    if count < minimumRequiredPoints {
+      // Ensure we start at the first point
+      path.move(to: points[0])
+
+      if let fb = fallback?.fallback {
+        fb(&path, points, &self)
+      } else {
+        // Default behavior if no fallback provided: simple polyline
+        for i in 1..<count {
+          path.addLine(to: points[i])
+        }
+      }
+      return true
+    }
+
+    // 3 or more points: move to first and let caller proceed
     path.move(to: points[0])
     return false
   }
+  //  @discardableResult
+  //  package mutating func preparePathForNonLinearIfNeeded(
+  //    path: inout Path,
+  //    minimumRequiredPoints: Int = 3,
+  //    fallback: ((inout Path, [CGPoint]) -> Void)? = nil
+  //  ) -> Bool {
+  //    let count = points.count
+  //    guard count >= 1 else { return true }  // nothing to draw
+  //
+  //    if count == 1 {
+  //      path.move(to: points[0])
+  //      return true
+  //    }
+  //
+  //    if count == 2 {
+  //      path.move(to: points[0])
+  //      path.addLine(to: points[1])
+  //      return true
+  //    }
+  //
+  //    /// 3 or more points => caller continues to build non-linear path
+  //    path.move(to: points[0])
+  //    return false
+  //  }
 }
 
-struct NonLinearPathFallback {
+//struct NonLinearPathFallback {
+//  let minRequiredPoints: Int
+//  let fallback: ((inout Path, [CGPoint]) -> Void)? = nil
+//}
+//
+//extension NonLinearPathFallback {
+//
+//}
+
+/// Alternative; consider leaving WavePathGenerator out of this, and
+/// just create a tiny polyline fallback instead
+/// ```
+/// { path, pts, _ in
+///   guard let first = pts.first else { return }
+///   path.move(to: first)
+///   for p in pts.dropFirst() { path.addLine(to: p) }
+/// }
+/// ```
+package typealias PathFallBack = (inout Path, [CGPoint], inout WavePathGenerator) -> Void
+package struct NonLinearPathFallback {
   let minRequiredPoints: Int
-  let fallback: ((inout Path, [CGPoint]) -> Void)? = nil
+  let fallback: PathFallBack?
+
+  init(
+    minRequiredPoints: Int,
+    fallback: PathFallBack? = nil
+  ) {
+    self.minRequiredPoints = minRequiredPoints
+    self.fallback = fallback
+  }
 }
 
 extension NonLinearPathFallback {
-  
+  static var defaultLinear: NonLinearPathFallback {
+    NonLinearPathFallback(minRequiredPoints: 4) {
+      path,
+      pts,
+      generator in
+      /// Temporarily swap generator points if needed
+      let original = generator.points
+      generator.points = pts
+      defer { generator.points = original }
+
+      /// Use linear processor as the fallback
+      generator.processLinear(path: &path)
+    }
+  }
 }
