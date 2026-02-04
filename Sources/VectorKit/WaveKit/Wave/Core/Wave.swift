@@ -8,7 +8,6 @@
 import Foundation
 
 public typealias FloatWave = Wave<Double>
-//public typealias FloatWave = Wave<Float>
 
 /// Think of a wave as having two "engines" that determine its position:
 ///
@@ -22,11 +21,11 @@ public typealias FloatWave = Wave<Double>
 /// - The `normalisedIndex`
 /// - In a SwiftUI Canvas, 0.0 might be the left edge and 1.0 the right edge;
 ///   and Cycles is how many "humps" of the wave fit into that space.
-public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, Codable {
+public struct Wave<T: WaveFloat>: WaveShaped, Sendable, Identifiable, Hashable, Equatable, Codable {
   public let id: UUID
   public var amplitude: T
   public var frequency: T
-  public var phase: T
+  private(set) var phase: T
   public var waveform: Waveform
 
   public init(
@@ -39,8 +38,31 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
     self.id = id
     self.amplitude = amp
     self.frequency = freq
-    self.phase = phase
+    self.phase = Self.wrapToTwoPi(phase)
     self.waveform = waveform
+  }
+}
+
+extension Wave {
+  public mutating func setPhaseRadians(_ newPhase: T) {
+    phase = Self.wrapToTwoPi(newPhase)
+  }
+
+  public mutating func advancePhaseRadians(by delta: T) {
+    phase = Self.wrapToTwoPi(phase + delta)
+  }
+
+  public var phaseRadians: T { phase }
+
+  public var unitPhase: T { Self.wrapUnit(Self.radiansToUnit(phase)) }
+
+  public mutating func setUnitPhase(_ u: T) {
+    phase = Self.wrapToTwoPi(Self.unitToRadians(Self.wrapUnit(u)))
+  }
+
+  public mutating func advanceUnitPhase(by du: T) {
+    let newUnit = Self.wrapUnit(unitPhase + du)
+    phase = Self.unitToRadians(newUnit)
   }
 }
 

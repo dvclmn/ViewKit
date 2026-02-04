@@ -10,7 +10,7 @@ import Foundation
 /// A convenience for applying a single style to a single ``Wave``.
 /// If applying a ``WaveStyle`` to *multiple* Waves, prefer holding an instance
 /// of `WaveStyle` alongside the Waves, rather than using this type.
-public struct StyledWave: Wavable, Hashable, Codable, Equatable, Identifiable {
+public struct StyledWave: WaveShaped, Hashable, Codable, Equatable, Identifiable {
   public typealias Value = Double
 //  public typealias Value = Float
   

@@ -1,5 +1,5 @@
 //
-//  Wavable.swift
+//  WaveShaped.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 31/1/2026.
@@ -8,16 +8,24 @@
 import Foundation
 
 @dynamicMemberLookup
-public protocol Wavable {
+public protocol WaveShaped {
   associatedtype Value: WaveFloat
+
+  //  var id: UUID { get }
+  //  var amplitude: Value { get set }
+  //  var frequency: Value { get set }
+  //  var phaseRadians: Value { get set }
+  ////  var phase: Value { get set }
+  //  var waveform: Waveform { get set }
+
   var wave: Wave<Value> { get set }
   var config: WaveConfig<Value> { get set }
 }
 
-extension Wavable {
-  public subscript<T>(dynamicMember keyPath: WritableKeyPath<Wave<Value>, T>) -> T{
-    get { self.wave[keyPath: keyPath] }
-    set { self.wave[keyPath: keyPath] = newValue }
+extension WaveShaped {
+  public subscript<T>(dynamicMember keyPath: WritableKeyPath<Self, T>) -> T {
+    get { self[keyPath: keyPath] }
+    set { self[keyPath: keyPath] = newValue }
   }
 
   /// Evaluates the wave at a specific point in space.
@@ -26,9 +34,11 @@ extension Wavable {
   ///   - normalisedIndex: The normalisedIndex (0...1) of the current point.
   public func sample(
     state: ContinuousParameter<Value>,
-    at normalisedIndex: Value
+    at normalisedIndex: Value,
+    //    cycles: Value,
   ) -> Value {
-    /// 1. Get the time-based phase from our persistent state
+
+    /// 1. Get the time-based phase from persistent state
     let temporalPhase = state.currentPhase
 
     /// 2. Add spatial phase (cycles) and static offset (wave.phase)

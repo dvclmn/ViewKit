@@ -37,7 +37,7 @@ extension WavePathGenerator {
     processPath(with: interpolation, stamper: { _, _, _ in }, path: &path)
     return path
   }
-  
+
   public mutating func path(withStyle style: PathStyle) -> Path {
     var path = Path()
     let stamper = makeStampClosure(from: style.stamped)
@@ -48,13 +48,18 @@ extension WavePathGenerator {
 
 // MARK: - Edit Existing Path
 extension WavePathGenerator {
-
   public mutating func editPath(
     with interpolation: WaveInterpolation,
     path: inout Path
   ) {
     processPath(with: interpolation, stamper: { _, _, _ in }, path: &path)
   }
-
   
+  public mutating func editPath(
+    withStyle style: PathStyle,
+    path: inout Path
+  ) {
+    let stamper = makeStampClosure(from: style.stamped)
+    processPath(with: style.interpolation, stamper: stamper, path: &path)
+  }
 }

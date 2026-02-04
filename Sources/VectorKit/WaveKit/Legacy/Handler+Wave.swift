@@ -96,7 +96,7 @@ extension WaveHandler {
       let x = xPositions[i]
       let spatialPhase = spatialPhases[i]
 
-      let yNormal = centerY + amp * T.wf_sin(normalPhase + spatialPhase)
+      let yNormal = centerY + amp * T.waveSin(normalPhase + spatialPhase)
       //      let yNormal = centerY + amp * sin(normalPhase + spatialPhase)
       normalPoints.append(
         CGPoint(
@@ -106,7 +106,7 @@ extension WaveHandler {
       )
 
       if let gPhase = ghostPhase {
-        let yGhost = centerY + amp * T.wf_sin(gPhase + spatialPhase)
+        let yGhost = centerY + amp * T.waveSin(gPhase + spatialPhase)
         ghostPoints?.append(
           CGPoint(
             fromWaveFloat: x,

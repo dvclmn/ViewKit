@@ -5,27 +5,27 @@
 //  Created by Dave Coleman on 1/2/2026.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 public protocol WaveFloat: BinaryFloatingPoint, Sendable, Codable, StringRenderable, FloatRenderable {
-  static func wf_sin(_ x: Self) -> Self
+  static func waveSin(_ x: Self) -> Self
+  static var twoPi: Self { get }
 }
-//extension Float: WaveFloat {}
-//extension CGFloat: WaveFloat {}
-//extension Double: WaveFloat {}
 
 extension Float: WaveFloat {
-  public static func wf_sin(_ x: Float) -> Float { Foundation.sin(x) }
+  public static func waveSin(_ x: Float) -> Float { Foundation.sin(x) }
+  public static var twoPi: Float { .pi * 2 }
 }
 
 extension Double: WaveFloat {
-  public static func wf_sin(_ x: Double) -> Double { Foundation.sin(x) }
+  public static func waveSin(_ x: Double) -> Double { Foundation.sin(x) }
+  public static var twoPi: Double { .pi * 2 }
 }
 
 extension CGFloat: WaveFloat {
-  public static func wf_sin(_ x: CGFloat) -> CGFloat { Darwin.sin(x) }
-  // Alternatively: return CGFloat(Foundation.sin(Double(x)))
+  public static func waveSin(_ x: CGFloat) -> CGFloat { Darwin.sin(x) }
+  public static var twoPi: CGFloat { .pi * 2 }
 }
 
 extension CGPoint {
@@ -38,7 +38,7 @@ extension CGPoint {
 }
 
 extension Binding where Value: WaveFloat {
-  
+
   public var toBindingFloat: Binding<CGFloat> {
     Binding<CGFloat>(
       get: { CGFloat(wrappedValue) },
@@ -52,4 +52,3 @@ extension Binding where Value: WaveFloat {
     )
   }
 }
-

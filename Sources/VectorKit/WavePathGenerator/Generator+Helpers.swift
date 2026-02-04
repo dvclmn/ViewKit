@@ -8,7 +8,10 @@
 import SwiftUI
 
 extension WavePathGenerator {
-
+  /// This replaces existing points
+  public mutating func updatePoints(_ newPoints: [CGPoint]) {
+    points = newPoints
+  }
   public mutating func resetPoints() {
     points.removeAll()
   }
