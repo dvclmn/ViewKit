@@ -10,13 +10,12 @@ import SwiftUI
 
 @Observable
 final class SliderHandler {
-//final class SliderHandler<Value: BinaryFloatingPoint> {
   
   var value: Double
   var label: QuickLabel
   var range: ClosedRange<Double>
-//  var step: CGFloat?
-  var step: StepStyle<Double> = .none
+  var step: Double?
+//  var step: StepStyle<Double> = .none
 
   var phase: SliderPhase = .idle
   var didChangeSlider: SliderOutput?
@@ -32,7 +31,8 @@ final class SliderHandler {
     value: Double,
     label: QuickLabel,
     range: ClosedRange<Double>,
-    step: StepStyle<Double>,
+    step: Double?,
+//    step: StepStyle<Double>,
     didChangeSlider: SliderOutput?
   ) {
     self.value = value

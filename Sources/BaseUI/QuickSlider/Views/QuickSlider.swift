@@ -69,7 +69,8 @@ extension QuickSlider {
         value: CGFloat(value.wrappedValue),
         label: label,
         range: range.toDoubleRange,
-        step: StepStyle(fromOptionalValue: step.map { Double($0) }),
+        step: step.map { Double($0) },
+        //        step: StepStyle(fromOptionalValue: step.map { Double($0) }),
         didChangeSlider: didChangeSlider
       )
     )

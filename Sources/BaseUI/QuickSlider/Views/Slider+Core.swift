@@ -13,7 +13,7 @@ public struct SliderCore: View {
   @Environment(\.explicitControlSize) private var explicitControlSize
   @Environment(\.sliderComponents) private var sliderComponents
 
-  //  @Environment(\.stepStyle) private var stepStyle
+  @Environment(\.stepStyle) private var stepStyle
   @Environment(\.formatValue) private var formatValue
   @Environment(\.sliderDefaultValue) private var sliderDefaultValue
   @Environment(\.isDebugMode) private var isDebugMode
@@ -28,20 +28,29 @@ public struct SliderCore: View {
       LabelComponent()
     }
 
-    switch store.step {
-      case .native(stepSize: let size):
-        SliderTrackView(step: size)
+    if let step = store.step {
+      switch stepStyle {
+        case .native:
+          SliderTrackView(step: step)
 
-      case .stepper(stepSize: let size):
-        SliderTrackView(step: nil)
-        Stepper(
-          store.label.text,
-          value: $store.value,
-          step: size,
-        )
+        case .stepper:
+          HStack {
+            SliderTrackView(step: nil)
+            
+            Stepper(
+              store.label.text,
+              value: $store.value,
+              step: step,
+            )
+            .labelsHidden()
+          }
 
-      case .none:
-        SliderTrackView(step: nil)
+        case .none:
+          SliderTrackView(step: nil)
+      }
+
+    } else {
+      SliderTrackView(step: nil)
     }
 
     // MARK: - Units
@@ -53,7 +62,6 @@ public struct SliderCore: View {
       .onDoubleTap($store.value.toBindingDouble, defaultValue: sliderDefaultValue)
       .contextMenu { ContextMenuItems() }
     }
-
   }
 }
 

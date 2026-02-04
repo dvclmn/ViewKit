@@ -23,7 +23,7 @@ struct SliderTrackView: View {
 
         Group {
           if let step {
-//          if let step = store.step {
+//                      if let step = store.step {
             Slider(
               value: $store.value,
               in: store.range,
