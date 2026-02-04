@@ -69,17 +69,19 @@ extension Path {
     }
   }
 
+  /// Appends a point marker shape at a given point with a visual radius.
+  ///
+  /// This helper computes the center-origin rect parameters and delegates to
+  /// `PointShape.updatePath(center:radius:path:)` to avoid redundant geometry work.
+  /// - Parameters:
+  ///   - point: Center position where the marker should be drawn.
+  ///   - shape: The marker shape to draw. Defaults to `.circle`.
+  ///   - radius: The visual radius/half-extent for the marker.
   public mutating func addShape(
     at point: CGPoint,
+    using shape: PointShape = .circle,
     radius: CGFloat,
-    using shape: PointShape = .circle
   ) {
-    let rect = CGRect(
-      x: point.x - radius / 2,
-      y: point.y - radius / 2,
-      width: radius,
-      height: radius
-    )
-    shape.updatePath(in: rect, path: &self)
+    shape.updatePath(center: point, radius: radius, path: &self)
   }
 }

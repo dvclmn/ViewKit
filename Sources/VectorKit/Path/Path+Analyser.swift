@@ -43,5 +43,23 @@ extension Path {
       labelPoints: labelPoints
     )
   }
+  
+  mutating func addConnections(
+    from start: CGPoint,
+    to end: CGPoint,
+    controlPoints: [CGPoint]
+  ) {
+    if controlPoints.count == 1 {
+      move(to: start)
+      addLine(to: controlPoints[0])
+      move(to: controlPoints[0])
+      
+    } else if controlPoints.count == 2 {
+      move(to: start)
+      addLine(to: controlPoints[0])
+      move(to: controlPoints[1])
+      addLine(to: end)
+    }
+  }
 
 }

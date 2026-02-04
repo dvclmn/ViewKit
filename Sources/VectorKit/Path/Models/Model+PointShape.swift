@@ -32,21 +32,26 @@ public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, Case
 }
 
 extension PointShape {
-  public func updatePath(
-    in rect: CGRect,
-    path: inout Path
-  ) {
-    //  public func shapePath(in rect: CGRect) -> Path {
-    //    var path = Path()
-    let center = CGPoint(x: rect.midX, y: rect.midY)
-    let radius = min(rect.width, rect.height) / 2
-
+  /// Draw this PointShape into the provided Path using a center point and radius.
+  ///
+  /// This is the primary primitive for rendering point markers. Prefer calling this
+  /// overload to avoid recomputing geometry (center/radius) from a rect.
+  /// - Parameters:
+  ///   - center: The center of the shape in the target coordinate space.
+  ///   - radius: The overall size to render. Interpreted as the radius for circular shapes
+  ///             and the half-extent for others (e.g. square half-side).
+  ///   - path: The path to append the shape geometry to.
+  public func updatePath(center: CGPoint, radius: CGFloat, path: inout Path) {
     switch self {
       case .square:
-        path.addRect(rect)
+        let size = CGSize(width: radius * 2, height: radius * 2)
+        let origin = CGPoint(x: center.x - radius, y: center.y - radius)
+        path.addRect(CGRect(origin: origin, size: size))
 
       case .circle:
-        path.addEllipse(in: rect)
+        let size = CGSize(width: radius * 2, height: radius * 2)
+        let origin = CGPoint(x: center.x - radius, y: center.y - radius)
+        path.addEllipse(in: CGRect(origin: origin, size: size))
 
       case .cross:
         path.move(to: CGPoint(x: center.x - radius, y: center.y))
@@ -55,11 +60,29 @@ extension PointShape {
         path.addLine(to: CGPoint(x: center.x, y: center.y + radius))
 
       case .triangle:
-        path.move(to: CGPoint(x: center.x - radius * 0.707, y: center.y + radius * 0.707))
+        // Equilateral-ish upright triangle inscribed in the circle of given radius
+        let s: CGFloat = 0.707 // sin/cos(45deg) factor used in prior implementation
+        path.move(to: CGPoint(x: center.x - radius * s, y: center.y + radius * s))
         path.addLine(to: CGPoint(x: center.x, y: center.y - radius))
-        path.addLine(to: CGPoint(x: center.x + radius * 0.707, y: center.y + radius * 0.707))
-        
-      case .none: break
+        path.addLine(to: CGPoint(x: center.x + radius * s, y: center.y + radius * s))
+
+      case .none:
+        break
     }
+  }
+
+  /// Convenience overload that renders this shape inside a rect by
+  /// deriving its center and radius. Prefer `updatePath(center:radius:path:)`
+  /// when you already have those values to avoid duplicate calculations.
+  /// - Parameters:
+  ///   - rect: The bounding rect to draw within.
+  ///   - path: The path to append the shape geometry to.
+  public func updatePath(
+    in rect: CGRect,
+    path: inout Path
+  ) {
+    let center = CGPoint(x: rect.midX, y: rect.midY)
+    let radius = min(rect.width, rect.height) / 2
+    updatePath(center: center, radius: radius, path: &path)
   }
 }

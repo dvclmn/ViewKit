@@ -41,7 +41,11 @@ extension StrokeConfig {
   public static var example01: Self { Self(.green, lineWidth: 5, style: .smooth) }
   public static var example02: Self { Self(.orange, lineWidth: 3, style: .line) }
   public static var example03: Self {
-    Self(.brown, lineWidth: 2, style: .stamped(shape: .circle, radius: 30))
+    Self(
+      .brown,
+      lineWidth: 2,
+      style: .stamped(shape: .circle, radius: 30)
+    )
   }
 }
 
