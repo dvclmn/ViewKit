@@ -7,36 +7,84 @@
 
 import SwiftUI
 
+enum QuadSmoothingStyle {
+  case continuous  // Flowing / midpoint-based
+  case articulated  // Corner aware/preserving, 3-point control
+}
+
 extension WavePathGenerator {
 
-  /// Smooth path using quadratic Bézier curves
-  package mutating func createQuadCurvePath() {
+  /// t: 0 = flowing (midpoint), 1 = corner-aware (3-point influenced)
+  func processQuadPath(
+    path: inout Path,
+    cornerBias t: CGFloat = 0.5
+  ) {
+    let n = points.count
+    guard n >= 2 else { return }
 
-    guard points.count >= 2 else { return }
+    let t = max(0, min(1, t))
 
     path.move(to: points[0])
 
-    for i in 0..<points.count - 2 {
+    if n == 2 {
+      path.addLine(to: points[1])
+      return
+    }
+
+    /// Curves to midpoints, controls blended between two policies.
+    for i in 0..<(n - 2) {
       let p0 = points[i]
       let p1 = points[i + 1]
       let p2 = points[i + 2]
 
-      /// Calculate control point as midpoint between points
-      // Calculate control point using both current and next segments
-      // This creates a smoother transition between segments
+      let end = CGPoint(
+        x: (p1.x + p2.x) * 0.5,
+        y: (p1.y + p2.y) * 0.5)
+
+      let cA = p1
+      let cB = CGPoint(
+        x: p1.x + (p0.x - p2.x) * 0.25,
+        y: p1.y + (p0.y - p2.y) * 0.25)
+
       let control = CGPoint(
-        x: p1.x + ((p0.x - p2.x) / 4),  // Use p2 to influence control point
-        y: p1.y + ((p0.y - p2.y) / 4)  // Quarter distance for subtle curve
-      )
+        x: cA.x + (cB.x - cA.x) * t,
+        y: cA.y + (cB.y - cA.y) * t)
 
-      path.addQuadCurve(to: p1, control: control)
+      path.addQuadCurve(to: end, control: control)
     }
 
-    /// Add final line to last point
-    if let last = points.last {
-      path.addLine(to: last)
-    }
-
+    /// Finish smoothly to the last point (avoid a final straight-line kink).
+    path.addQuadCurve(to: points[n - 1], control: points[n - 2])
   }
+
+  /// Smooth path using quadratic Bézier curves
+  //  package mutating func createQuadCurvePath() {
+  //
+  //    guard points.count >= 2 else { return }
+  //
+  //    path.move(to: points[0])
+  //
+  //    for i in 0..<points.count - 2 {
+  //      let p0 = points[i]
+  //      let p1 = points[i + 1]
+  //      let p2 = points[i + 2]
+  //
+  //      /// Calculate control point as midpoint between points
+  //      // Calculate control point using both current and next segments
+  //      // This creates a smoother transition between segments
+  //      let control = CGPoint(
+  //        x: p1.x + ((p0.x - p2.x) / 4),  // Use p2 to influence control point
+  //        y: p1.y + ((p0.y - p2.y) / 4)  // Quarter distance for subtle curve
+  //      )
+  //
+  //      path.addQuadCurve(to: p1, control: control)
+  //    }
+  //
+  //    /// Add final line to last point
+  //    if let last = points.last {
+  //      path.addLine(to: last)
+  //    }
+  //
+  //  }
 
 }

@@ -11,9 +11,9 @@ public struct WavePathGenerator {
   public var points: [CGPoint] = []
   //  private var cachedControlPoints: [CGPoint]?
 
-  public
-    init()
-  {}
+  public init(points: [CGPoint] = []) {
+    self.points = points
+  }
 }
 
 extension WavePathGenerator {

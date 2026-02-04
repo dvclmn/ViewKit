@@ -44,16 +44,6 @@ extension Array where Element == CGPoint {
     }
   }
 
-  //  private func processLinePath(
-  //    shouldDropFirst: Bool = true,
-  //    path: inout Path
-  //  ) {
-  //    guard let firstPoint = self.first else { return }
-  //    let lines = shouldDropFirst ? Array(self.dropFirst()) : self
-  //    path.move(to: firstPoint)
-  //    path.addLines(lines)
-  //  }
-
   private func processStampedPath(
     shouldDropFirst: Bool = true,
     shape: PointShape,
@@ -69,8 +59,11 @@ extension Array where Element == CGPoint {
     //    path.addLines(lines)
   }
 
-  /// Alternative: Smooth curved path using quadratic curves
-  private func processSmoothPath(path: inout Path) {
+  /// Smooth curved path using quadratic curves
+  private func processSmoothPath(
+    midpointFactor: Double = 0.5,
+    path: inout Path
+  ) {
     guard count > 1 else { return }
 
     path.move(to: self[0])
@@ -84,8 +77,8 @@ extension Array where Element == CGPoint {
       let current = self[i]
       let next = self[i + 1]
       let mid = CGPoint(
-        x: (current.x + next.x) * 0.5,
-        y: (current.y + next.y) * 0.5)
+        x: (current.x + next.x) * midpointFactor,
+        y: (current.y + next.y) * midpointFactor)
       path.addQuadCurve(to: mid, control: current)
     }
 
