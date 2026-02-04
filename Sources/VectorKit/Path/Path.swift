@@ -82,6 +82,7 @@ extension Path {
     using shape: PointShape = .circle,
     radius: CGFloat,
   ) {
-    shape.updatePath(center: point, radius: radius, path: &self)
+    shape.addShape(to: &self, at: point, radius: radius)
+//    shape.updatePath(center: point, radius: radius, path: &self)
   }
 }

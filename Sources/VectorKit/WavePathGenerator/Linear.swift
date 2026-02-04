@@ -13,12 +13,28 @@ extension WavePathGenerator {
 
   /// Creates a path by connecting points with straight lines
   /// This is the fastest method, ideal when smoothness isn't required
+  //  package mutating func processLinear(
+  //    shouldDropFirst: Bool = true
+  //  ) {
+  //    guard let firstPoint = points.first else { return }
+  //    let allPoints = shouldDropFirst ? Array(points.dropFirst()) : points
+  //    path.move(to: firstPoint)
+  //    path.addLines(allPoints)
+  //  }
+
   package mutating func processLinear(
-    shouldDropFirst: Bool = true
+    shouldDropFirst: Bool = true,
+    path: in
+    stamped: (_ index: Int?, _ point: CGPoint) -> Void
   ) {
     guard let firstPoint = points.first else { return }
-    let lines = shouldDropFirst ? Array(points.dropFirst()) : points
+    let allPoints = shouldDropFirst ? Array(points.dropFirst()) : points
     path.move(to: firstPoint)
-    path.addLines(lines)
+    for point in allPoints {
+
+      path.addLine(to: point)
+
+    }
+    //    path.addLines(lines)
   }
 }

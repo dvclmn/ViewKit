@@ -14,11 +14,11 @@ public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, Case
   case cross
   case triangle
   case none
-  
+
   public var id: String { rawValue }
-  
+
   public var name: String { rawValue.capitalized }
-  
+
   public var icon: String {
     switch self {
       case .square: "square.fill"
@@ -26,7 +26,7 @@ public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, Case
       case .cross: "circle.fill"
       case .triangle: "circle.fill"
       case .none: "circle.slash"
-        //        case .diamond: "diamond.fill"
+    //        case .diamond: "diamond.fill"
     }
   }
 }
@@ -37,34 +37,39 @@ extension PointShape {
   /// This is the primary primitive for rendering point markers. Prefer calling this
   /// overload to avoid recomputing geometry (center/radius) from a rect.
   /// - Parameters:
-  ///   - center: The center of the shape in the target coordinate space.
+  ///   - point: The center of the shape in the target coordinate space.
   ///   - radius: The overall size to render. Interpreted as the radius for circular shapes
   ///             and the half-extent for others (e.g. square half-side).
   ///   - path: The path to append the shape geometry to.
-  public func updatePath(center: CGPoint, radius: CGFloat, path: inout Path) {
+  public func addShape(
+    to path: inout Path,
+    at point: CGPoint,
+    radius: CGFloat,
+  ) {
     switch self {
       case .square:
         let size = CGSize(width: radius * 2, height: radius * 2)
-        let origin = CGPoint(x: center.x - radius, y: center.y - radius)
+        let origin = CGPoint(x: point.x - radius, y: point.y - radius)
         path.addRect(CGRect(origin: origin, size: size))
 
       case .circle:
         let size = CGSize(width: radius * 2, height: radius * 2)
-        let origin = CGPoint(x: center.x - radius, y: center.y - radius)
+        let origin = CGPoint(x: point.x - radius, y: point.y - radius)
         path.addEllipse(in: CGRect(origin: origin, size: size))
 
       case .cross:
-        path.move(to: CGPoint(x: center.x - radius, y: center.y))
-        path.addLine(to: CGPoint(x: center.x + radius, y: center.y))
-        path.move(to: CGPoint(x: center.x, y: center.y - radius))
-        path.addLine(to: CGPoint(x: center.x, y: center.y + radius))
+        path.move(to: CGPoint(x: point.x - radius, y: point.y))
+        path.addLine(to: CGPoint(x: point.x + radius, y: point.y))
+        path.move(to: CGPoint(x: point.x, y: point.y - radius))
+        path.addLine(to: CGPoint(x: point.x, y: point.y + radius))
 
       case .triangle:
-        // Equilateral-ish upright triangle inscribed in the circle of given radius
-        let s: CGFloat = 0.707 // sin/cos(45deg) factor used in prior implementation
-        path.move(to: CGPoint(x: center.x - radius * s, y: center.y + radius * s))
-        path.addLine(to: CGPoint(x: center.x, y: center.y - radius))
-        path.addLine(to: CGPoint(x: center.x + radius * s, y: center.y + radius * s))
+        /// Equilateral-ish upright triangle inscribed in the circle of given radius
+        /// sin/cos(45deg) factor used in prior implementation
+        let s: CGFloat = 0.707
+        path.move(to: CGPoint(x: point.x - radius * s, y: point.y + radius * s))
+        path.addLine(to: CGPoint(x: point.x, y: point.y - radius))
+        path.addLine(to: CGPoint(x: point.x + radius * s, y: point.y + radius * s))
 
       case .none:
         break
@@ -77,12 +82,17 @@ extension PointShape {
   /// - Parameters:
   ///   - rect: The bounding rect to draw within.
   ///   - path: The path to append the shape geometry to.
+  @available(
+    *, deprecated, renamed: "updatePath(center:radius:path:)",
+    message:
+      "Prefer `updatePath(center:radius:path:)` when you already have center and radius, to avoid redundant calculations"
+  )
   public func updatePath(
     in rect: CGRect,
     path: inout Path
   ) {
     let center = CGPoint(x: rect.midX, y: rect.midY)
     let radius = min(rect.width, rect.height) / 2
-    updatePath(center: center, radius: radius, path: &path)
+    addShape(to: &path, at: center, radius: radius)
   }
 }

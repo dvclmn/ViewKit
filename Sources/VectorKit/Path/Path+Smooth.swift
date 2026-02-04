@@ -14,36 +14,37 @@ extension Array where Element == CGPoint {
     type: PathStyle = .line,
     shouldDropFirst: Bool = true
   ) -> Path {
-    let builder = WavePathGenerator
+    let builder = WavePathGenerator(points: self)
+    
 //    Path { path in
 //      processPath(type: type, shouldDropFirst: shouldDropFirst, path: &path)
 //    }
   }
 
-  public func processPath(
-    type: PathStyle = .line,
-    shouldDropFirst: Bool = true,
-    path: inout Path
-  ) {
-    switch type {
-      case .line:
-        processLinePath(
-          shouldDropFirst: shouldDropFirst,
-          path: &path
-        )
-
-      case .smooth:
-        processSmoothPath(path: &path)
-
-      case .stamped(let shape, let radius):
-        processStampedPath(
-          shouldDropFirst: shouldDropFirst,
-          shape: shape,
-          radius: radius,
-          path: &path
-        )
-    }
-  }
+//  public func processPath(
+//    type: PathStyle = .line,
+//    shouldDropFirst: Bool = true,
+//    path: inout Path
+//  ) {
+//    switch type {
+//      case .line:
+//        processLinePath(
+//          shouldDropFirst: shouldDropFirst,
+//          path: &path
+//        )
+//
+//      case .smooth:
+//        processSmoothPath(path: &path)
+//
+//      case .stamped(let shape, let radius):
+//        processStampedPath(
+//          shouldDropFirst: shouldDropFirst,
+//          shape: shape,
+//          radius: radius,
+//          path: &path
+//        )
+//    }
+//  }
 
 
 

@@ -9,12 +9,19 @@ import SwiftUI
 
 public struct WavePathGenerator {
   public var points: [CGPoint] = []
-  var path: Path = .init()
+  //  var stamp: FloatPointStyle?
+//  var path: Path = .init()
 
   public init(points: [CGPoint] = []) {
     self.points = points
   }
 }
+
+typealias Stamped = (
+  _ index: Int?,
+  _ point: CGPoint,
+  _ path: inout Path
+) -> Void
 
 extension WavePathGenerator {
 
@@ -23,10 +30,11 @@ extension WavePathGenerator {
   ///   - points: Array of points to interpolate
   ///   - interpolation: The interpolation method to use
   /// - Returns: A new Path object, or nil if insufficient points
-  public mutating func path(
-    with interpolation: WaveInterpolation
-  ) -> Path {
+  public mutating func path(with interpolation: WaveInterpolation) -> Path {
     guard !points.isEmpty else { return Path() }
+
+    var path = Path()
+    let stamper = makeStampClosure(from: stamp)
 
     switch interpolation {
       case .linear:
@@ -45,9 +53,20 @@ extension WavePathGenerator {
     return self.path
   }
 
+  public mutating func path(with style: PathStyle) -> Path {
+    self.stamp = style.stamped
+    return path(with: style.interpolation)
+  }
+
+  //  private mutating func processPath
+
   public mutating func resetPoints() {
     points.removeAll()
   }
 
   var hasTwoOrMorePoints: Bool { points.count >= 2 }
+}
+
+extension WavePathGenerator {
+
 }
