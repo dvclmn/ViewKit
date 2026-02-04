@@ -80,7 +80,11 @@ extension WavePathGenerator {
   /// Prepares a Path for non-linear drawing given current points.
   /// - Returns: true if the caller should return early because the path was fully handled (0, 1, or 2 points). False means there are 3 or more points and caller should continue building a non-linear path.
   @discardableResult
-  package mutating func preparePathForNonLinearIfNeeded(path: inout Path) -> Bool {
+  package mutating func preparePathForNonLinearIfNeeded(
+    path: inout Path,
+    minimumRequiredPoints: Int = 3,
+    fallback: ((inout Path, [CGPoint]) -> Void)? = nil
+  ) -> Bool {
     let count = points.count
     guard count >= 1 else { return true }  // nothing to draw
 
@@ -99,4 +103,13 @@ extension WavePathGenerator {
     path.move(to: points[0])
     return false
   }
+}
+
+struct NonLinearPathFallback {
+  let minRequiredPoints: Int
+  let fallback: ((inout Path, [CGPoint]) -> Void)? = nil
+}
+
+extension NonLinearPathFallback {
+  
 }
