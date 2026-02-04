@@ -62,6 +62,19 @@ extension Binding where Value == WaveStack {
     } set: { newValue in
       wrappedValue.update(key, path: keyPath, newValue: newValue)
     }
-
+  }
+  
+  @MainActor
+  public func waveBinding<K: WaveKey>(
+    _ key: K.Type,
+//    _ keyPath: WritableKeyPath<ConfiguredWave, T>
+  ) -> Binding<ConfiguredWave> {
+    Binding<ConfiguredWave> {
+      wrappedValue[key]
+    } set: { newValue in
+      wrappedValue[key] = newValue
+//      wrappedValue.update(key, path: keyPath, newValue: newValue)
+    }
+    
   }
 }

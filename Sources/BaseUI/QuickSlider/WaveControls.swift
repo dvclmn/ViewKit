@@ -9,11 +9,13 @@ import SwiftUI
 import VectorKit
 
 public struct WaveControls<T: WaveFloat>: View {
-  @Binding var wave: Wave<T>
+  @Binding var wave: ConfiguredWave
+//  @Binding var wave: Wave<T>
   let ranges: (WaveAttribute<T>) -> ClosedRange<T>?
   
   public init(
-    wave: Binding<Wave<T>>,
+    wave: Binding<ConfiguredWave>,
+//    wave: Binding<Wave<T>>,
     ranges: @escaping (WaveAttribute<T>) -> ClosedRange<T>? = { _ in nil }
   ) {
     self._wave = wave
@@ -25,13 +27,13 @@ public struct WaveControls<T: WaveFloat>: View {
       QuickSlider(
         "Amplitude",
         value: $wave.amplitude.toBindingDouble,
-        range: ranges(.amplitude)?.toDoubleRange ?? 0.0...1.0
+        range: ranges(.amplitude)?.toDoubleRange ?? .unitRange
       )
       
       QuickSlider(
         "Frequency",
         value: $wave.frequency.toBindingDouble,
-        range: ranges(.frequency)?.toDoubleRange ?? 0.0...1.0
+        range: ranges(.frequency)?.toDoubleRange ?? .unitRange
       )
       
       QuickSlider(
@@ -39,6 +41,17 @@ public struct WaveControls<T: WaveFloat>: View {
         value: $wave.phaseRadians.toBindingDouble,
         range: ranges(.phase)?.toDoubleRange ?? .unitRange
       )
+      
+      Divider()
+      
+      /// Might make this one optional?
+      QuickSlider(
+        "Cycles",
+        value: $wave.config.cycles,
+        range: ranges(.cycles)?.toDoubleRange ?? .unitRange,
+        step: 1
+      )
+      .stepStyle(.stepper)
     }
     
   }

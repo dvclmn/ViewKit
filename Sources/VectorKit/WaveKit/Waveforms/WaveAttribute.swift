@@ -23,6 +23,8 @@ public enum WaveAttribute<T: WaveFloat>: String, Sendable, CaseIterable, Identif
 
   /// How much irregularity is introduced into the overall wave / movement
   case noise
+  
+  case cycles
 
   public var id: String { rawValue }
 
@@ -32,6 +34,7 @@ public enum WaveAttribute<T: WaveFloat>: String, Sendable, CaseIterable, Identif
       case .frequency: ("Frequency", "Freq")
       case .phase: ("Phase Offset", "Phase")
       case .noise: ("Noise", "Noise")
+      case .cycles: ("Cycles", "Cycles")
     }
   }
 
@@ -39,17 +42,19 @@ public enum WaveAttribute<T: WaveFloat>: String, Sendable, CaseIterable, Identif
 //  public var defaultValue: Float {
     switch self {
       case .amplitude: 20
-      case .frequency: 1.0
-      case .phase: 0.0
-      case .noise: 0.0
+      case .frequency: 1
+      case .phase: 0
+      case .noise: 0
+      case .cycles: 2
     }
   }
   public var defaultRange: ClosedRange<T> {
     switch self {
       case .amplitude: 0...20
       case .frequency: 0...4
-      case .phase: .unitRange
+      case .phase: .phaseRange
       case .noise: 0...20
+      case .cycles: 0...20
     }
   }
 
@@ -60,6 +65,7 @@ public enum WaveAttribute<T: WaveFloat>: String, Sendable, CaseIterable, Identif
       //      case .phase: "point.forward.to.point.capsulepath"
       case .phase: "eye"  // glowplug, scribble
       case .noise: "dice"  // glowplug, scribble
+      case .cycles: "dice"  // glowplug, scribble
     //      case .cyclesAcross: "eye"
     }
   }
@@ -94,15 +100,15 @@ public enum WaveAttribute<T: WaveFloat>: String, Sendable, CaseIterable, Identif
   //    }
   //  }
 
-  public var range: ClosedRange<T> {
-    switch self {
-      case .amplitude: 0.01...60
-      case .frequency: 0.01...20
-      //      case .cyclesAcross: 0.1...10.0
-      case .phase: 0...twoPi()
-      case .noise: 0...4
-    }
-  }
+//  public var range: ClosedRange<T> {
+//    switch self {
+//      case .amplitude: 0.01...60
+//      case .frequency: 0.01...20
+//      //      case .cyclesAcross: 0.1...10.0
+//      case .phase: 0...twoPi()
+//      case .noise: 0...4
+//    }
+//  }
 
   //  var unitOfMeasurement: ValueUnits {
   //    switch self {
