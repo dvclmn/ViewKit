@@ -9,30 +9,10 @@ import CasePaths
 import CoreTools
 import SwiftUI
 
-/// The below `stamped` case replaces what
-/// VectorKit's `PointStyle` used to handle
-@CaseDetection
-@AssociatedValues
-@MetaEnum
-@CasePathable
-public enum PathStyle: Sendable, Hashable, Codable, Equatable {
-  public static var pickerLabel: QuickLabel { "Path Style" }
-  case line
-  case smooth
-  case stamped(shape: PointShape, radius: CGFloat)
-
-  /// A few tricky things here; this does provide a default for
-  /// the `stamped` value, but doesn't provide any static access
-  /// to the values inside `StampedConfig`...
-  ///
-  /// Additionally, do I make this default here, or do I just require
-  /// that the associated value itself has a default value —
-  /// like that `StampedConfig` has an init with default values
-  /// for each parameter?
-  ///
-  /// And then, as well, there's the route where the case could be
-  /// written with a default too, like `case stamped(StampedConfig = .init())`
-  public static var stampedDefault: Self { .stamped(shape: .circle, radius: 3.0) }
+/// Path style with optional stamping effect
+public struct PathStyle {
+  let interpolation: WaveInterpolation
+  let stamped: FloatPointStyle?
 }
 
 extension PathStyle {

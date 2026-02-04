@@ -16,7 +16,7 @@ extension WavePathGenerator {
 
   /// t: 0 = flowing (midpoint), 1 = corner-aware (3-point influenced)
   package mutating func processQuadratic(
-    midpointFactor: Double = 0.5,
+    midpoint midpointFactor: Double = 0.5,
     cornerBias t: Double = 0.5
   ) {
     let n = points.count

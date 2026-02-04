@@ -10,7 +10,7 @@ import SwiftUI
 
 extension Array where Element == CGPoint {
 
-  public func toPath(
+  public func createPath(
     type: PathStyle = .line,
     shouldDropFirst: Bool = true
   ) -> Path {
