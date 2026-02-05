@@ -35,24 +35,15 @@ public struct PopupMessage: Sendable, Identifiable {
   }
 }
 
+extension PopupMessage {
+  public var title: String { label.text }
+  public var icon: IconLiteral? { label.icon }
+  public var iconString: String? { label.icon?.toString }
+}
+
 // MARK: - Convenience inits
 extension PopupMessage {
-//  public init(
-//    _ title: String,
-//    icon: IconLiteral? = nil,
-//    message: String? = nil,
-//    isLoading: Bool = false,
-//    role: ActionRole = .neutral,
-//    dismissal: PopupDismissBehaviour = .automatic(3.5),
-//    action: PopupAction? = nil
-//  ) {
-//    self.id = UUID()
-//    self.label = QuickLabel(title, icon: icon, role: role)
-//    self.message = message
-//    self.isLoading = isLoading
-//    self.dismissal = dismissal
-//    self.action = action
-//  }
+
 }
 
 extension PopupMessage: ExpressibleByStringLiteral {

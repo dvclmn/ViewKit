@@ -22,22 +22,15 @@ extension IconLiteral: ExpressibleByStringLiteral {
 }
 
 extension IconLiteral {
-//  public init(_ iconPreset: Icons) {
-//    self.init(stringLiteral: iconPreset.icon)
-//  }
-
   public static func preset(_ iconPreset: Icons) -> Self {
     self.init(stringLiteral: iconPreset.icon)
   }
 
   public var toString: String {
     switch self {
-      case .emoji(let string):
-        return string
-      case .symbol(let string):
-        return string
-      case .customSymbol(let symbol):
-        return symbol.reference
+      case .emoji(let string): string
+      case .symbol(let string): string
+      case .customSymbol(let symbol): symbol.reference
     }
   }
 }

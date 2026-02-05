@@ -18,15 +18,22 @@ public struct PopupAction: Sendable {
 }
 
 /// ```
-/// let runAction = makeActionClosure(from: popupMessage.action) // /// always safe to call
-/// let dismiss = makeDismissalClosure(from: popupMessage.dismissal)
+/// @MainActor
+/// private func displayPopup(popupMessage: PopupMessage) async {
+///   let runAction = makeActionClosure(from: popupMessage.action) // /// always safe to call
+///   let dismiss = makeDismissalClosure(from: popupMessage.dismissal)
 ///
-/// // Wire these into your UI (e.g., button taps call runAction())
-/// // Start dismissal behavior when appropriate
-/// dismiss()
+///   // Wire these into your UI (e.g., button taps call runAction())
+///   // Start dismissal behavior when appropriate
+///   dismiss()
+/// }
 /// ```
+///
 /// ```
-/// func makeComposedAction(from action: PopupAction?, autoDismiss: /// @MainActor @escaping () -> Void) -> @Sendable () -> Void {
+/// func makeComposedAction(
+///   from action: PopupAction?,
+///   autoDismiss: @MainActor @escaping () -> Void
+/// ) -> @Sendable () -> Void {
 ///   let userAction = makeActionClosure(from: action)
 ///   return {
 ///     // 1) analytics
@@ -39,29 +46,29 @@ public struct PopupAction: Sendable {
 /// }
 /// ```
 extension Popup {
-  // Converts PopupMessage.action into a closure you can call uniformly.
-  // If there's no action, returns a no-op.
+  /// Converts PopupMessage.action into a closure you can call uniformly.
+  /// If there's no action, returns a no-op.
   func makeActionClosure(from action: PopupAction?) -> () -> Void {
     guard let action else { return {} }
     return action.action
   }
   
-  // Converts dismissal behavior into a closure that knows how/when to dismiss.
-  func makeDismissalClosure(from dismissal: PopupDismissBehaviour) -> (@MainActor () -> Void) {
-    switch dismissal {
-      case .automatic(let seconds):
-        return { [weak self] in
-          Task { @MainActor in
-            try? await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
-            await self?.hidePopup()
-          }
-        }
-      case .manual:
-        return { [weak self] in
-          Task { @MainActor in
-            await self?.hidePopup()
-          }
-        }
-    }
-  }
+  /// Converts dismissal behavior into a closure that knows how/when to dismiss.
+//  func makeDismissalClosure(from dismissal: PopupDismissBehaviour) -> (@MainActor () -> Void) {
+//    switch dismissal {
+//      case .automatic(let seconds, _):
+//        return { [weak self] in
+//          Task { @MainActor in
+//            try? await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
+//            await self?.hidePopup()
+//          }
+//        }
+//      case .manual:
+//        return { [weak self] in
+//          Task { @MainActor in
+//            await self?.hidePopup()
+//          }
+//        }
+//    }
+//  }
 }

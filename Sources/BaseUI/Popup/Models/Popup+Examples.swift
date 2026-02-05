@@ -16,7 +16,7 @@ extension PopupMessage {
     role: .neutral,
     dismissal: .automatic(2)
   )
-  
+
   static let example02 = PopupMessage(
     "Library Exported Successfully",
     icon: "checkmark.circle.fill",
@@ -33,10 +33,14 @@ extension PopupMessage {
 }
 
 extension PopupMessage {
-  public static func success(_ title: String, message: String? = nil, action: PopupAction? = nil) -> PopupMessage {
+  public static func success(
+    _ title: String,
+    message: String? = nil,
+    action: PopupAction? = nil
+  ) -> PopupMessage {
     PopupMessage(
       title,
-      icon: .preset(.checkmark),           // type-safe icon literal
+      icon: .preset(.tick),
       message: message,
       isLoading: false,
       role: .neutral,
@@ -44,11 +48,15 @@ extension PopupMessage {
       action: action
     )
   }
-  
-  public static func error(_ title: String, message: String? = nil, action: PopupAction? = nil) -> PopupMessage {
+
+  public static func error(
+    _ title: String,
+    message: String? = nil,
+    action: PopupAction? = nil
+  ) -> PopupMessage {
     PopupMessage(
       title,
-      icon: .preset(.error),               // type-safe icon literal
+      icon: .preset(.warning),
       message: message,
       isLoading: false,
       role: .error,

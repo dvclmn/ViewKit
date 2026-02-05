@@ -21,16 +21,11 @@ public final class Popup: Sendable {
 
 extension Popup {
 
-  
-
-  private func showAndHidePopup(popupMessage: PopupMessage) async {
+  package func showAndHidePopup(popupMessage: PopupMessage) async {
     popupTask?.cancel()
-    //    print("Popup triggered: \(popupMessage.title)")
 
     popupTask = Task { @MainActor in
       await displayPopup(popupMessage: popupMessage)
-
-      //      do {
 
       if let duration = popupMessage.dismissal.autoDismissDuration {
         do {

@@ -26,7 +26,7 @@ public struct CopyTextButton: View {
 
     Button {
       copyStringToClipboard(contentToCopy ?? title)
-      popup?.showPopup("Copied to clipboard", icon: Icons.copyAlt.icon)
+      popup?.showPopup("Copied to clipboard", icon: .preset(.copyAlt))
 
     } label: {
       Label(title, systemImage: Icons.copy.icon)

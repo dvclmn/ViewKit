@@ -25,16 +25,16 @@ public struct PopupView: View {
   private let rounding: CGFloat = Styles.sizeRegular
 
   let popupMessage: PopupMessage?
-  let isCompact: Bool
+//  let isCompact: Bool
   let hasCloseButton: Bool
 
   public init(
     _ message: PopupMessage?,
-    isCompact: Bool = false,
+//    isCompact: Bool = false,
     hasCloseButton: Bool = false,
   ) {
     self.popupMessage = message
-    self.isCompact = isCompact
+//    self.isCompact = isCompact
     self.hasCloseButton = hasCloseButton
   }
 
@@ -122,26 +122,6 @@ extension PopupView {
 
   @ViewBuilder
   func PopupTitle(_ title: String, icon: String?) -> some View {
-
-    Group {
-      if let icon {
-
-        Label {
-          Text(title)
-        } icon: {
-          Image(systemName: icon)
-            .foregroundStyle(.secondary)
-        }
-
-      } else {
-        Text(title)
-      }
-    }
-    .font(.system(size: isCompact ? 11 : 14))
-    .fontWeight(.medium)
-
-    /// To leave room for the dismiss button
-    .padding(.trailing, hasCloseButton ? 20 : 0)
 
   }
 
