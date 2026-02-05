@@ -178,4 +178,8 @@ case newWindow = "macwindow.on.rectangle"
   public static var getRandomIcon: String {
     return Icons.allCases.randomElement()?.icon ?? Icons.action.icon
   }
+  
+  public static var getRandom: Self {
+    return Icons.allCases.randomElement() ?? Icons.action
+  }
 }

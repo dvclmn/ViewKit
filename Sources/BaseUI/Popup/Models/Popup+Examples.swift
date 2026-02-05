@@ -5,13 +5,15 @@
 //  Created by Dave Coleman on 5/2/2026.
 //
 
+import CoreTools
+
 extension PopupMessage {
   static let example01 = PopupMessage(
     "I am loading",
-    icon: Icons.getRandomIcon,
+    icon: .preset(.getRandom),
     message: "Here is a random icon, and a loading indicator.",
     isLoading: true,
-    role: .normal,
+    role: .neutral,
     dismissal: .automatic(2)
   )
   
@@ -25,6 +27,33 @@ extension PopupMessage {
       title: "Test button action",
       action: {
         print("Hello it's an aciton")
-      })
+      }
+    )
   )
+}
+
+extension PopupMessage {
+  public static func success(_ title: String, message: String? = nil, action: PopupAction? = nil) -> PopupMessage {
+    PopupMessage(
+      title,
+      icon: .preset(.checkmark),           // type-safe icon literal
+      message: message,
+      isLoading: false,
+      role: .neutral,
+      dismissal: .automatic(2),
+      action: action
+    )
+  }
+  
+  public static func error(_ title: String, message: String? = nil, action: PopupAction? = nil) -> PopupMessage {
+    PopupMessage(
+      title,
+      icon: .preset(.error),               // type-safe icon literal
+      message: message,
+      isLoading: false,
+      role: .error,
+      dismissal: .manual,
+      action: action
+    )
+  }
 }

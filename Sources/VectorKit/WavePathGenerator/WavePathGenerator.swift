@@ -8,9 +8,7 @@
 import SwiftUI
 
 public struct WavePathGenerator {
-  public var points: [CGPoint] = []
-  //  var stamp: FloatPointStyle?
-  //  var path: Path = .init()
+  public var points: [CGPoint]
 
   public init(points: [CGPoint] = []) {
     self.points = points

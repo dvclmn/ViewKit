@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum PopupDismissBehaviour: Equatable {
+public enum PopupDismissBehaviour: Equatable, Sendable {
   case automatic(TimeInterval, showsIndicator: Bool = false)
   case manual
   
