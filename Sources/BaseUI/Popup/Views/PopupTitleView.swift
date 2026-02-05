@@ -13,6 +13,8 @@ struct PopupTitleView: View {
   // @Environment(\.viewportSize) private var viewportSize
   
   let message: PopupMessage
+  let hasCloseButton: Bool
+  
   var body: some View {
    
     Group {
@@ -39,13 +41,13 @@ struct PopupTitleView: View {
   }
 }
 
-extension PopupTitleView {
-  
-}
-#if DEBUG
-#Preview(traits: .size(.normal)) {
-  // @Previewable @State var store = AppHandler()
-  PopupTitleView(message: .example01)
-  // .environment(store)
-}
-#endif
+//extension PopupTitleView {
+//  
+//}
+//#if DEBUG
+//#Preview(traits: .size(.normal)) {
+//  // @Previewable @State var store = AppHandler()
+//  PopupTitleView(message: .example01)
+//  // .environment(store)
+//}
+//#endif

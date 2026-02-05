@@ -25,16 +25,16 @@ public struct PopupView: View {
   private let rounding: CGFloat = Styles.sizeRegular
 
   let popupMessage: PopupMessage?
-//  let isCompact: Bool
+  let isCompact: Bool
   let hasCloseButton: Bool
 
   public init(
     _ message: PopupMessage?,
-//    isCompact: Bool = false,
+    isCompact: Bool = false,
     hasCloseButton: Bool = false,
   ) {
     self.popupMessage = message
-//    self.isCompact = isCompact
+    self.isCompact = isCompact
     self.hasCloseButton = hasCloseButton
   }
 
@@ -44,7 +44,7 @@ public struct PopupView: View {
       VStack {
         VStack(spacing: isCompact ? 4 : 6) {
 
-          PopupTitle(popupMessage.title, icon: popupMessage.icon)
+          PopupTitleView(message: popupMessage, hasCloseButton: hasCloseButton)
           if let messageDetail = popupMessage.message {
             Text(messageDetail)
               .foregroundStyle(.secondary)
@@ -100,6 +100,7 @@ public struct PopupView: View {
           self.shouldStartProgressBar = false
         }
       }
+      .environment(\.isCompactMode, isCompact)
     }
 
   }
@@ -117,11 +118,6 @@ extension PopupView {
   }
   @ViewBuilder
   func PopupContent(_ message: PopupMessage) -> some View {
-
-  }
-
-  @ViewBuilder
-  func PopupTitle(_ title: String, icon: String?) -> some View {
 
   }
 

@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 9/6/2025.
 //
 
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
 @available(macOS 15.0, iOS 18.0, *)
 public struct SubviewContent: View {
@@ -18,7 +18,10 @@ public struct SubviewContent: View {
   public var body: some View {
 
     ForEach(subviews: collection) { subview in
-      DynamicStack(layoutType: layoutType, spacing: (spacing ?? layoutSpacing).subElementSpacingReduction()) {
+      DynamicStack(
+        layoutType: layoutType,
+        spacing: (spacing ?? layoutSpacing).subElementSpacingReduction()
+      ) {
         subview
         /// Display a divider, as dictated by the `ContainerValue`
         /// This expresses; "All subviews except for the last one"
