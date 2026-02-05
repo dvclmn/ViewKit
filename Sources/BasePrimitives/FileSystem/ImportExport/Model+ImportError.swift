@@ -12,17 +12,28 @@ public enum ImportError: Error, CustomStringConvertible {
   case failedToRead(String)
   case fileExtensionMissing
   case decodingFailed(Error)
+  case failedSecurityScopedAccess(String)
+  case fileImporterFailure(Error)
   
   public var description: String {
     switch self {
       case .resourceNotFound(let path):
-        return "Resource not found at path: \(path)"
+        "Resource not found at path: \(path)"
+        
       case .failedToRead(let reason):
-        return "Failed to read file: \(reason)"
+        "Failed to read file: \(reason)"
+        
       case .fileExtensionMissing:
-        return "File extension missing. Please specify a valid file type."
+        "File extension missing. Please specify a valid file type."
+        
       case .decodingFailed(let error):
-        return "Failed to decode data: \(error)"
+        "Failed to decode data: \(error)"
+        
+      case .failedSecurityScopedAccess(let url):
+        "Failed to access file \(url) using a security-scoped resource."
+        
+      case .fileImporterFailure(let error):
+        "Failed to import file: \(error)"
     }
   }
 }

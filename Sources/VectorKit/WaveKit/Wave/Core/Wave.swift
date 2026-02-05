@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MetaCodable
 
 public typealias FloatWave = Wave<Double>
 
@@ -21,12 +22,14 @@ public typealias FloatWave = Wave<Double>
 /// - The `normalisedIndex`
 /// - In a SwiftUI Canvas, 0.0 might be the left edge and 1.0 the right edge;
 ///   and Cycles is how many "humps" of the wave fit into that space.
+@Codable
 public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, Codable {
   public let id: UUID
   public var amplitude: T
   public var frequency: T
 
   /// Stored backing value in radians
+  @CodedAt("phase")
   private var _phase: T
 
   /// Expose phase in radians with get/set
@@ -60,7 +63,7 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
 }
 
 extension Wave {
-  
+
   public mutating func update(
     _ newValue: T,
     in range: ClosedRange<T>? = nil,
@@ -68,7 +71,7 @@ extension Wave {
   ) {
     self[keyPath: keyPath] = newValue.clampedIfNeeded(to: range)
   }
-  
+
   public mutating func updateDelta(
     _ newDelta: T,
     in range: ClosedRange<T>? = nil,

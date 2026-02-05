@@ -5,23 +5,13 @@
 //  Created by Dave Coleman on 14/2/2025.
 //
 
-
+import CoreTools
 import SwiftUI
-import BasePrimitives
-
-public struct PopupAction {
-  let title: String
-  let action: () -> Void
-  
-  public init(title: String, action: @escaping () -> Void) {
-    self.title = title
-    self.action = action
-  }
-}
 
 @MainActor
 public struct PopupMessage: Sendable, Identifiable {
   public let id: UUID
+  
   public let title: String
   public let icon: String?
   public let message: String?
@@ -50,51 +40,9 @@ public struct PopupMessage: Sendable, Identifiable {
   }
 }
 
-extension PopupMessage {
-  static let example01 = PopupMessage(
-    "I am loading",
-    icon: Icons.getRandomIcon,
-    message: "Here is a random icon, and a loading indicator.",
-    isLoading: true,
-    role: .normal,
-    dismissal: .automatic(2)
-  )
-
-  static let example02 = PopupMessage(
-    "Library Exported Successfully",
-    icon: "checkmark.circle.fill",
-    message: "Here is some example text",
-    isLoading: true,
-    role: .error,
-    action: PopupAction(title: "Test button action", action: {
-      print("Hello it's an aciton")
-    })
-  )
-
+extension PopupMessage: ExpressibleByStringLiteral {
+  public init(stringLiteral value: StringLiteralType) { .init(value) }
 }
-
-public enum PopupRole {
-  case normal
-  case warning
-  case error
-  
-  public var colour: Color {
-    switch self {
-      case .normal:
-        return .gray
-      case .warning:
-        return .yellow
-      case .error:
-        return .red
-    }
-  }
-}
-
-//public enum ErrorSeverity: Equatable {
-//  case error
-//  case warning
-//
-//}
 
 public enum PopupLocation: String, Sendable, Equatable {
   case main
@@ -107,19 +55,17 @@ public enum PopupLocation: String, Sendable, Equatable {
 public enum PopupDismissBehaviour: Equatable {
   case automatic(TimeInterval, showsIndicator: Bool = false)
   case manual
-  
+
   public var autoDismissDuration: TimeInterval? {
-    if case .automatic(let interval, _) = self {
-      return interval
-    } else {
+    guard case .automatic(let interval, _) = self else {
       return nil
     }
+    return interval
   }
   public var shouldShowDismissTimingIndicator: Bool {
-    if case .automatic(_, let showsIndicator) = self {
-      return showsIndicator
-    } else {
+    guard case .automatic(_, let showsIndicator) = self else {
       return false
     }
+    return showsIndicator
   }
 }

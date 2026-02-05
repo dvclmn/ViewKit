@@ -71,3 +71,28 @@ public struct ImportHandler {
     return try loadData(from: url, asType: type)
   }
 }
+
+extension ImportHandler {
+  /// Load and decode Data from a file URL.
+  public static func loadSecurityScoped<T: Decodable>(
+    result: Result<URL, Error>,
+    asType type: T.Type,
+  ) throws -> T {
+
+    switch result {
+      case .success(let url):
+
+        defer { url.stopAccessingSecurityScopedResource() }
+
+        /// Start accessing security-scoped resource
+        guard url.startAccessingSecurityScopedResource() else {
+          throw ImportError.failedSecurityScopedAccess(url.lastPathComponent)
+        }
+
+        return try loadData(from: url, asType: type)
+
+      case .failure(let error):
+        throw ImportError.fileImporterFailure(error)
+    }
+  }
+}
