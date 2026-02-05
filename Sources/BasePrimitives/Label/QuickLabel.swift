@@ -10,7 +10,8 @@ import SwiftUI
 public struct QuickLabel: Sendable, Codable, Equatable, Hashable {
   public var text: String
   public let icon: IconLiteral?
-  public let role: Role?
+  public let role: ActionRole?
+//  public let role: Role?
 }
 
 // MARK: - Initialisers
@@ -19,7 +20,7 @@ extension QuickLabel {
   public init(
     _ text: String,
     icon: IconLiteral? = nil,
-    role: Role? = nil
+    role: ActionRole? = nil
   ) {
     self.text = text
     self.icon = icon
@@ -31,7 +32,7 @@ extension QuickLabel {
   public init(
     _ text: String,
     symbol symbolString: String?,
-    role: Role? = nil
+    role: ActionRole? = nil
   ) {
     self.init(
       text,
@@ -53,19 +54,3 @@ extension QuickLabel: CustomStringConvertible {
   }
 }
 
-extension QuickLabel {
-
-  public enum Role: Equatable, Sendable, Codable {
-    case success
-    case destructive
-    case warning
-
-    var colour: Color {
-      switch self {
-        case .success: .green
-        case .destructive: .red
-        case .warning: .yellow
-      }
-    }
-  }
-}

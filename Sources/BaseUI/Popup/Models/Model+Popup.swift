@@ -12,29 +12,32 @@ import SwiftUI
 public struct PopupMessage: Sendable, Identifiable {
   public let id: UUID
   
-  public let title: String
-  public let icon: String?
+  public let label: QuickLabel
+//  public let title: String
+//  public let icon: String?
   public let message: String?
   public let isLoading: Bool
-  public let role: PopupRole
+//  public let role: PopupRole
   public let dismissal: PopupDismissBehaviour
   public let action: PopupAction?
 
   public init(
     _ title: String,
-    icon: String? = nil,
+    icon: IconLiteral? = nil,
     message: String? = nil,
     isLoading: Bool = false,
-    role: PopupRole = .normal,
+    role: ActionRole = .neutral,
     dismissal: PopupDismissBehaviour = .automatic(3.5),
     action: PopupAction? = nil
   ) {
     self.id = UUID()
-    self.title = title
-    self.icon = icon
+//    self.title = title
+//    self.icon = icon
+    
+    self.label = QuickLabel(title, icon: icon, role: role)
+    
     self.message = message
     self.isLoading = isLoading
-    self.role = role
     self.dismissal = dismissal
     self.action = action
   }
@@ -52,20 +55,3 @@ public enum PopupLocation: String, Sendable, Equatable {
 
 }
 
-public enum PopupDismissBehaviour: Equatable {
-  case automatic(TimeInterval, showsIndicator: Bool = false)
-  case manual
-
-  public var autoDismissDuration: TimeInterval? {
-    guard case .automatic(let interval, _) = self else {
-      return nil
-    }
-    return interval
-  }
-  public var shouldShowDismissTimingIndicator: Bool {
-    guard case .automatic(_, let showsIndicator) = self else {
-      return false
-    }
-    return showsIndicator
-  }
-}
