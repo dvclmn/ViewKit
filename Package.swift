@@ -45,7 +45,6 @@ let package = Package(
       name: "GestureKit",
       targets: [
         "GestureKit",
-//        "LilyPad",
       ]
     ),
 
@@ -176,16 +175,6 @@ let package = Package(
       ]
     ),
 
-//    .target(
-//      name: "LilyPad",
-//      dependencies: [
-//        .module(.coreTools),
-//        .module(.gestureKit),
-//        .module(.colourKit),
-//        .casePaths,
-//      ]
-//    ),
-
     .target(
       name: "MotionKit",
       dependencies: [
@@ -240,10 +229,14 @@ let package = Package(
       ],
     ),
 
-    // MARK: - Forwarding modules
+    // MARK: - Test targets
     .testTarget(
       name: "SharedHelpersTests",
       dependencies: [.module(.sharedHelpers)]
+    ),
+    .testTarget(
+      name: "BasePrimitivesTests",
+      dependencies: [.module(.primitives)]
     ),
 
   ],

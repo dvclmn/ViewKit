@@ -178,9 +178,12 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
   /// Divides both axes by `divisor`, clamping the results at 0.
   ///
   /// Negative results are clamped to zero.
-  // TODO: Consider cases where the divisor itself could cause division by zero
-  // And whether I want to return zero, fallback on something, etc
+  /// If `divisor` is zero or non-finite, returns a value with both axes set to zero.
   public func divideBoth(by divisor: Component) -> Self {
+    // Return zeros when divisor is zero or non-finite to guarantee a value.
+    guard divisor.isFinite, divisor != 0 else {
+      return self.adjustBoth { _ in 0 }
+    }
     return self.adjustBoth { value in
       let divided = value / divisor
       return Swift.max(0, divided)
@@ -191,16 +194,46 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
   ///
   /// The selected component (respecting `mapping`) is used as the divisor for both
   /// horizontal and vertical components; results are clamped to zero.
+  /// If the selected divisor is zero or non-finite, returns a value with both axes set to zero.
   public func divideBoth(
     by divisorProvider: Self,
     using axis: GridAxis,
     mapping: AxisMapping = .default
   ) -> Self {
     let divisor = divisorProvider.value(along: axis, mapping: mapping)
+    // Return zeros when divisor is zero or non-finite to guarantee a value.
+    guard divisor.isFinite, divisor != 0 else {
+      return self.adjustBoth(mapping: mapping) { _ in 0 }
+    }
     return self.adjustBoth(mapping: mapping) { a, b in
       let aSafe = Swift.max(0, a / divisor)
       let bSafe = Swift.max(0, b / divisor)
       return (aSafe, bSafe)
+    }
+  }
+
+  /// Failable variant: divides both axes by `divisor` and returns `nil` if `divisor` is zero or non-finite.
+  ///
+  /// On success, negative results are clamped to zero.
+  public func dividingBothExactly(by divisor: Component) -> Self? {
+    guard divisor.isFinite, divisor != 0 else { return nil }
+    return self.adjustBoth { value in
+      Swift.max(0, value / divisor)
+    }
+  }
+
+  /// Failable variant: divides both axes by a single divisor read from `divisorProvider` along `axis`.
+  ///
+  /// Returns `nil` if the selected divisor is zero or non-finite. On success, results are clamped to zero.
+  public func dividingBothExactly(
+    by divisorProvider: Self,
+    using axis: GridAxis,
+    mapping: AxisMapping = .default
+  ) -> Self? {
+    let divisor = divisorProvider.value(along: axis, mapping: mapping)
+    guard divisor.isFinite, divisor != 0 else { return nil }
+    return self.adjustBoth(mapping: mapping) { a, b in
+      (Swift.max(0, a / divisor), Swift.max(0, b / divisor))
     }
   }
 
