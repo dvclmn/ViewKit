@@ -1,5 +1,5 @@
 //
-//  FloatAdjustable.swift
+//  AdjustableByAxis.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 15/12/2025.
@@ -24,8 +24,8 @@ extension CGPoint: AdjustableByAxis {}
 extension UnitPoint: AdjustableByAxis {}
 extension CGVector: AdjustableByAxis {}
 
-/// MARK: Axis-aware single-axis adjustments
-///
+// MARK: Axis-aware single-axis adjustments
+
 /// Helpers to read/modify a single component along a given `GridAxis`, optionally
 /// using an `AxisMapping` to resolve which stored component is considered horizontal
 /// or vertical for the current context.
@@ -73,8 +73,8 @@ extension AdjustableByAxis {
   }
 }
 
-/// MARK: Dual-axis numeric adjustments
-///
+// MARK: Dual-axis numeric adjustments
+
 /// Utilities for applying unary/binary operations to both components of a value whose
 /// components are `BinaryFloatingPoint` (e.g. `CGFloat`). These methods make it easy to
 /// scale, combine, or otherwise coordinate the horizontal/vertical components together
@@ -142,17 +142,22 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
   public func adjustBoth(
     transform: (Component) -> Component
   ) -> Self {
-    let h = value(along: .horizontal)
-    let v = value(along: .vertical)
+    return adjustBoth(mapping: .default) { h, v in
+      (transform(h), transform(v))
+    }
+  }
 
-    let newH = transform(h)
-    let newV = transform(v)
-
-    let result =
-      self
-      .setting(newH, along: .horizontal)
-      .setting(newV, along: .vertical)
-    return result
+  /// Applies the same unary `transform` independently to both axes using the provided mapping.
+  ///
+  /// This variant makes the mapping explicit. It reads both axis components using `mapping`,
+  /// applies `transform` to each value, and writes the results back honoring `mapping`.
+  public func adjustBoth(
+    mapping: AxisMapping = .default,
+    transform: (Component) -> Component
+  ) -> Self {
+    return adjustBoth(mapping: mapping) { h, v in
+      (transform(h), transform(v))
+    }
   }
 
   /// Multiplies both axes by a single factor read from `factorProvider` along `axis`.
@@ -173,6 +178,8 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
   /// Divides both axes by `divisor`, clamping the results at 0.
   ///
   /// Negative results are clamped to zero.
+  // TODO: Consider cases where the divisor itself could cause division by zero
+  // And whether I want to return zero, fallback on something, etc
   public func divideBoth(by divisor: Component) -> Self {
     return self.adjustBoth { value in
       let divided = value / divisor

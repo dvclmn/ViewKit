@@ -77,10 +77,25 @@ extension AdjustableByAxis {
     with other: Other,
     transform: (_ lhs: Component, _ rhs: Component) -> Component
   ) -> Self where Other.Component == Component {
+    return self.adjustBoth(with: other, mapping: .default, transform: transform)
+  }
 
-    self.adjustBoth(with: other) { _, lhs, rhs in
-      transform(lhs, rhs)
+  /// Mapping-aware variant: combines this value with `other` component-wise using `transform`.
+  ///
+  /// Values for each axis are read using `mapping` and written back honoring `mapping`.
+  public func adjustBoth<Other: AdjustableByAxis>(
+    with other: Other,
+    mapping: AxisMapping = .default,
+    transform: (_ lhs: Component, _ rhs: Component) -> Component
+  ) -> Self where Other.Component == Component {
+    var result = self
+    for axis in [GridAxis.horizontal, .vertical] {
+      let lhs = self.value(along: axis, mapping: mapping)
+      let rhs = other.value(along: axis, mapping: mapping)
+      let newValue = transform(lhs, rhs)
+      result = result.setting(newValue, along: axis, mapping: mapping)
     }
+    return result
   }
 
   /// Component-wise combination where the transform also receives the `GridAxis` being processed.
@@ -90,16 +105,22 @@ extension AdjustableByAxis {
     with other: Other,
     transform: (_ axis: GridAxis, _ lhs: Component, _ rhs: Component) -> Component
   ) -> Self where Other.Component == Component {
+    return self.adjustBoth(with: other, mapping: .default, transform: transform)
+  }
 
+  /// Mapping-aware variant: component-wise combination where the transform also receives the `GridAxis`.
+  public func adjustBoth<Other: AdjustableByAxis>(
+    with other: Other,
+    mapping: AxisMapping = .default,
+    transform: (_ axis: GridAxis, _ lhs: Component, _ rhs: Component) -> Component
+  ) -> Self where Other.Component == Component {
     var result = self
-
     for axis in [GridAxis.horizontal, .vertical] {
-      let lhs = self.value(along: axis)
-      let rhs = other.value(along: axis)
+      let lhs = self.value(along: axis, mapping: mapping)
+      let rhs = other.value(along: axis, mapping: mapping)
       let newValue = transform(axis, lhs, rhs)
-      result = result.setting(newValue, along: axis)
+      result = result.setting(newValue, along: axis, mapping: mapping)
     }
-
     return result
   }
 }
