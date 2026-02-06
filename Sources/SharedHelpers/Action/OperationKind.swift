@@ -8,7 +8,7 @@
 import EnumMacros
 
 @CaseDetection
-enum UpdateKind {
+public enum UpdateKind {
   case withUndo(action: String? = nil)
   case standard
 }

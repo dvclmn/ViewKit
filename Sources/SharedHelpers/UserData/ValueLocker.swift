@@ -51,6 +51,6 @@ import Foundation
 /// ```
 public protocol ValueLocker<Value> {
   associatedtype Value
-  // Mutate the underlying persisted value in a safe, serialized manner.
-  func withLock(_ update: (inout Value) -> Void)
+  /// Mutate the underlying persisted value in a safe, serialized manner.
+  func withLock(_ update: @escaping (inout Value) -> Void)
 }

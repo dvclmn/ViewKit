@@ -14,13 +14,14 @@ public enum LoadState<Value> {
   case ready(Value)  // hydrated and ready
 }
 
+@MainActor
 public protocol UserDataHandler: Observation.Observable, AnyObject {
   associatedtype Value
 
   var dataState: LoadState<Value> { get set }
-  var storage: Value { get set }
-  
-  var locker: any ​Value​Locker​<​Value> { get }
+  //  var storage: Value { get set }
+
+  //  var locker: any ValueLocker<Value> { get }
 
   /// Make this a `weak var`
   var undoManager: UndoManager? { get set }
@@ -30,23 +31,24 @@ public protocol UserDataHandler: Observation.Observable, AnyObject {
 extension UserDataHandler {
 
   /// Ready-only accessor. Use this only inside views that are presented after gating on `.ready`.
-  var userData: Value {
+  @MainActor
+  public var userData: Value {
     get { requireData() }
     set { setValue { $0 = newValue } }
   }
 
   /// If you still want an optional for convenience in a few places:
-  var userDataIfPresent: Value? {
+  public var userDataIfPresent: Value? {
     if case .ready(let data) = dataState { return data }
     return nil
   }
 
-  var isReady: Bool {
+  public var isReady: Bool {
     if case .ready = dataState { return true }
     return false
   }
 
-  func setReady(_ value: Value) {
+  public func setReady(_ value: Value) {
     dataState = .ready(value)
   }
 
@@ -66,22 +68,21 @@ extension UserDataHandler {
   }
 
   @MainActor
-  func setValue<T>(_ keyPath: WritableKeyPath<Value, T>, to value: T) {
+  public func setValue<T>(_ keyPath: WritableKeyPath<Value, T>, to value: T) {
     updateData { $0[keyPath: keyPath] = value }
   }
 
   @MainActor
-  func setValue(
+  public func setValue(
     action: UpdateKind = .standard,
     perform change: (inout Value) -> Void
   ) {
     updateData(action, perform: change)
-    //    self.$breathingWaveStorage.withLock { change(&$0) }
   }
 
   /// Binding to a non-optional wave (use only in ready path)
   @MainActor
-  func dataBinding(_ action: UpdateKind = .standard) -> Binding<Value> {
+  public func dataBinding(_ action: UpdateKind = .standard) -> Binding<Value> {
     Binding(
       get: { self.requireData() },
       set: { newValue in
@@ -123,53 +124,58 @@ extension UserDataHandler {
   }
 
   @MainActor
-  func userDataDidChange(
-    _ isDebugging: Bool = false
+  public func userDataDidChange(
+    _ isDebugging: Bool = false,
+    updateStorage: @escaping (Value) -> Void,
   ) {
-    guard let data = userDataIfPresent else {
-      if isDebugging {
-        print("No local in-memory data found, nothing to save. \(Date.debug)")
-      }
-      return
-    }
-    
+    //  ) -> Value {
+    //    guard let data = userDataIfPresent else {
+    //      if isDebugging {
+    //        print("No local in-memory data found, nothing to save. \(Date.debug)")
+    //      }
+    //
+    //    }
+
     debouncer.execute { @MainActor in
-      self.locker.withLock { storage in
-        if isDebugging {
-          print("Saving now. \(Date.debug)")
-          print("Diff: \(diff(storage, data))\n\n")
-        }
-        storage = data
-      }
+      updateStorage(self.requireData())
+      //      updateStorage(&data)
+      //      updateStorage { storage in
+      ////      self.locker.withLock { storage in
+      //        if isDebugging {
+      //          print("Saving now. \(Date.debug)")
+      //          print("Diff: \(diff(storage, data))\n\n")
+      //        }
+      //        storage = data
+      //      }
     }
   }
-  
-//  @MainActor
-//  func userDataDidChange(
-//    _ isDebugging: Bool = false,
-//    updateWithLock: (inout Value) -> Void,
-//  ) {
-//    guard let data = userDataIfPresent else {
-//      if isDebugging {
-//        print("No local in-memory data found, nothing to save to storage. \(Date.debug)")
-//      }
-//      return
-//    }
-//    debouncer.execute { @MainActor in
-//      updateWithLock {
-//        if isDebugging {
-//          print("Saving stage config now. \(Date.debug)")
-//          print("Diff: \(diff($0, data))\n\n")
-//        }
-//        $0 = data
-//      }
-//      //      self.$storage.withLock {
-//      //        if isDebugging {
-//      //          print("Saving stage config now. \(Date.debug)")
-//      //          print("Diff: \(diff($0, data))\n\n")
-//      //        }
-//      //        $0 = data
-//      //      }
-//    }
-//  }
+
+  //  @MainActor
+  //  func userDataDidChange(
+  //    _ isDebugging: Bool = false,
+  //    updateWithLock: (inout Value) -> Void,
+  //  ) {
+  //    guard let data = userDataIfPresent else {
+  //      if isDebugging {
+  //        print("No local in-memory data found, nothing to save to storage. \(Date.debug)")
+  //      }
+  //      return
+  //    }
+  //    debouncer.execute { @MainActor in
+  //      updateWithLock {
+  //        if isDebugging {
+  //          print("Saving stage config now. \(Date.debug)")
+  //          print("Diff: \(diff($0, data))\n\n")
+  //        }
+  //        $0 = data
+  //      }
+  //      //      self.$storage.withLock {
+  //      //        if isDebugging {
+  //      //          print("Saving stage config now. \(Date.debug)")
+  //      //          print("Diff: \(diff($0, data))\n\n")
+  //      //        }
+  //      //        $0 = data
+  //      //      }
+  //    }
+  //  }
 }
