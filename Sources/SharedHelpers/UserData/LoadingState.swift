@@ -19,6 +19,8 @@ public protocol UserDataHandler: Observation.Observable, AnyObject {
 
   var dataState: LoadState<Value> { get set }
   var storage: Value { get set }
+  
+  var locker: any ​Value​Locker​<​Value> { get }
 
   /// Make this a `weak var`
   var undoManager: UndoManager? { get set }
@@ -122,30 +124,52 @@ extension UserDataHandler {
 
   @MainActor
   func userDataDidChange(
-    _ isDebugging: Bool = false,
-    updateWithLock: (inout Value) -> Void,
+    _ isDebugging: Bool = false
   ) {
     guard let data = userDataIfPresent else {
       if isDebugging {
-        print("No local in-memory data found, nothing to save to storage. \(Date.debug)")
+        print("No local in-memory data found, nothing to save. \(Date.debug)")
       }
       return
     }
+    
     debouncer.execute { @MainActor in
-      updateWithLock {
+      self.locker.withLock { storage in
         if isDebugging {
-                    print("Saving stage config now. \(Date.debug)")
-                    print("Diff: \(diff($0, data))\n\n")
-                  }
-                  $0 = data
+          print("Saving now. \(Date.debug)")
+          print("Diff: \(diff(storage, data))\n\n")
+        }
+        storage = data
       }
-//      self.$storage.withLock {
+    }
+  }
+  
+//  @MainActor
+//  func userDataDidChange(
+//    _ isDebugging: Bool = false,
+//    updateWithLock: (inout Value) -> Void,
+//  ) {
+//    guard let data = userDataIfPresent else {
+//      if isDebugging {
+//        print("No local in-memory data found, nothing to save to storage. \(Date.debug)")
+//      }
+//      return
+//    }
+//    debouncer.execute { @MainActor in
+//      updateWithLock {
 //        if isDebugging {
 //          print("Saving stage config now. \(Date.debug)")
 //          print("Diff: \(diff($0, data))\n\n")
 //        }
 //        $0 = data
 //      }
-    }
-  }
+//      //      self.$storage.withLock {
+//      //        if isDebugging {
+//      //          print("Saving stage config now. \(Date.debug)")
+//      //          print("Diff: \(diff($0, data))\n\n")
+//      //        }
+//      //        $0 = data
+//      //      }
+//    }
+//  }
 }
