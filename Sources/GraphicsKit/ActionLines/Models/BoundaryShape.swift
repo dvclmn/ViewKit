@@ -31,6 +31,10 @@ public enum BoundaryShape: String, Hashable, CaseIterable, Identifiable, Pickabl
   }
 }
 
+extension BoundaryShape {
+  
+}
+
 extension ActionLine.BoundaryKind {
   public func shape(from config: ActionLine.Configuration) -> ActionLine.BoundaryStyle {
     switch self {
@@ -38,14 +42,4 @@ extension ActionLine.BoundaryKind {
       case .outer: config.outerShape
     }
   }
-  
-//  public func variation(
-//    at index: Int,
-//    from variations: ActionLineVariations
-//  ) -> Double {
-//    switch self {
-//      case .inner: return variations.boundaryInner[index]
-//      case .outer: return variations.boundaryOuter[index]
-//    }
-//  }
 }

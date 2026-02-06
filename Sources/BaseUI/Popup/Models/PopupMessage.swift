@@ -46,6 +46,20 @@ extension PopupMessage {
 
 }
 
+extension PopupMessage: CustomStringConvertible {
+  public var description: String {
+    DisplayString {
+      Indented("Popup Message") {
+        Labeled("Label", value: label)
+        Labeled("Message", value: message)
+        Labeled("Loading?", value: isLoading)
+        Labeled("Dismiss Behaviour", value: dismissal)
+        Labeled("Action", value: action)
+      }
+    }.text
+  }
+}
+
 extension PopupMessage: ExpressibleByStringLiteral {
   public init(stringLiteral value: StringLiteralType) {
     self.init(value)

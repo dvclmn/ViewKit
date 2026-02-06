@@ -14,7 +14,7 @@ public struct ConfiguredWave: WaveShaped, Sendable, Identifiable, Hashable, Coda
   public var wave: FloatWave
   public var config: FloatWaveConfig
 
-  public init(_ wave: FloatWave, config: FloatWaveConfig = .init()) {
+  public init(_ wave: FloatWave = .example01, config: FloatWaveConfig = .init()) {
     self.wave = wave
     self.config = config
   }

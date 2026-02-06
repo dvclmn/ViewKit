@@ -5,12 +5,12 @@
 //  Created by Dave Coleman on 9/6/2025.
 //
 
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
 @available(macOS 15.0, iOS 18.0, *)
 public struct SectionContent: View {
-//  @Environment(\.layoutAxis) private var layoutAxis
+  //  @Environment(\.layoutAxis) private var layoutAxis
   @Environment(\.layoutType) private var layoutType
   @Environment(\.layoutSpacing) private var layoutSpacing
 
@@ -26,17 +26,17 @@ public struct SectionContent: View {
     /// `ForEach(subviews: subviewCollection) { subview in`
     ForEach(collection) { sectionElement in
 
-      let end = collection.endIndex
-      collection.count
-      
-      if sectionElement.id == collection[end]. {
-        sectionElement
-          .border(Color.green.opacity(0.3))
-      }
-      
+      //      let end = collection.endIndex
+      //      collection.count
+
+      //      if sectionElement.id == collection[end]. {
+      //        sectionElement
+      //          .border(Color.green.opacity(0.3))
+      //      }
+
       if sectionElement.containerValues.isShowingSectionHeader {
         sectionElement.header
-          .foregroundStyle(.secondary.opacity(0.8))
+//          .foregroundStyle(.secondary.opacity(0.8))
           .fontWeight(.medium)
       }
 

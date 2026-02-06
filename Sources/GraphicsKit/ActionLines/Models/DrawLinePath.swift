@@ -82,12 +82,6 @@ extension LinePathContext {
       if i == 0 {
         spinePath.move(to: pt)
       } else {
-
-        //        spinePath.addShape(at: pt, radius: 6, using: .circle)
-        //        spinePath.addQuadCurve(
-        //          to: pt,
-        //          control: pt.shifted(dx: 3, dy: 3)
-        //        )
         spinePath.addLine(to: pt)
       }
     }

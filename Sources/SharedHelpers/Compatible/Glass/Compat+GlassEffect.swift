@@ -9,9 +9,9 @@ import SwiftUI
 
 extension View {
   @ViewBuilder
-  public func glassEffectCompatible<S: Shape>(_ shape: S) -> some View {
+  public func glassEffectCompatible<S: Shape>(_ shape: S, isEnabled: Bool = true) -> some View {
     if #available(macOS 26, iOS 26, *) {
-      glassEffect(.regular, in: shape)
+      glassEffect(isEnabled ? .regular : .identity, in: shape)
     } else {
       self
     }

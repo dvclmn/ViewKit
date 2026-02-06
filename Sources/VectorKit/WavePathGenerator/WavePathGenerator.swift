@@ -52,7 +52,7 @@ extension WavePathGenerator {
   ) {
     processPath(with: interpolation, stamper: { _, _, _ in }, path: &path)
   }
-  
+
   public mutating func editPath(
     withStyle style: PathStyle,
     path: inout Path

@@ -19,18 +19,28 @@ import SwiftUI
 /// ```
 ///
 
-struct PopupKey: @preconcurrency EnvironmentKey {
-  @MainActor
-  static let defaultValue: Popup? = Popup()
-}
-
+//struct PopupKey: @preconcurrency EnvironmentKey {
+//  @MainActor
+//  static let defaultValue: Popup? = Popup()
+//}
 
 extension EnvironmentValues {
-  public var popup: Popup? {
-    get { self[PopupKey.self] }
-    set { self[PopupKey.self] = newValue }
-  }
+  @Entry public var popup: Popup?
 }
+
+//extension View {
+//  func setEffectShouldPulse(_ shouldPulse: Bool) -> some View {
+//    self.environment(\.effectShouldPulse, shouldPulse)
+//  }
+//}
+
+
+//extension EnvironmentValues {
+//  public var popup: Popup? {
+//    get { self[PopupKey.self] }
+//    set { self[PopupKey.self] = newValue }
+//  }
+//}
 /// Cannot use the below syntax yet, complains about
 /// main actor in macro expansion
 //extension EnvironmentValues {

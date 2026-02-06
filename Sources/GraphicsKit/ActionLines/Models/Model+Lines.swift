@@ -23,6 +23,7 @@ extension ActionLine {
     public var cycles: CGFloat
 
     public var shape: LineShape
+    
 
     public init(
       shape: LineShape,

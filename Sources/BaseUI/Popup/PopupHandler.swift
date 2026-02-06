@@ -22,19 +22,20 @@ public final class Popup: Sendable {
 extension Popup {
 
   package func showAndHidePopup(popupMessage: PopupMessage) async {
+    print("Showing a popup at \(Date.debug): \(popupMessage)")
     popupTask?.cancel()
-
     popupTask = Task { @MainActor in
       await displayPopup(popupMessage: popupMessage)
 
-      if let duration = popupMessage.dismissal.autoDismissDuration {
-        do {
-          try await Task.sleep(for: .seconds(duration))
-          await hidePopup()
+      /// If no auto-dismiss duration, then we're done, and can exit
+      guard let duration = popupMessage.dismissal.autoDismissDuration else { return }
+      
+      do {
+        try await Task.sleep(for: .seconds(duration))
+        await hidePopup()
 
-        } catch {
+      } catch {
 
-        }
       }
 
     }
