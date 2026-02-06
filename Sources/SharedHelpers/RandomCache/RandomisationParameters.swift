@@ -25,12 +25,6 @@ import Foundation
 /// A type-safe key for influencing random generation beyond numeric bounds.
 ///
 /// Create static keys in extensions to add new influences without colliding names.
-public struct InfluenceKey<Value: Hashable>: Hashable, ExpressibleByStringLiteral, CustomStringConvertible {
-  public let rawValue: String
-  public init(_ rawValue: String) { self.rawValue = rawValue }
-  public init(stringLiteral value: String) { self.rawValue = value }
-  public var description: String { rawValue }
-}
 
 /// Expresses the numeric domain from which random values may be drawn.
 /// Use a single closed range for simple cases, or multiple disjoint ranges to
@@ -42,8 +36,8 @@ public enum Bounds<T: BinaryFloatingPoint>: Hashable {
   /// Flattens to an array of ranges for algorithms that operate over sequences.
   public var ranges: [ClosedRange<T>] {
     switch self {
-    case .single(let r): return [r]
-    case .multiple(let rs): return rs
+      case .single(let r): return [r]
+      case .multiple(let rs): return rs
     }
   }
 }
@@ -51,7 +45,7 @@ public enum Bounds<T: BinaryFloatingPoint>: Hashable {
 ///
 /// This replaces the ambiguous `additionalParams` with a type-safe set of
 /// named influences that call sites can extend using `InfluenceKey`.
-public struct RandomizationSpec<T: BinaryFloatingPoint>: Hashable {
+public struct RandomisationSpec<T: BinaryFloatingPoint>: Hashable {
 
   /// Numeric bounds that define the domain for random value generation.
   public var bounds: Bounds<T>
@@ -59,18 +53,6 @@ public struct RandomizationSpec<T: BinaryFloatingPoint>: Hashable {
   /// Additional, named influences that may affect generation (e.g., smoothing,
   /// distribution skew, clamping policy). Values are type-safe per key.
   public var influences: [AnyInfluenceKey: AnyHashable]
-
-  /// Type-erased key wrapper to keep `influences` dictionary heterogeneous while
-  /// preserving key identity and hashing.
-  public struct AnyInfluenceKey: Hashable, CustomStringConvertible {
-    private let box: AnyHashable
-    private let _description: () -> String
-    public init<Value>(_ key: InfluenceKey<Value>) {
-      self.box = AnyHashable(key.rawValue)
-      self._description = { key.rawValue }
-    }
-    public var description: String { _description() }
-  }
 
   public init(bounds: Bounds<T>, influences: [AnyInfluenceKey: AnyHashable] = [:]) {
     self.bounds = bounds
@@ -93,7 +75,8 @@ public struct RandomizationSpec<T: BinaryFloatingPoint>: Hashable {
   }
 
   /// Set a typed influence value for a given key.
-  public mutating func setInfluence<Value>(_ value: Value, for key: InfluenceKey<Value>) where Value: Hashable {
+  public mutating func setInfluence<Value>(_ value: Value, for key: InfluenceKey<Value>)
+  where Value: Hashable {
     influences[AnyInfluenceKey(key)] = AnyHashable(value)
   }
 }
@@ -101,11 +84,11 @@ public struct RandomizationSpec<T: BinaryFloatingPoint>: Hashable {
 // MARK: - Migration aids
 
 /// Backwards-compatible alias so existing call sites compile while migrating.
-public typealias RandomisationParameters<T: BinaryFloatingPoint> = RandomizationSpec<T>
+public typealias RandomisationParameters<T: BinaryFloatingPoint> = RandomisationSpec<T>
 
-public extension RandomizationSpec {
+extension RandomisationSpec {
   /// Legacy-style initializer to ease migration from `ranges` + `additionalParams`.
-  init(ranges: [ClosedRange<T>] = [], additionalParams: [String: AnyHashable] = [:]) {
+  public init(ranges: [ClosedRange<T>] = [], additionalParams: [String: AnyHashable] = [:]) {
     let bounds: Bounds<T> = ranges.count == 1 ? .single(ranges[0]) : .multiple(ranges)
     var influences: [AnyInfluenceKey: AnyHashable] = [:]
     // Map legacy string keys into InfluenceKey<String> for continuity.
@@ -116,13 +99,12 @@ public extension RandomizationSpec {
 
 // MARK: - Common influence keys
 
-public extension InfluenceKey where Value == Double {
+extension InfluenceKey where Value == Double {
   /// Bias/skew factor in the range [-1, 1], where 0 is uniform.
-  static var skew: InfluenceKey<Double> { "skew" }
+  public static var skew: InfluenceKey<Double> { "skew" }
 }
 
-public extension InfluenceKey where Value == Bool {
+extension InfluenceKey where Value == Bool {
   /// Whether to favor continuity between successive values.
-  static var smoothTransitions: InfluenceKey<Bool> { "smoothTransitions" }
+  public static var smoothTransitions: InfluenceKey<Bool> { "smoothTransitions" }
 }
-
