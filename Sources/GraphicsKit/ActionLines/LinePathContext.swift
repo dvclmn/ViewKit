@@ -10,9 +10,13 @@ import SwiftUI
 struct LinePathContext {
   let start: CGPoint
   let end: CGPoint
-  let style: ActionLine.Style
+  let style: ActionLine.LineStyle
 
-  init(from start: CGPoint, to end: CGPoint, with style: ActionLine.Style) {
+  init(
+    from start: CGPoint,
+    to end: CGPoint,
+    with style: ActionLine.LineStyle
+  ) {
     self.start = start
     self.end = end
     self.style = style

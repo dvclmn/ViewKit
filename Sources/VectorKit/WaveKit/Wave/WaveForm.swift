@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Waveform: String, Sendable, Codable, Hashable, CaseIterable, Identifiable {
+public enum Waveform: String, Sendable, Codable, Equatable, Hashable, CaseIterable, Identifiable {
   case sine
   case triangle
   case square

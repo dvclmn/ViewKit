@@ -11,13 +11,6 @@ import Foundation
 public protocol WaveShaped {
   associatedtype Value: WaveFloat
 
-  //  var id: UUID { get }
-  //  var amplitude: Value { get set }
-  //  var frequency: Value { get set }
-  //  var phaseRadians: Value { get set }
-  ////  var phase: Value { get set }
-  //  var waveform: Waveform { get set }
-
   var wave: Wave<Value> { get set }
   var config: WaveConfig<Value> { get set }
 }

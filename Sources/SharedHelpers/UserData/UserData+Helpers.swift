@@ -15,20 +15,12 @@ extension UserDataHandler {
   public var isReady: Bool { dataState.isReady }
 
   /// Useful in cases where I do want to check for a present value
-  public var userDataIfPresent: Value? {
-    dataState.readyValue
-    //    if case .ready(let data) = dataState { return data }
-    //    return nil
-  }
+  public var userDataIfPresent: Value? { dataState.readyValue }
 
   // MARK: - Reading Data
   /// Ready-only accessor. Use this only inside views that are presented after gating on `.ready`.
   @MainActor
-  public var userData: Value {
-    requireData()
-    //    get { requireData() }
-    //    set { setValue { $0 = newValue } }
-  }
+  public var userData: Value { requireData() }
 
   /// Crashes early if misused outside `.ready`.
   /// Backing for the non-optional API

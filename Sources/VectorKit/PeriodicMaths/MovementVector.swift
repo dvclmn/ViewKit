@@ -15,10 +15,11 @@ struct MovementVector {
     frequency: Double = 1.0,
     chaos: Double = 0.3
   ) -> CGPoint {
+    fatalError("Shut up")
     // Use different frequency offsets for x and y to create more organic movement
-    let x = oscillate(in: range, frequency: frequency * 1.0, noise: chaos)
-    let y = oscillate(in: range, frequency: frequency * 1.3, noise: chaos)
-    return CGPoint(x: x, y: y)
+//    let x = oscillate(in: range, frequency: frequency * 1.0, noise: chaos)
+//    let y = oscillate(in: range, frequency: frequency * 1.3, noise: chaos)
+//    return CGPoint(x: x, y: y)
   }
   
   static func randomWander(

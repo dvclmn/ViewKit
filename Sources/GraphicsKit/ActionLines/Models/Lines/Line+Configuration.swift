@@ -12,6 +12,8 @@ public enum ActionLine {}
 
 extension ActionLine {
 
+  /// Attributes of the full Action Lines collective.
+  /// For style of individual lines, see ``ActionLine/LineStyle``
   public struct Configuration: Equatable, Sendable, Codable {
 
     public var density: Double
@@ -19,7 +21,7 @@ extension ActionLine {
     /// Like a clock / radial wipe transition shape
     public var radialCoverage: Double
 
-    public var lineStyle: Style
+    public var lineStyle: LineStyle
 
     public var outerShape: BoundaryStyle
     public var innerShape: BoundaryStyle
@@ -28,20 +30,11 @@ extension ActionLine {
     private var _rotation: Double = 0.0
 
     public init(
-      density: Double = 50,
-      radialCoverage: Double = 1.0,
-      lineStyle: Style = .init(
-        shape: .diamond,
-        minWidth: 1,
-        maxWidth: 12
-      ),
-      outerShape: BoundaryStyle = .init(
-        radius: 1.0,
-        colour: HSVColour(h: 0.25, s: 0.6, v: 0.5),
-      ),
-      innerShape: BoundaryStyle = .init(
-        radius: 0.2
-      ),
+      density: Double,
+      radialCoverage: Double,
+      lineStyle: LineStyle,
+      outerShape: BoundaryStyle,
+      innerShape: BoundaryStyle,
     ) {
       self.density = density
       self.radialCoverage = radialCoverage
@@ -58,6 +51,7 @@ extension ActionLine.Configuration {
   public var rotation: Double {
     get { _rotation / (2 * .pi) }
     set {
+      
       _rotation = (newValue * 2 * .pi).truncatingRemainder(dividingBy: 2 * .pi)
     }
   }
@@ -67,12 +61,3 @@ extension ActionLine.Configuration {
     set { rotation = (newValue / 360).truncatingRemainder(dividingBy: 1) }
   }
 }
-
-//extension ActionLine.Configuration {
-//
-//  /// Linear interpolation helper
-//  private func lerp(_ start: Double, _ end: Double, _ t: Double) -> Double {
-//    start + (end - start) * t
-//  }
-//
-//}

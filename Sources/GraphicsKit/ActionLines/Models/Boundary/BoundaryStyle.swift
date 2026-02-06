@@ -44,8 +44,6 @@ extension ActionLine {
 
 extension ActionLine {
   @CaseDetection
-  //  @CasePathable
-  //  @dynamicMemberLookup
   public enum BoundaryKind: String, CaseIterable, Identifiable, NamedItem {
     case inner
     case outer
@@ -53,14 +51,11 @@ extension ActionLine {
     public var id: String { rawValue }
     public var name: String { rawValue.capitalized }
 
-    public var path: WritableKeyPath<ActionLine.Configuration, BoundaryStyle> {
-      //    public var path: ReferenceWritableKeyPath<ActionLine.Configuration, BoundaryStyle> {
-      //    public var path: ReferenceWritableKeyPath<Binding<ActionLine.Configuration>, BoundaryStyle> {
-      //    public var path: WritableKeyPath<Binding<ActionLine.Configuration>, BoundaryStyle> {
-      switch self {
-        case .inner: \.innerShape
-        case .outer: \.outerShape
-      }
-    }
+//    public var path: WritableKeyPath<ActionLine.Configuration, BoundaryStyle> {
+//      switch self {
+//        case .inner: \.innerShape
+//        case .outer: \.outerShape
+//      }
+//    }
   }
 }

@@ -12,6 +12,7 @@ public protocol UserDataHandler: Observation.Observable, AnyObject {
   associatedtype Value
 
   var dataState: LoadState<Value> { get set }
+  var storage: Value { get set }
 
   /// Make this a `weak var`
   var undoManager: UndoManager? { get set }

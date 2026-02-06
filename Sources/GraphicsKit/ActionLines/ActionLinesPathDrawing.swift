@@ -42,7 +42,7 @@ extension ActionLine {
   public static func drawPath(
     from start: CGPoint,
     to end: CGPoint,
-    style: ActionLine.Style
+    style: ActionLine.LineStyle
   ) -> Path {
     let context = LinePathContext(from: start, to: end, with: style)
     return switch style.shape {

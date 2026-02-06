@@ -26,43 +26,9 @@ public typealias Sampler = WaveSampler<Double>
 /// ```
 /// let ys = WaveSampler<Float>.values(for: .sine, phases: phaseArray)
 /// ```
-public struct WaveSampler<T: WaveFloat> {
-  // MARK: Lookup table configuration
-  /// Number of bits used to address entries in the sine lookup table.
-  /// 11 bits -> 2048 addressable entries (plus one extra for interpolation wrap).
-  @usableFromInline static var tableBits: Int { 11 }
-
-  /// Total number of addressable entries in the lookup table (2^tableBits).
-  @usableFromInline static var tableSize: Int { 1 << tableBits }
-
-  /// Bitmask for wrapping table indices (e.g., `(index) & tableMask`).
-  @usableFromInline static var tableMask: Int { tableSize - 1 }
-
-  /// Table size as a generic floating-point value.
-  @usableFromInline static var tableSizeF: T { T(tableSize) }
-
-}
+public enum WaveSampler<T: WaveFloat> {}
 
 extension WaveSampler {
-  // MARK: Sine table storage
-  /// Lazily computed sine lookup table with an extra sample for linear interpolation.
-  /// The extra element duplicates the first to simplify wrap-around.
-  @usableFromInline static var sineTable: [T] {
-    /// Build once per generic instantiation `T`
-    var table = [T]()
-    table.reserveCapacity(tableSize + 1)
-    let twoPi: T = T(2) * T.pi
-    let denom = tableSizeF
-
-    /// Explicitly lift `i` to `T` to avoid integer/generic arithmetic ambiguity.
-    for i in 0...tableSize {
-      let angle: T = (T(i) * twoPi) / denom
-      let sinAngle = T.waveSin(angle)
-      table.append(sinAngle)
-    }
-    return table
-  }
-
   /// Note: Scalar calls: Calling sin repeatedly per-sample can be relatively expensive.
   /// A lookup table with linear interpolation is extremely fast for single-sample access.
   /// So for scalar sampling (one value(for:at:) at a time), this use of `sineTable`
@@ -81,8 +47,6 @@ extension WaveSampler {
     at phase: T
   ) -> T {
     let p = Wave.wrapUnit(phase)
-//    let p = Wave.wrapToTwoPi(phase)
-    //    let p = T.normalisedPhase(phase)
     return value(for: waveform, phaseRadians: p)
   }
 
@@ -105,7 +69,42 @@ extension WaveSampler {
       case .square: p < T(0.5) ? T(1) : T(-1)
     }
   }
+}
 
+// MARK: - Sine table storage
+extension WaveSampler {
+
+  // MARK: Lookup table configuration
+  /// Number of bits used to address entries in the sine lookup table.
+  /// 11 bits -> 2048 addressable entries (plus one extra for interpolation wrap).
+  @usableFromInline static var tableBits: Int { 11 }
+
+  /// Total number of addressable entries in the lookup table (2^tableBits).
+  @usableFromInline static var tableSize: Int { 1 << tableBits }
+
+  /// Bitmask for wrapping table indices (e.g., `(index) & tableMask`).
+  @usableFromInline static var tableMask: Int { tableSize - 1 }
+
+  /// Table size as a generic floating-point value.
+  @usableFromInline static var tableSizeF: T { T(tableSize) }
+
+  /// Lazily computed sine lookup table with an extra sample for linear interpolation.
+  /// The extra element duplicates the first to simplify wrap-around.
+  @usableFromInline static var sineTable: [T] {
+    /// Build once per generic instantiation `T`
+    var table = [T]()
+    table.reserveCapacity(tableSize + 1)
+    let twoPi: T = T(2) * T.pi
+    let denom = tableSizeF
+
+    /// Explicitly lift `i` to `T` to avoid integer/generic arithmetic ambiguity.
+    for i in 0...tableSize {
+      let angle: T = (T(i) * twoPi) / denom
+      let sinAngle = T.waveSin(angle)
+      table.append(sinAngle)
+    }
+    return table
+  }
   @inlinable
   static func sineLookup(_ phase: T) -> T {
     /// Scale phase in [0, 1) to table space and split into integer/fractional parts.
