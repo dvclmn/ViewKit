@@ -45,10 +45,11 @@ extension RandomGeneratable where Value.RawSignificand: FixedWidthInteger {
     parameters: RandomisationParameters<Value>
   ) -> Value {
     
-    /// Generate a single random value using the provided range
-    guard let range = parameters.ranges.first else {
+    /// Generate a single random value using the first available range
+    guard let range = parameters.domain.ranges.first else {
       return 0
     }
     return Value.random(in: range, using: &generator)
   }
 }
+

@@ -48,10 +48,10 @@ extension ActionLineVariations {
     using generator: inout RandomNumberGenerator,
     parameters spec: RandomisationParameters<Value>
   ) -> Self {
-    
-    // Determine angle and boundary domains. If the spec provided no bounds,
-    // use sensible defaults.
-    let bounds = spec.bounds.ranges
+
+    /// Determine angle and boundary domains. If the spec provided no bounds,
+    /// use sensible defaults.
+    let bounds = spec.domain.ranges
     let angleRanges: [ClosedRange<Double>] = bounds.isEmpty ? [0.0...(2.0 * .pi)] : bounds
     let boundaryRanges: [ClosedRange<Double>] = bounds.isEmpty ? [-1.0...1.0] : bounds
 
@@ -78,26 +78,24 @@ extension ActionLineVariations {
     )
   }
 
-  
-//  public static func generate(
-//    count: Int,
-//    using generator: inout RandomNumberGenerator,
-//    parameters: RandomisationParameters<Value>
-//  ) -> Self {
-//
-//    let baseAngles = (0..<count).map { _ in
-//      Double.random(in: 0...(2 * .pi), using: &generator)
-//    }.sorted()
-//
-//    let boundary = (0..<count).map { _ in
-//      Double.random(in: -1.0...1.0, using: &generator)
-//    }
-//
-//    return ActionLineVariations(
-//      baseAngles: baseAngles,
-//      boundary: boundary,
-//      density: count
-//    )
-//  }
+  //  public static func generate(
+  //    count: Int,
+  //    using generator: inout RandomNumberGenerator,
+  //    parameters: RandomisationParameters<Value>
+  //  ) -> Self {
+  //
+  //    let baseAngles = (0..<count).map { _ in
+  //      Double.random(in: 0...(2 * .pi), using: &generator)
+  //    }.sorted()
+  //
+  //    let boundary = (0..<count).map { _ in
+  //      Double.random(in: -1.0...1.0, using: &generator)
+  //    }
+  //
+  //    return ActionLineVariations(
+  //      baseAngles: baseAngles,
+  //      boundary: boundary,
+  //      density: count
+  //    )
+  //  }
 }
-
