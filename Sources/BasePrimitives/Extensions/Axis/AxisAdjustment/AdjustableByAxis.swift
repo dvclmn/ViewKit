@@ -7,18 +7,15 @@
 
 import SwiftUI
 
-/// Provides a convenient adjustment mechanism
-/// for types with more than one float/integer value
+/// A convenience protocol for types that expose two scalar components addressable by axis.
 ///
-/// Doesn't need to know about dimensions (width/height),
-/// or axes (x/y) or indices (row/col) at all.
+/// Conforming types (for example `CGPoint` (x/y), `CGSize` (width/height), `UnitPoint`,
+/// and `CGVector`) gain ergonomic helpers for reading and writing values along a
+/// `GridAxis` while honoring an `AxisMapping` (identity vs. transposed).
 ///
-/// Operates purely in terms of:
-/// - Axis
-/// - Scalar values
-/// - Reconstruction
-///
-/// And lets the convention do the mapping.
+/// Use these APIs when the usual assumptions (x → horizontal, y → vertical) don't always
+/// hold. By threading an explicit `AxisMapping`, you can write axis-oriented code that
+/// remains correct under rotated/transposed coordinate systems.
 public protocol AdjustableByAxis: AxisKeyPathWritable {}
 
 // MARK: - Adjustable
@@ -27,8 +24,26 @@ extension CGPoint: AdjustableByAxis {}
 extension UnitPoint: AdjustableByAxis {}
 extension CGVector: AdjustableByAxis {}
 
+/// MARK: Axis-aware single-axis adjustments
+///
+/// Helpers to read/modify a single component along a given `GridAxis`, optionally
+/// using an `AxisMapping` to resolve which stored component is considered horizontal
+/// or vertical for the current context.
 extension AdjustableByAxis {
 
+  /// Returns a copy with the component along `axis` set to `newValue`.
+  ///
+  /// The target component is resolved using `mapping`. With `.identity`,
+  /// horizontal maps to the type's primary storage (e.g. `width`/`x`), and vertical
+  /// to the secondary (e.g. `height`/`y`). With `.transposed`, this relationship is flipped.
+  ///
+  /// Example:
+  /// ```swift
+  /// let size = CGSize(width: 10, height: 20)
+  /// let wider = size.adjust(.horizontal, newValue: 30) // width: 30, height: 20
+  /// let taller = size.adjust(.vertical, newValue: 40)   // width: 10, height: 40
+  /// ```
+  /// You can pass `mapping: .transposed` to flip which stored field is touched.
   public func adjust(
     _ axis: GridAxis,
     newValue: Component,
@@ -37,6 +52,16 @@ extension AdjustableByAxis {
     setting(newValue, along: axis, mapping: mapping)
   }
 
+  /// Returns a copy by transforming the component along `axis` with `transform`.
+  ///
+  /// This reads the current value along `axis`, applies `transform`, and writes the
+  /// result back using the provided `mapping`.
+  ///
+  /// Example:
+  /// ```swift
+  /// let point = CGPoint(x: 5, y: 8)
+  /// let shifted = point.adjust(.horizontal) { $0 + 10 } // x: 15, y: 8
+  /// ```
   public func adjust(
     _ axis: GridAxis,
     mapping: AxisMapping = .default,
@@ -48,8 +73,25 @@ extension AdjustableByAxis {
   }
 }
 
+/// MARK: Dual-axis numeric adjustments
+///
+/// Utilities for applying unary/binary operations to both components of a value whose
+/// components are `BinaryFloatingPoint` (e.g. `CGFloat`). These methods make it easy to
+/// scale, combine, or otherwise coordinate the horizontal/vertical components together
+/// while respecting an optional `AxisMapping`.
 extension AdjustableByAxis where Component: BinaryFloatingPoint {
 
+  /// Combines this value with `other` by applying `op` component-wise.
+  ///
+  /// The horizontal components are combined together and the vertical components are
+  /// combined together. The components are located using `mapping`.
+  ///
+  /// Example (component-wise max):
+  /// ```swift
+  /// let a = CGSize(width: 10, height: 5)
+  /// let b = CGSize(width: 8, height: 12)
+  /// let c = a.adjustBoth(using: max, with: b) // (10, 12)
+  /// ```
   public func adjustBoth(
     using op: (Component, Component) -> Component,
     with other: Self,
@@ -66,6 +108,20 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
     }
   }
 
+  /// Combines both components with a single scalar taken from `other` along `axis`.
+  ///
+  /// Extracts the specified axis value from `other` (using `mapping`) and applies `op`
+  /// to both this value's horizontal and vertical components with that single factor.
+  /// Useful for uniform scaling based on one axis.
+  ///
+  /// Example:
+  /// ```swift
+  /// let base = CGSize(width: 10, height: 20)
+  /// let factors = CGSize(width: 2, height: 3)
+  /// // Use the horizontal factor (2) to scale both components
+  /// let scaled = base.adjustBoth(using: *, with: factors, along: .horizontal)
+  /// // => (20, 40)
+  /// ```
   public func adjustBoth(
     using op: (Component, Component) -> Component,
     with other: Self,
@@ -79,20 +135,10 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
     }
   }
 
-  //  public func adjustBoth(
-  //    using op: (Component, Component) -> Component,
-  //    with other: Self,
-  //    mapping: AxisMapping = .default
-  //  ) -> Self {
-  //    let a = value(along: .horizontal, mapping: mapping)
-  //    let b = other.value(along: .horizontal, mapping: mapping)
-  //
-  //    return adjustBoth(mapping: mapping) {
-  //      (op($0, a), op($1, b))
-  //    }
-  //  }
-
-  /// Apply the same unary transform to both axes independently
+  /// Applies the same unary `transform` independently to both axes.
+  ///
+  /// Reads the current horizontal and vertical values, applies `transform` to each,
+  /// and writes the results back.
   public func adjustBoth(
     transform: (Component) -> Component
   ) -> Self {
@@ -109,12 +155,10 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
     return result
   }
 
-  /// Multiply both axes by the same factor
-  /// Mapping is not required here, transform is symmetrical
-  //  public func multiplyBoth(by factor: Component) -> Self {
-  //    return self.adjustBoth { $0 * factor }
-  //  }
-
+  /// Multiplies both axes by a single factor read from `factorProvider` along `axis`.
+  ///
+  /// This is a convenience for uniform scaling based on one of the provider's axes.
+  /// The axis-to-storage relationship is resolved using `mapping`.
   public func multiplyBoth(
     by factorProvider: Self,
     using axis: GridAxis,
@@ -126,7 +170,9 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
     }
   }
 
-  /// Divide both axes by the same divisor, clamping at 0
+  /// Divides both axes by `divisor`, clamping the results at 0.
+  ///
+  /// Negative results are clamped to zero.
   public func divideBoth(by divisor: Component) -> Self {
     return self.adjustBoth { value in
       let divided = value / divisor
@@ -134,6 +180,10 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
     }
   }
 
+  /// Divides both axes by a single divisor read from `divisorProvider` along `axis`.
+  ///
+  /// The selected component (respecting `mapping`) is used as the divisor for both
+  /// horizontal and vertical components; results are clamped to zero.
   public func divideBoth(
     by divisorProvider: Self,
     using axis: GridAxis,
@@ -147,8 +197,21 @@ extension AdjustableByAxis where Component: BinaryFloatingPoint {
     }
   }
 
-  /// Apply a binary transform that can coordinate both axes together
-  /// The transform receives (h, v) and returns (newH, newV)
+  /// Applies a binary transform that can coordinate both axes together.
+  ///
+  /// The closure receives the current `(horizontal, vertical)` values and returns
+  /// a new pair `(newHorizontal, newVertical)`. The read/write of components honors
+  /// the provided `mapping`.
+  ///
+  /// Example (normalize to max):
+  /// ```swift
+  /// let size = CGSize(width: 2, height: 4)
+  /// let normalized = size.adjustBoth { h, v in
+  ///   let m = max(h, v)
+  ///   return (h / m, v / m)
+  /// }
+  /// // => (0.5, 1.0)
+  /// ```
   public func adjustBoth(
     mapping: AxisMapping = .default,
     _ transform: (Component, Component) -> (Component, Component)

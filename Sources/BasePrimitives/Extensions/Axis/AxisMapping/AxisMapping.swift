@@ -7,8 +7,20 @@
 
 import SwiftUI
 
-/// Go to
+/// Describes how a type's stored components map to logical axes.
+///
+/// Many types store two scalars in a fixed order (e.g. `CGSize` stores `(width, height)`,
+/// `CGPoint` stores `(x, y)`). In most contexts, width/x correspond to the horizontal axis
+/// and height/y to the vertical axis. In rotated or transposed contexts, this assumption
+/// can be inverted. `AxisMapping` makes that relationship explicit.
+///
+/// - `.identity`: primary storage corresponds to horizontal; secondary to vertical.
+/// - `.transposed`: primary storage corresponds to vertical; secondary to horizontal.
+///
+/// Thread an explicit `AxisMapping` into read/write helpers to keep axis-oriented code
+/// correct even when coordinate systems are flipped.
 public enum AxisMapping: Sendable {
+  
   /// # Primary is Horizontal
   /// Normal: Width/Column is Horizontal, Height/Row is Vertical.
   /// Previously: `primaryIsHorizontal` / `widthIsHorizontal`
@@ -19,9 +31,13 @@ public enum AxisMapping: Sendable {
   /// Previously: `primaryIsVertical` / `heightIsHorizontal`
   case transposed
 
+  /// The default mapping for typical Cartesian layouts (horizontal ↔ primary, vertical ↔ secondary).
   public static let `default`: Self = .identity
 
-  /// Routes a request to the correct component based on mapping and axis.
+  /// Selects either `primary` or `secondary` based on `axis` and the current mapping.
+  ///
+  /// With `.identity`, `.horizontal` selects `primary` and `.vertical` selects `secondary`.
+  /// With `.transposed`, this selection is flipped.
   public func select<T>(primary: T, secondary: T, for axis: GridAxis) -> T {
     switch (self, axis) {
       case (.identity, .horizontal), (.transposed, .vertical): return primary
@@ -29,7 +45,9 @@ public enum AxisMapping: Sendable {
     }
   }
 
-  /// Reconstructs a pair in the correct order for the type's storage.
+  /// Reorders `(h, v)` into `(primary, secondary)` according to the mapping.
+  ///
+  /// With `.identity` the result is `(h, v)`; with `.transposed` the result is `(v, h)`.
   public func pair<T>(h: T, v: T) -> (primary: T, secondary: T) {
     switch self {
       case .identity: return (h, v)
@@ -37,7 +55,8 @@ public enum AxisMapping: Sendable {
     }
   }
 
-  func resolve<T>(primary: T, secondary: T, for axis: GridAxis) -> T {
+  /// Internal variant of `select(primary:secondary:for:)` used by helpers.
+  package func resolve<T>(primary: T, secondary: T, for axis: GridAxis) -> T {
     switch (self, axis) {
       case (.identity, .horizontal), (.transposed, .vertical): return primary
       case (.identity, .vertical), (.transposed, .horizontal): return secondary
@@ -45,8 +64,15 @@ public enum AxisMapping: Sendable {
   }
 }
 
+/// Cross-value adjustments for `AdjustableByAxis` types.
+///
+/// These helpers combine two axis-addressable values using a transform. They read
+/// corresponding axis components from `self` and `other` and compute a new value.
 extension AdjustableByAxis {
 
+  /// Combines this value with `other` component-wise using `transform`.
+  ///
+  /// The same transform is applied on both axes independently.
   public func adjustBoth<Other: AdjustableByAxis>(
     with other: Other,
     transform: (_ lhs: Component, _ rhs: Component) -> Component
@@ -57,6 +83,9 @@ extension AdjustableByAxis {
     }
   }
 
+  /// Component-wise combination where the transform also receives the `GridAxis` being processed.
+  ///
+  /// Useful when the horizontal and vertical axes should be treated differently.
   public func adjustBoth<Other: AdjustableByAxis>(
     with other: Other,
     transform: (_ axis: GridAxis, _ lhs: Component, _ rhs: Component) -> Component
@@ -78,11 +107,13 @@ extension AdjustableByAxis {
 // MARK: - Deprecations
 extension AxisMapping {
 
+  /// Deprecated: Use `AxisMapping.identity`.
   @available(
     *, deprecated, renamed: "identity", message: "Renamed for clarity, please use `.identity` instead"
   )
   public static let primaryIsHorizontal: Self = .identity
 
+  /// Deprecated: Use `AxisMapping.transposed`.
   @available(
     *, deprecated, renamed: "transposed", message: "Renamed for clarity, please use `.identity` instead"
   )
@@ -120,53 +151,4 @@ public enum AxisConvention: Sendable {
   case heightIsHorizontal
 
 }
-//
-//
-//  public static let `default`: Self = .widthIsHorizontal
-//}
-//
-//extension AxisConvention {
-//
-//  public var widthAxis: Axis2D {
-//    switch self {
-//      case .widthIsHorizontal: .horizontal
-//      case .heightIsHorizontal: .vertical
-//    }
-//  }
-//
-//  public var heightAxis: Axis2D {
-//    switch self {
-//      case .widthIsHorizontal: .vertical
-//      case .heightIsHorizontal: .horizontal
-//    }
-//  }
-//}
-//
-///// This exists alongside `AxisConvention`, to represent index
-///// space, where `AxisConvention` represents 'dimension' space
-/////
-///// In a standard grid, Columns typically represent the horizontal index (X)
-///// and Rows represent the vertical index (Y)
-//public enum GridAxisConvention: Sendable {
-//  case columnIsHorizontal
-//  case rowIsHorizontal
-//
-//  public static let `default`: Self = .columnIsHorizontal
-//}
-//
-//extension GridAxisConvention {
-//
-//  public var rowAxis: Axis2D {
-//    switch self {
-//      case .columnIsHorizontal: .vertical
-//      case .rowIsHorizontal: .horizontal
-//    }
-//  }
-//
-//  public var columnAxis: Axis2D {
-//    switch self {
-//      case .columnIsHorizontal: .horizontal
-//      case .rowIsHorizontal: .vertical
-//    }
-//  }
-//}
+
