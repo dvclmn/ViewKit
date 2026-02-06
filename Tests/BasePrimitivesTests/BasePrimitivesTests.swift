@@ -32,10 +32,10 @@ struct DivisionSemanticsTests {
   }
   
   @Test("Failable: exact division succeeds for finite non-zero")
-  func failableExactSuccess() {
+  func failableExactSuccess() throws {
     let size = CGSize(width: 10, height: 20)
     let result = size.dividingBothExactly(by: 2)
-    let unwrapped = #require(result)
+    let unwrapped = try #require(result)
     #expect(unwrapped.width == 5)
     #expect(unwrapped.height == 10)
   }
@@ -62,11 +62,11 @@ struct DivisionSemanticsTests {
   }
   
   @Test("Provider-based failable: exact variant returns nil for zero/non-finite")
-  func providerBasedFailable() {
+  func providerBasedFailable() throws {
     let size = CGSize(width: 10, height: 20)
     let provider = CGSize(width: 2, height: 0)
     
-    let ok = #require(size.dividingBothExactly(by: provider, using: .horizontal, mapping: .identity))
+    let ok = try #require(size.dividingBothExactly(by: provider, using: .horizontal, mapping: .identity))
     #expect(ok.width == 5)
     #expect(ok.height == 10)
     
