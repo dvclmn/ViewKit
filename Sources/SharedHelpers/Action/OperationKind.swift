@@ -5,6 +5,14 @@
 //  Created by Dave Coleman on 13/10/2025.
 //
 
+import EnumMacros
+
+@CaseDetection
+enum UpdateKind {
+  case withUndo(action: String? = nil)
+  case standard
+}
+
 public protocol OperationPerforming {
   associatedtype ComponentID: Hashable
   mutating func perform(

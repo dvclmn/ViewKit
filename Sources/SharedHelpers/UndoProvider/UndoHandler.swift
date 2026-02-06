@@ -12,7 +12,6 @@ import SwiftUI
 
 @MainActor
 @Observable
-
 final public class UndoHandler<Value> {
 
   var binding: Binding<Value>?
