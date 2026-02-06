@@ -47,8 +47,17 @@ public struct RoughPathVariations: RandomGeneratable, Sendable {
     using generator: inout any RandomNumberGenerator,
     parameters: RandomisationParameters<Value>
   ) -> RoughPathVariations {
-    let roughness = parameters.additionalParams["roughness"] as? CGFloat ?? 10
-    let jitter = parameters.additionalParams["jitter"] as? CGFloat ?? 1.0
+    // Prefer typed influences if defined; fall back to legacy string keys; then to defaults
+    let roughness: CGFloat = (
+      parameters.influence(for: .roughness) ??
+      (parameters.influence(for: InfluenceKey<Double>("roughness")).map { CGFloat($0) }) ??
+      CGFloat(10)
+    )
+    let jitter: CGFloat = (
+      parameters.influence(for: .jitter) ??
+      (parameters.influence(for: InfluenceKey<Double>("jitter")).map { CGFloat($0) }) ??
+      CGFloat(1.0)
+    )
 
     let xOffsets = (0..<count).map { _ in
       CGFloat.random(in: -roughness...roughness, using: &generator) * jitter
@@ -65,3 +74,4 @@ public struct RoughPathVariations: RandomGeneratable, Sendable {
     )
   }
 }
+

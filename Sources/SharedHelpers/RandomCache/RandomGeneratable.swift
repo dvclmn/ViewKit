@@ -36,6 +36,16 @@ nonisolated public protocol RandomGeneratable: Equatable, Hashable {
   ) -> Self
 }
 
+public extension RandomGeneratable {
+  static func generate(
+    count: Int,
+    using generator: inout any RandomNumberGenerator,
+    spec: RandomisationSpec<Value>
+  ) -> Self {
+    generate(count: count, using: &generator, parameters: spec)
+  }
+}
+
 /// Constraint `where Value.RawSignificand: FixedWidthInteger`
 /// seems to allow 'seeing' that `random(in:using:)` method
 extension RandomGeneratable where Value.RawSignificand: FixedWidthInteger {

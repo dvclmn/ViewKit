@@ -73,35 +73,3 @@ extension RandomisationSpec {
     influences[AnyInfluenceKey(key)] = AnyHashable(value)
   }
 }
-
-// MARK: - Migration aids
-
-/// Backwards-compatible alias so existing call sites compile while migrating.
-public typealias RandomisationParameters<T: BinaryFloatingPoint> = RandomisationSpec<T>
-
-extension RandomisationSpec {
-  /// Legacy-style initializer to ease migration from `ranges` + `additionalParams`.
-  public init(
-    ranges: [ClosedRange<T>] = [],
-    additionalParams: [String: AnyHashable] = [:]
-  ) {
-    let domain: RandomDomain<T> = ranges.count == 1 ? .single(ranges[0]) : .multiple(ranges)
-    var influences: [AnyInfluenceKey: AnyHashable] = [:]
-    
-    /// Map legacy string keys into InfluenceKey<String> for continuity.
-    for (k, v) in additionalParams { influences[AnyInfluenceKey(InfluenceKey<String>(k))] = v }
-    self.init(domain: domain, influences: influences)
-  }
-}
-
-// MARK: - Common influence keys
-
-extension InfluenceKey where Value == Double {
-  /// Bias/skew factor in the range [-1, 1], where 0 is uniform.
-  public static var skew: InfluenceKey<Double> { "skew" }
-}
-
-extension InfluenceKey where Value == Bool {
-  /// Whether to favor continuity between successive values.
-  public static var smoothTransitions: InfluenceKey<Bool> { "smoothTransitions" }
-}
