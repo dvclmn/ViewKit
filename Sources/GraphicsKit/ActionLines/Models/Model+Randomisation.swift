@@ -49,28 +49,28 @@ extension ActionLineVariations {
     parameters spec: RandomisationParameters<Value>
   ) -> Self {
     
-    // Angles default to [0, 2π], unless bounds were explicitly provided.
-    let angleRanges = spec.bounds.ranges.isEmpty ? [0.0...(2.0 * .pi)] : spec.bounds.ranges
-    
-    // Boundary defaults to [-1, 1] unless bounds were provided.
-    let boundaryRanges = spec.bounds.ranges.isEmpty ? [-1.0...1.0] : spec.bounds.ranges
-    
-    func randomFrom(_ ranges: [ClosedRange<Double>], using g: inout RandomNumberGenerator) -> Double {
-      // Pick a range uniformly, then sample uniformly within it.
+    // Determine angle and boundary domains. If the spec provided no bounds,
+    // use sensible defaults.
+    let bounds = spec.bounds.ranges
+    let angleRanges: [ClosedRange<Double>] = bounds.isEmpty ? [0.0...(2.0 * .pi)] : bounds
+    let boundaryRanges: [ClosedRange<Double>] = bounds.isEmpty ? [-1.0...1.0] : bounds
+
+    // Helper to sample uniformly from a composite domain.
+    func sample(from ranges: [ClosedRange<Double>], using g: inout RandomNumberGenerator) -> Double {
       let idx = Int.random(in: 0..<ranges.count, using: &g)
       let r = ranges[idx]
       return Double.random(in: r, using: &g)
     }
-    
-    var g = generator // copy if you need to separate streams; otherwise use &generator
-    
-    let baseAngles = (0..<count)
-      .map { _ in randomFrom(angleRanges, using: &g) }
-      .sorted()
-    
-    let boundary = (0..<count)
-      .map { _ in randomFrom(boundaryRanges, using: &g) }
-    
+
+    // Generate stable base sequences given seed, count, and spec.
+    let baseAngles = (0..<count).map { _ in
+      sample(from: angleRanges, using: &generator)
+    }.sorted()
+
+    let boundary = (0..<count).map { _ in
+      sample(from: boundaryRanges, using: &generator)
+    }
+
     return ActionLineVariations(
       baseAngles: baseAngles,
       boundary: boundary,
@@ -100,3 +100,4 @@ extension ActionLineVariations {
 //    )
 //  }
 }
+

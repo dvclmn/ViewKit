@@ -16,12 +16,20 @@ public struct InfluenceKey<Value: Hashable>: Hashable, ExpressibleByStringLitera
 
 /// Type-erased key wrapper to keep `influences` dictionary heterogeneous while
 /// preserving key identity and hashing.
-public struct AnyInfluenceKey: Hashable, CustomStringConvertible {
-  private let box: AnyHashable
-  private let _description: () -> String
+public struct AnyInfluenceKey: Hashable, Equatable, CustomStringConvertible {
+  public let rawValue: String
   public init<Value>(_ key: InfluenceKey<Value>) {
-    self.box = AnyHashable(key.rawValue)
-    self._description = { key.rawValue }
+    self.rawValue = key.rawValue
   }
-  public var description: String { _description() }
+  public var description: String { rawValue }
+
+  // Equatable is synthesized via rawValue; explicit for clarity.
+  public static func == (lhs: AnyInfluenceKey, rhs: AnyInfluenceKey) -> Bool {
+    lhs.rawValue == rhs.rawValue
   }
+  // Hashable based solely on rawValue to ensure stable identity across generic Value types.
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(rawValue)
+  }
+}
+
