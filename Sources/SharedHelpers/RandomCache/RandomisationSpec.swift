@@ -20,27 +20,9 @@ import Foundation
 ///
 /// // Multiple ranges
 /// let spec2 = RandomizationSpec<Double>(ranges: [0.0...0.2, 0.8...1.0])
-/// let ranges = spec2.bounds.ranges
+/// let ranges = spec2.domain.ranges
 /// ```
-/// A type-safe key for influencing random generation beyond numeric bounds.
-///
-/// Create static keys in extensions to add new influences without colliding names.
 
-/// Expresses the numeric domain from which random values may be drawn.
-/// Use a single closed range for simple cases, or multiple disjoint ranges to
-/// construct a composite domain.
-public enum Bounds<T: BinaryFloatingPoint>: Hashable {
-  case single(ClosedRange<T>)
-  case multiple([ClosedRange<T>])
-
-  /// Flattens to an array of ranges for algorithms that operate over sequences.
-  public var ranges: [ClosedRange<T>] {
-    switch self {
-      case .single(let r): return [r]
-      case .multiple(let rs): return rs
-    }
-  }
-}
 /// A specification describing how random values should be generated.
 ///
 /// This replaces the ambiguous `additionalParams` with a type-safe set of
@@ -48,25 +30,25 @@ public enum Bounds<T: BinaryFloatingPoint>: Hashable {
 public struct RandomisationSpec<T: BinaryFloatingPoint>: Hashable {
 
   /// Numeric bounds that define the domain for random value generation.
-  public var bounds: Bounds<T>
+  public var domain: RandomDomain<T>
 
   /// Additional, named influences that may affect generation (e.g., smoothing,
   /// distribution skew, clamping policy). Values are type-safe per key.
   public var influences: [AnyInfluenceKey: AnyHashable]
 
-  public init(bounds: Bounds<T>, influences: [AnyInfluenceKey: AnyHashable] = [:]) {
-    self.bounds = bounds
+  public init(domain: RandomDomain<T>, influences: [AnyInfluenceKey: AnyHashable] = [:]) {
+    self.domain = domain
     self.influences = influences
   }
 
   /// Convenience for a single range.
   public init(range: ClosedRange<T>, influences: [AnyInfluenceKey: AnyHashable] = [:]) {
-    self.init(bounds: .single(range), influences: influences)
+    self.init(domain: .single(range), influences: influences)
   }
 
   /// Convenience for multiple ranges.
   public init(ranges: [ClosedRange<T>], influences: [AnyInfluenceKey: AnyHashable] = [:]) {
-    self.init(bounds: .multiple(ranges), influences: influences)
+    self.init(domain: .multiple(ranges), influences: influences)
   }
 
   /// Read a typed influence value for a given key.
@@ -89,11 +71,11 @@ public typealias RandomisationParameters<T: BinaryFloatingPoint> = Randomisation
 extension RandomisationSpec {
   /// Legacy-style initializer to ease migration from `ranges` + `additionalParams`.
   public init(ranges: [ClosedRange<T>] = [], additionalParams: [String: AnyHashable] = [:]) {
-    let bounds: Bounds<T> = ranges.count == 1 ? .single(ranges[0]) : .multiple(ranges)
+    let domain: RandomDomain<T> = ranges.count == 1 ? .single(ranges[0]) : .multiple(ranges)
     var influences: [AnyInfluenceKey: AnyHashable] = [:]
     // Map legacy string keys into InfluenceKey<String> for continuity.
     for (k, v) in additionalParams { influences[AnyInfluenceKey(InfluenceKey<String>(k))] = v }
-    self.init(bounds: bounds, influences: influences)
+    self.init(domain: domain, influences: influences)
   }
 }
 

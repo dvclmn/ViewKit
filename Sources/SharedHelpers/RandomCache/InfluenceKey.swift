@@ -23,13 +23,13 @@ public struct AnyInfluenceKey: Hashable, Equatable, CustomStringConvertible {
   }
   public var description: String { rawValue }
 
-  // Equatable is synthesized via rawValue; explicit for clarity.
+  /// Equatable is synthesized via rawValue; explicit for clarity.
   public static func == (lhs: AnyInfluenceKey, rhs: AnyInfluenceKey) -> Bool {
     lhs.rawValue == rhs.rawValue
   }
-  // Hashable based solely on rawValue to ensure stable identity across generic Value types.
+
+  /// Hashable based solely on rawValue to ensure stable identity across generic Value types.
   public func hash(into hasher: inout Hasher) {
     hasher.combine(rawValue)
   }
 }
-
