@@ -7,21 +7,33 @@
 
 import SwiftUI
 
-public struct RandomDiceLabel: View {
+public struct RandomDiceLabel<V: Equatable>: View {
   let title: String
   let angle: AngleAdjustment
-  public init(_ title: String, angle: AngleAdjustment = .default) {
+  let rollTrigger: V
+
+  public init(
+    _ title: String,
+    rollTrigger: V,
+    angle: AngleAdjustment = .default
+  ) where V: Equatable {
     self.title = title
     self.angle = angle
+    self.rollTrigger = rollTrigger
   }
-  public var body: some View {
 
+  //  public init(_ title: String, adjustsAngle: Bool) where V == Int {
+  //    self.title = title
+  //    self.angle = adjustsAngle ? .default : .none
+  //    self.rollTrigger = 0
+  //  }
+
+  public var body: some View {
     Label {
       Text(title)
     } icon: {
-      RandomDiceIcon(angle: angle)
+      RandomDiceIcon(rollTrigger: rollTrigger, angle: angle)
     }
-
   }
 }
 
@@ -39,8 +51,8 @@ public enum AngleAdjustment: Sendable {
   }
 }
 
-public struct RandomDiceIcon: View {
-  
+public struct RandomDiceIcon<V: Equatable>: View {
+
   let diceFaces: [Int] = [1, 2, 3, 4, 5, 6]
   let iconMap: [Int: String] = [
     1: "die.face.1",
@@ -51,31 +63,33 @@ public struct RandomDiceIcon: View {
     6: "die.face.6",
   ]
   let angle: AngleAdjustment
+  let rollTrigger: V
 
-  public init(angle: AngleAdjustment = .default) {
+  @State private var face: Int = 6
+  @State private var rotation: Double = 0
+
+  public init(rollTrigger: V, angle: AngleAdjustment = .default) {
+    self.rollTrigger = rollTrigger
     self.angle = angle
   }
+
   public var body: some View {
-    Image(systemName: randomFace)
+    Image(systemName: iconMap[face] ?? "die.face.6")
       .symbolRenderingMode(.hierarchical)
       .symbolVariant(.fill)
-      .rotationEffect(
-        Angle(
-          degrees: Double.random(in: -angle.adjustment...angle.adjustment)
-        )
-      )
+      .rotationEffect(.degrees(rotation))
+      .task(id: rollTrigger) {
+        reroll()
+      }
+      .task {
+        if face == 6 {
+          reroll()
+        }
+      }
   }
-}
 
-extension RandomDiceIcon {
-  private var randomFace: String {
-    iconMap[diceFaces.randomElement() ?? 6] ?? "die.face.6"
+  private func reroll() {
+    face = Int.random(in: 1...6)
+    rotation = Double.random(in: -angle.adjustment...angle.adjustment)
   }
 }
-//#if DEBUG
-//#Preview(traits: .size(.normal)) {
-//  // @Previewable @State var store = AppHandler()
-//  RandomDiceIcon()
-//  // .environment(store)
-//}
-//#endif

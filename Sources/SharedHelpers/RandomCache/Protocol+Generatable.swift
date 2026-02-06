@@ -15,7 +15,7 @@ import Foundation
 ///
 /// Note: `GraphicsKit/ActionLineVariations` is a good
 /// example of this system in use.
-nonisolated public protocol RandomGeneratable {
+nonisolated public protocol RandomGeneratable: Equatable, Hashable {
   
   /// Conformance to `BinaryFloatingPoint` neccessary to ensure
   /// compatibility with floating-point random operations.
