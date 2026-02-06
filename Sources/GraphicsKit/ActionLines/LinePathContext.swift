@@ -78,7 +78,15 @@ extension LinePathContext {
       let t = Double(i) / Double(samples)
       let px = start.x + dx * t
       let py = start.y + dy * t
+      
+      #warning("Adopt WaveSampler")
+//      let phaseTurns = t * cycles
+//      let wave = WaveSampler<Double>.sample(.sine, phase: phaseTurns, domain: .turns)
+      
       let wave = sin(t * .pi * 2 * cycles)
+      
+      
+      
       let wx = px + perp.x * wave * amplitude
       let wy = py + perp.y * wave * amplitude
       let pt = CGPoint(x: wx, y: wy)

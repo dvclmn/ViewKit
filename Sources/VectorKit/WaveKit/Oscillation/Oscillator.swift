@@ -84,6 +84,9 @@ public struct OscillatorSmoothed {
     // Convert phase to a scalar in [0, 1) expected by the sampler, then apply phase offset in turns
     let basePhase: Double = phase.currentPhase
     let shiftedPhase = basePhase + phaseOffset.displayed
+    
+//    let sample = WaveSampler<T>.sample(waveform, phase: shiftedPhase, domain: .turns)
+    
     let sample = Sampler.value(for: waveform, at: shiftedPhase)
     return amp.displayed * sample
   }

@@ -8,6 +8,14 @@
 import CoreTools
 import Foundation
 
+/// IMPORTANT:
+/// Moving to use of ``WaveSampler``:
+/// Oscillator and oscillate(...)
+/// • Keep oscillate(time: base: amplitude: frequency: phase:) as-is (it’s a standard, easy-to-read formula).
+/// • If you want to route through Wave​Sampler for consistency:
+/// - Convert from radians to turns: phase​Turns = frequency * time + (phase / (2π))
+/// - Then sample(.sine, phase: phase​Turns, domain: .turns, sine​Mode: .auto), and scale by amplitude and add base.
+
 /// Returns an oscillating value using a sine wave.
 /// - Parameters:
 ///   - time: Time in seconds (monotonic). You can pass `AnimationTimeline`'s `time` here.
@@ -27,18 +35,18 @@ public func oscillate(
 ) -> Double {
   /// `y(t) = base + amplitude * sin(2π f t + phase)`
   let result = base + amplitude * sin(frequency.omega * time + phase)
-//  DebugString("Oscillation", indented: true) {
-//    Labeled("Time", value: time)
-//    //    Labeled("Float Time", value: Float(time))
-//    Labeled("Base Value", value: base)
-//    Labeled("Amp", value: amplitude)
-//    Labeled("Freq", value: frequency)
-//    Labeled("Omega", value: frequency.omega)
-//    Labeled("Phase", value: phase)
-//    Divider()
-//    Labeled("Result", value: result)
-//    Divider()
-//  }
+  //  DebugString("Oscillation", indented: true) {
+  //    Labeled("Time", value: time)
+  //    //    Labeled("Float Time", value: Float(time))
+  //    Labeled("Base Value", value: base)
+  //    Labeled("Amp", value: amplitude)
+  //    Labeled("Freq", value: frequency)
+  //    Labeled("Omega", value: frequency.omega)
+  //    Labeled("Phase", value: phase)
+  //    Divider()
+  //    Labeled("Result", value: result)
+  //    Divider()
+  //  }
   return result
 }
 

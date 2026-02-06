@@ -46,6 +46,10 @@ extension WaveformPicker {
         for x in 0...Int(width) {
           let progress = Double(x) / width
           let y: Double
+          
+          
+//          let progress = T(Double(x) / width)                       // turns across width
+//          let y = midHeight + WaveSampler<T>.sample(form, phase: progress, domain: .turns) * (height / 2)
 
           switch form {
             case .sine:  // Sine

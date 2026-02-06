@@ -7,6 +7,10 @@
 
 import Foundation
 
+/// Using ``WaveSampler`` here:
+/// Continuous​Parameter
+///   • Continue to use it to accumulate current​Phase in turns [0, 1). That aligns perfectly with the Wave​Sampler’s turns domain.
+///   • Then call Wave​Sampler​.sample(waveform, phase: phase​.current​Phase, domain: .turns).
 public typealias ContinuousFloat = ContinuousParameter<Double>
 //public typealias ContinuousFloat = ContinuousParameter<Float>
 
@@ -34,7 +38,6 @@ public struct ContinuousParameter<T: WaveFloat> {
     accumulatedPhase - floor(accumulatedPhase)
   }
 }
-
 
 // MARK: - Phase Accumulator (for smooth animation)
 //public struct WavePhaseAccumulator {

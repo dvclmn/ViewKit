@@ -16,7 +16,3 @@ public enum LoadState<Value> {
   case failed(Error)
   case ready(Value)
 }
-
-extension LoadState {
-
-}

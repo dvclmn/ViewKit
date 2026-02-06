@@ -9,7 +9,7 @@ import SwiftUI
 
 @MainActor
 public protocol UserDataHandler: Observation.Observable, AnyObject {
-  associatedtype Value
+  associatedtype Value: Equatable
 
   var dataState: LoadState<Value> { get set }
   var storage: Value { get set }
@@ -61,7 +61,7 @@ extension UserDataHandler {
       return
     }
     debouncer.execute { @MainActor in
-      updateStorage(self.requireData())
+      updateStorage(data)
     }
   }
 }

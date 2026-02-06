@@ -44,7 +44,6 @@ public struct StageView: View {
           anchorZ: 0,
           perspective: 0
         )
-        
 
         /// - Parameters:
         ///   - angle: The angle by which to rotate the view's content.
@@ -64,12 +63,11 @@ public struct StageView: View {
           anchorZ: floorConfig.zoom,
           perspective: floorConfig.perspective
         )
-      
-      
+
     }
     .compositingGroup()
 
-      .scaleEffect(x: floorConfig.width, y: floorConfig.depth, anchor: .center)
+    .scaleEffect(x: floorConfig.width, y: floorConfig.depth, anchor: .center)
 
     //      .mask {
 
