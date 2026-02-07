@@ -8,6 +8,27 @@
 import CoreTools
 import SwiftUI
 
+//extension Label {
+//  public init(_ label: QuickLabel) {
+//    Label {
+//      Text(label.text)
+//    } icon: {
+//      switch label.icon {
+//        case .emoji(let emojiString): Text(emojiString)
+//        case .symbol(let symbolString): Image(systemName: symbolString)
+//        case .customSymbol(_): Text("Custom Symbol not implemented")
+//          //          Image(
+//          //            ImageResource(
+//          //              name: customSymbol.reference,
+//          //              bundle: Bundle.module
+//          //            )
+//          //          )
+//        case .none: EmptyView()
+//      }
+//    }
+//  }
+//}
+
 public struct MaybeLabel: View {
   @Environment(\.labelDisplay) private var labelDisplay
 
@@ -18,9 +39,6 @@ public struct MaybeLabel: View {
 
   public var body: some View {
 
-    /// Don't need to handle Hidden case, the `base` label style does this
-    //    if !isHidden {
-
     Label {
       Text(label.text)
     } icon: {
@@ -29,10 +47,6 @@ public struct MaybeLabel: View {
     /// May need to figure out a 'plain' override
     .labelStyle(.base(display: effectiveLabelDisplay))
 
-    //    } else {
-    //      EmptyView()
-    //        .accessibilityLabel(label.text)
-    //    }
   }
 }
 
@@ -44,7 +58,6 @@ extension MaybeLabel {
     hasIcon ? labelDisplay : .titleOnly
   }
   private var hasIcon: Bool { label.icon != nil }
-  //  private var isHidden: Bool { labelDisplay?.isHidden ?? false }
 
 }
 

@@ -5,15 +5,23 @@
 //  Created by Dave Coleman on 27/1/2026.
 //
 
-import SwiftUI
 import ColourKit
 import CoreTools
+import SwiftUI
 
 public struct HSVSliderGroup: View {
 
-  @Binding var colour: HSVColour
+  @State private var colourNative: Color = .primary
+  @State private var colourRGB: RGBColour = .white
   
-  public init(_ colour: Binding<HSVColour>) {
+  @Binding var colour: HSVColour
+//  @Binding var colourHSV: HSVColour
+  let kind: ColourModelKind
+
+  public init(
+    _ colour: Binding<HSVColour>,
+    kind: ColourModelKind =
+  ) {
     self._colour = colour
   }
   public var body: some View {
@@ -40,9 +48,13 @@ public struct HSVSliderGroup: View {
       )
       .sliderStyle(.custom(.brightness(colour.hueSatOnly.toColour)))
     }
+    .labelWeight(.semibold)
+    .labelColour(.secondary)
     .environment(\.maxCharacterColumns, 4)
     .environment(\.layoutSpacing, 4)
-    
+    .task(id: colour) {
+      self.colourNative = colour.toColour
+    }
 
   }
 }
@@ -57,7 +69,7 @@ extension HSVSliderGroup {
     HSVSliderGroup($colour)
   }
   .formStyle(.grouped)
-    .padding()
-    .frame(maxWidth: 300)
+  .padding()
+  .frame(maxWidth: 300)
 }
 #endif

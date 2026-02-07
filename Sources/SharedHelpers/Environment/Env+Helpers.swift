@@ -19,4 +19,23 @@ extension View {
   public func isDebugMode(_ mode: Bool) -> some View {
     self.environment(\.isDebugMode, mode)
   }
+
+  /// Font weight
+  /// Symbol rendering mode (e.g. hierarchy) / variant (e.g. fill)
+  /// Foreground style
+  public func iconWeight(_ weight: Font.Weight) -> some View {
+    self.environment(\.iconWeight, weight)
+  }
+
+  public func iconColour<S>(_ colour: S) -> some View where S: ShapeStyle {
+    self.environment(\.iconColour, AnyShapeStyle(colour))
+  }
+  
+  public func labelWeight(_ weight: Font.Weight) -> some View {
+    self.environment(\.labelWeight, weight)
+  }
+  
+  public func labelColour<S>(_ colour: S) -> some View where S: ShapeStyle {
+    self.environment(\.labelColour, AnyShapeStyle(colour))
+  }
 }
