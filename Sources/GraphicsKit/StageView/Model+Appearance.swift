@@ -7,12 +7,12 @@
 
 import BasePrimitives
 import Foundation
+import VectorKit
 
 // TODO: Need to be clearer about what these properties do/mean
 public struct FloorAppearance: Sendable, Codable, Equatable, Hashable {
 
   public var pattern: PatternPreset
-//  public var pattern: PatternConfiguration
   public var degrees: Double
   public var perspective: Double
   public var width: Double

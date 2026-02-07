@@ -36,7 +36,7 @@ public struct SliderCore: View {
         case .stepper:
           HStack {
             SliderTrackView(step: nil)
-            
+
             Stepper(
               store.label.text,
               value: $store.value,
@@ -99,12 +99,6 @@ extension SliderCore {
   func LabelComponent() -> some View {
     @Bindable var store = store
     MaybeLabel(store.label)
-
       .onDoubleTap($store.value.toBindingDouble, defaultValue: sliderDefaultValue)
-    //      .font(.body)
-    //      .lineLimit(1)
-
-    /// This can cause fuzzy text, in certain situations
-    //      .fixedSize(horizontal: true, vertical: false)
   }
 }

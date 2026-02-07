@@ -47,17 +47,17 @@ public struct HSVSliderGroup: View {
   }
 }
 
-//extension HSVSliderGroup {
-//
-//}
-//#if DEBUG
-//#Preview(traits: .size(.normal)) {
-//  @Previewable @State var colour = HSVColour.green
-//  Form {
-//    HSVSliderGroup(colour: $colour)
-//  }
-//  .formStyle(.grouped)
-//    .padding()
-//    .frame(maxWidth: 300)
-//}
-//#endif
+extension HSVSliderGroup {
+
+}
+#if DEBUG
+#Preview(traits: .size(.normal)) {
+  @Previewable @State var colour = HSVColour.green
+  Form {
+    HSVSliderGroup($colour)
+  }
+  .formStyle(.grouped)
+    .padding()
+    .frame(maxWidth: 300)
+}
+#endif

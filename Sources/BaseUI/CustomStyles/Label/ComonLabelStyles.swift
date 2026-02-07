@@ -29,15 +29,8 @@ public struct CommonLabelStyleModifier: ViewModifier {
         content
       }
     }  // END group
-    /// This and the below `symbolRenderingMode` are mucking with
-    /// the control I have over render modes out in the view using MayBae Label
-//    .foregroundStyle(labelPart.isIcon ? finalIconStyle : AnyShapeStyle(.primary))
-    .fontWeight(elementWeight)
 
-    /// Note: Choosing not to set `.symbolVariant()` here. Prefer setting this high
-    /// up in the View hierarchy, and overriding with `.environment(_:_:)`.
-    /// This saves needing a shadow `symbolVariant` Env value
-//    .symbolRenderingMode(symbolRenderingMode ?? .hierarchical)
+    .fontWeight(labelPart.weight(override: <#T##Font.Weight?#>))
 
   }
 }
@@ -75,15 +68,6 @@ extension CommonLabelStyleModifier {
     return isStacked && labelPart.isIcon
   }
 
-  var elementWeight: Font.Weight? {
-    switch labelPart {
-      case .title:
-        return labelWeight
-      case .icon:
-        return iconWeight ?? .semibold
-    }
-  }
-
 }
 extension View {
   public func commonLabelStyles(
@@ -97,10 +81,4 @@ extension View {
       )
     )
   }
-}
-
-@CaseDetection
-public enum LabelPart {
-  case title
-  case icon
 }

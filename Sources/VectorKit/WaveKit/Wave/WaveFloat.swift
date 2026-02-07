@@ -11,25 +11,21 @@ import SwiftUI
 public protocol WaveFloat: BinaryFloatingPoint, Sendable, Codable, StringRenderable, FloatRenderable {
   static func waveSin(_ x: Self) -> Self
   static var twoPi: Self { get }
-  static var zero: Self { get }
 }
 
 extension Float: WaveFloat {
   public static func waveSin(_ x: Self) -> Self { Foundation.sin(x) }
   public static var twoPi: Self { .pi * 2 }
-  public static var zero: Self { 0 }
 }
 
 extension Double: WaveFloat {
   public static func waveSin(_ x: Self) -> Self { Foundation.sin(x) }
   public static var twoPi: Self { .pi * 2 }
-  public static var zero: Self { 0 }
 }
 
 extension CGFloat: WaveFloat {
   public static func waveSin(_ x: Self) -> Self { Darwin.sin(x) }
   public static var twoPi: Self { .pi * 2 }
-  public static var zero: Self { 0 }
 }
 
 extension CGPoint {

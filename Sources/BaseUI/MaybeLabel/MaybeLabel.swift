@@ -14,10 +14,20 @@ public struct MaybeLabel: View {
   let label: QuickLabel
   let isPlain: Bool
 
+  private let placeholderIcon: String = "eye"
+
   public var body: some View {
 
     if !isHidden {
-      MainLabelView()
+
+      Label {
+        Text(label.text)
+      } icon: {
+        IconView(label.icon ?? .symbol(placeholderIcon))
+      }
+      /// May need to figure out a 'plain' override
+      .labelStyle(.base)
+
     } else {
       EmptyView()
         .accessibilityLabel(label.text)
@@ -26,31 +36,8 @@ public struct MaybeLabel: View {
 }
 
 extension MaybeLabel {
-  private var isHidden: Bool {
-    labelDisplay?.isHidden ?? false
-  }
+  private var isHidden: Bool { labelDisplay?.isHidden ?? false }
 
-  @ViewBuilder
-  private func MainLabelView() -> some View {
-    if let icon = label.icon {
-      Label {
-        Text(label.text)
-      } icon: {
-        /// Icon-specific styles in here
-        if isPlain {
-          IconView(icon)
-        } else {
-
-          IconView(icon)
-            .commonLabelStyles(for: .icon, display: labelDisplay)
-        }
-      }
-      
-
-    } else {
-      Text(label.text)
-    }
-  }
 }
 
 // MARK: - Initialisers

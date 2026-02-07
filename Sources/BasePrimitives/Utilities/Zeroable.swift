@@ -7,25 +7,15 @@
 
 import Foundation
 
+extension Optional where Wrapped: BinaryFloatingPoint {
 
-/// Protocol for types that can be treated as "zero" when nil
-public protocol Zeroable {
-  static var zero: Self { get }
-}
-
-extension Double: Zeroable {
-  public static var zero: Double { 0.0 }
-}
-
-extension Optional where Wrapped: Zeroable {
-
-  /// Applies an operation to two optionals, treating nil as zero
-  public func combined<T>(
-    with other: T?,
-    using operation: (Wrapped, T) -> Wrapped
-  ) -> Wrapped? where T: Zeroable {
+  /// Applies an operation to two optional floats, treating nil as zero
+  public func combined(
+    with other: Wrapped?,
+    using operation: (Wrapped, Wrapped) -> Wrapped
+  ) -> Wrapped? {
     guard self != nil || other != nil else { return nil }
-    
+
     let lhs = self ?? .zero
     let rhs = other ?? .zero
     return operation(lhs, rhs)
