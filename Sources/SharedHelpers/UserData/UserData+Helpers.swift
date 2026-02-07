@@ -7,24 +7,19 @@
 
 import SwiftUI
 
+// MARK: - Reading Data
 extension UserDataHandler {
 
-  public func setReady(_ value: Value) {
-    dataState = .ready(value)
-  }
-  public var isReady: Bool { dataState.isReady }
+  /// Ready-only accessor. Use this only inside views that are presented after gating on `.ready`.
+  @MainActor
+  public var userData: Value { unsafeReadyData() }
 
   /// Useful in cases where I do want to check for a present value
   public var userDataIfPresent: Value? { dataState.readyValue }
 
-  // MARK: - Reading Data
-  /// Ready-only accessor. Use this only inside views that are presented after gating on `.ready`.
-  @MainActor
-  public var userData: Value { requireData() }
-
-  /// Crashes early if misused outside `.ready`.
-  /// Backing for the non-optional API
-  package func requireData(
+  /// Returns the current data when the handler is `.ready`.
+  /// Triggers a precondition failure if called before readiness.
+  package func unsafeReadyData(
     file: StaticString = #fileID,
     line: UInt = #line
   ) -> Value {
@@ -38,7 +33,11 @@ extension UserDataHandler {
     return data
   }
 
-  // MARK: - Setting Data
+}
+
+// MARK: - Setting Data
+extension UserDataHandler {
+
   @MainActor
   public func setValue<T>(_ keyPath: WritableKeyPath<Value, T>, to value: T) {
     updateData { $0[keyPath: keyPath] = value }
@@ -51,13 +50,16 @@ extension UserDataHandler {
   ) {
     updateData(action, perform: change)
   }
+}
 
-  // MARK: - Binding Data
+// MARK: - Binding Data
+extension UserDataHandler {
+
   /// Binding to a non-optional wave (use only in ready path)
   @MainActor
   public func dataBinding(_ action: UpdateKind = .standard) -> Binding<Value> {
     Binding(
-      get: { self.requireData() },
+      get: { self.unsafeReadyData() },
       set: { newValue in
         self.updateData(action) { $0 = newValue }
       }

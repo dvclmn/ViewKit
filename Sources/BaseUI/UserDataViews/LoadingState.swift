@@ -8,7 +8,7 @@
 import CoreTools
 import SwiftUI
 
-public struct LoadingView<Store: UserDataHandler, Content: View>: View {
+public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
   @Environment(\.undoManager) private var undoManager
   //  @State private var store: Store
   //  let dataState: LoadState<Store.Value>

@@ -22,6 +22,11 @@ public protocol UserDataHandler: Observation.Observable, AnyObject {
 // MARK: - Core storage sync
 extension UserDataHandler {
 
+  public func setReady(_ value: Value) {
+    dataState = .ready(value)
+  }
+  public var isReady: Bool { dataState.isReady }
+
   /// Handles core setting of data, as well as undo/redo behaviour
   @MainActor
   package func updateData(
@@ -29,7 +34,7 @@ extension UserDataHandler {
     perform change: (inout Value) -> Void
   ) {
     /// Read user data
-    var current = requireData()
+    var current = unsafeReadyData()
     /// Capture for undo
     let old = current
 
@@ -51,8 +56,9 @@ extension UserDataHandler {
     }
   }
 
+  /// Syncing the local changes with the backing storage
   @MainActor
-  public func userDataDidChange(
+  package func userDataDidChange(
     _ isDebugging: Bool = false,
     updateStorage: @escaping (Value) -> Void,
   ) {
