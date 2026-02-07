@@ -21,31 +21,36 @@ extension EnvironmentValues {
 
   @Entry var isWithinSliderGroup: Bool = false
 
-  //  @Entry var sliderHandler: SliderHandler = .init(
-  //    value: 1.0,
-  //    label: "",
-  //    range: 0...1,
-  //    step: nil,
-  //    didChangeSlider: { _ in }
-  //  )
 }
 
 /// This is in use by e.g. `QuickSlider`, `LabeledSlider`
 public protocol SliderStylable {}
 
 extension View where Self: SliderStylable {
-  public func sliderStyle(
-    _ style: SliderStyle = .native,
-    components: SliderComponents = .all
-  ) -> some View {
+  public func sliderStyle(_ style: SliderStyle = .native) -> some View {
     self.environment(\.sliderStyle, style)
-      .environment(\.sliderComponents, components)
   }
 
-  public func stepStyle(
-    _ style: StepStyle,
-  ) -> some View {
+  public func sliderComponents(_ components: SliderComponents = .all) -> some View {
+    self.environment(\.sliderComponents, components)
+  }
+
+  public func stepStyle(_ style: StepStyle) -> some View {
     self.environment(\.stepStyle, style)
   }
 
 }
+
+import SwiftUI
+
+//public struct SliderStyleModifier: ViewModifier {
+//  @Environment(\.hsvcompon)
+//  public func body(content: Content) -> some View {
+//    content
+//  }
+//}
+//extension View {
+//  public func example() -> some View {
+//    self.modifier(SliderStyleModifier())
+//  }
+//}

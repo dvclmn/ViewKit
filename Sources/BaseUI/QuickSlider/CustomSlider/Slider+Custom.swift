@@ -26,7 +26,7 @@ struct SliderCustom: View {
   @State private var isHovering: Bool = false
 
   let thumbDiameter: CGFloat = 16
-  let style: TrackFillStyle
+//  let style: TrackFillStyle
 //  let preset: TrackStylePreset
 
   public var body: some View {
@@ -36,7 +36,7 @@ struct SliderCustom: View {
           // MARK: - Track
           SliderTrackView(
             style: style,
-            preset: ...
+//            preset: ...
             height: trackHeight,
             midpoint: proxy.size.midpoint
           )
@@ -100,14 +100,7 @@ extension SliderCustom {
       }
   }
 
-  var clipShape: AnyShape {
-    switch sliderComponents {
 
-      /// Aka has fill *only*
-      case .track: AnyShape(.rect(cornerRadius: cornerRounding ?? Styles.sizeTiny))
-      default: AnyShape(.capsule)
-    }
-  }
 
 //  @ViewBuilder
 //  func SliderTrack(in size: CGSize) -> some View {

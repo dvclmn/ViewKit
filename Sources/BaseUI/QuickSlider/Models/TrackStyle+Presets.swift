@@ -7,8 +7,10 @@
 
 import ColourKit
 import SwiftUI
+import CoreTools
 
-enum TrackStyle {
+@MetaEnum
+public enum TrackStyle {
   case rgb(RGBColour, RGBComponent)
   case hsv(HSVColour, HSVComponent)
   case opacityCheckboard
@@ -32,7 +34,7 @@ enum TrackStyle {
               )
             case .brightness:
               LinearGradient(
-                colors: [.black, colour.toColour],
+                colors: [.black, colour.hueSatOnly.toColour],
                 startPoint: .leading,
                 endPoint: .trailing
               )

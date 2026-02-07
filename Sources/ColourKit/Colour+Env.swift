@@ -10,6 +10,7 @@ import SwiftUI
 extension EnvironmentValues {
   @Entry public var colourHandler: ColourHandler = .init()
   @Entry public var rgbComponent: RGBComponent?
+  @Entry public var hsvComponent: HSVComponent?
   
   /// Colour adjustments, see ``ColourModification``
   @Entry public var colourModification: ColourModification?

@@ -20,7 +20,7 @@ public struct HSVSliderGroup: View {
 
   public init(
     _ colour: Binding<RGBColour>,
-    kind: ColourModelKind =
+    kind: ColourModelKind = .hsv
   ) {
     self._colour = colour
   }
@@ -34,20 +34,22 @@ public struct HSVSliderGroup: View {
             value: $colour.red,
             range: .unitRange
           )
-          .sliderStyle(.custom(.rgb(colour, for: .red)))
+          .sliderStyle(.custom(.rgb(colour, .red)))
+//          .sliderStyle(.custom(.rgb(colour, for: .red)))
           
           QuickSlider(
             "G",
             value: $colour.green,
             range: .unitRange
           )
-          .sliderStyle(.custom(.saturation(hue: colour.hue)))
+          .sliderStyle(.custom(.rgb(colour, .green)))
           
           QuickSlider(
             "B",
             value: $colour.blue,
             range: .unitRange
           )
+          .sliderStyle(.custom(.rgb(colour, .blue)))
           
           
         case .hsv:
@@ -56,22 +58,23 @@ public struct HSVSliderGroup: View {
           value: $colour.hue,
           range: .unitRange
         )
-        .sliderStyle(.custom(.hueRainbow))
+        .sliderStyle(.custom(.hsv(colourHSV, .hue)))
+//        .sliderStyle(.custom(.hueRainbow))
 
         QuickSlider(
           "S",
           value: $colour.saturation,
           range: .unitRange
         )
-        .sliderStyle(.custom(.saturation(hue: colour.hue)))
+        .sliderStyle(.custom(.hsv(colourHSV, .saturation)))
 
         QuickSlider(
           "V",
           value: $colour.brightness,
           range: .unitRange
         )
+        .sliderStyle(.custom(.hsv(colourHSV, .brightness)))
       }
-      .sliderStyle(.custom(.brightness(colour.hueSatOnly.toColour)))
     }
     .labelWeight(.semibold)
     .labelColour(.secondary)
