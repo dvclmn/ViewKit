@@ -14,14 +14,16 @@ public typealias FloatPointStyle = PointStyle<Double>
 public struct PointStyle<T: WaveFloat>: Sendable, Codable, Equatable, Hashable {
   public var shape: PointShape
   public var radius: T
-  public var colour: HSVColour
-  public var colourSecondary: HSVColour?
+  public var colour: RGBColour
+//  public var colour: HSVColour
+  public var colourSecondary: RGBColour?
+//  public var colourSecondary: HSVColour?
   
   public init(
     shape: PointShape = .circle,
     radius: T = 9.0,
-    colour: HSVColour = .brown,
-    colourSecondary: HSVColour? = .purple,
+    colour: RGBColour = .brown,
+    colourSecondary: RGBColour? = .purple,
   ) {
     self.shape = shape
     self.radius = radius

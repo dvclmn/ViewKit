@@ -23,14 +23,15 @@ extension ActionLine {
     /// A randomised value controlling visual 'rag' quality,
     /// for boundary action line edges?
     public var variation: Double
-    public var colour: HSVColour
+    public var colour: RGBColour
+//    public var colour: HSVColour
     public var shape: BoundaryShape
 
     public init(
       radius: Double = 0.5,
       position: CGPoint = .zero,
       variation: Double = 1,
-      colour: HSVColour = .gray(0.5),
+      colour: RGBColour = .gray(0.5),
       shape: BoundaryShape = .circle
     ) {
       self.radius = radius

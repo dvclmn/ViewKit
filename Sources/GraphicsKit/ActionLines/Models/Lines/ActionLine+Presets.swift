@@ -19,11 +19,13 @@ extension ActionLine.Configuration {
       ),
       outerShape: .init(
         radius: 0.7,
-        colour: HSVColour(h: 0.75, s: 0.6, v: 0.5),
+        colour: .aliceblue,
+//        colour: HSVColour(h: 0.75, s: 0.6, v: 0.5),
       ),
       innerShape: .init(
         radius: 0.2,
-        colour: HSVColour(h: 0.15, s: 0.5, v: 0.55),
+        colour: .oliveDark,
+//        colour: HSVColour(h: 0.15, s: 0.5, v: 0.55),
       ),
     )
   }
@@ -39,7 +41,8 @@ extension ActionLine.Configuration {
       ),
       outerShape: .init(
         radius: 1.0,
-        colour: HSVColour(h: 0.25, s: 0.6, v: 0.5),
+        colour: .brown,
+//        colour: HSVColour(h: 0.25, s: 0.6, v: 0.5),
       ),
       innerShape: .init(
         radius: 0.2

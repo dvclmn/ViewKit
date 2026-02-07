@@ -27,54 +27,52 @@ struct SliderCustom: View {
 
   let thumbDiameter: CGFloat = 16
   let style: TrackStyle
-//  let preset: TrackStylePreset
 
   public var body: some View {
 
-      GeometryReader { proxy in
-        ZStack {
-          // MARK: - Track
-          SliderTrackBackground(
-            style: style,
-//            preset: ...
-            height: trackHeight,
-            midpoint: proxy.size.midpoint
-          )
-          .environment(\.isHovering, isHovering)
+    GeometryReader { proxy in
+      ZStack {
+        // MARK: - Track
+        SliderTrackBackground(
+          style: style,
+          height: trackHeight,
+          midpoint: proxy.size.midpoint
+        )
+        .environment(\.isHovering, isHovering)
 
-          // MARK: - Thumb
-          if sliderComponents.contains(.thumb) {
-            
-            /// Slider thumb
-            SliderThumb(
+        // MARK: - Thumb
+        if sliderComponents.contains(.thumb) {
+
+          /// Slider thumb
+          SliderThumb(
+            diameter: thumbDiameter,
+            //              store: $store.thumbHandler,
+            //              value: value,
+            position: store.thumbPosition(
               diameter: thumbDiameter,
-              //              store: $store.thumbHandler,
-              //              value: value,
-              position: store.thumbPosition(
-                diameter: thumbDiameter,
-                forSliderValue: store.value,
-                range: store.range,
-                trackSize: store.trackSize
-              ),
-              shape: .circle,
-            )
-          }
-        }  // END zstack
-        .frame(maxWidth: .infinity)
-        .contentShape(.rect)
-        .onHover { isHovering = $0 }
-
-        .task(id: trackHeight) {
-          store.updateTrackSize(
-            viewWidth: proxy.size.width,
-            trackHeight: trackHeight
+              forSliderValue: store.value,
+              range: store.range,
+              trackSize: store.trackSize
+            ),
+            shape: .circle,
           )
         }
-        .gesture(sliderGesture)
-      }  // END geo
+      }  // END zstack
+      .frame(maxWidth: .infinity)
+      .contentShape(.rect)
+      .onHover { isHovering = $0 }
 
-      /// Prevents the geo reader from taking up more space than it really needs
-      .frame(height: trackHeightForFrame)
+      .task(id: trackHeight) {
+        store.updateTrackSize(
+          viewWidth: proxy.size.width,
+          trackHeight: trackHeight
+        )
+      }
+      .gesture(sliderGesture)
+    }  // END geo
+
+    /// Prevents the geo reader from taking up more space than it really needs
+    .frame(height: trackHeightForFrame)
   }
 }
 
@@ -100,28 +98,26 @@ extension SliderCustom {
       }
   }
 
-
-
-//  @ViewBuilder
-//  func SliderTrack(in size: CGSize) -> some View {
-//    ZStack {
-//      Rectangle()
-//        .fill(style.background)
-//        .fill(style.foreground)
-//    }
-//    .drawingGroup()
-//    .frame(height: trackHeight)
-//
-//    .overlay(alignment: .leading) {
-//      if let width = store.fillWidth() {
-//        Rectangle()
-//          .fill(style.fill.opacity(isHovering ? 1.0 : 0.6))
-//          .frame(width: width)
-//      }
-//    }
-//    .clipShape(clipShape)
-//    .animation(Styles.animationExtraQuickNSmooth, value: isHovering)
-//    .position(size.midpoint)
-//  }
+  //  @ViewBuilder
+  //  func SliderTrack(in size: CGSize) -> some View {
+  //    ZStack {
+  //      Rectangle()
+  //        .fill(style.background)
+  //        .fill(style.foreground)
+  //    }
+  //    .drawingGroup()
+  //    .frame(height: trackHeight)
+  //
+  //    .overlay(alignment: .leading) {
+  //      if let width = store.fillWidth() {
+  //        Rectangle()
+  //          .fill(style.fill.opacity(isHovering ? 1.0 : 0.6))
+  //          .frame(width: width)
+  //      }
+  //    }
+  //    .clipShape(clipShape)
+  //    .animation(Styles.animationExtraQuickNSmooth, value: isHovering)
+  //    .position(size.midpoint)
+  //  }
 
 }
