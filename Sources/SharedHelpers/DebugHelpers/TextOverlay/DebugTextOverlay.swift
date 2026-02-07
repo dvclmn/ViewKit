@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct DebugTextOverlayModifier: ViewModifier {
-  @Environment(\.explicitColour) private var explicitColour
+  @Environment(\.colourOverride) private var colourOverride
 
   @State private var gatheredText: String?
 
@@ -38,7 +38,7 @@ public struct DebugTextOverlayModifier: ViewModifier {
             //            .background(.black.opacityLow)
 
             //            .background(TintShapeStyle())
-            .background(explicitColour.withFallback(.clear).opacityLow)
+            .background(colourOverride.withFallback(.clear).opacityLow)
             .clipShape(.rect(cornerRadius: 3))
             .padding()
             .safeAreaPadding(padding.0, padding.1)

@@ -14,6 +14,7 @@ public struct CommonLabelStyleModifier: ViewModifier {
   @Environment(\.iconColour) private var iconColour
   @Environment(\.iconFontSize) private var iconFontSize
   @Environment(\.labelDisplay) private var labelDisplay
+  @Environment(\.fontWeightOverride) private var fontWeightOverride
   @Environment(\.symbolRenderingMode) private var symbolRenderingMode
 
   let labelPart: LabelPart
@@ -29,8 +30,7 @@ public struct CommonLabelStyleModifier: ViewModifier {
         content
       }
     }  // END group
-
-    .fontWeight(labelPart.weight(override: <#T##Font.Weight?#>))
+    .fontWeight(labelPart.weight(override: fontWeightOverride))
 
   }
 }
@@ -53,10 +53,6 @@ extension CommonLabelStyleModifier {
       return isStackedIcon ? Font.title2 : nil
     }
     return Font.system(size: iconFontSize)
-  }
-
-  private var finalIconStyle: AnyShapeStyle {
-    iconColour ?? AnyShapeStyle(.secondary)
   }
 
   private var internalLabelDisplay: LabelDisplay? {

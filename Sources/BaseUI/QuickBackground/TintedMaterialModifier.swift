@@ -11,7 +11,7 @@ import BasePrimitives
 
 public struct TintedMaterialModifier: ViewModifier {
   @Environment(\.backgroundMaterial) private var backgroundMaterial
-  @Environment(\.explicitContentMode) private var explicitContentMode
+  @Environment(\.contentModeOverride) private var contentModeOverride
   @Environment(\.isBackgroundExtensionEnabled) private var isBackgroundExtensionEnabled
   @Environment(\.isAnimationEnabled) private var isAnimationEnabled
   let image: Image?
@@ -26,7 +26,7 @@ public struct TintedMaterialModifier: ViewModifier {
           /// Image, if provided
           image?
             .resizable()
-            .aspectRatio(nil, contentMode: explicitContentMode ?? .fill)
+            .aspectRatio(nil, contentMode: contentModeOverride ?? .fill)
             .opacity(imageIntensity)
 
           /// Tint colour

@@ -10,7 +10,9 @@ import SwiftUI
 
 extension LabelStyle where Self == CustomLabel {
   public static var base: Self { Self() }
-  public static func base(display: LabelDisplay) -> Self { Self(labelDisplay: display) }
+  
+  /// If no value supplied for `display`, will use environment value, or fall back to `.titleAndIcon`
+  public static func base(display: LabelDisplay?) -> Self { Self(labelDisplay: display) }
 
   @available(*, deprecated, renamed: "base", message: "Prefer more accurately named 'base'.")
   public static var custom: Self { Self() }

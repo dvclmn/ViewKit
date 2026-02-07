@@ -10,7 +10,7 @@ import SwiftUI
 
 public struct SliderCore: View {
   @Environment(SliderHandler.self) private var store
-  @Environment(\.explicitControlSize) private var explicitControlSize
+  @Environment(\.controlSizeOverride) private var controlSizeOverride
   @Environment(\.sliderComponents) private var sliderComponents
 
   @Environment(\.stepStyle) private var stepStyle

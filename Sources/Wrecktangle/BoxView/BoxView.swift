@@ -14,7 +14,7 @@ public struct BoxView: View {
   @Environment(\.metrics) private var metrics
   @Environment(\.gridWidth) private var gridWidth
   @Environment(\.gridHeight) private var gridHeight
-  @Environment(\.explicitFontSize) private var explicitFontSize
+  @Environment(\.fontSizeOverride) private var fontSizeOverride
 
   @State private var characterSize: CGSize?
 
@@ -41,7 +41,7 @@ public struct BoxView: View {
     //    .fixedSize(horizontal: true, vertical: false)
     .fixedSize()
 
-    //    .gridSetup(.sfMono, fontSize: explicitFontSize ?? 13)
+    //    .gridSetup(.sfMono, fontSize: fontSizeOverride ?? 13)
 
     .environment(\.isShowingGridGuide, false)
 
@@ -85,7 +85,7 @@ extension EnvironmentValues {
     //                .environment(\.metrics, .lineNumbers)
     .environment(\.paragraphNumber, 5)
     .setGridFrame(18, alignment: .leading)
-    .environment(\.explicitFontSize, 11)
+    .environment(\.fontSizeOverride, 11)
 
   }
   .textSelection(.enabled)

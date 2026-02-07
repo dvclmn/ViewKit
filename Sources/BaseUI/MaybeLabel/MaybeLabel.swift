@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 28/2/2025.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
 public struct MaybeLabel: View {
@@ -18,25 +18,33 @@ public struct MaybeLabel: View {
 
   public var body: some View {
 
-    if !isHidden {
+    /// Don't need to handle Hidden case, the `base` label style does this
+    //    if !isHidden {
 
-      Label {
-        Text(label.text)
-      } icon: {
-        IconView(label.icon ?? .symbol(placeholderIcon))
-      }
-      /// May need to figure out a 'plain' override
-      .labelStyle(.base)
-
-    } else {
-      EmptyView()
-        .accessibilityLabel(label.text)
+    Label {
+      Text(label.text)
+    } icon: {
+      IconView(label.icon ?? .symbol(placeholderIcon))
     }
+    /// May need to figure out a 'plain' override
+    .labelStyle(.base(display: effectiveLabelDisplay))
+
+    //    } else {
+    //      EmptyView()
+    //        .accessibilityLabel(label.text)
+    //    }
   }
 }
 
 extension MaybeLabel {
-  private var isHidden: Bool { labelDisplay?.isHidden ?? false }
+  /// This really is the crux of what maybe label offers; a lightweight
+  /// wrapper over the concept of; if no icon supplied, default to
+  /// 'text-only' label style
+  private var effectiveLabelDisplay: LabelDisplay? {
+    hasIcon ? labelDisplay : .titleOnly
+  }
+  private var hasIcon: Bool { label.icon != nil }
+  //  private var isHidden: Bool { labelDisplay?.isHidden ?? false }
 
 }
 

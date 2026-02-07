@@ -24,31 +24,31 @@ extension EnvironmentValues {
   @Entry public var strokeColour: AnyShapeStyle?
   @Entry public var strokeWeight: CGFloat?
 
-  // MARK: - Sizing overrides
+  // MARK: - Overrides
   /// As opposed to the above more *specific* naming such as icon{x},
-  /// stroke{x}, these explicit{x} properties can be applied to anything.
+  /// stroke{x}, these override{x} properties can be applied to anything.
   @Entry public var sizeOverride: CGSize?
   @Entry public var heightOverride: CGFloat?
   @Entry public var widthOverride: CGFloat?
   @Entry public var fontSizeOverride: CGFloat?
+  @Entry public var fontWeightOverride: Font.Weight?
 
-  /// Useful when referring to neither height nor width specifically
-  @Entry public var explicitLength: CGFloat?
-  @Entry public var explicitRange: ClosedRange<CGFloat>?
+  /// `length` useful when referring to neither height nor width specifically
+  @Entry public var lengthOverride: CGFloat?
+  @Entry public var rangeOverride: ClosedRange<CGFloat>?
 
   /// Helpful article on `aspectRatio`
   /// https://alejandromp.com/development/blog/image-aspectratio-without-frames/
   /// See also `viewAspectRatio()` in BaseHelpers
-  @Entry public var explicitAspectRatio: CGFloat?
-  @Entry public var explicitContentMode: ContentMode?
-  @Entry public var explicitControlSize: ControlSize?
+  @Entry public var aspectRatioOverride: CGFloat?
+  @Entry public var contentModeOverride: ContentMode?
+  @Entry public var controlSizeOverride: ControlSize?
 
   @Entry public var helpText: String = ""
   @Entry public var cornerRounding: CGFloat?
 
   /// Perhaps the below two can be merged.
-  @Entry public var explicitColour: AnyShapeStyle?
-  //  @Entry public var explicitColour: (any ShapeStyle)? = nil
+  @Entry public var colourOverride: AnyShapeStyle?
   @Entry public var emphasisColour: AnyShapeStyle?
 
   @Entry public var buttonRole: ButtonRole?
@@ -87,24 +87,24 @@ extension EnvironmentValues {
   @Entry public var isScrollAtStart: Bool = true
 
   @Entry public var formatValue: (Double) -> String = { $0.displayString }
-  
+
   /// E.g. 3 places: `10.056` or one place: `10.1`
   /// See `Foundation/NumberFormatStyleConfiguration/Precision`
   /// This imposes a fixed number (no min or max) of places.
   @Entry public var fractionLength: Int?
-  
+
   /// E.g. 3 places: `023.6` or two places: `23.6`
   /// As implied in the name, this won't impose an upper limit,
   /// only ensure there are at least 'x' integers
   @Entry public var minIntegerLength: Int?
-  
+
   /// Important: For these binding env values, don't forget to actually
   /// initialise them somewhere in the app, to establish their source of truth
   @Entry public var isPaused: Binding<Bool> = .constant(true)
   @Entry public var frameRate: Binding<FrameRate> = .constant(.unlocked)
   @Entry public var animationClock: TimeInterval?
   @Entry public var isAnimationEnabled: Bool = false
-  
+
   @Entry public var isInspectorPresented: Binding<Bool> = .constant(false)
   @Entry public var columnVisibility: Binding<NavigationSplitViewVisibility> = .constant(.automatic)
 }

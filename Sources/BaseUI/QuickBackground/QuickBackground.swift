@@ -13,11 +13,11 @@ import SwiftUI
 //
 struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   @Environment(\.emphasisColour) private var emphasisColour
-  @Environment(\.explicitAspectRatio) private var explicitAspectRatio
+  @Environment(\.aspectRatioOverride) private var aspectRatioOverride
   @Environment(\.layoutPadding) private var layoutPadding
   @Environment(\.horizontalBias) private var horizontalBias
   @Environment(\.backgroundMaterial) private var backgroundMaterial
-  @Environment(\.explicitColour) private var explicitColour
+  @Environment(\.colourOverride) private var colourOverride
   @Environment(\.strokeColour) private var strokeColour
   @Environment(\.strokeWeight) private var strokeWeight
 
@@ -64,7 +64,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
 //
 extension QuickBackgroundModifier {
   private var backgroundColour: AnyShapeStyle {
-    explicitColour.withFallback(.black.opacity(0.6))
+    colourOverride.withFallback(.black.opacity(0.6))
   }
   private var basePadding: CGFloat {
     return padding ?? layoutPadding ?? CGFloat.defaultQuickPadding
