@@ -36,7 +36,7 @@ public struct SliderExamples: View {
         .environment(\.sliderDefaultValue, 1.0)
 
         //      .setExplicitHeight(5)
-        //      .environment(\.explicitHeight, 5)
+        //      .environment(\.heightOverride, 5)
 //        .environment(\.trackComponents, [.thumb])
         //      .padding()
         //      .background(.purple.quinary)
@@ -57,12 +57,12 @@ public struct SliderExamples: View {
         )
         .sliderStyle(.native, components: [.track, .thumb])
         .gridCellColumns(3)
-        //      .environment(\.explicitHeight, 20)
+        //      .environment(\.heightOverride, 20)
         //      .padding()
         //      .background(.brown.quinary)
 
         
-        //      .environment(\.explicitHeight, 34)
+        //      .environment(\.heightOverride, 34)
         //      .padding()
         //      .background(.blue.quinary)
 

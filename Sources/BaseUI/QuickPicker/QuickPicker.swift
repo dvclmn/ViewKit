@@ -11,7 +11,7 @@ import SwiftUI
 public struct QuickPicker<RowContent: View, Item>: View where Item: Pickable & Hashable {
 
   public typealias PickerOutput = (Item, Bool) -> RowContent
-  @Environment(\.explicitHeight) private var explicitHeight
+  @Environment(\.heightOverride) private var heightOverride
 
   @State private var allItems: [Item]
 //  let allItems: [Item]

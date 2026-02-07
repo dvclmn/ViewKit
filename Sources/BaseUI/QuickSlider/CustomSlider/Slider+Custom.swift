@@ -18,7 +18,7 @@ import SwiftUI
 /// - Units
 
 struct SliderCustom: View {
-  @Environment(\.explicitHeight) private var explicitHeight
+  @Environment(\.heightOverride) private var heightOverride
   @Environment(\.cornerRounding) private var cornerRounding
   @Environment(\.sliderComponents) private var sliderComponents
   @Environment(SliderHandler.self) private var store
@@ -78,7 +78,7 @@ extension SliderCustom {
   }
 
   var trackHeight: CGFloat {
-    explicitHeight ?? store.fallbackHeight
+    heightOverride ?? store.fallbackHeight
   }
 
   var sliderGesture: some Gesture {

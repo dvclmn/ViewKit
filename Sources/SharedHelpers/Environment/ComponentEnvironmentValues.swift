@@ -27,10 +27,10 @@ extension EnvironmentValues {
   // MARK: - Sizing overrides
   /// As opposed to the above more *specific* naming such as icon{x},
   /// stroke{x}, these explicit{x} properties can be applied to anything.
-  @Entry public var explicitSize: CGSize?
-  @Entry public var explicitHeight: CGFloat?
-  @Entry public var explicitWidth: CGFloat?
-  @Entry public var explicitFontSize: CGFloat?
+  @Entry public var sizeOverride: CGSize?
+  @Entry public var heightOverride: CGFloat?
+  @Entry public var widthOverride: CGFloat?
+  @Entry public var fontSizeOverride: CGFloat?
 
   /// Useful when referring to neither height nor width specifically
   @Entry public var explicitLength: CGFloat?

@@ -24,7 +24,6 @@ public struct CustomLabel: LabelStyle {
   @Environment(\.layoutSpacing) private var layoutSpacing
   @Environment(\.layoutAlignment) private var layoutAlignment
   @Environment(\.textAlignment) private var textAlignment
-  //  @Environment(\.multilineTextAlignment) private var multilineTextAlignment
 
   let explicitLabelDisplay: LabelDisplay?
 

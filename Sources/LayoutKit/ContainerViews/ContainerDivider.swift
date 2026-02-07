@@ -9,13 +9,13 @@ import SwiftUI
 import BasePrimitives
 
 public struct ContainerDivider: View {
-  @Environment(\.explicitWidth) private var explicitWidth
-  @Environment(\.explicitHeight) private var explicitHeight
+  @Environment(\.widthOverride) private var widthOverride
+  @Environment(\.heightOverride) private var heightOverride
   
   public var body: some View {
     
     Divider()
-      .frame(width: explicitWidth, height: explicitHeight)
+      .frame(width: widthOverride, height: heightOverride)
       .opacity(0.7)
       .fixedSize(horizontal: false, vertical: isVerticalFixed)
     
@@ -26,5 +26,5 @@ extension ContainerDivider {
   /// pushing/expanding its parent view outwards, which is very annoying.
   ///
   /// If an explicit height is provided, then we don't need to make it fixed
-  private var isVerticalFixed: Bool { explicitHeight == nil }
+  private var isVerticalFixed: Bool { heightOverride == nil }
 }

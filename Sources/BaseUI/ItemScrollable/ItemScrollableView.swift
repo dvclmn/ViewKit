@@ -14,7 +14,7 @@
 //  //  @Environment(\.strokeConfig) private var strokeConfig
 //  //  @Environment(\.labelConfig) private var labelForeground
 //  //  @Environment(\.isItemSelected) private var isItemSelected
-//  //  @Environment(\.explicitHeight) private var explicitHeight
+//  //  @Environment(\.heightOverride) private var heightOverride
 //
 //  //  @State private var contentWidth: CGFloat? = nil
 //  private let contentPaddingH: CGFloat = Styles.sizeSmall

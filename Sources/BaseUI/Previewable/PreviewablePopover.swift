@@ -11,7 +11,7 @@ import SwiftUI
 
 public struct PreviewablePopoverModifier<PopoverContent: View>: ViewModifier {
   @Environment(\.layoutAlignment) private var layoutAlignment
-  @Environment(\.explicitSize) private var explicitSize
+  @Environment(\.sizeOverride) private var sizeOverride
 
   @Binding var isPresented: Bool
   let attachmentAnchor: PopoverAttachmentAnchor
@@ -34,10 +34,10 @@ public struct PreviewablePopoverModifier<PopoverContent: View>: ViewModifier {
           PopoverView()
             //            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .frame(
-              width: explicitSize?.width,
-              //              width: explicitSize?.width ?? 400,
-              height: explicitSize?.height
-                //              height: explicitSize?.height ?? 600
+              width: sizeOverride?.width,
+              //              width: sizeOverride?.width ?? 400,
+              height: sizeOverride?.height
+                //              height: sizeOverride?.height ?? 600
             )
             .quickBackground()
         }

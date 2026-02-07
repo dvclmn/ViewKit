@@ -13,7 +13,7 @@ import SwiftUI
 public struct CustomLabeledContent: LabeledContentStyle {
   @Environment(\.layoutAxis) private var layoutAxis
   @Environment(\.layoutAlignment) private var layoutAlignment
-  @Environment(\.explicitWidth) private var explicitWidth
+  @Environment(\.widthOverride) private var widthOverride
 
   //  @Environment(\.layoutConfig) private var layoutConfig
 
@@ -37,7 +37,7 @@ public struct CustomLabeledContent: LabeledContentStyle {
         }
       }
     }
-    .frame(maxWidth: explicitWidth, alignment: layoutAlignment ?? .center)
+    .frame(maxWidth: widthOverride, alignment: layoutAlignment ?? .center)
 
   }
 }
@@ -57,7 +57,7 @@ extension CustomLabeledContent {
       configuration.content
         .controlSize(.small)
         .toggleStyle(.switch)
-        .frame(maxWidth: explicitWidth, alignment: layoutAlignment?.opposite ?? .center)
+        .frame(maxWidth: widthOverride, alignment: layoutAlignment?.opposite ?? .center)
 
     } label: {
       configuration.label

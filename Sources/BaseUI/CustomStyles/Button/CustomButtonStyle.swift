@@ -20,7 +20,7 @@ public struct BasePlainButton: PrimitiveButtonStyle {
   //  @Environment(\.strokeConfig) private var strokeConfig
   //  @Environment(\.isInControlGroup) private var isInControlGroup
   @Environment(\.isEnabled) private var isEnabled
-  @Environment(\.explicitHeight) private var explicitHeight
+  @Environment(\.heightOverride) private var heightOverride
   @Environment(\.isBackgroundHidden) private var isBackgroundHidden
 
   public init() {}
@@ -35,7 +35,7 @@ public struct BasePlainButton: PrimitiveButtonStyle {
         .quickBackground(isEnabled: !isBackgroundHidden)
         //        .fontWeight(.medium)
         .lineLimit(1)
-        //        .frame(height: explicitHeight)
+        //        .frame(height: heightOverride)
         //        .padding(.bottom, 3)
         .opacity(isEnabled ? 1.0 : 0.4)
         .contentShape(Rectangle())
