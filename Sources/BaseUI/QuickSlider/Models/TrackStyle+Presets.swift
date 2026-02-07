@@ -15,6 +15,7 @@ public enum TrackStyle {
   case hsv(HSVColour, HSVComponent)
   case opacityCheckboard
   case clear
+  case gradient(LinearGradient)
 
   func shape() -> AnyShapeStyle {
     //  func shape() -> some ShapeStyle {
@@ -52,6 +53,9 @@ public enum TrackStyle {
 
       case .clear:
         return AnyShapeStyle(Color.clear)
+        
+      case .gradient(let gradient):
+        return AnyShapeStyle(gradient)
     }
   }
 }

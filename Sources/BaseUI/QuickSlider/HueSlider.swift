@@ -29,7 +29,14 @@ public struct HueSlider<Value: BinaryFloatingPoint & Sendable>: View {
       value: $hue,
       range: .unitRange
     )
-    .sliderStyle(.custom(.hueRainbow))
+    .sliderStyle(.custom(.gradient(LinearGradient.rainbow())))
+    
+//    QuickSlider(
+//      title ?? "Hue",
+//      value: $hue,
+//      range: .unitRange
+//    )
+//    .sliderStyle(.custom(.hsv))
 
   }
 }

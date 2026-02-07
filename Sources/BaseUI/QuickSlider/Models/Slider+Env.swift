@@ -26,7 +26,8 @@ extension EnvironmentValues {
 /// This is in use by e.g. `QuickSlider`, `LabeledSlider`
 public protocol SliderStylable {}
 
-extension View where Self: SliderStylable {
+extension View {
+//extension View where Self: SliderStylable {
   public func sliderStyle(_ style: SliderStyle = .native) -> some View {
     self.environment(\.sliderStyle, style)
   }
@@ -40,8 +41,6 @@ extension View where Self: SliderStylable {
   }
 
 }
-
-import SwiftUI
 
 //public struct SliderStyleModifier: ViewModifier {
 //  @Environment(\.hsvcompon)
