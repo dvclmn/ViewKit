@@ -10,15 +10,18 @@ import SwiftUI
 // MARK: - Reading Data
 extension UserDataHandler {
 
-  /// Ready-only accessor. Use this only inside views that are presented after gating on `.ready`.
+  /// Non-optional accessor for in-memory user data once `.ready`.
+  /// Crashes via precondition if accessed before readiness. Prefer this inside views gated on `.ready`.
   @MainActor
   public var userData: Value { unsafeReadyData() }
 
-  /// Useful in cases where I do want to check for a present value
+  /// Optional accessor to inspect the current in-memory value, if initialized.
+  /// Returns `nil` before the handler reaches `.ready`.
   public var userDataIfPresent: Value? { dataState.readyValue }
 
   /// Returns the current data when the handler is `.ready`.
   /// Triggers a precondition failure if called before readiness.
+  /// Backing for the non-optional `userData` accessor.
   package func unsafeReadyData(
     file: StaticString = #fileID,
     line: UInt = #line
@@ -37,12 +40,15 @@ extension UserDataHandler {
 
 // MARK: - Setting Data
 extension UserDataHandler {
-
+  /// Mutates a single property on the in-memory value and propagates updates.
+  /// Convenience for targeted updates without rewriting the whole `Value`.
   @MainActor
   public func setValue<T>(_ keyPath: WritableKeyPath<Value, T>, to value: T) {
     updateData { $0[keyPath: keyPath] = value }
   }
 
+  /// Performs an in-place mutation of the in-memory value.
+  /// Supports undo registration via `UpdateKind`.
   @MainActor
   public func setValue(
     action: UpdateKind = .standard,
@@ -55,7 +61,8 @@ extension UserDataHandler {
 // MARK: - Binding Data
 extension UserDataHandler {
 
-  /// Binding to a non-optional wave (use only in ready path)
+  /// Binding to the non-optional in-memory value (use only when `.ready`).
+  /// Writes propagate through `updateData`, optionally registering undo.
   @MainActor
   public func dataBinding(_ action: UpdateKind = .standard) -> Binding<Value> {
     Binding(
