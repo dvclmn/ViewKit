@@ -21,6 +21,34 @@ public struct ConfiguredWave: WaveShaped, Sendable, Identifiable, Hashable, Coda
 }
 
 extension ConfiguredWave {
+  public init(
+    amplitude: Value,
+    frequency: Value,
+    phaseOffset: Value = .zero,
+    waveform: Waveform = .sine,
+    cycles: Value = 2,
+    samples: Int = 30,
+    interpolation: WaveInterpolation = .cubic(),
+    noise: Value = .zero
+  ) {
+    let wave = FloatWave(
+      amp: amplitude,
+      freq: frequency,
+      phase: phaseOffset,
+      waveform: waveform
+    )
+    let config = WaveConfig(
+      cycles: cycles,
+      sampleCount: samples,
+      interpolation: interpolation,
+      noise: noise
+    )
+    self.wave = wave
+    self.config = config
+  }
+}
+
+extension ConfiguredWave {
   public static var example01: Self {
     .init(
       .example01,

@@ -5,20 +5,20 @@
 //  Created by Dave Coleman on 6/2/2026.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 public struct ImportExportModifier<Store: UserDataHandler>: ViewModifier
 where Store.Value: Transferable & Codable {
   //  @Environment(BreathingHandler.self) private var store
   @Environment(\.popup) private var popup
-  
+
   @State private var isImporting: Bool = false
   @State private var isExporting: Bool = false
-  
+
   @Bindable var store: Store
   public func body(content: Content) -> some View {
-    
+
     //    @Bindable var store = store
     content
       .fileExporter(
@@ -36,13 +36,13 @@ where Store.Value: Transferable & Codable {
                   }
                 )
               )
-              
+
             case .failure(let error):
               popup?.showPopup("Failed to export preset: \(error)")
           }
         }
       )
-    
+
       .fileImporter(
         isPresented: $isImporting,
         allowedContentTypes: [.json],
@@ -56,16 +56,16 @@ where Store.Value: Transferable & Codable {
               //            store.waveUpdate(.withUndo(action: "Load Preset")) {
               $0 = newWave
             }
-            
+
           } catch {
             popup?.showPopup("File import error: \(error)")
           }
-          
+
           //          store.isImporting = false
-          
+
         }
       )
-    
+
       .toolbar {
         ToolbarItemGroup {
           Button {
@@ -74,7 +74,7 @@ where Store.Value: Transferable & Codable {
             Label("Save Preset", systemImage: Icons.plus.icon)
             //          Label("Save Preset", systemImage: "document.badge.gearshape")
           }
-          
+
           Button {
             isImporting = true
           } label: {

@@ -35,7 +35,6 @@ extension UserDataHandler {
     }
     return data
   }
-
 }
 
 // MARK: - Setting Data
@@ -43,7 +42,10 @@ extension UserDataHandler {
   /// Mutates a single property on the in-memory value and propagates updates.
   /// Convenience for targeted updates without rewriting the whole `Value`.
   @MainActor
-  public func setValue<T>(_ keyPath: WritableKeyPath<Value, T>, to value: T) {
+  public func setValue<T>(
+    _ keyPath: WritableKeyPath<Value, T>,
+    to value: T
+  ) {
     updateData { $0[keyPath: keyPath] = value }
   }
 

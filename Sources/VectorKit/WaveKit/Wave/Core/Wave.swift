@@ -44,7 +44,6 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
     set { _phase = Self.unitToRadians(Self.wrapUnit(newValue)) }
   }
 
-  //  private(set) var phase: T
   public var waveform: Waveform
 
   public init(
