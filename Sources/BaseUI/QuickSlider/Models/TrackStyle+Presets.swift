@@ -8,82 +8,128 @@
 import ColourKit
 import SwiftUI
 
-extension TrackFillStyle {
-  public static var clearBG: TrackFillStyle {
-    TrackFillStyle(
-      fill: AnyShapeStyle(Color.accentColor),
-      background: AnyShapeStyle(Color.clear)
-    )
-  }
-  public static var opacitySlider: TrackFillStyle {
-    TrackFillStyle(
-      fill: nil,
-      foreground: AnyShapeStyle(
-        LinearGradient(
+enum TrackStyle {
+  case rgb(RGBColour, RGBComponent)
+  case hsv(HSVColour, HSVComponent)
+  case opacityCheckboard
+  case clear
+
+  func shape() -> AnyShapeStyle {
+    //  func shape() -> some ShapeStyle {
+    switch self {
+      case .rgb(let colour, let component):
+        return AnyShapeStyle(component.sliderTrackGradient(colour: colour))
+
+      case .hsv(let colour, let component):
+        let gradient =
+          switch component {
+            case .hue: LinearGradient.rainbow()
+            case .saturation:
+              LinearGradient(
+                colors: [.gray, Color(hue: colour.hue, saturation: 1.0, brightness: 1.0)],
+                startPoint: .leading,
+                endPoint: .trailing
+              )
+            case .brightness:
+              LinearGradient(
+                colors: [.black, colour.toColour],
+                startPoint: .leading,
+                endPoint: .trailing
+              )
+            case .alpha:
+              preconditionFailure("Don't pass alpha to create a slider track gradient")
+          }
+        return AnyShapeStyle(gradient)
+      case .opacityCheckboard:
+        let gradient = LinearGradient(
           colors: [.clear, .white],
           startPoint: .leading,
           endPoint: .trailing
         )
-      ),
-      background: .checkerboard()
-    )
-  }
-  public static var hueRainbow: TrackFillStyle {
-    TrackFillStyle(
-      fill: nil,
-      foreground: nil,
-      //      background: nil
-      background: AnyShapeStyle(LinearGradient.rainbow())
-    )
-  }
+        return AnyShapeStyle(gradient)
 
-  public static func saturation(hue: Double) -> TrackFillStyle {
-    //  public static func saturation(_ hue: Color) -> TrackFillStyle {
-    TrackFillStyle(
-      fill: nil,
-      foreground: nil,
-      //      background: nil
-      background: AnyShapeStyle(
-        LinearGradient(
-          colors: [.gray, Color(hue: hue, saturation: 1.0, brightness: 1.0)],
-          startPoint: .leading,
-          endPoint: .trailing
-        )
-      )
-    )
+      case .clear:
+        return AnyShapeStyle(Color.clear)
+    }
   }
-  public static func brightness(_ colour: Color) -> TrackFillStyle {
-    TrackFillStyle(
-      fill: nil,
-      foreground: nil,
-      //      background: nil
-      background: AnyShapeStyle(
-        LinearGradient(
-          colors: [.black, colour],
-          startPoint: .leading,
-          endPoint: .trailing
-        )
-      )
-    )
-  }
-
-  public static func rgb(_ colour: RGBColour, for component: RGBComponent) -> TrackFillStyle {
-    //  public static func rgb(_ colour: RGBColour) -> TrackFillStyle {
-    TrackFillStyle(
-      fill: nil,
-      foreground: nil,
-      //      background: nil
-      background: AnyShapeStyle(
-        component.sliderTrackGradient(colour: colour)
-      )
-      //        AnyShapeStyle(
-      //        LinearGradient(
-      //          colors: [.black, colour],
-      //          startPoint: .leading,
-      //          endPoint: .trailing
-      //        )
-      //      )
-    )
-  }
-
 }
+
+//extension TrackFillStyle {
+//  public static var clearBG: TrackFillStyle {
+//    TrackFillStyle(
+//      fill: AnyShapeStyle(Color.accentColor),
+//      background: AnyShapeStyle(Color.clear)
+//    )
+//  }
+//  public static var opacitySlider: TrackFillStyle {
+//    TrackFillStyle(
+//      fill: nil,
+//      foreground: AnyShapeStyle(
+//        LinearGradient(
+//          colors: [.clear, .white],
+//          startPoint: .leading,
+//          endPoint: .trailing
+//        )
+//      ),
+//      background: .checkerboard()
+//    )
+//  }
+//  public static var hueRainbow: TrackFillStyle {
+//    TrackFillStyle(
+//      fill: nil,
+//      foreground: nil,
+//      //      background: nil
+//      background: AnyShapeStyle(LinearGradient.rainbow())
+//    )
+//  }
+//
+//  public static func saturation(hue: Double) -> TrackFillStyle {
+//    //  public static func saturation(_ hue: Color) -> TrackFillStyle {
+//    TrackFillStyle(
+//      fill: nil,
+//      foreground: nil,
+//      //      background: nil
+//      background: AnyShapeStyle(
+//        LinearGradient(
+//          colors: [.gray, Color(hue: hue, saturation: 1.0, brightness: 1.0)],
+//          startPoint: .leading,
+//          endPoint: .trailing
+//        )
+//      )
+//    )
+//  }
+//  public static func brightness(_ colour: Color) -> TrackFillStyle {
+//    TrackFillStyle(
+//      fill: nil,
+//      foreground: nil,
+//      //      background: nil
+//      background: AnyShapeStyle(
+//        LinearGradient(
+//          colors: [.black, colour],
+//          startPoint: .leading,
+//          endPoint: .trailing
+//        )
+//      )
+//    )
+//  }
+//
+//  public static func rgb(_ colour: RGBColour, for component: RGBComponent) -> TrackFillStyle {
+//    //  public static func rgb(_ colour: RGBColour) -> TrackFillStyle {
+//    TrackFillStyle(
+//      fill: nil,
+//      foreground: nil,
+//      //      background: nil
+//      background: AnyShapeStyle(
+//        component.sliderTrackGradient(colour: colour)
+//      )
+//      //        AnyShapeStyle(
+//      //        LinearGradient(
+//      //          colors: [.black, colour],
+//      //          startPoint: .leading,
+//      //          endPoint: .trailing
+//      //        )
+//      //      )
+//    )
+//  }
+//
+//}

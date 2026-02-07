@@ -31,11 +31,11 @@ public struct SliderCore: View {
     if let step = store.step {
       switch stepStyle {
         case .native:
-          SliderTrackView(step: step)
+          SliderTrackNativeView(step: step)
 
         case .stepper:
           HStack {
-            SliderTrackView(step: nil)
+            SliderTrackNativeView(step: nil)
 
             Stepper(
               store.label.text,
@@ -46,11 +46,11 @@ public struct SliderCore: View {
           }
 
         case .none:
-          SliderTrackView(step: nil)
+          SliderTrackNativeView(step: nil)
       }
 
     } else {
-      SliderTrackView(step: nil)
+      SliderTrackNativeView(step: nil)
     }
 
     // MARK: - Units

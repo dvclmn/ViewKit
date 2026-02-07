@@ -12,14 +12,14 @@ import SwiftUI
 public struct HSVSliderGroup: View {
 
   @State private var colourNative: Color = .primary
-  @State private var colourRGB: RGBColour = .white
+  @State private var colourHSV: HSVColour = .white
   
-  @Binding var colour: HSVColour
+  @Binding var colour: RGBColour
 //  @Binding var colourHSV: HSVColour
   let kind: ColourModelKind
 
   public init(
-    _ colour: Binding<HSVColour>,
+    _ colour: Binding<RGBColour>,
     kind: ColourModelKind =
   ) {
     self._colour = colour
@@ -27,25 +27,50 @@ public struct HSVSliderGroup: View {
   public var body: some View {
 
     SliderGroup {
-      QuickSlider(
-        "H",
-        value: $colour.hue,
-        range: .unitRange
-      )
-      .sliderStyle(.custom(.hueRainbow))
+      switch kind {
+        case .rgb:
+          QuickSlider(
+            "R",
+            value: $colour.red,
+            range: .unitRange
+          )
+          .sliderStyle(.custom(.rgb(colour, for: .red)))
+          
+          QuickSlider(
+            "G",
+            value: $colour.green,
+            range: .unitRange
+          )
+          .sliderStyle(.custom(.saturation(hue: colour.hue)))
+          
+          QuickSlider(
+            "B",
+            value: $colour.blue,
+            range: .unitRange
+          )
+          
+          
+        case .hsv:
+        QuickSlider(
+          "H",
+          value: $colour.hue,
+          range: .unitRange
+        )
+        .sliderStyle(.custom(.hueRainbow))
 
-      QuickSlider(
-        "S",
-        value: $colour.saturation,
-        range: .unitRange
-      )
-      .sliderStyle(.custom(.saturation(hue: colour.hue)))
+        QuickSlider(
+          "S",
+          value: $colour.saturation,
+          range: .unitRange
+        )
+        .sliderStyle(.custom(.saturation(hue: colour.hue)))
 
-      QuickSlider(
-        "V",
-        value: $colour.brightness,
-        range: .unitRange
-      )
+        QuickSlider(
+          "V",
+          value: $colour.brightness,
+          range: .unitRange
+        )
+      }
       .sliderStyle(.custom(.brightness(colour.hueSatOnly.toColour)))
     }
     .labelWeight(.semibold)

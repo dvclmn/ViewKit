@@ -8,7 +8,7 @@
 import CoreTools
 import SwiftUI
 
-struct SliderTrackView: View {
+struct SliderTrackNativeView: View {
   @Environment(SliderHandler.self) private var store
   @Environment(\.sliderStyle) private var sliderStyle
 
@@ -50,7 +50,7 @@ struct SliderTrackView: View {
   }
 }
 
-extension SliderTrackView {
+extension SliderTrackNativeView {
   private func handleOnEdit(_ didEdit: Bool) {
     let phase = SliderPhase(fromOnEditingChanged: didEdit)
     store.updatePhase(phase)

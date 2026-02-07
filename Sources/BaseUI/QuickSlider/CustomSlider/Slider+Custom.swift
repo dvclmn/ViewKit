@@ -18,22 +18,29 @@ import SwiftUI
 /// - Units
 
 struct SliderCustom: View {
+  @Environment(SliderHandler.self) private var store
   @Environment(\.heightOverride) private var heightOverride
   @Environment(\.cornerRounding) private var cornerRounding
   @Environment(\.sliderComponents) private var sliderComponents
-  @Environment(SliderHandler.self) private var store
 
   @State private var isHovering: Bool = false
 
   let thumbDiameter: CGFloat = 16
   let style: TrackFillStyle
+//  let preset: TrackStylePreset
 
   public var body: some View {
 
       GeometryReader { proxy in
         ZStack {
           // MARK: - Track
-          SliderTrack(in: proxy.size)
+          SliderTrackView(
+            style: style,
+            preset: ...
+            height: trackHeight,
+            midpoint: proxy.size.midpoint
+          )
+          .environment(\.isHovering, isHovering)
 
           // MARK: - Thumb
           if sliderComponents.contains(.thumb) {
@@ -102,26 +109,26 @@ extension SliderCustom {
     }
   }
 
-  @ViewBuilder
-  func SliderTrack(in size: CGSize) -> some View {
-    ZStack {
-      Rectangle()
-        .fill(style.background)
-        .fill(style.foreground)
-    }
-    .drawingGroup()
-    .frame(height: trackHeight)
-
-    .overlay(alignment: .leading) {
-      if let width = store.fillWidth() {
-        Rectangle()
-          .fill(style.fill.opacity(isHovering ? 1.0 : 0.6))
-          .frame(width: width)
-      }
-    }
-    .clipShape(clipShape)
-    .animation(Styles.animationExtraQuickNSmooth, value: isHovering)
-    .position(size.midpoint)
-  }
+//  @ViewBuilder
+//  func SliderTrack(in size: CGSize) -> some View {
+//    ZStack {
+//      Rectangle()
+//        .fill(style.background)
+//        .fill(style.foreground)
+//    }
+//    .drawingGroup()
+//    .frame(height: trackHeight)
+//
+//    .overlay(alignment: .leading) {
+//      if let width = store.fillWidth() {
+//        Rectangle()
+//          .fill(style.fill.opacity(isHovering ? 1.0 : 0.6))
+//          .frame(width: width)
+//      }
+//    }
+//    .clipShape(clipShape)
+//    .animation(Styles.animationExtraQuickNSmooth, value: isHovering)
+//    .position(size.midpoint)
+//  }
 
 }

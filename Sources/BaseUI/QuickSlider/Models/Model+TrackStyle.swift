@@ -12,6 +12,7 @@ public enum SliderStyle {
   case custom(TrackFillStyle)
 }
 
+/// I think tbh I'm not sure what I mean by fill *and* fg/bg
 public struct TrackFillStyle {
   let fill: AnyShapeStyle
   /// This could drive more complex fills,

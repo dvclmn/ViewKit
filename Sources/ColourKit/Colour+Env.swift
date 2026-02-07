@@ -9,10 +9,11 @@ import SwiftUI
 
 extension EnvironmentValues {
   @Entry public var colourHandler: ColourHandler = .init()
+  @Entry public var rgbComponent: RGBComponent?
   
   /// Colour adjustments, see ``ColourModification``
-  @Entry public var colourModification: ColourModification? = nil
-  @Entry public var colourModificationStrength: ModificationStrengthPreset? = nil
-  @Entry public var colourPurpose: ColourPurpose? = nil
-  @Entry public var colourChroma: ColourChroma? = nil
+  @Entry public var colourModification: ColourModification?
+  @Entry public var colourModificationStrength: ModificationStrengthPreset?
+  @Entry public var colourPurpose: ColourPurpose?
+  @Entry public var colourChroma: ColourChroma?
 }
