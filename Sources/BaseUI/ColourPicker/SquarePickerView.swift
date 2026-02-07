@@ -12,7 +12,7 @@ import SwiftUI
 struct PickerSquare: View {
   let hue: Double
   var body: some View {
-    
+
     ZStack {
       Rectangle()
         .fill(

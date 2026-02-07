@@ -5,43 +5,44 @@
 //  Created by Dave Coleman on 12/5/2025.
 //
 
-import SwiftUI
-import ColourKit
+//import ColourKit
+//import SwiftUI
 
-struct HSVPickerExample: View {
-//  @State private var hue: Double = 0.6
-//  @State private var saturation: Double = 1.0
-//  @State private var brightness: Double = 1.0
-  
-  @State private var colour: HSVColour = .init(fromRGB: .orange)
-  
-  var body: some View {
-    VStack {
-      SquareColourPicker($colour)
-      .frame(width: 200, height: 200)
-      
-      Slider(value: $colour.hue, in: 0...1)
-        .padding()
-      
-      RoundedRectangle(cornerRadius: 8)
-        .fill(colour.toColour)
-        .frame(height: 50)
-        .padding()
-    }
-  }
-}
-
-//extension HSVPickerExample {
-//  var currentColour: HSVColour {
-//    HSVColour(
-//      hue: hue,
-//      saturation: saturation,
-//      brightness: brightness)
+/// See `BaseDemos`
+//struct HSVPickerExample: View {
+//  //  @State private var hue: Double = 0.6
+//  //  @State private var saturation: Double = 1.0
+//  //  @State private var brightness: Double = 1.0
+//
+//  @State private var colour: HSVColour = .init(fromRGB: .orange)
+//
+//  var body: some View {
+//    VStack {
+//      SquareColourPicker($colour)
+//        .frame(width: 200, height: 200)
+//
+//      Slider(value: $colour.hue, in: 0...1)
+//        .padding()
+//
+//      RoundedRectangle(cornerRadius: 8)
+//        .fill(colour.toColour)
+//        .frame(height: 50)
+//        .padding()
+//    }
 //  }
 //}
-#if DEBUG
-@available(macOS 15, iOS 18, *)
-#Preview(traits: .size(.normal)) {
-  HSVPickerExample()
-}
-#endif
+//
+////extension HSVPickerExample {
+////  var currentColour: HSVColour {
+////    HSVColour(
+////      hue: hue,
+////      saturation: saturation,
+////      brightness: brightness)
+////  }
+////}
+//#if DEBUG
+//@available(macOS 15, iOS 18, *)
+//#Preview(traits: .size(.normal)) {
+//  HSVPickerExample()
+//}
+//#endif

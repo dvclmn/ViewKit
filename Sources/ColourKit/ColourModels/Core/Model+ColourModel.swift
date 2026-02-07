@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 12/5/2025.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 public protocol ColourModel: Codable, Equatable {
   var colourSpace: Color.RGBColorSpace { get }
@@ -20,6 +20,8 @@ public protocol ColourModel: Codable, Equatable {
 extension ColourModel {
   public mutating func opacity(_ opacity: Double) { alpha = opacity }
   public var colourSpace: Color.RGBColorSpace { .sRGB }
+  public var nsColourSpace: NSColorSpace { .deviceRGB }
+//  public var nsColourSpace: NSColorSpace { .sRGB }
 }
 
 @CaseDetection

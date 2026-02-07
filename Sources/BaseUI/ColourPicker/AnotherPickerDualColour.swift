@@ -8,16 +8,18 @@
 import ColourKit
 import SwiftUI
 
-public struct DualHSVPicker: View {
-  @Binding var primaryColour: HSVColour
-  @Binding var secondaryColour: HSVColour
+public struct DualColourPicker: View {
+  @Binding var primaryColour: RGBColour
+//  @Binding var primaryColour: HSVColour
+  @Binding var secondaryColour: RGBColour
+//  @Binding var secondaryColour: HSVColour
   @Binding var activeColour: ColourLevel
   //  let activeColour: ColourLevel
   let pickerSize: CGFloat
 
   public init(
-    primaryColour: Binding<HSVColour>,
-    secondaryColour: Binding<HSVColour>,
+    primaryColour: Binding<RGBColour>,
+    secondaryColour: Binding<RGBColour>,
     activeColour: Binding<ColourLevel>,
     pickerSize: CGFloat = 140
   ) {
@@ -41,30 +43,30 @@ public struct DualHSVPicker: View {
   }
 }
 
-public struct DualRGBPicker: View {
-  @Binding var primaryColour: RGBColour
-  @Binding var secondaryColour: RGBColour
-  @Binding var activeColour: ColourLevel
-  //  let activeColour: ColourLevel
-
-  public init(
-    primaryColour: Binding<RGBColour>,
-    secondaryColour: Binding<RGBColour>,
-    activeColour: Binding<ColourLevel>,
-  ) {
-    self._primaryColour = primaryColour
-    self._secondaryColour = secondaryColour
-    self._activeColour = activeColour
-  }
-
-  public var body: some View {
-
-    QuickerPicker(activeColour.name, selection: $activeColour)
-
-    RGBColourSliders(
-      colour: activeColour.isForeground
-        ? $primaryColour
-        : $secondaryColour,
-    )
-  }
-}
+//public struct DualRGBPicker: View {
+//  @Binding var primaryColour: RGBColour
+//  @Binding var secondaryColour: RGBColour
+//  @Binding var activeColour: ColourLevel
+//  //  let activeColour: ColourLevel
+//
+//  public init(
+//    primaryColour: Binding<RGBColour>,
+//    secondaryColour: Binding<RGBColour>,
+//    activeColour: Binding<ColourLevel>,
+//  ) {
+//    self._primaryColour = primaryColour
+//    self._secondaryColour = secondaryColour
+//    self._activeColour = activeColour
+//  }
+//
+//  public var body: some View {
+//
+//    QuickerPicker(activeColour.name, selection: $activeColour)
+//
+//    RGBColourSliders(
+//      colour: activeColour.isForeground
+//        ? $primaryColour
+//        : $secondaryColour,
+//    )
+//  }
+//}

@@ -1,5 +1,5 @@
 //
-//  TrackFillView.swift
+//  SliderTrackBackground.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 7/2/2026.
@@ -9,7 +9,7 @@ import ColourKit
 import SwiftUI
 import CoreTools
 
-struct SliderTrackView: View {
+struct SliderTrackBackground: View {
   @Environment(SliderHandler.self) private var store
   @Environment(\.rgbComponent) private var rgbComponent
   @Environment(\.isHovering) private var isHovering
@@ -46,7 +46,7 @@ struct SliderTrackView: View {
   }
 }
 
-extension SliderTrackView {
+extension SliderTrackBackground {
   var clipShape: AnyShape {
     switch sliderComponents {
 

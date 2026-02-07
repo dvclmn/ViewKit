@@ -13,12 +13,15 @@ public struct SquareColourPicker: View {
   @State private var dragPosition: CGPoint = .zero
   @GestureState private var isDragging = false
 
-  @Binding var colour: HSVColour
+  @State private var colourHSV: HSVColour = .white
+  
+  @Binding var colour: RGBColour
+  //  @Binding var colour: HSVColour
   let size: CGFloat
   let thumbSize: CGFloat
 
   public init(
-    _ colour: Binding<HSVColour>,
+    _ colour: Binding<RGBColour>,
     size: CGFloat = 100,
     thumbSize: CGFloat = 15
   ) {
@@ -34,15 +37,15 @@ public struct SquareColourPicker: View {
 
     ZStack {
       /// Square gradient area
-      PickerSquare(hue: colour.hue)
+      PickerSquare(hue: colour.toHSV.hue)
         .clipShape(.rect(cornerRadius: Styles.sizeSmall))
         .padding(insetAmount / 2)
-//        .border(Color.green.opacity(0.3))
+        //        .border(Color.green.opacity(0.3))
         .gesture(drag(in: CGSize(fromLength: sizePlusInset)))
 
     }
     .frame(width: sizePlusInset, height: sizePlusInset)
-//    .border(Color.brown.opacity(0.3))
+    //    .border(Color.brown.opacity(0.3))
     .overlay {
 
       /// Thumb
@@ -50,15 +53,18 @@ public struct SquareColourPicker: View {
         .strokeBorder(.white.opacity(0.2), lineWidth: 1)
         .background(Circle().fill(.gray))
         .frame(width: thumbSize, height: thumbSize)
-//        .border(Color.red.opacity(0.3))
-      
+        //        .border(Color.red.opacity(0.3))
+
         .offset(CGSize(fromLength: insetAmount / 2))
-//        .border(Color.orange.opacity(0.3))
-      
+        //        .border(Color.orange.opacity(0.3))
+
         .position(thumbPosition)
-//        .border(Color.yellow.opacity(0.3))
-      
+        //        .border(Color.yellow.opacity(0.3))
+
         .allowsHitTesting(false)
+    }
+    .task(id: colour) {
+      colourHSV = colour.toHSV
     }
 
   }
@@ -74,10 +80,10 @@ extension SquareColourPicker {
   /// y is inverted
   private var thumbPosition: CGPoint {
     return CGPoint(
-      x: colour.saturation * (size),
-//      x: colour.saturation * (sizeMinusInset),
-      y: (1 - colour.brightness) * (size)
-//      y: (1 - colour.brightness) * (sizeMinusInset)
+      x: colourHSV.saturation * (size),
+      //      x: colour.saturation * (sizeMinusInset),
+      y: (1 - colourHSV.brightness) * (size)
+      //      y: (1 - colour.brightness) * (sizeMinusInset)
     )
   }
 
@@ -86,13 +92,17 @@ extension SquareColourPicker {
       .updating($isDragging) { _, state, _ in state = true }
       .onChanged { value in
         let location = value.location
-//        let location = value.location + (insetAmount / 2)
+        //        let location = value.location + (insetAmount / 2)
 
         let clampedX = min(max(location.x, 0), size.width)
         let clampedY = min(max(location.y, 0), size.height)
 
-        colour.saturation = clampedX / size.width
-        colour.brightness = 1 - (clampedY / size.height)  // inverted y axis
+        let newSat = clampedX / size.width
+        let newBrightness = 1 - (clampedY / size.height)  // inverted y axis
+        let newHSV = colourHSV.set(hue: nil, saturation: newSat, brightness: newBrightness)
+        colour = newHSV.toRGB
+//        colour.toHSV.saturation = clampedX / size.width
+//        colour.toHSV.brightness =
       }
   }
 

@@ -42,7 +42,7 @@ extension HSVAdjustable {
     hue: Double?,
     saturation: Double?,
     brightness: Double?
-  ) {
+  ) -> Self {
     var hsv = self.toHSV
     if let hue {
       hsv.hue = hue
@@ -53,7 +53,8 @@ extension HSVAdjustable {
     if let brightness {
       hsv.brightness = brightness
     }
-    self = Self(fromHSV: hsv)
+    return Self(fromHSV: hsv)
+//    self = Self(fromHSV: hsv)
 
     //    return Self(fromHSV: hsv)
   }

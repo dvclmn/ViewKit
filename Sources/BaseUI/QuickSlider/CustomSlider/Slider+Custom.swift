@@ -26,7 +26,7 @@ struct SliderCustom: View {
   @State private var isHovering: Bool = false
 
   let thumbDiameter: CGFloat = 16
-//  let style: TrackFillStyle
+//  let style: TrackStyle
 //  let preset: TrackStylePreset
 
   public var body: some View {
@@ -34,7 +34,7 @@ struct SliderCustom: View {
       GeometryReader { proxy in
         ZStack {
           // MARK: - Track
-          SliderTrackView(
+          SliderTrackBackground(
             style: style,
 //            preset: ...
             height: trackHeight,
