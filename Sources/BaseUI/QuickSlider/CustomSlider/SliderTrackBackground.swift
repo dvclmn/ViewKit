@@ -9,8 +9,8 @@ import ColourKit
 import SwiftUI
 import CoreTools
 
-struct SliderTrackBackground: View {
-  @Environment(SliderHandler.self) private var store
+struct SliderTrackBackground<Value: SliderFloat>: View {
+  @Environment(SliderHandler<Value>.self) private var store
   @Environment(\.rgbComponent) private var rgbComponent
   @Environment(\.isHovering) private var isHovering
   @Environment(\.sliderComponents) private var sliderComponents
@@ -18,7 +18,7 @@ struct SliderTrackBackground: View {
 
   //  let style: TrackFillStyle
   let style: TrackStyle
-  let height: Double
+  let height: Value
 //  let midpoint: CGPoint
 
   var body: some View {
@@ -29,7 +29,7 @@ struct SliderTrackBackground: View {
       //        .fill(style.foreground)
     }
 //    .drawingGroup()
-    .frame(height: height)
+    .frame(height: height.toCGFloat)
 
     //    .overlay(alignment: .leading) {
     //      if let width = store.fillWidth() {

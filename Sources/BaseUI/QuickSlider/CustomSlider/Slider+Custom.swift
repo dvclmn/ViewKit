@@ -17,7 +17,7 @@ import SwiftUI
 /// - onEnd callback / phase
 /// - Units
 
-struct SliderCustom<Value: BinaryFloatingPoint & Sendable>: View {
+struct SliderCustom<Value: SliderFloat>: View {
   @Environment(SliderHandler<Value>.self) private var store
   @Environment(\.heightOverride) private var heightOverride
   @Environment(\.cornerRounding) private var cornerRounding
@@ -36,7 +36,7 @@ struct SliderCustom<Value: BinaryFloatingPoint & Sendable>: View {
         SliderTrackBackground(
           style: style,
           height: trackHeight,
-//          midpoint: proxy.size.midpoint
+          //          midpoint: proxy.size.midpoint
         )
         .environment(\.isHovering, isHovering)
 
@@ -46,8 +46,6 @@ struct SliderCustom<Value: BinaryFloatingPoint & Sendable>: View {
           /// Slider thumb
           SliderThumb(
             diameter: thumbDiameter,
-            //              store: $store.thumbHandler,
-            //              value: value,
             position: store.thumbPosition(
               diameter: thumbDiameter,
               trackSize: store.trackSize
@@ -68,7 +66,7 @@ struct SliderCustom<Value: BinaryFloatingPoint & Sendable>: View {
       }
       .gesture(sliderGesture)
     }  // END geo
-    .border(Color.green.opacity(0.3))
+//    .border(Color.green.opacity(0.3))
     /// Prevents the geo reader from taking up more space than it really needs
     .frame(height: trackHeightForFrame)
   }

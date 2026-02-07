@@ -7,8 +7,9 @@
 
 import ColourKit
 import SwiftUI
+import CoreTools
 
-public struct HueSlider<Value: BinaryFloatingPoint & Sendable>: View {
+public struct HueSlider<Value: SliderFloat>: View {
 
   let title: String?
   @Binding var hue: Value

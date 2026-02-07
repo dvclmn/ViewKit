@@ -8,11 +8,25 @@
 import CoreTools
 import SwiftUI
 
-struct SliderTrackNativeView: View {
-  @Environment(SliderHandler.self) private var store
+public protocol SliderFloat: BinaryFloatingPoint, Sendable, Strideable, FloatRenderable where Stride: BinaryFloatingPoint {}
+extension Double: SliderFloat {}
+extension CGFloat: SliderFloat {}
+
+struct SliderTrackNativeView<Value: SliderFloat>: View  {
+//struct SliderTrackNativeView<Value: BinaryFloatingPoint & Sendable & Strideable>: View {
+  @Environment(SliderHandler<Value>.self) private var store
   @Environment(\.sliderStyle) private var sliderStyle
 
-  let step: Double?
+  let step: Value.Stride?
+  
+//  init(step: Value) where Value.Stride: BinaryFloatingPoint {
+//    self.step = step
+//  }
+//  
+//  init() {
+//    self.step = nil
+//  }
+  
   var body: some View {
 
     switch sliderStyle {
@@ -23,7 +37,6 @@ struct SliderTrackNativeView: View {
 
         Group {
           if let step {
-//                      if let step = store.step {
             Slider(
               value: $store.value,
               in: store.range,
@@ -44,7 +57,7 @@ struct SliderTrackNativeView: View {
 
       // MARK: - Custom Slider
       case .custom(let style):
-        SliderCustom(style: style)
+        SliderCustom<Value>(style: style)
 
     }
   }
@@ -56,86 +69,3 @@ extension SliderTrackNativeView {
     store.updatePhase(phase)
   }
 }
-
-//struct Component_Slider: View {
-//
-//  @Environment(\.sliderComponents) private var sliderComponents
-//  @Environment(\.sliderHandler) private var store
-//  @Environment(\.sliderDefaultValue) private var sliderDefaultValue
-//  @Environment(\.isDebugMode) private var isDebugMode
-//
-//  var body: some View {
-//    @Bindable var store = store
-//
-//    switch sliderStyle {
-//      // MARK: - Native Slider
-//      case .native:
-//        if sliderComponents.contains(.label) {
-//          LabelComponent()
-//          NativeSliderComponent()
-//            .debugFrame("Native + Label", .green, isEnabled: isDebugMode)
-//
-//        } else {
-//          NativeSliderComponent()
-//            .labelsHidden()
-//            .debugFrame("Native + NO Label", .orange, isEnabled: isDebugMode)
-//        }
-//
-//      // MARK: - Custom Slider
-//      case .custom(let style):
-//        SliderCustom(style: style) {
-//          if sliderComponents.contains(.label) {
-//            LabelComponent()
-//              .debugFrame("Custom + Label", .pink, isEnabled: isDebugMode)
-//          }
-//        }
-//
-//    }
-//  }
-//}
-
-//extension Component_Slider {
-
-//  private func handleOnEdit(_ didEdit: Bool) {
-//    let phase = SliderPhase(fromOnEditingChanged: didEdit)
-//    store.updatePhase(phase)
-//  }
-//
-//  @ViewBuilder
-//  func NativeSliderComponent() -> some View {
-//    @Bindable var store = store
-//
-//    Group {
-//      if let step = store.step {
-//        Slider(
-//          value: $store.value,
-//          in: store.range,
-//          step: step
-//        ) { editing in
-//          handleOnEdit(editing)
-//        }
-//      } else {
-//        Slider(
-//          value: $store.value,
-//          in: store.range,
-//        ) { editing in
-//          handleOnEdit(editing)
-//        }
-//      }
-//    }
-////    .frame(maxWidth: .infinity)
-//
-//  }
-//
-//  @ViewBuilder
-//  func LabelComponent() -> some View {
-//    @Bindable var store = store
-//    MaybeLabel(store.label)
-//    //      .onDoubleTap($store.value, defaultValue: sliderDefaultValue)
-//    //      .font(.body)
-//    //      .lineLimit(1)
-//
-//    /// This can cause fuzzy text, in certain situations
-//    //      .fixedSize(horizontal: true, vertical: false)
-//  }
-//}

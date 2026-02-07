@@ -9,12 +9,12 @@ import BasePrimitives
 import SwiftUI
 
 @Observable
-final class SliderHandler<Value: BinaryFloatingPoint & Sendable> {
+final class SliderHandler<Value: SliderFloat> {
 
   var value: Value
   var label: QuickLabel
   var range: ClosedRange<Value>
-  var step: Value?
+  var step: Value.Stride?
   //  var step: StepStyle<Double> = .none
 
   var phase: SliderPhase = .idle
@@ -31,7 +31,7 @@ final class SliderHandler<Value: BinaryFloatingPoint & Sendable> {
     value: Value,
     label: QuickLabel,
     range: ClosedRange<Value>,
-    step: Value?,
+    step: Value.Stride?,
     //    step: StepStyle<Value>,
     didChangeSlider: SliderOutput?
   ) {

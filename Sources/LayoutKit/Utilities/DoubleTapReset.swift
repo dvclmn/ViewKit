@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-public struct DoubleTapModifier: ViewModifier {
-  
+public struct DoubleTapModifier<Value: BinaryFloatingPoint>: ViewModifier {
+
   private let action: () -> Void
-  
+
   /// For backwards compatibility
-  public init(value: Binding<Double>, defaultValue: Double?) {
+  public init(value: Binding<Value>, defaultValue: Value?) {
     self.action = {
       if let defaultValue {
         print("Double tapped to reset to default value: \(defaultValue)")
@@ -22,12 +22,12 @@ public struct DoubleTapModifier: ViewModifier {
       }
     }
   }
-  
+
   // New flexible option
   public init(action: @escaping () -> Void) {
     self.action = action
   }
-  
+
   public func body(content: Content) -> some View {
     content
       .gesture(
@@ -37,46 +37,46 @@ public struct DoubleTapModifier: ViewModifier {
           }
       )
   }
-  
-//  public func body(content: Content) -> some View {
-//    content
-//      .gesture(
-//        TapGesture(count: 2)
-//          .onEnded { _ in
-//            if let defaultValue {
-//              print("Double tapped to reset to default value: \(defaultValue)")
-//              value = defaultValue
-//            } else {
-//              print("Double tapped, but no default value set.")
-//            }
-//          }
-//      )
-//  }
+
+  //  public func body(content: Content) -> some View {
+  //    content
+  //      .gesture(
+  //        TapGesture(count: 2)
+  //          .onEnded { _ in
+  //            if let defaultValue {
+  //              print("Double tapped to reset to default value: \(defaultValue)")
+  //              value = defaultValue
+  //            } else {
+  //              print("Double tapped, but no default value set.")
+  //            }
+  //          }
+  //      )
+  //  }
 }
 extension View {
-  
-  public func onDoubleTap(
-    _ value: Binding<Double>,
-    defaultValue: Double? = nil
+
+  public func onDoubleTap<T: BinaryFloatingPoint>(
+    _ value: Binding<T>,
+    defaultValue: T? = nil
   ) -> some View {
     self.modifier(DoubleTapModifier(value: value, defaultValue: defaultValue))
   }
-  
+
   public func onDoubleTap(
     _ action: @escaping () -> Void
   ) -> some View {
-    self.modifier(DoubleTapModifier(action: action))
+    self.modifier(DoubleTapModifier<Double>(action: action))
   }
-  
-//  public func onDoubleTap(
-//    _ value: Binding<Double>,
-//    defaultValue: Double?
-//  ) -> some View {
-//    self.modifier(
-//      DoubleTapModifier(
-//        value: value,
-//        defaultValue: defaultValue
-//      )
-//    )
-//  }
+
+  //  public func onDoubleTap(
+  //    _ value: Binding<Double>,
+  //    defaultValue: Double?
+  //  ) -> some View {
+  //    self.modifier(
+  //      DoubleTapModifier(
+  //        value: value,
+  //        defaultValue: defaultValue
+  //      )
+  //    )
+  //  }
 }

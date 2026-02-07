@@ -10,10 +10,10 @@ import SwiftUI
 
 public typealias SliderOutput = (SliderPhase) -> Void
 
-public struct QuickSlider<Value: BinaryFloatingPoint & Sendable>: View, ValueFormattable, SliderStylable {
+public struct QuickSlider<Value: SliderFloat>: View, ValueFormattable, SliderStylable {
   @Environment(\.isWithinSliderGroup) private var isWithinSliderGroup
   @Environment(\.sliderComponents) private var sliderComponents
-  @State private var store: SliderHandler
+  @State private var store: SliderHandler<Value>
 
   @Binding var value: Value
 
@@ -23,17 +23,17 @@ public struct QuickSlider<Value: BinaryFloatingPoint & Sendable>: View, ValueFor
       if isWithinSliderGroup {
         GridRow {
           /// Handles slider Label, Track, and Units display
-          SliderCore()
+          SliderCore<Value>()
         }
 
       } else {
         HStack {
-          SliderCore()
+          SliderCore<Value>()
         }
       }
     }
-    .bindModel($store.value, to: $value.toBindingDouble)
     .environment(store)
+    .bindModel($store.value, to: $value)
   }
 }
 
@@ -44,9 +44,9 @@ extension QuickSlider {
     _ title: String,
     value: Binding<Value>,
     range: ClosedRange<Value>,
-    step: Value? = nil,
+    step: Value.Stride? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
-  ) {
+  ) where Value.Stride: BinaryFloatingPoint {
     self.init(
       label: QuickLabel(title),
       value: value,
@@ -60,16 +60,17 @@ extension QuickSlider {
     label: QuickLabel,
     value: Binding<Value>,
     range: ClosedRange<Value>,
-    step: Value? = nil,
+    step: Value.Stride? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
     self._value = value
     self._store = State(
       initialValue: SliderHandler(
-        value: CGFloat(value.wrappedValue),
+        value: value.wrappedValue,
         label: label,
-        range: range.toDoubleRange,
-        step: step.map { Double($0) },
+        range: range,
+        step: step,
+//        step: step.map { Double($0) },
         //        step: StepStyle(fromOptionalValue: step.map { Double($0) }),
         didChangeSlider: didChangeSlider
       )

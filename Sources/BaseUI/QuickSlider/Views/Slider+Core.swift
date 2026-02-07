@@ -5,11 +5,11 @@
 //  Created by Dave Coleman on 11/8/2025.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
-public struct SliderCore: View {
-  @Environment(SliderHandler.self) private var store
+struct SliderCore<Value: SliderFloat>: View {
+  @Environment(SliderHandler<Value>.self) private var store
   @Environment(\.controlSizeOverride) private var controlSizeOverride
   @Environment(\.sliderComponents) private var sliderComponents
 
@@ -19,8 +19,8 @@ public struct SliderCore: View {
   @Environment(\.isDebugMode) private var isDebugMode
 
   @State private var isHovering: Bool = false
-
-  public var body: some View {
+  
+  var body: some View {
     @Bindable var store = store
 
     // MARK: - Units
@@ -31,11 +31,11 @@ public struct SliderCore: View {
     if let step = store.step {
       switch stepStyle {
         case .native:
-          SliderTrackNativeView(step: step)
+          SliderTrackNativeView<Value>(step: step)
 
         case .stepper:
           HStack {
-            SliderTrackNativeView(step: nil)
+            SliderTrackNativeView<Value>(step: nil)
 
             Stepper(
               store.label.text,
@@ -46,26 +46,30 @@ public struct SliderCore: View {
           }
 
         case .none:
-          SliderTrackNativeView(step: nil)
+          SliderTrackNativeView<Value>(step: nil)
       }
 
     } else {
-      SliderTrackNativeView(step: nil)
+      SliderTrackNativeView<Value>(step: nil)
     }
 
     // MARK: - Units
     if sliderComponents.contains(.units) {
       TextColumns(alignment: .trailing) {
-        Text(formatValue(store.value))
+        Text(formatValue(store.value.toDouble))
       }
       .textSelection(.disabled)
-      .onDoubleTap($store.value.toBindingDouble, defaultValue: sliderDefaultValue)
+      .onDoubleTap($store.value, defaultValue: sliderDefault)
       .contextMenu { ContextMenuItems() }
     }
   }
 }
 
 extension SliderCore {
+  
+  private var sliderDefault: Value? {
+    sliderDefaultValue.map { Value($0) }
+  }
 
   private var columnSpan: Int { sliderComponents.count }
 
@@ -85,10 +89,10 @@ extension SliderCore {
       Label("Copy", systemImage: Icons.copy.icon)
     }
 
-    if let sliderDefaultValue {
+    if let sliderDefault {
       Divider()
       Button {
-        store.value = sliderDefaultValue
+        store.value = sliderDefault
       } label: {
         Label("Reset to Default", systemImage: Icons.refresh.icon)
       }
