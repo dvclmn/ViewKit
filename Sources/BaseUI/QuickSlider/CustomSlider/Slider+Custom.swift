@@ -17,15 +17,15 @@ import SwiftUI
 /// - onEnd callback / phase
 /// - Units
 
-struct SliderCustom: View {
-  @Environment(SliderHandler.self) private var store
+struct SliderCustom<Value: BinaryFloatingPoint & Sendable>: View {
+  @Environment(SliderHandler<Value>.self) private var store
   @Environment(\.heightOverride) private var heightOverride
   @Environment(\.cornerRounding) private var cornerRounding
   @Environment(\.sliderComponents) private var sliderComponents
 
   @State private var isHovering: Bool = false
 
-  let thumbDiameter: CGFloat = 16
+  let thumbDiameter: Value = 16
   let style: TrackStyle
 
   public var body: some View {

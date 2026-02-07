@@ -5,19 +5,13 @@
 //  Created by Dave Coleman on 15/10/2025.
 //
 
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
 public struct FrameFromSizeModifier: ViewModifier {
-  
-//  let axis: Axis.Set?
-//  let size: CGSize?
-//  let width: CGFloat?
-//  let height: CGFloat?
-//  let alignment: Alignment
-  
+
   let dimensions: FrameDimensions
-  
+
   public func body(content: Content) -> some View {
     content
       .frame(
@@ -27,61 +21,42 @@ public struct FrameFromSizeModifier: ViewModifier {
       )
   }
 }
-extension FrameFromSizeModifier {
-//  private var dimensions: FrameDimensions {
-//    if let axis {
-//
-//      return FrameDimensions(
-//        fromLength: <#T##CGFloat#>,
-//        axis: <#T##Axis#>,
-//        alignment: <#T##Alignment#>
-//      )
-//      
-//    } else {
-//      return FrameDimensions(
-//        width: width,
-//        height: height,
-//        alignment: alignment
-//      )
-//    }
-//  }
-}
 
 extension View {
-  
+
   /// Specify both H and V axes to form a square.
-  public func frameFromLength(
-    _ length: CGFloat?,
+  public func frameFromLength<T: BinaryFloatingPoint>(
+    _ length: T?,
     axis: Axis.Set,
     alignment: Alignment = .center
   ) -> some View {
     self.modifier(
       FrameFromSizeModifier(
         dimensions: FrameDimensions(
-          fromLength: length,
+          fromLength: length?.toCGFloat,
           axis: axis,
           alignment: alignment
         )
       )
     )
   }
-  
+
   /// Sets a frame with same value for width and height
-  public func frameFromSquare(
-    _ length: CGFloat?,
+  public func frameFromSquare<T: BinaryFloatingPoint>(
+    _ length: T?,
     alignment: Alignment = .center
   ) -> some View {
     self.modifier(
       FrameFromSizeModifier(
         dimensions: FrameDimensions(
-          fromLength: length,
+          fromLength: length?.toCGFloat,
           axis: [.horizontal, .vertical],
           alignment: alignment
         )
       )
     )
   }
-  
+
   public func frameFromSize(
     _ size: CGSize?,
     alignment: Alignment = .center
@@ -89,39 +64,16 @@ extension View {
     self.modifier(
       FrameFromSizeModifier(
         dimensions: FrameDimensions(fromSize: size, alignment: alignment)
-//        axis: nil,
-//        size: size,
-//        width: size?.width,
-//        height: size?.height,
-//        alignment: alignment
       )
     )
   }
-  
+
   public func frameFromDimensions(
     _ dimensions: FrameDimensions
   ) -> some View {
     self.modifier(
-      FrameFromSizeModifier(
-        dimensions: dimensions
-        //        axis: nil,
-        //        size: size,
-        //        width: size?.width,
-        //        height: size?.height,
-        //        alignment: alignment
-      )
+      FrameFromSizeModifier(dimensions: dimensions)
     )
   }
-//  public func frameFromSize(
-//    _ dimensions: FrameDimensions?,
-//    alignment: Alignment = .center
-//  ) -> some View {
-//    self.modifier(
-//      FrameFromSizeModifier(
-//        dimensions: dimen
-//      )
-//    )
-//  }
-  
-  
+
 }

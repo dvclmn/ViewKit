@@ -8,15 +8,15 @@
 import CoreTools
 import SwiftUI
 
-public struct SliderThumb<ThumbShape: InsettableShape>: View {
+public struct SliderThumb<ThumbShape: InsettableShape, Value: BinaryFloatingPoint & Sendable>: View {
   @Environment(\.controlSize) private var controlSize
 
-  let diameter: CGFloat
+  let diameter: Value
   let position: CGPoint?
   let shape: ThumbShape
 
   public init(
-    diameter: CGFloat,
+    diameter: Value,
     position: CGPoint?,
     shape: ThumbShape = .circle,
   ) {

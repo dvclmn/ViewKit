@@ -9,12 +9,12 @@ import BasePrimitives
 import SwiftUI
 
 @Observable
-final class SliderHandler {
+final class SliderHandler<Value: BinaryFloatingPoint & Sendable> {
 
-  var value: Double
+  var value: Value
   var label: QuickLabel
-  var range: ClosedRange<Double>
-  var step: Double?
+  var range: ClosedRange<Value>
+  var step: Value?
   //  var step: StepStyle<Double> = .none
 
   var phase: SliderPhase = .idle
@@ -27,12 +27,12 @@ final class SliderHandler {
   let hitAreaBuffer: Double = 16
   let fallbackHeight: Double = 5
 
-  public init(
-    value: Double,
+  init(
+    value: Value,
     label: QuickLabel,
-    range: ClosedRange<Double>,
-    step: Double?,
-    //    step: StepStyle<Double>,
+    range: ClosedRange<Value>,
+    step: Value?,
+    //    step: StepStyle<Value>,
     didChangeSlider: SliderOutput?
   ) {
     self.value = value
@@ -63,34 +63,35 @@ extension SliderHandler {
     self.didChangeSlider?(phase)
   }
 
-  func handleDragChange(_ gestureValue: DragGesture.Value) -> Double {
+  func handleDragChange(_ gestureValue: DragGesture.Value) -> Value {
 
+    let trackWidth = Value(trackSize.width)
     /// fall back to current value
-    guard trackSize.width > 0 else { return value }
+    guard trackWidth > 0 else { return value }
 
-    let location: Double = gestureValue.location.x
+    let location = Value(gestureValue.location.x)
 
     /// Location clamped so it cannot go outside
     /// the bounds of the track
-    let clamped = location.clamped(0, trackSize.width)
-    let percentage = clamped / trackSize.width
+    let clamped = location.clamped(0, trackWidth)
+    let percentage = clamped / trackWidth
     let newValue = percentage.denormalised(in: range)
 
     return newValue
   }
 
-  func fillWidth() -> Double? {
+  func fillWidth() -> Value? {
 
     guard isGeometryReady else { return nil }
 
     /// Normalised here is essentially: “How far along the slider should the
     /// thumb be, in proportion to its full track length?”
     let normalised = value.normalised(in: range)
-    return normalised * trackSize.width
+    return normalised * Value(trackSize.width)
   }
 
   public func thumbPosition(
-    diameter: Double,
+    diameter: Value,
     trackSize: CGSize
   ) -> CGPoint? {
 
@@ -105,14 +106,9 @@ extension SliderHandler {
     /// so the Thumb doesn't hand awkwardly out the edges of the track.
 
     let horizontalPadding = diameter * 0.4
-    let adjustedWidth = max(0, trackSize.width - (horizontalPadding * 2))
-    //    let localX = (gestureValue.location.x - horizontalPadding).clamped(0, adjustedWidth)
-    //    let percentage = adjustedWidth > 0 ? (localX / adjustedWidth) : 0
+    let adjustedWidth = max(0, Value(trackSize.width) - (horizontalPadding * 2))
 
-    //    let horizontalPadding = diameter * 0.4
-    //    let adjustedWidth = trackSize.width - (horizontalPadding * 2)
-
-    let x = horizontalPadding + (normalised * adjustedWidth)
+    let x = CGFloat(horizontalPadding + (normalised * adjustedWidth))
     let y = trackSize.height / 2
 
     return CGPoint(x: x, y: y)
