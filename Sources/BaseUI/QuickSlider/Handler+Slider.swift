@@ -10,17 +10,17 @@ import SwiftUI
 
 @Observable
 final class SliderHandler {
-  
+
   var value: Double
   var label: QuickLabel
   var range: ClosedRange<Double>
   var step: Double?
-//  var step: StepStyle<Double> = .none
+  //  var step: StepStyle<Double> = .none
 
   var phase: SliderPhase = .idle
   var didChangeSlider: SliderOutput?
 
-//  var thumbHandler: ThumbHandler = .init()
+  //  var thumbHandler: ThumbHandler = .init()
 
   /// Including vertical hit area buffer
   var trackSize: CGSize = .zero
@@ -32,7 +32,7 @@ final class SliderHandler {
     label: QuickLabel,
     range: ClosedRange<Double>,
     step: Double?,
-//    step: StepStyle<Double>,
+    //    step: StepStyle<Double>,
     didChangeSlider: SliderOutput?
   ) {
     self.value = value
@@ -64,6 +64,10 @@ extension SliderHandler {
   }
 
   func handleDragChange(_ gestureValue: DragGesture.Value) -> Double {
+
+    /// fall back to current value
+    guard trackSize.width > 0 else { return value }
+
     let location: Double = gestureValue.location.x
 
     /// Location clamped so it cannot go outside
@@ -84,29 +88,33 @@ extension SliderHandler {
     let normalised = value.normalised(in: range)
     return normalised * trackSize.width
   }
-  
+
   public func thumbPosition(
     diameter: Double,
-    forSliderValue value: Double,
-    range: ClosedRange<Double>,
     trackSize: CGSize
   ) -> CGPoint? {
-    
+
     guard trackSize.isGreaterThanZero else { return nil }
     //    guard isGeometryReady else { return nil }
-    
+
     /// Normalised here is essentially: “How far along the slider should the
     /// thumb be, in proportion to its full track length?”
     let normalised = value.normalised(in: range)
-    
+
     /// Remove some length from the beginning/end of the draggable width,
     /// so the Thumb doesn't hand awkwardly out the edges of the track.
+
     let horizontalPadding = diameter * 0.4
-    let adjustedWidth = trackSize.width - (horizontalPadding * 2)
-    
+    let adjustedWidth = max(0, trackSize.width - (horizontalPadding * 2))
+    //    let localX = (gestureValue.location.x - horizontalPadding).clamped(0, adjustedWidth)
+    //    let percentage = adjustedWidth > 0 ? (localX / adjustedWidth) : 0
+
+    //    let horizontalPadding = diameter * 0.4
+    //    let adjustedWidth = trackSize.width - (horizontalPadding * 2)
+
     let x = horizontalPadding + (normalised * adjustedWidth)
     let y = trackSize.height / 2
-    
+
     return CGPoint(x: x, y: y)
   }
 

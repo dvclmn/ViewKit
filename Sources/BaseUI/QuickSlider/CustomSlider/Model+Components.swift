@@ -7,19 +7,6 @@
 
 import SwiftUI
 
-//public struct TrackComponents: OptionSet, Sendable {
-//  public init(rawValue: Int) {
-//    self.rawValue = rawValue
-//  }
-//  public let rawValue: Int
-//
-//  public static let fill = Self(rawValue: 1 << 0)
-//  public static let thumb = Self(rawValue: 1 << 1)
-//  public static let all: Self = [.fill, .thumb]
-//}
-
-
-
 public struct SliderComponents: OptionSet, Sendable {
   public init(rawValue: Int) {
     self.rawValue = rawValue

@@ -36,7 +36,7 @@ struct SliderCustom: View {
         SliderTrackBackground(
           style: style,
           height: trackHeight,
-          midpoint: proxy.size.midpoint
+//          midpoint: proxy.size.midpoint
         )
         .environment(\.isHovering, isHovering)
 
@@ -50,8 +50,6 @@ struct SliderCustom: View {
             //              value: value,
             position: store.thumbPosition(
               diameter: thumbDiameter,
-              forSliderValue: store.value,
-              range: store.range,
               trackSize: store.trackSize
             ),
             shape: .circle,
@@ -70,7 +68,7 @@ struct SliderCustom: View {
       }
       .gesture(sliderGesture)
     }  // END geo
-
+    .border(Color.green.opacity(0.3))
     /// Prevents the geo reader from taking up more space than it really needs
     .frame(height: trackHeightForFrame)
   }

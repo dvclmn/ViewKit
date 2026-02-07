@@ -19,7 +19,7 @@ struct SliderTrackBackground: View {
   //  let style: TrackFillStyle
   let style: TrackStyle
   let height: Double
-  let midpoint: CGPoint
+//  let midpoint: CGPoint
 
   var body: some View {
 
@@ -28,7 +28,7 @@ struct SliderTrackBackground: View {
         .fill(style.shape())
       //        .fill(style.foreground)
     }
-    .drawingGroup()
+//    .drawingGroup()
     .frame(height: height)
 
     //    .overlay(alignment: .leading) {
@@ -39,8 +39,8 @@ struct SliderTrackBackground: View {
     //      }
     //    }
     .clipShape(clipShape)
-    .animation(Styles.animationExtraQuickNSmooth, value: isHovering)
-    .position(midpoint)
+//    .animation(Styles.animationExtraQuickNSmooth, value: isHovering)
+//    .position(midpoint)
     //    .position(size.midpoint)
 
   }
