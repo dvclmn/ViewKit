@@ -12,7 +12,7 @@ import SwiftUI
 final class SliderHandler {
 //final class SliderHandler<Value: SliderFloat> {
 
-  var value: Double
+//  var value: Double
   var label: QuickLabel
   var range: ClosedRange<Double>
   var step: Double?
@@ -29,14 +29,14 @@ final class SliderHandler {
   let fallbackHeight: Double = 5
 
   init(
-    value: Double,
+//    value: Double,
     label: QuickLabel,
     range: ClosedRange<Double>,
     step: Double?,
     //    step: StepStyle<Value>,
     didChangeSlider: SliderOutput?
   ) {
-    self.value = value
+//    self.value = value
     self.label = label
     self.range = range
     self.step = step
@@ -64,11 +64,13 @@ extension SliderHandler {
     self.didChangeSlider?(phase)
   }
 
-  func handleDragChange(_ gestureValue: DragGesture.Value) -> Double {
+  func handleDragChange(
+    _ gestureValue: DragGesture.Value
+  ) -> Double? {
 
     let trackWidth = trackSize.width
     /// fall back to current value
-    guard trackWidth > 0 else { return value }
+    guard trackWidth > 0 else { return nil }
 
     let location = gestureValue.location.x
 
@@ -81,7 +83,7 @@ extension SliderHandler {
     return newValue
   }
 
-  func fillWidth() -> Double? {
+  func fillWidth(_ value: Double) -> Double? {
 
     guard isGeometryReady else { return nil }
 
@@ -92,6 +94,7 @@ extension SliderHandler {
   }
 
   public func thumbPosition(
+    value: Double,
     diameter: Double,
     trackSize: CGSize
   ) -> CGPoint? {

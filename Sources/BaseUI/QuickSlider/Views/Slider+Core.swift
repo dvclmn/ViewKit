@@ -20,6 +20,8 @@ struct SliderCore<Value: SliderFloat>: View {
 
   @State private var isHovering: Bool = false
 
+  @Binding var value: Value
+  
   var body: some View {
     @Bindable var store = store
 
@@ -39,7 +41,7 @@ struct SliderCore<Value: SliderFloat>: View {
 
             Stepper(
               store.label.text,
-              value: $store.value,
+              value: $value,
               step: step,
             )
             .labelsHidden()
@@ -84,7 +86,7 @@ extension SliderCore {
   @ViewBuilder
   private func ContextMenuItems() -> some View {
     Button {
-      copyStringToClipboard(store.value.toString)
+      copyStringToClipboard("\(value)")
     } label: {
       Label("Copy", systemImage: Icons.copy.icon)
     }

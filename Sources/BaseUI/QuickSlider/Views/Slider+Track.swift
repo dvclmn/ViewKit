@@ -8,15 +8,17 @@
 import CoreTools
 import SwiftUI
 
-public protocol SliderFloat: BinaryFloatingPoint, Sendable, Strideable, FloatRenderable where Stride: BinaryFloatingPoint {}
+public protocol SliderFloat: BinaryFloatingPoint, Sendable, Strideable where Stride: BinaryFloatingPoint {}
+
 extension Double: SliderFloat {}
 extension CGFloat: SliderFloat {}
+extension Float: SliderFloat {}
 
 struct SliderTrackNativeView<Value: SliderFloat>: View  {
-//struct SliderTrackNativeView<Value: BinaryFloatingPoint & Sendable & Strideable>: View {
   @Environment(SliderHandler.self) private var store
   @Environment(\.sliderStyle) private var sliderStyle
 
+  @Binding var value: Value
   let step: Value.Stride?
   
 //  init(step: Value) where Value.Stride: BinaryFloatingPoint {
@@ -38,15 +40,15 @@ struct SliderTrackNativeView<Value: SliderFloat>: View  {
         Group {
           if let step {
             Slider(
-              value: $store.value,
-              in: store.range,
+              value: $value,
+              in: ClosedRange<Value>(store.range),
               step: step.toDouble
             ) { editing in
               handleOnEdit(editing)
             }
           } else {
             Slider(
-              value: $store.value,
+              value: $value,
               in: store.range,
             ) { editing in
               handleOnEdit(editing)

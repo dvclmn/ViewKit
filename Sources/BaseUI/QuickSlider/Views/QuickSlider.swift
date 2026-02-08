@@ -33,7 +33,7 @@ public struct QuickSlider<Value: SliderFloat>: View, ValueFormattable, SliderSty
       }
     }
     .environment(store)
-    .bindModel($store.value, to: $value.toBindingDouble)
+//    .bindModel($store.value, to: $value.toBindingDouble)
   }
 }
 
