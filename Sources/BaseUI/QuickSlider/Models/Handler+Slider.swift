@@ -21,6 +21,8 @@ final class SliderHandler {
 
   /// Including vertical hit area buffer
   var trackWidth: Double?
+  
+  let thumbDiameter: Double = 16
   //  var trackSize: CGSize = .zero
   let trackHeight: Double = 5
   let hitAreaBuffer: Double = 16
@@ -68,10 +70,10 @@ extension SliderHandler {
     _ gestureValue: DragGesture.Value
   ) -> Double? {
 
-//    print("Handling drag change")
+    //    print("Handling drag change")
     /// fall back to current value
     guard let trackWidth else {
-//      print("No value for track width")
+      //      print("No value for track width")
       return nil
     }
     //    guard trackWidth > 0 else { return nil }
@@ -89,7 +91,7 @@ extension SliderHandler {
 
   func fillWidth(_ value: Double) -> Double? {
 
-//    guard isGeometryReady else { return nil }
+    //    guard isGeometryReady else { return nil }
     guard let trackWidth else { return nil }
 
     /// Normalised here is essentially: “How far along the slider should the
@@ -100,13 +102,13 @@ extension SliderHandler {
 
   public func thumbPosition(
     value: Double,
-    diameter: Double,
-//    trackSize: CGSize
+//    diameter: Double,
+    //    trackSize: CGSize
   ) -> CGPoint? {
 
-//    guard trackSize.isGreaterThanZero else { return nil }
+    //    guard trackSize.isGreaterThanZero else { return nil }
     //    guard isGeometryReady else { return nil }
-guard let trackWidth else { return nil }
+    guard let trackWidth else { return nil }
     /// Normalised here is essentially: “How far along the slider should the
     /// thumb be, in proportion to its full track length?”
     let normalised = value.normalised(in: range)
@@ -114,7 +116,7 @@ guard let trackWidth else { return nil }
     /// Remove some length from the beginning/end of the draggable width,
     /// so the Thumb doesn't hand awkwardly out the edges of the track.
 
-    let horizontalPadding = diameter * 0.4
+    let horizontalPadding = thumbDiameter * 0.4
     let adjustedWidth = max(0, trackWidth - (horizontalPadding * 2))
 
     let x = CGFloat(horizontalPadding + (normalised * adjustedWidth))

@@ -12,15 +12,16 @@ public struct QuickDisclosureStyle: DisclosureGroupStyle {
   public func makeBody(configuration: Configuration) -> some View {
 
     VStack(spacing: Styles.sizeSmall) {
-      //      .offset(y: -Styles.sizeRegular)
 
       if configuration.isExpanded {
         configuration.content
+        
       } else {
         Text("Content hidden")
           .font(.caption2)
           .foregroundStyle(.tertiary)
           .italic()
+          .frame(maxWidth: .infinity, alignment: .leading)
       }
     }
     .padding(.top, Styles.sizeMedium)
@@ -30,9 +31,6 @@ public struct QuickDisclosureStyle: DisclosureGroupStyle {
         configuration.isExpanded.toggle()
 
       } label: {
-        //          configuration.label
-        //            .foregroundStyle(configuration.isExpanded ? .primary : .secondary)
-
         Text(configuration.isExpanded ? "Hide" : "Show")
           .foregroundColor(
             configuration.isExpanded
@@ -42,7 +40,6 @@ public struct QuickDisclosureStyle: DisclosureGroupStyle {
           .font(.caption.weight(.medium))
           .textCase(.uppercase)
           .animation(nil, value: configuration.isExpanded)
-
           .contentShape(.rect)
 
       }  // END button

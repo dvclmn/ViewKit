@@ -14,7 +14,7 @@ public struct SquareColourPicker: View {
   @GestureState private var isDragging = false
 
   @State private var colourHSV: HSVColour = .white
-  
+
   @Binding var colour: RGBColour
   //  @Binding var colour: HSVColour
   let size: CGFloat
@@ -23,7 +23,7 @@ public struct SquareColourPicker: View {
   public init(
     _ colour: Binding<RGBColour>,
     size: CGFloat = 100,
-    thumbSize: CGFloat = 15
+    thumbSize: CGFloat = 16
   ) {
     self._colour = colour
     self.size = size
@@ -31,41 +31,24 @@ public struct SquareColourPicker: View {
   }
 
   public var body: some View {
+    // MARK: - Square Gradient area
 
-    //    GeometryReader { proxy in
-    //      let size = proxy.size
+    PickerSquare(hue: colour.toHSV.hue)
+      .clipShape(.rect(cornerRadius: Styles.sizeSmall))
+      .padding(insetAmount / 2)
+      .frame(width: sizePlusInset, height: sizePlusInset)
 
-    ZStack {
-      /// Square gradient area
-      PickerSquare(hue: colour.toHSV.hue)
-        .clipShape(.rect(cornerRadius: Styles.sizeSmall))
-        .padding(insetAmount / 2)
-        //        .border(Color.green.opacity(0.3))
-        .gesture(drag(in: CGSize(fromLength: sizePlusInset)))
+      // MARK: - Thumb
+      .overlay {
+        SliderThumb(diameter: thumbSize, shape: .circle)
+          .offset(CGSize(fromLength: insetAmount / 2))
+          .position(thumbPosition)
 
-    }
-    .frame(width: sizePlusInset, height: sizePlusInset)
-    //    .border(Color.brown.opacity(0.3))
-    .overlay {
-
-      /// Thumb
-      Circle()
-        .strokeBorder(.white.opacity(0.2), lineWidth: 1)
-        .background(Circle().fill(.gray))
-        .frame(width: thumbSize, height: thumbSize)
-        //        .border(Color.red.opacity(0.3))
-
-        .offset(CGSize(fromLength: insetAmount / 2))
-        //        .border(Color.orange.opacity(0.3))
-
-        .position(thumbPosition)
-        //        .border(Color.yellow.opacity(0.3))
-
-        .allowsHitTesting(false)
-    }
-    .task(id: colour) {
-      colourHSV = colour.toHSV
-    }
+      }
+      .gesture(drag(in: CGSize(fromLength: sizePlusInset)))
+      .task(id: colour) {
+        colourHSV = colour.toHSV
+      }
 
   }
 }
@@ -101,8 +84,8 @@ extension SquareColourPicker {
         let newBrightness = 1 - (clampedY / size.height)  // inverted y axis
         let newHSV = colourHSV.set(hue: nil, saturation: newSat, brightness: newBrightness)
         colour = newHSV.toRGB
-//        colour.toHSV.saturation = clampedX / size.width
-//        colour.toHSV.brightness =
+        //        colour.toHSV.saturation = clampedX / size.width
+        //        colour.toHSV.brightness =
       }
   }
 

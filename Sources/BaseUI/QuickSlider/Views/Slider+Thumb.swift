@@ -8,43 +8,42 @@
 import CoreTools
 import SwiftUI
 
-public struct SliderThumb<ThumbShape: InsettableShape, Value: BinaryFloatingPoint & Sendable>: View {
+public struct SliderThumb<ThumbShape: InsettableShape>: View {
   @Environment(\.controlSize) private var controlSize
 
-  let diameter: Value
-  let position: CGPoint?
+  //  let thumbDiameter: Double = 16
+  let diameter: Double
+  //  let position: CGPoint?
   let shape: ThumbShape
 
   public init(
-    diameter: Value,
-    position: CGPoint?,
+    diameter: Double = 16,
+    //    position: CGPoint?,
     shape: ThumbShape = .circle,
   ) {
     self.diameter = diameter
-    self.position = position
+    //    self.position = position
     self.shape = shape
   }
 
   public var body: some View {
 
-    if let position {
+    FilledShape(
+      shape,
+      Color.gray,
+      strokeColour: strokeGradient().opacity(0.32)
+    )
 
-      FilledShape(
-        shape,
-        Color.gray,
-        strokeColour: strokeGradient().opacity(0.32)
-      )
+    .shadow(
+      color: .black.opacity(0.5),
+      radius: 0.9,
+      x: 0,
+      y: 0.3
+    )
+    .frameFromLength(diameter, axis: [.horizontal, .vertical])
 
-      .shadow(
-        color: .black.opacity(0.5),
-        radius: 0.9,
-        x: 0,
-        y: 0.3
-      )
-      .frameFromLength(diameter, axis: [.horizontal, .vertical])
-      .position(position)
-      .allowsHitTesting(false)
-    }
+    //      .allowsHitTesting(false)
+
   }
 }
 extension SliderThumb {

@@ -26,7 +26,6 @@ extension QuickSlider {
     @State private var isHovering: Bool = false
 
     @Binding var value: Value
-    let thumbDiameter: Value = 16
     let style: TrackStyle
 
     public var body: some View {
@@ -50,17 +49,16 @@ extension QuickSlider {
               .environment(\.isHovering, isHovering)
 
             // MARK: - Thumb
-            if sliderComponents.contains(.thumb) {
+            if sliderComponents.contains(.thumb),
+              let position = store.thumbPosition(value: value.toDouble)
+            {
 
               /// Slider thumb
               SliderThumb(
-                diameter: thumbDiameter,
-                position: store.thumbPosition(
-                  value: value.toDouble,
-                  diameter: thumbDiameter.toDouble,
-                ),
+                diameter: store.thumbDiameter,
                 shape: .circle,
               )
+              .position(position)
             }
           }
         }
