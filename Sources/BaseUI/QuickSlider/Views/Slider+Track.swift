@@ -21,15 +21,7 @@ extension QuickSlider {
 
   @Binding var value: Value
   let step: Value.Stride?
-  
-//  init(step: Value) where Value.Stride: BinaryFloatingPoint {
-//    self.step = step
-//  }
-//  
-//  init() {
-//    self.step = nil
-//  }
-  
+
   var body: some View {
 
     switch sliderStyle {

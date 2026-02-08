@@ -14,14 +14,17 @@ public struct AnotherColourPicker: View {
   @AppStorage("areColourSlidersExpanded") var areColourSlidersExpanded: Bool = true
 
   @Binding var colour: RGBColour
+  let kind: ColourModelKind
   //  @Binding var colour: HSVColour
   let pickerSize: CGFloat
 
   public init(
     colour: Binding<RGBColour>,
+    kind: ColourModelKind,
     pickerSize: CGFloat = 120
   ) {
     self._colour = colour
+    self.kind = kind
     self.pickerSize = pickerSize
   }
   public var body: some View {
@@ -34,7 +37,7 @@ public struct AnotherColourPicker: View {
       "Sliders",
       isExpanded: $areColourSlidersExpanded
     ) {
-      ColourSliderGroup($colour)
+      ColourSliderGroup($colour, kind: kind)
     }
     .disclosureGroupStyle(.sectioned)
   }

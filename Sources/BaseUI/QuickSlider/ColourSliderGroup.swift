@@ -14,13 +14,15 @@ public struct ColourSliderGroup: View {
   //  @State private var colourNative: Color = .primary
   //  @State private var colourHSV: HSVColour = .white
 
+  @State private var isHovering: Bool = false
+  
   @Binding var colour: RGBColour
   //  @Binding var colourHSV: HSVColour
   let kind: ColourModelKind
 
   public init(
     _ colour: Binding<RGBColour>,
-    kind: ColourModelKind = .hsv
+    kind: ColourModelKind
   ) {
     self._colour = colour
     self.kind = kind
@@ -36,7 +38,6 @@ public struct ColourSliderGroup: View {
             range: .unitRange
           )
           .sliderStyle(.custom(.rgb(colour, .red)))
-          //          .sliderStyle(.custom(.rgb(colour, for: .red)))
 
           QuickSlider(
             "G",
@@ -59,7 +60,6 @@ public struct ColourSliderGroup: View {
             range: .unitRange
           )
           .sliderStyle(.custom(.hsv(hsvBinding().wrappedValue, .hue)))
-          //        .sliderStyle(.custom(.hueRainbow))
 
           QuickSlider(
             "S",
@@ -101,7 +101,7 @@ extension ColourSliderGroup {
 #Preview(traits: .size(.normal)) {
   @Previewable @State var colour = RGBColour.green
   Form {
-    ColourSliderGroup($colour)
+    ColourSliderGroup($colour, kind: .rgb)
   }
   .formStyle(.grouped)
   .padding()

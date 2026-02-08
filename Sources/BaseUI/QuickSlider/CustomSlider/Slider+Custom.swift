@@ -20,7 +20,7 @@ import SwiftUI
 extension QuickSlider {
   struct SliderCustom: View {
   @Environment(SliderHandler.self) private var store
-  @Environment(\.heightOverride) private var heightOverride
+//  @Environment(\.heightOverride) private var heightOverride
   @Environment(\.cornerRounding) private var cornerRounding
   @Environment(\.sliderComponents) private var sliderComponents
 
@@ -38,7 +38,6 @@ extension QuickSlider {
         SliderTrackBackground(
           style: style,
           height: trackHeight,
-          //          midpoint: proxy.size.midpoint
         )
         .environment(\.isHovering, isHovering)
 
@@ -82,6 +81,8 @@ extension QuickSlider.SliderCustom {
     trackHeight + store.hitAreaBuffer
   }
 
+  /// Track height is based on either a specific value from the environment,
+  /// or a default height defined on `SliderHandler`
   var trackHeight: CGFloat {
     heightOverride ?? store.fallbackHeight
   }
