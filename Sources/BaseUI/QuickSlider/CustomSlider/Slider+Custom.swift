@@ -17,7 +17,8 @@ import SwiftUI
 /// - onEnd callback / phase
 /// - Units
 
-struct SliderCustom<Value: SliderFloat>: View {
+extension QuickSlider {
+  struct SliderCustom: View {
   @Environment(SliderHandler.self) private var store
   @Environment(\.heightOverride) private var heightOverride
   @Environment(\.cornerRounding) private var cornerRounding
@@ -25,6 +26,7 @@ struct SliderCustom<Value: SliderFloat>: View {
 
   @State private var isHovering: Bool = false
 
+    @Binding var value: Value
   let thumbDiameter: Value = 16
   let style: TrackStyle
 
@@ -47,6 +49,7 @@ struct SliderCustom<Value: SliderFloat>: View {
           SliderThumb(
             diameter: thumbDiameter,
             position: store.thumbPosition(
+              value: value.toDouble,
               diameter: thumbDiameter.toDouble,
               trackSize: store.trackSize
             ),
@@ -71,8 +74,9 @@ struct SliderCustom<Value: SliderFloat>: View {
     .frame(height: trackHeightForFrame)
   }
 }
+}
 
-extension SliderCustom {
+extension QuickSlider.SliderCustom {
 
   var trackHeightForFrame: CGFloat {
     trackHeight + store.hitAreaBuffer
@@ -86,7 +90,8 @@ extension SliderCustom {
 
     return DragGesture(minimumDistance: 0)
       .onChanged { gestureValue in
-        store.value = store.handleDragChange(gestureValue)
+        guard let new = store.handleDragChange(gestureValue) else { return }
+        value = Value(new)
         store.updatePhase(.dragging)
       }
       .onEnded { _ in

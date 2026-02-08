@@ -8,7 +8,8 @@
 import CoreTools
 import SwiftUI
 
-struct SliderCore<Value: SliderFloat>: View {
+extension QuickSlider {
+  struct SliderCore: View {
   @Environment(SliderHandler.self) private var store
   @Environment(\.controlSizeOverride) private var controlSizeOverride
   @Environment(\.sliderComponents) private var sliderComponents
@@ -33,41 +34,42 @@ struct SliderCore<Value: SliderFloat>: View {
     if let step = store.step {
       switch stepStyle {
         case .native:
-          SliderTrackNativeView<Value>(step: Value.Stride(step))
+          SliderTrackNativeView(value: $value, step: Value.Stride(step))
 
         case .stepper:
           HStack {
-            SliderTrackNativeView<Value>(step: nil)
+            SliderTrackNativeView(value: $value, step: nil)
 
             Stepper(
               store.label.text,
               value: $value,
-              step: step,
+              step: Value.Stride(step),
             )
             .labelsHidden()
           }
 
         case .none:
-          SliderTrackNativeView<Value>(step: nil)
+          SliderTrackNativeView(value: $value, step: nil)
       }
 
     } else {
-      SliderTrackNativeView<Value>(step: nil)
+      SliderTrackNativeView(value: $value, step: nil)
     }
 
     // MARK: - Units
     if sliderComponents.contains(.units) {
       TextColumns(alignment: .trailing) {
-        Text(formatValue(store.value.toDouble))
+        Text(formatValue(value.toDouble))
       }
       .textSelection(.disabled)
-      .onDoubleTap($store.value, defaultValue: sliderDefault.toDoubleIfPresent)
+      .onDoubleTap($value, defaultValue: sliderDefault)
       .contextMenu { ContextMenuItems() }
     }
   }
 }
+}
 
-extension SliderCore {
+extension QuickSlider.SliderCore {
 
   private var sliderDefault: Value? {
     sliderDefaultValue.map { Value($0) }
@@ -94,7 +96,7 @@ extension SliderCore {
     if let sliderDefault {
       Divider()
       Button {
-        store.value = sliderDefault.toDouble
+        value = sliderDefault
       } label: {
         Label("Reset to Default", systemImage: Icons.refresh.icon)
       }
@@ -105,6 +107,6 @@ extension SliderCore {
   func LabelComponent() -> some View {
     @Bindable var store = store
     MaybeLabel(store.label)
-      .onDoubleTap($store.value.toBindingDouble, defaultValue: sliderDefaultValue)
+      .onDoubleTap($value.toBindingDouble, defaultValue: sliderDefaultValue)
   }
 }

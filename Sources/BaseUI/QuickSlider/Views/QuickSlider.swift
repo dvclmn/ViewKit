@@ -23,12 +23,12 @@ public struct QuickSlider<Value: SliderFloat>: View, ValueFormattable, SliderSty
       if isWithinSliderGroup {
         GridRow {
           /// Handles slider Label, Track, and Units display
-          SliderCore<Value>()
+          SliderCore(value: $value)
         }
 
       } else {
         HStack {
-          SliderCore<Value>()
+          SliderCore(value: $value)
         }
       }
     }
@@ -66,7 +66,7 @@ extension QuickSlider {
     self._value = value
     self._store = State(
       initialValue: SliderHandler(
-        value: value.wrappedValue.toDouble,
+//        value: value.wrappedValue.toDouble,
         label: label,
         range: range.toDoubleRange,
         step: step.toDoubleIfPresent,

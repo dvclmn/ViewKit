@@ -14,7 +14,8 @@ extension Double: SliderFloat {}
 extension CGFloat: SliderFloat {}
 extension Float: SliderFloat {}
 
-struct SliderTrackNativeView<Value: SliderFloat>: View  {
+extension QuickSlider {
+  struct SliderTrackNativeView: View  {
   @Environment(SliderHandler.self) private var store
   @Environment(\.sliderStyle) private var sliderStyle
 
@@ -41,15 +42,15 @@ struct SliderTrackNativeView<Value: SliderFloat>: View  {
           if let step {
             Slider(
               value: $value,
-              in: ClosedRange<Value>(store.range),
-              step: step.toDouble
+              in: sliderRange,
+              step: step
             ) { editing in
               handleOnEdit(editing)
             }
           } else {
             Slider(
               value: $value,
-              in: store.range,
+              in: sliderRange,
             ) { editing in
               handleOnEdit(editing)
             }
@@ -59,13 +60,21 @@ struct SliderTrackNativeView<Value: SliderFloat>: View  {
 
       // MARK: - Custom Slider
       case .custom(let style):
-        SliderCustom<Value>(style: style)
+        SliderCustom(
+          value: $value,
+          style: style
+        )
 
     }
   }
 }
+}
 
-extension SliderTrackNativeView {
+extension QuickSlider.SliderTrackNativeView {
+  private var sliderRange: ClosedRange<Value> {
+    Value(store.range.lowerBound)...Value(store.range.upperBound)
+  }
+
   private func handleOnEdit(_ didEdit: Bool) {
     let phase = SliderPhase(fromOnEditingChanged: didEdit)
     store.updatePhase(phase)
