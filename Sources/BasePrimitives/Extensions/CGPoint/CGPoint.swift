@@ -40,6 +40,11 @@ extension Array where Element == CGPoint {
 }
 
 extension CGPoint {
+
+  public init(_ x: CGFloat, _ y: CGFloat) {
+    self.init(x: x, y: y)
+  }
+  
   /// Returns a new CGPoint aligned relative to a container of the given size,
   /// using a unit point as the anchor.
   ///

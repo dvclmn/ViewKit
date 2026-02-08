@@ -20,9 +20,6 @@ extension CGPoint {
     self.init(x: length, y: length)
   }
 
-  public init(_ x: CGFloat, _ y: CGFloat) {
-    self.init(x: x, y: y)
-  }
   public var toCGSize: CGSize {
     return CGSize(width: self.x, height: self.y)
   }

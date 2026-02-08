@@ -7,7 +7,46 @@
 
 import SwiftUI
 
+/// Convenience extension for common taper functions
 extension Path {
+  /// Common width profiles for variable-width paths
+  public enum WidthProfile {
+    case constant(CGFloat)
+    case tapered(min: CGFloat, max: CGFloat)
+    case custom((CGFloat) -> CGFloat)
+
+    public func width(at t: CGFloat) -> CGFloat {
+      switch self {
+        case .constant(let w):
+          return w / 2
+
+        case .tapered(let min, let max):
+          /// Tapered: thin at ends, thick in middle
+          let half = max / 2
+          let minHalf = min / 2
+          let envelope = sin(t * .pi)  // 0 at ends, 1 at middle
+          return minHalf + (half - minHalf) * envelope
+
+        case .custom(let fn):
+          return fn(t)
+      }
+    }
+  }
+}
+
+extension Path {
+
+  public static func variableWidthPath(
+    spine: Path,
+    profile: WidthProfile,
+    samples: Int
+  ) -> Path {
+    Self.variableWidthPath(
+      spine: spine,
+      widthAt: { profile.width(at: $0) },
+      samples: samples)
+  }
+
   //extension GraphicsContext {
   /// Creates a closed path with variable width along a spine path
   /// - Parameters:
@@ -15,7 +54,7 @@ extension Path {
   ///   - widthAt: Closure that returns the half-width at a given parametric position (0...1)
   ///   - samples: Number of samples along the path for smooth curves
   /// - Returns: A closed path that can be filled
-  public static func variableWidthPath(
+  private static func variableWidthPath(
     spine: Path,
     widthAt: @escaping (CGFloat) -> CGFloat,
     samples: Int
@@ -102,43 +141,5 @@ extension Path {
     }
 
     return resultPath
-  }
-}
-
-/// Convenience extension for common taper functions
-extension Path {
-  /// Common width profiles for variable-width paths
-  public enum WidthProfile {
-    case constant(CGFloat)
-    case tapered(min: CGFloat, max: CGFloat)
-    case custom((CGFloat) -> CGFloat)
-
-    public func width(at t: CGFloat) -> CGFloat {
-      switch self {
-        case .constant(let w):
-          return w / 2
-
-        case .tapered(let min, let max):
-          /// Tapered: thin at ends, thick in middle
-          let half = max / 2
-          let minHalf = min / 2
-          let envelope = sin(t * .pi)  // 0 at ends, 1 at middle
-          return minHalf + (half - minHalf) * envelope
-
-        case .custom(let fn):
-          return fn(t)
-      }
-    }
-  }
-
-  public func variableWidthPath(
-    spine: Path,
-    profile: WidthProfile,
-    samples: Int
-  ) -> Path {
-    Self.variableWidthPath(
-      spine: spine,
-      widthAt: { profile.width(at: $0) },
-      samples: samples)
   }
 }

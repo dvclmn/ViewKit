@@ -6,46 +6,48 @@
 //
 
 import ColourKit
+import Foundation
 
 extension ActionLine.Configuration {
   public static var wavy: Self {
     .init(
       density: 50,
       radialCoverage: 1.0,
-      lineStyle: .init(
-        shape: .wave,
-        minWidth: 16,
+      lineStyle: ActionLine.LineStyle(
+        shape: .wave(),
+        minWidth: 24,
         maxWidth: 1
       ),
-      outerShape: .init(
+      outerShape: ActionLine.BoundaryStyle(
         radius: 0.7,
         colour: .aliceblue,
-//        colour: HSVColour(h: 0.75, s: 0.6, v: 0.5),
       ),
-      innerShape: .init(
+      innerShape: ActionLine.BoundaryStyle(
         radius: 0.5,
         colour: .oliveDark,
-//        colour: HSVColour(h: 0.15, s: 0.5, v: 0.55),
       ),
     )
   }
-  
+
   public static var wavy02: Self {
     .init(
-      density: 90,
+      density: 10,
       radialCoverage: 1.0,
-      lineStyle: .init(
-        shape: .wave,
-        minWidth: 26,
+      lineStyle: ActionLine.LineStyle(
+        shape: .wave(),
+        minWidth: 12,
         maxWidth: 1
       ),
-      outerShape: .init(
-        radius: 0.7,
-        colour: .aliceblue,
+      outerShape: ActionLine.BoundaryStyle(
+        radius: 0.9,
+        variation: 0.2,
+        colour: RGBColour(0.15, 0.35, 0.6),
       ),
-      innerShape: .init(
-        radius: 0.1,
-        colour: .oliveDark,
+      innerShape: ActionLine.BoundaryStyle(
+        radius: 0.05,
+        position: CGPoint(10, 200),
+        variation: 1.2,
+        colour: RGBColour(0.65, 0.35, 0.3),
       ),
     )
   }
@@ -54,17 +56,16 @@ extension ActionLine.Configuration {
     .init(
       density: 50,
       radialCoverage: 1.0,
-      lineStyle: .init(
-        shape: .wave,
+      lineStyle: ActionLine.LineStyle(
+        shape: .diamond,
         minWidth: 40,
         maxWidth: 1
       ),
-      outerShape: .init(
+      outerShape: ActionLine.BoundaryStyle(
         radius: 1.0,
         colour: .brown,
-//        colour: HSVColour(h: 0.25, s: 0.6, v: 0.5),
       ),
-      innerShape: .init(
+      innerShape: ActionLine.BoundaryStyle(
         radius: 0.2
       ),
     )

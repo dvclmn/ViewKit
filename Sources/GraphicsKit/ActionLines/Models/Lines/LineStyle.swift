@@ -20,8 +20,8 @@ extension ActionLine {
     public var opacity: Double
 
     /// This is for wave only
-    public var sampleCount: Int
-    public var cycles: CGFloat
+//    public var sampleCount: Int
+    public var cycles: Double
 
     public var shape: LineShape
 
@@ -30,14 +30,14 @@ extension ActionLine {
       minWidth: Double,
       maxWidth: Double,
       opacity: Double = 1,
-      sampleCount: Int = 30,
+//      sampleCount: Int = 30,
       cycles: CGFloat = 2,
     ) {
       self.shape = shape
       self.minWidth = minWidth
       self.maxWidth = maxWidth
       self.opacity = opacity
-      self.sampleCount = sampleCount
+//      self.sampleCount = sampleCount
       self.cycles = cycles
     }
   }
