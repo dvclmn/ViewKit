@@ -10,33 +10,27 @@ import SwiftUI
 
 @Observable
 final class SliderHandler {
-//final class SliderHandler<Value: SliderFloat> {
 
-//  var value: Double
+  //  var value: Double
   var label: QuickLabel
   var range: ClosedRange<Double>
   var step: Double?
-  //  var step: StepStyle<Double> = .none
 
   var phase: SliderPhase = .idle
   var didChangeSlider: SliderOutput?
 
-  //  var thumbHandler: ThumbHandler = .init()
-
   /// Including vertical hit area buffer
-  var trackSize: CGSize = .zero
+  var trackWidth: Double?
+  //  var trackSize: CGSize = .zero
+  let trackHeight: Double = 5
   let hitAreaBuffer: Double = 16
-  let fallbackHeight: Double = 5
 
   init(
-//    value: Double,
     label: QuickLabel,
     range: ClosedRange<Double>,
     step: Double?,
-    //    step: StepStyle<Value>,
     didChangeSlider: SliderOutput?
   ) {
-//    self.value = value
     self.label = label
     self.range = range
     self.step = step
@@ -46,17 +40,23 @@ final class SliderHandler {
 
 extension SliderHandler {
 
+  var trackSizeWithHeightBuffer: CGSize? {
+    guard let trackWidth else { return nil }
+    return CGSize(width: trackWidth, height: trackHeightWithBuffer)
+  }
+
+  var trackHeightWithBuffer: Double { trackHeight + hitAreaBuffer }
+
   var isDragging: Bool { phase == .dragging }
 
-  private var isGeometryReady: Bool { trackSize.isGreaterThanZero }
+  private var isGeometryReady: Bool { trackWidth != nil }
+  //  private var isGeometryReady: Bool { trackSize.isGreaterThanZero }
 
   /// Do not include the hit area buffer in `trackHeight`
-  func updateTrackSize(
-    viewWidth: Double,
-    trackHeight: Double
-  ) {
-    let heightIncBuffer: Double = trackHeight + hitAreaBuffer
-    trackSize = CGSize(width: viewWidth, height: heightIncBuffer)
+  func updateTrackSize(viewWidth: Double) {
+    //    let heightIncBuffer: Double = trackHeight + hitAreaBuffer
+    trackWidth = viewWidth
+    //    trackSize = CGSize(width: viewWidth, height: heightIncBuffer)
   }
 
   func updatePhase(_ phase: SliderPhase) {
@@ -68,9 +68,10 @@ extension SliderHandler {
     _ gestureValue: DragGesture.Value
   ) -> Double? {
 
-    let trackWidth = trackSize.width
+    //    let trackWidth = trackSize.width
     /// fall back to current value
-    guard trackWidth > 0 else { return nil }
+    guard let trackWidth else { return nil }
+    //    guard trackWidth > 0 else { return nil }
 
     let location = gestureValue.location.x
 
@@ -85,12 +86,13 @@ extension SliderHandler {
 
   func fillWidth(_ value: Double) -> Double? {
 
-    guard isGeometryReady else { return nil }
+//    guard isGeometryReady else { return nil }
+    guard let trackWidth else { return nil }
 
     /// Normalised here is essentially: “How far along the slider should the
     /// thumb be, in proportion to its full track length?”
     let normalised = value.normalised(in: range)
-    return normalised * trackSize.width
+    return normalised * trackWidth
   }
 
   public func thumbPosition(

@@ -6,7 +6,7 @@
 //  Copyright © 2023 Apple. All rights reserved.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
 /// Parts:
@@ -19,73 +19,76 @@ import SwiftUI
 
 extension QuickSlider {
   struct SliderCustom: View {
-  @Environment(SliderHandler.self) private var store
-//  @Environment(\.heightOverride) private var heightOverride
-  @Environment(\.cornerRounding) private var cornerRounding
-  @Environment(\.sliderComponents) private var sliderComponents
+    @Environment(SliderHandler.self) private var store
+    @Environment(\.cornerRounding) private var cornerRounding
+    @Environment(\.sliderComponents) private var sliderComponents
 
-  @State private var isHovering: Bool = false
+    @State private var isHovering: Bool = false
 
     @Binding var value: Value
-  let thumbDiameter: Value = 16
-  let style: TrackStyle
+    let thumbDiameter: Value = 16
+    let style: TrackStyle
 
-  public var body: some View {
+    public var body: some View {
 
-    GeometryReader { proxy in
-      ZStack {
-        // MARK: - Track
-        SliderTrackBackground(
-          style: style,
-          height: trackHeight,
+      Capsule()
+        .fill(.brown)
+        .viewSize(
+          capture: .size,
+          mode: .debounce(0.2),
+          isEnabled: true,
+          valueOutput: { size in
+            store.trackWidth = size.width
+          }
         )
-        .environment(\.isHovering, isHovering)
-
-        // MARK: - Thumb
-        if sliderComponents.contains(.thumb) {
-
-          /// Slider thumb
-          SliderThumb(
-            diameter: thumbDiameter,
-            position: store.thumbPosition(
-              value: value.toDouble,
-              diameter: thumbDiameter.toDouble,
-              trackSize: store.trackSize
-            ),
-            shape: .circle,
-          )
+        .overlay {
+          // MARK: - Track
+          SliderTrackBackground(style: style)
+            .environment(\.isHovering, isHovering)
         }
-      }  // END zstack
-      .frame(maxWidth: .infinity)
-      .contentShape(.rect)
-      .onHover { isHovering = $0 }
+        //    GeometryReader { proxy in
+        //      ZStack {
+        //        // MARK: - Track
+        //        SliderTrackBackground(
+        //          style: style,
+        //          height: trackHeight,
+        //        )
+        //        .environment(\.isHovering, isHovering)
+        //
+        //        // MARK: - Thumb
+        //        if sliderComponents.contains(.thumb) {
+        //
+        //          /// Slider thumb
+        //          SliderThumb(
+        //            diameter: thumbDiameter,
+        //            position: store.thumbPosition(
+        //              value: value.toDouble,
+        //              diameter: thumbDiameter.toDouble,
+        //              trackSize: store.trackSize
+        //            ),
+        //            shape: .circle,
+        //          )
+        //        }
+        //      }  // END zstack
+        //      .frame(maxWidth: .infinity)
+        //      .contentShape(.rect)
+        //      .onHover { isHovering = $0 }
+        //
+        //      .task(id: trackHeight) {
+        //        store.updateTrackSize(
+        //          viewWidth: proxy.size.width,
+        //          trackHeight: trackHeight
+        //        )
+        //      }
+        //      .gesture(sliderGesture)
+        //    }  // END geo
 
-      .task(id: trackHeight) {
-        store.updateTrackSize(
-          viewWidth: proxy.size.width,
-          trackHeight: trackHeight
-        )
-      }
-      .gesture(sliderGesture)
-    }  // END geo
-//    .border(Color.green.opacity(0.3))
-    /// Prevents the geo reader from taking up more space than it really needs
-    .frame(height: trackHeightForFrame)
+        .frame(height: store.trackHeightWithBuffer)
+    }
   }
-}
 }
 
 extension QuickSlider.SliderCustom {
-
-  var trackHeightForFrame: CGFloat {
-    trackHeight + store.hitAreaBuffer
-  }
-
-  /// Track height is based on either a specific value from the environment,
-  /// or a default height defined on `SliderHandler`
-  var trackHeight: CGFloat {
-    heightOverride ?? store.fallbackHeight
-  }
 
   var sliderGesture: some Gesture {
 
