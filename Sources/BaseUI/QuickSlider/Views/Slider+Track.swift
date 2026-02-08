@@ -14,7 +14,7 @@ extension CGFloat: SliderFloat {}
 
 struct SliderTrackNativeView<Value: SliderFloat>: View  {
 //struct SliderTrackNativeView<Value: BinaryFloatingPoint & Sendable & Strideable>: View {
-  @Environment(SliderHandler<Value>.self) private var store
+  @Environment(SliderHandler.self) private var store
   @Environment(\.sliderStyle) private var sliderStyle
 
   let step: Value.Stride?
@@ -40,7 +40,7 @@ struct SliderTrackNativeView<Value: SliderFloat>: View  {
             Slider(
               value: $store.value,
               in: store.range,
-              step: step
+              step: step.toDouble
             ) { editing in
               handleOnEdit(editing)
             }

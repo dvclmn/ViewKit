@@ -18,7 +18,7 @@ import SwiftUI
 /// - Units
 
 struct SliderCustom<Value: SliderFloat>: View {
-  @Environment(SliderHandler<Value>.self) private var store
+  @Environment(SliderHandler.self) private var store
   @Environment(\.heightOverride) private var heightOverride
   @Environment(\.cornerRounding) private var cornerRounding
   @Environment(\.sliderComponents) private var sliderComponents
@@ -47,7 +47,7 @@ struct SliderCustom<Value: SliderFloat>: View {
           SliderThumb(
             diameter: thumbDiameter,
             position: store.thumbPosition(
-              diameter: thumbDiameter,
+              diameter: thumbDiameter.toDouble,
               trackSize: store.trackSize
             ),
             shape: .circle,

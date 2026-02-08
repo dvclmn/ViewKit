@@ -10,7 +10,7 @@ import SwiftUI
 import CoreTools
 
 struct SliderTrackBackground<Value: SliderFloat>: View {
-  @Environment(SliderHandler<Value>.self) private var store
+  @Environment(SliderHandler.self) private var store
   @Environment(\.rgbComponent) private var rgbComponent
   @Environment(\.isHovering) private var isHovering
   @Environment(\.sliderComponents) private var sliderComponents

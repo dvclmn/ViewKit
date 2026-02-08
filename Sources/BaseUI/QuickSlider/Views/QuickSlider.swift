@@ -13,7 +13,7 @@ public typealias SliderOutput = (SliderPhase) -> Void
 public struct QuickSlider<Value: SliderFloat>: View, ValueFormattable, SliderStylable {
   @Environment(\.isWithinSliderGroup) private var isWithinSliderGroup
   @Environment(\.sliderComponents) private var sliderComponents
-  @State private var store: SliderHandler<Value>
+  @State private var store: SliderHandler
 
   @Binding var value: Value
 
@@ -33,7 +33,7 @@ public struct QuickSlider<Value: SliderFloat>: View, ValueFormattable, SliderSty
       }
     }
     .environment(store)
-    .bindModel($store.value, to: $value)
+    .bindModel($store.value, to: $value.toBindingDouble)
   }
 }
 
@@ -66,10 +66,10 @@ extension QuickSlider {
     self._value = value
     self._store = State(
       initialValue: SliderHandler(
-        value: value.wrappedValue,
+        value: value.wrappedValue.toDouble,
         label: label,
-        range: range,
-        step: step,
+        range: range.toDoubleRange,
+        step: step.toDoubleIfPresent,
 //        step: step.map { Double($0) },
         //        step: StepStyle(fromOptionalValue: step.map { Double($0) }),
         didChangeSlider: didChangeSlider

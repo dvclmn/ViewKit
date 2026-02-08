@@ -9,7 +9,7 @@ import CoreTools
 import SwiftUI
 
 struct SliderCore<Value: SliderFloat>: View {
-  @Environment(SliderHandler<Value>.self) private var store
+  @Environment(SliderHandler.self) private var store
   @Environment(\.controlSizeOverride) private var controlSizeOverride
   @Environment(\.sliderComponents) private var sliderComponents
 
@@ -19,7 +19,7 @@ struct SliderCore<Value: SliderFloat>: View {
   @Environment(\.isDebugMode) private var isDebugMode
 
   @State private var isHovering: Bool = false
-  
+
   var body: some View {
     @Bindable var store = store
 
@@ -31,7 +31,7 @@ struct SliderCore<Value: SliderFloat>: View {
     if let step = store.step {
       switch stepStyle {
         case .native:
-          SliderTrackNativeView<Value>(step: step)
+          SliderTrackNativeView<Value>(step: Value.Stride(step))
 
         case .stepper:
           HStack {
@@ -59,14 +59,14 @@ struct SliderCore<Value: SliderFloat>: View {
         Text(formatValue(store.value.toDouble))
       }
       .textSelection(.disabled)
-      .onDoubleTap($store.value, defaultValue: sliderDefault)
+      .onDoubleTap($store.value, defaultValue: sliderDefault.toDoubleIfPresent)
       .contextMenu { ContextMenuItems() }
     }
   }
 }
 
 extension SliderCore {
-  
+
   private var sliderDefault: Value? {
     sliderDefaultValue.map { Value($0) }
   }
@@ -92,7 +92,7 @@ extension SliderCore {
     if let sliderDefault {
       Divider()
       Button {
-        store.value = sliderDefault
+        store.value = sliderDefault.toDouble
       } label: {
         Label("Reset to Default", systemImage: Icons.refresh.icon)
       }
