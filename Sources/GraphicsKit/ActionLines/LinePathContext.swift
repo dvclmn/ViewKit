@@ -24,6 +24,8 @@ struct LinePathContext {
 }
 
 extension LinePathContext {
+  private var lineLength: CGFloat { start.distance(to: end) }
+  
   var triangle: Path {
     Path { path in
       let angle = atan2(end.y - start.y, end.x - start.x)
@@ -45,7 +47,8 @@ extension LinePathContext {
     return Path { path in
       let angle = atan2(end.y - start.y, end.x - start.x)
       let perpAngle: Double = angle + Double.pi / 2
-      let mid = CGPoint(x: (start.x + end.x) / 2, y: (start.y + end.y) / 2)
+      let mid = start.midpoint(to: end)
+//      let mid = CGPoint(x: (start.x + end.x) / 2, y: (start.y + end.y) / 2)
 
       let perpOffsetX = cos(perpAngle) * style.minWidth
       let perpOffsetY = sin(perpAngle) * style.maxWidth

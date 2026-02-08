@@ -23,7 +23,7 @@ extension ActionLine.Configuration {
 //        colour: HSVColour(h: 0.75, s: 0.6, v: 0.5),
       ),
       innerShape: .init(
-        radius: 0.2,
+        radius: 0.5,
         colour: .oliveDark,
 //        colour: HSVColour(h: 0.15, s: 0.5, v: 0.55),
       ),

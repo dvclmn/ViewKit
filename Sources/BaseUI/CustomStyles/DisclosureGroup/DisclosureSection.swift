@@ -66,31 +66,27 @@ public struct DisclosureSection<Content: View>: View {
   public var body: some View {
 
     Section {
-      if expanded.wrappedValue {
-        content
-      } else {
-        Text("Hidden")
-          //          .hidden()
-          //        Label("Hidden", systemImage: "eye")
-          //          .symbolVariant(.slash.fill)
-          //          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(.quaternary)
-        //          .border(Color.green.opacity(0.3))
-      }
+//      Group {
+        if expanded.wrappedValue {
+          content
+        } else {
+
+          Label("Hidden", systemImage: "eye")
+            .symbolVariant(.slash.fill)
+            .symbolRenderingMode(.hierarchical)
+            .foregroundStyle(.tertiary)
+            .labelStyle(.base)
+            .iconColour(.secondary)
+//            .transition(.push(from: .leading))
+          //          .border(Color.green.opacity(0.3))
+        }
+//      }
+//      .animation(Styles.animationSpringSubtle, value: isExpanded)
     } header: {
       HStack {
-        HStack {
-          if !isExpanded {
-            Image(systemName: "eye")
-              .symbolVariant(.slash.fill)
-              .symbolRenderingMode(.hierarchical)
-              .foregroundStyle(.secondary)
-              .transition(.push(from: .leading))
-          }
-          Text(title)
-            .foregroundStyle(isExpanded ? .secondary : .tertiary)
-        }
-        .animation(Styles.animationSpringSubtle, value: isExpanded)
+        Text(title)
+          .foregroundStyle(isExpanded ? .secondary : .tertiary)
+
         Spacer()
         Toggle(isOn: expanded) {
           Text(isExpanded ? "Hide" : "Show")

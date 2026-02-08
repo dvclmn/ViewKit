@@ -30,7 +30,6 @@ public struct AnotherColourPicker: View {
     DisclosureSection("Colour Picker", isExpanded: $isColourPickerExpanded) {
 //    DisclosureGroup("Picker", isExpanded: $isColourPickerExpanded) {
       SquareColourPicker($colour, size: pickerSize)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
     }
     
     DisclosureSection("Sliders", isExpanded: $areColourSlidersExpanded) {

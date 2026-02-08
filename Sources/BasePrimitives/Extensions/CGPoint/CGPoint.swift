@@ -193,6 +193,10 @@ extension CGPoint {
   //    return result
   //  }
 
+  public func midpoint(to other: Self) -> Self {
+    lerp(to: other, t: 0.5)
+  }
+  
   public static func midPoint(
     from p1: CGPoint,
     to p2: CGPoint
