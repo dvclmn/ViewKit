@@ -43,13 +43,19 @@ extension ActionLine {
     from start: CGPoint,
     to end: CGPoint,
     style: ActionLine.LineStyle
-  ) -> Path {
-    let context = LinePathContext(from: start, to: end, with: style)
-    return switch style.shape {
+  ) -> (Path, debugInfo: String) {
+    let context = LinePathContext(
+      from: start,
+      to: end,
+      with: style
+    )
+    let path = switch style.shape {
       case .triangle: context.triangle
       case .diamond: context.diamond
       case .wave: context.wavy
     }
+    
+    return (path, context.effectiveCycles.toString)
   }
 
   private static func handleSquare(

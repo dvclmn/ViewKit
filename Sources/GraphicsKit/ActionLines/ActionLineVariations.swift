@@ -52,23 +52,18 @@ extension ActionLineVariations {
     /// Determine angle and boundary domains. If the spec provided no bounds,
     /// use sensible defaults.
     let bounds = spec.domain.ranges
-    let angleRanges: [ClosedRange<Double>] = bounds.isEmpty ? [0.0...(2.0 * .pi)] : bounds
-    let boundaryRanges: [ClosedRange<Double>] = bounds.isEmpty ? [-1.0...1.0] : bounds
+//    guard !bounds.isEmpty || count > 1 else { return nil }
+    
+//    let angleRanges: [ClosedRange<Double>] = bounds.isEmpty ? [0.0...(2.0 * .pi)] : bounds
+//    let boundaryRanges: [ClosedRange<Double>] = bounds.isEmpty ? [-1.0...1.0] : bounds
 
-    // Helper to sample uniformly from a composite domain.
-    func sample(from ranges: [ClosedRange<Double>], using g: inout RandomNumberGenerator) -> Double {
-      let idx = Int.random(in: 0..<ranges.count, using: &g)
-      let r = ranges[idx]
-      return Double.random(in: r, using: &g)
-    }
-
-    // Generate stable base sequences given seed, count, and spec.
+    /// Generate stable base sequences given seed, count, and spec.
     let baseAngles = (0..<count).map { _ in
-      sample(from: angleRanges, using: &generator)
+      sample(from: bounds, using: &generator)
     }.sorted()
 
     let boundary = (0..<count).map { _ in
-      sample(from: boundaryRanges, using: &generator)
+      sample(from: bounds, using: &generator)
     }
 
     return ActionLineVariations(
@@ -78,24 +73,13 @@ extension ActionLineVariations {
     )
   }
 
-  //  public static func generate(
-  //    count: Int,
-  //    using generator: inout RandomNumberGenerator,
-  //    parameters: RandomisationParameters<Value>
-  //  ) -> Self {
-  //
-  //    let baseAngles = (0..<count).map { _ in
-  //      Double.random(in: 0...(2 * .pi), using: &generator)
-  //    }.sorted()
-  //
-  //    let boundary = (0..<count).map { _ in
-  //      Double.random(in: -1.0...1.0, using: &generator)
-  //    }
-  //
-  //    return ActionLineVariations(
-  //      baseAngles: baseAngles,
-  //      boundary: boundary,
-  //      density: count
-  //    )
-  //  }
+  /// Helper to sample uniformly from a composite domain.
+  private static func sample(
+    from ranges: [ClosedRange<Double>],
+    using g: inout RandomNumberGenerator
+  ) -> Double {
+    let idx = Int.random(in: 0..<ranges.count, using: &g)
+    let r = ranges[idx]
+    return Double.random(in: r, using: &g)
+  }
 }

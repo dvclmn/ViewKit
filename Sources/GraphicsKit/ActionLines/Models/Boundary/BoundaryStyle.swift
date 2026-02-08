@@ -18,6 +18,7 @@ extension ActionLine {
   public struct BoundaryStyle: Equatable, Sendable, Codable {
 
     public var radius: Double
+    public var radiusRange: ClosedRange<Double>
     public var position: CGPoint
 
     /// A randomised value controlling visual 'rag' quality,
@@ -29,12 +30,14 @@ extension ActionLine {
 
     public init(
       radius: Double = 0.5,
+      radiusRange: ClosedRange<Double> = 0.01...4,
       position: CGPoint = .zero,
       variation: Double = 1,
       colour: RGBColour = .gray(0.5),
       shape: BoundaryShape = .circle
     ) {
       self.radius = radius
+      self.radiusRange = radiusRange
       self.position = position
       self.variation = variation
       self.colour = colour

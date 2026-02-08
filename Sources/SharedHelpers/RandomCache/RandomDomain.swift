@@ -10,7 +10,7 @@ import Foundation
 /// A type-safe key for influencing random generation beyond numeric bounds.
 ///
 /// Create static keys in extensions to add new influences without colliding names.
-
+/// 
 /// Expresses the numeric domain from which random values may be drawn.
 /// Use a single closed range for simple cases, or multiple disjoint ranges to
 /// construct a composite domain.

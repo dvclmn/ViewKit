@@ -10,11 +10,11 @@ import ColourKit
 extension ActionLine.Configuration {
   public static var wavy: Self {
     .init(
-      density: 60,
+      density: 50,
       radialCoverage: 1.0,
       lineStyle: .init(
         shape: .wave,
-        minWidth: 20,
+        minWidth: 16,
         maxWidth: 1
       ),
       outerShape: .init(
@@ -26,6 +26,26 @@ extension ActionLine.Configuration {
         radius: 0.5,
         colour: .oliveDark,
 //        colour: HSVColour(h: 0.15, s: 0.5, v: 0.55),
+      ),
+    )
+  }
+  
+  public static var wavy02: Self {
+    .init(
+      density: 90,
+      radialCoverage: 1.0,
+      lineStyle: .init(
+        shape: .wave,
+        minWidth: 26,
+        maxWidth: 1
+      ),
+      outerShape: .init(
+        radius: 0.7,
+        colour: .aliceblue,
+      ),
+      innerShape: .init(
+        radius: 0.1,
+        colour: .oliveDark,
       ),
     )
   }
