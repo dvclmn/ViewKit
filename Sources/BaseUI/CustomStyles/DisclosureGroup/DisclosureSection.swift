@@ -69,17 +69,31 @@ public struct DisclosureSection<Content: View>: View {
       if expanded.wrappedValue {
         content
       } else {
-        Label("Hidden", systemImage: "eye")
-          .symbolVariant(.slash.fill)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(.tertiary)
+        Text("Hidden")
+          //          .hidden()
+          //        Label("Hidden", systemImage: "eye")
+          //          .symbolVariant(.slash.fill)
+          //          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(.quaternary)
+        //          .border(Color.green.opacity(0.3))
       }
     } header: {
       HStack {
-        Text(title)
+        HStack {
+          if !isExpanded {
+            Image(systemName: "eye")
+              .symbolVariant(.slash.fill)
+              .symbolRenderingMode(.hierarchical)
+              .foregroundStyle(.secondary)
+              .transition(.push(from: .leading))
+          }
+          Text(title)
+            .foregroundStyle(isExpanded ? .secondary : .tertiary)
+        }
+        .animation(Styles.animationSpringSubtle, value: isExpanded)
         Spacer()
         Toggle(isOn: expanded) {
-          Text(expanded.wrappedValue ? "Hide" : "Show")
+          Text(isExpanded ? "Hide" : "Show")
             .font(.caption.weight(.medium))
             .textCase(.uppercase)
         }
@@ -88,27 +102,13 @@ public struct DisclosureSection<Content: View>: View {
         .controlSize(.small)
       }
     }
-
-    //    Section {
-    //      if isExpanded {
-    //        content
-    //      } else {
-    //        Label("Hidden", systemImage: Icons.eye.icon)
-    //          .symbolVariant(.slash.fill)
-    //          .symbolRenderingMode(.hierarchical)
-    //          .foregroundStyle(.tertiary)
-    //      }
-    //    } header: {
-    //      HStack {
-    //        Text(title)
-    //        Spacer()
-    //        ToggleButton()
-    //      }
-    //    }
   }
 }
 
 extension DisclosureSection {
+  private var isExpanded: Bool {
+    expanded.wrappedValue
+  }
 
   /// The single source of truth the view will use
   private var expanded: Binding<Bool> {
