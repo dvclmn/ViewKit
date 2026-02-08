@@ -9,67 +9,67 @@ import CoreTools
 import SwiftUI
 
 extension QuickSlider {
-  struct SliderCore: View {
-  @Environment(SliderHandler.self) private var store
-  @Environment(\.controlSizeOverride) private var controlSizeOverride
-  @Environment(\.sliderComponents) private var sliderComponents
+  struct SliderComponents: View {
+    @Environment(SliderHandler.self) private var store
+    @Environment(\.controlSizeOverride) private var controlSizeOverride
+    @Environment(\.sliderComponents) private var sliderComponents
 
-  @Environment(\.stepStyle) private var stepStyle
-  @Environment(\.formatValue) private var formatValue
-  @Environment(\.sliderDefaultValue) private var sliderDefaultValue
-  @Environment(\.isDebugMode) private var isDebugMode
+    @Environment(\.stepStyle) private var stepStyle
+    @Environment(\.formatValue) private var formatValue
+    @Environment(\.sliderDefaultValue) private var sliderDefaultValue
+    @Environment(\.isDebugMode) private var isDebugMode
 
-  @State private var isHovering: Bool = false
+    @State private var isHovering: Bool = false
 
-  @Binding var value: Value
-  
-  var body: some View {
-    @Bindable var store = store
+    @Binding var value: Value
 
-    // MARK: - Units
-    if sliderComponents.contains(.label) {
-      LabelComponent()
-    }
+    var body: some View {
+      @Bindable var store = store
 
-    if let step = store.step {
-      switch stepStyle {
-        case .native:
-          SliderTrackNativeView(value: $value, step: Value.Stride(step))
-
-        case .stepper:
-          HStack {
-            SliderTrackNativeView(value: $value, step: nil)
-
-            Stepper(
-              store.label.text,
-              value: $value,
-              step: Value.Stride(step),
-            )
-            .labelsHidden()
-          }
-
-        case .none:
-          SliderTrackNativeView(value: $value, step: nil)
+      // MARK: - Units
+      if sliderComponents.contains(.label) {
+        LabelComponent()
       }
 
-    } else {
-      SliderTrackNativeView(value: $value, step: nil)
-    }
+      if let step = store.step {
+        switch stepStyle {
+          case .native:
+            SliderCore(value: $value, step: Value.Stride(step))
 
-    // MARK: - Units
-    if sliderComponents.contains(.units) {
-      TextColumns(alignment: .trailing) {
-        Text(formatValue(value.toDouble))
+          case .stepper:
+            HStack {
+              SliderCore(value: $value, step: nil)
+
+              Stepper(
+                store.label.text,
+                value: $value,
+                step: Value.Stride(step),
+              )
+              .labelsHidden()
+            }
+
+          case .none:
+            SliderCore(value: $value, step: nil)
+        }
+
+      } else {
+        SliderCore(value: $value, step: nil)
       }
-      .textSelection(.disabled)
-      .onDoubleTap($value, defaultValue: sliderDefault)
-      .contextMenu { ContextMenuItems() }
+
+      // MARK: - Units
+      if sliderComponents.contains(.units) {
+        TextColumns(alignment: .trailing) {
+          Text(formatValue(value.toDouble))
+        }
+        .textSelection(.disabled)
+        .onDoubleTap($value, defaultValue: sliderDefault)
+        .contextMenu { ContextMenuItems() }
+      }
     }
   }
 }
-}
 
-extension QuickSlider.SliderCore {
+extension QuickSlider.SliderComponents {
 
   private var sliderDefault: Value? {
     sliderDefaultValue.map { Value($0) }

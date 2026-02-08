@@ -15,8 +15,8 @@ public struct DebugTextKey: PreferenceKey {
 
     let next = nextValue()
     if next.isEmpty { return }
-    print("Running `DebugTextKey` reduce at \(Date.debug)")
-    print("\n\nCurrent value: \(value). \n\nNew data: \(next)\n\n")
+//    print("Running `DebugTextKey` reduce at \(Date.debug)")
+//    print("\n\nCurrent value: \(value). \n\nNew data: \(next)\n\n")
 
     /// Build a set of what we already have
     var seen = Set(value)

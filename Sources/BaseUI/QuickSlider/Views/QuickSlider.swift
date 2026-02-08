@@ -23,17 +23,16 @@ public struct QuickSlider<Value: SliderFloat>: View, ValueFormattable, SliderSty
       if isWithinSliderGroup {
         GridRow {
           /// Handles slider Label, Track, and Units display
-          SliderCore(value: $value)
+          SliderComponents(value: $value)
         }
 
       } else {
         HStack {
-          SliderCore(value: $value)
+          SliderComponents(value: $value)
         }
       }
     }
     .environment(store)
-//    .bindModel($store.value, to: $value.toBindingDouble)
   }
 }
 

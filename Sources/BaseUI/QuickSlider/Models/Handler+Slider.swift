@@ -68,9 +68,12 @@ extension SliderHandler {
     _ gestureValue: DragGesture.Value
   ) -> Double? {
 
-    //    let trackWidth = trackSize.width
+//    print("Handling drag change")
     /// fall back to current value
-    guard let trackWidth else { return nil }
+    guard let trackWidth else {
+//      print("No value for track width")
+      return nil
+    }
     //    guard trackWidth > 0 else { return nil }
 
     let location = gestureValue.location.x
@@ -98,12 +101,12 @@ extension SliderHandler {
   public func thumbPosition(
     value: Double,
     diameter: Double,
-    trackSize: CGSize
+//    trackSize: CGSize
   ) -> CGPoint? {
 
-    guard trackSize.isGreaterThanZero else { return nil }
+//    guard trackSize.isGreaterThanZero else { return nil }
     //    guard isGeometryReady else { return nil }
-
+guard let trackWidth else { return nil }
     /// Normalised here is essentially: “How far along the slider should the
     /// thumb be, in proportion to its full track length?”
     let normalised = value.normalised(in: range)
@@ -112,10 +115,10 @@ extension SliderHandler {
     /// so the Thumb doesn't hand awkwardly out the edges of the track.
 
     let horizontalPadding = diameter * 0.4
-    let adjustedWidth = max(0, trackSize.width - (horizontalPadding * 2))
+    let adjustedWidth = max(0, trackWidth - (horizontalPadding * 2))
 
     let x = CGFloat(horizontalPadding + (normalised * adjustedWidth))
-    let y = trackSize.height / 2
+    let y = trackHeightWithBuffer / 2
 
     return CGPoint(x: x, y: y)
   }

@@ -19,8 +19,8 @@ public struct DebugTextOverlayModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .onPreferenceChange(DebugTextKey.self) { newText in
-        print("Running `DebugTextKey` `onPreferenceChange` at \(Date.debug)")
-        print("New text is: \(newText)")
+//        print("Running `DebugTextKey` `onPreferenceChange` at \(Date.debug)")
+//        print("New text is: \(newText)")
         guard isEnabled else { return }
         self.gatheredText = newText.joined(separator: "\n")
       }

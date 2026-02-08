@@ -8,61 +8,55 @@
 import CoreTools
 import SwiftUI
 
-public protocol SliderFloat: BinaryFloatingPoint, Sendable, Strideable where Stride: BinaryFloatingPoint {}
-
-extension Double: SliderFloat {}
-extension CGFloat: SliderFloat {}
-extension Float: SliderFloat {}
-
 extension QuickSlider {
-  struct SliderTrackNativeView: View  {
-  @Environment(SliderHandler.self) private var store
-  @Environment(\.sliderStyle) private var sliderStyle
+  struct SliderCore: View {
+    @Environment(SliderHandler.self) private var store
+    @Environment(\.sliderStyle) private var sliderStyle
 
-  @Binding var value: Value
-  let step: Value.Stride?
+    @Binding var value: Value
+    let step: Value.Stride?
 
-  var body: some View {
+    var body: some View {
 
-    switch sliderStyle {
+      switch sliderStyle {
 
-      // MARK: - Native Slider
-      case .native:
-        @Bindable var store = store
+        // MARK: - Native Slider
+        case .native:
+          @Bindable var store = store
 
-        Group {
-          if let step {
-            Slider(
-              value: $value,
-              in: sliderRange,
-              step: step
-            ) { editing in
-              handleOnEdit(editing)
-            }
-          } else {
-            Slider(
-              value: $value,
-              in: sliderRange,
-            ) { editing in
-              handleOnEdit(editing)
+          Group {
+            if let step {
+              Slider(
+                value: $value,
+                in: sliderRange,
+                step: step
+              ) { editing in
+                handleOnEdit(editing)
+              }
+            } else {
+              Slider(
+                value: $value,
+                in: sliderRange,
+              ) { editing in
+                handleOnEdit(editing)
+              }
             }
           }
-        }
-        .labelsHidden()
+          .labelsHidden()
 
-      // MARK: - Custom Slider
-      case .custom(let style):
-        SliderCustom(
-          value: $value,
-          style: style
-        )
+        // MARK: - Custom Slider
+        case .custom(let style):
+          SliderCustom(
+            value: $value,
+            style: style
+          )
 
+      }
     }
   }
 }
-}
 
-extension QuickSlider.SliderTrackNativeView {
+extension QuickSlider.SliderCore {
   private var sliderRange: ClosedRange<Value> {
     Value(store.range.lowerBound)...Value(store.range.upperBound)
   }

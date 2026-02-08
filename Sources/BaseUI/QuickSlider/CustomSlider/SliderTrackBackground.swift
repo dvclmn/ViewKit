@@ -25,7 +25,7 @@ struct SliderTrackBackground: View {
     }
     .frame(height: store.trackHeight)
     .clipShape(clipShape)
-    .allowsHitTesting(false)
+    
 
   }
 }

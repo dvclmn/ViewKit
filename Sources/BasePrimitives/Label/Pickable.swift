@@ -12,13 +12,13 @@ public protocol Pickable: LabeledItem {
   /// A label that describes the purpose of the whole enum.
   /// E.g. "View Mode", or "Inspector Tab"
   static var pickerLabel: QuickLabel { get }
-  func isSelected(current: Self) -> Bool
+//  func isSelected(current: Self) -> Bool
 }
 
 extension Pickable where Self: Equatable {
-  public func isSelected(current: Self) -> Bool {
-    return self == current
-  }
+//  public func isSelected(current: Self) -> Bool {
+//    return self == current
+//  }
 }
 
 extension Pickable where Self: CaseIterable, Self.AllCases == [Self] {
@@ -26,6 +26,7 @@ extension Pickable where Self: CaseIterable, Self.AllCases == [Self] {
 }
 
 extension Pickable {
+  /// Produces a rough default Picker label
   public static var pickerLabel: QuickLabel {
     let typeName = String(describing: Self.self)
     let words = typeName.camelCaseToWords

@@ -32,7 +32,8 @@ extension QuickSlider {
     public var body: some View {
 
       Capsule()
-        .fill(.brown)
+        //        .fill(.cyan.opacity(0.2))
+        .fill(.clear)
         .viewSize(
           capture: .size,
           mode: .debounce(0.2),
@@ -41,49 +42,31 @@ extension QuickSlider {
             store.trackWidth = size.width
           }
         )
-        .overlay {
-          // MARK: - Track
-          SliderTrackBackground(style: style)
-            .environment(\.isHovering, isHovering)
-        }
-        //    GeometryReader { proxy in
-        //      ZStack {
-        //        // MARK: - Track
-        //        SliderTrackBackground(
-        //          style: style,
-        //          height: trackHeight,
-        //        )
-        //        .environment(\.isHovering, isHovering)
-        //
-        //        // MARK: - Thumb
-        //        if sliderComponents.contains(.thumb) {
-        //
-        //          /// Slider thumb
-        //          SliderThumb(
-        //            diameter: thumbDiameter,
-        //            position: store.thumbPosition(
-        //              value: value.toDouble,
-        //              diameter: thumbDiameter.toDouble,
-        //              trackSize: store.trackSize
-        //            ),
-        //            shape: .circle,
-        //          )
-        //        }
-        //      }  // END zstack
-        //      .frame(maxWidth: .infinity)
-        //      .contentShape(.rect)
-        //      .onHover { isHovering = $0 }
-        //
-        //      .task(id: trackHeight) {
-        //        store.updateTrackSize(
-        //          viewWidth: proxy.size.width,
-        //          trackHeight: trackHeight
-        //        )
-        //      }
-        //      .gesture(sliderGesture)
-        //    }  // END geo
 
+        .overlay {
+          ZStack {
+            // MARK: - Track
+            SliderTrackBackground(style: style)
+              .environment(\.isHovering, isHovering)
+
+            // MARK: - Thumb
+            if sliderComponents.contains(.thumb) {
+
+              /// Slider thumb
+              SliderThumb(
+                diameter: thumbDiameter,
+                position: store.thumbPosition(
+                  value: value.toDouble,
+                  diameter: thumbDiameter.toDouble,
+                ),
+                shape: .circle,
+              )
+            }
+          }
+        }
+        .onHover { isHovering = $0 }
         .frame(height: store.trackHeightWithBuffer)
+        .gesture(sliderGesture)
     }
   }
 }
@@ -102,27 +85,4 @@ extension QuickSlider.SliderCustom {
         store.updatePhase(.idle)
       }
   }
-
-  //  @ViewBuilder
-  //  func SliderTrack(in size: CGSize) -> some View {
-  //    ZStack {
-  //      Rectangle()
-  //        .fill(style.background)
-  //        .fill(style.foreground)
-  //    }
-  //    .drawingGroup()
-  //    .frame(height: trackHeight)
-  //
-  //    .overlay(alignment: .leading) {
-  //      if let width = store.fillWidth() {
-  //        Rectangle()
-  //          .fill(style.fill.opacity(isHovering ? 1.0 : 0.6))
-  //          .frame(width: width)
-  //      }
-  //    }
-  //    .clipShape(clipShape)
-  //    .animation(Styles.animationExtraQuickNSmooth, value: isHovering)
-  //    .position(size.midpoint)
-  //  }
-
 }
