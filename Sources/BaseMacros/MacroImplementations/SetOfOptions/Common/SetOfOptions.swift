@@ -24,7 +24,7 @@ import SwiftSyntaxMacros
 
 public struct SetOfOptionsMacro {
 
-  static func decodeExpansion(
+  package static func decodeExpansion(
     of attribute: AttributeSyntax,
     attachedTo decl: some DeclGroupSyntax,
     in context: some MacroExpansionContext,
