@@ -25,12 +25,12 @@ extension AssociatedValuesBuilder {
   /// ```
   
   /// e.g., "v0" or "v0, v1, v2"
-  package func uniquedVariableNames(_ parameters: EnumCaseParameterListSyntax) -> String {
-    parameters
-      .enumerated()
-      .map { index, _ in "v\(index)" }
-      .joined(separator: ", ")
-  }
+//  package func uniquedVariableNames(_ parameters: EnumCaseParameterListSyntax) -> String {
+//    parameters
+//      .enumerated()
+//      .map { index, _ in "v\(index)" }
+//      .joined(separator: ", ")
+//  }
 //  package func uniquedVariableNames(_ parameters: EnumCaseParameterListSyntax) -> DeclSyntax {
 //
 //    DeclSyntax(

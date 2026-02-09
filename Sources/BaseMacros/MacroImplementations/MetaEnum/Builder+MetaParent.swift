@@ -10,13 +10,11 @@ import SwiftSyntax
 import SwiftSyntaxMacros
 
 extension MetaEnumBuilder {
-  
-  
+
   package var metaToParentConvenience: DeclSyntax {
-    "\(raw: access) var parent: \(raw: parentTypeName)? { .init(fromMeta: self) } "
+    "\(raw: detectedEnum.access) var parent: \(raw: detectedEnum.parentTypeName)? { .init(fromMeta: self) } "
   }
 
-  
   /// Target output:
   /// ```
   /// public init?(fromMeta meta: Self.Meta) {
@@ -31,7 +29,7 @@ extension MetaEnumBuilder {
   /// Note: Could try using this to generate more defaults:
   /// https://github.com/alschmut/SwiftBuildableMacro?tab=readme-ov-file#builder-default-values
   package var metaToParentInit: DeclSyntax {
-    let cases = casesList { item in
+    let cases = detectedEnum.casesList { item in
       guard item.hasAssociatedValues else {
         return "self = .\(item.name)"
       }
@@ -50,7 +48,7 @@ extension MetaEnumBuilder {
       let pairs = zip(paramClause.parameters, defaults)
       let argumentList = pairs.map { param, def -> String in
         let label = param.firstName?.text ?? "_"
-        
+
         /// def.value is the `ExprSyntax` from `InitializerClauseSyntax`
         return "\(label): \(def.value)"
       }.joined(separator: ", ")
@@ -59,7 +57,7 @@ extension MetaEnumBuilder {
     }
 
     return """
-      \(raw: access) init?(fromMeta meta: Self.Meta) {
+      \(raw: detectedEnum.access) init?(fromMeta meta: Self.Meta) {
         switch meta {
       \(raw: cases)
         }

@@ -28,13 +28,13 @@ extension MetaEnumBuilder {
   func build() -> [DeclSyntax] {
     [
       // Properties on Parent
-      DeclSyntax("\(raw: access) var meta: Self.Meta {.init(self)}"),
+      DeclSyntax("\(raw: detectedEnum.access) var meta: Self.Meta {.init(self)}"),
       DeclSyntax(hasAssociatedValuesProperty),
       DeclSyntax(metaToParentInit),
     ]
 
       // Beginning of Meta enum declaration
-      + [DeclSyntax("\(raw: access) enum Meta: String, CaseIterable, Identifiable {")]
+    + [DeclSyntax("\(raw: detectedEnum.access) enum Meta: String, CaseIterable, Identifiable {")]
 
       + metaEnumInternals
       + caseDetection
@@ -74,12 +74,12 @@ extension MetaEnumBuilder {
   ///   }
   ///
   private var makeMetaInit: DeclSyntax {
-    let cases = casesList { item in
+    let cases = detectedEnum.casesList { item in
       "self = .\(item.name)"
     }
 
     return """
-      \(raw: access) init(_ \(parentParamName): \(raw: parentTypeName)) {
+      \(raw: detectedEnum.access) init(_ \(parentParamName): \(raw: detectedEnum.parentTypeName)) {
         switch \(parentParamName) {
       \(raw: cases)
         }
@@ -94,7 +94,7 @@ extension MetaEnumBuilder {
   ///   case whale
   /// […]
   private var metaCases: DeclSyntax {
-    childCases
+    detectedEnum.cases
       .map { "  case \($0.name)" }
       .joined("\n")
       .toDeclSyntax
@@ -108,13 +108,13 @@ extension MetaEnumBuilder {
   /// }
   /// ```
   var nameProperty: DeclSyntax {
-    let cases = casesList {
+    let cases = detectedEnum.casesList {
       "\"\($0.name.capitalized)\""
     }
 
     return
       """
-      \(raw: access) var name: String {
+      \(raw: detectedEnum.access) var name: String {
         switch self {
           \(raw: cases)
         }
@@ -122,16 +122,16 @@ extension MetaEnumBuilder {
       """
   }
 
-  var idProperty: DeclSyntax { "\(raw: access) var id: String {rawValue}" }
+  var idProperty: DeclSyntax { "\(raw: detectedEnum.access) var id: String {rawValue}" }
 
   var hasAssociatedValuesProperty: DeclSyntax {
-    let cases = casesList {
+    let cases = detectedEnum.casesList {
       "\($0.hasAssociatedValues ? "true" : "false")"
     }
 
     return
       """
-      \(raw: access) var hasAssociatedValues: Bool {
+      \(raw: detectedEnum.access) var hasAssociatedValues: Bool {
         switch self {
           \(raw: cases)
         }
