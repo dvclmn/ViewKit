@@ -29,7 +29,8 @@ public struct SetOfOptionsMacro {
     attachedTo decl: some DeclGroupSyntax,
     in context: some MacroExpansionContext,
     emitDiagnostics: Bool
-  ) -> (StructDeclSyntax, EnumDeclSyntax, TypeSyntax)? {
+  ) -> StructDeclSyntax? {
+//  ) -> (StructDeclSyntax, EnumDeclSyntax, TypeSyntax)? {
 
     /// Determine the name of the options enum.
     let optionsEnumName: String

@@ -6,8 +6,13 @@
 //
 
 import CasePaths
-import CoreTools
 import SwiftUI
+
+/// ```
+/// CasePicker(value: $lineShape, title: "Line Shapes") { meta in
+///   Text(meta.name)
+/// }
+/// ```
 
 /// Usage:
 /// ```

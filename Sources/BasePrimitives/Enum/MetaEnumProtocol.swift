@@ -8,6 +8,8 @@
 import SwiftUI
 
 /// This whole file is *one* possible solution for a Case Paths driven Picker
+
+/// This is applied to the parent, not the Meta Enum.
 public protocol MetaEnumProtocol {
   associatedtype Meta: CaseIterable & Hashable & Identifiable where Self.Meta.AllCases: RandomAccessCollection
 
