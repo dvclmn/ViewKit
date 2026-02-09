@@ -5,10 +5,10 @@
 //  Created by Dave Coleman on 6/2/2026.
 //
 
+import CasePaths
 import CoreTools
 import SwiftUI
 import VectorKit
-import CasePaths
 
 @MetaEnum
 @CaseDetection
@@ -130,41 +130,27 @@ extension LineShape {
 }
 
 extension LineShape {
-  //  private var lineLength: CGFloat {  }
 
-  /// Tunable thresholds for cycle moderation
-  /// Lines shorter than `minLengthForFullCycles` reduce cycles down toward `minCycles`.
-  /// Lines at or above `maxLengthForFullCycles` keep the full requested cycles.
-  private var minLengthForFullCycles: CGFloat { 80 }  // tweak
-  private var maxLengthForFullCycles: CGFloat { 240 }  // tweak
-  private var minCycles: Double { 0.5 }  // tweak: allow half a cycle at minimum
+  /// Reference length where full cycles are reached.
+  /// Lines shorter than this length smoothly reduce cycles toward zero.
+  private var referenceLengthForCycles: CGFloat { 200 }
+  private var minCycles: Double { 0 }
 
-  /// Maps the desired cycles to a moderated value based on `lineLength`.
-  /// - For very short lines, cycles approach `minCycles`.
-  /// - For long lines, cycles approach the original `style.cycles`.
+  /// Scales the requested cycle count based on the length of the line.
+  ///
+  /// - Parameters:
+  ///   - cycles: The desired number of cycles on a sufficiently long line.
+  ///   - lineLength: The current length of the line.
+  /// - Returns: A moderated cycle count that smoothly approaches zero on very short lines and reaches full cycles at the reference length.
   func effectiveCycles(
     cycles: Double,
     lineLength: Double,
-    //    style: ActionLine.LineStyle
   ) -> Double {
+    guard cycles > 0, lineLength > 0 else { return 0 }
 
-    let desired = cycles
-    /// If desired is already very small, just return it.
-    guard cycles > 0 else { return 0 }
+    var t = min(max(lineLength / referenceLengthForCycles, 0), 1)
+    t = t * t * (3 - 2 * t)  // smoothstep easing
 
-    //    let length = start.distance(to: end)
-    /// If line is long enough, keep full cycles
-    if lineLength >= maxLengthForFullCycles { return desired }
-
-    /// If line is extremely short, clamp to minCycles
-    if lineLength <= minLengthForFullCycles { return max(minCycles, min(desired, desired)) }
-
-    /// Otherwise, interpolate between minCycles and desired based on normalized length
-    let t = Double((lineLength - minLengthForFullCycles) / (maxLengthForFullCycles - minLengthForFullCycles))
-
-    /// Smoothstep for a gentler transition
-    let smooth = t * t * (3 - 2 * t)
-    let value = minCycles + (desired - minCycles) * smooth
-    return max(minCycles, min(value, desired))
+    return min(max(minCycles, cycles * t), cycles)
   }
 }
