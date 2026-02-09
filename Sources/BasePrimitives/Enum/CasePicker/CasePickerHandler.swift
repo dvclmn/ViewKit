@@ -9,7 +9,7 @@ import CasePaths
 import SwiftUI
 
 @Observable
-public final class CasePickerState<Enum: MetaEnum> {
+public final class CasePickerHandler<Enum: MetaEnum> {
   var selectedMeta: Enum.Meta
   @ObservationIgnored private var cache: [Enum.Meta: Enum]
 
@@ -30,7 +30,7 @@ public final class CasePickerState<Enum: MetaEnum> {
   func switchTo(_ newMeta: Enum.Meta, binding: Binding<Enum>) {
     guard selectedMeta != newMeta else { return }
 
-    // Cache current value
+    /// Cache current value
     cache[selectedMeta] = binding.wrappedValue
 
     if let restored = cache[newMeta] {
@@ -91,7 +91,12 @@ public struct CaseBinding<Root, Value> {
 //  }
 //}
 
-// MARK: - Main Picker View
+// MARK: - Utility: clamp helper for floating-point
+private extension BinaryFloatingPoint {
+  func clamped(to range: ClosedRange<Self>) -> Self {
+    return min(max(self, range.lowerBound), range.upperBound)
+  }
+}
 
 // MARK: - Case Proxy
 @MainActor
@@ -103,7 +108,7 @@ public struct CaseProxy<Root> where Root: CasePathable {
   public func `case`<Value>(
     _ caseKeyPath: CaseKeyPath<Root, Value>
   ) -> Binding<Value>? {
-    // Convert case key path to AnyCasePath
+    /// Convert case key path to AnyCasePath
     let casePath = AnyCasePath(caseKeyPath)
     return CaseBinding(casePath: casePath, root: selection).binding()
   }
@@ -114,16 +119,48 @@ public struct CaseProxy<Root> where Root: CasePathable {
   ) -> Binding<Value>? {
     CaseBinding(casePath: casePath, root: selection).binding()
   }
+
+  // MARK: - Clamped variants for BinaryFloatingPoint associated values
+
+  /// Create a clamped binding for a floating-point associated value using a CaseKeyPath
+  public func `case`<Value>(
+    _ caseKeyPath: CaseKeyPath<Root, Value>,
+    clamp range: ClosedRange<Value>
+  ) -> Binding<Value>? where Value: BinaryFloatingPoint {
+    let casePath = AnyCasePath(caseKeyPath)
+    guard let base = CaseBinding(casePath: casePath, root: selection).binding() else { return nil }
+    return Binding<Value>(
+      get: { base.wrappedValue.clamped(to: range) },
+      set: { newValue in
+        base.wrappedValue = newValue.clamped(to: range)
+      }
+    )
+  }
+
+  /// Create a clamped binding for a floating-point associated value using AnyCasePath
+  public func binding<Value>(
+    _ casePath: AnyCasePath<Root, Value>,
+    clamp range: ClosedRange<Value>
+  ) -> Binding<Value>? where Value: BinaryFloatingPoint {
+    guard let base = CaseBinding(casePath: casePath, root: selection).binding() else { return nil }
+    return Binding<Value>(
+      get: { base.wrappedValue.clamped(to: range) },
+      set: { newValue in
+        base.wrappedValue = newValue.clamped(to: range)
+      }
+    )
+  }
 }
 
 // MARK: - View Extensions for Conditional Content
-extension View {
-  /// Show this view only when the enum matches the given case
-  public func showIf<Root, Value>(
-    _ binding: Binding<Root>,
-    matches casePath: AnyCasePath<Root, Value>
-  ) -> some View {
-    self.opacity(casePath.extract(from: binding.wrappedValue) != nil ? 1 : 0)
-      .disabled(casePath.extract(from: binding.wrappedValue) == nil)
-  }
-}
+//extension View {
+//  /// Show this view only when the enum matches the given case
+//  public func showIf<Root, Value>(
+//    _ binding: Binding<Root>,
+//    matches casePath: AnyCasePath<Root, Value>
+//  ) -> some View {
+//    self.opacity(casePath.extract(from: binding.wrappedValue) != nil ? 1 : 0)
+//      .disabled(casePath.extract(from: binding.wrappedValue) == nil)
+//  }
+//}
+

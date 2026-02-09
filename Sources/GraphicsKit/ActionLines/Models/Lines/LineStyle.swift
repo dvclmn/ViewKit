@@ -19,6 +19,8 @@ extension ActionLine {
 
     public var opacity: Double
     public var cycles: Double
+    
+    public var uniformity: Double
 
     public var shape: LineShape
 
@@ -28,12 +30,14 @@ extension ActionLine {
       maxWidth: Double,
       opacity: Double = 1,
       cycles: CGFloat = 2,
+      uniformity: Double = 1.0
     ) {
       self.shape = shape
       self.minWidth = minWidth
       self.maxWidth = maxWidth
       self.opacity = opacity
       self.cycles = cycles
+      self.uniformity = uniformity
     }
   }
 }
