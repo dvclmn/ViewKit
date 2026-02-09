@@ -9,7 +9,7 @@ import CasePaths
 import SwiftUI
 
 @Observable
-public final class CasePickerState<Enum: MetaEnumProtocol> {
+public final class CasePickerState<Enum: MetaEnum> {
   var selectedMeta: Enum.Meta
   @ObservationIgnored private var cache: [Enum.Meta: Enum]
 
@@ -95,26 +95,26 @@ public struct CaseBinding<Root, Value> {
 
 public struct CasePicker<Root, Meta, Content>: View
 where
-  Root: MetaEnumProtocol & CasePathable,
+  Root: MetaEnum & CasePathable,
   Meta == Root.Meta,
   Content: View
 {
   let title: String
   @Binding var selection: Root
   @State private var state: CasePickerState<Root>
-  let metaName: (Meta) -> String
+//  let metaName: (Meta) -> String
   @ViewBuilder let content: (CaseProxy<Root>) -> Content
 
   public init(
     _ title: String,
     selection: Binding<Root>,
-    metaName: @escaping (Meta) -> String = { "\($0)" },
+//    metaName: @escaping (Meta) -> String = { "\($0)" },
     @ViewBuilder content: @escaping (CaseProxy<Root>) -> Content
   ) {
     self.title = title
     self._selection = selection
     self._state = State(initialValue: CasePickerState(initialValue: selection.wrappedValue))
-    self.metaName = metaName
+//    self.metaName = metaName
     self.content = content
   }
 
@@ -136,6 +136,10 @@ where
       set: { newMeta in state.switchTo(newMeta, binding: $selection) }
     )
   }
+}
+
+extension CasePicker {
+  
 }
 
 // MARK: - Case Proxy

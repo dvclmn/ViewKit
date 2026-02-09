@@ -12,7 +12,7 @@ import CasePaths
 /// An alternative to the below `MetaCache`
 @MainActor
 @Observable
-public final class CasePayloadCache<Enum: MetaEnumProtocol> {
+public final class CasePayloadCache<Enum: MetaEnum> {
   
   public var selectedMeta: Enum.Meta
   @ObservationIgnored private var lastByMeta: [Enum.Meta: Enum]
@@ -43,11 +43,11 @@ public final class CasePayloadCache<Enum: MetaEnumProtocol> {
 
 /// The below feels perhaps hacky, with the `MetaCache`?
 /// A generic cache that holds the last payload for each case.
-private final class MetaCache<Enum: MetaEnumProtocol> {
+private final class MetaCache<Enum: MetaEnum> {
   var lastByMeta: [Enum.Meta: Enum] = [:]
 }
 
-extension Binding where Value: MetaEnumProtocol {
+extension Binding where Value: MetaEnum {
   @MainActor
   func metaSelection(preservingPayloads: Bool = true) -> Binding<Value.Meta> {
     let cache = MetaCache<Value>()

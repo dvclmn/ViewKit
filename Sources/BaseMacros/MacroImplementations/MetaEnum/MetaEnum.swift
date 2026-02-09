@@ -49,7 +49,7 @@ public struct MetaEnumMacro: MemberMacro, ExtensionMacro {
   ) throws -> [ExtensionDeclSyntax] {
     
     return [
-      try ExtensionDeclSyntax("extension \(type): MetaEnumProtocol {}"),
+      try ExtensionDeclSyntax("extension \(type): MetaEnum {}"),
     ]
     
 //    let builder = try MetaEnumBuilder(

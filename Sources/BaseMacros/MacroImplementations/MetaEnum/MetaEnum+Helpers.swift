@@ -5,18 +5,6 @@
 //  Created by Dave Coleman on 27/10/2025.
 //
 
-//===----------------------------------------------------------------------===//
-//
-// This source file is part of the Swift.org open source project
-//
-// Copyright (c) 2014 - 2023 Apple Inc. and the Swift project authors
-// Licensed under Apache License v2.0 with Runtime Library Exception
-//
-// See https://swift.org/LICENSE.txt for license information
-// See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-//
-//===----------------------------------------------------------------------===//
-
 import MacroToolkit
 import SwiftDiagnostics
 import SwiftSyntax
@@ -27,19 +15,23 @@ extension MetaEnumBuilder {
 
   func build() -> [DeclSyntax] {
     [
-      // Properties on Parent
+      /// Properties on Parent
       DeclSyntax("\(raw: detectedEnum.access) var meta: Self.Meta {.init(self)}"),
       DeclSyntax(hasAssociatedValuesProperty),
       DeclSyntax(metaToParentInit),
     ]
 
-      // Beginning of Meta enum declaration
-      + [DeclSyntax("\(raw: detectedEnum.access) enum Meta: String, CaseIterable, Identifiable, Hashable {")]
+      /// Beginning of Meta enum declaration
+      + [
+        DeclSyntax(
+          "\(raw: detectedEnum.access) enum Meta: String, CaseIterable, Identifiable, Hashable, MetaEnumNested {"
+        )
+      ]
 
       + metaEnumInternals
       + caseDetection
 
-      // End brace for Meta enum
+      /// End brace for Meta enum
       + [DeclSyntax("}")]
 
   }

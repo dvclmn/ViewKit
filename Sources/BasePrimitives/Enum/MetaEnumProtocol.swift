@@ -10,24 +10,24 @@ import SwiftUI
 
 /// This whole file is *one* possible solution for a Case Paths driven Picker
 
-public enum MetaEnum {
+//public enum MetaEnum {
 
-  /// This is applied to the parent, not the Meta Enum.
-  public protocol Parent {
-    associatedtype Child: Meta
+/// This is applied to the parent, not the Meta Enum.
+public protocol MetaEnum {
+  associatedtype Meta: MetaEnumNested
 
-    /// Current “case only”
-    var meta: Child { get }
+  /// Current “case only”
+  var meta: Meta { get }
 
-    /// Build a “reasonable default” instance for this case (or nil if impossible)
-    init?(fromMeta: Child)
-  }
-
-  public protocol Meta: CaseIterable, Hashable, Identifiable where AllCases: RandomAccessCollection {
-    var name: String { get }
-  }
-
+  /// Build a “reasonable default” instance for this case (or nil if impossible)
+  init?(fromMeta: Meta)
 }
+
+public protocol MetaEnumNested: CaseIterable, Hashable, Identifiable where AllCases: RandomAccessCollection {
+  var name: String { get }
+}
+
+//}
 
 //public protocol
 

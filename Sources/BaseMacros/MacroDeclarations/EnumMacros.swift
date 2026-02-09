@@ -30,7 +30,7 @@ public macro CaseDetection(includesNames: Bool = false) =
 @attached(member, names: arbitrary)
 //@attached(member, names: named(Meta), named(meta), named(init(fromMeta:)))
 //@attached(extension, conformances: RawRepresentable, CaseIterable)
-@attached(extension, conformances: MetaEnumProtocol)
+@attached(extension, conformances: MetaEnum)
 /// Not going to try to pass arguments for now
 public macro MetaEnum() = #externalMacro(
   module: "BaseMacrosImplementation",
