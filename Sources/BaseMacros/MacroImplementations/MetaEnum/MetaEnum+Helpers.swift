@@ -34,7 +34,7 @@ extension MetaEnumBuilder {
     ]
 
       // Beginning of Meta enum declaration
-    + [DeclSyntax("\(raw: detectedEnum.access) enum Meta: String, CaseIterable, Identifiable {")]
+    + [DeclSyntax("\(raw: detectedEnum.access) enum Meta: String, CaseIterable, Identifiable, Hashable {")]
 
       + metaEnumInternals
       + caseDetection

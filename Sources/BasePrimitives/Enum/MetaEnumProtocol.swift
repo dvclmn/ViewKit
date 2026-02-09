@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+
 /// This whole file is *one* possible solution for a Case Paths driven Picker
 public protocol MetaEnumProtocol {
   associatedtype Meta: CaseIterable & Hashable & Identifiable where Self.Meta.AllCases: RandomAccessCollection
@@ -76,6 +78,29 @@ extension Binding where Value: MetaEnumProtocol {
     )
   }
 }
+
+
+/// Usage:
+/// ```
+/// CasePicker(value: $lineShape, title: "Line Shapes") { meta in
+///   Text(meta.name)
+/// }
+/// ```
+//struct CasePicker<Value: MetaEnumProtocol, Label: View>: View {
+//  @Binding var value: Value
+//  var title: String
+//  var preservesPayloads: Bool = true
+//  @ViewBuilder var labelForMeta: (Value.Meta) -> Label
+//
+//  var body: some View {
+//    Picker(title, selection: $value.metaSelection(preservingPayloads: preservesPayloads)) {
+//      ForEach(Value.Meta.allCases) { meta in
+//        labelForMeta(meta).tag(meta)
+//      }
+//    }
+//  }
+//}
+
 
 //extension Binding where Value: MetaEnumProtocol {
 //  /// A binding to “which case is selected?”, with optional per-case payload preservation.
