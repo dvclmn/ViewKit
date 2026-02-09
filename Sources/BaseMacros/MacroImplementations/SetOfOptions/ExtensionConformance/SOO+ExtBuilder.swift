@@ -14,28 +14,22 @@ import SwiftSyntaxMacros
 struct SetOfOptionsExtensionBuilder {
 
   let detectedStruct: Struct
+  //  let type: any TypeSyntaxProtocol
 
-  //  init(
-  //    node: AttributeSyntax,
-  //    decl: some DeclGroupSyntax,
-  //    context: some MacroExpansionContext,
-  //  ) throws {
-  //
-  //    guard let enumDecl = decl as? EnumDeclSyntax else {
-  //      throw MacroError("@MetaEnum can only be attached to enum declarations")
-  //    }
-  //    self.detectedEnum = Enum(enumDecl)
-  //
-  //    self.caseDetection = try CaseDetectionBuilder(
-  //      node: node,
-  //      decl: decl
-  //    ).build()
-  //
-  //    self.parentParamName = context.makeUniqueName("parent")
-  //  }
-  init() throws {
+  init(
+    node: AttributeSyntax,
+    decl: some DeclGroupSyntax,
+    //      context: some MacroExpansionContext,
+  ) throws {
 
+    guard let structDecl = decl as? StructDeclSyntax else {
+      throw MacroError("@SetOfOptions can only be attached to struct declarations")
+    }
+    self.detectedStruct = Struct(structDecl)
   }
+  //  init() throws {
+  //
+  //  }
 }
 
 extension SetOfOptionsExtensionBuilder {
@@ -43,7 +37,13 @@ extension SetOfOptionsExtensionBuilder {
     for inherited in inheritedTypes where inherited.description == name {
       return true
     }
+    return false
   }
+
+  //  func type() -> some TypeSyntaxProtocol {
+  //    .init(validating: detectedStruct._syntax._syntaxNode.root)
+  ////    detectedStruct._syntax.name
+  //  }
 
   var inheritedTypes: [Type] {
     detectedStruct.inheritedTypes
@@ -63,7 +63,7 @@ extension SetOfOptionsExtensionBuilder {
     //    else { return [] }
 
     /// Check for existing conformances
-//    var hasOptionSet = false
+    //    var hasOptionSet = false
     let conformanceType = "OptionSet"
     let hasOptionSetConformance = hasConformance(named: conformanceType)
 
@@ -81,25 +81,22 @@ extension SetOfOptionsExtensionBuilder {
     //    }
 
     /// Build conformance list based on what's missing
-//    var conformances: [String] = []
-//    if !hasOptionSetConformance {
-//      conformances.append("OptionSet")
-//    }
+    //    var conformances: [String] = []
+    //    if !hasOptionSetConformance {
+    //      conformances.append("OptionSet")
+    //    }
 
     /// If all conformances are already present, don't add an extension
-    guard !conformances.isEmpty else {
-      return []
-    }
+    //    guard !conformances.isEmpty else {
+    //      return []
+    //    }
 
     /// Create extension with only the missing conformances
-//    let conformanceList = conformances.joined(separator: ", ")
+    //    let conformanceList = conformances.joined(separator: ", ")
 
-    let conformance = ExtensionDeclSyntax("nonisolated extension \(type): \(raw: conformanceList) {}")
-    
-    let thing = [
-      try
-    ]
+    let conformance = try ExtensionDeclSyntax(
+      "nonisolated extension \(raw: detectedStruct.identifier): \(raw: conformanceType) {}")
 
-    return thing
+    return [conformance]
   }
 }

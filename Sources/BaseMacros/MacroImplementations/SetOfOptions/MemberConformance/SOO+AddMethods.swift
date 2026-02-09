@@ -12,54 +12,18 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-extension SetOfOptionsMacro: MemberMacro {
+extension SetOfOptionsBuilder {
 
-  private static let isUsingBuilderForOutput: Bool = false
+  //  private static let isUsingBuilderForOutput: Bool = false
 
-  public static func expansion(
-    of attribute: AttributeSyntax,
-    providingMembersOf decl: some DeclGroupSyntax,
-    conformingTo: [TypeSyntax],
-    in context: some MacroExpansionContext
-  ) throws -> [DeclSyntax] {
+  //  public static func expansion(
+  //    of attribute: AttributeSyntax,
+  //    providingMembersOf decl: some DeclGroupSyntax,
+  //    conformingTo: [TypeSyntax],
+  //    in context: some MacroExpansionContext
+  //  ) throws -> [DeclSyntax] {
 
-    guard
-      let (_, optionsEnum, rawType) = decodeExpansion(
-        of: attribute,
-        attachedTo: decl,
-        in: context,
-        emitDiagnostics: true
-      )
-    else { return [] }
-
-    /// Extract case elements
-    let caseElements: [EnumCaseElementSyntax] = optionsEnum.memberBlock.members.flatMap { member in
-      guard let caseDecl = member.decl.as(EnumCaseDeclSyntax.self) else {
-        return [EnumCaseElementSyntax]()
-      }
-      return Array(caseDecl.elements)
-    }
-
-    /// Get access control modifier
-    let access = decl.modifiers.first(where: \.isPublicAccessLevel)
-
-    //    guard isUsingBuilderForOutput else {
-    return output(
-      enum: optionsEnum,
-      elements: caseElements,
-      access: access,
-      rawType: rawType
-    )
-    //    }
-    /// Using the Builder style for output
-    //    return buildOptionSetMembers(
-    //      caseElements: caseElements,
-    //      enumName: optionsEnum.name,
-    //      rawType: rawType,
-    //      access: access
-    //    )
-
-  }
+  //  }
 
   private static func output(
     enum optionsEnum: EnumDeclSyntax,
@@ -71,10 +35,10 @@ extension SetOfOptionsMacro: MemberMacro {
     let trimmedCases: [String] = caseElements.map { $0.name.text }
 
     // MARK: - Raw Value methods
-    let primary: [DeclSyntax] = [
-      "\(access)let rawValue: \(rawType)",
-      "\(access)init(rawValue: \(rawType)) { self.rawValue = rawValue }",
-    ]
+//    let primary: [DeclSyntax] = [
+//      "\(access)let rawValue: \(rawType)",
+//      "\(access)init(rawValue: \(rawType)) { self.rawValue = rawValue }",
+//    ]
 
     // MARK: - Option Set static members
     let staticVars = trimmedCases.map { (element) -> DeclSyntax in
