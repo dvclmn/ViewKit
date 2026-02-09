@@ -20,20 +20,18 @@ public struct ShaderModifier: ViewModifier {
 
       switch effect.usageType {
 
-        case .colorEffect:
-          content
-            .colorEffect(effect.shader, isEnabled: isEnabled)
+        case .colorEffect: content.colorEffect(effect.shader, isEnabled: isEnabled)
 
         case .distortionEffect:
-          content
-            .distortionEffect(effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled)
+          content.distortionEffect(
+            effect.shader,
+            maxSampleOffset: .zero,
+            isEnabled: isEnabled
+          )
 
-        case .layerEffect:
-          content
-            .layerEffect(effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled)
+        case .layerEffect: content.layerEffect(effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled)
 
-        default:
-          content
+        default: content
       }
 
     } else {
