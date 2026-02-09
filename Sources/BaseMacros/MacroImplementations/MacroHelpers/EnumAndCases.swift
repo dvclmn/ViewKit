@@ -54,8 +54,7 @@ extension Enum {
       .map { "case .\($0.name): \(valueForCase($0))" }
       .joined(separator: "\n")
   }
-  
-  
+
   /// Common Swift declaration modifiers include:
   /// - Access control: public, internal, fileprivate, private, package, open
   /// - Behavior/semantics: final, static, class, override, mutating, nonmutating, required, convenience, dynamic

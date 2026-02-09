@@ -10,6 +10,7 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import BasePrimitives
+import MacroToolkit
 
 extension Array where Element == EnumCaseElementSyntax {
   func staticOptionSetVariables(
@@ -23,6 +24,7 @@ extension Array where Element == EnumCaseElementSyntax {
     }
   }
 
+  @available(*, deprecated, renamed: "casesList(_:)", message: "Prefer MacroToolKit-powered method on `Enum`")
   func allCasesList() -> String {
     self.map { ".\($0.name)" }.joined(separator: ",\n  ")
   }
@@ -35,23 +37,28 @@ extension Array where Element == EnumCaseElementSyntax {
     }.joined(separator: "\n  ")
   }
 
+
+}
+
+extension String {
+  public var toDeclSyntax: DeclSyntax {
+    DeclSyntax(stringLiteral: self)
+  }
+}
+
+extension Enum {
   func optionSetStringBuilder(
-    enumName: TokenSyntax,
+//    enumName: TokenSyntax,
     snakeConditional: String
   ) -> String {
-    self.map { element in
+    let enumName = identifier
+    return cases.map { element in
       """
       if self.contains(.\(element.name)) {
         strings.append(Self.stringValue(for: \(enumName).\(element.name), \(snakeConditional): \(snakeConditional)))
       }
       """
     }.joined(separator: "\n  ")
-  }
-}
-
-extension String {
-  public var toDeclSyntax: DeclSyntax {
-    DeclSyntax(stringLiteral: self)
   }
 }
 

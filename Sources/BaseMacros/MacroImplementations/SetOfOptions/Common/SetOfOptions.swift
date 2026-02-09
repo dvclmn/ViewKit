@@ -23,7 +23,7 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 public struct SetOfOptionsMacro: MemberMacro, ExtensionMacro {
-  
+
   /// Handles conformance to `OptionSet`
   public static func expansion(
     of node: AttributeSyntax,
@@ -32,22 +32,28 @@ public struct SetOfOptionsMacro: MemberMacro, ExtensionMacro {
     conformingTo protocols: [TypeSyntax],
     in context: some MacroExpansionContext
   ) throws -> [ExtensionDeclSyntax] {
-    
+
     let builder = try SetOfOptionsExtensionBuilder(
       node: node,
       decl: declaration,
     )
     return try builder.build()
   }
-  
+
   public static func expansion(
     of attribute: AttributeSyntax,
     providingMembersOf decl: some DeclGroupSyntax,
     conformingTo: [TypeSyntax],
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
-    
-    
+    let builder = try SetOfOptionsBuilder(
+      node: attribute,
+      decl: decl,
+      conformingTo: conformingTo,
+      context: context
+    )
+    return builder.build()
+
   }
 
 }
