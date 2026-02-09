@@ -5,15 +5,15 @@
 //  Created by Dave Coleman on 9/2/2026.
 //
 
+import MacroToolkit
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
-import MacroToolkit
 
 struct AssociatedValuesBuilder {
-  
+
   let detectedEnum: Enum
-  
+
   init(
     node: AttributeSyntax,
     decl: some DeclGroupSyntax,
@@ -28,51 +28,57 @@ struct AssociatedValuesBuilder {
 }
 
 extension AssociatedValuesBuilder {
-  
+
   func build() -> [DeclSyntax] {
 
-    return try detectedEnum.memberBlock.members.compactMap {
-      $0.decl.as(EnumCaseDeclSyntax.self)?
-        .elements
-        .compactMap { $0 }
-    }
-    .reduce([], +)
-    .compactMap { element -> DeclSyntax? in
-      guard let associatedValue = element.parameterClause else {
-        return nil
-      }
-      
-      let parameters = associatedValue.parameters
-      let isSingleValue = parameters.count == 1
-      
-      /// 1. Determine the return type string
-      /// If single: just the type (e.g., `CGRect`)
-      /// If multiple: the full parameter clause (e.g., `(x: Int, y: Int)`)
-      let typeString: String
-      if isSingleValue, let firstParam = parameters.first {
-        typeString = "\(firstParam.type)"
-      } else {
-        typeString = "\(associatedValue)"
-      }
-      
-      /// 2. Generate internal variable names for the pattern match
-      let variableNames = parameters
-        .enumerated()
-        .map { index, _ in "v\(index)" }
-        .joined(separator: ", ")
-      
-      return DeclSyntax(
-        try VariableDeclSyntax("\(declaration.modifiers)var \(element.name)Value: \(raw: typeString)?") {
-          try IfExprSyntax("if case let .\(element.name)(\(raw: variableNames)) = self") {
-            if isSingleValue {
-              "return v0"
-            } else {
-              "return (\(raw: variableNames))"
-            }
-          }
-          "return nil"
+    //    let cases = try detectedEnum.memberBlock.members.compactMap {
+    //      $0.decl.as(EnumCaseDeclSyntax.self)?
+    //        .elements
+    //        .compactMap { $0 }
+    //    }
+
+    let thing = detectedEnum.cases
+      .compactMap { element -> EnumCase? in
+        //      .compactMap { element -> DeclSyntax? in
+        guard let associatedValue = element.associatedValues else {
+          return nil
         }
-      )
-    }
+
+        let parameters = associatedValue.parameters
+        let isSingleValue = parameters.count == 1
+
+        /// 1. Determine the return type string
+        /// If single: just the type (e.g., `CGRect`)
+        /// If multiple: the full parameter clause (e.g., `(x: Int, y: Int)`)
+        let typeString: String
+        if isSingleValue, let firstParam = parameters.first {
+          typeString = "\(firstParam.type)"
+        } else {
+          typeString = "\(associatedValue)"
+        }
+
+        /// 2. Generate internal variable names for the pattern match
+
+        let variableDecl = try VariableDeclSyntax(
+          """
+          \(detectedEnum.modifiers)var \(raw: element.name)Value: \(raw: typeString)?
+          """)
+
+        //        providingMembersOf declaration: some DeclGroupSyntax,
+        //        return DeclSyntax(
+        //          try VariableDeclSyntax() {
+        //            try IfExprSyntax("if case let .\(element.name)(\(raw: variableNames)) = self") {
+        //              if isSingleValue {
+        //                "return v0"
+        //              } else {
+        //                "return (\(raw: variableNames))"
+        //              }
+        //            }
+        //            "return nil"
+        //          }
+        //        )
+      }  // end compact map
+
+    //    return
   }
 }

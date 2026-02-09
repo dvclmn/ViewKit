@@ -52,8 +52,8 @@ extension MetaEnumBuilder {
       /// Creates initialiser allowing creation of a Meta enum from parent
       DeclSyntax(makeMetaInit),
 
-      DeclSyntax(metaNameProperty),
-      DeclSyntax(metaIDProperty),
+      DeclSyntax(nameProperty),
+      DeclSyntax(idProperty),
       DeclSyntax(metaToParentConvenience),
     ]
 
@@ -87,12 +87,6 @@ extension MetaEnumBuilder {
       """
   }
 
-  
-
-  private var metaToParentConvenience: DeclSyntax {
-    "\(raw: access) var parent: \(raw: parentTypeName)? { .init(fromMeta: self) } "
-  }
-
   /// ## Meta enum declaration
   /// ```
   /// enum Meta {
@@ -113,7 +107,7 @@ extension MetaEnumBuilder {
   ///   case .whale: "Whale"
   /// }
   /// ```
-  var metaNameProperty: DeclSyntax {
+  var nameProperty: DeclSyntax {
     let cases = casesList {
       "\"\($0.name.capitalized)\""
     }
@@ -128,7 +122,7 @@ extension MetaEnumBuilder {
       """
   }
 
-  var metaIDProperty: DeclSyntax { "\(raw: access) var id: String {rawValue}" }
+  var idProperty: DeclSyntax { "\(raw: access) var id: String {rawValue}" }
 
   var hasAssociatedValuesProperty: DeclSyntax {
     let cases = casesList {

@@ -36,36 +36,3 @@ struct MetaEnumBuilder {
     self.parentParamName = context.makeUniqueName("parent")
   }
 }
-
-extension MetaEnumBuilder {
-  var parentTypeName: String { detectedEnum.identifier }
-  var access: String { detectedEnum.accessLevel?.name ?? "" }
-  var childCases: [EnumCase] { detectedEnum.cases }
-
-  var hasAnyAssociatedValues: Bool {
-    childCases.contains(where: \.hasAssociatedValues)
-  }
-
-  /// For usage in properties — not the original declarations of cases.
-  ///
-  /// So, used for this:
-  /// ```
-  /// var someProperty: Bool {
-  ///   case .whale: someValue
-  ///   ...
-  ///
-  /// ```
-  ///
-  /// *Not* for this:
-  /// ```
-  /// enum SomeEnum {
-  ///   case whale
-  ///   ...
-  ///
-  /// ``
-  func casesList(_ valueForCase: (EnumCase) -> String) -> String {
-    childCases
-      .map { "case .\($0.name): \(valueForCase($0))" }
-      .joined(separator: "\n")
-  }
-}

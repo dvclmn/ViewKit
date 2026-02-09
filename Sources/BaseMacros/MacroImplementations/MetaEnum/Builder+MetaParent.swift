@@ -11,6 +11,12 @@ import SwiftSyntaxMacros
 
 extension MetaEnumBuilder {
   
+  
+  package var metaToParentConvenience: DeclSyntax {
+    "\(raw: access) var parent: \(raw: parentTypeName)? { .init(fromMeta: self) } "
+  }
+
+  
   /// Target output:
   /// ```
   /// public init?(fromMeta meta: Self.Meta) {
