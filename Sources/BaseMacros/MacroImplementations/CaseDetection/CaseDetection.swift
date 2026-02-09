@@ -25,7 +25,7 @@ import SwiftSyntaxMacros
 // https://github.com/swiftlang/swift-syntax/blob/main/Examples/Sources/MacroExamples/Implementation/Member/CaseDetectionMacro.swift
 // Additional modifications based on stackotter's MacroToolkit
 
-extension CaseDetectionMacro: MemberMacro {
+public struct CaseDetectionMacro: MemberMacro {
 
   public static func expansion(
     of node: AttributeSyntax,
@@ -34,7 +34,7 @@ extension CaseDetectionMacro: MemberMacro {
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
 
-    let macro = try CaseDetectionMacro(node: node, decl: decl)
-    return macro.makeCaseDetector()
+    let macro = try CaseDetectionBuilder(node: node, decl: decl)
+    return macro.build()
   }
 }

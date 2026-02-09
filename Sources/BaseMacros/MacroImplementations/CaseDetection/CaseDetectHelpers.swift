@@ -10,7 +10,7 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-public struct CaseDetectionMacro {
+public struct CaseDetectionBuilder {
 
   let detectedEnum: Enum
   let includesNames: Bool
@@ -29,12 +29,12 @@ public struct CaseDetectionMacro {
   }
 }
 
-extension CaseDetectionMacro {
+extension CaseDetectionBuilder {
 
   private var cases: [EnumCase] { detectedEnum.cases }
   private var access: String { detectedEnum.accessLevel?.name ?? "" }
 
-  func makeCaseDetector() -> [DeclSyntax] {
+  func build() -> [DeclSyntax] {
 
     let detections: [DeclSyntax] =
       cases

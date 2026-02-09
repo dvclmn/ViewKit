@@ -31,13 +31,13 @@ public struct MetaEnumMacro: MemberMacro, ExtensionMacro {
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
 
-    let macro = try MetaEnumBuilder(
+    let metaEnumBuilder = try MetaEnumBuilder(
       node: node,
       decl: declaration,
       context: context,
     )
  
-    return macro.makeMetaEnum()
+    return metaEnumBuilder.build()
   }
 
   public static func expansion(
@@ -47,6 +47,8 @@ public struct MetaEnumMacro: MemberMacro, ExtensionMacro {
     conformingTo protocols: [TypeSyntax],
     in context: some MacroExpansionContext
   ) throws -> [ExtensionDeclSyntax] {
+    
+    []
 //    let builder = try MetaEnumBuilder(
 //      node: node,
 //      decl: declaration,

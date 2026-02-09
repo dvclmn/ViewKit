@@ -14,7 +14,8 @@ import SwiftSyntaxMacros
 struct MetaEnumBuilder {
   let detectedEnum: Enum
   let parentParamName: TokenSyntax
-  let caseDetection: CaseDetectionMacro
+  let caseDetection: [DeclSyntax]
+//  let caseDetection: CaseDetectionBuilder
 
   init(
     node: AttributeSyntax,
@@ -27,10 +28,10 @@ struct MetaEnumBuilder {
     }
     self.detectedEnum = Enum(enumDecl)
 
-    self.caseDetection = try CaseDetectionMacro(
+    self.caseDetection = try CaseDetectionBuilder(
       node: node,
       decl: decl
-    )
+    ).build()
 
     self.parentParamName = context.makeUniqueName("parent")
   }

@@ -25,7 +25,7 @@ import SwiftSyntaxMacros
 
 extension MetaEnumBuilder {
 
-  func makeMetaEnum() -> [DeclSyntax] {
+  func build() -> [DeclSyntax] {
     [
       // Properties on Parent
       DeclSyntax("\(raw: access) var meta: Self.Meta {.init(self)}"),
@@ -37,6 +37,7 @@ extension MetaEnumBuilder {
       + [DeclSyntax("\(raw: access) enum Meta: String, CaseIterable, Identifiable {")]
 
       + metaEnumInternals
+      + caseDetection
 
       // End brace for Meta enum
       + [DeclSyntax("}")]
@@ -54,7 +55,6 @@ extension MetaEnumBuilder {
       DeclSyntax(metaNameProperty),
       DeclSyntax(metaIDProperty),
       DeclSyntax(metaToParentConvenience),
-      DeclSyntax(caseDetections),
     ]
 
   }
@@ -180,24 +180,6 @@ extension MetaEnumBuilder {
   }
 
   var metaIDProperty: DeclSyntax { "\(raw: access) var id: String {rawValue}" }
-  /// ## Case Detection
-  ///
-  /// ```
-  /// var isBird: Bool {
-  ///   if case .bird = self {
-  ///     return true
-  ///   }
-  ///   return false
-  /// }
-  /// […]
-  ///
-  /// ```
-  var caseDetections: DeclSyntax {
-    caseDetection.makeCaseDetector()
-      .map(String.init)
-      .joined(separator: "\n")
-      .toDeclSyntax
-  }
 
   var hasAssociatedValuesProperty: DeclSyntax {
     let cases = casesList {
@@ -214,4 +196,3 @@ extension MetaEnumBuilder {
       """
   }
 }
-
