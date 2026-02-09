@@ -48,7 +48,10 @@ public struct MetaEnumMacro: MemberMacro, ExtensionMacro {
     in context: some MacroExpansionContext
   ) throws -> [ExtensionDeclSyntax] {
     
-    []
+    return [
+      try ExtensionDeclSyntax("extension \(type): MetaEnumProtocol {}"),
+    ]
+    
 //    let builder = try MetaEnumBuilder(
 //      node: node,
 //      decl: declaration,

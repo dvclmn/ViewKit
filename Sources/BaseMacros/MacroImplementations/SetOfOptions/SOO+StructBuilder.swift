@@ -52,13 +52,15 @@ struct SetOfOptionsBuilder {
 
 extension SetOfOptionsBuilder {
 
-  var access: String { parentStruct.accessLevel?.name ?? "" }
+  var access: String {
+    parentStruct.accessLevel?.name ?? ""
+  }
+  //  var access: String { parentStruct.accessLevel?.name ?? "" }
 
   func build() -> [DeclSyntax] {
     let result: [DeclSyntax] =
       rawValueMethods()
       + staticProperties()
-
       + [
         optionSetAllProperty(),
         stringValueProperty(),
@@ -79,14 +81,14 @@ extension SetOfOptionsBuilder {
 
   func rawValueMethods() -> [DeclSyntax] {
     [
-      "\(raw: access)let rawValue: \(rawType)",
-      "\(raw: access)init(rawValue: \(rawType)) { self.rawValue = rawValue }",
+      "\(raw: access) let rawValue: \(rawType)",
+      "\(raw: access) init(rawValue: \(rawType)) { self.rawValue = rawValue }",
     ]
   }
 
   func staticProperties() -> [DeclSyntax] {
     optionsEnum.cases.map { element -> DeclSyntax in
-      "\(raw: access)static let \(raw: element): Self = Self(rawValue: 1 << \(raw: optionsEnum.identifier).\(raw: element).rawValue)"
+      "\(raw: access) static let \(raw: element.name): Self = Self(rawValue: 1 << \(raw: optionsEnum.identifier).\(raw: element.name).rawValue)"
     }
   }
 
@@ -95,7 +97,7 @@ extension SetOfOptionsBuilder {
       snakeConditional: snakeConditional
     )
     return """
-      \(access)func stringValueJoined(isSnakeCase: Bool = false) -> String {
+      \(access) func stringValueJoined(isSnakeCase: Bool = false) -> String {
         var strings: [String] = []
         \(thingy)
         return strings.joined(separator: ", ")
@@ -105,30 +107,35 @@ extension SetOfOptionsBuilder {
   }
 
   func optionSetAllProperty() -> DeclSyntax {
-    """
-      \(access)static let all: Self = [
-        \(optionsEnum.casesList(\.name))
-      ]
-    """
-    .toDeclSyntax
+
+    let allContent = optionsEnum.casesList(.memberList(trailing: ","))
+    //    let allContent = optionsEnum.casesList { item in
+    //      "." + item.name + ","
+    //    }
+    return """
+        \(access) static let all: Self = [\(allContent)]
+      """
+      .toDeclSyntax
   }
 
   func stringValueProperty() -> DeclSyntax {
 
-    let stringSwitchCases = optionsEnum.casesList { element in
-      let camel = element.name
-      let snake = camel.camelCaseToSnakeCase
+    let stringSwitchCases = optionsEnum.casesList(
+      .switchCase { element in
+        let camel = element.name
+        let snake = camel.camelCaseToSnakeCase
 
-      /// If both versions are identical, just return the raw string
-      guard camel == snake else {
-        /// Otherwise, provide the ternary conditional
-        return "  case .\(camel): \(snakeConditional) ? \"\(snake)\" : \"\(camel)\""
+        // If both versions are identical, just return the raw string literal.
+        if camel == snake {
+          return "\"\(camel)\""
+        }
+        // Otherwise, return the ternary expression only; the preset supplies the `case .name:` prefix.
+        return "isSnakeCase ? \"\(snake)\" : \"\(camel)\""
       }
-      return "  case .\(camel): \"\(camel)\""
-    }
+    )
 
     return """
-      \(raw: access)static func stringValue(
+      \(raw: access) static func stringValue(
         for option: \(raw: optionsEnum.identifier), 
         \(raw: snakeConditional): Bool = false
       ) -> String {
@@ -137,7 +144,6 @@ extension SetOfOptionsBuilder {
         } 
       }
       """
-
   }
 
   //  package static func decodeExpansion(
@@ -255,3 +261,4 @@ extension SetOfOptionsBuilder {
 //  }
 
 //}
+

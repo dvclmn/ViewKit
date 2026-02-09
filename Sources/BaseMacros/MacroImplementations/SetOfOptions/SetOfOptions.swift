@@ -39,8 +39,7 @@ public struct SetOfOptionsMacro: MemberMacro, ExtensionMacro {
     return builder.build()
 
   }
-  
-  
+
   /// Handles conformance to `OptionSet`
   public static func expansion(
     of node: AttributeSyntax,
@@ -49,14 +48,13 @@ public struct SetOfOptionsMacro: MemberMacro, ExtensionMacro {
     conformingTo protocols: [TypeSyntax],
     in context: some MacroExpansionContext
   ) throws -> [ExtensionDeclSyntax] {
-    
+
     let builder = try SetOfOptionsExtensionBuilder(
       node: node,
       decl: declaration,
     )
-    
+
     return try builder.build()
   }
-
 
 }

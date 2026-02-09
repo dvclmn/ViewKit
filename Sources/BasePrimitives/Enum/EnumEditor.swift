@@ -41,7 +41,7 @@ struct EnumEditor<E: MetaEnumProtocol>: View {
   
   // Example helper that uses CasePath to build a binding to an associated value.
   // The exact implementation depends on how your CasePath helpers are structured.
-  private func binding<T>(for casePath: CasePath<E, T>) -> Binding<T>? {
+  private func binding<T>(for casePath: AnyCasePath<E, T>) -> Binding<T>? {
     guard let current = casePath.extract(from: value) else { return nil }
     return Binding<T>(
       get: { casePath.extract(from: value) ?? current },

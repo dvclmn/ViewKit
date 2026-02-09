@@ -13,10 +13,10 @@ import SwiftUI
 ///   Text(meta.name)
 /// }
 /// ```
-
+///
 /// Usage:
 /// ```
-/// CasePathablePicker(
+/// CasePicker(
 ///   "Line Shape",
 ///   selection: $lineShape,
 ///   toMeta: \.meta,
@@ -24,7 +24,7 @@ import SwiftUI
 ///   metaName: \.name
 /// )
 /// ```
-public struct CasePathablePicker<Root, Meta>: View
+public struct CasePicker<Root, Meta>: View
 where
   Root: CasePathable & Identifiable,
   Meta: Identifiable & CaseIterable & Hashable,
@@ -58,23 +58,23 @@ where
     }
   }
 }
-extension CasePathablePicker {
+extension CasePicker {
   private var caseBinding: Binding<Meta> {
     Binding(
       get: { toMeta(selection) },
       set: { newMeta in
         /// Early-exit if the IDs match (no change)
         guard toMeta(selection).id != newMeta.id else { return }
-        
+
         /// Early-exit if cannot construct a new Root from Meta
         guard let newValue = fromMeta(newMeta) else { return }
-        
+
         selection = newValue
       }
     )
   }
 }
-//extension CasePathablePicker {
+//extension CasePicker {
 //  private var caseBinding: Binding<Meta> {
 //    Binding(
 //      get: { toMeta(selection) },

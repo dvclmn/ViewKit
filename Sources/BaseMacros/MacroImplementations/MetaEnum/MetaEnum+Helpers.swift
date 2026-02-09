@@ -34,7 +34,7 @@ extension MetaEnumBuilder {
     ]
 
       // Beginning of Meta enum declaration
-    + [DeclSyntax("\(raw: detectedEnum.access) enum Meta: String, CaseIterable, Identifiable, Hashable {")]
+      + [DeclSyntax("\(raw: detectedEnum.access) enum Meta: String, CaseIterable, Identifiable, Hashable {")]
 
       + metaEnumInternals
       + caseDetection
@@ -74,9 +74,11 @@ extension MetaEnumBuilder {
   ///   }
   ///
   private var makeMetaInit: DeclSyntax {
-    let cases = detectedEnum.casesList { item in
-      "self = .\(item.name)"
-    }
+    let cases = detectedEnum.casesList(
+      .switchCase { item in
+        "self = .\(item.name)"
+      }
+    )
 
     return """
       \(raw: detectedEnum.access) init(_ \(parentParamName): \(raw: detectedEnum.parentTypeName)) {
@@ -108,9 +110,11 @@ extension MetaEnumBuilder {
   /// }
   /// ```
   var nameProperty: DeclSyntax {
-    let cases = detectedEnum.casesList {
-      "\"\($0.name.capitalized)\""
-    }
+    let cases = detectedEnum.casesList(
+      .switchCase {
+        "\"\($0.name.capitalized)\""
+      }
+    )
 
     return
       """
@@ -125,10 +129,11 @@ extension MetaEnumBuilder {
   var idProperty: DeclSyntax { "\(raw: detectedEnum.access) var id: String {rawValue}" }
 
   var hasAssociatedValuesProperty: DeclSyntax {
-    let cases = detectedEnum.casesList {
-      "\($0.hasAssociatedValues ? "true" : "false")"
-    }
-
+    let cases = detectedEnum.casesList(
+      .switchCase {
+        "\($0.hasAssociatedValues ? "true" : "false")"
+      }
+    )
     return
       """
       \(raw: detectedEnum.access) var hasAssociatedValues: Bool {
