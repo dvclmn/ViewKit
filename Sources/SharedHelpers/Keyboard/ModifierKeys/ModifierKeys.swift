@@ -35,7 +35,7 @@ extension ModifierKeys {
   #if canImport(AppKit)
   public init(from event: NSEvent) {
     let flags = event.modifierFlags
-//  public init(from appKitKey: NSEvent.ModifierFlags) {
+    //  public init(from appKitKey: NSEvent.ModifierFlags) {
     var result: ModifierKeys = []
     if flags.contains(.shift) { result.insert(.shift) }
     if flags.contains(.control) { result.insert(.control) }
@@ -89,25 +89,24 @@ extension ModifierKeys {
 // MARK: - Initialisers
 //extension ModifierKeys {
 
-  //  struct ModifierMetadata: Hashable {
-  //    let name: String
-  //    let symbol: String
-  //  }
+//  struct ModifierMetadata: Hashable {
+//    let name: String
+//    let symbol: String
+//  }
 
-  //  private static let metadata: [ModifierKeys: ModifierMetadata] = [
-  //    .shift: .init(name: "Shift", symbol: "􀆝"),
-  //    .control: .init(name: "Control", symbol: "􀆍"),
-  //    .option: .init(name: "Option", symbol: "􀆕"),
-  //    .command: .init(name: "Command", symbol: "􀆔"),
-  //    .capsLock: .init(name: "Caps Lock", symbol: "􀆡"),
-  //  ]
+//  private static let metadata: [ModifierKeys: ModifierMetadata] = [
+//    .shift: .init(name: "Shift", symbol: "􀆝"),
+//    .control: .init(name: "Control", symbol: "􀆍"),
+//    .option: .init(name: "Option", symbol: "􀆕"),
+//    .command: .init(name: "Command", symbol: "􀆔"),
+//    .capsLock: .init(name: "Caps Lock", symbol: "􀆡"),
+//  ]
 
-  //  private var individualOptions: [ModifierKeys] {
-  //    ModifierKeys.metadata.keys.filter { contains($0) }
-  //  }
+//  private var individualOptions: [ModifierKeys] {
+//    ModifierKeys.metadata.keys.filter { contains($0) }
+//  }
 
 //}
-
 
 //public struct ModifierDisplayElement: OptionSet, Sendable {
 //  public init(rawValue: Int) {

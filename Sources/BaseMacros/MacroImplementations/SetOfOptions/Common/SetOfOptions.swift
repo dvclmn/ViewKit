@@ -37,6 +37,7 @@ public struct SetOfOptionsMacro: MemberMacro, ExtensionMacro {
       node: node,
       decl: declaration,
     )
+    
     return try builder.build()
   }
 
