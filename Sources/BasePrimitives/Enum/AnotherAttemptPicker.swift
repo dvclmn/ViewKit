@@ -93,55 +93,6 @@ public struct CaseBinding<Root, Value> {
 
 // MARK: - Main Picker View
 
-public struct CasePicker<Root, Meta, Content>: View
-where
-  Root: MetaEnum & CasePathable,
-  Meta == Root.Meta,
-  Content: View
-{
-  let title: String
-  @Binding var selection: Root
-  @State private var state: CasePickerState<Root>
-//  let metaName: (Meta) -> String
-  @ViewBuilder let content: (CaseProxy<Root>) -> Content
-
-  public init(
-    _ title: String,
-    selection: Binding<Root>,
-//    metaName: @escaping (Meta) -> String = { "\($0)" },
-    @ViewBuilder content: @escaping (CaseProxy<Root>) -> Content
-  ) {
-    self.title = title
-    self._selection = selection
-    self._state = State(initialValue: CasePickerState(initialValue: selection.wrappedValue))
-//    self.metaName = metaName
-    self.content = content
-  }
-
-  public var body: some View {
-    VStack(alignment: .leading, spacing: 12) {
-      Picker(title, selection: metaBinding) {
-        ForEach(Array(Meta.allCases), id: \.id) { meta in
-          Text(metaName(meta)).tag(meta)
-        }
-      }
-
-      content(CaseProxy(selection: $selection))
-    }
-  }
-
-  private var metaBinding: Binding<Meta> {
-    Binding(
-      get: { selection.meta },
-      set: { newMeta in state.switchTo(newMeta, binding: $selection) }
-    )
-  }
-}
-
-extension CasePicker {
-  
-}
-
 // MARK: - Case Proxy
 @MainActor
 public struct CaseProxy<Root> where Root: CasePathable {
