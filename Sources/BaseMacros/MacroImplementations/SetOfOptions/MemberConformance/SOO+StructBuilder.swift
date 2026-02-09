@@ -29,7 +29,7 @@ struct SetOfOptionsBuilder {
     }
 
     self.parentStruct = Struct(structDecl)
-    
+
     /// 2) Find nested enum named "Options"
     guard
       let optionsEnumDecl = structDecl.memberBlock.members
@@ -51,6 +51,8 @@ struct SetOfOptionsBuilder {
 }
 
 extension SetOfOptionsBuilder {
+
+  var access: String { parentStruct.accessLevel?.name ?? "" }
 
   func build() -> [DeclSyntax] {
     let result: [DeclSyntax] =
