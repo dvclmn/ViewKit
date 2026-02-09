@@ -5,20 +5,31 @@
 //  Created by Dave Coleman on 9/2/2026.
 //
 
+import CasePaths
 import SwiftUI
 
 /// This whole file is *one* possible solution for a Case Paths driven Picker
 
-/// This is applied to the parent, not the Meta Enum.
-public protocol MetaEnumProtocol {
-  associatedtype Meta: CaseIterable & Hashable & Identifiable where Meta.AllCases: RandomAccessCollection
+public enum MetaEnum {
 
-  /// Current “case only”
-  var meta: Meta { get }
+  /// This is applied to the parent, not the Meta Enum.
+  public protocol Parent {
+    associatedtype Child: Meta
 
-  /// Build a “reasonable default” instance for this case (or nil if impossible)
-  init?(fromMeta: Meta)
+    /// Current “case only”
+    var meta: Child { get }
+
+    /// Build a “reasonable default” instance for this case (or nil if impossible)
+    init?(fromMeta: Child)
+  }
+
+  public protocol Meta: CaseIterable, Hashable, Identifiable where AllCases: RandomAccessCollection {
+    var name: String { get }
+  }
+
 }
+
+//public protocol
 
 /// Usage:
 /// ```

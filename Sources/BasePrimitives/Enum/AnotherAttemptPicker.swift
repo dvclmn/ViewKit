@@ -33,7 +33,6 @@ public final class CasePickerState<Enum: MetaEnumProtocol> {
     // Cache current value
     cache[selectedMeta] = binding.wrappedValue
 
-    // Restore or create new value
     if let restored = cache[newMeta] {
       binding.wrappedValue = restored
     } else if let fresh = Enum(fromMeta: newMeta) {
@@ -50,11 +49,9 @@ public final class CasePickerState<Enum: MetaEnumProtocol> {
 /// Provides bindable access to associated values of a specific enum case
 @MainActor
 public struct CaseBinding<Root, Value> {
-//  let casePath: CaseKeyPath<Root, Value>
   let casePath: AnyCasePath<Root, Value>
   let root: Binding<Root>
 
-  /// Create a binding to the associated value, only if the enum is currently in this case
   public func binding() -> Binding<Value>? {
     guard casePath.extract(from: root.wrappedValue) != nil else {
       return nil
@@ -67,18 +64,38 @@ public struct CaseBinding<Root, Value> {
       }
     )
   }
-
-  /// Force-unwrapped binding (use when you know the case matches)
-  public func binding() -> Binding<Value> where Value == Void {
-    binding() ?? Binding.constant(())
-  }
 }
+
+//public struct CaseBinding<Root, Value> {
+////  let casePath: CaseKeyPath<Root, Value>
+//  let casePath: AnyCasePath<Root, Value>
+//  let root: Binding<Root>
+//
+//  /// Create a binding to the associated value, only if the enum is currently in this case
+//  public func binding() -> Binding<Value>? {
+//    guard casePath.extract(from: root.wrappedValue) != nil else {
+//      return nil
+//    }
+//
+//    return Binding<Value>(
+//      get: { casePath.extract(from: root.wrappedValue)! },
+//      set: { newValue in
+//        root.wrappedValue = casePath.embed(newValue)
+//      }
+//    )
+//  }
+//
+//  /// Force-unwrapped binding (use when you know the case matches)
+//  public func binding() -> Binding<Value> where Value == Void {
+//    binding() ?? Binding.constant(())
+//  }
+//}
 
 // MARK: - Main Picker View
 
 public struct CasePicker<Root, Meta, Content>: View
 where
-  Root: MetaEnumProtocol,
+  Root: MetaEnumProtocol & CasePathable,
   Meta == Root.Meta,
   Content: View
 {
@@ -121,25 +138,26 @@ where
   }
 }
 
-// MARK: - Case Proxy (provides bindings to specific cases)
+// MARK: - Case Proxy
 @MainActor
-public struct CaseProxy<Root> {
+public struct CaseProxy<Root> where Root: CasePathable {
   let selection: Binding<Root>
 
-  /// Access a binding for a specific case with associated value
-  public func binding<Value>(
-    _ casePath: CaseKeyPath<Root, Value>
-//    _ casePath: AnyCasePath<Root, Value>
+  /// Use with case key paths: `proxy.case(\.wave)`
+  /// The case key path is automatically converted to AnyCasePath
+  public func `case`<Value>(
+    _ caseKeyPath: CaseKeyPath<Root, Value>
   ) -> Binding<Value>? {
-    CaseBinding(casePath: casePath, root: selection).binding()
+    // Convert case key path to AnyCasePath
+    let casePath = AnyCasePath(caseKeyPath)
+    return CaseBinding(casePath: casePath, root: selection).binding()
   }
 
-  /// Check if currently in a specific case and get binding
-  public func `case`<Value>(
-//    _ casePath: CaseKeyPath<Root, Value>
+  /// Direct AnyCasePath variant for backwards compatibility
+  public func binding<Value>(
     _ casePath: AnyCasePath<Root, Value>
   ) -> Binding<Value>? {
-    binding(casePath)
+    CaseBinding(casePath: casePath, root: selection).binding()
   }
 }
 
