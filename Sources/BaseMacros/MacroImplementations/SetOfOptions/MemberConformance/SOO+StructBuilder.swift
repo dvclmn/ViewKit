@@ -12,6 +12,7 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 struct SetOfOptionsBuilder {
+  let parentStruct: Struct
   let optionsEnum: Enum
   let rawType: TypeSyntax
 
@@ -22,19 +23,27 @@ struct SetOfOptionsBuilder {
     context: some MacroExpansionContext,
   ) throws {
 
-    guard let enumDecl = decl as? EnumDeclSyntax else {
-      throw MacroError("@SetOfOptions requires nested enum")
+    /// 1) Ensure we’re attached to a struct
+    guard let structDecl = decl as? StructDeclSyntax else {
+      throw MacroError("@SetOfOptions must be attached to a struct")
     }
 
-    guard enumDecl.name.text == "Options" else {
-      /// Consider making this configurable one day
+    self.parentStruct = Struct(structDecl)
+    
+    /// 2) Find nested enum named "Options"
+    guard
+      let optionsEnumDecl = structDecl.memberBlock.members
+        .compactMap({ $0.decl.as(EnumDeclSyntax.self) })
+        .first(where: { $0.name.text == "Options" })
+    else {
       throw MacroError("@SetOfOptions requires nested enum named 'Options'")
     }
 
-    self.optionsEnum = Enum(enumDecl)
+    self.optionsEnum = Enum(optionsEnumDecl)
 
+    /// 3) Extract RawType from attribute generic args (e.g. `@SetOfOptions<UInt8>`)
     guard let raw = Self.getRawType(from: node) else {
-      throw MacroError("@SetOfOptions requires nested Options enum has a valid raw type")
+      throw MacroError("@SetOfOptions<RawType> generic argument is required, e.g. @SetOfOptions<UInt8>")
     }
     self.rawType = raw
 

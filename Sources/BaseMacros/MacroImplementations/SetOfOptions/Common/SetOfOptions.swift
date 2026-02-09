@@ -24,23 +24,6 @@ import SwiftSyntaxMacros
 
 public struct SetOfOptionsMacro: MemberMacro, ExtensionMacro {
 
-  /// Handles conformance to `OptionSet`
-  public static func expansion(
-    of node: AttributeSyntax,
-    attachedTo declaration: some DeclGroupSyntax,
-    providingExtensionsOf type: some TypeSyntaxProtocol,
-    conformingTo protocols: [TypeSyntax],
-    in context: some MacroExpansionContext
-  ) throws -> [ExtensionDeclSyntax] {
-
-    let builder = try SetOfOptionsExtensionBuilder(
-      node: node,
-      decl: declaration,
-    )
-    
-    return try builder.build()
-  }
-
   public static func expansion(
     of attribute: AttributeSyntax,
     providingMembersOf decl: some DeclGroupSyntax,
@@ -56,5 +39,24 @@ public struct SetOfOptionsMacro: MemberMacro, ExtensionMacro {
     return builder.build()
 
   }
+  
+  
+  /// Handles conformance to `OptionSet`
+  public static func expansion(
+    of node: AttributeSyntax,
+    attachedTo declaration: some DeclGroupSyntax,
+    providingExtensionsOf type: some TypeSyntaxProtocol,
+    conformingTo protocols: [TypeSyntax],
+    in context: some MacroExpansionContext
+  ) throws -> [ExtensionDeclSyntax] {
+    
+    let builder = try SetOfOptionsExtensionBuilder(
+      node: node,
+      decl: declaration,
+    )
+    
+    return try builder.build()
+  }
+
 
 }
