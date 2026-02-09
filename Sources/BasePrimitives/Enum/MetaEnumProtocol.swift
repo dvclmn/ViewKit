@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 /// This whole file is *one* possible solution for a Case Paths driven Picker
 public protocol MetaEnumProtocol {
   associatedtype Meta: CaseIterable & Hashable & Identifiable where Self.Meta.AllCases: RandomAccessCollection
@@ -31,7 +29,7 @@ final class CasePickerState<Enum: MetaEnumProtocol> {
     self.lastByMeta = [initialValue.meta: initialValue]
   }
 
-  /// apply a new selection and update the bound enum accordingly
+  /// Apply a new selection and update the bound enum accordingly
   func applySelection(_ newMeta: Enum.Meta, to binding: Binding<Enum>) {
     let oldValue = binding.wrappedValue
     if oldValue.meta != newMeta {
@@ -79,7 +77,6 @@ extension Binding where Value: MetaEnumProtocol {
   }
 }
 
-
 /// Usage:
 /// ```
 /// CasePicker(value: $lineShape, title: "Line Shapes") { meta in
@@ -100,7 +97,6 @@ extension Binding where Value: MetaEnumProtocol {
 //    }
 //  }
 //}
-
 
 //extension Binding where Value: MetaEnumProtocol {
 //  /// A binding to “which case is selected?”, with optional per-case payload preservation.
