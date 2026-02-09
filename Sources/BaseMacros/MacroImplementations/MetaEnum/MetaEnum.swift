@@ -23,7 +23,7 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import MacroToolkit
 
-public struct MetaEnumMacro: MemberMacro {
+public struct MetaEnumMacro: MemberMacro, ExtensionMacro {
   public static func expansion(
     of node: AttributeSyntax,
     providingMembersOf declaration: some DeclGroupSyntax,
@@ -38,5 +38,29 @@ public struct MetaEnumMacro: MemberMacro {
     )
  
     return macro.makeMetaEnum()
+  }
+
+  public static func expansion(
+    of node: AttributeSyntax,
+    attachedTo declaration: some DeclGroupSyntax,
+    providingExtensionsOf type: some TypeSyntaxProtocol,
+    conformingTo protocols: [TypeSyntax],
+    in context: some MacroExpansionContext
+  ) throws -> [ExtensionDeclSyntax] {
+//    let builder = try MetaEnumBuilder(
+//      node: node,
+//      decl: declaration,
+//      context: context
+//    )
+//    let parentType = builder.parentTypeName
+////    let ext: ExtensionDeclSyntax
+////    let ext: DeclSyntax = "extension \(raw: parentType): MetaEnumProtocol {}"
+//    
+////    return [ext]
+//    return [
+//      try ExtensionDeclSyntax("extension \(type): \(raw: parentType) {}"),
+//    ]
+    
+    
   }
 }

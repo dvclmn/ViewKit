@@ -5,12 +5,12 @@
 //  Created by Dave Coleman on 18/9/2025.
 //
 
+import BasePrimitives
 import MacroToolkit
 import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
-import BasePrimitives
 
 extension SetOfOptionsMacro: MemberMacro {
 
@@ -43,21 +43,21 @@ extension SetOfOptionsMacro: MemberMacro {
     /// Get access control modifier
     let access = decl.modifiers.first(where: \.isPublicAccessLevel)
 
-    guard isUsingBuilderForOutput else {
-      return output(
-        enum: optionsEnum,
-        elements: caseElements,
-        access: access,
-        rawType: rawType
-      )
-    }
-    /// Using the Builder style for output
-    return buildOptionSetMembers(
-      caseElements: caseElements,
-      enumName: optionsEnum.name,
-      rawType: rawType,
-      access: access
+    //    guard isUsingBuilderForOutput else {
+    return output(
+      enum: optionsEnum,
+      elements: caseElements,
+      access: access,
+      rawType: rawType
     )
+    //    }
+    /// Using the Builder style for output
+    //    return buildOptionSetMembers(
+    //      caseElements: caseElements,
+    //      enumName: optionsEnum.name,
+    //      rawType: rawType,
+    //      access: access
+    //    )
 
   }
 
@@ -83,18 +83,17 @@ extension SetOfOptionsMacro: MemberMacro {
 
     // MARK: - String Value
     let snakeConditional: String = "isSnakeCase"
-    
+
     let stringSwitchCases = caseElements.map { element in
       let camel = element.name.text
       let snake = camel.camelCaseToSnakeCase
-      
+
       /// If both versions are identical, just return the raw string
-      if camel == snake {
-        return "  case .\(camel): \"\(camel)\""
-      } else {
+      guard camel == snake else {
         /// Otherwise, provide the ternary conditional
         return "  case .\(camel): \(snakeConditional) ? \"\(snake)\" : \"\(camel)\""
       }
+      return "  case .\(camel): \"\(camel)\""
     }.joined(separator: "\n    ")
 
     let optionSetStringBuilder: String = trimmedCases.map { element in
@@ -104,7 +103,7 @@ extension SetOfOptionsMacro: MemberMacro {
       }
       """
     }.joined(separator: "\n  ")
-    
+
     /// Example of `OptionSet` `.all`:
     ///
     /// ```swift

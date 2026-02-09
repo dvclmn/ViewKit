@@ -21,7 +21,7 @@ extension SetOfOptionsMacro: ExtensionMacro {
   ) throws -> [ExtensionDeclSyntax] {
     /// Decode the expansion arguments.
     guard
-      let (structDecl, optionsEnum, _) = decodeExpansion(
+      let (structDecl, _, _) = decodeExpansion(
         of: node,
         attachedTo: declaration,
         in: context,
