@@ -26,6 +26,8 @@ extension ActionLine {
     public var outerShape: BoundaryStyle
     public var innerShape: BoundaryStyle
 
+    public var shaderA: ShaderEffect = .chromaticSubtle
+    
     /// Internal storage uses radians for calculations
     private var _rotation: Double = 0.0
 
