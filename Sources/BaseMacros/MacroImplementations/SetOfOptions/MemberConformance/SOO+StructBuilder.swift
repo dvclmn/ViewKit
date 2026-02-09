@@ -79,14 +79,14 @@ extension SetOfOptionsBuilder {
 
   func rawValueMethods() -> [DeclSyntax] {
     [
-      "\(raw: optionsEnum.access)let rawValue: \(rawType)",
-      "\(raw: optionsEnum.access)init(rawValue: \(rawType)) { self.rawValue = rawValue }",
+      "\(raw: access)let rawValue: \(rawType)",
+      "\(raw: access)init(rawValue: \(rawType)) { self.rawValue = rawValue }",
     ]
   }
 
   func staticProperties() -> [DeclSyntax] {
     optionsEnum.cases.map { element -> DeclSyntax in
-      "\(raw: optionsEnum.access)static let \(raw: element): Self = Self(rawValue: 1 << \(raw: optionsEnum.identifier).\(raw: element).rawValue)"
+      "\(raw: access)static let \(raw: element): Self = Self(rawValue: 1 << \(raw: optionsEnum.identifier).\(raw: element).rawValue)"
     }
   }
 
@@ -95,7 +95,7 @@ extension SetOfOptionsBuilder {
       snakeConditional: snakeConditional
     )
     return """
-      \(optionsEnum.access)func stringValueJoined(isSnakeCase: Bool = false) -> String {
+      \(access)func stringValueJoined(isSnakeCase: Bool = false) -> String {
         var strings: [String] = []
         \(thingy)
         return strings.joined(separator: ", ")
@@ -106,7 +106,7 @@ extension SetOfOptionsBuilder {
 
   func optionSetAllProperty() -> DeclSyntax {
     """
-      \(optionsEnum.access)static let all: Self = [
+      \(access)static let all: Self = [
         \(optionsEnum.casesList(\.name))
       ]
     """
@@ -128,7 +128,7 @@ extension SetOfOptionsBuilder {
     }
 
     return """
-      \(raw: optionsEnum.access)static func stringValue(
+      \(raw: access)static func stringValue(
         for option: \(raw: optionsEnum.identifier), 
         \(raw: snakeConditional): Bool = false
       ) -> String {
