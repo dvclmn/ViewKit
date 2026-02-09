@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreTools
+import CasePaths
 
 /// Usage:
 /// ```
@@ -14,20 +15,20 @@ import CoreTools
 ///   Text(meta.name)
 /// }
 /// ```
-struct CasePicker<Value: MetaEnumProtocol, Label: View>: View {
-  @Binding var value: Value
-  var title: String
-  var preservesPayloads: Bool = true
-  @ViewBuilder var labelForMeta: (Value.Meta) -> Label
-  
-  var body: some View {
-    Picker(title, selection: $value.metaSelection(preservingPayloads: preservesPayloads)) {
-      ForEach(Value.Meta.allCases) { meta in
-        labelForMeta(meta).tag(meta)
-      }
-    }
-  }
-}
+//struct CasePicker<Value: MetaEnumProtocol, Label: View>: View {
+//  @Binding var value: Value
+//  var title: String
+//  var preservesPayloads: Bool = true
+//  @ViewBuilder var labelForMeta: (Value.Meta) -> Label
+//  
+//  var body: some View {
+//    Picker(title, selection: $value.metaSelection(preservingPayloads: preservesPayloads)) {
+//      ForEach(Value.Meta.allCases) { meta in
+//        labelForMeta(meta).tag(meta)
+//      }
+//    }
+//  }
+//}
 
 struct CasePathablePicker<Root: CasePathable & Identifiable, Meta: Identifiable & CaseIterable>: View
 where Root.ID == Meta.ID {
@@ -55,14 +56,16 @@ where Root.ID == Meta.ID {
   }
 }
 
-// Usage:
-CasePathablePicker(
-  selection: $lineShape,
-  toMeta: \.meta,
-  fromMeta: LineShape.init(fromMeta:),
-  label: "Line Shape",
-  metaName: \.name
-)
+/// Usage:
+/// ```
+/// CasePathablePicker(
+///   selection: $lineShape,
+///   toMeta: \.meta,
+///   fromMeta: LineShape.init(fromMeta:),
+///   label: "Line Shape",
+///   metaName: \.name
+/// )
+/// ```
 
 
 //struct LineShapePickerDemo: View {
