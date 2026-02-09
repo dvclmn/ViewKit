@@ -107,8 +107,9 @@ extension MetaEnumBuilder {
       }
 
       /// Attempt to construct using default values for associated parameters, if all are present
-      let defaults = item.defaultValueIfPresent
-      guard let paramClause = item.enumCase._syntax.parameterClause else {
+      let defaults = item.defaultValuesIfPresent
+      guard let paramClause = item.associatedValues else {
+//      guard let paramClause = item.enumCase._syntax.parameterClause else {
         return "return nil"
       }
 

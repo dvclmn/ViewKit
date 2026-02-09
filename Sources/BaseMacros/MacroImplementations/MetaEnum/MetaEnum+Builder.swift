@@ -15,7 +15,7 @@ struct MetaEnumBuilder {
   let detectedEnum: Enum
   let parentParamName: TokenSyntax
   let caseDetection: [DeclSyntax]
-//  let caseDetection: CaseDetectionBuilder
+  //  let caseDetection: CaseDetectionBuilder
 
   init(
     node: AttributeSyntax,
@@ -40,7 +40,7 @@ struct MetaEnumBuilder {
 extension MetaEnumBuilder {
   var parentTypeName: String { detectedEnum.identifier }
   var access: String { detectedEnum.accessLevel?.name ?? "" }
-  var childCases: [MetaEnumCase] { detectedEnum.cases.map(MetaEnumCase.init) }
+  var childCases: [EnumCase] { detectedEnum.cases }
 
   var hasAnyAssociatedValues: Bool {
     childCases.contains(where: \.hasAssociatedValues)
@@ -63,7 +63,7 @@ extension MetaEnumBuilder {
   ///   ...
   ///
   /// ``
-  func casesList(_ valueForCase: (MetaEnumCase) -> String) -> String {
+  func casesList(_ valueForCase: (EnumCase) -> String) -> String {
     childCases
       .map { "case .\($0.name): \(valueForCase($0))" }
       .joined(separator: "\n")
