@@ -14,7 +14,7 @@ extension AssociatedValuesBuilder {
   package var cases: [EnumCase] { detectedEnum.cases }
   package var access: String { detectedEnum.accessLevel?.name ?? "" }
 
-  /// This creates enumerated and v-prefixed variable names:
+  /// Creates enumerated and v-prefixed variable names for pattern matching
   /// ```
   /// var fernValue: Int? {
   ///   if case let .fern(v0) = self {
@@ -23,17 +23,25 @@ extension AssociatedValuesBuilder {
   ///   return nil
   /// }
   /// ```
-  package func uniquedVariableNames(_ parameters: EnumCaseParameterListSyntax) -> DeclSyntax {
-
-    DeclSyntax(
-      parameters
-        .enumerated()
-        .map { index, _ in "v\(index)" }
-        .joined(separator: ", ")
-
-    )
-
+  
+  /// e.g., "v0" or "v0, v1, v2"
+  package func uniquedVariableNames(_ parameters: EnumCaseParameterListSyntax) -> String {
+    parameters
+      .enumerated()
+      .map { index, _ in "v\(index)" }
+      .joined(separator: ", ")
   }
+//  package func uniquedVariableNames(_ parameters: EnumCaseParameterListSyntax) -> DeclSyntax {
+//
+//    DeclSyntax(
+//      parameters
+//        .enumerated()
+//        .map { index, _ in "v\(index)" }
+//        .joined(separator: ", ")
+//
+//    )
+//
+//  }
 }
 
 /// Note: a Case (not the whole enum itself)

@@ -3,12 +3,12 @@ import Foundation
 
 // MARK: - Associated Values
 
-/// Synthesises an `OptionSet` to accompany the `enum`
-/// Note: The `struct` is a requirement
+/// Generates optional properties for cases with associated values,
+/// for more streamlined access.
 @AssociatedValues
 enum CoolPlants {
   case fern(Int)
-  case cactus(String)
+  case cactus(String, Bool)
   case orchid
 }
 
