@@ -5,12 +5,12 @@
 //  Created by Dave Coleman on 3/3/2024.
 //
 
+import BasePrimitives
 import EnumMacros
 import Foundation
-import BasePrimitives
 import SwiftUI
 
-public struct Tooltip: ViewModifier {
+public struct ToolTipModifier: ViewModifier {
 
   @State private var isHovered = false
 
@@ -29,7 +29,6 @@ public struct Tooltip: ViewModifier {
         }
       }  // END hover
 
-      //      .overlay(alignment: .toolTip) {
       .overlay(alignment: toolTipAlignment) {
 
         ToolTipView(
@@ -37,10 +36,7 @@ public struct Tooltip: ViewModifier {
           isShowing: isShowing
         )
         .backgroundTint(colour)
-//        .environment(\.colourOverride, colour)
-//        .offset(alignment.offset(distance: 10, radial: .outward))
 
-        
         .alignmentGuide(toolTipAlignment.horizontal) { dimensions in
           dimensions.offset(
             for: toolTipAlignment,
@@ -49,7 +45,7 @@ public struct Tooltip: ViewModifier {
             radial: .outward
           )
         }
-        
+
         .alignmentGuide(toolTipAlignment.vertical) { dimensions in
           dimensions.offset(
             for: toolTipAlignment,
@@ -58,51 +54,12 @@ public struct Tooltip: ViewModifier {
             radial: .outward
           )
         }
-//          /// Horizontal positioning
-//          switch toolTipAlignment.horizontal {
-//            case .leading:
-//              return d[.trailing] + totalOffset(for: .horizontal)  // Place tooltip to the left
-//            case .trailing:
-//              return d[.leading] + totalOffset(for: .horizontal)  // Place tooltip to the right
-//            default:  // center
-//              return d[HorizontalAlignment.center] + totalOffset(for: .horizontal)
-//          }
-//          //          guidesH(dimensions)
-//        }
-//        .alignmentGuide(toolTipAlignment.vertical) { d in
-//          /// Vertical positioning
-//          switch toolTipAlignment.vertical {
-//            case .top:
-//              return d[.bottom] + totalOffset(for: .vertical)  // Place tooltip above
-//            case .bottom:
-//              return d[.top] + totalOffset(for: .vertical)  // Place tooltip below
-//            default:  // center
-//              return d[VerticalAlignment.center] + totalOffset(for: .vertical)
-//          }
-//        }
         .allowsHitTesting(false)
-
-        //          .animation(Styles.animationEased, value: isShowing)
       }  // END overlay
   }
 }
 
-extension Tooltip {
-
-//  private func alignmentOffset(for axis: Axis2D, dimensions: ViewDimensions) -> CGFloat {
-//    let length = axis.isHorizontal ? dimensions.width : dimensions.height
-//    
-//    let offsetMagnitude = length * 0.2
-//    let offset = alignment.offset(distance: offsetMagnitude, radial: .outward)
-//    return dimensions[alignment] + offset
-////    let offset: CGFloat = {
-////      switch alignment {
-////        case .leading: .zero
-////        case .trailing: .zero
-////        default: .zero
-////      }
-////    }()
-//  }
+extension ToolTipModifier {
 
   nonisolated private var toolTipAlignment: Alignment {
     alignment.forTooltip
@@ -145,7 +102,7 @@ extension View {
     color: Color? = nil
   ) -> some View {
     self.modifier(
-      Tooltip(
+      ToolTipModifier(
         text: text,
         offset: offset,
         alignment: alignment,

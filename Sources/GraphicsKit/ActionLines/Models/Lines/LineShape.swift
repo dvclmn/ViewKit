@@ -18,7 +18,7 @@ public enum LineShape: CaseIterable, Identifiable, Sendable, Codable, Equatable,
   public static let allCases: [LineShape] = [.triangle, .diamond, .wave()]
   case triangle
   case diamond
-  case wave(sampleCount: Int = 30)
+  case wave(strength: Double = 0.5, sampleCount: Int = 30)
 
   public var id: String { name }
 
@@ -46,85 +46,27 @@ extension LineShape {
   ) -> (Path, cycles: Double) {
     switch self {
       case .triangle:
-        let path = Path { path in
-          let angle = atan2(end.y - start.y, end.x - start.x)
-          let perpAngle: Double = angle + Double.pi / 2
-
-          let x1 = end.x + cos(perpAngle) * style.minWidth
-          let y1 = end.y + sin(perpAngle) * style.maxWidth
-          let x2 = end.x - cos(perpAngle) * style.minWidth
-          let y2 = end.y - sin(perpAngle) * style.maxWidth
-
-          path.move(to: start)
-          path.addLine(to: CGPoint(x: x1, y: y1))
-          path.addLine(to: CGPoint(x: x2, y: y2))
-          path.closeSubpath()
-        }
-        return (path, 0.0)
-
-      case .diamond:
-        let path = Path { path in
-          let angle = atan2(end.y - start.y, end.x - start.x)
-          let perpAngle: Double = angle + Double.pi / 2
-          let mid = start.midpoint(to: end)
-          //      let mid = CGPoint(x: (start.x + end.x) / 2, y: (start.y + end.y) / 2)
-
-          let perpOffsetX = cos(perpAngle) * style.minWidth
-          let perpOffsetY = sin(perpAngle) * style.maxWidth
-
-          let perp1 = CGPoint(x: mid.x + perpOffsetX, y: mid.y + perpOffsetY)
-          let perp2 = CGPoint(x: mid.x - perpOffsetX, y: mid.y - perpOffsetY)
-          path.move(to: start)
-          path.addLine(to: perp1)
-          path.addLine(to: end)
-          path.addLine(to: perp2)
-          path.closeSubpath()
-        }
-        return (path, 0.0)
-
-      case .wave(let samples):
-        let length = start.distance(to: end)
-
-        let cycles = effectiveCycles(
-          cycles: style.cycles,
-          lineLength: length
+        trianglePath(
+          from: start,
+          to: end,
+          minWidth: style.minWidth,
+          maxWidth: style.maxWidth
         )
-
-        let amplitude = style.width
-        let dx = end.x - start.x
-        let dy = end.y - start.y
-
-        /// Create the spine path (centerline of the wave)
-        var spinePath = Path()
-        let angle = atan2(dy, dx)
-        let perp = CGPoint(x: -sin(angle), y: cos(angle))
-
-        for i in 0...samples {
-          let t = Double(i) / Double(samples)
-          let px = start.x + dx * t
-          let py = start.y + dy * t
-
-          let phaseTurns = t * cycles
-          let wave = WaveSampler<Double>.sample(.sine, phase: phaseTurns, domain: .turns)
-
-          let wx = px + perp.x * wave * amplitude
-          let wy = py + perp.y * wave * amplitude
-          let pt = CGPoint(x: wx, y: wy)
-
-          if i == 0 {
-            spinePath.move(to: pt)
-          } else {
-            spinePath.addLine(to: pt)
-          }
-        }
-
-        /// Create variable-width path with tapered ends
-        let path = Path.variableWidthPath(
-          spine: spinePath,
-          profile: .tapered(min: style.minWidth, max: style.maxWidth),
+      case .diamond:
+        diamondPath(
+          from: start,
+          to: end,
+          minWidth: style.minWidth,
+          maxWidth: style.maxWidth
+        )
+      case .wave(let strength, let samples):
+        wavePath(
+          from: start,
+          to: end,
+          with: style,
+          strength: strength,
           samples: samples
         )
-        return (path, cycles)
     }
   }
 }

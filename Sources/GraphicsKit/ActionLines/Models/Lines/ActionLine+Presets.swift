@@ -34,7 +34,7 @@ extension ActionLine.Configuration {
       density: 10,
       radialCoverage: 1.0,
       lineStyle: ActionLine.LineStyle(
-        shape: .wave(),
+        shape: .wave(strength: 6, sampleCount: 80),
         minWidth: 12,
         maxWidth: 1
       ),
