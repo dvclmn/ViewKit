@@ -25,7 +25,7 @@ extension QuickSlider {
 
     @State private var isHovering: Bool = false
 
-    @Binding var value: Value
+    @Binding var value: Double
     let style: TrackStyle
 
     public var body: some View {
@@ -76,7 +76,7 @@ extension QuickSlider.SliderCustom {
     return DragGesture(minimumDistance: 0)
       .onChanged { gestureValue in
         guard let new = store.handleDragChange(gestureValue) else { return }
-        value = Value(new)
+        value = new
         store.updatePhase(.dragging)
       }
       .onEnded { _ in

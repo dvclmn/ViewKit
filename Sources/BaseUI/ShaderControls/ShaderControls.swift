@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 10/2/2026.
 //
 
+import CasePaths
+import CoreTools
 import GraphicsKit
 import SwiftUI
 
@@ -12,47 +14,62 @@ public struct ShaderControls: View {
 
   // @Environment(\.viewportSize) private var viewportSize
   @Binding var shader: ShaderEffect
-  let persistenceKey: String
+  let persistenceKeyExpanded: String
+  let persistenceKeyEnabled: String
   public init(
     shader: Binding<ShaderEffect>,
-    persistenceKey: String? = nil
+    persistenceKeyExpanded: String? = nil,
+    persistenceKeyEnabled: String? = nil,
   ) {
     self._shader = shader
-    self.persistenceKey = persistenceKey ?? "isShowingShaderControlSection"
+    self.persistenceKeyExpanded = persistenceKeyExpanded ?? "isShowingShaderControls"
+    self.persistenceKeyEnabled = persistenceKeyEnabled ?? "areShaderControlsEnabled"
   }
   public var body: some View {
 
-    DisclosureSection(
-      "Shaders",
-      persistenceKey: "isShowingWavesShaders"
-        //      isExpanded: store.prefBinding(\.expanded).bindingBool(key: .shaders)
-    ) {
+    DisclosureSection("Shaders", persistenceKey: persistenceKeyExpanded) {
+
       
       switch shader {
         case .chromaticAberration:
-          
-          
-        case .fisheye:
-          
-          
-        case .glitter:
-          
-          
-        case .crtCurvature:
-          
-          
-        case .crtLines:
-          
-          
-        case .filmGrain:
-          
-          
-        case .ripplePush:
-          
-          
-        case .psych:
-          
-          
+          if let binding = $shader.chromaticAberration {
+            QuickSlider(
+              "Strength",
+              value: binding.strength.toBindingDouble,
+              range: 0...4
+            )
+
+            QuickSlider(
+              "Fringing",
+              value: binding.radialStrength.toBindingDouble,
+              range: -40...40
+            )
+          }
+
+        default: StateView("Not yet implemented")
+      //
+      //
+      //        case .fisheye:
+      //
+      //
+      //        case .glitter:
+      //
+      //
+      //        case .crtCurvature:
+      //
+      //
+      //        case .crtLines:
+      //
+      //
+      //        case .filmGrain:
+      //
+      //
+      //        case .ripplePush:
+      //
+      //
+      //        case .psych:
+      //
+      //
       }
       //      ToggledView(persistenceKey: "areShadersEnabled") {
       //        if let binding = store.dataBinding(.standard).shaderA.chromaticAberration {

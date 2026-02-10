@@ -28,7 +28,7 @@ extension QuickSlider {
             if let step {
               Slider(
                 value: $value,
-                in: sliderRange,
+                in: store.range,
                 step: step
               ) { editing in
                 handleOnEdit(editing)
@@ -36,7 +36,7 @@ extension QuickSlider {
             } else {
               Slider(
                 value: $value,
-                in: sliderRange,
+                in: store.range,
               ) { editing in
                 handleOnEdit(editing)
               }
@@ -57,9 +57,9 @@ extension QuickSlider {
 }
 
 extension QuickSlider.SliderCore {
-  private var sliderRange: ClosedRange<Value> {
-    Value(store.range.lowerBound)...Value(store.range.upperBound)
-  }
+//  private var sliderRange: ClosedRange<Double> {
+//    Value(store.range.lowerBound)...Value(store.range.upperBound)
+//  }
 
   private func handleOnEdit(_ didEdit: Bool) {
     let phase = SliderPhase(fromOnEditingChanged: didEdit)

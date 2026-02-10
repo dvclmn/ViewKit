@@ -8,15 +8,15 @@
 import SwiftUI
 import CoreTools
 
-public struct BoundFloatSlider<T: BinaryFloatingPoint>: View where T: SliderFloat {
+public struct BoundFloatSlider: View {
   // @Environment(AppHandler.self) private var store
   // @Environment(\.viewportSize) private var viewportSize
   let title: String
-  @Binding var boundFloat: BoundFloat<T>
+  @Binding var boundFloat: BoundFloat<Double>
   
   public init(
     title: String,
-    boundFloat: Binding<BoundFloat<T>>
+    boundFloat: Binding<BoundFloat<Double>>
   ) {
     self.title = title
     self._boundFloat = boundFloat
@@ -33,13 +33,13 @@ public struct BoundFloatSlider<T: BinaryFloatingPoint>: View where T: SliderFloa
   }
 }
 
-extension BoundFloatSlider {
-  
-}
-#if DEBUG
-#Preview(traits: .size(.normal)) {
-  // @Previewable @State var store = AppHandler()
-  BoundFloatSlider()
-  // .environment(store)
-}
-#endif
+//extension BoundFloatSlider {
+//  
+//}
+//#if DEBUG
+//#Preview(traits: .size(.normal)) {
+//  // @Previewable @State var store = AppHandler()
+//  BoundFloatSlider()
+//  // .environment(store)
+//}
+//#endif

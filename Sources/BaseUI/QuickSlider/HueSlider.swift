@@ -12,12 +12,12 @@ import CoreTools
 public struct HueSlider<Value: SliderFloat>: View {
 
   let title: String?
-  @Binding var hue: Value
+  @Binding var hue: Double
 //  @Binding var colour: HSVColour
   
   public init(
     _ title: String? = nil,
-    hue: Binding<Value>
+    hue: Binding<Double>
   ) {
 //  public init(colour: Binding<HSVColour>) {
     self.title = title

@@ -34,7 +34,7 @@ extension QuickSlider {
       if let step = store.step {
         switch stepStyle {
           case .native:
-            SliderCore(value: $value, step: Value.Stride(step))
+            SliderCore(value: $value, step: step)
 
           case .stepper:
             HStack {
@@ -43,7 +43,7 @@ extension QuickSlider {
               Stepper(
                 store.label.text,
                 value: $value,
-                step: Value.Stride(step),
+                step: step,
               )
               .labelsHidden()
             }
@@ -62,7 +62,7 @@ extension QuickSlider {
           Text(formatValue(value.toDouble))
         }
         .textSelection(.disabled)
-        .onDoubleTap($value, defaultValue: sliderDefault)
+        .onDoubleTap($value, defaultValue: sliderDefaultValue)
         .contextMenu { ContextMenuItems() }
       }
     }
@@ -71,9 +71,9 @@ extension QuickSlider {
 
 extension QuickSlider.SliderComponents {
 
-  private var sliderDefault: Value? {
-    sliderDefaultValue.map { Value($0) }
-  }
+//  private var sliderDefault: Double? {
+//    sliderDefaultValue
+//  }
 
   private var columnSpan: Int { sliderComponents.count }
 
@@ -93,10 +93,10 @@ extension QuickSlider.SliderComponents {
       Label("Copy", systemImage: Icons.copy.icon)
     }
 
-    if let sliderDefault {
+    if let sliderDefaultValue {
       Divider()
       Button {
-        value = sliderDefault
+        value = sliderDefaultValue
       } label: {
         Label("Reset to Default", systemImage: Icons.refresh.icon)
       }

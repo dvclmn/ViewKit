@@ -127,6 +127,7 @@ let package = Package(
         .module(.gestureKit),
         .module(.vectorKit),
         .sharing,
+        .casePaths,
       ],
     ),
 
