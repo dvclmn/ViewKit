@@ -23,7 +23,7 @@ public struct BoundFloatSlider<T: BinaryFloatingPoint>: View where T: SliderFloa
   }
   public var body: some View {
     
-    QuickSlider<T>(
+    QuickSlider(
       title,
       value: $boundFloat.value,
       range: boundFloat.range,

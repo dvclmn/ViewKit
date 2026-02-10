@@ -21,7 +21,7 @@ extension QuickSlider {
 
     @State private var isHovering: Bool = false
 
-    @Binding var value: Value
+    @Binding var value: Double
 
     var body: some View {
       @Bindable var store = store

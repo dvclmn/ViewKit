@@ -13,8 +13,8 @@ extension QuickSlider {
     @Environment(SliderHandler.self) private var store
     @Environment(\.sliderStyle) private var sliderStyle
 
-    @Binding var value: Value
-    let step: Value?
+    @Binding var value: Double
+    let step: Double?
 
     var body: some View {
 

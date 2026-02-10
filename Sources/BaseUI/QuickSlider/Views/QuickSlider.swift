@@ -10,12 +10,12 @@ import SwiftUI
 
 public typealias SliderOutput = (SliderPhase) -> Void
 
-public struct QuickSlider<Value: SliderFloat>: View, ValueFormattable, SliderStylable {
+public struct QuickSlider: View, ValueFormattable, SliderStylable {
   @Environment(\.isWithinSliderGroup) private var isWithinSliderGroup
   @Environment(\.sliderComponents) private var sliderComponents
   @State private var store: SliderHandler
 
-  @Binding var value: Value
+  @Binding var value: Double
 
   public var body: some View {
 
@@ -41,11 +41,11 @@ extension QuickSlider {
 
   public init(
     _ title: String,
-    value: Binding<Value>,
-    range: ClosedRange<Value>,
-    step: Value.Stride? = nil,
+    value: Binding<Double>,
+    range: ClosedRange<Double>,
+    step: Double? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
-  ) where Value.Stride: BinaryFloatingPoint {
+  ) {
     self.init(
       label: QuickLabel(title),
       value: value,
@@ -57,19 +57,19 @@ extension QuickSlider {
 
   public init(
     label: QuickLabel,
-    value: Binding<Value>,
-    range: ClosedRange<Value>,
-    step: Value.Stride? = nil,
+    value: Binding<Double>,
+    range: ClosedRange<Double>,
+    step: Double? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
     self._value = value
     self._store = State(
       initialValue: SliderHandler(
-//        value: value.wrappedValue.toDouble,
+        //        value: value.wrappedValue.toDouble,
         label: label,
         range: range.toDoubleRange,
         step: step.toDoubleIfPresent,
-//        step: step.map { Double($0) },
+        //        step: step.map { Double($0) },
         //        step: StepStyle(fromOptionalValue: step.map { Double($0) }),
         didChangeSlider: didChangeSlider
       )
@@ -83,7 +83,7 @@ extension QuickSlider {
     range: ClosedRange<Int>,
     step: Int? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
-  ) where Value == Double {
+  ) {
     self.init(
       label: QuickLabel(title),
       value: intValue.toBindingDouble,
