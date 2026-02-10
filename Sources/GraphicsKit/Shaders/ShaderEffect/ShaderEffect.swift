@@ -27,10 +27,17 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   case glitter(spread: CGFloat, )
 
   case crtCurvature(
-    k1: CGFloat,
-    k2: CGFloat,
+    strength: CGFloat,  // Suggested range: -0.1 to -0.4
+    zoom: CGFloat  // Suggested range: 1.0 to 1.1 (to hide edges)
+      //    k1: CGFloat,
+      //    k2: CGFloat,
   )
-  case crtLines(density: CGFloat = 1.5)
+  case crtLines(
+    lineSpacing: CGFloat,  // Distance between scanlines (e.g., 3.0)
+    lineIntensity: CGFloat,  // Darkening strength (0.0 to 1.0)
+    phosphorSize: CGFloat,  // Width of the vertical grille (e.g., 2.0),
+    brightness: CGFloat  // Final gain to offset dark lines (e.g., 1.2)
+  )
 
   case radialBlur(
     origin: CGPoint,
@@ -89,12 +96,17 @@ extension ShaderEffect {
       case .glitter(let spread):
         [.boundingRect, .float(spread)]
 
-      case .crtCurvature(let k1, let k2):
-        //      case .crtCurvature(let k1, let k2, let origin):
-        [.boundingRect, .float(k1), .float(k2)]
+      case .crtCurvature(let strength, let zoom):
+        [.boundingRect, .float(strength), .float(zoom)]
 
-      case .crtLines(let density):
-        [.boundingRect, .float(density)]
+      case .crtLines(let lineSpacing, let lineIntensity, let phosphorSize, let brightness):
+        [
+          .boundingRect,
+          .float(lineSpacing),
+          .float(lineIntensity),
+          .float(phosphorSize),
+          .float(brightness),
+        ]
 
       case .radialBlur(let origin, let strength, let start, let end, let samples):
         [

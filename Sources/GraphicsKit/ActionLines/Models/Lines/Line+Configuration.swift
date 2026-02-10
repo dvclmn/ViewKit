@@ -29,21 +29,9 @@ extension ActionLine {
     public var outerShape: BoundaryStyle
     public var innerShape: BoundaryStyle
 
-    @IgnoreCoding
+//    @IgnoreCoding
 //    public var shaders: Set<ShaderEffect> = [
-    public var shaders: [ShaderEffect] = [
-      .chromaticSubtle,
-//      .crtCurvature(k1: 2.0, k2: 2.0),
-      .crtLines(),
-//      .crtCurvature(k1: 0.5, k2: 0.5),
-      .radialBlur(
-        origin: .zero,
-        strength: 2.0,
-        start: 0.7,
-        end: 0.9,
-        samples: 10
-      )
-    ]
+    public var shaders: [ShaderEffect] = ShaderEffect.wavyPreset
 
     //    @IgnoreCoding
     //    public var chrom: ShaderEffect = .chromaticSubtle
@@ -64,12 +52,14 @@ extension ActionLine {
       lineStyle: LineStyle,
       outerShape: BoundaryStyle,
       innerShape: BoundaryStyle,
+      shaders: [ShaderEffect] = ShaderEffect.wavyPreset
     ) {
       self.density = density
       self.radialCoverage = radialCoverage
       self.lineStyle = lineStyle
       self.outerShape = outerShape
       self.innerShape = innerShape
+      self.shaders = shaders
     }
   }
 }
@@ -88,6 +78,7 @@ extension ActionLine.Configuration {
     radiusOuter: Double,
     colourOuter: RGBColour,
     variantionOuter: Double,
+    shaders: [ShaderEffect] = ShaderEffect.wavyPreset
   ) {
 
     let lineStyle = ActionLine.LineStyle(
@@ -110,7 +101,8 @@ extension ActionLine.Configuration {
       density: density,
       lineStyle: lineStyle,
       outerShape: inner,
-      innerShape: outer
+      innerShape: outer,
+      shaders: shaders
     )
   }
 

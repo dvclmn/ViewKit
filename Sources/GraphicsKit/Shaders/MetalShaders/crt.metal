@@ -8,78 +8,75 @@
 #include <metal_stdlib>
 using namespace metal;
 
-// Colour effect
-// Configurable CRT-style pincushion/barrel distortion with aspect and center control
+// MARK: - 1. Curvature (Distortion)
+// This function warps the screen coordinates to simulate a glass tube.
 [[ stitchable ]] float2 crtCurvature(
                                      float2 position,
                                      float4 bounds,
-                                     float k1,          // primary radial term (negative for CRT pincushion)
-                                     float k2          // secondary term for nuance (usually small magnitude)
+                                     float curvatureAmount,
+                                     float zoom
                                      ) {
-  // float2 center     // distortion center in pixels
-  // clamp output to bounds to avoid sampling outside
-  bool clampToBounds = true;
-  
-  // Normalize to -1..1 with aspect correction so distortion is radially symmetric
   float2 viewSize = bounds.zw;
-  // Derive center as the midpoint of the view size
   float2 center = viewSize * 0.5;
-  float2 uv = (position - center) / viewSize * 2.0; // centered UV in -2..2 range relative to center
-
-  // Apply aspect correction (scale x by aspect so circle stays circle)
-  float aspect = viewSize.x / max(1.0, viewSize.y);
-  float2 uvAspect = float2(uv.x / aspect, uv.y);
-
-  // Radial distance squared
+  
+  // Normalize coordinates: -1.0 (top/left) to 1.0 (bottom/right)
+  float2 uv = (position - center) / (viewSize * 0.5);
+  
+  // Aspect correction: ensures the "circle" of distortion isn't stretched
+  float aspect = viewSize.x / viewSize.y;
+  float2 uvAspect = float2(uv.x * aspect, uv.y);
+  
+  // Calculate radial distance from center
+  // Higher r2 = further from center = more distortion
   float r2 = dot(uvAspect, uvAspect);
-
-  // Radial scale: 1 + k1*r^2 + k2*r^4
-  float scale = 1.0 + k1 * r2 + k2 * (r2 * r2);
-
-  // Avoid division by very small scale; clamp to a reasonable minimum
-  scale = max(scale, 0.0001);
-
-  // Apply inverse mapping: map distorted screen position back to source
-  float2 distorted = uvAspect * scale;
-
-  // Undo aspect correction
-  distorted.x *= aspect;
-
-  // Map back to pixel space
-  float2 outPos = distorted * 0.5 * viewSize + center;
-
-  if (clampToBounds) {
-    outPos = clamp(outPos, float2(0.0, 0.0), viewSize);
-  }
-
+  
+  // The Distortion Formula: P_distorted = P * (1 + k * r^2)
+  // We use curvatureAmount as 'k'.
+  float distortion = 1.0 + curvatureAmount * r2;
+  
+  // Apply distortion and the 'zoom' to clip the black corners
+  float2 distortedUV = uv * distortion / zoom;
+  
+  // Map back from -1..1 space to pixel space
+  float2 outPos = (distortedUV * (viewSize * 0.5)) + center;
+  
   return outPos;
 }
 
-// MARK: - Distortion Effect
+// MARK: - 2. CRT Effects (Lines & Mask)
 [[ stitchable ]] half4 crtLines(
                                 float2 position,
                                 half4 color,
                                 float4 bounds,
-                                float density
+                                float lineSpacing,
+                                float lineIntensity,
+                                float phosphorSize,
+                                float brightnessBoost
                                 ) {
-  // 1. Basic Scanlines
-  // We use a sine wave based on the Y position to create the dark gaps
-  float2 viewSize = bounds.zw;
-  float scanlineFrequency = viewSize.y * density; // Adjust for density
-  float brightness = 1.4;
-  float scanline = brightness + 0.2 * sin(position.y * scanlineFrequency);
+  // A. FIXED SCANLINES (Horizontal)
+  // Instead of viewSize.y, we use 'position.y' directly.
+  // This makes lines stay the same physical size during resize.
+  float scanline = sin(position.y * (6.28318 / lineSpacing));
   
-  // 2. Simple Aperture Grille (Vertical lines)
-  float verticalLineDensity = 1.0;
-  float grilleFrequency = viewSize.x * verticalLineDensity;
-  float something = 0.9; // brightness again?
-  float anotherThing = 0.2;
-  float grille = something + anotherThing * sin(position.x * grilleFrequency);
   
-  // 3. Combine and boost "glow"
-  half4 result = color * scanline * grille;
+  // Normalize sine (-1..1) to a controlled darkening factor
+  float scanlineValue = mix(1.0, (scanline + 1.0) * 0.5, lineIntensity);
   
-  // Subtle brightness boost to compensate for the dark lines
-  return result * 1.2;
+  // B. APERTURE GRILLE (Vertical)
+  // Simulates the vertical phosphor strips or shadow mask
+  float grille = sin(position.x * (6.28318 / phosphorSize));
+  float grilleValue = mix(1.0, (grille + 1.0) * 0.5, lineIntensity * 0.5);
+  
+  // C. VIGNETTE
+  // Subtle darkening of the corners for depth
+  float2 uv = position / bounds.zw;
+  float vignette = uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y);
+  vignette = pow(16.0 * vignette, 0.1);
+  
+  // Combine everything
+  half4 result = color;
+  half factor = half(scanlineValue * grilleValue * vignette);
+  result.rgb *= half3(factor);
+  
+  return result * brightnessBoost;
 }
-

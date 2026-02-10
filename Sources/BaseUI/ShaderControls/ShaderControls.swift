@@ -12,6 +12,8 @@ import SwiftUI
 
 public struct ShaderControls: View {
 
+  @AppStorage("shouldLockBlurAndSamples") var shouldLockBlurAndSamples: Bool = true
+
   @Binding var shader: ShaderEffect
   let persistenceKeyExpanded: String
   let persistenceKeyEnabled: String
@@ -56,15 +58,15 @@ public struct ShaderControls: View {
             if let binding = $shader.crtCurvature {
 
               QuickSlider(
-                "K1",
-                value: binding.k1.toBindingDouble,
-                range: -4...4
+                "Strength",
+                value: binding.strength.toBindingDouble,
+                range: 0...10
               )
 
               QuickSlider(
-                "K2",
-                value: binding.k2.toBindingDouble,
-                range: -4...4
+                "Zoom",
+                value: binding.zoom.toBindingDouble,
+                range: 0...4
               )
 
             }
@@ -73,42 +75,63 @@ public struct ShaderControls: View {
             if let binding = $shader.crtLines {
 
               QuickSlider(
-                "Density",
-                value: binding.toBindingDouble,
+                "Spacing",
+                value: binding.lineSpacing.toBindingDouble,
+                range: 0...40
+              )
+              QuickSlider(
+                "Intensity",
+                value: binding.lineIntensity.toBindingDouble,
+                range: 0...6
+              )
+              QuickSlider(
+                "Phosphor",
+                value: binding.phosphorSize.toBindingDouble,
                 range: 0...10
+              )
+              QuickSlider(
+                "Brightness",
+                value: binding.brightness.toBindingDouble,
+                range: 0...4
               )
             }
 
           case .radialBlur:
+
             if let binding = $shader.radialBlur {
+
+              //              if shouldLockBlurAndSamples {
+              //
+              //              }
+
               QuickSlider(
                 "Blur",
                 value: binding.strength.toBindingDouble,
-                range: 0...4
+                range: 0...10
               )
               .helpText("Control the amount of Blur")
 
               QuickSlider(
                 "Start",
                 value: binding.start.toBindingDouble,
-                range: .unitRange,
+                range: 0...2,
               )
               .helpText("How far out from the origin does the Blur begin")
 
               QuickSlider(
                 "End",
                 value: binding.end.toBindingDouble,
-                range: .unitRange,
+                range: 0.5...3,
               )
               .helpText("How far out from the origin do we reach 100% blurriness")
-              
+
               QuickSlider(
                 "Samples",
                 value: binding.samples.toBindingDouble,
-                range: .unitRange,
-                step: 1.0
+                range: 1...100,
               )
-//              .helpText("How far out from the origin do we reach 100% blurriness")
+              .disabled(shouldLockBlurAndSamples)
+              //              .helpText("How far out from the origin do we reach 100% blurriness")
             }
 
           default: StateView("Not yet implemented")

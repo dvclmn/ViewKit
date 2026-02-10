@@ -51,7 +51,7 @@ extension ActionLine.Configuration {
       ),
     )
   }
-  
+
   public static var wavy03: Self {
     .init(
       density: 20,
@@ -64,7 +64,8 @@ extension ActionLine.Configuration {
       variantionInner: 0.5,
       radiusOuter: 0.1,
       colourOuter: RGBColour(0.65, 0.35, 0.1),
-      variantionOuter: 0.1
+      variantionOuter: 0.1,
+      shaders: ShaderEffect.wavyPreset02
     )
   }
 
@@ -85,5 +86,53 @@ extension ActionLine.Configuration {
         radius: 0.2
       ),
     )
+  }
+}
+
+extension ShaderEffect {
+  public static var wavyPreset: [ShaderEffect] {
+    [
+      .chromaticSubtle,
+
+      .crtCurvature(strength: 0.0, zoom: 0.5),
+      //      .crtCurvature(k1: 2.0, k2: 2.0),
+      .crtLines(
+        lineSpacing: 2.0,
+        lineIntensity: 0.5,
+        phosphorSize: 1.0,
+        brightness: 0.4
+      ),
+      //      .crtCurvature(k1: 0.5, k2: 0.5),
+      .radialBlur(
+        origin: .zero,
+        strength: 2.0,
+        start: 0.7,
+        end: 0.9,
+        samples: 10
+      ),
+    ]
+  }
+
+  public static var wavyPreset02: [ShaderEffect] {
+    [
+      .chromaticPresetA,
+
+      .crtCurvature(strength: 1.0, zoom: 0.5),
+
+      .crtLines(
+        lineSpacing: 4.0,
+        lineIntensity: 0.4,
+        phosphorSize: 1.0,
+        brightness: 1.8
+      ),
+
+      .radialBlur(
+        origin: .zero,
+        strength: 2.0,
+        start: 0.7,
+        end: 0.9,
+        samples: 10
+      ),
+    ]
   }
 }

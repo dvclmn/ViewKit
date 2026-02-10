@@ -16,7 +16,6 @@ public struct SliderGroup<Sliders: View>: View, ValueFormattable {
 
   public init(
     _ title: String? = nil,
-//    verticalSpacing: CGFloat? = Styles.sizeSmall,
     verticalSpacing: CGFloat? = nil,
     @ViewBuilder content: @escaping () -> Sliders
   ) {
