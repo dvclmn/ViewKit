@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct ToggledViewModifier: ViewModifier {
+struct ToggledViewModifier: ViewModifier {
 
   /// Internal ephemeral fallback
   //  @State private var transientEnabled: Bool
@@ -15,12 +15,8 @@ public struct ToggledViewModifier: ViewModifier {
 
   let title: String
   @OptionallyPersisted var isEnabled: Bool
+  let defaultEnabled: Bool
   //  private let usesPersistence: Bool
-
-  public init(_ title: String = "Enabled", defaultEnabled: Bool = true, persistenceKey: String? = nil) {
-    self.title = title
-    self._isEnabled = OptionallyPersisted(defaultValue: defaultEnabled, persistenceKey: persistenceKey)
-  }
 
   //  public init(
   //    _ title: String = "Enabled",
@@ -41,13 +37,10 @@ public struct ToggledViewModifier: ViewModifier {
   //    }
   //  }
 
-  public func body(content: Content) -> some View {
-    VStack {
-      Toggle(title, isOn: $isEnabled)
-        .foregroundStyle(isEnabled ? .primary : .tertiary)
-      if isEnabled {
-        content
-      }
+  func body(content: Content) -> some View {
+
+    ToggledViewCommon<Content>(title, isEnabled: $isEnabled) {
+      content
     }
   }
 }
@@ -66,6 +59,17 @@ extension View {
     persistenceKey: String? = nil,
     defaultEnabled: Bool = true,
   ) -> some View {
-    self.modifier(ToggledViewModifier())
+    self.modifier(
+      ToggledViewModifier(
+        title: title,
+        isEnabled: OptionallyPersisted(defaultValue: defaultEnabled, persistenceKey: persistenceKey),
+        defaultEnabled: defaultEnabled,
+      )
+    )
+    //    self.modifier(ToggledViewModifier(
+    //      _ title: String = "Enabled",
+    //      defaultEnabled: Bool = true,
+    //      persistenceKey: OptionallyPersisted(defaultValue: defaultEnabled, persistenceKey: persistenceKey)
+
   }
 }
