@@ -20,16 +20,23 @@ public struct ShaderModifier: ViewModifier {
 
       switch effect.usageType {
 
-        case .colorEffect: content.colorEffect(effect.shader, isEnabled: isEnabled)
+        case .colorEffect: content.colorEffect(
+          effect.shader,
+          isEnabled: isEnabled
+        )
 
         case .distortionEffect:
           content.distortionEffect(
             effect.shader,
-            maxSampleOffset: .zero,
+            maxSampleOffset: maxOffset,
             isEnabled: isEnabled
           )
 
-        case .layerEffect: content.layerEffect(effect.shader, maxSampleOffset: .zero, isEnabled: isEnabled)
+        case .layerEffect: content.layerEffect(
+          effect.shader,
+          maxSampleOffset: maxOffset,
+          isEnabled: isEnabled
+        )
 
         default: content
       }
@@ -44,7 +51,20 @@ public struct ShaderModifier: ViewModifier {
 extension View {
   public func shaderEffect(
     _ effect: ShaderEffect?,
-    maxOffset: CGSize = .zero,
+    isEnabled: Bool = true
+  ) -> some View {
+    self.modifier(
+      ShaderModifier(
+        effect: effect,
+        maxOffset: .zero,
+        isEnabled: isEnabled
+      )
+    )
+  }
+
+  public func shaderEffect(
+    _ effect: ShaderEffect?,
+    maxOffset: CGSize,
     isEnabled: Bool = true
   ) -> some View {
     self.modifier(

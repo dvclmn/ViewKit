@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol SliderFloat: BinaryFloatingPoint, Sendable, Strideable where Stride: BinaryFloatingPoint {}
+public protocol SliderFloat: BinaryFloatingPoint, Sendable {}
 
 extension Double: SliderFloat {}
 extension CGFloat: SliderFloat {}

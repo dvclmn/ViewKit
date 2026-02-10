@@ -13,7 +13,8 @@ using namespace metal;
                             float2 position,
                             SwiftUI::Layer layer,
                             float2 location,
-                            float2 velocity) {
+                            float2 velocity
+                            ) {
   
   // Compute the motion vector with a falloff based on distance
   float2 m = -velocity * pow(clamp(1 - length(location - position) / 190, 0.0, 1.0), 2) * 1.5;
@@ -35,18 +36,3 @@ using namespace metal;
   // Return the average of the sampled colors with an alpha of 1
   return half4(c / 10, 1);
 }
-
-//[[stitchable]]
-//half4 ripplePush(float2 p,
-//                                SwiftUI::Layer a,
-//                                float2 l,
-//                                float2 v){
-//  
-//  float2 m=-v*pow(clamp(1-length(l-p)/190,0.,1.),2)*1.5
-//  half3 c=0
-//  for(float i=0;i<10;i++){
-//    float s=.175+.005*i
-//    c+=half3(a.sample(p+s*m).r,a.sample(p+(s+.025)*m).g,a.sample(p+(s+.05)*m).b)
-//  }
-//  return half4(c/10,1)
-//}

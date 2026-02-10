@@ -14,7 +14,7 @@ extension QuickSlider {
     @Environment(\.sliderStyle) private var sliderStyle
 
     @Binding var value: Value
-    let step: Value.Stride?
+    let step: Value?
 
     var body: some View {
 

@@ -24,17 +24,10 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     strength: CGFloat
   )
 
-  case glitter(
-    //    origin: UnitPoint,
-    spread: CGFloat,
-  )
+  case glitter(spread: CGFloat,)
 
-  case crtCurvature(
-    distortion: CGFloat,
-  )
-  case crtLines(
-    density: CGFloat,
-  )
+  case crtCurvature(distortion: CGFloat = 0.05)
+  case crtLines(density: CGFloat = 1.5)
 
   case filmGrain(
     time: CGFloat,
@@ -44,8 +37,8 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   )
 
   case ripplePush(
-    l: CGPoint,
-    v: CGPoint
+    location: CGPoint,
+    velocity: CGPoint
   )
 
   case psych(
@@ -54,6 +47,19 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
 }
 
 extension ShaderEffect {
+//  public var range: ClosedRange<CGFloat> {
+//    switch self {
+//      case .chromaticAberration:
+//      case .fisheye:
+//      case .glitter:
+//      case .crtCurvature:
+//      case .crtLines:
+//      case .filmGrain:
+//      case .ripplePush:
+//      case .psych:
+//    }
+//  }
+  
   public var arguments: [Shader.Argument] {
     switch self {
       /// Haven't yet exposed all shader controls to this case
@@ -76,8 +82,8 @@ extension ShaderEffect {
       case .crtLines(let density):
         [.boundingRect, .float(density)]
 
-      case .ripplePush(let l, let v):
-        [.float2(l), .float2(v)]
+      case .ripplePush(let location, let velocity):
+        [.float2(location), .float2(velocity)]
 
       case .psych(let time):
         [.boundingRect, .float(time)]
@@ -88,10 +94,6 @@ extension ShaderEffect {
   }
 }
 extension ShaderEffect {
-  //  case filmGrain
-  //  case wavyBlur
-  //  case ripple
-  //  case psych
 
   /// This refers to the name of the function in the `.metal` shader file.
   /// E.g. "chromaticAberration" refers to:

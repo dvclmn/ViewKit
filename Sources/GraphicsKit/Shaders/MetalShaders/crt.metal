@@ -8,6 +8,7 @@
 #include <metal_stdlib>
 using namespace metal;
 
+// Colour effect
 [[ stitchable ]] float2 crtCurvature(
                                      float2 position,
                                      float4 bounds,
@@ -25,15 +26,17 @@ using namespace metal;
   return (distortedUV + 1.0) / 2.0 * viewSize;
 }
 
+// Distortion effect
 [[ stitchable ]] half4 crtLines(
                                 float2 position,
                                 half4 color,
-                                float4 bounds
+                                float4 bounds,
+                                float density
                                 ) {
   // 1. Basic Scanlines
   // We use a sine wave based on the Y position to create the dark gaps
   float2 viewSize = bounds.zw;
-  float scanlineFrequency = viewSize.y * 1.5; // Adjust for density
+  float scanlineFrequency = viewSize.y * density; // Adjust for density
   float scanline = 0.8 + 0.2 * sin(position.y * scanlineFrequency);
   
   // 2. Simple Aperture Grille (Vertical lines)
