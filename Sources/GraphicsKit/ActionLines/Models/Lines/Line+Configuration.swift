@@ -36,7 +36,13 @@ extension ActionLine {
 //      .crtCurvature(k1: 2.0, k2: 2.0),
       .crtLines(),
 //      .crtCurvature(k1: 0.5, k2: 0.5),
-      .radialBlur(origin: .zero, strength: 2.0, start: 0.7, end: 0.9)
+      .radialBlur(
+        origin: .zero,
+        strength: 2.0,
+        start: 0.7,
+        end: 0.9,
+        samples: 10
+      )
     ]
 
     //    @IgnoreCoding

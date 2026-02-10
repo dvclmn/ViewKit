@@ -101,6 +101,14 @@ public struct ShaderControls: View {
                 range: .unitRange,
               )
               .helpText("How far out from the origin do we reach 100% blurriness")
+              
+              QuickSlider(
+                "Samples",
+                value: binding.samples.toBindingDouble,
+                range: .unitRange,
+                step: 1.0
+              )
+//              .helpText("How far out from the origin do we reach 100% blurriness")
             }
 
           default: StateView("Not yet implemented")
