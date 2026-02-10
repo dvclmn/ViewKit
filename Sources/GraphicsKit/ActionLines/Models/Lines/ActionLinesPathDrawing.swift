@@ -29,10 +29,10 @@ extension ActionLine {
 
     return switch boundaryShape {
       case .square:
-        handleSquare(dx, dy, size: effectiveSize, center: center)
+        handleSquareBoundary(dx, dy, size: effectiveSize, center: center)
 
       case .circle:
-        handleCircle(size: effectiveSize)
+        handleCircleBoundary(size: effectiveSize)
 
       case .matchViewport:
         fatalError("Not yet implemented")
@@ -44,21 +44,10 @@ extension ActionLine {
     to end: CGPoint,
     style: ActionLine.LineStyle
   ) -> (Path, cycles: Double) {
-//    let context = LinePathContext(
-//      from: start,
-//      to: end,
-//      with: style
-//    )
-//    let path = switch style.shape {
-//      case .triangle: context.triangle
-//      case .diamond: context.diamond
-//      case .wave: context.wavy
-//    }
     style.shape.path(from: start, to: end, with: style)
-//    return (path, style.shape.effectiveCycles(cycles: <#T##Double#>, lineLength: <#T##Double#>))
   }
 
-  private static func handleSquare(
+  private static func handleSquareBoundary(
     _ dx: Double,
     _ dy: Double,
     size: CGSize,
@@ -94,7 +83,7 @@ extension ActionLine {
     return min(abs(distanceToVertical), abs(distanceToHorizontal))
   }
 
-  private static func handleCircle(size: CGSize) -> Double {
+  private static func handleCircleBoundary(size: CGSize) -> Double {
 
     /// Circle fits inside the rectangle
     ///

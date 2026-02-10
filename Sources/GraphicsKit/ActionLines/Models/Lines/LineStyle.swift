@@ -8,10 +8,12 @@
 import ColourKit
 import CoreTools
 import SwiftUI
+import MetaCodable
 
 extension ActionLine {
   /// Addresses per-line attributes. See ``ActionLine/Configuration``
   /// for attributes across the whole Action Lines canvas
+  @Codable
   public struct LineStyle: Equatable, Sendable, Codable {
 
     public var minWidth: Double
@@ -21,6 +23,9 @@ extension ActionLine {
     public var cycles: Double
     
     public var uniformity: Double
+    
+    @IgnoreCoding
+    public var phaseOffset: Double = 0
 
     public var shape: LineShape
 
@@ -30,7 +35,8 @@ extension ActionLine {
       maxWidth: Double,
       opacity: Double = 1,
       cycles: CGFloat = 2,
-      uniformity: Double = 1.0
+      uniformity: Double = 1.0,
+      phaseOffset: Double = 0
     ) {
       self.shape = shape
       self.minWidth = minWidth
@@ -38,6 +44,7 @@ extension ActionLine {
       self.opacity = opacity
       self.cycles = cycles
       self.uniformity = uniformity
+      self.phaseOffset = phaseOffset
     }
   }
 }

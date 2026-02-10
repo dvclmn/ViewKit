@@ -13,8 +13,8 @@ extension EnvironmentValues {
   @Entry public var isResizingCanvas: Bool = false
 
   @Entry public var canvasPan: CGSize = .zero
-  @Entry public var canvasZoom: CGFloat = 1.0
-  @Entry public var canvasZoomRange: ClosedRange<CGFloat>?
+  @Entry public var canvasZoom: Double = 1.0
+  @Entry public var canvasZoomRange: ClosedRange<Double>?
   @Entry public var canvasRotation: Angle = .zero
   
 //  @Entry public var pointerState: PointerState = .initial

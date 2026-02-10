@@ -18,7 +18,10 @@ public enum LineShape: CaseIterable, Identifiable, Sendable, Codable, Equatable,
   public static let allCases: [LineShape] = [.triangle, .diamond, .wave()]
   case triangle
   case diamond
-  case wave(strength: Double = 0.5, sampleCount: Int = 30)
+  case wave(
+    strength: Double = 0.5,
+    sampleCount: Int = 30
+  )
 
   public var id: String { name }
 
@@ -60,11 +63,13 @@ extension LineShape {
           maxWidth: style.maxWidth
         )
       case .wave(let strength, let samples):
+//      case .wave(let strength, let phaseOffset, let samples):
         wavePath(
           from: start,
           to: end,
           with: style,
           strength: strength,
+          phaseOffset: style.phaseOffset,
           samples: samples
         )
     }

@@ -14,6 +14,7 @@ extension LineShape {
     to end: CGPoint,
     with style: ActionLine.LineStyle,
     strength: Double,
+    phaseOffset: Double,
     samples: Int,
   ) -> (Path, cycles: Double) {
     let length = start.distance(to: end)
@@ -30,18 +31,18 @@ extension LineShape {
     /// Create the spine path (centerline of the wave)
     var spinePath = Path()
     let angle = atan2(dy, dx)
-    let perp = CGPoint(x: -sin(angle), y: cos(angle))
+    let perpendicular = CGPoint(x: -sin(angle), y: cos(angle))
 
     for i in 0...samples {
       let t = Double(i) / Double(samples)
       let px = start.x + dx * t
       let py = start.y + dy * t
 
-      let phaseTurns = t * cycles
+      let phaseTurns = t * cycles + phaseOffset
       let wave = WaveSampler<Double>.sample(.sine, phase: phaseTurns, domain: .turns)
 
-      let wx = px + perp.x * wave * amplitude
-      let wy = py + perp.y * wave * amplitude
+      let wx = px + perpendicular.x * wave * amplitude
+      let wy = py + perpendicular.y * wave * amplitude
       let pt = CGPoint(x: wx, y: wy)
 
       if i == 0 {

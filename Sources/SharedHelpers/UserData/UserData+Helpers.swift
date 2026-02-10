@@ -49,6 +49,17 @@ extension UserDataHandler {
     updateData { $0[keyPath: keyPath] = value }
   }
 
+  /// Mutates a single property on the in-memory value and propagates updates.
+  /// Convenience for targeted updates without rewriting the whole `Value`.
+  @MainActor
+  public func setValue<T>(
+    _ keyPath: WritableKeyPath<Value, T>?,
+    to value: T
+  ) {
+    guard let keyPath else { return }
+    updateData { $0[keyPath: keyPath] = value }
+  }
+
   /// Performs an in-place mutation of the in-memory value.
   /// Supports undo registration via `UpdateKind`.
   @MainActor

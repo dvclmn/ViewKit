@@ -71,7 +71,8 @@ let package = Package(
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
-    .package(url: "https://github.com/quantumOrange/CubicSpline", branch: "main"),
+    .package(url: "https://github.com/jpsim/Yams", from: "6.2.1"),
+//    .package(url: "https://github.com/quantumOrange/CubicSpline", branch: "main"),
     //    .package(
     //      url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
   ],
@@ -129,7 +130,7 @@ let package = Package(
       ],
     ),
 
-    // Note: The only target that depends on BaseUI
+    /// Note: The only target that depends on BaseUI
     .target(
       name: "CanvasKit",
       dependencies: [
@@ -198,7 +199,8 @@ let package = Package(
         .module(.colourKit),
         .casePaths,
         .product(name: "MetaCodable", package: "MetaCodable"),
-        .product(name: "CubicSpline", package: "CubicSpline"),
+//        .product(name: "CubicSpline", package: "CubicSpline"),
+        .product(name: "Yams", package: "Yams"),
 
       ]
     ),

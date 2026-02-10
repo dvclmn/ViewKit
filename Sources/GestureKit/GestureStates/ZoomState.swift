@@ -10,12 +10,12 @@ import Foundation
 
 public struct ZoomState: CanvasGestureState {
 
-  public static var initialValue: CGFloat { 1.0 }
-  public var value: CGFloat
+  public static var initialValue: Double { 1.0 }
+  public var value: Double
   public var phase: InteractionPhase
 
   public init(
-    _ value: CGFloat = 1.0,
+    _ value: Double = 1.0,
     phase: InteractionPhase = .none
   ) {
     self.value = value
@@ -25,7 +25,7 @@ public struct ZoomState: CanvasGestureState {
 
 extension ZoomState {
 /// Note: Zoom already clamped at the gesture level
-  public func zoom(clampedTo range: ClosedRange<CGFloat>) -> CGFloat {
+  public func zoom(clampedTo range: ClosedRange<Double>) -> Double {
     value.clamped(to: range)
   }
 }

@@ -15,7 +15,6 @@ import SwiftUI
 @dynamicMemberLookup
 public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   case chromaticAberration(
-//    viewSize: CGSize,
     strength: CGFloat,  // Aka opacity
     radialStrength: CGFloat,
   )
@@ -26,9 +25,15 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   )
 
   case glitter(
-    origin: UnitPoint,
+    //    origin: UnitPoint,
     spread: CGFloat,
-    viewSize: CGSize
+  )
+
+  case crtCurvature(
+    distortion: CGFloat,
+  )
+  case crtLines(
+    density: CGFloat,
   )
 
   case filmGrain(
@@ -62,8 +67,14 @@ extension ShaderEffect {
       case .fisheye(let origin, let radius, let strength):
         [.boundingRect, .float2(origin), .float(radius), .float(strength)]
 
-      case .glitter(let origin, let spread, let viewSize):
-        [.float2(origin.toCGPoint(in: viewSize)), .float(spread)]
+      case .glitter(let spread):
+        [.boundingRect, .float(spread)]
+
+      case .crtCurvature(let distortion):
+        [.boundingRect, .float(distortion)]
+
+      case .crtLines(let density):
+        [.boundingRect, .float(density)]
 
       case .ripplePush(let l, let v):
         [.float2(l), .float2(v)]
@@ -88,40 +99,26 @@ extension ShaderEffect {
   /// [[ stitchable ]]
   /// half4 chromaticAberration(float2 position...)
   /// ```
-  public var reference: String {
+  public var reference: (shader: String, name: String) {
     switch self {
-      case .chromaticAberration: "chromaticAberration"
-      case .fisheye: "fisheye"
-      case .glitter: "glitter"
-      case .ripplePush: "ripplePush"
-      case .psych: "psych"
-      case .filmGrain: "filmGrain"
-    //      case .wavyBlur: "wavyBlur"
-    //      case .ripple: "ripple"
-    //      case .psych: "psych"
-    }
-  }
-
-  //  public var meta: Self.Meta { ShaderEffect.Meta(self) }
-
-  public var name: String {
-    switch self {
-      case .chromaticAberration: "Chromatic Abberation"
-      case .fisheye: "Fish-eye"
-      case .glitter: "Glitter"
-      case .ripplePush: "Ripple Push"
-      case .psych: "Psych"
-      case .filmGrain: "Film Grain"
+      case .chromaticAberration: ("chromaticAberration", "Chromatic Abberation")
+      case .fisheye: ("fisheye", "Fish-eye")
+      case .glitter: ("glitter", "Glitter")
+      case .crtCurvature: ("crtCurvature", "CRT Curvature")
+      case .crtLines: ("crtLines", "CRT Lines")
+      case .ripplePush: ("ripplePush", "Ripple Push")
+      case .psych: ("psych", "Pysch")
+      case .filmGrain: ("filmGrain", "Film Grain")
     }
   }
 
   /// Using the reference as the ID ensures that 'fisheye'
   /// is always the same 'item' in a ForEach, regardless of its settings.
-  public var id: String { reference }
+  public var id: String { reference.shader }
 
   /// Custom Hashable to ensure "one of each" in a Set
   public func hash(into hasher: inout Hasher) {
-    hasher.combine(reference)
+    hasher.combine(reference.shader)
   }
 
   public static func == (lhs: ShaderEffect, rhs: ShaderEffect) -> Bool {
@@ -132,53 +129,10 @@ extension ShaderEffect {
     return Shader(
       function: ShaderFunction(
         library: .bundle(.module),
-        name: reference
+        name: reference.shader
       ),
       arguments: arguments
     )
   }
 
-  /// Tip: `colorEffect` operates on individual pixel colors in isolation, whereas
-  /// `layerEffect` provides access to the entire view layer, making it possible
-  /// to sample neighboring pixels. Hence the `maxOffset` parameter.
-  ///
-  /// Shader function signatures for usage type.
-  /// All assume `[[ stitchable ]]` is already included.
-  ///
-  /// ## layerEffect:
-  /// ```
-  /// half4 name(
-  ///   float2 position,
-  ///   SwiftUI::Layer layer,
-  ///   args...
-  /// )
-  /// ```
-  ///
-  /// ## colorEffect:
-  /// ```
-  /// half4 name(
-  ///   float2 position,
-  ///   half4 color,
-  ///   args...
-  /// )
-  /// ```
-  ///
-  /// ## distortionEffect:
-  /// ```
-  /// float2 name(
-  ///   float2 position,
-  ///   args...
-  /// )
-  /// ```
-  @available(macOS 15.0, iOS 18.0, *)
-  public var usageType: Shader.UsageType {
-    switch self {
-      case .chromaticAberration: .layerEffect
-      case .ripplePush: .distortionEffect
-      case .fisheye: .distortionEffect
-      case .glitter: .layerEffect
-      case .psych: .colorEffect
-      case .filmGrain: .colorEffect
-    }
-  }
 }

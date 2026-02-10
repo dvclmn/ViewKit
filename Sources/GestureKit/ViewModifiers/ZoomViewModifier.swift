@@ -8,14 +8,14 @@
 import CoreTools
 import SwiftUI
 
-public typealias ZoomUpdate = (CGFloat, InteractionPhase) -> CGFloat?
+public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
 
 public struct ZoomModifier: ViewModifier {
   @Environment(\.canvasZoomRange) private var zoomRange
   @Environment(\.modifierKeys) private var modifierKeys
   
-  @State private var internalZoom: CGFloat            // source of truth during gesture
-  @State private var lastMagnification: CGFloat = 1   // per-gesture accumulator
+  @State private var internalZoom: Double            // source of truth during gesture
+  @State private var lastMagnification: Double = 1   // per-gesture accumulator
   @State private var isGesturing: Bool = false        // helps with external sync
   
   private let externalZoom: Binding<Double>?
@@ -23,7 +23,7 @@ public struct ZoomModifier: ViewModifier {
   let didUpdateZoom: ZoomUpdate
   
   init(
-    initial: CGFloat,
+    initial: Double,
     zoom: Binding<Double>? = nil,
     isEnabled: Bool,
     didUpdateZoom: @escaping ZoomUpdate
@@ -45,13 +45,13 @@ public struct ZoomModifier: ViewModifier {
         // External source changed (e.g. reset button / slider / programmatic change).
         // Only adopt it when we are NOT currently gesturing.
         guard !isGesturing, let newValue else { return }
-        internalZoom = CGFloat(newValue).clamped(to: rangeForZoom)
+        internalZoom = Double(newValue).clamped(to: rangeForZoom)
       }
   }
 }
 
 extension ZoomModifier {
-  private var rangeForZoom: ClosedRange<CGFloat> {
+  private var rangeForZoom: ClosedRange<Double> {
     guard let zoomRange else {
       assertionFailure("Need a zoom range to be supplied through the environment")
       return 0.0...1.0
@@ -101,7 +101,7 @@ extension View {
   ) -> some View {
     self.modifier(
       ZoomModifier(
-        initial: CGFloat(zoom.wrappedValue),
+        initial: Double(zoom.wrappedValue),
         zoom: zoom,
         isEnabled: isEnabled,
         didUpdateZoom: didUpdateZoom
@@ -111,7 +111,7 @@ extension View {
   
   /// Pure internal state + callback
   public func zoomGesture(
-    initial: CGFloat,
+    initial: Double,
     isEnabled: Bool = true,
     didUpdateZoom: @escaping ZoomUpdate = { _, _ in nil }
   ) -> some View {

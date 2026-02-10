@@ -49,22 +49,15 @@ extension ActionLineVariations {
     parameters spec: RandomisationParameters<Value>
   ) -> Self {
 
-    /// Determine angle and boundary domains. If the spec provided no bounds,
-    /// use sensible defaults.
+    /// Determine angle and boundary domains.
     let bounds = spec.domain.ranges
-//    guard !bounds.isEmpty || count > 1 else { return nil }
-    
-//    let angleRanges: [ClosedRange<Double>] = bounds.isEmpty ? [0.0...(2.0 * .pi)] : bounds
-//    let boundaryRanges: [ClosedRange<Double>] = bounds.isEmpty ? [-1.0...1.0] : bounds
 
     /// Generate stable base sequences given seed, count, and spec.
-    let baseAngles = (0..<count).map { _ in
-      sample(from: bounds, using: &generator)
-    }.sorted()
-
     let boundary = (0..<count).map { _ in
       sample(from: bounds, using: &generator)
     }
+
+    let baseAngles = boundary.sorted()
 
     return ActionLineVariations(
       baseAngles: baseAngles,

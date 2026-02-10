@@ -6,7 +6,9 @@
 //
 
 import ColourKit
+import MetaCodable
 import SwiftUI
+import Yams
 
 public enum ActionLine {}
 
@@ -14,6 +16,7 @@ extension ActionLine {
 
   /// Attributes of the full Action Lines collective.
   /// For style of individual lines, see ``ActionLine/LineStyle``
+  @Codable
   public struct Configuration: Equatable, Sendable, Codable {
 
     public var density: Double
@@ -26,9 +29,11 @@ extension ActionLine {
     public var outerShape: BoundaryStyle
     public var innerShape: BoundaryStyle
 
+    @IgnoreCoding
     public var shaderA: ShaderEffect = .chromaticSubtle
 
     /// Internal storage uses radians for calculations
+    @IgnoreCoding
     private var _rotation: Double = 0.0
 
     public init(
@@ -48,7 +53,7 @@ extension ActionLine {
 }
 
 extension ActionLine.Configuration {
-
+  /// Alternative convenience init
   public init(
     density: Double,
     minWidth: Double,
