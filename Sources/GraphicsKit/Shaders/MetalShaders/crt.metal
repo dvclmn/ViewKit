@@ -14,13 +14,16 @@ using namespace metal;
                                      float2 position,
                                      float4 bounds,
                                      float k1,          // primary radial term (negative for CRT pincushion)
-                                     float k2,          // secondary term for nuance (usually small magnitude)
-                                     float2 center     // distortion center in pixels
+                                     float k2          // secondary term for nuance (usually small magnitude)
                                      ) {
+  // float2 center     // distortion center in pixels
   // clamp output to bounds to avoid sampling outside
   bool clampToBounds = true;
+  
   // Normalize to -1..1 with aspect correction so distortion is radially symmetric
   float2 viewSize = bounds.zw;
+  // Derive center as the midpoint of the view size
+  float2 center = viewSize * 0.5;
   float2 uv = (position - center) / viewSize * 2.0; // centered UV in -2..2 range relative to center
 
   // Apply aspect correction (scale x by aspect so circle stays circle)

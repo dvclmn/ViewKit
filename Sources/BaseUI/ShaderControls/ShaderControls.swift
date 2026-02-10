@@ -56,26 +56,26 @@ public struct ShaderControls: View {
               QuickSlider(
                 "K1",
                 value: binding.k1.toBindingDouble,
-                range: 0...4
+                range: -4...4
               )
 
               QuickSlider(
                 "K2",
                 value: binding.k2.toBindingDouble,
-                range: 0...4
+                range: -4...4
               )
 
-              QuickSlider(
-                "Origin X",
-                value: binding.origin.x.toBindingDouble,
-                range: -100...100
-              )
-              
-              QuickSlider(
-                "Origin Y",
-                value: binding.origin.y.toBindingDouble,
-                range: -100...100
-              )
+//              QuickSlider(
+//                "Origin X",
+//                value: binding.origin.x.toBindingDouble,
+//                range: -500...500
+//              )
+//              
+//              QuickSlider(
+//                "Origin Y",
+//                value: binding.origin.y.toBindingDouble,
+//                range: -500...500
+//              )
 
             }
 
@@ -83,9 +83,9 @@ public struct ShaderControls: View {
             if let binding = $shader.crtLines {
 
               QuickSlider(
-                "Distortion",
+                "Density",
                 value: binding.toBindingDouble,
-                range: 0...4
+                range: 0...10
               )
             }
 

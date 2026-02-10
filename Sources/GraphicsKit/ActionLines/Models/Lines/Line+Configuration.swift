@@ -32,8 +32,9 @@ extension ActionLine {
     @IgnoreCoding
     public var shaders: [ShaderEffect] = [
       .chromaticSubtle,
+      .crtCurvature(k1: 2.0, k2: 2.0),
       .crtLines(),
-      .crtCurvature(k1: 2.0, k2: 2.0, origin: .zero),
+      .crtCurvature(k1: 2.0, k2: 2.0),
     ]
 
     //    @IgnoreCoding

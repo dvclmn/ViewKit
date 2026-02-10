@@ -51,6 +51,22 @@ extension ActionLine.Configuration {
       ),
     )
   }
+  
+  public static var wavy03: Self {
+    .init(
+      density: 20,
+      minWidth: 100,
+      maxWidth: 80,
+      cycles: 5,
+      shape: .diamond,
+      radiusInner: 2.3,
+      colourInner: RGBColour(0.25, 0.35, 0.2),
+      variantionInner: 0.5,
+      radiusOuter: 0.1,
+      colourOuter: RGBColour(0.65, 0.35, 0.1),
+      variantionOuter: 0.1
+    )
+  }
 
   public static var other: Self {
     .init(
