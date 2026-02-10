@@ -7,8 +7,31 @@
 
 import SwiftUI
 
+//struct ConditionalStorage<Value> {
+//  private let external: Binding<Value>?
+//  private let getInternal: () -> Value
+//  private let setInternal: (Value) -> Void
+//  
+//  var binding: Binding<Value> {
+//    external ?? Binding(get: getInternal, set: setInternal)
+//  }
+//  
+//  static func make(
+//    external: Binding<Value>?,
+//    transient: Binding<Value>,
+//    persisted: Binding<Value>,
+//    usesPersistence: Bool
+//  ) -> ConditionalStorage {
+//    ConditionalStorage(
+//      external: external,
+//      getInternal: { usesPersistence ? persisted.wrappedValue : transient.wrappedValue },
+//      setInternal: { usesPersistence ? (persisted.wrappedValue = $0) : (transient.wrappedValue = $0) }
+//    )
+//  }
+//}
+
 @propertyWrapper
-public struct OptionallyPersisted<Value: Sendable>: Sendable {
+public struct OptionallyPersisted<Value: Sendable>: Sendable, DynamicProperty {
   private enum Storage: Sendable {
     case external(Binding<Value>)
     case persisted(key: String, defaultValue: Value)
@@ -55,7 +78,9 @@ extension OptionallyPersisted where Value == Bool {
 
   /// External binding
   public init(binding: Binding<Value>) {
+//    print("Initialised with a binding. \(binding)")
     self.storage = .external(binding)
+
     /// Dummy initializations - these won't be used
     self._transientValue = State(initialValue: binding.wrappedValue)
     self._persistedValue = AppStorage(wrappedValue: binding.wrappedValue, "unused")
@@ -66,16 +91,18 @@ extension OptionallyPersisted where Value == Bool {
     if let key = persistenceKey {
       self.storage = .persisted(key: key, defaultValue: defaultValue)
     } else {
+//      print("No persistence key provided, using default value instead.")
       self.storage = .transient(defaultValue: defaultValue)
     }
     self._transientValue = State(initialValue: defaultValue)
     self._persistedValue = AppStorage(wrappedValue: defaultValue, persistenceKey ?? "unused")
   }
-
 }
 
 // MARK: - Alternative approach
-//private final class ToggleState: ObservableObject {
+
+//@Observable
+//private final class ToggleState {
 //  enum Source {
 //    case external(Binding<Bool>)
 //    case appStorage(AppStorage<Bool>)
@@ -88,8 +115,10 @@ extension OptionallyPersisted where Value == Bool {
 //    switch source {
 //      case .external(let binding):
 //        return binding
+//        
 //      case .appStorage(let storage):
 //        return storage.projectedValue
+//        
 //      case .state(let published):
 //        return Binding(
 //          get: { published.wrappedValue },

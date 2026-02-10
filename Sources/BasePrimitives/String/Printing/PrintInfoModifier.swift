@@ -19,7 +19,7 @@ public struct PrintInfoModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .onAppear {
-
+        guard !isPreview else { return }
         switch info {
           case .userDefaultsURL:
             if let path = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)

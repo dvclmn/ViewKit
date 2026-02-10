@@ -31,18 +31,21 @@ public struct ShaderControls: View {
   }
   public var body: some View {
 
-    ForEach($shaders) { shader in
+//    VStack(alignment: .leading, spacing: Styles.sizeHuge) {
+      ForEach($shaders) { shader in
 
-      VStack(alignment: .leading, spacing: Styles.sizeHuge) {
-        SliderGroup(shader.wrappedValue.name, spacing: Styles.sizeSmall) {
-          SingleShaderControlView(shader: shader)
-//          Divider()
+        /// This controls the space between the Slider Group header and the Slider content
+        VStack(alignment: .leading, spacing: Styles.sizeSmall) {
+          SliderGroup(shader.wrappedValue.name, spacing: Styles.sizeSmall) {
+            SingleShaderControlView(shader: shader)
+          }
         }
-      }
-      
-    }  // END foreach
-    .togglable(persistenceKey: persistenceKeyEnabled, defaultEnabled: true)
-    .environment(\.layoutPadding, Styles.sizeSmall)
+        .padding(.bottom, Styles.sizeSmall)
+
+      }  // END foreach
+      .togglable(persistenceKey: persistenceKeyEnabled, defaultEnabled: true)
+      .environment(\.layoutPadding, Styles.sizeSmall)
+//    }
 
   }
 }

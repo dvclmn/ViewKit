@@ -25,27 +25,31 @@ public struct SliderGroup<Sliders: View>: View, ValueFormattable {
   }
   public var body: some View {
 
+    if let title {
+      Text(title)
+        .font(.body)
+        //          .font(.callout.weight(.medium))
+        .foregroundStyle(.secondary)
+      //          .padding(.bottom, Styles.sizeSmall)
+    }
     Grid(
-      alignment: .leading,
+      alignment: .topLeading,
       verticalSpacing: spacing
     ) {
-      if let title {
-        Text(title)
-          .font(.body)
-//          .font(.callout.weight(.medium))
-          .foregroundStyle(.secondary)
-        //          .padding(.bottom, Styles.sizeSmall)
-      }
       content
         .environment(\.isWithinSliderGroup, true)
+
     }
+    //    .padding(.bottom, Styles.sizeMedium)
   }
 }
 
 extension SliderGroup {
+  
+  /// This controls the spacing between Grid Rows in a Slider Group
   private var spacing: CGFloat? {
     let base = verticalSpacing ?? layoutSpacing
-//    return base
-    return base.map { $0 * 1.2 }
+    //    return base
+    return base.map { $0 * 1.3 }
   }
 }

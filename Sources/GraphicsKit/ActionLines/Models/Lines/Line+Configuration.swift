@@ -29,18 +29,7 @@ extension ActionLine {
     public var outerShape: BoundaryStyle
     public var innerShape: BoundaryStyle
 
-//    @IgnoreCoding
-//    public var shaders: Set<ShaderEffect> = [
     public var shaders: [ShaderEffect] = ShaderEffect.wavyPreset
-
-    //    @IgnoreCoding
-    //    public var chrom: ShaderEffect = .chromaticSubtle
-    //
-    //    @IgnoreCoding
-    //    public var shaderB: ShaderEffect = .crtLines()
-    //
-    //    @IgnoreCoding
-    //    public var shaderC: ShaderEffect = .crtCurvature(k1: 2.0, k2: 2.0, origin: .zero)
 
     /// Internal storage uses radians for calculations
     @IgnoreCoding

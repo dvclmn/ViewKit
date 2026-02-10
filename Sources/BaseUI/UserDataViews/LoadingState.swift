@@ -14,18 +14,15 @@ public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
   @Bindable var store: Store
   let didUpdatUserData: (Store.Value) -> Void
   let content: Content
-//  let content: (Store.Value) -> Content
 
   public init(
     store: Store,
     didUpdatUserData: @escaping (Store.Value) -> Void,
     @ViewBuilder content: @escaping () -> Content
-//    @ViewBuilder content: @escaping (Store.Value) -> Content
   ) {
     self.store = store
     self.didUpdatUserData = didUpdatUserData
     self.content = content()
-//    self.content = content
   }
 
   public var body: some View {
@@ -38,9 +35,7 @@ public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
         StateView("Error loading data", message: error.localizedDescription)
 
       case .ready:
-//      case .ready(let value):
         content
-//        content(value)
           .environment(store)
           .task(id: store.userDataIfPresent) {
 

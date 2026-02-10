@@ -80,6 +80,9 @@ extension QuickSlider.SliderCore {
   private func MinMaxLabel(_ label: MinMaxLabel) -> some View {
     if let value = label.value(from: store) {
       Image(systemName: value)
+    } else {
+      Image(systemName: "eye")
+        .hidden()
     }
   }
 

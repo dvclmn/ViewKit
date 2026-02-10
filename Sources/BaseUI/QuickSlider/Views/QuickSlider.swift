@@ -29,6 +29,12 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
           SliderComponents(value: $value)
         }
         HelpText()
+//          .gridCellColumns(4)
+        //        .border(Color.green.opacity(0.3))
+
+
+        //          .gridCellAnchor(.trailing)
+        //          .border(Color.purple.opacity(0.3))
 
       } else {
         HStack {
@@ -47,7 +53,6 @@ extension QuickSlider {
       Text(helpText)
         .font(.caption2)
         .foregroundStyle(.secondary)
-//        .padding(.bottom, Styles.sizeSmall)
     }
 
   }
