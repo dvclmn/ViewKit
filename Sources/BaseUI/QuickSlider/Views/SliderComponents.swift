@@ -11,7 +11,6 @@ import SwiftUI
 extension QuickSlider {
   struct SliderComponents: View {
     @Environment(SliderHandler.self) private var store
-    @Environment(\.controlSizeOverride) private var controlSizeOverride
     @Environment(\.sliderComponents) private var sliderComponents
 
     @Environment(\.stepStyle) private var stepStyle
@@ -26,33 +25,17 @@ extension QuickSlider {
     var body: some View {
       @Bindable var store = store
 
-      // MARK: - Units
+      // MARK: - Label
       if sliderComponents.contains(.label) {
         LabelComponent()
       }
 
+      // MARK: - Stepper / Main Track
       if let step = store.step {
-        switch stepStyle {
-          case .native:
-            SliderCore(value: $value, step: step)
-
-          case .stepper:
-            HStack {
-              SliderCore(value: $value, step: nil)
-
-              Stepper(
-                store.label.text,
-                value: $value,
-                step: step,
-              )
-              .labelsHidden()
-            }
-
-          case .none:
-            SliderCore(value: $value, step: nil)
-        }
+        StepperView(step)
 
       } else {
+        // MARK: - Main Track
         SliderCore(value: $value, step: nil)
       }
 
@@ -71,11 +54,17 @@ extension QuickSlider {
 
 extension QuickSlider.SliderComponents {
 
-//  private var sliderDefault: Double? {
-//    sliderDefaultValue
-//  }
+  //  private var sliderDefault: Double? {
+  //    sliderDefaultValue
+  //  }
 
-  private var columnSpan: Int { sliderComponents.count }
+  private var columnSpan: Int {
+    let 
+    if sliderComponents == [.label, .units] {
+      
+    }
+//    sliderComponents
+  }
 
   private func handleHaptics(_ old: Double, _ new: Double) -> Bool {
     guard let defaultVal = sliderDefaultValue else {
@@ -83,6 +72,29 @@ extension QuickSlider.SliderComponents {
     }
     return HapticPreset.boundaryAndDefault(store.range.toDoubleRange, defaultValue: defaultVal).shouldFire(
       old, new)
+  }
+
+  @ViewBuilder
+  private func StepperView(_ step: Double) -> some View {
+    switch stepStyle {
+      case .native:
+        QuickSlider.SliderCore(value: $value, step: step)
+
+      case .stepper:
+        HStack {
+          QuickSlider.SliderCore(value: $value, step: nil)
+
+          Stepper(
+            store.label.text,
+            value: $value,
+            step: step,
+          )
+          .labelsHidden()
+        }
+
+      case .none:
+        QuickSlider.SliderCore(value: $value, step: nil)
+    }
   }
 
   @ViewBuilder

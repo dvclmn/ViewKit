@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ToggledViewCommon<Content: View>: View {
-  
+
   let title: String
   @Binding var isEnabled: Bool
   let content: Content
-  
+
   init(
     _ title: String,
     isEnabled: Binding<Bool>,
@@ -22,14 +22,12 @@ struct ToggledViewCommon<Content: View>: View {
     self._isEnabled = isEnabled
     self.content = content()
   }
-  
+
   var body: some View {
     VStack {
       Toggle(title, isOn: $isEnabled)
         .foregroundStyle(isEnabled ? .primary : .tertiary)
-      if isEnabled {
-        content
-      }
+      if isEnabled { content }
     }
   }
 }

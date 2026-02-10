@@ -27,49 +27,51 @@ public struct ShaderControls: View {
   }
   public var body: some View {
 
-    DisclosureSection("Shaders", persistenceKey: persistenceKeyExpanded) {
+    DisclosureSection(shader.name, persistenceKey: persistenceKeyExpanded) {
 
-      
-      switch shader {
-        case .chromaticAberration:
-          if let binding = $shader.chromaticAberration {
-            QuickSlider(
-              "Strength",
-              value: binding.strength.toBindingDouble,
-              range: 0...4
-            )
+      SliderGroup {
+        switch shader {
+          case .chromaticAberration:
+            if let binding = $shader.chromaticAberration {
 
-            QuickSlider(
-              "Fringing",
-              value: binding.radialStrength.toBindingDouble,
-              range: -40...40
-            )
-          }
+              QuickSlider(
+                "Strength",
+                value: binding.strength.toBindingDouble,
+                range: 0...4
+              )
 
-        default: StateView("Not yet implemented")
-      //
-      //
-      //        case .fisheye:
-      //
-      //
-      //        case .glitter:
-      //
-      //
-      //        case .crtCurvature:
-      //
-      //
-      //        case .crtLines:
-      //
-      //
-      //        case .filmGrain:
-      //
-      //
-      //        case .ripplePush:
-      //
-      //
-      //        case .psych:
-      //
-      //
+              QuickSlider(
+                "Fringing",
+                value: binding.radialStrength.toBindingDouble,
+                range: -40...40
+              )
+            }
+
+          default: StateView("Not yet implemented")
+        //
+        //
+        //        case .fisheye:
+        //
+        //
+        //        case .glitter:
+        //
+        //
+        //        case .crtCurvature:
+        //
+        //
+        //        case .crtLines:
+        //
+        //
+        //        case .filmGrain:
+        //
+        //
+        //        case .ripplePush:
+        //
+        //
+        //        case .psych:
+        //
+        //
+        }
       }
       //      ToggledView(persistenceKey: "areShadersEnabled") {
       //        if let binding = store.dataBinding(.standard).shaderA.chromaticAberration {
@@ -110,6 +112,7 @@ extension ShaderControls {
     ShaderControls(shader: $shader)
   }
   .formStyle(.grouped)
+  .frame(width: 300)
   // .environment(store)
 }
 #endif
