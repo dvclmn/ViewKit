@@ -60,13 +60,13 @@ public struct ShaderControls: View {
               QuickSlider(
                 "Strength",
                 value: binding.strength.toBindingDouble,
-                range: 0...10
+                range: 0...90
               )
 
               QuickSlider(
                 "Zoom",
                 value: binding.zoom.toBindingDouble,
-                range: 0...4
+                range: 0...3
               )
 
             }

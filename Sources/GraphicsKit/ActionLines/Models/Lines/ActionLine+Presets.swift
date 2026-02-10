@@ -117,7 +117,7 @@ extension ShaderEffect {
     [
       .chromaticPresetA,
 
-      .crtCurvature(strength: 1.0, zoom: 0.5),
+      .crtCurvature(strength: 10.0, zoom: 1.5),
 
       .crtLines(
         lineSpacing: 4.0,

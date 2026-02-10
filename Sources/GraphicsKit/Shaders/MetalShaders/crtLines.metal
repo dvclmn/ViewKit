@@ -8,41 +8,6 @@
 #include <metal_stdlib>
 using namespace metal;
 
-// MARK: - 1. Curvature (Distortion)
-// This function warps the screen coordinates to simulate a glass tube.
-[[ stitchable ]] float2 crtCurvature(
-                                     float2 position,
-                                     float4 bounds,
-                                     float curvatureAmount,
-                                     float zoom
-                                     ) {
-  float2 viewSize = bounds.zw;
-  float2 center = viewSize * 0.5;
-  
-  // Normalize coordinates: -1.0 (top/left) to 1.0 (bottom/right)
-  float2 uv = (position - center) / (viewSize * 0.5);
-  
-  // Aspect correction: ensures the "circle" of distortion isn't stretched
-  float aspect = viewSize.x / viewSize.y;
-  float2 uvAspect = float2(uv.x * aspect, uv.y);
-  
-  // Calculate radial distance from center
-  // Higher r2 = further from center = more distortion
-  float r2 = dot(uvAspect, uvAspect);
-  
-  // The Distortion Formula: P_distorted = P * (1 + k * r^2)
-  // We use curvatureAmount as 'k'.
-  float distortion = 1.0 + curvatureAmount * r2;
-  
-  // Apply distortion and the 'zoom' to clip the black corners
-  float2 distortedUV = uv * distortion / zoom;
-  
-  // Map back from -1..1 space to pixel space
-  float2 outPos = (distortedUV * (viewSize * 0.5)) + center;
-  
-  return outPos;
-}
-
 // MARK: - 2. CRT Effects (Lines & Mask)
 [[ stitchable ]] half4 crtLines(
                                 float2 position,

@@ -67,18 +67,6 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
 }
 
 extension ShaderEffect {
-  //  public var range: ClosedRange<CGFloat> {
-  //    switch self {
-  //      case .chromaticAberration:
-  //      case .fisheye:
-  //      case .glitter:
-  //      case .crtCurvature:
-  //      case .crtLines:
-  //      case .filmGrain:
-  //      case .ripplePush:
-  //      case .psych:
-  //    }
-  //  }
 
   public var arguments: [Shader.Argument] {
     switch self {

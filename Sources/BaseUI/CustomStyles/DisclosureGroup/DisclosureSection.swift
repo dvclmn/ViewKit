@@ -11,16 +11,19 @@ import SwiftUI
 public struct DisclosureSection<Content: View>: View {
 
   /// External override (caller fully controls state)
-  private var externalExpanded: Binding<Bool>?
+//  private var externalExpanded: Binding<Bool>?
 
   /// Internal ephemeral fallback
-  @State private var transientExpanded: Bool
+//  @State private var transientExpanded: Bool
 
   /// Internal persisted slot (only used when enabled)
-  @AppStorage private var persistedExpanded: Bool
-  private let usesPersistence: Bool
+//  @AppStorage private var persistedExpanded: Bool
+//  private let usesPersistence: Bool
 
   let title: String
+  
+  @OptionallyPersisted var isExpanded: Bool
+  
   let content: Content
 
   /// 1) External binding initialiser (caller may persist or not)
