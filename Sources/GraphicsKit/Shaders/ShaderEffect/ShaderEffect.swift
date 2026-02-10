@@ -36,7 +36,8 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     origin: CGPoint,
     strength: CGFloat,
     start: CGFloat,
-    end: CGFloat
+    end: CGFloat,
+    samples: CGFloat
   )
 
   case filmGrain(
@@ -95,8 +96,15 @@ extension ShaderEffect {
       case .crtLines(let density):
         [.boundingRect, .float(density)]
 
-      case .radialBlur(let origin, let strength, let start, let end):
-        [.boundingRect, .float2(origin), .float(strength), .float(start), .float(end)]
+      case .radialBlur(let origin, let strength, let start, let end, let samples):
+        [
+          .boundingRect,
+          .float2(origin),
+          .float(strength),
+          .float(start),
+          .float(end),
+          .float(samples),
+        ]
 
       case .ripplePush(let location, let velocity):
         [.float2(location), .float2(velocity)]
@@ -126,7 +134,7 @@ extension ShaderEffect {
       case .glitter: ("glitter", "Glitter")
       case .crtCurvature: ("crtCurvature", "CRT Curvature")
       case .crtLines: ("crtLines", "CRT Lines")
-      case .radialBlur: ("radialBlurFast", "Radial Blur")
+      case .radialBlur: ("radialBlur", "Radial Blur")  // Also radialBlurFast
       case .ripplePush: ("ripplePush", "Ripple Push")
       case .psych: ("psych", "Pysch")
       case .filmGrain: ("filmGrain", "Film Grain")

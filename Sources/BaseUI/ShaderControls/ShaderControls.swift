@@ -22,8 +22,10 @@ public struct ShaderControls: View {
     persistenceKeyEnabled: String? = nil,
   ) {
     self._shader = shader
-    self.persistenceKeyExpanded = persistenceKeyExpanded ?? "isShowingShaderControls_\(shader.wrappedValue.name)"
-    self.persistenceKeyEnabled = persistenceKeyEnabled ?? "areShaderControlsEnabled_\(shader.wrappedValue.name)"
+    self.persistenceKeyExpanded =
+      persistenceKeyExpanded ?? "isShowingShaderControls_\(shader.wrappedValue.name)"
+    self.persistenceKeyEnabled =
+      persistenceKeyEnabled ?? "areShaderControlsEnabled_\(shader.wrappedValue.name)"
   }
   public var body: some View {
 
@@ -65,18 +67,6 @@ public struct ShaderControls: View {
                 range: -4...4
               )
 
-//              QuickSlider(
-//                "Origin X",
-//                value: binding.origin.x.toBindingDouble,
-//                range: -500...500
-//              )
-//              
-//              QuickSlider(
-//                "Origin Y",
-//                value: binding.origin.y.toBindingDouble,
-//                range: -500...500
-//              )
-
             }
 
           case .crtLines:
@@ -87,6 +77,30 @@ public struct ShaderControls: View {
                 value: binding.toBindingDouble,
                 range: 0...10
               )
+            }
+
+          case .radialBlur:
+            if let binding = $shader.radialBlur {
+              QuickSlider(
+                "Blur",
+                value: binding.strength.toBindingDouble,
+                range: 0...4
+              )
+              .helpText("Control the amount of Blur")
+
+              QuickSlider(
+                "Start",
+                value: binding.start.toBindingDouble,
+                range: .unitRange,
+              )
+              .helpText("How far out from the origin does the Blur begin")
+
+              QuickSlider(
+                "End",
+                value: binding.end.toBindingDouble,
+                range: .unitRange,
+              )
+              .helpText("How far out from the origin do we reach 100% blurriness")
             }
 
           default: StateView("Not yet implemented")
