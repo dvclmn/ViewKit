@@ -57,7 +57,7 @@ extension ShaderControls {
 #Preview(traits: .size(.normal)) {
   @Previewable @State var shaders: [ShaderEffect] = [
     .chromaticPresetA,
-    .crtCurvature(strength: 2, zoom: 1),
+    .crtCurvature(strength: 2),
     .crtLines(),
 
   ]

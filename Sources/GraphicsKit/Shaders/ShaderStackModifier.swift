@@ -5,18 +5,77 @@
 //  Created by Dave Coleman on 10/2/2026.
 //
 
+import CoreTools
 import SwiftUI
+
+public struct ShaderStackModifier: ViewModifier {
+
+  let shaders: [ShaderEffect]
+  let maxOffset: CGSize
+
+  public func body(content: Content) -> some View {
+    content
+      .shaderEffect(
+        shaders[safe: 3],
+        maxOffset: maxOffset,
+        isEnabled: true
+      )
+
+      .shaderEffect(
+        shaders[safe: 2],
+        maxOffset: maxOffset,
+        isEnabled: true
+      )
+
+      .shaderEffect(
+        shaders[safe: 1],
+        maxOffset: maxOffset,
+        isEnabled: true
+      )
+
+      .shaderEffect(
+        shaders[safe: 0],
+        maxOffset: maxOffset,
+        isEnabled: true
+      )
+
+  }
+}
+extension View {
+  public func shaderStack(
+    _ shaders: ShaderEffect...,
+    maxOffset: CGSize? = nil
+  ) -> some View {
+    self.modifier(
+      ShaderStackModifier(
+        shaders: shaders,
+        maxOffset: maxOffset ?? .zero
+      )
+    )
+  }
+  public func shaderStack(
+    _ shaders: [ShaderEffect],
+    maxOffset: CGSize? = nil
+  ) -> some View {
+    self.modifier(
+      ShaderStackModifier(
+        shaders: shaders,
+        maxOffset: maxOffset ?? .zero
+      )
+    )
+  }
+}
 
 //public struct ShaderStackModifier<Content: View>: View {
 //  let content: Content
 //  let effects: [ShaderEffect]
 //  let maxOffset: CGSize
 //  let isEnabled: Bool
-//  
+//
 //  public var body: some View {
 //    applyEffects(to: content, effects: effects)
 //  }
-//  
+//
 //  @ViewBuilder
 //  private func applyEffects<V: View>(
 //    to view: V,
@@ -33,7 +92,7 @@ import SwiftUI
 //      view
 //    }
 //  }
-//  
+//
 //  @ViewBuilder
 //  private func applySingleEffect<V: View>(
 //    to view: V,

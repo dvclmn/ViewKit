@@ -13,9 +13,7 @@ public typealias FloatLineStyle = LineStyle<Double>
 
 public struct LineStyle<T: WaveFloat>: Codable, Sendable, Equatable, Hashable {
   public var colour: RGBColour
-//  public var colour: HSVColour
   public var colourSecondary: RGBColour?
-//  public var colourSecondary: HSVColour?
   public var lineWidth: T
   public var dashes: Int
   public var dashPhase: T

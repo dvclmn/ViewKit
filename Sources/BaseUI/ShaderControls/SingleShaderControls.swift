@@ -41,15 +41,15 @@ struct SingleShaderControlView: View {
 
           QuickSlider(
             "Strength",
-            value: binding.strength.toBindingDouble,
-            range: 0...90
+            value: binding.toBindingDouble,
+            range: 0...40
           )
 
-          QuickSlider(
-            "Zoom",
-            value: binding.zoom.toBindingDouble,
-            range: 0...3
-          )
+//          QuickSlider(
+//            "Zoom",
+//            value: binding.zoom.toBindingDouble,
+//            range: 0...3
+//          )
 
         }
 

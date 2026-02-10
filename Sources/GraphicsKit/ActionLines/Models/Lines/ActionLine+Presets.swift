@@ -92,15 +92,15 @@ extension ActionLine.Configuration {
 extension ShaderEffect {
   public static var wavyPreset: [ShaderEffect] {
     [
-      .chromaticSubtle,
+      .chromaticSubtle
 
       //      .crtCurvature(strength: 0.0, zoom: 0.5),
-//      .crtLines(
-//        lineSpacing: 2.0,
-//        lineIntensity: 0.5,
-//        phosphorSize: 1.0,
-//        brightness: 0.4
-//      ),
+      //      .crtLines(
+      //        lineSpacing: 2.0,
+      //        lineIntensity: 0.5,
+      //        phosphorSize: 1.0,
+      //        brightness: 0.4
+      //      ),
       //      .crtCurvature(k1: 0.5, k2: 0.5),
       //      .radialBlur(
       //        origin: .zero,
@@ -114,9 +114,6 @@ extension ShaderEffect {
 
   public static var wavyPreset02: [ShaderEffect] {
     [
-      .chromaticPresetA,
-
-      .crtCurvature(strength: 10.0, zoom: 1.5),
 
       .crtLines(
         lineSpacing: 4.0,
@@ -124,6 +121,8 @@ extension ShaderEffect {
         phosphorSize: 1.0,
         brightness: 1.8
       ),
+      
+      .crtCurvature(strength: 0.5),
 
       .radialBlur(
         origin: .zero,
@@ -132,6 +131,8 @@ extension ShaderEffect {
         end: 0.9,
         samples: 10
       ),
+      
+      .chromaticPresetA,
     ]
   }
 }

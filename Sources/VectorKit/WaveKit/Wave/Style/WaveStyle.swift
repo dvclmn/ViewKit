@@ -24,3 +24,9 @@ public struct WaveStyle<T: WaveFloat>: Codable, Sendable, Equatable, Hashable {
     self.pointStyle = point
   }
 }
+
+//extension WaveStyle {
+//  public init() {
+//    
+//  }
+//}

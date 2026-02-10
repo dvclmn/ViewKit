@@ -29,10 +29,10 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   // Strength: Suggested range: -0.1 to -0.4
   // Zoom: Suggested range: 1.0 to 1.1 (to hide edges)
   case crtCurvature(
-    strength: CGFloat = 1.0,
-    zoom: CGFloat = 0.2
-      //    k1: CGFloat,
-      //    k2: CGFloat,
+    strength: CGFloat = 0.5
+    //    zoom: CGFloat = 0.2
+    //    k1: CGFloat,
+    //    k2: CGFloat,
   )
 
   // Distance between scanlines (e.g., 3.0)
@@ -91,8 +91,8 @@ extension ShaderEffect {
       case .glitter(let spread):
         [.boundingRect, .float(spread)]
 
-      case .crtCurvature(let strength, let zoom):
-        [.boundingRect, .float(strength), .float(zoom)]
+      case .crtCurvature(let strength):
+        [.boundingRect, .float(strength)]
 
       case .crtLines(let lineSpacing, let lineIntensity, let phosphorSize, let brightness):
         [
