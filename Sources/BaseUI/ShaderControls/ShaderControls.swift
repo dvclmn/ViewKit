@@ -39,12 +39,14 @@ public struct ShaderControls: View {
                 value: binding.strength.toBindingDouble,
                 range: 0...4
               )
+              .helpText("Adjust the opacity of the color shift")
 
               QuickSlider(
                 "Fringing",
                 value: binding.radialStrength.toBindingDouble,
                 range: -40...40
               )
+              .helpText("Controls how far apart the colours shift")
             }
 
           default: StateView("Not yet implemented")

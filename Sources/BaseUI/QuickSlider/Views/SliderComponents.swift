@@ -67,7 +67,7 @@ extension QuickSlider.SliderComponents {
   }
 
   @ViewBuilder
-  private func StepperView() -> some View {
+  private func StepperView(_ step: Double) -> some View {
     switch stepStyle {
       case .native, .none:
         QuickSlider.SliderCore(value: $value)

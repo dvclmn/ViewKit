@@ -30,12 +30,16 @@ extension View {
   public func iconColour<S>(_ colour: S) -> some View where S: ShapeStyle {
     self.environment(\.iconColour, AnyShapeStyle(colour))
   }
-  
+
   public func labelWeight(_ weight: Font.Weight) -> some View {
     self.environment(\.labelWeight, weight)
   }
-  
+
   public func labelColour<S>(_ colour: S) -> some View where S: ShapeStyle {
     self.environment(\.labelColour, AnyShapeStyle(colour))
+  }
+
+  public func helpText(_ text: String) -> some View {
+    self.environment(\.helpText, text).help(text)
   }
 }

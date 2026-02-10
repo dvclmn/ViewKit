@@ -29,14 +29,34 @@ extension QuickSlider {
                 value: $value,
                 in: store.range,
                 step: step
-              ) { editing in
+              ) {
+                EmptyView()
+                
+              } minimumValueLabel: {
+                Image(systemName: "circle.outline")
+                
+              } maximumValueLabel: {
+                Image(systemName: "circle.dotted.and.circle")
+                
+              } onEditingChanged: { editing in
                 handleOnEdit(editing)
               }
+
             } else {
+
               Slider(
                 value: $value,
                 in: store.range,
-              ) { editing in
+              ) {
+                EmptyView()
+                
+              } minimumValueLabel: {
+                Image(systemName: "circle.outline")
+                
+              } maximumValueLabel: {
+                Image(systemName: "circle.dotted.and.circle")
+                
+              } onEditingChanged: { editing in
                 handleOnEdit(editing)
               }
             }
@@ -56,6 +76,8 @@ extension QuickSlider {
 }
 
 extension QuickSlider.SliderCore {
+  
+  
   private func handleOnEdit(_ didEdit: Bool) {
     let phase = SliderPhase(fromOnEditingChanged: didEdit)
     store.updatePhase(phase)

@@ -13,6 +13,8 @@ public typealias SliderOutput = (SliderPhase) -> Void
 public struct QuickSlider: View, ValueFormattable, SliderStylable {
   @Environment(\.isWithinSliderGroup) private var isWithinSliderGroup
   @Environment(\.sliderComponents) private var sliderComponents
+  @Environment(\.helpText) private var helpText
+
   @State private var store: SliderHandler
 
   @Binding var value: Double
@@ -26,11 +28,12 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
           /// Handles slider Label, Track, and Units display
           SliderComponents(value: $value)
         }
-        
+        HelpText()
+
       } else {
         HStack {
-          //          SliderMain()
           SliderComponents(value: $value)
+          HelpText()
         }
       }
     }
@@ -40,10 +43,12 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
 extension QuickSlider {
   @ViewBuilder
   private func HelpText() -> some View {
-    Text("Some help text")
-      .font(.caption2)
-      .foregroundStyle(.secondary)
-      .padding(.bottom, Styles.sizeSmall)
+    if !helpText.isEmpty {
+      Text(helpText)
+        .font(.caption2)
+        .foregroundStyle(.secondary)
+        .padding(.bottom, Styles.sizeSmall)
+    }
 
   }
 }
@@ -55,6 +60,7 @@ extension QuickSlider {
     value: Binding<Double>,
     range: ClosedRange<Double>,
     step: Double? = nil,
+    minMaxLabels: (String, String)? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
     self.init(
@@ -62,6 +68,7 @@ extension QuickSlider {
       value: value,
       range: range,
       step: step,
+      minMaxLabels: minMaxLabels,
       didChangeSlider: didChangeSlider
     )
   }
@@ -71,17 +78,16 @@ extension QuickSlider {
     value: Binding<Double>,
     range: ClosedRange<Double>,
     step: Double? = nil,
+    minMaxLabels: (String, String)? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
     self._value = value
     self._store = State(
       initialValue: SliderHandler(
-        //        value: value.wrappedValue.toDouble,
         label: label,
         range: range.toDoubleRange,
         step: step.toDoubleIfPresent,
-        //        step: step.map { Double($0) },
-        //        step: StepStyle(fromOptionalValue: step.map { Double($0) }),
+        minMaxLabels: minMaxLabels,
         didChangeSlider: didChangeSlider
       )
     )
@@ -103,20 +109,4 @@ extension QuickSlider {
       didChangeSlider: didChangeSlider
     )
   }
-
-  //  public init(
-  //    _ title: String,
-  //    value: Binding<Double>,
-  //    range: ClosedRange<Double>,
-  //    step: Double? = nil,
-  //    didChangeSlider: @escaping SliderOutput = { _ in },
-  //  ) {
-  //    self.init(
-  //      label: QuickLabel(title),
-  //      value: value,
-  //      range: range,
-  //      step: step,
-  //      didChangeSlider: didChangeSlider
-  //    )
-  //  }
 }
