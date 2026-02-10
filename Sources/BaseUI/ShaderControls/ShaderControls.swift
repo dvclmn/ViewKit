@@ -44,7 +44,8 @@ public struct ShaderControls: View {
               QuickSlider(
                 "Fringing",
                 value: binding.radialStrength.toBindingDouble,
-                range: -40...40
+                range: -40...40,
+                minMaxLabels: ("circle.dotted", "circle.dotted.and.circle")
               )
               .helpText("Controls how far apart the colours shift")
             }

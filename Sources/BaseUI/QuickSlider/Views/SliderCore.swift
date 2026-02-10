@@ -31,13 +31,13 @@ extension QuickSlider {
                 step: step
               ) {
                 EmptyView()
-                
+
               } minimumValueLabel: {
-                Image(systemName: "circle.outline")
-                
+                MinMaxLabel(.min)
+
               } maximumValueLabel: {
-                Image(systemName: "circle.dotted.and.circle")
-                
+                MinMaxLabel(.max)
+
               } onEditingChanged: { editing in
                 handleOnEdit(editing)
               }
@@ -49,13 +49,13 @@ extension QuickSlider {
                 in: store.range,
               ) {
                 EmptyView()
-                
+
               } minimumValueLabel: {
-                Image(systemName: "circle.outline")
-                
+                MinMaxLabel(.min)
+
               } maximumValueLabel: {
-                Image(systemName: "circle.dotted.and.circle")
-                
+                MinMaxLabel(.max)
+
               } onEditingChanged: { editing in
                 handleOnEdit(editing)
               }
@@ -76,10 +76,27 @@ extension QuickSlider {
 }
 
 extension QuickSlider.SliderCore {
-  
-  
+  @ViewBuilder
+  private func MinMaxLabel(_ label: MinMaxLabel) -> some View {
+    if let value = label.value(from: store) {
+      Image(systemName: value)
+    }
+  }
+
   private func handleOnEdit(_ didEdit: Bool) {
     let phase = SliderPhase(fromOnEditingChanged: didEdit)
     store.updatePhase(phase)
+  }
+}
+
+enum MinMaxLabel {
+  case min
+  case max
+
+  func value(from store: SliderHandler) -> String? {
+    switch self {
+      case .min: store.minMaxLabels?.0
+      case .max: store.minMaxLabels?.1
+    }
   }
 }
