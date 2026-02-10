@@ -50,6 +50,7 @@ extension ShaderEffect {
       case .glitter: .layerEffect
       case .crtCurvature: .distortionEffect
       case .crtLines: .colorEffect
+      case .radialBlur: .layerEffect
       case .psych: .colorEffect
       case .filmGrain: .colorEffect
     }

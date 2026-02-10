@@ -40,6 +40,33 @@ extension Binding where Value == Int {
   }
 }
 
+extension Binding {
+  //  public func toBindingArray() -> Binding<[Value]> where Value == Set<Self.Element> {
+  //    Binding<[Value]>(
+  //      get: { Array(wrappedValue) },
+  //      set: { wrappedValue = Array($0) }
+  //    )
+  //  }
+
+//  public func toBindingArray() -> Binding<Value> where Value: MutableCollection, Value: Comparable {
+//    Binding<Value>(
+//      get: {
+//        let thing = self.wrappedValue
+//        thing.sorted(by: <#T##(Value.Element, Value.Element) throws -> Bool#>)
+////        Array(arrayLiteral: wrappedValue).sorted()
+//      },
+//      set: { wrappedValue = Set($0) }
+//    )
+//  }
+  
+//  public func toBindingArray() -> Binding<Value> where Value: Hashable, Value == [Element], Element: Comparable {
+//    Binding<Value>(
+//      get: { Array(wrappedValue).sorted() },
+//      set: { wrappedValue = Set($0) }
+//    )
+//  }
+}
+
 extension Binding where Value: BinaryFloatingPoint & Sendable {
   //  public func clampedIfNeeded(to range: ClosedRange<Value>?) -> Binding<Value> {
   //    guard let range else { return self }

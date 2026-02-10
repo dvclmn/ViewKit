@@ -30,11 +30,12 @@ extension ActionLine {
     public var innerShape: BoundaryStyle
 
     @IgnoreCoding
+//    public var shaders: Set<ShaderEffect> = [
     public var shaders: [ShaderEffect] = [
       .chromaticSubtle,
       .crtCurvature(k1: 2.0, k2: 2.0),
       .crtLines(),
-      .crtCurvature(k1: 2.0, k2: 2.0),
+      .crtCurvature(k1: 0.5, k2: 0.5),
     ]
 
     //    @IgnoreCoding

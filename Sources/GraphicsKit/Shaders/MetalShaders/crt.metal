@@ -55,7 +55,7 @@ using namespace metal;
   return outPos;
 }
 
-// Distortion effect
+// MARK: - Distortion Effect
 [[ stitchable ]] half4 crtLines(
                                 float2 position,
                                 half4 color,
@@ -66,11 +66,15 @@ using namespace metal;
   // We use a sine wave based on the Y position to create the dark gaps
   float2 viewSize = bounds.zw;
   float scanlineFrequency = viewSize.y * density; // Adjust for density
-  float scanline = 0.8 + 0.2 * sin(position.y * scanlineFrequency);
+  float brightness = 1.4;
+  float scanline = brightness + 0.2 * sin(position.y * scanlineFrequency);
   
   // 2. Simple Aperture Grille (Vertical lines)
-  float grilleFrequency = viewSize.x * 2.0;
-  float grille = 0.9 + 0.1 * sin(position.x * grilleFrequency);
+  float verticalLineDensity = 1.0;
+  float grilleFrequency = viewSize.x * verticalLineDensity;
+  float something = 0.9; // brightness again?
+  float anotherThing = 0.2;
+  float grille = something + anotherThing * sin(position.x * grilleFrequency);
   
   // 3. Combine and boost "glow"
   half4 result = color * scanline * grille;

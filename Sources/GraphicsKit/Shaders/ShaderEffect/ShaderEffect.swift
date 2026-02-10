@@ -29,9 +29,15 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   case crtCurvature(
     k1: CGFloat,
     k2: CGFloat,
-//    origin: CGPoint
   )
   case crtLines(density: CGFloat = 1.5)
+
+  case radialBlur(
+    origin: CGPoint,
+    strength: CGFloat,
+    start: CGFloat,
+    end: CGFloat
+  )
 
   case filmGrain(
     time: CGFloat,
@@ -48,8 +54,8 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   case psych(
     time: CGFloat
   )
-  
-//  case noShader
+
+  //  case noShader
 }
 
 extension ShaderEffect {
@@ -83,11 +89,14 @@ extension ShaderEffect {
         [.boundingRect, .float(spread)]
 
       case .crtCurvature(let k1, let k2):
-//      case .crtCurvature(let k1, let k2, let origin):
+        //      case .crtCurvature(let k1, let k2, let origin):
         [.boundingRect, .float(k1), .float(k2)]
 
       case .crtLines(let density):
         [.boundingRect, .float(density)]
+
+      case .radialBlur(let origin, let strength, let start, let end):
+        [.boundingRect, .float2(origin), .float(strength), .float(start), .float(end)]
 
       case .ripplePush(let location, let velocity):
         [.float2(location), .float2(velocity)]
@@ -97,8 +106,8 @@ extension ShaderEffect {
 
       case .filmGrain(let time, let size, let intensity, let colour):
         [.float(time), .float(size), .float(intensity), .float(colour)]
-        
-//      case .noShader: []
+
+    //      case .noShader: []
     }
   }
 }
@@ -117,10 +126,11 @@ extension ShaderEffect {
       case .glitter: ("glitter", "Glitter")
       case .crtCurvature: ("crtCurvature", "CRT Curvature")
       case .crtLines: ("crtLines", "CRT Lines")
+      case .radialBlur: ("radialBlurFast", "Radial Blur")
       case .ripplePush: ("ripplePush", "Ripple Push")
       case .psych: ("psych", "Pysch")
       case .filmGrain: ("filmGrain", "Film Grain")
-//      case .noShader: ("noShader", "No shader")
+    //      case .noShader: ("noShader", "No shader")
     }
   }
 
