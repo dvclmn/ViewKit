@@ -25,6 +25,28 @@ public struct SliderComponents: OptionSet, Sendable {
   public static let noUnits: Self = [label, .track, .thumb]
 }
 
+extension SliderComponents {
+  public var columnCount: Int {
+    /// Help text is vertical-only; ignore it for horizontal layout.
+    let hasLabel = contains(.label)
+    let hasUnits = contains(.units)
+    let hasTrack = contains(.track)
+
+    /// Track (with or without thumb) occupies a single column.
+    guard hasTrack else {
+      /// No track: fall back to counting visible horizontal components.
+      /// Keep a sensible minimum of 1 to avoid zero-column layouts.
+      let count = (hasLabel ? 1 : 0) + (hasUnits ? 1 : 0)
+      return max(count, 1)
+    }
+    /// Base 1 column for the track, plus optional label and units.
+    var count = 1
+    if hasLabel { count += 1 }
+    if hasUnits { count += 1 }
+    return max(count, 1)
+  }
+}
+
 public enum SliderPhase {
   case dragging
   case idle

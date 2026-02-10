@@ -14,7 +14,6 @@ extension QuickSlider {
     @Environment(\.sliderStyle) private var sliderStyle
 
     @Binding var value: Double
-    let step: Double?
 
     var body: some View {
 
@@ -25,7 +24,7 @@ extension QuickSlider {
           @Bindable var store = store
 
           Group {
-            if let step {
+            if let step = store.step {
               Slider(
                 value: $value,
                 in: store.range,
@@ -57,10 +56,6 @@ extension QuickSlider {
 }
 
 extension QuickSlider.SliderCore {
-//  private var sliderRange: ClosedRange<Double> {
-//    Value(store.range.lowerBound)...Value(store.range.upperBound)
-//  }
-
   private func handleOnEdit(_ didEdit: Bool) {
     let phase = SliderPhase(fromOnEditingChanged: didEdit)
     store.updatePhase(phase)

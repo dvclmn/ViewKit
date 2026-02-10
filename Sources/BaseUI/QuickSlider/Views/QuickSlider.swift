@@ -21,13 +21,15 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
 
     Group {
       if isWithinSliderGroup {
+        //        VStack {
         GridRow {
           /// Handles slider Label, Track, and Units display
           SliderComponents(value: $value)
         }
-
+        
       } else {
         HStack {
+          //          SliderMain()
           SliderComponents(value: $value)
         }
       }
@@ -35,7 +37,16 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
     .environment(store)
   }
 }
+extension QuickSlider {
+  @ViewBuilder
+  private func HelpText() -> some View {
+    Text("Some help text")
+      .font(.caption2)
+      .foregroundStyle(.secondary)
+      .padding(.bottom, Styles.sizeSmall)
 
+  }
+}
 // MARK: - Initialisers
 extension QuickSlider {
 

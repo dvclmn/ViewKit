@@ -36,7 +36,7 @@ extension QuickSlider {
 
       } else {
         // MARK: - Main Track
-        SliderCore(value: $value, step: nil)
+        SliderCore(value: $value)
       }
 
       // MARK: - Units
@@ -58,14 +58,6 @@ extension QuickSlider.SliderComponents {
   //    sliderDefaultValue
   //  }
 
-  private var columnSpan: Int {
-    let 
-    if sliderComponents == [.label, .units] {
-      
-    }
-//    sliderComponents
-  }
-
   private func handleHaptics(_ old: Double, _ new: Double) -> Bool {
     guard let defaultVal = sliderDefaultValue else {
       return HapticPreset.boundary(store.range.toDoubleRange).shouldFire(old, new)
@@ -75,14 +67,14 @@ extension QuickSlider.SliderComponents {
   }
 
   @ViewBuilder
-  private func StepperView(_ step: Double) -> some View {
+  private func StepperView() -> some View {
     switch stepStyle {
-      case .native:
-        QuickSlider.SliderCore(value: $value, step: step)
+      case .native, .none:
+        QuickSlider.SliderCore(value: $value)
 
       case .stepper:
         HStack {
-          QuickSlider.SliderCore(value: $value, step: nil)
+          QuickSlider.SliderCore(value: $value)
 
           Stepper(
             store.label.text,
@@ -91,9 +83,6 @@ extension QuickSlider.SliderComponents {
           )
           .labelsHidden()
         }
-
-      case .none:
-        QuickSlider.SliderCore(value: $value, step: nil)
     }
   }
 
