@@ -14,7 +14,6 @@ struct ToggledViewModifier: ViewModifier {
   let defaultEnabled: Bool
 
   func body(content: Content) -> some View {
-
     ToggledViewCommon<Content>(title, isEnabled: $isEnabled) {
       content
     }

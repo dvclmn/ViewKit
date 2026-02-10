@@ -19,13 +19,13 @@ public struct FilledShape<
 
   public init(
     _ shape: S,
-    _ content: Style,
+    style content: Style,
     strokeColour: StyleStroke? = nil,
     lineWidth: CGFloat = 1.0
   ) {
     self.shape = shape
     self.content = content
-    
+
     if let strokeColour {
       self.strokeColour = AnyShapeStyle(strokeColour)
     } else {

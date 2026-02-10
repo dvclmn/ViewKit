@@ -30,7 +30,7 @@ public struct SliderThumb<ThumbShape: InsettableShape>: View {
 
     FilledShape(
       shape,
-      Color.gray,
+      style: Color.gray,
       strokeColour: strokeGradient().opacity(0.32)
     )
 

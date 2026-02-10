@@ -47,7 +47,7 @@ extension QuickSlider {
       Text(helpText)
         .font(.caption2)
         .foregroundStyle(.secondary)
-        .padding(.bottom, Styles.sizeSmall)
+//        .padding(.bottom, Styles.sizeSmall)
     }
 
   }

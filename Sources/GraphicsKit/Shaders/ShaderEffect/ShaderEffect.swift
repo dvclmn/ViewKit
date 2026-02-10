@@ -26,17 +26,24 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
 
   case glitter(spread: CGFloat, )
 
+  // Strength: Suggested range: -0.1 to -0.4
+  // Zoom: Suggested range: 1.0 to 1.1 (to hide edges)
   case crtCurvature(
-    strength: CGFloat,  // Suggested range: -0.1 to -0.4
-    zoom: CGFloat  // Suggested range: 1.0 to 1.1 (to hide edges)
+    strength: CGFloat = 1.0,
+    zoom: CGFloat = 0.2
       //    k1: CGFloat,
       //    k2: CGFloat,
   )
+
+  // Distance between scanlines (e.g., 3.0)
+  // Darkening strength (0.0 to 1.0)
+  // Width of the vertical grille (e.g., 2.0),
+  // Final gain to offset dark lines (e.g., 1.2)
   case crtLines(
-    lineSpacing: CGFloat,  // Distance between scanlines (e.g., 3.0)
-    lineIntensity: CGFloat,  // Darkening strength (0.0 to 1.0)
-    phosphorSize: CGFloat,  // Width of the vertical grille (e.g., 2.0),
-    brightness: CGFloat  // Final gain to offset dark lines (e.g., 1.2)
+    lineSpacing: CGFloat = 1.0,
+    lineIntensity: CGFloat = 1.0,
+    phosphorSize: CGFloat = 1.0,
+    brightness: CGFloat = 1.0
   )
 
   case radialBlur(

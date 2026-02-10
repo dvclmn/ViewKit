@@ -16,27 +16,36 @@ public struct SliderGroup<Sliders: View>: View, ValueFormattable {
 
   public init(
     _ title: String? = nil,
-    verticalSpacing: CGFloat? = nil,
+    spacing: CGFloat? = nil,
     @ViewBuilder content: @escaping () -> Sliders
   ) {
     self.title = title
-    self.verticalSpacing = verticalSpacing
+    self.verticalSpacing = spacing
     self.content = content()
   }
   public var body: some View {
 
     Grid(
       alignment: .leading,
-      verticalSpacing: verticalSpacing ?? layoutSpacing
+      verticalSpacing: spacing
     ) {
       if let title {
         Text(title)
-          .font(.callout.weight(.medium))
+          .font(.body)
+//          .font(.callout.weight(.medium))
           .foregroundStyle(.secondary)
-          .padding(.bottom, Styles.sizeSmall)
+        //          .padding(.bottom, Styles.sizeSmall)
       }
       content
         .environment(\.isWithinSliderGroup, true)
     }
+  }
+}
+
+extension SliderGroup {
+  private var spacing: CGFloat? {
+    let base = verticalSpacing ?? layoutSpacing
+//    return base
+    return base.map { $0 * 1.2 }
   }
 }

@@ -60,7 +60,7 @@ extension Array where Element == ShaderEffect {
 
         self.append(newValue)
       } else {
-        self[idx] = newValue
+        self[safe: idx] = newValue
       }
     }
   }
@@ -85,11 +85,11 @@ extension Array where Element == ShaderEffect {
 
   /// A placeholder ShaderEffect used when expanding the array or writing `nil`.
   /// Replace this with something appropriate for your app (e.g., a no-op shader).
-//  private static var placeholderShader: ShaderEffect {
-//    // If you have a real no-op ShaderEffect, return it here.
-//    // For now we assume `ShaderEffect()` is constructible; adjust if needed.
-//    return ShaderEffect.noShader
-//  }
+  //  private static var placeholderShader: ShaderEffect {
+  //    // If you have a real no-op ShaderEffect, return it here.
+  //    // For now we assume `ShaderEffect()` is constructible; adjust if needed.
+  //    return ShaderEffect.noShader
+  //  }
 }
 /// If you have an `ActionLine.Configuration` type with `var shaders: [ShaderEffect]`,
 /// you can add convenience forwarding here once that type is available in this module.

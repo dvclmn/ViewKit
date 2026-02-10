@@ -27,12 +27,12 @@ public struct AnotherColourPicker: View {
   }
   public var body: some View {
 
-    DisclosureSection("Colour Picker", isExpanded: $isColourPickerExpanded) {
+    DisclosureSection("Colour Picker", persistenceKey: "isColourPickerExpanded") {
 //    DisclosureGroup("Picker", isExpanded: $isColourPickerExpanded) {
       SquareColourPicker($colour, size: pickerSize)
     }
     
-    DisclosureSection("Sliders", isExpanded: $areColourSlidersExpanded) {
+    DisclosureSection("Sliders", persistenceKey: "areColourSlidersExpanded") {
       ColourSliderGroup($colour, kind: kind)
       
     }

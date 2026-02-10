@@ -55,10 +55,10 @@ extension ActionLine.Configuration {
   public static var wavy03: Self {
     .init(
       density: 20,
-      minWidth: 100,
+      minWidth: 10,
       maxWidth: 80,
       cycles: 5,
-      shape: .diamond,
+      shape: .wave(strength: 2, sampleCount: 20),
       radiusInner: 2.3,
       colourInner: RGBColour(0.25, 0.35, 0.2),
       variantionInner: 0.5,
@@ -94,22 +94,21 @@ extension ShaderEffect {
     [
       .chromaticSubtle,
 
-      .crtCurvature(strength: 0.0, zoom: 0.5),
-      //      .crtCurvature(k1: 2.0, k2: 2.0),
-      .crtLines(
-        lineSpacing: 2.0,
-        lineIntensity: 0.5,
-        phosphorSize: 1.0,
-        brightness: 0.4
-      ),
+      //      .crtCurvature(strength: 0.0, zoom: 0.5),
+//      .crtLines(
+//        lineSpacing: 2.0,
+//        lineIntensity: 0.5,
+//        phosphorSize: 1.0,
+//        brightness: 0.4
+//      ),
       //      .crtCurvature(k1: 0.5, k2: 0.5),
-      .radialBlur(
-        origin: .zero,
-        strength: 2.0,
-        start: 0.7,
-        end: 0.9,
-        samples: 10
-      ),
+      //      .radialBlur(
+      //        origin: .zero,
+      //        strength: 2.0,
+      //        start: 0.7,
+      //        end: 0.9,
+      //        samples: 10
+      //      ),
     ]
   }
 

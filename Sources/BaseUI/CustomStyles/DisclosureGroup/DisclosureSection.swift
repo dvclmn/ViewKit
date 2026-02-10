@@ -31,7 +31,9 @@ public struct DisclosureSection<Content: View>: View {
 
     Section {
       if isExpanded {
-        content
+//        VStack(alignment: .leading, spacing: Styles.sizeMedium) {
+          content
+//        }
       } else {
 
         Label("Hidden", systemImage: "eye")
