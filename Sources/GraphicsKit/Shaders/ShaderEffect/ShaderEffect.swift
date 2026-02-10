@@ -24,9 +24,13 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     strength: CGFloat
   )
 
-  case glitter(spread: CGFloat,)
+  case glitter(spread: CGFloat, )
 
-  case crtCurvature(distortion: CGFloat = 0.05)
+  case crtCurvature(
+    k1: CGFloat,
+    k2: CGFloat,
+    origin: CGPoint
+  )
   case crtLines(density: CGFloat = 1.5)
 
   case filmGrain(
@@ -47,19 +51,19 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
 }
 
 extension ShaderEffect {
-//  public var range: ClosedRange<CGFloat> {
-//    switch self {
-//      case .chromaticAberration:
-//      case .fisheye:
-//      case .glitter:
-//      case .crtCurvature:
-//      case .crtLines:
-//      case .filmGrain:
-//      case .ripplePush:
-//      case .psych:
-//    }
-//  }
-  
+  //  public var range: ClosedRange<CGFloat> {
+  //    switch self {
+  //      case .chromaticAberration:
+  //      case .fisheye:
+  //      case .glitter:
+  //      case .crtCurvature:
+  //      case .crtLines:
+  //      case .filmGrain:
+  //      case .ripplePush:
+  //      case .psych:
+  //    }
+  //  }
+
   public var arguments: [Shader.Argument] {
     switch self {
       /// Haven't yet exposed all shader controls to this case
@@ -76,8 +80,8 @@ extension ShaderEffect {
       case .glitter(let spread):
         [.boundingRect, .float(spread)]
 
-      case .crtCurvature(let distortion):
-        [.boundingRect, .float(distortion)]
+      case .crtCurvature(let k1, let k2, let origin):
+        [.boundingRect, .float(k1), .float(k2), .float2(origin)]
 
       case .crtLines(let density):
         [.boundingRect, .float(density)]

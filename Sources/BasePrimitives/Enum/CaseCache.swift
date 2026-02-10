@@ -5,38 +5,37 @@
 //  Created by Dave Coleman on 9/2/2026.
 //
 
-import SwiftUI
 import CasePaths
-
+import SwiftUI
 
 /// An alternative to the below `MetaCache`
 @MainActor
 @Observable
 public final class CasePayloadCache<Enum: MetaEnum> {
-  
+
   public var selectedMeta: Enum.Meta
   @ObservationIgnored private var lastByMeta: [Enum.Meta: Enum]
-  
+
   public init(initialValue: Enum) {
     self.selectedMeta = initialValue.meta
     self.lastByMeta = [initialValue.meta: initialValue]
   }
-  
+
   public func select(_ newMeta: Enum.Meta, binding: Binding<Enum>) {
     let oldValue = binding.wrappedValue
     let oldMeta = oldValue.meta
     guard oldMeta != newMeta else { return }
-    
-    // Remember what we’re leaving.
+
+    /// Remember what we’re leaving.
     lastByMeta[oldMeta] = oldValue
-    
-    // Restore if we’ve seen this case before, else create a default.
+
+    /// Restore if we’ve seen this case before, else create a default.
     if let restored = lastByMeta[newMeta] {
       binding.wrappedValue = restored
     } else if let fresh = Enum(fromMeta: newMeta) {
       binding.wrappedValue = fresh
     }
-    
+
     selectedMeta = newMeta
   }
 }

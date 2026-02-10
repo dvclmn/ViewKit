@@ -190,6 +190,7 @@ let package = Package(
         .module(.primitives),
         .module(.enumMacros),
         .sharing,
+        .casePaths,
       ],
     ),
 

@@ -12,18 +12,18 @@ import SwiftUI
 
 public struct ShaderControls: View {
 
-  // @Environment(\.viewportSize) private var viewportSize
   @Binding var shader: ShaderEffect
   let persistenceKeyExpanded: String
   let persistenceKeyEnabled: String
+
   public init(
     shader: Binding<ShaderEffect>,
     persistenceKeyExpanded: String? = nil,
     persistenceKeyEnabled: String? = nil,
   ) {
     self._shader = shader
-    self.persistenceKeyExpanded = persistenceKeyExpanded ?? "isShowingShaderControls"
-    self.persistenceKeyEnabled = persistenceKeyEnabled ?? "areShaderControlsEnabled"
+    self.persistenceKeyExpanded = persistenceKeyExpanded ?? "isShowingShaderControls_\(shader.wrappedValue.name)"
+    self.persistenceKeyEnabled = persistenceKeyEnabled ?? "areShaderControlsEnabled_\(shader.wrappedValue.name)"
   }
   public var body: some View {
 
@@ -48,6 +48,45 @@ public struct ShaderControls: View {
                 minMaxLabels: ("circle.dotted", "circle.dotted.and.circle")
               )
               .helpText("Controls how far apart the colours shift")
+            }
+
+          case .crtCurvature:
+            if let binding = $shader.crtCurvature {
+
+              QuickSlider(
+                "K1",
+                value: binding.k1.toBindingDouble,
+                range: 0...4
+              )
+
+              QuickSlider(
+                "K2",
+                value: binding.k2.toBindingDouble,
+                range: 0...4
+              )
+
+              QuickSlider(
+                "Origin X",
+                value: binding.origin.x.toBindingDouble,
+                range: -100...100
+              )
+              
+              QuickSlider(
+                "Origin Y",
+                value: binding.origin.y.toBindingDouble,
+                range: -100...100
+              )
+
+            }
+
+          case .crtLines:
+            if let binding = $shader.crtLines {
+
+              QuickSlider(
+                "Distortion",
+                value: binding.toBindingDouble,
+                range: 0...4
+              )
             }
 
           default: StateView("Not yet implemented")

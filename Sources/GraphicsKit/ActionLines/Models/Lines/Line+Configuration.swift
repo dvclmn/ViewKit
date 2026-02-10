@@ -30,7 +30,20 @@ extension ActionLine {
     public var innerShape: BoundaryStyle
 
     @IgnoreCoding
-    public var shaderA: ShaderEffect = .chromaticSubtle
+    public var shaders: [ShaderEffect] = [
+      .chromaticSubtle,
+      .crtLines(),
+      .crtCurvature(k1: 2.0, k2: 2.0, origin: .zero),
+    ]
+
+    //    @IgnoreCoding
+    //    public var chrom: ShaderEffect = .chromaticSubtle
+    //
+    //    @IgnoreCoding
+    //    public var shaderB: ShaderEffect = .crtLines()
+    //
+    //    @IgnoreCoding
+    //    public var shaderC: ShaderEffect = .crtCurvature(k1: 2.0, k2: 2.0, origin: .zero)
 
     /// Internal storage uses radians for calculations
     @IgnoreCoding
