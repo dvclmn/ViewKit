@@ -12,7 +12,6 @@ import Foundation
 /// WaveRegistry.register(VerticalWave.self)
 /// WaveRegistry.register(DotRadiusWave.self)
 /// WaveRegistry.register(HorizontalWave.self)
-/// WaveRegistry.register(MainWave.self)
 /// ```
 ///
 /// Then ``WaveStack/snapshot()`` iterates over registered keys
