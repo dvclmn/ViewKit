@@ -14,14 +14,9 @@ public struct ColourSliders: View {
   @State private var isHovering: Bool = false
 
   @Binding var colour: RGBColour
-  //  let kind: ColourModelKind
 
-  public init(
-    _ colour: Binding<RGBColour>,
-    //    kind: ColourModelKind
-  ) {
+  public init(_ colour: Binding<RGBColour>) {
     self._colour = colour
-    //    self.kind = kind
   }
 
   public var body: some View {
@@ -102,7 +97,8 @@ extension ColourSliders {
 #Preview(traits: .size(.normal)) {
   @Previewable @State var colour = RGBColour.green
   Form {
-    ColourSliders($colour, kind: .rgb)
+    ColourSliders($colour)
+      .environment(\.activeColourModel, .constant(.rgb))
   }
   .formStyle(.grouped)
   .padding()
