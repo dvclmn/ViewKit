@@ -12,9 +12,9 @@ extension CheckerBoardBuilder {
   package var width: CGFloat { size.width }
   package var height: CGFloat { size.height }
 
-  package var offset: CGSize { config.offset }
-  package var offsetX: CGFloat { config.offset.width }
-  package var offsetY: CGFloat { config.offset.height }
+  public var offset: CGSize { config.offset }
+  package var offsetX: CGFloat { offset.width }
+  package var offsetY: CGFloat { offset.height }
 
   package var cellSize: CGFloat {
     config.size.clamped(to: config.sizeRange)
@@ -28,7 +28,7 @@ extension CheckerBoardBuilder {
 
   package var absVanishingPoint: CGPoint {
     vanishingPoint.toCGPoint(in: size).adjustBoth {
-      ($0 + width * 0.5, $1 + height * 0.48) // Optical adjustment
+      ($0 + width * 0.5, $1 + height * 0.48)  // Optical adjustment
     }
   }
 

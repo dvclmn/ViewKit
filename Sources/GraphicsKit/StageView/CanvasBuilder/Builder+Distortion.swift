@@ -16,7 +16,7 @@ import Foundation
 /// Basically, how far away is the 'camera', from the geometry
 @CasePathable
 @dynamicMemberLookup
-enum DistortionModel: Codable, Sendable, Equatable, Hashable {
+public enum DistortionModel: Codable, Sendable, Equatable, Hashable {
   /// The original one — `scale = 1 / (1 + k*r))`
   case radialProjective(strength: CGFloat)
 
@@ -25,11 +25,11 @@ enum DistortionModel: Codable, Sendable, Equatable, Hashable {
   case planarPerspective(strength: CGFloat)
   case none
 
-  static let radialDefault: Self = .radialProjective(strength: 0.5)
+  public static let radialDefault: Self = .radialProjective(strength: 0.5)
 }
 
 extension DistortionModel {
-  var strengthValue: CGFloat? {
+  public var strengthValue: CGFloat? {
     switch self {
       case .radialProjective(let strength): strength
       case .radialPolynomial(let strength): strength

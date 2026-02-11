@@ -18,7 +18,7 @@ extension CheckerBoardBuilder {
   private var baseLimits: Int { 5000 }
   private var drawDistance: Int { config.maxDrawDistance }
 
-  package mutating func drawGrid(_ draw: (Path, Color) -> Void) {
+  public mutating func drawGrid(_ draw: (Path, Color) -> Void) {
 
     guard offsetX.isFinite && offsetY.isFinite else { return }
 

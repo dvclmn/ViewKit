@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CheckerBoardBuilder {
+public struct CheckerBoardBuilder {
   var rows: [Int] = []
   var cols: [Int] = []
 
@@ -23,7 +23,7 @@ struct CheckerBoardBuilder {
   let size: CGSize
   let config: StageViewConfig
 
-  init(
+  public init(
     size: CGSize,
     config: StageViewConfig
   ) {

@@ -7,6 +7,7 @@
 
 import ColourKit
 import SwiftUI
+import CoreTools
 
 public struct StageViewConfig: Codable, Sendable, Equatable, Hashable {
   var fishEye: ShaderEffect = .fisheyePresetA
@@ -23,13 +24,13 @@ public struct StageViewConfig: Codable, Sendable, Equatable, Hashable {
   var size: Double
   var sizeRange: ClosedRange<Double> = 10...100
 
-  var offset: CGSize
+  public var offset: CGSize
   var gap: Double
   var width: Double
 
-  var distortion: DistortionModel
-  var vanishingPoint: UnitPoint
-  var vanishingPointRange: ClosedRange<CGFloat>
+  public var distortion: DistortionModel
+  public var vanishingPoint: UnitPoint
+  public var vanishingPointRange: ClosedRange<CGFloat>
 
   var degrees: Double
 
