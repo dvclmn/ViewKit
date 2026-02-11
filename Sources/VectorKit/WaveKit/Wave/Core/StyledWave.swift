@@ -11,9 +11,6 @@ import Foundation
 /// If applying a ``WaveStyle`` to *multiple* Waves, prefer holding an instance
 /// of `WaveStyle` alongside the Waves, rather than using this type.
 public struct StyledWave: WaveShaped, Hashable, Codable, Equatable, Identifiable {
-  public typealias Value = Double
-//  public typealias Value = Float
-  
   public var id: FloatWave.ID { wave.id }
   public var wave: FloatWave
   public var config: WaveConfig
@@ -34,6 +31,6 @@ extension StyledWave {
   }
   
   public var configuredWave: ConfiguredWave { .init(wave, config: config) }
-  public var dotRadius: Value { style.pointStyle.radius }
-  public var lineWidth: Value { style.lineStyle.lineWidth }
+  public var dotRadius: Double { style.pointStyle.radius }
+  public var lineWidth: Double { style.lineStyle.lineWidth }
 }
