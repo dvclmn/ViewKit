@@ -7,7 +7,17 @@
 
 import Foundation
 
-public enum ToggleKind {
+public enum ToggleKind: String {
   case expanded
   case enabled
+}
+
+extension ToggleKind {
+  /// Suffix used for the camelCase style builder (e.g. "Enabled", "Expanded")
+//  package var camelSuffix: String {
+//    switch self {
+//      case .enabled: return "Enabled"
+//      case .expanded: return "Expanded"
+//    }
+//  }
 }

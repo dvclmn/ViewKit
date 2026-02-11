@@ -51,7 +51,7 @@ import Foundation
 /// ```
 public protocol PersistenceKey {
   associatedtype Value: Sendable
-  
+
   /// Naming guide example: {domain} + {section} + {kind}
   /// `breathingWaves.shaders.enabled`
   static var storageKey: String { get }
@@ -61,29 +61,27 @@ public protocol PersistenceKey {
 /// Convenience for Bool toggles
 /// Note: Will probably need per-AppStorage-supported-types declarations?
 public protocol ToggleKey: PersistenceKey where Value == Bool {
-  
+
   static var displayName: String { get }
   static var kind: ToggleKind { get }
 }
 
 /// Provide default displayName from storageKey
 extension ToggleKey {
+
   /// Default kind for toggles unless overridden by the conformer
   public static var kind: ToggleKind { .enabled }
 
   /// Builds a storage key using the pattern: "{domain}.{section}{KindSuffix}"
   /// Example: domain = "breathingWaves", section = "shaders", kind = .enabled
   /// Result: "breathingWaves.shadersEnabled"
-  public static func key(from domain: String, _ section: String) -> String {
-    "\(domain).\(section)\(kind.camelSuffix)"
+  public static func key(
+    from domain: String,
+    _ section: String
+  ) -> String {
+    "\(domain).\(section)\(kind.rawValue.capitalized)"
   }
 
-  /// Alternate builder using a dotted third component for kind:
-  /// Pattern: "{domain}.{section}.{kind}"
-  /// Example: "breathingWaves.shaders.enabled"
-  public static func dottedKey(from domain: String, _ section: String) -> String {
-    "\(domain).\(section).\(kind.dottedComponent)"
-  }
   public static var displayName: String {
     /// Convert "shader.effects.enabled" -> "Shader Effects Enabled"
     storageKey
@@ -94,6 +92,13 @@ extension ToggleKey {
 }
 
 /// A simple registry. Only for catching duplicate keys at runtime (during development)
+/// Call at app launch:
+/// ```
+///  public static func registerAll() {
+///    register(ShaderEnabledKey.self)
+///    register(AdvancedControlsKey.self)
+///  }
+///  ```
 @MainActor
 public enum PersistenceKeyRegistry: Sendable {
   private static var registeredKeys: Set<String> = []
@@ -107,28 +112,4 @@ public enum PersistenceKeyRegistry: Sendable {
     registeredKeys.insert(key)
   }
 
-  // Call at app launch:
-  //  public static func registerAll() {
-  //    register(ShaderEnabledKey.self)
-  //    register(AdvancedControlsKey.self)
-  //    register(AnimationEnabledKey.self)
-  //  }
 }
-fileprivate extension ToggleKind {
-  /// Suffix used for the camelCase style builder (e.g. "Enabled", "Expanded")
-  var camelSuffix: String {
-    switch self {
-    case .enabled: return "Enabled"
-    case .expanded: return "Expanded"
-    }
-  }
-
-  /// Lowercased component used for the dotted style builder (e.g. "enabled", "expanded")
-  var dottedComponent: String {
-    switch self {
-    case .enabled: return "enabled"
-    case .expanded: return "expanded"
-    }
-  }
-}
-
