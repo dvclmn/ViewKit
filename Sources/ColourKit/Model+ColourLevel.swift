@@ -30,6 +30,27 @@ public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable, NamedItem
 
 }
 
+extension Binding where Value == RGBColour {
+
+  public static func colourBinding(
+    _ primary: Binding<RGBColour>,
+    _ secondary: Binding<RGBColour>,
+    level: ColourLevel
+  ) -> Binding<RGBColour> {
+    Binding<RGBColour> {
+      level.isForeground ? primary.wrappedValue : secondary.wrappedValue
+    } set: {
+      if level.isForeground {
+        primary.wrappedValue = $0
+      } else {
+        secondary.wrappedValue = $0
+      }
+    }
+
+  }
+
+}
+
 extension ColourLevel: CustomStringConvertible {
   public var description: String { name }
 }

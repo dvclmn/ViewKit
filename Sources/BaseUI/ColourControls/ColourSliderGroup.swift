@@ -10,27 +10,26 @@ import CoreTools
 import SwiftUI
 
 public struct ColourSliders: View {
-
+  @Environment(\.activeColourModel) private var activeColourModel
   @State private var isHovering: Bool = false
 
   @Binding var colour: RGBColour
-  let kind: ColourModelKind
+  //  let kind: ColourModelKind
 
   public init(
     _ colour: Binding<RGBColour>,
-    kind: ColourModelKind
+    //    kind: ColourModelKind
   ) {
     self._colour = colour
-    self.kind = kind
+    //    self.kind = kind
   }
 
   public var body: some View {
 
     SliderGroup {
-      switch kind {
+      switch activeColourModel.wrappedValue {
         case .rgb: RGBView()
         case .hsv: HSView()
-
       }
     }
     .labelWeight(.semibold)

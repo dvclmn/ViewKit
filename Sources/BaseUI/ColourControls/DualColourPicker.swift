@@ -18,27 +18,39 @@ public struct DualColourPicker: View {
   /// Note: this also is represented in the Env, just like `activeColour`,
   /// could consider moving it to there, not sure
   let kind: ColourModelKind
+  let components: ColourPickerComponents
 
   public init(
     primaryColour: Binding<RGBColour>,
     secondaryColour: Binding<RGBColour>,
     kind: ColourModelKind,
+    components: ColourPickerComponents
   ) {
     self._primaryColour = primaryColour
     self._secondaryColour = secondaryColour
     self.kind = kind
+    self.components = components
   }
 
   public var body: some View {
 
     QuickerPicker(activeColour.wrappedValue.name, selection: activeColour)
-
-    ColourSliderGroup(
-      activeColour.wrappedValue.isForeground
-        ? $primaryColour
-        : $secondaryColour,
-      kind: kind
+    
+    ColourPicker(
+      colour: .colourBinding(
+        $primaryColour,
+        $secondaryColour,
+        level: activeColour.wrappedValue
+      ),
+      kind: kind,
+      components: components
     )
+//    ColourSliderGroup(
+//      activeColour.wrappedValue.isForeground
+//        ? $primaryColour
+//        : $secondaryColour,
+//      kind: kind
+//    )
   }
 }
 

@@ -13,25 +13,26 @@ import SwiftUI
 /// Note: Not a Dual picker, this is for handling one colour only
 /// See ``DualColourPicker`` for handling fore/background
 public struct ColourPicker: View {
+  @Environment(\.activeColourModel) private var activeColourModel
   //  @AppStorage("isColourPickerExpanded") var isColourPickerExpanded: Bool = false
   //  @AppStorage("areColourSlidersExpanded") var areColourSlidersExpanded: Bool = true
 
-  let title: String
+//  let title: String
   @Binding var colour: RGBColour
-  @Binding var kind: ColourModelKind
+//  @Binding var kind: ColourModelKind
   let components: ColourPickerComponents
   //  @OptionallyPersisted var isEnabled: Bool
 
   public init(
-    title: String,
+//    title: String,
     colour: Binding<RGBColour>,
-    kind: Binding<ColourModelKind>,
+//    kind: Binding<ColourModelKind>,
     components: ColourPickerComponents,
     //    configuration: ToggleConfiguration,
   ) {
-    self.title = title
+//    self.title = title
     self._colour = colour
-    self._kind = kind
+//    self._kind = kind
     self.components = components
     //    self.title = configuration.title
     //    self._isEnabled = configuration.persistedValue
@@ -44,7 +45,7 @@ public struct ColourPicker: View {
     }
 
     if components.contains(.sliders) {
-      ColourSliders($colour, kind: kind)
+      ColourSliders($colour, kind: activeColourModel)
     }
 
     if components.isEmpty {
