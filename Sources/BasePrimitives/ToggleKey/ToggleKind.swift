@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ToggleKind: String {
+public enum ToggleKind: String, Sendable {
   case expanded
   case enabled
 }

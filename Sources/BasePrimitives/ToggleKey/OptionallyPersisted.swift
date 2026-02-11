@@ -60,7 +60,7 @@ extension OptionallyPersisted where Value == Bool {
     self._persistedValue = AppStorage(wrappedValue: K.defaultValue, K.storageKey)
   }
 
-  // Keep external binding init
+  /// Keep external binding init
   public init(binding: Binding<Value>) {
     self.storage = .external(binding)
     self._transientValue = State(initialValue: binding.wrappedValue)

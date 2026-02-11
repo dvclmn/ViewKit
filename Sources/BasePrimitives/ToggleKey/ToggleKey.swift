@@ -72,7 +72,10 @@ extension ToggleKey {
   public static var defaultValue: Bool { true }
 
   /// "{domain}.{section}{KindSuffix}"
-  public static func key(from domain: String, _ section: String) -> String {
+  public static func key(
+    from domain: String,
+    _ section: String
+  ) -> String {
     "\(domain).\(section)\(kind.camelSuffix)"
   }
 
@@ -110,22 +113,6 @@ extension String {
     return String(first).uppercased() + dropFirst()
   }
 }
-
-//extension ToggleKey {
-//
-//  /// Default kind for toggles unless overridden by the conformer
-//  public static var kind: ToggleKind { .enabled }
-//
-//  /// Builds a storage key using the pattern: "{domain}.{section}{KindSuffix}"
-//  /// Example: domain = "breathingWaves", section = "shaders", kind = .enabled
-//  /// Result: "breathingWaves.shadersEnabled"
-//  public static func key(
-//    from domain: String,
-//    _ section: String
-//  ) -> String {
-//    "\(domain).\(section)\(kind.camelSuffix)"
-//  }
-//}
 
 /// A simple registry. Only for catching duplicate keys at runtime (during development)
 /// Call at app launch:
