@@ -51,7 +51,6 @@ extension WaveSampler {
     }
   }
 
-  // Convenience wrappers
   @inlinable public static func value(for waveform: Waveform, atTurns phase: T) -> T {
     sample(waveform, phase: phase, domain: .turns, sineMode: .auto)
   }
@@ -120,40 +119,6 @@ extension WaveSampler {
   /// Table size as a generic floating-point value.
   @usableFromInline static var tableSizeF: T { T(tableSize) }
 
-  /// Lazily computed sine lookup table with an extra sample for linear interpolation.
-  /// The extra element duplicates the first to simplify wrap-around.
-
-  /// IMPORTANT: This table must stay a single, cached build per generic `T`.
-  /// Need to be a static let, initialized once.
-  /// Otherwise, it will be rebuilt on every access
-  //  @usableFromInline static let sineTable: [T] = {
-  //    var table = [T]()
-  //    table.reserveCapacity(tableSize + 1)
-  //    let twoPi: T = T(2) * T.pi
-  //    let denom = tableSizeF
-  //    for i in 0...tableSize {
-  //      let angle: T = (T(i) * twoPi) / denom
-  //      table.append(T.waveSin(angle))
-  //    }
-  //    return table
-  //  }()
-  //
-  //  @inlinable
-  //  static func sineLookup(_ phase: T) -> T {
-  //    /// Scale phase in [0, 1) to table space and split into integer/fractional parts.
-  //    let scaled = phase * tableSizeF
-  //    let index = Int(floor(max(T(0), scaled)))
-  //    let fraction = scaled - T(index)
-  //
-  //    let i0 = index & tableMask
-  //    let i1 = (i0 + 1) & tableMask
-  //
-  //    /// Linear interpolation between neighbors
-  //    let y0 = sineTable[i0]
-  //    let y1 = sineTable[i1]
-  //    return y0 + fraction * (y1 - y0)
-  //  }
-
   @inlinable static func sineLookup(_ phase: T) -> T {
     let tableSize = 1 << 11
     let mask = tableSize - 1
@@ -183,7 +148,7 @@ extension WaveSampler {
 }
 
 extension WaveSampler {
-  // A clear, readable sine for “turns” domain
+  /// A clear, readable sine for “turns” domain
   @inlinable public static func sineMathTurns(_ phaseTurns: T) -> T {
     T.waveSin(phaseTurns * T.twoPi)
   }

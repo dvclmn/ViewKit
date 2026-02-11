@@ -7,12 +7,15 @@
 
 import Foundation
 
-/// Usage (once, at app startup):
+/// Do this once at app launch:
 /// ```
-/// WaveKeyRegistry.register(Fundamental.self)
-/// WaveKeyRegistry.register(Harmonic2.self)
+/// WaveRegistry.register(VerticalWave.self)
+/// WaveRegistry.register(DotRadiusWave.self)
+/// WaveRegistry.register(HorizontalWave.self)
+/// WaveRegistry.register(MainWave.self)
 /// ```
 ///
+/// Then ``WaveStack/snapshot()`` iterates over registered keys
 /// ```
 /// for (codingKey, layer) in decoded.waves {
 ///   if let keyType = WaveKeyRegistry.all[codingKey] {
@@ -20,14 +23,9 @@ import Foundation
 ///   }
 /// }
 /// ```
-/// ```
-/// // Do this once at app launch
-/// WaveRegistry.register(VerticalWave.self)
-/// WaveRegistry.register(DotRadiusWave.self)
-/// WaveRegistry.register(HorizontalWave.self)
-/// WaveRegistry.register(MainWave.self)
 ///
-/// // Now your struct just works!
+/// Now your struct just works!
+/// ```
 /// struct BreathingPreferences: Sendable, Codable {
 ///   var enabledWaves: [AnyWaveKey: Bool] = [:]
 /// }
@@ -43,5 +41,18 @@ public enum WaveKeyRegistry {
 
   static func lookup(_ key: String) -> (any WaveKey.Type)? {
     return registeredTypes[key]
+  }
+}
+
+extension WaveKeyRegistry {
+  
+  /// Helper to apply a `ConfiguredWave` to a stack using the type-erased key
+  static func apply(
+    _ wave: ConfiguredWave,
+    key: String,
+    to stack: inout WaveStack
+  ) {
+    guard let keyType = registeredTypes[key] else { return }
+    stack.setValue(wave, for: keyType)
   }
 }

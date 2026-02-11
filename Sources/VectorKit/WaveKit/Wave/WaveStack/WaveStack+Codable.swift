@@ -5,10 +5,10 @@
 //  Created by Dave Coleman on 25/1/2026.
 //
 
-import Foundation
 import CoreTools
+import Foundation
 
-public struct CodableWaveStack: Codable {
+public struct WaveStackSnapshot: Codable {
   public var waves: [String: ConfiguredWave]
 
   public init(_ waves: [String: ConfiguredWave]) {
@@ -16,26 +16,41 @@ public struct CodableWaveStack: Codable {
   }
 }
 
+extension WaveStackSnapshot {
+
+  /// Initialise a snapshot of a WaveStack
+  public init(of stack: WaveStack) {
+    self = stack.snapshot()
+  }
+
+  /// Convenience apply method for “I have a snapshot, now what?”
+  public func applySnapshot(to stack: inout WaveStack) {
+    stack.restore(from: self)
+  }
+}
+
 extension WaveStack {
 
   /// Converts current state to a Codable projection
-  public func snapshot() -> CodableWaveStack {
+  public func snapshot() -> WaveStackSnapshot {
     print("Preparing a `CodableWaveStack` snapshot at \(Date.debug).")
     var result: [String: ConfiguredWave] = [:]
 
     /// Iterate the registry to see what keys we care about encoding
     for (codingKey, keyType) in WaveKeyRegistry.registeredTypes {
-      print("Checking key: \(codingKey), type: \(keyType)...")
+      print("Looking for keys to regsiter. Found: \(codingKey), type: \(keyType)...")
       let value = self[keyType]
       result[codingKey] = value
     }
     print("Found \(result.count) wave(s): \(result.keys.sorted())")
-    return CodableWaveStack(result)
+    return WaveStackSnapshot(result)
   }
 
-  public mutating func restore(from snapshot: CodableWaveStack) {
-    print("Restoring from `CodableWaveStack` at \(Date.debug). Found \(snapshot.waves.count) wave(s): \(snapshot.waves.keys.sorted())")
-    
+  public mutating func restore(from snapshot: WaveStackSnapshot) {
+    print(
+      "Restoring from `CodableWaveStack` at \(Date.debug). Found \(snapshot.waves.count) wave(s): \(snapshot.waves.keys.sorted())"
+    )
+
     for (key, wave) in snapshot.waves {
       print("Applying wave for key: \(key)")
       WaveKeyRegistry.apply(wave, key: key, to: &self)
@@ -43,4 +58,3 @@ extension WaveStack {
     print("Restore complete at \(Date.debug)")
   }
 }
-

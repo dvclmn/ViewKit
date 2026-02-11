@@ -12,7 +12,7 @@ import SwiftUI
 ///
 /// `stack[Fundamental.self].wave.phase += delta`
 /// `stack[Fundamental.self].settings.isEnabled.toggle()`
-//#warning("Try out dynamic lookup")
+// TODO: Try out dynamic lookup?
 //@dynamicMemberLookup
 public struct WaveStack: @unchecked Sendable, Equatable, Identifiable, Hashable {
   public let id: UUID
@@ -30,7 +30,8 @@ extension WaveStack {
   }
 
   /// Internal helper for ``WaveKeyRegistry`` to inject values
-  fileprivate mutating func setValue(
+  /// For use by `WaveKeyRegistry` only
+  package mutating func setValue(
     _ value: ConfiguredWave,
     for keyType: any WaveKey.Type
   ) {
@@ -38,16 +39,10 @@ extension WaveStack {
   }
 }
 
-extension WaveKeyRegistry {
-
-  /// Helper to apply a `ConfiguredWave` to a stack using the type-erased key
-  static func apply(
-    _ wave: ConfiguredWave,
-    key: String,
-    to stack: inout WaveStack
-  ) {
-    guard let keyType = registeredTypes[key] else { return }
-    stack.setValue(wave, for: keyType)
+extension WaveStack {
+  public init(restoring snapshot: WaveStackSnapshot) {
+    self.init()
+    self.restore(from: snapshot)
   }
 }
 
@@ -55,26 +50,12 @@ extension Binding where Value == WaveStack {
   @MainActor
   public func waveBinding<K: WaveKey, T>(
     _ key: K.Type,
-    _ keyPath: WritableKeyPath<ConfiguredWave, T>
+    _ keyPath: WritableKeyPath<ConfiguredWave, T> = \.self
   ) -> Binding<T> {
     Binding<T> {
       wrappedValue[key][keyPath: keyPath]
     } set: { newValue in
-      wrappedValue.update(key, path: keyPath, newValue: newValue)
+      wrappedValue[key][keyPath: keyPath] = newValue
     }
-  }
-  
-  @MainActor
-  public func waveBinding<K: WaveKey>(
-    _ key: K.Type,
-//    _ keyPath: WritableKeyPath<ConfiguredWave, T>
-  ) -> Binding<ConfiguredWave> {
-    Binding<ConfiguredWave> {
-      wrappedValue[key]
-    } set: { newValue in
-      wrappedValue[key] = newValue
-//      wrappedValue.update(key, path: keyPath, newValue: newValue)
-    }
-    
   }
 }
