@@ -5,71 +5,155 @@
 //  Created by Dave Coleman on 23/1/2026.
 //
 
+import SwiftUI
+
 /// Note: These aren't dynamic system colours like SwiftUI's
 /// These comes from standard CSS named colours
 extension RGBColour {
-  
-  public static let black: RGBColour = .init(r: 0.0, g: 0.0, b: 0.0, a: 1.0, name: "black")
-  public static let white: RGBColour = .init(r: 1.0, g: 1.0, b: 1.0, a: 1.0, name: "white")
-  public static let gray: RGBColour = .init(r: 0.5, g: 0.5, b: 0.5, a: 1.0, name: "gray")
-  public static let silver: RGBColour = .init(r: 0.7529411765, g: 0.7529411765, b: 0.7529411765, a: 1.0, name: "silver")
 
-  public static let red: RGBColour = .init(r: 1.0, g: 0.0, b: 0.0, a: 1.0, name: "red")
-  public static let green: RGBColour = .init(r: 0.0, g: 0.5019607843, b: 0.0, a: 1.0, name: "green")
-  public static let blue: RGBColour = .init(r: 0.0, g: 0.0, b: 1.0, a: 1.0, name: "blue")
+  public static let black: RGBColour = #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+  public static let white: RGBColour = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+  public static let gray: RGBColour = #colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
+  public static let silver: RGBColour = #colorLiteral(
+    red: 0.7529411765, green: 0.7529411765, blue: 0.7529411765, alpha: 1.0)
 
-  public static let lime: RGBColour = .init(r: 0.0, g: 1.0, b: 0.0, a: 1.0, name: "lime")
-  public static let navy: RGBColour = .init(r: 0.0, g: 0.0, b: 0.5019607843, a: 1.0, name: "navy")
-  public static let teal: RGBColour = .init(r: 0.0, g: 0.5019607843, b: 0.5019607843, a: 1.0, name: "teal")
-  public static let olive: RGBColour = .init(r: 0.5019607843, g: 0.5019607843, b: 0.0, a: 1.0, name: "olive")
-  public static let purple: RGBColour = .init(r: 0.5019607843, g: 0.0, b: 0.5019607843, a: 1.0, name: "purple")
-  public static let maroon: RGBColour = .init(r: 0.5019607843, g: 0.0, b: 0.0, a: 1.0, name: "maroon")
+  public static let red: RGBColour = #colorLiteral(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+  public static let green: RGBColour = #colorLiteral(red: 0.0, green: 0.5019607843, blue: 0.0, alpha: 1.0)
 
-  public static let cyan: RGBColour = .init(r: 0.0, g: 1.0, b: 1.0, a: 1.0, name: "cyan")
-  public static let magenta: RGBColour = .init(r: 1.0, g: 0.0, b: 1.0, a: 1.0, name: "magenta")
-  public static let yellow: RGBColour = .init(r: 1.0, g: 1.0, b: 0.0, a: 1.0, name: "yellow")
+  public static let blue: RGBColour = #colorLiteral(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
 
-  public static let orange: RGBColour = .init(r: 1.0, g: 0.6470588235, b: 0.0, a: 1.0, name: "orange")
-  public static let brown: RGBColour = .init(r: 0.6470588235, g: 0.1647058824, b: 0.1647058824, a: 1.0, name: "brown")
-  public static let pink: RGBColour = .init(r: 1.0, g: 0.7529411765, b: 0.7960784314, a: 1.0, name: "pink")
-  public static let gold: RGBColour = .init(r: 1.0, g: 0.8431372549, b: 0.0, a: 1.0, name: "gold")
+  public static let lime: RGBColour = #colorLiteral(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0)
+  public static let navy: RGBColour = #colorLiteral(red: 0.0, green: 0.0, blue: 0.5019607843, alpha: 1.0)
+  public static let teal: RGBColour = #colorLiteral(
+    red: 0.0, green: 0.5019607843, blue: 0.5019607843, alpha: 1.0)
+  public static let olive: RGBColour = #colorLiteral(
+    red: 0.5019607843, green: 0.5019607843, blue: 0.0, alpha: 1.0)
+  public static let purple: RGBColour = #colorLiteral(
+    red: 0.5019607843, green: 0.0, blue: 0.5019607843, alpha: 1.0)
+  public static let maroon: RGBColour = #colorLiteral(red: 0.5019607843, green: 0.0, blue: 0.0, alpha: 1.0)
 
-  public static let dodgerblue: RGBColour = .init(r: 0.1176470588, g: 0.5647058824, b: 1.0, a: 1.0, name: "dodgerblue")
-  public static let deepskyblue: RGBColour = .init(r: 0.0, g: 0.7490196078, b: 1.0, a: 1.0, name: "deepskyblue")
-  public static let royalblue: RGBColour = .init(r: 0.2549019608, g: 0.4117647059, b: 0.8823529412, a: 1.0, name: "royalblue")
-  public static let cornflowerblue: RGBColour = .init(r: 0.3921568627, g: 0.5843137255, b: 0.9294117647, a: 1.0, name: "cornflowerblue")
-  public static let steelblue: RGBColour = .init(r: 0.2745098039, g: 0.5098039216, b: 0.7058823529, a: 1.0, name: "steelblue")
+  public static let cyan: RGBColour = #colorLiteral(red: 0.0, green: 1.0, blue: 1.0, alpha: 1.0)
+  public static let magenta: RGBColour = #colorLiteral(red: 1.0, green: 0.0, blue: 1.0, alpha: 1.0)
+  public static let yellow: RGBColour = #colorLiteral(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)
 
-  public static let skyblue: RGBColour = .init(r: 0.5294117647, g: 0.8078431373, b: 0.9215686275, a: 1.0, name: "skyblue")
-  public static let lightblue: RGBColour = .init(r: 0.6784313725, g: 0.8470588235, b: 0.9019607843, a: 1.0, name: "lightblue")
-  public static let lightskyblue: RGBColour = .init(r: 0.5294117647, g: 0.8078431373, b: 0.9803921569, a: 1.0, name: "lightskyblue")
+  public static let orange: RGBColour = #colorLiteral(red: 1.0, green: 0.6470588235, blue: 0.0, alpha: 1.0)
+  public static let brown: RGBColour = #colorLiteral(
+    red: 0.6470588235, green: 0.1647058824, blue: 0.1647058824, alpha: 1.0)
+  public static let pink: RGBColour = #colorLiteral(
+    red: 1.0, green: 0.7529411765, blue: 0.7960784314, alpha: 1.0)
+  public static let gold: RGBColour = #colorLiteral(red: 1.0, green: 0.8431372549, blue: 0.0, alpha: 1.0)
 
-  public static let seagreen: RGBColour = .init(r: 0.1803921569, g: 0.5450980392, b: 0.3411764706, a: 1.0, name: "seagreen")
-  public static let mediumseagreen: RGBColour = .init(r: 0.2352941176, g: 0.7019607843, b: 0.4431372549, a: 1.0, name: "mediumseagreen")
-  public static let forestgreen: RGBColour = .init(r: 0.1333333333, g: 0.5450980392, b: 0.1333333333, a: 1.0, name: "forestgreen")
-  public static let darkgreen: RGBColour = .init(r: 0.0, g: 0.3921568627, b: 0.0, a: 1.0, name: "darkgreen")
+  public static let dodgerblue: RGBColour = #colorLiteral(
+    red: 0.1176470588, green: 0.5647058824, blue: 1.0, alpha: 1.0)
+  public static let deepskyblue: RGBColour = #colorLiteral(
+    red: 0.0, green: 0.7490196078, blue: 1.0, alpha: 1.0)
+  public static let royalblue: RGBColour = #colorLiteral(
+    red: 0.2549019608, green: 0.4117647059, blue: 0.8823529412, alpha: 1.0)
+  public static let cornflowerblue: RGBColour = #colorLiteral(
+    red: 0.3921568627, green: 0.5843137255, blue: 0.9294117647, alpha: 1.0)
+  public static let steelblue: RGBColour = #colorLiteral(
+    red: 0.2745098039, green: 0.5098039216, blue: 0.7058823529, alpha: 1.0)
 
-  public static let indigo: RGBColour = .init(r: 0.2941176471, g: 0.0, b: 0.5098039216, a: 1.0, name: "indigo")
-  public static let violet: RGBColour = .init(r: 0.9333333333, g: 0.5098039216, b: 0.9333333333, a: 1.0, name: "violet")
-  public static let orchid: RGBColour = .init(r: 0.8549019608, g: 0.4392156863, b: 0.8392156863, a: 1.0, name: "orchid")
-  public static let rebeccapurple: RGBColour = .init(r: 0.4, g: 0.2, b: 0.6, a: 1.0, name: "rebeccapurple")
+  public static let skyblue: RGBColour = #colorLiteral(
+    red: 0.5294117647, green: 0.8078431373, blue: 0.9215686275, alpha: 1.0)
+  public static let lightblue: RGBColour = #colorLiteral(
+    red: 0.6784313725, green: 0.8470588235, blue: 0.9019607843, alpha: 1.0)
+  public static let lightskyblue: RGBColour = #colorLiteral(
+    red: 0.5294117647, green: 0.8078431373, blue: 0.9803921569, alpha: 1.0)
 
-  public static let tomato: RGBColour = .init(r: 1.0, g: 0.3882352941, b: 0.2784313725, a: 1.0, name: "tomato")
-  public static let coral: RGBColour = .init(r: 1.0, g: 0.4980392157, b: 0.3137254902, a: 1.0, name: "coral")
-  public static let salmon: RGBColour = .init(r: 0.9803921569, g: 0.5019607843, b: 0.4470588235, a: 1.0, name: "salmon")
-  public static let darksalmon: RGBColour = .init(r: 0.9137254902, g: 0.5882352941, b: 0.4784313725, a: 1.0, name: "darksalmon")
+  public static let seagreen: RGBColour = #colorLiteral(
+    red: 0.1803921569, green: 0.5450980392, blue: 0.3411764706, alpha: 1.0)
+  public static let mediumseagreen: RGBColour = #colorLiteral(
+    red: 0.2352941176, green: 0.7019607843, blue: 0.4431372549, alpha: 1.0)
+  public static let forestgreen: RGBColour = #colorLiteral(
+    red: 0.1333333333, green: 0.5450980392, blue: 0.1333333333, alpha: 1.0)
+  public static let darkgreen: RGBColour = #colorLiteral(red: 0.0, green: 0.3921568627, blue: 0.0, alpha: 1.0)
 
-  public static let chocolate: RGBColour = .init(r: 0.8235294118, g: 0.4117647059, b: 0.1176470588, a: 1.0, name: "chocolate")
-  public static let peru: RGBColour = .init(r: 0.8039215686, g: 0.5215686275, b: 0.2470588235, a: 1.0, name: "peru")
-  public static let tan: RGBColour = .init(r: 0.8235294118, g: 0.7058823529, b: 0.5490196078, a: 1.0, name: "tan")
-  public static let wheat: RGBColour = .init(r: 0.9607843137, g: 0.8705882353, b: 0.7019607843, a: 1.0, name: "wheat")
+  public static let indigo: RGBColour = #colorLiteral(
+    red: 0.2941176471, green: 0.0, blue: 0.5098039216, alpha: 1.0)
+  public static let violet: RGBColour = #colorLiteral(
+    red: 0.9333333333, green: 0.5098039216, blue: 0.9333333333, alpha: 1.0)
+  public static let orchid: RGBColour = #colorLiteral(
+    red: 0.8549019608, green: 0.4392156863, blue: 0.8392156863, alpha: 1.0)
+  public static let rebeccapurple: RGBColour = #colorLiteral(red: 0.4, green: 0.2, blue: 0.6, alpha: 1.0)
 
-  public static let aliceblue: RGBColour = .init(r: 0.9411764706, g: 0.9725490196, b: 1.0, a: 1.0, name: "aliceblue")
-  public static let antiquewhite: RGBColour = .init(r: 0.9803921569, g: 0.9215686275, b: 0.8431372549, a: 1.0, name: "antiquewhite")
-  public static let ivory: RGBColour = .init(r: 1.0, g: 1.0, b: 0.9411764706, a: 1.0, name: "ivory")
-  public static let beige: RGBColour = .init(r: 0.9607843137, g: 0.9607843137, b: 0.862745098, a: 1.0, name: "beige")
-  public static let whitesmoke: RGBColour = .init(r: 0.9607843137, g: 0.9607843137, b: 0.9607843137, a: 1.0, name: "whitesmoke")
+  public static let tomato: RGBColour = #colorLiteral(
+    red: 1.0, green: 0.3882352941, blue: 0.2784313725, alpha: 1.0)
+  public static let coral: RGBColour = #colorLiteral(
+    red: 1.0, green: 0.4980392157, blue: 0.3137254902, alpha: 1.0)
+  public static let salmon: RGBColour = #colorLiteral(
+    red: 0.9803921569, green: 0.5019607843, blue: 0.4470588235, alpha: 1.0)
+  public static let darksalmon: RGBColour = #colorLiteral(
+    red: 0.9137254902, green: 0.5882352941, blue: 0.4784313725, alpha: 1.0)
+
+  public static let chocolate: RGBColour = #colorLiteral(
+    red: 0.8235294118, green: 0.4117647059, blue: 0.1176470588, alpha: 1.0)
+  public static let peru: RGBColour = #colorLiteral(
+    red: 0.8039215686, green: 0.5215686275, blue: 0.2470588235, alpha: 1.0)
+  public static let tan: RGBColour = #colorLiteral(
+    red: 0.8235294118, green: 0.7058823529, blue: 0.5490196078, alpha: 1.0)
+  public static let wheat: RGBColour = #colorLiteral(
+    red: 0.9607843137, green: 0.8705882353, blue: 0.7019607843, alpha: 1.0)
+
+  public static let aliceblue: RGBColour = #colorLiteral(
+    red: 0.9411764706, green: 0.9725490196, blue: 1.0, alpha: 1.0)
+  public static let antiquewhite: RGBColour = #colorLiteral(
+    red: 0.9803921569, green: 0.9215686275, blue: 0.8431372549, alpha: 1.0)
+  public static let ivory: RGBColour = #colorLiteral(red: 1.0, green: 1.0, blue: 0.9411764706, alpha: 1.0)
+  public static let beige: RGBColour = #colorLiteral(
+    red: 0.9607843137, green: 0.9607843137, blue: 0.862745098, alpha: 1.0)
+  public static let whitesmoke: RGBColour = #colorLiteral(
+    red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1.0)
 }
+//  #if DEBUG
+//  public enum VisualSwatches {
+//    // Core
+//    public static let black: RGBColour = RGBColour(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))
+//    public static let white: Color = Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+//    public static let gray: Color = Color(#colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 1))
+//    public static let silver: Color = Color(#colorLiteral(red: 0.7529411765, green: 0.7529411765, blue: 0.7529411765, alpha: 1))
+//
+//    // Primaries/secondaries
+//    public static let red = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
+//    public static let green = #colorLiteral(red: 0, green: 0.5019607843, blue: 0, alpha: 1)
+//    public static let blue = #colorLiteral(red: 0, green: 0, blue: 1, alpha: 1)
+//    public static let cyan = #colorLiteral(red: 0, green: 1, blue: 1, alpha: 1)
+//    public static let magenta = #colorLiteral(red: 1, green: 0, blue: 1, alpha: 1)
+//    public static let yellow = #colorLiteral(red: 1, green: 1, blue: 0, alpha: 1)
+//
+//    // Extras
+//    public static let orange = #colorLiteral(red: 1, green: 0.6470588235, blue: 0, alpha: 1)
+//    public static let brown = #colorLiteral(red: 0.6470588235, green: 0.1647058824, blue: 0.1647058824, alpha: 1)
+//    public static let pink = #colorLiteral(red: 1, green: 0.7529411765, blue: 0.7960784314, alpha: 1)
+//    public static let gold = #colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1)
+//
+//    // Blues
+//    public static let dodgerblue = #colorLiteral(red: 0.1176470588, green: 0.5647058824, blue: 1, alpha: 1)
+//    public static let deepskyblue = #colorLiteral(red: 0, green: 0.7490196078, blue: 1, alpha: 1)
+//    public static let royalblue = #colorLiteral(red: 0.2549019608, green: 0.4117647059, blue: 0.8823529412, alpha: 1)
+//    public static let cornflowerblue = #colorLiteral(red: 0.3921568627, green: 0.5843137255, blue: 0.9294117647, alpha: 1)
+//    public static let steelblue = #colorLiteral(red: 0.2745098039, green: 0.5098039216, blue: 0.7058823529, alpha: 1)
+//
+//    // Greens
+//    public static let seagreen = #colorLiteral(red: 0.1803921569, green: 0.5450980392, blue: 0.3411764706, alpha: 1)
+//    public static let mediumseagreen = #colorLiteral(red: 0.2352941176, green: 0.7019607843, blue: 0.4431372549, alpha: 1)
+//    public static let forestgreen = #colorLiteral(red: 0.1333333333, green: 0.5450980392, blue: 0.1333333333, alpha: 1)
+//    public static let darkgreen = #colorLiteral(red: 0, green: 0.3921568627, blue: 0, alpha: 1)
+//
+//    // Purples
+//    public static let indigo = #colorLiteral(red: 0.2941176471, green: 0, blue: 0.5098039216, alpha: 1)
+//    public static let violet = #colorLiteral(red: 0.9333333333, green: 0.5098039216, blue: 0.9333333333, alpha: 1)
+//    public static let orchid = #colorLiteral(red: 0.8549019608, green: 0.4392156863, blue: 0.8392156863, alpha: 1)
+//    public static let rebeccapurple = #colorLiteral(red: 0.4, green: 0.2, blue: 0.6, alpha: 1)
+//
+//    // Neutrals
+//    public static let aliceblue = #colorLiteral(red: 0.9411764706, green: 0.9725490196, blue: 1, alpha: 1)
+//    public static let antiquewhite = #colorLiteral(red: 0.9803921569, green: 0.9215686275, blue: 0.8431372549, alpha: 1)
+//    public static let ivory = #colorLiteral(red: 1, green: 1, blue: 0.9411764706, alpha: 1)
+//    public static let beige = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.862745098, alpha: 1)
+//    public static let whitesmoke = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+//  }
+//}
 //  public static let black: RGBColour = .from255(0, 0, 0, name: "black")
 //  public static let silver: RGBColour = .from255(192, 192, 192, name: "silver")
 //  public static let gray: RGBColour = .from255(128, 128, 128, name: "gray")
@@ -211,4 +295,3 @@ extension RGBColour {
 //  public static let yellowgreen: RGBColour = .from255(154, 205, 50, name: "yellowgreen")
 //  public static let rebeccapurple: RGBColour = .from255(102, 51, 153, name: "rebeccapurple")
 //}
-
