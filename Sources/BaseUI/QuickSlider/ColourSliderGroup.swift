@@ -27,6 +27,7 @@ public struct ColourSliderGroup: View {
     self._colour = colour
     self.kind = kind
   }
+  
   public var body: some View {
 
     SliderGroup {

@@ -12,124 +12,132 @@ import SwiftUI
 //nonisolated public init<C>(sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ViewBuilder content: () -> Content, @ViewBuilder label: () -> Label) where C : RandomAccessCollection
 /// Note: ForEach automatically assigns a tag to the selection views using each option’s id. This is possible because Flavor conforms to the Identifiable protocol.
 
-public struct QuickPicker<Item: Hashable>: View {
-//public struct QuickPicker<RowContent: View, Item>: View where Item: Pickable & Hashable {
+public struct QuickPicker<Item: Hashable & Identifiable & CustomStringConvertible>: View {
+  //public struct QuickPicker<RowContent: View, Item>: View where Item: Pickable & Hashable {
 
-  public typealias PickerOutput = (Item, Bool) -> RowContent
+  //  public typealias PickerOutput = (Item, Bool) -> RowContent
   @Environment(\.heightOverride) private var heightOverride
 
-  @State private var allItems: [Item]
-//  let allItems: [Item]
+  //  @State private var sourceData: [Item]
 
-  @Binding var item: Item
-  let style: QuickPickerStyle
-  let hasLabeledContentWrapper: Bool
-  let areShortcutsEnabled: Bool
-  let maxItems: Int?
-//  let rowContent: PickerOutput?
+  let title: String
+  @Binding var selection: Item
+  /// The items representing what the Picker chooses from
+  let sourceData: [Item]
+
+  //  let style: QuickPickerStyle
+  //  let hasLabeledContentWrapper: Bool
+  //  let areShortcutsEnabled: Bool
+  //  let maxItems: Int?
+  //  let rowContent: PickerOutput?
 
   public init(
-    item: Binding<Item>,
-    allItems: [Item],
-    style: QuickPickerStyle = .plain,
-    hasLabeledContentWrapper: Bool = false,
-    areShortcutsEnabled: Bool = false,
-    maxItems: Int? = nil,
-//    @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
-  ) where RowContent == EmptyView {
-    self._item = item
-    self._allItems = State(initialValue: allItems)
-    self.style = style
-    self.hasLabeledContentWrapper = hasLabeledContentWrapper
-    self.areShortcutsEnabled = areShortcutsEnabled
-    self.maxItems = maxItems
-//    self.rowContent = rowContent
+    title: String,
+    selection: Binding<Item>,
+    sourceData: [Item],
+    //    style: QuickPickerStyle = .plain,
+    //    hasLabeledContentWrapper: Bool = false,
+    //    areShortcutsEnabled: Bool = false,
+    //    maxItems: Int? = nil,
+    //    @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
+  ) {
+    //  ) where RowContent == EmptyView {
+    self.title = title
+    self._selection = selection
+    self.sourceData = sourceData
+    //    self._allItems = State(initialValue: allItems)
+    //    self.style = style
+    //    self.hasLabeledContentWrapper = hasLabeledContentWrapper
+    //    self.areShortcutsEnabled = areShortcutsEnabled
+    //    self.maxItems = maxItems
+    //    self.rowContent = rowContent
   }
   //  private let hasCustomContent: Bool
 
   public var body: some View {
-
     
-    
-    Group {
-      switch style {
-        case .plain:
-          PlainStyle()
-
-        case .capsule:
-          Text("Not currently available")
-      //          ItemScrollable(
-      //            scrolledItem: $item,
-      //            axis: .horizontal,
-      //            showsIndicators: false
-      //          ) { scrollableItem in
-      //            MaybeLabel(item.label)
-      //          }
+    Picker(title, selection: $selection) {
+      ForEach(sourceData) { item in
+        Text(item.description)
       }
     }
-    .environment(\.shortcutsEnabled, areShortcutsEnabled)
+//    currentValueLabel: {
+//    }
+
+
+//    Group {
+//      switch style {
+//        case .plain:
+//          PlainStyle()
+//
+//        case .capsule:
+//          Text("Not currently available")
+//      //          ItemScrollable(
+//      //            scrolledItem: $item,
+//      //            axis: .horizontal,
+//      //            showsIndicators: false
+//      //          ) { scrollableItem in
+//      //            MaybeLabel(item.label)
+//      //          }
+//      }
+//    }
+//    .environment(\.shortcutsEnabled, areShortcutsEnabled)
   }
 }
 
 extension QuickPicker {
 
-  @ViewBuilder
-  private func PlainStyle() -> some View {
-    if hasLabeledContentWrapper {
-      LabeledContent {
-        PickerContent()
-      } label: {
-        MaybeLabel(Item.pickerLabel)
-          .foregroundStyle(.secondary)
-      }
-    } else {
-      PickerContent()
-    }
-  }
+//  @ViewBuilder
+//  private func PlainStyle() -> some View {
+//    if hasLabeledContentWrapper {
+//      LabeledContent {
+//        PickerContent()
+//      } label: {
+//        MaybeLabel(Item.pickerLabel)
+//          .foregroundStyle(.secondary)
+//      }
+//    } else {
+//      PickerContent()
+//    }
+//  }
 
-  @ViewBuilder
-  func PickerContent() -> some View {
-    Picker(Item.pickerLabel.text, selection: $item) {
-
-      ForEach(allItems) { pickerItem in
-        
-//        RowView(pickerItem) { hovering in
-//          if rowContent != nil {
-//            rowContent?(pickerItem, hovering)
-//          } else {
-            
-//            VStack {
-//              Text("Item Type: \(String(describing: pickerItem.self))")
-//              Text("All Items Type: \(String(describing: allItems.self))")
-//            }
-            MaybeLabel(pickerItem.label).tag(pickerItem)
-//          }
-//        }
-      }
-    }
-  }
+//  @ViewBuilder
+//  func PickerContent() -> some View {
+//    Picker(Item.pickerLabel.text, selection: $item) {
+//
+//      ForEach(allItems) { pickerItem in
+//
+//        //        RowView(pickerItem) { hovering in
+//        //          if rowContent != nil {
+//        //            rowContent?(pickerItem, hovering)
+//        //          } else {
+//
+//        //            VStack {
+//        //              Text("Item Type: \(String(describing: pickerItem.self))")
+//        //              Text("All Items Type: \(String(describing: allItems.self))")
+//        //            }
+//        MaybeLabel(pickerItem.label).tag(pickerItem)
+//        //          }
+//        //        }
+//      }
+//    }
+//  }
 }
 
 extension QuickPicker where Item: CaseIterable, Item.AllCases == [Item] {
   public init(
-    item: Binding<Item>,
-    style: QuickPickerStyle = .plain,
-    hasLabeledContentWrapper: Bool = false,
-    areShortcutsEnabled: Bool = false,
-    maxItems: Int? = nil,
-//    @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
-  ) where RowContent == EmptyView {
-    self._item = item
-
-    /// This init is able to populate `allItems` automatically,
-    /// using `CaseIterable`'s `allCases`.
-    self._allItems = State(initialValue: Item.allCases)
-
-    self.style = style
-    self.hasLabeledContentWrapper = hasLabeledContentWrapper
-    self.areShortcutsEnabled = areShortcutsEnabled
-    self.maxItems = maxItems
-//    self.rowContent = rowContent
+    title: String,
+    selection: Binding<Item>,
+//    item: Binding<Item>,
+//    style: QuickPickerStyle = .plain,
+//    hasLabeledContentWrapper: Bool = false,
+//    areShortcutsEnabled: Bool = false,
+//    maxItems: Int? = nil,
+    //    @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
+  ) {
+    self.title = title
+    self._selection = selection
+    self.sourceData = Item.allCases
   }
 
 }

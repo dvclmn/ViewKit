@@ -28,6 +28,14 @@ public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable, NamedItem
   public var id: String { rawValue }
   public var name: String { rawValue.capitalized }
 
+}
+
+extension ColourLevel: CustomStringConvertible {
+  public var description: String { name }
+}
+
+extension ColourLevel {
+
   public func keyPathRGB<T: ColourHandlerProtocol>() -> WritableKeyPath<T, RGBColour> {
     switch self {
       case .foreground: \.foregroundRGB
