@@ -7,8 +7,8 @@
 
 import ColourKit
 import CoreTools
-import SwiftUI
 import MetaCodable
+import SwiftUI
 
 extension ActionLine {
   /// Addresses per-line attributes. See ``ActionLine/Configuration``
@@ -21,9 +21,9 @@ extension ActionLine {
 
     public var opacity: Double
     public var cycles: Double
-    
+
     public var uniformity: Double
-    
+
     @IgnoreCoding
     public var phaseOffset: Double = 0
 

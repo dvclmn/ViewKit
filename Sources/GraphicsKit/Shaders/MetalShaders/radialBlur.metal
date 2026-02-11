@@ -2,78 +2,85 @@
 #include <SwiftUI/SwiftUI_Metal.h>
 using namespace metal;
 
+static inline float maxDistanceToBounds(float2 originN) {
+  // originN is in [0,1]. Compute farthest corner distance in normalised space.
+  float2 c0 = float2(0.0, 0.0);
+  float2 c1 = float2(1.0, 0.0);
+  float2 c2 = float2(0.0, 1.0);
+  float2 c3 = float2(1.0, 1.0);
+  
+  float d0 = length(originN - c0);
+  float d1 = length(originN - c1);
+  float d2 = length(originN - c2);
+  float d3 = length(originN - c3);
+  
+  return max(max(d0, d1), max(d2, d3));
+}
+
 /// Progressive radial blur shader with zoom blur effect
-/// Blurs pixels more intensely as they approach the edges from a central origin point
 [[ stitchable ]] half4 radialBlur(
                                   float2 position,
                                   SwiftUI::Layer layer,
                                   float4 bounds,
-                                  float2 origin,
+                                  float2 origin,          // still treated as offset from centre in normalised units
                                   float blurStrength,
-                                  float falloffStart,
-                                  float falloffEnd,
+                                  float falloffCentre,    // 0..1 : where blur is 50%
+                                  float falloffWidth,     // 0..1 : transition width (softness)
                                   float samples
                                   ) {
-  // Get the size of the layer
   float2 size = bounds.zw;
   
-  // Normalize position to [0, 1]
-  float2 normalizedPos = position / size;
-
-  // Treat `origin` as a normalized offset from the layer's center.
-  // The center in normalized coordinates is (0.5, 0.5) regardless of bounds origin.
-  float2 normalizedCenter = float2(0.5, 0.5);
-  float2 normalizedOrigin = clamp(normalizedCenter + origin, 0.0, 1.0);
+  // Normalise position to [0,1]
+  float2 posN = position / size;
   
-  // Calculate distance from origin
-  float2 delta = normalizedPos - normalizedOrigin;
-  float distance = length(delta);
+  // Treat `origin` as a normalised offset from the layer's centre
+  float2 centreN = float2(0.5, 0.5);
+  float2 originN = clamp(centreN + origin, 0.0, 1.0);
   
-  // Calculate blur amount based on distance with customizable falloff
-  // falloffStart: distance at which blur begins (0.0 = center, 1.0 = far edge)
-  // falloffEnd: distance at which blur reaches maximum (typically > falloffStart)
-  float blurAmount = smoothstep(falloffStart, falloffEnd, distance);
+  // Normalised distance (0..1), robust to aspect ratio + origin not centred
+  float2 deltaN = posN - originN;
+  float dist = length(deltaN);
+  float maxDist = max(0.0001, maxDistanceToBounds(originN));
+  float distanceN = clamp(dist / maxDist, 0.0, 1.0);
   
-  // If no blur needed, return original pixel
+  // Convert centre/width to [start,end] in a stable way
+  float halfW = max(0.0001, falloffWidth * 0.5);
+  float start = clamp(falloffCentre - halfW, 0.0, 1.0);
+  float end   = clamp(falloffCentre + halfW, 0.0, 1.0);
+  
+  // Blur ramps from 0 (inside start) to 1 (outside end)
+  float blurAmount = smoothstep(start, end, distanceN);
+  
   if (blurAmount < 0.001) {
     return layer.sample(position);
   }
   
-  // Adaptive sample count based on blur amount (performance optimization)
   int actualSamples = int(mix(4.0, samples, blurAmount));
   
-  // Direction from origin to current position (for zoom blur)
-  float2 direction = delta;
-  if (length(direction) > 0.0001) {
-    direction = normalize(direction);
-  }
+  // Zoom direction in normalised space
+  float2 dirN = deltaN;
+  float lenDir = length(dirN);
+  dirN = (lenDir > 0.0001) ? (dirN / lenDir) : float2(0.0);
   
-  // Accumulate color samples
   half4 color = half4(0.0);
   float totalWeight = 0.0;
   
-  // Sample along the radial direction (zoom blur)
+  // scale: use the smaller dimension to keep blur "strength" consistent
+  float pixelScale = min(size.x, size.y);
+  
   for (int i = 0; i < actualSamples; i++) {
-    // Calculate offset with gaussian-like distribution
-    float t = (float(i) / float(actualSamples - 1)) - 0.5; // -0.5 to 0.5
-    
-    // Gaussian weight for better quality blur
+    float t = (float(i) / float(max(actualSamples - 1, 1))) - 0.5; // [-0.5, 0.5]
     float weight = exp(-2.0 * t * t);
     
-    // Scale the offset by blur strength and blur amount
     float offset = t * blurStrength * blurAmount;
     
-    // Sample position along the radial direction
-    float2 samplePos = position + direction * offset * size.x * 0.5;
+    // Convert from normalised direction into pixel offset
+    float2 samplePos = position + (dirN * offset * pixelScale);
     
-    // Accumulate weighted color
     color += layer.sample(samplePos) * weight;
     totalWeight += weight;
   }
   
-  // Normalize by total weight
-  color /= totalWeight;
-  
+  color /= max(totalWeight, 0.0001);
   return color;
 }
-

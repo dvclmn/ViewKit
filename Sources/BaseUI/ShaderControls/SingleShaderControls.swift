@@ -45,11 +45,11 @@ struct SingleShaderControlView: View {
             range: 0...40
           )
 
-//          QuickSlider(
-//            "Zoom",
-//            value: binding.zoom.toBindingDouble,
-//            range: 0...3
-//          )
+          //          QuickSlider(
+          //            "Zoom",
+          //            value: binding.zoom.toBindingDouble,
+          //            range: 0...3
+          //          )
 
         }
 
@@ -85,30 +85,28 @@ struct SingleShaderControlView: View {
           QuickSlider(
             "Blur",
             value: binding.strength.toBindingDouble,
-            range: 0...10
+            range: 0...20
           )
-          .helpText("Control the amount of Blur")
 
           QuickSlider(
             "Start",
             value: binding.start.toBindingDouble,
-            range: 0...2,
+            range: 0...1,
           )
-          .helpText("How far out from the origin does the Blur begin")
+          .helpText("The blur start point, from view edges to the centre.")
 
           QuickSlider(
-            "End",
+            "Falloff",
             value: binding.end.toBindingDouble,
-            range: 0.5...3,
+            range: 0...3,
           )
-          .helpText("How far out from the origin do we reach 100% blurriness")
+          .helpText("How gradual or abrupt is the transition from 0-100% blur.")
 
           QuickSlider(
             "Samples",
             value: binding.samples.toBindingDouble,
-            range: 1...100,
+            range: 1...200,
           )
-          //          .disabled(shouldLockBlurAndSamples)
         }
 
       case .fisheye,

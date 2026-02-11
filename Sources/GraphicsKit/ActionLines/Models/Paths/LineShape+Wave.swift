@@ -17,6 +17,7 @@ extension LineShape {
     phaseOffset: Double,
     samples: Int,
   ) -> (Path, cycles: Double) {
+    print("Ran LineShape.wavePath at \(Date.debug)")
     let length = start.distance(to: end)
 
     let cycles = effectiveCycles(

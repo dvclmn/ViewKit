@@ -196,26 +196,6 @@ extension WaveSampler {
 public enum PhaseDomain { case turns, radians }
 public enum SineMode { case math, table, auto }
 
-//extension WaveSampler {
-//  @available(*, deprecated, renamed: "sineTable", message: "Something something")
-//  @usableFromInline static var sineTable: [T] {
-//    /// Build once per generic instantiation `T`
-//    var table = [T]()
-//    table.reserveCapacity(tableSize + 1)
-//    let twoPi: T = T(2) * T.pi
-//    let denom = tableSizeF
-//
-//    /// Explicitly lift `i` to `T` to avoid integer/generic arithmetic ambiguity.
-//    for i in 0...tableSize {
-//      let angle: T = (T(i) * twoPi) / denom
-//      let sinAngle = T.waveSin(angle)
-//      table.append(sinAngle)
-//    }
-//    return table
-//  }
-//
-//}
-
 @usableFromInline
 package struct FloatSineTable {
   @usableFromInline
