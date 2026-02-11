@@ -9,7 +9,7 @@ import ColourKit
 import CoreTools
 import SwiftUI
 
-public struct ColourSliderGroup: View {
+public struct ColourSliders: View {
 
   @State private var isHovering: Bool = false
 
@@ -40,7 +40,7 @@ public struct ColourSliderGroup: View {
   }
 }
 
-extension ColourSliderGroup {
+extension ColourSliders {
   @ViewBuilder
   private func RGBView() -> some View {
     QuickSlider(
@@ -103,7 +103,7 @@ extension ColourSliderGroup {
 #Preview(traits: .size(.normal)) {
   @Previewable @State var colour = RGBColour.green
   Form {
-    ColourSliderGroup($colour, kind: .rgb)
+    ColourSliders($colour, kind: .rgb)
   }
   .formStyle(.grouped)
   .padding()

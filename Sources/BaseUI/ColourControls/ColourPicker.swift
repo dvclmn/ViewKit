@@ -13,55 +13,44 @@ import SwiftUI
 /// Note: Not a Dual picker, this is for handling one colour only
 /// See ``DualColourPicker`` for handling fore/background
 public struct ColourPicker: View {
-//  @AppStorage("isColourPickerExpanded") var isColourPickerExpanded: Bool = false
-//  @AppStorage("areColourSlidersExpanded") var areColourSlidersExpanded: Bool = true
+  //  @AppStorage("isColourPickerExpanded") var isColourPickerExpanded: Bool = false
+  //  @AppStorage("areColourSlidersExpanded") var areColourSlidersExpanded: Bool = true
 
   let title: String
   @Binding var colour: RGBColour
   @Binding var kind: ColourModelKind
   let components: ColourPickerComponents
-//  @OptionallyPersisted var isEnabled: Bool
-  
-  
+  //  @OptionallyPersisted var isEnabled: Bool
+
   public init(
     title: String,
     colour: Binding<RGBColour>,
     kind: Binding<ColourModelKind>,
     components: ColourPickerComponents,
-//    configuration: ToggleConfiguration,
+    //    configuration: ToggleConfiguration,
   ) {
     self.title = title
     self._colour = colour
     self._kind = kind
     self.components = components
-//    self.title = configuration.title
-//    self._isEnabled = configuration.persistedValue
+    //    self.title = configuration.title
+    //    self._isEnabled = configuration.persistedValue
   }
 
   public var body: some View {
 
-    #warning("Turning this off, need to reference control sizes for Sliders, to replace thumb size parameter")
-    SquareColourPicker(<#T##colour: Binding<RGBColour>##Binding<RGBColour>#>, size: <#T##CGFloat#>)
-//    SquareColourPicker(
-//      <#T##colour: Binding<RGBColour>##Binding<RGBColour>#>,
-//      size: <#T##CGFloat#>,
-//      thumbSize: <#T##CGFloat#>
-//    )
-//    DisclosureSection(<#T##key: ToggleKey.Type##ToggleKey.Type#>, content: <#T##() -> View#>)
-//    DisclosureSection("Colour Picker", persistenceKey: "isColourPickerExpanded") {
-////    DisclosureGroup("Picker", isExpanded: $isColourPickerExpanded) {
-//      SquareColourPicker($colour, size: pickerSize)
-//    }
-    
-//    DisclosureSection("Sliders", persistenceKey: "areColourSlidersExpanded") {
-      ColourSliderGroup($colour, kind: kind)
-//    }
+    if components.contains(.square) {
+      SquareColourPicker($colour)
+    }
 
-//    DisclosureGroup(
-//      "Sliders",
-//      isExpanded: $areColourSlidersExpanded
-//    ) {
-//    }
-//    .disclosureGroupStyle(.sectioned)
+    if components.contains(.sliders) {
+      ColourSliders($colour, kind: kind)
+    }
+
+    if components.isEmpty {
+      StateView("No components specified")
+        .controlSize(.small)
+    }
+
   }
 }
