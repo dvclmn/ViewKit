@@ -12,7 +12,7 @@ import SwiftUI
 /// Path style with optional stamping effect
 public struct PathStyle: Sendable, Codable, Hashable {
   let interpolation: WaveInterpolation
-  let stamped: FloatPointStyle?
+  let stamped: PointStyle?
 }
 
 extension PathStyle {

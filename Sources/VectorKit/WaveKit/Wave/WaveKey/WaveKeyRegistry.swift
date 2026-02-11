@@ -23,13 +23,6 @@ import Foundation
 ///   }
 /// }
 /// ```
-///
-/// Now your struct just works!
-/// ```
-/// struct BreathingPreferences: Sendable, Codable {
-///   var enabledWaves: [AnyWaveKey: Bool] = [:]
-/// }
-/// ```
 public enum WaveKeyRegistry {
 
   nonisolated(unsafe)
@@ -45,7 +38,7 @@ public enum WaveKeyRegistry {
 }
 
 extension WaveKeyRegistry {
-  
+
   /// Helper to apply a `ConfiguredWave` to a stack using the type-erased key
   static func apply(
     _ wave: ConfiguredWave,

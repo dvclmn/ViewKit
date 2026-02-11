@@ -8,12 +8,13 @@
 import ColourKit
 import Foundation
 
-public typealias FloatPointStyle = PointStyle<Double>
+//public typealias FloatPointStyle = PointStyle<Double>
 //public typealias FloatPointStyle = PointStyle<Float>
 
-public struct PointStyle<T: WaveFloat>: Sendable, Codable, Equatable, Hashable {
+public struct PointStyle: Sendable, Codable, Equatable, Hashable {
+//public struct PointStyle<T: WaveFloat>: Sendable, Codable, Equatable, Hashable {
   public var shape: PointShape
-  public var radius: T
+  public var radius: Double
   public var colour: RGBColour
 //  public var colour: HSVColour
   public var colourSecondary: RGBColour?
@@ -21,7 +22,7 @@ public struct PointStyle<T: WaveFloat>: Sendable, Codable, Equatable, Hashable {
   
   public init(
     shape: PointShape = .circle,
-    radius: T = 9.0,
+    radius: Double = 9.0,
     colour: RGBColour = .brown,
     colourSecondary: RGBColour? = .purple,
   ) {

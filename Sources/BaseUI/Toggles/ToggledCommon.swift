@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ToggledViewCommon<Content: View>: View {
   @Environment(\.layoutSpacing) private var layoutSpacing
-  
+
   let title: String
   @Binding var isEnabled: Bool
   let content: Content
@@ -25,14 +25,11 @@ struct ToggledViewCommon<Content: View>: View {
   }
 
   var body: some View {
-    
-//    VStack(alignment: .leading, spacing: layoutSpacing.map { $0 * 2.4 } ) {
-      Toggle(title, isOn: $isEnabled)
-        .foregroundStyle(isEnabled ? .primary : .tertiary)
-      if isEnabled {
-//        Divider()
-        content
-      }
-//    }
+
+    Toggle(title, isOn: $isEnabled)
+      .foregroundStyle(isEnabled ? .primary : .tertiary)
+    if isEnabled {
+      content
+    }
   }
 }

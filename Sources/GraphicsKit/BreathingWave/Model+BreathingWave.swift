@@ -11,17 +11,27 @@ import MetaCodable
 import VectorKit
 
 @Codable
-struct BreathingWave: Sendable, Equatable, Hashable, Codable {
+public struct BreathingWave: Sendable, Equatable, Hashable {
 
-//  @CodedBy(WaveStackCoder())
-//  var stack = WaveStack()
-  var style = FloatWaveStyle()
-//
-  @IgnoreCoding static let ampRange: ClosedRange<Double> = 0...600
-  @IgnoreCoding static let freqRange: ClosedRange<Double> = 0...3
-  @IgnoreCoding static let cyclesRange: ClosedRange<Double> = 0...30
+  @CodedBy(WaveStackCoder())
+  public var stack: WaveStack
 
-  var shaders: [ShaderEffect] = ShaderEffect.wavyPreset02
+  public var style: WaveStyle
+  public var shaders: [ShaderEffect]
+
+  @IgnoreCoding public let ampRange: ClosedRange<Double> = 0...600
+  @IgnoreCoding public let freqRange: ClosedRange<Double> = 0...3
+  @IgnoreCoding public let cyclesRange: ClosedRange<Double> = 0...30
+
+  public init(
+    stack: WaveStack = .init(),
+    style: WaveStyle = .init(),
+    shaders: [ShaderEffect] = ShaderEffect.wavyPreset02
+  ) {
+    self.stack = stack
+    self.style = style
+    self.shaders = shaders
+  }
 }
 
 struct WaveStackCoder: HelperCoder {
@@ -40,7 +50,7 @@ struct WaveStackCoder: HelperCoder {
 
 extension BreathingWave: Transferable {
 
-  static var transferRepresentation: some TransferRepresentation {
+  public static var transferRepresentation: some TransferRepresentation {
     CodableRepresentation(for: BreathingWave.self, contentType: .json)
       .suggestedFileName("New wave preset")
   }
@@ -56,7 +66,7 @@ extension BreathingWave: Transferable {
 //    let container = try decoder.container(keyedBy: CodingKeys.self)
 //
 //    /// Handle wave style
-//    let style = try container.decode(FloatWaveStyle.self, forKey: .style)
+//    let style = try container.decode(WaveStyle.self, forKey: .style)
 //    self.style = style
 //
 //    /// For `WaveStack`, encode the projection and apply it to the stack

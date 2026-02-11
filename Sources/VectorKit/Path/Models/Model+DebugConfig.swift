@@ -11,12 +11,12 @@ import ColourKit
 
 public struct PathDebugConfig {
 
-  public let lineStyle: LineStyle<CGFloat>
+  public let lineStyle: WaveLineStyle
   public let fillColour: RGBColour
   public let labelFontSize: CGFloat
 
   public init(
-    lineStyle: LineStyle<CGFloat> = .init(),
+    lineStyle: WaveLineStyle = .init(),
     fillColour: RGBColour = .orange,
     labelFontSize: CGFloat = 11,
   ) {

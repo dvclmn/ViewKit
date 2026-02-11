@@ -8,22 +8,23 @@
 import ColourKit
 import Foundation
 
-public typealias FloatLineStyle = LineStyle<Double>
+//public typealias FloatLineStyle = LineStyle<Double>
 //public typealias FloatPointStyle = PointStyle<Float>
 
-public struct LineStyle<T: WaveFloat>: Codable, Sendable, Equatable, Hashable {
+public struct WaveLineStyle: Codable, Sendable, Equatable, Hashable {
+  //public struct LineStyle<T: WaveFloat>: Codable, Sendable, Equatable, Hashable {
   public var colour: RGBColour
   public var colourSecondary: RGBColour?
-  public var lineWidth: T
+  public var lineWidth: Double
   public var dashes: Int
-  public var dashPhase: T
+  public var dashPhase: Double
 
   public init(
     colour: RGBColour = .green,
     colourSecondary: RGBColour? = .orange,
-    lineWidth: T = 3.0,
+    lineWidth: Double = 3.0,
     dashes: Int = 0,
-    dashPhase: T = 0,
+    dashPhase: Double = 0,
   ) {
     self.colour = colour
     self.colourSecondary = colourSecondary
@@ -33,7 +34,7 @@ public struct LineStyle<T: WaveFloat>: Codable, Sendable, Equatable, Hashable {
   }
 }
 
-extension LineStyle {
+extension WaveLineStyle {
   public static var example: Self {
     .init(
       colour: .green,

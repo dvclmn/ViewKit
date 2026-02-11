@@ -12,7 +12,7 @@ extension WavePathGenerator {
   /// without the path processors needing to know anything about the stamping logic itself.
   ///
   /// Separates the concerns of “how the path is interpolated” from “what is stamped at each point.”
-  func makeStampClosure(from style: FloatPointStyle?) -> Stamper {
+  func makeStampClosure(from style: PointStyle?) -> Stamper {
     guard let style else { return { _, _, _ in } }
     return { index, point, path in
       style.shape.addShape(to: &path, at: point, radius: style.radius)
