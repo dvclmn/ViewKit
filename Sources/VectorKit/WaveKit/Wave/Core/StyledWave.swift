@@ -16,10 +16,10 @@ public struct StyledWave: WaveShaped, Hashable, Codable, Equatable, Identifiable
   
   public var id: FloatWave.ID { wave.id }
   public var wave: FloatWave
-  public var config: FloatWaveConfig
+  public var config: WaveConfig
   public var style: WaveStyle
 
-  public init(_ wave: FloatWave, config: FloatWaveConfig, style: WaveStyle) {
+  public init(_ wave: FloatWave, config: WaveConfig, style: WaveStyle) {
     self.wave = wave
     self.config = config
     self.style = style

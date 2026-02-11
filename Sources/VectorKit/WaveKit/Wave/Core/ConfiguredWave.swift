@@ -12,9 +12,9 @@ public struct ConfiguredWave: WaveShaped, Sendable, Identifiable, Hashable, Coda
   public typealias Value = Double
   public var id: FloatWave.ID { wave.id }
   public var wave: FloatWave
-  public var config: FloatWaveConfig
+  public var config: WaveConfig
 
-  public init(_ wave: FloatWave = .example01, config: FloatWaveConfig = .init()) {
+  public init(_ wave: FloatWave = .example01, config: WaveConfig = .init()) {
     self.wave = wave
     self.config = config
   }
@@ -59,7 +59,7 @@ extension ConfiguredWave {
   public static var example02: Self {
     .init(
       .example02,
-      config: FloatWaveConfig(cycles: 10, sampleCount: 10)
+      config: WaveConfig(cycles: 10, sampleCount: 10)
     )
   }
 }

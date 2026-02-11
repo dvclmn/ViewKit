@@ -10,7 +10,6 @@ import CoreTools
 import Foundation
 
 public struct WaveStyle: Codable, Sendable, Equatable, Hashable {
-  //public struct WaveStyle<T: WaveFloat>: Codable, Sendable, Equatable, Hashable {
   public var lineStyle: WaveLineStyle
   public var pointStyle: PointStyle
 
@@ -22,9 +21,3 @@ public struct WaveStyle: Codable, Sendable, Equatable, Hashable {
     self.pointStyle = point
   }
 }
-
-//extension WaveStyle {
-//  public init() {
-//
-//  }
-//}
