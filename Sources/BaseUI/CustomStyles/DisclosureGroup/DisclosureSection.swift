@@ -13,19 +13,56 @@ public struct DisclosureSection<Content: View>: View {
   let title: String
   @OptionallyPersisted var isExpanded: Bool
   let content: Content
-
-  public init(
-    _ title: String,
-    persistenceKey: String? = nil,
+  
+  private init(
+    configuration: ToggleConfiguration,
     @ViewBuilder content: () -> Content
   ) {
-    self.title = title
-    self._isExpanded = OptionallyPersisted(
-      defaultValue: true,
-      persistenceKey: persistenceKey
-    )
+    self.title = configuration.title
+    self._isExpanded = configuration.persistedValue
     self.content = content()
   }
+  
+  // Public initializers
+  public init<K: ToggleKey>(
+    _ key: K.Type,
+    @ViewBuilder content: () -> Content
+  ) {
+    self.init(configuration: ToggleConfiguration(key), content: content)
+  }
+  
+  public init(
+    _ title: String,
+    binding: Binding<Bool>,
+    @ViewBuilder content: () -> Content
+  ) {
+    self.init(configuration: ToggleConfiguration(title, binding: binding), content: content)
+  }
+  
+  public init(
+    _ title: String,
+    transient defaultExpanded: Bool = true,
+    @ViewBuilder content: () -> Content
+  ) {
+    self.init(configuration: ToggleConfiguration(title, transient: defaultExpanded), content: content)
+  }
+  
+//  let title: String
+//  @OptionallyPersisted var isExpanded: Bool
+//  let content: Content
+//
+//  public init(
+//    _ title: String,
+//    persistenceKey: String? = nil,
+//    @ViewBuilder content: () -> Content
+//  ) {
+//    self.title = title
+//    self._isExpanded = OptionallyPersisted(
+//      defaultValue: true,
+//      persistenceKey: persistenceKey
+//    )
+//    self.content = content()
+//  }
 
   public var body: some View {
 

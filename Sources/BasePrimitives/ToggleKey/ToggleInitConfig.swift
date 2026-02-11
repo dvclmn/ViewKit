@@ -5,12 +5,12 @@
 //  Created by Dave Coleman on 11/2/2026.
 //
 
-import Foundation
+import SwiftUI
 
 /// Encapsulates the initialization strategy for toggle-based views
 public struct ToggleConfiguration {
-  let title: String
-  let persistedValue: OptionallyPersisted<Bool>
+  public let title: String
+  public let persistedValue: OptionallyPersisted<Bool>
   
   // Key-based
   public init<K: ToggleKey>(_ key: K.Type) {
@@ -31,16 +31,16 @@ public struct ToggleConfiguration {
   }
   
   // Legacy string-based (deprecated)
-  @available(*, deprecated, message: "Use init(_:) with a ToggleKey type instead")
-  public init(_ title: String, persistenceKey: String?, defaultValue: Bool = true) {
-    self.title = title
-    if let key = persistenceKey {
-      self.persistedValue = OptionallyPersisted(
-        defaultValue: defaultValue,
-        persistenceKey: key
-      )
-    } else {
-      self.persistedValue = OptionallyPersisted(transient: defaultValue)
-    }
-  }
+//  @available(*, deprecated, message: "Use init(_:) with a ToggleKey type instead")
+//  public init(_ title: String, persistenceKey: String?, defaultValue: Bool = true) {
+//    self.title = title
+//    if let key = persistenceKey {
+//      self.persistedValue = OptionallyPersisted(
+//        defaultValue: defaultValue,
+//        persistenceKey: key
+//      )
+//    } else {
+//      self.persistedValue = OptionallyPersisted(transient: defaultValue)
+//    }
+//  }
 }

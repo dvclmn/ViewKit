@@ -30,41 +30,80 @@ import CoreTools
 /// }
 /// ```
 public struct ToggledView<Content: View>: View {
+  
   let title: String
   @OptionallyPersisted var isEnabled: Bool
   let content: Content
   
-  /// Key-based initializer (title derived from key)
+  private init(
+    configuration: ToggleConfiguration,
+    @ViewBuilder content: () -> Content
+  ) {
+    self.title = configuration.title
+    self._isEnabled = configuration.persistedValue
+    self.content = content()
+  }
+  
+  // Public initializers delegate to private init
   public init<K: ToggleKey>(
     _ key: K.Type,
     @ViewBuilder content: () -> Content
   ) {
-    self.title = K.displayName
-    self._isEnabled = OptionallyPersisted(key)
-    self.content = content()
+    self.init(configuration: ToggleConfiguration(key), content: content)
   }
   
-  /// Binding-based initializer (explicit title)
   public init(
     _ title: String = "Enabled",
     binding: Binding<Bool>,
     @ViewBuilder content: () -> Content
   ) {
-    self.title = title
-    self._isEnabled = OptionallyPersisted(binding: binding)
-    self.content = content()
+    self.init(configuration: ToggleConfiguration(title, binding: binding), content: content)
   }
   
-  /// Transient (non-persisted) initializer
   public init(
     _ title: String = "Enabled",
     transient defaultEnabled: Bool = true,
     @ViewBuilder content: () -> Content
   ) {
-    self.title = title
-    self._isEnabled = OptionallyPersisted(transient: defaultEnabled)
-    self.content = content()
+    self.init(configuration: ToggleConfiguration(title, transient: defaultEnabled), content: content)
   }
+  
+  
+//  let title: String
+//  @OptionallyPersisted var isEnabled: Bool
+//  let content: Content
+//  
+//  /// Key-based initializer (title derived from key)
+//  public init<K: ToggleKey>(
+//    _ key: K.Type,
+//    @ViewBuilder content: () -> Content
+//  ) {
+//    self.title = K.displayName
+//    self._isEnabled = OptionallyPersisted(key)
+//    self.content = content()
+//  }
+//  
+//  /// Binding-based initializer (explicit title)
+//  public init(
+//    _ title: String = "Enabled",
+//    binding: Binding<Bool>,
+//    @ViewBuilder content: () -> Content
+//  ) {
+//    self.title = title
+//    self._isEnabled = OptionallyPersisted(binding: binding)
+//    self.content = content()
+//  }
+//  
+//  /// Transient (non-persisted) initializer
+//  public init(
+//    _ title: String = "Enabled",
+//    transient defaultEnabled: Bool = true,
+//    @ViewBuilder content: () -> Content
+//  ) {
+//    self.title = title
+//    self._isEnabled = OptionallyPersisted(transient: defaultEnabled)
+//    self.content = content()
+//  }
   
   public var body: some View {
     ToggledViewCommon(title, isEnabled: $isEnabled) {

@@ -31,23 +31,30 @@ struct ToggledViewModifier: ViewModifier {
   let title: String
   @OptionallyPersisted var isEnabled: Bool
 
-  /// Key-based initializer (title derived from key)
-  init<K: ToggleKey>(key: K.Type) {
-    self.title = K.displayName
-    self._isEnabled = OptionallyPersisted(key)
+  fileprivate init(
+    configuration: ToggleConfiguration
+  ) {
+    self.title = configuration.title
+    self._isEnabled = configuration.persistedValue
   }
-
-  /// Binding-based initializer (explicit title)
-  init(title: String, binding: Binding<Bool>) {
-    self.title = title
-    self._isEnabled = OptionallyPersisted(binding: binding)
-  }
-
-  /// Optional: Transient (non-persisted) initializer
-  init(title: String, transient defaultValue: Bool = true) {
-    self.title = title
-    self._isEnabled = OptionallyPersisted(transient: defaultValue)
-  }
+    
+//  /// Key-based initializer (title derived from key)
+//  init<K: ToggleKey>(key: K.Type) {
+//    self.title = K.displayName
+//    self._isEnabled = OptionallyPersisted(key)
+//  }
+//
+//  /// Binding-based initializer (explicit title)
+//  init(title: String, binding: Binding<Bool>) {
+//    self.title = title
+//    self._isEnabled = OptionallyPersisted(binding: binding)
+//  }
+//
+//  /// Optional: Transient (non-persisted) initializer
+//  init(title: String, transient defaultValue: Bool = true) {
+//    self.title = title
+//    self._isEnabled = OptionallyPersisted(transient: defaultValue)
+//  }
 
   func body(content: Content) -> some View {
     ToggledViewCommon(title, isEnabled: $isEnabled) {
@@ -78,9 +85,10 @@ struct ToggledViewModifier: ViewModifier {
 
 extension View {
 
-  /// Type-safe togglable view with persistence key
+  /// Type-safe togglable view with persistence key. Title is derived from key
   public func togglable<K: ToggleKey>(_ key: K.Type) -> some View {
-    self.modifier(ToggledViewModifier(key: key))
+    self.modifier(ToggledViewModifier(configuration: ToggleConfiguration(key)))
+//    self.modifier(ToggledViewModifier(key: key))
   }
 
   /// Togglable view with external binding
@@ -88,7 +96,8 @@ extension View {
     _ title: String = "Enabled",
     binding: Binding<Bool>
   ) -> some View {
-    self.modifier(ToggledViewModifier(title: title, binding: binding))
+    self.modifier(ToggledViewModifier(configuration: ToggleConfiguration(title, binding: binding)))
+//    self.modifier(ToggledViewModifier(title: title, binding: binding))
   }
 
   /// Togglable view with transient (non-persisted) state
@@ -96,7 +105,8 @@ extension View {
     _ title: String = "Enabled",
     transient defaultValue: Bool = true
   ) -> some View {
-    self.modifier(ToggledViewModifier(title: title, transient: defaultValue))
+    self.modifier(ToggledViewModifier(configuration: ToggleConfiguration(title, transient: defaultValue)))
+//    self.modifier(ToggledViewModifier(title: title, transient: defaultValue))
   }
   //  /// Type-safe togglable view
   //  public func togglable<K: ToggleKey>(_ key: K.Type) -> some View {
