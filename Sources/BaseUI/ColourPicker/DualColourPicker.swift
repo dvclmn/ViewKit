@@ -36,7 +36,7 @@ public struct DualColourPicker: View {
 
   public var body: some View {
 
-    QuickerPicker(activeColour.name, selection: $activeColour)
+    QuickerPicker(activeColour.wrappedValue.name, selection: $activeColour)
 
     DualColourPicker(
       colour: activeColour.isForeground

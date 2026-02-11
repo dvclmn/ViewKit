@@ -8,7 +8,12 @@
 import BasePrimitives
 import SwiftUI
 
-public struct QuickPicker<RowContent: View, Item>: View where Item: Pickable & Hashable {
+// See also a Picker variant with a `currentValueLabel`
+//nonisolated public init<C>(sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ViewBuilder content: () -> Content, @ViewBuilder label: () -> Label) where C : RandomAccessCollection
+/// Note: ForEach automatically assigns a tag to the selection views using each option’s id. This is possible because Flavor conforms to the Identifiable protocol.
+
+public struct QuickPicker<Item: Hashable>: View {
+//public struct QuickPicker<RowContent: View, Item>: View where Item: Pickable & Hashable {
 
   public typealias PickerOutput = (Item, Bool) -> RowContent
   @Environment(\.heightOverride) private var heightOverride
@@ -21,7 +26,7 @@ public struct QuickPicker<RowContent: View, Item>: View where Item: Pickable & H
   let hasLabeledContentWrapper: Bool
   let areShortcutsEnabled: Bool
   let maxItems: Int?
-  let rowContent: PickerOutput?
+//  let rowContent: PickerOutput?
 
   public init(
     item: Binding<Item>,
@@ -30,7 +35,7 @@ public struct QuickPicker<RowContent: View, Item>: View where Item: Pickable & H
     hasLabeledContentWrapper: Bool = false,
     areShortcutsEnabled: Bool = false,
     maxItems: Int? = nil,
-    @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
+//    @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
   ) where RowContent == EmptyView {
     self._item = item
     self._allItems = State(initialValue: allItems)
@@ -38,12 +43,14 @@ public struct QuickPicker<RowContent: View, Item>: View where Item: Pickable & H
     self.hasLabeledContentWrapper = hasLabeledContentWrapper
     self.areShortcutsEnabled = areShortcutsEnabled
     self.maxItems = maxItems
-    self.rowContent = rowContent
+//    self.rowContent = rowContent
   }
   //  private let hasCustomContent: Bool
 
   public var body: some View {
 
+    
+    
     Group {
       switch style {
         case .plain:
@@ -110,7 +117,7 @@ extension QuickPicker where Item: CaseIterable, Item.AllCases == [Item] {
     hasLabeledContentWrapper: Bool = false,
     areShortcutsEnabled: Bool = false,
     maxItems: Int? = nil,
-    @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
+//    @ViewBuilder rowContent: @escaping PickerOutput = { _, _ in EmptyView() }
   ) where RowContent == EmptyView {
     self._item = item
 
@@ -122,7 +129,7 @@ extension QuickPicker where Item: CaseIterable, Item.AllCases == [Item] {
     self.hasLabeledContentWrapper = hasLabeledContentWrapper
     self.areShortcutsEnabled = areShortcutsEnabled
     self.maxItems = maxItems
-    self.rowContent = rowContent
+//    self.rowContent = rowContent
   }
 
 }

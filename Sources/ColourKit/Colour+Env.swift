@@ -17,4 +17,7 @@ extension EnvironmentValues {
   @Entry public var colourModificationStrength: ModificationStrengthPreset?
   @Entry public var colourPurpose: ColourPurpose?
   @Entry public var colourChroma: ColourChroma?
+  
+  @Entry public var activeColour: Binding<ColourLevel> = .constant(.foreground)
+  @Entry public var activeColourModel: Binding<ColourModelKind> = .constant(.rgb)
 }

@@ -11,18 +11,16 @@ import SwiftUI
 public struct SliderThumb<ThumbShape: InsettableShape>: View {
   @Environment(\.controlSize) private var controlSize
 
-  //  let thumbDiameter: Double = 16
+  /// Could probably move this diameter out from here,
+  /// have it more adaptable
   let diameter: Double
-  //  let position: CGPoint?
   let shape: ThumbShape
 
   public init(
     diameter: Double = 16,
-    //    position: CGPoint?,
     shape: ThumbShape = .circle,
   ) {
     self.diameter = diameter
-    //    self.position = position
     self.shape = shape
   }
 
