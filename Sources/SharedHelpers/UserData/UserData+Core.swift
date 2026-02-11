@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BasePrimitives
 
 /// Core contract for types that manage an in-memory user data value with a readiness lifecycle.
 /// Provides state, storage, and coordination for updates and persistence.
@@ -25,6 +26,8 @@ public protocol UserDataHandler: Observation.Observable, AnyObject {
 
   /// Debounces outbound syncs to backing storage to avoid excessive writes.
   var debouncer: AsyncDebouncer { get }
+  
+  init(data: LoadState<Value>)
 }
 
 // MARK: - Core storage sync
@@ -33,6 +36,7 @@ extension UserDataHandler {
   /// Marks the handler as `.ready` with the provided value.
   /// Use after loading or hydrating initial data.
   public func setReady(_ value: Value) {
+    print("Set \(Self.self) to status of `LoadState.ready` at \(Date.debug)")
     dataState = .ready(value)
   }
 

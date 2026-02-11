@@ -28,7 +28,9 @@ public enum WaveKeyRegistry {
     public static var registeredTypes: [String: any WaveKey.Type] = [:]
 
   public static func register<T: WaveKey>(_ type: T.Type) {
+    print("Registering wave type: \(T.self)")
     registeredTypes[T.codingKey] = type
+    print("Now have \(registeredTypes.count) wave types registered")
   }
 
   static func lookup(_ key: String) -> (any WaveKey.Type)? {

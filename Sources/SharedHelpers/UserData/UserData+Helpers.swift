@@ -71,17 +71,17 @@ extension UserDataHandler {
     updateData(action, perform: change)
   }
 
-//  @MainActor
-//  public func setCase<Root, T>(
-//    action: UpdateKind = .standard,
-//    casePath: AnyCasePath<Root, T>
-//    //    perform change: (inout Value) -> Void
-//  ) where Root: CasePathable {
-//    
-//    updateData(action) { data in
-//      data[keyPath: casePath]
-//    }
-//  }
+  //  @MainActor
+  //  public func setCase<Root, T>(
+  //    action: UpdateKind = .standard,
+  //    casePath: AnyCasePath<Root, T>
+  //    //    perform change: (inout Value) -> Void
+  //  ) where Root: CasePathable {
+  //
+  //    updateData(action) { data in
+  //      data[keyPath: casePath]
+  //    }
+  //  }
 }
 
 // MARK: - Binding Data

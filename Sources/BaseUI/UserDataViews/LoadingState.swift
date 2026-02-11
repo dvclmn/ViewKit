@@ -11,6 +11,7 @@ import SwiftUI
 public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
   @Environment(\.undoManager) private var undoManager
 
+  //  @State private var store: Store
   @Bindable var store: Store
   let didUpdatUserData: (Store.Value) -> Void
   let content: Content
@@ -20,6 +21,7 @@ public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
     didUpdatUserData: @escaping (Store.Value) -> Void,
     @ViewBuilder content: @escaping () -> Content
   ) {
+    //    self._store = State(initialValue: Store())
     self.store = store
     self.didUpdatUserData = didUpdatUserData
     self.content = content()
@@ -29,14 +31,17 @@ public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
     switch store.dataState {
       case .idle, .loading:
         ProgressView("Loading…")
-          .task { store.setReady(store.storage) }
+          .task {
+            /// Only set status if not already set to Ready
+            guard !store.isReady else { return }
+            store.setReady(store.storage)
+          }
 
       case .failed(let error):
         StateView("Error loading data", message: error.localizedDescription)
 
       case .ready:
         content
-          .environment(store)
           .task(id: store.userDataIfPresent) {
 
             /// Usually looks like this:
@@ -50,6 +55,7 @@ public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
           .task(id: undoManager) {
             store.undoManager = undoManager
           }
+          .environment(store)
     }
   }
 }

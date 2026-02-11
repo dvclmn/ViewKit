@@ -8,11 +8,7 @@
 import ColourKit
 import Foundation
 
-//public typealias FloatLineStyle = LineStyle<Double>
-//public typealias FloatPointStyle = PointStyle<Float>
-
 public struct WaveLineStyle: Codable, Sendable, Equatable, Hashable {
-  //public struct LineStyle<T: WaveFloat>: Codable, Sendable, Equatable, Hashable {
   public var colour: RGBColour
   public var colourSecondary: RGBColour?
   public var lineWidth: Double

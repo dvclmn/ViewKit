@@ -36,7 +36,10 @@ public struct BreathingWave: Sendable, Equatable, Hashable {
 
 struct WaveStackCoder: HelperCoder {
   func decode(from decoder: Decoder) throws -> WaveStack {
+    print("Decoding wave stack at \(Date.debug)")
     let snapshot = try WaveStackSnapshot(from: decoder)
+    
+    print()
     var stack = WaveStack()
     stack.restore(from: snapshot)
     return stack

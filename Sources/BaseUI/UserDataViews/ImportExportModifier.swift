@@ -19,7 +19,6 @@ where Store.Value: Transferable & Codable {
   @Bindable var store: Store
   public func body(content: Content) -> some View {
 
-    //    @Bindable var store = store
     content
       .fileExporter(
         isPresented: $isExporting,
@@ -53,16 +52,12 @@ where Store.Value: Transferable & Codable {
               asType: Store.Value.self
             )
             store.setValue(action: .withUndo(action: "Load Preset")) {
-              //            store.waveUpdate(.withUndo(action: "Load Preset")) {
               $0 = newWave
             }
 
           } catch {
             popup?.showPopup("File import error: \(error)")
           }
-
-          //          store.isImporting = false
-
         }
       )
 
@@ -72,7 +67,6 @@ where Store.Value: Transferable & Codable {
             isExporting = true
           } label: {
             Label("Save Preset", systemImage: Icons.plus.icon)
-            //          Label("Save Preset", systemImage: "document.badge.gearshape")
           }
 
           Button {

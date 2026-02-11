@@ -21,6 +21,8 @@ extension WaveStackSnapshot {
   /// Initialise a snapshot of a WaveStack
   public init(of stack: WaveStack) {
     self = stack.snapshot()
+//    let thing = stack.snapshot()
+//    self.init(thing.waves)
   }
 
   /// Convenience apply method for “I have a snapshot, now what?”
