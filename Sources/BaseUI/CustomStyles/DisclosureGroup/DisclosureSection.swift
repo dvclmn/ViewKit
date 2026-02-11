@@ -13,7 +13,7 @@ public struct DisclosureSection<Content: View>: View {
   let title: String
   @OptionallyPersisted var isExpanded: Bool
   let content: Content
-  
+
   private init(
     configuration: ToggleConfiguration,
     @ViewBuilder content: () -> Content
@@ -22,15 +22,16 @@ public struct DisclosureSection<Content: View>: View {
     self._isExpanded = configuration.persistedValue
     self.content = content()
   }
-  
-  // Public initializers
+
+  /// Key-based init (title derived from key)
   public init<K: ToggleKey>(
     _ key: K.Type,
     @ViewBuilder content: () -> Content
   ) {
     self.init(configuration: ToggleConfiguration(key), content: content)
   }
-  
+
+  /// Binding-based, with explicit title
   public init(
     _ title: String,
     binding: Binding<Bool>,
@@ -38,7 +39,8 @@ public struct DisclosureSection<Content: View>: View {
   ) {
     self.init(configuration: ToggleConfiguration(title, binding: binding), content: content)
   }
-  
+
+  /// Transient (non-persisted) variant
   public init(
     _ title: String,
     transient defaultExpanded: Bool = true,
@@ -46,31 +48,12 @@ public struct DisclosureSection<Content: View>: View {
   ) {
     self.init(configuration: ToggleConfiguration(title, transient: defaultExpanded), content: content)
   }
-  
-//  let title: String
-//  @OptionallyPersisted var isExpanded: Bool
-//  let content: Content
-//
-//  public init(
-//    _ title: String,
-//    persistenceKey: String? = nil,
-//    @ViewBuilder content: () -> Content
-//  ) {
-//    self.title = title
-//    self._isExpanded = OptionallyPersisted(
-//      defaultValue: true,
-//      persistenceKey: persistenceKey
-//    )
-//    self.content = content()
-//  }
 
   public var body: some View {
 
     Section {
       if isExpanded {
-        //        VStack(alignment: .leading, spacing: Styles.sizeMedium) {
         content
-        //        }
       } else {
 
         Label("Hidden", systemImage: "eye")
