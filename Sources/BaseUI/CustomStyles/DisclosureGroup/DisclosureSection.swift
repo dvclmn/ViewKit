@@ -12,14 +12,23 @@ public struct DisclosureSection<Content: View>: View {
 
   let title: String
   @OptionallyPersisted var isExpanded: Bool
+
+  /// Trying out optional Enabled persistence if caller wants it
+  //  @OptionallyPersisted var isEnabled: Bool?
   let content: Content
 
   private init(
     configuration: ToggleConfiguration,
+    //    enabledConfiguration: ToggleConfiguration?,
     @ViewBuilder content: () -> Content
   ) {
     self.title = configuration.title
     self._isExpanded = configuration.persistedValue
+
+    //    if let enabledConfiguration = Optionpers {
+    //          self._isEnabled = OptionallyPersisted(enabledConfiguration.persistedValue)
+    //
+    //    }
     self.content = content()
   }
 

@@ -14,7 +14,6 @@ public struct ColourPickerComponents: OptionSet, Sendable {
   public let rawValue: Int
 
   public static let square = Self(rawValue: 1 << 0)
-//  public static let hsvSliders = Self(rawValue: 1 << 1)
-  public static let sliders = Self(rawValue: 1 << 2)
+  public static let sliders = Self(rawValue: 1 << 1)
   public static let all: Self = [.square, .sliders]
 }

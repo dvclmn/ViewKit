@@ -52,31 +52,31 @@ public struct OptionallyPersisted<Value: Sendable>: Sendable, DynamicProperty {
 }
 
 extension OptionallyPersisted {
-  
+
   /// Type-safe persistence with a key
-//  public init<K: PersistenceKey>(_ keyType: K.Type) where K.Value == Value {
-//    self.storage = .persisted(key: K.storageKey, defaultValue: K.defaultValue)
-//    self._transientValue = State(initialValue: K.defaultValue)
-//    self._persistedValue = AppStorage(wrappedValue: K.defaultValue, K.storageKey)
-//  }
+  //  public init<K: PersistenceKey>(_ keyType: K.Type) where K.Value == Value {
+  //    self.storage = .persisted(key: K.storageKey, defaultValue: K.defaultValue)
+  //    self._transientValue = State(initialValue: K.defaultValue)
+  //    self._persistedValue = AppStorage(wrappedValue: K.defaultValue, K.storageKey)
+  //  }
 }
 
 extension OptionallyPersisted where Value == Bool {
-  
+
   /// Type-safe toggle persistence
   public init<K: ToggleKey>(_ keyType: K.Type) {
     self.storage = .persisted(key: K.storageKey, defaultValue: K.defaultValue)
     self._transientValue = State(initialValue: K.defaultValue)
     self._persistedValue = AppStorage(wrappedValue: K.defaultValue, K.storageKey)
   }
-  
+
   // Keep external binding init
   public init(binding: Binding<Value>) {
     self.storage = .external(binding)
     self._transientValue = State(initialValue: binding.wrappedValue)
     self._persistedValue = AppStorage(wrappedValue: binding.wrappedValue, "unused")
   }
-  
+
   /// Transient (non-persisted) storage
   public init(transient defaultValue: Value) {
     self.storage = .transient(defaultValue: defaultValue)
