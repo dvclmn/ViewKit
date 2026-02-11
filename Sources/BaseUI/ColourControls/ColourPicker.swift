@@ -41,6 +41,7 @@ public struct ColourPicker: View {
   public var body: some View {
 
     #warning("Turning this off, need to reference control sizes for Sliders, to replace thumb size parameter")
+    SquareColourPicker(<#T##colour: Binding<RGBColour>##Binding<RGBColour>#>, size: <#T##CGFloat#>)
 //    SquareColourPicker(
 //      <#T##colour: Binding<RGBColour>##Binding<RGBColour>#>,
 //      size: <#T##CGFloat#>,

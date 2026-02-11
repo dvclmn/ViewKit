@@ -38,7 +38,7 @@ extension HSVAdjustable {
 
   /// Set a new value, returns new instance
   /// If value is `nil`, that property doesn't get touched
-  public mutating func set(
+  public func set(
     hue: Double?,
     saturation: Double?,
     brightness: Double?

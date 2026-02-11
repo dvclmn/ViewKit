@@ -15,19 +15,19 @@ public struct ShaderControls: View {
   @AppStorage("shouldLockBlurAndSamples") var shouldLockBlurAndSamples: Bool = true
 
   @Binding var shaders: [ShaderEffect]
-  let persistenceKeyExpanded: String
-  let persistenceKeyEnabled: String
+//  let persistenceKeyExpanded: String
+//  let persistenceKeyEnabled: String
 
   public init(
     shaders: Binding<[ShaderEffect]>,
-    persistenceKeyExpanded: String? = nil,
-    persistenceKeyEnabled: String? = nil,
+//    persistenceKeyExpanded: String? = nil,
+//    persistenceKeyEnabled: String? = nil,
   ) {
     self._shaders = shaders
-    self.persistenceKeyExpanded =
-      persistenceKeyExpanded ?? "isShowingShaderControls_\(shaders.wrappedValue.reduce("") { $0 + $1.name })"
-    self.persistenceKeyEnabled =
-      persistenceKeyEnabled ?? "areShaderControlsEnabled_\(shaders.wrappedValue.reduce("") { $0 + $1.name }))"
+//    self.persistenceKeyExpanded =
+//      persistenceKeyExpanded ?? "isShowingShaderControls_\(shaders.wrappedValue.reduce("") { $0 + $1.name })"
+//    self.persistenceKeyEnabled =
+//      persistenceKeyEnabled ?? "areShaderControlsEnabled_\(shaders.wrappedValue.reduce("") { $0 + $1.name }))"
   }
   public var body: some View {
 
@@ -43,7 +43,7 @@ public struct ShaderControls: View {
         .padding(.bottom, Styles.sizeSmall)
 
       }  // END foreach
-      .togglable(persistenceKey: persistenceKeyEnabled, defaultEnabled: true)
+//      .togglable(persistenceKey: persistenceKeyEnabled, defaultEnabled: true)
       .environment(\.layoutPadding, Styles.sizeSmall)
 //    }
 

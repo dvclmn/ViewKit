@@ -25,7 +25,7 @@ extension ColourModel {
 }
 
 @CaseDetection
-public enum ColourModelKind {
+public enum ColourModelKind: String, Hashable, Codable {
   case rgb
   case hsv
 }

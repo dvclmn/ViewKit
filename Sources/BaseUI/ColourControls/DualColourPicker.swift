@@ -11,27 +11,22 @@ import SwiftUI
 /// Presents both a Square Picker, and RGB/HSV Sliders
 public struct DualColourPicker: View {
   @Environment(\.activeColour) private var activeColour
+  
   @Binding var primaryColour: RGBColour
-  //  @Binding var primaryColour: HSVColour
   @Binding var secondaryColour: RGBColour
-  //  @Binding var secondaryColour: HSVColour
-  //  @Binding var activeColour: ColourLevel
+  
+  /// Note: this also is represented in the Env, just like `activeColour`,
+  /// could consider moving it to there, not sure
   let kind: ColourModelKind
-  //  let activeColour: ColourLevel
-  //  let pickerSize: CGFloat
 
   public init(
     primaryColour: Binding<RGBColour>,
     secondaryColour: Binding<RGBColour>,
-    //    activeColour: Binding<ColourLevel>,
     kind: ColourModelKind,
-    //    pickerSize: CGFloat = 140
   ) {
     self._primaryColour = primaryColour
     self._secondaryColour = secondaryColour
-    //    self._activeColour = activeColour
     self.kind = kind
-    //    self.pickerSize = pickerSize
   }
 
   public var body: some View {
