@@ -58,33 +58,3 @@ extension BreathingWave: Transferable {
       .suggestedFileName("New wave preset")
   }
 }
-
-//
-//extension BreathingWave {
-//  enum CodingKeys: String, CodingKey {
-//    case stack, style
-//  }
-//
-//  init(from decoder: Decoder) throws {
-//    let container = try decoder.container(keyedBy: CodingKeys.self)
-//
-//    /// Handle wave style
-//    let style = try container.decode(WaveStyle.self, forKey: .style)
-//    self.style = style
-//
-//    /// For `WaveStack`, encode the projection and apply it to the stack
-//    let projection = try container.decode(WaveStackSnapshot.self, forKey: .stack)
-//    self.stack = WaveStack()
-//    self.stack.restore(from: projection)
-//  }
-//
-//  func encode(to encoder: Encoder) throws {
-//    var container = encoder.container(keyedBy: CodingKeys.self)
-//
-//    try container.encode(style, forKey: .style)
-//
-//    /// Encode the stack as a projection
-//    let projection = stack.snapshot()
-//    try container.encode(projection, forKey: .stack)
-//  }
-//}
