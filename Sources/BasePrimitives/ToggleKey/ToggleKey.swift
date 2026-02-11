@@ -49,7 +49,7 @@ import Foundation
 ///   }
 /// }
 /// ```
-public protocol PersistenceKey {
+public protocol PersistenceKey: Sendable {
   associatedtype Value: Sendable
 
   /// Naming guide example: {domain} + {section} + {kind}
@@ -66,30 +66,66 @@ public protocol ToggleKey: PersistenceKey where Value == Bool {
   static var kind: ToggleKind { get }
 }
 
-/// Provide default displayName from storageKey
 extension ToggleKey {
 
-  /// Default kind for toggles unless overridden by the conformer
   public static var kind: ToggleKind { .enabled }
+  public static var defaultValue: Bool { true }
 
-  /// Builds a storage key using the pattern: "{domain}.{section}{KindSuffix}"
-  /// Example: domain = "breathingWaves", section = "shaders", kind = .enabled
-  /// Result: "breathingWaves.shadersEnabled"
-  public static func key(
-    from domain: String,
-    _ section: String
-  ) -> String {
-    "\(domain).\(section)\(kind.rawValue.capitalized)"
+  /// "{domain}.{section}{KindSuffix}"
+  public static func key(from domain: String, _ section: String) -> String {
+    "\(domain).\(section)\(kind.camelSuffix)"
   }
 
+  /// Default displayName derived from storageKey:
+  /// "breathingWaves.lineStyleExpanded" -> "Line Style"
+  /// "actionLines.colourPickerEnabled" -> "Colour Picker"
   public static var displayName: String {
-    /// Convert "shader.effects.enabled" -> "Shader Effects Enabled"
-    storageKey
-      .split(separator: ".")
-      .map { $0.capitalized }
-      .joined(separator: " ")
+    let last = storageKey.split(separator: ".").last.map(String.init) ?? storageKey
+    let section =
+      last.hasSuffix(kind.camelSuffix)
+      ? String(last.dropLast(kind.camelSuffix.count))
+      : last
+
+    return section.splitCamelCase().capitalisingFirstLetter()
   }
 }
+
+extension String {
+  fileprivate func splitCamelCase() -> String {
+    var out = ""
+    out.reserveCapacity(count + 8)
+
+    var prevWasLower = false
+    for scalar in unicodeScalars {
+      let isUpper = CharacterSet.uppercaseLetters.contains(scalar)
+      if isUpper, prevWasLower { out.append(" ") }
+      out.append(Character(scalar))
+      prevWasLower = CharacterSet.lowercaseLetters.contains(scalar)
+    }
+    return out
+  }
+
+  fileprivate func capitalisingFirstLetter() -> String {
+    guard let first else { return self }
+    return String(first).uppercased() + dropFirst()
+  }
+}
+
+//extension ToggleKey {
+//
+//  /// Default kind for toggles unless overridden by the conformer
+//  public static var kind: ToggleKind { .enabled }
+//
+//  /// Builds a storage key using the pattern: "{domain}.{section}{KindSuffix}"
+//  /// Example: domain = "breathingWaves", section = "shaders", kind = .enabled
+//  /// Result: "breathingWaves.shadersEnabled"
+//  public static func key(
+//    from domain: String,
+//    _ section: String
+//  ) -> String {
+//    "\(domain).\(section)\(kind.camelSuffix)"
+//  }
+//}
 
 /// A simple registry. Only for catching duplicate keys at runtime (during development)
 /// Call at app launch:
