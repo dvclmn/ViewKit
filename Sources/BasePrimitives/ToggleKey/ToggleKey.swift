@@ -68,7 +68,7 @@ public protocol ToggleKey: PersistenceKey where Value == Bool {
 
 extension ToggleKey {
 
-  public static var kind: ToggleKind { .enabled }
+//  public static var kind: ToggleKind { .enabled }
   public static var defaultValue: Bool { true }
 
   /// "{domain}.{section}{KindSuffix}"
