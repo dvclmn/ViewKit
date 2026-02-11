@@ -44,7 +44,7 @@ let package = Package(
     .library(
       name: "GestureKit",
       targets: [
-        "GestureKit",
+        "GestureKit"
       ]
     ),
 
@@ -72,7 +72,7 @@ let package = Package(
     .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     .package(url: "https://github.com/jpsim/Yams", from: "6.2.1"),
-//    .package(url: "https://github.com/quantumOrange/CubicSpline", branch: "main"),
+    //    .package(url: "https://github.com/quantumOrange/CubicSpline", branch: "main"),
     //    .package(
     //      url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
   ],
@@ -165,6 +165,7 @@ let package = Package(
         .module(.colourKit),
         .module(.vectorKit),
         .casePaths,
+        .metaCodable,
       ]
     ),
 
@@ -200,8 +201,7 @@ let package = Package(
         .module(.coreTools),
         .module(.colourKit),
         .casePaths,
-        .product(name: "MetaCodable", package: "MetaCodable"),
-//        .product(name: "CubicSpline", package: "CubicSpline"),
+        .metaCodable,
         .product(name: "Yams", package: "Yams"),
 
       ]
@@ -256,6 +256,9 @@ extension Target.Dependency {
   static var casePaths: Self {
     .product(name: "CasePaths", package: "swift-case-paths")
   }
+  static var metaCodable: Self {
+    .product(name: "MetaCodable", package: "MetaCodable")
+  }
   //  static var identifiedCollections: Self {
   //    .product(name: "IdentifiedCollections", package: "swift-identified-collections")
   //  }
@@ -277,7 +280,7 @@ enum BaseModule {
   case gestureKit
   case graphicsKit
   case layoutKit
-//  case lilypad
+  //  case lilypad
   case motionKit
   case sharedHelpers
   case vectorKit
@@ -298,7 +301,7 @@ enum BaseModule {
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
       case .layoutKit: "LayoutKit"
-//      case .lilypad: "LilyPad"
+      //      case .lilypad: "LilyPad"
       case .motionKit: "MotionKit"
       case .sharedHelpers: "SharedHelpers"
       case .vectorKit: "VectorKit"
