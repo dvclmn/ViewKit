@@ -9,11 +9,11 @@ import Foundation
 
 @dynamicMemberLookup
 public struct ConfiguredWave: Sendable, Identifiable, Hashable, Codable, Equatable {
-  public var id: FloatWave.ID { wave.id }
-  public var wave: FloatWave
+  public var id: Wave<Double>.ID { wave.id }
+  public var wave: Wave<Double>
   public var config: WaveConfig
 
-  public init(_ wave: FloatWave = .example01, config: WaveConfig = .init()) {
+  public init(_ wave: Wave<Double> = .example01, config: WaveConfig = .init()) {
     self.wave = wave
     self.config = config
   }

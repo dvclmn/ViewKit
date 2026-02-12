@@ -7,7 +7,8 @@
 
 import CoreTools
 import Foundation
-import VectorKit
+
+public typealias WaveComposer = (_ value: inout Double, _ offset: Double) -> Void
 
 /// What do `WaveVisualElement`s need, to be be animated appropriately?
 
@@ -24,7 +25,30 @@ public struct WaveChannel {
   /// offset, to be moved around interestingly on the Canvas
   /// The closure allows the caller to express *how* the offset should be
   /// applied to a particular element
-  public let compose: (_ state: inout WaveVisualElement, _ offset: Double) -> Void
+  //  public let compose: (_ element: inout WaveVisualElement, _ offset: Double) -> Void
+
+  /// The channel promises: “I’ll fetch the Double for you, you just mutate it.”
+  public let compose: WaveComposer
+
+  public init(
+    wave: ConfiguredWave,
+    element: WaveVisualElement.Meta,
+    compose: @escaping WaveComposer
+  ) {
+    self.wave = wave
+    self.element = element
+    self.compose = compose
+  }
+}
+
+extension WaveChannel {
+  /// Applies this channel to a concrete element instance.
+  public func apply(to element: inout WaveVisualElement, offset: Double) {
+    let path = self.element.doubleCase
+    guard var value = element[case: path] else { return }
+    compose(&value, offset)
+    element[case: path] = value
+  }
 }
 
 extension Array where Element == WaveChannel {
