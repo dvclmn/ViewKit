@@ -29,21 +29,7 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
   public var frequency: T
 
   /// Stored backing value in radians
-  @CodedAt("phase")
-  private var _phase: T
-
-  /// Expose phase in radians with get/set
-  public var phaseRadians: T {
-    get { _phase }
-    set { _phase = Self.wrapToTwoPi(newValue) }
-  }
-
-  /// Expose unit phase [0, 1) with get/set
-  public var unitPhase: T {
-    get { Self.radiansToUnit(_phase) }
-    set { _phase = Self.unitToRadians(Self.wrapUnit(newValue)) }
-  }
-
+  @CodedAt("phase") private var _phase: T
   public var waveform: Waveform
 
   public init(
@@ -62,6 +48,18 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
 }
 
 extension Wave {
+
+  /// Expose phase in radians with get/set
+  public var phaseRadians: T {
+    get { _phase }
+    set { _phase = Self.wrapToTwoPi(newValue) }
+  }
+
+  /// Expose unit phase [0, 1) with get/set
+  public var unitPhase: T {
+    get { Self.radiansToUnit(_phase) }
+    set { _phase = Self.unitToRadians(Self.wrapUnit(newValue)) }
+  }
 
   public mutating func update(
     _ newValue: T,

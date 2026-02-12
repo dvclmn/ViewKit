@@ -29,23 +29,28 @@ public struct WaveBounds {
 
 extension WaveBounds  {
   
-  subscript() -> ConfiguredWave {
-    // Build a ConfiguredWave using the midpoints of the configured bounds
-    let ampMid = (amplitude.lowerBound + amplitude.upperBound) / 2
-    let freqMid = (frequency.lowerBound + frequency.upperBound) / 2
-    let cyclesMid = (cycles.lowerBound + cycles.upperBound) / 2
-    let noiseMid = (noise.lowerBound + noise.upperBound) / 2
-
-    // Default phase at 0 and a default waveform (e.g., .sine) if available
-    // If Waveform.sine is unavailable in your project, adjust accordingly.
-    return ConfiguredWave(
-      amplitude: ampMid,
-      frequency: freqMid,
-      phaseOffset: 0,
-      waveform: .sine,
-      cycles: cyclesMid,
-      noise: noiseMid
-    )
+//  subscript() -> ConfiguredWave {
+//    // Build a ConfiguredWave using the midpoints of the configured bounds
+//    let ampMid = (amplitude.lowerBound + amplitude.upperBound) / 2
+//    let freqMid = (frequency.lowerBound + frequency.upperBound) / 2
+//    let cyclesMid = (cycles.lowerBound + cycles.upperBound) / 2
+//    let noiseMid = (noise.lowerBound + noise.upperBound) / 2
+//
+//    // Default phase at 0 and a default waveform (e.g., .sine) if available
+//    // If Waveform.sine is unavailable in your project, adjust accordingly.
+//    return ConfiguredWave(
+//      amplitude: ampMid,
+//      frequency: freqMid,
+//      phaseOffset: 0,
+//      waveform: .sine,
+//      cycles: cyclesMid,
+//      noise: noiseMid
+//    )
+//  }
+  
+  /// Maps each range to the corresponding value in ``ConfiguredWave``
+  public func wavePath() -> WritableKeyPath<ConfiguredWave, Double> {
+    
   }
   
   public func clampedWaveValue(

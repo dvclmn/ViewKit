@@ -7,10 +7,8 @@
 
 import Foundation
 
-/// Previously handled by now-removed `WaveModulator`
 @dynamicMemberLookup
 public struct ConfiguredWave: Sendable, Identifiable, Hashable, Codable, Equatable {
-  public typealias Value = Double
   public var id: FloatWave.ID { wave.id }
   public var wave: FloatWave
   public var config: WaveConfig
@@ -23,20 +21,18 @@ public struct ConfiguredWave: Sendable, Identifiable, Hashable, Codable, Equatab
 
 extension ConfiguredWave {
 
-  public subscript<T>(dynamicMember keyPath: WritableKeyPath<Wave<Value>, T>) -> T {
+  public subscript<T>(dynamicMember keyPath: WritableKeyPath<Wave<Double>, T>) -> T {
     get { self.wave[keyPath: keyPath] }
     set { self.wave[keyPath: keyPath] = newValue }
   }
 
   public init(
-    amplitude: Value,
-    frequency: Value,
-    phaseOffset: Value = .zero,
+    amplitude: Double,
+    frequency: Double,
+    phaseOffset: Double = .zero,
     waveform: Waveform = .sine,
-    cycles: Value = 2,
-    //    samples: Int = 30,
-    //    interpolation: WaveInterpolation = .cubic(),
-    noise: Value = .zero
+    cycles: Double = 2,
+    noise: Double = .zero
   ) {
     let wave = FloatWave(
       amp: amplitude,
@@ -46,8 +42,6 @@ extension ConfiguredWave {
     )
     let config = WaveConfig(
       cycles: cycles,
-      //      sampleCount: samples,
-      //      interpolation: interpolation,
       noise: noise
     )
     self.wave = wave
@@ -56,29 +50,29 @@ extension ConfiguredWave {
 
   /// Returns the corresponding bounds range for a Wave property on this configured wave.
   /// Usage: `let r = configuredWave[bounds: someBounds, keyPath: \Wave<Double>.amplitude]`
-  public subscript(bounds bounds: WaveBounds, keyPath keyPath: WritableKeyPath<Wave<Value>, Value>) -> ClosedRange<Value> {
+  public subscript(bounds bounds: WaveBounds, keyPath keyPath: WritableKeyPath<Wave<Double>, Double>) -> ClosedRange<Double> {
     switch keyPath {
-    case \Wave<Value>.amplitude:
+    case \Wave<Double>.amplitude:
       return bounds.amplitude
-    case \Wave<Value>.frequency:
+    case \Wave<Double>.frequency:
       return bounds.frequency
     default:
       // If you add more Double properties to Wave (e.g., exposing phaseRadians), map them here.
       // Fallback to a very wide range to avoid crashing.
-      return (Value.leastNormalMagnitude...Value.greatestFiniteMagnitude)
+      return (Double.leastNormalMagnitude...Double.greatestFiniteMagnitude)
     }
   }
 
   /// Returns the corresponding bounds range for a Config property (cycles, noise) on this configured wave.
   /// Usage: `let r = configuredWave[bounds: someBounds, config: \WaveConfig.cycles]`
-  public subscript(bounds bounds: WaveBounds, config keyPath: WritableKeyPath<WaveConfig, Value>) -> ClosedRange<Value> {
+  public subscript(bounds bounds: WaveBounds, config keyPath: WritableKeyPath<WaveConfig, Double>) -> ClosedRange<Double> {
     switch keyPath {
     case \WaveConfig.cycles:
       return bounds.cycles
     case \WaveConfig.noise:
       return bounds.noise
     default:
-      return (Value.leastNormalMagnitude...Value.greatestFiniteMagnitude)
+      return (Double.leastNormalMagnitude...Double.greatestFiniteMagnitude)
     }
   }
 }
@@ -89,25 +83,26 @@ extension ConfiguredWave {
   /// - Parameters:
   ///   - state: The persistent ContinuousParameter for this specific wave.
   ///   - normalisedIndex: The normalisedIndex (0...1) of the current point.
-  public func sample(
-    state: ContinuousParameter<Value>,
-    at normalisedIndex: Value,
-  ) -> Value {
-
-    /// 1. Get the time-based phase from persistent state
-    let temporalPhase = state.currentPhase
-
-    /// 2. Add spatial phase (cycles) and static offset (wave.phase)
-    let spatialPhase = normalisedIndex * Value(config.cycles)
-    let staticOffset = wave.phaseRadians
-
-    let totalPhase = temporalPhase + spatialPhase + staticOffset
-    let wrappedPhase = totalPhase - floor(totalPhase)
-
-    /// 3. Run it through the waveform math. Wrap and Sample
-    let value = wave.waveform.sample(phase: wrappedPhase)
-    return wave.amplitude * value
-  }
+  #warning("Put this back into use. Somewhere")
+//  public func sample(
+//    state: ContinuousParameter<Double>,
+//    at normalisedIndex: Double,
+//  ) -> Double {
+//
+//    /// 1. Get the time-based phase from persistent state
+//    let temporalPhase = state.currentPhase
+//
+//    /// 2. Add spatial phase (cycles) and static offset (wave.phase)
+//    let spatialPhase = normalisedIndex * Double(config.cycles)
+//    let staticOffset = wave.phaseRadians
+//
+//    let totalPhase = temporalPhase + spatialPhase + staticOffset
+//    let wrappedPhase = totalPhase - floor(totalPhase)
+//
+//    /// 3. Run it through the waveform math. Wrap and Sample
+//    let value = wave.waveform.sample(phase: wrappedPhase)
+//    return wave.amplitude * value
+//  }
 
   public static var example01: Self {
     .init(
