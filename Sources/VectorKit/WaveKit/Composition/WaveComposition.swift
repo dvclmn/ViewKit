@@ -10,19 +10,38 @@ import Foundation
 /// Ha need to fix these naaaames
 public struct ComposedElements: Codable, Sendable, Equatable {
   public var waveComposition: WaveComposition
-  public var elements: ElementStore
-  
+  public var elements: [WaveVisualElement]
+  //  public var elements: ElementStore
+
   public init(
     waveComposition: WaveComposition,
-    elements: ElementStore
+    elements: [WaveVisualElement]
+      //    elements: ElementStore
   ) {
     self.waveComposition = waveComposition
     self.elements = elements
   }
 }
 
+/// Let's set up some initial elements just to play
+extension ComposedElements {
+  public static let example: ComposedElements = .init(
+    waveComposition: .example,
+    elements: [
+      WaveVisualElement(
+        kind: .dotRadius,
+        initialValue: 2.0,
+      ),
+      WaveVisualElement(kind: .dotX),
+      WaveVisualElement(kind: .dotY),
+    ]
+  )
+
+}
+
 public struct WaveComposition: Sendable, Codable, Equatable {
-  public var channels: [WaveChannel]
+  //  public var channels: [WaveChannel]
+  public var waves: [ConfiguredWave]
 
   public var style: WaveStyle
 
@@ -32,20 +51,37 @@ public struct WaveComposition: Sendable, Codable, Equatable {
   public var interpolation: WaveInterpolation
 
   public init(
-    channels: [WaveChannel],
+    waves: [ConfiguredWave],
+    //    channels: [WaveChannel],
     blendMode: WaveBlendMode = .add,
     style: WaveStyle = .init(),
     placement: WavePlacement = .vertical,
     sampleCount: Int = 20,
     interpolation: WaveInterpolation = .linear
   ) {
-    self.channels = channels
+    self.waves = waves
     self.blendMode = blendMode
     self.style = style
     self.placement = placement
     self.sampleCount = sampleCount
     self.interpolation = interpolation
   }
+}
+
+extension WaveComposition {
+  public static let example: WaveComposition = .init(
+    waves: [
+      ConfiguredWave(
+        Wave<Double>(amp: 2.0, freq: 1.0, phase: 0.0),
+        config: WaveConfig(cycles: 2.0, noise: 0.0)
+      )
+    ],
+    blendMode: .add,
+    style: WaveStyle(),
+    placement: .vertical,
+    sampleCount: 30,
+    interpolation: .cubic()
+  )
 }
 
 /// Encapsulates the “how do these waves combine?” logic.

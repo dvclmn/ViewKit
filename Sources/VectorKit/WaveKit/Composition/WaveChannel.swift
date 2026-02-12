@@ -9,15 +9,19 @@ import CoreTools
 import Foundation
 import MetaCodable
 
-public typealias WaveComposer = @Sendable (_ base: Double, _ current: Double, _ offset: Double) -> Double
+public typealias WaveComposer =
+  @Sendable (
+    _ base: Double,
+    _ current: Double,
+    _ offset: Double
+  ) -> Double
 //public typealias WaveComposer = (_ element: inout WaveVisualElement, _ offset: Double) -> Void
 //public typealias WaveComposer = @Sendable (_ value: Double, _ offset: Double) -> Double
 //public typealias WaveComposer = (_ elementValue: inout Double, _ offset: Double) -> Void
 
 /// Perhaps create a composition that can be spun up at run time?
-/// A grouping of `WaveChannels` is a ``WaveComposition``
-@Codable
-public struct WaveChannel: Sendable, Equatable {
+/// This isn't a persisted thing, it's just a builder or a factory, i think
+public struct WaveChannel: Sendable {
   /// So for wave stack, now instead of registering a very specific named one,
   /// we just make a new more run-time-y one?
   public var wave: ConfiguredWave
@@ -34,16 +38,16 @@ public struct WaveChannel: Sendable, Equatable {
 
   /// The channel promises: “I’ll fetch the Double for you, you just mutate it.”
   //  @IgnoreCoding
-  //  public let compose: WaveComposer
+  public let compose: WaveComposer
 
   public init(
     wave: ConfiguredWave,
     elementKind: WaveVisualElement.ElementKind,
-    //    compose: @escaping WaveComposer
+    compose: @escaping WaveComposer
   ) {
     self.wave = wave
     self.elementKind = elementKind
-    //    self.compose = compose
+    self.compose = compose
   }
 }
 
@@ -54,7 +58,7 @@ extension WaveChannel {
   public func applying(
     to element: WaveVisualElement,
     offset: Double,
-    compose: WaveComposer
+    //    compose: WaveComposer
   ) -> WaveVisualElement {
     /// If this channel doesn't target the element's kind, return the element unchanged
     guard element.kind == elementKind else { return element }
@@ -80,19 +84,12 @@ extension Sequence where Element == WaveChannel {
   public subscript(elementKind: WaveVisualElement.ElementKind) -> WaveChannel? {
     first { $0.elementKind == elementKind }
   }
-  public func applyingAll(
-    to element: WaveVisualElement,
-    offset: Double,
-    compose: WaveComposer
-  ) -> WaveVisualElement {
+
+  public func applyingAll(to element: WaveVisualElement, offset: Double) -> WaveVisualElement {
     reduce(element) {
       partial,
       channel in
-      channel.applying(
-        to: partial,
-        offset: offset,
-        compose: compose
-      )
+      channel.applying(to: partial, offset: offset)
     }
   }
 }
