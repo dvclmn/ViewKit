@@ -21,9 +21,6 @@ public struct ConfiguredWaveStack: Sendable, Equatable, Hashable {
   public var sampleCount: Int
   public var interpolation: WaveInterpolation
 
-  @IgnoreCoding public let ampRange: ClosedRange<Double> = 0...600
-  @IgnoreCoding public let freqRange: ClosedRange<Double> = 0...3
-  @IgnoreCoding public let cyclesRange: ClosedRange<Double> = 0...30
 
   public init(
     stack: WaveStack = .init(),
