@@ -8,7 +8,9 @@
 import CoreTools
 import Foundation
 
-public typealias WaveComposer = (_ value: inout Double, _ offset: Double) -> Void
+//public typealias WaveComposer = (_ element: inout WaveVisualElement, _ offset: Double) -> Void
+public typealias WaveComposer = (_ value: Double, _ offset: Double) -> Double
+//public typealias WaveComposer = (_ elementValue: inout Double, _ offset: Double) -> Void
 
 /// Perhaps create a composition that can be spun up at run time?
 /// A grouping of `WaveChannels` is a ``WaveComposition``
@@ -18,7 +20,8 @@ public struct WaveChannel {
   public var wave: ConfiguredWave
 
   /// The element being animated by the wave
-  public let element: WaveVisualElement.Meta
+  public let elementKind: WaveVisualElement.ElementKind
+//  public let element: WaveVisualElement.Meta
 
   /// This gives a visual element the actual values, based on the provided
   /// offset, to be moved around interestingly on the Canvas
@@ -31,28 +34,39 @@ public struct WaveChannel {
 
   public init(
     wave: ConfiguredWave,
-    element: WaveVisualElement.Meta,
+    elementKind: WaveVisualElement.ElementKind,
     compose: @escaping WaveComposer
   ) {
     self.wave = wave
-    self.element = element
+    self.elementKind = elementKind
     self.compose = compose
   }
 }
 
 extension WaveChannel {
   /// Applies this channel to a concrete element instance.
-  public func apply(to element: inout WaveVisualElement, offset: Double) {
-    let path = self.element.doubleCase
-    guard var value = element[case: path] else { return }
-    compose(&value, offset)
-    element[case: path] = value
+  /// As `WaveChannel` only holds onto the element *kind*
+  public func applying(to element: WaveVisualElement, offset: Double) -> WaveVisualElement {
+    guard element.kind == elementKind else { return element }
+    return .init(kind: element.kind, value: compose(element.value, offset))
   }
+  
+//  public func apply(
+//    to element: inout WaveVisualElement,
+//    offset: Double
+//  ) {
+////    let path = self.element.doubleCase
+////    guard var value = element[case: path] else { return }
+//    compose(&element, offset)
+//    element
+////    element[case: path] = value
+//  }
 }
 
 extension Array where Element == WaveChannel {
-  public subscript(element: WaveVisualElement.Meta) -> WaveChannel? {
-    first { $0.element == element }
+  public subscript(elementKind: WaveVisualElement.ElementKind) -> WaveChannel? {
+//  public subscript(element: WaveVisualElement.Meta) -> WaveChannel? {
+    first { $0.elementKind == elementKind }
   }
 }
 
