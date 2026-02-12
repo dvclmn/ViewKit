@@ -12,11 +12,14 @@ public enum MoveDirection: String, LabeledItem, Sendable {
   case previous
 
   public static let forward: Self = .next
+
   public static let backward: Self = .previous
+  public static let reverse: Self = .previous
 
   public var label: QuickLabel { QuickLabel(rawValue.capitalized, symbol: icon) }
 
   public var id: String { rawValue }
+  
   public var icon: String {
     switch self {
       case .next: Icons.next.icon

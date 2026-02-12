@@ -20,7 +20,7 @@ import Foundation
 ///   )
 /// }
 /// ```
-public protocol WaveKey: Hashable {
+public protocol WaveKey: Hashable, Sendable {
   static var codingKey: String { get }
   static var displayName: String { get }
   static var defaultValue: ConfiguredWave { get }
@@ -30,7 +30,3 @@ public protocol WaveKey: Hashable {
 public protocol OrderedWaveKey: WaveKey {
   static var order: Int { get }
 }
-
-//public struct RegisteredWaves {
-//  
-//}

@@ -64,67 +64,6 @@ public enum AxisMapping: Sendable {
   }
 }
 
-/// Cross-value adjustments for `AdjustableByAxis` types.
-///
-/// These helpers combine two axis-addressable values using a transform. They read
-/// corresponding axis components from `self` and `other` and compute a new value.
-extension AdjustableByAxis {
-
-  /// Combines this value with `other` component-wise using `transform`.
-  ///
-  /// The same transform is applied on both axes independently.
-  public func adjustBoth<Other: AdjustableByAxis>(
-    with other: Other,
-    transform: (_ lhs: Component, _ rhs: Component) -> Component
-  ) -> Self where Other.Component == Component {
-    return self.adjustBoth(with: other, mapping: .default, transform: transform)
-  }
-
-  /// Mapping-aware variant: combines this value with `other` component-wise using `transform`.
-  ///
-  /// Values for each axis are read using `mapping` and written back honoring `mapping`.
-  public func adjustBoth<Other: AdjustableByAxis>(
-    with other: Other,
-    mapping: AxisMapping = .default,
-    transform: (_ lhs: Component, _ rhs: Component) -> Component
-  ) -> Self where Other.Component == Component {
-    var result = self
-    for axis in [GridAxis.horizontal, .vertical] {
-      let lhs = self.value(along: axis, mapping: mapping)
-      let rhs = other.value(along: axis, mapping: mapping)
-      let newValue = transform(lhs, rhs)
-      result = result.setting(newValue, along: axis, mapping: mapping)
-    }
-    return result
-  }
-
-  /// Component-wise combination where the transform also receives the `GridAxis` being processed.
-  ///
-  /// Useful when the horizontal and vertical axes should be treated differently.
-  public func adjustBoth<Other: AdjustableByAxis>(
-    with other: Other,
-    transform: (_ axis: GridAxis, _ lhs: Component, _ rhs: Component) -> Component
-  ) -> Self where Other.Component == Component {
-    return self.adjustBoth(with: other, mapping: .default, transform: transform)
-  }
-
-  /// Mapping-aware variant: component-wise combination where the transform also receives the `GridAxis`.
-  public func adjustBoth<Other: AdjustableByAxis>(
-    with other: Other,
-    mapping: AxisMapping = .default,
-    transform: (_ axis: GridAxis, _ lhs: Component, _ rhs: Component) -> Component
-  ) -> Self where Other.Component == Component {
-    var result = self
-    for axis in [GridAxis.horizontal, .vertical] {
-      let lhs = self.value(along: axis, mapping: mapping)
-      let rhs = other.value(along: axis, mapping: mapping)
-      let newValue = transform(axis, lhs, rhs)
-      result = result.setting(newValue, along: axis, mapping: mapping)
-    }
-    return result
-  }
-}
-
 // MARK: - Deprecations
 extension AxisMapping {
 
