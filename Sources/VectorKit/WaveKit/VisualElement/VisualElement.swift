@@ -7,7 +7,7 @@
 
 public typealias ElementStore = [WaveVisualElement.ElementKind: WaveVisualElement]
 
-public struct WaveVisualElement: Sendable, Codable, Identifiable {
+public struct WaveVisualElement: Sendable, Codable, Identifiable, Equatable, Hashable {
   public var id: ElementKind.ID { kind.id }
   public let kind: ElementKind
   

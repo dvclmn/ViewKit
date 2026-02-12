@@ -7,7 +7,21 @@
 
 import Foundation
 
-public struct WaveComposition: Sendable, Codable {
+/// Ha need to fix these naaaames
+public struct ComposedElements: Codable, Sendable, Equatable {
+  public var waveComposition: WaveComposition
+  public var elements: ElementStore
+  
+  public init(
+    waveComposition: WaveComposition,
+    elements: ElementStore
+  ) {
+    self.waveComposition = waveComposition
+    self.elements = elements
+  }
+}
+
+public struct WaveComposition: Sendable, Codable, Equatable {
   public var channels: [WaveChannel]
 
   public var style: WaveStyle
