@@ -9,7 +9,7 @@ import Foundation
 
 /// Previously handled by now-removed `WaveModulator`
 @dynamicMemberLookup
-public struct ConfiguredWave: WaveShaped, Sendable, Identifiable, Hashable, Codable, Equatable {
+public struct ConfiguredWave: Sendable, Identifiable, Hashable, Codable, Equatable {
   public typealias Value = Double
   public var id: FloatWave.ID { wave.id }
   public var wave: FloatWave
@@ -22,20 +22,20 @@ public struct ConfiguredWave: WaveShaped, Sendable, Identifiable, Hashable, Coda
 }
 
 extension ConfiguredWave {
-  
+
   public subscript<T>(dynamicMember keyPath: WritableKeyPath<Wave<Value>, T>) -> T {
     get { self.wave[keyPath: keyPath] }
     set { self.wave[keyPath: keyPath] = newValue }
   }
-  
+
   public init(
     amplitude: Value,
     frequency: Value,
     phaseOffset: Value = .zero,
     waveform: Waveform = .sine,
     cycles: Value = 2,
-    samples: Int = 30,
-    interpolation: WaveInterpolation = .cubic(),
+    //    samples: Int = 30,
+    //    interpolation: WaveInterpolation = .cubic(),
     noise: Value = .zero
   ) {
     let wave = FloatWave(
@@ -46,17 +46,45 @@ extension ConfiguredWave {
     )
     let config = WaveConfig(
       cycles: cycles,
-      sampleCount: samples,
-      interpolation: interpolation,
+      //      sampleCount: samples,
+      //      interpolation: interpolation,
       noise: noise
     )
     self.wave = wave
     self.config = config
   }
+
+  /// Returns the corresponding bounds range for a Wave property on this configured wave.
+  /// Usage: `let r = configuredWave[bounds: someBounds, keyPath: \Wave<Double>.amplitude]`
+  public subscript(bounds bounds: WaveBounds, keyPath keyPath: WritableKeyPath<Wave<Value>, Value>) -> ClosedRange<Value> {
+    switch keyPath {
+    case \Wave<Value>.amplitude:
+      return bounds.amplitude
+    case \Wave<Value>.frequency:
+      return bounds.frequency
+    default:
+      // If you add more Double properties to Wave (e.g., exposing phaseRadians), map them here.
+      // Fallback to a very wide range to avoid crashing.
+      return (Value.leastNormalMagnitude...Value.greatestFiniteMagnitude)
+    }
+  }
+
+  /// Returns the corresponding bounds range for a Config property (cycles, noise) on this configured wave.
+  /// Usage: `let r = configuredWave[bounds: someBounds, config: \WaveConfig.cycles]`
+  public subscript(bounds bounds: WaveBounds, config keyPath: WritableKeyPath<WaveConfig, Value>) -> ClosedRange<Value> {
+    switch keyPath {
+    case \WaveConfig.cycles:
+      return bounds.cycles
+    case \WaveConfig.noise:
+      return bounds.noise
+    default:
+      return (Value.leastNormalMagnitude...Value.greatestFiniteMagnitude)
+    }
+  }
 }
 
 extension ConfiguredWave {
-  
+
   /// Evaluates the wave at a specific point in space.
   /// - Parameters:
   ///   - state: The persistent ContinuousParameter for this specific wave.
@@ -65,22 +93,22 @@ extension ConfiguredWave {
     state: ContinuousParameter<Value>,
     at normalisedIndex: Value,
   ) -> Value {
-    
+
     /// 1. Get the time-based phase from persistent state
     let temporalPhase = state.currentPhase
-    
+
     /// 2. Add spatial phase (cycles) and static offset (wave.phase)
     let spatialPhase = normalisedIndex * Value(config.cycles)
     let staticOffset = wave.phaseRadians
-    
+
     let totalPhase = temporalPhase + spatialPhase + staticOffset
     let wrappedPhase = totalPhase - floor(totalPhase)
-    
+
     /// 3. Run it through the waveform math. Wrap and Sample
     let value = wave.waveform.sample(phase: wrappedPhase)
     return wave.amplitude * value
   }
-  
+
   public static var example01: Self {
     .init(
       .example01,
@@ -88,10 +116,11 @@ extension ConfiguredWave {
     )
   }
 
-  public static var example02: Self {
-    .init(
-      .example02,
-      config: WaveConfig(cycles: 10, sampleCount: 10)
-    )
-  }
+  //  public static var example02: Self {
+  //    .init(
+  //      .example02,
+  //      config: WaveConfig(cycles: 10, sampleCount: 10)
+  //    )
+  //  }
 }
+

@@ -28,7 +28,44 @@ public struct WaveBounds {
 }
 
 extension WaveBounds  {
-  public func clampedWaveValue(for wave: Wave, keyPath: WritableKeyPath<Wave, Double>) -> Double {
-    
+  
+  subscript() -> ConfiguredWave {
+    // Build a ConfiguredWave using the midpoints of the configured bounds
+    let ampMid = (amplitude.lowerBound + amplitude.upperBound) / 2
+    let freqMid = (frequency.lowerBound + frequency.upperBound) / 2
+    let cyclesMid = (cycles.lowerBound + cycles.upperBound) / 2
+    let noiseMid = (noise.lowerBound + noise.upperBound) / 2
+
+    // Default phase at 0 and a default waveform (e.g., .sine) if available
+    // If Waveform.sine is unavailable in your project, adjust accordingly.
+    return ConfiguredWave(
+      amplitude: ampMid,
+      frequency: freqMid,
+      phaseOffset: 0,
+      waveform: .sine,
+      cycles: cyclesMid,
+      noise: noiseMid
+    )
   }
+  
+  public func clampedWaveValue(
+    for wave: Wave<Double>,
+    keyPath: WritableKeyPath<Wave<Double>, Double>
+  ) -> Double {
+    let value = wave[keyPath: keyPath]
+    let range = range(for: keyPath) ?? (Double.leastNormalMagnitude...Double.greatestFiniteMagnitude)
+    return value.clamped(to: range)
+  }
+  
+  private func range(for keyPath: WritableKeyPath<Wave<Double>, Double>) -> ClosedRange<Double>? {
+    switch keyPath {
+    case \Wave<Double>.amplitude:
+      return amplitude
+    case \Wave<Double>.frequency:
+      return frequency
+    default:
+      return nil
+    }
+  }
+  
 }
