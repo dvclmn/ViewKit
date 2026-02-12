@@ -10,15 +10,15 @@
 public struct WaveVisualElement: Sendable, Codable, Identifiable, Equatable, Hashable {
   public var id: ElementKind.ID { kind.id }
   public let kind: ElementKind
-  
+
   /// a stable base (the authored value)
   public var base: Double
-  
+
   /// a derived current (after wave offsets)
   /// base is stable, current is what you render.
   public var current: Double
-//  public let value: Double
-  
+  //  public let value: Double
+
   public init(
     kind: ElementKind,
     initialValue: Double = .zero
@@ -26,5 +26,12 @@ public struct WaveVisualElement: Sendable, Codable, Identifiable, Equatable, Has
     self.kind = kind
     self.base = initialValue
     self.current = .zero
+  }
+}
+
+extension WaveVisualElement {
+  public mutating func updateCurrent(with new: Double) {
+    current = new
+//    current = base + offset
   }
 }

@@ -69,7 +69,11 @@ extension WavePlacement {
   ///
   /// Prefer `normalisedPoint(at:sampleCount:)` if you want to keep
   /// things in unit space; call this at the final draw site.
-  public func point(at index: Int, sampleCount: Int, in size: CGSize) -> CGPoint {
+  public func point(
+    at index: Int,
+    sampleCount: Int,
+    in size: CGSize
+  ) -> CGPoint {
     let u = normalisedPoint(at: index, sampleCount: sampleCount)
     return CGPoint(x: u.x * size.width, y: u.y * size.height)
   }

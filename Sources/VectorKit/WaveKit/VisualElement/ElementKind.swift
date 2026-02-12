@@ -34,7 +34,7 @@ extension WaveVisualElement {
 }
 
 extension WaveVisualElement.ElementKind {
-  func sanitise(_ v: Double) -> Double {
+  package func sanitise(_ v: Double) -> Double {
     switch self {
       case .dotRadius, .lineWidth, .dashLength, .dashGap:
         return max(0, v)

@@ -69,7 +69,11 @@ extension WaveChannel {
     let newCurrent = element.kind.sanitise(
       compose(element.base, element.current, offset)
     )
-    return .init(kind: element.kind, base: element.base, current: newCurrent)
+    var newElement = WaveVisualElement(kind: element.kind, initialValue: element.base)
+    newElement.updateCurrent(with: newCurrent)
+    
+    return newElement
+    //    return .init(kind: element.kind, base: element.base, current: newCurrent)
     //    return .init(kind: element.kind, value: sanitised)
   }
 }
