@@ -17,7 +17,7 @@ struct ToggledViewCommon<Content: View>: View {
   init(
     _ title: String,
     isEnabled: Binding<Bool>,
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: () -> Content
   ) {
     self.title = title
     self._isEnabled = isEnabled

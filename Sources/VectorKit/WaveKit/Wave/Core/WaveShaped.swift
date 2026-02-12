@@ -12,7 +12,7 @@ public protocol WaveShaped {
   associatedtype Value: WaveFloat
 
   var wave: Wave<Value> { get set }
-  var config: WaveConfig<Value> { get set }
+  var config: WaveConfig { get set }
 }
 
 extension WaveShaped {
@@ -28,14 +28,13 @@ extension WaveShaped {
   public func sample(
     state: ContinuousParameter<Value>,
     at normalisedIndex: Value,
-    //    cycles: Value,
   ) -> Value {
 
     /// 1. Get the time-based phase from persistent state
     let temporalPhase = state.currentPhase
 
     /// 2. Add spatial phase (cycles) and static offset (wave.phase)
-    let spatialPhase = normalisedIndex * config.cycles
+    let spatialPhase = normalisedIndex * Value(config.cycles)
     let staticOffset = wave.phaseRadians
 
     let totalPhase = temporalPhase + spatialPhase + staticOffset

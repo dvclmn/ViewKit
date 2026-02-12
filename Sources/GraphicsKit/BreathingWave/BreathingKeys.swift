@@ -8,15 +8,6 @@
 import Foundation
 import VectorKit
 
-/// Not every wave needs to have every attribute exposed to the user
-/// for controlling. Some properties influence the overall wave shape
-/// more than others, depending on how exactly it's drawn in the Canvas.
-///
-/// Trying to think of how to express this more concretely in the code.
-///
-/// E.g. `VerticalWave`'s `amplitude` contributes hugely to the overall
-/// 'width' aspect of the final visual. In contrast, `DotRadiusWave`'s
-/// `cycles` doesn't impact visuals nearly as much.
 public enum VerticalWave: WaveKey {
   public static let displayName = "Vertical"
   public static let codingKey = "vertical"

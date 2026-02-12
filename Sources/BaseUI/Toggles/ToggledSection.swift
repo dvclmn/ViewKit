@@ -40,7 +40,7 @@ public struct ToggledView<Content: View>: View {
     @ViewBuilder content: () -> Content
   ) {
     self.title = configuration.title
-    self._isEnabled = configuration.persistedValue
+    self._isEnabled = configuration.asPropertyWrapper
     self.content = content()
   }
 

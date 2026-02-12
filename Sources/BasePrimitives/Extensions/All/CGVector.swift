@@ -41,7 +41,7 @@ extension CGVector {
 }
 
 extension CGVector {
-
+  
   public static func smoothed(
     previous smoothed: CGVector,
     prevPosition: CGPoint,
@@ -54,22 +54,12 @@ extension CGVector {
       to: currentPosition,
       dt: deltaTime
     )
-
+    
     return smoothed.adjustBoth(with: raw) { _, prev, next in
       (prev * (1 - factor)) + (next * factor)
     }
-    //    let raw = CGVector.velocity(
-    //      from: prevPosition,
-    //      to: currentPosition,
-    //      dt: deltaTime
-    //    )
-    //    return CGVector(
-    //      dx: (smoothed.dx * (1 - factor)) + (raw.dx * factor),
-    //      dy: (smoothed.dy * (1 - factor)) + (raw.dy * factor)
-    //    )
-
   }
-
+  
   /// Performs vector magnitude limiting while preserving direction
   /// Could apply to:
   /// - Game movement systems (limiting player/NPC speeds)
@@ -80,22 +70,22 @@ extension CGVector {
   public func clampVelocity(
     maxVelocity: Double = 10.0
   ) -> CGVector {
-
+    
     guard magnitude > maxVelocity else { return self }
-
+    
     /// Scale down to max velocity while preserving direction
     let scale = maxVelocity / magnitude
-
+    
     return CGVector(
       dx: self.dx * scale,
       dy: self.dy * scale
     )
   }
-
+  
   public var magnitude: CGFloat {
     return sqrt(dx * dx + dy * dy)
   }
-
+  
   public static func between(
     _ from: CGPoint,
     _ to: CGPoint,
@@ -107,7 +97,7 @@ extension CGVector {
       dy: (to.y - from.y) / dt
     )
   }
-
+  
   /// Velocity vs. Speed
   ///
   /// Velocity is a vector (has direction and magnitude, e.g., `dx` and `dy` in 2D space).
@@ -125,13 +115,13 @@ extension CGVector {
   public var speed: CGFloat {
     return sqrt(dx * dx + dy * dy)
   }
-
+  
   public func normalisedSpeed(
     maxSpeed: CGFloat = 1000.0
   ) -> CGFloat {
     return min(speed / maxSpeed, 1.0)
   }
-
+}
   //  public var displayString: String {
   //    self.displayString()
   //  }
@@ -212,5 +202,5 @@ extension CGVector {
   //    /// Clamp to reasonable bounds to prevent outliers
   //    return clampVelocity(finalVelocity)
   //  }
-
-}
+//
+//}
