@@ -44,7 +44,5 @@ extension WaveScalar {
 }
 
 extension WaveBounds {
-  public subscript(_ scalar: WaveScalar) -> ClosedRange<Double> {
-    self[keyPath: scalar.boundsKeyPath]
-  }
+ 
 }

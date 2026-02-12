@@ -29,6 +29,10 @@ public struct WaveBounds {
 
 extension WaveBounds  {
   
+  public subscript(_ scalar: WaveScalar) -> ClosedRange<Double> {
+    self[keyPath: scalar.boundsKeyPath]
+  }
+  
 //  subscript() -> ConfiguredWave {
 //    // Build a ConfiguredWave using the midpoints of the configured bounds
 //    let ampMid = (amplitude.lowerBound + amplitude.upperBound) / 2
@@ -49,28 +53,28 @@ extension WaveBounds  {
 //  }
   
   /// Maps each range to the corresponding value in ``ConfiguredWave``
-  public func wavePath() -> WritableKeyPath<ConfiguredWave, Double> {
-    
-  }
-  
-  public func clampedWaveValue(
-    for wave: Wave<Double>,
-    keyPath: WritableKeyPath<Wave<Double>, Double>
-  ) -> Double {
-    let value = wave[keyPath: keyPath]
-    let range = range(for: keyPath) ?? (Double.leastNormalMagnitude...Double.greatestFiniteMagnitude)
-    return value.clamped(to: range)
-  }
-  
-  private func range(for keyPath: WritableKeyPath<Wave<Double>, Double>) -> ClosedRange<Double>? {
-    switch keyPath {
-    case \Wave<Double>.amplitude:
-      return amplitude
-    case \Wave<Double>.frequency:
-      return frequency
-    default:
-      return nil
-    }
-  }
+//  public func wavePath() -> WritableKeyPath<ConfiguredWave, Double> {
+//    
+//  }
+//  
+//  public func clampedWaveValue(
+//    for wave: Wave<Double>,
+//    keyPath: WritableKeyPath<Wave<Double>, Double>
+//  ) -> Double {
+//    let value = wave[keyPath: keyPath]
+//    let range = range(for: keyPath) ?? (Double.leastNormalMagnitude...Double.greatestFiniteMagnitude)
+//    return value.clamped(to: range)
+//  }
+//  
+//  private func range(for keyPath: WritableKeyPath<Wave<Double>, Double>) -> ClosedRange<Double>? {
+//    switch keyPath {
+//    case \Wave<Double>.amplitude:
+//      return amplitude
+//    case \Wave<Double>.frequency:
+//      return frequency
+//    default:
+//      return nil
+//    }
+//  }
   
 }
