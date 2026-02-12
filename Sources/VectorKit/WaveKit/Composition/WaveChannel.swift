@@ -71,14 +71,38 @@ extension WaveChannel {
     )
     var newElement = WaveVisualElement(kind: element.kind, initialValue: element.base)
     newElement.updateCurrent(with: newCurrent)
-    
+
     return newElement
     //    return .init(kind: element.kind, base: element.base, current: newCurrent)
     //    return .init(kind: element.kind, value: sanitised)
   }
 }
 
-/// ```
+//extension WaveChannel {
+  
+//  public static func dotHorizontal(with wave: ConfiguredWave) -> Self {
+//    WaveChannel(
+//      wave: wave,
+//      elementKind: .dotX,
+//      compose: { base, _, offset in
+//        base + offset
+//      }
+//    )
+//  }
+//
+//  /// A radius channel: scales the base radius by (1 + offset), clamped at zero.
+//  public static func dotRadius(with wave: ConfiguredWave) -> Self {
+//    WaveChannel(
+//      wave: wave,
+//      elementKind: .dotRadius,
+//      compose: { base, _, offset in
+//        max(0, base * (1 + offset))
+//      }
+//    )
+//  }
+//}
+
+///```
 /// elements = elements
 ///   .map { $0.resettingCurrentToBase() }
 ///   .map { channels.applyingAll(to: $0, offset: offset) }
@@ -89,7 +113,10 @@ extension Sequence where Element == WaveChannel {
     first { $0.elementKind == elementKind }
   }
 
-  public func applyingAll(to element: WaveVisualElement, offset: Double) -> WaveVisualElement {
+  public func applyingAll(
+    to element: WaveVisualElement,
+    offset: Double
+  ) -> WaveVisualElement {
     reduce(element) {
       partial,
       channel in
@@ -171,3 +198,4 @@ extension Sequence where Element == WaveChannel {
 //    ]
 //  }
 //}
+

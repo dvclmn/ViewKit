@@ -23,6 +23,14 @@ public struct ComposedElements: Codable, Sendable, Equatable {
   }
 }
 
+extension ComposedElements {
+  public func thing() {
+    let channels: [WaveChannel] = [
+      .dotHorizontal(with: <#T##ConfiguredWave#>)
+    ]
+  }
+}
+
 /// Let's set up some initial elements just to play
 extension ComposedElements {
   public static let example: ComposedElements = .init(
