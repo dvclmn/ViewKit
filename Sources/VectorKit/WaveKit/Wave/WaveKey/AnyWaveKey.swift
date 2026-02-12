@@ -19,6 +19,9 @@ public struct AnyWaveKey: Hashable, @unchecked Sendable {
     self.defaultValue = T.defaultValue
     self.baseType = type
   }
+}
+
+extension AnyWaveKey {
 
   /// Casting back to a specific type
   public func asType<T: WaveKey>(_ type: T.Type) -> T.Type? {
