@@ -28,7 +28,7 @@ import SwiftUI
 /// WavePlacement.horizontal.inset(by: 0.1)  // 10%…90%, centred
 /// WavePlacement(from: .leading, to: UnitPoint(x: 1, y: 0.5))
 /// ```
-public struct WavePlacement: Equatable, Sendable {
+public struct WavePlacement: Equatable, Sendable, Codable {
 
   /// The normalised start point of the waveform path (0–1 per axis).
   public let start: UnitPoint

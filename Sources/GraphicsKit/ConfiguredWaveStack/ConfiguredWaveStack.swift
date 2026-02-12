@@ -9,23 +9,13 @@ import CoreTransferable
 import MetaCodable
 import VectorKit
 
-struct MultiWavePath {
-  public var channels: [WaveChannel]
-  
-  public var style: WaveStyle
-  let placement: WavePlacement
-  
-  public var sampleCount: Int
-  public var interpolation: WaveInterpolation
-}
-
 @Codable
 public struct ConfiguredWaveStack: Sendable, Equatable, Hashable {
 
   @CodedBy(WaveStackCoder())
   public var stack: WaveStack
-//  public var primaryWaveKey: AnyWaveKey?
-  
+  //  public var primaryWaveKey: AnyWaveKey?
+
   public var sampleCount: Int
   public var interpolation: WaveInterpolation
 
@@ -35,14 +25,14 @@ public struct ConfiguredWaveStack: Sendable, Equatable, Hashable {
   /// If no primary wave key supplied, will default to first in the stack
   public init(
     stack: WaveStack = .init(),
-//    primaryWave: AnyWaveKey? = nil,
+    //    primaryWave: AnyWaveKey? = nil,
     samples: Int = 20,
     interpolation: WaveInterpolation = .cubic(),
     style: WaveStyle = .init(),
     shaders: [ShaderEffect] = ShaderEffect.wavyPreset02
   ) {
     self.stack = stack
-//    self.primaryWaveKey = primaryWave
+    //    self.primaryWaveKey = primaryWave
     self.sampleCount = samples
     self.interpolation = interpolation
     self.style = style
@@ -50,18 +40,16 @@ public struct ConfiguredWaveStack: Sendable, Equatable, Hashable {
   }
 }
 
-extension ConfiguredWaveStack {
-  
-  public var primaryWave: ConfiguredWave? {
-    guard let key = primaryWaveKey,
-          let typedKey = key.as
-    else { return nil }
-    stack[key.]
-  }
-
-}
-
-
+//extension ConfiguredWaveStack {
+//
+//  public var primaryWave: ConfiguredWave? {
+//    guard let key = primaryWaveKey,
+//          let typedKey = key.as
+//    else { return nil }
+//    stack[key.]
+//  }
+//
+//}
 
 extension ConfiguredWaveStack: Transferable {
 
