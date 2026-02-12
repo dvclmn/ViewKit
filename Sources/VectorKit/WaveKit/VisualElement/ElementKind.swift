@@ -33,6 +33,23 @@ extension WaveVisualElement {
   }
 }
 
+extension WaveVisualElement.ElementKind {
+  func sanitise(_ v: Double) -> Double {
+    switch self {
+      case .dotRadius, .lineWidth, .dashLength, .dashGap:
+        return max(0, v)
+
+      case .dotHue:
+        // keep in [0, 360)
+        let x = v.truncatingRemainder(dividingBy: 360)
+        return x < 0 ? x + 360 : x
+
+      case .dashPhase, .dotX, .dotY:
+        return v
+    }
+  }
+}
+
 //extension WaveVisualElement.ElementKind {
 //  /// A single source of truth for "which case key path belongs to this meta case"
 //  var doubleCase: CaseKeyPath<WaveVisualElement, Double> {

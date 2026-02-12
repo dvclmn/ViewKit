@@ -21,7 +21,7 @@ public struct WaveChannel {
 
   /// The element being animated by the wave
   public let elementKind: WaveVisualElement.ElementKind
-//  public let element: WaveVisualElement.Meta
+  //  public let element: WaveVisualElement.Meta
 
   /// This gives a visual element the actual values, based on the provided
   /// offset, to be moved around interestingly on the Canvas
@@ -44,28 +44,46 @@ public struct WaveChannel {
 }
 
 extension WaveChannel {
-  /// Applies this channel to a concrete element instance.
-  /// As `WaveChannel` only holds onto the element *kind*
+  /// Returns a new element with this channel applied at the given offset.
+  /// This is the non-mutating counterpart to `apply(to:offset:)` and includes sanitisation.
   public func applying(to element: WaveVisualElement, offset: Double) -> WaveVisualElement {
+    /// If this channel doesn't target the element's kind, return the element unchanged
     guard element.kind == elementKind else { return element }
-    return .init(kind: element.kind, value: compose(element.value, offset))
+    
+    /// Compose a new value from the current value and offset, then sanitise it
+    let newValue = compose(element.value, offset)
+    let sanitised = element.kind.sanitise(newValue)
+    return .init(kind: element.kind, value: sanitised)
   }
-  
-//  public func apply(
-//    to element: inout WaveVisualElement,
-//    offset: Double
-//  ) {
-////    let path = self.element.doubleCase
-////    guard var value = element[case: path] else { return }
-//    compose(&element, offset)
-//    element
-////    element[case: path] = value
-//  }
+
+  //  public func apply(to element: inout WaveVisualElement, offset: Double) {
+  //    guard element.kind == elementKind else { return }
+  //    compose(&element.value, offset)
+  //    element.value = element.kind.sanitise(element.value)
+  //  }
+
+  //  public func applying(to element: WaveVisualElement, offset: Double) -> WaveVisualElement {
+  //    guard element.kind == elementKind else { return element }
+  //    let new = compose(element.value, offset)
+  //    let sanitised = element.kind.sanitise(element.value)
+  //    return .init(kind: element.kind, value: compose(element.value, offset))
+  //  }
+
+  //  public func apply(
+  //    to element: inout WaveVisualElement,
+  //    offset: Double
+  //  ) {
+  ////    let path = self.element.doubleCase
+  ////    guard var value = element[case: path] else { return }
+  //    compose(&element, offset)
+  //    element
+  ////    element[case: path] = value
+  //  }
 }
 
 extension Array where Element == WaveChannel {
   public subscript(elementKind: WaveVisualElement.ElementKind) -> WaveChannel? {
-//  public subscript(element: WaveVisualElement.Meta) -> WaveChannel? {
+    //  public subscript(element: WaveVisualElement.Meta) -> WaveChannel? {
     first { $0.elementKind == elementKind }
   }
 }
