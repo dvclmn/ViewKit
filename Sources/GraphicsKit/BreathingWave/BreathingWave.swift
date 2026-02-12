@@ -1,5 +1,5 @@
 //
-//  Model+BreathingWave.swift
+//  ConfiguredWaveStack.swift
 //  BaseDemos
 //
 //  Created by Dave Coleman on 25/1/2026.
@@ -11,13 +11,15 @@ import MetaCodable
 import VectorKit
 
 @Codable
-public struct BreathingWave: Sendable, Equatable, Hashable {
+public struct ConfiguredWaveStack: Sendable, Equatable, Hashable {
 
   @CodedBy(WaveStackCoder())
   public var stack: WaveStack
-
   public var style: WaveStyle
   public var shaders: [ShaderEffect]
+  
+  public var sampleCount: Int
+  public var interpolation: WaveInterpolation
 
   @IgnoreCoding public let ampRange: ClosedRange<Double> = 0...600
   @IgnoreCoding public let freqRange: ClosedRange<Double> = 0...3
@@ -51,10 +53,10 @@ struct WaveStackCoder: HelperCoder {
   }
 }
 
-extension BreathingWave: Transferable {
+extension ConfiguredWaveStack: Transferable {
 
   public static var transferRepresentation: some TransferRepresentation {
-    CodableRepresentation(for: BreathingWave.self, contentType: .json)
+    CodableRepresentation(for: ConfiguredWaveStack.self, contentType: .json)
       .suggestedFileName("New wave preset")
   }
 }

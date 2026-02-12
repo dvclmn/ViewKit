@@ -12,8 +12,10 @@ import SwiftUI
 ///
 /// `stack[Fundamental.self].wave.phase += delta`
 /// `stack[Fundamental.self].settings.isEnabled.toggle()`
-// TODO: Try out dynamic lookup?
-//@dynamicMemberLookup
+///
+/// Note: Visually, this comes out as a *single* wave, however the stack
+/// aspect is because of the combining of multiple wave forms to create a
+/// new, modulated wave.
 public struct WaveStack: @unchecked Sendable, Equatable, Identifiable, Hashable {
   public let id: UUID
   private var storage: [ObjectIdentifier: ConfiguredWave] = [:]
