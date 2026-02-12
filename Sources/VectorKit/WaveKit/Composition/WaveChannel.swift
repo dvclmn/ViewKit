@@ -9,19 +9,19 @@ import CoreTools
 import Foundation
 import MetaCodable
 
-public typealias WaveComposer =
-  @Sendable (
-    _ base: Double,
-    _ current: Double,
-    _ offset: Double
-  ) -> Double
+//public typealias WaveComposer =
+//  @Sendable (
+//    _ base: Double,
+//    _ current: Double,
+//    _ offset: Double
+//  ) -> Double
 //public typealias WaveComposer = (_ element: inout WaveVisualElement, _ offset: Double) -> Void
 //public typealias WaveComposer = @Sendable (_ value: Double, _ offset: Double) -> Double
 //public typealias WaveComposer = (_ elementValue: inout Double, _ offset: Double) -> Void
 
 /// Perhaps create a composition that can be spun up at run time?
 /// This isn't a persisted thing, it's just a builder or a factory, i think
-public struct WaveChannel: Sendable {
+public struct WaveChannel: Sendable, Codable, Equatable {
   /// So for wave stack, now instead of registering a very specific named one,
   /// we just make a new more run-time-y one?
   public var wave: ConfiguredWave
@@ -38,44 +38,62 @@ public struct WaveChannel: Sendable {
 
   /// The channel promises: “I’ll fetch the Double for you, you just mutate it.”
   //  @IgnoreCoding
-  public let compose: WaveComposer
+//  public let compose: WaveComposer
+  public var operation: WaveOperation
 
   public init(
     wave: ConfiguredWave,
     elementKind: WaveVisualElement.ElementKind,
-    compose: @escaping WaveComposer
+    operation: WaveOperation
   ) {
     self.wave = wave
     self.elementKind = elementKind
-    self.compose = compose
+    self.operation = operation
   }
+//  public init(
+//    wave: ConfiguredWave,
+//    elementKind: WaveVisualElement.ElementKind,
+//    compose: @escaping WaveComposer
+//  ) {
+//    self.wave = wave
+//    self.elementKind = elementKind
+//    self.compose = compose
+//  }
 }
 
 extension WaveChannel {
+  
+  /// Applies this channel to `element` if it targets the same kind.
+  @inlinable
+  public func apply(to element: inout WaveVisualElement, offset: Double) {
+    guard element.kind == elementKind else { return }
+    let v = operation.apply(base: element.base, current: element.current, offset: offset)
+    element.setCurrent(v)
+  }
 
   /// Returns a new element with this channel applied at the given offset.
   /// This is the non-mutating counterpart to `apply(to:offset:)` and includes sanitisation.
-  public func applying(
-    to element: WaveVisualElement,
-    offset: Double,
-    //    compose: WaveComposer
-  ) -> WaveVisualElement {
-    /// If this channel doesn't target the element's kind, return the element unchanged
-    guard element.kind == elementKind else { return element }
-
-    /// Compose a new value from the current value and offset, then sanitise it
-    //    let newValue = compose(element.value, offset)
-    //    let sanitised = element.kind.sanitise(newValue)
-    let newCurrent = element.kind.sanitise(
-      compose(element.base, element.current, offset)
-    )
-    var newElement = WaveVisualElement(kind: element.kind, initialValue: element.base)
-    newElement.updateCurrent(with: newCurrent)
-
-    return newElement
-    //    return .init(kind: element.kind, base: element.base, current: newCurrent)
-    //    return .init(kind: element.kind, value: sanitised)
-  }
+//  public func applying(
+//    to element: WaveVisualElement,
+//    offset: Double,
+//    //    compose: WaveComposer
+//  ) -> WaveVisualElement {
+//    /// If this channel doesn't target the element's kind, return the element unchanged
+//    guard element.kind == elementKind else { return element }
+//
+//    /// Compose a new value from the current value and offset, then sanitise it
+//    //    let newValue = compose(element.value, offset)
+//    //    let sanitised = element.kind.sanitise(newValue)
+//    let newCurrent = element.kind.sanitise(
+//      compose(element.base, element.current, offset)
+//    )
+//    var newElement = WaveVisualElement(kind: element.kind, initialValue: element.base)
+//    newElement.updateCurrent(with: newCurrent)
+//
+//    return newElement
+//    //    return .init(kind: element.kind, base: element.base, current: newCurrent)
+//    //    return .init(kind: element.kind, value: sanitised)
+//  }
 }
 
 //extension WaveChannel {
@@ -102,28 +120,35 @@ extension WaveChannel {
 //  }
 //}
 
+extension Array where Element == WaveChannel {
+  @inlinable
+  public func applyAll(to element: inout WaveVisualElement, offset: Double) {
+    for ch in self { ch.apply(to: &element, offset: offset) }
+  }
+}
+
 ///```
 /// elements = elements
 ///   .map { $0.resettingCurrentToBase() }
 ///   .map { channels.applyingAll(to: $0, offset: offset) }
 ///   ```
-extension Sequence where Element == WaveChannel {
-
-  public subscript(elementKind: WaveVisualElement.ElementKind) -> WaveChannel? {
-    first { $0.elementKind == elementKind }
-  }
-
-  public func applyingAll(
-    to element: WaveVisualElement,
-    offset: Double
-  ) -> WaveVisualElement {
-    reduce(element) {
-      partial,
-      channel in
-      channel.applying(to: partial, offset: offset)
-    }
-  }
-}
+//extension Sequence where Element == WaveChannel {
+//
+//  public subscript(elementKind: WaveVisualElement.ElementKind) -> WaveChannel? {
+//    first { $0.elementKind == elementKind }
+//  }
+//
+//  public func applyingAll(
+//    to element: WaveVisualElement,
+//    offset: Double
+//  ) -> WaveVisualElement {
+//    reduce(element) {
+//      partial,
+//      channel in
+//      channel.applying(to: partial, offset: offset)
+//    }
+//  }
+//}
 
 //  public func apply(to element: inout WaveVisualElement, offset: Double) {
 //    guard element.kind == elementKind else { return }

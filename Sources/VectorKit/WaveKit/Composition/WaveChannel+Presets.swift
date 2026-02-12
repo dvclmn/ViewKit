@@ -9,19 +9,35 @@
 
 extension WaveChannel {
 
-  /// A radius channel: scales the base radius by (1 + offset), clamped at zero.
   public static func dotRadius(with wave: ConfiguredWave) -> Self {
-    .init(wave: wave, elementKind: .dotRadius) { base, current, offset in
-      max(0, base * (1 + offset))
-    }
+    .init(wave: wave, elementKind: .dotRadius, operation: .scaleBaseByOnePlusOffset)
   }
 
-  /// A horizontal (x) channel: adds the offset to the base x position.
-  public static func dotHorizontal(with wave: ConfiguredWave) -> Self {
-    .init(wave: wave, elementKind: .dotRadius) { base, current, offset in
-      base + offset
-    }
+  public static func dotX(with wave: ConfiguredWave) -> Self {
+    .init(wave: wave, elementKind: .dotX, operation: .addToBase)
   }
+
+  public static func dotY(with wave: ConfiguredWave) -> Self {
+    .init(wave: wave, elementKind: .dotY, operation: .addToBase)
+  }
+
+  public static func dashPhase(with wave: ConfiguredWave) -> Self {
+    .init(wave: wave, elementKind: .dashPhase, operation: .addToBase)
+  }
+
+  /// A radius channel: scales the base radius by (1 + offset), clamped at zero.
+  //  public static func dotRadius(with wave: ConfiguredWave) -> Self {
+  //    .init(wave: wave, elementKind: .dotRadius) { base, current, offset in
+  //      max(0, base * (1 + offset))
+  //    }
+  //  }
+  //
+  //  /// A horizontal (x) channel: adds the offset to the base x position.
+  //  public static func dotHorizontal(with wave: ConfiguredWave) -> Self {
+  //    .init(wave: wave, elementKind: .dotRadius) { base, current, offset in
+  //      base + offset
+  //    }
+  //  }
 }
 
 //extension CasePathable {

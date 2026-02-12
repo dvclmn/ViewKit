@@ -7,31 +7,41 @@
 
 //public typealias ElementStore = [WaveVisualElement.ElementKind: WaveVisualElement]
 
+/// Base = authored value (stable, same for each sample unless you change it).
+/// Current = what you render after wave offsets for this frame/sample.
+///
+/// That distinction matters because most wave ops are easier/safer defined against base:
+/// - dotX: usually base + offset
+/// - dotRadius: usually base * (1 + offset) (not “keep compounding current each channel”)
+/// - dashPhase: usually base + offset (or current + offset if you want accumulating behaviour)
 public struct WaveVisualElement: Sendable, Codable, Identifiable, Equatable, Hashable {
   public var id: ElementKind.ID { kind.id }
   public let kind: ElementKind
 
-  /// a stable base (the authored value)
+  /// Authored/stable value (e.g. the dot's baseline y for this sample)
   public var base: Double
 
-  /// a derived current (after wave offsets)
-  /// base is stable, current is what you render.
+  /// Derived value after applying wave channels for this frame/sample
   public var current: Double
-  //  public let value: Double
 
-  public init(
-    kind: ElementKind,
-    initialValue: Double = .zero
-  ) {
+  public init(kind: ElementKind, base: Double) {
     self.kind = kind
-    self.base = initialValue
-    self.current = .zero
+    self.base = base
+    self.current = base
   }
 }
 
 extension WaveVisualElement {
-  public mutating func updateCurrent(with new: Double) {
-    current = new
-//    current = base + offset
+
+  public mutating func resetCurrentToBase() {
+    current = base
   }
+
+  public mutating func setCurrent(_ v: Double) {
+    current = kind.sanitise(v)
+  }
+  //  public mutating func updateCurrent(with new: Double) {
+  //    current = new
+  ////    current = base + offset
+  //  }
 }
