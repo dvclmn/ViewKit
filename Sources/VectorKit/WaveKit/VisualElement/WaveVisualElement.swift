@@ -19,7 +19,7 @@ public enum WaveVisualElement: Sendable {
   case dotX(Double)
   case dotY(Double)
   case dotRadius(Double)  // *2 for diameter
-  case dotHue(Double)  // 360 hue shift
+  case dotHue(Double)  // 360° hue shift
 
   /// Dashes
   case dashLength(Double)

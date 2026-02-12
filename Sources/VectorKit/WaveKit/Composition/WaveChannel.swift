@@ -10,9 +10,8 @@ import Foundation
 
 public typealias WaveComposer = (_ value: inout Double, _ offset: Double) -> Void
 
-/// What do `WaveVisualElement`s need, to be be animated appropriately?
-
 /// Perhaps create a composition that can be spun up at run time?
+/// A grouping of `WaveChannels` is a ``WaveComposition``
 public struct WaveChannel {
   /// So for wave stack, now instead of registering a very specific named one,
   /// we just make a new more run-time-y one?

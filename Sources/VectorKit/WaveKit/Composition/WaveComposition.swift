@@ -10,10 +10,10 @@ import Foundation
 public struct WaveComposition {
   public var channels: [WaveChannel]
 
-  public var blendMode: WaveBlendMode
   public var style: WaveStyle
-  public var placement: WavePlacement
 
+  public var blendMode: WaveBlendMode
+  public var placement: WavePlacement
   public var sampleCount: Int
   public var interpolation: WaveInterpolation
 
