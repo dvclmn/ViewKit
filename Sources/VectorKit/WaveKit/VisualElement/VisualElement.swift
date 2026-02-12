@@ -15,9 +15,7 @@ public struct WaveVisualElement: Sendable, Codable, Identifiable {
   public var base: Double
   
   /// a derived current (after wave offsets)
-  ///
-  /// channel operates on current while base stays untouched
-  /// (or reset current = base each frame before applying channels).
+  /// base is stable, current is what you render.
   public var current: Double
 //  public let value: Double
 }

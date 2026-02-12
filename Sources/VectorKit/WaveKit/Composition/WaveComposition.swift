@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct WaveComposition {
+public struct WaveComposition: Sendable, Codable {
   public var channels: [WaveChannel]
 
   public var style: WaveStyle
