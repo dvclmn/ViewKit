@@ -49,9 +49,13 @@ extension ConfiguredWave {
 
 extension ConfiguredWave {
 
-  // Radians path
+  /// Radians path
   @inlinable
-  public func sample(at index: Double, time: TimeInterval, sineMode: SineMode = .auto) -> Double {
+  public func sample(
+    at index: Double,
+    time: TimeInterval,
+    sineMode: SineMode = .auto
+  ) -> Double {
     let timePhase = .twoPi * wave.frequency * time
     let staticPhase = wave.phaseRadians
     let spatial = Double(config.cycles)
@@ -61,9 +65,13 @@ extension ConfiguredWave {
     return wave.amplitude * y
   }
 
-  // Turns path (optional, if you sometimes prefer a turns domain)
+  /// Turns path
   @inlinable
-  public func sampleTurns(at index: Double, time: TimeInterval, sineMode: SineMode = .auto) -> Double {
+  public func sampleTurns(
+    at index: Double,
+    time: TimeInterval,
+    sineMode: SineMode = .auto
+  ) -> Double {
     let temporalTurns = (wave.frequency * time)  // f*t cycles
     let staticTurns = wave.phaseRadians / .twoPi
     let spatialTurns = Double(config.cycles) * index
@@ -71,6 +79,24 @@ extension ConfiguredWave {
     let wrapped = total - floor(total)
     let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: wrapped)
     return wave.amplitude * y
+  }
+
+  public func samples(
+    indices: [Double],  // Normalised, across a slice of a view
+    time: TimeInterval
+  ) -> [Double] {
+    var ys: [Double] = []
+    ys.reserveCapacity(indices.count)
+    let timePhase = .twoPi * wave.frequency * time
+    let staticPhase = wave.phaseRadians
+    let spatial = Double(config.cycles)
+
+    for index in indices {
+      let angle = timePhase + (spatial * .twoPi * index) + staticPhase
+      let y = WaveSampler<Double>.value(for: wave.waveform, atRadians: angle)
+      ys.append(wave.amplitude * y)
+    }
+    return ys
   }
 
   /// Evaluates the wave at a specific point in space.
