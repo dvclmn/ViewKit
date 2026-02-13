@@ -64,17 +64,14 @@ let package = Package(
   // MARK: - Dependancies
   dependencies: [
     //    .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.0.0"),
-    .package(url: "https://github.com/swiftlang/swift-syntax", from: "600.0.1"),
-    //    .package(url: "https://github.com/mattmassicotte/nsui", from: "1.3.0"),
+    .package(url: "https://github.com/swiftlang/swift-syntax", from: "602.0.0"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     .package(url: "https://github.com/jpsim/Yams", from: "6.2.1"),
-    //    .package(url: "https://github.com/quantumOrange/CubicSpline", branch: "main"),
-    .package(
-      url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
+    .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
   ],
 
   targets: [
@@ -92,13 +89,18 @@ let package = Package(
 
     .target(
       name: "EnumMacros",
-      dependencies: ["BaseMacrosImplementation"],
+      dependencies: [
+        "BaseMacrosImplementation"
+      ],
       path: .macrosSource + "/MacroDeclarations",
     ),
 
     .executableTarget(
       name: "BaseMacrosClient",
-      dependencies: ["EnumMacros"],
+      dependencies: [
+        .module(.enumMacros),
+        .module(.primitives),
+      ],
       path: .macrosSource + "/BaseMacrosClient",
     ),
 
@@ -166,6 +168,9 @@ let package = Package(
         .module(.vectorKit),
         .casePaths,
         .metaCodable,
+      ],
+      resources: [
+        .process("Shaders/MetalShaders")
       ]
     ),
 
@@ -237,11 +242,12 @@ let package = Package(
     // MARK: - Test targets
     .testTarget(
       name: "SharedHelpersTests",
-      dependencies: [.module(.sharedHelpers)]
+      dependencies: [.module(.sharedHelpers)],
     ),
     .testTarget(
       name: "BasePrimitivesTests",
-      dependencies: [.module(.primitives)]
+      dependencies: [.module(.primitives)],
+      exclude: ["BasePrimitives.xctestplan"],
     ),
 
   ],
@@ -260,9 +266,9 @@ extension Target.Dependency {
   static var metaCodable: Self {
     .product(name: "MetaCodable", package: "MetaCodable")
   }
-    static var identifiedCollections: Self {
-      .product(name: "IdentifiedCollections", package: "swift-identified-collections")
-    }
+  static var identifiedCollections: Self {
+    .product(name: "IdentifiedCollections", package: "swift-identified-collections")
+  }
   static var nsui: Self {
     .product(name: "NSUI", package: "nsui")
   }

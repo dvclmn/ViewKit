@@ -41,9 +41,7 @@ extension CaseIterable where Self: InfoBarItemDescriptor {
 //  public var label: QuickLabel { .init(labelText, icon: icon) }
 //}
 
-extension InfoBarSectionProtocol where Self: RawRepresentable, Self.RawValue == String {
-  public var text: String { rawValue.capitalized }
-}
+
 
 //extension InfoBarSectionProtocol where Self: CaseIterable {
 //  public static func items(

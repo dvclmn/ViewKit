@@ -5,43 +5,34 @@
 //  Created by Dave Coleman on 13/2/2026.
 //
 
-import Foundation
 import CoreTools
+import Foundation
 
 /// Describes a single InfoBar Item
 public protocol InfoBarItemDescriptor {
   associatedtype Source
   associatedtype SectionKey: InfoBarSectionKey
-  
-  var label: QuickLabel { get }
+
+  var labelText: String { get }
+  var icon: IconLiteral { get }
   func content(from source: Source, format: DisplayFormat) -> String
 }
 
-public extension InfoBarItemDescriptor {
-  // Convenience if you like your current split:
-  var labelText: String { label.text }
-  var icon: IconLiteral { label.icon } // if QuickLabel has that
-  
-  func makeItem(from source: Source, format: DisplayFormat) -> InfoBarItem {
-    InfoBarItem(
-      id: UUID(),
-      sectionKey: InfoBarSectionID(SectionKey.self),
-      label: label,
-      content: content(from: source, format: format)
-    )
-  }
-  
+extension InfoBarItemDescriptor {
+
+  public var label: QuickLabel { .init(labelText, icon: icon) }
+  //  public var labelText: String { label.text }
+  //  public var icon: IconLiteral { label.icon }
+
   public func makeItem(from source: Source, format: DisplayFormat) -> InfoBarItem {
     InfoBarItem(
       section: InfoBarSectionID(SectionKey.self),
       label: label,
       content: content(from: source, format: format)
     )
-    //    InfoBarItem(
-    //      id: UUID(),
-    //      sectionKey: InfoBarSectionID(SectionKey.self),
-    //      label: label,
-    //      content: content(from: source, format: format)
-    //    )
   }
+}
+
+extension InfoBarItemDescriptor where Self: RawRepresentable, Self.RawValue == String {
+  public var text: String { rawValue.capitalized }
 }

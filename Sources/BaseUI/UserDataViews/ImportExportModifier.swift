@@ -22,7 +22,7 @@ where Store.Value: Transferable & Codable {
     content
       .fileExporter(
         isPresented: $isExporting,
-        item: store.userData,
+        item: store.userData(),
         onCompletion: { result in
           switch result {
             case .success(let url):

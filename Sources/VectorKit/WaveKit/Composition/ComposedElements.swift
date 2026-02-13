@@ -8,7 +8,7 @@
 import Foundation
 
 public struct WaveDocument: Codable, Sendable, Equatable {
-  
+
   /// composition owns waves
   public var library: WaveLibrary
 

@@ -69,7 +69,7 @@ extension GroupedView {
 
     guard let keyForValue else { return nil }
     let grouped: ItemGroup<Item> = Dictionary(grouping: data, by: keyForValue)
-    let sortedSection = grouped.sorted(byKeyPath: \.key)
+    let sortedSection = grouped.sorted(by: \.key)
     return sortedSection
 
   }

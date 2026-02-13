@@ -48,10 +48,12 @@ extension UserDataHandler {
   @MainActor
   package func updateData(
     _ action: UpdateKind = .standard,
-    perform change: (inout Value) -> Void
+    file: StaticString = #fileID,
+    line: UInt = #line,
+    perform change: (inout Value) -> Void,
   ) {
     /// Read user data (precondition: must be `.ready`).
-    var current = unsafeReadyData()
+    var current = unsafeReadyData(file: file, line: line)
 
     /// Capture for undo
     let old = current

@@ -1,4 +1,5 @@
 import EnumMacros
+import BasePrimitives
 import Foundation
 
 // MARK: - Associated Values

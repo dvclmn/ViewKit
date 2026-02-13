@@ -14,12 +14,19 @@ import SwiftSyntaxMacros
 // `StaticMemberIterable` macro:
 // https://github.com/DanielSincere/StaticMemberIterable
 public struct StaticMemberIterableMacro: MemberMacro {
-  public static func expansion<Declaration, Context>(
-    of node: SwiftSyntax.AttributeSyntax,
-    providingMembersOf declaration: Declaration,
-    in context: Context
-  ) throws -> [SwiftSyntax.DeclSyntax]
-  where Declaration: SwiftSyntax.DeclGroupSyntax, Context: SwiftSyntaxMacros.MacroExpansionContext {
+
+  public static func expansion(
+    of node: AttributeSyntax,
+    providingMembersOf declaration: some DeclGroupSyntax,
+    conformingTo protocols: [TypeSyntax],
+    in context: some MacroExpansionContext
+  ) throws -> [DeclSyntax] {
+    //  public static func expansion<Declaration, Context>(
+    //    of node: SwiftSyntax.AttributeSyntax,
+    //    providingMembersOf declaration: Declaration,
+    //    in context: Context
+    //  ) throws -> [SwiftSyntax.DeclSyntax]
+    //  where Declaration: SwiftSyntax.DeclGroupSyntax, Context: SwiftSyntaxMacros.MacroExpansionContext {
 
     let staticMemberNames: [String] = declaration.memberBlock.members
       .flatMap { (memberDeclListItemSyntax: MemberBlockItemSyntax) in

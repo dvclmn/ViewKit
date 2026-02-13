@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 🔔 Remember: Types like Array, Set and Dictionary conform to Sequence
 extension Sequence where Element: Identifiable {
 
   public func mostRecent<T: Comparable>(
@@ -58,7 +59,7 @@ extension Sequence {
 
   /// Non-native key path based sorting
   public func sorted<T: Comparable>(
-    byKeyPath keyPath: KeyPath<Element, T>,
+    by keyPath: KeyPath<Element, T>,
     using comparator: (T, T) -> Bool = (<)
   ) -> [Element] {
     sorted { a, b in

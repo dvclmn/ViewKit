@@ -12,16 +12,13 @@ public struct InfoBarView: View {
   @Environment(\.backgroundStyle) private var backgroundStyle
   @Environment(\.modifierKeys) private var modifierKeys
 
-  let sections: [GroupedSection]
+  let sections: [InfoBarSection]
   let showingModifiersSection: Bool
-  //  let items: [InfoBarSectionID: [InfoBarItem]]
 
   public init(
-    sections: [GroupedSection],
+    sections: [InfoBarSection],
     showingModifiersSection: Bool = false
   ) {
-    //    let grouped = Dictionary(grouping: items, by: \.sectionKey)
-    //    self.items = grouped
     self.sections = sections
     self.showingModifiersSection = showingModifiersSection
   }

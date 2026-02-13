@@ -14,7 +14,7 @@ extension SampleContent {
   }
 }
 
-extension SampleContent.ExampleItem: InfoBarSectionProtocol {
+extension SampleContent.ExampleItem: InfoBarItemDescriptor {
   public typealias Source = SampleContent.ExampleDataStore
   public typealias SectionKey = SampleContent.ExampleSectionKey
 
@@ -29,7 +29,7 @@ extension SampleContent.ExampleItem: InfoBarSectionProtocol {
     }
   }
   
-  public func getContent(
+  public func content(
     from source: SampleContent.ExampleDataStore,
     format: DisplayFormat
   ) -> String {

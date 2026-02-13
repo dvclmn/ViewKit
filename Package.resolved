@@ -1,5 +1,5 @@
 {
-  "originHash" : "dcdc7082646d5eb81401f2582c06e321ffac48085e089a482946f5ab4d8a0ecf",
+  "originHash" : "a99131a2941e30ccfe8953f99a7efee7cfe9c9584abd8b038776d6fbb7b6888f",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -105,8 +105,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/stackotter/swift-macro-toolkit",
       "state" : {
-        "revision" : "569627091e1fbb8745d691aeeb008e7247dedb7c",
-        "version" : "0.6.1"
+        "revision" : "77d4a6d6215a0709d169fa1c2be4df8d8e5f0796",
+        "version" : "0.8.0"
       }
     },
     {
@@ -132,8 +132,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-syntax",
       "state" : {
-        "revision" : "0687f71944021d616d34d922343dcef086855920",
-        "version" : "600.0.1"
+        "revision" : "4799286537280063c85a32f09884cfbca301b1a1",
+        "version" : "602.0.0"
       }
     },
     {
@@ -143,6 +143,15 @@
       "state" : {
         "revision" : "4c27acf5394b645b70d8ba19dc249c0472d5f618",
         "version" : "1.7.0"
+      }
+    },
+    {
+      "identity" : "yams",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jpsim/Yams",
+      "state" : {
+        "revision" : "deaf82e867fa2cbd3cd865978b079bfcf384ac28",
+        "version" : "6.2.1"
       }
     }
   ],

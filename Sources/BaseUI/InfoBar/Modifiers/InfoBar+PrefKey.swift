@@ -34,7 +34,7 @@ extension View {
     source: T.Source,
     format: DisplayFormat = .default
   ) -> some View
-  where T: InfoBarSectionProtocol & CaseIterable {
+  where T: InfoBarItemDescriptor & CaseIterable {
     self.preference(
       key: InfoBarKey.self,
       value: items.items(from: source, format: format)

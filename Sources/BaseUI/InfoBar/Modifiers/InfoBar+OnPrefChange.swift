@@ -11,7 +11,7 @@ import SwiftUI
 public struct InfoBarItemsModifier: ViewModifier {
   @Environment(\.isInfoBarPresent) private var isInfoBarPresent
   @State private var debouncer = AsyncDebouncer(interval: 0.2)
-  @State private var sections: [GroupedSection] = []
+  @State private var sections: [InfoBarSection] = []
 
   let isEnabled: Bool
   public func body(content: Content) -> some View {
@@ -58,7 +58,7 @@ extension InfoBarItemsModifier {
 
     /// Group and Sort once
     self.sections = grouped.map { (key, items) in
-      GroupedSection(id: key, title: key.title, items: items)
+      InfoBarSection(id: key, title: key.title, items: items)
     }.sorted { $0.title < $1.title }
 
   }
@@ -68,4 +68,3 @@ extension View {
     self.modifier(InfoBarItemsModifier(isEnabled: isEnabled))
   }
 }
-

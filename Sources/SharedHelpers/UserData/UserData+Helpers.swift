@@ -14,7 +14,12 @@ extension UserDataHandler {
   /// Non-optional accessor for in-memory user data once `.ready`.
   /// Crashes via precondition if accessed before readiness. Prefer this inside views gated on `.ready`.
   @MainActor
-  public var userData: Value { unsafeReadyData() }
+  public func userData(
+    file: StaticString = #fileID,
+    line: UInt = #line
+  ) -> Value {
+    unsafeReadyData(file: file, line: line)
+  }
 
   /// Optional accessor to inspect the current in-memory value, if initialized.
   /// Returns `nil` before the handler reaches `.ready`.
@@ -29,7 +34,7 @@ extension UserDataHandler {
   ) -> Value {
     guard let data = dataState.readyValue else {
       preconditionFailure(
-        "\(String(describing: Value.self)) accessed before `LoadState` ready",
+        "\(String(describing: Value.self)) accessed before `LoadState` ready. File: \(file), Line: \(line)",
         file: file,
         line: line
       )
@@ -42,23 +47,28 @@ extension UserDataHandler {
 extension UserDataHandler {
   /// Mutates a single property on the in-memory value and propagates updates.
   /// Convenience for targeted updates without rewriting the whole `Value`.
-  @MainActor
-  public func setValue<T>(
-    _ keyPath: WritableKeyPath<Value, T>,
-    to value: T
-  ) {
-    updateData { $0[keyPath: keyPath] = value }
-  }
+  //  @MainActor
+  //  public func setValue<T>(
+  //    _ keyPath: WritableKeyPath<Value, T>,
+  //    to value: T,
+  //    file: StaticString = #fileID,
+  //    line: UInt = #line
+  //  ) {
+  //    updateData((file: file, line: line)) { $0[keyPath: keyPath] = value }
+  //  }
 
   /// Mutates a single property on the in-memory value and propagates updates.
   /// Convenience for targeted updates without rewriting the whole `Value`.
   @MainActor
   public func setValue<T>(
+    action: UpdateKind = .standard,
     _ keyPath: WritableKeyPath<Value, T>?,
-    to value: T
+    to value: T,
+    file: StaticString = #fileID,
+    line: UInt = #line
   ) {
     guard let keyPath else { return }
-    updateData { $0[keyPath: keyPath] = value }
+    updateData(action, file: file, line: line) { $0[keyPath: keyPath] = value }
   }
 
   /// Performs an in-place mutation of the in-memory value.
@@ -66,9 +76,11 @@ extension UserDataHandler {
   @MainActor
   public func setValue(
     action: UpdateKind = .standard,
-    perform change: (inout Value) -> Void
+    perform change: (inout Value) -> Void,
+    file: StaticString = #fileID,
+    line: UInt = #line
   ) {
-    updateData(action, perform: change)
+    updateData(action, file: file, line: line, perform: change)
   }
 
   //  @MainActor
@@ -90,11 +102,15 @@ extension UserDataHandler {
   /// Binding to the non-optional in-memory value (use only when `.ready`).
   /// Writes propagate through `updateData`, optionally registering undo.
   @MainActor
-  public func dataBinding(_ action: UpdateKind = .standard) -> Binding<Value> {
+  public func dataBinding(
+    _ action: UpdateKind = .standard,
+    file: StaticString = #fileID,
+    line: UInt = #line
+  ) -> Binding<Value> {
     Binding(
-      get: { self.unsafeReadyData() },
+      get: { self.unsafeReadyData(file: file, line: line) },
       set: { newValue in
-        self.updateData(action) { $0 = newValue }
+        self.updateData(action, file: file, line: line) { $0 = newValue }
       }
     )
   }

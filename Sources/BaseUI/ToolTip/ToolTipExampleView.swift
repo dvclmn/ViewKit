@@ -27,7 +27,7 @@ public struct ToolTipExampleView: View {
 
     VStack(spacing: 20) {
       ForEach(
-        exampleAlignment.sorted(byKeyPath: \.value.displayName.abbreviated),
+        exampleAlignment.sorted(by: \.value.displayName.abbreviated),
         id: \.value.displayName.abbreviated
       ) { colour, alignment in
         VStack {

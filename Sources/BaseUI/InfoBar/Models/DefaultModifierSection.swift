@@ -15,14 +15,9 @@ extension InfoBarItem {
 
   package static func modifiersSection(_ modifiers: Modifiers?) -> InfoBarItem {
     InfoBarItem(
-      sectionKey: InfoBarSectionID(ModifiersSectionKey.self),
+      section: ModifiersSectionKey.self,
       label: QuickLabel("Modifiers", symbol: "keyboard"),
       content: "Need to fix"
-//        modifiers?.displayName(
-//        elements: .icon,
-//        separator: "",
-//        emptyText: ""
-//      ) ?? ""
     )
   }
 }

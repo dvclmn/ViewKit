@@ -73,10 +73,11 @@ extension SetOfOptionsBuilder {
 }
 extension SetOfOptionsBuilder {
   var snakeConditional: String { "isSnakeCase" }
+  
   private static func getRawType(from attribute: AttributeSyntax) -> TypeSyntax? {
     let args = attribute.attributeName.as(IdentifierTypeSyntax.self)?.genericArgumentClause
     let rawType = args?.arguments.first?.argument
-    return rawType
+    return TypeSyntax(rawType)
   }
 
   func rawValueMethods() -> [DeclSyntax] {
