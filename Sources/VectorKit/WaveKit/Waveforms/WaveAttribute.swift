@@ -8,45 +8,30 @@
 import CoreTools
 import Foundation
 
-#warning("Need to decide between naming; WaveScalar or WaveAttribute")
-public enum WaveScalar: String, CaseIterable, Codable, Hashable, Sendable {
-  case amplitude
-  case frequency
-  case cycles
-  case noise
-}
+//#warning("Need to decide between naming; WaveScalar or WaveAttribute")
+//public enum WaveScalar: String, CaseIterable, Codable, Hashable, Sendable {
+//  case amplitude
+//  case frequency
+//  case phase
+//  case cycles
+//  case noise
+//}
+//
+//extension WaveScalar {
+//  public var boundsKeyPath: KeyPath<WaveBounds, ClosedRange<Double>> {
+//    switch self {
+//      case .amplitude: \.amplitude
+//      case .frequency: \.frequency
+//      case .phase:
+//      case .cycles: \.cycles
+//      case .noise: \.noise
+//    }
+//  }
 
-extension WaveScalar {
-  public var boundsKeyPath: KeyPath<WaveBounds, ClosedRange<Double>> {
-    switch self {
-      case .amplitude: \.amplitude
-      case .frequency: \.frequency
-      case .cycles: \.cycles
-      case .noise: \.noise
-    }
-  }
-  
-  public func get(from wave: ConfiguredWave) -> Double {
-    switch self {
-      case .amplitude: wave.wave.amplitude
-      case .frequency: wave.wave.frequency
-      case .cycles: wave.config.cycles
-      case .noise: wave.config.noise
-    }
-  }
-  
-  public func set(_ newValue: Double, on wave: inout ConfiguredWave) {
-    switch self {
-      case .amplitude: wave.wave.amplitude = newValue
-      case .frequency: wave.wave.frequency = newValue
-      case .cycles: wave.config.cycles = newValue
-      case .noise: wave.config.noise = newValue
-    }
-  }
-}
+//}
 
 @CaseDetection
-public enum WaveAttribute<T: WaveFloat>: String, Sendable, CaseIterable, Identifiable {
+public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
 
   public static var allCases: [Self] { [.amplitude, .frequency, .phase] }
 
@@ -60,7 +45,7 @@ public enum WaveAttribute<T: WaveFloat>: String, Sendable, CaseIterable, Identif
 
   /// How much irregularity is introduced into the overall wave / movement
   case noise
-  
+
   case cycles
 
   public var id: String { rawValue }
@@ -75,8 +60,8 @@ public enum WaveAttribute<T: WaveFloat>: String, Sendable, CaseIterable, Identif
     }
   }
 
-  public var defaultValue: T {
-//  public var defaultValue: Float {
+  public var defaultValue: Double {
+    //  public var defaultValue: Float {
     switch self {
       case .amplitude: 20
       case .frequency: 1
@@ -85,7 +70,7 @@ public enum WaveAttribute<T: WaveFloat>: String, Sendable, CaseIterable, Identif
       case .cycles: 2
     }
   }
-  public var defaultRange: ClosedRange<T> {
+  public var defaultRange: ClosedRange<Double> {
     switch self {
       case .amplitude: 0...20
       case .frequency: 0...4
@@ -104,6 +89,26 @@ public enum WaveAttribute<T: WaveFloat>: String, Sendable, CaseIterable, Identif
       case .noise: "dice"  // glowplug, scribble
       case .cycles: "dice"  // glowplug, scribble
     //      case .cyclesAcross: "eye"
+    }
+  }
+
+  public func get(from wave: ConfiguredWave) -> Double {
+    switch self {
+      case .amplitude: wave.wave.amplitude
+      case .frequency: wave.wave.frequency
+      case .phase: wave.wave.phaseRadians
+      case .cycles: wave.config.cycles
+      case .noise: wave.config.noise
+    }
+  }
+
+  public func set(_ newValue: Double, on wave: inout ConfiguredWave) {
+    switch self {
+      case .amplitude: wave.wave.amplitude = newValue
+      case .frequency: wave.wave.frequency = newValue
+      case .phase: wave.wave.phaseRadians = newValue
+      case .cycles: wave.config.cycles = newValue
+      case .noise: wave.config.noise = newValue
     }
   }
 
@@ -137,15 +142,15 @@ public enum WaveAttribute<T: WaveFloat>: String, Sendable, CaseIterable, Identif
   //    }
   //  }
 
-//  public var range: ClosedRange<T> {
-//    switch self {
-//      case .amplitude: 0.01...60
-//      case .frequency: 0.01...20
-//      //      case .cyclesAcross: 0.1...10.0
-//      case .phase: 0...twoPi()
-//      case .noise: 0...4
-//    }
-//  }
+  //  public var range: ClosedRange<T> {
+  //    switch self {
+  //      case .amplitude: 0.01...60
+  //      case .frequency: 0.01...20
+  //      //      case .cyclesAcross: 0.1...10.0
+  //      case .phase: 0...twoPi()
+  //      case .noise: 0...4
+  //    }
+  //  }
 
   //  var unitOfMeasurement: ValueUnits {
   //    switch self {

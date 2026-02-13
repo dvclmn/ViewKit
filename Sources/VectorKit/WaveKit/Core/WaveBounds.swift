@@ -8,31 +8,31 @@
 import Foundation
 
 /// Define sensible defaults for Wave properties, to provide ranges for UI sliders etc
-public struct WaveBounds {
-  public let amplitude: ClosedRange<Double>
-  public let frequency: ClosedRange<Double>
-  public let cycles: ClosedRange<Double>
-  public let noise: ClosedRange<Double>
-
-  public init(
-    amplitude: ClosedRange<Double> = 0...600,
-    frequency: ClosedRange<Double> = 0...3,
-    cycles: ClosedRange<Double> = 0...30,
-    noise: ClosedRange<Double> = 0...30,
-  ) {
-    self.amplitude = amplitude
-    self.frequency = frequency
-    self.cycles = cycles
-    self.noise = noise
-  }
-}
-
-extension WaveBounds  {
-  
-  public subscript(_ scalar: WaveScalar) -> ClosedRange<Double> {
-    self[keyPath: scalar.boundsKeyPath]
-  }
-  
+//public struct WaveBounds {
+//  public let amplitude: ClosedRange<Double>
+//  public let frequency: ClosedRange<Double>
+//  public let cycles: ClosedRange<Double>
+//  public let noise: ClosedRange<Double>
+//
+//  public init(
+//    amplitude: ClosedRange<Double> = 0...600,
+//    frequency: ClosedRange<Double> = 0...3,
+//    cycles: ClosedRange<Double> = 0...30,
+//    noise: ClosedRange<Double> = 0...30,
+//  ) {
+//    self.amplitude = amplitude
+//    self.frequency = frequency
+//    self.cycles = cycles
+//    self.noise = noise
+//  }
+//}
+//
+//extension WaveBounds  {
+//  
+//  public subscript(_ scalar: WaveScalar) -> ClosedRange<Double> {
+//    self[keyPath: scalar.boundsKeyPath]
+//  }
+//  
 //  subscript() -> ConfiguredWave {
 //    // Build a ConfiguredWave using the midpoints of the configured bounds
 //    let ampMid = (amplitude.lowerBound + amplitude.upperBound) / 2
@@ -77,4 +77,4 @@ extension WaveBounds  {
 //    }
 //  }
   
-}
+//}

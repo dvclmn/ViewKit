@@ -9,17 +9,17 @@ import Foundation
 
 public struct ComposedElements: Codable, Sendable, Equatable {
   public var waveComposition: WaveComposition
-  
+
   /// The channels define which elements are driven by which waves (and how).
   public var channels: [WaveChannel]
-  
+
   /// Author-time elements (for the *sample*). You can treat these as defaults/prototypes.
   /// Why prototypes and not [WaveVisualElement]?
   /// Because your per-sample dotY base etc changes with index (baseY), and you don’t want to
   /// persist 200 elements for every sample unless you really mean to. Store defaults,
   /// then build per-sample elements cheaply.
   public var elementPrototypes: [WaveVisualElement.ElementKind: Double]
-  
+
   public init(
     waveComposition: WaveComposition,
     channels: [WaveChannel],
@@ -33,35 +33,35 @@ public struct ComposedElements: Codable, Sendable, Equatable {
 
 extension ComposedElements {
   public static func original(
-    waveH: ConfiguredWave,
-    waveV: ConfiguredWave,
-    waveR: ConfiguredWave,
-    style: WaveStyle,
-    sampleCount: Int,
-    interpolation: WaveInterpolation
+    waveH: ConfiguredWave = .init(),
+    waveV: ConfiguredWave = .init(),
+    waveR: ConfiguredWave = .init(),
+    style: WaveStyle = .init(),
+    sampleCount: Int = 30,
+    interpolation: WaveInterpolation = .cubic()
   ) -> Self {
     let composition = WaveComposition(
       waves: [waveH, waveV, waveR],
       style: style,
-      blendMode: .add,           // whatever your enum is
-      placement: .vertical, // placeholder
+      blendMode: .add,  // whatever your enum is
+      placement: .vertical,  // placeholder
       sampleCount: sampleCount,
       interpolation: interpolation
     )
-    
+
     let channels: [WaveChannel] = [
-      .dotX(with: waveV),              // vertical wave affects X (as you had)
-      .dotY(with: waveH),              // horizontal wave affects Y (as you had)
+      .dotX(with: waveV),  // vertical wave affects X (as you had)
+      .dotY(with: waveH),  // horizontal wave affects Y (as you had)
       .dotRadius(with: waveR),
       // .dashPhase(with: waveV),       // optional
     ]
-    
+
     let prototypes: [WaveVisualElement.ElementKind: Double] = [
       .dotRadius: style.pointStyle.radius,
       .dashPhase: style.lineStyle.dashPhase,
       .lineWidth: style.lineStyle.lineWidth,
     ]
-    
+
     return .init(
       waveComposition: composition,
       channels: channels,

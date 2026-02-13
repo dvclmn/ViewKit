@@ -8,15 +8,16 @@
 import SwiftUI
 import VectorKit
 
-public struct WaveControls<T: WaveFloat>: View {
+public struct WaveControls: View {
+//public struct WaveControls<T: WaveFloat>: View {
   @Binding var wave: ConfiguredWave
   //  @Binding var wave: Wave<T>
-  let ranges: (WaveAttribute<T>) -> ClosedRange<T>?
+  let ranges: (WaveAttribute) -> ClosedRange<Double>?
 
   public init(
     wave: Binding<ConfiguredWave>,
     //    wave: Binding<Wave<T>>,
-    ranges: @escaping (WaveAttribute<T>) -> ClosedRange<T>? = { _ in nil }
+    ranges: @escaping (WaveAttribute) -> ClosedRange<Double>? = { _ in nil }
   ) {
     self._wave = wave
     self.ranges = ranges
