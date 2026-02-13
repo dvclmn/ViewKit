@@ -33,6 +33,11 @@ public struct WaveDocument: Codable, Sendable, Equatable {
 }
 
 extension WaveDocument {
+  
+//  public func waveElementPair(for element: WaveVisualElement.ElementKind) ->  {
+//    
+//  }
+  
   public static func original(
     waveH: ConfiguredWave = .init(),
     waveV: ConfiguredWave = .init(),

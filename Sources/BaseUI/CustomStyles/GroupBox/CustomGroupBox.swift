@@ -22,27 +22,27 @@ public struct CustomGroupBox: GroupBoxStyle {
     /// the header part and the content part. A small spacing value here
     /// prevents the heading from being pushed too far from the content
     VStack(alignment: .leading, spacing: Styles.sizeTiny) {
-        configuration.label
-          .foregroundStyle(.secondary)
-          .font(.callout)
+      configuration.label
+        .foregroundStyle(.secondary)
+        .font(.callout)
 
-        VStack(alignment: .leading, spacing: Styles.sizeRegular) {
-          configuration.content
-        }
-        .padding(.horizontal, padding.horizontal)
-        .padding(.top, padding.top)
-        .padding(.bottom, padding.bottom)
+      VStack(alignment: .leading, spacing: Styles.sizeRegular) {
+        configuration.content
+      }
+      .padding(.horizontal, padding.horizontal)
+      .padding(.top, padding.top)
+      .padding(.bottom, padding.bottom)
 
-        .background {
-          FilledShape(
-            .rect(cornerRadius: cornerRounding ?? Styles.sizeSmall),
-            style: backgroundStyle ?? AnyShapeStyle(Color.black.opacity(0.14)),
-//            style: backgroundStyle ?? AnyShapeStyle(Color.white.opacity(0.03)),
-            strokeColour: Color.white.opacity(0.0)
-          )
-          .animation(Styles.animationSpringQuickNSubtle, value: isEmphasised)
-        }
-//      }
+      .background {
+        FilledShape(
+          .rect(cornerRadius: cornerRounding ?? Styles.sizeSmall),
+          style: backgroundStyle ?? AnyShapeStyle(Color.black.opacity(0.14)),
+          //            style: backgroundStyle ?? AnyShapeStyle(Color.white.opacity(0.03)),
+          strokeColour: Color.white.opacity(0.0)
+        )
+        .animation(Styles.animationSpringQuickNSubtle, value: isEmphasised)
+      }
+      //      }
     }
   }
 }

@@ -8,28 +8,6 @@
 import CoreTools
 import Foundation
 
-//#warning("Need to decide between naming; WaveScalar or WaveAttribute")
-//public enum WaveScalar: String, CaseIterable, Codable, Hashable, Sendable {
-//  case amplitude
-//  case frequency
-//  case phase
-//  case cycles
-//  case noise
-//}
-//
-//extension WaveScalar {
-//  public var boundsKeyPath: KeyPath<WaveBounds, ClosedRange<Double>> {
-//    switch self {
-//      case .amplitude: \.amplitude
-//      case .frequency: \.frequency
-//      case .phase:
-//      case .cycles: \.cycles
-//      case .noise: \.noise
-//    }
-//  }
-
-//}
-
 @CaseDetection
 public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
 
@@ -112,60 +90,13 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
     }
   }
 
-  //  public var keyPath: WritableKeyPath<WaveLegacy, SmoothedProperty> {
-  //    switch self {
-  //      case .amplitude: \.amplitudeSmoothed
-  //      case .frequency: \.frequencySmoothed
-  //      case .phase: \.phaseOffsetSmoothed
-  //      case .noise: \.noiseSmoothed
-  //
-  //    }
-  //  }
-
-  //  @MainActor
-  //  public var displayedKeyPath: WritableKeyPath<WaveProperties.Engine, CGFloat> {
-  //    switch self {
-  //      case .frequency: \.displayedFrequency
-  //      case .amplitude: \.displayedAmplitude
-  //      case .noise: \.displayedNoise
-  //      case .phaseOffset: \.displayedPhaseOffset
-  //    }
-  //  }
-  //
-  ////  @MainActor
-  //  public var targetKeyPath: WritableKeyPath<WaveProperties.Engine, CGFloat> {
-  //    switch self {
-  //      case .frequency: \.targetFrequency
-  //      case .amplitude: \.targetAmplitude
-  //      case .noise: \.targetNoise
-  //      case .phaseOffset: \.targetPhaseOffset
-  //    }
-  //  }
-
-  //  public var range: ClosedRange<T> {
-  //    switch self {
-  //      case .amplitude: 0.01...60
-  //      case .frequency: 0.01...20
-  //      //      case .cyclesAcross: 0.1...10.0
-  //      case .phase: 0...twoPi()
-  //      case .noise: 0...4
-  //    }
-  //  }
-
-  //  var unitOfMeasurement: ValueUnits {
-  //    switch self {
-  //        /// Typically 0.0-1.0
-  //      case .amplitude: .normalised
-  //
-  //        /// Cycles per second
-  //      case .frequency: .hertz
-  //
-  //        /// Angular position in wave cycle
-  //      case .phase: .radians
-  //
-  //        /// Noise magnitude typically `0.0-1.0`
-  //      case .noise: .normalised
-  //    }
-  //  }
+  public var keyPath: WritableKeyPath<ConfiguredWave, Double> {
+    switch self {
+      case .amplitude: \.wave.amplitude
+      case .frequency: \.wave.frequency
+      case .phase: \.wave.phaseRadians
+      case .noise: \.config.noise
+      case .cycles: \.config.cycles
+    }
+  }
 }
-//public var twoPi: CGFloat { .pi * 2 }

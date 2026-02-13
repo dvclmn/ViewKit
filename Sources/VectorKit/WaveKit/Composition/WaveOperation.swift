@@ -28,16 +28,11 @@ extension WaveOperation {
   @inlinable
   public func apply(base: Double, current: Double, offset: Double) -> Double {
     switch self {
-      case .addToBase:
-        return base + offset
-      case .addToCurrent:
-        return current + offset
-      case .scaleBaseByOnePlusOffset:
-        return base * (1 + offset)
-      case .scaleCurrentByOnePlusOffset:
-        return current * (1 + offset)
-      case .addBaseTimesOffset:
-        return base + (base * offset)
+      case .addToBase: base + offset
+      case .addToCurrent: current + offset
+      case .scaleBaseByOnePlusOffset: base * (1 + offset)
+      case .scaleCurrentByOnePlusOffset: current * (1 + offset)
+      case .addBaseTimesOffset: base + (base * offset)
     }
   }
 }

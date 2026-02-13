@@ -44,8 +44,13 @@ extension WaveDriver {
 }
 
 extension Array where Element == WaveDriver {
+  public subscript(waveID: ConfiguredWave.ID) -> WaveVisualElement.ElementKind? {
+    first { $0.waveID == waveID }?.elementKind
+  }
+
   @inlinable
   public func applyAll(to element: inout WaveVisualElement, offset: Double) {
     for ch in self { ch.apply(to: &element, offset: offset) }
   }
+
 }

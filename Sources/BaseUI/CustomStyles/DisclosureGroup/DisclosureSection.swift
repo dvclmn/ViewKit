@@ -9,7 +9,9 @@ import CoreTools
 import SwiftUI
 
 public struct DisclosureSection<Content: View>: View {
-
+  /// If disabled, hiding/showing is not possible
+  @Environment(\.isEnabled) private var isControlEnabled
+  
   @OptionallyPersisted var isExpanded: Bool
   let title: String
   let content: Content
@@ -50,7 +52,7 @@ public struct DisclosureSection<Content: View>: View {
   public var body: some View {
 
     Section {
-      if isExpanded {
+      if isExpanded || isControlEnabled {
         content
 
       } else {
@@ -63,19 +65,22 @@ public struct DisclosureSection<Content: View>: View {
       }
 
     } header: {
+      
       HStack {
         Text(title)
           .foregroundStyle(isExpanded ? .secondary : .tertiary)
 
-        Spacer()
-        Toggle(isOn: $isExpanded) {
-          Text(isExpanded ? "Hide" : "Show")
-            .font(.caption.weight(.medium))
-            .textCase(.uppercase)
+        if isControlEnabled {
+          Spacer()
+          Toggle(isOn: $isExpanded) {
+            Text(isExpanded ? "Hide" : "Show")
+              .font(.caption.weight(.medium))
+              .textCase(.uppercase)
+          }
+          .buttonStyle(.plain)
+          .toggleStyle(.button)
+          .controlSize(.small)
         }
-        .buttonStyle(.plain)
-        .toggleStyle(.button)
-        .controlSize(.small)
       }
     }
   }

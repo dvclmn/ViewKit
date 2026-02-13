@@ -9,50 +9,53 @@ import SwiftUI
 import VectorKit
 
 public struct WaveControls: View {
-//public struct WaveControls<T: WaveFloat>: View {
+  let title: String
   @Binding var wave: ConfiguredWave
-  //  @Binding var wave: Wave<T>
   let ranges: (WaveAttribute) -> ClosedRange<Double>?
 
   public init(
+    _ title: String,
     wave: Binding<ConfiguredWave>,
-    //    wave: Binding<Wave<T>>,
     ranges: @escaping (WaveAttribute) -> ClosedRange<Double>? = { _ in nil }
   ) {
+    self.title = title
     self._wave = wave
     self.ranges = ranges
   }
   public var body: some View {
 
-    SliderGroup {
-      QuickSlider(
-        "Amplitude",
-        value: $wave.amplitude.toBindingDouble,
-        range: ranges(.amplitude)?.toDoubleRange ?? .unitRange
-      )
-
-      QuickSlider(
-        "Frequency",
-        value: $wave.frequency.toBindingDouble,
-        range: ranges(.frequency)?.toDoubleRange ?? .unitRange
-      )
-
-      QuickSlider(
-        "Phase",
-        value: $wave.phaseRadians.toBindingDouble,
-        range: ranges(.phase)?.toDoubleRange ?? .unitRange
-      )
-
+    SliderGroup(title) {
+      
+      Wave(.amplitude)
+      Wave(.frequency)
+      Wave(.phase)
+      Wave(.noise)
+      
       Divider()
+      
+      Wave(.cycles)
+        .stepStyle(.stepper)
+    }
+  }
+}
 
-      /// Might make this one optional?
-      QuickSlider(
-        "Cycles",
-        value: $wave.config.cycles,
-        range: ranges(.cycles)?.toDoubleRange ?? .unitRange,
-        step: 1
-      )
-      .stepStyle(.stepper)
+extension WaveControls {
+  @ViewBuilder
+  private func Wave(_ attribute: WaveAttribute) -> some View {
+    QuickSlider(
+      attribute.name.full,
+      value: $wave.waveBinding(attribute),
+      range: ranges(attribute) ?? attribute.defaultRange
+    )
+  }
+}
+
+extension Binding where Value == ConfiguredWave {
+  func waveBinding(_ attribute: WaveAttribute) -> Binding<Double> {
+    Binding<Double> {
+      wrappedValue[keyPath: attribute.keyPath]
+    } set: {
+      wrappedValue[keyPath: attribute.keyPath] = $0
     }
 
   }

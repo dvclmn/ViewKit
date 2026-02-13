@@ -28,9 +28,7 @@ public struct SliderGroup<Sliders: View>: View, ValueFormattable {
     if let title {
       Text(title)
         .font(.body)
-        //          .font(.callout.weight(.medium))
         .foregroundStyle(.secondary)
-      //          .padding(.bottom, Styles.sizeSmall)
     }
     Grid(
       alignment: .topLeading,
@@ -38,14 +36,13 @@ public struct SliderGroup<Sliders: View>: View, ValueFormattable {
     ) {
       content
         .environment(\.isWithinSliderGroup, true)
-
     }
     //    .padding(.bottom, Styles.sizeMedium)
   }
 }
 
 extension SliderGroup {
-  
+
   /// This controls the spacing between Grid Rows in a Slider Group
   private var spacing: CGFloat? {
     let base = verticalSpacing ?? layoutSpacing

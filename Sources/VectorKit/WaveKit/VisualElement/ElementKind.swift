@@ -34,6 +34,20 @@ extension WaveVisualElement {
 }
 
 extension WaveVisualElement.ElementKind {
+  public var name: String {
+    switch self {
+      case .dotX: "Dot X"
+      case .dotY: "Dot Y"
+      case .dotRadius: "Dot Radius"
+      case .dotHue: "Dot Hue"
+      case .dashLength: "Dash Length"
+      case .dashGap: "Dash Gap"
+      case .dashPhase: "Dash Phase"
+      case .lineWidth: "Line Width"
+    }
+  
+  }
+  
   package func sanitise(_ v: Double) -> Double {
     switch self {
       case .dotRadius, .lineWidth, .dashLength, .dashGap:
