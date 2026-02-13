@@ -14,7 +14,7 @@ extension SampleContent {
   }
 }
 
-extension SampleContent.ExampleItem: InfoBarSection {
+extension SampleContent.ExampleItem: InfoBarSectionProtocol {
   public typealias Source = SampleContent.ExampleDataStore
   public typealias SectionKey = SampleContent.ExampleSectionKey
 
