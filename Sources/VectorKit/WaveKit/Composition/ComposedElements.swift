@@ -1,5 +1,5 @@
 //
-//  ComposedElements.swift
+//  WaveDocument.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 12/2/2026.
@@ -7,31 +7,31 @@
 
 import Foundation
 
-public struct ComposedElements: Codable, Sendable, Equatable {
-  public var waveComposition: WaveComposition
+public struct WaveDocument: Codable, Sendable, Equatable {
+  
+  /// composition owns waves
+  public var library: WaveLibrary
 
   /// The channels define which elements are driven by which waves (and how).
+  /// binds wave→element
   public var channels: [WaveChannel]
 
   /// Author-time elements (for the *sample*). You can treat these as defaults/prototypes.
-  /// Why prototypes and not [WaveVisualElement]?
-  /// Because your per-sample dotY base etc changes with index (baseY), and you don’t want to
-  /// persist 200 elements for every sample unless you really mean to. Store defaults,
-  /// then build per-sample elements cheaply.
+  /// Prototypes define base values used to instantiate per-sample elements
   public var elementPrototypes: [WaveVisualElement.ElementKind: Double]
 
   public init(
-    waveComposition: WaveComposition,
+    library: WaveLibrary,
     channels: [WaveChannel],
     elementPrototypes: [WaveVisualElement.ElementKind: Double]
   ) {
-    self.waveComposition = waveComposition
+    self.library = library
     self.channels = channels
     self.elementPrototypes = elementPrototypes
   }
 }
 
-extension ComposedElements {
+extension WaveDocument {
   public static func original(
     waveH: ConfiguredWave = .init(),
     waveV: ConfiguredWave = .init(),
@@ -40,7 +40,7 @@ extension ComposedElements {
     sampleCount: Int = 30,
     interpolation: WaveInterpolation = .cubic()
   ) -> Self {
-    let composition = WaveComposition(
+    let composition = WaveLibrary(
       waves: [waveH, waveV, waveR],
       style: style,
       blendMode: .add,  // whatever your enum is
@@ -63,7 +63,7 @@ extension ComposedElements {
     ]
 
     return .init(
-      waveComposition: composition,
+      library: composition,
       channels: channels,
       elementPrototypes: prototypes
     )
@@ -72,12 +72,12 @@ extension ComposedElements {
 
 /// Ha need to fix these naaaames
 //public struct ComposedElements: Codable, Sendable, Equatable {
-//  public var waveComposition: WaveComposition
+//  public var waveComposition: WaveLibrary
 //  public var elements: [WaveVisualElement]
 //  //  public var elements: ElementStore
 //
 //  public init(
-//    waveComposition: WaveComposition,
+//    waveComposition: WaveLibrary,
 //    elements: [WaveVisualElement]
 //      //    elements: ElementStore
 //  ) {

@@ -1,5 +1,5 @@
 //
-//  Model+WaveComposition.swift
+//  Model+WaveLibrary.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 19/8/2025.
@@ -8,9 +8,8 @@
 import Foundation
 import IdentifiedCollections
 
-public struct WaveComposition: Sendable, Codable, Equatable {
+public struct WaveLibrary: Sendable, Codable, Equatable {
   public var waves: IdentifiedArrayOf<ConfiguredWave>
-//  public var waves: [ConfiguredWave.ID: ConfiguredWave]
   public var style: WaveStyle
   public var blendMode: WaveBlendMode
   public var placement: WavePlacement
@@ -34,8 +33,8 @@ public struct WaveComposition: Sendable, Codable, Equatable {
   }
 }
 
-extension WaveComposition {
-  public static let example: WaveComposition = .init(
+extension WaveLibrary {
+  public static let example: WaveLibrary = .init(
     waves: [
       ConfiguredWave(
         Wave<Double>(amp: 2.0, freq: 1.0, phase: 0.0),
