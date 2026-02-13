@@ -34,20 +34,44 @@ extension View {
     source: T.Source,
     format: DisplayFormat = .default
   ) -> some View
-  where T: InfoBarSection & CaseIterable {
-    return self.preference(
+  where T: InfoBarSectionProtocol & CaseIterable {
+    self.preference(
       key: InfoBarKey.self,
       value: items.items(from: source, format: format)
     )
   }
-  
-  public func addInfoBarItems<T>(
+
+  public func addInfoBarItems<K: InfoBarSectionKey>(
     _ items: String...,
+    key: K.Type = DebugSectionKey.self,
     format: DisplayFormat = .default
   ) -> some View {
-    return self.preference(
+    self.preference(
       key: InfoBarKey.self,
-      value: ...
+      value: items.map { text in
+        InfoBarItem(
+          section: key,
+          label: QuickLabel(stringLiteral: ""),
+          content: text
+        )
+      }
+    )
+  }
+
+  public func addInfoBarItems<K: InfoBarSectionKey>(
+    _ items: (String, String)...,
+    key: K.Type = DebugSectionKey.self,
+    format: DisplayFormat = .default
+  ) -> some View {
+    self.preference(
+      key: InfoBarKey.self,
+      value: items.map { text in
+        InfoBarItem(
+          section: key,
+          label: QuickLabel(stringLiteral: text.0),
+          content: text.1
+        )
+      }
     )
   }
 }

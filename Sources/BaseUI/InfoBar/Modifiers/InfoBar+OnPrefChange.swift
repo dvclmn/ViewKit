@@ -69,9 +69,3 @@ extension View {
   }
 }
 
-/// Small helper struct for  processed InfoBar data
-public struct GroupedSection: Identifiable {
-  public let id: InfoBarSectionID
-  let title: String
-  let items: [InfoBarItem]
-}

@@ -14,14 +14,14 @@ public struct InfoBarView: View {
 
   let sections: [GroupedSection]
   let showingModifiersSection: Bool
-//  let items: [InfoBarSectionID: [InfoBarItem]]
+  //  let items: [InfoBarSectionID: [InfoBarItem]]
 
   public init(
     sections: [GroupedSection],
     showingModifiersSection: Bool = false
   ) {
-//    let grouped = Dictionary(grouping: items, by: \.sectionKey)
-//    self.items = grouped
+    //    let grouped = Dictionary(grouping: items, by: \.sectionKey)
+    //    self.items = grouped
     self.sections = sections
     self.showingModifiersSection = showingModifiersSection
   }
@@ -55,16 +55,16 @@ public struct InfoBarView: View {
     .font(.caption)
     .fontWeight(.medium)
     .frame(height: Styles.infoBarHeight)
-    
+
     .background(.tintedMaterial, ignoresSafeAreaEdges: .horizontal)
 
-//    .background {
-//      Rectangle()
-//        .fill(.thinMaterial)
-//
-//      Rectangle()
-//        .fill(backgroundStyle ?? AnyShapeStyle(.black.opacity(0.06)))
-//    }
+    //    .background {
+    //      Rectangle()
+    //        .fill(.thinMaterial)
+    //
+    //      Rectangle()
+    //        .fill(backgroundStyle ?? AnyShapeStyle(.black.opacity(0.06)))
+    //    }
     /// Small top highlight for contrast against background
     .overlay(alignment: .top) {
       Rectangle()
