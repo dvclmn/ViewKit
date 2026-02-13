@@ -29,6 +29,7 @@ extension InfoBarSection {
 extension InfoBarSection where Self: RawRepresentable, Self.RawValue == String {
   public var text: String { rawValue.capitalized }
 }
+
 extension InfoBarSection where Self: CaseIterable {
   public static func items(
     from source: Source,
@@ -38,7 +39,7 @@ extension InfoBarSection where Self: CaseIterable {
       InfoBarItem(
         sectionKey: InfoBarSectionID(SectionKey.self),
         label: thing.label,
-        text: thing.getContent(from: source, format: format)
+        content: thing.getContent(from: source, format: format)
       )
     }
   }

@@ -19,7 +19,6 @@ public struct InfoBarItem: LabeledItem, Sendable, Equatable, Hashable {
   /// Update: Performance in e.g. CanvasKit suffered dramatically
   /// once I implemented this as DisplayBlock
   public let content: String
-  //  public let content: DisplayBlock
 }
 
 extension InfoBarItem {
@@ -33,12 +32,23 @@ extension InfoBarItem {
   public init(
     sectionKey: InfoBarSectionID,
     label: QuickLabel,
-    text: String
+    content: String
   ) {
     self.id = UUID()
     self.sectionKey = sectionKey
     self.label = label
-    self.content = text
+    self.content = content
+    //    self.content = .text(text)
+  }
+
+  public init(
+    title: String,
+    content: String
+  ) {
+    self.id = UUID()
+    self.sectionKey = .default
+    self.label = QuickLabel(title)
+    self.content = content
     //    self.content = .text(text)
   }
 }

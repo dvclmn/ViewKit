@@ -19,6 +19,10 @@ public protocol InfoBarSectionKey: Hashable, Sendable {
   static var title: String { get }
 }
 
+public enum DefaultSectionKey: InfoBarSectionKey {
+  public static let title = "Default"
+}
+
 public struct InfoBarSectionID: Hashable, Sendable {
   private let id: ObjectIdentifier
   public let title: String
@@ -35,4 +39,8 @@ public struct InfoBarSectionID: Hashable, Sendable {
   public func hash(into hasher: inout Hasher) {
     hasher.combine(id)
   }
+}
+
+extension InfoBarSectionID {
+  public static let `default`: Self = .init(DefaultSectionKey.self)
 }

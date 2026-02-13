@@ -14,10 +14,10 @@ public struct InfoBarKey: PreferenceKey {
   public static let defaultValue: [InfoBarItem] = []
 
   public static func reduce(value: inout [InfoBarItem], nextValue: () -> [InfoBarItem]) {
-    
+
     let next = nextValue()
     if next.isEmpty { return }
-    
+
     /// Efficiently filter out duplicates using the Hashable conformance
     let existingIDs = Set(value.map(\.id))
     value.append(contentsOf: next.filter { !existingIDs.contains($0.id) })
@@ -27,6 +27,8 @@ public struct InfoBarKey: PreferenceKey {
 
 // MARK: - Modifier for Child Views, to add to InfoBar
 extension View {
+  /// For when constructing multiple info bar items from e.g.
+  /// an enum conforming to `InfoBarSection`
   public func addInfoBarItems<T>(
     _ items: T.Type,
     source: T.Source,
@@ -36,6 +38,16 @@ extension View {
     return self.preference(
       key: InfoBarKey.self,
       value: items.items(from: source, format: format)
+    )
+  }
+  
+  public func addInfoBarItems<T>(
+    _ items: String...,
+    format: DisplayFormat = .default
+  ) -> some View {
+    return self.preference(
+      key: InfoBarKey.self,
+      value: ...
     )
   }
 }
