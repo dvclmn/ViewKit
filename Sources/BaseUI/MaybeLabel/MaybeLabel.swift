@@ -8,27 +8,6 @@
 import CoreTools
 import SwiftUI
 
-//extension Label {
-//  public init(_ label: QuickLabel) {
-//    Label {
-//      Text(label.text)
-//    } icon: {
-//      switch label.icon {
-//        case .emoji(let emojiString): Text(emojiString)
-//        case .symbol(let symbolString): Image(systemName: symbolString)
-//        case .customSymbol(_): Text("Custom Symbol not implemented")
-//          //          Image(
-//          //            ImageResource(
-//          //              name: customSymbol.reference,
-//          //              bundle: Bundle.module
-//          //            )
-//          //          )
-//        case .none: EmptyView()
-//      }
-//    }
-//  }
-//}
-
 public struct MaybeLabel: View {
   @Environment(\.labelDisplay) private var labelDisplay
 
@@ -40,7 +19,9 @@ public struct MaybeLabel: View {
   public var body: some View {
 
     Label {
-      Text(label.text)
+      if !label.text.isEmpty {
+        Text(label.text)
+      }
     } icon: {
       IconView(label.icon ?? .symbol(placeholderIcon))
     }

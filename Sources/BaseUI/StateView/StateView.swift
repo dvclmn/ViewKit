@@ -12,6 +12,7 @@ import SwiftUI
 public struct StateView<Content: View>: View {
   @Environment(\.layoutType) private var layoutType
   @Environment(\.layoutAlignment) private var layoutAlignment
+  @Environment(\.layoutPadding) private var layoutPadding
   @Environment(\.isCompactMode) private var isCompact
   @Environment(\.iconFontSize) private var iconFontSize
   @Environment(\.controlSize) private var controlSize
@@ -33,15 +34,15 @@ public struct StateView<Content: View>: View {
       MessageView()
       additionalContent
     }
-    VStack(
-      alignment: layoutAlignment?.horizontal ?? .center,
-      spacing: scale(16, for: controlSize, min: 6)
-    ) {
-
-    }
+    //    VStack(
+    //      alignment: layoutAlignment?.horizontal ?? .center,
+    //      spacing: scale(16, for: controlSize, min: 6)
+    //    ) {
+    //
+    //    }
     .monospacedDigit()
-    .padding(.bottom, Styles.sizeRegular)
-    .padding(.horizontal, Styles.sizeRegular)
+    .padding(.vertical, layoutPadding ?? Styles.sizeRegular)
+    .padding(.horizontal, layoutPadding ?? Styles.sizeRegular)
     .frame(
       maxWidth: .infinity,
       maxHeight: .infinity,
@@ -53,7 +54,7 @@ public struct StateView<Content: View>: View {
 extension StateView {
 
   private var paddingLength: CGFloat {
-    label.icon != nil
+    (label.icon != nil && !layoutType.isHstack)
       ? scale(iconSize * 1.4, for: controlSize)
       : .zero
   }
@@ -64,16 +65,25 @@ extension StateView {
 
   @ViewBuilder
   private func TitleView() -> some View {
-    Text(label.text.toMarkdownCompatible)
-      .multilineTextAlignment(.center)
-      .font(.system(size: scale(22, for: controlSize)))
-      .foregroundStyle(.secondary)
+    Group {
+      switch layoutType {
+        case .hstack:
+          MaybeLabel(label: label, isPlain: false)
 
-      /// Pan gesture view was causing `FeatureIconView` to take
-      /// up too much space, so using overlay to keep it contained better
-      .overlay(alignment: .top) {
-        IconView()
+        default:
+          Text(label.text.toMarkdownCompatible)
+
+            /// Pan gesture view was causing `FeatureIconView` to take
+            /// up too much space, so using overlay to keep it contained better
+            .overlay(alignment: .top) {
+              IconView()
+            }
       }
+    }  // END group
+    .multilineTextAlignment(.center)
+    .font(.system(controlSize.textStyle))
+//    .font(.system(size: scale(22, for: controlSize)))
+    .foregroundStyle(.secondary)
   }
 
   @ViewBuilder

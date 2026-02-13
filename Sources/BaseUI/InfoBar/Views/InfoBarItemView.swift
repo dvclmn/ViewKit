@@ -25,8 +25,8 @@ public struct InfoBarItemView: View {
     HStack(spacing: Styles.sizeTiny) {
       MaybeLabel(item.label)
         .environment(\.labelDisplay, itemLabelDisplay)
-      /// Some leading padding here brings the icon in from the edge a bit,
-      /// including the very first item
+        /// Some leading padding here brings the icon in from the edge a bit,
+        /// including the very first item
         .padding(.leading, Styles.sizeTiny)
 
       Text(String(describing: item.content))
@@ -35,7 +35,7 @@ public struct InfoBarItemView: View {
         .monospacedDigit()
 
       Divider().opacity(0.6)
-      /// Adds breathing room between the end of the content and its trailing Divider
+        /// Adds breathing room between the end of the content and its trailing Divider
         .padding(.leading, Styles.sizeNano)
     }
 

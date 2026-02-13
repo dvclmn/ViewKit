@@ -59,8 +59,8 @@ public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
           .task(id: undoManager) {
             store.undoManager = undoManager
           }
-          .environment(store)
           .environment(\.isLoading, false)
+          .environment(store)
     }
   }
 }

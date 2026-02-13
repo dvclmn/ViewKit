@@ -13,28 +13,24 @@ public struct DisclosureSection<Content: View>: View {
   @OptionallyPersisted var isExpanded: Bool
   let title: String
   let content: Content
-  
-  // The "Master" Init
+
   private init(
     configuration: ToggleConfiguration,
     @ViewBuilder content: () -> Content
   ) {
     self.title = configuration.title
-    // FIX: Assign the wrapper struct, not the value
     self._isExpanded = configuration.asPropertyWrapper
     self.content = content()
   }
-  
-  // MARK: - Public Convenience Inits
-  // These just create the config and pass it to the master init
-  
+
+  /// These just create the config and pass it to the master init
   public init<K: ToggleKey>(
     _ key: K.Type,
     @ViewBuilder content: () -> Content
   ) {
     self.init(configuration: ToggleConfiguration(key), content: content)
   }
-  
+
   public init(
     _ title: String,
     binding: Binding<Bool>,
@@ -42,7 +38,7 @@ public struct DisclosureSection<Content: View>: View {
   ) {
     self.init(configuration: ToggleConfiguration(title, binding: binding), content: content)
   }
-  
+
   public init(
     _ title: String,
     transient defaultExpanded: Bool = true,
@@ -50,52 +46,13 @@ public struct DisclosureSection<Content: View>: View {
   ) {
     self.init(configuration: ToggleConfiguration(title, transient: defaultExpanded), content: content)
   }
-  
-//  let title: String
-//  @OptionallyPersisted var isExpanded: Bool
-//  let content: Content
-//
-//  private init(
-//    configuration: ToggleConfiguration,
-//    @ViewBuilder content: () -> Content
-//  ) {
-//    self.title = configuration.title
-//    self._isExpanded = configuration.persistedValue
-//    self.content = content()
-//  }
-//
-//  /// Key-based init (title derived from key)
-//  public init<K: ToggleKey>(
-//    _ key: K.Type,
-//    @ViewBuilder content: () -> Content
-//  ) {
-//    self.init(configuration: ToggleConfiguration(key), content: content)
-//  }
-//
-//  /// Binding-based, with explicit title
-//  public init(
-//    _ title: String,
-//    binding: Binding<Bool>,
-//    @ViewBuilder content: () -> Content
-//  ) {
-//    self.init(configuration: ToggleConfiguration(title, binding: binding), content: content)
-//  }
-//
-//  /// Transient (non-persisted) variant
-//  public init(
-//    _ title: String,
-//    transient defaultExpanded: Bool = true,
-//    @ViewBuilder content: () -> Content
-//  ) {
-//    self.init(configuration: ToggleConfiguration(title, transient: defaultExpanded), content: content)
-//  }
 
   public var body: some View {
 
     Section {
       if isExpanded {
         content
-        
+
       } else {
         Label("Hidden", systemImage: "eye")
           .symbolVariant(.slash.fill)
@@ -104,7 +61,7 @@ public struct DisclosureSection<Content: View>: View {
           .labelStyle(.base)
           .iconColour(.secondary)
       }
-      
+
     } header: {
       HStack {
         Text(title)

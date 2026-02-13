@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import CoreTools
 
 /// This is here and not `SharedHelpers` because it relies on `LayoutKit`
 extension EnvironmentValues {
   @Entry public var layoutType: LayoutType = .passthrough
 }
 
+@CaseDetection
 public enum LayoutType {
   case hstack(alignment: VerticalAlignment = .center)
   case vstack(alignment: HorizontalAlignment = .center)

@@ -11,7 +11,6 @@ public struct QuickLabel: Sendable, Codable, Equatable, Hashable {
   public var text: String
   public let icon: IconLiteral?
   public let role: ActionRole?
-//  public let role: Role?
 }
 
 // MARK: - Initialisers
