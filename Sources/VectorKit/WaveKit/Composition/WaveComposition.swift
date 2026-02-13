@@ -6,21 +6,19 @@
 //
 
 import Foundation
+import IdentifiedCollections
 
 public struct WaveComposition: Sendable, Codable, Equatable {
-  //  public var channels: [WaveChannel]
-  public var waves: [ConfiguredWave]
-
+  public var waves: IdentifiedArrayOf<ConfiguredWave>
+//  public var waves: [ConfiguredWave.ID: ConfiguredWave]
   public var style: WaveStyle
-
   public var blendMode: WaveBlendMode
   public var placement: WavePlacement
   public var sampleCount: Int
   public var interpolation: WaveInterpolation
-
+  
   public init(
-    waves: [ConfiguredWave],
-    //    channels: [WaveChannel],
+    waves: IdentifiedArrayOf<ConfiguredWave>,
     style: WaveStyle = .init(),
     blendMode: WaveBlendMode = .add,
     placement: WavePlacement = .vertical,

@@ -73,8 +73,8 @@ let package = Package(
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     .package(url: "https://github.com/jpsim/Yams", from: "6.2.1"),
     //    .package(url: "https://github.com/quantumOrange/CubicSpline", branch: "main"),
-    //    .package(
-    //      url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
+    .package(
+      url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
   ],
 
   targets: [
@@ -202,6 +202,7 @@ let package = Package(
         .module(.colourKit),
         .casePaths,
         .metaCodable,
+        .identifiedCollections,
         .product(name: "Yams", package: "Yams"),
 
       ]
@@ -259,9 +260,9 @@ extension Target.Dependency {
   static var metaCodable: Self {
     .product(name: "MetaCodable", package: "MetaCodable")
   }
-  //  static var identifiedCollections: Self {
-  //    .product(name: "IdentifiedCollections", package: "swift-identified-collections")
-  //  }
+    static var identifiedCollections: Self {
+      .product(name: "IdentifiedCollections", package: "swift-identified-collections")
+    }
   static var nsui: Self {
     .product(name: "NSUI", package: "nsui")
   }
