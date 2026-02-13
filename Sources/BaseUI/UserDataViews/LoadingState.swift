@@ -11,20 +11,20 @@ import SwiftUI
 public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
   @Environment(\.undoManager) private var undoManager
 
-  //  @State private var store: Store
   @Bindable var store: Store
   let didUpdatUserData: (Store.Value) -> Void
-  let content: Content
+  let content: () -> Content
+  //  let content: (Store.Value) -> Content
 
   public init(
     store: Store,
     didUpdatUserData: @escaping (Store.Value) -> Void,
+    //    @ViewBuilder content: @escaping (Store.Value) -> Content
     @ViewBuilder content: @escaping () -> Content
   ) {
-    //    self._store = State(initialValue: Store())
     self.store = store
     self.didUpdatUserData = didUpdatUserData
-    self.content = content()
+    self.content = content
   }
 
   public var body: some View {
@@ -36,12 +36,16 @@ public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
             guard !store.isReady else { return }
             store.setReady(store.storage)
           }
+          .environment(\.isLoading, true)
 
       case .failed(let error):
         StateView("Error loading data", message: error.localizedDescription)
+          .environment(\.isLoading, false)
 
       case .ready:
-        content
+        //      case .ready(let data):
+        content()
+          //        content(data)
           .task(id: store.userDataIfPresent) {
 
             /// Usually looks like this:
@@ -56,6 +60,7 @@ public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
             store.undoManager = undoManager
           }
           .environment(store)
+          .environment(\.isLoading, false)
     }
   }
 }

@@ -11,6 +11,7 @@ import SwiftUI
 public struct InfoBarView: View {
   @Environment(\.backgroundStyle) private var backgroundStyle
   @Environment(\.modifierKeys) private var modifierKeys
+  @Environment(\.isLoading) private var isLoading
 
   let sections: [InfoBarSection]
   let showingModifiersSection: Bool
@@ -25,57 +26,50 @@ public struct InfoBarView: View {
 
   public var body: some View {
 
-    ScrollView(.horizontal) {
+    if !isLoading {
+      ScrollView(.horizontal) {
 
-      HStack(alignment: .firstTextBaseline, spacing: 0) {
-        if !sections.isEmpty {
-          ForEach(sections) { section in
-            InfoBarSectionView(sectionTitle: section.title, items: section.items)
-          }  // END foreach
-          if showingModifiersSection {
-            InfoBarSectionView(
-              sectionTitle: "Modifiers",
-              items: [.modifiersSection(modifierKeys)]
-            )
+        HStack(alignment: .firstTextBaseline, spacing: 0) {
+          if !sections.isEmpty {
+            ForEach(sections) { section in
+              InfoBarSectionView(sectionTitle: section.title, items: section.items)
+            }  // END foreach
+            if showingModifiersSection {
+              InfoBarSectionView(
+                sectionTitle: "Modifiers",
+                items: [.modifiersSection(modifierKeys)]
+              )
+            }
+
+            Spacer()
+          } else {
+            NoItems("No items to display")
           }
+        }  // END hstack
+        .safeAreaPadding(.horizontal, Styles.sizeTiny)
+      }
+      .scrollBounceBehavior(.basedOnSize)
+      .scrollIndicators(.hidden)
 
-          Spacer()
-        } else {
-          NoItems("No items to display")
-        }
-      }  // END hstack
-      .safeAreaPadding(.horizontal, Styles.sizeTiny)
+      .font(.caption)
+      .fontWeight(.medium)
+      .frame(height: Styles.infoBarHeight)
+      .background(.thinMaterial, ignoresSafeAreaEdges: .horizontal)
+      .background(backgroundStyle ?? AnyShapeStyle(.black.opacity(0.06)), ignoresSafeAreaEdges: .horizontal)
+      /// Small top highlight for contrast against background
+      .overlay(alignment: .top) {
+        Rectangle()
+          .fill(.white.opacity(0.02))
+          .frame(maxWidth: .infinity, maxHeight: 1)
+      }
+
+      .monospacedDigit()
+
+      .environment(\.layoutAxis, .horizontal)
+      .environment(\.layoutAlignment, .leading)
+      .environment(\.layoutSpacing, .zero)
+      .environment(\.symbolVariants, .fill)
     }
-    .scrollBounceBehavior(.basedOnSize)
-    .scrollIndicators(.hidden)
-
-    .font(.caption)
-    .fontWeight(.medium)
-    .frame(height: Styles.infoBarHeight)
-
-    .background(.tintedMaterial, ignoresSafeAreaEdges: .horizontal)
-
-    //    .background {
-    //      Rectangle()
-    //        .fill(.thinMaterial)
-    //
-    //      Rectangle()
-    //        .fill(backgroundStyle ?? AnyShapeStyle(.black.opacity(0.06)))
-    //    }
-    /// Small top highlight for contrast against background
-    .overlay(alignment: .top) {
-      Rectangle()
-        .fill(.white.opacity(0.02))
-        .frame(maxWidth: .infinity, maxHeight: 1)
-    }
-
-    .monospacedDigit()
-
-    .environment(\.layoutAxis, .horizontal)
-    .environment(\.layoutAlignment, .leading)
-    .environment(\.layoutSpacing, .zero)
-    .environment(\.symbolVariants, .fill)
-
   }
 }
 
