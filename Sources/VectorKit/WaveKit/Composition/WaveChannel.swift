@@ -1,5 +1,5 @@
 //
-//  WaveChannel.swift
+//  WaveDriver.swift
 //  BaseDemos
 //
 //  Created by Dave Coleman on 5/2/2026.
@@ -8,8 +8,8 @@
 import CoreTools
 import Foundation
 
-public struct WaveChannel: Sendable, Codable, Equatable, Identifiable {
-  
+public struct WaveDriver: Sendable, Codable, Equatable, Identifiable {
+
   public let id: UUID
   public var waveID: ConfiguredWave.ID
 
@@ -32,7 +32,7 @@ public struct WaveChannel: Sendable, Codable, Equatable, Identifiable {
   }
 }
 
-extension WaveChannel {
+extension WaveDriver {
 
   /// Applies this channel to `element` if it targets the same kind.
   @inlinable
@@ -43,7 +43,7 @@ extension WaveChannel {
   }
 }
 
-extension Array where Element == WaveChannel {
+extension Array where Element == WaveDriver {
   @inlinable
   public func applyAll(to element: inout WaveVisualElement, offset: Double) {
     for ch in self { ch.apply(to: &element, offset: offset) }

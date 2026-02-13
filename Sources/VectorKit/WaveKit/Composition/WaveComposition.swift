@@ -34,6 +34,11 @@ public struct WaveLibrary: Sendable, Codable, Equatable {
 }
 
 extension WaveLibrary {
+  public subscript(waveID waveID: ConfiguredWave.ID) -> ConfiguredWave? {
+    get { waves[id: waveID] }
+    set { waves[id: waveID] = newValue }
+  }
+  
   public static let example: WaveLibrary = .init(
     waves: [
       ConfiguredWave(

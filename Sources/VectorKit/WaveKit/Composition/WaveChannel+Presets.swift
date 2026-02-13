@@ -1,5 +1,5 @@
 //
-//  WaveChannel+Presets.swift
+//  WaveDriver+Presets.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 12/2/2026.
@@ -7,22 +7,22 @@
 
 //import CasePaths
 
-extension WaveChannel {
+extension WaveDriver {
 
-  public static func dotRadius(with wave: ConfiguredWave) -> Self {
-    .init(wave: wave, elementKind: .dotRadius, operation: .scaleBaseByOnePlusOffset)
+  public static func dotRadius(with waveID: ConfiguredWave.ID) -> Self {
+    .init(waveID: waveID, elementKind: .dotRadius, operation: .scaleBaseByOnePlusOffset)
   }
 
-  public static func dotX(with wave: ConfiguredWave) -> Self {
-    .init(wave: wave, elementKind: .dotX, operation: .addToBase)
+  public static func dotX(with waveID: ConfiguredWave.ID) -> Self {
+    .init(waveID: waveID, elementKind: .dotX, operation: .addToBase)
   }
 
-  public static func dotY(with wave: ConfiguredWave) -> Self {
-    .init(wave: wave, elementKind: .dotY, operation: .addToBase)
+  public static func dotY(with waveID: ConfiguredWave.ID) -> Self {
+    .init(waveID: waveID, elementKind: .dotY, operation: .addToBase)
   }
 
-  public static func dashPhase(with wave: ConfiguredWave) -> Self {
-    .init(wave: wave, elementKind: .dashPhase, operation: .addToBase)
+  public static func dashPhase(with waveID: ConfiguredWave.ID) -> Self {
+    .init(waveID: waveID, elementKind: .dashPhase, operation: .addToBase)
   }
 
   /// A radius channel: scales the base radius by (1 + offset), clamped at zero.

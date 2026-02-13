@@ -14,20 +14,21 @@ public struct WaveDocument: Codable, Sendable, Equatable {
 
   /// The channels define which elements are driven by which waves (and how).
   /// binds wave→element
-  public var channels: [WaveChannel]
+  public var drivers: [WaveDriver]
 
+  /// These are like blueprints/templates
   /// Author-time elements (for the *sample*). You can treat these as defaults/prototypes.
   /// Prototypes define base values used to instantiate per-sample elements
-  public var elementPrototypes: [WaveVisualElement.ElementKind: Double]
+  public var elementDefaults: [WaveVisualElement.ElementKind: Double]
 
   public init(
     library: WaveLibrary,
-    channels: [WaveChannel],
-    elementPrototypes: [WaveVisualElement.ElementKind: Double]
+    drivers: [WaveDriver],
+    elementDefaults: [WaveVisualElement.ElementKind: Double]
   ) {
     self.library = library
-    self.channels = channels
-    self.elementPrototypes = elementPrototypes
+    self.drivers = drivers
+    self.elementDefaults = elementDefaults
   }
 }
 
@@ -49,10 +50,10 @@ extension WaveDocument {
       interpolation: interpolation
     )
 
-    let channels: [WaveChannel] = [
-      .dotX(with: waveV),  // vertical wave affects X (as you had)
-      .dotY(with: waveH),  // horizontal wave affects Y (as you had)
-      .dotRadius(with: waveR),
+    let drivers: [WaveDriver] = [
+      .dotX(with: waveV.id),  // vertical wave affects X (as you had)
+      .dotY(with: waveH.id),  // horizontal wave affects Y (as you had)
+      .dotRadius(with: waveR.id),
       // .dashPhase(with: waveV),       // optional
     ]
 
@@ -64,8 +65,8 @@ extension WaveDocument {
 
     return .init(
       library: composition,
-      channels: channels,
-      elementPrototypes: prototypes
+      drivers: drivers,
+      elementDefaults: prototypes
     )
   }
 }
@@ -88,7 +89,7 @@ extension WaveDocument {
 //
 //extension ComposedElements {
 //  public func thing() {
-//    let channels: [WaveChannel] = [
+//    let channels: [WaveDriver] = [
 //      .dotHorizontal(with: <#T##ConfiguredWave#>)
 //    ]
 //  }
