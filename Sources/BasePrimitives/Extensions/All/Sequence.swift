@@ -39,12 +39,16 @@ extension Sequence where Element: Equatable {
 
 extension Sequence {
 
-  public func summarise(
+  public func summarise<T: Comparable>(
     key: PartialKeyPath<Element>,
+    sortedBy keyPath: KeyPath<Element, T>,
     //    key: KeyPath<Element, T>,
     delimiter: Character? = ","
   ) -> String {
-    return self.map { String(describing: $0[keyPath: key]) }
+    return
+      self
+      .sorted(by: keyPath)
+      .map { String(describing: $0[keyPath: key]) }
       .enumerated()
       .reduce(into: "") { (result, element) in
         let (index, value) = element

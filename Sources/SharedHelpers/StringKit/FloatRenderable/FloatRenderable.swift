@@ -22,14 +22,34 @@ public protocol FloatRenderable: StringRenderable, Sendable {
 extension FloatRenderable {
 
   public func render(using format: DisplayFormat = .default) -> String {
-    guard let integerLength = format.integerLength else {
-      return Double(value).formatted(
-        .number
-          .precision(.fractionLength(format.decimalPlaces))
-          .grouping(format.grouping)
-      )
+
+    let result: String
+    if let integerLength = format.integerLength {
+      result = renderWithIntegerLength(integerLength, format: format)
+    } else {
+      result = renderWithoutIntegerLength(format: format)
     }
-    return Double(value).formatted(
+
+    return format.sign.shouldPostProcess
+      ? format.sign.processingLeadingPlus(in: result)
+      : result
+
+  }
+
+  private func renderWithoutIntegerLength(format: DisplayFormat) -> String {
+    Double(value).formatted(
+      .number
+        .precision(.fractionLength(format.decimalPlaces))
+        .grouping(format.grouping)
+        .sign(strategy: format.sign.toNativeStrategy)
+    )
+  }
+
+  private func renderWithIntegerLength(
+    _ integerLength: Int,
+    format: DisplayFormat
+  ) -> String {
+    Double(value).formatted(
       .number
         .precision(
           .integerAndFractionLength(
@@ -47,6 +67,8 @@ extension FloatRenderable {
   /// A convenience that just returns the `displayString()`
   /// method with it's default values
   public var displayString: String { self.render() }
+  public var displayStringConcise: String { self.render(using: .short) }
+  public var displayStringWithSign: String { self.render(using: .init(sign: .always(renderPlusSign: false))) }
 
   /// For backwards compat
   public func displayString(

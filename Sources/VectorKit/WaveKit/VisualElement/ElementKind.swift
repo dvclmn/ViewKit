@@ -35,6 +35,7 @@ extension WaveVisualElement {
 }
 
 extension WaveVisualElement.ElementKind {
+  
   public var name: String {
     switch self {
       case .dotX: "Dot X"
@@ -46,16 +47,70 @@ extension WaveVisualElement.ElementKind {
       case .dashPhase: "Dash Phase"
       case .lineWidth: "Line Width"
     }
-  
   }
   
+/// `dotX` and `dotY` need `WavePlacement` and view size
+///
+///
+/// `dotRadius` needs 
+///
+///
+/// `dotHue`
+///
+///
+/// `dashLength`
+///
+///
+/// `dashGap`
+///
+///
+/// `dashPhase`
+///
+///
+/// `lineWidth`
+///
+///
+  public func baseValue(
+    index: Double // Normalised index
+    
+  ) -> Double {
+//  public func baseValue(calculate: () -> Double) -> Double {
+    
+//    switch self {
+//      case .dotX:
+//        
+//        
+//      case .dotY:
+//        
+//        
+//      case .dotRadius:
+//        
+//        
+//      case .dotHue:
+//        
+//        
+//      case .dashLength:
+//        
+//        
+//      case .dashGap:
+//        
+//        
+//      case .dashPhase:
+//        
+//        
+//      case .lineWidth:
+//        
+//        
+//    }
+  }
+
   package func sanitise(_ value: Double) -> Double {
     switch self {
       case .dotRadius, .lineWidth, .dashLength, .dashGap:
         return max(0, value)
 
       case .dotHue:
-        // keep in [0, 360)
+        /// keep in [0, 360)
         let x = value.truncatingRemainder(dividingBy: 360)
         return x < 0 ? x + 360 : x
 

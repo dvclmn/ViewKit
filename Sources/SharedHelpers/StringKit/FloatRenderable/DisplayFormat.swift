@@ -13,19 +13,22 @@ public struct DisplayFormat {
   public var grouping: NumberGrouping
   public var labelStyle: PropertyLabel.Style
   public var separatorVisibility: SeparatorVisibility
+  public var sign: SignDisplay
 
   public init(
     decimalPlaces: Int = 2,
     integerLength: Int? = nil,
     grouping: NumberGrouping = .automatic,
     labelStyle: PropertyLabel.Style = .standard,
-    separatorVisibility: SeparatorVisibility = .both
+    separatorVisibility: SeparatorVisibility = .both,
+    sign: SignDisplay = .standard
   ) {
     self.decimalPlaces = decimalPlaces
     self.integerLength = integerLength
     self.grouping = grouping
     self.labelStyle = labelStyle
     self.separatorVisibility = separatorVisibility
+    self.sign = sign
   }
 }
 

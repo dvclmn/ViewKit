@@ -67,14 +67,14 @@ extension Substring: StringRenderable {
   public var toString: String { String(self) }
 }
 
-extension AnyRegexOutput: StringRenderable {
-  public var toString: String {
-    DisplayString {
-      self.summarise(key: \.name)
-      self.summarise(key: \.name)
-      self.summarise(key: \.range)
-      self.summarise(key: \.type)
-      self.summarise(key: \.value)
-    }.text
-  }
-}
+//extension AnyRegexOutput: StringRenderable {
+//  public var toString: String {
+//    DisplayString {
+//      self.summarise(key: \.name, sortedBy: \.name)
+//      self.summarise(key: \.name, sortedBy: \.name)
+//      self.summarise(key: \.range, sortedBy: \.name)
+//      self.summarise(key: \.type, sortedBy: \.name)
+//      self.summarise(key: \.value, sortedBy: \.name)
+//    }.text
+//  }
+//}
