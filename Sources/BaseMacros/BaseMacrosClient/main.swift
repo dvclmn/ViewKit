@@ -136,7 +136,7 @@ public enum Attribute {
 
 struct MyRecord {
   @StaticMemberIterable
-  enum Fixtures {
+  private enum Fixtures {
     static let a = MyRecord()
     static let b = MyRecord()
   }
