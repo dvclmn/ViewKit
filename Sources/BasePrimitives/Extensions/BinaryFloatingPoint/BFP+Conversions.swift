@@ -25,7 +25,8 @@ extension BinaryFloatingPoint {
   public var degreesToRadians: Self { self * .pi / 180 }
   public var radiansToDegrees: Self { self * 180 / .pi }
 
-  /// Where `self` is the frequency
+  /// omega is inherently “radians per second”
+  /// In the below, `self` is the frequency (Hz)
   /// `ω = 2πf`
   public var omega: Self { self * .pi * 2 }
 
