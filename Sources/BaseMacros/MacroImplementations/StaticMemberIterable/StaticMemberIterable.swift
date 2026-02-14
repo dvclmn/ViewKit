@@ -21,13 +21,8 @@ public struct StaticMemberIterableMacro: MemberMacro {
     conformingTo protocols: [TypeSyntax],
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
-    //  public static func expansion<Declaration, Context>(
-    //    of node: SwiftSyntax.AttributeSyntax,
-    //    providingMembersOf declaration: Declaration,
-    //    in context: Context
-    //  ) throws -> [SwiftSyntax.DeclSyntax]
-    //  where Declaration: SwiftSyntax.DeclGroupSyntax, Context: SwiftSyntaxMacros.MacroExpansionContext {
 
+    let access
     let staticMemberNames: [String] = declaration.memberBlock.members
       .flatMap { (memberDeclListItemSyntax: MemberBlockItemSyntax) in
         memberDeclListItemSyntax

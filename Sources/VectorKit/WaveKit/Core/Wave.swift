@@ -10,18 +10,6 @@ import MetaCodable
 
 public typealias FloatWave = Wave<Double>
 
-/// Think of a wave as having two "engines" that determine its position:
-///
-/// ## Time (When you are)
-/// - The Motor
-/// - Handled by ``ContinuousParameter``
-/// - Constantly moves the wave forward.
-///
-/// ## Space (Where you are)
-/// - The Coordinate
-/// - The `normalisedIndex`
-/// - In a SwiftUI Canvas, 0.0 might be the left edge and 1.0 the right edge;
-///   and Cycles is how many "humps" of the wave fit into that space.
 @Codable
 public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, Codable {
   public let id: UUID
@@ -31,7 +19,13 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
   /// or as cycles per unit-x if you sample across a normalised width.
   public var frequency: T
 
-  @CodedAt("phase") private var phase: UnitPhase<T>  // <- canonical
+  /// Store phase in turns when humans touch it (UI, serialisation, “quarter cycle”, looping).
+  /// Convert to radians only at the boundary where trig happens.
+  ///
+  /// Advance phase in the same unit as frequency naturally produces:
+  /// -  Hz × seconds → turns
+  /// -  radians/sec × seconds → radians
+  @CodedAt("phase") private var phase: UnitPhase<T>
 
   public var waveform: Waveform
 
@@ -45,23 +39,11 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
     self.id = id
     self.amplitude = amp
     self.frequency = freq
+    
+    /// Previously: `self._phase = Self.wrapToTwoPi(phase)`
     self.phase = UnitPhase(phaseTurns)
     self.waveform = waveform
   }
-
-  //  public init(
-  //    id: UUID = UUID(),
-  //    amp: T,
-  //    freq: T,
-  //    phase: T,
-  //    waveform: Waveform = .sine
-  //  ) {
-  //    self.id = id
-  //    self.amplitude = amp
-  //    self.frequency = freq
-  //    self._phase = Self.wrapToTwoPi(phase)
-  //    self.waveform = waveform
-  //  }
 }
 
 extension Wave {
@@ -89,18 +71,6 @@ extension Wave {
     // cycles/sec * sec = cycles (turns)
     advancePhaseTurns(by: frequency * dt)
   }
-
-  /// Expose phase in radians with get/set
-  //  public var phaseRadians: T {
-  //    get { _phase }
-  //    set { _phase = Self.wrapToTwoPi(newValue) }
-  //  }
-  //
-  //  /// Expose unit phase [0, 1) with get/set
-  //  public var unitPhase: T {
-  //    get { Self.radiansToUnit(_phase) }
-  //    set { _phase = Self.unitToRadians(Self.wrapUnit(newValue)) }
-  //  }
 
   public mutating func update(
     _ newValue: T,

@@ -6,6 +6,11 @@
 //
 
 import SwiftUI
+import CoreTools
+
+//public enum WavePlacementPreset {
+//  case
+//}
 
 // MARK: - WavePlacement
 
@@ -84,6 +89,7 @@ extension WavePlacement {
 
 // MARK: - Semantic presets
 
+@StaticMemberIterable
 extension WavePlacement {
 
   // MARK: Axis-aligned
