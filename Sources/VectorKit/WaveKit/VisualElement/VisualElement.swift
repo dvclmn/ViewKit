@@ -40,8 +40,5 @@ extension WaveVisualElement {
   public mutating func setCurrent(_ v: Double) {
     current = kind.sanitise(v)
   }
-  //  public mutating func updateCurrent(with new: Double) {
-  //    current = new
-  ////    current = base + offset
-  //  }
+
 }

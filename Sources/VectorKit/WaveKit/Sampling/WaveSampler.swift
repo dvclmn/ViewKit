@@ -158,8 +158,11 @@ extension WaveSampler {
   }
 }
 
-public enum PhaseDomain { case turns, radians }
-public enum SineMode { case math, table, auto }
+public enum SineMode {
+  case math
+  case table
+  case auto
+}
 
 @usableFromInline
 package struct FloatSineTable {

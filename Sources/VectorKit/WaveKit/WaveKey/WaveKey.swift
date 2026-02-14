@@ -7,13 +7,8 @@
 
 import Foundation
 
-/// Each wave key:
-/// - declares that it participates
-/// - declares what kind of value it carries
-/// - declares its default
-///
 /// ```
-/// enum Fundamental: WaveKey {
+/// enum DotRadiusWave: WaveKey {
 ///   static let defaultValue = ConfiguredWave(
 ///     Wave(freq: 1, amp: 1, phase: 0, waveform: .sine),
 ///     config: WaveConfig(isEnabled: true)

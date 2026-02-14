@@ -38,7 +38,11 @@ extension WaveDriver {
   @inlinable
   public func apply(to element: inout WaveVisualElement, offset: Double) {
     guard element.kind == elementKind else { return }
-    let v = operation.apply(base: element.base, current: element.current, offset: offset)
+    let v = operation.apply(
+      base: element.base,
+      current: element.current,
+      offset: offset
+    )
     element.setCurrent(v)
   }
 }

@@ -32,11 +32,11 @@ extension QuickSlider {
               ) {
                 EmptyView()
 
-              } minimumValueLabel: {
-                MinMaxLabel(.min)
-
-              } maximumValueLabel: {
-                MinMaxLabel(.max)
+//              } minimumValueLabel: {
+//                MinMaxLabel(.min)
+//
+//              } maximumValueLabel: {
+//                MinMaxLabel(.max)
 
               } onEditingChanged: { editing in
                 handleOnEdit(editing)
@@ -50,13 +50,14 @@ extension QuickSlider {
               ) {
                 EmptyView()
 
-              } minimumValueLabel: {
-                MinMaxLabel(.min)
-
-              } maximumValueLabel: {
-                MinMaxLabel(.max)
-
-              } onEditingChanged: { editing in
+//              } minimumValueLabel: {
+//                MinMaxLabel(.min)
+//
+//              } maximumValueLabel: {
+//                MinMaxLabel(.max)
+//
+              }
+              onEditingChanged: { editing in
                 handleOnEdit(editing)
               }
             }

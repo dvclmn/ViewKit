@@ -102,8 +102,8 @@ extension Wave {
 
   public static var example02: Self {
     .init(
-      amp: 30,
-      freq: 10,
+      amp: 60,
+      freq: 0.1,
       phase: 0,
       waveform: .sine
     )

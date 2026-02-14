@@ -36,6 +36,9 @@ public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
 
 }
 
+extension GridAxis: CustomStringConvertible {
+  public var description: String { name }
+}
 extension GridAxis {
   public struct Set: OptionSet, Sendable {
     public init(rawValue: Int) {
@@ -183,15 +186,15 @@ extension GridAxis {
 
   public var name: String {
     switch self {
-      case .horizontal: "Width"
-      case .vertical: "Height"
+      case .horizontal: "Horizontal"
+      case .vertical: "Vertical"
     }
   }
 
-  public var icon: String {
+  public var altName02: String {
     switch self {
-      case .horizontal: "arrow.left.and.right.text.vertical"
-      case .vertical: "arrow.up.and.down.text.horizontal"
+      case .horizontal: "Width"
+      case .vertical: "Height"
     }
   }
 
@@ -201,13 +204,13 @@ extension GridAxis {
       case .vertical: "Rows"
     }
   }
-
-  public var altName02: String {
+  public var icon: String {
     switch self {
-      case .horizontal: "Horizontal"
-      case .vertical: "Vertical"
+      case .horizontal: "arrow.left.and.right.text.vertical"
+      case .vertical: "arrow.up.and.down.text.horizontal"
     }
   }
+
 }
 
 extension Axis {

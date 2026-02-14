@@ -9,17 +9,17 @@
 
 extension WaveDriver {
 
+  public static func dotX(with waveID: ConfiguredWave.ID) -> Self {
+    .init(waveID: waveID, elementKind: .dotX, operation: .scaleCurrentByOnePlusOffset)
+  }
+  
+  public static func dotY(with waveID: ConfiguredWave.ID) -> Self {
+    .init(waveID: waveID, elementKind: .dotY, operation: .scaleCurrentByOnePlusOffset)
+  }
   public static func dotRadius(with waveID: ConfiguredWave.ID) -> Self {
     .init(waveID: waveID, elementKind: .dotRadius, operation: .scaleBaseByOnePlusOffset)
   }
 
-  public static func dotX(with waveID: ConfiguredWave.ID) -> Self {
-    .init(waveID: waveID, elementKind: .dotX, operation: .addToBase)
-  }
-
-  public static func dotY(with waveID: ConfiguredWave.ID) -> Self {
-    .init(waveID: waveID, elementKind: .dotY, operation: .addToBase)
-  }
 
   public static func dashPhase(with waveID: ConfiguredWave.ID) -> Self {
     .init(waveID: waveID, elementKind: .dashPhase, operation: .addToBase)

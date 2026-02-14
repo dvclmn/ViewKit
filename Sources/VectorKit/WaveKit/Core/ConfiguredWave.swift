@@ -13,7 +13,10 @@ public struct ConfiguredWave: Sendable, Identifiable, Hashable, Codable, Equatab
   public var wave: Wave<Double>
   public var config: WaveConfig
 
-  public init(_ wave: Wave<Double> = .example01, config: WaveConfig = .init()) {
+  public init(
+    _ wave: Wave<Double>,
+    config: WaveConfig = .init()
+  ) {
     self.wave = wave
     self.config = config
   }
@@ -50,20 +53,20 @@ extension ConfiguredWave {
 extension ConfiguredWave {
 
   /// Radians path
-  @inlinable
-  public func sample(
-    at index: Double,
-    time: TimeInterval,
-    sineMode: SineMode = .auto
-  ) -> Double {
-    let timePhase = .twoPi * wave.frequency * time
-    let staticPhase = wave.phaseRadians
-    let spatial = Double(config.cycles)
-
-    let angle = timePhase + (spatial * .twoPi * index) + staticPhase
-    let y = WaveSampler<Double>.value(for: wave.waveform, atRadians: angle)
-    return wave.amplitude * y
-  }
+//  @inlinable
+//  public func sample(
+//    at index: Double,
+//    time: TimeInterval,
+//    sineMode: SineMode = .auto
+//  ) -> Double {
+//    let timePhase = .twoPi * wave.frequency * time
+//    let staticPhase = wave.phaseRadians
+//    let spatial = Double(config.cycles)
+//
+//    let angle = timePhase + (spatial * .twoPi * index) + staticPhase
+//    let y = WaveSampler<Double>.value(for: wave.waveform, atRadians: angle)
+//    return wave.amplitude * y
+//  }
 
   /// Turns path
   @inlinable
@@ -72,12 +75,12 @@ extension ConfiguredWave {
     time: TimeInterval,
     sineMode: SineMode = .auto
   ) -> Double {
-    let temporalTurns = (wave.frequency * time)  // f*t cycles
-    let staticTurns = wave.phaseRadians / .twoPi
-    let spatialTurns = Double(config.cycles) * index
+    let temporalTurns = (wave.frequency * time * .twoPi)  // f*t cycles
+    let staticTurns = wave.phaseRadians
+    let spatialTurns = Double(config.cycles) * index * .twoPi
     let total = temporalTurns + spatialTurns + staticTurns
-    let wrapped = total - floor(total)
-    let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: wrapped)
+//    let wrapped = total - floor(total)
+    let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: total)
     return wave.amplitude * y
   }
 

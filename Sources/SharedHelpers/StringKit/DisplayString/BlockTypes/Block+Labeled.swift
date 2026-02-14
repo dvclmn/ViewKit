@@ -66,14 +66,14 @@ extension DisplayBlock {
         .float(result)
 
       case let result as StringRenderable:
-//      case let result as String:
-          .text(result.toString)
-        
+        //      case let result as String:
+        .text(result.toString)
+
       case let result as NSEvent.Phase:
         .text(result.description)
-        
+
       case let result as CustomStringConvertible:
-          .text(result.description)
+        .text(result.description)
 
       case nil:
         .text("nil")

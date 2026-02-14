@@ -48,18 +48,18 @@ extension WaveVisualElement.ElementKind {
   
   }
   
-  package func sanitise(_ v: Double) -> Double {
+  package func sanitise(_ value: Double) -> Double {
     switch self {
       case .dotRadius, .lineWidth, .dashLength, .dashGap:
-        return max(0, v)
+        return max(0, value)
 
       case .dotHue:
         // keep in [0, 360)
-        let x = v.truncatingRemainder(dividingBy: 360)
+        let x = value.truncatingRemainder(dividingBy: 360)
         return x < 0 ? x + 360 : x
 
       case .dashPhase, .dotX, .dotY:
-        return v
+        return value
     }
   }
 }

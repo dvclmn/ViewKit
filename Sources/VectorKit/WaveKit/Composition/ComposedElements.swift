@@ -39,11 +39,11 @@ extension WaveDocument {
 //  }
   
   public static func original(
-    waveH: ConfiguredWave = .init(),
-    waveV: ConfiguredWave = .init(),
-    waveR: ConfiguredWave = .init(),
-    style: WaveStyle = .init(),
-    sampleCount: Int = 30,
+    waveH: ConfiguredWave = .init(Wave<Double>.example02),
+    waveV: ConfiguredWave = .init(Wave<Double>.example02),
+    waveR: ConfiguredWave = .init(Wave<Double>.example02),
+    style: WaveStyle = .init(line: .init(lineWidth: 30)),
+    sampleCount: Int = 20,
     interpolation: WaveInterpolation = .cubic()
   ) -> Self {
     let composition = WaveLibrary(
@@ -59,7 +59,7 @@ extension WaveDocument {
       .dotX(with: waveV.id),  // vertical wave affects X (as you had)
       .dotY(with: waveH.id),  // horizontal wave affects Y (as you had)
       .dotRadius(with: waveR.id),
-      // .dashPhase(with: waveV),       // optional
+//      .init(waveID: waveV.id, elementKind: .dotHue, operation: .addToBase)
     ]
 
     let prototypes: [WaveVisualElement.ElementKind: Double] = [

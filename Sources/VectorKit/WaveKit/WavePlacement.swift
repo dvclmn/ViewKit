@@ -28,7 +28,7 @@ import SwiftUI
 /// WavePlacement.horizontal.inset(by: 0.1)  // 10%…90%, centred
 /// WavePlacement(from: .leading, to: UnitPoint(x: 1, y: 0.5))
 /// ```
-public struct WavePlacement: Equatable, Sendable, Codable {
+public struct WavePlacement: Equatable, Sendable, Codable, Hashable {
 
   /// The normalised start point of the waveform path (0–1 per axis).
   public let start: UnitPoint
@@ -75,7 +75,10 @@ extension WavePlacement {
     in size: CGSize
   ) -> CGPoint {
     let u = normalisedPoint(at: index, sampleCount: sampleCount)
-    return CGPoint(x: u.x * size.width, y: u.y * size.height)
+    return CGPoint(
+      x: u.x * size.width,
+      y: u.y * size.height
+    )
   }
 }
 
