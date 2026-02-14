@@ -47,7 +47,7 @@ public struct WavePlacement: Equatable, Sendable, Codable, Hashable {
 // MARK: - Normalised index resolution
 
 extension WavePlacement {
-  
+
   public var isHorizontal: Bool { self == .horizontal }
   public var isVertical: Bool { self == .vertical }
 
@@ -241,7 +241,7 @@ extension WavePlacement {
 
 extension WavePlacement: CustomStringConvertible {
   public var description: String {
-    "Start: \(start.displ)"
+    "Start: \(start.displayString(places: 2)), End: \(end.displayString(places: 2))"
   }
 }
 

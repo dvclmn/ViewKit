@@ -11,7 +11,8 @@ public protocol StringRenderable {
   var toString: String { get }
 }
 
-// MARK: - Strings
+// MARK: - String types
+
 extension String: StringRenderable {
   public var toString: String { self }
 }
@@ -24,11 +25,25 @@ extension Character: StringRenderable {
   public var toString: String { String(self) }
 }
 
-// MARK: - Primitives
+extension Substring: StringRenderable {
+  public var toString: String { String(self) }
+}
+
+// MARK: - Floats
 
 extension Double: StringRenderable {
   public var toString: String { String(self) }
 }
+
+extension CGFloat: StringRenderable {
+  public var toString: String { "\(self)" }
+}
+
+extension Float: StringRenderable {
+  public var toString: String { String(self) }
+}
+
+// MARK: - Primitives
 
 extension Int: StringRenderable {
   public var toString: String { String(self) }
@@ -54,17 +69,9 @@ extension CGPoint: StringRenderable {
   public var toString: String { displayString }
 }
 
-extension CGFloat: StringRenderable {
-  public var toString: String { displayString }
-}
-
 // MARK: - Alignment
 extension Alignment: StringRenderable {
   public var toString: String { self.displayName.standard }
-}
-
-extension Substring: StringRenderable {
-  public var toString: String { String(self) }
 }
 
 //extension AnyRegexOutput: StringRenderable {

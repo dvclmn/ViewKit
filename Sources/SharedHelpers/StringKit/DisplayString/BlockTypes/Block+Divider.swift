@@ -17,7 +17,3 @@ extension Divider: DisplayRenderable{
     value.render(using: format)
   }
 }
-
-//extension Divider: StringRenderable {
-//  public var toString: String { render(using: .default) }
-//}

@@ -43,10 +43,6 @@ extension Labeled {
   }
 }
 
-//extension Labeled: StringRenderable {
-//  public var toString: String { render(using: .default) }
-//}
-
 extension Labeled: DisplayRenderable {
   public func render(using format: DisplayFormat) -> String {
     let valuePart = value?.render(using: format) ?? "nil"
@@ -62,7 +58,7 @@ extension DisplayBlock {
       case let result as any PropertiesLabeled:
         .floatGroup(result)
 
-      case let result as any BinaryFloatingPoint & Sendable:
+      case let result as any FloatRenderable:
         .float(result)
 
       case let result as StringRenderable:
