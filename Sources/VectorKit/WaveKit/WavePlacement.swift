@@ -47,6 +47,8 @@ public struct WavePlacement: Equatable, Sendable, Codable, Hashable {
 // MARK: - Normalised index resolution
 
 extension WavePlacement {
+  
+  
 
   /// Returns the normalised `UnitPoint` for a given sample index.
   ///

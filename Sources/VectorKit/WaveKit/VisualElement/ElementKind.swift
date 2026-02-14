@@ -63,37 +63,83 @@ extension WaveVisualElement.ElementKind {
   /// `dashLength`, `dashGap`, `dashPhase` and `lineWidth`
   /// Need `WaveLineStyle`
   public func baseValue(
-//    index: Double  // Normalised index
-library
+    index: Double,  // Normalised index
+    config: WaveConfiguration,
+    viewSize size: CGSize
   ) -> Double {
-    //  public func baseValue(calculate: () -> Double) -> Double {
 
-    //    switch self {
-    //      case .dotX:
-    //
-    //
-    //      case .dotY:
-    //
-    //
-    //      case .dotRadius:
-    //
-    //
-    //      case .dotHue:
-    //
-    //
-    //      case .dashLength:
-    //
-    //
-    //      case .dashGap:
-    //
-    //
-    //      case .dashPhase:
-    //
-    //
-    //      case .lineWidth:
-    //
-    //
-    //    }
+    switch self {
+      case .dotX:
+        baseLocation(index, placement: config.placement, viewSize: size).baseX
+//        let base: Double
+//        if config.placement == .horizontal {
+//          base = index.lerp(from: size.width, to: 0)
+//
+//        } else if config.placement == .vertical {
+//          base = size.width / 2
+//
+//        } else {
+//          preconditionFailure("Not yet supported")
+//        }
+//        return base
+
+      case .dotY:
+        baseLocation(index, placement: config.placement, viewSize: size).baseY
+//        let base: Double
+//        if config.placement == .horizontal {
+//          base = size.height / 2
+//
+//        } else if config.placement == .vertical {
+//          base = index.lerp(from: size.height, to: 0)
+//
+//        } else {
+//          preconditionFailure("Not yet supported")
+//        }
+//        return base
+
+      case .dotRadius:
+        config.style.pointStyle.radius
+
+      case .dotHue:
+        baseLocation(index, placement: config.placement, viewSize: size).baseY
+        
+      case .dashLength:
+
+      case .dashGap:
+
+      case .dashPhase:
+
+      case .lineWidth:
+
+    }
+  }
+  
+  private func baseLocation(
+    _ index: Double,
+    placement: WavePlacement,
+    viewSize size: CGSize
+  ) -> (baseX: Double, baseY: Double) {
+    
+    var baseX: Double
+    var baseY: Double
+    
+    switch placement {
+      case .horizontal:
+        baseX = index.lerp(from: size.width, to: 0)
+        /// Establishes a starting point halfway up the view,
+        /// in a horizontal line
+        baseY = size.height / 2
+        
+      case .vertical:
+        baseY = index.lerp(from: size.height, to: 0)
+        /// Establishes a starting point in the centre of the view,
+        /// in a vertical line
+        baseX = size.width / 2
+        
+      default: preconditionFailure("Not yet supported")
+    }
+    
+    return (baseX, baseY)
   }
 
   package func sanitise(_ value: Double) -> Double {
