@@ -1,5 +1,5 @@
 //
-//  WaveConfiguration.swift
+//  WaveRenderSettings.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 19/8/2025.
@@ -8,7 +8,7 @@
 import Foundation
 import IdentifiedCollections
 
-public struct WaveConfiguration: Sendable, Codable, Equatable {
+public struct WaveRenderSettings: Sendable, Codable, Equatable {
   
   public var style: WaveStyle
   public var blendMode: WaveBlendMode
@@ -33,13 +33,13 @@ public struct WaveConfiguration: Sendable, Codable, Equatable {
   }
 }
 
-extension WaveConfiguration {
+extension WaveRenderSettings {
 //  public subscript(waveID waveID: ConfiguredWave.ID) -> ConfiguredWave? {
 //    get { waves[id: waveID] }
 //    set { waves[id: waveID] = newValue }
 //  }
 
-  public static let example: WaveConfiguration = .init(
+  public static let example: WaveRenderSettings = .init(
 //    waves: [
 //      ConfiguredWave(
 //        Wave<Double>(

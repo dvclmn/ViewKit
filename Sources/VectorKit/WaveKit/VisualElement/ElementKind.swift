@@ -24,7 +24,7 @@ extension WaveVisualElement {
     case dotHue  // 360° hue shift
 
     /// Dashes
-    case dashLength
+    //    case dashLength
     case dashGap
     case dashPhase
 
@@ -42,7 +42,7 @@ extension WaveVisualElement.ElementKind {
       case .dotY: "Dot Y"
       case .dotRadius: "Dot Radius"
       case .dotHue: "Dot Hue"
-      case .dashLength: "Dash Length"
+//      case .dashLength: "Dash Length"
       case .dashGap: "Dash Gap"
       case .dashPhase: "Dash Phase"
       case .lineWidth: "Line Width"
@@ -64,87 +64,66 @@ extension WaveVisualElement.ElementKind {
   /// Need `WaveLineStyle`
   public func baseValue(
     index: Double,  // Normalised index
-    config: WaveConfiguration,
+    settings: WaveRenderSettings,
     viewSize size: CGSize
   ) -> Double {
 
     switch self {
       case .dotX:
-        baseLocation(index, placement: config.placement, viewSize: size).baseX
-//        let base: Double
-//        if config.placement == .horizontal {
-//          base = index.lerp(from: size.width, to: 0)
-//
-//        } else if config.placement == .vertical {
-//          base = size.width / 2
-//
-//        } else {
-//          preconditionFailure("Not yet supported")
-//        }
-//        return base
+        baseLocation(index, placement: settings.placement, viewSize: size).baseX
 
       case .dotY:
-        baseLocation(index, placement: config.placement, viewSize: size).baseY
-//        let base: Double
-//        if config.placement == .horizontal {
-//          base = size.height / 2
-//
-//        } else if config.placement == .vertical {
-//          base = index.lerp(from: size.height, to: 0)
-//
-//        } else {
-//          preconditionFailure("Not yet supported")
-//        }
-//        return base
+        baseLocation(index, placement: settings.placement, viewSize: size).baseY
 
       case .dotRadius:
-        config.style.pointStyle.radius
+        settings.style.pointStyle.radius
 
       case .dotHue:
-        baseLocation(index, placement: config.placement, viewSize: size).baseY
-        
-      case .dashLength:
+        baseLocation(index, placement: settings.placement, viewSize: size).baseY
 
       case .dashGap:
+        settings.style.lineStyle.dashGap
 
       case .dashPhase:
+        settings.style.lineStyle.dashPhase
 
       case .lineWidth:
+        settings.style.lineStyle.lineWidth
 
     }
   }
-  
+
   private func baseLocation(
     _ index: Double,
     placement: WavePlacement,
     viewSize size: CGSize
   ) -> (baseX: Double, baseY: Double) {
-    
+
     var baseX: Double
     var baseY: Double
-    
+
     switch placement {
       case .horizontal:
         baseX = index.lerp(from: size.width, to: 0)
         /// Establishes a starting point halfway up the view,
         /// in a horizontal line
         baseY = size.height / 2
-        
+
       case .vertical:
         baseY = index.lerp(from: size.height, to: 0)
         /// Establishes a starting point in the centre of the view,
         /// in a vertical line
         baseX = size.width / 2
-        
+
       default: preconditionFailure("Not yet supported")
     }
-    
+
     return (baseX, baseY)
   }
 
   package func sanitise(_ value: Double) -> Double {
     switch self {
-      case .dotRadius, .lineWidth, .dashLength, .dashGap:
+      case .dotRadius, .lineWidth, .dashGap:
         return max(0, value)
 
       case .dotHue:
@@ -157,29 +136,3 @@ extension WaveVisualElement.ElementKind {
     }
   }
 }
-
-//extension WaveVisualElement.ElementKind {
-//  /// A single source of truth for "which case key path belongs to this meta case"
-//  var doubleCase: CaseKeyPath<WaveVisualElement, Double> {
-//    switch self {
-//      case .dotX: \.dotX
-//      case .dotY: \.dotY
-//      case .dotRadius: \.dotRadius
-//      case .dotHue: \.dotHue
-//      case .dashLength: \.dashLength
-//      case .dashGap: \.dashGap
-//      case .dashPhase: \.dashPhase
-//    }
-//  }
-//}
-
-//extension WaveVisualElement {
-//  public subscript() -> WaveVisualElement {
-//
-//  }
-//}
-
-/// Some examples of how a visual element might be moved around
-//extension WaveVisualElement.Meta {
-//  public static func example(_ wave: ConfiguredWave) ->
-//}
