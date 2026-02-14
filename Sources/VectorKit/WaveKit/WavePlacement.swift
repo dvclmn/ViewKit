@@ -8,10 +8,6 @@
 import CoreTools
 import SwiftUI
 
-//public enum WavePlacementPreset {
-//  case
-//}
-
 // MARK: - WavePlacement
 
 /// Describes how a waveform is oriented through a view, using
@@ -91,8 +87,6 @@ extension WavePlacement {
 
 @StaticMemberIterable
 extension WavePlacement {
-
-  // MARK: Axis-aligned
 
   /// Horizontal, left → right, full width, vertically centred.
   public static let horizontal = WavePlacement(from: .leading, to: .trailing)

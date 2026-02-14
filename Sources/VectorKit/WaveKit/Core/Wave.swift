@@ -39,7 +39,7 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
     self.id = id
     self.amplitude = amp
     self.frequency = freq
-    
+
     /// Previously: `self._phase = Self.wrapToTwoPi(phase)`
     self.phase = UnitPhase(phaseTurns)
     self.waveform = waveform
@@ -108,21 +108,30 @@ extension Wave {
   ///   Both are correct; the first keeps your stored values human-scale.
   public var omega: T { frequency.omega }
 
-  //  public static var example01: Self {
-  //    .init(
-  //      amp: 8,
-  //      freq: 3,
-  //      phase: 0,
-  //      waveform: .sine
-  //    )
-  //  }
-  //
-  //  public static var example02: Self {
-  //    .init(
-  //      amp: 60,
-  //      freq: 0.1,
-  //      phase: 0,
-  //      waveform: .sine
-  //    )
-  //  }
+  public static var example01: Self {
+    .init(
+      amp: 8,
+      freq: 3,
+      phaseTurns: 0,
+      waveform: .sine
+    )
+  }
+
+  public static var example02: Self {
+    .init(
+      amp: 60,
+      freq: 0.1,
+      phaseTurns: 0,
+      waveform: .sine
+    )
+  }
+  
+  public static var example03: Self {
+    .init(
+      amp: 30,
+      freq: 0.3,
+      phaseTurns: 0.6,
+      waveform: .sine
+    )
+  }
 }

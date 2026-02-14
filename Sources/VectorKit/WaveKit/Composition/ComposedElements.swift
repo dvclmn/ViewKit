@@ -33,21 +33,23 @@ public struct WaveDocument: Codable, Sendable, Equatable {
 }
 
 extension WaveDocument {
-  
-//  public func waveElementPair(for element: WaveVisualElement.ElementKind) ->  {
-//    
-//  }
-  
+
+  public subscript(waveID waveID: ConfiguredWave.ID) -> ConfiguredWave? {
+    get { library.waves[id: waveID] }
+    set { library.waves[id: waveID] = newValue }
+  }
+
   public static func original(
     waveH: ConfiguredWave = .init(Wave<Double>.example02),
     waveV: ConfiguredWave = .init(Wave<Double>.example02),
-    waveR: ConfiguredWave = .init(Wave<Double>.example02),
+//    waveR: ConfiguredWave = .init(Wave<Double>.example02),
     style: WaveStyle = .init(line: .init(lineWidth: 30)),
     sampleCount: Int = 20,
     interpolation: WaveInterpolation = .cubic()
   ) -> Self {
     let composition = WaveLibrary(
-      waves: [waveH, waveV, waveR],
+      waves: [waveH, waveV],
+//      waves: [waveH, waveV, waveR],
       style: style,
       blendMode: .add,  // whatever your enum is
       placement: .vertical,  // placeholder
@@ -58,11 +60,13 @@ extension WaveDocument {
     let drivers: [WaveDriver] = [
       .dotX(with: waveV.id),  // vertical wave affects X (as you had)
       .dotY(with: waveH.id),  // horizontal wave affects Y (as you had)
-      .dotRadius(with: waveR.id),
-//      .init(waveID: waveV.id, elementKind: .dotHue, operation: .addToBase)
+//      .dotRadius(with: waveR.id),
+      //      .init(waveID: waveV.id, elementKind: .dotHue, operation: .addToBase)
     ]
 
     let prototypes: [WaveVisualElement.ElementKind: Double] = [
+      .dotX: 0,
+      .dotY: 0,
       .dotRadius: style.pointStyle.radius,
       .dashPhase: style.lineStyle.dashPhase,
       .lineWidth: style.lineStyle.lineWidth,
@@ -75,43 +79,3 @@ extension WaveDocument {
     )
   }
 }
-
-/// Ha need to fix these naaaames
-//public struct ComposedElements: Codable, Sendable, Equatable {
-//  public var waveComposition: WaveLibrary
-//  public var elements: [WaveVisualElement]
-//  //  public var elements: ElementStore
-//
-//  public init(
-//    waveComposition: WaveLibrary,
-//    elements: [WaveVisualElement]
-//      //    elements: ElementStore
-//  ) {
-//    self.waveComposition = waveComposition
-//    self.elements = elements
-//  }
-//}
-//
-//extension ComposedElements {
-//  public func thing() {
-//    let channels: [WaveDriver] = [
-//      .dotHorizontal(with: <#T##ConfiguredWave#>)
-//    ]
-//  }
-//}
-
-/// Let's set up some initial elements just to play
-//extension ComposedElements {
-//  public static let example: ComposedElements = .init(
-//    waveComposition: .example,
-//    elements: [
-//      WaveVisualElement(
-//        kind: .dotRadius,
-//        initialValue: 2.0,
-//      ),
-//      WaveVisualElement(kind: .dotX),
-//      WaveVisualElement(kind: .dotY),
-//    ]
-//  )
-//
-//}

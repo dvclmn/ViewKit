@@ -38,7 +38,7 @@ extension ConfiguredWave {
     let wave = FloatWave(
       amp: amplitude,
       freq: frequency,
-      phase: phaseOffset,
+      phaseTurns: phaseOffset,
       waveform: waveform
     )
     let config = WaveConfig(
@@ -52,22 +52,42 @@ extension ConfiguredWave {
 
 extension ConfiguredWave {
 
-  /// Radians path
-//  @inlinable
-//  public func sample(
-//    at index: Double,
-//    time: TimeInterval,
-//    sineMode: SineMode = .auto
-//  ) -> Double {
-//    let timePhase = .twoPi * wave.frequency * time
-//    let staticPhase = wave.phaseRadians
-//    let spatial = Double(config.cycles)
-//
-//    let angle = timePhase + (spatial * .twoPi * index) + staticPhase
-//    let y = WaveSampler<Double>.value(for: wave.waveform, atRadians: angle)
-//    return wave.amplitude * y
-//  }
+  public func timePhase(from elapsed: TimeInterval) -> Double {
+    .twoPi * wave.frequency * elapsed
+  }
 
+  /// Radians path
+  //  @inlinable
+  //  public func sample(
+  //    at index: Double,
+  //    time: TimeInterval,
+  //    sineMode: SineMode = .auto
+  //  ) -> Double {
+  //    let timePhase = .twoPi * wave.frequency * time
+  //    let staticPhase = wave.phaseRadians
+  //    let spatial = Double(config.cycles)
+  //
+  //    let angle = timePhase + (spatial * .twoPi * index) + staticPhase
+  //    let y = WaveSampler<Double>.value(for: wave.waveform, atRadians: angle)
+  //    return wave.amplitude * y
+  //  }
+
+  @inlinable
+  public func sampleAlt(
+    at index: Double,
+    combinedPhase: Double,
+//    time: TimeInterval,
+    sineMode: SineMode = .auto
+  ) -> Double {
+//    let temporalTurns = (wave.frequency * time * .twoPi)  // f*t cycles
+//    let staticTurns = wave.phaseRadians
+//    let spatialTurns = Double(config.cycles) * index * .twoPi
+//    let total = temporalTurns + spatialTurns + staticTurns
+    //    let wrapped = total - floor(total)
+    let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: total)
+    return wave.amplitude * y
+  }
+  
   /// Turns path
   @inlinable
   public func sampleTurns(
@@ -79,7 +99,7 @@ extension ConfiguredWave {
     let staticTurns = wave.phaseRadians
     let spatialTurns = Double(config.cycles) * index * .twoPi
     let total = temporalTurns + spatialTurns + staticTurns
-//    let wrapped = total - floor(total)
+    //    let wrapped = total - floor(total)
     let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: total)
     return wave.amplitude * y
   }

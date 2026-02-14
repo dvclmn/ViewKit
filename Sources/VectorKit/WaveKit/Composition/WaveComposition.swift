@@ -42,7 +42,7 @@ extension WaveLibrary {
   public static let example: WaveLibrary = .init(
     waves: [
       ConfiguredWave(
-        Wave<Double>(amp: 2.0, freq: 1.0, phase: 0.0),
+        Wave<Double>(amp: 2.0, freq: 1.0, phaseTurns: 0.0),
         config: WaveConfig(cycles: 2.0, noise: 0.0)
       )
     ],

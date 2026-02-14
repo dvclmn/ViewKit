@@ -51,12 +51,15 @@ extension WaveSampler {
     }
   }
 
-  @inlinable public static func value(for waveform: Waveform, atTurns phase: T) -> T {
-    sample(waveform, phase: phase, domain: .turns, sineMode: .auto)
-  }
-  @inlinable public static func value(for waveform: Waveform, atRadians angle: T) -> T {
-    sample(waveform, phase: angle, domain: .radians, sineMode: .auto)
-  }
+  //  @inlinable public static func value(
+  //    for waveform: Waveform,
+  //    atTurns phase: T
+  //  ) -> T {
+  //    sample(waveform, phase: phase, domain: .turns, sineMode: .auto)
+  //  }
+  //  @inlinable public static func value(for waveform: Waveform, atRadians angle: T) -> T {
+  //    sample(waveform, phase: angle, domain: .radians, sineMode: .auto)
+  //  }
 }
 
 extension WaveSampler {
@@ -165,23 +168,6 @@ public enum SineMode {
 }
 
 @usableFromInline
-package struct FloatSineTable {
-  @usableFromInline
-  static let table: [Float] = Self.build()
-  private static func build() -> [Float] {
-    let tableSize = 1 << 11
-    var table: [Float] = []
-    table.reserveCapacity(tableSize + 1)
-    let twoPi = Float.pi * 2
-    for i in 0...tableSize {
-      let angle = Float(i) * twoPi / Float(tableSize)
-      table.append(sinf(angle))
-    }
-    return table
-  }
-}
-
-@usableFromInline
 package struct DoubleSineTable {
   @usableFromInline
   static let table: [Double] = Self.build()
@@ -193,6 +179,22 @@ package struct DoubleSineTable {
     for i in 0...tableSize {
       let angle = Double(i) * twoPi / Double(tableSize)
       table.append(sin(angle))
+    }
+    return table
+  }
+}
+@usableFromInline
+package struct FloatSineTable {
+  @usableFromInline
+  static let table: [Float] = Self.build()
+  private static func build() -> [Float] {
+    let tableSize = 1 << 11
+    var table: [Float] = []
+    table.reserveCapacity(tableSize + 1)
+    let twoPi = Float.pi * 2
+    for i in 0...tableSize {
+      let angle = Float(i) * twoPi / Float(tableSize)
+      table.append(sinf(angle))
     }
     return table
   }

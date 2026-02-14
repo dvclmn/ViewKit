@@ -36,7 +36,7 @@ extension WaveDriver {
 
   /// Applies this channel to `element` if it targets the same kind.
   @inlinable
-  public func apply(to element: inout WaveVisualElement, offset: Double) {
+  public func applyOperation(to element: inout WaveVisualElement, offset: Double) {
     guard element.kind == elementKind else { return }
     let v = operation.apply(
       base: element.base,
@@ -54,7 +54,7 @@ extension Array where Element == WaveDriver {
 
   @inlinable
   public func applyAll(to element: inout WaveVisualElement, offset: Double) {
-    for ch in self { ch.apply(to: &element, offset: offset) }
+    for ch in self { ch.applyOperation(to: &element, offset: offset) }
   }
 
 }

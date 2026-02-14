@@ -15,6 +15,7 @@ import Foundation
 //@CasePathable
 //@dynamicMemberLookup
 extension WaveVisualElement {
+  @CaseDetection
   public enum ElementKind: String, Sendable, Identifiable, CaseIterable, Codable, Equatable, Hashable {
     /// Dots
     case dotX
