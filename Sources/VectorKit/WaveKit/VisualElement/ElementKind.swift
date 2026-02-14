@@ -9,6 +9,9 @@ import CasePaths
 import CoreTools
 import Foundation
 
+/// Might find better solution, but for now this is an easy way to avoid
+/// long strung-together guard let statements etc
+
 /// I think now being CasePathable, this is essentially the new `SampleState`?
 //@MetaEnum
 //@AssociatedValues

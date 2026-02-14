@@ -47,6 +47,9 @@ public struct WavePlacement: Equatable, Sendable, Codable, Hashable {
 // MARK: - Normalised index resolution
 
 extension WavePlacement {
+  
+  public var isHorizontal: Bool { self == .horizontal }
+  public var isVertical: Bool { self == .vertical }
 
   /// Returns the normalised `UnitPoint` for a given sample index.
   ///
@@ -233,6 +236,12 @@ extension WavePlacement {
       start: CGPoint(x: start.x * size.width, y: start.y * size.height),
       end: CGPoint(x: end.x * size.width, y: end.y * size.height)
     )
+  }
+}
+
+extension WavePlacement: CustomStringConvertible {
+  public var description: String {
+    "Start: \(start.displ)"
   }
 }
 

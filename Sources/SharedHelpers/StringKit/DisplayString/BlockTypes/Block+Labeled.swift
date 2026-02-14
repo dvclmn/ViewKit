@@ -62,7 +62,7 @@ extension DisplayBlock {
       case let result as any PropertiesLabeled:
         .floatGroup(result)
 
-      case let result as any FloatRenderable:
+      case let result as any BinaryFloatingPoint & Sendable:
         .float(result)
 
       case let result as StringRenderable:

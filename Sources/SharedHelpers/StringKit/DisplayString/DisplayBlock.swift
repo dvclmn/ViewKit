@@ -14,7 +14,7 @@ public enum DisplayBlock: Sendable {
 
   case text(String)
   case indented(Indented)
-  case float(any FloatRenderable)
+  case float(any (BinaryFloatingPoint & Sendable))
   case floatGroup(any PropertiesLabeled)
   case display(any DisplayRenderable)
 
