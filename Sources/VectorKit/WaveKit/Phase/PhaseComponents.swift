@@ -5,47 +5,47 @@
 //  Created by Dave Coleman on 12/2/2026.
 //
 
-import CoreTools
-import Foundation
-
-public struct PhaseComponents {
-  let index: Double  // spatial parameter in 0...1
-  let cycles: Double  // spatial cycles across the span
-  let timePhase: Double  // ωt or any time-driven phase
-  let staticPhase: Double  // per-wave phase offset
-
-  public init(
-    index: Double,
-    cycles: Double,
-    timePhase: Double,
-    staticPhase: Double
-  ) {
-    self.index = index
-    self.cycles = cycles
-    self.timePhase = timePhase
-    self.staticPhase = staticPhase
-  }
-}
-
-extension PhaseComponents {
-  public init(
-    from wave: ConfiguredWave,
-    index: Double,
-    elapsedTime: TimeInterval,
-  ) {
-    self.init(
-      index: index,
-      cycles: wave.config.cycles,
-      timePhase: wave.timePhase(from: elapsedTime),
-      staticPhase: wave.wave.unitPhase
-    )
-  }
-  @inline(__always)
-  public func combinedPhase() -> Double {
-    let spatial = index * cycles * twoPi()
-    return timePhase + spatial + staticPhase
-  }
-}
+//import CoreTools
+//import Foundation
+//
+//public struct PhaseComponents {
+//  let index: Double  // spatial parameter in 0...1
+//  let cycles: Double  // spatial cycles across the span
+//  let timePhase: Double  // ωt or any time-driven phase
+//  let staticPhase: Double  // per-wave phase offset
+//
+//  public init(
+//    index: Double,
+//    cycles: Double,
+//    timePhase: Double,
+//    staticPhase: Double
+//  ) {
+//    self.index = index
+//    self.cycles = cycles
+//    self.timePhase = timePhase
+//    self.staticPhase = staticPhase
+//  }
+//}
+//
+//extension PhaseComponents {
+//  public init(
+//    from wave: ConfiguredWave,
+//    index: Double,
+//    elapsedTime: TimeInterval,
+//  ) {
+//    self.init(
+//      index: index,
+//      cycles: wave.config.cycles,
+//      timePhase: wave.timePhase(from: elapsedTime),
+//      staticPhase: wave.wave.unitPhase
+//    )
+//  }
+//  @inline(__always)
+//  public func combinedPhase() -> Double {
+//    let spatial = index * cycles * twoPi()
+//    return timePhase + spatial + staticPhase
+//  }
+//}
 
 //public struct PhaseComponents {
 //
