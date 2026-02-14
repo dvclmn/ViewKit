@@ -106,38 +106,19 @@ public enum Attribute {
   case noValue
 }
 
-/// Current issue:
-///
-/// The case is:
-/// ```
-/// case quadNamed(Bool, min: Int, title: String, CGFloat)
-/// ```
-///
-/// ```
-/// The output is:
-/// public init?(quadNamedOptional: Bool?, min: Int?, title: String?, d: CGFloat?) {
-///   guard let quadNamedOptional else {
-///     return nil
-///   }
-///   guard let min else {
-///     return nil
-///   }
-///   guard let title else {
-///     return nil
-///   }
-///   guard let d else {
-///     return nil
-///   }
-///   self = .quadNamed(quadNamedOptional, min, title, d)
-/// }
-/// ```
-///
-/// The issue that `min` and `title` are missing their labels in the self assignment
-
+@StaticMemberIterable
 struct MyRecord {
-  @StaticMemberIterable
-  private enum Fixtures {
-    static let a = MyRecord()
-    static let b = MyRecord()
-  }
+  static let a = MyRecord()
+  static let b: Self = .init()
+  static let c: MyRecord = .init()
+  static let d: String = "hello"
 }
+
+//struct MyRecord {
+//  @StaticMemberIterable
+//  private enum Fixtures {
+//    static let a = MyRecord()
+//    static let b: Self =
+//    static let c: MyRecord = .init()
+//  }
+//}

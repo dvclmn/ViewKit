@@ -13,9 +13,6 @@ import SwiftSyntaxMacros
 // Full credit to Daniel Sincere for this
 // `StaticMemberIterable` macro:
 // https://github.com/DanielSincere/StaticMemberIterable
-
-// MARK: - Macro Entry Point
-
 public struct StaticMemberIterableMacro: MemberMacro {
   public static func expansion(
     of node: AttributeSyntax,
