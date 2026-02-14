@@ -15,7 +15,7 @@ public struct WaveLibrary: Sendable, Codable, Equatable {
   public var placement: WavePlacement
   public var sampleCount: Int
   public var interpolation: WaveInterpolation
-  
+
   public init(
     waves: IdentifiedArrayOf<ConfiguredWave>,
     style: WaveStyle = .init(),
@@ -38,11 +38,16 @@ extension WaveLibrary {
     get { waves[id: waveID] }
     set { waves[id: waveID] = newValue }
   }
-  
+
   public static let example: WaveLibrary = .init(
     waves: [
       ConfiguredWave(
-        Wave<Double>(amp: 2.0, freq: 1.0, phaseTurns: 0.0),
+        Wave<Double>(
+          amp: 2.0,
+          freq: 1.0,
+          phaseTurns: 0.0,
+          waveform: .sineDefault
+        ),
         config: WaveConfig(cycles: 2.0, noise: 0.0)
       )
     ],

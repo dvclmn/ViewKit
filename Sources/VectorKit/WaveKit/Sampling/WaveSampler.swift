@@ -13,19 +13,7 @@ import Foundation
 import SwiftUI
 
 public typealias Sampler = WaveSampler<Double>
-//public typealias Sampler = WaveSampler<Float>
 
-/// Uses `Float` internally
-///
-/// Good for scalar calls — fast and predictable
-/// ```
-/// let y = WaveSampler<Float>.value(for: .sine, at: phase)
-/// ```
-///
-/// Good for arrays — vForce is very fast here
-/// ```
-/// let ys = WaveSampler<Float>.values(for: .sine, phases: phaseArray)
-/// ```
 public enum WaveSampler<T: WaveFloat> {}
 
 extension WaveSampler {
@@ -34,19 +22,19 @@ extension WaveSampler {
   public static func sample(
     _ waveform: Waveform,
     phase: T,
-    domain: PhaseDomain = .turns,
+//    domain: PhaseDomain = .turns,
   ) -> T {
-    let pTurns: T =
-      (domain == .turns)
-      ? Wave.wrapUnit(phase)
-      : Wave.wrapUnit(phase / T.twoPi)
+    let pTurns: T = phase
+    //    let pTurns: T =
+    //      (domain == .turns)
+    //      ? Wave.wrapUnit(phase)
+    //      : Wave.wrapUnit(phase / T.twoPi)
 
     switch waveform {
       case .sine(let mode):
         switch mode {
           case .math: return sineMathTurns(pTurns)
           case .table: return sineLookup(pTurns)
-        //          case .auto: return sineLookup(pTurns)  // sensible default for scalar calls
         }
       case .triangle: return T(1) - T(4) * abs(pTurns - T(0.5))
       case .sawtooth: return T(2) * pTurns - T(1)
@@ -57,11 +45,11 @@ extension WaveSampler {
 
 extension WaveSampler {
   /// A clear, readable sine for “turns” domain
-  @inlinable public static func sineMathTurns(_ phaseTurns: T) -> T {
+  @inlinable package static func sineMathTurns(_ phaseTurns: T) -> T {
     T.waveSin(phaseTurns * T.twoPi)
   }
-  // And for radians
-  @inlinable public static func sineMathRadians(_ angle: T) -> T {
+  /// And for radians
+  @inlinable package static func sineMathRadians(_ angle: T) -> T {
     T.waveSin(angle)
   }
 }
@@ -91,7 +79,9 @@ extension WaveSampler {
   package static func sineLookup(_ phase: T) -> T {
     let tableSize = 1 << 11
     let mask = tableSize - 1
+    let isFloat = T.self == Float.self
 
+    //    let table = isFloat ? FloatSineTable.table : DoubleSineTable.table
     guard T.self == Float.self else {
       let table = DoubleSineTable.table
       let scaled = Double(phase) * Double(tableSize)
@@ -120,7 +110,7 @@ extension WaveSampler {
 package struct DoubleSineTable {
   @usableFromInline
   static let table: [Double] = Self.build()
-  
+
   private static func build() -> [Double] {
     let tableSize = 1 << 11
     var table: [Double] = []
@@ -137,7 +127,7 @@ package struct DoubleSineTable {
 package struct FloatSineTable {
   @usableFromInline
   static let table: [Float] = Self.build()
-  
+
   private static func build() -> [Float] {
     let tableSize = 1 << 11
     var table: [Float] = []

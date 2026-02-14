@@ -21,6 +21,8 @@ public enum Waveform: Sendable, Codable, Equatable, Hashable, CaseIterable, Iden
   case triangle
   case square
   case sawtooth
+  
+  public static let sineDefault: Self = .sine(mode: .table)
 
   public var id: String { name }
   public var name: String {

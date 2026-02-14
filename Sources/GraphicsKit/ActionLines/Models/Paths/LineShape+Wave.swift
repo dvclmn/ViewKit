@@ -40,7 +40,8 @@ extension LineShape {
       let py = start.y + dy * t
 
       let phaseTurns = t * cycles + phaseOffset
-      let wave = WaveSampler<Double>.sample(.sine, phase: phaseTurns, domain: .turns)
+      let wave = WaveSampler<Double>.sample(.sineDefault, phase: phaseTurns)
+//      let wave = WaveSampler<Double>.sample(.sine, phase: phaseTurns, domain: .turns)
 
       let wx = px + perpendicular.x * wave * amplitude
       let wy = py + perpendicular.y * wave * amplitude

@@ -79,7 +79,7 @@ extension WaveformPicker {
 #if DEBUG
 #Preview {
   // @Previewable @State var store = AppHandler()
-  @Previewable @State var waveform: Waveform = .sine
+  @Previewable @State var waveform: Waveform = .sineDefault
   WaveformPicker(waveform: $waveform)
     .frame(width: 300, height: 600)
   // .environment(store)

@@ -76,19 +76,19 @@ extension ConfiguredWave {
   public func sampleAlt(
     at index: Double,
     combinedPhase: Double,
-//    time: TimeInterval,
+    //    time: TimeInterval,
     sineMode: SineMode = .table
   ) -> Double {
-//    let temporalTurns = (wave.frequency * time * .twoPi)  // f*t cycles
-//    let staticTurns = wave.phaseRadians
-//    let spatialTurns = Double(config.cycles) * index * .twoPi
-//    let total = temporalTurns + spatialTurns + staticTurns
+    //    let temporalTurns = (wave.frequency * time * .twoPi)  // f*t cycles
+    //    let staticTurns = wave.phaseRadians
+    //    let spatialTurns = Double(config.cycles) * index * .twoPi
+    //    let total = temporalTurns + spatialTurns + staticTurns
     //    let wrapped = total - floor(total)
-    let y = WaveSampler<Double>.
-//    let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: total)
+    let y = WaveSampler<Double>.sample(wave.waveform, phase: combinedPhase)
+    //    let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: total)
     return wave.amplitude * y
   }
-  
+
   /// Turns path
   @inlinable
   public func sampleTurns(
@@ -96,30 +96,33 @@ extension ConfiguredWave {
     time: TimeInterval,
     sineMode: SineMode = .table
   ) -> Double {
-    let temporalTurns = (wave.frequency * time * .twoPi)  // f*t cycles
-    let staticTurns = wave.phaseRadians
-    let spatialTurns = Double(config.cycles) * index * .twoPi
-    let total = temporalTurns + spatialTurns + staticTurns
-    //    let wrapped = total - floor(total)
-    let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: total)
-    return wave.amplitude * y
+    fatalError("Not using right now")
+//    let temporalTurns = (wave.frequency * time * .twoPi)  // f*t cycles
+//    let staticTurns = wave.phaseRadians
+//    let spatialTurns = Double(config.cycles) * index * .twoPi
+//    let total = temporalTurns + spatialTurns + staticTurns
+//    //    let wrapped = total - floor(total)
+//    let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: total)
+//    return wave.amplitude * y
   }
 
   public func samples(
     indices: [Double],  // Normalised, across a slice of a view
     time: TimeInterval
   ) -> [Double] {
-    var ys: [Double] = []
-    ys.reserveCapacity(indices.count)
-    let timePhase = .twoPi * wave.frequency * time
-    let staticPhase = wave.phaseRadians
-    let spatial = Double(config.cycles)
-
-    for index in indices {
-      let angle = timePhase + (spatial * .twoPi * index) + staticPhase
-      let y = WaveSampler<Double>.value(for: wave.waveform, atRadians: angle)
-      ys.append(wave.amplitude * y)
-    }
-    return ys
+    fatalError("Not using right now")
+//    var ys: [Double] = []
+//    ys.reserveCapacity(indices.count)
+//    let timePhase = .twoPi * wave.frequency * time
+//    let staticPhase = wave.phaseRadians
+//    let spatial = Double(config.cycles)
+//
+//    for index in indices {
+//      let angle = timePhase + (spatial * .twoPi * index) + staticPhase
+////      let y = WaveSampler
+////      let y = WaveSampler<Double>.value(for: wave.waveform, atRadians: angle)
+//      ys.append(wave.amplitude * y)
+//    }
+//    return ys
   }
 }

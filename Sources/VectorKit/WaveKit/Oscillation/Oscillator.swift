@@ -85,9 +85,9 @@ public struct OscillatorSmoothed {
     let basePhase: Double = phase.currentPhase
     let shiftedPhase = basePhase + phaseOffset.displayed
     
+    let sample = WaveSampler<Double>.sample(waveform, phase: shiftedPhase)
+    //    let sample = Sampler.value(for: waveform, at: shiftedPhase)
 //    let sample = WaveSampler<T>.sample(waveform, phase: shiftedPhase, domain: .turns)
-    
-    let sample = Sampler.value(for: waveform, at: shiftedPhase)
     return amp.displayed * sample
   }
 
