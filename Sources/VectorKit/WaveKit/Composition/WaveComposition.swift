@@ -1,5 +1,5 @@
 //
-//  Model+WaveLibrary.swift
+//  WaveConfiguration.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 19/8/2025.
@@ -8,8 +8,8 @@
 import Foundation
 import IdentifiedCollections
 
-public struct WaveLibrary: Sendable, Codable, Equatable {
-  public var waves: IdentifiedArrayOf<ConfiguredWave>
+public struct WaveConfiguration: Sendable, Codable, Equatable {
+  
   public var style: WaveStyle
   public var blendMode: WaveBlendMode
   public var placement: WavePlacement
@@ -17,14 +17,14 @@ public struct WaveLibrary: Sendable, Codable, Equatable {
   public var interpolation: WaveInterpolation
 
   public init(
-    waves: IdentifiedArrayOf<ConfiguredWave>,
+//    waves: IdentifiedArrayOf<ConfiguredWave>,
     style: WaveStyle = .init(),
     blendMode: WaveBlendMode = .add,
     placement: WavePlacement = .vertical,
     sampleCount: Int = 20,
     interpolation: WaveInterpolation = .linear
   ) {
-    self.waves = waves
+//    self.waves = waves
     self.style = style
     self.blendMode = blendMode
     self.placement = placement
@@ -33,24 +33,24 @@ public struct WaveLibrary: Sendable, Codable, Equatable {
   }
 }
 
-extension WaveLibrary {
-  public subscript(waveID waveID: ConfiguredWave.ID) -> ConfiguredWave? {
-    get { waves[id: waveID] }
-    set { waves[id: waveID] = newValue }
-  }
+extension WaveConfiguration {
+//  public subscript(waveID waveID: ConfiguredWave.ID) -> ConfiguredWave? {
+//    get { waves[id: waveID] }
+//    set { waves[id: waveID] = newValue }
+//  }
 
-  public static let example: WaveLibrary = .init(
-    waves: [
-      ConfiguredWave(
-        Wave<Double>(
-          amp: 2.0,
-          freq: 1.0,
-          phaseTurns: 0.0,
-          waveform: .sineDefault
-        ),
-        config: WaveConfig(cycles: 2.0, noise: 0.0)
-      )
-    ],
+  public static let example: WaveConfiguration = .init(
+//    waves: [
+//      ConfiguredWave(
+//        Wave<Double>(
+//          amp: 2.0,
+//          freq: 1.0,
+//          phaseTurns: 0.0,
+//          waveform: .sineDefault
+//        ),
+//        config: WaveConfig(cycles: 2.0, noise: 0.0)
+//      )
+//    ],
     style: WaveStyle(),
     blendMode: .add,
     placement: .vertical,

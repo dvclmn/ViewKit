@@ -35,7 +35,7 @@ extension WaveVisualElement {
 }
 
 extension WaveVisualElement.ElementKind {
-  
+
   public var name: String {
     switch self {
       case .dotX: "Dot X"
@@ -48,60 +48,52 @@ extension WaveVisualElement.ElementKind {
       case .lineWidth: "Line Width"
     }
   }
-  
-/// `dotX` and `dotY` need `WavePlacement` and view size
-///
-///
-/// `dotRadius` needs 
-///
-///
-/// `dotHue`
-///
-///
-/// `dashLength`
-///
-///
-/// `dashGap`
-///
-///
-/// `dashPhase`
-///
-///
-/// `lineWidth`
-///
-///
+
+  /// What does each Kind need for it's base value
+  /// `dotX` and `dotY`
+  /// `WavePlacement` and view size
+  ///
+  /// `dotRadius`
+  /// Needs `WaveStyle/PointStyle`
+  ///
+  /// `dotHue`
+  /// Perhaps needs similar to dotX/Y? It calculates a hue 'mix amount',
+  /// spread along the dominant view axis (as per WavePlacement)
+  ///
+  /// `dashLength`, `dashGap`, `dashPhase` and `lineWidth`
+  /// Need `WaveLineStyle`
   public func baseValue(
-    index: Double // Normalised index
-    
+//    index: Double  // Normalised index
+library
   ) -> Double {
-//  public func baseValue(calculate: () -> Double) -> Double {
-    
-//    switch self {
-//      case .dotX:
-//        
-//        
-//      case .dotY:
-//        
-//        
-//      case .dotRadius:
-//        
-//        
-//      case .dotHue:
-//        
-//        
-//      case .dashLength:
-//        
-//        
-//      case .dashGap:
-//        
-//        
-//      case .dashPhase:
-//        
-//        
-//      case .lineWidth:
-//        
-//        
-//    }
+    //  public func baseValue(calculate: () -> Double) -> Double {
+
+    //    switch self {
+    //      case .dotX:
+    //
+    //
+    //      case .dotY:
+    //
+    //
+    //      case .dotRadius:
+    //
+    //
+    //      case .dotHue:
+    //
+    //
+    //      case .dashLength:
+    //
+    //
+    //      case .dashGap:
+    //
+    //
+    //      case .dashPhase:
+    //
+    //
+    //      case .lineWidth:
+    //
+    //
+    //    }
   }
 
   package func sanitise(_ value: Double) -> Double {

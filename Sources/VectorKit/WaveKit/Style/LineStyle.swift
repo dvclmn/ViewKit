@@ -13,6 +13,7 @@ public struct WaveLineStyle: Codable, Sendable, Equatable, Hashable {
   public var colourSecondary: RGBColour?
   public var lineWidth: Double
   public var dashes: Int
+  public var dashGap: Double
   public var dashPhase: Double
 
   public init(
@@ -20,12 +21,14 @@ public struct WaveLineStyle: Codable, Sendable, Equatable, Hashable {
     colourSecondary: RGBColour? = .orange,
     lineWidth: Double = 3.0,
     dashes: Int = 0,
+    dashGap: Double = 0,
     dashPhase: Double = 0,
   ) {
     self.colour = colour
     self.colourSecondary = colourSecondary
     self.lineWidth = lineWidth
     self.dashes = dashes
+    self.dashGap = dashGap
     self.dashPhase = dashPhase
   }
 }
