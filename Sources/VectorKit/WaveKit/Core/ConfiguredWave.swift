@@ -31,7 +31,7 @@ extension ConfiguredWave {
     amplitude: Double,
     frequency: Double,
     phaseOffset: Double = .zero,
-    waveform: Waveform = .sine,
+    waveform: Waveform = .sine(),
     cycles: Double = 2,
     noise: Double = .zero
   ) {
@@ -77,14 +77,15 @@ extension ConfiguredWave {
     at index: Double,
     combinedPhase: Double,
 //    time: TimeInterval,
-    sineMode: SineMode = .auto
+    sineMode: SineMode = .table
   ) -> Double {
 //    let temporalTurns = (wave.frequency * time * .twoPi)  // f*t cycles
 //    let staticTurns = wave.phaseRadians
 //    let spatialTurns = Double(config.cycles) * index * .twoPi
 //    let total = temporalTurns + spatialTurns + staticTurns
     //    let wrapped = total - floor(total)
-    let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: total)
+    let y = WaveSampler<Double>.v
+//    let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: total)
     return wave.amplitude * y
   }
   
@@ -93,7 +94,7 @@ extension ConfiguredWave {
   public func sampleTurns(
     at index: Double,
     time: TimeInterval,
-    sineMode: SineMode = .auto
+    sineMode: SineMode = .table
   ) -> Double {
     let temporalTurns = (wave.frequency * time * .twoPi)  // f*t cycles
     let staticTurns = wave.phaseRadians

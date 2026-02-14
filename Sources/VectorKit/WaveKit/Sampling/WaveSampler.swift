@@ -35,75 +35,79 @@ extension WaveSampler {
     _ waveform: Waveform,
     phase: T,
     domain: PhaseDomain = .turns,
-    sineMode: SineMode = .auto
   ) -> T {
-    let pTurns: T = (domain == .turns) ? Wave.wrapUnit(phase) : Wave.wrapUnit(phase / T.twoPi)
+    let pTurns: T =
+      (domain == .turns)
+      ? Wave.wrapUnit(phase)
+      : Wave.wrapUnit(phase / T.twoPi)
+
     switch waveform {
-      case .sine:
-        switch sineMode {
+      case .sine(let mode):
+        switch mode {
           case .math: return sineMathTurns(pTurns)
           case .table: return sineLookup(pTurns)
-          case .auto: return sineLookup(pTurns)  // sensible default for scalar calls
+        //          case .auto: return sineLookup(pTurns)  // sensible default for scalar calls
         }
       case .triangle: return T(1) - T(4) * abs(pTurns - T(0.5))
       case .sawtooth: return T(2) * pTurns - T(1)
       case .square: return pTurns < T(0.5) ? T(1) : T(-1)
     }
   }
-
-  //  @inlinable public static func value(
-  //    for waveform: Waveform,
-  //    atTurns phase: T
-  //  ) -> T {
-  //    sample(waveform, phase: phase, domain: .turns, sineMode: .auto)
-  //  }
-  //  @inlinable public static func value(for waveform: Waveform, atRadians angle: T) -> T {
-  //    sample(waveform, phase: angle, domain: .radians, sineMode: .auto)
-  //  }
 }
 
 extension WaveSampler {
-  /// Note: Scalar calls: Calling sin repeatedly per-sample can be relatively expensive.
-  /// A lookup table with linear interpolation is extremely fast for single-sample access.
-  /// So for scalar sampling (one value(for:at:) at a time), this use of `sineTable`
-  /// is often faster and predictable.
-  ///
-  /// Returns the waveform value for a given phase in turns.
-  /// - Parameters:
-  ///   - waveform: The waveform shape to sample.
-  ///   - phase: A phase value in arbitrary units; it will be normalized to [0, 1).
-  ///            Interpret 1.0 as one full turn (2π radians). Values outside [0, 1)
-  ///            are wrapped safely before lookup.
-  /// - Returns: The waveform sample in the range [-1, 1].
-  @inlinable
-  public static func value(
-    for waveform: Waveform,
-    at phase: T
-  ) -> T {
-    let p = Wave.wrapUnit(phase)
-    return value(for: waveform, phaseRadians: p)
+  /// A clear, readable sine for “turns” domain
+  @inlinable public static func sineMathTurns(_ phaseTurns: T) -> T {
+    T.waveSin(phaseTurns * T.twoPi)
   }
-
-  /// `phaseRadians` must already be wrapped to 2π radians
-  @inlinable
-  public static func value(
-    for waveform: Waveform,
-    phaseRadians: T
-  ) -> T {
-    let p = phaseRadians
-
-    return switch waveform {
-      case .sine: sineLookup(p)
-
-      /// Standard: `-1 → 1 → -1`, peaks at `0.25` and `0.75`
-      case .triangle: T(1) - T(4) * abs(p - T(0.5))
-
-      /// Linear ramp: `-1 → 1`, discontinuity at integers
-      case .sawtooth: T(2) * p - T(1)
-      case .square: p < T(0.5) ? T(1) : T(-1)
-    }
+  // And for radians
+  @inlinable public static func sineMathRadians(_ angle: T) -> T {
+    T.waveSin(angle)
   }
 }
+
+//extension WaveSampler {
+/// Note: Scalar calls: Calling sin repeatedly per-sample can be relatively expensive.
+/// A lookup table with linear interpolation is extremely fast for single-sample access.
+/// So for scalar sampling (one value(for:at:) at a time), this use of `sineTable`
+/// is often faster and predictable.
+///
+/// Returns the waveform value for a given phase in turns.
+/// - Parameters:
+///   - waveform: The waveform shape to sample.
+///   - phase: A phase value in arbitrary units; it will be normalized to [0, 1).
+///            Interpret 1.0 as one full turn (2π radians). Values outside [0, 1)
+///            are wrapped safely before lookup.
+/// - Returns: The waveform sample in the range [-1, 1].
+//  @inlinable
+//  public static func value(
+//    for waveform: Waveform,
+//    at phase: T
+//  ) -> T {
+//    let p = Wave.wrapUnit(phase)
+//    return value(for: waveform, phaseRadians: p)
+//  }
+//
+//  /// `phaseRadians` must already be wrapped to 2π radians
+//  @inlinable
+//  public static func value(
+//    for waveform: Waveform,
+//    phaseRadians: T
+//  ) -> T {
+//    let p = phaseRadians
+//
+//    return switch waveform {
+//      case .sine: sineLookup(p)
+//
+//      /// Standard: `-1 → 1 → -1`, peaks at `0.25` and `0.75`
+//      case .triangle: T(1) - T(4) * abs(p - T(0.5))
+//
+//      /// Linear ramp: `-1 → 1`, discontinuity at integers
+//      case .sawtooth: T(2) * p - T(1)
+//      case .square: p < T(0.5) ? T(1) : T(-1)
+//    }
+//  }
+//}
 
 // MARK: - Sine table storage
 extension WaveSampler {
@@ -148,23 +152,6 @@ extension WaveSampler {
     return T(y0 + frac * (y1 - y0))
 
   }
-}
-
-extension WaveSampler {
-  /// A clear, readable sine for “turns” domain
-  @inlinable public static func sineMathTurns(_ phaseTurns: T) -> T {
-    T.waveSin(phaseTurns * T.twoPi)
-  }
-  // And for radians
-  @inlinable public static func sineMathRadians(_ angle: T) -> T {
-    T.waveSin(angle)
-  }
-}
-
-public enum SineMode {
-  case math
-  case table
-  case auto
 }
 
 @usableFromInline

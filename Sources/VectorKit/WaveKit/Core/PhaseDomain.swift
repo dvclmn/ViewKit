@@ -8,7 +8,7 @@
 import Foundation
 
 public enum PhaseDomain {
-  case radians  //
+  case radians
   case turns
 }
 
