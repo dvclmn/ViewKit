@@ -66,6 +66,91 @@ extension WaveSampler {
   }
 }
 
+// MARK: - Sine table storage
+extension WaveSampler {
+
+  // MARK: Lookup table configuration
+  /// Number of bits used to address entries in the sine lookup table.
+  /// 11 bits -> 2048 addressable entries (plus one extra for interpolation wrap).
+  @usableFromInline
+  package static var tableBits: Int { 11 }
+
+  /// Total number of addressable entries in the lookup table (2^tableBits).
+  @usableFromInline
+  package static var tableSize: Int { 1 << tableBits }
+
+  /// Bitmask for wrapping table indices (e.g., `(index) & tableMask`).
+  @usableFromInline
+  package static var tableMask: Int { tableSize - 1 }
+
+  /// Table size as a generic floating-point value.
+  @usableFromInline
+  package static var tableSizeF: T { T(tableSize) }
+
+  @inlinable
+  package static func sineLookup(_ phase: T) -> T {
+    let tableSize = 1 << 11
+    let mask = tableSize - 1
+
+    guard T.self == Float.self else {
+      let table = DoubleSineTable.table
+      let scaled = Double(phase) * Double(tableSize)
+      let i = Int(floor(max(0, scaled)))
+      let frac = scaled - Double(i)
+      let i0 = i & mask
+      let i1 = (i0 + 1) & mask
+      let y0 = table[i0]
+      let y1 = table[i1]
+      return T(y0 + frac * (y1 - y0))
+    }
+    let table = FloatSineTable.table
+    let scaled = Float(phase) * Float(tableSize)
+    let i = Int(floor(max(0, scaled)))
+    let frac = scaled - Float(i)
+    let i0 = i & mask
+    let i1 = (i0 + 1) & mask
+    let y0 = table[i0]
+    let y1 = table[i1]
+    return T(y0 + frac * (y1 - y0))
+
+  }
+}
+
+@usableFromInline
+package struct DoubleSineTable {
+  @usableFromInline
+  static let table: [Double] = Self.build()
+  
+  private static func build() -> [Double] {
+    let tableSize = 1 << 11
+    var table: [Double] = []
+    table.reserveCapacity(tableSize + 1)
+    let twoPi = Double.pi * 2
+    for i in 0...tableSize {
+      let angle = Double(i) * twoPi / Double(tableSize)
+      table.append(sin(angle))
+    }
+    return table
+  }
+}
+@usableFromInline
+package struct FloatSineTable {
+  @usableFromInline
+  static let table: [Float] = Self.build()
+  
+  private static func build() -> [Float] {
+    let tableSize = 1 << 11
+    var table: [Float] = []
+    table.reserveCapacity(tableSize + 1)
+    let twoPi = Float.pi * 2
+    for i in 0...tableSize {
+      let angle = Float(i) * twoPi / Float(tableSize)
+      table.append(sinf(angle))
+    }
+    return table
+  }
+}
+
 //extension WaveSampler {
 /// Note: Scalar calls: Calling sin repeatedly per-sample can be relatively expensive.
 /// A lookup table with linear interpolation is extremely fast for single-sample access.
@@ -108,81 +193,3 @@ extension WaveSampler {
 //    }
 //  }
 //}
-
-// MARK: - Sine table storage
-extension WaveSampler {
-
-  // MARK: Lookup table configuration
-  /// Number of bits used to address entries in the sine lookup table.
-  /// 11 bits -> 2048 addressable entries (plus one extra for interpolation wrap).
-  @usableFromInline static var tableBits: Int { 11 }
-
-  /// Total number of addressable entries in the lookup table (2^tableBits).
-  @usableFromInline static var tableSize: Int { 1 << tableBits }
-
-  /// Bitmask for wrapping table indices (e.g., `(index) & tableMask`).
-  @usableFromInline static var tableMask: Int { tableSize - 1 }
-
-  /// Table size as a generic floating-point value.
-  @usableFromInline static var tableSizeF: T { T(tableSize) }
-
-  @inlinable static func sineLookup(_ phase: T) -> T {
-    let tableSize = 1 << 11
-    let mask = tableSize - 1
-
-    guard T.self == Float.self else {
-      let table = DoubleSineTable.table
-      let scaled = Double(phase) * Double(tableSize)
-      let i = Int(floor(max(0, scaled)))
-      let frac = scaled - Double(i)
-      let i0 = i & mask
-      let i1 = (i0 + 1) & mask
-      let y0 = table[i0]
-      let y1 = table[i1]
-      return T(y0 + frac * (y1 - y0))
-    }
-    let table = FloatSineTable.table
-    let scaled = Float(phase) * Float(tableSize)
-    let i = Int(floor(max(0, scaled)))
-    let frac = scaled - Float(i)
-    let i0 = i & mask
-    let i1 = (i0 + 1) & mask
-    let y0 = table[i0]
-    let y1 = table[i1]
-    return T(y0 + frac * (y1 - y0))
-
-  }
-}
-
-@usableFromInline
-package struct DoubleSineTable {
-  @usableFromInline
-  static let table: [Double] = Self.build()
-  private static func build() -> [Double] {
-    let tableSize = 1 << 11
-    var table: [Double] = []
-    table.reserveCapacity(tableSize + 1)
-    let twoPi = Double.pi * 2
-    for i in 0...tableSize {
-      let angle = Double(i) * twoPi / Double(tableSize)
-      table.append(sin(angle))
-    }
-    return table
-  }
-}
-@usableFromInline
-package struct FloatSineTable {
-  @usableFromInline
-  static let table: [Float] = Self.build()
-  private static func build() -> [Float] {
-    let tableSize = 1 << 11
-    var table: [Float] = []
-    table.reserveCapacity(tableSize + 1)
-    let twoPi = Float.pi * 2
-    for i in 0...tableSize {
-      let angle = Float(i) * twoPi / Float(tableSize)
-      table.append(sinf(angle))
-    }
-    return table
-  }
-}

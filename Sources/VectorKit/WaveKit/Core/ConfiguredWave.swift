@@ -84,7 +84,7 @@ extension ConfiguredWave {
 //    let spatialTurns = Double(config.cycles) * index * .twoPi
 //    let total = temporalTurns + spatialTurns + staticTurns
     //    let wrapped = total - floor(total)
-    let y = WaveSampler<Double>.v
+    let y = WaveSampler<Double>.
 //    let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: total)
     return wave.amplitude * y
   }

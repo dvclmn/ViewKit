@@ -34,7 +34,7 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
     amp: T,
     freq: T,
     phaseTurns: T,
-    waveform: Waveform = .sine
+    waveform: Waveform
   ) {
     self.id = id
     self.amplitude = amp
@@ -113,7 +113,7 @@ extension Wave {
       amp: 8,
       freq: 3,
       phaseTurns: 0,
-      waveform: .sine
+      waveform: .sine()
     )
   }
 
@@ -122,16 +122,16 @@ extension Wave {
       amp: 60,
       freq: 0.1,
       phaseTurns: 0,
-      waveform: .sine
+      waveform: .sine()
     )
   }
-  
+
   public static var example03: Self {
     .init(
       amp: 30,
       freq: 0.3,
       phaseTurns: 0.6,
-      waveform: .sine
+      waveform: .sine()
     )
   }
 }
