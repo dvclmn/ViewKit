@@ -15,7 +15,6 @@ struct MetaEnumBuilder {
   let detectedEnum: Enum
   let parentParamName: TokenSyntax
   let caseDetection: [DeclSyntax]
-  //  let caseDetection: CaseDetectionBuilder
 
   init(
     node: AttributeSyntax,

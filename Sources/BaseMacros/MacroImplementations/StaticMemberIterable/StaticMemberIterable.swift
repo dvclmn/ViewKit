@@ -22,7 +22,6 @@ public struct StaticMemberIterableMacro: MemberMacro {
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
 
-    let access
     let staticMemberNames: [String] = declaration.memberBlock.members
       .flatMap { (memberDeclListItemSyntax: MemberBlockItemSyntax) in
         memberDeclListItemSyntax

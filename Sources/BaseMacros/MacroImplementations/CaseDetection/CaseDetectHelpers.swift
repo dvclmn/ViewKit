@@ -11,7 +11,6 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 public struct CaseDetectionBuilder {
-
   let detectedEnum: Enum
   let includesNames: Bool
 
