@@ -106,6 +106,13 @@ public enum Attribute {
   case noValue
 }
 
+/// This inference is intentionally heuristic. It will not catch cases like the below.
+///
+/// This could return `MyRecord`, but macro can’t know:
+/// `static let x = makeDefaultRecord()`
+///
+/// If `MyRecord` is an enum, could be `Self`, but ambiguous:
+/// `static let y = .someCase`
 @StaticMemberIterable
 struct MyRecord {
   static let a = MyRecord()
@@ -113,12 +120,3 @@ struct MyRecord {
   static let c: MyRecord = .init()
   static let d: String = "hello"
 }
-
-//struct MyRecord {
-//  @StaticMemberIterable
-//  private enum Fixtures {
-//    static let a = MyRecord()
-//    static let b: Self =
-//    static let c: MyRecord = .init()
-//  }
-//}

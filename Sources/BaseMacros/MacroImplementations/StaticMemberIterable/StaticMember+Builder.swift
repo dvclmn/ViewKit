@@ -63,14 +63,40 @@ extension DeclGroupSyntax {
     return nil
   }
 
-  /// Identifiers of static variables whose explicit type annotation matches
-  /// the parent type's name — i.e. the `Self`-typed static members.
+  /// Identifiers of static variables that are "self-typed":
+  /// either explicitly (`Self` / `MyType` / qualified `Module.MyType`)
+  /// or inferred via obvious initialisers (`.init()`, `MyType()`, etc.)
   fileprivate var selfTypedStaticVariableIdentifiers: [String] {
-    let name = typeName ?? "Self"
+    guard let typeName else { return [] }
+    let acceptedTypeNames: Set<String> = [typeName, "Self"]
+    
     return memberBlock.members
       .flatMap { $0.children(viewMode: .fixedUp).compactMap { $0.as(VariableDeclSyntax.self) } }
-      .filter { $0.hasStaticModifier && $0.hasDeclaredType(name) }
-      .compactMap(\.firstBindingIdentifier)
+      .filter(\.hasStaticModifier)
+      .flatMap { decl in
+        decl.bindings.compactMap { binding -> String? in
+          guard let ident = binding.pattern.as(IdentifierPatternSyntax.self)?.identifier.text else {
+            return nil
+          }
+          
+          // 1) Explicitly typed?
+          if let annotated = binding.typeAnnotation?.type.simpleTypeName,
+             acceptedTypeNames.contains(annotated) || annotated == typeName
+          {
+            return ident
+          }
+          
+          // 2) No type annotation — try infer from initializer
+          if binding.typeAnnotation == nil,
+             let initExpr = binding.initializer?.value,
+             initExpr.isObviouslySelfInitialiser(enclosingTypeName: typeName)
+          {
+            return ident
+          }
+          
+          return nil
+        }
+      }
   }
 
   /// The text of the first access-level modifier on this declaration, if one
@@ -131,5 +157,53 @@ extension VariableDeclSyntax {
     bindings.contains { binding in
       binding.typeAnnotation?.type.trimmedDescription == typeName
     }
+  }
+}
+
+extension TypeSyntax {
+  /// Best-effort "base" name for simple comparisons.
+  /// - `Self` -> "Self"
+  /// - `MyRecord` -> "MyRecord"
+  /// - `MyModule.MyRecord` -> "MyRecord"
+  fileprivate var simpleTypeName: String? {
+    if let ident = self.as(IdentifierTypeSyntax.self) {
+      return ident.name.text
+    }
+    if let member = self.as(MemberTypeSyntax.self) {
+      return member.name.text
+    }
+    return trimmedDescription
+  }
+}
+
+extension ExprSyntax {
+  /// Heuristically detect obvious "this constructs Self" initialisers:
+  /// `.init(...)`, `Self.init(...)`, `MyType(...)`, `MyType.init(...)`
+  fileprivate func isObviouslySelfInitialiser(enclosingTypeName: String) -> Bool {
+    guard let call = self.as(FunctionCallExprSyntax.self) else { return false }
+    
+    // `.init(...)` or `Self.init(...)` or `MyType.init(...)`
+    if let member = call.calledExpression.as(MemberAccessExprSyntax.self),
+       member.declName.baseName.text == "init"
+    {
+      // `.init(...)` (no base) => within type context, this is Self
+      if member.base == nil { return true }
+      
+      // `Self.init(...)` or `MyType.init(...)`
+      if let baseIdent = member.base?.as(DeclReferenceExprSyntax.self)?.baseName.text {
+        return baseIdent == "Self" || baseIdent == enclosingTypeName
+      }
+      
+      // Sometimes bases appear as identifiers in other shapes — fall back on text
+      let baseText = member.base?.trimmedDescription
+      if baseText == "Self" || baseText == enclosingTypeName { return true }
+    }
+    
+    // `MyType(...)` (calling the type as a function)
+    if let callee = call.calledExpression.as(DeclReferenceExprSyntax.self)?.baseName.text {
+      return callee == enclosingTypeName
+    }
+    
+    return false
   }
 }
