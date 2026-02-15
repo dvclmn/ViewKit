@@ -29,7 +29,7 @@ public struct ContextMenuPreviewModifier<MenuContent: View>: ViewModifier {
             alignment: .topLeading
           )
           .padding()
-          .glassEffectCompatible(.rect(cornerRadius: Styles.sizeRegular))
+          .glassEffectCompatible(in: .rect(cornerRadius: Styles.sizeRegular))
           .buttonStyle(.plain)
           //      .font(.callout)
           .foregroundStyle(.primary.opacity(0.96))

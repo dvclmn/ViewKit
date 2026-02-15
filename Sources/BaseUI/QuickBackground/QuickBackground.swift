@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 19/5/2025.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
 struct QuickBackgroundModifier<S: Shape>: ViewModifier {
@@ -20,25 +20,28 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
 
   let isEnabled: Bool
   let shape: S
+  let glass: GlassTypeCompatible?
   let padding: CGFloat
   let tint: AnyShapeStyle
 
   func body(content: Content) -> some View {
     content
       .weightedPadding(layoutPadding ?? padding)
+      .glassEffectCompatible(glass ?? .regular, in: shape, isEnabled: glass != nil)
       .background {
-        shape
-          .fill(backgroundColour.opacity(colourIntensity ?? 0.3))
-          .fill(material)
-          .stroke(
-            strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)),
-            lineWidth: strokeWeight ?? 1)
+        if glass == nil {
+          shape
+            .fill(backgroundColour.opacity(colourIntensity ?? 0.3))
+            .fill(material)
+            .stroke(
+              strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)),
+              lineWidth: strokeWeight ?? 1)
+        }
       }
 
   }
 }
 
-//
 extension QuickBackgroundModifier {
   private var backgroundColour: AnyShapeStyle {
     colourOverride ?? tint
@@ -55,6 +58,7 @@ extension View {
   /// argument, as it's handled through `shape`
   public func quickBackground<S: Shape>(
     shape: S = .rect(cornerRadius: Styles.sizeSmall),
+    glass: GlassTypeCompatible? = nil,
     padding: CGFloat = Styles.sizeTiny,
     tint: Color = Color.defaultQuickTint,
     isEnabled: Bool = true,
@@ -63,6 +67,7 @@ extension View {
       QuickBackgroundModifier(
         isEnabled: isEnabled,
         shape: shape,
+        glass: glass,
         padding: padding,
         tint: AnyShapeStyle(tint),
       )
@@ -70,6 +75,7 @@ extension View {
   }
 
   public func quickRoundedBackground(
+    glass: GlassTypeCompatible? = nil,
     rounding: Double = Styles.sizeSmall,
     padding: CGFloat = Styles.sizeTiny,
     tint: Color = Color.defaultQuickTint,
@@ -79,6 +85,7 @@ extension View {
       QuickBackgroundModifier(
         isEnabled: isEnabled,
         shape: .rect(cornerRadius: rounding),
+        glass: glass,
         padding: padding,
         tint: AnyShapeStyle(tint),
       )

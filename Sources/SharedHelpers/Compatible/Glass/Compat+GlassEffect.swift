@@ -10,10 +10,11 @@ import SwiftUI
 extension View {
   @ViewBuilder
   public func glassEffectCompatible<S: Shape>(
-    glass: GlassTypeCompatible = .regular,
+    _ glass: GlassTypeCompatible = .regular,
     in shape: S,
+    isEnabled: Bool = true
   ) -> some View {
-    if #available(macOS 26, iOS 26, *) {
+    if #available(macOS 26, iOS 26, *), isEnabled {
       glassEffect(glass.glassType, in: shape)
     } else {
       self
@@ -24,7 +25,7 @@ extension View {
 public enum GlassTypeCompatible {
   case regular
   case clear
-  case identity // No glass effect at all
+  case identity  // No glass effect at all
 
   @available(macOS 26, iOS 26, *)
   public var glassType: Glass {
