@@ -10,7 +10,7 @@ import SwiftUI
 @available(macOS 15, iOS 18, *)
 extension ContainerValues {
   @Entry public var isGrouped: Bool = false
-  @Entry public var isHighlighted: Bool = false
+  @Entry public var isEmphasised: Bool = false
   @Entry public var shouldWiggle: Bool = false
   @Entry public var hasDividers: Bool = true
   @Entry public var hasSpacers: Bool = true

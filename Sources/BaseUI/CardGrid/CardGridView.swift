@@ -9,46 +9,32 @@ import CoreTools
 import LayoutKit
 import SwiftUI
 
-//import SwiftUI
-//
-//struct CustomView<Content: View>: View {
-//
-//  let content: Content
-//
-//  init(
-//    @ViewBuilder content: @escaping () -> Content
-//  ) {
-//    self.content = content()
-//  }
-//
-//  var body: some View {
-//    content
-//  }
-//}
+public struct CardGrid<Item: LabeledItem, Content: View>: View {
+  public typealias CardItem = (Item) -> Content
 
-public struct CardGrid<Item: LabeledItem>: View {
-
-  @State private var isHovering: Bool = false
-//  let label: QuickLabel
   let data: [Item]
   let cardSize: CGSize
+  let content: CardItem
 
   public init(
-//    label: QuickLabel,
     data: [Item],
-    cardSize: CGSize = .localPreset
+    cardSize: CGSize = .localPreset,
+    @ViewBuilder content: @escaping CardItem
   ) {
-//    self.label = label
     self.data = data
     self.cardSize = cardSize
+    self.content = content
   }
-
 
   public var body: some View {
 
+    //    DecomposedView(
+    //      .subview,
+    //      layout: .vstack(alignment: .leading),
+    //      //        layoutType: .grid(alignment: .topLeading, horizontalSpacing: Styles.sizeSmall),
+    //      spacing: Styles.sizeMedium
+    //    ) {
     VStack(alignment: .leading, spacing: Styles.sizeMedium) {
-      //      Text("Select an element")
-
       LazyVGrid(
         columns: .adaptive(
           mode: .fixedWidth(width: cardSize.width),
@@ -58,28 +44,11 @@ public struct CardGrid<Item: LabeledItem>: View {
         alignment: .center,
         spacing: Styles.sizeRegular
       ) {
-
         ForEach(data) { item in
-          //        ForEach(SampleContent.Animal.withSymbols()) { animal in
-
-          MaybeLabel(item.label)
-            //            .foregroundStyle(.secondary)
-            .labelStyle(.base)
-            .environment(\.labelDisplay, .stacked)
-            .environment(\.symbolRenderingMode, .hierarchical)
-            .environment(\.symbolVariants, .fill)
-            .frame(
-              width: cardSize.width,
-              height: cardSize.height,
-              alignment: .center
-            )
-            .quickBackground(
-              shape: .rect(cornerRadius: Styles.sizeSmall.bump),
-              padding: .zero
-            )
-            .backgroundTint(.white.opacity(0.1))
-            .onHover { isHovering = $0 }
+          ItemView(item: item, cardSize: cardSize, content: content)
+          //          ItemView(data: data, cardSize: cardSize, content: content)
         }
+
       }  // END lazy grid
     }  // END main vstack
     .weightedPadding(Styles.sizeMedium.bump)
@@ -95,10 +64,13 @@ extension CardGrid {
 #Preview(traits: .size(.normal)) {
   // @Previewable @State var store = AppHandler()
   CardGrid(
-//    label: QuickLabel("Hello", symbol: "eye"),
+    //    label: QuickLabel("Hello", symbol: "eye"),
     data: SampleContent.Animal.withSymbols(),
     cardSize: .localPreset
-  )
+  ) { item in
+//  ) { item, isHovered in
+    MaybeLabel(item.label)
+  }
   // .environment(store)
 }
 #endif

@@ -21,7 +21,7 @@ public protocol ContainerValueCompatible {
 /// that is gated with `@available`
 public enum ContainerValueBool: ContainerValueCompatible {
   case isGrouped
-  case isHighlighted
+  case isEmphasised
   case shouldWiggle
   case hasDividers
   case hasSpacers
@@ -38,7 +38,7 @@ extension ContainerValueBool {
   public var containerKeyPath: WritableKeyPath<ContainerValues, Value> {
     switch self {
       case .isGrouped: \.isGrouped
-      case .isHighlighted: \.isHighlighted
+      case .isEmphasised: \.isEmphasised
       case .shouldWiggle: \.shouldWiggle
       case .hasDividers: \.hasDividers
       case .hasSpacers: \.hasSpacers

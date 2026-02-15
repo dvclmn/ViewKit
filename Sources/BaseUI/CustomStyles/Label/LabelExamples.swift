@@ -16,6 +16,21 @@ public struct LabelExampleView: View {
     ScrollView {
       VStack(alignment: .leading, spacing: Styles.sizeMedium) {
 
+        CardGrid(data: SampleContent.Animal.withSymbols()) { item in
+//        CardGrid(data: SampleContent.Animal.withSymbols()) { item, isHovered in
+//          let label =
+//            isHovered
+//            ? QuickLabel("Remove", icon: .preset(.trash), role: .destructive)
+//            : item.label
+
+          MaybeLabel(item.label)
+            .containerValueBool(.isEmphasised, item == SampleContent.Animal.withSymbols()[2])
+
+        }
+        //        CardGrid(data: SampleContent.Animal.withEmojis()) {
+        //          MaybeLabel($0.label)
+        //        }
+
         ExampleLabel("Native Automatic Style")
           .labelStyle(.automatic)
 
@@ -29,7 +44,6 @@ public struct LabelExampleView: View {
         }
         .groupBoxStyle(.custom)
 
-        
       }
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
