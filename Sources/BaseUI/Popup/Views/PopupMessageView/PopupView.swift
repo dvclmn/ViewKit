@@ -11,7 +11,7 @@ import BasePrimitives
 import SwiftUI
 
 @MainActor
-public struct PopupView: View {
+struct PopupView: View {
   @Environment(\.popup) private var popup
   @Environment(\.isDebugMode) private var isDebugMode
   @Environment(\.isCompactMode) private var isCompactMode
@@ -25,21 +25,21 @@ public struct PopupView: View {
   private let rounding: CGFloat = Styles.sizeRegular
 
   let popupMessage: PopupMessage
-  //  let isCompact: Bool
-  //  let hasCloseButton: Bool
 
-  public init?(
+  init(
+    message: PopupMessage,
+  ) {
+    self.popupMessage = message
+  }
+  
+  init?(
     _ message: PopupMessage?,
-    //    isCompact: Bool = false,
-    //    hasCloseButton: Bool = false,
   ) {
     guard let message else { return nil }
     self.popupMessage = message
-    //    self.isCompact = isCompact
-    //    self.hasCloseButton = hasCloseButton
   }
 
-  public var body: some View {
+  var body: some View {
 
     VStack {
       PopupCoreView(popupMessage: popupMessage)
@@ -60,6 +60,7 @@ public struct PopupView: View {
           }
         }
         .background(.thinMaterial)
+      
         .clipShape(.rect(cornerRadius: rounding))
         .overlay {
           RoundedRectangle(cornerRadius: rounding)

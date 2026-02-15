@@ -33,9 +33,10 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
           shape
             .fill(backgroundColour.opacity(colourIntensity ?? 0.3))
             .fill(material)
-            .stroke(
-              strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)),
-              lineWidth: strokeWeight ?? 1)
+            .stroke(LinearGradient.lightFalloff(), lineWidth: 1)
+//            .stroke(
+//              strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)),
+//              lineWidth: strokeWeight ?? 1)
         }
       }
 

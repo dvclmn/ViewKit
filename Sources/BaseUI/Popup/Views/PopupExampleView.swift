@@ -10,21 +10,28 @@ import SwiftUI
 
 public struct PopupExampleView: View {
   @Environment(\.popup) private var popup
+
   public var body: some View {
 
-    VStack {
-      Text("HFuw")
+    VStack(alignment: .leading, spacing: Styles.sizeLarge) {
+      PopupView(.example01)
+        .environment(\.isCompactMode, true)
+
+      PopupView(.example01)
+        .environment(\.isCompactMode, false)
+
       PopupView(
-        .example01,
-        isCompact: true,
-        hasCloseButton: true
+        PopupMessage(
+          "Another Popup",
+          icon: .emoji("⏰"),
+          message: nil,
+          isLoading: true,
+          role: .warning,
+          dismissal: .automatic(1, showsIndicator: true),
+          action: nil
+        )
       )
-      
-      PopupView(
-        .example01,
-        isCompact: false,
-        hasCloseButton: false
-      )
+      .environment(\.isCompactMode, false)
     }
     .padding(30)
     .background(.black.secondary)
