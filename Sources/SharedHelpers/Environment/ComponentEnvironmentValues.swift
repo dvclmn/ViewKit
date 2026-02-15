@@ -49,6 +49,7 @@ extension EnvironmentValues {
 
   /// Perhaps the below two can be merged.
   @Entry public var colourOverride: AnyShapeStyle?
+  @Entry public var colourIntensity: Double?
   @Entry public var emphasisColour: AnyShapeStyle?
 
   @Entry public var buttonRole: ButtonRole?

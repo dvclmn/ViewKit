@@ -9,28 +9,29 @@ import SwiftUI
 
 extension View {
   @ViewBuilder
-  public func glassEffectCompatible<S: Shape>(_ shape: S, isEnabled: Bool = true) -> some View {
+  public func glassEffectCompatible<S: Shape>(
+    glass: GlassTypeCompatible = .regular,
+    in shape: S,
+  ) -> some View {
     if #available(macOS 26, iOS 26, *) {
-      glassEffect(isEnabled ? .regular : .identity, in: shape)
+      glassEffect(glass.glassType, in: shape)
     } else {
       self
     }
   }
 }
 
-//import SwiftUI
-//
-//public struct GlassContainer<Content: View>: View {
-//  
-//  let content: Content
-//  
-//  public init(
-//    @ViewBuilder content: @escaping () -> Content
-//  ) {
-//    self.content = content()
-//  }
-//  
-//  public var body: some View {
-//    content
-//  }
-//}
+public enum GlassTypeCompatible {
+  case regular
+  case clear
+  case identity // No glass effect at all
+
+  @available(macOS 26, iOS 26, *)
+  public var glassType: Glass {
+    switch self {
+      case .regular: .regular
+      case .clear: .clear
+      case .identity: .identity
+    }
+  }
+}

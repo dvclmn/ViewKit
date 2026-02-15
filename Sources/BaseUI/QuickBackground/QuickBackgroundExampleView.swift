@@ -5,34 +5,39 @@
 //  Created by Dave Coleman on 15/2/2026.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 struct QuickBackgroundExampleView: View {
-  // @Environment(AppHandler.self) private var store
-  // @Environment(\.viewportSize) private var viewportSize
-  
+
   var body: some View {
-    
-    Text("Hello")
-      .padding(40)
-      .frame(width: 600, height: 700)
-      .quickBackground(
-        shape: .rect(cornerRadius: Styles.sizeSmall),
-        padding: Styles.sizeRegular,
-        hasOpticalAdjustment: true
-      )
-    
+    VStack(spacing: Styles.sizeMedium) {
+
+      Text("Rounded Rect")
+        .padding(40)
+        .quickBackground(
+          shape: .rect(cornerRadius: Styles.sizeRegular),
+          padding: Styles.sizeSmall,
+          tint: .pink,
+        )
+
+      Text("Capsule")
+        .padding(40)
+        .quickBackground(
+          shape: .capsule,
+          padding: Styles.sizeMedium,
+          tint: .black,
+        )
+    }
+    .environment(\.horizontalBias, 3)
+    .environment(\.opticalCentreBias, 1.5)
+    .padding(20)
+    .background(Color.black.secondary)
   }
 }
 
-extension QuickBackgroundExampleView {
-  
-}
 #if DEBUG
 #Preview(traits: .size(.normal)) {
-  // @Previewable @State var store = AppHandler()
   QuickBackgroundExampleView()
-  // .environment(store)
 }
 #endif

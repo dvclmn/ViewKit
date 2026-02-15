@@ -16,44 +16,23 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   @Environment(\.colourOverride) private var colourOverride
   @Environment(\.strokeColour) private var strokeColour
   @Environment(\.strokeWeight) private var strokeWeight
+  @Environment(\.colourIntensity) private var colourIntensity
 
   let isEnabled: Bool
   let shape: S
   let padding: CGFloat
-  let tint: AnyShapeStyle?
-  //  let hasOpticalAdjustment: Bool
+  let tint: AnyShapeStyle
 
   func body(content: Content) -> some View {
     content
       .weightedPadding(layoutPadding ?? padding)
-//      .padding(.horizontal, paddingH)
-//      .padding(.vertical, paddingV)
-//      .padding(.bottom, opticalPadding)
-
       .background {
-        if #available(macOS 14.0, *) {
-          shape
-            .fill(backgroundColour)
-            .fill(material)
-            .stroke(
-              strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)),
-              lineWidth: strokeWeight ?? 1)
-        } else {
-
-          shape
-            .fill(backgroundColour)
-          //          .fill(tintColour)
-
-          shape
-            .fill(material)
-
-          shape
-            .stroke(
-              strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)),
-              lineWidth: strokeWeight ?? 1)
-
-          // Fallback on earlier versions
-        }
+        shape
+          .fill(backgroundColour.opacity(colourIntensity ?? 0.3))
+          .fill(material)
+          .stroke(
+            strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)),
+            lineWidth: strokeWeight ?? 1)
       }
 
   }
@@ -62,18 +41,8 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
 //
 extension QuickBackgroundModifier {
   private var backgroundColour: AnyShapeStyle {
-    tint ?? colourOverride.withFallback(.black.opacity(0.6))
+    colourOverride ?? tint
   }
-  private var adjusted: CGFloat {
-    return layoutPadding ?? padding
-//    return padding ?? layoutPadding ?? CGFloat.defaultQuickPadding
-  }
-
-  /// Adds some extra width to the H axis for balance
-  private var hBias: CGFloat { horizontalBias ?? 2.6 }
-  //  private var paddingH: CGFloat { basePadding * hBias }
-  //  private var paddingV: CGFloat { basePadding }
-  //  private var opticalPadding: CGFloat { hasOpticalAdjustment ? (paddingV / 2) : 0 }
 
   private var material: AnyShapeStyle {
     guard isEnabled else { return .clear }
@@ -115,11 +84,6 @@ extension View {
       )
     )
   }
-}
-
-extension CGFloat {
-  //  public static var defaultQuickRounding: CGFloat { Styles.sizeTiny }
-  public static var defaultQuickPadding: CGFloat { 3.0 }
 }
 
 extension Color {

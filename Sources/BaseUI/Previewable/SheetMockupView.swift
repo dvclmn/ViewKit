@@ -18,18 +18,14 @@ struct SheetMockup<Sheet: View>: ViewModifier {
     if isPreviewing, isPreview {
       content
         .overlay {
-          //      ZStack {
-          //        content
           Color.black.opacity(0.8)
             .ignoresSafeArea()
           sheet()
-          /// Intentionally leaving padding nil here, to allow customisation
-          /// out at the call site
+            /// Intentionally leaving padding nil here, to allow customisation
+            /// out at the call site
             .quickBackground(
               shape: .rect(cornerRadius: Styles.sizeMedium),
-              padding: nil,
               isEnabled: true,
-              hasOpticalAdjustment: true
             )
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(Styles.sizeLarge)
@@ -40,9 +36,7 @@ struct SheetMockup<Sheet: View>: ViewModifier {
                 .quickBackground(padding: Styles.sizeMicro)
                 .padding(Styles.sizeSmall)
             }
-
         }
-
     } else {
       content
     }
