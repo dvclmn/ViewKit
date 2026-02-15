@@ -51,10 +51,10 @@ extension String {
     hasSpaceAroundText: Bool = true
   ) -> String {
 
-//    guard contains(splitCharacter) else {
-//      return self.padding(
-//        
-//    }
+    //    guard contains(splitCharacter) else {
+    //      return self.padding(
+    //
+    //    }
     /// If there is no split character present in the provided `text`, this will simply return a
     /// `[String.SubSequence]` with the full text.
     ///

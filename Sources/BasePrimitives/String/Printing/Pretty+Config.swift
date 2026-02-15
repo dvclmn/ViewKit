@@ -29,11 +29,11 @@ public struct PrettyPrintConfig: Sendable {
 }
 
 extension PrettyPrintConfig {
-  
+
   public func overflowDescription<T>(for value: T) -> String {
     "\(typeName(value)){...}"
   }
-  
+
   public func indent(_ depth: Int) -> String {
     String(repeating: indentChar, count: depth * indentSize)
   }
