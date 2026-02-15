@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension Array where Element == GridItem {
-  
+
   /// When the desired number of columns is fixed/known
   public static func columns(
     _ count: Int = 3,
@@ -16,7 +16,7 @@ extension Array where Element == GridItem {
     spacing: CGFloat? = nil,
     alignment: Alignment? = nil
   ) -> Self {
-    
+
     let (min, max) = mode.minAndMax
     let result: Self = Array(
       repeating: GridItem(
@@ -31,7 +31,7 @@ extension Array where Element == GridItem {
     )
     return result
   }
-  
+
   /// Adaptive allows not specifying an explicit number of columns.
   /// Instead allowing the column count to change based on availble width
   public static func adaptive(
@@ -39,7 +39,7 @@ extension Array where Element == GridItem {
     spacing: CGFloat? = nil,
     alignment: Alignment? = nil
   ) -> Self {
-    
+
     let result = GridItem(
       .adaptive(minimum: mode.minAndMax.min, maximum: mode.minAndMax.max),
       spacing: spacing,

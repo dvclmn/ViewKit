@@ -50,11 +50,11 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
   }
   public var defaultRange: ClosedRange<Double> {
     switch self {
-      case .amplitude: 0...100
-      case .frequency: 0...4
+      case .amplitude: 0...700
+      case .frequency: 0...2
       case .phase: .phaseRange
       case .noise: 0...20
-      case .cycles: 0...20
+      case .cycles: 0...60
     }
   }
 

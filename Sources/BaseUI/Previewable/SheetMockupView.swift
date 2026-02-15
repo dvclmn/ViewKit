@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 19/9/2025.
 //
 
-
 import BasePrimitives
 import SwiftUI
 
@@ -17,28 +16,33 @@ struct SheetMockup<Sheet: View>: ViewModifier {
   func body(content: Content) -> some View {
 
     if isPreviewing, isPreview {
-      ZStack {
-        content
-        Color.black.opacity(0.4)
-          .ignoresSafeArea()
-        sheet()
-          .quickBackground(padding: Styles.sizeMedium)
-          .clipShape(.rect(cornerRadius: Styles.sizeMedium))
-          //          .background {
-          //            RimLightShape(fillStyle: AnyShapeStyle(.regularMaterial)) {
-          //              RoundedRectangle(cornerRadius: Styles.sizeSmall.bump)
-          //            }
-          //          }
-          .frame(maxWidth: .infinity, maxHeight: .infinity)
-          .padding(Styles.sizeLarge)
-          .overlay(alignment: .topLeading) {
-            Text("Sheet Preview-Only")
-              .font(.caption2)
-              .foregroundStyle(.tertiary)
-              .quickBackground()
-              .padding(Styles.sizeSmall)
-          }
-      }
+      content
+        .overlay {
+          //      ZStack {
+          //        content
+          Color.black.opacity(0.8)
+            .ignoresSafeArea()
+          sheet()
+          /// Intentionally leaving padding nil here, to allow customisation
+          /// out at the call site
+            .quickBackground(
+              shape: .rect(cornerRadius: Styles.sizeMedium),
+              padding: nil,
+              isEnabled: true,
+              hasOpticalAdjustment: true
+            )
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(Styles.sizeLarge)
+            .overlay(alignment: .topLeading) {
+              Text("Sheet Preview-Only")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+                .quickBackground(padding: Styles.sizeMicro)
+                .padding(Styles.sizeSmall)
+            }
+
+        }
+
     } else {
       content
     }

@@ -9,21 +9,6 @@
 
 extension WaveDriver {
 
-  public static func dotX(with waveID: ConfiguredWave.ID) -> Self {
-    .init(waveID: waveID, elementKind: .dotX, operation: .scaleCurrentByOnePlusOffset)
-  }
-  
-  public static func dotY(with waveID: ConfiguredWave.ID) -> Self {
-    .init(waveID: waveID, elementKind: .dotY, operation: .scaleCurrentByOnePlusOffset)
-  }
-  public static func dotRadius(with waveID: ConfiguredWave.ID) -> Self {
-    .init(waveID: waveID, elementKind: .dotRadius, operation: .scaleBaseByOnePlusOffset)
-  }
-
-
-  public static func dashPhase(with waveID: ConfiguredWave.ID) -> Self {
-    .init(waveID: waveID, elementKind: .dashPhase, operation: .addToBase)
-  }
 
   /// A radius channel: scales the base radius by (1 + offset), clamped at zero.
   //  public static func dotRadius(with wave: ConfiguredWave) -> Self {

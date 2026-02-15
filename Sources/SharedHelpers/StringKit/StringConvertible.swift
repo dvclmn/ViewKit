@@ -53,10 +53,6 @@ extension Bool: StringRenderable {
   public var toString: String { self ? "true" : "false" }
 }
 
-extension Array: StringRenderable where Element: StringRenderable {
-  public var toString: String { map(\.toString).joined(separator: ", ") }
-}
-
 extension CGSize: StringRenderable {
   public var toString: String { displayString }
 }
@@ -73,6 +69,13 @@ extension CGPoint: StringRenderable {
 extension Alignment: StringRenderable {
   public var toString: String { self.displayName.standard }
 }
+
+// MARK: - Collections
+extension Array: StringRenderable where Element: StringRenderable {
+  public var toString: String { map(\.toString).joined(separator: ", ") }
+}
+
+
 
 //extension AnyRegexOutput: StringRenderable {
 //  public var toString: String {

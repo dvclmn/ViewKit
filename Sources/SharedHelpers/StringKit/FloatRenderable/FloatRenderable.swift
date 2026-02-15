@@ -66,7 +66,13 @@ extension FloatRenderable {
   /// method with it's default values
   public var displayString: String { self.render() }
   public var displayStringConcise: String { self.render(using: .short) }
-  public var displayStringWithSign: String { self.render(using: .init(sign: .always(renderPlusSign: false))) }
+  public var displayStringWithSign: String {
+    let format = DisplayFormat(
+      decimalPlaces: 2,
+      sign: .always(renderPlusSign: false)
+    )
+    return self.render(using: format)
+  }
 
   /// For backwards compat
   public func displayString(

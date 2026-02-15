@@ -58,9 +58,13 @@ public struct PreviewableSheetBoolModifier<SheetContent: View>: ViewModifier {
           // Fallback on earlier versions
         }
       }
-      .modifier(SheetMockup(isPreviewing: isPreviewing) { sheetContent() })
+      .modifier(
+        SheetMockup(isPreviewing: isPreviewing) {
+          sheetContent()
+        }
+      )
 
-      .ignoresSafeArea(edges: isPreviewing ? .all : [])
+    //      .ignoresSafeArea(edges: isPreviewing ? .all : [])
   }
 }
 

@@ -34,6 +34,17 @@ public struct WaveDriver: Sendable, Codable, Equatable, Identifiable {
 
 extension WaveDriver {
 
+  public static func make(
+    _ element: WaveVisualElement.ElementKind,
+    waveID: ConfiguredWave.ID,
+    //    operation: WaveOperation? = nil
+    //    operation: @autoclosure @escaping () -> WaveOperation
+  ) -> Self {
+    let op = element.operation
+    return Self(waveID: waveID, elementKind: element, operation: op)
+    //    let op = element.operation(override: operation)
+  }
+
   /// Applies this channel to `element` if it targets the same kind.
   @inlinable
   public func applyOperation(
@@ -41,6 +52,7 @@ extension WaveDriver {
     offset: Double
   ) {
     guard element.kind == elementKind else { return }
+    
     let value = operation.apply(
       base: element.base,
       current: element.current,

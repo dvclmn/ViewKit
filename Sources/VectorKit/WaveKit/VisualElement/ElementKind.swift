@@ -41,15 +41,47 @@ extension WaveVisualElement.ElementKind {
 
   public var name: String {
     switch self {
+
       case .dotX: "Dot X"
       case .dotY: "Dot Y"
       case .dotRadius: "Dot Radius"
       case .dotHue: "Dot Hue"
-//      case .dashLength: "Dash Length"
+      //      case .dashLength: "Dash Length"
       case .dashGap: "Dash Gap"
       case .dashPhase: "Dash Phase"
       case .lineWidth: "Line Width"
     }
+  }
+
+  public var icon: IconLiteral {
+    switch self {
+      case .dotX: "arrow.left.and.right" // x.axis
+      case .dotY: "arrow.up.and.down" // y.axis
+      case .dotRadius: "circle.dotted.circle"
+      case .dotHue: "swatchpalette"
+      case .dashGap: "directcurrent"  // alternatingcurrent
+      case .dashPhase: "clock.arrow.trianglehead.counterclockwise.rotate.90"
+      case .lineWidth: "lineweight"
+    }
+  }
+}
+
+extension WaveVisualElement.ElementKind {
+
+  public var operation: WaveOperation {
+    //  public func operation(operationOverride: WaveOperation? = nil) -> WaveOperation {
+    //  public func operation(override: (() -> WaveOperation)? = nil) -> WaveOperation {
+    let base: WaveOperation =
+      switch self {
+        case .dotX: .addToBase
+        case .dotY: .addToBase
+        case .dotRadius: .scaleBaseByOnePlusOffset
+        case .dotHue: .addToBase
+        case .dashGap: .addToBase
+        case .dashPhase: .addToBase
+        case .lineWidth: .addToBase
+      }
+    return base
   }
 
   /// What does each Kind need for it's base value

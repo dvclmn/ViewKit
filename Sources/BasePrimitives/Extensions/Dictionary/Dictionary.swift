@@ -8,6 +8,39 @@
 import Foundation
 
 extension Dictionary where Key: CustomStringConvertible, Value: CustomStringConvertible {
+  public func displayString<T: Comparable>(
+    sortedBy keyPath: KeyPath<Element, T>? = nil,
+    delimiter: String = ", "
+  ) -> String {
+    let pairs: [Element]
+    if let keyPath {
+      // Use the Sequence.sorted(by:) key-path helper to sort dictionary elements (key/value tuples)
+      pairs = self.sorted(by: keyPath)
+    } else {
+      // Default: sort by key's description to produce stable output
+      pairs = self.sorted { lhs, rhs in
+        lhs.key.description < rhs.key.description
+      }
+    }
+
+    return pairs
+      .map { $0.key.description + ": " + $0.value.description }
+      .joined(separator: delimiter)
+  }
+  
+  //extension Dictionary: StringRenderable where Key: StringRenderable, Value: StringRenderable {
+  
+  //        (
+  //          "Elements",
+  //          store.userData().elementDefaults
+  //            .sorted(by: \.key.id)
+  //            .map { $0.key.rawValue + ": " + $0.value.toString }
+  //            .joined(separator: ", ")
+  //        ),
+  //        ("Element Defaults", store.userData.elementDefaults.count.toString),
+  //  public var toString: String { map(\.toString).joined(separator: ", ") }
+  //}
+
 
   //  public func displayString() -> String {
   //    guard !self.isEmpty else { return "nil" }
@@ -21,17 +54,6 @@ extension Dictionary where Key: CustomStringConvertible, Value: CustomStringConv
 }
 
 extension Dictionary {
-  /// Trying out just using the existing version of this on Sequence
-  /// Non-native key path based sorting for Dictionary
-  //  public func sorted<T: Comparable>(
-  //    by keyPath: KeyPath<Element, T>,
-  ////    byKeyPath keyPath: KeyPath<Element, T>,
-  //    using comparator: (T, T) -> Bool = (<)
-  //  ) -> [Element] {
-  //    sorted { a, b in
-  //      comparator(a[keyPath: keyPath], b[keyPath: keyPath])
-  //    }
-  //  }
 
   /// Allows use of a `KeyPath` for grouping, like
   /// ```

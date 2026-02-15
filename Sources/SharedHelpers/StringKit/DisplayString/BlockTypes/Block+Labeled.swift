@@ -21,17 +21,6 @@ public struct Labeled {
 }
 
 extension Labeled {
-  //  public init(
-  //    _ key: String,
-  //    value: any PropertiesLabeled,
-  //    separator: String = ": "
-  //  ) {
-  //    self.key = key
-  //    self.value = DisplayBlock.
-  ////    self.value = DisplayBlock.displayBlock(for: value)
-  //    self.separator = separator
-  //  }
-
   public init(
     _ key: String,
     value: Any?,

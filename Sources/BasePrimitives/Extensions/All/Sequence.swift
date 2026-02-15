@@ -42,7 +42,6 @@ extension Sequence {
   public func summarise<T: Comparable>(
     key: PartialKeyPath<Element>,
     sortedBy keyPath: KeyPath<Element, T>,
-    //    key: KeyPath<Element, T>,
     delimiter: Character? = ","
   ) -> String {
     return

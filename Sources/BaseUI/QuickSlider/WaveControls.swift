@@ -29,7 +29,7 @@ public struct WaveControls: View {
       Wave(.amplitude)
       Wave(.frequency)
       Wave(.phase)
-      Wave(.noise)
+//      Wave(.noise)
       
       Divider()
       

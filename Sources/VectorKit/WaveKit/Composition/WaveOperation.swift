@@ -16,6 +16,7 @@ public enum WaveOperation: String, Codable, Sendable, Hashable {
 }
 
 extension WaveOperation {
+  /// Note: Sanitisation (such as clamping) happens later
   @inlinable
   public func apply(
     base: Double,

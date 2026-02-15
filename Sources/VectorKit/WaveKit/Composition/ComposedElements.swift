@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 12/2/2026.
 //
 
+import ColourKit
 import Foundation
 import IdentifiedCollections
 
@@ -39,11 +40,11 @@ extension WaveDocument {
   public static func original(
     waveH: ConfiguredWave = .waveHExample,
     waveV: ConfiguredWave = .waveVExample,
-    waveR: ConfiguredWave = .waveVExample,
+    waveR: ConfiguredWave = .waveRExample,
     style: WaveStyle = .originalExample,
     sampleCount: Int = 20,
-    placement: WavePlacement = .horizontal,
-    interpolation: WaveInterpolation = .cubic()
+    placement: WavePlacement = .vertical,
+    interpolation: WaveInterpolation = .linear
   ) -> Self {
     let settings = WaveRenderSettings(
       style: style,
@@ -54,14 +55,14 @@ extension WaveDocument {
     )
 
     let drivers: [WaveDriver] = [
-      .dotX(with: waveV.id),
-      .dotY(with: waveH.id),
-      .dotRadius(with: waveR.id),
-      .init(waveID: waveH.id, elementKind: .dotHue, operation: .addToBase),
+      .make(.dotX, waveID: waveV.id),
+      .make(.dotY, waveID: waveH.id),
+      .make(.dotRadius, waveID: waveR.id),
+      .make(.dotHue, waveID: waveV.id),
     ]
 
     return .init(
-      waves: [waveH, waveV],
+      waves: [waveH, waveV, waveR],
       settings: settings,
       drivers: drivers,
     )
@@ -72,7 +73,7 @@ extension ConfiguredWave {
   public static var waveHExample: Self {
     .init(
       .init(
-        amp: 30,
+        amp: 100,
         freq: 0.3,
         phaseTurns: 0.6,
         waveform: .sine()
@@ -87,7 +88,22 @@ extension ConfiguredWave {
   public static var waveVExample: Self {
     .init(
       .init(
-        amp: 10,
+        amp: 80,
+        freq: 0.2,
+        phaseTurns: 0,
+        waveform: .sine()
+      ),
+      config: .init(
+        cycles: 2,
+        noise: 0
+      )
+    )
+  }
+
+  public static var waveRExample: Self {
+    .init(
+      .init(
+        amp: 0.5,
         freq: 0.2,
         phaseTurns: 0,
         waveform: .sine()
@@ -104,14 +120,14 @@ extension WaveStyle {
   public static var originalExample: Self {
     .init(
       line: .init(
-        colour: .azure,
-        lineWidth: 12,
+        colour: .forestgreen,
+        lineWidth: 22,
       ),
       point: .init(
-        shape: .square,
-        radius: 5,
-        colour: .cadetblue,
-        colourMixStrength: 2.0
+        shape: .circle,
+        radius: 30,
+        colour: RGBColour(0.3, 0.9, 0.3),
+        colourMixStrength: 3.4
       )
     )
   }
