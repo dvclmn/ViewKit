@@ -9,8 +9,6 @@ import SwiftUI
 
 struct PopupTitleView: View {
   @Environment(\.isCompactMode) private var isCompactMode
-  // @Environment(AppHandler.self) private var store
-  // @Environment(\.viewportSize) private var viewportSize
 
   let message: PopupMessage
   let hasCloseButton: Bool
@@ -26,14 +24,3 @@ struct PopupTitleView: View {
 
   }
 }
-
-//extension PopupTitleView {
-//
-//}
-//#if DEBUG
-//#Preview(traits: .size(.normal)) {
-//  // @Previewable @State var store = AppHandler()
-//  PopupTitleView(message: .example01)
-//  // .environment(store)
-//}
-//#endif

@@ -7,16 +7,16 @@
 
 //import BaseUI
 
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
 @MainActor
-
 public struct PopupView: View {
-
   @Environment(\.popup) private var popup
   @Environment(\.isDebugMode) private var isDebugMode
-  
+  @Environment(\.isCompactMode) private var isCompactMode
+  @Environment(\.hasCloseButton) private var hasCloseButton
+
   @State private var isHoveringDismiss: Bool = false
   @State private var shouldStartProgressBar: Bool = false
 
@@ -24,47 +24,25 @@ public struct PopupView: View {
   private let minWidth: Double = 180
   private let rounding: CGFloat = Styles.sizeRegular
 
-  let popupMessage: PopupMessage?
-  let isCompact: Bool
-  let hasCloseButton: Bool
+  let popupMessage: PopupMessage
+  //  let isCompact: Bool
+  //  let hasCloseButton: Bool
 
-  public init(
+  public init?(
     _ message: PopupMessage?,
-    isCompact: Bool = false,
-    hasCloseButton: Bool = false,
+    //    isCompact: Bool = false,
+    //    hasCloseButton: Bool = false,
   ) {
+    guard let message else { return nil }
     self.popupMessage = message
-    self.isCompact = isCompact
-    self.hasCloseButton = hasCloseButton
+    //    self.isCompact = isCompact
+    //    self.hasCloseButton = hasCloseButton
   }
 
   public var body: some View {
 
-    if let popupMessage {
-      VStack {
-        VStack(spacing: isCompact ? 4 : 6) {
-
-          PopupTitleView(message: popupMessage, hasCloseButton: hasCloseButton)
-          if let messageDetail = popupMessage.message {
-            Text(messageDetail)
-              .foregroundStyle(.secondary)
-              .font(.callout.weight(.medium))
-          }
-          if let action = popupMessage.action {
-            Button(action.title) {
-              return action.action()
-            }
-          }
-
-        }  // END vstack
-        
-        //      .transition(.asymmetric(insertion: .move(edge: .bottom), removal: .move(edge: .top)))
-        .multilineTextAlignment(.leading)
-        .fixedSize(horizontal: false, vertical: true)
-        
-        .padding(.horizontal, isCompact ? 12 : 20)
-        .padding(.top, isCompact ? 8 : 13)
-        .padding(.bottom, isCompact ? 10 : isShowingIndicator ? Styles.sizeMedium.bump : 16)
+    VStack {
+      PopupCoreView(popupMessage: popupMessage)
         .overlay(alignment: .topTrailing) {
           if hasCloseButton {
             DismissButton()
@@ -90,29 +68,28 @@ public struct PopupView: View {
         }
         .shadow(color: .black.opacity(0.2), radius: 40, x: 0, y: 18)
         .shadow(color: .black.opacity(0.2), radius: 9, x: 0, y: 1)
-      }
-      .compositingGroup()
-      .id(popupMessage.id)
-      .onAppear {
-        if popupMessage.dismissal.autoDismissDuration != nil {
-          self.shouldStartProgressBar = true
-        } else {
-          self.shouldStartProgressBar = false
-        }
-      }
-      .environment(\.isCompactMode, isCompact)
     }
+    .compositingGroup()
 
+    .id(popupMessage.id)
+
+    .onAppear {
+      if popupMessage.dismissal.autoDismissDuration != nil {
+        self.shouldStartProgressBar = true
+      } else {
+        self.shouldStartProgressBar = false
+      }
+    }
   }
+
 }
 
-
 extension PopupView {
-  
+
   var isShowingIndicator: Bool {
-    popupMessage?.dismissal.shouldShowDismissTimingIndicator ?? false
+    popupMessage.dismissal.shouldShowDismissTimingIndicator
   }
-  
+
   var progressBarLength: CGFloat {
     shouldStartProgressBar ? .infinity : .zero
   }

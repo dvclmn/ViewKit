@@ -19,7 +19,12 @@ public struct PopupViewModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-      .popupViewOnly(debugPopup: debugPopup, alignment: alignment)
+      .popupViewOnly(
+        debugPopup: debugPopup,
+        alignment: alignment,
+        isCompact: isCompact,
+        hasCloseButton: hasCloseButton
+      )
       .environment(\.popup, popup)
   }
 }
@@ -39,10 +44,12 @@ public struct PopupViewExtenderModifier: ViewModifier {
       .overlay(alignment: alignment) {
         PopupView(
           debugPopup.message ?? popup?.popupMessage,
-          isCompact: isCompact,
-          hasCloseButton: hasCloseButton
+//          isCompact: isCompact,
+//          hasCloseButton: hasCloseButton
         )
         .padding(Styles.sizeRegular)
+        .environment(\.isCompactMode, isCompact)
+        .environment(\.hasCloseButton, hasCloseButton)
       }
   }
 }

@@ -26,6 +26,9 @@ import SwiftUI
 
 extension EnvironmentValues {
   @Entry public var popup: Popup?
+//  @Entry var popupMessage: PopupMessage?
+  @Entry var hasCloseButton: Bool = false
+  
 }
 
 //extension View {
