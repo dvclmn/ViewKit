@@ -32,17 +32,8 @@ public struct LineCaps {
 }
 
 extension String {
-  //public struct TextCore {
 
-  /// Splits `self` at specified
-  ///
-  /// Example result:
-  /// ```
-  ///
-  ///
-  /// ```
   public func splitPadAndCap(
-    //    _ text: String = "",
     with paddingString: String = " ",
     toFill width: Int,
     alignment: Alignment = .center,
@@ -51,10 +42,6 @@ extension String {
     hasSpaceAroundText: Bool = true
   ) -> String {
 
-    //    guard contains(splitCharacter) else {
-    //      return self.padding(
-    //
-    //    }
     /// If there is no split character present in the provided `text`, this will simply return a
     /// `[String.SubSequence]` with the full text.
     ///
@@ -276,38 +263,9 @@ extension String {
             + textExtraSpace.trailing
 
         }
-
       }
 
       result += finalCaps.trailing
-
-      //      let metrics: String = """
-      //
-      //
-      //
-      //        ---
-      //
-      //        Content: \(splitTextChunk)
-      //        Chunk count: \(splitTextChunk.count)
-      //        Text spaces: \(textSpaceCount)
-      //
-      //        How many splits? \(splitCount)
-      //
-      //        Content width: \(contentWidth)
-      //        Caps: \(finalCaps), and their width: \(capsSpaceCount)
-      //
-      //        Provided space: \(width)
-      //        Total content width inc. spaces & caps: \(finalContentWidth)
-      //
-      //        Remaining available width, to be padded out: \(availableSpace)
-      //        ---
-      //
-      //
-      //
-      //
-      //        """
-
-      //      print(!contentIsSplit ? metrics : "")
 
       return result
     }
@@ -339,5 +297,4 @@ extension String {
         return (left, Swift.max(0, padding - left))
     }
   }
-
 }
