@@ -48,3 +48,9 @@ extension Color {
   public var toNSColor: NSColor { NSColor(self) }
 }
 
+
+//extension Optional where Wrapped == Color {
+//  public func withFallback(_ colour: Color) -> AnyShapeStyle {
+//    self ?? AnyShapeStyle(colour)
+//  }
+//}

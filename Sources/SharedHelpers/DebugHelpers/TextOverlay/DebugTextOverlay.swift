@@ -38,7 +38,7 @@ public struct DebugTextOverlayModifier: ViewModifier {
             //            .background(.black.opacityLow)
 
             //            .background(TintShapeStyle())
-            .background(colourOverride.withFallback(.clear).opacityLow)
+            .background(colourOverride?.opacityLow)
             .clipShape(.rect(cornerRadius: 3))
             .padding()
             .safeAreaPadding(padding.0, padding.1)

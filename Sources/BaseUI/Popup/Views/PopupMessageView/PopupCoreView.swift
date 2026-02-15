@@ -26,8 +26,8 @@ struct PopupCoreView: View {
         .environment(\.symbolVariants, .fill)
         .environment(\.symbolRenderingMode, .hierarchical)
         .environment(\.iconColour, AnyShapeStyle(.secondary))
-      
-        .font(.system(size: isCompactMode ? 11 : 14))
+
+        .font(isCompactMode ? .callout : .headline)
         .fontWeight(.medium)
 
         /// To leave room for the dismiss button
@@ -36,7 +36,7 @@ struct PopupCoreView: View {
       if let messageDetail = popupMessage.message {
         Text(messageDetail)
           .foregroundStyle(.secondary)
-          .font(.callout.weight(.medium))
+          .font(isCompactMode ? .caption : .body)
       }
       if let action = popupMessage.action {
         Button(action.title) {

@@ -52,4 +52,3 @@ extension QuickLabel: CustomStringConvertible {
     return "QuickLabel[\"\(text)\", icon: \"\(icon?.toString ?? "")\"]"
   }
 }
-

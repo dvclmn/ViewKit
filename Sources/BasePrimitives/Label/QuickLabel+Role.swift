@@ -14,13 +14,13 @@ public enum ActionRole: Equatable, Sendable, Codable, Hashable {
   case warning
   case neutral
 
-  public var colour: Color {
+  public var colour: Color? {
     switch self {
       case .success: .green
       case .destructive: .red
       case .error: .red
       case .warning: .yellow
-      case .neutral: .gray
+      case .neutral: nil
     }
   }
 }

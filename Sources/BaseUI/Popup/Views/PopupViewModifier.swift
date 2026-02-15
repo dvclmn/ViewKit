@@ -8,6 +8,15 @@
 import BasePrimitives
 import SwiftUI
 
+public struct PopupSetupModifier: ViewModifier {
+  @State private var popup = Popup()
+
+  public func body(content: Content) -> some View {
+    content
+      .environment(\.popup, popup)
+  }
+}
+
 public struct PopupViewModifier: ViewModifier {
 
   @State private var popup = Popup()
@@ -42,19 +51,30 @@ public struct PopupViewExtenderModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .overlay(alignment: alignment) {
-        PopupView(
-          debugPopup.message ?? popup?.popupMessage,
-//          isCompact: isCompact,
-//          hasCloseButton: hasCloseButton
-        )
-        .padding(Styles.sizeRegular)
-        .environment(\.isCompactMode, isCompact)
-        .environment(\.hasCloseButton, hasCloseButton)
+        if let popup {
+          PopupView(
+            popup.popupMessage ?? debugPopup.message,
+            //          isCompact: isCompact,
+            //          hasCloseButton: hasCloseButton
+          )
+          .padding(Styles.sizeRegular)
+          .environment(\.isCompactMode, isCompact)
+          .environment(\.hasCloseButton, hasCloseButton)
+
+        } else {
+          StateView("No popup set in the Environment", icon: .emoji("🚨"))
+        }
       }
   }
 }
 
 extension View {
+  public func setUpPopup() -> some View {
+    self.modifier(
+      PopupSetupModifier()
+    )
+  }
+
   public func popup(
     debugPopup: PopupDebug = .none,
     alignment: Alignment = .top,

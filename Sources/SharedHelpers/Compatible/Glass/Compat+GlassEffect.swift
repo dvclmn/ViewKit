@@ -12,7 +12,6 @@ extension View {
   public func glassEffectCompatible<S: Shape>(
     _ glass: GlassTypeCompatible? = .regular,
     in shape: S,
-//    isEnabled: Bool = true
   ) -> some View {
     if #available(macOS 26, iOS 26, *), let glass {
       glassEffect(glass.glassType, in: shape)

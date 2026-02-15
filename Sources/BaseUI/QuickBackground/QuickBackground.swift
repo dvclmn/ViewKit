@@ -23,7 +23,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   let glass: GlassTypeCompatible?
   let padding: CGFloat
   let tint: Color?
-//  let tint: AnyShapeStyle?
+  //  let tint: AnyShapeStyle?
 
   func body(content: Content) -> some View {
     content

@@ -9,11 +9,11 @@ import SwiftUI
 
 extension View {
   public func backgroundTint(_ style: AnyShapeStyle?) -> some View {
-    self.environment(\.colourOverride, style)
+    self.environment(\.shapeStyleOverride, style)
   }
 
   public func backgroundTint(_ colour: Color?) -> some View {
-    self.environment(\.colourOverride, colour?.toShapeStyle)
+    self.environment(\.colourOverride, colour)
   }
 
   public func isDebugMode(_ mode: Bool) -> some View {
