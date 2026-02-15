@@ -14,15 +14,18 @@ public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {
   public typealias CardItem = (Item, Bool) -> Content
 
   let data: [Item]
+  let alignment: HorizontalAlignment
   let cardSize: CGSize
   let content: CardItem
 
   public init(
     data: [Item],
+    alignment: HorizontalAlignment = .leading,
     cardSize: CGSize = .localPreset,
     @ViewBuilder content: @escaping CardItem
   ) {
     self.data = data
+    self.alignment = alignment
     self.cardSize = cardSize
     self.content = content
   }
@@ -35,13 +38,12 @@ public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {
         spacing: Styles.sizeRegular,
         alignment: .center
       ),
-      alignment: .center,
+      alignment: alignment,
       spacing: Styles.sizeRegular
     ) {
       ForEach(data) { item in
         ItemView(item: item, cardSize: cardSize, content: content)
       }
-
     }  // END lazy grid
 
   }

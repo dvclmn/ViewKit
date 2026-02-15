@@ -17,27 +17,29 @@ import Foundation
 //@AssociatedValues
 //@CasePathable
 //@dynamicMemberLookup
-extension WaveVisualElement {
-  @CaseDetection
-  public enum ElementKind: String, Sendable, Identifiable, CaseIterable, Codable, Equatable, Hashable, LabeledItem {
-    /// Dots
-    case dotX
-    case dotY
-    case dotRadius  // *2 for diameter
-    case dotHue  // 360° hue shift
+//extension WaveVisualElement {
+@CaseDetection
+public enum VisualElementKind: String, Sendable, Identifiable, CaseIterable, Codable, Equatable, Hashable,
+  LabeledItem
+{
+  /// Dots
+  case dotX
+  case dotY
+  case dotRadius  // *2 for diameter
+  case dotHue  // 360° hue shift
 
-    /// Dashes
-    //    case dashLength
-    case dashGap
-    case dashPhase
+  /// Dashes
+  //    case dashLength
+  case dashGap
+  case dashPhase
 
-    case lineWidth
+  case lineWidth
 
-    public var id: String { rawValue }
-  }
+  public var id: String { rawValue }
 }
+//}
 
-extension WaveVisualElement.ElementKind {
+extension VisualElementKind {
 
   public var name: String {
     switch self {
@@ -55,8 +57,8 @@ extension WaveVisualElement.ElementKind {
 
   public var icon: IconLiteral {
     switch self {
-      case .dotX: "arrow.left.and.right" // x.axis
-      case .dotY: "arrow.up.and.down" // y.axis
+      case .dotX: "arrow.left.and.right"  // x.axis
+      case .dotY: "arrow.up.and.down"  // y.axis
       case .dotRadius: "circle.dotted.circle"
       case .dotHue: "swatchpalette"
       case .dashGap: "directcurrent"  // alternatingcurrent
@@ -67,7 +69,7 @@ extension WaveVisualElement.ElementKind {
   public var label: QuickLabel { .init(name, icon: icon) }
 }
 
-extension WaveVisualElement.ElementKind {
+extension VisualElementKind {
 
   public var operation: WaveOperation {
     //  public func operation(operationOverride: WaveOperation? = nil) -> WaveOperation {

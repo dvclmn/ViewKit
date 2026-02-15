@@ -52,7 +52,7 @@ public struct PreviewableSheetBoolModifier<SheetContent: View>: ViewModifier {
       .sheet(isPresented: $isPresented) {
         if #available(macOS 13.3, *) {
           sheetContent()
-            .presentationBackground(AnyShapeStyle(backgroundMaterial ?? .thinMaterial))
+//            .presentationBackground(AnyShapeStyle(backgroundMaterial ?? .thinMaterial))
         } else {
           sheetContent()
           // Fallback on earlier versions

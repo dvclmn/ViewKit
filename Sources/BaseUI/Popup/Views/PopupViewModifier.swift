@@ -14,17 +14,13 @@ public struct PopupViewModifier: ViewModifier {
 
   let debugPopup: PopupDebug
   let alignment: Alignment
+  let isCompact: Bool
+  let hasCloseButton: Bool
 
   public func body(content: Content) -> some View {
     content
-      .environment(\.popup, popup)
       .popupViewOnly(debugPopup: debugPopup, alignment: alignment)
-//      .overlay(alignment: alignment) {
-//        PopupView(
-//          debugPopup.message ?? popup.popupMessage
-//        )
-//        .padding(Styles.sizeRegular)
-//      }
+      .environment(\.popup, popup)
   }
 }
 
@@ -35,12 +31,16 @@ public struct PopupViewExtenderModifier: ViewModifier {
 
   let debugPopup: PopupDebug
   let alignment: Alignment
+  let isCompact: Bool
+  let hasCloseButton: Bool
 
   public func body(content: Content) -> some View {
     content
       .overlay(alignment: alignment) {
         PopupView(
-          debugPopup.message ?? popup?.popupMessage
+          debugPopup.message ?? popup?.popupMessage,
+          isCompact: isCompact,
+          hasCloseButton: hasCloseButton
         )
         .padding(Styles.sizeRegular)
       }
@@ -50,24 +50,35 @@ public struct PopupViewExtenderModifier: ViewModifier {
 extension View {
   public func popup(
     debugPopup: PopupDebug = .none,
-    alignment: Alignment = .top
+    alignment: Alignment = .top,
+    isCompact: Bool = false,
+    hasCloseButton: Bool = false
   ) -> some View {
     self.modifier(
       PopupViewModifier(
         debugPopup: debugPopup,
-        alignment: alignment
+        alignment: alignment,
+        isCompact: isCompact,
+        hasCloseButton: hasCloseButton
       )
     )
   }
-  
+
+  /// View only means no State is set up in this View modifier.
+  /// It just passes the Popup View, and assumes the Popup
+  /// is already in the Environment
   public func popupViewOnly(
     debugPopup: PopupDebug = .none,
-    alignment: Alignment = .top
+    alignment: Alignment = .top,
+    isCompact: Bool = false,
+    hasCloseButton: Bool = false
   ) -> some View {
     self.modifier(
       PopupViewExtenderModifier(
         debugPopup: debugPopup,
-        alignment: alignment
+        alignment: alignment,
+        isCompact: isCompact,
+        hasCloseButton: hasCloseButton
       )
     )
   }

@@ -17,6 +17,7 @@ struct SheetMockup<Sheet: View>: ViewModifier {
 
     if isPreviewing, isPreview {
       content
+        .scrollContentBackground(.hidden)
         .overlay {
           Color.black.opacity(0.8)
             .ignoresSafeArea()

@@ -9,7 +9,7 @@ import ColourKit
 import Foundation
 import IdentifiedCollections
 
-public typealias WaveElements = [WaveVisualElement.ElementKind: WaveVisualElement]
+public typealias WaveElements = [VisualElementKind: WaveVisualElement]
 public struct WaveDocument: Codable, Sendable, Equatable {
 
   public var waves: IdentifiedArrayOf<ConfiguredWave>
@@ -31,10 +31,35 @@ public struct WaveDocument: Codable, Sendable, Equatable {
 }
 
 extension WaveDocument {
-
+  public mutating func addElement(
+    _ kind: VisualElementKind,
+    baseValue: Double? = nil,
+    with wave: ConfiguredWave = .waveHExample
+  ) {
+//    let element = WaveVisualElement(
+//      kind: kind,
+//      base: baseValue ?? .zero
+//    )
+    let newDriver = WaveDriver(
+      waveID: wave.id,
+      elementKind: kind,
+      operation: kind.operation
+    )
+    waves.append(wave)
+    drivers.append(newDriver)
+  }
   public subscript(waveID waveID: ConfiguredWave.ID) -> ConfiguredWave? {
     get { waves[id: waveID] }
     set { waves[id: waveID] = newValue }
+  }
+
+  public subscript(element elementKind: VisualElementKind) -> ConfiguredWave.ID? {
+    get {
+      let driver = drivers.first { driver in
+        driver.elementKind == elementKind
+      }
+      return driver?.waveID
+    }
   }
 
   public static func original(

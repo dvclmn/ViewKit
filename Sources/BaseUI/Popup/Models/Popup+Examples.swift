@@ -10,7 +10,8 @@ import CoreTools
 extension PopupMessage {
   static let example01 = PopupMessage(
     "I am loading",
-    icon: .preset(.getRandom),
+    icon: .preset(.controller),
+//    icon: .preset(.getRandom),
     message: "Here is a random icon, and a loading indicator.",
     isLoading: true,
     role: .neutral,

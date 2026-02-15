@@ -14,7 +14,7 @@ public struct WaveDriver: Sendable, Codable, Equatable, Identifiable {
   public var waveID: ConfiguredWave.ID
 
   /// The element being animated by the wave
-  public let elementKind: WaveVisualElement.ElementKind
+  public let elementKind: VisualElementKind
 
   /// The channel promises: “I’ll fetch the Double for you, you just mutate it.”
   public var operation: WaveOperation
@@ -22,7 +22,7 @@ public struct WaveDriver: Sendable, Codable, Equatable, Identifiable {
   public init(
     id: UUID = UUID(),
     waveID: ConfiguredWave.ID,
-    elementKind: WaveVisualElement.ElementKind,
+    elementKind: VisualElementKind,
     operation: WaveOperation
   ) {
     self.id = id
@@ -35,7 +35,7 @@ public struct WaveDriver: Sendable, Codable, Equatable, Identifiable {
 extension WaveDriver {
 
   public static func make(
-    _ element: WaveVisualElement.ElementKind,
+    _ element: VisualElementKind,
     waveID: ConfiguredWave.ID,
     //    operation: WaveOperation? = nil
     //    operation: @autoclosure @escaping () -> WaveOperation
@@ -63,7 +63,7 @@ extension WaveDriver {
 }
 
 extension Array where Element == WaveDriver {
-  public subscript(waveID: ConfiguredWave.ID) -> WaveVisualElement.ElementKind? {
+  public subscript(waveID: ConfiguredWave.ID) -> VisualElementKind? {
     first { $0.waveID == waveID }?.elementKind
   }
 
