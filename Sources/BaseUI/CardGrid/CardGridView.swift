@@ -9,8 +9,9 @@ import CoreTools
 import LayoutKit
 import SwiftUI
 
-public struct CardGrid<Item: LabeledItem, Content: View>: View {
-  public typealias CardItem = (Item) -> Content
+public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {
+  @Environment(\.colourOverride) private var colourOverride
+  public typealias CardItem = (Item, Bool) -> Content
 
   let data: [Item]
   let cardSize: CGSize
@@ -28,31 +29,20 @@ public struct CardGrid<Item: LabeledItem, Content: View>: View {
 
   public var body: some View {
 
-    //    DecomposedView(
-    //      .subview,
-    //      layout: .vstack(alignment: .leading),
-    //      //        layoutType: .grid(alignment: .topLeading, horizontalSpacing: Styles.sizeSmall),
-    //      spacing: Styles.sizeMedium
-    //    ) {
-    VStack(alignment: .leading, spacing: Styles.sizeMedium) {
-      LazyVGrid(
-        columns: .adaptive(
-          mode: .fixedWidth(width: cardSize.width),
-          spacing: Styles.sizeRegular,
-          alignment: .center
-        ),
-        alignment: .center,
-        spacing: Styles.sizeRegular
-      ) {
-        ForEach(data) { item in
-          ItemView(item: item, cardSize: cardSize, content: content)
-          //          ItemView(data: data, cardSize: cardSize, content: content)
-        }
+    LazyVGrid(
+      columns: .adaptive(
+        mode: .fixedWidth(width: cardSize.width),
+        spacing: Styles.sizeRegular,
+        alignment: .center
+      ),
+      alignment: .center,
+      spacing: Styles.sizeRegular
+    ) {
+      ForEach(data) { item in
+        ItemView(item: item, cardSize: cardSize, content: content)
+      }
 
-      }  // END lazy grid
-    }  // END main vstack
-    .weightedPadding(Styles.sizeMedium.bump)
-    .frame(maxWidth: 440)
+    }  // END lazy grid
 
   }
 }
@@ -67,8 +57,8 @@ extension CardGrid {
     //    label: QuickLabel("Hello", symbol: "eye"),
     data: SampleContent.Animal.withSymbols(),
     cardSize: .localPreset
-  ) { item in
-//  ) { item, isHovered in
+      //  ) { item in
+  ) { item, isHovered in
     MaybeLabel(item.label)
   }
   // .environment(store)

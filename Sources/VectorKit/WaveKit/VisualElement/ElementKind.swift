@@ -19,7 +19,7 @@ import Foundation
 //@dynamicMemberLookup
 extension WaveVisualElement {
   @CaseDetection
-  public enum ElementKind: String, Sendable, Identifiable, CaseIterable, Codable, Equatable, Hashable {
+  public enum ElementKind: String, Sendable, Identifiable, CaseIterable, Codable, Equatable, Hashable, LabeledItem {
     /// Dots
     case dotX
     case dotY
@@ -64,6 +64,7 @@ extension WaveVisualElement.ElementKind {
       case .lineWidth: "lineweight"
     }
   }
+  public var label: QuickLabel { .init(name, icon: icon) }
 }
 
 extension WaveVisualElement.ElementKind {

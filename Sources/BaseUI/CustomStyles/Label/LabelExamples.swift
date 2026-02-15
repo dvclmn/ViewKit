@@ -16,15 +16,14 @@ public struct LabelExampleView: View {
     ScrollView {
       VStack(alignment: .leading, spacing: Styles.sizeMedium) {
 
-        CardGrid(data: SampleContent.Animal.withSymbols()) { item in
-//        CardGrid(data: SampleContent.Animal.withSymbols()) { item, isHovered in
-//          let label =
-//            isHovered
-//            ? QuickLabel("Remove", icon: .preset(.trash), role: .destructive)
-//            : item.label
+        CardGrid(data: SampleContent.Animal.withSymbols()) { item, isHovered in
+          let label =
+            isHovered
+            ? QuickLabel("Remove", icon: .preset(.trash), role: .destructive)
+            : item.label
 
-          MaybeLabel(item.label)
-            .containerValueBool(.isEmphasised, item == SampleContent.Animal.withSymbols()[2])
+          MaybeLabel(label)
+            .containerValueBool(.isEmphasised, item.label.text == "Tapir")
 
         }
         //        CardGrid(data: SampleContent.Animal.withEmojis()) {

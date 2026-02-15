@@ -11,11 +11,8 @@ import SwiftUI
 extension CardGrid {
 
   struct ItemView: View {
-    //    @Environment(\.isEmphasised) private var isEmphasised
-
     @State private var isHovering: Bool = false
     let item: Item
-    //    let data: [Item]
     let cardSize: CGSize
     @ViewBuilder var content: CardItem
 
@@ -23,48 +20,22 @@ extension CardGrid {
 
       if #available(macOS 15, iOS 18, *) {
 
-        ForEach(subviews: content(item)) { subview in
-          //        Group(subviews: content(item)) { subviewCollection in
-          //          ForEach(subviewCollection) { subview in
-
+        ForEach(subviews: content(item, isHovering)) { subview in
           ItemSubView(
+            isHovering: $isHovering,
             item: item,
             cardSize: cardSize,
             subview: subview
           )
-
-          //            ItemSubView(
-          //              item: item,
-          //              cardSize: cardSize,
-          //              content: conte
-          //            ) { item, isHovering in
-          //
-          //            }
-          //          }
+          .environment(\.isEmphasised, subview.containerValues.isEmphasised)
+          .environment(\.isHovering, isHovering)
         }
 
-        //        }  // END for each
-
       } else {
-        content(item)
-        //        ForEach(data) { item in
-        //          ItemSubView(
-        //            item: item,
-        //            cardSize: cardSize,
-        //            content: content
-        //              //                subview: subview
-        //              //                content: content
-        //          )
-        //        }
-      }
-
-      //
-      //    content(item, isHovering)
-
-      //        }
-
-      //      }
-
-    }
+        content(item, isHovering)
+          .modifier(CardViewItemModifier(cardSize: cardSize))
+          .environment(\.isHovering, isHovering)
+      }  // END if available
+    }  // END view body
   }
 }
