@@ -8,9 +8,6 @@
 import BasePrimitives
 import SwiftUI
 
-//public struct StrokeColourAndWidth
-
-//
 struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   @Environment(\.emphasisColour) private var emphasisColour
   @Environment(\.aspectRatioOverride) private var aspectRatioOverride
@@ -23,7 +20,6 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
 
   let isEnabled: Bool
   let shape: S
-  //  let tint: Color?
   let padding: CGFloat?
   let hasOpticalAdjustment: Bool
 
@@ -32,6 +28,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
       .padding(.horizontal, paddingH)
       .padding(.vertical, paddingV)
       .padding(.bottom, opticalPadding)
+
       .background {
         if #available(macOS 14.0, *) {
           shape
@@ -80,11 +77,6 @@ extension QuickBackgroundModifier {
     guard isEnabled else { return .clear }
     return AnyShapeStyle(backgroundMaterial ?? .regularMaterial)
   }
-
-  //  private var tintColour: AnyShapeStyle {
-  //    guard isEnabled else { return .clear }
-  //    return tint?.toShapeStyle ?? emphasisColour ?? Color.defaultQuickTint.toShapeStyle
-  //  }
 }
 
 extension View {
