@@ -23,18 +23,24 @@ extension CardGrid {
 
       if #available(macOS 15, iOS 18, *) {
 
-        Group(subviews: content(item)) { subviewCollection in
-          ForEach(subviewCollection) { subview in
+        ForEach(subviews: content(item)) { subview in
+          //        Group(subviews: content(item)) { subviewCollection in
+          //          ForEach(subviewCollection) { subview in
 
-            subview
-            //            ItemSubView(
-            //              item: item,
-            //              cardSize: cardSize,
-            //              content: conte
-            //            ) { item, isHovering in
-            //
-            //            }
-          }
+          ItemSubView(
+            item: item,
+            cardSize: cardSize,
+            subview: subview
+          )
+
+          //            ItemSubView(
+          //              item: item,
+          //              cardSize: cardSize,
+          //              content: conte
+          //            ) { item, isHovering in
+          //
+          //            }
+          //          }
         }
 
         //        }  // END for each

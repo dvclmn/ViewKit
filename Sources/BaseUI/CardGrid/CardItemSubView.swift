@@ -5,24 +5,26 @@
 //  Created by Dave Coleman on 15/2/2026.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 extension CardGrid {
 
-  //  @available(macOS 15, iOS 18, *)
+    @available(macOS 15, iOS 18, *)
   struct ItemSubView: View {
 
     @State private var isHovering: Bool = false
 
     let item: Item
     let cardSize: CGSize
-    //    let subview: Subview
-    @ViewBuilder var content: CardItem
+        let subview: Subview
+//    @ViewBuilder var content: CardItem
+    //    @ViewBuilder var content: CardItem
 
     var body: some View {
-      //      content
-      content(item)
+      subview
+//            content
+//      content(item)
         //      content(item, isHovering)
         .labelStyle(.base)
         .environment(\.labelDisplay, .stacked)
@@ -39,7 +41,7 @@ extension CardGrid {
           shape: .rect(cornerRadius: Styles.sizeSmall.bump),
           padding: .zero
         )
-//        .backgroundTint(.white.opacity(isEmphasised ? 0.2 : 0.08))
+        //        .backgroundTint(.white.opacity(isEmphasised ? 0.2 : 0.08))
         .onHover { isHovering = $0 }
 
     }
