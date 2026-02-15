@@ -59,15 +59,12 @@ public struct CustomLabel: LabelStyle {
           alignment: layoutAlignment?.horizontal ?? .center,
           spacing: layoutSpacing ?? Styles.sizeSmall
         ) {
+          configuration.icon
+            .commonLabelStyles(for: .icon, display: internalLabelDisplay)
+
           configuration.title
             .commonLabelStyles(for: .title, display: internalLabelDisplay)
 
-            .overlay {
-              configuration.icon
-                .commonLabelStyles(for: .icon, display: internalLabelDisplay)
-              //                .aspectRatio(1, contentMode: .fill)
-
-            }
         }
 
       case .hidden:
