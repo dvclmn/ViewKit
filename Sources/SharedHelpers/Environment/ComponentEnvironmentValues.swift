@@ -48,9 +48,12 @@ extension EnvironmentValues {
   @Entry public var cornerRounding: CGFloat?
 
   /// Perhaps the below two can be merged.
-  @Entry public var colourOverride: AnyShapeStyle?
+  @Entry public var shapeStyleOverride: AnyShapeStyle?
+  @Entry public var colourOverride: Color?
+  @Entry public var emphasisShapeStyle: AnyShapeStyle?
+  @Entry public var emphasisColour: Color?
+  
   @Entry public var colourIntensity: Double?
-  @Entry public var emphasisColour: AnyShapeStyle?
 
   @Entry public var buttonRole: ButtonRole?
   @Entry public var isFocusable: Bool = true

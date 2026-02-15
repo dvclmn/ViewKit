@@ -15,6 +15,7 @@ struct PopupView: View {
   @Environment(\.isCompactMode) private var isCompactMode
   @Environment(\.hasCloseButton) private var hasCloseButton
   @Environment(\.hasGlassEffect) private var hasGlassEffect
+  @Environment(\.colourOverride) private var colourOverride
 
   @State private var isHoveringDismiss: Bool = false
 
@@ -50,7 +51,8 @@ struct PopupView: View {
           glass: hasGlassEffect ? .regular : nil,
           rounding: rounding,
           padding: .zero,
-          tint: popupMessage.label.role?.colour ?? .black,
+          tint: popupMessage.label.role?.colour,
+//          tint: colourOverride ?? AnyShapeStyle(popupMessage.label.role?.colour),
           isEnabled: true
         )
 

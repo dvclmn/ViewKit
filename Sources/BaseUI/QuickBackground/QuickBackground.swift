@@ -22,12 +22,13 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   let shape: S
   let glass: GlassTypeCompatible?
   let padding: CGFloat
-  let tint: AnyShapeStyle?
+  let tint: Color?
+//  let tint: AnyShapeStyle?
 
   func body(content: Content) -> some View {
     content
       .weightedPadding(layoutPadding ?? padding)
-      .glassEffectCompatible(glass ?? .regular, in: shape, isEnabled: glass != nil)
+      .glassEffectCompatible(glass, in: shape)
       .background {
         if glass == nil {
           shape
@@ -53,7 +54,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
 }
 
 extension QuickBackgroundModifier {
-  private var backgroundColour: AnyShapeStyle {
+  private var backgroundColour: Color {
     colourOverride ?? tint ?? .clear
   }
 
@@ -70,7 +71,7 @@ extension View {
     shape: S = .rect(cornerRadius: Styles.sizeSmall),
     //    glass: GlassTypeCompatible? = nil,
     padding: CGFloat = Styles.sizeTiny,
-    tint: Color? = Color.defaultQuickTint,
+    tint: Color? = nil,
     usesGlassEffect: Bool = false,
     isEnabled: Bool = true,
   ) -> some View {
@@ -80,7 +81,7 @@ extension View {
         shape: shape,
         glass: usesGlassEffect ? .regular(tint: tint) : nil,
         padding: padding,
-        tint: AnyShapeStyle(tint),
+        tint: tint,
       )
     )
   }
@@ -89,7 +90,7 @@ extension View {
     glass: GlassTypeCompatible? = nil,
     rounding: Double = Styles.sizeSmall,
     padding: CGFloat = Styles.sizeTiny,
-    tint: Color? = Color.defaultQuickTint,
+    tint: Color? = nil,
     usesGlassEffect: Bool = false,
     isEnabled: Bool = true,
   ) -> some View {
@@ -100,13 +101,13 @@ extension View {
         glass: usesGlassEffect ? .regular(tint: tint) : nil,
         //        glass: glass,
         padding: padding,
-        tint: AnyShapeStyle(tint),
+        tint: tint,
         //        tint: tint.map { AnyShapeStyle($0) } ?? .clear,
       )
     )
   }
 }
 
-extension Color {
-  public static var defaultQuickTint: Color { Color.black.opacity(0.2) }
-}
+//extension Color {
+//  public static var defaultQuickTint: Color { Color.black.opacity(0.2) }
+//}
