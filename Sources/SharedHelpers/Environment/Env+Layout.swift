@@ -27,8 +27,12 @@ extension EnvironmentValues {
   @Entry public var safePadding: EdgeInsets? = nil
 
   /// For things like weighted padding, giving more
-  /// breathing room to the X axis etc
+  /// breathing room to the X axis etc. Increase to add width
   @Entry public var horizontalBias: CGFloat? = nil
+  
+  /// Adds bias to the height of a View within it's parent.
+  /// Increase to shift content upward
+  @Entry public var opticalCentreBias: CGFloat? = nil
 
   /// This (perhaps unneccesarily) pairs with `ContainerValue`
   /// of the same name, in BaseHelpers' Compatible collection.

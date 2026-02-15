@@ -8,6 +8,9 @@
 import SwiftUI
 
 public struct WeightedPaddingModifier: ViewModifier {
+  @Environment(\.horizontalBias) private var horizontalBiasOverride
+  @Environment(\.opticalCentreBias) private var opticalCentreBiasOverride
+
   let padding: CGFloat
   let horizontalBias: CGFloat  // Increase to add width
   let opticalCentreBias: CGFloat  // Increase to shift content upward
@@ -31,30 +34,37 @@ extension WeightedPaddingModifier {
       trailing: CGFloat?
     )
   {
-    /// Calculate vertical padding - always the base padding value
-    let paddingV = padding
 
-    /// Calculate horizontal padding with bias applied directly
-    /// This way horizontalBias represents a direct multiplier
-    let paddingH = padding * horizontalBias
+    let biasH = horizontalBiasOverride ?? horizontalBias
+    let biasCentre = opticalCentreBiasOverride ?? opticalCentreBias
+    
+    /// Calculate vertical padding with optical center bias.
+    /// Increasing opticalCentreBias increases bottom padding and decreases top padding,
+    /// shifting content upward.
+    let safeBias = max(biasCentre, 0.01)
+    let paddingTop = padding / safeBias
+    let paddingBottom = padding * safeBias
+
+    /// Calculate horizontal padding with direct bias multiplier
+    let paddingH = padding * biasH
 
     guard let excludedEdge else {
-      /// Apply full padding to all edges when no edge is excluded
-      return (paddingV, paddingV, paddingH, paddingH)
+      /// Apply computed padding to all edges when no edge is excluded
+      return (paddingTop, paddingBottom, paddingH, paddingH)
     }
 
     switch excludedEdge {
       case .top:
-        return (nil, paddingV, paddingH, paddingH)
+        return (nil, paddingBottom, paddingH, paddingH)
 
       case .bottom:
-        return (paddingV, nil, paddingH, paddingH)
+        return (paddingTop, nil, paddingH, paddingH)
 
       case .leading:
-        return (paddingV, paddingV, nil, paddingH)
+        return (paddingTop, paddingBottom, nil, paddingH)
 
       case .trailing:
-        return (paddingV, paddingV, paddingH, nil)
+        return (paddingTop, paddingBottom, paddingH, nil)
     }
   }
 }
