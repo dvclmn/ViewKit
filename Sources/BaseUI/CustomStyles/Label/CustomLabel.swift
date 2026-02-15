@@ -10,7 +10,7 @@ import SwiftUI
 
 extension LabelStyle where Self == CustomLabel {
   public static var base: Self { Self() }
-  
+
   /// If no value supplied for `display`, will use environment value, or fall back to `.titleAndIcon`
   public static func base(display: LabelDisplay?) -> Self { Self(labelDisplay: display) }
 
@@ -59,11 +59,15 @@ public struct CustomLabel: LabelStyle {
           alignment: layoutAlignment?.horizontal ?? .center,
           spacing: layoutSpacing ?? Styles.sizeSmall
         ) {
-          configuration.icon
-            .commonLabelStyles(for: .icon, display: internalLabelDisplay)
-
           configuration.title
             .commonLabelStyles(for: .title, display: internalLabelDisplay)
+
+            .overlay {
+              configuration.icon
+                .commonLabelStyles(for: .icon, display: internalLabelDisplay)
+              //                .aspectRatio(1, contentMode: .fill)
+
+            }
         }
 
       case .hidden:
@@ -93,4 +97,19 @@ extension CustomLabel {
         .commonLabelStyles(for: .icon, display: internalLabelDisplay)
     }
   }
+}
+
+extension VerticalAlignment {
+  /// A custom alignment for image titles.
+  private struct ImageTitleAlignment: AlignmentID {
+    static func defaultValue(in context: ViewDimensions) -> CGFloat {
+      // Default to bottom alignment if no guides are set.
+      context[VerticalAlignment.bottom]
+    }
+  }
+
+  /// A guide for aligning titles.
+  static let imageTitleAlignmentGuide = VerticalAlignment(
+    ImageTitleAlignment.self
+  )
 }

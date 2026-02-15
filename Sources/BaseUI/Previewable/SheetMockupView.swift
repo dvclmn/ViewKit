@@ -21,10 +21,11 @@ struct SheetMockup<Sheet: View>: ViewModifier {
           Color.black.opacity(0.8)
             .ignoresSafeArea()
           sheet()
-            /// Intentionally leaving padding nil here, to allow customisation
-            /// out at the call site
+            /// Need to specify zero padding to match actual macOS sheet appearance.
+            /// Otherwise this Preview gets padding when the *real* sheet gets none.
             .quickBackground(
-              shape: .rect(cornerRadius: Styles.sizeMedium),
+              shape: .rect(cornerRadius: Styles.sizeMedium.bump),
+              padding: .zero,
               isEnabled: true,
             )
             .frame(maxWidth: .infinity, maxHeight: .infinity)

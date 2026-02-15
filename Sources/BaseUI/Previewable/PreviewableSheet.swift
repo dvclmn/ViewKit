@@ -20,7 +20,7 @@ public struct PreviewableSheetItemModifier<SheetContent: View, Item: Identifiabl
     content
       .sheet(item: $item) { item in
         sheetContent(item)
-//          .presentationBackground(AnyShapeStyle(backgroundMaterial ?? .thinMaterial))
+        //          .presentationBackground(AnyShapeStyle(backgroundMaterial ?? .thinMaterial))
       }
       .modifier(
         SheetMockup(
