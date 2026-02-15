@@ -9,27 +9,17 @@ import Foundation
 
 extension Dictionary where Key: CustomStringConvertible, Value: CustomStringConvertible {
   public func displayString<T: Comparable>(
-    sortedBy keyPath: KeyPath<Element, T>? = nil,
-    delimiter: String = ", "
+    sortedBy keyPath: KeyPath<Element, T>,
+    keyValueSeparator: String = ": ",
+    pairSeparator: String = ", "
   ) -> String {
-    let pairs: [Element]
-    if let keyPath {
-      // Use the Sequence.sorted(by:) key-path helper to sort dictionary elements (key/value tuples)
-      pairs = self.sorted(by: keyPath)
-    } else {
-      // Default: sort by key's description to produce stable output
-      pairs = self.sorted { lhs, rhs in
-        lhs.key.description < rhs.key.description
-      }
-    }
-
-    return pairs
-      .map { $0.key.description + ": " + $0.value.description }
-      .joined(separator: delimiter)
+    sorted(by: keyPath)
+      .map { $0.key.description + keyValueSeparator + $0.value.description }
+      .joined(separator: pairSeparator)
   }
-  
+
   //extension Dictionary: StringRenderable where Key: StringRenderable, Value: StringRenderable {
-  
+
   //        (
   //          "Elements",
   //          store.userData().elementDefaults
@@ -40,7 +30,6 @@ extension Dictionary where Key: CustomStringConvertible, Value: CustomStringConv
   //        ("Element Defaults", store.userData.elementDefaults.count.toString),
   //  public var toString: String { map(\.toString).joined(separator: ", ") }
   //}
-
 
   //  public func displayString() -> String {
   //    guard !self.isEmpty else { return "nil" }
