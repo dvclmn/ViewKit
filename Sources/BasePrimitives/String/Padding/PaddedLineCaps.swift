@@ -7,8 +7,6 @@
 
 import Foundation
 
-public typealias StringCaps = (leading: String, trailing: String)
-
 public enum TextPadAlignment: Sendable, Hashable {
   case leading
   case centre
@@ -27,91 +25,114 @@ public struct LineCaps: Sendable, Hashable {
   }
 }
 
-public enum PadDebugStyle: Sendable, Hashable {
-  case none
-  case showSpaces(space: Character = "·")
-}
+public struct LinePadOptions: Sendable, Hashable {
+  public var width: Int
+  public var pad: Character
+  public var alignment: TextPadAlignment
+  public var splitOn: Character?
+  public var omitEmptySplits: Bool
+  public var caps: LineCaps?
+  public var surroundSpaces: SurroundSpaces
 
-extension String {
-
-  /// Pads a line to a target width.
-  ///
-  /// Policy:
-  /// - If `splitOn` is provided *and* the string contains it, the string is split and padding is distributed across gaps.
-  /// - Otherwise, padding is distributed left/right according to `alignment`.
-  /// - If `toFill` is smaller than the minimum required width, the string is returned without clipping.
-  public func paddedLine(
-    toFill width: Int,
+  public init(
+    width: Int,
     pad: Character = " ",
     alignment: TextPadAlignment = .centre,
     splitOn: Character? = nil,
+    omitEmptySplits: Bool = true,
     caps: LineCaps? = nil,
-    surroundTextWithSpaces: Bool = true,
-    omitEmptySplits: Bool = true
-  ) -> String {
+    surroundSpaces: SurroundSpaces = .none
+  ) {
+    self.width = width
+    self.pad = pad
+    self.alignment = alignment
+    self.splitOn = splitOn
+    self.omitEmptySplits = omitEmptySplits
+    self.caps = caps
+    self.surroundSpaces = surroundSpaces
+  }
+}
 
-    // Build caps
-    let (capLeading, capTrailing): StringCaps = {
-      guard let caps else { return ("", "") }
+extension String {
+  public func paddedLine(_ options: LinePadOptions) -> String {
+    let width = options.width
+    let pad = options.pad
+
+    /// If width is too small, return the original input unchanged (no clipping).
+    /// (This matches what you’ve already changed.)
+    /// Note: we evaluate “too small” later after computing minWidth; this early return
+    /// is only for obviously invalid widths.
+    if width <= 0 { return self }
+
+    /// Build cap strings (including optional cap-adjacent spaces)
+    let (capLeading, capTrailing): (String, String) = {
+      guard let caps = options.caps else { return ("", "") }
       let spacer = caps.padWithSpace ? " " : ""
       return (caps.leading + spacer, spacer + caps.trailing)
     }()
 
-    // Decide whether to split
+    /// Determine split mode
     let pieces: [Substring]
-    let shouldSplit: Bool
-    if let splitOn, self.contains(splitOn) {
-      pieces = self.split(separator: splitOn, omittingEmptySubsequences: omitEmptySplits)
-      shouldSplit = pieces.count > 1
+    let isSplitMode: Bool
+    if let split = options.splitOn, self.contains(split) {
+      let parts = self.split(separator: split, omittingEmptySubsequences: options.omitEmptySplits)
+      pieces = parts.isEmpty ? [self[...]] : parts
+      isSplitMode = pieces.count > 1
     } else {
       pieces = [self[...]]
-      shouldSplit = false
+      isSplitMode = false
     }
 
-    // Surround-space policy
-    let surround = surroundTextWithSpaces ? " " : ""
-    let surroundWidth = surround.count * 2
-
-    // Minimum width (caps + content + (surround per piece or per gap policy))
-    //
-    // Chosen policy:
-    // - No split: surround the whole string once.
-    // - Split: surround each gap (i.e. before+after each padding run), not each piece.
-    //
-    // If you prefer “surround each piece”, that’s a different (valid) policy — just make it explicit.
-    let contentWidth = pieces.reduce(0) { $0 + $1.count }
     let gaps = max(0, pieces.count - 1)
+    let contentWidth = pieces.reduce(0) { $0 + $1.count }
 
-    let gapSurroundWidth = shouldSplit ? (surroundWidth * gaps) : 0
-    let wholeSurroundWidth = shouldSplit ? 0 : surroundWidth
+    /// Decide surround-space behaviour
+    let wantsWholeBookends: Bool =
+      switch options.surroundSpaces {
+        case .none, .aroundSplitGaps: false
+        case .aroundWholeText, .both: true
+      }
+
+    let wantsGapBookends: Bool =
+      switch options.surroundSpaces {
+        case .none, .aroundWholeText: false
+        case .aroundSplitGaps, .both: true
+      }
+
+    /// Compute the minimum width required before we can add any pad characters.
+    /// - Whole-text bookends add 2 spaces total, only when NOT split.
+    /// - Gap bookends add 2 spaces per gap, only when split.
+    let wholeBookendWidth = (!isSplitMode && wantsWholeBookends) ? 2 : 0
+    let gapBookendWidth = (isSplitMode && wantsGapBookends) ? (2 * gaps) : 0
 
     let minWidth =
       capLeading.count + capTrailing.count
       + contentWidth
-      + gapSurroundWidth
-      + wholeSurroundWidth
+      + wholeBookendWidth
+      + gapBookendWidth
 
-    /// If too small, don’t clip; return “as assembled” without padding.
-    if width <= minWidth {
+    if width < minWidth {
       return self
-//      guard shouldSplit else {
-//        return capLeading + surround + self + surround + capTrailing
-//      }
-//      return capLeading + pieces.joined(separator: "") + capTrailing
     }
 
     let availablePadding = width - minWidth
 
-    guard shouldSplit else {
-      let (left, right) = distributePadding(alignment: alignment, padding: availablePadding)
+    guard isSplitMode else {
+      /// No split: distribute left/right padding via alignment
+      let (left, right) = distributePadding(options.alignment, padding: availablePadding)
+
       return capLeading
         + String(repeating: pad, count: left)
-        + surround + self + surround
+        + (wantsWholeBookends ? " " : "")
+        + self
+        + (wantsWholeBookends ? " " : "")
         + String(repeating: pad, count: right)
         + capTrailing
     }
-    let perGap = availablePadding / gaps
-    let leftover = availablePadding % gaps
+    
+    /// Distribute padding over gaps
+    let perGap = gaps == 0 ? 0 : (availablePadding / gaps)
+    let leftover = gaps == 0 ? 0 : (availablePadding % gaps)
 
     var out = capLeading
 
@@ -119,10 +140,11 @@ extension String {
       out += piece
 
       if idx < gaps {
-        let thisGap = perGap + (idx < leftover ? 1 : 0)
-        out += surround
-        out += String(repeating: pad, count: thisGap)
-        out += surround
+        let padCount = perGap + (idx < leftover ? 1 : 0)
+
+        if wantsGapBookends { out += " " }
+        out += String(repeating: pad, count: padCount)
+        if wantsGapBookends { out += " " }
       }
     }
 
@@ -130,10 +152,7 @@ extension String {
     return out
   }
 
-  private func distributePadding(
-    alignment: TextPadAlignment,
-    padding: Int
-  ) -> (left: Int, right: Int) {
+  private func distributePadding(_ alignment: TextPadAlignment, padding: Int) -> (left: Int, right: Int) {
     switch alignment {
       case .leading: return (0, padding)
       case .trailing: return (padding, 0)

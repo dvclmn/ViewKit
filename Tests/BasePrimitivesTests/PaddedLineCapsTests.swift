@@ -20,7 +20,8 @@ struct TextPaddingGalleryTests {
     var alignment: TextPadAlignment = .centre
     var splitOn: Character? = nil
     var caps: LineCaps? = nil
-    var surroundTextWithSpaces: Bool = true
+    var surroundSpaces: SurroundSpaces = .none
+    //    var surroundTextWithSpaces: Bool = true
     var omitEmptySplits: Bool = true
     var expected: String? = nil  // optional “golden” expected output
   }
@@ -56,13 +57,13 @@ struct TextPaddingGalleryTests {
         input: "Title",
         width: 14,
         caps: .init("│", "│", padWithSpace: true),
-        expected: "│ Title      │"
+        expected: "│   Title    │"
       ),
 
       .init(
         name: "Split with caps",
         input: "A@B@C",
-        width: 12,
+        width: 11,
         splitOn: "@",
         caps: .init("[", "]", padWithSpace: false),
         expected: "[A   B   C]"
@@ -78,13 +79,15 @@ struct TextPaddingGalleryTests {
 
     for c in cases {
       let result = c.input.paddedLine(
-        toFill: c.width,
-        pad: c.pad,
-        alignment: c.alignment,
-        splitOn: c.splitOn,
-        caps: c.caps,
-        surroundTextWithSpaces: c.surroundTextWithSpaces,
-        omitEmptySplits: c.omitEmptySplits
+        .init(
+          width: c.width,
+          pad: c.pad,
+          alignment: c.alignment,
+          splitOn: c.splitOn,
+          omitEmptySplits: c.omitEmptySplits,
+          caps: c.caps,
+          surroundSpaces: c.surroundSpaces
+        )
       )
 
       // Gallery: helpful to inspect while iterating.
@@ -107,16 +110,19 @@ struct TextPaddingGalleryTests {
   func lengthInvariant() {
     let input = "Hello@World@Swift"
     let width = 40
-
+    
     let result = input.paddedLine(
-      toFill: width,
-      pad: " ",
-      alignment: .centre,
-      splitOn: "@",
-      caps: .init("│", "│", padWithSpace: true),
-      surroundTextWithSpaces: true
+      .init(
+        width: width,
+        pad: " ",
+        alignment: .centre,
+        splitOn: "@",
+        omitEmptySplits: true,
+        caps: .init("│", "│", padWithSpace: true),
+        surroundSpaces: .aroundWholeText
+      )
     )
-
+    
     // This invariant holds if you define “toFill” as “exactly fill when possible”
     #expect(result.count == width)
   }
