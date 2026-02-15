@@ -21,19 +21,30 @@ struct TextPaddingGalleryTests {
     var splitOn: Character? = nil
     var caps: LineCaps? = nil
     var surroundSpaces: SurroundSpaces = .none
-    //    var surroundTextWithSpaces: Bool = true
+    var oddPaddingPolicy: OddPaddingPolicy = .tolerate
     var omitEmptySplits: Bool = true
-    var expected: String? = nil  // optional “golden” expected output
+    var expected: String? = nil
   }
 
   @Test("Gallery cases")
   func gallery() {
     let cases: [Case] = [
       .init(
-        name: "No split, centred",
+        name: "No split, centred, tolerate misalignment",
         input: "Hello",
         width: 10,
-        expected: "  Hello   "  // (example: depends on your exact surround-space rule)
+        alignment: .centre,
+        oddPaddingPolicy: .tolerate,
+        expected: "  Hello   "
+      ),
+
+      .init(
+        name: "No split, centred, expand for perfect centring",
+        input: "Hello",
+        width: 11,
+        alignment: .centre,
+        oddPaddingPolicy: .expand,
+        expected: "   Hello   "
       ),
 
       .init(
@@ -57,6 +68,7 @@ struct TextPaddingGalleryTests {
         input: "Title",
         width: 14,
         caps: .init("│", "│", padWithSpace: true),
+        oddPaddingPolicy: .tolerate,
         expected: "│   Title    │"
       ),
 
@@ -86,7 +98,8 @@ struct TextPaddingGalleryTests {
           splitOn: c.splitOn,
           omitEmptySplits: c.omitEmptySplits,
           caps: c.caps,
-          surroundSpaces: c.surroundSpaces
+          surroundSpaces: c.surroundSpaces,
+          oddPaddingPolicy: c.oddPaddingPolicy
         )
       )
 
@@ -110,7 +123,7 @@ struct TextPaddingGalleryTests {
   func lengthInvariant() {
     let input = "Hello@World@Swift"
     let width = 40
-    
+
     let result = input.paddedLine(
       .init(
         width: width,
@@ -122,7 +135,7 @@ struct TextPaddingGalleryTests {
         surroundSpaces: .aroundWholeText
       )
     )
-    
+
     // This invariant holds if you define “toFill” as “exactly fill when possible”
     #expect(result.count == width)
   }

@@ -13,6 +13,12 @@ public enum TextPadAlignment: Sendable, Hashable {
   case trailing
 }
 
+public enum OddPaddingPolicy: Sendable, Hashable {
+  case reduce  // shrink width by 1 to make padding even
+  case expand  // grow width by 1 to make padding even
+  case tolerate  // accept uneven sides (current behavior)
+}
+
 public struct LineCaps: Sendable, Hashable {
   public var leading: String
   public var trailing: String
@@ -33,6 +39,7 @@ public struct LinePadOptions: Sendable, Hashable {
   public var omitEmptySplits: Bool
   public var caps: LineCaps?
   public var surroundSpaces: SurroundSpaces
+  public var oddPaddingPolicy: OddPaddingPolicy
 
   public init(
     width: Int,
@@ -41,7 +48,8 @@ public struct LinePadOptions: Sendable, Hashable {
     splitOn: Character? = nil,
     omitEmptySplits: Bool = true,
     caps: LineCaps? = nil,
-    surroundSpaces: SurroundSpaces = .none
+    surroundSpaces: SurroundSpaces = .none,
+    oddPaddingPolicy: OddPaddingPolicy = .reduce
   ) {
     self.width = width
     self.pad = pad
@@ -50,6 +58,7 @@ public struct LinePadOptions: Sendable, Hashable {
     self.omitEmptySplits = omitEmptySplits
     self.caps = caps
     self.surroundSpaces = surroundSpaces
+    self.oddPaddingPolicy = oddPaddingPolicy
   }
 }
 
@@ -75,7 +84,10 @@ extension String {
     let pieces: [Substring]
     let isSplitMode: Bool
     if let split = options.splitOn, self.contains(split) {
-      let parts = self.split(separator: split, omittingEmptySubsequences: options.omitEmptySplits)
+      let parts = self.split(
+        separator: split,
+        omittingEmptySubsequences: options.omitEmptySplits
+      )
       pieces = parts.isEmpty ? [self[...]] : parts
       isSplitMode = pieces.count > 1
     } else {
@@ -118,8 +130,22 @@ extension String {
     let availablePadding = width - minWidth
 
     guard isSplitMode else {
+
+      var effectivePadding = availablePadding
+      if options.alignment == .centre && (availablePadding % 2 != 0) {
+        switch options.oddPaddingPolicy {
+          case .tolerate:
+            break  // keep as-is
+          case .reduce:
+            // Only reduce if we won’t violate the minimum width.
+            if effectivePadding > 0 { effectivePadding -= 1 }
+          case .expand:
+            effectivePadding += 1
+        }
+      }
+
       /// No split: distribute left/right padding via alignment
-      let (left, right) = distributePadding(options.alignment, padding: availablePadding)
+      let (left, right) = distributePadding(options.alignment, padding: effectivePadding)
 
       return capLeading
         + String(repeating: pad, count: left)
@@ -129,7 +155,7 @@ extension String {
         + String(repeating: pad, count: right)
         + capTrailing
     }
-    
+
     /// Distribute padding over gaps
     let perGap = gaps == 0 ? 0 : (availablePadding / gaps)
     let leftover = gaps == 0 ? 0 : (availablePadding % gaps)
