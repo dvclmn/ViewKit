@@ -16,9 +16,9 @@ struct PopupView: View {
   @Environment(\.isDebugMode) private var isDebugMode
   @Environment(\.isCompactMode) private var isCompactMode
   @Environment(\.hasCloseButton) private var hasCloseButton
+  @Environment(\.hasGlassEffect) private var hasGlassEffect
 
   @State private var isHoveringDismiss: Bool = false
-  @State private var shouldStartProgressBar: Bool = false
 
   private let maxWidth: Double = 240
   private let minWidth: Double = 180
@@ -31,7 +31,7 @@ struct PopupView: View {
   ) {
     self.popupMessage = message
   }
-  
+
   init?(
     _ message: PopupMessage?,
   ) {
@@ -48,52 +48,26 @@ struct PopupView: View {
             DismissButton()
           }
         }
-        .overlay(alignment: .bottom) {
-          if let duration = popupMessage.dismissal.autoDismissDuration, isShowingIndicator {
-            Capsule()
-              .fill(.quaternary)
-              .frame(maxWidth: progressBarLength, maxHeight: 5)
-              .padding(.horizontal, Styles.sizeSmall.bump)
-              .padding(.bottom, Styles.sizeSmall.bumpDown)
-              .animation(.linear(duration: duration), value: shouldStartProgressBar)
-              .frame(maxWidth: .infinity, alignment: .leading)
-          }
-        }
-        .background(.thinMaterial)
-      
-        .clipShape(.rect(cornerRadius: rounding))
-        .overlay {
-          RoundedRectangle(cornerRadius: rounding)
-            .fill(.clear)
-            .stroke(LinearGradient.lightFalloff(), style: .simple01)
-        }
+        .quickRoundedBackground(
+          glass: hasGlassEffect ? .regular : nil,
+          rounding: rounding,
+          padding: .zero,
+          tint: popupMessage.label.role?.colour,
+          isEnabled: true
+        )
+
         .shadow(color: .black.opacity(0.2), radius: 40, x: 0, y: 18)
         .shadow(color: .black.opacity(0.2), radius: 9, x: 0, y: 1)
     }
     .compositingGroup()
-
     .id(popupMessage.id)
 
-    .onAppear {
-      if popupMessage.dismissal.autoDismissDuration != nil {
-        self.shouldStartProgressBar = true
-      } else {
-        self.shouldStartProgressBar = false
-      }
-    }
   }
 
 }
 
 extension PopupView {
 
-  var isShowingIndicator: Bool {
-    popupMessage.dismissal.shouldShowDismissTimingIndicator
-  }
-
-  var progressBarLength: CGFloat {
-    shouldStartProgressBar ? .infinity : .zero
-  }
   @ViewBuilder
   func PopupContent(_ message: PopupMessage) -> some View {
 

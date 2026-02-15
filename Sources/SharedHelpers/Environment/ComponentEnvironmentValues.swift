@@ -106,6 +106,8 @@ extension EnvironmentValues {
   @Entry public var animationClock: TimeInterval?
   @Entry public var isAnimationEnabled: Bool = false
 
+  @Entry public var hasGlassEffect: Bool = false
+
   @Entry public var isInspectorPresented: Binding<Bool> = .constant(false)
   @Entry public var columnVisibility: Binding<NavigationSplitViewVisibility> = .constant(.automatic)
   

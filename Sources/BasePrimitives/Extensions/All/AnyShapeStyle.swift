@@ -8,6 +8,10 @@
 import SwiftUI
 
 extension AnyShapeStyle {
+  public init?(_ colour: Color?) {
+    guard let colour else { return nil }
+    self.init(colour)
+  }
   public static var clear: Self { Self(Color.clear) }
 
   public var opacityBarelyThere: Self { Self(opacity(OpacityPreset.opacityBarelyThere.rawValue)) }

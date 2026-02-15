@@ -22,7 +22,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   let shape: S
   let glass: GlassTypeCompatible?
   let padding: CGFloat
-  let tint: AnyShapeStyle
+  let tint: AnyShapeStyle?
 
   func body(content: Content) -> some View {
     content
@@ -33,10 +33,19 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
           shape
             .fill(backgroundColour.opacity(colourIntensity ?? 0.3))
             .fill(material)
-            .stroke(LinearGradient.lightFalloff(), lineWidth: 1)
-//            .stroke(
-//              strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.1)),
-//              lineWidth: strokeWeight ?? 1)
+
+            .stroke(
+              LinearGradient.lightFalloff(
+                .white.opacity(0.08),
+                direction: .topLeading,
+                falloffAmount: 0.9
+              ),
+              lineWidth: strokeWeight ?? 1
+            )
+            .stroke(
+              strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.08)),
+              lineWidth: strokeWeight ?? 1
+            )
         }
       }
 
@@ -45,7 +54,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
 
 extension QuickBackgroundModifier {
   private var backgroundColour: AnyShapeStyle {
-    colourOverride ?? tint
+    colourOverride ?? tint ?? .clear
   }
 
   private var material: AnyShapeStyle {
@@ -61,7 +70,7 @@ extension View {
     shape: S = .rect(cornerRadius: Styles.sizeSmall),
     glass: GlassTypeCompatible? = nil,
     padding: CGFloat = Styles.sizeTiny,
-    tint: Color = Color.defaultQuickTint,
+    tint: Color? = Color.defaultQuickTint,
     isEnabled: Bool = true,
   ) -> some View {
     self.modifier(
@@ -79,7 +88,7 @@ extension View {
     glass: GlassTypeCompatible? = nil,
     rounding: Double = Styles.sizeSmall,
     padding: CGFloat = Styles.sizeTiny,
-    tint: Color = Color.defaultQuickTint,
+    tint: Color? = Color.defaultQuickTint,
     isEnabled: Bool = true,
   ) -> some View {
     self.modifier(
@@ -89,6 +98,7 @@ extension View {
         glass: glass,
         padding: padding,
         tint: AnyShapeStyle(tint),
+        //        tint: tint.map { AnyShapeStyle($0) } ?? .clear,
       )
     )
   }
