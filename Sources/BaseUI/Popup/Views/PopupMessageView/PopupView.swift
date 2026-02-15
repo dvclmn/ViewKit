@@ -5,8 +5,6 @@
 //  Created by Dave Coleman on 5/2/2024.
 //
 
-//import BaseUI
-
 import BasePrimitives
 import SwiftUI
 
@@ -52,7 +50,7 @@ struct PopupView: View {
           glass: hasGlassEffect ? .regular : nil,
           rounding: rounding,
           padding: .zero,
-          tint: popupMessage.label.role?.colour,
+          tint: popupMessage.label.role?.colour ?? .black,
           isEnabled: true
         )
 

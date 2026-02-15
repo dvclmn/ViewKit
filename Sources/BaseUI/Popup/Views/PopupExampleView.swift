@@ -110,7 +110,7 @@ public struct PopupExampleView: View {
     }
     .padding(30)
 //    .background(.black.secondary)
-    .halfImageDebugBackground(balance: 0.8)
+    .halfImageDebugBackground(balance: 0.3)
     
     //    Button {
     //      popup?.showPopup(.example02)

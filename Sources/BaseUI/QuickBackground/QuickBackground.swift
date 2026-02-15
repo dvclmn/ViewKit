@@ -68,16 +68,17 @@ extension View {
   /// argument, as it's handled through `shape`
   public func quickBackground<S: Shape>(
     shape: S = .rect(cornerRadius: Styles.sizeSmall),
-    glass: GlassTypeCompatible? = nil,
+    //    glass: GlassTypeCompatible? = nil,
     padding: CGFloat = Styles.sizeTiny,
     tint: Color? = Color.defaultQuickTint,
+    usesGlassEffect: Bool = false,
     isEnabled: Bool = true,
   ) -> some View {
     self.modifier(
       QuickBackgroundModifier(
         isEnabled: isEnabled,
         shape: shape,
-        glass: glass,
+        glass: usesGlassEffect ? .regular(tint: tint) : nil,
         padding: padding,
         tint: AnyShapeStyle(tint),
       )
@@ -89,13 +90,15 @@ extension View {
     rounding: Double = Styles.sizeSmall,
     padding: CGFloat = Styles.sizeTiny,
     tint: Color? = Color.defaultQuickTint,
+    usesGlassEffect: Bool = false,
     isEnabled: Bool = true,
   ) -> some View {
     self.modifier(
       QuickBackgroundModifier(
         isEnabled: isEnabled,
         shape: .rect(cornerRadius: rounding),
-        glass: glass,
+        glass: usesGlassEffect ? .regular(tint: tint) : nil,
+        //        glass: glass,
         padding: padding,
         tint: AnyShapeStyle(tint),
         //        tint: tint.map { AnyShapeStyle($0) } ?? .clear,

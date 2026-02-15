@@ -20,9 +20,9 @@ struct QuickBackgroundExampleView: View {
         .padding(40)
         .quickBackground(
           shape: .rect(cornerRadius: Styles.sizeRegular),
-          glass: .regular,
           padding: Styles.sizeSmall,
           tint: .pink,
+          usesGlassEffect: true
         )
 
       Text("Capsule")
@@ -31,6 +31,7 @@ struct QuickBackgroundExampleView: View {
           shape: .capsule,
           padding: Styles.sizeMedium,
           tint: .black,
+          usesGlassEffect: false
         )
     }
     .environment(\.horizontalBias, 3)

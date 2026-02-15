@@ -11,37 +11,40 @@ public struct HalfImageBackgroundModifier: ViewModifier {
   let url: URL?
   let balanceFactor: Double
   public func body(content: Content) -> some View {
-    content
+    let total = 10
+    let blankSpan = NumericHelpers.decileIndex(from: balanceFactor)
+    let imageSpan = max(total - blankSpan, 1)
+
+    return
+      content
       .background {
         HStack(spacing: 0) {
           Rectangle().fill(.black.secondary)
             .containerRelativeFrameCompatible(
               .horizontal,
-              count: 10,
-              span: ,
-              spacing: <#T##CGFloat#>,
-              alignment: <#T##Alignment#>
+              count: total,
+              span: blankSpan,
+              spacing: 0,
+              alignment: .leading
             )
-          //            .frame(width: width / 2)
-          AsyncImage(url: url) {
-            $0.image?
-              .resizable()
-              .aspectRatio(contentMode: .fill)
-          }
-          //          .frame(width: width / 2)
-        }
-        
-//        Rectangle()
-//          .fill(Color.red)
-//          .containerRelativeFrame(.vertical, count: 100, span: 43, spacing: 0)
-//        
-//        Rectangle()
-//          .fill(Color.green)
-//          .containerRelativeFrame(.vertical, count: 100, span: 37, spacing: 0)
-//        
-//        Rectangle()
-//          .fill(Color.yellow)
 
+          Rectangle().fill(.cyan.tertiary)
+            .containerRelativeFrameCompatible(
+              .horizontal,
+              count: total,
+              span: imageSpan,
+              spacing: 0,
+              alignment: .trailing
+            )
+            .overlay {
+              AsyncImage(url: url) {
+                $0.image?
+                  .resizable()
+                  .aspectRatio(contentMode: .fill)
+                  .clipped()
+              }
+            }
+        }
       }
   }
 }
@@ -86,4 +89,3 @@ public enum NumericHelpers {
     decileIndex(from: Double(value))
   }
 }
-
