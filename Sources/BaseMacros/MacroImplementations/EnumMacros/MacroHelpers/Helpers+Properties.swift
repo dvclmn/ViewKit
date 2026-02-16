@@ -72,29 +72,28 @@ public enum MacroHelpers {
     return properties
 
   }
-  
-  
+
   /// Extract properties from struct
   public static func extractProperties(from structDecl: StructDeclSyntax) -> [ExtractableProperty] {
     structDecl.memberBlock.members.compactMap { member -> ExtractableProperty? in
       guard let variable = member.decl.as(VariableDeclSyntax.self),
-            let binding = variable.bindings.first,
-            let identifier = binding.pattern.as(IdentifierPatternSyntax.self),
-            let typeNode = binding.typeAnnotation?.type
+        let binding = variable.bindings.first,
+        let identifier = binding.pattern.as(IdentifierPatternSyntax.self),
+        let typeNode = binding.typeAnnotation?.type
       else {
         return nil
       }
-      
+
       /// Skip computed properties
       if binding.accessorBlock != nil { return nil }
-      
+
       /// Skip static or class properties
       if variable.modifiers.contains(where: {
         $0.name.tokenKind == .keyword(.static) || $0.name.tokenKind == .keyword(.class)
       }) {
         return nil
       }
-      
+
       /// Extract type information
       let isOptional: Bool
       let underlyingType: String
@@ -105,13 +104,13 @@ public enum MacroHelpers {
         isOptional = false
         underlyingType = typeNode.description.trimmingCharacters(in: .whitespacesAndNewlines)
       }
-      
+
       /// Extract attribute information
       let customKey = extractCustomKey(from: variable)
-      
+
       /// Extract default value if present
       let defaultValue = binding.initializer?.value.description
-      
+
       return ExtractableProperty(
         name: identifier.identifier.text,
         type: underlyingType,
@@ -121,24 +120,24 @@ public enum MacroHelpers {
       )
     }
   }
-  
+
   private static func extractTypeInfo(from typeNode: TypeSyntax) -> (isOptional: Bool, type: String) {
     guard let optionalType = typeNode.as(OptionalTypeSyntax.self) else {
       return (false, typeNode.description.trimmingCharacters(in: .whitespacesAndNewlines))
     }
     return (true, optionalType.wrappedType.description.trimmingCharacters(in: .whitespacesAndNewlines))
   }
-  
+
   private static func extractCustomKey(from variable: VariableDeclSyntax) -> String? {
     for attribute in variable.attributes {
       if let attrSyntax = attribute.as(AttributeSyntax.self),
-         let attrName = attrSyntax.attributeName.as(IdentifierTypeSyntax.self),
-         attrName.description == "Attribute",
-         let argList = attrSyntax.arguments?.as(LabeledExprListSyntax.self),
-         let labeledArg = argList.first(where: { $0.label?.text == "originalName" }),
-         let stringLiteral = labeledArg.expression.as(StringLiteralExprSyntax.self)
+        let attrName = attrSyntax.attributeName.as(IdentifierTypeSyntax.self),
+        attrName.description == "Attribute",
+        let argList = attrSyntax.arguments?.as(LabeledExprListSyntax.self),
+        let labeledArg = argList.first(where: { $0.label?.text == "originalName" }),
+        let stringLiteral = labeledArg.expression.as(StringLiteralExprSyntax.self)
       {
-        
+
         let literalValue = stringLiteral.segments
           .compactMap { segment -> String? in
             if let segment = segment.as(StringSegmentSyntax.self) {
@@ -147,7 +146,7 @@ public enum MacroHelpers {
             return nil
           }
           .joined()
-        
+
         return literalValue
       }
     }
