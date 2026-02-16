@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import SampleBuilder
 
+//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
 public struct PopupAction: Sendable, Identifiable {
   public let id: UUID
   let title: String

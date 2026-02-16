@@ -18,9 +18,19 @@
 public macro SampleBuilder(
   numberOfItems: Int,
   dataGeneratorType: DataGeneratorType
-) = #externalMacro(module: "BaseMacrosImplementation", type: "SampleBuilderMacro")
+) =
+  #externalMacro(module: "BaseMacrosImplementation", type: "SampleBuilderMacro")
 
 @attached(peer)
-public macro SampleBuilderItem(
-  category: SampleBuilderItemCategory
-) = #externalMacro(module: "BaseMacrosImplementation", type: "SampleBuilderItemMacro")
+public macro SampleBuilderItem(category: SampleBuilderItemCategory) =
+  #externalMacro(
+    module: "BaseMacrosImplementation",
+    type: "SampleBuilderItemMacro"
+  )
+
+@attached(peer)
+public macro SamplesIgnored() =
+  #externalMacro(
+    module: "BaseMacrosImplementation",
+    type: "SamplesIgnoredMacro"
+  )

@@ -128,7 +128,7 @@ for element in Example.sample {
 struct Review {
   let rating: Int
   let time: Date
-  let product: Product
+  @SamplesIgnored let product: Product
 }
 
 @SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)

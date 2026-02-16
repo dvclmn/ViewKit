@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+import SampleBuilder
 
+//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
 public enum PopupLoading: Sendable {
   case indeterminate
   /// Not yet supported

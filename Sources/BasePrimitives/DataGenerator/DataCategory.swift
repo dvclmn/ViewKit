@@ -1,10 +1,3 @@
-//
-//  DataCategory.swift
-//  BaseHelpers
-//
-//  Created by Dave Coleman on 16/2/2026.
-//
-
 /*
  This source file is part of SwiftAndTipsMacros
 

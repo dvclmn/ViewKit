@@ -12,12 +12,12 @@
 //  Created by Pedro Rojas on 23/08/23.
 //
 
+import BasePrimitives
 import SwiftCompilerPlugin
 import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
-import BasePrimitives
 
 public struct SampleBuilderItemMacro: PeerMacro {
   /*
@@ -75,8 +75,8 @@ public struct SampleBuilderItemMacro: PeerMacro {
       .declName.baseName.text,
       let dataCategory = DataCategory(rawValue: simpleCategoryString)
     {
-
       return dataCategory
+      
     } else if let imageCategoryString = argumentTuple
       .expression
       .as(FunctionCallExprSyntax.self)?

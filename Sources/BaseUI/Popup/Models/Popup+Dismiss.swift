@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import SampleBuilder
 
+//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
 public enum PopupDismissBehaviour: Equatable, Sendable {
   case automatic(TimeInterval, showsIndicator: Bool = false)
   case manual
