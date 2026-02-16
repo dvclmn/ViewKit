@@ -21,9 +21,9 @@
 
 import Foundation
 
-public struct DataCategory: RawRepresentable {
+public struct DataCategory: RawRepresentable, Sendable {
   
-  public enum BuiltInValue: String {
+  public enum BuiltInValue: String, Sendable {
     // String
     case firstName
     case lastName
@@ -40,7 +40,7 @@ public struct DataCategory: RawRepresentable {
     case url
   }
   
-  public enum Category {
+  public enum Category: Sendable {
     case builtInValue(BuiltInValue)
     case image(width: Int, height: Int)
   }
