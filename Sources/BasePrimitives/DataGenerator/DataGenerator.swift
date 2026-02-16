@@ -14,40 +14,37 @@
 
 import Foundation
 
-//import DataCategory
-
 private typealias Provider = FakeDataProvider
 
 // Keep all method names in lowercase.
-public struct DataGenerator {
-  public var int: () -> Int
-  public var int8: () -> Int8
-  public var int16: () -> Int16
-  public var int32: () -> Int32
-  public var int64: () -> Int64
-  public var uint: () -> UInt
-  public var uint8: () -> UInt8
-  public var uint16: () -> UInt16
-  public var uint32: () -> UInt32
-  public var uint64: () -> UInt64
-  public var float: () -> Float
-  public var float32: () -> Float32
-  public var float64: () -> Float64
-  public var double: () -> Double
-  public var string: () -> String
-  public var bool: () -> Bool
-  public var data: () -> Data
-  public var date: () -> Date
-  public var uuid: () -> UUID
-  public var cgpoint: () -> CGPoint
-  public var cgrect: () -> CGRect
-  public var cgsize: () -> CGSize
-  public var cgvector: () -> CGVector
-  public var cgfloat: () -> CGFloat
-  public var url: () -> URL
+public struct DataGenerator: Sendable {
+  public let int: @Sendable () -> Int
+  public let int8: @Sendable () -> Int8
+  public let int16: @Sendable () -> Int16
+  public let int32: @Sendable () -> Int32
+  public let int64: @Sendable () -> Int64
+  public let uint: @Sendable () -> UInt
+  public let uint8: @Sendable () -> UInt8
+  public let uint16: @Sendable () -> UInt16
+  public let uint32: @Sendable () -> UInt32
+  public let uint64: @Sendable () -> UInt64
+  public let float: @Sendable () -> Float
+  public let float32: @Sendable () -> Float32
+  public let float64: @Sendable () -> Float64
+  public let double: @Sendable () -> Double
+  public let string: @Sendable () -> String
+  public let bool: @Sendable () -> Bool
+  public let data: @Sendable () -> Data
+  public let date: @Sendable () -> Date
+  public let uuid: @Sendable () -> UUID
+  public let cgpoint: @Sendable () -> CGPoint
+  public let cgrect: @Sendable () -> CGRect
+  public let cgsize: @Sendable () -> CGSize
+  public let cgvector: @Sendable () -> CGVector
+  public let cgfloat: @Sendable () -> CGFloat
+  public let url: @Sendable () -> URL
 }
 
-@MainActor
 extension DataGenerator {
   public static let `default` = Self(
     int: { 0 },

@@ -12,7 +12,7 @@ extension Collection {
 }
 
 extension BidirectionalCollection {
-  func nextIndex(
+  public func nextIndex(
     after index: Index,
     wrapping: Bool = true
   ) -> Index? {
@@ -26,7 +26,7 @@ extension BidirectionalCollection {
     }
   }
   
-  func previousIndex(
+  public func previousIndex(
     before index: Index,
     wrapping: Bool = true
   ) -> Index? {
@@ -41,7 +41,7 @@ extension BidirectionalCollection {
 }
 
 extension BidirectionalCollection where Element: Equatable {
-  func nextElement(
+  public func nextElement(
     after element: Element,
     wrapping: Bool = true
   ) -> Element? {
@@ -53,7 +53,7 @@ extension BidirectionalCollection where Element: Equatable {
     return self[next]
   }
   
-  func previousElement(
+  public func previousElement(
     before element: Element,
     wrapping: Bool = true
   ) -> Element? {

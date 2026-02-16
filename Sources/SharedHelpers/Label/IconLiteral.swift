@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import SampleBuilder
 
+@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
 public enum IconLiteral: Sendable, Equatable, Codable, Hashable {
   case emoji(String)
   case symbol(String)

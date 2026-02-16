@@ -9,7 +9,7 @@ import SwiftUI
 
 enum IconType {
   case native
-//  case custom
+  //  case custom
 }
 
 public struct IconGalleryView: View {
@@ -36,22 +36,22 @@ public struct IconGalleryView: View {
         spacing: Styles.sizeRegular
       ) {
         Text("Need to fix this after changes to String/Shared helpers")
-//        ForEach(icons, id: \.reference) { icon in
-//          //        ForEach(Icons.allCases.reversed()) { icon in
-//          VStack(spacing: 0) {
-//            MainText(icon.reference)
-//              .overlay {
-//                MainIcon(icon.reference)
-//              }
-//            //            AltIcons(icon)
-//          }
-//          .frame(width: thumbnailSize, height: thumbnailSize)
-//          .aspectRatio(1 / 1, contentMode: .fill)
-//          .fixedSize()
-//          .background(.gray.quinary.opacity(0.7))
-//          .clipShape(.rect(cornerRadius: Styles.sizeTiny))
-//
-//        }
+        //        ForEach(icons, id: \.reference) { icon in
+        //          //        ForEach(Icons.allCases.reversed()) { icon in
+        //          VStack(spacing: 0) {
+        //            MainText(icon.reference)
+        //              .overlay {
+        //                MainIcon(icon.reference)
+        //              }
+        //            //            AltIcons(icon)
+        //          }
+        //          .frame(width: thumbnailSize, height: thumbnailSize)
+        //          .aspectRatio(1 / 1, contentMode: .fill)
+        //          .fixedSize()
+        //          .background(.gray.quinary.opacity(0.7))
+        //          .clipShape(.rect(cornerRadius: Styles.sizeTiny))
+        //
+        //        }
       }
       .padding(Styles.sizeMedium)
       //      .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -69,8 +69,8 @@ extension IconGalleryView {
         case .native:
           Image(systemName: iconString)
 
-//        case .custom:
-//          Image(ImageResource(name: iconString, bundle: .module))
+      //        case .custom:
+      //          Image(ImageResource(name: iconString, bundle: .module))
 
       }
     }
@@ -110,8 +110,8 @@ extension IconGalleryView {
     switch iconType {
       case .native:
         return Icons.allCases
-//      case .custom:
-//        return CustomSymbol.allCases
+    //      case .custom:
+    //        return CustomSymbol.allCases
     }
   }
 }
