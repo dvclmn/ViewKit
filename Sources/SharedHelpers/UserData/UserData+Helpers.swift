@@ -45,17 +45,6 @@ extension UserDataHandler {
 
 // MARK: - Setting Data
 extension UserDataHandler {
-  /// Mutates a single property on the in-memory value and propagates updates.
-  /// Convenience for targeted updates without rewriting the whole `Value`.
-  //  @MainActor
-  //  public func setValue<T>(
-  //    _ keyPath: WritableKeyPath<Value, T>,
-  //    to value: T,
-  //    file: StaticString = #fileID,
-  //    line: UInt = #line
-  //  ) {
-  //    updateData((file: file, line: line)) { $0[keyPath: keyPath] = value }
-  //  }
 
   /// Mutates a single property on the in-memory value and propagates updates.
   /// Convenience for targeted updates without rewriting the whole `Value`.
@@ -83,17 +72,6 @@ extension UserDataHandler {
     updateData(action, file: file, line: line, perform: change)
   }
 
-  //  @MainActor
-  //  public func setCase<Root, T>(
-  //    action: UpdateKind = .standard,
-  //    casePath: AnyCasePath<Root, T>
-  //    //    perform change: (inout Value) -> Void
-  //  ) where Root: CasePathable {
-  //
-  //    updateData(action) { data in
-  //      data[keyPath: casePath]
-  //    }
-  //  }
 }
 
 // MARK: - Binding Data

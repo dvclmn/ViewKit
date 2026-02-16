@@ -27,7 +27,7 @@ struct PopupCoreView: View {
         .environment(\.symbolRenderingMode, .hierarchical)
         .environment(\.iconColour, AnyShapeStyle(.secondary))
 
-        .font(isCompactMode ? .callout : .headline)
+        .font(isCompactMode ? .callout : .body.weight(.semibold))
         .fontWeight(.medium)
 
         /// To leave room for the dismiss button
@@ -57,14 +57,12 @@ struct PopupCoreView: View {
     }  // END vstack
 
     .multilineTextAlignment(.leading)
-    //    .fixedSize(horizontal: false, vertical: true)
 
-    .padding(.horizontal, isCompactMode ? 12 : 20)
-    .padding(.top, isCompactMode ? 8 : 13)
-    .padding(
-      .bottom,
-      isCompactMode
-        ? 10 : popupMessage.dismissal.shouldShowDismissTimingIndicator ? Styles.sizeMedium.bump : 16
+    .weightedPadding(
+      isCompactMode ? 10 : 17,
+      horizontalBias: isCompactMode ? 1.4 : 1.2,
+      opticalCentreBias: 1.2,
+      excludedEdge: nil
     )
 
     .onAppear {

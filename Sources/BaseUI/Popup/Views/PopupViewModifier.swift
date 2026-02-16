@@ -34,6 +34,7 @@ public struct PopupViewModifier: ViewModifier {
         isCompact: isCompact,
         hasCloseButton: hasCloseButton
       )
+//      .setUpPopup()
       .environment(\.popup, popup)
   }
 }
@@ -51,11 +52,9 @@ public struct PopupViewExtenderModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .overlay(alignment: alignment) {
-        if let popup {
+        if let popup, let message = popup.popupMessage {
           PopupView(
-            popup.popupMessage ?? debugPopup.message,
-            //          isCompact: isCompact,
-            //          hasCloseButton: hasCloseButton
+            message,
           )
           .padding(Styles.sizeRegular)
           .environment(\.isCompactMode, isCompact)
@@ -65,14 +64,13 @@ public struct PopupViewExtenderModifier: ViewModifier {
           StateView("No popup set in the Environment", icon: .emoji("🚨"))
         }
       }
+      
   }
 }
 
 extension View {
   public func setUpPopup() -> some View {
-    self.modifier(
-      PopupSetupModifier()
-    )
+    self.modifier(PopupSetupModifier())
   }
 
   public func popup(

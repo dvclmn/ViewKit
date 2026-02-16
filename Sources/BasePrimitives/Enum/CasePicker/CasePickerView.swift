@@ -34,15 +34,12 @@ where
   }
 
   public var body: some View {
-//    VStack(alignment: .leading, spacing: 12) {
-      
       Picker(title, selection: metaBinding) {
         ForEach(Array(Meta.allCases), id: \.id) { meta in
           Text(meta.name).tag(meta)
         }
       }
       content(CaseProxy(selection: $selection))
-//    }
   }
 
 }
@@ -55,9 +52,3 @@ extension CasePicker {
     )
   }
 }
-// MARK: - Usage Note on clampAny
-// The clampAny property is intended to carry optional range info (such as a Range<Float> or ClosedRange<Double>)
-// that can be used by the content closure to clamp floating-point associated values in the selected case.
-// The actual clamping logic can be implemented via extensions on CaseProxy, which can extract and apply
-// clampAny when requested by the content view. This keeps the CasePicker generic and flexible.
-

@@ -46,54 +46,10 @@ public final class CasePickerHandler<Enum: MetaEnum> {
 
 // MARK: - Case Binding Helper
 
-/// Provides bindable access to associated values of a specific enum case
-@MainActor
-public struct CaseBinding<Root, Value> {
-  let casePath: AnyCasePath<Root, Value>
-  let root: Binding<Root>
-
-  public func binding() -> Binding<Value>? {
-    guard casePath.extract(from: root.wrappedValue) != nil else {
-      return nil
-    }
-
-    return Binding<Value>(
-      get: { casePath.extract(from: root.wrappedValue)! },
-      set: { newValue in
-        root.wrappedValue = casePath.embed(newValue)
-      }
-    )
-  }
-}
-
-//public struct CaseBinding<Root, Value> {
-////  let casePath: CaseKeyPath<Root, Value>
-//  let casePath: AnyCasePath<Root, Value>
-//  let root: Binding<Root>
-//
-//  /// Create a binding to the associated value, only if the enum is currently in this case
-//  public func binding() -> Binding<Value>? {
-//    guard casePath.extract(from: root.wrappedValue) != nil else {
-//      return nil
-//    }
-//
-//    return Binding<Value>(
-//      get: { casePath.extract(from: root.wrappedValue)! },
-//      set: { newValue in
-//        root.wrappedValue = casePath.embed(newValue)
-//      }
-//    )
-//  }
-//
-//  /// Force-unwrapped binding (use when you know the case matches)
-//  public func binding() -> Binding<Value> where Value == Void {
-//    binding() ?? Binding.constant(())
-//  }
-//}
 
 // MARK: - Utility: clamp helper for floating-point
-private extension BinaryFloatingPoint {
-  func clamped(to range: ClosedRange<Self>) -> Self {
+extension BinaryFloatingPoint {
+  fileprivate func clamped(to range: ClosedRange<Self>) -> Self {
     return min(max(self, range.lowerBound), range.upperBound)
   }
 }
@@ -163,4 +119,3 @@ public struct CaseProxy<Root> where Root: CasePathable {
 //      .disabled(casePath.extract(from: binding.wrappedValue) == nil)
 //  }
 //}
-

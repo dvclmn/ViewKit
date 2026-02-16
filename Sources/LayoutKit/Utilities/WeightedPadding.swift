@@ -37,16 +37,16 @@ extension WeightedPaddingModifier {
 
     let biasH = horizontalBiasOverride ?? horizontalBias
     let biasCentre = opticalCentreBiasOverride ?? opticalCentreBias
-    
+
     /// Calculate vertical padding with optical center bias.
     /// Increasing opticalCentreBias increases bottom padding and decreases top padding,
     /// shifting content upward.
     let safeBias = max(biasCentre, 0.01)
-    let paddingTop = padding / safeBias
-    let paddingBottom = padding * safeBias
+    let paddingTop = max(0, padding / safeBias)
+    let paddingBottom = max(0, padding * safeBias)
 
     /// Calculate horizontal padding with direct bias multiplier
-    let paddingH = padding * biasH
+    let paddingH = max(0, padding * biasH)
 
     guard let excludedEdge else {
       /// Apply computed padding to all edges when no edge is excluded
@@ -72,7 +72,7 @@ extension WeightedPaddingModifier {
 extension View {
   public func weightedPadding(
     _ padding: CGFloat,
-    horizontalBias: CGFloat = 1.4,
+    horizontalBias: CGFloat = 1.2,
     opticalCentreBias: CGFloat = 1.2,
     excludedEdge: Edge? = nil
   ) -> some View {

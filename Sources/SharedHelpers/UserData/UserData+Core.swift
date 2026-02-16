@@ -70,7 +70,7 @@ extension UserDataHandler {
         print("⚠️ Attempted to register undo without providing an undoManager to `\(Self.Type.self)`")
       }
       undoManager?.registerUndo(withTarget: self) { target in
-        target.updateData(.standard) { $0 = old }
+        target.updateData(action) { $0 = old }
       }
       if let actionName { undoManager?.setActionName(actionName) }
     }
