@@ -9,6 +9,7 @@ import CoreTools
 import SwiftUI
 import SampleBuilder
 
+
 extension PopupMessage {
 
   public static let example01 = Self.make(

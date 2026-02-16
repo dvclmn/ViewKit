@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 13/2/2025.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
 public struct QuickTabView<TabItem: LabeledItem & Hashable, Content: View>: View

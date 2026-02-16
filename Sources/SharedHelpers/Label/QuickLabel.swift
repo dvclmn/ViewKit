@@ -8,7 +8,7 @@
 import SwiftUI
 import SampleBuilder
 
-@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
+//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
 public struct QuickLabel: Sendable, Codable, Equatable, Hashable {
   public var text: String
   public let icon: IconLiteral?
