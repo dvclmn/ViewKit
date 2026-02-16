@@ -8,18 +8,20 @@
 import CasePaths
 import SwiftUI
 
-
 /// Provides bindable access to associated values of a specific enum case
+///
+/// Intended to be used conditionally, such as:
+/// `if let binding = proxy.case(\.wave)) {...}`
 @MainActor
 public struct CaseBinding<Root, Value> {
   let casePath: AnyCasePath<Root, Value>
   let root: Binding<Root>
-  
+
   public func binding() -> Binding<Value>? {
     guard casePath.extract(from: root.wrappedValue) != nil else {
       return nil
     }
-    
+
     return Binding<Value>(
       get: { casePath.extract(from: root.wrappedValue)! },
       set: { newValue in
@@ -28,7 +30,6 @@ public struct CaseBinding<Root, Value> {
     )
   }
 }
-
 
 //public struct CaseBinding<Root, Value> {
 ////  let casePath: CaseKeyPath<Root, Value>

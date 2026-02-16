@@ -16,7 +16,7 @@ where
 {
   let title: String
   @Binding var selection: Root
-  @State private var state: CasePickerHandler<Root>
+  @State private var state: CasePathHandler<Root>
   @ViewBuilder let content: (CaseProxy<Root>) -> Content
   let clampAny: Any?
 
@@ -28,27 +28,17 @@ where
   ) {
     self.title = title
     self._selection = selection
-    self._state = State(initialValue: CasePickerHandler(initialValue: selection.wrappedValue))
+    self._state = State(initialValue: CasePathHandler(initialValue: selection.wrappedValue))
     self.content = content
     self.clampAny = clamp
   }
 
   public var body: some View {
-      Picker(title, selection: metaBinding) {
-        ForEach(Array(Meta.allCases), id: \.id) { meta in
-          Text(meta.name).tag(meta)
-        }
+    Picker(title, selection: state.metaBinding($selection)) {
+      ForEach(Array(Meta.allCases), id: \.id) { meta in
+        Text(meta.name).tag(meta)
       }
-      content(CaseProxy(selection: $selection))
-  }
-
-}
-
-extension CasePicker {
-  private var metaBinding: Binding<Meta> {
-    Binding(
-      get: { selection.meta },
-      set: { newMeta in state.switchTo(newMeta, binding: $selection) }
-    )
+    }
+    content(CaseProxy(selection: $selection))
   }
 }
