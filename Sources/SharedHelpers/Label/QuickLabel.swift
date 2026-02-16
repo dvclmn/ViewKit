@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 26/5/2025.
 //
 
-import SwiftUI
 import SampleBuilder
+import SwiftUI
 
 @SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
 public struct QuickLabel: Sendable, Codable, Equatable, Hashable {
