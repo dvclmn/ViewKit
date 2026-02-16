@@ -14,14 +14,13 @@ import BasePrimitives
 // This source file is part of SwiftAndTipsMacros
 // Copyright (c) 2023 Pedro Rojas and project authors
 // Licensed under MIT License
-
 @attached(member, names: named(sample))
 public macro SampleBuilder(
   numberOfItems: Int,
   dataGeneratorType: DataGeneratorType
-) = #externalMacro(module: "SampleBuilderImplementation", type: "SampleBuilderMacro")
+) = #externalMacro(module: "BaseMacrosImplementation", type: "SampleBuilderMacro")
 
 @attached(peer)
 public macro SampleBuilderItem(
   category: SampleBuilderItemCategory
-) = #externalMacro(module: "SampleBuilderImplementation", type: "SampleBuilderItemMacro")
+) = #externalMacro(module: "BaseMacrosImplementation", type: "SampleBuilderItemMacro")

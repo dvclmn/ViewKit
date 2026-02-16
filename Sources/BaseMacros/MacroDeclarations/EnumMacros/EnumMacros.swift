@@ -13,7 +13,7 @@ import BasePrimitives
 // https://github.com/bernndr/swift-macros/
 @attached(member, names: arbitrary)
 public macro AssociatedValues() = #externalMacro(
-  module: "EnumMacrosImplementation",
+  module: "BaseMacrosImplementation",
   type: "AssociatedValuesMacro"
 )
 
@@ -22,7 +22,7 @@ public macro AssociatedValues() = #externalMacro(
 @attached(member, names: arbitrary)
 public macro CaseDetection(includesNames: Bool = false) =
 #externalMacro(
-  module: "EnumMacrosImplementation",
+  module: "BaseMacrosImplementation",
   type: "CaseDetectionMacro"
 )
 
@@ -33,7 +33,7 @@ public macro CaseDetection(includesNames: Bool = false) =
 @attached(extension, conformances: MetaEnum)
 /// Not going to try to pass arguments for now
 public macro MetaEnum() = #externalMacro(
-  module: "EnumMacrosImplementation",
+  module: "BaseMacrosImplementation",
   type: "MetaEnumMacro"
 )
 
@@ -66,7 +66,7 @@ public macro MetaEnum() = #externalMacro(
 @attached(member, names: arbitrary)
 @attached(extension, conformances: OptionSet)
 public macro SetOfOptions<RawType>() = #externalMacro(
-  module: "EnumMacrosImplementation",
+  module: "BaseMacrosImplementation",
   type: "SetOfOptionsMacro"
 )
 
@@ -99,7 +99,7 @@ public macro SetOfOptions<RawType>() = #externalMacro(
 /// ```
 @attached(member, names: arbitrary)
 public macro Optinits() = #externalMacro(
-  module: "EnumMacrosImplementation",
+  module: "BaseMacrosImplementation",
   type: "OptinitsMacro"
 )
 
@@ -108,6 +108,6 @@ public macro Optinits() = #externalMacro(
 // https://github.com/DanielSincere/StaticMemberIterable
 @attached(member, names: named(allStaticMembers))
 public macro StaticMemberIterable() = #externalMacro(
-  module: "EnumMacrosImplementation",
+  module: "BaseMacrosImplementation",
   type: "StaticMemberIterableMacro"
 )

@@ -1,6 +1,7 @@
 import BasePrimitives
 import EnumMacros
 import Foundation
+import SampleBuilder
 
 // MARK: - Associated Values
 
@@ -59,16 +60,6 @@ struct CoolAnimals {
   }
 }
 
-//struct Thing {
-//
-//  var otherThing: CoolAnimals {
-//    let thing: CoolAnimals = .bat
-//
-//    thing.contains(.frog)
-//
-//  }
-//
-//}
 
 /// Expected output:
 /// ```
@@ -121,7 +112,6 @@ struct MyRecord {
   static let d: String = "hello"
 }
 
-
 // MARK: - SampleData
 
 @SampleBuilder(numberOfItems: 10, dataGeneratorType: .default)
@@ -151,10 +141,10 @@ struct Product {
 struct Profile {
   @SampleBuilderItem(category: .firstName)
   let firstName: String
-  
+
   @SampleBuilderItem(category: .lastName)
   let lastName: String
-  
+
   @SampleBuilderItem(category: .image(width: 300, height: 300))
   let profileImage: URL
 }
