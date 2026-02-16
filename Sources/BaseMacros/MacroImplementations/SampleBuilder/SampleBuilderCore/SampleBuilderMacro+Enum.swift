@@ -13,6 +13,7 @@
 //
 
 import BasePrimitives
+import MacroToolkit
 import SwiftSyntax
 import SwiftSyntaxMacros
 
@@ -29,6 +30,8 @@ extension SampleBuilderMacro {
       $0.decl.as(EnumCaseDeclSyntax.self)
     }
 
+    let access = Enum(enumDecl).access
+
     if cases.isEmpty {
       SampleBuilderDiagnostic.report(
         diagnostic: .enumWithEmptyCases,
@@ -41,6 +44,7 @@ extension SampleBuilderMacro {
     let sampleCode = generateSampleCodeSyntax(
       sampleData: generateSampleArrayCases(
         cases: cases,
+        access: access,
         numberOfItems: numberOfItems,
         generatorType: generatorType
       )
@@ -51,6 +55,7 @@ extension SampleBuilderMacro {
 
   static func generateSampleArrayCases(
     cases: [EnumCaseDeclSyntax],
+    access: String,
     numberOfItems: Int,
     generatorType: DataGeneratorType
   ) -> ArrayElementListSyntax {
@@ -66,7 +71,8 @@ extension SampleBuilderMacro {
         ParameterItem(
           identifierName: $0.0?.text,
           identifierType: $0.1,
-          category: nil
+          category: nil,
+          accessLevel: access,
         )
       }
 
@@ -113,14 +119,12 @@ extension SampleBuilderMacro {
   ) -> [EnumCaseDeclSyntax] {
     var totalNumberOfCases: [EnumCaseDeclSyntax] = []
 
-    /*
-     we will extend the cases according to the number of items.
-     for example, if cases are [case1, case2, case3]
-     and numberOfItems = 2, the result should be [case1, case2].
-    
-     If cases are [case1, case2] and numberOfItems = 7, the result
-     should be [case1, case2, case1, case2, case1, case2, case1]
-     */
+    /// we will extend the cases according to the number of items.
+    /// for example, if cases are [case1, case2, case3]
+    /// and numberOfItems = 2, the result should be [case1, case2].
+    ///
+    /// If cases are [case1, case2] and numberOfItems = 7, the result
+    /// should be [case1, case2, case1, case2, case1, case2, case1]
     for i in 0..<numberOfItems {
       totalNumberOfCases.append(
         cases[i % cases.count]
@@ -135,16 +139,16 @@ extension EnumCaseDeclSyntax {
   var hasAssociatedValues: Bool {
     self.elements.first?.parameterClause != nil
   }
-  
+
   var name: String {
     guard let caseName = self.elements.first?.name.text
     else {
       fatalError("Compiler Bug: Case name not found")
     }
-    
+
     return caseName
   }
-  
+
   var parameters: [(TokenSyntax?, TypeSyntax)] {
     self.elements.first?.parameterClause?.parameters.map {
       ($0.firstName, $0.type)

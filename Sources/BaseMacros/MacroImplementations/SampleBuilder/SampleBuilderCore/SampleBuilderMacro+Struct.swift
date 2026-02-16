@@ -13,6 +13,7 @@
 //
 
 import BasePrimitives
+import MacroToolkit
 import SwiftSyntax
 import SwiftSyntaxMacros
 
@@ -56,8 +57,10 @@ extension SampleBuilderMacro {
         $0.decl.as(InitializerDeclSyntax.self)
       }
 
+    let access = Struct(structDecl).access
+
     if initMembers.isEmpty {
-      // No custom init around. We use the memberwise initializer's properties:
+      /// No custom init around. We use the memberwise initializer's properties:
       return storedPropertyMembers.compactMap {
         if let identifier = $0.bindings.first?
           .pattern
@@ -76,7 +79,8 @@ extension SampleBuilderMacro {
         ParameterItem(
           identifierName: $0.0,
           identifierType: $0.1,
-          category: $0.2
+          category: $0.2,
+          accessLevel: access,
         )
       }
     }
@@ -98,7 +102,7 @@ extension SampleBuilderMacro {
     context: MacroExpansionContext
   ) -> DataCategory? {
 
-    // Skip categorization for ignored properties
+    /// Skip categorization for ignored properties
     if variableDecl.hasSamplesIgnoredAttribute {
       return nil
     }
@@ -119,7 +123,7 @@ extension SampleBuilderMacro {
 
     if generatorType == .default {
       // Since default will always the return the same value,
-      // Using SampleBuilderItem is useless and will throw a warning.
+      /// Using SampleBuilderItem is useless and will throw a warning.
       SampleBuilderDiagnostic.report(
         diagnostic: .sampleBuilderItemRedundant,
         node: Syntax(attribute),
@@ -148,7 +152,7 @@ extension SampleBuilderMacro {
         .declName.baseName.text == "image"
     {
 
-      // Image's width and height
+      /// Image's width and height
       let argumentsValues = imageCategoryExpression.arguments.compactMap {
         Int($0.expression.as(IntegerLiteralExprSyntax.self)?.literal.text ?? "")
       }
@@ -212,4 +216,3 @@ extension SampleBuilderMacro {
     return arrayElementListSyntax
   }
 }
-

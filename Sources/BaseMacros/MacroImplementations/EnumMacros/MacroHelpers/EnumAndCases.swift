@@ -10,7 +10,12 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
+extension Struct {
+  var access: String { accessLevel?.name ?? "" }
+}
+
 extension Enum {
+
   /// Public, internal, etc.
   var access: String { accessLevel?.name ?? "" }
 
@@ -53,11 +58,11 @@ extension Enum {
   /// Returns a joined string built from each enum case using a custom formatter.
   /// - Parameter valueForCase: A closure that returns a string for each case.
   /// - Returns: The joined string with a newline separator.
-//  func casesList(_ valueForCase: (EnumCase) -> String) -> String {
-//    cases
-//      .map { valueForCase($0) }
-//      .joined(separator: "\n")
-//  }
+  //  func casesList(_ valueForCase: (EnumCase) -> String) -> String {
+  //    cases
+  //      .map { valueForCase($0) }
+  //      .joined(separator: "\n")
+  //  }
 
   /// Returns a joined string using a provided preset.
   /// - Parameter preset: A built-in formatting preset for common patterns.
@@ -80,9 +85,9 @@ extension Enum {
 
   /// Convenience: Default to a member list suitable for array/OptionSet literals.
   /// Produces lines like: ".foo,"
-//  var memberList: String {
-//    casesList(preset: .memberList(trailing: ","))
-//  }
+  //  var memberList: String {
+  //    casesList(preset: .memberList(trailing: ","))
+  //  }
 
   /// Common Swift declaration modifiers include:
   /// - Access control: public, internal, fileprivate, private, package, open

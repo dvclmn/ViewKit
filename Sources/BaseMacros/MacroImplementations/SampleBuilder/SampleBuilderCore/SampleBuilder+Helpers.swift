@@ -23,8 +23,8 @@ extension SampleBuilderMacro {
       ),
       rightSquare: .rightSquareToken()
     )
-    
-//    let accessLevel = 
+
+    //    let accessLevel =
 
     let sampleCode = VariableDeclSyntax(
       modifiers: DeclModifierListSyntax {
@@ -117,7 +117,7 @@ extension SampleBuilderMacro {
       .as(PrefixOperatorExprSyntax.self)
     {
       return negativeNumberOfItems(expression: prefixExpression)
-      
+
     } else if let integerExpression = argumentTuple
       .expression
       .as(IntegerLiteralExprSyntax.self),

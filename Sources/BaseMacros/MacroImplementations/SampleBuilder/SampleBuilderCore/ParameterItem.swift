@@ -13,14 +13,15 @@
 //
 
 import BasePrimitives
+import MacroToolkit
 import SwiftSyntax
 
 struct ParameterItem {
   let identifierName: String?
   let identifierType: TypeSyntax
   let category: DataCategory?
+  let accessLevel: String
+//  let accessLevel: AccessModifier
 
-  var hasName: Bool {
-    identifierName != nil
-  }
+  var hasName: Bool { identifierName != nil }
 }
