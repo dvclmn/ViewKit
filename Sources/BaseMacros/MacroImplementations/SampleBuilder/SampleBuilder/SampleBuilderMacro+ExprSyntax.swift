@@ -16,6 +16,7 @@ import BasePrimitives
 import SwiftSyntax
 
 extension SampleBuilderMacro {
+  
   static func getExpressionSyntax(
     from type: TypeSyntax,
     generatorType: DataGeneratorType,
@@ -57,7 +58,7 @@ extension SampleBuilderMacro {
     if let simpleType = arrayType.element.as(IdentifierTypeSyntax.self),
       SupportedType(rawValue: simpleType.name.text) == nil
     {
-      // Custom array type that attaches SampleBuilder in its declaration:
+      /// Custom array type that attaches SampleBuilder in its declaration:
       return ExprSyntax(
         MemberAccessExprSyntax(
           base: DeclReferenceExprSyntax(
@@ -136,7 +137,7 @@ extension SampleBuilderMacro {
       )
     }
 
-    // Custom type that attaches SampleBuilder in its declaration:
+    /// Custom type that attaches SampleBuilder in its declaration:
     return ExprSyntax(
       ForceUnwrapExprSyntax(
         expression: MemberAccessExprSyntax(

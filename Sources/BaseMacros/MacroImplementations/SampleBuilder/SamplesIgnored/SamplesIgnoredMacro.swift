@@ -26,13 +26,8 @@ public struct SamplesIgnoredMacro: PeerMacro {
     providingPeersOf declaration: some SwiftSyntax.DeclSyntaxProtocol,
     in context: some SwiftSyntaxMacros.MacroExpansionContext
   ) throws -> [SwiftSyntax.DeclSyntax] {
-
-    let dataCategory = getDataCategory(from: node)
-
     guard
-      let variableDecl =
-        declaration
-        .as(VariableDeclSyntax.self),
+      let variableDecl = declaration.as(VariableDeclSyntax.self),
       variableDecl.isStoredProperty
     else {
       SampleBuilderItemDiagnostic.report(
@@ -43,44 +38,8 @@ public struct SamplesIgnoredMacro: PeerMacro {
       return []
     }
 
-    guard dataCategory.supports(type: variableDecl.typeName)
-    else {
-      SampleBuilderItemDiagnostic.report(
-        diagnostic: .categoryNotSupported(category: dataCategory, typeName: variableDecl.typeName),
-        node: node,
-        context: context
-      )
-      return []
-    }
-
+    // Marker attribute; no generated peers needed.
     return []
   }
 
-  static func getDataCategory(from node: AttributeSyntax) -> DataCategory {
-    guard let argumentTuple = node.arguments?.as(LabeledExprListSyntax.self)?.first
-    else {
-      fatalError("Compiler bug: Argument must exist")
-    }
-
-    if let simpleCategoryString = argumentTuple
-      .expression
-      .as(MemberAccessExprSyntax.self)?
-      .declName.baseName.text,
-      let dataCategory = DataCategory(rawValue: simpleCategoryString)
-    {
-      return dataCategory
-      
-    } else if let imageCategoryString = argumentTuple
-      .expression
-      .as(FunctionCallExprSyntax.self)?
-      .description
-      .dropFirst(),  // it removes the dot from .image(...)
-      let dataCategory = DataCategory(rawValue: String(imageCategoryString))
-    {
-
-      return dataCategory
-    }
-
-    fatalError("Compiler bug: Argument must exist")
-  }
 }
