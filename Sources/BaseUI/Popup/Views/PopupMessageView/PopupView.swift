@@ -29,6 +29,12 @@ struct PopupView: View {
 
     VStack {
       PopupCoreView(popupMessage: message)
+        .weightedPadding(
+          isCompactMode ? 10 : 17,
+          horizontalBias: isCompactMode ? 1.4 : 1.2,
+          opticalCentreBias: 1.1,
+          excludedEdge: nil
+        )
         .overlay(alignment: .topTrailing) {
           if hasCloseButton {
             DismissButton()
@@ -72,10 +78,11 @@ extension PopupView {
     } label: {
       Label("Dismiss", systemImage: Icons.cross.icon)
         .labelStyle(.iconOnly)
-        .font(.caption.weight(.bold))
+        .font(isCompactMode ? .callout.weight(.bold) : .title3.weight(.semibold))
         .foregroundStyle(isHoveringDismiss ? .secondary : .tertiary)
-        .padding(Styles.sizeSmall)
+        .padding(isCompactMode ? Styles.sizeSmall.bump : Styles.sizeRegular.bumpDown)
         .contentShape(Rectangle())
+      //        .border(Color.green.opacity(0.3))
     }
     .buttonStyle(.plain)
     .onHover { hovering in

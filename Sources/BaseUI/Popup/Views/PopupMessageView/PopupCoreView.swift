@@ -13,7 +13,7 @@ struct PopupCoreView: View {
   @Environment(\.isCompactMode) private var isCompactMode
   @Environment(\.hasCloseButton) private var hasCloseButton
 
-  @State private var shouldStartProgressBar: Bool = false
+  @State private var shouldAnimateDismissalIndicator: Bool = false
 
   let popupMessage: PopupMessage
   var body: some View {
@@ -42,31 +42,52 @@ struct PopupCoreView: View {
           return action.action()
         }
       }
-      
+
       if let duration = popupMessage.dismissal.autoDismissDuration, isShowingIndicator {
         Capsule()
           .fill(.quaternary)
+          .fill(
+            LinearGradient(
+              colors: [.clear, .white.opacity(0.1)],
+              startPoint: .center,
+              endPoint: .trailing
+            )
+          )
           .frame(maxWidth: progressBarLength, maxHeight: 5)
-          .padding(.horizontal, Styles.sizeSmall.bump)
-          .padding(.bottom, Styles.sizeSmall.bumpDown)
-          .animation(.linear(duration: duration), value: shouldStartProgressBar)
+          .opacity(shouldAnimateDismissalIndicator ? 1 : 0)
+          .padding(.top, Styles.sizeSmall.bumpDown)
+          .animation(.linear(duration: duration), value: shouldAnimateDismissalIndicator)
           .frame(maxWidth: .infinity, alignment: .leading)
+          .offset(y: isCompactMode ? 2 : 5)
+
       }
     }  // END vstack
 
     .multilineTextAlignment(.leading)
-    .weightedPadding(
-      isCompactMode ? 10 : 17,
-      horizontalBias: isCompactMode ? 1.4 : 1.2,
-      opticalCentreBias: 1.2,
-      excludedEdge: nil
-    )
+
+    
+    //    .overlay {
+    //      if let duration = popupMessage.dismissal.autoDismissDuration, isShowingIndicator {
+    //
+    //        RadialGradient(
+    //          colors: [.white.opacity(0.1), .clear],
+    //          center: UnitPoint(x: shouldAnimateDismissalIndicator ? 1 : 0, y: 1),
+    //          startRadius: 0,
+    //          endRadius: shouldAnimateDismissalIndicator ? 140 : 120
+    //        )
+    //        .animation(
+    //          .timingCurve(.easeInOut, duration: duration),
+    //          //          .easeInOut(duration: duration),
+    //          value: shouldAnimateDismissalIndicator
+    //        )
+    //      }
+    //    }
 
     .task(id: popupMessage.dismissal.autoDismissDuration) {
       if popupMessage.dismissal.autoDismissDuration != nil {
-        self.shouldStartProgressBar = true
+        self.shouldAnimateDismissalIndicator = true
       } else {
-        self.shouldStartProgressBar = false
+        self.shouldAnimateDismissalIndicator = false
       }
     }
   }
@@ -78,7 +99,7 @@ extension PopupCoreView {
     popupMessage.dismissal.shouldShowDismissTimingIndicator
   }
   var progressBarLength: CGFloat {
-    shouldStartProgressBar ? .infinity : .zero
+    shouldAnimateDismissalIndicator ? .infinity : .zero
   }
 
 }

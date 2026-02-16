@@ -29,6 +29,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
     content
       .weightedPadding(layoutPadding ?? padding)
       .glassEffectCompatible(glass, in: shape)
+      .clipShape(shape)
       .background {
         if glass == nil {
           shape
@@ -49,6 +50,7 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
             )
         }
       }
+      
 
   }
 }

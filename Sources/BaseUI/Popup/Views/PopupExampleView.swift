@@ -15,44 +15,7 @@ public struct PopupExampleView: View {
 
     ScrollView {
       VStack(alignment: .leading, spacing: Styles.sizeRegular) {
-        //        PopupView(
-        //          PopupMessage(
-        //            "Compact, *No* Glass",
-        //            icon: .preset(.message),
-        //            message: "Here is a random icon, and a loading indicator.",
-        //            isLoading: true,
-        //            role: .neutral,
-        //            dismissal: .automatic(2)
-        //          )
-        //        )
-        //        .environment(\.isCompactMode, true)
-        //        .environment(\.hasGlassEffect, false)
-        //
-        //        PopupView(
-        //          PopupMessage(
-        //            "Compact, Glass Effect",
-        //            icon: .preset(.message),
-        //            message: "Here is a random icon, and a loading indicator.",
-        //            isLoading: true,
-        //            role: .neutral,
-        //            dismissal: .automatic(2)
-        //          )
-        //        )
-        //        .environment(\.isCompactMode, true)
-        //        .environment(\.hasGlassEffect, true)
 
-        //        PopupView(
-        //          PopupMessage(
-        //            "No Glass, Regular Size",
-        //            icon: .preset(.controller),
-        //            //    icon: .preset(.getRandom),
-        //            message: "Here is a random icon, and a loading indicator.",
-        //            isLoading: true,
-        //            role: .neutral,
-        //            dismissal: .automatic(2)
-        //          )
-        //        )
-        //        .environment(\.hasGlassEffect, false)
         PopupView(
           message: .make(
             "Glass Effect, Regular Size",
@@ -61,13 +24,12 @@ public struct PopupExampleView: View {
             message: "This View is a little larger, so the Glass Effect is slightly more opaque.",
             loading: .none,
             //            role: .neutral,
-            dismissal: .automatic(0.1, showsIndicator: true)
+            dismissal: .automatic(1, showsIndicator: true)
           ),
           alignment: .topTrailing
         )
         .environment(\.hasGlassEffect, true)
-        //        .environment(\.popupLoadingBehaviour, .indeterminate)
-        //        .environment(\.popupDismissal, .automatic(3, showsIndicator: true))
+        .environment(\.hasCloseButton, true)
 
         PopupView(
           message: .make(
@@ -76,12 +38,13 @@ public struct PopupExampleView: View {
             message: nil,
             loading: .indeterminate,
             //            role: .warning,
-            dismissal: .automatic(0.1, showsIndicator: true),
+            dismissal: .automatic(1, showsIndicator: true),
           ),
           alignment: .topTrailing
         )
         .environment(\.isCompactMode, true)
         .environment(\.hasGlassEffect, true)
+        .environment(\.hasCloseButton, true)
 
         PopupView(
           message: .make(
