@@ -11,43 +11,61 @@ import SwiftUI
 public struct PopupMessage: Sendable, Identifiable {
   public let id: UUID
 
-  public let label: QuickLabel
-  public let message: String?
-  public let isLoading: Bool
-  public let dismissal: PopupDismissBehaviour
-  public let actions: [PopupAction]
+  var label: QuickLabel
+  let message: String?
+  let loading: PopupLoading
+  var dismissal: PopupDismissBehaviour = .manual
+  var actions: [PopupAction]
 
   public init(
+    id: UUID = UUID(),
     _ title: String,
     icon: IconLiteral? = nil,
     message: String? = nil,
-    isLoading: Bool = false,
-    role: ActionRole = .neutral,
-//    dismissal: PopupDismissBehaviour = .automatic(3.5),
+    loading: PopupLoading = .none,
     actions: [PopupAction] = []
-//    actions: PopupAction...
   ) {
-    self.id = UUID()
-    self.label = QuickLabel(title, icon: icon, role: role)
+    self.id = id
+    self.label = QuickLabel(title, icon: icon)
     self.message = message
-    self.isLoading = isLoading
-    self.dismissal = dismissal
+    self.loading = loading
     self.actions = actions
   }
+  
+  public init(
+    id: UUID = UUID(),
+    _ title: String,
+    icon: IconLiteral? = nil,
+    message: String? = nil,
+    loading: PopupLoading = .none,
+    action: PopupAction
+  ) {
+    self.id = id
+    self.label = QuickLabel(title, icon: icon)
+    self.message = message
+    self.loading = loading
+    self.actions = [action]
+  }
+
+//  public init(
+//    id: UUID = UUID(),
+//    label: QuickLabel,
+//    message: String? = nil,
+//    loading: PopupLoading = .none,
+//    actions: [PopupAction] = []
+//  ) {
+//    self.id = id
+//    self.label = label
+//    self.message = message
+//    self.loading = loading
+//    self.actions = actions
+//  }
 }
 
 extension PopupMessage {
-  
-  
-  
   public var title: String { label.text }
   public var icon: IconLiteral? { label.icon }
   public var iconString: String? { label.icon?.toString }
-}
-
-// MARK: - Convenience inits
-extension PopupMessage {
-
 }
 
 extension PopupMessage: CustomStringConvertible {
@@ -56,7 +74,7 @@ extension PopupMessage: CustomStringConvertible {
       Indented("Popup Message") {
         Labeled("Label", value: label)
         Labeled("Message", value: message)
-        Labeled("Loading?", value: isLoading)
+        Labeled("Loading?", value: loading)
         Labeled("Dismiss Behaviour", value: dismissal)
         Labeled("Action", value: actions)
       }

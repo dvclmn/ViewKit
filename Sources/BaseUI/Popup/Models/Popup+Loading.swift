@@ -5,6 +5,11 @@
 //  Created by Dave Coleman on 16/2/2026.
 //
 
-public enum PopupLoading {
-  case indet
+import SwiftUI
+
+public enum PopupLoading: Sendable {
+  case indeterminate
+  /// Not yet supported
+//  case determinate(Binding<Double>)
+  case none
 }
