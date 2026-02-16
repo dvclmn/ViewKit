@@ -32,38 +32,41 @@ public struct PopupMessage: Sendable, Identifiable {
     self.dismissal = dismissal
     self.actions = actions
   }
+}
 
-  //  public init(
-  //    id: UUID = UUID(),
-  //    _ title: String,
-  //    icon: IconLiteral? = nil,
-  //    message: String? = nil,
-  //    loading: PopupLoading = .none,
-  //    action: PopupAction
-  //  ) {
-  //    self.id = id
-  //    self.label = QuickLabel(title, icon: icon)
-  //    self.message = message
-  //    self.loading = loading
-  //    self.actions = [action]
-  //  }
+// MARK: - Builders
+extension PopupMessage {
 
-  //  public init(
-  //    id: UUID = UUID(),
-  //    label: QuickLabel,
-  //    message: String? = nil,
-  //    loading: PopupLoading = .none,
-  //    actions: [PopupAction] = []
-  //  ) {
-  //    self.id = id
-  //    self.label = label
-  //    self.message = message
-  //    self.loading = loading
-  //    self.actions = actions
-  //  }
+  public static func make(
+    _ title: String,
+    loading: PopupLoading = .none,
+    actions: PopupAction...
+  ) -> Self {
+    PopupMessage(
+      label: QuickLabel(title),
+      loading: loading,
+      actions: actions
+    )
+  }
+
+  public static func make(
+    _ title: String,
+    icon: IconLiteral,
+    message: String? = nil,
+    loading: PopupLoading = .none,
+    actions: PopupAction...
+  ) -> Self {
+    PopupMessage(
+      label: QuickLabel(title, icon: icon),
+      message: message,
+      loading: loading,
+      actions: actions
+    )
+  }
 }
 
 extension PopupMessage {
+
   public var title: String { label.text }
   public var icon: IconLiteral? { label.icon }
   public var iconString: String? { label.icon?.toString }

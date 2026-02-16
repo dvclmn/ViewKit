@@ -58,23 +58,4 @@ extension Popup {
     guard let action else { return {} }
     return action.action
   }
-  
-  /// Converts dismissal behavior into a closure that knows how/when to dismiss.
-//  func makeDismissalClosure(from dismissal: PopupDismissBehaviour) -> (@MainActor () -> Void) {
-//    switch dismissal {
-//      case .automatic(let seconds, _):
-//        return { [weak self] in
-//          Task { @MainActor in
-//            try? await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
-//            await self?.hidePopup()
-//          }
-//        }
-//      case .manual:
-//        return { [weak self] in
-//          Task { @MainActor in
-//            await self?.hidePopup()
-//          }
-//        }
-//    }
-//  }
 }

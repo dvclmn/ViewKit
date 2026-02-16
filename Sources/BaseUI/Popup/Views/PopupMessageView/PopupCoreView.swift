@@ -36,11 +36,11 @@ struct PopupCoreView: View {
           .foregroundStyle(.secondary)
           .font(isCompactMode ? .caption : .body)
       }
-      
+
       ForEach(popupMessage.actions) { action in
         Button(action.title) {
           return action.action()
-        } 
+        }
       }
     }  // END vstack
 

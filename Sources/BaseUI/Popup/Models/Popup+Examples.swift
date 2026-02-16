@@ -9,48 +9,8 @@ import CoreTools
 import SwiftUI
 
 extension PopupMessage {
-  public static func make(
-    _ title: String,
-    loading: PopupLoading = .none,
-    actions: PopupAction...
-  ) -> Self {
-    PopupMessage(
-      label: QuickLabel(title),
-      loading: loading,
-      actions: actions
-    )
-  }
 
-  public static func make(
-    _ title: String,
-    icon: IconLiteral,
-    message: String? = nil,
-    loading: PopupLoading = .none,
-    actions: PopupAction...
-  ) -> Self {
-    PopupMessage(
-      label: QuickLabel(title, icon: icon),
-      loading: loading,
-      actions: actions
-    )
-  }
-
-  //  public static func make<Content: View>(
-  //    _ title: String,
-  //    icon: IconLiteral,
-  //    loading: PopupLoading = .none,
-  //    dismissal: PopupDismissBehaviour = .manual,
-  //    @ViewBuilder actions: () -> Content
-  ////    actions: PopupAction...
-  //  ) -> Self {
-  ////    PopupMessage(
-  ////      label: QuickLabel(title, icon: icon),
-  ////      loading: loading,
-  ////      actions: actions
-  ////    )
-  //  }
-
-  static let example01 = Self.make(
+  public static let example01 = Self.make(
     "I am loading",
     icon: .preset(.controller),
     //    icon: .preset(.getRandom),
@@ -60,7 +20,7 @@ extension PopupMessage {
     //    dismissal: .automatic(2)
   )
 
-  static let example02 = Self.make(
+  public static let example02 = Self.make(
     "Library Exported Successfully",
     icon: "checkmark.circle.fill",
     message: "Here is some example text",
@@ -69,7 +29,7 @@ extension PopupMessage {
     actions: PopupAction(
       title: "Test button action"
     ) {
-      print("Hello it's an aciton")
+      print("Hello it's an action")
     }
   )
 }

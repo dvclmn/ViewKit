@@ -17,6 +17,8 @@ import Foundation
 
 extension SampleContent {
   public enum Strings {
+    
+    
 
     public static let conversationTitles: [String] = [
       "Swift programming",

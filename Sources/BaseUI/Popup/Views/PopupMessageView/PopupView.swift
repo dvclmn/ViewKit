@@ -48,7 +48,7 @@ struct PopupView: View {
           depthIntensity: 0.0
         )
     }
-    .frame(maxWidth: 300, alignment: alignment)
+    .frame(maxWidth: 360, alignment: alignment)
     .compositingGroup()
     .id(message.id)
     .padding(Styles.sizeRegular)

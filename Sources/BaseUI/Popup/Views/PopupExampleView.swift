@@ -14,7 +14,7 @@ public struct PopupExampleView: View {
   public var body: some View {
 
     ScrollView {
-      VStack(alignment: .leading, spacing: Styles.sizeLarge) {
+      VStack(alignment: .leading, spacing: Styles.sizeRegular) {
         //        PopupView(
         //          PopupMessage(
         //            "Compact, *No* Glass",
@@ -114,7 +114,7 @@ public struct PopupExampleView: View {
       }
       .padding(30)
     }
-    .halfImageDebugBackground(balance: 0.3)
+    .halfImageDebugBackground(balance: 0.6)
 
     .toolbar {
       ToolbarItem {
@@ -124,6 +124,10 @@ public struct PopupExampleView: View {
       }
     }
   }
+}
+
+extension PopupExampleView {
+  
 }
 
 #if DEBUG

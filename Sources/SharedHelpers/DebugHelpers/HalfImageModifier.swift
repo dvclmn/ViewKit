@@ -41,9 +41,9 @@ public struct HalfImageBackgroundModifier: ViewModifier {
                 $0.image?
                   .resizable()
                   .aspectRatio(contentMode: .fill)
-                  .clipped()
               }
             }
+            .clipped()
         }
       }
   }
