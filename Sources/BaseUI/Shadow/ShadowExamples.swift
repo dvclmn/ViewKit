@@ -16,55 +16,19 @@ private struct ShadowExampleView: View {
     VStack(spacing: 90) {
 
       BaseView("Depth effect ON")
-        .quickShadow(
+        .depthShadow(
           opacity: 0.9,
           radius: 16,
           distanceY: 40,
-          depth: ShadowDepth(rounding: 20, distance: 0.9)
+          rounding: 20,
         )
 
       BaseView("Depth effect OFF")
-        .quickShadow(
+        .depthShadow(
           opacity: 0.9,
           radius: 16,
           distanceY: 40,
         )
-
-      //      RoundedRectangle(cornerRadius: 20)
-      //        .fill(.ultraThinMaterial)
-      //        .aspectRatio(3.1, contentMode: .fit)
-      //        .frame(width: 380)
-      //        .overlay {
-      //          Text("Opacity Zero")
-      //            .font(.system(size: 15, weight: .medium))
-      //        }
-      //        .quickShadow(
-      //          opacity: 0.0, radius: 16, distanceY: 40, depth: ShadowDepth(rounding: 20, distance: 0.9))
-      //
-      //      RoundedRectangle(cornerRadius: 20)
-      //        .fill(.ultraThinMaterial)
-      //        .aspectRatio(3.1, contentMode: .fit)
-      //        .frame(width: 380)
-      //        .overlay {
-      //          Text("Depth effect ON")
-      //            .font(.system(size: 15, weight: .medium))
-      //        }
-      //        .quickShadow(
-      //          opacity: 0.9, radius: 16, distanceY: 40, depth: ShadowDepth(rounding: 20, distance: 0.9)
-      //        )
-      //
-      //        .padding(.bottom, 40)
-      //
-      //      RoundedRectangle(cornerRadius: 20)
-      //        .fill(.ultraThinMaterial)
-      ////        .fill(.gray)
-      //        .aspectRatio(3.1, contentMode: .fit)
-      //        .frame(width: 380)
-      //        .quickShadow(opacity: 0.7, radius: 16, distanceY: 50)
-      //        .overlay {
-      //          Text("Depth effect OFF")
-      //            .font(.system(size: 15, weight: .medium))
-      //        }
 
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)

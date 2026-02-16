@@ -7,69 +7,71 @@
 
 import SwiftUI
 
-public struct ShadowDepth {
-  var rounding: CGFloat
-  var distance: CGFloat
+//public struct ShadowDepth {
+//  var rounding: CGFloat
+//  var distance: CGFloat
+//
+//  public init(rounding: CGFloat, distance: CGFloat) {
+//    self.rounding = rounding
+//    self.distance = distance
+//  }
+//}
 
-  public init(rounding: CGFloat, distance: CGFloat) {
-    self.rounding = rounding
-    self.distance = distance
-  }
-}
+public struct DepthShadowModifier: ViewModifier {
 
-public struct ShadowModifier: ViewModifier {
-
-  var opacity: Double
-  var radius: Double
-  var distanceY: Double
-  var depth: ShadowDepth?
+  let opacity: Double
+  let radius: Double
+  let distanceY: Double
+  let depthIntensity: Double
+  let isEnabled: Bool
 
   public func body(content: Content) -> some View {
 
     content
       .modifier(
-        LayeredShadow(
+        DepthShadowBaseModifier(
           opacity: opacity,
           radius: radius,
           distanceY: distanceY,
-          isOn: !hasDepth
+          isEnabled: isEnabled
         )
       )
 
       .background {
-        if let depth = depth, opacity > 0.0 {
-          RoundedRectangle(cornerRadius: depth.rounding)
+        if isEnabled, depthIntensity > 0 {
+          RoundedRectangle(cornerRadius: 10 * depthIntensity)
             .fill(.ultraThinMaterial)
             .modifier(
-              LayeredShadow(opacity: opacity, radius: radius, distanceY: distanceY, isOn: hasDepth)
+              DepthShadowBaseModifier(
+                opacity: opacity,
+                radius: radius,
+                distanceY: distanceY,
+                isEnabled: isEnabled
+              )
             )
-            .scaleEffect(min(1.0, max(0.0, depth.distance)))
+            .scaleEffect(min(1, max(0, distanceY * depthIntensity)))
         }
 
       }
   }
-
-}
-
-extension ShadowModifier {
-  var hasDepth: Bool {
-    self.depth != nil
-  }
 }
 
 extension View {
-  public func quickShadow(
+  public func depthShadow(
     opacity: Double = 0.2,
     radius: Double = 4,
     distanceY: Double = 6,
-    depth: ShadowDepth? = nil
+    depthIntensity: Double = 0.0,
+    isEnabled: Bool = true
   ) -> some View {
     self.modifier(
-      ShadowModifier(
+      DepthShadowModifier(
         opacity: opacity,
         radius: radius,
         distanceY: distanceY,
-        depth: depth
-      ))
+        depthIntensity: depthIntensity,
+        isEnabled: isEnabled
+      )
+    )
   }
 }
