@@ -23,6 +23,8 @@ extension SampleBuilderMacro {
       ),
       rightSquare: .rightSquareToken()
     )
+    
+//    let accessLevel = 
 
     let sampleCode = VariableDeclSyntax(
       modifiers: DeclModifierListSyntax {
@@ -62,7 +64,7 @@ extension SampleBuilderMacro {
       }
     )
 
-    // This will make the code available only on DEBUG mode
+    /// This will make the code available only on DEBUG mode
     return IfConfigDeclSyntax(
       clauses: IfConfigClauseListSyntax {
         IfConfigClauseSyntax(
