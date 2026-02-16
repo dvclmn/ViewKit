@@ -77,32 +77,44 @@ let package = Package(
   targets: [
     // MARK: - BaseMacro targets
     .macro(
-      name: "BaseMacrosImplementation",
+      name: "EnumMacrosImplementation",
       dependencies: [
         .module(.primitives),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
-      path: .macrosSource + "/MacroImplementations",
+      path: .macrosSource + "/EnumMacros",
     ),
 
     .target(
       name: "EnumMacros",
       dependencies: ["BaseMacrosImplementation"],
-      path: .macrosSource + "/MacroDeclarations",
+      path: .macrosSource + "/EnumMacros",
+    ),
+
+    .macro(
+      name: "SampleBuilderImplementation",
+      dependencies: [
+        .module(.primitives),
+        .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+        .product(name: "SwiftDiagnostics", package: "swift-syntax"),
+        .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
+      ],
+      path: .macrosSource + "/SampleBuilder",
     ),
 
     .target(
       name: "SampleBuilder",
       dependencies: ["BaseMacrosImplementation"],
-      path: .macrosSource + "/MacroDeclarations",
+      path: .macrosSource + "/SampleBuilder",
     ),
 
     .executableTarget(
       name: "BaseMacrosClient",
       dependencies: [
         .module(.enumMacros),
+        .module(.sampleBuilder),
         .module(.primitives),
       ],
       path: .macrosSource + "/BaseMacrosClient",

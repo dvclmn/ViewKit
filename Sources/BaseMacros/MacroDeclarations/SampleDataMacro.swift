@@ -19,9 +19,9 @@ import BasePrimitives
 public macro SampleBuilder(
   numberOfItems: Int,
   dataGeneratorType: DataGeneratorType
-) = #externalMacro(module: "BaseMacrosImplementation", type: "SampleBuilderMacro")
+) = #externalMacro(module: "SampleBuilderImplementation", type: "SampleBuilderMacro")
 
 @attached(peer)
 public macro SampleBuilderItem(
   category: SampleBuilderItemCategory
-) = #externalMacro(module: "BaseMacrosImplementation", type: "SampleBuilderItemMacro")
+) = #externalMacro(module: "SampleBuilderImplementation", type: "SampleBuilderItemMacro")
