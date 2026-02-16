@@ -7,7 +7,9 @@
 
 import CoreTools
 import SwiftUI
+import SampleBuilder
 
+@SampleBuilder(numberOfItems: 3, dataGeneratorType: .default)
 public struct PopupMessage: Sendable, Identifiable {
   public let id: UUID
 

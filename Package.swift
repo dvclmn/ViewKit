@@ -129,6 +129,7 @@ let package = Package(
       name: "BaseUI",
       dependencies: [
         .module(.coreTools),
+        .module(.sampleBuilder),
         .module(.colourKit),
         .module(.layoutKit),
         .module(.graphicsKit),
@@ -201,6 +202,7 @@ let package = Package(
       dependencies: [
         .module(.primitives),
         .module(.enumMacros),
+        .module(.sampleBuilder),
         .sharing,
         .casePaths,
       ],
