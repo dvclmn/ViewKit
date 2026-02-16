@@ -18,9 +18,6 @@ public struct PopupSetupModifier: ViewModifier {
 }
 
 public struct PopupViewModifier: ViewModifier {
-
-  @State private var popup = Popup()
-
   let debugPopup: PopupDebug
   let alignment: Alignment
   let isCompact: Bool
@@ -34,8 +31,7 @@ public struct PopupViewModifier: ViewModifier {
         isCompact: isCompact,
         hasCloseButton: hasCloseButton
       )
-      //      .setUpPopup()
-      .environment(\.popup, popup)
+      .setUpPopup()
   }
 }
 
@@ -55,14 +51,15 @@ public struct PopupViewExtenderModifier: ViewModifier {
         /// This allows providing a warning that there's no popup set in the Env
         if let popup {
           if let message = popup.popupMessage {
-            PopupView(message)
+            PopupView(message: message)
               .environment(\.isCompactMode, isCompact)
               .environment(\.hasCloseButton, hasCloseButton)
           }
 
         } else {
           StateView("No popup set in the Environment", icon: .emoji("🚨"))
-            .quickBackground()
+            .quickRoundedBackground(rounding: Styles.sizeMedium)
+            .padding()
         }
       }
 
@@ -70,10 +67,14 @@ public struct PopupViewExtenderModifier: ViewModifier {
 }
 
 extension View {
+
+  /// Initialises Popup handler and injects into Environment
+  /// Does not display a popup view
   public func setUpPopup() -> some View {
     self.modifier(PopupSetupModifier())
   }
 
+  /// Initialises Popup handler and displays Popup view
   public func popup(
     debugPopup: PopupDebug = .none,
     alignment: Alignment = .top,
@@ -90,9 +91,9 @@ extension View {
     )
   }
 
-  /// View only means no State is set up in this View modifier.
-  /// It just passes the Popup View, and assumes the Popup
-  /// is already in the Environment
+  /// Displays Popup View only, does not initialise handler.
+  /// This modifier assume the Popup is already in the Environment,
+  /// and will display a warning View if it's not.
   public func popupViewOnly(
     debugPopup: PopupDebug = .none,
     alignment: Alignment = .top,

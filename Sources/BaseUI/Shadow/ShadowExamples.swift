@@ -22,7 +22,7 @@ private struct ShadowExampleView: View {
           distanceY: 40,
           depth: ShadowDepth(rounding: 20, distance: 0.9)
         )
-      
+
       BaseView("Depth effect OFF")
         .quickShadow(
           opacity: 0.9,
@@ -78,7 +78,6 @@ private struct ShadowExampleView: View {
             .degrees(CGFloat(item) * (360.0 / CGFloat(totalBackgroundShapes))),
             anchor: rotationAnchor(item)
           )
-        //          .rotationEffect(.degrees(CGFloat(item) * CGFloat(360 / totalBackgroundShapes)), anchor: .center)
       }
     }
     .background(.teal.opacity(0.2))

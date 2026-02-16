@@ -15,46 +15,46 @@ public struct PopupExampleView: View {
 
     ScrollView {
       VStack(alignment: .leading, spacing: Styles.sizeLarge) {
-        PopupView(
-          PopupMessage(
-            "Compact, *No* Glass",
-            icon: .preset(.message),
-            message: "Here is a random icon, and a loading indicator.",
-            isLoading: true,
-            role: .neutral,
-            dismissal: .automatic(2)
-          )
-        )
-        .environment(\.isCompactMode, true)
-        .environment(\.hasGlassEffect, false)
+//        PopupView(
+//          PopupMessage(
+//            "Compact, *No* Glass",
+//            icon: .preset(.message),
+//            message: "Here is a random icon, and a loading indicator.",
+//            isLoading: true,
+//            role: .neutral,
+//            dismissal: .automatic(2)
+//          )
+//        )
+//        .environment(\.isCompactMode, true)
+//        .environment(\.hasGlassEffect, false)
+//
+//        PopupView(
+//          PopupMessage(
+//            "Compact, Glass Effect",
+//            icon: .preset(.message),
+//            message: "Here is a random icon, and a loading indicator.",
+//            isLoading: true,
+//            role: .neutral,
+//            dismissal: .automatic(2)
+//          )
+//        )
+//        .environment(\.isCompactMode, true)
+//        .environment(\.hasGlassEffect, true)
 
+//        PopupView(
+//          PopupMessage(
+//            "No Glass, Regular Size",
+//            icon: .preset(.controller),
+//            //    icon: .preset(.getRandom),
+//            message: "Here is a random icon, and a loading indicator.",
+//            isLoading: true,
+//            role: .neutral,
+//            dismissal: .automatic(2)
+//          )
+//        )
+//        .environment(\.hasGlassEffect, false)
         PopupView(
-          PopupMessage(
-            "Compact, Glass Effect",
-            icon: .preset(.message),
-            message: "Here is a random icon, and a loading indicator.",
-            isLoading: true,
-            role: .neutral,
-            dismissal: .automatic(2)
-          )
-        )
-        .environment(\.isCompactMode, true)
-        .environment(\.hasGlassEffect, true)
-
-        PopupView(
-          PopupMessage(
-            "No Glass, Regular Size",
-            icon: .preset(.controller),
-            //    icon: .preset(.getRandom),
-            message: "Here is a random icon, and a loading indicator.",
-            isLoading: true,
-            role: .neutral,
-            dismissal: .automatic(2)
-          )
-        )
-        .environment(\.hasGlassEffect, false)
-        PopupView(
-          PopupMessage(
+          message: PopupMessage(
             "Glass Effect, Regular Size",
             icon: .preset(.controller),
             //    icon: .preset(.getRandom),
@@ -67,7 +67,7 @@ public struct PopupExampleView: View {
         .environment(\.hasGlassEffect, true)
 
         PopupView(
-          PopupMessage(
+          message: PopupMessage(
             "Compact Popup",
             icon: .emoji("⏰"),
             message: nil,
@@ -81,7 +81,7 @@ public struct PopupExampleView: View {
         .environment(\.hasGlassEffect, true)
 
         PopupView(
-          PopupMessage(
+          message: PopupMessage(
             "Not Compact",
             icon: .emoji("⏰"),
             message: nil,
@@ -95,7 +95,7 @@ public struct PopupExampleView: View {
         .environment(\.hasGlassEffect, false)
 
         PopupView(
-          PopupMessage(
+          message: PopupMessage(
             "Another Popup",
             icon: .preset(.binoculars),
             message: nil,
@@ -125,9 +125,7 @@ public struct PopupExampleView: View {
 
 #if DEBUG
 #Preview(traits: .size(.normal)) {
-  @Previewable @State var popup = Popup()
   PopupExampleView()
-//    .environment(popup)
-    .popupViewOnly()
+    .popup()
 }
 #endif

@@ -23,25 +23,12 @@ struct PopupView: View {
   private let minWidth: Double = 180
   private let rounding: CGFloat = Styles.sizeRegular
 
-  let popupMessage: PopupMessage
-
-  init(
-    message: PopupMessage,
-  ) {
-    self.popupMessage = message
-  }
-
-  init?(
-    _ message: PopupMessage?,
-  ) {
-    guard let message else { return nil }
-    self.popupMessage = message
-  }
+  let message: PopupMessage
 
   var body: some View {
 
     VStack {
-      PopupCoreView(popupMessage: popupMessage)
+      PopupCoreView(popupMessage: message)
         .overlay(alignment: .topTrailing) {
           if hasCloseButton {
             DismissButton()
@@ -51,8 +38,7 @@ struct PopupView: View {
           glass: hasGlassEffect ? .regular : nil,
           rounding: rounding,
           padding: .zero,
-          tint: popupMessage.label.role?.colour,
-//          tint: colourOverride ?? AnyShapeStyle(popupMessage.label.role?.colour),
+          tint: message.label.role?.colour,
           isEnabled: true
         )
 
@@ -60,7 +46,7 @@ struct PopupView: View {
         .shadow(color: .black.opacity(0.2), radius: 9, x: 0, y: 1)
     }
     .compositingGroup()
-    .id(popupMessage.id)
+    .id(message.id)
     .padding(Styles.sizeRegular)
 
   }
