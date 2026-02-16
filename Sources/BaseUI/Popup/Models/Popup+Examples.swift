@@ -6,9 +6,51 @@
 //
 
 import CoreTools
+import SwiftUI
 
 extension PopupMessage {
-  static let example01 = PopupMessage(
+  public static func make(
+    _ title: String,
+    loading: PopupLoading = .none,
+    actions: PopupAction...
+  ) -> Self {
+    PopupMessage(
+      label: QuickLabel(title),
+      loading: loading,
+      actions: actions
+    )
+  }
+
+  public static func make(
+    _ title: String,
+    icon: IconLiteral,
+    message: String? = nil,
+    loading: PopupLoading = .none,
+    actions: PopupAction...
+  ) -> Self {
+    PopupMessage(
+      label: QuickLabel(title, icon: icon),
+      loading: loading,
+      actions: actions
+    )
+  }
+
+  //  public static func make<Content: View>(
+  //    _ title: String,
+  //    icon: IconLiteral,
+  //    loading: PopupLoading = .none,
+  //    dismissal: PopupDismissBehaviour = .manual,
+  //    @ViewBuilder actions: () -> Content
+  ////    actions: PopupAction...
+  //  ) -> Self {
+  ////    PopupMessage(
+  ////      label: QuickLabel(title, icon: icon),
+  ////      loading: loading,
+  ////      actions: actions
+  ////    )
+  //  }
+
+  static let example01 = Self.make(
     "I am loading",
     icon: .preset(.controller),
     //    icon: .preset(.getRandom),
@@ -18,13 +60,13 @@ extension PopupMessage {
     //    dismissal: .automatic(2)
   )
 
-  static let example02 = PopupMessage(
+  static let example02 = Self.make(
     "Library Exported Successfully",
     icon: "checkmark.circle.fill",
     message: "Here is some example text",
     loading: .none,
     //    role: .error,
-    action: PopupAction(
+    actions: PopupAction(
       title: "Test button action"
     ) {
       print("Hello it's an aciton")
@@ -39,12 +81,10 @@ extension PopupMessage {
     actions: PopupAction...
   ) -> PopupMessage {
     PopupMessage(
-      title,
-      icon: .preset(.tick),
+      label: QuickLabel(title, icon: .preset(.tick)),
       message: message,
       loading: .none,
-      //      role: .neutral,
-      //      dismissal: .automatic(2),
+      dismissal: .automatic(2),
       actions: actions
     )
   }
@@ -55,12 +95,9 @@ extension PopupMessage {
     action: PopupAction...
   ) -> PopupMessage {
     PopupMessage(
-      title,
-      icon: .preset(.warning),
+      label: QuickLabel(title, icon: .preset(.warning)),
       message: message,
       loading: .none,
-//      role: .error,
-//      dismissal: .manual,
       actions: action
     )
   }

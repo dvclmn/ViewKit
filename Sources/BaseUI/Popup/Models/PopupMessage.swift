@@ -14,52 +14,53 @@ public struct PopupMessage: Sendable, Identifiable {
   var label: QuickLabel
   let message: String?
   let loading: PopupLoading
-  var dismissal: PopupDismissBehaviour = .manual
+  var dismissal: PopupDismissBehaviour
   var actions: [PopupAction]
 
   public init(
     id: UUID = UUID(),
-    _ title: String,
-    icon: IconLiteral? = nil,
+    label: QuickLabel,
     message: String? = nil,
     loading: PopupLoading = .none,
+    dismissal: PopupDismissBehaviour = .manual,
     actions: [PopupAction] = []
   ) {
     self.id = id
-    self.label = QuickLabel(title, icon: icon)
+    self.label = label
     self.message = message
     self.loading = loading
+    self.dismissal = dismissal
     self.actions = actions
   }
-  
-  public init(
-    id: UUID = UUID(),
-    _ title: String,
-    icon: IconLiteral? = nil,
-    message: String? = nil,
-    loading: PopupLoading = .none,
-    action: PopupAction
-  ) {
-    self.id = id
-    self.label = QuickLabel(title, icon: icon)
-    self.message = message
-    self.loading = loading
-    self.actions = [action]
-  }
 
-//  public init(
-//    id: UUID = UUID(),
-//    label: QuickLabel,
-//    message: String? = nil,
-//    loading: PopupLoading = .none,
-//    actions: [PopupAction] = []
-//  ) {
-//    self.id = id
-//    self.label = label
-//    self.message = message
-//    self.loading = loading
-//    self.actions = actions
-//  }
+  //  public init(
+  //    id: UUID = UUID(),
+  //    _ title: String,
+  //    icon: IconLiteral? = nil,
+  //    message: String? = nil,
+  //    loading: PopupLoading = .none,
+  //    action: PopupAction
+  //  ) {
+  //    self.id = id
+  //    self.label = QuickLabel(title, icon: icon)
+  //    self.message = message
+  //    self.loading = loading
+  //    self.actions = [action]
+  //  }
+
+  //  public init(
+  //    id: UUID = UUID(),
+  //    label: QuickLabel,
+  //    message: String? = nil,
+  //    loading: PopupLoading = .none,
+  //    actions: [PopupAction] = []
+  //  ) {
+  //    self.id = id
+  //    self.label = label
+  //    self.message = message
+  //    self.loading = loading
+  //    self.actions = actions
+  //  }
 }
 
 extension PopupMessage {
@@ -84,7 +85,7 @@ extension PopupMessage: CustomStringConvertible {
 
 extension PopupMessage: ExpressibleByStringLiteral {
   public init(stringLiteral value: StringLiteralType) {
-    self.init(value)
+    self.init(label: QuickLabel(value))
   }
 }
 

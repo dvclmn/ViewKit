@@ -27,12 +27,14 @@ where Store.Value: Transferable & Codable {
           switch result {
             case .success(let url):
               popup?.showPopup(
-                "Successfully exported preset",
-                action: PopupAction(
-                  title: "See in Finder",
-                  action: {
-                    OpenInFinder.open(url)
-                  }
+                .make(
+                  "Successfully exported preset",
+                  actions: PopupAction(
+                    title: "See in Finder",
+                    action: {
+                      OpenInFinder.open(url)
+                    }
+                  )
                 )
               )
 
