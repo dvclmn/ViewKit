@@ -30,11 +30,14 @@ struct PopupView: View {
     VStack {
       PopupCoreView(popupMessage: message)
         .weightedPadding(
-          isCompactMode ? 10 : 17,
+          basePadding,
           horizontalBias: isCompactMode ? 1.4 : 1.2,
           opticalCentreBias: 1.1,
           excludedEdge: nil
         )
+        .environment(\.layoutPadding, basePadding)
+        .environment(\.layoutAlignment, alignment)
+
         .overlay(alignment: .topTrailing) {
           if hasCloseButton {
             DismissButton()
@@ -55,8 +58,11 @@ struct PopupView: View {
         )
 
     }
-    .frame(maxWidth: 360, alignment: alignment)
-    .compositingGroup()
+    .frame(
+      maxWidth: 360,
+      alignment: alignment
+    )
+    //    .compositingGroup()
     .id(message.id)
     .padding(Styles.sizeRegular)
 
@@ -65,6 +71,10 @@ struct PopupView: View {
 }
 
 extension PopupView {
+
+  private var basePadding: Double {
+    isCompactMode ? 10 : 14
+  }
 
   @ViewBuilder
   func PopupContent(_ message: PopupMessage) -> some View {

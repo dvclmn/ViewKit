@@ -11,6 +11,8 @@ import SwiftUI
 struct PopupCoreView: View {
   @Environment(\.popup) private var popup
   @Environment(\.isCompactMode) private var isCompactMode
+  @Environment(\.layoutPadding) private var layoutPadding
+  @Environment(\.layoutAlignment) private var layoutAlignment
   @Environment(\.hasCloseButton) private var hasCloseButton
 
   @State private var shouldAnimateDismissalIndicator: Bool = false
@@ -18,7 +20,7 @@ struct PopupCoreView: View {
   let popupMessage: PopupMessage
   var body: some View {
 
-    VStack(alignment: .leading, spacing: isCompactMode ? 4 : 6) {
+    VStack(alignment: .leading, spacing: spacing) {
 
       MaybeLabel(popupMessage.label)
         .environment(\.symbolVariants, .fill)
@@ -41,9 +43,14 @@ struct PopupCoreView: View {
         Button(action.title) {
           return action.action()
         }
+        .controlSize(isCompactMode ? .small : .regular)
+        .offset(y: downwardOffset)
       }
 
-      if let duration = popupMessage.dismissal.autoDismissDuration, isShowingIndicator {
+      if let duration = popupMessage.dismissal.autoDismissDuration, isShowingIndicator,
+        popupMessage.actions.isEmpty
+      {
+
         Capsule()
           .fill(.quaternary)
           .fill(
@@ -58,30 +65,17 @@ struct PopupCoreView: View {
           .padding(.top, Styles.sizeSmall.bumpDown)
           .animation(.linear(duration: duration), value: shouldAnimateDismissalIndicator)
           .frame(maxWidth: .infinity, alignment: .leading)
-          .offset(y: isCompactMode ? 2 : 5)
+          .offset(y: downwardOffset)
 
       }
     }  // END vstack
-
+    .frame(
+      minWidth: 200,
+      //      maxWidth: 360,
+      alignment: .leading
+        //      alignment: layoutAlignment ?? .trailing
+    )
     .multilineTextAlignment(.leading)
-
-    
-    //    .overlay {
-    //      if let duration = popupMessage.dismissal.autoDismissDuration, isShowingIndicator {
-    //
-    //        RadialGradient(
-    //          colors: [.white.opacity(0.1), .clear],
-    //          center: UnitPoint(x: shouldAnimateDismissalIndicator ? 1 : 0, y: 1),
-    //          startRadius: 0,
-    //          endRadius: shouldAnimateDismissalIndicator ? 140 : 120
-    //        )
-    //        .animation(
-    //          .timingCurve(.easeInOut, duration: duration),
-    //          //          .easeInOut(duration: duration),
-    //          value: shouldAnimateDismissalIndicator
-    //        )
-    //      }
-    //    }
 
     .task(id: popupMessage.dismissal.autoDismissDuration) {
       if popupMessage.dismissal.autoDismissDuration != nil {
@@ -94,6 +88,18 @@ struct PopupCoreView: View {
 }
 
 extension PopupCoreView {
+
+  private var downwardOffset: Double {
+    let factor: Double = isCompactMode ? 0.15 : 0.15
+    return layoutPadding.map { $0 * factor } ?? 0
+  }
+  private var spacing: Double {
+    let factor = isCompactMode ? 0.7 : 1
+
+    let base: Double = popupMessage.actions.isEmpty ? 7 : 12
+
+    return max(0, base * factor)
+  }
 
   var isShowingIndicator: Bool {
     popupMessage.dismissal.shouldShowDismissTimingIndicator

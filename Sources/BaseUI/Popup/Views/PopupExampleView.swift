@@ -39,12 +39,27 @@ public struct PopupExampleView: View {
             loading: .indeterminate,
             //            role: .warning,
             dismissal: .automatic(1, showsIndicator: true),
+            actions: PopupAction(title: "Open in Finder", action: {})
           ),
           alignment: .topTrailing
         )
         .environment(\.isCompactMode, true)
         .environment(\.hasGlassEffect, true)
-        .environment(\.hasCloseButton, true)
+        
+        PopupView(
+          message: .make(
+            "Compact Popup",
+            icon: .emoji("⏰"),
+            message: nil,
+            loading: .indeterminate,
+            //            role: .warning,
+            dismissal: .automatic(1, showsIndicator: true),
+          ),
+          alignment: .topTrailing
+        )
+        .environment(\.isCompactMode, true)
+        .environment(\.hasGlassEffect, true)
+        
 
         PopupView(
           message: .make(
