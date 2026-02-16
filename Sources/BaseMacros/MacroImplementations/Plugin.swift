@@ -17,5 +17,7 @@ struct BaseMacrosPlugin: CompilerPlugin {
     SetOfOptionsMacro.self,
     OptinitsMacro.self,
     StaticMemberIterableMacro.self,
+    SampleBuilderMacro.self,
+    SampleBuilderItemMacro.self,
   ]
 }

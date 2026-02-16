@@ -84,13 +84,14 @@ let package = Package(
         .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
-      path: .macrosSource + "/EnumMacros",
+      path: .macrosSource + "/MacroImplementations",
     ),
 
+    /// Note: `path` here wants the Macro Declaration source, not the Implementation
     .target(
       name: "EnumMacros",
-      dependencies: ["BaseMacrosImplementation"],
-      path: .macrosSource + "/EnumMacros",
+      dependencies: ["EnumMacrosImplementation"],
+      path: .macrosSource + "/MacroDeclarations/EnumMacros",
     ),
 
     .macro(
@@ -101,13 +102,13 @@ let package = Package(
         .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
-      path: .macrosSource + "/SampleBuilder",
+      path: .macrosSource + "/MacroImplementations",
     ),
 
     .target(
       name: "SampleBuilder",
-      dependencies: ["BaseMacrosImplementation"],
-      path: .macrosSource + "/SampleBuilder",
+      dependencies: ["SampleBuilderImplementation"],
+      path: .macrosSource + "/MacroDeclarations/SampleBuilder",
     ),
 
     .executableTarget(
