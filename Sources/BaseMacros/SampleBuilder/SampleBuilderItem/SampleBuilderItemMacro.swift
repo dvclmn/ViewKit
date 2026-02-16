@@ -17,7 +17,7 @@ import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
-import SharedHelpers
+import BasePrimitives
 
 public struct SampleBuilderItemMacro: PeerMacro {
   /*

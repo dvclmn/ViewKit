@@ -15,7 +15,7 @@
 import SwiftSyntax
 import SwiftDiagnostics
 import SwiftSyntaxMacros
-import SharedHelpers
+import BasePrimitives
 
 enum SampleBuilderItemDiagnostic: DiagnosticMessage {
     case notAStoredProperty

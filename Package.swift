@@ -12,7 +12,7 @@ let package = Package(
   products: [
     .library(
       name: "BaseMacros",
-      targets: ["EnumMacros"]
+      targets: ["EnumMacros", "SampleBuilder"]
     ),
     .executable(
       name: "BaseMacrosClient",
@@ -89,9 +89,13 @@ let package = Package(
 
     .target(
       name: "EnumMacros",
-      dependencies: [
-        "BaseMacrosImplementation"
-      ],
+      dependencies: ["BaseMacrosImplementation"],
+      path: .macrosSource + "/MacroDeclarations",
+    ),
+
+    .target(
+      name: "SampleBuilder",
+      dependencies: ["BaseMacrosImplementation"],
       path: .macrosSource + "/MacroDeclarations",
     ),
 
@@ -279,6 +283,7 @@ extension String {
 
 enum BaseModule {
   case enumMacros
+  case sampleBuilder
   case networking
   case primitives
   case baseUI
@@ -300,6 +305,7 @@ enum BaseModule {
   var name: String {
     switch self {
       case .enumMacros: "EnumMacros"
+      case .sampleBuilder: "SampleBuilder"
       case .networking: "BaseNetworking"
       case .primitives: "BasePrimitives"
       case .baseUI: "BaseUI"

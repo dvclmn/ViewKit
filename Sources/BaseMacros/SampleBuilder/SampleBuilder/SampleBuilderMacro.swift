@@ -12,17 +12,19 @@
 //  Created by Pedro Rojas on 05/08/23.
 //
 
+import BasePrimitives
 import SwiftCompilerPlugin
 import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
-import SharedHelpers
 
 public struct SampleBuilderMacro: MemberMacro {
+
   public static func expansion(
     of node: SwiftSyntax.AttributeSyntax,
     providingMembersOf declaration: some SwiftSyntax.DeclGroupSyntax,
+    conformingTo protocols: [TypeSyntax],
     in context: some SwiftSyntaxMacros.MacroExpansionContext
   ) throws -> [SwiftSyntax.DeclSyntax] {
 

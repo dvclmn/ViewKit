@@ -14,7 +14,7 @@
 
 import SwiftSyntax
 import SwiftSyntaxMacros
-import SharedHelpers
+import BasePrimitives
 
 // Enums
 extension SampleBuilderMacro {

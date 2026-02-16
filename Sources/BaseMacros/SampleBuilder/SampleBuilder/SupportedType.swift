@@ -12,7 +12,7 @@
 //  Created by Pedro Rojas on 15/08/23.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftSyntax
 
 enum SupportedType: String {
@@ -53,7 +53,8 @@ enum SupportedType: String {
           } else { "" }
 
         return ExprSyntax(
-          stringLiteral: "DataGenerator.\(dataGeneratorType)(\(categoryParameter)).\(self.rawValue.lowercased())()")
+          stringLiteral:
+            "DataGenerator.\(dataGeneratorType)(\(categoryParameter)).\(self.rawValue.lowercased())()")
     }
   }
 }

@@ -12,7 +12,7 @@
 //  Created by Pedro Rojas on 19/08/23.
 //
 
-import SharedHelpers
+import BasePrimitives
 import SwiftSyntax
 
 extension SampleBuilderMacro {
