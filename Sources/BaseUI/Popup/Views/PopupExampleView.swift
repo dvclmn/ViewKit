@@ -61,11 +61,13 @@ public struct PopupExampleView: View {
             message: "This View is a little larger, so the Glass Effect is slightly more opaque.",
             loading: .none,
             //            role: .neutral,
-            //            dismissal: .automatic(2)
+            dismissal: .automatic(0.1, showsIndicator: true)
           ),
           alignment: .topTrailing
         )
         .environment(\.hasGlassEffect, true)
+        //        .environment(\.popupLoadingBehaviour, .indeterminate)
+        //        .environment(\.popupDismissal, .automatic(3, showsIndicator: true))
 
         PopupView(
           message: .make(
@@ -74,7 +76,7 @@ public struct PopupExampleView: View {
             message: nil,
             loading: .indeterminate,
             //            role: .warning,
-            //            dismissal: .automatic(1, showsIndicator: true),
+            dismissal: .automatic(0.1, showsIndicator: true),
           ),
           alignment: .topTrailing
         )
@@ -127,7 +129,7 @@ public struct PopupExampleView: View {
 }
 
 extension PopupExampleView {
-  
+
 }
 
 #if DEBUG

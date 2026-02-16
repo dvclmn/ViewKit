@@ -9,21 +9,21 @@ import CoreTools
 import SampleBuilder
 import SwiftUI
 
-@SampleBuilder(numberOfItems: 3, dataGeneratorType: .default)
+//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .default)
 public struct PopupMessage: Sendable, Identifiable {
   public let id: UUID
 
-  @SamplesIgnored var label: QuickLabel
+  var label: QuickLabel
   let message: String?
-  @SamplesIgnored let loading: PopupLoading
-  @SamplesIgnored var dismissal: PopupDismissBehaviour
-  @SamplesIgnored var actions: [PopupAction]
+  let loading: PopupLoadingIndicator
+  var dismissal: PopupDismissBehaviour
+  var actions: [PopupAction]
 
   public init(
     id: UUID = UUID(),
     label: QuickLabel,
     message: String? = nil,
-    loading: PopupLoading = .none,
+    loading: PopupLoadingIndicator = .none,
     dismissal: PopupDismissBehaviour = .manual,
     actions: [PopupAction] = []
   ) {
@@ -41,12 +41,14 @@ extension PopupMessage {
 
   public static func make(
     _ title: String,
-    loading: PopupLoading = .none,
+    loading: PopupLoadingIndicator = .none,
+    dismissal: PopupDismissBehaviour = .automatic(),
     actions: PopupAction...
   ) -> Self {
     PopupMessage(
       label: QuickLabel(title),
       loading: loading,
+      dismissal: dismissal,
       actions: actions
     )
   }
@@ -55,13 +57,15 @@ extension PopupMessage {
     _ title: String,
     icon: IconLiteral,
     message: String? = nil,
-    loading: PopupLoading = .none,
+    loading: PopupLoadingIndicator = .none,
+    dismissal: PopupDismissBehaviour = .automatic(),
     actions: PopupAction...
   ) -> Self {
     PopupMessage(
       label: QuickLabel(title, icon: icon),
       message: message,
       loading: loading,
+      dismissal: dismissal,
       actions: actions
     )
   }

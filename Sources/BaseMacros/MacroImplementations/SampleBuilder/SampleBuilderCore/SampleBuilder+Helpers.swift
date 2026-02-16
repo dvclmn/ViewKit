@@ -6,6 +6,7 @@
 //
 
 import BasePrimitives
+import MacroToolkit
 import SwiftCompilerPlugin
 import SwiftDiagnostics
 import SwiftSyntax
@@ -13,8 +14,7 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 extension SampleBuilderMacro {
-  
-  
+
   static func getDataGeneratorType(
     from node: SwiftSyntax.AttributeSyntax
   ) -> DataGeneratorType {
@@ -114,27 +114,21 @@ extension SampleBuilderMacro {
 }
 // MARK: - Attribute helpers
 
-extension AttributeSyntax {
-  /// Returns true if this attribute's name matches `SamplesIgnored`, supporting
-  /// both unqualified (e.g., `@SamplesIgnored`) and module-qualified names
-  fileprivate var isSamplesIgnored: Bool {
-    /// Use a robust textual check on the attribute name to avoid tight coupling
-    /// to specific SwiftSyntax node kinds. This covers `IdentifierTypeSyntax`,
-    /// `MemberTypeSyntax`, and other type name forms.
-    let name = attributeName.trimmedDescription
-    return name == "SamplesIgnored" || name.hasSuffix(".SamplesIgnored")
-  }
-}
+//extension AttributeSyntax {
+//  /// Returns true if this attribute's name matches `SamplesIgnored`, supporting
+//  /// both unqualified (e.g., `@SamplesIgnored`) and module-qualified names
+//  fileprivate var isSamplesIgnored: Bool {
+//    /// Use a robust textual check on the attribute name to avoid tight coupling
+//    /// to specific SwiftSyntax node kinds. This covers `IdentifierTypeSyntax`,
+//    /// `MemberTypeSyntax`, and other type name forms.
+//  }
+//}
 
 extension VariableDeclSyntax {
   /// True when the declaration has an attached `@SamplesIgnored` attribute.
   var hasSamplesIgnoredAttribute: Bool {
-    for item in attributes {
-      if let attr = item.as(AttributeSyntax.self), attr.isSamplesIgnored {
-        return true
-      }
-    }
-    return false
+    let variable = Variable(self)
+    return variable.attribute(named: "SamplesIgnored") != nil
   }
 }
 
@@ -143,6 +137,7 @@ extension SampleBuilderMacro {
   /// Use this in places like `getValidParameterList` before mapping to
   /// `ParameterItem`.
   static func filterOutIgnored(_ variables: [VariableDeclSyntax]) -> [VariableDeclSyntax] {
-    variables.filter { !$0.hasSamplesIgnoredAttribute }
+
+    variables.filter { !$0.hasSamplesIgnoredAttribute}
   }
 }

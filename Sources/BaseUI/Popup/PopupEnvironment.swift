@@ -28,6 +28,8 @@ extension EnvironmentValues {
   @Entry public var popup: Popup?
 //  @Entry var popupMessage: PopupMessage?
   @Entry var hasCloseButton: Bool = false
+//  @Entry var popupDismissal: PopupDismissBehaviour = .automatic()
+//  @Entry var popupLoadingBehaviour: PopupLoadingIndicator = .none
   
 }
 

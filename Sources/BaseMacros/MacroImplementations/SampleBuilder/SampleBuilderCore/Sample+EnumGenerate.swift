@@ -25,7 +25,6 @@ extension SampleBuilderMacro {
   /// ```
   static func generateSampleArrayCases(
     cases: [EnumCaseDeclSyntax],
-//    access: String,
     numberOfItems: Int,
     generatorType: DataGeneratorType
   ) -> ArrayElementListSyntax {

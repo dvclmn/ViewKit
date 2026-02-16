@@ -42,6 +42,16 @@ struct PopupCoreView: View {
           return action.action()
         }
       }
+      
+      if let duration = popupMessage.dismissal.autoDismissDuration, isShowingIndicator {
+        Capsule()
+          .fill(.quaternary)
+          .frame(maxWidth: progressBarLength, maxHeight: 5)
+          .padding(.horizontal, Styles.sizeSmall.bump)
+          .padding(.bottom, Styles.sizeSmall.bumpDown)
+          .animation(.linear(duration: duration), value: shouldStartProgressBar)
+          .frame(maxWidth: .infinity, alignment: .leading)
+      }
     }  // END vstack
 
     .multilineTextAlignment(.leading)
@@ -52,7 +62,7 @@ struct PopupCoreView: View {
       excludedEdge: nil
     )
 
-    .onAppear {
+    .task(id: popupMessage.dismissal.autoDismissDuration) {
       if popupMessage.dismissal.autoDismissDuration != nil {
         self.shouldStartProgressBar = true
       } else {

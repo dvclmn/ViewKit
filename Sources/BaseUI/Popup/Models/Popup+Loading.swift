@@ -9,9 +9,10 @@ import SwiftUI
 import SampleBuilder
 
 //@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
-public enum PopupLoading: Sendable {
-  case indeterminate
+public enum PopupLoadingIndicator: Sendable {
+  case indeterminate // Shows spinning indicator, no progress value
   /// Not yet supported
+  /// Shows loading bar with progress
 //  case determinate(Binding<Double>)
   case none
 }

@@ -10,7 +10,7 @@ import SampleBuilder
 
 //@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
 public enum PopupDismissBehaviour: Equatable, Sendable {
-  case automatic(TimeInterval, showsIndicator: Bool = false)
+  case automatic(TimeInterval = 4, showsIndicator: Bool = false)
   case manual
   
   public var autoDismissDuration: TimeInterval? {

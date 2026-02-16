@@ -47,6 +47,7 @@ struct PopupView: View {
           distanceY: 30,
           depthIntensity: 0.0
         )
+
     }
     .frame(maxWidth: 360, alignment: alignment)
     .compositingGroup()

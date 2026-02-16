@@ -18,7 +18,7 @@ extension PopupMessage {
     message: "Here is a random icon, and a loading indicator.",
     loading: .indeterminate,
     //    role: .neutral,
-    //    dismissal: .automatic(2)
+        dismissal: .automatic(2, showsIndicator: true)
   )
 
   public static let example02 = Self.make(
