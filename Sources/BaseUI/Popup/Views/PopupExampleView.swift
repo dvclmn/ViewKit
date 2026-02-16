@@ -110,27 +110,16 @@ public struct PopupExampleView: View {
 
       }
       .padding(30)
-      .overlay {
-        Text("Popup Message: \(popup?.popupMessage?.description, default: "nil")")
-          .background(.red)
-      }
-      //    .background(.black.secondary)
     }
     .halfImageDebugBackground(balance: 0.3)
 
-    //    Button {
-    //      popup?.showPopup(.example02)
-    //    } label: {
-    //      Label("Test Popup", systemImage: Icons.text.icon)
-    //    }
-    //    .padding(40)
-    //    .frame(width: 600, height: 700)
-    //    .background(.black.opacity(0.6))
-    //    .popup(debugPopup: .example(.example01))
-    //      .onAppear {
-    //        popup.showPopup(examplePopup)
-    //      }
-
+    .toolbar {
+      ToolbarItem {
+        Button("Test Popup") {
+          popup?.showPopup(.example02)
+        }
+      }
+    }
   }
 }
 
@@ -138,6 +127,7 @@ public struct PopupExampleView: View {
 #Preview(traits: .size(.normal)) {
   @Previewable @State var popup = Popup()
   PopupExampleView()
-    .environment(popup)
+//    .environment(popup)
+    .popupViewOnly()
 }
 #endif

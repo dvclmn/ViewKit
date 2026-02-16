@@ -61,6 +61,7 @@ struct PopupView: View {
     }
     .compositingGroup()
     .id(popupMessage.id)
+    .padding(Styles.sizeRegular)
 
   }
 

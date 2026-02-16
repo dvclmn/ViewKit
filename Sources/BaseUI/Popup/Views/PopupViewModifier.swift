@@ -34,7 +34,7 @@ public struct PopupViewModifier: ViewModifier {
         isCompact: isCompact,
         hasCloseButton: hasCloseButton
       )
-//      .setUpPopup()
+      //      .setUpPopup()
       .environment(\.popup, popup)
   }
 }
@@ -52,19 +52,20 @@ public struct PopupViewExtenderModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .overlay(alignment: alignment) {
-        if let popup, let message = popup.popupMessage {
-          PopupView(
-            message,
-          )
-          .padding(Styles.sizeRegular)
-          .environment(\.isCompactMode, isCompact)
-          .environment(\.hasCloseButton, hasCloseButton)
+        /// This allows providing a warning that there's no popup set in the Env
+        if let popup {
+          if let message = popup.popupMessage {
+            PopupView(message)
+              .environment(\.isCompactMode, isCompact)
+              .environment(\.hasCloseButton, hasCloseButton)
+          }
 
         } else {
           StateView("No popup set in the Environment", icon: .emoji("🚨"))
+            .quickBackground()
         }
       }
-      
+
   }
 }
 

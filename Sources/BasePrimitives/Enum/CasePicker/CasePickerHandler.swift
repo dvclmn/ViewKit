@@ -25,11 +25,19 @@ import SwiftUI
 public final class CasePathHandler<Enum: MetaEnum> {
   var selectedMeta: Enum.Meta
   @ObservationIgnored private var cache: [Enum.Meta: Enum]
+  @ObservationIgnored private let fallback: CaseFallbackStrategy<Enum>
 
-  public init(initialValue: Enum) {
+  public init(
+    initialValue: Enum,
+    fallback: CaseFallbackStrategy<Enum> = .keepCurrent
+  ) {
     self.selectedMeta = initialValue.meta
     self.cache = [initialValue.meta: initialValue]
+    self.fallback = fallback
   }
+}
+
+extension CasePathHandler {
 
   /// Get or restore a value for the given meta case
   func value(for meta: Enum.Meta, binding: Binding<Enum>) -> Enum {
@@ -39,52 +47,83 @@ public final class CasePathHandler<Enum: MetaEnum> {
     return cache[meta] ?? Enum(fromMeta: meta) ?? binding.wrappedValue
   }
 
-  /// Switch to a new case, preserving the old value in cache
-  
   /// Switch to a new case, preserving the old value in cache.
   /// Returns whether the underlying enum actually changed.
+  ///
+  /// Example usage:
+  /// ```
+  /// @State private var handler = CasePickerHandler<DemoTab>(
+  ///   initialValue: .graphics(.actionLines),
+  ///   fallback: .fallbackValue { meta in
+  ///     switch meta {
+  ///       case .graphics: return .graphics(.actionLines)
+  ///       default: return DemoTab(fromMeta: meta) // or nil if you prefer
+  ///     }
+  ///   }
+  /// )
+  /// ```
   @discardableResult
   public func switchTo(_ newMeta: Enum.Meta, binding: Binding<Enum>) -> Bool {
+
+    /// Sync in case the bound value changed externally
     let currentMeta = binding.wrappedValue.meta
     if selectedMeta != currentMeta { selectedMeta = currentMeta }
-    
+
     guard currentMeta != newMeta else { return true }
-    
-    // Cache current value under its *actual* meta.
+
+    /// Cache current value under its *actual* meta.
     cache[currentMeta] = binding.wrappedValue
-    
+
     if let restored = cache[newMeta] {
       binding.wrappedValue = restored
       selectedMeta = newMeta
       return true
     }
-    
+
     if let fresh = Enum(fromMeta: newMeta) {
       binding.wrappedValue = fresh
       cache[newMeta] = fresh
       selectedMeta = newMeta
       return true
     }
-    
-    // Could not switch. Keep selectedMeta aligned with reality.
-    selectedMeta = binding.wrappedValue.meta
-    return false
+
+    // Apply fallback policy
+    switch fallback {
+      case .keepCurrent:
+        selectedMeta = binding.wrappedValue.meta
+        return false
+
+      case .fallbackValue(let make):
+        guard let value = make(newMeta) else {
+          selectedMeta = binding.wrappedValue.meta
+          return false
+        }
+        binding.wrappedValue = value
+        cache[newMeta] = value
+        selectedMeta = newMeta
+        return true
+
+      case .assertAndKeepCurrent(let message):
+        assertionFailure(message())
+        selectedMeta = binding.wrappedValue.meta
+        return false
+    }
   }
-//  func switchTo(_ newMeta: Enum.Meta, binding: Binding<Enum>) {
-//    guard selectedMeta != newMeta else { return }
-//
-//    /// Cache current value
-//    cache[selectedMeta] = binding.wrappedValue
-//
-//    if let restored = cache[newMeta] {
-//      binding.wrappedValue = restored
-//    } else if let fresh = Enum(fromMeta: newMeta) {
-//      binding.wrappedValue = fresh
-//      cache[newMeta] = fresh
-//    }
-//
-//    selectedMeta = newMeta
-//  }
+  //  func switchTo(_ newMeta: Enum.Meta, binding: Binding<Enum>) {
+  //    guard selectedMeta != newMeta else { return }
+  //
+  //    /// Cache current value
+  //    cache[selectedMeta] = binding.wrappedValue
+  //
+  //    if let restored = cache[newMeta] {
+  //      binding.wrappedValue = restored
+  //    } else if let fresh = Enum(fromMeta: newMeta) {
+  //      binding.wrappedValue = fresh
+  //      cache[newMeta] = fresh
+  //    }
+  //
+  //    selectedMeta = newMeta
+  //  }
 }
 
 @MainActor

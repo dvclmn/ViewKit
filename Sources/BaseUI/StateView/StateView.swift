@@ -43,11 +43,11 @@ public struct StateView<Content: View>: View {
     .monospacedDigit()
     .padding(.vertical, layoutPadding ?? Styles.sizeRegular)
     .padding(.horizontal, layoutPadding ?? Styles.sizeRegular)
-    .frame(
-      maxWidth: .infinity,
-      maxHeight: .infinity,
-      alignment: layoutAlignment ?? .center
-    )
+//    .frame(
+//      maxWidth: .infinity,
+//      maxHeight: .infinity,
+//      alignment: layoutAlignment ?? .center
+//    )
   }
 }
 
