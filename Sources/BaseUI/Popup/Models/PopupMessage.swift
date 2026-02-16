@@ -6,14 +6,14 @@
 //
 
 import CoreTools
-import SwiftUI
 import SampleBuilder
+import SwiftUI
 
-@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
+@SampleBuilder(numberOfItems: 3, dataGeneratorType: .default)
 public struct PopupMessage: Sendable, Identifiable {
   public let id: UUID
 
-  var label: QuickLabel
+  @SamplesIgnored var label: QuickLabel
   let message: String?
   @SamplesIgnored let loading: PopupLoading
   @SamplesIgnored var dismissal: PopupDismissBehaviour

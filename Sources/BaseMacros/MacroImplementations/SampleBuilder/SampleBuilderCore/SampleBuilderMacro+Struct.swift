@@ -30,12 +30,15 @@ extension SampleBuilderMacro {
       context: context
     )
 
+    let access = Struct(structDecl).accessLevel
+
     let sampleCode = generateSampleCodeSyntax(
       sampleData: generateSampleData(
         parameters: validParameters,
         numberOfItems: numberOfItems,
         generatorType: generatorType
-      )
+      ),
+      access: access
     )
 
     return [DeclSyntax(sampleCode)]
@@ -56,8 +59,6 @@ extension SampleBuilderMacro {
       .compactMap {
         $0.decl.as(InitializerDeclSyntax.self)
       }
-
-
 
     if initMembers.isEmpty {
       /// No custom init around. We use the memberwise initializer's properties:
@@ -80,25 +81,22 @@ extension SampleBuilderMacro {
           identifierName: $0.0,
           identifierType: $0.1,
           category: $0.2,
-//          accessLevel: access,
+          //          accessLevel: access,
         )
       }
     }
 
     let largestParameterList =
       initMembers
-      .map {
-        getParametersFromInit(initSyntax: $0, access: access)
-      }.max {
-        $0.count < $1.count
-      } ?? []
+      .map { getParametersFromInit(initSyntax: $0) }
+      .max { $0.count < $1.count } ?? []
 
     return largestParameterList
   }
 
   static func getParametersFromInit(
     initSyntax: InitializerDeclSyntax,
-//    access: String,
+    //    access: String,
   ) -> [ParameterItem] {
     let parameters = initSyntax.signature.parameterClause.parameters
 
@@ -107,7 +105,7 @@ extension SampleBuilderMacro {
         identifierName: $0.firstName.text,
         identifierType: $0.type,
         category: nil,
-//        accessLevel: access
+        //        accessLevel: access
       )
     }
   }

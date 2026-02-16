@@ -11,11 +11,12 @@ import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
+import MacroToolkit
 
 extension SampleBuilderMacro {
   static func generateSampleCodeSyntax(
     sampleData: ArrayElementListSyntax,
-    access: String,
+    access: AccessModifier?,
   ) -> IfConfigDeclSyntax {
 
     let returnType = ArrayTypeSyntax(
@@ -25,9 +26,13 @@ extension SampleBuilderMacro {
       ),
       rightSquare: .rightSquareToken()
     )
+    
+    let accessString = (access ?? .internal).name
+    let accessTokenSyntax: TokenSyntax = TokenSyntax(stringLiteral: accessString)
 
     let sampleCode = VariableDeclSyntax(
       modifiers: DeclModifierListSyntax {
+        DeclModifierSyntax(name: accessTokenSyntax)
         DeclModifierSyntax(name: .keyword(.static))
       },
       bindingSpecifier: .keyword(.var),

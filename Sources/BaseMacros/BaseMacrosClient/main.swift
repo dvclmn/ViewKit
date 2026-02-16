@@ -120,14 +120,21 @@ struct MyRecord {
 
 // MARK: - SampleData
 
-@SampleBuilder(numberOfItems: 10, dataGeneratorType: .default)
-public struct Example {
-  let item1: UUID
-  let item2: Int
-}
+//@SampleBuilder(numberOfItems: 4, dataGeneratorType: .default)
+//public struct Example {
+//  let item1: UUID
+//  let item2: Int
+//}
 
-for element in Example.sample {
-  print(element.item1, element.item2)
+@SampleBuilder(numberOfItems: 3, dataGeneratorType: .default)
+public struct PopupMessage: Sendable, Identifiable {
+  public let id: UUID
+
+  var label: String
+  let message: String?
+  @SamplesIgnored let loading: Int
+  @SamplesIgnored var dismissal: Bool
+  @SamplesIgnored var actions: [Int]
 }
 
 @SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)

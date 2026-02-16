@@ -30,7 +30,7 @@ extension SampleBuilderMacro {
       $0.decl.as(EnumCaseDeclSyntax.self)
     }
 
-    let access = Enum(enumDecl).access
+    let access = Enum(enumDecl).accessLevel
 
     if cases.isEmpty {
       SampleBuilderDiagnostic.report(
@@ -44,7 +44,6 @@ extension SampleBuilderMacro {
     let sampleCode = generateSampleCodeSyntax(
       sampleData: generateSampleArrayCases(
         cases: cases,
-        access: access,
         numberOfItems: numberOfItems,
         generatorType: generatorType
       ),

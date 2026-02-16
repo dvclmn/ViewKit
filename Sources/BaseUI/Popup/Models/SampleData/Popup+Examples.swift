@@ -6,9 +6,8 @@
 //
 
 import CoreTools
-import SwiftUI
 import SampleBuilder
-
+import SwiftUI
 
 extension PopupMessage {
 
