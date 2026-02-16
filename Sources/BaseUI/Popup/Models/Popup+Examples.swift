@@ -24,7 +24,7 @@ extension PopupMessage {
     message: "Here is some example text",
     isLoading: true,
     role: .error,
-    action: PopupAction(
+    actions: PopupAction(
       title: "Test button action",
       action: {
         print("Hello it's an aciton")
@@ -37,7 +37,7 @@ extension PopupMessage {
   public static func success(
     _ title: String,
     message: String? = nil,
-    action: PopupAction? = nil
+    actions: [PopupAction]
   ) -> PopupMessage {
     PopupMessage(
       title,
@@ -46,7 +46,7 @@ extension PopupMessage {
       isLoading: false,
       role: .neutral,
       dismissal: .automatic(2),
-      action: action
+      actions: actions
     )
   }
 
@@ -62,7 +62,7 @@ extension PopupMessage {
       isLoading: false,
       role: .error,
       dismissal: .manual,
-      action: action
+      actions: action
     )
   }
 }

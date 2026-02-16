@@ -17,20 +17,22 @@ private struct ShadowExampleView: View {
 
       BaseView("Depth effect ON")
         .depthShadow(
-          opacity: 0.9,
+          opacity: 0.2,
           radius: 16,
           distanceY: 40,
-          rounding: 20,
+          depthIntensity: 2,
         )
 
       BaseView("Depth effect OFF")
         .depthShadow(
-          opacity: 0.9,
+          opacity: 0.3,
           radius: 16,
           distanceY: 40,
+          depthIntensity: 0.0
         )
 
     }
+
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .padding(38)
     .background {

@@ -7,11 +7,17 @@
 
 import Foundation
 
-public struct PopupAction: Sendable {
+public struct PopupAction: Sendable, Identifiable {
+  public let id: UUID
   let title: String
   let action: @Sendable () -> Void
   
-  public init(title: String, action: @escaping @Sendable () -> Void) {
+  public init(
+    id: UUID = UUID(),
+    title: String,
+    action: @escaping @Sendable () -> Void
+  ) {
+    self.id = id
     self.title = title
     self.action = action
   }

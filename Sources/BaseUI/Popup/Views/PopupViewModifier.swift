@@ -51,7 +51,7 @@ public struct PopupViewExtenderModifier: ViewModifier {
         /// This allows providing a warning that there's no popup set in the Env
         if let popup {
           if let message = popup.popupMessage {
-            PopupView(message: message)
+            PopupView(message: message, alignment: alignment)
               .environment(\.isCompactMode, isCompact)
               .environment(\.hasCloseButton, hasCloseButton)
           }

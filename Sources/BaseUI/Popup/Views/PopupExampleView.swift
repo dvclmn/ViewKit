@@ -62,7 +62,8 @@ public struct PopupExampleView: View {
             isLoading: true,
             role: .neutral,
             dismissal: .automatic(2)
-          )
+          ),
+          alignment: .topTrailing
         )
         .environment(\.hasGlassEffect, true)
 
@@ -75,7 +76,8 @@ public struct PopupExampleView: View {
             role: .warning,
             dismissal: .automatic(1, showsIndicator: true),
             action: nil
-          )
+          ),
+          alignment: .topTrailing
         )
         .environment(\.isCompactMode, true)
         .environment(\.hasGlassEffect, true)
@@ -84,12 +86,13 @@ public struct PopupExampleView: View {
           message: PopupMessage(
             "Not Compact",
             icon: .emoji("⏰"),
-            message: nil,
+            message: "This Popup has a indicator showing how long until it disappears.",
             isLoading: true,
             role: .warning,
             dismissal: .automatic(1, showsIndicator: true),
             action: nil
-          )
+          ),
+          alignment: .topTrailing
         )
         .environment(\.isCompactMode, false)
         .environment(\.hasGlassEffect, false)
@@ -102,8 +105,9 @@ public struct PopupExampleView: View {
             isLoading: true,
             role: .warning,
             dismissal: .manual,
-            action: nil
-          )
+            action: PopupAction(title: "See More", action: {  })
+          ),
+          alignment: .topTrailing
         )
         .environment(\.hasCloseButton, true)
         .environment(\.hasGlassEffect, true)

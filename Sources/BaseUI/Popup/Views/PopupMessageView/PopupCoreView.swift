@@ -20,8 +20,6 @@ struct PopupCoreView: View {
 
     VStack(alignment: .leading, spacing: isCompactMode ? 4 : 6) {
 
-      //      PopupTitleView(message: popupMessage, hasCloseButton: hasCloseButton)
-
       MaybeLabel(popupMessage.label)
         .environment(\.symbolVariants, .fill)
         .environment(\.symbolRenderingMode, .hierarchical)
@@ -38,26 +36,15 @@ struct PopupCoreView: View {
           .foregroundStyle(.secondary)
           .font(isCompactMode ? .caption : .body)
       }
-      if let action = popupMessage.action {
+      
+      ForEach(popupMessage.actions) { action in
         Button(action.title) {
           return action.action()
-        }
+        } 
       }
-
-      if let duration = popupMessage.dismissal.autoDismissDuration, isShowingIndicator {
-        Capsule()
-          .fill(.quaternary)
-          .frame(maxWidth: progressBarLength, maxHeight: 5)
-          .padding(.horizontal, Styles.sizeSmall.bump)
-          .padding(.bottom, Styles.sizeSmall.bumpDown)
-          .animation(.linear(duration: duration), value: shouldStartProgressBar)
-          .frame(maxWidth: .infinity, alignment: .leading)
-      }
-
     }  // END vstack
 
     .multilineTextAlignment(.leading)
-
     .weightedPadding(
       isCompactMode ? 10 : 17,
       horizontalBias: isCompactMode ? 1.4 : 1.2,

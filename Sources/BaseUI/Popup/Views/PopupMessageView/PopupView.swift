@@ -24,7 +24,7 @@ struct PopupView: View {
   private let rounding: CGFloat = Styles.sizeRegular
 
   let message: PopupMessage
-
+  let alignment: Alignment
   var body: some View {
 
     VStack {
@@ -41,10 +41,14 @@ struct PopupView: View {
           tint: message.label.role?.colour,
           isEnabled: true
         )
-
-        .shadow(color: .black.opacity(0.2), radius: 40, x: 0, y: 18)
-        .shadow(color: .black.opacity(0.2), radius: 9, x: 0, y: 1)
+        .depthShadow(
+          opacity: 0.2,
+          radius: 12,
+          distanceY: 30,
+          depthIntensity: 0.0
+        )
     }
+    .frame(maxWidth: 300, alignment: alignment)
     .compositingGroup()
     .id(message.id)
     .padding(Styles.sizeRegular)

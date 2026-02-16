@@ -15,7 +15,7 @@ public struct PopupMessage: Sendable, Identifiable {
   public let message: String?
   public let isLoading: Bool
   public let dismissal: PopupDismissBehaviour
-  public let action: PopupAction?
+  public let actions: [PopupAction]
 
   public init(
     _ title: String,
@@ -23,19 +23,23 @@ public struct PopupMessage: Sendable, Identifiable {
     message: String? = nil,
     isLoading: Bool = false,
     role: ActionRole = .neutral,
-    dismissal: PopupDismissBehaviour = .automatic(3.5),
-    action: PopupAction? = nil
+//    dismissal: PopupDismissBehaviour = .automatic(3.5),
+    actions: [PopupAction] = []
+//    actions: PopupAction...
   ) {
     self.id = UUID()
     self.label = QuickLabel(title, icon: icon, role: role)
     self.message = message
     self.isLoading = isLoading
     self.dismissal = dismissal
-    self.action = action
+    self.actions = actions
   }
 }
 
 extension PopupMessage {
+  
+  
+  
   public var title: String { label.text }
   public var icon: IconLiteral? { label.icon }
   public var iconString: String? { label.icon?.toString }
@@ -54,7 +58,7 @@ extension PopupMessage: CustomStringConvertible {
         Labeled("Message", value: message)
         Labeled("Loading?", value: isLoading)
         Labeled("Dismiss Behaviour", value: dismissal)
-        Labeled("Action", value: action)
+        Labeled("Action", value: actions)
       }
     }.text
   }
