@@ -45,13 +45,11 @@ extension SampleBuilderMacro {
     generatorType: DataGeneratorType,
     context: MacroExpansionContext
   ) -> [ParameterItem] {
-    let storedPropertyMembers = structDecl.memberBlock.members
-      .compactMap {
-        $0.decl.as(VariableDeclSyntax.self)
-      }
-      .filter {
-        $0.isStoredProperty
-      }
+    let storedPropertyMembers = filterOutIgnored(
+      structDecl.memberBlock.members
+        .compactMap { $0.decl.as(VariableDeclSyntax.self) }
+        .filter { $0.isStoredProperty }
+    )
 
     let initMembers = structDecl.memberBlock.members
       .compactMap {
@@ -99,6 +97,11 @@ extension SampleBuilderMacro {
     generatorType: DataGeneratorType,
     context: MacroExpansionContext
   ) -> DataCategory? {
+
+    // Skip categorization for ignored properties
+    if variableDecl.hasSamplesIgnoredAttribute {
+      return nil
+    }
 
     // Check if SampleBuilderItem is used.
     guard
@@ -209,3 +212,4 @@ extension SampleBuilderMacro {
     return arrayElementListSyntax
   }
 }
+

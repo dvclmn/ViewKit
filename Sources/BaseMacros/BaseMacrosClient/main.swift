@@ -1,3 +1,10 @@
+//
+//  main.swift
+//  BaseMacros
+//
+//  Created by Dave Coleman on 16/2/2026.
+//
+
 import BasePrimitives
 import EnumMacros
 import Foundation

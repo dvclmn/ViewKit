@@ -19,5 +19,6 @@ struct BaseMacrosPlugin: CompilerPlugin {
     StaticMemberIterableMacro.self,
     SampleBuilderMacro.self,
     SampleBuilderItemMacro.self,
+    SamplesIgnoredMacro.self,
   ]
 }
