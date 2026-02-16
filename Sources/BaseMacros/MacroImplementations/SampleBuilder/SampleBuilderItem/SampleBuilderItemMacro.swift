@@ -59,13 +59,16 @@ public struct SampleBuilderItemMacro: PeerMacro {
       return []
     }
 
-    // It does nothing, but will help SampleBuilder to support categories
+    /// Ultimately this returns nothing, but is used by the main `@SampleBuilder`
+    /// macro as a marker, to help SampleBuilder to support categories
     return []
   }
 
+  /// Extracts the provided `SampleBuilderItemCategory` from the
+  /// `@SampleBuilderItem` peer macro `category` argument.
+  /// `AttributeSyntax` refers to the `@​Sample​Builder​Item` attribute itself
   static func getDataCategory(from node: AttributeSyntax) -> DataCategory {
-    guard let argumentTuple = node.arguments?.as(LabeledExprListSyntax.self)?.first
-    else {
+    guard let argumentTuple = node.arguments?.as(LabeledExprListSyntax.self)?.first else {
       fatalError("Compiler bug: Argument must exist")
     }
 
@@ -76,7 +79,7 @@ public struct SampleBuilderItemMacro: PeerMacro {
       let dataCategory = DataCategory(rawValue: simpleCategoryString)
     {
       return dataCategory
-      
+
     } else if let imageCategoryString = argumentTuple
       .expression
       .as(FunctionCallExprSyntax.self)?
@@ -84,7 +87,6 @@ public struct SampleBuilderItemMacro: PeerMacro {
       .dropFirst(),  // it removes the dot from .image(...)
       let dataCategory = DataCategory(rawValue: String(imageCategoryString))
     {
-
       return dataCategory
     }
 

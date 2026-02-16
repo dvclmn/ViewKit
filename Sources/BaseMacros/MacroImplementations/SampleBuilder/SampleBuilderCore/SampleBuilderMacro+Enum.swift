@@ -47,70 +47,11 @@ extension SampleBuilderMacro {
         access: access,
         numberOfItems: numberOfItems,
         generatorType: generatorType
-      )
+      ),
+      access: access
     )
 
     return [DeclSyntax(sampleCode)]
-  }
-
-  static func generateSampleArrayCases(
-    cases: [EnumCaseDeclSyntax],
-    access: String,
-    numberOfItems: Int,
-    generatorType: DataGeneratorType
-  ) -> ArrayElementListSyntax {
-    var arrayElementListSyntax = ArrayElementListSyntax()
-
-    let totalNumberOfCases = replicateCases(
-      cases: cases,
-      numberOfItems: numberOfItems
-    )
-
-    for caseItem in totalNumberOfCases {
-      let parameters = caseItem.parameters.map {
-        ParameterItem(
-          identifierName: $0.0?.text,
-          identifierType: $0.1,
-          category: nil,
-          accessLevel: access,
-        )
-      }
-
-      let caseExpression =
-        if caseItem.hasAssociatedValues {
-          ExprSyntax(
-            FunctionCallExprSyntax(
-              calledExpression: MemberAccessExprSyntax(
-                period: .periodToken(),
-                name: .identifier(caseItem.name)
-              ),
-              leftParen: .leftParenToken(),
-              arguments: getParameterListForSampleElement(
-                parameters: parameters,
-                generatorType: generatorType
-              ),
-              rightParen: .rightParenToken()
-            )
-          )
-        } else {
-          ExprSyntax(
-            MemberAccessExprSyntax(
-              period: .periodToken(),
-              name: .identifier(caseItem.name)
-            )
-          )
-        }
-
-      arrayElementListSyntax.append(
-        ArrayElementSyntax(
-          leadingTrivia: .newline,
-          expression: caseExpression,
-          trailingComma: .commaToken()
-        )
-      )
-    }
-
-    return arrayElementListSyntax
   }
 
   static func replicateCases(

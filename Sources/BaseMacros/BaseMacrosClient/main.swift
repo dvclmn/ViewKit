@@ -67,7 +67,6 @@ struct CoolAnimals {
   }
 }
 
-
 /// Expected output:
 /// ```
 /// public init?(thingOptional: Bool?) {
@@ -122,7 +121,7 @@ struct MyRecord {
 // MARK: - SampleData
 
 @SampleBuilder(numberOfItems: 10, dataGeneratorType: .default)
-struct Example {
+public struct Example {
   let item1: UUID
   let item2: Int
 }
@@ -165,5 +164,7 @@ enum MyEnum {
   indirect case case1(String, Int, String, [String])
   case case2
   case case3(Product)
+  case monkey
   case case4([String: Product])
+  case coolGuy
 }
