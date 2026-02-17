@@ -5,19 +5,23 @@
 //  Created by Dave Coleman on 29/6/2025.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
 /// Represents a *delta* adjustment in HSV space
 /// Does not set hsv values to these, but adds to them
 public struct HSVAdjustment: Sendable, Codable, Equatable, Hashable {
 
-  /// Important: This `hue` is cyclic. I am no longer using
-  /// `UnitIntervalCyclic` because it's fiddly, but
-  /// this does still need (somehow) to be made cyclic
+
+  /// Hue is cyclic. Unit interval `[0,1)`
   public var hue: Double?
+  
+  /// saturation and brightness are deltas. Expected range `−1…1`
   public var saturation: Double?
   public var brightness: Double?
+  
+  /// Scalar multiplier applied when combining/applying adjustments;
+  /// not used as interpolation time parameter
   public let strength: Double
 
   public init(
@@ -79,12 +83,13 @@ extension HSVAdjustment {
   
   public func interpolated(towards other: HSVAdjustment, t: Double) -> HSVAdjustment {
     HSVAdjustment(
-      hue: hue.interpolatedHue(towards: other.hue, strength: t),
-      saturation: saturation.interpolated(towards: other.saturation, strength: t),
-      brightness: brightness.interpolated(towards: other.brightness, strength: t),
-      strength: strength.interpolated(towards: other.strength, strength: t) // or keep lhs.strength
+      hue: hue.interpolatedHue(towards: other.hue, amount: t),
+      saturation: saturation.interpolated(towards: other.saturation, amount: t),
+      brightness: brightness.interpolated(towards: other.brightness, amount: t),
+      strength: strength.interpolated(towards: other.strength, strength: t)
     )
   }
+
   
   public func scaled(by factor: Double) -> HSVAdjustment {
     HSVAdjustment(
@@ -118,15 +123,24 @@ extension HSVAdjustment {
     return combined
   }
 
-  public func adding(other: Self) -> Self {
+  public func adding(
+    other: Self,
+    shouldScaleStrength: Bool = false
+  ) -> Self {
     HSVAdjustment(
-      hue: hue.combined(with: other.hue) {
-        $0.interpolated(towards: $1, amount: 1.0)
-      },
+      hue: hue.combined(with: other.hue) { $0.interpolatedHue(towards: $1, amount: 1.0) },
       saturation: saturation.combined(with: other.saturation, using: +),
-
-      brightness: brightness.combined(with: other.brightness, using: +)
+      brightness: brightness.combined(with: other.brightness, using: +),
+      strength: shouldScaleStrength ? strength + other.strength : self.strength
     )
+//    HSVAdjustment(
+//      hue: hue.combined(with: other.hue) {
+//        $0.interpolated(towards: $1, amount: 1.0)
+//      },
+//      saturation: saturation.combined(with: other.saturation, using: +),
+//
+//      brightness: brightness.combined(with: other.brightness, using: +)
+//    )
   }
 }
 
@@ -134,54 +148,25 @@ public func + (lhs: HSVAdjustment, rhs: HSVAdjustment) -> HSVAdjustment {
   lhs.adding(other: rhs)
 }
 
-extension Optional where Wrapped == Double {
+//extension Double {
+//  func interpolatedHue(towards to: Double, amount t: Double) -> Double {
+//    var delta = to - self
+//    if delta > 0.5 { delta -= 1.0 }
+//    if delta < -0.5 { delta += 1.0 }
+//    var result = self + delta * t
+//    if result < 0 { result += 1.0 }
+//    if result >= 1 { result -= 1.0 }
+//    return result
+//  }
+//}
 
-  /// Cyclic interpolation for hue values (shortest path around color wheel)
-  public func interpolatedHue(
-    towards other: Double?,
-    strength: Double
-  ) -> Double? {
-    switch (self, other) {
-
-      case (nil, nil): nil
-      case (let a?, nil): a
-      case (nil, let b?): b
-      case (let a?, let b?):
-        a.interpolatedHue(towards: b, amount: strength)
-    }
-
-    //    switch (self, other) {
-    //
-    //      case (nil, nil): return nil
-    //
-    //      /// Keep current hue when target is nil
-    //      case (let hue?, nil): return hue
-    //
-    //      /// Jump to target when current is nil
-    //      case (nil, let target?): return target
-    //
-    //      case (let from?, let to?):
-    //        let value = from.interpolated(towards: to, amount: strength)
-    //        return value
-    //    }
-  }
-}
-
-extension Double {
-  // Assumes values in [0, 1); wraps around unit circle
-  func interpolatedHue(
-    towards to: Double,
-    amount t: Double
-  ) -> Double {
-    precondition((0...1).contains(self) && (0...1).contains(to), "Hue must be in [0, 1]")
-    let a = self
-    let b = to
-    var delta = b - a
-    if delta > 0.5 { delta -= 1.0 }
-    if delta < -0.5 { delta += 1.0 }
-    var result = a + delta * t
-    if result < 0 { result += 1.0 }
-    if result >= 1 { result -= 1.0 }
-    return result
-  }
-}
+//extension Optional where Wrapped == Double {
+//  func interpolatedHue(towards other: Double?, strength: Double) -> Double? {
+//    switch (self, other) {
+//      case (nil, nil): return nil
+//      case (let a?, nil): return a
+//      case (nil, let b?): return b
+//      case (let a?, let b?): return a.interpolatedHue(to: b, amount: strength)
+//    }
+//  }
+//}

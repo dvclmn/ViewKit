@@ -9,7 +9,7 @@ import BasePrimitives
 import SwiftUI
 
 public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable,
-  ColourModel, HSVAdjustable
+  ColourModel
 {
   public let id: UUID
   public var red: Double
@@ -172,15 +172,6 @@ extension RGBColour {
       name: name
     )
   }
-
-  /// Convert to HSV, preserving `previous.hue` when the converted hue is undefined.
-  public func toHSV(preservingHueFrom previous: HSVColour?) -> HSVColour {
-    let converted = self.toHSV
-    guard let previous else { return converted }
-    return previous.mergingPreservingHue(converted)
-  }
-
-  public var toHSV: HSVColour { HSVColour(fromRGB: self) }
 
   /// Create a color with specified brightness (0.0 to 1.0)
   public static func gray(

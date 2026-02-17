@@ -8,7 +8,7 @@
 import Foundation
 
 
-extension RGBColour {
+extension RGBColour: LuminanceReadable {
   public func luminanceThreshold(using method: LuminanceMethod) -> LuminanceThreshold {
     return LuminanceThreshold(from: self)
   }

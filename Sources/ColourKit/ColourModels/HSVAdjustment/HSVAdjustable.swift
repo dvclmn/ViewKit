@@ -7,7 +7,7 @@
 
 public protocol HSVAdjustable {
 //public protocol HSVAdjustable: ColourModel, LuminanceReadable {
-  associatedtype Colour: ColourModel
+//  associatedtype Colour: ColourModel
   
   var toHSV: HSVColour { get }
   init(fromHSV hsv: HSVColour)

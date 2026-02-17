@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 17/2/2026.
 //
 
-extension HSVColour {
+extension HSVColour: LuminanceReadable {
   
   public func luminance(using method: LuminanceMethod = .wcag) -> Double {
     

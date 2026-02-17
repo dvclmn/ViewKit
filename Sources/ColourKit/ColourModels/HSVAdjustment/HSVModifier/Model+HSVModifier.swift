@@ -16,11 +16,16 @@ extension Array where Element == HSVAdjustment {
   /// Combines adjustments with a strength multiplier
   public func combined(with strength: Double) -> HSVAdjustment {
     guard !isEmpty else { return .zero }
-
-    /// Apply strength to each adjustment, then combine them
-    let weightedAdjustments = self.map { adjustment in
-      HSVAdjustment.zero.interpolated(towards: adjustment)
-    }
-    return weightedAdjustments.reduce(.zero, +)
+    let weighted = self.map { $0.scaled(by: strength) }
+    return weighted.reduce(.zero, +)
   }
+//  public func combined(with strength: Double) -> HSVAdjustment {
+//    guard !isEmpty else { return .zero }
+//
+//    /// Apply strength to each adjustment, then combine them
+//    let weightedAdjustments = self.map { adjustment in
+//      HSVAdjustment.zero.interpolated(towards: adjustment)
+//    }
+//    return weightedAdjustments.reduce(.zero, +)
+//  }
 }

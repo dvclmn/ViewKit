@@ -70,12 +70,13 @@ extension SystemColour {
     return HSVAdjustment(h: hue, s: sat, v: val)
   }
 
-  public func hsvAdjusted(by adjustment: HSVAdjustment) -> Color? {
-    guard let baseAdjustment = hsvAdjustment else { return nil }
-    let adjusted: HSVAdjustment = baseAdjustment.interpolated(
-      towards: adjustment
-    )
-    return adjusted.toColour()
-  }
+  /// This unable to work, as HSVAdjustable only works in deltas
+//  public func hsvAdjusted(by adjustment: HSVAdjustment) -> Color? {
+//    guard let baseAdjustment = hsvAdjustment else { return nil }
+//    let adjusted: HSVAdjustment = baseAdjustment.interpolated(
+//      towards: adjustment
+//    )
+//    return adjusted.toColour()
+//  }
 
 }

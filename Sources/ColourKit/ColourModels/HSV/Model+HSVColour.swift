@@ -50,14 +50,6 @@ public struct HSVColour: Identifiable, Equatable, Sendable, ColourModel, Hashabl
   }
 }
 
-extension HSVColour: HSVAdjustable {
-
-  public init(fromHSV hsv: HSVColour) {
-    self = hsv
-  }
-
-  public var toHSV: HSVColour { self }
-}
 
 extension HSVColour {
 
