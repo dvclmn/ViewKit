@@ -16,10 +16,6 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
 
   @State private var isHovering: Bool = false
 
-  //  @State private var foregroundSlot: HierarchicalColour = .primary
-
-  //  @State private var activeColourID: Colour.ID?
-
   @Binding var primary: Colour
   @Binding var secondary: Colour?
 
@@ -34,7 +30,6 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
   ) {
     self._primary = primary
     self._secondary = secondary
-    //    self._activeColourID = State(initialValue: primary.wrappedValue.id)
     self.diameter = diameter
     self.overlapFactor = overlapFactor
   }
@@ -44,43 +39,16 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
     if let secondary {
 
       HStack {
-        //        switch activeColour.wrappedValue {
-        //          case .foreground:
         Level(.primary, colour: primary)
         Level(.secondary, colour: secondary)
-
-        //          case .background:
-        //        }
-
-        //          .zIndex(index(for: .background))
       }
-      //      .task(id: activeColour.wrappedValue) {
-      //      }
+
     } else {
+
       /// If there's only one colour provided, we don't even need
       /// to think about active colour level
       Level(.primary, colour: primary)
     }
-    //    .allowsHitTesting(!modifierKeys.isHoldingOption)
-    //      .frame(width: swatchPairTotalWidth)
-    //
-    //      .onHover { isHovering = $0 }
-
-    //    .overlay(alignment: .leading) {
-    //      if isHovering && modifierKeys.isHoldingOption {
-    //        Label("Swap Foreground and Background", systemImage: "arrow.uturn.right")
-    //          .fontWeight(.medium)
-    //          .foregroundStyle(
-    //            .pink
-    //            //            store.colourHandler.contrastingSwiftUIColour(for: .foreground, using: .contrastPreset(.highContrast), includesAlpha: false)
-    //            //            store.colourHandler.selectedColour.contrastingBorderColour(using: .highContrast).nativeColour(includesAlpha: false)
-    //          )
-    //          .frame(width: diameter)
-    //          .allowsHitTesting(false)
-    //      }
-    //    }
-    //    .gesture(tapSwapGesture, isEnabled: isHoldingOption)
-    //    .padding(.horizontal, Styles.sizeRegular.bump)
 
   }
 }
@@ -91,8 +59,8 @@ extension ColourLevelSwitch {
     let temp = primary
     primary = currentSecondary
     secondary = temp
-    // If you track selection elsewhere, you likely want the active slot to be .primary after swap.
-    // activeHierarchicalColour.wrappedValue = .primary
+    /// If you track selection elsewhere, you likely want the active slot to be .primary after swap.
+    activeHierarchicalColour.wrappedValue = .primary
   }
 
   private func isActive(_ slot: HierarchicalColour) -> Bool {
@@ -107,22 +75,13 @@ extension ColourLevelSwitch {
     isActiveAndSwitchMode(slot) ? 2 : 1
   }
 
-  
-  //  var backgroundSlot: HierarchicalColour {
-  //    foregroundSlot == .primary ? .secondary : .primary
-  //  }
-
-  //  func swapForegroundAndBackground() {
-  //    foregroundSlot = foregroundSlot == .primary ? .secondary : .primary
-  //  }
-
   var activeColourBinding: Binding<Colour> {
     switch activeHierarchicalColour.wrappedValue {
       case .primary:
         return $primary
       case .secondary:
-        // If secondary can be nil, you’ll need to decide what to do in that case.
-        // Option A: Provide a default or disable selection when nil.
+        /// If secondary can be nil, you’ll need to decide what to do in that case.
+        /// Option A: Provide a default or disable selection when nil.
         return Binding(
           get: { secondary ?? primary },  // fallback to primary for read
           set: { newValue in secondary = newValue }  // write to secondary
@@ -151,10 +110,6 @@ extension ColourLevelSwitch {
   //        )
   //    }
   //  }
-
-  func isColourActive(_ slot: HierarchicalColour) -> Bool {
-    slot == activeHierarchicalColour.wrappedValue
-  }
 
   //  func isForeground(_ slot: HierarchicalColour) -> Bool {
   //    slot == foregroundSlot
@@ -221,25 +176,12 @@ extension ColourLevelSwitch {
 
   }
 
-  private var isDualColourMode: Bool {
-    secondary != nil
-  }
-
   //  private func
 
-  //  private func index(for level: HierarchicalColour) -> Double {
-  //    guard isActiveAndSwitchMode(level) else {
-  //      return 1
-  //    }
-  //    return 2
-  //  }
+}
 
-  //  private func colourLevel(for hierarchy: HierarchicalColour) -> ColourLevel {
-  //    switch activeColour.wrappedValue {
-  //      case .foreground:
-  //      case .background:
-  //    }
-  //  }
+// MARK: - Geometry/Layout
+extension ColourLevelSwitch {
 
   var swatchPairTotalWidth: CGFloat {
     /// *Both* swatches are drawn in toward one another by
@@ -247,29 +189,27 @@ extension ColourLevelSwitch {
     (diameter * 2) - (overlapFactor * diameter / 2)
   }
 
-//  private func offsetAmount(_ colourLevel: HierarchicalColour) -> CGFloat {
-//    guard isDualColourMode else { return .zero }
-//    return isActive(colourLevel) ? -swatchOverlap : swatchOverlap
-//  }
-  
   private func offsetAmount(_ slot: HierarchicalColour) -> CGFloat {
     guard isDualColourMode else { return .zero }
     return slot == .primary ? -swatchOverlap : swatchOverlap
   }
 
+}
+
+// MARK: - Swap State
+extension ColourLevelSwitch {
 
   private var swatchOverlap: CGFloat {
     diameter * overlapFactor
   }
-  
 
-  //  private func isActiveAndSwitchMode(_ colourLevel: HierarchicalColour) -> Bool {
-  //    colourLevel == activeHierarchicalColour.wrappedValue && isDualColourMode
-  //  }
-  //
-  //  private func isActive(_ colourLevel: HierarchicalColour) -> Bool {
-  //    colourLevel == activeHierarchicalColour.wrappedValue
-  //  }
+  private var isDualColourMode: Bool {
+    secondary != nil
+  }
+
+  func isColourActive(_ slot: HierarchicalColour) -> Bool {
+    slot == activeHierarchicalColour.wrappedValue
+  }
 
   private var contrastColour: Colour {
     let hsvAdjustment = HSVAdjustment(h: 0.1, s: 0.0, v: 0.1)
@@ -277,22 +217,26 @@ extension ColourLevelSwitch {
     return adjusted
   }
 
-  //  var tapSwapGesture: some Gesture {
-  //    TapGesture()
-  //      .onEnded { _ in
-  //        store.colourHandler.swapColours()
-  //      }
-  //  }
-
-  //  var isHoldingOption: Bool {
-  //    return modifierKeys.contains(.option)
-  //  }
-
-  //  var isShowingSwappable: Bool {
-  //    store.colourHandler.hoveredColourLevel != nil && isHoldingOption
-  //  }
 }
 
-//extension ColourLevel {
-//  func isActive()
-//}
+/// This is from above, here for now
+//    .allowsHitTesting(!modifierKeys.isHoldingOption)
+//      .frame(width: swatchPairTotalWidth)
+//
+//      .onHover { isHovering = $0 }
+
+//    .overlay(alignment: .leading) {
+//      if isHovering && modifierKeys.isHoldingOption {
+//        Label("Swap Foreground and Background", systemImage: "arrow.uturn.right")
+//          .fontWeight(.medium)
+//          .foregroundStyle(
+//            .pink
+//            //            store.colourHandler.contrastingSwiftUIColour(for: .foreground, using: .contrastPreset(.highContrast), includesAlpha: false)
+//            //            store.colourHandler.selectedColour.contrastingBorderColour(using: .highContrast).nativeColour(includesAlpha: false)
+//          )
+//          .frame(width: diameter)
+//          .allowsHitTesting(false)
+//      }
+//    }
+//    .gesture(tapSwapGesture, isEnabled: isHoldingOption)
+//    .padding(.horizontal, Styles.sizeRegular.bump)
