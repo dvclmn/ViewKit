@@ -10,7 +10,6 @@ import CoreTools
 import GraphicsKit
 import SwiftUI
 
-
 public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & EnvironmentResolvableColour>: View {
   @Environment(\.activeColour) private var activeColour
   @Environment(\.modifierKeys) private var modifierKeys
@@ -79,32 +78,34 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
   }
 }
 extension ColourLevelSwitch {
-  private func index(for level: ColourLevel) -> Double {
+  
+//  private func
+  
+  private func index(for level: HierarchicalColour) -> Double {
     guard isActiveAndSwitchMode(level) else {
       return 1
     }
     return 2
   }
-  
-  
-  
-//  private func colourLevel(for hierarchy: HierarchicalColour) -> ColourLevel {
-//    switch activeColour.wrappedValue {
-//      case .foreground:
-//      case .background:
-//    }
-//  }
+
+  //  private func colourLevel(for hierarchy: HierarchicalColour) -> ColourLevel {
+  //    switch activeColour.wrappedValue {
+  //      case .foreground:
+  //      case .background:
+  //    }
+  //  }
 
   @ViewBuilder
   private func Level(
-//    _ colourLevel: ColourLevel,
+    //    _ colourLevel: ColourLevel,
     colour: Colour
   ) -> some View {
     Button {
-      activeColour.wrappedValue = colourLevel
+//      activeColour.wrappedValue = colourLevel
     } label: {
-      ColourLevelLabel(colourLevel, colour: colour)
-        .frameFromSquare(diameter)
+      Text("Be right back")
+//      ColourLevelLabel(colourLevel, colour: colour)
+//        .frameFromSquare(diameter)
     }
     //    .border(Color.green.opacity(0.3))
     .buttonStyle(.noClickAnimation(isPlain: true))
@@ -113,7 +114,7 @@ extension ColourLevelSwitch {
 
   @ViewBuilder
   private func ColourLevelLabel(
-    _ colourLevel: ColourLevel,
+    _ colourLevel: HierarchicalColour,
     colour: Colour
   ) -> some View {
 
@@ -138,7 +139,6 @@ extension ColourLevelSwitch {
     //      .contentShape(.rect)
 
   }
-  
 
   private var isDualColourMode: Bool {
     secondary != nil
@@ -150,7 +150,7 @@ extension ColourLevelSwitch {
     (diameter * 2) - (overlapFactor * diameter / 2)
   }
 
-  private func offsetAmount(_ colourLevel: ColourLevel) -> CGFloat {
+  private func offsetAmount(_ colourLevel: HierarchicalColour) -> CGFloat {
     guard isDualColourMode else { return .zero }
     return isActive(colourLevel) ? -swatchOverlap : swatchOverlap
   }
@@ -159,11 +159,11 @@ extension ColourLevelSwitch {
     diameter * overlapFactor
   }
 
-  private func isActiveAndSwitchMode(_ colourLevel: ColourLevel) -> Bool {
+  private func isActiveAndSwitchMode(_ colourLevel: HierarchicalColour) -> Bool {
     colourLevel == activeColour.wrappedValue && isDualColourMode
   }
 
-  private func isActive(_ colourLevel: ColourLevel) -> Bool {
+  private func isActive(_ colourLevel: HierarchicalColour) -> Bool {
     colourLevel == activeColour.wrappedValue
   }
 

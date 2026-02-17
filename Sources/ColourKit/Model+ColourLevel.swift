@@ -17,12 +17,15 @@ public protocol ColourHandlerProtocol {
 }
 
 @CaseDetection
-public enum HierarchicalColour: String, Sendable, CaseIterable, Identifiable {
+public enum HierarchicalColour: String, Sendable, CaseCyclable, CaseIterable, NamedItem, Identifiable {
+  
+  public static let defaultCase: Self = .primary
+  
   case primary  // Foreground by default
   case secondary  // Background by default
 
   public var id: String { rawValue }
-
+  public var name: String { rawValue.capitalized }
   public func colour(for activeLevel: ColourLevel) -> Self {
     switch activeLevel {
       case .foreground: .primary

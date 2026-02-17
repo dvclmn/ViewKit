@@ -11,10 +11,10 @@ import SwiftUI
 public struct ColourHandler: ColourHandlerProtocol, Sendable {
 
   /// This describes which colour is currently being used for drawing
-  public var activeColourLevel: ColourLevel = .foreground
+  public var activeColourLevel: HierarchicalColour = .primary
   /// This is when a user directly clicks a colour, and is editing it
-  public var focusedColourLevel: ColourLevel? = nil
-  public var hoveredColourLevel: ColourLevel? = nil
+  public var focusedColourLevel: HierarchicalColour? = nil
+  public var hoveredColourLevel: HierarchicalColour? = nil
 
   /// This is the current, user-selected colour (there may be another
   /// introduced, so becoming foreground and background).
@@ -72,9 +72,9 @@ extension ColourHandler {
 
   public var selectedColour: RGBColour {
     switch activeColourLevel {
-      case .foreground:
+      case .primary:
         return foregroundRGB
-      case .background:
+      case .secondary:
         return backgroundRGB
     }
   }
