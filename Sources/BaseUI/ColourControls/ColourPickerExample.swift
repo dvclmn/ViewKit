@@ -43,9 +43,11 @@ extension ColourPickerExample {
 }
 #if DEBUG
 #Preview(traits: .size(.normal)) {
+  @Previewable @State var model: ColourModelKind = .rgb
   ColourPickerExample()
     .frame(width: 300)
     .setHSVRepresentation()
-    
+    .environment(\.activeColourModel, $model)
+
 }
 #endif

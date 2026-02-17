@@ -6,14 +6,14 @@
 //
 
 import ColourKit
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 @MetaEnum
 public enum TrackStyle {
   case rgb(RGBColour, RGBComponent)
   case hsv(HSVColour, HSVComponent)
-  case opacityCheckboard
+  case opacityCheckboard(any ColourModel)
   case clear
   case gradient(LinearGradient)
 
@@ -43,9 +43,10 @@ public enum TrackStyle {
               preconditionFailure("Don't pass alpha to create a slider track gradient")
           }
         return AnyShapeStyle(gradient)
-      case .opacityCheckboard:
+
+      case .opacityCheckboard(let colour):
         let gradient = LinearGradient(
-          colors: [.clear, .white],
+          colors: [.clear, colour.toColour],
           startPoint: .leading,
           endPoint: .trailing
         )
@@ -53,7 +54,7 @@ public enum TrackStyle {
 
       case .clear:
         return AnyShapeStyle(Color.clear)
-        
+
       case .gradient(let gradient):
         return AnyShapeStyle(gradient)
     }

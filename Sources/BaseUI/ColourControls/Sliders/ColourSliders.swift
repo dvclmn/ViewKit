@@ -58,6 +58,13 @@ extension ColourSliders {
     )
     .sliderStyle(.custom(.rgb(colour, .blue)))
 
+    QuickSlider(
+      "A",
+      value: $colour.alpha,
+      range: .unitRange
+    )
+    .sliderStyle(.custom(.opacityCheckboard(colour.toOpaque)))
+
   }
 
   @ViewBuilder
@@ -82,6 +89,13 @@ extension ColourSliders {
       range: .unitRange
     )
     .sliderStyle(.custom(.hsv(hsvBinding().wrappedValue, .brightness)))
+
+    QuickSlider(
+      "A",
+      value: $colour.alpha,
+      range: .unitRange
+    )
+    .sliderStyle(.custom(.opacityCheckboard(colour.toOpaque)))
   }
 
   private func hsvBinding() -> Binding<HSVColour> {

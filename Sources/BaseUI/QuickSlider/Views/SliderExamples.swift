@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreTools
+import ColourKit
 
 public struct SliderExamples: View {
 
@@ -32,7 +33,7 @@ public struct SliderExamples: View {
           value: $zoomValue.toBindingDouble,
           range: zoomRange.toDoubleRange,
         )
-        .sliderStyle(.custom(.opacityCheckboard))
+        .sliderStyle(.custom(.opacityCheckboard(RGBColour.bisque)))
         .environment(\.sliderDefaultValue, 1.0)
 
         //      .setExplicitHeight(5)

@@ -50,8 +50,16 @@ public struct HSVColour: Identifiable, Equatable, Sendable, ColourModel, Hashabl
   }
 }
 
-
 extension HSVColour {
+
+  public var toColour: Color {
+    Color(
+      hue: hue,
+      saturation: saturation,
+      brightness: brightness,
+      opacity: alpha
+    )
+  }
 
   /// Hue is only meaningful when there is chroma and not pure black.
   /// (You can decide whether `brightness == 0` should count as undefined even if saturation > 0;
@@ -61,6 +69,8 @@ extension HSVColour {
     /// still not observable), change to saturation > 0.
     saturation > 0 && brightness > 0
   }
+  
+  
 
   /// Returns `incoming`, but if its hue is undefined (grey/black), preserves `self.hue`.
   public func mergingPreservingHue(_ incoming: HSVColour) -> HSVColour {
@@ -88,6 +98,10 @@ extension HSVColour {
       alpha: 1.0,
     )
   }
+  
+  public var toOpaque: HSVColour {
+    HSVColour(h: hue, s: saturation, v: brightness, alpha: 1.0, name: name)
+  }
 
   /// Convert to RGB and back again while preserving hue across undefined-hue zones.
   /// Useful when RGB is your bound storage but HSV drives interaction.
@@ -98,7 +112,7 @@ extension HSVColour {
     let hsv = rgb.toHSV(preservingHueFrom: previous)
     return (rgb, hsv)
   }
-  
+
   public var toRGB: RGBColour { RGBColour(fromHSV: self) }
 
   public static func gray(
@@ -115,23 +129,23 @@ extension HSVColour {
   }
 
   /// This is handled in ``HSVAdjustable/adjust(by:)``
-//  func applying(adjustment: HSVAdjustment) -> HSVColour {
-//    let adjustedHue = adjustment.hue.map { hue + $0 } ?? hue
-//
-//    let adjustedSaturation =
-//      adjustment.saturation.map { saturation + $0 } ?? saturation
-//
-//    let adjustedBrightness =
-//      adjustment.brightness.map { brightness + $0 } ?? brightness
-//
-//    return HSVColour(
-//      hue: adjustedHue,
-//      saturation: adjustedSaturation,
-//      brightness: adjustedBrightness,
-//      alpha: alpha,
-//      name: self.name
-//    )
-//  }
+  //  func applying(adjustment: HSVAdjustment) -> HSVColour {
+  //    let adjustedHue = adjustment.hue.map { hue + $0 } ?? hue
+  //
+  //    let adjustedSaturation =
+  //      adjustment.saturation.map { saturation + $0 } ?? saturation
+  //
+  //    let adjustedBrightness =
+  //      adjustment.brightness.map { brightness + $0 } ?? brightness
+  //
+  //    return HSVColour(
+  //      hue: adjustedHue,
+  //      saturation: adjustedSaturation,
+  //      brightness: adjustedBrightness,
+  //      alpha: alpha,
+  //      name: self.name
+  //    )
+  //  }
 }
 
 //

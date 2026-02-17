@@ -59,13 +59,46 @@ public struct ColourPicker: View {
           primary: $primaryColour,
           secondary: $secondaryColour,
           diameter: 30,
-          overlapFactor: 0.37,
+          overlapFactor: 0.24,
           //          mode: .switcher
         )
         Spacer()
         //        QuickerPicker(activeColour.wrappedValue.name, selection: activeColour)
         //      }
         ToggleButtonGroup(components: $components)
+
+        ControlGroup {
+          Button {
+            activeColourModel.wrappedValue.next()
+          } label: {
+            Label(
+              activeColourModel.wrappedValue.name, systemImage: activeColourModel.wrappedValue.icon.toString
+            )
+  //          .frame(maxWidth: .infinity)
+//            .aspectRatio(1, contentMode: .fit)
+            .labelStyle(.iconOnly)
+  //          .border(Color.purple.opacity(0.3))
+            //          Text()
+          }
+        }
+//        .aspectRatio(1, contentMode: .fit)
+//        .buttonBorderShape(.roundedRectangle)
+//        .border(Color.green.opacity(0.3))
+//        .buttonStyle(.plain)
+//        .background {
+//          RoundedRectangle(cornerRadius: 2)
+//            .aspectRatio(1, contentMode: .fit)
+//        }
+
+        //        Picker("Colour Model", selection: activeColourModel) {
+        //          ForEach(ColourModelKind.allCases) { model in
+        //            Text(model.name).tag(model)
+        //          }
+        //        }
+        //        .pickerStyle(.segmented)
+        //        .controlSize(.small)
+        //        .labelsHidden()
+
       }
 
       if components.contains(.square) {
@@ -80,6 +113,6 @@ public struct ColourPicker: View {
         StateView("No components specified")
           .controlSize(.small)
       }
-    }
+    }  // END main vstack
   }
 }

@@ -58,6 +58,15 @@ extension RGBColour: _ExpressibleByColorLiteral {
     )
   }
 
+  public var toColour: Color {
+    Color(
+      colourSpace,
+      red: red,
+      green: green,
+      blue: blue,
+      opacity: alpha
+    )
+  }
 }
 
 extension RGBColour {
@@ -150,6 +159,10 @@ extension RGBColour {
 }
 
 extension RGBColour {
+  
+  public var toOpaque: Self {
+    RGBColour(red, green, blue, a: 1.0, name: name)
+  }
 
   public var areAllComponentsNormalised: Bool {
     red.isWithin(.unitRange)
@@ -186,9 +199,10 @@ extension RGBColour {
       name: "Gray"
     )
   }
+  
 }
 
-//
+
 extension RGBColour: CustomStringConvertible {
   public var description: String {
     guard let name else {

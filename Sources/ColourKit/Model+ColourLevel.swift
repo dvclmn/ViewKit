@@ -61,7 +61,21 @@ public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable, NamedItem
 
 extension Binding where Value == RGBColour {
 
-  public static func colourBinding(
+//  public func colourBinding(
+//    lockAlpha: Bool = false
+////    level: ColourLevel
+//  ) -> Binding<RGBColour> {
+//    Binding<RGBColour> {
+//      if lockAlpha {
+//        let current = wrappedValue.alpha
+//        
+//      }
+//    } set: { newColour in
+//      <#code#>
+//    }
+//  }
+//  
+  public static func dualColourBinding(
     _ primary: Binding<RGBColour>,
     _ secondary: Binding<RGBColour?>,
     level: ColourLevel

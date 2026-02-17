@@ -13,6 +13,8 @@ public protocol ColourModel: Codable, Equatable, Identifiable {
   var id: UUID { get }
   var name: String? { get }
   var alpha: Double { get set }
+  var toColour: Color { get }
+  var toOpaque: Self { get }
   mutating func opacity(_ opacity: Double)
   static func gray(_ brightness: Double, alpha: Double) -> Self
 }
@@ -24,7 +26,24 @@ extension ColourModel {
 }
 
 @CaseDetection
-public enum ColourModelKind: String, Hashable, Codable, Sendable {
+public enum ColourModelKind: String, Hashable, Codable, Sendable, CaseIterable, CaseCyclable, Identifiable {
+  public static let defaultCase: ColourModelKind = .rgb
+  
   case rgb
   case hsv
+ 
+  public var id: String { rawValue}
+  public var name: String {
+    switch self {
+      case .rgb: "RGB"
+      case .hsv: "HSV"
+    }
+  }
+  
+  public var icon: IconLiteral {
+    switch self {
+      case .rgb: .symbol("camera.filters")
+      case .hsv: .symbol("cone") // line.3.crossed.swirl.circle
+    }
+  }
 }
