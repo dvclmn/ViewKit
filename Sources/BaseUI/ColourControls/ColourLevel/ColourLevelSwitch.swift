@@ -12,6 +12,7 @@ import SwiftUI
 
 public struct ColourLevelSwitch<Colour: ColourModel & EnvironmentResolvableColour>: View {
   @Environment(\.activeColour) private var activeColour
+  @Environment(\.hsvPrimaryRepresentation) private var hsvPrimaryRepresentation
   @Environment(\.modifierKeys) private var modifierKeys
   
   @State private var isHovering: Bool = false
@@ -152,7 +153,7 @@ extension ColourLevelSwitch {
   
   private var contrastColour: Colour {
     let hsvAdjustment = HSVAdjustment(h: 0.2, s: 0.0, v: 0.2)
-    let hsv
+//    let hsvAdjusted = hsvPrimaryRepresentation.wrappedValue?.adjust(hue: <#T##Double#>, saturation: <#T##Double#>, brightness: <#T##Double#>)
   }
 
   //  var tapSwapGesture: some Gesture {

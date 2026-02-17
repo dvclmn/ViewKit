@@ -16,12 +16,10 @@ public protocol ColourModel: Codable, Equatable {
   static func gray(_ brightness: Double, alpha: Double) -> Self
 }
 
-// MARK: - Extension methods
 extension ColourModel {
   public mutating func opacity(_ opacity: Double) { alpha = opacity }
   public var colourSpace: Color.RGBColorSpace { .sRGB }
   public var nsColourSpace: NSColorSpace { .deviceRGB }
-//  public var nsColourSpace: NSColorSpace { .sRGB }
 }
 
 @CaseDetection

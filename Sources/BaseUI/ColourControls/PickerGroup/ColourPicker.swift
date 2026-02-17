@@ -35,21 +35,21 @@ public struct ColourPicker: View {
       if let secondaryBinding = Binding($secondaryColour) {
 //      if secondaryColour != nil {
         
-        ColourLevelView(
-          level: activeColour.wrappedValue,
-          foreground: primaryColour,
-          background: secondaryBinding.wrappedValue,
-          diameter: 30,
-          overlapFactor: 0.5
-        )
+//        ColourLevelView(
+//          level: activeColour.wrappedValue,
+//          foreground: primaryColour,
+//          background: secondaryBinding.wrappedValue,
+//          diameter: 30,
+//          overlapFactor: 0.5
+//        )
         
         ColourLevelSwitch(
-          level: activeColour,
+//          level: activeColour,
           foreground: $primaryColour,
-          background: secondaryBinding,
+          background: $secondaryColour,
           diameter: 30,
           overlapFactor: 0.5,
-          mode: .switcher
+//          mode: .switcher
         )
 //        QuickerPicker(activeColour.wrappedValue.name, selection: activeColour)
       }

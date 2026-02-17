@@ -5,8 +5,10 @@
 //  Created by Dave Coleman on 11/10/2025.
 //
 
-nonisolated public protocol HSVAdjustable: ColourModel, LuminanceReadable {
-
+public protocol HSVAdjustable {
+//public protocol HSVAdjustable: ColourModel, LuminanceReadable {
+  associatedtype Colour: ColourModel
+  
   var toHSV: HSVColour { get }
   init(fromHSV hsv: HSVColour)
 
@@ -56,30 +58,7 @@ extension HSVAdjustable {
     return Self(fromHSV: hsv)
   }
 
-  public func contrastColour(
-    strength: ModificationStrengthPreset,
-    purpose: ColourPurpose = .legibility,
-    chroma: ColourChroma = .standard,
-  ) -> Self {
 
-    let hsv = self.toHSV
-
-    guard strength.adjustmentStrength > 0 else { return self }
-
-    let adjustment = HSVAdjustment.applyingModifiers(
-      for: self,
-      strength: strength,
-      purpose: purpose,
-      chroma: chroma
-    )
-
-    let adjustedHSV = hsv.applying(adjustment: adjustment)
-
-    let adjustedColour = Self(fromHSV: adjustedHSV)
-
-    return adjustedColour
-
-  }
 
   /// This will 'pass through', returning `self` if `modification` is `nil`
   public func contrastColour(modification: ColourModification?) -> Self {
@@ -90,5 +69,32 @@ extension HSVAdjustable {
       purpose: modification.purpose,
       chroma: modification.chroma
     )
+  }
+}
+
+extension HSVAdjustable where Colour: LuminanceReadable {
+  public func contrastColour(
+    strength: ModificationStrengthPreset,
+    purpose: ColourPurpose = .legibility,
+    chroma: ColourChroma = .standard,
+  ) -> Self {
+    
+    let hsv = self.toHSV
+    
+    guard strength.adjustmentStrength > 0 else { return self }
+    
+    let adjustment = HSVAdjustment.applyingModifiers(
+      for: Colour,
+      strength: strength,
+      purpose: purpose,
+      chroma: chroma
+    )
+    
+    let adjustedHSV = hsv.applying(adjustment: adjustment)
+    
+    let adjustedColour = Self(fromHSV: adjustedHSV)
+    
+    return adjustedColour
+    
   }
 }

@@ -40,23 +40,7 @@ nonisolated public protocol ColourComponent: Identifiable, CaseIterable, RawRepr
   func sliderTrackGradient(colour: Model) -> LinearGradient
 }
 
-//
 extension ColourComponent {
   public var id: String { self.name }
   public var name: String { rawValue.capitalized }
-  
-//  public func componentBinding(
-//    _ component: Self,
-//  ) -> Binding<Double> {
-//    Binding {
-//      component.get(model)
-//    } set: { newValue in
-//      component.set(&model, newValue)
-//    }
-//
-////    .init(
-////      get: { component.get($0) },
-////      set: { component.set(&$0, $1) }
-////    )
-//  }
 }

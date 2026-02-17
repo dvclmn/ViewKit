@@ -20,16 +20,8 @@ public enum LuminanceMethod: Sendable, Codable {
 }
 
 //
-extension HSVColour: LuminanceReadable {
+//extension LuminanceReadable {
 
-  public func luminance(using method: LuminanceMethod = .wcag) -> Double {
-    RGBColour(fromHSV: self).luminance(using: method)
-  }
-
-  public func luminanceThreshold(using method: LuminanceMethod) -> LuminanceThreshold {
-    RGBColour(fromHSV: self).luminanceThreshold(using: method)
-  }
-}
 
 //extension Color: LuminanceReadable {
 //  public func luminance(using method: LuminanceMethod = .wcag) -> Double {

@@ -11,8 +11,9 @@ import SwiftUI
 
 public struct SquareColourPicker: View {
   @Environment(\.controlSize) private var controlSize
+  @Environment(\.hsvPrimaryRepresentation) private var hsvPrimaryRepresentation
 
-  @State private var hsvLocal: HSVColour
+  //  @State private var hsvPrimaryRepresentation: HSVColour
 
   @State private var viewSize: CGSize?
   @State private var dragPosition: CGPoint = .zero
@@ -24,49 +25,55 @@ public struct SquareColourPicker: View {
     _ colour: Binding<RGBColour>,
   ) {
     self._colour = colour
-    self._hsvLocal = State(initialValue: colour.wrappedValue.toHSV)
+    //    self._hsvPrimaryRepresentation = State(initialValue: colour.wrappedValue.toHSV)
   }
 
   public var body: some View {
-    PickerSquare(hue: hsvLocal.hue)
-      .aspectRatio(1, contentMode: .fit)
 
-      .clipShape(.rect(cornerRadius: Styles.sizeSmall))
-      .viewSize(mode: .debounce(0.1), isEnabled: true) { size in
-        viewSize = size
-      }
-    
-      // MARK: - Thumb
-      .overlay {
-        SliderThumb(diameter: thumbDiameter, shape: .circle)
-          .position(thumbPosition)
-      }
+    if let bindingHSV = Binding(hsvPrimaryRepresentation) {
+      PickerSquare(hue: bindingHSV.wrappedValue.hue)
+        .aspectRatio(1, contentMode: .fit)
 
-      .gesture(drag(), including: .gesture)
+        .clipShape(.rect(cornerRadius: Styles.sizeSmall))
+        .viewSize(mode: .debounce(0.1), isEnabled: true) { size in
+          viewSize = size
+        }
 
-      .task(id: colour) {
-        hsvLocal = colour.toHSV(preservingHueFrom: hsvLocal)
-//        let newHSV = colour.toHSV
-//        
-//        if newHSV.brightness == 0 || newHSV.saturation == 0 {
-//          /// hue is undefined here; keep existing hue
-//          hsvLocal.saturation = newHSV.saturation
-//          hsvLocal.brightness = newHSV.brightness
-//          hsvLocal.alpha = newHSV.alpha
-//        } else {
-//          hsvLocal = newHSV
-//        }
-//        let newHSV = colour.toHSV
-//        if newHSV.brightness == 0 {
-//          /// preserve hsv.saturation (and hue) when colour is black
-//          hsvLocal.brightness = 0
-//        } else {
-//          hsvLocal = newHSV
-//        }
-      }
+        // MARK: - Thumb
+        .overlay {
+          SliderThumb(diameter: thumbDiameter, shape: .circle)
+            .position(thumbPosition)
+        }
+
+        .gesture(drag(), including: .gesture)
+
+        .task(id: colour) {
+          bindingHSV.wrappedValue = colour.toHSV(preservingHueFrom: bindingHSV.wrappedValue)
+          //        let newHSV = colour.toHSV
+          //
+          //        if newHSV.brightness == 0 || newHSV.saturation == 0 {
+          //          /// hue is undefined here; keep existing hue
+          //          hsvLocal.saturation = newHSV.saturation
+          //          hsvLocal.brightness = newHSV.brightness
+          //          hsvLocal.alpha = newHSV.alpha
+          //        } else {
+          //          hsvLocal = newHSV
+          //        }
+          //        let newHSV = colour.toHSV
+          //        if newHSV.brightness == 0 {
+          //          /// preserve hsv.saturation (and hue) when colour is black
+          //          hsvLocal.brightness = 0
+          //        } else {
+          //          hsvLocal = newHSV
+          //        }
+        }
+    } else {
+      StateView("No HSV Representation found in the Environment", icon: .emoji("🌈"))
+    }
 
   }
 }
+
 extension SquareColourPicker {
   private var thumbDiameter: CGFloat {
     switch controlSize {
@@ -75,6 +82,7 @@ extension SquareColourPicker {
       default: 16
     }
   }
+
   private var thumbRadius: CGFloat { thumbDiameter / 2 }
 
   /// How far in from the square edge the thumb centre is allowed to travel.
@@ -88,11 +96,11 @@ extension SquareColourPicker {
   }
 
   private var thumbPosition: CGPoint {
-    guard let viewSize else { return .zero }
+    guard let viewSize, let hsv = hsvPrimaryRepresentation.wrappedValue else { return .zero }
     let rect = travelRect(in: viewSize)
 
-    let x = rect.minX + CGFloat(hsvLocal.saturation) * rect.width
-    let y = rect.minY + (1 - CGFloat(hsvLocal.brightness)) * rect.height
+    let x = rect.minX + CGFloat(hsv.saturation) * rect.width
+    let y = rect.minY + (1 - CGFloat(hsv.brightness)) * rect.height
 
     return CGPoint(x: x, y: y)
   }
@@ -103,7 +111,7 @@ extension SquareColourPicker {
       .updating($isDragging) { _, state, _ in state = true }
       .onChanged { value in
 
-        guard let viewSize else { return }
+        guard let viewSize, let hsv = hsvPrimaryRepresentation.wrappedValue else { return }
         let location = value.location
 
         let rect = travelRect(in: viewSize)
@@ -114,10 +122,10 @@ extension SquareColourPicker {
         let newSat = Double((x - rect.minX) / rect.width)
         let newBrightness = Double(1 - ((y - rect.minY) / rect.height))
 
-        hsvLocal.saturation = newSat
-        hsvLocal.brightness = newBrightness
+        hsvPrimaryRepresentation.wrappedValue?.saturation = newSat
+        hsvPrimaryRepresentation.wrappedValue?.brightness = newBrightness
 
-        colour = hsvLocal.toRGB
+        colour = hsv.toRGB
       }
   }
 }
