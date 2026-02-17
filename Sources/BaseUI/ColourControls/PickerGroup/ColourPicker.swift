@@ -28,31 +28,40 @@ public struct ColourPicker: View {
     self._components = State(initialValue: components)
   }
 
+  public init(
+    primary: Binding<RGBColour>,
+    secondary: Binding<RGBColour>,
+    components: ColourPickerComponents
+  ) {
+    self._primaryColour = primary
+    self._secondaryColour = Binding(secondary)
+    self._components = State(initialValue: components)
+  }
+
   public var body: some View {
 
-
     VStack {
-      if let secondaryBinding = Binding($secondaryColour) {
-//      if secondaryColour != nil {
-        
-//        ColourLevelView(
-//          level: activeColour.wrappedValue,
-//          foreground: primaryColour,
-//          background: secondaryBinding.wrappedValue,
-//          diameter: 30,
-//          overlapFactor: 0.5
-//        )
-        
-        ColourLevelSwitch(
-//          level: activeColour,
-          foreground: $primaryColour,
-          background: $secondaryColour,
-          diameter: 30,
-          overlapFactor: 0.5,
-//          mode: .switcher
-        )
-//        QuickerPicker(activeColour.wrappedValue.name, selection: activeColour)
-      }
+      //      if let secondaryBinding = Binding($secondaryColour) {
+      //      if secondaryColour != nil {
+
+      //        ColourLevelView(
+      //          level: activeColour.wrappedValue,
+      //          foreground: primaryColour,
+      //          background: secondaryBinding.wrappedValue,
+      //          diameter: 30,
+      //          overlapFactor: 0.5
+      //        )
+
+      ColourLevelSwitch(
+        //          level: activeColour,
+        foreground: $primaryColour,
+        background: $secondaryColour,
+        diameter: 30,
+        overlapFactor: 0.5,
+        //          mode: .switcher
+      )
+      //        QuickerPicker(activeColour.wrappedValue.name, selection: activeColour)
+      //      }
       ToggleButtonGroup(components: $components)
         .frame(maxWidth: .infinity, alignment: .trailing)
 

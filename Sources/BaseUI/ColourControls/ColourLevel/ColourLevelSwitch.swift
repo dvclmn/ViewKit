@@ -12,10 +12,11 @@ import SwiftUI
 
 public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & EnvironmentResolvableColour>: View {
   @Environment(\.activeColour) private var activeColour
-  @Environment(\.hsvPrimaryRepresentation) private var hsvPrimaryRepresentation
+  //  @Environment(\.hsvPrimaryRepresentation) private var hsvPrimaryRepresentation
   @Environment(\.modifierKeys) private var modifierKeys
-  
+
   @State private var isHovering: Bool = false
+  @State private var hsvPrimaryRepresentation: HSVColour?
 
   //  @Binding var level: ColourLevel
   @Binding var foreground: Colour
@@ -65,6 +66,13 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
 
     .onHover { isHovering = $0 }
 
+    .environment(\.hsvPrimaryRepresentation, $hsvPrimaryRepresentation)
+
+    .task(id: foreground) {
+      guard foreground is RGBColour else { return }
+      self.hsvPrimaryRepresentation = foreground.toHSV
+    }
+
     //    .overlay(alignment: .leading) {
     //      if isHovering && modifierKeys.isHoldingOption {
     //        Label("Swap Foreground and Background", systemImage: "arrow.uturn.right")
@@ -93,7 +101,7 @@ extension ColourLevelSwitch {
     Button {
       activeColour.wrappedValue = colourLevel
     } label: {
-      
+
       /// Displays either the colour, or a checkerboard style
       /// opacity view, for when alpha is less than 1.0
       ZStack {
@@ -104,7 +112,8 @@ extension ColourLevelSwitch {
       .clipShape(.circle)
       .overlay {
         if isActiveAndSwitchMode(colourLevel) {
-          Circle().fill(.clear).stroke(.white, lineWidth: 1)
+          Circle().fill(.clear).stroke(contrastColour.toColour, lineWidth: 1)
+          //          Circle().fill(.clear).stroke(.white, lineWidth: 1)
         }
       }
 
@@ -123,7 +132,7 @@ extension ColourLevelSwitch {
     //    .border(Color.green.opacity(0.3))
     .buttonStyle(.plain)
   }
-  
+
   private var isDualColourMode: Bool {
     background != nil
   }
@@ -150,11 +159,11 @@ extension ColourLevelSwitch {
   private func isActive(_ colourLevel: ColourLevel) -> Bool {
     colourLevel == activeColour.wrappedValue
   }
-  
+
   private var contrastColour: Colour {
-    let hsvAdjustment = HSVAdjustment(h: 0.2, s: 0.0, v: 0.2)
-    let adjusted = foreground.adjust(hue: <#T##Double#>, saturation: <#T##Double#>, brightness: <#T##Double#>)
-//    let hsvAdjusted = hsvPrimaryRepresentation.wrappedValue?.adjust(hue: <#T##Double#>, saturation: <#T##Double#>, brightness: <#T##Double#>)
+    let hsvAdjustment = HSVAdjustment(h: 0.1, s: 0.0, v: 0.1)
+    let adjusted = foreground.adjust(by: hsvAdjustment)
+    return adjusted
   }
 
   //  var tapSwapGesture: some Gesture {
