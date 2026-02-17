@@ -19,7 +19,6 @@ public struct ColourPicker: View {
 
   @Binding var colour: RGBColour
   @State private var components: ColourPickerComponents
-  //  let components: ColourPickerComponents
 
   public init(
     colour: Binding<RGBColour>,
@@ -27,29 +26,26 @@ public struct ColourPicker: View {
   ) {
     self._colour = colour
     self._components = State(initialValue: components)
-    //    self.components = components
   }
 
   public var body: some View {
 
-    ToggleButtonGroup(components: $components)
+    VStack {
+      ToggleButtonGroup(components: $components)
 
-    //    Group {
-    if components.contains(.square) {
-      // TODO: SquareColourPicker compensates for hit area, causing it to appear too padded
-      SquareColourPicker($colour)
+      if components.contains(.square) {
+        // TODO: SquareColourPicker compensates for hit area, causing it to appear too padded
+        SquareColourPicker($colour)
+      }
+
+      if components.contains(.sliders) {
+        ColourSliders($colour)
+      }
+
+      if components.isEmpty {
+        StateView("No components specified")
+          .controlSize(.small)
+      }
     }
-
-    if components.contains(.sliders) {
-      ColourSliders($colour)
-    }
-
-    if components.isEmpty {
-      StateView("No components specified")
-        .controlSize(.small)
-    }
-    //    }
-    //    .border(Color.green.opacity(0.3))
-
   }
 }

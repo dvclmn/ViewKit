@@ -48,23 +48,23 @@ extension Binding {
   //    )
   //  }
 
-//  public func toBindingArray() -> Binding<Value> where Value: MutableCollection, Value: Comparable {
-//    Binding<Value>(
-//      get: {
-//        let thing = self.wrappedValue
-//        thing.sorted(by: <#T##(Value.Element, Value.Element) throws -> Bool#>)
-////        Array(arrayLiteral: wrappedValue).sorted()
-//      },
-//      set: { wrappedValue = Set($0) }
-//    )
-//  }
-  
-//  public func toBindingArray() -> Binding<Value> where Value: Hashable, Value == [Element], Element: Comparable {
-//    Binding<Value>(
-//      get: { Array(wrappedValue).sorted() },
-//      set: { wrappedValue = Set($0) }
-//    )
-//  }
+  //  public func toBindingArray() -> Binding<Value> where Value: MutableCollection, Value: Comparable {
+  //    Binding<Value>(
+  //      get: {
+  //        let thing = self.wrappedValue
+  //        thing.sorted(by: <#T##(Value.Element, Value.Element) throws -> Bool#>)
+  ////        Array(arrayLiteral: wrappedValue).sorted()
+  //      },
+  //      set: { wrappedValue = Set($0) }
+  //    )
+  //  }
+
+  //  public func toBindingArray() -> Binding<Value> where Value: Hashable, Value == [Element], Element: Comparable {
+  //    Binding<Value>(
+  //      get: { Array(wrappedValue).sorted() },
+  //      set: { wrappedValue = Set($0) }
+  //    )
+  //  }
 }
 
 extension Binding where Value: BinaryFloatingPoint & Sendable {
@@ -127,7 +127,7 @@ extension Binding where Value: OptionSet & Sendable, Value.Element == Value {
 extension Binding {
   /// Returns a Boolean binding that toggles the Bool for the given Key in the Dictionary
   @MainActor
-  public func bindingBool<T>(key: T) -> Binding<Bool>
+  public func bindingToggle<T>(key: T) -> Binding<Bool>
   where Value == [T: Bool], T: Hashable {
     Binding<Bool> {
       wrappedValue[key] ?? false
@@ -146,6 +146,56 @@ extension Binding {
   //        }
   //      }
   //    )
+  //  }
+
+}
+
+extension Binding where Value: OptionSet {
+
+  /// Returns a Boolean binding that represents membership of `option` inside an OptionSet.
+  /// Setting `true` inserts the option; setting `false` removes it.
+  ///
+  /// ```
+  /// Toggle(
+  ///   "Square only",
+  ///   isOn: $components.bindingToggle(option: .square, clearing: .all)
+  /// )
+  /// ```
+  @MainActor
+  public func bindingToggle(
+    option: Value.Element,
+    clearing others: Value? = nil
+  ) -> Binding<Bool> {
+    Binding<Bool> {
+      wrappedValue.contains(option)
+    } set: { isOn in
+      if isOn {
+        if let others { wrappedValue.subtract(others) }
+        wrappedValue.insert(option)
+      } else {
+        wrappedValue.remove(option)
+      }
+    }
+  }
+
+  /// Like `bindingToggle(option:)`, but can optionally clear other options when enabling.
+  //  @MainActor
+  //  public func bindingToggle(
+  //    option: Option,
+  //
+  //  ) -> Binding<Bool>
+  //  where Value == Option, Option: OptionSet {
+  //
+  //    Binding<Bool> {
+  //      wrappedValue.contains(option)
+  //    } set: { isOn in
+  //      if isOn {
+  //
+  //        wrappedValue.insert(option)
+  //      } else {
+  //        wrappedValue.remove(option)
+  //      }
+  //    }
   //  }
 }
 
