@@ -7,6 +7,7 @@
 
 import ColourKit
 import SwiftUI
+import CoreTools
 
 /// Presents both a Square Picker, and RGB/HSV Sliders
 public struct ColourPicker: View {
@@ -40,7 +41,7 @@ public struct ColourPicker: View {
 
   public var body: some View {
 
-    VStack {
+    VStack(spacing: Styles.sizeRegular.bump) {
       //      if let secondaryBinding = Binding($secondaryColour) {
       //      if secondaryColour != nil {
 
@@ -52,18 +53,21 @@ public struct ColourPicker: View {
       //          overlapFactor: 0.5
       //        )
 
-      ColourLevelSwitch(
-        //          level: activeColour,
-        foreground: $primaryColour,
-        background: $secondaryColour,
-        diameter: 30,
-        overlapFactor: 0.4,
-        //          mode: .switcher
-      )
-      //        QuickerPicker(activeColour.wrappedValue.name, selection: activeColour)
-      //      }
-      ToggleButtonGroup(components: $components)
-        .frame(maxWidth: .infinity, alignment: .trailing)
+      HStack {
+        ColourLevelSwitch(
+          //          level: activeColour,
+          foreground: $primaryColour,
+          background: $secondaryColour,
+          diameter: 30,
+          overlapFactor: 0.37,
+          //          mode: .switcher
+        )
+        Spacer()
+        //        QuickerPicker(activeColour.wrappedValue.name, selection: activeColour)
+        //      }
+        ToggleButtonGroup(components: $components)
+      }
+        
 
       if components.contains(.square) {
         SquareColourPicker($primaryColour)

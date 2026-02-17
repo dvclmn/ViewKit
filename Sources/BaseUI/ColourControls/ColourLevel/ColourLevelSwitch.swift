@@ -15,7 +15,6 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
   @Environment(\.modifierKeys) private var modifierKeys
 
   @State private var isHovering: Bool = false
-  
 
   @Binding var foreground: Colour
   @Binding var background: Colour?
@@ -39,16 +38,16 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
 
     ZStack {
       Level(.foreground, colour: foreground)
+        .zIndex(index(for: .foreground))
       if let background {
         Level(.background, colour: background)
+          .zIndex(index(for: .background))
       }
     }
     .allowsHitTesting(!modifierKeys.isHoldingOption)
     .frame(width: swatchPairTotalWidth)
 
     .onHover { isHovering = $0 }
-
-    
 
     //    .overlay(alignment: .leading) {
     //      if isHovering && modifierKeys.isHoldingOption {
@@ -69,6 +68,12 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
   }
 }
 extension ColourLevelSwitch {
+  private func index(for level: ColourLevel) -> Double {
+    guard isActiveAndSwitchMode(level) else {
+      return 1
+    }
+    return 2
+  }
 
   @ViewBuilder
   private func Level(
@@ -81,7 +86,7 @@ extension ColourLevelSwitch {
       ColourLevelLabel(colourLevel, colour: colour)
     }
     //    .border(Color.green.opacity(0.3))
-    .buttonStyle(.plain)
+    .buttonStyle(.noClickAnimation)
   }
 
   @ViewBuilder

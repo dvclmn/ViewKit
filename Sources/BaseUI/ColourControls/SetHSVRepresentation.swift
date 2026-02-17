@@ -25,7 +25,7 @@ struct HSVRepresentationModifier<Colour: ColourModel & HSVAdjustable>: ViewModif
         guard representation is RGBColour, let representation else { return }
         self.hsvPrimaryRepresentation = representation.toHSV
       }
-      .environment(\.hsvPrimaryRepresentation, $hsvPrimaryRepresentation)
+      .environment(\.hsvPrimaryRepresentation, Binding($hsvPrimaryRepresentation))
   }
 }
 extension View {

@@ -31,7 +31,7 @@ public struct SquareColourPicker: View {
   public var body: some View {
 
     Group {
-      if let bindingHSV = Binding(hsvPrimaryRepresentation) {
+      if let bindingHSV = hsvPrimaryRepresentation {
         PickerSquare(hue: bindingHSV.wrappedValue.hue)
           .aspectRatio(1, contentMode: .fit)
 
@@ -101,7 +101,7 @@ extension SquareColourPicker {
   }
 
   private var thumbPosition: CGPoint {
-    guard let viewSize, let hsv = hsvPrimaryRepresentation.wrappedValue else { return .zero }
+    guard let viewSize, let hsv = hsvPrimaryRepresentation?.wrappedValue else { return .zero }
     let rect = travelRect(in: viewSize)
 
     let x = rect.minX + CGFloat(hsv.saturation) * rect.width
@@ -116,7 +116,7 @@ extension SquareColourPicker {
       .updating($isDragging) { _, state, _ in state = true }
       .onChanged { value in
 
-        guard let viewSize, let hsv = hsvPrimaryRepresentation.wrappedValue else { return }
+        guard let viewSize, let hsv = hsvPrimaryRepresentation?.wrappedValue else { return }
         let location = value.location
 
         let rect = travelRect(in: viewSize)
@@ -127,8 +127,8 @@ extension SquareColourPicker {
         let newSat = Double((x - rect.minX) / rect.width)
         let newBrightness = Double(1 - ((y - rect.minY) / rect.height))
 
-        hsvPrimaryRepresentation.wrappedValue?.saturation = newSat
-        hsvPrimaryRepresentation.wrappedValue?.brightness = newBrightness
+        hsvPrimaryRepresentation?.wrappedValue.saturation = newSat
+        hsvPrimaryRepresentation?.wrappedValue.brightness = newBrightness
 
         colour = hsv.toRGB
       }
