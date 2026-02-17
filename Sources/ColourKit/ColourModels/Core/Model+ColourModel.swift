@@ -8,8 +8,9 @@
 import CoreTools
 import SwiftUI
 
-public protocol ColourModel: Codable, Equatable {
+public protocol ColourModel: Codable, Equatable, Identifiable {
   var colourSpace: Color.RGBColorSpace { get }
+  var id: UUID { get }
   var name: String? { get }
   var alpha: Double { get set }
   mutating func opacity(_ opacity: Double)
@@ -27,4 +28,3 @@ public enum ColourModelKind: String, Hashable, Codable, Sendable {
   case rgb
   case hsv
 }
-

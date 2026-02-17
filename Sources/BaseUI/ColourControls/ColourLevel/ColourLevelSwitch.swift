@@ -11,10 +11,15 @@ import GraphicsKit
 import SwiftUI
 
 public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & EnvironmentResolvableColour>: View {
-  @Environment(\.activeColour) private var activeColour
+  @Environment(\.activeColour) private var activeHierarchicalColour
   @Environment(\.modifierKeys) private var modifierKeys
 
   @State private var isHovering: Bool = false
+
+  /// Which slot is currently the foreground role
+  @State private var foregroundSlot: HierarchicalColour = .primary
+
+  //  @State private var activeColourID: Colour.ID?
 
   @Binding var primary: Colour
   @Binding var secondary: Colour?
@@ -30,6 +35,7 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
   ) {
     self._primary = primary
     self._secondary = secondary
+    //    self._activeColourID = State(initialValue: primary.wrappedValue.id)
     self.diameter = diameter
     self.overlapFactor = overlapFactor
   }
@@ -41,18 +47,20 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
       HStack {
         //        switch activeColour.wrappedValue {
         //          case .foreground:
-        Level(colour: primary)
-        Level(colour: secondary)
+        Level(.primary, colour: primary)
+        Level(.secondary, colour: secondary)
 
         //          case .background:
         //        }
 
         //          .zIndex(index(for: .background))
       }
+      //      .task(id: activeColour.wrappedValue) {
+      //      }
     } else {
       /// If there's only one colour provided, we don't even need
       /// to think about active colour level
-      Level(colour: primary)
+      Level(.primary, colour: primary)
     }
     //    .allowsHitTesting(!modifierKeys.isHoldingOption)
     //      .frame(width: swatchPairTotalWidth)
@@ -78,37 +86,75 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
   }
 }
 extension ColourLevelSwitch {
-  
-//  private func
-  
-  private func index(for level: HierarchicalColour) -> Double {
-    guard isActiveAndSwitchMode(level) else {
-      return 1
-    }
-    return 2
+
+  var backgroundSlot: HierarchicalColour {
+    foregroundSlot == .primary ? .secondary : .primary
   }
 
-  //  private func colourLevel(for hierarchy: HierarchicalColour) -> ColourLevel {
-  //    switch activeColour.wrappedValue {
-  //      case .foreground:
-  //      case .background:
-  //    }
-  //  }
+  func swapForegroundAndBackground() {
+    foregroundSlot = foregroundSlot == .primary ? .secondary : .primary
+  }
+
+  var activeColourBinding: Binding<Colour> {
+    switch activeHierarchicalColour.wrappedValue {
+      case .primary:
+        return $primary
+      case .secondary:
+        // If secondary can be nil, you’ll need to decide what to do in that case.
+        // Option A: Provide a default or disable selection when nil.
+        return Binding(
+          get: { secondary ?? primary },  // fallback to primary for read
+          set: { newValue in secondary = newValue }  // write to secondary
+        )
+    }
+  }
+
+  var foregroundColourBinding: Binding<Colour> {
+    switch foregroundSlot {
+      case .primary: return $primary
+      case .secondary:
+        return Binding(
+          get: { secondary ?? primary },
+          set: { newValue in secondary = newValue }
+        )
+    }
+  }
+
+  var backgroundColourBinding: Binding<Colour> {
+    switch backgroundSlot {
+      case .primary: return $primary
+      case .secondary:
+        return Binding(
+          get: { secondary ?? primary },
+          set: { newValue in secondary = newValue }
+        )
+    }
+  }
+
+  func isColourActive(_ slot: HierarchicalColour) -> Bool {
+    slot == activeHierarchicalColour.wrappedValue
+  }
+
+  func isForeground(_ slot: HierarchicalColour) -> Bool {
+    slot == foregroundSlot
+  }
 
   @ViewBuilder
   private func Level(
-    //    _ colourLevel: ColourLevel,
+    _ colourLevel: HierarchicalColour,
     colour: Colour
   ) -> some View {
     Button {
-//      activeColour.wrappedValue = colourLevel
+      //      activeColour.wrappedValue = colourLevel
     } label: {
-      Text("Be right back")
-//      ColourLevelLabel(colourLevel, colour: colour)
-//        .frameFromSquare(diameter)
+      ColourLevelLabel(colourLevel, colour: colour)
+        .frameFromSquare(diameter)
     }
     //    .border(Color.green.opacity(0.3))
     .buttonStyle(.noClickAnimation(isPlain: true))
+    .overlay {
+      Text("")
+    }
     //    .buttonStyle(.plain)
   }
 
@@ -144,6 +190,22 @@ extension ColourLevelSwitch {
     secondary != nil
   }
 
+  //  private func
+
+//  private func index(for level: HierarchicalColour) -> Double {
+//    guard isActiveAndSwitchMode(level) else {
+//      return 1
+//    }
+//    return 2
+//  }
+
+  //  private func colourLevel(for hierarchy: HierarchicalColour) -> ColourLevel {
+  //    switch activeColour.wrappedValue {
+  //      case .foreground:
+  //      case .background:
+  //    }
+  //  }
+
   var swatchPairTotalWidth: CGFloat {
     /// *Both* swatches are drawn in toward one another by
     /// `swatchOverlap`, hence why we only subtract half of it here
@@ -159,13 +221,13 @@ extension ColourLevelSwitch {
     diameter * overlapFactor
   }
 
-  private func isActiveAndSwitchMode(_ colourLevel: HierarchicalColour) -> Bool {
-    colourLevel == activeColour.wrappedValue && isDualColourMode
-  }
-
-  private func isActive(_ colourLevel: HierarchicalColour) -> Bool {
-    colourLevel == activeColour.wrappedValue
-  }
+//  private func isActiveAndSwitchMode(_ colourLevel: HierarchicalColour) -> Bool {
+//    colourLevel == activeHierarchicalColour.wrappedValue && isDualColourMode
+//  }
+//
+//  private func isActive(_ colourLevel: HierarchicalColour) -> Bool {
+//    colourLevel == activeHierarchicalColour.wrappedValue
+//  }
 
   private var contrastColour: Colour {
     let hsvAdjustment = HSVAdjustment(h: 0.1, s: 0.0, v: 0.1)
