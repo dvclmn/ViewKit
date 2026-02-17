@@ -12,7 +12,7 @@ extension ShapeStyle where Self == CheckerboardPattern {
   public static func checkerboard(
     primary: RGBColour = .white,
     secondary: RGBColour = .gray,
-    scale: CGFloat = 1.0,
+    scale: CGFloat = 4.0,
     offset: CGPoint = .zero
   ) -> Self {
     CheckerboardPattern(

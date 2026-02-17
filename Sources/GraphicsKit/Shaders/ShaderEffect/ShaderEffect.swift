@@ -67,7 +67,7 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   case checkerboard(
     primary: RGBColour = .white,
     secondary: RGBColour = .gray,
-    scale: CGFloat = 1.0,
+    scale: CGFloat = 4.0,
     offset: CGPoint = .zero
   )
 
@@ -123,15 +123,15 @@ extension ShaderEffect {
       case .filmGrain(let time, let size, let intensity, let colour):
         [.float(time), .float(size), .float(intensity), .float(colour)]
 
-      case .checkerboard(_, let secondary, let scale, let offset):
+      case .checkerboard(let primary, let secondary, let scale, let offset):
         [
-          //          .color(primary.toColour),
+          .boundingRect,
+          .color(primary.toColour),
           .color(secondary.toColour),
           .float(scale),
           .float2(offset),
         ]
 
-    //      case .noShader: []
     }
   }
 }

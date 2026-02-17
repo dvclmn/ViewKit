@@ -15,7 +15,7 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
   @Environment(\.modifierKeys) private var modifierKeys
 
   @State private var isHovering: Bool = false
-  @State private var hsvPrimaryRepresentation: HSVColour?
+  
 
   @Binding var foreground: Colour
   @Binding var background: Colour?
@@ -48,12 +48,7 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
 
     .onHover { isHovering = $0 }
 
-    .environment(\.hsvPrimaryRepresentation, $hsvPrimaryRepresentation)
-
-    .task(id: foreground) {
-      guard foreground is RGBColour else { return }
-      self.hsvPrimaryRepresentation = foreground.toHSV
-    }
+    
 
     //    .overlay(alignment: .leading) {
     //      if isHovering && modifierKeys.isHoldingOption {
@@ -96,13 +91,12 @@ extension ColourLevelSwitch {
   ) -> some View {
 
     ZStack {
-      //      Circle()
-      //        .inset(by: 2)
-      //        .fill(.checkerboard())
       Circle()
-        .fill(.checkerboard())
-        //        .fill(colour.toColour)
-        .stroke(contrastColour.toColour, lineWidth: isActiveAndSwitchMode(colourLevel) ? 2 : 0)
+        .inset(by: 2)
+        .fill(.checkerboard(scale: 5.5))
+      Circle()
+        .fill(colour.toColour)
+        .strokeBorder(contrastColour.toColour, lineWidth: isActiveAndSwitchMode(colourLevel) ? 2 : 0)
     }
     .frameFromSquare(diameter)
 

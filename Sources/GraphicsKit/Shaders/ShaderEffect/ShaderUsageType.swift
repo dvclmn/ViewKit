@@ -41,12 +41,18 @@ extension ShaderEffect {
   ///   args...
   /// )
   /// ```
+  ///
+  /// ## shapeStyle:
+  /// ```
+  /// half4 name(float2 position, args...)
+  /// ```
   @available(macOS 15.0, iOS 18.0, *)
   public var usageType: Shader.UsageType {
     switch self {
       case .chromaticAberration, .glitter, .radialBlur: .layerEffect
       case .ripplePush, .crtCurvature, .fisheye: .distortionEffect
-      case .psych, .filmGrain, .checkerboard, .crtLines: .colorEffect
+      case .psych, .filmGrain, .crtLines: .colorEffect
+      case .checkerboard: .shapeStyle
     }
   }
 }

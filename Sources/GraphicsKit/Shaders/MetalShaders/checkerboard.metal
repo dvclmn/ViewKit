@@ -13,27 +13,6 @@
 using namespace metal;
 
 
-/// A shader that renders a two-colour checkerboard pattern, tiled from the
-/// top-leading origin.
-///
-/// - Parameter position: The user-space coordinate of the current pixel.
-/// - Parameter color: The current color of the pixel (unused, but required by the signature).
-/// - Parameter primary: The colour used for "even" squares.
-/// - Parameter secondary: The colour used for "odd" squares.
-/// - Parameter size: The side length of each square, in user-space.
-/// - Parameter offset: An X/Y translation applied to the pattern before tiling.
-[[ stitchable ]] half4 checkerboard(
-                                    float2 position,
-                                    half4 color,
-//                                    half4 primary,
-                                    half4 secondary,
-                                    float size,
-                                    float2 offset
-                                    ) {
-  uint2 posInChecks = uint2((position - offset) / size);
-  bool isSecondary = (posInChecks.x ^ posInChecks.y) & 1;
-  return isSecondary ? secondary : color;
-}
 
 /// A shader that renders a two-colour checkerboard pattern.
 ///
@@ -55,29 +34,52 @@ using namespace metal;
 /// - Parameter imageSize: The full size of the image, used to derive the centre origin.
 /// - Parameter offset: An X/Y translation applied to the pattern before tiling.
 
+[[ stitchable ]] half4 checkerboard(
+                                    float2 position,
+                                    float4 bounds,
+                                    half4 primary,
+                                    half4 secondary,
+                                    float size,
+                                    float2 offset
+                                    ) {
+  // Shift the coordinate system so (0,0) is the centre of the image,
+  // then apply the caller-supplied offset.
+  float2 viewSize = bounds.zw;
+  float2 centred = position - (viewSize * 0.5) - offset;
+  
+  // Determine which square we're in, rounding toward negative infinity
+  // so the grid is symmetric around the centre.
+  // floor() is used instead of a bare uint cast because casting a negative
+  // float to uint is undefined behaviour; floor gives us the correct
+  // mathematical "tile index" for negative coordinates too.
+  int2 posInChecks = int2(floor(centred.x / size), floor(centred.y / size));
+  
+  // XOR the column and row, then test the lowest bit.
+  bool isSecondary = (posInChecks.x ^ posInChecks.y) & 1;
+  
+  return isSecondary ? secondary : primary;
+}
+
+
+
+// Simpler version, with no centring
+/// A shader that renders a two-colour checkerboard pattern, tiled from the
+/// top-leading origin.
+///
+/// - Parameter position: The user-space coordinate of the current pixel.
+/// - Parameter color: The current color of the pixel (unused, but required by the signature).
+/// - Parameter primary: The colour used for "even" squares.
+/// - Parameter secondary: The colour used for "odd" squares.
+/// - Parameter size: The side length of each square, in user-space.
+/// - Parameter offset: An X/Y translation applied to the pattern before tiling.
 //[[ stitchable ]] half4 checkerboard(
 //                                    float2 position,
-//                                    half4 color,
-////                                    float4 bounds,
 //                                    half4 primary,
 //                                    half4 secondary,
 //                                    float size,
 //                                    float2 offset
 //                                    ) {
-//  // Shift the coordinate system so (0,0) is the centre of the image,
-//  // then apply the caller-supplied offset.
-//  float2 viewSize = bounds.zw;
-//  float2 centred = position - (viewSize * 0.5) - offset;
-//  
-//  // Determine which square we're in, rounding toward negative infinity
-//  // so the grid is symmetric around the centre.
-//  // floor() is used instead of a bare uint cast because casting a negative
-//  // float to uint is undefined behaviour; floor gives us the correct
-//  // mathematical "tile index" for negative coordinates too.
-//  int2 posInChecks = int2(floor(centred.x / size), floor(centred.y / size));
-//  
-//  // XOR the column and row, then test the lowest bit.
+//  uint2 posInChecks = uint2((position - offset) / size);
 //  bool isSecondary = (posInChecks.x ^ posInChecks.y) & 1;
-//  
 //  return isSecondary ? secondary : primary;
 //}
