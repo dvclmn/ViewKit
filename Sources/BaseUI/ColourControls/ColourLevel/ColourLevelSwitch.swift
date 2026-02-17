@@ -95,27 +95,16 @@ extension ColourLevelSwitch {
     colour: Colour
   ) -> some View {
 
-    /// Displays either the colour, or a checkerboard style
-    /// opacity view, for when alpha is less than 1.0
     ZStack {
-      
-      // TODO: This Pattern is causing artifacting underneath the Color
-      // Will need to either turn off when opacity == 1.0
-      // Or inset, or something
-      PatternCanvas(preset: .opacityCheckerboard)
-      Color(colour.toColour)
+      //      Circle()
+      //        .inset(by: 2)
+      //        .fill(.checkerboard())
+      Circle()
+        .fill(.checkerboard())
+        //        .fill(colour.toColour)
+        .stroke(contrastColour.toColour, lineWidth: isActiveAndSwitchMode(colourLevel) ? 2 : 0)
     }
     .frameFromSquare(diameter)
-    .clipShape(.circle, style: .init(eoFill: true, antialiased: true))
-
-    .overlay {
-      if isActiveAndSwitchMode(colourLevel) {
-        Circle()
-          .fill(.clear)
-          .stroke(contrastColour.toColour, lineWidth: 3)
-        //          Circle().fill(.clear).stroke(.white, lineWidth: 1)
-      }
-    }
 
     .offset(x: offsetAmount(colourLevel))
     .zIndex(isActiveAndSwitchMode(colourLevel) ? 2 : 1)

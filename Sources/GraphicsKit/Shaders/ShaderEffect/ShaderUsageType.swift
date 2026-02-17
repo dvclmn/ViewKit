@@ -44,15 +44,9 @@ extension ShaderEffect {
   @available(macOS 15.0, iOS 18.0, *)
   public var usageType: Shader.UsageType {
     switch self {
-      case .chromaticAberration: .layerEffect
-      case .ripplePush: .distortionEffect
-      case .fisheye: .distortionEffect
-      case .glitter: .layerEffect
-      case .crtCurvature: .distortionEffect
-      case .crtLines: .colorEffect
-      case .radialBlur: .layerEffect
-      case .psych: .colorEffect
-      case .filmGrain: .colorEffect
+      case .chromaticAberration, .glitter, .radialBlur: .layerEffect
+      case .ripplePush, .crtCurvature, .fisheye: .distortionEffect
+      case .psych, .filmGrain, .checkerboard, .crtLines: .colorEffect
     }
   }
 }

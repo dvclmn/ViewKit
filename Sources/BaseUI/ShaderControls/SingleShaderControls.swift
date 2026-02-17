@@ -109,6 +109,23 @@ struct SingleShaderControlView: View {
           )
         }
 
+      case .checkerboard:
+        //      case .checkerboard(let primary, let secondary, let scale, let offset):
+        if let binding = $shader.checkerboard {
+          ColourPicker(
+            primary: binding.primary,
+            secondary: binding.secondary,
+            components: .all
+          )
+
+          QuickSlider(
+            "Scale",
+            value: binding.scale.toBindingDouble,
+            range: 0...40
+          )
+
+        }
+
       case .fisheye,
         .glitter,
         .filmGrain,

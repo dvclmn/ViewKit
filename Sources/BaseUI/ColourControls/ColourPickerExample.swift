@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ColourPickerExample: View {
   @State private var primary: RGBColour = .init(red: 0.1, green: 0.3, blue: 0.8)
-  @State private var secondary: RGBColour? = .init(red: 0.7, green: 0.2, blue: 0.6)
+  @State private var secondary: RGBColour? = .init(red: 0.7, green: 0.2, blue: 0.6, alpha: 0.2)
   @State private var components: ColourPickerComponents = .all
   var body: some View {
 

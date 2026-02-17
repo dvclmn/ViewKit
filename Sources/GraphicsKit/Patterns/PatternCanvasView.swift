@@ -10,11 +10,7 @@
 import ColourKit
 import SwiftUI
 
-public struct SomePattern: ShapeStyle {
-  public func resolve(in environment: EnvironmentValues) -> Never {
-    
-  }
-}
+
 
 public struct PatternCanvas: View {
 

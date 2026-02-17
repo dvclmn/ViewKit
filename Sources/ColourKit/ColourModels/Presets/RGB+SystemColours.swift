@@ -18,6 +18,7 @@ extension RGBColour {
   public static let white: RGBColour = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
   public static let silver: RGBColour = #colorLiteral(red: 0.7529411765, green: 0.7529411765, blue: 0.7529411765, alpha: 1.0)
   public static let gray: RGBColour = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1.0)
+  public static let grayAlt: RGBColour = .init(0.3, 0.3, 0.3)
   public static let red: RGBColour = #colorLiteral(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
   public static let maroon: RGBColour = #colorLiteral(red: 0.5019607843, green: 0.0, blue: 0.0, alpha: 1.0)
   public static let yellow: RGBColour = #colorLiteral(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)

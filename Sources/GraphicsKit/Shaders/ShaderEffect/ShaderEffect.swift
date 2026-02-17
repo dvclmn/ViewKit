@@ -6,6 +6,7 @@
 //
 
 import CasePaths
+import ColourKit
 import CoreTools
 import SwiftUI
 
@@ -26,19 +27,14 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
 
   case glitter(spread: CGFloat, )
 
-  // Strength: Suggested range: -0.1 to -0.4
-  // Zoom: Suggested range: 1.0 to 1.1 (to hide edges)
-  case crtCurvature(
-    strength: CGFloat = 0.5
-    //    zoom: CGFloat = 0.2
-    //    k1: CGFloat,
-    //    k2: CGFloat,
-  )
+  /// Strength: Suggested range: -0.1 to -0.4
+  /// Zoom: Suggested range: 1.0 to 1.1 (to hide edges)
+  case crtCurvature(strength: CGFloat = 0.5)
 
-  // Distance between scanlines (e.g., 3.0)
-  // Darkening strength (0.0 to 1.0)
-  // Width of the vertical grille (e.g., 2.0),
-  // Final gain to offset dark lines (e.g., 1.2)
+  /// Distance between scanlines (e.g., 3.0)
+  /// Darkening strength (0.0 to 1.0)
+  /// Width of the vertical grille (e.g., 2.0),
+  /// Final gain to offset dark lines (e.g., 1.2)
   case crtLines(
     lineSpacing: CGFloat = 1.0,
     lineIntensity: CGFloat = 1.0,
@@ -66,8 +62,13 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     velocity: CGPoint
   )
 
-  case psych(
-    time: CGFloat
+  case psych(time: CGFloat)
+
+  case checkerboard(
+    primary: RGBColour = .white,
+    secondary: RGBColour = .gray,
+    scale: CGFloat = 1.0,
+    offset: CGPoint = .zero
   )
 
   //  case noShader
@@ -122,6 +123,14 @@ extension ShaderEffect {
       case .filmGrain(let time, let size, let intensity, let colour):
         [.float(time), .float(size), .float(intensity), .float(colour)]
 
+      case .checkerboard(_, let secondary, let scale, let offset):
+        [
+          //          .color(primary.toColour),
+          .color(secondary.toColour),
+          .float(scale),
+          .float2(offset),
+        ]
+
     //      case .noShader: []
     }
   }
@@ -145,6 +154,7 @@ extension ShaderEffect {
       case .ripplePush: ("ripplePush", "Ripple Push")
       case .psych: ("psych", "Pysch")
       case .filmGrain: ("filmGrain", "Film Grain")
+      case .checkerboard: ("checkerboard", "Checkerboard")
     //      case .noShader: ("noShader", "No shader")
     }
   }

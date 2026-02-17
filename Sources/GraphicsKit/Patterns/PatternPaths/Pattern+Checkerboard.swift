@@ -5,7 +5,52 @@
 //  Created by Dave Coleman on 12/5/2025.
 //
 
+import ColourKit
 import SwiftUI
+
+extension ShapeStyle where Self == CheckerboardPattern {
+  public static func checkerboard(
+    primary: RGBColour = .white,
+    secondary: RGBColour = .gray,
+    scale: CGFloat = 1.0,
+    offset: CGPoint = .zero
+  ) -> Self {
+    CheckerboardPattern(
+      primary: primary,
+      secondary: secondary,
+      scale: scale,
+      offset: offset
+    )
+  }
+}
+
+public struct CheckerboardPattern: ShapeStyle {
+  let primary: RGBColour
+  let secondary: RGBColour
+  let scale: CGFloat
+  let offset: CGPoint
+  //
+  //  public init(
+  //    primary: RGBColour,
+  //    secondary: RGBColour,
+  //    scale: CGFloat,
+  //    offset: CGPoint,
+  //  ) {
+  //    self.primary = primary
+  //    self.secondary = secondary
+  //    self.scale = scale
+  //    self.offset = offset
+  //  }
+
+  public func resolve(in environment: EnvironmentValues) -> some ShapeStyle {
+    ShaderEffect.checkerboard(
+      primary: primary,
+      secondary: secondary,
+      scale: scale,
+      offset: offset
+    ).shader
+  }
+}
 
 extension GraphicsContext {
 
