@@ -24,15 +24,16 @@ public struct WaveControls: View {
   }
   public var body: some View {
 
-    SliderGroup(title) {
-      
+    SliderGroup {
+      //    SliderGroup(title) {
+
       Wave(.amplitude)
       Wave(.frequency)
       Wave(.phase)
-//      Wave(.noise)
-      
+      //      Wave(.noise)
+
       Divider()
-      
+
       Wave(.cycles)
         .stepStyle(.stepper)
     }
@@ -43,10 +44,18 @@ extension WaveControls {
   @ViewBuilder
   private func Wave(_ attribute: WaveAttribute) -> some View {
     QuickSlider(
-      attribute.name.full,
+      attribute.name.abbreviated,
       value: $wave.waveBinding(attribute),
       range: ranges(attribute) ?? attribute.defaultRange
     )
+    .formatValue {
+      $0.render(using: .init(decimalPlaces: 1))
+    }
+    .labelTextCase(.uppercase)
+    .labelWeight(.semibold)
+    .labelColour(.secondary)
+    .labelFontStyle(.callout)
+
   }
 }
 

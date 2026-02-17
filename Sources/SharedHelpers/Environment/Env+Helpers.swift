@@ -38,6 +38,18 @@ extension View {
   public func labelColour<S>(_ colour: S) -> some View where S: ShapeStyle {
     self.environment(\.labelColour, AnyShapeStyle(colour))
   }
+  
+  public func labelFontSize(_ size: CGFloat) -> some View {
+    self.environment(\.labelFontSize, size)
+  }
+  
+  public func labelFontStyle(_ style: Font.TextStyle) -> some View {
+    self.environment(\.labelFontStyle, style)
+  }
+  
+  public func labelTextCase(_ textCase: Text.Case) -> some View {
+    self.environment(\.labelTextCase, textCase)
+  }
 
   public func helpText(_ text: String) -> some View {
     self.environment(\.helpText, text).help(text)

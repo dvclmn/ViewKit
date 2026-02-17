@@ -25,6 +25,7 @@ public struct CustomLabel: LabelStyle {
   @Environment(\.isCompactMode) private var isCompactMode
   @Environment(\.layoutSpacing) private var layoutSpacing
   @Environment(\.layoutAlignment) private var layoutAlignment
+  @Environment(\.labelFontStyle) private var labelFontStyle
   @Environment(\.textAlignment) private var textAlignment
 
   let explicitLabelDisplay: LabelDisplay?
@@ -100,7 +101,7 @@ extension VerticalAlignment {
   /// A custom alignment for image titles.
   private struct ImageTitleAlignment: AlignmentID {
     static func defaultValue(in context: ViewDimensions) -> CGFloat {
-      // Default to bottom alignment if no guides are set.
+      /// Default to bottom alignment if no guides are set.
       context[VerticalAlignment.bottom]
     }
   }

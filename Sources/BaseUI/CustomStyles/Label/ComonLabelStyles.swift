@@ -15,6 +15,9 @@ public struct CommonLabelStyleModifier: ViewModifier {
   @Environment(\.iconColour) private var iconColour
   @Environment(\.iconFontSize) private var iconFontSize
   @Environment(\.labelDisplay) private var labelDisplay
+  @Environment(\.labelFontStyle) private var labelFontStyle
+  @Environment(\.labelTextCase) private var labelTextCase
+  @Environment(\.labelFontSize) private var labelFontSize
   //  @Environment(\.fontWeightOverride) private var fontWeightOverride
   @Environment(\.symbolRenderingMode) private var symbolRenderingMode
 
@@ -25,20 +28,21 @@ public struct CommonLabelStyleModifier: ViewModifier {
       /// Handle if we've got a specific font for the Icon part
       ///
       /// Note: So far this modifier only handles Font, foreground style and font weight
-      if let finalIconFont {
+      if let configuredFont {
         ConditionalColourView(content)
-          .font(finalIconFont)
+          .font(configuredFont)
 
       } else {
         ConditionalColourView(content)
       }
     }  // END group
     .fontWeight(part.weight(override: weightOverride))
+    .textCase(labelTextCase)
 
   }
 }
 extension CommonLabelStyleModifier {
-  
+
   @ViewBuilder
   private func ConditionalColourView(_ content: Content) -> some View {
     if let colourOverride {
@@ -61,10 +65,17 @@ extension CommonLabelStyleModifier {
     return nil
   }
 
-  private var finalIconFont: Font? {
+  private var configuredFont: Font? {
 
     /// Are we handling the icon part?
-    guard part.isIcon else { return nil }
+    //        guard part.isIcon else { return nil }
+    //    if part.isTitle, let labelFontSize {
+    //      return Font.system(size: labelFontSize)
+    //    }
+
+    if part.isTitle, let labelFontStyle {
+      return Font.system(labelFontStyle)
+    }
 
     /// (I think this is right?) We'll let any present `iconFontSize`
     /// value take precedence over whether the label display is

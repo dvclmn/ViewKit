@@ -91,7 +91,7 @@ extension QuickSlider.SliderComponents {
     Button {
       copyStringToClipboard("\(value)")
     } label: {
-      Label("Copy", systemImage: Icons.copy.icon)
+      Label("Copy Value", systemImage: Icons.copy.icon)
     }
 
     if let sliderDefaultValue {

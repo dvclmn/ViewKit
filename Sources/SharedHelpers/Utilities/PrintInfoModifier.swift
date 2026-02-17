@@ -9,7 +9,7 @@ import SwiftUI
 import BasePrimitives
 
 public enum LocationInfo {
-  case userDefaultsURL
+  case userDefaults
   case applicationSupport
 }
 
@@ -22,7 +22,7 @@ public struct PrintInfoModifier: ViewModifier {
       .onAppear {
         guard !isPreview else { return }
         switch info {
-          case .userDefaultsURL:
+          case .userDefaults:
             if let path = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)
               .first?.appendingPathComponent("Preferences").appendingPathComponent(
                 "com.yourcompany.yourapp.plist"

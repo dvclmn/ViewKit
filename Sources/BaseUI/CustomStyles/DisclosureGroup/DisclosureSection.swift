@@ -52,7 +52,8 @@ public struct DisclosureSection<Content: View>: View {
   public var body: some View {
 
     Section {
-      if isExpanded || isControlEnabled {
+      if isExpanded {
+//      if isExpanded || isControlEnabled {
         content
 
       } else {

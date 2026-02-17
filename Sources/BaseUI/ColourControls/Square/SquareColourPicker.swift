@@ -25,11 +25,9 @@ public struct SquareColourPicker: View {
   }
 
   public var body: some View {
-    // MARK: - Square Gradient area
-
     PickerSquare(hue: colour.toHSV.hue)
       .clipShape(.rect(cornerRadius: Styles.sizeSmall))
-      .viewSize(mode: .debounce(0.1), isEnabled: true) { size in
+      .viewSize(mode: .debounce(0.2), isEnabled: true) { size in
         viewSize = size
       }
       .padding(insetAmount / 2)

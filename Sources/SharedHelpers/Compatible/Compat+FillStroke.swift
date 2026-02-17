@@ -25,12 +25,7 @@ public struct FilledShape<
   ) {
     self.shape = shape
     self.content = content
-
-    if let strokeColour {
-      self.strokeColour = AnyShapeStyle(strokeColour)
-    } else {
-      self.strokeColour = AnyShapeStyle(Color.clear)
-    }
+    self.strokeColour = strokeColour.map { AnyShapeStyle($0) } ?? .clear
     self.lineWidth = lineWidth
   }
 

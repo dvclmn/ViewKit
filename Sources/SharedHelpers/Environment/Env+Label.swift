@@ -13,6 +13,9 @@ extension EnvironmentValues {
   /// Labels
   @Entry public var labelColour: AnyShapeStyle? = nil
   @Entry public var labelWeight: Font.Weight? = nil
+  @Entry public var labelFontStyle: Font.TextStyle? = nil
+  @Entry public var labelFontSize: CGFloat? = nil
+  @Entry public var labelTextCase: Text.Case? = nil
 
   /// This is useful because SwiftUI exposes control over display of
   /// icon and label elements in the form of the `LabelStyle` protocol.

@@ -16,6 +16,7 @@ public struct SliderThumb<ThumbShape: InsettableShape>: View {
   let diameter: Double
   let shape: ThumbShape
 
+  let grayShade: Double = 0.9
   public init(
     diameter: Double = 16,
     shape: ThumbShape = .circle,
@@ -28,7 +29,7 @@ public struct SliderThumb<ThumbShape: InsettableShape>: View {
 
     FilledShape(
       shape,
-      style: Color.gray,
+      style: Color(r: grayShade, g: grayShade, b: grayShade, a: 1.0),
       strokeColour: strokeGradient().opacity(0.32)
     )
 

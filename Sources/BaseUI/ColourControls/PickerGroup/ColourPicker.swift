@@ -18,19 +18,25 @@ public struct ColourPicker: View {
   @Environment(\.activeColourModel) private var activeColourModel
 
   @Binding var colour: RGBColour
-  let components: ColourPickerComponents
+  @State private var components: ColourPickerComponents
+  //  let components: ColourPickerComponents
 
   public init(
     colour: Binding<RGBColour>,
     components: ColourPickerComponents,
   ) {
     self._colour = colour
-    self.components = components
+    self._components = State(initialValue: components)
+    //    self.components = components
   }
 
   public var body: some View {
 
+    ToggleButtonGroup(components: $components)
+
+    //    Group {
     if components.contains(.square) {
+      // TODO: SquareColourPicker compensates for hit area, causing it to appear too padded
       SquareColourPicker($colour)
     }
 
@@ -42,6 +48,8 @@ public struct ColourPicker: View {
       StateView("No components specified")
         .controlSize(.small)
     }
+    //    }
+    //    .border(Color.green.opacity(0.3))
 
   }
 }

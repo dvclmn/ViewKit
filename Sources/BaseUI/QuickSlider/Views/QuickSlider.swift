@@ -23,18 +23,11 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
 
     Group {
       if isWithinSliderGroup {
-        //        VStack {
         GridRow {
           /// Handles slider Label, Track, and Units display
           SliderComponents(value: $value)
         }
         HelpText()
-//          .gridCellColumns(4)
-        //        .border(Color.green.opacity(0.3))
-
-
-        //          .gridCellAnchor(.trailing)
-        //          .border(Color.purple.opacity(0.3))
 
       } else {
         HStack {
