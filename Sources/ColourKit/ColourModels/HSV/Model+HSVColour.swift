@@ -61,6 +61,25 @@ extension HSVColour: HSVAdjustable {
 
 extension HSVColour {
 
+  /// Hue is only meaningful when there is chroma and not pure black.
+  /// (You can decide whether `brightness == 0` should count as undefined even if saturation > 0;
+  /// practically it behaves as undefined because it round-trips poorly.)
+  public var isHueDefined: Bool {
+    /// If you’d rather allow hue when brightness == 0 (mathematically it’s
+    /// still not observable), change to saturation > 0.
+    saturation > 0 && brightness > 0
+  }
+
+  /// Returns `incoming`, but if its hue is undefined (grey/black), preserves `self.hue`.
+  public func mergingPreservingHue(_ incoming: HSVColour) -> HSVColour {
+    guard incoming.isHueDefined else {
+      var result = incoming
+      result.hue = self.hue
+      return result
+    }
+    return incoming
+  }
+
   public var hueOnly: Self {
     Self(
       hue: hue,
@@ -78,6 +97,16 @@ extension HSVColour {
     )
   }
 
+  /// Convert to RGB and back again while preserving hue across undefined-hue zones.
+  /// Useful when RGB is your bound storage but HSV drives interaction.
+  public func toRGBPreservingHueRoundTrip(
+    from previous: HSVColour?
+  ) -> (rgb: RGBColour, hsv: HSVColour) {
+    let rgb = self.toRGB
+    let hsv = rgb.toHSV(preservingHueFrom: previous)
+    return (rgb, hsv)
+  }
+  
   public var toRGB: RGBColour { RGBColour(fromHSV: self) }
 
   public static func gray(

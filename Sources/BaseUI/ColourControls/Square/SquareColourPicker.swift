@@ -28,41 +28,46 @@ public struct SquareColourPicker: View {
   }
 
   public var body: some View {
-    PickerSquare(hue: colour.toHSV.hue)
+    PickerSquare(hue: hsvLocal.hue)
       .aspectRatio(1, contentMode: .fit)
 
       .clipShape(.rect(cornerRadius: Styles.sizeSmall))
       .viewSize(mode: .debounce(0.1), isEnabled: true) { size in
         viewSize = size
       }
-      //      .padding(insetAmount / 2)
-      //      .frame(width: sizePlusInset, height: sizePlusInset)
-
+    
       // MARK: - Thumb
       .overlay {
         SliderThumb(diameter: thumbDiameter, shape: .circle)
-          //          .offset(CGSize(fromLength: insetAmount / 2))
           .position(thumbPosition)
-
       }
 
       .gesture(drag(), including: .gesture)
 
       .task(id: colour) {
-        let newHSV = colour.toHSV
-        if newHSV.brightness == 0 {
-          /// preserve hsv.saturation (and hue) when colour is black
-          hsvLocal.brightness = 0
-        } else {
-          hsvLocal = newHSV
-        }
+        hsvLocal = colour.toHSV(preservingHueFrom: hsvLocal)
+//        let newHSV = colour.toHSV
+//        
+//        if newHSV.brightness == 0 || newHSV.saturation == 0 {
+//          /// hue is undefined here; keep existing hue
+//          hsvLocal.saturation = newHSV.saturation
+//          hsvLocal.brightness = newHSV.brightness
+//          hsvLocal.alpha = newHSV.alpha
+//        } else {
+//          hsvLocal = newHSV
+//        }
+//        let newHSV = colour.toHSV
+//        if newHSV.brightness == 0 {
+//          /// preserve hsv.saturation (and hue) when colour is black
+//          hsvLocal.brightness = 0
+//        } else {
+//          hsvLocal = newHSV
+//        }
       }
 
   }
 }
 extension SquareColourPicker {
-
-  private var colourHSV: HSVColour { colour.toHSV }
   private var thumbDiameter: CGFloat {
     switch controlSize {
       case .large: 18
@@ -115,9 +120,4 @@ extension SquareColourPicker {
         colour = hsvLocal.toRGB
       }
   }
-
-}
-
-extension SquareColourPicker {
-
 }
