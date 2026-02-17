@@ -12,35 +12,27 @@ import SwiftUI
 
 public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & EnvironmentResolvableColour>: View {
   @Environment(\.activeColour) private var activeColour
-  //  @Environment(\.hsvPrimaryRepresentation) private var hsvPrimaryRepresentation
   @Environment(\.modifierKeys) private var modifierKeys
 
   @State private var isHovering: Bool = false
   @State private var hsvPrimaryRepresentation: HSVColour?
 
-  //  @Binding var level: ColourLevel
   @Binding var foreground: Colour
   @Binding var background: Colour?
 
   let diameter: CGFloat
   let overlapFactor: CGFloat
 
-  //  let mode: SwitchMode
-
   public init(
-    //    level: Binding<ColourLevel>,
     foreground: Binding<Colour>,
     background: Binding<Colour?>,
     diameter: CGFloat,
     overlapFactor: CGFloat,
-    //    mode: SwitchMode
   ) {
-    //    self._level = level
     self._foreground = foreground
     self._background = background
     self.diameter = diameter
     self.overlapFactor = overlapFactor
-    //    self.mode = mode
   }
 
   public var body: some View {
@@ -48,18 +40,8 @@ public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & Environmen
     ZStack {
       Level(.foreground, colour: foreground)
       if let background {
-        //      if background != nil {
         Level(.background, colour: background)
       }
-      //      switch mode {
-      //        case .switcher:
-      //
-      //        case .single:
-      //          switch level {
-      //            case .foreground: Level(.foreground)
-      //            case .background: Level(.background)
-      //          }
-      //      }
     }
     .allowsHitTesting(!modifierKeys.isHoldingOption)
     .frame(width: swatchPairTotalWidth)
@@ -101,36 +83,51 @@ extension ColourLevelSwitch {
     Button {
       activeColour.wrappedValue = colourLevel
     } label: {
-
-      /// Displays either the colour, or a checkerboard style
-      /// opacity view, for when alpha is less than 1.0
-      ZStack {
-        PatternCanvas(preset: .opacityCheckerboard)
-        Color(colour.toColour)
-      }
-      .frameFromSquare(diameter)
-      .clipShape(.circle)
-      .overlay {
-        if isActiveAndSwitchMode(colourLevel) {
-          Circle().fill(.clear).stroke(contrastColour.toColour, lineWidth: 1)
-          //          Circle().fill(.clear).stroke(.white, lineWidth: 1)
-        }
-      }
-
-      .offset(x: offsetAmount(colourLevel))
-      .zIndex(isActiveAndSwitchMode(colourLevel) ? 2 : 1)
-      .accessibilityLabel(Text("Edit \(colourLevel.name) Colour"))
-      .animation(
-        .snappy(duration: 0.22, extraBounce: 0.13),
-        value: colourLevel
-      )
-      .id(colourLevel)
-
-      //      .contentShape(.rect)
-
+      ColourLevelLabel(colourLevel, colour: colour)
     }
     //    .border(Color.green.opacity(0.3))
     .buttonStyle(.plain)
+  }
+
+  @ViewBuilder
+  private func ColourLevelLabel(
+    _ colourLevel: ColourLevel,
+    colour: Colour
+  ) -> some View {
+
+    /// Displays either the colour, or a checkerboard style
+    /// opacity view, for when alpha is less than 1.0
+    ZStack {
+      
+      // TODO: This Pattern is causing artifacting underneath the Color
+      // Will need to either turn off when opacity == 1.0
+      // Or inset, or something
+      PatternCanvas(preset: .opacityCheckerboard)
+      Color(colour.toColour)
+    }
+    .frameFromSquare(diameter)
+    .clipShape(.circle, style: .init(eoFill: true, antialiased: true))
+
+    .overlay {
+      if isActiveAndSwitchMode(colourLevel) {
+        Circle()
+          .fill(.clear)
+          .stroke(contrastColour.toColour, lineWidth: 3)
+        //          Circle().fill(.clear).stroke(.white, lineWidth: 1)
+      }
+    }
+
+    .offset(x: offsetAmount(colourLevel))
+    .zIndex(isActiveAndSwitchMode(colourLevel) ? 2 : 1)
+    .accessibilityLabel(Text("Edit \(colourLevel.name) Colour"))
+    .animation(
+      .snappy(duration: 0.22, extraBounce: 0.13),
+      value: colourLevel
+    )
+    .id(colourLevel)
+
+    //      .contentShape(.rect)
+
   }
 
   private var isDualColourMode: Bool {

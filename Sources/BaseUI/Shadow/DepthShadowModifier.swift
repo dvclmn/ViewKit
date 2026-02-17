@@ -7,16 +7,6 @@
 
 import SwiftUI
 
-//public struct ShadowDepth {
-//  var rounding: CGFloat
-//  var distance: CGFloat
-//
-//  public init(rounding: CGFloat, distance: CGFloat) {
-//    self.rounding = rounding
-//    self.distance = distance
-//  }
-//}
-
 public struct DepthShadowModifier: ViewModifier {
 
   let opacity: Double

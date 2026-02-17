@@ -57,7 +57,7 @@ public struct ColourPicker: View {
         foreground: $primaryColour,
         background: $secondaryColour,
         diameter: 30,
-        overlapFactor: 0.5,
+        overlapFactor: 0.4,
         //          mode: .switcher
       )
       //        QuickerPicker(activeColour.wrappedValue.name, selection: activeColour)

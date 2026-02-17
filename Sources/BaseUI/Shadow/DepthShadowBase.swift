@@ -8,6 +8,10 @@
 import Foundation
 import SwiftUI
 
+//extension ShadowStyle {
+//  public static
+//}
+
 /// Only used internall by ``ShadowModifier``
 struct DepthShadowBaseModifier: ViewModifier {
 
