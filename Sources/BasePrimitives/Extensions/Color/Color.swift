@@ -23,6 +23,9 @@ enum OpacityPreset: CGFloat {
 
 extension Color {
   
+  public static let darkGrey: Color = .init(white: 0.28)
+  public static let darkerGrey: Color = .init(white: 0.1)
+  
   public func toCGColor(using environment: EnvironmentValues) -> CGColor{
     resolve(in: environment).cgColor
   }
