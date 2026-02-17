@@ -47,15 +47,9 @@ public struct HSVColour: Identifiable, Equatable, Sendable, ColourModel, Hashabl
     name: String? = nil
   ) {
     self.init(hue: h, saturation: s, brightness: v, alpha: alpha, name: name)
-    //    self.hue = hue
-    //    self.saturation = saturation
-    //    self.brightness = brightness
-    //    self.alpha = alpha
-    //    self.name = name
   }
 }
 
-//
 extension HSVColour: HSVAdjustable {
 
   public init(fromHSV hsv: HSVColour) {

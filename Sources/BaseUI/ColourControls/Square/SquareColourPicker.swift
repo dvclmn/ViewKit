@@ -12,6 +12,8 @@ import SwiftUI
 public struct SquareColourPicker: View {
   @Environment(\.controlSize) private var controlSize
 
+  @State private var hsvLocal: HSVColour
+
   @State private var viewSize: CGSize?
   @State private var dragPosition: CGPoint = .zero
   @GestureState private var isDragging = false
@@ -22,25 +24,39 @@ public struct SquareColourPicker: View {
     _ colour: Binding<RGBColour>,
   ) {
     self._colour = colour
+    self._hsvLocal = State(initialValue: colour.wrappedValue.toHSV)
   }
 
   public var body: some View {
     PickerSquare(hue: colour.toHSV.hue)
+      .aspectRatio(1, contentMode: .fit)
+
       .clipShape(.rect(cornerRadius: Styles.sizeSmall))
-      .viewSize(mode: .debounce(0.2), isEnabled: true) { size in
+      .viewSize(mode: .debounce(0.1), isEnabled: true) { size in
         viewSize = size
       }
-      .padding(insetAmount / 2)
-      .frame(width: sizePlusInset, height: sizePlusInset)
+      //      .padding(insetAmount / 2)
+      //      .frame(width: sizePlusInset, height: sizePlusInset)
 
       // MARK: - Thumb
       .overlay {
         SliderThumb(diameter: thumbDiameter, shape: .circle)
-          .offset(CGSize(fromLength: insetAmount / 2))
+          //          .offset(CGSize(fromLength: insetAmount / 2))
           .position(thumbPosition)
 
       }
-      .gesture(drag())
+
+      .gesture(drag(), including: .gesture)
+
+      .task(id: colour) {
+        let newHSV = colour.toHSV
+        if newHSV.brightness == 0 {
+          /// preserve hsv.saturation (and hue) when colour is black
+          hsvLocal.brightness = 0
+        } else {
+          hsvLocal = newHSV
+        }
+      }
 
   }
 }
@@ -54,26 +70,32 @@ extension SquareColourPicker {
     }
   }
 
-  private var sizePlusInset: CGFloat? {
-    viewSize.map { $0.width + insetAmount }
-  }
-
-  private var insetAmount: CGFloat {
-    thumbDiameter / 2
-  }
-
   private var colourHSV: HSVColour { colour.toHSV }
 
   /// y is inverted
+  //  private var thumbPosition: CGPoint {
+  //    guard let viewSize else { return .zero }
+  //
+  //    let x = colourHSV.saturation * viewSize.width
+  //    let y = (1 - colourHSV.brightness) * viewSize.width
+  //    return CGPoint(
+  //      x: max(0, x),
+  //      y: max(0, y)
+  //    )
+  //  }
+
   private var thumbPosition: CGPoint {
     guard let viewSize else { return .zero }
+    let x = CGFloat(hsvLocal.saturation) * viewSize.width
+    let y = (1 - CGFloat(hsvLocal.brightness)) * viewSize.height
     return CGPoint(
-      x: colourHSV.saturation * viewSize.width,
-      y: (1 - colourHSV.brightness) * viewSize.width
+      x: min(max(0, x), viewSize.width),
+      y: min(max(0, y), viewSize.height)
     )
   }
 
   func drag() -> some Gesture {
+
     DragGesture(minimumDistance: 0)
       .updating($isDragging) { _, state, _ in state = true }
       .onChanged { value in
@@ -84,11 +106,17 @@ extension SquareColourPicker {
         let clampedX = min(max(location.x, 0), viewSize.width)
         let clampedY = min(max(location.y, 0), viewSize.height)
 
-        let newSat = clampedX / viewSize.width
-        let newBrightness = 1 - (clampedY / viewSize.height)  // inverted y axis
+        hsvLocal.saturation = Double(clampedX / viewSize.width)
+        hsvLocal.brightness = Double(1 - (clampedY / viewSize.height))
+        // (optional) hsv.hue stays as-is
 
-        let newHSV = colourHSV.set(hue: nil, saturation: newSat, brightness: newBrightness)
-        colour = newHSV.toRGB
+        colour = hsvLocal.toRGB
+
+        //        let newSat = clampedX / viewSize.width
+        //        let newBrightness = 1 - (clampedY / viewSize.height)  // inverted y axis
+
+        //        let newHSV = colourHSV.set(hue: nil, saturation: newSat, brightness: newBrightness)
+        //        colour = newHSV.toRGB
       }
   }
 

@@ -54,9 +54,6 @@ extension HSVAdjustable {
       hsv.brightness = brightness
     }
     return Self(fromHSV: hsv)
-//    self = Self(fromHSV: hsv)
-
-    //    return Self(fromHSV: hsv)
   }
 
   public func contrastColour(

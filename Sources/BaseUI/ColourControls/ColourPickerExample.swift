@@ -10,7 +10,7 @@ import ColourKit
 
 struct ColourPickerExample: View {
   @State private var colour: RGBColour = .init(red: 0.1, green: 0.3, blue: 0.8)
-  @State private var components: ColourPickerComponents = .all
+  @State private var components: ColourPickerComponents = .square
   var body: some View {
     
     Form {
