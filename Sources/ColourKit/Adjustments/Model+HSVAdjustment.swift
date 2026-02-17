@@ -12,14 +12,13 @@ import SwiftUI
 /// Does not set hsv values to these, but adds to them
 public struct HSVAdjustment: Sendable, Codable, Equatable, Hashable {
 
-
   /// Hue is cyclic. Unit interval `[0,1)`
   public var hue: Double?
-  
+
   /// saturation and brightness are deltas. Expected range `−1…1`
   public var saturation: Double?
   public var brightness: Double?
-  
+
   /// Scalar multiplier applied when combining/applying adjustments;
   /// not used as interpolation time parameter
   public let strength: Double
@@ -46,18 +45,22 @@ public struct HSVAdjustment: Sendable, Codable, Equatable, Hashable {
 }
 
 extension HSVAdjustment {
+  public init(fromAdjustable adjustable: some HSVAdjustable) {
+    let hsv = adjustable.toHSV
+    self.init(h: hsv.hue, s: hsv.saturation, v: hsv.brightness)
+  }
 
   /// Removed `to​Colour` because a delta cannot be turned into a concrete Color without a base color.
-//  public var toColour: Color? {
-//    guard let hue, let saturation, let brightness else { return nil }
-//    let nsColour = NSColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0)
-//    return Color(nsColor: nsColour)
-//  }
+  //  public var toColour: Color? {
+  //    guard let hue, let saturation, let brightness else { return nil }
+  //    let nsColour = NSColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0)
+  //    return Color(nsColor: nsColour)
+  //  }
 
-//  @available(
-//    *, deprecated, renamed: "toColour",
-//    message: "Prefer property version of this, rather than the method `toColour()`"
-//  )
+  //  @available(
+  //    *, deprecated, renamed: "toColour",
+  //    message: "Prefer property version of this, rather than the method `toColour()`"
+  //  )
   //  public func toColour() -> Color? {
   //    toColour
   //  }
@@ -73,27 +76,29 @@ extension HSVAdjustment {
     HSVAdjustment(h: nil, s: nil, v: nil)
   }
 
-//  public func interpolated(towards other: HSVAdjustment) -> HSVAdjustment {
-//    HSVAdjustment(
-//      hue: hue.interpolatedHue(towards: other.hue, strength: strength),
-//      saturation: saturation.interpolated(towards: other.saturation, strength: strength),
-//      brightness: brightness.interpolated(towards: other.brightness, strength: strength)
-//    )
-//  }
-  
-  public func interpolated(towards other: HSVAdjustment, t: Double) -> HSVAdjustment {
+  //  public func interpolated(towards other: HSVAdjustment) -> HSVAdjustment {
+  //    HSVAdjustment(
+  //      hue: hue.interpolatedHue(towards: other.hue, strength: strength),
+  //      saturation: saturation.interpolated(towards: other.saturation, strength: strength),
+  //      brightness: brightness.interpolated(towards: other.brightness, strength: strength)
+  //    )
+  //  }
+
+  public func interpolated(
+    towards other: HSVAdjustment,
+    amount: Double
+  ) -> HSVAdjustment {
     HSVAdjustment(
-      hue: hue.interpolatedHue(towards: other.hue, amount: t),
-      saturation: saturation.interpolated(towards: other.saturation, amount: t),
-      brightness: brightness.interpolated(towards: other.brightness, amount: t),
-      strength: strength.interpolated(towards: other.strength, strength: t)
+      hue: hue.interpolatedHue(towards: other.hue, amount: amount),
+      saturation: saturation.interpolated(towards: other.saturation, amount: amount),
+      brightness: brightness.interpolated(towards: other.brightness, amount: amount),
+      strength: strength.interpolated(towards: other.strength, amount: amount)
     )
   }
 
-  
   public func scaled(by factor: Double) -> HSVAdjustment {
     HSVAdjustment(
-      hue: hue.map { $0 * factor }, // see clamping below
+      hue: hue.map { $0 * factor },  // see clamping below
       saturation: saturation.map { $0 * factor },
       brightness: brightness.map { $0 * factor },
       strength: strength * factor
@@ -133,14 +138,14 @@ extension HSVAdjustment {
       brightness: brightness.combined(with: other.brightness, using: +),
       strength: shouldScaleStrength ? strength + other.strength : self.strength
     )
-//    HSVAdjustment(
-//      hue: hue.combined(with: other.hue) {
-//        $0.interpolated(towards: $1, amount: 1.0)
-//      },
-//      saturation: saturation.combined(with: other.saturation, using: +),
-//
-//      brightness: brightness.combined(with: other.brightness, using: +)
-//    )
+    //    HSVAdjustment(
+    //      hue: hue.combined(with: other.hue) {
+    //        $0.interpolated(towards: $1, amount: 1.0)
+    //      },
+    //      saturation: saturation.combined(with: other.saturation, using: +),
+    //
+    //      brightness: brightness.combined(with: other.brightness, using: +)
+    //    )
   }
 }
 

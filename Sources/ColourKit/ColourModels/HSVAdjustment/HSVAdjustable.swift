@@ -6,9 +6,6 @@
 //
 
 public protocol HSVAdjustable {
-//public protocol HSVAdjustable: ColourModel, LuminanceReadable {
-//  associatedtype Colour: ColourModel
-  
   var toHSV: HSVColour { get }
   init(fromHSV hsv: HSVColour)
 
@@ -38,6 +35,18 @@ extension HSVAdjustable {
     return Self(fromHSV: hsv)
   }
 
+  public func adjust(
+    by adjustment: HSVAdjustment
+  ) -> Self {
+    var hsv = self.toHSV
+
+    if let dh = adjustment.hue { hsv.hue += dh }
+    if let ds = adjustment.saturation { hsv.saturation += ds }
+    if let dv = adjustment.brightness { hsv.brightness += dv }
+
+    return Self(fromHSV: hsv)
+  }
+
   /// Set a new value, returns new instance
   /// If value is `nil`, that property doesn't get touched
   public func set(
@@ -58,8 +67,6 @@ extension HSVAdjustable {
     return Self(fromHSV: hsv)
   }
 
-
-
   /// This will 'pass through', returning `self` if `modification` is `nil`
   public func contrastColour(modification: ColourModification?) -> Self {
     guard let modification else { return self }
@@ -72,29 +79,29 @@ extension HSVAdjustable {
   }
 }
 
-extension HSVAdjustable where Colour: LuminanceReadable {
+extension HSVAdjustable where Self: LuminanceReadable {
   public func contrastColour(
     strength: ModificationStrengthPreset,
     purpose: ColourPurpose = .legibility,
     chroma: ColourChroma = .standard,
   ) -> Self {
-    
+
     let hsv = self.toHSV
-    
+
     guard strength.adjustmentStrength > 0 else { return self }
-    
+
     let adjustment = HSVAdjustment.applyingModifiers(
-      for: Colour,
+      for: self,
       strength: strength,
       purpose: purpose,
       chroma: chroma
     )
-    
+
     let adjustedHSV = hsv.applying(adjustment: adjustment)
-    
+
     let adjustedColour = Self(fromHSV: adjustedHSV)
-    
+
     return adjustedColour
-    
+
   }
 }

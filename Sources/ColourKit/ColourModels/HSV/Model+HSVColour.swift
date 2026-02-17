@@ -114,29 +114,30 @@ extension HSVColour {
     )
   }
 
-  func applying(adjustment: HSVAdjustment) -> HSVColour {
-    let adjustedHue = adjustment.hue.map { hue + $0 } ?? hue
-
-    let adjustedSaturation =
-      adjustment.saturation.map { saturation + $0 } ?? saturation
-
-    let adjustedBrightness =
-      adjustment.brightness.map { brightness + $0 } ?? brightness
-
-    return HSVColour(
-      hue: adjustedHue,
-      saturation: adjustedSaturation,
-      brightness: adjustedBrightness,
-      alpha: alpha,
-      name: self.name
-    )
-  }
+  /// This is handled in ``HSVAdjustable/adjust(by:)``
+//  func applying(adjustment: HSVAdjustment) -> HSVColour {
+//    let adjustedHue = adjustment.hue.map { hue + $0 } ?? hue
+//
+//    let adjustedSaturation =
+//      adjustment.saturation.map { saturation + $0 } ?? saturation
+//
+//    let adjustedBrightness =
+//      adjustment.brightness.map { brightness + $0 } ?? brightness
+//
+//    return HSVColour(
+//      hue: adjustedHue,
+//      saturation: adjustedSaturation,
+//      brightness: adjustedBrightness,
+//      alpha: alpha,
+//      name: self.name
+//    )
+//  }
 }
 
 //
-public func + (lhs: HSVColour, rhs: HSVAdjustment) -> HSVColour {
-  lhs.applying(adjustment: rhs)
-}
+//public func + (lhs: HSVColour, rhs: HSVAdjustment) -> HSVColour {
+//  lhs.applying(adjustment: rhs)
+//}
 
 extension HSVColour: CustomStringConvertible {
   public var description: String {

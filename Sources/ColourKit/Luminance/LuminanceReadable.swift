@@ -22,7 +22,6 @@ public enum LuminanceMethod: Sendable, Codable {
 //
 //extension LuminanceReadable {
 
-
 //extension Color: LuminanceReadable {
 //  public func luminance(using method: LuminanceMethod = .wcag) -> Double {
 //    fatalError("Not yet implemented")
@@ -41,7 +40,7 @@ public enum LuminanceMethod: Sendable, Codable {
 //  public func luminance(using method: LuminanceMethod = .wcag) -> Double {
 //    fatalError("Not yet implemented")
 //  }
-//  
+//
 //  public func luminanceThreshold(using method: LuminanceMethod) -> LuminanceThreshold {
 //    fatalError("Not yet implemented")
 //  }
