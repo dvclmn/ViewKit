@@ -45,6 +45,7 @@ extension ColourPickerExample {
 #Preview(traits: .size(.normal)) {
   ColourPickerExample()
     .frame(width: 300)
+    .setHSVRepresentation()
     
 }
 #endif

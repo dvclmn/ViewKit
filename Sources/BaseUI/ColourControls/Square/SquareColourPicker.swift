@@ -30,45 +30,50 @@ public struct SquareColourPicker: View {
 
   public var body: some View {
 
-    if let bindingHSV = Binding(hsvPrimaryRepresentation) {
-      PickerSquare(hue: bindingHSV.wrappedValue.hue)
-        .aspectRatio(1, contentMode: .fit)
+    Group {
+      if let bindingHSV = Binding(hsvPrimaryRepresentation) {
+        PickerSquare(hue: bindingHSV.wrappedValue.hue)
+          .aspectRatio(1, contentMode: .fit)
 
-        .clipShape(.rect(cornerRadius: Styles.sizeSmall))
-        .viewSize(mode: .debounce(0.1), isEnabled: true) { size in
-          viewSize = size
-        }
+          .clipShape(.rect(cornerRadius: Styles.sizeSmall))
+          .viewSize(mode: .debounce(0.1), isEnabled: true) { size in
+            viewSize = size
+          }
 
-        // MARK: - Thumb
-        .overlay {
-          SliderThumb(diameter: thumbDiameter, shape: .circle)
-            .position(thumbPosition)
-        }
+          // MARK: - Thumb
+          .overlay {
+            SliderThumb(diameter: thumbDiameter, shape: .circle)
+              .position(thumbPosition)
+          }
 
-        .gesture(drag(), including: .gesture)
+          .gesture(drag(), including: .gesture)
 
-        .task(id: colour) {
-          bindingHSV.wrappedValue = colour.toHSV(preservingHueFrom: bindingHSV.wrappedValue)
-          //        let newHSV = colour.toHSV
-          //
-          //        if newHSV.brightness == 0 || newHSV.saturation == 0 {
-          //          /// hue is undefined here; keep existing hue
-          //          hsvLocal.saturation = newHSV.saturation
-          //          hsvLocal.brightness = newHSV.brightness
-          //          hsvLocal.alpha = newHSV.alpha
-          //        } else {
-          //          hsvLocal = newHSV
-          //        }
-          //        let newHSV = colour.toHSV
-          //        if newHSV.brightness == 0 {
-          //          /// preserve hsv.saturation (and hue) when colour is black
-          //          hsvLocal.brightness = 0
-          //        } else {
-          //          hsvLocal = newHSV
-          //        }
-        }
-    } else {
-      StateView("No HSV Representation found in the Environment", icon: .emoji("🌈"))
+          .task(id: colour) {
+            bindingHSV.wrappedValue = colour.toHSV(preservingHueFrom: bindingHSV.wrappedValue)
+            //        let newHSV = colour.toHSV
+            //
+            //        if newHSV.brightness == 0 || newHSV.saturation == 0 {
+            //          /// hue is undefined here; keep existing hue
+            //          hsvLocal.saturation = newHSV.saturation
+            //          hsvLocal.brightness = newHSV.brightness
+            //          hsvLocal.alpha = newHSV.alpha
+            //        } else {
+            //          hsvLocal = newHSV
+            //        }
+            //        let newHSV = colour.toHSV
+            //        if newHSV.brightness == 0 {
+            //          /// preserve hsv.saturation (and hue) when colour is black
+            //          hsvLocal.brightness = 0
+            //        } else {
+            //          hsvLocal = newHSV
+            //        }
+          }
+      }
+    }
+    .overlay {
+      if hsvPrimaryRepresentation == nil {
+        StateView("No HSV Representation found in the Environment", icon: .emoji("🌈"))
+      }
     }
 
   }
