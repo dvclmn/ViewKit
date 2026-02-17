@@ -35,7 +35,6 @@ public struct ColourPicker: View {
       .frame(maxWidth: .infinity, alignment: .trailing)
 
       if components.contains(.square) {
-        // TODO: SquareColourPicker compensates for hit area, causing it to appear too padded
         SquareColourPicker($colour)
       }
 

@@ -62,6 +62,7 @@ public struct SquareColourPicker: View {
 }
 extension SquareColourPicker {
 
+  private var colourHSV: HSVColour { colour.toHSV }
   private var thumbDiameter: CGFloat {
     switch controlSize {
       case .large: 18
@@ -69,29 +70,26 @@ extension SquareColourPicker {
       default: 16
     }
   }
+  private var thumbRadius: CGFloat { thumbDiameter / 2 }
 
-  private var colourHSV: HSVColour { colour.toHSV }
+  /// How far in from the square edge the thumb centre is allowed to travel.
+  /// - If `= thumbRadius`: thumb stays fully inside.
+  /// - If `< thumbRadius`: thumb overlaps by (thumbRadius - inset).
+  /// - If `> thumbRadius`: thumb stays extra padded from edges.
+  private var thumbTravelInset: CGFloat { thumbRadius - 3 }
 
-  /// y is inverted
-  //  private var thumbPosition: CGPoint {
-  //    guard let viewSize else { return .zero }
-  //
-  //    let x = colourHSV.saturation * viewSize.width
-  //    let y = (1 - colourHSV.brightness) * viewSize.width
-  //    return CGPoint(
-  //      x: max(0, x),
-  //      y: max(0, y)
-  //    )
-  //  }
+  private func travelRect(in size: CGSize) -> CGRect {
+    CGRect(origin: .zero, size: size).insetBy(dx: thumbTravelInset, dy: thumbTravelInset)
+  }
 
   private var thumbPosition: CGPoint {
     guard let viewSize else { return .zero }
-    let x = CGFloat(hsvLocal.saturation) * viewSize.width
-    let y = (1 - CGFloat(hsvLocal.brightness)) * viewSize.height
-    return CGPoint(
-      x: min(max(0, x), viewSize.width),
-      y: min(max(0, y), viewSize.height)
-    )
+    let rect = travelRect(in: viewSize)
+
+    let x = rect.minX + CGFloat(hsvLocal.saturation) * rect.width
+    let y = rect.minY + (1 - CGFloat(hsvLocal.brightness)) * rect.height
+
+    return CGPoint(x: x, y: y)
   }
 
   func drag() -> some Gesture {
@@ -103,20 +101,18 @@ extension SquareColourPicker {
         guard let viewSize else { return }
         let location = value.location
 
-        let clampedX = min(max(location.x, 0), viewSize.width)
-        let clampedY = min(max(location.y, 0), viewSize.height)
+        let rect = travelRect(in: viewSize)
 
-        hsvLocal.saturation = Double(clampedX / viewSize.width)
-        hsvLocal.brightness = Double(1 - (clampedY / viewSize.height))
-        // (optional) hsv.hue stays as-is
+        let x = min(max(location.x, rect.minX), rect.maxX)
+        let y = min(max(location.y, rect.minY), rect.maxY)
+
+        let newSat = Double((x - rect.minX) / rect.width)
+        let newBrightness = Double(1 - ((y - rect.minY) / rect.height))
+
+        hsvLocal.saturation = newSat
+        hsvLocal.brightness = newBrightness
 
         colour = hsvLocal.toRGB
-
-        //        let newSat = clampedX / viewSize.width
-        //        let newBrightness = 1 - (clampedY / viewSize.height)  // inverted y axis
-
-        //        let newHSV = colourHSV.set(hue: nil, saturation: newSat, brightness: newBrightness)
-        //        colour = newHSV.toRGB
       }
   }
 
