@@ -20,4 +20,5 @@ extension EnvironmentValues {
   
   @Entry public var activeColour: Binding<ColourLevel> = .constant(.foreground)
   @Entry public var activeColourModel: Binding<ColourModelKind> = .constant(.rgb)
+  @Entry public var hsvRepresentation: Binding<HSVColour?> = .constant(nil)
 }

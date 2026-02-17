@@ -11,52 +11,57 @@ import GraphicsKit
 import SwiftUI
 
 public struct ColourLevelSwitch<Colour: ColourModel & EnvironmentResolvableColour>: View {
+  @Environment(\.activeColour) private var activeColour
   @Environment(\.modifierKeys) private var modifierKeys
+  
   @State private var isHovering: Bool = false
 
-  @Binding var level: ColourLevel
+  //  @Binding var level: ColourLevel
   @Binding var foreground: Colour
-  @Binding var background: Colour
+  @Binding var background: Colour?
 
   let diameter: CGFloat
   let overlapFactor: CGFloat
 
-  let mode: SwitchMode
+  //  let mode: SwitchMode
 
   public init(
-    level: Binding<ColourLevel>,
+    //    level: Binding<ColourLevel>,
     foreground: Binding<Colour>,
-    background: Binding<Colour>,
+    background: Binding<Colour?>,
     diameter: CGFloat,
     overlapFactor: CGFloat,
-    mode: SwitchMode
+    //    mode: SwitchMode
   ) {
-    self._level = level
+    //    self._level = level
     self._foreground = foreground
     self._background = background
     self.diameter = diameter
     self.overlapFactor = overlapFactor
-    self.mode = mode
+    //    self.mode = mode
   }
 
   public var body: some View {
 
     ZStack {
-      switch mode {
-        case .switcher:
-          Level(.foreground)
-          Level(.background)
-
-        case .single:
-          switch level {
-            case .foreground: Level(.foreground)
-            case .background: Level(.background)
-          }
+      Level(.foreground, colour: foreground)
+      if let background {
+        //      if background != nil {
+        Level(.background, colour: background)
       }
+      //      switch mode {
+      //        case .switcher:
+      //
+      //        case .single:
+      //          switch level {
+      //            case .foreground: Level(.foreground)
+      //            case .background: Level(.background)
+      //          }
+      //      }
     }
     .allowsHitTesting(!modifierKeys.isHoldingOption)
     .frame(width: swatchPairTotalWidth)
-    
+
     .onHover { isHovering = $0 }
 
     //    .overlay(alignment: .leading) {
@@ -73,24 +78,26 @@ public struct ColourLevelSwitch<Colour: ColourModel & EnvironmentResolvableColou
     //      }
     //    }
     //    .gesture(tapSwapGesture, isEnabled: isHoldingOption)
-//    .padding(.horizontal, Styles.sizeRegular.bump)
-    
+    //    .padding(.horizontal, Styles.sizeRegular.bump)
 
   }
 }
 extension ColourLevelSwitch {
 
   @ViewBuilder
-  private func Level(_ colourLevel: ColourLevel) -> some View {
+  private func Level(
+    _ colourLevel: ColourLevel,
+    colour: Colour
+  ) -> some View {
     Button {
-      level = colourLevel
+      activeColour.wrappedValue = colourLevel
     } label: {
+      
+      /// Displays either the colour, or a checkerboard style
+      /// opacity view, for when alpha is less than 1.0
       ZStack {
         PatternCanvas(preset: .opacityCheckerboard)
-        switch colourLevel {
-          case .foreground: foreground.toColour
-          case .background: background.toColour
-        }
+        Color(colour.toColour)
       }
       .frameFromSquare(diameter)
       .clipShape(.circle)
@@ -99,15 +106,7 @@ extension ColourLevelSwitch {
           Circle().fill(.clear).stroke(.white, lineWidth: 1)
         }
       }
-      
-      //      ColourLevelView(
-      //        level: colourLevel,
-      //        foreground: foreground,
-      //        background: background,
-      //        diameter: diameter,
-      //        overlapFactor: overlapFactor
-      //      )
-      
+
       .offset(x: offsetAmount(colourLevel))
       .zIndex(isActiveAndSwitchMode(colourLevel) ? 2 : 1)
       .accessibilityLabel(Text("Edit \(colourLevel.name) Colour"))
@@ -116,12 +115,16 @@ extension ColourLevelSwitch {
         value: colourLevel
       )
       .id(colourLevel)
-      
-//      .contentShape(.rect)
-      
+
+      //      .contentShape(.rect)
+
     }
-//    .border(Color.green.opacity(0.3))
+    //    .border(Color.green.opacity(0.3))
     .buttonStyle(.plain)
+  }
+  
+  private var isDualColourMode: Bool {
+    background != nil
   }
 
   var swatchPairTotalWidth: CGFloat {
@@ -131,20 +134,25 @@ extension ColourLevelSwitch {
   }
 
   private func offsetAmount(_ colourLevel: ColourLevel) -> CGFloat {
-    guard mode.isSwitcher else { return .zero }
-   return isActive(colourLevel) ? -swatchOverlap : swatchOverlap
+    guard isDualColourMode else { return .zero }
+    return isActive(colourLevel) ? -swatchOverlap : swatchOverlap
   }
-  
+
   private var swatchOverlap: CGFloat {
     diameter * overlapFactor
   }
 
   private func isActiveAndSwitchMode(_ colourLevel: ColourLevel) -> Bool {
-    colourLevel == level && mode.isSwitcher
+    colourLevel == activeColour.wrappedValue && isDualColourMode
+  }
+
+  private func isActive(_ colourLevel: ColourLevel) -> Bool {
+    colourLevel == activeColour.wrappedValue
   }
   
-  private func isActive(_ colourLevel: ColourLevel) -> Bool {
-    colourLevel == level
+  private var contrastColour: Colour {
+    let hsvAdjustment = HSVAdjustment(h: 0.2, s: 0.0, v: 0.2)
+    let hsv
   }
 
   //  var tapSwapGesture: some Gesture {
