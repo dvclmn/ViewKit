@@ -34,11 +34,21 @@ extension Binding where Value == RGBColour {
 
   public static func colourBinding(
     _ primary: Binding<RGBColour>,
-    _ secondary: Binding<RGBColour>,
+    _ secondary: Binding<RGBColour?>,
     level: ColourLevel
   ) -> Binding<RGBColour> {
     Binding<RGBColour> {
-      level.isForeground ? primary.wrappedValue : secondary.wrappedValue
+
+      if level.isForeground {
+        return primary.wrappedValue
+      }
+
+      guard let secondary = secondary.wrappedValue else {
+        return primary.wrappedValue
+      }
+
+      return secondary
+
     } set: {
       if level.isForeground {
         primary.wrappedValue = $0
@@ -46,9 +56,7 @@ extension Binding where Value == RGBColour {
         secondary.wrappedValue = $0
       }
     }
-
   }
-
 }
 
 extension ColourLevel: CustomStringConvertible {
