@@ -77,9 +77,11 @@ extension HSVAdjustable {
       chroma: modification.chroma
     )
   }
+
 }
 
 extension HSVAdjustable where Self: LuminanceReadable {
+
   public func contrastColour(
     strength: ModificationStrengthPreset,
     purpose: ColourPurpose = .legibility,
@@ -97,7 +99,8 @@ extension HSVAdjustable where Self: LuminanceReadable {
       chroma: chroma
     )
 
-    let adjustedHSV = hsv.applying(adjustment: adjustment)
+    let adjustedHSV = hsv.adjust(by: adjustment)
+    //    let adjustedHSV = hsv.apply(adjustment: adjustment)
 
     let adjustedColour = Self(fromHSV: adjustedHSV)
 
