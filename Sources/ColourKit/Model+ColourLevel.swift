@@ -17,6 +17,21 @@ public protocol ColourHandlerProtocol {
 }
 
 @CaseDetection
+public enum HierarchicalColour: String, Sendable, CaseIterable, Identifiable {
+  case primary  // Foreground by default
+  case secondary  // Background by default
+
+  public var id: String { rawValue }
+
+  public func colour(for activeLevel: ColourLevel) -> Self {
+    switch activeLevel {
+      case .foreground: .primary
+      case .background: .secondary
+    }
+  }
+}
+
+@CaseDetection
 public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable, NamedItem, Pickable, Identifiable {
   public typealias Item = Self
 

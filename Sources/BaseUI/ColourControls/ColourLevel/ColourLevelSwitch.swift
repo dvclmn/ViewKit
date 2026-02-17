@@ -10,44 +10,55 @@ import CoreTools
 import GraphicsKit
 import SwiftUI
 
+
 public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & EnvironmentResolvableColour>: View {
   @Environment(\.activeColour) private var activeColour
   @Environment(\.modifierKeys) private var modifierKeys
 
   @State private var isHovering: Bool = false
 
-  @Binding var foreground: Colour
-  @Binding var background: Colour?
+  @Binding var primary: Colour
+  @Binding var secondary: Colour?
 
   let diameter: CGFloat
   let overlapFactor: CGFloat
 
   public init(
-    foreground: Binding<Colour>,
-    background: Binding<Colour?>,
+    primary: Binding<Colour>,
+    secondary: Binding<Colour?>,
     diameter: CGFloat,
     overlapFactor: CGFloat,
   ) {
-    self._foreground = foreground
-    self._background = background
+    self._primary = primary
+    self._secondary = secondary
     self.diameter = diameter
     self.overlapFactor = overlapFactor
   }
 
   public var body: some View {
 
-    ZStack {
-      Level(.foreground, colour: foreground)
-        .zIndex(index(for: .foreground))
-      if let background {
-        Level(.background, colour: background)
-          .zIndex(index(for: .background))
-      }
-    }
-    .allowsHitTesting(!modifierKeys.isHoldingOption)
-    .frame(width: swatchPairTotalWidth)
+    if let secondary {
 
-    .onHover { isHovering = $0 }
+      HStack {
+        //        switch activeColour.wrappedValue {
+        //          case .foreground:
+        Level(colour: primary)
+        Level(colour: secondary)
+
+        //          case .background:
+        //        }
+
+        //          .zIndex(index(for: .background))
+      }
+    } else {
+      /// If there's only one colour provided, we don't even need
+      /// to think about active colour level
+      Level(colour: primary)
+    }
+    //    .allowsHitTesting(!modifierKeys.isHoldingOption)
+    //      .frame(width: swatchPairTotalWidth)
+    //
+    //      .onHover { isHovering = $0 }
 
     //    .overlay(alignment: .leading) {
     //      if isHovering && modifierKeys.isHoldingOption {
@@ -74,19 +85,30 @@ extension ColourLevelSwitch {
     }
     return 2
   }
+  
+  
+  
+//  private func colourLevel(for hierarchy: HierarchicalColour) -> ColourLevel {
+//    switch activeColour.wrappedValue {
+//      case .foreground:
+//      case .background:
+//    }
+//  }
 
   @ViewBuilder
   private func Level(
-    _ colourLevel: ColourLevel,
+//    _ colourLevel: ColourLevel,
     colour: Colour
   ) -> some View {
     Button {
       activeColour.wrappedValue = colourLevel
     } label: {
       ColourLevelLabel(colourLevel, colour: colour)
+        .frameFromSquare(diameter)
     }
     //    .border(Color.green.opacity(0.3))
-    .buttonStyle(.noClickAnimation)
+    .buttonStyle(.noClickAnimation(isPlain: true))
+    //    .buttonStyle(.plain)
   }
 
   @ViewBuilder
@@ -103,10 +125,9 @@ extension ColourLevelSwitch {
         .fill(colour.toColour)
         .strokeBorder(contrastColour.toColour, lineWidth: isActiveAndSwitchMode(colourLevel) ? 2 : 0)
     }
-    .frameFromSquare(diameter)
 
     .offset(x: offsetAmount(colourLevel))
-    .zIndex(isActiveAndSwitchMode(colourLevel) ? 2 : 1)
+    //    .zIndex(isActiveAndSwitchMode(colourLevel) ? 2 : 1)
     .accessibilityLabel(Text("Edit \(colourLevel.name) Colour"))
     .animation(
       .snappy(duration: 0.22, extraBounce: 0.13),
@@ -117,9 +138,10 @@ extension ColourLevelSwitch {
     //      .contentShape(.rect)
 
   }
+  
 
   private var isDualColourMode: Bool {
-    background != nil
+    secondary != nil
   }
 
   var swatchPairTotalWidth: CGFloat {
@@ -147,7 +169,7 @@ extension ColourLevelSwitch {
 
   private var contrastColour: Colour {
     let hsvAdjustment = HSVAdjustment(h: 0.1, s: 0.0, v: 0.1)
-    let adjusted = foreground.adjust(by: hsvAdjustment)
+    let adjusted = primary.adjust(by: hsvAdjustment)
     return adjusted
   }
 

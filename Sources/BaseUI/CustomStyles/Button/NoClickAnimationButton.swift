@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-extension PrimitiveButtonStyle where Self == NoClickAnimationButton {
-  //  @available(*, deprecated, renamed: "base", message: "Prefer more accurately named 'base'.")
-  //  public static var custom: Self { Self() }
+extension ButtonStyle where Self == NoClickAnimationButton {
+//extension PrimitiveButtonStyle where Self == NoClickAnimationButton {
   public static var noClickAnimation: Self { Self() }
   public static func noClickAnimation(isPlain: Bool = false) -> Self {
     Self(isPlain: isPlain)
@@ -17,12 +16,9 @@ extension PrimitiveButtonStyle where Self == NoClickAnimationButton {
 }
 
 //
-public struct NoClickAnimationButton: PrimitiveButtonStyle {
-  //  @Environment(\.strokeConfig) private var strokeConfig
-  //  @Environment(\.isInControlGroup) private var isInControlGroup
+public struct NoClickAnimationButton: ButtonStyle {
+//public struct NoClickAnimationButton: PrimitiveButtonStyle {
   @Environment(\.isEnabled) private var isEnabled
-  //  @Environment(\.heightOverride) private var heightOverride
-  //  @Environment(\.isBackgroundHidden) private var isBackgroundHidden
 
   let isPlain: Bool
 
@@ -32,11 +28,13 @@ public struct NoClickAnimationButton: PrimitiveButtonStyle {
 
   public func makeBody(configuration: Configuration) -> some View {
 
-    Button {
-      configuration.trigger()
-    } label: {
-      configuration.label
-    }  // END button
-    //    .buttonStyle(.plain)
+    configuration.label
+//    Button {
+//      configuration.trigger()
+//    } label: {
+//      configuration.label
+//    }  // END button
+//    
+//    .buttonStyle(.plain)
   }
 }
