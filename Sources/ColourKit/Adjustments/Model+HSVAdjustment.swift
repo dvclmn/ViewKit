@@ -9,7 +9,7 @@ import BasePrimitives
 import SwiftUI
 
 /// Represents a *delta* adjustment in HSV space
-/// Does not set hsb values to these, but adds to them
+/// Does not set hsv values to these, but adds to them
 public struct HSVAdjustment: Sendable, Codable, Equatable, Hashable {
 
   /// Important: This `hue` is cyclic. I am no longer using
@@ -43,11 +43,19 @@ public struct HSVAdjustment: Sendable, Codable, Equatable, Hashable {
 
 extension HSVAdjustment {
 
-  public func toColour() -> Color? {
+  public var toColour: Color? {
     guard let hue, let saturation, let brightness else { return nil }
     let nsColour = NSColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0)
     return Color(nsColor: nsColour)
   }
+
+  @available(
+    *, deprecated, renamed: "toColour",
+    message: "Prefer property version of this, rather than the method `toColour()`"
+  )
+  //  public func toColour() -> Color? {
+  //    toColour
+  //  }
 
   public static func adjustments(
     from modifiers: [any HSVModifier]
@@ -67,52 +75,6 @@ extension HSVAdjustment {
       brightness: brightness.interpolated(towards: other.brightness, strength: strength)
     )
   }
-
-  //  func scaleAll(by factor: Double) -> HSVAdjustment {
-  //    HSVAdjustment(
-  //      hue: hue.map { $0.value * factor },
-  //      saturation: saturation.map { $0 * factor },
-  //      brightness: brightness.map { $0 * factor }
-  //    )
-  //  }
-  //
-  //  func scale(
-  //    _ keyPath: WritableKeyPath<HSVAdjustment, Double>,
-  //    by factor: Double
-  //  ) -> HSVAdjustment {
-  //    var result = self
-  //    result[keyPath: keyPath] *= factor
-  //    return result
-  //  }
-
-  /// With `interpolated`, `HSVAdjustment` now knows how to
-  /// go from one instance of itself, to another, linearly interpolating.
-  ///
-  /// The key here is that a `HSVAdjustment` describes
-  /// the properties neccesary to actually *change* a given colour.
-  /// These values/presets are described elsewhere, such as
-  /// `ColourModification` and `ContrastPreset` etc.
-  ///
-  /// But here, we can go from one, to another, which is very useful.
-  //  func interpolated(
-  //    towards other: HSVAdjustment,
-  //    strength: Double
-  //  ) -> HSVAdjustment {
-  //    HSVAdjustment(
-  //      hue: self.hue.interpolated(
-  //        towards: other.hue,
-  //        strength: strength
-  //      ),
-  //      saturation: self.saturation.interpolated(
-  //        towards: other.saturation,
-  //        strength: strength
-  //      ),
-  //      brightness: self.brightness.interpolated(
-  //        towards: other.brightness,
-  //        strength: strength
-  //      )
-  //    )
-  //  }
 
   static func applyingModifiers(
     for luminanceColour: any LuminanceReadable,
@@ -137,17 +99,20 @@ extension HSVAdjustment {
     return combined
   }
 
+  public func adding(other: Self) -> Self {
+    HSVAdjustment(
+      hue: hue.combined(with: other.hue) {
+        $0.interpolated(towards: $1, amount: 1.0)
+      },
+      saturation: saturation.combined(with: other.saturation, using: +),
+
+      brightness: brightness.combined(with: other.brightness, using: +)
+    )
+  }
 }
 
 public func + (lhs: HSVAdjustment, rhs: HSVAdjustment) -> HSVAdjustment {
-  HSVAdjustment(
-    hue: lhs.hue.combined(with: rhs.hue) {
-      $0.interpolated(towards: $1, amount: 1.0)
-    },
-    saturation: lhs.saturation.combined(with: rhs.saturation, using: +),
-
-    brightness: lhs.brightness.combined(with: rhs.brightness, using: +)
-  )
+  lhs.adding(other: rhs)
 }
 
 extension Optional where Wrapped == Double {
