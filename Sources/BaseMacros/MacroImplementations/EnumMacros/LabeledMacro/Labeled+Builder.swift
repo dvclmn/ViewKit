@@ -28,7 +28,10 @@ struct LabeledBuilder {
 extension LabeledBuilder {
   func build() -> [DeclSyntax] {
     [
-      DeclSyntax("\(raw: detectedEnum.access) var id: String { rawValue.capitalized }"),
+      DeclSyntax("\(raw: detectedEnum.access) var id: String { rawValue }"),
+      DeclSyntax("\(raw: detectedEnum.access) var name: String { rawValue.capitalized }"),
+//      DeclSyntax("\(raw: detectedEnum.access) var icon: LabelIcon? { rawValue.capitalized }"),
+      DeclSyntax("\(raw: detectedEnum.access) var label: String { QuickLabel(name, icon: IconLiteral(from: icon)) }"),
     ]
   }
 }

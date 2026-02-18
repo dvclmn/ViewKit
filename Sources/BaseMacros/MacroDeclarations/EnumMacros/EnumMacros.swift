@@ -117,7 +117,7 @@ public macro StaticMemberIterable() =
     type: "StaticMemberIterableMacro"
   )
 
-@attached(member, names: named(name), named(id), named(label))
+@attached(member, names: named(name), named(id), named(icon), named(label))
 @attached(extension, conformances: Identifiable)
 //@attached(extension, conformances: RawRepresentable, Identifiable)
 public macro Labeled() =

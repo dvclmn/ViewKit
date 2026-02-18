@@ -42,9 +42,9 @@ extension LabeledMacro: ExtensionMacro {
     guard let enumDecl = declaration as? EnumDeclSyntax else {
       throw MacroError("@Labeled can only be attached to enum declarations")
     }
-    
-//    let isIdentifiable: Bool =
-//    declaration.inheritanceClause?.is(Identifiable.self)
+
+    //    let isIdentifiable: Bool =
+    //    declaration.inheritanceClause?.is(Identifiable.self)
 
     return try MacroHelpers.createConformanceForEnum(
       decl: enumDecl,

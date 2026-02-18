@@ -7,6 +7,7 @@
 
 import Foundation
 import SampleBuilder
+import BasePrimitives
 
 @SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
 public enum IconLiteral: Sendable, Equatable, Codable, Hashable {
@@ -33,6 +34,15 @@ extension IconLiteral {
       case .emoji(let string): string
       case .symbol(let string): string
       case .customSymbol(let symbol): symbol.reference
+    }
+  }
+}
+
+extension IconLiteral {
+  public init(from labelIcon: LabelIcon) {
+    switch labelIcon {
+      case .symbol(let string): self = .symbol(string)
+      case .emoji(let string): self = .emoji(string)
     }
   }
 }
