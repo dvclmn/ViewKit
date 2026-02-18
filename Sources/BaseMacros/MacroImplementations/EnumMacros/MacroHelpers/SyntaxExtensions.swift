@@ -10,14 +10,6 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-//extension SyntaxStringInterpolation {
-//  public mutating func appendInterpolation<Node: SyntaxProtocol>(_ node: Node?) {
-//    if let node {
-//      appendInterpolation(node)
-//    }
-//  }
-//}
-
 extension LabeledExprListSyntax {
   /// Retrieve the first element with the given label.
   public func first(labeled name: String) -> Element? {
@@ -28,33 +20,6 @@ extension LabeledExprListSyntax {
 
       return false
     }
-  }
-}
-
-extension TokenSyntax {
-
-//  public enum TriviaKind {
-//    case leading, trailing
-//
-//  }
-//
-//  public func triviaRemoved(_ kind: TriviaKind) -> TokenSyntax {
-//    switch kind {
-//      case .leading:
-//        return self.with(\.leadingTrivia, [])
-//
-//      case .trailing:
-//        return self.with(\.trailingTrivia, [])
-//    }
-//  }
-
-  public var initialUppercased: String {
-    let name = self.text
-    guard let initial = name.first else {
-      return name
-    }
-
-    return "\(initial.uppercased())\(name.dropFirst())"
   }
 }
 
@@ -79,14 +44,42 @@ extension DeclGroupSyntax {
   }
 }
 
-extension EnumDeclSyntax {
-  public var caseElements: [EnumCaseElementSyntax] {
-    memberBlock.members.flatMap { member in
-      guard let caseDecl = member.decl.as(EnumCaseDeclSyntax.self) else {
-        return [EnumCaseElementSyntax]()
-      }
+extension TokenSyntax {
 
-      return Array(caseDecl.elements)
+  public var initialUppercased: String {
+    let name = self.text
+    guard let initial = name.first else {
+      return name
     }
+
+    return "\(initial.uppercased())\(name.dropFirst())"
   }
+
+  //  public enum TriviaKind {
+  //    case leading, trailing
+  //
+  //  }
+  //
+  //  public func triviaRemoved(_ kind: TriviaKind) -> TokenSyntax {
+  //    switch kind {
+  //      case .leading:
+  //        return self.with(\.leadingTrivia, [])
+  //
+  //      case .trailing:
+  //        return self.with(\.trailingTrivia, [])
+  //    }
+  //  }
+
 }
+
+//extension EnumDeclSyntax {
+//  public var caseElements: [EnumCaseElementSyntax] {
+//    memberBlock.members.flatMap { member in
+//      guard let caseDecl = member.decl.as(EnumCaseDeclSyntax.self) else {
+//        return [EnumCaseElementSyntax]()
+//      }
+//
+//      return Array(caseDecl.elements)
+//    }
+//  }
+//}
