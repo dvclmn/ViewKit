@@ -129,5 +129,5 @@ public macro Labeled() =
 public macro Icon(_ icon: LabelIcon) =
   #externalMacro(
     module: "BaseMacrosImplementation",
-    type: "SampleBuilderItemMacro"
+    type: "LabeledIconMacro"
   )
