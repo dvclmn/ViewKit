@@ -45,7 +45,7 @@ enum ExampleEnumNames {
 
 // MARK: - LabeledEnum
 @Labeled
-enum House: String, Identifiable {
+enum House: String {
   case roof
   case door
   case backyard

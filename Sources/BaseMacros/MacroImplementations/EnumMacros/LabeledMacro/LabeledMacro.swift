@@ -11,14 +11,14 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-public struct LabeledMacro: MemberMacro, ExtensionMacro {
+public struct LabeledMacro: MemberMacro {
   public static func expansion(
     of node: AttributeSyntax,
     providingMembersOf declaration: some DeclGroupSyntax,
     conformingTo: [TypeSyntax],
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
-    
+
     let builder = try LabeledBuilder(
       node: node,
       decl: declaration,
@@ -26,7 +26,11 @@ public struct LabeledMacro: MemberMacro, ExtensionMacro {
     )
     return builder.build()
   }
-  
+
+}
+
+extension LabeledMacro: ExtensionMacro {
+
   public static func expansion(
     of node: AttributeSyntax,
     attachedTo declaration: some DeclGroupSyntax,
@@ -34,7 +38,7 @@ public struct LabeledMacro: MemberMacro, ExtensionMacro {
     conformingTo protocols: [TypeSyntax],
     in context: some MacroExpansionContext
   ) throws -> [ExtensionDeclSyntax] {
-    
-    return [ try ExtensionDeclSyntax("extension \(type): Identifiable {}") ]
+
+    return [try ExtensionDeclSyntax("extension \(type): Identifiable {}")]
   }
 }

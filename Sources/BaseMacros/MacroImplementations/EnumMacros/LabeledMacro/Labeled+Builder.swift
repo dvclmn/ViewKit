@@ -23,6 +23,12 @@ struct LabeledBuilder {
       in: decl,
       context: context
     )
-    //    self.detectedEnum = try LabeledHelpers.detectEnum(in: decl)
+  }
+}
+extension LabeledBuilder {
+  func build() -> [DeclSyntax] {
+    [
+      DeclSyntax("\(raw: detectedEnum.access) var id: String { rawValue.capitalized }"),
+    ]
   }
 }

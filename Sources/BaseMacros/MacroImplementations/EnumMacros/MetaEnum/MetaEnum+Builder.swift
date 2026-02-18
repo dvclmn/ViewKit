@@ -36,8 +36,29 @@ struct MetaEnumBuilder {
   }
 }
 
-extension LabeledBuilder {
+extension MetaEnumBuilder {
+  
   func build() -> [DeclSyntax] {
-    return []
+    [
+      /// Properties on Parent
+      DeclSyntax("\(raw: detectedEnum.access) var meta: Self.Meta {.init(self)}"),
+      DeclSyntax(hasAssociatedValuesProperty),
+      DeclSyntax(metaToParentInit),
+    ]
+    
+    /// Beginning of Meta enum declaration
+    + [
+      DeclSyntax(
+        "\(raw: detectedEnum.access) enum Meta: String, CaseIterable, Identifiable, Hashable, MetaEnumNested {"
+      )
+    ]
+    
+    + metaEnumInternals
+    + caseDetection
+    
+    /// End brace for Meta enum
+    + [DeclSyntax("}")]
+    
   }
+
 }

@@ -13,30 +13,7 @@ import SwiftSyntaxMacros
 
 extension MetaEnumBuilder {
 
-  func build() -> [DeclSyntax] {
-    [
-      /// Properties on Parent
-      DeclSyntax("\(raw: detectedEnum.access) var meta: Self.Meta {.init(self)}"),
-      DeclSyntax(hasAssociatedValuesProperty),
-      DeclSyntax(metaToParentInit),
-    ]
-
-      /// Beginning of Meta enum declaration
-      + [
-        DeclSyntax(
-          "\(raw: detectedEnum.access) enum Meta: String, CaseIterable, Identifiable, Hashable, MetaEnumNested {"
-        )
-      ]
-
-      + metaEnumInternals
-      + caseDetection
-
-      /// End brace for Meta enum
-      + [DeclSyntax("}")]
-
-  }
-
-  private var metaEnumInternals: [DeclSyntax] {
+  var metaEnumInternals: [DeclSyntax] {
     [
       /// Lists out the canonical Meta case declarations
       DeclSyntax(metaCases),

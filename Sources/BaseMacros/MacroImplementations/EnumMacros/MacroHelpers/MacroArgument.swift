@@ -11,8 +11,8 @@ import SwiftSyntaxMacros
 
 extension AttributeSyntax {
 
-  /// Uses MacroToolKit, returns bool value for a Macro attribute,
-  /// such as `@CaseDetection(includesNames: true)`
+  /// Uses MacroToolKit, returns bool value for a Macro attribute if present.
+  /// Such as `@CaseDetection(includesNames: true)`
   public func boolArgument(labeled label: String) -> Bool {
     let argument = MacroAttribute(self).argument(labeled: label)?.asBooleanLiteral
     return argument?.value ?? false

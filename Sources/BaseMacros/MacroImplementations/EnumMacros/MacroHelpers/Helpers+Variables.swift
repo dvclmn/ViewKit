@@ -21,6 +21,7 @@
 
 import SwiftSyntax
 
+/// Used by ``SampleBuilderMacro``
 extension VariableDeclSyntax {
   var isStoredProperty: Bool {
     /// Stored properties cannot have more than 1 binding in its declaration.

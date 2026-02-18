@@ -26,7 +26,8 @@ enum LabeledFixIt {
 
 extension LabeledHelpers {
   static func makeEnumWithStringRawType(_ enumDecl: EnumDeclSyntax) -> EnumDeclSyntax {
-    // Build the `String` inherited type node
+    
+    /// Build the `String` inherited type node
     let stringType = InheritedTypeSyntax(
       type: TypeSyntax(IdentifierTypeSyntax(name: .identifier("String"))),
       trailingComma: enumDecl.inheritanceClause?.inheritedTypes.isEmpty == false
@@ -35,9 +36,9 @@ extension LabeledHelpers {
     )
 
     guard let clause = enumDecl.inheritanceClause else {
-      // Create a new inheritance clause: `: String`
+      /// Create a new inheritance clause: `: String`
       let colon = TokenSyntax.colonToken(trailingTrivia: .space)
-      let list = InheritedTypeListSyntax([stringType])
+      let list: InheritedTypeListSyntax = [stringType]
       let newClause = InheritanceClauseSyntax(
         colon: colon,
         inheritedTypes: list
@@ -45,12 +46,10 @@ extension LabeledHelpers {
       return enumDecl.with(\.inheritanceClause, newClause)
     }
     // Insert `String` at the beginning of the inherited types (raw type must come first)
-    var types = clause.inheritedTypes
-    // Ensure spacing/trivia is nice for the new first element
-    let updatedTypes =
-      types.isEmpty
-      ? InheritedTypeListSyntax([stringType])
-      : InheritedTypeListSyntax([stringType] + types)
+    let types = clause.inheritedTypes
+    // Build a new list by creating an Array of elements with `stringType` first
+    let combined: [InheritedTypeSyntax] = [stringType] + types.map { $0 }
+    let updatedTypes = InheritedTypeListSyntax(combined)
     let updatedClause = clause.with(\.inheritedTypes, updatedTypes)
     return enumDecl.with(\.inheritanceClause, updatedClause)
   }
@@ -64,7 +63,7 @@ extension LabeledHelpers {
     let newEnum = makeEnumWithStringRawType(enumDecl)
 
     let diagnostic = Diagnostic(
-      node: Syntax(enumDecl.identifier),  // anchor on the name
+      node: Syntax(enumDecl.name),  // anchor on the name
       message: LabeledDiagnostic.MissingStringRawType(),
       fixIts: [
         FixIt(
@@ -79,3 +78,4 @@ extension LabeledHelpers {
     context.diagnose(diagnostic)
   }
 }
+

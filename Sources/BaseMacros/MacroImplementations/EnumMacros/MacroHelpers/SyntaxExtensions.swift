@@ -10,15 +10,6 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-extension DeclModifierSyntax {
-  public var isPublicAccessLevel: Bool {
-    switch self.name.tokenKind {
-      case .keyword(.public): return true
-      default: return false
-    }
-  }
-}
-
 extension SyntaxStringInterpolation {
   public mutating func appendInterpolation<Node: SyntaxProtocol>(_ node: Node?) {
     if let node {
