@@ -10,13 +10,13 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-extension SyntaxStringInterpolation {
-  public mutating func appendInterpolation<Node: SyntaxProtocol>(_ node: Node?) {
-    if let node {
-      appendInterpolation(node)
-    }
-  }
-}
+//extension SyntaxStringInterpolation {
+//  public mutating func appendInterpolation<Node: SyntaxProtocol>(_ node: Node?) {
+//    if let node {
+//      appendInterpolation(node)
+//    }
+//  }
+//}
 
 extension LabeledExprListSyntax {
   /// Retrieve the first element with the given label.
@@ -33,20 +33,20 @@ extension LabeledExprListSyntax {
 
 extension TokenSyntax {
 
-  public enum TriviaKind {
-    case leading, trailing
-
-  }
-
-  public func triviaRemoved(_ kind: TriviaKind) -> TokenSyntax {
-    switch kind {
-      case .leading:
-        return self.with(\.leadingTrivia, [])
-
-      case .trailing:
-        return self.with(\.trailingTrivia, [])
-    }
-  }
+//  public enum TriviaKind {
+//    case leading, trailing
+//
+//  }
+//
+//  public func triviaRemoved(_ kind: TriviaKind) -> TokenSyntax {
+//    switch kind {
+//      case .leading:
+//        return self.with(\.leadingTrivia, [])
+//
+//      case .trailing:
+//        return self.with(\.trailingTrivia, [])
+//    }
+//  }
 
   public var initialUppercased: String {
     let name = self.text

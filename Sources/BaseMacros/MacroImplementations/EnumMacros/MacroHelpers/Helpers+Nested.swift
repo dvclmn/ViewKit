@@ -9,7 +9,7 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-extension MacroHelpers {
+package enum MacroHelpers {
 
   public static func findNestedStruct(
     in structDecl: StructDeclSyntax,

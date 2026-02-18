@@ -148,3 +148,19 @@ extension SetOfOptionsBuilder {
   }
 
 }
+
+extension Enum {
+  func optionSetStringBuilder(
+    //    enumName: TokenSyntax,
+    snakeConditional: String
+  ) -> String {
+    let enumName = identifier
+    return cases.map { element in
+      """
+      if self.contains(.\(element.name)) {
+        strings.append(Self.stringValue(for: \(enumName).\(element.name), \(snakeConditional): \(snakeConditional)))
+      }
+      """
+    }.joined(separator: "\n  ")
+  }
+}
