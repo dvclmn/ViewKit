@@ -19,12 +19,12 @@ public struct LabeledMacro: MemberMacro, ExtensionMacro {
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
     
-//    let metaEnumBuilder = try MetaEnumBuilder(
-//      node: node,
-//      decl: declaration,
-//      context: context,
-//    )
-//    return metaEnumBuilder.build()
+    let builder = try LabeledBuilder(
+      node: node,
+      decl: declaration,
+      context: context,
+    )
+    return builder.build()
   }
   
   public static func expansion(

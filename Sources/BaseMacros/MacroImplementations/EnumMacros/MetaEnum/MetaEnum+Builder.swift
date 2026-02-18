@@ -35,3 +35,9 @@ struct MetaEnumBuilder {
     self.parentParamName = context.makeUniqueName("parent")
   }
 }
+
+extension LabeledBuilder {
+  func build() -> [DeclSyntax] {
+    return []
+  }
+}

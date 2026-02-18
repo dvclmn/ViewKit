@@ -43,6 +43,14 @@ enum ExampleEnumNames {
   //  }
 }
 
+// MARK: - LabeledEnum
+@Labeled
+enum House: String, Identifiable {
+  case roof
+  case door
+  case backyard
+}
+
 // MARK: - MetaEnum
 
 /// Creates a corresponding enum without assoc. values

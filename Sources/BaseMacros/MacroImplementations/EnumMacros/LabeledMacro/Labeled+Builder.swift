@@ -19,6 +19,10 @@ struct LabeledBuilder {
     decl: some DeclGroupSyntax,
     context: some MacroExpansionContext
   ) throws {
-    self.detectedEnum = try LabeledHelpers.detectEnum(in: decl)
+    self.detectedEnum = try LabeledHelpers.detectEnum(
+      in: decl,
+      context: context
+    )
+    //    self.detectedEnum = try LabeledHelpers.detectEnum(in: decl)
   }
 }

@@ -14,6 +14,7 @@ struct BaseMacrosPlugin: CompilerPlugin {
     AssociatedValuesMacro.self,
     CaseDetectionMacro.self,
     MetaEnumMacro.self,
+    LabeledMacro.self,
     SetOfOptionsMacro.self,
     OptinitsMacro.self,
     StaticMemberIterableMacro.self,
