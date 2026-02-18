@@ -19,19 +19,19 @@ public protocol _Bindable {
   var wrappedValue: Value { get nonmutating set }
 }
 
-private struct Bind<HandlerValue: _Bindable, ViewValue: _Bindable>: ViewModifier
-where HandlerValue.Value == ViewValue.Value, HandlerValue.Value: Equatable {
+private struct Bind<HandlerBinding: _Bindable, ViewBinding: _Bindable>: ViewModifier
+where HandlerBinding.Value == ViewBinding.Value, HandlerBinding.Value: Equatable {
 
   @State private var hasAppeared = false
   @State private var debouncer: AsyncDebouncer?
 
-  let handlerValue: HandlerValue
-  let viewValue: ViewValue
+  let handlerValue: HandlerBinding
+  let viewValue: ViewBinding
 
   init(
     debounce: DebounceMode,
-    handlerValue: HandlerValue,
-    viewValue: ViewValue
+    handlerValue: HandlerBinding,
+    viewValue: ViewBinding
   ) {
     self._debouncer = debounce.createDebouncer()
     self.handlerValue = handlerValue
@@ -43,36 +43,51 @@ where HandlerValue.Value == ViewValue.Value, HandlerValue.Value: Equatable {
       .onAppear {
         guard !self.hasAppeared else { return }
         self.hasAppeared = true
+
         guard self.viewValue.wrappedValue != self.handlerValue.wrappedValue else { return }
-        self.viewValue.wrappedValue = self.handlerValue.wrappedValue
+
+        if let debouncer {
+          debouncer.execute { @MainActor in
+            self.viewValue.wrappedValue = self.handlerValue.wrappedValue
+          }
+        } else {
+          self.viewValue.wrappedValue = self.handlerValue.wrappedValue
+        }
       }
 
       .onChange(of: self.handlerValue.wrappedValue) { _, newValue in
 
         if let debouncer {
           debouncer.execute { @MainActor in
-            guard self.viewValue.wrappedValue != newValue
-            else { return }
-            self.viewValue.wrappedValue = newValue
+            handlerDidChange(newValue)
           }
         } else {
-          guard self.viewValue.wrappedValue != newValue
-          else { return }
-          self.viewValue.wrappedValue = newValue
+          handlerDidChange(newValue)
         }
 
       }
 
       .onChange(of: self.viewValue.wrappedValue) { _, newValue in
-        guard self.handlerValue.wrappedValue != newValue
-        else { return }
-        self.handlerValue.wrappedValue = newValue
+        if let debouncer {
+          debouncer.execute { @MainActor in
+            viewDidChange(newValue)
+          }
+        } else {
+          viewDidChange(newValue)
+        }
+
       }
   }
 }
 
 extension Bind {
-  private func handlerDidChange(_ newValue: HandlerValue.Value) {
+  private func viewDidChange(_ newValue: ViewBinding.Value) {
+    guard self.handlerValue.wrappedValue != newValue
+    else { return }
+    self.handlerValue.wrappedValue = newValue
+  }
+
+  private func handlerDidChange(_ newValue: HandlerBinding.Value) {
     guard self.viewValue.wrappedValue != newValue
     else { return }
     self.viewValue.wrappedValue = newValue
@@ -82,12 +97,14 @@ extension Bind {
 extension View {
 
   public func bindModel<HandlerValue: _Bindable, ViewValue: _Bindable>(
+    debounce: DebounceMode,
     _ handlerValue: HandlerValue,
     to viewValue: ViewValue
   ) -> some View
   where HandlerValue.Value == ViewValue.Value, HandlerValue.Value: Equatable {
     self.modifier(
       Bind(
+        debounce: debounce,
         handlerValue: handlerValue,
         viewValue: viewValue
       )

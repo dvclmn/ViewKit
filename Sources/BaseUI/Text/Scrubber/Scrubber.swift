@@ -40,6 +40,7 @@ public struct TextScrubber: View, ValueFormattable {
 
     /// This uses `bindModel`, as it needs to flow both ways
     .bindModel(
+      debounce: .noDebounce,
       $store.value,
       to: Binding {
         guard let range else { return self.value }
