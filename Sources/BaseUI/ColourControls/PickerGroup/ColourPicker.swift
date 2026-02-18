@@ -46,7 +46,7 @@ public struct ColourPicker: View {
         ColourLevelSwitch(
           primary: $primaryColour,
           secondary: $secondaryColour,
-          diameter: 30,
+          diameter: 26,
           overlapFactor: 0.24,
         )
         Spacer()
@@ -82,12 +82,9 @@ extension ColourPicker {
         Label(
           activeColourModel.wrappedValue.name, systemImage: activeColourModel.wrappedValue.icon.toString
         )
-        //          .frame(maxWidth: .infinity)
-        //            .aspectRatio(1, contentMode: .fit)
         .labelStyle(.iconOnly)
-        //          .border(Color.purple.opacity(0.3))
-        //          Text()
       }
+//      .scaleEffect(x: 1.0, y: -1.0, anchor: .center)
     }
   }
 }

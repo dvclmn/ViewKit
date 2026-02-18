@@ -7,6 +7,22 @@
 
 import Foundation
 
+public enum EmojiList {
+  case shell
+  case clown
+  case brocoli
+}
+
+extension EmojiList {
+  public var character: Character {
+    switch self {
+      case .shell: "🐚"
+      case .clown: "🤡"
+      case .brocoli: "🥦"
+    }
+  }
+}
+
 public struct Emoji {
 
   public static var myFavourites: String {

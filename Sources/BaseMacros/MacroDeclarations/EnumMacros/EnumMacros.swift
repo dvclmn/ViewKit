@@ -12,19 +12,20 @@ import BasePrimitives
 // AssociatedValues macro. See repo:
 // https://github.com/bernndr/swift-macros/
 @attached(member, names: arbitrary)
-public macro AssociatedValues() = #externalMacro(
-  module: "BaseMacrosImplementation",
-  type: "AssociatedValuesMacro"
-)
+public macro AssociatedValues() =
+  #externalMacro(
+    module: "BaseMacrosImplementation",
+    type: "AssociatedValuesMacro"
+  )
 
 // MARK: - CaseDetection
 /// Add computed properties named `is<Case>` for each case element in the enum.
 @attached(member, names: arbitrary)
 public macro CaseDetection(includesNames: Bool = false) =
-#externalMacro(
-  module: "BaseMacrosImplementation",
-  type: "CaseDetectionMacro"
-)
+  #externalMacro(
+    module: "BaseMacrosImplementation",
+    type: "CaseDetectionMacro"
+  )
 
 // MARK: - MetaEnum
 @attached(member, names: arbitrary)
@@ -32,10 +33,11 @@ public macro CaseDetection(includesNames: Bool = false) =
 //@attached(extension, conformances: RawRepresentable, CaseIterable)
 @attached(extension, conformances: MetaEnum)
 /// Not going to try to pass arguments for now
-public macro MetaEnum() = #externalMacro(
-  module: "BaseMacrosImplementation",
-  type: "MetaEnumMacro"
-)
+public macro MetaEnum() =
+  #externalMacro(
+    module: "BaseMacrosImplementation",
+    type: "MetaEnumMacro"
+  )
 
 // MARK: - Option Set
 
@@ -65,10 +67,11 @@ public macro MetaEnum() = #externalMacro(
 ///     }
 @attached(member, names: arbitrary)
 @attached(extension, conformances: OptionSet)
-public macro SetOfOptions<RawType>() = #externalMacro(
-  module: "BaseMacrosImplementation",
-  type: "SetOfOptionsMacro"
-)
+public macro SetOfOptions<RawType>() =
+  #externalMacro(
+    module: "BaseMacrosImplementation",
+    type: "SetOfOptionsMacro"
+  )
 
 /// Generates failable initializers for enum cases with single associated values.
 ///
@@ -98,16 +101,33 @@ public macro SetOfOptions<RawType>() = #externalMacro(
 /// }
 /// ```
 @attached(member, names: arbitrary)
-public macro Optinits() = #externalMacro(
-  module: "BaseMacrosImplementation",
-  type: "OptinitsMacro"
-)
+public macro Optinits() =
+  #externalMacro(
+    module: "BaseMacrosImplementation",
+    type: "OptinitsMacro"
+  )
 
 // Full credit to Daniel Sincere for this
 // `StaticMemberIterable` macro:
 // https://github.com/DanielSincere/StaticMemberIterable
 @attached(member, names: named(allStaticMembers))
-public macro StaticMemberIterable() = #externalMacro(
-  module: "BaseMacrosImplementation",
-  type: "StaticMemberIterableMacro"
-)
+public macro StaticMemberIterable() =
+  #externalMacro(
+    module: "BaseMacrosImplementation",
+    type: "StaticMemberIterableMacro"
+  )
+
+@attached(member, names: named(name), named(id), named(label))
+@attached(extension, conformances: Identifiable)
+//@attached(extension, conformances: RawRepresentable, Identifiable)
+public macro Labeled() =
+  #externalMacro(
+    module: "BaseMacrosImplementation",
+    type: "LabeledMacro"
+  )
+@attached(peer)
+public macro Icon(_ icon: LabelIcon) =
+  #externalMacro(
+    module: "BaseMacrosImplementation",
+    type: "SampleBuilderItemMacro"
+  )

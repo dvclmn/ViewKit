@@ -7,6 +7,33 @@
 
 import Foundation
 
+/// This is really just for the `@Labeled` macro
+public enum LabelIcon: Sendable, Equatable, Codable, Hashable {
+  case symbol(String)
+  case emoji(String)
+
+  public static func preset(_ iconPreset: Icons) -> Self {
+    self.init(stringLiteral: iconPreset.icon)
+  }
+  public static func emojiFavs(_ emoji: EmojiList) -> Self {
+    self.init(stringLiteral: emoji.character)
+  }
+}
+extension LabelIcon: ExpressibleByStringLiteral {
+  /// Have chosen `IconLiteral.symbol` as the
+  /// most logical path for a string literal init
+  public init(stringLiteral value: String) {
+    self = .symbol(value)
+  }
+}
+
+extension LabelIcon: ExpressibleByExtendedGraphemeClusterLiteral {
+  /// For easy emoji initialisation
+  public init(stringLiteral value: Character) {
+    self = .emoji("\(value)")
+  }
+}
+
 protocol IconGalleryViewable: Identifiable, RawRepresentable, CaseIterable where Self.RawValue == String {
   var id: String { get }
   var reference: String { get }
@@ -124,7 +151,7 @@ public enum Icons: String, IconGalleryViewable, Codable, Equatable {
   case logOut = "rectangle.portrait.and.arrow.right"
   case developer = "keyboard"
   case token = "hockey.puck"
-case newWindow = "macwindow.on.rectangle"
+  case newWindow = "macwindow.on.rectangle"
   case sliders = "switch.2"
   case minus = "minus"
   case qrCode = "qrcode"
@@ -178,7 +205,7 @@ case newWindow = "macwindow.on.rectangle"
   public static var getRandomIcon: String {
     return Icons.allCases.randomElement()?.icon ?? Icons.action.icon
   }
-  
+
   public static var getRandom: Self {
     return Icons.allCases.randomElement() ?? Icons.action
   }
