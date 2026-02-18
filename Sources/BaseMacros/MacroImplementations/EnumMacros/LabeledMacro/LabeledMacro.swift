@@ -39,6 +39,17 @@ extension LabeledMacro: ExtensionMacro {
     in context: some MacroExpansionContext
   ) throws -> [ExtensionDeclSyntax] {
 
-    return [try ExtensionDeclSyntax("extension \(type): Identifiable {}")]
+    guard let enumDecl = declaration as? EnumDeclSyntax else {
+      throw MacroError("@Labeled can only be attached to enum declarations")
+    }
+    
+//    let isIdentifiable: Bool =
+//    declaration.inheritanceClause?.is(Identifiable.self)
+
+    return try MacroHelpers.createConformanceForEnum(
+      decl: enumDecl,
+      protocol: "Identifiable"
+    )
+    //    return [try ExtensionDeclSyntax("extension \(type): Identifiable {}")]
   }
 }
