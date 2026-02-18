@@ -24,7 +24,7 @@ public struct LabeledMacro: MemberMacro {
       decl: declaration,
       context: context,
     )
-    return builder.build()
+    return try builder.build()
   }
 
 }

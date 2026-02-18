@@ -22,19 +22,8 @@ public struct LabeledIconMacro: PeerMacro {
     
     let icon = getIcon(from: node)
     
-    guard let enumCase = declaration.as(EnumCaseDeclSyntax.self)
-//      let variableDecl =
-//        declaration
-//        .as(EnumCase.self),
-//      variableDecl.isStoredProperty
-    else {
+    guard let enumCase = declaration.as(EnumCaseDeclSyntax.self) else {
       throw MacroError("@Icon can only be attached to an enum case")
-//      SampleBuilderItemDiagnostic.report(
-//        diagnostic: .notAStoredProperty,
-//        node: node,
-//        context: context
-//      )
-      return []
     }
 
     
@@ -48,37 +37,34 @@ public struct LabeledIconMacro: PeerMacro {
   /// `@SampleBuilderItem` peer macro `category` argument.
   /// `AttributeSyntax` refers to the `@​Sample​Builder​Item` attribute itself
   static func getIcon(from node: AttributeSyntax) -> LabelIcon {
-//  static func getDataCategory(from node: AttributeSyntax) -> DataCategory {
-    guard let argumentTuple = node.arguments?.as(LabeledExprListSyntax.self)?.first else {
-//      fatalError("Compiler bug: Argument must exist")
+    // Expect exactly one unlabeled argument for @Icon(_ icon: LabelIcon)
+    guard let firstArg = node.arguments?.as(LabeledExprListSyntax.self)?.first else {
+      fatalError("Compiler bug: Argument must exist")
     }
-    
-    let iconType = argumentTuple
-      .expression
-      .as(MemberAccessExprSyntax.self)
-//      .declName.baseName.text,
-    
-//    guard iconType, let iconResult = iconType as? LabelIcon else {
-//      throw
-//    }
-      
-    }
-        
-//    let iconResult = LabelIcon
-    
 
-    
-      
-//    } else if let imageCategoryString = argumentTuple
-//      .expression
-//      .as(FunctionCallExprSyntax.self)?
-//      .description
-//      .dropFirst(),  // it removes the dot from .image(...)
-//              let dataCategory = DataCategory(rawValue: String(imageCategoryString))
-//    {
-//      return dataCategory
-//    }
-//    
-//    fatalError("Compiler bug: Argument must exist")
+    let expr = firstArg.expression
+
+    // Handle explicit calls like .symbol("tray.fill") or .emoji("🐶")
+    if let call = expr.as(FunctionCallExprSyntax.self),
+       let member = call.calledExpression.as(MemberAccessExprSyntax.self) {
+      let baseName = member.declName.baseName.text
+      if let valueExpr = call.arguments.first?.expression,
+         let string = valueExpr.as(StringLiteralExprSyntax.self)?.segments.compactMap({ seg in
+           seg.as(StringSegmentSyntax.self)?.content.text
+         }).joined() {
+        if baseName == "symbol" { return .symbol(string) }
+        if baseName == "emoji" { return .emoji(string) }
+      }
+    }
+
+    // Handle a bare string literal: @Icon("tray.fill")
+    if let stringLiteral = expr.as(StringLiteralExprSyntax.self) {
+      let value = stringLiteral.segments.compactMap { $0.as(StringSegmentSyntax.self)?.content.text }.joined()
+      return .symbol(value)
+    }
+
+    // If we reach here, we don't support the provided syntax yet
+    fatalError("Unsupported @Icon argument. Use .symbol(\"...\"), .emoji(\"...\"), or a string literal.")
   }
 }
+

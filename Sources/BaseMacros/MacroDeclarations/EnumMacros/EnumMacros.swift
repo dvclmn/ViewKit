@@ -125,9 +125,9 @@ public macro Labeled() =
     module: "BaseMacrosImplementation",
     type: "LabeledMacro"
   )
-@attached(peer)
-public macro Icon(_ icon: LabelIcon) =
-  #externalMacro(
-    module: "BaseMacrosImplementation",
-    type: "LabeledIconMacro"
-  )
+//@attached(peer)
+//public macro Icon(_ icon: LabelIcon) =
+//  #externalMacro(
+//    module: "BaseMacrosImplementation",
+//    type: "LabeledIconMacro"
+//  )
