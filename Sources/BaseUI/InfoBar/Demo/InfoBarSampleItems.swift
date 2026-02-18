@@ -25,7 +25,7 @@ extension SampleContent.ExampleItem: InfoBarItemDescriptor {
       case .touchModeActive: .preset(.binoculars)
       case .pointerLocked: .preset(.binoculars)
       case .clickedDown: .preset(.binoculars)
-      case .pressure: .preset(.binoculars)
+//      case .pressure: .preset(.binoculars)
     }
   }
   

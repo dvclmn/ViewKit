@@ -10,7 +10,7 @@ import BasePrimitives
 
 extension SampleContent {
   public struct ExampleDataStore {
-    public let currentPressure: CGFloat?
+//    public let currentPressure: CGFloat?
     public let isPointerLocked: Bool
     public let isInDrawingMode: Bool
     public let isClicked: Bool
@@ -20,7 +20,7 @@ extension SampleContent {
     public let pointCountFiltered: Int
 
     public init(
-      currentPressure: CGFloat? = 0,
+//      currentPressure: CGFloat? = 0,
       isPointerLocked: Bool = false,
       isInDrawingMode: Bool = false,
       isClicked: Bool = false,
@@ -29,7 +29,7 @@ extension SampleContent {
       strokeCountActive: Int = 1,
       pointCountFiltered: Int = 1492,
     ) {
-      self.currentPressure = currentPressure
+//      self.currentPressure = currentPressure
       self.isPointerLocked = isPointerLocked
       self.isInDrawingMode = isInDrawingMode
       self.isClicked = isClicked
@@ -48,7 +48,7 @@ extension SampleContent {
     case touchModeActive
     case pointerLocked
     case clickedDown
-    case pressure
+//    case pressure
 
     public static var sectionTitle: String { "SampleItems" }
 
@@ -61,7 +61,7 @@ extension SampleContent {
         case .touchModeActive: "Touch Mode Active"
         case .pointerLocked: "Pointer Locked"
         case .clickedDown: "Clicked Down"
-        case .pressure: "Pressure"
+//        case .pressure: "Pressure"
       }
     }
 

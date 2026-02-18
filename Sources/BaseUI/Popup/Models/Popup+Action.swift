@@ -5,15 +5,15 @@
 //  Created by Dave Coleman on 5/2/2026.
 //
 
+import CoreTools
 import Foundation
 import SampleBuilder
 
-//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
 public struct PopupAction: Sendable, Identifiable {
   public let id: UUID
   let title: String
   let action: @Sendable () -> Void
-  
+
   public init(
     id: UUID = UUID(),
     title: String,
@@ -22,6 +22,31 @@ public struct PopupAction: Sendable, Identifiable {
     self.id = id
     self.title = title
     self.action = action
+  }
+}
+
+public enum PopupActionPreset {
+  case openInFinder(URL)
+  
+  var title: String {
+    switch self {
+      case .openInFinder: "View in Finder"
+    }
+  }
+}
+extension PopupAction {
+  
+  /// Will add a default title if none provided
+  public static func preset(
+    _ title: String? = nil,
+    preset: PopupActionPreset
+  ) -> Self {
+    switch preset {
+      case .openInFinder(let url):
+        PopupAction(title: title ?? preset.title) {
+          OpenInFinder.open(url)
+        }
+    }
   }
 }
 

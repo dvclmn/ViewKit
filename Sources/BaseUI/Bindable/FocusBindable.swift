@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 3/2/2025.
 //
 
+import CoreTools
 import SwiftUI
 
 /// Note: This is directly taken from Point-Free's implementation in
@@ -13,25 +14,29 @@ import SwiftUI
 ///
 /// I make no claim over the logic behind this solution.
 
-
-extension View {
-
-  public func bindModel<HandlerValue: _Bindable, ViewValue: _Bindable>(
-    _ handlerValue: HandlerValue,
-    to viewValue: ViewValue
-  ) -> some View
-  where HandlerValue.Value == ViewValue.Value, HandlerValue.Value: Equatable {
-    self.modifier(Bind(handlerValue: handlerValue, viewValue: viewValue))
-  }
+public protocol _Bindable {
+  associatedtype Value
+  var wrappedValue: Value { get nonmutating set }
 }
-
 
 private struct Bind<HandlerValue: _Bindable, ViewValue: _Bindable>: ViewModifier
 where HandlerValue.Value == ViewValue.Value, HandlerValue.Value: Equatable {
+
+  @State private var hasAppeared = false
+  @State private var debouncer: AsyncDebouncer?
+
   let handlerValue: HandlerValue
   let viewValue: ViewValue
 
-  @State var hasAppeared = false
+  init(
+    debounce: DebounceMode,
+    handlerValue: HandlerValue,
+    viewValue: ViewValue
+  ) {
+    self._debouncer = debounce.createDebouncer()
+    self.handlerValue = handlerValue
+    self.viewValue = viewValue
+  }
 
   func body(content: Content) -> some View {
     content
@@ -41,13 +46,23 @@ where HandlerValue.Value == ViewValue.Value, HandlerValue.Value: Equatable {
         guard self.viewValue.wrappedValue != self.handlerValue.wrappedValue else { return }
         self.viewValue.wrappedValue = self.handlerValue.wrappedValue
       }
-    
+
       .onChange(of: self.handlerValue.wrappedValue) { _, newValue in
-        guard self.viewValue.wrappedValue != newValue
-        else { return }
-        self.viewValue.wrappedValue = newValue
+
+        if let debouncer {
+          debouncer.execute { @MainActor in
+            guard self.viewValue.wrappedValue != newValue
+            else { return }
+            self.viewValue.wrappedValue = newValue
+          }
+        } else {
+          guard self.viewValue.wrappedValue != newValue
+          else { return }
+          self.viewValue.wrappedValue = newValue
+        }
+
       }
-    
+
       .onChange(of: self.viewValue.wrappedValue) { _, newValue in
         guard self.handlerValue.wrappedValue != newValue
         else { return }
@@ -56,10 +71,28 @@ where HandlerValue.Value == ViewValue.Value, HandlerValue.Value: Equatable {
   }
 }
 
+extension Bind {
+  private func handlerDidChange(_ newValue: HandlerValue.Value) {
+    guard self.viewValue.wrappedValue != newValue
+    else { return }
+    self.viewValue.wrappedValue = newValue
+  }
+}
 
-public protocol _Bindable {
-  associatedtype Value
-  var wrappedValue: Value { get nonmutating set }
+extension View {
+
+  public func bindModel<HandlerValue: _Bindable, ViewValue: _Bindable>(
+    _ handlerValue: HandlerValue,
+    to viewValue: ViewValue
+  ) -> some View
+  where HandlerValue.Value == ViewValue.Value, HandlerValue.Value: Equatable {
+    self.modifier(
+      Bind(
+        handlerValue: handlerValue,
+        viewValue: viewValue
+      )
+    )
+  }
 }
 
 @available(iOS 15, macOS 12, tvOS 15, watchOS 8, *)

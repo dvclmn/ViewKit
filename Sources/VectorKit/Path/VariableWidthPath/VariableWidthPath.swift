@@ -16,7 +16,13 @@ public struct VariableWidthPath {
   var previousNormal: CGPoint?
   var previousWidth: CGFloat?
   
-  public init(leftEdge: [CGPoint], rightEdge: [CGPoint], pendingFirstPoint: CGPoint? = nil, previousNormal: CGPoint? = nil, previousWidth: CGFloat? = nil) {
+  public init(
+    leftEdge: [CGPoint] = [],
+    rightEdge: [CGPoint] = [],
+    pendingFirstPoint: CGPoint? = nil,
+    previousNormal: CGPoint? = nil,
+    previousWidth: CGFloat? = nil
+  ) {
     self.leftEdge = leftEdge
     self.rightEdge = rightEdge
     self.pendingFirstPoint = pendingFirstPoint
