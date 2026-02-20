@@ -26,9 +26,12 @@ public struct InfoBarItemView: View {
       if let label = item.label {
         MaybeLabel(label)
           .environment(\.labelDisplay, itemLabelDisplay)
-        /// Some leading padding here brings the icon in from the edge a bit,
-        /// including the very first item
+          /// Some leading padding here brings the icon in from the edge a bit,
+          /// including the very first item
           .padding(.leading, Styles.sizeTiny)
+          /// This seems to be behaving; this ensures that the text label
+          /// from MaybeLabel doesn't get truncated
+          .fixedSize(horizontal: true, vertical: false)
       }
 
       Text(String(describing: item.content))

@@ -33,15 +33,16 @@ public struct InfoBarView: View {
           if !sections.isEmpty {
             ForEach(sections) { section in
               InfoBarSectionView(sectionTitle: section.title, items: section.items)
-            }  // END foreach
+            }
+            
             if showingModifiersSection {
               InfoBarSectionView(
                 sectionTitle: "Modifiers",
                 items: [.modifiersSection(modifierKeys)]
               )
             }
-
             Spacer()
+            
           } else {
             NoItems("No items to display")
           }

@@ -9,7 +9,6 @@ import CoreTools
 import Foundation
 
 public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
-  //public struct InfoBarItem: LabeledItem, Sendable, Equatable, Hashable {
   public let id: UUID
   public let sectionKey: InfoBarSectionID
   public let label: QuickLabel?
@@ -28,6 +27,10 @@ public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
 }
 
 extension InfoBarItem: ExpressibleByStringLiteral {
+
+  /// Allows a very simple/flexible way to create an info bar item
+  /// Defaults to `DebugSectionKey`, but considering changing
+  /// this in future to be a bit more flexible/expressive
   public init(stringLiteral value: String) {
     self.init(
       section: InfoBarSectionID(DebugSectionKey.self),
@@ -42,7 +45,7 @@ extension InfoBarItem {
   /// implicitly converted to a SectionID
   public init<K: InfoBarSectionKey>(
     section: K.Type,
-    label: QuickLabel,
+    label: QuickLabel?,
     content: String
   ) {
     self.id = UUID()
@@ -65,9 +68,9 @@ extension InfoBarItem {
   }
 }
 
-extension InfoBarItem {
-  public enum ContentKind {
-    case text(String)
-    case floatLabeled(PropertiesLabeled)
-  }
-}
+//extension InfoBarItem {
+//  public enum ContentKind {
+//    case text(String)
+//    case floatLabeled(PropertiesLabeled)
+//  }
+//}

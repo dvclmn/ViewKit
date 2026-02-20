@@ -8,6 +8,16 @@
 import CoreTools
 import SwiftUI
 
+extension Label {
+  public init(
+    title:
+  ) where Icon == Optional<Icon> {
+    self.init(title: <#T##() -> View#>, icon: <#T##() -> View#>)
+  }
+}
+
+/// Thinking about this; shouldn't MaybeLabel just exist as a way to
+/// declare a `Label` with an optional
 public struct MaybeLabel: View {
   @Environment(\.labelDisplay) private var labelDisplay
 
@@ -26,7 +36,7 @@ public struct MaybeLabel: View {
       IconView(label.icon ?? .symbol(placeholderIcon))
     }
     /// May need to figure out a 'plain' override
-    .labelStyle(.base(display: effectiveLabelDisplay))
+//    .labelStyle(.base(display: effectiveLabelDisplay))
 
   }
 }

@@ -28,6 +28,8 @@ struct InfoBarSectionView: View {
           }
         }
         .labelStyle(.base)
+        .iconColour(.secondary)
+        .labelColour(.secondary)
 
       } header: {
         MaybeLabel(sectionTitle)
