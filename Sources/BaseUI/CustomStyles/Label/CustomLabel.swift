@@ -14,8 +14,6 @@ extension LabelStyle where Self == CustomLabel {
   /// If no value supplied for `display`, will use environment value, or fall back to `.titleAndIcon`
   public static func base(display: LabelDisplay?) -> Self { Self(labelDisplay: display) }
 
-  @available(*, deprecated, renamed: "base", message: "Prefer more accurately named 'base'.")
-  public static var custom: Self { Self() }
 }
 
 /// Note regarding `MaybeLabel`: II think I need to handle this
@@ -28,18 +26,18 @@ public struct CustomLabel: LabelStyle {
   @Environment(\.labelFontStyle) private var labelFontStyle
   @Environment(\.textAlignment) private var textAlignment
 
-  let explicitLabelDisplay: LabelDisplay?
+  let displayOverride: LabelDisplay?
 
   /// This allows the caller of `.labelStyle(.base)` to provide
   /// a labelDisplay 'then and there', rather than requiring an additional
   /// env value like `.environment(\.labelDisplay, .stacked)`
   public init(labelDisplay: LabelDisplay? = nil) {
-    self.explicitLabelDisplay = labelDisplay
+    self.displayOverride = labelDisplay
   }
 
   public func makeBody(configuration: Configuration) -> some View {
 
-    switch internalLabelDisplay {
+    switch adjustedLabelDisplay {
       case .iconOnly:
         LabelBase(configuration)
           .labelStyle(.iconOnly)
@@ -53,20 +51,8 @@ public struct CustomLabel: LabelStyle {
           .labelStyle(.titleAndIcon)
 
       case .stacked:
-        /// Note: Opted to define stacked within `CustomButton`,
-        /// rather than it's own seperate `LabelStyle`, as things were
-        /// starting to get a bit circular / self-referential or something
-        VStack(
-          alignment: layoutAlignment?.horizontal ?? .center,
-          spacing: layoutSpacing ?? Styles.sizeSmall
-        ) {
-          configuration.icon
-            .commonLabelStyles(for: .icon, display: internalLabelDisplay)
-
-          configuration.title
-            .commonLabelStyles(for: .title, display: internalLabelDisplay)
-
-        }
+        /// Note: Only `LabelDisplay` that doesn't use `LabelBase`
+        Stacked(configuration)
 
       case .hidden:
         LabelBase(configuration)
@@ -81,33 +67,48 @@ public struct CustomLabel: LabelStyle {
 
 extension CustomLabel {
 
-  private var internalLabelDisplay: LabelDisplay? {
-    explicitLabelDisplay ?? labelDisplay
+  private var adjustedLabelDisplay: LabelDisplay? {
+    displayOverride ?? labelDisplay
   }
 
   @ViewBuilder
   private func LabelBase(_ configuration: Configuration) -> some View {
     Label {
       configuration.title
-        .commonLabelStyles(for: .title, display: internalLabelDisplay)
+        .commonLabelStyles(for: .title, displayOverride: adjustedLabelDisplay)
     } icon: {
       configuration.icon
-        .commonLabelStyles(for: .icon, display: internalLabelDisplay)
-    }
-  }
-}
-
-extension VerticalAlignment {
-  /// A custom alignment for image titles.
-  private struct ImageTitleAlignment: AlignmentID {
-    static func defaultValue(in context: ViewDimensions) -> CGFloat {
-      /// Default to bottom alignment if no guides are set.
-      context[VerticalAlignment.bottom]
+        .commonLabelStyles(for: .icon, displayOverride: adjustedLabelDisplay)
     }
   }
 
-  /// A guide for aligning titles.
-  static let imageTitleAlignmentGuide = VerticalAlignment(
-    ImageTitleAlignment.self
-  )
+  @ViewBuilder
+  private func Stacked(_ configuration: Configuration) -> some View {
+    VStack(
+      alignment: layoutAlignment?.horizontal ?? .center,
+      spacing: layoutSpacing ?? Styles.sizeSmall
+    ) {
+      configuration.icon
+        .commonLabelStyles(for: .icon, displayOverride: adjustedLabelDisplay)
+
+      configuration.title
+        .commonLabelStyles(for: .title, displayOverride: adjustedLabelDisplay)
+    }
+  }
+
 }
+
+//extension VerticalAlignment {
+//  /// A custom alignment for image titles.
+//  private struct ImageTitleAlignment: AlignmentID {
+//    static func defaultValue(in context: ViewDimensions) -> CGFloat {
+//      /// Default to bottom alignment if no guides are set.
+//      context[VerticalAlignment.bottom]
+//    }
+//  }
+//
+//  /// A guide for aligning titles.
+//  static let imageTitleAlignmentGuide = VerticalAlignment(
+//    ImageTitleAlignment.self
+//  )
+//}

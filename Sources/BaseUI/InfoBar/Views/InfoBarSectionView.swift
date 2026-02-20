@@ -7,7 +7,7 @@
 
 //import BaseUI
 
-import BasePrimitives
+import CoreTools
 import LayoutKit
 import SwiftUI
 
@@ -30,6 +30,7 @@ struct InfoBarSectionView: View {
         .labelStyle(.base)
         .iconColour(.secondary)
         .labelColour(.secondary)
+        .labelIconSpacingCompatible(4)
 
       } header: {
         MaybeLabel(sectionTitle)

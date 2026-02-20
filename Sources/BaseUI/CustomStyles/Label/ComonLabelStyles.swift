@@ -18,11 +18,10 @@ public struct CommonLabelStyleModifier: ViewModifier {
   @Environment(\.labelFontStyle) private var labelFontStyle
   @Environment(\.labelTextCase) private var labelTextCase
   @Environment(\.labelFontSize) private var labelFontSize
-  //  @Environment(\.fontWeightOverride) private var fontWeightOverride
   @Environment(\.symbolRenderingMode) private var symbolRenderingMode
 
   let part: LabelPart
-  let explicitLabelDisplay: LabelDisplay?
+  let displayOverride: LabelDisplay?
   public func body(content: Content) -> some View {
     Group {
       /// Handle if we've got a specific font for the Icon part
@@ -92,7 +91,7 @@ extension CommonLabelStyleModifier {
   }
 
   private var internalLabelDisplay: LabelDisplay? {
-    explicitLabelDisplay ?? labelDisplay
+    displayOverride ?? labelDisplay
   }
 
   private var isStackedIcon: Bool {
@@ -104,12 +103,12 @@ extension CommonLabelStyleModifier {
 extension View {
   public func commonLabelStyles(
     for labelPart: LabelPart,
-    display: LabelDisplay?
+    displayOverride: LabelDisplay?
   ) -> some View {
     self.modifier(
       CommonLabelStyleModifier(
         part: labelPart,
-        explicitLabelDisplay: display
+        displayOverride: displayOverride
       )
     )
   }

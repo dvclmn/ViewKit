@@ -16,4 +16,13 @@ extension View {
       self
     }
   }
+
+  @ViewBuilder
+  public func labelReservedIconWidthCompatible(_ value: CGFloat) -> some View {
+    if #available(macOS 26, iOS 26, *) {
+      labelReservedIconWidth(value)
+    } else {
+      self
+    }
+  }
 }

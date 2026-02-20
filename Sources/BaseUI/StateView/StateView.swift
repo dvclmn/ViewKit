@@ -43,11 +43,11 @@ public struct StateView<Content: View>: View {
     .monospacedDigit()
     .padding(.vertical, layoutPadding ?? Styles.sizeRegular)
     .padding(.horizontal, layoutPadding ?? Styles.sizeRegular)
-//    .frame(
-//      maxWidth: .infinity,
-//      maxHeight: .infinity,
-//      alignment: layoutAlignment ?? .center
-//    )
+    //    .frame(
+    //      maxWidth: .infinity,
+    //      maxHeight: .infinity,
+    //      alignment: layoutAlignment ?? .center
+    //    )
   }
 }
 
@@ -68,7 +68,7 @@ extension StateView {
     Group {
       switch layoutType {
         case .hstack:
-          MaybeLabel(label: label, isPlain: false)
+          MaybeLabel(label: label)
 
         default:
           Text(label.text.toMarkdownCompatible)
@@ -82,7 +82,7 @@ extension StateView {
     }  // END group
     .multilineTextAlignment(.center)
     .font(.system(controlSize.textStyle))
-//    .font(.system(size: scale(22, for: controlSize)))
+    //    .font(.system(size: scale(22, for: controlSize)))
     .foregroundStyle(.secondary)
   }
 

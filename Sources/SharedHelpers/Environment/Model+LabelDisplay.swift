@@ -5,20 +5,20 @@
 //  Created by Dave Coleman on 8/7/2024.
 //
 
-import SwiftUI
 import EnumMacros
+import SwiftUI
 
 @CaseDetection
 public enum LabelDisplay: String, CaseIterable, Identifiable, Equatable, Sendable {
-  
+
   case iconOnly
   case titleOnly
   case titleAndIcon
   case stacked
   case hidden
-  
+
   public var id: String { rawValue }
-  
+
   public var name: String {
     switch self {
       case .iconOnly: "Icon only"
@@ -28,7 +28,7 @@ public enum LabelDisplay: String, CaseIterable, Identifiable, Equatable, Sendabl
       case .hidden: "Hidden"
     }
   }
-  
+
   @MainActor
   public func toNative() -> (any LabelStyle)? {
     switch self {
