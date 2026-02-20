@@ -34,8 +34,8 @@ extension Indented: DisplayRenderable {
     let result = elements.reduce(into: "") { partial, item in
       partial += "\n" + item
     }
-    /// Add title if present
-    return (title ?? "") + result
+    /// Add title if present, and a final line break
+    return (title ?? "") + result + "\n"
   }
 
   private func indentedElements(
