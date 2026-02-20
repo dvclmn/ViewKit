@@ -58,7 +58,7 @@ public struct ImportHandler {
   }
 
   /// Load and decode Data from bundle
-  public static func loadData<T: Decodable>(
+  public static func loadDataFromBundle<T: Decodable>(
     named name: String,
     withExtension ext: String,
     asType type: T.Type,

@@ -26,9 +26,9 @@ extension QuickSlider {
       @Bindable var store = store
 
       // MARK: - Label
-      if sliderComponents.contains(.label) {
-        LabelComponent()
-      }
+//      if sliderComponents.contains(.label) {
+//        LabelComponent()
+//      }
 
       // MARK: - Stepper / Main Track
       if let step = store.step {
@@ -104,10 +104,5 @@ extension QuickSlider.SliderComponents {
     }
   }
 
-  @ViewBuilder
-  func LabelComponent() -> some View {
-    @Bindable var store = store
-    MaybeLabel(store.label)
-      .onDoubleTap($value.toBindingDouble, defaultValue: sliderDefaultValue)
-  }
+
 }

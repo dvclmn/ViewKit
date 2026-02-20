@@ -100,7 +100,8 @@ extension LabeledBuilder {
       DeclSyntax("\(raw: detectedEnum.access) var id: String { rawValue }"),
       DeclSyntax("\(raw: detectedEnum.access) var name: String { rawValue.capitalized }"),
       //      DeclSyntax(iconProperty),
-      DeclSyntax("\(raw: detectedEnum.access) var label: QuickLabel { QuickLabel(name, icon: IconLiteral(from: icon)) }"),
+      DeclSyntax("\(raw: detectedEnum.access) var label: QuickLabel { QuickLabel(name, icon: nil) }"),
+//      DeclSyntax("\(raw: detectedEnum.access) var label: QuickLabel { QuickLabel(name, icon: IconLiteral(from: icon)) }"),
     ]
   }
 }

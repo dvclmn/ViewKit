@@ -59,13 +59,13 @@ extension View {
   }
 
   public func addInfoBarItems<K: InfoBarSectionKey>(
-    _ items: (String, String)...,
+    @DisplayStringBuilder _ content: () -> [DisplayBlock],
     key: K.Type = DebugSectionKey.self,
     format: DisplayFormat = .default
   ) -> some View {
     self.preference(
       key: InfoBarKey.self,
-      value: items.map { text in
+      value: content().lines().map { text in
         InfoBarItem(
           section: key,
           label: QuickLabel(stringLiteral: text.0),
@@ -74,6 +74,23 @@ extension View {
       }
     )
   }
+  
+//  public func addInfoBarItems<K: InfoBarSectionKey>(
+//    _ items: (String, String)...,
+//    key: K.Type = DebugSectionKey.self,
+//    format: DisplayFormat = .default
+//  ) -> some View {
+//    self.preference(
+//      key: InfoBarKey.self,
+//      value: items.map { text in
+//        InfoBarItem(
+//          section: key,
+//          label: QuickLabel(stringLiteral: text.0),
+//          content: text.1
+//        )
+//      }
+//    )
+//  }
   
 //  public func addInfoBarItems<K: InfoBarSectionKey>(
 //    _ items: (icon: IconLiteral, String)...,

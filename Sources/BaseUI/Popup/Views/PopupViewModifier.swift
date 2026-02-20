@@ -21,7 +21,7 @@ public struct PopupViewModifier: ViewModifier {
   let debugPopup: PopupDebug
   let alignment: Alignment
   let isCompact: Bool
-  let hasCloseButton: Bool
+//  let hasCloseButton: Bool
 
   public func body(content: Content) -> some View {
     content
@@ -29,7 +29,7 @@ public struct PopupViewModifier: ViewModifier {
         debugPopup: debugPopup,
         alignment: alignment,
         isCompact: isCompact,
-        hasCloseButton: hasCloseButton
+//        hasCloseButton: hasCloseButton
       )
       .setUpPopup()
   }
@@ -43,7 +43,7 @@ public struct PopupViewExtenderModifier: ViewModifier {
   let debugPopup: PopupDebug
   let alignment: Alignment
   let isCompact: Bool
-  let hasCloseButton: Bool
+//  let hasCloseButton: Bool
 
   public func body(content: Content) -> some View {
     content
@@ -53,7 +53,7 @@ public struct PopupViewExtenderModifier: ViewModifier {
           if let message = popup.popupMessage {
             PopupView(message: message, alignment: alignment)
               .environment(\.isCompactMode, isCompact)
-              .environment(\.hasCloseButton, hasCloseButton)
+//              .environment(\.hasCloseButton, hasCloseButton)
           }
 
         } else {
@@ -79,14 +79,14 @@ extension View {
     debugPopup: PopupDebug = .none,
     alignment: Alignment = .top,
     isCompact: Bool = false,
-    hasCloseButton: Bool = false
+//    hasCloseButton: Bool = false
   ) -> some View {
     self.modifier(
       PopupViewModifier(
         debugPopup: debugPopup,
         alignment: alignment,
         isCompact: isCompact,
-        hasCloseButton: hasCloseButton
+//        hasCloseButton: hasCloseButton
       )
     )
   }
@@ -98,14 +98,14 @@ extension View {
     debugPopup: PopupDebug = .none,
     alignment: Alignment = .top,
     isCompact: Bool = false,
-    hasCloseButton: Bool = false
+//    hasCloseButton: Bool = false
   ) -> some View {
     self.modifier(
       PopupViewExtenderModifier(
         debugPopup: debugPopup,
         alignment: alignment,
         isCompact: isCompact,
-        hasCloseButton: hasCloseButton
+//        hasCloseButton: hasCloseButton
       )
     )
   }

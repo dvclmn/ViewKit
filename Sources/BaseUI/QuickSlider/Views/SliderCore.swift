@@ -12,6 +12,7 @@ extension QuickSlider {
   struct SliderCore: View {
     @Environment(SliderHandler.self) private var store
     @Environment(\.sliderStyle) private var sliderStyle
+    @Environment(\.sliderDefaultValue) private var sliderDefaultValue
 
     @Binding var value: Double
 
@@ -30,7 +31,8 @@ extension QuickSlider {
                 in: store.range,
                 step: step
               ) {
-                EmptyView()
+//                EmptyView()
+                LabelComponent()
 
 //              } minimumValueLabel: {
 //                MinMaxLabel(.min)
@@ -48,7 +50,8 @@ extension QuickSlider {
                 value: $value,
                 in: store.range,
               ) {
-                EmptyView()
+                
+                LabelComponent()
 
 //              } minimumValueLabel: {
 //                MinMaxLabel(.min)
@@ -77,6 +80,14 @@ extension QuickSlider {
 }
 
 extension QuickSlider.SliderCore {
+  
+  @ViewBuilder
+  func LabelComponent() -> some View {
+    @Bindable var store = store
+    MaybeLabel(store.label)
+      .onDoubleTap($value.toBindingDouble, defaultValue: sliderDefaultValue)
+  }
+  
   @ViewBuilder
   private func MinMaxLabel(_ label: MinMaxLabel) -> some View {
     if let value = label.value(from: store) {
