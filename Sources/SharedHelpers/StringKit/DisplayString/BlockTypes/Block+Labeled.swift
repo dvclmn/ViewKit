@@ -10,7 +10,8 @@ import AppKit
 public struct Labeled {
 
   public let key: String
-  public let value: DisplayBlock?
+  public let value: (any DisplayRenderable)?
+//  public let value: DisplayBlock?
 
   /// E.g. for `CGPoint`
   /// ```

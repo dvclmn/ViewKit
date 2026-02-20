@@ -21,6 +21,7 @@ public struct InfoBarKey: PreferenceKey {
     /// Efficiently filter out duplicates using the Hashable conformance
     let existingIDs = Set(value.map(\.id))
     value.append(contentsOf: next.filter { !existingIDs.contains($0.id) })
+
   }
 }
 
@@ -64,10 +65,18 @@ extension View {
   ) -> some View {
     self.preference(
       key: InfoBarKey.self,
-      value: content().compactMap {
-        ($0 as? any InfoBarItemConvertible)?
-          .asInfoBarItem(section: key, format: format)
+      value: content().compactMap { block -> InfoBarItem? in
+        guard case .labeled(let labeled) = block else { return nil }
+        return InfoBarItem(
+          section: key,
+          label: QuickLabel(stringLiteral: labeled.key),
+          content: labeled.value?.render(using: format) ?? ""
+        )
       }
+      //      value: content().compactMap {
+      //        ($0 as? any InfoBarItemConvertible)?
+      //          .asInfoBarItem(section: key, format: format)
+      //      }
     )
     //    self.preference(
     //      key: InfoBarKey.self,

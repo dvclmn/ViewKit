@@ -11,13 +11,12 @@ import Foundation
 
 @CaseDetection(includesNames: true)
 public enum DisplayBlock: Sendable {
-
   case text(String)
   case indented(Indented)
   case float(any FloatRenderable)
   case floatGroup(any PropertiesLabeled)
   case display(any DisplayRenderable)
-
+  case labeled(Labeled)
 }
 
 extension DisplayBlock: DisplayRenderable {
@@ -28,6 +27,7 @@ extension DisplayBlock: DisplayRenderable {
       case .floatGroup(let value): value.render(using: format)
       case .indented(let indented): indented.render(using: format)
       case .display(let value): value.render(using: format)
+      case .labeled(let value): value.render(using: format)
     }
   }
 }
