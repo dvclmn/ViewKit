@@ -74,4 +74,16 @@ extension DisplayStringBuilder {
       )
     ]
   }
+
+  public static func buildExpression(_ value: IndentedLines) -> [DisplayBlock] {
+    guard !value.lines.isEmpty else { return [] }
+    return [
+      .indented(
+        Indented(
+          value.title,
+          content: { value.lines.joined(separator: value.separator) }
+        )
+      )
+    ]
+  }
 }
