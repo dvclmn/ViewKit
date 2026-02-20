@@ -11,7 +11,7 @@ public struct Labeled {
 
   public let key: String
   public let value: (any DisplayRenderable)?
-//  public let value: DisplayBlock?
+  //  public let value: DisplayBlock?
 
   /// E.g. for `CGPoint`
   /// ```
@@ -51,7 +51,6 @@ extension DisplayBlock {
         .float(result)
 
       case let result as StringRenderable:
-        //      case let result as String:
         .text(result.toString)
 
       case let result as NSEvent.Phase:

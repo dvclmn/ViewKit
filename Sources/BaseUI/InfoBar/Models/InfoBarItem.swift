@@ -45,6 +45,14 @@ extension InfoBarItem {
     self.label = label
     self.content = content
   }
+  
+  public init(fromLabeled: Labeled) {
+    self.init(
+      section: <#T##InfoBarSectionID#>,
+      label: <#T##QuickLabel#>,
+      content: <#T##String#>
+    )
+  }
 }
 
 extension InfoBarItem {
@@ -53,3 +61,4 @@ extension InfoBarItem {
     case floatLabeled(PropertiesLabeled)
   }
 }
+

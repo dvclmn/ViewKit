@@ -20,20 +20,11 @@ public struct Indented: Sendable {
     self.title = title
     self.content = content()
   }
-  
-//  public init(
-//    _ title: String? = nil,
-//    content: [DisplayBlock]
-//  ) {
-//    self.title = title
-//    self.content = content
-//  }
 }
 
 extension Indented: DisplayRenderable {
   public func render(using format: DisplayFormat) -> String {
     createIndented(format: format) ?? ""
-//    createIndented(for: indented)
   }
 }
 

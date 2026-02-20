@@ -32,47 +32,73 @@ extension View {
   public func addInfoBarItems<T>(
     _ items: T.Type,
     source: T.Source,
-    format: DisplayFormat = .default
+    format: DisplayFormat = .default,
+    isEnabled: Bool = true
   ) -> some View
   where T: InfoBarItemDescriptor & CaseIterable {
     self.preference(
       key: InfoBarKey.self,
-      value: items.items(from: source, format: format)
+      value: isEnabled ? items.items(from: source, format: format) : []
     )
   }
 
   public func addInfoBarItems<K: InfoBarSectionKey>(
     _ items: String...,
     key: K.Type = DebugSectionKey.self,
-    format: DisplayFormat = .default
+    format: DisplayFormat = .default,
+    isEnabled: Bool = true
   ) -> some View {
     self.preference(
       key: InfoBarKey.self,
-      value: items.map { text in
+      value: isEnabled ? items.map { text in
         InfoBarItem(
           section: key,
           label: QuickLabel(stringLiteral: ""),
           content: text
         )
-      }
+      } : []
     )
   }
 
   public func addInfoBarItems<K: InfoBarSectionKey>(
     @DisplayStringBuilder _ content: () -> [DisplayBlock],
     key: K.Type = DebugSectionKey.self,
-    format: DisplayFormat = .default
+    format: DisplayFormat = .default,
+    isEnabled: Bool = true
   ) -> some View {
     self.preference(
       key: InfoBarKey.self,
-      value: content().compactMap { block -> InfoBarItem? in
-        guard case .labeled(let labeled) = block else { return nil }
-        return InfoBarItem(
-          section: key,
-          label: QuickLabel(stringLiteral: labeled.key),
-          content: labeled.value?.render(using: format) ?? ""
-        )
-      }
+      value: isEnabled ? content().map { block in
+        switch block {
+          case .labeled(let labeled):
+            return InfoBarItem(
+              section: key,
+              label: QuickLabel(stringLiteral: labeled.key),
+              content: labeled.value?.render(using: format) ?? ""
+            )
+          case .text(let text):
+            return InfoBarItem(
+              section: key,
+              label: QuickLabel(stringLiteral: ""),
+              content: text
+            )
+          default:
+            // For .display, .float, .floatGroup, .indented — render them generically
+            return InfoBarItem(
+              section: key,
+              label: QuickLabel(stringLiteral: ""),
+              content: block.render(using: format)
+            )
+        }
+      } : []
+//      value: content().compactMap { block -> InfoBarItem? in
+//        guard case .labeled(let labeled) = block else { return nil }
+//        return InfoBarItem(
+//          section: key,
+//          label: QuickLabel(stringLiteral: labeled.key),
+//          content: labeled.value?.render(using: format) ?? ""
+//        )
+//      }
       //      value: content().compactMap {
       //        ($0 as? any InfoBarItemConvertible)?
       //          .asInfoBarItem(section: key, format: format)
