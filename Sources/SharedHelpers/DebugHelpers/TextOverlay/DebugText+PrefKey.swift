@@ -15,8 +15,8 @@ public struct DebugTextKey: PreferenceKey {
 
     let next = nextValue()
     if next.isEmpty { return }
-//    print("Running `DebugTextKey` reduce at \(Date.debug)")
-//    print("\n\nCurrent value: \(value). \n\nNew data: \(next)\n\n")
+    //    print("Running `DebugTextKey` reduce at \(Date.debug)")
+    //    print("\n\nCurrent value: \(value). \n\nNew data: \(next)\n\n")
 
     /// Build a set of what we already have
     var seen = Set(value)
@@ -39,16 +39,12 @@ extension View {
       value: isEnabled ? text : []
     )
   }
-  
+
   public func addDebugText(
     _ text: String...,
     isEnabled: Bool = true
   ) -> some View {
     self.addDebugText(text, isEnabled: isEnabled)
-//    return self.preference(
-//      key: DebugTextKey.self,
-//      value: isEnabled ? text : []
-//    )
   }
 
   public func addDebugText(
@@ -56,10 +52,6 @@ extension View {
     isEnabled: Bool = true
   ) -> some View {
     self.addDebugText([text], isEnabled: isEnabled)
-//    return self.preference(
-//      key: DebugTextKey.self,
-//      value: isEnabled ? [text] : []
-//    )
   }
 
   public func addDebugText(
@@ -67,10 +59,6 @@ extension View {
     isEnabled: Bool = true
   ) -> some View {
     self.addDebugText(displayString().lines, isEnabled: isEnabled)
-//    return self.preference(
-//      key: DebugTextKey.self,
-//      value: isEnabled ? displayString().lines : []
-//    )
   }
 
   public func addDebugText(
@@ -78,10 +66,6 @@ extension View {
     isEnabled: Bool = true
   ) -> some View {
     self.addDebugText(content().lines(), isEnabled: isEnabled)
-//    return self.preference(
-//      key: DebugTextKey.self,
-//      value: isEnabled ? content().lines() : []
-//    )
   }
 
 }

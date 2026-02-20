@@ -17,7 +17,6 @@ public struct Labeled {
   /// Label separator: ": "
   /// Result: X: 10
   public let separator: String
-
 }
 
 extension Labeled {

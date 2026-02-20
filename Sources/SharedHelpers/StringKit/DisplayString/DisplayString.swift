@@ -27,7 +27,6 @@ public struct DisplayString {
     self.separator = separator
     self.format = format
   }
-
 }
 
 extension DisplayString {
@@ -43,14 +42,6 @@ extension DisplayString {
   }
 }
 
-//public func DisplayStringText(
-//  _ separator: String = "\n",
-//  @DisplayStringBuilder _ content: () -> [DisplayBlock]
-//) -> String {
-//  let blocks = content()
-//  return blocks.output(separator: separator)
-//}
-
 extension DisplayString {
   public var text: String {
     components.output(
@@ -61,10 +52,6 @@ extension DisplayString {
 
   public var lines: [String] {
     components.map { $0.render(using: format) }
-    //    components.output(
-    //      separator: separator,
-    //      format: format
-    //    )
   }
 
   public func decimalPlaces(_ places: Int) -> DisplayString {
