@@ -8,21 +8,10 @@
 import CoreTools
 import SwiftUI
 
-extension Label {
-  public init(
-    title:
-  ) where Icon == Optional<Icon> {
-    self.init(title: <#T##() -> View#>, icon: <#T##() -> View#>)
-  }
-}
-
-/// Thinking about this; shouldn't MaybeLabel just exist as a way to
-/// declare a `Label` with an optional
 public struct MaybeLabel: View {
   @Environment(\.labelDisplay) private var labelDisplay
 
   let label: QuickLabel
-  let isPlain: Bool
 
   private let placeholderIcon: String = "eye"
 
@@ -33,10 +22,12 @@ public struct MaybeLabel: View {
         Text(label.text)
       }
     } icon: {
-      IconView(label.icon ?? .symbol(placeholderIcon))
+      if let icon = label.icon {
+        IconView(icon)
+      }
+//      IconView(label.icon ?? .symbol(placeholderIcon))
     }
-    /// May need to figure out a 'plain' override
-//    .labelStyle(.base(display: effectiveLabelDisplay))
+    //    .labelStyle(.base(display: effectiveLabelDisplay))
 
   }
 }
@@ -45,10 +36,10 @@ extension MaybeLabel {
   /// This really is the crux of what maybe label offers; a lightweight
   /// wrapper over the concept of; if no icon supplied, default to
   /// 'text-only' label style
-  private var effectiveLabelDisplay: LabelDisplay? {
-    hasIcon ? labelDisplay : .titleOnly
-  }
-  private var hasIcon: Bool { label.icon != nil }
+//  private var effectiveLabelDisplay: LabelDisplay? {
+//    hasIcon ? labelDisplay : .titleOnly
+//  }
+//  private var hasIcon: Bool { label.icon != nil }
 
 }
 
@@ -57,34 +48,34 @@ extension MaybeLabel {
 
   public init(
     _ label: QuickLabel,
-    isPlain: Bool = false
+//    isPlain: Bool = false
   ) {
     self.label = label
-    self.isPlain = isPlain
+//    self.isPlain = isPlain
   }
 
   public init(
     _ text: String,
     icon: IconLiteral? = nil,
-    isPlain: Bool = false
+//    isPlain: Bool = false
   ) {
     let quickLabel = QuickLabel(text, icon: icon)
     self.label = quickLabel
-    self.isPlain = isPlain
+//    self.isPlain = isPlain
   }
 
-  public init(
-    _ text: String,
-    symbol: String?,
-    isPlain: Bool = false
-  ) {
-    if let symbol {
-      let quickLabel = QuickLabel(text, icon: .symbol(symbol))
-      self.label = quickLabel
-
-    } else {
-      self.label = QuickLabel(text, icon: nil)
-    }
-    self.isPlain = isPlain
-  }
+//  public init(
+//    _ text: String,
+//    symbol: String?,
+//    isPlain: Bool = false
+//  ) {
+//    if let symbol {
+//      let quickLabel = QuickLabel(text, icon: .symbol(symbol))
+//      self.label = quickLabel
+//
+//    } else {
+//      self.label = QuickLabel(text, icon: nil)
+//    }
+//    self.isPlain = isPlain
+//  }
 }
