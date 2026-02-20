@@ -39,6 +39,9 @@ public struct InfoBarSectionID: Hashable, Sendable {
 
 
 // MARK: - Debug convenience
+/// Consider  other cases where very simple InfoBarItems way want to be
+/// created, that are even just string based, no ceremoney, that aren't
+/// neccesarily debug items.
 public enum DebugSectionKey: InfoBarSectionKey {
   public static let title: String = "Debug"
 }

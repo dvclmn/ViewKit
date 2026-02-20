@@ -8,27 +8,32 @@
 import CoreTools
 import Foundation
 
-public struct InfoBarItem: LabeledItem, Sendable, Equatable, Hashable {
+public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
+  //public struct InfoBarItem: LabeledItem, Sendable, Equatable, Hashable {
   public let id: UUID
   public let sectionKey: InfoBarSectionID
-  public let label: QuickLabel
-
-  /// Could one day consider making this more strongly typed,
-  /// for content-specific styling such as display format for Floats etc
-  ///
-  /// Update: Performance in e.g. CanvasKit suffered dramatically
-  /// once I implemented this as DisplayBlock
+  public let label: QuickLabel?
   public let content: String
 
   public init(
     section: InfoBarSectionID,
-    label: QuickLabel,
+    label: QuickLabel?,
     content: String
   ) {
     self.id = UUID()
     self.sectionKey = section
     self.label = label
     self.content = content
+  }
+}
+
+extension InfoBarItem: ExpressibleByStringLiteral {
+  public init(stringLiteral value: String) {
+    self.init(
+      section: InfoBarSectionID(DebugSectionKey.self),
+      label: nil,
+      content: value
+    )
   }
 }
 
@@ -45,12 +50,17 @@ extension InfoBarItem {
     self.label = label
     self.content = content
   }
-  
-  public init(fromLabeled: Labeled) {
+
+  /// Provides a way for DisplayString's Labeled to fit nicely with InfoBar
+  public init<K: InfoBarSectionKey>(
+    fromLabeled labeled: Labeled,
+    section: K.Type = DebugSectionKey.self,
+    format: DisplayFormat = .default
+  ) {
     self.init(
-      section: <#T##InfoBarSectionID#>,
-      label: <#T##QuickLabel#>,
-      content: <#T##String#>
+      section: section,
+      label: QuickLabel(stringLiteral: labeled.key),
+      content: labeled.renderValue(using: format)
     )
   }
 }
@@ -61,4 +71,3 @@ extension InfoBarItem {
     case floatLabeled(PropertiesLabeled)
   }
 }
-

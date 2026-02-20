@@ -7,59 +7,60 @@
 
 import Foundation
 
-extension ModifierKeys.Options {
-  public var id: Int { rawValue }
-
-  public var name: String {
-    switch self {
-      case .shift: "Shift"
-      case .option: "Option"
-      case .command: "Command"
-      case .control: "Control"
-      case .capsLock: "Caps Lock"
-    }
-  }
-
-  public var symbolLiteral: Character {
-    switch self {
-      case .shift: "􀆝"
-      case .option: "􀆕"
-      case .command: "􀆔"
-      case .control: "􀆍"
-      case .capsLock: "􀆡"
-    }
-  }
-}
-
-extension Modifiers {
-//  #warning("Bring this back, just fiddling with modifiers")
-//    public func displayName(
-//      elements: ModifierDisplayElement,
-//      separator: String = " + ",
-//      emptyText: String = "None"
-//    ) -> String {
-//      let components: [String] = self.compactMap { option in
-//        guard let meta = ModifierKeys.metadata[option] else { return nil }
-//  
-//        switch elements {
-//          case .name:
-//            return meta.name
-//          case .icon:
-//            return meta.symbol
-//          case .both:
-//            return "\(meta.symbol) \(meta.name)"
-//          default:
-//            return nil
-//        }
-//      }
-//  
-//      return components.isEmpty ? emptyText : components.joined(separator: separator)
+//extension ModifierKeys {
+//  public func displayName(
+//    elements: ModifierDisplayElements,
+//    separator: String = " + ",
+//    emptyText: String = "None"
+//  ) -> String {
+//    // Build components for each contained option using the metadata map
+//    let presentOptions = ModifierKeys.Options.allCases.filter {
+//      self.contains($0)
 //    }
-}
-extension ModifierKeys: CustomStringConvertible {
-  public var description: String {
-    #warning("Bring this back, just fiddling with modifiers")
-    //    displayName(elements: .name)
-    self.stringValueJoined()
-  }
-}
+//
+//    let components: [String] = presentOptions.compactMap { option in
+//      guard let meta = ModifierKeys.metadata(for: option) else { return nil }
+//      switch elements {
+//      case .name:
+//        return meta.name
+//      case .icon:
+//        return meta.symbol
+//      case .both:
+//        return "\(meta.symbol) \(meta.name)"
+//      default:
+//        return nil
+//      }
+//    }
+//
+//    return components.isEmpty ? emptyText : components.joined(separator: separator)
+//  }
+//}
+
+//private extension ModifierKeys {
+//  // Provide a file-scoped accessor to the private metadata map
+//  static func _metadata(for option: ModifierKeys.Options) -> Metadata? {
+//    // The metadata dictionary keys are `ModifierKeys` (sets). Create a singleton set for the option.
+//    // Use the local metadataLookup dictionary to get the Metadata for the single option
+//    return metadataLookup[option]
+//  }
+//
+//  // Build a local lookup keyed by Options to access the private map
+//  static var metadataLookup: [ModifierKeys.Options: Metadata] {
+//    // Convert the private `[ModifierKeys : Metadata]` into an `[Options : Metadata]` by taking any single-option key
+//    var result: [ModifierKeys.Options: Metadata] = [:]
+//    for (keySet, meta) in metadata {
+//      // Find the single option contained in this key set
+//      let singleOptions = ModifierKeys.Options.allCases.filter { keySet.contains($0) }
+//      if singleOptions.count == 1, let single = singleOptions.first {
+//        result[single] = meta
+//      }
+//    }
+//    return result
+//  }
+//}
+//
+//extension ModifierKeys: CustomStringConvertible {
+//  public var description: String {
+//    displayName(elements: .name)
+//  }
+//}

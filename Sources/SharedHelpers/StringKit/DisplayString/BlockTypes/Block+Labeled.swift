@@ -18,9 +18,7 @@ public struct Labeled {
   /// Label separator: ": "
   /// Result: X: 10
   public let separator: String
-}
 
-extension Labeled {
   public init(
     _ key: String,
     value: Any?,
@@ -35,14 +33,19 @@ extension Labeled {
 extension Labeled: DisplayRenderable {
   public func render(using format: DisplayFormat) -> String {
     let valuePart = value?.render(using: format) ?? "nil"
-    //    let valuePart = value?.toString ?? "nil"
     return key + separator + valuePart
+  }
+}
+
+extension Labeled {
+  public func renderValue(using format: DisplayFormat) -> String {
+    value?.render(using: format) ?? "nil"
   }
 }
 
 extension DisplayBlock {
 
-  static func semantic(for value: Any?) -> DisplayBlock {
+  fileprivate static func semantic(for value: Any?) -> DisplayBlock {
     switch value {
       case let result as any PropertiesLabeled:
         .floatGroup(result)

@@ -23,11 +23,13 @@ public struct InfoBarItemView: View {
     /// the `item.content` can deceptively look like the
     /// Label text, but it is not, it is seperate.
     HStack(spacing: Styles.sizeTiny) {
-      MaybeLabel(item.label)
-        .environment(\.labelDisplay, itemLabelDisplay)
+      if let label = item.label {
+        MaybeLabel(label)
+          .environment(\.labelDisplay, itemLabelDisplay)
         /// Some leading padding here brings the icon in from the edge a bit,
         /// including the very first item
-        .padding(.leading, Styles.sizeTiny)
+          .padding(.leading, Styles.sizeTiny)
+      }
 
       Text(String(describing: item.content))
         /// Taking the edge off the brightness
