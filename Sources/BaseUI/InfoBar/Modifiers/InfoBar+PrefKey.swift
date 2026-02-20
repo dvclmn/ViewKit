@@ -21,7 +21,6 @@ public struct InfoBarKey: PreferenceKey {
     /// Efficiently filter out duplicates using the Hashable conformance
     let existingIDs = Set(value.map(\.id))
     value.append(contentsOf: next.filter { !existingIDs.contains($0.id) })
-
   }
 }
 
@@ -65,49 +64,56 @@ extension View {
   ) -> some View {
     self.preference(
       key: InfoBarKey.self,
-      value: content().lines().map { text in
-        InfoBarItem(
-          section: key,
-          label: QuickLabel(stringLiteral: text.0),
-          content: text.1
-        )
+      value: content().compactMap {
+        ($0 as? any InfoBarItemConvertible)?
+          .asInfoBarItem(section: key, format: format)
       }
     )
+    //    self.preference(
+    //      key: InfoBarKey.self,
+    //      value: content().lines().map { text in
+    //        InfoBarItem(
+    //          section: key,
+    //          label: QuickLabel(stringLiteral: text.0),
+    //          content: text.1
+    //        )
+    //      }
+    //    )
   }
-  
-//  public func addInfoBarItems<K: InfoBarSectionKey>(
-//    _ items: (String, String)...,
-//    key: K.Type = DebugSectionKey.self,
-//    format: DisplayFormat = .default
-//  ) -> some View {
-//    self.preference(
-//      key: InfoBarKey.self,
-//      value: items.map { text in
-//        InfoBarItem(
-//          section: key,
-//          label: QuickLabel(stringLiteral: text.0),
-//          content: text.1
-//        )
-//      }
-//    )
-//  }
-  
-//  public func addInfoBarItems<K: InfoBarSectionKey>(
-//    _ items: (icon: IconLiteral, String)...,
-//    key: K.Type = DebugSectionKey.self,
-//    format: DisplayFormat = .default
-//  ) -> some View {
-//    self.preference(
-//      key: InfoBarKey.self,
-//      value: items.map { text in
-//        InfoBarItem(
-//          section: key,
-//          label: QuickLabel("", icon: text.0),
-//          content: text.1
-//        )
-//      }
-//    )
-//    .environment(\.labelDisplay, .iconOnly)
-//    .environment(\.iconColour, AnyShapeStyle(.secondary))
-//  }
+
+  //  public func addInfoBarItems<K: InfoBarSectionKey>(
+  //    _ items: (String, String)...,
+  //    key: K.Type = DebugSectionKey.self,
+  //    format: DisplayFormat = .default
+  //  ) -> some View {
+  //    self.preference(
+  //      key: InfoBarKey.self,
+  //      value: items.map { text in
+  //        InfoBarItem(
+  //          section: key,
+  //          label: QuickLabel(stringLiteral: text.0),
+  //          content: text.1
+  //        )
+  //      }
+  //    )
+  //  }
+
+  //  public func addInfoBarItems<K: InfoBarSectionKey>(
+  //    _ items: (icon: IconLiteral, String)...,
+  //    key: K.Type = DebugSectionKey.self,
+  //    format: DisplayFormat = .default
+  //  ) -> some View {
+  //    self.preference(
+  //      key: InfoBarKey.self,
+  //      value: items.map { text in
+  //        InfoBarItem(
+  //          section: key,
+  //          label: QuickLabel("", icon: text.0),
+  //          content: text.1
+  //        )
+  //      }
+  //    )
+  //    .environment(\.labelDisplay, .iconOnly)
+  //    .environment(\.iconColour, AnyShapeStyle(.secondary))
+  //  }
 }
