@@ -17,6 +17,16 @@ public struct InfoBarItemsModifier: ViewModifier {
   public func body(content: Content) -> some View {
 
     content
+      .contentMargins(
+        isEnabled ? .bottom : [],
+        EdgeInsets(
+          top: Styles.infoBarHeight,
+          leading: 0,
+          bottom: Styles.infoBarHeight,
+          trailing: 0
+        ),
+        for: .automatic
+      )
       .safeAreaPadding(.bottom, isEnabled ? Styles.infoBarHeight : nil)
       .onPreferenceChange(InfoBarKey.self) { newItems in
         guard shouldDisplay else { return }

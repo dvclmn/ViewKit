@@ -171,6 +171,7 @@ public enum Icons: String, IconGalleryViewable, Codable, Equatable {
   case key = "key"
   case snowflake = "snowflake"
   case contrast = "circle.lefthalf.striped.horizontal.inverse"
+  case contrastAlt = "circle.lefthalf.filled.inverse"
   case horn = "horn"
   case hornBlast = "horn.blast"
   case palette = "paintpalette"

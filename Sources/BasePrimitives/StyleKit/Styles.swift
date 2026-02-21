@@ -33,9 +33,9 @@ public struct Styles {
 
   /// Info bar
   public static let infoBarHeight: Double = 24
+  public static let infoBarDefaultHeight: Double = 38
 
   public static let titleBarHeight: Double = 26
-  public static let infoBarDefaultHeight: Double = 38
   public static let overScroll: Double = 200
 
   /// Padding
