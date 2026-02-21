@@ -8,7 +8,6 @@
 import SwiftUI
 
 extension View {
-
   @ViewBuilder
   public func scrollEdgeEffectStyleCompatible(isSoft: Bool, for edge: Edge.Set) -> some View {
     if #available(macOS 26.0, *) {

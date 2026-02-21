@@ -46,21 +46,21 @@ public struct MessageBubbleShape: Shape {
     let start = CGPoint(x: shapeOriginX, y: shapeOriginY)
 
     let bottomLeft = CGPoint(x: shapeOriginX + diagonalThing, y: height)
-    let bottomRight = bottomLeft.shiftedRight(width - (diagonalThing * 2))
+    let bottomRight = bottomLeft.shiftedRight(by: width - (diagonalThing * 2))
 //    let bottomRight = bottomLeft.shiftRight(shapeWidth - diagonalThing)
-    let topRight = start.shiftedRight(width)
+    let topRight = start.shiftedRight(by: width)
 
     path.move(to: start)
 
-    path.addCurve(to: bottomLeft, control1: start.shiftedRight(rounding), control2: bottomLeft.shiftedLeft(rounding))
+    path.addCurve(to: bottomLeft, control1: start.shiftedRight(by: rounding), control2: bottomLeft.shiftedLeft(by: rounding))
 
     path.addLine(to: bottomRight)
 //    path.addLine(to: topRight)
 
     path.addCurve(
       to: topRight,
-      control1: bottomRight.shiftedRight(rounding),
-      control2: topRight.shiftedLeft(rounding)
+      control1: bottomRight.shiftedRight(by: rounding),
+      control2: topRight.shiftedLeft(by: rounding)
     )
 //    for i in 0..<points.count {
 //      let currentPoint = points[i]

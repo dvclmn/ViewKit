@@ -7,32 +7,50 @@
 
 import SwiftUI
 
+extension VerticalEdge {
+  public var toAlignment: VerticalAlignment {
+    switch self {
+      case .top: .top
+      case .bottom: .bottom
+    }
+  }
+}
+
+extension HorizontalEdge {
+  public var toAlignment: HorizontalAlignment {
+    switch self {
+      case .leading: .leading
+      case .trailing: .trailing
+    }
+  }
+}
+
 extension Edge.Set {
-  
-//  public func toAxis() -> Axis2D {
-//    
-//    let isHorizontal: Bool = self == .horizontal
-//   
-//    if self == .horizontal {
-//      return CGFloat(count) * unitSize.width
-//    } else if self == .vertical {
-//      return CGFloat(count) * unitSize.height
-//    } else if self == .top || self == .bottom {
-//      // Top/bottom are vertical
-//      return CGFloat(count) * unitSize.height
-//    } else if self == .leading || self == .trailing {
-//      // Leading/trailing are horizontal
-//      return CGFloat(count) * unitSize.width
-//    } else if self == .all {
-//      // Ambiguous, pick one (horizontal)
-//      return CGFloat(count) * unitSize.width
-//    } else {
-//      return nil
-//    }
-//    
-//    
-//  }
-  
+
+  //  public func toAxis() -> Axis2D {
+  //
+  //    let isHorizontal: Bool = self == .horizontal
+  //
+  //    if self == .horizontal {
+  //      return CGFloat(count) * unitSize.width
+  //    } else if self == .vertical {
+  //      return CGFloat(count) * unitSize.height
+  //    } else if self == .top || self == .bottom {
+  //      // Top/bottom are vertical
+  //      return CGFloat(count) * unitSize.height
+  //    } else if self == .leading || self == .trailing {
+  //      // Leading/trailing are horizontal
+  //      return CGFloat(count) * unitSize.width
+  //    } else if self == .all {
+  //      // Ambiguous, pick one (horizontal)
+  //      return CGFloat(count) * unitSize.width
+  //    } else {
+  //      return nil
+  //    }
+  //
+  //
+  //  }
+
 }
 
 extension Edge {
@@ -82,25 +100,25 @@ extension Edge {
   }
 
   /// Convenient default, assumes convention of width == horizontal
-//  public var toAxis: Axis {
-//    self.toAxis(using: .widthIsHorizontal)
-//  }
-//
-//  public func toAxis(using mapping: AxisMapping = .default) -> Axis {
-//    switch convention {
-//      case .widthIsHorizontal:
-//        switch self {
-//          case .top, .bottom: .vertical
-//          case .leading, .trailing: .horizontal
-//        }
-//
-//      case .heightIsHorizontal:
-//        switch self {
-//          case .top, .bottom: .horizontal
-//          case .leading, .trailing: .vertical
-//        }
-//    }
-//  }
+  //  public var toAxis: Axis {
+  //    self.toAxis(using: .widthIsHorizontal)
+  //  }
+  //
+  //  public func toAxis(using mapping: AxisMapping = .default) -> Axis {
+  //    switch convention {
+  //      case .widthIsHorizontal:
+  //        switch self {
+  //          case .top, .bottom: .vertical
+  //          case .leading, .trailing: .horizontal
+  //        }
+  //
+  //      case .heightIsHorizontal:
+  //        switch self {
+  //          case .top, .bottom: .horizontal
+  //          case .leading, .trailing: .vertical
+  //        }
+  //    }
+  //  }
 
   public var alignment: Alignment {
     switch self {

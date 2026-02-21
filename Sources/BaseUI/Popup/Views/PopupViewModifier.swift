@@ -21,7 +21,6 @@ public struct PopupViewModifier: ViewModifier {
   let debugPopup: PopupDebug
   let alignment: Alignment
   let isCompact: Bool
-//  let hasCloseButton: Bool
 
   public func body(content: Content) -> some View {
     content
@@ -29,7 +28,6 @@ public struct PopupViewModifier: ViewModifier {
         debugPopup: debugPopup,
         alignment: alignment,
         isCompact: isCompact,
-//        hasCloseButton: hasCloseButton
       )
       .setUpPopup()
   }
@@ -43,17 +41,17 @@ public struct PopupViewExtenderModifier: ViewModifier {
   let debugPopup: PopupDebug
   let alignment: Alignment
   let isCompact: Bool
-//  let hasCloseButton: Bool
 
   public func body(content: Content) -> some View {
     content
       .overlay(alignment: alignment) {
+
         /// This allows providing a warning that there's no popup set in the Env
         if let popup {
-          if let message = popup.popupMessage {
+          if let message = message(popup) {
             PopupView(message: message, alignment: alignment)
               .environment(\.isCompactMode, isCompact)
-//              .environment(\.hasCloseButton, hasCloseButton)
+            //              .environment(\.hasCloseButton, hasCloseButton)
           }
 
         } else {
@@ -63,6 +61,12 @@ public struct PopupViewExtenderModifier: ViewModifier {
         }
       }
 
+  }
+}
+
+extension PopupViewExtenderModifier {
+  private func message(_ popup: Popup) -> PopupMessage? {
+    debugPopup.message ?? popup.popupMessage
   }
 }
 
@@ -79,14 +83,12 @@ extension View {
     debugPopup: PopupDebug = .none,
     alignment: Alignment = .top,
     isCompact: Bool = false,
-//    hasCloseButton: Bool = false
   ) -> some View {
     self.modifier(
       PopupViewModifier(
         debugPopup: debugPopup,
         alignment: alignment,
         isCompact: isCompact,
-//        hasCloseButton: hasCloseButton
       )
     )
   }
@@ -98,14 +100,12 @@ extension View {
     debugPopup: PopupDebug = .none,
     alignment: Alignment = .top,
     isCompact: Bool = false,
-//    hasCloseButton: Bool = false
   ) -> some View {
     self.modifier(
       PopupViewExtenderModifier(
         debugPopup: debugPopup,
         alignment: alignment,
         isCompact: isCompact,
-//        hasCloseButton: hasCloseButton
       )
     )
   }

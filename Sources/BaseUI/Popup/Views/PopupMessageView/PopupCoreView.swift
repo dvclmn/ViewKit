@@ -34,7 +34,7 @@ struct PopupCoreView: View {
         .padding(.trailing, hasCloseButton ? 20 : 0)
 
       if let messageDetail = popupMessage.message {
-        Text(messageDetail)
+        Text(messageDetail.toMarkdownCompatible)
           .foregroundStyle(.secondary)
           .font(isCompactMode ? .caption : .body)
       }

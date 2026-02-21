@@ -15,7 +15,7 @@ extension PopupMessage {
     "I am loading",
     icon: .preset(.controller),
     //    icon: .preset(.getRandom),
-    message: "Here is a random icon, and a loading indicator.",
+    message: "Here is a **random icon**, a *loading* indicator, and ==some highlighted== text",
     loading: .indeterminate,
     //    role: .neutral,
         dismissal: .automatic(2, showsIndicator: true)

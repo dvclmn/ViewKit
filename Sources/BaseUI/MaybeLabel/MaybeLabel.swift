@@ -19,7 +19,7 @@ public struct MaybeLabel: View {
 
     Label {
       if !label.text.isEmpty {
-        Text(label.text)
+        Text(label.text.toMarkdownCompatible)
       }
     } icon: {
       if let icon = label.icon {

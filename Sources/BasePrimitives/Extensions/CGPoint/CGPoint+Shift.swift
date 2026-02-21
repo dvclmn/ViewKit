@@ -28,22 +28,22 @@ extension CGPoint {
   }
   
   /// Shift right (increases x)
-  public func shiftedRight(_ distance: CGFloat) -> CGPoint {
+  public func shiftedRight(by distance: CGFloat) -> CGPoint {
     return CGPoint(x: self.x + distance, y: self.y)
   }
   
   /// Shift left (decreases x)
-  public func shiftedLeft(_ distance: CGFloat) -> CGPoint {
+  public func shiftedLeft(by distance: CGFloat) -> CGPoint {
     return CGPoint(x: self.x - distance, y: self.y)
   }
   
   /// Shift down (increases y)
-  public func shiftedDown(_ distance: CGFloat) -> CGPoint {
+  public func shiftedDown(by distance: CGFloat) -> CGPoint {
     return CGPoint(x: self.x, y: self.y + distance)
   }
   
   /// Shift up (decreases y)
-  public func shiftedUp(_ distance: CGFloat) -> CGPoint {
+  public func shiftedUp(by distance: CGFloat) -> CGPoint {
     let copy = self
     return CGPoint(x: copy.x, y: copy.y - distance)
   }
