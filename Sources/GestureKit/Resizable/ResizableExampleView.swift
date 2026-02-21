@@ -9,7 +9,8 @@ import CoreTools
 import SwiftUI
 
 struct ResizableExampleView: View {
-  @State private var overlayHeight: Double = 200
+
+  @State private var overlayHeight: CGFloat = 200
 
   var body: some View {
 
@@ -28,16 +29,10 @@ struct ResizableExampleView: View {
         )
 
         .overlay(alignment: .bottom) {
-          Rectangle()
-            .fill(.thinMaterial)
-            .fill(.brown.opacity(0.3))
-            .modifier(ResizableModifier())
-            .frame(
-              minHeight: 100,
-              maxHeight: overlayHeight,
-              alignment: .bottom
-            )
-
+          OverlayView()
+//            .border(Color.green.opacity(0.3))
+            .modifier(ResizableModifier(height: $overlayHeight))
+            .padding()
         }
       }
 
@@ -49,7 +44,22 @@ struct ResizableExampleView: View {
 }
 
 extension ResizableExampleView {
+  @ViewBuilder
+  private func OverlayView() -> some View {
+    Rectangle()
+      .fill(.thinMaterial)
+      .fill(.brown.opacity(0.3))
 
+      .frame(
+        maxWidth: .infinity,
+        minHeight: 100,
+        //        maxHeight: overlayHeight,
+        alignment: .bottom
+      )
+      .frame(height: overlayHeight)
+      .clipShape(.rect(cornerRadius: Styles.sizeRegular))
+      
+  }
 }
 #if DEBUG
 #Preview {

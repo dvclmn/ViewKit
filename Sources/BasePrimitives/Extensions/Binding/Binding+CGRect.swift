@@ -59,3 +59,26 @@ extension Binding where Value == CGSize? {
     }
   }
 }
+
+extension Binding where Value == CGFloat? {
+  public func toBindingRect(along axis: GridAxis) -> Binding<CGRect?> {
+    return Binding<CGRect?> {
+      guard let value = wrappedValue else { return nil }
+
+      let size: CGSize =
+        switch axis {
+          case .horizontal: CGSize(width: value, height: .zero)
+          case .vertical: CGSize(width: .zero, height: value)
+        }
+      return CGRect(origin: .zero, size: size)
+    } set: {
+      switch axis {
+        case .horizontal:
+          wrappedValue = $0?.size.width
+        case .vertical:
+          wrappedValue = $0?.size.height
+      }
+      //
+    }
+  }
+}

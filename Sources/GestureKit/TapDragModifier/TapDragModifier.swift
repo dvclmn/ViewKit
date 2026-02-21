@@ -23,6 +23,7 @@ public struct UnifiedDragModifier: ViewModifier {
   @State private var dragState: DragGestureState
 
   @Binding var dragRect: CGRect?
+  
   let isEnabled: Bool
   let tapCount: Int
   let minimumDistance: CGFloat
@@ -120,6 +121,26 @@ extension View {
       UnifiedDragModifier(
         rect: translation.toBindingRect,
         behavior: behavior,
+        isEnabled: isEnabled,
+        tapCount: tapCount,
+        minimumDistance: minimumDistance,
+        didUpdateTap: didUpdateTap,
+      )
+    )
+  }
+  
+  public func tapDragGesture(
+    scalar: Binding<CGFloat?>,
+    axis: GridAxis,
+    tapCount: Int = 1,
+    isEnabled: Bool = true,
+    minimumDistance: CGFloat = 5,
+    didUpdateTap: @escaping TapUpdate = { _ in },
+  ) -> some View {
+    self.modifier(
+      UnifiedDragModifier(
+        rect: scalar.toBindingRect(along: axis),
+        behavior: .continuous(axes: axis.toSet),
         isEnabled: isEnabled,
         tapCount: tapCount,
         minimumDistance: minimumDistance,

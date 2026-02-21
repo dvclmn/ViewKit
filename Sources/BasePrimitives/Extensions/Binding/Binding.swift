@@ -40,7 +40,16 @@ extension Binding where Value == Int {
   }
 }
 
-extension Binding {
+extension Binding where Value: Sendable {
+  public var toOptionalBinding: Binding<Value?> {
+    Binding<Value?>(
+      get: { wrappedValue },
+      set: {
+        guard let value = $0 else { return }
+        wrappedValue = value
+      }
+    )
+  }
   //  public func toBindingArray() -> Binding<[Value]> where Value == Set<Self.Element> {
   //    Binding<[Value]>(
   //      get: { Array(wrappedValue) },
@@ -106,7 +115,6 @@ extension Binding where Value == Bool {
     )
   }
 }
-
 
 //extension Binding where Value == CGFloat {
 //  /// Convert `CGFloat` Binding to `Double` Binding
