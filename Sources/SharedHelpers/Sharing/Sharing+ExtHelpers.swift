@@ -52,4 +52,14 @@ extension SharedKey {
       default: defaultValue
     ]
   }
+
+  public static func appStorage<T: Codable>(
+    _ key: String,
+    defaultValue: T
+  ) -> Self where Self == AppStorageKey<T>.Default {
+    return Self[
+      .appStorage(key),
+      default: defaultValue
+    ]
+  }
 }

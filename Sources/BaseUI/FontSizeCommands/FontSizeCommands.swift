@@ -9,10 +9,8 @@
 import CoreTools
 import SwiftUI
 
-
 public protocol FontSizeControlling: PreferenceSettable
 where Prefs: FontSizePreferences {}
-
 
 public protocol PreferenceSettable: AnyObject, Observable {
 
