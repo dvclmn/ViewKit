@@ -57,6 +57,7 @@ public enum Icons: String, IconGalleryViewable, Codable, Equatable {
   case game = "sdcard"
   case back = "chevron.backward"
   case forward = "chevron.forward"
+  case moon = "moon"
   case up = "chevron.up"
   case down = "chevron.down"
   case sort = "arrow.up.arrow.down"
