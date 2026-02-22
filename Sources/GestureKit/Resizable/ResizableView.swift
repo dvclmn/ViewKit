@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 22/2/2026.
 //
 
-import SwiftUI
 import LayoutKit
+import SwiftUI
 
 struct ResizableView<Content: View>: View {
 
@@ -35,10 +35,22 @@ struct ResizableView<Content: View>: View {
   var body: some View {
     DynamicStack(
       alignedAxis: edge.isVertical
-      ? .vertical(edge.toAlignment.horizontal)
-      : .horizontal(edge.toAlignment.vertical)
+        ? .vertical(edge.toAlignment.horizontal)
+        : .horizontal(edge.toAlignment.vertical)
     ) {
       content
+
+        .frame(
+          width: isVertical ? nil : displaySize,
+          height: isVertical ? displaySize : nil,
+          alignment: edge.toAlignment.toOpposing
+        )
     }
+    .frame(
+      maxWidth: .infinity,
+      maxHeight: .infinity,
+      alignment: edge.toAlignment.toOpposing
+    )
+
   }
 }

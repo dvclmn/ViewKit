@@ -16,21 +16,37 @@ struct ResizableExampleView: View {
 
   var body: some View {
 
+    HStack(spacing: 0) {
+      VStack(spacing: 0) {
+        Color.blue.opacity(0.15)
 
-        VStack(spacing: 0) {
-          Color.blue.opacity(0.15)
-    
-    
-          Color.green.opacity(0.15)
-            .frame(maxHeight: .infinity)
-            .resizableEdge(
-              .top,
-              initialLength: resizeLengths.initial,
-              minLength: resizeLengths.min,
-              maxLength: resizeLengths.max
-            )
+        Color.green.opacity(0.15)
+          .frame(maxHeight: .infinity)
+          .resizableEdge(
+            .top,
+            initialLength: resizeLengths.initial,
+            minLength: resizeLengths.min,
+            maxLength: resizeLengths.max
+          )
+      }
+      .frame(width: 180, height: 500)
+      
+      VStack(spacing: 0) {
+        Color.orange.opacity(0.15)
+
+        ResizableView(
+          edge: .top,
+          initialLength: resizeLengths.initial,
+          minLength: resizeLengths.min,
+          maxLength: resizeLengths.max
+        ) {
+          Color.brown.opacity(0.15)
+          //              .frame(maxHeight: .infinity)
         }
-        .frame(width: 320, height: 500)
+
+      }
+      .frame(width: 180, height: 500)
+    }
 
     //    HStack(spacing: 0) {
     //

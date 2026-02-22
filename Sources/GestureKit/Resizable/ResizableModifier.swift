@@ -12,9 +12,11 @@ struct ResizableEdgeModifier: ViewModifier {
   @State private var currentLength: CGFloat
   @GestureState private var dragDelta: CGFloat = 0
 
-  let edge: Edge
-  let minLength: CGFloat
-  let maxLength: CGFloat
+  //  let edge: Edge
+  //  let minLength: CGFloat
+  //  let maxLength: CGFloat
+
+  let state: ResizeState
 
   init(
     edge: Edge,
@@ -22,10 +24,11 @@ struct ResizableEdgeModifier: ViewModifier {
     minLength: CGFloat = 50,
     maxLength: CGFloat = .infinity
   ) {
-    self.edge = edge
+    //    self.edge = edge
     self._currentLength = State(initialValue: initialLength)
-    self.minLength = minLength
-    self.maxLength = maxLength
+    //    self.minLength = minLength
+    //    self.maxLength = maxLength
+    self.state = ResizeState(edge: edge, minLength: minLength, maxLength: maxLength)
   }
 
   func body(content: Content) -> some View {
@@ -33,17 +36,23 @@ struct ResizableEdgeModifier: ViewModifier {
       .frame(
         maxWidth: .infinity,
         maxHeight: .infinity,
-        alignment: edge.toAlignment.toOpposing
+        alignment: state.edge.toAlignment.toOpposing
       )
       .frame(
         width: isVertical ? nil : displaySize,
         height: isVertical ? displaySize : nil,
-        alignment: edge.toAlignment.toOpposing
+        alignment: state.edge.toAlignment.toOpposing
       )
-      .overlay(alignment: edge.toAlignment) {
+      .overlay(alignment: state.edge.toAlignment) {
         ResizeHandle()
-          .gesture(dragGesture)
-          .environment(\.layoutAxis, edge.toAxis)
+          .gesture(
+            ResizeGesture(
+              dragDelta: dragDelta,
+              currentLength: $currentLength,
+              state: state
+            )
+          )
+          .environment(\.layoutAxis, state.edge.toAxis)
       }
 
   }
@@ -51,35 +60,10 @@ struct ResizableEdgeModifier: ViewModifier {
 
 // MARK: - Gesture Logic
 extension ResizableEdgeModifier {
-  private var lengthRange: ClosedRange<CGFloat> {
-    minLength...maxLength
-  }
 
-  private var isVertical: Bool {
-    edge == .top || edge == .bottom
-  }
-
-  /// Invert drag for Top and Leading edges
-  private var dragMultiplier: CGFloat {
-    (edge == .top || edge == .leading) ? -1 : 1
-  }
-
+  private var isVertical: Bool { state.isVertical }
   private var displaySize: CGFloat {
-    (currentLength + (dragDelta * dragMultiplier)).clamped(to: lengthRange)
-  }
-
-  private var dragGesture: some Gesture {
-    DragGesture(minimumDistance: 0, coordinateSpace: .global)
-      .updating($dragDelta) { value, state, _ in
-        
-        /// Use height for top/bottom, width for leading/trailing
-        state = isVertical ? value.translation.height : value.translation.width
-      }
-      .onEnded { value in
-        let translation = isVertical ? value.translation.height : value.translation.width
-        let proposed = currentLength + (translation * dragMultiplier)
-        currentLength = proposed.clamped(to: lengthRange)
-      }
+    state.displaySize(currentLength: currentLength, dragDelta: dragDelta)
   }
 
 }
