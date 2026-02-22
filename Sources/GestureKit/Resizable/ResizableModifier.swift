@@ -34,7 +34,6 @@ struct ResizableEdgeModifier: ViewModifier {
 
   func body(content: Content) -> some View {
     content
-      .coordinateSpace(.named(resizeSpace))
       .frame(height: currentHeight)
 
       .overlay(alignment: edge.alignment) {
@@ -42,31 +41,35 @@ struct ResizableEdgeModifier: ViewModifier {
           .gesture(dragGesture)
       }
   }
-
 }
 
 extension ResizableEdgeModifier {
 
-  //  private var alignment: Alignment {
-  //    switch edge {
-  //      case .top: .bottom
-  //      case .leading: .topLeading
-  //      case .bottom: .bottomLeading
-  //      case .trailing: .bottomTrailing
-  //    }
-  //  }
+  /// Determines if the drag movement should be inverted based on the edge.
+  private var dragMultiplier: CGFloat {
+    switch edge {
+      case .top, .leading:
+        return -1
+      case .bottom, .trailing:
+        return 1
+    }
+  }
 
   private var currentHeight: CGFloat {
-    (storedHeight + dragDelta).clamped(to: minHeight...maxHeight)
+    /// Apply the multiplier to the dragDelta
+    let adjustedDelta = dragDelta * dragMultiplier
+    return (storedHeight + adjustedDelta).clamped(to: minHeight...maxHeight)
   }
 
   private var dragGesture: some Gesture {
-    DragGesture(minimumDistance: 2, coordinateSpace: .named(resizeSpace))
+    DragGesture(minimumDistance: 2, coordinateSpace: .global)
       .updating($dragDelta) { value, state, _ in
         state = value.translation.height
       }
       .onEnded { value in
-        let proposed = storedHeight + value.translation.height
+        // Apply the multiplier here as well to update the base state
+        let adjustedTranslation = value.translation.height * dragMultiplier
+        let proposed = storedHeight + adjustedTranslation
         storedHeight = proposed.clamped(to: minHeight...maxHeight)
       }
   }
@@ -82,9 +85,7 @@ extension ResizableEdgeModifier {
         .fill(Color.primary.opacity(0.2))
         .frame(width: 40, height: 4)
     }
-
   }
-
 }
 
 // MARK: - View extension
