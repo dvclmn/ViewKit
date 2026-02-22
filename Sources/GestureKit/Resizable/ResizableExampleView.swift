@@ -12,54 +12,52 @@ struct ResizableExampleView: View {
 
   @State private var overlayHeight: CGFloat = 200
 
+  private let resizeLengths: (min: Double, initial: Double, max: Double) = (70, 240, 400)
+
   var body: some View {
 
-    //    VStack(spacing: 0) {
-    //      Color.blue.opacity(0.15)
+
+        VStack(spacing: 0) {
+          Color.blue.opacity(0.15)
+    
+    
+          Color.green.opacity(0.15)
+            .frame(maxHeight: .infinity)
+            .resizableEdge(
+              .top,
+              initialLength: resizeLengths.initial,
+              minLength: resizeLengths.min,
+              maxLength: resizeLengths.max
+            )
+        }
+        .frame(width: 320, height: 500)
+
+    //    HStack(spacing: 0) {
     //
+    //      ScrollView {
+    //        Text(String(repeating: SampleContent.Strings.paragraphs[2], count: 2))
+    //          .opacity(0.4)
+    //      }
+    //      .background(.blue.quaternary)
+    //      .frame(
+    //        maxWidth: .infinity,
+    //        maxHeight: .infinity,
+    //        alignment: .topLeading
+    //      )
     //
-    //      Color.green.opacity(0.15)
-    //        .frame(maxHeight: .infinity)
+    //      .overlay(alignment: .bottom) {
+    //        OverlayView()
+    //          .padding()
+    //          .resizableEdge(
+    //            .top,
+    //            initialLength: resizeLengths.initial,
+    //            minLength: resizeLengths.min,
+    //            maxLength: resizeLengths.max
+    //          )
+    //      }
+    //      Rectangle()
+    //        .fill(.green.tertiary)
     //    }
-    //    .frame(width: 320, height: 500)
-
-    HStack(spacing: 0) {
-
-      //      VStack {
-
-      ScrollView {
-        Text(String(repeating: SampleContent.Strings.paragraphs[2], count: 2))
-          .opacity(0.4)
-      }
-      .background(.blue.quaternary)
-      .frame(
-        maxWidth: .infinity,
-        maxHeight: .infinity,
-        alignment: .topLeading
-      )
-
-      .overlay(alignment: .bottom) {
-        OverlayView()
-          //            .border(Color.green.opacity(0.3))
-          //            .padding()
-          .resizableEdge(
-            .top,
-            initialLength: 200,
-            minLength: 80,
-            maxLength: 400
-          )
-      }
-      //      }
-      //          .modifier(
-      //            ResizableModifier(
-      //              height: $overlayHeight,
-      //              axis: .vertical
-      //            )
-      //          )
-
-      Rectangle()
-        .fill(.green.tertiary)
-    }
 
   }
 }
@@ -74,7 +72,7 @@ extension ResizableExampleView {
       .frame(
         maxWidth: .infinity,
         minHeight: 100,
-        //                maxHeight: overlayHeight,
+        maxHeight: .infinity,
         alignment: .bottom
       )
       .frame(height: overlayHeight)

@@ -31,51 +31,57 @@ struct ResizableEdgeModifier: ViewModifier {
   func body(content: Content) -> some View {
     content
       .frame(
+        maxWidth: .infinity,
+        maxHeight: .infinity,
+        alignment: edge.toAlignment.toOpposing
+      )
+      .frame(
         width: isVertical ? nil : displaySize,
-        height: isVertical ? displaySize : nil
+        height: isVertical ? displaySize : nil,
+        alignment: edge.toAlignment.toOpposing
       )
       .overlay(alignment: edge.toAlignment) {
         ResizeHandle()
           .gesture(dragGesture)
+          .environment(\.layoutAxis, edge.toAxis)
       }
-      .environment(\.layoutAxis, edge.toAxis)
-      
+
   }
 }
 
 // MARK: - Gesture Logic
 extension ResizableEdgeModifier {
+  private var lengthRange: ClosedRange<CGFloat> {
+    minLength...maxLength
+  }
 
   private var isVertical: Bool {
     edge == .top || edge == .bottom
   }
 
-  // Invert drag for Top and Leading edges
+  /// Invert drag for Top and Leading edges
   private var dragMultiplier: CGFloat {
     (edge == .top || edge == .leading) ? -1 : 1
   }
 
   private var displaySize: CGFloat {
-    (currentLength + (dragDelta * dragMultiplier)).clamped(to: minLength...maxLength)
+    (currentLength + (dragDelta * dragMultiplier)).clamped(to: lengthRange)
   }
 
   private var dragGesture: some Gesture {
     DragGesture(minimumDistance: 0, coordinateSpace: .global)
       .updating($dragDelta) { value, state, _ in
-        // Use height for top/bottom, width for leading/trailing
+        
+        /// Use height for top/bottom, width for leading/trailing
         state = isVertical ? value.translation.height : value.translation.width
       }
       .onEnded { value in
         let translation = isVertical ? value.translation.height : value.translation.width
         let proposed = currentLength + (translation * dragMultiplier)
-        currentLength = proposed.clamped(to: minLength...maxLength)
+        currentLength = proposed.clamped(to: lengthRange)
       }
   }
 
-  @ViewBuilder
-  private func ResizeHandle() -> some View {
-   
-  }
 }
 
 extension View {

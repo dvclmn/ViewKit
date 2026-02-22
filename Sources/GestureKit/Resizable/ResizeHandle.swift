@@ -21,7 +21,7 @@ struct ResizeHandle: View {
           height: isVertical ? handleThickness : nil
         )
 
-      // The visual indicator (the "pill")
+      /// Visual drag indicator
       Capsule()
         .fill(Color.secondary.opacity(0.5))
         .frame(
@@ -29,7 +29,7 @@ struct ResizeHandle: View {
           height: isVertical ? 4 : 40
         )
     }
-    .pointerStyleCompatible(isVertical ? .rowResize)
+    .pointerStyleCompatible(isVertical ? .columnResize : .rowResize)
 
     /// Change cursor based on direction
     //    .onHover { inside in

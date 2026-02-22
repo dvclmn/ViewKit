@@ -47,10 +47,14 @@ public enum PointerStyleCompatible: Sendable {
 
   /// The pointer style for resizing a column, or vertical division.
   case columnResize
+  
+  /// The pointer style for resizing a column, or vertical division.
   case columnResizeDirections(HorizontalDirectionCompatible.Set)
 
-  /// for resizing a row, or horizontal division, in either direction.
+  /// Style for resizing a row, or horizontal division, in either direction.
   case rowResize
+  
+  /// Style for resizing a row, or horizontal division, in either direction.
   case rowResizeDirections(VerticalDirectionCompatible.Set)
 
   case frameResize(
