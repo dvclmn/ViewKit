@@ -14,46 +14,51 @@ struct ResizableExampleView: View {
 
   var body: some View {
 
-    VStack(spacing: 0) {
-      Color.blue.opacity(0.15)
-        .resizableEdge(initialHeight: 200, minHeight: 80, maxHeight: 400)
-
-      Color.green.opacity(0.15)
-        .frame(maxHeight: .infinity)
-    }
-    .frame(width: 320, height: 500)
-
-    //    HStack(spacing: 0) {
-
-    //      VStack {
+    //    VStack(spacing: 0) {
+    //      Color.blue.opacity(0.15)
     //
-    //        ScrollView {
-    //          Text(String(repeating: SampleContent.Strings.paragraphs[2], count: 2))
-    //            .opacity(0.4)
-    //        }
-    //        .background(.blue.quaternary)
-    //        .frame(
-    //          maxWidth: .infinity,
-    //          maxHeight: .infinity,
-    //          alignment: .topLeading
-    //        )
     //
-    //        .overlay(alignment: .bottom) {
-    //          OverlayView()
-    //            //            .border(Color.green.opacity(0.3))
-    //            .padding()
-    //        }
-    //      }
-    //      .modifier(
-    //        ResizableModifier(
-    //          height: $overlayHeight,
-    //          axis: .vertical
-    //        )
-    //      )
-    //
-    //      Rectangle()
-    //        .fill(.green.tertiary)
+    //      Color.green.opacity(0.15)
+    //        .frame(maxHeight: .infinity)
     //    }
+    //    .frame(width: 320, height: 500)
+
+    HStack(spacing: 0) {
+
+      //      VStack {
+
+      ScrollView {
+        Text(String(repeating: SampleContent.Strings.paragraphs[2], count: 2))
+          .opacity(0.4)
+      }
+      .background(.blue.quaternary)
+      .frame(
+        maxWidth: .infinity,
+        maxHeight: .infinity,
+        alignment: .topLeading
+      )
+
+      .overlay(alignment: .bottom) {
+        OverlayView()
+          //            .border(Color.green.opacity(0.3))
+          //            .padding()
+          .resizableEdge(
+            initialHeight: 200,
+            minHeight: 80,
+            maxHeight: 400
+          )
+      }
+      //      }
+      //          .modifier(
+      //            ResizableModifier(
+      //              height: $overlayHeight,
+      //              axis: .vertical
+      //            )
+      //          )
+
+      Rectangle()
+        .fill(.green.tertiary)
+    }
 
   }
 }

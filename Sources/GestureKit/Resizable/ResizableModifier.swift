@@ -8,18 +8,15 @@
 import CoreTools
 import SwiftUI
 
-// MARK: - Modifier
-
 struct ResizableEdgeModifier: ViewModifier {
 
-  /// The committed, persisted height — survives between drag sessions
   @State private var storedHeight: CGFloat
-
-  /// The live delta for the current drag only — resets to zero after each gesture
-  @State private var dragDelta: CGFloat = 0
+  @GestureState private var dragDelta: CGFloat = 0
 
   let minHeight: CGFloat
   let maxHeight: CGFloat
+
+  private let resizeSpace = "ResizableEdgeModifier.resizeSpace"
 
   init(initialHeight: CGFloat, minHeight: CGFloat, maxHeight: CGFloat) {
     _storedHeight = State(initialValue: initialHeight)
@@ -27,68 +24,45 @@ struct ResizableEdgeModifier: ViewModifier {
     self.maxHeight = maxHeight
   }
 
-  // The rendered height is always the sum of the two.
-  // During a drag, dragDelta is live. At rest, it's zero.
   private var currentHeight: CGFloat {
     (storedHeight + dragDelta).clamped(to: minHeight...maxHeight)
   }
 
   func body(content: Content) -> some View {
     content
+      .coordinateSpace(name: resizeSpace)
       .frame(height: currentHeight)
       .overlay(alignment: .bottom) {
-        ResizeHandle(dragDelta: $dragDelta, storedHeight: $storedHeight)
+        ResizeHandle()
+          .gesture(dragGesture)
       }
   }
-}
 
-// MARK: - Handle
-
-// Kept as a separate View so its responsibilities are clear:
-// it owns the gesture, nothing else.
-private struct ResizeHandle: View {
-
-  @Binding var dragDelta: CGFloat
-  @Binding var storedHeight: CGFloat
-
-  // How tall the hittable strip is. Visually it can be thinner.
-  private let hitAreaHeight: CGFloat = 16
-
-  var body: some View {
-    ZStack {
-      // The hittable region — invisible but fully interactive
-      Color.clear
-        .frame(height: hitAreaHeight)
-        .contentShape(Rectangle())
-
-      // A small visible affordance so the user knows it's draggable.
-      // Swap this out for whatever suits your design.
-      Capsule()
-        .fill(Color.primary.opacity(0.2))
-        .frame(width: 40, height: 4)
-    }
-    .gesture(
-      DragGesture(minimumDistance: 4)
-        .onChanged { value in
-          // value.translation.height is cumulative from touch-down,
-          // which is exactly what we want — no amplification risk.
-          dragDelta = value.translation.height
-        }
-        .onEnded { value in
-          // Commit the delta into storedHeight exactly once.
-          // Then clear dragDelta so we start fresh next time.
-          storedHeight += value.translation.height
-          dragDelta = 0
-        }
-    )
+  private var dragGesture: some Gesture {
+    DragGesture(minimumDistance: 2, coordinateSpace: .named(resizeSpace))
+      .updating($dragDelta) { value, state, _ in
+        state = value.translation.height
+      }
+      .onEnded { value in
+        let proposed = storedHeight + value.translation.height
+        storedHeight = proposed.clamped(to: minHeight...maxHeight)
+      }
   }
-}
 
-// MARK: - Clamp helper
+  private struct ResizeHandle: View {
+    private let hitAreaHeight: CGFloat = 16
 
-extension Comparable {
-  func clamped(to range: ClosedRange<Self>) -> Self {
-    min(max(self, range.lowerBound), range.upperBound)
+    var body: some View {
+      ZStack {
+        Color.clear
+          .frame(height: hitAreaHeight)
+          .contentShape(Rectangle())
+
+        Capsule()
+          .fill(Color.primary.opacity(0.2))
+          .frame(width: 40, height: 4)
+      }
+    }
   }
 }
 
