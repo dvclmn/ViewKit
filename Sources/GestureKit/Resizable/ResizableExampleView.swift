@@ -43,10 +43,10 @@ struct ResizableExampleView: View {
           //            .border(Color.green.opacity(0.3))
           //            .padding()
           .resizableEdge(
-            initialHeight: 200,
-            edge: .top,
-            minHeight: 80,
-            maxHeight: 400
+            .top,
+            initialLength: 200,
+            minLength: 80,
+            maxLength: 400
           )
       }
       //      }
