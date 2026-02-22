@@ -20,6 +20,7 @@ struct ResizableExampleView: View {
 
         ScrollView {
           Text(String(repeating: SampleContent.Strings.paragraphs[2], count: 2))
+            .opacity(0.4)
         }
         .background(.blue.quaternary)
         .frame(
@@ -30,11 +31,16 @@ struct ResizableExampleView: View {
 
         .overlay(alignment: .bottom) {
           OverlayView()
-//            .border(Color.green.opacity(0.3))
-            .modifier(ResizableModifier(height: $overlayHeight))
+            //            .border(Color.green.opacity(0.3))
             .padding()
         }
       }
+      .modifier(
+        ResizableModifier(
+          height: $overlayHeight,
+          axis: .vertical
+        )
+      )
 
       Rectangle()
         .fill(.green.tertiary)
@@ -53,12 +59,12 @@ extension ResizableExampleView {
       .frame(
         maxWidth: .infinity,
         minHeight: 100,
-        //        maxHeight: overlayHeight,
+//                maxHeight: overlayHeight,
         alignment: .bottom
       )
       .frame(height: overlayHeight)
       .clipShape(.rect(cornerRadius: Styles.sizeRegular))
-      
+
   }
 }
 #if DEBUG

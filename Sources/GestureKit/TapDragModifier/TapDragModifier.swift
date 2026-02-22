@@ -132,6 +132,7 @@ extension View {
   public func tapDragGesture(
     scalar: Binding<CGFloat?>,
     axis: GridAxis,
+    reversed: Bool = false,
     tapCount: Int = 1,
     isEnabled: Bool = true,
     minimumDistance: CGFloat = 5,
@@ -139,7 +140,7 @@ extension View {
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
-        rect: scalar.toBindingRect(along: axis),
+        rect: scalar.toBindingRect(along: axis, reversed: reversed),
         behavior: .continuous(axes: axis.toSet),
         isEnabled: isEnabled,
         tapCount: tapCount,
