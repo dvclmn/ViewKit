@@ -30,7 +30,7 @@ public enum AxisMapping: Sendable {
   /// Flipped: Width/Column is Vertical, Height/Row is Horizontal.
   /// Previously: `primaryIsVertical` / `heightIsHorizontal`
   case transposed
-  
+
   /// Note: A third possible Axis could be 3D (Z-axis), this pattern could
   /// work by just adding a .depth case to the enums.
 
@@ -64,6 +64,14 @@ public enum AxisMapping: Sendable {
       case (.transposed, .vertical): return .horizontal
     }
   }
+
+  /// Converts a physical axis (SwiftUI.Axis) into your logical GridAxis.
+  public func map(_ swiftUIAxis: Axis) -> GridAxis {
+    let gridAxis = swiftUIAxis.toGridAxis
+    return map(gridAxis)
+
+  }
+
 }
 
 // MARK: - Deprecations

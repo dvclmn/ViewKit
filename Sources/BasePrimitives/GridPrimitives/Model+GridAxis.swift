@@ -213,6 +213,15 @@ extension GridAxis {
 
 }
 
+extension GridAxis {
+  public var toSwiftUIAxis: Axis {
+    switch self {
+      case .horizontal: .horizontal
+      case .vertical: .vertical
+    }
+  }
+}
+
 extension Axis {
   public var toGridAxis: GridAxis {
     switch self {

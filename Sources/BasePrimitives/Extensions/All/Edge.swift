@@ -54,10 +54,24 @@ extension Edge.Set {
 }
 
 extension Edge {
-  
-  /// Assumes `identity` for ``AxisMapping``
-  public var toAxis: Axis {
-    
+
+  /// The physical axis this edge resides on in a standard coordinate system.
+  public var toSwiftUIAxis: Axis {
+    switch self {
+      case .top, .bottom: return .vertical
+      case .leading, .trailing: return .horizontal
+    }
+  }
+
+  /// Resolves which logical axis this edge belongs to.
+  /// Assumes `identity` for ``AxisMapping`` as the baseline.
+  public var toAxis: GridAxis {
+    let mapping: AxisMapping = .identity
+    /// 1. Get the physical reality of the edge (.top -> .vertical)
+    let physical = self.toSwiftUIAxis
+
+    /// 2. Ask the mapping what that physical axis represents logically
+    return mapping.map(physical)
   }
 
   public static let zero: Double = 0.00
