@@ -9,17 +9,17 @@ import Foundation
 
 public protocol AxisKeyPathReadable {
   associatedtype Component
-  
+
   /// Path to the first storage slot (e.g., .width, .x, .column)
   static var primaryKey: KeyPath<Self, Component> { get }
-  
+
   /// Path to the second storage slot (e.g., .height, .y, .row)
   static var secondaryKey: KeyPath<Self, Component> { get }
-  
-  func value(along axis: GridAxis, mapping: AxisMapping)
+
+  func value(along axis: GridAxis, mapping: AxisMapping)  -> Component
 }
 extension AxisKeyPathReadable {
-  
+
   public func value(
     along axis: GridAxis,
     mapping: AxisMapping = .default,

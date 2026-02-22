@@ -35,7 +35,6 @@ public enum AxisMapping: Sendable {
   public static let `default`: Self = .identity
 
   /// Selects either `primary` or `secondary` based on `axis` and the current mapping.
-  ///
   /// With `.identity`, `.horizontal` selects `primary` and `.vertical` selects `secondary`.
   /// With `.transposed`, this selection is flipped.
   public func select<T>(primary: T, secondary: T, for axis: GridAxis) -> T {
@@ -46,7 +45,6 @@ public enum AxisMapping: Sendable {
   }
 
   /// Reorders `(h, v)` into `(primary, secondary)` according to the mapping.
-  ///
   /// With `.identity` the result is `(h, v)`; with `.transposed` the result is `(v, h)`.
   public func pair<T>(h: T, v: T) -> (primary: T, secondary: T) {
     switch self {
@@ -54,7 +52,6 @@ public enum AxisMapping: Sendable {
       case .transposed: return (v, h)
     }
   }
-
 }
 
 // MARK: - Deprecations

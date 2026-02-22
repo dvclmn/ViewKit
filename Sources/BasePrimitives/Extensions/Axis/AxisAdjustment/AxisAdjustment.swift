@@ -16,35 +16,29 @@ import SwiftUI
 /// Use these APIs when the usual assumptions (x → horizontal, y → vertical) don't always
 /// hold. By threading an explicit `AxisMapping`, you can write axis-oriented code that
 /// remains correct under rotated/transposed coordinate systems.
-public protocol AdjustableByAxis: AxisKeyPathWritable {}
 
 // MARK: - Adjustable
-extension CGSize: AdjustableByAxis {}
-extension CGPoint: AdjustableByAxis {}
-extension UnitPoint: AdjustableByAxis {}
-extension CGVector: AdjustableByAxis {}
-
 
 /// Cross-value adjustments for `AdjustableByAxis` types.
 ///
 /// These helpers combine two axis-addressable values using a transform. They read
 /// corresponding axis components from `self` and `other` and compute a new value.
-extension AdjustableByAxis {
-  
+extension AxisKeyPathWritable {
+
   /// Combines this value with `other` component-wise using `transform`.
   ///
   /// The same transform is applied on both axes independently.
-  public func adjustBoth<Other: AdjustableByAxis>(
+  public func adjustBoth<Other: AxisKeyPathWritable>(
     with other: Other,
     transform: (_ lhs: Component, _ rhs: Component) -> Component
   ) -> Self where Other.Component == Component {
     return self.adjustBoth(with: other, mapping: .default, transform: transform)
   }
-  
+
   /// Mapping-aware variant: combines this value with `other` component-wise using `transform`.
   ///
   /// Values for each axis are read using `mapping` and written back honoring `mapping`.
-  public func adjustBoth<Other: AdjustableByAxis>(
+  public func adjustBoth<Other: AxisKeyPathWritable>(
     with other: Other,
     mapping: AxisMapping = .default,
     transform: (_ lhs: Component, _ rhs: Component) -> Component
@@ -58,19 +52,19 @@ extension AdjustableByAxis {
     }
     return result
   }
-  
+
   /// Component-wise combination where the transform also receives the `GridAxis` being processed.
   ///
   /// Useful when the horizontal and vertical axes should be treated differently.
-  public func adjustBoth<Other: AdjustableByAxis>(
+  public func adjustBoth<Other: AxisKeyPathWritable>(
     with other: Other,
     transform: (_ axis: GridAxis, _ lhs: Component, _ rhs: Component) -> Component
   ) -> Self where Other.Component == Component {
     return self.adjustBoth(with: other, mapping: .default, transform: transform)
   }
-  
+
   /// Mapping-aware variant: component-wise combination where the transform also receives the `GridAxis`.
-  public func adjustBoth<Other: AdjustableByAxis>(
+  public func adjustBoth<Other: AxisKeyPathWritable>(
     with other: Other,
     mapping: AxisMapping = .default,
     transform: (_ axis: GridAxis, _ lhs: Component, _ rhs: Component) -> Component
@@ -86,13 +80,12 @@ extension AdjustableByAxis {
   }
 }
 
-
 // MARK: Axis-aware single-axis adjustments
 
 /// Helpers to read/modify a single component along a given `GridAxis`, optionally
 /// using an `AxisMapping` to resolve which stored component is considered horizontal
 /// or vertical for the current context.
-extension AdjustableByAxis {
+extension AxisKeyPathWritable {
 
   /// Returns a copy with the component along `axis` set to `newValue`.
   ///
@@ -142,7 +135,7 @@ extension AdjustableByAxis {
 /// components are `BinaryFloatingPoint` (e.g. `CGFloat`). These methods make it easy to
 /// scale, combine, or otherwise coordinate the horizontal/vertical components together
 /// while respecting an optional `AxisMapping`.
-extension AdjustableByAxis where Component: BinaryFloatingPoint {
+extension AxisKeyPathWritable where Component: BinaryFloatingPoint {
 
   /// Combines this value with `other` by applying `op` component-wise.
   ///

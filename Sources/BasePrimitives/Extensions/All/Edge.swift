@@ -125,7 +125,7 @@ extension Edge {
   //    }
   //  }
 
-  public var alignment: Alignment {
+  public var toAlignment: Alignment {
     switch self {
       case .top: .top
       case .bottom: .bottom
@@ -143,7 +143,7 @@ extension Edge {
     }
   }
 
-  public var alignmentOpposite: Alignment {
+  public var toAlignmentOpposing: Alignment {
     switch self {
       case .top: .bottom
       case .bottom: .top

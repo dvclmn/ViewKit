@@ -37,19 +37,19 @@ struct ResizableEdgeModifier: ViewModifier {
         height: isVertical ? displaySize : nil
       )
       .overlay(alignment: edge.alignment) {
-        ResizeHandle()
-          .gesture(dragGesture)
+//        ResizeHandle()
+//          .gesture(dragGesture)
       }
-      .environment(\.layoutAxis, <#T##value: V##V#>)
+      
   }
 }
 
 // MARK: - Gesture Logic
 extension ResizableEdgeModifier {
 
-  private var layoutAxis: Axis {
-    edge.to
-  }
+//  private var layoutAxis: Axis {
+//    edge.to
+//  }
   private var isVertical: Bool {
     edge == .top || edge == .bottom
   }
