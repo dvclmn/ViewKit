@@ -54,6 +54,11 @@ extension Edge.Set {
 }
 
 extension Edge {
+  
+  /// Assumes `identity` for ``AxisMapping``
+  public var toAxis: Axis {
+    
+  }
 
   public static let zero: Double = 0.00
   public static let quarter: Double = 0.25

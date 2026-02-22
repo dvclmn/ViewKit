@@ -57,7 +57,7 @@ struct ScrubberCore: View {
           //        .allowsHitTesting(isDraggable)
         }
 
-        .setPointerStyle(.frameResize(position: .leading, directions: .all))
+        .pointerStyleCompatible(.frameResize(position: .leading, directions: .all))
         .onHover { store.isHovered = $0 }
         .gesture(ScrubDragGesture(store: store), isEnabled: isDraggable)
         .sensoryFeedback(.alignment, trigger: store.value) {

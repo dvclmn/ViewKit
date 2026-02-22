@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-//import CasePaths
 
 extension CGSize: AxisKeyPathWritable {
   public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.width }
@@ -57,6 +56,7 @@ extension GridDimensions: AxisKeyPathWritable {
   public static var primaryKey: WritableKeyPath<Self, Int> { \.width }
   public static var secondaryKey: WritableKeyPath<Self, Int> { \.height }
 }
+
 
 //extension GridAxis: AxisKeyPathReadable {
 //  public static var primaryKey: KeyPath<Self, Void> { \Self.Cases.horizontal }

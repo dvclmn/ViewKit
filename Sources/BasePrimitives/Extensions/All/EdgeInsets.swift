@@ -30,11 +30,17 @@ extension EdgeInsets {
   /// A "Synthetic" property for uniform horizontal padding
   var horizontalUniform: CGFloat {
     get { (leading + trailing) / 2 }
-    set { leading = newValue; trailing = newValue }
+    set {
+      leading = newValue
+      trailing = newValue
+    }
   }
-  
+
   var verticalUniform: CGFloat {
     get { (top + bottom) / 2 }
-    set { top = newValue; bottom = newValue }
+    set {
+      top = newValue
+      bottom = newValue
+    }
   }
 }
