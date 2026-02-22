@@ -192,3 +192,25 @@ extension VerticalAlignment {
   //    }
   //  }
 }
+
+extension HorizontalAlignment {
+  /// Maps a horizontal alignment to its vertical equivalent.
+  var verticalEquivalent: VerticalAlignment {
+    switch self {
+      case .leading:  return .top
+      case .trailing: return .bottom
+      default:        return .center
+    }
+  }
+}
+
+extension VerticalAlignment {
+  /// Maps a vertical alignment to its horizontal equivalent.
+  var horizontalEquivalent: HorizontalAlignment {
+    switch self {
+      case .top:      return .leading
+      case .bottom:   return .trailing
+      default:        return .center
+    }
+  }
+}

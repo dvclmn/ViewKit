@@ -31,7 +31,7 @@ extension AxisKeyPathWritable {
   public func setting(
     _ newValue: Component,
     along axis: GridAxis,
-    mapping: AxisMapping = .identity
+    mapping: AxisMapping = .default
   ) -> Self {
     var copy = self
     let keyPath = mapping.select(
