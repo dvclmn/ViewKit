@@ -55,13 +55,6 @@ public enum AxisMapping: Sendable {
     }
   }
 
-  /// Internal variant of `select(primary:secondary:for:)` used by helpers.
-//  package func resolve<T>(primary: T, secondary: T, for axis: GridAxis) -> T {
-//    switch (self, axis) {
-//      case (.identity, .horizontal), (.transposed, .vertical): return primary
-//      case (.identity, .vertical), (.transposed, .horizontal): return secondary
-//    }
-//  }
 }
 
 // MARK: - Deprecations

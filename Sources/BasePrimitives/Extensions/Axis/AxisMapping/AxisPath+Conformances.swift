@@ -8,53 +8,53 @@
 import SwiftUI
 
 extension CGSize: AxisKeyPathWritable {
-  public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.width }
-  public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.height }
+  public static var primaryWritableKey: WritableKeyPath<Self, CGFloat> { \.width }
+  public static var secondaryWritableKey: WritableKeyPath<Self, CGFloat> { \.height }
 }
 
 extension CGRect: AxisKeyPathWritable {
-  public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.size.width }
-  public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.size.height }
+  public static var primaryWritableKey: WritableKeyPath<Self, CGFloat> { \.size.width }
+  public static var secondaryWritableKey: WritableKeyPath<Self, CGFloat> { \.size.height }
 }
 
 extension CGPoint: AxisKeyPathWritable {
-  public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.x }
-  public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.y }
+  public static var primaryWritableKey: WritableKeyPath<Self, CGFloat> { \.x }
+  public static var secondaryWritableKey: WritableKeyPath<Self, CGFloat> { \.y }
 }
 extension CGVector: AxisKeyPathWritable {
-  public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.dx }
-  public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.dy }
+  public static var primaryWritableKey: WritableKeyPath<Self, CGFloat> { \.dx }
+  public static var secondaryWritableKey: WritableKeyPath<Self, CGFloat> { \.dy }
 }
 
 extension UnitPoint: AxisKeyPathWritable {
-  public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.x }
-  public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.y }
+  public static var primaryWritableKey: WritableKeyPath<Self, CGFloat> { \.x }
+  public static var secondaryWritableKey: WritableKeyPath<Self, CGFloat> { \.y }
 }
 
 extension EdgeInsets: AxisKeyPathWritable {
-  public static var primaryKey: WritableKeyPath<Self, CGFloat> { \.horizontalUniform }
-  public static var secondaryKey: WritableKeyPath<Self, CGFloat> { \.verticalUniform }
+  public static var primaryWritableKey: WritableKeyPath<Self, CGFloat> { \.horizontalUniform }
+  public static var secondaryWritableKey: WritableKeyPath<Self, CGFloat> { \.verticalUniform }
 }
 
 // MARK: - Index-based conformace
 extension GridPosition: AxisKeyPathWritable {
-  public static var primaryKey: WritableKeyPath<Self, Int> { \.column }
-  public static var secondaryKey: WritableKeyPath<Self, Int> { \.row }
+  public static var primaryWritableKey: WritableKeyPath<Self, Int> { \.column }
+  public static var secondaryWritableKey: WritableKeyPath<Self, Int> { \.row }
 }
 
 extension UnitSize: AxisKeyPathWritable {
-  public static var primaryKey: WritableKeyPath<Self, UnitLength> { \.width }
-  public static var secondaryKey: WritableKeyPath<Self, UnitLength> { \.height }
+  public static var primaryWritableKey: WritableKeyPath<Self, UnitLength> { \.width }
+  public static var secondaryWritableKey: WritableKeyPath<Self, UnitLength> { \.height }
 }
 
 extension UnitRect: AxisKeyPathWritable {
-  public static var primaryKey: WritableKeyPath<Self, UnitLength> { \.size.width }
-  public static var secondaryKey: WritableKeyPath<Self, UnitLength> { \.size.height }
+  public static var primaryWritableKey: WritableKeyPath<Self, UnitLength> { \.size.width }
+  public static var secondaryWritableKey: WritableKeyPath<Self, UnitLength> { \.size.height }
 }
 
 extension GridDimensions: AxisKeyPathWritable {
-  public static var primaryKey: WritableKeyPath<Self, Int> { \.width }
-  public static var secondaryKey: WritableKeyPath<Self, Int> { \.height }
+  public static var primaryWritableKey: WritableKeyPath<Self, Int> { \.width }
+  public static var secondaryWritableKey: WritableKeyPath<Self, Int> { \.height }
 }
 
 
