@@ -11,46 +11,61 @@ import SwiftUI
 struct ResizableView<Content: View>: View {
 
   @State private var currentLength: CGFloat
-  @GestureState private var dragDelta: CGFloat = 0
+  @State private var dragDelta: CGFloat = .zero
 
-  let edge: Edge
-  let minLength: CGFloat
-  let maxLength: CGFloat
+  let state: ResizeState
   let content: Content
 
   init(
     edge: Edge,
     initialLength: CGFloat,
-    minLength: CGFloat = 50,
-    maxLength: CGFloat = .infinity,
+    minLength: CGFloat,
+    maxLength: CGFloat,
     @ViewBuilder content: @escaping () -> Content
   ) {
-    self.edge = edge
     self._currentLength = State(initialValue: initialLength)
-    self.minLength = minLength
-    self.maxLength = maxLength
+    self.state = ResizeState(edge: edge, minLength: minLength, maxLength: maxLength)
     self.content = content()
   }
 
   var body: some View {
     DynamicStack(
-      alignedAxis: edge.isVertical
-        ? .vertical(edge.toAlignment.horizontal)
-        : .horizontal(edge.toAlignment.vertical)
+      alignedAxis: state.isVertical
+        ? .vertical(state.edge.toAlignment.horizontal)
+        : .horizontal(state.edge.toAlignment.vertical),
+      spacing: .zero
     ) {
       content
-
         .frame(
-          width: isVertical ? nil : displaySize,
-          height: isVertical ? displaySize : nil,
-          alignment: edge.toAlignment.toOpposing
+          width: state.isVertical ? nil : displaySize,
+          height: state.isVertical ? displaySize : nil,
+          alignment: state.edge.toAlignment.toOpposing
         )
+        .overlay(alignment: state.edge.toAlignment) {
+          ResizeHandle()
+            .gesture(
+              ResizeGesture(
+                dragDelta: dragDelta,
+                currentLength: $currentLength,
+                state: state
+              ) { delta in
+                self.dragDelta = delta
+              }
+            )
+            .environment(\.layoutAxis, state.edge.toAxis)
+        }
     }
     .frame(
       maxWidth: .infinity,
       maxHeight: .infinity,
-      alignment: edge.toAlignment.toOpposing
+      alignment: state.edge.toAlignment.toOpposing
     )
 
+  }
+}
+
+extension ResizableView {
+  private var displaySize: CGFloat {
+    state.displaySize(currentLength: currentLength, dragDelta: dragDelta)
   }
 }
