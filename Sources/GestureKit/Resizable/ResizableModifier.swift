@@ -13,29 +13,51 @@ struct ResizableEdgeModifier: ViewModifier {
   @State private var storedHeight: CGFloat
   @GestureState private var dragDelta: CGFloat = 0
 
+  let edge: Edge
   let minHeight: CGFloat
   let maxHeight: CGFloat
 
+  private let hitAreaHeight: CGFloat = 16
   private let resizeSpace = "ResizableEdgeModifier.resizeSpace"
 
-  init(initialHeight: CGFloat, minHeight: CGFloat, maxHeight: CGFloat) {
-    _storedHeight = State(initialValue: initialHeight)
+  init(
+    initialHeight: CGFloat,
+    edge: Edge,
+    minHeight: CGFloat,
+    maxHeight: CGFloat
+  ) {
+    self._storedHeight = State(initialValue: initialHeight)
+    self.edge = edge
     self.minHeight = minHeight
     self.maxHeight = maxHeight
   }
 
-  private var currentHeight: CGFloat {
-    (storedHeight + dragDelta).clamped(to: minHeight...maxHeight)
-  }
-
   func body(content: Content) -> some View {
     content
-      .coordinateSpace(name: resizeSpace)
+      .coordinateSpace(.named(resizeSpace))
       .frame(height: currentHeight)
-      .overlay(alignment: .bottom) {
+
+      .overlay(alignment: edge.alignment) {
         ResizeHandle()
           .gesture(dragGesture)
       }
+  }
+
+}
+
+extension ResizableEdgeModifier {
+
+  //  private var alignment: Alignment {
+  //    switch edge {
+  //      case .top: .bottom
+  //      case .leading: .topLeading
+  //      case .bottom: .bottomLeading
+  //      case .trailing: .bottomTrailing
+  //    }
+  //  }
+
+  private var currentHeight: CGFloat {
+    (storedHeight + dragDelta).clamped(to: minHeight...maxHeight)
   }
 
   private var dragGesture: some Gesture {
@@ -49,21 +71,20 @@ struct ResizableEdgeModifier: ViewModifier {
       }
   }
 
-  private struct ResizeHandle: View {
-    private let hitAreaHeight: CGFloat = 16
+  @ViewBuilder
+  private func ResizeHandle() -> some View {
+    ZStack(alignment: .center) {
+      Color.clear
+        .frame(height: hitAreaHeight)
+        .contentShape(Rectangle())
 
-    var body: some View {
-      ZStack {
-        Color.clear
-          .frame(height: hitAreaHeight)
-          .contentShape(Rectangle())
-
-        Capsule()
-          .fill(Color.primary.opacity(0.2))
-          .frame(width: 40, height: 4)
-      }
+      Capsule()
+        .fill(Color.primary.opacity(0.2))
+        .frame(width: 40, height: 4)
     }
+
   }
+
 }
 
 // MARK: - View extension
@@ -71,12 +92,14 @@ struct ResizableEdgeModifier: ViewModifier {
 extension View {
   func resizableEdge(
     initialHeight: CGFloat,
+    edge: Edge,
     minHeight: CGFloat = 100,
     maxHeight: CGFloat = 600
   ) -> some View {
     modifier(
       ResizableEdgeModifier(
         initialHeight: initialHeight,
+        edge: edge,
         minHeight: minHeight,
         maxHeight: maxHeight
       ))

@@ -44,6 +44,7 @@ struct ResizableExampleView: View {
           //            .padding()
           .resizableEdge(
             initialHeight: 200,
+            edge: .top,
             minHeight: 80,
             maxHeight: 400
           )
