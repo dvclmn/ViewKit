@@ -20,6 +20,14 @@ extension Axis {
       case .vertical: .vertical
     }
   }
+  
+  public var isHorizontal: Bool {
+    self == .horizontal
+  }
+  
+  public var isVertical: Bool {
+    self == .vertical
+  }
 
   public func getMinMax(_ axis: Axis.MinMax, mapping: AxisMapping = .default) -> Axis {
     switch mapping {

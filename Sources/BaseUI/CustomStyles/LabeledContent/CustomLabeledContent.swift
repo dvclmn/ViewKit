@@ -57,7 +57,7 @@ extension CustomLabeledContent {
       configuration.content
         .controlSize(.small)
         .toggleStyle(.switch)
-        .frame(maxWidth: widthOverride, alignment: layoutAlignment?.opposite ?? .center)
+        .frame(maxWidth: widthOverride, alignment: layoutAlignment?.toOpposing ?? .center)
 
     } label: {
       configuration.label

@@ -121,7 +121,7 @@ extension Alignment {
   //      default: .center
   //    }
   //  }
-  public var opposite: Alignment {
+  public var toOpposing: Alignment {
     switch self {
 
       case .topLeading: .bottomTrailing

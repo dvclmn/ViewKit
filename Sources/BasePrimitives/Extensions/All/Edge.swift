@@ -25,38 +25,11 @@ extension HorizontalEdge {
   }
 }
 
-extension Edge.Set {
-
-  //  public func toAxis() -> Axis2D {
-  //
-  //    let isHorizontal: Bool = self == .horizontal
-  //
-  //    if self == .horizontal {
-  //      return CGFloat(count) * unitSize.width
-  //    } else if self == .vertical {
-  //      return CGFloat(count) * unitSize.height
-  //    } else if self == .top || self == .bottom {
-  //      // Top/bottom are vertical
-  //      return CGFloat(count) * unitSize.height
-  //    } else if self == .leading || self == .trailing {
-  //      // Leading/trailing are horizontal
-  //      return CGFloat(count) * unitSize.width
-  //    } else if self == .all {
-  //      // Ambiguous, pick one (horizontal)
-  //      return CGFloat(count) * unitSize.width
-  //    } else {
-  //      return nil
-  //    }
-  //
-  //
-  //  }
-
-}
-
 extension Edge {
 
   /// The physical axis this edge resides on in a standard coordinate system.
-  public var toSwiftUIAxis: Axis {
+  public var toAxis: Axis {
+    //    let mapping: AxisMapping = .identity
     switch self {
       case .top, .bottom: return .vertical
       case .leading, .trailing: return .horizontal
@@ -65,10 +38,10 @@ extension Edge {
 
   /// Resolves which logical axis this edge belongs to.
   /// Assumes `identity` for ``AxisMapping`` as the baseline.
-  public var toAxis: GridAxis {
+  public var toGridAxis: GridAxis {
     let mapping: AxisMapping = .identity
     /// 1. Get the physical reality of the edge (.top -> .vertical)
-    let physical = self.toSwiftUIAxis
+    let physical = self.toAxis
 
     /// 2. Ask the mapping what that physical axis represents logically
     return mapping.map(physical)
@@ -118,27 +91,6 @@ extension Edge {
     }
   }
 
-  /// Convenient default, assumes convention of width == horizontal
-  //  public var toAxis: Axis {
-  //    self.toAxis(using: .widthIsHorizontal)
-  //  }
-  //
-  //  public func toAxis(using mapping: AxisMapping = .default) -> Axis {
-  //    switch convention {
-  //      case .widthIsHorizontal:
-  //        switch self {
-  //          case .top, .bottom: .vertical
-  //          case .leading, .trailing: .horizontal
-  //        }
-  //
-  //      case .heightIsHorizontal:
-  //        switch self {
-  //          case .top, .bottom: .horizontal
-  //          case .leading, .trailing: .vertical
-  //        }
-  //    }
-  //  }
-
   public var toAlignment: Alignment {
     switch self {
       case .top: .top
@@ -158,53 +110,6 @@ extension Edge {
   }
 
   public var toAlignmentOpposing: Alignment {
-    switch self {
-      case .top: .bottom
-      case .bottom: .top
-      case .leading: .trailing
-      case .trailing: .leading
-    }
+    toAlignment.toOpposing
   }
 }
-
-// top
-// leading
-// bottom
-// trailing
-// all
-// horizontal
-// vertical
-//extension Edge.Set {
-//  public func toAxis(using convention: AxisConvention) -> Axis? {
-//    switch convention {
-//      case .widthIsHorizontal:
-//        if self == .top
-//          || self == .bottom
-//          || self == .vertical
-//        {
-//          return .vertical
-//        }
-//        if self == .leading
-//          || self == .trailing
-//          || self == .horizontal
-//        {
-//          return .horizontal
-//        }
-//
-//      case .heightIsHorizontal:
-//        if self == .top
-//          || self == .bottom
-//          || self == .vertical
-//        {
-//          return .horizontal
-//        }
-//        if self == .leading
-//          || self == .trailing
-//          || self == .horizontal
-//        {
-//          return .vertical
-//        }
-//    }
-//    return nil
-//  }
-//}

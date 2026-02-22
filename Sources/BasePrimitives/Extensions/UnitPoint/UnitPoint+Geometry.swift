@@ -39,6 +39,7 @@ extension UnitPoint {
     return isHorizontalEdge || isVerticalEdge
   }
 
+  /// Should probably tie these into ``AxisMapping``
   public var isHorizontalEdge: Bool {
     switch self {
       case .top, .bottom: true
@@ -55,14 +56,13 @@ extension UnitPoint {
 
   public var toAxis: Axis? {
     if isHorizontalEdge {
-      return Axis.horizontal
+      Axis.horizontal
     } else if isVerticalEdge {
-      return Axis.vertical
+      Axis.vertical
     } else {
-      return nil
+      nil
     }
   }
-
 
   /// A collection of unit points arranged horizontally along the top edge.
   ///

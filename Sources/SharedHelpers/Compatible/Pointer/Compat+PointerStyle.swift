@@ -5,84 +5,64 @@
 //  Created by Dave Coleman on 19/9/2024.
 //
 
-import SwiftUI
 import BasePrimitives
-
-public enum FrameResizePositionCompatible: Int8, CaseIterable, Sendable {
-  case top
-  case leading
-  case bottom
-  case trailing
-  case topLeading
-  case topTrailing
-  case bottomLeading
-  case bottomTrailing
-}
-
-public enum FrameResizeDirectionCompatible: Int8, CaseIterable, Sendable {
-
-  /// Indicates that the frame can be resized inwards to be smaller.
-  case inward
-
-  /// Indicates that the frame can be resized outwards to be larger.
-  case outward
-  
-  case all
-}
+import SwiftUI
 
 public enum PointerStyleCompatible: Sendable {
+  /// Displays an arrow in macOS and a circle in iPadOS and visionOS.
   case `default`
+
+  /// Appropriate for selecting or inserting text in a horizontal layout.
+  /// Sometimes referred to as the I-beam pointer.
   case horizontalText
+
+  /// Style appropriate for selecting or inserting text in a
+  /// vertical layout.
   case verticalText
+
+  /// Style for precise rectangular selection, such as selecting a portion
+  /// of an image or multiple lines of text. It displays a crosshair
   case rectSelection
+
+  /// Indicates that dragging to reposition content within specific bounds,
+  /// such as panning a large image, is possible. Displays an open hand to
+  /// indicate that the content can be repositioned.
+  ///
+  /// Typically it’s used along with `grabActive` while a mouse or trackpad is
+  /// actively clicked to indicate that the content is currently being repositioned.
   case grabIdle
+
+  /// The style for actively dragging to reposition content within specific bounds.
+  /// Displays a closed hand to indicate that the content is currently being repositioned
   case grabActive
+
+  /// The pointer style appropriate for content opens a URL link to a
+  /// webpage, document, or other item when clicked. Displays a pointing hand.
   case link
+
+  /// Indicates that the content can be zoomed in.
+  /// Displays a magnifying glass with a plus symbol.
   case zoomIn
   case zoomOut
+
+  /// The pointer style for resizing a column, or vertical division.
   case columnResize
+  case columnResizeDirections(HorizontalDirectionCompatible.Set)
+
+  /// for resizing a row, or horizontal division, in either direction.
   case rowResize
-  
-//#if canImport(AppKit)
+  case rowResizeDirections(VerticalDirectionCompatible.Set)
+
   case frameResize(
     position: FrameResizePositionCompatible,
     directions: FrameResizeDirectionCompatible = .all
-  )  //(position: FrameResizePosition, directions: FrameResizeDirection.Set = .all) -> PointerStyle
-  case image(Image, hotSpot: UnitPoint)  // (_ image: Image, hotSpot: UnitPoint) -> PointerStyle
-//#endif
+  )
+  case image(Image, hotSpot: UnitPoint)
+
 }
 
-#if canImport(AppKit)
-extension FrameResizePositionCompatible {
-  @available(macOS 15, *)
-  var toResizePosition: FrameResizePosition {
-    switch self {
-      case .top: .top
-      case .leading: .leading
-      case .bottom: .bottom
-      case .trailing: .trailing
-      case .topLeading: .topLeading
-      case .topTrailing: .topTrailing
-      case .bottomLeading: .bottomLeading
-      case .bottomTrailing: .bottomTrailing
-    }
-  }
-}
-extension FrameResizeDirectionCompatible {
-  @available(macOS 15, *)
-  var toResizeDirection: FrameResizeDirection.Set {
-    switch self {
-      case .inward: .inward
-      case .outward: .outward
-      case .all: .all
-    }
-  }
-}
-#endif
-
-// MARK: - Private Extension for Conversion
 extension PointerStyleCompatible {
-#if canImport(AppKit)
+  #if canImport(AppKit)
   @available(macOS 15, *)
   var toPointerStyle: PointerStyle {
     switch self {
@@ -95,39 +75,23 @@ extension PointerStyleCompatible {
       case .link: .link
       case .zoomIn: .zoomIn
       case .zoomOut: .zoomOut
+
       case .columnResize: .columnResize
+      case .columnResizeDirections(let dir):
+        .columnResize(directions: dir.toHorizontalDirection)
+
       case .rowResize: .rowResize
-      case .frameResize(let position, let direction): .frameResize(
-        position: position.toResizePosition,
-        directions: direction.toResizeDirection
-      )
+      case .rowResizeDirections(let dir):
+        .rowResize(directions: dir.toVerticalDirection)
+
+      case .frameResize(let position, let direction):
+        .frameResize(
+          position: position.toResizePosition,
+          directions: direction.toResizeDirection
+        )
+        
       case .image(let image, let hotSpot): .image(image, hotSpot: hotSpot)
     }
   }
-#endif
-}
-
-extension GridBoundaryPoint {
-  
-  public var toCompatPointerStyle: PointerStyleCompatible {
-    let style = PointerStyleCompatible.frameResize(
-      position: self.toCompatFrameResizePosition,
-      directions: .all
-    )
-    return style
-  }
-  
-  var toCompatFrameResizePosition: FrameResizePositionCompatible {
-    switch self {
-      case .topLeading: .topLeading
-      case .topTrailing: .topTrailing
-      case .bottomLeading: .bottomLeading
-      case .bottomTrailing: .bottomTrailing
-      case .top: .top
-      case .trailing: .trailing
-      case .leading: .leading
-      case .bottom: .bottom
-    }
-  }
-  
+  #endif
 }

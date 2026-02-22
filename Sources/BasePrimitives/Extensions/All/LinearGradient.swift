@@ -32,7 +32,7 @@ extension LinearGradient {
         colour.opacity(falloffAmount.inversePercentage),
       ],
       startPoint: direction.toUnitPoint(),
-      endPoint: direction.opposite.toUnitPoint()
+      endPoint: direction.toOpposing.toUnitPoint()
     )
   }
 }

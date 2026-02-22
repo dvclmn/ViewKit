@@ -16,8 +16,6 @@ struct ResizableEdgeModifier: ViewModifier {
   let minLength: CGFloat
   let maxLength: CGFloat
 
-  private let handleThickness: CGFloat = 16
-
   init(
     edge: Edge,
     initialLength: CGFloat,
@@ -36,10 +34,11 @@ struct ResizableEdgeModifier: ViewModifier {
         width: isVertical ? nil : displaySize,
         height: isVertical ? displaySize : nil
       )
-      .overlay(alignment: edge.alignment) {
-//        ResizeHandle()
-//          .gesture(dragGesture)
+      .overlay(alignment: edge.toAlignment) {
+        ResizeHandle()
+          .gesture(dragGesture)
       }
+      .environment(\.layoutAxis, edge.toAxis)
       
   }
 }
@@ -47,9 +46,6 @@ struct ResizableEdgeModifier: ViewModifier {
 // MARK: - Gesture Logic
 extension ResizableEdgeModifier {
 
-//  private var layoutAxis: Axis {
-//    edge.to
-//  }
   private var isVertical: Bool {
     edge == .top || edge == .bottom
   }

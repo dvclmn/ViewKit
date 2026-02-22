@@ -64,6 +64,7 @@ extension Direction2D {
 }
 
 extension Alignment {
+
   public var direction: Direction2D {
     switch self {
       case .top: .up
@@ -101,7 +102,6 @@ extension ViewDimensions {
     for alignment: Alignment,
     axis: GridAxis,
     magnitude: CGFloat,  // As a factor, e.g. 0.2
-    //    distance: CGFloat,
     radial radialDirection: RadialDirection = .outward
   ) -> CGFloat {
 
@@ -117,20 +117,13 @@ extension ViewDimensions {
       ? self[targetAlignment.horizontal] + offset
       : self[targetAlignment.vertical] + offset
 
-    //    direction.offset(distance: distance, radial: radialDirection)
   }
 
   private func getAlignment(
     _ alignment: Alignment,
-    //    for axis: GridAxis
   ) -> Alignment {
-    let excluded: [Alignment] = [.center]
+    //    let excluded: [Alignment] = [.center]
     let toFlip: [Alignment] = [.leading, .trailing, .top, .bottom]
-    return toFlip.contains(alignment) ? alignment.opposite : alignment
-    //    switch alignment {
-    //      case .leading, .trailing, .top, .bottom:
-    //        return alignment.opposite
-    //
-    //    }
+    return toFlip.contains(alignment) ? alignment.toOpposing : alignment
   }
 }
