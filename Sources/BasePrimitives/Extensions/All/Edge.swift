@@ -46,6 +46,14 @@ extension Edge {
     /// 2. Ask the mapping what that physical axis represents logically
     return mapping.map(physical)
   }
+  
+  public var isVertical: Bool {
+    self.toGridAxis.isVertical
+  }
+  
+  public var isHorizontal: Bool {
+    self.toGridAxis.isHorizontal
+  }
 
   public static let zero: Double = 0.00
   public static let quarter: Double = 0.25

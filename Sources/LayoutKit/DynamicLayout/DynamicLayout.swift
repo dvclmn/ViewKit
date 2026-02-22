@@ -35,7 +35,19 @@ public struct DynamicStack<Content: View>: View {
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.init(
-      layoutType: LayoutType(fromAxis: axis),
+      layoutType: LayoutType(fromAxis: axis.map { AlignedAxis(fromAxis: $0) }),
+      spacing: spacing,
+      content: content
+    )
+  }
+
+  public init(
+    alignedAxis: AlignedAxis?,
+    spacing: CGFloat? = nil,
+    @ViewBuilder content: @escaping () -> Content
+  ) {
+    self.init(
+      layoutType: LayoutType(fromAxis: alignedAxis),
       spacing: spacing,
       content: content
     )

@@ -20,11 +20,11 @@ extension Axis {
       case .vertical: .vertical
     }
   }
-  
+
   public var isHorizontal: Bool {
     self == .horizontal
   }
-  
+
   public var isVertical: Bool {
     self == .vertical
   }
@@ -50,21 +50,13 @@ extension Axis {
     }
 
   }
-
 }
 
 extension Axis {
-
   public enum MinMax {
     case minWidth
     case maxWidth
     case minHeight
     case maxHeight
   }
-
-}
-
-public enum AlignmentForAxis {
-  case horizontal(HorizontalAlignment)
-  case vertical(VerticalAlignment)
 }

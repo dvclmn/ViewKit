@@ -31,17 +31,6 @@ struct ResizeHandle: View {
     }
     .pointerStyleCompatible(isVertical ? .columnResize : .rowResize)
 
-    /// Change cursor based on direction
-    //    .onHover { inside in
-    //      if inside {
-    //#if os(macOS)
-    //        isVertical ? NSCursor.resizeUpDown.push() : NSCursor.resizeLeftRight.push()
-    //#endif
-    //      } else {
-    //#if os(macOS)
-    //        NSCursor.pop()
-    //#endif
-    //      }
   }
 
 }

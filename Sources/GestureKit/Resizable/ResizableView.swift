@@ -6,17 +6,18 @@
 //
 
 import SwiftUI
+import LayoutKit
 
 struct ResizableView<Content: View>: View {
-  
+
   @State private var currentLength: CGFloat
   @GestureState private var dragDelta: CGFloat = 0
-  
+
   let edge: Edge
   let minLength: CGFloat
   let maxLength: CGFloat
   let content: Content
-  
+
   init(
     edge: Edge,
     initialLength: CGFloat,
@@ -32,7 +33,11 @@ struct ResizableView<Content: View>: View {
   }
 
   var body: some View {
-    DynamicStack(axis: edge.toAxis) {
+    DynamicStack(
+      alignedAxis: edge.isVertical
+      ? .vertical(edge.toAlignment.horizontal)
+      : .horizontal(edge.toAlignment.vertical)
+    ) {
       content
     }
   }

@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 10/1/2026.
 //
 
-import SwiftUI
 import CoreTools
+import SwiftUI
 
 /// This is here and not `SharedHelpers` because it relies on `LayoutKit`
 extension EnvironmentValues {
@@ -23,10 +23,10 @@ public enum LayoutType {
   /// Defaults to ``LayoutType/passthrough`` if axis is nil
   /// Note: this doesn't afford a chance to pass in desired
   /// alignment. May fix this in future.
-  public init(fromAxis axis: Axis?) {
+  public init(fromAxis axis: AlignedAxis?) {
     switch axis {
-      case .horizontal: self = .hstack()
-      case .vertical: self = .vstack()
+      case .horizontal(let alignment): self = .hstack(alignment: alignment)
+      case .vertical(let alignment): self = .vstack(alignment: alignment)
       case nil: self = .passthrough
     }
   }

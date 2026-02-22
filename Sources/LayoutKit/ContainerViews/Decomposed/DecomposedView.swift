@@ -77,7 +77,7 @@ extension DecomposedView {
   ) {
     self.init(
       subviewType,
-      layout: LayoutType(fromAxis: axis),
+      layout: LayoutType(fromAxis: axis.map { AlignedAxis(fromAxis: $0) }),
       spacing: spacing,
       content: content
     )

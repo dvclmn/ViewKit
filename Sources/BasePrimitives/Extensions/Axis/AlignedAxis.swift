@@ -12,5 +12,22 @@ import SwiftUI
 public enum AlignedAxis {
   case horizontal(VerticalAlignment)
   case vertical(HorizontalAlignment)
-  
+}
+
+extension AlignedAxis {
+  /// Defaults to `center` alignment for both axes
+  public init(fromAxis axis: Axis) {
+    self =
+      switch axis {
+        case .horizontal: .horizontal(.center)
+        case .vertical: .vertical(.center)
+      }
+  }
+
+  public var toAxis: Axis {
+    switch self {
+      case .horizontal: .horizontal
+      case .vertical: .vertical
+    }
+  }
 }
