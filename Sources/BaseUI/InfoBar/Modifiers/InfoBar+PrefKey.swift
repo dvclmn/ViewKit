@@ -64,23 +64,23 @@ extension View {
   public func addInfoBarItems<K: InfoBarSectionKey>(
     @DisplayStringBuilder _ content: () -> [DisplayBlock],
     key: K.Type = DebugSectionKey.self,
-    format: FloatDisplayPreset = .standard,
+    preset: FloatDisplayPreset = .standard,
     //    format: FloatDisplayFormat = .default,
     isEnabled: Bool = true
   ) -> some View {
     self.preference(
       key: InfoBarKey.self,
-      value: isEnabled
-        ? content().map { block in
-          switch block {
-            case let .labeled(key,separator, value):
-              InfoBarItem(fromLabeled: labeled, section: key, format: format)
-
-            default:
-              InfoBarItem(section: key, label: nil, content: content().output(format: format))
-
-          }
-        } : []
+      value: isEnabled ? content().toInfoBarItems(section: key, preset: preset) : []
+      //        ? content().map { block in
+      //          switch block {
+      //            case let .labeled(key,separator, value):
+      //              InfoBarItem(fromLabeled: labeled, section: key, format: format)
+      //
+      //            default:
+      //              InfoBarItem(section: key, label: nil, content: content().output(format: format))
+      //
+      //          }
+      //        } : []
       //      value: content().compactMap { block -> InfoBarItem? in
       //        guard case .labeled(let labeled) = block else { return nil }
       //        return InfoBarItem(

@@ -17,7 +17,7 @@ public enum FloatDisplayPreset: String, CaseIterable {
   case wholeNumber
   case showSign
   
-  var format: FloatDisplayFormat {
+  public var format: FloatDisplayFormat {
     switch self {
       case .standard:
           .init()
