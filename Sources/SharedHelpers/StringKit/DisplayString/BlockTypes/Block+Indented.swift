@@ -22,7 +22,8 @@ public struct Indented: Sendable {
   }
 }
 
-extension Indented: DisplayRenderable {
+extension Indented {
+//extension Indented: DisplayRenderable {
 
   public func render(using format: FloatDisplayFormat) -> String {
 

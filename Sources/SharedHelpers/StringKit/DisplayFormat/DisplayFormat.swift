@@ -38,8 +38,7 @@ extension FloatDisplayFormat {
     copy.integerLength = integerLength
     return copy
   }
-}
-extension FloatDisplayFormat {
+
   public static var `default`: Self { .init() }
 }
 

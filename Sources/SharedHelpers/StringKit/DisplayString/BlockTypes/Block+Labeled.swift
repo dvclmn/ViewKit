@@ -7,16 +7,17 @@
 
 import AppKit
 
-public struct Labeled<Value> {
+public struct Labeled {
+//public struct Labeled<Value> {
 
   public let key: String
 
   /// Previously had value as `any DisplayRenderable`, however this
   /// has been retired as it unneccesarily shadowed `FloatRenderable`
-  public let value: Value?
+//  public let value: Value?
   //  public let value: Any?
   //  public let value: (any StringRenderable)?
-  //  public let value: DisplayBlock?
+    public let value: DisplayBlock
 
   /// E.g. for `CGPoint`
   /// ```
@@ -30,7 +31,7 @@ public struct Labeled<Value> {
     separator: String = ": "
   ) {
     self.key = key
-    self.value = DisplayBlock.semantic(for: value)
+    self.value = DisplayBlock(from: value)
 //    self.value = DisplayBlock.semantic(for: value)
     self.separator = separator
   }

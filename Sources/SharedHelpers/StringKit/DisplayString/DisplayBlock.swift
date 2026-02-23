@@ -5,48 +5,52 @@
 //  Created by Dave Coleman on 6/10/2025.
 //
 
+import AppKit
 import BasePrimitives
 import EnumMacros
 import Foundation
 
-/// Note: have removed `display`, as this was accidentally mirroring
-/// `FloatRenderable` directly anyway
+/// Note: have removed `display`, as this was mirroring `FloatRenderable`
+///
+/// I think I can see `DisplayBlock` as being a way to keep various type casting
+/// etc out of the `DisplayStringBuilder`
 @CaseDetection(includesNames: true)
 public enum DisplayBlock: Sendable {
   case text(String)
   case indented(Indented)
   case float(any FloatRenderable)
   case floatGroup(any PropertiesLabeled)
-  
+
   /// Note: This previously drove ``Divider``
-//  case display(any DisplayRenderable)
-  case labeled(Labeled)
+  //  case display(any DisplayRenderable)
+  //  case labeled(Labeled)
 }
 
 extension DisplayBlock {
   init(from value: Any?) {
-    self = switch value {
-      case let result as any PropertiesLabeled:
+    self =
+      switch value {
+        case let result as any PropertiesLabeled:
           .floatGroup(result)
-        
-      case let result as any FloatRenderable:
+
+        case let result as any FloatRenderable:
           .float(result)
-        
-      case let result as StringRenderable:
+
+        case let result as StringRenderable:
           .text(result.toString)
-        
-      case let result as NSEvent.Phase:
+
+        case let result as NSEvent.Phase:
           .text(result.description)
-        
-      case let result as CustomStringConvertible:
+
+        case let result as CustomStringConvertible:
           .text(result.description)
-        
-      case nil:
+
+        case nil:
           .text("nil")
-        
-      default:
+
+        default:
           .text(String(describing: value))
-    }
+      }
   }
 }
 
@@ -57,8 +61,8 @@ extension DisplayBlock {
       case .float(let value): value.render(using: format)
       case .floatGroup(let value): value.render(using: format)
       case .indented(let indented): indented.render(using: format)
-//      case .display(let value): value.render(using: format)
-      case .labeled(let value): value.render(using: format)
+    //      case .display(let value): value.render(using: format)
+    //      case .labeled(let value): value.render(using: format)
     }
   }
 }

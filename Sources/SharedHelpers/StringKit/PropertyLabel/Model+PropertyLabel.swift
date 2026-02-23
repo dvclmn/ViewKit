@@ -46,20 +46,27 @@ extension PropertyLabel: ExpressibleByStringLiteral {
 }
 
 extension PropertyLabel {
-  public func stringValue(
-    from style: PropertyLabel.Style,
-    hasSeparator: Bool = true
-  ) -> String? {
-    let labelText: String? =
-      switch style {
-        case .none: nil
-        case .standard: self.label
-        /// Abbreviated will fall back to using Standard Label
-        case .abbreviated: self.abbreviated ?? self.label
-      }
-    let shouldRenderSep: Bool = hasSeparator && style != .none
-    let separator: String? = shouldRenderSep ? self.separator : nil
-    return [labelText, separator].compactMap(\.self).joined()
+
+  func labelText(style: Self.Style) -> String? {
+    switch style {
+      case .none: nil
+      case .standard: label
+
+      /// Falls back to standard if `abbreviated` is `nil`
+      case .abbreviated: abbreviated ?? label
+    }
   }
 
+  func separatorText(using format: FloatDisplayFormat) -> String? {
+    let shouldRenderSep: Bool =
+      format.separatorVisibility.contains(.propertyLabel)
+      && format.labelStyle != .none
+    return shouldRenderSep ? separator : nil
+  }
+
+  public func stringValue(using format: FloatDisplayFormat) -> String? {
+    let text = labelText(style: format.labelStyle)
+    let separator = separatorText(using: format)
+    return [text, separator].compactMap(\.self).joined("")
+  }
 }

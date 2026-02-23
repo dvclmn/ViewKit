@@ -26,3 +26,11 @@ public struct LabelComponent {
     self.value = value
   }
 }
+
+extension LabelComponent {
+  func stringValue(using format: FloatDisplayFormat) -> String {
+    let labelText = label.stringValue(using: format)
+    let valueText = value.render(using: format)
+    return labelText.map { $0 + valueText } ?? valueText
+  }
+}

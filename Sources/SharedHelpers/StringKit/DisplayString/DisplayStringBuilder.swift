@@ -39,15 +39,17 @@ extension DisplayStringBuilder {
   public static func buildExpression(_ expression: DisplayBlock) -> [DisplayBlock] {
     [expression]
   }
-  
+
   public static func buildExpression(_ value: Labeled) -> [DisplayBlock] {
-    [.labeled(value)]
+    [value.value]
+//    [.labeled(value)]
   }
 
-  public static func buildExpression(_ value: any DisplayRenderable) -> [DisplayBlock] {
-    [.display(value)]
-  }
-  
+  /// `DisplayRenderable` retired, use `FloatRenderable`
+//  public static func buildExpression(_ value: any DisplayRenderable) -> [DisplayBlock] {
+//    [.display(value)]
+//  }
+
   public static func buildExpression(_ value: any FloatRenderable) -> [DisplayBlock] {
     [.float(value)]
   }
