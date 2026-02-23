@@ -7,11 +7,16 @@
 
 import Foundation
 
+/// For now this can be used both for single Float values,
+/// as well as multiple together. As often a grouping of floats
+/// looks best sharing the same overall formatting.
 public struct FloatDisplayFormat: Equatable, Sendable {
   public var decimalPlaces: Int
   public var integerLength: Int?
   public var grouping: NumberGrouping
   public var labelStyle: PropertyLabel.Style
+  public var propertySeparator: PropertySeparator
+  public var componentDelimiter: ComponentDelimiter
   public var separatorVisibility: SeparatorVisibility
   public var sign: SignDisplay
 
@@ -20,14 +25,18 @@ public struct FloatDisplayFormat: Equatable, Sendable {
     integerLength: Int? = nil,
     grouping: NumberGrouping = .automatic,
     labelStyle: PropertyLabel.Style = .standard,
-    separators: SeparatorVisibility = .both,
+    propertySeparator: PropertySeparator = .colon,
+    componentDelimiter: ComponentDelimiter = .comma,
+    separatorVisibility: SeparatorVisibility = .both,
     sign: SignDisplay = .standard
   ) {
     self.decimalPlaces = decimalPlaces
     self.integerLength = integerLength
     self.grouping = grouping
     self.labelStyle = labelStyle
-    self.separatorVisibility = separators
+    self.propertySeparator = propertySeparator
+    self.componentDelimiter = componentDelimiter
+    self.separatorVisibility = separatorVisibility
     self.sign = sign
   }
 }

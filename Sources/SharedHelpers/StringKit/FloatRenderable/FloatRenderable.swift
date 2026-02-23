@@ -10,7 +10,7 @@ import SwiftUI
 public typealias NumberGrouping = FloatingPointFormatStyle<Double>.Configuration.Grouping
 
 public protocol FloatRenderable: BinaryFloatingPoint, DisplayAtomRenderable, DisplayPresetRenderable {
-//public protocol FloatRenderable: BinaryFloatingPoint, DisplayStringRenderable {
+  //public protocol FloatRenderable: BinaryFloatingPoint, DisplayStringRenderable {
   func render(using format: FloatDisplayFormat) -> String
 }
 
@@ -18,7 +18,6 @@ extension FloatRenderable {
   public func displayString(_ preset: FloatDisplayPreset) -> String {
     render(using: preset.format)
   }
-  
 }
 
 /// This protocol combo is unlikely to exist, but just in case

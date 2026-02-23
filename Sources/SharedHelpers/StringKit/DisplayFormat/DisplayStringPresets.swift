@@ -27,7 +27,7 @@ public enum FloatDisplayPreset: String, CaseIterable {
         .init(
           decimalPlaces: 0,
           labelStyle: .abbreviated,
-          separators: .component
+          separatorVisibility: .component
         )
 
       case .wholeNumber:
@@ -37,7 +37,7 @@ public enum FloatDisplayPreset: String, CaseIterable {
           .init(
             decimalPlaces: 0,
             labelStyle: .abbreviated,
-            separators: .component
+            separatorVisibility: .component
           )
 
       case .showSign:

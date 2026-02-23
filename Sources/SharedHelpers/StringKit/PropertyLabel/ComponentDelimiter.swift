@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 23/2/2026.
 //
 
-public enum ComponentDelimiter: Sendable {
+public enum ComponentDelimiter: Sendable, Equatable {
   case space
   case none
   case custom(String)

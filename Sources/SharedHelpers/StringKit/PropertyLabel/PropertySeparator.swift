@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 23/2/2026.
 //
 
-public enum PropertySeparator: Sendable {
+public enum PropertySeparator: Sendable, Equatable {
   case colon
   case custom(String)
   case none
