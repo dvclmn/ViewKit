@@ -41,12 +41,42 @@ extension InfoBarItem {
   }
 
   /// Provides a way for DisplayString's Labeled to fit nicely with InfoBar
+  /// Really only suitable for `text` and `labeled`. `indented`
+  /// would be better suited to constructing *multiple* InfoBarItems
   public init<K: InfoBarSectionKey>(
     fromBlock displayBlock: DisplayBlock,
 //    fromLabeled labeled: Labeled,
     section: K.Type = DebugSectionKey.self,
     format: FloatDisplayFormat = .default
   ) {
+    let label: String?
+    let content: String?
+    
+    switch displayBlock {
+//    let text: String? = switch displayBlock {
+      case .text(let atom):
+        label = nil
+        content = atom.render(using: format)
+        
+      case .labeled(let key, let separator, let value):
+        label = key + separator
+        content = value?.render(using: format)
+
+      case .indented(let indented):
+        nil // Not sure indented works here?
+        
+      case .divider(let string):
+        nil // Nor divider
+    }
+    
+    guard let text else { return nil }
+    self.init(
+      text,
+      icon: nil,
+      role: nil
+    )
+    
+    
     self.init(
       section: section,
       label: QuickLabel(
@@ -71,27 +101,20 @@ extension InfoBarItem: ExpressibleByStringLiteral {
   }
 }
 
-extension QuickLabel {
-  init?(
-    fromBlock displayBlock: DisplayBlock,
-    using format: FloatDisplayFormat
-  ) {
-    let text: String? = switch displayBlock {
-      case .text(let atom): atom.render(using: format)
-        
-      case .labeled(let key, let separator, let value):
-        Labeled.toString(key: key, value: value, separator: separator, using: format)
-//        let text = Labeled(key, value: value, separator: separator).
-        
-      case .indented(let indented): nil // Not sure indented works here?
-      case .divider(let string): nil // Nor divider
-    }
-    
-    guard let text else { return nil }
-    self.init(
-      text,
-      icon: nil,
-      role: nil
-    )
+extension Array where Element == DisplayBlock {
+  func toInfoBarItems<K: InfoBarSectionKey>(
+    section: K.Type = DebugSectionKey.self,
+    format: FloatDisplayFormat = .default
+  ) -> [InfoBarItem] {
+//    self.compactMap(\.toInfoBarItem(section: section, using: format))
   }
 }
+
+//extension QuickLabel {
+//  init?(
+//    fromBlock displayBlock: DisplayBlock,
+//    using format: FloatDisplayFormat
+//  ) {
+//
+//  }
+//}

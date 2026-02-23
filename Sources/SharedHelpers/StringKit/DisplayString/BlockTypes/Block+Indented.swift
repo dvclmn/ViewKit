@@ -12,7 +12,6 @@ import Foundation
 public struct Indented: Sendable {
   public let title: String?
   public let content: [DisplayBlock]
-
 }
 
 extension Indented {
