@@ -15,6 +15,8 @@ public enum FloatDisplayPreset: String, CaseIterable {
   /// Display a floating point value with `0` decimal places
   case wholeNumber
   case showSign
+  
+  case dimensions
 
   public var format: FloatDisplayFormat {
     switch self {
@@ -30,6 +32,13 @@ public enum FloatDisplayPreset: String, CaseIterable {
 
       case .wholeNumber:
         .init(decimalPlaces: 0)
+        
+      case .dimensions:
+          .init(
+            decimalPlaces: 0,
+            labelStyle: .abbreviated,
+            separators: .component
+          )
 
       case .showSign:
         .init(

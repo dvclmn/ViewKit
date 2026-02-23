@@ -21,7 +21,7 @@ public protocol PropertiesLabeled: DisplayAtomRenderable, DisplayPresetRenderabl
 
   /// Text separating each Label+Value pairing.
   /// E.g. the comma `,` in `X: 10, Y: -20`
-  var separator: ComponentSeparator { get }
+//  var defaultSeparator: ComponentSeparator { get }
 
   func renderProperties(using format: FloatDisplayFormat) -> String
 }
@@ -36,19 +36,15 @@ extension PropertiesLabeled {
   }
 }
 
-public enum ComponentSeparator: Sendable {
-  case space
-  case none
-  case custom(String)
 
-  public static let comma: Self = .custom(", ")
-}
 
 /// Types like `CGPoint` that have float properties.
 /// May be a pair, like `CGPoint`'s `x` and `y`,
 /// or more, like `CGRect`
 extension PropertiesLabeled {
 
+  var defaultDelimiter: ComponentDelimiter { .comma }
+  
   public func renderProperties(
     using format: FloatDisplayFormat
   ) -> String {
@@ -60,7 +56,7 @@ extension PropertiesLabeled {
   private func separatorString(using format: FloatDisplayFormat) -> String {
     let shouldRender = format.separatorVisibility.contains(.component)
     let str =
-      switch separator {
+      switch defaultDelimiter {
         case .space: " "
         case .none: ""
         case .custom(let str): str

@@ -7,10 +7,21 @@
 
 import Foundation
 
+/// Coordinating all separators in this domain:
+///
+/// Which types have separators?
+/// - ``PropertiesLabeled``
+/// - ``PropertyLabel``
+/// - ``Labeled``
+
+/// Trying to achieve `120 x 260`
+/// This looks like a
+
 /// A component is a key+value pair, where the
 /// key is the property's text label ``PropertyLabel``,
 /// and the value is the floating point value of this property
 public struct LabelComponent {
+  
   /// E.g. `Width`, or `X`. May include a separator,
   /// such as the colon here in `Height:`
   public let label: PropertyLabel

@@ -25,13 +25,13 @@ public struct PropertyLabel {
   let abbreviated: String?
 
   /// Text separating the property's label from it's float value
-  /// E.g. the colon in `Width: ` or `X: `
-  let separator: String
+  /// E.g. the colon in `Width: `
+  let separator: PropertySeparator
 
   public init(
     _ label: String,
     abbreviated: String? = nil,
-    separator: String = ": "
+    separator: PropertySeparator = .colon
   ) {
     self.label = label
     self.abbreviated = abbreviated
