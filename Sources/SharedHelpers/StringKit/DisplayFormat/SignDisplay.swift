@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SignDisplay {
+public enum SignDisplay: Sendable, Equatable {
   /// Just displays minus for negative values — the default behvaiour
   case standard
 

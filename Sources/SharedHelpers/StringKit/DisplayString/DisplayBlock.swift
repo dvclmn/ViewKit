@@ -23,8 +23,8 @@ public enum DisplayBlock: Sendable {
   case floatGroup(any PropertiesLabeled)
   //case divider(Divider)
   /// Note: This previously drove ``Divider``
-  //  case display(any DisplayRenderable)
-    case labeled(Labeled)
+//  case display(any DisplayStringRenderable)
+  case labeled(Labeled)
 }
 
 extension DisplayBlock {
@@ -39,6 +39,11 @@ extension DisplayBlock {
 
         case let result as StringRenderable:
           .text(result.toString)
+
+        case let result as Labeled:
+            .labeled(result)
+//        case let result as DisplayStringRenderable:
+//          .display(result)
 
         case let result as NSEvent.Phase:
           .text(result.description)
@@ -56,17 +61,15 @@ extension DisplayBlock {
 }
 
 extension DisplayBlock {
-  public func renderBlock(
-
-    using format: FloatDisplayFormat
-  ) -> String {
+  public func renderBlock(using format: FloatDisplayFormat) -> String {
     switch self {
       case .text(let text): text.toString
       case .float(let value): value.render(using: format)
       case .floatGroup(let value): value.renderProperties(using: format)
       //      case .floatGroup(let value): value.render(using: format)
       case .indented(let indented): indented.render(using: format)
-    //      case .display(let value): value.render(using: format)
+      case .labeled(let labeled): labeled.....
+//      case .display(let value): value.displayString(format.)
     //      case .labeled(let value): value.render(using: format)
     }
   }

@@ -45,11 +45,7 @@ extension DisplayStringBuilder {
     [.labeled(value)]
   }
 
-  /// `DisplayRenderable` retired, use `FloatRenderable`
-  //  public static func buildExpression(_ value: any DisplayRenderable) -> [DisplayBlock] {
-  //    [.display(value)]
-  //  }
-
+  /// Is this silly?
   public static func buildExpression(_ value: Any?) -> [DisplayBlock] {
     [DisplayBlock(from: value)]
   }

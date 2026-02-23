@@ -7,17 +7,21 @@
 
 import AppKit
 
+//public protocol DisplayBlockConvertable {
+//
+//}
+
 public struct Labeled: Sendable {
-//public struct Labeled<Value> {
+  //public struct Labeled<Value> {
 
   public let key: String
 
   /// Previously had value as `any DisplayRenderable`, however this
   /// has been retired as it unneccesarily shadowed `FloatRenderable`
-//  public let value: Value?
+  //  public let value: Value?
   //  public let value: Any?
-    public let value: (any StringRenderable)?
-//    public let value: DisplayBlock
+  public let value: (any StringRenderable)?
+  //    public let value: DisplayBlock
 
   /// E.g. for `CGPoint`
   /// ```
@@ -32,12 +36,11 @@ public struct Labeled: Sendable {
   ) {
     self.key = key
     self.value = value as? (any StringRenderable)
-//    self.value = DisplayBlock(from: value)
-//    self.value = DisplayBlock.semantic(for: value)
+    //    self.value = DisplayBlock(from: value)
+    //    self.value = DisplayBlock.semantic(for: value)
     self.separator = separator
   }
 }
-
 
 //extension Labeled: DisplayRenderable {
 //  public func render(using format: FloatDisplayFormat) -> String {
@@ -46,31 +49,39 @@ public struct Labeled: Sendable {
 //  }
 //}
 //
-//extension Labeled {
-//  public func renderValue(using format: FloatDisplayFormat) -> String {
-//    value?.render(using: format) ?? "nil"
-//  }
-//}
+extension Labeled {
+
+  public func renderLabel(using format: FloatDisplayFormat) -> String {
+    let valuePart = value.
+    return key + separator + valuePart
+  }
+  //  public var toDisplayBlock: DisplayBlock {
+  //    DisplayBlock.labeled(self)
+  ////  public func toDisplayBlock(using format: FloatDisplayFormat?) -> DisplayBlock {
+  //
+  ////    value?.render(using: format) ?? "nil"
+  //  }
+}
 
 //extension DisplayBlock {
 
-  //  fileprivate static func semantic(for value: Any?) -> DisplayBlock {
-  //
-  //  }
+//  fileprivate static func semantic(for value: Any?) -> DisplayBlock {
+//
+//  }
 
-  //  public static func displayBlock(for value: Any?) -> DisplayBlock {
-  //
-  //    guard let value else { return.text("nil") }
-  //    if let result = value as?
-  ////    if let value
-  //
-  //    let text = string(for: value)
-  //    return DisplayBlock.text(text)
-  //  }
-  //
-  //  private static func string(for value: Any?) -> String {
-  //
-  //    guard let convertible = value as? StringRenderable else { return String(describing: value) }
-  //    return convertible.toString
-  //  }
+//  public static func displayBlock(for value: Any?) -> DisplayBlock {
+//
+//    guard let value else { return.text("nil") }
+//    if let result = value as?
+////    if let value
+//
+//    let text = string(for: value)
+//    return DisplayBlock.text(text)
+//  }
+//
+//  private static func string(for value: Any?) -> String {
+//
+//    guard let convertible = value as? StringRenderable else { return String(describing: value) }
+//    return convertible.toString
+//  }
 //}

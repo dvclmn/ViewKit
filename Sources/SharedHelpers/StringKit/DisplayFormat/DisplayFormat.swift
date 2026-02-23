@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FloatDisplayFormat {
+public struct FloatDisplayFormat: Equatable, Sendable {
   public var decimalPlaces: Int
   public var integerLength: Int?
   public var grouping: NumberGrouping
@@ -33,6 +33,7 @@ public struct FloatDisplayFormat {
 }
 
 extension FloatDisplayFormat {
+
   public func with(integerLength: Int) -> Self {
     var copy = self
     copy.integerLength = integerLength
@@ -40,40 +41,6 @@ extension FloatDisplayFormat {
   }
 
   public static var `default`: Self { .init() }
-}
-
-// MARK: - Presets
-
-public enum FloatDisplayPreset: String, CaseIterable {
-  case standard
-  
-  case concise
-  
-  /// Display a floating point value with `0` decimal places
-  case wholeNumber
-  case showSign
-
-  var format: FloatDisplayFormat {
-    switch self {
-      case .standard:
-        .init()
-
-      case .concise:
-        .init(
-          decimalPlaces: 0,
-          labelStyle: .abbreviated,
-          separatorVisibility: .component
-        )
-
-      case .wholeNumber:
-        .init(decimalPlaces: 0)
-
-      case .showSign:
-        .init(
-          sign: .always(renderPlusSign: false)
-        )
-    }
-  }
 }
 
 extension BinaryFloatingPoint {

@@ -9,7 +9,7 @@ import EnumMacros
 
 extension PropertyLabel {
   @CaseDetection
-  public enum Style: Equatable {
+  public enum Style: Equatable, Sendable {
     case none
     case standard
     case abbreviated
