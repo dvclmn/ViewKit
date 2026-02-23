@@ -58,7 +58,7 @@ extension InfoBarItem {
   public init<K: InfoBarSectionKey>(
     fromLabeled labeled: Labeled,
     section: K.Type = DebugSectionKey.self,
-    format: DisplayFormat = .default
+    format: FloatDisplayFormat = .default
   ) {
     self.init(
       section: section,

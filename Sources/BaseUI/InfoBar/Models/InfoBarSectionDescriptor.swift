@@ -13,11 +13,11 @@ public protocol InfoBarSectionProtocol {
   associatedtype Item: InfoBarItemDescriptor where Item.Source == Source
 
   static var key: InfoBarSectionID { get }
-  static func items(from source: Source, format: DisplayFormat) -> [InfoBarItem]
+  static func items(from source: Source, format: FloatDisplayFormat) -> [InfoBarItem]
 }
 
 extension CaseIterable where Self: InfoBarItemDescriptor {
-  public static func items(from source: Source, format: DisplayFormat) -> [InfoBarItem] {
+  public static func items(from source: Source, format: FloatDisplayFormat) -> [InfoBarItem] {
     allCases.map { $0.makeItem(from: source, format: format) }
   }
 }

@@ -22,7 +22,7 @@ public enum DisplayBlock: Sendable {
 }
 
 extension DisplayBlock: FloatRenderable {
-  public func render(using format: DisplayFormat) -> String {
+  public func render(using format: FloatDisplayFormat) -> String {
     switch self {
       case .text(let text): text
       case .float(let value): value.render(using: format)

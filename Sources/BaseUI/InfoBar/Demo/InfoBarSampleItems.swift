@@ -31,7 +31,7 @@ extension SampleContent.ExampleItem: InfoBarItemDescriptor {
   
   public func content(
     from source: SampleContent.ExampleDataStore,
-    format: DisplayFormat
+    format: FloatDisplayFormat
   ) -> String {
 
     return switch self {

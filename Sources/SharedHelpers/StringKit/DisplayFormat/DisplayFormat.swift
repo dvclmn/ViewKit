@@ -1,5 +1,5 @@
 //
-//  DisplayFormat.swift
+//  FloatDisplayFormat.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 12/1/2026.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DisplayFormat {
+public struct FloatDisplayFormat {
   public var decimalPlaces: Int
   public var integerLength: Int?
   public var grouping: NumberGrouping
@@ -32,7 +32,7 @@ public struct DisplayFormat {
   }
 }
 
-extension DisplayFormat {
+extension FloatDisplayFormat {
   public func with(integerLength: Int) -> Self {
     var copy = self
     copy.integerLength = integerLength
@@ -41,12 +41,12 @@ extension DisplayFormat {
 }
 
 // MARK: - Presets
-extension DisplayFormat {
+extension FloatDisplayFormat {
 
   /// 2 decimal places
-  public static var `default`: DisplayFormat { .init() }
+  public static var `default`: Self { .init() }
 
-  public static var short: DisplayFormat {
+  public static var short: Self {
     .init(
       decimalPlaces: 0,
       grouping: .automatic,

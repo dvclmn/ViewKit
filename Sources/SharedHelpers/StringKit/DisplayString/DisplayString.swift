@@ -16,12 +16,12 @@ public struct DisplayString {
   /// the source code). Defaults to and is frequently set to
   /// a new line character `"\n"`
   private let separator: String
-  private let format: DisplayFormat
+  private let format: FloatDisplayFormat
 
   public init(
     _ components: [DisplayBlock],
     separator: String,
-    format: DisplayFormat
+    format: FloatDisplayFormat
   ) {
     self.components = components
     self.separator = separator
@@ -33,7 +33,7 @@ extension DisplayString {
 
   public init(
     _ separator: String = "\n",
-    format: DisplayFormat = .default,
+    format: FloatDisplayFormat = .default,
     @DisplayStringBuilder _ content: () -> [DisplayBlock]
   ) {
     self.separator = separator
@@ -80,12 +80,12 @@ extension DisplayString {
 extension Array where Element == DisplayBlock {
   public func output(
     separator: String = "\n",
-    format: DisplayFormat = .default
+    format: FloatDisplayFormat = .default
   ) -> String {
     lines(format: format).joined(separator)
   }
 
-  public func lines(format: DisplayFormat = .default) -> [String] {
+  public func lines(format: FloatDisplayFormat = .default) -> [String] {
     map { $0.render(using: format) }
   }
 }

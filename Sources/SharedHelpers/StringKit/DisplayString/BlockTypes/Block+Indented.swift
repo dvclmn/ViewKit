@@ -24,7 +24,7 @@ public struct Indented: Sendable {
 
 extension Indented: DisplayRenderable {
 
-  public func render(using format: DisplayFormat) -> String {
+  public func render(using format: FloatDisplayFormat) -> String {
 
     let content = content.map {
       $0.render(using: format)

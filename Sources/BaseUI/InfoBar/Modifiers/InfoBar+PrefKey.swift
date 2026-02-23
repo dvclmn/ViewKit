@@ -32,7 +32,7 @@ extension View {
   public func addInfoBarItems<T>(
     _ items: T.Type,
     source: T.Source,
-    format: DisplayFormat = .default,
+    format: FloatDisplayFormat = .default,
     isEnabled: Bool = true
   ) -> some View
   where T: InfoBarItemDescriptor & CaseIterable {
@@ -45,7 +45,7 @@ extension View {
   public func addInfoBarItems<K: InfoBarSectionKey>(
     _ items: String...,
     key: K.Type = DebugSectionKey.self,
-    format: DisplayFormat = .default,
+    format: FloatDisplayFormat = .default,
     isEnabled: Bool = true
   ) -> some View {
     self.preference(
@@ -64,7 +64,7 @@ extension View {
   public func addInfoBarItems<K: InfoBarSectionKey>(
     @DisplayStringBuilder _ content: () -> [DisplayBlock],
     key: K.Type = DebugSectionKey.self,
-    format: DisplayFormat = .default,
+    format: FloatDisplayFormat = .default,
     isEnabled: Bool = true
   ) -> some View {
     self.preference(

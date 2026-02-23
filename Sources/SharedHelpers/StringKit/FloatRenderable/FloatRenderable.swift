@@ -10,7 +10,7 @@ import SwiftUI
 public typealias NumberGrouping = FloatingPointFormatStyle<Double>.Configuration.Grouping
 
 public protocol FloatRenderable: BinaryFloatingPoint & Sendable {
-  func render(using format: DisplayFormat) -> String
+  func render(using format: FloatDisplayFormat) -> String
 }
 
 extension Double: FloatRenderable {}
@@ -18,7 +18,7 @@ extension CGFloat: FloatRenderable {}
 extension Float: FloatRenderable {}
 
 extension FloatRenderable {
-  public func render(using format: DisplayFormat = .default) -> String {
+  public func render(using format: FloatDisplayFormat = .default) -> String {
 
     let result: String
     if let integerLength = format.integerLength {
@@ -32,7 +32,7 @@ extension FloatRenderable {
       : result
   }
 
-  private func renderWithoutIntegerLength(format: DisplayFormat) -> String {
+  private func renderWithoutIntegerLength(format: FloatDisplayFormat) -> String {
     Double(self).formatted(
       .number
         .precision(.fractionLength(format.decimalPlaces))
@@ -43,7 +43,7 @@ extension FloatRenderable {
 
   private func renderWithIntegerLength(
     _ integerLength: Int,
-    format: DisplayFormat
+    format: FloatDisplayFormat
   ) -> String {
     Double(self).formatted(
       .number

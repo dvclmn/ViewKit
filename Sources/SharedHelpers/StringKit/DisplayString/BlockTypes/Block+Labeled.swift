@@ -31,14 +31,14 @@ public struct Labeled {
 }
 
 extension Labeled: DisplayRenderable {
-  public func render(using format: DisplayFormat) -> String {
+  public func render(using format: FloatDisplayFormat) -> String {
     let valuePart = value?.render(using: format) ?? "nil"
     return key + separator + valuePart
   }
 }
 
 extension Labeled {
-  public func renderValue(using format: DisplayFormat) -> String {
+  public func renderValue(using format: FloatDisplayFormat) -> String {
     value?.render(using: format) ?? "nil"
   }
 }

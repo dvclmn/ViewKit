@@ -28,7 +28,7 @@ public protocol PropertiesLabeled: DisplayRenderable {
 /// or more, like `CGRect`
 extension PropertiesLabeled {
 
-  public func render(using format: DisplayFormat) -> String {
+  public func render(using format: FloatDisplayFormat) -> String {
     let sepVis = format.separatorVisibility
     let labels = components.map { component in
 
