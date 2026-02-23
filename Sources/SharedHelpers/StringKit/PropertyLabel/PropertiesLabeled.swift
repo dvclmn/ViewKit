@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol PropertiesLabeled: DisplayRenderable {
+public protocol PropertiesLabeled: FloatRenderable {
 
   /// E.g. `Width` paired with `10.5`
   ///
@@ -48,25 +48,5 @@ extension PropertiesLabeled {
     return labels.joined(separatorIfNeeded)
   }
 
-  /// Default for convenience
-//  public var displayString: String { displayString() }
-//
-//  /// In the moment / case-by-case properties, put into the
-//  /// function signature, for flexibility
-//  public func displayString(
-//    places: Int = 2,
-//    grouping: NumberGrouping = .automatic,
-//    labelStyle: PropertyLabel.Style = .standard,
-//    separators separatorVisibility: SeparatorVisibility = .both
-//  ) -> String {
-//    render(
-//      using: DisplayFormat(
-//        decimalPlaces: places,
-//        grouping: grouping,
-//        labelStyle: labelStyle,
-//        separatorVisibility: separatorVisibility
-//      )
-//    )
-//  }
 
 }

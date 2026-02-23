@@ -17,11 +17,40 @@ public enum DisplayBlock: Sendable {
   case indented(Indented)
   case float(any FloatRenderable)
   case floatGroup(any PropertiesLabeled)
+  
+  /// Note: This previously drove ``Divider``
 //  case display(any DisplayRenderable)
   case labeled(Labeled)
 }
 
-extension DisplayBlock: FloatRenderable {
+extension DisplayBlock {
+  init(from value: Any?) {
+    self = switch value {
+      case let result as any PropertiesLabeled:
+          .floatGroup(result)
+        
+      case let result as any FloatRenderable:
+          .float(result)
+        
+      case let result as StringRenderable:
+          .text(result.toString)
+        
+      case let result as NSEvent.Phase:
+          .text(result.description)
+        
+      case let result as CustomStringConvertible:
+          .text(result.description)
+        
+      case nil:
+          .text("nil")
+        
+      default:
+          .text(String(describing: value))
+    }
+  }
+}
+
+extension DisplayBlock {
   public func render(using format: FloatDisplayFormat) -> String {
     switch self {
       case .text(let text): text

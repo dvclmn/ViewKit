@@ -58,10 +58,3 @@ extension FloatRenderable {
   }
 
 }
-
-extension BinaryFloatingPoint {
-  public func toPercentString(within range: ClosedRange<Self>) -> String {
-    let percent = Double(toPercent(within: range))
-    return String(percent.displayString(places: 0) + "%")
-  }
-}

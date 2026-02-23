@@ -39,20 +39,41 @@ extension FloatDisplayFormat {
     return copy
   }
 }
+extension FloatDisplayFormat {
+  public static var `default`: Self { .init() }
+}
 
 // MARK: - Presets
-extension FloatDisplayFormat {
 
-  /// 2 decimal places
-  public static var `default`: Self { .init() }
+public enum FloatDisplayPreset: String, CaseIterable {
+  case standard
+  case concise
+  case showSign
 
-  public static var short: Self {
-    .init(
-      decimalPlaces: 0,
-      grouping: .automatic,
-      labelStyle: .abbreviated,
-      separatorVisibility: .component
-    )
+  var format: FloatDisplayFormat {
+    switch self {
+      case .standard:
+        .init()
+
+      case .concise:
+        .init(
+          decimalPlaces: 0,
+          grouping: .automatic,
+          labelStyle: .abbreviated,
+          separatorVisibility: .component
+        )
+
+      case .showSign:
+        .init(
+          sign: .always(renderPlusSign: false)
+        )
+    }
   }
+}
 
+extension BinaryFloatingPoint {
+  public func toPercentString(within range: ClosedRange<Self>) -> String {
+    let percent = Double(toPercent(within: range))
+    return String(percent.render(using: .init(decimalPlaces: 0)) + "%")
+  }
 }

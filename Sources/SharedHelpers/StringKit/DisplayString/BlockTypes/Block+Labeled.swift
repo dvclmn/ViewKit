@@ -7,10 +7,15 @@
 
 import AppKit
 
-public struct Labeled {
+public struct Labeled<Value> {
 
   public let key: String
-  public let value: (any DisplayRenderable)?
+
+  /// Previously had value as `any DisplayRenderable`, however this
+  /// has been retired as it unneccesarily shadowed `FloatRenderable`
+  public let value: Value?
+  //  public let value: Any?
+  //  public let value: (any StringRenderable)?
   //  public let value: DisplayBlock?
 
   /// E.g. for `CGPoint`
@@ -26,49 +31,29 @@ public struct Labeled {
   ) {
     self.key = key
     self.value = DisplayBlock.semantic(for: value)
+//    self.value = DisplayBlock.semantic(for: value)
     self.separator = separator
   }
 }
 
-extension Labeled: DisplayRenderable {
-  public func render(using format: FloatDisplayFormat) -> String {
-    let valuePart = value?.render(using: format) ?? "nil"
-    return key + separator + valuePart
-  }
-}
-
-extension Labeled {
-  public func renderValue(using format: FloatDisplayFormat) -> String {
-    value?.render(using: format) ?? "nil"
-  }
-}
+//extension Labeled: DisplayRenderable {
+//  public func render(using format: FloatDisplayFormat) -> String {
+//    let valuePart = value?.render(using: format) ?? "nil"
+//    return key + separator + valuePart
+//  }
+//}
+//
+//extension Labeled {
+//  public func renderValue(using format: FloatDisplayFormat) -> String {
+//    value?.render(using: format) ?? "nil"
+//  }
+//}
 
 extension DisplayBlock {
 
-  fileprivate static func semantic(for value: Any?) -> DisplayBlock {
-    switch value {
-      case let result as any PropertiesLabeled:
-        .floatGroup(result)
-
-      case let result as any FloatRenderable:
-        .float(result)
-
-      case let result as StringRenderable:
-        .text(result.toString)
-
-      case let result as NSEvent.Phase:
-        .text(result.description)
-
-      case let result as CustomStringConvertible:
-        .text(result.description)
-
-      case nil:
-        .text("nil")
-
-      default:
-        .text(String(describing: value))
-    }
-  }
+  //  fileprivate static func semantic(for value: Any?) -> DisplayBlock {
+  //
+  //  }
 
   //  public static func displayBlock(for value: Any?) -> DisplayBlock {
   //
