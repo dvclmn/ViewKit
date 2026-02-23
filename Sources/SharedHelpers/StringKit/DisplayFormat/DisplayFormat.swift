@@ -17,7 +17,7 @@ public struct FloatDisplayFormat: Equatable, Sendable {
   public var labelStyle: PropertyLabel.Style
   public var propertySeparator: PropertySeparator
   public var componentDelimiter: ComponentDelimiter
-  public var separatorVisibility: SeparatorVisibility
+//  public var separatorVisibility: SeparatorVisibility
   public var sign: SignDisplay
 
   public init(
@@ -27,7 +27,7 @@ public struct FloatDisplayFormat: Equatable, Sendable {
     labelStyle: PropertyLabel.Style = .standard,
     propertySeparator: PropertySeparator = .colon,
     componentDelimiter: ComponentDelimiter = .comma,
-    separatorVisibility: SeparatorVisibility = .both,
+//    separatorVisibility: SeparatorVisibility = .both,
     sign: SignDisplay = .standard
   ) {
     self.decimalPlaces = decimalPlaces
@@ -36,7 +36,7 @@ public struct FloatDisplayFormat: Equatable, Sendable {
     self.labelStyle = labelStyle
     self.propertySeparator = propertySeparator
     self.componentDelimiter = componentDelimiter
-    self.separatorVisibility = separatorVisibility
+//    self.separatorVisibility = separatorVisibility
     self.sign = sign
   }
 }

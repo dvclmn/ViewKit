@@ -15,7 +15,8 @@ public protocol InfoBarItemDescriptor {
 
   var labelText: String { get }
   var icon: IconLiteral { get }
-  func content(from source: Source, format: FloatDisplayFormat) -> String
+  func content(from source: Source) -> String
+//  func content(from source: Source, format: FloatDisplayFormat) -> String
 }
 
 extension InfoBarItemDescriptor {
@@ -24,11 +25,15 @@ extension InfoBarItemDescriptor {
   //  public var labelText: String { label.text }
   //  public var icon: IconLiteral { label.icon }
 
-  public func makeItem(from source: Source, format: FloatDisplayFormat) -> InfoBarItem {
+  public func makeItem(
+    from source: Source,
+    format: FloatDisplayFormat
+  ) -> InfoBarItem {
     InfoBarItem(
       section: InfoBarSectionID(SectionKey.self),
       label: label,
-      content: content(from: source, format: format)
+      content: content(from: source)
+//      content: content(from: source, format: format)
     )
   }
 }

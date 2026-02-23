@@ -18,6 +18,7 @@ extension CGPoint: PropertiesLabeled {
 }
 
 extension CGSize: PropertiesLabeled {
+  
 //  public var defaultSeparator: ComponentDelimiter { .comma }
   public var components: [LabelComponent] {
     [

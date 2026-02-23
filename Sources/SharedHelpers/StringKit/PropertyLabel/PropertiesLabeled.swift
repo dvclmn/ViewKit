@@ -43,7 +43,7 @@ extension PropertiesLabeled {
 /// or more, like `CGRect`
 extension PropertiesLabeled {
 
-  var defaultDelimiter: ComponentDelimiter { .comma }
+//  var defaultDelimiter: ComponentDelimiter { .comma }
   
   public func renderProperties(
     using format: FloatDisplayFormat
@@ -55,13 +55,14 @@ extension PropertiesLabeled {
 
   private func separatorString(using format: FloatDisplayFormat) -> String {
     let shouldRender = format.separatorVisibility.contains(.component)
-    let str =
-      switch defaultDelimiter {
-        case .space: " "
-        case .none: ""
-        case .custom(let str): str
-      }
-    return shouldRender ? str : ""
+    return 
+//    let str =
+//      switch defaultDelimiter {
+//        case .space: " "
+//        case .none: ""
+//        case .custom(let str): str
+//      }
+//    return shouldRender ? str : ""
   }
   //  func shouldRenderSeparator(using format: FloatDisplayFormat) -> Bool {
   //

@@ -61,7 +61,7 @@ extension PropertyLabel {
     let shouldRenderSep: Bool =
       format.separatorVisibility.contains(.propertyLabel)
       && format.labelStyle != .none
-    return shouldRenderSep ? separator : nil
+    return shouldRenderSep ? separator.toString : nil
   }
 
   public func stringValue(using format: FloatDisplayFormat) -> String? {
