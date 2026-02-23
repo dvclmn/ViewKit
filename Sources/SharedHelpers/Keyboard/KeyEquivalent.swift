@@ -7,20 +7,19 @@
 
 import SwiftUI
 
-
 extension Set where Element == KeyEquivalent {
   public var isHoldingSpace: Bool {
     self.contains(.space)
   }
 }
 
-
+/// See `ModifierKeys` for similar name/icon properties for modifiers
 extension KeyEquivalent {
 
   public func name(isAbbreviated: Bool = false) -> String {
     return isAbbreviated ? name.abbreviated : name.full
   }
-  
+
   private var name: (full: String, abbreviated: String) {
     switch self {
       case .clear: ("Clear", "Clear")
@@ -68,16 +67,4 @@ extension KeyEquivalent {
   public var symbolCapitalised: String {
     String(symbolLiteral).capitalized
   }
-
-//  public func nameAndSymbol(isAbbreviated: Bool = false) -> String {
-//    switch self {
-//      case .clear, .delete, .deleteForward, .upArrow, .downArrow, .leftArrow, .rightArrow, .escape, .home, .end,
-//        .pageUp, .pageDown, .`return`, .space, .tab:
-//        "\(self.name) (\(self.symbolLiteral))"
-//
-//      default:
-//        "\(self.name.capitalized)"
-//    }
-//  }
-
 }

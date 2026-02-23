@@ -7,13 +7,14 @@
 
 import Foundation
 
+/// Note: This previously had associated values for fit/fill to provide
+/// geometry info, needed to actually calculate what fit/fill looks like.
+/// Not sure whether this should come back, or be handled elsewhere
 public enum ZoomOperation: Sendable {
-  case initial  // 100% / no zoom
+  case identity  // 100% / no zoom
   case zoom(CGFloat)
   case fit
-//  case fit(CanvasGeometry)
   case fill
-//  case fill(CanvasGeometry)
 }
 
 extension ZoomOperation {
@@ -26,32 +27,26 @@ extension ZoomOperation {
   ///
   ///   ```
   public func resolve(
-//    current zoom: CGFloat,
-//    current: ZoomState,
-    artwork: CGSize,
+    subject: CGSize,
     viewport: CGSize
   ) -> CGFloat {
-//  ) -> ZoomState {
     switch self {
-      case .initial: return .zero
+      case .identity: return .zero
       case .zoom(let level): return level
-//        return ZoomState(zoom: level, phase: .changed)
 
       case .fit:
         let values = Self.scaleValues(
-          artwork: artwork,
+          artwork: subject,
           viewport: viewport
         )
         return min(values.0, values.1)
-//        return ZoomState(zoom: min(values.0, values.1), phase: .ended)
 
       case .fill:
         let values = Self.scaleValues(
-          artwork: artwork,
+          artwork: subject,
           viewport: viewport
         )
         return max(values.0, values.1)
-
     }
   }
 
@@ -60,6 +55,7 @@ extension ZoomOperation {
     viewport: CGSize,
     padding: CGFloat = 40
   ) -> (CGFloat, CGFloat) {
+
     /// Calculate available space after padding
     let viewportAvailable = viewport.adjustBoth { $0 - (padding * 2) }
 
@@ -67,11 +63,6 @@ extension ZoomOperation {
       viewportAvailable.width / artwork.width,
       viewportAvailable.height / artwork.height
     )
-
-    //    return min(
-    //      viewportAvailable.width / artwork.width,
-    //      viewportAvailable.height / artwork.height
-    //    )
 
   }
 }

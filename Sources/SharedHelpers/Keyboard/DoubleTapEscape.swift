@@ -12,9 +12,9 @@ import SwiftUI
 public struct EscapeKeyDoubleTapModifier: ViewModifier {
   var action: () -> Void
   var bufferMilliseconds: Int
-  
+
   @State private var lastEscapePressDate: Date?
-  
+
   public func body(content: Content) -> some View {
     content
       .onAppear {
@@ -24,28 +24,29 @@ public struct EscapeKeyDoubleTapModifier: ViewModifier {
         }
       }
   }
-  
-  
-  
+
   private func handle(event: NSEvent) {
     guard event.keyCode == 53 else {  // 53 is the keycode for Escape
       return
     }
-    
+
     let now = Date()
-    
-    if let lastPress = lastEscapePressDate, now.timeIntervalSince(lastPress) * 1000 < Double(bufferMilliseconds) {
+
+    if let lastPress = lastEscapePressDate,
+      now.timeIntervalSince(lastPress) * 1000 < Double(bufferMilliseconds)
+    {
       action()
-      lastEscapePressDate = nil // reset after action
+      lastEscapePressDate = nil  // reset after action
     } else {
       lastEscapePressDate = now
     }
   }
 }
 
-
-public extension View {
-  func onEscapeKeyDoubleTap(bufferMilliseconds: Int = 300, perform action: @escaping () -> Void) -> some View {
+extension View {
+  public func onEscapeKeyDoubleTap(
+    bufferMilliseconds: Int = 300, perform action: @escaping () -> Void
+  ) -> some View {
     self.modifier(EscapeKeyDoubleTapModifier(action: action, bufferMilliseconds: bufferMilliseconds))
   }
 }

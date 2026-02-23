@@ -8,15 +8,12 @@
 import EnumMacros
 import SwiftUI
 
-//#if canImport(AppKit)
-
 /// AppKit modifiers: `NSEvent.ModifierFlags`
 /// SwiftUI modifier: `EventModifiers`
 extension EnvironmentValues {
   @Entry public var modifierKeys: Modifiers = []
 }
 
-//public typealias Keys = Set<KeyEquivalent>
 /// This `Modifiers` is used a lot throughout this package and various project
 public typealias Modifiers = ModifierKeys
 

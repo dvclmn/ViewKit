@@ -25,7 +25,6 @@ import SwiftUI
 ///   }
 /// }
 /// ```
-
 public struct ModifierKeysModifier: ViewModifier {
 
   @State private var modifierKeys = Modifiers()
@@ -41,9 +40,6 @@ public struct ModifierKeysModifier: ViewModifier {
           self.modifierKeys = Modifiers(from: new)
         }
         .environment(\.modifierKeys, modifierKeys)
-      //        .task(id: modifierKeys) {
-      //          print("Modifier keys changed: \(modifierKeys.description)")
-      //        }
 
     } else {
       #if canImport(AppKit)
@@ -66,11 +62,7 @@ public struct ModifierKeysModifier: ViewModifier {
 extension View {
   /// Falls back to default mask, if no value supplied for `keysToWatch`
   public func readModifierKeys(_ keysToWatch: EventModifiers? = nil) -> some View {
-    //    #if canImport(AppKit)
     self.modifier(ModifierKeysModifier(keysToWatch: keysToWatch))
-    //    #elseif canImport(UIKit)
-    //    self
-    //    #endif
   }
 }
 #endif

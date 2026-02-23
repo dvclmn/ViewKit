@@ -7,14 +7,14 @@
 
 import SwiftUI
 
+/// Extends standard SwiftUI type `KeyPress` (not a custom type)
 extension KeyPress {
-//  \(self.key.symbolCapitalised)\(self.modifiers.symbols)
   public var displayString: String {
     return """
 
       Key Press:
       ----------
-      
+
       Phase: \(phase.name)
       Characters: \(self.characters)
 
