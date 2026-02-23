@@ -18,14 +18,12 @@ public enum DisplayBlock: Sendable {
   case text(DisplayAtom)
   case labeled(key: String, separator: String = ": ", value: DisplayAtom?)
   case indented(Indented)
-  case divider(String = "----------")
+  case divider(String)
+//  case divider(String = "----------")
 }
 
 extension DisplayBlock {
-//  public static func make(from text: String) -> DisplayBlock {
-//    .text(DisplayAtom(text))
-//  }
-  
+
   public func render(using format: FloatDisplayFormat) -> String {
     switch self {
       case .text(let atom):

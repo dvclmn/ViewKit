@@ -55,11 +55,15 @@ extension DisplayStringBuilder {
     [.indented(value)]
   }
 
+  public static func buildExpression(_ value: Divider) -> [DisplayBlock] {
+    [.divider(value.toString)]
+  }
+
   public static func buildExpression(_ value: IndentedLines) -> [DisplayBlock] {
     guard !value.lines.isEmpty else { return [] }
     return [.indented(Indented(fromLines: value))]
   }
-  
+
   public static func buildExpression(_ value: any CustomStringConvertible) -> [DisplayBlock] {
     [.text(.make(from: value))]
   }

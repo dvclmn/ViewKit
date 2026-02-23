@@ -33,6 +33,9 @@ public struct FloatDisplayFormat: Equatable, Sendable {
 }
 
 extension FloatDisplayFormat {
+  public init(fromPreset preset: FloatDisplayPreset) {
+    self = preset.format
+  }
 
   public func with(integerLength: Int) -> Self {
     var copy = self

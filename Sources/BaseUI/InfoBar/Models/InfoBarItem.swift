@@ -26,20 +26,6 @@ public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
   }
 }
 
-extension InfoBarItem: ExpressibleByStringLiteral {
-
-  /// Allows a very simple/flexible way to create an info bar item
-  /// Defaults to `DebugSectionKey`, but considering changing
-  /// this in future to be a bit more flexible/expressive
-  public init(stringLiteral value: String) {
-    self.init(
-      section: InfoBarSectionID(DebugSectionKey.self),
-      label: nil,
-      content: value
-    )
-  }
-}
-
 extension InfoBarItem {
   /// Allows supplying a SectionKey directly, which is then
   /// implicitly converted to a SectionID
@@ -64,7 +50,19 @@ extension InfoBarItem {
       section: section,
       label: QuickLabel(stringLiteral: labeled.key),
       content: labeled.block.render(using: format)
-//      content: labeled.renderValue(using: format)
+    )
+  }
+}
+
+extension InfoBarItem: ExpressibleByStringLiteral {
+  /// Allows a very simple/flexible way to create an info bar item
+  /// Defaults to `DebugSectionKey`, but considering changing
+  /// this in future to be a bit more flexible/expressive
+  public init(stringLiteral value: String) {
+    self.init(
+      section: InfoBarSectionID(DebugSectionKey.self),
+      label: nil,
+      content: value
     )
   }
 }

@@ -64,7 +64,8 @@ extension View {
   public func addInfoBarItems<K: InfoBarSectionKey>(
     @DisplayStringBuilder _ content: () -> [DisplayBlock],
     key: K.Type = DebugSectionKey.self,
-    format: FloatDisplayFormat = .default,
+    format: FloatDisplayPreset = .standard,
+    //    format: FloatDisplayFormat = .default,
     isEnabled: Bool = true
   ) -> some View {
     self.preference(
@@ -73,9 +74,8 @@ extension View {
         ? content().map { block in
           switch block {
             case .labeled(let labeled):
-              fatalError("Not currently implemented, need to fix")
-//              InfoBarItem(fromLabeled: labeled, section: key, format: format)
-              
+              InfoBarItem(fromLabeled: labeled, section: key, format: format)
+
             default:
               InfoBarItem(section: key, label: nil, content: content().output(format: format))
 
@@ -143,5 +143,6 @@ extension View {
   //  }
 }
 
+extension DisplayString {
 
-
+}
