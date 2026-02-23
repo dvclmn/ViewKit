@@ -23,19 +23,21 @@ extension DisplayStringRenderable {
   public var displayString: String {
     displayString(.standard)
   }
-
-
-extension DisplayStringRenderable where Self: FloatRenderable {
-  public func displayString(_ preset: FloatDisplayPreset) -> String {
-    render(using: preset.format)
-  }
 }
 
-extension DisplayStringRenderable where Self: PropertiesLabeled {
-  public func displayString(_ preset: FloatDisplayPreset) -> String {
-    renderProperties(using: preset.format)
-  }
-}
+//extension DisplayStringRenderable where Self: FloatRenderable {
+//  public func displayString(_ preset: FloatDisplayPreset) -> String {
+//    render(using: preset.format)
+//  }
+//}
+
+//extension DisplayStringRenderable where Self: PropertiesLabeled {
+//  public func displayString(_ preset: FloatDisplayPreset) -> String {
+//    renderProperties(using: preset.format)
+//  }
+//}
+
+
 
 /// A convenience that just returns the `displayString()`
 /// method with it's default values

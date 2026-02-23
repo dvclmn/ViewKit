@@ -7,8 +7,7 @@
 
 import Foundation
 
-public protocol PropertiesLabeled: Sendable {
-  //public protocol PropertiesLabeled: FloatRenderable {
+public protocol PropertiesLabeled: DisplayStringRenderable {
 
   /// E.g. `Width` paired with `10.5`
   ///
@@ -25,6 +24,12 @@ public protocol PropertiesLabeled: Sendable {
   //  var separator: String { get }
 
   func renderProperties(using format: FloatDisplayFormat) -> String
+}
+
+extension PropertiesLabeled {
+  public func displayString(_ preset: FloatDisplayPreset) -> String {
+    renderProperties(using: preset.format)
+  }
 }
 
 public enum ComponentSeparator: Sendable {
