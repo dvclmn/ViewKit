@@ -63,7 +63,8 @@ extension InfoBarItem {
     self.init(
       section: section,
       label: QuickLabel(stringLiteral: labeled.key),
-      content: labeled.renderValue(using: format)
+      content: labeled.block.render(using: format)
+//      content: labeled.renderValue(using: format)
     )
   }
 }

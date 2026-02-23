@@ -7,6 +7,8 @@
 
 public protocol DisplayAtomRenderable: Sendable {
   func render(using format: FloatDisplayFormat) -> String
+//  var displayString: String { get }
+//  func displayString(_ preset: FloatDisplayPreset) -> String
 }
 
 /// Type-erased box
@@ -22,12 +24,16 @@ public struct DisplayAtom: Sendable {
   }
 }
 
+extension DisplayAtomRenderable {
+
+}
+
 extension String: DisplayAtomRenderable {
   public func render(using format: FloatDisplayFormat) -> String { self }
 }
 
 //extension FloatRenderable {
-  // adapt: FloatRenderable already knows how to render with a FloatDisplayFormat
+// adapt: FloatRenderable already knows how to render with a FloatDisplayFormat
 //}
 //extension Double: DisplayAtomRenderable {
 //  public func render(using format: FloatDisplayFormat) -> String {

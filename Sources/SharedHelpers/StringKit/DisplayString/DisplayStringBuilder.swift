@@ -43,17 +43,31 @@ extension DisplayStringBuilder {
   }
 
   /// Overloads for dedicated Block Types ``Labeled``, ``Indented``, ``Divider`` etc
-//  public static func buildExpression(_ value: Labeled) -> [DisplayBlock] {
-//    [.labeled(value)]
-//  }
-  
+  //  public static func buildExpression(_ value: Labeled) -> [DisplayBlock] {
+  //    [.labeled(value)]
+  //  }
+
   public static func buildExpression(_ value: Labeled) -> [DisplayBlock] {
     [value.block]
   }
 
-  public static func buildExpression(_ value: Any?) -> [DisplayBlock] {
+  public static func buildExpression(_ value: Indented) -> [DisplayBlock] {
+    [.indented(value)]
+  }
+
+  public static func buildExpression(_ value: IndentedLines) -> [DisplayBlock] {
+    guard !value.lines.isEmpty else { return [] }
+    return [.indented(Indented(fromLines: value))]
+  }
+  
+  public static func buildExpression(_ value: any CustomStringConvertible) -> [DisplayBlock] {
     [.text(.make(from: value))]
   }
+
+  /// I may want to turn this back on?
+  //  public static func buildExpression(_ value: Any?) -> [DisplayBlock] {
+  //    [.text(.make(from: value))]
+  //  }
 
   //  public static func buildExpression(_ value: any FloatRenderable) -> [DisplayBlock] {
   //    [.float(value)]
@@ -71,20 +85,4 @@ extension DisplayStringBuilder {
   //    [.text(value.toString)]
   //  }
 
-  public static func buildExpression(_ value: Indented) -> [DisplayBlock] {
-    [.indented(value)]
-  }
-
-
-  public static func buildExpression(_ value: IndentedLines) -> [DisplayBlock] {
-    guard !value.lines.isEmpty else { return [] }
-    return [
-      .indented(
-        Indented(
-          value.title,
-          content: { value.lines.joined(separator: value.separator) }
-        )
-      )
-    ]
-  }
 }

@@ -14,12 +14,12 @@
 /// This is meant as a more concise API for quick use in UI etc.
 /// Can dip to `FloatRenderable`/`PropertiesLabeled`
 /// for more control
-public protocol DisplayStringRenderable: Sendable {
+public protocol DisplayPresetRenderable: Sendable {
   var displayString: String { get }
   func displayString(_ preset: FloatDisplayPreset) -> String
 }
 
-extension DisplayStringRenderable {
+extension DisplayPresetRenderable {
   public var displayString: String {
     displayString(.standard)
   }

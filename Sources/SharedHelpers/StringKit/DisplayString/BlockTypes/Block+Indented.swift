@@ -13,6 +13,9 @@ public struct Indented: Sendable {
   public let title: String?
   public let content: [DisplayBlock]
 
+}
+
+extension Indented {
   public init(
     _ title: String? = nil,
     @DisplayStringBuilder content: () -> [DisplayBlock]
@@ -20,10 +23,14 @@ public struct Indented: Sendable {
     self.title = title
     self.content = content()
   }
-}
 
-extension Indented {
-//extension Indented: DisplayRenderable {
+  init(fromLines indentedLines: IndentedLines) {
+    let blocks: [DisplayBlock] = indentedLines.lines.map {
+      DisplayBlock.text(DisplayAtom($0))
+    }
+    self.init(title: indentedLines.title, content: blocks)
+  }
+  //extension Indented: DisplayRenderable {
 
   public func render(using format: FloatDisplayFormat) -> String {
 

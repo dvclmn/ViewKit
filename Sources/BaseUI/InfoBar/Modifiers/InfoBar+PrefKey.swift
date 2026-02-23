@@ -73,7 +73,8 @@ extension View {
         ? content().map { block in
           switch block {
             case .labeled(let labeled):
-              InfoBarItem(fromLabeled: labeled, section: key, format: format)
+              fatalError("Not currently implemented, need to fix")
+//              InfoBarItem(fromLabeled: labeled, section: key, format: format)
               
             default:
               InfoBarItem(section: key, label: nil, content: content().output(format: format))
@@ -141,3 +142,6 @@ extension View {
   //    .environment(\.iconColour, AnyShapeStyle(.secondary))
   //  }
 }
+
+
+

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol PropertiesLabeled: DisplayAtomRenderable {
+public protocol PropertiesLabeled: DisplayAtomRenderable, DisplayPresetRenderable {
 //public protocol PropertiesLabeled: DisplayStringRenderable {
 
   /// E.g. `Width` paired with `10.5`
@@ -30,6 +30,10 @@ public protocol PropertiesLabeled: DisplayAtomRenderable {
 extension PropertiesLabeled {
   public func displayString(_ preset: FloatDisplayPreset) -> String {
     renderProperties(using: preset.format)
+  }
+  
+  public func render(using format: FloatDisplayFormat) -> String {
+    renderProperties(using: format)
   }
 }
 

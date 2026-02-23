@@ -20,6 +20,30 @@ public enum DisplayBlock: Sendable {
   case indented(Indented)
   case divider(String = "----------")
 }
+
+extension DisplayBlock {
+//  public static func make(from text: String) -> DisplayBlock {
+//    .text(DisplayAtom(text))
+//  }
+  
+  public func render(using format: FloatDisplayFormat) -> String {
+    switch self {
+      case .text(let atom):
+        return atom.render(using: format)
+
+      case .labeled(let key, let sep, let value):
+        let valueText = value?.render(using: format) ?? "nil"
+        return key + sep + valueText
+
+      case .divider(let text):
+        return text
+
+      case .indented(let indented):
+        return indented.render(using: format)
+    }
+  }
+}
+
 //@CaseDetection(includesNames: true)
 //public enum DisplayBlock: Sendable {
 //  case text(any StringRenderable)
@@ -33,53 +57,53 @@ public enum DisplayBlock: Sendable {
 //  case labeled(Labeled)
 //}
 
-extension DisplayBlock {
-  init(from value: Any?) {
-    self =
-      switch value {
-        case let result as any PropertiesLabeled:
-          .floatGroup(result)
+//extension DisplayBlock {
+//  init(from value: Any?) {
+//    self =
+//      switch value {
+//        case let result as any PropertiesLabeled:
+//          .floatGroup(result)
+//
+//        case let result as any FloatRenderable:
+//          .float(result)
+//
+//        case let result as StringRenderable:
+//          .text(result.toString)
+//
+//        case let result as Labeled:
+//            .labeled(result)
+////        case let result as DisplayStringRenderable:
+////          .display(result)
+//
+//        case let result as NSEvent.Phase:
+//          .text(result.description)
+//
+//        case let result as CustomStringConvertible:
+//          .text(result.description)
+//
+//        case nil:
+//          .text("nil")
+//
+//        default:
+//          .text(String(describing: value))
+//      }
+//  }
+//}
 
-        case let result as any FloatRenderable:
-          .float(result)
-
-        case let result as StringRenderable:
-          .text(result.toString)
-
-        case let result as Labeled:
-            .labeled(result)
-//        case let result as DisplayStringRenderable:
-//          .display(result)
-
-        case let result as NSEvent.Phase:
-          .text(result.description)
-
-        case let result as CustomStringConvertible:
-          .text(result.description)
-
-        case nil:
-          .text("nil")
-
-        default:
-          .text(String(describing: value))
-      }
-  }
-}
-
-extension DisplayBlock {
-  public func renderBlock(using format: FloatDisplayFormat) -> String {
-    switch self {
-      case .text(let text): text.toString
-      case .float(let value): value.render(using: format)
-      case .floatGroup(let value): value.renderProperties(using: format)
-      //      case .floatGroup(let value): value.render(using: format)
-      case .indented(let indented): indented.render(using: format)
-      case .labeled(let labeled): labeled.....
-//      case .display(let value): value.displayString(format.)
-    //      case .labeled(let value): value.render(using: format)
-    }
-  }
-}
+//extension DisplayBlock {
+//  public func renderBlock(using format: FloatDisplayFormat) -> String {
+//    switch self {
+//      case .text(let text): text.toString
+//      case .float(let value): value.render(using: format)
+//      case .floatGroup(let value): value.renderProperties(using: format)
+//      //      case .floatGroup(let value): value.render(using: format)
+//      case .indented(let indented): indented.render(using: format)
+//      case .labeled(let labeled): labeled.....
+////      case .display(let value): value.displayString(format.)
+//    //      case .labeled(let value): value.render(using: format)
+//    }
+//  }
+//}
 
 extension DisplayBlock {
   var indentationDepth: Int {
