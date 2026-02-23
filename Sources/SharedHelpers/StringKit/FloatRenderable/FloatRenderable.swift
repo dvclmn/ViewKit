@@ -10,11 +10,9 @@ import SwiftUI
 public typealias NumberGrouping = FloatingPointFormatStyle<Double>.Configuration.Grouping
 
 public protocol FloatRenderable: BinaryFloatingPoint & Sendable {
-//public protocol FloatRenderable: BinaryFloatingPoint & Sendable & StringRenderable {
   func render(using format: DisplayFormat) -> String
 }
 
-// MARK: - Conformances
 extension Double: FloatRenderable {}
 extension CGFloat: FloatRenderable {}
 extension Float: FloatRenderable {}
@@ -32,7 +30,6 @@ extension FloatRenderable {
     return format.sign.shouldPostProcess
       ? format.sign.processingLeadingPlus(in: result)
       : result
-
   }
 
   private func renderWithoutIntegerLength(format: DisplayFormat) -> String {
@@ -60,33 +57,6 @@ extension FloatRenderable {
     )
   }
 
-  /// `StringRenderable` conformance
-  public var toString: String { self.render() }
-
-  /// A convenience that just returns the `displayString()`
-  /// method with it's default values
-  public var displayString: String { self.render() }
-  public var displayStringConcise: String { self.render(using: .short) }
-  public var displayStringWithSign: String {
-    let format = DisplayFormat(
-      decimalPlaces: 2,
-      sign: .always(renderPlusSign: false)
-    )
-    return self.render(using: format)
-  }
-
-  /// For backwards compat
-  public func displayString(
-    places: Int = 2,
-    grouping: NumberGrouping = .automatic
-  ) -> String {
-    render(
-      using: DisplayFormat(
-        decimalPlaces: places,
-        grouping: grouping,
-      )
-    )
-  }
 }
 
 extension BinaryFloatingPoint {

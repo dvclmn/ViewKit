@@ -54,7 +54,7 @@ extension PropertyLabel {
       switch style {
         case .none: nil
         case .standard: self.label
-          /// Abbreviated will fall back to using Standard Label
+        /// Abbreviated will fall back to using Standard Label
         case .abbreviated: self.abbreviated ?? self.label
       }
     let shouldRenderSep: Bool = hasSeparator && style != .none
@@ -62,10 +62,4 @@ extension PropertyLabel {
     return [labelText, separator].compactMap(\.self).joined()
   }
 
-  @CaseDetection
-  public enum Style: Equatable {
-    case none
-    case standard
-    case abbreviated
-  }
 }

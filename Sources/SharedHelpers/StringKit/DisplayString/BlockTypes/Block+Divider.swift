@@ -12,8 +12,11 @@ public struct Divider {
     self.value = .text(value)
   }
 }
-extension Divider: DisplayRenderable{
-  public func render(using format: DisplayFormat) -> String {
-    value.render(using: format)
-  }
-}
+
+/// Have removed this as `DisplayRenderable` and `FloatRenderable`
+/// is actually the same thing, and I think is only needed for floats (which Divider isn't)
+//extension Divider: DisplayRenderable{
+//  public func render(using format: DisplayFormat) -> String {
+//    value.render(using: format)
+//  }
+//}

@@ -96,5 +96,4 @@ extension AttributedString {
       attr.value = font?.monospaced() ?? Font.body.monospaced()
     }
   }
-
 }

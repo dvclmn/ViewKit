@@ -33,7 +33,19 @@ public struct DisplayFormat {
 }
 
 extension DisplayFormat {
+  public func with(integerLength: Int) -> Self {
+    var copy = self
+    copy.integerLength = integerLength
+    return copy
+  }
+}
+
+// MARK: - Presets
+extension DisplayFormat {
+
+  /// 2 decimal places
   public static var `default`: DisplayFormat { .init() }
+
   public static var short: DisplayFormat {
     .init(
       decimalPlaces: 0,
@@ -43,9 +55,4 @@ extension DisplayFormat {
     )
   }
 
-  public func with(integerLength: Int) -> Self {
-    var copy = self
-    copy.integerLength = integerLength
-    return copy
-  }
 }

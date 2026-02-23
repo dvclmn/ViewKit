@@ -41,7 +41,7 @@ public enum SignDisplay {
         return value
     }
   }
-  
+
   package var shouldPostProcess: Bool {
     switch self {
       case .standard, .none: false
@@ -52,7 +52,7 @@ public enum SignDisplay {
   package var toNativeStrategy: FloatingPointFormatStyle<Double>.Configuration.SignDisplayStrategy {
     switch self {
       case .standard: .automatic
-      case .always(let renderPlusSign): .always(includingZero: true)
+      case .always: .always(includingZero: true)
       case .none: .never
     }
   }

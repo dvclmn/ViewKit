@@ -54,7 +54,7 @@ extension Bool: StringRenderable {
 }
 
 extension CGSize: StringRenderable {
-  public var toString: String { displayString }
+  public var toString: String { rende }
 }
 
 extension NSRect: StringRenderable {

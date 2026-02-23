@@ -9,24 +9,26 @@ import BasePrimitives
 import EnumMacros
 import Foundation
 
+/// Note: have removed `display`, as this was accidentally mirroring
+/// `FloatRenderable` directly anyway
 @CaseDetection(includesNames: true)
 public enum DisplayBlock: Sendable {
   case text(String)
   case indented(Indented)
   case float(any FloatRenderable)
   case floatGroup(any PropertiesLabeled)
-  case display(any DisplayRenderable)
+//  case display(any DisplayRenderable)
   case labeled(Labeled)
 }
 
-extension DisplayBlock: DisplayRenderable {
+extension DisplayBlock: FloatRenderable {
   public func render(using format: DisplayFormat) -> String {
     switch self {
       case .text(let text): text
       case .float(let value): value.render(using: format)
       case .floatGroup(let value): value.render(using: format)
       case .indented(let indented): indented.render(using: format)
-      case .display(let value): value.render(using: format)
+//      case .display(let value): value.render(using: format)
       case .labeled(let value): value.render(using: format)
     }
   }
