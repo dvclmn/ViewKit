@@ -21,7 +21,7 @@ public protocol PropertiesLabeled: DisplayAtomRenderable, DisplayPresetRenderabl
 
   /// Text separating each Label+Value pairing.
   /// E.g. the comma `,` in `X: 10, Y: -20`
-//  var defaultSeparator: ComponentSeparator { get }
+  //  var defaultSeparator: ComponentSeparator { get }
 
   func renderProperties(using format: FloatDisplayFormat) -> String
 }
@@ -36,34 +36,33 @@ extension PropertiesLabeled {
   }
 }
 
-
-
 /// Types like `CGPoint` that have float properties.
 /// May be a pair, like `CGPoint`'s `x` and `y`,
 /// or more, like `CGRect`
 extension PropertiesLabeled {
 
-//  var defaultDelimiter: ComponentDelimiter { .comma }
-  
+  //  var defaultDelimiter: ComponentDelimiter { .comma }
+
   public func renderProperties(
     using format: FloatDisplayFormat
   ) -> String {
-    let sep = separatorString(using: format)
+    let delimiter = format.separatorString(for: .componentDelimiter)
+    //    let delimiter = format.componentDelimiter.toString ?? ""
     return components.map { $0.stringValue(using: format) }
-      .joined(sep)
+      .joined(delimiter)
   }
 
-  private func separatorString(using format: FloatDisplayFormat) -> String {
-    let shouldRender = format.separatorVisibility.contains(.component)
-    return 
-//    let str =
-//      switch defaultDelimiter {
-//        case .space: " "
-//        case .none: ""
-//        case .custom(let str): str
-//      }
-//    return shouldRender ? str : ""
-  }
+  //  private func separatorString(using format: FloatDisplayFormat) -> String {
+  //    let shouldRender = format.separatorVisibility.contains(.component)
+  //    return
+  //    let str =
+  //      switch defaultDelimiter {
+  //        case .space: " "
+  //        case .none: ""
+  //        case .custom(let str): str
+  //      }
+  //    return shouldRender ? str : ""
+  //  }
   //  func shouldRenderSeparator(using format: FloatDisplayFormat) -> Bool {
   //
   //  }

@@ -26,16 +26,16 @@ public struct PropertyLabel {
 
   /// Text separating the property's label from it's float value
   /// E.g. the colon in `Width: `
-  let separator: PropertySeparator
+//  let separator: PropertySeparator
 
   public init(
     _ label: String,
     abbreviated: String? = nil,
-    separator: PropertySeparator = .colon
+//    separator: PropertySeparator = .colon
   ) {
     self.label = label
     self.abbreviated = abbreviated
-    self.separator = separator
+//    self.separator = separator
   }
 }
 
@@ -57,16 +57,18 @@ extension PropertyLabel {
     }
   }
 
-  func separatorText(using format: FloatDisplayFormat) -> String? {
-    let shouldRenderSep: Bool =
-      format.separatorVisibility.contains(.propertyLabel)
-      && format.labelStyle != .none
-    return shouldRenderSep ? separator.toString : nil
-  }
+//  func separatorText(using format: FloatDisplayFormat) -> String? {
+//    let sep = format.propertySeparator.toString ?? ""
+//    let shouldRenderSep: Bool =
+//      format.separatorVisibility.contains(.propertyLabel)
+//      && format.labelStyle != .none
+//    return shouldRenderSep ? separator.toString : nil
+//  }
 
   public func stringValue(using format: FloatDisplayFormat) -> String? {
     let text = labelText(style: format.labelStyle)
-    let separator = separatorText(using: format)
+    let separator = format.separatorString(for: .propertyLabel)
+//    let separator = separatorText(using: format)
     return [text, separator].compactMap(\.self).joined("")
   }
 }

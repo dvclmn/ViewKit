@@ -17,7 +17,7 @@ public struct FloatDisplayFormat: Equatable, Sendable {
   public var labelStyle: PropertyLabel.Style
   public var propertySeparator: PropertySeparator
   public var componentDelimiter: ComponentDelimiter
-//  public var separatorVisibility: SeparatorVisibility
+  //  public var separatorVisibility: SeparatorVisibility
   public var sign: SignDisplay
 
   public init(
@@ -27,7 +27,7 @@ public struct FloatDisplayFormat: Equatable, Sendable {
     labelStyle: PropertyLabel.Style = .standard,
     propertySeparator: PropertySeparator = .colon,
     componentDelimiter: ComponentDelimiter = .comma,
-//    separatorVisibility: SeparatorVisibility = .both,
+    //    separatorVisibility: SeparatorVisibility = .both,
     sign: SignDisplay = .standard
   ) {
     self.decimalPlaces = decimalPlaces
@@ -36,7 +36,7 @@ public struct FloatDisplayFormat: Equatable, Sendable {
     self.labelStyle = labelStyle
     self.propertySeparator = propertySeparator
     self.componentDelimiter = componentDelimiter
-//    self.separatorVisibility = separatorVisibility
+    //    self.separatorVisibility = separatorVisibility
     self.sign = sign
   }
 }
@@ -44,6 +44,13 @@ public struct FloatDisplayFormat: Equatable, Sendable {
 extension FloatDisplayFormat {
   public init(fromPreset preset: FloatDisplayPreset) {
     self = preset.format
+  }
+
+  func separatorString(for kind: SeparatorKind) -> String {
+    switch kind {
+      case .propertyLabel: propertySeparator.toString ?? ""
+      case .componentDelimiter: componentDelimiter.toString ?? ""
+    }
   }
 
   public func with(integerLength: Int) -> Self {
@@ -60,4 +67,9 @@ extension BinaryFloatingPoint {
     let percent = Double(toPercent(within: range))
     return String(percent.render(using: .init(decimalPlaces: 0)) + "%")
   }
+}
+
+enum SeparatorKind {
+  case propertyLabel
+  case componentDelimiter
 }
