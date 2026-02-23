@@ -10,7 +10,6 @@ import EnumMacros
 import Foundation
 import SampleBuilder
 
-//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
 @CaseDetection
 public enum IconLiteral: Sendable, Equatable, Codable, Hashable {
   case emoji(String)

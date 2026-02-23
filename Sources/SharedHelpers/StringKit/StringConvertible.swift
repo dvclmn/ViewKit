@@ -75,8 +75,6 @@ extension Array: StringRenderable where Element: StringRenderable {
   public var toString: String { map(\.toString).joined(separator: ", ") }
 }
 
-
-
 //extension AnyRegexOutput: StringRenderable {
 //  public var toString: String {
 //    DisplayString {

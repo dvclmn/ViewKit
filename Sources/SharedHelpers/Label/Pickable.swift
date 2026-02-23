@@ -12,13 +12,6 @@ public protocol Pickable: LabeledItem {
   /// A label that describes the purpose of the whole enum.
   /// E.g. "View Mode", or "Inspector Tab"
   static var pickerLabel: QuickLabel { get }
-//  func isSelected(current: Self) -> Bool
-}
-
-extension Pickable where Self: Equatable {
-//  public func isSelected(current: Self) -> Bool {
-//    return self == current
-//  }
 }
 
 extension Pickable where Self: CaseIterable, Self.AllCases == [Self] {

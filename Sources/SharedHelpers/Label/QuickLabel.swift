@@ -8,14 +8,12 @@
 import SampleBuilder
 import SwiftUI
 
-//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
 public struct QuickLabel: Sendable, Codable, Equatable, Hashable {
   public var text: String
   public let icon: IconLiteral?
   public let role: ActionRole?
 }
 
-// MARK: - Initialisers
 extension QuickLabel {
 
   public init(
