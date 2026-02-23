@@ -37,6 +37,10 @@ public struct PopupMessage: Sendable, Identifiable {
 
 // MARK: - Builders
 extension PopupMessage {
+  public mutating func add(actions: PopupAction...) {
+    //    var copy = self
+    self.actions.append(contentsOf: actions)
+  }
 
   public static func make(
     _ title: String,

@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 8/7/2025.
 //
 
-/// ⚠️ Dependancy: `displayString`
 import SwiftUI
 
 public struct DebugCircleModifier: ViewModifier {
@@ -21,8 +20,7 @@ public struct DebugCircleModifier: ViewModifier {
               .fill(.purple)
               .frame(width: size, height: size)
 
-//            // TODO: This shouldn't need a String(describing), need to fix DisplayString stuff
-            Text(String(describing: location.debugDescription))
+            Text(location.debugDescription)
 
               .font(.caption)
               .padding(4)

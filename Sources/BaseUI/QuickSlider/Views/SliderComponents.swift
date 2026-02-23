@@ -26,6 +26,7 @@ extension QuickSlider {
       @Bindable var store = store
 
       // MARK: - Label
+      /// Has this moved to the actual Label closure in the Slider?
 //      if sliderComponents.contains(.label) {
 //        LabelComponent()
 //      }

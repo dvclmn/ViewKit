@@ -9,14 +9,11 @@ import Foundation
 
 public protocol PropertiesLabeled: DisplayRenderable {
 
-  /// A component is a key+value pair, where the
-  /// key is the property's text label ``PropertyLabel``,
-  /// and the value is the floating point value of that property,
-  /// conforming to ``StringRenderable``.
-  ///
   /// E.g. `Width` paired with `10.5`
   ///
-  /// Note: the ``PropertyLabel`` includes a trailing
+  /// Note: ``LabelComponent`` holds onto a ``PropertyLabel``,
+  /// which 
+  /// the ``PropertyLabel`` includes a trailing
   /// separator, delimiting the Label and Value. This is different
   /// to the below ``PropertiesLabeled/separator``.
   var components: [LabelComponent] { get }
@@ -24,7 +21,6 @@ public protocol PropertiesLabeled: DisplayRenderable {
   /// Text separating each Label+Value pairing.
   /// E.g. the comma `,` in `X: 10, Y: -20`
   var separator: String { get }
-
 }
 
 /// Types like `CGPoint` that have float properties.

@@ -53,13 +53,13 @@ extension PopupMessage {
   public static func error(
     _ title: String,
     message: String? = nil,
-    action: PopupAction...
+    actions: PopupAction...
   ) -> PopupMessage {
     PopupMessage(
       label: QuickLabel(title, icon: .preset(.warning)),
       message: message,
       loading: .none,
-      actions: action
+      actions: actions
     )
   }
 }

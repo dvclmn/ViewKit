@@ -19,7 +19,6 @@ public struct StateView<Content: View>: View {
 
   let label: QuickLabel
   let message: String?
-  //  let iconSize: CGFloat
   let additionalContent: Content
 
   public var body: some View {
@@ -34,20 +33,9 @@ public struct StateView<Content: View>: View {
       MessageView()
       additionalContent
     }
-    //    VStack(
-    //      alignment: layoutAlignment?.horizontal ?? .center,
-    //      spacing: scale(16, for: controlSize, min: 6)
-    //    ) {
-    //
-    //    }
     .monospacedDigit()
     .padding(.vertical, layoutPadding ?? Styles.sizeRegular)
     .padding(.horizontal, layoutPadding ?? Styles.sizeRegular)
-    //    .frame(
-    //      maxWidth: .infinity,
-    //      maxHeight: .infinity,
-    //      alignment: layoutAlignment ?? .center
-    //    )
   }
 }
 
@@ -55,7 +43,7 @@ extension StateView {
 
   private var paddingLength: CGFloat {
     (label.icon != nil && !layoutType.isHstack)
-      ? scale(iconSize * 1.4, for: controlSize)
+      ? controlSize.scale(iconSize * 1.4)
       : .zero
   }
   private var iconSize: CGFloat {
@@ -72,7 +60,6 @@ extension StateView {
 
         default:
           Text(label.text.toMarkdownCompatible)
-
             /// Pan gesture view was causing `FeatureIconView` to take
             /// up too much space, so using overlay to keep it contained better
             .overlay(alignment: .top) {
@@ -82,22 +69,15 @@ extension StateView {
     }  // END group
     .multilineTextAlignment(.center)
     .font(.system(controlSize.textStyle))
-    //    .font(.system(size: scale(22, for: controlSize)))
     .foregroundStyle(.secondary)
   }
 
   @ViewBuilder
   private func IconView() -> some View {
     if let icon = label.icon {
-
-      if #available(macOS 14.0, *) {
-        FeatureIconView(icon: icon, fontSize: scale(iconSize, for: controlSize))
-          .offset(y: -scale(iconSize * 1.3, for: controlSize))
-          .foregroundStyle(.secondary.opacity(0.86))
-      } else {
-
-        // Fallback on earlier versions
-      }
+      FeatureIconView(icon: icon, fontSize: controlSize.scale(iconSize))
+        .offset(y: -controlSize.scale(offsetAmount(icon)))
+        .foregroundStyle(.secondary.opacity(0.86))
     }
   }
 
@@ -106,10 +86,18 @@ extension StateView {
     if let message = message {
       Text(message)
         .multilineTextAlignment(.center)
-        .font(.system(size: scale(15, for: controlSize)))
+        .font(.system(size: controlSize.scale(15)))
         .foregroundStyle(.tertiary)
-        .padding(.bottom, scale(16, for: controlSize))
+        .padding(.bottom, controlSize.scale(16))
     }
+  }
+}
+
+extension StateView {
+  private func offsetAmount(_ icon: IconLiteral) -> CGFloat {
+    icon.isEmojiComposition
+      ? iconSize * 1.7
+      : iconSize * 1.3
   }
 }
 
@@ -119,12 +107,10 @@ extension StateView {
   public init(
     _ title: String,
     message: String? = nil,
-    //    iconSize: CGFloat = 46,
     @ViewBuilder additionalContent: () -> Content = { EmptyView() }
   ) {
     self.label = QuickLabel(title)
     self.message = message
-    //    self.iconSize = iconSize
     self.additionalContent = additionalContent()
   }
 
@@ -132,24 +118,20 @@ extension StateView {
     _ title: String,
     icon: IconLiteral? = nil,
     message: String? = nil,
-    //    iconSize: CGFloat = 46,
     @ViewBuilder additionalContent: () -> Content = { EmptyView() }
   ) {
     self.label = QuickLabel(title, icon: icon)
     self.message = message
-    //    self.iconSize = iconSize
     self.additionalContent = additionalContent()
   }
 
   public init(
     label: QuickLabel,
     message: String? = nil,
-    //    iconSize: CGFloat = 46,
     @ViewBuilder additionalContent: () -> Content = { EmptyView() }
   ) {
     self.label = label
     self.message = message
-    //    self.iconSize = iconSize
     self.additionalContent = additionalContent()
   }
 

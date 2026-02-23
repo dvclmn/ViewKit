@@ -27,15 +27,17 @@ public struct PopupAction: Sendable, Identifiable {
 
 public enum PopupActionPreset {
   case openInFinder(URL)
-  
+  case copyToClipboard(String)
+
   var title: String {
     switch self {
       case .openInFinder: "View in Finder"
+      case .copyToClipboard: "Copy Text"
     }
   }
 }
 extension PopupAction {
-  
+
   /// Will add a default title if none provided
   public static func preset(
     _ title: String? = nil,
@@ -45,6 +47,11 @@ extension PopupAction {
       case .openInFinder(let url):
         PopupAction(title: title ?? preset.title) {
           OpenInFinder.open(url)
+        }
+        
+      case .copyToClipboard(let text):
+        PopupAction(title: title ?? preset.title) {
+          copyStringToClipboard(text)
         }
     }
   }

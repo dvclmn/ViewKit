@@ -23,7 +23,7 @@ struct ResizableExampleView: View {
         Color.green.opacity(0.15)
           .frame(maxHeight: .infinity)
           .resizableEdge(
-            .top,
+            edge: .top,
             initialLength: resizeLengths.initial,
             minLength: resizeLengths.min,
             maxLength: resizeLengths.max

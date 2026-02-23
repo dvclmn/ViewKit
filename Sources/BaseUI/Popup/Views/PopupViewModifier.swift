@@ -81,7 +81,7 @@ extension View {
   /// Initialises Popup handler and displays Popup view
   public func popup(
     debugPopup: PopupDebug = .none,
-    alignment: Alignment = .top,
+    alignment: Alignment = .topTrailing,
     isCompact: Bool = false,
   ) -> some View {
     self.modifier(
@@ -98,7 +98,7 @@ extension View {
   /// and will display a warning View if it's not.
   public func popupViewOnly(
     debugPopup: PopupDebug = .none,
-    alignment: Alignment = .top,
+    alignment: Alignment = .topTrailing,
     isCompact: Bool = false,
   ) -> some View {
     self.modifier(

@@ -7,6 +7,7 @@
 
 import BasePrimitives
 import SwiftUI
+import GestureKit
 
 @MainActor
 struct PopupView: View {
@@ -17,6 +18,7 @@ struct PopupView: View {
   @Environment(\.hasGlassEffect) private var hasGlassEffect
   @Environment(\.colourOverride) private var colourOverride
 
+  @State private var offsetY: CGFloat = 0
   @State private var isHoveringDismiss: Bool = false
 
   private let maxWidth: Double = 240
@@ -56,15 +58,19 @@ struct PopupView: View {
           distanceY: 30,
           depthIntensity: 0.0
         )
+        .offset(y: offsetY)
 
     }
     .frame(
       maxWidth: 360,
       alignment: alignment
     )
-    //    .compositingGroup()
     .id(message.id)
     .padding(Styles.sizeRegular)
+//    .panGesture { delta, _, _ in
+////      let new = offsetY + delta.height
+//      offsetY += delta.height
+//    }
 
   }
 
@@ -92,7 +98,6 @@ extension PopupView {
         .foregroundStyle(isHoveringDismiss ? .secondary : .tertiary)
         .padding(isCompactMode ? Styles.sizeSmall.bump : Styles.sizeRegular.bumpDown)
         .contentShape(Rectangle())
-      //        .border(Color.green.opacity(0.3))
     }
     .buttonStyle(.plain)
     .onHover { hovering in

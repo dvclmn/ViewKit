@@ -46,7 +46,6 @@ extension FeatureIconView {
 }
 
 #if DEBUG
-@available(macOS 15, iOS 18, *)
 #Preview(traits: .size(.normal)) {
   FeatureIconView(emoji: "👺")
     .frame(maxWidth: .infinity, maxHeight: .infinity)

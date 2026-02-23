@@ -5,13 +5,16 @@
 //  Created by Dave Coleman on 31/8/2025.
 //
 
+import BasePrimitives
+import EnumMacros
 import Foundation
 import SampleBuilder
-import BasePrimitives
 
-@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
+//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
+@CaseDetection
 public enum IconLiteral: Sendable, Equatable, Codable, Hashable {
   case emoji(String)
+  case emojiComposition(EmojiComposition)
   case symbol(String)
   case customSymbol(CustomSymbol)
 }
@@ -32,6 +35,7 @@ extension IconLiteral {
   public var toString: String {
     switch self {
       case .emoji(let string): string
+      case .emojiComposition(let comp): comp.emoji.map(\.emoji.toString).joined("")
       case .symbol(let string): string
       case .customSymbol(let symbol): symbol.reference
     }

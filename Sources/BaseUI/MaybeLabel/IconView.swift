@@ -6,6 +6,7 @@
 //
 
 import CoreTools
+import GraphicsKit
 import SwiftUI
 
 public struct IconView: View {
@@ -21,6 +22,7 @@ public struct IconView: View {
     Group {
       switch icon {
         case .emoji(let emojiString): Text(emojiString)
+        case .emojiComposition(let comp): EmojiCompositionView(composition: comp)
         case .symbol(let symbolString): Image(systemName: symbolString)
         case .customSymbol(_): Text("Custom Symbol not implemented")
       //          Image(

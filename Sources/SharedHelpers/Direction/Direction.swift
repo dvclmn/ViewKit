@@ -28,30 +28,23 @@ extension Direction {
       case .down, .right: 1
     }
   }
-  
+
   public var isHorizontal: Bool {
     switch self {
       case .left, .right: true
       default: false
     }
   }
-  
+
   public var isVertical: Bool {
-    !isHorizontal
-  }
-
-  public func update<T: BinaryFloatingPoint>(
-    _ value: inout T,
-    by delta: T
-  ) {
-    value += T(scalar) * delta
-  }
-
-  public var toAxis: Axis {
     switch self {
-      case .up, .down: .vertical
-      case .left, .right: .horizontal
+      case .up, .down: true
+      default: false
     }
+  }
+
+  public func update<T: BinaryFloatingPoint>(_ value: inout T, by delta: T) {
+    value += T(scalar) * delta
   }
 
   /// A generic method to mutate a scalar
@@ -59,11 +52,12 @@ extension Direction {
     value + scalar * delta
   }
 
-  public func apply<T: BinaryFloatingPoint>(
-    to value: T,
-    by delta: T
-  ) -> T {
+  public func apply<T: BinaryFloatingPoint>(to value: T, by delta: T) -> T {
     value + T(scalar) * delta
+  }
+
+  public var toAxis: Axis {
+    isVertical ? .vertical : .horizontal
   }
 
   /// A helper to apply direction to a tuple (for 2D scenarios)

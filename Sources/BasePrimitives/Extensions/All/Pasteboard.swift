@@ -40,7 +40,6 @@ extension UIPasteboard: PasteboardCopying {
 }
 #endif
 
-/// Usage
 public func copyStringToClipboard(_ contents: String) {
   DispatchQueue.main.async {
     let pasteboard: PasteboardCopying

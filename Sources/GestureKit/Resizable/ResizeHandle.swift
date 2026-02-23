@@ -10,7 +10,10 @@ import SwiftUI
 
 struct ResizeHandle: View {
   @Environment(\.layoutAxis) private var layoutAxis
-  private let handleThickness: CGFloat = 16
+  private let handleThickness: CGFloat = 20
+
+  @State private var isHovering: Bool = false
+  
   var body: some View {
 
     ZStack {
@@ -20,17 +23,23 @@ struct ResizeHandle: View {
           width: isVertical ? nil : handleThickness,
           height: isVertical ? handleThickness : nil
         )
+        .onHover { hovering in
+          isHovering = hovering
+        }
 
       /// Visual drag indicator
       Capsule()
-        .fill(Color.secondary.opacity(0.5))
+        .fill(Color.secondary.opacity(isHovering ? 0.9 : 0.4))
+//        .fill(.thinMaterial)
         .frame(
           width: isVertical ? 40 : 4,
           height: isVertical ? 4 : 40
         )
+        .allowsHitTesting(false)
     }
-    .pointerStyleCompatible(isVertical ? .columnResize : .rowResize)
-
+    .pointerStyleCompatible(isVertical ? .rowResize : .columnResize)
+    .animation(Styles.animationSmooth, value: isHovering)
+    
   }
 
 }

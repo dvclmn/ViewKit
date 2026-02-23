@@ -67,10 +67,3 @@ extension InfoBarItem {
     )
   }
 }
-
-//extension InfoBarItem {
-//  public enum ContentKind {
-//    case text(String)
-//    case floatLabeled(PropertiesLabeled)
-//  }
-//}

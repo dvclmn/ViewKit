@@ -9,14 +9,12 @@ import SwiftUI
 
 extension EdgeInsets {
 
-  /// This permits the omission of any one of the four
-  /// parameters, which the default init doesn't allow for.
-  public init(
-    topWithDefaults top: CGFloat = 0,
+  public static func make(
+    top: CGFloat = 0,
     leading: CGFloat = 0,
     bottom: CGFloat = 0,
     trailing: CGFloat = 0
-  ) {
+  ) -> Self {
     self.init(
       top: top,
       leading: leading,
@@ -24,6 +22,21 @@ extension EdgeInsets {
       trailing: trailing
     )
   }
+  /// This permits the omission of any one of the four
+  /// parameters, which the default init doesn't allow for.
+  //  public init(
+  //    topWithDefaults top: CGFloat = 0,
+  //    leading: CGFloat = 0,
+  //    bottom: CGFloat = 0,
+  //    trailing: CGFloat = 0
+  //  ) {
+  //    self.init(
+  //      top: top,
+  //      leading: leading,
+  //      bottom: bottom,
+  //      trailing: trailing
+  //    )
+  //  }
 
   public static var zero: EdgeInsets { EdgeInsets() }
 

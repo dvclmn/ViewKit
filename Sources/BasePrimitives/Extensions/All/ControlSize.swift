@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension ControlSize {
-  
+
   public var scaleFactor: CGFloat {
     switch self {
       case .mini: 0.45
@@ -19,9 +19,9 @@ extension ControlSize {
       @unknown default: 1.0
     }
   }
-  
+
   public var textStyle: Font.TextStyle {
-//  public var fontSize: CGFloat {
+    //  public var fontSize: CGFloat {
     switch self {
       case .mini: .caption2
       case .small: .callout
@@ -31,14 +31,15 @@ extension ControlSize {
       @unknown default: .body
     }
   }
-}
 
-public func scale(
-  _ value: CGFloat,
-  for controlSize: ControlSize,
-  by strength: CGFloat = 1.0,
-  min: CGFloat = 0
-) -> CGFloat {
-  let result = value * controlSize.scaleFactor * strength
-  return max(min, result)
+  public func scale(
+    _ value: CGFloat,
+    //    for controlSize: ControlSize,
+    by strength: CGFloat = 1.0,
+    min: CGFloat = 0
+  ) -> CGFloat {
+    let result = value * self.scaleFactor * strength
+    return max(min, result)
+  }
+
 }

@@ -10,11 +10,17 @@ import SwiftUI
 
 struct ResizableEdgeModifier: ViewModifier {
   @State private var currentLength: CGFloat
-//  @GestureState private var dragDelta: CGFloat = 0
-
   @State private var dragDelta: CGFloat = .zero
-  
+
   let state: ResizeState
+
+  init(
+    initialLength: CGFloat,
+    state: ResizeState
+  ) {
+    self._currentLength = State(initialValue: initialLength)
+    self.state = state
+  }
 
   init(
     edge: Edge,
@@ -61,8 +67,8 @@ extension ResizableEdgeModifier {
 }
 
 extension View {
-  func resizableEdge(
-    _ edge: Edge,
+  public func resizableEdge(
+    edge: Edge,
     initialLength: CGFloat,
     minLength: CGFloat = 100,
     maxLength: CGFloat = 600

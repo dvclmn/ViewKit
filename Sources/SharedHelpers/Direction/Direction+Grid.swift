@@ -30,10 +30,6 @@ extension GridPosition {
       in: gridDimensions
     )
     return wrappedPosition
-    //    let wrappedCol = (offset.x % gridDimensions.columns + gridDimensions.columns) % gridDimensions.columns
-    //    let wrappedRow = (offset.y % gridDimensions.rows + gridDimensions.rows) % gridDimensions.rows
-    //
-    //    return GridPosition(column: wrappedCol, row: wrappedRow)
   }
 
 }

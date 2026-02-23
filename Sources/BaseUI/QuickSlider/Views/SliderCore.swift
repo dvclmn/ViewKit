@@ -31,14 +31,14 @@ extension QuickSlider {
                 in: store.range,
                 step: step
               ) {
-//                EmptyView()
+                //                EmptyView()
                 LabelComponent()
 
-//              } minimumValueLabel: {
-//                MinMaxLabel(.min)
-//
-//              } maximumValueLabel: {
-//                MinMaxLabel(.max)
+                //              } minimumValueLabel: {
+                //                MinMaxLabel(.min)
+                //
+                //              } maximumValueLabel: {
+                //                MinMaxLabel(.max)
 
               } onEditingChanged: { editing in
                 handleOnEdit(editing)
@@ -50,17 +50,16 @@ extension QuickSlider {
                 value: $value,
                 in: store.range,
               ) {
-                
+
                 LabelComponent()
 
-//              } minimumValueLabel: {
-//                MinMaxLabel(.min)
-//
-//              } maximumValueLabel: {
-//                MinMaxLabel(.max)
-//
-              }
-              onEditingChanged: { editing in
+                //              } minimumValueLabel: {
+                //                MinMaxLabel(.min)
+                //
+                //              } maximumValueLabel: {
+                //                MinMaxLabel(.max)
+                //
+              } onEditingChanged: { editing in
                 handleOnEdit(editing)
               }
             }
@@ -80,14 +79,14 @@ extension QuickSlider {
 }
 
 extension QuickSlider.SliderCore {
-  
+
   @ViewBuilder
   func LabelComponent() -> some View {
     @Bindable var store = store
     MaybeLabel(store.label)
       .onDoubleTap($value.toBindingDouble, defaultValue: sliderDefaultValue)
   }
-  
+
   @ViewBuilder
   private func MinMaxLabel(_ label: MinMaxLabel) -> some View {
     if let value = label.value(from: store) {
