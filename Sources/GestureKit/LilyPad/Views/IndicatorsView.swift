@@ -65,7 +65,7 @@ extension TouchIndicatorsView {
 
   @ViewBuilder
   func TouchLabel(_ touch: TouchPoint) -> some View {
-    Text(touch.position.displayString(places: 0))
+    Text(touch.position.displayString(.wholeNumber))
       .monospaced()
       .font(.caption2)
       .fixedSize()

@@ -46,7 +46,11 @@ extension FloatDisplayFormat {
 
 public enum FloatDisplayPreset: String, CaseIterable {
   case standard
+  
   case concise
+  
+  /// Display a floating point value with `0` decimal places
+  case wholeNumber
   case showSign
 
   var format: FloatDisplayFormat {
@@ -57,10 +61,12 @@ public enum FloatDisplayPreset: String, CaseIterable {
       case .concise:
         .init(
           decimalPlaces: 0,
-          grouping: .automatic,
           labelStyle: .abbreviated,
           separatorVisibility: .component
         )
+
+      case .wholeNumber:
+        .init(decimalPlaces: 0)
 
       case .showSign:
         .init(

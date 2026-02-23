@@ -7,7 +7,7 @@
 
 import AppKit
 
-public struct Labeled {
+public struct Labeled: Sendable {
 //public struct Labeled<Value> {
 
   public let key: String
@@ -16,8 +16,8 @@ public struct Labeled {
   /// has been retired as it unneccesarily shadowed `FloatRenderable`
 //  public let value: Value?
   //  public let value: Any?
-  //  public let value: (any StringRenderable)?
-    public let value: DisplayBlock
+    public let value: (any StringRenderable)?
+//    public let value: DisplayBlock
 
   /// E.g. for `CGPoint`
   /// ```
@@ -31,11 +31,13 @@ public struct Labeled {
     separator: String = ": "
   ) {
     self.key = key
-    self.value = DisplayBlock(from: value)
+    self.value = value as? (any StringRenderable)
+//    self.value = DisplayBlock(from: value)
 //    self.value = DisplayBlock.semantic(for: value)
     self.separator = separator
   }
 }
+
 
 //extension Labeled: DisplayRenderable {
 //  public func render(using format: FloatDisplayFormat) -> String {
@@ -50,7 +52,7 @@ public struct Labeled {
 //  }
 //}
 
-extension DisplayBlock {
+//extension DisplayBlock {
 
   //  fileprivate static func semantic(for value: Any?) -> DisplayBlock {
   //
@@ -71,4 +73,4 @@ extension DisplayBlock {
   //    guard let convertible = value as? StringRenderable else { return String(describing: value) }
   //    return convertible.toString
   //  }
-}
+//}

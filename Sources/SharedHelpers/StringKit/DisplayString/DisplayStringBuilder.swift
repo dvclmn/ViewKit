@@ -40,40 +40,45 @@ extension DisplayStringBuilder {
     [expression]
   }
 
+  /// Overloads for dedicated Block Types ``Labeled``, ``Indented``, ``Divider`` etc
   public static func buildExpression(_ value: Labeled) -> [DisplayBlock] {
-    [value.value]
-//    [.labeled(value)]
+    [.labeled(value)]
   }
 
   /// `DisplayRenderable` retired, use `FloatRenderable`
-//  public static func buildExpression(_ value: any DisplayRenderable) -> [DisplayBlock] {
-//    [.display(value)]
-//  }
+  //  public static func buildExpression(_ value: any DisplayRenderable) -> [DisplayBlock] {
+  //    [.display(value)]
+  //  }
 
-  public static func buildExpression(_ value: any FloatRenderable) -> [DisplayBlock] {
-    [.float(value)]
+  public static func buildExpression(_ value: Any?) -> [DisplayBlock] {
+    [DisplayBlock(from: value)]
   }
 
-  public static func buildExpression(_ value: any PropertiesLabeled) -> [DisplayBlock] {
-    [.floatGroup(value)]
-  }
+  //  public static func buildExpression(_ value: any FloatRenderable) -> [DisplayBlock] {
+  //    [.float(value)]
+  //  }
+  //
+  //  public static func buildExpression(_ value: any PropertiesLabeled) -> [DisplayBlock] {
+  //    [.floatGroup(value)]
+  //  }
 
-  public static func buildExpression(_ value: String) -> [DisplayBlock] {
-    [.text(value)]
-  }
-
-  public static func buildExpression<T: StringRenderable>(_ value: T) -> [DisplayBlock] {
-    [.text(value.toString)]
-  }
+  //  public static func buildExpression(_ value: String) -> [DisplayBlock] {
+  //    [.text(value)]
+  //  }
+  //
+  //  public static func buildExpression<T: StringRenderable>(_ value: T) -> [DisplayBlock] {
+  //    [.text(value.toString)]
+  //  }
 
   public static func buildExpression(_ value: Indented) -> [DisplayBlock] {
     [
-      .indented(
-        Indented(
-          value.title,
-          content: { value.content }
-        )
-      )
+      .indented(value)
+      //      .indented(
+      //        Indented(
+      //          value.title,
+      //          content: { value.content }
+      //        )
+      //      )
     ]
   }
 

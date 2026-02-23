@@ -23,6 +23,11 @@ extension DisplayStringRenderable {
   public var displayString: String {
     displayString(.standard)
   }
+  
+  @available(*, deprecated, renamed: "displayString(_:)", message: "Prefer new FloatDisplayPreset-based method. Use preset .wholeNumber for 0 decimal places.")
+  public func displayString(places: Int) -> String {
+    displayString(.wholeNumber)
+  }
 }
 
 //extension DisplayStringRenderable where Self: FloatRenderable {

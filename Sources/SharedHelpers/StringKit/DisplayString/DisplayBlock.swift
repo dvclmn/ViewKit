@@ -16,14 +16,15 @@ import Foundation
 /// etc out of the `DisplayStringBuilder`
 @CaseDetection(includesNames: true)
 public enum DisplayBlock: Sendable {
-  case text(String)
+  case text(any StringRenderable)
+  //  case text(String)
   case indented(Indented)
   case float(any FloatRenderable)
   case floatGroup(any PropertiesLabeled)
-
+  //case divider(Divider)
   /// Note: This previously drove ``Divider``
   //  case display(any DisplayRenderable)
-  //  case labeled(Labeled)
+    case labeled(Labeled)
 }
 
 extension DisplayBlock {
@@ -55,12 +56,15 @@ extension DisplayBlock {
 }
 
 extension DisplayBlock {
-  public func render(using format: FloatDisplayFormat) -> String {
+  public func renderBlock(
+
+    using format: FloatDisplayFormat
+  ) -> String {
     switch self {
-      case .text(let text): text
+      case .text(let text): text.toString
       case .float(let value): value.render(using: format)
       case .floatGroup(let value): value.renderProperties(using: format)
-//      case .floatGroup(let value): value.render(using: format)
+      //      case .floatGroup(let value): value.render(using: format)
       case .indented(let indented): indented.render(using: format)
     //      case .display(let value): value.render(using: format)
     //      case .labeled(let value): value.render(using: format)

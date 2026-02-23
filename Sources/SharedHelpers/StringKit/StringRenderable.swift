@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public protocol StringRenderable {
+public protocol StringRenderable: Sendable {
   var toString: String { get }
 }
 

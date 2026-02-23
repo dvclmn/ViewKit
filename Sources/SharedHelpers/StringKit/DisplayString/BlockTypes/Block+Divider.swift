@@ -6,17 +6,20 @@
 //
 
 public struct Divider {
-  public let value: DisplayBlock
+  public let value: String
+  //  public let value: DisplayBlock
 
   public init(value: String = "----------\n") {
-    self.value = .text(value)
+    self.value = value
+    //    self.value = .text(value)
   }
 }
 
 /// Have removed this as `DisplayRenderable` and `FloatRenderable`
 /// is actually the same thing, and I think is only needed for floats (which Divider isn't)
-//extension Divider: DisplayRenderable{
-//  public func render(using format: DisplayFormat) -> String {
-//    value.render(using: format)
-//  }
-//}
+extension Divider: StringRenderable {
+  public var toString: String { value }
+  //  public func render(using format: DisplayFormat) -> String {
+  //    value.render(using: format)
+  //  }
+}
