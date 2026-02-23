@@ -7,38 +7,9 @@
 
 import Foundation
 
-
-extension FloatRenderable {
-  /// A convenience that just returns the `displayString()`
-  /// method with it's default values
-  public var displayString: String { self.render() }
-  public func displayString(_ preset: FloatDisplayPreset) -> String {
-    render(using: preset.format)
-  }
-  //  public var displayStringConcise: String { self.render(using: .short) }
-
-  //  public var displayStringWithSign: String {
-  //    let format = DisplayFormat(
-  //      decimalPlaces: 2,
-  //      sign: .always(renderPlusSign: false)
-  //    )
-  //    return self.render(using: format)
-  //  }
-
-  /// Going to prefer `render(using:)` for customisation
-  /// For backwards compat
-  //  public func displayString(
-  //    places: Int = 2,
-  //    grouping: NumberGrouping = .automatic
-  //  ) -> String {
-  //    render(
-  //      using: DisplayFormat(
-  //        decimalPlaces: places,
-  //        grouping: grouping,
-  //      )
-  //    )
-  //  }
-}
+//extension FloatRenderable {
+//
+//}
 
 extension PropertiesLabeled {
 

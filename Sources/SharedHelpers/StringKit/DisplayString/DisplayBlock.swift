@@ -59,7 +59,7 @@ extension DisplayBlock {
     switch self {
       case .text(let text): text
       case .float(let value): value.render(using: format)
-      case .floatGroup(let value): value.renderAll(using: format)
+      case .floatGroup(let value): value.renderProperties(using: format)
 //      case .floatGroup(let value): value.render(using: format)
       case .indented(let indented): indented.render(using: format)
     //      case .display(let value): value.render(using: format)

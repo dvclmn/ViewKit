@@ -241,7 +241,7 @@ extension WavePlacement {
 
 extension WavePlacement: CustomStringConvertible {
   public var description: String {
-    "Start:\t\(start.displayString(places: 2)),\nEnd:\t\(end.displayString(places: 2))"
+    "Start:\t\(start.displayString),\nEnd:\t\(end.displayString)"
   }
 }
 

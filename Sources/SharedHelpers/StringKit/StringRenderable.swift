@@ -37,6 +37,27 @@ extension Substring: StringRenderable {
   public var toString: String { String(self) }
 }
 
+// MARK: - Primitives
+
+extension Int: StringRenderable {
+  public var toString: String { String(self) }
+}
+
+extension Bool: StringRenderable {
+  public var toString: String { self ? "true" : "false" }
+}
+
+// MARK: - Alignment
+extension Alignment: StringRenderable {
+  public var toString: String { self.displayName.standard }
+}
+
+// MARK: - Collections
+extension Array: StringRenderable where Element: StringRenderable {
+  public var toString: String { map(\.toString).joined(separator: ", ") }
+}
+
+
 // MARK: - Floats
 
 /// Covered already by FloatRenderable
@@ -52,15 +73,7 @@ extension Substring: StringRenderable {
 //  public var toString: String { String(self) }
 //}
 
-// MARK: - Primitives
 
-extension Int: StringRenderable {
-  public var toString: String { String(self) }
-}
-
-extension Bool: StringRenderable {
-  public var toString: String { self ? "true" : "false" }
-}
 
 /// Covered already by PropertiesLabeled
 //extension CGSize: StringRenderable {
@@ -75,12 +88,3 @@ extension Bool: StringRenderable {
 //  public var toString: String { displayString }
 //}
 
-// MARK: - Alignment
-extension Alignment: StringRenderable {
-  public var toString: String { self.displayName.standard }
-}
-
-// MARK: - Collections
-extension Array: StringRenderable where Element: StringRenderable {
-  public var toString: String { map(\.toString).joined(separator: ", ") }
-}
