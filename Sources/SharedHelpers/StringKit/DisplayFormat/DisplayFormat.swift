@@ -20,14 +20,14 @@ public struct FloatDisplayFormat: Equatable, Sendable {
     integerLength: Int? = nil,
     grouping: NumberGrouping = .automatic,
     labelStyle: PropertyLabel.Style = .standard,
-    separatorVisibility: SeparatorVisibility = .both,
+    separators: SeparatorVisibility = .both,
     sign: SignDisplay = .standard
   ) {
     self.decimalPlaces = decimalPlaces
     self.integerLength = integerLength
     self.grouping = grouping
     self.labelStyle = labelStyle
-    self.separatorVisibility = separatorVisibility
+    self.separatorVisibility = separators
     self.sign = sign
   }
 }

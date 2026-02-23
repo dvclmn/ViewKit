@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol PropertiesLabeled: DisplayAtomRenderable, DisplayPresetRenderable {
-//public protocol PropertiesLabeled: DisplayStringRenderable {
+  //public protocol PropertiesLabeled: DisplayStringRenderable {
 
   /// E.g. `Width` paired with `10.5`
   ///
@@ -22,7 +22,6 @@ public protocol PropertiesLabeled: DisplayAtomRenderable, DisplayPresetRenderabl
   /// Text separating each Label+Value pairing.
   /// E.g. the comma `,` in `X: 10, Y: -20`
   var separator: ComponentSeparator { get }
-  //  var separator: String { get }
 
   func renderProperties(using format: FloatDisplayFormat) -> String
 }
@@ -31,7 +30,7 @@ extension PropertiesLabeled {
   public func displayString(_ preset: FloatDisplayPreset) -> String {
     renderProperties(using: preset.format)
   }
-  
+
   public func render(using format: FloatDisplayFormat) -> String {
     renderProperties(using: format)
   }
