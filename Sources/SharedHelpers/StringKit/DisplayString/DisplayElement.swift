@@ -7,8 +7,8 @@
 
 public protocol DisplayAtomRenderable: Sendable {
   func render(using format: FloatDisplayFormat) -> String
-//  var displayString: String { get }
-//  func displayString(_ preset: FloatDisplayPreset) -> String
+  //  var displayString: String { get }
+  //  func displayString(_ preset: FloatDisplayPreset) -> String
 }
 
 /// Type-erased box

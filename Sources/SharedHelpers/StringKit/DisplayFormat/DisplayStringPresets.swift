@@ -37,10 +37,16 @@ public enum FloatDisplayPreset: String, CaseIterable {
       case .dimensions:
           .init(
             decimalPlaces: 0,
-            labelStyle: .abbreviated,
-            propertySeparator: .none
-//            separatorVisibility: .component
+            labelStyle: .none,
+            propertySeparator: .none,
+            componentDelimiter: .dimensions,
           )
+//          .init(
+//            decimalPlaces: 0,
+//            labelStyle: .abbreviated,
+//            propertySeparator: .none
+////            separatorVisibility: .component
+//          )
 
       case .showSign:
         .init(

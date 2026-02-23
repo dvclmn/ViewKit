@@ -6,6 +6,11 @@
 //
 
 import Foundation
+//
+//public struct FloatGroupDisplayFormat: Equatable, Sendable {
+//  
+//  let format: FloatDisplayFormat
+//}
 
 /// For now this can be used both for single Float values,
 /// as well as multiple together. As often a grouping of floats

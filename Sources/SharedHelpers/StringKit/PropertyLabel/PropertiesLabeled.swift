@@ -19,10 +19,6 @@ public protocol PropertiesLabeled: DisplayAtomRenderable, DisplayPresetRenderabl
   /// to the below ``PropertiesLabeled/separator``.
   var components: [LabelComponent] { get }
 
-  /// Text separating each Label+Value pairing.
-  /// E.g. the comma `,` in `X: 10, Y: -20`
-  //  var defaultSeparator: ComponentSeparator { get }
-
   func renderProperties(using format: FloatDisplayFormat) -> String
 }
 

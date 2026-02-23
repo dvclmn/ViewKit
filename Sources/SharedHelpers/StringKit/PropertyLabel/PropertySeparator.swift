@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 23/2/2026.
 //
 
+/// Text separating each Label+Value pairing.
+/// E.g. the comma `,` in `X: 10, Y: -20`
 public enum PropertySeparator: Sendable, Equatable {
   case colon
   case custom(String)
