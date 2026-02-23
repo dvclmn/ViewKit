@@ -11,6 +11,14 @@ public protocol StringRenderable {
   var toString: String { get }
 }
 
+extension StringRenderable where Self: FloatRenderable {
+  public var toString: String { render(using: .default) }
+}
+
+extension StringRenderable where Self: PropertiesLabeled {
+  public var toString: String { renderProperties(using: .default) }
+}
+
 // MARK: - String types
 
 extension String: StringRenderable {
@@ -31,17 +39,18 @@ extension Substring: StringRenderable {
 
 // MARK: - Floats
 
-extension Double: StringRenderable {
-  public var toString: String { String(self) }
-}
+/// Covered already by FloatRenderable
+//extension Double: StringRenderable {
+//  public var toString: String { String(self) }
+//}
 
-extension CGFloat: StringRenderable {
-  public var toString: String { "\(self)" }
-}
-
-extension Float: StringRenderable {
-  public var toString: String { String(self) }
-}
+//extension CGFloat: StringRenderable {
+//  public var toString: String { "\(self)" }
+//}
+//
+//extension Float: StringRenderable {
+//  public var toString: String { String(self) }
+//}
 
 // MARK: - Primitives
 
@@ -53,17 +62,18 @@ extension Bool: StringRenderable {
   public var toString: String { self ? "true" : "false" }
 }
 
-extension CGSize: StringRenderable {
-  public var toString: String { rende }
-}
+/// Covered already by PropertiesLabeled
+//extension CGSize: StringRenderable {
+//  public var toString: String { rende }
+//}
 
-extension NSRect: StringRenderable {
-  public var toString: String { displayString }
-}
+//extension NSRect: StringRenderable {
+//  public var toString: String { displayString }
+//}
 
-extension CGPoint: StringRenderable {
-  public var toString: String { displayString }
-}
+//extension CGPoint: StringRenderable {
+//  public var toString: String { displayString }
+//}
 
 // MARK: - Alignment
 extension Alignment: StringRenderable {

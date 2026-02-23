@@ -7,12 +7,6 @@
 
 import Foundation
 
-public enum ComponentSeparator {
-  case space
-  case none
-  case custom(String)
-}
-
 public protocol PropertiesLabeled: Sendable {
   //public protocol PropertiesLabeled: FloatRenderable {
 
@@ -29,6 +23,16 @@ public protocol PropertiesLabeled: Sendable {
   /// E.g. the comma `,` in `X: 10, Y: -20`
   var separator: ComponentSeparator { get }
   //  var separator: String { get }
+
+  func renderProperties(using format: FloatDisplayFormat) -> String
+}
+
+public enum ComponentSeparator: Sendable {
+  case space
+  case none
+  case custom(String)
+
+  public static let comma: Self = .custom(", ")
 }
 
 /// Types like `CGPoint` that have float properties.
@@ -36,7 +40,7 @@ public protocol PropertiesLabeled: Sendable {
 /// or more, like `CGRect`
 extension PropertiesLabeled {
 
-  func renderAll(
+  public func renderProperties(
     using format: FloatDisplayFormat
   ) -> String {
     let sep = separatorString(using: format)
@@ -44,7 +48,7 @@ extension PropertiesLabeled {
       .joined(sep)
   }
 
-  func separatorString(using format: FloatDisplayFormat) -> String {
+  private func separatorString(using format: FloatDisplayFormat) -> String {
     let shouldRender = format.separatorVisibility.contains(.component)
     let str =
       switch separator {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension CGPoint: PropertiesLabeled {
-  public var separator: String { ", " }
+  public var separator: ComponentSeparator { .comma }
   public var components: [LabelComponent] {
     [
       .init("X", value: x),
@@ -18,7 +18,7 @@ extension CGPoint: PropertiesLabeled {
 }
 
 extension CGSize: PropertiesLabeled {
-  public var separator: String { ", " }
+  public var separator: ComponentSeparator { .comma }
   public var components: [LabelComponent] {
     [
       .init(PropertyLabel("Width", abbreviated: "W"), value: width),
@@ -28,12 +28,12 @@ extension CGSize: PropertiesLabeled {
 }
 
 extension NSRect: PropertiesLabeled {
-  public var separator: String { ", " }
+  public var separator: ComponentSeparator { .comma }
   public var components: [LabelComponent] { origin.components + size.components }
 }
 
 extension UnitPoint: PropertiesLabeled {
-  public var separator: String { ", " }
+  public var separator: ComponentSeparator { .comma }
   public var components: [LabelComponent] {
     [
       .init("X", value: x),
@@ -43,7 +43,7 @@ extension UnitPoint: PropertiesLabeled {
 }
 
 extension CGVector: PropertiesLabeled {
-  public var separator: String { ", " }
+  public var separator: ComponentSeparator { .comma }
   public var components: [LabelComponent] {
     [
       .init("DX", value: dx),
