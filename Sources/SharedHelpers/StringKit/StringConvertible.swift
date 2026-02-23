@@ -74,15 +74,3 @@ extension Alignment: StringRenderable {
 extension Array: StringRenderable where Element: StringRenderable {
   public var toString: String { map(\.toString).joined(separator: ", ") }
 }
-
-//extension AnyRegexOutput: StringRenderable {
-//  public var toString: String {
-//    DisplayString {
-//      self.summarise(key: \.name, sortedBy: \.name)
-//      self.summarise(key: \.name, sortedBy: \.name)
-//      self.summarise(key: \.range, sortedBy: \.name)
-//      self.summarise(key: \.type, sortedBy: \.name)
-//      self.summarise(key: \.value, sortedBy: \.name)
-//    }.text
-//  }
-//}
