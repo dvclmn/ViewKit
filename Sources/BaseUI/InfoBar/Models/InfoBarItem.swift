@@ -42,14 +42,18 @@ extension InfoBarItem {
 
   /// Provides a way for DisplayString's Labeled to fit nicely with InfoBar
   public init<K: InfoBarSectionKey>(
-    fromLabeled labeled: Labeled,
+    fromBlock displayBlock: DisplayBlock,
+//    fromLabeled labeled: Labeled,
     section: K.Type = DebugSectionKey.self,
     format: FloatDisplayFormat = .default
   ) {
     self.init(
       section: section,
-      label: QuickLabel(stringLiteral: labeled.key),
-      content: labeled.block.render(using: format)
+      label: QuickLabel(
+        fromBlock: displayBlock,
+        using: format
+      ),
+      content: <#T##String#>
     )
   }
 }
@@ -63,6 +67,31 @@ extension InfoBarItem: ExpressibleByStringLiteral {
       section: InfoBarSectionID(DebugSectionKey.self),
       label: nil,
       content: value
+    )
+  }
+}
+
+extension QuickLabel {
+  init?(
+    fromBlock displayBlock: DisplayBlock,
+    using format: FloatDisplayFormat
+  ) {
+    let text: String? = switch displayBlock {
+      case .text(let atom): atom.render(using: format)
+        
+      case .labeled(let key, let separator, let value):
+        Labeled.toString(key: key, value: value, separator: separator, using: format)
+//        let text = Labeled(key, value: value, separator: separator).
+        
+      case .indented(let indented): nil // Not sure indented works here?
+      case .divider(let string): nil // Nor divider
+    }
+    
+    guard let text else { return nil }
+    self.init(
+      text,
+      icon: nil,
+      role: nil
     )
   }
 }

@@ -73,7 +73,7 @@ extension View {
       value: isEnabled
         ? content().map { block in
           switch block {
-            case .labeled(let labeled):
+            case let .labeled(key,separator, value):
               InfoBarItem(fromLabeled: labeled, section: key, format: format)
 
             default:

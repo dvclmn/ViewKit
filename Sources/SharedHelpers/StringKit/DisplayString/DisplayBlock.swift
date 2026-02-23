@@ -16,10 +16,9 @@ import Foundation
 /// what is semantic? And keeps mess/formatting out of ``DisplayStringBuilder``
 public enum DisplayBlock: Sendable {
   case text(DisplayAtom)
-  case labeled(key: String, separator: String = ": ", value: DisplayAtom?)
+  case labeled(key: String, separator: String, value: DisplayAtom?)
   case indented(Indented)
   case divider(String)
-//  case divider(String = "----------")
 }
 
 extension DisplayBlock {
@@ -30,8 +29,7 @@ extension DisplayBlock {
         return atom.render(using: format)
 
       case .labeled(let key, let sep, let value):
-        let valueText = value?.render(using: format) ?? "nil"
-        return key + sep + valueText
+        return Labeled.toString(key: key, value: value, separator: sep, using: format)
 
       case .divider(let text):
         return text
@@ -40,6 +38,11 @@ extension DisplayBlock {
         return indented.render(using: format)
     }
   }
+
+  //  public var label: Labeled? {
+  //    guard case let .labeled(key, sep, value) = self else { return nil }
+  //    return Labeled(key, value: value, separator: sep)
+  //  }
 }
 
 //@CaseDetection(includesNames: true)
