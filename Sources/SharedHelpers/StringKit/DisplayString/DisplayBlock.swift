@@ -12,20 +12,26 @@ import Foundation
 
 /// Note: have removed `display`, as this was mirroring `FloatRenderable`
 ///
-/// I think I can see `DisplayBlock` as being a way to keep various type casting
-/// etc out of the `DisplayStringBuilder`
-@CaseDetection(includesNames: true)
+/// Akin to a document AST (text / labelled / indented / divider etc). Helps determine
+/// what is semantic? And keeps mess/formatting out of ``DisplayStringBuilder``
 public enum DisplayBlock: Sendable {
-  case text(any StringRenderable)
-  //  case text(String)
+  case text(DisplayAtom)
+  case labeled(key: String, separator: String = ": ", value: DisplayAtom?)
   case indented(Indented)
-  case float(any FloatRenderable)
-  case floatGroup(any PropertiesLabeled)
-  //case divider(Divider)
-  /// Note: This previously drove ``Divider``
-//  case display(any DisplayStringRenderable)
-  case labeled(Labeled)
+  case divider(String = "----------")
 }
+//@CaseDetection(includesNames: true)
+//public enum DisplayBlock: Sendable {
+//  case text(any StringRenderable)
+//  //  case text(String)
+//  case indented(Indented)
+//  case float(any FloatRenderable)
+//  case floatGroup(any PropertiesLabeled)
+//  //case divider(Divider)
+//  /// Note: This previously drove ``Divider``
+////  case display(any DisplayStringRenderable)
+//  case labeled(Labeled)
+//}
 
 extension DisplayBlock {
   init(from value: Any?) {

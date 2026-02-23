@@ -7,7 +7,8 @@
 
 import Foundation
 
-public protocol PropertiesLabeled: DisplayStringRenderable {
+public protocol PropertiesLabeled: DisplayAtomRenderable {
+//public protocol PropertiesLabeled: DisplayStringRenderable {
 
   /// E.g. `Width` paired with `10.5`
   ///

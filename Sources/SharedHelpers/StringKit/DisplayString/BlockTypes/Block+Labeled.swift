@@ -13,33 +13,48 @@ import AppKit
 
 public struct Labeled: Sendable {
   //public struct Labeled<Value> {
-
+  
   public let key: String
-
-  /// Previously had value as `any DisplayRenderable`, however this
-  /// has been retired as it unneccesarily shadowed `FloatRenderable`
-  //  public let value: Value?
-  //  public let value: Any?
-  public let value: (any StringRenderable)?
-  //    public let value: DisplayBlock
-
+  
   /// E.g. for `CGPoint`
   /// ```
   /// Label separator: ": "
   /// Result: X: 10
   public let separator: String
+  public let value: DisplayAtom?
 
-  public init(
-    _ key: String,
-    value: Any?,
-    separator: String = ": "
-  ) {
+
+  /// Previously had value as `any DisplayRenderable`, however this
+  /// has been retired as it unneccesarily shadowed `FloatRenderable`
+  //  public let value: Value?
+  //  public let value: Any?
+//  public let value: (any StringRenderable)?
+  //    public let value: DisplayBlock
+
+
+//  public let separator: String
+
+  public init(_ key: String, _ value: DisplayAtom?, separator: String = ": ") {
     self.key = key
-    self.value = value as? (any StringRenderable)
-    //    self.value = DisplayBlock(from: value)
-    //    self.value = DisplayBlock.semantic(for: value)
+    self.value = value
     self.separator = separator
   }
+  
+  public var block: DisplayBlock {
+    .labeled(key: key, separator: separator, value: value)
+  }
+  
+//  public init(
+//    _ key: String,
+//    value: Any?,
+//    separator: String = ": "
+//  ) {
+//    self.key = key
+//    self.value = value as? (any StringRenderable)
+//    //    self.value = DisplayBlock(from: value)
+//    //    self.value = DisplayBlock.semantic(for: value)
+//    self.separator = separator
+//  }
 }
 
 //extension Labeled: DisplayRenderable {
@@ -51,10 +66,10 @@ public struct Labeled: Sendable {
 //
 extension Labeled {
 
-  public func renderLabel(using format: FloatDisplayFormat) -> String {
-    let valuePart = value.
-    return key + separator + valuePart
-  }
+//  public func renderLabel(using format: FloatDisplayFormat) -> String {
+//    let valuePart = value.
+//    return key + separator + valuePart
+//  }
   //  public var toDisplayBlock: DisplayBlock {
   //    DisplayBlock.labeled(self)
   ////  public func toDisplayBlock(using format: FloatDisplayFormat?) -> DisplayBlock {

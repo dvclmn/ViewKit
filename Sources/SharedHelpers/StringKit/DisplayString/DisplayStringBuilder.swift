@@ -8,6 +8,8 @@
 import BasePrimitives
 import Foundation
 
+/// Ideally this should stay simple/dumb, not concerned with formatting strings etc.
+/// Just putting things together
 @resultBuilder
 public struct DisplayStringBuilder {
 
@@ -41,13 +43,16 @@ extension DisplayStringBuilder {
   }
 
   /// Overloads for dedicated Block Types ``Labeled``, ``Indented``, ``Divider`` etc
+//  public static func buildExpression(_ value: Labeled) -> [DisplayBlock] {
+//    [.labeled(value)]
+//  }
+  
   public static func buildExpression(_ value: Labeled) -> [DisplayBlock] {
-    [.labeled(value)]
+    [value.block]
   }
 
-  /// Is this silly?
   public static func buildExpression(_ value: Any?) -> [DisplayBlock] {
-    [DisplayBlock(from: value)]
+    [.text(.make(from: value))]
   }
 
   //  public static func buildExpression(_ value: any FloatRenderable) -> [DisplayBlock] {
@@ -67,16 +72,9 @@ extension DisplayStringBuilder {
   //  }
 
   public static func buildExpression(_ value: Indented) -> [DisplayBlock] {
-    [
-      .indented(value)
-      //      .indented(
-      //        Indented(
-      //          value.title,
-      //          content: { value.content }
-      //        )
-      //      )
-    ]
+    [.indented(value)]
   }
+
 
   public static func buildExpression(_ value: IndentedLines) -> [DisplayBlock] {
     guard !value.lines.isEmpty else { return [] }
