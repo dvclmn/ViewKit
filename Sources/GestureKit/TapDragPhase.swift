@@ -15,6 +15,8 @@ import Foundation
 /// e.g. a Selection (range between taps) kind.
 /// Could replace DrawString's `InteractionKind`
 ///
+/// **UPDATE**
+///
 //@CaseDetection
 //@AssociatedValues
 //@MetaEnum

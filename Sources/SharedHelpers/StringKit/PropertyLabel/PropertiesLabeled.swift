@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol PropertiesLabeled: DisplayAtomRenderable, DisplayPresetRenderable {
+public protocol PropertiesLabeled: DisplayFragmentRenderable, DisplayPresetRenderable {
   //public protocol PropertiesLabeled: DisplayStringRenderable {
 
   /// E.g. `Width` paired with `10.5`
@@ -36,8 +36,6 @@ extension PropertiesLabeled {
 /// May be a pair, like `CGPoint`'s `x` and `y`,
 /// or more, like `CGRect`
 extension PropertiesLabeled {
-
-  //  var defaultDelimiter: ComponentDelimiter { .comma }
 
   public func renderProperties(
     using format: FloatDisplayFormat

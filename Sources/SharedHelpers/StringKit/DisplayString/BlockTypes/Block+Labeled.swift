@@ -21,7 +21,7 @@ public struct Labeled: Sendable {
   /// Label separator: ": "
   /// Result: X: 10
   public let separator: String
-  public let value: DisplayAtom?
+  public let value: DisplayFragment?
 
   /// Previously had value as `any DisplayRenderable`, however this
   /// has been retired as it unneccesarily shadowed `FloatRenderable`
@@ -42,8 +42,8 @@ public struct Labeled: Sendable {
 
     let labelValue =
       switch value {
-        case let value as DisplayAtomRenderable: DisplayAtom(value)
-        default: DisplayAtom(String(describing: value))
+        case let value as DisplayFragmentRenderable: DisplayFragment(value)
+        default: DisplayFragment(String(describing: value))
       }
     self.value = labelValue
     self.separator = separator
@@ -55,7 +55,7 @@ public struct Labeled: Sendable {
   
   public static func toString(
     key: String,
-    value: DisplayAtom?,
+    value: DisplayFragment?,
     separator: String,
     using format: FloatDisplayFormat
   ) -> String {

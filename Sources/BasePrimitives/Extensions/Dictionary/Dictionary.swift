@@ -18,6 +18,40 @@ extension Dictionary where Key: CustomStringConvertible, Value: CustomStringConv
       .joined(separator: pairSeparator)
   }
 
+  public func prettyPrinted(
+//  public func prettyPrinted<T: Comparable>(
+    aligned: Bool = true,
+//    sortedBy keyPath: KeyPath<Element, T>,
+  ) -> String {
+    guard !isEmpty else { return "[:]" }
+
+    let pairs = map {
+      (key: "\"\($0)\":", value: "\"\($1)\"")
+    }
+    .sorted { $0.key < $1.key }
+    //    .sorted(by: keyPath)
+
+    let lines: [String]
+
+    if aligned {
+      let maxKeyLength = pairs.map(\.key.count).max() ?? 0
+      lines = pairs.map { key, value in
+        let padding = String(repeating: " ", count: maxKeyLength - key.count + 1)
+        return "    \(key)\(padding)\(value)"
+      }
+    } else {
+      lines = pairs.map { key, value in
+        "    \(key) \(value)"
+      }
+    }
+
+    return "[\n\(lines.joined(separator: "\n"))\n]"
+  }
+
+  //  func prettyPrint(aligned: Bool = true) {
+  //    print(prettyPrinted(aligned: aligned))
+  //  }
+
   //extension Dictionary: StringRenderable where Key: StringRenderable, Value: StringRenderable {
 
   //        (

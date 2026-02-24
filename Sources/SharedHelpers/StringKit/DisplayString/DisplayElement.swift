@@ -5,17 +5,17 @@
 //  Created by Dave Coleman on 23/2/2026.
 //
 
-public protocol DisplayAtomRenderable: Sendable {
+public protocol DisplayFragmentRenderable: Sendable {
   func render(using format: FloatDisplayFormat) -> String
   //  var displayString: String { get }
   //  func displayString(_ preset: FloatDisplayPreset) -> String
 }
 
 /// Type-erased box
-public struct DisplayAtom: Sendable {
+public struct DisplayFragment: Sendable {
   private let _render: @Sendable (FloatDisplayFormat) -> String
 
-  public init<R: DisplayAtomRenderable>(_ base: R) {
+  public init<R: DisplayFragmentRenderable>(_ base: R) {
     self._render = { format in base.render(using: format) }
   }
 
@@ -24,40 +24,40 @@ public struct DisplayAtom: Sendable {
   }
 }
 
-extension DisplayAtomRenderable {
+extension DisplayFragmentRenderable {
 
 }
 
-extension String: DisplayAtomRenderable {
+extension String: DisplayFragmentRenderable {
   public func render(using format: FloatDisplayFormat) -> String { self }
 }
 
 //extension FloatRenderable {
 // adapt: FloatRenderable already knows how to render with a FloatDisplayFormat
 //}
-//extension Double: DisplayAtomRenderable {
+//extension Double: DisplayFragmentRenderable {
 //  public func render(using format: FloatDisplayFormat) -> String {
 //    self.render(using: format)  // from FloatRenderable
 //  }
 //}
-// (or just make FloatRenderable refine DisplayAtomRenderable)
+// (or just make FloatRenderable refine DisplayFragmentRenderable)
 
 /// `DisplayBlock(from: Any?)` can just become `.text(.make(from: value))`
-/// `Labeled.init(key:value:Any?)` can become `DisplayAtom.make(from:)`
-extension DisplayAtom {
-  public static func make(from value: Any?) -> DisplayAtom {
+/// `Labeled.init(key:value:Any?)` can become `DisplayFragment.make(from:)`
+extension DisplayFragment {
+  public static func make(from value: Any?) -> DisplayFragment {
     switch value {
-      case let v as DisplayAtomRenderable:
-        return DisplayAtom(v)
+      case let val as DisplayFragmentRenderable:
+        return DisplayFragment(val)
 
-      case let v as CustomStringConvertible:
-        return DisplayAtom(v.description)
+      case let val as CustomStringConvertible:
+        return DisplayFragment(val.description)
 
       case nil:
-        return DisplayAtom("nil")
+        return DisplayFragment("nil")
 
       default:
-        return DisplayAtom(String(describing: value))
+        return DisplayFragment(String(describing: value))
     }
   }
 }

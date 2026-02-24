@@ -15,8 +15,8 @@ import Foundation
 /// Akin to a document AST (text / labelled / indented / divider etc). Helps determine
 /// what is semantic? And keeps mess/formatting out of ``DisplayStringBuilder``
 public enum DisplayBlock: Sendable {
-  case text(DisplayAtom)
-  case labeled(key: String, separator: String, value: DisplayAtom?)
+  case text(DisplayFragment)
+  case labeled(key: String, separator: String, value: DisplayFragment?)
   case indented(Indented)
   case divider(String)
 }

@@ -25,7 +25,7 @@ extension Indented {
 
   init(fromLines indentedLines: IndentedLines) {
     let blocks: [DisplayBlock] = indentedLines.lines.map {
-      DisplayBlock.text(DisplayAtom($0))
+      DisplayBlock.text(DisplayFragment($0))
     }
     self.init(title: indentedLines.title, content: blocks)
   }
