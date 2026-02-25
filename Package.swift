@@ -135,6 +135,7 @@ let package = Package(
         .module(.graphicsKit),
         .module(.gestureKit),
         .module(.vectorKit),
+        .module(.canvasKit),
         .sharing,
         .casePaths,
       ],
@@ -146,7 +147,7 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.gestureKit),
-        .module(.baseUI),
+//        .module(.baseUI),
       ],
     ),
 

@@ -71,10 +71,8 @@ extension View {
     )
   }
 
-  /// This overload for `CharacterSizeModifier`
-  /// is provided for when the character size can be sent
-  /// straight to the environment as `unitSize`, and doesn't
-  /// need to go through the domain via callback.
+  /// For use when an immediate size via callback isn't required.
+  /// Just sets the `unitSize` value in the environment.
   public func setCharacterUnitSize(
     mode: DebounceMode
   ) -> some View {

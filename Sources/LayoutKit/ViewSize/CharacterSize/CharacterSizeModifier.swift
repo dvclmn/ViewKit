@@ -21,15 +21,14 @@ public struct CharacterSizeModifier: ViewModifier {
     content
       .overlay {
         Text(testString.text)
-          .fixedSize()
           .monospaced()
+          .fixedSize()
           .allowsTightening(false)
           .viewSize(mode: debounceMode, isEnabled: unitSize == nil) { size in
 
-            /// This derives a single glyph size from the test string
-            /// being used. The aim being to obtain a more accurate
-            /// size, by averaging out any glyph differences / having
-            /// a larger sample size
+            /// This derives a single glyph size from the multiple-character test string.
+            /// The goal of sampling more than a single character is to hopefully obtain
+            /// a more accurate reading, by averaging out the results.
             let charSize = testString.singleCharacterSize(in: size)
 
             /// This value can be used either via the `sizeDidChange` callback,
@@ -37,21 +36,15 @@ public struct CharacterSizeModifier: ViewModifier {
             if shouldSetEnv {
               /// This updates the env value
               self.characterSize = charSize
-
-              /// And still sends out the callback, if needed
-              sizeDidChange(charSize)
-
-            } else {
-              /// This sends the size to the consumer via callback
-              sizeDidChange(charSize)
             }
+
+            /// This sends the size to the consumer via callback
+            sizeDidChange(charSize)
           }
           .foregroundStyle(.cyan.secondary)
           .hidden()
           .allowsHitTesting(false)
-
       }
       .environment(\.unitSize, characterSize ?? unitSize)
-
   }
 }
