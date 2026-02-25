@@ -13,31 +13,25 @@ public struct GridConfiguration {
   public let cellSize: CGSize
   public let colour: Color
   public let lineWidth: CGFloat
-  public let pan: CGSize
-//  public let pan: CGPoint
   public let density: DisplayDensity
-  
+
   public init(
     fillStyle: GridFillStyle,
     cellSize: CGSize,
     colour: Color,
     lineWidth: CGFloat,
-    pan: CGSize,
-//    pan: CGPoint,
     density: DisplayDensity
   ) {
     self.fillStyle = fillStyle
     self.cellSize = cellSize
     self.colour = colour
     self.lineWidth = lineWidth
-    self.pan = pan
     self.density = density
   }
-
 }
 
 extension GridConfiguration {
-  // Determine if we should even draw based on the second implementation's logic
+  /// Determine if we should even draw based on the second implementation's logic
   public var shouldDrawLines: Bool {
     density.isShowingCellMarkers
   }

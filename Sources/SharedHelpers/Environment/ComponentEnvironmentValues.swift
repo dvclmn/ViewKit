@@ -115,6 +115,11 @@ extension EnvironmentValues {
   @Entry public var columnVisibility: Binding<NavigationSplitViewVisibility> = .constant(.automatic)
   
   @Entry public var isLoading: Bool = false
+  
+  /// From CanvasKit
+  @Entry public var panOffset: CGSize = .zero
+  @Entry public var zoomLevel: Double = 1.0
+  @Entry public var zoomRange: ClosedRange<Double>?
 }
 
 public protocol ValueFormattable {}

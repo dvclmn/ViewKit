@@ -7,17 +7,16 @@
 
 import SwiftUI
 import BasePrimitives
-import CanvasKit
 
 extension GraphicsContext {
 
   public func drawGridLines(
     config: GridConfiguration,
     containerSize: CGSize,
-//    canvasZoom: CGFloat
   ) {
-    let currentZoom = self.environment.zoomLevel
-    let zoomed = config.cellSize * canvasZoom
+    let zoomLevel = self.environment.zoomLevel
+    let zoomedCell = config.cellSize * zoomLevel
+    
     let (columns, rows) = (
       config.gridSize?.width.gridLength ?? 1,
       config.gridSize?.height.gridLength ?? 1,
@@ -25,7 +24,7 @@ extension GraphicsContext {
     let path = Path.createGrid(
       columns: columns,
       rows: rows,
-      cellSize: zoomed,
+      cellSize: zoomedCell,
       containerSize: containerSize
     )
     self.stroke(
@@ -37,28 +36,31 @@ extension GraphicsContext {
 }
 
 extension GraphicsContext {
+  
+  /// Note: was previously `in rect: CGRect`, but the `origin`
+  /// wasn't being used, so changed to `size`.
   public func drawInfiniteGrid(
-    in rect: CGRect,  // The viewport/container size
+    in containerSize: CGSize,
     config: GridConfiguration
   ) {
     guard config.shouldDrawLines else { return }
 
-    let pan = config.pan
-    let size = config.cellSize
+    let pan = self.environment.panOffset
+    let cellSize = config.cellSize
 
     var path = Path()
 
     /// Vertical Lines (Columns)
     /// Find the first line index that would be visible on the left
-    let startCol = Int(floor(-pan.width / size.width))
+    let startCol = Int(floor(-pan.width / containerSize.width))
 //    let startCol = Int(floor(-pan.x / size.width))
-    let endCol = startCol + Int(ceil(rect.width / size.width)) + 1
+    let endCol = startCol + Int(ceil(containerSize.width / cellSize.width)) + 1
 
     for i in startCol...endCol {
       let x = CGFloat(i) * size.width + pan.width
 //      let x = CGFloat(i) * size.width + pan.x
       path.move(to: CGPoint(x: x, y: 0))
-      path.addLine(to: CGPoint(x: x, y: rect.height))
+      path.addLine(to: CGPoint(x: x, y: size.height))
 
       /// Annotation Logic
       if i % config.density.rawValue == 0 {
@@ -69,13 +71,13 @@ extension GraphicsContext {
     /// Horizontal Lines (Rows)
     let startRow = Int(floor(-pan.height / size.height))
 //    let startRow = Int(floor(-pan.y / size.height))
-    let endRow = startRow + Int(ceil(rect.height / size.height)) + 1
+    let endRow = startRow + Int(ceil(size.height / size.height)) + 1
 
     for i in startRow...endRow {
       let y = CGFloat(i) * size.height + pan.height
 //      let y = CGFloat(i) * size.height + pan.y
       path.move(to: CGPoint(x: 0, y: y))
-      path.addLine(to: CGPoint(x: rect.width, y: y))
+      path.addLine(to: CGPoint(x: size.width, y: y))
     }
 
     /// Single stroke call is much more efficient than filling individual rects

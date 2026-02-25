@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreTools
+import GraphicsKit
 
 struct CellSelectionCanvas: View {
    @Environment(\.unitSize) private var unitSize
@@ -18,7 +19,7 @@ struct CellSelectionCanvas: View {
     Canvas(
       opaque: true,
       rendersAsynchronously: true) { context, size in
-        context.draw
+        context.drawInfiniteGrid(in: <#T##CGRect#>, config: <#T##GridConfiguration#>)
       }
     
   }

@@ -32,7 +32,6 @@ extension Path {
     }
   }
 
-  
   public init(
     fromPoints points: [CGPoint],
     type: PathStyle = .line,
@@ -40,13 +39,11 @@ extension Path {
   ) {
     self = points.createPath(type: type, shouldDropFirst: shouldDropFirst)
   }
-
 }
 
 extension Path {
 
   public static func createGrid(
-    //    fillStyle: GridFillStyle,
     columns: Int,
     rows: Int,
     cellSize: CGSize,
@@ -83,6 +80,6 @@ extension Path {
     radius: CGFloat,
   ) {
     shape.addShape(to: &self, at: point, radius: radius)
-//    shape.updatePath(center: point, radius: radius, path: &self)
+    //    shape.updatePath(center: point, radius: radius, path: &self)
   }
 }
