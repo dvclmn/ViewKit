@@ -73,9 +73,7 @@ extension View {
 
   /// For use when an immediate size via callback isn't required.
   /// Just sets the `unitSize` value in the environment.
-  public func setCharacterUnitSize(
-    mode: DebounceMode
-  ) -> some View {
+  public func setCharacterSize(mode: DebounceMode) -> some View {
     self.modifier(
       CharacterSizeModifier(
         debounceMode: mode,

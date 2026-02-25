@@ -11,7 +11,7 @@ import SwiftUI
 public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
 
 public struct ZoomModifier: ViewModifier {
-  @Environment(\.canvasZoomRange) private var zoomRange
+  @Environment(\.zoomRange) private var zoomRange
   @Environment(\.modifierKeys) private var modifierKeys
   
   @State private var internalZoom: Double            // source of truth during gesture

@@ -71,7 +71,7 @@ extension GridGuideOverlayModifier {
           density: .half
         ),
         containerSize: size,
-        canvasZoom: 1.0
+//        canvasZoom: 1.0
       )
 
       if isDrawingDebugText {

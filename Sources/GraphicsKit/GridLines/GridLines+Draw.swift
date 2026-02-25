@@ -7,14 +7,16 @@
 
 import SwiftUI
 import BasePrimitives
+import CanvasKit
 
 extension GraphicsContext {
 
   public func drawGridLines(
     config: GridConfiguration,
     containerSize: CGSize,
-    canvasZoom: CGFloat
+//    canvasZoom: CGFloat
   ) {
+    let currentZoom = self.environment.zoomLevel
     let zoomed = config.cellSize * canvasZoom
     let (columns, rows) = (
       config.gridSize?.width.gridLength ?? 1,
