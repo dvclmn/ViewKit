@@ -27,19 +27,29 @@ extension View {
       )
     )
   }
-  
+
   /// This now returns a CGRect to allow describing safe area insets,
   /// which wasn't possible with previous CGSize
   ///
   /// If a callback is needed, see ``viewSize(capture:mode:isEnabled:valueOutput:)``
-  public func readViewportSizeCapture<T: GeometryCapturable>(
-    capture: GeometryCapture<T> = .size,
+  public func viewportSizeCapture(
     mode debounceMode: DebounceMode,
     showsIndicator: Bool = false,
   ) -> some View {
     self.modifier(
       EnvironmentViewportSizeModifier(
-        capture: capture,
+        mode: debounceMode,
+        showsIndicator: showsIndicator
+      )
+    )
+  }
+
+  public func viewportSizeAndSafeAreaCapture(
+    mode debounceMode: DebounceMode,
+    showsIndicator: Bool = false,
+  ) -> some View {
+    self.modifier(
+      EnvironmentViewportSizeAndSafeAreaModifier(
         mode: debounceMode,
         showsIndicator: showsIndicator
       )

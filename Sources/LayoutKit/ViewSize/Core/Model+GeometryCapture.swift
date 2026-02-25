@@ -8,30 +8,15 @@
 import SharedHelpers
 import SwiftUI
 
-public struct SizeAndSafeInsets: Equatable, Sendable {
-  let size: CGSize
-  let safeInsets: EdgeInsets
+public protocol GeometryCapturable: Equatable, Sendable {
+  //  var type: Self.Type { get }
+  //  var transform: @Sendable (GeometryProxy) -> Self { get }
 }
-
-extension SizeAndSafeInsets {
-  public var rect: CGRect {
-    let width = size.width - (safeInsets.leading + safeInsets.trailing)
-    let height = size.height - (safeInsets.top + safeInsets.bottom)
-
-    return CGRect(
-      x: safeInsets.leading,
-      y: safeInsets.top,
-      width: width,
-      height: height
-    )
-  }
-}
-
-public protocol GeometryCapturable: Equatable, Sendable {}
 extension CGSize: GeometryCapturable {}
 extension CGRect: GeometryCapturable {}
 extension EdgeInsets: GeometryCapturable {}
 extension SizeAndSafeInsets: GeometryCapturable {}
+
 
 public struct GeometryCapture<T: GeometryCapturable>: Sendable {
   let type: T.Type
