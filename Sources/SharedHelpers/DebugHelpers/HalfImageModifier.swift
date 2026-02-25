@@ -10,6 +10,7 @@ import SwiftUI
 public struct HalfImageBackgroundModifier: ViewModifier {
   let url: URL?
   let balanceFactor: Double
+  let offset: CGSize
   public func body(content: Content) -> some View {
     let total = 10
     let blankSpan = NumericHelpers.decileIndex(from: balanceFactor)
@@ -25,7 +26,7 @@ public struct HalfImageBackgroundModifier: ViewModifier {
               count: total,
               span: blankSpan,
               spacing: 0,
-              alignment: .leading
+              alignment: .leading,
             )
 
           Rectangle().fill(.cyan.tertiary)
@@ -34,7 +35,7 @@ public struct HalfImageBackgroundModifier: ViewModifier {
               count: total,
               span: imageSpan,
               spacing: 0,
-              alignment: .trailing
+              alignment: .trailing,
             )
             .overlay {
               AsyncImage(url: url) {
@@ -42,6 +43,7 @@ public struct HalfImageBackgroundModifier: ViewModifier {
                   .resizable()
                   .aspectRatio(contentMode: .fill)
               }
+//              .offset(offset)
             }
             .clipped()
         }
@@ -55,12 +57,14 @@ extension View {
         string:
           "https://images.unsplash.com/photo-1770566258012-7d809f99c574?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       ),
-    balance: Double = 0.5
+    balance: Double = 0.5,
+    offset: CGSize = .zero
   ) -> some View {
     self.modifier(
       HalfImageBackgroundModifier(
         url: url,
-        balanceFactor: balance
+        balanceFactor: balance,
+        offset: offset
       )
     )
   }

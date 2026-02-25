@@ -50,7 +50,6 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
             )
         }
       }
-      
 
   }
 }
@@ -74,14 +73,15 @@ extension View {
     //    glass: GlassTypeCompatible? = nil,
     padding: CGFloat = Styles.sizeTiny,
     tint: Color? = nil,
-    usesGlassEffect: Bool = false,
+    //    usesGlassEffect: Bool = false,
     isEnabled: Bool = true,
   ) -> some View {
     self.modifier(
       QuickBackgroundModifier(
         isEnabled: isEnabled,
         shape: shape,
-        glass: usesGlassEffect ? .regular(tint: tint) : nil,
+        glass: nil,
+        //        glass: usesGlassEffect ? .regular(tint: tint) : nil,
         padding: padding,
         tint: tint,
       )
@@ -93,14 +93,15 @@ extension View {
     rounding: Double = Styles.sizeSmall,
     padding: CGFloat = Styles.sizeTiny,
     tint: Color? = nil,
-    usesGlassEffect: Bool = false,
+    //    usesGlassEffect: Bool = false,
     isEnabled: Bool = true,
   ) -> some View {
     self.modifier(
       QuickBackgroundModifier(
         isEnabled: isEnabled,
         shape: .rect(cornerRadius: rounding),
-        glass: usesGlassEffect ? .regular(tint: tint) : nil,
+        glass: glass,
+        //        glass: usesGlassEffect ? .regular(tint: tint) : nil,
         //        glass: glass,
         padding: padding,
         tint: tint,

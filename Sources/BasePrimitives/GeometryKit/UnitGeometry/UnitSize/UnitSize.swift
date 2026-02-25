@@ -11,7 +11,6 @@ import Foundation
 public struct UnitSize: Hashable, Codable, Sendable {
 
   /// Columns == Width is the more common convention.
-  ///
   public var width: UnitLength
 
   /// Rows == Height
@@ -77,7 +76,7 @@ extension UnitSize {
       unitLength: unitSize.height
     )
   }
-  
+
   public init(magnitudeA: Int, magnitudeB: Int, other: UnitSize) {
     self.init(
       width: UnitLength(magnitude: magnitudeA, unitLength: other.width.unitLength),

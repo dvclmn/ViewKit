@@ -41,7 +41,6 @@ public struct DepthShadowModifier: ViewModifier {
             )
             .scaleEffect(min(1, max(0, distanceY * depthIntensity)))
         }
-
       }
   }
 }

@@ -10,7 +10,7 @@ import Foundation
 extension Character: GridCell {
 //  public typealias Base = <#type#>
   
-  public static func createBlank() -> Character { Character("") }
+  public static func createBlank() -> Character { Character(" ") }
 //  public func position(in grid: Base) -> GridPosition {
 //    <#code#>
 //  }
