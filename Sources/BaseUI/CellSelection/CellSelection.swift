@@ -36,8 +36,10 @@ public struct CellSelectionTestView: View {
     .gridFont(.sfMono, size: 88)
     .infoBarView(debounceMode: .debounce(0.1))
 
-    .environment(\.canvasSize, documentSize)
     .task(id: documentSize) { store.canvasSize = documentSize }
+    .task(id: gridDimensions) { store.gridDimensions = gridDimensions }
+    
+    .environment(\.canvasSize, documentSize)
     .environment(store)
     .environment(\.zoomRange, zoomRange)
   }

@@ -36,8 +36,7 @@ struct CellSelectionCanvas: View {
         drawsBorder: false
       )
       
-      let selectedRect = CGRect(origin: store.pointerLocalSpace, size: <#T##CGSize#>)
-      let selectedShape = Path
+      let selectedShape = Path(store.se)
       
     }  // END canvas
 
@@ -53,5 +52,6 @@ struct CellSelectionCanvas: View {
     .task(id: zoomLevel) { store.zoom = zoomLevel }
     .task(id: viewportRect) { store.viewportRect = viewportRect }
     .task(id: unitSize) { store.cellSize = unitSize }
+    
   }
 }

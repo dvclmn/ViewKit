@@ -16,6 +16,7 @@ final class SelectionHandler {
   var viewportRect: CGRect?
   var canvasSize: CGSize?
   var cellSize: CGSize?
+  var gridDimensions: GridDimensions?
 }
 
 extension SelectionHandler {
@@ -49,19 +50,22 @@ extension SelectionHandler {
 
   /// Returns the row and column index for a global pointer location
   /// Returns nil if the pointer is outside the grid boundaries
-  public func cellIndex(
+  public func gridPosition(
+    //  public func cellIndex(
     at globalPoint: CGPoint,
-    gridDimensions: GridDimensions
-      //    grid: GridMetadata
 
-  ) -> (row: Int, col: Int)? {
+    //    grid: GridMetadata
 
+  ) -> GridPosition? {
+    //  ) -> (row: Int, col: Int)? {
+
+    guard let gridDimensions else { return nil }
     let unitSize = unitSize(gridDimensions.columns, gridDimensions.rows)
     guard let gridScreenSize = unitSize?.screenSize else { return nil }
     guard let cellSize else { return nil }
+
     /// 1. Convert Global Screen Space -> Local Canvas Space
     guard let local = pointerLocalSpace else { return nil }
-    //    let local = toLocal(point: globalPoint)
 
     /// 2. Perform Boundary Check
     /// Ensure the pointer isn't in the "empty space" around the canvas
@@ -71,10 +75,39 @@ extension SelectionHandler {
       return nil
     }
 
-    // 3. Convert Local Coordinate -> Grid Indices
+    /// 3. Convert Local Coordinate -> Grid Indices
     let col = Int(local.x / cellSize.width)
     let row = Int(local.y / cellSize.height)
 
-    return (row, col)
+    return GridPosition(row, col)
+    //    return (row, col)
+  }
+
+  var pointerGridPosition: GridPosition? {
+    guard let pointerLocation else { return nil }
+    return gridPosition(at: pointerLocation)
+  }
+
+  var selectionRect: CGRect? {
+    guard let local = pointerLocalSpace else { return nil }
+    guard let cellSize else { return nil }
+
+    let originX = CGFloat(position.column) * cellSize.width
+    let originY = CGFloat(position.row) * cellSize.height
+    let cellRect = CGRect(
+      x: originX, y: originY,
+      width: cellSize.width,
+      height: cellSize.height
+    )
+  }
+
+  func isPointerInCell(
+    gridPosition: GridPosition,
+    //    row: Int,
+    //    col: Int,
+    globalPoint: CGPoint,
+  ) -> Bool {
+    guard let local = pointerLocalSpace else { return false }
+    return selectionRect(at: gridPosition)?.contains(local) ?? false
   }
 }
