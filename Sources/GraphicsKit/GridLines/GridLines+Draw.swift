@@ -10,42 +10,54 @@ import SwiftUI
 
 extension GraphicsContext {
 
-  func drawGrid(
-    config: GridConfiguration,
-    containerSize: CGSize,
-    isInfinite: Bool
+  public func drawGrid(
+    in containerSize: CGSize,
+    mode: GridSizeMode = .fillContainer,
+    lineColour: Color = .gray.opacity(0.2),
+    lineWidth: CGFloat = 1,
+    annotations: GridAnnotationDensity = .none
   ) {
-    guard config.shouldDrawLines else { return }
 
     guard let cellSize = self.environment.unitSize else { return }
-    //    let unitCell = self.environment.unitSize
+
     let zoom = self.environment.zoomLevel
     let cellZoomed = cellSize * zoom
 
+    guard
+      let gridSize = mode.gridSize(
+        from: cellZoomed,  // Or `cellSize`?
+        in: containerSize
+      )
+    else { return }
+
     let path: Path
 
-    if isInfinite {
-      let pan = self.environment.panOffset
-      path = .infiniteGrid(
-        containerSize: containerSize,
-        unitCell: cellZoomed,
-        offset: pan,
-        onVerticalIndex: { i, x in
-          if i % config.density.rawValue == 0 {
-            self.draw(
-              Text("\(i)").font(.caption2).foregroundColor(.secondary),
-              at: CGPoint(x: x + 4, y: 20))
+    switch mode {
+      case .fixed, .fill:
+        path = .boundedGrid(
+          unitSize: gridSize,
+          containerSize: containerSize
+        )
+
+      case .fillContainer:
+        let pan = self.environment.panOffset
+        path = .infiniteGrid(
+          containerSize: containerSize,
+          unitCell: cellZoomed,
+          offset: pan,
+          onVerticalIndex: { i, x in
+            if annotations.isShowingCellMarkers {
+              self.draw(
+                Text("\(i)").font(.caption2).foregroundColor(.secondary),
+                at: CGPoint(x: x + 4, y: 20))
+            }
           }
-        }
-      )
-    } else {
-      // bounded: fillStyle decides counts
-      guard let unitSize = config.gridSize(from: cellZoomed) else { return }
-      path = .boundedGrid(unitSize: unitSize, containerSize: containerSize)
+        )
     }
 
-    self.stroke(path, with: .color(config.colour), lineWidth: config.lineWidth)
+    self.stroke(path, with: .color(lineColour), lineWidth: lineWidth)
   }
+  
   //  public func drawGridLines(
   //    config: GridConfiguration,
   //    containerSize: CGSize,

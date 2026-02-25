@@ -8,45 +8,34 @@
 import BasePrimitives
 import SwiftUI
 
-public struct GridConfiguration {
-  public let fillStyle: GridFillStyle
-  public let colour: Color
-  public let lineWidth: CGFloat
-  public let density: DisplayDensity
+//public struct GridConfiguration {
+//  public let gridMode: GridSizeMode
+//  public let colour: Color
+//  public let lineWidth: CGFloat
+//  public let density: GridAnnotationDensity
+//
+//  public init(
+//    fillStyle: GridSizeMode,
+//    colour: Color,
+//    lineWidth: CGFloat,
+//    density: GridAnnotationDensity
+//  ) {
+//    self.gridMode = fillStyle
+//    self.colour = colour
+//    self.lineWidth = lineWidth
+//    self.density = density
+//  }
+//}
 
-  public init(
-    fillStyle: GridFillStyle,
-    colour: Color,
-    lineWidth: CGFloat,
-    density: DisplayDensity
-  ) {
-    self.fillStyle = fillStyle
-    self.colour = colour
-    self.lineWidth = lineWidth
-    self.density = density
-  }
-}
+//extension GridConfiguration {
 
-extension GridConfiguration {
+//  public var shouldDrawLines: Bool {
+//    density.isShowingCellMarkers
+//  }
 
-  public var shouldDrawLines: Bool {
-    density.isShowingCellMarkers
-  }
-  public func gridSize(from cellSize: CGSize) -> UnitSize? {
-    let unitSize = cellSize
+//}
 
-    return switch fillStyle {
-      case .fixed(let columns, let rows):
-        UnitSize(width: columns, height: rows, unitSize: unitSize)
-
-      case .fill(let size):
-        UnitSize(fromSize: size, unitSize: unitSize)
-    }
-  }
-}
-
-
-public enum DisplayDensity: Int {
+public enum GridAnnotationDensity: Int {
   case full = 1
   case threeQuarters = 2
   case half = 4
@@ -67,7 +56,7 @@ public enum DisplayDensity: Int {
 
 }
 
-extension DisplayDensity {
+extension GridAnnotationDensity {
   public var stepSize: Int? {
     guard self != .none else { return nil }
     return rawValue

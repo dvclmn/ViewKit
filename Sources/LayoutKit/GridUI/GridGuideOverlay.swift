@@ -61,18 +61,36 @@ extension GridGuideOverlayModifier {
       context,
       size in
 
-      context.drawGridLines(
-        config: GridConfiguration(
-          fillStyle: .fill(size: size),
-          cellSize: unitSize,
-          colour: .cyan.opacity(opacity),
-          lineWidth: 1.0,
-          //          pan: .zero,
-          density: .half
-        ),
-        containerSize: size,
-        //        canvasZoom: 1.0
+      context.drawGrid(
+        in: size,
+        mode: .fillContainer,
+        lineColour: .cyan.opacity(opacity),
+        lineWidth: 1,
+        annotations: .half
       )
+      
+//      context.drawGrid(
+//        config: .init(
+//          fillStyle: .fill(size: size),
+//          colour: .cyan.opacity(opacity),
+//          lineWidth: 1,
+//          density: .half
+//        ),
+//        containerSize: size,
+//        isInfinite: true
+//      )
+      //      context.drawGridLines(
+      //        config: GridConfiguration(
+      //          fillStyle: .fill(size: size),
+      //          cellSize: unitSize,
+      //          colour: .cyan.opacity(opacity),
+      //          lineWidth: 1.0,
+      //          //          pan: .zero,
+      //          density: .half
+      //        ),
+      //        containerSize: size,
+      //        //        canvasZoom: 1.0
+      //      )
 
       if isDrawingDebugText {
         debugText(
