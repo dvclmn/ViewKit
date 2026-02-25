@@ -49,20 +49,56 @@ public struct CoordinateSpaceTransform {
 
 extension CoordinateSpaceTransform {
 
+  /// The implicit offset required to center the canvas in the viewport
+  /// before any manual panning is applied.
+  private var centeringOffset: CGSize {
+    switch viewAnchor {
+      case .anchoredToCentre:
+        return CGSize(
+          width: (viewportSize.width - (canvasSize.width * zoom)) / 2,
+          height: (viewportSize.height - (canvasSize.height * zoom)) / 2
+        )
+    }
+  }
+
+  /// The combined translation: Centering + User Pan
+  private var totalOffset: CGSize {
+    CGSize(
+      width: centeringOffset.width + pan.width,
+      height: centeringOffset.height + pan.height
+    )
+  }
+
   /// Converts a global/screen space point to local / canvas point
-  /// *Removes* pan and zoom.
   public func toLocal(point: CGPoint) -> CGPoint {
     CGPoint(
-      x: (point.x - pan.width) / zoom,
-      y: (point.y - pan.height) / zoom
+      x: (point.x - totalOffset.width) / zoom,
+      y: (point.y - totalOffset.height) / zoom
     )
   }
 
   /// Converts a canvas-local point back to screen/global space
   public func toGlobal(point: CGPoint) -> CGPoint {
-    return CGPoint(
-      x: (point.x * zoom) + pan.width,
-      y: (point.y * zoom) + pan.height
+    CGPoint(
+      x: (point.x * zoom) + totalOffset.width,
+      y: (point.y * zoom) + totalOffset.height
     )
   }
+
+  //  /// Converts a global/screen space point to local / canvas point
+  //  /// *Removes* pan and zoom.
+  //  public func toLocal(point: CGPoint) -> CGPoint {
+  //    CGPoint(
+  //      x: (point.x - pan.width) / zoom,
+  //      y: (point.y - pan.height) / zoom
+  //    )
+  //  }
+  //
+  //  /// Converts a canvas-local point back to screen/global space
+  //  public func toGlobal(point: CGPoint) -> CGPoint {
+  //    return CGPoint(
+  //      x: (point.x * zoom) + pan.width,
+  //      y: (point.y * zoom) + pan.height
+  //    )
+  //  }
 }

@@ -53,7 +53,8 @@ public struct ZoomModifier: ViewModifier {
 extension ZoomModifier {
   private var rangeForZoom: ClosedRange<Double> {
     guard let zoomRange else {
-      assertionFailure("Need a zoom range to be supplied through the environment")
+      print("⚠️ Need a zoom range to be supplied through the environment for ZoomModifier")
+//      assertionFailure("Need a zoom range to be supplied through the environment")
       return 0.0...1.0
     }
     return zoomRange

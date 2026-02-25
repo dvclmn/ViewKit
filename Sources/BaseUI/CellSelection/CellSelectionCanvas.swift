@@ -44,7 +44,7 @@ struct CellSelectionCanvas: View {
       Labeled("Cell Size", value: unitSize?.displayString(.dimensions))
       Labeled("Zoom", value: zoomLevel.toPercentString(within: zoomRange ?? .unitRange))
     }
-
+    .debugTextOverlay("No zoom range in env", isEnabled: zoomRange == nil, alignment: .center)
     .task(id: panOffset) { store.pan = panOffset }
     .task(id: zoomLevel) { store.zoom = zoomLevel }
     .task(id: viewportSize) { store.viewportSize = viewportSize }

@@ -9,16 +9,19 @@ import CanvasKit
 import CoreTools
 import SwiftUI
 
-struct CellSelectionTestView: View {
+public struct CellSelectionTestView: View {
   @State private var store: SelectionHandler = .init()
   private let font: Font = .system(.body, design: .monospaced)
   private let documentSize: CGSize = .init(width: 500, height: 600)
+  private let zoomRange: ClosedRange<Double> = 0.1...10
 
-  var body: some View {
+  public init() {}
+  public var body: some View {
 
     CanvasView(canvasSize: documentSize) {
       CellSelectionCanvas()
     }
+    
     .onContinuousHover(
       coordinateSpace: .global
         //      coordinateSpace: .local
@@ -33,11 +36,11 @@ struct CellSelectionTestView: View {
     .gridFont(.sfMono, size: 88)
 
     .infoBarView(debounceMode: .noDebounce)
-
-    .environment(\.zoomRange, 0.1...10)
+    
     .environment(\.canvasSize, documentSize)
     .task(id: documentSize) { store.canvasSize = documentSize }
     .environment(store)
+    .environment(\.zoomRange, zoomRange)
   }
 }
 

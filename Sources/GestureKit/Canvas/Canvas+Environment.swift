@@ -9,7 +9,7 @@ import SwiftUI
 
 extension EnvironmentValues {
   @Entry public var canvasGeometry: CanvasGeometry = .init()
-  @Entry public var canvasSize: CGSize = .zero
+//  @Entry public var canvasSize: CGSize = .zero
   @Entry public var isResizingCanvas: Bool = false
 
   @Entry public var canvasRotation: Angle = .zero

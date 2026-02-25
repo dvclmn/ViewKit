@@ -66,5 +66,4 @@ extension GeometryCapture {
       $0.frame(in: .scrollView(axis: axis))
     }
   }
-
 }
