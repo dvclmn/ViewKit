@@ -14,7 +14,6 @@ struct CellSelectionCanvas: View {
   
   let gridConfig: GridConfiguration = .init(
     fillStyle: <#T##GridFillStyle#>,
-    cellSize: <#T##CGSize#>,
     colour: <#T##Color#>,
     lineWidth: <#T##CGFloat#>,
     density: <#T##DisplayDensity#>

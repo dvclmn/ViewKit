@@ -44,8 +44,7 @@ extension UnitSize {
     unitSize: CGSize?,
     rounding: GridRounding = .down,
   ) {
-
-    /// Note: no need for `GridAxisConvention` here, as the input `size`
+    /// Note: no need for `AxisMapping` here, as the input `size`
     /// and the `uniSize`'s axes are being operated on consistently, not
     /// being mixed around etc.
     guard let size,
@@ -77,7 +76,11 @@ extension UnitSize {
     )
   }
 
-  public init(magnitudeA: Int, magnitudeB: Int, other: UnitSize) {
+  public init(
+    magnitudeA: Int,
+    magnitudeB: Int,
+    other: UnitSize
+  ) {
     self.init(
       width: UnitLength(magnitude: magnitudeA, unitLength: other.width.unitLength),
       height: UnitLength(magnitude: magnitudeB, unitLength: other.height.unitLength)

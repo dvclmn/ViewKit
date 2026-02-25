@@ -174,7 +174,7 @@ extension CGSize {
   ) -> UnitSize? {
     UnitSize(fromSize: self, unitSize: unitSize, rounding: rounding)
   }
-  
+
   public func snapped(
     using unitSize: CGSize,
     rounding: GridRounding = .down

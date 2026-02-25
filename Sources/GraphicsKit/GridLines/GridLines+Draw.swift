@@ -15,11 +15,13 @@ extension GraphicsContext {
     containerSize: CGSize,
   ) {
 
+    guard let cellSize = self.environment.unitSize else { return }
     let zoom = self.environment.zoomLevel
-    let cell = config.cellSize * zoom
+    let cell = cellSize * zoom
+    let gridSize = config.gridSize(from: cellSize)
 
-    let columns = config.gridSize?.width.gridLength ?? 1
-    let rows = config.gridSize?.height.gridLength ?? 1
+    let columns = gridSize?.width.gridLength ?? 1
+    let rows = gridSize?.height.gridLength ?? 1
 
     let path = Path.grid(
       containerSize: containerSize,
@@ -59,10 +61,11 @@ extension GraphicsContext {
     config: GridConfiguration
   ) {
 
+    guard let cellSize = self.environment.unitSize else { return }
     guard config.shouldDrawLines else { return }
 
     let pan = self.environment.panOffset
-    let cell = config.cellSize
+    let cell = cellSize
 
     let path = Path.grid(
       containerSize: containerSize,

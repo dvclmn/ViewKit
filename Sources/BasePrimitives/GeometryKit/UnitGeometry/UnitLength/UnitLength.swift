@@ -15,8 +15,6 @@ import Foundation
 ///
 /// “This cell is 8 characters wide (grid-space),
 /// which equals 8 × 9pt = 72pt (screen-space).”
-///
-/// Settled on the names now, which is Grid length, and Screen length
 public struct UnitLength: Hashable, Codable, Sendable {
 
   package var magnitude: Int
@@ -31,12 +29,10 @@ public struct UnitLength: Hashable, Codable, Sendable {
     _ magnitude: Int,
     axis: GridAxis,
     mapping: AxisMapping = .default,
-    //    convention: AxisConvention = .default,
     unitSize: CGSize?
   ) {
     guard let unitSize else { return nil }
     let unitLength = unitSize.value(along: axis, mapping: mapping)
-    //    let unitLength = unitSize.length(along: axis, convention: convention)
     self.magnitude = magnitude
     self.unitLength = unitLength
   }
