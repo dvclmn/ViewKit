@@ -44,7 +44,6 @@ extension View {
       )
     )
   }
-
 }
 
 // MARK: - Character Size modifiers

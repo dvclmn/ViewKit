@@ -15,7 +15,7 @@ struct CellSelectionCanvas: View {
   @Environment(\.panOffset) private var panOffset
   @Environment(\.zoomLevel) private var zoomLevel
   @Environment(\.zoomRange) private var zoomRange
-  @Environment(\.viewportSize) private var viewportSize
+  @Environment(\.viewportRect) private var viewportRect
 //  @Environment(\.canvasSize) private var canvasSize
 
   var body: some View {

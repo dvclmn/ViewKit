@@ -13,7 +13,7 @@ final class SelectionHandler {
   var pointerLocation: CGPoint?
   var zoom: CGFloat = 1
   var pan: CGSize = .zero
-  var viewportSize: CGSize?
+  var viewportRect: CGRect?
   var canvasSize: CGSize?
 }
 
@@ -22,14 +22,14 @@ extension SelectionHandler {
   /// Aka Canvas space
   var pointerLocalSpace: CGPoint? {
     guard let pointerLocation,
-      let viewportSize,
+      let viewportRect,
       let canvasSize
     else { return nil }
     let transform = CoordinateSpaceTransform(
       viewAnchor: .anchoredToCentre,
       zoom: zoom,
       pan: pan,
-      viewportSize: viewportSize,
+      viewportSize: viewportRect,
       canvasSize: canvasSize
     )
 

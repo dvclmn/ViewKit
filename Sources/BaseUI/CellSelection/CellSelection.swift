@@ -32,7 +32,7 @@ public struct CellSelectionTestView: View {
       }
     }
     .setCharacterSize(mode: .debounce(0.2))
-    .readViewportSize(mode: .debounce(0.2))
+    .viewportCapture(mode: .debounce(0.2))
     .gridFont(.sfMono, size: 88)
 
     .infoBarView(debounceMode: .noDebounce)

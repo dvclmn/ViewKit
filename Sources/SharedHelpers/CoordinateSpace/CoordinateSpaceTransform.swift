@@ -19,16 +19,14 @@ public enum ViewAnchor {
 /// Canvas == Local space
 public struct CoordinateSpaceTransform {
 
-  /// Want to know:
-  /// - How big would the canvas size be inside the viewport size
-
   let viewAnchor: ViewAnchor
 
   let zoom: CGFloat
   let pan: CGSize
 
-  /// Global size
-  let viewportSize: CGSize
+  /// Global viewport rect, where `size` is inset by
+  /// `origin`, to express safe area insets
+  let viewportRect: CGRect
   let canvasSize: CGSize
 
   public init(
@@ -48,6 +46,7 @@ public struct CoordinateSpaceTransform {
 }
 
 extension CoordinateSpaceTransform {
+  
 
   /// The implicit offset required to center the canvas in the viewport
   /// before any manual panning is applied.
