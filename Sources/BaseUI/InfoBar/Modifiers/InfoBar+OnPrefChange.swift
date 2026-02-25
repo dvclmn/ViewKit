@@ -10,7 +10,7 @@ import SwiftUI
 
 public struct InfoBarItemsModifier: ViewModifier {
   @Environment(\.isInfoBarPresent) private var isInfoBarPresent
-  @State private var debouncer = AsyncDebouncer(interval: 0.2)
+  @State private var debouncer = AsyncDebouncer(interval: 0.1)
   @State private var sections: [InfoBarSection] = []
 
   let isEnabled: Bool

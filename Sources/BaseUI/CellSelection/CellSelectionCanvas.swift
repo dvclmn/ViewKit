@@ -10,7 +10,10 @@ import GraphicsKit
 import SwiftUI
 
 struct CellSelectionCanvas: View {
+  @Environment(SelectionHandler.self) private var store
   @Environment(\.unitSize) private var unitSize
+  @Environment(\.zoomLevel) private var zoomLevel
+  @Environment(\.zoomRange) private var zoomRange
 
   var body: some View {
 
@@ -20,29 +23,21 @@ struct CellSelectionCanvas: View {
     ) {
       context,
       size in
-      
+
       context.drawGrid(
         in: size,
         mode: .fillContainer,
-        lineColour: .gray.opacity(0.2),
+        lineColour: .gray.opacity(0.3),
         lineWidth: 1,
-        annotations: .half
+        annotations: .quarter,
+        drawsBorder: false
       )
-//      let gridConfig: GridConfiguration = .init(
-//        fillStyle: .fixed(columns: 10, rows: 20),
-////        fillStyle: .fill(size: size),
-//        colour: .gray.opacity(0.1),
-//        lineWidth: 1,
-//        density: .half
-//      )
-//
-//      context.drawGrid(
-//        config: gridConfig,
-//        containerSize: size,
-//        isInfinite: false
-//      )
+    }  // END canvas
 
+    .addInfoBarItems {
+      Labeled("Pointer", value: store.pointerLocation?.displayString(.location))
+      Labeled("Cell Size", value: unitSize?.displayString(.dimensions))
+      Labeled("Zoom", value: zoomLevel.toPercentString(within: zoomRange ?? .unitRange))
     }
-
   }
 }

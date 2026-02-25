@@ -8,14 +8,28 @@
 import BasePrimitives
 import SwiftUI
 
+public enum GridPinMode {
+  /// Pin lines to Viewport
+  /// Grid lines will remain fixed in 'screen space'
+  /// Panning will not affect/move grid lines.
+  case viewport
+
+  /// Pin lines to Pan offset
+  /// Grid lines will be anchored to the pannable 'canvas'
+  /// view, so panning will move the Grid Lines.
+  case panOffset
+}
+
 extension GraphicsContext {
 
   public func drawGrid(
     in containerSize: CGSize,
-    mode: GridSizeMode = .fillContainer,
+    sizeMode: GridSizeMode = .fillContainer,
+    pinMode: GridPinMode = .panOffset,
     lineColour: Color = .gray.opacity(0.2),
     lineWidth: CGFloat = 1,
-    annotations: GridAnnotationDensity = .none
+    annotations: GridAnnotationDensity = .none,
+    drawsBorder: Bool = true
   ) {
 
     guard let cellSize = self.environment.unitSize else { return }
@@ -24,7 +38,7 @@ extension GraphicsContext {
     let cellZoomed = cellSize * zoom
 
     guard
-      let gridSize = mode.gridSize(
+      let gridSize = sizeMode.gridSize(
         from: cellZoomed,  // Or `cellSize`?
         in: containerSize
       )
@@ -32,11 +46,12 @@ extension GraphicsContext {
 
     let path: Path
 
-    switch mode {
+    switch sizeMode {
       case .fixed, .fill:
         path = .boundedGrid(
           unitSize: gridSize,
-          containerSize: containerSize
+          containerSize: containerSize,
+          drawsBorder: drawsBorder
         )
 
       case .fillContainer:
@@ -45,6 +60,8 @@ extension GraphicsContext {
           containerSize: containerSize,
           unitCell: cellZoomed,
           offset: pan,
+          drawsBorder: drawsBorder,
+          edgeEpsilon: max(0.5, lineWidth / 2),
           onVerticalIndex: { i, x in
             if annotations.isShowingCellMarkers {
               self.draw(
@@ -57,7 +74,7 @@ extension GraphicsContext {
 
     self.stroke(path, with: .color(lineColour), lineWidth: lineWidth)
   }
-  
+
   //  public func drawGridLines(
   //    config: GridConfiguration,
   //    containerSize: CGSize,

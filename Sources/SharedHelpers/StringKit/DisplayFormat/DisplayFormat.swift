@@ -6,9 +6,10 @@
 //
 
 import Foundation
+
 //
 //public struct FloatGroupDisplayFormat: Equatable, Sendable {
-//  
+//
 //  let format: FloatDisplayFormat
 //}
 
@@ -20,7 +21,7 @@ public struct FloatDisplayFormat: Equatable, Sendable {
   public var integerLength: Int?
   public var grouping: NumberGrouping
   public var labelStyle: PropertyLabel.Style
-  public var propertySeparator: PropertySeparator
+  //  public var propertySeparator: PropertySeparator
   public var componentDelimiter: ComponentDelimiter
   //  public var separatorVisibility: SeparatorVisibility
   public var sign: SignDisplay
@@ -30,7 +31,7 @@ public struct FloatDisplayFormat: Equatable, Sendable {
     integerLength: Int? = nil,
     grouping: NumberGrouping = .automatic,
     labelStyle: PropertyLabel.Style = .standard,
-    propertySeparator: PropertySeparator = .colon,
+    //    propertySeparator: PropertySeparator = .colon,
     componentDelimiter: ComponentDelimiter = .comma,
     //    separatorVisibility: SeparatorVisibility = .both,
     sign: SignDisplay = .standard
@@ -39,7 +40,7 @@ public struct FloatDisplayFormat: Equatable, Sendable {
     self.integerLength = integerLength
     self.grouping = grouping
     self.labelStyle = labelStyle
-    self.propertySeparator = propertySeparator
+    //    self.propertySeparator = propertySeparator
     self.componentDelimiter = componentDelimiter
     //    self.separatorVisibility = separatorVisibility
     self.sign = sign
@@ -53,7 +54,7 @@ extension FloatDisplayFormat {
 
   func separatorString(for kind: SeparatorKind) -> String {
     switch kind {
-      case .propertyLabel: propertySeparator.toString ?? ""
+      case .propertyLabel: labelStyle.separatorString
       case .componentDelimiter: componentDelimiter.toString ?? ""
     }
   }

@@ -15,7 +15,10 @@ public enum FloatDisplayPreset: String, CaseIterable {
   /// Display a floating point value with `0` decimal places
   case wholeNumber
   case showSign
-  
+
+  /// No labels, no decimal places, just comma delimiter
+  case location
+
   case dimensions
 
   public var format: FloatDisplayFormat {
@@ -26,27 +29,32 @@ public enum FloatDisplayPreset: String, CaseIterable {
       case .concise:
         .init(
           decimalPlaces: 0,
-          labelStyle: .abbreviated,
-          propertySeparator: .none
-//          separatorVisibility: .component
+          labelStyle: .abbreviated(.none),
+            //          separatorVisibility: .component
         )
 
       case .wholeNumber:
         .init(decimalPlaces: 0)
-        
+
       case .dimensions:
-          .init(
-            decimalPlaces: 0,
-            labelStyle: .none,
-            propertySeparator: .none,
-            componentDelimiter: .dimensions,
-          )
-//          .init(
-//            decimalPlaces: 0,
-//            labelStyle: .abbreviated,
-//            propertySeparator: .none
-////            separatorVisibility: .component
-//          )
+        .init(
+          decimalPlaces: 0,
+          labelStyle: .none,
+          componentDelimiter: .dimensions,
+        )
+      //          .init(
+      //            decimalPlaces: 0,
+      //            labelStyle: .abbreviated,
+      //            propertySeparator: .none
+      ////            separatorVisibility: .component
+      //          )
+
+      case .location:
+        .init(
+          decimalPlaces: 0,
+          labelStyle: .none,
+          componentDelimiter: .comma,
+        )
 
       case .showSign:
         .init(
