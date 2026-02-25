@@ -147,7 +147,6 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.gestureKit),
-//        .module(.baseUI),
       ],
     ),
 

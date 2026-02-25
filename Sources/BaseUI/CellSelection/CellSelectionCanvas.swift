@@ -12,6 +12,14 @@ import GraphicsKit
 struct CellSelectionCanvas: View {
    @Environment(\.unitSize) private var unitSize
   
+  let gridConfig: GridConfiguration = .init(
+    fillStyle: <#T##GridFillStyle#>,
+    cellSize: <#T##CGSize#>,
+    colour: <#T##Color#>,
+    lineWidth: <#T##CGFloat#>,
+    density: <#T##DisplayDensity#>
+  )
+  
   var body: some View {
     
     Text("Character Size: \(unitSize, default: "nil")")
@@ -19,7 +27,7 @@ struct CellSelectionCanvas: View {
     Canvas(
       opaque: true,
       rendersAsynchronously: true) { context, size in
-        context.drawInfiniteGrid(in: <#T##CGRect#>, config: <#T##GridConfiguration#>)
+        context.drawInfiniteGrid(in: size, config: <#T##GridConfiguration#>)
       }
     
   }

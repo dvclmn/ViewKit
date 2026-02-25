@@ -67,11 +67,11 @@ extension GridGuideOverlayModifier {
           cellSize: unitSize,
           colour: .cyan.opacity(opacity),
           lineWidth: 1.0,
-          pan: .zero,
+          //          pan: .zero,
           density: .half
         ),
         containerSize: size,
-//        canvasZoom: 1.0
+        //        canvasZoom: 1.0
       )
 
       if isDrawingDebugText {
