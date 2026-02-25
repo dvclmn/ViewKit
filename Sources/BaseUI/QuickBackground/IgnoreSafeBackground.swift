@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 20/9/2025.
 //
 
-
 import SwiftUI
 
 public struct IgnoreSafeBackgroundModifier: ViewModifier {

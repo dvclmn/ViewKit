@@ -16,7 +16,6 @@ struct CellSelectionCanvas: View {
   @Environment(\.zoomLevel) private var zoomLevel
   @Environment(\.zoomRange) private var zoomRange
   @Environment(\.viewportRect) private var viewportRect
-//  @Environment(\.canvasSize) private var canvasSize
 
   var body: some View {
 
@@ -36,17 +35,23 @@ struct CellSelectionCanvas: View {
         annotations: .quarter,
         drawsBorder: false
       )
+      
+      let selectedRect = CGRect(origin: store.pointerLocalSpace, size: <#T##CGSize#>)
+      let selectedShape = Path
+      
     }  // END canvas
 
     .addInfoBarItems {
       Labeled("Pointer (Global)", value: store.pointerLocation?.displayString(.location))
       Labeled("Pointer (Local)", value: store.pointerLocalSpace?.displayString(.location))
+      Labeled("Viewport Rect", value: viewportRect?.displayString(.concise))
       Labeled("Cell Size", value: unitSize?.displayString(.dimensions))
       Labeled("Zoom", value: zoomLevel.toPercentString(within: zoomRange ?? .unitRange))
     }
     .debugTextOverlay("No zoom range in env", isEnabled: zoomRange == nil, alignment: .center)
     .task(id: panOffset) { store.pan = panOffset }
     .task(id: zoomLevel) { store.zoom = zoomLevel }
-    .task(id: viewportSize) { store.viewportSize = viewportSize }
+    .task(id: viewportRect) { store.viewportRect = viewportRect }
+    .task(id: unitSize) { store.cellSize = unitSize }
   }
 }

@@ -84,7 +84,7 @@ extension EnvironmentValues {
   /// minus any base UI components like Toolbar or Inspector.
   ///
   /// Useful as long as its companion modifier
-  /// `readViewportSize(mode:showsIndicator:didUpdateSize)`
+  /// `viewportCapture(mode:showsIndicator:didUpdateSize)`
   /// is placed on the view the caller regards as the viewport area
   @Entry public var viewportSize: CGSize?
   @Entry public var viewportRect: CGRect?

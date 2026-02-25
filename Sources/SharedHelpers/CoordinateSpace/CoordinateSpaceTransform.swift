@@ -13,8 +13,6 @@ public enum ViewAnchor {
   case anchoredToCentre
 }
 
-/// Lingo:
-///
 /// Global == viewport == screen space
 /// Canvas == Local space
 public struct CoordinateSpaceTransform {
@@ -33,71 +31,57 @@ public struct CoordinateSpaceTransform {
     viewAnchor: ViewAnchor,
     zoom: CGFloat,
     pan: CGSize,
-    viewportSize: CGSize,
+    viewportRect: CGRect,
     canvasSize: CGSize
   ) {
     self.viewAnchor = viewAnchor
     self.zoom = zoom
     self.pan = pan
-    self.viewportSize = viewportSize
+    self.viewportRect = viewportRect
     self.canvasSize = canvasSize
   }
-
 }
 
 extension CoordinateSpaceTransform {
-  
 
-  /// The implicit offset required to center the canvas in the viewport
-  /// before any manual panning is applied.
+  /// The dynamic offset to center the canvas within the safe viewport area.
+  /// This uses the size of the viewport (which already has insets subtracted).
   private var centeringOffset: CGSize {
     switch viewAnchor {
       case .anchoredToCentre:
         return CGSize(
-          width: (viewportSize.width - (canvasSize.width * zoom)) / 2,
-          height: (viewportSize.height - (canvasSize.height * zoom)) / 2
+          width: (viewportRect.width - (canvasSize.width * zoom)) / 2,
+          height: (viewportRect.height - (canvasSize.height * zoom)) / 2
         )
     }
   }
 
-  /// The combined translation: Centering + User Pan
-  private var totalOffset: CGSize {
-    CGSize(
-      width: centeringOffset.width + pan.width,
-      height: centeringOffset.height + pan.height
+  /// The "Zero Point" of your drawing area in screen space.
+  /// Safe Area Origin + Centering + Manual Pan.
+  private var totalGlobalOffset: CGPoint {
+    CGPoint(
+      x: viewportRect.origin.x + centeringOffset.width + pan.width,
+      y: viewportRect.origin.y + centeringOffset.height + pan.height
     )
   }
 
   /// Converts a global/screen space point to local / canvas point
   public func toLocal(point: CGPoint) -> CGPoint {
+    // 1. Subtract the total translation from the raw screen point
+    // 2. Divide by zoom to get the coordinate on the "original" canvas scale
     CGPoint(
-      x: (point.x - totalOffset.width) / zoom,
-      y: (point.y - totalOffset.height) / zoom
+      x: (point.x - totalGlobalOffset.x) / zoom,
+      y: (point.y - totalGlobalOffset.y) / zoom
     )
   }
 
   /// Converts a canvas-local point back to screen/global space
   public func toGlobal(point: CGPoint) -> CGPoint {
+    // 1. Scale the local point up
+    // 2. Add the total translation to place it correctly on the screen
     CGPoint(
-      x: (point.x * zoom) + totalOffset.width,
-      y: (point.y * zoom) + totalOffset.height
+      x: (point.x * zoom) + totalGlobalOffset.x,
+      y: (point.y * zoom) + totalGlobalOffset.y
     )
   }
-
-  //  /// Converts a global/screen space point to local / canvas point
-  //  /// *Removes* pan and zoom.
-  //  public func toLocal(point: CGPoint) -> CGPoint {
-  //    CGPoint(
-  //      x: (point.x - pan.width) / zoom,
-  //      y: (point.y - pan.height) / zoom
-  //    )
-  //  }
-  //
-  //  /// Converts a canvas-local point back to screen/global space
-  //  public func toGlobal(point: CGPoint) -> CGPoint {
-  //    return CGPoint(
-  //      x: (point.x * zoom) + pan.width,
-  //      y: (point.y * zoom) + pan.height
-  //    )
-  //  }
 }
