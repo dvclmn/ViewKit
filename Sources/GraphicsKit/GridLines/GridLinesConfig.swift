@@ -45,10 +45,6 @@ extension GridConfiguration {
   }
 }
 
-public enum GridFillStyle {
-  case fixed(columns: Int, rows: Int)
-  case fill(size: CGSize)
-}
 
 public enum DisplayDensity: Int {
   case full = 1
