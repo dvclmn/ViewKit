@@ -8,8 +8,8 @@
 import SwiftUI
 
 public struct SizeAndSafeInsets: Equatable, Sendable {
-  private let size: CGSize
-  private let safeInsets: EdgeInsets
+  let size: CGSize
+  let safeInsets: EdgeInsets
 }
 
 extension SizeAndSafeInsets {

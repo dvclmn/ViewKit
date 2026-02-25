@@ -8,67 +8,36 @@
 import CoreTools
 import SwiftUI
 
-//public enum CaptureArea {
-//  case viewport
-//  case viewportAndSafeArea
-//}
+enum CaptureArea {
+  case viewport
+  case viewportAndSafeArea
+}
 
 /// A Viewport is considered to be a single, self-contained View,
 /// not including any native components like Toolbar or Inspector.
-public struct EnvironmentViewportSizeAndSafeAreaModifier: ViewModifier {
-  /// Uses a rect to express the size of the safe area (using the origin)
-  @State private var viewportRect: CGRect?
-
-  let mode: DebounceMode
-  let showsIndicator: Bool
-
-  public func body(content: Content) -> some View {
-    content
-      .modifier(
-        ViewSizeModifier<SizeAndSafeInsets>(
-          capture: .sizeAndSafeInsets,
-          mode: mode,
-          isEnabled: true
-        ) { geometry in
-          viewportRect = geometry.rect
-        }
-
-      )
-      //      .viewSize(
-      //        capture: .sizeAndSafeInsets,
-      //        mode: mode
-      //      ) { geometry in
-      //        self.viewportRect = geometry.rect
-      //      }
-      .modifier(ViewportSizeIndicatorModifier(isEnabled: showsIndicator))
-      .environment(\.viewportRect, viewportRect)
-  }
-}
 public struct EnvironmentViewportSizeModifier: ViewModifier {
 
+  @State private var viewportRect: CGRect?
   @State private var viewportSize: CGSize?
 
+  /// Keeping this internal for now
+  //  let respectsSafeArea: Bool = true
+
+//  let captureArea: CaptureArea
+//  let capture: GeometryCapture<Capture>
   let mode: DebounceMode
   let showsIndicator: Bool
 
   public func body(content: Content) -> some View {
     content
-      .modifier(
-        ViewSizeModifier<CGSize>(
-          capture: .size,
-          mode: mode,
-          isEnabled: true
-          ) { size in
-            viewportSize = size
-          }
-        )
-      )
-      //      .viewSize(
-      //        capture: .size,
-      //        mode: mode
-      //      ) { geometry in
-      //        self.viewportSize = geometry.size
-      //      }
+      .viewSize(
+        capture: .sizeAndSafeInsets,
+        //        capture: respectsSafeArea ? .sizeAndSafeInsets : .size,
+        mode: mode
+      ) { geometry in
+        self.viewportRect = geometry.rect
+        self.viewportSize = geometry.size
+      }
       .modifier(ViewportSizeIndicatorModifier(isEnabled: showsIndicator))
       //      .viewportSizeIndicator(isEnabled: showsIndicator)
 

@@ -28,11 +28,12 @@ extension View {
     )
   }
 
-  /// This now returns a CGRect to allow describing safe area insets,
-  /// which wasn't possible with previous CGSize
+  /// This adds a `viewportSize` and `viewportRect`
+  /// to the environment. `viewportRect` expresses both
+  /// viewport size, and also safe area insets.
   ///
   /// If a callback is needed, see ``viewSize(capture:mode:isEnabled:valueOutput:)``
-  public func viewportSizeCapture(
+  public func viewportCapture(
     mode debounceMode: DebounceMode,
     showsIndicator: Bool = false,
   ) -> some View {
@@ -44,17 +45,6 @@ extension View {
     )
   }
 
-  public func viewportSizeAndSafeAreaCapture(
-    mode debounceMode: DebounceMode,
-    showsIndicator: Bool = false,
-  ) -> some View {
-    self.modifier(
-      EnvironmentViewportSizeAndSafeAreaModifier(
-        mode: debounceMode,
-        showsIndicator: showsIndicator
-      )
-    )
-  }
 }
 
 // MARK: - Character Size modifiers
