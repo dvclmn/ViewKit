@@ -19,19 +19,20 @@ struct CellSelectionTestView: View {
     CanvasView(canvasSize: documentSize) {
       CellSelectionCanvas()
     }
-    .setCharacterSize(mode: .debounce(0.2))
-    .gridFont(.sfMono, size: 28)
-
-    .infoBarView()
-    
-    .onContinuousHover(coordinateSpace: .local) { phase in
+    .onContinuousHover(
+      coordinateSpace: .canvasIdentity
+      //      coordinateSpace: .local
+    ) { phase in
       switch phase {
-        case .active(let location):
-          store.pointerLocation = location
-        case .ended:
-          store.pointerLocation = nil
+        case .active(let location): store.pointerLocation = location
+        case .ended: store.pointerLocation = nil
       }
     }
+    .setCharacterSize(mode: .debounce(0.2))
+    .readViewportSize(mode: .debounce(0.2))
+    .gridFont(.sfMono, size: 88)
+
+    .infoBarView(debounceMode: .noDebounce)
 
     .environment(\.zoomRange, 0.1...10)
     .environment(store)

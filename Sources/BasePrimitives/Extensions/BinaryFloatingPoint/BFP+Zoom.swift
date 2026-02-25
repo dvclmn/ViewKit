@@ -10,10 +10,10 @@ import Foundation
 extension BinaryFloatingPoint {
 
   /// Only for if `self` is in normalised [0,1] space
-//  public func removingZoomNormalised(_ zoom: Self) -> Self {
-//    guard zoom >= 0 else { return self }
-//    return self / (1 + zoom)
-//  }
+  //  public func removingZoomNormalised(_ zoom: Self) -> Self {
+  //    guard zoom >= 0 else { return self }
+  //    return self / (1 + zoom)
+  //  }
 
   /// Only for if `self` is a percent (0–100):
   public func removingZoomPercent(_ percent: Self) -> Self {
@@ -26,6 +26,14 @@ extension BinaryFloatingPoint {
   //    return Self(result)
   //  }
 
+  /// Keeps line width visually consistent across zoom levels.
+  /// Optically, lines can feel slightly heavier at small zoom levels,
+  /// and thinner when zoomed in close. Use `sensitivity`
+  /// to adjust the feel of the weight at either extreme.
+  ///
+  /// A sensitivity of `0`/`nil` does not change the apparent
+  /// line weight at all. A value of `1` will produce thinner lines
+  /// at low zooms, and thicker lines at high zooms.
   public func removingZoom(
     _ zoom: Self,
     clampedTo range: ClosedRange<Self>? = nil,
@@ -34,19 +42,18 @@ extension BinaryFloatingPoint {
     guard zoom.isGreaterThanZero, range?.isGreaterThanZero ?? false else {
       return self
     }
-    
     let effectiveZoom = range.map { zoom.clamped(to: $0) } ?? zoom
-    
+
     if let sensitivity {
       let s = sensitivity.clamped(to: 0...1)
       return self * Self(pow(Double(effectiveZoom), Double(s - 1)))
     }
-    
+
     return self / effectiveZoom
   }
-  
+
   /// This removes a zoom range which has been normalised from 0-1
-  
+
   /// Applies non-linear zoom scaling to provide better control at different zoom levels
   /// - Parameters:
   ///   - zoomLevel: The current zoom level (0.1...60)
@@ -62,56 +69,56 @@ extension BinaryFloatingPoint {
     highSensitivityThreshold: Double = 5.0,
     curve: Double = 1.5
   ) -> Double {
-    
+
     guard range.isGreaterThanZero,
-          curve > 0
+      curve > 0
     else { return zoom }
-    
+
     let upper = range.upperBound
     let lower = range.lowerBound
-    
+
     /// Normalize the zoom level to 0...1 range
     /// This method also clamps to range
     let normalised = zoom.normalised(in: range)
-    
+
     /// Calculate threshold positions in normalized space
     /// Ensure no unexpected invalid values by clamping
     let low = lowSensitivityThreshold.clamped(to: range)
     let high = highSensitivityThreshold.clamped(to: range)
-    
+
     let lowThresholdNorm = (low - lower) / (upper - lower)
     let highThresholdNorm = (high - lower) / (upper - lower)
-    
+
     let transformedZoom: Double
-    
+
     if normalised <= lowThresholdNorm {
       /// Low zoom range: reduce sensitivity (expand the curve - slower response)
       let localNorm = normalised / lowThresholdNorm
-      
+
       /// Use curve to slow down response
       let slowed = CGFloat(curve).slowResponse(localNorm)
-      
+
       transformedZoom = slowed * lowThresholdNorm
-      
+
     } else if normalised >= highThresholdNorm {
       /// High zoom range: increase sensitivity (compress the curve - faster response)
       let localNorm = (normalised - highThresholdNorm) / (1.0 - highThresholdNorm)
-      
+
       /// Inverse curve for faster response
       let faster = CGFloat(curve).fastResponse(localNorm)
       //      let compressed = pow(localNorm, 1.0 / curve)
       transformedZoom = highThresholdNorm + faster * (1.0 - highThresholdNorm)
-      
+
     } else {
       /// Middle range: linear scaling
       transformedZoom = normalised
     }
-    
+
     /// Convert back to actual zoom range
     return transformedZoom.denormalised(in: range)
     //    return transformedZoom * (upper - lower) + lower
   }
-  
+
   /// Simplified non-linear zoom scaling using a single curve parameter
   /// - Parameters:
   ///   - zoom: The current zoom level
@@ -129,5 +136,4 @@ extension BinaryFloatingPoint {
     return transformed.denormalised(in: range)
   }
 
-  
 }

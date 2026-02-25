@@ -67,9 +67,12 @@ extension Path {
   /// edgeEpsilon: max(0.5, config.lineWidth / 2)
   ///
   /// ```
+  ///
+  /// Note: `cellSize` must be original unit/unzoomed size.
+  /// Passing "cell size plus zoom" will produce undefined results
   public static func infiniteGrid(
     containerSize: CGSize,
-    unitCell: CGSize,
+    cellSize: CGSize,
     offset: CGSize,
     drawsBorder: Bool,
     edgeEpsilon: CGFloat = 0.5,
@@ -77,8 +80,8 @@ extension Path {
   ) -> Path {
     let w = containerSize.width
     let h = containerSize.height
-    let cw = unitCell.width
-    let ch = unitCell.height
+    let cw = cellSize.width
+    let ch = cellSize.height
 
     guard w > 0, h > 0, cw > 0, ch > 0 else { return Path() }
 

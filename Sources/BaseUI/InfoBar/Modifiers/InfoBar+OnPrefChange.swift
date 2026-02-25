@@ -8,13 +8,23 @@
 import CoreTools
 import SwiftUI
 
-public struct InfoBarItemsModifier: ViewModifier {
+struct InfoBarItemsModifier: ViewModifier {
   @Environment(\.isInfoBarPresent) private var isInfoBarPresent
-  @State private var debouncer = AsyncDebouncer(interval: 0.1)
+
   @State private var sections: [InfoBarSection] = []
+  @State private var debouncer: AsyncDebouncer?
 
   let isEnabled: Bool
-  public func body(content: Content) -> some View {
+
+  init(
+    mode: DebounceMode,
+    isEnabled: Bool
+  ) {
+    self._debouncer = mode.createDebouncer()
+    self.isEnabled = isEnabled
+  }
+
+  func body(content: Content) -> some View {
 
     content
       .contentMargins(
@@ -30,8 +40,12 @@ public struct InfoBarItemsModifier: ViewModifier {
       .safeAreaPadding(.bottom, isEnabled ? Styles.infoBarHeight : nil)
       .onPreferenceChange(InfoBarKey.self) { newItems in
         guard shouldDisplay else { return }
-        debouncer.execute {
-          await handlePreferenceChange(newItems)
+        if let debouncer {
+          debouncer.execute { @MainActor in
+            handlePreferenceChange(newItems)
+          }
+        } else {
+          handlePreferenceChange(newItems)
         }
 
       }
@@ -70,11 +84,19 @@ extension InfoBarItemsModifier {
     self.sections = grouped.map { (key, items) in
       InfoBarSection(id: key, title: key.title, items: items)
     }.sorted { $0.title < $1.title }
-
   }
 }
+
 extension View {
-  public func infoBarView(isEnabled: Bool = true) -> some View {
-    self.modifier(InfoBarItemsModifier(isEnabled: isEnabled))
+  public func infoBarView(
+    debounceMode: DebounceMode = .debounce(0.2),
+    isEnabled: Bool = true
+  ) -> some View {
+    self.modifier(
+      InfoBarItemsModifier(
+        mode: debounceMode,
+        isEnabled: isEnabled,
+      )
+    )
   }
 }

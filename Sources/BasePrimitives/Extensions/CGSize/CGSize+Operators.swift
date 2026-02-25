@@ -87,3 +87,11 @@ public func / (lhs: CGSize, rhs: CGFloat) -> CGSize {
     height: lhs.height / rhs
   )
 }
+
+// MARK: - Unary
+
+extension CGSize {
+  public static prefix func - (size: CGSize) -> CGSize {
+    CGSize(width: -size.width, height: -size.height)
+  }
+}

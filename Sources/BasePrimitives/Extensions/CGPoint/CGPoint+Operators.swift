@@ -123,6 +123,14 @@ public func / (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
   )
 }
 
+// MARK: - Unary
+extension CGPoint {
+  static prefix func - (point: CGPoint) -> CGPoint {
+    CGPoint(x: -point.x, y: -point.y)
+  }
+}
+
+
 // MARK: - Plus Equals
 
 // MARK: - Greater than

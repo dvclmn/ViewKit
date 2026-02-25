@@ -12,8 +12,10 @@ import SwiftUI
 struct CellSelectionCanvas: View {
   @Environment(SelectionHandler.self) private var store
   @Environment(\.unitSize) private var unitSize
+  @Environment(\.panOffset) private var panOffset
   @Environment(\.zoomLevel) private var zoomLevel
   @Environment(\.zoomRange) private var zoomRange
+  @Environment(\.viewportSize) private var viewportSize
 
   var body: some View {
 
@@ -26,7 +28,8 @@ struct CellSelectionCanvas: View {
 
       context.drawGrid(
         in: size,
-        mode: .fillContainer,
+        sizeMode: .fillContainer,
+        pinMode: .canvas,
         lineColour: .gray.opacity(0.3),
         lineWidth: 1,
         annotations: .quarter,
@@ -35,9 +38,14 @@ struct CellSelectionCanvas: View {
     }  // END canvas
 
     .addInfoBarItems {
-      Labeled("Pointer", value: store.pointerLocation?.displayString(.location))
+      Labeled("Pointer (Global)", value: store.pointerLocation?.displayString(.location))
+      Labeled("Pointer (Local)", value: store.pointerLocalSpace?.displayString(.location))
       Labeled("Cell Size", value: unitSize?.displayString(.dimensions))
       Labeled("Zoom", value: zoomLevel.toPercentString(within: zoomRange ?? .unitRange))
     }
+
+    .task(id: panOffset) { store.pan = panOffset }
+    .task(id: zoomLevel) { store.zoom = zoomLevel }
+    .task(id: viewportSize) { store.viewportSize = viewportSize }
   }
 }

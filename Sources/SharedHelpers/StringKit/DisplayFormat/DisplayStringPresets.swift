@@ -41,6 +41,7 @@ public enum FloatDisplayPreset: String, CaseIterable {
           decimalPlaces: 0,
           labelStyle: .none,
           componentDelimiter: .dimensions,
+          sign: .always(renderPlusSign: false)
         )
       //          .init(
       //            decimalPlaces: 0,

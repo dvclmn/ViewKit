@@ -17,7 +17,8 @@ public enum GridPinMode {
   /// Pin lines to Pan offset
   /// Grid lines will be anchored to the pannable 'canvas'
   /// view, so panning will move the Grid Lines.
-  case panOffset
+  case canvas
+  //  case panOffset
 }
 
 extension GraphicsContext {
@@ -25,7 +26,7 @@ extension GraphicsContext {
   public func drawGrid(
     in containerSize: CGSize,
     sizeMode: GridSizeMode = .fillContainer,
-    pinMode: GridPinMode = .panOffset,
+    pinMode: GridPinMode = .canvas,
     lineColour: Color = .gray.opacity(0.2),
     lineWidth: CGFloat = 1,
     annotations: GridAnnotationDensity = .none,
@@ -35,7 +36,13 @@ extension GraphicsContext {
     guard let cellSize = self.environment.unitSize else { return }
 
     let zoom = self.environment.zoomLevel
+    let zoomRange = self.environment.zoomRange
     let cellZoomed = cellSize * zoom
+    let effectiveLineWidth: CGFloat = lineWidth.removingZoom(
+      zoom,
+      clampedTo: zoomRange?.toCGFloatRange,
+      sensitivity: 0.2
+    )
 
     guard
       let gridSize = sizeMode.gridSize(
@@ -55,11 +62,13 @@ extension GraphicsContext {
         )
 
       case .fillContainer:
-        let pan = self.environment.panOffset
+        let panEnv = self.environment.panOffset
+        let effectivePanOffset = pinMode == .viewport ? -panEnv : .zero
+         
         path = .infiniteGrid(
           containerSize: containerSize,
-          unitCell: cellZoomed,
-          offset: pan,
+          cellSize: cellSize,
+          offset: effectivePanOffset,
           drawsBorder: drawsBorder,
           edgeEpsilon: max(0.5, lineWidth / 2),
           onVerticalIndex: { i, x in
@@ -72,7 +81,7 @@ extension GraphicsContext {
         )
     }
 
-    self.stroke(path, with: .color(lineColour), lineWidth: lineWidth)
+    self.stroke(path, with: .color(lineColour), lineWidth: effectiveLineWidth)
   }
 
   //  public func drawGridLines(
