@@ -13,7 +13,15 @@ public enum ViewAnchor {
   case anchoredToCentre
 }
 
+/// Lingo:
+///
+/// Global == viewport == screen space
+/// Canvas == Local space
 public struct CoordinateSpaceTransform {
+
+  /// Want to know:
+  /// - How big would the canvas size be inside the viewport size
+
   let viewAnchor: ViewAnchor
 
   let zoom: CGFloat
@@ -21,17 +29,20 @@ public struct CoordinateSpaceTransform {
 
   /// Global size
   let viewportSize: CGSize
-  
+  let canvasSize: CGSize
+
   public init(
     viewAnchor: ViewAnchor,
     zoom: CGFloat,
     pan: CGSize,
-    viewportSize: CGSize
+    viewportSize: CGSize,
+    canvasSize: CGSize
   ) {
     self.viewAnchor = viewAnchor
     self.zoom = zoom
     self.pan = pan
     self.viewportSize = viewportSize
+    self.canvasSize = canvasSize
   }
 
 }

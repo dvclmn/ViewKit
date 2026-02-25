@@ -120,6 +120,9 @@ extension EnvironmentValues {
   @Entry public var panOffset: CGSize = .zero
   @Entry public var zoomLevel: Double = 1.0
   @Entry public var zoomRange: ClosedRange<Double>?
+  
+  /// Aka artwork size, document size
+  @Entry public var canvasSize: CGSize?
 }
 
 public protocol ValueFormattable {}

@@ -20,8 +20,8 @@ struct CellSelectionTestView: View {
       CellSelectionCanvas()
     }
     .onContinuousHover(
-      coordinateSpace: .canvasIdentity
-      //      coordinateSpace: .local
+      coordinateSpace: .global
+        //      coordinateSpace: .local
     ) { phase in
       switch phase {
         case .active(let location): store.pointerLocation = location
@@ -35,6 +35,8 @@ struct CellSelectionTestView: View {
     .infoBarView(debounceMode: .noDebounce)
 
     .environment(\.zoomRange, 0.1...10)
+    .environment(\.canvasSize, documentSize)
+    .task(id: documentSize) { store.canvasSize = documentSize }
     .environment(store)
   }
 }
