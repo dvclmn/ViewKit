@@ -142,7 +142,3 @@ extension View {
   //    .environment(\.iconColour, AnyShapeStyle(.secondary))
   //  }
 }
-
-extension DisplayString {
-
-}

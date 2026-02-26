@@ -93,7 +93,7 @@ extension View {
     rect: Binding<CGRect?>,
     behavior: DragBehavior,
     tapCount: Int = 1,
-    isEnabled: Bool = true,
+//    isEnabled: Bool = true,
     minimumDistance: CGFloat = 5,
     didUpdateTap: @escaping TapUpdate = { _ in },
   ) -> some View {

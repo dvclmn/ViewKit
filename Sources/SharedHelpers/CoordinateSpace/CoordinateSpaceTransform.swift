@@ -13,6 +13,13 @@ public enum ViewAnchor {
   case anchoredToCentre
 }
 
+public enum PanSpace {
+  /// Pan is expressed in global/screen points (already scaled)
+  case global
+  /// Pan is expressed in local/canvas points (independent of zoom)
+  case local
+}
+
 /// Global == viewport == screen space
 /// Canvas == Local space
 ///
@@ -23,12 +30,15 @@ public struct CoordinateSpaceContext {
 
   let viewAnchor: ViewAnchor
 
+  /// Scale factor applied to canvas (>= 0).
   let zoom: CGFloat
+  /// Translation of canvas; units depend on panSpace.
   let pan: CGSize
+  let panSpace: PanSpace
 
-  /// Global viewport rect, where `size` is inset by
-  /// `origin`, to express safe area insets
+  /// In global/screen space; includes safe-area origin and size.
   let viewportRect: CGRect
+  /// In local/canvas space (unscaled).
   let canvasSize: CGSize
 
   public init(
@@ -36,11 +46,13 @@ public struct CoordinateSpaceContext {
     zoom: CGFloat,
     pan: CGSize,
     viewportRect: CGRect,
-    canvasSize: CGSize
+    canvasSize: CGSize,
+    panSpace: PanSpace
   ) {
     self.viewAnchor = viewAnchor
     self.zoom = zoom
     self.pan = pan
+    self.panSpace = panSpace
     self.viewportRect = viewportRect
     self.canvasSize = canvasSize
   }
@@ -48,8 +60,20 @@ public struct CoordinateSpaceContext {
 
 extension CoordinateSpaceContext {
 
+  /// Pan normalized to global space. If the input pan is in local/canvas units,
+  /// scale it by `zoom` to convert to global points; otherwise use as-is.
+  private var panInGlobalSpace: CGSize {
+    switch panSpace {
+      case .global:
+        return pan
+      case .local:
+        return CGSize(width: pan.width * zoom, height: pan.height * zoom)
+    }
+  }
+
   /// The dynamic offset to center the canvas within the safe viewport area.
   /// This uses the size of the viewport (which already has insets subtracted).
+  /// Canvas is scaled by zoom for centering; viewportRect is never scaled.
   private var centeringOffset: CGSize {
     switch viewAnchor {
       case .anchoredToCentre:
@@ -64,8 +88,8 @@ extension CoordinateSpaceContext {
   /// Safe Area Origin + Centering + Manual Pan.
   private var totalGlobalOffset: CGPoint {
     CGPoint(
-      x: viewportRect.origin.x + centeringOffset.width + pan.width,
-      y: viewportRect.origin.y + centeringOffset.height + pan.height
+      x: viewportRect.origin.x + centeringOffset.width + panInGlobalSpace.width,
+      y: viewportRect.origin.y + centeringOffset.height + panInGlobalSpace.height
     )
   }
 

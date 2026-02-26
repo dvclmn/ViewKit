@@ -27,6 +27,9 @@ public enum DragBehavior {
 
   /// Accumulated offset that persists across drags
   case continuous(axes: GridAxis.Set = .all)
+  
+  /// Gesture is not active
+  case none
 
   public var axes: GridAxis.Set {
     if case .continuous(let axes) = self {

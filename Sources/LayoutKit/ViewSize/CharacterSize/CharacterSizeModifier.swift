@@ -24,6 +24,11 @@ public struct CharacterSizeModifier: ViewModifier {
           .monospaced()
           .fixedSize()
           .allowsTightening(false)
+
+          /// This was a quick test
+          //          .onAppear {
+          //            self.characterSize = CGSize(100, 200)
+          //          }
           .viewSize(mode: debounceMode, isEnabled: unitSize == nil) { size in
 
             /// This derives a single glyph size from the multiple-character test string.

@@ -31,6 +31,7 @@ public struct EnvironmentViewportSizeModifier: ViewModifier {
         capture: .sizeAndSafeInsets,
         mode: mode
       ) { geometry in
+        
         self.viewportRect = geometry.rect
         self.viewportSize = geometry.size
       }
@@ -45,3 +46,10 @@ public struct EnvironmentViewportSizeModifier: ViewModifier {
 extension View {
 
 }
+
+
+//if let viewportSize {
+//  print(
+//    "🔔 Existing Environment value found for `viewportSize`: \(viewportSize). May be worth checking whether it can be used, rather than re-capturing via this modifier."
+//  )
+//  }

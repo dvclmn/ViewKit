@@ -27,7 +27,7 @@ public struct GridGeometryView<Content: View>: View {
       .setCharacterSize(mode: .debounce(0.2))
 
       /// This provides the environment with `viewportRect`
-      .viewportCapture(mode: .debounce(0.2))
+      .viewportCapture(mode: .debounce(0.2), showsIndicator: true)
 
       .environment(\.gridDimensions, dimensions)
   }

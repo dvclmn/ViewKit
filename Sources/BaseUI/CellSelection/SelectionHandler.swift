@@ -32,7 +32,8 @@ extension SelectionHandler {
       zoom: zoom,
       pan: pan,
       viewportRect: viewportRect,
-      canvasSize: canvasSize
+      canvasSize: canvasSize,
+      panSpace: .global
     )
 
     return transform.toLocal(point: pointerLocation)
