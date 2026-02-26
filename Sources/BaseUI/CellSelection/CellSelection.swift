@@ -10,8 +10,9 @@ import CoreTools
 import SwiftUI
 
 public struct CellSelectionTestView: View {
-  @Environment(\.canvasSize) private var canvasSize
+  //  @Environment(\.canvasSize) private var canvasSize
   @Environment(\.gridDimensions) private var gridDimensions
+  @Environment(\.unitSize) private var unitSize
 
   @State private var store: SelectionHandler = .init()
 
@@ -43,6 +44,7 @@ public struct CellSelectionTestView: View {
 
       .environment(store)
       .environment(\.zoomRange, zoomRange)
+      .environment(\.canvasSize, canvasSize)
 
     } else {
       StateView("No Canvas Size")
@@ -52,7 +54,13 @@ public struct CellSelectionTestView: View {
 }
 
 extension CellSelectionTestView {
+  private var canvasSize: CGSize? {
+    guard let unitSize else { return nil }
+    guard let gridDimensions else { return nil }
 
+    //    let dimensions = gridCanvas.wrappedValue.gridDimensions
+    return gridDimensions.toScreenSize(using: unitSize)
+  }
 }
 #if DEBUG
 #Preview {

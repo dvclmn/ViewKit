@@ -27,7 +27,14 @@ public struct CanvasGeometry: GeometryContext, Sendable, Equatable {
 }
 
 extension CanvasGeometry {
-  public var canvasSize: CGSize { subjectSize }
+  public var canvasSize: CGSize {
+    get {
+      subjectSize
+    }
+    set {
+      subjectSize = newValue
+    }
+  }
   //  public var isEitherZero: Bool { viewportSize.isZero || subjectSize.isZero }
 
 }

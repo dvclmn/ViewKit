@@ -85,9 +85,9 @@ extension GridDimensions {
   //    toUnitSize(with: unitSize).screenHeight
   //  }
   //
-  //  public func screenSize(using unitSize: CGSize) -> CGSize {
-  //    toUnitSize(with: unitSize).screenSize
-  //  }
+  public func toScreenSize(using unitSize: CGSize) -> CGSize? {
+    toUnitSize(with: unitSize).screenSize
+  }
 
   //  public func width(with cellSize: CGSize) -> CGFloat {
   //    CGFloat(width) * cellSize.width
