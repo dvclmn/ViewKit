@@ -18,7 +18,8 @@ public enum ViewAnchor {
 ///
 /// I may consider either including `CanvasGeometry` in this,
 /// or actually just removing that entirely and absorbing into this type
-public struct CoordinateSpaceTransform {
+public struct CoordinateSpaceContext {
+//public struct CoordinateSpaceTransform {
 
   let viewAnchor: ViewAnchor
 

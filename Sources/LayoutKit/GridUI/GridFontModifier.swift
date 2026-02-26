@@ -8,6 +8,8 @@
 import BasePrimitives
 import SwiftUI
 
+/// Provides a convenient way to set a Grid font. This doesn't handle any
+/// font/glyph geometry etc, just setting the font and font size visually.
 public struct GridFontModifier: ViewModifier {
 
   let fontStyle: GridFont
@@ -16,7 +18,6 @@ public struct GridFontModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .font(gridFont)
-//      .monospaced()
       /// Prevents any compression of the spacing between characters
       .allowsTightening(false)
   }
