@@ -12,7 +12,7 @@ import SwiftUI
 public struct UnitSpan: Hashable, Sendable {
   public var start: UnitPoint
   public var end: UnitPoint
-  
+
   public init(start: UnitPoint, end: UnitPoint) {
     self.start = start
     self.end = end
@@ -26,14 +26,27 @@ extension UnitSpan {
 }
 
 extension Axis {
-  
-  /// Returns the start and end UnitPoints for a gradient, given a convention relating dimensions to axis.
-  public func toGradientSpan(convention: AxisConvention = .widthIsHorizontal) -> UnitSpan {
-    switch (self, convention) {
-      case (.horizontal, .widthIsHorizontal), (.vertical, .heightIsHorizontal):
-        return UnitSpan(start: .leading, end: .trailing)
-      case (.horizontal, .heightIsHorizontal), (.vertical, .widthIsHorizontal):
-        return UnitSpan(start: .top, end: .bottom)
-    }
+
+  /// Returns the start and end UnitPoints for a gradient, given how
+  /// “primary/secondary storage” maps onto horizontal/vertical.
+  public func toGradientSpan(mapping: AxisMapping = .identity) -> UnitSpan {
+    mapping.select(
+      primary: UnitSpan(start: .leading, end: .trailing),  // “primary is horizontal”
+      secondary: UnitSpan(start: .top, end: .bottom),  // “secondary is vertical”
+      for: self.toGridAxis
+    )
   }
+
+  //
+  //  /// Returns the start and end UnitPoints for a gradient, given a convention relating dimensions to axis.
+  //  public func toGradientSpan(mapping: AxisMapping = .identity) -> UnitSpan {
+  //    //  public func toGradientSpan(convention: AxisConvention = .widthIsHorizontal) -> UnitSpan {
+  //    mapping.select(primary: <#T##T#>, secondary: <#T##T#>, for: self.toGridAxis)
+  ////    switch (self, mapping) {
+  ////      case (.horizontal, .identity), (.vertical, .heightIsHorizontal):
+  ////        return UnitSpan(start: .leading, end: .trailing)
+  ////      case (.horizontal, .heightIsHorizontal), (.vertical, .widthIsHorizontal):
+  ////        return UnitSpan(start: .top, end: .bottom)
+  ////    }
+  //  }
 }

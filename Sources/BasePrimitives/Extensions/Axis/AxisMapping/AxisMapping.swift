@@ -71,7 +71,6 @@ public enum AxisMapping: Sendable {
     return map(gridAxis)
 
   }
-
 }
 
 // MARK: - Deprecations

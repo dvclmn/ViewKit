@@ -14,24 +14,26 @@ import SwiftSyntaxBuilder
 /// accepting optional parameters and returning nil if the parameter is nil.
 /// See `BaseMacrosClient/main` for usage example.
 public struct OptinitsMacro: MemberMacro {
+  
   public static func expansion(
     of node: AttributeSyntax,
     providingMembersOf declaration: some DeclGroupSyntax,
+    conformingTo protocols: [TypeSyntax],
     in context: some MacroExpansionContext
   ) throws -> [DeclSyntax] {
     guard let enumDecl = declaration.as(EnumDeclSyntax.self) else {
       throw MacroError("@Optinits can only be attached to enum declarations")
     }
-
+    
     let accessLevel =
-      enumDecl.modifiers.first { modifier in
-        ["public", "internal", "private", "fileprivate"].contains(
-          modifier.name.text
-        )
-      }?.name.text ?? "internal"
-
+    enumDecl.modifiers.first { modifier in
+      ["public", "internal", "private", "fileprivate"].contains(
+        modifier.name.text
+      )
+    }?.name.text ?? "internal"
+    
     var initializers: [DeclSyntax] = []
-
+    
     for member in enumDecl.memberBlock.members {
       guard let caseDecl = member.decl.as(EnumCaseDeclSyntax.self) else {
         continue
@@ -42,9 +44,17 @@ public struct OptinitsMacro: MemberMacro {
         inits: &initializers
       )
     }
-
+    
     return initializers
   }
+  
+//  public static func expansion(
+//    of node: AttributeSyntax,
+//    providingMembersOf declaration: some DeclGroupSyntax,
+//    in context: some MacroExpansionContext
+//  ) throws -> [DeclSyntax] {
+//    
+//  }
   
   private static func generateInitializers(
     elements: EnumCaseElementListSyntax,

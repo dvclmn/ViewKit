@@ -11,10 +11,10 @@ import Foundation
 public protocol AxisKeyPathWritable: AxisKeyPathReadable {
   associatedtype Component
 
-  /// Path to the first storage slot (e.g., .width, .x, .column)
+  /// Path to the first storage slot (e.g. `width`, `x`, `column`)
   static var primaryWritableKey: WritableKeyPath<Self, Component> { get }
 
-  /// Path to the second storage slot (e.g., .height, .y, .row)
+  /// Path to the second storage slot (e.g. `height`, `y`, `row`)
   static var secondaryWritableKey: WritableKeyPath<Self, Component> { get }
 
   func setting(

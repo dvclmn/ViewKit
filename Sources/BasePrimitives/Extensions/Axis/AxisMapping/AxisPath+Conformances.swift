@@ -47,6 +47,11 @@ extension UnitSize: AxisKeyPathWritable {
   public static var secondaryWritableKey: WritableKeyPath<Self, UnitLength> { \.height }
 }
 
+extension UnitSpan: AxisKeyPathWritable {
+  public static var primaryWritableKey: WritableKeyPath<Self, UnitPoint> { \.start }
+  public static var secondaryWritableKey: WritableKeyPath<Self, UnitPoint> { \.end }
+}
+
 extension UnitRect: AxisKeyPathWritable {
   public static var primaryWritableKey: WritableKeyPath<Self, UnitLength> { \.size.width }
   public static var secondaryWritableKey: WritableKeyPath<Self, UnitLength> { \.size.height }
@@ -56,7 +61,6 @@ extension GridDimensions: AxisKeyPathWritable {
   public static var primaryWritableKey: WritableKeyPath<Self, Int> { \.width }
   public static var secondaryWritableKey: WritableKeyPath<Self, Int> { \.height }
 }
-
 
 //extension GridAxis: AxisKeyPathReadable {
 //  public static var primaryKey: KeyPath<Self, Void> { \Self.Cases.horizontal }
