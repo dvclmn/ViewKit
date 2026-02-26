@@ -18,7 +18,7 @@ enum CaptureArea {
 public struct EnvironmentViewportSizeModifier: ViewModifier {
 
   @State private var viewportRect: CGRect?
-  @State private var viewportSize: CGSize?
+//  @State private var viewportSize: CGSize?
 
   let mode: DebounceMode
   let showsIndicator: Bool
@@ -28,17 +28,23 @@ public struct EnvironmentViewportSizeModifier: ViewModifier {
       /// `sizeAndSafeInsets` is able to return both the size,
       /// as well as the insets
       .viewSize(
-        capture: .sizeAndSafeInsets,
+        capture: .safeGlobalRect,
         mode: mode
-      ) { geometry in
-
-        self.viewportRect = geometry.rect
-        self.viewportSize = geometry.size
+      ) {
+        self.viewportRect = $0
       }
+      //      .viewSize(
+      //        capture: .sizeAndSafeInsets,
+      //        mode: mode
+      //      ) { geometry in
+      //
+      //        self.viewportRect = geometry.rect
+      //        self.viewportSize = geometry.size
+      //      }
       .modifier(ViewportSizeIndicatorModifier(isEnabled: showsIndicator))
 
       /// This captures both a size and a rect; a size for ease, and the rect for safe area awareness
-      .environment(\.viewportSize, viewportSize)
+      //      .environment(\.viewportSize, viewportSize)
       .environment(\.viewportRect, viewportRect)
   }
 }

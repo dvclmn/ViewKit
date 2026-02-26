@@ -86,8 +86,12 @@ extension EnvironmentValues {
   /// Useful as long as its companion modifier
   /// `viewportCapture(mode:showsIndicator:didUpdateSize)`
   /// is placed on the view the caller regards as the viewport area
-  @Entry public var viewportSize: CGSize?
+//  @Entry public var viewportSize: CGSize?
   @Entry public var viewportRect: CGRect?
+  public var viewportSize: CGSize? {
+    guard let viewportRect else { return nil }
+    return viewportRect.size
+  }
   @Entry public var isScrollAtStart: Bool = true
 
   @Entry public var formatValue: (Double) -> String = { $0.displayString }

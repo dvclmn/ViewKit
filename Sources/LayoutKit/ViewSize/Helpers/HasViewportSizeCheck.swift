@@ -16,7 +16,7 @@ public struct HasViewportSizeCheckModifier: ViewModifier {
         "No viewport size value in environment",
         isEnabled: viewportSize == nil
       )
-//      .backgroundTint(viewportSize == nil ? .red : .black)
+    //      .backgroundTint(viewportSize == nil ? .red : .black)
   }
 }
 
@@ -61,5 +61,23 @@ public struct ViewportSizeIndicatorModifier: ViewModifier {
           }
         }
       }
+
+    //      .overlay(alignment: .topLeading) {
+    //        if let viewportRect {
+    //          Rectangle()
+    //            .fill(.brown.tertiary)
+    //            .stroke(.orange.secondary, lineWidth: 1)
+    //            .frame(
+    //              width: viewportRect.width,
+    //              height: viewportRect.height,
+    //              alignment: .topLeading
+    //            )
+    //            .offset(
+    //              x: viewportRect.origin.x,
+    //              y: viewportRect.origin.y
+    //            )
+    //            .allowsHitTesting(false)
+    //        }
+    //      }
   }
 }

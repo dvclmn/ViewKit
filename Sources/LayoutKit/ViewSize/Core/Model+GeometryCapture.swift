@@ -40,6 +40,16 @@ extension GeometryCapture {
     .init(type: EdgeInsets.self) { $0.safeAreaInsets }
   }
 
+  public static var safeGlobalRect: GeometryCapture<CGRect> {
+    .init(type: CGRect.self) { proxy in
+//      proxy.bounds(of: .)
+      proxy.frame(in: .global)
+    }
+//    .init(type: SizeAndSafeInsets.self) {
+//      SizeAndSafeInsets(size: $0.size, safeInsets: $0.safeAreaInsets)
+//    }
+  }
+  
   public static var sizeAndSafeInsets: GeometryCapture<SizeAndSafeInsets> {
     .init(type: SizeAndSafeInsets.self) {
       SizeAndSafeInsets(size: $0.size, safeInsets: $0.safeAreaInsets)

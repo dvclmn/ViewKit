@@ -18,7 +18,6 @@ public struct CellSelectionTestView: View {
 
   @State private var store: SelectionHandler = .init()
 
-  //  private let font: Font = .system(.body, design: .monospaced)
   private let zoomRange: ClosedRange<Double> = 0.1...10
 
   public init() {}
@@ -48,23 +47,6 @@ public struct CellSelectionTestView: View {
       .environment(\.canvasSize, canvasSize)
       .environment(store)
 
-      .overlay(alignment: .topLeading) {
-        if let viewportRect {
-          Rectangle()
-            .fill(.brown.tertiary)
-            .stroke(.orange.secondary, lineWidth: 1)
-            .frame(
-              width: viewportRect.width,
-              height: viewportRect.height,
-              alignment: .topLeading
-            )
-            .offset(
-              x: viewportRect.origin.x,
-              y: viewportRect.origin.y
-            )
-            .allowsHitTesting(false)
-        }
-      }
 
     } else {
       StateView("No Canvas Size")
