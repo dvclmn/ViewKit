@@ -24,7 +24,7 @@ public struct UnifiedDragModifier: ViewModifier {
 
   @Binding var dragRect: CGRect?
   
-  let isEnabled: Bool
+//  let isEnabled: Bool
   let tapCount: Int
   let minimumDistance: CGFloat
   let didUpdateTap: TapUpdate
@@ -32,14 +32,14 @@ public struct UnifiedDragModifier: ViewModifier {
   init(
     rect: Binding<CGRect?>,
     behavior: DragBehavior,
-    isEnabled: Bool,
+//    isEnabled: Bool,
     tapCount: Int,
     minimumDistance: CGFloat,
     didUpdateTap: @escaping TapUpdate,
 
   ) {
     self._dragRect = rect
-    self.isEnabled = isEnabled
+//    self.isEnabled = isEnabled
     self.tapCount = tapCount
     self.minimumDistance = minimumDistance
     self.didUpdateTap = didUpdateTap
@@ -57,6 +57,8 @@ public struct UnifiedDragModifier: ViewModifier {
   }
 }
 extension UnifiedDragModifier {
+  
+  private var isEnabled: Bool { behaviour.isEnabled }
   private var behaviour: DragBehavior { dragState.behaviour }
 
   // TODO: Add modifiers, to get different behaviour based on e.g. holding Option, Command, etc
@@ -101,7 +103,7 @@ extension View {
       UnifiedDragModifier(
         rect: rect,
         behavior: behavior,
-        isEnabled: isEnabled,
+//        isEnabled: isEnabled,
         tapCount: tapCount,
         minimumDistance: minimumDistance,
         didUpdateTap: didUpdateTap,
@@ -113,7 +115,7 @@ extension View {
     translation: Binding<CGSize?>,
     behavior: DragBehavior,
     tapCount: Int = 1,
-    isEnabled: Bool = true,
+//    isEnabled: Bool = true,
     minimumDistance: CGFloat = 5,
     didUpdateTap: @escaping TapUpdate = { _ in },
   ) -> some View {
@@ -121,7 +123,7 @@ extension View {
       UnifiedDragModifier(
         rect: translation.toBindingRect,
         behavior: behavior,
-        isEnabled: isEnabled,
+//        isEnabled: isEnabled,
         tapCount: tapCount,
         minimumDistance: minimumDistance,
         didUpdateTap: didUpdateTap,
@@ -134,7 +136,7 @@ extension View {
     axis: GridAxis,
     reversed: Bool = false,
     tapCount: Int = 1,
-    isEnabled: Bool = true,
+//    isEnabled: Bool = true,
     minimumDistance: CGFloat = 5,
     didUpdateTap: @escaping TapUpdate = { _ in },
   ) -> some View {
@@ -142,7 +144,7 @@ extension View {
       UnifiedDragModifier(
         rect: scalar.toBindingRect(along: axis, reversed: reversed),
         behavior: .continuous(axes: axis.toSet),
-        isEnabled: isEnabled,
+//        isEnabled: isEnabled,
         tapCount: tapCount,
         minimumDistance: minimumDistance,
         didUpdateTap: didUpdateTap,

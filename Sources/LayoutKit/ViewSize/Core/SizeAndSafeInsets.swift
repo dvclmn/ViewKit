@@ -14,8 +14,10 @@ public struct SizeAndSafeInsets: Equatable, Sendable {
 
 extension SizeAndSafeInsets {
   public var rect: CGRect {
-    let width = size.width - (safeInsets.leading + safeInsets.trailing)
-    let height = size.height - (safeInsets.top + safeInsets.bottom)
+    let width = size.width - (safeInsets.leading)
+//    let width = size.width - (safeInsets.leading + safeInsets.trailing)
+    let height = size.height - (safeInsets.top)
+//    let height = size.height - (safeInsets.top + safeInsets.bottom)
     
     return CGRect(
       x: safeInsets.leading,

@@ -21,13 +21,13 @@ public enum DragType {
 @MetaEnum
 @CaseDetection
 //@AssociatedValues
-public enum DragBehavior {
+public enum DragBehavior: Equatable {
   /// Transient rectangle from drag origin to current point
   case marquee(drawMarquee: Bool)
 
   /// Accumulated offset that persists across drags
   case continuous(axes: GridAxis.Set = .all)
-  
+
   /// Gesture is not active
   case none
 
@@ -39,6 +39,11 @@ public enum DragBehavior {
   }
 }
 
+extension DragBehavior {
+  public var isEnabled: Bool {
+    self != .none
+  }
+}
 //enum DragState {
 //  case marquee(MarqueePhase)
 //  case cumulative(CumulativePhase)

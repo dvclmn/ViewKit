@@ -31,7 +31,7 @@ public struct EnvironmentViewportSizeModifier: ViewModifier {
         capture: .sizeAndSafeInsets,
         mode: mode
       ) { geometry in
-        
+
         self.viewportRect = geometry.rect
         self.viewportSize = geometry.size
       }
@@ -46,7 +46,6 @@ public struct EnvironmentViewportSizeModifier: ViewModifier {
 extension View {
 
 }
-
 
 //if let viewportSize {
 //  print(

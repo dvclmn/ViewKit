@@ -61,6 +61,8 @@ extension DragGestureState {
         lastComputedValue = size
         
         return CGRect(origin: .zero, size: size)
+        
+      case .none: return nil
     }
 
   }

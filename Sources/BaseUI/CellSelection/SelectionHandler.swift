@@ -68,11 +68,9 @@ extension SelectionHandler {
     let row = Int(local.y / cellSize.height)
 
     return GridPosition(row, col)
-    //    return (row, col)
   }
 
   var selectionRect: CGRect? {
-    //    guard let local = pointerLocalSpace else { return nil }
     guard let position = pointerGridPosition else { return nil }
     guard let cellSize else { return nil }
 

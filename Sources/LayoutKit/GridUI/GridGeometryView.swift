@@ -23,6 +23,7 @@ public struct GridGeometryView<Content: View>: View {
 
   public var body: some View {
     content
+    
       /// This provides the environment with `unitSize`
       .setCharacterSize(mode: .debounce(0.2))
 
