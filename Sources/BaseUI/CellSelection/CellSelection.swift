@@ -7,12 +7,13 @@
 
 import CanvasKit
 import CoreTools
+import LayoutKit
 import SwiftUI
 
 public struct CellSelectionTestView: View {
-  //  @Environment(\.canvasSize) private var canvasSize
   @Environment(\.gridDimensions) private var gridDimensions
   @Environment(\.unitSize) private var unitSize
+  @Environment(\.gridCanvasSize) private var gridCanvasSize
 
   @State private var store: SelectionHandler = .init()
 
@@ -22,7 +23,7 @@ public struct CellSelectionTestView: View {
   public init() {}
   public var body: some View {
 
-    if let canvasSize {
+    if let canvasSize = gridCanvasSize {
 
       CanvasView(canvasSize: canvasSize) {
         CellSelectionCanvas()
@@ -34,8 +35,8 @@ public struct CellSelectionTestView: View {
           case .ended: store.pointerLocation = nil
         }
       }
-      .setCharacterSize(mode: .debounce(0.2))
-      .viewportCapture(mode: .debounce(0.2))
+      //      .setCharacterSize(mode: .debounce(0.2))
+      //      .viewportCapture(mode: .debounce(0.2))
       .gridFont(.sfMono, size: 88)
       .infoBarView(debounceMode: .debounce(0.1))
 
@@ -53,20 +54,17 @@ public struct CellSelectionTestView: View {
   }
 }
 
-extension CellSelectionTestView {
-  private var canvasSize: CGSize? {
-    guard let unitSize else { return nil }
-    guard let gridDimensions else { return nil }
-
-    //    let dimensions = gridCanvas.wrappedValue.gridDimensions
-    return gridDimensions.toScreenSize(using: unitSize)
-  }
-}
-#if DEBUG
-#Preview {
-
-  CellSelectionTestView()
-    .frame(width: 600, height: 700)
-
-}
-#endif
+//extension CellSelectionTestView {
+//
+//}
+//#if DEBUG
+//#Preview {
+//
+//  GridGeometryView(dimensions: .) {
+//    CellSelectionTestView()
+//
+//  }
+//  .frame(width: 600, height: 700)
+//
+//}
+//#endif

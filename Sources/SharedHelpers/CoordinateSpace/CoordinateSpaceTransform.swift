@@ -19,7 +19,7 @@ public enum ViewAnchor {
 /// I may consider either including `CanvasGeometry` in this,
 /// or actually just removing that entirely and absorbing into this type
 public struct CoordinateSpaceContext {
-//public struct CoordinateSpaceTransform {
+  //public struct CoordinateSpaceTransform {
 
   let viewAnchor: ViewAnchor
 
@@ -71,8 +71,8 @@ extension CoordinateSpaceContext {
 
   /// Converts a global/screen space point to local / canvas point
   public func toLocal(point: CGPoint) -> CGPoint {
-    // 1. Subtract the total translation from the raw screen point
-    // 2. Divide by zoom to get the coordinate on the "original" canvas scale
+    /// 1. Subtract the total translation from the raw screen point
+    /// 2. Divide by zoom to get the coordinate on the "original" canvas scale
     CGPoint(
       x: (point.x - totalGlobalOffset.x) / zoom,
       y: (point.y - totalGlobalOffset.y) / zoom
@@ -81,8 +81,8 @@ extension CoordinateSpaceContext {
 
   /// Converts a canvas-local point back to screen/global space
   public func toGlobal(point: CGPoint) -> CGPoint {
-    // 1. Scale the local point up
-    // 2. Add the total translation to place it correctly on the screen
+    /// 1. Scale the local point up
+    /// 2. Add the total translation to place it correctly on the screen
     CGPoint(
       x: (point.x * zoom) + totalGlobalOffset.x,
       y: (point.y * zoom) + totalGlobalOffset.y
