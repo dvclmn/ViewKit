@@ -21,13 +21,9 @@ final class SelectionHandler {
 
 extension SelectionHandler {
 
-  /// Aka Canvas space
-  var pointerLocalSpace: CGPoint? {
-    guard let pointerLocation,
-      let viewportRect,
-      let canvasSize
-    else { return nil }
-    let transform = CoordinateSpaceContext(
+  private var coordinateTransform: CoordinateSpaceContext? {
+    guard let viewportRect, let canvasSize else { return nil }
+    return CoordinateSpaceContext(
       viewAnchor: .anchoredToCentre,
       zoom: zoom,
       pan: pan,
@@ -35,9 +31,25 @@ extension SelectionHandler {
       canvasSize: canvasSize,
       panSpace: .global
     )
+  }
+
+  /// Aka Canvas space
+  var pointerLocalSpace: CGPoint? {
+    guard let pointerLocation, let transform = coordinateTransform else { return nil }
+
+    #if DEBUG
+    transform.assertRoundTrip(global: pointerLocation)
+    #endif
 
     return transform.toLocal(point: pointerLocation)
   }
+
+  #if DEBUG
+  var pointerRoundTripError: CGFloat? {
+    guard let pointerLocation, let transform = coordinateTransform else { return nil }
+    return transform.roundTripError(global: pointerLocation)
+  }
+  #endif
 
   private func unitSize(_ columns: Int, _ rows: Int) -> UnitSize? {
     guard let cellSize else { return nil }

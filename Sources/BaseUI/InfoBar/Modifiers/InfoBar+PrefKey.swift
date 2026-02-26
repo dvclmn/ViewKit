@@ -68,77 +68,13 @@ extension View {
     //    format: FloatDisplayFormat = .default,
     isEnabled: Bool = true
   ) -> some View {
+    
+    
     self.preference(
       key: InfoBarKey.self,
       value: isEnabled ? content().toInfoBarItems(section: key, preset: preset) : []
-      //        ? content().map { block in
-      //          switch block {
-      //            case let .labeled(key,separator, value):
-      //              InfoBarItem(fromLabeled: labeled, section: key, format: format)
-      //
-      //            default:
-      //              InfoBarItem(section: key, label: nil, content: content().output(format: format))
-      //
-      //          }
-      //        } : []
-      //      value: content().compactMap { block -> InfoBarItem? in
-      //        guard case .labeled(let labeled) = block else { return nil }
-      //        return InfoBarItem(
-      //          section: key,
-      //          label: QuickLabel(stringLiteral: labeled.key),
-      //          content: labeled.value?.render(using: format) ?? ""
-      //        )
-      //      }
-      //      value: content().compactMap {
-      //        ($0 as? any InfoBarItemConvertible)?
-      //          .asInfoBarItem(section: key, format: format)
-      //      }
     )
-    //    self.preference(
-    //      key: InfoBarKey.self,
-    //      value: content().lines().map { text in
-    //        InfoBarItem(
-    //          section: key,
-    //          label: QuickLabel(stringLiteral: text.0),
-    //          content: text.1
-    //        )
-    //      }
-    //    )
+
   }
 
-  //  public func addInfoBarItems<K: InfoBarSectionKey>(
-  //    _ items: (String, String)...,
-  //    key: K.Type = DebugSectionKey.self,
-  //    format: DisplayFormat = .default
-  //  ) -> some View {
-  //    self.preference(
-  //      key: InfoBarKey.self,
-  //      value: items.map { text in
-  //        InfoBarItem(
-  //          section: key,
-  //          label: QuickLabel(stringLiteral: text.0),
-  //          content: text.1
-  //        )
-  //      }
-  //    )
-  //  }
-
-  //  public func addInfoBarItems<K: InfoBarSectionKey>(
-  //    _ items: (icon: IconLiteral, String)...,
-  //    key: K.Type = DebugSectionKey.self,
-  //    format: DisplayFormat = .default
-  //  ) -> some View {
-  //    self.preference(
-  //      key: InfoBarKey.self,
-  //      value: items.map { text in
-  //        InfoBarItem(
-  //          section: key,
-  //          label: QuickLabel("", icon: text.0),
-  //          content: text.1
-  //        )
-  //      }
-  //    )
-  //    .environment(\.labelDisplay, .iconOnly)
-  //    .environment(\.iconColour, AnyShapeStyle(.secondary))
-  //  }
 }

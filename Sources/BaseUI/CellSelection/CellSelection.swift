@@ -10,7 +10,7 @@ import CoreTools
 import LayoutKit
 import SwiftUI
 
-public struct CellSelectionTestView: View {
+public struct CellSelectionTestView<Content: View>: View {
   @Environment(\.gridDimensions) private var gridDimensions
   @Environment(\.viewportRect) private var viewportRect
   @Environment(\.unitSize) private var unitSize
@@ -20,13 +20,22 @@ public struct CellSelectionTestView: View {
 
   private let zoomRange: ClosedRange<Double> = 0.1...10
 
-  public init() {}
+  let content: Content
+
+  public init(
+    @ViewBuilder content: @escaping () -> Content
+  ) {
+    self.content = content()
+  }
   public var body: some View {
 
     if let canvasSize = gridCanvasSize {
 
       CanvasView(canvasSize: canvasSize) {
-        CellSelectionCanvas()
+        ZStack {
+          CellSelectionCanvas()
+          content
+        }
       }
 
       .onContinuousHover(coordinateSpace: .global) { phase in
@@ -38,15 +47,12 @@ public struct CellSelectionTestView: View {
       //      .setCharacterSize(mode: .debounce(0.2))
       //      .viewportCapture(mode: .debounce(0.2))
 
-      .infoBarView(debounceMode: .debounce(0.1))
-
       .task(id: canvasSize) { store.canvasSize = canvasSize }
       .task(id: gridDimensions) { store.gridDimensions = gridDimensions }
 
       .environment(\.zoomRange, zoomRange)
       .environment(\.canvasSize, canvasSize)
       .environment(store)
-
 
     } else {
       StateView("No Canvas Size")

@@ -21,6 +21,8 @@ struct CellSelectionCanvas: View {
   @Environment(\.canvasSize) private var canvasSize
 
   private let rounding: CGFloat = 4
+  
+//  let drawingContext: @escaping (inout GraphicsContext, CGSize)
 
   var body: some View {
 
@@ -72,7 +74,7 @@ struct CellSelectionCanvas: View {
 //      Labeled("Zoom", value: zoomLevel.toPercentString(within: zoomRange ?? .unitRange))
       Labeled("Canvas Size", value: canvasSize?.displayString(.dimensions))
     }
-    .debugTextOverlay("No zoom range in env", isEnabled: zoomRange == nil, alignment: .center)
+//    .debugTextOverlay("No zoom range in env", isEnabled: zoomRange == nil, alignment: .center)
     .task(id: panOffset) { store.pan = panOffset }
     .task(id: zoomLevel) { store.zoom = zoomLevel }
     .task(id: viewportRect) { store.viewportRect = viewportRect }

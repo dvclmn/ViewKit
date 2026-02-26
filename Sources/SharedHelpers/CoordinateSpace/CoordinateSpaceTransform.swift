@@ -60,6 +60,11 @@ public struct CoordinateSpaceContext {
 
 extension CoordinateSpaceContext {
 
+  private var zoomSafe: CGFloat {
+    guard zoom.isFinite, zoom > 0 else { return 1 }
+    return zoom
+  }
+
   /// Pan normalized to global space. If the input pan is in local/canvas units,
   /// scale it by `zoom` to convert to global points; otherwise use as-is.
   private var panInGlobalSpace: CGSize {
@@ -67,7 +72,7 @@ extension CoordinateSpaceContext {
       case .global:
         return pan
       case .local:
-        return CGSize(width: pan.width * zoom, height: pan.height * zoom)
+        return CGSize(width: pan.width * zoomSafe, height: pan.height * zoomSafe)
     }
   }
 
@@ -78,10 +83,18 @@ extension CoordinateSpaceContext {
     switch viewAnchor {
       case .anchoredToCentre:
         return CGSize(
-          width: (viewportRect.width - (canvasSize.width * zoom)) / 2,
-          height: (viewportRect.height - (canvasSize.height * zoom)) / 2
+          width: (viewportRect.width - (canvasSize.width * zoomSafe)) / 2,
+          height: (viewportRect.height - (canvasSize.height * zoomSafe)) / 2
         )
     }
+  }
+
+  /// Canvas frame expressed in global/screen space.
+  public var canvasFrameInGlobalSpace: CGRect {
+    .init(
+      origin: totalGlobalOffset,
+      size: .init(width: canvasSize.width * zoomSafe, height: canvasSize.height * zoomSafe)
+    )
   }
 
   /// The "Zero Point" of your drawing area in screen space.
@@ -98,8 +111,8 @@ extension CoordinateSpaceContext {
     /// 1. Subtract the total translation from the raw screen point
     /// 2. Divide by zoom to get the coordinate on the "original" canvas scale
     CGPoint(
-      x: (point.x - totalGlobalOffset.x) / zoom,
-      y: (point.y - totalGlobalOffset.y) / zoom
+      x: (point.x - totalGlobalOffset.x) / zoomSafe,
+      y: (point.y - totalGlobalOffset.y) / zoomSafe
     )
   }
 
@@ -108,8 +121,80 @@ extension CoordinateSpaceContext {
     /// 1. Scale the local point up
     /// 2. Add the total translation to place it correctly on the screen
     CGPoint(
-      x: (point.x * zoom) + totalGlobalOffset.x,
-      y: (point.y * zoom) + totalGlobalOffset.y
+      x: (point.x * zoomSafe) + totalGlobalOffset.x,
+      y: (point.y * zoomSafe) + totalGlobalOffset.y
     )
   }
+
+  /// Converts a global/screen rect to local/canvas rect.
+  public func toLocal(rect: CGRect) -> CGRect {
+    .init(
+      origin: toLocal(point: rect.origin),
+      size: .init(
+        width: rect.width / zoomSafe,
+        height: rect.height / zoomSafe
+      )
+    )
+  }
+
+  /// Converts a local/canvas rect to global/screen rect.
+  public func toGlobal(rect: CGRect) -> CGRect {
+    .init(
+      origin: toGlobal(point: rect.origin),
+      size: .init(
+        width: rect.width * zoomSafe,
+        height: rect.height * zoomSafe
+      )
+    )
+  }
+
+  #if DEBUG
+  /// Distance error for round-tripping a global point through local space.
+  public func roundTripError(global point: CGPoint) -> CGFloat {
+    let local = toLocal(point: point)
+    let result = toGlobal(point: local)
+    return hypot(result.x - point.x, result.y - point.y)
+  }
+
+  /// Distance error for round-tripping a local point through global space.
+  public func roundTripError(local point: CGPoint) -> CGFloat {
+    let global = toGlobal(point: point)
+    let result = toLocal(point: global)
+    return hypot(result.x - point.x, result.y - point.y)
+  }
+
+  @discardableResult
+  public func assertRoundTrip(
+    global point: CGPoint,
+    tolerance: CGFloat = 0.5,
+    file: StaticString = #fileID,
+    line: UInt = #line
+  ) -> CGFloat {
+    let error = roundTripError(global: point)
+    assert(
+      error <= tolerance,
+      "Coordinate transform round-trip failed (global->local->global). Error: \(error), tolerance: \(tolerance)",
+      file: file,
+      line: line
+    )
+    return error
+  }
+
+  @discardableResult
+  public func assertRoundTrip(
+    local point: CGPoint,
+    tolerance: CGFloat = 0.5,
+    file: StaticString = #fileID,
+    line: UInt = #line
+  ) -> CGFloat {
+    let error = roundTripError(local: point)
+    assert(
+      error <= tolerance,
+      "Coordinate transform round-trip failed (local->global->local). Error: \(error), tolerance: \(tolerance)",
+      file: file,
+      line: line
+    )
+    return error
+  }
+  #endif
 }

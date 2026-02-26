@@ -9,14 +9,18 @@ import CoreTools
 import SwiftUI
 
 public struct GridGeometryView<Content: View>: View {
+  @Environment(\.fontSizeOverride) private var fontSize
 
+  let font: GridFont
   let dimensions: GridDimensions
   let content: Content
 
   public init(
+    font: GridFont,
     dimensions: GridDimensions,
     @ViewBuilder content: @escaping () -> Content
   ) {
+    self.font = font
     self.dimensions = dimensions
     self.content = content()
   }
@@ -28,7 +32,9 @@ public struct GridGeometryView<Content: View>: View {
       .setCharacterSize(mode: .debounce(0.2))
 
       /// This provides the environment with `viewportRect`
-      .viewportCapture(mode: .debounce(0.2), showsIndicator: true)
+      .viewportCapture(mode: .debounce(0.2), showsIndicator: false)
+
+      .gridFont(font, size: fontSize ?? 24)
 
       .environment(\.gridDimensions, dimensions)
   }
