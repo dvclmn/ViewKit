@@ -33,7 +33,7 @@ extension CanvasGestureState {
   }
 
   public mutating func update(_ newValue: Value, phase: InteractionPhase) {
-//    print("Updating `CanvasGestureState` with value \(newValue) and phase \(phase)")
+    //    print("Updating `CanvasGestureState` with value \(newValue) and phase \(phase)")
     self.value = newValue
     self.phase = phase
   }
@@ -64,12 +64,13 @@ extension ClampedGestureState where Value == CGSize {
     zoom: CGFloat
   ) -> CGSize {
     let artwork = geometry.canvasSize
-    let viewport = geometry.viewportSize
+    let viewportRect = geometry.viewportRect
+    //    let viewport = geometry.viewportSize
     let scaledArtwork = artwork * zoom
-    
-    let maxX = max((scaledArtwork.width - viewport.width) / 2, 0)
-    let maxY = max((scaledArtwork.height - viewport.height) / 2, 0)
-    
+
+    let maxX = max((scaledArtwork.width - viewportRect.width) / 2, 0)
+    let maxY = max((scaledArtwork.height - viewportRect.height) / 2, 0)
+
     return CGSize(
       width: value.width.clamped(to: -maxX...maxX),
       height: value.height.clamped(to: -maxY...maxY)

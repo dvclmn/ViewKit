@@ -1,5 +1,5 @@
 //
-//  CoordinateSpaceTransform.swift
+//  CoordinateSpaceContext.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 25/2/2026.
@@ -46,7 +46,7 @@ public struct CoordinateSpaceContext {
   }
 }
 
-extension CoordinateSpaceTransform {
+extension CoordinateSpaceContext {
 
   /// The dynamic offset to center the canvas within the safe viewport area.
   /// This uses the size of the viewport (which already has insets subtracted).

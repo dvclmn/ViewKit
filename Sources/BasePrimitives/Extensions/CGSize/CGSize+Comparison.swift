@@ -7,6 +7,10 @@
 
 import Foundation
 
+extension CGRect {
+  public var isZero: Bool { width == 0 && height == 0 }
+}
+
 extension CGSize {
 
   /// Returns true if both width and height are greater than zero

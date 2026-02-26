@@ -8,7 +8,8 @@
 import Foundation
 
 /// Intended as a bit of an analogue to CanvasGeometry for Grid artwork
-public struct GridGeometry {
+public struct GridGeometry: GeometryContext {
   /// A rect, not a size, to express safe area insets
-  let viewportRect: CGRect
+  public let viewportRect: CGRect
+  public let subjectSize: GridDimensions
 }

@@ -27,7 +27,7 @@ extension SelectionHandler {
       let viewportRect,
       let canvasSize
     else { return nil }
-    let transform = CoordinateSpaceTransform(
+    let transform = CoordinateSpaceContext(
       viewAnchor: .anchoredToCentre,
       zoom: zoom,
       pan: pan,

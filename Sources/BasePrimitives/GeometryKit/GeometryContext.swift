@@ -5,34 +5,43 @@
 //  Created by Dave Coleman on 26/2/2026.
 //
 
+import CoreGraphics
 import Foundation
 
-/// This aims to express concepts similar to GridGeometry, CanvasGeometry, ArtworkGeometry
-/// It's meant to help with situating one known rect within another known rect,
-/// coordinate space conversions, etc
+/// This aims to express concepts similar to previous models `GridGeometry`,
+/// `CanvasGeometry`, `ArtworkGeometry` etc. It's meant to help with situating
+/// one known rect within another known rect, coordinate space conversions, etc
 public protocol GeometryContext {
   associatedtype Size: DomainSize
 
-  var viewportRect: CGRect { get }
-  var itemSize: Size { get }
-  
-  var unitSize: UnitSize { get }
+  /// Uses rect,  not size, to express safe area insets. Usually provided
+  /// by `ViewSizeModifier` / `GeometryCapturable` domains
+  var viewportRect: CGRect { get set }
+  var subjectSize: Size { get set }
+//  var unitSize: UnitSize { get }
 }
 
-public protocol DomainSize {
+extension GeometryContext {
+  public var isEitherZero: Bool { viewportRect.isZero || subjectSize.isZero }
+}
+
+public protocol DomainSize: Equatable {
   associatedtype Value
 
   var width: Value { get }
   var height: Value { get }
+  static var zero: Self { get }
+}
 
+extension DomainSize {
+  public var isZero: Bool { self == .zero }
 }
 
 extension CGSize: DomainSize {
   public typealias Value = CGFloat
-  //  public var widthValue: CGFloat { self.width }
-  //  public var heightValue: CGFloat { self.height }
 }
 
 extension GridDimensions: DomainSize {
   public typealias Value = Int
+  public static let zero: GridDimensions = .init(0, 0)
 }
