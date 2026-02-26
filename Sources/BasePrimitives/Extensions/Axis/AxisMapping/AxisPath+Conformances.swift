@@ -8,6 +8,8 @@
 import SwiftUI
 
 extension CGSize: AxisKeyPathWritable {
+  public typealias Component = <#type#>
+  
   public static var primaryWritableKey: WritableKeyPath<Self, CGFloat> { \.width }
   public static var secondaryWritableKey: WritableKeyPath<Self, CGFloat> { \.height }
 }

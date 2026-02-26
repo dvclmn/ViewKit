@@ -16,7 +16,7 @@ public protocol AxisKeyPathReadable {
   /// Path to the second storage slot (e.g., .height, .y, .row)
   static var secondaryKey: KeyPath<Self, Component> { get }
 
-  func value(along axis: GridAxis, mapping: AxisMapping) -> Component
+//  func value(along axis: GridAxis, mapping: AxisMapping) -> Component
 }
 extension AxisKeyPathReadable {
 

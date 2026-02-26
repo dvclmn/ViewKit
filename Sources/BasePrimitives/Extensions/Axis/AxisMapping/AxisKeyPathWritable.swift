@@ -9,7 +9,7 @@ import Foundation
 
 /// Note: this requires that conforming types have mutable (var) properties
 public protocol AxisKeyPathWritable: AxisKeyPathReadable {
-  associatedtype Component
+  //  associatedtype Component
 
   /// Path to the first storage slot (e.g. `width`, `x`, `column`)
   static var primaryWritableKey: WritableKeyPath<Self, Component> { get }
@@ -17,11 +17,11 @@ public protocol AxisKeyPathWritable: AxisKeyPathReadable {
   /// Path to the second storage slot (e.g. `height`, `y`, `row`)
   static var secondaryWritableKey: WritableKeyPath<Self, Component> { get }
 
-  func setting(
-    _ newValue: Component,
-    along axis: GridAxis,
-    mapping: AxisMapping
-  ) -> Self
+//  func setting(
+//    _ newValue: Component,
+//    along axis: GridAxis,
+//    mapping: AxisMapping
+//  ) -> Self
 }
 
 extension AxisKeyPathWritable {
@@ -34,13 +34,12 @@ extension AxisKeyPathWritable {
     mapping: AxisMapping = .default
   ) -> Self {
     var copy = self
-    let keyPath = mapping.select(
+    let kp = mapping.select(
       primary: Self.primaryWritableKey,
       secondary: Self.secondaryWritableKey,
       for: axis
     )
-    copy[keyPath: keyPath] = newValue
+    copy[keyPath: kp] = newValue
     return copy
   }
-  
 }
