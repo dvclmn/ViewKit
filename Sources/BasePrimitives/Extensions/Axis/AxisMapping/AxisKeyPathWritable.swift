@@ -9,7 +9,7 @@ import Foundation
 
 /// Note: this requires that conforming types have mutable (var) properties
 public protocol AxisKeyPathWritable: AxisKeyPathReadable {
-  //  associatedtype Component
+    associatedtype Component
 
   /// Path to the first storage slot (e.g. `width`, `x`, `column`)
   static var primaryWritableKey: WritableKeyPath<Self, Component> { get }
@@ -25,6 +25,7 @@ public protocol AxisKeyPathWritable: AxisKeyPathReadable {
 }
 
 extension AxisKeyPathWritable {
+//  public typealias Component = Self.Component
   public static var primaryKey: KeyPath<Self, Component> { primaryWritableKey }
   public static var secondaryKey: KeyPath<Self, Component> { secondaryWritableKey }
 

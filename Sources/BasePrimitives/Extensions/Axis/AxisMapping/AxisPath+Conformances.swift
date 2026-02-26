@@ -8,8 +8,6 @@
 import SwiftUI
 
 extension CGSize: AxisKeyPathWritable {
-  public typealias Component = <#type#>
-  
   public static var primaryWritableKey: WritableKeyPath<Self, CGFloat> { \.width }
   public static var secondaryWritableKey: WritableKeyPath<Self, CGFloat> { \.height }
 }
@@ -47,11 +45,6 @@ extension GridPosition: AxisKeyPathWritable {
 extension UnitSize: AxisKeyPathWritable {
   public static var primaryWritableKey: WritableKeyPath<Self, UnitLength> { \.width }
   public static var secondaryWritableKey: WritableKeyPath<Self, UnitLength> { \.height }
-}
-
-extension UnitSpan: AxisKeyPathWritable {
-  public static var primaryWritableKey: WritableKeyPath<Self, UnitPoint> { \.start }
-  public static var secondaryWritableKey: WritableKeyPath<Self, UnitPoint> { \.end }
 }
 
 extension UnitRect: AxisKeyPathWritable {

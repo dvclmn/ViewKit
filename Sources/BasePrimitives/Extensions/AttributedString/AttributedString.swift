@@ -16,8 +16,7 @@ extension AttributedString {
     }
     return index(startIndex, offsetByCharacters: offset)
   }
-  
-  
+
   ///
   /// ```
   /// var output = attrString
@@ -38,15 +37,12 @@ extension AttributedString {
     self.setAttributes(highlightContainer)
   }
 
-  public func lines(
-    subsequenceStrategy: SubsequenceStrategy = .doNotOmit
-  ) -> [String] {
-    return self.toString.lines(subsequenceStrategy: subsequenceStrategy)
+  public func lines(omissionStrategy: OmissionStrategy) -> [String] {
+    return self.toString.lines(omissionStrategy: omissionStrategy)
   }
 
-  public var lines: [String] {
-    self.lines(subsequenceStrategy: .doNotOmit)
-  }
+  /// A convenience around ``lines(omissionStrategy:)``, uses strategy `.doNotOmit`
+  public var lines: [String] { lines(omissionStrategy: .doNotOmit) }
 
   public mutating func append(
     _ string: String,
@@ -111,7 +107,6 @@ extension String {
 
   }
 }
-
 
 //extension AttributedString {
 //

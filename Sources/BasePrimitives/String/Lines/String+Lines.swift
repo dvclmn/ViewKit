@@ -7,19 +7,16 @@
 
 import Foundation
 
-public enum SubsequenceStrategy {
+public enum OmissionStrategy {
   case omitAllEmpty
   case omitLastLineIfEmpty
   case doNotOmit
 
-  public var omitEmptySubsequences: Bool {
+  public var shouldOmit: Bool {
     switch self {
-      case .omitAllEmpty:
-        return true
-      case .omitLastLineIfEmpty:
-        return false
-      case .doNotOmit:
-        return false
+      case .omitAllEmpty: true
+      case .omitLastLineIfEmpty: false
+      case .doNotOmit: false
     }
   }
 }
@@ -30,7 +27,7 @@ extension Array where Element == String {
     result[0] = element + "\(result[0])"
     return result
   }
-  
+
   public func appendToLastLine(_ element: Element) -> [Element] {
     var result: [Element] = self
     result[result.endIndex - 1] = "\(result[result.endIndex - 1])\(element)"
@@ -42,21 +39,20 @@ extension String {
 
   public func substringLines(
     separator: String = "\n",
-    subsequenceStrategy: SubsequenceStrategy = .doNotOmit,
+    omissionStrategy: OmissionStrategy = .doNotOmit,
   ) -> [Substring] {
     let subsequence: [Substring] = self.split(
       separator: separator,
       maxSplits: Int.max,
-      omittingEmptySubsequences: subsequenceStrategy.omitEmptySubsequences
+      omittingEmptySubsequences: omissionStrategy.shouldOmit
     )
-    switch subsequenceStrategy {
+    switch omissionStrategy {
       case .omitAllEmpty, .doNotOmit:
         return subsequence
 
       case .omitLastLineIfEmpty:
         guard let lastLine = subsequence.last else { return subsequence }
-        let lastLineIsEmpty: Bool = lastLine.allSatisfy { $0 == " " }
-        let result = lastLineIsEmpty ? Array(subsequence.dropLast()) : subsequence
+        let result = lastLine.isEmpty ? Array(subsequence.dropLast()) : subsequence
         return result
     }
   }
@@ -80,22 +76,17 @@ extension String {
     return self.split(separator: separator).map(String.init)
   }
 
-  public func lines(
-    subsequenceStrategy: SubsequenceStrategy = .doNotOmit
-      //    omittingEmptySubsequences: Bool = false
-  ) -> [String] {
-
+  public func lines(omissionStrategy: OmissionStrategy = .doNotOmit) -> [String] {
     let lines: [String] = self.substringLines(
-      subsequenceStrategy: subsequenceStrategy
+      omissionStrategy: omissionStrategy
     ).map { substring in
       String(substring)
     }
-
     return lines
   }
 
   public var longestLineLength: Int {
-    let longestLine = substringLines().map { $0.count }.max() ?? 1
+    let longestLine = substringLines(omissionStrategy: .doNotOmit).map { $0.count }.max() ?? 1
     return longestLine
   }
 

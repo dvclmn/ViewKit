@@ -8,12 +8,8 @@
 import Foundation
 
 extension Character: GridCell {
-//  public typealias Base = <#type#>
   
   public static func createBlank() -> Character { Character(" ") }
-//  public func position(in grid: Base) -> GridPosition {
-//    <#code#>
-//  }
 }
 
 extension GridShaped where Cell == Character {
@@ -25,7 +21,7 @@ extension GridShaped where Cell == Character {
 
   public static func generateCells(from text: String) -> [[Cell]] {
     let dimensions = text.gridDimensions
-    let lines = text.substringLines(subsequenceStrategy: .omitLastLineIfEmpty)
+    let lines = text.substringLines(omissionStrategy: .omitLastLineIfEmpty)
 
     return lines.enumerated().map {
       rowIndex,

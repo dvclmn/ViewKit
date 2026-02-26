@@ -24,6 +24,7 @@ extension AxisKeyPathReadable {
     along axis: GridAxis,
     mapping: AxisMapping = .default,
   ) -> Component {
+    
     /// Resolve which KeyPath to use based on the axis and the mapping
     let keyPath = mapping.select(
       primary: Self.primaryKey,

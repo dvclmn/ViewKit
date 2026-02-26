@@ -8,13 +8,13 @@
 import Foundation
 
 extension GridShaped {
-  
+
   public func unitSize(
     cellSize: CGSize
   ) -> UnitSize {
     UnitSize(dimensions: dimensions, unitSize: cellSize)
   }
-  
+
   var rows: [Row] { cells }
   var columns: Cells {
     guard let firstRow = cells.first else { return [] }
@@ -25,18 +25,18 @@ extension GridShaped {
 
   /// The total number of cells in the grid, whether empty or not
   public var cellCount: Int { rowCount * columnCount }
-  
+
   /// The total number of non-empty cells in the grid
   public var cellCountRagged: Int { cells.reduce(0) { $0 + $1.count } }
-  
+
   public var rowCount: Int { cells.count }
 
-  /// Width of the first row — the 'intended' width of a rectangular grid.
+  /// Width of the **first row** — the 'intended' width of a rectangular grid.
   /// Aka the canoncial width
   public var columnCount: Int { cells.first?.count ?? 0 }
 
   /// This returns the `maxWidth`(width of the widest row).
-  /// Use `canonicalWidth` for width of *first* row
+  /// Use `canonicalWidth` for width of **first** row
   public var width: Int { widestRow }
 
   /// Width of the widest row
@@ -58,11 +58,11 @@ extension GridShaped {
     }
     return cells
   }
-  
-//  func position(for value: Cell) -> GridPosition? {
-////    let row = value.
-////     let cell = self[]
-//  }
+
+  //  func position(for value: Cell) -> GridPosition? {
+  ////    let row = value.
+  ////     let cell = self[]
+  //  }
 
   public func positions(of value: Cell) -> [GridPosition] {
     var positions: [GridPosition] = []

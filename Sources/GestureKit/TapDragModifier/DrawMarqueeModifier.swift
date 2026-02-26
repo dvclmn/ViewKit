@@ -24,7 +24,7 @@ public struct DrawMarqueeModifier: ViewModifier {
             }
             .allowsHitTesting(false)
             .addDebugText(
-              "Origin: \(rect.origin.displayString(places: 0))",
+              "Origin: \(rect.origin.displayString(.concise))",
               isEnabled: isDebugMode
             )
           }
