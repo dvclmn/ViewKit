@@ -36,11 +36,6 @@ extension SelectionHandler {
     )
 
     return transform.toLocal(point: pointerLocation)
-    //    return CoordinateSpaceTransform.toLocal(
-    //      point: pointerLocation,
-    //      zoom: zoom,
-    //      pan: pan
-    //    )
   }
 
   private func unitSize(_ columns: Int, _ rows: Int) -> UnitSize? {
@@ -51,16 +46,6 @@ extension SelectionHandler {
   /// Returns the row and column index for a global pointer location
   /// Returns nil if the pointer is outside the grid boundaries
   var pointerGridPosition: GridPosition? {
-
-    //  public func gridPosition(
-    //    //  public func cellIndex(
-    //    at globalPoint: CGPoint,
-    //
-    //    //    grid: GridMetadata
-    //
-    //  ) -> GridPosition? {
-    //  ) -> (row: Int, col: Int)? {
-
     guard let gridDimensions else { return nil }
     let unitSize = unitSize(gridDimensions.columns, gridDimensions.rows)
     guard let gridScreenSize = unitSize?.screenSize else { return nil }

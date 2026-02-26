@@ -18,6 +18,7 @@ struct CellSelectionCanvas: View {
   @Environment(\.viewportRect) private var viewportRect
   @Environment(\.canvasRounding) private var canvasRounding
   @Environment(\.gridDimensions) private var gridDimensions
+  @Environment(\.canvasSize) private var canvasSize
 
   private let rounding: CGFloat = 4
 
@@ -66,9 +67,10 @@ struct CellSelectionCanvas: View {
     .addInfoBarItems {
       Labeled("Pointer (Global)", value: store.pointerLocation?.displayString(.location))
       Labeled("Pointer (Local)", value: store.pointerLocalSpace?.displayString(.location))
-      Labeled("Viewport Rect", value: viewportRect?.displayString(.concise))
-      Labeled("Cell Size", value: unitSize?.displayString(.dimensions))
-      Labeled("Zoom", value: zoomLevel.toPercentString(within: zoomRange ?? .unitRange))
+//      Labeled("Viewport Rect", value: viewportRect?.displayString(.concise))
+//      Labeled("Cell Size", value: unitSize?.displayString(.dimensions))
+//      Labeled("Zoom", value: zoomLevel.toPercentString(within: zoomRange ?? .unitRange))
+      Labeled("Canvas Size", value: canvasSize?.displayString(.dimensions))
     }
     .debugTextOverlay("No zoom range in env", isEnabled: zoomRange == nil, alignment: .center)
     .task(id: panOffset) { store.pan = panOffset }

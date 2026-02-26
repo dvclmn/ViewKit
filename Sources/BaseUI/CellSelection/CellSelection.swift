@@ -12,7 +12,9 @@ import SwiftUI
 public struct CellSelectionTestView: View {
   @Environment(\.canvasSize) private var canvasSize
   @Environment(\.gridDimensions) private var gridDimensions
+
   @State private var store: SelectionHandler = .init()
+
   private let font: Font = .system(.body, design: .monospaced)
   private let zoomRange: ClosedRange<Double> = 0.1...10
 
@@ -41,7 +43,7 @@ public struct CellSelectionTestView: View {
 
       .environment(store)
       .environment(\.zoomRange, zoomRange)
-      
+
     } else {
       StateView("No Canvas Size")
     }

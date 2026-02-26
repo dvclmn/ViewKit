@@ -15,6 +15,9 @@ public enum ViewAnchor {
 
 /// Global == viewport == screen space
 /// Canvas == Local space
+///
+/// I may consider either including `CanvasGeometry` in this,
+/// or actually just removing that entirely and absorbing into this type
 public struct CoordinateSpaceTransform {
 
   let viewAnchor: ViewAnchor
