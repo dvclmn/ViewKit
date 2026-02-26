@@ -21,9 +21,9 @@ extension UnitSize {
   public var screenHeight: CGFloat? { height.screenLength }
 
   public var screenSize: CGSize? {
-    guard let lengthW = width.screenLength, let lengthH = height.screenLength else {
-      return nil
-    }
+    guard let lengthW = width.screenLength,
+      let lengthH = height.screenLength
+    else { return nil }
     return CGSize(width: lengthW, height: lengthH)
   }
 
@@ -36,7 +36,6 @@ extension UnitSize {
   public func screenSize(fallback: CGSize = CGSize.zero) -> CGSize {
     screenSize ?? fallback
   }
-  
 
   public func adjustCounts(
     transform: (Int, Int) -> (width: Int, height: Int)

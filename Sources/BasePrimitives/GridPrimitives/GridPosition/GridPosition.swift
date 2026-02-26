@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 14/10/2025.
 //
 
-import Foundation
+import SwiftUI
 
 /// This is like `CGPoint`
 ///
@@ -20,8 +20,8 @@ import Foundation
 /// )
 /// ```
 public struct GridPosition: ModelBase {
-  public var column: Int // x
-  public var row: Int // y
+  public var column: Int  // x
+  public var row: Int  // y
 
   public init(column: Int, row: Int) {
     self.column = column
@@ -55,6 +55,35 @@ extension GridPosition {
     self.column = column
   }
 
+  public var isOrigin: Bool { row == 0 && column == 0 }
+
+  public func isLastRow(in grid: GridDimensions) -> Bool {
+    let rowCount = grid.height
+    return row >= rowCount - 1
+  }
+
+  public func isLastColumn(in grid: GridDimensions) -> Bool {
+    let colCount = grid.width
+    return column >= colCount - 1
+  }
+  
+  public func toUnitPoint(in grid: GridDimensions) -> UnitPoint {
+    /// Map discrete grid coordinates to a continuous UnitPoint in [0, 1].
+    /// Interpret (column, row) as the top-left corner of the cell and map to the cell center.
+    /// Handle degenerate grids (zero width/height) by returning .zero to avoid division by zero.
+    let width = max(grid.width, 1)
+    let height = max(grid.height, 1)
+
+    /// Clamp to valid indices to keep UnitPoint within [0, 1].
+    let clampedColumn = min(max(column, 0), width - 1)
+    let clampedRow = min(max(row, 0), height - 1)
+
+    /// Normalize to [0, 1] using cell centers. For N columns, centers are at (0.5/N, 1.5/N, ..., (N-0.5)/N).
+    let x = (CGFloat(clampedColumn) + 0.5) / CGFloat(width)
+    let y = (CGFloat(clampedRow) + 0.5) / CGFloat(height)
+
+    return UnitPoint(x: x, y: y)
+  }
   //  var row: Int { x }
   //  var column: Int { y }
 }

@@ -16,6 +16,10 @@ struct CellSelectionCanvas: View {
   @Environment(\.zoomLevel) private var zoomLevel
   @Environment(\.zoomRange) private var zoomRange
   @Environment(\.viewportRect) private var viewportRect
+  @Environment(\.canvasRounding) private var canvasRounding
+  @Environment(\.gridDimensions) private var gridDimensions
+
+  private let rounding: CGFloat = 4
 
   var body: some View {
 
@@ -36,8 +40,27 @@ struct CellSelectionCanvas: View {
         drawsBorder: false
       )
       
-      let selectedShape = Path(store.se)
+      guard let rect = store.selectionRect else { return }
       
+      if let radii = rectRadii {
+        let rounded = UnevenRoundedRectangle(cornerRadii: radii)
+          .path(in: rect)
+        context.fillAndStroke(
+          rounded,
+          fillColour: .cyan.opacity(0.25),
+          strokeColour: .blue.opacity(0.8),
+          strokeThickness: 1
+        )
+      } else {
+        let selectedShape = Path(rect)
+        context.fillAndStroke(
+          selectedShape,
+          fillColour: .cyan.opacity(0.25),
+          strokeColour: .blue.opacity(0.8),
+          strokeThickness: 1
+        )
+      }
+
     }  // END canvas
 
     .addInfoBarItems {
@@ -52,6 +75,34 @@ struct CellSelectionCanvas: View {
     .task(id: zoomLevel) { store.zoom = zoomLevel }
     .task(id: viewportRect) { store.viewportRect = viewportRect }
     .task(id: unitSize) { store.cellSize = unitSize }
-    
+
+  }
+}
+
+extension CellSelectionCanvas {
+
+  private var rectRadii: RectangleCornerRadii? {
+    let rounding = canvasRounding ?? Styles.sizeTiny
+    guard let gridDimensions else { return nil }
+    guard let position = store.pointerGridPosition else { return nil }
+
+    /// Determine if the current position is at any of the four grid corners.
+    let isTop = position.row == 0
+    let isLeft = position.column == 0
+    let isBottom = position.isLastRow(in: gridDimensions)
+    let isRight = position.isLastColumn(in: gridDimensions)
+
+    /// Round only the corners that coincide with the grid's outer corners.
+    let topLeading: CGFloat = (isTop && isLeft) ? rounding : .zero
+    let topTrailing: CGFloat = (isTop && isRight) ? rounding : .zero
+    let bottomLeading: CGFloat = (isBottom && isLeft) ? rounding : .zero
+    let bottomTrailing: CGFloat = (isBottom && isRight) ? rounding : .zero
+
+    return RectangleCornerRadii(
+      topLeading: topLeading,
+      bottomLeading: bottomLeading,
+      bottomTrailing: bottomTrailing,
+      topTrailing: topTrailing
+    )
   }
 }

@@ -52,7 +52,7 @@ extension EnvironmentValues {
   @Entry public var colourOverride: Color?
   @Entry public var emphasisShapeStyle: AnyShapeStyle?
   @Entry public var emphasisColour: Color?
-  
+
   @Entry public var colourIntensity: Double?
 
   @Entry public var buttonRole: ButtonRole?
@@ -113,14 +113,18 @@ extension EnvironmentValues {
 
   @Entry public var isInspectorPresented: Binding<Bool> = .constant(false)
   @Entry public var columnVisibility: Binding<NavigationSplitViewVisibility> = .constant(.automatic)
-  
+
   @Entry public var isLoading: Bool = false
-  
+
   /// From CanvasKit
   @Entry public var panOffset: CGSize = .zero
   @Entry public var zoomLevel: Double = 1.0
   @Entry public var zoomRange: ClosedRange<Double>?
   
+  /// Note: This is already zoom-adjusted, so remains the same
+  /// effective size regardless of zoom level
+  @Entry public var canvasRounding: Double?
+
   /// Aka artwork size, document size
   @Entry public var canvasSize: CGSize?
 }

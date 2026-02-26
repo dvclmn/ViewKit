@@ -50,13 +50,15 @@ extension SelectionHandler {
 
   /// Returns the row and column index for a global pointer location
   /// Returns nil if the pointer is outside the grid boundaries
-  public func gridPosition(
-    //  public func cellIndex(
-    at globalPoint: CGPoint,
+  var pointerGridPosition: GridPosition? {
 
-    //    grid: GridMetadata
-
-  ) -> GridPosition? {
+    //  public func gridPosition(
+    //    //  public func cellIndex(
+    //    at globalPoint: CGPoint,
+    //
+    //    //    grid: GridMetadata
+    //
+    //  ) -> GridPosition? {
     //  ) -> (row: Int, col: Int)? {
 
     guard let gridDimensions else { return nil }
@@ -83,31 +85,22 @@ extension SelectionHandler {
     //    return (row, col)
   }
 
-  var pointerGridPosition: GridPosition? {
-    guard let pointerLocation else { return nil }
-    return gridPosition(at: pointerLocation)
-  }
-
   var selectionRect: CGRect? {
-    guard let local = pointerLocalSpace else { return nil }
+    //    guard let local = pointerLocalSpace else { return nil }
+    guard let position = pointerGridPosition else { return nil }
     guard let cellSize else { return nil }
 
     let originX = CGFloat(position.column) * cellSize.width
     let originY = CGFloat(position.row) * cellSize.height
-    let cellRect = CGRect(
+    return CGRect(
       x: originX, y: originY,
       width: cellSize.width,
       height: cellSize.height
     )
   }
 
-  func isPointerInCell(
-    gridPosition: GridPosition,
-    //    row: Int,
-    //    col: Int,
-    globalPoint: CGPoint,
-  ) -> Bool {
+  var isPointerInCell: Bool {
     guard let local = pointerLocalSpace else { return false }
-    return selectionRect(at: gridPosition)?.contains(local) ?? false
+    return selectionRect?.contains(local) ?? false
   }
 }

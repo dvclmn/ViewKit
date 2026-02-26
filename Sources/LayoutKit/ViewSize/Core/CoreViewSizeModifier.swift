@@ -11,7 +11,7 @@ import SwiftUI
 public typealias ViewSizeOutput<T> = (T) -> Void
 
 public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
-
+  @Environment(\.viewportSize) private var viewportSize
   @State private var debouncer: AsyncDebouncer?
 
   let capture: GeometryCapture<Capture>
@@ -39,6 +39,12 @@ public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
 
       } action: { newValue in
         guard isEnabled else { return }
+
+        if let viewportSize {
+          print(
+            "🔔 Existing Environment value found for `viewportSize`: \(viewportSize). May be worth checking whether it can be used, rather than re-capturing via this modifier."
+          )
+        }
 
         if let debouncer {
           debouncer.execute { @MainActor in
