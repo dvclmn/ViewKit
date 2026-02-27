@@ -11,7 +11,8 @@
 ///   b) As distinct from a user's cropped frame / view onto the grid
 
 public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row, Index == Int {
-  associatedtype Cell: GridCell
+  associatedtype Cell: BlankCreatable & Equatable
+//  associatedtype Cell: GridCell
   typealias Cells = [[Cell]]
   typealias Row = [Cell]
 
@@ -28,9 +29,20 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element 
   ) -> Cells
 }
 
-public protocol GridCell: Equatable {
+public protocol BlankCreatable {
   static func createBlank() -> Self
 }
+
+//extension Character: BlankCreatable {
+//  public static func createBlank() -> Character { Character(" ") }
+//}
+//
+//extension GridShaped where Cell: BlankCreatable {
+//  // Now you can use Cell.createBlank() generically
+//}
+//public protocol GridCell: Equatable {
+//  static func createBlank() -> Self
+//}
 
 extension GridShaped {
   public init(arrayLiteral elements: Row...) {

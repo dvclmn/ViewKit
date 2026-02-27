@@ -1,18 +1,27 @@
 //
-//  Grid+Cell.swift
+//  GridString.swift
 //  BaseHelpers
 //
-//  Created by Dave Coleman on 4/1/2026.
+//  Created by Dave Coleman on 27/2/2026.
 //
 
 import Foundation
 
-extension Character: GridCell {
+//public protocol GridString: GridShaped, ExpressibleByStringLiteral where Cell == Character {
+//  init(stringLiteral value: String)
+//}
 
+extension Character: BlankCreatable {
   public static func createBlank() -> Character { Character(" ") }
 }
 
 extension GridShaped where Cell == Character {
+  // Any members here can freely use Character APIs, including createBlank()
+  public static func blankCell() -> Cell { .createBlank() }
+//}
+
+/// This is essentially the same as `extension GridShaped where Cell == Character`
+//extension GridString {
 
   public init(fromString string: String) {
     let cells = Self.generateCells(from: string)
@@ -22,11 +31,11 @@ extension GridShaped where Cell == Character {
   public static func generateCells(from text: String) -> [[Cell]] {
     print(
       """
-      
+
       Generating cells from text:
       \(text)
-      
-      
+
+
       """)
     let dimensions = text.gridDimensions
     let lines = text.lines(omissionStrategy: .doNotOmit)
@@ -67,18 +76,4 @@ extension GridShaped where Cell == Character {
     return rowsStrings.joinedLines()
   }
 
-}
-
-enum GridCellError: LocalizedError {
-  case outOfBounds(index: Int)
-  case indexOutOfRange(index: Int, count: Int)
-
-  var errorDescription: String? {
-    switch self {
-      case .outOfBounds(let index):
-        return "Adjusted index \(index) is out of bounds"
-      case .indexOutOfRange(let index, let count):
-        return "Cell index \(index) is out of range (valid range: 0...\(count-1))"
-    }
-  }
 }
