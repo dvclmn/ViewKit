@@ -125,6 +125,11 @@ extension EnvironmentValues {
   @Entry public var zoomLevel: Double = 1.0
   @Entry public var zoomRange: ClosedRange<Double>?
   
+  public var zoomClamped: Double {
+    guard let zoomRange else { return zoomLevel }
+    return zoomLevel.clamped(to: zoomRange)
+  }
+  
   /// Note: This is already zoom-adjusted, so remains the same
   /// effective size regardless of zoom level
   @Entry public var canvasRounding: Double?

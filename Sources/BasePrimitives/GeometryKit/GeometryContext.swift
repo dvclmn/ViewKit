@@ -18,7 +18,7 @@ public protocol GeometryContext {
   /// by `ViewSizeModifier` / `GeometryCapturable` domains
   var viewportRect: CGRect { get set }
   var subjectSize: Size { get set }
-//  var unitSize: UnitSize { get }
+  //  var unitSize: UnitSize { get }
 }
 
 extension GeometryContext {
@@ -46,29 +46,27 @@ extension GridDimensions: DomainSize {
   public static let zero: GridDimensions = .init(0, 0)
 }
 
-
-
 /// Intended as a bit of an analogue to CanvasGeometry for Grid artwork
 public struct GridGeometry: GeometryContext {
   /// A rect, not a size, to express safe area insets
   public var viewportRect: CGRect
   public var subjectSize: GridDimensions
-  
-//  let environment: EnvironmentValues
-  
+
+  //  let environment: EnvironmentValues
+
   public init(
     viewportRect: CGRect,
     subjectSize: GridDimensions,
-//    environment: EnvironmentValues
+    //    environment: EnvironmentValues
   ) {
     self.viewportRect = viewportRect
     self.subjectSize = subjectSize
-//    self.environment = environment
+    //    self.environment = environment
   }
 }
 
 extension GridGeometry {
-  
+
   //  private var canvasSize: CGSize? {
   //    guard let unitSize else { return nil }
   //    guard let gridDimensions else { return nil }

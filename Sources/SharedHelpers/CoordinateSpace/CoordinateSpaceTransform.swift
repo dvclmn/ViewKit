@@ -5,27 +5,15 @@
 //  Created by Dave Coleman on 25/2/2026.
 //
 
+import BasePrimitives
 import Foundation
-
-public enum ViewAnchor {
-  /// Trying to express; SwiftUI anchors my View to the centre by default,
-  /// calculations must take that into account
-  case anchoredToCentre
-}
-
-public enum PanSpace {
-  /// Pan is expressed in global/screen points (already scaled)
-  case global
-  /// Pan is expressed in local/canvas points (independent of zoom)
-  case local
-}
 
 /// Global == viewport == screen space
 /// Canvas == Local space
 ///
 /// I may consider either including `CanvasGeometry` in this,
 /// or actually just removing that entirely and absorbing into this type
-public struct CoordinateSpaceContext {
+public struct CoordinateSpaceContext<Geometry: GeometryContext> where Geometry.Size == CGSize {
   //public struct CoordinateSpaceTransform {
 
   let viewAnchor: ViewAnchor
@@ -36,43 +24,48 @@ public struct CoordinateSpaceContext {
   let pan: CGSize
   let panSpace: PanSpace
 
+  let geometry: Geometry
   /// In global/screen space; includes safe-area origin and size.
-  let viewportRect: CGRect
+  //  let viewportRect: CGRect
   /// In local/canvas space (unscaled).
-  let canvasSize: CGSize
+  //  let canvasSize: CGSize
 
   public init(
     viewAnchor: ViewAnchor,
     zoom: CGFloat,
     pan: CGSize,
-    viewportRect: CGRect,
-    canvasSize: CGSize,
-    panSpace: PanSpace
+    panSpace: PanSpace,
+    geometry: Geometry
+      //    viewportRect: CGRect,
+      //    canvasSize: CGSize,
   ) {
     self.viewAnchor = viewAnchor
     self.zoom = zoom
     self.pan = pan
     self.panSpace = panSpace
-    self.viewportRect = viewportRect
-    self.canvasSize = canvasSize
+    self.geometry = geometry
+    //    self.viewportRect = viewportRect
+    //    self.canvasSize = canvasSize
   }
 }
 
 extension CoordinateSpaceContext {
 
+  private var viewportRect: CGRect { geometry.viewportRect }
+  private var subjectSize: CGSize { geometry.subjectSize }
+
   private var zoomSafe: CGFloat {
-    guard zoom.isFinite, zoom > 0 else { return 1 }
-    return zoom
+    zoom.clamped(to: 0.01...CGFloat.greatestFiniteMagnitude)
+    //    guard zoom.isFinite, zoom > 0 else { return 1 }
+    //    return zoom
   }
 
   /// Pan normalized to global space. If the input pan is in local/canvas units,
   /// scale it by `zoom` to convert to global points; otherwise use as-is.
   private var panInGlobalSpace: CGSize {
     switch panSpace {
-      case .global:
-        return pan
-      case .local:
-        return CGSize(width: pan.width * zoomSafe, height: pan.height * zoomSafe)
+      case .global: pan
+      case .local: CGSize(width: pan.width * zoomSafe, height: pan.height * zoomSafe)
     }
   }
 
@@ -83,8 +76,8 @@ extension CoordinateSpaceContext {
     switch viewAnchor {
       case .anchoredToCentre:
         return CGSize(
-          width: (viewportRect.width - (canvasSize.width * zoomSafe)) / 2,
-          height: (viewportRect.height - (canvasSize.height * zoomSafe)) / 2
+          width: (viewportRect.width - (subjectSize.width * zoomSafe)) / 2,
+          height: (viewportRect.height - (subjectSize.height * zoomSafe)) / 2
         )
     }
   }
@@ -93,7 +86,7 @@ extension CoordinateSpaceContext {
   public var canvasFrameInGlobalSpace: CGRect {
     .init(
       origin: totalGlobalOffset,
-      size: .init(width: canvasSize.width * zoomSafe, height: canvasSize.height * zoomSafe)
+      size: .init(width: subjectSize.width * zoomSafe, height: subjectSize.height * zoomSafe)
     )
   }
 
@@ -147,6 +140,18 @@ extension CoordinateSpaceContext {
       )
     )
   }
+
+  //  public func dragRect(for rect: CGRect) -> CGRect? {
+  //    mapToCanvas(viewportRect: rect)
+  //  }
+
+  //  public func tapLocation(for location: CGPoint) -> CGPoint? {
+  //    mapToCanvas(viewportPoint: location)
+  //  }
+
+}
+
+extension CoordinateSpaceContext {
 
   #if DEBUG
   /// Distance error for round-tripping a global point through local space.

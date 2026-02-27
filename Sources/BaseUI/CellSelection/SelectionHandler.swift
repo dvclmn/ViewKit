@@ -21,7 +21,7 @@ final class SelectionHandler {
 
 extension SelectionHandler {
 
-  private var coordinateTransform: CoordinateSpaceContext? {
+  private var coordinateTransform: CoordinateSpaceContext<GridCanvasGeometry>? {
     guard let viewportRect, let canvasSize else { return nil }
     return CoordinateSpaceContext(
       viewAnchor: .anchoredToCentre,
