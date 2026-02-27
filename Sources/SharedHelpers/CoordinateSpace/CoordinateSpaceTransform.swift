@@ -56,13 +56,14 @@ extension CoordinateSpaceContext {
     panSpace: PanSpace,
     geometry: T,
     unitSize: CGSize
-  ) where T.Size == GridDimensions {
+  ) where T.Size == UnitSize {
     self.zoom = zoom
     self.pan = pan
     self.panSpace = panSpace
 
     self.viewportRect = geometry.viewportRect
-    guard let size = geometry.subjectSize.toCGSize(using: unitSize) else {
+    
+    guard let size = geometry.subjectSize.toCGSize else {
       //      preconditionFailure("See ")
       return nil
     }

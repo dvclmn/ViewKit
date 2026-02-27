@@ -23,6 +23,6 @@ public protocol GeometryContext {
 }
 
 extension GeometryContext {
-  public var isEitherZero: Bool { viewportRect.isZero || subjectSize.isZero }
+//  public var isEitherZero: Bool { viewportRect.isZero || subjectSize.isZero }
   public var subjectAnchor: UnitPoint { .center }
 }

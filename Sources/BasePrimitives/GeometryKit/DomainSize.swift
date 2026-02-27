@@ -13,26 +13,32 @@ public protocol DomainSize: Equatable {
 
   var width: Value { get }
   var height: Value { get }
-  static var zero: Self { get }
-  func toCGSize(using unitSize: CGSize) -> CGSize?
+  //  static var zero: Self { get }
+  var toCGSize: CGSize? { get }
+  //  func toCGSize(using unitSize: CGSize) -> CGSize?
 }
 
-extension DomainSize {
-  public var isZero: Bool { self == .zero }
-}
+//extension DomainSize {
+//  public var isZero: Bool { self == .zero }
+//}
 
 // MARK: - Conformances
 extension CGSize: DomainSize {
   public typealias Value = CGFloat
 
-  public func toCGSize(using unitSize: CGSize) -> CGSize? { self }
+  public var toCGSize: CGSize? { self }
+  //  public func toCGSize(using unitSize: CGSize) -> CGSize? { self }
 }
 
-extension GridDimensions: DomainSize {
-  public typealias Value = Int
-  public static let zero: GridDimensions = .init(0, 0)
+extension UnitSize: DomainSize {
+  //extension GridDimensions: DomainSize {
 
-  public func toCGSize(using unitSize: CGSize) -> CGSize? {
-    toScreenSize(using: unitSize)
-  }
+  public typealias Value = UnitLength
+  //  public static var zero: Self { . }
+  //  public static let zero: GridDimensions = .init(0, 0)
+
+  public var toCGSize: CGSize? { screenSize }
+  //  public func toCGSize(using unitSize: CGSize) -> CGSize? {
+  //    toScreenSize(using: unitSize)
+  //  }
 }

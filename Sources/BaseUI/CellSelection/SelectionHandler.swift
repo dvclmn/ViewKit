@@ -13,25 +13,36 @@ final class SelectionHandler {
   var pointerLocation: CGPoint?
   var zoom: CGFloat = 1
   var pan: CGSize = .zero
-  var viewportRect: CGRect?
   var canvasSize: CGSize?
   var cellSize: CGSize?
-  var gridDimensions: GridDimensions?
+  var geometry: GridGeometry?
+  //  var viewportRect: CGRect?
+  //  var gridDimensions: GridDimensions?
 }
 
 extension SelectionHandler {
 
-  private var coordinateTransform: CoordinateSpaceContext<GridCanvasGeometry>? {
-    guard let viewportRect, let canvasSize else { return nil }
-    return CoordinateSpaceContext(
-      viewAnchor: .anchoredToCentre,
+  private var coordinateTransform: CoordinateSpaceContext? {
+    guard let geometry, let cellSize else { return nil }
+    return .init(
       zoom: zoom,
       pan: pan,
-      viewportRect: viewportRect,
-      canvasSize: canvasSize,
-      panSpace: .global
+      panSpace: .global,
+      geometry: geometry,
+      unitSize: cellSize
     )
   }
+  //  private var coordinateTransform: CoordinateSpaceContext<GridCanvasGeometry>? {
+  //    guard let viewportRect, let canvasSize else { return nil }
+  //    return CoordinateSpaceContext(
+  //      viewAnchor: .anchoredToCentre,
+  //      zoom: zoom,
+  //      pan: pan,
+  //      viewportRect: viewportRect,
+  //      canvasSize: canvasSize,
+  //      panSpace: .global
+  //    )
+  //  }
 
   /// Aka Canvas space
   var pointerLocalSpace: CGPoint? {
@@ -59,8 +70,8 @@ extension SelectionHandler {
   /// Returns the row and column index for a global pointer location
   /// Returns nil if the pointer is outside the grid boundaries
   var pointerGridPosition: GridPosition? {
-    guard let gridDimensions else { return nil }
-    let unitSize = unitSize(gridDimensions.columns, gridDimensions.rows)
+    guard let dimensions = geometry?.subjectSize else { return nil }
+    let unitSize = unitSize(dimensions.columns, dimensions.rows)
     guard let gridScreenSize = unitSize?.screenSize else { return nil }
     guard let cellSize else { return nil }
 

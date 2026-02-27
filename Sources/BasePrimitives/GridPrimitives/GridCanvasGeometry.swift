@@ -12,12 +12,13 @@ import Foundation
 public struct GridGeometry: GeometryContext, Sendable, Equatable {
   /// A rect, not a size, to express safe area insets
   public var viewportRect: CGRect
-  public var subjectSize: GridDimensions
-//  public var unitSize: CGSize
+  public var subjectSize: UnitSize
+  //  public var subjectSize: GridDimensions
+  //  public var unitSize: CGSize
 
   public init(
     viewportRect: CGRect,
-    subjectSize: GridDimensions,
+    subjectSize: UnitSize,
   ) {
     self.viewportRect = viewportRect
     self.subjectSize = subjectSize
@@ -25,7 +26,6 @@ public struct GridGeometry: GeometryContext, Sendable, Equatable {
 }
 
 extension GridGeometry {
-  
 
   //  private var canvasSize: CGSize? {
   //    guard let unitSize else { return nil }

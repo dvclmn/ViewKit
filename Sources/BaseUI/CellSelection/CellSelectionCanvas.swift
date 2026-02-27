@@ -77,7 +77,7 @@ struct CellSelectionCanvas: View {
 //    .debugTextOverlay("No zoom range in env", isEnabled: zoomRange == nil, alignment: .center)
     .task(id: panOffset) { store.pan = panOffset }
     .task(id: zoomLevel) { store.zoom = zoomLevel }
-    .task(id: viewportRect) { store.viewportRect = viewportRect }
+    .task(id: viewportRect) { store.geometry?.viewportRect = viewportRect }
     .task(id: unitSize) { store.cellSize = unitSize }
 
   }
