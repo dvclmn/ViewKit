@@ -37,12 +37,13 @@ extension AttributedString {
     self.setAttributes(highlightContainer)
   }
 
-  public func lines(omissionStrategy: OmissionStrategy) -> [String] {
-    return self.toString.lines(omissionStrategy: omissionStrategy)
+  public func lines(omissionStrategy: OmissionStrategy = .doNotOmit) -> [Substring] {
+    toString.lines(omissionStrategy: omissionStrategy)
   }
 
-  /// A convenience around ``lines(omissionStrategy:)``, uses strategy `.doNotOmit`
-  public var lines: [String] { lines(omissionStrategy: .doNotOmit) }
+  public func stringLines(omissionStrategy: OmissionStrategy = .doNotOmit) -> [String] {
+    toString.stringLines(omissionStrategy: omissionStrategy)
+  }
 
   public mutating func append(
     _ string: String,

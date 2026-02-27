@@ -7,20 +7,6 @@
 
 import Foundation
 
-public enum OmissionStrategy {
-  case omitAllEmpty
-  case omitLastLineIfEmpty
-  case doNotOmit
-
-  public var shouldOmit: Bool {
-    switch self {
-      case .omitAllEmpty: true
-      case .omitLastLineIfEmpty: false
-      case .doNotOmit: false
-    }
-  }
-}
-
 extension Array where Element == String {
   public func preprendToFirstLine(_ element: Element) -> [Element] {
     var result: [Element] = self
@@ -37,24 +23,47 @@ extension Array where Element == String {
 
 extension String {
 
-  public func substringLines(
-    separator: String = "\n",
-    omissionStrategy: OmissionStrategy = .doNotOmit,
-  ) -> [Substring] {
-    let subsequence: [Substring] = self.split(
-      separator: separator,
-      maxSplits: Int.max,
-      omittingEmptySubsequences: omissionStrategy.shouldOmit
-    )
-    switch omissionStrategy {
-      case .omitAllEmpty, .doNotOmit:
-        return subsequence
+  public func lines(omissionStrategy: OmissionStrategy = .doNotOmit) -> [Substring] {
+    omissionStrategy.split(self, whereSeparator: \.isNewline)
+  }
 
-      case .omitLastLineIfEmpty:
-        guard let lastLine = subsequence.last else { return subsequence }
-        let result = lastLine.isEmpty ? Array(subsequence.dropLast()) : subsequence
-        return result
-    }
+  /// Purely a convenience for converting ``lines(omissionStrategy:)``
+  /// from `[Substring]` to `[String]`
+  public func stringLines(omissionStrategy: OmissionStrategy = .doNotOmit) -> [String] {
+    lines(omissionStrategy: omissionStrategy).map(String.init)
+  }
+
+  public func components(
+    separatedBy separator: Character,
+    omissionStrategy: OmissionStrategy = .doNotOmit
+  ) -> [String] {
+    omissionStrategy
+      .split(self, separator: separator)
+      .map(String.init)
+  }
+
+  //  public func lines(omissionStrategy: OmissionStrategy = .doNotOmit) -> [Substring] {
+  //
+  //    let subsequence = split(
+  //      maxSplits: Int.max,
+  //      omittingEmptySubsequences: omissionStrategy.shouldOmit,
+  //      whereSeparator: \.isNewline
+  //    )
+  //
+  //    switch omissionStrategy {
+  //      case .omitAllEmpty, .doNotOmit:
+  //        return subsequence
+  //
+  //      case .omitLastLineIfEmpty:
+  //        guard let lastLine = subsequence.last else { return subsequence }
+  //        let result = lastLine.isEmpty ? Array(subsequence.dropLast()) : subsequence
+  //        return result
+  //    }
+  //  }
+
+  @available(*, deprecated, renamed: "lines(omissionStrategy:)")
+  public func substringLines(omissionStrategy: OmissionStrategy = .doNotOmit) -> [Substring] {
+    lines(omissionStrategy: omissionStrategy)
   }
 
   /// Returns an empty string if `self` is empty
@@ -63,31 +72,22 @@ extension String {
     return String(first)
   }
 
+  //  public var isNewLine: Bool {
+  //    contains(where: \.isNewline)
+  //  }
+
   /// Appends a newline character (`\n`) to the end of the string if it does
   /// not already end with one. Otherwise returns the original string unchanged.
   public var addingNewLine: String {
-    guard self.last != "\n" else {
+    guard let last, !last.isNewline else {
       return self
     }
     return self + "\n"
   }
 
-  public func components(separatedBy separator: Character) -> [String] {
-    return self.split(separator: separator).map(String.init)
-  }
-
-  public func lines(omissionStrategy: OmissionStrategy = .doNotOmit) -> [String] {
-    let lines: [String] = self.substringLines(
-      omissionStrategy: omissionStrategy
-    ).map { substring in
-      String(substring)
-    }
-    return lines
-  }
-
   public var longestLineLength: Int {
-    let longestLine = substringLines(omissionStrategy: .doNotOmit).map { $0.count }.max() ?? 1
-    return longestLine
+    lines(omissionStrategy: .doNotOmit)
+      .map { $0.count }.max() ?? 1
   }
 
   public func linesIndented(
@@ -95,15 +95,15 @@ extension String {
     using indentString: String = "\t"
   ) -> String {
     let indent = String(repeating: indentString, count: level)
-    let indentedLines = self.substringLines().map { indent + $0 }
+    let indentedLines = lines().map { indent + $0 }
     return indentedLines.joined("\n")
   }
 
-  public func linesJoined(
-    _ separator: String = "\t"
-  ) -> String {
-    self.substringLines().map { String($0) }.joined(separator)
-  }
+  //  public func linesJoined(
+  //    _ separator: String = "\t"
+  //  ) -> String {
+  //    lines().map { String($0) }.joined(separator)
+  //  }
 
   public func insertingLineBreak(every characters: Int) -> String {
     guard characters > 0 else { return self }

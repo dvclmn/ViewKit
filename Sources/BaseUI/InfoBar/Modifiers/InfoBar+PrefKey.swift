@@ -62,18 +62,21 @@ extension View {
   }
 
   public func addInfoBarItems<K: InfoBarSectionKey>(
-    @DisplayStringBuilder _ content: () -> [DisplayBlock],
+    @DisplayStringBuilder _ content: @escaping () -> [DisplayBlock],
     key: K.Type = DebugSectionKey.self,
     preset: FloatDisplayPreset = .standard,
-    //    format: FloatDisplayFormat = .default,
     isEnabled: Bool = true
   ) -> some View {
+    self.transformPreference(InfoBarKey.self) { value in
+      guard isEnabled else { return }
+      let newItems = content().toInfoBarItems(section: key, preset: preset)
+      value.append(contentsOf: newItems)
+    }
     
-    
-    self.preference(
-      key: InfoBarKey.self,
-      value: isEnabled ? content().toInfoBarItems(section: key, preset: preset) : []
-    )
+//    self.preference(
+//      key: InfoBarKey.self,
+//      value: isEnabled ? content().toInfoBarItems(section: key, preset: preset) : []
+//    )
 
   }
 

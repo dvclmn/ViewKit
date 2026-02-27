@@ -8,20 +8,28 @@
 import Foundation
 
 extension Character: GridCell {
-  
+
   public static func createBlank() -> Character { Character(" ") }
 }
 
 extension GridShaped where Cell == Character {
-  
+
   public init(fromString string: String) {
     let cells = Self.generateCells(from: string)
     self.init(cells: cells)
   }
 
   public static func generateCells(from text: String) -> [[Cell]] {
+    print(
+      """
+      
+      Generating cells from text:
+      \(text)
+      
+      
+      """)
     let dimensions = text.gridDimensions
-    let lines = text.substringLines(omissionStrategy: .omitLastLineIfEmpty)
+    let lines = text.lines(omissionStrategy: .doNotOmit)
 
     return lines.enumerated().map {
       rowIndex,
@@ -42,7 +50,7 @@ extension GridShaped where Cell == Character {
     let characterCells = line.map(Cell.init)
 
     let paddingCells = (line.count..<targetWidth).map { colIndex in
-//      let position = GridPosition(column: colIndex, row: rowIndex)
+      //      let position = GridPosition(column: colIndex, row: rowIndex)
       return Cell.createBlank()
     }
 
@@ -58,7 +66,7 @@ extension GridShaped where Cell == Character {
     }
     return rowsStrings.joinedLines()
   }
-  
+
 }
 
 enum GridCellError: LocalizedError {

@@ -10,7 +10,7 @@ import SwiftUI
 extension String {
   public var gridDimensions: GridDimensions {
     let width: Int = longestLineLength
-    let height: Int = substringLines(omissionStrategy: .doNotOmit).count
+    let height: Int = lines(omissionStrategy: .doNotOmit).count
     return GridDimensions(width: width, height: height)
   }
 }
