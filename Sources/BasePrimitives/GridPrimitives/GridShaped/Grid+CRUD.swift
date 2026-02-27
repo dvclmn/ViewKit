@@ -17,18 +17,16 @@ extension GridShaped {
     self[at: position] = value
   }
 
+  // TODO: Possibly provide option for either optional or blank?
   public mutating func clearCells(at positions: [GridPosition]) {
     for position in positions where isPositionValid(position) {
       self[at: position] = Cell.createBlank()
     }
   }
-  
-//  public mutating func clearCells(at positions: [GridPosition]) {
-//    for position in positions {
-//      self[at: position] = nil
-//    }
-//  }
 
+  /// Empty grid + addColumn is currently a no-op.
+  /// Need to decide whether this should create a 1-row grid.
+  /// If yes, codify it (e.g., if row​Count == 0 and add​Column is called, insert a single empty row first).
   @inlinable
   mutating func ensureRectangular(paddingCell: Cell = .createBlank()) {
     guard !cells.isEmpty else { return }
@@ -126,6 +124,8 @@ extension GridShaped {
     }
   }
 
+  /// Empty grid + addColumn is currently a no-op — see comment on
+  /// `ensureRectangular()`
   public mutating func addColumn(to edge: GridEdge) {
     precondition(edge.isColumnEdge)
     ensureRectangular()
@@ -146,69 +146,4 @@ extension GridShaped {
       cells[rowIndex].remove(at: targetColumn)
     }
   }
-
-  //#warning("Have changed approach regarding GridPosition, no longer stored on GridCell, so will need to fix this up")
-  //  public mutating func addRow(to edge: GridEdge) {
-  //    switch edge {
-  //      case .top:
-  //        let newRow: Row = (0..<columnCount).map { _ in Cell.createBlank() }
-  //        cells.insert(newRow, at: 0)
-  //      //        rows += 1
-  //      //        reindexPositions()
-  //
-  //      case .bottom:
-  //        let newRow: Row = (0..<columnCount).map { _ in Cell.createBlank() }
-  //        cells.append(newRow)
-  //      //        rows += 1
-  //      //        reindexPositions()
-  //
-  //      default:
-  //        break  // handled elsewhere
-  //    }
-  //  }
-  //
-  //  //#warning("Have changed approach regarding GridPosition, no longer stored on GridCell, so will need to fix this up")
-  //  public mutating func removeRow(from edge: GridEdge) {
-  //    precondition(rowCount > 1, "Cannot remove last row")
-  //
-  //    switch edge {
-  //      case .top:
-  //        cells.removeFirst()
-  //      case .bottom:
-  //        cells.removeLast()
-  //      default:
-  //        fatalError("Invalid edge for row removal")
-  //    }
-  //  }
-
-  //  public mutating func addColumn(to edge: GridEdge) {
-  //    precondition(edge == .leading || edge == .trailing)
-  //
-  //    for rowIndex in 0..<rowCount {
-  //      if edge == .leading {
-  //        cells[rowIndex].insert(Cell.createBlank(), at: 0)
-  //      } else {
-  //        cells[rowIndex].append(Cell.createBlank())
-  //      }
-  //    }
-  //
-  //    //    columns += 1
-  //    //    reindexPositions()
-  //  }
-  //
-  //  #warning(
-  //    "Have changed approach regarding GridPosition, no longer stored on GridCell, so will need to fix this up")
-  //
-  //  public mutating func removeColumn(from edge: GridEdge) {
-  //    precondition(columnCount > 1, "Cannot remove last column")
-  //
-  //    let targetColumn = (edge == .leading) ? 0 : columnCount - 1
-  //
-  //    for rowIndex in 0..<rowCount {
-  //      cells[rowIndex].remove(at: targetColumn)
-  //    }
-  //
-  //    //    columns -= 1
-  //    //    reindexPositions()
-  //  }
 }

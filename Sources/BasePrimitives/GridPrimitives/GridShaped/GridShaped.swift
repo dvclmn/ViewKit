@@ -10,9 +10,14 @@
 ///   a) Inherent/uncropped dimensions
 ///   b) As distinct from a user's cropped frame / view onto the grid
 
+/// `GridPosition` is a lightweight value type used for addressing.
+/// Cells do not store positions.
+/// - The `subscript(at:)` never expands the grid; use `set(_:at:)` to auto-expand.
+/// - Column-wise operations normalize rows to rectangular shape before applying changes.
 public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row, Index == Int {
+
   associatedtype Cell: BlankCreatable, Equatable, Sendable
-//  associatedtype Cell: GridCell
+
   typealias Cells = [[Cell]]
   typealias Row = [Cell]
 
