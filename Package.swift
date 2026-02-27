@@ -85,18 +85,26 @@ let package = Package(
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
       path: .macrosSource + "/MacroImplementations",
+      linkerSettings: [
+        // Required in Release/build-for-testing so the macro executable can load
+        // package frameworks (for example, CasePaths) at runtime.
+        .unsafeFlags([
+          "-Xlinker", "-rpath",
+          "-Xlinker", "@executable_path/PackageFrameworks",
+        ])
+      ],
     ),
 
     /// Note: `path` here wants the Macro Declaration source, not the Implementation
     .target(
       name: "EnumMacros",
-      dependencies: ["BaseMacrosImplementation"],
+      dependencies: ["BaseMacrosImplementation", .module(.primitives)],
       path: .macrosSource + "/MacroDeclarations/EnumMacros",
     ),
 
     .target(
       name: "SampleBuilder",
-      dependencies: ["BaseMacrosImplementation"],
+      dependencies: ["BaseMacrosImplementation", .module(.primitives)],
       path: .macrosSource + "/MacroDeclarations/SampleBuilder",
     ),
 
