@@ -26,9 +26,13 @@ extension String {
   public var isLastLineEmpty: Bool {
     lines().last?.isEmpty == true
   }
-  
+
   public func lines(omissionStrategy: OmissionStrategy = .doNotOmit) -> [Substring] {
     omissionStrategy.split(self, whereSeparator: \.isNewline)
+  }
+
+  public func characterLines(omissionStrategy: OmissionStrategy = .doNotOmit) -> [[Substring.Element]] {
+    lines(omissionStrategy: omissionStrategy).map(Array.init)
   }
 
   /// Purely a convenience for converting ``lines(omissionStrategy:)``

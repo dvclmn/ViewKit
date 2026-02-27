@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 enum GridCellError: LocalizedError {
   case outOfBounds(index: Int)
   case indexOutOfRange(index: Int, count: Int)

@@ -7,12 +7,24 @@
 
 import Foundation
 
+public struct GridRenderOptions: OptionSet, Sendable {
+  public let rawValue: Int
+  public init(rawValue: Int) { self.rawValue = rawValue }
+
+  public static let trimTrailingSpacesPerLine = GridRenderOptions(rawValue: 1 << 0)
+  public static let includeTerminalNewline = GridRenderOptions(rawValue: 1 << 1)
+
+  public static let `default`: GridRenderOptions = []
+}
+
 /// Key points:
 /// - No padding/truncation happens here.
 /// - Tests can assert rows​.count, widest​Line, and had​Terminal​Newline directly.
 /// - The “terminal newline becomes spaces” issue is avoided entirely at this stage.
 public struct GridParseResult<Cell> {
-  public let rows: [[Cell]]  // ragged, no padding
+
+  /// ragged, no padding with spaces etc
+  public let rows: [[Cell]]
   public let hadTerminalNewline: Bool
   public let widestLine: Int
 }
@@ -34,20 +46,24 @@ public struct GridParsingOptions: OptionSet, Sendable {
 extension GridShaped where Cell == Character {
   /// Pure parse: no padding/truncation
   public static func parse(text: String, options: GridParsingOptions = .default) -> GridParseResult<Cell> {
-    let hadTerminalNewline = text.last == "\n" || text.last == "\r\n"
-    /// Use your existing `lines(omissionStrategy:)` carefully here.
-    /// Convert each line to [Character] without padding.
-    let split = text.lines(omissionStrategy: .doNotOmit)
-    var rows = split.map { Array($0) }
+
+    let hadTerminalNewline = text.last?.isNewline == true
+
+    /// Convert each line to `[Character]` without padding.
+    var rows = text.characterLines(omissionStrategy: .doNotOmit)
 
     if !options.contains(.preserveTerminalNewlineAsRow), hadTerminalNewline {
-      // If the trailing line exists solely due to terminal newline and is empty, drop it.
+      /// If the trailing line exists solely due to terminal newline and is empty, drop it.
       if let last = rows.last, last.isEmpty {
         rows.removeLast()
       }
     }
 
     let widest = rows.map(\.count).max() ?? 0
-    return .init(rows: rows, hadTerminalNewline: hadTerminalNewline, widestLine: widest)
+    return .init(
+      rows: rows,
+      hadTerminalNewline: hadTerminalNewline,
+      widestLine: widest
+    )
   }
 }

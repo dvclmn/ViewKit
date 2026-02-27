@@ -10,9 +10,7 @@ extension GridShaped {
   /// When a user starts drawing in previously empty space:
   public mutating func set(_ value: Cell, at position: GridPosition) {
     expandToInclude(position: position, blank: Cell.createBlank())
-    //    expandToInclude(position: position, blank: GridCell.createBlank(at: position))
     self[at: position] = value
-    //    self[at: position] = GridCell(character: char, position: position)
   }
 
   public mutating func clearCells(at positions: [GridPosition]) {
@@ -21,6 +19,7 @@ extension GridShaped {
     }
   }
 
+  // TODO: Need to separate inherent dimensions from user-defined 'frame'
   public mutating func expandToInclude(
     position: GridPosition,
     blank: @autoclosure () -> Cell
@@ -42,46 +41,7 @@ extension GridShaped {
       }
       newCells.append(newRow)
     }
-
     self.cells = newCells
-
-//    #warning("Need to separate inherent dimensions from user-defined 'frame'")
-    //    self.cells = newCells
-    //    self.columns = requiredColumns
-    //    self.rows = requiredRows
-  }
-
-  public mutating func resize(
-    by amount: GridDimensions,
-    at edges: GridEdge.Set
-  ) {
-    let rows = amount.rows
-    let columns = amount.columns
-
-    for edge in GridEdge.allCases where edges.contains(GridEdge.Set(edge)) {
-      switch edge.gridAxis {
-        case .vertical:
-          if rows > 0 {
-            addRows(to: edge, count: rows)
-          } else if rows < 0 {
-            removeRows(from: edge, count: -rows)
-          }
-        case .horizontal:
-          if amount.columns > 0 {
-            addColumns(to: edge, count: columns)
-          } else if columns < 0 {
-            removeColumns(from: edge, count: -columns)
-          }
-      }
-    }
-  }
-
-  public mutating func resize(
-    by amount: GridDimensions,
-    at boundaryPoint: GridBoundaryPoint
-  ) {
-    let edges = boundaryPoint.affectedEdges
-    self.resize(by: amount, at: edges)
   }
 
   mutating func addColumns(to edge: GridEdge, count: Int = 1) {

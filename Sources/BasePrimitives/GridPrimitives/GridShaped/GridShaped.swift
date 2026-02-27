@@ -33,17 +33,6 @@ public protocol BlankCreatable {
   static func createBlank() -> Self
 }
 
-//extension Character: BlankCreatable {
-//  public static func createBlank() -> Character { Character(" ") }
-//}
-//
-//extension GridShaped where Cell: BlankCreatable {
-//  // Now you can use Cell.createBlank() generically
-//}
-//public protocol GridCell: Equatable {
-//  static func createBlank() -> Self
-//}
-
 extension GridShaped {
   public init(arrayLiteral elements: Row...) {
     self.init(elements)
@@ -55,9 +44,3 @@ extension GridShaped {
     self.init(cells: cells)
   }
 }
-
-//public enum RowValidation<T: GridShaped> {
-//  case patch((T.Row, Int) -> T.Row)
-//  case ignore
-//  case throwError
-//}

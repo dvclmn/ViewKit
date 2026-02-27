@@ -86,7 +86,7 @@ extension GridShaped where Cell == Character {
     }
     return rowsStrings.joinedLines()
   }
-  
+
   public func toString(options: GridRenderOptions = .default) -> String {
     let lines = (0..<rowCount).map { rowIndex -> String in
       let line = (0..<columnCount).map { col in
@@ -100,11 +100,18 @@ extension GridShaped where Cell == Character {
       return s
     }
     let joined = lines.joined(separator: "\n")
-    if options.contains(.includeTerminalNewline) {
-      return joined + "\n"
-    } else {
+    guard options.contains(.includeTerminalNewline) else {
       return joined
     }
+    return joined + "\n"
   }
 
+}
+
+extension String {
+  fileprivate func rstrip() -> String {
+    var view = self[...]
+    while view.last == " " { view = view.dropLast() }
+    return String(view)
+  }
 }
