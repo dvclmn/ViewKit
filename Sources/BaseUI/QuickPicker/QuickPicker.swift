@@ -12,7 +12,8 @@ import SwiftUI
 //nonisolated public init<C>(sources: C, selection: KeyPath<C.Element, Binding<SelectionValue>>, @ViewBuilder content: () -> Content, @ViewBuilder label: () -> Label) where C : RandomAccessCollection
 /// Note: ForEach automatically assigns a tag to the selection views using each option’s id. This is possible because Flavor conforms to the Identifiable protocol.
 
-public struct QuickPicker<Item: Hashable & Identifiable & CustomStringConvertible>: View {
+public struct QuickPicker<Item: Hashable & Identifiable>: View {
+//public struct QuickPicker<Item: Hashable & Identifiable & CustomStringConvertible>: View {
   //public struct QuickPicker<RowContent: View, Item>: View where Item: Pickable & Hashable {
 
   //  public typealias PickerOutput = (Item, Bool) -> RowContent
@@ -21,6 +22,8 @@ public struct QuickPicker<Item: Hashable & Identifiable & CustomStringConvertibl
   //  @State private var sourceData: [Item]
 
   let title: String
+//  let itemDescription: String
+  
   @Binding var selection: Item
   /// The items representing what the Picker chooses from
   let sourceData: [Item]
@@ -58,7 +61,7 @@ public struct QuickPicker<Item: Hashable & Identifiable & CustomStringConvertibl
     
     Picker(title, selection: $selection) {
       ForEach(sourceData) { item in
-        Text(item.description)
+        Text(itemDescription)
       }
     }
 //    currentValueLabel: {
