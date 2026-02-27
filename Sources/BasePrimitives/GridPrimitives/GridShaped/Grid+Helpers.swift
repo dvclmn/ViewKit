@@ -50,40 +50,26 @@ extension GridShaped {
     cells.isEmpty || cells.allSatisfy { $0.isEmpty }
   }
 
-  public var dimensions: GridDimensions { .init(width: columnCount, height: rowCount) }
-
-  func cells(at positions: [GridPosition]) -> [Cell] {
-    var cells: [Cell] = []
-    for position in positions {
-      if let cell = self[at: position] {
-        cells.append(cell)
+  public func forEachPosition(_ body: (GridPosition, Cell) -> Void) {
+    for (r, row) in rows.enumerated() {
+      for (c, cell) in row.enumerated() {
+        body(GridPosition(column: c, row: r), cell)
       }
     }
-    return cells
   }
 
   public func positions(of value: Cell) -> [GridPosition] {
-    var positions: [GridPosition] = []
-    for (rowIndex, line) in rows.enumerated() {
-      for (columnIndex, val) in line.enumerated() where val == value {
-        positions.append(GridPosition(column: columnIndex, row: rowIndex))
-      }
+    var result: [GridPosition] = []
+    forEachPosition { pos, cell in
+      if cell == value { result.append(pos) }
     }
-    return positions
+    return result
   }
 
-  //  func cells(in bounds: GridDimensions) -> [GridCell] {
-  //    var cells: [GridCell] = []
-  //    for row in 0..<bounds.height {
-  //      for column in 0..<bounds.width {
-  //        let position = GridPosition(row: row, column: column)
-  //        if let cell = self[at: position] {
-  //          cells.append(cell)
-  //        }
-  //      }
-  //    }
-  //    return cells
-  //  }
-}
+  public func cells(at positions: [GridPosition]) -> [Cell] {
+    positions.compactMap { self[at: $0] }
+  }
 
-//extension GridShaped where Cell.Value
+  public var dimensions: GridDimensions { .init(width: columnCount, height: rowCount) }
+
+}

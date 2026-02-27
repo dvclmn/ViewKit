@@ -39,12 +39,14 @@ extension GridShaped {
   public subscript(at position: GridPosition) -> Cell? {
     get {
       guard isPositionValid(position) else { return nil }
-      return self[row: position.row, col: position.column]
+      return cells[position.row][position.column]
     }
     set {
-      guard isPositionValid(position) else { return }
-      self[row: position.row, col: position.column] = newValue
+      guard isPositionValid(position) else {
+        /// No auto-expand here. Use `set(_:at:)` instead.
+        return
+      }
+      cells[position.row][position.column] = newValue ?? .createBlank()
     }
   }
-
 }
