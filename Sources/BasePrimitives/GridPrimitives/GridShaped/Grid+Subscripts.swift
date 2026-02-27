@@ -24,7 +24,13 @@ extension GridShaped {
   }
 
   public subscript(column columnIndex: Int) -> [Cell] {
-    get { cells.map(\.self[columnIndex]) }
+    //    get { cells.map(\.self[columnIndex]) }
+    get {
+      cells.compactMap { row in
+        //      cells.map { row in
+        row[safe: columnIndex]
+      }
+    }
     set {
       for i in cells.indices {
         cells[i][safe: columnIndex] = newValue[i]

@@ -16,11 +16,13 @@ extension GridShaped {
   }
 
   var rows: [Row] { cells }
-  
+
   var columns: Cells {
     guard let firstRow = cells.first else { return [] }
     return (0..<firstRow.count).map { col in
-      cells.map(\.self[col])
+      cells.compactMap { row in
+        row[safe: col]
+      }
     }
   }
 
@@ -59,11 +61,6 @@ extension GridShaped {
     }
     return cells
   }
-
-  //  func position(for value: Cell) -> GridPosition? {
-  ////    let row = value.
-  ////     let cell = self[]
-  //  }
 
   public func positions(of value: Cell) -> [GridPosition] {
     var positions: [GridPosition] = []

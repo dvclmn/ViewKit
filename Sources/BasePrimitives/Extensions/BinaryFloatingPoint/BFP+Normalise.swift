@@ -68,7 +68,7 @@ extension BinaryFloatingPoint {
     denormalisedIfValid(in: range) ?? 0
   }
 
-  /// Converts a normalized fraction (between 0.0 and 1.0)
+  /// Converts a normalised fraction (between 0.0 and 1.0)
   /// back to a value within the given range.
   /// Fractions outside 0.0-1.0 will extend beyond the range proportionally.
   public func denormalisedIfValid(in range: ClosedRange<Self>) -> Self? {

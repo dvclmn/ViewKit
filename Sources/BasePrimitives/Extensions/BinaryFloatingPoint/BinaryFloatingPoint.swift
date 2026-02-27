@@ -82,7 +82,7 @@ extension BinaryFloatingPoint {
   public static func angleDelta(_ angle1: Self, _ angle2: Self) -> Self {
     var delta = angle1 - angle2
 
-    /// Normalize to [-π, π] range
+    /// Normalise to [-π, π] range
     while delta > .pi { delta -= 2 * .pi }
     while delta < -.pi { delta += 2 * .pi }
 

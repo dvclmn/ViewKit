@@ -299,10 +299,10 @@ extension AxisKeyPathWritable where Component: BinaryFloatingPoint {
   /// a new pair `(newHorizontal, newVertical)`. The read/write of components honors
   /// the provided `mapping`.
   ///
-  /// Example (normalize to max):
+  /// Example (normalise to max):
   /// ```swift
   /// let size = CGSize(width: 2, height: 4)
-  /// let normalized = size.adjustBoth { h, v in
+  /// let normalised = size.adjustBoth { h, v in
   ///   let m = max(h, v)
   ///   return (h / m, v / m)
   /// }

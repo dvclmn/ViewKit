@@ -16,9 +16,7 @@ extension GridShaped {
   }
 
   func rowNumber(for rowIndex: Int) -> Int? {
-    fatalError("Need to work on this")
-    //    let row = self[row: rowIndex].in
-    //    rows.firstIndex(where: { $0. == row })
-    //    table.rows.firstIndex(where: { $0.id == self.id }).map { $0 + 1 }
+    guard isRowValid(rowIndex) else { return nil }
+    return rowIndex + 1
   }
 }

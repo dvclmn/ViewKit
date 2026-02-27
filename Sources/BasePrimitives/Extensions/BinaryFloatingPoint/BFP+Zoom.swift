@@ -77,11 +77,11 @@ extension BinaryFloatingPoint {
     let upper = range.upperBound
     let lower = range.lowerBound
 
-    /// Normalize the zoom level to 0...1 range
+    /// Normalise the zoom level to 0...1 range
     /// This method also clamps to range
     let normalised = zoom.normalised(in: range)
 
-    /// Calculate threshold positions in normalized space
+    /// Calculate threshold positions in normalised space
     /// Ensure no unexpected invalid values by clamping
     let low = lowSensitivityThreshold.clamped(to: range)
     let high = highSensitivityThreshold.clamped(to: range)

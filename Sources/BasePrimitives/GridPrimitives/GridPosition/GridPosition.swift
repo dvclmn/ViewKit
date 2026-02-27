@@ -78,7 +78,7 @@ extension GridPosition {
     let clampedColumn = min(max(column, 0), width - 1)
     let clampedRow = min(max(row, 0), height - 1)
 
-    /// Normalize to [0, 1] using cell centers. For N columns, centers are at (0.5/N, 1.5/N, ..., (N-0.5)/N).
+    /// Normalise to [0, 1] using cell centers. For N columns, centers are at (0.5/N, 1.5/N, ..., (N-0.5)/N).
     let x = (CGFloat(clampedColumn) + 0.5) / CGFloat(width)
     let y = (CGFloat(clampedRow) + 0.5) / CGFloat(height)
 

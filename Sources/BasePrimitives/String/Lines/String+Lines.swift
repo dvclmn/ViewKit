@@ -23,6 +23,10 @@ extension Array where Element == String {
 
 extension String {
 
+  public var isLastLineEmpty: Bool {
+    lines().last?.isEmpty == true
+  }
+  
   public func lines(omissionStrategy: OmissionStrategy = .doNotOmit) -> [Substring] {
     omissionStrategy.split(self, whereSeparator: \.isNewline)
   }

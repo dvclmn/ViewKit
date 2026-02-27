@@ -16,27 +16,39 @@ extension Character: BlankCreatable {
 }
 
 extension GridShaped where Cell == Character {
-  // Any members here can freely use Character APIs, including createBlank()
-  public static func blankCell() -> Cell { .createBlank() }
-//}
 
-/// This is essentially the same as `extension GridShaped where Cell == Character`
-//extension GridString {
-
-  public init(fromString string: String) {
-    let cells = Self.generateCells(from: string)
-    self.init(cells: cells)
+  /// Build from text with explicit policies
+  public init(
+    fromString text: String,
+    parsing options: GridParsingOptions = .default,
+    normalisation policy: GridNormalizationPolicy<Cell>? = nil
+  ) {
+    let parsed = Self.parse(text: text, options: options)
+    let rows = policy.map { Self.normaliseRows(parsed.rows, policy: $0) } ?? parsed.rows
+    self.init(cells: rows)
   }
 
+  // Any members here can freely use Character APIs, including createBlank()
+  //  public static func blankCell() -> Cell { .createBlank() }
+  //}
+
+  /// This is essentially the same as `extension GridShaped where Cell == Character`
+  //extension GridString {
+
+  //  public init(fromString string: String) {
+  //    let cells = Self.generateCells(from: string)
+  //    self.init(cells: cells)
+  //  }
+
   public static func generateCells(from text: String) -> [[Cell]] {
-    print(
-      """
-
-      Generating cells from text:
-      \(text)
-
-
-      """)
+    //    print(
+    //      """
+    //
+    //      Generating cells from text:
+    //      \(text)
+    //
+    //
+    //      """)
     let dimensions = text.gridDimensions
     let lines = text.lines(omissionStrategy: .doNotOmit)
 
@@ -59,7 +71,6 @@ extension GridShaped where Cell == Character {
     let characterCells = line.map(Cell.init)
 
     let paddingCells = (line.count..<targetWidth).map { colIndex in
-      //      let position = GridPosition(column: colIndex, row: rowIndex)
       return Cell.createBlank()
     }
 
@@ -74,6 +85,26 @@ extension GridShaped where Cell == Character {
       }.joined()
     }
     return rowsStrings.joinedLines()
+  }
+  
+  public func toString(options: GridRenderOptions = .default) -> String {
+    let lines = (0..<rowCount).map { rowIndex -> String in
+      let line = (0..<columnCount).map { col in
+        let position = GridPosition(column: col, row: rowIndex)
+        return self[at: position] ?? " "
+      }
+      var s = String(line)
+      if options.contains(.trimTrailingSpacesPerLine) {
+        s = s.rstrip()
+      }
+      return s
+    }
+    let joined = lines.joined(separator: "\n")
+    if options.contains(.includeTerminalNewline) {
+      return joined + "\n"
+    } else {
+      return joined
+    }
   }
 
 }

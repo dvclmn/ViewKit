@@ -7,6 +7,49 @@
 
 import Foundation
 
+public struct GridNormalizationPolicy<Cell> {
+  public var alignment: GridAlignment = .leading
+  public var targetWidth: Int? = nil  // nil means use widest line
+  public var padCell: Cell
+  public var truncationCell: Cell? = nil
+  public var padLastLine: Bool = true  // If false, avoid padding last line
+
+  public init(
+    alignment: GridAlignment = .leading,
+    targetWidth: Int? = nil,
+    padCell: Cell,
+    truncationCell: Cell? = nil,
+    padLastLine: Bool = true
+  ) {
+    self.alignment = alignment
+    self.targetWidth = targetWidth
+    self.padCell = padCell
+    self.truncationCell = truncationCell
+    self.padLastLine = padLastLine
+  }
+}
+
+extension GridShaped {
+  public static func normaliseRows(
+    _ ragged: [[Cell]],
+    policy: GridNormalizationPolicy<Cell>
+  ) -> [[Cell]] {
+    let width = policy.targetWidth ?? (ragged.map(\.count).max() ?? 0)
+    guard width > 0 else { return ragged }
+
+    return ragged.enumerated().map { index, row in
+      let isLast = index == ragged.count - 1
+      let pad = policy.padLastLine || !isLast
+      return normalisedRows(
+        row.count == width || !pad ? [row] : [row],
+        alignment: policy.alignment,
+        paddingCell: policy.padCell,
+        truncationCell: policy.truncationCell
+      ).first ?? row
+    }
+  }
+}
+
 extension GridShaped {
   func isPositionValid(_ position: GridPosition) -> Bool {
     isRowValid(position.row) && isColumnValidAcrossAllRows(position.column)
@@ -95,9 +138,8 @@ extension RowNormaliser {
     let padding = Array(repeating: paddingCell, count: padWidth)
 
     return switch alignment {
-      //      case .center:
-      case .leading: padding + row
-      case .trailing: row + padding
+      case .leading: row + padding
+      case .trailing: padding + row
     }
 
   }

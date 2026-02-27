@@ -11,7 +11,7 @@
 ///   b) As distinct from a user's cropped frame / view onto the grid
 
 public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row, Index == Int {
-  associatedtype Cell: BlankCreatable & Equatable
+  associatedtype Cell: BlankCreatable, Equatable, Sendable
 //  associatedtype Cell: GridCell
   typealias Cells = [[Cell]]
   typealias Row = [Cell]
