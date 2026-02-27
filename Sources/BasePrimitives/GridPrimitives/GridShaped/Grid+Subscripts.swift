@@ -24,10 +24,8 @@ extension GridShaped {
   }
 
   public subscript(column columnIndex: Int) -> [Cell] {
-    //    get { cells.map(\.self[columnIndex]) }
     get {
       cells.compactMap { row in
-        //      cells.map { row in
         row[safe: columnIndex]
       }
     }
@@ -36,48 +34,16 @@ extension GridShaped {
         cells[i][safe: columnIndex] = newValue[i]
       }
     }
-    //    return cells.map { $0[columnIndex] }
   }
-
-  //  public subscript(row rowIndex: Int) -> Row {
-  //    get { self[at: GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)] }
-  ////    get { cells[safe: rowIndex] ?? [] }
-  ////    set {
-  ////      if rowIndex < cells.count {
-  ////        cells[rowIndex] = newValue
-  ////
-  ////      } else if rowIndex == cells.count {
-  ////        cells.append(newValue)
-  ////      }
-  ////    }
-  //  }
-  //
-  //  public subscript(col colIndex: Int) -> [Cell] {
-  //    get { self[row: <#T##Int#>] }
-  ////    get { cells[safe: rowIndex] ?? [] }
-  ////    set {
-  ////      if rowIndex < cells.count {
-  ////        cells[rowIndex] = newValue
-  ////
-  ////      } else if rowIndex == cells.count {
-  ////        cells.append(newValue)
-  ////      }
-  ////    }
-  //  }
 
   public subscript(at position: GridPosition) -> Cell? {
     get {
       guard isPositionValid(position) else { return nil }
-      //      guard isValid(position: position) else { return nil }
       return self[row: position.row, col: position.column]
-      //      return self[row: position.row, column: position.column]
     }
     set {
       guard isPositionValid(position) else { return }
-      //      guard isValid(position: position), let value = newValue else { return }
       self[row: position.row, col: position.column] = newValue
-      return
-      //      self[row: position.row, column: position.column] = value
     }
   }
 
