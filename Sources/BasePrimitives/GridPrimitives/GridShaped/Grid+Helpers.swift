@@ -16,6 +16,7 @@ extension GridShaped {
   }
 
   var rows: [Row] { cells }
+  
   var columns: Cells {
     guard let firstRow = cells.first else { return [] }
     return (0..<firstRow.count).map { col in

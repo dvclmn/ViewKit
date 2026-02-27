@@ -28,24 +28,24 @@ extension GridShaped {
     let requiredRows = position.row + 1
     let requiredColumns = Swift.max(columnCount, position.column + 1)
 
-    var newCells: [Cell] = []
+    var newCells: Cells = []
 
     for row in 0..<requiredRows {
+      var newRow: Row = []
       for column in 0..<requiredColumns {
-        if row < rowCount, column < columnCount {
-          let position = GridPosition(column: column, row: row)
-          print("GridPosition from `expandToInclude()`: \(position)")
-          guard let cell = self[at: position] else { return }
-          newCells.append(cell)
+        let pos = GridPosition(column: column, row: row)
+        if let cell = self[at: pos] {
+          newRow.append(cell)
         } else {
-          newCells.append(blank())
+          newRow.append(blank())
         }
       }
+      newCells.append(newRow)
     }
 
-    fatalError("Not yet implemented")
+    self.cells = newCells
 
-    #warning("Need to separate inherent dimensions from user-defined 'frame'")
+//    #warning("Need to separate inherent dimensions from user-defined 'frame'")
     //    self.cells = newCells
     //    self.columns = requiredColumns
     //    self.rows = requiredRows
@@ -89,7 +89,7 @@ extension GridShaped {
   }
 
   mutating func removeColumns(from edge: GridEdge, count: Int = 1) {
-    precondition(columnCount > count, "Cannot remove \(count) columns; only \(columns) available")
+    precondition(columnCount > count, "Cannot remove \(count) columns; only \(columnCount) available")
     for _ in 0..<count { removeColumn(from: edge) }
   }
 
@@ -98,7 +98,7 @@ extension GridShaped {
   }
 
   mutating func removeRows(from edge: GridEdge, count: Int = 1) {
-    precondition(rowCount > count, "Cannot remove \(count) rows; only \(rows) available")
+    precondition(rowCount > count, "Cannot remove \(count) rows; only \(rowCount) available")
     for _ in 0..<count { removeRow(from: edge) }
   }
 
@@ -106,24 +106,14 @@ extension GridShaped {
   public mutating func addRow(to edge: GridEdge) {
     switch edge {
       case .top:
-        let newRow = (0..<columnCount).map { column in
-          [
-            Cell.createBlank()
-          ]
-          //          GridCell.createBlank(at: .init(row: 0, column: column))
-        }
-        cells.insert(contentsOf: newRow, at: 0)
+        let newRow: Row = (0..<columnCount).map { _ in Cell.createBlank() }
+        cells.insert(newRow, at: 0)
       //        rows += 1
       //        reindexPositions()
 
       case .bottom:
-        let newRow = (0..<columnCount).map { column in
-          [
-            Cell.createBlank()
-          ]
-          //          GridCell.createBlank(at: .init(row: rows, column: column))
-        }
-        cells.append(contentsOf: newRow)
+        let newRow: Row = (0..<columnCount).map { _ in Cell.createBlank() }
+        cells.append(newRow)
       //        rows += 1
       //        reindexPositions()
 
@@ -136,17 +126,15 @@ extension GridShaped {
   public mutating func removeRow(from edge: GridEdge) {
     precondition(rowCount > 1, "Cannot remove last row")
 
-    let range: Range<Int>
     switch edge {
       case .top:
-        range = 0..<columnCount
+        cells.removeFirst()
       case .bottom:
-        range = cells.count - columnCount..<cells.count
+        cells.removeLast()
       default:
         fatalError("Invalid edge for row removal")
     }
 
-    cells.removeSubrange(range)
     //    rows -= 1
     //    reindexPositions()
   }
@@ -154,11 +142,12 @@ extension GridShaped {
   public mutating func addColumn(to edge: GridEdge) {
     precondition(edge == .leading || edge == .trailing)
 
-    for row in (0..<rowCount).reversed() {
-      let column = (edge == .leading) ? 0 : columnCount
-      let newCell = [Cell.createBlank()]
-      let insertIndex = row * columnCount + (edge == .leading ? 0 : columnCount)
-      cells.insert(newCell, at: insertIndex)
+    for rowIndex in 0..<rowCount {
+      if edge == .leading {
+        cells[rowIndex].insert(Cell.createBlank(), at: 0)
+      } else {
+        cells[rowIndex].append(Cell.createBlank())
+      }
     }
 
     //    columns += 1
@@ -173,9 +162,8 @@ extension GridShaped {
 
     let targetColumn = (edge == .leading) ? 0 : columnCount - 1
 
-    for row in (0..<rowCount).reversed() {
-      let index = row * columnCount + targetColumn
-      cells.remove(at: index)
+    for rowIndex in 0..<rowCount {
+      cells[rowIndex].remove(at: targetColumn)
     }
 
     //    columns -= 1
