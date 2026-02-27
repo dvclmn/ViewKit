@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 18/2/2026.
 //
 
-import BasePrimitives
 import MacroToolkit
 import SwiftDiagnostics
 import SwiftSyntax

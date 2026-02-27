@@ -12,7 +12,6 @@
 //  Created by Pedro Rojas on 15/08/23.
 //
 
-import BasePrimitives
 import SwiftSyntax
 
 enum SupportedType: String {

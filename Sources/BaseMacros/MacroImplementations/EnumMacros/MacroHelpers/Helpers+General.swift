@@ -136,3 +136,28 @@ extension TypeSyntax {
 //  }
 
 //}
+
+extension Array where Element == String {
+  var joinedLines: String { joined(separator: "\n") }
+
+  func joined(_ separator: String) -> String {
+    joined(separator: separator)
+  }
+}
+
+extension String {
+  var camelCaseToSnakeCase: String {
+    var result = ""
+
+    for (index, char) in enumerated() {
+      if char.isUppercase {
+        if index > 0 { result.append("_") }
+        result.append(char.lowercased())
+      } else {
+        result.append(char)
+      }
+    }
+
+    return result
+  }
+}

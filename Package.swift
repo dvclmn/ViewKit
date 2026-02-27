@@ -79,20 +79,11 @@ let package = Package(
     .macro(
       name: "BaseMacrosImplementation",
       dependencies: [
-        .module(.primitives),
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
       ],
       path: .macrosSource + "/MacroImplementations",
-      linkerSettings: [
-        // Required in Release/build-for-testing so the macro executable can load
-        // package frameworks (for example, CasePaths) at runtime.
-        .unsafeFlags([
-          "-Xlinker", "-rpath",
-          "-Xlinker", "@executable_path/PackageFrameworks",
-        ])
-      ],
     ),
 
     /// Note: `path` here wants the Macro Declaration source, not the Implementation

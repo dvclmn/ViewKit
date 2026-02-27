@@ -12,7 +12,6 @@
 //  Created by Pedro Rojas on 29/08/23.
 //
 
-import BasePrimitives
 import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxMacros
