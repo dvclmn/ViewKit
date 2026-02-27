@@ -66,7 +66,6 @@ extension GridShaped {
 
   func isColumnValidInAnyRow(_ column: Int) -> Bool {
     column >= 0 && rows.contains { $0.count > column }
-    //    column >= 0 && rows.contains { $0.cells.count > column }
   }
 
   func isColumnValidAcrossAllRows(_ column: Int) -> Bool {
@@ -74,7 +73,6 @@ extension GridShaped {
       && column >= 0
       && column < columnCount
       && rows.allSatisfy { $0.count > column }
-    //    !rows.isEmpty && column >= 0 && rows.allSatisfy { $0.cells.count > column }
   }
 }
 
@@ -141,15 +139,7 @@ extension RowNormaliser {
       case .leading: row + padding
       case .trailing: padding + row
     }
-
   }
-
-  //  private func padRow(
-  //    to width: Int,
-  //    with alignment: GridAlignment
-  //  ) -> T.Row {
-  //    row + Array(repeating: padCell, count: targetWidth - row.count)
-  //  }
 }
 
 extension GridShaped {

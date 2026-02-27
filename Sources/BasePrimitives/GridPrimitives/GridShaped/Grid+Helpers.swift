@@ -17,34 +17,41 @@ extension GridShaped {
 
   var rows: [Row] { cells }
 
+  /// Uses width of the widest row to derive columns
   var columns: Cells {
-    guard let firstRow = cells.first else { return [] }
-    return (0..<firstRow.count).map { col in
+    let maxCount = widestRow
+    guard maxCount > 0 else { return [] }
+    return (0..<maxCount).map { col in
       cells.compactMap { row in
         row[safe: col]
       }
     }
+    //    guard let firstRow = cells.first else { return [] }
+    //    return (0..<firstRow.count).map { col in
+    //      cells.compactMap { row in
+    //        row[safe: col]
+    //      }
+    //    }
   }
 
   /// The total number of cells in the grid, whether empty or not
-  public var cellCount: Int { rowCount * columnCount }
+  public var cellCount: Int { Swift.max(0, rowCount * width) }
 
   /// The total number of non-empty cells in the grid
   public var cellCountRagged: Int { cells.reduce(0) { $0 + $1.count } }
 
   public var rowCount: Int { cells.count }
+  public var height: Int { rowCount }
 
-  /// Width of the **first row** — the 'intended' width of a rectangular grid.
-  /// Aka the canoncial width
-  public var columnCount: Int { cells.first?.count ?? 0 }
-
-  /// This returns the `maxWidth`(width of the widest row).
-  /// Use `canonicalWidth` for width of **first** row
+  /// This returns the width of the widest row. ``widestRow``
+  public var columnCount: Int { widestRow }
   public var width: Int { widestRow }
-
-  /// Width of the widest row
   public var widestRow: Int { cells.map(\.count).max() ?? 0 }
-  public var height: Int { cells.count }
+
+  /// Width of the first non-empty row
+  public var canonicalColumnCount: Int {
+    cells.first(where: { !$0.isEmpty })?.count ?? 0
+  }
 
   public var isEmpty: Bool {
     cells.isEmpty || cells.allSatisfy { $0.isEmpty }
@@ -70,6 +77,11 @@ extension GridShaped {
     positions.compactMap { self[at: $0] }
   }
 
-  public var dimensions: GridDimensions { .init(width: columnCount, height: rowCount) }
+  public var dimensions: GridDimensions {
+    .init(
+      width: width,
+      height: rowCount
+    )
+  }
 
 }

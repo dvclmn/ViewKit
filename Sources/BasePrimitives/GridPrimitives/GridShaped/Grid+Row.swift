@@ -6,13 +6,14 @@
 //
 
 extension GridShaped {
-  public static func emptyRows(rowCount: Int, columnCount: Int) -> Cells {
-    let row = Self.emptyRow(columnCount: columnCount)
+  
+  public static func createEmptyRows(rowCount: Int, columnCount: Int) -> Cells {
+    let row = Self.createEmptyRow(columnCount: columnCount)
     return Array(repeating: row, count: rowCount)
   }
-  public static func emptyRow(columnCount: Int) -> Row {
+  
+  public static func createEmptyRow(columnCount: Int) -> Row {
     Array(repeating: Cell.createBlank(), count: columnCount)
-    //    return Row(cells: cells.toIdentifiedArray)
   }
 
   func rowNumber(for rowIndex: Int) -> Int? {

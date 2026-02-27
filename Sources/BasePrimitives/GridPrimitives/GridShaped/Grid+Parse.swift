@@ -7,15 +7,7 @@
 
 import Foundation
 
-public struct GridRenderOptions: OptionSet, Sendable {
-  public let rawValue: Int
-  public init(rawValue: Int) { self.rawValue = rawValue }
 
-  public static let trimTrailingSpacesPerLine = GridRenderOptions(rawValue: 1 << 0)
-  public static let includeTerminalNewline = GridRenderOptions(rawValue: 1 << 1)
-
-  public static let `default`: GridRenderOptions = []
-}
 
 /// Key points:
 /// - No padding/truncation happens here.
