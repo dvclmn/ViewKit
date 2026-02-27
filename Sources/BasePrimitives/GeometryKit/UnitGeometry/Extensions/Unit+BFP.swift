@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - Float extension
 extension BinaryFloatingPoint {
 
   /// Converts a float (screen) value, to an integer (grid) value,
@@ -21,7 +20,6 @@ extension BinaryFloatingPoint {
   ///   - unitSize: The size that defines a new reference point, where width == 1 unit wide, and height == 1 unit high
   ///   - rounding: Whether to round up or down, when converting floats to integers
   /// - Returns: An integer that represents the number of 'units' that can fit along the length of `self`
-
   public func toGridCount(
     using unitLength: CGFloat,
     rounding: GridRounding = .down

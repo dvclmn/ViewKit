@@ -32,26 +32,7 @@ extension CGPoint {
     
     let valX = rounding.roundedIfNeeded(rawX)
     let valY = rounding.roundedIfNeeded(rawY)
-    //    if let rounding {
-    //      let valX = x.rounded(rounding.rule)
-    //    }
-    
+
     return UnitPoint(x: valX, y: valY)
   }
-  //
-  //  public func toUnitPoint(in unitSize: CGSize) -> UnitPoint {
-  //
-  //  }
-  //  public init(
-  //    point: CGPoint,
-  //    cellSize: CGSize
-  //  ) {
-  //    /// `floor()` here maps a continuous coordinate to the
-  //    /// nearest lower integer, effectively identifying which grid cell
-  //    /// the point belongs to.
-  //    let col = Int(floor(point.x / cellSize.width))
-  //    let row = Int(floor(point.y / cellSize.height))
-  //
-  //    self.init(row: row, column: col)
-  //  }
 }

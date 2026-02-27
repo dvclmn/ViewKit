@@ -49,7 +49,7 @@ public enum GridRounding {
     guard let rule else { return Int(value) }
     return Int(value.rounded(rule))
   }
-  
+
   public func fractionalPart(_ value: CGFloat) -> CGFloat {
     return value - value.rounded(.towardZero)
   }

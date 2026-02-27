@@ -14,11 +14,11 @@ public enum RadialDirection: Sendable {
 }
 
 extension RadialDirection {
-  
+
 }
 
 extension UnitPoint {
-  
+
   /// If left nil, the radial direction will be inferred from `self`,
   /// using a product of the origin (0.5) and the provided coordinate's value
   func directionMultiplier(
@@ -27,16 +27,16 @@ extension UnitPoint {
     radial radialDirection: RadialDirection? = nil
   ) -> CGFloat {
     let axisValue = value(along: axis, mapping: mapping)
-    
+
     fatalError("Need to be finished")
-//    if let radialDirection {
-//      radialDirection.is
-//    }
-//    
+    //    if let radialDirection {
+    //      radialDirection.is
+    //    }
+    //
     // No explicit radial direction: infer based on position relative to center (0.5)
     if axisValue < 0.5 { return +1 }
     if axisValue > 0.5 { return -1 }
     return 0
-    
+
   }
 }

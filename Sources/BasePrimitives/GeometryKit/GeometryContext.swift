@@ -6,7 +6,7 @@
 //
 
 import CoreGraphics
-import Foundation
+import SwiftUI
 
 /// This aims to express concepts similar to previous models `GridGeometry`,
 /// `CanvasGeometry`, `ArtworkGeometry` etc. It's meant to help with situating
@@ -18,11 +18,13 @@ public protocol GeometryContext {
   /// by `ViewSizeModifier` / `GeometryCapturable` domains
   var viewportRect: CGRect { get set }
   var subjectSize: Size { get set }
+  var subjectAnchor: UnitPoint { get }
   //  var unitSize: UnitSize { get }
 }
 
 extension GeometryContext {
   public var isEitherZero: Bool { viewportRect.isZero || subjectSize.isZero }
+  public var subjectAnchor: UnitPoint { .center }
 }
 
 /// Intended as a bit of an analogue to CanvasGeometry for Grid artwork

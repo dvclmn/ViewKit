@@ -17,7 +17,7 @@ public struct CoordinateSpaceContext {
   //public struct CoordinateSpaceContext<Geometry: GeometryContext> where Geometry.Size == CGSize {
   //public struct CoordinateSpaceTransform {
 
-  let viewAnchor: ViewAnchor
+//  let viewAnchor: ViewAnchor
 
   /// Scale factor applied to canvas (>= 0).
   let zoom: CGFloat
@@ -32,7 +32,6 @@ public struct CoordinateSpaceContext {
   let canvasSize: CGSize
 
   public init(
-    viewAnchor: ViewAnchor,
     zoom: CGFloat,
     pan: CGSize,
     panSpace: PanSpace,
@@ -40,7 +39,6 @@ public struct CoordinateSpaceContext {
     viewportRect: CGRect,
     canvasSize: CGSize,
   ) {
-    self.viewAnchor = viewAnchor
     self.zoom = zoom
     self.pan = pan
     self.panSpace = panSpace
@@ -53,7 +51,7 @@ public struct CoordinateSpaceContext {
 extension CoordinateSpaceContext {
 
   //  public init(
-  public init<T: GeometryContext>(
+  public init?<T: GeometryContext>(
     viewAnchor: ViewAnchor,
     zoom: CGFloat,
     pan: CGSize,
@@ -68,9 +66,10 @@ extension CoordinateSpaceContext {
     self.panSpace = panSpace
 
     self.viewportRect = geometry.viewportRect
-    let size = geometry.subjectSize.toCGSize(using: unitSize)
-      self.canvasSize = size ??
-    
+    guard let size = geometry.subjectSize.toCGSize(using: unitSize) else {
+      preconditionFailure("See ")
+    }
+    self.canvasSize = size ??
 //    self.canvasSize = geometry.subjectSize.toCGSize(using: unitSize)
   }
 
