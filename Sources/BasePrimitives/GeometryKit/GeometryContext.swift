@@ -25,27 +25,6 @@ extension GeometryContext {
   public var isEitherZero: Bool { viewportRect.isZero || subjectSize.isZero }
 }
 
-public protocol DomainSize: Equatable {
-  associatedtype Value
-
-  var width: Value { get }
-  var height: Value { get }
-  static var zero: Self { get }
-}
-
-extension DomainSize {
-  public var isZero: Bool { self == .zero }
-}
-
-extension CGSize: DomainSize {
-  public typealias Value = CGFloat
-}
-
-extension GridDimensions: DomainSize {
-  public typealias Value = Int
-  public static let zero: GridDimensions = .init(0, 0)
-}
-
 /// Intended as a bit of an analogue to CanvasGeometry for Grid artwork
 public struct GridGeometry: GeometryContext {
   /// A rect, not a size, to express safe area insets

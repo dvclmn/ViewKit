@@ -13,7 +13,8 @@ import Foundation
 ///
 /// I may consider either including `CanvasGeometry` in this,
 /// or actually just removing that entirely and absorbing into this type
-public struct CoordinateSpaceContext<Geometry: GeometryContext> where Geometry.Size == CGSize {
+public struct CoordinateSpaceContext {
+  //public struct CoordinateSpaceContext<Geometry: GeometryContext> where Geometry.Size == CGSize {
   //public struct CoordinateSpaceTransform {
 
   let viewAnchor: ViewAnchor
@@ -24,35 +25,57 @@ public struct CoordinateSpaceContext<Geometry: GeometryContext> where Geometry.S
   let pan: CGSize
   let panSpace: PanSpace
 
-  let geometry: Geometry
+  //  let geometry: Geometry
   /// In global/screen space; includes safe-area origin and size.
-  //  let viewportRect: CGRect
+  let viewportRect: CGRect
   /// In local/canvas space (unscaled).
-  //  let canvasSize: CGSize
+  let canvasSize: CGSize
 
   public init(
     viewAnchor: ViewAnchor,
     zoom: CGFloat,
     pan: CGSize,
     panSpace: PanSpace,
-    geometry: Geometry
-      //    viewportRect: CGRect,
-      //    canvasSize: CGSize,
+    //    geometry: Geometry
+    viewportRect: CGRect,
+    canvasSize: CGSize,
   ) {
     self.viewAnchor = viewAnchor
     self.zoom = zoom
     self.pan = pan
     self.panSpace = panSpace
-    self.geometry = geometry
-    //    self.viewportRect = viewportRect
-    //    self.canvasSize = canvasSize
+    //    self.geometry = geometry
+    self.viewportRect = viewportRect
+    self.canvasSize = canvasSize
   }
 }
 
 extension CoordinateSpaceContext {
 
+  //  public init(
+  public init<T: GeometryContext>(
+    viewAnchor: ViewAnchor,
+    zoom: CGFloat,
+    pan: CGSize,
+    panSpace: PanSpace,
+    //        geometry: any GeometryContext
+    geometry: T,
+    unitSize: CGSize
+  ) where T.Size == GridDimensions {
+    self.viewAnchor = viewAnchor
+    self.zoom = zoom
+    self.pan = pan
+    self.panSpace = panSpace
+
+    self.viewportRect = geometry.viewportRect
+    let size = geometry.subjectSize.toCGSize(using: unitSize)
+      self.canvasSize = size ??
+    
+//    self.canvasSize = geometry.subjectSize.toCGSize(using: unitSize)
+  }
+
   private var viewportRect: CGRect { geometry.viewportRect }
-  private var subjectSize: CGSize { geometry.subjectSize }
+  private var subjectSize: CGSize { geometry.subjectSize.toCGSize(using: <#T##CGSize#>) }
 
   private var zoomSafe: CGFloat {
     zoom.clamped(to: 0.01...CGFloat.greatestFiniteMagnitude)
@@ -65,7 +88,11 @@ extension CoordinateSpaceContext {
   private var panInGlobalSpace: CGSize {
     switch panSpace {
       case .global: pan
-      case .local: CGSize(width: pan.width * zoomSafe, height: pan.height * zoomSafe)
+      case .local:
+        CGSize(
+          width: pan.width * zoomSafe,
+          height: pan.height * zoomSafe
+        )
     }
   }
 
@@ -84,9 +111,12 @@ extension CoordinateSpaceContext {
 
   /// Canvas frame expressed in global/screen space.
   public var canvasFrameInGlobalSpace: CGRect {
-    .init(
+    CGRect(
       origin: totalGlobalOffset,
-      size: .init(width: subjectSize.width * zoomSafe, height: subjectSize.height * zoomSafe)
+      size: CGSize(
+        width: subjectSize.width * zoomSafe,
+        height: subjectSize.height * zoomSafe
+      )
     )
   }
 
@@ -121,9 +151,9 @@ extension CoordinateSpaceContext {
 
   /// Converts a global/screen rect to local/canvas rect.
   public func toLocal(rect: CGRect) -> CGRect {
-    .init(
+    CGRect(
       origin: toLocal(point: rect.origin),
-      size: .init(
+      size: CGSize(
         width: rect.width / zoomSafe,
         height: rect.height / zoomSafe
       )
@@ -132,9 +162,9 @@ extension CoordinateSpaceContext {
 
   /// Converts a local/canvas rect to global/screen rect.
   public func toGlobal(rect: CGRect) -> CGRect {
-    .init(
+    CGRect(
       origin: toGlobal(point: rect.origin),
-      size: .init(
+      size: CGSize(
         width: rect.width * zoomSafe,
         height: rect.height * zoomSafe
       )
