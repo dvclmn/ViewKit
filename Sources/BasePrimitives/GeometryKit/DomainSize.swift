@@ -15,13 +15,13 @@ public protocol DomainSize: Equatable {
   var height: Value { get }
   static var zero: Self { get }
   func toCGSize(using unitSize: CGSize) -> CGSize?
-
 }
 
 extension DomainSize {
   public var isZero: Bool { self == .zero }
 }
 
+// MARK: - Conformances
 extension CGSize: DomainSize {
   public typealias Value = CGFloat
 

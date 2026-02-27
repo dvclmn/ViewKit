@@ -26,33 +26,3 @@ extension GeometryContext {
   public var isEitherZero: Bool { viewportRect.isZero || subjectSize.isZero }
   public var subjectAnchor: UnitPoint { .center }
 }
-
-/// Intended as a bit of an analogue to CanvasGeometry for Grid artwork
-public struct GridGeometry: GeometryContext {
-  /// A rect, not a size, to express safe area insets
-  public var viewportRect: CGRect
-  public var subjectSize: GridDimensions
-
-  //  let environment: EnvironmentValues
-
-  public init(
-    viewportRect: CGRect,
-    subjectSize: GridDimensions,
-    //    environment: EnvironmentValues
-  ) {
-    self.viewportRect = viewportRect
-    self.subjectSize = subjectSize
-    //    self.environment = environment
-  }
-}
-
-extension GridGeometry {
-
-  //  private var canvasSize: CGSize? {
-  //    guard let unitSize else { return nil }
-  //    guard let gridDimensions else { return nil }
-  //
-  //    //    let dimensions = gridCanvas.wrappedValue.gridDimensions
-  //    return gridDimensions.toScreenSize(using: unitSize)
-  //  }
-}

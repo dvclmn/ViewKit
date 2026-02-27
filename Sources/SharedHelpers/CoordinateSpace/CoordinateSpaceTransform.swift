@@ -6,7 +6,7 @@
 //
 
 import BasePrimitives
-import Foundation
+import SwiftUI
 
 /// Global == viewport == screen space
 /// Canvas == Local space
@@ -17,34 +17,33 @@ public struct CoordinateSpaceContext {
   //public struct CoordinateSpaceContext<Geometry: GeometryContext> where Geometry.Size == CGSize {
   //public struct CoordinateSpaceTransform {
 
-//  let viewAnchor: ViewAnchor
-
   /// Scale factor applied to canvas (>= 0).
   let zoom: CGFloat
   /// Translation of canvas; units depend on panSpace.
   let pan: CGSize
   let panSpace: PanSpace
 
-  //  let geometry: Geometry
   /// In global/screen space; includes safe-area origin and size.
   let viewportRect: CGRect
+
   /// In local/canvas space (unscaled).
-  let canvasSize: CGSize
+  let subjectSize: CGSize
+  let subjectAnchor: UnitPoint
 
   public init(
     zoom: CGFloat,
     pan: CGSize,
     panSpace: PanSpace,
-    //    geometry: Geometry
     viewportRect: CGRect,
-    canvasSize: CGSize,
+    subjectSize: CGSize,
+    subjectAnchor: UnitPoint
   ) {
     self.zoom = zoom
     self.pan = pan
     self.panSpace = panSpace
-    //    self.geometry = geometry
     self.viewportRect = viewportRect
-    self.canvasSize = canvasSize
+    self.subjectSize = subjectSize
+    self.subjectAnchor = subjectAnchor
   }
 }
 
@@ -52,29 +51,24 @@ extension CoordinateSpaceContext {
 
   //  public init(
   public init?<T: GeometryContext>(
-    viewAnchor: ViewAnchor,
     zoom: CGFloat,
     pan: CGSize,
     panSpace: PanSpace,
-    //        geometry: any GeometryContext
     geometry: T,
     unitSize: CGSize
   ) where T.Size == GridDimensions {
-    self.viewAnchor = viewAnchor
     self.zoom = zoom
     self.pan = pan
     self.panSpace = panSpace
 
     self.viewportRect = geometry.viewportRect
     guard let size = geometry.subjectSize.toCGSize(using: unitSize) else {
-      preconditionFailure("See ")
+      //      preconditionFailure("See ")
+      return nil
     }
-    self.canvasSize = size ??
-//    self.canvasSize = geometry.subjectSize.toCGSize(using: unitSize)
+    self.subjectSize = size
+    self.subjectAnchor = geometry.subjectAnchor
   }
-
-  private var viewportRect: CGRect { geometry.viewportRect }
-  private var subjectSize: CGSize { geometry.subjectSize.toCGSize(using: <#T##CGSize#>) }
 
   private var zoomSafe: CGFloat {
     zoom.clamped(to: 0.01...CGFloat.greatestFiniteMagnitude)
@@ -99,12 +93,14 @@ extension CoordinateSpaceContext {
   /// This uses the size of the viewport (which already has insets subtracted).
   /// Canvas is scaled by zoom for centering; viewportRect is never scaled.
   private var centeringOffset: CGSize {
-    switch viewAnchor {
-      case .anchoredToCentre:
+    switch subjectAnchor {
+      case .center:
         return CGSize(
           width: (viewportRect.width - (subjectSize.width * zoomSafe)) / 2,
           height: (viewportRect.height - (subjectSize.height * zoomSafe)) / 2
         )
+
+      default: fatalError("Not yet implemented")
     }
   }
 
