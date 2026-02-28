@@ -23,8 +23,6 @@ struct CellSelectionCanvas: View {
 
   private let rounding: CGFloat = 4
 
-  //  let drawingContext: @escaping (inout GraphicsContext, CGSize)
-
   var body: some View {
 
     Canvas(
@@ -45,7 +43,7 @@ struct CellSelectionCanvas: View {
       )
 
       guard let rect = store.selectionRect else {
-        context.drawDebugText("No selection rect", at: size.midpoint, pointDisplay: .point(.pink))
+//        context.drawDebugText("No selection rect", at: size.midpoint, pointDisplay: .point(.pink))
         return
       }
 
@@ -85,7 +83,14 @@ struct CellSelectionCanvas: View {
     .task(id: viewportRect) { refreshGeometry() }
     .task(id: unitSize) { refreshGeometry() }
     .task(id: gridDimensions) { refreshGeometry() }
-    .task(id: hoverLocation) { store.pointerLocation = hoverLocation }
+    .task(id: hoverLocation) {
+//      if isPreview {
+//        store.pointerLocation = CGPoint(60, 220)
+//      } else {
+      store.pointerLocation = hoverLocation
+//      }
+    }
+
 
   }
 }
