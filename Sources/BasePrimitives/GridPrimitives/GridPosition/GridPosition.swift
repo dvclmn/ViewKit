@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+/// Would this be better than `GridPosition`?
+public struct GridPoint: Hashable, Codable, Sendable {
+  public var x: Int
+  public var y: Int
+}
+
 /// This is like `CGPoint`
 ///
 /// 📣 Important: ASCII-based / original GridPosition emphatically did
