@@ -59,7 +59,7 @@ extension SelectionHandler {
 
     /// 2. Perform Boundary Check
     /// Ensure the pointer isn't in the "empty space" around the canvas
-    let canvasSize = geometry.canvasCGSize
+    let canvasSize = geometry.canvasSize.cgSize
     guard local.x >= 0, local.x < canvasSize.width,
       local.y >= 0, local.y < canvasSize.height
     else {

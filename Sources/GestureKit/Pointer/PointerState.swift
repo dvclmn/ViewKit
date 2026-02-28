@@ -10,17 +10,16 @@ import SwiftUI
 
 public struct TapState: PointerAction {
   public var value: CGPoint?
-  public var isActive: Bool = false
 
   public init(_ value: Value? = nil) {
     self.value = value
   }
 }
 
-public struct DragState: PointerAction {
+public struct DragState: PointerAction, Activatable {
   public var value: CGRect?
   public var isActive: Bool = false
-  
+
   public let dragThreshold: CGFloat = 6
 
   public init(_ value: Value? = nil) {
@@ -30,8 +29,7 @@ public struct DragState: PointerAction {
 
 public struct HoverState: PointerAction {
   public var value: CGPoint?
-  public var isActive: Bool = false
-  
+
   public init(_ value: Value? = nil) {
     self.value = value
   }
@@ -67,7 +65,7 @@ public struct HoverState: PointerAction {
 //    (kind?.isDrag ?? false) && phase.isActive
 //  }
 
-  /// This packages up the output neatly for the caller to work with
+/// This packages up the output neatly for the caller to work with
 //  public var interactionData: PointerInteraction? {
 //    switch kind {
 //      case .drag:
@@ -140,7 +138,7 @@ public struct HoverState: PointerAction {
 //    self.rect = rect
 //    kind = .drag
 //    self.phase = phase
-//    
+//
 //    /// On first drag event, if `start` is nil, capture the origin as the start.
 ////    if tap == nil { tap = rect.origin }
 //    /// Update current to the far corner of the rect so translation reflects size.
@@ -158,8 +156,8 @@ public struct HoverState: PointerAction {
 //    return isValidDrag ? result : nil
 //  }
 
-  /// Returns true if the current pointer state indicates that it is of
-  /// type Drag; not a Tap, nor a Hover
+/// Returns true if the current pointer state indicates that it is of
+/// type Drag; not a Tap, nor a Hover
 //  private func isDragPermitted(for translation: CGSize) -> Bool {
 //    translation.diagonalLength >= dragThreshold
 //    //    hypot(translation.width, translation.height) >= dragThreshold

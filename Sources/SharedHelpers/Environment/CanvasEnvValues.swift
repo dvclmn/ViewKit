@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BasePrimitives
 
 extension EnvironmentValues {
 
@@ -22,13 +23,15 @@ extension EnvironmentValues {
     return viewportRect.size
   }
 
+  @Entry public var canvasGeometry: CanvasGeometry = .init()
+
   /// From CanvasKit
   @Entry public var zoomLevel: Double = 1.0
   @Entry public var zoomRange: ClosedRange<Double>?
-  
+
   @Entry public var panOffset: CGSize = .zero
   @Entry public var rotation: Angle = .zero
-  
+
   @Entry public var hoverLocation: CGPoint?
 
   public var zoomClamped: Double {

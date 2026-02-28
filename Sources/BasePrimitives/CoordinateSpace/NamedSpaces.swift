@@ -45,6 +45,10 @@ public struct Size<Space> {
     self.width = width
     self.height = height
   }
+
+  public var cgSize: CGSize {
+    .init(width: width, height: height)
+  }
 }
 
 public struct Rect<Space> {

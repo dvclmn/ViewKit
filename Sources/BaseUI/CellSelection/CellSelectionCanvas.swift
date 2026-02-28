@@ -16,13 +16,13 @@ struct CellSelectionCanvas: View {
   @Environment(\.zoomLevel) private var zoomLevel
   @Environment(\.zoomRange) private var zoomRange
   @Environment(\.viewportRect) private var viewportRect
-  @Environment(\.canvasRounding) private var canvasRounding
+  @Environment(\.cornerRounding) private var cornerRounding
   @Environment(\.gridDimensions) private var gridDimensions
   @Environment(\.canvasSize) private var canvasSize
 
   private let rounding: CGFloat = 4
-  
-//  let drawingContext: @escaping (inout GraphicsContext, CGSize)
+
+  //  let drawingContext: @escaping (inout GraphicsContext, CGSize)
 
   var body: some View {
 
@@ -42,9 +42,9 @@ struct CellSelectionCanvas: View {
         annotations: .quarter,
         drawsBorder: false
       )
-      
+
       guard let rect = store.selectionRect else { return }
-      
+
       if let radii = rectRadii {
         let rounded = UnevenRoundedRectangle(cornerRadii: radii)
           .path(in: rect)
@@ -69,13 +69,13 @@ struct CellSelectionCanvas: View {
     .addInfoBarItems {
       Labeled("Pointer (Global)", value: store.pointerLocation?.displayString(.location))
       Labeled("Pointer (Local)", value: store.pointerLocalSpace?.displayString(.location))
-//      Labeled("Viewport Rect", value: viewportRect?.displayString(.concise))
-//      Labeled("Cell Size", value: unitSize?.displayString(.dimensions))
-//      Labeled("Zoom", value: zoomLevel.toPercentString(within: zoomRange ?? .unitRange))
+      //      Labeled("Viewport Rect", value: viewportRect?.displayString(.concise))
+      //      Labeled("Cell Size", value: unitSize?.displayString(.dimensions))
+      //      Labeled("Zoom", value: zoomLevel.toPercentString(within: zoomRange ?? .unitRange))
       Labeled("Canvas Size", value: canvasSize?.displayString(.dimensions))
     }
-//    .debugTextOverlay("No zoom range in env", isEnabled: zoomRange == nil, alignment: .center)
-    
+    //    .debugTextOverlay("No zoom range in env", isEnabled: zoomRange == nil, alignment: .center)
+
     .task(id: panOffset) { store.pan = panOffset }
     .task(id: zoomLevel) { store.zoom = zoomLevel }
     .task(id: viewportRect) { refreshGeometry() }
@@ -97,12 +97,13 @@ extension CellSelectionCanvas {
       viewportRect: viewportRect,
       dimensions: gridDimensions,
       projection: GridProjection(unitSize: unitSize),
-      canvasAnchor: .center
+      anchor: .center
+        //      canvasAnchor: .center
     )
   }
 
   private var rectRadii: RectangleCornerRadii? {
-    let rounding = canvasRounding ?? Styles.sizeTiny
+    let rounding: CGFloat = cornerRounding ?? Styles.sizeTiny
     guard let gridDimensions else { return nil }
     guard let position = store.pointerGridPosition else { return nil }
 
