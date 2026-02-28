@@ -14,9 +14,10 @@ import Foundation
 extension Character: BlankCreatable {
   public static func createBlank() -> Character {
     #if DEBUG
-    Character("#") // ⁉ ⁈ ‡ † ⌅ ⌥ ░ ╳ ☝ ☮ ▁ ☼ ✕ ✐ ✳ ✩ ▨ ▓ ▚ ∑ η ❡ ✁ ✿ ɑ
+    // ░ ╳ ✕ ▚ ∑ η ✳
+    Character("▚")
+    
     #else
-
     Character(" ")
 
     #endif

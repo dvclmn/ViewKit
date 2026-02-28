@@ -45,7 +45,6 @@ extension Range where Bound == String.Index {
     }
 
     /// Create the AttributedString range
-    ///
     let attributedStringRange: Range<AttributedString.Index> = start..<end
 
     return attributedStringRange

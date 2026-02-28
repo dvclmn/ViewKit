@@ -38,19 +38,17 @@ public struct CellSelectionTestView<Content: View>: View {
         }
       }
 
-//      .onContinuousHover(coordinateSpace: .global) { phase in
-//        switch phase {
-//          case .active(let location): store.pointerLocation = location
-//          case .ended: store.pointerLocation = nil
-//        }
-//      }
+      //      .onContinuousHover(coordinateSpace: .global) { phase in
+      //        switch phase {
+      //          case .active(let location): store.pointerLocation = location
+      //          case .ended: store.pointerLocation = nil
+      //        }
+      //      }
       //      .setCharacterSize(mode: .debounce(0.2))
       //      .viewportCapture(mode: .debounce(0.2))
 
-      
-      
-//      .task(id: canvasSize) { store.canvasSize = canvasSize }
-//      .task(id: gridDimensions) { store.gridDimensions = gridDimensions }
+      //      .task(id: canvasSize) { store.canvasSize = canvasSize }
+      //      .task(id: gridDimensions) { store.gridDimensions = gridDimensions }
 
       .environment(\.zoomRange, zoomRange)
       .environment(\.canvasSize, canvasSize)

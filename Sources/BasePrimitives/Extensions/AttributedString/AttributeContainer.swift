@@ -24,6 +24,7 @@ extension AttributeContainer {
   public static var highlighter: Self { colours(.black, on: .green) }
   public static var blackOnOrange: Self { colours(.black, on: .orange.opacity(0.7)) }
   public static var secondary: Self { colours(.secondary) }
+  public static var faint: Self { colours(.primary.opacity(0.16)) }
   public static var clear: Self { colours(.clear, on: .clear) }
 
 }
