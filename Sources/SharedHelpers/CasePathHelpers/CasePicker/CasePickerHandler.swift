@@ -6,6 +6,7 @@
 //
 
 import CasePaths
+import BasePrimitives
 import SwiftUI
 
 /// Owns the “case switching policy” for `MetaEnum` values.
@@ -109,21 +110,6 @@ extension CasePathHandler {
         return false
     }
   }
-  //  func switchTo(_ newMeta: Enum.Meta, binding: Binding<Enum>) {
-  //    guard selectedMeta != newMeta else { return }
-  //
-  //    /// Cache current value
-  //    cache[selectedMeta] = binding.wrappedValue
-  //
-  //    if let restored = cache[newMeta] {
-  //      binding.wrappedValue = restored
-  //    } else if let fresh = Enum(fromMeta: newMeta) {
-  //      binding.wrappedValue = fresh
-  //      cache[newMeta] = fresh
-  //    }
-  //
-  //    selectedMeta = newMeta
-  //  }
 }
 
 @MainActor
@@ -143,15 +129,3 @@ extension CasePathHandler {
     )
   }
 }
-
-// MARK: - View Extensions for Conditional Content
-//extension View {
-//  /// Show this view only when the enum matches the given case
-//  public func showIf<Root, Value>(
-//    _ binding: Binding<Root>,
-//    matches casePath: AnyCasePath<Root, Value>
-//  ) -> some View {
-//    self.opacity(casePath.extract(from: binding.wrappedValue) != nil ? 1 : 0)
-//      .disabled(casePath.extract(from: binding.wrappedValue) == nil)
-//  }
-//}

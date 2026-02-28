@@ -7,6 +7,7 @@
 
 import CasePaths
 import SwiftUI
+import BasePrimitives
 
 public struct CasePicker<Root, Meta, Content>: View
 where

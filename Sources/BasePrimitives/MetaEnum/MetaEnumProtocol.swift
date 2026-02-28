@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 9/2/2026.
 //
 
-import CasePaths
+//import CasePaths
 import SwiftUI
 
 /// Note: This is applied to the parent, not the Meta Enum.

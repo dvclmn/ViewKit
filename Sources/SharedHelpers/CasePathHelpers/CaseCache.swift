@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 9/2/2026.
 //
 
+import BasePrimitives
 import CasePaths
 import SwiftUI
 
@@ -42,33 +43,33 @@ public final class CasePayloadCache<Enum: MetaEnum> {
 
 /// The below feels perhaps hacky, with the `MetaCache`?
 /// A generic cache that holds the last payload for each case.
-private final class MetaCache<Enum: MetaEnum> {
-  var lastByMeta: [Enum.Meta: Enum] = [:]
-}
+//private final class MetaCache<Enum: MetaEnum> {
+//  var lastByMeta: [Enum.Meta: Enum] = [:]
+//}
 
-extension Binding where Value: MetaEnum {
-  @MainActor
-  func metaSelection(preservingPayloads: Bool = true) -> Binding<Value.Meta> {
-    let cache = MetaCache<Value>()
-    cache.lastByMeta[self.wrappedValue.meta] = self.wrappedValue
-    return Binding<Value.Meta>(
-      get: { self.wrappedValue.meta },
-      set: { newMeta in
-        let oldValue = self.wrappedValue
-        let oldMeta = oldValue.meta
-        guard oldMeta != newMeta else { return }
-        if preservingPayloads {
-          cache.lastByMeta[oldMeta] = oldValue
-          if let restored = cache.lastByMeta[newMeta] {
-            self.wrappedValue = restored
-            return
-          }
-        }
-        // fall back to a default if we have no previous payload
-        if let fresh = Value(fromMeta: newMeta) {
-          self.wrappedValue = fresh
-        }
-      }
-    )
-  }
-}
+//extension Binding where Value: MetaEnum {
+//  @MainActor
+//  func metaSelection(preservingPayloads: Bool = true) -> Binding<Value.Meta> {
+//    let cache = MetaCache<Value>()
+//    cache.lastByMeta[self.wrappedValue.meta] = self.wrappedValue
+//    return Binding<Value.Meta>(
+//      get: { self.wrappedValue.meta },
+//      set: { newMeta in
+//        let oldValue = self.wrappedValue
+//        let oldMeta = oldValue.meta
+//        guard oldMeta != newMeta else { return }
+//        if preservingPayloads {
+//          cache.lastByMeta[oldMeta] = oldValue
+//          if let restored = cache.lastByMeta[newMeta] {
+//            self.wrappedValue = restored
+//            return
+//          }
+//        }
+//        // fall back to a default if we have no previous payload
+//        if let fresh = Value(fromMeta: newMeta) {
+//          self.wrappedValue = fresh
+//        }
+//      }
+//    )
+//  }
+//}
