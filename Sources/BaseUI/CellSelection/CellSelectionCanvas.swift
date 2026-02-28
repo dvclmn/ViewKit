@@ -19,6 +19,7 @@ struct CellSelectionCanvas: View {
   @Environment(\.cornerRounding) private var cornerRounding
   @Environment(\.gridDimensions) private var gridDimensions
   @Environment(\.canvasSize) private var canvasSize
+  @Environment(\.hoverLocation) private var hoverLocation
 
   private let rounding: CGFloat = 4
 
@@ -43,7 +44,10 @@ struct CellSelectionCanvas: View {
         drawsBorder: false
       )
 
-      guard let rect = store.selectionRect else { return }
+      guard let rect = store.selectionRect else {
+        context.drawDebugText("No selection rect", at: size.midpoint, pointDisplay: .point(.pink))
+        return
+      }
 
       if let radii = rectRadii {
         let rounded = UnevenRoundedRectangle(cornerRadii: radii)
@@ -67,8 +71,8 @@ struct CellSelectionCanvas: View {
     }  // END canvas
 
     .addInfoBarItems {
-      Labeled("Pointer (Global)", value: store.pointerLocation?.displayString(.location))
-      Labeled("Pointer (Local)", value: store.pointerLocalSpace?.displayString(.location))
+      //      Labeled("Pointer (Global)", value: store.pointerLocation?.displayString(.location))
+      //      Labeled("Pointer (Local)", value: store.pointerLocalSpace?.displayString(.location))
       //      Labeled("Viewport Rect", value: viewportRect?.displayString(.concise))
       //      Labeled("Cell Size", value: unitSize?.displayString(.dimensions))
       //      Labeled("Zoom", value: zoomLevel.toPercentString(within: zoomRange ?? .unitRange))
@@ -81,6 +85,7 @@ struct CellSelectionCanvas: View {
     .task(id: viewportRect) { refreshGeometry() }
     .task(id: unitSize) { refreshGeometry() }
     .task(id: gridDimensions) { refreshGeometry() }
+    .task(id: hoverLocation) { store.pointerLocation = hoverLocation }
 
   }
 }

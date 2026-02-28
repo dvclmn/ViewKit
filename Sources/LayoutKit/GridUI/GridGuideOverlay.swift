@@ -124,7 +124,6 @@ extension GridGuideOverlayModifier {
         positioned: .aboveOrigin,
         fontSize: 20,
         pointDisplay: .none,
-        zoomPercent: 1.0
       )
     }
   }

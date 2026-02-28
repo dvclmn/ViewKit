@@ -36,10 +36,11 @@ extension GraphicsContext {
     colour: Color = .primary,
     fontSize: CGFloat = 11,
     pointDisplay: DebugPoint,
-    zoomPercent zoomLevel: CGFloat?  // Pass in normalised zoom if relevant
+//    zoomPercent zoomLevel: CGFloat?  // Pass in normalised zoom if relevant
   ) {
 
-    let zoom = zoomLevel ?? 1.0
+    let zoom = environment.zoomLevel
+//    let zoom = zoomLevel ?? 1.0
     let fontSizeUnZoomed = fontSize.removingZoomPercent(zoom)
 
     /// Calculate size, for drawing Label background

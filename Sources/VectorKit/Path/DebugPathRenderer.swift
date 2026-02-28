@@ -43,7 +43,6 @@ public struct PathDebugRenderer {
         colour: .primary,
         fontSize: config.labelFontSize,
         pointDisplay: .none,
-        zoomPercent: zoomPercent
       )
     }
   }
