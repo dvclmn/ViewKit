@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GestureKitDemoView: View {
 
-  @State private var interactionKind: PointerInteraction?
+//  @State private var interactionKind: PointerInteraction?
   @State private var offset = CGSize.zero
 
   var body: some View {
@@ -21,19 +21,19 @@ struct GestureKitDemoView: View {
         .frame(width: 600, height: 700)
         .background(.black.opacity(0.6))
 
-      Capsule().fill(.brown)
-        .frame(width: 300, height: 100)
-        .offset(offset)
-        .cumulativeDrag(
-          $offset,
-          isEnabled: true,
-          minDragDistance: 4
-        ) { dragging in
-          interactionKind = dragging ? .drag(.zero, .changed) : nil
-        }
+//      Capsule().fill(.brown)
+//        .frame(width: 300, height: 100)
+//        .offset(offset)
+//        .cumulativeDrag(
+//          $offset,
+//          isEnabled: true,
+//          minDragDistance: 4
+//        ) { dragging in
+//          interactionKind = dragging ? .drag(.zero, .changed) : nil
+//        }
     }
 
-    .addDebugText("Interaction: \(interactionKind?.referenceName, default: "None")")
+//    .addDebugText("Interaction: \(interactionKind?.referenceName, default: "None")")
 
     //      .onTapGesture { location in
     //        interactionKind = .tap(location)

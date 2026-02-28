@@ -144,21 +144,21 @@ extension ViewportContext {
       )
     )
   }
-//  /// Converts a global/screen rect to local/canvas rect.
-//  public func toCanvas(rect: CGRect) -> CGRect {
-////    let origin = Point<ScreenSpace>(fromPoint: rect.origin)
-//    Rect<CanvasSpace>(
-//      origin: toCanvas(screenPoint: rect.origin),
-//      size: <#T##CGSize#>
-//    )
-////    CGRect(
-////      origin: toCanvas(screenPoint: Point<ScreenSpace>(fromPoint: rect.origin)),
-////      size: CGSize(
-////        width: rect.width / zoomSafe,
-////        height: rect.height / zoomSafe
-////      )
-////    )
-//  }
+  //  /// Converts a global/screen rect to local/canvas rect.
+  //  public func toCanvas(rect: CGRect) -> CGRect {
+  ////    let origin = Point<ScreenSpace>(fromPoint: rect.origin)
+  //    Rect<CanvasSpace>(
+  //      origin: toCanvas(screenPoint: rect.origin),
+  //      size: <#T##CGSize#>
+  //    )
+  ////    CGRect(
+  ////      origin: toCanvas(screenPoint: Point<ScreenSpace>(fromPoint: rect.origin)),
+  ////      size: CGSize(
+  ////        width: rect.width / zoomSafe,
+  ////        height: rect.height / zoomSafe
+  ////      )
+  ////    )
+  //  }
 
   /// Converts a local/canvas rect to global/screen rect.
   public func toGlobal(rect: CGRect) -> CGRect {
@@ -191,10 +191,10 @@ extension ViewportContext {
   //  }
 
   /// Step 1: Screen -> Canvas
-//  func convertToCanvas(_ screenPoint: Point<ScreenSpace>) -> Point<CanvasSpace> {
-//    // The math stays here, protected by the types
-//    let x = (screenPoint.x - viewportRect.minX - pan.x) / zoom
-//    let y = (screenPoint.y - viewportRect.minY - pan.y) / zoom
-//    return Point<CanvasSpace>(x: x, y: y)
-//  }
+  //  func convertToCanvas(_ screenPoint: Point<ScreenSpace>) -> Point<CanvasSpace> {
+  //    // The math stays here, protected by the types
+  //    let x = (screenPoint.x - viewportRect.minX - pan.x) / zoom
+  //    let y = (screenPoint.y - viewportRect.minY - pan.y) / zoom
+  //    return Point<CanvasSpace>(x: x, y: y)
+  //  }
 }
