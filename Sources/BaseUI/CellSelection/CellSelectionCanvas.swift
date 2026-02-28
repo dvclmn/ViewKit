@@ -42,10 +42,8 @@ struct CellSelectionCanvas: View {
         drawsBorder: false
       )
 
-      guard let rect = store.selectionRect else {
-//        context.drawDebugText("No selection rect", at: size.midpoint, pointDisplay: .point(.pink))
-        return
-      }
+      guard let rect = store.selectionRect else { return }
+      // context.drawDebugText("No selection rect", at: size.midpoint, pointDisplay: .point(.pink))
 
       if let radii = rectRadii {
         let rounded = UnevenRoundedRectangle(cornerRadii: radii)
@@ -76,21 +74,13 @@ struct CellSelectionCanvas: View {
       //      Labeled("Zoom", value: zoomLevel.toPercentString(within: zoomRange ?? .unitRange))
       Labeled("Canvas Size", value: canvasSize?.displayString(.dimensions))
     }
-    //    .debugTextOverlay("No zoom range in env", isEnabled: zoomRange == nil, alignment: .center)
 
     .task(id: panOffset) { store.pan = panOffset }
     .task(id: zoomLevel) { store.zoom = zoomLevel }
     .task(id: viewportRect) { refreshGeometry() }
     .task(id: unitSize) { refreshGeometry() }
     .task(id: gridDimensions) { refreshGeometry() }
-    .task(id: hoverLocation) {
-//      if isPreview {
-//        store.pointerLocation = CGPoint(60, 220)
-//      } else {
-      store.pointerLocation = hoverLocation
-//      }
-    }
-
+    .task(id: hoverLocation) { store.pointerLocation = hoverLocation }
 
   }
 }
@@ -108,7 +98,6 @@ extension CellSelectionCanvas {
       dimensions: gridDimensions,
       projection: GridProjection(unitSize: unitSize),
       anchor: .center
-        //      canvasAnchor: .center
     )
   }
 

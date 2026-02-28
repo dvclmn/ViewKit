@@ -12,8 +12,10 @@ public struct BoxView: View {
   @Environment(\.glyphSet) private var glyphSet
   @Environment(\.frameStyle) private var frameStyle
   @Environment(\.metrics) private var metrics
-  @Environment(\.gridWidth) private var gridWidth
-  @Environment(\.gridHeight) private var gridHeight
+  @Environment(\.gridDimensions) private var gridDimensions
+  
+//  @Environment(\.gridWidth) private var gridWidth
+//  @Environment(\.gridHeight) private var gridHeight
   @Environment(\.fontSizeOverride) private var fontSizeOverride
 
   @State private var characterSize: CGSize?
@@ -30,8 +32,8 @@ public struct BoxView: View {
   public var body: some View {
     Text(
       Box(
-        width: gridWidth ?? 15,
-        height: gridHeight,
+        width: gridDimensions?.width ?? 15,
+        height: gridDimensions?.height,
         theme: theme,
         metrics: metrics
       ) {
@@ -84,7 +86,9 @@ extension EnvironmentValues {
     }
     //                .environment(\.metrics, .lineNumbers)
     .environment(\.paragraphNumber, 5)
-    .setGridFrame(18, alignment: .leading)
+    .environment(\.gridDimensions, .init(18, 1))
+    
+//    .setGridFrame(18, alignment: .leading)
     .environment(\.fontSizeOverride, 11)
 
   }

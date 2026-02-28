@@ -17,7 +17,7 @@ public struct BoxViewExample: View {
   let textLength: Int
   //  let paragraph: Int?
 
-  init(
+  public init(
     textLength: Int = 100,
     //    paragraph: Int? = nil
   ) {
