@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-//import CasePaths
-
 /// Note: `GridAxis` is about how indices progress across the grid,
 /// not about how the things themselves are shaped.
 ///
@@ -26,7 +24,6 @@ import SwiftUI
 ///
 /// ```
 //@CasePathable
-
 public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
   case horizontal  // Column
   case vertical  // Row
