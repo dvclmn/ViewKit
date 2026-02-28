@@ -8,15 +8,15 @@
 import SwiftUI
 
 extension EnvironmentValues {
-  @Entry public var canvasGeometry: CanvasGeometry = .init()
+//  @Entry public var canvasGeometry: CanvasGeometry = .init()
 //  @Entry public var canvasSize: CGSize = .zero
   @Entry public var isResizingCanvas: Bool = false
 
-  @Entry public var canvasRotation: Angle = .zero
+  
   
 //  @Entry public var pointerState: PointerState = .initial
 //  @Entry public var tapLocation: CGPoint?
-//  @Entry public var hoverLocation: CGPoint?
+
 //  @Entry public var dragRect: CGRect?
   
   @Entry public var shouldRenderDragRect: Bool = true

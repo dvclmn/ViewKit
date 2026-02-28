@@ -80,18 +80,7 @@ extension EnvironmentValues {
   /// consuming this View, or what it's context is.
   @Entry public var viewDescription: String?
 
-  /// This is primarily expected to represent the whole window of an app,
-  /// minus any base UI components like Toolbar or Inspector.
-  ///
-  /// Useful as long as its companion modifier
-  /// `viewportCapture(mode:showsIndicator:didUpdateSize)`
-  /// is placed on the view the caller regards as the viewport area
-//  @Entry public var viewportSize: CGSize?
-  @Entry public var viewportRect: CGRect?
-  public var viewportSize: CGSize? {
-    guard let viewportRect else { return nil }
-    return viewportRect.size
-  }
+
   @Entry public var isScrollAtStart: Bool = true
 
   @Entry public var formatValue: (Double) -> String = { $0.displayString }
@@ -120,22 +109,7 @@ extension EnvironmentValues {
 
   @Entry public var isLoading: Bool = false
 
-  /// From CanvasKit
-  @Entry public var panOffset: CGSize = .zero
-  @Entry public var zoomLevel: Double = 1.0
-  @Entry public var zoomRange: ClosedRange<Double>?
-  
-  public var zoomClamped: Double {
-    guard let zoomRange else { return zoomLevel }
-    return zoomLevel.clamped(to: zoomRange)
-  }
-  
-  /// Note: This is already zoom-adjusted, so remains the same
-  /// effective size regardless of zoom level
-  @Entry public var canvasRounding: Double?
 
-  /// Aka artwork size, document size
-  @Entry public var canvasSize: CGSize?
 }
 
 public protocol ValueFormattable {}
