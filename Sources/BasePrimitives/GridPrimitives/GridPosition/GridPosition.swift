@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-/// Would this be better than `GridPosition`?
-public struct GridPoint: Hashable, Codable, Sendable {
-  public var x: Int
-  public var y: Int
-}
-
 /// This is like `CGPoint`
 ///
 /// 📣 Important: ASCII-based / original GridPosition emphatically did
@@ -36,6 +30,16 @@ public struct GridPosition: ModelBase {
 }
 
 extension GridPosition {
+  
+  public init(x: Int, y: Int) {
+    self.init(column: x, row: y)
+  }
+
+  /// Cartesian X equivalent (Column)
+  public var x: Int { column }
+
+  /// Cartesian Y equivalent (Row)
+  public var y: Int { row }
 
   /// `cellSize` is the width and height in points
   /// of a single cell in the current `GridCanvas`.
@@ -72,7 +76,7 @@ extension GridPosition {
     let colCount = grid.width
     return column >= colCount - 1
   }
-  
+
   public func toUnitPoint(in grid: GridDimensions) -> UnitPoint {
     /// Map discrete grid coordinates to a continuous UnitPoint in [0, 1].
     /// Interpret (column, row) as the top-left corner of the cell and map to the cell center.
