@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 25/2/2026.
 //
 
-import BasePrimitives
-import SwiftUI
+//import BasePrimitives
+//import SwiftUI
 
 /// Global == viewport == screen space
 /// Canvas == Local space
@@ -52,7 +52,7 @@ import SwiftUI
 //  }
 //}
 
-extension CoordinateSpaceContext {
+//extension CoordinateSpaceContext {
 //
 //  //  public init(
 //  public init?<T: GeometryContext>(
@@ -109,57 +109,57 @@ extension CoordinateSpaceContext {
   //    mapToCanvas(viewportPoint: location)
   //  }
 
-}
-
-extension CoordinateSpaceContext {
-
-  #if DEBUG
-  /// Distance error for round-tripping a global point through local space.
-  public func roundTripError(global point: CGPoint) -> CGFloat {
-    let local = toLocal(point: point)
-    let result = toGlobal(point: local)
-    return hypot(result.x - point.x, result.y - point.y)
-  }
-
-  /// Distance error for round-tripping a local point through global space.
-  public func roundTripError(local point: CGPoint) -> CGFloat {
-    let global = toGlobal(point: point)
-    let result = toLocal(point: global)
-    return hypot(result.x - point.x, result.y - point.y)
-  }
-
-  @discardableResult
-  public func assertRoundTrip(
-    global point: CGPoint,
-    tolerance: CGFloat = 0.5,
-    file: StaticString = #fileID,
-    line: UInt = #line
-  ) -> CGFloat {
-    let error = roundTripError(global: point)
-    assert(
-      error <= tolerance,
-      "Coordinate transform round-trip failed (global->local->global). Error: \(error), tolerance: \(tolerance)",
-      file: file,
-      line: line
-    )
-    return error
-  }
-
-  @discardableResult
-  public func assertRoundTrip(
-    local point: CGPoint,
-    tolerance: CGFloat = 0.5,
-    file: StaticString = #fileID,
-    line: UInt = #line
-  ) -> CGFloat {
-    let error = roundTripError(local: point)
-    assert(
-      error <= tolerance,
-      "Coordinate transform round-trip failed (local->global->local). Error: \(error), tolerance: \(tolerance)",
-      file: file,
-      line: line
-    )
-    return error
-  }
-  #endif
-}
+//}
+//
+//extension CoordinateSpaceContext {
+//
+//  #if DEBUG
+//  /// Distance error for round-tripping a global point through local space.
+//  public func roundTripError(global point: CGPoint) -> CGFloat {
+//    let local = toLocal(point: point)
+//    let result = toGlobal(point: local)
+//    return hypot(result.x - point.x, result.y - point.y)
+//  }
+//
+//  /// Distance error for round-tripping a local point through global space.
+//  public func roundTripError(local point: CGPoint) -> CGFloat {
+//    let global = toGlobal(point: point)
+//    let result = toLocal(point: global)
+//    return hypot(result.x - point.x, result.y - point.y)
+//  }
+//
+//  @discardableResult
+//  public func assertRoundTrip(
+//    global point: CGPoint,
+//    tolerance: CGFloat = 0.5,
+//    file: StaticString = #fileID,
+//    line: UInt = #line
+//  ) -> CGFloat {
+//    let error = roundTripError(global: point)
+//    assert(
+//      error <= tolerance,
+//      "Coordinate transform round-trip failed (global->local->global). Error: \(error), tolerance: \(tolerance)",
+//      file: file,
+//      line: line
+//    )
+//    return error
+//  }
+//
+//  @discardableResult
+//  public func assertRoundTrip(
+//    local point: CGPoint,
+//    tolerance: CGFloat = 0.5,
+//    file: StaticString = #fileID,
+//    line: UInt = #line
+//  ) -> CGFloat {
+//    let error = roundTripError(local: point)
+//    assert(
+//      error <= tolerance,
+//      "Coordinate transform round-trip failed (local->global->local). Error: \(error), tolerance: \(tolerance)",
+//      file: file,
+//      line: line
+//    )
+//    return error
+//  }
+//  #endif
+//}

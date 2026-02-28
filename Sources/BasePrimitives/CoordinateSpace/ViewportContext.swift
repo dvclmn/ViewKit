@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 28/2/2026.
 //
 
-import BasePrimitives
 import SwiftUI
 
 /// ## Paradigm 1: Standard Pixel App (Photoshop style)
@@ -30,14 +29,14 @@ import SwiftUI
 
 /// Manages the continuous relationship between the Viewport and the Canvas.
 ///
-/// // Usage in a View/Gesture:
+/// Usage in a View/Gesture:
 /// ```
 /// let tap = Point<ScreenSpace>(x: gesture.location.x, y: gesture.location.y)
 /// let canvasPoint = viewport.convertToCanvas(tap)
 /// let gridPos = projection.gridPosition(from: canvasPoint)
 /// ```
 
-/// gridPos is now a pure (column, row) you can use to look up your ASCII character!
+/// `gridPos` is now a pure (column, row) you can use to look up your ASCII character!
 ///
 /// This is the successor of older `CoordinateSpaceContext`
 public struct ViewportContext {
@@ -136,14 +135,30 @@ extension ViewportContext {
 
   /// Converts a global/screen rect to local/canvas rect.
   public func toCanvas(rect: CGRect) -> CGRect {
-    CGRect(
-      origin: toCanvas(screenPoint: Point<ScreenSpace>(fromPoint: rect.origin)),
+    let originCanvas = toCanvas(screenPoint: Point<ScreenSpace>(fromPoint: rect.origin))
+    return CGRect(
+      origin: CGPoint(x: originCanvas.x, y: originCanvas.y),
       size: CGSize(
         width: rect.width / zoomSafe,
         height: rect.height / zoomSafe
       )
     )
   }
+//  /// Converts a global/screen rect to local/canvas rect.
+//  public func toCanvas(rect: CGRect) -> CGRect {
+////    let origin = Point<ScreenSpace>(fromPoint: rect.origin)
+//    Rect<CanvasSpace>(
+//      origin: toCanvas(screenPoint: rect.origin),
+//      size: <#T##CGSize#>
+//    )
+////    CGRect(
+////      origin: toCanvas(screenPoint: Point<ScreenSpace>(fromPoint: rect.origin)),
+////      size: CGSize(
+////        width: rect.width / zoomSafe,
+////        height: rect.height / zoomSafe
+////      )
+////    )
+//  }
 
   /// Converts a local/canvas rect to global/screen rect.
   public func toGlobal(rect: CGRect) -> CGRect {
