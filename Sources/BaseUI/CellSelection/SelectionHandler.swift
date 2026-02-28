@@ -6,6 +6,7 @@
 //
 
 import CoreTools
+import CanvasKit
 import SwiftUI
 
 @Observable
@@ -17,57 +18,46 @@ final class SelectionHandler {
 }
 
 extension SelectionHandler {
-
-  private var viewportRect: CGRect? {
-    geometry?.viewportRect
-  }
-
-  private var dimensions: GridDimensions? {
-    geometry?.dimensions
-  }
-
   private var viewportContext: ViewportContext? {
     guard let geometry else { return nil }
     return geometry.viewportContext(zoom: zoom, pan: pan)
   }
 
+  private var pointerHoverMapper: CanvasPointerHoverMapper? {
+    guard let context = viewportContext else { return nil }
+    return CanvasPointerHoverMapper(context: context)
+  }
+
   /// Aka Canvas space
   var pointerLocalSpace: CGPoint? {
-    guard let pointerLocation, let context = viewportContext else { return nil }
-    let canvasPoint = context.toCanvas(
-      screenPoint: Point<ScreenSpace>(fromPoint: pointerLocation)
-    )
-    return CGPoint(x: canvasPoint.x, y: canvasPoint.y)
+    guard
+      let pointerLocation,
+      let mapped = pointerHoverMapper?.map(screenPoint: pointerLocation)
+    else { return nil }
+
+    return mapped.canvas
   }
 
   #if DEBUG
   var pointerRoundTripError: CGFloat? {
-    guard let pointerLocation, let context = viewportContext else { return nil }
-    let local = context.toCanvas(screenPoint: Point<ScreenSpace>(fromPoint: pointerLocation))
-    let roundTrip = context.toGlobal(point: CGPoint(x: local.x, y: local.y))
-    return hypot(roundTrip.x - pointerLocation.x, roundTrip.y - pointerLocation.y)
+    guard
+      let pointerLocation,
+      let mapper = pointerHoverMapper
+    else { return nil }
+    return mapper.roundTripError(screenPoint: pointerLocation)
   }
   #endif
 
   /// Returns the row and column index for a global pointer location
   /// Returns nil if the pointer is outside the grid boundaries
   var pointerGridPosition: GridPosition? {
-    guard let geometry else { return nil }
+    guard
+      let geometry,
+      let pointerLocation,
+      let mapped = pointerHoverMapper?.mapIfInside(screenPoint: pointerLocation)
+    else { return nil }
 
-    /// 1. Convert Global Screen Space -> Local Canvas Space
-    guard let local = pointerLocalSpace else { return nil }
-
-    /// 2. Perform Boundary Check
-    /// Ensure the pointer isn't in the "empty space" around the canvas
-    let canvasSize = geometry.canvasSize.cgSize
-    guard local.x >= 0, local.x < canvasSize.width,
-      local.y >= 0, local.y < canvasSize.height
-    else {
-      return nil
-    }
-
-    /// 3. Convert Local Coordinate -> Grid Indices
-    let point = Point<CanvasSpace>(fromPoint: local)
+    let point = Point<CanvasSpace>(fromPoint: mapped.canvas)
     return geometry.projection.gridPositionIfValid(from: point)
   }
 

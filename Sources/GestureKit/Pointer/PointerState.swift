@@ -35,6 +35,21 @@ public struct HoverState: PointerAction {
   }
 }
 
+extension HoverState {
+  public var isActive: Bool {
+    value != nil
+  }
+
+  public mutating func update(_ phase: HoverPhase) {
+    switch phase {
+      case .active(let location):
+        update(location)
+      case .ended:
+        update(nil)
+    }
+  }
+}
+
 //public struct PointerState {
 //
 //  private(set) var tapOrHover: CGPoint?

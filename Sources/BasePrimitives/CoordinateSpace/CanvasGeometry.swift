@@ -26,6 +26,31 @@ public struct CanvasGeometry: Sendable, Equatable {
   }
 }
 
+extension CanvasGeometry {
+  public var isValidForCoordinateMapping: Bool {
+    viewportRect.width > 0
+      && viewportRect.height > 0
+      && canvasSize.width > 0
+      && canvasSize.height > 0
+  }
+
+  public func viewportContext(
+    zoom: CGFloat,
+    pan: CGSize
+  ) -> ViewportContext {
+    ViewportContext(
+      viewportRect: viewportRect,
+      pan: Point<ScreenSpace>(x: pan.width, y: pan.height),
+      zoom: zoom,
+      canvasSize: Size<CanvasSpace>(
+        width: canvasSize.width,
+        height: canvasSize.height
+      ),
+      canvasAnchor: canvasAnchor
+    )
+  }
+}
+
 //extension CanvasGeometry: CustomStringConvertible {
 //  public var description: String {
 //    DisplayString {
