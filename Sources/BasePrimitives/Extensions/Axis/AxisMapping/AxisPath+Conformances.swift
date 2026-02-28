@@ -42,16 +42,6 @@ extension GridPosition: AxisKeyPathWritable {
   public static var secondaryWritableKey: WritableKeyPath<Self, Int> { \.row }
 }
 
-extension UnitSize: AxisKeyPathWritable {
-  public static var primaryWritableKey: WritableKeyPath<Self, UnitLength> { \.width }
-  public static var secondaryWritableKey: WritableKeyPath<Self, UnitLength> { \.height }
-}
-
-extension UnitRect: AxisKeyPathWritable {
-  public static var primaryWritableKey: WritableKeyPath<Self, UnitLength> { \.size.width }
-  public static var secondaryWritableKey: WritableKeyPath<Self, UnitLength> { \.size.height }
-}
-
 extension GridDimensions: AxisKeyPathWritable {
   public static var primaryWritableKey: WritableKeyPath<Self, Int> { \.width }
   public static var secondaryWritableKey: WritableKeyPath<Self, Int> { \.height }

@@ -22,18 +22,28 @@ extension CGSize {
     return lengthOfSelf.toGridCount(using: unitLength, rounding: rounding)
   }
   
-  public func toUnitSize(
+  public func toGridDimensions(
     using unitSize: CGSize,
     rounding: GridRounding = .down
-  ) -> UnitSize? {
-    UnitSize(fromSize: self, unitSize: unitSize, rounding: rounding)
+  ) -> GridDimensions? {
+    guard
+      let width = width.toGridCount(using: unitSize.width, rounding: rounding),
+      let height = height.toGridCount(using: unitSize.height, rounding: rounding),
+      width > 0,
+      height > 0
+    else { return nil }
+
+    return GridDimensions(width: width, height: height)
   }
   
-  public func snapped(
+  public func snappedToGrid(
     using unitSize: CGSize,
     rounding: GridRounding = .down
   ) -> CGSize? {
-    toUnitSize(using: unitSize, rounding: rounding)?.screenSize
+    guard let dimensions = toGridDimensions(using: unitSize, rounding: rounding) else {
+      return nil
+    }
+    return dimensions.toScreenSize(using: unitSize)
   }
 }
 

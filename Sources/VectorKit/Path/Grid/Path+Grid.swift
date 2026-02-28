@@ -18,15 +18,16 @@ public enum GridLinesMode {
 
 extension Path {
   public static func boundedGrid(
-    unitSize: UnitSize,
+    dimensions: GridDimensions,
+    cellSize: CGSize,
     containerSize: CGSize,
     drawsBorder: Bool
   ) -> Path {
-    let cols = max(0, unitSize.width.magnitude)
-    let rows = max(0, unitSize.height.magnitude)
+    let cols = max(0, dimensions.width)
+    let rows = max(0, dimensions.height)
 
-    let cw = unitSize.width.unitLength
-    let ch = unitSize.height.unitLength
+    let cw = cellSize.width
+    let ch = cellSize.height
 
     guard containerSize.width > 0, containerSize.height > 0, cw > 0, ch > 0 else {
       return Path()

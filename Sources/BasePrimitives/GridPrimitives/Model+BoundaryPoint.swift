@@ -108,23 +108,6 @@ extension GridBoundaryPoint {
     }
   }
 
-  public func isValidSizeDelta(
-    from oldSize: UnitSize,
-    to newSize: UnitSize
-  ) -> Bool {
-    switch self {
-      case .top, .bottom:
-        return oldSize.width == newSize.width
-
-      case .leading, .trailing:
-        return oldSize.height == newSize.height
-
-      case .topLeading, .bottomLeading, .topTrailing, .bottomTrailing:
-        /// Both axes are allowed to change at corners
-        return true
-    }
-  }
-
   //  public func isValidSizeDelta(
   //    from oldDimensions: GridDimensions,
   //    to newDimensions: GridDimensions

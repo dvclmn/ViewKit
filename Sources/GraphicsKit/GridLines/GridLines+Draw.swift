@@ -45,7 +45,7 @@ extension GraphicsContext {
     )
 
     guard
-      let gridSize = sizeMode.gridSize(
+      let gridDimensions = sizeMode.gridDimensions(
         from: cellZoomed,  // Or `cellSize`?
         in: containerSize
       )
@@ -56,7 +56,8 @@ extension GraphicsContext {
     switch sizeMode {
       case .fixed, .fill:
         path = .boundedGrid(
-          unitSize: gridSize,
+          dimensions: gridDimensions,
+          cellSize: cellZoomed,
           containerSize: containerSize,
           drawsBorder: drawsBorder
         )

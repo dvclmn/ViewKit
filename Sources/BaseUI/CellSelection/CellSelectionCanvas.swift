@@ -78,25 +78,28 @@ struct CellSelectionCanvas: View {
     
     .task(id: panOffset) { store.pan = panOffset }
     .task(id: zoomLevel) { store.zoom = zoomLevel }
-    .task(id: viewportRect) {
-      guard let viewportRect else { return }
-      store.geometry?.viewportRect = viewportRect
-    }
-    .task(id: unitSize) { store.cellSize = unitSize }
-    
-//    .task(id: canvasSize) {
-//      guard let canvasSize else { return }
-//      store.geometry?.subjectSize = canvasSize
-//    }
-    .task(id: gridDimensions) {
-      
-//      store.gridDimensions = gridDimensions
-    }
+    .task(id: viewportRect) { refreshGeometry() }
+    .task(id: unitSize) { refreshGeometry() }
+    .task(id: gridDimensions) { refreshGeometry() }
 
   }
 }
 
 extension CellSelectionCanvas {
+
+  private func refreshGeometry() {
+    guard let viewportRect, let unitSize, let gridDimensions else {
+      store.geometry = nil
+      return
+    }
+
+    store.geometry = GridGeometry(
+      viewportRect: viewportRect,
+      dimensions: gridDimensions,
+      projection: GridProjection(unitSize: unitSize),
+      canvasAnchor: .center
+    )
+  }
 
   private var rectRadii: RectangleCornerRadii? {
     let rounding = canvasRounding ?? Styles.sizeTiny

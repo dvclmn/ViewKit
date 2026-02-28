@@ -10,61 +10,83 @@ import Foundation
 /// Suggestion from Gemini
 /// Bridges the gap between pure Grid dimensions and Canvas (continuous) space.
 /// Note: The only piece that needs to know about e.g.  ASCII cell size.
-public struct GridProjection {
+public struct GridProjection: Equatable, Sendable {
   
   /// The size of a single grid cell in Canvas Space.
   public let unitSize: CGSize // e.g., 10x18 for a font
   
-  //  public var cellSize: CGSize
   public var rounding: GridRounding = .down
   
-  public init(unitSize: CGSize) {
+  public init(
+    unitSize: CGSize,
+    rounding: GridRounding = .down
+  ) {
     self.unitSize = unitSize
+    self.rounding = rounding
   }
 }
 
 extension GridProjection {
   
-  /// Converts Canvas space (continuous) to Grid space (discrete)
+  /// Converts Canvas space (continuous) to Grid space (discrete).
+  /// Returns `nil` when input cannot be safely converted.
+  public func gridPositionIfValid(from point: Point<CanvasSpace>) -> GridPosition? {
+    guard
+      let column = point.x.toGridCount(using: unitSize.width, rounding: rounding),
+      let row = point.y.toGridCount(using: unitSize.height, rounding: rounding)
+    else { return nil }
+
+    return GridPosition(column: column, row: row)
+  }
+
+  /// Converts Canvas space (continuous) to Grid space (discrete).
+  /// Falls back to `.zero` when input is invalid.
   public func gridPosition(from point: Point<CanvasSpace>) -> GridPosition {
-    GridPosition(
-      column: Int(floor(point.x / unitSize.width)),
-      row: Int(floor(point.y / unitSize.height))
+    gridPositionIfValid(from: point) ?? .zero
+  }
+
+  // MARK: - Grid to Canvas
+
+  public func canvasSize(for dimensions: GridDimensions) -> Size<CanvasSpace> {
+    Size(
+      width: CGFloat(dimensions.width) * unitSize.width,
+      height: CGFloat(dimensions.height) * unitSize.height
     )
   }
 
-  // MARK: - Grid to Canvas (Up the chain)
+  public func canvasCGSize(for dimensions: GridDimensions) -> CGSize {
+    let size = canvasSize(for: dimensions)
+    return CGSize(width: size.width, height: size.height)
+  }
 
-//  public func canvasSize(for dimensions: GridDimensions) -> CGSize {
-//    CGSize(
-//      width: CGFloat(dimensions.width) * cellSize.width,
-//      height: CGFloat(dimensions.height) * cellSize.height
-//    )
-//  }
-//
-//  public func canvasPoint(for position: GridPosition) -> CGPoint {
-//    CGPoint(
-//      x: CGFloat(position.x) * cellSize.width,
-//      y: CGFloat(position.y) * cellSize.height
-//    )
-//  }
-//
-//  // MARK: - Canvas to Grid (Down the chain)
-//
-//  public func gridDimensions(for canvasSize: CGSize) -> GridDimensions {
-//    // Here you would implement your specific rounding logic
-//    GridDimensions(
-//      width: Int(canvasSize.width / cellSize.width),  // Simplified
-//      height: Int(canvasSize.height / cellSize.height)
-//    )
-//  }
-//
-//  public func gridPosition(for canvasPoint: CGPoint) -> GridPosition {
-//    GridPosition(
-//      x: Int(canvasPoint.x / cellSize.width),
-//      y: Int(canvasPoint.y / cellSize.height)
-//    )
-//  }
+  public func canvasPoint(for position: GridPosition) -> Point<CanvasSpace> {
+    Point(
+      x: CGFloat(position.column) * unitSize.width,
+      y: CGFloat(position.row) * unitSize.height
+    )
+  }
+
+  // MARK: - Canvas to Grid
+
+  public func gridDimensions(
+    for canvasSize: Size<CanvasSpace>,
+    rounding: GridRounding? = nil
+  ) -> GridDimensions? {
+    let strategy = rounding ?? self.rounding
+    return CGSize(
+      width: canvasSize.width,
+      height: canvasSize.height
+    )
+    .toGridDimensions(using: unitSize, rounding: strategy)
+  }
+
+  public func gridDimensions(
+    for canvasSize: CGSize,
+    rounding: GridRounding? = nil
+  ) -> GridDimensions? {
+    let strategy = rounding ?? self.rounding
+    return canvasSize.toGridDimensions(using: unitSize, rounding: strategy)
+  }
 }
 
 /// Suggestion from Claude

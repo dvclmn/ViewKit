@@ -24,19 +24,20 @@ public enum GridSizeMode {
 extension GridSizeMode {
   
   /// Should cellSize be before or after zoom? I'm not sure
-  public func gridSize(
+  public func gridDimensions(
     from cellSize: CGSize,
     in containerSize: CGSize
-  ) -> UnitSize? {
+  ) -> GridDimensions? {
     switch self {
       case .fixed(let columns, let rows):
-        UnitSize(width: columns, height: rows, unitSize: cellSize)
+        guard columns > 0, rows > 0 else { return nil }
+        return GridDimensions(width: columns, height: rows)
 
       case .fill(let size):
-        UnitSize(fromSize: size, unitSize: cellSize)
+        return size.toGridDimensions(using: cellSize)
 
       case .fillContainer:
-        UnitSize(fromSize: containerSize, unitSize: cellSize)
+        return containerSize.toGridDimensions(using: cellSize)
     }
   }
 }

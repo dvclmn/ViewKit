@@ -9,10 +9,10 @@ import Foundation
 
 extension GridShaped {
 
-  public func unitSize(
+  public func canvasSize(
     cellSize: CGSize
-  ) -> UnitSize {
-    UnitSize(dimensions: dimensions, unitSize: cellSize)
+  ) -> CGSize? {
+    dimensions.toScreenSize(using: cellSize)
   }
 
   var rows: [Row] { cells }

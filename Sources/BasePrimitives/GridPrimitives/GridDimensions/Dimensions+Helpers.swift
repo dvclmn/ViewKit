@@ -14,28 +14,18 @@ extension GridDimensions {
     GridDimensions(width: width * 2, height: height * 2)
   }
 
-  public func toUnitSize(with unitSize: CGSize) -> UnitSize {
-    UnitSize(width: width, height: height, unitSize: unitSize)
-  }
-
-  /// These have moved to UnitSize.
-  /// Checks if a point (in pixel coordinates) falls within the grid bounds
+  /// Checks if a point (in canvas/screen coordinates) falls within the grid bounds.
   public func contains(
     point: CGPoint,
     unitSize: CGSize
   ) -> Bool {
-    let size = toUnitSize(with: unitSize)
-    guard let width = size.screenWidth,
-      let height = size.screenHeight
+    guard let size = toScreenSize(using: unitSize)
     else { return false }
-    //  public func contains(point: CGPoint, cellSize: CGSize) -> Bool {
-    //    let gridSize = toCGSize(withCellSize: cellSize)
+
     return point.x >= 0
       && point.y >= 0
-      && point.x < width
-      //      && point.x < screenWidth(using: unitSize)
-      && point.y < height
-    //      && point.y < screenHeight(using: unitSize)
+      && point.x < size.width
+      && point.y < size.height
   }
   /// Checks if a grid position is within valid bounds
   public func contains(position: GridPosition) -> Bool {
@@ -86,7 +76,12 @@ extension GridDimensions {
   //  }
   //
   public func toScreenSize(using unitSize: CGSize) -> CGSize? {
-    toUnitSize(with: unitSize).screenSize
+    guard
+      let width = width.toScreenLength(using: unitSize.width),
+      let height = height.toScreenLength(using: unitSize.height)
+    else { return nil }
+
+    return CGSize(width: width, height: height)
   }
 
   //  public func width(with cellSize: CGSize) -> CGFloat {

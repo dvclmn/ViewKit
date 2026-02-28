@@ -9,7 +9,7 @@ import CoreGraphics
 import CoreTools
 import SwiftUI
 
-public struct CanvasGeometry: GeometryContext, Sendable, Equatable {
+public struct CanvasGeometry: Sendable, Equatable {
   public var viewportRect: CGRect
   public var subjectSize: CGSize
   public var subjectAnchor: UnitPoint

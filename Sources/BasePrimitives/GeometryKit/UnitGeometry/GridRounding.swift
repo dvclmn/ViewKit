@@ -23,7 +23,7 @@ import Foundation
 /// - Text measurement conversions to integer cell counts
 /// - Hit-testing cell indices without overflow
 /// - Visual alignment corrections and expansions
-public enum GridRounding {
+public enum GridRounding: Sendable {
   case down
   case up
   case none

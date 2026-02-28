@@ -8,33 +8,46 @@
 import CoreGraphics
 import SwiftUI
 
-/// Intended as a bit of an analogue to CanvasGeometry for Grid artwork
-public struct GridGeometry: GeometryContext, Sendable, Equatable {
-  /// A rect, not a size, to express safe area insets
+/// Continuous/discrete geometry for grid documents.
+public struct GridGeometry: Sendable, Equatable {
   public var viewportRect: CGRect
-  public var subjectSize: UnitSize
-  public var subjectAnchor: UnitPoint
-  //  public var subjectSize: GridDimensions
-  //  public var unitSize: CGSize
+  public var dimensions: GridDimensions
+  public var projection: GridProjection
+  public var canvasAnchor: UnitPoint
 
   public init(
     viewportRect: CGRect = .zero,
-    subjectSize: UnitSize,
-    subjectAnchor: UnitPoint = .center
+    dimensions: GridDimensions,
+    projection: GridProjection,
+    canvasAnchor: UnitPoint = .center
   ) {
     self.viewportRect = viewportRect
-    self.subjectSize = subjectSize
-    self.subjectAnchor = subjectAnchor
+    self.dimensions = dimensions
+    self.projection = projection
+    self.canvasAnchor = canvasAnchor
   }
 }
 
 extension GridGeometry {
 
-  //  private var canvasSize: CGSize? {
-  //    guard let unitSize else { return nil }
-  //    guard let gridDimensions else { return nil }
-  //
-  //    //    let dimensions = gridCanvas.wrappedValue.gridDimensions
-  //    return gridDimensions.toScreenSize(using: unitSize)
-  //  }
+  public var canvasSize: Size<CanvasSpace> {
+    projection.canvasSize(for: dimensions)
+  }
+
+  public var canvasCGSize: CGSize {
+    projection.canvasCGSize(for: dimensions)
+  }
+
+  public func viewportContext(
+    zoom: CGFloat,
+    pan: CGSize
+  ) -> ViewportContext {
+    ViewportContext(
+      viewportRect: viewportRect,
+      pan: Point<ScreenSpace>(x: pan.width, y: pan.height),
+      zoom: zoom,
+      canvasSize: canvasSize,
+      canvasAnchor: canvasAnchor
+    )
+  }
 }

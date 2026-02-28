@@ -122,6 +122,12 @@ let package = Package(
     .target(
       name: "BasePrimitives",
       dependencies: [.casePaths],
+      exclude: [
+        "GeometryKit/UnitGeometry/UnitLength",
+        "GeometryKit/UnitGeometry/UnitPosition",
+        "GeometryKit/UnitGeometry/UnitRect",
+        "GeometryKit/UnitGeometry/UnitSize",
+      ]
     ),
 
     .target(
