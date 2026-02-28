@@ -22,6 +22,14 @@ final class SelectionHandler {
 
 extension SelectionHandler {
 
+  private var viewportRect: CGRect? {
+    geometry?.viewportRect
+  }
+
+  private var dimensions: GridDimensions? {
+    geometry?.subjectSize.dimensions
+  }
+
   private var coordinateTransform: CoordinateSpaceContext? {
     guard let geometry, let cellSize else { return nil }
     return .init(
@@ -70,18 +78,22 @@ extension SelectionHandler {
   /// Returns the row and column index for a global pointer location
   /// Returns nil if the pointer is outside the grid boundaries
   var pointerGridPosition: GridPosition? {
-    guard let dimensions = geometry?.subjectSize else { return nil }
-    let unitSize = unitSize(dimensions.columns, dimensions.rows)
-    guard let gridScreenSize = unitSize?.screenSize else { return nil }
-    guard let cellSize else { return nil }
+    //    guard let dimensions else { return nil }
+    //    let unitSize = unitSize(dimensions.columns, dimensions.rows)
+    //    guard let gridScreenSize = unitSize?.screenSize else { return nil }
+    //    guard let cellSize else { return nil }
+
+    guard let cellSize,
+      let size = geometry?.subjectSize.toCGSize
+    else { return nil }
 
     /// 1. Convert Global Screen Space -> Local Canvas Space
     guard let local = pointerLocalSpace else { return nil }
 
     /// 2. Perform Boundary Check
     /// Ensure the pointer isn't in the "empty space" around the canvas
-    guard local.x >= 0, local.x < gridScreenSize.width,
-      local.y >= 0, local.y < gridScreenSize.height
+    guard local.x >= 0, local.x < size.width,
+      local.y >= 0, local.y < size.height
     else {
       return nil
     }

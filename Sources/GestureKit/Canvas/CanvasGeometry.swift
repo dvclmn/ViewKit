@@ -7,20 +7,23 @@
 
 import CoreGraphics
 import CoreTools
-import Foundation
+import SwiftUI
 
 public struct CanvasGeometry: GeometryContext, Sendable, Equatable {
   public var viewportRect: CGRect
   public var subjectSize: CGSize
+  public var subjectAnchor: UnitPoint
 
   /// Initialise with zero, so the instance gets set up,
   /// and then can update at runtime
   public init(
     viewportRect: CGRect = .zero,
     subjectSize: CGSize = .zero,
+    subjectAnchor: UnitPoint = .center
   ) {
     self.viewportRect = viewportRect
     self.subjectSize = subjectSize
+    self.subjectAnchor = subjectAnchor
   }
 }
 

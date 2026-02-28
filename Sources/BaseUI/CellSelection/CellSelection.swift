@@ -47,8 +47,7 @@ public struct CellSelectionTestView<Content: View>: View {
       //      .setCharacterSize(mode: .debounce(0.2))
       //      .viewportCapture(mode: .debounce(0.2))
 
-      .task(id: canvasSize) { store.geometry?.subjectSize = canvasSize }
-      .task(id: gridDimensions) { store.gridDimensions = gridDimensions }
+      
       
 //      .task(id: canvasSize) { store.canvasSize = canvasSize }
 //      .task(id: gridDimensions) { store.gridDimensions = gridDimensions }

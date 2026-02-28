@@ -28,6 +28,9 @@ public struct CoordinateSpaceContext {
 
   /// In local/canvas space (unscaled).
   let subjectSize: CGSize
+  
+  /// Describes how SwiftUI is handling layout for `subjectSize`,
+  /// important for correctly calculating many things.
   let subjectAnchor: UnitPoint
 
   public init(
@@ -62,7 +65,7 @@ extension CoordinateSpaceContext {
     self.panSpace = panSpace
 
     self.viewportRect = geometry.viewportRect
-    
+
     guard let size = geometry.subjectSize.toCGSize else {
       //      preconditionFailure("See ")
       return nil

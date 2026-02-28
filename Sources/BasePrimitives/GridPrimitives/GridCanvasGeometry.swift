@@ -6,22 +6,25 @@
 //
 
 import CoreGraphics
-import Foundation
+import SwiftUI
 
 /// Intended as a bit of an analogue to CanvasGeometry for Grid artwork
 public struct GridGeometry: GeometryContext, Sendable, Equatable {
   /// A rect, not a size, to express safe area insets
   public var viewportRect: CGRect
   public var subjectSize: UnitSize
+  public var subjectAnchor: UnitPoint
   //  public var subjectSize: GridDimensions
   //  public var unitSize: CGSize
 
   public init(
-    viewportRect: CGRect,
+    viewportRect: CGRect = .zero,
     subjectSize: UnitSize,
+    subjectAnchor: UnitPoint = .center
   ) {
     self.viewportRect = viewportRect
     self.subjectSize = subjectSize
+    self.subjectAnchor = subjectAnchor
   }
 }
 

@@ -16,14 +16,17 @@ import Foundation
 /// “This cell is 8 characters wide (grid-space),
 /// which equals 8 × 9pt = 72pt (screen-space).”
 public struct UnitLength: Hashable, Codable, Sendable {
-
+  
   package var magnitude: Int
   public var unitLength: CGFloat
-
+  
   public init(magnitude: Int, unitLength: CGFloat) {
     self.magnitude = magnitude
     self.unitLength = unitLength
   }
+}
+
+extension UnitLength {
 
   public init?(
     _ magnitude: Int,

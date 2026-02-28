@@ -75,10 +75,23 @@ struct CellSelectionCanvas: View {
       Labeled("Canvas Size", value: canvasSize?.displayString(.dimensions))
     }
 //    .debugTextOverlay("No zoom range in env", isEnabled: zoomRange == nil, alignment: .center)
+    
     .task(id: panOffset) { store.pan = panOffset }
     .task(id: zoomLevel) { store.zoom = zoomLevel }
-    .task(id: viewportRect) { store.geometry?.viewportRect = viewportRect }
+    .task(id: viewportRect) {
+      guard let viewportRect else { return }
+      store.geometry?.viewportRect = viewportRect
+    }
     .task(id: unitSize) { store.cellSize = unitSize }
+    
+//    .task(id: canvasSize) {
+//      guard let canvasSize else { return }
+//      store.geometry?.subjectSize = canvasSize
+//    }
+    .task(id: gridDimensions) {
+      
+//      store.gridDimensions = gridDimensions
+    }
 
   }
 }
