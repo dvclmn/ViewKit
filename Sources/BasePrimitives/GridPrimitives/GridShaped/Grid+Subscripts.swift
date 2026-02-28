@@ -9,13 +9,7 @@ extension GridShaped {
 
   public subscript(row rowIndex: Int, col colIndex: Int) -> Cell? {
     get { cells[safe: rowIndex]?[safe: colIndex] }
-    set {
-      guard let newValue
-      //        cells.indices.contains(rowIndex),
-      //        cells[rowIndex].indices.contains(colIndex)
-      else { return }
-      cells[safe: rowIndex]?[safe: colIndex] = newValue
-    }
+    set { cells[safe: rowIndex]?[safe: colIndex] = newValue }
   }
 
   public subscript(row rowIndex: Int) -> Row? {

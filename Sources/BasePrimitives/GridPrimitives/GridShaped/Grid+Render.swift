@@ -44,9 +44,13 @@ extension GridShaped where Cell == Character {
 
     let lines = (0..<rowCount).map { rowIndex -> String in
       let line = (0..<columnCount).map { col in
-        let position = GridPosition(column: col, row: rowIndex)
-        return self[at: position] ?? Cell.createBlank()
+        let row = cells[rowIndex]
+        return row[safe: col] ?? Cell.createBlank()
       }
+//      let line = (0..<columnCount).map { col in
+//        let position = GridPosition(column: col, row: rowIndex)
+//        return self[at: position] ?? Cell.createBlank()
+//      }
       var s = String(line)
       if options.contains(.trimTrailingSpacesPerLine) {
         s = s.rstrip()

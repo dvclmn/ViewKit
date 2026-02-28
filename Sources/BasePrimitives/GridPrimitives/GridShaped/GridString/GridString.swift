@@ -12,11 +12,19 @@ import Foundation
 //}
 
 extension Character: BlankCreatable {
-  public static func createBlank() -> Character { Character(" ") }
+  public static func createBlank() -> Character {
+    #if DEBUG
+    Character("#")
+    #else
+
+    Character(" ")
+
+    #endif
+  }
 }
 
 extension GridShaped where Cell == Character {
-  
+
   /// Build from text with explicit policies
   public init(
     fromString text: String,
@@ -27,19 +35,19 @@ extension GridShaped where Cell == Character {
     let rows = policy.map { Self.normaliseRows(parsed.rows, policy: $0) } ?? parsed.rows
     self.init(cells: rows)
   }
-  
+
   // Any members here can freely use Character APIs, including createBlank()
   //  public static func blankCell() -> Cell { .createBlank() }
   //}
-  
+
   /// This is essentially the same as `extension GridShaped where Cell == Character`
   //extension GridString {
-  
+
   //  public init(fromString string: String) {
   //    let cells = Self.generateCells(from: string)
   //    self.init(cells: cells)
   //  }
-  
+
   public static func generateCells(from text: String) -> [[Cell]] {
     //    print(
     //      """
@@ -51,7 +59,7 @@ extension GridShaped where Cell == Character {
     //      """)
     let dimensions = text.gridDimensions
     let lines = text.lines(omissionStrategy: .doNotOmit)
-    
+
     return lines.enumerated().map {
       rowIndex,
       line in
@@ -62,18 +70,18 @@ extension GridShaped where Cell == Character {
       )
     }
   }
-  
+
   private static func createRowCells(
     from line: Substring,
     rowIndex: Int,
     targetWidth: Int
   ) -> [Cell] {
     let characterCells = line.map(Cell.init)
-    
+
     let paddingCells = (line.count..<targetWidth).map { colIndex in
       return Cell.createBlank()
     }
-    
+
     return characterCells + paddingCells
   }
 

@@ -51,9 +51,27 @@ extension GridShaped {
 }
 
 extension GridShaped {
+
+  /// Previous was too strict, and required that the given column index be valid in every row.
+  /// Have removed the `isColumnValidAcrossAllRows` requirement.
+  ///
+  /// E.g.:
+  /// - If grid is ragged, then for any column index ≥ the shortest row’s length,
+  ///   `rows​.all​Satisfy { $0​.count > column }` fails.
+  /// - If any row is empty, then even column 0 is considered invalid,
+  ///   making every position invalid across the entire grid.
+  /// - Because `column​Count` is `widest​Row`, `to​String() `will iterate
+  ///   up to the widest row’s width, but the subscript will reject any column not present in
+  ///   all rows, returning nil for many cells. `to​String()` then replaces them with blanks.
   func isPositionValid(_ position: GridPosition) -> Bool {
-    isRowValid(position.row) && isColumnValidAcrossAllRows(position.column)
+    guard isRowValid(position.row) else { return false }
+    let row = cells[position.row]
+    return position.column >= 0 && position.column < row.count
   }
+
+  //  func isPositionValid(_ position: GridPosition) -> Bool {
+  //    isRowValid(position.row) && isColumnValidAcrossAllRows(position.column)
+  //  }
 
   /// Check that this row index is within the table’s bounds
   func isRowValid(_ row: Int) -> Bool {
@@ -68,6 +86,9 @@ extension GridShaped {
     column >= 0 && rows.contains { $0.count > column }
   }
 
+  @available(
+    *, deprecated, message: "Is arguably too strict for common use, was causing a lot of blank cells"
+  )
   func isColumnValidAcrossAllRows(_ column: Int) -> Bool {
     !rows.isEmpty
       && column >= 0
