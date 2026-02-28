@@ -18,9 +18,9 @@ import Foundation
 ///   unitSize: CGSize
 /// ) -> GridPoint?
 /// ```
-public enum ScreenSpace {}
+public enum ScreenSpace {} // Aka Viewport
 public enum CanvasSpace {}  // local, pre-transform
-public enum GridSpace {}
+public enum GridSpace {} // ASCII art, cells etc
 
 public struct Point<Space> {
   public var x: CGFloat

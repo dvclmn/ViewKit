@@ -13,42 +13,44 @@ import SwiftUI
 ///
 /// I may consider either including `CanvasGeometry` in this,
 /// or actually just removing that entirely and absorbing into this type
-public struct CoordinateSpaceContext {
-  //public struct CoordinateSpaceContext<Geometry: GeometryContext> where Geometry.Size == CGSize {
-  //public struct CoordinateSpaceTransform {
-
-  /// Scale factor applied to canvas (>= 0).
-  let zoom: CGFloat
-  /// Translation of canvas; units depend on panSpace.
-  let pan: CGSize
-  let panSpace: PanSpace
-
-  /// In global/screen space; includes safe-area origin and size.
-  let viewportRect: CGRect
-
-  /// In local/canvas space (unscaled).
-  let subjectSize: CGSize
-  
-  /// Describes how SwiftUI is handling layout for `subjectSize`,
-  /// important for correctly calculating many things.
-  let subjectAnchor: UnitPoint
-
-  public init(
-    zoom: CGFloat,
-    pan: CGSize,
-    panSpace: PanSpace,
-    viewportRect: CGRect,
-    subjectSize: CGSize,
-    subjectAnchor: UnitPoint
-  ) {
-    self.zoom = zoom
-    self.pan = pan
-    self.panSpace = panSpace
-    self.viewportRect = viewportRect
-    self.subjectSize = subjectSize
-    self.subjectAnchor = subjectAnchor
-  }
-}
+///
+/// UPDATE: Retired. See new ``ViewportContext``
+//public struct CoordinateSpaceContext {
+//  //public struct CoordinateSpaceContext<Geometry: GeometryContext> where Geometry.Size == CGSize {
+//  //public struct CoordinateSpaceTransform {
+//
+//  /// Scale factor applied to canvas (>= 0).
+//  let zoom: CGFloat
+//  /// Translation of canvas; units depend on panSpace.
+//  let pan: CGSize
+//  let panSpace: PanSpace
+//
+//  /// In global/screen space; includes safe-area origin and size.
+//  let viewportRect: CGRect
+//
+//  /// In local/canvas space (unscaled).
+//  let subjectSize: CGSize
+//  
+//  /// Describes how SwiftUI is handling layout for `subjectSize`,
+//  /// important for correctly calculating many things.
+//  let subjectAnchor: UnitPoint
+//
+//  public init(
+//    zoom: CGFloat,
+//    pan: CGSize,
+//    panSpace: PanSpace,
+//    viewportRect: CGRect,
+//    subjectSize: CGSize,
+//    subjectAnchor: UnitPoint
+//  ) {
+//    self.zoom = zoom
+//    self.pan = pan
+//    self.panSpace = panSpace
+//    self.viewportRect = viewportRect
+//    self.subjectSize = subjectSize
+//    self.subjectAnchor = subjectAnchor
+//  }
+//}
 
 extension CoordinateSpaceContext {
 

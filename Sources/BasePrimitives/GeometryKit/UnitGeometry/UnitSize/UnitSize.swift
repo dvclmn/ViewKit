@@ -5,9 +5,14 @@
 //  Created by Dave Coleman on 14/10/2025.
 //
 
-import Foundation
+//import Foundation
 
 /// Equivalent to `CGSize`
+/// UPDATE: Retired. This and `UnitLength` were a sneaky source of tricky
+/// to resolve bugs, because they held both the `Int` and the `CGFloat`.
+///
+/// Splitting them into `GridDimensions` (pure `Int`) and `GridProjection`
+/// (`CGFloat` scaler), the abiguitity is removed
 //public struct UnitSize: Hashable, Codable, Sendable {
 //
 //  /// Columns == Width is the more common convention.
