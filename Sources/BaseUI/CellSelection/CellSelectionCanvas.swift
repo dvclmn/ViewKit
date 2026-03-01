@@ -33,6 +33,7 @@ struct CellSelectionCanvas: View {
       size in
 
       context.drawGrid(
+        unitSizeOverride: unitSize,
         in: size,
         sizeMode: .fillContainer,
         pinMode: .canvas,

@@ -35,6 +35,7 @@ extension GraphicsContext {
   ) {
 
     guard let cellSize = (unitSizeOverride ?? self.environment.activeUnitSize) else { return }
+//    let cellSize = unitSize
 
     let zoom = self.environment.zoomLevel
     let zoomRange = self.environment.zoomRange
