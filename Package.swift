@@ -122,7 +122,7 @@ let package = Package(
     .target(
       name: "BasePrimitives",
       resources: [
-        .copy("Assets.xcassets")
+        .process("Assets.xcassets")
       ],
     ),
 
