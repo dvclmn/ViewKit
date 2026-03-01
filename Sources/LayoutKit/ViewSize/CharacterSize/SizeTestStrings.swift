@@ -31,17 +31,17 @@ struct TestString {
 
 extension TestString {
 
-  func characterDimensions(
-    in textBoundingSize: CGSize,
-    at fontSize: CGFloat
-  ) -> CharacterDimensions {
-    let size = sizeInBounds(textBoundingSize)
-    return CharacterDimensions.dimensions(
-      size.width,
-      size.height,
-      at: fontSize
-    )
-  }
+//  func characterDimensions(
+//    in textBoundingSize: CGSize,
+//    at fontSize: CGFloat
+//  ) -> CharacterDimensions {
+//    let size = sizeInBounds(textBoundingSize)
+//    return CharacterDimensions.dimensions(
+//      size.width,
+//      size.height,
+//      at: fontSize
+//    )
+//  }
 
   //  func characterDimensions(
   //    in textBoundingSize: CGSize,
@@ -66,9 +66,9 @@ extension TestString {
     return result
   }
 
-  func characterSize(in textBoundingSize: CGSize) -> CGSize {
-    singleCharacterSize(in: textBoundingSize)
-  }
+//  func characterSize(in textBoundingSize: CGSize) -> CGSize {
+//    singleCharacterSize(in: textBoundingSize)
+//  }
 
   private func sizeInBounds(_ bounds: CGSize) -> CGSize {
     CGSize(

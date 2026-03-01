@@ -59,15 +59,6 @@ extension EnvironmentValues {
   @Entry public var isFocusable: Bool = true
   @Entry public var isBackgroundExtensionEnabled: Bool = false
 
-  /// This originated from SumBuddy, where it was referred to
-  /// as `characterSize`, derived from the width and height
-  /// of a monospaced font glyph.
-  ///
-  /// Read more: ``UnitSize``
-  @Entry public var unitSize: CGSize?
-  @Entry public var gridDimensions: GridDimensions?
-  @Entry public var gridFont: GridFont?
-
   /// App-wide / project-wide mapping convention, for which
   /// property on a type should be considered the identity vs transposed.
   /// Aka whether width maps to horizontal, or rows to vertical, etc etc.
@@ -104,9 +95,15 @@ extension EnvironmentValues {
 
   @Entry public var hasGlassEffect: Bool = false
 
+  /// This is directly related to `gridFont` and `canvasBaseFontSize`
+  @Entry public var unitSize: CGSize?
+  @Entry public var gridDimensions: GridDimensions?
+  @Entry public var gridFont: GridFont?
+
   @Entry public var isASCIIMode: Bool = false
+  @Entry public var canvasBaseFontSize: CGFloat?
   @Entry public var asciiModeFontSize: CGFloat?
-  @Entry public var characterDimensions: CharacterDimensions?
+  //  @Entry public var characterDimensions: CharacterDimensions?
   //  @Entry public var asciiUnitSize: CGSize?
 
   /// This relies on `CharacterSizeModifier` providing `unitSize` with a value in an ancestor View somewhere.

@@ -8,26 +8,30 @@
 import CoreTools
 import SwiftUI
 
-public struct CharacterAndViewSizeModifier<Size: CharacterSize>: ViewModifier {
-  @State private var characterSize: Size?
+public struct CharacterAndViewSizeModifier: ViewModifier {
+//public struct CharacterAndViewSizeModifier<Size: CharacterSize>: ViewModifier {
+  @State private var characterSize: CGSize?
+//  @State private var characterSize: Size?
   @State private var viewSize: CGSize?
 
   let debounceMode: DebounceMode
-  let fontSize: CGFloat?
-  let sizeDidChange: (_ characterSize: Size?, _ viewSize: CGSize?) -> Void
-  let sizeResolver: CharacterSizeResolver<Size>
+//  let fontSize: CGFloat?
+  let sizeDidChange: (_ characterSize: CGSize?, _ viewSize: CGSize?) -> Void
+//  let sizeDidChange: (_ characterSize: Size?, _ viewSize: CGSize?) -> Void
+//  let sizeResolver: CharacterSizeResolver<Size>
 
   public func body(content: Content) -> some View {
     content
       .modifier(
-        CharacterSizeModifier<Size>(
+        CharacterSizeModifier(
+//        CharacterSizeModifier<Size>(
           debounceMode: debounceMode,
-          fontSize: fontSize,
+//          fontSize: fontSize,
           sizeDidChange: { size in
             characterSize = size
           },
           shouldSetEnv: false,
-          sizeResolver: sizeResolver
+//          sizeResolver: sizeResolver
         )
       )
       .viewSize(mode: debounceMode) { size in
