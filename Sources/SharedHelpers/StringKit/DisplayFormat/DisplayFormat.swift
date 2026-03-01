@@ -48,9 +48,12 @@ public struct FloatDisplayFormat: Equatable, Sendable {
 }
 
 extension FloatDisplayFormat {
-  public init(fromPreset preset: FloatDisplayPreset) {
-    self = preset.format
+  public static func fromPreset(preset: FloatDisplayPreset) -> Self {
+    preset.format
   }
+//  public init(fromPreset preset: FloatDisplayPreset) {
+//    self = preset.format
+//  }
 
   func separatorString(for kind: SeparatorKind) -> String {
     switch kind {
