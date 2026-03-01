@@ -11,13 +11,13 @@ import SwiftUI
 public struct CharacterAndViewSizeModifier: ViewModifier {
   @Environment(\.font) private var font
 
-  @State private var characterDimensions: CharacterDimensions?
-  @State private var characterSize: CGSize?
+  @State private var characterSize: (any CharacterSize)?
+  //  @State private var characterSize: CGSize?
   @State private var viewSize: CGSize?
 
   let debounceMode: DebounceMode
   let fontSize: CGFloat?
-  let sizeDidChange: (CGSize?, CGSize?) -> Void
+  let sizeDidChange: (_ characterSize: (any CharacterSize)?, _ viewSize: CGSize?) -> Void
 
   public func body(content: Content) -> some View {
     content
@@ -27,7 +27,10 @@ public struct CharacterAndViewSizeModifier: ViewModifier {
       .viewSize(mode: debounceMode) { size in
         viewSize = size
       }
-      .task(id: characterSize) {
+      .task(id: characterSize as? CGSize) {
+        sizeDidChange(characterSize, viewSize)
+      }
+      .task(id: characterSize as? CharacterDimensions) {
         sizeDidChange(characterSize, viewSize)
       }
       .task(id: viewSize) {

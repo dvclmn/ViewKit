@@ -33,15 +33,45 @@ extension TestString {
 
   func characterDimensions(
     in textBoundingSize: CGSize,
-    at fontSize: CGFloat
-  ) -> CharacterDimensions {
+    at fontSize: CGFloat?
+  ) -> any CharacterSize {
+    //  ) -> some CharacterSize {
+
     let size = sizeInBounds(textBoundingSize)
+
+    guard let fontSize else {
+
+      return CGSize(
+        width: max(1, size.width),
+        height: max(1, size.height)
+      )
+
+    }
+    //    guard T.self is CGSize.Type else {
     return CharacterDimensions.dimensions(
       size.width,
       size.height,
       at: fontSize
     )
+
+    //    return CharacterDimensions.dimensions(
+    //      size.width,
+    //      size.height,
+    //      at: fontSize
+    //    )
   }
+
+  //  func characterDimensions(
+  //    in textBoundingSize: CGSize,
+  //    at fontSize: CGFloat
+  //  ) -> CharacterDimensions {
+  //    let size = sizeInBounds(textBoundingSize)
+  //    return CharacterDimensions.dimensions(
+  //      size.width,
+  //      size.height,
+  //      at: fontSize
+  //    )
+  //  }
 
   /// The size of a single Character, based on the measurement
   /// of the full Test String dimensions, displayed / derived from a monospace font

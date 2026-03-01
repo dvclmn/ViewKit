@@ -6,15 +6,16 @@
 //
 
 import Foundation
+import CoreGraphics
 
-public protocol CharacterSize {
+public protocol CharacterSize: Equatable {
   var width: CGFloat { get }
   var height: CGFloat { get }
 }
 
 extension CGSize: CharacterSize {}
 
-public struct CharacterDimensions: CharacterSize {
+public struct CharacterDimensions: CharacterSize, Equatable {
   public let width: CGFloat
   public let height: CGFloat
   let fontSize: CGFloat
