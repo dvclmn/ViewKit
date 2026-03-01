@@ -7,9 +7,7 @@
 
 import Foundation
 
-// MARK: - Int extension
 extension Int {
-  
   public func toScreenLength(
     using unitLength: CGFloat,
   ) -> CGFloat? {
@@ -17,7 +15,7 @@ extension Int {
     let result = CGFloat(self) * unitLength
     return result
   }
-  
+
   public func toScreenLength(
     along axis: GridAxis,
     mapping: AxisMapping = .default,
@@ -27,5 +25,5 @@ extension Int {
     let length = unitSize.value(along: axis, mapping: mapping)
     return toScreenLength(using: length)
   }
-  
+
 }
