@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
   name: "BaseHelpers",
   platforms: [
-//    .iOS("17.0"),
-    .macOS("14.0"),
+    //    .iOS("17.0"),
+    .macOS("14.0")
   ],
   products: [
     .library(
@@ -69,7 +69,6 @@ let package = Package(
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
-//    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     .package(url: "https://github.com/jpsim/Yams", from: "6.2.1"),
     .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
@@ -122,13 +121,15 @@ let package = Package(
 
     .target(
       name: "BasePrimitives",
-//      dependencies: [.casePaths],
-      exclude: [
-        "GeometryKit/UnitGeometry/UnitLength",
-        "GeometryKit/UnitGeometry/UnitPosition",
-        "GeometryKit/UnitGeometry/UnitRect",
-        "GeometryKit/UnitGeometry/UnitSize",
-      ]
+      resources: [
+        .copy("Assets.xcassets")
+      ],
+//      exclude: [
+//        "GeometryKit/UnitGeometry/UnitLength",
+//        "GeometryKit/UnitGeometry/UnitPosition",
+//        "GeometryKit/UnitGeometry/UnitRect",
+//        "GeometryKit/UnitGeometry/UnitSize",
+//      ]
     ),
 
     .target(
@@ -212,6 +213,7 @@ let package = Package(
         .sharing,
         .casePaths,
       ],
+      resources: [.process("Grid/AcPlus_IBM_BIOS.ttf")]
     ),
 
     .target(

@@ -11,22 +11,23 @@ import SwiftUI
 struct GridFrameModifier: ViewModifier {
   @Environment(\.asciiUnitSize) private var asciiUnitSize
 
-  let dimensions: GridDimensions
+  let width: Int?
+  let height: Int?
   let alignment: Alignment
 
   func body(content: Content) -> some View {
     content
       .frame(
-        width: frameSize?.width,
-        height: frameSize?.height,
+        width: length(from: width),
+        height: length(from: height),
         alignment: alignment
       )
   }
 }
 extension GridFrameModifier {
-  private var frameSize: CGSize? {
-    guard let asciiUnitSize else { return nil }
-    return dimensions.toScreenSize(using: asciiUnitSize)
+  private func length(from value: Int?) -> CGFloat? {
+    guard let value else { return nil }
+    return value.toScreenLength(along: .horizontal, using: asciiUnitSize)
   }
 }
 
@@ -54,6 +55,7 @@ struct GridFrameMinMaxModifier: ViewModifier {
       )
   }
 }
+
 extension GridFrameMinMaxModifier {
   private func length(from value: Int?) -> CGFloat? {
     guard let value else { return nil }
@@ -63,13 +65,36 @@ extension GridFrameMinMaxModifier {
 
 extension View {
   public func gridFrame(
-    width: Int,
-    height: Int,
+    width: Int? = nil,
+    height: Int? = nil,
     alignment: Alignment = .center
   ) -> some View {
     self.modifier(
       GridFrameModifier(
-        dimensions: GridDimensions(width, height),
+        width: width,
+        height: height,
+        alignment: alignment
+      )
+    )
+  }
+
+  public func gridFrame(
+    minWidth: Int? = nil,
+    idealWidth: Int? = nil,
+    maxWidth: Int? = nil,
+    minHeight: Int? = nil,
+    idealHeight: Int? = nil,
+    maxHeight: Int? = nil,
+    alignment: Alignment = .center,
+  ) -> some View {
+    self.modifier(
+      GridFrameMinMaxModifier(
+        minWidth: minWidth,
+        idealWidth: idealWidth,
+        maxWidth: maxWidth,
+        minHeight: minHeight,
+        idealHeight: idealHeight,
+        maxHeight: maxHeight,
         alignment: alignment
       )
     )

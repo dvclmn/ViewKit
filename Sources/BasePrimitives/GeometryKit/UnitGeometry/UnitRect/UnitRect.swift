@@ -7,18 +7,18 @@
 
 import Foundation
 
-public struct UnitRect: ModelBase {
-
-  public var origin: UnitPosition
-  public var size: UnitSize
-
-  public init(
-    origin: UnitPosition,
-    size: UnitSize,
-  ) {
-    self.origin = origin
-    self.size = size
-  }
+//public struct UnitRect: ModelBase {
+//
+//  public var origin: UnitPosition
+//  public var size: UnitSize
+//
+//  public init(
+//    origin: UnitPosition,
+//    size: UnitSize,
+//  ) {
+//    self.origin = origin
+//    self.size = size
+//  }
 
   //  public init(
   //    origin: GridPosition,
@@ -59,9 +59,9 @@ public struct UnitRect: ModelBase {
   //      cellSize: cellSize
   //    )
   //  }
-}
-
-extension UnitRect {
+//}
+//
+//extension UnitRect {
 
   //    public static func gridPositions(
   //      from rect: CGRect,
@@ -90,57 +90,57 @@ extension UnitRect {
 
   /// Iterates over all GridPositions within this UnitRect
 
-  public var toCGRect: CGRect? {
-    guard let originPoint = origin.toCGPoint,
-      let rectSize = size.screenSize
-    else { return nil }
-    //    let originPoint = origin.toCGPoint(cellSize: cellSize)
-    //    let size = CGSize(
-    //      width: CGFloat(self.size.width) * cellSize.width,
-    //      height: CGFloat(self.size.height) * cellSize.height
-    //    )
-    return CGRect(origin: originPoint, size: rectSize)
-  }
-
-  //  public static func create(clampedTo bounds: GridDimensions) -> UnitRect {
-  //
-  //  }
-
-  public static func createIfContained(
-    within bounds: GridDimensions,
-    fromRect rect: CGRect,
-    unitSize: CGSize
-  ) -> Self? {
-    guard let (a, b) = gridPositionsIfContained(in: bounds, from: rect, cellSize: unitSize)
-    else { return nil }
-
-    return UnitRect(from: a, to: b, unitSize: unitSize)
-//    return UnitRect(startPosition: a, endPosition: b, cellSize: cellSize)
-  }
-  
-  /// Same as `gridPositions(from:)` but returns nil if either position
-  /// falls outside of bounds.
-  public static func gridPositionsIfContained(
-    in bounds: GridDimensions,
-    from rect: CGRect,
-    cellSize: CGSize
-  ) -> (GridPosition, GridPosition)? {
-    let standardised = rect.standardized
-    guard
-      let a = GridPosition.createIfContained(
-        within: bounds,
-        at: standardised.origin,
-        cellSize: cellSize
-      ),
-      let b = GridPosition.createIfContained(
-        within: bounds,
-        at: standardised.point(at: .bottomTrailing),
-        cellSize: cellSize
-      )
-    else {
-      return nil
-    }
-    return (a, b)
-  }
-
-}
+//  public var toCGRect: CGRect? {
+//    guard let originPoint = origin.toCGPoint,
+//      let rectSize = size.screenSize
+//    else { return nil }
+//    //    let originPoint = origin.toCGPoint(cellSize: cellSize)
+//    //    let size = CGSize(
+//    //      width: CGFloat(self.size.width) * cellSize.width,
+//    //      height: CGFloat(self.size.height) * cellSize.height
+//    //    )
+//    return CGRect(origin: originPoint, size: rectSize)
+//  }
+//
+//  //  public static func create(clampedTo bounds: GridDimensions) -> UnitRect {
+//  //
+//  //  }
+//
+//  public static func createIfContained(
+//    within bounds: GridDimensions,
+//    fromRect rect: CGRect,
+//    unitSize: CGSize
+//  ) -> Self? {
+//    guard let (a, b) = gridPositionsIfContained(in: bounds, from: rect, cellSize: unitSize)
+//    else { return nil }
+//
+//    return UnitRect(from: a, to: b, unitSize: unitSize)
+////    return UnitRect(startPosition: a, endPosition: b, cellSize: cellSize)
+//  }
+//  
+//  /// Same as `gridPositions(from:)` but returns nil if either position
+//  /// falls outside of bounds.
+//  public static func gridPositionsIfContained(
+//    in bounds: GridDimensions,
+//    from rect: CGRect,
+//    cellSize: CGSize
+//  ) -> (GridPosition, GridPosition)? {
+//    let standardised = rect.standardized
+//    guard
+//      let a = GridPosition.createIfContained(
+//        within: bounds,
+//        at: standardised.origin,
+//        cellSize: cellSize
+//      ),
+//      let b = GridPosition.createIfContained(
+//        within: bounds,
+//        at: standardised.point(at: .bottomTrailing),
+//        cellSize: cellSize
+//      )
+//    else {
+//      return nil
+//    }
+//    return (a, b)
+//  }
+//
+//}

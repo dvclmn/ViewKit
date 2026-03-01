@@ -27,18 +27,21 @@ public struct ASCIIText: View {
     if let gridFont {
       Text(key)
         .gridFont(gridFont, size: asciiModeFontSize ?? 22)
+    } else {
+      Text(key)
     }
 
   }
 }
 
-//extension ExampleView {
-//
-//}
-//#if DEBUG
-//#Preview(traits: .size(.normal)) {
-//  // @Previewable @State var store = AppHandler()
-//  ExampleView()
-//  // .environment(store)
-//}
-//#endif
+extension ASCIIText {
+
+}
+#if DEBUG
+#Preview(traits: .size(.normal)) {
+  ASCIIText("I'm an ASCII Text")
+    .frame(width: 300, height: 600)
+    .environment(\.isASCIIMode, true)
+    .gridFont(.ibm, size: 40)
+}
+#endif
