@@ -106,6 +106,15 @@ extension EnvironmentValues {
   
   @Entry public var isASCIIMode: Bool = false
   @Entry public var asciiModeFontSize: CGFloat?
+  @Entry public var characterDimensions: CharacterDimensions?
+  
+  /// This relies on `CharacterSizeModifier` providing `unitSize` with a value in an ancestor View somewhere.
+//  public var asciiUnitSize: CGSize? {
+//    guard let asciiModeFontSize, let unitSize else { return nil }
+//    
+//    
+////    return CGSize(width: asciiModeFontSize, height: asciiModeFontSize)
+//  }
 
   @Entry public var isInspectorPresented: Binding<Bool> = .constant(false)
   @Entry public var columnVisibility: Binding<NavigationSplitViewVisibility> = .constant(.automatic)

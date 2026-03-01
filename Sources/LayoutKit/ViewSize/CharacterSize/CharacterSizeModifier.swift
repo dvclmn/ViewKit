@@ -14,6 +14,7 @@ public struct CharacterSizeModifier: ViewModifier {
   private let testString = TestString.example01
 
   let debounceMode: DebounceMode
+  let fontSize: CGFloat?
   let sizeDidChange: (CGSize?) -> Void
   let shouldSetEnv: Bool
 

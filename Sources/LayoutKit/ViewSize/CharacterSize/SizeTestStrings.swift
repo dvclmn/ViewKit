@@ -10,12 +10,13 @@ import Foundation
 
 struct TestString {
 
-  /// The string to test, to derive character width and height
+  /// The string to test, to derive a single character width and height
   let text: String
 
   /// Manually specify the number of characters along the
-  /// x and y (width and height).
-  /// This saves the CPU from needing to calculate this
+  /// x and y / width and height / columns and rows
+  ///
+  /// This is trivial info to provide, and is one less job for the computer
   let width: Int
   let height: Int
 
@@ -30,16 +31,34 @@ struct TestString {
 
 extension TestString {
 
+  func characterDimensions(
+    in textBoundingSize: CGSize,
+    at fontSize: CGFloat
+  ) -> CharacterDimensions {
+    let size = sizeInBounds(textBoundingSize)
+    return CharacterDimensions.dimensions(
+      size.width,
+      size.height,
+      at: fontSize
+    )
+  }
+
   /// The size of a single Character, based on the measurement
-  /// of the full Test String dimensions
+  /// of the full Test String dimensions, displayed / derived from a monospace font
   func singleCharacterSize(in textBoundingSize: CGSize) -> CGSize {
-    let width = textBoundingSize.width / CGFloat(width)
-    let height = textBoundingSize.height / CGFloat(height)
+    let size = sizeInBounds(textBoundingSize)
     let result = CGSize(
-      width: max(1, width),
-      height: max(1, height)
+      width: max(1, size.width),
+      height: max(1, size.height)
     )
     return result
+  }
+
+  private func sizeInBounds(_ bounds: CGSize) -> CGSize {
+    CGSize(
+      width: bounds.width / CGFloat(width),
+      height: bounds.height / CGFloat(height)
+    )
   }
 }
 

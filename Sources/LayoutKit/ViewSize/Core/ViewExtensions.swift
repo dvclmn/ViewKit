@@ -58,6 +58,7 @@ extension View {
   /// - Returns: Two optional sizes, the first for the charatcer, the second for the container view
   public func characterAndViewSize(
     mode debounceMode: DebounceMode,
+    fontSize: CGFloat? = nil,
     _ sizeDidChange: @escaping (CGSize?, CGSize?) -> Void
   ) -> some View {
     self.modifier(
@@ -68,14 +69,15 @@ extension View {
     )
   }
 
-  /// Find the size of a single character of a (usually
-  /// monospaced) font. Optionally read the container view
-  /// size for calculating the Characters-per-dimension etc.
+  /// Find the size of a single character of a monospaced font.
   /// - Parameters:
+  ///   - mode: Debounce mode
+  ///   - fontSize: Explicit font size, will inherit from value set in ancestor View if none provided
+  ///   - shouldSetEnv: If true, this modifier will set the `unitSize` EnvironmentValue
   ///   - sizeDidChange: Callback when the character or view size changes
-  /// - Returns: Two optional sizes, the first for the charatcer, the second for the container view
   public func characterSize(
     mode: DebounceMode,
+    fontSize: CGFloat? = nil,
     shouldSetEnv: Bool = false,
     _ sizeDidChange: @escaping (CGSize?) -> Void
   ) -> some View {
