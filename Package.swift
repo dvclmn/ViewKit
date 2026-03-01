@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
   name: "BaseHelpers",
   platforms: [
-    .iOS("17.0"),
+//    .iOS("17.0"),
     .macOS("14.0"),
   ],
   products: [
@@ -68,7 +68,8 @@ let package = Package(
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
-    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
+    .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
+//    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     .package(url: "https://github.com/jpsim/Yams", from: "6.2.1"),
     .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),

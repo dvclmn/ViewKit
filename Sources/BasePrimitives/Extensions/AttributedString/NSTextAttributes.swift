@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 20/12/2025.
 //
 
+#if canImport(AppKit)
 import AppKit
 
 public typealias NSTextAttributes = [NSAttributedString.Key: Any]
@@ -86,3 +87,5 @@ extension NSAttributedString.Key {
     }
   }
 }
+
+#endif

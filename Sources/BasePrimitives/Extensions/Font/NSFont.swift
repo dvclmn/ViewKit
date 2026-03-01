@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 11/10/2025.
 //
 
+#if canImport(AppKit)
 import AppKit
 import SwiftUI
 
@@ -89,3 +90,4 @@ extension NSFont {
   }
 
 }
+#endif

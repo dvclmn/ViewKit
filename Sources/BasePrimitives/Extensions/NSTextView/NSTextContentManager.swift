@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 21/12/2025.
 //
 
+#if canImport(AppKit)
 import AppKit
 
 /// From forum post:
@@ -33,3 +34,4 @@ extension NSTextContentManager {
 //    return NSTextRange(location: textRangeLocation, end: endLocation)
 //  }
 }
+#endif

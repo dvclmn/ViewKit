@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 16/11/2025.
 //
 
+#if canImport(AppKit)
 import AppKit
 
 extension NSTextView {
@@ -131,3 +132,4 @@ extension NSTextView {
     return unionRect.isNull ? .zero : unionRect
   }
 }
+#endif

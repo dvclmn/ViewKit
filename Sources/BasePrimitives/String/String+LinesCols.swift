@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 21/11/2025.
 //
 
+#if canImport(AppKit)
 import AppKit
 import Foundation
 
@@ -67,3 +68,4 @@ extension String {
     return count
   }
 }
+#endif

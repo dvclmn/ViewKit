@@ -61,7 +61,7 @@ extension ZoomModifier {
     guard let zoomRange else {
       print("⚠️ Need a zoom range to be supplied through the environment for ZoomModifier")
       //      assertionFailure("Need a zoom range to be supplied through the environment")
-      return 0.0...1.0
+      return 0.2...10
     }
     return zoomRange
   }

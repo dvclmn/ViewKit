@@ -5,7 +5,8 @@
 //  Created by Dave Coleman on 9/7/2025.
 //
 
-import CoreTools
+//import CoreTools
+import EnumMacros
 import SwiftUI
 
 extension EnvironmentValues {

@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 30/10/2024.
 //
 
+
 import SwiftUI
 
 /// https://gist.github.com/shaps80/5615c8a71fe26d229bf063d2e7c87a5c
@@ -39,6 +40,7 @@ extension Binding where Value: OptionSet & Sendable, Value.Element: Sendable {
 //  }
 //}
 
+
 public protocol NamedOptionSet: OptionSet, CustomStringConvertible
 where Element == Self {
   static var namedOptions: [(Self, String)] { get }
@@ -61,7 +63,7 @@ extension NamedOptionSet {
 }
 
 // MARK: - Conformances
-
+#if canImport(AppKit)
 extension NSEvent.Phase: NamedOptionSet, @retroactive CustomStringConvertible {
   public static var namedOptions: [(NSEvent.Phase, String)] {
     [
@@ -74,3 +76,4 @@ extension NSEvent.Phase: NamedOptionSet, @retroactive CustomStringConvertible {
     ]
   }
 }
+#endif

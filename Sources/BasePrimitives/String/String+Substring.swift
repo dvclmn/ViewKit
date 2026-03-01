@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 20/12/2025.
 //
 
+#if canImport(AppKit)
 import AppKit
 
 extension Substring {
@@ -32,3 +33,4 @@ extension Array where Element == Substring {
     }
   }
 }
+#endif

@@ -7,12 +7,6 @@
 
 import Foundation
 
-//
-//public struct FloatGroupDisplayFormat: Equatable, Sendable {
-//
-//  let format: FloatDisplayFormat
-//}
-
 /// For now this can be used both for single Float values,
 /// as well as multiple together. As often a grouping of floats
 /// looks best sharing the same overall formatting.
@@ -51,9 +45,9 @@ extension FloatDisplayFormat {
   public static func fromPreset(preset: FloatDisplayPreset) -> Self {
     preset.format
   }
-//  public init(fromPreset preset: FloatDisplayPreset) {
-//    self = preset.format
-//  }
+  //  public init(fromPreset preset: FloatDisplayPreset) {
+  //    self = preset.format
+  //  }
 
   func separatorString(for kind: SeparatorKind) -> String {
     switch kind {
@@ -72,9 +66,12 @@ extension FloatDisplayFormat {
 }
 
 extension BinaryFloatingPoint {
-  public func toPercentString(within range: ClosedRange<Self>) -> String {
+  public func toPercentString(
+    within range: ClosedRange<Self>,
+    decimalPlaces: Int = 0
+  ) -> String {
     let percent = Double(toPercent(within: range))
-    return String(percent.render(using: .init(decimalPlaces: 0)) + "%")
+    return String(percent.render(using: .init(decimalPlaces: decimalPlaces)) + "%")
   }
 }
 

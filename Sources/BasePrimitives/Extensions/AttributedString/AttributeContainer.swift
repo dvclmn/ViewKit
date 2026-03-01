@@ -49,6 +49,7 @@ extension AttributeContainer {
     return container
   }
 
+
   public func getAttributes<S: AttributeScope>(
     for scope: KeyPath<AttributeScopes, S.Type>
   ) -> NSTextAttributes? {

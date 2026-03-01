@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 9/12/2024.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
 public struct InfoBarView: View {
@@ -34,7 +34,7 @@ public struct InfoBarView: View {
             ForEach(sections) { section in
               InfoBarSectionView(sectionTitle: section.title, items: section.items)
             }
-            
+
             if showingModifiersSection {
               InfoBarSectionView(
                 sectionTitle: "Modifiers",
@@ -42,7 +42,7 @@ public struct InfoBarView: View {
               )
             }
             Spacer()
-            
+
           } else {
             NoItems("No items to display")
           }

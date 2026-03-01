@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 22/12/2025.
 //
 
+#if canImport(AppKit)
 import AppKit
 
 /// The below custom keys are located here for access
@@ -90,3 +91,4 @@ extension NSFontDescriptor.SymbolicTraits {
     .compactMap { contains($0.0) ? $0.1 : nil }
   }
 }
+#endif
