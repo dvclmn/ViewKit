@@ -8,9 +8,11 @@
 import CoreTools
 import SwiftUI
 
-public struct CharacterSizeModifier: ViewModifier {
+public struct CharacterSizeModifier<Size: CharacterSize>: ViewModifier {
   @Environment(\.unitSize) private var unitSize
-  @State private var characterSize: CGSize?
+  
+//  @State private var characterDimensions: CharacterDimensions?
+  @State private var characterSize: Size?
   private let testString = TestString.example01
 
   let debounceMode: DebounceMode

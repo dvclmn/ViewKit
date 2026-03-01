@@ -7,9 +7,16 @@
 
 import Foundation
 
-public struct CharacterDimensions {
-  let width: CGFloat
-  let height: CGFloat
+public protocol CharacterSize {
+  var width: CGFloat { get }
+  var height: CGFloat { get }
+}
+
+extension CGSize: CharacterSize {}
+
+public struct CharacterDimensions: CharacterSize {
+  public let width: CGFloat
+  public let height: CGFloat
   let fontSize: CGFloat
 }
 

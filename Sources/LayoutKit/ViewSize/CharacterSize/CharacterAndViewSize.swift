@@ -11,15 +11,17 @@ import SwiftUI
 public struct CharacterAndViewSizeModifier: ViewModifier {
   @Environment(\.font) private var font
 
+  @State private var characterDimensions: CharacterDimensions?
   @State private var characterSize: CGSize?
   @State private var viewSize: CGSize?
 
   let debounceMode: DebounceMode
+  let fontSize: CGFloat?
   let sizeDidChange: (CGSize?, CGSize?) -> Void
 
   public func body(content: Content) -> some View {
     content
-      .characterSize(mode: debounceMode) { size in
+      .characterSize(mode: debounceMode, at: fontSize) { size in
         characterSize = size
       }
       .viewSize(mode: debounceMode) { size in

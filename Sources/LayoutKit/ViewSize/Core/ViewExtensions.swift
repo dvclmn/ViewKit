@@ -58,7 +58,7 @@ extension View {
   /// - Returns: Two optional sizes, the first for the charatcer, the second for the container view
   public func characterAndViewSize(
     mode debounceMode: DebounceMode,
-    fontSize: CGFloat? = nil,
+    at fontSize: CGFloat? = nil,
     _ sizeDidChange: @escaping (CGSize?, CGSize?) -> Void
   ) -> some View {
     self.modifier(
@@ -77,13 +77,14 @@ extension View {
   ///   - sizeDidChange: Callback when the character or view size changes
   public func characterSize(
     mode: DebounceMode,
-    fontSize: CGFloat? = nil,
+    at fontSize: CGFloat? = nil,
     shouldSetEnv: Bool = false,
     _ sizeDidChange: @escaping (CGSize?) -> Void
   ) -> some View {
     self.modifier(
       CharacterSizeModifier(
         debounceMode: mode,
+        fontSize: fontSize,
         sizeDidChange: sizeDidChange,
         shouldSetEnv: shouldSetEnv
       )
@@ -92,10 +93,11 @@ extension View {
 
   /// For use when an immediate size via callback isn't required.
   /// Just sets the `unitSize` value in the environment.
-  public func setCharacterSize(mode: DebounceMode) -> some View {
+  public func setCharacterSize(mode: DebounceMode, at fontSize: CGFloat? = nil) -> some View {
     self.modifier(
       CharacterSizeModifier(
         debounceMode: mode,
+        fontSize: fontSize,
         sizeDidChange: { _ in },
         shouldSetEnv: true
       )
