@@ -13,15 +13,20 @@ public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
 public struct ZoomModifier: ViewModifier {
   @Environment(\.zoomRange) private var zoomRange
   @Environment(\.modifierKeys) private var modifierKeys
-  
-  @State private var internalZoom: Double            // source of truth during gesture
-  @State private var lastMagnification: Double = 1   // per-gesture accumulator
-  @State private var isGesturing: Bool = false        // helps with external sync
-  
+
+  /// source of truth during gesture
+  @State private var internalZoom: Double
+
+  /// per-gesture accumulator
+  @State private var lastMagnification: Double = 1
+
+  /// helps with external sync
+  @State private var isGesturing: Bool = false
+
   private let externalZoom: Binding<Double>?
   let isEnabled: Bool
   let didUpdateZoom: ZoomUpdate
-  
+
   init(
     initial: Double,
     zoom: Binding<Double>? = nil,
@@ -33,7 +38,7 @@ public struct ZoomModifier: ViewModifier {
     self.isEnabled = isEnabled
     self.didUpdateZoom = didUpdateZoom
   }
-  
+
   public func body(content: Content) -> some View {
     content
       .simultaneousGesture(zoomGesture, isEnabled: isEnabled)
@@ -54,7 +59,7 @@ extension ZoomModifier {
   private var rangeForZoom: ClosedRange<Double> {
     guard let zoomRange else {
       print("⚠️ Need a zoom range to be supplied through the environment for ZoomModifier")
-//      assertionFailure("Need a zoom range to be supplied through the environment")
+      //      assertionFailure("Need a zoom range to be supplied through the environment")
       return 0.0...1.0
     }
     return zoomRange
@@ -63,14 +68,14 @@ extension ZoomModifier {
     MagnifyGesture()
       .onChanged { value in
         isGesturing = true
-        
-        // value.magnification is absolute since gesture start.
-        // Convert to incremental delta:
+
+        /// value.magnification is absolute since gesture start.
+        /// Convert to incremental delta:
         let delta = value.magnification / lastMagnification
         lastMagnification = value.magnification
-        
+
         let newZoom = (internalZoom * delta).clamped(to: rangeForZoom)
-        
+
         internalZoom = newZoom
         externalZoom?.wrappedValue = Double(newZoom)
         _ = didUpdateZoom(newZoom, .changed)
@@ -78,20 +83,13 @@ extension ZoomModifier {
       .onEnded { _ in
         isGesturing = false
         lastMagnification = 1
-        
+
         let final = internalZoom.clamped(to: rangeForZoom)
         externalZoom?.wrappedValue = Double(final)
         internalZoom = didUpdateZoom(final, .ended) ?? final
       }
   }
 }
-
-//private extension Comparable {
-//  @inline(__always)
-//  func clamped(to range: ClosedRange<Self>) -> Self {
-//    min(max(self, range.lowerBound), range.upperBound)
-//  }
-//}
 
 extension View {
   /// Stateful + binding sync
@@ -109,7 +107,7 @@ extension View {
       )
     )
   }
-  
+
   /// Pure internal state + callback
   public func zoomGesture(
     initial: Double,
@@ -170,16 +168,16 @@ extension View {
 //        // Convert to incremental delta:
 //        let delta = value.magnification / lastMagnification
 //        lastMagnification = value.magnification
-//        
+//
 //        let newZoom = (internalZoom * delta).clamped(to: zoomRange)
-//        
+//
 //        internalZoom = newZoom
 //        externalZoom?.wrappedValue = Double(newZoom)
 //        _ = didUpdateZoom(newZoom, .changed)
 //      }
 //      .onEnded { value in
 //        lastMagnification = 1
-//        
+//
 //        let final = internalZoom.clamped(to: zoomRange)
 //        externalZoom?.wrappedValue = Double(final)
 //        internalZoom = didUpdateZoom(final, .ended) ?? final
