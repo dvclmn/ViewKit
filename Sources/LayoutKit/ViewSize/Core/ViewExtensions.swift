@@ -191,6 +191,23 @@ extension View {
       )
     )
   }
+  
+  /// For use when an immediate size via callback isn't required.
+  /// Just sets the `unitSize` value in the environment.
+  public func setCharacterDimensions(
+    mode: DebounceMode,
+    at fontSize: CGFloat
+  ) -> some View {
+    self.modifier(
+      CharacterSizeModifier<CGSize>(
+        debounceMode: mode,
+        fontSize: fontSize,
+        sizeDidChange: { _ in },
+        shouldSetEnv: true,
+        sizeResolver: resolveCharacterCGSize
+      )
+    )
+  }
 }
 
 private func resolveCharacterCGSize(

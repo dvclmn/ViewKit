@@ -6,18 +6,27 @@
 //
 
 import SwiftUI
+import CoreTools
 
 struct GridFrameModifier: ViewModifier {
+  @Environment(\.asciiModeFontSize) private var asciiModeFontSize
+  
+  let dimensions: GridDimensions
+  let alignment: Alignment
   
   func body(content: Content) -> some View {
     content
+//      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
   }
 }
-//extension View {
-//  public func example() -> some View {
-//    self.modifier(ExampleModifier())
-//  }
-//}
+
+
+
+extension View {
+  public func gridFrame(width: Int, height: Int, alignment: Alignment) -> some View {
+    self.frame(width: <#T##CGFloat?#>, height: <#T##CGFloat?#>, alignment: <#T##Alignment#>)
+  }
+}
 
 //public struct CanvasDimensionsModifier: ViewModifier {
 //  @Environment(\.gridCanvas) private var gridCanvas
