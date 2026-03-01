@@ -34,7 +34,7 @@ extension GraphicsContext {
     drawsBorder: Bool = true
   ) {
 
-    guard let cellSize = (unitSizeOverride ?? self.environment.unitSize) else { return }
+    guard let cellSize = (unitSizeOverride ?? self.environment.activeUnitSize) else { return }
 
     let zoom = self.environment.zoomLevel
     let zoomRange = self.environment.zoomRange

@@ -9,7 +9,7 @@ import BasePrimitives
 import SwiftUI
 
 public struct FrameFromUnitSize: ViewModifier {
-  @Environment(\.unitSize) private var unitSize
+  @Environment(\.activeUnitSize) private var unitSize
 
   let width: Int?
   let height: Int?

@@ -44,12 +44,12 @@ enum ExampleEnumNames {
 }
 
 // MARK: - LabeledEnum
-@Labeled
-enum House: String {
-  case roof
-  case door
-  case backyard
-}
+//@Labeled
+//enum House: String {
+//  case roof
+//  case door
+//  case backyard
+//}
 
 // MARK: - MetaEnum
 

@@ -9,7 +9,7 @@ import SwiftUI
 import BasePrimitives
 
 public struct FrameFromUnitLength: ViewModifier {
-  @Environment(\.unitSize) private var unitSize
+  @Environment(\.activeUnitSize) private var unitSize
   @Environment(\.axisMapping) private var axisMapping
   
   let axis: Axis

@@ -20,6 +20,9 @@ struct GridGeometryModifier: ViewModifier {
 
   func body(content: Content) -> some View {
     content
+      /// The canvas/grid source-of-truth font size, used for deriving
+      /// size transforms into other domains (e.g. ASCII UI mode).
+      .environment(\.canvasBaseFontSize, fontSize)
 
       /// This provides the environment with `unitSize`
       .setCharacterSize(mode: .debounce(0.2))

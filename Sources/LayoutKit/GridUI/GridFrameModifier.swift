@@ -9,8 +9,7 @@ import CoreTools
 import SwiftUI
 
 struct GridFrameModifier: ViewModifier {
-  @Environment(\.unitSize) private var unitSize
-  @Environment(\.asciiModeFontSize) private var asciiModeFontSize
+  @Environment(\.activeUnitSize) private var activeUnitSize
 
   let width: Int?
   let height: Int?
@@ -19,22 +18,24 @@ struct GridFrameModifier: ViewModifier {
   func body(content: Content) -> some View {
     content
       .frame(
-        width: length(from: width),
-        height: length(from: height),
+        width: length(from: width, along: .horizontal),
+        height: length(from: height, along: .vertical),
         alignment: alignment
       )
   }
 }
 extension GridFrameModifier {
-  private func length(from value: Int?) -> CGFloat? {
+  private func length(
+    from value: Int?,
+    along axis: GridAxis
+  ) -> CGFloat? {
     guard let value else { return nil }
-    return value.toScreenLength(along: .horizontal, using: unitSize)
+    return value.toScreenLength(along: axis, using: activeUnitSize)
   }
 }
 
 struct GridFrameMinMaxModifier: ViewModifier {
-  @Environment(\.unitSize) private var unitSize
-  @Environment(\.asciiModeFontSize) private var asciiModeFontSize
+  @Environment(\.activeUnitSize) private var activeUnitSize
 
   let minWidth: Int?
   let idealWidth: Int?
@@ -47,21 +48,24 @@ struct GridFrameMinMaxModifier: ViewModifier {
   func body(content: Content) -> some View {
     content
       .frame(
-        minWidth: length(from: minWidth),
-        idealWidth: length(from: idealWidth),
-        maxWidth: length(from: maxWidth),
-        minHeight: length(from: minHeight),
-        idealHeight: length(from: idealHeight),
-        maxHeight: length(from: maxHeight),
+        minWidth: length(from: minWidth, along: .horizontal),
+        idealWidth: length(from: idealWidth, along: .horizontal),
+        maxWidth: length(from: maxWidth, along: .horizontal),
+        minHeight: length(from: minHeight, along: .vertical),
+        idealHeight: length(from: idealHeight, along: .vertical),
+        maxHeight: length(from: maxHeight, along: .vertical),
         alignment: alignment
       )
   }
 }
 
 extension GridFrameMinMaxModifier {
-  private func length(from value: Int?) -> CGFloat? {
+  private func length(
+    from value: Int?,
+    along axis: GridAxis
+  ) -> CGFloat? {
     guard let value else { return nil }
-    return value.toScreenLength(along: .horizontal, using: unitSize)
+    return value.toScreenLength(along: axis, using: activeUnitSize)
   }
 }
 

@@ -10,7 +10,7 @@ import GraphicsKit
 import SwiftUI
 
 public struct GridGuideOverlayModifier: ViewModifier {
-  @Environment(\.unitSize) private var unitSize
+  @Environment(\.activeUnitSize) private var unitSize
   @Environment(\.gridDimensions) private var gridDimensions
   @Environment(\.layoutAlignment) private var layoutAlignment
 
