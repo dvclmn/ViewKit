@@ -29,7 +29,8 @@ struct InfoBarItemsModifier: ViewModifier {
     if isEnabled {
       content
         .contentMargins(
-          isEnabled ? .bottom : [],
+          .bottom,
+//          isEnabled ? .bottom : [],
           EdgeInsets(
             top: Styles.infoBarHeight,
             leading: 0,
@@ -38,7 +39,8 @@ struct InfoBarItemsModifier: ViewModifier {
           ),
           for: .automatic
         )
-        .safeAreaPadding(.bottom, isEnabled ? Styles.infoBarHeight : nil)
+        .safeAreaPadding(.bottom, Styles.infoBarHeight)
+//        .safeAreaPadding(.bottom, isEnabled ? Styles.infoBarHeight : nil)
         .onPreferenceChange(InfoBarKey.self) { newItems in
           guard shouldDisplay else { return }
           if let debouncer {
@@ -48,8 +50,8 @@ struct InfoBarItemsModifier: ViewModifier {
           } else {
             handlePreferenceChange(newItems)
           }
-
         }
+      
         .overlay(alignment: .bottom) {
           if shouldDisplay {
             InfoBarView(sections: sections)
