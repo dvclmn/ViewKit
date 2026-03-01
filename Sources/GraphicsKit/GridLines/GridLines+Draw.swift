@@ -24,6 +24,7 @@ public enum GridPinMode {
 extension GraphicsContext {
 
   public func drawGrid(
+    unitSizeOverride: CGSize? = nil,
     in containerSize: CGSize,
     sizeMode: GridSizeMode = .fillContainer,
     pinMode: GridPinMode = .canvas,
@@ -33,7 +34,7 @@ extension GraphicsContext {
     drawsBorder: Bool = true
   ) {
 
-    guard let cellSize = self.environment.unitSize else { return }
+    guard let cellSize = (unitSizeOverride ?? self.environment.unitSize) else { return }
 
     let zoom = self.environment.zoomLevel
     let zoomRange = self.environment.zoomRange
@@ -65,7 +66,7 @@ extension GraphicsContext {
       case .fillContainer:
         let panEnv = self.environment.panOffset
         let effectivePanOffset = pinMode == .viewport ? -panEnv : .zero
-         
+
         path = .infiniteGrid(
           containerSize: containerSize,
           cellSize: cellSize,

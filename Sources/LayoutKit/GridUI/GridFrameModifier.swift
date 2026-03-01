@@ -9,7 +9,8 @@ import CoreTools
 import SwiftUI
 
 struct GridFrameModifier: ViewModifier {
-  @Environment(\.asciiUnitSize) private var asciiUnitSize
+  @Environment(\.unitSize) private var unitSize
+  @Environment(\.asciiModeFontSize) private var asciiModeFontSize
 
   let width: Int?
   let height: Int?
@@ -27,12 +28,13 @@ struct GridFrameModifier: ViewModifier {
 extension GridFrameModifier {
   private func length(from value: Int?) -> CGFloat? {
     guard let value else { return nil }
-    return value.toScreenLength(along: .horizontal, using: asciiUnitSize)
+    return value.toScreenLength(along: .horizontal, using: unitSize)
   }
 }
 
 struct GridFrameMinMaxModifier: ViewModifier {
-  @Environment(\.asciiUnitSize) private var asciiUnitSize
+  @Environment(\.unitSize) private var unitSize
+  @Environment(\.asciiModeFontSize) private var asciiModeFontSize
 
   let minWidth: Int?
   let idealWidth: Int?
@@ -59,7 +61,7 @@ struct GridFrameMinMaxModifier: ViewModifier {
 extension GridFrameMinMaxModifier {
   private func length(from value: Int?) -> CGFloat? {
     guard let value else { return nil }
-    return value.toScreenLength(along: .horizontal, using: asciiUnitSize)
+    return value.toScreenLength(along: .horizontal, using: unitSize)
   }
 }
 

@@ -124,12 +124,6 @@ let package = Package(
       resources: [
         .copy("Assets.xcassets")
       ],
-//      exclude: [
-//        "GeometryKit/UnitGeometry/UnitLength",
-//        "GeometryKit/UnitGeometry/UnitPosition",
-//        "GeometryKit/UnitGeometry/UnitRect",
-//        "GeometryKit/UnitGeometry/UnitSize",
-//      ]
     ),
 
     .target(
@@ -213,7 +207,7 @@ let package = Package(
         .sharing,
         .casePaths,
       ],
-      resources: [.process("Grid/AcPlus_IBM_BIOS.ttf")]
+      resources: [.process("Grid/Fonts")]
     ),
 
     .target(
