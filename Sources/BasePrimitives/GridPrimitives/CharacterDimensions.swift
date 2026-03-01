@@ -11,14 +11,21 @@ import CoreGraphics
 public protocol CharacterSize: Equatable {
   var width: CGFloat { get }
   var height: CGFloat { get }
+  var cgSize: CGSize { get }
 }
 
 extension CGSize: CharacterSize {}
 
+extension CharacterSize {
+  public var cgSize: CGSize {
+    CGSize(width: width, height: height)
+  }
+}
+
 public struct CharacterDimensions: CharacterSize, Equatable {
   public let width: CGFloat
   public let height: CGFloat
-  let fontSize: CGFloat
+  public let fontSize: CGFloat
 }
 
 extension CharacterDimensions {

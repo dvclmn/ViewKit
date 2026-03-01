@@ -33,32 +33,14 @@ extension TestString {
 
   func characterDimensions(
     in textBoundingSize: CGSize,
-    at fontSize: CGFloat?
-  ) -> any CharacterSize {
-    //  ) -> some CharacterSize {
-
+    at fontSize: CGFloat
+  ) -> CharacterDimensions {
     let size = sizeInBounds(textBoundingSize)
-
-    guard let fontSize else {
-
-      return CGSize(
-        width: max(1, size.width),
-        height: max(1, size.height)
-      )
-
-    }
-    //    guard T.self is CGSize.Type else {
     return CharacterDimensions.dimensions(
       size.width,
       size.height,
       at: fontSize
     )
-
-    //    return CharacterDimensions.dimensions(
-    //      size.width,
-    //      size.height,
-    //      at: fontSize
-    //    )
   }
 
   //  func characterDimensions(
@@ -82,6 +64,10 @@ extension TestString {
       height: max(1, size.height)
     )
     return result
+  }
+
+  func characterSize(in textBoundingSize: CGSize) -> CGSize {
+    singleCharacterSize(in: textBoundingSize)
   }
 
   private func sizeInBounds(_ bounds: CGSize) -> CGSize {
