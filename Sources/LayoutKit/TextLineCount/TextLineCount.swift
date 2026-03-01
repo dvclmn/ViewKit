@@ -10,7 +10,6 @@
 
 import SwiftUI
 
-
 public struct TextLineCountViewModifier: ViewModifier {
   @State private var numberOfLines: Int = 0
 
@@ -32,7 +31,6 @@ public struct TextLineCountViewModifier: ViewModifier {
     }
   }
 }
-
 
 extension View {
   /// Counts the number of lines it takes to draw a string,

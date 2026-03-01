@@ -8,6 +8,7 @@
 import CoreTools
 import SwiftUI
 
+public typealias ZoomEventUpdate = (ZoomGestureEvent) -> Double?
 public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
 
 public struct ZoomModifier: ViewModifier {
@@ -25,18 +26,18 @@ public struct ZoomModifier: ViewModifier {
 
   private let externalZoom: Binding<Double>?
   let isEnabled: Bool
-  let didUpdateZoom: ZoomUpdate
+  let didUpdateEvent: ZoomEventUpdate
 
   init(
     initial: Double,
     zoom: Binding<Double>? = nil,
     isEnabled: Bool,
-    didUpdateZoom: @escaping ZoomUpdate
+    didUpdateEvent: @escaping ZoomEventUpdate
   ) {
     self._internalZoom = State(initialValue: initial)
     self.externalZoom = zoom
     self.isEnabled = isEnabled
-    self.didUpdateZoom = didUpdateZoom
+    self.didUpdateEvent = didUpdateEvent
   }
 
   public func body(content: Content) -> some View {
@@ -67,6 +68,7 @@ extension ZoomModifier {
   private var zoomGesture: some Gesture {
     MagnifyGesture()
       .onChanged { value in
+        let isGestureStart = !isGesturing
         isGesturing = true
 
         /// value.magnification is absolute since gesture start.
@@ -74,19 +76,37 @@ extension ZoomModifier {
         let delta = value.magnification / lastMagnification
         lastMagnification = value.magnification
 
-        let newZoom = (internalZoom * delta).clamped(to: rangeForZoom)
-        let resolvedZoom = (didUpdateZoom(newZoom, .changed) ?? newZoom)
+        let previousZoom = internalZoom
+        let newZoom = (previousZoom * delta).clamped(to: rangeForZoom)
+        let event = ZoomGestureEvent(
+          phase: .changed,
+          previousZoom: previousZoom,
+          proposedZoom: newZoom,
+          magnification: value.magnification,
+          magnificationDelta: delta,
+          isGestureStart: isGestureStart
+        )
+        let resolvedZoom = (didUpdateEvent(event) ?? newZoom)
           .clamped(to: rangeForZoom)
 
         internalZoom = resolvedZoom
         externalZoom?.wrappedValue = Double(resolvedZoom)
       }
-      .onEnded { _ in
+      .onEnded { value in
         isGesturing = false
         lastMagnification = 1
 
-        let final = internalZoom.clamped(to: rangeForZoom)
-        let resolvedFinal = (didUpdateZoom(final, .ended) ?? final)
+        let previousZoom = internalZoom
+        let final = previousZoom.clamped(to: rangeForZoom)
+        let event = ZoomGestureEvent(
+          phase: .ended,
+          previousZoom: previousZoom,
+          proposedZoom: final,
+          magnification: value.magnification,
+          magnificationDelta: 1,
+          isGestureStart: false
+        )
+        let resolvedFinal = (didUpdateEvent(event) ?? final)
           .clamped(to: rangeForZoom)
 
         externalZoom?.wrappedValue = Double(resolvedFinal)
@@ -96,6 +116,22 @@ extension ZoomModifier {
 }
 
 extension View {
+  /// Stateful + binding sync using full zoom event context
+  public func zoomGesture(
+    zoom: Binding<Double>,
+    isEnabled: Bool = true,
+    didUpdateEvent: @escaping ZoomEventUpdate
+  ) -> some View {
+    self.modifier(
+      ZoomModifier(
+        initial: Double(zoom.wrappedValue),
+        zoom: zoom,
+        isEnabled: isEnabled,
+        didUpdateEvent: didUpdateEvent
+      )
+    )
+  }
+
   /// Stateful + binding sync
   public func zoomGesture(
     zoom: Binding<Double>,
@@ -107,7 +143,25 @@ extension View {
         initial: Double(zoom.wrappedValue),
         zoom: zoom,
         isEnabled: isEnabled,
-        didUpdateZoom: didUpdateZoom
+        didUpdateEvent: { event in
+          didUpdateZoom(event.proposedZoom, event.phase)
+        }
+      )
+    )
+  }
+
+  /// Pure internal state + callback using full zoom event context
+  public func zoomGesture(
+    initial: Double,
+    isEnabled: Bool = true,
+    didUpdateEvent: @escaping ZoomEventUpdate
+  ) -> some View {
+    self.modifier(
+      ZoomModifier(
+        initial: initial,
+        zoom: nil,
+        isEnabled: isEnabled,
+        didUpdateEvent: didUpdateEvent
       )
     )
   }
@@ -123,7 +177,9 @@ extension View {
         initial: initial,
         zoom: nil,
         isEnabled: isEnabled,
-        didUpdateZoom: didUpdateZoom
+        didUpdateEvent: { event in
+          didUpdateZoom(event.proposedZoom, event.phase)
+        }
       )
     )
   }
