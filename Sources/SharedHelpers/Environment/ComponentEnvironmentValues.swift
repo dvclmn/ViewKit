@@ -66,6 +66,7 @@ extension EnvironmentValues {
   /// Read more: ``UnitSize``
   @Entry public var unitSize: CGSize?
   @Entry public var gridDimensions: GridDimensions?
+  @Entry public var gridFont: GridFont?
 
   /// App-wide / project-wide mapping convention, for which
   /// property on a type should be considered the identity vs transposed.
@@ -79,7 +80,6 @@ extension EnvironmentValues {
   /// Meant as a debug helper, for when I'm not sure who is
   /// consuming this View, or what it's context is.
   @Entry public var viewDescription: String?
-
 
   @Entry public var isScrollAtStart: Bool = true
 
@@ -103,12 +103,14 @@ extension EnvironmentValues {
   @Entry public var isAnimationEnabled: Bool = false
 
   @Entry public var hasGlassEffect: Bool = false
+  
+  @Entry public var isASCIIMode: Bool = false
+  @Entry public var asciiModeFontSize: CGFloat?
 
   @Entry public var isInspectorPresented: Binding<Bool> = .constant(false)
   @Entry public var columnVisibility: Binding<NavigationSplitViewVisibility> = .constant(.automatic)
 
   @Entry public var isLoading: Bool = false
-
 
 }
 

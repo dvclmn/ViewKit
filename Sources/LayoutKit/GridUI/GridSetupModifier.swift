@@ -5,31 +5,30 @@
 //  Created by Dave Coleman on 1/11/2025.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
-
 
 /// Aims to produce a full setup with Grid Font,
 /// Character measure for unit size, injecting
 /// into environment, etc.
 
 struct GridGeometryModifier: ViewModifier {
-  
+
   let font: GridFont
   let fontSize: CGFloat
   let dimensions: GridDimensions
-  
+
   func body(content: Content) -> some View {
     content
-    
-    /// This provides the environment with `unitSize`
+
+      /// This provides the environment with `unitSize`
       .setCharacterSize(mode: .debounce(0.2))
-    
-    /// This provides the environment with `viewportRect`
+
+      /// This provides the environment with `viewportRect`
       .viewportCapture(mode: .debounce(0.2), showsIndicator: false)
-    
+
       .gridFont(font, size: fontSize)
-    
+
       .environment(\.gridDimensions, dimensions)
   }
 }

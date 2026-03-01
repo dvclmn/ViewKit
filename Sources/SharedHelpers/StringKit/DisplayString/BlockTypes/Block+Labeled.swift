@@ -52,7 +52,7 @@ public struct Labeled: Sendable {
   public var block: DisplayBlock {
     .labeled(key: key, separator: separator, value: value)
   }
-  
+
   public static func toString(
     key: String,
     value: DisplayFragment?,
