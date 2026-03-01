@@ -75,18 +75,22 @@ extension ZoomModifier {
         lastMagnification = value.magnification
 
         let newZoom = (internalZoom * delta).clamped(to: rangeForZoom)
+        let resolvedZoom = (didUpdateZoom(newZoom, .changed) ?? newZoom)
+          .clamped(to: rangeForZoom)
 
-        internalZoom = newZoom
-        externalZoom?.wrappedValue = Double(newZoom)
-        _ = didUpdateZoom(newZoom, .changed)
+        internalZoom = resolvedZoom
+        externalZoom?.wrappedValue = Double(resolvedZoom)
       }
       .onEnded { _ in
         isGesturing = false
         lastMagnification = 1
 
         let final = internalZoom.clamped(to: rangeForZoom)
-        externalZoom?.wrappedValue = Double(final)
-        internalZoom = didUpdateZoom(final, .ended) ?? final
+        let resolvedFinal = (didUpdateZoom(final, .ended) ?? final)
+          .clamped(to: rangeForZoom)
+
+        externalZoom?.wrappedValue = Double(resolvedFinal)
+        internalZoom = resolvedFinal
       }
   }
 }
