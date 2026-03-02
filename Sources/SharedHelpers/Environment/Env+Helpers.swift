@@ -5,7 +5,22 @@
 //  Created by Dave Coleman on 11/1/2026.
 //
 
+import BasePrimitives
 import SwiftUI
+
+public protocol ValueFormattable {}
+
+extension View where Self: ValueFormattable {
+  public func formatValue(_ format: @escaping (Double) -> String) -> some View {
+    self.environment(\.formatValue, format)
+  }
+}
+
+extension View {
+  public func setGridDimensions(_ width: Int, height: Int) -> some View {
+    self.environment(\.gridDimensions, GridDimensions(width, height))
+  }
+}
 
 extension View {
   public func backgroundTint(_ style: AnyShapeStyle?) -> some View {
@@ -38,15 +53,15 @@ extension View {
   public func labelColour<S>(_ colour: S) -> some View where S: ShapeStyle {
     self.environment(\.labelColour, AnyShapeStyle(colour))
   }
-  
+
   public func labelFontSize(_ size: CGFloat) -> some View {
     self.environment(\.labelFontSize, size)
   }
-  
+
   public func labelFontStyle(_ style: Font.TextStyle) -> some View {
     self.environment(\.labelFontStyle, style)
   }
-  
+
   public func labelTextCase(_ textCase: Text.Case) -> some View {
     self.environment(\.labelTextCase, textCase)
   }
