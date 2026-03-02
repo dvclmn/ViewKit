@@ -26,17 +26,8 @@ public struct SectionContent: View {
     /// `ForEach(subviews: subviewCollection) { subview in`
     ForEach(collection) { sectionElement in
 
-      //      let end = collection.endIndex
-      //      collection.count
-
-      //      if sectionElement.id == collection[end]. {
-      //        sectionElement
-      //          .border(Color.green.opacity(0.3))
-      //      }
-
       if sectionElement.containerValues.isShowingSectionHeader {
         sectionElement.header
-//          .foregroundStyle(.secondary.opacity(0.8))
           .fontWeight(.medium)
       }
 
@@ -52,6 +43,9 @@ public struct SectionContent: View {
       if sectionElement.containerValues.hasDividers {
         ContainerDivider()
       }
+//      else {
+//        Circle().fill(.red)
+//      }
 
       if sectionElement.containerValues.hasSpacers {
         Spacer()

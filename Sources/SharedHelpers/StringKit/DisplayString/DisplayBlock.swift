@@ -25,8 +25,8 @@ extension DisplayBlock {
 
   public func render(using format: FloatDisplayFormat) -> String {
     switch self {
-      case .text(let atom):
-        return atom.render(using: format)
+      case .text(let fragment):
+        return fragment.render(using: format)
 
       case .labeled(let key, let sep, let value):
         return Labeled.toString(key: key, value: value, separator: sep, using: format)

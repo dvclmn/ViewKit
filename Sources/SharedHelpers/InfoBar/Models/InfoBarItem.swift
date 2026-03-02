@@ -99,7 +99,6 @@ extension Array where Element == DisplayBlock {
   func toInfoBarItems<K: InfoBarSectionKey>(
     section: K.Type = DebugSectionKey.self,
     preset: FloatDisplayPreset = .standard
-      //    format: FloatDisplayFormat = .default
   ) -> [InfoBarItem] {
     compactMap { block -> [InfoBarItem]? in
       switch block {

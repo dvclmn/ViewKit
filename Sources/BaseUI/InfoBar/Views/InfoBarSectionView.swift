@@ -14,16 +14,19 @@ struct InfoBarSectionView: View {
 
   let sectionTitle: String
   let items: [InfoBarItem]
+  
+  private let sectionItemSpacing: CGFloat = Styles.sizeTiny
 
   var body: some View {
 
     DecomposedView(.section, axis: .horizontal) {
       Section {
         /// This is the HStack (and spacing) between *whole* individual InfoBar Items.
-        HStack(spacing: 0) {
+        HStack(spacing: sectionItemSpacing) {
           ForEach(items) { item in
             InfoBarItemView(item: item)
           }
+//          .containerValueBool(.hasDividers, true)
         }
         .labelStyle(.base)
         .iconColour(.secondary)
@@ -44,9 +47,13 @@ struct InfoBarSectionView: View {
               .frame(width: 1)
               .frame(maxHeight: .infinity)
           }
+          .padding(.trailing, sectionItemSpacing)
       }
+
     }
     .containerValueBool(.hasSpacers, false)
-    .containerValueBool(.hasDividers, false)
+    
+    /// Controls Divider visibility between whole Sections
+        .containerValueBool(.hasDividers, false)
   }
 }

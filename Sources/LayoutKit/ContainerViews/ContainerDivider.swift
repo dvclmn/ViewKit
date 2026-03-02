@@ -5,20 +5,20 @@
 //  Created by Dave Coleman on 20/9/2025.
 //
 
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
 public struct ContainerDivider: View {
   @Environment(\.widthOverride) private var widthOverride
   @Environment(\.heightOverride) private var heightOverride
-  
+
   public var body: some View {
-    
+
     Divider()
       .frame(width: widthOverride, height: heightOverride)
       .opacity(0.7)
-      .fixedSize(horizontal: false, vertical: isVerticalFixed)
-    
+//      .fixedSize(horizontal: false, vertical: isVerticalFixed)
+
   }
 }
 extension ContainerDivider {

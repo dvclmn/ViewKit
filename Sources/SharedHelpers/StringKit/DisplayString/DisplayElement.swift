@@ -45,7 +45,7 @@ extension String: DisplayFragmentRenderable {
 /// `DisplayBlock(from: Any?)` can just become `.text(.make(from: value))`
 /// `Labeled.init(key:value:Any?)` can become `DisplayFragment.make(from:)`
 extension DisplayFragment {
-  public static func make(from value: Any?) -> DisplayFragment {
+  public static func make(from value: Any) -> DisplayFragment {
     switch value {
       case let val as DisplayFragmentRenderable:
         return DisplayFragment(val)
@@ -53,8 +53,8 @@ extension DisplayFragment {
       case let val as CustomStringConvertible:
         return DisplayFragment(val.description)
 
-      case nil:
-        return DisplayFragment("nil")
+//      case let val as Optional:
+//        return DisplayFragment("nil")
 
       default:
         return DisplayFragment(String(describing: value))
