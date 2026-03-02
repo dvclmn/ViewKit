@@ -36,13 +36,16 @@ public struct CellSelectionTestView<Content: View>: View {
         CellSelectionCanvas()
           .allowsCanvasClipping(false)
         content
+        
       }
+      
       .environment(\.zoomRange, zoomRange)
       .environment(\.canvasSize, canvasSize)
       .environment(store)
 
     } else {
       StateView("No Canvas Size")
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     //    .environment(\.canvasSize, documentSize)
   }
