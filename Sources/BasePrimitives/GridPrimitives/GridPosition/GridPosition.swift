@@ -30,7 +30,7 @@ public struct GridPosition: ModelBase {
 }
 
 extension GridPosition {
-  
+
   public init(x: Int, y: Int) {
     self.init(column: x, row: y)
   }
@@ -60,9 +60,9 @@ extension GridPosition {
   //    self.init(row: row, column: col)
   //  }
 
-  public init(_ row: Int, _ column: Int) {
-    self.row = row
+  public init(_ column: Int, _ row: Int) {
     self.column = column
+    self.row = row
   }
 
   public var isOrigin: Bool { row == 0 && column == 0 }

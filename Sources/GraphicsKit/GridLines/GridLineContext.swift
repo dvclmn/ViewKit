@@ -30,12 +30,12 @@ struct GridLineContext {
   let panOffset: CGSize
   let zoomLevel: CGFloat
   let zoomRange: ClosedRange<CGFloat>?
+  let hasCellNumbers: Bool
 }
 
 extension GridLineContext {
   init?(
     domain: UnitSizeDomain,
-    //    unitSizeOverride: CGSize?,
     containerSize: CGSize,
     sizeMode: GridSizeMode,
     pinMode: GridPinMode,
@@ -50,13 +50,12 @@ extension GridLineContext {
     self.containerSize = containerSize
     self.sizeMode = sizeMode
     self.pinMode = pinMode
-    //    self.lineColour = lineColour
     self.lineWidth = environment.gridLineWidth
-    //    self.annotationDensity = annotationDensity
     self.drawsBorder = drawsBorder
     self.panOffset = environment.panOffset
     self.zoomLevel = environment.zoomLevel.toCGFloat
     self.zoomRange = environment.zoomRange?.toCGFloatRange
+    self.hasCellNumbers = environment.isShowingCellNumbers
   }
 }
 
@@ -65,6 +64,14 @@ extension GridLineContext {
   var zoomedUnitSize: CGSize {
     unitSize * zoomLevel
   }
+
+  //  var effectiveDimensions: GridDimensions? {
+  //    let base = sizeMode.gridDimensions(
+  //      from: zoomedUnitSize,
+  //      in: containerSize
+  //    )
+  //    hasCellNumbers ?
+  //  }
 
   var effectiveLineWidth: CGFloat {
     lineWidth.removingZoom(
@@ -85,6 +92,7 @@ extension GridLineContext {
   func makeOutput() -> GridLineOutput? {
     switch sizeMode {
       case .fixed, .fill:
+        //        dwdwd
         guard
           let dimensions = sizeMode.gridDimensions(
             from: zoomedUnitSize,

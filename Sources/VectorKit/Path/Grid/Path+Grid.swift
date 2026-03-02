@@ -21,13 +21,14 @@ public enum GridLinesMode {
 
 extension Path {
   public static func boundedGrid(
-    dimensions: GridDimensions,
+    rect: GridRect,
+    //    dimensions: GridDimensions,
     cellSize: CGSize,
     containerSize: CGSize,
     drawsBorder: Bool
   ) -> Path {
-    let cols = max(0, dimensions.width)
-    let rows = max(0, dimensions.height)
+    let cols = max(0, rect.size.width)
+    let rows = max(0, rect.size.height)
 
     let cw = cellSize.width
     let ch = cellSize.height
@@ -43,25 +44,25 @@ extension Path {
     let colEnd = drawsBorder ? cols : max(0, cols - 1)
 
     /// If the grid is too small to have “inner” lines, return empty.
-    guard rowStart <= rowEnd || colStart <= colEnd else { return Path() }
+    guard rowStart <= rowEnd, colStart <= colEnd else { return Path() }
 
     return Path { p in
       /// Horizontal
-      if rowStart <= rowEnd {
-        for r in rowStart...rowEnd {
-          let y = CGFloat(r) * ch
-          p.move(to: CGPoint(x: 0, y: y))
-          p.addLine(to: CGPoint(x: containerSize.width, y: y))
-        }
+      //      if rowStart <= rowEnd {
+      for r in rowStart...rowEnd {
+        let y = CGFloat(r) * ch
+        p.move(to: CGPoint(x: 0, y: y))
+        p.addLine(to: CGPoint(x: containerSize.width, y: y))
       }
+      //      }
       /// Vertical
-      if colStart <= colEnd {
-        for c in colStart...colEnd {
-          let x = CGFloat(c) * cw
-          p.move(to: CGPoint(x: x, y: 0))
-          p.addLine(to: CGPoint(x: x, y: containerSize.height))
-        }
+      //      if colStart <= colEnd {
+      for c in colStart...colEnd {
+        let x = CGFloat(c) * cw
+        p.move(to: CGPoint(x: x, y: 0))
+        p.addLine(to: CGPoint(x: x, y: containerSize.height))
       }
+      //      }
     }
 
   }

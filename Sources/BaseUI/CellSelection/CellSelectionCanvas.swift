@@ -41,13 +41,13 @@ struct CellSelectionCanvas: View {
 
       context.drawGrid(
         domain: .canvas,
-//        unitSizeOverride: unitSize,
+        //        unitSizeOverride: unitSize,
         in: size,
         sizeMode: .fillContainer,
         pinMode: .canvas,
-//        lineColour: gridLineColour,
-//        lineWidth: gridLineWidth,
-//        annotations: .full,
+        //        lineColour: gridLineColour,
+        //        lineWidth: gridLineWidth,
+        //        annotations: .full,
         drawsBorder: false
       )
 

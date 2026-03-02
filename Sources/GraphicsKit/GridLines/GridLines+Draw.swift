@@ -17,7 +17,6 @@ extension GraphicsContext {
   /// `gridLineColour` and `gridLineWidth`
   public func drawGrid(
     domain: UnitSizeDomain,
-    //    unitSizeOverride: CGSize? = nil,
     in containerSize: CGSize,
     sizeMode: GridSizeMode = .fillContainer,
     pinMode: GridPinMode = .canvas,
@@ -26,7 +25,6 @@ extension GraphicsContext {
     guard
       let context = GridLineContext(
         domain: domain,
-        //        unitSizeOverride: unitSizeOverride,
         containerSize: containerSize,
         sizeMode: sizeMode,
         pinMode: pinMode,

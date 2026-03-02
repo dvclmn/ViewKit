@@ -24,7 +24,7 @@ struct FontCompression {
     /// Start from a zoom-compensated size so annotation size remains perceptually stable
     let compensatedSize = fontSize.removingZoom(
       zoom,
-      clampedTo: zoomRange,
+      across: zoomRange,
       sensitivity: sensitivity
     )
     

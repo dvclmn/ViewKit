@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct GridDimensions: ModelBase {
+public struct GridDimensions: Sendable, Codable, Equatable, Hashable {
   public var width: Int
   public var height: Int
 

@@ -10,7 +10,7 @@ import CoreTools
 import LayoutKit
 import SwiftUI
 
-public struct CellSelectionTestView<Content: View>: View {
+public struct CellSelectionView<Content: View>: View {
   @Environment(\.gridCanvasSize) private var gridCanvasSize
   @Environment(\.unitSize) private var unitSize
   @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers
@@ -53,7 +53,7 @@ public struct CellSelectionTestView<Content: View>: View {
   }
 }
 
-extension CellSelectionTestView {
+extension CellSelectionView {
   /// Offset to accomodate row/col numbers, if present
   private var offset: (top: CGFloat, leading: CGFloat) {
     guard let unitSize else { return (0, 0) }
@@ -66,7 +66,7 @@ extension CellSelectionTestView {
 #if DEBUG
 #Preview(traits: .size(.normal)) {
   @Previewable @State var store = SelectionHandler()
-  CellSelectionTestView(store: store) {
+  CellSelectionView(store: store) {
     Text("Example text")
   }
   .gridSetup(font: .sfMono, fontSize: 28, dimensions: .init(30, 14))
