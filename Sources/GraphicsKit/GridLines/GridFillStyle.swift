@@ -8,6 +8,7 @@
 import CoreTools
 import SwiftUI
 
+
 /// `fill(size: CGSize)` is ambiguous about which size, or what size means
 ///
 /// Should probably clarify, or be specific at call sites;
@@ -22,9 +23,56 @@ public enum GridSizeMode {
 }
 
 extension GridSizeMode {
-  
+
+  /// I'm pretty sure `cellSize` should be the zoomed size
+  public func path(
+    for cellSize: CGSize,
+    in containerSize: CGSize,
+    panOffset: CGSize,
+    pinMode: GridPinMode,
+    drawsBorder: Bool,
+  ) -> Path? {
+
+    guard
+      let dimensions = gridDimensions(
+        from: cellSize,
+        in: containerSize
+      )
+    else { return nil }
+    let path: Path
+
+    switch self {
+      case .fixed, .fill:
+        path = .boundedGrid(
+          dimensions: dimensions,
+          cellSize: cellSize,
+          containerSize: containerSize,
+          drawsBorder: drawsBorder
+        )
+
+      case .fillContainer:
+        //        let panEnv = self.environment.panOffset
+        let effectivePanOffset = pinMode == .viewport ? -panOffset : .zero
+
+        path = .infiniteGrid(
+          containerSize: containerSize,
+          cellSize: cellSize,
+          offset: effectivePanOffset,
+          drawsBorder: drawsBorder,
+          edgeEpsilon: max(0.5, lineWidth / 2),
+          onVerticalIndex: { i, x in
+            if annotations.isShowingCellMarkers {
+              self.draw(
+                Text("\(i)").font(.caption2).foregroundColor(.secondary),
+                at: CGPoint(x: x + 4, y: 20))
+            }
+          }
+        )
+    }
+  }
+
   /// Should cellSize be before or after zoom? I'm not sure
-  public func gridDimensions(
+  private func gridDimensions(
     from cellSize: CGSize,
     in containerSize: CGSize
   ) -> GridDimensions? {

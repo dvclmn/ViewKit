@@ -15,5 +15,4 @@ public enum GridPinMode {
   /// Grid lines will be anchored to the pannable 'canvas'
   /// view, so panning will move the Grid Lines.
   case canvas
-  //  case panOffset
 }

@@ -33,43 +33,14 @@ extension GraphicsContext {
       sensitivity: 0.2
     )
 
-    guard
-      let gridDimensions = sizeMode.gridDimensions(
-        from: cellZoomed,  // Or `cellSize`?
-        in: containerSize
-      )
-    else { return }
+//    guard
+//      let gridDimensions = sizeMode.gridDimensions(
+//        from: cellZoomed,  // Or `cellSize`?
+//        in: containerSize
+//      )
+//    else { return }
 
-    let path: Path
-
-    switch sizeMode {
-      case .fixed, .fill:
-        path = .boundedGrid(
-          dimensions: gridDimensions,
-          cellSize: cellZoomed,
-          containerSize: containerSize,
-          drawsBorder: drawsBorder
-        )
-
-      case .fillContainer:
-        let panEnv = self.environment.panOffset
-        let effectivePanOffset = pinMode == .viewport ? -panEnv : .zero
-
-        path = .infiniteGrid(
-          containerSize: containerSize,
-          cellSize: cellSize,
-          offset: effectivePanOffset,
-          drawsBorder: drawsBorder,
-          edgeEpsilon: max(0.5, lineWidth / 2),
-          onVerticalIndex: { i, x in
-            if annotations.isShowingCellMarkers {
-              self.draw(
-                Text("\(i)").font(.caption2).foregroundColor(.secondary),
-                at: CGPoint(x: x + 4, y: 20))
-            }
-          }
-        )
-    }
+    
 
     self.stroke(path, with: .color(lineColour), lineWidth: effectiveLineWidth)
   }

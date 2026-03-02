@@ -8,6 +8,8 @@
 import CoreTools
 import SwiftUI
 
+public typealias VerticalIndexOutput = (_ index: Int, _ x: CGFloat) -> Void
+
 public enum GridLinesMode {
   /// Draw enough lines to cover the container, choosing indices based on offset
   case infinite(offset: CGSize)
@@ -71,13 +73,19 @@ extension Path {
   ///
   /// Note: `cellSize` must be original unit/unzoomed size.
   /// Passing "cell size plus zoom" will produce undefined results
+  ///
+  /// Epsilon here means a small tolerance band (in points) used to decide whether a candidate
+  /// grid line should be considered “on” the container’s edge (left/right or top/bottom).
+  ///
+  /// It accounts for floating‑point rounding and stroke width so an “inner” grid line
+  /// isn't drawn right on top of the border line, or miss it due to tiny numeric drift.
   public static func infiniteGrid(
     containerSize: CGSize,
     cellSize: CGSize,
     offset: CGSize,
     drawsBorder: Bool,
     edgeEpsilon: CGFloat = 0.5,
-    onVerticalIndex: ((Int, CGFloat) -> Void)? = nil
+    onVerticalIndex: VerticalIndexOutput? = nil
   ) -> Path {
     let w = containerSize.width
     let h = containerSize.height
@@ -85,12 +93,6 @@ extension Path {
     let ch = cellSize.height
 
     guard w > 0, h > 0, cw > 0, ch > 0 else { return Path() }
-
-    //    let startCol = Int(floor((-offset.width) / cw))
-    //    let endCol = Int(ceil((w - offset.width) / cw))
-    //
-    //    let startRow = Int(floor((-offset.height) / ch))
-    //    let endRow = Int(ceil((h - offset.height) / ch))
 
     let startCol = Int(floor((-offset.width) / cw))
     let endCol = Int(ceil((w - offset.width) / cw))
@@ -123,80 +125,5 @@ extension Path {
         p.addLine(to: CGPoint(x: w, y: y))
       }
     }
-    //    return Path { p in
-    //      for i in startCol...endCol {
-    //        let x = CGFloat(i) * cw + offset.width
-    //        p.move(to: CGPoint(x: x, y: 0))
-    //        p.addLine(to: CGPoint(x: x, y: h))
-    //        onVerticalIndex?(i, x)
-    //      }
-    //
-    //      for i in startRow...endRow {
-    //        let y = CGFloat(i) * ch + offset.height
-    //        p.move(to: CGPoint(x: 0, y: y))
-    //        p.addLine(to: CGPoint(x: w, y: y))
-    //      }
-    //    }
   }
 }
-
-//  public static func grid(
-//    containerSize: CGSize,
-//    cellSize: CGSize,
-//    mode: GridLinesMode,
-//    onVerticalIndex: ((Int, CGFloat) -> Void)? = nil
-//  ) -> Path {
-//    let w = containerSize.width
-//    let h = containerSize.height
-//    let cw = cellSize.width
-//    let ch = cellSize.height
-//
-//    guard w > 0, h > 0, cw > 0, ch > 0 else { return Path() }
-//
-//    func verticalRange(offsetX: CGFloat) -> ClosedRange<Int> {
-//      // leftmost visible index … rightmost visible index (+1 as buffer)
-//      let start = Int(floor((-offsetX) / cw))
-//      let end = Int(ceil((w - offsetX) / cw))
-//      return start...end
-//    }
-//
-//    func horizontalRange(offsetY: CGFloat) -> ClosedRange<Int> {
-//      let start = Int(floor((-offsetY) / ch))
-//      let end = Int(ceil((h - offsetY) / ch))
-//      return start...end
-//    }
-//
-//    let offset: CGSize
-//    let colRange: ClosedRange<Int>
-//    let rowRange: ClosedRange<Int>
-//
-//    switch mode {
-//      case .infinite(let o):
-//        offset = o
-//        colRange = verticalRange(offsetX: o.width)
-//        rowRange = horizontalRange(offsetY: o.height)
-//
-//      case .bounded(let columns, let rows):
-//        offset = .zero
-//        colRange = 0...max(0, columns)
-//        rowRange = 0...max(0, rows)
-//    }
-//
-//    return Path { p in
-//      // Vertical
-//      for i in colRange {
-//        let x = CGFloat(i) * cw + offset.width
-//        p.move(to: CGPoint(x: x, y: 0))
-//        p.addLine(to: CGPoint(x: x, y: h))
-//        onVerticalIndex?(i, x)
-//      }
-//
-//      // Horizontal
-//      for i in rowRange {
-//        let y = CGFloat(i) * ch + offset.height
-//        p.move(to: CGPoint(x: 0, y: y))
-//        p.addLine(to: CGPoint(x: w, y: y))
-//      }
-//    }
-//  }
-//}
