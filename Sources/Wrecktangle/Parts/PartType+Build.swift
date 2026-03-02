@@ -15,7 +15,6 @@ extension Box.PartRole {
     position: Box.PositionContext
   ) -> Box.PartStructure {
 
-    print("quick check: \(self.pretty)")
     guard let part = engine.theme.frameStyle.frame.part(for: self) else {
       assertionFailure(
         "Missing \(self) for Frame Preset '\(engine.framePreset.name)', with Glyph design '\(engine.glyphDesign.name)'"

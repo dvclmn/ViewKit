@@ -9,14 +9,31 @@ extension Box.GlyphSet {
   public static var rounded: Self {
     GlyphSet(.round) {
 
+      Glyph.blank
+
+      // Rounded box glyphs are all thin in Unicode, so we alias
+      // increased weights to the same characters.
+      Glyph("─", .horizontal, weight: .increased)
+      Glyph("│", .vertical, weight: .increased)
+
       Glyph("╭", .corner(.topLeading))
       Glyph("╮", .corner(.topTrailing))
       Glyph("╰", .corner(.bottomLeading))
       Glyph("╯", .corner(.bottomTrailing))
 
-//      GlyphGroup.joinsThin
+      Glyph("╭", .corner(.topLeading), weight: .increased)
+      Glyph("╮", .corner(.topTrailing), weight: .increased)
+      Glyph("╰", .corner(.bottomLeading), weight: .increased)
+      Glyph("╯", .corner(.bottomTrailing), weight: .increased)
+
+      GlyphGroup.joinsThin
+      Glyph("┬", .join(.top), x: .increased)
+      Glyph("┴", .join(.bottom), x: .increased)
+      Glyph("├", .join(.leading), y: .increased)
+      Glyph("┤", .join(.trailing), y: .increased)
+      Glyph("┼", .join(.cross), y: .increased)
+
       GlyphGroup.straightsThin
-//      GlyphGroup.straightsThin
     }
   }
   //    style: .rounded,

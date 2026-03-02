@@ -45,126 +45,113 @@ extension Box.FrameStructure {
         GlyphType.v(.standard)
       }
 
-      //      PartGroup {
-      //
-      //      }
-      //      PartGroup.straightsDouble
-      //      PartGroup.doubleJoin
+      // MARK: - Joins
+      Part(.join(.leading)) {
+        Row {
+          GlyphType.v(.increased)
+          GlyphType.blank
+          GlyphType.join(
+            x: .standard,
+            y: .standard,
+          )
+        }
+      }
 
-      //      Part(.join(.leading)) {
-      //        Row {
-      //          GlyphType.v(.increased)
-      //          GlyphType.blank
-      //          GlyphType.join(
-      //            x: .standard,
-      //            y: .standard,
-      //          )
-      //        }
-      //      }
-      //
-      //      Part(.join(.trailing)) {
-      //        Row {
-      //          GlyphType.join(
-      //            x: .standard,
-      //            y: .standard,
-      //          )
-      //          GlyphType.blank
-      //          GlyphType.v(.increased)
-      //        }
-      //      }
-      //
-      //      Part(.join(.top)) {
-      //        Row {
-      //          GlyphType.h(.increased)
-      //          GlyphType.blank
-      //          GlyphType.join(
-      //            x: .standard,
-      //            y: .standard,
-      //          )
-      //        }
-      //      }
-      //
-      //      Part(.join(.bottom)) {
-      //        Row {
-      //          GlyphType.join(
-      //            x: .standard,
-      //            y: .standard,
-      //          )
-      //          GlyphType.blank
-      //          GlyphType.h(.increased)
-      //        }
-      //      }
-      //
-      //      Part(.join(.cross)) {
-      //        Row {
-      //          GlyphType.join(
-      //            x: .standard,
-      //            y: .standard,
-      //          )
-      //        }
-      //      }
-      //
-      //      Part(.corner(.topLeading)) {
-      //        Row {
-      //          GlyphType.corner(.increased)
-      //          GlyphType.h(.increased)
-      //          GlyphType.h(.increased)
-      //        }
-      //        Row {
-      //          GlyphType.v(.increased)
-      //          GlyphType.blank
-      //          GlyphType.corner(.standard)
-      //        }
-      //      }
-      //
-      //      Part(.corner(.topTrailing)) {
-      //        Row {
-      //          GlyphType.h(.increased)
-      //          GlyphType.h(.increased)
-      //          GlyphType.corner(.increased)
-      //        }
-      //        Row {
-      //          GlyphType.corner(.standard)
-      //          GlyphType.blank
-      //          GlyphType.v(.increased)
-      //        }
-      //      }
-      //
-      //      Part(.corner(.bottomLeading)) {
-      //        Row {
-      //          GlyphType.v(.increased)
-      //          GlyphType.blank
-      //          GlyphType.corner(.standard)
-      //        }
-      //
-      //        Row {
-      //          GlyphType.corner(.increased)
-      //          GlyphType.h(.increased)
-      //          GlyphType.h(.increased)
-      //        }
-      //      }
-      //
-      //      Part(.corner(.bottomTrailing)) {
-      //        Row {
-      //          GlyphType.corner(.standard)
-      //          GlyphType.blank
-      //          GlyphType.v(.increased)
-      //        }
-      //
-      //        Row {
-      //          GlyphType.h(.increased)
-      //          GlyphType.h(.increased)
-      //          GlyphType.corner(.increased)
-      //        }
-      //      }
+      Part(.join(.trailing)) {
+        Row {
+          GlyphType.join(
+            x: .standard,
+            y: .standard,
+          )
+          GlyphType.blank
+          GlyphType.v(.increased)
+        }
+      }
 
-      //      Part.doubleJoin
+      Part(.join(.top)) {
+        Row {
+          GlyphType.h(.increased)
+          GlyphType.blank
+          GlyphType.join(
+            x: .standard,
+            y: .standard,
+          )
+        }
+      }
 
-      //      Part.doubleJoin
-      //      PartGroup.doubleCorner
+      Part(.join(.bottom)) {
+        Row {
+          GlyphType.join(
+            x: .standard,
+            y: .standard,
+          )
+          GlyphType.blank
+          GlyphType.h(.increased)
+        }
+      }
+
+      Part(.join(.cross)) {
+        Row {
+          GlyphType.join(
+            x: .standard,
+            y: .standard,
+          )
+        }
+      }
+
+      // MARK: - Corners
+      Part(.corner(.topLeading)) {
+        Row {
+          GlyphType.corner(.increased)
+          GlyphType.h(.increased)
+          GlyphType.h(.increased)
+        }
+        Row {
+          GlyphType.v(.increased)
+          GlyphType.blank
+          GlyphType.corner(.standard)
+        }
+      }
+
+      Part(.corner(.topTrailing)) {
+        Row {
+          GlyphType.h(.increased)
+          GlyphType.h(.increased)
+          GlyphType.corner(.increased)
+        }
+        Row {
+          GlyphType.corner(.standard)
+          GlyphType.blank
+          GlyphType.v(.increased)
+        }
+      }
+
+      Part(.corner(.bottomLeading)) {
+        Row {
+          GlyphType.v(.increased)
+          GlyphType.blank
+          GlyphType.corner(.standard)
+        }
+        Row {
+          GlyphType.corner(.increased)
+          GlyphType.h(.increased)
+          GlyphType.h(.increased)
+        }
+      }
+
+      Part(.corner(.bottomTrailing)) {
+        Row {
+          GlyphType.corner(.standard)
+          GlyphType.blank
+          GlyphType.v(.increased)
+        }
+        Row {
+          GlyphType.h(.increased)
+          GlyphType.h(.increased)
+          GlyphType.corner(.increased)
+        }
+      }
 
     }  // END Frame
-    //    .merged(with: Part.doubleJoin)
-    //    .merged(with: Part.doubleCorner)
   }
 }

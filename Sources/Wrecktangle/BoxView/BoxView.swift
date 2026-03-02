@@ -16,7 +16,7 @@ public struct BoxView: View {
   
 //  @Environment(\.gridWidth) private var gridWidth
 //  @Environment(\.gridHeight) private var gridHeight
-  @Environment(\.fontSizeOverride) private var fontSizeOverride
+//  @Environment(\.fontSizeOverride) private var fontSizeOverride
 
   @State private var characterSize: CGSize?
 
@@ -28,7 +28,7 @@ public struct BoxView: View {
     self.content = content()
   }
 
-  #warning("Not able to use `.gridSetup()` here, need to do this somewhere!")
+//  #warning("Not able to use `.gridSetup()` here, need to do this somewhere!")
   public var body: some View {
     Text(
       Box(

@@ -37,7 +37,7 @@ extension Box.GlyphStructure {
     guard case .corner(let cornerType)? = Box.PartStructure.Context.currentRole else {
       fatalError("corner(_:) used outside a corner Part")
     }
-    return Self(.corner(cornerType), weight: .standard)
+    return Self(.corner(cornerType), weight: weight)
   }
 
   static var blank: Self {
