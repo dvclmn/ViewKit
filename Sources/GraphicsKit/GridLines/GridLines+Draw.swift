@@ -20,29 +20,30 @@ extension GraphicsContext {
     annotations: GridAnnotationDensity = .none,
     drawsBorder: Bool = true
   ) {
-
-    guard let cellSize = (unitSizeOverride ?? self.environment.activeUnitSize)
+    guard
+      let context = GridLineContext(
+        unitSizeOverride: unitSizeOverride,
+        containerSize: containerSize,
+        sizeMode: sizeMode,
+        pinMode: pinMode,
+        lineColour: lineColour,
+        lineWidth: lineWidth,
+        annotations: annotations,
+        drawsBorder: drawsBorder,
+        environment: self.environment
+      ),
+      let output = context.makeOutput()
     else { return }
 
-    let zoom = self.environment.zoomLevel
-    let zoomRange = self.environment.zoomRange
-    let cellZoomed = cellSize * zoom
-    let effectiveLineWidth: CGFloat = lineWidth.removingZoom(
-      zoom,
-      clampedTo: zoomRange?.toCGFloatRange,
-      sensitivity: 0.2
+    self.stroke(
+      output.path,
+      with: .color(output.lineColour),
+      lineWidth: output.lineWidth
     )
 
-//    guard
-//      let gridDimensions = sizeMode.gridDimensions(
-//        from: cellZoomed,  // Or `cellSize`?
-//        in: containerSize
-//      )
-//    else { return }
-
-    
-
-    self.stroke(path, with: .color(lineColour), lineWidth: effectiveLineWidth)
+    output.annotations.forEach { annotation in
+      drawAnnotation(annotation.text, at: annotation.point)
+    }
   }
 
   private func drawAnnotation(_ text: String, at point: CGPoint) {

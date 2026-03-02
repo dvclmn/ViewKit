@@ -31,12 +31,17 @@ extension GridDimensions: ExpressibleByIntegerLiteral {
   }
 }
 
+extension GridDimensions: CustomStringConvertible {
+  public var description: String { "\(width) x \(height)" }
+}
+
 public func + (lhs: GridDimensions, rhs: GridDimensions) -> GridDimensions {
   return GridDimensions(
     width: lhs.width + rhs.width,
     height: lhs.height + rhs.height
   )
 }
+
 
 //import SwiftUI
 //import BasePrimitives

@@ -34,7 +34,7 @@ public struct Labeled: Sendable {
 
   public init(
     _ key: String,
-    value: Any?,
+    value: Any,
     //    value: DisplayAtom?,
     separator: String = ": "
   ) {

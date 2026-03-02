@@ -61,24 +61,17 @@ extension View {
     )
   }
 
-  #warning("Wondering if the above exts also should use `transformPreference`?")
+  //  #warning("Wondering if the above exts also should use `transformPreference`?")
   public func addInfoBarItems<K: InfoBarSectionKey>(
     @DisplayStringBuilder _ content: @escaping () -> [DisplayBlock],
     key: K.Type = DebugSectionKey.self,
     preset: FloatDisplayPreset = .standard,
-    //    isEnabled: Bool = true
+
   ) -> some View {
     self.transformPreference(InfoBarKey.self) { value in
-      //      guard isEnabled else { return }
       let newItems = content().toInfoBarItems(section: key, preset: preset)
       value.append(contentsOf: newItems)
     }
-
-    //    self.preference(
-    //      key: InfoBarKey.self,
-    //      value: isEnabled ? content().toInfoBarItems(section: key, preset: preset) : []
-    //    )
-
   }
 
 }
