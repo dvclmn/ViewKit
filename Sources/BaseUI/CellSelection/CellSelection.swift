@@ -11,20 +11,19 @@ import LayoutKit
 import SwiftUI
 
 public struct CellSelectionTestView<Content: View>: View {
-  @Environment(\.gridDimensions) private var gridDimensions
-  @Environment(\.viewportRect) private var viewportRect
-  @Environment(\.unitSize) private var unitSize
   @Environment(\.gridCanvasSize) private var gridCanvasSize
 
-  @State private var store: SelectionHandler = .init()
+  @State private var store: SelectionHandler
 
   private let zoomRange: ClosedRange<Double> = 0.1...10
 
   let content: Content
 
   public init(
+    store: SelectionHandler? = nil,
     @ViewBuilder content: @escaping () -> Content
   ) {
+    self._store = State(initialValue: store ?? SelectionHandler())
     self.content = content()
   }
   public var body: some View {
@@ -32,36 +31,31 @@ public struct CellSelectionTestView<Content: View>: View {
     if let canvasSize = gridCanvasSize {
 
       CanvasView(canvasSize: canvasSize) {
-        /// Keep layers as direct children so canvas container values are visible.
+
         CellSelectionCanvas()
           .allowsCanvasClipping(false)
         content
-        
+
       }
-      
       .environment(\.zoomRange, zoomRange)
       .environment(\.canvasSize, canvasSize)
       .environment(store)
 
     } else {
       StateView("No Canvas Size")
-      .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    //    .environment(\.canvasSize, documentSize)
   }
 }
 
-//extension CellSelectionTestView {
-//
-//}
-//#if DEBUG
-//#Preview {
-//
-//  GridGeometryView(dimensions: .) {
-//    CellSelectionTestView()
-//
-//  }
-//  .frame(width: 600, height: 700)
-//
-//}
-//#endif
+#if DEBUG
+#Preview(traits: .size(.normal)) {
+  @Previewable @State var store = SelectionHandler()
+  CellSelectionTestView(store: store) {
+    Text("Example text")
+  }
+  .gridSetup(font: .sfMono, fontSize: 28, dimensions: .init(30, 14))
+  //  .environment(\.gridCanvasSize, CGSize(200, 500))
+  // .environment(store)
+}
+#endif

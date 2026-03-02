@@ -29,7 +29,7 @@ extension EnvironmentValues {
   /// For things like weighted padding, giving more
   /// breathing room to the X axis etc. Increase to add width
   @Entry public var horizontalBias: CGFloat? = nil
-  
+
   /// Adds bias to the height of a View within it's parent.
   /// Increase to shift content upward
   @Entry public var opticalCentreBias: CGFloat? = nil

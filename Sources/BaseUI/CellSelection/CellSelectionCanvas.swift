@@ -20,6 +20,7 @@ struct CellSelectionCanvas: View {
   @Environment(\.gridDimensions) private var gridDimensions
   @Environment(\.canvasSize) private var canvasSize
   @Environment(\.hoverLocation) private var hoverLocation
+  @Environment(\.canvasBackground) private var canvasBackground
 
   private let rounding: CGFloat = 4
 
@@ -31,6 +32,8 @@ struct CellSelectionCanvas: View {
     ) {
       context,
       size in
+
+      context.fillCanvas(with: canvasBackground, in: size)
 
       context.drawGrid(
         unitSizeOverride: unitSize,

@@ -12,9 +12,7 @@ extension EnvironmentValues {
   
   /// This is directly related to `gridFont` and `canvasBaseFontSize`
   @Entry public var unitSize: CGSize?
-  @Entry public var gridDimensions: GridDimensions?
-  @Entry public var gridFont: GridFont?
-  
+
   @Entry public var isASCIIMode: Bool = false
   @Entry public var canvasBaseFontSize: CGFloat?
   @Entry public var asciiModeFontSize: CGFloat?

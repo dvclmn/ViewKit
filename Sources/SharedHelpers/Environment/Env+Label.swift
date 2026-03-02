@@ -27,8 +27,8 @@ extension EnvironmentValues {
   @Entry public var iconColour: AnyShapeStyle? = nil
   @Entry public var iconWeight: Font.Weight? = nil
   @Entry public var iconFontSize: CGFloat? = nil
-  
+
   /// Already a native value for this: `labelIconToTitleSpacing`
-//  @Entry public var labelIconSpacing: CGFloat? = nil
+  //  @Entry public var labelIconSpacing: CGFloat? = nil
 
 }

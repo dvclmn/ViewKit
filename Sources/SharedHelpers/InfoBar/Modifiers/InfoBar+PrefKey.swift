@@ -33,12 +33,13 @@ extension View {
     _ items: T.Type,
     source: T.Source,
     format: FloatDisplayFormat = .default,
-    isEnabled: Bool = true
+    //    isEnabled: Bool = true
   ) -> some View
   where T: InfoBarItemDescriptor & CaseIterable {
     self.preference(
       key: InfoBarKey.self,
-      value: isEnabled ? items.items(from: source, format: format) : []
+      value: items.items(from: source, format: format)
+      //      value: isEnabled ? items.items(from: source, format: format) : []
     )
   }
 
@@ -46,37 +47,37 @@ extension View {
     _ items: String...,
     key: K.Type = DebugSectionKey.self,
     format: FloatDisplayFormat = .default,
-    isEnabled: Bool = true
+    //    isEnabled: Bool = true
   ) -> some View {
     self.preference(
       key: InfoBarKey.self,
-      value: isEnabled
-        ? items.map { text in
-          InfoBarItem(
-            section: key,
-            label: QuickLabel(stringLiteral: ""),
-            content: text
-          )
-        } : []
+      value: items.map { text in
+        InfoBarItem(
+          section: key,
+          label: QuickLabel(stringLiteral: ""),
+          content: text
+        )
+      }
     )
   }
 
+  #warning("Wondering if the above exts also should use `transformPreference`?")
   public func addInfoBarItems<K: InfoBarSectionKey>(
     @DisplayStringBuilder _ content: @escaping () -> [DisplayBlock],
     key: K.Type = DebugSectionKey.self,
     preset: FloatDisplayPreset = .standard,
-    isEnabled: Bool = true
+    //    isEnabled: Bool = true
   ) -> some View {
     self.transformPreference(InfoBarKey.self) { value in
-      guard isEnabled else { return }
+      //      guard isEnabled else { return }
       let newItems = content().toInfoBarItems(section: key, preset: preset)
       value.append(contentsOf: newItems)
     }
-    
-//    self.preference(
-//      key: InfoBarKey.self,
-//      value: isEnabled ? content().toInfoBarItems(section: key, preset: preset) : []
-//    )
+
+    //    self.preference(
+    //      key: InfoBarKey.self,
+    //      value: isEnabled ? content().toInfoBarItems(section: key, preset: preset) : []
+    //    )
 
   }
 

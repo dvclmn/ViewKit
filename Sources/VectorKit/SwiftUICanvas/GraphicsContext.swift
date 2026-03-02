@@ -36,11 +36,11 @@ extension GraphicsContext {
     colour: Color = .primary,
     fontSize: CGFloat = 11,
     pointDisplay: DebugPoint,
-//    zoomPercent zoomLevel: CGFloat?  // Pass in normalised zoom if relevant
+    //    zoomPercent zoomLevel: CGFloat?  // Pass in normalised zoom if relevant
   ) {
 
     let zoom = environment.zoomLevel
-//    let zoom = zoomLevel ?? 1.0
+    //    let zoom = zoomLevel ?? 1.0
     let fontSizeUnZoomed = fontSize.removingZoomPercent(zoom)
 
     /// Calculate size, for drawing Label background
@@ -136,5 +136,13 @@ extension GraphicsContext {
       with: .color(colour),
       style: StrokeStyle.dashed(strokeWidth: strokeWidth, style: style, gap: gap)
     )
+  }
+
+  public func fillCanvas(
+    with colour: Color,
+    in size: CGSize,
+  ) {
+    let path = Path(fromSize: size)
+    self.fill(path, with: .color(colour))
   }
 }

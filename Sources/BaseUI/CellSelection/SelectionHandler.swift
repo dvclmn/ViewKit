@@ -10,7 +10,7 @@ import CoreTools
 import SwiftUI
 
 @Observable
-final class SelectionHandler {
+public final class SelectionHandler {
 
   /// This should come in from CanvasKit, and be mapped to canvas/local
   var pointerLocation: CGPoint?

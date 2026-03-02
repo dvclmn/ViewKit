@@ -8,33 +8,6 @@
 import BasePrimitives
 import SwiftUI
 
-//public struct GridConfiguration {
-//  public let gridMode: GridSizeMode
-//  public let colour: Color
-//  public let lineWidth: CGFloat
-//  public let density: GridAnnotationDensity
-//
-//  public init(
-//    fillStyle: GridSizeMode,
-//    colour: Color,
-//    lineWidth: CGFloat,
-//    density: GridAnnotationDensity
-//  ) {
-//    self.gridMode = fillStyle
-//    self.colour = colour
-//    self.lineWidth = lineWidth
-//    self.density = density
-//  }
-//}
-
-//extension GridConfiguration {
-
-//  public var shouldDrawLines: Bool {
-//    density.isShowingCellMarkers
-//  }
-
-//}
-
 public enum GridAnnotationDensity: Int {
   case full = 1
   case threeQuarters = 2

@@ -30,7 +30,6 @@ public final class NetworkMonitor {
   }
 }
 
-
 public struct NetworkConnectionModifier: ViewModifier {
 
   @State private var monitor: NetworkMonitor = .init()
@@ -40,7 +39,6 @@ public struct NetworkConnectionModifier: ViewModifier {
       .environment(\.isConnectedToInternet, monitor.isConnected)
   }
 }
-
 
 extension View {
   public func monitorNetworkConnection() -> some View {

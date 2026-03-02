@@ -163,6 +163,7 @@ public enum Icons: String, IconGalleryViewable, Codable, Equatable {
   case sport = "figure.basketball"
   case paperclip = "paperclip"
   case pentagon = "pentagon"
+  case bitmap = "stairs" // raster, pixels
   case theatre = "theatermasks"
   case boat = "ferry"
   case star = "star"
