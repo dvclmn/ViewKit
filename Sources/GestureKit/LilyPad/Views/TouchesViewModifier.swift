@@ -28,7 +28,7 @@ public struct TrackpadTouchesModifier: ViewModifier {
         )
       }
       if isEnabled {
-        TrackpadTouchesView(isDrawingEnabled: isEnabled) { touchOutput in
+        TrackpadTouchesView { touchOutput in
           didUpdateTouches(touchOutput)
 
           if shouldShowIndicators {

@@ -19,12 +19,8 @@ import SwiftUI
 public typealias TapUpdate = (CGPoint) -> Void
 
 public struct UnifiedDragModifier: ViewModifier {
-
   @State private var dragState: DragGestureState
-
   @Binding var dragRect: CGRect?
-  
-//  let isEnabled: Bool
   let tapCount: Int
   let minimumDistance: CGFloat
   let didUpdateTap: TapUpdate
@@ -32,19 +28,15 @@ public struct UnifiedDragModifier: ViewModifier {
   init(
     rect: Binding<CGRect?>,
     behavior: DragBehavior,
-//    isEnabled: Bool,
     tapCount: Int,
     minimumDistance: CGFloat,
-    didUpdateTap: @escaping TapUpdate,
-
+    didUpdateTap: @escaping TapUpdate
   ) {
     self._dragRect = rect
-//    self.isEnabled = isEnabled
     self.tapCount = tapCount
     self.minimumDistance = minimumDistance
     self.didUpdateTap = didUpdateTap
 
-    /// Initialize state based on behavior
     self._dragState = State(initialValue: DragGestureState(behavior))
   }
 
@@ -53,25 +45,18 @@ public struct UnifiedDragModifier: ViewModifier {
       .onTapGesture(count: tapCount) { didUpdateTap($0) }
       .gesture(dragGesture, isEnabled: isEnabled)
       .drawMarqueeRect(rect: dragRect, isEnabled: behaviour.isMarquee)
-
   }
 }
+
 extension UnifiedDragModifier {
-  
   private var isEnabled: Bool { behaviour.isEnabled }
   private var behaviour: DragBehavior { dragState.behaviour }
 
-  // TODO: Add modifiers, to get different behaviour based on e.g. holding Option, Command, etc
   private var dragGesture: some Gesture {
     DragGesture(minimumDistance: minimumDistance)
       .onChanged { value in
-
-        /// Only anchor once at the very beginning of this specific drag
         if dragState.anchor == nil {
           dragState.begin(
-
-            /// IMPORTANT: Not sure if I should use `dragRect.origin`,
-            /// or the *size* (and convert to CGPoint)
             with: behaviour.isMarquee
               ? value.startLocation
               : dragRect?.size.toCGPoint
@@ -81,7 +66,7 @@ extension UnifiedDragModifier {
         dragRect = dragState.update(value)
       }
 
-      .onEnded { value in
+      .onEnded { _ in
         if behaviour.isMarquee {
           dragRect = nil
         }
@@ -95,18 +80,16 @@ extension View {
     rect: Binding<CGRect?>,
     behavior: DragBehavior,
     tapCount: Int = 1,
-//    isEnabled: Bool = true,
     minimumDistance: CGFloat = 5,
-    didUpdateTap: @escaping TapUpdate = { _ in },
+    didUpdateTap: @escaping TapUpdate = { _ in }
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
         rect: rect,
         behavior: behavior,
-//        isEnabled: isEnabled,
         tapCount: tapCount,
         minimumDistance: minimumDistance,
-        didUpdateTap: didUpdateTap,
+        didUpdateTap: didUpdateTap
       )
     )
   }
@@ -115,39 +98,35 @@ extension View {
     translation: Binding<CGSize?>,
     behavior: DragBehavior,
     tapCount: Int = 1,
-//    isEnabled: Bool = true,
     minimumDistance: CGFloat = 5,
-    didUpdateTap: @escaping TapUpdate = { _ in },
+    didUpdateTap: @escaping TapUpdate = { _ in }
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
         rect: translation.toBindingRect,
         behavior: behavior,
-//        isEnabled: isEnabled,
         tapCount: tapCount,
         minimumDistance: minimumDistance,
-        didUpdateTap: didUpdateTap,
+        didUpdateTap: didUpdateTap
       )
     )
   }
-  
+
   public func tapDragGesture(
     scalar: Binding<CGFloat?>,
     axis: GridAxis,
     reversed: Bool = false,
     tapCount: Int = 1,
-//    isEnabled: Bool = true,
     minimumDistance: CGFloat = 5,
-    didUpdateTap: @escaping TapUpdate = { _ in },
+    didUpdateTap: @escaping TapUpdate = { _ in }
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
         rect: scalar.toBindingRect(along: axis, reversed: reversed),
         behavior: .continuous(axes: axis.toSet),
-//        isEnabled: isEnabled,
         tapCount: tapCount,
         minimumDistance: minimumDistance,
-        didUpdateTap: didUpdateTap,
+        didUpdateTap: didUpdateTap
       )
     )
   }

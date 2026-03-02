@@ -21,9 +21,3 @@ public struct RotateState: CanvasGestureState {
     self.phase = phase
   }
 }
-
-extension RotateState {
-  //  public func withPhase(_ newPhase: Interaction.Phase) -> Self {
-  //    Self(rotation: value, phase: newPhase)
-  //  }
-}

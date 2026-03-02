@@ -56,7 +56,7 @@ extension CumulativeDragGestureModifier {
         isDragging(true)
       }
 
-      .onEnded { gestureValue in
+      .onEnded { _ in
         tracker.end()
         isDragging(false)
       }

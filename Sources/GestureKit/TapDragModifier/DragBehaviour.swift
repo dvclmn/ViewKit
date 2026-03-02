@@ -8,19 +8,8 @@
 import CoreTools
 import SwiftUI
 
-public enum DragType {
-  case marquee
-  case continuous
-}
-
-//public enum DragStartInfo {
-//  case marquee(DragGesture.Value)
-//  case accrued(CGSize)
-//}
-
 @MetaEnum
 @CaseDetection
-//@AssociatedValues
 public enum DragBehavior: Equatable {
   /// Transient rectangle from drag origin to current point
   case marquee(drawMarquee: Bool)
@@ -44,40 +33,3 @@ extension DragBehavior {
     self != .none
   }
 }
-//enum DragState {
-//  case marquee(MarqueePhase)
-//  case cumulative(CumulativePhase)
-//}
-
-enum DragPhase {
-  case marquee(MarqueePhase)
-  case cumulative(CumulativePhase)
-}
-
-//public typealias MarqueeUpdate = (PointerInteraction?) -> Void
-enum MarqueePhase {
-  case idle
-  case dragging(origin: CGPoint)
-}
-
-enum CumulativePhase {
-  case idle(controller: CumulativeDragController)
-  case dragging(controller: CumulativeDragController)
-}
-
-//public enum DragBehavior {
-//  /// Transient rectangle from drag origin to current point
-//  case marquee(onUpdate: MarqueeUpdate)
-//
-//  /// Accumulated offset that persists across drags
-//  case cumulative(
-//    offset: Binding<CGSize>,
-//    axes: GridAxis.Set = .all,
-//    onDragging: (Bool) -> Void = { _ in }
-//  )
-//}
-
-//enum DragPhase {
-//  case idle
-//  case active
-//}

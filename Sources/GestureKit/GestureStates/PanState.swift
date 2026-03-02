@@ -13,7 +13,7 @@ public struct PanState: CanvasGestureState, ClampedGestureState {
   public static var initialValue: CGSize { .zero }
   public var value: CGSize
   public var phase: InteractionPhase
-//
+
   public init(
     _ value: CGSize = .zero,
     phase: InteractionPhase = .none
@@ -27,6 +27,4 @@ extension PanState {
   public static var centered: Self { .init(.zero) }
 
   public var pan: CGSize { value }
-
-
 }

@@ -17,28 +17,17 @@ struct ResizeGesture: Gesture {
   var body: some Gesture {
     DragGesture(minimumDistance: 0, coordinateSpace: .global)
       .updating($dragDelta) { value, gestureState, _ in
-
-        /// Use height for top/bottom, width for leading/trailing
-        gestureState = state.isVertical ? value.translation.height : value.translation.width
-        deltaDidChange(dragDelta)
+        let delta = state.isVertical ? value.translation.height : value.translation.width
+        gestureState = delta
+        deltaDidChange(delta)
       }
       .onEnded { value in
         let translation = state.isVertical ? value.translation.height : value.translation.width
         let proposed = currentLength + (translation * state.dragMultiplier)
         currentLength = proposed.clamped(to: state.lengthRange)
-        
-        deltaDidChange(dragDelta)
+        deltaDidChange(.zero)
       }
   }
-}
-
-extension ResizeGesture {
-//  private var displayLength: CGFloat {
-    //    currentLength: CGFloat,
-    //    dragDelta: CGFloat
-    //  ) -> CGFloat {
-//    (currentLength + (dragDelta * state.dragMultiplier)).clamped(to: state.lengthRange)
-//  }
 }
 
 struct ResizeState: Equatable {

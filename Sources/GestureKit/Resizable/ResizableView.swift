@@ -9,9 +9,7 @@ import LayoutKit
 import SwiftUI
 
 public struct ResizableView<Content: View>: View {
-
   @State private var currentLength: CGFloat
-  //  @State private var dragDelta: CGFloat = .zero
 
   let state: ResizeState
   let content: Content
@@ -29,7 +27,6 @@ public struct ResizableView<Content: View>: View {
   }
 
   public var body: some View {
-
     content
       .modifier(
         ResizableEdgeModifier(
@@ -37,43 +34,5 @@ public struct ResizableView<Content: View>: View {
           state: state
         )
       )
-    //    DynamicStack(
-    //      alignedAxis: state.isVertical
-    //        ? .vertical(state.edge.toAlignment.horizontal)
-    //        : .horizontal(state.edge.toAlignment.vertical),
-    //      spacing: .zero
-    //    ) {
-    //      content
-    //        .frame(
-    //          width: state.isVertical ? nil : displaySize,
-    //          height: state.isVertical ? displaySize : nil,
-    //          alignment: state.edge.toAlignment.toOpposing
-    //        )
-    //        .overlay(alignment: state.edge.toAlignment) {
-    //          ResizeHandle()
-    //            .gesture(
-    //              ResizeGesture(
-    //                dragDelta: dragDelta,
-    //                currentLength: $currentLength,
-    //                state: state
-    //              ) { delta in
-    //                self.dragDelta = delta
-    //              }
-    //            )
-    //            .environment(\.layoutAxis, state.edge.toAxis)
-    //        }
-    //    }
-    //    .frame(
-    //      maxWidth: .infinity,
-    //      maxHeight: .infinity,
-    //      alignment: state.edge.toAlignment.toOpposing
-    //    )
-
   }
 }
-
-//extension ResizableView {
-//  private var displaySize: CGFloat {
-//    state.displaySize(currentLength: currentLength, dragDelta: dragDelta)
-//  }
-//}

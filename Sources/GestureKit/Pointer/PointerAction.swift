@@ -10,28 +10,17 @@ public protocol Activatable {
 }
 
 public protocol PointerAction: Sendable {
-
   /// E.g. CGRect for Drag
   associatedtype Value
-
   var value: Value? { get set }
-
   init(_ value: Value?)
   mutating func update(_ newValue: Value?)
-
-  /// A value for 'at rest'
-  //  static var initialValue: Value { get }
-
-  //  mutating func update(_ newValue: Value, phase: InteractionPhase)
-  //  mutating func updatePhase(_ phase: InteractionPhase)
 }
 
 extension PointerAction {
-
-    public mutating func update(_ newValue: Value?) {
-      self.value = newValue
-  //    self.isActive = isActive
-    }
+  public mutating func update(_ newValue: Value?) {
+    self.value = newValue
+  }
 }
 
 extension PointerAction where Self: Activatable {

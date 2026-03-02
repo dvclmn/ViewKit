@@ -9,36 +9,15 @@
 import AppKit
 import CoreTools
 
-// MARK: - Custom NSView for Pan Tracking
 public class PanTrackingNSView: NSView {
-
   var didUpdatePan: PanOutput = { _, _, _ in }
 
-  // MARK: - Two-Finger Pan via ScrollWheel
   public override func scrollWheel(with event: NSEvent) {
-//    print("Received a scrollWheel event: \(event).")
     let modifiers = Modifiers(from: event)
-    
-//    print("Any modifiers held: \(modifiers)")
     guard event.hasPreciseScrollingDeltas else { return }
-    let deltaX = event.scrollingDeltaX
-    let deltaY = event.scrollingDeltaY
-    let delta = CGSize(width: deltaX, height: deltaY)
-
-//    print("Can NSEvent's Phase be more than one value simultaneously?")
-//    print("Current delta: \(delta)")
-//    print("NSEvent Phase: \(event.phase)")
-//    print("NSEvent Momentum Phase: \(event.momentumPhase)\n\n")
-
+    let delta = CGSize(width: event.scrollingDeltaX, height: event.scrollingDeltaY)
     let phase = InteractionPhase(from: event.momentumPhase)
-    
     didUpdatePan(delta, phase, modifiers)
   }
-
-//  public override func mouseExited(with event: NSEvent) {
-//    print("Mouse exited with event: \(event)")
-//    super.mouseExited(with: event)
-//    didUpdatePan(.inactive)
-//  }
 }
 #endif

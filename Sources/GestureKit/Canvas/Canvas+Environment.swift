@@ -9,16 +9,5 @@ import SwiftUI
 
 extension EnvironmentValues {
   @Entry public var isResizingCanvas: Bool = false
-
-  
-  
-//  @Entry public var pointerState: PointerState = .initial
-//  @Entry public var tapLocation: CGPoint?
-
-//  @Entry public var dragRect: CGRect?
-  
   @Entry public var shouldRenderDragRect: Bool = true
-//  @Entry public var pointerInteraction: PointerInteraction.Meta = .none
-//  @Entry public var isHoverEnabled: Bool = true
-//  @Entry public var isDragEnabled: Bool = true
 }

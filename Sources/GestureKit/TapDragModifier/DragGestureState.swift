@@ -24,7 +24,6 @@ struct DragGestureState {
 }
 
 extension DragGestureState {
-
   var value: CGRect { lastComputedValue?.toCGRectZeroOrigin ?? .zero }
 
   /// For this, marquee wants the `Gesture.Value` start location
@@ -47,10 +46,7 @@ extension DragGestureState {
         return newRect
 
       case .continuous:
-        guard let anchor else {
-          print("No anchor found, returning current value: \(value.displayString)")
-          return value
-        }
+        guard let anchor else { return value }
         let base = anchor.toCGSize
         let size = applyAxis(
           behaviour.axes,
@@ -59,12 +55,10 @@ extension DragGestureState {
         )
 
         lastComputedValue = size
-        
         return CGRect(origin: .zero, size: size)
-        
+
       case .none: return nil
     }
-
   }
 
   mutating func end() {
