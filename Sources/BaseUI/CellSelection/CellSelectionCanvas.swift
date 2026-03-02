@@ -46,7 +46,7 @@ struct CellSelectionCanvas: View {
         pinMode: .canvas,
         lineColour: gridLineColour,
         lineWidth: gridLineWidth,
-        annotations: .full,
+//        annotations: .full,
         drawsBorder: false
       )
 

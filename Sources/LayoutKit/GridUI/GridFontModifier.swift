@@ -16,15 +16,6 @@ struct GridFontModifier: ViewModifier {
 
   let fontStyle: GridFont?
   let fontSize: CGFloat
-//  let fontSize: GridFontSize
-
-//  init(
-//    fontStyle: GridFont?,
-//    fontSize: GridFontSize
-//  ) {
-//    self.fontStyle = fontStyle
-//    self.fontSize = fontSize
-//  }
 
   func body(content: Content) -> some View {
     content
@@ -32,14 +23,14 @@ struct GridFontModifier: ViewModifier {
       /// Prevents any compression of the spacing between characters
       .allowsTightening(false)
       .environment(\.gridFont, fontStyle)
-//      .environment(\.asciiModeFontSize, fontSize.asciiUIValue ?? asciiModeFontSize)
+    //      .environment(\.asciiModeFontSize, fontSize.asciiUIValue ?? asciiModeFontSize)
   }
 }
 
 extension GridFontModifier {
 
   private var finalGridFont: Font? {
-//    guard let fontSize = fontSize.size else { return nil }
+    //    guard let fontSize = fontSize.size else { return nil }
     guard let font = fontStyle ?? gridFont else { return nil }
     return switch font {
       case .sfMono:
@@ -61,31 +52,31 @@ extension View {
       GridFontModifier(
         fontStyle: style,
         fontSize: size
-//        fontSize: .canvas(size)
+          //        fontSize: .canvas(size)
       )
     )
   }
-  
+
   public func gridFontSize(
     size: CGFloat
   ) -> some View {
     self.modifier(
       GridFontModifier(
-        fontStyle: style,
+        fontStyle: nil,
         fontSize: size
-        //        fontSize: .canvas(size)
+          //        fontSize: .canvas(size)
       )
     )
   }
 
-//  /// This does not set a `GridFont` in the Environment.
-//  /// Use ``gridFont(_:size:)`` first if there no grid font present yet.
-//  public func asciiUIFont(size: CGFloat = 20) -> some View {
-//    self.modifier(
-//      GridFontModifier(
-//        fontStyle: nil,
-//        fontSize: .asciiUI(size)
-//      )
-//    )
-//  }
+  //  /// This does not set a `GridFont` in the Environment.
+  //  /// Use ``gridFont(_:size:)`` first if there no grid font present yet.
+  //  public func asciiUIFont(size: CGFloat = 20) -> some View {
+  //    self.modifier(
+  //      GridFontModifier(
+  //        fontStyle: nil,
+  //        fontSize: .asciiUI(size)
+  //      )
+  //    )
+  //  }
 }

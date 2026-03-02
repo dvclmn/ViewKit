@@ -67,7 +67,7 @@ extension GridGuideOverlayModifier {
         pinMode: .viewport,
         lineColour: .cyan.opacity(opacity),
         lineWidth: 1,
-        annotations: .half
+//        annotations: .half
       )
       
 //      context.drawGrid(

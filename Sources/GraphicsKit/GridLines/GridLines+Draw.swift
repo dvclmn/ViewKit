@@ -10,6 +10,8 @@ import SwiftUI
 
 extension GraphicsContext {
 
+  /// Note: Annotation vis. and density now determined by
+  /// Env value and `FontCompression`
   public func drawGrid(
     unitSizeOverride: CGSize? = nil,
     in containerSize: CGSize,
@@ -17,7 +19,7 @@ extension GraphicsContext {
     pinMode: GridPinMode = .canvas,
     lineColour: Color = .gray.opacity(0.2),
     lineWidth: CGFloat = 1,
-    annotations: GridAnnotationDensity = .none,
+//    annotations: GridAnnotationDensity = .none,
     drawsBorder: Bool = true
   ) {
     guard
@@ -26,9 +28,8 @@ extension GraphicsContext {
         containerSize: containerSize,
         sizeMode: sizeMode,
         pinMode: pinMode,
-        lineColour: lineColour,
         lineWidth: lineWidth,
-        annotations: annotations,
+//        annotationDensity: annotations,
         drawsBorder: drawsBorder,
         environment: self.environment
       ),
@@ -37,7 +38,7 @@ extension GraphicsContext {
 
     self.stroke(
       output.path,
-      with: .color(output.lineColour),
+      with: .color(lineColour),
       lineWidth: output.lineWidth
     )
 

@@ -15,7 +15,7 @@ struct GridLineAnnotation {
 
 struct GridLineOutput {
   let path: Path
-  let lineColour: Color
+//  let lineColour: Color
   let lineWidth: CGFloat
   let annotations: [GridLineAnnotation]
 }
@@ -26,9 +26,9 @@ struct GridLineContext {
   let containerSize: CGSize
   let sizeMode: GridSizeMode
   let pinMode: GridPinMode
-  let lineColour: Color
+//  let lineColour: Color
   let lineWidth: CGFloat
-  let annotations: GridAnnotationDensity
+//  let annotationDensity: GridAnnotationDensity
   let drawsBorder: Bool
   let panOffset: CGSize
   let zoomLevel: CGFloat
@@ -41,9 +41,9 @@ extension GridLineContext {
     containerSize: CGSize,
     sizeMode: GridSizeMode,
     pinMode: GridPinMode,
-    lineColour: Color,
+//    lineColour: Color,
     lineWidth: CGFloat,
-    annotations: GridAnnotationDensity,
+//    annotationDensity: GridAnnotationDensity,
     drawsBorder: Bool,
     environment: EnvironmentValues
   ) {
@@ -55,12 +55,12 @@ extension GridLineContext {
     self.containerSize = containerSize
     self.sizeMode = sizeMode
     self.pinMode = pinMode
-    self.lineColour = lineColour
+//    self.lineColour = lineColour
     self.lineWidth = lineWidth
-    self.annotations = annotations
+//    self.annotationDensity = annotationDensity
     self.drawsBorder = drawsBorder
     self.panOffset = environment.panOffset
-    self.zoomLevel = CGFloat(environment.zoomLevel)
+    self.zoomLevel = environment.zoomLevel.toCGFloat
     self.zoomRange = environment.zoomRange?.toCGFloatRange
   }
 }
@@ -106,7 +106,7 @@ extension GridLineContext {
 
         return GridLineOutput(
           path: path,
-          lineColour: lineColour,
+//          lineColour: lineColour,
           lineWidth: effectiveLineWidth,
           annotations: []
         )
@@ -145,7 +145,7 @@ extension GridLineContext {
 
         return GridLineOutput(
           path: path,
-          lineColour: lineColour,
+//          lineColour: lineColour,
           lineWidth: effectiveLineWidth,
           annotations: markers
         )
@@ -158,7 +158,7 @@ extension GridLineContext {
     position: CGFloat,
     markers: inout [GridLineAnnotation]
   ) {
-    guard shouldDrawMarker(for: index) else { return }
+//    guard shouldDrawMarker(for: index) else { return }
 
     let baseOffset = unitSize / 2
     let isVertical = axis.isVertical
@@ -174,9 +174,9 @@ extension GridLineContext {
     )
   }
 
-  private func shouldDrawMarker(for index: Int) -> Bool {
-    guard annotations.isShowingCellMarkers else { return false }
-    guard let stepSize = annotations.stepSize, stepSize > 0 else { return false }
-    return index.isMultiple(of: stepSize)
-  }
+//  private func shouldDrawMarker(for index: Int) -> Bool {
+//    guard annotationDensity.isShowingCellMarkers else { return false }
+//    guard let stepSize = annotationDensity.stepSize, stepSize > 0 else { return false }
+//    return index.isMultiple(of: stepSize)
+//  }
 }
