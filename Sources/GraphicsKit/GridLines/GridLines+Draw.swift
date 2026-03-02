@@ -42,12 +42,45 @@ extension GraphicsContext {
     )
 
     output.annotations.forEach { annotation in
-      drawAnnotation(annotation.text, at: annotation.point)
+      drawAnnotation(
+        annotation.text,
+        at: annotation.point,
+        zoom: environment.zoomLevel,
+        zoomRange: environment.zoomRange
+      )
     }
   }
 
-  private func drawAnnotation(_ text: String, at point: CGPoint) {
-    let text = Text(text).font(.caption2).foregroundColor(.secondary)
+  private func drawAnnotation(
+    _ text: String,
+    at point: CGPoint,
+    zoom: CGFloat,
+    zoomRange: ClosedRange<Double>?
+  ) {
+    let baseFontSize: Double = 12
+    let scaledFontSize = baseFontSize.removingZoom(
+      zoom,
+      clampedTo: zoomRange,
+      sensitivity: 0.2
+    )
+    let text = Text(text)
+      .font(.system(size: scaledFontSize))
+      .fontWidth(.condensed)
+      .foregroundColor(.secondary)
+    //      .monospacedDigit()
+
     self.draw(text, at: point)
+  }
+}
+
+struct FontCompression {
+  let fontSize: CGFloat
+  let cellSize: CGSize
+  let zoom: CGFloat
+  let zoomRange: ClosedRange<Double>?
+  let sensitivity: CGFloat
+  
+  func makeFont(...) -> (width: Font.Width, size: CGFloat) {
+    
   }
 }

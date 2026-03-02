@@ -27,6 +27,27 @@ public func - (lhs: GridDimensions, rhs: GridDimensions) -> GridDimensions {
   )
 }
 
+// MARK: - Int
+public func * (lhs: GridDimensions, rhs: Int) -> GridDimensions {
+  return GridDimensions(
+    width: lhs.width * rhs,
+    height: lhs.height * rhs
+  )
+}
+public func + (lhs: GridDimensions, rhs: Int) -> GridDimensions {
+  return GridDimensions(
+    width: lhs.width + rhs,
+    height: lhs.height + rhs
+  )
+}
+
+public func - (lhs: GridDimensions, rhs: Int) -> GridDimensions {
+  return GridDimensions(
+    width: lhs.width - rhs,
+    height: lhs.height - rhs
+  )
+}
+
 // MARK: - CGSize
 public func * (lhs: CGSize, rhs: GridDimensions) -> CGSize {
   let w = lhs.width * CGFloat(rhs.width)

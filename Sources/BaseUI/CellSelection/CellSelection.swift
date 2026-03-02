@@ -12,6 +12,8 @@ import SwiftUI
 
 public struct CellSelectionTestView<Content: View>: View {
   @Environment(\.gridCanvasSize) private var gridCanvasSize
+  @Environment(\.unitSize) private var unitSize
+  @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers
 
   @State private var store: SelectionHandler
 
@@ -34,7 +36,10 @@ public struct CellSelectionTestView<Content: View>: View {
 
         CellSelectionCanvas()
           .allowsCanvasClipping(false)
+
         content
+          .padding(.top, offset.top)
+          .padding(.leading, offset.leading)
 
       }
       .environment(\.zoomRange, zoomRange)
@@ -45,6 +50,15 @@ public struct CellSelectionTestView<Content: View>: View {
       StateView("No Canvas Size")
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+  }
+}
+
+extension CellSelectionTestView {
+  private var offset: (top: CGFloat, leading: CGFloat) {
+    guard let unitSize else { return (0, 0) }
+    return isShowingCellNumbers
+      ? (unitSize.height, unitSize.width)
+      : (0, 0)
   }
 }
 

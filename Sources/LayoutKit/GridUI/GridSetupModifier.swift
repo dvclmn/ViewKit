@@ -40,8 +40,8 @@ struct GridGeometryModifier: ViewModifier {
 extension GridGeometryModifier {
   /// If cell numbers are showing, the grid needs to be enlarged by 1x cell to accomodate
   private var effectiveDimensions: GridDimensions {
-    isShowingCellNumbers
-    ? 
+    let additional: Int = isShowingCellNumbers ? 1 : 0
+    return dimensions + additional
   }
 }
 

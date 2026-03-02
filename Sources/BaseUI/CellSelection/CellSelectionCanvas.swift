@@ -21,6 +21,7 @@ struct CellSelectionCanvas: View {
   @Environment(\.canvasSize) private var canvasSize
   @Environment(\.hoverLocation) private var hoverLocation
   @Environment(\.canvasBackground) private var canvasBackground
+  @Environment(\.isDebugMode) private var isDebugMode
 
   private let rounding: CGFloat = 4
 
@@ -69,7 +70,7 @@ struct CellSelectionCanvas: View {
       }
 
     }  // END canvas
-
+    .debugFrame("Cell Canvas", .orange, isEnabled: isDebugMode)
     .addInfoBarItems {
       //      Labeled("Pointer (Global)", value: store.pointerLocation?.displayString(.location))
       //      Labeled("Pointer (Local)", value: store.pointerLocalSpace?.displayString(.location))

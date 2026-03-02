@@ -34,20 +34,34 @@ public struct Labeled: Sendable {
 
   public init(
     _ key: String,
-    value: Any,
+    value: Any?,
     //    value: DisplayAtom?,
     separator: String = ": "
   ) {
     self.key = key
 
-    let labelValue =
-      switch value {
-        case let value as DisplayFragmentRenderable: DisplayFragment(value)
-        default: DisplayFragment(String(describing: value))
-      }
-    self.value = labelValue
+    if let value {
+      self.value =
+        switch value {
+          case let value as DisplayFragmentRenderable: DisplayFragment(value)
+          default: DisplayFragment(String(describing: value))
+        }
+    } else {
+      self.value = DisplayFragment(String(describing: value))
+    }
+
     self.separator = separator
   }
+
+  //  public init(
+  //    _ key: String,
+  //    value: Any?,
+  //    //    value: DisplayAtom?,
+  //    separator: String = ": "
+  //  ) {
+  //
+  //    self.init(key, value: value, separator: separator)
+  //  }
 
   public var block: DisplayBlock {
     .labeled(key: key, separator: separator, value: value)

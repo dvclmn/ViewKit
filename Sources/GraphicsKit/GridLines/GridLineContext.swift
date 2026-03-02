@@ -122,7 +122,7 @@ extension GridLineContext {
           drawsBorder: drawsBorder,
           edgeEpsilon: edgeEpsilon,
           onHorizontalIndex: { index, x in
-            
+
             /// Passing `vertical` looks inverted, but it's not
             handleMarker(
               for: .vertical,
@@ -132,7 +132,7 @@ extension GridLineContext {
             )
           },
           onVerticalIndex: { index, y in
-            
+
             /// Passing `horizontal` looks inverted, but it's not
             handleMarker(
               for: .horizontal,
@@ -160,11 +160,11 @@ extension GridLineContext {
   ) {
     guard shouldDrawMarker(for: index) else { return }
 
-    let baseOffset = zoomedUnitSize
+    let baseOffset = unitSize / 2
     let isVertical = axis.isVertical
 
-    let valX = isVertical ? position : baseOffset.width
-    let valY = isVertical ? baseOffset.height : position
+    let valX = isVertical ? position + baseOffset.height / 2 : baseOffset.width
+    let valY = isVertical ? baseOffset.height : position + baseOffset.height
 
     markers.append(
       GridLineAnnotation(
