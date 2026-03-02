@@ -8,6 +8,19 @@
 import CoreTools
 import SwiftUI
 
+struct GridLineAnnotation {
+  let text: String
+  let point: CGPoint
+}
+
+struct GridLineOutput {
+  let path: Path
+  let lineColour: Color
+  let lineWidth: CGFloat
+  let annotations: [GridLineAnnotation]
+}
+
+// MARK: - Main Context
 struct GridLineContext {
   let unitSize: CGSize
   let containerSize: CGSize
@@ -20,18 +33,6 @@ struct GridLineContext {
   let panOffset: CGSize
   let zoomLevel: CGFloat
   let zoomRange: ClosedRange<CGFloat>?
-}
-
-struct GridLineAnnotation {
-  let text: String
-  let point: CGPoint
-}
-
-struct GridLineOutput {
-  let path: Path
-  let lineColour: Color
-  let lineWidth: CGFloat
-  let annotations: [GridLineAnnotation]
 }
 
 extension GridLineContext {
@@ -62,6 +63,9 @@ extension GridLineContext {
     self.zoomLevel = CGFloat(environment.zoomLevel)
     self.zoomRange = environment.zoomRange?.toCGFloatRange
   }
+}
+
+extension GridLineContext {
 
   var zoomedUnitSize: CGSize {
     unitSize * zoomLevel
@@ -109,19 +113,32 @@ extension GridLineContext {
 
       case .fillContainer:
         var markers: [GridLineAnnotation] = []
+
+        /// Note: passing in *un-zoomed* cell (unit) size
         let path = Path.infiniteGrid(
           containerSize: containerSize,
-          cellSize: zoomedUnitSize,
+          cellSize: unitSize,
           offset: effectivePanOffset,
           drawsBorder: drawsBorder,
           edgeEpsilon: edgeEpsilon,
-          onVerticalIndex: { index, x in
-            guard shouldDrawMarker(for: index) else { return }
-            markers.append(
-              GridLineAnnotation(
-                text: "\(index)",
-                point: CGPoint(x: x + 4, y: 20)
-              )
+          onHorizontalIndex: { index, x in
+            
+            /// Passing `vertical` looks inverted, but it's not
+            handleMarker(
+              for: .vertical,
+              at: index,
+              position: x,
+              markers: &markers
+            )
+          },
+          onVerticalIndex: { index, y in
+            
+            /// Passing `horizontal` looks inverted, but it's not
+            handleMarker(
+              for: .horizontal,
+              at: index,
+              position: y,
+              markers: &markers
             )
           }
         )
@@ -133,6 +150,28 @@ extension GridLineContext {
           annotations: markers
         )
     }
+  }
+
+  private func handleMarker(
+    for axis: GridAxis,
+    at index: Int,
+    position: CGFloat,
+    markers: inout [GridLineAnnotation]
+  ) {
+    guard shouldDrawMarker(for: index) else { return }
+
+    let baseOffset = zoomedUnitSize
+    let isVertical = axis.isVertical
+
+    let valX = isVertical ? position : baseOffset.width
+    let valY = isVertical ? baseOffset.height : position
+
+    markers.append(
+      GridLineAnnotation(
+        text: "\(index)",
+        point: CGPoint(x: valX, y: valY)
+      )
+    )
   }
 
   private func shouldDrawMarker(for index: Int) -> Bool {

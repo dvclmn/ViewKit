@@ -42,7 +42,7 @@ struct CellSelectionCanvas: View {
         pinMode: .canvas,
         lineColour: .gray.opacity(0.3),
         lineWidth: 1,
-        annotations: .quarter,
+        annotations: .full,
         drawsBorder: false
       )
 

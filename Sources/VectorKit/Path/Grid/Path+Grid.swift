@@ -8,7 +8,8 @@
 import CoreTools
 import SwiftUI
 
-public typealias VerticalIndexOutput = (_ index: Int, _ x: CGFloat) -> Void
+public typealias IndexHorizontal = (_ index: Int, _ x: CGFloat) -> Void
+public typealias IndexVertical = (_ index: Int, _ y: CGFloat) -> Void
 
 public enum GridLinesMode {
   /// Draw enough lines to cover the container, choosing indices based on offset
@@ -85,7 +86,8 @@ extension Path {
     offset: CGSize,
     drawsBorder: Bool,
     edgeEpsilon: CGFloat = 0.5,
-    onVerticalIndex: VerticalIndexOutput? = nil
+    onHorizontalIndex: IndexHorizontal? = nil,
+    onVerticalIndex: IndexVertical? = nil,
   ) -> Path {
     let w = containerSize.width
     let h = containerSize.height
@@ -108,21 +110,24 @@ extension Path {
     }
 
     return Path { p in
+      /// Columns -> vertical lines at fixed x
       for i in startCol...endCol {
         let x = CGFloat(i) * cw + offset.width
         if !drawsBorder, isOnVerticalEdge(x) { continue }
 
         p.move(to: CGPoint(x: x, y: 0))
         p.addLine(to: CGPoint(x: x, y: h))
-        onVerticalIndex?(i, x)
+        onHorizontalIndex?(i, x)
       }
 
+      /// Rows -> horizontal lines at fixed y
       for i in startRow...endRow {
         let y = CGFloat(i) * ch + offset.height
         if !drawsBorder, isOnHorizontalEdge(y) { continue }
 
         p.move(to: CGPoint(x: 0, y: y))
         p.addLine(to: CGPoint(x: w, y: y))
+        onVerticalIndex?(i, y)
       }
     }
   }

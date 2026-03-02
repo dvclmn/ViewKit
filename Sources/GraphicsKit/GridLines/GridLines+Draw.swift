@@ -47,6 +47,7 @@ extension GraphicsContext {
   }
 
   private func drawAnnotation(_ text: String, at point: CGPoint) {
-    self.draw(Text(text).font(.caption2).foregroundColor(.secondary), at: point)
+    let text = Text(text).font(.caption2).foregroundColor(.secondary)
+    self.draw(text, at: point)
   }
 }

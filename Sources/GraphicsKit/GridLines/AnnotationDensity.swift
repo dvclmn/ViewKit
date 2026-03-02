@@ -8,6 +8,7 @@
 import BasePrimitives
 import SwiftUI
 
+/// Need to add a type to handle annotation position
 public enum GridAnnotationDensity: Int {
   case full = 1
   case threeQuarters = 2
