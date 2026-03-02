@@ -13,7 +13,8 @@ import SwiftUI
 /// into environment, etc.
 
 struct GridGeometryModifier: ViewModifier {
-
+  @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers: Bool
+  
   let font: GridFont
   let fontSize: CGFloat
   let dimensions: GridDimensions
@@ -33,6 +34,14 @@ struct GridGeometryModifier: ViewModifier {
       .gridFont(font, size: fontSize)
 
       .environment(\.gridDimensions, dimensions)
+  }
+}
+
+extension GridGeometryModifier {
+  /// If cell numbers are showing, the grid needs to be enlarged by 1x cell to accomodate
+  private var effectiveDimensions: GridDimensions {
+    isShowingCellNumbers
+    ? 
   }
 }
 

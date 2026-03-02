@@ -12,6 +12,7 @@ extension EnvironmentValues {
 
   @Entry public var gridDimensions: GridDimensions?
   @Entry public var gridFont: GridFont?
+  @Entry public var isShowingCellNumbers: Bool = false
 }
 
 extension View {

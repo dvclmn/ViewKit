@@ -19,6 +19,7 @@ public struct GridDimensions: ModelBase {
     self.width = width
     self.height = height
   }
+  
   public init(_ width: Int, _ height: Int) {
     self.init(width: width, height: height)
   }
@@ -34,14 +35,6 @@ extension GridDimensions: ExpressibleByIntegerLiteral {
 extension GridDimensions: CustomStringConvertible {
   public var description: String { "\(width) x \(height)" }
 }
-
-public func + (lhs: GridDimensions, rhs: GridDimensions) -> GridDimensions {
-  return GridDimensions(
-    width: lhs.width + rhs.width,
-    height: lhs.height + rhs.height
-  )
-}
-
 
 //import SwiftUI
 //import BasePrimitives

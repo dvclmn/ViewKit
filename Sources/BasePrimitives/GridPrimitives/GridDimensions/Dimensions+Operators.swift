@@ -7,13 +7,33 @@
 
 import Foundation
 
+public func * (lhs: GridDimensions, rhs: GridDimensions) -> GridDimensions {
+  return GridDimensions(
+    width: lhs.width * rhs.width,
+    height: lhs.height * rhs.height
+  )
+}
+public func + (lhs: GridDimensions, rhs: GridDimensions) -> GridDimensions {
+  return GridDimensions(
+    width: lhs.width + rhs.width,
+    height: lhs.height + rhs.height
+  )
+}
+
+public func - (lhs: GridDimensions, rhs: GridDimensions) -> GridDimensions {
+  return GridDimensions(
+    width: lhs.width - rhs.width,
+    height: lhs.height - rhs.height
+  )
+}
+
+// MARK: - CGSize
 public func * (lhs: CGSize, rhs: GridDimensions) -> CGSize {
   let w = lhs.width * CGFloat(rhs.width)
   let h = lhs.height * CGFloat(rhs.height)
   return CGSize(width: w, height: h)
 }
 
-/// Adds 
 public func + (lhs: CGSize, rhs: GridDimensions) -> CGSize {
   let w = lhs.width + CGFloat(rhs.width)
   let h = lhs.height + CGFloat(rhs.height)
