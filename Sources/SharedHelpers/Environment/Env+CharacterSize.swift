@@ -41,12 +41,27 @@ extension EnvironmentValues {
     return unitSize * scale
   }
 
-  /// Current effective unit size for the active domain.
+  /// Current effective unit size, based on the ``isASCIIMode`` setting
   public var activeUnitSize: CGSize? {
     if isASCIIMode {
       return asciiUnitSize ?? unitSize
     }
     return unitSize
   }
+}
 
+public enum UnitSizeDomain {
+  case canvas  // Returns `unitSize`
+  case asciiMode  // Returns `asciiUnitSize`
+  case automatic  // Defers to Environment's `activeUnitSize` value
+  //case custom(CGSize)
+
+  public var environmentKey: KeyPath<EnvironmentValues, CGSize?> {
+    switch self {
+      case .canvas: \.unitSize
+      case .asciiMode: \.asciiUnitSize
+      case .automatic: \.activeUnitSize
+    //      case .custom(let size): nil
+    }
+  }
 }

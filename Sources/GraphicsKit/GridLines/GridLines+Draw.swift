@@ -5,31 +5,31 @@
 //  Created by Dave Coleman on 9/1/2026.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
 extension GraphicsContext {
 
   /// Note: Annotation vis. and density now determined by
   /// Env value and `FontCompression`
+  ///
+  /// To customise line colour and width, set env values
+  /// `gridLineColour` and `gridLineWidth`
   public func drawGrid(
-    unitSizeOverride: CGSize? = nil,
+    domain: UnitSizeDomain,
+    //    unitSizeOverride: CGSize? = nil,
     in containerSize: CGSize,
     sizeMode: GridSizeMode = .fillContainer,
     pinMode: GridPinMode = .canvas,
-    lineColour: Color = .gray.opacity(0.2),
-    lineWidth: CGFloat = 1,
-//    annotations: GridAnnotationDensity = .none,
     drawsBorder: Bool = true
   ) {
     guard
       let context = GridLineContext(
-        unitSizeOverride: unitSizeOverride,
+        domain: domain,
+        //        unitSizeOverride: unitSizeOverride,
         containerSize: containerSize,
         sizeMode: sizeMode,
         pinMode: pinMode,
-        lineWidth: lineWidth,
-//        annotationDensity: annotations,
         drawsBorder: drawsBorder,
         environment: self.environment
       ),
@@ -38,7 +38,7 @@ extension GraphicsContext {
 
     self.stroke(
       output.path,
-      with: .color(lineColour),
+      with: .color(environment.gridLineColour),
       lineWidth: output.lineWidth
     )
 

@@ -36,7 +36,7 @@ extension BinaryFloatingPoint {
   /// at low zooms, and thicker lines at high zooms.
   public func removingZoom(
     _ zoom: Self,
-    clampedTo range: ClosedRange<Self>? = nil,
+    across range: ClosedRange<Self>? = nil,
     sensitivity: Self? = nil
   ) -> Self {
     guard zoom.isGreaterThanZero, range?.isGreaterThanZero ?? false else {

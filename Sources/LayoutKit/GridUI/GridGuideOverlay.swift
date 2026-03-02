@@ -5,12 +5,12 @@
 //  Created by Dave Coleman on 11/10/2025.
 //
 
-import BasePrimitives
+import CoreTools
 import GraphicsKit
 import SwiftUI
 
 public struct GridGuideOverlayModifier: ViewModifier {
-  @Environment(\.activeUnitSize) private var unitSize
+  @Environment(\.activeUnitSize) private var activeUnitSize
   @Environment(\.gridDimensions) private var gridDimensions
   @Environment(\.layoutAlignment) private var layoutAlignment
 
@@ -44,42 +44,43 @@ extension GridGuideOverlayModifier {
   //  }
   @ViewBuilder
   private func GridGuide() -> some View {
-    if let unitSize {
-      CoreView(unitSize)
-    } else {
-      if isPreview {
-        ProgressView("Loading Unit Size")
-          .foregroundStyle(.tertiary)
-          .font(.caption)
-      }
-    }  // END size check
+
+    CoreView()
+    //    } else {
+    //      if isPreview {
+    //        ProgressView("Loading Unit Size")
+    //          .foregroundStyle(.tertiary)
+    //          .font(.caption)
+    //      }
+    //    }  // END size check
   }
 
   @ViewBuilder
-  private func CoreView(_ unitSize: CGSize) -> some View {
+  private func CoreView() -> some View {
     Canvas {
       context,
       size in
 
       context.drawGrid(
+        domain: .automatic,
         in: size,
         sizeMode: .fillContainer,
         pinMode: .viewport,
-        lineColour: .cyan.opacity(opacity),
-        lineWidth: 1,
-//        annotations: .half
+        //        lineColour: .cyan.opacity(opacity),
+        //        lineWidth: 1,
+        //        annotations: .half
       )
-      
-//      context.drawGrid(
-//        config: .init(
-//          fillStyle: .fill(size: size),
-//          colour: .cyan.opacity(opacity),
-//          lineWidth: 1,
-//          density: .half
-//        ),
-//        containerSize: size,
-//        isInfinite: true
-//      )
+
+      //      context.drawGrid(
+      //        config: .init(
+      //          fillStyle: .fill(size: size),
+      //          colour: .cyan.opacity(opacity),
+      //          lineWidth: 1,
+      //          density: .half
+      //        ),
+      //        containerSize: size,
+      //        isInfinite: true
+      //      )
       //      context.drawGridLines(
       //        config: GridConfiguration(
       //          fillStyle: .fill(size: size),
@@ -93,13 +94,15 @@ extension GridGuideOverlayModifier {
       //        //        canvasZoom: 1.0
       //      )
 
-      if isDrawingDebugText {
-        debugText(
-          size: size,
-          unitSize: unitSize,
-          context: context
-        )
-      }
+      //      if isDrawingDebugText {
+      //        context.drawDebugText(<#T##text: String##String#>, at: <#T##CGPoint#>, pointDisplay: <#T##DebugPoint#>)
+      //        debugText(
+      //          domain: .automatic,
+      //          size: size,
+      //          //          unitSize: unitSize,
+      //          context: context
+      //        )
+      //      }
     }
     .frameFromGridDimensions(
       gridDimensions: FrameGridDimensions(from: gridDimensions, alignment: layoutAlignment ?? .center)
@@ -111,22 +114,25 @@ extension GridGuideOverlayModifier {
     //    )
   }
 
-  private func debugText(
-    size: CGSize,
-    unitSize: CGSize,
-    context: GraphicsContext
-  ) {
-    let gridWidth: Int = size.width.toGridCount(using: unitSize.width, rounding: .up) ?? 0
-    for i in 0..<gridWidth {
-      context.drawDebugText(
-        "\(i)",
-        at: CGPoint(x: CGFloat(i) * unitSize.width, y: 0),
-        positioned: .aboveOrigin,
-        fontSize: 20,
-        pointDisplay: .none,
-      )
-    }
-  }
+  /// Possibly refer to `VectorKit`'s `drawDebugText(_:at:positioned:colour:fontSize:pointDisplay:)`
+  //  private func debugText(
+  //    domain: UnitSizeDomain = .automatic,
+  //    size: CGSize,
+  //    //    unitSize: CGSize,
+  //    context: GraphicsContext
+  //  ) {
+  //    guard let unitSize = context.unitSize(from: domain) else { return }
+  //    let gridWidth: Int = size.width.toGridCount(using: unitSize.width, rounding: .up) ?? 0
+  //    for i in 0..<gridWidth {
+  //      context.drawDebugText(
+  //        "\(i)",
+  //        at: CGPoint(x: CGFloat(i) * unitSize.width, y: 0),
+  //        positioned: .aboveOrigin,
+  //        fontSize: 20,
+  //        pointDisplay: .none,
+  //      )
+  //    }
+  //  }
 }
 
 extension View {

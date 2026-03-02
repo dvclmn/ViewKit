@@ -145,4 +145,8 @@ extension GraphicsContext {
     let path = Path(fromSize: size)
     self.fill(path, with: .color(colour))
   }
+  
+  public func unitSize(from domain: UnitSizeDomain) -> CGSize? {
+    environment[keyPath: domain.environmentKey]
+  }
 }
