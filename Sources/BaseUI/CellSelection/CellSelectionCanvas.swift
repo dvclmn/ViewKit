@@ -19,9 +19,12 @@ struct CellSelectionCanvas: View {
   @Environment(\.cornerRounding) private var cornerRounding
   @Environment(\.gridDimensions) private var gridDimensions
   @Environment(\.canvasSize) private var canvasSize
-  @Environment(\.hoverLocation) private var hoverLocation
+  @Environment(\.pointerLocation) private var pointerLocation
   @Environment(\.canvasBackground) private var canvasBackground
   @Environment(\.isDebugMode) private var isDebugMode
+
+  @Environment(\.gridLineColour) private var gridLineColour
+  @Environment(\.gridLineWidth) private var gridLineWidth
 
   private let rounding: CGFloat = 4
 
@@ -41,24 +44,22 @@ struct CellSelectionCanvas: View {
         in: size,
         sizeMode: .fillContainer,
         pinMode: .canvas,
-        lineColour: .gray.opacity(0.3),
-        lineWidth: 1,
+        lineColour: gridLineColour,
+        lineWidth: gridLineWidth,
         annotations: .full,
         drawsBorder: false
       )
 
       guard let rect = store.selectionRect else { return }
-      // context.drawDebugText("No selection rect", at: size.midpoint, pointDisplay: .point(.pink))
 
       let selectionShape: Path
-
       if let radii = rectRadii {
         selectionShape = UnevenRoundedRectangle(cornerRadii: radii)
           .path(in: rect)
       } else {
         selectionShape = Path(rect)
       }
-      
+
       context.fillAndStroke(
         selectionShape,
         fillColour: .cyan.opacity(0.25),
@@ -82,7 +83,7 @@ struct CellSelectionCanvas: View {
     .task(id: viewportRect) { refreshGeometry() }
     .task(id: unitSize) { refreshGeometry() }
     .task(id: gridDimensions) { refreshGeometry() }
-    .task(id: hoverLocation) { store.pointerLocation = hoverLocation }
+    .task(id: pointerLocation) { store.pointerLocation = pointerLocation }
 
   }
 }

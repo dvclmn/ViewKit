@@ -8,19 +8,6 @@
 import CoreTools
 import SwiftUI
 
-//@AssociatedValues
-//enum GridFontSize {
-//  case canvas(CGFloat)
-//  case asciiUI(CGFloat)
-//
-//  var size: CGFloat? {
-//    switch self {
-//      case .canvas(let fontSize): fontSize
-//      case .asciiUI(let fontSize): fontSize
-//    }
-//  }
-//}
-
 /// Provides a convenient way to set a Grid font. This doesn't handle any
 /// font/glyph geometry etc, just setting the font and font size visually.
 struct GridFontModifier: ViewModifier {
@@ -75,6 +62,18 @@ extension View {
         fontStyle: style,
         fontSize: size
 //        fontSize: .canvas(size)
+      )
+    )
+  }
+  
+  public func gridFontSize(
+    size: CGFloat
+  ) -> some View {
+    self.modifier(
+      GridFontModifier(
+        fontStyle: style,
+        fontSize: size
+        //        fontSize: .canvas(size)
       )
     )
   }

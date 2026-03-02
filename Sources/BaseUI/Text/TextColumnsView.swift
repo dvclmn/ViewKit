@@ -37,7 +37,8 @@ public struct TextColumns<Content: View>: View {
       .hidden()
       //      .frame(minWidth: screenWidth)
       .gridGuide(opacity: 0.3, isEnabled: isDebugMode)
-      .setGridDimensions(columnWidth, height: 1)
+      .environment(\.gridDimensions, .init(columnWidth, 1))
+//      .setGridDimensions(columnWidth, height: 1)
       .characterSize(mode: .debounce(0.2), shouldSetEnv: true) { size in
         self.characterSize = size
       }

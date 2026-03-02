@@ -26,7 +26,6 @@ extension GridPosition {
     within dimensions: GridDimensions,
     at point: CGPoint,
     cellSize: CGSize,
-    //    rounding: GridRounding = .down
   ) -> GridPosition? {
 
     let col = Int(floor(point.x / cellSize.width))
@@ -34,15 +33,6 @@ extension GridPosition {
     let candidate = GridPosition(column: col, row: row)
     return dimensions.contains(position: candidate) ? candidate : nil
 
-    //    fatalError("Needs implementation")
-    /// The grid size conversion is *only* to check whether the point is contained.
-    /// The cellSize is not used to construct the
-    //        let gridSize = dimensions.toUnitSize(unitSize: cellSize)
-    //        let containsPoint = gridSize.contains(point: point)
-    //
-    //        let position = GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
-    //        guard dimensions.contains(point: point, cellSize: cellSize) else { return nil }
-    //        return GridPosition(point: point, cellSize: cellSize)
   }
 
   /// Note: zero-based count for internal representation,
@@ -54,70 +44,14 @@ extension GridPosition {
   /// Position starting from one, for UI
   public var displayRepresentation: GridPosition {
     GridPosition(column: column + 1, row: row + 1)
-    //    self + 1
-  }
-
-  public var isGreaterThanZero: Bool {
-    return column > 0 && row > 0
-  }
-
-  public var isGreaterThanOrEqualToZero: Bool {
-    return column >= 0 && row >= 0
-  }
-
-  /// Converts grid position to canvas-space point
-  /// - Parameter cellSize: The size of each grid cell
-  /// - Returns: The top-left point of the cell in canvas coordinates
-  //  public func toCGPoint(cellSize: CGSize) -> CGPoint {
-  //    CGPoint(
-  //      x: CGFloat(column) * cellSize.width,
-  //      y: CGFloat(row) * cellSize.height
-  //    )
-  //  }
-
-  public func toUnitPoint(using unitSize: CGSize) -> UnitPoint? {
-    guard let x = row.toScreenLength(using: unitSize.width),
-      let y = column.toScreenLength(using: unitSize.height)
-    else { return nil }
-    return UnitPoint(
-      x: x,
-      y: y
-    )
-    //    CGPoint(
-    //      x: CGFloat(column) * cellSize.width,
-    //      y: CGFloat(row) * cellSize.height
-    //    )
-  }
-
-  public func toScreenPoint(
-    using unitSize: CGSize
-  ) -> CGPoint {
-    CGPoint(
-      x: CGFloat(column) * unitSize.width,
-      y: CGFloat(row) * unitSize.height
-    )
   }
 
   public func neighbour(at edge: GridEdge) -> GridPosition {
-    //  public func neighbour(at edge: Edge) -> GridPosition {
     let delta = edge.directionVector
     return GridPosition(
       column: max(0, column + delta.column),
       row: max(0, row + delta.row),
     )
-  }
-
-  public func toCGRect(cellSize: CGSize) -> CGRect {
-    CGRect(
-      x: CGFloat(column) * cellSize.width,
-      y: CGFloat(row) * cellSize.height,
-      width: cellSize.width,
-      height: cellSize.height
-    )
-  }
-
-  public func toIndex(columns: Int) -> Int {
-    row * columns + column
   }
 
   /// Basic offset methods
@@ -131,10 +65,6 @@ extension GridPosition {
   public mutating func offsetting(by delta: GridPosition) {
     let current = self
     self = current + delta
-  }
-
-  public func isValidWithin(dimensions: GridDimensions) -> Bool {
-    return dimensions.contains(position: self)
   }
 
   /// Column and Row as 'raw' `Int`s are used here, intead of a `GridPosition`,

@@ -32,7 +32,7 @@ extension EnvironmentValues {
   @Entry public var panOffset: CGSize = .zero
   @Entry public var rotation: Angle = .zero
 
-  @Entry public var hoverLocation: CGPoint?
+  @Entry public var pointerLocation: CGPoint?
 
   public var zoomClamped: Double {
     guard let zoomRange else { return zoomLevel }
