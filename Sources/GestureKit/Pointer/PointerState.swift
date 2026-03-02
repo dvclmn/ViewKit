@@ -42,10 +42,8 @@ extension HoverState {
 
   public mutating func update(_ phase: HoverPhase) {
     switch phase {
-      case .active(let location):
-        update(location)
-      case .ended:
-        update(nil)
+      case .active(let location): update(location)
+      case .ended: update(nil)
     }
   }
 }

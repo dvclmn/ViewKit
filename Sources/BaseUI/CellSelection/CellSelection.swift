@@ -54,6 +54,7 @@ public struct CellSelectionTestView<Content: View>: View {
 }
 
 extension CellSelectionTestView {
+  /// Offset to accomodate row/col numbers, if present
   private var offset: (top: CGFloat, leading: CGFloat) {
     guard let unitSize else { return (0, 0) }
     return isShowingCellNumbers

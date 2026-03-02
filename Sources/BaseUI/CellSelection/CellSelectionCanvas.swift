@@ -50,24 +50,21 @@ struct CellSelectionCanvas: View {
       guard let rect = store.selectionRect else { return }
       // context.drawDebugText("No selection rect", at: size.midpoint, pointDisplay: .point(.pink))
 
+      let selectionShape: Path
+
       if let radii = rectRadii {
-        let rounded = UnevenRoundedRectangle(cornerRadii: radii)
+        selectionShape = UnevenRoundedRectangle(cornerRadii: radii)
           .path(in: rect)
-        context.fillAndStroke(
-          rounded,
-          fillColour: .cyan.opacity(0.25),
-          strokeColour: .blue.opacity(0.8),
-          strokeThickness: 1
-        )
       } else {
-        let selectedShape = Path(rect)
-        context.fillAndStroke(
-          selectedShape,
-          fillColour: .cyan.opacity(0.25),
-          strokeColour: .blue.opacity(0.8),
-          strokeThickness: 1
-        )
+        selectionShape = Path(rect)
       }
+      
+      context.fillAndStroke(
+        selectionShape,
+        fillColour: .cyan.opacity(0.25),
+        strokeColour: .blue.opacity(0.8),
+        strokeThickness: 1
+      )
 
     }  // END canvas
     .debugFrame("Cell Canvas", .orange, isEnabled: isDebugMode)
