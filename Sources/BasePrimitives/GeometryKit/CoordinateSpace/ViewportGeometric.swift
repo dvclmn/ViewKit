@@ -26,11 +26,8 @@ extension ViewportGeometric {
       canvasAnchor: anchor
     )
   }
-  
+
   public var isValidForCoordinateMapping: Bool {
-    viewportRect.width > 0 &&
-    viewportRect.height > 0 &&
-    canvasSize.width > 0 &&
-    canvasSize.height > 0
+    viewportRect.width > 0 && viewportRect.height > 0 && canvasSize.width > 0 && canvasSize.height > 0
   }
 }

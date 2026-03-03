@@ -18,11 +18,11 @@ import Foundation
 ///   unitSize: CGSize
 /// ) -> GridPoint?
 /// ```
-public enum ScreenSpace {}  // Aka Viewport
-public enum CanvasSpace {}  // local, pre-transform
-public enum GridSpace {}  // ASCII art, cells etc
+public enum ScreenSpace: Sendable {}  // Aka Viewport
+public enum CanvasSpace: Sendable {}  // local, pre-transform
+public enum GridSpace: Sendable {}  // ASCII art, cells etc
 
-public struct Point<Space> {
+public struct Point<Space>: Sendable {
   public var x: CGFloat
   public var y: CGFloat
 
@@ -37,7 +37,7 @@ public struct Point<Space> {
   }
 }
 
-public struct Size<Space> {
+public struct Size<Space>: Sendable, Equatable {
   public var width: CGFloat
   public var height: CGFloat
 
@@ -51,7 +51,13 @@ public struct Size<Space> {
   }
 }
 
-public struct Rect<Space> {
+extension Size {
+  public static var zero: Self {
+    .init(width: 0, height: 0)
+  }
+}
+
+public struct Rect<Space>: Sendable {
   public var x: CGFloat
   public var y: CGFloat
   public var width: CGFloat
