@@ -77,7 +77,7 @@ struct CellSelectionCanvas: View {
       //      Labeled("Viewport Rect", value: viewportRect?.displayString(.concise))
       //      Labeled("Cell Size", value: unitSize?.displayString(.dimensions))
       //      Labeled("Zoom", value: zoomLevel.toPercentString(within: zoomRange ?? .unitRange))
-      Labeled("Canvas Size", value: canvasSize?.displayString(.dimensions))
+      Labeled("Canvas Size", value: canvasSize?.cgSize.displayString(.dimensions))
     }
 
     .task(id: panOffset) { store.pan = panOffset }

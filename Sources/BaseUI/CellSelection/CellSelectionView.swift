@@ -11,7 +11,7 @@ import LayoutKit
 import SwiftUI
 
 public struct CellSelectionView<Content: View>: View {
-  @Environment(\.gridCanvasSize) private var gridCanvasSize
+  //  @Environment(\.gridCanvasSize) private var gridCanvasSize
   @Environment(\.unitSize) private var unitSize
   @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers
 
@@ -30,26 +30,28 @@ public struct CellSelectionView<Content: View>: View {
   }
   public var body: some View {
 
-    if let gridCanvasSize {
+    //    if let gridCanvasSize {
 
-      CanvasView(canvasSize: gridCanvasSize) {
+    GridCanvasView {
+      //      CanvasView(canvasSize: gridCanvasSize.cgSize) {
 
-        CellSelectionCanvas()
-          .allowsCanvasClipping(false)
+      CellSelectionCanvas()
+        .allowsCanvasClipping(false)
 
-        content
-          .padding(.top, offset.top)
-          .padding(.leading, offset.leading)
+      content
+        .padding(.top, offset.top)
+        .padding(.leading, offset.leading)
 
-      }
-      .environment(\.zoomRange, zoomRange)
-      .environment(\.canvasSize, gridCanvasSize)
-      .environment(store)
-
-    } else {
-      StateView("Missing Canvas Size", message: "No value found for `gridCanvasSize` in the Environment")
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+    .environment(\.zoomRange, zoomRange)
+    /// Don't add canvas size to Env, CanvasView already does this
+    //      .environment(\.canvasSize, gridCanvasSize)
+    .environment(store)
+
+    //    } else {
+    //      StateView("Missing Canvas Size", message: "No value found for `gridCanvasSize` in the Environment")
+    //        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    //    }
   }
 }
 

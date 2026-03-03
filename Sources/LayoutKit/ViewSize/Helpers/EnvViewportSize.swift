@@ -33,18 +33,8 @@ public struct EnvironmentViewportSizeModifier: ViewModifier {
       ) {
         self.viewportRect = $0
       }
-      //      .viewSize(
-      //        capture: .sizeAndSafeInsets,
-      //        mode: mode
-      //      ) { geometry in
-      //
-      //        self.viewportRect = geometry.rect
-      //        self.viewportSize = geometry.size
-      //      }
-      .modifier(ViewportSizeIndicatorModifier(isEnabled: showsIndicator))
 
-      /// This captures both a size and a rect; a size for ease, and the rect for safe area awareness
-      //      .environment(\.viewportSize, viewportSize)
+      .modifier(ViewportSizeIndicatorModifier(isEnabled: showsIndicator))
       .environment(\.viewportRect, viewportRect)
   }
 }

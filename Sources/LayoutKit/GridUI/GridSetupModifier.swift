@@ -44,7 +44,9 @@ extension GridGeometryModifier {
   /// If cell numbers are showing, the grid needs to be enlarged by 1x cell to accomodate
   private var effectiveDimensions: GridDimensions {
     let additional: Int = isShowingCellNumbers ? 1 : 0
-    return dimensions + additional
+    let result = dimensions + additional
+//    print("Checking out for Grid Dimensions: \(result)")
+    return result
   }
 }
 

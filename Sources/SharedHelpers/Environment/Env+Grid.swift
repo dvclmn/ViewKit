@@ -19,7 +19,27 @@ extension EnvironmentValues {
   /// Note: This hard-codes / assumes `unitSize` (not `asciiUnitSize` nor
   /// `activeUnitSize`). Derives anchor from `canvasAnchor` Env value.
   public var gridGeometry: GridGeometry? {
-    guard let viewportRect, let gridDimensions, let unitSize else { return nil }
+    guard let viewportRect, let gridDimensions, let unitSize else {
+      print(
+        """
+        ---
+        Couldn't return `gridGeometry`, no value found in Env for:
+        `viewportRect`: \(viewportRect, default: "nil")
+        `gridDimensions`: \(gridDimensions, default: "nil")
+        `unitSize`: \(unitSize, default: "nil")
+
+        Let's also check
+        `asciiUnitSize`: \(asciiUnitSize, default: "nil")
+        `activeUnitSize`: \(activeUnitSize, default: "nil")
+
+        ---
+
+
+        """
+      )
+      return nil
+    }
+
     return GridGeometry(
       viewportRect: viewportRect,
       dimensions: gridDimensions,
@@ -28,8 +48,4 @@ extension EnvironmentValues {
     )
   }
 
-  public var gridCanvasSize: CGSize? {
-    guard let unitSize, let gridDimensions else { return nil }
-    return gridDimensions.toScreenSize(using: unitSize)
-  }
 }
