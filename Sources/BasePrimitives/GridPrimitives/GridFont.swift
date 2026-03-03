@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-public enum GridFont: String, Sendable, Codable, Hashable, Equatable, Pickable, CaseIterable, Identifiable {
+public enum GridFont: String, Sendable, Codable, Hashable, Equatable, CaseIterable, Identifiable {
 
-  public static let pickerLabel: QuickLabel = "Font"
+//  public static let pickerLabel: QuickLabel = "Font"
 
   case menlo = "Menlo"
   case sfMono = "SF Mono"
@@ -23,7 +23,7 @@ public enum GridFont: String, Sendable, Codable, Hashable, Equatable, Pickable, 
   public var id: String { rawValue }
   public var name: String { rawValue }
 
-  public var label: QuickLabel { QuickLabel(name) }
+//  public var label: QuickLabel { QuickLabel(name) }
 }
 
 extension GridFont {
