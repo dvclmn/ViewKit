@@ -8,24 +8,24 @@
 extension GridShaped {
 
   public subscript(row rowIndex: Int, col colIndex: Int) -> Cell? {
-    get { cells[safe: rowIndex]?[safe: colIndex] }
-    set { cells[safe: rowIndex]?[safe: colIndex] = newValue }
+    get { rows[safe: rowIndex]?[safe: colIndex] }
+    set { rows[safe: rowIndex]?[safe: colIndex] = newValue }
   }
 
   public subscript(row rowIndex: Int) -> Row? {
-    get { cells[safe: rowIndex] }
-    set { cells[safe: rowIndex] = newValue }
+    get { rows[safe: rowIndex] }
+    set { rows[safe: rowIndex] = newValue }
   }
 
   public subscript(column columnIndex: Int) -> [Cell] {
     get {
-      cells.compactMap { row in
+      rows.compactMap { row in
         row[safe: columnIndex]
       }
     }
     set {
-      for i in cells.indices {
-        cells[safe: i]?[safe: columnIndex] = newValue[i]
+      for i in rows.indices {
+        rows[safe: i]?[safe: columnIndex] = newValue[i]
       }
     }
   }
@@ -33,14 +33,14 @@ extension GridShaped {
   public subscript(at position: GridPosition) -> Cell? {
     get {
       guard isPositionValid(position) else { return nil }
-      return cells[position.row][position.column]
+      return rows[position.row][position.column]
     }
     set {
       guard isPositionValid(position) else {
         /// No auto-expand here. Use `set(_:at:)` instead.
         return
       }
-      cells[position.row][position.column] = newValue ?? .createBlank()
+      rows[position.row][position.column] = newValue ?? .createBlank()
     }
   }
 }

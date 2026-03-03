@@ -27,7 +27,7 @@ extension GridShaped where Cell == Character {
   public func toString(options: GridRenderOptions = .default) -> String {
     let lines = (0..<rowCount).map { rowIndex -> String in
       let line = (0..<columnCount).map { col in
-        let row = cells[rowIndex]
+        let row = rows[rowIndex]
         return row[safe: col] ?? Cell.createBlank()
       }
 

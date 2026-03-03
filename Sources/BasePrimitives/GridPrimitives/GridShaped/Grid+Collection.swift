@@ -10,30 +10,30 @@ import SwiftUI
 // MARK: - Collection conformance
 extension GridShaped {
 
-  public var startIndex: Int { cells.startIndex }
-  public var endIndex: Int { cells.endIndex }
+  public var startIndex: Int { rows.startIndex }
+  public var endIndex: Int { rows.endIndex }
 
   /// This is required, by `Collection`, to be non-optional.
   /// I believe this `position` would correspond to Row.
   /// Consider safer alternative `subscript(row rowIndex: Int) -> Row?`
   public subscript(position: Int) -> Row {
-    return cells[position]
+    return rows[position]
   }
 
   public func index(after i: Int) -> Int {
-    return cells.index(after: i)
+    return rows.index(after: i)
   }
 
   public func mapRows<T>(_ transform: (Row) -> T) -> [T] {
-    cells.map(transform)
+    rows.map(transform)
   }
 
   public func enumerated() -> EnumeratedSequence<Rows> {
-    cells.enumerated()
+    rows.enumerated()
   }
 
   public mutating func append(_ row: Row) {
-    cells.append(row)
+    rows.append(row)
   }
 
   public init(
@@ -44,11 +44,11 @@ extension GridShaped {
     switch axis {
       case .horizontal:
         self.init(
-          grid.cells.map {
+          grid.rows.map {
             Array(repeating: $0, count: count).flatMap { $0 }
           })
       case .vertical:
-        self.init(Array(repeating: grid.cells, count: count).flatMap { $0 })
+        self.init(Array(repeating: grid.rows, count: count).flatMap { $0 })
     }
   }
 }

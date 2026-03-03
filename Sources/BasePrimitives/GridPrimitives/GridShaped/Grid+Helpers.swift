@@ -15,14 +15,14 @@ extension GridShaped {
     dimensions.toScreenSize(using: cellSize)
   }
 
-  var rows: [Row] { cells }
+//  var rows: [Row] { cells }
 
   /// Uses width of the widest row to derive columns
   var columns: Rows {
     let maxCount = widestRow
     guard maxCount > 0 else { return [] }
     return (0..<maxCount).map { col in
-      cells.compactMap { row in
+      rows.compactMap { row in
         row[safe: col]
       }
     }
@@ -38,23 +38,23 @@ extension GridShaped {
   public var cellCount: Int { Swift.max(0, rowCount * width) }
 
   /// The total number of non-empty cells in the grid
-  public var cellCountRagged: Int { cells.reduce(0) { $0 + $1.count } }
+  public var cellCountRagged: Int { rows.reduce(0) { $0 + $1.count } }
 
-  public var rowCount: Int { cells.count }
+  public var rowCount: Int { rows.count }
   public var height: Int { rowCount }
 
   /// This returns the width of the widest row. ``widestRow``
   public var columnCount: Int { widestRow }
   public var width: Int { widestRow }
-  public var widestRow: Int { cells.map(\.count).max() ?? 0 }
+  public var widestRow: Int { rows.map(\.count).max() ?? 0 }
 
   /// Width of the first non-empty row
   public var canonicalColumnCount: Int {
-    cells.first(where: { !$0.isEmpty })?.count ?? 0
+    rows.first(where: { !$0.isEmpty })?.count ?? 0
   }
 
   public var isEmpty: Bool {
-    cells.isEmpty || cells.allSatisfy { $0.isEmpty }
+    rows.isEmpty || rows.allSatisfy { $0.isEmpty }
   }
 
   public func forEachPosition(_ body: (GridPosition, Cell) -> Void) {

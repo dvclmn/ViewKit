@@ -65,7 +65,7 @@ extension GridShaped {
   ///   all rows, returning nil for many cells. `to​String()` then replaces them with blanks.
   func isPositionValid(_ position: GridPosition) -> Bool {
     guard isRowValid(position.row) else { return false }
-    let row = cells[position.row]
+    let row = rows[position.row]
     return position.column >= 0 && position.column < row.count
   }
 
@@ -98,18 +98,18 @@ extension GridShaped {
 }
 
 public struct RowNormaliser<T: GridShaped> {
-  let cells: T.Rows
+  let rows: T.Rows
   let paddingCell: T.Cell
   let truncationCell: T.Cell?
   let alignment: GridAlignment
 
   public init(
-    cells: T.Rows,
+    rows: T.Rows,
     paddingCell: T.Cell,
     truncationCell: T.Cell?,
     alignment: GridAlignment = .leading
   ) {
-    self.cells = cells
+    self.rows = rows
     self.paddingCell = paddingCell
     self.truncationCell = truncationCell
     self.alignment = alignment
@@ -119,8 +119,8 @@ public struct RowNormaliser<T: GridShaped> {
 extension RowNormaliser {
 
   public var normalised: T.Rows {
-    let targetWidth = cells.width(for: .widestRow)
-    let patched: T.Rows = cells.map { patchedRow($0, width: targetWidth) }
+    let targetWidth = rows.width(for: .widestRow)
+    let patched: T.Rows = rows.map { patchedRow($0, width: targetWidth) }
     return patched
   }
 
@@ -166,14 +166,14 @@ extension RowNormaliser {
 extension GridShaped {
 
   public static func normalisedRows(
-    _ cells: Rows,
+    _ rows: Rows,
     alignment: GridAlignment = .leading,
     paddingCell: Cell,
     truncationCell: Cell?
   ) -> Rows {
 
     let normaliser = RowNormaliser<Self>(
-      cells: cells,
+      rows: rows,
       paddingCell: paddingCell,
       truncationCell: truncationCell,
       alignment: alignment

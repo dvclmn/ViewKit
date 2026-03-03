@@ -14,13 +14,13 @@ struct GridEditingTests {
 
   struct G: GridShaped {
     typealias Cell = Character
-    var cells: Rows
-    init(cells: Rows) { self.cells = cells }
+    var rows: Rows
+    init(rows: Rows) { self.rows = rows }
   }
 
   @Test
   func setAutoExpands() {
-    var g = G(cells: [])
+    var g = G(rows: [])
     g.set("X", at: .init(column: 3, row: 2))
     #expect(g.rowCount == 3)
     #expect(g.columnCount == 4)
@@ -29,7 +29,7 @@ struct GridEditingTests {
 
   @Test
   func removeColumnOnRaggedIsSafe() {
-    var g = G(cells: [
+    var g = G(rows: [
       ["A", "B", "C"],
       ["D"],  // ragged
     ])

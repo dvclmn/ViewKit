@@ -31,13 +31,13 @@ extension GridShaped {
   }
 
   private func joinedVertically(with other: Self) -> Self {
-    Self(self.cells + other.cells)
+    Self(self.rows + other.rows)
   }
 
   private func joinedHorizontally(
     with other: Self
   ) -> Self {
-    let combined = Self.zipLongest(self.cells, other.cells, fill: [])
+    let combined = Self.zipLongest(self.rows, other.rows, fill: [])
       .map(+)
     return Self(combined)
   }

@@ -30,7 +30,7 @@ extension GridShaped where Cell == Character {
   ) {
     let parsed = Self.parse(text: text, options: options)
     let rows = policy.map { Self.normaliseRows(parsed.rows, policy: $0) } ?? parsed.rows
-    self.init(cells: rows)
+    self.init(rows: rows)
   }
 
   public static func generateCells(from text: String) -> [[Cell]] {

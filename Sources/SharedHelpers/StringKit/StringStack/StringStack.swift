@@ -15,24 +15,24 @@ public struct StringStack: GridShaped {
   public typealias Row = [Cell]
   public typealias Element = Row
 
-  public var cells: Rows
+  public var rows: Rows
 
-  public init(cells: Rows) {
-    self.cells = cells
+  public init(rows: Rows) {
+    self.rows = rows
   }
 }
 
 // MARK: - Convenience Initialisers
 extension StringStack {
 
-  public init(_ cells: Rows) {
+  public init(_ rows: Rows) {
     let normalised = Self.normalisedRows(
-      cells,
+      rows,
       alignment: .leading,
       paddingCell: " ",
       truncationCell: "%"
     )
-    self.cells = normalised
+    self.rows = normalised
   }
 
   public init(_ string: String) {
@@ -40,13 +40,12 @@ extension StringStack {
   }
 
   public init(rows: [String], padToUniformWidth: Bool = true) {
-    let cells = rows.map { Array($0) }
-    self.init(cells)
+    self.init(rows.map { Array($0) })
   }
 }
 extension StringStack {
 
-  public var stringRows: [String] { cells.map { String($0) } }
+  public var stringRows: [String] { rows.map { String($0) } }
   public var string: String { stringRows.joined("\n") }
 
 }

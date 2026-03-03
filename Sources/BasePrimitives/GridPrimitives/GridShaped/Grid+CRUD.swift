@@ -29,12 +29,12 @@ extension GridShaped {
   /// If yes, codify it (e.g., if row​Count == 0 and add​Column is called, insert a single empty row first).
   @inlinable
   mutating func ensureRectangular(paddingCell: Cell = .createBlank()) {
-    guard !cells.isEmpty else { return }
+    guard !rows.isEmpty else { return }
     let width = columnCount
-    for i in cells.indices {
-      let shortfall = width - cells[i].count
+    for i in rows.indices {
+      let shortfall = width - rows[i].count
       if shortfall > 0 {
-        cells[i].append(contentsOf: Array(repeating: paddingCell, count: shortfall))
+        rows[i].append(contentsOf: Array(repeating: paddingCell, count: shortfall))
       }
     }
   }
@@ -106,10 +106,10 @@ extension GridShaped {
     switch edge {
       case .top:
         let newRow: Row = (0..<columnCount).map { _ in .createBlank() }
-        cells.insert(newRow, at: 0)
+        rows.insert(newRow, at: 0)
       case .bottom:
         let newRow: Row = (0..<columnCount).map { _ in .createBlank() }
-        cells.append(newRow)
+        rows.append(newRow)
       default:
         break
     }
@@ -118,8 +118,8 @@ extension GridShaped {
   public mutating func removeRow(from edge: GridEdge) {
     precondition(rowCount > 1, "Cannot remove last row")
     switch edge {
-      case .top: cells.removeFirst()
-      case .bottom: cells.removeLast()
+      case .top: rows.removeFirst()
+      case .bottom: rows.removeLast()
       default: preconditionFailure("Invalid edge for row removal")
     }
   }
@@ -129,11 +129,11 @@ extension GridShaped {
   public mutating func addColumn(to edge: GridEdge) {
     precondition(edge.isColumnEdge)
     ensureRectangular()
-    for rowIndex in cells.indices {
+    for rowIndex in rows.indices {
       if edge == .leading {
-        cells[rowIndex].insert(.createBlank(), at: 0)
+        rows[rowIndex].insert(.createBlank(), at: 0)
       } else {
-        cells[rowIndex].append(.createBlank())
+        rows[rowIndex].append(.createBlank())
       }
     }
   }
@@ -142,8 +142,8 @@ extension GridShaped {
     precondition(columnCount > 1, "Cannot remove last column")
     ensureRectangular()
     let targetColumn = (edge == .leading) ? 0 : columnCount - 1
-    for rowIndex in cells.indices {
-      cells[rowIndex].remove(at: targetColumn)
+    for rowIndex in rows.indices {
+      rows[rowIndex].remove(at: targetColumn)
     }
   }
 }

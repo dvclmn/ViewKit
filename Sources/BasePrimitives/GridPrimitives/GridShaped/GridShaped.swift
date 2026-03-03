@@ -21,13 +21,13 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element 
   typealias Rows = [[Cell]]
   typealias Row = [Cell]
 
-  var cells: Rows { get set }
+  var rows: Rows { get set }
 
-  init(cells: Rows)
-  init(_ cells: Rows)
+  init(rows: Rows)
+  init(_ rows: Rows)
 
   static func normalisedRows(
-    _ cells: Rows,
+    _ rows: Rows,
     alignment: GridAlignment,
     paddingCell: Cell,
     truncationCell: Cell?
@@ -45,7 +45,7 @@ extension GridShaped {
 }
 
 extension GridShaped {
-  public init(_ cells: Self.Rows) {
-    self.init(cells: cells)
+  public init(_ rows: Self.Rows) {
+    self.init(rows: rows)
   }
 }
