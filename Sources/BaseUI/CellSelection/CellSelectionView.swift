@@ -48,18 +48,18 @@ public struct CellSelectionView<Content: View>: View {
   }
 }
 
-extension CellSelectionView {
-
-}
-
-#if DEBUG
-#Preview(traits: .size(.normal)) {
-  @Previewable @State var store = SelectionHandler()
-  CellSelectionView(store: store) {
-    Text("Example text")
-  }
-  .gridSetup(font: .sfMono, fontSize: 28, dimensions: .init(30, 14))
-  //  .environment(\.gridCanvasSize, CGSize(200, 500))
-  // .environment(store)
-}
-#endif
+//extension CellSelectionView {
+//
+//}
+//
+//#if DEBUG
+//#Preview(traits: .size(.normal)) {
+//  @Previewable @State var store = SelectionHandler()
+//  CellSelectionView(store: store) {
+//    Text("Example text")
+//  }
+//  .gridSetup(font: .sfMono, fontSize: 28, dimensions: .init(30, 14))
+//  //  .environment(\.gridCanvasSize, CGSize(200, 500))
+//  // .environment(store)
+//}
+//#endif

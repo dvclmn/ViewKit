@@ -18,20 +18,20 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element 
 
   associatedtype Cell: BlankCreatable, Equatable, Sendable
 
-  typealias Cells = [[Cell]]
+  typealias Rows = [[Cell]]
   typealias Row = [Cell]
 
-  var cells: Cells { get set }
+  var cells: Rows { get set }
 
-  init(cells: Cells)
-  init(_ cells: Cells)
+  init(cells: Rows)
+  init(_ cells: Rows)
 
   static func normalisedRows(
-    _ cells: Cells,
+    _ cells: Rows,
     alignment: GridAlignment,
     paddingCell: Cell,
     truncationCell: Cell?
-  ) -> Cells
+  ) -> Rows
 }
 
 public protocol BlankCreatable {
@@ -45,7 +45,7 @@ extension GridShaped {
 }
 
 extension GridShaped {
-  public init(_ cells: Self.Cells) {
+  public init(_ cells: Self.Rows) {
     self.init(cells: cells)
   }
 }

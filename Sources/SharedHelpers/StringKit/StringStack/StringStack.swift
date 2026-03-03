@@ -15,9 +15,9 @@ public struct StringStack: GridShaped {
   public typealias Row = [Cell]
   public typealias Element = Row
 
-  public var cells: Cells
+  public var cells: Rows
 
-  public init(cells: Cells) {
+  public init(cells: Rows) {
     self.cells = cells
   }
 }
@@ -25,7 +25,7 @@ public struct StringStack: GridShaped {
 // MARK: - Convenience Initialisers
 extension StringStack {
 
-  public init(_ cells: Cells) {
+  public init(_ cells: Rows) {
     let normalised = Self.normalisedRows(
       cells,
       alignment: .leading,

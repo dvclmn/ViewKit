@@ -28,7 +28,7 @@ extension GridShaped {
     cells.map(transform)
   }
 
-  public func enumerated() -> EnumeratedSequence<Cells> {
+  public func enumerated() -> EnumeratedSequence<Rows> {
     cells.enumerated()
   }
 

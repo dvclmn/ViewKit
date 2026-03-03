@@ -14,8 +14,8 @@ struct GridEditingTests {
 
   struct G: GridShaped {
     typealias Cell = Character
-    var cells: Cells
-    init(cells: Cells) { self.cells = cells }
+    var cells: Rows
+    init(cells: Rows) { self.cells = cells }
   }
 
   @Test

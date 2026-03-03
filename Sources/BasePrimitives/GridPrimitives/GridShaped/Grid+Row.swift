@@ -7,7 +7,7 @@
 
 extension GridShaped {
   
-  public static func createEmptyRows(rowCount: Int, columnCount: Int) -> Cells {
+  public static func createEmptyRows(rowCount: Int, columnCount: Int) -> Rows {
     let row = Self.createEmptyRow(columnCount: columnCount)
     return Array(repeating: row, count: rowCount)
   }

@@ -98,13 +98,13 @@ extension GridShaped {
 }
 
 public struct RowNormaliser<T: GridShaped> {
-  let cells: T.Cells
+  let cells: T.Rows
   let paddingCell: T.Cell
   let truncationCell: T.Cell?
   let alignment: GridAlignment
 
   public init(
-    cells: T.Cells,
+    cells: T.Rows,
     paddingCell: T.Cell,
     truncationCell: T.Cell?,
     alignment: GridAlignment = .leading
@@ -118,9 +118,9 @@ public struct RowNormaliser<T: GridShaped> {
 
 extension RowNormaliser {
 
-  public var normalised: T.Cells {
+  public var normalised: T.Rows {
     let targetWidth = cells.width(for: .widestRow)
-    let patched: T.Cells = cells.map { patchedRow($0, width: targetWidth) }
+    let patched: T.Rows = cells.map { patchedRow($0, width: targetWidth) }
     return patched
   }
 
@@ -166,11 +166,11 @@ extension RowNormaliser {
 extension GridShaped {
 
   public static func normalisedRows(
-    _ cells: Cells,
+    _ cells: Rows,
     alignment: GridAlignment = .leading,
     paddingCell: Cell,
     truncationCell: Cell?
-  ) -> Cells {
+  ) -> Rows {
 
     let normaliser = RowNormaliser<Self>(
       cells: cells,

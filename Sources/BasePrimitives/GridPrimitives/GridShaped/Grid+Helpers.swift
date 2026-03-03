@@ -18,7 +18,7 @@ extension GridShaped {
   var rows: [Row] { cells }
 
   /// Uses width of the widest row to derive columns
-  var columns: Cells {
+  var columns: Rows {
     let maxCount = widestRow
     guard maxCount > 0 else { return [] }
     return (0..<maxCount).map { col in
