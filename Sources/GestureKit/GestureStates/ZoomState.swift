@@ -28,4 +28,6 @@ extension ZoomState {
   public func zoom(clampedTo range: ClosedRange<Double>) -> Double {
     value.clamped(to: range)
   }
+  
+  public var zoom: Double { value }
 }
