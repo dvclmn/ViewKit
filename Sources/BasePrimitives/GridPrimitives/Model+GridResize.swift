@@ -20,26 +20,3 @@ public struct GridResizeHelper {
     anchorPoint: UnitPoint
   ) {}
 }
-
-// MARK: - Grid Geometry
-//public struct GridGeometry: Sendable, Equatable {
-//  public let unitSize: CGSize // Aka Cell size
-//  public let dimensions: GridDimensions
-//
-//  public static let zero = GridGeometry(
-//    cellSize: .zero,
-//    dimensions: .minSize
-//  )
-//
-//  public init(
-//    cellSize: CGSize,
-//    dimensions: GridDimensions
-//  ) {
-//    self.unitSize = cellSize
-//    self.dimensions = dimensions
-//  }
-//
-//  public var canvasSize: CGSize {
-//    dimensions.screenSize(using: unitSize)
-//  }
-//}

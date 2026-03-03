@@ -22,6 +22,7 @@ struct CellSelectionCanvas: View {
   @Environment(\.pointerLocation) private var pointerLocation
   @Environment(\.canvasBackground) private var canvasBackground
   @Environment(\.isDebugMode) private var isDebugMode
+  @Environment(\.gridGeometry) private var gridGeometry
 
   @Environment(\.gridLineColour) private var gridLineColour
   @Environment(\.gridLineWidth) private var gridLineWidth
@@ -81,29 +82,13 @@ struct CellSelectionCanvas: View {
 
     .task(id: panOffset) { store.pan = panOffset }
     .task(id: zoomLevel) { store.zoom = zoomLevel }
-    .task(id: viewportRect) { refreshGeometry() }
-    .task(id: unitSize) { refreshGeometry() }
-    .task(id: gridDimensions) { refreshGeometry() }
     .task(id: pointerLocation) { store.pointerLocation = pointerLocation }
+    .task(id: gridGeometry) { store.geometry = gridGeometry }
 
   }
 }
 
 extension CellSelectionCanvas {
-
-  private func refreshGeometry() {
-    guard let viewportRect, let unitSize, let gridDimensions else {
-      store.geometry = nil
-      return
-    }
-
-    store.geometry = GridGeometry(
-      viewportRect: viewportRect,
-      dimensions: gridDimensions,
-      projection: GridProjection(unitSize: unitSize),
-      anchor: .center
-    )
-  }
 
   private var rectRadii: RectangleCornerRadii? {
     let rounding: CGFloat = cornerRounding ?? Styles.sizeTiny
