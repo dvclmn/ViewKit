@@ -14,11 +14,11 @@ public struct CharacterSizeModifier: ViewModifier {
   @State private var characterSize: CGSize?
   private let testString = TestString.example01
 
-//  let font: GridFont
-//  let fontSize: CGFloat
-  
+  //  let font: GridFont
+  //  let fontSize: CGFloat
+
   let config: GridFontConfig
-  
+
   let debounceMode: DebounceMode
   let shouldSetEnv: Bool
   let sizeDidChange: (CGSize?) -> Void
@@ -26,12 +26,11 @@ public struct CharacterSizeModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .overlay {
-        
-       
 
+        Text(testString.text)
+          .gridFont(config: config)
           .monospaced()
           .fixedSize()
-          .allowsTightening(false)
 
           .viewSize(mode: debounceMode, isEnabled: unitSize == nil) { size in
 
@@ -59,23 +58,23 @@ public struct CharacterSizeModifier: ViewModifier {
 }
 
 extension CharacterSizeModifier {
-  @ViewBuilder
-  private func TextMeasurementView() -> some View {
-    
-    if let descriptor = config.descriptor(in: envSelf) {
-      Text(testString.text)
-        .font(descriptor)
-    } else {
-      Text(testString.text)
-    }
-//    switch config {
-//      case .domain(let domain):
-//        
-//      case .custom(let font, let size):
-//      case .passthrough:
-//        
-//    }
-  }
+  //  @ViewBuilder
+  //  private func TextMeasurementView() -> some View {
+  //
+  //    if let descriptor = config.descriptor(in: envSelf) {
+  //      Text(testString.text)
+  //        .font(descriptor)
+  //    } else {
+  //      Text(testString.text)
+  //    }
+  //    //    switch config {
+  //    //      case .domain(let domain):
+  //    //
+  //    //      case .custom(let font, let size):
+  //    //      case .passthrough:
+  //    //
+  //    //    }
+  //  }
 }
 
 //typealias CharacterSizeResolver<Size: CharacterSize> = (

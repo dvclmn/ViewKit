@@ -22,8 +22,9 @@ public struct CharacterAndViewSizeModifier: ViewModifier {
     content
       .modifier(
         CharacterSizeModifier(
-          font: font,
-          fontSize: fontSize,
+          config: config,
+//          font: font,
+//          fontSize: fontSize,
           debounceMode: debounceMode,
           shouldSetEnv: false
         ) { size in

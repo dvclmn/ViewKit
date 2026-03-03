@@ -40,7 +40,8 @@ public struct TextColumns<Content: View>: View {
       .environment(\.gridDimensions, .init(columnWidth, 1))
 //      .setGridDimensions(columnWidth, height: 1)
       .characterSize(
-        for: font, size: fontSize,
+        config: .passthrough,
+//        for: font, size: fontSize,
         mode: .debounce(0.2),
         shouldSetEnv: true
       ) { size in

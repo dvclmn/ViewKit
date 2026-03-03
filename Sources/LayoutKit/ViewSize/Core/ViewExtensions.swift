@@ -64,8 +64,9 @@ extension View {
   ) -> some View {
     self.modifier(
       CharacterAndViewSizeModifier(
-        font: font,
-        fontSize: fontSize,
+        config: config,
+//        font: font,
+//        fontSize: fontSize,
         debounceMode: debounceMode,
         sizeDidChange: sizeDidChange
       )
@@ -88,8 +89,9 @@ extension View {
   ) -> some View {
     self.modifier(
       CharacterSizeModifier(
-        font: font,
-        fontSize: fontSize,
+        config: config,
+//        font: font,
+//        fontSize: fontSize,
         debounceMode: mode,
         shouldSetEnv: shouldSetEnv,
         sizeDidChange: sizeDidChange,
@@ -107,8 +109,9 @@ extension View {
   ) -> some View {
     self.modifier(
       CharacterSizeModifier(
-        font: font,
-        fontSize: fontSize,
+        config: config,
+//        font: font,
+//        fontSize: fontSize,
         debounceMode: mode,
         shouldSetEnv: true,
         sizeDidChange: { _ in },

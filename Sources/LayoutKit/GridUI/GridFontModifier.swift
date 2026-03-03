@@ -40,6 +40,12 @@ extension GridFontModifier {
 
 }
 extension View {
+  public func gridFont(config: GridFontConfig) -> some View {
+    self.modifier(
+      GridFontModifier(config: config)
+    )
+  }
+
   /// This sets the font for this View. It doesn't set/change any Environment value
   public func gridFont(for domain: GridFontDomain = .automatic) -> some View {
     self.modifier(
