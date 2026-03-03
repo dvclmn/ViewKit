@@ -28,7 +28,7 @@ struct GridCanvasGeometryModifier: ViewModifier {
       .environment(\.gridFontSize, fontSize)
 
       /// This provides the environment with `unitSize`
-      .setCharacterSize(mode: .debounce(0.2))
+      .setCharacterSize(for: font, size: fontSize, mode: .debounce(0.2))
 
       /// This provides the environment with `viewportRect`
       .viewportCapture(mode: .debounce(0.2), showsIndicator: false)

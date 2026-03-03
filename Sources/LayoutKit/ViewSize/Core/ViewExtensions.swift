@@ -47,7 +47,7 @@ extension View {
 }
 
 extension View {
-  
+
   /// Find the size of a single character of a (usually
   /// monospaced) font. Optionally read the container view
   /// size for calculating the Characters-per-dimension etc.
@@ -56,17 +56,22 @@ extension View {
   ///   - sizeDidChange: Callback when the character or view size changes
   /// - Returns: Two optional sizes, the first for the charatcer, the second for the container view
   public func characterAndViewSize(
+    config: GridFontConfig = .automatic,
+//    for font: GridFont,
+//    size fontSize: CGFloat,
     mode debounceMode: DebounceMode,
     _ sizeDidChange: @escaping (CGSize?, CGSize?) -> Void
   ) -> some View {
     self.modifier(
       CharacterAndViewSizeModifier(
+        font: font,
+        fontSize: fontSize,
         debounceMode: debounceMode,
         sizeDidChange: sizeDidChange
       )
     )
   }
-  
+
   /// Find the size of a single character of a (usually
   /// monospaced) font. Optionally read the container view
   /// size for calculating the Characters-per-dimension etc.
@@ -74,32 +79,43 @@ extension View {
   ///   - sizeDidChange: Callback when the character or view size changes
   /// - Returns: Two optional sizes, the first for the charatcer, the second for the container view
   public func characterSize(
+    config: GridFontConfig = .automatic,
+//    for font: GridFont,
+//    size fontSize: CGFloat,
     mode: DebounceMode,
     shouldSetEnv: Bool = false,
     _ sizeDidChange: @escaping (CGSize?) -> Void
   ) -> some View {
     self.modifier(
       CharacterSizeModifier(
+        font: font,
+        fontSize: fontSize,
         debounceMode: mode,
+        shouldSetEnv: shouldSetEnv,
         sizeDidChange: sizeDidChange,
-        shouldSetEnv: shouldSetEnv
       )
     )
   }
-  
+
   /// For use when an immediate size via callback isn't required.
   /// Just sets the `unitSize` value in the environment.
-  public func setCharacterSize(mode: DebounceMode) -> some View {
+  public func setCharacterSize(
+    config: GridFontConfig = .automatic,
+//    for font: GridFont,
+//    size fontSize: CGFloat,
+    mode: DebounceMode
+  ) -> some View {
     self.modifier(
       CharacterSizeModifier(
+        font: font,
+        fontSize: fontSize,
         debounceMode: mode,
+        shouldSetEnv: true,
         sizeDidChange: { _ in },
-        shouldSetEnv: true
       )
     )
   }
 }
-
 
 //// MARK: - Character Size modifiers
 //extension View {
@@ -246,7 +262,7 @@ extension View {
 //      )
 //    )
 //  }
-//  
+//
 //  /// For use when an immediate size via callback isn't required.
 //  /// Just sets the `unitSize` value in the environment.
 //  public func setCharacterDimensions(

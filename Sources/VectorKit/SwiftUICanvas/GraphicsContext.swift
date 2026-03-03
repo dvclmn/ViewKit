@@ -146,7 +146,7 @@ extension GraphicsContext {
     self.fill(path, with: .color(colour))
   }
   
-  public func unitSize(from domain: UnitSizeDomain) -> CGSize? {
-    environment[keyPath: domain.environmentKey]
+  public func unitSize(from domain: GridFontDomain) -> CGSize? {
+    environment[keyPath: domain.unitSizeKey]
   }
 }

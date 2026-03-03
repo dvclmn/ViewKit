@@ -14,7 +14,7 @@ struct GridFontModifier: ViewModifier {
   @Environment(\.gridFontSize) private var gridFontSize
   @Environment(\.isASCIIMode) private var isASCIIMode
 
-  let domain: UnitSizeDomain
+  let domain: GridFontDomain
   func body(content: Content) -> some View {
     content
       .font(font)
@@ -48,7 +48,11 @@ extension GridFontModifier {
 }
 extension View {
   /// This sets the font for this View. It doesn't set/change any Environment value
-  public func gridFont(for domain: UnitSizeDomain = .automatic) -> some View {
+  public func gridFont(for domain: GridFontDomain = .automatic) -> some View {
+    self.modifier(GridFontModifier(domain: domain))
+  }
+  
+  public func gridFont(_ style: GridFont, size: CGFloat) -> some View {
     self.modifier(GridFontModifier(domain: domain))
   }
 }

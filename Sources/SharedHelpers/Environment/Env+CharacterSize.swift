@@ -14,7 +14,7 @@ extension EnvironmentValues {
   @Entry public var unitSize: CGSize?
 
   @Entry public var isASCIIMode: Bool = false
-  
+
   /// The font size used for `GridCanvasView`, e.g. for ASCII art display
   @Entry public var gridFontSize: CGFloat?
   @Entry public var asciiModeFontSize: CGFloat?
@@ -50,20 +50,81 @@ extension EnvironmentValues {
     }
     return unitSize
   }
+
+  public var activeGridFontSize: CGFloat? {
+    if isASCIIMode {
+      return asciiModeFontSize ?? gridFontSize
+    }
+    return gridFontSize
+  }
 }
 
-public enum UnitSizeDomain {
+/// There are two discrete areas that need a GridFont / unitSize
+/// to be declared; `GridCanvasView` and the
+/// `EnvironmentValues/isASCIIMode`
+public enum GridFontDomain: Sendable {
   case canvas  // Returns `unitSize`
   case asciiMode  // Returns `asciiUnitSize`
   case automatic  // Defers to Environment's `activeUnitSize` value
-  //case custom(CGSize)
 
-  public var environmentKey: KeyPath<EnvironmentValues, CGSize?> {
+  public var unitSizeKey: KeyPath<EnvironmentValues, CGSize?> {
     switch self {
       case .canvas: \.unitSize
       case .asciiMode: \.asciiUnitSize
       case .automatic: \.activeUnitSize
-    //      case .custom(let size): nil
     }
+  }
+
+  public var fontSizeKey: KeyPath<EnvironmentValues, CGFloat?> {
+    switch self {
+      case .canvas: \.gridFontSize
+      case .asciiMode: \.asciiModeFontSize
+      case .automatic: \.activeGridFontSize
+    }
+  }
+
+  public func gridFont(in env: EnvironmentValues) -> GridFont? {
+    env.gridFont
+  }
+
+  public func gridFontSize(in env: EnvironmentValues) -> CGFloat? {
+    env[keyPath: fontSizeKey]
+  }
+
+  public func unitSize(in env: EnvironmentValues) -> CGSize? {
+    env[keyPath: unitSizeKey]
+  }
+}
+
+public enum GridFontConfig: Sendable {
+  case domain(GridFontDomain)
+  case custom(GridFont, size: CGFloat)
+  
+  public static let automatic: Self = .domain(.automatic)
+
+  public func descriptor(in environment: EnvironmentValues) -> GridFontDescriptor? {
+    switch self {
+      case .domain(let domain):
+        guard let style = domain.gridFont(in: environment),
+          let size = domain.gridFontSize(in: environment)
+        else { return nil }
+        return GridFontDescriptor(style: style, size: size)
+
+      case .custom(let font, let size):
+        return GridFontDescriptor(style: font, size: size)
+    }
+  }
+}
+
+public struct GridFontDescriptor {
+  let style: GridFont
+  let size: CGFloat
+
+  public init(
+    style: GridFont,
+    size: CGFloat
+  ) {
+    self.style = style
+    self.size = size
   }
 }

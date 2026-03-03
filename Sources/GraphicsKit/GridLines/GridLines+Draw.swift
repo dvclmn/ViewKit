@@ -16,7 +16,7 @@ extension GraphicsContext {
   /// To customise line colour and width, set env values
   /// `gridLineColour` and `gridLineWidth`
   public mutating func drawGrid(
-    domain: UnitSizeDomain,
+    domain: GridFontDomain,
     in containerSize: CGSize,
     sizeMode: GridSizeMode = .fillContainer,
     pinMode: GridPinMode = .canvas,

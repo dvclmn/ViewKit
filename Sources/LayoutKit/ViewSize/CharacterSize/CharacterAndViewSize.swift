@@ -9,30 +9,26 @@ import CoreTools
 import SwiftUI
 
 public struct CharacterAndViewSizeModifier: ViewModifier {
-//public struct CharacterAndViewSizeModifier<Size: CharacterSize>: ViewModifier {
   @State private var characterSize: CGSize?
-//  @State private var characterSize: Size?
   @State private var viewSize: CGSize?
 
+  let config: GridFontConfig
+//  let font: GridFont
+//  let fontSize: CGFloat
   let debounceMode: DebounceMode
-//  let fontSize: CGFloat?
   let sizeDidChange: (_ characterSize: CGSize?, _ viewSize: CGSize?) -> Void
-//  let sizeDidChange: (_ characterSize: Size?, _ viewSize: CGSize?) -> Void
-//  let sizeResolver: CharacterSizeResolver<Size>
 
   public func body(content: Content) -> some View {
     content
       .modifier(
         CharacterSizeModifier(
-//        CharacterSizeModifier<Size>(
+          font: font,
+          fontSize: fontSize,
           debounceMode: debounceMode,
-//          fontSize: fontSize,
-          sizeDidChange: { size in
-            characterSize = size
-          },
-          shouldSetEnv: false,
-//          sizeResolver: sizeResolver
-        )
+          shouldSetEnv: false
+        ) { size in
+          characterSize = size
+        }
       )
       .viewSize(mode: debounceMode) { size in
         viewSize = size

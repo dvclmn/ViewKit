@@ -36,10 +36,14 @@ public struct TextColumns<Content: View>: View {
       .monospaced()
       .hidden()
       //      .frame(minWidth: screenWidth)
-      .gridGuide(opacity: 0.3, isEnabled: isDebugMode)
+//      .gridGuide(opacity: 0.3, isEnabled: isDebugMode)
       .environment(\.gridDimensions, .init(columnWidth, 1))
 //      .setGridDimensions(columnWidth, height: 1)
-      .characterSize(mode: .debounce(0.2), shouldSetEnv: true) { size in
+      .characterSize(
+        for: font, size: fontSize,
+        mode: .debounce(0.2),
+        shouldSetEnv: true
+      ) { size in
         self.characterSize = size
       }
 

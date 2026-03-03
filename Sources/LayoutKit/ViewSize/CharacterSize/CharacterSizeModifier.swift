@@ -13,23 +13,25 @@ public struct CharacterSizeModifier: ViewModifier {
   @State private var characterSize: CGSize?
   private let testString = TestString.example01
 
-  let font: GridFont
+//  let font: GridFont
+//  let fontSize: CGFloat
+  
+  let config: GridFontConfig
+  
   let debounceMode: DebounceMode
-  let sizeDidChange: (CGSize?) -> Void
   let shouldSetEnv: Bool
+  let sizeDidChange: (CGSize?) -> Void
 
   public func body(content: Content) -> some View {
     content
       .overlay {
+        
         Text(testString.text)
+
           .monospaced()
           .fixedSize()
           .allowsTightening(false)
 
-          /// This was a quick test
-          //          .onAppear {
-          //            self.characterSize = CGSize(100, 200)
-          //          }
           .viewSize(mode: debounceMode, isEnabled: unitSize == nil) { size in
 
             /// This derives a single glyph size from the multiple-character test string.
@@ -53,6 +55,10 @@ public struct CharacterSizeModifier: ViewModifier {
       }
       .environment(\.unitSize, characterSize ?? unitSize)
   }
+}
+
+extension CharacterSizeModifier {
+  
 }
 
 //typealias CharacterSizeResolver<Size: CharacterSize> = (
