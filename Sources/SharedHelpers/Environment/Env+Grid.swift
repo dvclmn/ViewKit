@@ -17,14 +17,14 @@ extension EnvironmentValues {
   @Entry public var gridLineWidth: CGFloat = 1.0
 
   /// Note: This hard-codes / assumes `unitSize` (not `asciiUnitSize` nor
-  /// `activeUnitSize`) and also assumes a canvas artwork anchor of `center`
+  /// `activeUnitSize`). Derives anchor from `canvasAnchor` Env value.
   public var gridGeometry: GridGeometry? {
     guard let viewportRect, let gridDimensions, let unitSize else { return nil }
     return GridGeometry(
       viewportRect: viewportRect,
       dimensions: gridDimensions,
       unitSize: unitSize,
-      anchor: .center
+      anchor: canvasAnchor
     )
   }
 

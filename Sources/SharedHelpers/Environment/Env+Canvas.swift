@@ -23,7 +23,12 @@ extension EnvironmentValues {
     return viewportRect.size
   }
 
-  @Entry public var canvasGeometry: CanvasGeometry = .init()
+  //  @Entry public var canvasGeometry: CanvasGeometry = .init()
+
+  /// This is usable by both Canvas and Grid domains. Describes the anchor
+  /// used for SwiftUI layout by the main Artwork View in a CanvasView.
+  /// Important for coordinate space calculations.
+  @Entry public var canvasAnchor: UnitPoint = .center
 
   /// From CanvasKit
   @Entry public var zoomLevel: Double = 1.0
@@ -47,8 +52,18 @@ extension EnvironmentValues {
   //  }
 
   /// Aka artwork size, document size
-  @Entry public var canvasSize: CGSize?
-  
+  @Entry public var canvasSize: Size<CanvasSpace>?
+  //  @Entry public var canvasSize: CGSize?
+
+  public var canvasGeometry: CanvasGeometry? {
+    guard let viewportRect, let canvasSize else { return nil }
+    return CanvasGeometry(
+      viewportRect: viewportRect,
+      canvasSize: canvasSize,
+      anchor: canvasAnchor
+    )
+  }
+
   @Entry public var canvasBackground: Color = Color(white: 0.04)
 
 }
