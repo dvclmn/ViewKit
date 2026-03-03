@@ -207,7 +207,6 @@ let package = Package(
         .sharing,
         .casePaths,
       ],
-//      resources: [.process("Grid/Fonts")]
     ),
 
     .target(
