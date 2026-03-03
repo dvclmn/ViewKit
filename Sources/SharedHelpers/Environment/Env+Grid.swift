@@ -27,6 +27,13 @@ extension EnvironmentValues {
       anchor: .center
     )
   }
+  
+  public var gridCanvasSize: CGSize? {
+    guard let unitSize else { return nil }
+    guard let gridDimensions else { return nil }
+    
+    return gridDimensions.toScreenSize(using: unitSize)
+  }
 
 }
 
