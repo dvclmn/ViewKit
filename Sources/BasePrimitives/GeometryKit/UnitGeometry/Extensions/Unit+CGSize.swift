@@ -8,7 +8,7 @@
 import Foundation
 
 extension CGSize {
-  
+
   /// The axis is justified here, as we need to specify the edge for `self`
   public func toGridCount(
     along axis: GridAxis,
@@ -21,7 +21,7 @@ extension CGSize {
     let unitLength = unitSize.value(along: axis, mapping: mapping)
     return lengthOfSelf.toGridCount(using: unitLength, rounding: rounding)
   }
-  
+
   public func toGridDimensions(
     using unitSize: CGSize,
     rounding: GridRounding = .down
@@ -35,7 +35,7 @@ extension CGSize {
 
     return GridDimensions(width: width, height: height)
   }
-  
+
   public func snappedToGrid(
     using unitSize: CGSize,
     rounding: GridRounding = .down
