@@ -15,7 +15,7 @@ extension GraphicsContext {
   ///
   /// To customise line colour and width, set env values
   /// `gridLineColour` and `gridLineWidth`
-  public func drawGrid(
+  public mutating func drawGrid(
     domain: UnitSizeDomain,
     in containerSize: CGSize,
     sizeMode: GridSizeMode = .fillContainer,
@@ -34,6 +34,7 @@ extension GraphicsContext {
       let output = context.makeOutput()
     else { return }
 
+    
     self.stroke(
       output.path,
       with: .color(environment.gridLineColour),

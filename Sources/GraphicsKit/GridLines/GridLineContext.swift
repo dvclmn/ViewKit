@@ -63,6 +63,19 @@ extension GridLineContext {
 
   var zoomedUnitSize: CGSize { unitSize * zoomLevel }
 
+  //  .offset(x: offset.leading, y: offset.top)
+  /// Offset to accomodate row/col numbers, if present
+  //  var cellNumberOffset: (top: CGFloat, leading: CGFloat) {
+  //    //    guard let unitSize else { return (0, 0) }
+  //    hasCellNumbers
+  //      ? (-unitSize.height, -unitSize.width)
+  //      : (0, 0)
+  //  }
+
+  var cellNumberOffsetFactor: Int {
+    hasCellNumbers ? 1 : 0
+  }
+
   var gridRect: GridRect? {
     guard
       let baseSize = sizeMode.gridDimensions(
@@ -70,10 +83,9 @@ extension GridLineContext {
         in: containerSize
       )
     else { return nil }
-    let baseOffset = hasCellNumbers ? 1 : 0
 
-    let size = baseSize - baseOffset
-    let origin = GridPosition(x: baseOffset, y: baseOffset)
+    let size = baseSize - cellNumberOffsetFactor
+    let origin = GridPosition(x: cellNumberOffsetFactor, y: cellNumberOffsetFactor)
     return GridRect(origin: origin, size: size)
   }
 

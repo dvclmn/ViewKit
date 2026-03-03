@@ -23,6 +23,7 @@ struct CellSelectionCanvas: View {
   @Environment(\.canvasBackground) private var canvasBackground
   @Environment(\.isDebugMode) private var isDebugMode
   @Environment(\.gridGeometry) private var gridGeometry
+  @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers
 
   @Environment(\.gridLineColour) private var gridLineColour
   @Environment(\.gridLineWidth) private var gridLineWidth
@@ -40,43 +41,43 @@ struct CellSelectionCanvas: View {
 
       context.fillCanvas(with: canvasBackground, in: size)
 
+      if let offset = canvasOffset {
+        context.translateBy(x: offset.width, y: offset.height)
+      }
+
+      // MARK: - Grid Lines
       context.drawGrid(
         domain: .canvas,
-        //        unitSizeOverride: unitSize,
         in: size,
         sizeMode: .fillContainer,
         pinMode: .canvas,
-        //        lineColour: gridLineColour,
-        //        lineWidth: gridLineWidth,
-        //        annotations: .full,
         drawsBorder: false
       )
 
-      guard let rect = store.selectionRect else { return }
-
-      let selectionShape: Path
-      if let radii = rectRadii {
-        selectionShape = UnevenRoundedRectangle(cornerRadii: radii)
-          .path(in: rect)
-      } else {
-        selectionShape = Path(rect)
-      }
-
-      context.fillAndStroke(
-        selectionShape,
-        fillColour: .cyan.opacity(0.25),
-        strokeColour: .blue.opacity(0.8),
-        strokeThickness: 1
-      )
+      //      // MARK: - Selection Box
+      //      guard let rect = store.selectionRect else { return }
+      //
+      //      let selectionShape = Path { p in
+      //        if let radii = rectRadii {
+      //          p = UnevenRoundedRectangle(cornerRadii: radii)
+      //            .path(in: rect)
+      //        } else {
+      //          p = Path(rect)
+      //        }
+      //      }
+      //
+      //      context.fillAndStroke(
+      //        selectionShape,
+      //        fillColour: .cyan.opacity(0.25),
+      //        strokeColour: .blue.opacity(0.8),
+      //        strokeThickness: 1
+      //      )
 
     }  // END canvas
+
     .debugFrame("Cell Canvas", .orange, isEnabled: isDebugMode)
+    
     .addInfoBarItems {
-      //      Labeled("Pointer (Global)", value: store.pointerLocation?.displayString(.location))
-      //      Labeled("Pointer (Local)", value: store.pointerLocalSpace?.displayString(.location))
-      //      Labeled("Viewport Rect", value: viewportRect?.displayString(.concise))
-      //      Labeled("Cell Size", value: unitSize?.displayString(.dimensions))
-      //      Labeled("Zoom", value: zoomLevel.toPercentString(within: zoomRange ?? .unitRange))
       Labeled("Canvas Size", value: canvasSize?.cgSize.displayString(.dimensions))
     }
 
@@ -89,6 +90,13 @@ struct CellSelectionCanvas: View {
 }
 
 extension CellSelectionCanvas {
+
+  var canvasOffset: CGSize? {
+    guard let unitSize else { return nil }
+    let result = isShowingCellNumbers ? -unitSize : nil
+    //    print("Canvas Offset: \(result?.displayString(.concise), default: "nil")")
+    return result
+  }
 
   private var rectRadii: RectangleCornerRadii? {
     let rounding: CGFloat = cornerRounding ?? Styles.sizeTiny

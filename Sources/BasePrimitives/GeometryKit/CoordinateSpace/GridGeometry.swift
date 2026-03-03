@@ -17,6 +17,7 @@ public struct GridGeometry: Sendable, Equatable {
 
   /// What is the canvas/artwork's anchor in the parent view
   public var anchor: UnitPoint
+  
 
   public init(
     viewportRect: CGRect = .zero,

@@ -20,23 +20,23 @@ extension EnvironmentValues {
   /// `activeUnitSize`). Derives anchor from `canvasAnchor` Env value.
   public var gridGeometry: GridGeometry? {
     guard let viewportRect, let gridDimensions, let unitSize else {
-//      print(
-//        """
-//        ---
-//        Couldn't return `gridGeometry`, no value found in Env for:
-//        `viewportRect`: \(viewportRect, default: "nil")
-//        `gridDimensions`: \(gridDimensions, default: "nil")
-//        `unitSize`: \(unitSize, default: "nil")
-//
-//        Let's also check
-//        `asciiUnitSize`: \(asciiUnitSize, default: "nil")
-//        `activeUnitSize`: \(activeUnitSize, default: "nil")
-//
-//        ---
-//
-//
-//        """
-//      )
+      //      print(
+      //        """
+      //        ---
+      //        Couldn't return `gridGeometry`, no value found in Env for:
+      //        `viewportRect`: \(viewportRect, default: "nil")
+      //        `gridDimensions`: \(gridDimensions, default: "nil")
+      //        `unitSize`: \(unitSize, default: "nil")
+      //
+      //        Let's also check
+      //        `asciiUnitSize`: \(asciiUnitSize, default: "nil")
+      //        `activeUnitSize`: \(activeUnitSize, default: "nil")
+      //
+      //        ---
+      //
+      //
+      //        """
+      //      )
       return nil
     }
 

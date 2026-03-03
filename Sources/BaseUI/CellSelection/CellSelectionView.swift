@@ -30,39 +30,26 @@ public struct CellSelectionView<Content: View>: View {
   }
   public var body: some View {
 
-    //    if let gridCanvasSize {
-
     GridCanvasView {
-      //      CanvasView(canvasSize: gridCanvasSize.cgSize) {
 
       CellSelectionCanvas()
         .allowsCanvasClipping(false)
+      //        .debugFrame("Cell Selection", .brown)
 
       content
-        .padding(.top, offset.top)
-        .padding(.leading, offset.leading)
+      //        .debugFrame("Grid content", .purple)
+      //        .padding(.top, offset.top)
+      //        .padding(.leading, offset.leading)
 
     }
     .environment(\.zoomRange, zoomRange)
-    /// Don't add canvas size to Env, CanvasView already does this
-    //      .environment(\.canvasSize, gridCanvasSize)
     .environment(store)
 
-    //    } else {
-    //      StateView("Missing Canvas Size", message: "No value found for `gridCanvasSize` in the Environment")
-    //        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    //    }
   }
 }
 
 extension CellSelectionView {
-  /// Offset to accomodate row/col numbers, if present
-  private var offset: (top: CGFloat, leading: CGFloat) {
-    guard let unitSize else { return (0, 0) }
-    return isShowingCellNumbers
-      ? (unitSize.height, unitSize.width)
-      : (0, 0)
-  }
+
 }
 
 #if DEBUG

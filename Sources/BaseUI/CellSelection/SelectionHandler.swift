@@ -26,8 +26,6 @@ extension SelectionHandler {
   var pointerGridPosition: GridPosition? {
     guard let geometry, let pointerLocation else { return nil }
     return pointerLocation.gridPosition(geometry: geometry)
-    //    let point = Point<CanvasSpace>(fromPoint: pointerLocation)
-    //    return geometry.projection.gridPositionIfValid(from: point)
   }
 
   var selectionRect: CGRect? {
