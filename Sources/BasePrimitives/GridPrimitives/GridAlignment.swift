@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// This can be expanded with new cases over time
 public enum GridAlignment: Sendable, Codable, Equatable {
 //  case center
   case leading

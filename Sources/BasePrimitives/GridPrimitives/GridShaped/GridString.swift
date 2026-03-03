@@ -7,16 +7,12 @@
 
 import Foundation
 
-//public protocol GridString: GridShaped, ExpressibleByStringLiteral where Cell == Character {
-//  init(stringLiteral value: String)
-//}
-
 extension Character: BlankCreatable {
   public static func createBlank() -> Character {
     #if DEBUG
     // ░ ╳ ✕ ▚ ∑ η ✳
     Character("▚")
-    
+
     #else
     Character(" ")
 
@@ -37,27 +33,8 @@ extension GridShaped where Cell == Character {
     self.init(cells: rows)
   }
 
-  // Any members here can freely use Character APIs, including createBlank()
-  //  public static func blankCell() -> Cell { .createBlank() }
-  //}
-
-  /// This is essentially the same as `extension GridShaped where Cell == Character`
-  //extension GridString {
-
-  //  public init(fromString string: String) {
-  //    let cells = Self.generateCells(from: string)
-  //    self.init(cells: cells)
-  //  }
-
   public static func generateCells(from text: String) -> [[Cell]] {
-    //    print(
-    //      """
-    //
-    //      Generating cells from text:
-    //      \(text)
-    //
-    //
-    //      """)
+
     let dimensions = text.gridDimensions
     let lines = text.lines(omissionStrategy: .doNotOmit)
 

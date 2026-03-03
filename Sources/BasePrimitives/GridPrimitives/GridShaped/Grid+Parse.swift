@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 /// Key points:
 /// - No padding/truncation happens here.
 /// - Tests can assert rows​.count, widest​Line, and had​Terminal​Newline directly.

@@ -10,12 +10,12 @@ import Foundation
 /// Bridges the gap between pure Grid dimensions and Canvas (continuous) space.
 /// Note: The only piece that needs to know about e.g.  ASCII cell size.
 public struct GridProjection: Equatable, Sendable {
-  
+
   /// The size of a single grid cell in Canvas Space.
-  public let unitSize: CGSize // e.g., 10x18 for a font
-  
+  public let unitSize: CGSize  // e.g., 10x18 for a font
+
   public var rounding: GridRounding = .down
-  
+
   public init(
     unitSize: CGSize,
     rounding: GridRounding = .down
@@ -26,7 +26,7 @@ public struct GridProjection: Equatable, Sendable {
 }
 
 extension GridProjection {
-  
+
   /// Converts Canvas space (continuous) to Grid space (discrete).
   /// Returns `nil` when input cannot be safely converted.
   public func gridPositionIfValid(from point: Point<CanvasSpace>) -> GridPosition? {

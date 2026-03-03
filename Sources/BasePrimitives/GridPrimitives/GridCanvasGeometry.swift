@@ -9,7 +9,7 @@ import CoreGraphics
 import SwiftUI
 
 /// Continuous/discrete geometry for grid documents.
-public struct GridGeometry: Sendable, Equatable {
+public struct GridGeometry: Sendable, Equatable, ViewportGeometric {
   public var viewportRect: CGRect
   
   public var dimensions: GridDimensions
@@ -41,16 +41,16 @@ extension GridGeometry {
 //    projection.canvasCGSize(for: dimensions)
 //  }
 
-  public func viewportContext(
-    zoom: CGFloat,
-    pan: CGSize
-  ) -> ViewportContext {
-    ViewportContext(
-      viewportRect: viewportRect,
-      pan: Point<ScreenSpace>(x: pan.width, y: pan.height),
-      zoom: zoom,
-      canvasSize: canvasSize,
-      canvasAnchor: anchor
-    )
-  }
+//  public func viewportContext(
+//    zoom: CGFloat,
+//    pan: CGSize
+//  ) -> ViewportContext {
+//    ViewportContext(
+//      viewportRect: viewportRect,
+//      pan: Point<ScreenSpace>(x: pan.width, y: pan.height),
+//      zoom: zoom,
+//      canvasSize: canvasSize,
+//      canvasAnchor: anchor
+//    )
+//  }
 }
