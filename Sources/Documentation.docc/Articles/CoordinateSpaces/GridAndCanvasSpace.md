@@ -1,7 +1,4 @@
-//
-//  GridAndCanvasSpace.swift
-//  
-//
-//  Created by Dave Coleman on 3/3/2026.
-//
+# Coordinate Spaces
+Moving between Grid, Canvas and Screen space
 
+Both `CanvasGeometry` and `GridGeometry` conform to `ViewportGeometric`, allowing them to provide a `ViewportContext` value
