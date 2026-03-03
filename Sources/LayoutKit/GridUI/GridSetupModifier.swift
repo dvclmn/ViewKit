@@ -15,7 +15,7 @@ import SwiftUI
 /// - Reads viewport size and sets `viewportRect` in the Env
 /// - Sets `gridDimensions` in the Env, accounting for cell numbers if present
 struct GridCanvasGeometryModifier: ViewModifier {
-//  @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers: Bool
+  //  @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers: Bool
 
   let font: GridFont
   let fontSize: CGFloat
