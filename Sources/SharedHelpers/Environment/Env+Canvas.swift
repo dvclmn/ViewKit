@@ -17,7 +17,7 @@ extension EnvironmentValues {
   /// `viewportCapture(mode:showsIndicator:didUpdateSize)`
   /// is placed on the view the caller regards as the viewport area
   @Entry public var viewportRect: CGRect?
-  
+
   /// I think this should be removed, and callers just access `viewportRect`
   /// directly and get the size from there
   public var viewportSize: CGSize? {

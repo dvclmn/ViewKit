@@ -16,13 +16,15 @@ public protocol ViewportGeometric: Sendable, Equatable {
 extension ViewportGeometric {
 
   public var canvasCGSize: CGSize { canvasSize.cgSize }
+
   public func viewportContext(
     zoom: CGFloat,
     pan: CGSize
-  ) -> ViewportContext {
-    ViewportContext(
+  ) -> ViewportContext? {
+    guard isValidForCoordinateMapping else { return nil }
+    return ViewportContext(
       viewportRect: viewportRect,
-      pan: Point<ScreenSpace>(x: pan.width, y: pan.height),
+      pan: Point<ScreenSpace>(fromOffset: pan),
       zoom: zoom,
       canvasSize: canvasSize,
       canvasAnchor: anchor
@@ -30,6 +32,9 @@ extension ViewportGeometric {
   }
 
   public var isValidForCoordinateMapping: Bool {
-    viewportRect.width > 0 && viewportRect.height > 0 && canvasSize.width > 0 && canvasSize.height > 0
+    viewportRect.width > 0
+      && viewportRect.height > 0
+      && canvasSize.width > 0
+      && canvasSize.height > 0
   }
 }
