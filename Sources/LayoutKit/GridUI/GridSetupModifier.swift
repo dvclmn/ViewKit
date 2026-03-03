@@ -8,13 +8,15 @@
 import CoreTools
 import SwiftUI
 
-/// Aims to produce a full setup with Grid Font,
-/// Character measure for unit size, injecting
-/// into environment, etc.
-
+/// This handles a lot of common setup required for Grid-related domains.
+/// - Adds canvas base font size to the env
+/// - Sets the chosen font
+/// - Measures character size for chosen font style and size, and sets Env `unitSize`
+/// - Reads viewport size and sets `viewportRect` in the Env
+/// - Sets `gridDimensions` in the Env, accounting for cell numbers if present
 struct GridGeometryModifier: ViewModifier {
   @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers: Bool
-  
+
   let font: GridFont
   let fontSize: CGFloat
   let dimensions: GridDimensions
@@ -33,11 +35,12 @@ struct GridGeometryModifier: ViewModifier {
 
       .gridFont(font, size: fontSize)
 
-      .environment(\.gridDimensions, dimensions)
+      .environment(\.gridDimensions, effectiveDimensions)
   }
 }
 
 extension GridGeometryModifier {
+
   /// If cell numbers are showing, the grid needs to be enlarged by 1x cell to accomodate
   private var effectiveDimensions: GridDimensions {
     let additional: Int = isShowingCellNumbers ? 1 : 0
@@ -46,8 +49,7 @@ extension GridGeometryModifier {
 }
 
 extension View {
-  /// A grid setup overload to accept a whole `GridCanvas`,
-  /// to make it a little tidier
+  /// A grid setup overload to accept a whole `GridCanvas`, to make it tidier
   public func gridSetup(
     font: GridFont,
     fontSize: CGFloat,

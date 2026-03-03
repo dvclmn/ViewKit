@@ -23,7 +23,7 @@ public struct StateView<Content: View>: View {
 
   public var body: some View {
 
-    DecomposedView(.subview) {
+    DecomposedView(.subview, layout: .vstack(alignment: .center)) {
       // MARK: - Title
       TitleView()
         /// Padding to achieve nice vertical optical centering

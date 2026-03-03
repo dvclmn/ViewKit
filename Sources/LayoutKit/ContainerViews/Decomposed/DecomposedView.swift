@@ -19,7 +19,7 @@ public struct DecomposedView<Content: View>: View {
   /// Will fall back to environment `LayoutType` if no value provided for `layout`
   public init(
     _ subviewType: SubViewType,
-    layout: LayoutType? = nil,
+    layout: LayoutType,
     spacing: CGFloat? = nil,
     @ViewBuilder content: @escaping () -> Content
   ) {

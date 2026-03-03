@@ -30,9 +30,9 @@ public struct CellSelectionView<Content: View>: View {
   }
   public var body: some View {
 
-    if let canvasSize = gridCanvasSize {
+    if let gridCanvasSize {
 
-      CanvasView(canvasSize: canvasSize) {
+      CanvasView(canvasSize: gridCanvasSize) {
 
         CellSelectionCanvas()
           .allowsCanvasClipping(false)
@@ -43,11 +43,11 @@ public struct CellSelectionView<Content: View>: View {
 
       }
       .environment(\.zoomRange, zoomRange)
-      .environment(\.canvasSize, canvasSize)
+      .environment(\.canvasSize, gridCanvasSize)
       .environment(store)
 
     } else {
-      StateView("No Canvas Size")
+      StateView("Missing Canvas Size", message: "No value found for `gridCanvasSize` in the Environment")
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
   }

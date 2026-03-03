@@ -61,17 +61,21 @@ extension GridLineContext {
 
 extension GridLineContext {
 
-  var zoomedUnitSize: CGSize {
-    unitSize * zoomLevel
-  }
+  var zoomedUnitSize: CGSize { unitSize * zoomLevel }
 
-  //  var effectiveDimensions: GridDimensions? {
-  //    let base = sizeMode.gridDimensions(
-  //      from: zoomedUnitSize,
-  //      in: containerSize
-  //    )
-  //    hasCellNumbers ?
-  //  }
+  var gridRect: GridRect? {
+    guard
+      let baseSize = sizeMode.gridDimensions(
+        from: zoomedUnitSize,
+        in: containerSize
+      )
+    else { return nil }
+    let baseOffset = hasCellNumbers ? 1 : 0
+
+    let size = baseSize - baseOffset
+    let origin = GridPosition(x: baseOffset, y: baseOffset)
+    return GridRect(origin: origin, size: size)
+  }
 
   var effectiveLineWidth: CGFloat {
     lineWidth.removingZoom(
@@ -93,15 +97,11 @@ extension GridLineContext {
     switch sizeMode {
       case .fixed, .fill:
         //        dwdwd
-        guard
-          let dimensions = sizeMode.gridDimensions(
-            from: zoomedUnitSize,
-            in: containerSize
-          )
-        else { return nil }
+        guard let gridRect else { return nil }
 
         let path = Path.boundedGrid(
-          dimensions: dimensions,
+          rect: gridRect,
+          //          dimensions: dimensions,
           cellSize: zoomedUnitSize,
           containerSize: containerSize,
           drawsBorder: drawsBorder
@@ -115,10 +115,12 @@ extension GridLineContext {
         )
 
       case .fillContainer:
+        guard let gridRect else { return nil }
         var markers: [GridLineAnnotation] = []
 
         /// Note: passing in *un-zoomed* cell (unit) size
         let path = Path.infiniteGrid(
+          originOffset: gridRect.origin,
           containerSize: containerSize,
           cellSize: unitSize,
           offset: effectivePanOffset,

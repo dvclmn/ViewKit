@@ -12,7 +12,7 @@ extension ContainerValues {
   @Entry public var isGrouped: Bool = false
   @Entry public var isEmphasised: Bool = false
   @Entry public var shouldWiggle: Bool = false
-  @Entry public var hasDividers: Bool = true
+  @Entry public var hasDividers: Bool = false
   @Entry public var hasSpacers: Bool = true
   @Entry public var hasAlternatingRowStyle: Bool = false
   @Entry public var isFirst: Bool = false

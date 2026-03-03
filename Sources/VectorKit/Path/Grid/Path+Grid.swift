@@ -22,16 +22,20 @@ public enum GridLinesMode {
 extension Path {
   public static func boundedGrid(
     rect: GridRect,
-    //    dimensions: GridDimensions,
     cellSize: CGSize,
     containerSize: CGSize,
     drawsBorder: Bool
   ) -> Path {
-    let cols = max(0, rect.size.width)
-    let rows = max(0, rect.size.height)
+    // rect.origin encodes any top/leading offset caused by header row/column (row/col numbers)
+    // rect.size encodes the number of grid cells to render in each direction
+    let originX: Int = rect.origin.x
+    let originY: Int = rect.origin.y
 
-    let cw = cellSize.width
-    let ch = cellSize.height
+    let cols: Int = max(0, rect.size.width)
+    let rows: Int = max(0, rect.size.height)
+
+    let cw: CGFloat = cellSize.width
+    let ch: CGFloat = cellSize.height
 
     guard containerSize.width > 0, containerSize.height > 0, cw > 0, ch > 0 else {
       return Path()
@@ -47,24 +51,22 @@ extension Path {
     guard rowStart <= rowEnd, colStart <= colEnd else { return Path() }
 
     return Path { p in
-      /// Horizontal
-      //      if rowStart <= rowEnd {
+      // Horizontal lines (rows)
       for r in rowStart...rowEnd {
-        let y = CGFloat(r) * ch
-        p.move(to: CGPoint(x: 0, y: y))
-        p.addLine(to: CGPoint(x: containerSize.width, y: y))
+        let x = CGFloat(originX)
+        let y = CGFloat(originY) + CGFloat(r) * ch
+        p.move(to: CGPoint(x: x, y: y))
+        p.addLine(to: CGPoint(x: x + containerSize.width, y: y))
       }
-      //      }
-      /// Vertical
-      //      if colStart <= colEnd {
-      for c in colStart...colEnd {
-        let x = CGFloat(c) * cw
-        p.move(to: CGPoint(x: x, y: 0))
-        p.addLine(to: CGPoint(x: x, y: containerSize.height))
-      }
-      //      }
-    }
 
+      // Vertical lines (columns)
+      for c in colStart...colEnd {
+        let x = CGFloat(originX) + CGFloat(c) * cw
+        let y = CGFloat(originY)
+        p.move(to: CGPoint(x: x, y: y))
+        p.addLine(to: CGPoint(x: x, y: y + containerSize.height))
+      }
+    }
   }
 
   /// For eplison; to align with border stroke width, follow rule of thumb:
@@ -82,6 +84,7 @@ extension Path {
   /// It accounts for floating‑point rounding and stroke width so an “inner” grid line
   /// isn't drawn right on top of the border line, or miss it due to tiny numeric drift.
   public static func infiniteGrid(
+    originOffset: GridPosition,
     containerSize: CGSize,
     cellSize: CGSize,
     offset: CGSize,
@@ -95,6 +98,12 @@ extension Path {
     let cw = cellSize.width
     let ch = cellSize.height
 
+    /// Origin offset: if the caller wants to shift the grid (e.g. to leave room for headers),
+    /// incorporate it here. For now we assume (0,0); callers can bake header space into `offset`.
+    guard let originX: CGFloat = originOffset.x.toScreenLength(along: .horizontal, using: cellSize),
+      let originY: CGFloat = originOffset.y.toScreenLength(along: .vertical, using: cellSize)
+    else { return Path() }
+
     guard w > 0, h > 0, cw > 0, ch > 0 else { return Path() }
 
     let startCol = Int(floor((-offset.width) / cw))
@@ -103,6 +112,7 @@ extension Path {
     let startRow = Int(floor((-offset.height) / ch))
     let endRow = Int(ceil((h - offset.height) / ch))
 
+    /// Note: these edge checks are relative to the container bounds (0 to w/h), NOT the origin offset.
     func isOnVerticalEdge(_ x: CGFloat) -> Bool {
       abs(x - 0) <= edgeEpsilon || abs(x - w) <= edgeEpsilon
     }
@@ -116,8 +126,8 @@ extension Path {
         let x = CGFloat(i) * cw + offset.width
         if !drawsBorder, isOnVerticalEdge(x) { continue }
 
-        p.move(to: CGPoint(x: x, y: 0))
-        p.addLine(to: CGPoint(x: x, y: h))
+        p.move(to: CGPoint(x: x + originX, y: originY))
+        p.addLine(to: CGPoint(x: x + originX, y: originY + h))
         onHorizontalIndex?(i, x)
       }
 
@@ -126,8 +136,8 @@ extension Path {
         let y = CGFloat(i) * ch + offset.height
         if !drawsBorder, isOnHorizontalEdge(y) { continue }
 
-        p.move(to: CGPoint(x: 0, y: y))
-        p.addLine(to: CGPoint(x: w, y: y))
+        p.move(to: CGPoint(x: originX, y: y + originY))
+        p.addLine(to: CGPoint(x: originX + w, y: y + originY))
         onVerticalIndex?(i, y)
       }
     }
