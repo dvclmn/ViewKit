@@ -13,6 +13,7 @@ public struct CharacterSizeModifier: ViewModifier {
   @State private var characterSize: CGSize?
   private let testString = TestString.example01
 
+  let font: GridFont
   let debounceMode: DebounceMode
   let sizeDidChange: (CGSize?) -> Void
   let shouldSetEnv: Bool

@@ -34,47 +34,11 @@ extension GridDimensions {
       && position.column < width
       && position.row < height
   }
-
-  /// Convenience method: converts point to position and checks if it's valid
-  //  public func containsValidPosition(for point: CGPoint) -> Bool {
-  //    let gridPosition = position(for: point)
-  //    return contains(position: gridPosition)
-  //  }
-
-  //  public func position(
-  //    for point: CGPoint,
-  //    rounding: GridRounding = .down,
-  //    mapping: AxisMapping = .default,
-  //  ) -> GridPosition {
-  //
-  //    let row = point.value(along: .horizontal, mapping: mapping)
-  //    let col = point.value(along: .vertical, mapping: mapping)
-  //
-  //    return GridPosition(<#T##row: Int##Int#>, <#T##column: Int##Int#>)
-  //    //    fatalError("Needs implementation after refactor of UnitSize/AxisMapping")
-  //    //    let row = convention.makeCGPoint(h: <#T##CGFloat#>, v: <#T##CGFloat#>)
-  //    //    GridPosition(
-  //    //      row: Int(floor(point.y / cellSize.height)),
-  //    //      column: Int(floor(point.x / cellSize.width)),
-  //    //    )
-  //  }
-}
-
-// MARK: - Coordinate Conversion
-extension GridDimensions {
-
 }
 
 // MARK: - Size Calculations
 extension GridDimensions {
-  //  public func screenWidth(using unitSize: CGSize) -> CGFloat {
-  //    toUnitSize(with: unitSize).screenWidth
-  //  }
-  //
-  //  public func screenHeight(using unitSize: CGSize) -> CGFloat {
-  //    toUnitSize(with: unitSize).screenHeight
-  //  }
-  //
+
   public func toScreenSize(using unitSize: CGSize) -> CGSize? {
     guard
       let width = width.toScreenLength(using: unitSize.width),
@@ -83,21 +47,6 @@ extension GridDimensions {
 
     return CGSize(width: width, height: height)
   }
-
-  //  public func width(with cellSize: CGSize) -> CGFloat {
-  //    CGFloat(width) * cellSize.width
-  //  }
-  //
-  //  public func height(with cellSize: CGSize) -> CGFloat {
-  //    CGFloat(height) * cellSize.height
-  //  }
-
-  //  public func toCGSize(withCellSize cellSize: CGSize) -> CGSize {
-  //    CGSize(
-  //      width: width(with: cellSize),
-  //      height: height(with: cellSize)
-  //    )
-  //  }
 }
 
 // MARK: - Additional Convenience Methods

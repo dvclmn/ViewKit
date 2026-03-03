@@ -25,10 +25,6 @@ extension GridPosition {
       x: x,
       y: y
     )
-    //    CGPoint(
-    //      x: CGFloat(column) * cellSize.width,
-    //      y: CGFloat(row) * cellSize.height
-    //    )
   }
 
   public func toCGRect(cellSize: CGSize) -> CGRect {
@@ -69,8 +65,6 @@ extension CGPoint {
   public func gridPosition(
     geometry: GridGeometry
   ) -> GridPosition? {
-    //    guard let geometry, let pointerLocation else { return nil }
-
     let point = Point<CanvasSpace>(fromPoint: self)
     return geometry.projection.gridPositionIfValid(from: point)
   }

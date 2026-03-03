@@ -31,7 +31,6 @@ public struct CellSelectionView<Content: View>: View {
       CellSelectionCanvas()
         .allowsCanvasClipping(false)
       content
-
     }
     .environment(store)
 
