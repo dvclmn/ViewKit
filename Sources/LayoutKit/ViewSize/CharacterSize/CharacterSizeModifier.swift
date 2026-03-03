@@ -10,6 +10,7 @@ import SwiftUI
 
 public struct CharacterSizeModifier: ViewModifier {
   @Environment(\.unitSize) private var unitSize
+  @Environment(\.self) private var envSelf
   @State private var characterSize: CGSize?
   private let testString = TestString.example01
 
@@ -26,7 +27,7 @@ public struct CharacterSizeModifier: ViewModifier {
     content
       .overlay {
         
-        Text(testString.text)
+       
 
           .monospaced()
           .fixedSize()
@@ -58,7 +59,23 @@ public struct CharacterSizeModifier: ViewModifier {
 }
 
 extension CharacterSizeModifier {
-  
+  @ViewBuilder
+  private func TextMeasurementView() -> some View {
+    
+    if let descriptor = config.descriptor(in: envSelf) {
+      Text(testString.text)
+        .font(descriptor)
+    } else {
+      Text(testString.text)
+    }
+//    switch config {
+//      case .domain(let domain):
+//        
+//      case .custom(let font, let size):
+//      case .passthrough:
+//        
+//    }
+  }
 }
 
 //typealias CharacterSizeResolver<Size: CharacterSize> = (

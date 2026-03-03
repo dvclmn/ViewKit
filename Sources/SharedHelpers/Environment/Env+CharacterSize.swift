@@ -99,7 +99,11 @@ public enum GridFontDomain: Sendable {
 public enum GridFontConfig: Sendable {
   case domain(GridFontDomain)
   case custom(GridFont, size: CGFloat)
-  
+
+  /// `passthrough` allows `CharacterSizeModifier` to measure whatever
+  /// font is currently set in that View hierarchy
+  case passthrough
+
   public static let automatic: Self = .domain(.automatic)
 
   public func descriptor(in environment: EnvironmentValues) -> GridFontDescriptor? {
@@ -112,6 +116,8 @@ public enum GridFontConfig: Sendable {
 
       case .custom(let font, let size):
         return GridFontDescriptor(style: font, size: size)
+
+      case .passthrough: return nil
     }
   }
 }
@@ -126,5 +132,21 @@ public struct GridFontDescriptor {
   ) {
     self.style = style
     self.size = size
+  }
+}
+
+extension GridFontDescriptor {
+  public var font: Font {
+    //    guard let size, let gridFont else { return nil }
+    return switch style {
+      case .sfMono:
+        .system(
+          size: size,
+          design: .monospaced
+        )
+      default:
+        .custom(style.rawValue, fixedSize: size)
+    }
+
   }
 }

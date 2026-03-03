@@ -12,48 +12,48 @@ struct GridFontModifier: ViewModifier {
   @Environment(\.gridFont) private var gridFont
   @Environment(\.asciiModeFontSize) private var asciiModeFontSize
   @Environment(\.gridFontSize) private var gridFontSize
+  @Environment(\.self) private var envSelf
   @Environment(\.isASCIIMode) private var isASCIIMode
 
-  let domain: GridFontDomain
+  //  let domain: GridFontDomain
+  //  let descriptor: GridFontDescriptor
+
+  let config: GridFontConfig
+
   func body(content: Content) -> some View {
     content
-      .font(font)
+      .font(config.descriptor(in: envSelf)?.font)
       /// Prevents any compression of the spacing between characters
       .allowsTightening(false)
   }
 }
 
 extension GridFontModifier {
-  
-  private var size: CGFloat? {
-    switch domain {
-      case .automatic: isASCIIMode ? asciiModeFontSize : gridFontSize
-      case .canvas: gridFontSize
-      case .asciiMode: asciiModeFontSize
-    }
-  }
 
-  private var font: Font? {
-    guard let size, let gridFont else { return nil }
-    return switch gridFont {
-      case .sfMono:
-        .system(
-          size: size,
-          design: .monospaced
-        )
-      default:
-        .custom(gridFont.rawValue, fixedSize: size)
-    }
-  }
+  //  private var size: CGFloat? {
+  //    switch domain {
+  //      case .automatic: isASCIIMode ? asciiModeFontSize : gridFontSize
+  //      case .canvas: gridFontSize
+  //      case .asciiMode: asciiModeFontSize
+  //    }
+  //  }
+
 }
 extension View {
   /// This sets the font for this View. It doesn't set/change any Environment value
   public func gridFont(for domain: GridFontDomain = .automatic) -> some View {
-    self.modifier(GridFontModifier(domain: domain))
+    self.modifier(
+      GridFontModifier(
+        config: .domain(domain)
+        //        descriptor: GridFontConfig.domain(domain)
+      )
+    )
   }
-  
+
   public func gridFont(_ style: GridFont, size: CGFloat) -> some View {
-    self.modifier(GridFontModifier(domain: domain))
+    self.modifier(
+      GridFontModifier(config: .custom(style, size: size))
+    )
   }
 }
 
