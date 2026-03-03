@@ -14,6 +14,8 @@ public protocol ViewportGeometric: Sendable, Equatable {
 }
 
 extension ViewportGeometric {
+
+  public var canvasCGSize: CGSize { canvasSize.cgSize }
   public func viewportContext(
     zoom: CGFloat,
     pan: CGSize

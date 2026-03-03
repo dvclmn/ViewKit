@@ -16,14 +16,14 @@ extension EnvironmentValues {
   /// Useful as long as its companion modifier
   /// `viewportCapture(mode:showsIndicator:didUpdateSize)`
   /// is placed on the view the caller regards as the viewport area
-  //  @Entry public var viewportSize: CGSize?
   @Entry public var viewportRect: CGRect?
+  
+  /// I think this should be removed, and callers just access `viewportRect`
+  /// directly and get the size from there
   public var viewportSize: CGSize? {
     guard let viewportRect else { return nil }
     return viewportRect.size
   }
-
-  //  @Entry public var canvasGeometry: CanvasGeometry = .init()
 
   /// This is usable by both Canvas and Grid domains. Describes the anchor
   /// used for SwiftUI layout by the main Artwork View in a CanvasView.
@@ -44,16 +44,8 @@ extension EnvironmentValues {
     return zoomLevel.clamped(to: zoomRange)
   }
 
-  /// Stabilises the existing Environment value for cornerRounding
-  //  @Entry public var canvasRounding: Double?
-  //  public func zoomAdjustedRounding(_ roundingOverride: Double? = nil) -> Double {
-  //    guard let cornerRounding else { return nil }
-  //    return cornerRounding.removingZoom(zoomLevel)
-  //  }
-
   /// Aka artwork size, document size
   @Entry public var canvasSize: Size<CanvasSpace>?
-  //  @Entry public var canvasSize: CGSize?
 
   public var canvasGeometry: CanvasGeometry? {
     guard let viewportRect, let canvasSize else { return nil }

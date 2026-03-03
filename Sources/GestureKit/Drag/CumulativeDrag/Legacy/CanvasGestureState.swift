@@ -63,7 +63,7 @@ extension ClampedGestureState where Value == CGSize {
     to geometry: CanvasGeometry,
     zoom: CGFloat
   ) -> CGSize {
-    let artwork = geometry.canvasSize
+    let artwork = geometry.canvasCGSize
     let viewportRect = geometry.viewportRect
     let scaledArtwork = artwork * zoom
 
