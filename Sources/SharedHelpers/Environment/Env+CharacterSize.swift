@@ -10,11 +10,13 @@ import SwiftUI
 
 extension EnvironmentValues {
 
-  /// This is directly related to `gridFont` and `canvasBaseFontSize`
+  /// This is directly related to `gridFont` and `gridFontSize`
   @Entry public var unitSize: CGSize?
 
   @Entry public var isASCIIMode: Bool = false
-  @Entry public var canvasBaseFontSize: CGFloat?
+  
+  /// The font size used for `GridCanvasView`, e.g. for ASCII art display
+  @Entry public var gridFontSize: CGFloat?
   @Entry public var asciiModeFontSize: CGFloat?
 
   /// Scale ratio from canvas font size domain to ASCII mode font size domain.
@@ -22,20 +24,20 @@ extension EnvironmentValues {
   public var asciiScaleRelativeToCanvas: CGFloat? {
     guard
       let asciiModeFontSize,
-      let canvasBaseFontSize,
+      let gridFontSize,
       asciiModeFontSize.isFinite,
-      canvasBaseFontSize.isFinite,
+      gridFontSize.isFinite,
       asciiModeFontSize > 0,
-      canvasBaseFontSize > 0
+      gridFontSize > 0
     else { return nil }
 
-    return asciiModeFontSize / canvasBaseFontSize
+    return asciiModeFontSize / gridFontSize
   }
 
   /// Derived cell size for ASCII UI mode.
   ///
   /// This relies on `CharacterSizeModifier` providing `unitSize` with a value
-  /// in an ancestor view, where `unitSize` is measured at `canvasBaseFontSize`.
+  /// in an ancestor view, where `unitSize` is measured at `gridFontSize`.
   public var asciiUnitSize: CGSize? {
     guard let unitSize, let scale = asciiScaleRelativeToCanvas else { return nil }
     return unitSize * scale

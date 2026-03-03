@@ -24,12 +24,13 @@ public struct ASCIIText: View {
 
   public var body: some View {
 
-    if let gridFont {
-      Text(key)
-        .gridFont(gridFont, size: asciiModeFontSize ?? 22)
-    } else {
-      Text(key)
-    }
+    //    if let gridFont {
+    Text(key)
+      .gridFont(for: .asciiMode)
+    //        .gridFont(gridFont, size: asciiModeFontSize ?? 22)
+    //    } else {
+    //      Text(key)
+    //    }
 
   }
 }
@@ -42,6 +43,6 @@ extension ASCIIText {
   ASCIIText("I'm an ASCII Text")
     .frame(width: 300, height: 600)
     .environment(\.isASCIIMode, true)
-    .gridFont(.ibm, size: 40)
+  //    .gridFont(.ibm, size: 40)
 }
 #endif

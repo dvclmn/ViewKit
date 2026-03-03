@@ -14,8 +14,8 @@ import SwiftUI
 /// - Measures character size for chosen font style and size, and sets Env `unitSize`
 /// - Reads viewport size and sets `viewportRect` in the Env
 /// - Sets `gridDimensions` in the Env, accounting for cell numbers if present
-struct GridGeometryModifier: ViewModifier {
-  @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers: Bool
+struct GridCanvasGeometryModifier: ViewModifier {
+//  @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers: Bool
 
   let font: GridFont
   let fontSize: CGFloat
@@ -25,7 +25,7 @@ struct GridGeometryModifier: ViewModifier {
     content
       /// The canvas/grid source-of-truth font size, used for deriving
       /// size transforms into other domains (e.g. ASCII UI mode).
-      .environment(\.canvasBaseFontSize, fontSize)
+      .environment(\.gridFontSize, fontSize)
 
       /// This provides the environment with `unitSize`
       .setCharacterSize(mode: .debounce(0.2))
@@ -33,32 +33,26 @@ struct GridGeometryModifier: ViewModifier {
       /// This provides the environment with `viewportRect`
       .viewportCapture(mode: .debounce(0.2), showsIndicator: false)
 
-      .gridFont(font, size: fontSize)
+      .environment(\.gridFont, font)
+      //      .gridFont(font, size: fontSize)
 
-      .environment(\.gridDimensions, effectiveDimensions)
+      .environment(\.gridDimensions, dimensions)
   }
 }
 
-extension GridGeometryModifier {
+extension GridCanvasGeometryModifier {
 
-  /// If cell numbers are showing, the grid needs to be enlarged by 1x cell to accomodate
-  private var effectiveDimensions: GridDimensions {
-    let additional: Int = isShowingCellNumbers ? 1 : 0
-    let result = dimensions + additional
-//    print("Checking out for Grid Dimensions: \(result)")
-    return result
-  }
 }
 
 extension View {
   /// A grid setup overload to accept a whole `GridCanvas`, to make it tidier
-  public func gridSetup(
+  public func gridCanvasSetup(
     font: GridFont,
     fontSize: CGFloat,
     dimensions: GridDimensions,
   ) -> some View {
     self.modifier(
-      GridGeometryModifier(
+      GridCanvasGeometryModifier(
         font: font,
         fontSize: fontSize,
         dimensions: dimensions

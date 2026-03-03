@@ -22,6 +22,8 @@ struct GridLineOutput {
 // MARK: - Main Context
 struct GridLineContext {
   let unitSize: CGSize
+  //  let gridDimensions: GridDimensions
+  let gridRect: GridRect
   let containerSize: CGSize
   let sizeMode: GridSizeMode
   let pinMode: GridPinMode
@@ -45,6 +47,7 @@ extension GridLineContext {
     guard let unitSize = environment[keyPath: domain.environmentKey] else {
       return nil
     }
+    guard let dimensions = environment.gridDimensions else { return nil }
 
     self.unitSize = unitSize
     self.containerSize = containerSize
@@ -56,6 +59,7 @@ extension GridLineContext {
     self.zoomLevel = environment.zoomLevel.toCGFloat
     self.zoomRange = environment.zoomRange?.toCGFloatRange
     self.hasCellNumbers = environment.isShowingCellNumbers
+    self.gridRect = GridRect(origin: .zero, size: dimensions)
   }
 }
 
@@ -76,18 +80,18 @@ extension GridLineContext {
     hasCellNumbers ? 1 : 0
   }
 
-  var gridRect: GridRect? {
-    guard
-      let baseSize = sizeMode.gridDimensions(
-        from: zoomedUnitSize,
-        in: containerSize
-      )
-    else { return nil }
-
-    let size = baseSize - cellNumberOffsetFactor
-    let origin = GridPosition(x: cellNumberOffsetFactor, y: cellNumberOffsetFactor)
-    return GridRect(origin: origin, size: size)
-  }
+  //  var gridRect: GridRect? {
+  //    guard
+  //      let baseSize = sizeMode.gridDimensions(
+  //        from: zoomedUnitSize,
+  //        in: containerSize
+  //      )
+  //    else { return nil }
+  //
+  //    let size = baseSize - cellNumberOffsetFactor
+  //    let origin = GridPosition(x: cellNumberOffsetFactor, y: cellNumberOffsetFactor)
+  //    return GridRect(origin: origin, size: size)
+  //  }
 
   var effectiveLineWidth: CGFloat {
     lineWidth.removingZoom(
@@ -109,7 +113,7 @@ extension GridLineContext {
     switch sizeMode {
       case .fixed, .fill:
         //        dwdwd
-        guard let gridRect else { return nil }
+        //        guard let gridRect else { return nil }
 
         let path = Path.boundedGrid(
           rect: gridRect,
@@ -127,7 +131,7 @@ extension GridLineContext {
         )
 
       case .fillContainer:
-        guard let gridRect else { return nil }
+        //        guard let gridRect else { return nil }
         var markers: [GridLineAnnotation] = []
 
         /// Note: passing in *un-zoomed* cell (unit) size
