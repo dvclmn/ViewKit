@@ -63,22 +63,50 @@ public struct ViewportContext {
 extension ViewportContext {
 
   private var zoomSafe: CGFloat {
-    zoom.clamped(to: 0.01...CGFloat.greatestFiniteMagnitude)
-    //    guard zoom.isFinite, zoom > 0 else { return 1 }
-    //    return zoom
+    assert(zoom.isFinite, "ViewportContext: zoom became non-finite")
+    /// I may consider a different value for max, like 20 or 80 or whatever makes sense
+    return zoom.clamped(to: 0.06...CGFloat.greatestFiniteMagnitude)
   }
+
   /// The dynamic offset to center the canvas within the safe viewport area.
   /// This uses the size of the viewport (which already has insets subtracted).
   /// Canvas is scaled by zoom for centering; viewportRect is never scaled.
   private var centeringOffset: CGSize {
-    switch canvasAnchor {
-      case .center:
-        return CGSize(
-          width: (viewportRect.width - (canvasSize.width * zoomSafe)) / 2,
-          height: (viewportRect.height - (canvasSize.height * zoomSafe)) / 2
-        )
 
-      default: fatalError("Not yet implemented")
+    /// Size of the canvas once zoom is applied
+    let scaledCanvasWidth = canvasSize.width * zoomSafe
+    let scaledCanvasHeight = canvasSize.height * zoomSafe
+
+    /// Helper to compute offset for a given UnitPoint (0..1 in each axis)
+    func offset(for anchor: UnitPoint) -> CGSize {
+      /// Clamp to `[0,1]` to be safe for custom UnitPoints
+      let ax = max(0, min(1, anchor.x))
+      let ay = max(0, min(1, anchor.y))
+
+      /// `anchor.x == 0 (leading)` content starts at 0 horizontally (no extra centering)
+      /// `anchor.x == 0.5 (center)` split remaining space equally on both sides
+      /// `anchor.x == 1 (trailing)` push content fully to the trailing edge
+      let offsetX = (viewportRect.width - scaledCanvasWidth) * ax
+
+      /// Same for vertical: 0 = top, 0.5 = center, 1 = bottom
+      let offsetY = (viewportRect.height - scaledCanvasHeight) * ay
+
+      return CGSize(width: offsetX, height: offsetY)
+    }
+
+    return switch canvasAnchor {
+      case .center: offset(for: .center)
+      case .top: offset(for: .top)
+      case .bottom: offset(for: .bottom)
+      case .leading: offset(for: .leading)
+      case .trailing: offset(for: .trailing)
+      case .topLeading: offset(for: .topLeading)
+      case .topTrailing: offset(for: .topTrailing)
+      case .bottomLeading: offset(for: .bottomLeading)
+      case .bottomTrailing: offset(for: .bottomTrailing)
+      default:
+        /// For any custom UnitPoint, use its normalized x/y as fractions
+        offset(for: canvasAnchor)
     }
   }
 
@@ -105,7 +133,6 @@ extension ViewportContext {
   /// Converts a global/screen space point to local / canvas point
   /// Previously: `toLocal(point:) - > CGPoint`
   public func toCanvas(screenPoint point: Point<ScreenSpace>) -> Point<CanvasSpace> {
-    //  public func toLocal(point: CGPoint) -> CGPoint {
     /// 1. Subtract the total translation from the raw screen point
     /// 2. Divide by zoom to get the coordinate on the "original" canvas scale
     Point<CanvasSpace>(
