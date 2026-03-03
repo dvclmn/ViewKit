@@ -26,3 +26,18 @@ public struct CanvasGeometry: Sendable, Equatable, ViewportGeometric {
   }
 }
 
+extension CanvasGeometry {
+  public init?(
+    viewportRect: CGRect,
+    gridDimensions: GridDimensions,
+    unitSize: CGSize,
+    anchor: UnitPoint
+  ) {
+    guard let size = gridDimensions.toScreenSize(using: unitSize) else { return nil }
+    self.init(
+      viewportRect: viewportRect,
+      canvasSize: Size<CanvasSpace>(fromCGSize: size),
+      anchor: anchor
+    )
+  }
+}
