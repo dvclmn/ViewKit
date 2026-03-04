@@ -16,14 +16,14 @@ public struct QuickSlider<TrackBody: View>: View, ValueFormattable, SliderStylab
   @Environment(\.helpText) private var helpText
 
   public typealias Configuration = SliderTrackConfiguration
-  
+
   typealias TrackBackground = (Configuration) -> TrackBody
 
   @State private var store: SliderHandler
 
   @Binding var value: Double
 
-  private let track: TrackBackground
+  private let track: TrackBackground?
 
   public var body: some View {
 
@@ -114,7 +114,7 @@ extension QuickSlider {
     step: Double? = nil,
     //    minMaxLabels: (String, String)? = nil,
     //    @ViewBuilder track: @escaping (Configuration) -> TrackBody,
-    style: S,
+    trackStyle: S,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) where S.Body == TrackBody {
     self.init(
@@ -124,7 +124,7 @@ extension QuickSlider {
       step: step,
       //      minMaxLabels: minMaxLabels,
       track: { configuration in
-        style.makeBody(configuration: configuration)
+        trackStyle.makeBody(configuration: configuration)
       },
       didChangeSlider: didChangeSlider
     )

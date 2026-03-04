@@ -9,7 +9,7 @@ import SwiftUI
 
 //public enum SliderStyle {
 //  case native
-//  case custom(TrackStyle)
+//  case custom()
 //}
 
 /// I think tbh I'm not sure what I mean by fill *and* fg/bg

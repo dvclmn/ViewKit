@@ -11,50 +11,49 @@ import SwiftUI
 extension QuickSlider {
   struct SliderCore: View {
     @Environment(SliderHandler.self) private var store
-    //    @Environment(\.sliderStyle) private var sliderStyle
     @Environment(\.sliderDefaultValue) private var sliderDefaultValue
 
     @Binding var value: Double
-    let track: TrackBackground
+    let track: TrackBackground?
     var body: some View {
 
-      switch sliderStyle {
+      if let track {
+        // MARK: - Custom Slider
+        SliderCustom(value: $value, track: track)
+
+      } else {
 
         // MARK: - Native Slider
-        case .native:
-          @Bindable var store = store
 
-          Group {
-            if let step = store.step {
-              Slider(
-                value: $value,
-                in: store.range,
-                step: step
-              ) {
-                LabelComponent()
-              } onEditingChanged: { editing in
-                handleOnEdit(editing)
-              }
+        @Bindable var store = store
 
-            } else {
+        Group {
+          if let step = store.step {
+            Slider(
+              value: $value,
+              in: store.range,
+              step: step
+            ) {
+              LabelComponent()
+            } onEditingChanged: { editing in
+              handleOnEdit(editing)
+            }
 
-              Slider(
-                value: $value,
-                in: store.range,
-              ) {
-                LabelComponent()
-              } onEditingChanged: { editing in
-                handleOnEdit(editing)
-              }
+          } else {
+
+            Slider(
+              value: $value,
+              in: store.range,
+            ) {
+              LabelComponent()
+            } onEditingChanged: { editing in
+              handleOnEdit(editing)
             }
           }
-          .labelsHidden()
-
-        // MARK: - Custom Slider
-        case .custom(let style):
-          SliderCustom(value: $value, track: track)
-      //          SliderCustom(value: $value, style: style)
+        }
+        .labelsHidden()
       }
+
     }
   }
 }

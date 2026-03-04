@@ -22,7 +22,7 @@ extension QuickSlider {
     @State private var isHovering: Bool = false
 
     @Binding var value: Double
-    let track: TrackBackground
+    let track: TrackBackground?
 
     var body: some View {
       @Bindable var store = store
