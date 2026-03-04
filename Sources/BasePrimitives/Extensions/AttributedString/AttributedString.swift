@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension AttributedString {
-  public var toString: String { String(self.characters) }
+//  public var toString: String { String(self.characters) }
 
   public func index(at offset: Int) -> AttributedString.Index? {
     guard offset >= 0 && offset <= characters.count else {

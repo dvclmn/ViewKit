@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 9/9/2025.
 //
 
-import SharedHelpers
+import CoreTools
 import SwiftUI
 
 public protocol GeometryCapturable: Equatable, Sendable {

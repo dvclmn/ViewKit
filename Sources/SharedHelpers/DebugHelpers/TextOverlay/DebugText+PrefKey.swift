@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BasePrimitives
 
 public struct DebugTextKey: PreferenceKey {
   public typealias Value = [String]
