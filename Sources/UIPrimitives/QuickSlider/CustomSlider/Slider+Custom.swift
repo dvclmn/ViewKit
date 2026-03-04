@@ -24,16 +24,6 @@ extension QuickSlider {
 
 //    @Environment(\.sliderTrackStyle) private var trackStyle
 
-    //    let trackConfig = SliderTrackConfiguration(
-    //      value: normalizedValue,
-    //      range: 0...1,
-    //      isEnabled: isEnabled,
-    //      orientation: .horizontal,
-    //      size: proposedSize,
-    //      colorScheme: colorScheme,
-    //      tint: tintColor
-    //    )
-
     // or however you compose the track view
 
     @State private var isHovering: Bool = false
@@ -87,6 +77,18 @@ extension QuickSlider {
 }
 
 extension QuickSlider.SliderCustom {
+  
+  
+  //    let trackConfig = SliderTrackConfiguration(
+  //      value: normalizedValue,
+  //      range: 0...1,
+  //      isEnabled: isEnabled,
+  //      orientation: .horizontal,
+  //      size: proposedSize,
+  //      colorScheme: colorScheme,
+  //      tint: tintColor
+  //    )
+
 
   var sliderGesture: some Gesture {
 
