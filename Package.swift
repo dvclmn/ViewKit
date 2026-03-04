@@ -186,6 +186,7 @@ let package = Package(
         .module(.coreTools),
         .module(.colourKit),
         .module(.vectorKit),
+        .module(.componentKit),
         .casePaths,
         .metaCodable,
       ],

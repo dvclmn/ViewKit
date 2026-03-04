@@ -9,6 +9,10 @@ import ColourKit
 import CoreTools
 import SwiftUI
 
+public protocol SliderTrackStyle {
+  
+}
+
 @MetaEnum
 public enum TrackStyle {
   case rgb(RGBColour, RGBComponent)
