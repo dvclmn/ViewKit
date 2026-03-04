@@ -19,16 +19,16 @@ extension EnvironmentValues {
   @Entry public var sliderStyle: SliderStyle = .native
   @Entry public var stepStyle: StepStyle?
 
-  @Entry var sliderTrackStyle: AnySliderTrackStyle = .init()
+//  @Entry var sliderTrackStyle: AnySliderTrackStyle = .init()
   
   @Entry var isWithinSliderGroup: Bool = false
 
 }
 
 extension View {
-  public func sliderTrackStyle<S: SliderTrackStyle>(_ style: S) -> some View {
-    environment(\.sliderTrackStyle, AnySliderTrackStyle(style))
-  }
+//  public func sliderTrackStyle<S: SliderTrackStyle>(_ style: S) -> some View {
+//    environment(\.sliderTrackStyle, AnySliderTrackStyle(style))
+//  }
 }
 
 
