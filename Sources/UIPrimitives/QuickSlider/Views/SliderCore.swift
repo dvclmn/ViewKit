@@ -104,9 +104,10 @@ enum MinMaxLabel {
   case max
 
   func value(from store: SliderHandler) -> String? {
-    switch self {
-      case .min: store.minMaxLabels?.0
-      case .max: store.minMaxLabels?.1
-    }
+    fatalError("Not currently implemented")
+    //    switch self {
+    //      case .min: store.minMaxLabels?.0
+    //      case .max: store.minMaxLabels?.1
+    //    }
   }
 }

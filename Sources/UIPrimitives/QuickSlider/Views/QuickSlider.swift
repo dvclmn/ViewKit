@@ -8,21 +8,19 @@
 import CoreTools
 import SwiftUI
 
-
-
 public typealias SliderOutput = (SliderPhase) -> Void
 
 public struct QuickSlider<TrackBody: View>: View, ValueFormattable, SliderStylable {
   @Environment(\.isWithinSliderGroup) private var isWithinSliderGroup
   @Environment(\.sliderComponents) private var sliderComponents
   @Environment(\.helpText) private var helpText
-  
+
   public typealias Configuration = SliderTrackConfiguration
 
   @State private var store: SliderHandler
 
   @Binding var value: Double
-  
+
   private let makeTrack: (Configuration) -> TrackBody
 
   public var body: some View {
@@ -63,49 +61,6 @@ extension QuickSlider {
 // MARK: - Initialisers
 extension QuickSlider {
 
-  public init(
-    _ title: LocalizedStringKey,
-    value: Binding<Double>,
-    range: ClosedRange<Double>,
-    step: Double? = nil,
-//    minMaxLabels: (String, String)? = nil,
-    @ViewBuilder track: @escaping (Configuration) -> TrackBody,
-    didChangeSlider: @escaping SliderOutput = { _ in },
-  ) {
-    self.init(
-      label: QuickLabel(title),
-      value: value,
-      range: range,
-      step: step,
-//      minMaxLabels: minMaxLabels,
-      makeTrack: track,
-      didChangeSlider: didChangeSlider
-    )
-  }
-  
-  public init<S: SliderTrackStyle>(
-    _ title: LocalizedStringKey,
-    value: Binding<Double>,
-    range: ClosedRange<Double>,
-    step: Double? = nil,
-    //    minMaxLabels: (String, String)? = nil,
-//    @ViewBuilder track: @escaping (Configuration) -> TrackBody,
-    style: S,
-    didChangeSlider: @escaping SliderOutput = { _ in },
-  ) {
-    self.init(
-      label: QuickLabel(title),
-      value: value,
-      range: range,
-      step: step,
-      //      minMaxLabels: minMaxLabels,
-      makeTrack: { configuration in
-        style.makeBody(configuration: configuration)
-      },
-      didChangeSlider: didChangeSlider
-    )
-  }
-
   // TODO: Considering pivoting to SwiftUI-style
   // Label closure/ViewBuilder instead of QuickLabel?
   public init(
@@ -113,7 +68,8 @@ extension QuickSlider {
     value: Binding<Double>,
     range: ClosedRange<Double>,
     step: Double? = nil,
-//    minMaxLabels: (String, String)? = nil,
+    //    minMaxLabels: (String, String)? = nil,
+    @ViewBuilder track: @escaping (Configuration) -> TrackBody = { _ in EmptyView() },
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
     self._value = value
@@ -122,9 +78,53 @@ extension QuickSlider {
         label: label,
         range: range.toDoubleRange,
         step: step.toDoubleIfPresent,
-//        minMaxLabels: minMaxLabels,
+        //        minMaxLabels: minMaxLabels,
         didChangeSlider: didChangeSlider
       )
+    )
+    self.makeTrack = track
+  }
+
+  public init(
+    _ title: String,
+    value: Binding<Double>,
+    range: ClosedRange<Double>,
+    step: Double? = nil,
+    //    minMaxLabels: (String, String)? = nil,
+    @ViewBuilder track: @escaping (Configuration) -> TrackBody = { _ in EmptyView() },
+    didChangeSlider: @escaping SliderOutput = { _ in },
+  ) {
+    self.init(
+      label: QuickLabel(title),
+      value: value,
+      range: range,
+      step: step,
+      //      minMaxLabels: minMaxLabels,
+      track: track,
+      didChangeSlider: didChangeSlider
+    )
+  }
+
+  public init<S: SliderTrackStyle>(
+    _ title: String,
+    value: Binding<Double>,
+    range: ClosedRange<Double>,
+    step: Double? = nil,
+    //    minMaxLabels: (String, String)? = nil,
+    //    @ViewBuilder track: @escaping (Configuration) -> TrackBody,
+    style: S,
+    didChangeSlider: @escaping SliderOutput = { _ in },
+  ) where S.Body == TrackBody {
+    self.init(
+      label: QuickLabel(title),
+      value: value,
+      range: range,
+      step: step,
+      //      minMaxLabels: minMaxLabels,
+      track: { configuration in
+        style.makeBody(configuration: configuration)
+      },
+      didChangeSlider: didChangeSlider
     )
   }
 
@@ -134,6 +134,7 @@ extension QuickSlider {
     intValue: Binding<Int>,
     range: ClosedRange<Int>,
     step: Int? = nil,
+    @ViewBuilder track: @escaping (Configuration) -> TrackBody = { _ in EmptyView() },
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
     self.init(
@@ -141,18 +142,18 @@ extension QuickSlider {
       value: intValue.toBindingDouble,
       range: range.toDoubleRange,
       step: step?.toDouble,
+      track: track,
       didChangeSlider: didChangeSlider
     )
   }
 }
 
-
 // Convenience without specifying the generic at call site
-public extension QuickSlider where TrackBody == DefaultSliderTrackStyle.Body {
-  init(
-    value: Binding<Double>,
-    in range: ClosedRange<Double>
-  ) {
-    self.init(value: value, in: range, style: DefaultSliderTrackStyle())
-  }
-}
+//extension QuickSlider where TrackBody == DefaultSliderTrackStyle.Body {
+//  public init(
+//    value: Binding<Double>,
+//    in range: ClosedRange<Double>
+//  ) {
+//    self.init(value: value, in: range, style: DefaultSliderTrackStyle())
+//  }
+//}

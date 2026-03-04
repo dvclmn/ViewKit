@@ -12,7 +12,7 @@ import SwiftUI
 final class SliderHandler {
 
   var label: QuickLabel
-  var minMaxLabels: (String, String)? = nil
+//  var minMaxLabels: (String, String)? = nil
   var range: ClosedRange<Double>
   var step: Double?
 
@@ -31,13 +31,13 @@ final class SliderHandler {
     label: QuickLabel,
     range: ClosedRange<Double>,
     step: Double?,
-    minMaxLabels: (String, String)?,
+//    minMaxLabels: (String, String)?,
     didChangeSlider: SliderOutput?
   ) {
     self.label = label
     self.range = range
     self.step = step
-    self.minMaxLabels = minMaxLabels
+//    self.minMaxLabels = minMaxLabels
     self.didChangeSlider = didChangeSlider
   }
 }

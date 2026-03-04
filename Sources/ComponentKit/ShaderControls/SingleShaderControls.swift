@@ -7,7 +7,8 @@
 
 import CasePaths
 import CoreTools
-import GraphicsKit
+import UIPrimitives
+//import GraphicsKit
 import SwiftUI
 
 struct SingleShaderControlView: View {
@@ -31,7 +32,7 @@ struct SingleShaderControlView: View {
             "Fringing",
             value: binding.radialStrength.toBindingDouble,
             range: -40...40,
-            minMaxLabels: ("circle.dotted", "circle.dotted.and.circle")
+//            minMaxLabels: ("circle.dotted", "circle.dotted.and.circle")
           )
           .helpText("Controls how far apart the colours shift")
         }
