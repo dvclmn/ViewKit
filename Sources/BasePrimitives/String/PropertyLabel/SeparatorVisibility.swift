@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 10/10/2025.
 //
 
-import EnumMacros
+//import EnumMacros
 import Foundation
 
 public struct SeparatorVisibility: OptionSet, Sendable {

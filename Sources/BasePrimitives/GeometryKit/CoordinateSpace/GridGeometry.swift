@@ -54,5 +54,11 @@ extension GridGeometry {
     )
     self.anchor = anchor
   }
+}
 
+extension GridGeometry: CustomStringConvertible {
+  public var description: String {
+//    Displstrin
+    ""
+  }
 }

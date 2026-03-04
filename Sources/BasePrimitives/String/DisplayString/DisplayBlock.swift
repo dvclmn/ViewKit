@@ -7,7 +7,7 @@
 
 import AppKit
 import BasePrimitives
-import EnumMacros
+//import EnumMacros
 import Foundation
 
 /// Note: have removed `display`, as this was mirroring `FloatRenderable`
