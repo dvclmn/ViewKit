@@ -55,6 +55,9 @@ extension QuickSlider {
                 colourScheme: colourScheme
               )
             )
+            .frame(height: store.trackHeight)
+            .clipShape(clipShape)
+            
             //                      SliderTrackBackground(style: style)
             .environment(\.isHovering, isHovering)
 
@@ -80,17 +83,15 @@ extension QuickSlider {
 }
 
 extension QuickSlider.SliderCustom {
-
-  //    let trackConfig = SliderTrackConfiguration(
-  //      value: normalizedValue,
-  //      range: 0...1,
-  //      isEnabled: isEnabled,
-  //      orientation: .horizontal,
-  //      size: proposedSize,
-  //      colorScheme: colorScheme,
-  //      tint: tintColor
-  //    )
-
+  
+  var clipShape: AnyShape {
+    switch sliderComponents {
+        
+        /// Aka has fill *only*
+      case .track: AnyShape(.rect(cornerRadius: cornerRounding ?? Styles.sizeTiny))
+      default: AnyShape(.capsule)
+    }
+  }
   var sliderGesture: some Gesture {
 
     return DragGesture(minimumDistance: 0)

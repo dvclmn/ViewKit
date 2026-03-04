@@ -37,9 +37,9 @@ public protocol SliderStylable {}
 
 extension View {
 //extension View where Self: SliderStylable {
-  public func sliderStyle(_ style: SliderStyle = .native) -> some View {
-    self.environment(\.sliderStyle, style)
-  }
+//  public func sliderStyle(_ style: SliderStyle = .native) -> some View {
+//    self.environment(\.sliderStyle, style)
+//  }
 
   public func sliderComponents(_ components: SliderComponents = .all) -> some View {
     self.environment(\.sliderComponents, components)

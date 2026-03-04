@@ -16,13 +16,44 @@ public struct RGBTrackStyle: SliderTrackStyle {
 
   public func makeBody(configuration: Configuration) -> some View {
     Rectangle()
-      .fill(
-        .checkerboard(
-          primary: RGBColour.gray(1),
-          secondary: RGBColour.gray(0.7),
-          scale: 5.5
-        )
-      )
+      .fill(.opacityBackground)
       .fill(component.sliderTrackGradient(colour: colour))
+  }
+}
+
+public struct HSVTrackStyle: SliderTrackStyle {
+
+  let colour: HSVColour
+  let component: HSVComponent
+
+  public func makeBody(configuration: Configuration) -> some View {
+    Rectangle()
+      .fill(.opacityBackground)
+      .fill(gradient)
+  }
+}
+
+extension HSVTrackStyle {
+  private var gradient: LinearGradient {
+    let gradient =
+      switch component {
+        case .hue: LinearGradient.rainbow()
+        case .saturation:
+          LinearGradient(
+            colors: [.gray, Color(hue: colour.hue, saturation: 1.0, brightness: 1.0)],
+            startPoint: .leading,
+            endPoint: .trailing
+          )
+        case .brightness:
+          LinearGradient(
+            colors: [.black, colour.hueSatOnly.toColour],
+            startPoint: .leading,
+            endPoint: .trailing
+          )
+        case .alpha:
+          preconditionFailure("Don't pass alpha to create a slider track gradient")
+      }
+    return gradient
+    //    return AnyShapeStyle(gradient)
   }
 }

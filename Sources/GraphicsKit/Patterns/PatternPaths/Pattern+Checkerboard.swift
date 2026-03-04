@@ -39,6 +39,8 @@ extension ShapeStyle where Self == CheckerboardPattern {
       offset: offset
     )
   }
+
+  public static var opacityBackground: Self { .checkerboard() }
 }
 
 public struct CheckerboardPattern: ShapeStyle {
