@@ -28,6 +28,7 @@ let package = Package(
         "BaseUI",
         "LayoutKit",
         "ComponentKit",
+        "UIPrimitives",
       ]
     ),
 
@@ -138,6 +139,7 @@ let package = Package(
         .module(.gestureKit),
         .module(.vectorKit),
         .module(.canvasKit),
+        .module(.uiPrimitives),
         .sharing,
         .casePaths,
       ],
@@ -216,6 +218,13 @@ let package = Package(
         .module(.sampleBuilder),
         .sharing,
         .casePaths,
+      ],
+    ),
+
+    .target(
+      name: "UIPrimitives",
+      dependencies: [
+        .module(.coreTools)
       ],
     ),
 
@@ -319,6 +328,7 @@ enum BaseModule {
   //  case lilypad
   case motionKit
   case sharedHelpers
+  case uiPrimitives
   case vectorKit
   case wrecktangle
 
@@ -342,6 +352,7 @@ enum BaseModule {
       //      case .lilypad: "LilyPad"
       case .motionKit: "MotionKit"
       case .sharedHelpers: "SharedHelpers"
+      case .uiPrimitives: "UIPrimitives"
       case .vectorKit: "VectorKit"
       case .wrecktangle: "Wrecktangle"
 

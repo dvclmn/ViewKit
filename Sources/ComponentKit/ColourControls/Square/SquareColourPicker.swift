@@ -7,8 +7,8 @@
 
 import ColourKit
 import CoreTools
-import SwiftUI
 import LayoutKit
+import SwiftUI
 
 public struct SquareColourPicker: View {
   @Environment(\.controlSize) private var controlSize
@@ -73,7 +73,8 @@ public struct SquareColourPicker: View {
     }
     .overlay {
       if hsvPrimaryRepresentation == nil {
-        StateView("No HSV Representation found in the Environment", icon: .emoji("🌈"))
+        Text("No HSV Representation found in the Environment")
+        //        StateView("No HSV Representation found in the Environment", icon: .emoji("🌈"))
       }
     }
 

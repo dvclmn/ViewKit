@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 1/10/2025.
 //
 
-
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
 public struct ContextMenuPreviewModifier<MenuContent: View>: ViewModifier {
   @Environment(\.sizeOverride) private var sizeOverride
@@ -19,7 +18,7 @@ public struct ContextMenuPreviewModifier<MenuContent: View>: ViewModifier {
     content
       .overlay(alignment: layoutAlignment ?? .center) {
         if isPreviewing, isPreview {
-          
+
           VStack(alignment: .leading, spacing: Styles.sizeSmall.bump) {
             menuContent
           }
@@ -34,7 +33,7 @@ public struct ContextMenuPreviewModifier<MenuContent: View>: ViewModifier {
           //      .font(.callout)
           .foregroundStyle(.primary.opacity(0.96))
           //            .quickBackground()
-          
+
         }
       }
   }
