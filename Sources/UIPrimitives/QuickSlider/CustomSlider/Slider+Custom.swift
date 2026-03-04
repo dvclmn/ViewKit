@@ -29,7 +29,8 @@ extension QuickSlider {
     @State private var isHovering: Bool = false
 
     @Binding var value: Double
-    let style: TrackStyle
+    let track: TrackBackground
+    //    let style: TrackStyle
 
     public var body: some View {
 
@@ -50,24 +51,25 @@ extension QuickSlider {
           //          trackStyle.makeBody(configuration: config)
           //            .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
 
-          //          ZStack {
-          //            // MARK: - Track
-          //            SliderTrackBackground(style: style)
-          //              .environment(\.isHovering, isHovering)
-          //
-          //            // MARK: - Thumb
-          //            if sliderComponents.contains(.thumb),
-          //              let position = store.thumbPosition(value: value.toDouble)
-          //            {
-          //
-          //              /// Slider thumb
-          //              SliderThumb(
-          //                diameter: store.thumbDiameter,
-          //                shape: .circle,
-          //              )
-          //              .position(position)
-          //            }
-          //          }
+                    ZStack {
+                      // MARK: - Track
+    track()
+//                      SliderTrackBackground(style: style)
+                        .environment(\.isHovering, isHovering)
+          
+                      // MARK: - Thumb
+                      if sliderComponents.contains(.thumb),
+                        let position = store.thumbPosition(value: value.toDouble)
+                      {
+          
+                        /// Slider thumb
+                        SliderThumb(
+                          diameter: store.thumbDiameter,
+                          shape: .circle,
+                        )
+                        .position(position)
+                      }
+                    }
         }
         .onHover { isHovering = $0 }
         .frame(height: store.trackHeightWithBuffer)

@@ -11,11 +11,11 @@ import SwiftUI
 extension QuickSlider {
   struct SliderCore: View {
     @Environment(SliderHandler.self) private var store
-    @Environment(\.sliderStyle) private var sliderStyle
+    //    @Environment(\.sliderStyle) private var sliderStyle
     @Environment(\.sliderDefaultValue) private var sliderDefaultValue
 
     @Binding var value: Double
-
+    let track: TrackBackground
     var body: some View {
 
       switch sliderStyle {
@@ -31,15 +31,7 @@ extension QuickSlider {
                 in: store.range,
                 step: step
               ) {
-                //                EmptyView()
                 LabelComponent()
-
-                //              } minimumValueLabel: {
-                //                MinMaxLabel(.min)
-                //
-                //              } maximumValueLabel: {
-                //                MinMaxLabel(.max)
-
               } onEditingChanged: { editing in
                 handleOnEdit(editing)
               }
@@ -50,15 +42,7 @@ extension QuickSlider {
                 value: $value,
                 in: store.range,
               ) {
-
                 LabelComponent()
-
-                //              } minimumValueLabel: {
-                //                MinMaxLabel(.min)
-                //
-                //              } maximumValueLabel: {
-                //                MinMaxLabel(.max)
-                //
               } onEditingChanged: { editing in
                 handleOnEdit(editing)
               }
@@ -68,7 +52,8 @@ extension QuickSlider {
 
         // MARK: - Custom Slider
         case .custom(let style):
-          SliderCustom(value: $value, style: style)
+          SliderCustom(value: $value, track: track)
+      //          SliderCustom(value: $value, style: style)
       }
     }
   }
@@ -83,6 +68,12 @@ extension QuickSlider.SliderCore {
       .onDoubleTap($value.toBindingDouble, defaultValue: sliderDefaultValue)
   }
 
+  private func handleOnEdit(_ didEdit: Bool) {
+    let phase = SliderPhase(fromOnEditingChanged: didEdit)
+    store.updatePhase(phase)
+  }
+
+  // Min Max not in use atm
   @ViewBuilder
   private func MinMaxLabel(_ label: MinMaxLabel) -> some View {
     if let value = label.value(from: store) {
@@ -91,11 +82,6 @@ extension QuickSlider.SliderCore {
       Image(systemName: "eye")
         .hidden()
     }
-  }
-
-  private func handleOnEdit(_ didEdit: Bool) {
-    let phase = SliderPhase(fromOnEditingChanged: didEdit)
-    store.updatePhase(phase)
   }
 }
 

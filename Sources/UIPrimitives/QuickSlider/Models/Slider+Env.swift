@@ -16,7 +16,7 @@ import SwiftUI
 extension EnvironmentValues {
   @Entry public var sliderComponents: SliderComponents = .all
   @Entry public var sliderDefaultValue: Double?
-  @Entry public var sliderStyle: SliderStyle = .native
+//  @Entry public var sliderStyle: SliderStyle = .native
   @Entry public var stepStyle: StepStyle?
 
 //  @Entry var sliderTrackStyle: AnySliderTrackStyle = .init()

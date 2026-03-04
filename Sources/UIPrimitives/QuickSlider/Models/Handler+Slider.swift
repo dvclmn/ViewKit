@@ -12,7 +12,7 @@ import SwiftUI
 final class SliderHandler {
 
   var label: QuickLabel
-//  var minMaxLabels: (String, String)? = nil
+  //  var minMaxLabels: (String, String)? = nil
   var range: ClosedRange<Double>
   var step: Double?
 
@@ -21,7 +21,7 @@ final class SliderHandler {
 
   /// Including vertical hit area buffer
   var trackWidth: Double?
-  
+
   let thumbDiameter: Double = 16
   //  var trackSize: CGSize = .zero
   let trackHeight: Double = 5
@@ -31,18 +31,30 @@ final class SliderHandler {
     label: QuickLabel,
     range: ClosedRange<Double>,
     step: Double?,
-//    minMaxLabels: (String, String)?,
+    //    minMaxLabels: (String, String)?,
     didChangeSlider: SliderOutput?
   ) {
     self.label = label
     self.range = range
     self.step = step
-//    self.minMaxLabels = minMaxLabels
+    //    self.minMaxLabels = minMaxLabels
     self.didChangeSlider = didChangeSlider
   }
 }
 
 extension SliderHandler {
+
+  func trackConfiguration(
+    value: Double,
+    in env: EnvironmentValues
+  ) -> SliderTrackConfiguration {
+    .init(
+      value: value,
+      range: range,
+      colorScheme: env.colorScheme,
+      tint: .accentColor
+    )
+  }
 
   var trackSizeWithHeightBuffer: CGSize? {
     guard let trackWidth else { return nil }
@@ -104,7 +116,7 @@ extension SliderHandler {
 
   public func thumbPosition(
     value: Double,
-//    diameter: Double,
+    //    diameter: Double,
     //    trackSize: CGSize
   ) -> CGPoint? {
 

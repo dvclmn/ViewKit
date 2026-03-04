@@ -16,12 +16,14 @@ public struct QuickSlider<TrackBody: View>: View, ValueFormattable, SliderStylab
   @Environment(\.helpText) private var helpText
 
   public typealias Configuration = SliderTrackConfiguration
+  
+  typealias TrackBackground = (Configuration) -> TrackBody
 
   @State private var store: SliderHandler
 
   @Binding var value: Double
 
-  private let makeTrack: (Configuration) -> TrackBody
+  private let track: TrackBackground
 
   public var body: some View {
 
@@ -36,13 +38,13 @@ extension QuickSlider {
     if isWithinSliderGroup {
       GridRow {
         /// Handles slider Label, Track, and Units display
-        SliderComponents(value: $value)
+        SliderComponents(value: $value, track: track)
       }
       HelpText()
 
     } else {
       HStack {
-        SliderComponents(value: $value)
+        SliderComponents(value: $value, track: track)
         HelpText()
       }
     }
@@ -82,7 +84,7 @@ extension QuickSlider {
         didChangeSlider: didChangeSlider
       )
     )
-    self.makeTrack = track
+    self.track = track
   }
 
   public init(

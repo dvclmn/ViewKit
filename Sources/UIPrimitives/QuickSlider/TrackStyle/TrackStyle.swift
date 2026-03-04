@@ -38,36 +38,6 @@ extension SliderTrackStyle {
   }
 }
 
-public struct DefaultSliderTrackStyle: SliderTrackStyle {
-  public init() {}
-  public func makeBody(configuration: Configuration) -> some View {
-    RoundedRectangle(cornerRadius: 8, style: .continuous)
-      .fill(.secondary.opacity(0.25))
-  }
-}
-
-public struct AnySliderTrackStyleBox: SliderTrackStyle {
-  public typealias Body = AnyView
-  private let _makeBody: (Configuration) -> AnyView
-
-  public init<S: SliderTrackStyle>(_ style: S) {
-    self._makeBody = { configuration in
-      AnyView(style.makeBody(configuration: configuration))
-    }
-  }
-
-  @ViewBuilder public func makeBody(configuration: Configuration) -> AnyView {
-    _makeBody(configuration)
-  }
-}
-
-public extension SliderTrackStyle {
-  /// Erase a concrete `SliderTrackStyle` to a non-generic box suitable for use in Environment.
-  func eraseToEnvironmentTrackStyle() -> AnySliderTrackStyleBox {
-    AnySliderTrackStyleBox(self)
-  }
-}
-
 //private struct SliderTrackStyleKey: EnvironmentKey {
 //  static let defaultValue: AnySliderTrackStyleBox = AnySliderTrackStyleBox(DefaultSliderTrackStyle())
 //}
@@ -135,4 +105,3 @@ public extension SliderTrackStyle {
 //    set { self[SliderTrackStyleKey.self] = newValue }
 //  }
 //}
-

@@ -42,8 +42,10 @@ extension ColourSliders {
       "R",
       value: $colour.red,
       range: .unitRange
-    )
-    .sliderStyle(.custom(.rgb(colour, .red)))
+    ) { config in
+      
+    }
+//    .sliderStyle(.custom(.rgb(colour, .red)))
 
     QuickSlider(
       "G",
