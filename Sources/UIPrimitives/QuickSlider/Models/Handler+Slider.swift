@@ -27,8 +27,8 @@ final class SliderHandler {
   let trackHeight: Double = 5
   let hitAreaBuffer: Double = 16
   
-  private let width: Int = 30
-  private let cellCharacters = ["░", "▒", "▓", "█"]
+  let width: Int = 30
+  let cellCharacters = ["░", "▒", "▓", "█"]
 
   init(
     label: QuickLabel,

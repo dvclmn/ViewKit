@@ -27,6 +27,7 @@ struct TextSliderCore: View {
 
     VStack(spacing: 0) {
       Text(sliderRepresentation())
+        .gridFont(for: .asciiMode)
       //        .gridFont(for: .interface)
     }
     .frame(width: sliderFullWidth)
@@ -41,7 +42,7 @@ extension TextSliderCore {
 
   private func sliderRepresentation() -> String {
 
-    let normalisedValue = (value - range.lowerBound) / (range.upperBound - range.lowerBound)
+    let normalisedValue = (value - store.range.lowerBound) / (store.range.upperBound - store.range.lowerBound)
     let filledWidth = Int(normalisedValue * Double(columns))
     let subCellPosition = (normalisedValue * Double(columns) - Double(filledWidth)) * 4
 
@@ -51,7 +52,7 @@ extension TextSliderCore {
       if i < filledWidth {
         representation += "█"
       } else if i == filledWidth {
-        representation += cellCharacters[min(Int(subCellPosition), 3)]
+        representation += store.cellCharacters[min(Int(subCellPosition), 3)]
       } else {
         representation += " "
       }
