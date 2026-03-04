@@ -8,6 +8,18 @@
 import ColourKit
 import CoreTools
 import SwiftUI
+import UIPrimitives
+
+/// A quick patch to support the existing shape, may split out into
+/// nicer structs or something one day
+public struct TrackStyleShapeProvider: SliderTrackShapeStyleProvider {
+  private let style: TrackStyle
+  public init(_ style: TrackStyle) { self.style = style }
+
+  public func makeBackgroundStyle(configuration: SliderTrackConfiguration) -> AnyShapeStyle {
+    style.shape()
+  }
+}
 
 @MetaEnum
 public enum TrackStyle {

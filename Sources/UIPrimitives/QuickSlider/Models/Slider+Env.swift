@@ -19,9 +19,18 @@ extension EnvironmentValues {
   @Entry public var sliderStyle: SliderStyle = .native
   @Entry public var stepStyle: StepStyle?
 
+  @Entry var sliderTrackStyle: AnySliderTrackStyle = .default
+  
   @Entry var isWithinSliderGroup: Bool = false
 
 }
+
+extension View {
+  public func sliderTrackStyle<S: SliderTrackStyle>(_ style: S) -> some View {
+    environment(\.sliderTrackStyle, AnySliderTrackStyle(style))
+  }
+}
+
 
 /// This is in use by e.g. `QuickSlider`, `LabeledSlider`
 public protocol SliderStylable {}

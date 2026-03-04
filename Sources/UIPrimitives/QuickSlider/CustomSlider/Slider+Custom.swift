@@ -22,7 +22,7 @@ extension QuickSlider {
     @Environment(\.cornerRounding) private var cornerRounding
     @Environment(\.sliderComponents) private var sliderComponents
 
-//    @Environment(\.sliderTrackStyle) private var trackStyle
+    //    @Environment(\.sliderTrackStyle) private var trackStyle
 
     // or however you compose the track view
 
@@ -77,8 +77,7 @@ extension QuickSlider {
 }
 
 extension QuickSlider.SliderCustom {
-  
-  
+
   //    let trackConfig = SliderTrackConfiguration(
   //      value: normalizedValue,
   //      range: 0...1,
@@ -88,7 +87,6 @@ extension QuickSlider.SliderCustom {
   //      colorScheme: colorScheme,
   //      tint: tintColor
   //    )
-
 
   var sliderGesture: some Gesture {
 

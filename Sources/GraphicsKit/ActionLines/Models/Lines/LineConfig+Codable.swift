@@ -6,23 +6,24 @@
 //
 
 import Foundation
-import Yams
+//import Yams
 
-extension ActionLine.Configuration {
-
-  public init(yaml string: String) throws {
-    self = try YAMLDecoder().decode(ActionLine.Configuration.self, from: string)
-  }
-  public func toYAML() throws -> String {
-    try YAMLEncoder().encode(self)
-  }
-  public init(yaml data: Data) throws {
-    let string = String(decoding: data, as: UTF8.self)
-    self = try YAMLDecoder().decode(ActionLine.Configuration.self, from: string)
-  }
-  public func yamlData() throws -> Data {
-    try YAMLEncoder().encode(self).data(using: .utf8) ?? Data()
-  }
+//extension ActionLine.Configuration {
+//
+//  public init(yaml string: String) throws {
+//    self = try YAMLDecoder().decode(ActionLine.Configuration.self, from: string)
+//  }
+//  public func toYAML() throws -> String {
+//    try YAMLEncoder().encode(self)
+//  }
+//  public init(yaml data: Data) throws {
+//    let string = String(decoding: data, as: UTF8.self)
+//    self = try YAMLDecoder().decode(ActionLine.Configuration.self, from: string)
+//  }
+//  public func yamlData() throws -> Data {
+//    try YAMLEncoder().encode(self).data(using: .utf8) ?? Data()
+//  }
+//}
 
   //  public init(from decoder: Decoder) throws {
   //    let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -48,4 +49,4 @@ extension ActionLine.Configuration {
   //    try container.encode(innerShape, forKey: .innerShape)
   //    try container.encode(rotation, forKey: .rotation)
   //  }
-}
+//}

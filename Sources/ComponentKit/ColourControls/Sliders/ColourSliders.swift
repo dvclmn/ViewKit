@@ -7,6 +7,7 @@
 
 import ColourKit
 import CoreTools
+import UIPrimitives
 import SwiftUI
 
 public struct ColourSliders: View {
