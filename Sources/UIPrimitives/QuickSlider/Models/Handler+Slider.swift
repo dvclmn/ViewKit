@@ -26,6 +26,9 @@ final class SliderHandler {
   //  var trackSize: CGSize = .zero
   let trackHeight: Double = 5
   let hitAreaBuffer: Double = 16
+  
+  private let width: Int = 30
+  private let cellCharacters = ["░", "▒", "▓", "█"]
 
   init(
     label: QuickLabel,
@@ -43,6 +46,7 @@ final class SliderHandler {
 }
 
 extension SliderHandler {
+  var sliderTrackColumns: Int { width - 2 }
 
   func trackConfiguration(
     value: Double,

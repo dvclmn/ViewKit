@@ -7,19 +7,21 @@
 
 import SwiftUI
 
-@Observable
-final class TextSliderHandler {
-  
-}
+//@Observable
+//final class TextSliderHandler {
+//
+//}
 
 struct TextSliderCore: View {
+  @Environment(SliderHandler.self) private var store
   // @Environment(AppHandler.self) private var store
   // @Environment(\.viewportSize) private var viewportSize
 
+  let value: Double
   let unitSize: CGSize
-  let range: ClosedRange<Double>
-  let width: Int
-  let columns: Int
+  //  let range: ClosedRange<Double>
+  //  let width: Int
+  //  let columns: Int
 
   var body: some View {
 
@@ -33,10 +35,9 @@ struct TextSliderCore: View {
 }
 
 extension TextSliderCore {
+  private var columns: Int { store.sliderTrackColumns }
 
-  
-
-  var sliderFullWidth: CGFloat { CGFloat(width) * unitSize.width }
+  var sliderFullWidth: CGFloat { CGFloat(store.width) * unitSize.width }
 
   private func sliderRepresentation() -> String {
 
@@ -64,6 +65,5 @@ extension TextSliderCore {
 
     return representation
   }
-
 
 }

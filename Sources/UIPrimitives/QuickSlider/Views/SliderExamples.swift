@@ -18,8 +18,6 @@ public struct SliderExamples: View {
   public var body: some View {
     VStack(spacing: Styles.sizeMedium) {
       
-      Text("Hello")
-      
       QuickSlider(
         "Hello",
         value: $zoomValue.toBindingDouble,
@@ -99,7 +97,7 @@ public struct SliderExamples: View {
       ////      .sliderStyle(.custom(.clear))
       //      .sliderComponents([.track, .units])
     }  // END main vstack
-    .padding()
+    .padding(30)
     .frame(maxWidth: 320)
     //    .isDebugMode(true)
 

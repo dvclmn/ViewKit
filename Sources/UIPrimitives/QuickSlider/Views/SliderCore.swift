@@ -13,51 +13,66 @@ extension QuickSlider {
     @Environment(SliderHandler.self) private var store
     @Environment(\.sliderDefaultValue) private var sliderDefaultValue
     @Environment(\.colorScheme) private var colourScheme
+    @Environment(\.isASCIIMode) private var isASCIIMode
+    @Environment(\.unitSize) private var unitSize
 
     @Binding var value: Double
     let track: TrackBackground
     var body: some View {
 
-      if let track = track(store.trackConfiguration(value: value, colourScheme: colourScheme)) {
-        // MARK: - Custom Slider
-        SliderCustom(value: $value, track: track)
+      if isASCIIMode, let unitSize {
+
+        TextSliderCore(
+          value: value,
+          unitSize: unitSize
+        )
 
       } else {
 
-        // MARK: - Native Slider
-        @Bindable var store = store
+        if let track = track(store.trackConfiguration(value: value, colourScheme: colourScheme)) {
+          // MARK: - Custom Slider
+          SliderCustom(value: $value, track: track)
 
-        Group {
-          if let step = store.step {
-            Slider(
-              value: $value,
-              in: store.range,
-              step: step
-            ) {
-              LabelComponent()
-            } onEditingChanged: { editing in
-              handleOnEdit(editing)
-            }
+        } else {
 
-          } else {
+          // MARK: - Native Slider
+          @Bindable var store = store
 
-            Slider(
-              value: $value,
-              in: store.range,
-            ) {
-              LabelComponent()
-            } onEditingChanged: { editing in
-              handleOnEdit(editing)
+          Group {
+            if let step = store.step {
+              Slider(
+                value: $value,
+                in: store.range,
+                step: step
+              ) {
+                LabelComponent()
+              } onEditingChanged: { editing in
+                handleOnEdit(editing)
+              }
+
+            } else {
+
+              Slider(
+                value: $value,
+                in: store.range,
+              ) {
+                LabelComponent()
+              } onEditingChanged: { editing in
+                handleOnEdit(editing)
+              }
             }
           }
+          .labelsHidden()
         }
-        .labelsHidden()
       }
+
     }
   }
 }
 
 extension QuickSlider.SliderCore {
+
+  private var columns: Int { store.sliderTrackColumns }
 
   @ViewBuilder
   func LabelComponent() -> some View {
