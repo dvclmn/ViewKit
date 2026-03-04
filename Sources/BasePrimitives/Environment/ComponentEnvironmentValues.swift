@@ -27,7 +27,6 @@ extension EnvironmentValues {
   /// Relating to SwiftUI's `backgroundExtensionEffect()` modifier
   @Entry public var isBackgroundExtensionEnabled: Bool = false
   @Entry public var hasGlassEffect: Bool = false
-
 }
 
 extension EnvironmentValues {
