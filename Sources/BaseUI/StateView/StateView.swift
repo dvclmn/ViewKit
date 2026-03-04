@@ -8,6 +8,7 @@
 import CoreTools
 import LayoutKit
 import SwiftUI
+import UIPrimitives
 
 public struct StateView<Content: View>: View {
   @Environment(\.layoutType) private var layoutType
@@ -56,7 +57,7 @@ extension StateView {
     Group {
       switch layoutType {
         case .hstack:
-          MaybeLabel(label: label)
+          MaybeLabel(label)
 
         default:
           Text(label.text.toMarkdownCompatible)

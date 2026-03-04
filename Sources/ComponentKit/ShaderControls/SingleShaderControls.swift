@@ -8,7 +8,7 @@
 import CasePaths
 import CoreTools
 import UIPrimitives
-//import GraphicsKit
+import GraphicsKit
 import SwiftUI
 
 struct SingleShaderControlView: View {
@@ -132,7 +132,8 @@ struct SingleShaderControlView: View {
         .filmGrain,
         .ripplePush,
         .psych:
-        StateView("Not yet implemented")
+        Text("Not yet implemented")
+//        StateView("Not yet implemented")
     }
 
   }

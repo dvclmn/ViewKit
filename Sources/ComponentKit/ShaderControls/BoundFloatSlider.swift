@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreTools
+import UIPrimitives
 
 public struct BoundFloatSlider: View {
   // @Environment(AppHandler.self) private var store

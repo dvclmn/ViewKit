@@ -5,10 +5,11 @@
 //  Created by Dave Coleman on 10/2/2026.
 //
 
-import CasePaths
+//import CasePaths
 import CoreTools
 import GraphicsKit
 import SwiftUI
+import UIPrimitives
 
 public struct ShaderControls: View {
 
@@ -36,7 +37,7 @@ public struct ShaderControls: View {
 }
 
 #if DEBUG
-#Preview(traits: .size(.normal)) {
+#Preview {
   @Previewable @State var shaders: [ShaderEffect] = [
     .chromaticPresetA,
     .crtCurvature(strength: 2),

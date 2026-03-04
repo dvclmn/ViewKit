@@ -7,6 +7,7 @@
 
 import CoreTools
 import SwiftUI
+import UIPrimitives
 
 public struct LabelExampleView: View {
 

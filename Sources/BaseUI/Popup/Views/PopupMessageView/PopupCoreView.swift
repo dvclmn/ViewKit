@@ -7,6 +7,7 @@
 
 import CoreTools
 import SwiftUI
+import UIPrimitives
 
 struct PopupCoreView: View {
   @Environment(\.popup) private var popup

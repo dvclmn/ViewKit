@@ -7,6 +7,7 @@
 
 import CoreTools
 import LayoutKit
+import UIPrimitives
 import SwiftUI
 
 struct InfoBarSectionView: View {

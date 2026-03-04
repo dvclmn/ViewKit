@@ -9,6 +9,7 @@ import ColourKit
 import CoreTools
 import LayoutKit
 import SwiftUI
+import UIPrimitives
 
 public struct SquareColourPicker: View {
   @Environment(\.controlSize) private var controlSize

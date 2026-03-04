@@ -163,6 +163,7 @@ let package = Package(
         .module(.graphicsKit),
         .module(.layoutKit),
         .module(.uiPrimitives),
+        .casePaths,
       ],
     ),
 
