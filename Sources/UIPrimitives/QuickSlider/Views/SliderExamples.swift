@@ -33,7 +33,7 @@ public struct SliderExamples: View {
           value: $zoomValue.toBindingDouble,
           range: zoomRange.toDoubleRange,
         )
-        .sliderStyle(.custom(.opacityCheckboard(RGBColour.bisque)))
+//        .sliderStyle(.custom(.opacityCheckboard(RGBColour.bisque)))
         .environment(\.sliderDefaultValue, 1.0)
 
         //      .setExplicitHeight(5)
@@ -56,7 +56,7 @@ public struct SliderExamples: View {
           value: $zoomValue.toBindingDouble,
           range: zoomRange.toDoubleRange,
         )
-        .sliderStyle(.native)
+//        .sliderStyle(.native)
         .sliderComponents([.track, .thumb])
         .gridCellColumns(3)
         //      .environment(\.heightOverride, 20)
@@ -80,7 +80,7 @@ public struct SliderExamples: View {
         value: $zoomValue.toBindingDouble,
         range: zoomRange.toDoubleRange,
       )
-      .sliderStyle(.custom(.clear))
+//      .sliderStyle(.custom(.clear))
       .sliderComponents([.track, .units])
     } // END main vstack
     .padding()

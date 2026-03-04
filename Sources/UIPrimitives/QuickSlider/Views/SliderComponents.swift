@@ -6,8 +6,8 @@
 //
 
 import CoreTools
-import SwiftUI
 import LayoutKit
+import SwiftUI
 
 extension QuickSlider {
   struct SliderComponents: View {
@@ -29,9 +29,9 @@ extension QuickSlider {
 
       // MARK: - Label
       /// Has this moved to the actual Label closure in the Slider?
-//      if sliderComponents.contains(.label) {
-//        LabelComponent()
-//      }
+      //      if sliderComponents.contains(.label) {
+      //        LabelComponent()
+      //      }
 
       // MARK: - Stepper / Main Track
       if let step = store.step {
@@ -39,7 +39,7 @@ extension QuickSlider {
 
       } else {
         // MARK: - Main Track
-        SliderCore(value: $value)
+        SliderCore(value: $value, track: track)
       }
 
       // MARK: - Units
@@ -73,11 +73,11 @@ extension QuickSlider.SliderComponents {
   private func StepperView(_ step: Double) -> some View {
     switch stepStyle {
       case .native, .none:
-        QuickSlider.SliderCore(value: $value)
+        QuickSlider.SliderCore(value: $value, track: track)
 
       case .stepper:
         HStack {
-          QuickSlider.SliderCore(value: $value)
+          QuickSlider.SliderCore(value: $value, track: track)
 
           Stepper(
             store.label.text,
@@ -106,6 +106,5 @@ extension QuickSlider.SliderComponents {
       }
     }
   }
-
 
 }

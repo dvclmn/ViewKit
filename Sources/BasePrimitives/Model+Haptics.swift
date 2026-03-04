@@ -17,7 +17,7 @@ public enum HapticPreset: Sendable {
   case perStep(Double)
   case custom(HapticCondition)
 
-  func shouldFire(_ oldValue: Double, _ newValue: Double) -> Bool {
+  public func shouldFire(_ oldValue: Double, _ newValue: Double) -> Bool {
 
     let wiggleRoom: Double = 0.005
     switch self {
@@ -49,4 +49,3 @@ public enum HapticPreset: Sendable {
     }
   }
 }
-

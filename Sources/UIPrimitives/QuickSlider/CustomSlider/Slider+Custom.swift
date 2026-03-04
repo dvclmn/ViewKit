@@ -44,35 +44,28 @@ extension QuickSlider {
 
         .overlay {
 
-          //          trackStyle.makeBody(configuration: config)
-          //            .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-
-          ZStack {
-            // MARK: - Track
-            track(
-              store.trackConfiguration(
-                value: value,
-                colourScheme: colourScheme
-              )
+          // MARK: - Track
+          track(
+            store.trackConfiguration(
+              value: value,
+              colourScheme: colourScheme
             )
-            .frame(height: store.trackHeight)
-            .clipShape(clipShape)
-            
-            //                      SliderTrackBackground(style: style)
-            .environment(\.isHovering, isHovering)
+          )
+          .frame(height: store.trackHeight)
+          .clipShape(clipShape)
+          .environment(\.isHovering, isHovering)
 
-            // MARK: - Thumb
-            if sliderComponents.contains(.thumb),
-              let position = store.thumbPosition(value: value.toDouble)
-            {
+          // MARK: - Thumb
+          if sliderComponents.contains(.thumb),
+            let position = store.thumbPosition(value: value.toDouble)
+          {
 
-              /// Slider thumb
-              SliderThumb(
-                diameter: store.thumbDiameter,
-                shape: .circle,
-              )
-              .position(position)
-            }
+            /// Slider thumb
+            SliderThumb(
+              diameter: store.thumbDiameter,
+              shape: .circle,
+            )
+            .position(position)
           }
         }
         .onHover { isHovering = $0 }
@@ -83,11 +76,11 @@ extension QuickSlider {
 }
 
 extension QuickSlider.SliderCustom {
-  
+
   var clipShape: AnyShape {
     switch sliderComponents {
-        
-        /// Aka has fill *only*
+
+      /// Aka has fill *only*
       case .track: AnyShape(.rect(cornerRadius: cornerRounding ?? Styles.sizeTiny))
       default: AnyShape(.capsule)
     }
