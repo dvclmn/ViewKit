@@ -16,10 +16,11 @@ struct FontCompression {
   let sensitivity: CGFloat
   let characterCount: Int
   
-  /// Compute a font width, size, and visibility decision based on the available cell width and zoom.
+  /// Compute a font width, size, and visibility decision based on the available
+  /// cell width and zoom.
   /// The logic progressively compresses width, slightly scales size (respecting `sensitivity`),
-  /// and finally hides if even compressed text cannot fit at a legible size.
-  func makeFont() -> (width: Font.Width, size: CGFloat, visible: Bool) {
+  /// and applies a soft visibility fade to avoid threshold flicker.
+  func makeFont() -> (width: Font.Width, size: CGFloat, visible: Bool, opacity: CGFloat) {
     
     /// Start from a zoom-compensated size so annotation size remains perceptually stable
     let compensatedSize = fontSize.removingZoom(
@@ -61,10 +62,13 @@ struct FontCompression {
     let adjustedScale = 1 - (1 - rawScale) * sensitivity
     let finalSize = compensatedSize * adjustedScale
     
-    /// If we're still far from fitting, consider it not visible to avoid clutter/illegibility.
-    /// Threshold chosen empirically; tweak to taste.
-    let isVisible = fitRatio >= 0.5
-    
-    return (width, finalSize, isVisible)
+    /// Soft fade band avoids harsh on/off flicker around the threshold.
+    /// Below `fadeStart`, hide; above `fadeEnd`, fully show.
+    let fadeStart: CGFloat = 0.42
+    let fadeEnd: CGFloat = 0.62
+    let opacity = ((fitRatio - fadeStart) / (fadeEnd - fadeStart)).clamped(to: 0...1)
+    let isVisible = opacity > 0.02
+
+    return (width, finalSize, isVisible, opacity)
   }
 }

@@ -88,7 +88,7 @@ extension GraphicsContext {
     let styled = Text(text)
       .font(.system(size: result.size))
       .fontWidth(result.width)
-      .foregroundColor(.secondary.opacity(0.7))
+      .foregroundColor(.secondary.opacity(0.7 * result.opacity))
 
     self.draw(styled, at: point)
   }

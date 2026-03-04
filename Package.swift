@@ -262,6 +262,10 @@ let package = Package(
       name: "VectorKitTests",
       dependencies: [.module(.vectorKit)],
     ),
+    .testTarget(
+      name: "GraphicsKitTests",
+      dependencies: [.module(.graphicsKit)],
+    ),
 
   ],
 )
