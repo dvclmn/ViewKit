@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
-import VectorKit
+import UIPrimitives
+import CoreTools
+//import VectorKit
 
 public struct WaveControls: View {
   let title: String

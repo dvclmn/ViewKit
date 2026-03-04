@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 11/10/2025.
 //
 
-import CoreTools
-import GraphicsKit
-import SwiftUI
+//import CoreTools
+//import GraphicsKit
+//import SwiftUI
 //
 //public struct GridGuideOverlayModifier: ViewModifier {
 //  @Environment(\.activeUnitSize) private var activeUnitSize

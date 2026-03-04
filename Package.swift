@@ -226,7 +226,8 @@ let package = Package(
     .target(
       name: "UIPrimitives",
       dependencies: [
-        .module(.coreTools)
+        .module(.coreTools),
+        .module(.layoutKit),
       ],
     ),
 
@@ -235,6 +236,7 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.colourKit),
+        .module(.uiPrimitives),
         .casePaths,
         .metaCodable,
         .identifiedCollections,

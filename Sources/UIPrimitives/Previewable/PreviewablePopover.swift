@@ -8,7 +8,6 @@
 import BasePrimitives
 import SwiftUI
 
-
 public struct PreviewablePopoverModifier<PopoverContent: View>: ViewModifier {
   @Environment(\.layoutAlignment) private var layoutAlignment
   @Environment(\.sizeOverride) private var sizeOverride
@@ -39,12 +38,12 @@ public struct PreviewablePopoverModifier<PopoverContent: View>: ViewModifier {
               height: sizeOverride?.height
                 //              height: sizeOverride?.height ?? 600
             )
-            .quickBackground()
+          #warning("Will need to sort something for this, now that this is in UIPrimitives")
+//            .quickBackground()
         }
       }
   }
 }
-
 
 extension PreviewablePopoverModifier {
   @ViewBuilder
@@ -53,7 +52,6 @@ extension PreviewablePopoverModifier {
     //      .padding(.top, Styles.toolbarHeightPrimary)
   }
 }
-
 
 extension View {
   public func previewablePopover<Content>(

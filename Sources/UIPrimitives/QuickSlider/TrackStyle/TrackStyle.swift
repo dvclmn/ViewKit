@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 4/3/2026.
 //
 
-import Foundation
+import SwiftUI
 
 public protocol SliderTrackStyle {
   associatedtype Body: View
@@ -46,6 +46,10 @@ public struct AnySliderTrackStyle: SliderTrackStyle {
   public func makeBody(configuration: SliderTrackConfiguration) -> some View {
     _makeBody(configuration)
   }
+}
+
+extension AnySliderTrackStyle {
+  public static let default: Self = .init(.makeBody(.init(value: <#T##Double#>, range: <#T##ClosedRange<Double>#>, colorScheme: <#T##ColorScheme#>, tint: <#T##Color#>)))
 }
 
 //extension View {

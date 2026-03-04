@@ -8,6 +8,7 @@
 import ColourKit
 import MetaCodable
 import SwiftUI
+
 //import Yams
 
 public enum ActionLine {}
@@ -99,7 +100,6 @@ extension ActionLine.Configuration {
   public var rotation: Double {
     get { _rotation / (2 * .pi) }
     set {
-
       _rotation = (newValue * 2 * .pi).truncatingRemainder(dividingBy: 2 * .pi)
     }
   }

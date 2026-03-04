@@ -5,10 +5,10 @@
 //  Created by Dave Coleman on 16/6/2025.
 //
 
-import BasePrimitives
-import ColourKit
-import GraphicsKit
-import SwiftUI
+//import BasePrimitives
+//import ColourKit
+//import GraphicsKit
+//import SwiftUI
 
 /// This works, but is possible now deprecated by a shader version
 //extension Image {

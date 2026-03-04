@@ -29,7 +29,8 @@ public struct PreviewableSheetItemModifier<SheetContent: View, Item: Identifiabl
             if let item = previewItem {
               sheetContent(item)
             } else {
-              StateView("Please provide a `Binding<Item?>` to preview.")
+              Text("Please provide a `Binding<Item?>` to preview.")
+//              StateView("Please provide a `Binding<Item?>` to preview.")
                 .environment(\.isCompactMode, true)
             }
           }
