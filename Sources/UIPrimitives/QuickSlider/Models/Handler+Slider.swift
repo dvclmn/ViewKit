@@ -46,12 +46,13 @@ extension SliderHandler {
 
   func trackConfiguration(
     value: Double,
-    in env: EnvironmentValues
+    colourScheme: ColorScheme
+//    in env: EnvironmentValues
   ) -> SliderTrackConfiguration {
     .init(
       value: value,
       range: range,
-      colorScheme: env.colorScheme,
+      colorScheme: colourScheme,
       tint: .accentColor
     )
   }

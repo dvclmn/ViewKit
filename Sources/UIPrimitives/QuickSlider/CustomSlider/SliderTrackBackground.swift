@@ -20,15 +20,15 @@ struct SliderTrackBackground: View {
   var body: some View {
 
     ZStack {
-      Rectangle()
-        .fill(
-          .checkerboard(
-            primary: RGBColour.gray(1),
-            secondary: RGBColour.gray(0.7),
-            scale: 5.5
-          )
-        )
-        .fill(style.shape())
+//      Rectangle()
+//        .fill(
+//          .checkerboard(
+//            primary: RGBColour.gray(1),
+//            secondary: RGBColour.gray(0.7),
+//            scale: 5.5
+//          )
+//        )
+//        .fill(style.shape())
     }
     .frame(height: store.trackHeight)
     .clipShape(clipShape)
