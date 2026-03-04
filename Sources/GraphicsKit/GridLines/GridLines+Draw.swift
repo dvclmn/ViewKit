@@ -22,6 +22,9 @@ extension GraphicsContext {
     pinMode: GridPinMode = .canvas,
     drawsBorder: Bool = true
   ) {
+    
+    // MARK: - Grid Lines
+    /// Prepare context and create output
     guard
       let context = GridLineContext(
         domain: domain,
@@ -34,12 +37,14 @@ extension GraphicsContext {
       let output = context.makeOutput()
     else { return }
 
+    /// Stroke the Grid lines
     self.stroke(
       output.path,
       with: .color(environment.gridLineColour),
       lineWidth: output.lineWidth
     )
 
+    // MARK: - Cell Numbers
     guard environment.isShowingCellNumbers else { return }
     
     output.annotations.forEach { annotation in

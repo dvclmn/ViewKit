@@ -1,67 +1,12 @@
 //
-//  GridLineContext.swift
+//  Context+Helpers.swift
 //  BaseHelpers
 //
-//  Created by Dave Coleman on 2/3/2026.
+//  Created by Dave Coleman on 4/3/2026.
 //
 
 import CoreTools
-import SwiftUI
-
-struct GridLineAnnotation {
-  let text: String
-  let point: CGPoint
-}
-
-struct GridLineOutput {
-  let path: Path
-  let lineWidth: CGFloat
-  let annotations: [GridLineAnnotation]
-}
-
-// MARK: - Main Context
-struct GridLineContext {
-  let unitSize: CGSize
-  //  let gridDimensions: GridDimensions
-  let gridRect: GridRect
-  let containerSize: CGSize
-  let sizeMode: GridSizeMode
-  let pinMode: GridPinMode
-  let lineWidth: CGFloat
-  let drawsBorder: Bool
-  let panOffset: CGSize
-  let zoomLevel: CGFloat
-  let zoomRange: ClosedRange<CGFloat>?
-  let hasCellNumbers: Bool
-}
-
-extension GridLineContext {
-  init?(
-    domain: GridFontDomain,
-    containerSize: CGSize,
-    sizeMode: GridSizeMode,
-    pinMode: GridPinMode,
-    drawsBorder: Bool,
-    environment: EnvironmentValues
-  ) {
-    guard let unitSize = environment[keyPath: domain.unitSizeKey] else {
-      return nil
-    }
-    guard let dimensions = environment.gridDimensions else { return nil }
-
-    self.unitSize = unitSize
-    self.containerSize = containerSize
-    self.sizeMode = sizeMode
-    self.pinMode = pinMode
-    self.lineWidth = environment.gridLineWidth
-    self.drawsBorder = drawsBorder
-    self.panOffset = environment.panOffset
-    self.zoomLevel = environment.zoomLevel.toCGFloat
-    self.zoomRange = environment.zoomRange?.toCGFloatRange
-    self.hasCellNumbers = environment.isShowingCellNumbers
-    self.gridRect = GridRect(origin: .zero, size: dimensions)
-  }
-}
+import Foundation
 
 extension GridLineContext {
 
@@ -71,15 +16,13 @@ extension GridLineContext {
       case .fillContainer: infiniteGrid()
     }
   }
-
 }
 
 extension GridLineContext {
-  var zoomedUnitSize: CGSize { unitSize * zoomLevel }
 
-  var cellNumberOffsetFactor: Int {
-    hasCellNumbers ? 1 : 0
-  }
+  var zoomedUnitSize: CGSize { unitSize * zoomLevel }
+  var edgeEpsilon: CGFloat { max(0.5, effectiveLineWidth / 2) }
+  var effectivePanOffset: CGSize { pinMode.isViewport ? -panOffset : .zero }
 
   var effectiveLineWidth: CGFloat {
     lineWidth.removingZoom(
@@ -88,17 +31,9 @@ extension GridLineContext {
       sensitivity: 0.2
     )
   }
-
-  var edgeEpsilon: CGFloat {
-    max(0.5, effectiveLineWidth / 2)
-  }
-
-  var effectivePanOffset: CGSize {
-    pinMode == .viewport ? -panOffset : .zero
-  }
-
 }
 
+// MARK: - Path helpers
 extension GridLineContext {
 
   func boundedGrid() -> GridLineOutput {
@@ -119,8 +54,6 @@ extension GridLineContext {
   func infiniteGrid() -> GridLineOutput {
 
     var markers: [GridLineAnnotation] = []
-
-    //    print("Rect is \(gridRect)")
 
     /// Note: passing in *un-zoomed* cell (unit) size
     let path = Path.infiniteGrid(
@@ -169,12 +102,14 @@ extension GridLineContext {
     markers: inout [GridLineAnnotation]
   ) {
 
+    /// Basing the offset on a square rather than the usual tall
+    /// glyph shaped box make the numbers more balanced
     let offsetLength = unitSize.shortestDimension
 
-    /// This adds a little extra height, so both lines of numbers feel balanced
+    /// This adds a little extra height for the top row, also improves balance
     let offset = CGSize(width: offsetLength, height: offsetLength * 1.2)
 
-    /// Minus `unitSize` at the end offsets the numbers to the
+    /// Removing `unitSize` at the end offsets the numbers to the
     /// left and up by one, so they don't overlap the Canvas content
     let baseOffset = (offset / 2) - offset
     let isVertical = axis.isVertical
