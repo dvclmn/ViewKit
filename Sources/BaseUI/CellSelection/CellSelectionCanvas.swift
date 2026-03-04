@@ -41,10 +41,6 @@ struct CellSelectionCanvas: View {
 
       context.fillCanvas(with: canvasBackground, in: size)
 
-      //      if let offset = canvasOffset {
-      //        context.translateBy(x: offset.width, y: offset.height)
-      //      }
-
       // MARK: - Grid Lines
       context.drawGrid(
         domain: .canvas,
@@ -54,24 +50,25 @@ struct CellSelectionCanvas: View {
         drawsBorder: false
       )
 
-      //      // MARK: - Selection Box
-      //      guard let rect = store.selectionRect else { return }
-      //
-      //      let selectionShape = Path { p in
-      //        if let radii = rectRadii {
-      //          p = UnevenRoundedRectangle(cornerRadii: radii)
-      //            .path(in: rect)
-      //        } else {
-      //          p = Path(rect)
-      //        }
-      //      }
-      //
-      //      context.fillAndStroke(
-      //        selectionShape,
-      //        fillColour: .cyan.opacity(0.25),
-      //        strokeColour: .blue.opacity(0.8),
-      //        strokeThickness: 1
-      //      )
+      // MARK: - Selection Box
+      guard let rect = store.selectionRect,
+        let gridDimensions,
+        let hoverPos = store.pointerGridPosition
+      else { return }
+
+      let radii = rectRadii(
+        dimensions: gridDimensions,
+        position: hoverPos
+      )
+
+      let path = Path(roundedRect: rect, cornerRadii: radii)
+
+      context.fillAndStroke(
+        path,
+        fillColour: .cyan.opacity(0.25),
+        strokeColour: .blue.opacity(0.8),
+        strokeThickness: 1
+      )
 
     }  // END canvas
 
@@ -98,16 +95,19 @@ extension CellSelectionCanvas {
     return result
   }
 
-  private var rectRadii: RectangleCornerRadii? {
+  private func rectRadii(
+    dimensions: GridDimensions,
+    position: GridPosition,
+  ) -> RectangleCornerRadii {
     let rounding: CGFloat = cornerRounding ?? Styles.sizeTiny
-    guard let gridDimensions else { return nil }
-    guard let position = store.pointerGridPosition else { return nil }
+    //    guard let gridDimensions else { return nil }
+    //    guard let position = store.pointerGridPosition else { return nil }
 
     /// Determine if the current position is at any of the four grid corners.
     let isTop = position.row == 0
     let isLeft = position.column == 0
-    let isBottom = position.isLastRow(in: gridDimensions)
-    let isRight = position.isLastColumn(in: gridDimensions)
+    let isBottom = position.isLastRow(in: dimensions)
+    let isRight = position.isLastColumn(in: dimensions)
 
     /// Round only the corners that coincide with the grid's outer corners.
     let topLeading: CGFloat = (isTop && isLeft) ? rounding : .zero

@@ -16,14 +16,33 @@ public struct QuickSlider<TrackBody: View>: View, ValueFormattable, SliderStylab
   @Environment(\.helpText) private var helpText
 
   public typealias Configuration = SliderTrackConfiguration
-
-  typealias TrackBackground = (Configuration) -> TrackBody
+  typealias TrackBackground = (Configuration) -> TrackBody?
 
   @State private var store: SliderHandler
 
   @Binding var value: Double
+  private let track: TrackBackground
 
-  private let track: TrackBackground?
+  public init(
+    _ title: String,
+    value: Binding<Double>,
+    range: ClosedRange<Double>,
+    step: Double? = nil,
+    @ViewBuilder track: @escaping (Configuration) -> TrackBody?,
+    didChangeSlider: @escaping SliderOutput = { _ in },
+  ) {
+
+    self._store = State(
+      initialValue: SliderHandler(
+        label: QuickLabel(title),
+        range: range.toDoubleRange,
+        step: step.toDoubleIfPresent,
+        didChangeSlider: didChangeSlider
+      )
+    )
+    self._value = value
+    self.track = track
+  }
 
   public var body: some View {
 
@@ -60,52 +79,39 @@ extension QuickSlider {
 
   }
 }
+
 // MARK: - Initialisers
+
 extension QuickSlider {
 
   // TODO: Considering pivoting to SwiftUI-style
   // Label closure/ViewBuilder instead of QuickLabel?
   public init(
-    label: QuickLabel,
+    _ title: String,
+    //    label: QuickLabel,
     value: Binding<Double>,
     range: ClosedRange<Double>,
     step: Double? = nil,
     //    minMaxLabels: (String, String)? = nil,
-    @ViewBuilder track: @escaping (Configuration) -> TrackBody = { _ in EmptyView() },
+    //    @ViewBuilder track: @escaping (Configuration) -> TrackBody,
     didChangeSlider: @escaping SliderOutput = { _ in },
-  ) {
+  ) where TrackBody == EmptyView {
     self._value = value
     self._store = State(
       initialValue: SliderHandler(
-        label: label,
+        label: QuickLabel(title),
+        //        label: label,
         range: range.toDoubleRange,
         step: step.toDoubleIfPresent,
         //        minMaxLabels: minMaxLabels,
         didChangeSlider: didChangeSlider
       )
     )
-    self.track = track
+    self.track = { _ in nil }
   }
 
-  public init(
-    _ title: String,
-    value: Binding<Double>,
-    range: ClosedRange<Double>,
-    step: Double? = nil,
-    //    minMaxLabels: (String, String)? = nil,
-    @ViewBuilder track: @escaping (Configuration) -> TrackBody = { _ in EmptyView() },
-    didChangeSlider: @escaping SliderOutput = { _ in },
-  ) {
-    self.init(
-      label: QuickLabel(title),
-      value: value,
-      range: range,
-      step: step,
-      //      minMaxLabels: minMaxLabels,
-      track: track,
-      didChangeSlider: didChangeSlider
-    )
-  }
+}
+extension QuickSlider {
 
   public init<S: SliderTrackStyle>(
     _ title: String,
@@ -118,7 +124,8 @@ extension QuickSlider {
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) where S.Body == TrackBody {
     self.init(
-      label: QuickLabel(title),
+      title,
+      //      label: QuickLabel(title),
       value: value,
       range: range,
       step: step,
@@ -131,23 +138,44 @@ extension QuickSlider {
   }
 
   /// For Binding to Int more conveniently
-  public init(
-    _ title: String,
-    intValue: Binding<Int>,
-    range: ClosedRange<Int>,
-    step: Int? = nil,
-    @ViewBuilder track: @escaping (Configuration) -> TrackBody = { _ in EmptyView() },
-    didChangeSlider: @escaping SliderOutput = { _ in },
-  ) {
-    self.init(
-      label: QuickLabel(title),
-      value: intValue.toBindingDouble,
-      range: range.toDoubleRange,
-      step: step?.toDouble,
-      track: track,
-      didChangeSlider: didChangeSlider
-    )
-  }
+  //  public init(
+  //    _ title: String,
+  //    intValue: Binding<Int>,
+  //    range: ClosedRange<Int>,
+  //    step: Int? = nil,
+  //    //    @ViewBuilder track: @escaping (Configuration) -> TrackBody = { _ in EmptyView() },
+  //    didChangeSlider: @escaping SliderOutput = { _ in },
+  //  ) {
+  //    self.init(
+  //      label: QuickLabel(title),
+  //      value: intValue.toBindingDouble,
+  //      range: range.toDoubleRange,
+  //      step: step?.toDouble,
+  //      track: track,
+  //      didChangeSlider: didChangeSlider
+  //    )
+  //  }
+
+  //  public init(
+  //    _ title: String,
+  //    value: Binding<Double>,
+  //    range: ClosedRange<Double>,
+  //    step: Double? = nil,
+  //    //    minMaxLabels: (String, String)? = nil,
+  //    @ViewBuilder track: @escaping (Configuration) -> TrackBody = { _ in EmptyView() },
+  //    didChangeSlider: @escaping SliderOutput = { _ in },
+  //  ) {
+  //    self.init(
+  //      label: QuickLabel(title),
+  //      value: value,
+  //      range: range,
+  //      step: step,
+  //      //      minMaxLabels: minMaxLabels,
+  //      track: track,
+  //      didChangeSlider: didChangeSlider
+  //    )
+  //  }
+
 }
 
 // Convenience without specifying the generic at call site

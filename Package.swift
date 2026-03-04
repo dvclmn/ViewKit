@@ -72,7 +72,7 @@ let package = Package(
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
-//    .package(url: "https://github.com/jpsim/Yams", from: "6.2.1"),
+    //    .package(url: "https://github.com/jpsim/Yams", from: "6.2.1"),
     .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
   ],
 
@@ -241,7 +241,7 @@ let package = Package(
         .casePaths,
         .metaCodable,
         .identifiedCollections,
-//        .product(name: "Yams", package: "Yams"),
+        //        .product(name: "Yams", package: "Yams"),
 
       ]
     ),

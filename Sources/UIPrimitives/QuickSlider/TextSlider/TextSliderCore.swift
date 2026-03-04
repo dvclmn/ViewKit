@@ -1,0 +1,69 @@
+//
+//  TextSliderCore.swift
+//  DrawString
+//
+//  Created by Dave Coleman on 4/3/2026.
+//
+
+import SwiftUI
+
+@Observable
+final class TextSliderHandler {
+  
+}
+
+struct TextSliderCore: View {
+  // @Environment(AppHandler.self) private var store
+  // @Environment(\.viewportSize) private var viewportSize
+
+  let unitSize: CGSize
+  let range: ClosedRange<Double>
+  let width: Int
+  let columns: Int
+
+  var body: some View {
+
+    VStack(spacing: 0) {
+      Text(sliderRepresentation())
+      //        .gridFont(for: .interface)
+    }
+    .frame(width: sliderFullWidth)
+
+  }
+}
+
+extension TextSliderCore {
+
+  
+
+  var sliderFullWidth: CGFloat { CGFloat(width) * unitSize.width }
+
+  private func sliderRepresentation() -> String {
+
+    let normalisedValue = (value - range.lowerBound) / (range.upperBound - range.lowerBound)
+    let filledWidth = Int(normalisedValue * Double(columns))
+    let subCellPosition = (normalisedValue * Double(columns) - Double(filledWidth)) * 4
+
+    var representation = "┌" + String(repeating: "─", count: columns) + "┐\n│"
+
+    for i in 0..<columns {
+      if i < filledWidth {
+        representation += "█"
+      } else if i == filledWidth {
+        representation += cellCharacters[min(Int(subCellPosition), 3)]
+      } else {
+        representation += " "
+      }
+    }
+
+    representation += "│\n└" + String(repeating: "─", count: columns) + "┘\n"
+
+    //    if representation.count > width {
+    //      fatalError("`representation.count` ( \(representation.count) ) can't exceed containing width of \(width)")
+    //    }
+
+    return representation
+  }
+
+
+}

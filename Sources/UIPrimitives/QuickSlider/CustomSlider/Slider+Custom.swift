@@ -26,7 +26,8 @@ extension QuickSlider {
     @State private var isHovering: Bool = false
 
     @Binding var value: Double
-    let track: TrackBackground
+    let track: TrackBody
+    //    let track: TrackBackground
 
     public var body: some View {
 
@@ -45,15 +46,16 @@ extension QuickSlider {
         .overlay {
 
           // MARK: - Track
-          track(
-            store.trackConfiguration(
-              value: value,
-              colourScheme: colourScheme
-            )
-          )
-          .frame(height: store.trackHeight)
-          .clipShape(clipShape)
-          .environment(\.isHovering, isHovering)
+          track
+            //          track(
+            //            store.trackConfiguration(
+            //              value: value,
+            //              colourScheme: colourScheme
+            //            )
+            //          )
+            .frame(height: store.trackHeight)
+            .clipShape(clipShape)
+            .environment(\.isHovering, isHovering)
 
           // MARK: - Thumb
           if sliderComponents.contains(.thumb),

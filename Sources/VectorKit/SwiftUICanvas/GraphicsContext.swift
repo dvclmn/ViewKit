@@ -14,12 +14,6 @@ extension BinaryFloatingPoint {
     return Self(result)
   }
 }
-//extension String {
-//  public var firstLine: String {
-//    let firstSubstring = self.split(separator: "\n").first ?? ""
-//    return String(firstSubstring)
-//  }
-//}
 
 extension GraphicsContext {
 
@@ -36,11 +30,9 @@ extension GraphicsContext {
     colour: Color = .primary,
     fontSize: CGFloat = 11,
     pointDisplay: DebugPoint,
-    //    zoomPercent zoomLevel: CGFloat?  // Pass in normalised zoom if relevant
   ) {
 
     let zoom = environment.zoomLevel
-    //    let zoom = zoomLevel ?? 1.0
     let fontSizeUnZoomed = fontSize.removingZoomPercent(zoom)
 
     /// Calculate size, for drawing Label background
@@ -85,20 +77,24 @@ extension GraphicsContext {
   }
 
   // MARK: - Quick Fill and Stroke
+
+  /// `removeZoom` affects `strokeThickness` only
   public func fillAndStroke(
     _ path: Path,
     fillColour: Color = .blue.opacity(0.4),
     strokeColour: Color = .indigo,
-    strokeThickness: CGFloat = 1
+    strokeThickness: CGFloat = 1,
+    removeZoom: Bool = true
   ) {
     self.fill(
       path,
       with: .color(fillColour)
     )
+
     self.stroke(
       path,
       with: .color(strokeColour),
-      lineWidth: strokeThickness
+      lineWidth: removeZoom ? unZoomedLineWidth(for: strokeThickness) : strokeThickness
     )
   }
 
@@ -145,8 +141,24 @@ extension GraphicsContext {
     let path = Path(fromSize: size)
     self.fill(path, with: .color(colour))
   }
-  
+
   public func unitSize(from domain: GridFontDomain) -> CGSize? {
     environment[keyPath: domain.unitSizeKey]
+  }
+}
+
+extension GraphicsContext {
+  func unZoomedLineWidth(
+    for width: CGFloat,
+    sensitivity: CGFloat? = 0.2
+  ) -> CGFloat {
+    guard let range = environment.zoomRange else {
+      return width
+    }
+    return width.removingZoom(
+      environment.zoomLevel,
+      across: range.toCGFloatRange,
+      sensitivity: sensitivity
+    )
   }
 }

@@ -29,7 +29,8 @@ public struct SliderThumb<ThumbShape: InsettableShape>: View {
 
     FilledShape(
       shape,
-      style: Color(r: grayShade, g: grayShade, b: grayShade, a: 1.0),
+      style: Color(white: 0.2),
+//      style: Color(r: grayShade, g: grayShade, b: grayShade),
       strokeColour: strokeGradient().opacity(0.32)
     )
 

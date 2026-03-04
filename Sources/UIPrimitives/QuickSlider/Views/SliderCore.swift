@@ -12,19 +12,19 @@ extension QuickSlider {
   struct SliderCore: View {
     @Environment(SliderHandler.self) private var store
     @Environment(\.sliderDefaultValue) private var sliderDefaultValue
+    @Environment(\.colorScheme) private var colourScheme
 
     @Binding var value: Double
-    let track: TrackBackground?
+    let track: TrackBackground
     var body: some View {
 
-      if let track {
+      if let track = track(store.trackConfiguration(value: value, colourScheme: colourScheme)) {
         // MARK: - Custom Slider
         SliderCustom(value: $value, track: track)
 
       } else {
 
         // MARK: - Native Slider
-
         @Bindable var store = store
 
         Group {
@@ -53,7 +53,6 @@ extension QuickSlider {
         }
         .labelsHidden()
       }
-
     }
   }
 }

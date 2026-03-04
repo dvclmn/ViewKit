@@ -5,9 +5,10 @@
 //  Created by Dave Coleman on 11/8/2025.
 //
 
-import SwiftUI
 import CoreTools
-import ColourKit
+import SwiftUI
+
+//import ColourKit
 
 public struct SliderExamples: View {
 
@@ -16,82 +17,96 @@ public struct SliderExamples: View {
 
   public var body: some View {
     VStack(spacing: Styles.sizeMedium) {
-
-      SliderGroup("Group title") {
-
-        QuickSlider(
-          "Simple Slider",
-          value: $zoomValue.toBindingDouble,
-          range: zoomRange.toDoubleRange,
-        )
-//        .sliderStyle(.native, components: .noLabel)
-        //      .padding()
-        //      .background(.mint.quinary)
-
-        QuickSlider(
-          "Opacity Slider",
-          value: $zoomValue.toBindingDouble,
-          range: zoomRange.toDoubleRange,
-        )
-//        .sliderStyle(.custom(.opacityCheckboard(RGBColour.bisque)))
-        .environment(\.sliderDefaultValue, 1.0)
-
-        //      .setExplicitHeight(5)
-        //      .environment(\.heightOverride, 5)
-//        .environment(\.trackComponents, [.thumb])
-        //      .padding()
-        //      .background(.purple.quinary)
-
-        QuickSlider(
-          "No Units",
-          value: $zoomValue.toBindingDouble,
-          range: zoomRange.toDoubleRange,
-        )
-//        .environment(\.sliderComponents, [.slider, .label])
-        //      .padding()
-        //      .background(.yellow.quinary)
-
-        QuickSlider(
-          "Compact",
-          value: $zoomValue.toBindingDouble,
-          range: zoomRange.toDoubleRange,
-        )
-//        .sliderStyle(.native)
-        .sliderComponents([.track, .thumb])
-        .gridCellColumns(3)
-        //      .environment(\.heightOverride, 20)
-        //      .padding()
-        //      .background(.brown.quinary)
-
-        
-        //      .environment(\.heightOverride, 34)
-        //      .padding()
-        //      .background(.blue.quinary)
-
-      }
-      .formatValue { $0.render(using: .init(decimalPlaces: 1)) }
-      .environment(\.maxCharacterColumns, 4)
-      //    .formStyle(.grouped)
       
-      Divider()
-
+      Text("Hello")
+      
       QuickSlider(
-        "Bar Slider",
+        "Hello",
         value: $zoomValue.toBindingDouble,
-        range: zoomRange.toDoubleRange,
+        range: zoomRange.toDoubleRange
       )
-//      .sliderStyle(.custom(.clear))
-      .sliderComponents([.track, .units])
-    } // END main vstack
+      .environment(\.isASCIIMode, true)
+      
+//      QuickSlider(
+//        "Simple Slider",
+//        value: $zoomValue.toBindingDouble,
+//        range: zoomRange.toDoubleRange,
+//      )
+
+      //      SliderGroup("Group title") {
+      //
+      //        QuickSlider(
+      //          "Simple Slider",
+      //          value: $zoomValue.toBindingDouble,
+      //          range: zoomRange.toDoubleRange,
+      //        )
+      ////        .sliderStyle(.native, components: .noLabel)
+      //        //      .padding()
+      //        //      .background(.mint.quinary)
+      //
+      //        QuickSlider(
+      //          "Opacity Slider",
+      //          value: $zoomValue.toBindingDouble,
+      //          range: zoomRange.toDoubleRange,
+      //        )
+      ////        .sliderStyle(.custom(.opacityCheckboard(RGBColour.bisque)))
+      //        .environment(\.sliderDefaultValue, 1.0)
+      //
+      //        //      .setExplicitHeight(5)
+      //        //      .environment(\.heightOverride, 5)
+      ////        .environment(\.trackComponents, [.thumb])
+      //        //      .padding()
+      //        //      .background(.purple.quinary)
+      //
+      //        QuickSlider(
+      //          "No Units",
+      //          value: $zoomValue.toBindingDouble,
+      //          range: zoomRange.toDoubleRange,
+      //        )
+      ////        .environment(\.sliderComponents, [.slider, .label])
+      //        //      .padding()
+      //        //      .background(.yellow.quinary)
+      //
+      //        QuickSlider(
+      //          "Compact",
+      //          value: $zoomValue.toBindingDouble,
+      //          range: zoomRange.toDoubleRange,
+      //        )
+      ////        .sliderStyle(.native)
+      //        .sliderComponents([.track, .thumb])
+      //        .gridCellColumns(3)
+      //        //      .environment(\.heightOverride, 20)
+      //        //      .padding()
+      //        //      .background(.brown.quinary)
+      //
+      //
+      //        //      .environment(\.heightOverride, 34)
+      //        //      .padding()
+      //        //      .background(.blue.quinary)
+      //
+      //      }
+      //      .formatValue { $0.render(using: .init(decimalPlaces: 1)) }
+      //      .environment(\.maxCharacterColumns, 4)
+      //    .formStyle(.grouped)
+
+      //      Divider()
+
+      //      QuickSlider(
+      //        "Bar Slider",
+      //        value: $zoomValue.toBindingDouble,
+      //        range: zoomRange.toDoubleRange,
+      //      )
+      ////      .sliderStyle(.custom(.clear))
+      //      .sliderComponents([.track, .units])
+    }  // END main vstack
     .padding()
     .frame(maxWidth: 320)
-//    .isDebugMode(true)
+    //    .isDebugMode(true)
 
   }
 }
 #if DEBUG
-@available(macOS 15, iOS 18, *)
-#Preview{
+#Preview {
   SliderExamples()
 }
 #endif
