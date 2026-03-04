@@ -28,11 +28,12 @@ public struct InfoBarItemView: View {
       if let label = item.label {
         MaybeLabel(label)
           .environment(\.labelDisplay, itemLabelDisplay)
+          .gridFont(for: .asciiMode)
 
           /// This seems to be behaving; this ensures that the text label
           /// from MaybeLabel doesn't get truncated
           .fixedSize(horizontal: true, vertical: false)
-//          .debugFrame("Label", .purple, isEnabled: isDebugMode)
+        //          .debugFrame("Label", .purple, isEnabled: isDebugMode)
       }
 
       Text(String(describing: item.content))
@@ -40,11 +41,11 @@ public struct InfoBarItemView: View {
         .opacity(0.9)
         .monospacedDigit()
         .fixedSize(horizontal: true, vertical: false)
-//        .debugFrame("Value", .brown, isEnabled: isDebugMode)
+      //        .debugFrame("Value", .brown, isEnabled: isDebugMode)
 
-            Divider().opacity(0.6)
-      /// Adds breathing room between the end of the content and its trailing Divider
-              .padding(.leading, Styles.sizeSmall)
+      Divider().opacity(0.6)
+        /// Adds breathing room between the end of the content and its trailing Divider
+        .padding(.leading, Styles.sizeSmall)
     }
     .debugFrame("Item", .purple, isEnabled: isDebugMode)
     /// Some leading padding here brings the icon in from the edge a bit,

@@ -37,6 +37,9 @@ public struct InfoBarSectionID: Hashable, Sendable {
   }
 }
 
+extension InfoBarSectionID {
+  public static let exampleID: Self = .init(DebugSectionKey.self)
+}
 
 // MARK: - Debug convenience
 /// Consider  other cases where very simple InfoBarItems way want to be
