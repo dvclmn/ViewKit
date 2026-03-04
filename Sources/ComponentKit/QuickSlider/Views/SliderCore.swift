@@ -68,11 +68,7 @@ extension QuickSlider {
 
         // MARK: - Custom Slider
         case .custom(let style):
-          SliderCustom(
-            value: $value,
-            style: style
-          )
-
+          SliderCustom(value: $value, style: style)
       }
     }
   }

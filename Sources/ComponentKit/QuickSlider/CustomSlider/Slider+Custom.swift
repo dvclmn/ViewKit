@@ -16,12 +16,25 @@ import SwiftUI
 /// - Haptics
 /// - onEnd callback / phase
 /// - Units
-
 extension QuickSlider {
   struct SliderCustom: View {
     @Environment(SliderHandler.self) private var store
     @Environment(\.cornerRounding) private var cornerRounding
     @Environment(\.sliderComponents) private var sliderComponents
+
+//    @Environment(\.sliderTrackStyle) private var trackStyle
+
+    //    let trackConfig = SliderTrackConfiguration(
+    //      value: normalizedValue,
+    //      range: 0...1,
+    //      isEnabled: isEnabled,
+    //      orientation: .horizontal,
+    //      size: proposedSize,
+    //      colorScheme: colorScheme,
+    //      tint: tintColor
+    //    )
+
+    // or however you compose the track view
 
     @State private var isHovering: Bool = false
 
@@ -43,24 +56,28 @@ extension QuickSlider {
         )
 
         .overlay {
-          ZStack {
-            // MARK: - Track
-            SliderTrackBackground(style: style)
-              .environment(\.isHovering, isHovering)
 
-            // MARK: - Thumb
-            if sliderComponents.contains(.thumb),
-              let position = store.thumbPosition(value: value.toDouble)
-            {
+          //          trackStyle.makeBody(configuration: config)
+          //            .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
 
-              /// Slider thumb
-              SliderThumb(
-                diameter: store.thumbDiameter,
-                shape: .circle,
-              )
-              .position(position)
-            }
-          }
+          //          ZStack {
+          //            // MARK: - Track
+          //            SliderTrackBackground(style: style)
+          //              .environment(\.isHovering, isHovering)
+          //
+          //            // MARK: - Thumb
+          //            if sliderComponents.contains(.thumb),
+          //              let position = store.thumbPosition(value: value.toDouble)
+          //            {
+          //
+          //              /// Slider thumb
+          //              SliderThumb(
+          //                diameter: store.thumbDiameter,
+          //                shape: .circle,
+          //              )
+          //              .position(position)
+          //            }
+          //          }
         }
         .onHover { isHovering = $0 }
         .frame(height: store.trackHeightWithBuffer)
