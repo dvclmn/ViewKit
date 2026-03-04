@@ -124,7 +124,8 @@ let package = Package(
     .target(
       name: "BasePrimitives",
       resources: [
-        .process("Assets.xcassets")
+        .process("Assets.xcassets"),
+        .process("Resources/Fonts"),
       ],
     ),
 

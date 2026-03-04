@@ -37,6 +37,7 @@ public struct InfoBarItemView: View {
       }
 
       Text(String(describing: item.content))
+        .gridFont(for: .asciiMode)
         /// Taking the edge off the brightness
         .opacity(0.9)
         .monospacedDigit()

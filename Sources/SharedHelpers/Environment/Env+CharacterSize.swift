@@ -137,16 +137,6 @@ public struct GridFontDescriptor {
 
 extension GridFontDescriptor {
   public var font: Font {
-    //    guard let size, let gridFont else { return nil }
-    return switch style {
-      case .sfMono:
-        .system(
-          size: size,
-          design: .monospaced
-        )
-      default:
-        .custom(style.rawValue, fixedSize: size)
-    }
-
+    style.resolvedFont(size: size)
   }
 }
