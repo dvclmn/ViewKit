@@ -6,7 +6,7 @@
 //
 
 import CoreTools
-import Foundation
+import SwiftUI
 
 extension GridLineContext {
 

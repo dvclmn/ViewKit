@@ -131,6 +131,7 @@ extension Path {
       /// Columns -> vertical lines at fixed x
       for i in startCol...endCol {
         let x = CGFloat(i) * cw + offset.width
+        guard x >= -edgeEpsilon, x <= w + edgeEpsilon else { continue }
         if !drawsBorder, isOnVerticalEdge(x) { continue }
 
         p.move(to: CGPoint(x: x + originX, y: originY))
@@ -141,6 +142,7 @@ extension Path {
       /// Rows -> horizontal lines at fixed y
       for i in startRow...endRow {
         let y = CGFloat(i) * ch + offset.height
+        guard y >= -edgeEpsilon, y <= h + edgeEpsilon else { continue }
         if !drawsBorder, isOnHorizontalEdge(y) { continue }
 
         p.move(to: CGPoint(x: originX, y: y + originY))

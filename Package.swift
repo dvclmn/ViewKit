@@ -258,6 +258,10 @@ let package = Package(
       dependencies: [.module(.primitives)],
       exclude: ["BasePrimitives.xctestplan"],
     ),
+    .testTarget(
+      name: "VectorKitTests",
+      dependencies: [.module(.vectorKit)],
+    ),
 
   ],
 )
