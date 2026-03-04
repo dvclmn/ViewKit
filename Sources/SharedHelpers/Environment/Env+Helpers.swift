@@ -8,10 +8,6 @@
 import BasePrimitives
 import SwiftUI
 
-
-
-
-
 extension View {
   public func backgroundTint(_ style: AnyShapeStyle?) -> some View {
     self.environment(\.shapeStyleOverride, style)

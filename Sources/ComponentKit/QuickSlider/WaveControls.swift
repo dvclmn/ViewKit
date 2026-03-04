@@ -25,8 +25,6 @@ public struct WaveControls: View {
   public var body: some View {
 
     SliderGroup {
-      //    SliderGroup(title) {
-
       Wave(.amplitude)
       Wave(.frequency)
       Wave(.phase)

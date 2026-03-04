@@ -27,6 +27,7 @@ let package = Package(
       targets: [
         "BaseUI",
         "LayoutKit",
+        "ComponentKit",
       ]
     ),
 
@@ -142,12 +143,18 @@ let package = Package(
       ],
     ),
 
-    /// Note: The only target that depends on BaseUI
     .target(
       name: "CanvasKit",
       dependencies: [
         .module(.coreTools),
         .module(.gestureKit),
+      ],
+    ),
+
+    .target(
+      name: "ComponentKit",
+      dependencies: [
+        .module(.coreTools)
       ],
     ),
 
