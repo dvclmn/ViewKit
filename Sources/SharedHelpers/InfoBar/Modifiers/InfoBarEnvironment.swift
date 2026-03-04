@@ -5,10 +5,9 @@
 //  Created by Dave Coleman on 9/7/2025.
 //
 
-//import CoreTools
+import BasePrimitives
 import EnumMacros
 import SwiftUI
-
 
 @CaseDetection
 public enum InfoBarElement {

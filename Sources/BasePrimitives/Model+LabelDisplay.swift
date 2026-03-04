@@ -5,10 +5,10 @@
 //  Created by Dave Coleman on 8/7/2024.
 //
 
-import EnumMacros
+//import EnumMacros
 import SwiftUI
 
-@CaseDetection
+//@CaseDetection
 public enum LabelDisplay: String, CaseIterable, Identifiable, Equatable, Sendable {
 
   case iconOnly
@@ -36,6 +36,13 @@ public enum LabelDisplay: String, CaseIterable, Identifiable, Equatable, Sendabl
       case .titleOnly: .titleOnly
       case .titleAndIcon, .stacked: .titleAndIcon
       case .hidden: nil
+    }
+  }
+
+  public var isStacked: Bool {
+    switch self {
+      case .stacked: true
+      default: false
     }
   }
 }

@@ -12,6 +12,8 @@ public struct InfoBarView: View {
   @Environment(\.backgroundStyle) private var backgroundStyle
   @Environment(\.modifierKeys) private var modifierKeys
   @Environment(\.isLoading) private var isLoading
+  @Environment(\.isASCIIMode) private var isASCIIMode
+  @Environment(\.asciiModeFontSize) private var asciiModeFontSize
 
   let sections: [InfoBarSection]
   let showingModifiersSection: Bool
@@ -52,7 +54,8 @@ public struct InfoBarView: View {
       .scrollBounceBehavior(.basedOnSize)
       .scrollIndicators(.hidden)
 
-      .font(.caption)
+      .gridFont(config: .domain(.asciiMode))
+//      .font(.caption)
       .fontWeight(.medium)
       .frame(height: Styles.infoBarHeight)
       .background(.thinMaterial, ignoresSafeAreaEdges: .horizontal)
@@ -79,7 +82,6 @@ extension InfoBarView {
   @ViewBuilder
   func NoItems(_ reasonText: String) -> some View {
     Text(reasonText)
-      .font(.caption)
       .foregroundStyle(.tertiary)
       .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
   }

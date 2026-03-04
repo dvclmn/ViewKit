@@ -55,7 +55,6 @@ public struct InfoBarItemView: View {
     .onHover { hovering in
       isHoveringItem = hovering
     }
-    .gridFont(for: .asciiMode)
     //    .containerValueBool(.isShowingSectionHeader, isShowingSectionHeader)
     //    .containerValueBool(.hasSpacers, false)
 
