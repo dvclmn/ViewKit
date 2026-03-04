@@ -199,8 +199,8 @@ let package = Package(
       name: "LayoutKit",
       dependencies: [
         .module(.coreTools),
-        .module(.vectorKit),
-        .module(.graphicsKit),
+//        .module(.vectorKit),
+//        .module(.graphicsKit),
       ]
     ),
 

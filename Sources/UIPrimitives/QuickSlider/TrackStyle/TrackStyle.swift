@@ -38,26 +38,15 @@ public protocol SliderTrackStyle {
 /// ```
 public struct AnySliderTrackStyle: SliderTrackStyle {
   private let _makeBody: (SliderTrackConfiguration) -> AnyView
-  
+
   public init<S: SliderTrackStyle>(_ style: S) {
     self._makeBody = { AnyView(style.makeBody(configuration: $0)) }
   }
-  
+
   public func makeBody(configuration: SliderTrackConfiguration) -> some View {
     _makeBody(configuration)
   }
 }
-
-extension EnvironmentValues {
-  @Entry var sliderTrackStyle: AnySliderTrackStyle = .default
-}
-
-public extension View {
-  func sliderTrackStyle<S: SliderTrackStyle>(_ style: S) -> some View {
-    environment(\.sliderTrackStyle, AnySliderTrackStyle(style))
-  }
-}
-
 
 //extension View {
 //  func setEffectShouldPulse(_ shouldPulse: Bool) -> some View {
@@ -75,4 +64,3 @@ public extension View {
 //    set { self[SliderTrackStyleKey.self] = newValue }
 //  }
 //}
-

@@ -21,25 +21,29 @@ public struct QuickSlider: View, ValueFormattable, SliderStylable {
 
   public var body: some View {
 
-    Group {
-      if isWithinSliderGroup {
-        GridRow {
-          /// Handles slider Label, Track, and Units display
-          SliderComponents(value: $value)
-        }
-        HelpText()
-
-      } else {
-        HStack {
-          SliderComponents(value: $value)
-          HelpText()
-        }
-      }
-    }
-    .environment(store)
+    SliderContentView()
+      .environment(store)
   }
 }
 extension QuickSlider {
+
+  @ViewBuilder
+  private func SliderContentView() -> some View {
+    if isWithinSliderGroup {
+      GridRow {
+        /// Handles slider Label, Track, and Units display
+        SliderComponents(value: $value)
+      }
+      HelpText()
+
+    } else {
+      HStack {
+        SliderComponents(value: $value)
+        HelpText()
+      }
+    }
+  }
+
   @ViewBuilder
   private func HelpText() -> some View {
     if !helpText.isEmpty {
@@ -54,7 +58,7 @@ extension QuickSlider {
 extension QuickSlider {
 
   public init(
-    _ title: String,
+    _ title: LocalizedStringKey,
     value: Binding<Double>,
     range: ClosedRange<Double>,
     step: Double? = nil,
@@ -71,6 +75,8 @@ extension QuickSlider {
     )
   }
 
+  // TODO: Considering pivoting to SwiftUI-style
+  // Label closure/ViewBuilder instead of QuickLabel?
   public init(
     label: QuickLabel,
     value: Binding<Double>,
