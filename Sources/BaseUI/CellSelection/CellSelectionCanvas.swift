@@ -41,9 +41,9 @@ struct CellSelectionCanvas: View {
 
       context.fillCanvas(with: canvasBackground, in: size)
 
-      if let offset = canvasOffset {
-        context.translateBy(x: offset.width, y: offset.height)
-      }
+      //      if let offset = canvasOffset {
+      //        context.translateBy(x: offset.width, y: offset.height)
+      //      }
 
       // MARK: - Grid Lines
       context.drawGrid(
@@ -75,8 +75,8 @@ struct CellSelectionCanvas: View {
 
     }  // END canvas
 
-    .debugFrame("Cell Canvas", .orange, isEnabled: isDebugMode)
-    
+    //    .debugFrame("Cell Canvas", .orange, isEnabled: true)
+
     .addInfoBarItems {
       Labeled("Canvas Size", value: canvasSize?.cgSize.displayString(.dimensions))
     }

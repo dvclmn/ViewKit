@@ -34,7 +34,6 @@ extension GraphicsContext {
       let output = context.makeOutput()
     else { return }
 
-    
     self.stroke(
       output.path,
       with: .color(environment.gridLineColour),
@@ -42,6 +41,7 @@ extension GraphicsContext {
     )
 
     guard environment.isShowingCellNumbers else { return }
+    
     output.annotations.forEach { annotation in
       drawAnnotation(
         annotation.text,

@@ -14,8 +14,9 @@ public enum GridFont: String, Sendable, Codable, Hashable, Equatable, CaseIterab
   case sfMono = "SF Mono"
   case courier = "Courier New"
   case monaco = "Monaco"
-  case ibm = "AcPlus IBM BIOS"
-  case ibmEGA = "Ac437 IBM EGA 8x14"
+  case terminal = "BigBlueTerm437 Nerd Font"
+  //  case ibm = "AcPlus IBM BIOS"
+  //  case ibmEGA = "Ac437 IBM EGA 8x14"
   case geist = "Geist Mono"
   case jetBrains = "JetBrains Mono"
 
@@ -32,8 +33,9 @@ extension GridFont {
       case .sfMono: 1.0
       case .courier: 1.0
       case .monaco: 1.0
-      case .ibm: 1.0
-      case .ibmEGA: 1.0
+      //      case .ibm: 1.0
+      //      case .ibmEGA: 1.0
+      case .terminal: 1.0
       case .geist: 1.0
       case .jetBrains: 1.0
     }

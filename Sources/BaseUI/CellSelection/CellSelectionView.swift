@@ -30,9 +30,10 @@ public struct CellSelectionView<Content: View>: View {
     GridCanvasView {
       CellSelectionCanvas()
         .allowsCanvasClipping(false)
+      
       content
+//        .debugFrame("Canvas Content", .mint)
     }
     .environment(store)
-
   }
 }

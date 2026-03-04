@@ -65,33 +65,21 @@ extension GridLineContext {
 
 extension GridLineContext {
 
-  var zoomedUnitSize: CGSize { unitSize * zoomLevel }
+  func makeOutput() -> GridLineOutput? {
+    return switch sizeMode {
+      case .fixed, .fill: boundedGrid()
+      case .fillContainer: infiniteGrid()
+    }
+  }
 
-  //  .offset(x: offset.leading, y: offset.top)
-  /// Offset to accomodate row/col numbers, if present
-  //  var cellNumberOffset: (top: CGFloat, leading: CGFloat) {
-  //    //    guard let unitSize else { return (0, 0) }
-  //    hasCellNumbers
-  //      ? (-unitSize.height, -unitSize.width)
-  //      : (0, 0)
-  //  }
+}
+
+extension GridLineContext {
+  var zoomedUnitSize: CGSize { unitSize * zoomLevel }
 
   var cellNumberOffsetFactor: Int {
     hasCellNumbers ? 1 : 0
   }
-
-  //  var gridRect: GridRect? {
-  //    guard
-  //      let baseSize = sizeMode.gridDimensions(
-  //        from: zoomedUnitSize,
-  //        in: containerSize
-  //      )
-  //    else { return nil }
-  //
-  //    let size = baseSize - cellNumberOffsetFactor
-  //    let origin = GridPosition(x: cellNumberOffsetFactor, y: cellNumberOffsetFactor)
-  //    return GridRect(origin: origin, size: size)
-  //  }
 
   var effectiveLineWidth: CGFloat {
     lineWidth.removingZoom(
@@ -109,69 +97,70 @@ extension GridLineContext {
     pinMode == .viewport ? -panOffset : .zero
   }
 
-  func makeOutput() -> GridLineOutput? {
-    switch sizeMode {
-      case .fixed, .fill:
-        //        dwdwd
-        //        guard let gridRect else { return nil }
+}
 
-        let path = Path.boundedGrid(
-          rect: gridRect,
-          //          dimensions: dimensions,
-          cellSize: zoomedUnitSize,
-          containerSize: containerSize,
-          drawsBorder: drawsBorder
-        )
+extension GridLineContext {
 
-        return GridLineOutput(
-          path: path,
-          //          lineColour: lineColour,
-          lineWidth: effectiveLineWidth,
-          annotations: []
-        )
+  func boundedGrid() -> GridLineOutput {
+    let path = Path.boundedGrid(
+      rect: gridRect,
+      cellSize: zoomedUnitSize,
+      containerSize: containerSize,
+      drawsBorder: drawsBorder
+    )
 
-      case .fillContainer:
-        //        guard let gridRect else { return nil }
-        var markers: [GridLineAnnotation] = []
-
-        /// Note: passing in *un-zoomed* cell (unit) size
-        let path = Path.infiniteGrid(
-          originOffset: gridRect.origin,
-          containerSize: containerSize,
-          cellSize: unitSize,
-          offset: effectivePanOffset,
-          drawsBorder: drawsBorder,
-          edgeEpsilon: edgeEpsilon,
-          onHorizontalIndex: { index, x in
-
-            /// Passing `vertical` looks inverted, but it's not
-            handleMarker(
-              for: .vertical,
-              at: index,
-              position: x,
-              markers: &markers
-            )
-          },
-          onVerticalIndex: { index, y in
-
-            /// Passing `horizontal` looks inverted, but it's not
-            handleMarker(
-              for: .horizontal,
-              at: index,
-              position: y,
-              markers: &markers
-            )
-          }
-        )
-
-        return GridLineOutput(
-          path: path,
-          //          lineColour: lineColour,
-          lineWidth: effectiveLineWidth,
-          annotations: markers
-        )
-    }
+    return GridLineOutput(
+      path: path,
+      lineWidth: effectiveLineWidth,
+      annotations: []
+    )
   }
+
+  func infiniteGrid() -> GridLineOutput {
+
+    var markers: [GridLineAnnotation] = []
+
+    //    print("Rect is \(gridRect)")
+
+    /// Note: passing in *un-zoomed* cell (unit) size
+    let path = Path.infiniteGrid(
+      originOffset: gridRect.origin,
+      containerSize: containerSize,
+      cellSize: unitSize,
+      offset: effectivePanOffset,
+      drawsBorder: drawsBorder,
+      edgeEpsilon: edgeEpsilon,
+      onHorizontalIndex: { index, x in
+
+        /// Passing `vertical` looks inverted, but it's not
+        handleMarker(
+          for: .vertical,
+          at: index,
+          position: x,
+          markers: &markers
+        )
+      },
+      onVerticalIndex: { index, y in
+
+        /// Passing `horizontal` looks inverted, but it's not
+        handleMarker(
+          for: .horizontal,
+          at: index,
+          position: y,
+          markers: &markers
+        )
+      }
+    )
+
+    return GridLineOutput(
+      path: path,
+      lineWidth: effectiveLineWidth,
+      annotations: markers
+    )
+  }
+}
+
+extension GridLineContext {
 
   private func handleMarker(
     for axis: GridAxis,
@@ -179,13 +168,26 @@ extension GridLineContext {
     position: CGFloat,
     markers: inout [GridLineAnnotation]
   ) {
-    //    guard shouldDrawMarker(for: index) else { return }
 
-    let baseOffset = unitSize / 2
+    let offsetLength = unitSize.shortestDimension
+
+    /// This adds a little extra height, so both lines of numbers feel balanced
+    let offset = CGSize(width: offsetLength, height: offsetLength * 1.2)
+
+    /// Minus `unitSize` at the end offsets the numbers to the
+    /// left and up by one, so they don't overlap the Canvas content
+    let baseOffset = (offset / 2) - offset
     let isVertical = axis.isVertical
 
-    let valX = isVertical ? position + baseOffset.height / 2 : baseOffset.width
-    let valY = isVertical ? baseOffset.height : position + baseOffset.height
+    let valX =
+      isVertical
+      ? position + baseOffset.height / 2
+      : baseOffset.width
+
+    let valY =
+      isVertical
+      ? baseOffset.height
+      : position + baseOffset.width
 
     markers.append(
       GridLineAnnotation(
@@ -194,10 +196,4 @@ extension GridLineContext {
       )
     )
   }
-
-  //  private func shouldDrawMarker(for index: Int) -> Bool {
-  //    guard annotationDensity.isShowingCellMarkers else { return false }
-  //    guard let stepSize = annotationDensity.stepSize, stepSize > 0 else { return false }
-  //    return index.isMultiple(of: stepSize)
-  //  }
 }
