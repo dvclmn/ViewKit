@@ -19,7 +19,7 @@ extension EnvironmentValues {
   @Entry public var sliderStyle: SliderStyle = .native
   @Entry public var stepStyle: StepStyle?
 
-  @Entry var sliderTrackStyle: AnySliderTrackStyle = .default
+  @Entry var sliderTrackStyle: AnySliderTrackStyle = .init()
   
   @Entry var isWithinSliderGroup: Bool = false
 
@@ -50,15 +50,3 @@ extension View {
   }
 
 }
-
-//public struct SliderStyleModifier: ViewModifier {
-//  @Environment(\.hsvcompon)
-//  public func body(content: Content) -> some View {
-//    content
-//  }
-//}
-//extension View {
-//  public func example() -> some View {
-//    self.modifier(SliderStyleModifier())
-//  }
-//}
