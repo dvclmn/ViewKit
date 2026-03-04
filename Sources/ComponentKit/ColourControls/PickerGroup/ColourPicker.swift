@@ -65,7 +65,7 @@ public struct ColourPicker: View {
       }
 
       if components.isEmpty {
-        StateView("No components specified")
+        Text("No components specified")
           .controlSize(.small)
       }
     }  // END main vstack
@@ -84,7 +84,7 @@ extension ColourPicker {
         )
         .labelStyle(.iconOnly)
       }
-//      .scaleEffect(x: 1.0, y: -1.0, anchor: .center)
+      //      .scaleEffect(x: 1.0, y: -1.0, anchor: .center)
     }
   }
 }

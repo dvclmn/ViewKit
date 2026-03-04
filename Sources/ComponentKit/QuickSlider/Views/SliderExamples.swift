@@ -69,7 +69,7 @@ public struct SliderExamples: View {
         //      .background(.blue.quinary)
 
       }
-      .formatValue { $0.displayString(places: 1) }
+      .formatValue { $0.render(using: .init(decimalPlaces: 1)) }
       .environment(\.maxCharacterColumns, 4)
       //    .formStyle(.grouped)
       
@@ -91,7 +91,7 @@ public struct SliderExamples: View {
 }
 #if DEBUG
 @available(macOS 15, iOS 18, *)
-#Preview(traits: .size(.normal)) {
+#Preview{
   SliderExamples()
 }
 #endif

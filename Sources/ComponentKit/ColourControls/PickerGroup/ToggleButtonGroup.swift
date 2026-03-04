@@ -29,7 +29,7 @@ struct ToggleButtonGroup: View {
     }
     .toggleStyle(.button)
     .labelStyle(.iconOnly)
-//    .fontWeight(.bold)
+    //    .fontWeight(.bold)
 
     .tint(.darkGrey)
   }

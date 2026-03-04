@@ -42,7 +42,7 @@ extension ColourPickerExample {
 
 }
 #if DEBUG
-#Preview(traits: .size(.normal)) {
+#Preview {
   @Previewable @State var model: ColourModelKind = .rgb
   ColourPickerExample()
     .frame(width: 300)

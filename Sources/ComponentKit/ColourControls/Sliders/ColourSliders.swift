@@ -108,7 +108,7 @@ extension ColourSliders {
 
 }
 #if DEBUG
-#Preview(traits: .size(.normal)) {
+#Preview {
   @Previewable @State var colour = RGBColour.green
   Form {
     ColourSliders($colour)

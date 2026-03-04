@@ -154,7 +154,10 @@ let package = Package(
     .target(
       name: "ComponentKit",
       dependencies: [
-        .module(.coreTools)
+        .module(.coreTools),
+        .module(.colourKit),
+        .module(.graphicsKit),
+        .module(.layoutKit),
       ],
     ),
 
@@ -307,6 +310,7 @@ enum BaseModule {
   case networking
   case primitives
   case baseUI
+  case componentKit
   case canvasKit
   case colourKit
   case gestureKit
@@ -329,6 +333,7 @@ enum BaseModule {
       case .networking: "BaseNetworking"
       case .primitives: "BasePrimitives"
       case .baseUI: "BaseUI"
+      case .componentKit: "ComponentKit"
       case .canvasKit: "CanvasKit"
       case .colourKit: "ColourKit"
       case .gestureKit: "GestureKit"

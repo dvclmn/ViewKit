@@ -29,7 +29,8 @@ public struct ColourLevelView<Colour: ColourModel & EnvironmentResolvableColour>
         case .background: background.toColour
       }
     }
-    .frameFromSquare(diameter)
+    .squareFrame(diameter)
+//    .frameFromSquare(diameter)
     .clipShape(.circle)
     .overlay {
       Circle().fill(.clear).stroke(.white, lineWidth: 1)
