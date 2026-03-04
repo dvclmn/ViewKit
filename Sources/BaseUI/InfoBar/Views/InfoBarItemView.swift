@@ -28,7 +28,6 @@ public struct InfoBarItemView: View {
       if let label = item.label {
         MaybeLabel(label)
           .environment(\.labelDisplay, itemLabelDisplay)
-          .gridFont(for: .asciiMode)
 
           /// This seems to be behaving; this ensures that the text label
           /// from MaybeLabel doesn't get truncated
@@ -37,7 +36,7 @@ public struct InfoBarItemView: View {
       }
 
       Text(String(describing: item.content))
-        .gridFont(for: .asciiMode)
+        
         /// Taking the edge off the brightness
         .opacity(0.9)
         .monospacedDigit()
@@ -56,6 +55,7 @@ public struct InfoBarItemView: View {
     .onHover { hovering in
       isHoveringItem = hovering
     }
+    .gridFont(for: .asciiMode)
     //    .containerValueBool(.isShowingSectionHeader, isShowingSectionHeader)
     //    .containerValueBool(.hasSpacers, false)
 

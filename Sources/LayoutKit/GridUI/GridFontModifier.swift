@@ -47,10 +47,13 @@ extension View {
   }
 
   /// This sets the font for this View. It doesn't set/change any Environment value
-  public func gridFont(for domain: GridFontDomain = .automatic) -> some View {
+  public func gridFont(
+    for domain: GridFontDomain = .automatic,
+    size: CGFloat? = nil
+  ) -> some View {
     self.modifier(
       GridFontModifier(
-        config: .domain(domain)
+        config: .domain(domain, size: size)
         //        descriptor: GridFontConfig.domain(domain)
       )
     )
