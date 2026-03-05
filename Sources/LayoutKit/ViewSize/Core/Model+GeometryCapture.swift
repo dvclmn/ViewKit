@@ -15,8 +15,7 @@ public protocol GeometryCapturable: Equatable, Sendable {
 extension CGSize: GeometryCapturable {}
 extension CGRect: GeometryCapturable {}
 extension EdgeInsets: GeometryCapturable {}
-extension SizeAndSafeInsets: GeometryCapturable {}
-
+extension SafeAreaRect: GeometryCapturable {}
 
 public struct GeometryCapture<T: GeometryCapturable>: Sendable {
   let type: T.Type
@@ -40,20 +39,22 @@ extension GeometryCapture {
     .init(type: EdgeInsets.self) { $0.safeAreaInsets }
   }
 
+  /// Note: This does not account for safe area insets at all
   public static var globalRect: GeometryCapture<CGRect> {
-//  public static var safeGlobalRect: GeometryCapture<CGRect> {
     .init(type: CGRect.self) { proxy in
-//      proxy.bounds(of: .)
       proxy.frame(in: .global)
     }
-//    .init(type: SizeAndSafeInsets.self) {
-//      SizeAndSafeInsets(size: $0.size, safeInsets: $0.safeAreaInsets)
-//    }
   }
-  
-  public static var sizeAndSafeInsets: GeometryCapture<SizeAndSafeInsets> {
-    .init(type: SizeAndSafeInsets.self) {
-      SizeAndSafeInsets(size: $0.size, safeInsets: $0.safeAreaInsets)
+
+  /// This captures three points of data, hoping to get proper
+  /// sense of safe areas and view positoning
+  public static var safeAreaRect: GeometryCapture<SafeAreaRect> {
+    .init(type: SafeAreaRect.self) { proxy in
+      return SafeAreaRect(
+        size: proxy.size,
+        safeInsets: proxy.safeAreaInsets,
+        frame: proxy.frame(in: .global)
+      )
     }
   }
 

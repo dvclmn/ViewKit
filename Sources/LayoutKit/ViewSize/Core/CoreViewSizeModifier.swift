@@ -10,7 +10,7 @@ import SwiftUI
 
 public typealias ViewSizeOutput<T> = (T) -> Void
 
-public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
+struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
   @Environment(\.viewportSize) private var viewportSize
   @State private var debouncer: AsyncDebouncer?
 
@@ -18,8 +18,7 @@ public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
   let isEnabled: Bool
   let valueOutput: ViewSizeOutput<Capture>
 
-  // MARK: - Initialiser
-  public init(
+  init(
     capture: GeometryCapture<Capture>,
     mode: DebounceMode,
     isEnabled: Bool,
@@ -31,8 +30,7 @@ public struct ViewSizeModifier<Capture: GeometryCapturable>: ViewModifier {
     self.valueOutput = valueOutput
   }
 
-  // MARK: - View Modifier
-  public func body(content: Content) -> some View {
+  func body(content: Content) -> some View {
     content
       .onGeometryChange(for: capture.type) { proxy in
         capture.transform(proxy)

@@ -7,12 +7,20 @@
 
 import SwiftUI
 
-public struct SizeAndSafeInsets: Equatable, Sendable {
+public struct SafeAreaRect: Equatable, Sendable {
+//public struct SizeAndSafeInsets: Equatable, Sendable {
   let size: CGSize
   let safeInsets: EdgeInsets
+  
+  let frame: CGRect
+//  let space: CoordinateSpace
 }
 
-extension SizeAndSafeInsets {
+extension SafeAreaRect {
+  
+//  var bounds: CGRect {
+//    space.
+//  }
   public var rect: CGRect {
     let width = size.width - (safeInsets.leading)
 //    let width = size.width - (safeInsets.leading + safeInsets.trailing)
