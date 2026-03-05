@@ -31,6 +31,10 @@ extension BinaryFloatingPoint {
   public mutating func increment(by amount: Self, in range: ClosedRange<Self>? = nil) {
     self = incrementing(by: amount, in: range)
   }
+  
+  public mutating func decrement(by amount: Self, in range: ClosedRange<Self>? = nil) {
+    self = incrementing(by: -amount, in: range)
+  }
 
   /// Map distance to a scaled distance using atan
   public func scaledDistance(

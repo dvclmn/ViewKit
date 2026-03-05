@@ -34,6 +34,9 @@ extension QuickSlider {
       // MARK: - Main Track
       SliderCore(value: $value, track: track)
 
+        .frame(width: sliderTrackMaxWidth)
+        .frame(maxWidth: .infinity, alignment: .trailing)
+
       // MARK: - Units
       if sliderComponents.contains(.units) {
         TextColumns(alignment: .trailing) {

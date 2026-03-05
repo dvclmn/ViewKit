@@ -120,6 +120,11 @@ extension CGRect {
 
 // MARK: - Convenience initialisers
 extension CGRect {
+  
+  /// Creates a rect with an origin of zero, and size from provided `size`
+  public init(fromSize size: CGSize) {
+    self.init(origin: .zero, size: size)
+  }
 
   /// Useful for occasions where origin and size properties
   /// are already defined, just need to be plugged in,

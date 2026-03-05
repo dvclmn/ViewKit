@@ -49,6 +49,8 @@ struct CellSelectionCanvas: View {
         pinMode: .canvas,
         drawsBorder: false
       )
+      
+//      context.debugEnvironmentViewportRect(in: size)
 
       // MARK: - Selection Box
       guard let rect = store.selectionRect,
