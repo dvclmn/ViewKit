@@ -26,7 +26,6 @@ where TabItem: CaseIterable, TabItem.AllCases: RandomAccessCollection {
   public var body: some View {
 
     if #available(macOS 15, iOS 18, *) {
-
       TabView(selection: $tab) {
         ForEach(TabItem.allCases) { tabItem in
           Tab(value: tabItem) {

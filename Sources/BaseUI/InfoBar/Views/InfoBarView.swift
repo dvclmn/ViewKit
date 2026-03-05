@@ -54,8 +54,7 @@ public struct InfoBarView: View {
       .scrollBounceBehavior(.basedOnSize)
       .scrollIndicators(.hidden)
 
-      .gridFont(.terminal, size: 20)
-//      .gridFont(config: .domain(.asciiMode))
+      .gridFont(config: .domain(.asciiMode))
 //      .font(.caption)
       .fontWeight(.medium)
       .frame(height: Styles.infoBarHeight)

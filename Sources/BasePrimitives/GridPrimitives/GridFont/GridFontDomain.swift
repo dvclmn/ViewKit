@@ -14,6 +14,17 @@ public enum GridFontDomain: Sendable {
   case canvas  // Returns `unitSize`
   case asciiMode  // Returns `asciiUnitSize`
   case automatic  // Defers to Environment's `activeUnitSize` value
+
+  /// Fallback used when no `gridFont` has been provided in the Environment.
+  public var fallbackFont: GridFont {
+    switch self {
+      case .asciiMode: .terminal
+      case .canvas, .automatic: .sfMono
+    }
+  }
+
+  /// Fallback used when no domain-specific font size is available.
+  public var fallbackFontSize: CGFloat { 20 }
   
   public var unitSizeKey: KeyPath<EnvironmentValues, CGSize?> {
     switch self {
