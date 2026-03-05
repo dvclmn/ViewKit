@@ -5,7 +5,8 @@
 //  Created by Dave Coleman on 7/10/2025.
 //
 
-import CoreTools
+import BasePrimitives
+//import CoreTools
 import SwiftUI
 
 extension WavePathGenerator {

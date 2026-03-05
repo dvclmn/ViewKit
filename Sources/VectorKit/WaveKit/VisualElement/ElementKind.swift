@@ -6,7 +6,9 @@
 //
 
 import CasePaths
-import CoreTools
+import EnumMacros
+import BasePrimitives
+//import CoreTools
 import Foundation
 
 /// Might find better solution, but for now this is an easy way to avoid

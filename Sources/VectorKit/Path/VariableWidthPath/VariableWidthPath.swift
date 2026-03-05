@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 31/5/2025.
 //
 
-import CoreTools
 import SwiftUI
+import BasePrimitives
 
 public struct VariableWidthPath {
   var leftEdge: [CGPoint] = []

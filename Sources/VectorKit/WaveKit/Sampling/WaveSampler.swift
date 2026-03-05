@@ -7,9 +7,8 @@
 
 import Accelerate
 import CoreGraphics
-import CoreTools
+//import CoreTools
 import Darwin
-import Foundation
 import SwiftUI
 
 public typealias Sampler = WaveSampler<Double>

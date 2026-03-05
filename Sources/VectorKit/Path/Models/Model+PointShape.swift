@@ -5,8 +5,9 @@
 //  Created by Dave Coleman on 12/7/2025.
 //
 
-import CoreTools
+//import CoreTools
 import SwiftUI
+import BasePrimitives
 
 public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, CaseIterable, Codable {
   case square

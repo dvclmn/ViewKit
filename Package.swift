@@ -239,6 +239,7 @@ let package = Package(
         //        .module(.coreTools),
         .module(.basePrimitives),
         .module(.enumMacros),
+        .module(.colourKit), // Consider trying to remove this dep.
         //        .module(.colourKit),
         //        .module(.uiPrimitives),
         .casePaths,

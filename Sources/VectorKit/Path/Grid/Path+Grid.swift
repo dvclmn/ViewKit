@@ -5,7 +5,8 @@
 //  Created by Dave Coleman on 25/2/2026.
 //
 
-import CoreTools
+//import CoreTools
+import BasePrimitives
 import SwiftUI
 
 public typealias IndexHorizontal = (_ index: Int, _ x: CGFloat) -> Void

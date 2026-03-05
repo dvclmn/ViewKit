@@ -27,9 +27,7 @@ extension Path {
 
   /// Initialises a Path with a rect at `size` dimensions, and origin of `zero`
   public init(fromSize size: CGSize) {
-    self.init { path in
-      path.addRect(CGRect(origin: .zero, size: size))
-    }
+    self.init(CGRect(origin: .zero, size: size))
   }
 
   public init(
@@ -40,7 +38,6 @@ extension Path {
     self = points.createPath(type: type, shouldDropFirst: shouldDropFirst)
   }
 }
-
 
 extension Path {
 

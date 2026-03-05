@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 1/2/2026.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 public protocol WaveFloat: BinaryFloatingPoint, Sendable, Codable, StringRenderable, FloatRenderable {

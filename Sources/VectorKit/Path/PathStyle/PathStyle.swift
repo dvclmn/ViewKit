@@ -6,7 +6,6 @@
 //
 
 import CasePaths
-import CoreTools
 import SwiftUI
 
 /// Path style with optional stamping effect
