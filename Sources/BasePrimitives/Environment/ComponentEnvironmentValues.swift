@@ -25,10 +25,7 @@ extension EnvironmentValues {
 
   /// I think this should be removed, and callers just access `viewportRect`
   /// directly and get the size from there
-  public var viewportSize: CGSize? {
-    guard let viewportRect else { return nil }
-    return viewportRect.size
-  }
+  public var viewportSize: CGSize? { viewportRect?.size }
 
   /// Strokes
   @Entry public var strokeColour: AnyShapeStyle?
