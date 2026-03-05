@@ -25,32 +25,25 @@ public enum GridFontDomain: Sendable {
 
   /// Fallback used when no domain-specific font size is available.
   public var fallbackFontSize: CGFloat { 20 }
-  
-  public var unitSizeKey: KeyPath<EnvironmentValues, CGSize?> {
-    switch self {
-      case .canvas: \.unitSize
-      case .asciiMode: \.asciiUnitSize
-      case .automatic: \.activeUnitSize
-    }
-  }
-  
-  public var fontSizeKey: KeyPath<EnvironmentValues, CGFloat?> {
-    switch self {
-      case .canvas: \.gridFontSize
-      case .asciiMode: \.asciiModeFontSize
-      case .automatic: \.activeGridFontSize
-    }
-  }
-  
-  public func gridFont(in env: EnvironmentValues) -> GridFont? {
-    env.gridFont
-  }
-  
-  public func gridFontSize(in env: EnvironmentValues) -> CGFloat? {
-    env[keyPath: fontSizeKey]
-  }
-  
+
   public func unitSize(in env: EnvironmentValues) -> CGSize? {
-    env[keyPath: unitSizeKey]
+    let key: KeyPath<EnvironmentValues, CGSize?> =
+      switch self {
+        case .canvas: \.unitSize
+        case .asciiMode: \.asciiUnitSize
+        case .automatic: \.activeUnitSize
+      }
+    return env[keyPath: key]
   }
+
+  public func fontSize(in env: EnvironmentValues) -> CGFloat? {
+    let key: KeyPath<EnvironmentValues, CGFloat?> =
+      switch self {
+        case .canvas: \.gridCanvasFontSize
+        case .asciiMode: \.asciiModeFontSize
+        case .automatic: \.activeGridFontSize
+      }
+    return env[keyPath: key]
+  }
+
 }

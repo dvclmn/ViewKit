@@ -20,6 +20,7 @@ public enum FloatDisplayPreset: String, CaseIterable {
   case location
 
   case dimensions
+  case rect
 
   public var format: FloatDisplayFormat {
     switch self {
@@ -30,7 +31,7 @@ public enum FloatDisplayPreset: String, CaseIterable {
         .init(
           decimalPlaces: 0,
           labelStyle: .abbreviated(.none),
-            //          separatorVisibility: .component
+          //          separatorVisibility: .component
         )
 
       case .wholeNumber:
@@ -59,6 +60,14 @@ public enum FloatDisplayPreset: String, CaseIterable {
 
       case .showSign:
         .init(
+          sign: .always(renderPlusSign: false)
+        )
+
+      case .rect:
+        .init(
+          decimalPlaces: 0,
+          labelStyle: .abbreviated(.colon),
+          componentDelimiter: .dimensions,
           sign: .always(renderPlusSign: false)
         )
     }

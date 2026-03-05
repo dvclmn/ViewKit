@@ -25,7 +25,7 @@ struct GridCanvasGeometryModifier: ViewModifier {
     content
       /// The canvas/grid source-of-truth font size, used for deriving
       /// size transforms into other domains (e.g. ASCII UI mode).
-      .environment(\.gridFontSize, fontSize)
+      .environment(\.gridCanvasFontSize, fontSize)
 
       /// This provides the environment with `unitSize`
       //      .setCharacterSize(for: font, size: fontSize, mode: .debounce(0.2))

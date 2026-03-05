@@ -5,20 +5,22 @@
 //  Created by Dave Coleman on 5/3/2026.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 public struct ViewportSizeIndicatorModifier: ViewModifier {
   @Environment(\.viewportRect) private var viewportRect
 
-  let isEnabled: Bool
   public func body(content: Content) -> some View {
     content
-
       .overlay {
-
         Canvas { context, size in
           context.debugEnvironmentViewportRect(in: size)
+        }
+        .overlay {
+          Text("Viewport Rect: \(viewportRect?.displayString(.rect), default: "None Found")")
+            .font(.title)
+            .background(.black.secondary)
         }
         .allowsHitTesting(false)
       }
@@ -59,6 +61,6 @@ extension GraphicsContext {
 
 extension View {
   public func viewportRectIndicator() -> some View {
-    self.modifier(ViewportSizeIndicatorModifier(isEnabled: true))
+    self.modifier(ViewportSizeIndicatorModifier())
   }
 }

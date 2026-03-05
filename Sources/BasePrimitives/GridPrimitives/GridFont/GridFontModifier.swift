@@ -10,7 +10,7 @@ import SwiftUI
 struct GridFontModifier: ViewModifier {
   @Environment(\.gridFont) private var gridFont
   @Environment(\.asciiModeFontSize) private var asciiModeFontSize
-  @Environment(\.gridFontSize) private var gridFontSize
+  @Environment(\.gridCanvasFontSize) private var gridCanvasFontSize
   @Environment(\.self) private var envSelf
   @Environment(\.isASCIIMode) private var isASCIIMode
 
@@ -19,7 +19,7 @@ struct GridFontModifier: ViewModifier {
   func body(content: Content) -> some View {
     content
       .font(config.descriptor(in: envSelf)?.font)
-    
+
       /// Prevents any compression of the spacing between characters
       .allowsTightening(false)
   }

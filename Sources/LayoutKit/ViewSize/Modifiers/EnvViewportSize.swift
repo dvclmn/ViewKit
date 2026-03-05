@@ -23,7 +23,7 @@ public struct EnvironmentViewportSizeModifier: ViewModifier {
         self.viewportRect = $0.rect
       }
 
-      .modifier(ViewportSizeIndicatorModifier(isEnabled: isDebugMode))
+//      .modifier(ViewportSizeIndicatorModifier(isEnabled: isDebugMode))
       .environment(\.viewportRect, viewportRect)
   }
 }

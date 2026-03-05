@@ -20,8 +20,10 @@ public enum GridFontConfig: Sendable {
   public func descriptor(in environment: EnvironmentValues) -> GridFontDescriptor? {
     switch self {
       case .domain(let domain, let size):
-        let hasStyleFromEnvironment = domain.gridFont(in: environment) != nil
+        let hasStyleFromEnvironment = environment.gridFont != nil
+//        let hasStyleFromEnvironment = domain.gridFont(in: environment) != nil
         let hasSizeFromEnvironment = size != nil || domain.gridFontSize(in: environment) != nil
+//        let hasSizeFromEnvironment = size != nil || domain.gridFontSize(in: environment) != nil
 
         let resolvedStyle = domain.gridFont(in: environment) ?? domain.fallbackFont
         let resolvedSize = size ?? domain.gridFontSize(in: environment) ?? domain.fallbackFontSize
