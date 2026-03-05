@@ -49,6 +49,25 @@ extension GridFont {
     return size / scale
   }
 
+  /// A horizontal offset to be applied in sertain contexts, to
+  /// counteract font metrics something something
+  ///
+  /// Aka `BigBlueTerm437` has a slight bias to the left,
+  /// so needs a nudge to the right to appear perfectly centred
+  /// in its own advance width
+  ///
+  /// Applied as a factor of its current width.
+  /// E.g. `width * horizontalOffsetFactor`
+  public var horizontalOffsetFactor: CGFloat? {
+    switch self {
+      case .menlo: nil
+      case .sfMono: nil
+      case .courier: nil
+      case .monaco: nil
+      case .terminal: 0.14
+    }
+  }
+
 }
 // MARK: - Bundled
 extension GridFont {

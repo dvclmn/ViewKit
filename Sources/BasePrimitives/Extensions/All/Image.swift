@@ -47,3 +47,18 @@ public extension NSImage {
 }
 #endif
 
+
+
+//var resolvedImage: NSImage? {
+//  if let primary = NSImage(named: placeholderIconName) {
+//    return primary
+//  }
+//  if let fallbackName = Bundle.main.iconFileName,
+//     let fallback = NSImage(named: fallbackName) {
+//    return fallback
+//  }
+//  if let backup = NSImage(named: placeholderIconBackupName) {
+//    return backup
+//  }
+//  return nil
+//  }

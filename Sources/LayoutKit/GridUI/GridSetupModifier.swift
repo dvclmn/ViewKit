@@ -17,7 +17,6 @@ import SwiftUI
 struct GridCanvasGeometryModifier: ViewModifier {
   //  @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers: Bool
 
-//  let config: GridFontConfig
   let font: GridFont
   let fontSize: CGFloat
   let dimensions: GridDimensions
@@ -29,11 +28,11 @@ struct GridCanvasGeometryModifier: ViewModifier {
       .environment(\.gridFontSize, fontSize)
 
       /// This provides the environment with `unitSize`
-//      .setCharacterSize(for: font, size: fontSize, mode: .debounce(0.2))
+      //      .setCharacterSize(for: font, size: fontSize, mode: .debounce(0.2))
       .setCharacterSize(config: .custom(font, size: fontSize), mode: .debounce(0.2))
 
       /// This provides the environment with `viewportRect`
-      .viewportCapture(mode: .debounce(0.2), showsIndicator: false)
+      .viewportCapture(mode: .debounce(0.2))
 
       .environment(\.gridFont, font)
       //      .gridFont(font, size: fontSize)

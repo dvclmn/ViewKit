@@ -18,7 +18,7 @@ enum CaptureArea {
 public struct EnvironmentViewportSizeModifier: ViewModifier {
 
   @State private var viewportRect: CGRect?
-//  @State private var viewportSize: CGSize?
+  //  @State private var viewportSize: CGSize?
 
   let mode: DebounceMode
   let showsIndicator: Bool

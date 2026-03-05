@@ -9,21 +9,6 @@ import SwiftUI
 
 extension EnvironmentValues {
 
-  /// This is primarily expected to represent the whole window of an app,
-  /// minus any base UI components like Toolbar or Inspector.
-  ///
-  /// Useful as long as its companion modifier
-  /// `viewportCapture(mode:showsIndicator:didUpdateSize)`
-  /// is placed on the view the caller regards as the viewport area
-  @Entry public var viewportRect: CGRect?
-
-  /// I think this should be removed, and callers just access `viewportRect`
-  /// directly and get the size from there
-  public var viewportSize: CGSize? {
-    guard let viewportRect else { return nil }
-    return viewportRect.size
-  }
-
   /// This is usable by both Canvas and Grid domains. Describes the anchor
   /// used for SwiftUI layout by the main Artwork View in a CanvasView.
   /// Important for coordinate space calculations.
