@@ -37,34 +37,36 @@ extension QuickSlider {
         } else {
 
           // MARK: - Native Slider
+
+          /// Using `labelsHidden` as Label is handled in ``SliderComponents``
           @Bindable var store = store
 
-          Group {
-            if let step = store.step {
-              
-              Slider(
-                value: $value,
-                in: store.range,
-                step: step
-              ) {
-                LabelComponent()
-              } onEditingChanged: { editing in
-                handleOnEdit(editing)
-              }
+          if let step = store.step {
+            Slider(
+              value: $value,
+              in: store.range,
+              step: step
+            ) {
+              SliderLabel(value: $value)
 
-            } else {
-
-              Slider(
-                value: $value,
-                in: store.range,
-              ) {
-                LabelComponent()
-              } onEditingChanged: { editing in
-                handleOnEdit(editing)
-              }
+            } onEditingChanged: { editing in
+              handleOnEdit(editing)
             }
+            .labelsHidden()
+
+          } else {
+
+            Slider(
+              value: $value,
+              in: store.range,
+            ) {
+              SliderLabel(value: $value)
+
+            } onEditingChanged: { editing in
+              handleOnEdit(editing)
+            }
+            .labelsHidden()
           }
-          .labelsHidden()
         }
       }
 
@@ -75,13 +77,6 @@ extension QuickSlider {
 extension QuickSlider.SliderCore {
 
   private var columns: Int { store.sliderTrackColumns }
-
-  @ViewBuilder
-  func LabelComponent() -> some View {
-    @Bindable var store = store
-    MaybeLabel(store.label)
-      .onDoubleTap($value.toBindingDouble, defaultValue: sliderDefaultValue)
-  }
 
   private func handleOnEdit(_ didEdit: Bool) {
     let phase = SliderPhase(fromOnEditingChanged: didEdit)
