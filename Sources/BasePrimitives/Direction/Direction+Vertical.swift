@@ -5,15 +5,18 @@
 //  Created by Dave Coleman on 14/1/2026.
 //
 
-import Foundation
 import EnumMacros
+import Foundation
 
 extension Direction {
-  @CaseDetection
   public enum Vertical {
     case up
     case down
-    
-    public var opposite: Self { isUp ? .down : .up }
   }
+}
+
+extension Direction.Vertical {
+  public var opposite: Self { isUp ? .down : .up }
+  public var isUp: Bool { self == .up }
+  public var isDown: Bool { self == .down }
 }

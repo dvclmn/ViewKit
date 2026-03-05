@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
-import SampleBuilder
+//import SampleBuilder
 
-@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
+//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
 public enum ActionRole: Equatable, Sendable, Codable, Hashable {
   case success
   case destructive
