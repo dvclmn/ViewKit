@@ -8,30 +8,41 @@
 import SwiftUI
 
 public struct SafeAreaRect: Equatable, Sendable {
-//public struct SizeAndSafeInsets: Equatable, Sendable {
   let size: CGSize
   let safeInsets: EdgeInsets
-  
-  let frame: CGRect
-//  let space: CoordinateSpace
+  let globalFrame: CGRect
 }
 
 extension SafeAreaRect {
-  
-//  var bounds: CGRect {
-//    space.
-//  }
+  /// The portion of the view's frame in the global coordinate space that is inside the safe area.
+  /// This is computed by offsetting the global frame by the leading/top safe area insets and
+  /// reducing the size by the total horizontal and vertical insets. Width and height are clamped
+  /// to be non-negative.
   public var rect: CGRect {
-    let width = size.width - (safeInsets.leading)
-//    let width = size.width - (safeInsets.leading + safeInsets.trailing)
-    let height = size.height - (safeInsets.top)
-//    let height = size.height - (safeInsets.top + safeInsets.bottom)
-    
-    return CGRect(
-      x: safeInsets.leading,
-      y: safeInsets.top,
-      width: width,
-      height: height
-    )
+    let x = globalFrame.origin.x + safeInsets.leading
+    let y = globalFrame.origin.y + safeInsets.top
+    let width = max(0, size.width - (safeInsets.leading + safeInsets.trailing))
+    let height = max(0, size.height - (safeInsets.top + safeInsets.bottom))
+    return CGRect(x: x, y: y, width: width, height: height)
   }
 }
+
+//extension SafeAreaRect {
+//
+//  public var rect: CGRect {
+//    
+//    let x
+//    
+//    let width = size.width - (safeInsets.leading)
+////    let width = size.width - (safeInsets.leading + safeInsets.trailing)
+//    let height = size.height - (safeInsets.top)
+////    let height = size.height - (safeInsets.top + safeInsets.bottom)
+//    
+//    return CGRect(
+//      x: safeInsets.leading,
+//      y: safeInsets.top,
+//      width: width,
+//      height: height
+//    )
+//  }
+//}

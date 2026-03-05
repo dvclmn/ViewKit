@@ -53,7 +53,7 @@ extension GeometryCapture {
       return SafeAreaRect(
         size: proxy.size,
         safeInsets: proxy.safeAreaInsets,
-        frame: proxy.frame(in: .global)
+        globalFrame: proxy.frame(in: .global)
       )
     }
   }
