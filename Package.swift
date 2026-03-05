@@ -91,13 +91,13 @@ let package = Package(
     /// Note: `path` here wants the Macro Declaration source, not the Implementation
     .target(
       name: "EnumMacros",
-      dependencies: ["BaseMacrosImplementation", .module(.primitives)],
+      dependencies: ["BaseMacrosImplementation", .module(.basePrimitives)],
       path: .macrosSource + "/MacroDeclarations/EnumMacros",
     ),
 
     .target(
       name: "SampleBuilder",
-      dependencies: ["BaseMacrosImplementation", .module(.primitives)],
+      dependencies: ["BaseMacrosImplementation", .module(.basePrimitives)],
       path: .macrosSource + "/MacroDeclarations/SampleBuilder",
     ),
 
@@ -106,7 +106,7 @@ let package = Package(
       dependencies: [
         .module(.enumMacros),
         .module(.sampleBuilder),
-        .module(.primitives),
+        .module(.basePrimitives),
       ],
       path: .macrosSource + "/BaseMacrosClient",
     ),
@@ -171,7 +171,7 @@ let package = Package(
     .target(
       name: "ColourKit",
       dependencies: [
-        .module(.coreTools)
+        .module(.basePrimitives)
       ],
     ),
 
@@ -217,7 +217,7 @@ let package = Package(
     .target(
       name: "SharedHelpers",
       dependencies: [
-        .module(.primitives),
+        .module(.basePrimitives),
         .module(.enumMacros),
         .module(.sampleBuilder),
         .sharing,
@@ -236,9 +236,11 @@ let package = Package(
     .target(
       name: "VectorKit",
       dependencies: [
-        .module(.coreTools),
-        .module(.colourKit),
-        .module(.uiPrimitives),
+        //        .module(.coreTools),
+        .module(.basePrimitives),
+        .module(.enumMacros),
+        //        .module(.colourKit),
+        //        .module(.uiPrimitives),
         .casePaths,
         .metaCodable,
         .identifiedCollections,
@@ -258,7 +260,7 @@ let package = Package(
     .target(
       name: "CoreTools",
       dependencies: [
-        .module(.primitives),
+        .module(.basePrimitives),
         .module(.sharedHelpers),
         .module(.enumMacros),
       ],
@@ -280,7 +282,7 @@ let package = Package(
     ),
     .testTarget(
       name: "BasePrimitivesTests",
-      dependencies: [.module(.primitives)],
+      dependencies: [.module(.basePrimitives)],
       exclude: ["BasePrimitives.xctestplan"],
     ),
     .testTarget(
@@ -323,7 +325,7 @@ enum BaseModule {
   case enumMacros
   case sampleBuilder
   case networking
-  case primitives
+  case basePrimitives
   case baseUI
   case componentKit
   case canvasKit
@@ -347,7 +349,7 @@ enum BaseModule {
       case .enumMacros: "EnumMacros"
       case .sampleBuilder: "SampleBuilder"
       case .networking: "BaseNetworking"
-      case .primitives: "BasePrimitives"
+      case .basePrimitives: "BasePrimitives"
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
       case .canvasKit: "CanvasKit"

@@ -5,8 +5,6 @@
 //  Created by Dave Coleman on 22/2/2026.
 //
 
-import BasePrimitives
-
 extension GridBoundaryPoint {
 
   public var toCompatPointerStyle: PointerStyleCompatible {

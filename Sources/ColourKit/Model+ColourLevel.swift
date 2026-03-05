@@ -5,7 +5,8 @@
 //  Created by Dave Coleman on 29/6/2025.
 //
 
-import CoreTools
+//import CoreTools
+import BasePrimitives
 import SwiftUI
 
 public protocol ColourHandlerProtocol {
@@ -16,7 +17,7 @@ public protocol ColourHandlerProtocol {
   var background: Color { get }
 }
 
-@CaseDetection
+//@CaseDetection
 public enum HierarchicalColour: String, Sendable, CaseCyclable, CaseIterable, NamedItem, Identifiable,
   Equatable
 {
@@ -45,7 +46,6 @@ public enum HierarchicalColour: String, Sendable, CaseCyclable, CaseIterable, Na
   }
 }
 
-@CaseDetection
 public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable, NamedItem, Pickable, Identifiable {
   public typealias Item = Self
 
@@ -57,6 +57,8 @@ public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable, NamedItem
   public var id: String { rawValue }
   public var name: String { rawValue.capitalized }
 
+  public var isForeground: Bool { self == .foreground }
+  public var isBackground: Bool { self == .background }
 }
 
 extension Binding where Value == RGBColour {

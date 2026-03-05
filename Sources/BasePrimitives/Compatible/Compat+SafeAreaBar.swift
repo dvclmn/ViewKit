@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 21/2/2026.
 //
 
-import BasePrimitives
 import SwiftUI
 
 /// Shows the specified content as a custom bar above or below the modified view

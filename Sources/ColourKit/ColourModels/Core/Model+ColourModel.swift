@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 12/5/2025.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 public protocol ColourModel: Codable, Equatable, Identifiable {
@@ -25,7 +25,6 @@ extension ColourModel {
   public var nsColourSpace: NSColorSpace { .deviceRGB }
 }
 
-@CaseDetection
 public enum ColourModelKind: String, Hashable, Codable, Sendable, CaseIterable, CaseCyclable, Identifiable {
   public static let defaultCase: ColourModelKind = .rgb
   
@@ -46,4 +45,7 @@ public enum ColourModelKind: String, Hashable, Codable, Sendable, CaseIterable, 
       case .hsv: .symbol("cone") // line.3.crossed.swirl.circle
     }
   }
+  
+  public var isRGB: Bool { self == .rgb }
+  public var isHSV: Bool { self == .hsv }
 }
