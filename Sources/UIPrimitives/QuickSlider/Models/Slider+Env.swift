@@ -16,37 +16,33 @@ import SwiftUI
 extension EnvironmentValues {
   @Entry public var sliderComponents: SliderComponents = .all
   @Entry public var sliderDefaultValue: Double?
-//  @Entry public var sliderStyle: SliderStyle = .native
   @Entry public var stepStyle: StepStyle?
-
-//  @Entry var sliderTrackStyle: AnySliderTrackStyle = .init()
-  
+  @Entry public var sliderTrackMaxWidth: CGFloat?
   @Entry var isWithinSliderGroup: Bool = false
 
 }
 
 extension View {
-//  public func sliderTrackStyle<S: SliderTrackStyle>(_ style: S) -> some View {
-//    environment(\.sliderTrackStyle, AnySliderTrackStyle(style))
-//  }
+  //  public func sliderTrackStyle<S: SliderTrackStyle>(_ style: S) -> some View {
+  //    environment(\.sliderTrackStyle, AnySliderTrackStyle(style))
+  //  }
 }
-
 
 /// This is in use by e.g. `QuickSlider`, `LabeledSlider`
 public protocol SliderStylable {}
 
 extension View {
-//extension View where Self: SliderStylable {
-//  public func sliderStyle(_ style: SliderStyle = .native) -> some View {
-//    self.environment(\.sliderStyle, style)
-//  }
-
   public func sliderComponents(_ components: SliderComponents = .all) -> some View {
     self.environment(\.sliderComponents, components)
   }
 
   public func stepStyle(_ style: StepStyle) -> some View {
     self.environment(\.stepStyle, style)
+  }
+  
+  /// Max width for the track component
+  public func sliderMaxWidth(_ width: CGFloat) -> some View {
+    self.environment(\.sliderTrackMaxWidth, width)
   }
 
 }

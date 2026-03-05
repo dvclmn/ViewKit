@@ -13,8 +13,7 @@ extension QuickSlider {
   struct SliderComponents: View {
     @Environment(SliderHandler.self) private var store
     @Environment(\.sliderComponents) private var sliderComponents
-
-    @Environment(\.stepStyle) private var stepStyle
+    @Environment(\.sliderTrackMaxWidth) private var sliderTrackMaxWidth
     @Environment(\.formatValue) private var formatValue
     @Environment(\.sliderDefaultValue) private var sliderDefaultValue
     @Environment(\.isDebugMode) private var isDebugMode
@@ -32,14 +31,8 @@ extension QuickSlider {
         SliderLabel(value: $value)
       }
 
-      // MARK: - Stepper / Main Track
-      if let step = store.step {
-        StepperView(step)
-
-      } else {
-        // MARK: - Main Track
-        SliderCore(value: $value, track: track)
-      }
+      // MARK: - Main Track
+      SliderCore(value: $value, track: track)
 
       // MARK: - Units
       if sliderComponents.contains(.units) {
@@ -62,26 +55,6 @@ extension QuickSlider.SliderComponents {
     }
     return HapticPreset.boundaryAndDefault(store.range.toDoubleRange, defaultValue: defaultVal).shouldFire(
       old, new)
-  }
-
-  @ViewBuilder
-  private func StepperView(_ step: Double) -> some View {
-    switch stepStyle {
-      case .native, .none:
-        QuickSlider.SliderCore(value: $value, track: track)
-
-      case .stepper:
-        HStack {
-          QuickSlider.SliderCore(value: $value, track: track)
-
-          Stepper(
-            store.label.text,
-            value: $value,
-            step: step,
-          )
-          .labelsHidden()
-        }
-    }
   }
 
   @ViewBuilder

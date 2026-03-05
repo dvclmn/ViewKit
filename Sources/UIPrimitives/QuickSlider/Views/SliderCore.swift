@@ -15,6 +15,7 @@ extension QuickSlider {
     @Environment(\.colorScheme) private var colourScheme
     @Environment(\.isASCIIMode) private var isASCIIMode
     @Environment(\.unitSize) private var unitSize
+    @Environment(\.stepStyle) private var stepStyle
 
     @Binding var value: Double
     let track: TrackBackground
@@ -42,6 +43,8 @@ extension QuickSlider {
           @Bindable var store = store
 
           if let step = store.step {
+            StepperView(step)
+
             Slider(
               value: $value,
               in: store.range,
@@ -75,6 +78,19 @@ extension QuickSlider {
 }
 
 extension QuickSlider.SliderCore {
+
+  @ViewBuilder
+  private func StepperView(_ step: Double) -> some View {
+    if stepStyle == .stepper {
+      //    if let step = store.step, stepStyle == .stepper {
+      Stepper(
+        store.label.text,
+        value: $value,
+        step: step,
+      )
+      .labelsHidden()
+    }
+  }
 
   private var columns: Int { store.sliderTrackColumns }
 
