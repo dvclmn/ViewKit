@@ -15,10 +15,8 @@ public enum GridFont: String, Sendable, Codable, Hashable, Equatable, CaseIterab
   case courier = "Courier New"
   case monaco = "Monaco"
   case terminal = "BigBlueTerm437 Nerd Font"
-  //  case ibm = "AcPlus IBM BIOS"
-  //  case ibmEGA = "Ac437 IBM EGA 8x14"
-  case geist = "Geist Mono"
-  case jetBrains = "JetBrains Mono"
+  //  case geist = "Geist Mono"
+  //  case jetBrains = "JetBrains Mono"
 
   public var id: String { rawValue }
   public var name: String { rawValue }
@@ -33,11 +31,9 @@ extension GridFont {
       case .sfMono: 1.0
       case .courier: 1.0
       case .monaco: 1.0
-      //      case .ibm: 1.0
-      //      case .ibmEGA: 1.0
       case .terminal: 1.0
-      case .geist: 1.0
-      case .jetBrains: 1.0
+    //      case .geist: 1.0
+    //      case .jetBrains: 1.0
     }
   }
 
@@ -53,4 +49,26 @@ extension GridFont {
     return size / scale
   }
 
+}
+// MARK: - Bundled
+extension GridFont {
+  public var bundledFont: BundledFont? {
+    switch self {
+      case .terminal: .bigBlueTerm
+      default: nil
+    }
+  }
+
+  public func resolvedFont(size: CGFloat) -> Font {
+    switch self {
+      case .sfMono:
+        return .system(size: size, design: .monospaced)
+
+      default:
+        if let bundledFont {
+          return bundledFont.swiftUIFont(size: size)
+        }
+        return .custom(rawValue, fixedSize: size)
+    }
+  }
 }

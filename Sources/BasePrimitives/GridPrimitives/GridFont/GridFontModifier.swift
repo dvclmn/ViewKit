@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 31/10/2025.
 //
 
-import CoreTools
 import SwiftUI
 
 struct GridFontModifier: ViewModifier {
@@ -15,30 +14,17 @@ struct GridFontModifier: ViewModifier {
   @Environment(\.self) private var envSelf
   @Environment(\.isASCIIMode) private var isASCIIMode
 
-  //  let domain: GridFontDomain
-  //  let descriptor: GridFontDescriptor
-
   let config: GridFontConfig
 
   func body(content: Content) -> some View {
     content
       .font(config.descriptor(in: envSelf)?.font)
+    
       /// Prevents any compression of the spacing between characters
       .allowsTightening(false)
   }
 }
 
-extension GridFontModifier {
-
-  //  private var size: CGFloat? {
-  //    switch domain {
-  //      case .automatic: isASCIIMode ? asciiModeFontSize : gridFontSize
-  //      case .canvas: gridFontSize
-  //      case .asciiMode: asciiModeFontSize
-  //    }
-  //  }
-
-}
 extension View {
   public func gridFont(config: GridFontConfig) -> some View {
     self.modifier(

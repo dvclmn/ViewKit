@@ -10,7 +10,7 @@ import SwiftUI
 public struct GridFontDescriptor {
   let style: GridFont
   let size: CGFloat
-  
+
   public init(
     style: GridFont,
     size: CGFloat
@@ -21,7 +21,5 @@ public struct GridFontDescriptor {
 }
 
 extension GridFontDescriptor {
-  public var font: Font {
-    style.resolvedFont(size: size)
-  }
+  public var font: Font { style.resolvedFont(size: size) }
 }

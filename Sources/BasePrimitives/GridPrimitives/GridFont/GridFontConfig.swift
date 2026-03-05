@@ -14,7 +14,7 @@ public enum GridFontConfig: Sendable {
   /// `passthrough` allows `CharacterSizeModifier` to measure whatever
   /// font is currently set in that View hierarchy
   case passthrough
-
+  
   public static let automatic: Self = .domain(.automatic)
 
   public func descriptor(in environment: EnvironmentValues) -> GridFontDescriptor? {
