@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 14/1/2026.
 //
 
-import BasePrimitives
+import Foundation
 
 extension GridPosition {
   public mutating func offsetting(_ direction: Direction, by delta: Int = 1) {

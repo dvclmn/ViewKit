@@ -23,7 +23,7 @@ extension EmojiList {
   }
 }
 
-public struct Emoji {
+public struct EmojiConstants {
 
   public static var myFavourites: String {
     """

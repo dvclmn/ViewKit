@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 14/1/2026.
 //
 
-//import BasePrimitives
+import BasePrimitives
 
 public enum ModifiersSectionKey: InfoBarSectionKey {
   public static let title = "Modifiers"

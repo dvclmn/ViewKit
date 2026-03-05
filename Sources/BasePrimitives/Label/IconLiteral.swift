@@ -5,12 +5,8 @@
 //  Created by Dave Coleman on 31/8/2025.
 //
 
-import BasePrimitives
-import EnumMacros
 import Foundation
-import SampleBuilder
 
-@CaseDetection()
 public enum IconLiteral: Sendable, Equatable, Codable, Hashable {
   case emoji(String)
   case emojiComposition(EmojiComposition)
@@ -27,6 +23,15 @@ extension IconLiteral: ExpressibleByStringLiteral {
 }
 
 extension IconLiteral {
+  public init(from labelIcon: LabelIcon) {
+    switch labelIcon {
+      case .symbol(let string): self = .symbol(string)
+      case .emoji(let string): self = .emoji(string)
+    }
+  }
+}
+
+extension IconLiteral {
   public static func preset(_ iconPreset: Icons) -> Self {
     self.init(stringLiteral: iconPreset.icon)
   }
@@ -39,13 +44,33 @@ extension IconLiteral {
       case .customSymbol(let symbol): symbol.reference
     }
   }
-}
 
-extension IconLiteral {
-  public init(from labelIcon: LabelIcon) {
-    switch labelIcon {
-      case .symbol(let string): self = .symbol(string)
-      case .emoji(let string): self = .emoji(string)
+  public var isEmoji: Bool {
+    if case .emoji = self {
+      return true
     }
+    return false
   }
+
+  public var isEmojiComposition: Bool {
+    if case .emojiComposition = self {
+      return true
+    }
+    return false
+  }
+
+  public var isSymbol: Bool {
+    if case .symbol = self {
+      return true
+    }
+    return false
+  }
+
+  public var isCustomSymbol: Bool {
+    if case .customSymbol = self {
+      return true
+    }
+    return false
+  }
+
 }
