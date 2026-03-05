@@ -34,16 +34,16 @@ public struct PathDebugRenderer {
 
     /// Draw coordinate labels
     for label in result.labelPoints where label.element.isLabelled {
-
-      context.drawDebugText(
-        label.point.debugDescription,
-        //        label.point.displayString(places: 0, labelStyle: .none),
-        at: label.point,
-        positioned: .aboveOrigin,
-        colour: .primary,
-        fontSize: config.labelFontSize,
-        pointDisplay: .none,
-      )
+      #warning("Need to bring thid back")
+//      context.drawDebugText(
+//        label.point.debugDescription,
+//        //        label.point.displayString(places: 0, labelStyle: .none),
+//        at: label.point,
+//        positioned: .aboveOrigin,
+//        colour: .primary,
+//        fontSize: config.labelFontSize,
+//        pointDisplay: .none,
+//      )
     }
   }
 

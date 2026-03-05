@@ -6,7 +6,9 @@
 //
 
 import Foundation
-import CoreTools
+//import CoreTools
+import BasePrimitives
+import EnumMacros
 
 @MetaEnum
 public enum WaveDisplayComponent {

@@ -7,6 +7,7 @@
 
 //import CoreTools
 import SwiftUI
+//import EnumMacros
 
 // MARK: - WavePlacement
 
@@ -88,7 +89,7 @@ extension WavePlacement {
 
 // MARK: - Semantic presets
 
-@StaticMemberIterable
+//@StaticMemberIterable
 extension WavePlacement {
 
   /// Horizontal, left → right, full width, vertically centred.

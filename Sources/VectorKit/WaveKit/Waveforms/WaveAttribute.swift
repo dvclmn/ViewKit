@@ -5,7 +5,8 @@
 //  Created by Dave Coleman on 4/11/2024.
 //
 
-import CoreTools
+//import CoreTools
+import EnumMacros
 import Foundation
 
 @CaseDetection
