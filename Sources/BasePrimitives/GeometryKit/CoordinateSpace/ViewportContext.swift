@@ -133,7 +133,7 @@ extension ViewportContext {
   public func toCanvas(rect: CGRect) -> CGRect {
     let originCanvas = toCanvas(screenPoint: Point<ScreenSpace>(fromPoint: rect.origin))
     return CGRect(
-      origin: CGPoint(x: originCanvas.x, y: originCanvas.y),
+      origin: originCanvas.cgPoint,
       size: CGSize(
         width: rect.width / zoomSafe,
         height: rect.height / zoomSafe

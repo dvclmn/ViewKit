@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Point<Space>: Sendable {
+public struct Point<Space>: Sendable, Equatable {
   public var x: CGFloat
   public var y: CGFloat
 
@@ -24,5 +24,11 @@ public struct Point<Space>: Sendable {
   public init(fromOffset point: CGSize) {
     self.x = point.width
     self.y = point.height
+  }
+}
+
+extension Point {
+  public var cgPoint: CGPoint {
+    .init(x: x, y: y)
   }
 }

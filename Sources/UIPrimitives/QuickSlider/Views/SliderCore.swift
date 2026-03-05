@@ -29,6 +29,7 @@ extension QuickSlider {
 
       } else {
 
+        /// If there's a track, then it's a Custom Slider
         if let track = track(store.trackConfiguration(value: value, colourScheme: colourScheme)) {
           // MARK: - Custom Slider
           SliderCustom(value: $value, track: track)
@@ -40,6 +41,7 @@ extension QuickSlider {
 
           Group {
             if let step = store.step {
+              
               Slider(
                 value: $value,
                 in: store.range,

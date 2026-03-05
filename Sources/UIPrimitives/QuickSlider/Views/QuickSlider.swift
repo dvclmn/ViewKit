@@ -55,6 +55,8 @@ extension QuickSlider {
   @ViewBuilder
   private func SliderContentView() -> some View {
     if isWithinSliderGroup {
+      /// This is super useful, allowing nicely-aligned labels and tracks
+      /// for neighbouring Sliders. As long as they're within a SliderGroup
       GridRow {
         /// Handles slider Label, Track, and Units display
         SliderComponents(value: $value, track: track)
