@@ -5,10 +5,8 @@
 //  Created by Dave Coleman on 3/7/2025.
 //
 
-import EnumMacros
 import SwiftUI
 
-@CaseDetection
 /// This type assumes a top-left origin
 public enum Direction: String, CaseIterable, Identifiable {
   case up
@@ -104,4 +102,11 @@ extension Direction {
       case .right: .rightArrow
     }
   }
+}
+
+extension Direction {
+  public var isUp: Bool { self == .up }
+  public var isDown: Bool { self == .down }
+  public var isLeft: Bool { self == .left }
+  public var isRight: Bool { self == .right }
 }
