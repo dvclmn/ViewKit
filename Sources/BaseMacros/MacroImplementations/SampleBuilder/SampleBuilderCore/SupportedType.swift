@@ -13,6 +13,7 @@
 //
 
 import SwiftSyntax
+import MacroHelpers
 
 enum SupportedType: String {
   case int = "Int"

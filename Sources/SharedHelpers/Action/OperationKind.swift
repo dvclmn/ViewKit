@@ -5,12 +5,27 @@
 //  Created by Dave Coleman on 13/10/2025.
 //
 
-import EnumMacros
+//import EnumMacros
 
-@CaseDetection()
 public enum UpdateKind {
   case withUndo(action: String? = nil)
   case standard
+}
+
+extension UpdateKind {
+  public var isWithUndo: Bool {
+    if case .withUndo = self {
+      return true
+    }
+    return false
+  }
+  
+  public var isStandard: Bool {
+    if case .standard = self {
+      return true
+    }
+    return false
+  }
 }
 
 public protocol OperationPerforming {

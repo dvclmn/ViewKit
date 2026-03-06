@@ -20,7 +20,13 @@ let package = Package(
     ),
 
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
-    .library(name: "BasePrimitives", targets: ["BasePrimitives"]),
+    .library(
+      name: "BasePrimitives",
+      targets: [
+        "BasePrimitives",
+        "MacroHelpers",
+      ]
+    ),
 
     .library(
       name: "BaseUI",
@@ -32,13 +38,13 @@ let package = Package(
       ]
     ),
 
-//    .library(name: "DrawingPrimitives", targets: ["DrawingPrimitives"]),
+    //    .library(name: "DrawingPrimitives", targets: ["DrawingPrimitives"]),
 
     .library(
       name: "GraphicsKit",
       targets: [
         "GraphicsKit",
-//        "ColourKit",
+        //        "ColourKit",
         "MotionKit",
         "CanvasKit",
         "VectorKit",
@@ -86,6 +92,7 @@ let package = Package(
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftDiagnostics", package: "swift-syntax"),
         .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
+        .module(.macroHelpers),
       ],
       path: .macrosSource + "/MacroImplementations",
     ),
@@ -93,13 +100,20 @@ let package = Package(
     /// Note: `path` here wants the Macro Declaration source, not the Implementation
     .target(
       name: "EnumMacros",
-      dependencies: ["BaseMacrosImplementation", .module(.basePrimitives)],
+      dependencies: [
+        "BaseMacrosImplementation",
+        .module(.macroHelpers),
+      ],
       path: .macrosSource + "/MacroDeclarations/EnumMacros",
     ),
 
     .target(
       name: "SampleBuilder",
-      dependencies: ["BaseMacrosImplementation", .module(.basePrimitives)],
+      dependencies: [
+        "BaseMacrosImplementation",
+        .module(.macroHelpers),
+        //        .module(.basePrimitives)
+      ],
       path: .macrosSource + "/MacroDeclarations/SampleBuilder",
     ),
 
@@ -125,6 +139,11 @@ let package = Package(
 
     .target(
       name: "BasePrimitives",
+      dependencies: [
+        .module(.enumMacros),
+        .metaCodable,
+        .casePaths,
+      ],
       resources: [
         .process("Assets.xcassets"),
         .process("Resources/Fonts"),
@@ -136,9 +155,9 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.sampleBuilder),
-//        .module(.colourKit),
+        //        .module(.colourKit),
         .module(.layoutKit),
-//        .module(.drawingPrimitives),
+        //        .module(.drawingPrimitives),
         .module(.graphicsKit),
         .module(.gestureKit),
         .module(.vectorKit),
@@ -155,7 +174,7 @@ let package = Package(
         .module(.coreTools),
         .module(.gestureKit),
         .module(.uiPrimitives),
-//        .module(.drawingPrimitives),
+        //        .module(.drawingPrimitives),
       ],
     ),
 
@@ -165,8 +184,8 @@ let package = Package(
       name: "ComponentKit",
       dependencies: [
         .module(.coreTools),
-//        .module(.colourKit),
-//        .module(.drawingPrimitives),
+        //        .module(.colourKit),
+        //        .module(.drawingPrimitives),
         .module(.graphicsKit),
         .module(.layoutKit),
         .module(.uiPrimitives),
@@ -174,22 +193,22 @@ let package = Package(
       ],
     ),
 
-//    .target(
-//      name: "ColourKit",
-//      dependencies: [
-//        .module(.basePrimitives)
-//      ],
-//    ),
+    //    .target(
+    //      name: "ColourKit",
+    //      dependencies: [
+    //        .module(.basePrimitives)
+    //      ],
+    //    ),
 
-//    .target(
-//      name: "DrawingPrimitives",
-//      dependencies: [
-//        .module(.basePrimitives)
-////        .module(.coreTools),
-////        .module(.gestureKit),
-////        .module(.uiPrimitives),
-//      ],
-//    ),
+    //    .target(
+    //      name: "DrawingPrimitives",
+    //      dependencies: [
+    //        .module(.basePrimitives)
+    ////        .module(.coreTools),
+    ////        .module(.gestureKit),
+    ////        .module(.uiPrimitives),
+    //      ],
+    //    ),
 
     .target(
       name: "GestureKit",
@@ -205,8 +224,8 @@ let package = Package(
       name: "GraphicsKit",
       dependencies: [
         .module(.coreTools),
-//        .module(.colourKit),
-//        .module(.drawingPrimitives),
+        //        .module(.colourKit),
+        //        .module(.drawingPrimitives),
         .module(.vectorKit),
         .module(.uiPrimitives),
         .casePaths,
@@ -225,22 +244,30 @@ let package = Package(
     ),
 
     .target(
+      name: "MacroHelpers",
+      dependencies: [
+        //          .module(.coreTools)
+      ]
+    ),
+
+    .target(
       name: "MotionKit",
       dependencies: [
         .module(.coreTools)
       ]
     ),
 
-    .target(
-      name: "SharedHelpers",
-      dependencies: [
-        .module(.basePrimitives),
-        .module(.enumMacros),
-        .module(.sampleBuilder),
-        .sharing,
-        .casePaths,
-      ],
-    ),
+//    .target(
+//      name: "SharedHelpers",
+//      dependencies: [
+//        .module(.basePrimitives),
+//        .module(.enumMacros),
+//        .module(.sampleBuilder),
+//        .module(.macroHelpers),
+//        .sharing,
+//        .casePaths,
+//      ],
+//    ),
 
     .target(
       name: "UIPrimitives",
@@ -256,8 +283,8 @@ let package = Package(
         //        .module(.coreTools),
         .module(.basePrimitives),
         .module(.enumMacros),
-//        .module(.drawingPrimitives),
-//        .module(.colourKit),  // Consider trying to remove this dep.
+        //        .module(.drawingPrimitives),
+        //        .module(.colourKit),  // Consider trying to remove this dep.
         //        .module(.colourKit),
         //        .module(.uiPrimitives),
         .casePaths,
@@ -348,10 +375,11 @@ enum BaseModule {
   case baseUI
   case componentKit
   case canvasKit
-//  case colourKit
-//  case drawingPrimitives
+  //  case colourKit
+  //  case drawingPrimitives
   case gestureKit
   case graphicsKit
+  case macroHelpers
   case layoutKit
   //  case lilypad
   case motionKit
@@ -373,10 +401,11 @@ enum BaseModule {
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
       case .canvasKit: "CanvasKit"
-//      case .colourKit: "ColourKit"
-//      case .drawingPrimitives: "DrawingPrimitives"
+      //      case .colourKit: "ColourKit"
+      //      case .drawingPrimitives: "DrawingPrimitives"
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
+      case .macroHelpers: "MacroHelpers"
       case .layoutKit: "LayoutKit"
       //      case .lilypad: "LilyPad"
       case .motionKit: "MotionKit"

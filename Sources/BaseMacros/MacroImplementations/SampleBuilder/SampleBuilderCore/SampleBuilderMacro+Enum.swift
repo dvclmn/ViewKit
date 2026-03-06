@@ -15,6 +15,7 @@
 import MacroToolkit
 import SwiftSyntax
 import SwiftSyntaxMacros
+import MacroHelpers
 
 // MARK: - Enums
 extension SampleBuilderMacro {

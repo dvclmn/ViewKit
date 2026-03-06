@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import VectorKit
+//import VectorKit
 
 extension LineShape {
   package func wavePath(

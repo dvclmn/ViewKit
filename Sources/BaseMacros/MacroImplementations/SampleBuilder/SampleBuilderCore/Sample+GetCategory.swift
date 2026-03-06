@@ -9,6 +9,7 @@ import SwiftCompilerPlugin
 import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxBuilder
+import MacroHelpers
 import SwiftSyntaxMacros
 
 extension SampleBuilderMacro {

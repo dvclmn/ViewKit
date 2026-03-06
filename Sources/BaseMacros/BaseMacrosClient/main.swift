@@ -5,9 +5,10 @@
 //  Created by Dave Coleman on 16/2/2026.
 //
 
-import BasePrimitives
 import EnumMacros
 import Foundation
+//import BasePrimitives
+import MacroHelpers
 import SampleBuilder
 
 // MARK: - Associated Values
@@ -53,6 +54,7 @@ enum ExampleEnumNames {
 
 // MARK: - MetaEnum
 
+//#warning("Should bring this back, trying to work out relationship with BasePrimitives")
 /// Creates a corresponding enum without assoc. values
 @MetaEnum
 enum AnotherEnum {
@@ -134,52 +136,52 @@ struct MyRecord {
 //  let item2: Int
 //}
 
-@SampleBuilder(numberOfItems: 3, dataGeneratorType: .default)
-public struct PopupMessage: Sendable, Identifiable {
-  public let id: UUID
-
-  var label: String
-  let message: String?
-  @SamplesIgnored let loading: Int
-  @SamplesIgnored var dismissal: Bool
-  @SamplesIgnored var actions: [Int]
-}
-
-@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
-struct Review {
-  let rating: Int
-  let time: Date
-  @SamplesIgnored let product: Product
-}
-
-@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
-struct Product {
-  var price: Int
-  var description: String
-}
-
-@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
-struct Profile {
-  @SampleBuilderItem(category: .firstName)
-  let firstName: String
-
-  @SampleBuilderItem(category: .lastName)
-  let lastName: String
-
-  @SampleBuilderItem(category: .image(width: 300, height: 300))
-  let profileImage: URL
-}
-
-for profile in Profile.sample {
-  print(profile.firstName, profile.lastName, profile.profileImage)
-}
-
-@SampleBuilder(numberOfItems: 6, dataGeneratorType: .random)
-enum MyEnum {
-  indirect case case1(String, Int, String, [String])
-  case case2
-  case case3(Product)
-  case monkey
-  case case4([String: Product])
-  case coolGuy
-}
+//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .default)
+//public struct PopupMessage: Sendable, Identifiable {
+//  public let id: UUID
+//
+//  var label: String
+//  let message: String?
+//  @SamplesIgnored let loading: Int
+//  @SamplesIgnored var dismissal: Bool
+//  @SamplesIgnored var actions: [Int]
+//}
+//
+//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
+//struct Review {
+//  let rating: Int
+//  let time: Date
+//  @SamplesIgnored let product: Product
+//}
+//
+//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
+//struct Product {
+//  var price: Int
+//  var description: String
+//}
+//
+//@SampleBuilder(numberOfItems: 3, dataGeneratorType: .random)
+//struct Profile {
+//  @SampleBuilderItem(category: .firstName)
+//  let firstName: String
+//
+//  @SampleBuilderItem(category: .lastName)
+//  let lastName: String
+//
+//  @SampleBuilderItem(category: .image(width: 300, height: 300))
+//  let profileImage: URL
+//}
+//
+//for profile in Profile.sample {
+//  print(profile.firstName, profile.lastName, profile.profileImage)
+//}
+//
+//@SampleBuilder(numberOfItems: 6, dataGeneratorType: .random)
+//enum MyEnum {
+//  indirect case case1(String, Int, String, [String])
+//  case case2
+//  case case3(Product)
+//  case monkey
+//  case case4([String: Product])
+//  case coolGuy
+//}

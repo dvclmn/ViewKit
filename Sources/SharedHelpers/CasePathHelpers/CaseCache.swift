@@ -8,6 +8,7 @@
 import BasePrimitives
 import CasePaths
 import SwiftUI
+import MacroHelpers
 
 /// An alternative to the below `MetaCache`
 @MainActor

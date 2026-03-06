@@ -10,6 +10,7 @@ import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
+import MacroHelpers
 
 extension SampleBuilderMacro {
 

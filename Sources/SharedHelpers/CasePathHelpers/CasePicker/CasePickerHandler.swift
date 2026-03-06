@@ -7,6 +7,7 @@
 
 import CasePaths
 import BasePrimitives
+import MacroHelpers
 import SwiftUI
 
 /// Owns the “case switching policy” for `MetaEnum` values.

@@ -5,10 +5,10 @@
 //  Created by Dave Coleman on 12/2/2026.
 //
 
+import BasePrimitives
 // import ColourKit
 import Foundation
 import IdentifiedCollections
-import BasePrimitives
 
 public typealias WaveElements = [VisualElementKind: WaveVisualElement]
 public struct WaveDocument: Codable, Sendable, Equatable {
@@ -37,10 +37,10 @@ extension WaveDocument {
     baseValue: Double? = nil,
     with wave: ConfiguredWave = .waveHExample
   ) {
-//    let element = WaveVisualElement(
-//      kind: kind,
-//      base: baseValue ?? .zero
-//    )
+    //    let element = WaveVisualElement(
+    //      kind: kind,
+    //      base: baseValue ?? .zero
+    //    )
     let newDriver = WaveDriver(
       waveID: wave.id,
       elementKind: kind,

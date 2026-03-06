@@ -12,6 +12,7 @@
 //  Created by Pedro Rojas on 29/08/23.
 //
 
+import MacroHelpers
 import SwiftDiagnostics
 import SwiftSyntax
 import SwiftSyntaxMacros

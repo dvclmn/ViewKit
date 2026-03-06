@@ -6,9 +6,9 @@
 //
 
 import CasePaths
-import CoreTools
+//import CoreTools
 import SwiftUI
-import VectorKit
+//import VectorKit
 
 @MetaEnum
 @CaseDetection

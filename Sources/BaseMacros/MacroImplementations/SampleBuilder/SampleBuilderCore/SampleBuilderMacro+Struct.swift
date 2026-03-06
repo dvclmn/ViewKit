@@ -12,6 +12,7 @@
 //  Created by Pedro Rojas on 19/08/23.
 //
 
+import MacroHelpers
 import MacroToolkit
 import SwiftSyntax
 import SwiftSyntaxMacros
@@ -23,7 +24,7 @@ extension SampleBuilderMacro {
     generatorType: DataGeneratorType,
     context: MacroExpansionContext
   ) -> [SwiftSyntax.DeclSyntax] {
-    
+
     let validParameters = getValidParameterList(
       from: structDecl,
       generatorType: generatorType,
@@ -49,7 +50,7 @@ extension SampleBuilderMacro {
     generatorType: DataGeneratorType,
     context: MacroExpansionContext
   ) -> [ParameterItem] {
-    
+
     let storedPropertyMembers = filterOutIgnored(
       structDecl.memberBlock.members
         .compactMap { $0.decl.as(VariableDeclSyntax.self) }

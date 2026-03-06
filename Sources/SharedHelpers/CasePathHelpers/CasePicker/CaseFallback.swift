@@ -7,6 +7,7 @@
 
 import Foundation
 import BasePrimitives
+import MacroHelpers
 
 public enum CaseFallbackStrategy<Root: MetaEnum> {
   

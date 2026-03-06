@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 16/2/2026.
 //
 
+import MacroHelpers
 import MacroToolkit
 import SwiftCompilerPlugin
 import SwiftDiagnostics
@@ -137,6 +138,6 @@ extension SampleBuilderMacro {
   /// `ParameterItem`.
   static func filterOutIgnored(_ variables: [VariableDeclSyntax]) -> [VariableDeclSyntax] {
 
-    variables.filter { !$0.hasSamplesIgnoredAttribute}
+    variables.filter { !$0.hasSamplesIgnoredAttribute }
   }
 }
