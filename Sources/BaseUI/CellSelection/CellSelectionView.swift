@@ -13,16 +13,17 @@ import SwiftUI
 public struct CellSelectionView<Content: View>: View {
   @Environment(\.unitSize) private var unitSize
   @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers
+  @Environment(\.pointerGridPosition) private var pointerGridPosition
 
-  @State private var store: SelectionHandler
+//  @State private var store: SelectionHandler
 
   let content: Content
 
   public init(
-    store: SelectionHandler? = nil,
+//    store: SelectionHandler? = nil,
     @ViewBuilder content: @escaping () -> Content
   ) {
-    self._store = State(initialValue: store ?? SelectionHandler())
+//    self._store = State(initialValue: store ?? SelectionHandler())
     self.content = content()
   }
   public var body: some View {
@@ -35,10 +36,10 @@ public struct CellSelectionView<Content: View>: View {
       //        .debugFrame("Canvas Content", .mint)
     }
     .environment(\.shouldShowInfoBarItems, true)
-    .environment(store)
+//    .environment(store)
     
     .addInfoBarItems {
-      Labeled("Hover", value: store.pointerGridPosition)
+      Labeled("Hover", value: pointerGridPosition)
       //      Labeled("Hover", value: store.pointerLocation)
     }
   }

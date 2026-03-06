@@ -10,7 +10,7 @@ import GraphicsKit
 import SwiftUI
 
 struct CellSelectionCanvas: View {
-  @Environment(SelectionHandler.self) private var store
+  //  @Environment(SelectionHandler.self) private var store
   @Environment(\.unitSize) private var unitSize
   @Environment(\.panOffset) private var panOffset
   @Environment(\.zoomLevel) private var zoomLevel
@@ -26,6 +26,7 @@ struct CellSelectionCanvas: View {
   @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers
   @Environment(\.gridLineColour) private var gridLineColour
   @Environment(\.gridLineWidth) private var gridLineWidth
+  @Environment(\.pointerGridPosition) private var pointerGridPosition
 
   private let rounding: CGFloat = 4
 
@@ -52,9 +53,9 @@ struct CellSelectionCanvas: View {
       //      context.debugEnvironmentViewportRect(in: size)
 
       // MARK: - Selection Box
-      guard let rect = store.selectionRect,
+      guard let rect = selectionRect,
         let gridDimensions,
-        let hoverPos = store.pointerGridPosition
+        let hoverPos = pointerGridPosition
       else { return }
 
       let radii = rectRadii(
@@ -78,16 +79,29 @@ struct CellSelectionCanvas: View {
     //      Labeled("Canvas Size", value: canvasSize?.cgSize.displayString(.dimensions))
     //    }
 
-//    .task(id: panOffset) { store.pan = panOffset }
-//    .task(id: zoomLevel) { store.zoom = zoomLevel }
-    .task(id: pointerLocation) { store.pointerLocation = pointerLocation }
-    .task(id: gridGeometry) { store.geometry = gridGeometry }
+    //    .task(id: panOffset) { store.pan = panOffset }
+    //    .task(id: zoomLevel) { store.zoom = zoomLevel }
+    //    .task(id: pointerLocation) { store.pointerLocation = pointerLocation }
+    //    .task(id: gridGeometry) { store.geometry = gridGeometry }
 
-    
   }
 }
 
 extension CellSelectionCanvas {
+
+  private var selectionRect: CGRect? {
+    guard let position = pointerGridPosition else { return nil }
+    guard let cellSize = gridGeometry?.projection.unitSize else { return nil }
+    //    guard let cellSize = geometry?.projection.unitSize else { return nil }
+
+    let originX = CGFloat(position.column) * cellSize.width
+    let originY = CGFloat(position.row) * cellSize.height
+    return CGRect(
+      x: originX, y: originY,
+      width: cellSize.width,
+      height: cellSize.height
+    )
+  }
 
   var canvasOffset: CGSize? {
     guard let unitSize else { return nil }
