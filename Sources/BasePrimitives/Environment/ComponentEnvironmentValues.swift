@@ -15,6 +15,8 @@ import SwiftUI
 // MARK: - Visuals
 extension EnvironmentValues {
 
+  @Entry public var modifierKeys: Modifiers = []
+  
   /// This is primarily expected to represent the whole window of an app,
   /// minus any base UI components like Toolbar or Inspector.
   ///
