@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 19/1/2026.
 //
 
-import CasePaths
+//import CasePaths
 import SwiftUI
 
 /// Path style with optional stamping effect

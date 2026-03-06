@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 14/1/2026.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 /// Goals for unified Tap/Drag modifier
