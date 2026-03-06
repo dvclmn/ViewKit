@@ -34,6 +34,7 @@ public struct CellSelectionView<Content: View>: View {
       content
 //        .debugFrame("Canvas Content", .mint)
     }
+    .environment(\.shouldShowInfoBarItems, true)
     .environment(store)
     .addInfoBarItems {
       Labeled("Hover", value: store.pointerGridPosition)

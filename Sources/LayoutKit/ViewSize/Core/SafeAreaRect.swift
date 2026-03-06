@@ -26,14 +26,14 @@ extension SafeAreaRect {
     let height = max(0, size.height - (safeInsets.top + safeInsets.bottom))
     let result = CGRect(x: x, y: y, width: width, height: height)
 
-    DebugString("Safe Area Rect") {
-      Indented {
-        Labeled("X", value: x)
-        Labeled("Y", value: y)
-        Labeled("Width", value: width)
-        Labeled("Height", value: height)
-      }
-    }
+//    DebugString("Safe Area Rect") {
+//      Indented {
+//        Labeled("X", value: x)
+//        Labeled("Y", value: y)
+//        Labeled("Width", value: width)
+//        Labeled("Height", value: height)
+//      }
+//    }
 
     return result
   }

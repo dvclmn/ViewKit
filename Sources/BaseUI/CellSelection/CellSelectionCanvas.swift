@@ -75,9 +75,9 @@ struct CellSelectionCanvas: View {
     }  // END canvas
     //    .debugFrame("Cell Canvas", .orange, isEnabled: true)
 
-    .addInfoBarItems {
-      Labeled("Canvas Size", value: canvasSize?.cgSize.displayString(.dimensions))
-    }
+//    .addInfoBarItems {
+//      Labeled("Canvas Size", value: canvasSize?.cgSize.displayString(.dimensions))
+//    }
 
     .task(id: panOffset) { store.pan = panOffset }
     .task(id: zoomLevel) { store.zoom = zoomLevel }

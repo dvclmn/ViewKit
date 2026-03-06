@@ -22,7 +22,7 @@ public struct GridFontDescriptor {
 
 extension GridFontDescriptor {
   public var font: Font {
-    print("Resolving font with style: \(style) and size: \(size)")
+//    print("Resolving font with style: \(style) and size: \(size)")
     return style.resolvedFont(size: size)
   }
 }
