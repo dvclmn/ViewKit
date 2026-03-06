@@ -25,3 +25,12 @@ public func DebugString(
     }.text
   )
 }
+
+/// ```
+/// private func missingValue(_ key: String, for consumer: String) -> String {
+///   "EnvironmentValue `\(key)` missing, needed by \(consumer)"
+/// }
+/// ```
+public func printMissing(_ value: String, for consumer: String) {
+  print("`\(value)` missing, needed by `\(consumer)`")
+}

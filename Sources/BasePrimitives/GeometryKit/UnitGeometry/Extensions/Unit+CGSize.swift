@@ -31,7 +31,10 @@ extension CGSize {
       let height = height.toGridCount(using: unitSize.height, rounding: rounding),
       width > 0,
       height > 0
-    else { return nil }
+    else {
+      printMissing("width or height", for: "toGridDimensions(using:rounding:)")
+      return nil
+    }
 
     return GridDimensions(width: width, height: height)
   }

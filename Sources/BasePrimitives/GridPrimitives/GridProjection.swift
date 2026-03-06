@@ -12,7 +12,8 @@ import Foundation
 public struct GridProjection: Equatable, Sendable {
 
   /// The size of a single grid cell in Canvas Space.
-  public let unitSize: CGSize  // e.g., 10x18 for a font
+  /// Aka `cellSize`
+  public let unitSize: CGSize
 
   public var rounding: GridRounding = .down
 
@@ -33,7 +34,10 @@ extension GridProjection {
     guard
       let column = point.x.toGridCount(using: unitSize.width, rounding: rounding),
       let row = point.y.toGridCount(using: unitSize.height, rounding: rounding)
-    else { return nil }
+    else {
+      printMissing("column / row", for: "gridPositionIfValid(from:)")
+      return nil
+    }
 
     return GridPosition(column: column, row: row)
   }
@@ -66,7 +70,6 @@ extension GridProjection {
   }
 
   // MARK: - Canvas to Grid
-
   public func gridDimensions(
     for canvasSize: Size<CanvasSpace>,
     rounding: GridRounding? = nil
