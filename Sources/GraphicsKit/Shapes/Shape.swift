@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import BasePrimitives
 //import BasePrimitives
-import VectorKit
+//import VectorKit
 
 extension Shape {
   

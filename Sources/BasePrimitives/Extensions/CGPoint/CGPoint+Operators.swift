@@ -67,6 +67,13 @@ public func + (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
   )
 }
 
+public func + (lhs: CGFloat, rhs: CGPoint) -> CGPoint {
+  return CGPoint(
+    x: lhs + rhs.x,
+    y: lhs + rhs.y
+  )
+}
+
 // MARK: - Addition in place
 public func += (lhs: inout CGPoint, rhs: CGPoint) {
   lhs = lhs + rhs
@@ -107,6 +114,12 @@ public func * (lhs: CGPoint, rhs: CGSize) -> CGPoint {
     y: lhs.y * rhs.height
   )
 }
+
+public func * (lhs: CGFloat, rhs: CGPoint) -> CGPoint {
+  CGPoint(x: lhs * rhs.x, y: lhs * rhs.y)
+}
+
+// MARK: - Division
 
 public func / (lhs: CGPoint, rhs: CGSize) -> CGPoint {
   precondition(rhs.width != 0 && rhs.height != 0, "Cannot divide by zero size")

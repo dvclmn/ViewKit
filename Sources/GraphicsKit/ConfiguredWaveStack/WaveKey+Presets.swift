@@ -6,7 +6,8 @@
 //
 
 import Foundation
-import VectorKit
+import BasePrimitives
+//import VectorKit
 
 public enum VerticalWave: WaveKey {
   public static let displayName = "Vertical"

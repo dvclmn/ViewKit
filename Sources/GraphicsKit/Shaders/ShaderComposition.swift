@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BasePrimitives
 
 public protocol AnyShaderEffect {
   var shaders: [Shader] { get }

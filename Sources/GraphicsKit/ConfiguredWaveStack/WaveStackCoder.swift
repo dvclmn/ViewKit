@@ -6,7 +6,8 @@
 //
 
 import MetaCodable
-import VectorKit
+import BasePrimitives
+//import VectorKit
 import Foundation
 
 struct WaveStackCoder: HelperCoder {

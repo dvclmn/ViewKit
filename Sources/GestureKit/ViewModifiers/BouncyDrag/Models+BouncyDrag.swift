@@ -6,7 +6,8 @@
 //
 
 import Foundation
-import VectorKit
+//import VectorKit
+import BasePrimitives
 
 enum DragMethod: Sendable {
   case clickAndDrag

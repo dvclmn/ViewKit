@@ -7,7 +7,8 @@
 
 import CoreTransferable
 import MetaCodable
-import VectorKit
+import BasePrimitives
+//import VectorKit
 
 @Codable
 public struct ConfiguredWaveStack: Sendable, Equatable, Hashable {

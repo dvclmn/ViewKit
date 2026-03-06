@@ -5,8 +5,9 @@
 //  Created by Dave Coleman on 20/1/2026.
 //
 
-import VectorKit
+//import VectorKit
 import Foundation
+import BasePrimitives
 
 extension DrawingData {
   static func makeStrokes(

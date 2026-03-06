@@ -7,7 +7,7 @@
 
 import BasePrimitives
 import Foundation
-import VectorKit
+//import VectorKit
 
 // TODO: Need to be clearer about what these properties do/mean
 public struct FloorAppearance: Sendable, Codable, Equatable, Hashable {
