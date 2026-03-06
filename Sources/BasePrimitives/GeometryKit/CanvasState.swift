@@ -13,9 +13,13 @@ import SwiftUI
 /// the View hirearchy). This type encapsulates this data
 public struct CanvasState: Sendable, Equatable {
 
-  var zoomLevel: Double
-  var panOffset: CGSize
-  var rotation: Angle
+  public var panState: PanState
+  public var zoomState: ZoomState
+  public var rotationState: RotateState
+  
+//  var zoomLevel: Double
+//  var panOffset: CGSize
+//  var rotation: Angle
 
   /// Location in Canvas space
   let pointerLocation: CGPoint?
