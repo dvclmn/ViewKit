@@ -82,7 +82,7 @@ let package = Package(
     .package(url: "https://github.com/swiftlang/swift-syntax", from: "602.0.0"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
-    .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
+//    .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     //    .package(url: "https://github.com/jpsim/Yams", from: "6.2.1"),
@@ -168,7 +168,7 @@ let package = Package(
         .module(.vectorKit),
         .module(.canvasKit),
         .module(.uiPrimitives),
-        .sharing,
+//        .sharing,
         .casePaths,
       ],
     ),
@@ -352,9 +352,9 @@ extension Target.Dependency {
   static func module(_ baseModule: BaseModule) -> Self {
     .target(name: baseModule.name)
   }
-  static var sharing: Self {
-    .product(name: "Sharing", package: "swift-sharing")
-  }
+//  static var sharing: Self {
+//    .product(name: "Sharing", package: "swift-sharing")
+//  }
   static var casePaths: Self {
     .product(name: "CasePaths", package: "swift-case-paths")
   }

@@ -6,6 +6,7 @@
 //
 
 import CasePaths
+import EnumMacros
 //import CoreTools
 import SwiftUI
 //import VectorKit

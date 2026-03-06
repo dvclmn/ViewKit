@@ -8,7 +8,8 @@
 import CasePaths
 // import ColourKit
 import CoreGraphics
-import CoreTools
+import EnumMacros
+//import CoreTools
 import SwiftUI
 
 /// Ideas for future properties:
@@ -25,7 +26,7 @@ extension ActionLine {
     /// for boundary action line edges?
     public var variation: Double
     public var colour: RGBColour
-//    public var colour: HSVColour
+    //    public var colour: HSVColour
     public var shape: BoundaryShape
 
     public init(
@@ -55,11 +56,11 @@ extension ActionLine {
     public var id: String { rawValue }
     public var name: String { rawValue.capitalized }
 
-//    public var path: WritableKeyPath<ActionLine.Configuration, BoundaryStyle> {
-//      switch self {
-//        case .inner: \.innerShape
-//        case .outer: \.outerShape
-//      }
-//    }
+    //    public var path: WritableKeyPath<ActionLine.Configuration, BoundaryStyle> {
+    //      switch self {
+    //        case .inner: \.innerShape
+    //        case .outer: \.outerShape
+    //      }
+    //    }
   }
 }
