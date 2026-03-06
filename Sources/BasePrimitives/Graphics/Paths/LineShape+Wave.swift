@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 //import VectorKit
 
 extension LineShape {
@@ -17,7 +18,7 @@ extension LineShape {
     phaseOffset: Double,
     samples: Int,
   ) -> (Path, cycles: Double) {
-//    print("Ran LineShape.wavePath at \(Date.debug)")
+    //    print("Ran LineShape.wavePath at \(Date.debug)")
     let length = start.distance(to: end)
 
     let cycles = effectiveCycles(
@@ -41,7 +42,7 @@ extension LineShape {
 
       let phaseTurns = t * cycles + phaseOffset
       let wave = WaveSampler<Double>.sample(.sineDefault, phase: phaseTurns)
-//      let wave = WaveSampler<Double>.sample(.sine, phase: phaseTurns, domain: .turns)
+      //      let wave = WaveSampler<Double>.sample(.sine, phase: phaseTurns, domain: .turns)
 
       let wx = px + perpendicular.x * wave * amplitude
       let wy = py + perpendicular.y * wave * amplitude

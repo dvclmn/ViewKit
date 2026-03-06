@@ -6,8 +6,9 @@
 //
 
 import CasePaths
+import EnumMacros
 // import ColourKit
-import CoreTools
+//import CoreTools
 import SwiftUI
 
 @MetaEnum

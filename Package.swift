@@ -148,6 +148,7 @@ let package = Package(
         .module(.enumMacros),
         .metaCodable,
         .casePaths,
+        .identifiedCollections,
       ],
       resources: [
         .process("Assets.xcassets"),
