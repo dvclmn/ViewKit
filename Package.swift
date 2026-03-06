@@ -32,6 +32,8 @@ let package = Package(
       ]
     ),
 
+    .library(name: "DrawingPrimitives", targets: ["DrawingPrimitives"]),
+
     .library(
       name: "GraphicsKit",
       targets: [
@@ -240,7 +242,7 @@ let package = Package(
         //        .module(.coreTools),
         .module(.basePrimitives),
         .module(.enumMacros),
-        .module(.colourKit), // Consider trying to remove this dep.
+        .module(.colourKit),  // Consider trying to remove this dep.
         //        .module(.colourKit),
         //        .module(.uiPrimitives),
         .casePaths,
