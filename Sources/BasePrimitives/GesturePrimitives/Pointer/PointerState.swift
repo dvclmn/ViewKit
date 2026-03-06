@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 12/1/2026.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 public struct TapState: PointerAction {

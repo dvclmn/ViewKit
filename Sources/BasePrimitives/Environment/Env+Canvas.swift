@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+
+//extension EnvironmentValues {
+//  @Entry public var isResizingCanvas: Bool = false
+//  @Entry public var shouldRenderDragRect: Bool = true
+//}
+
+
 extension EnvironmentValues {
 
   /// This is usable by both Canvas and Grid domains. Describes the anchor

@@ -7,7 +7,7 @@
 
 #if canImport(AppKit)
 import SwiftUI
-import CoreTools
+import BasePrimitives
 
 public struct PanGestureView: NSViewRepresentable {
   let onPanGesture: PanOutput
