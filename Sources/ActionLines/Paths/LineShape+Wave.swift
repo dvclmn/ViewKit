@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 9/2/2026.
 //
 
+import BasePrimitives
 import SwiftUI
-
-//import VectorKit
 
 extension LineShape {
   package func wavePath(

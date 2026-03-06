@@ -20,11 +20,13 @@ let package = Package(
     ),
 
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
+    
     .library(
       name: "BasePrimitives",
       targets: [
         "BasePrimitives",
         "MacroHelpers",
+        "CasePathHelpers",
       ]
     ),
 
@@ -47,6 +49,7 @@ let package = Package(
         //        "ColourKit",
         "MotionKit",
         "CanvasKit",
+        "ActionLines",
 //        "VectorKit",
       ]
     ),
@@ -183,6 +186,22 @@ let package = Package(
         //        .module(.drawingPrimitives),
       ],
     ),
+    
+      .target(
+        name: "CasePathHelpers",
+        dependencies: [
+          .casePaths,
+        ],
+      ),
+    
+      .target(
+        name: "ActionLines",
+        dependencies: [
+          .module(.coreTools),
+          .casePaths,
+          .metaCodable,
+        ],
+      ),
 
     /// Currently, this main advantage of this seems to be that
     /// it doesn't depend on Gesture, Vector or CanvasKit.
@@ -381,6 +400,7 @@ enum BaseModule {
   case baseUI
   case componentKit
   case canvasKit
+  case casePathHelpers
   //  case colourKit
   //  case drawingPrimitives
   case gestureKit
@@ -404,6 +424,7 @@ enum BaseModule {
       case .sampleBuilder: "SampleBuilder"
       case .networking: "BaseNetworking"
       case .basePrimitives: "BasePrimitives"
+      case .casePathHelpers: "CasePathHelpers"
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
       case .canvasKit: "CanvasKit"

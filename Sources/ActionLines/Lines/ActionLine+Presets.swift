@@ -6,7 +6,7 @@
 //
 
 // import ColourKit
-//import BasePrimitives
+import BasePrimitives
 import Foundation
 
 extension ActionLine.Configuration {
@@ -122,7 +122,7 @@ extension ShaderEffect {
         phosphorSize: 1.0,
         brightness: 1.8
       ),
-      
+
       .crtCurvature(strength: 0.5),
 
       .radialBlur(
@@ -132,7 +132,7 @@ extension ShaderEffect {
         end: 0.9,
         samples: 10
       ),
-      
+
       .chromaticPresetA,
     ]
   }
