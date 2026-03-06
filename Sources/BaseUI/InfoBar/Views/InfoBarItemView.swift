@@ -26,6 +26,7 @@ public struct InfoBarItemView: View {
     /// Label text, but it is not, it is seperate.
     HStack(spacing: 0) {
       if let label = item.label {
+//        Text(label.text)
         MaybeLabel(label)
           .environment(\.labelDisplay, itemLabelDisplay)
 

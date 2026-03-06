@@ -73,7 +73,6 @@ struct CellSelectionCanvas: View {
       )
 
     }  // END canvas
-
     //    .debugFrame("Cell Canvas", .orange, isEnabled: true)
 
     .addInfoBarItems {

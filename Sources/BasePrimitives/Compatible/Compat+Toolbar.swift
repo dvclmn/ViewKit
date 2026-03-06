@@ -11,12 +11,13 @@ extension View {
   @ViewBuilder
   public func toolbarBackgroundVisibilityCompat(
     _ visibility: Visibility,
-    isForWindowToolbar: Bool,
+    for placement: ToolbarPlacement = .automatic,
   ) -> some View {
     if #available(macOS 15.0, iOS 18.0, *) {
-      self.toolbarBackgroundVisibility(visibility, for: isForWindowToolbar ? .windowToolbar : .automatic)
+      self.toolbarBackgroundVisibility(visibility, for: placement)
     } else {
       self
+//      self.toolbarVisibility(visibility, for: placement)
     }
   }
 }

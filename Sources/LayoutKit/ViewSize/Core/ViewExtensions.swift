@@ -35,12 +35,12 @@ extension View {
   /// If a callback is needed, see ``viewSize(capture:mode:isEnabled:valueOutput:)``
   public func viewportCapture(
     mode debounceMode: DebounceMode,
-//    showsIndicator: Bool = false,
+    //    showsIndicator: Bool = false,
   ) -> some View {
     self.modifier(
       EnvironmentViewportSizeModifier(
         mode: debounceMode,
-//        showsIndicator: showsIndicator
+        //        showsIndicator: showsIndicator
       )
     )
   }

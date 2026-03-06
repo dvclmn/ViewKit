@@ -15,39 +15,57 @@ struct GridFontModifier: ViewModifier {
   @Environment(\.isASCIIMode) private var isASCIIMode
 
   let config: GridFontConfig
+  let fallbackFont: Font?
 
   func body(content: Content) -> some View {
     content
-      .font(config.descriptor(in: envSelf)?.font)
+      .font(fontResult)
 
       /// Prevents any compression of the spacing between characters
-      .allowsTightening(false)
+      .allowsTightening(!hasFontResult)
+  }
+}
+extension GridFontModifier {
+  private var hasFontResult: Bool { fontResult != nil }
+  private var fontResult: Font? {
+    config.descriptor(in: envSelf)?.font ?? fallbackFont
   }
 }
 
 extension View {
-  public func gridFont(config: GridFontConfig) -> some View {
+  public func gridFont(
+    config: GridFontConfig,
+    fallback: Font? = nil
+  ) -> some View {
     self.modifier(
-      GridFontModifier(config: config)
+      GridFontModifier(config: config, fallbackFont: fallback)
     )
   }
 
   /// This sets the font for this View. It doesn't set/change any Environment value
   public func gridFont(
     for domain: GridFontDomain = .automatic,
-    size: CGFloat? = nil
+    size: CGFloat? = nil,
+    fallback: Font? = nil
   ) -> some View {
     self.modifier(
       GridFontModifier(
-        config: .domain(domain, size: size)
-        //        descriptor: GridFontConfig.domain(domain)
+        config: .domain(domain, size: size),
+        fallbackFont: fallback
+          //        descriptor: GridFontConfig.domain(domain)
       )
     )
   }
 
-  public func gridFont(_ style: GridFont, size: CGFloat) -> some View {
+  public func gridFont(
+    _ font: GridFont,
+    size: CGFloat
+  ) -> some View {
     self.modifier(
-      GridFontModifier(config: .custom(style, size: size))
+      GridFontModifier(
+        config: .custom(font, size: size),
+        fallbackFont: nil
+      )
     )
   }
 }

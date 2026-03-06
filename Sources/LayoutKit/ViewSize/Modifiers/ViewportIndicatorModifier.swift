@@ -17,6 +17,7 @@ public struct ViewportSizeIndicatorModifier: ViewModifier {
         Canvas { context, size in
           context.debugEnvironmentViewportRect(in: size)
         }
+        //        .ignoresSafeArea()
         .overlay {
           Text("Viewport Rect: \(viewportRect?.displayString(.rect), default: "None Found")")
             .font(.title)
@@ -28,18 +29,21 @@ public struct ViewportSizeIndicatorModifier: ViewModifier {
 }
 
 extension GraphicsContext {
-  public func debugEnvironmentViewportRect(
-    in size: CGSize,
-    //    colour: Color = .gray,
-    //    strokeStyle: StrokeStyle? = nil,
-    //    strokeWidth: CGFloat = 2
-  ) {
+  public func debugEnvironmentViewportRect(in size: CGSize) {
 
     guard let rect = environment.viewportRect else { return }
 
     if size != rect.size {
       print(
-        "⚠️ This Canvas view does not match the size of the full viewport; result of this debug visual may be undefined. Canvas Size: \(size), Viewport Rect: \(rect)"
+        """
+        ⚠️ This Canvas view does not match the size of the full viewport; 
+        result of this debug visual may be undefined.
+        Canvas Size:    \(size.displayString)
+        Viewport Size:  \(rect.size.displayString)
+        Rect origin:    \(rect.origin.displayString)
+
+
+        """
       )
     }
 

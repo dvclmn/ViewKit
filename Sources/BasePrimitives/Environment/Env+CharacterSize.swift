@@ -47,14 +47,16 @@ extension EnvironmentValues {
   /// Current effective unit size, based on the ``isASCIIMode`` setting
   public var activeUnitSize: CGSize? {
     if isASCIIMode {
-      return asciiUnitSize ?? unitSize
+      return asciiUnitSize
+//      return asciiUnitSize ?? unitSize
     }
     return unitSize
   }
 
   public var activeGridFontSize: CGFloat? {
     if isASCIIMode {
-      return asciiModeFontSize ?? gridCanvasFontSize
+      return asciiModeFontSize
+//      return asciiModeFontSize ?? gridCanvasFontSize
     }
     return gridCanvasFontSize
   }

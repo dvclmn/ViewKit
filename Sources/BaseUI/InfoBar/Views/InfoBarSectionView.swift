@@ -7,15 +7,15 @@
 
 import CoreTools
 import LayoutKit
-import UIPrimitives
 import SwiftUI
+import UIPrimitives
 
 struct InfoBarSectionView: View {
   @Environment(\.sectionLabelDisplay) private var sectionLabelDisplay
 
   let sectionTitle: String
   let items: [InfoBarItem]
-  
+
   private let sectionItemSpacing: CGFloat = Styles.sizeTiny
 
   var body: some View {
@@ -27,7 +27,6 @@ struct InfoBarSectionView: View {
           ForEach(items) { item in
             InfoBarItemView(item: item)
           }
-//          .containerValueBool(.hasDividers, true)
         }
         .labelStyle(.base)
         .iconColour(.secondary)
@@ -53,8 +52,8 @@ struct InfoBarSectionView: View {
 
     }
     .containerValueBool(.hasSpacers, false)
-    
+
     /// Controls Divider visibility between whole Sections
-        .containerValueBool(.hasDividers, false)
+    .containerValueBool(.hasDividers, false)
   }
 }

@@ -32,7 +32,7 @@ extension GridLineContext {
     drawsBorder: Bool,
     environment: EnvironmentValues
   ) {
-    guard let unitSize = environment[keyPath: domain.unitSizeKey],
+    guard let unitSize = domain.unitSize(in: environment),
       let dimensions = environment.gridDimensions
     else { return nil }
 

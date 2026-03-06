@@ -54,12 +54,16 @@ public struct InfoBarView: View {
       .scrollBounceBehavior(.basedOnSize)
       .scrollIndicators(.hidden)
 
-      .gridFont(config: .domain(.asciiMode))
+      .gridFont(
+        config: .domain(.asciiMode),
+        fallback: .caption2.weight(.medium)
+      )
 //      .font(.caption)
-      .fontWeight(.medium)
+//      .fontWeight(.medium)
       .frame(height: Styles.infoBarHeight)
       .background(.thinMaterial, ignoresSafeAreaEdges: .horizontal)
       .background(backgroundStyle ?? AnyShapeStyle(.black.opacity(0.06)), ignoresSafeAreaEdges: .horizontal)
+      
       /// Small top highlight for contrast against background
       .overlay(alignment: .top) {
         Rectangle()

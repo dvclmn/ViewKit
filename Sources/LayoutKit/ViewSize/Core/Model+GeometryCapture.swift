@@ -42,7 +42,7 @@ extension GeometryCapture {
   /// Note: This does not account for safe area insets at all
   public static var globalRect: GeometryCapture<CGRect> {
     .init(type: CGRect.self) { proxy in
-      proxy.frame(in: .global)
+      proxy.frame(in: .local)
     }
   }
 

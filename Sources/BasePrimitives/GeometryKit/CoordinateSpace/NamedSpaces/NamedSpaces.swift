@@ -18,7 +18,11 @@ import Foundation
 ///   unitSize: CGSize
 /// ) -> GridPoint?
 /// ```
-public enum ScreenSpace: Sendable {}  // Aka Viewport
-public enum CanvasSpace: Sendable {}  // local, pre-transform
-public enum GridSpace: Sendable {}  // ASCII art, cells etc
+public enum ScreenSpace: Sendable, Hashable {
+  public static let safeArea: String = "screenSafeArea"
+}  // Aka Viewport
+public enum CanvasSpace: Sendable, Hashable {
+  public static let safeArea: String = "canvasSafeArea"
+}  // local, pre-transform
+public enum GridSpace: Sendable, Hashable {}  // ASCII art, cells etc
 

@@ -84,10 +84,10 @@ extension GridFont {
         return .system(size: size, design: .monospaced)
 
       default:
-        if let bundledFont {
-          return bundledFont.swiftUIFont(size: size)
+        guard let bundledFont else {
+          return .custom(rawValue, fixedSize: size)
         }
-        return .custom(rawValue, fixedSize: size)
+        return bundledFont.swiftUIFont(size: size)
     }
   }
 }
