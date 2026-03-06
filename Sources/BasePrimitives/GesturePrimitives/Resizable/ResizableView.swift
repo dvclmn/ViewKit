@@ -5,7 +5,8 @@
 //  Created by Dave Coleman on 22/2/2026.
 //
 
-import LayoutKit
+//import LayoutKit
+import BasePrimitives
 import SwiftUI
 
 public struct ResizableView<Content: View>: View {

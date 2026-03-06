@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import VectorKit
 
 enum DragMethod: Sendable {

@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 7/5/2025.
 //
 
-import BasePrimitives
+import CoreTools
 import SwiftUI
 
 public struct TouchIndicatorsView: View {
