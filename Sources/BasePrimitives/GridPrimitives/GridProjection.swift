@@ -26,6 +26,15 @@ public struct GridProjection: Equatable, Sendable {
   }
 }
 
+extension GridProjection: CustomStringConvertible {
+  public var description: String {
+    DisplayString {
+      Labeled("Unit Size", value: unitSize.displayString(.concise))
+      Labeled("Rounding", value: rounding.name)
+    }.text
+  }
+}
+
 extension GridProjection {
 
   /// Converts Canvas space (continuous) to Grid space (discrete).

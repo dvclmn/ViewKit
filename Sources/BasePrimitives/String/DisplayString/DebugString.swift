@@ -34,3 +34,11 @@ public func DebugString(
 public func printMissing(_ value: String, for consumer: String) {
   print("`\(value)` missing, needed by `\(consumer)`")
 }
+
+public func printDidNotSatisfy(
+  _ value: String,
+  expectation: String,
+  for consumer: String
+) {
+  print("`\(value)` did not match expected result `\(expectation)`, in method `\(consumer)`")
+}

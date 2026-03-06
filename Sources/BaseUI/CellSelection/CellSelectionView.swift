@@ -14,16 +14,14 @@ public struct CellSelectionView<Content: View>: View {
   @Environment(\.unitSize) private var unitSize
   @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers
   @Environment(\.pointerGridPosition) private var pointerGridPosition
-
-//  @State private var store: SelectionHandler
+  @Environment(\.pointerLocation) private var pointerLocation
+  @Environment(\.viewportRect) private var viewportRect
+  @Environment(\.gridGeometry) private var gridGeometry
+  @Environment(\.zoomLevel) private var zoomLevel
 
   let content: Content
 
-  public init(
-//    store: SelectionHandler? = nil,
-    @ViewBuilder content: @escaping () -> Content
-  ) {
-//    self._store = State(initialValue: store ?? SelectionHandler())
+  public init(@ViewBuilder content: @escaping () -> Content) {
     self.content = content()
   }
   public var body: some View {
@@ -31,16 +29,33 @@ public struct CellSelectionView<Content: View>: View {
     GridCanvasView {
       CellSelectionCanvas()
         .allowsCanvasClipping(false)
+      
 
       content
       //        .debugFrame("Canvas Content", .mint)
     }
     .environment(\.shouldShowInfoBarItems, true)
-//    .environment(store)
-    
-    .addInfoBarItems {
-      Labeled("Hover", value: pointerGridPosition)
-      //      Labeled("Hover", value: store.pointerLocation)
+
+    //    .addInfoBarItems {
+    //      Labeled("Hover", value: pointerGridPosition)
+    //      //      Labeled("Hover", value: store.pointerLocation)
+    //    }
+
+    .overlay(alignment: .bottomTrailing) {
+      VStack(alignment: .leading) {
+        Text(
+          DisplayString {
+            Labeled("Viewport rect", value: viewportRect?.debugDescription)
+            Labeled("Grid Geometry", value: gridGeometry?.description)
+            Labeled("Pointer Location", value: pointerLocation?.displayString(.concise))
+            Labeled("Zoom", value: zoomLevel)
+          }.text
+        )
+        .font(.callout)
+        .quickRoundedBackground()
+        .padding()
+      }
+      //      .offset(y: 50)
     }
   }
 }

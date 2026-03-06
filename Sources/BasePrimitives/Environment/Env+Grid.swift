@@ -17,12 +17,12 @@ extension EnvironmentValues {
 
   public var pointerGridPosition: GridPosition? {
     guard let gridGeometry else {
-      printMissing("gridGeometry", for: "pointerGridPosition")
+//      printMissing("gridGeometry", for: "pointerGridPosition")
       return nil
     }
 
     guard let pointerLocation else {
-      printMissing("pointerLocation", for: "pointerGridPosition")
+//      printMissing("pointerLocation", for: "pointerGridPosition")
       return nil
     }
 
@@ -36,17 +36,17 @@ extension EnvironmentValues {
   public var gridGeometry: GridGeometry? {
 
     guard let viewportRect else {
-      printMissing("viewportRect", for: "gridGeometry")
+//      printMissing("viewportRect", for: "gridGeometry")
       return nil
     }
 
     guard let gridDimensions else {
-      printMissing("gridDimensions", for: "gridGeometry")
+//      printMissing("gridDimensions", for: "gridGeometry")
       return nil
     }
 
     guard let unitSize else {
-      printMissing("unitSize", for: "gridGeometry")
+//      printMissing("unitSize", for: "gridGeometry")
       return nil
     }
 
@@ -57,10 +57,4 @@ extension EnvironmentValues {
       anchor: canvasAnchor
     )
   }
-
 }
-
-//private func missingValue(_ key: String, for consumer: String) -> String {
-//  "EnvironmentValue `\(key)` missing, needed by \(consumer)"
-//  //  "\(file):\(line) \(function): EnvironmentValue `\(key)` missing, needed by `gridGeometry`"
-//}

@@ -23,10 +23,12 @@ import Foundation
 /// - Text measurement conversions to integer cell counts
 /// - Hit-testing cell indices without overflow
 /// - Visual alignment corrections and expansions
-public enum GridRounding: Sendable {
+public enum GridRounding: String, Sendable {
   case down
   case up
   case none
+  
+  public var name: String { rawValue.capitalized }
 
   private var rule: FloatingPointRoundingRule? {
     switch self {
@@ -100,7 +102,7 @@ extension SnapStrategy {
         return Foundation.round(value)
     }
   }
-  
+
   func snapped(_ value: CGFloat) -> Int {
     switch self {
       case .floor:

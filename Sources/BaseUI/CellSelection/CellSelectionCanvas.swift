@@ -84,6 +84,7 @@ struct CellSelectionCanvas: View {
     //    .task(id: pointerLocation) { store.pointerLocation = pointerLocation }
     //    .task(id: gridGeometry) { store.geometry = gridGeometry }
 
+    Text("Pointer Location \(pointerLocation?.displayString(.concise))")
   }
 }
 

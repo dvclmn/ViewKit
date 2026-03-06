@@ -57,7 +57,10 @@ extension GridGeometry: ViewportGeometric {
 
 extension GridGeometry: CustomStringConvertible {
   public var description: String {
-    //    Displstrin
-    ""
+    DisplayString {
+      Labeled("Viewport", value: viewportRect)
+      Labeled("Grid Dimensions", value: dimensions.description + " Cells")
+      Labeled("Projection", value: projection)
+    }.text
   }
 }
