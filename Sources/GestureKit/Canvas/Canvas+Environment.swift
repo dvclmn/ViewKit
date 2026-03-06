@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension EnvironmentValues {
-  @Entry public var isResizingCanvas: Bool = false
-  @Entry public var shouldRenderDragRect: Bool = true
-}
+//extension EnvironmentValues {
+//  @Entry public var isResizingCanvas: Bool = false
+//  @Entry public var shouldRenderDragRect: Bool = true
+//}

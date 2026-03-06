@@ -14,14 +14,28 @@ extension EnvironmentValues {
   /// Important for coordinate space calculations.
   @Entry public var canvasAnchor: UnitPoint = .center
 
+  @Entry public var canvasState: Binding<CanvasState>?
+
   /// From CanvasKit
-  @Entry public var zoomLevel: Double = 1.0
+  //  @Entry public var zoomLevel: Double = 1.0
+  //  @Entry public var panOffset: CGSize = .zero
+  //  @Entry public var rotation: Angle = .zero
+  //  @Entry public var pointerLocation: CGPoint?
+
+  public var zoomLevel: Double {
+    canvasState?.wrappedValue.zoomLevel ?? 1.0
+  }
+  public var panOffset: CGSize {
+    canvasState?.wrappedValue.panOffset ?? .zero
+  }
+  public var rotation: Angle {
+    canvasState?.wrappedValue.rotation ?? .zero
+  }
+  public var pointerLocation: CGPoint? {
+    canvasState?.wrappedValue.pointerLocation
+  }
+
   @Entry public var zoomRange: ClosedRange<Double>?
-
-  @Entry public var panOffset: CGSize = .zero
-  @Entry public var rotation: Angle = .zero
-
-  @Entry public var pointerLocation: CGPoint?
 
   public var zoomClamped: Double {
     guard let zoomRange else { return zoomLevel }
