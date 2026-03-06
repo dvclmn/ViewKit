@@ -47,7 +47,7 @@ let package = Package(
         //        "ColourKit",
         "MotionKit",
         "CanvasKit",
-        "VectorKit",
+//        "VectorKit",
       ]
     ),
 
@@ -166,7 +166,7 @@ let package = Package(
         //        .module(.drawingPrimitives),
         .module(.graphicsKit),
         .module(.gestureKit),
-        .module(.vectorKit),
+//        .module(.vectorKit),
         .module(.canvasKit),
         .module(.uiPrimitives),
 //        .sharing,
@@ -221,7 +221,7 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.layoutKit),
-        .module(.vectorKit),
+//        .module(.vectorKit),
         .casePaths,
       ]
     ),
@@ -232,7 +232,7 @@ let package = Package(
         .module(.coreTools),
         //        .module(.colourKit),
         //        .module(.drawingPrimitives),
-        .module(.vectorKit),
+//        .module(.vectorKit),
         .module(.uiPrimitives),
         .casePaths,
         .metaCodable,
@@ -283,23 +283,23 @@ let package = Package(
       ],
     ),
 
-    .target(
-      name: "VectorKit",
-      dependencies: [
-        //        .module(.coreTools),
-        .module(.basePrimitives),
-        .module(.enumMacros),
-        //        .module(.drawingPrimitives),
-        //        .module(.colourKit),  // Consider trying to remove this dep.
-        //        .module(.colourKit),
-        //        .module(.uiPrimitives),
-        .casePaths,
-        .metaCodable,
-        .identifiedCollections,
-        //        .product(name: "Yams", package: "Yams"),
-
-      ]
-    ),
+//    .target(
+//      name: "VectorKit",
+//      dependencies: [
+//        //        .module(.coreTools),
+//        .module(.basePrimitives),
+//        .module(.enumMacros),
+//        //        .module(.drawingPrimitives),
+//        //        .module(.colourKit),  // Consider trying to remove this dep.
+//        //        .module(.colourKit),
+//        //        .module(.uiPrimitives),
+//        .casePaths,
+//        .metaCodable,
+//        .identifiedCollections,
+//        //        .product(name: "Yams", package: "Yams"),
+//
+//      ]
+//    ),
 
     .target(
       name: "Wrecktangle",
@@ -337,10 +337,10 @@ let package = Package(
       dependencies: [.module(.basePrimitives)],
       exclude: ["BasePrimitives.xctestplan"],
     ),
-    .testTarget(
-      name: "VectorKitTests",
-      dependencies: [.module(.vectorKit)],
-    ),
+//    .testTarget(
+//      name: "VectorKitTests",
+//      dependencies: [.module(.vectorKit)],
+//    ),
     .testTarget(
       name: "GraphicsKitTests",
       dependencies: [.module(.graphicsKit)],
@@ -391,7 +391,7 @@ enum BaseModule {
   case motionKit
 //  case sharedHelpers
   case uiPrimitives
-  case vectorKit
+//  case vectorKit
   case wrecktangle
 
   /// Export-only modules
@@ -417,7 +417,7 @@ enum BaseModule {
       case .motionKit: "MotionKit"
 //      case .sharedHelpers: "SharedHelpers"
       case .uiPrimitives: "UIPrimitives"
-      case .vectorKit: "VectorKit"
+//      case .vectorKit: "VectorKit"
       case .wrecktangle: "Wrecktangle"
 
       /// Export-only

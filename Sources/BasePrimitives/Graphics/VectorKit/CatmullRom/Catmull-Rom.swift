@@ -18,21 +18,25 @@ public struct CatmullRom {
   ///   - variant: The parameterization style
   /// - Returns: Interpolated point
   public static func point(
-    p0: CGPoint, p1: CGPoint, p2: CGPoint, p3: CGPoint,
+    p0: CGPoint,
+    p1: CGPoint,
+    p2: CGPoint,
+    p3: CGPoint,
     t: CGFloat,
     variant: CatmullRom.SplineVariant = .centripetal
   ) -> CGPoint {
-    // For uniform, we can use the optimized basis function form
+    
+    /// For uniform, we can use the optimized basis function form
     if variant == .uniform {
       return uniformBasis(p0: p0, p1: p1, p2: p2, p3: p3, t: t)
     }
 
     // For centripetal/chordal, compute knot vector
-    let alpha = variant.alpha
+    let alpha: CGFloat = variant.alpha
     let t0: CGFloat = 0
-    let t1 = knotValue(t0, p0, p1, alpha: alpha)
-    let t2 = knotValue(t1, p1, p2, alpha: alpha)
-    let t3 = knotValue(t2, p2, p3, alpha: alpha)
+    let t1: CGFloat = knotValue(t0, p0, p1, alpha: alpha)
+    let t2: CGFloat = knotValue(t1, p1, p2, alpha: alpha)
+    let t3: CGFloat = knotValue(t2, p2, p3, alpha: alpha)
 
     let tt = t1 + (t2 - t1) * t
 
@@ -137,16 +141,16 @@ public struct CatmullRom {
 
 // MARK: - CGPoint Helpers
 
-extension CGPoint {
-  fileprivate static func * (lhs: CGFloat, rhs: CGPoint) -> CGPoint {
-    CGPoint(x: lhs * rhs.x, y: lhs * rhs.y)
-  }
-
-  fileprivate static func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
-    CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
-  }
-
-//  fileprivate func distance(to other: CGPoint) -> CGFloat {
-//    hypot(other.x - x, other.y - y)
+//extension CGPoint {
+//  fileprivate static func * (lhs: CGFloat, rhs: CGPoint) -> CGPoint {
+//    CGPoint(x: lhs * rhs.x, y: lhs * rhs.y)
 //  }
-}
+//
+//  fileprivate static func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+//    CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+//  }
+//
+////  fileprivate func distance(to other: CGPoint) -> CGFloat {
+////    hypot(other.x - x, other.y - y)
+////  }
+//}
