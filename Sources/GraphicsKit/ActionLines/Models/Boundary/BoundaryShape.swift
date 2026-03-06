@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 23/1/2026.
 //
 
-import CoreTools
+import BasePrimitives
 
 public enum BoundaryShape: String, Hashable, CaseIterable, Identifiable, Pickable, Sendable, Codable {
   

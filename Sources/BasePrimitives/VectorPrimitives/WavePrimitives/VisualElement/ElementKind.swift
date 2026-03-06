@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 12/2/2026.
 //
 
-import CasePaths
-import EnumMacros
+//import CasePaths
+//import EnumMacros
 import BasePrimitives
 //import CoreTools
 import Foundation
@@ -20,7 +20,7 @@ import Foundation
 //@CasePathable
 //@dynamicMemberLookup
 //extension WaveVisualElement {
-@CaseDetection
+//@CaseDetection
 public enum VisualElementKind: String, Sendable, Identifiable, CaseIterable, Codable, Equatable, Hashable,
   LabeledItem
 {
