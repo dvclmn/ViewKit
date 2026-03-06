@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CoreTools
+import BasePrimitives
 
 public struct ZoomGestureEvent: Sendable {
   public var phase: InteractionPhase

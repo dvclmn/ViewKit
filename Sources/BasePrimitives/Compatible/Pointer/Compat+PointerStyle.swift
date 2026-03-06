@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 19/9/2024.
 //
 
-import BasePrimitives
 import SwiftUI
 
 public enum PointerStyleCompatible: Sendable {

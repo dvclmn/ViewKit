@@ -6,7 +6,8 @@
 //
 
 import CoreGraphics
-import CoreTools
+import BasePrimitives
+//import CoreTools
 import Foundation
 
 public struct PanState: CanvasGestureState, ClampedGestureState {

@@ -5,7 +5,8 @@
 //  Created by Dave Coleman on 9/1/2026.
 //
 
-import CoreTools
+import BasePrimitives
+
 import SwiftUI
 
 public struct RotateState: CanvasGestureState {

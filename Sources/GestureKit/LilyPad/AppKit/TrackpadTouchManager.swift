@@ -6,8 +6,8 @@
 //
 
 import AppKit
-import CoreTools
-import VectorKit
+import BasePrimitives
+//import VectorKit
 
 /// Manages trackpad touches and maintains their history for velocity calculations
 class TrackpadTouchManager {

@@ -6,7 +6,6 @@
 //
 
 import AppKit
-import BasePrimitives
 //import EnumMacros
 import Foundation
 

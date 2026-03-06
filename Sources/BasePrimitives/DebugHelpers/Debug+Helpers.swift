@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import BasePrimitives
 
 extension CGPoint {
 
