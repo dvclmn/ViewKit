@@ -8,7 +8,7 @@
 //import CoreTools
 //import SwiftUI
 
-//import ColourKit
+//// import ColourKit
 
 //public struct SliderExamples: View {
 //
