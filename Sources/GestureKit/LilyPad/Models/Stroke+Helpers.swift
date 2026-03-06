@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 20/1/2026.
 //
 
+import VectorKit
 import Foundation
 
 extension DrawingData {

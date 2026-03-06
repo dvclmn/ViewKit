@@ -8,6 +8,7 @@
 // import ColourKit
 import Foundation
 import IdentifiedCollections
+import BasePrimitives
 
 public typealias WaveElements = [VisualElementKind: WaveVisualElement]
 public struct WaveDocument: Codable, Sendable, Equatable {

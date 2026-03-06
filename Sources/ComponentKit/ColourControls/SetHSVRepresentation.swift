@@ -7,6 +7,7 @@
 
 // import ColourKit
 import SwiftUI
+import BasePrimitives
 
 struct HSVRepresentationModifier<Colour: ColourModel & HSVAdjustable>: ViewModifier {
 

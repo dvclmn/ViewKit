@@ -44,9 +44,12 @@ extension BouncyHandler {
       return 1.0
     }
 
+//    #warning("See `CurveFunction.value(at:min:max:steps:)` in VectorKit")
     let adjustedDistance = (distance - scale.deadZone) / 1000
     let normalised = min(max(adjustedDistance, 0), 1)
     let curved = scale.curve.value(at: normalised, min: 0, max: 1)
     return 1.0 + (curved * scale.maxEffectThreshold)
+    
+//    fatalError("CurveFunction.value(at:min:max:steps:) is not implemented")
   }
 }

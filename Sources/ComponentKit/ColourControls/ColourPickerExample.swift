@@ -8,6 +8,7 @@
 // import ColourKit
 import SwiftUI
 import UIPrimitives
+import BasePrimitives
 
 struct ColourPickerExample: View {
   @State private var primary: RGBColour = .init(red: 0.1, green: 0.3, blue: 0.8)

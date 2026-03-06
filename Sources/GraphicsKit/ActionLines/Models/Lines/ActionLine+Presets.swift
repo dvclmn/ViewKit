@@ -6,6 +6,7 @@
 //
 
 // import ColourKit
+import BasePrimitives
 import Foundation
 
 extension ActionLine.Configuration {

@@ -8,6 +8,7 @@
 //#if canImport(AppKit)
 
 // import ColourKit
+import BasePrimitives
 import SwiftUI
 
 

@@ -6,6 +6,7 @@
 //
 
 // import ColourKit
+import BasePrimitives
 import Foundation
 
 public struct WaveLineStyle: Codable, Sendable, Equatable, Hashable {

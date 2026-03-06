@@ -7,6 +7,7 @@
 
 //import CoreTools
 import BasePrimitives
+import VectorKit
 import SwiftUI
 
 public typealias Strokes = [Stroke: StrokeConfig]

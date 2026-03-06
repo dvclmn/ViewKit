@@ -146,7 +146,7 @@ extension CGPoint {
     CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
   }
 
-  fileprivate func distance(to other: CGPoint) -> CGFloat {
-    hypot(other.x - x, other.y - y)
-  }
+//  fileprivate func distance(to other: CGPoint) -> CGFloat {
+//    hypot(other.x - x, other.y - y)
+//  }
 }

@@ -8,6 +8,7 @@
 // import ColourKit
 import SwiftUI
 import UIPrimitives
+import BasePrimitives
 
 public struct RGBTrackStyle: SliderTrackStyle {
 

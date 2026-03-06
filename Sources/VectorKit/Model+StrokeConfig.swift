@@ -5,11 +5,12 @@
 //  Created by Dave Coleman on 19/1/2026.
 //
 
-import CasePaths
+//import CasePaths
 // import ColourKit
-import CoreTools
+//import CoreTools
 import Foundation
-import VectorKit
+import BasePrimitives
+//import VectorKit
 
 public struct StrokeConfig: Sendable, Hashable, Codable {
   public let colour: RGBColour

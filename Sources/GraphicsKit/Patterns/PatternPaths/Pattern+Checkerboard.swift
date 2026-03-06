@@ -7,6 +7,7 @@
 
 // import ColourKit
 import SwiftUI
+import BasePrimitives
 import UIPrimitives
 
 /// overlay allows view to use Checkboard underneath

@@ -18,9 +18,9 @@ public struct CanvasState: Sendable, Equatable {
 //  public var zoomState: ZoomState
 //  public var rotationState: RotateState
   
-  var zoomLevel: Double
-  var panOffset: CGSize
-  var rotation: Angle
+  public var zoomLevel: Double
+  public var panOffset: CGSize
+  public var rotation: Angle
 
   /// Location in Canvas space
   let pointerLocation: CGPoint?
