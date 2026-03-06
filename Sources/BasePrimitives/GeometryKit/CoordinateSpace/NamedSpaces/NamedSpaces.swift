@@ -22,7 +22,13 @@ public enum ScreenSpace: Sendable, Hashable {
   public static let safeArea: String = "screenSafeArea"
 }  // Aka Viewport
 public enum CanvasSpace: Sendable, Hashable {
-  public static let safeArea: String = "canvasSafeArea"
+  /// Named coordinate space for the interactive viewport container.
+  public static let viewport: String = "canvasViewport"
+
+  /// Named coordinate space for the untransformed artwork/document container.
+  public static let artwork: String = "canvasArtwork"
+
+  /// Legacy alias retained for compatibility while migrating call sites.
+  public static let safeArea: String = viewport
 }  // local, pre-transform
 public enum GridSpace: Sendable, Hashable {}  // ASCII art, cells etc
-
