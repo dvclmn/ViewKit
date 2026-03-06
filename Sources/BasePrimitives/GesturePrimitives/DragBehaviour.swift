@@ -6,7 +6,7 @@
 //
 
 //import CoreTools
-import BasePrimitives
+//import BasePrimitives
 import SwiftUI
 
 //@MetaEnum
@@ -30,6 +30,14 @@ public enum DragBehavior: Equatable {
 }
 
 extension DragBehavior {
+  
+  public var isMarquee: Bool {
+    if case .marquee(let drawMarquee) = self {
+      return drawMarquee
+    }
+    return false
+  }
+  
   public var isEnabled: Bool {
     self != .none
   }

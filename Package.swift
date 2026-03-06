@@ -32,7 +32,7 @@ let package = Package(
       ]
     ),
 
-    .library(name: "DrawingPrimitives", targets: ["DrawingPrimitives"]),
+//    .library(name: "DrawingPrimitives", targets: ["DrawingPrimitives"]),
 
     .library(
       name: "GraphicsKit",
@@ -138,7 +138,7 @@ let package = Package(
         .module(.sampleBuilder),
 //        .module(.colourKit),
         .module(.layoutKit),
-        .module(.drawingPrimitives),
+//        .module(.drawingPrimitives),
         .module(.graphicsKit),
         .module(.gestureKit),
         .module(.vectorKit),
@@ -155,7 +155,7 @@ let package = Package(
         .module(.coreTools),
         .module(.gestureKit),
         .module(.uiPrimitives),
-        .module(.drawingPrimitives),
+//        .module(.drawingPrimitives),
       ],
     ),
 
@@ -166,7 +166,7 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
 //        .module(.colourKit),
-        .module(.drawingPrimitives),
+//        .module(.drawingPrimitives),
         .module(.graphicsKit),
         .module(.layoutKit),
         .module(.uiPrimitives),
@@ -181,15 +181,15 @@ let package = Package(
 //      ],
 //    ),
 
-    .target(
-      name: "DrawingPrimitives",
-      dependencies: [
-        .module(.basePrimitives)
-//        .module(.coreTools),
-//        .module(.gestureKit),
-//        .module(.uiPrimitives),
-      ],
-    ),
+//    .target(
+//      name: "DrawingPrimitives",
+//      dependencies: [
+//        .module(.basePrimitives)
+////        .module(.coreTools),
+////        .module(.gestureKit),
+////        .module(.uiPrimitives),
+//      ],
+//    ),
 
     .target(
       name: "GestureKit",
@@ -206,7 +206,7 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
 //        .module(.colourKit),
-        .module(.drawingPrimitives),
+//        .module(.drawingPrimitives),
         .module(.vectorKit),
         .module(.uiPrimitives),
         .casePaths,
@@ -256,7 +256,7 @@ let package = Package(
         //        .module(.coreTools),
         .module(.basePrimitives),
         .module(.enumMacros),
-        .module(.drawingPrimitives),
+//        .module(.drawingPrimitives),
 //        .module(.colourKit),  // Consider trying to remove this dep.
         //        .module(.colourKit),
         //        .module(.uiPrimitives),
@@ -349,7 +349,7 @@ enum BaseModule {
   case componentKit
   case canvasKit
 //  case colourKit
-  case drawingPrimitives
+//  case drawingPrimitives
   case gestureKit
   case graphicsKit
   case layoutKit
@@ -374,7 +374,7 @@ enum BaseModule {
       case .componentKit: "ComponentKit"
       case .canvasKit: "CanvasKit"
 //      case .colourKit: "ColourKit"
-      case .drawingPrimitives: "DrawingPrimitives"
+//      case .drawingPrimitives: "DrawingPrimitives"
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
       case .layoutKit: "LayoutKit"

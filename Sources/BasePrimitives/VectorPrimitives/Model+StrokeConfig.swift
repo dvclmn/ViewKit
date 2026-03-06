@@ -6,7 +6,7 @@
 //
 
 import CasePaths
-import ColourKit
+// import ColourKit
 import CoreTools
 import Foundation
 import VectorKit
