@@ -50,11 +50,11 @@ extension EnvironmentValues {
 }
 
 extension View {
-//  public func gridFontSize(_ size: CGFloat) -> some View {
-//    self.environment(\.gridFontSize, size)
-//  }
-//
-//  public func asciiModeFontSize(_ size: CGFloat) -> some View {
-//    self.environment(\.asciiModeFontSize, size)
-//  }
+  //  public func gridFontSize(_ size: CGFloat) -> some View {
+  //    self.environment(\.gridFontSize, size)
+  //  }
+  //
+  //  public func asciiModeFontSize(_ size: CGFloat) -> some View {
+  //    self.environment(\.asciiModeFontSize, size)
+  //  }
 }

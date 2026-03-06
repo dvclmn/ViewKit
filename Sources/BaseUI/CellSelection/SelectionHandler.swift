@@ -14,8 +14,8 @@ public final class SelectionHandler {
 
   /// This should come in from CanvasKit, and be mapped to canvas/local
   var pointerLocation: CGPoint?
-  var zoom: CGFloat = 1
-  var pan: CGSize = .zero
+//  var zoom: CGFloat = 1
+//  var pan: CGSize = .zero
   var geometry: GridGeometry?
 }
 

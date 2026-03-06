@@ -30,15 +30,16 @@ public struct CellSelectionView<Content: View>: View {
     GridCanvasView {
       CellSelectionCanvas()
         .allowsCanvasClipping(false)
-      
+
       content
-//        .debugFrame("Canvas Content", .mint)
+      //        .debugFrame("Canvas Content", .mint)
     }
     .environment(\.shouldShowInfoBarItems, true)
     .environment(store)
+    
     .addInfoBarItems {
       Labeled("Hover", value: store.pointerGridPosition)
-//      Labeled("Hover", value: store.pointerLocation)
+      //      Labeled("Hover", value: store.pointerLocation)
     }
   }
 }

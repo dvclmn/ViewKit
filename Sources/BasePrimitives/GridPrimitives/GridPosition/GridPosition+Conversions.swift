@@ -65,10 +65,12 @@ extension CGPoint {
   public func gridPosition(
     geometry: GridGeometry
   ) -> GridPosition? {
-    guard geometry.dimensions.contains(
-      point: self,
-      unitSize: geometry.projection.unitSize
-    ) else { return nil }
+    guard
+      geometry.dimensions.contains(
+        point: self,
+        unitSize: geometry.projection.unitSize
+      )
+    else { return nil }
 
     let point = Point<CanvasSpace>(fromPoint: self)
     guard let candidate = geometry.projection.gridPositionIfValid(from: point) else {

@@ -24,7 +24,6 @@ struct CellSelectionCanvas: View {
   @Environment(\.isDebugMode) private var isDebugMode
   @Environment(\.gridGeometry) private var gridGeometry
   @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers
-
   @Environment(\.gridLineColour) private var gridLineColour
   @Environment(\.gridLineWidth) private var gridLineWidth
 
@@ -49,8 +48,8 @@ struct CellSelectionCanvas: View {
         pinMode: .canvas,
         drawsBorder: false
       )
-      
-//      context.debugEnvironmentViewportRect(in: size)
+
+      //      context.debugEnvironmentViewportRect(in: size)
 
       // MARK: - Selection Box
       guard let rect = store.selectionRect,
@@ -75,15 +74,16 @@ struct CellSelectionCanvas: View {
     }  // END canvas
     //    .debugFrame("Cell Canvas", .orange, isEnabled: true)
 
-//    .addInfoBarItems {
-//      Labeled("Canvas Size", value: canvasSize?.cgSize.displayString(.dimensions))
-//    }
+    //    .addInfoBarItems {
+    //      Labeled("Canvas Size", value: canvasSize?.cgSize.displayString(.dimensions))
+    //    }
 
-    .task(id: panOffset) { store.pan = panOffset }
-    .task(id: zoomLevel) { store.zoom = zoomLevel }
+//    .task(id: panOffset) { store.pan = panOffset }
+//    .task(id: zoomLevel) { store.zoom = zoomLevel }
     .task(id: pointerLocation) { store.pointerLocation = pointerLocation }
     .task(id: gridGeometry) { store.geometry = gridGeometry }
 
+    
   }
 }
 
