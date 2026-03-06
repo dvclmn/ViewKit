@@ -59,12 +59,17 @@ let package = Package(
     ),
 
     .library(
-      name: "SharedHelpers",
-      targets: [
-        "SharedHelpers",
-        "Wrecktangle",
-      ]
+      name: "Wrecktangle",
+      targets: ["Wrecktangle"]
     ),
+
+    //    .library(
+    //      name: "SharedHelpers",
+    //      targets: [
+    //        "SharedHelpers",
+    //        "Wrecktangle",
+    //      ]
+    //    ),
 
     // Export-only libraries
     .library(name: "ToolKit", targets: ["ToolKit"]),
@@ -257,17 +262,17 @@ let package = Package(
       ]
     ),
 
-//    .target(
-//      name: "SharedHelpers",
-//      dependencies: [
-//        .module(.basePrimitives),
-//        .module(.enumMacros),
-//        .module(.sampleBuilder),
-//        .module(.macroHelpers),
-//        .sharing,
-//        .casePaths,
-//      ],
-//    ),
+    //    .target(
+    //      name: "SharedHelpers",
+    //      dependencies: [
+    //        .module(.basePrimitives),
+    //        .module(.enumMacros),
+    //        .module(.sampleBuilder),
+    //        .module(.macroHelpers),
+    //        .sharing,
+    //        .casePaths,
+    //      ],
+    //    ),
 
     .target(
       name: "UIPrimitives",
@@ -307,7 +312,7 @@ let package = Package(
       name: "CoreTools",
       dependencies: [
         .module(.basePrimitives),
-        .module(.sharedHelpers),
+//        .module(.sharedHelpers),
         .module(.enumMacros),
       ],
     ),
@@ -322,10 +327,10 @@ let package = Package(
     ),
 
     // MARK: - Test targets
-    .testTarget(
-      name: "SharedHelpersTests",
-      dependencies: [.module(.sharedHelpers)],
-    ),
+//    .testTarget(
+//      name: "SharedHelpersTests",
+//      dependencies: [.module(.sharedHelpers)],
+//    ),
     .testTarget(
       name: "BasePrimitivesTests",
       dependencies: [.module(.basePrimitives)],
@@ -383,7 +388,7 @@ enum BaseModule {
   case layoutKit
   //  case lilypad
   case motionKit
-  case sharedHelpers
+//  case sharedHelpers
   case uiPrimitives
   case vectorKit
   case wrecktangle
@@ -409,7 +414,7 @@ enum BaseModule {
       case .layoutKit: "LayoutKit"
       //      case .lilypad: "LilyPad"
       case .motionKit: "MotionKit"
-      case .sharedHelpers: "SharedHelpers"
+//      case .sharedHelpers: "SharedHelpers"
       case .uiPrimitives: "UIPrimitives"
       case .vectorKit: "VectorKit"
       case .wrecktangle: "Wrecktangle"
