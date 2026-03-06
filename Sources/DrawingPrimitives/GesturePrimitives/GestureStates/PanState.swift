@@ -6,7 +6,7 @@
 //
 
 import CoreGraphics
-import BasePrimitives
+//import BasePrimitives
 //import CoreTools
 import Foundation
 

@@ -7,7 +7,7 @@
 
 import ColourKit
 import SwiftUI
-import CoreTools
+import BasePrimitives
 
 public struct StageViewConfig: Codable, Sendable, Equatable, Hashable {
   var fishEye: ShaderEffect = .fisheyePresetA
