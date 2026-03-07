@@ -79,7 +79,7 @@ let package = Package(
 
     // Export-only libraries
     .library(name: "ToolKit", targets: ["ToolKit"]),
-    .library(name: "CoreTools", targets: ["CoreTools"]),
+//    .library(name: "CoreTools", targets: ["CoreTools"]),
   ],
 
   // MARK: - Dependancies
@@ -143,7 +143,8 @@ let package = Package(
     .target(
       name: "BaseNetworking",
       dependencies: [
-        .module(.coreTools),
+        .module(.basePrimitives),
+//        .module(.coreTools),
         .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
@@ -165,7 +166,7 @@ let package = Package(
     .target(
       name: "BaseUI",
       dependencies: [
-        .module(.coreTools),
+        .module(.basePrimitives),
         .module(.sampleBuilder),
         //        .module(.colourKit),
         .module(.layoutKit),
@@ -183,7 +184,7 @@ let package = Package(
     .target(
       name: "CanvasKit",
       dependencies: [
-        .module(.coreTools),
+        .module(.basePrimitives),
         .module(.gestureKit),
         //        .module(.uiPrimitives),
         //        .module(.drawingPrimitives),
@@ -212,7 +213,7 @@ let package = Package(
     .target(
       name: "ComponentKit",
       dependencies: [
-        .module(.coreTools),
+        .module(.basePrimitives),
         //        .module(.colourKit),
         //        .module(.drawingPrimitives),
         .module(.graphicsKit),
@@ -242,7 +243,7 @@ let package = Package(
     .target(
       name: "GestureKit",
       dependencies: [
-        .module(.coreTools),
+        .module(.basePrimitives),
         .module(.layoutKit),
         //        .module(.vectorKit),
         .casePaths,
@@ -262,7 +263,7 @@ let package = Package(
     .target(
       name: "GraphicsKit",
       dependencies: [
-        .module(.coreTools),
+        .module(.basePrimitives),
         //        .module(.colourKit),
         //        .module(.drawingPrimitives),
         //        .module(.vectorKit),
@@ -293,7 +294,7 @@ let package = Package(
     .target(
       name: "MotionKit",
       dependencies: [
-        .module(.coreTools)
+        .module(.basePrimitives),
       ]
     ),
 
@@ -338,24 +339,24 @@ let package = Package(
     .target(
       name: "Wrecktangle",
       dependencies: [
-        .module(.coreTools)
+        .module(.basePrimitives),
       ]
     ),
 
     // MARK: - Forwarding modules
-    .target(
-      name: "CoreTools",
-      dependencies: [
-        .module(.basePrimitives),
-        //        .module(.sharedHelpers),
-        .module(.enumMacros),
-      ],
-    ),
+//    .target(
+//      name: "CoreTools",
+//      dependencies: [
+//        .module(.basePrimitives),
+//        //        .module(.sharedHelpers),
+//        .module(.enumMacros),
+//      ],
+//    ),
 
     .target(
       name: "ToolKit",
       dependencies: [
-        .module(.coreTools),
+        .module(.basePrimitives),
         .module(.baseUI),
         .module(.graphicsKit),
       ],
@@ -432,7 +433,7 @@ enum BaseModule {
 
   /// Export-only modules
   case toolKit
-  case coreTools
+//  case coreTools
 
   var name: String {
     switch self {
@@ -460,7 +461,7 @@ enum BaseModule {
 
       /// Export-only
       case .toolKit: "ToolKit"
-      case .coreTools: "CoreTools"
+//      case .coreTools: "CoreTools"
     }
   }
 }

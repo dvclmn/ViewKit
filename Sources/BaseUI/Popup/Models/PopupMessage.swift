@@ -5,8 +5,9 @@
 //  Created by Dave Coleman on 14/2/2025.
 //
 
-import CoreTools
-import SampleBuilder
+//import CoreTools
+import BasePrimitives
+//import SampleBuilder
 import SwiftUI
 
 public struct PopupMessage: Sendable, Identifiable {
