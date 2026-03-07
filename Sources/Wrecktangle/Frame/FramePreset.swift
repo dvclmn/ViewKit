@@ -5,10 +5,10 @@
 //  Created by Dave Coleman on 11/11/2025.
 //
 
-import EnumMacros
+//import EnumMacros
 
 extension Box {
-  @CaseDetection
+//  @CaseDetection
   public enum FramePreset: String, Sendable, Codable, Hashable {
     case single
     case double

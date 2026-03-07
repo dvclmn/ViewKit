@@ -5,16 +5,14 @@
 //  Created by Dave Coleman on 30/10/2025.
 //
 
-import EnumMacros
-
-
+//import EnumMacros
 
 extension Box {
 
   /// Important: This partly exists because we need to somehow
   /// have an intermediate step between PartType and StringStack.
   /// Because Builder Components can't carry engine / row index context
-  @AssociatedValues
+//  @AssociatedValues
   enum LineType: Hashable, Sendable {
     case text(String)
     case repeater(LinePart)

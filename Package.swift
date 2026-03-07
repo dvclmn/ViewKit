@@ -192,7 +192,8 @@ let package = Package(
     .target(
       name: "CasePathHelpers",
       dependencies: [
-        .casePaths
+        .module(.macroHelpers),
+        .casePaths,
       ],
     ),
 

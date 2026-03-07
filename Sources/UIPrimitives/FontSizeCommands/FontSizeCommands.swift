@@ -6,7 +6,6 @@
 //
 
 #if canImport(AppKit)
-import CoreTools
 import SwiftUI
 
 public protocol FontSizeControlling: PreferenceSettable

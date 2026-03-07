@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 9/2/2026.
 //
 
-import BasePrimitives
+//import BasePrimitives
 import CasePaths
 import SwiftUI
 import MacroHelpers

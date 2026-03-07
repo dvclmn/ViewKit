@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-import EnumMacros
+//import EnumMacros
 import BasePrimitives
 import SwiftUI
 
@@ -13,7 +13,7 @@ extension Box {
 
   /// The counterpart to `GlyphRole`. Describes where a Part
   /// is used, in the stucture of a Box
-  @CaseDetection
+//  @CaseDetection
   public enum PartRole: Hashable, Codable, Sendable {
     case horizontal(HorizontalLocation)
     case vertical(VerticalLocation)

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreTools
 
 //struct ToolTipHorizontalAlignment: AlignmentID {
 //  static func defaultValue(in context: ViewDimensions) -> CGFloat {

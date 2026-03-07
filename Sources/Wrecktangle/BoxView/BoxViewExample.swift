@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 11/11/2025.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
-
 
 public struct BoxViewExample: View {
   @Environment(\.glyphSet) private var glyphSet
@@ -37,7 +36,6 @@ public struct BoxViewExample: View {
   }
 }
 
-
 extension BoxViewExample {
   private var paragraphIndex: Int {
     guard let paragraphNumber else {
@@ -56,7 +54,6 @@ extension BoxViewExample {
 //    .environment(store)
 //}
 //#endif
-
 
 public struct BoxExampleGroup: View {
 

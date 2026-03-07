@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreTools
 
 struct FontCompression {
   let fontSize: CGFloat

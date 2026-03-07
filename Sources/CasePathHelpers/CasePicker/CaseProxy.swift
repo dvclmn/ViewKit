@@ -43,3 +43,11 @@ public struct CaseProxy<Root: CasePathable> {
     )
   }
 }
+
+extension BinaryFloatingPoint {
+  public func clamped(to range: ClosedRange<Self>) -> Self {
+    guard range.lowerBound < range.upperBound else { return self }
+    return Swift.min(range.upperBound, Swift.max(range.lowerBound, self))
+
+  }
+}

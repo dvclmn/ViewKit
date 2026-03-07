@@ -5,7 +5,8 @@
 //  Created by Dave Coleman on 9/11/2025.
 //
 
-import EnumMacros
+//import EnumMacros
+import BasePrimitives
 import Foundation
 
 extension Box.GlyphGroup {

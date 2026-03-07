@@ -16,7 +16,7 @@ extension Comparable {
   public func clamped(to range: ClosedRange<Self>) -> Self {
     return clamped(range.lowerBound, range.upperBound)
   }
-  
+
   @inline(__always)
   public func clampedIfNeeded(to range: ClosedRange<Self>?) -> Self {
     guard let range else { return self }
