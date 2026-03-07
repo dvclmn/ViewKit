@@ -20,6 +20,8 @@ extension BinaryFloatingPoint {
     let normalised = percent / 100
     return self / (1 + normalised)
   }
+  
+  
 
   //  public func removingZoomPercent(_ zoomPercent: Self) -> Self {
   //    let result = Double(self) / pow(1 + Double(zoomPercent), 1)

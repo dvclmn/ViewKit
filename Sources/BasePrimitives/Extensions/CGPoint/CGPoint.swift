@@ -44,7 +44,7 @@ extension CGPoint {
   public init(_ x: CGFloat, _ y: CGFloat) {
     self.init(x: x, y: y)
   }
-  
+
   /// Returns a new CGPoint aligned relative to a container of the given size,
   /// using a unit point as the anchor.
   ///
@@ -139,7 +139,7 @@ extension CGPoint {
     let centred: CGSize = size / 2
     return self - centred
   }
-  
+
   func normalise() -> CGPoint {
     let l = length
     return CGPoint(x / l, y / l)
@@ -166,7 +166,6 @@ extension CGPoint {
   //  public var isNormalised: Bool {
   //    return x >= 0.0 && x <= 1.0 && y >= 0.0 && y <= 1.0
   //  }
-
 
   /// Standard Linear Interpolation (Lerp)
   /// Aligns with VectorArithmetic's logic.
@@ -201,7 +200,7 @@ extension CGPoint {
   public func midpoint(to other: Self) -> Self {
     lerp(to: other, t: 0.5)
   }
-  
+
   public static func midPoint(
     from p1: CGPoint,
     to p2: CGPoint
