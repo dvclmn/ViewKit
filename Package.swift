@@ -153,8 +153,8 @@ let package = Package(
       dependencies: [
         .module(.enumMacros),
         .metaCodable,
-//        .casePaths,
-        .identifiedCollections,
+        .casePaths,
+//        .identifiedCollections,
       ],
       resources: [
         .process("Assets.xcassets"),
