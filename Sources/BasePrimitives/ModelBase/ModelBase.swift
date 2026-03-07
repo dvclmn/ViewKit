@@ -8,7 +8,7 @@
 import Foundation
 
 //@MainActor
-public protocol ModelBase: Sendable, Codable, Equatable, Hashable {}
+//public protocol ModelBase: Sendable, Codable, Equatable, Hashable {}
 
 //@MainActor
 //public protocol ModelBaseWithID: Sendable, Codable, Equatable, Hashable, Identifiable where ID: Hashable {

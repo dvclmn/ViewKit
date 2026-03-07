@@ -19,7 +19,7 @@ import SwiftUI
 ///   "GridPosition cannot be negative, in either dimension."
 /// )
 /// ```
-public struct GridPosition: ModelBase {
+public struct GridPosition: Sendable, Codable, Equatable, Hashable {
   public var column: Int  // x
   public var row: Int  // y
 

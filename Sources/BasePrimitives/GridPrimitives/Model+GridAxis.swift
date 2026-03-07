@@ -24,7 +24,7 @@ import SwiftUI
 ///
 /// ```
 //@CasePathable
-public enum GridAxis: String, ModelBase, CaseIterable, Identifiable {
+public enum GridAxis: String, Sendable, Codable, Equatable, Hashable, CaseIterable, Identifiable {
   case horizontal  // Column
   case vertical  // Row
 

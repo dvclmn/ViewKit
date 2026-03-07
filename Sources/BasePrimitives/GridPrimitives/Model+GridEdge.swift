@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum GridEdge: String, ModelBase, CaseIterable {
+public enum GridEdge: String, Sendable, Codable, Equatable, Hashable, CaseIterable {
   case top
   case trailing
   case bottom

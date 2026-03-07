@@ -9,7 +9,7 @@ import Foundation
 import BasePrimitives
 
 public protocol DataStore {
-  associatedtype Item: ModelBase & Identifiable
+  associatedtype Item: Sendable, Codable, Equatable, Hashable & Identifiable
   associatedtype Config: ItemConfiguration
   var items: [Item] { get set }
 //  var items: IdentifiedArrayOf<Item> { get set }
@@ -21,7 +21,7 @@ public protocol DataStore {
 }
 
 public protocol ItemConfiguration: Identifiable {
-  associatedtype Item: ModelBase & Identifiable
+  associatedtype Item: Sendable, Codable, Equatable, Hashable & Identifiable
   var id: UUID { get }
   var itemID: Item.ID { get }
 }
