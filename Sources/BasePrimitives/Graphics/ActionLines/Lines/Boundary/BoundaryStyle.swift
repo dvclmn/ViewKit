@@ -8,8 +8,9 @@
 //import CasePaths
 // import ColourKit
 import CoreGraphics
-import CoreTools
-import EnumMacros
+//import CoreTools
+import BasePrimitives
+//import EnumMacros
 //import CoreTools
 import SwiftUI
 
@@ -49,7 +50,7 @@ extension ActionLine {
 }
 
 extension ActionLine {
-  @CaseDetection
+//  @CaseDetection
   public enum BoundaryKind: String, CaseIterable, Identifiable, NamedItem {
     case inner
     case outer

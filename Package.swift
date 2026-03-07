@@ -38,7 +38,7 @@ let package = Package(
         "BaseUI",
         "LayoutKit",
         "ComponentKit",
-//        "UIPrimitives",
+        //        "UIPrimitives",
       ]
     ),
 
@@ -51,7 +51,8 @@ let package = Package(
         //        "ColourKit",
         "MotionKit",
         "CanvasKit",
-        "ActionLines",
+//        "ActionLines",
+        "GraphicsModels",
         //        "VectorKit",
       ]
     ),
@@ -152,7 +153,7 @@ let package = Package(
       dependencies: [
         .module(.enumMacros),
         .metaCodable,
-        .casePaths,
+//        .casePaths,
         .identifiedCollections,
       ],
       resources: [
@@ -173,7 +174,7 @@ let package = Package(
         .module(.gestureKit),
         //        .module(.vectorKit),
         .module(.canvasKit),
-//        .module(.uiPrimitives),
+        //        .module(.uiPrimitives),
         //        .sharing,
         .casePaths,
       ],
@@ -184,7 +185,7 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.gestureKit),
-//        .module(.uiPrimitives),
+        //        .module(.uiPrimitives),
         //        .module(.drawingPrimitives),
       ],
     ),
@@ -197,14 +198,14 @@ let package = Package(
       ],
     ),
 
-    .target(
-      name: "ActionLines",
-      dependencies: [
-        .module(.coreTools),
-        .casePaths,
-        .metaCodable,
-      ],
-    ),
+//    .target(
+//      name: "ActionLines",
+//      dependencies: [
+//        .module(.coreTools),
+//        .casePaths,
+//        .metaCodable,
+//      ],
+//    ),
 
     /// Currently, this main advantage of this seems to be that
     /// it doesn't depend on Gesture, Vector or CanvasKit.
@@ -216,7 +217,7 @@ let package = Package(
         //        .module(.drawingPrimitives),
         .module(.graphicsKit),
         .module(.layoutKit),
-//        .module(.uiPrimitives),
+        //        .module(.uiPrimitives),
         .casePaths,
       ],
     ),
@@ -247,6 +248,16 @@ let package = Package(
         .casePaths,
       ]
     ),
+    
+      .target(
+        name: "GraphicsModels",
+        dependencies: [
+          .module(.basePrimitives),
+          .module(.enumMacros),
+          .metaCodable,
+          .casePaths,
+        ]
+      ),
 
     .target(
       name: "GraphicsKit",
@@ -255,7 +266,7 @@ let package = Package(
         //        .module(.colourKit),
         //        .module(.drawingPrimitives),
         //        .module(.vectorKit),
-//        .module(.uiPrimitives),
+        //        .module(.uiPrimitives),
         .casePaths,
         .metaCodable,
       ],
@@ -267,8 +278,8 @@ let package = Package(
     .target(
       name: "LayoutKit",
       dependencies: [
-        .module(.basePrimitives),
-//        .module(.coreTools)
+        .module(.basePrimitives)
+        //        .module(.coreTools)
       ]
     ),
 
@@ -298,13 +309,13 @@ let package = Package(
     //      ],
     //    ),
 
-//    .target(
-//      name: "UIPrimitives",
-//      dependencies: [
-//        .module(.coreTools),
-//        .module(.layoutKit),
-//      ],
-//    ),
+    //    .target(
+    //      name: "UIPrimitives",
+    //      dependencies: [
+    //        .module(.coreTools),
+    //        .module(.layoutKit),
+    //      ],
+    //    ),
 
     //    .target(
     //      name: "VectorKit",
@@ -408,13 +419,14 @@ enum BaseModule {
   //  case colourKit
   //  case drawingPrimitives
   case gestureKit
+  case graphicsModels
   case graphicsKit
   case macroHelpers
   case layoutKit
   //  case lilypad
   case motionKit
   //  case sharedHelpers
-//  case uiPrimitives
+  //  case uiPrimitives
   //  case vectorKit
   case wrecktangle
 
@@ -436,12 +448,13 @@ enum BaseModule {
       //      case .drawingPrimitives: "DrawingPrimitives"
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
+      case .graphicsModels: "GraphicsModels"
       case .macroHelpers: "MacroHelpers"
       case .layoutKit: "LayoutKit"
       //      case .lilypad: "LilyPad"
       case .motionKit: "MotionKit"
       //      case .sharedHelpers: "SharedHelpers"
-//      case .uiPrimitives: "UIPrimitives"
+      //      case .uiPrimitives: "UIPrimitives"
       //      case .vectorKit: "VectorKit"
       case .wrecktangle: "Wrecktangle"
 
