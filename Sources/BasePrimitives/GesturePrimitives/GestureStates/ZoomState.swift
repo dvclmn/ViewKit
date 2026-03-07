@@ -5,8 +5,6 @@
 //  Created by Dave Coleman on 9/1/2026.
 //
 
-import BasePrimitives
-//import CoreTools
 import Foundation
 
 public struct ZoomState: CanvasGestureState {
@@ -25,10 +23,10 @@ public struct ZoomState: CanvasGestureState {
 }
 
 extension ZoomState {
-/// Note: Zoom already clamped at the gesture level
+  /// Note: Zoom already clamped at the gesture level
   public func zoom(clampedTo range: ClosedRange<Double>) -> Double {
     value.clamped(to: range)
   }
-  
+
   public var zoom: Double { value }
 }

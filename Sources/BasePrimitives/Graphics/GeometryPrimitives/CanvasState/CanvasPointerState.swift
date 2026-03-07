@@ -5,14 +5,14 @@
 //  Created by Dave Coleman on 7/3/2026.
 //
 
-import BasePrimitives
+//import BasePrimitives
 import GestureKit
 
 extension CanvasState {
   public struct PointerState: Sendable, Equatable {
-    var pointerTap: TapState = .init()
-    var pointerDrag: DragState = .init()
-    var pointerHover: HoverState = .init()
+    public var pointerTap: TapState = .init()
+    public var pointerDrag: DragState = .init()
+    public var pointerHover: HoverState = .init()
   }
 }
 

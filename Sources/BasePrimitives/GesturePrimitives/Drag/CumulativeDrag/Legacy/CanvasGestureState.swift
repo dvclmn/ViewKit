@@ -9,7 +9,7 @@
 import BasePrimitives
 import SwiftUI
 
-public protocol CanvasGestureState: Sendable {
+public protocol CanvasGestureState: Sendable, Equatable {
 
   /// E.g. CGSize for pan
   associatedtype Value

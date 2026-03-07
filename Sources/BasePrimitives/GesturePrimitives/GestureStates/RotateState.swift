@@ -5,8 +5,6 @@
 //  Created by Dave Coleman on 9/1/2026.
 //
 
-import BasePrimitives
-
 import SwiftUI
 
 public struct RotateState: CanvasGestureState {
@@ -21,4 +19,8 @@ public struct RotateState: CanvasGestureState {
     self.value = value
     self.phase = phase
   }
+}
+
+extension RotateState {
+  public var rotation: Angle { value }
 }
