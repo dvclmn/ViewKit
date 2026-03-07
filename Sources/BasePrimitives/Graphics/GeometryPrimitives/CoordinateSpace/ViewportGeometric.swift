@@ -17,6 +17,10 @@ extension ViewportGeometric {
 
   public var canvasCGSize: CGSize { canvasSize.cgSize }
 
+  public func viewportContext(from state: TransformState) -> ViewportContext? {
+    viewportContext(zoom: state.zoomState.zoom, pan: state.panState.pan)
+  }
+
   public func viewportContext(
     zoom: CGFloat,
     pan: CGSize
