@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import CoreTools
+import BasePrimitives
 
 struct CustomGroupBoxView: View {
   

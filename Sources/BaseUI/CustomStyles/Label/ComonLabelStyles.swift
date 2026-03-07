@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 3/7/2025.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 public struct CommonLabelStyleModifier: ViewModifier {

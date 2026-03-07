@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 7/5/2025.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 public struct SliderGroup<Sliders: View>: View, ValueFormattable {

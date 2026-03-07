@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import CoreTools
+import BasePrimitives
 
 public struct ColumnConfig: Sendable {
   

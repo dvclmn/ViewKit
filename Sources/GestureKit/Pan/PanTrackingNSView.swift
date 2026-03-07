@@ -7,7 +7,7 @@
 
 #if canImport(AppKit)
 import AppKit
-import CoreTools
+import BasePrimitives
 
 public class PanTrackingNSView: NSView {
   var didUpdatePan: PanOutput = { _, _, _ in }

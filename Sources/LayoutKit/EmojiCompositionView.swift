@@ -5,7 +5,8 @@
 //  Created by Dave Coleman on 22/2/2026.
 //
 
-import CoreTools
+//import BasePrimitives
+import BasePrimitives
 import SwiftUI
 
 public struct EmojiCompositionView: View {

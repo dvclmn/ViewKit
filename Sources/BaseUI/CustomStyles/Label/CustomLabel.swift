@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 30/4/2024.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 extension LabelStyle where Self == CustomLabel {

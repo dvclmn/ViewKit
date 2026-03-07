@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 11/1/2026.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 struct InfoBarItemsModifier: ViewModifier {

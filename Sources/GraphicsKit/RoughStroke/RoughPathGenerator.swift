@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 11/12/2024.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 public struct RoughPathGenerator {

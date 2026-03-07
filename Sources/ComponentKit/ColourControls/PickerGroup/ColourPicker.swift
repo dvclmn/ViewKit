@@ -6,7 +6,7 @@
 //
 
 // import ColourKit
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 /// Presents both a Square Picker, and RGB/HSV Sliders

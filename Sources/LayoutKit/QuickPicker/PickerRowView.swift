@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 24/11/2025.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 extension QuickPicker {

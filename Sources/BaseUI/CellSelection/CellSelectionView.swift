@@ -6,7 +6,7 @@
 //
 
 import CanvasKit
-import CoreTools
+import BasePrimitives
 import LayoutKit
 import SwiftUI
 

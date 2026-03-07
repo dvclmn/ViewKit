@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import CoreTools
+import BasePrimitives
 
 /// Note: this is specifically geared toward `LazyVGrid`,
 /// `LazyHGrid` is not supported.

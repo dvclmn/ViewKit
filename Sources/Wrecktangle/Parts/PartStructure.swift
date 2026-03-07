@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 10/11/2025.
 //
 
-import CoreTools
+import BasePrimitives
 
 extension Box.PartStructure {
   init(

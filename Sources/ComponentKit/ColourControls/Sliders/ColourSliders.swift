@@ -6,7 +6,7 @@
 //
 
 // import ColourKit
-import CoreTools
+import BasePrimitives
 import SwiftUI
 import LayoutKit
 //import UIPrimitives

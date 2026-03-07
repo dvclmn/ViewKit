@@ -8,7 +8,7 @@
 #if os(macOS)
 
 import SwiftUI
-import CoreTools
+import BasePrimitives
 
 extension Flexi {
 

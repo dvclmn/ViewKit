@@ -28,7 +28,7 @@ let package = Package(
       targets: [
         "BasePrimitives",
         "MacroHelpers",
-        "CasePathHelpers",
+//        "CasePathHelpers",
       ]
     ),
 
@@ -52,7 +52,7 @@ let package = Package(
         "MotionKit",
         "CanvasKit",
 //        "ActionLines",
-        "GraphicsModels",
+//        "GraphicsModels",
         //        "VectorKit",
       ]
     ),
@@ -154,10 +154,10 @@ let package = Package(
         .module(.enumMacros),
         .metaCodable,
         .casePaths,
-//        .identifiedCollections,
+        .identifiedCollections,
       ],
       resources: [
-        .process("Assets.xcassets"),
+        .process("Resources/Assets.xcassets"),
         .process("Resources/Fonts"),
       ],
     ),
@@ -190,13 +190,13 @@ let package = Package(
       ],
     ),
 
-    .target(
-      name: "CasePathHelpers",
-      dependencies: [
-        .module(.macroHelpers),
-        .casePaths,
-      ],
-    ),
+//    .target(
+//      name: "CasePathHelpers",
+//      dependencies: [
+//        .module(.macroHelpers),
+//        .casePaths,
+//      ],
+//    ),
 
 //    .target(
 //      name: "ActionLines",
@@ -249,15 +249,15 @@ let package = Package(
       ]
     ),
     
-      .target(
-        name: "GraphicsModels",
-        dependencies: [
-          .module(.basePrimitives),
-          .module(.enumMacros),
-          .metaCodable,
-          .casePaths,
-        ]
-      ),
+//      .target(
+//        name: "GraphicsModels",
+//        dependencies: [
+//          .module(.basePrimitives),
+//          .module(.enumMacros),
+//          .metaCodable,
+//          .casePaths,
+//        ]
+//      ),
 
     .target(
       name: "GraphicsKit",
@@ -415,11 +415,11 @@ enum BaseModule {
   case baseUI
   case componentKit
   case canvasKit
-  case casePathHelpers
+//  case casePathHelpers
   //  case colourKit
   //  case drawingPrimitives
   case gestureKit
-  case graphicsModels
+//  case graphicsModels
   case graphicsKit
   case macroHelpers
   case layoutKit
@@ -440,7 +440,7 @@ enum BaseModule {
       case .sampleBuilder: "SampleBuilder"
       case .networking: "BaseNetworking"
       case .basePrimitives: "BasePrimitives"
-      case .casePathHelpers: "CasePathHelpers"
+//      case .casePathHelpers: "CasePathHelpers"
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
       case .canvasKit: "CanvasKit"
@@ -448,7 +448,7 @@ enum BaseModule {
       //      case .drawingPrimitives: "DrawingPrimitives"
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
-      case .graphicsModels: "GraphicsModels"
+//      case .graphicsModels: "GraphicsModels"
       case .macroHelpers: "MacroHelpers"
       case .layoutKit: "LayoutKit"
       //      case .lilypad: "LilyPad"

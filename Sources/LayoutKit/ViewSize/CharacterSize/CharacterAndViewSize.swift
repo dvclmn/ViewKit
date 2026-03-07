@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 10/10/2025.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 public struct CharacterAndViewSizeModifier: ViewModifier {

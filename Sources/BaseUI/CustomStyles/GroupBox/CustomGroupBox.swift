@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 6/11/2024.
 //
 
-import CoreTools
+import BasePrimitives
 import SwiftUI
 
 public struct CustomGroupBox: GroupBoxStyle {
