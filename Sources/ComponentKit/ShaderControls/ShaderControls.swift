@@ -26,7 +26,8 @@ public struct ShaderControls: View {
       /// This controls the space between the Slider Group header and the Slider content
       VStack(alignment: .leading, spacing: Styles.sizeSmall) {
         SliderGroup(shader.wrappedValue.name, spacing: Styles.sizeSmall) {
-          SingleShaderControlView(shader: shader)
+          Text("Bring back `SingleShaderControlView`")
+          //          SingleShaderControlView(shader: shader)
         }
       }
       .padding(.bottom, Styles.sizeSmall)

@@ -30,7 +30,7 @@ public struct ConfiguredWaveStack: Sendable, Equatable, Hashable {
     samples: Int = 20,
     interpolation: WaveInterpolation = .cubic(),
     style: WaveStyle = .init(),
-    shaders: [ShaderEffect] = ShaderEffect.chromaticPresetA
+    shaders: [ShaderEffect] = [ShaderEffect.chromaticPresetA]
 //    shaders: [ShaderEffect] = ShaderEffect.wavyPreset02
   ) {
     self.stack = stack
