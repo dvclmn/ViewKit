@@ -8,6 +8,13 @@
 import Foundation
 import BasePrimitives
 
+//public protocol Editable: Sendable, Codable, Equatable, Hashable {
+//  var dateAdded: Date { get }
+//  var dateDeleted: Date? { get set }
+//  var dateModified: Date? { get set }
+//}
+
+
 public protocol DataStore {
   associatedtype Item: Sendable, Codable, Equatable, Hashable & Identifiable
   associatedtype Config: ItemConfiguration
