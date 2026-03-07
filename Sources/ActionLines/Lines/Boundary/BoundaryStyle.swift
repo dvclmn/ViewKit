@@ -9,6 +9,7 @@
 // import ColourKit
 import CoreGraphics
 import CoreTools
+import EnumMacros
 //import CoreTools
 import SwiftUI
 

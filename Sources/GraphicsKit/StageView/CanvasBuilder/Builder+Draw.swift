@@ -6,6 +6,7 @@
 //
 
 import CoreTools
+import EnumMacros
 import SwiftUI
 
 @CaseDetection

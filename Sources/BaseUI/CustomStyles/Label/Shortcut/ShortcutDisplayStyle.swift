@@ -8,6 +8,7 @@
 
 import SwiftUI
 import CoreTools
+import EnumMacros
 
 extension EnvironmentValues {
   @Entry public var keyDisplayStyle: KeyboardElementDisplayStyle = .symbolLiteral

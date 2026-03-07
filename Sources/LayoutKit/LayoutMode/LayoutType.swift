@@ -6,6 +6,7 @@
 //
 
 import CoreTools
+import EnumMacros
 import SwiftUI
 
 /// This is here and not `SharedHelpers` because it relies on `LayoutKit`

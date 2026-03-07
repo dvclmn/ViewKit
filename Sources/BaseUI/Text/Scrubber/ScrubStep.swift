@@ -6,6 +6,7 @@
 //
 
 import CoreTools
+import EnumMacros
 
 @AssociatedValues
 public enum ScrubStrategy: Equatable {

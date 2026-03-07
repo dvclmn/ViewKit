@@ -5,7 +5,8 @@
 //  Created by Dave Coleman on 7/2/2026.
 //
 
-import CoreTools
+// import CoreTools
+import EnumMacros
 import SwiftUI
 
 @CaseDetection
