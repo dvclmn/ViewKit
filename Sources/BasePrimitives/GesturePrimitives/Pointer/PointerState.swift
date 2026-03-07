@@ -39,10 +39,17 @@ extension HoverState {
     value != nil
   }
 
-  public mutating func update(_ phase: HoverPhase) {
-    switch phase {
-      case .active(let location): update(location)
-      case .ended: update(nil)
-    }
-  }
+//  public mutating func update(_ phase: HoverPhase) {
+//    switch phase {
+//      case .active(let location): update(location)
+//      case .ended: update(nil)
+//    }
+//  }
+  
+//  public mutating func updatePhase(_ phase: HoverPhase) {
+//    switch phase {
+//      case .active(let location): update(location)
+//      case .ended: update(nil)
+//    }
+//  }
 }

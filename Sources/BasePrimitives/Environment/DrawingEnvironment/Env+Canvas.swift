@@ -22,6 +22,7 @@ extension EnvironmentValues {
 
   /// Aka artwork size, document size
   @Entry public var canvasSize: Size<CanvasSpace>?
+  @Entry public var canvasFrameInViewport: CGRect?
   @Entry public var canvasBackground: Color = Color(white: 0.04)
 
   public var canvasGeometry: CanvasGeometry? {
