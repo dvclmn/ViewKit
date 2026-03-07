@@ -8,14 +8,15 @@
 //import BasePrimitives
 //import GestureKit
 
-extension CanvasState {
-  public struct PointerState: Sendable, Equatable {
-    public var pointerTap: TapState = .init()
-    public var pointerDrag: DragState = .init()
-    public var pointerHover: HoverState = .init()
-  }
+//extension CanvasState {
+public struct PointerState: Sendable, Equatable {
+  public var pointerTap: TapState = .init()
+  public var pointerDrag: DragState = .init()
+  public var pointerHover: HoverState = .init()
 }
+//}
 
-extension CanvasState.PointerState {
+extension PointerState {
+  //extension CanvasState.PointerState {
   public static let initial: Self = .init()
 }

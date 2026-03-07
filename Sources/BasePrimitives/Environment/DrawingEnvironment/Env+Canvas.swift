@@ -21,7 +21,8 @@ extension EnvironmentValues {
   /// Important for coordinate space calculations.
   @Entry public var canvasAnchor: UnitPoint = .center
 
-  @Entry public var canvasState: Binding<CanvasState>?
+  @Entry public var pointerState: Binding<PointerState>?
+  @Entry public var transformState: Binding<TransformState>?
 //  @Entry public var canvasState: Binding<CanvasTransformState>?
 
   /// From CanvasKit
@@ -31,16 +32,16 @@ extension EnvironmentValues {
   //  @Entry public var pointerLocation: CGPoint?
 
   public var zoomLevel: Double {
-    canvasState?.wrappedValue.transform.zoomState.zoom ?? 1.0
+    transformState?.wrappedValue.zoomState.zoom ?? 1.0
   }
   public var panOffset: CGSize {
-    canvasState?.wrappedValue.transform.panState.pan ?? .zero
+    transformState?.wrappedValue.panState.pan ?? .zero
   }
   public var rotation: Angle {
-    canvasState?.wrappedValue.transform.rotationState.value ?? .zero
+    transformState?.wrappedValue.rotationState.value ?? .zero
   }
   public var pointerLocation: CGPoint? {
-    canvasState?.wrappedValue.pointer.pointerHover.value
+    pointerState?.wrappedValue.pointerHover.value
   }
 
   @Entry public var zoomRange: ClosedRange<Double>?

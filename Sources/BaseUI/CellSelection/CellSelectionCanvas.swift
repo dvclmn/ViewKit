@@ -10,7 +10,6 @@ import GraphicsKit
 import SwiftUI
 
 struct CellSelectionCanvas: View {
-  //  @Environment(SelectionHandler.self) private var store
   @Environment(\.unitSize) private var unitSize
   @Environment(\.panOffset) private var panOffset
   @Environment(\.zoomLevel) private var zoomLevel

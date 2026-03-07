@@ -141,23 +141,34 @@ extension QuickSlider {
   }
 
   /// For Binding to Int more conveniently
-  //  public init(
-  //    _ title: String,
-  //    intValue: Binding<Int>,
-  //    range: ClosedRange<Int>,
-  //    step: Int? = nil,
-  //    //    @ViewBuilder track: @escaping (Configuration) -> TrackBody = { _ in EmptyView() },
-  //    didChangeSlider: @escaping SliderOutput = { _ in },
-  //  ) {
-  //    self.init(
-  //      label: QuickLabel(title),
-  //      value: intValue.toBindingDouble,
-  //      range: range.toDoubleRange,
-  //      step: step?.toDouble,
-  //      track: track,
-  //      didChangeSlider: didChangeSlider
-  //    )
-  //  }
+  public init(
+    _ title: String,
+    intValue: Binding<Int>,
+    range: ClosedRange<Int>,
+    step: Int? = nil,
+    //    @ViewBuilder track: @escaping (Configuration) -> TrackBody = { _ in EmptyView() },
+    didChangeSlider: @escaping SliderOutput = { _ in },
+  ) where TrackBody == EmptyView {
+
+    self.init(
+      title,
+      value: intValue.toBindingDouble,
+      range: range.toDoubleRange,
+      step: step?.toDouble,
+      track: { _ in },
+      didChangeSlider: didChangeSlider
+    )
+
+    //      self.init(
+    //        title,
+    ////        label: QuickLabel(title),
+    //        value: intValue.toBindingDouble,
+    //        range: range.toDoubleRange,
+    //        step: step?.toDouble,
+    ////        track: nil,
+    //        didChangeSlider: didChangeSlider
+    //      )
+  }
 
   //  public init(
   //    _ title: String,
