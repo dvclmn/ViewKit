@@ -6,7 +6,7 @@
 //
 
 //import BasePrimitives
-import GestureKit
+//import GestureKit
 
 extension CanvasState {
   public struct PointerState: Sendable, Equatable {

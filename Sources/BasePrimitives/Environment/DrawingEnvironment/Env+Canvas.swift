@@ -40,7 +40,7 @@ extension EnvironmentValues {
     canvasState?.wrappedValue.transform.rotationState.value ?? .zero
   }
   public var pointerLocation: CGPoint? {
-    canvasState?.wrappedValue.pointer.pointerHover
+    canvasState?.wrappedValue.pointer.pointerHover.value
   }
 
   @Entry public var zoomRange: ClosedRange<Double>?

@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 1/3/2026.
 //
 
-import BasePrimitives
-import GestureKit
+//import BasePrimitives
+//import GestureKit
 import SwiftUI
 
 extension CanvasState {
