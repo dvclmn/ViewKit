@@ -21,7 +21,7 @@ extension EnvironmentValues {
   /// Important for coordinate space calculations.
   @Entry public var canvasAnchor: UnitPoint = .center
 
-  @Entry public var canvasState: Binding<CanvasState>?
+  @Entry public var canvasState: Binding<CanvasTransformState>?
 
   /// From CanvasKit
   //  @Entry public var zoomLevel: Double = 1.0

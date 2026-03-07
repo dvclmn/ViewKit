@@ -9,7 +9,7 @@ public protocol Activatable {
   var isActive: Bool { get set }
 }
 
-public protocol PointerAction: Sendable {
+public protocol PointerAction: Sendable, Equatable {
   /// E.g. CGRect for Drag
   associatedtype Value
   var value: Value? { get set }
