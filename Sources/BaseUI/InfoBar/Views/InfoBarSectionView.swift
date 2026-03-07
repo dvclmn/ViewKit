@@ -8,7 +8,7 @@
 import CoreTools
 import LayoutKit
 import SwiftUI
-import UIPrimitives
+//import UIPrimitives
 
 struct InfoBarSectionView: View {
   @Environment(\.sectionLabelDisplay) private var sectionLabelDisplay

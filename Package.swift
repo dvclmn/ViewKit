@@ -38,7 +38,7 @@ let package = Package(
         "BaseUI",
         "LayoutKit",
         "ComponentKit",
-        "UIPrimitives",
+//        "UIPrimitives",
       ]
     ),
 
@@ -173,7 +173,7 @@ let package = Package(
         .module(.gestureKit),
         //        .module(.vectorKit),
         .module(.canvasKit),
-        .module(.uiPrimitives),
+//        .module(.uiPrimitives),
         //        .sharing,
         .casePaths,
       ],
@@ -184,7 +184,7 @@ let package = Package(
       dependencies: [
         .module(.coreTools),
         .module(.gestureKit),
-        .module(.uiPrimitives),
+//        .module(.uiPrimitives),
         //        .module(.drawingPrimitives),
       ],
     ),
@@ -216,7 +216,7 @@ let package = Package(
         //        .module(.drawingPrimitives),
         .module(.graphicsKit),
         .module(.layoutKit),
-        .module(.uiPrimitives),
+//        .module(.uiPrimitives),
         .casePaths,
       ],
     ),
@@ -255,7 +255,7 @@ let package = Package(
         //        .module(.colourKit),
         //        .module(.drawingPrimitives),
         //        .module(.vectorKit),
-        .module(.uiPrimitives),
+//        .module(.uiPrimitives),
         .casePaths,
         .metaCodable,
       ],
@@ -267,7 +267,8 @@ let package = Package(
     .target(
       name: "LayoutKit",
       dependencies: [
-        .module(.coreTools)
+        .module(.basePrimitives),
+//        .module(.coreTools)
       ]
     ),
 
@@ -297,13 +298,13 @@ let package = Package(
     //      ],
     //    ),
 
-    .target(
-      name: "UIPrimitives",
-      dependencies: [
-        .module(.coreTools),
-        .module(.layoutKit),
-      ],
-    ),
+//    .target(
+//      name: "UIPrimitives",
+//      dependencies: [
+//        .module(.coreTools),
+//        .module(.layoutKit),
+//      ],
+//    ),
 
     //    .target(
     //      name: "VectorKit",
@@ -413,7 +414,7 @@ enum BaseModule {
   //  case lilypad
   case motionKit
   //  case sharedHelpers
-  case uiPrimitives
+//  case uiPrimitives
   //  case vectorKit
   case wrecktangle
 
@@ -440,7 +441,7 @@ enum BaseModule {
       //      case .lilypad: "LilyPad"
       case .motionKit: "MotionKit"
       //      case .sharedHelpers: "SharedHelpers"
-      case .uiPrimitives: "UIPrimitives"
+//      case .uiPrimitives: "UIPrimitives"
       //      case .vectorKit: "VectorKit"
       case .wrecktangle: "Wrecktangle"
 

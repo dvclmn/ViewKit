@@ -8,7 +8,8 @@
 // import ColourKit
 import CoreTools
 import SwiftUI
-import UIPrimitives
+import LayoutKit
+//import UIPrimitives
 
 public struct ColourSliders: View {
   @Environment(\.activeColourModel) private var activeColourModel

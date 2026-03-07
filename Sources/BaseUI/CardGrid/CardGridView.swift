@@ -7,7 +7,7 @@
 
 import CoreTools
 import LayoutKit
-import UIPrimitives
+//import UIPrimitives
 import SwiftUI
 
 public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {

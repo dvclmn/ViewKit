@@ -7,7 +7,8 @@
 
 import CoreTools
 import SwiftUI
-import UIPrimitives
+import LayoutKit
+//import UIPrimitives
 
 public struct InfoBarItemView: View {
   @Environment(\.isShowingSectionHeader) private var isShowingSectionHeader
