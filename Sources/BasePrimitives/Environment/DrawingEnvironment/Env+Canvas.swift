@@ -35,28 +35,28 @@ extension EnvironmentValues {
   }
 
   // MARK: - Input Events
-  @Entry public var pointerState: Binding<PointerState>?
-  @Entry public var transformState: Binding<TransformState>?
+  //  @Entry public var pointerState: Binding<PointerState>?
+  //  @Entry public var transformState: Binding<TransformState>?
   //  @Entry public var canvasState: Binding<CanvasTransformState>?
 
   /// From CanvasKit
-  //  @Entry public var zoomLevel: Double = 1.0
-  //  @Entry public var panOffset: CGSize = .zero
-  //  @Entry public var rotation: Angle = .zero
-  //  @Entry public var pointerLocation: CGPoint?
+  @Entry public var zoomLevel: Double = 1.0
+  @Entry public var panOffset: CGSize = .zero
+  @Entry public var rotation: Angle = .zero
+  @Entry public var pointerLocation: CGPoint?
 
-  public var zoomLevel: Double {
-    transformState?.wrappedValue.zoomState.zoom ?? 1.0
-  }
-  public var panOffset: CGSize {
-    transformState?.wrappedValue.panState.pan ?? .zero
-  }
-  public var rotation: Angle {
-    transformState?.wrappedValue.rotationState.value ?? .zero
-  }
-  public var pointerLocation: CGPoint? {
-    pointerState?.wrappedValue.pointerHover.value
-  }
+  //  public var zoomLevel: Double {
+  //    transformState?.wrappedValue.zoomState.zoom ?? 1.0
+  //  }
+  //  public var panOffset: CGSize {
+  //    transformState?.wrappedValue.panState.pan ?? .zero
+  //  }
+  //  public var rotation: Angle {
+  //    transformState?.wrappedValue.rotationState.value ?? .zero
+  //  }
+  //  public var pointerLocation: CGPoint? {
+  //    pointerState?.wrappedValue.pointerHover.value
+  //  }
 
   @Entry public var zoomRange: ClosedRange<Double>?
 
