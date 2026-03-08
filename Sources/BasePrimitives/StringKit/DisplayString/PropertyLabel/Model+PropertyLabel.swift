@@ -15,7 +15,7 @@ import Foundation
 ///
 /// With the option for a default version and a short version.
 /// E.g. default: "width", abbreviated: "W"
-public struct PropertyLabel {
+public struct PropertyLabel: Sendable {
 
   /// The standard / more verbose representation,
   /// e.g. `Width` for `CGSize`
@@ -26,16 +26,16 @@ public struct PropertyLabel {
 
   /// Text separating the property's label from it's float value
   /// E.g. the colon in `Width: `
-//  let separator: PropertySeparator
+  //  let separator: PropertySeparator
 
   public init(
     _ label: String,
     abbreviated: String? = nil,
-//    separator: PropertySeparator = .colon
+    //    separator: PropertySeparator = .colon
   ) {
     self.label = label
     self.abbreviated = abbreviated
-//    self.separator = separator
+    //    self.separator = separator
   }
 }
 
@@ -47,28 +47,27 @@ extension PropertyLabel: ExpressibleByStringLiteral {
 
 extension PropertyLabel {
 
-  func labelText(style: Self.Style) -> String? {
+  private func labelText(with style: Self.Style) -> String? {
     switch style {
       case .none: nil
       case .standard: label
-
       /// Falls back to standard if `abbreviated` is `nil`
       case .abbreviated: abbreviated ?? label
     }
   }
 
-//  func separatorText(using format: FloatDisplayFormat) -> String? {
-//    let sep = format.propertySeparator.toString ?? ""
-//    let shouldRenderSep: Bool =
-//      format.separatorVisibility.contains(.propertyLabel)
-//      && format.labelStyle != .none
-//    return shouldRenderSep ? separator.toString : nil
-//  }
+  //  func separatorText(using format: FloatDisplayFormat) -> String? {
+  //    let sep = format.propertySeparator.toString ?? ""
+  //    let shouldRenderSep: Bool =
+  //      format.separatorVisibility.contains(.propertyLabel)
+  //      && format.labelStyle != .none
+  //    return shouldRenderSep ? separator.toString : nil
+  //  }
 
-  public func stringValue(using format: FloatDisplayFormat) -> String? {
-    let text = labelText(style: format.labelStyle)
+  public func toString(using format: FloatDisplayFormat) -> String? {
+    let text = labelText(with: format.labelStyle)
     let separator = format.separatorString(for: .propertyLabel)
-//    let separator = separatorText(using: format)
+    //    let separator = separatorText(using: format)
     return [text, separator].compactMap(\.self).joined("")
   }
 }

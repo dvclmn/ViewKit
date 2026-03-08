@@ -15,27 +15,34 @@ import Foundation
 /// what is semantic? And keeps mess/formatting out of ``DisplayStringBuilder``
 public enum DisplayBlock: Sendable {
   case text(DisplayFragment)
-  case labeled(key: String, separator: String, value: DisplayFragment?)
+  case labeled(Labeled)
+//  case labeled(key: String, separator: String, value: DisplayFragment?)
   case indented(Indented)
   case divider(String)
 }
 
 extension DisplayBlock {
 
+  /// Where should I decide how to render an optional?
+  /// Currently it seems fragmented. Maybe move it here, at least
   public func render(using format: FloatDisplayFormat) -> String {
-    switch self {
+    let string: String? = switch self {
       case .text(let fragment):
-        return fragment.render(using: format)
+        fragment.render(using: format)
 
-      case .labeled(let key, let sep, let value):
-        return Labeled.toString(key: key, value: value, separator: sep, using: format)
+      case .labeled(let label):
+//      case .labeled(let key, let sep, let value):
+        label.toString(using: format)
+//        return Labeled.toString(key: key, value: value, separator: sep, using: format)
 
       case .divider(let text):
-        return text
+        text
 
       case .indented(let indented):
-        return indented.render(using: format)
+        indented.render(using: format)
     }
+    
+    return string ?? "nil"
   }
 
   //  public var label: Labeled? {
