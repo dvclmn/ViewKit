@@ -19,7 +19,7 @@ public struct ViewportSizeIndicatorModifier: ViewModifier {
         }
         //        .ignoresSafeArea()
         .overlay {
-          Text("Viewport Rect: \(viewportRect?.displayString(.rect), default: "None Found")")
+          Text("Viewport Rect: \(viewportRect?.displayString(.concise), default: "None Found")")
             .font(.title)
             .background(.black.secondary)
         }
