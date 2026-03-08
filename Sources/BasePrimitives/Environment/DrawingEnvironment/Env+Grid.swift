@@ -27,8 +27,6 @@ extension EnvironmentValues {
     }
 
     return pointerLocation.gridPosition(geometry: gridGeometry)
-    //    guard let geometry, let pointerLocation else { return nil }
-    //    return pointerLocation.gridPosition(geometry: geometry)
   }
 
   /// Note: This hard-codes / assumes `unitSize` (not `asciiUnitSize` nor
@@ -36,17 +34,17 @@ extension EnvironmentValues {
   public var gridGeometry: GridGeometry? {
 
     guard let viewportRect else {
-//      printMissing("viewportRect", for: "gridGeometry")
+            printMissing("viewportRect", for: "gridGeometry")
       return nil
     }
 
     guard let gridDimensions else {
-//      printMissing("gridDimensions", for: "gridGeometry")
+            printMissing("gridDimensions", for: "gridGeometry")
       return nil
     }
 
     guard let unitSize else {
-//      printMissing("unitSize", for: "gridGeometry")
+            printMissing("unitSize", for: "gridGeometry")
       return nil
     }
 

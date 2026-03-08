@@ -45,12 +45,12 @@ public struct ZoomModifier: ViewModifier {
     content
       .simultaneousGesture(zoomGesture, isEnabled: isEnabled)
       .onChange(of: modifierKeys) {
-        // If modifier keys change mid-pinch, don't let the next delta go bonkers.
+        /// If modifier keys change mid-pinch, don't let the next delta go bonkers.
         lastMagnification = 1
       }
       .onChange(of: externalZoom?.wrappedValue) { _, newValue in
-        // External source changed (e.g. reset button / slider / programmatic change).
-        // Only adopt it when we are NOT currently gesturing.
+        /// External source changed (e.g. reset button / slider / programmatic change).
+        /// Only adopt it when we are NOT currently gesturing.
         guard !isGesturing, let newValue else { return }
         internalZoom = Double(newValue).clamped(to: rangeForZoom)
       }
