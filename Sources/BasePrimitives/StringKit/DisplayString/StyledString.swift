@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import BasePrimitives
 
 //public struct StyledString {
 //  public var styledString: AttributedString

@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 3/10/2025.
 //
 
-import BasePrimitives
 import Foundation
 
 /// Ideally this should stay simple/dumb, not concerned with formatting strings etc.
@@ -43,10 +42,7 @@ extension DisplayStringBuilder {
   }
 
   /// Overloads for dedicated Block Types ``Labeled``, ``Indented``, ``Divider`` etc
-  //  public static func buildExpression(_ value: Labeled) -> [DisplayBlock] {
-  //    [.labeled(value)]
-  //  }
-
+  
   public static func buildExpression(_ value: Labeled) -> [DisplayBlock] {
     [value.block]
   }
@@ -67,26 +63,4 @@ extension DisplayStringBuilder {
   public static func buildExpression(_ value: any CustomStringConvertible) -> [DisplayBlock] {
     [.text(.make(from: value))]
   }
-
-  /// I may want to turn this back on?
-  //  public static func buildExpression(_ value: Any?) -> [DisplayBlock] {
-  //    [.text(.make(from: value))]
-  //  }
-
-  //  public static func buildExpression(_ value: any FloatRenderable) -> [DisplayBlock] {
-  //    [.float(value)]
-  //  }
-  //
-  //  public static func buildExpression(_ value: any PropertiesLabeled) -> [DisplayBlock] {
-  //    [.floatGroup(value)]
-  //  }
-
-  //  public static func buildExpression(_ value: String) -> [DisplayBlock] {
-  //    [.text(value)]
-  //  }
-  //
-  //  public static func buildExpression<T: StringRenderable>(_ value: T) -> [DisplayBlock] {
-  //    [.text(value.toString)]
-  //  }
-
 }

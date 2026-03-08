@@ -5,11 +5,7 @@
 //  Created by Dave Coleman on 1/3/2026.
 //
 
-//import BasePrimitives
-//import GestureKit
 import SwiftUI
-
-//extension CanvasState {
 
 /// Value-semantic snapshot of canvas transform interactions.
 public struct TransformState: Sendable, Equatable {
@@ -31,9 +27,11 @@ public struct TransformState: Sendable, Equatable {
   }
 }
 
-//}
 extension TransformState {
-  //extension CanvasState.TransformState {
+  public var zoom: Double { zoomState.value }
+  public var pan: CGSize { panState.value }
+  public var rotation: Angle { rotationState.rotation }
+
   public static var initial: Self { .init() }
 
   public var isPerformingGesture: Bool {
