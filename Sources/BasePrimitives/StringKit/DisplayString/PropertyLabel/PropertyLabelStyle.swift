@@ -7,6 +7,7 @@
 
 //import EnumMacros
 
+
 extension PropertyLabel {
   //  @CaseDetection
   public enum Style: Equatable, Sendable {

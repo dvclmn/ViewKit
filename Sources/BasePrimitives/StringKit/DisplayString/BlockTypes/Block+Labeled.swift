@@ -91,7 +91,8 @@ extension Labeled {
   ) -> String? {
 
     let effectiveFormat = formatOverride ?? format
-    let effectiveSeparator = separatorOverride ?? format.separatorString(for: kind.separatorKind)
+    let effectiveSeparator = separatorOverride ?? kind.separatorKind
+//    let effectiveSeparator = separatorOverride ?? format.separatorString(for: kind.separatorKind)
 
     //    key: String,
     //    value: DisplayFragment?,

@@ -19,7 +19,10 @@ public protocol PropertiesLabeled: DisplayFragmentRenderable, DisplayPresetRende
   var components: [Labeled] { get }
   //  var components: [LabelComponent] { get }
 
-  func renderProperties(using format: FloatDisplayFormat) -> String
+  func renderProperties(
+    using format: FloatDisplayFormat,
+    delimiter: ComponentDelimiter
+  ) -> String
 }
 
 extension PropertiesLabeled {
@@ -38,12 +41,13 @@ extension PropertiesLabeled {
 extension PropertiesLabeled {
 
   public func renderProperties(
-    using format: FloatDisplayFormat
+    using format: FloatDisplayFormat,
+    delimiter: ComponentDelimiter = .comma
   ) -> String {
-    let delimiter = format.separatorString(for: .componentDelimiter)
-    return components.map { $0.toString(using: format) ?? "nil" }.joined(delimiter)
-    //    return components.map { $0.stringValue(using: format) }
-    //      .joined(delimiter)
+    return components.map {
+      $0.toString(for: .property, using: format) ?? "nil"
+    }
+    .joined(delimiter.toString ?? "")
   }
 
 }

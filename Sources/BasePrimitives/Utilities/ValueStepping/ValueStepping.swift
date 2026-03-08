@@ -54,51 +54,51 @@ extension Collection where Element: Comparable {
 
 // MARK: - Value-centric helpers
 
-extension Equatable {
-  /// Returns a value stepped by one position within `allowed`.
-  /// - Parameters:
-  ///   - allowed: Ordered list of allowed values.
-  ///   - direction: `.up` for next, `.down` for previous.
-  ///   - wrapping: If true, stepping beyond the ends wraps around.
-  /// - Returns: The stepped value, or `nil` if stepping is not possible.
-  public func stepped(
-    in allowed: [Self],
-    direction: StepDirection = .up,
-    wrapping: Bool = false
-  ) -> Self? {
-    switch direction {
-      case .up: return allowed.nextValue(after: self, wrapping: wrapping)
-      case .down: return allowed.previousValue(before: self, wrapping: wrapping)
-    }
-  }
+//extension Equatable {
+//  /// Returns a value stepped by one position within `allowed`.
+//  /// - Parameters:
+//  ///   - allowed: Ordered list of allowed values.
+//  ///   - direction: `.up` for next, `.down` for previous.
+//  ///   - wrapping: If true, stepping beyond the ends wraps around.
+//  /// - Returns: The stepped value, or `nil` if stepping is not possible.
+//  public func stepped(
+//    in allowed: [Self],
+//    direction: StepDirection = .up,
+//    wrapping: Bool = false
+//  ) -> Self? {
+//    switch direction {
+//      case .up: return allowed.nextValue(after: self, wrapping: wrapping)
+//      case .down: return allowed.previousValue(before: self, wrapping: wrapping)
+//    }
+//  }
+//
+//  /// Mutates `self` to the stepped value within `allowed` if possible.
+//  public mutating func stepInPlace(
+//    in allowed: [Self],
+//    direction: StepDirection = .up,
+//    wrapping: Bool = false
+//  )
+//  {
+//    if let v = self.stepped(in: allowed, direction: direction, wrapping: wrapping) {
+//      self = v
+//    }
+//  }
+//}
 
-  /// Mutates `self` to the stepped value within `allowed` if possible.
-  public mutating func stepInPlace(
-    in allowed: [Self],
-    direction: StepDirection = .up,
-    wrapping: Bool = false
-  )
-  {
-    if let v = self.stepped(in: allowed, direction: direction, wrapping: wrapping) {
-      self = v
-    }
-  }
-}
-
-extension Comparable {
-  /// Returns a value stepped by one position within `allowed`, with a fallback when the current value
-  /// isn't exactly present: choose the next greater (for `.up`) or next lesser (for `.down`) element.
-  public func steppedLoosely(
-    in allowed: [Self],
-    direction: StepDirection = .up,
-    wrapping: Bool = false
-  ) -> Self? {
-    switch direction {
-      case .up: return allowed.nextValueLoosely(after: self, wrapping: wrapping)
-      case .down: return allowed.previousValueLoosely(before: self, wrapping: wrapping)
-    }
-  }
-}
+//extension Comparable {
+//  /// Returns a value stepped by one position within `allowed`, with a fallback when the current value
+//  /// isn't exactly present: choose the next greater (for `.up`) or next lesser (for `.down`) element.
+//  public func steppedLoosely(
+//    in allowed: [Self],
+//    direction: StepDirection = .up,
+//    wrapping: Bool = false
+//  ) -> Self? {
+//    switch direction {
+//      case .up: return allowed.nextValueLoosely(after: self, wrapping: wrapping)
+//      case .down: return allowed.previousValueLoosely(before: self, wrapping: wrapping)
+//    }
+//  }
+//}
 
 
 // MARK: - Usage Examples

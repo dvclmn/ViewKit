@@ -17,10 +17,10 @@ public enum FloatDisplayPreset: String, CaseIterable {
   case showSign
 
   /// No labels, no decimal places, just comma delimiter
-  case location
+//  case location
 
-  case dimensions
-  case rect
+//  case dimensions
+//  case rect
 
   public var format: FloatDisplayFormat {
     switch self {
@@ -30,20 +30,20 @@ public enum FloatDisplayPreset: String, CaseIterable {
       case .concise:
         .init(
           decimalPlaces: 0,
-          labelStyle: .abbreviated(.none),
+          labelStyle: .abbreviated,
           //          separatorVisibility: .component
         )
 
       case .wholeNumber:
         .init(decimalPlaces: 0)
 
-      case .dimensions:
-        .init(
-          decimalPlaces: 0,
-          labelStyle: .none,
-          componentDelimiter: .dimensions,
-          sign: .always(renderPlusSign: false)
-        )
+//      case .dimensions:
+//        .init(
+//          decimalPlaces: 0,
+//          labelStyle: .none,
+//          componentDelimiter: .dimensions,
+//          sign: .always(renderPlusSign: false)
+//        )
       //          .init(
       //            decimalPlaces: 0,
       //            labelStyle: .abbreviated,
@@ -51,25 +51,25 @@ public enum FloatDisplayPreset: String, CaseIterable {
       ////            separatorVisibility: .component
       //          )
 
-      case .location:
-        .init(
-          decimalPlaces: 0,
-          labelStyle: .none,
-          componentDelimiter: .comma,
-        )
+//      case .location:
+//        .init(
+//          decimalPlaces: 0,
+//          labelStyle: .none,
+//          componentDelimiter: .comma,
+//        )
 
       case .showSign:
         .init(
           sign: .always(renderPlusSign: false)
         )
 
-      case .rect:
-        .init(
-          decimalPlaces: 0,
-          labelStyle: .abbreviated(.colon),
-          componentDelimiter: .dimensions,
-          sign: .always(renderPlusSign: false)
-        )
+//      case .rect:
+//        .init(
+//          decimalPlaces: 0,
+//          labelStyle: .abbreviated(.colon),
+//          componentDelimiter: .dimensions,
+//          sign: .always(renderPlusSign: false)
+//        )
     }
   }
 }
