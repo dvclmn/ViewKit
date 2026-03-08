@@ -75,7 +75,21 @@ extension BinaryFloatingPoint {
   }
 }
 
+/// Examples:
+///
+/// For artwork dimensions, with a `CGSize` of
+///
+/// "Dimensions" = `label`
+/// "W " and "H " = `propertyLabel`
+/// " x " = `componentDelimiter`
+///
+/// ```
+/// Dimensions: W 260 x H H410
+///
+/// ```
+/// {Label}{}
 enum SeparatorKind {
+  case label
   case propertyLabel
   case componentDelimiter
 }

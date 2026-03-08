@@ -17,7 +17,9 @@ public struct Labeled: Sendable {
   /// ```
   /// Label separator: ": "
   /// Result: X: 10
-  public let separator: String
+  /// ```
+  /// Note: Have realised I could use 
+  public let seperatorOverride: String?
   public let value: DisplayFragment?
   
   /// If no value provided, will inherit from `DisplayString/format`
