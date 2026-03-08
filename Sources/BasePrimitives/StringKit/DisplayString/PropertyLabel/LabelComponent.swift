@@ -5,32 +5,32 @@
 //  Created by Dave Coleman on 4/10/2025.
 //
 
-public struct Separators: Sendable, Equatable {
-  let label: Separator
-  let property: Separator
-  let component: ComponentDelimiter
-
-  public init(
-    label: Separator = .colon,
-    property: Separator = .colon,
-    component: ComponentDelimiter = .space
-  ) {
-    self.label = label
-    self.property = property
-    self.component = component
-  }
-}
-
-extension Separators {
-  public subscript(kind kind: SeparatorKind) -> String? {
-    switch kind {
-      case .label: label.toString
-      case .propertyLabel: property.toString
-      case .componentDelimiter: component.toString
-    }
-  }
-  public static let `default`: Self = .init()
-}
+//public struct Separators: Sendable, Equatable {
+//  let label: Separator
+//  let property: Separator
+//  let component: ComponentDelimiter
+//
+//  public init(
+//    label: Separator = .colon,
+//    property: Separator = .colon,
+//    component: ComponentDelimiter = .space
+//  ) {
+//    self.label = label
+//    self.property = property
+//    self.component = component
+//  }
+//}
+//
+//extension Separators {
+//  public subscript(kind kind: SeparatorKind) -> String? {
+//    switch kind {
+//      case .label: label.toString
+//      case .propertyLabel: property.toString
+//      case .componentDelimiter: component.toString
+//    }
+//  }
+//  public static let `default`: Self = .init()
+//}
 
 //import Foundation
 //

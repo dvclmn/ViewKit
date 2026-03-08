@@ -47,7 +47,7 @@ extension PropertyLabel: ExpressibleByStringLiteral {
 
 extension PropertyLabel {
 
-  private func labelText(with style: Self.Style) -> String? {
+  package func labelText(with style: Self.Style) -> String? {
     switch style {
       case .none: nil
       case .standard: label

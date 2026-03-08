@@ -85,9 +85,13 @@ extension Labeled {
     //    .labeled(key: key, separator: separator, value: value)
   }
 
-  public func toString(using format: FloatDisplayFormat) -> String? {
+  public func toString(
+    for kind: LabelKind,
+    using format: FloatDisplayFormat
+  ) -> String? {
 
     let effectiveFormat = formatOverride ?? format
+    let effectiveSeparator = separatorOverride ?? format.separatorString(for: kind.separatorKind)
 
     //    key: String,
     //    value: DisplayFragment?,
@@ -97,10 +101,24 @@ extension Labeled {
     //    let valueText = value?.render(using: format) ?? "nil"
     //    return key + separator + valueText
 
-    let valueString = value?.render(using: effectiveFormat)
-    let labelString = key.toString(using: effectiveFormat)
+    let valueString = valuePart(using: format)
+//    let valueString = value?.render(using: effectiveFormat)
+    let labelString = labelPart(with: format.labelStyle)
+//    let labelString = key.toString(using: effectiveFormat)
+    return
 
   }
+
+  public func labelPart(with style: PropertyLabel.Style = .standard) -> String? {
+    key.labelText(with: style)
+  }
+
+  public func valuePart(using format: FloatDisplayFormat = .default) -> String? {
+    //    key.labelText(with: style)
+    value?.render(using: format)
+  }
+  
+  
 
   //  public func labelStyle(_ style: PropertyLabel.Style) -> Labeled {
   //    var format = formatOverride ?? .default

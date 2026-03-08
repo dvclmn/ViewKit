@@ -24,18 +24,4 @@ extension ComponentDelimiter {
   }
 }
 
-public enum Separator: Sendable, Equatable {
-  case colon
-  case custom(String)
-  case none
-}
 
-extension Separator {
-  var toString: String? {
-    switch self {
-      case .colon: ": "
-      case .custom(let str): str
-      case .none: nil
-    }
-  }
-}

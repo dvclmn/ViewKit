@@ -34,6 +34,17 @@ public enum SeparatorKind {
   case componentDelimiter
 }
 
+extension SeparatorKind {
+  public init(from labelKind: LabelKind) {
+    switch labelKind {
+      case .main: self = .label
+      case .property: self = .propertyLabel
+    }
+  }
+
+  public var labelKind: LabelKind? { .init(from: self) }
+}
+
 //extension SeparatorKind {
 //  func separatorString(from separators: Separators) -> String {
 //    switch self {

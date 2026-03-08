@@ -58,13 +58,14 @@ extension InfoBarItem {
         )
 
       case .labeled(let label):
+        self.init(fromLabeled: label, section: section, format: preset.format)
 //      case .labeled(let key, let separator, let value):
-        let format = preset.format
-        self.init(
-          section: section,
-          label: QuickLabel(stringLiteral: label. + separator),
-          content: value?.render(using: preset.format) ?? ""
-        )
+//        let format = preset.format
+//        self.init(
+//          section: section,
+//          label: QuickLabel(stringLiteral: label. + separator),
+//          content: value?.render(using: preset.format) ?? ""
+//        )
 
       case .indented:
         assertionFailure("Use extension `Array where Element == DisplayBlock` for `indented`.")
@@ -78,12 +79,18 @@ extension InfoBarItem {
 }
 
 extension InfoBarItem {
-  init<K: InfoBarSectionKey>(fromLabeled label: Labeled, section: K.Type) {
-    let label =
+  init<K: InfoBarSectionKey>(
+    fromLabeled labeled: Labeled,
+    section: K.Type,
+    format: FloatDisplayFormat = .default
+  ) {
+    
+    let label = labeled.labelPart(with: format.labelStyle) ?? ""
+    let value = labeled.valuePart(using: format) ?? ""
     self.init(
       section: section,
-      label: <#T##QuickLabel?#>,
-      content: <#T##String#>
+      label: QuickLabel(stringLiteral: label),
+      content: value
     )
   }
 }
