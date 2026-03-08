@@ -16,9 +16,6 @@ public struct FloatDisplayFormat: Equatable, Sendable {
   public var grouping: NumberGrouping
   public var labelStyle: PropertyLabel.Style
   public var separators: Separators
-  //    public var propertySeparator: PropertySeparator
-  //  public var componentDelimiter: ComponentDelimiter
-  //  public var separatorVisibility: SeparatorVisibility
   public var sign: SignDisplay
 
   public init(
@@ -26,20 +23,15 @@ public struct FloatDisplayFormat: Equatable, Sendable {
     integerLength: Int? = nil,
     grouping: NumberGrouping = .automatic,
     labelStyle: PropertyLabel.Style = .standard,
-    separators: Separators = .default,
-    //    propertySeparator: PropertySeparator = .colon,
-    //    componentDelimiter: ComponentDelimiter = .comma,
-    //    separatorVisibility: SeparatorVisibility = .both,
+    propertySeparator: Separator = .colon,
+    componentDelimiter: ComponentDelimiter = .comma,
     sign: SignDisplay = .standard
   ) {
     self.decimalPlaces = decimalPlaces
     self.integerLength = integerLength
     self.grouping = grouping
     self.labelStyle = labelStyle
-    self.separators = separators
-    //    self.propertySeparator = propertySeparator
-    //    self.componentDelimiter = componentDelimiter
-    //    self.separatorVisibility = separatorVisibility
+    self.separators = Separators(property: propertySeparator, component: componentDelimiter)
     self.sign = sign
   }
 }

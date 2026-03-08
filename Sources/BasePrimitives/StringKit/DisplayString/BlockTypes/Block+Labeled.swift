@@ -11,8 +11,7 @@ import AppKit
 public struct Labeled: Sendable {
 
   public let key: PropertyLabel
-  //  public let key: String
-  //  public let abbreviatedKey: String?
+  public let value: DisplayFragment?
 
   /// E.g. for `CGPoint`
   /// ```
@@ -20,7 +19,6 @@ public struct Labeled: Sendable {
   /// Result: X: 10
   /// ```
   public let separatorOverride: String?
-  public let value: DisplayFragment?
 
   /// If no value provided, will inherit from `DisplayString/format`
   public let formatOverride: FloatDisplayFormat?
@@ -28,19 +26,59 @@ public struct Labeled: Sendable {
   /// Providing a value for `separator` or `format` will override
   /// the defaults defined in `DisplayString/format`
   public init(
+    key: PropertyLabel,
+    value: DisplayFragment?,
+    separatorOverride: String? = nil,
+    formatOverride: FloatDisplayFormat? = nil
+  ) {
+    self.key = key
+    self.separatorOverride = separatorOverride
+    self.value = value
+    self.formatOverride = formatOverride
+  }
+}
+
+extension Labeled {
+  public init(
     _ key: String,
     value: Any?,
     separator: String? = nil,
     format: FloatDisplayFormat? = nil
   ) {
-    self.key = PropertyLabel(key)
-    self.separatorOverride = separator
-    self.value = value.map { DisplayFragment.make(from: $0) }
-    self.formatOverride = format
+    self.init(
+      key: PropertyLabel(key),
+      value: value.map { DisplayFragment.make(from: $0) },
+      separatorOverride: separator,
+      formatOverride: format
+    )
+    //    self.key = PropertyLabel(key)
+    //    self.separatorOverride = separator
+    //    self.value = value.map { DisplayFragment.make(from: $0) }
+    //    self.formatOverride = format
   }
-}
 
-extension Labeled {
+  /// An init handy for ``PropertiesLabeled``
+  public init(
+    //    _ key: String,
+    _ label: String,
+    abbreviated: String? = nil,
+    value: any FloatRenderable
+      //    value: any PropertiesLabeled
+      //    value: Any?,
+      //    separator: String? = nil,
+      //    format: FloatDisplayFormat? = nil
+  ) {
+    self.init(
+      key: PropertyLabel(label, abbreviated: abbreviated),
+      value: DisplayFragment(value),
+      separatorOverride: nil,
+      formatOverride: nil
+    )
+    //    self.key = PropertyLabel(label, abbreviated: abbreviated)
+    //    self.separatorOverride = separator
+    //    self.value = value.map { DisplayFragment.make(from: $0) }
+    //    self.formatOverride = format
+  }
 
   public var block: DisplayBlock {
     .labeled(self)

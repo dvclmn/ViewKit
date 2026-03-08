@@ -7,8 +7,6 @@
 
 public protocol DisplayFragmentRenderable: Sendable {
   func render(using format: FloatDisplayFormat) -> String
-  //  var displayString: String { get }
-  //  func displayString(_ preset: FloatDisplayPreset) -> String
 }
 
 /// Type-erased box
@@ -32,16 +30,6 @@ extension String: DisplayFragmentRenderable {
   public func render(using format: FloatDisplayFormat) -> String { self }
 }
 
-//extension FloatRenderable {
-// adapt: FloatRenderable already knows how to render with a FloatDisplayFormat
-//}
-//extension Double: DisplayFragmentRenderable {
-//  public func render(using format: FloatDisplayFormat) -> String {
-//    self.render(using: format)  // from FloatRenderable
-//  }
-//}
-// (or just make FloatRenderable refine DisplayFragmentRenderable)
-
 /// `DisplayBlock(from: Any?)` can just become `.text(.make(from: value))`
 /// `Labeled.init(key:value:Any?)` can become `DisplayFragment.make(from:)`
 extension DisplayFragment {
@@ -52,9 +40,6 @@ extension DisplayFragment {
 
       case let val as CustomStringConvertible:
         return DisplayFragment(val.description)
-
-//      case let val as Optional:
-//        return DisplayFragment("nil")
 
       default:
         return DisplayFragment(String(describing: value))

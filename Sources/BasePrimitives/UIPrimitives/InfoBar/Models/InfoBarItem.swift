@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 7/7/2025.
 //
 
-import BasePrimitives
 import Foundation
 
 public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
@@ -58,11 +57,12 @@ extension InfoBarItem {
           content: atom.render(using: preset.format)
         )
 
-      case .labeled(let key, let separator, let value):
-
+      case .labeled(let label):
+//      case .labeled(let key, let separator, let value):
+        let format = preset.format
         self.init(
           section: section,
-          label: QuickLabel(stringLiteral: key + separator),
+          label: QuickLabel(stringLiteral: label. + separator),
           content: value?.render(using: preset.format) ?? ""
         )
 
@@ -74,6 +74,17 @@ extension InfoBarItem {
         assertionFailure("Divider not suited for display as an InfoBarItem.")
         return nil
     }
+  }
+}
+
+extension InfoBarItem {
+  init<K: InfoBarSectionKey>(fromLabeled label: Labeled, section: K.Type) {
+    let label =
+    self.init(
+      section: section,
+      label: <#T##QuickLabel?#>,
+      content: <#T##String#>
+    )
   }
 }
 

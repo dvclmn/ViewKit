@@ -21,22 +21,24 @@ extension CGPoint: PropertiesLabeled {
 extension CGSize: PropertiesLabeled {
   
 //  public var defaultSeparator: ComponentDelimiter { .comma }
-  public var components: [LabelComponent] {
+  public var components: [Labeled] {
     [
-      .init(PropertyLabel("Width", abbreviated: "W"), value: width),
-      .init(PropertyLabel("Height", abbreviated: "H"), value: height),
+      .init("Width", abbreviated: "W", value: width),
+      .init("Height", abbreviated: "H", value: height),
+//      .init(PropertyLabel("Width", abbreviated: "W"), value: width),
+//      .init(PropertyLabel("Height", abbreviated: "H"), value: height),
     ]
   }
 }
 
 extension NSRect: PropertiesLabeled {
 //  public var defaultSeparator: ComponentDelimiter { .comma }
-  public var components: [LabelComponent] { origin.components + size.components }
+  public var components: [Labeled] { origin.components + size.components }
 }
 
 extension UnitPoint: PropertiesLabeled {
 //  public var defaultSeparator: ComponentDelimiter { .comma }
-  public var components: [LabelComponent] {
+  public var components: [Labeled] {
     [
       .init("X", value: x),
       .init("Y", value: y),
@@ -46,7 +48,7 @@ extension UnitPoint: PropertiesLabeled {
 
 extension CGVector: PropertiesLabeled {
 //  public var defaultSeparator: ComponentDelimiter { .comma }
-  public var components: [LabelComponent] {
+  public var components: [Labeled] {
     [
       .init("DX", value: dx),
       .init("DY", value: dy),

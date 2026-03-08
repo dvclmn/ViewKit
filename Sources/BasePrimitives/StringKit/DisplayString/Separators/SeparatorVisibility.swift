@@ -6,15 +6,16 @@
 //
 
 //import EnumMacros
-import Foundation
+//import Foundation
 
-public struct SeparatorVisibility: OptionSet, Sendable {
-  public init(rawValue: Int) {
-    self.rawValue = rawValue
-  }
-  public let rawValue: Int
-
-  public static let propertyLabel = Self(rawValue: 1 << 0)
-  public static let component = Self(rawValue: 1 << 1)
-  public static let both: Self = [.propertyLabel, .component]
-}
+/// Has perhaps been deprecated by defining `none` for a separator
+//public struct SeparatorVisibility: OptionSet, Sendable {
+//  public init(rawValue: Int) {
+//    self.rawValue = rawValue
+//  }
+//  public let rawValue: Int
+//
+//  public static let propertyLabel = Self(rawValue: 1 << 0)
+//  public static let component = Self(rawValue: 1 << 1)
+//  public static let both: Self = [.propertyLabel, .component]
+//}

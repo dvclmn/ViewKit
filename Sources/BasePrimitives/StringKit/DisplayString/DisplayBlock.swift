@@ -19,6 +19,7 @@ public enum DisplayBlock: Sendable {
 //  case labeled(key: String, separator: String, value: DisplayFragment?)
   case indented(Indented)
   case divider(String)
+//  case components([Labeled])
 }
 
 extension DisplayBlock {
@@ -40,6 +41,9 @@ extension DisplayBlock {
 
       case .indented(let indented):
         indented.render(using: format)
+        
+//      case .components(let items):
+        
     }
     
     return string ?? "nil"

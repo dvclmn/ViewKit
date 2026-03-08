@@ -17,7 +17,7 @@ public protocol PropertiesLabeled: DisplayFragmentRenderable, DisplayPresetRende
   /// separator, delimiting the Label and Value. This is different
   /// to the below ``PropertiesLabeled/separator``.
   var components: [Labeled] { get }
-//  var components: [LabelComponent] { get }
+  //  var components: [LabelComponent] { get }
 
   func renderProperties(using format: FloatDisplayFormat) -> String
 }
@@ -41,8 +41,9 @@ extension PropertiesLabeled {
     using format: FloatDisplayFormat
   ) -> String {
     let delimiter = format.separatorString(for: .componentDelimiter)
-    return components.map { $0.stringValue(using: format) }
-      .joined(delimiter)
+    return components.map { $0.toString(using: format) ?? "nil" }.joined(delimiter)
+    //    return components.map { $0.stringValue(using: format) }
+    //      .joined(delimiter)
   }
 
 }
