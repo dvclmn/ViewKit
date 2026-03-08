@@ -7,56 +7,32 @@
 
 import Foundation
 
-/// For now this can be used both for single Float values,
-/// as well as multiple together. As often a grouping of floats
-/// looks best sharing the same overall formatting.
-///
-/// Note: This shouldn't handle ``SeparatorKind/label``,
-/// that should be handled on a higher-up level
+/// Describes how a single floating-point value is formatted.
+/// Deliberately limited to numeric concerns only — no separator,
+/// label, or grouping/joining logic lives here.
 public struct FloatDisplayFormat: Equatable, Sendable {
   public var decimalPlaces: Int
   public var integerLength: Int?
   public var grouping: NumberGrouping
-  public var labelStyle: PropertyLabel.Style
-//  public var separators: Separators
   public var sign: SignDisplay
 
   public init(
     decimalPlaces: Int = 2,
     integerLength: Int? = nil,
     grouping: NumberGrouping = .automatic,
-    labelStyle: PropertyLabel.Style = .standard,
-//    propertySeparator: Separator = .colon,
-//    componentDelimiter: ComponentDelimiter = .comma,
     sign: SignDisplay = .standard
   ) {
     self.decimalPlaces = decimalPlaces
     self.integerLength = integerLength
     self.grouping = grouping
-    self.labelStyle = labelStyle
-//    self.separators = Separators(property: propertySeparator, component: componentDelimiter)
     self.sign = sign
   }
 }
 
 extension FloatDisplayFormat {
-//  func withSeparator(_ separator: Separator) -> Self {
-//    var copy = self
-//    
-////    copy.separators[kind: separatorKind] = separators[kind: separatorKind] ?? ""
-//    return copy
-//  }
-  
   public static func fromPreset(preset: FloatDisplayPreset) -> Self {
     preset.format
   }
-  //  public init(fromPreset preset: FloatDisplayPreset) {
-  //    self = preset.format
-  //  }
-
-//  func separatorString(for kind: SeparatorKind) -> String {
-//    separators[kind: kind] ?? ""
-//  }
 
   public func with(integerLength: Int) -> Self {
     var copy = self

@@ -7,152 +7,104 @@
 
 import AppKit
 
-/// As of now, this can be used either as a Main label, or a Property label
+/// A label+value pair. Used both as a standalone `DisplayBlock` (e.g. `"Dimensions: 260 x 410"`)
+/// and as an individual component inside `PropertiesLabeled` (e.g. `"W 260"`).
+///
+/// Separator ownership:
+/// - The separator between this label and its value (`propertySeparator`, default `" "`) lives here.
+/// - The separator between a top-level block label and its content (e.g. `": "`) is supplied
+///   by the `DisplayBlock` rendering layer.
+/// - The delimiter between sibling components (e.g. `" x "`) lives on `PropertiesLabeled`.
 public struct Labeled: Sendable {
 
   public let key: PropertyLabel
   public let value: DisplayFragment?
 
-  /// E.g. for `CGPoint`
-  /// ```
-  /// Label separator: ": "
-  /// Result: X: 10
-  /// ```
-  public let separatorOverride: String?
+  /// Separator between the label text and the value, e.g. the space in `W 260`.
+  /// Defaults to `" "`. Pass `""` to omit.
+  public let propertySeparator: String
 
-  /// If no value provided, will inherit from `DisplayString/format`
+  /// Per-item float format override. Inherits from context when `nil`.
   public let formatOverride: FloatDisplayFormat?
 
-  /// Providing a value for `separator` or `format` will override
-  /// the defaults defined in `DisplayString/format`
   public init(
     key: PropertyLabel,
     value: DisplayFragment?,
-    separatorOverride: String? = nil,
+    propertySeparator: String = " ",
     formatOverride: FloatDisplayFormat? = nil
   ) {
     self.key = key
-    self.separatorOverride = separatorOverride
+    self.propertySeparator = propertySeparator
     self.value = value
     self.formatOverride = formatOverride
   }
 }
 
+// MARK: - Convenience initialisers
+
 extension Labeled {
+
+  /// General-purpose init: key string + any value.
   public init(
     _ key: String,
     value: Any?,
-    separator: String? = nil,
+    propertySeparator: String = " ",
     format: FloatDisplayFormat? = nil
   ) {
     self.init(
       key: PropertyLabel(key),
       value: value.map { DisplayFragment.make(from: $0) },
-      separatorOverride: separator,
+      propertySeparator: propertySeparator,
       formatOverride: format
     )
-    //    self.key = PropertyLabel(key)
-    //    self.separatorOverride = separator
-    //    self.value = value.map { DisplayFragment.make(from: $0) }
-    //    self.formatOverride = format
   }
 
-  /// An init handy for ``PropertiesLabeled``
+  /// Convenience init for `PropertiesLabeled` components — takes a `FloatRenderable` value directly.
   public init(
-    //    _ key: String,
     _ label: String,
     abbreviated: String? = nil,
     value: any FloatRenderable
-      //    value: any PropertiesLabeled
-      //    value: Any?,
-      //    separator: String? = nil,
-      //    format: FloatDisplayFormat? = nil
   ) {
     self.init(
       key: PropertyLabel(label, abbreviated: abbreviated),
       value: DisplayFragment(value),
-      separatorOverride: nil,
+      propertySeparator: " ",
       formatOverride: nil
     )
-    //    self.key = PropertyLabel(label, abbreviated: abbreviated)
-    //    self.separatorOverride = separator
-    //    self.value = value.map { DisplayFragment.make(from: $0) }
-    //    self.formatOverride = format
   }
+}
 
-  public var block: DisplayBlock {
-    .labeled(self)
-    //    .labeled(key: key, separator: separator, value: value)
-  }
+// MARK: - Rendering
 
-  public func toString(
-    for kind: LabelKind,
-    using format: FloatDisplayFormat
-  ) -> String? {
+extension Labeled {
 
-    let effectiveFormat = formatOverride ?? format
-    let effectiveSeparator = separatorOverride ?? kind.separatorKind
-//    let effectiveSeparator = separatorOverride ?? format.separatorString(for: kind.separatorKind)
+  public var block: DisplayBlock { .labeled(self) }
 
-    //    key: String,
-    //    value: DisplayFragment?,
-    //    separator: String,
-    //    using format: FloatDisplayFormat
-    //  ) -> String {
-    //    let valueText = value?.render(using: format) ?? "nil"
-    //    return key + separator + valueText
-
-    let valueString = valuePart(using: format)
-//    let valueString = value?.render(using: effectiveFormat)
-    let labelString = labelPart(with: format.labelStyle)
-//    let labelString = key.toString(using: effectiveFormat)
-    return
-
-  }
-
+  /// Renders the label text only (no value, no separator).
   public func labelPart(with style: PropertyLabel.Style = .standard) -> String? {
     key.labelText(with: style)
   }
 
+  /// Renders the value only.
   public func valuePart(using format: FloatDisplayFormat = .default) -> String? {
-    //    key.labelText(with: style)
-    value?.render(using: format)
+    let effectiveFormat = formatOverride ?? format
+    return value?.render(using: effectiveFormat)
   }
-  
-  
 
-  //  public func labelStyle(_ style: PropertyLabel.Style) -> Labeled {
-  //    var format = formatOverride ?? .default
-  //    format.labelStyle = style
-  //    return Labeled(
-  //      key: key,
-  //      value: value,
-  //      separator: separator,
-  //      formatOverride: format
-  //    )
-  //  }
+  /// Renders `"<label><propertySeparator><value>"`, e.g. `"W 260"`.
+  /// Pass `.none` for `labelStyle` to suppress the label entirely.
+  public func toString(
+    labelStyle: PropertyLabel.Style = .standard,
+    using format: FloatDisplayFormat = .default
+  ) -> String? {
+    let effectiveFormat = formatOverride ?? format
+    let valueString = value?.render(using: effectiveFormat)
 
-  //  public static func toString(
-  //    key: String,
-  //    value: DisplayFragment?,
-  //    separator: String,
-  //    using format: FloatDisplayFormat
-  //  ) -> String {
-  //    let valueText = value?.render(using: format) ?? "nil"
-  //    return key + separator + valueText
-  //  }
+    guard let label = labelPart(with: labelStyle) else {
+      // labelStyle == .none: just the value
+      return valueString
+    }
+    // label + separator + value (or just label if no value)
+    return [label + propertySeparator, valueString].compactMap(\.self).joined()
+  }
 }
-
-//  private init(
-//    key: String,
-//    value: Any?,
-//    separator: String,
-//    formatOverride: FloatDisplayFormat?
-//  ) {
-//    self.key = key
-//    self.separator = separator
-//    self.value = value.map { DisplayFragment.make(from: $0) }
-//    self.formatOverride = formatOverride
-//  }
-
-//}

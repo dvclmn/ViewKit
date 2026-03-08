@@ -31,10 +31,13 @@ extension Indented {
   }
   //extension Indented: DisplayRenderable {
 
-  public func render(using format: FloatDisplayFormat) -> String {
+  public func render(
+    labelStyle: PropertyLabel.Style = .standard,
+    using format: FloatDisplayFormat
+  ) -> String {
 
     let content = content.map {
-      $0.render(using: format)
+      $0.render(labelStyle: labelStyle, using: format)
     }
     let elements = indentedElements(content: content)
 

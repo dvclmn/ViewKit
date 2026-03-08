@@ -41,3 +41,35 @@ extension Binding where Value: Comparable {
     }
   }
 }
+
+
+extension Equatable {
+  /// Returns a value stepped by one position within `allowed`.
+  /// - Parameters:
+  ///   - allowed: Ordered list of allowed values.
+  ///   - direction: `.up` for next, `.down` for previous.
+  ///   - wrapping: If true, stepping beyond the ends wraps around.
+  /// - Returns: The stepped value, or `nil` if stepping is not possible.
+  fileprivate func stepped(
+    in allowed: [Self],
+    direction: StepDirection = .up,
+    wrapping: Bool = false
+  ) -> Self? {
+    switch direction {
+      case .up: return allowed.nextValue(after: self, wrapping: wrapping)
+      case .down: return allowed.previousValue(before: self, wrapping: wrapping)
+    }
+  }
+  
+  /// Mutates `self` to the stepped value within `allowed` if possible.
+  fileprivate mutating func stepInPlace(
+    in allowed: [Self],
+    direction: StepDirection = .up,
+    wrapping: Bool = false
+  )
+  {
+    if let v = self.stepped(in: allowed, direction: direction, wrapping: wrapping) {
+      self = v
+    }
+  }
+}

@@ -7,47 +7,44 @@
 
 import Foundation
 
+/// A type with multiple named float properties, e.g. `CGPoint` (x, y) or `CGSize` (width, height).
+///
+/// Responsibility: join its `[Labeled]` components with a `ComponentDelimiter`.
+/// It does not own block-level separator logic — that lives at the `DisplayBlock`/`DisplayString` layer.
 public protocol PropertiesLabeled: DisplayFragmentRenderable, DisplayPresetRenderable {
 
-  /// E.g. `Width` paired with `10.5`
-  ///
-  /// Note: ``LabelComponent`` holds onto a ``PropertyLabel``,
-  /// which
-  /// the ``PropertyLabel`` includes a trailing
-  /// separator, delimiting the Label and Value. This is different
-  /// to the below ``PropertiesLabeled/separator``.
+  /// The ordered label+value components, e.g. `[("W", 260), ("H", 410)]` for a `CGSize`.
   var components: [Labeled] { get }
-  //  var components: [LabelComponent] { get }
 
   func renderProperties(
+    labelStyle: PropertyLabel.Style,
     using format: FloatDisplayFormat,
     delimiter: ComponentDelimiter
   ) -> String
 }
 
 extension PropertiesLabeled {
+
+  /// Convenience: render with a preset (uses `.standard` label style).
   public func displayString(_ preset: FloatDisplayPreset) -> String {
-    renderProperties(using: preset.format)
+    renderProperties(labelStyle: .standard, using: preset.format)
   }
 
+  /// `DisplayFragmentRenderable` conformance — renders with default label style.
   public func render(using format: FloatDisplayFormat) -> String {
-    renderProperties(using: format)
+    renderProperties(labelStyle: .standard, using: format)
   }
 }
 
-/// Types like `CGPoint` that have float properties.
-/// May be a pair, like `CGPoint`'s `x` and `y`,
-/// or more, like `CGRect`
 extension PropertiesLabeled {
 
   public func renderProperties(
-    using format: FloatDisplayFormat,
+    labelStyle: PropertyLabel.Style = .standard,
+    using format: FloatDisplayFormat = .default,
     delimiter: ComponentDelimiter = .comma
   ) -> String {
-    return components.map {
-      $0.toString(for: .property, using: format) ?? "nil"
-    }
-    .joined(delimiter.toString ?? "")
+    components
+      .map { $0.toString(labelStyle: labelStyle, using: format) ?? "" }
+      .joined(delimiter.toString ?? "")
   }
-
 }

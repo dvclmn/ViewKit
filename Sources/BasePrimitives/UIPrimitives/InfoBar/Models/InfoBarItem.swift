@@ -82,10 +82,10 @@ extension InfoBarItem {
   init<K: InfoBarSectionKey>(
     fromLabeled labeled: Labeled,
     section: K.Type,
+    labelStyle: PropertyLabel.Style = .standard,
     format: FloatDisplayFormat = .default
   ) {
-    
-    let label = labeled.labelPart(with: format.labelStyle) ?? ""
+    let label = labeled.labelPart(with: labelStyle) ?? ""
     let value = labeled.valuePart(using: format) ?? ""
     self.init(
       section: section,

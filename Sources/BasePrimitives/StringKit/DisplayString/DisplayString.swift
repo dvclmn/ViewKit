@@ -11,21 +11,26 @@ public struct DisplayString {
 
   private let components: [DisplayBlock]
 
-  /// This is the *top-level* seperator, that appears between
-  /// each element in the builder (defined on a new line in
-  /// the source code). Defaults to and is frequently set to
-  /// a new line character `"\n"`
+  /// Separator inserted between each top-level block. Defaults to `"\n"`.
   private let separator: String
+
+  /// How individual float values are formatted.
   private let format: FloatDisplayFormat
+
+  /// How block-level labels are displayed. Separated from `format`
+  /// because label styling is a presentation concern, not a float-formatting concern.
+  private let labelStyle: PropertyLabel.Style
 
   public init(
     _ components: [DisplayBlock],
     separator: String,
-    format: FloatDisplayFormat
+    format: FloatDisplayFormat,
+    labelStyle: PropertyLabel.Style
   ) {
     self.components = components
     self.separator = separator
     self.format = format
+    self.labelStyle = labelStyle
   }
 }
 
@@ -34,10 +39,12 @@ extension DisplayString {
   public init(
     _ separator: String = "\n",
     format: FloatDisplayFormat = .default,
+    labelStyle: PropertyLabel.Style = .standard,
     @DisplayStringBuilder _ content: () -> [DisplayBlock]
   ) {
     self.separator = separator
     self.format = format
+    self.labelStyle = labelStyle
     self.components = content()
   }
 }
@@ -46,46 +53,39 @@ extension DisplayString {
   public var text: String {
     components.output(
       separator: separator,
+      labelStyle: labelStyle,
       format: format
     )
   }
 
   public var lines: [String] {
-    components.map { $0.render(using: format) }
+    components.map { $0.render(labelStyle: labelStyle, using: format) }
   }
 
   public func decimalPlaces(_ places: Int) -> DisplayString {
     var newFormat = format
     newFormat.decimalPlaces = places
-
-    return DisplayString(
-      components,
-      separator: separator,
-      format: newFormat,
-    )
+    return DisplayString(components, separator: separator, format: newFormat, labelStyle: labelStyle)
   }
 
   public func labelStyle(_ style: PropertyLabel.Style) -> DisplayString {
-    var newFormat = format
-    newFormat.labelStyle = style
-
-    return DisplayString(
-      components,
-      separator: separator,
-      format: newFormat,
-    )
+    DisplayString(components, separator: separator, format: format, labelStyle: style)
   }
 }
 
 extension Array where Element == DisplayBlock {
   public func output(
     separator: String = "\n",
+    labelStyle: PropertyLabel.Style = .standard,
     format: FloatDisplayFormat = .default
   ) -> String {
-    lines(format: format).joined(separator)
+    lines(labelStyle: labelStyle, format: format).joined(separator)
   }
 
-  public func lines(format: FloatDisplayFormat = .default) -> [String] {
-    map { $0.render(using: format) }
+  public func lines(
+    labelStyle: PropertyLabel.Style = .standard,
+    format: FloatDisplayFormat = .default
+  ) -> [String] {
+    map { $0.render(labelStyle: labelStyle, using: format) }
   }
 }
