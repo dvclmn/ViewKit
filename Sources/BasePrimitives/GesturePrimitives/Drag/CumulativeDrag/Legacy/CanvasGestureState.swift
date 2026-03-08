@@ -6,7 +6,7 @@
 //
 
 //import CoreTools
-import BasePrimitives
+//import BasePrimitives
 import SwiftUI
 
 public protocol CanvasGestureState: Sendable, Equatable {

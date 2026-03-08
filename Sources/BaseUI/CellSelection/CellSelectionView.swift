@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 25/2/2026.
 //
 
-import CanvasKit
 import BasePrimitives
+import CanvasKit
 import LayoutKit
 import SwiftUI
 
@@ -29,7 +29,6 @@ public struct CellSelectionView<Content: View>: View {
     GridCanvasView {
       CellSelectionCanvas()
         .allowsCanvasClipping(false)
-      
 
       content
       //        .debugFrame("Canvas Content", .mint)
@@ -41,21 +40,21 @@ public struct CellSelectionView<Content: View>: View {
     //      //      Labeled("Hover", value: store.pointerLocation)
     //    }
 
-    .overlay(alignment: .bottomTrailing) {
-      VStack(alignment: .leading) {
-        Text(
-          DisplayString {
-            Labeled("Viewport rect", value: viewportRect?.debugDescription)
-            Labeled("Grid Geometry", value: gridGeometry?.description)
-            Labeled("Pointer Location", value: pointerLocation?.displayString(.concise))
-            Labeled("Zoom", value: zoomLevel)
-          }.text
-        )
-        .font(.callout)
-        .quickRoundedBackground()
-        .padding()
-      }
-      //      .offset(y: 50)
-    }
+//    .overlay(alignment: .bottomTrailing) {
+//      VStack(alignment: .leading) {
+//        Text(
+//          DisplayString {
+//            Labeled("Viewport rect", value: viewportRect?.debugDescription)
+//            Labeled("Grid Geometry", value: gridGeometry?.description)
+//            Labeled("Pointer Location", value: pointerLocation?.displayString(.concise))
+//            Labeled("Zoom", value: zoomLevel)
+//          }.text
+//        )
+//        .font(.callout)
+//        .quickRoundedBackground()
+//        .padding()
+//      }
+//      //      .offset(y: 50)
+//    }
   }
 }
