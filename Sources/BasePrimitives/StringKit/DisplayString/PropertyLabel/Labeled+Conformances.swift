@@ -9,7 +9,8 @@ import SwiftUI
 
 extension CGPoint: PropertiesLabeled {
 //  public var defaultSeparator: ComponentDelimiter { .comma }
-  public var components: [LabelComponent] {
+  public var components: [Labeled] {
+//  public var components: [LabelComponent] {
     [
       .init("X", value: x),
       .init("Y", value: y),

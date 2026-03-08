@@ -9,7 +9,7 @@ public enum ComponentDelimiter: Sendable, Equatable {
   case space
   case none
   case custom(String)
-  
+
   public static let comma: Self = .custom(", ")
   public static let dimensions: Self = .custom(" x ")
 }
@@ -20,6 +20,22 @@ extension ComponentDelimiter {
       case .space: " "
       case .none: nil
       case .custom(let string): string
+    }
+  }
+}
+
+public enum Separator: Sendable, Equatable {
+  case colon
+  case custom(String)
+  case none
+}
+
+extension Separator {
+  var toString: String? {
+    switch self {
+      case .colon: ": "
+      case .custom(let str): str
+      case .none: nil
     }
   }
 }

@@ -16,7 +16,8 @@ public protocol PropertiesLabeled: DisplayFragmentRenderable, DisplayPresetRende
   /// the ``PropertyLabel`` includes a trailing
   /// separator, delimiting the Label and Value. This is different
   /// to the below ``PropertiesLabeled/separator``.
-  var components: [LabelComponent] { get }
+  var components: [Labeled] { get }
+//  var components: [LabelComponent] { get }
 
   func renderProperties(using format: FloatDisplayFormat) -> String
 }

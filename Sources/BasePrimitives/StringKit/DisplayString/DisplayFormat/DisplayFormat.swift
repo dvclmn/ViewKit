@@ -15,8 +15,9 @@ public struct FloatDisplayFormat: Equatable, Sendable {
   public var integerLength: Int?
   public var grouping: NumberGrouping
   public var labelStyle: PropertyLabel.Style
-  //  public var propertySeparator: PropertySeparator
-  public var componentDelimiter: ComponentDelimiter
+  public var separators: Separators
+  //    public var propertySeparator: PropertySeparator
+  //  public var componentDelimiter: ComponentDelimiter
   //  public var separatorVisibility: SeparatorVisibility
   public var sign: SignDisplay
 
@@ -25,8 +26,9 @@ public struct FloatDisplayFormat: Equatable, Sendable {
     integerLength: Int? = nil,
     grouping: NumberGrouping = .automatic,
     labelStyle: PropertyLabel.Style = .standard,
+    separators: Separators = .default,
     //    propertySeparator: PropertySeparator = .colon,
-    componentDelimiter: ComponentDelimiter = .comma,
+    //    componentDelimiter: ComponentDelimiter = .comma,
     //    separatorVisibility: SeparatorVisibility = .both,
     sign: SignDisplay = .standard
   ) {
@@ -34,8 +36,9 @@ public struct FloatDisplayFormat: Equatable, Sendable {
     self.integerLength = integerLength
     self.grouping = grouping
     self.labelStyle = labelStyle
+    self.separators = separators
     //    self.propertySeparator = propertySeparator
-    self.componentDelimiter = componentDelimiter
+    //    self.componentDelimiter = componentDelimiter
     //    self.separatorVisibility = separatorVisibility
     self.sign = sign
   }
@@ -50,10 +53,7 @@ extension FloatDisplayFormat {
   //  }
 
   func separatorString(for kind: SeparatorKind) -> String {
-    switch kind {
-      case .propertyLabel: labelStyle.separatorString
-      case .componentDelimiter: componentDelimiter.toString ?? ""
-    }
+    separators[kind: kind] ?? ""
   }
 
   public func with(integerLength: Int) -> Self {
@@ -73,23 +73,4 @@ extension BinaryFloatingPoint {
     let percent = Double(toPercent(within: range))
     return String(percent.render(using: .init(decimalPlaces: decimalPlaces)) + "%")
   }
-}
-
-/// Examples:
-///
-/// For artwork dimensions, with a `CGSize` of
-///
-/// "Dimensions" = `label`
-/// "W " and "H " = `propertyLabel`
-/// " x " = `componentDelimiter`
-///
-/// ```
-/// Dimensions: W 260 x H H410
-///
-/// ```
-/// {Label}{}
-enum SeparatorKind {
-  case label
-  case propertyLabel
-  case componentDelimiter
 }
