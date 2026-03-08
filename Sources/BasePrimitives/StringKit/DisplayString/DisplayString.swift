@@ -89,11 +89,3 @@ extension Array where Element == DisplayBlock {
     map { $0.render(using: format) }
   }
 }
-
-extension AttributedString {
-  public func monospaced(_ font: Font? = nil) -> AttributedString {
-    self.transformingAttributes(\.font) { attr in
-      attr.value = font?.monospaced() ?? Font.body.monospaced()
-    }
-  }
-}

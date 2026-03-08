@@ -7,12 +7,7 @@
 
 import AppKit
 
-//public protocol DisplayBlockConvertable {
-//
-//}
-
 public struct Labeled: Sendable {
-  //public struct Labeled<Value> {
 
   public let key: String
 
@@ -22,46 +17,14 @@ public struct Labeled: Sendable {
   /// Result: X: 10
   public let separator: String
   public let value: DisplayFragment?
+  public let formatOverride: FloatDisplayFormat?  // nil = inherit from DisplayString
 
-  /// Previously had value as `any DisplayRenderable`, however this
-  /// has been retired as it unneccesarily shadowed `FloatRenderable`
-  //  public let value: Value?
-  //  public let value: Any?
-  //  public let value: (any StringRenderable)?
-  //    public let value: DisplayBlock
-
-  //  public let separator: String
-
-  public init(
-    _ key: String,
-    value: Any?,
-    //    value: DisplayAtom?,
-    separator: String = ": "
-  ) {
+  public init(_ key: String, value: Any?, separator: String = ": ") {
     self.key = key
-
-    if let value {
-      self.value =
-        switch value {
-          case let value as DisplayFragmentRenderable: DisplayFragment(value)
-          default: DisplayFragment(String(describing: value))
-        }
-    } else {
-      self.value = DisplayFragment(String(describing: value))
-    }
-
     self.separator = separator
+    self.value = value.map { DisplayFragment.make(from: $0) }
+    self.formatOverride = nil
   }
-
-  //  public init(
-  //    _ key: String,
-  //    value: Any?,
-  //    //    value: DisplayAtom?,
-  //    separator: String = ": "
-  //  ) {
-  //
-  //    self.init(key, value: value, separator: separator)
-  //  }
 
   public var block: DisplayBlock {
     .labeled(key: key, separator: separator, value: value)
@@ -90,46 +53,28 @@ public struct Labeled: Sendable {
   //  }
 }
 
-//extension Labeled: DisplayRenderable {
-//  public func render(using format: FloatDisplayFormat) -> String {
-//    let valuePart = value?.render(using: format) ?? "nil"
-//    return key + separator + valuePart
-//  }
-//}
-//
 extension Labeled {
 
-  //  public func renderLabel(using format: FloatDisplayFormat) -> String {
-  //    let valuePart = value.
-  //    return key + separator + valuePart
-  //  }
-  //  public var toDisplayBlock: DisplayBlock {
-  //    DisplayBlock.labeled(self)
-  ////  public func toDisplayBlock(using format: FloatDisplayFormat?) -> DisplayBlock {
-  //
-  ////    value?.render(using: format) ?? "nil"
-  //  }
+  private init(
+    key: String,
+    value: Any?,
+    separator: String,
+    formatOverride: FloatDisplayFormat?
+  ) {
+    self.key = key
+    self.separator = separator
+    self.value = value.map { DisplayFragment.make(from: $0) }
+    self.formatOverride = formatOverride
+  }
+
+  public func labelStyle(_ style: PropertyLabel.Style) -> Labeled {
+    var format = formatOverride ?? .default
+    format.labelStyle = style
+    return Labeled(
+      key: key,
+      value: value,
+      separator: separator,
+      formatOverride: format
+    )
+  }
 }
-
-//extension DisplayBlock {
-
-//  fileprivate static func semantic(for value: Any?) -> DisplayBlock {
-//
-//  }
-
-//  public static func displayBlock(for value: Any?) -> DisplayBlock {
-//
-//    guard let value else { return.text("nil") }
-//    if let result = value as?
-////    if let value
-//
-//    let text = string(for: value)
-//    return DisplayBlock.text(text)
-//  }
-//
-//  private static func string(for value: Any?) -> String {
-//
-//    guard let convertible = value as? StringRenderable else { return String(describing: value) }
-//    return convertible.toString
-//  }
-//}
