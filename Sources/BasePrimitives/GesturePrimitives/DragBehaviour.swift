@@ -5,12 +5,8 @@
 //  Created by Dave Coleman on 14/1/2026.
 //
 
-//import CoreTools
-//import BasePrimitives
 import SwiftUI
 
-//@MetaEnum
-//@CaseDetection
 public enum DragBehavior: Equatable {
   /// Transient rectangle from drag origin to current point
   case marquee(drawMarquee: Bool)
@@ -30,15 +26,13 @@ public enum DragBehavior: Equatable {
 }
 
 extension DragBehavior {
-  
+
   public var isMarquee: Bool {
     if case .marquee(let drawMarquee) = self {
       return drawMarquee
     }
     return false
   }
-  
-  public var isEnabled: Bool {
-    self != .none
-  }
+
+  public var isEnabled: Bool { self != .none }
 }

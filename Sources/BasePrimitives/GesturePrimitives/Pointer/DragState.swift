@@ -7,13 +7,22 @@
 
 import Foundation
 
-public struct DragState: PointerStateProtocol, Activatable {
+public struct DragState: PointerStateProtocol {
   public var value: CGRect?
-  public var isActive: Bool = false
-  
+  public var phase: InteractionPhase
+
   public let dragThreshold: CGFloat = 6
-  
+
   public init(_ value: Value? = nil) {
     self.value = value
+    self.phase = .none
+  }
+
+  public init(
+    _ value: Value? = nil,
+    phase: InteractionPhase = .none
+  ) {
+    self.value = value
+    self.phase = phase
   }
 }
