@@ -5,12 +5,10 @@
 //  Created by Dave Coleman on 10/2/2026.
 //
 
-//import CasePaths
 import BasePrimitives
 import GraphicsKit
-import SwiftUI
 import LayoutKit
-//import UIPrimitives
+import SwiftUI
 
 public struct ShaderControls: View {
 
@@ -27,8 +25,8 @@ public struct ShaderControls: View {
       /// This controls the space between the Slider Group header and the Slider content
       VStack(alignment: .leading, spacing: Styles.sizeSmall) {
         SliderGroup(shader.wrappedValue.name, spacing: Styles.sizeSmall) {
-          Text("Bring back `SingleShaderControlView`")
-          //          SingleShaderControlView(shader: shader)
+
+          SingleShaderControlView(shader: shader)
         }
       }
       .padding(.bottom, Styles.sizeSmall)

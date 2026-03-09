@@ -5,9 +5,7 @@
 //  Created by Dave Coleman on 24/1/2026.
 //
 
-// import ColourKit
 import BasePrimitives
-//import GraphicsKit
 import SwiftUI
 
 public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & EnvironmentResolvableColour>: View {
@@ -60,11 +58,11 @@ extension ColourLevelSwitch {
 
   private var isDualColourMode: Bool { secondary != nil }
 
-//  private var contrastColour: Colour {
-//    let hsvAdjustment = HSVAdjustment(h: 0.1, s: 0.1, v: 0.2)
-//    let adjusted = primary.adjust(by: hsvAdjustment)
-//    return adjusted
-//  }
+  //  private var contrastColour: Colour {
+  //    let hsvAdjustment = HSVAdjustment(h: 0.1, s: 0.1, v: 0.2)
+  //    let adjusted = primary.adjust(by: hsvAdjustment)
+  //    return adjusted
+  //  }
 
   func swapColours() {
     guard let currentSecondary = secondary else { return }
@@ -87,19 +85,19 @@ extension ColourLevelSwitch {
     isActiveAndSwitchMode(slot) ? 2 : 1
   }
 
-//  var activeColourBinding: Binding<Colour> {
-//    switch activeHierarchicalColour.wrappedValue {
-//      case .primary:
-//        return $primary
-//      case .secondary:
-//        /// If secondary can be nil, you’ll need to decide what to do in that case.
-//        /// Option A: Provide a default or disable selection when nil.
-//        return Binding(
-//          get: { secondary ?? primary },  // fallback to primary for read
-//          set: { newValue in secondary = newValue }  // write to secondary
-//        )
-//    }
-//  }
+  //  var activeColourBinding: Binding<Colour> {
+  //    switch activeHierarchicalColour.wrappedValue {
+  //      case .primary:
+  //        return $primary
+  //      case .secondary:
+  //        /// If secondary can be nil, you’ll need to decide what to do in that case.
+  //        /// Option A: Provide a default or disable selection when nil.
+  //        return Binding(
+  //          get: { secondary ?? primary },  // fallback to primary for read
+  //          set: { newValue in secondary = newValue }  // write to secondary
+  //        )
+  //    }
+  //  }
 
 }
 
@@ -129,7 +127,7 @@ extension ColourLevelSwitch {
       ColourLevelLabel(slot, colour: colour)
         .squareFrame(diameter)
     }
-//    .buttonStyle(.noClickAnimation(isPlain: true))
+    //    .buttonStyle(.noClickAnimation(isPlain: true))
   }
 
   @ViewBuilder
@@ -151,10 +149,10 @@ extension ColourLevelSwitch {
       //        .fill(colour.alpha < 0.9 ? .checkerboard(scale: 5.5) : .clear)
       Circle()
         .fill(colour.toColour)
-//        .stroke(
-//          contrastColour.toColour,
-//          lineWidth: isActiveAndSwitchMode(slot) ? 2 : 0
-//        )
+      //        .stroke(
+      //          contrastColour.toColour,
+      //          lineWidth: isActiveAndSwitchMode(slot) ? 2 : 0
+      //        )
     }
 
     .offset(x: offsetAmount(slot))

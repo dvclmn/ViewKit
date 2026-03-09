@@ -10,7 +10,8 @@ let package = Package(
     .macOS("14.0"),
   ],
   products: [
-    // MARK: - Macros
+
+    /// Macros
     .library(
       name: "BaseMacros",
       targets: ["EnumMacros", "SampleBuilder"]
@@ -20,7 +21,7 @@ let package = Package(
       targets: ["BaseMacrosClient"]
     ),
 
-    // MARK: - Helper Libraries
+    /// Helper Libraries
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
 
     .library(
@@ -28,7 +29,6 @@ let package = Package(
       targets: [
         "BasePrimitives",
         "MacroHelpers",
-        //        "CasePathHelpers",
       ]
     ),
 
@@ -38,22 +38,15 @@ let package = Package(
         "BaseUI",
         "LayoutKit",
         "ComponentKit",
-        //        "UIPrimitives",
       ]
     ),
-
-    //    .library(name: "DrawingPrimitives", targets: ["DrawingPrimitives"]),
 
     .library(
       name: "GraphicsKit",
       targets: [
         "GraphicsKit",
-        //        "ColourKit",
         "MotionKit",
         "CanvasKit",
-        //        "ActionLines",
-        //        "GraphicsModels",
-        //        "VectorKit",
       ]
     ),
 
@@ -69,17 +62,8 @@ let package = Package(
       targets: ["Wrecktangle"]
     ),
 
-    //    .library(
-    //      name: "SharedHelpers",
-    //      targets: [
-    //        "SharedHelpers",
-    //        "Wrecktangle",
-    //      ]
-    //    ),
-
-    // Export-only libraries
+    /// Export-only libraries
     .library(name: "ToolKit", targets: ["ToolKit"]),
-    //    .library(name: "CoreTools", targets: ["CoreTools"]),
   ],
 
   // MARK: - Dependancies
@@ -123,7 +107,6 @@ let package = Package(
       dependencies: [
         "BaseMacrosImplementation",
         .module(.macroHelpers),
-        //        .module(.basePrimitives)
       ],
       path: .macrosSource + "/MacroDeclarations/SampleBuilder",
     ),
@@ -144,7 +127,6 @@ let package = Package(
       name: "BaseNetworking",
       dependencies: [
         .module(.basePrimitives),
-        //        .module(.coreTools),
         .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
@@ -168,15 +150,10 @@ let package = Package(
       dependencies: [
         .module(.basePrimitives),
         .module(.sampleBuilder),
-        //        .module(.colourKit),
         .module(.layoutKit),
-        //        .module(.drawingPrimitives),
         .module(.graphicsKit),
         .module(.gestureKit),
-        //        .module(.vectorKit),
         .module(.canvasKit),
-        //        .module(.uiPrimitives),
-        //        .sharing,
         .casePaths,
       ],
     ),
@@ -186,30 +163,11 @@ let package = Package(
       dependencies: [
         .module(.basePrimitives),
         .module(.gestureKit),
-        //        .module(.uiPrimitives),
-        //        .module(.drawingPrimitives),
       ],
     ),
 
-    //    .target(
-    //      name: "CasePathHelpers",
-    //      dependencies: [
-    //        .module(.macroHelpers),
-    //        .casePaths,
-    //      ],
-    //    ),
-
-    //    .target(
-    //      name: "ActionLines",
-    //      dependencies: [
-    //        .module(.coreTools),
-    //        .casePaths,
-    //        .metaCodable,
-    //      ],
-    //    ),
-
-    /// Currently, this main advantage of this seems to be that
-    /// it doesn't depend on Gesture, Vector or CanvasKit.
+    /// Currently, this main advantage of `ComponentKit` over BaseUI (or LayoutKit)
+    /// seems to be that it doesn't depend on Gesture, Vector or CanvasKit.
     .target(
       name: "ComponentKit",
       dependencies: [

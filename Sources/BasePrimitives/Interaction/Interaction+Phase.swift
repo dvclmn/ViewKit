@@ -9,13 +9,29 @@ import AppKit
 
 public enum InteractionPhase: String, Sendable, Codable {
   case began
+
+  /// An event is in progress, but hasn't moved since the previous event.
+  /// Aka, has issued `began`, and is not yet `ended` or `cancelled`
   case stationary
-  case changed  // NSTouch = moved
+
+  case changed
+
   case ended
   case cancelled
-  case mayBegin  // NSTouch = touching
-  case any
+
+  /// User has placed two fingers on trackpad.
+  /// Signals the possibility of a gesture
+  case mayBegin
+
   case none
+
+  /// `any` is only found in NSTouch, not NSEvent
+  /// Not sure if useful here.
+  //  case any
+
+  /// `moved` and `touching` are aliases in NSTouch terms
+  public static let moved: Self = .changed
+  public static let touching: Self = .mayBegin
 }
 
 extension InteractionPhase {
@@ -41,7 +57,7 @@ extension InteractionPhase {
         case .ended: .ended
         case .cancelled: .cancelled
         case .touching: .mayBegin
-        case .any: .any
+        //        case .any: .any
         default: .none
       }
   }
@@ -54,6 +70,6 @@ extension InteractionPhase {
   }
 
   public var isActive: Bool {
-    self == .began || self == .changed
+    self == .began || self == .changed || self == .stationary
   }
 }
