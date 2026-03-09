@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension CumulativeDragController {
+extension CumulativeDragHandler {
   /// Strategy determining whether the controller owns its state or relies on an external source.
   enum Strategy {
     /// External source-of-truth mode.

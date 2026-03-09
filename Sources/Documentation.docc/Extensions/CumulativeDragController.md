@@ -50,7 +50,7 @@ The offset accumulation respects the configured `AxisMode`:
 @GestureState private var dragTranslation: CGSize = .zero
 
 var body: some View {
-  let dragController = CumulativeDragController(axisMode: .both, strategy: .external)
+  let dragController = CumulativeDragHandler(axisMode: .both, strategy: .external)
   let dragGesture = DragGesture()
     .onChanged { value in
       dragController.begin(with: offset)

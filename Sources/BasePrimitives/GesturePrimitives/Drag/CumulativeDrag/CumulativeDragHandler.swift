@@ -5,13 +5,12 @@
 //  Created by Dave Coleman on 10/8/2025.
 //
 
-import BasePrimitives
 import SwiftUI
 
 /// A unified drag offset controller supporting two strategies:
 /// 1. External source-of-truth mode: stateless, relying on external current offset state.
 /// 2. Internal owned state mode: stateful, owning and accumulating offset internally.
-struct CumulativeDragController {
+struct CumulativeDragHandler {
   let axes: GridAxis.Set
   let strategy: Strategy
   private(set) var anchor: CGPoint?
@@ -19,7 +18,7 @@ struct CumulativeDragController {
   private var lastComputedValue: CGSize?
 }
 
-extension CumulativeDragController {
+extension CumulativeDragHandler {
   mutating func begin(with currentExternalValue: CGSize? = nil) {
     switch strategy {
       case .external:
