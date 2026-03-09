@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol TransformAction: Sendable, Equatable {
+public protocol TransformStateProtocol: Sendable, Equatable {
 
   /// E.g. CGSize for pan
   associatedtype Value
@@ -24,7 +24,7 @@ public protocol TransformAction: Sendable, Equatable {
   mutating func updatePhase(_ phase: InteractionPhase)
 }
 
-extension TransformAction {
+extension TransformStateProtocol {
   public var isActive: Bool { phase.isActive }
 
   public static var initial: Self {
@@ -32,7 +32,6 @@ extension TransformAction {
   }
 
   public mutating func update(_ newValue: Value, phase: InteractionPhase) {
-    //    print("Updating `TransformAction` with value \(newValue) and phase \(phase)")
     self.value = newValue
     self.phase = phase
   }
@@ -42,7 +41,7 @@ extension TransformAction {
   }
 }
 
-extension TransformAction where Value == CGSize {
+extension TransformStateProtocol where Value == CGSize {
   public mutating func updateDelta(_ delta: Value, phase: InteractionPhase) {
     self.value.width += delta.width
     self.value.height += delta.height
@@ -50,28 +49,3 @@ extension TransformAction where Value == CGSize {
   }
 }
 
-public protocol ClampedGestureState: TransformAction {
-  func clamped(
-    to geometry: CanvasGeometry,
-    zoom: CGFloat
-  ) -> CGSize
-}
-
-extension ClampedGestureState where Value == CGSize {
-  public func clamped(
-    to geometry: CanvasGeometry,
-    zoom: CGFloat
-  ) -> CGSize {
-    let artwork = geometry.canvasCGSize
-    let viewportRect = geometry.viewportRect
-    let scaledArtwork = artwork * zoom
-
-    let maxX = max((scaledArtwork.width - viewportRect.width) / 2, 0)
-    let maxY = max((scaledArtwork.height - viewportRect.height) / 2, 0)
-
-    return CGSize(
-      width: value.width.clamped(to: -maxX...maxX),
-      height: value.height.clamped(to: -maxY...maxY)
-    )
-  }
-}

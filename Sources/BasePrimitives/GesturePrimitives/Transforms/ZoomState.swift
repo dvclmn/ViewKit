@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ZoomState: TransformAction {
+public struct ZoomState: TransformStateProtocol {
 
   public static var initialValue: Double { 1.0 }
   public var value: Double

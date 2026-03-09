@@ -5,8 +5,9 @@
 //  Created by Dave Coleman on 9/3/2026.
 //
 
+import Foundation
 
-public struct DragState: PointerAction, Activatable {
+public struct DragState: PointerStateProtocol, Activatable {
   public var value: CGRect?
   public var isActive: Bool = false
   
