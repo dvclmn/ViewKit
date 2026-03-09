@@ -7,7 +7,7 @@
 
 // import ColourKit
 import BasePrimitives
-import GraphicsKit
+//import GraphicsKit
 import SwiftUI
 
 public struct ColourLevelView<Colour: ColourModel & EnvironmentResolvableColour>: View {

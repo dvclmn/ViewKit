@@ -28,7 +28,7 @@ let package = Package(
       targets: [
         "BasePrimitives",
         "MacroHelpers",
-//        "CasePathHelpers",
+        //        "CasePathHelpers",
       ]
     ),
 
@@ -51,8 +51,8 @@ let package = Package(
         //        "ColourKit",
         "MotionKit",
         "CanvasKit",
-//        "ActionLines",
-//        "GraphicsModels",
+        //        "ActionLines",
+        //        "GraphicsModels",
         //        "VectorKit",
       ]
     ),
@@ -79,7 +79,7 @@ let package = Package(
 
     // Export-only libraries
     .library(name: "ToolKit", targets: ["ToolKit"]),
-//    .library(name: "CoreTools", targets: ["CoreTools"]),
+    //    .library(name: "CoreTools", targets: ["CoreTools"]),
   ],
 
   // MARK: - Dependancies
@@ -144,7 +144,7 @@ let package = Package(
       name: "BaseNetworking",
       dependencies: [
         .module(.basePrimitives),
-//        .module(.coreTools),
+        //        .module(.coreTools),
         .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
@@ -191,22 +191,22 @@ let package = Package(
       ],
     ),
 
-//    .target(
-//      name: "CasePathHelpers",
-//      dependencies: [
-//        .module(.macroHelpers),
-//        .casePaths,
-//      ],
-//    ),
+    //    .target(
+    //      name: "CasePathHelpers",
+    //      dependencies: [
+    //        .module(.macroHelpers),
+    //        .casePaths,
+    //      ],
+    //    ),
 
-//    .target(
-//      name: "ActionLines",
-//      dependencies: [
-//        .module(.coreTools),
-//        .casePaths,
-//        .metaCodable,
-//      ],
-//    ),
+    //    .target(
+    //      name: "ActionLines",
+    //      dependencies: [
+    //        .module(.coreTools),
+    //        .casePaths,
+    //        .metaCodable,
+    //      ],
+    //    ),
 
     /// Currently, this main advantage of this seems to be that
     /// it doesn't depend on Gesture, Vector or CanvasKit.
@@ -214,60 +214,25 @@ let package = Package(
       name: "ComponentKit",
       dependencies: [
         .module(.basePrimitives),
-        //        .module(.colourKit),
-        //        .module(.drawingPrimitives),
         .module(.graphicsKit),
         .module(.layoutKit),
-        //        .module(.uiPrimitives),
         .casePaths,
       ],
     ),
-
-    //    .target(
-    //      name: "ColourKit",
-    //      dependencies: [
-    //        .module(.basePrimitives)
-    //      ],
-    //    ),
-
-    //    .target(
-    //      name: "DrawingPrimitives",
-    //      dependencies: [
-    //        .module(.basePrimitives)
-    ////        .module(.coreTools),
-    ////        .module(.gestureKit),
-    ////        .module(.uiPrimitives),
-    //      ],
-    //    ),
 
     .target(
       name: "GestureKit",
       dependencies: [
         .module(.basePrimitives),
         .module(.layoutKit),
-        //        .module(.vectorKit),
         .casePaths,
       ]
     ),
-    
-//      .target(
-//        name: "GraphicsModels",
-//        dependencies: [
-//          .module(.basePrimitives),
-//          .module(.enumMacros),
-//          .metaCodable,
-//          .casePaths,
-//        ]
-//      ),
 
     .target(
       name: "GraphicsKit",
       dependencies: [
         .module(.basePrimitives),
-        //        .module(.colourKit),
-        //        .module(.drawingPrimitives),
-        //        .module(.vectorKit),
-        //        .module(.uiPrimitives),
         .casePaths,
         .metaCodable,
       ],
@@ -280,78 +245,28 @@ let package = Package(
       name: "LayoutKit",
       dependencies: [
         .module(.basePrimitives)
-        //        .module(.coreTools)
       ]
     ),
 
     .target(
       name: "MacroHelpers",
-      dependencies: [
-        //          .module(.coreTools)
-      ]
     ),
 
     .target(
       name: "MotionKit",
       dependencies: [
-        .module(.basePrimitives),
+        .module(.basePrimitives)
       ]
     ),
-
-    //    .target(
-    //      name: "SharedHelpers",
-    //      dependencies: [
-    //        .module(.basePrimitives),
-    //        .module(.enumMacros),
-    //        .module(.sampleBuilder),
-    //        .module(.macroHelpers),
-    //        .sharing,
-    //        .casePaths,
-    //      ],
-    //    ),
-
-    //    .target(
-    //      name: "UIPrimitives",
-    //      dependencies: [
-    //        .module(.coreTools),
-    //        .module(.layoutKit),
-    //      ],
-    //    ),
-
-    //    .target(
-    //      name: "VectorKit",
-    //      dependencies: [
-    //        //        .module(.coreTools),
-    //        .module(.basePrimitives),
-    //        .module(.enumMacros),
-    //        //        .module(.drawingPrimitives),
-    //        //        .module(.colourKit),  // Consider trying to remove this dep.
-    //        //        .module(.colourKit),
-    //        //        .module(.uiPrimitives),
-    //        .casePaths,
-    //        .metaCodable,
-    //        .identifiedCollections,
-    //        //        .product(name: "Yams", package: "Yams"),
-    //
-    //      ]
-    //    ),
 
     .target(
       name: "Wrecktangle",
       dependencies: [
-        .module(.basePrimitives),
+        .module(.basePrimitives)
       ]
     ),
 
     // MARK: - Forwarding modules
-//    .target(
-//      name: "CoreTools",
-//      dependencies: [
-//        .module(.basePrimitives),
-//        //        .module(.sharedHelpers),
-//        .module(.enumMacros),
-//      ],
-//    ),
 
     .target(
       name: "ToolKit",
@@ -363,10 +278,7 @@ let package = Package(
     ),
 
     // MARK: - Test targets
-    //    .testTarget(
-    //      name: "SharedHelpersTests",
-    //      dependencies: [.module(.sharedHelpers)],
-    //    ),
+
     .testTarget(
       name: "BasePrimitivesTests",
       dependencies: [.module(.basePrimitives)],
@@ -408,24 +320,15 @@ enum BaseModule {
   case baseUI
   case componentKit
   case canvasKit
-//  case casePathHelpers
-  //  case colourKit
-  //  case drawingPrimitives
   case gestureKit
-//  case graphicsModels
   case graphicsKit
   case macroHelpers
   case layoutKit
-  //  case lilypad
   case motionKit
-  //  case sharedHelpers
-  //  case uiPrimitives
-  //  case vectorKit
   case wrecktangle
 
   /// Export-only modules
   case toolKit
-//  case coreTools
 
   var name: String {
     switch self {
@@ -433,27 +336,19 @@ enum BaseModule {
       case .sampleBuilder: "SampleBuilder"
       case .networking: "BaseNetworking"
       case .basePrimitives: "BasePrimitives"
-//      case .casePathHelpers: "CasePathHelpers"
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
       case .canvasKit: "CanvasKit"
-      //      case .colourKit: "ColourKit"
-      //      case .drawingPrimitives: "DrawingPrimitives"
       case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
-//      case .graphicsModels: "GraphicsModels"
       case .macroHelpers: "MacroHelpers"
       case .layoutKit: "LayoutKit"
-      //      case .lilypad: "LilyPad"
       case .motionKit: "MotionKit"
-      //      case .sharedHelpers: "SharedHelpers"
-      //      case .uiPrimitives: "UIPrimitives"
-      //      case .vectorKit: "VectorKit"
       case .wrecktangle: "Wrecktangle"
 
       /// Export-only
       case .toolKit: "ToolKit"
-//      case .coreTools: "CoreTools"
+
     }
   }
 }

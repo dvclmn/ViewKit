@@ -11,8 +11,6 @@
 import BasePrimitives
 import SwiftUI
 
-
-
 public struct PatternCanvas: View {
 
   let style: PatternStyle
