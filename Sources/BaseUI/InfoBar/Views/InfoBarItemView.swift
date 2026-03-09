@@ -49,7 +49,7 @@ public struct InfoBarItemView: View {
         /// Adds breathing room between the end of the content and its trailing Divider
         .padding(.leading, Styles.sizeSmall)
     }
-    .debugFrame("Item", .purple, isEnabled: isDebugMode)
+//    .debugFrame("Item", .purple, isEnabled: isDebugMode)
     /// Some leading padding here brings the icon in from the edge a bit,
     /// including the very first item
     //    .padding(.leading, Styles.sizeTiny)

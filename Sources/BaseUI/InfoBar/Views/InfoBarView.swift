@@ -25,26 +25,13 @@ public struct InfoBarView: View {
     self.sections = sections
     self.showingModifiersSection = showingModifiersSection
   }
-  
-//  public func addInfoBarItems<K: InfoBarSectionKey>(
-//    @DisplayStringBuilder _ content: @escaping () -> [DisplayBlock],
-//    key: K.Type = DebugSectionKey.self,
-//    preset: FloatDisplayPreset = .standard,
-//    
-//  ) -> some View {
-//    self.transformPreference(InfoBarKey.self) { value in
-//      let newItems = content().toInfoBarItems(section: key, preset: preset)
-//      value.append(contentsOf: newItems)
-//    }
-//  }
-
 
   public init(
+    showingModifiersSection: Bool = false,
     @DisplayStringBuilder _ content: @escaping () -> [DisplayBlock],
-    showingModifiersSection: Bool = false
   ) {
+    self.showingModifiersSection = showingModifiersSection
     // TODO: Make DisplayString able to Declare an InfoBar section?
-    
     let sectionKey = DebugSectionKey.self
     let items = content().compactMap {
       InfoBarItem(
@@ -55,10 +42,9 @@ public struct InfoBarView: View {
     }
     let section = InfoBarSection(id: InfoBarSectionID(sectionKey), title: "I don't know", items: items)
     self.sections = [section]
-    self.showingModifiersSection = showingModifiersSection
+
   }
 
-  
   public var body: some View {
 
     if !isLoading {
