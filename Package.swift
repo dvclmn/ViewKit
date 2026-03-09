@@ -372,14 +372,6 @@ let package = Package(
       dependencies: [.module(.basePrimitives)],
       exclude: ["BasePrimitives.xctestplan"],
     ),
-    //    .testTarget(
-    //      name: "VectorKitTests",
-    //      dependencies: [.module(.vectorKit)],
-    //    ),
-    .testTarget(
-      name: "GraphicsKitTests",
-      dependencies: [.module(.graphicsKit)],
-    ),
 
   ],
 )
