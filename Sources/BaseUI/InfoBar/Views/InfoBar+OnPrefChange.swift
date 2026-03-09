@@ -83,7 +83,7 @@ extension InfoBarItemsModifier {
 
   private func handlePreferenceChange(_ newItems: [InfoBarItem]) {
 
-    print("Re-rendering InfoBar due to preference change at \(Date.debug)")
+//    print("Re-rendering InfoBar due to preference change at \(Date.debug)")
     /// Now this only runs when `newItems` actually changes
     let grouped = Dictionary(grouping: newItems, by: \.sectionKey)
 

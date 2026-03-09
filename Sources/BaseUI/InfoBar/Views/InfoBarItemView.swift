@@ -15,7 +15,7 @@ public struct InfoBarItemView: View {
   @Environment(\.itemLabelDisplay) private var itemLabelDisplay
   @Environment(\.isDebugMode) private var isDebugMode
 
-  @State private var isHoveringItem: Bool = false
+//  @State private var isHoveringItem: Bool = false
 
   let item: InfoBarItem
 
@@ -54,9 +54,9 @@ public struct InfoBarItemView: View {
     /// including the very first item
     //    .padding(.leading, Styles.sizeTiny)
 
-    .onHover { hovering in
-      isHoveringItem = hovering
-    }
+//    .onHover { hovering in
+//      isHoveringItem = hovering
+//    }
     //    .containerValueBool(.isShowingSectionHeader, isShowingSectionHeader)
     //    .containerValueBool(.hasSpacers, false)
 

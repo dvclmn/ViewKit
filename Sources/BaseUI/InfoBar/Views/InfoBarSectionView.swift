@@ -20,7 +20,7 @@ struct InfoBarSectionView: View {
 
   var body: some View {
 
-    DecomposedView(.section, axis: .horizontal) {
+//    DecomposedView(.section, axis: .horizontal) {
       Section {
         /// This is the HStack (and spacing) between *whole* individual InfoBar Items.
         HStack(spacing: sectionItemSpacing) {
@@ -50,10 +50,10 @@ struct InfoBarSectionView: View {
           .padding(.trailing, sectionItemSpacing)
       }
 
-    }
-    .containerValueBool(.hasSpacers, false)
+//    }
+//    .containerValueBool(.hasSpacers, false)
 
     /// Controls Divider visibility between whole Sections
-    .containerValueBool(.hasDividers, false)
+//    .containerValueBool(.hasDividers, false)
   }
 }

@@ -5,10 +5,9 @@
 //  Created by Dave Coleman on 25/6/2025.
 //
 
-#if DEBUG
+//#if DEBUG
 
 import SwiftUI
-import BasePrimitives
 
 public struct DebugFrameModifier: ViewModifier {
 
@@ -51,4 +50,4 @@ extension View {
     )
   }
 }
-#endif
+//#endif
