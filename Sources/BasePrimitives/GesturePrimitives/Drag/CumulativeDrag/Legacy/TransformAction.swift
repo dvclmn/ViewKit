@@ -5,11 +5,9 @@
 //  Created by Dave Coleman on 12/1/2026.
 //
 
-//import CoreTools
-//import BasePrimitives
-import SwiftUI
+import Foundation
 
-public protocol CanvasGestureState: Sendable, Equatable {
+public protocol TransformAction: Sendable, Equatable {
 
   /// E.g. CGSize for pan
   associatedtype Value
@@ -26,7 +24,7 @@ public protocol CanvasGestureState: Sendable, Equatable {
   mutating func updatePhase(_ phase: InteractionPhase)
 }
 
-extension CanvasGestureState {
+extension TransformAction {
   public var isActive: Bool { phase.isActive }
 
   public static var initial: Self {
@@ -34,7 +32,7 @@ extension CanvasGestureState {
   }
 
   public mutating func update(_ newValue: Value, phase: InteractionPhase) {
-    //    print("Updating `CanvasGestureState` with value \(newValue) and phase \(phase)")
+    //    print("Updating `TransformAction` with value \(newValue) and phase \(phase)")
     self.value = newValue
     self.phase = phase
   }
@@ -44,7 +42,7 @@ extension CanvasGestureState {
   }
 }
 
-extension CanvasGestureState where Value == CGSize {
+extension TransformAction where Value == CGSize {
   public mutating func updateDelta(_ delta: Value, phase: InteractionPhase) {
     self.value.width += delta.width
     self.value.height += delta.height
@@ -52,7 +50,7 @@ extension CanvasGestureState where Value == CGSize {
   }
 }
 
-public protocol ClampedGestureState: CanvasGestureState {
+public protocol ClampedGestureState: TransformAction {
   func clamped(
     to geometry: CanvasGeometry,
     zoom: CGFloat

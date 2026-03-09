@@ -8,7 +8,7 @@
 import CoreGraphics
 import Foundation
 
-public struct PanState: CanvasGestureState, ClampedGestureState {
+public struct PanState: TransformAction, ClampedGestureState {
   public static var initialValue: CGSize { .zero }
   public var value: CGSize
   public var phase: InteractionPhase

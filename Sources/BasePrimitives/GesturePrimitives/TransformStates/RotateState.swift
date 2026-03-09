@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct RotateState: CanvasGestureState {
+public struct RotateState: TransformAction {
   public static var initialValue: Angle { .zero }
   public var value: Angle
   public var phase: InteractionPhase
