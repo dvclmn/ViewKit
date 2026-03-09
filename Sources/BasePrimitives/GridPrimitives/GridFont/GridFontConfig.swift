@@ -16,9 +16,11 @@ public enum GridFontConfig: Sendable {
   case passthrough
 
   public static let automatic: Self = .domain(.automatic)
+}
+
+extension GridFontConfig {
 
   public func descriptor(in environment: EnvironmentValues) -> GridFontDescriptor? {
-
     switch self {
       case .domain(let domain, let explicitSize):
 
@@ -35,9 +37,7 @@ public enum GridFontConfig: Sendable {
         let hasSize = explicitSize != nil || envSize != nil
 
         guard let resolvedFont = envFont,
-          //        let resolvedFont = envFont ?? domain.fallbackFont
           let resolvedSize = explicitSize ?? envSize
-          //        let resolvedSize = explicitSize ?? envSize ?? domain.fallbackFontSize
         else { return nil }
 
         #if DEBUG

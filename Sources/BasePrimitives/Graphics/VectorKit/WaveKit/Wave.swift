@@ -10,7 +10,6 @@ import MetaCodable
 
 public typealias FloatWave = Wave<Double>
 
-@Codable
 public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, Codable {
   public let id: UUID
   public var amplitude: T
@@ -25,7 +24,7 @@ public struct Wave<T: WaveFloat>: Sendable, Identifiable, Hashable, Equatable, C
   /// Advance phase in the same unit as frequency naturally produces:
   /// -  Hz × seconds → turns
   /// -  radians/sec × seconds → radians
-  @CodedAt("phase") private var phase: UnitPhase<T>
+  var phase: UnitPhase<T>
 
   public var waveform: Waveform
 

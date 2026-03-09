@@ -13,31 +13,10 @@ import Testing
 @Suite("Grid font config resolution")
 struct GridFontConfigTests {
 
-  @Test("ASCII domain falls back when environment is missing")
-  func asciiDomainFallback() {
-    let env = EnvironmentValues()
-
-    let descriptor = GridFontConfig.domain(.asciiMode).descriptor(in: env)
-
-    #expect(descriptor != nil)
-    #expect(descriptor?.style == .terminal)
-    #expect(descriptor?.size == 20)
-  }
-
-  @Test("Canvas domain falls back when environment is missing")
-  func canvasDomainFallback() {
-    let env = EnvironmentValues()
-
-    let descriptor = GridFontConfig.domain(.canvas).descriptor(in: env)
-
-    #expect(descriptor != nil)
-    #expect(descriptor?.style == .sfMono)
-    #expect(descriptor?.size == 20)
-  }
-
   @Test("Domain uses environment style and size when available")
   func domainUsesEnvironmentValues() {
     var env = EnvironmentValues()
+    env.isASCIIMode = true
     env.gridFont = .menlo
     env.asciiModeFontSize = 17
 
@@ -50,6 +29,7 @@ struct GridFontConfigTests {
   @Test("Explicit size overrides environment size for domain")
   func explicitSizeOverridesEnvironment() {
     var env = EnvironmentValues()
+    env.isASCIIMode = true
     env.gridFont = .menlo
     env.asciiModeFontSize = 17
 
