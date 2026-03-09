@@ -11,20 +11,11 @@ import SwiftUI
 
 struct CellSelectionCanvas: View {
   @Environment(\.unitSize) private var unitSize
-  @Environment(\.panOffset) private var panOffset
-  @Environment(\.zoomLevel) private var zoomLevel
-  @Environment(\.zoomRange) private var zoomRange
-  @Environment(\.viewportRect) private var viewportRect
   @Environment(\.cornerRounding) private var cornerRounding
   @Environment(\.gridDimensions) private var gridDimensions
-  @Environment(\.canvasSize) private var canvasSize
-  @Environment(\.pointerLocation) private var pointerLocation
   @Environment(\.canvasBackground) private var canvasBackground
-  @Environment(\.isDebugMode) private var isDebugMode
   @Environment(\.gridGeometry) private var gridGeometry
   @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers
-  @Environment(\.gridLineColour) private var gridLineColour
-  @Environment(\.gridLineWidth) private var gridLineWidth
   @Environment(\.pointerGridPosition) private var pointerGridPosition
 
   private let rounding: CGFloat = 4
