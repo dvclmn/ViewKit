@@ -19,6 +19,9 @@ extension KeyEquivalent {
   public func name(isAbbreviated: Bool = false) -> String {
     return isAbbreviated ? name.abbreviated : name.full
   }
+  
+  public var nameFull: String { name.full }
+  public var nameAbbreviated: String { name.abbreviated }
 
   private var name: (full: String, abbreviated: String) {
     switch self {

@@ -19,6 +19,10 @@ public protocol InfoBarSectionKey: Hashable, Sendable {
   static var title: String { get }
 }
 
+//extension InfoBarSectionKey {
+//  public static var `default`: Self { DebugSectionKey.self }
+//}
+
 public struct InfoBarSectionID: Hashable, Sendable {
   private let id: ObjectIdentifier
   public let title: String

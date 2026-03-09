@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 13/2/2026.
 //
 
-import BasePrimitives
 import Foundation
 
 /// Describes a single InfoBar Item

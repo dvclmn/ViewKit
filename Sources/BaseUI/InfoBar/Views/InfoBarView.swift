@@ -25,7 +25,40 @@ public struct InfoBarView: View {
     self.sections = sections
     self.showingModifiersSection = showingModifiersSection
   }
+  
+//  public func addInfoBarItems<K: InfoBarSectionKey>(
+//    @DisplayStringBuilder _ content: @escaping () -> [DisplayBlock],
+//    key: K.Type = DebugSectionKey.self,
+//    preset: FloatDisplayPreset = .standard,
+//    
+//  ) -> some View {
+//    self.transformPreference(InfoBarKey.self) { value in
+//      let newItems = content().toInfoBarItems(section: key, preset: preset)
+//      value.append(contentsOf: newItems)
+//    }
+//  }
 
+
+  public init(
+    @DisplayStringBuilder _ content: @escaping () -> [DisplayBlock],
+    showingModifiersSection: Bool = false
+  ) {
+    // TODO: Make DisplayString able to Declare an InfoBar section?
+    
+    let sectionKey = DebugSectionKey.self
+    let items = content().compactMap {
+      InfoBarItem(
+        fromBlock: $0,
+        section: sectionKey,
+        preset: .standard
+      )
+    }
+    let section = InfoBarSection(id: InfoBarSectionID(sectionKey), title: "I don't know", items: items)
+    self.sections = [section]
+    self.showingModifiersSection = showingModifiersSection
+  }
+
+  
   public var body: some View {
 
     if !isLoading {
@@ -58,12 +91,12 @@ public struct InfoBarView: View {
         config: .domain(.asciiMode),
         fallback: .caption2.weight(.medium)
       )
-//      .font(.caption)
-//      .fontWeight(.medium)
+      //      .font(.caption)
+      //      .fontWeight(.medium)
       .frame(height: Styles.infoBarHeight)
       .background(.thinMaterial, ignoresSafeAreaEdges: .horizontal)
       .background(backgroundStyle ?? AnyShapeStyle(.black.opacity(0.06)), ignoresSafeAreaEdges: .horizontal)
-      
+
       /// Small top highlight for contrast against background
       .overlay(alignment: .top) {
         Rectangle()
