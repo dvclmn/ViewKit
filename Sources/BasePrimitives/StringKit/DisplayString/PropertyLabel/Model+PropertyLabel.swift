@@ -9,7 +9,7 @@ import Foundation
 
 /// Represents the text label for a property, e.g. "Width" / "W" for `CGSize.width`.
 /// Knows nothing about values, separators, or float formatting.
-public struct PropertyLabel: Sendable {
+public struct AbbreviableLabel: Sendable {
 
   /// The standard / more verbose representation, e.g. `Width`
   let label: String
@@ -26,13 +26,13 @@ public struct PropertyLabel: Sendable {
   }
 }
 
-extension PropertyLabel: ExpressibleByStringLiteral {
+extension AbbreviableLabel: ExpressibleByStringLiteral {
   public init(stringLiteral value: String) {
     self.init(value)
   }
 }
 
-extension PropertyLabel {
+extension AbbreviableLabel {
 
   /// Returns the label text for the given display style, or `nil` for `.none`.
   public func labelText(with style: Self.Style) -> String? {

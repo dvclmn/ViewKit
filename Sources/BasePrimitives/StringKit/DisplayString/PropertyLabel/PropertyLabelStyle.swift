@@ -1,5 +1,5 @@
 //
-//  PropertyLabelStyle.swift
+//  AbbreviableLabelStyle.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 23/2/2026.
@@ -8,7 +8,7 @@
 //import EnumMacros
 
 
-extension PropertyLabel {
+extension AbbreviableLabel {
   //  @CaseDetection
   public enum Style: Equatable, Sendable {
     case none

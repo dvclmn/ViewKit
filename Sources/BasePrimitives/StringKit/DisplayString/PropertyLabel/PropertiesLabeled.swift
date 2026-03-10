@@ -17,7 +17,7 @@ public protocol PropertiesLabeled: DisplayFragmentRenderable, DisplayPresetRende
   var components: [Labeled] { get }
 
   func renderProperties(
-    labelStyle: PropertyLabel.Style,
+    labelStyle: AbbreviableLabel.Style,
     using format: FloatDisplayFormat,
     delimiter: ComponentDelimiter
   ) -> String
@@ -39,7 +39,7 @@ extension PropertiesLabeled {
 extension PropertiesLabeled {
 
   public func renderProperties(
-    labelStyle: PropertyLabel.Style = .standard,
+    labelStyle: AbbreviableLabel.Style = .standard,
     using format: FloatDisplayFormat = .default,
     delimiter: ComponentDelimiter = .comma
   ) -> String {

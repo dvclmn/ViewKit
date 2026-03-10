@@ -9,7 +9,7 @@ extension InfoBarItem {
   init<K: InfoBarSectionKey>(
     fromLabeled labeled: Labeled,
     section: K.Type,
-    labelStyle: PropertyLabel.Style = .standard,
+    labelStyle: AbbreviableLabel.Style = .standard,
     format: FloatDisplayFormat = .default
   ) {
     let label = labeled.labelPart(with: labelStyle) ?? ""

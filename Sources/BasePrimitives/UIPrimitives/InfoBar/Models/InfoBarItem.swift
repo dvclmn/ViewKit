@@ -48,11 +48,11 @@ extension InfoBarItem {
     preset: FloatDisplayPreset = .standard
   ) {
     switch displayBlock {
-      case .text(let atom):
+      case .text(let fragment):
         self.init(
           section: section,
           label: nil,
-          content: atom.render(using: preset.format)
+          content: fragment.render(using: preset.format)
         )
 
       case .labeled(let label):

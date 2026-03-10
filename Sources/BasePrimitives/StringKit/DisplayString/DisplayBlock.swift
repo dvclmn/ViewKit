@@ -22,7 +22,7 @@ extension DisplayBlock {
   /// `labelStyle` is the layer-4 concern: how a top-level block label is displayed.
   /// Default is `.standard`; callers (e.g. `DisplayString`) can override.
   public func render(
-    labelStyle: PropertyLabel.Style = .standard,
+    labelStyle: AbbreviableLabel.Style = .standard,
     using format: FloatDisplayFormat
   ) -> String {
     let string: String? = switch self {

@@ -17,7 +17,7 @@ import AppKit
 /// - The delimiter between sibling components (e.g. `" x "`) lives on `PropertiesLabeled`.
 public struct Labeled: Sendable {
 
-  public let key: PropertyLabel
+  public let key: AbbreviableLabel
   public let value: DisplayFragment?
 
   /// Separator between the label text and the value, e.g. the space in `W 260`.
@@ -28,7 +28,7 @@ public struct Labeled: Sendable {
   public let formatOverride: FloatDisplayFormat?
 
   public init(
-    key: PropertyLabel,
+    key: AbbreviableLabel,
     value: DisplayFragment?,
     propertySeparator: String = " ",
     formatOverride: FloatDisplayFormat? = nil
@@ -52,7 +52,7 @@ extension Labeled {
     format: FloatDisplayFormat? = nil
   ) {
     self.init(
-      key: PropertyLabel(key),
+      key: AbbreviableLabel(key),
       value: value.map { DisplayFragment.make(from: $0) },
       propertySeparator: propertySeparator,
       formatOverride: format
@@ -66,7 +66,7 @@ extension Labeled {
     value: any FloatRenderable
   ) {
     self.init(
-      key: PropertyLabel(label, abbreviated: abbreviated),
+      key: AbbreviableLabel(label, abbreviated: abbreviated),
       value: DisplayFragment(value),
       propertySeparator: " ",
       formatOverride: nil
@@ -80,8 +80,8 @@ extension Labeled {
 
   public var block: DisplayBlock { .labeled(self) }
 
-  /// Renders the label text only (no value, no separator).
-  public func labelPart(with style: PropertyLabel.Style = .standard) -> String? {
+  /// Renders the label text only (no value or separator).
+  public func labelPart(with style: AbbreviableLabel.Style = .standard) -> String? {
     key.labelText(with: style)
   }
 
@@ -94,7 +94,7 @@ extension Labeled {
   /// Renders `"<label><propertySeparator><value>"`, e.g. `"W 260"`.
   /// Pass `.none` for `labelStyle` to suppress the label entirely.
   public func toString(
-    labelStyle: PropertyLabel.Style = .standard,
+    labelStyle: AbbreviableLabel.Style = .standard,
     using format: FloatDisplayFormat = .default
   ) -> String? {
     let effectiveFormat = formatOverride ?? format

@@ -19,13 +19,13 @@ public struct DisplayString {
 
   /// How block-level labels are displayed. Separated from `format`
   /// because label styling is a presentation concern, not a float-formatting concern.
-  private let labelStyle: PropertyLabel.Style
+  private let labelStyle: AbbreviableLabel.Style
 
   public init(
     _ components: [DisplayBlock],
     separator: String,
     format: FloatDisplayFormat,
-    labelStyle: PropertyLabel.Style
+    labelStyle: AbbreviableLabel.Style
   ) {
     self.components = components
     self.separator = separator
@@ -39,7 +39,7 @@ extension DisplayString {
   public init(
     _ separator: String = "\n",
     format: FloatDisplayFormat = .default,
-    labelStyle: PropertyLabel.Style = .standard,
+    labelStyle: AbbreviableLabel.Style = .standard,
     @DisplayStringBuilder _ content: () -> [DisplayBlock]
   ) {
     self.separator = separator
@@ -68,7 +68,7 @@ extension DisplayString {
     return DisplayString(components, separator: separator, format: newFormat, labelStyle: labelStyle)
   }
 
-  public func labelStyle(_ style: PropertyLabel.Style) -> DisplayString {
+  public func labelStyle(_ style: AbbreviableLabel.Style) -> DisplayString {
     DisplayString(components, separator: separator, format: format, labelStyle: style)
   }
 }
@@ -76,14 +76,14 @@ extension DisplayString {
 extension Array where Element == DisplayBlock {
   public func output(
     separator: String = "\n",
-    labelStyle: PropertyLabel.Style = .standard,
+    labelStyle: AbbreviableLabel.Style = .standard,
     format: FloatDisplayFormat = .default
   ) -> String {
     lines(labelStyle: labelStyle, format: format).joined(separator)
   }
 
   public func lines(
-    labelStyle: PropertyLabel.Style = .standard,
+    labelStyle: AbbreviableLabel.Style = .standard,
     format: FloatDisplayFormat = .default
   ) -> [String] {
     map { $0.render(labelStyle: labelStyle, using: format) }

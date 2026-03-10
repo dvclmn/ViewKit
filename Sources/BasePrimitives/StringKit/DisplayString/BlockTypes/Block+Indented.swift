@@ -32,7 +32,7 @@ extension Indented {
   //extension Indented: DisplayRenderable {
 
   public func render(
-    labelStyle: PropertyLabel.Style = .standard,
+    labelStyle: AbbreviableLabel.Style = .standard,
     using format: FloatDisplayFormat
   ) -> String {
 
