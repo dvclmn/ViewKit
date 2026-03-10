@@ -6,9 +6,9 @@
 //
 
 public struct PointerState: Sendable, Equatable {
-  public var tap: TapState = .initial
-  public var drag: DragState = .initial
-  public var hover: HoverState = .initial
+  public var tap: TapState = .init()
+  public var drag: DragState = .init(nil)
+  public var hover: HoverState = .init()
 }
 
 extension PointerState {

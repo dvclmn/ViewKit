@@ -8,7 +8,7 @@
 import CoreGraphics
 import Foundation
 
-public struct PanState: ClampedInteraction, DeltaInteraction {
+public struct PanState: ClampedInteraction, DeltaInteraction, PhasicContinuousInteraction {
 
   public static var initialValue: CGSize { .zero }
   public var value: CGSize

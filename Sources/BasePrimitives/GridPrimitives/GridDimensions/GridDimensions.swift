@@ -30,7 +30,7 @@ extension GridDimensions: ExpressibleByIntegerLiteral {
   public init(integerLiteral value: Int) {
     self.init(width: value, height: value)
   }
-}
+ }
 
 extension GridDimensions: CustomStringConvertible {
   public var description: String { "\(width) x \(height)" }

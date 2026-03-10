@@ -19,16 +19,16 @@ public protocol InteractionState: Sendable, Equatable {
 public protocol TransientInteraction: InteractionState {
   associatedtype Value
   var value: Value? { get set }
-  init(_ value: Value?)
+//  init(_ value: Value?)
 //  mutating func update(_ newValue: Value?)
 }
 
 extension TransientInteraction {
-  public init(_ value: Value?) { self.init(value) }
+  
   public var isActive: Bool { value != nil }
   public mutating func update(_ newValue: Value?) { value = newValue }
   
-  public static var initial: Self { .init(nil) }
+//  public static var initial: Self { .init(nil) }
 }
 
 // MARK: - Continuous
