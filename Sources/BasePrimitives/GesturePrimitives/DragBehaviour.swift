@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum DragBehavior: Equatable {
+public enum DragBehavior: Equatable, Sendable {
   /// Transient rectangle from drag origin to current point
   case marquee(drawMarquee: Bool)
 
@@ -16,6 +16,9 @@ public enum DragBehavior: Equatable {
 
   /// Gesture is not active
   case none
+
+  public static var marquee: Self { .marquee(drawMarquee: true) }
+  public static var continuous: Self { .continuous() }
 
   public var axes: GridAxis.Set {
     if case .continuous(let axes) = self {
