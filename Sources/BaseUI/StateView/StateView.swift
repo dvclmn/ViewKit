@@ -6,8 +6,9 @@
 //
 
 import BasePrimitives
-import SwiftUI
 import LayoutKit
+import SwiftUI
+
 //import UIPrimitives
 
 public struct StateView<Content: View>: View {
@@ -24,7 +25,8 @@ public struct StateView<Content: View>: View {
 
   public var body: some View {
 
-    DecomposedView(.subview, layout: .vstack(alignment: .center)) {
+    VStack {
+      //    DecomposedView(.subview, layout: .vstack(alignment: .center)) {
       // MARK: - Title
       TitleView()
         /// Padding to achieve nice vertical optical centering

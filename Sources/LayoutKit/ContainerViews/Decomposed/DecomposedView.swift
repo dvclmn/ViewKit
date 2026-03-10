@@ -8,6 +8,8 @@
 import BasePrimitives
 import SwiftUI
 
+//#warning("USE WITH CAUTION. Causes serious performance issues for some reason, like in InfoBar")
+@available(*, deprecated, message: "USE WITH CAUTION. Causes serious performance issues for some reason, like in InfoBar")
 public struct DecomposedView<Content: View>: View {
   @Environment(\.layoutType) private var layoutType
 

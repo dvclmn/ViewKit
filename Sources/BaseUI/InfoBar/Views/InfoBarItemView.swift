@@ -6,8 +6,9 @@
 //
 
 import BasePrimitives
-import SwiftUI
 import LayoutKit
+import SwiftUI
+
 //import UIPrimitives
 
 public struct InfoBarItemView: View {
@@ -15,7 +16,7 @@ public struct InfoBarItemView: View {
   @Environment(\.itemLabelDisplay) private var itemLabelDisplay
   @Environment(\.isDebugMode) private var isDebugMode
 
-//  @State private var isHoveringItem: Bool = false
+  @State private var isHoveringItem: Bool = false
 
   let item: InfoBarItem
 
@@ -25,9 +26,10 @@ public struct InfoBarItemView: View {
     /// the HBar item content. When set to display Icon-only,
     /// the `item.content` can deceptively look like the
     /// Label text, but it is not, it is seperate.
-    HStack(spacing: 0) {
+    ///
+    /// Spacing for Label {space} Content
+    HStack(spacing: Styles.sizeTiny) {
       if let label = item.label {
-//        Text(label.text)
         MaybeLabel(label)
           .environment(\.labelDisplay, itemLabelDisplay)
 
@@ -38,7 +40,7 @@ public struct InfoBarItemView: View {
       }
 
       Text(String(describing: item.content))
-        
+
         /// Taking the edge off the brightness
         .opacity(0.9)
         .monospacedDigit()
@@ -49,14 +51,13 @@ public struct InfoBarItemView: View {
         /// Adds breathing room between the end of the content and its trailing Divider
         .padding(.leading, Styles.sizeSmall)
     }
-//    .debugFrame("Item", .purple, isEnabled: isDebugMode)
+    //    .debugFrame("Item", .purple, isEnabled: isDebugMode)
     /// Some leading padding here brings the icon in from the edge a bit,
     /// including the very first item
     //    .padding(.leading, Styles.sizeTiny)
-
-//    .onHover { hovering in
-//      isHoveringItem = hovering
-//    }
+    .onHover { hovering in
+      isHoveringItem = hovering
+    }
     //    .containerValueBool(.isShowingSectionHeader, isShowingSectionHeader)
     //    .containerValueBool(.hasSpacers, false)
 

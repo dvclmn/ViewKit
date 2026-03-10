@@ -83,7 +83,6 @@ extension InfoBarItemsModifier {
 
   private func handlePreferenceChange(_ newItems: [InfoBarItem]) {
 
-//    print("Re-rendering InfoBar due to preference change at \(Date.debug)")
     /// Now this only runs when `newItems` actually changes
     let grouped = Dictionary(grouping: newItems, by: \.sectionKey)
 
@@ -95,6 +94,16 @@ extension InfoBarItemsModifier {
 }
 
 extension View {
+  public func infoBarView(isEnabled: Bool = true) -> some View {
+    self.modifier(
+      InfoBarItemsModifier(
+        mode: .noDebounce,
+        isEnabled: isEnabled,
+      )
+    )
+  }
+  
+  @available(*, deprecated, renamed: "infoBarView(isEnabled:)", message: "Debouncing is no longer supported for InfoBar")
   public func infoBarView(
     debounceMode: DebounceMode = .debounce(0.2),
     isEnabled: Bool = true
