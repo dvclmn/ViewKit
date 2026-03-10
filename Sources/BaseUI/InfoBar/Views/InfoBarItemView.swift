@@ -28,7 +28,7 @@ public struct InfoBarItemView: View {
     /// Label text, but it is not, it is seperate.
     ///
     /// Spacing for Label {space} Content
-    HStack(spacing: Styles.sizeTiny) {
+    HStack(spacing: 2) {
       if let label = item.label {
         MaybeLabel(label)
           .environment(\.labelDisplay, itemLabelDisplay)
@@ -58,8 +58,6 @@ public struct InfoBarItemView: View {
     .onHover { hovering in
       isHoveringItem = hovering
     }
-    //    .containerValueBool(.isShowingSectionHeader, isShowingSectionHeader)
-    //    .containerValueBool(.hasSpacers, false)
 
   }
 }

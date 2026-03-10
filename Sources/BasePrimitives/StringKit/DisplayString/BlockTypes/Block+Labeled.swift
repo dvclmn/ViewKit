@@ -20,9 +20,9 @@ public struct Labeled: Sendable {
   public let key: AbbreviableLabel
   public let value: DisplayFragment?
 
-  /// Separator between the label text and the value, e.g. the space in `W 260`.
-  /// Defaults to `" "`. Pass `""` to omit.
-  public let propertySeparator: String
+  /// Separator between the label text and the value,
+  /// e.g. the space in `W 260`. Defaults to `" "`.
+  public let propertySeparator: String?
 
   /// Per-item float format override. Inherits from context when `nil`.
   public let formatOverride: FloatDisplayFormat?
@@ -30,7 +30,7 @@ public struct Labeled: Sendable {
   public init(
     key: AbbreviableLabel,
     value: DisplayFragment?,
-    propertySeparator: String = " ",
+    propertySeparator: String? = " ",
     formatOverride: FloatDisplayFormat? = nil
   ) {
     self.key = key
@@ -93,18 +93,17 @@ extension Labeled {
 
   /// Renders `"<label><propertySeparator><value>"`, e.g. `"W 260"`.
   /// Pass `.none` for `labelStyle` to suppress the label entirely.
+  /// Returns `nil` if all parts are absent.
   public func toString(
     labelStyle: AbbreviableLabel.Style = .standard,
     using format: FloatDisplayFormat = .default
   ) -> String? {
     let effectiveFormat = formatOverride ?? format
-    let valueString = value?.render(using: effectiveFormat)
+    let label: String? = labelPart(with: labelStyle)
+    let separator: String? = label != nil ? propertySeparator : nil
+    let value: String? = valuePart(using: format)
 
-    guard let label = labelPart(with: labelStyle) else {
-      // labelStyle == .none: just the value
-      return valueString
-    }
-    // label + separator + value (or just label if no value)
-    return [label + propertySeparator, valueString].compactMap(\.self).joined()
+    let result = [label, separator, value].compactMap { $0 }.joined()
+    return result.isEmpty ? nil : result
   }
 }

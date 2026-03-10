@@ -10,12 +10,12 @@ import Foundation
 public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
   public let id: UUID
   public let sectionKey: InfoBarSectionID
-  public let label: QuickLabel
+  public let label: QuickLabel?
   public let content: String
 
   public init(
     section: InfoBarSectionID,
-    label: QuickLabel,
+    label: QuickLabel?,
     content: String
   ) {
     self.id = UUID()
@@ -30,7 +30,7 @@ extension InfoBarItem {
   /// implicitly converted to a SectionID
   public init<K: InfoBarSectionKey>(
     section: K.Type,
-    label: QuickLabel,
+    label: QuickLabel?,
     content: String
   ) {
     self.id = UUID()

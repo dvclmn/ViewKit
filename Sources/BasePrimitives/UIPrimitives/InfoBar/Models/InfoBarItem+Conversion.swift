@@ -6,17 +6,17 @@
 //
 
 extension InfoBarItem {
-  init<K: InfoBarSectionKey>(
+  init?<K: InfoBarSectionKey>(
     fromLabeled labeled: Labeled,
     section: K.Type,
     labelStyle: AbbreviableLabel.Style = .standard,
     format: FloatDisplayFormat = .default
   ) {
-    let label = labeled.labelPart(with: labelStyle) ?? ""
-    let value = labeled.valuePart(using: format) ?? ""
+    let label = labeled.labelPart(with: labelStyle)
+    guard let value = labeled.valuePart(using: format) else { return nil }
     self.init(
       section: section,
-      label: QuickLabel(stringLiteral: label),
+      label: label.map { QuickLabel(stringLiteral: $0) },
       content: value
     )
   }
