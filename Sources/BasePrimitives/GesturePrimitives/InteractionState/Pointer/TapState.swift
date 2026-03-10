@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TapState: InteractionState {
+public struct TapState: TransientInteraction {
   public var value: CGPoint?
 
   public init(_ value: Value? = nil) {

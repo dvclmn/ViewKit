@@ -8,13 +8,14 @@
 import CoreGraphics
 import Foundation
 
-public struct PanState: ClampedInteractionState, PhasicInteractionProtocol {
+public struct PanState: ClampedInteraction, DeltaInteraction {
+
   public static var initialValue: CGSize { .zero }
-  public var value: CGSize?
+  public var value: CGSize
   public var phase: InteractionPhase
 
   public init(
-    _ value: CGSize?,
+    _ value: CGSize,
     phase: InteractionPhase = .none
   ) {
     self.value = value
@@ -23,7 +24,7 @@ public struct PanState: ClampedInteractionState, PhasicInteractionProtocol {
 }
 
 extension PanState {
-  public static var centered: Self { .initial ?? .zero }
+  public static var centered: Self { self.init(Self.initialValue) }
 
   public var pan: CGSize { value }
 }

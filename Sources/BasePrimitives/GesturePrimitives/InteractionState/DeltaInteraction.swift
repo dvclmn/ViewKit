@@ -15,26 +15,26 @@ public protocol DeltaInteraction: InteractionState {}
 //  }
 //}
 
-extension DeltaInteraction where Self: TransientPhasicInteraction, Value == CGSize {
+extension DeltaInteraction where Self: ContinuousInteraction, Value == CGSize {
   public mutating func updateDelta(_ delta: Value) {
-    accumulate(delta)
+    self.value += delta
   }
 }
 
-extension DeltaInteraction where Self: Phasic, Value == CGSize {
+extension DeltaInteraction where Self: PhasicContinuousInteraction, Value == CGSize {
   public mutating func updateDelta(_ delta: Value, phase: InteractionPhase) {
-    accumulate(delta)
+    self.value += delta
     self.phase = phase
   }
 }
 
 // MARK: - Common delta helper
-extension DeltaInteraction where Value == CGSize {
-  @inline(__always)
-  fileprivate mutating func accumulate(_ delta: Value) {
-    self.value = (self.startValue ?? .zero) + delta
-  }
-}
+//extension DeltaInteraction where Value == CGSize {
+//  @inline(__always)
+//  fileprivate mutating func accumulate(_ delta: Value) {
+//    self.value = self.value + delta
+//  }
+//}
 
 //extension DeltaInteraction where Self: OptionalInteractionState, Value == CGSize {
 //  public var startValue: Value { value ?? .zero }

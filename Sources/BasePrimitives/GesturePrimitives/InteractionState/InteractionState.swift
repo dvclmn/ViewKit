@@ -10,29 +10,35 @@ import Foundation
 public protocol InteractionState: Sendable, Equatable {
   associatedtype Value
   var isActive: Bool { get }
+//  mutating func update(_ newValue: Value)
 }
 
+// MARK: - Transient
 /// Presence-based: value is optional, nil means "no interaction"
+/// E.g. Hover, Tap
 public protocol TransientInteraction: InteractionState {
   associatedtype Value
   var value: Value? { get set }
-  static var initialValue: Value? { get }  // typically nil
-  mutating func update(_ newValue: Value?)
+  init(_ value: Value?)
+//  mutating func update(_ newValue: Value?)
 }
 
 extension TransientInteraction {
-  public static var initialValue: Value? { nil }
+  public init(_ value: Value?) { self.init(value) }
   public var isActive: Bool { value != nil }
   public mutating func update(_ newValue: Value?) { value = newValue }
+  
+  public static var initial: Self { .init(nil) }
 }
 
+// MARK: - Continuous
 /// Value-based: value is always present; define a default
+/// E.g. Pan, zoom
 public protocol ContinuousInteraction: InteractionState {
   associatedtype Value
   var value: Value { get set }
-  static var defaultValue: Value { get }
+  static var initialValue: Value { get }
   init(_ value: Value)
-  mutating func update(_ newValue: Value)
 }
 
 extension ContinuousInteraction {
@@ -41,6 +47,8 @@ extension ContinuousInteraction {
 
   /// If type is phasic, can override with a phase-based rule
   public var isActive: Bool { true }
+  
+  public static var initial: Self { .init(Self.initialValue) }
 }
 
 //public protocol InteractionState: Sendable, Equatable {

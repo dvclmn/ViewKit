@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct RotateState: TransformStateProtocol {
+public struct RotateState: PhasicContinuousInteraction {
   public static var initialValue: Angle { .zero }
   public var value: Angle
   public var phase: InteractionPhase
