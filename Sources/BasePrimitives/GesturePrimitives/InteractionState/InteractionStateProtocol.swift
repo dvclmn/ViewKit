@@ -13,6 +13,8 @@ public protocol InteractionStateProtocol: Sendable, Equatable {
   var value: Value? { get set }
   var isActive: Bool { get }
 
+  static var initialValue: Value? { get }
+
   init(_ value: Value?)
 
   mutating func update(_ newValue: Value?)
@@ -28,7 +30,6 @@ extension InteractionStateProtocol {
 
 public protocol PhasicInteractionProtocol: InteractionStateProtocol {
   var phase: InteractionPhase { get set }
-  static var initialValue: Value { get }
 
   init(_ value: Value, phase: InteractionPhase)
 
@@ -39,8 +40,9 @@ public protocol PhasicInteractionProtocol: InteractionStateProtocol {
 
 extension PhasicInteractionProtocol {
 
-  public static var initial: Self {
-    .init(Self.initialValue, phase: .none)
+  public static var initial: Self? {
+    guard let value = Self.initialValue else { return nil }
+    return .init(value, phase: .none)
   }
 
   public mutating func update(_ newValue: Value, phase: InteractionPhase) {
@@ -53,10 +55,7 @@ extension PhasicInteractionProtocol {
   }
 }
 
-public protocol DeltaInteractionProtocol: InteractionStateProtocol {
-
-}
-
+public protocol DeltaInteractionProtocol: InteractionStateProtocol {}
 
 extension DeltaInteractionProtocol where Value == CGSize {
   public mutating func updateDelta(_ delta: Value) {
@@ -79,7 +78,6 @@ extension DeltaInteractionProtocol where Value == CGSize {
   }
 }
 
-
 //extension DeltaInteractionProtocol where Value == CGSize {
 //  public mutating func updateDelta(_ delta: Value) {
 //    self.value = (self.value ?? .zero) + delta
@@ -92,8 +90,6 @@ extension DeltaInteractionProtocol where Value == CGSize {
 //    self.phase = phase
 //  }
 //}
-
-
 
 //public protocol PointerStateProtocol: Sendable, Equatable {
 //  /// E.g. CGRect for Drag
