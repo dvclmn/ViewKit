@@ -7,45 +7,27 @@
 
 import Foundation
 
-public protocol TransformStateProtocol: Sendable, Equatable {
-
-  /// E.g. CGSize for pan
-  associatedtype Value
-
-  var value: Value { get set }
-  var phase: InteractionPhase { get set }
-
-  init(_ value: Value, phase: InteractionPhase)
-
-  /// A value for 'at rest'
-  static var initialValue: Value { get }
-
-  mutating func update(_ newValue: Value, phase: InteractionPhase)
-  mutating func updatePhase(_ phase: InteractionPhase)
-}
-
-extension TransformStateProtocol {
-  public var isActive: Bool { phase.isActive }
-
-  public static var initial: Self {
-    .init(Self.initialValue, phase: .none)
-  }
-
-  public mutating func update(_ newValue: Value, phase: InteractionPhase) {
-    self.value = newValue
-    self.phase = phase
-  }
-
-  public mutating func updatePhase(_ phase: InteractionPhase) {
-    self.phase = phase
-  }
-}
-
-extension TransformStateProtocol where Value == CGSize {
-  public mutating func updateDelta(_ delta: Value, phase: InteractionPhase) {
-    self.value.width += delta.width
-    self.value.height += delta.height
-    self.phase = phase
-  }
-}
-
+//public protocol TransformStateProtocol: Sendable, Equatable {
+//
+//  /// E.g. CGSize for pan
+////  associatedtype Value
+////  var value: Value { get set }
+//  
+//
+//  
+//
+//  /// A value for 'at rest'
+//  
+//
+//  
+//}
+//
+//extension TransformStateProtocol {
+//  public var isActive: Bool { phase.isActive }
+//
+//}
+//
+//extension TransformStateProtocol where Value == CGSize {
+//
+//}
+//
