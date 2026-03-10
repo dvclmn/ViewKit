@@ -11,32 +11,50 @@ public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
   public let id: UUID
   public let sectionKey: InfoBarSectionID
   public let label: QuickLabel?
-  public let content: String
+  public let columnedContent: ColumnString
 
   public init(
-    section: InfoBarSectionID,
+    id: UUID = UUID(),
+    sectionKey: InfoBarSectionID,
     label: QuickLabel?,
-    content: String
+    content: ColumnString
   ) {
-    self.id = UUID()
-    self.sectionKey = section
+    self.id = id
+    self.sectionKey = sectionKey
     self.label = label
-    self.content = content
+    self.columnedContent = content
   }
 }
 
 extension InfoBarItem {
+  /// This isn't implemented just yet, it's just a passthrough
+  public var content: String { columnedContent.content }
+  public init(
+    section: InfoBarSectionID,
+    label: QuickLabel?,
+    content: String,
+    columnWidth: ColumnString.Width = .default
+  ) {
+    self.init(
+      sectionKey: section,
+      label: label,
+      content: ColumnString(stringLiteral: content)
+    )
+  }
+
   /// Allows supplying a SectionKey directly, which is then
   /// implicitly converted to a SectionID
   public init<K: InfoBarSectionKey>(
     section: K.Type,
     label: QuickLabel?,
-    content: String
+    content: String,
+    columnWidth: ColumnString.Width = .default
   ) {
-    self.id = UUID()
-    self.sectionKey = InfoBarSectionID(section)
-    self.label = label
-    self.content = content
+    self.init(
+      sectionKey: InfoBarSectionID(section),
+      label: label,
+      content: ColumnString(stringLiteral: content)
+    )
   }
 
   /// Provides a way for DisplayString's Labeled to fit nicely with InfoBar
@@ -45,7 +63,8 @@ extension InfoBarItem {
   public init?<K: InfoBarSectionKey>(
     fromBlock displayBlock: DisplayBlock,
     section: K.Type = DebugSectionKey.self,
-    preset: FloatDisplayPreset = .standard
+    preset: FloatDisplayPreset = .standard,
+    columnWidth: ColumnString.Width = .default
   ) {
     switch displayBlock {
       case .text(let fragment):

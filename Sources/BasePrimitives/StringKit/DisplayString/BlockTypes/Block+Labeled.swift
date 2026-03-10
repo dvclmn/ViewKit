@@ -19,6 +19,7 @@ public struct Labeled: Sendable {
 
   public let key: AbbreviableLabel
   public let value: DisplayFragment?
+  //  public let contentColumnWidth: ColumnString.Width
 
   /// Separator between the label text and the value,
   /// e.g. the space in `W 260`. Defaults to `" "`.

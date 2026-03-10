@@ -23,14 +23,4 @@ extension PointerStateProtocol {
   public var isActive: Bool { value != nil }
 }
 
-// MARK: - Activatable
-//public protocol Activatable {
-//  var isActive: Bool { get set }
-//}
-//
-//extension PointerStateProtocol where Self: Activatable {
-//  public mutating func update(_ newValue: Value?, isActive: Bool) {
-//    self.value = newValue
-//    self.isActive = isActive
-//  }
-//}
+
