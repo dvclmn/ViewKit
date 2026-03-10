@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol ClampedInteractionState: InteractionStateProtocol {
+public protocol ClampedInteractionState: InteractionState {
   func clamped(to geometry: CanvasGeometry, zoom: CGFloat) -> Value
 }
 
