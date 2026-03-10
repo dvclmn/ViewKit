@@ -14,6 +14,8 @@ extension EnvironmentValues {
   @Entry public var isShowingCellNumbers: Bool = false
   @Entry public var gridLineColour: Color = .cyan.opacity(0.17)
   @Entry public var gridLineWidth: CGFloat = 1.0
+  
+  @Entry public var isCellSelectionEnabled: Bool = true
 
   public var pointerGridPosition: GridPosition? {
     guard let gridGeometry else {

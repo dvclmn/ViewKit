@@ -24,6 +24,7 @@ extension EnvironmentValues {
   @Entry public var canvasSize: Size<CanvasSpace>?
   @Entry public var canvasFrameInViewport: CGRect?
   @Entry public var canvasBackground: Color = Color(white: 0.04)
+  
 
   public var canvasGeometry: CanvasGeometry? {
     guard let viewportRect, let canvasSize else { return nil }

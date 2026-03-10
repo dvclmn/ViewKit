@@ -22,10 +22,6 @@ public struct DisplayFragment: Sendable {
   }
 }
 
-extension DisplayFragmentRenderable {
-
-}
-
 extension String: DisplayFragmentRenderable {
   public func render(using format: FloatDisplayFormat) -> String { self }
 }

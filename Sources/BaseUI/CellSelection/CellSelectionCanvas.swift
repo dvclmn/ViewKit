@@ -17,6 +17,7 @@ struct CellSelectionCanvas: View {
   @Environment(\.gridGeometry) private var gridGeometry
   @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers
   @Environment(\.pointerGridPosition) private var pointerGridPosition
+  @Environment(\.isCellSelectionEnabled) private var isCellSelectionEnabled
 
   private let rounding: CGFloat = 4
 
@@ -43,6 +44,7 @@ struct CellSelectionCanvas: View {
       //      context.debugEnvironmentViewportRect(in: size)
 
       // MARK: - Selection Box
+      guard isCellSelectionEnabled else { return }
       guard let rect = selectionRect,
         let gridDimensions,
         let hoverPos = pointerGridPosition
@@ -63,18 +65,6 @@ struct CellSelectionCanvas: View {
       )
 
     }  // END canvas
-    //    .debugFrame("Cell Canvas", .orange, isEnabled: true)
-
-    //    .addInfoBarItems {
-    //      Labeled("Canvas Size", value: canvasSize?.cgSize.displayString(.dimensions))
-    //    }
-
-    //    .task(id: panOffset) { store.pan = panOffset }
-    //    .task(id: zoomLevel) { store.zoom = zoomLevel }
-    //    .task(id: pointerLocation) { store.pointerLocation = pointerLocation }
-    //    .task(id: gridGeometry) { store.geometry = gridGeometry }
-
-    //    Text("Pointer Location \(pointerLocation?.displayString(.concise))")
   }
 }
 
