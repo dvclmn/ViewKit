@@ -7,11 +7,11 @@
 
 import Foundation
 
-public protocol ClampedTransformState: InteractionStateProtocol {
+public protocol ClampedInteractionState: InteractionStateProtocol {
   func clamped(to geometry: CanvasGeometry, zoom: CGFloat) -> Value
 }
 
-extension ClampedTransformState where Value == CGSize {
+extension ClampedInteractionState where Value == CGSize {
   public func clamped(to geometry: CanvasGeometry,zoom: CGFloat) -> CGSize {
     let artwork = geometry.canvasCGSize
     let viewportRect = geometry.viewportRect
@@ -20,9 +20,11 @@ extension ClampedTransformState where Value == CGSize {
     let maxX = max((scaledArtwork.width - viewportRect.width) / 2, 0)
     let maxY = max((scaledArtwork.height - viewportRect.height) / 2, 0)
     
+    let current = self.value ?? Self.initialValue ?? .zero
+    
     return CGSize(
-      width: value.width.clamped(to: -maxX...maxX),
-      height: value.height.clamped(to: -maxY...maxY)
+      width: current.width.clamped(to: -maxX...maxX),
+      height: current.height.clamped(to: -maxY...maxY)
     )
   }
 }

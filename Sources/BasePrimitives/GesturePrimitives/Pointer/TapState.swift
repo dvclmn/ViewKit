@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TapState: PointerStateProtocol {
+public struct TapState: InteractionStateProtocol {
   public var value: CGPoint?
 
   public init(_ value: Value? = nil) {

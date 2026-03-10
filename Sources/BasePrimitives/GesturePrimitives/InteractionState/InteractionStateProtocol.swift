@@ -15,7 +15,7 @@ public protocol InteractionStateProtocol: Sendable, Equatable {
 
   static var initialValue: Value? { get }
 
-  init(_ value: Value?)
+//  init(_ value: Value?)
 
   mutating func update(_ newValue: Value?)
 }
@@ -24,6 +24,8 @@ extension InteractionStateProtocol {
   public mutating func update(_ newValue: Value?) {
     self.value = newValue
   }
+  
+  public static var initialValue: CGPoint? { nil }
 
   public var isActive: Bool { value != nil }
 }
@@ -31,7 +33,7 @@ extension InteractionStateProtocol {
 public protocol PhasicInteractionProtocol: InteractionStateProtocol {
   var phase: InteractionPhase { get set }
 
-  init(_ value: Value, phase: InteractionPhase)
+  init(_ value: Value?, phase: InteractionPhase)
 
   mutating func update(_ newValue: Value, phase: InteractionPhase)
   mutating func updatePhase(_ phase: InteractionPhase)
@@ -57,6 +59,12 @@ extension PhasicInteractionProtocol {
 
 public protocol DeltaInteractionProtocol: InteractionStateProtocol {}
 
+extension DeltaInteractionProtocol {
+  public var startValue: Value? {
+    self.value ?? Self.initialValue
+  }
+}
+
 extension DeltaInteractionProtocol where Value == CGSize {
   public mutating func updateDelta(_ delta: Value) {
     accumulate(delta)
@@ -74,7 +82,7 @@ extension DeltaInteractionProtocol where Self: PhasicInteractionProtocol, Value 
 extension DeltaInteractionProtocol where Value == CGSize {
   @inline(__always)
   fileprivate mutating func accumulate(_ delta: Value) {
-    self.value = (self.value ?? .zero) + delta
+    self.value = (self.startValue ?? .zero) + delta
   }
 }
 

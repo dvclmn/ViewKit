@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct HoverState: PointerStateProtocol {
+public struct HoverState: InteractionStateProtocol {
   public var value: CGPoint?
 
   public init(_ value: Value? = nil) {

@@ -7,22 +7,23 @@
 
 import Foundation
 
-public struct DragState: PointerStateProtocol {
+public struct DragState: PhasicInteractionProtocol {
   public var value: CGRect?
   public var phase: InteractionPhase
-
+  public static var initialValue: CGRect? { .zero }
+  
   public let dragThreshold: CGFloat = 6
 
-  public init(_ value: Value? = nil) {
-    self.value = value
-    self.phase = .none
-  }
-
-  public init(
-    _ value: Value? = nil,
-    phase: InteractionPhase = .none
-  ) {
+  public init(_ value: Value?, phase: InteractionPhase = .none) {
     self.value = value
     self.phase = phase
   }
+
+//  public init(
+//    _ value: Value? = nil,
+//    phase: InteractionPhase = .none
+//  ) {
+//    self.value = value
+//    self.phase = phase
+//  }
 }
