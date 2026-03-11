@@ -20,14 +20,12 @@ extension PointerState {
     hover.reset()
   }
 }
-extension PointerState {
-  private func activityLabel(_ isActive: Bool) -> String { isActive ? "active" : "idle" }
 
+extension PointerState: ActivityDescribing {
   public var activityDescription: String {
     let tapStatus = activityLabel(tap.isActive)
     let dragStatus = activityLabel(drag.isActive)
     let hoverStatus = activityLabel(hover.isActive)
-
     let tapText = "Tap (\(tapStatus))"
     let dragText = "Drag (\(dragStatus))"
     let hoverText = "Hover (\(hoverStatus))"
@@ -35,4 +33,3 @@ extension PointerState {
     return [tapText, dragText, hoverText].joined(separator: ", ")
   }
 }
-
