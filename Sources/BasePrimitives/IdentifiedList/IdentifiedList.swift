@@ -14,23 +14,23 @@ import Foundation
 
 /// A list of identifiable elements with O(1) lookup and mutation by id,
 /// backed by standard library `Array` and `Dictionary`.
-public struct IdentifiedList<Element: Identifiable>: Sendable, Codable, Equatable {
+public struct IdentifiedList<Element: Identifiable> {
   // MARK: - Storage
   @usableFromInline
   internal var elements: [Element]
-  
+
   @usableFromInline
   internal var indexByID: [Element.ID: Int]
-  
+
   // MARK: - Initializers
-  
+
   /// Creates an empty identified list.
   @inlinable
   public init() {
     self.elements = []
     self.indexByID = [:]
   }
-  
+
   /// Creates an identified list from an array of elements.
   /// If duplicate ids are encountered, the last occurrence wins.
   @inlinable
@@ -40,16 +40,22 @@ public struct IdentifiedList<Element: Identifiable>: Sendable, Codable, Equatabl
     reserveCapacity(elements.count)
     for element in elements { append(element) }
   }
-  
+}
+
+extension IdentifiedList: Equatable where Element: Equatable {}
+extension IdentifiedList: Sendable where Element: Sendable, Element.ID: Sendable {}
+
+extension IdentifiedList {
+
   // MARK: - Capacity
   @inlinable
   public mutating func reserveCapacity(_ n: Int) {
     elements.reserveCapacity(n)
     indexByID.reserveCapacity(n)
   }
-  
+
   // MARK: - Basic operations
-  
+
   /// Appends an element. If an element with the same id already exists, it is replaced in-place.
   @inlinable
   public mutating func append(_ element: Element) {
@@ -61,7 +67,7 @@ public struct IdentifiedList<Element: Identifiable>: Sendable, Codable, Equatabl
       indexByID[id] = elements.endIndex - 1
     }
   }
-  
+
   /// Removes the element at the given index.
   @discardableResult
   @inlinable
@@ -76,7 +82,7 @@ public struct IdentifiedList<Element: Identifiable>: Sendable, Codable, Equatabl
     }
     return removed
   }
-  
+
   /// Removes the element with the given id, if present.
   @discardableResult
   @inlinable
@@ -84,9 +90,9 @@ public struct IdentifiedList<Element: Identifiable>: Sendable, Codable, Equatabl
     guard let idx = indexByID[id] else { return nil }
     return remove(at: idx)
   }
-  
+
   // MARK: - Id-based subscript
-  
+
   /// Accesses the element associated with the given id for reading and writing.
   /// - If setting to `nil`, removes the element if it exists.
   /// - If setting a non-nil value:
@@ -123,42 +129,4 @@ public struct IdentifiedList<Element: Identifiable>: Sendable, Codable, Equatabl
 
 // MARK: - Collection conformance
 
-extension IdentifiedList: RandomAccessCollection, MutableCollection {
-  public typealias Index = Int
-  public typealias SubSequence = Array<Element>.SubSequence
-  
-  @inlinable public var startIndex: Int { elements.startIndex }
-  @inlinable public var endIndex: Int { elements.endIndex }
-  @inlinable public func index(after i: Int) -> Int { elements.index(after: i) }
-  @inlinable public func index(before i: Int) -> Int { elements.index(before: i) }
-  
-  @inlinable public subscript(position: Int) -> Element {
-    get { elements[position] }
-    set {
-      let old = elements[position]
-      elements[position] = newValue
-      // Update index map when an element changes or its id changes.
-      if old.id != newValue.id {
-        indexByID.removeValue(forKey: old.id)
-        indexByID[newValue.id] = position
-      } else {
-        indexByID[newValue.id] = position
-      }
-    }
-  }
-}
-
 // MARK: - Codable
-
-extension IdentifiedList {
-  public init(from decoder: any Decoder) throws {
-    let container = try decoder.singleValueContainer()
-    let decoded = try container.decode([Element].self)
-    self.init(decoded)
-  }
-  
-  public func encode(to encoder: any Encoder) throws {
-    var container = encoder.singleValueContainer()
-    try container.encode(elements)
-  }
-}

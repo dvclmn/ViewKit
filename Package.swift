@@ -189,7 +189,6 @@ let package = Package(
       dependencies: [
         .module(.basePrimitives),
         .casePaths,
-//        .metaCodable,
       ],
       resources: [
         .process("Shaders/MetalShaders")
@@ -253,12 +252,12 @@ extension Target.Dependency {
   static var casePaths: Self {
     .product(name: "CasePaths", package: "swift-case-paths")
   }
-  static var metaCodable: Self {
-    .product(name: "MetaCodable", package: "MetaCodable")
-  }
-  static var nsui: Self {
-    .product(name: "NSUI", package: "nsui")
-  }
+//  static var metaCodable: Self {
+//    .product(name: "MetaCodable", package: "MetaCodable")
+//  }
+//  static var nsui: Self {
+//    .product(name: "NSUI", package: "nsui")
+//  }
 }
 extension String {
   static var macrosSource: String { "Sources/BaseMacros" }
