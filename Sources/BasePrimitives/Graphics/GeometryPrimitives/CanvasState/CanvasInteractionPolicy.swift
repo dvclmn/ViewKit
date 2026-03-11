@@ -9,6 +9,9 @@ public struct CanvasInteractionPolicy: Equatable, Sendable {
   public var panGestureEnabled: Bool
   public var zoomGestureEnabled: Bool
   public var dragBehaviour: DragBehavior
+  
+  /// Note: so far, hover seems to always be enabled.
+  /// Maybe this will change, not sure.
   public var hoverEnabled: Bool
 
   public init(

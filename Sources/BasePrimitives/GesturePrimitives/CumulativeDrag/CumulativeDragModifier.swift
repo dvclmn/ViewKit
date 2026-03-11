@@ -5,14 +5,19 @@
 //  Created by Dave Coleman on 24/6/2025.
 //
 
-//import CoreTools
 import SwiftUI
 
-/// This modifier handles a Drag Gesture that keeps track of
-/// how far it has been dragged, so the *drag distance accumulates*.
+/// A drag modifier that accumulates offset across multiple drag gestures.
+///
+/// Unlike a plain `DragGesture`, each new drag begins from the offset left by the
+/// previous one, so movement compounds over time. Internally powered by
+/// ``DragGestureState`` with ``DragBehavior/continuous(_:)``.
+///
+/// Prefer ``View/cumulativeDrag(_:isEnabled:minDragDistance:isDragging:)``
+/// over constructing this modifier directly.
 struct CumulativeDragGestureModifier: ViewModifier {
 
-  @State private var tracker: CumulativeDragHandler
+  @State private var dragState: DragGestureState
   @Binding var offset: CGSize
   let isEnabled: Bool
   let minDragDistance: CGFloat
@@ -26,8 +31,8 @@ struct CumulativeDragGestureModifier: ViewModifier {
     isDragging: @escaping (Bool) -> Void
   ) {
     self._offset = offset
-    self._tracker = State(
-      initialValue: CumulativeDragHandler(axes: axes, strategy: .external)
+    self._dragState = State(
+      initialValue: DragGestureState(.continuous(axes: axes))
     )
     self.isEnabled = isEnabled
     self.minDragDistance = minDragDistance
@@ -45,25 +50,37 @@ extension CumulativeDragGestureModifier {
     DragGesture(minimumDistance: minDragDistance)
       .onChanged { value in
 
-        /// 1. Only anchor once at the very beginning of this specific drag
-        if tracker.anchor == nil {
-          tracker.begin(with: offset)
+        /// Anchor once at the start of each drag so translation is relative to
+        /// the offset committed by the previous drag gesture.
+        if dragState.anchor == nil {
+          dragState.begin(with: offset.toCGPoint)
         }
 
-        /// 2. Update the binding using the stable anchor
-        offset = tracker.update(translation: value.translation)
+        if let result = dragState.update(value) {
+          offset = result.size
+        }
 
         isDragging(true)
       }
 
       .onEnded { _ in
-        tracker.end()
+        dragState.end()
         isDragging(false)
       }
   }
 }
 
 extension View {
+  /// Adds a cumulative drag gesture that compounds offset across successive drags.
+  ///
+  /// Lifting and re-dragging resumes from where the previous drag stopped,
+  /// unlike a basic `DragGesture` which always resets to zero translation.
+  ///
+  /// - Parameters:
+  ///   - offset: Binding that receives the accumulated `CGSize` offset.
+  ///   - isEnabled: When `false`, the gesture is ignored entirely.
+  ///   - minDragDistance: Minimum movement before the drag activates (default `5` pt).
+  ///   - isDragging: Called with `true` while dragging, `false` on release.
   public func cumulativeDrag(
     _ offset: Binding<CGSize>,
     isEnabled: Bool = true,

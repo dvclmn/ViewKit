@@ -7,35 +7,46 @@
 
 import SwiftUI
 
+/// Defines the drag interaction mode applied by ``UnifiedDragModifier``.
+///
+/// - ``marquee``: A transient selection rectangle, cleared when the drag ends.
+/// - ``continuous(axes:)``: An accumulated offset that persists across drags.
+/// - ``none``: No drag response.
 public enum DragBehavior: Equatable, Sendable {
-  /// Transient rectangle from drag origin to current point
-  case marquee(drawMarquee: Bool)
 
-  /// Accumulated offset that persists across drags
+  /// A transient selection rectangle drawn from the drag origin to the current
+  /// pointer position. All state is cleared on drag end.
+  ///
+  /// Typical use: lasso/marquee selection over a canvas or list.
+  case marquee
+
+  /// An accumulated offset that persists across drag gestures.
+  ///
+  /// Each new drag begins from the offset committed by the previous drag, so
+  /// movement compounds over time. Pass a ``GridAxis/Set`` to lock to an axis.
   case continuous(axes: GridAxis.Set = .all)
 
-  /// Gesture is not active
+  /// Drag gesture is inactive; no callbacks or state changes are produced.
   case none
 
-  public static var marquee: Self { .marquee(drawMarquee: true) }
+  /// Convenience for `.continuous(axes: .all)`.
   public static var continuous: Self { .continuous() }
-
-  public var axes: GridAxis.Set {
-    if case .continuous(let axes) = self {
-      return axes
-    }
-    return .all
-  }
 }
 
 extension DragBehavior {
 
+  /// The axis constraint for continuous drags. Returns `.all` for other modes.
+  public var axes: GridAxis.Set {
+    if case .continuous(let axes) = self { return axes }
+    return .all
+  }
+
+  /// Whether this behavior renders a marquee selection overlay.
   public var isMarquee: Bool {
-    if case .marquee(let drawMarquee) = self {
-      return drawMarquee
-    }
+    if case .marquee = self { return true }
     return false
   }
 
+  /// Whether drag gestures are active. `false` only for `.none`.
   public var isEnabled: Bool { self != .none }
 }

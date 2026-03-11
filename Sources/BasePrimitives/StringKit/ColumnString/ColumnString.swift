@@ -6,8 +6,8 @@
 //
 
 public struct ColumnString: Sendable, Equatable, Hashable {
-  let content: String
-  let width: Width
+  public let content: String
+  public let width: Width
   
   public init(content: String, width: Width = .default) {
     self.content = content
