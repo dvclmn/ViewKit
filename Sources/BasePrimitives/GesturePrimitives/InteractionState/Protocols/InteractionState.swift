@@ -27,6 +27,7 @@ extension TransientInteraction {
   
   public var isActive: Bool { value != nil }
   public mutating func update(_ newValue: Value?) { value = newValue }
+  public mutating func reset() { self.value = nil }
   
 //  public static var initial: Self { .init(nil) }
 }
