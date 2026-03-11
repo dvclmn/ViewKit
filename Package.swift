@@ -135,7 +135,6 @@ let package = Package(
       name: "BasePrimitives",
       dependencies: [
         .module(.enumMacros),
-        .metaCodable,
         .casePaths,
         .identifiedCollections,
       ],
@@ -192,7 +191,7 @@ let package = Package(
       dependencies: [
         .module(.basePrimitives),
         .casePaths,
-        .metaCodable,
+//        .metaCodable,
       ],
       resources: [
         .process("Shaders/MetalShaders")

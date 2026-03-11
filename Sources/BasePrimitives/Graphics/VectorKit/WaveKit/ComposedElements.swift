@@ -5,15 +5,15 @@
 //  Created by Dave Coleman on 12/2/2026.
 //
 
-import BasePrimitives
 // import ColourKit
 import Foundation
-import IdentifiedCollections
+
+//import IdentifiedCollections
 
 public typealias WaveElements = [VisualElementKind: WaveVisualElement]
 public struct WaveDocument: Codable, Sendable, Equatable {
 
-  public var waves: IdentifiedArrayOf<ConfiguredWave>
+  public var waves: [ConfiguredWave]
   public var settings: WaveRenderSettings
 
   /// The channels define which elements are driven by which waves (and how).
@@ -21,7 +21,7 @@ public struct WaveDocument: Codable, Sendable, Equatable {
   public var drivers: [WaveDriver]
 
   public init(
-    waves: IdentifiedArrayOf<ConfiguredWave>,
+    waves: [ConfiguredWave],
     settings: WaveRenderSettings,
     drivers: [WaveDriver],
   ) {
@@ -50,8 +50,19 @@ extension WaveDocument {
     drivers.append(newDriver)
   }
   public subscript(waveID waveID: ConfiguredWave.ID) -> ConfiguredWave? {
-    get { waves[id: waveID] }
-    set { waves[id: waveID] = newValue }
+    get { waves.first { $0.id == waveID } }
+    set {
+      if let index = waves.firstIndex(where: { $0.id == waveID }) {
+        if let newValue {
+          waves[index] = newValue
+        } else {
+          waves.remove(at: index)
+        }
+      } else if let newValue {
+        /// If not found and a non-nil value is provided, append it.
+        waves.append(newValue)
+      }
+    }
   }
 
   public subscript(element elementKind: VisualElementKind) -> ConfiguredWave.ID? {
