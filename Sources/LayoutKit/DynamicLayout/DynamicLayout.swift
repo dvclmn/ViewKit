@@ -17,7 +17,7 @@ public struct DynamicStack<Content: View>: View {
 
   let layoutType: LayoutType
   let spacing: CGFloat?
-  let content: Content
+  let content: () -> Content
 
   public init(
     layoutType: LayoutType,
@@ -26,7 +26,7 @@ public struct DynamicStack<Content: View>: View {
   ) {
     self.layoutType = layoutType
     self.spacing = spacing
-    self.content = content()
+    self.content = content
   }
 
   public init(
@@ -57,10 +57,10 @@ public struct DynamicStack<Content: View>: View {
 
     if let layout = layoutType.toLayout(spacing: spacing ?? layoutSpacing) {
       layout {
-        content
+        content()
       }
     } else {
-      content
+      content()
     }
 
   }

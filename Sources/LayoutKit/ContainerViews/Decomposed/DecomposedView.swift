@@ -16,7 +16,7 @@ public struct DecomposedView<Content: View>: View {
   let subviewType: SubViewType
   let layoutTypeOverride: LayoutType?
   let spacing: CGFloat?
-  let content: Content
+  let content: () -> Content
 
   /// Will fall back to environment `LayoutType` if no value provided for `layout`
   public init(
@@ -28,7 +28,7 @@ public struct DecomposedView<Content: View>: View {
     self.subviewType = subviewType
     self.layoutTypeOverride = layout
     self.spacing = spacing
-    self.content = content()
+    self.content = content
   }
 
   public var body: some View {
@@ -40,7 +40,7 @@ public struct DecomposedView<Content: View>: View {
 
           // MARK: - SubViews
           case .subview:
-            Group(subviews: content) { subviewCollection in
+            Group(subviews: content()) { subviewCollection in
               DynamicStack(layoutType: layoutIfPresent, spacing: spacing) {
                 SubviewContent(collection: subviewCollection, spacing: spacing)
               }
@@ -48,7 +48,7 @@ public struct DecomposedView<Content: View>: View {
 
           // MARK: - Sections
           case .section:
-            Group(sections: content) { sectionCollection in
+            Group(sections: content()) { sectionCollection in
               DynamicStack(layoutType: layoutIfPresent, spacing: spacing) {
                 SectionContent(collection: sectionCollection, spacing: spacing)
               }
@@ -59,7 +59,7 @@ public struct DecomposedView<Content: View>: View {
     } else {
       // MARK: - All OS versions below macOS 15
       DynamicStack(layoutType: layoutIfPresent, spacing: spacing) {
-        content
+        content()
       }
     }  // END if available check
   }

@@ -15,7 +15,7 @@ public struct TextColumns<Content: View>: View {
 
   let columnCount: Int?
   let alignment: Alignment
-  let content: Content
+  let content: () -> Content
 
   /// Will use environment's `maxCharacterColumns` if no
   /// value provided for `columnCount`
@@ -26,7 +26,7 @@ public struct TextColumns<Content: View>: View {
   ) {
     self.columnCount = columnCount
     self.alignment = alignment
-    self.content = content()
+    self.content = content
   }
 
   public var body: some View {
@@ -50,7 +50,7 @@ public struct TextColumns<Content: View>: View {
 
       /// Displays content within character-count-based confines
       .overlay(alignment: alignment) {
-        content
+        content()
           .lineLimit(1)
           .fixedSize()
           .monospacedDigit()

@@ -12,10 +12,10 @@ import SwiftUI
 
 public struct CellSelectionView<Content: View>: View {
 
-  let content: Content
+  let content: () -> Content
 
   public init(@ViewBuilder content: @escaping () -> Content) {
-    self.content = content()
+    self.content = content
   }
   public var body: some View {
 
@@ -23,7 +23,7 @@ public struct CellSelectionView<Content: View>: View {
       CellSelectionCanvas()
         .allowsCanvasClipping(false)
 
-      content
+      content()
       //        .debugFrame("Canvas Content", .mint)
     }
     .environment(\.shouldShowInfoBarItems, true)

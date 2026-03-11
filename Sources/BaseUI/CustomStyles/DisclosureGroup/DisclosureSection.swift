@@ -11,24 +11,24 @@ import SwiftUI
 public struct DisclosureSection<Content: View>: View {
   /// If disabled, hiding/showing is not possible
   @Environment(\.isEnabled) private var isControlEnabled
-  
+
   @OptionallyPersisted var isExpanded: Bool
   let title: String
-  let content: Content
+  let content: () -> Content
 
   private init(
     configuration: ToggleConfiguration,
-    @ViewBuilder content: () -> Content
+    @ViewBuilder content: @escaping () -> Content
   ) {
     self.title = configuration.title
     self._isExpanded = configuration.asPropertyWrapper
-    self.content = content()
+    self.content = content
   }
 
   /// These just create the config and pass it to the master init
   public init<K: ToggleKey>(
     _ key: K.Type,
-    @ViewBuilder content: () -> Content
+    @ViewBuilder content: @escaping () -> Content
   ) {
     self.init(configuration: ToggleConfiguration(key), content: content)
   }
@@ -36,7 +36,7 @@ public struct DisclosureSection<Content: View>: View {
   public init(
     _ title: String,
     binding: Binding<Bool>,
-    @ViewBuilder content: () -> Content
+    @ViewBuilder content: @escaping () -> Content
   ) {
     self.init(configuration: ToggleConfiguration(title, binding: binding), content: content)
   }
@@ -44,7 +44,7 @@ public struct DisclosureSection<Content: View>: View {
   public init(
     _ title: String,
     transient defaultExpanded: Bool = true,
-    @ViewBuilder content: () -> Content
+    @ViewBuilder content: @escaping () -> Content
   ) {
     self.init(configuration: ToggleConfiguration(title, transient: defaultExpanded), content: content)
   }
@@ -53,8 +53,8 @@ public struct DisclosureSection<Content: View>: View {
 
     Section {
       if isExpanded {
-//      if isExpanded || isControlEnabled {
-        content
+        //      if isExpanded || isControlEnabled {
+        content()
 
       } else {
         Label("Hidden", systemImage: "eye")
@@ -66,7 +66,7 @@ public struct DisclosureSection<Content: View>: View {
       }
 
     } header: {
-      
+
       HStack {
         Text(title)
           .foregroundStyle(isExpanded ? .secondary : .tertiary)

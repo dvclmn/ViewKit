@@ -14,7 +14,7 @@ public struct Repeater<Content: View>: View {
   let count: Int
   let axis: Axis?
   let spacing: CGFloat?
-  let content: Content
+  let content: () -> Content
 
   public init(
     _ count: Int,
@@ -25,14 +25,14 @@ public struct Repeater<Content: View>: View {
     self.count = count
     self.axis = axis
     self.spacing = spacing
-    self.content = content()
+    self.content = content
   }
 
   public var body: some View {
 
     DynamicStack(axis: axis, spacing: spacing) {
       ForEach(0..<self.count, id: \.self) { count in
-        content
+        content()
           .overlay {
             if isDebugMode {
               Text("Count: \(count)")

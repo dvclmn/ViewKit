@@ -17,19 +17,19 @@ import SwiftUI
 public struct HPack<Content: View>: View {
 
   let alignment: VerticalAlignment
-  let content: Content
+  let content: () -> Content
 
   public init(
     _ alignment: VerticalAlignment = .center,
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.alignment = alignment
-    self.content = content()
+    self.content = content
   }
 
   public var body: some View {
     HStack(alignment: alignment, spacing: 0) {
-      content
+      content()
     }
   }
 }
@@ -37,19 +37,19 @@ public struct HPack<Content: View>: View {
 public struct VPack<Content: View>: View {
 
   let alignment: HorizontalAlignment
-  let content: Content
+  let content: () -> Content
 
   public init(
     _ alignment: HorizontalAlignment = .center,
     @ViewBuilder content: @escaping () -> Content
   ) {
     self.alignment = alignment
-    self.content = content()
+    self.content = content
   }
 
   public var body: some View {
     VStack(alignment: alignment, spacing: 0) {
-      content
+      content()
     }
   }
 }

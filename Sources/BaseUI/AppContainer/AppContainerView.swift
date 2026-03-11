@@ -9,16 +9,16 @@ import SwiftUI
 
 public struct AppContainer<Content: View>: View {
 
-  let content: Content
+  let content: () -> Content
 
   public init(
     @ViewBuilder content: @escaping () -> Content
   ) {
-    self.content = content()
+    self.content = content
   }
 
   public var body: some View {
-    content
+    content()
       .popup(debugPopup: .none)
 
       #if canImport(AppKit)

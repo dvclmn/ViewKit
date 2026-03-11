@@ -33,22 +33,22 @@ public struct ToggledView<Content: View>: View {
 
   let title: String
   @OptionallyPersisted var isEnabled: Bool
-  let content: Content
+  let content: () -> Content
 
   private init(
     configuration: ToggleConfiguration,
-    @ViewBuilder content: () -> Content
+    @ViewBuilder content: @escaping  () -> Content
   ) {
     self.title = configuration.title
     self._isEnabled = configuration.asPropertyWrapper
-    self.content = content()
+    self.content = content
   }
 
   /// Public initializers delegate to private init
   /// Key-based initialiser (title derived from key)
   public init<K: ToggleKey>(
     _ key: K.Type,
-    @ViewBuilder content: () -> Content
+    @ViewBuilder content:  @escaping () -> Content
   ) {
     self.init(configuration: ToggleConfiguration(key), content: content)
   }
@@ -57,7 +57,7 @@ public struct ToggledView<Content: View>: View {
   public init(
     _ title: String = "Enabled",
     binding: Binding<Bool>,
-    @ViewBuilder content: () -> Content
+    @ViewBuilder content: @escaping  () -> Content
   ) {
     self.init(configuration: ToggleConfiguration(title, binding: binding), content: content)
   }
@@ -66,14 +66,14 @@ public struct ToggledView<Content: View>: View {
   public init(
     _ title: String = "Enabled",
     transient defaultEnabled: Bool = true,
-    @ViewBuilder content: () -> Content
+    @ViewBuilder content: @escaping  () -> Content
   ) {
     self.init(configuration: ToggleConfiguration(title, transient: defaultEnabled), content: content)
   }
 
   public var body: some View {
     ToggledViewCommon(title, isEnabled: $isEnabled) {
-      content
+      content()
     }
   }
 }
