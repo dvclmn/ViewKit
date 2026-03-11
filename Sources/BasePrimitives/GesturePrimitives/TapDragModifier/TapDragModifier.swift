@@ -20,6 +20,7 @@ public typealias TapUpdate = (CGPoint) -> Void
 public struct UnifiedDragModifier: ViewModifier {
   @State private var dragState: DragGestureState
   @Binding var dragRect: CGRect?
+  let behavior: DragBehavior
   let tapCount: Int
   let minimumDistance: CGFloat
   let didUpdateTap: TapUpdate
@@ -32,6 +33,7 @@ public struct UnifiedDragModifier: ViewModifier {
     didUpdateTap: @escaping TapUpdate
   ) {
     self._dragRect = rect
+    self.behavior = behavior
     self.tapCount = tapCount
     self.minimumDistance = minimumDistance
     self.didUpdateTap = didUpdateTap
@@ -44,6 +46,11 @@ public struct UnifiedDragModifier: ViewModifier {
       .onTapGesture(count: tapCount) { didUpdateTap($0) }
       .gesture(dragGesture, isEnabled: isEnabled)
       .drawMarqueeRect(rect: dragRect, isEnabled: behaviour.isMarquee)
+      .onChange(of: behavior) { _, newValue in
+        dragState.behaviour = newValue
+        dragState.end()
+        dragRect = nil
+      }
   }
 }
 

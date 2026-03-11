@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DragGestureState {
 
-  let behaviour: DragBehavior
+  var behaviour: DragBehavior
 
   /// The start location of the offset, captured at drag start
   private(set) var anchor: CGPoint?
