@@ -49,6 +49,23 @@ extension GridAxis {
   }
 }
 
+extension GridAxis.Set {
+  public var name: String {
+    let nameH = "Horizontal"
+    let nameV = "Vertical"
+
+    if self.isEmpty { return "None" }
+    if self == .horizontal { return nameH }
+    if self == .vertical { return nameV }
+    if self == .all { return "\(nameH) & \(nameV)" }
+
+    var parts: [String] = []
+    if contains(.horizontal) { parts.append(nameH) }
+    if contains(.vertical) { parts.append(nameV) }
+    return parts.joined(separator: " & ")
+  }
+}
+
 extension GridAxis {
   public var id: String { rawValue }
 

@@ -28,6 +28,8 @@ public struct TransformState: Sendable, Equatable {
 }
 
 extension TransformState {
+  
+  
   public var zoom: Double { zoomState.value }
   public var pan: CGSize { panState.value }
   public var rotation: Angle { rotationState.rotation }

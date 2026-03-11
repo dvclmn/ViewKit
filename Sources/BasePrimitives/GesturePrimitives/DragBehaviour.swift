@@ -34,6 +34,14 @@ public enum DragBehavior: Equatable, Sendable {
 }
 
 extension DragBehavior {
+  
+  public var name: String {
+    switch self {
+      case .marquee: "Marquee"
+      case .continuous(let axes): "Continuous (\(axes.name))"
+      case .none: "Continuous"
+    }
+  }
 
   /// The axis constraint for continuous drags. Returns `.all` for other modes.
   public var axes: GridAxis.Set {
