@@ -23,5 +23,7 @@ extension ContinuousInteraction {
   /// If type is phasic, can override with a phase-based rule
   public var isActive: Bool { true }
   
+  public mutating func reset() { self.value = Self.initialValue }
+  
   public static var initial: Self { .init(Self.initialValue) }
 }

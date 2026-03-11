@@ -35,10 +35,12 @@ extension TransformState {
 
   public static var initial: Self { .init() }
 
+  private func activityLabel(_ isActive: Bool) -> String { isActive ? "active" : "idle" }
+
   public var activityDescription: String {
-    let panStatus = panState.isActive ? "active" : "idle"
-    let zoomStatus = zoomState.isActive ? "active" : "idle"
-    let rotationStatus = rotationState.isActive ? "active" : "idle"
+    let panStatus = activityLabel(panState.isActive)
+    let zoomStatus = activityLabel(zoomState.isActive)
+    let rotationStatus = activityLabel(rotationState.isActive)
 
     let panText = "Pan (\(panStatus))"
     //    let panText = "Pan \(panStatus) (\(panW), \(panH))"
@@ -56,3 +58,4 @@ extension TransformState {
     return parts.joined(separator: ", ")
   }
 }
+

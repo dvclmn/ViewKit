@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 11/3/2026.
 //
 
-// MARK: - Transient
 public protocol PhasicTransientInteraction: PhasicInteraction, TransientInteraction {
   var phase: InteractionPhase { get set }
 
@@ -29,5 +28,6 @@ extension PhasicTransientInteraction {
     self.value = nil
     self.phase = .none
   }
+  
   public var isActive: Bool { value != nil || phase != .none }
 }

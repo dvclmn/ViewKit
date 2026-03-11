@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 11/3/2026.
 //
 
-// MARK: - Continuous
 public protocol PhasicContinuousInteraction: PhasicInteraction, ContinuousInteraction {
   var phase: InteractionPhase { get set }
   init(_ value: Value, phase: InteractionPhase)
@@ -25,6 +24,8 @@ extension PhasicContinuousInteraction {
     /// Defaulted (aka `initialValue`) states can be considered active only during a phase
     phase != .none
   }
+
+  public mutating func reset() { self = Self.initial }
 
   public static var initial: Self { .init(Self.initialValue, phase: .none) }
 }
