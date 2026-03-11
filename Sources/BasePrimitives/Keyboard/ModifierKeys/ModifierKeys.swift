@@ -11,7 +11,7 @@ import SwiftUI
 /// AppKit modifiers: `NSEvent.ModifierFlags`
 /// SwiftUI modifier: `EventModifiers`
 extension EnvironmentValues {
-  
+
 }
 
 /// This `Modifiers` is used a lot throughout this package and various project
@@ -36,15 +36,10 @@ public struct ModifierKeys: Sendable, Hashable {
   }
 
   public static let shift: Self = Self(rawValue: 1 << Options.shift.rawValue)
-
   public static let option: Self = Self(rawValue: 1 << Options.option.rawValue)
-
   public static let command: Self = Self(rawValue: 1 << Options.command.rawValue)
-
   public static let control: Self = Self(rawValue: 1 << Options.control.rawValue)
-
   public static let capsLock: Self = Self(rawValue: 1 << Options.capsLock.rawValue)
-
   public static let numericPad: Self = Self(rawValue: 1 << Options.numericPad.rawValue)
 
   public static let all: Self = [

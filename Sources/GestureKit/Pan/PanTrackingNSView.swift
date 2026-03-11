@@ -16,7 +16,10 @@ public class PanTrackingNSView: NSView {
     let modifiers = Modifiers(from: event)
     guard event.hasPreciseScrollingDeltas else { return }
     let delta = CGSize(width: event.scrollingDeltaX, height: event.scrollingDeltaY)
-    let phase = InteractionPhase(from: event.momentumPhase)
+    
+    let phase = InteractionPhase(from: event.phase)
+//    let phase = InteractionPhase(from: event.momentumPhase)
+//    print("Phase for pan: \(phase.name). Is Active? \(phase.isActive)")
     didUpdatePan(delta, phase, modifiers)
   }
 }

@@ -28,15 +28,36 @@ public struct TransformState: Sendable, Equatable {
 }
 
 extension TransformState {
-  
-  
+
   public var zoom: Double { zoomState.value }
   public var pan: CGSize { panState.value }
   public var rotation: Angle { rotationState.rotation }
 
   public static var initial: Self { .init() }
+  
+  public var activityDescription: String {
+    let panStatus = panState.isActive ? "active" : "idle"
+    let zoomStatus = zoomState.isActive ? "active" : "idle"
+    let rotationStatus = rotationState.isActive ? "active" : "idle"
 
-  public var isPerformingGesture: Bool {
-    panState.isActive || zoomState.isActive || rotationState.isActive
+//    let panW = Int(pan.width.rounded())
+//    let panH = Int(pan.height.rounded())
+    let panText = "Pan (\(panStatus))"
+//    let panText = "Pan \(panStatus) (\(panW), \(panH))"
+
+    let zoomText = String(format: "Zoom %@ (%.2fx)", zoomStatus, zoom)
+    let rotationText = String(format: "Rotation %@ (%.1f°)", rotationStatus, rotation.degrees)
+
+    var parts = [panText, zoomText, rotationText]
+
+    if let focus = latchedZoomFocusGlobal {
+      let focusText = String(format: "Focus: (%.1f, %.1f)", focus.x, focus.y)
+      parts.append(focusText)
+    }
+
+    return parts.joined(separator: ", ")
   }
+//  public var isActive: Bool {
+//    panState.isActive || zoomState.isActive || rotationState.isActive
+//  }
 }
