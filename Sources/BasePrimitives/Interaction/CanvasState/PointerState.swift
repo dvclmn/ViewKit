@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 7/3/2026.
 //
 
+import CoreGraphics
 import Foundation
 
 /// Example payload for the drag state
@@ -22,21 +23,19 @@ import Foundation
 /// ```
 public struct PointerState: Sendable, Equatable {
   /// These only exist when they are happening.
-  public var tap: TransientInteraction<CGPoint> = .init()
-  public var hover: TransientInteraction<CGPoint> = .init()
-  
+  public var tap: TransientInteraction<CGPoint?> = .init()
+  public var hover: TransientInteraction<CGPoint?> = .init()
+
   /// Drag data usually needs an origin and a translation/current point.
-  public var drag: TransientInteraction<DragData> = .init()
+  public var drag: TransientInteraction<CGRect> = .init()
+  //  public var drag: TransientInteraction<DragData> = .init()
 }
-
-
-
 
 //public struct PointerState: Sendable, Equatable {
 //  public var tapState: TapState = .init()
 //  public var dragState: DragState = .init(nil)
 //  public var hoverState: HoverState = .init()
-//  
+//
 //  public var tap: Interaction<CGPoint> = .init(value: .zero, phase: .none)
 //  public var drag: Interaction<CGFloat> = .init(value: 1.0, phase: .none)
 //  public var hover: Interaction<Angle> = .init(value: .zero, phase: .none)

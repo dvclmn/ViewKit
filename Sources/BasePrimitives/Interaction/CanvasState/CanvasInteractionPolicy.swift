@@ -1,5 +1,5 @@
 //
-//  CanvasInteractionPolicy.swift
+//  CanvasPolicy.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 10/3/2026.

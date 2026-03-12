@@ -22,8 +22,6 @@
 public enum CanvasOperation: Equatable, Sendable {
   case idle
   case hovering
-
-  // Flattened active states
   case panning(TransformSource, phase: InteractionPhase)
   case zooming(TransformSource, phase: InteractionPhase)
   case selecting(SelectionMode, phase: InteractionPhase)
@@ -32,7 +30,7 @@ public enum CanvasOperation: Equatable, Sendable {
 
 extension CanvasOperation {
   init(
-    effectiveTool: Tool,
+    effectiveTool: CanvasTool,
     isSpringLoaded: Bool,
     state: CanvasInteraction,
     modifiers: Modifiers
@@ -51,7 +49,7 @@ extension CanvasOperation {
   }
 }
 extension CanvasOperation {
-  var canvasPolicy: CanvasInteractionPolicy {
+  var canvasPolicy: CanvasPolicy {
     switch self {
       case .active(.panning(.pointerDrag), _):
         return .init(

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SelectionMode {
+public enum SelectionMode: Sendable, Equatable {
   /// Replace a Cell selection with a new one
   case new
 
