@@ -54,8 +54,8 @@ public struct OperationResolver {
   }
 
   private static func resolvePointer(
-    for tool: CanvasTool.ID,
-//    for tool: CanvasTool,
+//    for tool: CanvasTool.ID,
+    for tool: CanvasTool,
     pointer: PointerState,
     modifiers: Modifiers,
     isSpringLoaded: Bool
@@ -65,11 +65,11 @@ public struct OperationResolver {
 
     switch tool {
       case .pan:
-        return .panning(source, phase: pointer.dragState.phase)
+        return .panning(source, phase: pointer.drag.phase)
       case .select:
-        return .selecting(SelectionMode(fromModifiers: modifiers), phase: pointer.dragState.phase)
+        return .selecting(SelectionMode(fromModifiers: modifiers), phase: pointer.drag.phase)
       case .text:
-        return .placingText(phase: pointer.dragState.phase)
+        return .placingText(phase: pointer.drag.phase)
       default:
         return .idle
     }

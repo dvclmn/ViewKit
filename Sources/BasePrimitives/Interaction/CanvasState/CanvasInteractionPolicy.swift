@@ -17,26 +17,34 @@ public struct CanvasPolicy: Equatable, Sendable {
 
 extension CanvasPolicy {
   public init(fromOperation operation: CanvasOperation) {
-    switch operation {
+    self =
+      switch operation {
 
-      case .hovering:
-        <#code#>
-      case .panning(.pointerDrag, _):
-        return .init(
-          panGestureEnabled: <#T##Bool#>,
-          zoomGestureEnabled: <#T##Bool#>,
-          dragBehaviour: <#T##DragBehavior#>,
-          hoverEnabled: <#T##Bool#>
-        )
-      case .zooming(let source, let phase):
-        <#code#>
-      case .selecting(let selectionMode, let phase):
-        <#code#>
-      case .placingText(let phase):
+        //        case .hovering:
+        case .panning(.pointerDrag, _):
+          .init(
+            panGestureEnabled: true,
+            zoomGestureEnabled: true,
+            dragBehaviour: .continuous,
+            hoverEnabled: true
+          )
 
-      default: return .standard
+        case .selecting(_, _):
+          .init(
+            panGestureEnabled: true,
+            zoomGestureEnabled: true,
+            dragBehaviour: .marquee,
+            hoverEnabled: true
+          )
+        //      case .zooming(let source, let phase):
 
-    }
+        //      case .selecting(let selectionMode, let phase):
+
+        //      case .placingText(let phase):
+
+        default: Self.standard
+
+      }
   }
 }
 

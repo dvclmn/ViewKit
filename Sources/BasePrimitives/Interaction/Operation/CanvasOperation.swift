@@ -51,42 +51,7 @@ extension CanvasOperation {
 }
 extension CanvasOperation {
   var canvasPolicy: CanvasPolicy {
-    switch self {
-      case .hovering:
-        <#code#>
-      case .panning(.pointerDrag, _):
-        return .init(
-          panGestureEnabled: <#T##Bool#>,
-          zoomGestureEnabled: <#T##Bool#>,
-          dragBehaviour: <#T##DragBehavior#>,
-          hoverEnabled: <#T##Bool#>
-        )
-      case .zooming(let source, let phase):
-        <#code#>
-      case .selecting(let selectionMode, let phase):
-        <#code#>
-      case .placingText(let phase):
-        
-      default: return .standard
-    }
-//    switch self {
-//      case .active(.panning(.pointerDrag), _):
-//        return .init(
-//          panGestureEnabled: true,
-//          zoomGestureEnabled: true,
-//          dragBehaviour: .continuous,
-//          hoverEnabled: true)
-//
-//      case .active(.selecting(_), _):
-//        return .init(
-//          panGestureEnabled: true,
-//          zoomGestureEnabled: true,
-//          dragBehaviour: .marquee,
-//          hoverEnabled: true)
-//
-//      default:
-//        return .default
-//    }
+    CanvasPolicy(fromOperation: self)
   }
 }
 
@@ -98,14 +63,22 @@ extension CanvasOperation {
     switch self {
       case .idle: "Idle"
       case .hovering: "Hovering"
-      case .active(let kind, let phase): "\(kind.name), \(phase.name)"
+      default: "To Implement"
+    //      case .active(let kind, let phase): "\(kind.name), \(phase.name)"
     }
   }
 
   var phase: InteractionPhase? {
     switch self {
       case .idle, .hovering: nil
-      case .active(_, let phase): phase
+      case .panning(_, let phase): phase
+      case .zooming(_, let phase): phase
+      case .selecting(_, let phase): phase
+      case .placingText(let phase): phase
     }
+    //    switch self {
+    //      case .idle, .hovering: nil
+    //      case .active(_, let phase): phase
+    //    }
   }
 }
