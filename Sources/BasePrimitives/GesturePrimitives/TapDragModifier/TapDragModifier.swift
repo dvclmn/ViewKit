@@ -21,33 +21,36 @@ public typealias TapUpdate = (CGPoint) -> Void
 public struct UnifiedDragModifier: ViewModifier {
   @State private var dragState: DragGestureState
   @Binding var dragRect: CGRect?
-  let behavior: DragBehavior
+  let behaviour: DragBehavior
+  let drawsMarqueeRect: Bool
   let tapCount: Int
   let minimumDistance: CGFloat
   let didUpdateTap: TapUpdate
 
   init(
     rect: Binding<CGRect?>,
-    behavior: DragBehavior,
+    behaviour: DragBehavior,
+    drawsMarqueeRect: Bool,
     tapCount: Int,
     minimumDistance: CGFloat,
     didUpdateTap: @escaping TapUpdate
   ) {
     self._dragRect = rect
-    self.behavior = behavior
+    self.behaviour = behaviour
+    self.drawsMarqueeRect = drawsMarqueeRect
     self.tapCount = tapCount
     self.minimumDistance = minimumDistance
     self.didUpdateTap = didUpdateTap
 
-    self._dragState = State(initialValue: DragGestureState(behavior))
+    self._dragState = State(initialValue: DragGestureState(behaviour))
   }
 
   public func body(content: Content) -> some View {
     content
       .onTapGesture(count: tapCount) { didUpdateTap($0) }
-      .gesture(dragGesture, isEnabled: isEnabled)
-      .drawMarqueeRect(rect: dragRect, isEnabled: behaviour.isMarquee)
-      .onChange(of: behavior) { _, newValue in
+      .gesture(dragGesture, isEnabled: isDragEnabled)
+      .drawMarqueeRect(rect: dragRect, isEnabled: behaviour.isMarquee && drawsMarqueeRect)
+      .onChange(of: behaviour) { _, newValue in
         dragState.behaviour = newValue
         dragState.end()
         dragRect = nil
@@ -56,8 +59,7 @@ public struct UnifiedDragModifier: ViewModifier {
 }
 
 extension UnifiedDragModifier {
-  private var isEnabled: Bool { behaviour.isEnabled }
-  private var behaviour: DragBehavior { dragState.behaviour }
+  private var isDragEnabled: Bool { behaviour.isEnabled }
 
   private var dragGesture: some Gesture {
     DragGesture(minimumDistance: minimumDistance)
@@ -101,7 +103,8 @@ extension View {
   ///   - didUpdateTap: Called with the tap location in the view's coordinate space.
   public func tapDragGesture(
     rect: Binding<CGRect?>,
-    behavior: DragBehavior,
+    behaviour: DragBehavior,
+    drawsMarqueeRect: Bool = true,
     tapCount: Int = 1,
     minimumDistance: CGFloat = 5,
     didUpdateTap: @escaping TapUpdate = { _ in }
@@ -109,7 +112,8 @@ extension View {
     self.modifier(
       UnifiedDragModifier(
         rect: rect,
-        behavior: behavior,
+        behaviour: behaviour,
+        drawsMarqueeRect: drawsMarqueeRect,
         tapCount: tapCount,
         minimumDistance: minimumDistance,
         didUpdateTap: didUpdateTap
@@ -123,7 +127,8 @@ extension View {
   /// that projects the `size` component of the rect for callers that think in terms of offsets.
   public func tapDragGesture(
     translation: Binding<CGSize?>,
-    behavior: DragBehavior,
+    behaviour: DragBehavior,
+    drawsMarqueeRect: Bool = true,
     tapCount: Int = 1,
     minimumDistance: CGFloat = 5,
     didUpdateTap: @escaping TapUpdate = { _ in }
@@ -131,7 +136,8 @@ extension View {
     self.modifier(
       UnifiedDragModifier(
         rect: translation.toBindingRect,
-        behavior: behavior,
+        behaviour: behaviour,
+        drawsMarqueeRect: drawsMarqueeRect,
         tapCount: tapCount,
         minimumDistance: minimumDistance,
         didUpdateTap: didUpdateTap

@@ -24,8 +24,8 @@ extension CanvasPolicy {
         self = .standard
 
       case .panning:
-        // During a pointer-driven pan, gestures remain available so the user
-        // can switch mid-drag (e.g. pinch to zoom while panning).
+        /// During a pointer-driven pan, gestures remain available so the user
+        /// can switch mid-drag (e.g. pinch to zoom while panning).
         self = CanvasPolicy(
           panGestureEnabled: true,
           zoomGestureEnabled: true,

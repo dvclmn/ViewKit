@@ -24,9 +24,9 @@ public struct CanvasToolKind: RawRepresentable, Hashable, Sendable {
 
 extension CanvasToolKind {
   public static let select = Self(rawValue: "select")
-  public static let pan    = Self(rawValue: "pan")
-  public static let zoom   = Self(rawValue: "zoom")
-  public static let text   = Self(rawValue: "text")
+  public static let pan = Self(rawValue: "pan")
+  public static let zoom = Self(rawValue: "zoom")
+  public static let text = Self(rawValue: "text")
 }
 
 // MARK: - CanvasTool

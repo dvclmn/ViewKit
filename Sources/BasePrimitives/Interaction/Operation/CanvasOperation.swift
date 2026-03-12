@@ -51,26 +51,24 @@ extension CanvasOperation {
 
   public var name: String {
     switch self {
-      case .idle:                          "Idle"
-      case .hovering:                      "Hovering"
-      case .panning(let src, _):           "Panning (\(src.name))"
-      case .zooming(let src, _):           "Zooming (\(src.name))"
-      case .selecting(let mode, _):        "Selecting (\(mode.name))"
-      case .placingText:                   "Placing Text"
+      case .idle: "Idle"
+      case .hovering: "Hovering"
+      case .panning(let src, _): "Panning (\(src.name))"
+      case .zooming(let src, _): "Zooming (\(src.name))"
+      case .selecting(let mode, _): "Selecting (\(mode.name))"
+      case .placingText: "Placing Text"
     }
   }
 
   public var phase: InteractionPhase? {
     switch self {
-      case .idle, .hovering:                         nil
-      case .panning(_, let phase):                   phase
-      case .zooming(_, let phase):                   phase
-      case .selecting(_, let phase):                 phase
-      case .placingText(let phase):                  phase
+      case .idle, .hovering: nil
+      case .panning(_, let phase): phase
+      case .zooming(_, let phase): phase
+      case .selecting(_, let phase): phase
+      case .placingText(let phase): phase
     }
   }
 
-  public var isActive: Bool {
-    phase?.isActive ?? false
-  }
+  public var isActive: Bool { phase?.isActive ?? false }
 }

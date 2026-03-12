@@ -34,12 +34,12 @@ public enum DragBehavior: Equatable, Sendable, Hashable {
 }
 
 extension DragBehavior {
-  
+
   public var name: String {
     switch self {
       case .marquee: "Marquee"
       case .continuous(let axes): "Continuous (\(axes.name))"
-      case .none: "Continuous"
+      case .none: "None"
     }
   }
 
@@ -55,6 +55,6 @@ extension DragBehavior {
     return false
   }
 
-  /// Whether drag gestures are active. `false` only for `.none`.
+  /// Whether drag gestures are permitted. `false` only for `.none`.
   public var isEnabled: Bool { self != .none }
 }
