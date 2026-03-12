@@ -12,47 +12,55 @@ public struct OperationState {
   let modifiers: Modifiers
   let key: KeyEquivalent?
   let operation: CanvasOperation?
-//  let keyboardKey: KeyboardKey
+  //  let keyboardKey: KeyboardKey
 }
+
+//public struct EffectiveCanvasTool {
+//  let tool: CanvasTool
+//  let springLoaded: CanvasTool?
+//}
 
 //public enum KeyboardKey {
 //  case modifiers(Modifiers)
 //  case key(KeyEquivalent)
 //}
 
-
 public struct OperationResolver {
 
   /// Evaluates current state and returns the single operation the canvas should perform.
-  ///
-  /// Priority layers (first match wins):
-  /// 1. Global hardware gestures (two-finger trackpad pan/zoom)
-  /// 2. Spring-loaded pointer actions (e.g. Space → Pan tool)
-  /// 3. Standard tool pointer actions (drag/tap)
-  /// 4. Passive hover
   public static func resolve(
     state: CanvasInteractionState,
+    //    tool: EffectiveCanvasTool,
     activeTool: CanvasTool,
     springLoadedTool: CanvasTool?,
     modifiers: Modifiers
   ) -> CanvasOperation {
 
-    // Layer 1: Global Hardware Gestures
-    if let gestureOp = resolveGesture(from: state.transform) {
-      return gestureOp
+    /// Layer 1: Global Hardware Gestures (two-finger trackpad pan/zoom)
+    if let gestureOperation = resolveGesture(from: state.transform) {
+      return gestureOperation
     }
 
-    // Layer 2: Spring-Loaded Pointer Actions
-    if let springTool = springLoadedTool, state.pointer.drag.isActive {
-      return resolvePointer(for: springTool, pointer: state.pointer, modifiers: modifiers)
+    /// Layer 2: Spring-Loaded Pointer Actions  (e.g. Space → Pan tool)
+    if let springLoadedTool {
+//    if let springLoaded = springLoadedTool, state.pointer.drag.isActive {
+      return resolvePointer(
+        for: springLoadedTool,
+        state: state.pointer,
+        modifiers: modifiers
+      )
     }
 
-    // Layer 3: Standard Tool Pointer Actions
+    /// Layer 3: Standard Tool Pointer Actions (drag/tap)
     if state.pointer.drag.isActive || state.pointer.tap.isActive {
-      return resolvePointer(for: activeTool, pointer: state.pointer, modifiers: modifiers)
+      return resolvePointer(
+        for: activeTool,
+        state: state.pointer,
+        modifiers: modifiers
+      )
     }
 
-    // Layer 4: Passive Hover
+    /// Layer 4: Passive Hover
     if state.pointer.hover.isActive {
       return .hovering
     }
@@ -63,7 +71,7 @@ public struct OperationResolver {
   // MARK: - Private
 
   private static func resolveGesture(from transform: TransformState) -> CanvasOperation? {
-    // Zoom takes priority over pan when simultaneous
+    /// Zoom takes priority over pan when simultaneous
     if transform.zoom.isActive {
       return .zooming(.gesture, phase: transform.zoom.phase)
     }
@@ -75,18 +83,15 @@ public struct OperationResolver {
 
   private static func resolvePointer(
     for tool: CanvasTool,
-    pointer: PointerState,
+    state: PointerState,
     modifiers: Modifiers
   ) -> CanvasOperation {
+
     switch tool.kind {
-      case .pan:
-        return .panning(.pointerDrag, phase: pointer.drag.phase)
-      case .select:
-        return .selecting(SelectionMode(fromModifiers: modifiers), phase: pointer.drag.phase)
-      case .text:
-        return .placingText(phase: pointer.drag.phase)
-      default:
-        return .idle
+      case .pan: .panning(.pointerDrag, phase: state.drag.phase)
+      case .select: .selecting(SelectionMode(fromModifiers: modifiers), phase: state.drag.phase)
+      case .text: .placingText(phase: state.drag.phase)
+      default: .idle
     }
   }
 }

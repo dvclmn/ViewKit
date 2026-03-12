@@ -12,7 +12,9 @@ public struct ContinuousInteraction<Value: Sendable & Equatable>: Equatable, Sen
   public var phase: InteractionPhase
 
   public var isActive: Bool {
-    phase != .none && phase != .cancelled && phase != .ended
+    phase != .none
+      && phase != .cancelled
+      && phase != .ended
   }
 
   public init(_ value: Value, phase: InteractionPhase = .none) {
@@ -24,7 +26,7 @@ public struct ContinuousInteraction<Value: Sendable & Equatable>: Equatable, Sen
     self.value = value
     self.phase = phase
   }
-  
+
 }
 
 extension ContinuousInteraction where Value == CGSize {
@@ -48,8 +50,7 @@ extension ContinuousInteraction where Value == CGSize {
       height: value.height.clamped(to: -maxY...maxY)
     )
   }
-  
-  
+
 }
 
 // MARK: - Continuous

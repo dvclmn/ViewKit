@@ -13,7 +13,10 @@ public struct TransientInteraction<Value: Sendable & Equatable>: Sendable, Equat
 
   /// It's active if we have data AND the phase hasn't terminated.
   public var isActive: Bool {
-    value != nil && phase != .none && phase != .cancelled && phase != .ended
+    value != nil
+      && phase != .none
+      && phase != .cancelled
+      && phase != .ended
   }
 
   public init(_ value: Value? = nil, phase: InteractionPhase = .none) {

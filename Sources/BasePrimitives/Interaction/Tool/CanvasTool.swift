@@ -41,7 +41,15 @@ public struct CanvasTool: Sendable, Identifiable, Hashable {
 
   public let name: String
   public let icon: String
+
+  /// Can be pressed once to activate the tool, or held to 'spring load' it.
+  /// This allows the tool to be active only while it's key is held,
+  /// and once released the previously active tool is restored.
   public let shortcutKey: KeyEquivalent?
+
+  /// Some tools support an additional key for spring loading, over and above
+  /// their `shortcutKey`. E.g. Pan with the Space key
+  public let springLoadKey: KeyEquivalent?
   public let dragBehavior: DragBehavior
 
   public init(
