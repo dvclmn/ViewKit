@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BasePrimitives
+
 
 public struct VariableWidthPath {
   var leftEdge: [CGPoint] = []

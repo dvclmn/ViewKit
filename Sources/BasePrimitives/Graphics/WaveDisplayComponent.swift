@@ -7,7 +7,7 @@
 
 import Foundation
 //import CoreTools
-import BasePrimitives
+
 import EnumMacros
 
 @MetaEnum

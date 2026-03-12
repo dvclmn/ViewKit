@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 12/7/2025.
 //
 
-import BasePrimitives
+
 import SwiftUI
 
 public struct PathDebugRenderer {

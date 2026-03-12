@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BasePrimitives
+
 
 /// A structure representing a multiline string as a mutable stack of character rows.
 public struct StringStack: GridShaped {

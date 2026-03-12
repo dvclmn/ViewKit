@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BasePrimitives
+
 
 extension SampleContent {
   public struct ExampleDataStore {

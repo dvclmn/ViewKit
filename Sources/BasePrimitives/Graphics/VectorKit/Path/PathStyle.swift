@@ -6,7 +6,7 @@
 //
 
 //import CasePaths
-//import BasePrimitives
+
 import SwiftUI
 
 /// Path style with optional stamping effect

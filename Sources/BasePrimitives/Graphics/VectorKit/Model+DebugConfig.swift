@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BasePrimitives
+
 // import ColourKit
 
 public struct PathDebugConfig {

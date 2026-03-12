@@ -6,7 +6,7 @@
 //
 
 // import ColourKit
-import BasePrimitives
+
 import Foundation
 
 public struct PointStyle: Sendable, Codable, Equatable, Hashable {
