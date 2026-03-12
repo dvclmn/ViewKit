@@ -37,7 +37,7 @@ extension GridAxis: CustomStringConvertible {
   public var description: String { name }
 }
 extension GridAxis {
-  public struct Set: OptionSet, Sendable {
+  public struct Set: OptionSet, Sendable, Hashable {
     public init(rawValue: Int) {
       self.rawValue = rawValue
     }

@@ -5,10 +5,9 @@
 //  Created by Dave Coleman on 11/1/2026.
 //
 
-import BasePrimitives
 import Foundation
 
-enum SelectionMode {
+public enum SelectionMode {
   /// Replace a Cell selection with a new one
   case new
 
@@ -21,7 +20,7 @@ enum SelectionMode {
 }
 
 extension SelectionMode {
-  var name: String {
+  public var name: String {
     switch self {
       case .new: "New"
       case .add: "Add"

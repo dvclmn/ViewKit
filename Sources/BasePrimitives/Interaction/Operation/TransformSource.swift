@@ -7,7 +7,7 @@
 
 /// How panning was initiated — useful for debug display and
 /// for subtly different cursor/feedback behaviour.
-enum TransformSource: Equatable, Sendable {
+public enum TransformSource: Equatable, Sendable {
 
   /// Two-finger trackpad swipe for Pan, pinch for Zoom
   case gesture
@@ -17,7 +17,7 @@ enum TransformSource: Equatable, Sendable {
 }
 
 extension TransformSource {
-  var name: String {
+  public var name: String {
     switch self {
       case .gesture: "Gesture"
       case .pointerDrag(let invocation):
@@ -26,11 +26,9 @@ extension TransformSource {
   }
 }
 
-
-enum ToolInvocation {
+public enum ToolInvocation: Sendable, Equatable {
   case standard
   case springLoaded
-  
+
   var isSpringLoaded: Bool { self == .springLoaded }
 }
-

@@ -23,7 +23,7 @@ public struct TransientInteraction<Value: Sendable & Equatable>: Equatable, Send
     self.value = value
     self.phase = phase
   }
-  
+  s
   /// Instantly clears the transient state.
   public mutating func reset() {
     self.value = nil

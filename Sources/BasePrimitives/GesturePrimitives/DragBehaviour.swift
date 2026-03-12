@@ -12,7 +12,7 @@ import SwiftUI
 /// - ``marquee``: A transient selection rectangle, cleared when the drag ends.
 /// - ``continuous(axes:)``: An accumulated offset that persists across drags.
 /// - ``none``: No drag response.
-public enum DragBehavior: Equatable, Sendable {
+public enum DragBehavior: Equatable, Sendable, Hashable {
 
   /// A transient selection rectangle drawn from the drag origin to the current
   /// pointer position. All state is cleared on drag end.
