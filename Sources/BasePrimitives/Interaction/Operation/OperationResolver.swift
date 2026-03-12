@@ -23,19 +23,19 @@ public struct OperationResolver {
 
     // Layer 2: Spring-Loaded Pointer Actions
     // e.g., Holding spacebar temporarily activates the Pan tool
-    if let springTool = springLoadedTool, state.pointer.dragState.isActive {
+    if let springTool = springLoadedTool, state.pointer.drag.isActive {
       return resolvePointer(
         for: springTool, pointer: state.pointer, modifiers: modifiers, isSpringLoaded: true)
     }
 
     // Layer 3: Standard Tool Pointer Actions
-    if state.pointer.dragState.isActive || state.pointer.tapState.isActive {
+    if state.pointer.drag.isActive || state.pointer.tap.isActive {
       return resolvePointer(
         for: activeTool, pointer: state.pointer, modifiers: modifiers, isSpringLoaded: false)
     }
 
     // Layer 4: Passive Hover
-    if state.pointer.hoverState.isActive {
+    if state.pointer.hover.isActive {
       return .hovering
     }
 
@@ -44,19 +44,24 @@ public struct OperationResolver {
 
   private static func resolveGesture(from transform: TransformState) -> CanvasOperation? {
     // Evaluate gestures in their own micro-priority (e.g., Zoom usually dictates Pan if simultaneous)
-    if transform.zoomState.isActive {
-      return .zooming(.gesture, phase: transform.zoomState.phase)
+    if transform.zoom.isActive {
+      return .zooming(.gesture, phase: transform.zoom.phase)
     }
-    if transform.panState.isActive {
-      return .panning(.gesture, phase: transform.panState.phase)
+    if transform.pan.isActive {
+      return .panning(.gesture, phase: transform.pan.phase)
     }
     return nil
   }
 
   private static func resolvePointer(
-    for tool: CanvasTool, pointer: PointerState, modifiers: Modifiers, isSpringLoaded: Bool
+    for tool: CanvasTool.ID,
+//    for tool: CanvasTool,
+    pointer: PointerState,
+    modifiers: Modifiers,
+    isSpringLoaded: Bool
   ) -> CanvasOperation {
-    let source: TransformSource = .pointerDrag(isSpringLoaded ? .springLoaded : .standard)
+    let source: TransformSource = .pointerDrag
+//    let source: TransformSource = .pointerDrag(isSpringLoaded ? .springLoaded : .standard)
 
     switch tool {
       case .pan:

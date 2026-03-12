@@ -13,15 +13,18 @@ public enum TransformSource: Equatable, Sendable {
   case gesture
 
   /// Pan/Zoom tool selected, pointer drag
-  case pointerDrag(ToolInvocation)
+  case pointerDrag
+//  case pointerDrag(ToolInvocation)
 }
 
 extension TransformSource {
   public var name: String {
     switch self {
       case .gesture: "Gesture"
-      case .pointerDrag(let invocation):
-        "Pointer Drag \(invocation.isSpringLoaded ? " , Spring Loaded" : "")"
+      case .pointerDrag: "Pointer Drag"
+//      case .pointerDrag(let invocation):
+
+//        "Pointer Drag \(invocation.isSpringLoaded ? " , Spring Loaded" : "")"
     }
   }
 }

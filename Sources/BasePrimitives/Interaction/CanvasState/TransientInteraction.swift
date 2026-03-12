@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TransientInteraction<Value: Sendable & Equatable>: Equatable, Sendable {
+public struct TransientInteraction<Value: Sendable & Equatable>: Sendable, Equatable {
   public var value: Value?
   public var phase: InteractionPhase
 

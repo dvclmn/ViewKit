@@ -10,16 +10,41 @@ public struct CanvasPolicy: Equatable, Sendable {
   public var zoomGestureEnabled: Bool = true
   public var dragBehaviour: DragBehavior = .continuous()
   public var hoverEnabled: Bool = true
-  
+
   public static let standard = CanvasPolicy()
   public static let lockScale = CanvasPolicy(zoomGestureEnabled: false)
+}
+
+extension CanvasPolicy {
+  public init(fromOperation operation: CanvasOperation) {
+    switch operation {
+
+      case .hovering:
+        <#code#>
+      case .panning(.pointerDrag, _):
+        return .init(
+          panGestureEnabled: <#T##Bool#>,
+          zoomGestureEnabled: <#T##Bool#>,
+          dragBehaviour: <#T##DragBehavior#>,
+          hoverEnabled: <#T##Bool#>
+        )
+      case .zooming(let source, let phase):
+        <#code#>
+      case .selecting(let selectionMode, let phase):
+        <#code#>
+      case .placingText(let phase):
+
+      default: return .standard
+
+    }
+  }
 }
 
 //public struct CanvasInteractionPolicy: Equatable, Sendable {
 //  public var panGestureEnabled: Bool
 //  public var zoomGestureEnabled: Bool
 //  public var dragBehaviour: DragBehavior
-//  
+//
 //  /// Note: so far, hover seems to always be enabled.
 //  /// Maybe this will change, not sure.
 //  public var hoverEnabled: Bool

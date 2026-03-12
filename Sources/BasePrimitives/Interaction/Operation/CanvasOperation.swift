@@ -19,6 +19,7 @@
 //  case active(Kind, phase: InteractionPhase)
 //}
 
+/// This could/should become a descriptor (like CanvasTool) later
 public enum CanvasOperation: Equatable, Sendable {
   case idle
   case hovering
@@ -51,23 +52,41 @@ extension CanvasOperation {
 extension CanvasOperation {
   var canvasPolicy: CanvasPolicy {
     switch self {
-      case .active(.panning(.pointerDrag), _):
+      case .hovering:
+        <#code#>
+      case .panning(.pointerDrag, _):
         return .init(
-          panGestureEnabled: true,
-          zoomGestureEnabled: true,
-          dragBehaviour: .continuous,
-          hoverEnabled: true)
-
-      case .active(.selecting(_), _):
-        return .init(
-          panGestureEnabled: true,
-          zoomGestureEnabled: true,
-          dragBehaviour: .marquee,
-          hoverEnabled: true)
-
-      default:
-        return .default
+          panGestureEnabled: <#T##Bool#>,
+          zoomGestureEnabled: <#T##Bool#>,
+          dragBehaviour: <#T##DragBehavior#>,
+          hoverEnabled: <#T##Bool#>
+        )
+      case .zooming(let source, let phase):
+        <#code#>
+      case .selecting(let selectionMode, let phase):
+        <#code#>
+      case .placingText(let phase):
+        
+      default: return .standard
     }
+//    switch self {
+//      case .active(.panning(.pointerDrag), _):
+//        return .init(
+//          panGestureEnabled: true,
+//          zoomGestureEnabled: true,
+//          dragBehaviour: .continuous,
+//          hoverEnabled: true)
+//
+//      case .active(.selecting(_), _):
+//        return .init(
+//          panGestureEnabled: true,
+//          zoomGestureEnabled: true,
+//          dragBehaviour: .marquee,
+//          hoverEnabled: true)
+//
+//      default:
+//        return .default
+//    }
   }
 }
 
