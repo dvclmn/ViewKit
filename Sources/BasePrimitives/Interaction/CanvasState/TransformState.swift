@@ -7,28 +7,35 @@
 
 import SwiftUI
 
-/// Value-semantic snapshot of canvas transform interactions.
 public struct TransformState: Sendable, Equatable {
-  
-  public var pan: Interaction<CGSize> = .init(value: .zero, phase: .none)
-  public var zoom: Interaction<CGFloat> = .init(value: 1.0, phase: .none)
-  public var rotation: Interaction<Angle> = .init(value: .zero, phase: .none)
-  
+  /// These always exist, they just return to an identity value when inactive.
+  public var pan: ContinuousInteraction<CGSize> = .init(value: .zero)
+  public var zoom: ContinuousInteraction<CGFloat> = .init(value: 1.0)
+  public var rotation: ContinuousInteraction<Angle> = .init(value: .zero)
+}
+
+/// Value-semantic snapshot of canvas transform interactions.
+//public struct TransformState: Sendable, Equatable {
+//
+//  public var pan: Interaction<CGSize> = .init(value: .zero, phase: .none)
+//  public var zoom: Interaction<CGFloat> = .init(value: 1.0, phase: .none)
+//  public var rotation: Interaction<Angle> = .init(value: .zero, phase: .none)
+
 //  public var panState: PanState = .initial
 //  public var zoomState: ZoomState = .initial
 //  public var rotationState: RotateState = .initial
 //  public var latchedZoomFocusGlobal: CGPoint?
-}
+//}
 
-extension TransformState {
-  public static let initial: Self = .init()
-
-  public mutating func reset() {
-//    panState.reset()
-//    zoomState.reset()
-//    rotationState.reset()
-  }
-}
+//extension TransformState {
+//  public static let initial: Self = .init()
+//
+//  public mutating func reset() {
+////    panState.reset()
+////    zoomState.reset()
+////    rotationState.reset()
+//  }
+//}
 
 //extension TransformState: ActivityDescribing {
 //

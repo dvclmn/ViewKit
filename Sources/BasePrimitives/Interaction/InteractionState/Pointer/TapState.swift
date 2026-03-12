@@ -7,10 +7,10 @@
 
 import Foundation
 
-public struct TapState: TransientInteraction {
-  public var value: CGPoint?
-
-  public init(_ value: Value? = nil) {
-    self.value = value
-  }
-}
+//public struct TapState: TransientInteraction {
+//  public var value: CGPoint?
+//
+//  public init(_ value: Value? = nil) {
+//    self.value = value
+//  }
+//}
