@@ -13,10 +13,21 @@
 /// 1. Tool: `ToolHandler.effectiveTool(modifiers:)` (selected tool + spring-loading)
 /// 2. Gesture: `TransformState` pan/zoom phases (trackpad gestures take priority)
 /// 3. Pointer: `PointerState` drag/hover phases
-enum CanvasOperation: Equatable, Sendable {
+//enum CanvasOperation: Equatable, Sendable {
+//  case idle
+//  case hovering
+//  case active(Kind, phase: InteractionPhase)
+//}
+
+public enum CanvasOperation: Equatable, Sendable {
   case idle
   case hovering
-  case active(Kind, phase: InteractionPhase)
+  
+  // Flattened active states
+  case panning(TransformSource, phase: InteractionPhase)
+  case zooming(TransformSource, phase: InteractionPhase)
+  case selecting(SelectionMode, phase: InteractionPhase)
+  case placingText(phase: InteractionPhase)
 }
 
 extension CanvasOperation {

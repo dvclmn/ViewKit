@@ -5,9 +5,6 @@
 //  Created by Dave Coleman on 10/3/2026.
 //
 
-import BasePrimitives
-import CanvasKit
-
 extension CanvasOperation {
 
   /// Resolves gesture-driven operations that take priority regardless of tool selection.
