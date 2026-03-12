@@ -26,6 +26,7 @@ public enum InteractionKind: Equatable {
   }
 }
 
+
 //import EnumMacros
 //import SwiftUI
 //
