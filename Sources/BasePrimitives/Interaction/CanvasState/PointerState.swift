@@ -27,8 +27,19 @@ public struct PointerState: Sendable, Equatable {
   public var hover: TransientInteraction<CGPoint?> = .init()
 
   /// Drag data usually needs an origin and a translation/current point.
-  //  public var drag: TransientInteraction<CGRect> = .init()
   public var drag: TransientInteraction<DragData> = .init()
+
+  public init() {}
+}
+
+extension PointerState {
+  public static let initial = PointerState()
+
+  public mutating func reset() {
+    tap.reset()
+    hover.reset()
+    drag.reset()
+  }
 }
 
 public struct DragData: Sendable, Equatable {

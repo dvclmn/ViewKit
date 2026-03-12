@@ -7,7 +7,13 @@
 
 public struct OperationResolver {
 
-  /// Evaluates current state and returns the strict, single operation the canvas should perform.
+  /// Evaluates current state and returns the single operation the canvas should perform.
+  ///
+  /// Priority layers (first match wins):
+  /// 1. Global hardware gestures (two-finger trackpad pan/zoom)
+  /// 2. Spring-loaded pointer actions (e.g. Space → Pan tool)
+  /// 3. Standard tool pointer actions (drag/tap)
+  /// 4. Passive hover
   public static func resolve(
     state: CanvasInteraction,
     activeTool: CanvasTool,
@@ -15,23 +21,19 @@ public struct OperationResolver {
     modifiers: Modifiers
   ) -> CanvasOperation {
 
-    // Layer 1: Global Hardware Gestures (Wins immediately)
-    // e.g., Two-finger trackpad pan/zoom
+    // Layer 1: Global Hardware Gestures
     if let gestureOp = resolveGesture(from: state.transform) {
       return gestureOp
     }
 
     // Layer 2: Spring-Loaded Pointer Actions
-    // e.g., Holding spacebar temporarily activates the Pan tool
     if let springTool = springLoadedTool, state.pointer.drag.isActive {
-      return resolvePointer(
-        for: springTool, pointer: state.pointer, modifiers: modifiers, isSpringLoaded: true)
+      return resolvePointer(for: springTool, pointer: state.pointer, modifiers: modifiers)
     }
 
     // Layer 3: Standard Tool Pointer Actions
     if state.pointer.drag.isActive || state.pointer.tap.isActive {
-      return resolvePointer(
-        for: activeTool, pointer: state.pointer, modifiers: modifiers, isSpringLoaded: false)
+      return resolvePointer(for: activeTool, pointer: state.pointer, modifiers: modifiers)
     }
 
     // Layer 4: Passive Hover
@@ -42,8 +44,10 @@ public struct OperationResolver {
     return .idle
   }
 
+  // MARK: - Private
+
   private static func resolveGesture(from transform: TransformState) -> CanvasOperation? {
-    // Evaluate gestures in their own micro-priority (e.g., Zoom usually dictates Pan if simultaneous)
+    // Zoom takes priority over pan when simultaneous
     if transform.zoom.isActive {
       return .zooming(.gesture, phase: transform.zoom.phase)
     }
@@ -54,18 +58,13 @@ public struct OperationResolver {
   }
 
   private static func resolvePointer(
-//    for tool: CanvasTool.ID,
     for tool: CanvasTool,
     pointer: PointerState,
-    modifiers: Modifiers,
-    isSpringLoaded: Bool
+    modifiers: Modifiers
   ) -> CanvasOperation {
-    let source: TransformSource = .pointerDrag
-//    let source: TransformSource = .pointerDrag(isSpringLoaded ? .springLoaded : .standard)
-
-    switch tool {
+    switch tool.kind {
       case .pan:
-        return .panning(source, phase: pointer.drag.phase)
+        return .panning(.pointerDrag, phase: pointer.drag.phase)
       case .select:
         return .selecting(SelectionMode(fromModifiers: modifiers), phase: pointer.drag.phase)
       case .text:

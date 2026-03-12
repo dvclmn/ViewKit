@@ -12,6 +12,18 @@ public struct TransformState: Sendable, Equatable {
   public var pan: ContinuousInteraction<CGSize> = .init(value: .zero)
   public var zoom: ContinuousInteraction<CGFloat> = .init(value: 1.0)
   public var rotation: ContinuousInteraction<Angle> = .init(value: .zero)
+
+  public init() {}
+}
+
+extension TransformState {
+  public static let initial = TransformState()
+
+  public mutating func reset() {
+    pan = .init(value: .zero)
+    zoom = .init(value: 1.0)
+    rotation = .init(value: .zero)
+  }
 }
 
 /// Value-semantic snapshot of canvas transform interactions.

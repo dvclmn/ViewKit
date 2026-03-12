@@ -16,66 +16,46 @@ public struct CanvasPolicy: Equatable, Sendable {
 }
 
 extension CanvasPolicy {
+  /// Derives the appropriate input policy from the current canvas operation.
   public init(fromOperation operation: CanvasOperation) {
-    self =
-      switch operation {
+    switch operation {
 
-        //        case .hovering:
-        case .panning(.pointerDrag, _):
-          .init(
-            panGestureEnabled: true,
-            zoomGestureEnabled: true,
-            dragBehaviour: .continuous,
-            hoverEnabled: true
-          )
+      case .idle, .hovering:
+        self = .standard
 
-        case .selecting(_, _):
-          .init(
-            panGestureEnabled: true,
-            zoomGestureEnabled: true,
-            dragBehaviour: .marquee,
-            hoverEnabled: true
-          )
-        //      case .zooming(let source, let phase):
+      case .panning:
+        // During a pointer-driven pan, gestures remain available so the user
+        // can switch mid-drag (e.g. pinch to zoom while panning).
+        self = CanvasPolicy(
+          panGestureEnabled: true,
+          zoomGestureEnabled: true,
+          dragBehaviour: .continuous(),
+          hoverEnabled: false
+        )
 
-        //      case .selecting(let selectionMode, let phase):
+      case .zooming:
+        self = CanvasPolicy(
+          panGestureEnabled: true,
+          zoomGestureEnabled: true,
+          dragBehaviour: .none,
+          hoverEnabled: false
+        )
 
-        //      case .placingText(let phase):
+      case .selecting:
+        self = CanvasPolicy(
+          panGestureEnabled: true,
+          zoomGestureEnabled: true,
+          dragBehaviour: .marquee,
+          hoverEnabled: false
+        )
 
-        default: Self.standard
-
-      }
+      case .placingText:
+        self = CanvasPolicy(
+          panGestureEnabled: false,
+          zoomGestureEnabled: false,
+          dragBehaviour: .marquee,
+          hoverEnabled: false
+        )
+    }
   }
 }
-
-//public struct CanvasInteractionPolicy: Equatable, Sendable {
-//  public var panGestureEnabled: Bool
-//  public var zoomGestureEnabled: Bool
-//  public var dragBehaviour: DragBehavior
-//
-//  /// Note: so far, hover seems to always be enabled.
-//  /// Maybe this will change, not sure.
-//  public var hoverEnabled: Bool
-//
-//  public init(
-//    panGestureEnabled: Bool,
-//    zoomGestureEnabled: Bool,
-//    dragBehaviour: DragBehavior,
-//    hoverEnabled: Bool
-//  ) {
-//    self.panGestureEnabled = panGestureEnabled
-//    self.zoomGestureEnabled = zoomGestureEnabled
-//    self.dragBehaviour = dragBehaviour
-//    self.hoverEnabled = hoverEnabled
-//  }
-//}
-//
-//extension CanvasInteractionPolicy {
-//
-//  public static let `default` = Self(
-//    panGestureEnabled: true,
-//    zoomGestureEnabled: true,
-//    dragBehaviour: .none,
-//    hoverEnabled: true
-//  )
-//}

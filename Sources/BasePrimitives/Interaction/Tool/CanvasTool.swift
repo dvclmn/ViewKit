@@ -7,43 +7,51 @@
 
 import SwiftUI
 
-//  public var onActivate: @Sendable (ToolContext) -> Void
-//  public var onDeactivate: @Sendable (ToolContext) -> Void
-//  public var handleGesture: @Sendable (GestureEvent, ToolContext) -> Void
+// MARK: - CanvasToolKind
+
+/// An extensible tool identity type — same pattern as `Notification.Name`.
+///
+/// Define new kinds by extending this type in any module:
+/// ```swift
+/// extension CanvasToolKind {
+///   public static let brush = Self(rawValue: "brush")
+/// }
+/// ```
+public struct CanvasToolKind: RawRepresentable, Hashable, Sendable {
+  public let rawValue: String
+  public init(rawValue: String) { self.rawValue = rawValue }
+}
+
+extension CanvasToolKind {
+  public static let select = Self(rawValue: "select")
+  public static let pan    = Self(rawValue: "pan")
+  public static let zoom   = Self(rawValue: "zoom")
+  public static let text   = Self(rawValue: "text")
+}
+
+// MARK: - CanvasTool
 
 public struct CanvasTool: Sendable, Identifiable, Hashable {
-  public let id: UUID
+  /// Stable, switchable identity.
+  public let kind: CanvasToolKind
+
+  /// `Identifiable` conformance — backed by `kind` so tools with the same
+  /// role are considered the same item in SwiftUI lists.
+  public var id: CanvasToolKind { kind }
+
   public let name: String
   public let icon: String
   public let shortcutKey: KeyEquivalent?
-
-  /// ```
-  /// public static let zoom = CanvasTool(
-  ///   name: "Zoom",
-  ///   icon: "magnifyingglass",
-  ///   shortcutKey: "z",
-  ///   behaviours: [
-  ///     ToolBehaviour(
-  ///       trigger: .modifierKey(.command),
-  ///       springLoadTarget: .select,  // see note below on decoupling this
-  ///       description: "Hold Command to temporarily select"
-  ///     )
-  ///   ],
-  ///   dragBehavior: .none
-  /// )
-  /// ```
-  //  public let behaviours: [ToolBehaviour]
-
   public let dragBehavior: DragBehavior
 
   public init(
-    id: UUID = UUID(),
+    kind: CanvasToolKind,
     name: String,
     icon: String,
     shortcutKey: KeyEquivalent? = nil,
-    dragBehavior: DragBehavior,
+    dragBehavior: DragBehavior
   ) {
-    self.id = id
+    self.kind = kind
     self.name = name
     self.icon = icon
     self.shortcutKey = shortcutKey
