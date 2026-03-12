@@ -5,9 +5,6 @@
 //  Created by Dave Coleman on 9/3/2026.
 //
 
-import BasePrimitives
-import CanvasKit
-
 /// The semantic operation currently being performed on the canvas.
 ///
 /// Always *computed* from inputs — never stored independently. The three
