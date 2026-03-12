@@ -6,26 +6,26 @@
 //
 
 public struct PointerState: Sendable, Equatable {
-  public var tap: TapState = .init()
-  public var drag: DragState = .init(nil)
-  public var hover: HoverState = .init()
+  public var tapState: TapState = .init()
+  public var dragState: DragState = .init(nil)
+  public var hoverState: HoverState = .init()
 }
 
 extension PointerState {
   public static let initial: Self = .init()
 
   public mutating func reset() {
-    tap.reset()
-    drag.reset()
-    hover.reset()
+    tapState.reset()
+    dragState.reset()
+    hoverState.reset()
   }
 }
 
 extension PointerState: ActivityDescribing {
   public var activityDescription: String {
-    let tapStatus = activityLabel(tap.isActive)
-    let dragStatus = activityLabel(drag.isActive)
-    let hoverStatus = activityLabel(hover.isActive)
+    let tapStatus = activityLabel(tapState.isActive)
+    let dragStatus = activityLabel(dragState.isActive)
+    let hoverStatus = activityLabel(hoverState.isActive)
     let tapText = "Tap (\(tapStatus))"
     let dragText = "Drag (\(dragStatus))"
     let hoverText = "Hover (\(hoverStatus))"

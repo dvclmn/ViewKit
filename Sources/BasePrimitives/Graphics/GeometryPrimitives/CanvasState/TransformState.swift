@@ -15,13 +15,17 @@ public struct TransformState: Sendable, Equatable {
   public var latchedZoomFocusGlobal: CGPoint?
 }
 
+extension TransformState {
+  public static let initial: Self = .init()
+
+  public mutating func reset() {
+    panState.reset()
+    zoomState.reset()
+    rotationState.reset()
+  }
+}
+
 extension TransformState: ActivityDescribing {
-
-  public var zoom: Double { zoomState.value }
-  public var pan: CGSize { panState.value }
-  public var rotation: Angle { rotationState.rotation }
-
-  public static var initial: Self { .init() }
 
   public var activityDescription: String {
     let panStatus = activityLabel(panState.isActive)
@@ -33,13 +37,6 @@ extension TransformState: ActivityDescribing {
     let rotationText = "Rotation (\(rotationStatus))"
 
     return [panText, zoomText, rotationText].joined(separator: ", ")
-    //    var parts = [panText, zoomText, rotationText]
 
-    //    if let focus = latchedZoomFocusGlobal {
-    //      let focusText = String(format: "Focus: (%.1f, %.1f)", focus.x, focus.y)
-    //      parts.append(focusText)
-    //    }
-
-    //    return parts.joined(separator: ", ")
   }
 }
