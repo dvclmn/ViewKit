@@ -7,6 +7,26 @@
 
 import Foundation
 
+public struct TrackedInteraction<Value: Sendable & Equatable>: Equatable, Sendable {
+  public var value: Value
+  public var phase: InteractionPhase
+  
+  public var isActive: Bool { phase != .none && phase != .cancelled && phase != .ended }
+  
+  public mutating func update(value: Value, phase: InteractionPhase) {
+    self.value = value
+    self.phase = phase
+  }
+}
+
+// Usage:
+public struct TransformState: Sendable, Equatable {
+  public var pan: TrackedInteraction<CGSize> = .init(value: .zero, phase: .none)
+  public var zoom: TrackedInteraction<CGFloat> = .init(value: 1.0, phase: .none)
+}
+
+
+
 public protocol InteractionState: Sendable, Equatable {
   associatedtype Value
   var isActive: Bool { get }

@@ -5,8 +5,6 @@
 //  Created by Dave Coleman on 8/3/2026.
 //
 
-import BasePrimitives
-import GestureKit
 import SwiftUI
 
 /// `CanvasInteraction`'s state is owned outside of CanvasKit,

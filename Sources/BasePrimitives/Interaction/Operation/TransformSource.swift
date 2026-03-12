@@ -13,7 +13,7 @@ enum TransformSource: Equatable, Sendable {
   case gesture
 
   /// Pan/Zoom tool selected, pointer drag
-  case pointerDrag(Tool.InvocationKind)
+  case pointerDrag(ToolInvocation)
 }
 
 extension TransformSource {
@@ -26,11 +26,9 @@ extension TransformSource {
   }
 }
 
-extension Tool {
-  enum InvocationKind {
-    case standard
-    case springLoaded
+enum ToolInvocation {
+  case standard
+  case springLoaded
 
-    var isSpringLoaded: Bool { self == .springLoaded }
-  }
+  var isSpringLoaded: Bool { self == .springLoaded }
 }

@@ -22,7 +22,7 @@
 public enum CanvasOperation: Equatable, Sendable {
   case idle
   case hovering
-  
+
   // Flattened active states
   case panning(TransformSource, phase: InteractionPhase)
   case zooming(TransformSource, phase: InteractionPhase)
