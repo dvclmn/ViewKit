@@ -1,5 +1,5 @@
 //
-//  CanvasInteraction.swift
+//  CanvasInteractionState.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 8/3/2026.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-/// `CanvasInteraction`'s state is owned outside of CanvasKit,
+/// `CanvasInteractionState`'s state is owned outside of CanvasKit,
 /// by the project *using* CanvasKit. E.g. in the case of DrawString,
 /// this is owned by `BaseContainer` view.
 @Observable
-public final class CanvasInteraction {
+public final class CanvasInteractionState {
   public var pointer: PointerState
   public var transform: TransformState
 
@@ -24,7 +24,7 @@ public final class CanvasInteraction {
   }
 }
 
-extension CanvasInteraction {
+extension CanvasInteractionState {
 
   public var pan: CGSize { transform.pan.value }
   public var zoom: CGFloat { transform.zoom.value }

@@ -49,7 +49,7 @@ public struct UnifiedDragModifier: ViewModifier {
     content
       .onTapGesture(count: tapCount) { didUpdateTap($0) }
       .gesture(dragGesture, isEnabled: isDragEnabled)
-      .drawMarqueeRect(rect: dragRect, isEnabled: behaviour.isMarquee && drawsMarqueeRect)
+      .drawMarqueeRect(rect: dragRect, isEnabled: isMarqueeRectEnabled)
       .onChange(of: behaviour) { _, newValue in
         dragState.behaviour = newValue
         dragState.end()
@@ -60,6 +60,7 @@ public struct UnifiedDragModifier: ViewModifier {
 
 extension UnifiedDragModifier {
   private var isDragEnabled: Bool { behaviour.isEnabled }
+  private var isMarqueeRectEnabled: Bool { behaviour.isMarquee && drawsMarqueeRect }
 
   private var dragGesture: some Gesture {
     DragGesture(minimumDistance: minimumDistance)
@@ -165,7 +166,8 @@ extension View {
     self.modifier(
       UnifiedDragModifier(
         rect: scalar.toBindingRect(along: axis, reversed: reversed),
-        behavior: .continuous(axes: axis.toSet),
+        behaviour: .continuous(axes: axis.toSet),
+        drawsMarqueeRect: false,
         tapCount: tapCount,
         minimumDistance: minimumDistance,
         didUpdateTap: didUpdateTap

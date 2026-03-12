@@ -5,6 +5,22 @@
 //  Created by Dave Coleman on 12/3/2026.
 //
 
+import SwiftUI
+
+public struct OperationState {
+  let tool: CanvasTool
+  let modifiers: Modifiers
+  let key: KeyEquivalent?
+  let operation: CanvasOperation?
+//  let keyboardKey: KeyboardKey
+}
+
+//public enum KeyboardKey {
+//  case modifiers(Modifiers)
+//  case key(KeyEquivalent)
+//}
+
+
 public struct OperationResolver {
 
   /// Evaluates current state and returns the single operation the canvas should perform.
@@ -15,7 +31,7 @@ public struct OperationResolver {
   /// 3. Standard tool pointer actions (drag/tap)
   /// 4. Passive hover
   public static func resolve(
-    state: CanvasInteraction,
+    state: CanvasInteractionState,
     activeTool: CanvasTool,
     springLoadedTool: CanvasTool?,
     modifiers: Modifiers

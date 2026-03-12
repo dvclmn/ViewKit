@@ -9,7 +9,7 @@ extension CanvasOperation {
 
   /// Gesture-driven operations take priority regardless of tool selection.
   static func resolveGesturePriority(
-    from state: CanvasInteraction
+    from state: CanvasInteractionState
   ) -> CanvasOperation? {
     let transform = state.transform
     if transform.zoom.isActive {
@@ -25,7 +25,7 @@ extension CanvasOperation {
   static func resolveOperation(
     for tool: CanvasTool,
     isSpringLoaded: Bool,
-    state: CanvasInteraction,
+    state: CanvasInteractionState,
     modifiers: Modifiers
   ) -> CanvasOperation {
     let pointer = state.pointer

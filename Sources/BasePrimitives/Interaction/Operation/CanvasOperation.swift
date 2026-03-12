@@ -29,7 +29,7 @@ extension CanvasOperation {
   public init(
     effectiveTool: CanvasTool,
     isSpringLoaded: Bool,
-    state: CanvasInteraction,
+    state: CanvasInteractionState,
     modifiers: Modifiers
   ) {
     if let gestureOp = Self.resolveGesturePriority(from: state) {
