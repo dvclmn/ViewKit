@@ -7,42 +7,15 @@
 
 import SwiftUI
 
-// MARK: - CanvasToolKind
-
-/// An extensible tool identity type — same pattern as `Notification.Name`.
-///
-/// Define new kinds by extending this type in any module:
-/// ```swift
-/// extension CanvasToolKind {
-///   public static let brush = Self(rawValue: "brush")
-/// }
-/// ```
-public struct CanvasToolKind: RawRepresentable, Hashable, Sendable {
-  public let rawValue: String
-  public init(rawValue: String) { self.rawValue = rawValue }
-}
-
-extension CanvasToolKind {
-  public static let select = Self(rawValue: "select")
-  public static let pan = Self(rawValue: "pan")
-  public static let zoom = Self(rawValue: "zoom")
-  public static let text = Self(rawValue: "text")
-}
-
-// MARK: - CanvasTool
-
 public struct CanvasTool: Sendable, Identifiable, Hashable {
   /// Stable, switchable identity.
   public let kind: CanvasToolKind
-
-  /// `Identifiable` conformance — backed by `kind` so tools with the same
-  /// role are considered the same item in SwiftUI lists.
   public var id: CanvasToolKind { kind }
 
   public let name: String
   public let icon: String
 
-  /// Can be pressed once to activate the tool, or held to 'spring load' it.
+  /// Can be pressed once to activate the Tool, or held to 'spring load' it.
   /// This allows the tool to be active only while it's key is held,
   /// and once released the previously active tool is restored.
   public let shortcutKey: KeyEquivalent?
@@ -56,13 +29,15 @@ public struct CanvasTool: Sendable, Identifiable, Hashable {
     kind: CanvasToolKind,
     name: String,
     icon: String,
-    shortcutKey: KeyEquivalent? = nil,
-    dragBehavior: DragBehavior
+    shortcutKey: KeyEquivalent?,
+    springLoadKey: KeyEquivalent? = nil,
+    dragBehavior: DragBehavior = .none
   ) {
     self.kind = kind
     self.name = name
     self.icon = icon
     self.shortcutKey = shortcutKey
+    self.springLoadKey = springLoadKey
     self.dragBehavior = dragBehavior
   }
 }

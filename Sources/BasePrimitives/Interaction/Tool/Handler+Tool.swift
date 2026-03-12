@@ -12,6 +12,8 @@ public struct ToolHandler {
   /// Aka the Tool explicitly selected by the user, regardless of
   /// any spring-loading and other context
   var selectedTool: CanvasTool = .select
+  
+  var allTools: [CanvasTool] = [.select, .pan, .zoom]
 //  var selectedTool: Tool = .select
 
   var modifiers: Modifiers = []
@@ -20,41 +22,43 @@ public struct ToolHandler {
   /// Updated by the keyboard handler whenever a watched key is pressed/released.
   var heldKeys: Set<KeyEquivalent> = []
 
-  let defaultTool: Tool = .select
+  let defaultTool: CanvasTool = .select
   
   let springLoadDurationThreshold: TimeInterval = 0.15
 }
 
 extension ToolHandler {
-  mutating func setTool(_ tool: Tool) {
+  mutating func setTool(_ tool: CanvasTool) {
     self.selectedTool = tool
   }
 
   /// Behaviours that apply regardless of which tool is active.
   /// Listed in priority order — first match wins in `effectiveTool`.
-  static let globalBehaviours: [ToolBehaviour] = [
-    ToolBehaviour(
-      trigger: .heldKey(.space),
-      springLoadTarget: .pan,
-      description: "Hold Space to temporarily pan"
-    )
-  ]
+//  static let globalBehaviours: [ToolBehaviour] = [
+//    ToolBehaviour(
+//      trigger: .heldKey(.space),
+//      springLoadTarget: .pan,
+//      description: "Hold Space to temporarily pan"
+//    )
+//  ]
 
-  var springLoadedTool: Tool? {
+  var springLoadedTool: CanvasTool? {
 
-    let allBehaviours = Self.globalBehaviours + selectedTool.behaviours
+//    let globalBehaviours
+    
+//    let allBehaviours = Self.globalBehaviours + selectedTool.behaviours
 
     for behaviour in allBehaviours {
-      switch behaviour.trigger {
-        case .modifierKey(let required) where modifiers.contains(required):
-          return behaviour.springLoadTarget
-        case .heldKey(let key) where heldKeys.contains(key):
-          return behaviour.springLoadTarget
-        default:
-          break
+      switch currentTool {
+//        case .modifierKey(let required) where modifiers.contains(required):
+//          return behaviour.springLoadTarget
+//        case .heldKey(let key) where heldKeys.contains(key):
+//          return behaviour.springLoadTarget
+//        default:
+//          break
       }
-    }
-    return nil
+//    }
+//    return nil
   }
 
   var currentTool: Tool { springLoadedTool ?? selectedTool }

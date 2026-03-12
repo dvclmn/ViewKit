@@ -5,7 +5,8 @@
 //  Created by Dave Coleman on 12/3/2026.
 //
 
-public enum DefaultTools {
+extension CanvasTool {
+//public enum DefaultTools {
   public static let select = CanvasTool(
     kind: .select,
     name: "Select",
