@@ -9,9 +9,11 @@ import SwiftUI
 
 public struct TransformState: Sendable, Equatable {
   /// These always exist, they just return to an identity value when inactive.
-  public var pan: ContinuousInteraction<CGSize> = .init(value: .zero)
-  public var zoom: ContinuousInteraction<CGFloat> = .init(value: 1.0)
-  public var rotation: ContinuousInteraction<Angle> = .init(value: .zero)
+  public var pan: ContinuousInteraction<CGSize> = .init(.zero)
+  public var zoom: ContinuousInteraction<CGFloat> = .init(1.0)
+  public var rotation: ContinuousInteraction<Angle> = .init(.zero)
+
+  public var latchedZoomFocusGlobal: CGPoint?
 
   public init() {}
 }
@@ -20,9 +22,9 @@ extension TransformState {
   public static let initial = TransformState()
 
   public mutating func reset() {
-    pan = .init(value: .zero)
-    zoom = .init(value: 1.0)
-    rotation = .init(value: .zero)
+    pan = .init(.zero)
+    zoom = .init(1.0)
+    rotation = .init(.zero)
   }
 }
 

@@ -23,11 +23,14 @@ import Foundation
 /// ```
 public struct PointerState: Sendable, Equatable {
   /// These only exist when they are happening.
-  public var tap: TransientInteraction<CGPoint?> = .init()
-  public var hover: TransientInteraction<CGPoint?> = .init()
+  public var tap: TransientInteraction<CGPoint> = .init()
+  public var hover: TransientInteraction<CGPoint> = .init()
 
   /// Drag data usually needs an origin and a translation/current point.
-  public var drag: TransientInteraction<DragData> = .init()
+  public var drag: TransientInteraction<CGRect> = .init()
+
+  public let dragThreshold: CGFloat = 6
+  //  public var drag: TransientInteraction<DragData> = .init()
 
   public init() {}
 }
@@ -48,6 +51,10 @@ public struct DragData: Sendable, Equatable {
 }
 
 extension DragData {
+  //  public init?(fromRect rect: CGRect?) {
+  //    guard let rect else { return nil }
+  //    self.init(startLocation: <#T##CGPoint#>, currentLocation: <#T##CGPoint#>)
+  //  }
   public var translation: CGSize {
     CGSize(
       width: currentLocation.x - startLocation.x,

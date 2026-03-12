@@ -15,18 +15,23 @@ public struct ContinuousInteraction<Value: Sendable & Equatable>: Equatable, Sen
     phase != .none && phase != .cancelled && phase != .ended
   }
 
-  public init(value: Value, phase: InteractionPhase = .none) {
+  public init(_ value: Value, phase: InteractionPhase = .none) {
     self.value = value
     self.phase = phase
   }
 
-  public mutating func update(value: Value, phase: InteractionPhase) {
+  public mutating func update(_ value: Value, phase: InteractionPhase) {
     self.value = value
     self.phase = phase
   }
+  
 }
 
 extension ContinuousInteraction where Value == CGSize {
+  public mutating func updateDelta(_ delta: Value, phase: InteractionPhase) {
+    self.value += delta
+    self.phase = phase
+  }
   public func clamped(
     to geometry: CanvasGeometry,
     zoom: CGFloat
@@ -43,6 +48,8 @@ extension ContinuousInteraction where Value == CGSize {
       height: value.height.clamped(to: -maxY...maxY)
     )
   }
+  
+  
 }
 
 // MARK: - Continuous

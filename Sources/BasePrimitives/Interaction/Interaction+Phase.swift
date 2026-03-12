@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 9/1/2026.
 //
 
-import AppKit
+import SwiftUI
 
 public enum InteractionPhase: String, Sendable, Codable {
   case began
@@ -59,6 +59,14 @@ extension InteractionPhase {
         case .touching: .mayBegin
         //        case .any: .any
         default: .none
+      }
+  }
+
+  public init(fromHover hoverPhase: HoverPhase) {
+    self =
+      switch hoverPhase {
+        case .active: .changed
+        case .ended: .ended
       }
   }
 

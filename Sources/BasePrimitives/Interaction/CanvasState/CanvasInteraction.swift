@@ -25,6 +25,11 @@ public final class CanvasInteraction {
 }
 
 extension CanvasInteraction {
+
+  public var pan: CGSize { transform.pan.value }
+  public var zoom: CGFloat { transform.zoom.value }
+  public var rotation: Angle { transform.rotation.value }
+
   public func resetAll() {
     pointer.reset()
     transform.reset()

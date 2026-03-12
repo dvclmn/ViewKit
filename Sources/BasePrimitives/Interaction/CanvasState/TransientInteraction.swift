@@ -16,12 +16,12 @@ public struct TransientInteraction<Value: Sendable & Equatable>: Sendable, Equat
     value != nil && phase != .none && phase != .cancelled && phase != .ended
   }
 
-  public init(value: Value? = nil, phase: InteractionPhase = .none) {
+  public init(_ value: Value? = nil, phase: InteractionPhase = .none) {
     self.value = value
     self.phase = phase
   }
 
-  public mutating func update(value: Value?, phase: InteractionPhase) {
+  public mutating func update(_ value: Value?, phase: InteractionPhase) {
     self.value = value
     self.phase = phase
   }
