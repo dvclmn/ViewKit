@@ -26,9 +26,11 @@ extension TransformSource {
   }
 }
 
+
 enum ToolInvocation {
   case standard
   case springLoaded
-
+  
   var isSpringLoaded: Bool { self == .springLoaded }
 }
+

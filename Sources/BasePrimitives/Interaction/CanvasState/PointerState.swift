@@ -21,15 +21,15 @@ extension PointerState {
   }
 }
 
-extension PointerState: ActivityDescribing {
-  public var activityDescription: String {
-    let tapStatus = activityLabel(tapState.isActive)
-    let dragStatus = activityLabel(dragState.isActive)
-    let hoverStatus = activityLabel(hoverState.isActive)
-    let tapText = "Tap (\(tapStatus))"
-    let dragText = "Drag (\(dragStatus))"
-    let hoverText = "Hover (\(hoverStatus))"
-
-    return [tapText, dragText, hoverText].joined(separator: ", ")
-  }
-}
+//extension PointerState: ActivityDescribing {
+//  public var activityDescription: String {
+//    let tapStatus = activityLabel(tapState.isActive)
+//    let dragStatus = activityLabel(dragState.isActive)
+//    let hoverStatus = activityLabel(hoverState.isActive)
+//    let tapText = "Tap (\(tapStatus))"
+//    let dragText = "Drag (\(dragStatus))"
+//    let hoverText = "Hover (\(hoverStatus))"
+//
+//    return [tapText, dragText, hoverText].joined(separator: ", ")
+//  }
+//}
