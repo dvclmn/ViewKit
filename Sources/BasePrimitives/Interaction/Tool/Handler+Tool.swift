@@ -7,6 +7,56 @@
 
 import SwiftUI
 
+/// ```
+/// func makeOperation(controller: ToolController, state: CanvasInteractionState, modifiers: Modifiers) -> CanvasOperation {
+///   CanvasOperation(
+///     effectiveTool: controller.effectiveTool,
+///     isSpringLoaded: controller.isSpringLoaded,
+///     state: state,
+///     modifiers: modifiers
+///   )
+/// }
+/// ```
+
+//@Observable
+//public final class ToolController: Sendable {
+//  private var baseTool: CanvasTool = .select
+//  private var activations: [ToolActivation] = [] // stack
+//  
+//  public var effectiveTool: CanvasTool {
+//    activations.last?.tool ?? baseTool
+//  }
+//  
+//  public var isSpringLoaded: Bool {
+//    !activations.isEmpty
+//  }
+//  
+//  public func setBaseTool(_ tool: CanvasTool) {
+//    baseTool = tool
+//    activations.removeAll()
+//  }
+//  
+//  public func handleKeyDown(_ key: KeyEquivalent, modifiers: Modifiers) {
+//    // 1) Find matching ToolBinding(s)
+//    // 2) Choose highest priority
+//    // 3) If .hold, push activation; if .sticky, setBaseTool; if .toggle, toggle
+//  }
+//  
+//  public func handleKeyUp(_ key: KeyEquivalent) {
+//    // Pop any matching .hold activations activated by this key
+//  }
+//  
+//  public func cancelAllSpringLoads() {
+//    activations.removeAll()
+//  }
+//}
+//
+//public struct ToolActivation: Hashable, Sendable {
+//  public let tool: CanvasTool
+//  public let binding: ToolBinding
+//  public let startedAt: Date
+//}
+
 public struct ToolHandler {
 
   /// Aka the Tool explicitly selected by the user, regardless of
