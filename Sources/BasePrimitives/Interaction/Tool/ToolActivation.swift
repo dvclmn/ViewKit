@@ -12,8 +12,13 @@ public struct ToolActivation: Hashable, Sendable {
   public let binding: ToolBinding
   public let startedAt: Date
   public let key: KeyEquivalent
-  
-  public init(tool: CanvasTool, binding: ToolBinding, startedAt: Date = Date(), key: KeyEquivalent) {
+
+  public init(
+    tool: CanvasTool,
+    binding: ToolBinding,
+    startedAt: Date = Date(),
+    key: KeyEquivalent
+  ) {
     self.tool = tool
     self.binding = binding
     self.startedAt = startedAt
@@ -21,9 +26,14 @@ public struct ToolActivation: Hashable, Sendable {
   }
 }
 
-
 public enum ActivationMode: Sendable {
-  case hold  // spring-load while key is held
-  case sticky  // press to switch until changed
-  case toggle  // press to toggle on/off
+  /// Spring-load while key is held
+  case hold
+
+  /// Press to switch tool; remains active until changed
+  case sticky
+
+  /// Press to toggle on/off
+  case toggle
+
 }
