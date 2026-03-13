@@ -14,8 +14,8 @@ struct ZoomGesture: Gesture {
   @State private var lastMagnification: Double = 1
 
   @Binding var internalZoom: Double
-//  var externalZoom: Binding<Double>?
-  @Binding var externalZoom: Double?
+  var externalZoom: Binding<Double>?
+//  @Binding var externalZoom: Double?
   @Binding var isGesturing: Bool
   let didUpdateEvent: ZoomEventUpdate
 
@@ -46,7 +46,7 @@ struct ZoomGesture: Gesture {
           .clamped(to: unsafeZoomRange)
 
         internalZoom = resolvedZoom
-        externalZoom = resolvedZoom
+        externalZoom?.wrappedValue = resolvedZoom
       }
       .onEnded { value in
         isGesturing = false
@@ -67,7 +67,7 @@ struct ZoomGesture: Gesture {
 
         //        externalZoom?.wrappedValue = Double(resolvedFinal)
         internalZoom = resolvedFinal
-        externalZoom = resolvedFinal
+        externalZoom?.wrappedValue = resolvedFinal
       }
   }
 }

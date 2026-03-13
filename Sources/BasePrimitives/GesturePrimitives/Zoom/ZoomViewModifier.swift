@@ -43,7 +43,7 @@ public struct ZoomModifier: ViewModifier {
       .gesture(
         ZoomGesture(
           internalZoom: $internalZoom,
-          externalZoom: externalZoom ?? .constant(1.0),
+          externalZoom: externalZoom,
           isGesturing: $isGesturing,
           didUpdateEvent: didUpdateEvent
         ),
