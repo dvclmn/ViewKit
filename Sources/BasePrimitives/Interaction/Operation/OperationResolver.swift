@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-public struct OperationState {
-  let tool: CanvasTool
-  let modifiers: Modifiers
-  let key: KeyEquivalent?
-  let operation: CanvasOperation?
-  //  let keyboardKey: KeyboardKey
-}
+//public struct OperationState {
+//  let tool: CanvasTool
+//  let modifiers: Modifiers
+//  let key: KeyEquivalent?
+//  let operation: CanvasOperation?
+//  //  let keyboardKey: KeyboardKey
+//}
 
 //public struct EffectiveCanvasTool {
 //  let tool: CanvasTool
@@ -26,8 +26,7 @@ public struct OperationState {
 //}
 
 public struct OperationResolver {
-  
-  
+
   /// Evaluates current state and returns the single operation the canvas should perform.
   public static func resolve(
     state: CanvasInteractionState,
@@ -44,46 +43,45 @@ public struct OperationResolver {
 
     /// Layer 2: Spring-Loaded Pointer Actions  (e.g. Space → Pan tool)
     if let springLoadedTool {
-//    if let springLoaded = springLoadedTool, state.pointer.drag.isActive {
-      return resolvePointer(
+      //    if let springLoaded = springLoadedTool, state.pointer.drag.isActive {
+      return resolveOperation(
         for: springLoadedTool,
-        state: state.pointer,
+        state: state,
         modifiers: modifiers
       )
     }
 
     /// Layer 3: Standard Tool Pointer Actions (drag/tap)
     if state.pointer.drag.isActive || state.pointer.tap.isActive {
-      return resolvePointer(
+      return resolveOperation(
         for: activeTool,
-        state: state.pointer,
+        state: state,
         modifiers: modifiers
       )
     }
 
     /// Layer 4: Passive Hover
     if state.pointer.hover.isActive {
-      return .hovering
+      return .hovering()
     }
 
-    return .idle
+    return .idle()
   }
 
-  private static func resolvePointer(
-    for tool: CanvasTool,
-    state: PointerState,
-    modifiers: Modifiers
-  ) -> CanvasOperation {
+  //  private static func resolvePointer(
+  //    for tool: CanvasTool,
+  //    state: PointerState,
+  //    modifiers: Modifiers
+  //  ) -> CanvasOperation {
+  //
+  //    switch tool.kind {
+  //      case .pan: .panning(.pointerDrag, phase: state.drag.phase)
+  //      case .select: .selecting(CellSelectionMode(fromModifiers: modifiers), phase: state.drag.phase)
+  //      case .text: .placingText(phase: state.drag.phase)
+  //      default: .idle
+  //    }
+  //  }
 
-    switch tool.kind {
-      case .pan: .panning(.pointerDrag, phase: state.drag.phase)
-      case .select: .selecting(CellSelectionMode(fromModifiers: modifiers), phase: state.drag.phase)
-      case .text: .placingText(phase: state.drag.phase)
-      default: .idle
-    }
-  }
-  
-  
   /// Gesture-driven operations take priority regardless of tool selection.
   static func resolveGesturePriority(
     from state: CanvasInteractionState
@@ -97,19 +95,19 @@ public struct OperationResolver {
     }
     return nil
   }
-  
+
   /// Resolves an operation based on the currently effective tool and pointer/modifier state.
   static func resolveOperation(
     for tool: CanvasTool,
-    isSpringLoaded: Bool,
+    //    isSpringLoaded: Bool,
     state: CanvasInteractionState,
     modifiers: Modifiers
   ) -> CanvasOperation {
-    
+
     let pointer = state.pointer
-    
+
     switch tool.kind {
-        
+
       case .select:
         if pointer.drag.isActive {
           return .selecting(
@@ -121,20 +119,20 @@ public struct OperationResolver {
         } else {
           return .idle()
         }
-        
+
       case .pan:
         guard pointer.drag.isActive else { return .idle() }
         return .panning(.pointerDrag, phase: pointer.drag.phase)
-        
+
       case .zoom:
         /// Gesture-based zoom is handled by resolveGesturePriority.
         /// Pointer-based zoom (click-drag) is not yet implemented.
         return .idle()
-        
-        //      case .text:
-        //        guard pointer.drag.isActive else { return .idle() }
-        //        return .placingText(phase: pointer.drag.phase)
-        
+
+      //      case .text:
+      //        guard pointer.drag.isActive else { return .idle() }
+      //        return .placingText(phase: pointer.drag.phase)
+
       default:
         return .idle()
     }
