@@ -5,24 +5,20 @@
 //  Created by Dave Coleman on 24/6/2025.
 //
 
-
-//import CoreTools
 import SwiftUI
 
 public typealias ZoomEventUpdate = (ZoomGestureEvent) -> Double?
 public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
 
 public struct ZoomModifier: ViewModifier {
-  @Environment(\.zoomRange) private var zoomRange
+  @Environment(\.unsafeZoomRange) private var unsafeZoomRange
+  //  @Environment(\.zoomRange) private var zoomRange
   @Environment(\.modifierKeys) private var modifierKeys
 
-  /// source of truth during gesture
+  /// Source of truth during gesture
   @State private var internalZoom: Double
 
-  /// per-gesture accumulator
-  @State private var lastMagnification: Double = 1
-
-  /// helps with external sync
+  /// Helps with external sync
   @State private var isGesturing: Bool = false
 
   private let externalZoom: Binding<Double>?
@@ -43,76 +39,32 @@ public struct ZoomModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-      .simultaneousGesture(zoomGesture, isEnabled: isEnabled)
-      .onChange(of: modifierKeys) {
-        /// If modifier keys change mid-pinch, don't let the next delta go bonkers.
-        lastMagnification = 1
-      }
+      /// Was previously simultaneous gesture
+      .gesture(
+        ZoomGesture(
+          internalZoom: $internalZoom,
+          externalZoom: externalZoom ?? .constant(1.0),
+          isGesturing: $isGesturing,
+          didUpdateEvent: didUpdateEvent
+        ),
+        isEnabled: isEnabled
+      )
+//      .gesture(zoomGesture, isEnabled: isEnabled)
+      //      .onChange(of: modifierKeys) {
+      //        /// If modifier keys change mid-pinch, don't let the next delta go bonkers.
+      //        lastMagnification = 1
+      //      }
       .onChange(of: externalZoom?.wrappedValue) { _, newValue in
         /// External source changed (e.g. reset button / slider / programmatic change).
         /// Only adopt it when we are NOT currently gesturing.
         guard !isGesturing, let newValue else { return }
-        internalZoom = Double(newValue).clamped(to: rangeForZoom)
+        internalZoom = Double(newValue).clamped(to: unsafeZoomRange)
       }
   }
 }
 
 extension ZoomModifier {
-  private var rangeForZoom: ClosedRange<Double> {
-    guard let zoomRange else {
-      assertionFailure("Zoom range is missing from environment for ZoomModifier")
-      return 0.2...10
-    }
-    return zoomRange
-  }
-  private var zoomGesture: some Gesture {
-    MagnifyGesture()
-      .onChanged { value in
-        let isGestureStart = !isGesturing
-        isGesturing = true
 
-        /// value.magnification is absolute since gesture start.
-        /// Convert to incremental delta:
-        let delta = value.magnification / lastMagnification
-        lastMagnification = value.magnification
-
-        let previousZoom = internalZoom
-        let newZoom = (previousZoom * delta).clamped(to: rangeForZoom)
-        let event = ZoomGestureEvent(
-          phase: .changed,
-          previousZoom: previousZoom,
-          proposedZoom: newZoom,
-          magnification: value.magnification,
-          magnificationDelta: delta,
-          isGestureStart: isGestureStart
-        )
-        let resolvedZoom = (didUpdateEvent(event) ?? newZoom)
-          .clamped(to: rangeForZoom)
-
-        internalZoom = resolvedZoom
-        externalZoom?.wrappedValue = Double(resolvedZoom)
-      }
-      .onEnded { value in
-        isGesturing = false
-        lastMagnification = 1
-
-        let previousZoom = internalZoom
-        let final = previousZoom.clamped(to: rangeForZoom)
-        let event = ZoomGestureEvent(
-          phase: .ended,
-          previousZoom: previousZoom,
-          proposedZoom: final,
-          magnification: value.magnification,
-          magnificationDelta: 1,
-          isGestureStart: false
-        )
-        let resolvedFinal = (didUpdateEvent(event) ?? final)
-          .clamped(to: rangeForZoom)
-
-        externalZoom?.wrappedValue = Double(resolvedFinal)
-        internalZoom = resolvedFinal
-      }
-  }
 }
 
 extension View {

@@ -24,9 +24,9 @@ extension EnvironmentValues {
   @Entry public var canvasSize: Size<CanvasSpace>?
   @Entry public var canvasFrameInViewport: CGRect?
   @Entry public var canvasBackground: Color = Color(white: 0.04)
-  
+
   @Entry public var canvasInteractionPolicy: CanvasPolicy = .standard
-  
+
   public var canvasGeometry: CanvasGeometry? {
     guard let viewportRect, let canvasSize else { return nil }
     return CanvasGeometry(
@@ -38,6 +38,14 @@ extension EnvironmentValues {
 
   @Entry public var zoomLevel: Double = 1.0
   @Entry public var zoomRange: ClosedRange<Double>?
+
+  public var unsafeZoomRange: ClosedRange<Double> {
+    guard let zoomRange else {
+      assertionFailure("⚠️ Zoom range is missing from environment. Please ensure this is set high enough up the View hierarchy. Falling back to default range.")
+      return 0.2...10
+    }
+    return zoomRange
+  }
 
   @Entry public var panOffset: CGSize = .zero
   @Entry public var rotation: Angle = .zero
