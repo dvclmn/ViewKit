@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import EnumMacros
 
 public struct KeyBinding: Hashable, Sendable {
   public let key: KeyEquivalent
@@ -20,10 +21,13 @@ public struct KeyBinding: Hashable, Sendable {
   }
 }
 
+@MetaEnum
 public enum BindingScope: Sendable, Hashable {
   /// Applies regardless of current tool
   case global
-  case toolSpecific(CanvasToolKind)
+  case tool(CanvasToolKind)
+  
+//  static func makeFromMeta(kind: CanvasToolKind, meta: BindingScope.Meta)
 }
 
 /// ```

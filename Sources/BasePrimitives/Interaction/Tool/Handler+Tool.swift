@@ -62,13 +62,9 @@ extension ToolController {
 
     /// Find best binding for this key/modifier pair
     guard
-      let best = matchingBindings(
-        for: key,
-        //      modifiers: modifiers
-      ).max(by: { $0.priority < $1.priority })
-    else {
-      return
-    }
+      let best = matchingBindings(for: key)
+        .max(by: { $0.priority < $1.priority })
+    else { return }
 
     apply(binding: best, onKeyDown: key)
   }
@@ -106,21 +102,22 @@ extension ToolController {
     binding: ToolBinding,
     onKeyDown key: KeyEquivalent
   ) {
+    let targetTool = tool(for: binding.target)
     switch binding.mode {
       case .hold:
         /// Push a spring activation
-        let targetTool = tool(for: binding.target)
+//        let targetTool = tool(for: binding.target)
         let act = ToolActivation(tool: targetTool, binding: binding, key: key)
         activations.append(act)
 
       case .sticky:
-        let targetTool = tool(for: binding.target)
+//        let targetTool = tool(for: binding.target)
         setBaseTool(targetTool)
 
       case .toggle:
-        let targetTool = tool(for: binding.target)
+//        let targetTool = tool(for: binding.target)
         if effectiveTool.kind == targetTool.kind {
-          // Toggle off -> return to base (no-op if already base)
+          /// Toggle off -> return to base (no-op if already base)
           activations.removeAll()
         } else {
           setBaseTool(targetTool)
@@ -133,16 +130,16 @@ extension ToolController {
     activations.removeAll { $0.key == key && $0.binding.mode == .hold }
   }
 
-  private func tool(for kind: CanvasToolKind) -> CanvasTool {
-    switch kind {
-      case .select: return .select
-      case .pan: return .pan
-      case .zoom: return .zoom
-      default:
-        /// Fallback: keep current base tool if kind is unknown in this module
-        return baseTool
-    }
-  }
+//  private func tool(for kind: CanvasToolKind) -> CanvasTool {
+//    switch kind {
+//      case .select: return .select
+//      case .pan: return .pan
+//      case .zoom: return .zoom
+//      default:
+//        /// Fallback: keep current base tool if kind is unknown in this module
+//        return baseTool
+//    }
+//  }
 }
 
 //public struct ToolHandler {

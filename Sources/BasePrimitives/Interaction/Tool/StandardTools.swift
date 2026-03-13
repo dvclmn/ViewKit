@@ -6,6 +6,7 @@
 //
 
 extension CanvasTool {
+  public static let defaultTools: [CanvasTool] = [.select, .pan, .zoom]
 //public enum DefaultTools {
   public static let select = CanvasTool(
     kind: .select,
