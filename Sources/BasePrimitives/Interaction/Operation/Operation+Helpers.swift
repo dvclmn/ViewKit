@@ -31,6 +31,7 @@ extension CanvasOperation {
     let pointer = state.pointer
 
     switch tool.kind {
+        
       case .select:
         if pointer.drag.isActive {
           return .selecting(SelectionMode(fromModifiers: modifiers), phase: pointer.drag.phase)

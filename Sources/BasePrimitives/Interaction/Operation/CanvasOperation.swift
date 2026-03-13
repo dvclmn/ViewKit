@@ -4,6 +4,26 @@
 //
 //  Created by Dave Coleman on 9/3/2026.
 //
+extension CanvasOperation {
+  public struct Kind: RawRepresentable, Hashable, Sendable {
+    public let rawValue: String
+    public init(rawValue: String) { self.rawValue = rawValue }
+  }
+}
+
+extension CanvasOperation.Kind {
+  public static let hovering = Self(rawValue: "hovering")
+  public static let selecting = Self(rawValue: "selecting")
+  public static let panning = Self(rawValue: "panning")
+  public static let zooming = Self(rawValue: "zooming")
+}
+
+public struct CanvasOperation: Identifiable {
+  public var id: CanvasOperation.Kind { kind }
+  let kind: CanvasOperation.Kind
+  let name: String
+  //  let kind: CanvasToolKind
+}
 
 /// The semantic operation currently being performed on the canvas.
 ///
@@ -14,7 +34,7 @@
 /// 2. Spring-loaded pointer actions (e.g. Space → Pan)
 /// 3. Standard tool pointer actions
 /// 4. Passive hover
-public enum CanvasOperation: Equatable, Sendable {
+public enum CanvasOperationLegacy: Equatable, Sendable {
   case idle
   case hovering
   case panning(TransformSource, phase: InteractionPhase)
