@@ -26,7 +26,8 @@ public struct OperationState {
 //}
 
 public struct OperationResolver {
-
+  
+  
   /// Evaluates current state and returns the single operation the canvas should perform.
   public static func resolve(
     state: CanvasInteractionState,
@@ -37,7 +38,7 @@ public struct OperationResolver {
   ) -> CanvasOperation {
 
     /// Layer 1: Global Hardware Gestures (two-finger trackpad pan/zoom)
-    if let gestureOperation = resolveGesture(from: state.transform) {
+    if let gestureOperation = resolveGesturePriority(from: state) {
       return gestureOperation
     }
 
@@ -68,19 +69,6 @@ public struct OperationResolver {
     return .idle
   }
 
-  // MARK: - Private
-
-  private static func resolveGesture(from transform: TransformState) -> CanvasOperation? {
-    /// Zoom takes priority over pan when simultaneous
-    if transform.zoom.isActive {
-      return .zooming(.gesture, phase: transform.zoom.phase)
-    }
-    if transform.pan.isActive {
-      return .panning(.gesture, phase: transform.pan.phase)
-    }
-    return nil
-  }
-
   private static func resolvePointer(
     for tool: CanvasTool,
     state: PointerState,
@@ -89,9 +77,67 @@ public struct OperationResolver {
 
     switch tool.kind {
       case .pan: .panning(.pointerDrag, phase: state.drag.phase)
-      case .select: .selecting(SelectionMode(fromModifiers: modifiers), phase: state.drag.phase)
+      case .select: .selecting(CellSelectionMode(fromModifiers: modifiers), phase: state.drag.phase)
       case .text: .placingText(phase: state.drag.phase)
       default: .idle
     }
   }
+  
+  
+  /// Gesture-driven operations take priority regardless of tool selection.
+  static func resolveGesturePriority(
+    from state: CanvasInteractionState
+  ) -> CanvasOperation? {
+    let transform = state.transform
+    if transform.zoom.isActive {
+      return .zooming(.gesture, phase: transform.zoom.phase)
+    }
+    if transform.pan.isActive {
+      return .panning(.gesture, phase: transform.pan.phase)
+    }
+    return nil
+  }
+  
+  /// Resolves an operation based on the currently effective tool and pointer/modifier state.
+  static func resolveOperation(
+    for tool: CanvasTool,
+    isSpringLoaded: Bool,
+    state: CanvasInteractionState,
+    modifiers: Modifiers
+  ) -> CanvasOperation {
+    
+    let pointer = state.pointer
+    
+    switch tool.kind {
+        
+      case .select:
+        if pointer.drag.isActive {
+          return .selecting(
+            CellSelectionMode(fromModifiers: modifiers),
+            phase: pointer.drag.phase
+          )
+        } else if pointer.hover.isActive {
+          return .hovering()
+        } else {
+          return .idle()
+        }
+        
+      case .pan:
+        guard pointer.drag.isActive else { return .idle() }
+        return .panning(.pointerDrag, phase: pointer.drag.phase)
+        
+      case .zoom:
+        /// Gesture-based zoom is handled by resolveGesturePriority.
+        /// Pointer-based zoom (click-drag) is not yet implemented.
+        return .idle()
+        
+        //      case .text:
+        //        guard pointer.drag.isActive else { return .idle() }
+        //        return .placingText(phase: pointer.drag.phase)
+        
+      default:
+        return .idle()
+    }
+  }
+
 }

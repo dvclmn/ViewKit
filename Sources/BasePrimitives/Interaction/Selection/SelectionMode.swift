@@ -1,5 +1,5 @@
 //
-//  Model+SelectionMode.swift
+//  Model+CellSelectionMode.swift
 //  DrawString
 //
 //  Created by Dave Coleman on 11/1/2026.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SelectionMode: Sendable, Equatable {
+public enum CellSelectionMode: Sendable, Equatable {
   /// Replace a Cell selection with a new one
   case new
 
@@ -19,7 +19,7 @@ public enum SelectionMode: Sendable, Equatable {
 
 }
 
-extension SelectionMode {
+extension CellSelectionMode {
   public var name: String {
     switch self {
       case .new: "New"
@@ -29,11 +29,11 @@ extension SelectionMode {
   }
 }
 
-extension SelectionMode {
-  var modifiers: Modifiers { Self.modifiers(for: self) }
-  init(fromModifiers modifiers: Modifiers) { self = Self.mode(for: modifiers) }
+extension CellSelectionMode {
+  var modifiers: Modifiers { CellSelectionMode.modifiers(for: self) }
+  init(fromModifiers modifiers: Modifiers) { self = CellSelectionMode.mode(for: modifiers) }
 
-  static func modifiers(for mode: SelectionMode) -> Modifiers {
+  static func modifiers(for mode: CellSelectionMode) -> Modifiers {
     switch mode {
       case .new: []
       case .add: [.command]
@@ -41,7 +41,7 @@ extension SelectionMode {
     }
   }
 
-  static func mode(for modifiers: Modifiers) -> SelectionMode {
+  static func mode(for modifiers: Modifiers) -> CellSelectionMode {
     switch modifiers {
       case [.command]: .add
       case [.option]: .subtract
