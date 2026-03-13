@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import BasePrimitives
-
 public struct TintedMaterialModifier: ViewModifier {
   @Environment(\.backgroundMaterial) private var backgroundMaterial
   @Environment(\.contentModeOverride) private var contentModeOverride

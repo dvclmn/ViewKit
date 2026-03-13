@@ -6,7 +6,6 @@
 //
 
 //import CoreTools
-import BasePrimitives
 import SwiftUI
 
 struct QuickBackgroundModifier<S: Shape>: ViewModifier {
