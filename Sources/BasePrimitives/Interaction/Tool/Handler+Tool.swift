@@ -18,44 +18,104 @@ import SwiftUI
 /// }
 /// ```
 
-//@Observable
-//public final class ToolController: Sendable {
-//  private var baseTool: CanvasTool = .select
-//  private var activations: [ToolActivation] = [] // stack
-//  
-//  public var effectiveTool: CanvasTool {
-//    activations.last?.tool ?? baseTool
-//  }
-//  
-//  public var isSpringLoaded: Bool {
-//    !activations.isEmpty
-//  }
-//  
-//  public func setBaseTool(_ tool: CanvasTool) {
-//    baseTool = tool
-//    activations.removeAll()
-//  }
-//  
-//  public func handleKeyDown(_ key: KeyEquivalent, modifiers: Modifiers) {
-//    // 1) Find matching ToolBinding(s)
-//    // 2) Choose highest priority
-//    // 3) If .hold, push activation; if .sticky, setBaseTool; if .toggle, toggle
-//  }
-//  
-//  public func handleKeyUp(_ key: KeyEquivalent) {
-//    // Pop any matching .hold activations activated by this key
-//  }
-//  
-//  public func cancelAllSpringLoads() {
-//    activations.removeAll()
-//  }
-//}
-//
-//public struct ToolActivation: Hashable, Sendable {
-//  public let tool: CanvasTool
-//  public let binding: ToolBinding
-//  public let startedAt: Date
-//}
+@Observable
+public final class ToolController {
+  private(set) public var baseTool: CanvasTool
+  private(set) public var activations: [ToolActivation] = []
+  public private(set) var heldKeys: Set<KeyEquivalent> = []
+  public private(set) var bindings: [ToolBinding]
+
+  public init(baseTool: CanvasTool = .select, bindings: [ToolBinding] = ToolBinding.defaultBindings()) {
+    self.baseTool = baseTool
+    self.bindings = bindings
+  }
+
+  public var effectiveTool: CanvasTool {
+    activations.last?.tool ?? baseTool
+  }
+
+  public var isSpringLoaded: Bool { !activations.isEmpty }
+
+  public func setBaseTool(_ tool: CanvasTool) {
+    baseTool = tool
+    activations.removeAll()
+  }
+
+  public func setBindings(_ bindings: [ToolBinding]) {
+    self.bindings = bindings
+  }
+
+  public func handleKeyDown(_ key: KeyEquivalent, modifiers: Modifiers) {
+    // Track held key
+    heldKeys.insert(key)
+
+    // Find best binding for this key/modifier pair
+    guard let best = matchingBindings(for: key, modifiers: modifiers).max(by: { $0.priority < $1.priority })
+    else {
+      return
+    }
+
+    apply(binding: best, onKeyDown: key)
+  }
+
+  public func handleKeyUp(_ key: KeyEquivalent) {
+    // Stop tracking key
+    heldKeys.remove(key)
+    // Remove any hold activations created by this key
+    removeActivations(forKey: key)
+  }
+
+  public func cancelAllSpringLoads() {
+    activations.removeAll()
+  }
+
+  // MARK: - Helpers
+
+  private func matchingBindings(for key: KeyEquivalent, modifiers: Modifiers) -> [ToolBinding] {
+    bindings.filter { b in
+      b.binding.key == key && b.binding.requiredModifiers.isSubset(of: modifiers)
+    }
+  }
+
+  private func apply(binding: ToolBinding, onKeyDown key: KeyEquivalent) {
+    switch binding.mode {
+      case .hold:
+        // Push a spring activation
+        let targetTool = tool(for: binding.target)
+        let act = ToolActivation(tool: targetTool, binding: binding, key: key)
+        activations.append(act)
+
+      case .sticky:
+        let targetTool = tool(for: binding.target)
+        setBaseTool(targetTool)
+
+      case .toggle:
+        let targetTool = tool(for: binding.target)
+        if effectiveTool.kind == targetTool.kind {
+          // Toggle off -> return to base (no-op if already base)
+          activations.removeAll()
+        } else {
+          setBaseTool(targetTool)
+        }
+    }
+  }
+
+  private func removeActivations(forKey key: KeyEquivalent) {
+    // Remove all activations created by this key (common if key repeats)
+    activations.removeAll { $0.key == key && $0.binding.mode == .hold }
+  }
+
+  private func tool(for kind: CanvasToolKind) -> CanvasTool {
+    switch kind {
+      case .select: return .select
+      case .pan: return .pan
+      case .zoom: return .zoom
+      default:
+        // Fallback: keep current base tool if kind is unknown in this module
+        return baseTool
+    }
+  }
+}
 
 public struct ToolHandler {
 
