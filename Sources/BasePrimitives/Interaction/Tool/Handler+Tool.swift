@@ -18,11 +18,13 @@ import SwiftUI
 /// }
 /// ```
 
-@Observable
-public final class ToolController {
+//@Observable
+public struct ToolController {
+  //public final class ToolController {
   private(set) public var baseTool: CanvasTool
   private(set) public var activations: [ToolActivation] = []
   public private(set) var heldKeys: Set<KeyEquivalent> = []
+  public private(set) var modifiers: Modifiers = []
   public private(set) var bindings: [ToolBinding]
 
   public init(baseTool: CanvasTool = .select, bindings: [ToolBinding] = ToolBinding.defaultBindings()) {
@@ -35,21 +37,24 @@ public final class ToolController {
   }
 
   public var isSpringLoaded: Bool { !activations.isEmpty }
+}
 
-  public func setBaseTool(_ tool: CanvasTool) {
+extension ToolController {
+
+  public mutating func setBaseTool(_ tool: CanvasTool) {
     baseTool = tool
     activations.removeAll()
   }
 
-  public func setBindings(_ bindings: [ToolBinding]) {
+  public mutating func setBindings(_ bindings: [ToolBinding]) {
     self.bindings = bindings
   }
 
-  public func handleKeyDown(_ key: KeyEquivalent, modifiers: Modifiers) {
-    // Track held key
+  public mutating func handleKeyDown(_ key: KeyEquivalent, modifiers: Modifiers) {
+    /// Track held key
     heldKeys.insert(key)
 
-    // Find best binding for this key/modifier pair
+    /// Find best binding for this key/modifier pair
     guard let best = matchingBindings(for: key, modifiers: modifiers).max(by: { $0.priority < $1.priority })
     else {
       return
@@ -58,18 +63,21 @@ public final class ToolController {
     apply(binding: best, onKeyDown: key)
   }
 
-  public func handleKeyUp(_ key: KeyEquivalent) {
-    // Stop tracking key
+  public mutating func handleKeyUp(_ key: KeyEquivalent) {
+    /// Stop tracking key
     heldKeys.remove(key)
-    // Remove any hold activations created by this key
+    /// Remove any hold activations created by this key
     removeActivations(forKey: key)
   }
 
-  public func cancelAllSpringLoads() {
+  public mutating func cancelAllSpringLoads() {
     activations.removeAll()
   }
 
-  // MARK: - Helpers
+}
+
+// MARK: - Helpers
+extension ToolController {
 
   private func matchingBindings(
     for key: KeyEquivalent,
@@ -80,7 +88,7 @@ public final class ToolController {
     }
   }
 
-  private func apply(
+  private mutating func apply(
     binding: ToolBinding,
     onKeyDown key: KeyEquivalent
   ) {
@@ -106,8 +114,8 @@ public final class ToolController {
     }
   }
 
-  private func removeActivations(forKey key: KeyEquivalent) {
-    // Remove all activations created by this key (common if key repeats)
+  private mutating func removeActivations(forKey key: KeyEquivalent) {
+    /// Remove all activations created by this key (common if key repeats)
     activations.removeAll { $0.key == key && $0.binding.mode == .hold }
   }
 
@@ -117,7 +125,7 @@ public final class ToolController {
       case .pan: return .pan
       case .zoom: return .zoom
       default:
-        // Fallback: keep current base tool if kind is unknown in this module
+        /// Fallback: keep current base tool if kind is unknown in this module
         return baseTool
     }
   }
