@@ -27,19 +27,22 @@ public struct ToolController {
   public private(set) var modifiers: Modifiers = []
   public private(set) var bindings: [ToolBinding]
 
-  public init(baseTool: CanvasTool = .select, bindings: [ToolBinding] = ToolBinding.defaultBindings()) {
+  public init(
+    baseTool: CanvasTool = .select,
+    bindings: [ToolBinding] = ToolBinding.defaultBindings()
+  ) {
     self.baseTool = baseTool
     self.bindings = bindings
   }
+}
+
+extension ToolController {
 
   public var effectiveTool: CanvasTool {
     activations.last?.tool ?? baseTool
   }
 
   public var isSpringLoaded: Bool { !activations.isEmpty }
-}
-
-extension ToolController {
 
   public mutating func setBaseTool(_ tool: CanvasTool) {
     baseTool = tool
@@ -50,12 +53,19 @@ extension ToolController {
     self.bindings = bindings
   }
 
-  public mutating func handleKeyDown(_ key: KeyEquivalent, modifiers: Modifiers) {
+  public mutating func handleKeyDown(
+    _ key: KeyEquivalent,
+    //    modifiers: Modifiers
+  ) {
     /// Track held key
     heldKeys.insert(key)
 
     /// Find best binding for this key/modifier pair
-    guard let best = matchingBindings(for: key, modifiers: modifiers).max(by: { $0.priority < $1.priority })
+    guard
+      let best = matchingBindings(
+        for: key,
+        //      modifiers: modifiers
+      ).max(by: { $0.priority < $1.priority })
     else {
       return
     }
@@ -74,6 +84,10 @@ extension ToolController {
     activations.removeAll()
   }
 
+  public mutating func updateModifiers(_ modifiers: Modifiers) {
+    self.modifiers = modifiers
+  }
+
 }
 
 // MARK: - Helpers
@@ -81,7 +95,7 @@ extension ToolController {
 
   private func matchingBindings(
     for key: KeyEquivalent,
-    modifiers: Modifiers
+    //    modifiers: Modifiers
   ) -> [ToolBinding] {
     bindings.filter { b in
       b.binding.key == key && b.binding.requiredModifiers.isSubset(of: modifiers)
@@ -94,7 +108,7 @@ extension ToolController {
   ) {
     switch binding.mode {
       case .hold:
-        // Push a spring activation
+        /// Push a spring activation
         let targetTool = tool(for: binding.target)
         let act = ToolActivation(tool: targetTool, binding: binding, key: key)
         activations.append(act)
