@@ -25,7 +25,7 @@ extension CanvasPolicy: CustomStringConvertible {
       - hoverEnabled: \(hoverEnabled)
     """
   }
-  
+
   public var descriptionSingleLine: String {
     """
     Modifiers Enabled [pan: \(panGestureEnabled), zoom: \(zoomGestureEnabled), tapDrag: \(dragBehaviour.name), hover: \(hoverEnabled)]
@@ -35,10 +35,41 @@ extension CanvasPolicy: CustomStringConvertible {
 }
 
 extension CanvasPolicy {
-  /// Derives the appropriate input policy from the current canvas operation.
-  public init(fromOperation operation: CanvasOperation) {
-    switch operation {
 
+  /// Derives the appropriate input policy from the current canvas operation.
+  ///
+  /// Extending for domain-specific operations:
+  /// If a domain introduces new operation kinds (e.g., placing​Text, lasso):
+  /// Add a `kind` constant:
+  /// ```
+  /// extension CanvasOperation.Kind {
+  ///   public static let placingText = Self(rawValue: "placingText")
+  /// }
+  /// ```
+  ///
+  /// Optionally add a factory:
+  /// ```
+  /// extension CanvasOperation {
+  ///   public static func placingText(
+  ///     phase: InteractionPhase
+  ///   ) -> CanvasOperation {
+  ///     CanvasOperation(kind: .placingText, phase: phase)
+  ///   }
+  /// }
+  /// ```
+  ///
+  /// Extend the policy switch:
+  /// ```
+  /// case .placingText:
+  ///   self = CanvasPolicy(
+  ///     panGestureEnabled: false,
+  ///     zoomGestureEnabled: false,
+  ///     dragBehaviour: .marquee,
+  ///     hoverEnabled: false
+  ///   )
+  /// ```
+  public init(fromOperation operation: CanvasOperation) {
+    switch operation.kind {
       case .idle, .hovering:
         self = .standard
 
@@ -68,13 +99,9 @@ extension CanvasPolicy {
           hoverEnabled: false
         )
 
-      case .placingText:
-        self = CanvasPolicy(
-          panGestureEnabled: false,
-          zoomGestureEnabled: false,
-          dragBehaviour: .marquee,
-          hoverEnabled: false
-        )
+      default:
+        // Fallback for domain-specific kinds
+        self = .standard
     }
   }
 }

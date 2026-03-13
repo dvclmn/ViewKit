@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+/// Maps a key input to a tool activation with a given mode and priority.
+///
+/// Bindings are the single source of truth for "which key activates which tool".
+/// `CanvasTool` intentionally does *not* store shortcut keys — that's this type's job.
 public struct ToolBinding: Hashable, Sendable {
   public let scope: BindingScope
   public let binding: KeyBinding
@@ -31,10 +35,10 @@ public struct ToolBinding: Hashable, Sendable {
 
 extension ToolBinding {
 
+  /// Convenience: create a tool-scoped sticky binding (press to switch).
   public static func makeToolBinding(
     for kind: CanvasToolKind,
     key: KeyEquivalent,
-    //    scope: BindingScope.Meta,
     mode: ActivationMode = .sticky,
     priority: Int = 10
   ) -> Self {
@@ -47,6 +51,7 @@ extension ToolBinding {
     )
   }
 
+  /// Convenience: create a global hold binding (spring-load while held).
   public static func makeGlobalBinding(
     for kind: CanvasToolKind,
     key: KeyEquivalent,
@@ -64,7 +69,7 @@ extension ToolBinding {
 
   /// A minimal set of sensible defaults:
   /// - Sticky shortcuts for Select (V), Pan (H), Zoom (Z)
-  /// - Global hold Space => Pan with a higher priority
+  /// - Global hold Space → Pan with higher priority
   public static func defaultBindings() -> [ToolBinding] {
     [
       makeToolBinding(for: .select, key: "v"),
@@ -72,40 +77,5 @@ extension ToolBinding {
       makeToolBinding(for: .zoom, key: "z"),
       makeGlobalBinding(for: .pan, key: .space),
     ]
-    //    var bindings: [ToolBinding] = []
-    //
-    //    bindings.append(
-    //      ToolBinding(
-    //        scope: .tool(.select),
-    //        binding: KeyBinding(key: "v"),
-    //        target: .select,
-    //        mode: .sticky,
-    //        priority: 10))
-    //
-    //    bindings.append(
-    //      ToolBinding(
-    //        scope: .tool(.pan),
-    //        binding: KeyBinding(key: "h"),
-    //        target: .pan,
-    //        mode: .sticky,
-    //        priority: 10))
-    //
-    //    bindings.append(
-    //      ToolBinding(
-    //        scope: .tool(.zoom),
-    //        binding: KeyBinding(key: "z"),
-    //        target: .zoom,
-    //        mode: .sticky,
-    //        priority: 10))
-    //
-    //    /// Global Space -> Pan (hold), higher priority so it wins over others when held
-    //    bindings.append(
-    //      ToolBinding(
-    //        scope: .global,
-    //        binding: KeyBinding(key: .space),
-    //        target: .pan,
-    //        mode: .hold,
-    //        priority: 100))
-    //    return bindings
   }
 }

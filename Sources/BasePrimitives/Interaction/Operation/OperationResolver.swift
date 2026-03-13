@@ -7,9 +7,22 @@
 
 import SwiftUI
 
+/// Computes the single `CanvasOperation` from the current interaction state,
+/// active tool, and modifier keys.
+///
+/// ## Priority layers
+/// 1. Hardware gestures (two-finger trackpad pan/zoom) — always win
+/// 2. Spring-loaded pointer actions (e.g. Space → Pan tool)
+/// 3. Standard tool pointer actions (drag/tap with the selected tool)
+/// 4. Passive hover
+///
+/// ## Domain-specific tools
+///
+/// The `default` case returns `.idle()`. To handle custom tool kinds,
+/// override resolution in your domain by calling `resolve()` and
+/// post-processing the result, or by extending this type.
 public struct OperationResolver {
 
-  /// Evaluates current state and returns the single operation the canvas should perform.
   public static func resolve(
     state: CanvasInteractionState,
     activeTool: CanvasTool,
@@ -17,14 +30,13 @@ public struct OperationResolver {
     modifiers: Modifiers
   ) -> CanvasOperation {
 
-    /// Layer 1: Global Hardware Gestures (two-finger trackpad pan/zoom)
+    // Layer 1: Global Hardware Gestures
     if let gestureOperation = resolveGesturePriority(from: state) {
       return gestureOperation
     }
 
-    /// Layer 2: Spring-Loaded Pointer Actions  (e.g. Space → Pan tool)
+    // Layer 2: Spring-Loaded Pointer Actions
     if let springLoadedTool {
-      //    if let springLoaded = springLoadedTool, state.pointer.drag.isActive {
       return resolveOperation(
         for: springLoadedTool,
         state: state,
@@ -32,7 +44,7 @@ public struct OperationResolver {
       )
     }
 
-    /// Layer 3: Standard Tool Pointer Actions (drag/tap)
+    // Layer 3: Standard Tool Pointer Actions
     if state.pointer.drag.isActive || state.pointer.tap.isActive {
       return resolveOperation(
         for: activeTool,
@@ -41,7 +53,7 @@ public struct OperationResolver {
       )
     }
 
-    /// Layer 4: Passive Hover
+    // Layer 4: Passive Hover
     if state.pointer.hover.isActive {
       return .hovering()
     }
@@ -76,10 +88,7 @@ public struct OperationResolver {
 
       case .select:
         if pointer.drag.isActive {
-          return .selecting(
-            CellSelectionMode(fromModifiers: modifiers),
-            phase: pointer.drag.phase
-          )
+          return .selecting(phase: pointer.drag.phase)
         } else if pointer.hover.isActive {
           return .hovering()
         } else {
@@ -91,17 +100,12 @@ public struct OperationResolver {
         return .panning(.pointerDrag, phase: pointer.drag.phase)
 
       case .zoom:
-        /// Gesture-based zoom is handled by resolveGesturePriority.
-        /// Pointer-based zoom (click-drag) is not yet implemented.
+        // Gesture-based zoom is handled by resolveGesturePriority.
+        // Pointer-based zoom (click-drag) is not yet implemented.
         return .idle()
-
-      //      case .text:
-      //        guard pointer.drag.isActive else { return .idle() }
-      //        return .placingText(phase: pointer.drag.phase)
 
       default:
         return .idle()
     }
   }
-
 }

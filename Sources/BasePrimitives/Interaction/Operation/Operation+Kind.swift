@@ -1,6 +1,6 @@
 //
 //  Operation+Kind.swift
-//  DrawString
+//  BaseHelpers
 //
 //  Created by Dave Coleman on 11/3/2026.
 //
@@ -8,6 +8,14 @@
 import Foundation
 
 extension CanvasOperation {
+  /// An extensible operation identity — same pattern as `CanvasToolKind`.
+  ///
+  /// Extend in your domain:
+  /// ```swift
+  /// extension CanvasOperation.Kind {
+  ///   public static let placingText = Self(rawValue: "placingText")
+  /// }
+  /// ```
   public struct Kind: RawRepresentable, Hashable, Sendable {
     public let rawValue: String
     public init(rawValue: String) { self.rawValue = rawValue }
@@ -23,27 +31,5 @@ extension CanvasOperation.Kind {
 }
 
 extension CanvasOperation.Kind {
-  var name: String { rawValue.capitalized }
+  public var name: String { rawValue.capitalized }
 }
-
-
-//extension CanvasOperation {
-//  enum Kind: Equatable, Sendable {
-//    case selecting(SelectionMode)
-//    case panning(TransformSource)
-//    case zooming(TransformSource)
-//    case placingText
-//  }
-//}
-//
-//extension CanvasOperation.Kind {
-//  var name: String {
-//    switch self {
-//      case .selecting(let mode): "Selecting (\(mode.name))"
-//      case .panning(let source): "Panning via " + source.name
-//      case .zooming(let source): "Zooming via " + source.name
-//      case .placingText: "Placing Text"
-//    }
-//  }
-//}
-//

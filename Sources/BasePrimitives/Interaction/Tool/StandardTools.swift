@@ -7,12 +7,11 @@
 
 extension CanvasTool {
   public static let defaultTools: [CanvasTool] = [.select, .pan, .zoom]
-//public enum DefaultTools {
+
   public static let select = CanvasTool(
     kind: .select,
     name: "Select",
     icon: "cursorarrow",
-    shortcutKey: "v",
     dragBehavior: .marquee
   )
 
@@ -20,7 +19,6 @@ extension CanvasTool {
     kind: .pan,
     name: "Pan",
     icon: "hand.wave",
-    shortcutKey: "h",
     dragBehavior: .continuous
   )
 
@@ -28,7 +26,6 @@ extension CanvasTool {
     kind: .zoom,
     name: "Zoom",
     icon: "magnifyingglass",
-    shortcutKey: "z",
     dragBehavior: .none
   )
 }
