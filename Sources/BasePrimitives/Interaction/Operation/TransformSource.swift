@@ -14,7 +14,6 @@ public enum TransformSource: Equatable, Sendable {
 
   /// Pan/Zoom tool selected, pointer drag
   case pointerDrag
-//  case pointerDrag(ToolInvocation)
 }
 
 extension TransformSource {
@@ -22,16 +21,6 @@ extension TransformSource {
     switch self {
       case .gesture: "Gesture"
       case .pointerDrag: "Pointer Drag"
-//      case .pointerDrag(let invocation):
-
-//        "Pointer Drag \(invocation.isSpringLoaded ? " , Spring Loaded" : "")"
     }
   }
-}
-
-public enum ToolInvocation: Sendable, Equatable {
-  case standard
-  case springLoaded
-
-  var isSpringLoaded: Bool { self == .springLoaded }
 }

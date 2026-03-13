@@ -26,13 +26,16 @@ public struct ToolController {
   public private(set) var heldKeys: Set<KeyEquivalent> = []
   public private(set) var modifiers: Modifiers = []
   public private(set) var bindings: [ToolBinding]
+  public private(set) var toolRegistry: [CanvasToolKind: CanvasTool]
 
   public init(
     baseTool: CanvasTool = .select,
-    bindings: [ToolBinding] = ToolBinding.defaultBindings()
+    bindings: [ToolBinding] = ToolBinding.defaultBindings(),
+    tools: [CanvasTool] = CanvasTool.defaultTools
   ) {
     self.baseTool = baseTool
     self.bindings = bindings
+    self.toolRegistry = Dictionary(uniqueKeysWithValues: tools.map { ($0.kind, $0) })
   }
 }
 
@@ -51,6 +54,10 @@ extension ToolController {
 
   public mutating func setBindings(_ bindings: [ToolBinding]) {
     self.bindings = bindings
+  }
+
+  public mutating func registerTools(_ tools: [CanvasTool]) {
+    self.toolRegistry = Dictionary(uniqueKeysWithValues: tools.map { ($0.kind, $0) })
   }
 
   public mutating func handleKeyDown(
@@ -102,7 +109,7 @@ extension ToolController {
     binding: ToolBinding,
     onKeyDown key: KeyEquivalent
   ) {
-    let targetTool = tool(for: binding.target)
+    let targetTool = resolveTool(for: binding.target)
     switch binding.mode {
       case .hold:
         /// Push a spring activation
@@ -130,16 +137,9 @@ extension ToolController {
     activations.removeAll { $0.key == key && $0.binding.mode == .hold }
   }
 
-//  private func tool(for kind: CanvasToolKind) -> CanvasTool {
-//    switch kind {
-//      case .select: return .select
-//      case .pan: return .pan
-//      case .zoom: return .zoom
-//      default:
-//        /// Fallback: keep current base tool if kind is unknown in this module
-//        return baseTool
-//    }
-//  }
+  private func resolveTool(for kind: CanvasToolKind) -> CanvasTool {
+    toolRegistry[kind] ?? baseTool
+  }
 }
 
 //public struct ToolHandler {
@@ -225,3 +225,4 @@ extension ToolController {
 //  }
 //
 //}
+

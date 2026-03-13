@@ -7,30 +7,11 @@
 
 import SwiftUI
 
-//public struct OperationState {
-//  let tool: CanvasTool
-//  let modifiers: Modifiers
-//  let key: KeyEquivalent?
-//  let operation: CanvasOperation?
-//  //  let keyboardKey: KeyboardKey
-//}
-
-//public struct EffectiveCanvasTool {
-//  let tool: CanvasTool
-//  let springLoaded: CanvasTool?
-//}
-
-//public enum KeyboardKey {
-//  case modifiers(Modifiers)
-//  case key(KeyEquivalent)
-//}
-
 public struct OperationResolver {
 
   /// Evaluates current state and returns the single operation the canvas should perform.
   public static func resolve(
     state: CanvasInteractionState,
-    //    tool: EffectiveCanvasTool,
     activeTool: CanvasTool,
     springLoadedTool: CanvasTool?,
     modifiers: Modifiers
@@ -68,20 +49,6 @@ public struct OperationResolver {
     return .idle()
   }
 
-  //  private static func resolvePointer(
-  //    for tool: CanvasTool,
-  //    state: PointerState,
-  //    modifiers: Modifiers
-  //  ) -> CanvasOperation {
-  //
-  //    switch tool.kind {
-  //      case .pan: .panning(.pointerDrag, phase: state.drag.phase)
-  //      case .select: .selecting(CellSelectionMode(fromModifiers: modifiers), phase: state.drag.phase)
-  //      case .text: .placingText(phase: state.drag.phase)
-  //      default: .idle
-  //    }
-  //  }
-
   /// Gesture-driven operations take priority regardless of tool selection.
   static func resolveGesturePriority(
     from state: CanvasInteractionState
@@ -99,7 +66,6 @@ public struct OperationResolver {
   /// Resolves an operation based on the currently effective tool and pointer/modifier state.
   static func resolveOperation(
     for tool: CanvasTool,
-    //    isSpringLoaded: Bool,
     state: CanvasInteractionState,
     modifiers: Modifiers
   ) -> CanvasOperation {

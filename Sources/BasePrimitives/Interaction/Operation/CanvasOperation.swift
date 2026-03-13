@@ -37,23 +37,23 @@ public struct CanvasOperation: Identifiable {
 }
 
 extension CanvasOperation {
-  public init(
-    effectiveTool: CanvasTool,
-    isSpringLoaded: Bool,
-    state: CanvasInteractionState,
-    modifiers: Modifiers
-  ) {
-    if let gestureOp = Self.resolveGesturePriority(from: state) {
-      self = gestureOp
-      return
-    }
-    self = Self.resolveOperation(
-      for: effectiveTool,
-      isSpringLoaded: isSpringLoaded,
-      state: state,
-      modifiers: modifiers
-    )
-  }
+  //  public init(
+  //    effectiveTool: CanvasTool,
+  //    isSpringLoaded: Bool,
+  //    state: CanvasInteractionState,
+  //    modifiers: Modifiers
+  //  ) {
+  //    if let gestureOp = Self.resolveGesturePriority(from: state) {
+  //      self = gestureOp
+  //      return
+  //    }
+  //    self = Self.resolveOperation(
+  //      for: effectiveTool,
+  //      isSpringLoaded: isSpringLoaded,
+  //      state: state,
+  //      modifiers: modifiers
+  //    )
+  //  }
 
   public var isActive: Bool { phase?.isActive ?? false }
 
