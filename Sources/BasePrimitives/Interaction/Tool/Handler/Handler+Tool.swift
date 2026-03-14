@@ -8,29 +8,7 @@
 import SwiftUI
 
 /// Manages tool selection, spring-loading, and key bindings.
-///
-/// ## Setup
-///
-/// ```swift
-/// // 1. Create a handler with your domain's tools and bindings:
-/// var toolHandler = ToolHandler(
-///   baseTool: .select,
-///   tools: CanvasTool.defaultTools + [.text],
-///   bindings: ToolBinding.defaultBindings() + [
-///     .makeToolBinding(for: .text, key: "t")
-///   ]
-/// )
-///
-/// // 2. Feed key events:
-/// toolHandler.handleKeyDown("h")
-/// toolHandler.handleKeyUp("h")
-///
-/// // 3. Read the effective tool:
-/// let tool = toolHandler.effectiveTool
-///
-/// // 4. Get the tool list for your toolbar:
-/// let tools = toolHandler.availableTools  // derived from registry + bindings
-/// ```
+
 public struct ToolHandler {
   private(set) public var baseTool: CanvasTool
   private(set) public var activations: [ToolActivation] = []
@@ -98,20 +76,15 @@ extension ToolHandler {
     return armed.tool
   }
 
-
-  public var isSpringLoaded: Bool {
-    activations.contains { $0.isArmed }
-  }
+  public var isSpringLoaded: Bool { activations.contains { $0.isArmed } }
 
   /// Arms any pending activations whose hold duration has exceeded `springLoadDelay`.
   /// Call this on each event cycle (e.g. in a SwiftUI `.onReceive` or timer).
   public mutating func armSpringLoadsIfReady() {
     let now = Date()
-    for i in activations.indices {
-      if !activations[i].isArmed &&
-         now.timeIntervalSince(activations[i].startedAt) >= springLoadDelay {
-        activations[i].isArmed = true
-      }
+    for i in activations.indices
+    where !activations[i].isArmed && now.timeIntervalSince(activations[i].startedAt) >= springLoadDelay {
+      activations[i].isArmed = true
     }
   }
 
