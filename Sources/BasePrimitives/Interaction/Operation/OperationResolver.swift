@@ -100,8 +100,8 @@ public struct OperationResolver {
         return .panning(.pointerDrag, phase: pointer.drag.phase)
 
       case .zoom:
-        // Gesture-based zoom is handled by resolveGesturePriority.
-        // Pointer-based zoom (click-drag) is not yet implemented.
+        /// Gesture-based zoom is handled by resolveGesturePriority.
+        /// Pointer-based zoom (click-drag) is not yet implemented.
         return .idle()
 
       default:

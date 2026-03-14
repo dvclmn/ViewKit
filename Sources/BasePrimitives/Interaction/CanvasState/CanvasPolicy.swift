@@ -15,25 +15,6 @@ public struct CanvasPolicy: Equatable, Sendable {
   public static let lockScale = CanvasPolicy(zoomGestureEnabled: false)
 }
 
-extension CanvasPolicy: CustomStringConvertible {
-  public var description: String {
-    """
-    CanvasPolicy
-      - panGestureEnabled: \(panGestureEnabled)
-      - zoomGestureEnabled: \(zoomGestureEnabled)
-      - dragBehaviour: \(dragBehaviour.name)
-      - hoverEnabled: \(hoverEnabled)
-    """
-  }
-
-  public var descriptionSingleLine: String {
-    """
-    Modifiers Enabled [pan: \(panGestureEnabled), zoom: \(zoomGestureEnabled), tapDrag: \(dragBehaviour.name), hover: \(hoverEnabled)]
-
-    """
-  }
-}
-
 extension CanvasPolicy {
 
   /// Derives the appropriate input policy from the current canvas operation.
@@ -108,4 +89,23 @@ extension CanvasPolicy {
     }
   }
 
+}
+
+extension CanvasPolicy: CustomStringConvertible {
+  public var description: String {
+    """
+    CanvasPolicy
+      - panGestureEnabled: \(panGestureEnabled)
+      - zoomGestureEnabled: \(zoomGestureEnabled)
+      - dragBehaviour: \(dragBehaviour.name)
+      - hoverEnabled: \(hoverEnabled)
+    """
+  }
+
+  public var descriptionSingleLine: String {
+    """
+    Modifiers Enabled [pan: \(panGestureEnabled), zoom: \(zoomGestureEnabled), tapDrag: \(dragBehaviour.name), hover: \(hoverEnabled)]
+
+    """
+  }
 }

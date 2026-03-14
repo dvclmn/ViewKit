@@ -5,8 +5,18 @@
 //  Created by Dave Coleman on 10/3/2026.
 //
 
-import SwiftUI
 import EnumMacros
+import SwiftUI
+
+/// Whether a binding applies everywhere or only when a specific tool is active.
+@MetaEnum
+public enum BindingScope: Sendable, Hashable {
+  /// Applies regardless of current tool.
+  case global
+
+  /// Applies only when the specified tool is active.
+  case tool(CanvasToolKind)
+}
 
 /// A key (with optional modifiers) that can trigger a `ToolBinding`.
 public struct KeyBinding: Hashable, Sendable {
@@ -20,14 +30,4 @@ public struct KeyBinding: Hashable, Sendable {
     self.key = key
     self.requiredModifiers = requiredModifiers
   }
-}
-
-/// Whether a binding applies everywhere or only when a specific tool is active.
-@MetaEnum
-public enum BindingScope: Sendable, Hashable {
-  /// Applies regardless of current tool.
-  case global
-
-  /// Applies only when the specified tool is active.
-  case tool(CanvasToolKind)
 }
