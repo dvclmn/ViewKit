@@ -26,6 +26,6 @@ extension CanvasTool {
     kind: .zoom,
     name: "Zoom",
     icon: "magnifyingglass",
-    dragBehavior: .none
+    dragBehavior: .continuous(axes: .vertical)
   )
 }
