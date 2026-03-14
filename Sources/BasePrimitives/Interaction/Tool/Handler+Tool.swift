@@ -83,12 +83,12 @@ extension ToolHandler {
     activations.last?.tool ?? baseTool
   }
 
-  public var canvasModifierPolicy: CanvasPolicy {
-
+//  public var canvasModifierPolicy: CanvasPolicy {
+//
 //    CanvasPolicy(fromOperation: operation, tool: store.toolHandler.effectiveTool)
-
-
-  }
+//
+//
+//  }
 
   public var isSpringLoaded: Bool { !activations.isEmpty }
 
