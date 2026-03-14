@@ -17,8 +17,11 @@ public struct ToolHandler {
   public private(set) var bindings: [ToolBinding]
   public private(set) var toolRegistry: [CanvasToolKind: CanvasTool]
 
-  /// How long a hold-mode key must be held before the spring-loaded tool activates.
-  /// Brief taps shorter than this are ignored (no tool switch).
+  /// Sticky threshold: holding a sticky key longer than this arms it as a spring-load.
+  /// - For `.sticky`: If released before or equal to this delay, commit to the tool.
+  ///   If held longer, treat as a transient spring-load and revert on release.
+  /// - For `.hold`: Always spring-load immediately; never commit.
+  /// - For `.toggle`: Commit immediately on key down.
   public var springLoadDelay: TimeInterval
 
   public init(
@@ -63,10 +66,11 @@ extension ToolHandler {
 
 extension ToolHandler {
 
-  /// The currently effective tool, accounting for spring-load arming.
-  /// Only armed activations (those held longer than `springLoadDelay`) count.
+  /// The currently effective tool, considering pending and armed activations.
+  /// If there is any activation on the stack, its tool is effective immediately.
+  /// Otherwise the base tool is effective.
   public var effectiveTool: CanvasTool {
-    activations.last(where: { $0.isArmed })?.tool ?? baseTool
+    activations.last?.tool ?? baseTool
   }
 
   /// The spring-loaded tool if one is armed, or `nil`.
@@ -78,13 +82,32 @@ extension ToolHandler {
 
   public var isSpringLoaded: Bool { activations.contains { $0.isArmed } }
 
-  /// Arms any pending activations whose hold duration has exceeded `springLoadDelay`.
-  /// Call this on each event cycle (e.g. in a SwiftUI `.onReceive` or timer).
+  /// The smallest remaining time (in seconds) before any pending `.sticky` activation arms.
+  /// Returns `nil` when there are no pending arming activations.
+  public var pendingArmingTimeRemaining: TimeInterval? {
+    let now = Date()
+    let remainingTimes = activations.compactMap { a -> TimeInterval? in
+      guard a.binding.mode == .sticky, !a.isArmed, heldKeys.contains(a.key) else { return nil }
+      let elapsed = now.timeIntervalSince(a.startedAt)
+      let remaining = springLoadDelay - elapsed
+      return remaining > 0 ? remaining : 0
+    }
+    return remainingTimes.min()
+  }
+
+  /// Arms any pending `.sticky` activations whose hold duration has exceeded `springLoadDelay`
+  /// and whose key is still held. Call this from a reactive context (e.g. a `task(id:)` or
+  /// `onChange(of: activations)`) after sleeping until the earliest pending deadline.
   public mutating func armSpringLoadsIfReady() {
     let now = Date()
-    for i in activations.indices
-    where !activations[i].isArmed && now.timeIntervalSince(activations[i].startedAt) >= springLoadDelay {
-      activations[i].isArmed = true
+    for i in activations.indices {
+      let a = activations[i]
+      guard a.binding.mode == .sticky,
+            !a.isArmed,
+            heldKeys.contains(a.key) else { continue }
+      if now.timeIntervalSince(a.startedAt) >= springLoadDelay {
+        activations[i].isArmed = true
+      }
     }
   }
 
@@ -149,26 +172,50 @@ extension ToolHandler {
     let targetTool = resolveTool(for: binding.target)
     switch binding.mode {
       case .hold:
-        let act = ToolActivation(tool: targetTool, binding: binding, key: key)
+        // Always spring-load immediately; never commit.
+        let act = ToolActivation(
+          tool: targetTool,
+          binding: binding,
+          startedAt: Date(),
+          key: key,
+          isArmed: true
+        )
         activations.append(act)
 
       case .sticky:
-        setBaseTool(targetTool)
+        // Activate immediately as a pending commit; arming happens after the threshold.
+        let act = ToolActivation(
+          tool: targetTool,
+          binding: binding,
+          startedAt: Date(),
+          key: key,
+          isArmed: false
+        )
+        activations.append(act)
 
       case .toggle:
-        if effectiveTool.kind == targetTool.kind {
-          activations.removeAll()
-        } else {
-          setBaseTool(targetTool)
-        }
+        // Commit immediately on key down.
+        setBaseTool(targetTool)
     }
   }
 
   private mutating func removeActivations(forKey key: KeyEquivalent) {
-    activations.removeAll { $0.key == key && $0.binding.mode == .hold }
+    // First, determine if any sticky activation should commit.
+    if let act = activations.last(where: { $0.key == key && $0.binding.mode == .sticky }) {
+      if act.isArmed == false {
+        // Short press: commit to the tool. This clears the activation stack.
+        setBaseTool(act.tool)
+        return
+      }
+      // Long hold: spring-loaded only; fall through to removal to revert.
+    }
+
+    // Remove any activations tied to this key for both hold and sticky modes.
+    activations.removeAll { $0.key == key && ($0.binding.mode == .hold || $0.binding.mode == .sticky) }
   }
 
   private func resolveTool(for kind: CanvasToolKind) -> CanvasTool {
     toolRegistry[kind] ?? baseTool
   }
 }
+
