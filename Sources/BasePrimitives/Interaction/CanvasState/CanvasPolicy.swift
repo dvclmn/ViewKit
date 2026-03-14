@@ -68,7 +68,10 @@ extension CanvasPolicy {
   ///     hoverEnabled: false
   ///   )
   /// ```
-  public init(fromOperation operation: CanvasOperation) {
+  public init(
+    fromOperation operation: CanvasOperation,
+    tool: CanvasTool
+  ) {
     switch operation.kind {
       case .idle, .hovering:
         self = .standard
@@ -104,4 +107,5 @@ extension CanvasPolicy {
         self = .standard
     }
   }
+
 }

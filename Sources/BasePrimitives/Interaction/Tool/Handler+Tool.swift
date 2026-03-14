@@ -48,6 +48,9 @@ public struct ToolHandler {
     self.bindings = bindings
     self.toolRegistry = Dictionary(uniqueKeysWithValues: tools.map { ($0.kind, $0) })
   }
+}
+
+extension ToolHandler {
 
   /// All registered tools, ordered by binding appearance then remaining registry entries.
   ///
@@ -56,15 +59,16 @@ public struct ToolHandler {
     var seen: Set<CanvasToolKind> = []
     var result: [CanvasTool] = []
 
-    // Tools referenced by bindings, in binding order.
+    /// Tools referenced by bindings, in binding order.
     for binding in bindings {
       guard !seen.contains(binding.target),
-            let tool = toolRegistry[binding.target] else { continue }
+        let tool = toolRegistry[binding.target]
+      else { continue }
       seen.insert(binding.target)
       result.append(tool)
     }
 
-    // Remaining registered tools not covered by any binding.
+    /// Remaining registered tools not covered by any binding.
     for (kind, tool) in toolRegistry where !seen.contains(kind) {
       result.append(tool)
     }
@@ -77,6 +81,13 @@ extension ToolHandler {
 
   public var effectiveTool: CanvasTool {
     activations.last?.tool ?? baseTool
+  }
+
+  public var canvasModifierPolicy: CanvasPolicy {
+
+//    CanvasPolicy(fromOperation: operation, tool: store.toolHandler.effectiveTool)
+
+
   }
 
   public var isSpringLoaded: Bool { !activations.isEmpty }
