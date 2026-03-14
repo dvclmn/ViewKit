@@ -21,6 +21,7 @@ extension EnvironmentValues {
   @Entry public var canvasBackground: Color = Color(white: 0.04)
 
   @Entry public var canvasInputPolicy: CanvasInputPolicy = .standard
+  @Entry public var canvasOperation: CanvasOperation = .idle()
 
   public var canvasGeometry: CanvasGeometry? {
     guard let viewportRect, let canvasSize else { return nil }

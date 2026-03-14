@@ -9,7 +9,7 @@ import BasePrimitives
 import SwiftUI
 
 public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & EnvironmentResolvableColour>: View {
-  @Environment(\.activeColour) private var activeHierarchicalColour
+  @Environment(\.activeColourHierarchy) private var activeHierarchicalColour
   @Environment(\.modifierKeys) private var modifierKeys
 
   @State private var isHovering: Bool = false

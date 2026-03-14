@@ -9,15 +9,17 @@
 
 import SwiftUI
 
-public protocol ColourHandlerProtocol {
-  var foregroundRGB: RGBColour { get set }
-  var backgroundRGB: RGBColour { get set }
-
-  var foreground: Color { get }
-  var background: Color { get }
-}
+//public protocol ColourHandlerProtocol {
+//  var foregroundRGB: RGBColour { get set }
+//  var backgroundRGB: RGBColour { get set }
+//
+//  var foreground: Color { get }
+//  var background: Color { get }
+//}
 
 //@CaseDetection
+/// I don't at all understand the relationship between
+/// `HierarchicalColour` and `ColourLevel`
 public enum HierarchicalColour: String, Sendable, CaseCyclable, CaseIterable, NamedItem, Identifiable,
   Equatable
 {
@@ -63,20 +65,6 @@ public enum ColourLevel: String, Sendable, CaseCyclable, CaseIterable, NamedItem
 
 extension Binding where Value == RGBColour {
 
-//  public func colourBinding(
-//    lockAlpha: Bool = false
-////    level: ColourLevel
-//  ) -> Binding<RGBColour> {
-//    Binding<RGBColour> {
-//      if lockAlpha {
-//        let current = wrappedValue.alpha
-//        
-//      }
-//    } set: { newColour in
-//      <#code#>
-//    }
-//  }
-//  
   public static func dualColourBinding(
     _ primary: Binding<RGBColour>,
     _ secondary: Binding<RGBColour?>,
@@ -110,12 +98,12 @@ extension ColourLevel: CustomStringConvertible {
 
 extension ColourLevel {
 
-  public func keyPathRGB<T: ColourHandlerProtocol>() -> WritableKeyPath<T, RGBColour> {
-    switch self {
-      case .foreground: \.foregroundRGB
-      case .background: \.backgroundRGB
-    }
-  }
+//  public func keyPathRGB<T: ColourHandlerProtocol>() -> WritableKeyPath<T, RGBColour> {
+//    switch self {
+//      case .foreground: \.foregroundRGB
+//      case .background: \.backgroundRGB
+//    }
+//  }
 
   //  public func label(_ thing: () -> String) {
   //
@@ -126,12 +114,12 @@ extension ColourLevel {
   //      case .background: \.backgroundHSV
   //    }
   //  }
-  public func keyPathSwiftUI<T: ColourHandlerProtocol>() -> KeyPath<T, Color> {
-    switch self {
-      case .foreground: \.foreground
-      case .background: \.background
-    }
-  }
+//  public func keyPathSwiftUI<T: ColourHandlerProtocol>() -> KeyPath<T, Color> {
+//    switch self {
+//      case .foreground: \.foreground
+//      case .background: \.background
+//    }
+//  }
   //  public var keyPathSelected: KeyPath<ColourHandler, Self> {
   //    return \.activeColourLevel
   //    //    switch self {

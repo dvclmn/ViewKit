@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension EnvironmentValues {
-  @Entry public var colourHandler: ColourHandler = .init()
+//  @Entry public var colourHandler: ColourHandler = .init()
   @Entry public var rgbComponent: RGBComponent?
   @Entry public var hsvComponent: HSVComponent?
   
@@ -18,7 +18,7 @@ extension EnvironmentValues {
   @Entry public var colourPurpose: ColourPurpose?
   @Entry public var colourChroma: ColourChroma?
   
-  @Entry public var activeColour: Binding<HierarchicalColour> = .constant(.primary)
+  @Entry public var activeColourHierarchy: Binding<HierarchicalColour> = .constant(.primary)
 //  @Entry public var activeColour: Binding<ColourLevel> = .constant(.foreground)
   @Entry public var activeColourModel: Binding<ColourModelKind> = .constant(.rgb)
   @Entry public var hsvPrimaryRepresentation: Binding<HSVColour>? = nil

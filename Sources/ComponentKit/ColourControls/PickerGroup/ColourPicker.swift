@@ -11,7 +11,7 @@ import SwiftUI
 
 /// Presents both a Square Picker, and RGB/HSV Sliders
 public struct ColourPicker: View {
-  @Environment(\.activeColour) private var activeColour
+  @Environment(\.activeColourHierarchy) private var activeColourHierarchy
   @Environment(\.activeColourModel) private var activeColourModel
 
   @State private var components: ColourPickerComponents
