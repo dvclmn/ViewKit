@@ -100,8 +100,14 @@ public struct OperationResolver {
         return .panning(.pointerDrag, phase: pointer.drag.phase)
 
       case .zoom:
-        /// Gesture-based zoom is handled by resolveGesturePriority.
-        /// Pointer-based zoom (click-drag) is not yet implemented.
+        // Click-drag: continuous vertical drag maps to zoom in/out.
+        if pointer.drag.isActive {
+          return .zooming(.pointerDrag, phase: pointer.drag.phase)
+        }
+        // Click (no drag): step zoom at pointer location.
+        if pointer.tap.isActive {
+          return .zooming(.pointerDrag, phase: pointer.tap.phase)
+        }
         return .idle()
 
       default:

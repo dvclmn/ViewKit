@@ -1,53 +1,81 @@
 //
-//  CanvasPolicy.swift
+//  CanvasInputPolicy.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 10/3/2026.
 //
 
-public struct CanvasPolicy: Equatable, Sendable {
-  public var panGestureEnabled: Bool = true
-  public var zoomGestureEnabled: Bool = true
-  public var dragBehaviour: DragBehavior = .continuous()
-  public var hoverEnabled: Bool = true
+/// Controls which input modifiers and gestures are active on the canvas.
+///
+/// Each field gates a specific gesture or modifier in `TransformationsModifier`:
+/// - `panGestureEnabled`: Two-finger trackpad pan gesture
+/// - `zoomGestureEnabled`: Two-finger pinch-to-zoom gesture
+/// - `pointerDragPanEnabled`: Whether a pointer click-drag can pan the canvas
+///   (distinct from the two-finger gesture — this is for Pan tool drag)
+/// - `dragBehaviour`: What kind of drag interaction the pointer produces
+///   (marquee selection, continuous offset for pan/zoom, or disabled)
+/// - `hoverEnabled`: Whether pointer hover tracking is active
+public struct CanvasInputPolicy: Equatable, Sendable {
 
-  public static let standard = CanvasPolicy()
-  public static let lockScale = CanvasPolicy(zoomGestureEnabled: false)
+  /// Whether two-finger trackpad pan is active.
+  public var panGestureEnabled: Bool
+
+  /// Whether two-finger pinch-to-zoom is active.
+  public var zoomGestureEnabled: Bool
+
+  /// Whether pointer click-drag can pan the canvas.
+  /// Only `true` when the Pan tool (or a spring-loaded Pan) is the effective tool.
+  public var pointerDragPanEnabled: Bool
+
+  /// The drag interaction mode: `.marquee`, `.continuous(axes:)`, or `.none`.
+  public var dragBehaviour: DragBehavior
+
+  /// Whether pointer hover position is tracked.
+  public var hoverEnabled: Bool
+
+  public init(
+    panGestureEnabled: Bool = true,
+    zoomGestureEnabled: Bool = true,
+    pointerDragPanEnabled: Bool = false,
+    dragBehaviour: DragBehavior = .none,
+    hoverEnabled: Bool = true
+  ) {
+    self.panGestureEnabled = panGestureEnabled
+    self.zoomGestureEnabled = zoomGestureEnabled
+    self.pointerDragPanEnabled = pointerDragPanEnabled
+    self.dragBehaviour = dragBehaviour
+    self.hoverEnabled = hoverEnabled
+  }
+
+  /// Default idle policy: gestures enabled, no pointer-drag pan, hover on.
+  public static let standard = CanvasInputPolicy()
+
+  /// Locks zoom gesture only.
+  public static let lockScale = CanvasInputPolicy(zoomGestureEnabled: false)
 }
 
-extension CanvasPolicy {
+extension CanvasInputPolicy {
 
-  /// Derives the appropriate input policy from the current canvas operation.
+  /// Derives the appropriate input policy from the current canvas operation
+  /// and the effective tool.
   ///
-  /// Extending for domain-specific operations:
-  /// If a domain introduces new operation kinds (e.g., placing​Text, lasso):
-  /// Add a `kind` constant:
-  /// ```
+  /// The `tool` parameter is used to derive sensible defaults when idle —
+  /// for example, the Select tool's idle drag behaviour is `.marquee`,
+  /// while the Pan tool's is `.continuous`.
+  ///
+  /// ## Extending for domain-specific operations
+  ///
+  /// 1. Add a `kind` constant:
+  /// ```swift
   /// extension CanvasOperation.Kind {
   ///   public static let placingText = Self(rawValue: "placingText")
   /// }
   /// ```
   ///
-  /// Optionally add a factory:
-  /// ```
-  /// extension CanvasOperation {
-  ///   public static func placingText(
-  ///     phase: InteractionPhase
-  ///   ) -> CanvasOperation {
-  ///     CanvasOperation(kind: .placingText, phase: phase)
-  ///   }
-  /// }
-  /// ```
-  ///
-  /// Extend the policy switch:
-  /// ```
+  /// 2. Extend the policy switch:
+  /// ```swift
   /// case .placingText:
-  ///   self = CanvasPolicy(
-  ///     panGestureEnabled: false,
-  ///     zoomGestureEnabled: false,
-  ///     dragBehaviour: .marquee,
-  ///     hoverEnabled: false
-  ///   )
+  ///   self = CanvasInputPolicy(dragBehaviour: .none, hoverEnabled: false)
   /// ```
   public init(
     fromOperation operation: CanvasOperation,
@@ -55,57 +83,69 @@ extension CanvasPolicy {
   ) {
     switch operation.kind {
       case .idle, .hovering:
-        self = .standard
-
-      case .panning:
-        /// During a pointer-driven pan, gestures remain available so the user
-        /// can switch mid-drag (e.g. pinch to zoom while panning).
-        self = CanvasPolicy(
+        // Derive idle drag behaviour from the tool's declared preference.
+        // This prevents e.g. the Select tool from allowing continuous-drag panning.
+        self = CanvasInputPolicy(
           panGestureEnabled: true,
           zoomGestureEnabled: true,
+          pointerDragPanEnabled: false,
+          dragBehaviour: tool.dragBehavior,
+          hoverEnabled: true
+        )
+
+      case .panning:
+        // During a pointer-driven pan, gestures remain available so the user
+        // can switch mid-drag (e.g. pinch to zoom while panning).
+        self = CanvasInputPolicy(
+          panGestureEnabled: true,
+          zoomGestureEnabled: true,
+          pointerDragPanEnabled: true,
           dragBehaviour: .continuous(),
           hoverEnabled: false
         )
 
       case .zooming:
-        self = CanvasPolicy(
+        // Pointer-drag zoom uses vertical axis only.
+        self = CanvasInputPolicy(
           panGestureEnabled: true,
           zoomGestureEnabled: true,
-          dragBehaviour: .none,
+          pointerDragPanEnabled: false,
+          dragBehaviour: .continuous(axes: .vertical),
           hoverEnabled: false
         )
 
       case .selecting:
-        self = CanvasPolicy(
+        self = CanvasInputPolicy(
           panGestureEnabled: true,
           zoomGestureEnabled: true,
+          pointerDragPanEnabled: false,
           dragBehaviour: .marquee,
           hoverEnabled: false
         )
 
       default:
-        // Fallback for domain-specific kinds
-        self = .standard
+        // Fallback for domain-specific kinds — use tool's drag preference.
+        self = CanvasInputPolicy(
+          dragBehaviour: tool.dragBehavior,
+          hoverEnabled: true
+        )
     }
   }
-
 }
 
-extension CanvasPolicy: CustomStringConvertible {
+extension CanvasInputPolicy: CustomStringConvertible {
   public var description: String {
     """
-    CanvasPolicy
+    CanvasInputPolicy
       - panGestureEnabled: \(panGestureEnabled)
       - zoomGestureEnabled: \(zoomGestureEnabled)
+      - pointerDragPanEnabled: \(pointerDragPanEnabled)
       - dragBehaviour: \(dragBehaviour.name)
       - hoverEnabled: \(hoverEnabled)
     """
   }
 
   public var descriptionSingleLine: String {
-    """
-    Modifiers Enabled [pan: \(panGestureEnabled), zoom: \(zoomGestureEnabled), tapDrag: \(dragBehaviour.name), hover: \(hoverEnabled)]
-
-    """
+    "InputPolicy [pan: \(panGestureEnabled), zoom: \(zoomGestureEnabled), dragPan: \(pointerDragPanEnabled), tapDrag: \(dragBehaviour.name), hover: \(hoverEnabled)]"
   }
 }

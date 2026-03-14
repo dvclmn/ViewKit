@@ -39,14 +39,20 @@ public struct ToolHandler {
   public private(set) var bindings: [ToolBinding]
   public private(set) var toolRegistry: [CanvasToolKind: CanvasTool]
 
+  /// How long a hold-mode key must be held before the spring-loaded tool activates.
+  /// Brief taps shorter than this are ignored (no tool switch).
+  public var springLoadDelay: TimeInterval
+
   public init(
     baseTool: CanvasTool = .select,
     tools: [CanvasTool] = CanvasTool.defaultTools,
-    bindings: [ToolBinding] = ToolBinding.defaultBindings()
+    bindings: [ToolBinding] = ToolBinding.defaultBindings(),
+    springLoadDelay: TimeInterval = 0.15
   ) {
     self.baseTool = baseTool
     self.bindings = bindings
     self.toolRegistry = Dictionary(uniqueKeysWithValues: tools.map { ($0.kind, $0) })
+    self.springLoadDelay = springLoadDelay
   }
 }
 
@@ -79,18 +85,34 @@ extension ToolHandler {
 
 extension ToolHandler {
 
+  /// The currently effective tool, accounting for spring-load arming.
+  /// Only armed activations (those held longer than `springLoadDelay`) count.
   public var effectiveTool: CanvasTool {
-    activations.last?.tool ?? baseTool
+    activations.last(where: { $0.isArmed })?.tool ?? baseTool
   }
 
-  public var canvasModifierPolicy: CanvasPolicy {
-
-//    CanvasPolicy(fromOperation: operation, tool: store.toolHandler.effectiveTool)
-
-
+  /// The spring-loaded tool if one is armed, or `nil`.
+  /// Pass this to `OperationResolver.resolve(springLoadedTool:)`.
+  public var springLoadedTool: CanvasTool? {
+    guard let armed = activations.last(where: { $0.isArmed }) else { return nil }
+    return armed.tool
   }
 
-  public var isSpringLoaded: Bool { !activations.isEmpty }
+  public var isSpringLoaded: Bool {
+    activations.contains { $0.isArmed }
+  }
+
+  /// Arms any pending activations whose hold duration has exceeded `springLoadDelay`.
+  /// Call this on each event cycle (e.g. in a SwiftUI `.onReceive` or timer).
+  public mutating func armSpringLoadsIfReady() {
+    let now = Date()
+    for i in activations.indices {
+      if !activations[i].isArmed &&
+         now.timeIntervalSince(activations[i].startedAt) >= springLoadDelay {
+        activations[i].isArmed = true
+      }
+    }
+  }
 
   public mutating func setBaseTool(_ tool: CanvasTool) {
     baseTool = tool
