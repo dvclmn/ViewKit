@@ -57,7 +57,6 @@ extension InteractionPhase {
         case .ended: .ended
         case .cancelled: .cancelled
         case .touching: .mayBegin
-        //        case .any: .any
         default: .none
       }
   }
