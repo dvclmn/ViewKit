@@ -15,7 +15,6 @@ public struct EnvironmentViewportSizeModifier: ViewModifier {
   @State private var viewportRect: CGRect?
 
   let mode: DebounceMode
-//  let showsIndicator: Bool
 
   public func body(content: Content) -> some View {
     content

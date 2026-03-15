@@ -10,8 +10,7 @@ import SwiftUI
 
 // MARK: - View size modifiers
 extension View {
-  /// Previously had default value for `debounceMode`, but this felt
-  /// too risky for domains that may be tripped up by immediate vs debounced
+
   public func viewSize<T: GeometryCapturable>(
     capture: GeometryCapture<T> = .size,
     mode debounceMode: DebounceMode,

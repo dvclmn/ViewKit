@@ -18,17 +18,24 @@ import Foundation
 ///   unitSize: CGSize
 /// ) -> GridPoint?
 /// ```
+
+/// Full size Viewport — should represent the App Window dimensions,
+/// sans UI elements like sidebar, inspector, toolbar etc.
 public enum ScreenSpace: Sendable, Hashable {
   public static let safeArea: String = "screenSafeArea"
-}  // Aka Viewport
+}
+
+/// Local Artwork space, pre-transform (before zoom, pan etc)
 public enum CanvasSpace: Sendable, Hashable {
+  
   /// Named coordinate space for the interactive viewport container.
+  /// I think this will usually be the same as ``ScreenSpace/safeArea``?
   public static let viewport: String = "canvasViewport"
 
   /// Named coordinate space for the untransformed artwork/document container.
   public static let artwork: String = "canvasArtwork"
 
-  /// Legacy alias retained for compatibility while migrating call sites.
-  public static let safeArea: String = viewport
-}  // local, pre-transform
-public enum GridSpace: Sendable, Hashable {}  // ASCII art, cells etc
+}
+
+/// ASCII art, cells etc
+//public enum GridSpace: Sendable, Hashable {}
