@@ -7,7 +7,8 @@
 
 import Foundation
 
-extension ContinuousInteraction where Value == CGSize {
+extension ContinuousInteraction where Value == Size<ScreenSpace> {
+//extension ContinuousInteraction where Value == CGSize {
   public mutating func updateDelta(_ delta: Value, phase: InteractionPhase) {
     self.value += delta
     self.phase = phase
@@ -28,4 +29,9 @@ extension ContinuousInteraction where Value == CGSize {
       height: value.height.clamped(to: -maxY...maxY)
     )
   }
+}
+
+public func += <Space>(lhs: inout Size<Space>, rhs: Size<Space>) {
+  lhs.width += rhs.width
+  lhs.height += rhs.height
 }

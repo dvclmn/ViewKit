@@ -27,6 +27,7 @@ extension Size {
   public var cgSize: CGSize {
     .init(width: width, height: height)
   }
-  
+
   public static var zero: Self { .init(width: 0, height: 0) }
 }
+

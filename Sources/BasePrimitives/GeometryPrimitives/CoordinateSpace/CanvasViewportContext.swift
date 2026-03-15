@@ -23,12 +23,13 @@ extension CanvasViewportContext {
 
   public func viewportMapping(
     zoom: CGFloat,
-    pan: CGSize
+    pan: Size<ScreenSpace>
+//    pan: CGSize
   ) -> CanvasViewportMapping? {
     guard isValidForCoordinateMapping else { return nil }
     return CanvasViewportMapping(
       viewportRect: viewportRect,
-      pan: Point<ScreenSpace>(fromOffset: pan),
+      pan: pan,
       zoom: zoom,
       canvasSize: canvasSize,
       anchor: anchor

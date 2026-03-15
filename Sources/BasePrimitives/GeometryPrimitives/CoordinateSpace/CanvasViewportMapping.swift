@@ -11,21 +11,14 @@ public struct CanvasViewportMapping {
 
   /// In global/screen space; includes safe-area origin and size.
   public var viewportRect: Rect<ScreenSpace>
-  //  public var viewportRect: CGRect
-
-  /// Note: no need for previous `panInGlobalSpace`; this is always in
-  /// screen/global space now.
-  public var pan: Point<ScreenSpace>
+  public var pan: Size<ScreenSpace>
   public var zoom: CGFloat
-
-  /// This is the "subject" (the document) size in Canvas units.
-  /// In local/canvas space (unscaled).
   public var canvasSize: Size<CanvasSpace>
   public var anchor: UnitPoint
 
   public init(
     viewportRect: Rect<ScreenSpace>,
-    pan: Point<ScreenSpace>,
+    pan: Size<ScreenSpace>,
     zoom: CGFloat,
     canvasSize: Size<CanvasSpace>,
     anchor: UnitPoint
@@ -57,6 +50,7 @@ extension CanvasViewportMapping {
 
     /// Helper to compute offset for a given UnitPoint (0..1 in each axis)
     func offset(for anchor: UnitPoint) -> CGSize {
+      
       /// Clamp to `[0,1]` to be safe for custom UnitPoints
       let ax = max(0, min(1, anchor.x))
       let ay = max(0, min(1, anchor.y))
@@ -103,8 +97,8 @@ extension CanvasViewportMapping {
   /// Safe Area Origin + Centering + Manual Pan.
   private var totalGlobalOffset: CGPoint {
     CGPoint(
-      x: viewportRect.origin.x + centeringOffset.width + pan.x,
-      y: viewportRect.origin.y + centeringOffset.height + pan.y
+      x: viewportRect.origin.x + centeringOffset.width + pan.width,
+      y: viewportRect.origin.y + centeringOffset.height + pan.height
     )
   }
 

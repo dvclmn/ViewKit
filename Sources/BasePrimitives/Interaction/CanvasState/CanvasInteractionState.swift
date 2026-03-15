@@ -26,7 +26,7 @@ public final class CanvasInteractionState {
 
 extension CanvasInteractionState {
 
-  public var pan: CGSize { transform.pan.value }
+  public var pan: CGSize { transform.pan.value.cgSize }
   public var zoom: CGFloat { transform.zoom.value }
   public var rotation: Angle { transform.rotation.value }
 
