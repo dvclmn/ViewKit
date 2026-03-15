@@ -39,47 +39,49 @@ extension CanvasViewportMapping {
     return zoom.clamped(to: 0.06...CGFloat.greatestFiniteMagnitude)
   }
 
+  /// Computes the centering offset for a given anchor,
+  /// given the viewport size and the scaled canvas size.
+  /// - Parameters:
+  ///   - anchor: The anchor point (0..1 in each axis) describing
+  ///     how the canvas should be positioned within the viewport.
+  ///   - viewportSize: The viewport size in screen space (safe-area insets already applied).
+  ///   - scaledCanvasSize: The canvas size after applying zoom.
+  /// - Returns: The offset in screen space to position the scaled
+  ///   canvas within the viewport for the provided anchor.
+  static func centeringOffset(
+    for anchor: UnitPoint,
+    viewportSize: CGSize,
+    scaledCanvasSize: CGSize
+  ) -> CGSize {
+    /// Clamp to [0, 1] to be safe for custom UnitPoints
+    let ax = max(0, min(1, anchor.x))
+    let ay = max(0, min(1, anchor.y))
+
+    /// Compute how much extra space remains after scaling, then place according to anchor
+    let offsetX = (viewportSize.width - scaledCanvasSize.width) * ax
+    let offsetY = (viewportSize.height - scaledCanvasSize.height) * ay
+
+    return CGSize(width: offsetX, height: offsetY)
+  }
+
   /// The dynamic offset to center the canvas within the safe viewport area.
   /// This uses the size of the viewport (which already has insets subtracted).
   /// Canvas is scaled by zoom for centering; viewportRect is never scaled.
   private var centeringOffset: CGSize {
 
     /// Size of the canvas once zoom is applied
-    let scaledCanvasWidth = canvasSize.width * zoomSafe
-    let scaledCanvasHeight = canvasSize.height * zoomSafe
+    let scaledCanvasSize = CGSize(
+      width: canvasSize.width * zoomSafe,
+      height: canvasSize.height * zoomSafe
+    )
 
-    /// Helper to compute offset for a given UnitPoint (0..1 in each axis)
-    func offset(for anchor: UnitPoint) -> CGSize {
-      
-      /// Clamp to `[0,1]` to be safe for custom UnitPoints
-      let ax = max(0, min(1, anchor.x))
-      let ay = max(0, min(1, anchor.y))
+    let viewportSize = CGSize(width: viewportRect.width, height: viewportRect.height)
 
-      /// `anchor.x == 0 (leading)` content starts at 0 horizontally (no extra centering)
-      /// `anchor.x == 0.5 (center)` split remaining space equally on both sides
-      /// `anchor.x == 1 (trailing)` push content fully to the trailing edge
-      let offsetX = (viewportRect.width - scaledCanvasWidth) * ax
-
-      /// Same for vertical: 0 = top, 0.5 = center, 1 = bottom
-      let offsetY = (viewportRect.height - scaledCanvasHeight) * ay
-
-      return CGSize(width: offsetX, height: offsetY)
-    }
-
-    return switch anchor {
-      case .center: offset(for: .center)
-      case .top: offset(for: .top)
-      case .bottom: offset(for: .bottom)
-      case .leading: offset(for: .leading)
-      case .trailing: offset(for: .trailing)
-      case .topLeading: offset(for: .topLeading)
-      case .topTrailing: offset(for: .topTrailing)
-      case .bottomLeading: offset(for: .bottomLeading)
-      case .bottomTrailing: offset(for: .bottomTrailing)
-      default:
-        /// For any custom UnitPoint, use its normalized x/y as fractions
-        offset(for: anchor)
-    }
+    return Self.centeringOffset(
+      for: anchor,
+      viewportSize: viewportSize,
+      scaledCanvasSize: scaledCanvasSize
+    )
   }
 
   /// Canvas frame expressed in global/screen space.

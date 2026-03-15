@@ -48,11 +48,18 @@ extension Rect {
   public var origin: Point<Space> { .init(x: x, y: y) }
   public var size: Size<Space> { .init(width: width, height: height) }
   public static var zero: Self { .init(origin: .zero, size: .zero) }
-  
+
   public var midpoint: Point<Space> {
     .init(
       x: origin.x + size.width / 2,
       y: origin.y + size.height / 2
     )
   }
+
+  public var minX: CGFloat { x }
+  public var minY: CGFloat { y }
+  public var maxX: CGFloat { x + width }
+  public var maxY: CGFloat { y + height }
+  public var midX: CGFloat { x + width / 2 }
+  public var midY: CGFloat { y + height / 2 }
 }

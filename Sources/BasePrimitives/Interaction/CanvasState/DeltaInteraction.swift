@@ -13,10 +13,11 @@ extension ContinuousInteraction where Value == Size<ScreenSpace> {
     self.value += delta
     self.phase = phase
   }
-  public func clamped(
+  public func clamped<Space>(
     to geometry: CanvasGeometry,
     zoom: CGFloat
-  ) -> CGSize {
+  ) -> Size<Space> {
+//  ) -> CGSize {
     let artwork = geometry.canvasCGSize
     let viewportRect = geometry.viewportRect
     let scaledArtwork = artwork * zoom
@@ -24,7 +25,8 @@ extension ContinuousInteraction where Value == Size<ScreenSpace> {
     let maxX = max((scaledArtwork.width - viewportRect.width) / 2, 0)
     let maxY = max((scaledArtwork.height - viewportRect.height) / 2, 0)
 
-    return CGSize(
+    return Size<Space>(
+//    return CGSize(
       width: value.width.clamped(to: -maxX...maxX),
       height: value.height.clamped(to: -maxY...maxY)
     )
