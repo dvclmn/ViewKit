@@ -10,7 +10,7 @@ import SwiftUI
 /// `CanvasInteractionState`'s state is owned outside of CanvasKit,
 /// by the project *using* CanvasKit. E.g. in the case of DrawString,
 /// this is owned by `BaseContainer` view.
-@MainActor
+//@MainActor
 @Observable
 public final class CanvasInteractionState {
   public var pointer: PointerState
@@ -37,6 +37,7 @@ extension CanvasInteractionState {
   }
 }
 
+@MainActor
 extension CanvasInteractionState {
   package func dragRectBinding(using policy: CanvasInputPolicy) -> Binding<CGRect?> {
     switch policy.dragBehaviour {

@@ -80,6 +80,7 @@ extension View {
   ///   - reversed: When `true`, inverts the sign of the delta (useful for vertical sliders).
   public func tapDragGesture(
     scalar: Binding<CGFloat?>,
+    coordinateSpace: CoordinateSpace = .local,
     axis: GridAxis,
     reversed: Bool = false,
     tapCount: Int = 1,
@@ -89,6 +90,7 @@ extension View {
     self.modifier(
       UnifiedDragModifier(
         rect: scalar.toBindingRect(along: axis, reversed: reversed),
+        coordinateSpace: coordinateSpace,
         behaviour: .continuous(axes: axis.toSet),
         drawsMarqueeRect: false,
         tapCount: tapCount,
