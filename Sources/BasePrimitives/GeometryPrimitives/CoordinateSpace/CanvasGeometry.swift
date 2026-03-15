@@ -29,7 +29,6 @@ public struct CanvasGeometry: Sendable, Equatable, CanvasViewportContext {
 extension CanvasGeometry {
   public init?(
     viewportRect: Rect<ScreenSpace>,
-//    viewportRect: CGRect,
     gridDimensions: GridDimensions,
     unitSize: CGSize,
     anchor: UnitPoint

@@ -9,12 +9,9 @@ import CoreGraphics
 import Foundation
 
 public struct PointerState: Sendable, Equatable {
-  /// These only exist when they are happening.
-  public var tap: TransientInteraction<CGPoint> = .init()
-  public var hover: TransientInteraction<CGPoint> = .init()
-
-  /// Drag data usually needs an origin and a translation/current point.
-  public var drag: TransientInteraction<CGRect> = .init()
+  public var tap: TransientInteraction<Point<ScreenSpace>> = .init()
+  public var hover: TransientInteraction<Point<ScreenSpace>> = .init()
+  public var drag: TransientInteraction<Rect<ScreenSpace>> = .init()
 
   public let dragThreshold: CGFloat = 6
 

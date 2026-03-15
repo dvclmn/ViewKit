@@ -9,7 +9,6 @@ import SwiftUI
 
 public protocol CanvasViewportContext: Sendable, Equatable {
   var viewportRect: Rect<ScreenSpace> { get }
-//  var viewportRect: CGRect { get }
   var canvasSize: Size<CanvasSpace> { get }
   var anchor: UnitPoint { get }
 }

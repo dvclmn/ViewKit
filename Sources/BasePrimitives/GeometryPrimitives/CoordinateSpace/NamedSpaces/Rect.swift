@@ -48,4 +48,11 @@ extension Rect {
   public var origin: Point<Space> { .init(x: x, y: y) }
   public var size: Size<Space> { .init(width: width, height: height) }
   public static var zero: Self { .init(origin: .zero, size: .zero) }
+  
+  public var midpoint: Point<Space> {
+    .init(
+      x: origin.x + size.width / 2,
+      y: origin.y + size.height / 2
+    )
+  }
 }

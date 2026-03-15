@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct TransformState: Sendable, Equatable {
   /// These always exist, they just return to an identity value when inactive.
-  public var pan: ContinuousInteraction<CGSize> = .init(.zero)
+  public var pan: ContinuousInteraction<Size<ScreenSpace>> = .init(.zero)
   public var zoom: ContinuousInteraction<CGFloat> = .init(1.0)
   public var rotation: ContinuousInteraction<Angle> = .init(.zero)
 
