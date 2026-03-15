@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// Allows differentiating one `CGSize` from another, to make it clearer
+/// and easier to move between different coordinate spaces, with compile-time safety.
 public struct Size<Space>: Sendable, Equatable {
   public var width: CGFloat
   public var height: CGFloat
@@ -25,7 +27,6 @@ extension Size {
   public var cgSize: CGSize {
     .init(width: width, height: height)
   }
-  public static var zero: Self {
-    .init(width: 0, height: 0)
-  }
+  
+  public static var zero: Self { .init(width: 0, height: 0) }
 }

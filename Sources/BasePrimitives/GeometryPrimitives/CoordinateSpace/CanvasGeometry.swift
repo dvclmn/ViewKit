@@ -8,16 +8,16 @@
 import CoreGraphics
 import SwiftUI
 
-public struct CanvasGeometry: Sendable, Equatable, ViewportGeometric {
+public struct CanvasGeometry: Sendable, Equatable, CanvasViewportContext {
   public var viewportRect: CGRect
   public var anchor: UnitPoint
   public var canvasSize: Size<CanvasSpace>
+  
+  public static var zero: Self { .init() }
 
-  /// Initialise with zero, so the instance gets set up,
-  /// and then can update at runtime
   public init(
     viewportRect: CGRect = .zero,
-    canvasSize: Size<CanvasSpace>,
+    canvasSize: Size<CanvasSpace> = .zero,
     anchor: UnitPoint = .center
   ) {
     self.viewportRect = viewportRect

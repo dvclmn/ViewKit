@@ -1,5 +1,5 @@
 //
-//  ViewportGeometric.swift
+//  CanvasViewportContext.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 3/3/2026.
@@ -7,24 +7,24 @@
 
 import SwiftUI
 
-public protocol ViewportGeometric: Sendable, Equatable {
+public protocol CanvasViewportContext: Sendable, Equatable {
   var viewportRect: CGRect { get }
   var canvasSize: Size<CanvasSpace> { get }
   var anchor: UnitPoint { get }
 }
 
-extension ViewportGeometric {
+extension CanvasViewportContext {
 
   public var canvasCGSize: CGSize { canvasSize.cgSize }
 
-  public func viewportContext(from state: TransformState) -> ViewportContext? {
-    viewportContext(zoom: state.zoom.value, pan: state.pan.value)
+  public func viewportMapping(from state: TransformState) -> CanvasViewportMapping? {
+    viewportMapping(zoom: state.zoom.value, pan: state.pan.value)
   }
 
-  public func viewportContext(
+  public func viewportMapping(
     zoom: CGFloat,
     pan: CGSize
-  ) -> ViewportContext? {
+  ) -> CanvasViewportMapping? {
     guard isValidForCoordinateMapping else { return nil }
     return ViewportContext(
       viewportRect: viewportRect,

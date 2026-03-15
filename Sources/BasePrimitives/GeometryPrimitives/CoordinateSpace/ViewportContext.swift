@@ -1,5 +1,5 @@
 //
-//  ViewportContext.swift
+//  CanvasViewportMapping.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 28/2/2026.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-
-public struct ViewportContext {
+public struct CanvasViewportMapping {
 
   /// In global/screen space; includes safe-area origin and size.
-  public var viewportRect: CGRect
+  public var viewportRect: Rect​<​Screen​Space>
+  //  public var viewportRect: CGRect
 
   /// Note: no need for previous `panInGlobalSpace`; this is always in
   /// screen/global space now.
@@ -38,10 +38,10 @@ public struct ViewportContext {
   }
 }
 
-extension ViewportContext {
+extension CanvasViewportMapping {
 
   private var zoomSafe: CGFloat {
-    assert(zoom.isFinite, "ViewportContext: zoom became non-finite")
+    assert(zoom.isFinite, "CanvasViewportMapping: zoom became non-finite")
     /// I may consider a different value for max, like 20 or 80 or whatever makes sense
     return zoom.clamped(to: 0.06...CGFloat.greatestFiniteMagnitude)
   }

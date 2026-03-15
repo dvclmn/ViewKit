@@ -49,7 +49,7 @@ extension GridGeometry {
   }
 }
 
-extension GridGeometry: ViewportGeometric {
+extension GridGeometry: CanvasViewportContext {
   public var canvasSize: Size<CanvasSpace> {
     projection.canvasSize(for: dimensions)
   }

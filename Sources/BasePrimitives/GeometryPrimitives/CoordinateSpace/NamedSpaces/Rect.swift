@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// Allows differentiating one `CGRect` from another, to make it clearer
+/// and easier to move between different coordinate spaces, with compile-time safety.
 public struct Rect<Space>: Sendable {
   public var x: CGFloat
   public var y: CGFloat
