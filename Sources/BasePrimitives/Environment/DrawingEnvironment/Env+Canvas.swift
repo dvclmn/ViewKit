@@ -26,7 +26,7 @@ extension EnvironmentValues {
   public var canvasGeometry: CanvasGeometry? {
     guard let viewportRect, let canvasSize else { return nil }
     return CanvasGeometry(
-      viewportRect: viewportRect,
+      viewportRect: Rect<ScreenSpace>(from: viewportRect),
       canvasSize: canvasSize,
       anchor: canvasAnchor
     )
@@ -37,7 +37,9 @@ extension EnvironmentValues {
 
   public var unsafeZoomRange: ClosedRange<Double> {
     guard let zoomRange else {
-      assertionFailure("⚠️ Zoom range is missing from environment. Please ensure this is set high enough up the View hierarchy. Falling back to default range.")
+      assertionFailure(
+        "⚠️ Zoom range is missing from environment. Please ensure this is set high enough up the View hierarchy. Falling back to default range."
+      )
       return 0.2...10
     }
     return zoomRange

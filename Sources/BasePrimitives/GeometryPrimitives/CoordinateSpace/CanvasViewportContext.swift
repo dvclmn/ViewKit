@@ -8,7 +8,8 @@
 import SwiftUI
 
 public protocol CanvasViewportContext: Sendable, Equatable {
-  var viewportRect: CGRect { get }
+  var viewportRect: Rect<ScreenSpace> { get }
+//  var viewportRect: CGRect { get }
   var canvasSize: Size<CanvasSpace> { get }
   var anchor: UnitPoint { get }
 }
@@ -26,12 +27,12 @@ extension CanvasViewportContext {
     pan: CGSize
   ) -> CanvasViewportMapping? {
     guard isValidForCoordinateMapping else { return nil }
-    return ViewportContext(
+    return CanvasViewportMapping(
       viewportRect: viewportRect,
       pan: Point<ScreenSpace>(fromOffset: pan),
       zoom: zoom,
       canvasSize: canvasSize,
-      canvasAnchor: anchor
+      anchor: anchor
     )
   }
 

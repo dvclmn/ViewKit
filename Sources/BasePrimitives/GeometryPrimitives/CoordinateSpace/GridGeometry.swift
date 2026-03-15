@@ -10,7 +10,7 @@ import SwiftUI
 
 /// Continuous/discrete geometry for grid documents.
 public struct GridGeometry: Sendable, Equatable {
-  public let viewportRect: CGRect
+  public let viewportRect: Rect<ScreenSpace>
   public let dimensions: GridDimensions
   public let projection: GridProjection
 
@@ -18,7 +18,7 @@ public struct GridGeometry: Sendable, Equatable {
   public var anchor: UnitPoint
 
   public init(
-    viewportRect: CGRect = .zero,
+    viewportRect: Rect<ScreenSpace> = .zero,
     dimensions: GridDimensions,
     projection: GridProjection,
     anchor: UnitPoint = .center
@@ -33,7 +33,7 @@ public struct GridGeometry: Sendable, Equatable {
 extension GridGeometry {
 
   public init(
-    viewportRect: CGRect = .zero,
+    viewportRect: Rect<ScreenSpace> = .zero,
     dimensions: GridDimensions,
     unitSize: CGSize,
     rounding: GridRounding = .down,

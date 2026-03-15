@@ -9,14 +9,14 @@ import CoreGraphics
 import SwiftUI
 
 public struct CanvasGeometry: Sendable, Equatable, CanvasViewportContext {
-  public var viewportRect: CGRect
+  public var viewportRect: Rect<ScreenSpace>
   public var anchor: UnitPoint
   public var canvasSize: Size<CanvasSpace>
   
   public static var zero: Self { .init() }
 
   public init(
-    viewportRect: CGRect = .zero,
+    viewportRect: Rect<ScreenSpace> = .zero,
     canvasSize: Size<CanvasSpace> = .zero,
     anchor: UnitPoint = .center
   ) {
@@ -28,7 +28,8 @@ public struct CanvasGeometry: Sendable, Equatable, CanvasViewportContext {
 
 extension CanvasGeometry {
   public init?(
-    viewportRect: CGRect,
+    viewportRect: Rect<ScreenSpace>,
+//    viewportRect: CGRect,
     gridDimensions: GridDimensions,
     unitSize: CGSize,
     anchor: UnitPoint

@@ -9,12 +9,13 @@ import Foundation
 
 /// Allows differentiating one `CGRect` from another, to make it clearer
 /// and easier to move between different coordinate spaces, with compile-time safety.
-public struct Rect<Space>: Sendable {
+public struct Rect<Space>: Sendable, Equatable {
+
   public var x: CGFloat
   public var y: CGFloat
   public var width: CGFloat
   public var height: CGFloat
-  
+
   public init(
     x: CGFloat,
     y: CGFloat,
@@ -26,14 +27,25 @@ public struct Rect<Space>: Sendable {
     self.width = width
     self.height = height
   }
-  
-  public init(
-    origin: CGPoint,
-    size: CGSize
-  ) {
+}
+
+extension Rect {
+
+  public init(origin: Point<Space>, size: Size<Space>) {
     self.x = origin.x
     self.y = origin.y
     self.width = size.width
     self.height = size.height
   }
+
+  public init(from cgRect: CGRect) {
+    self.x = cgRect.origin.x
+    self.y = cgRect.origin.y
+    self.width = cgRect.size.width
+    self.height = cgRect.size.height
+  }
+
+  public var origin: Point<Space> { .init(x: x, y: y) }
+  public var size: Size<Space> { .init(width: width, height: height) }
+  public static var zero: Self { .init(origin: .zero, size: .zero) }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 public struct CanvasViewportMapping {
 
   /// In global/screen space; includes safe-area origin and size.
-  public var viewportRect: Rect​<​Screen​Space>
+  public var viewportRect: Rect<ScreenSpace>
   //  public var viewportRect: CGRect
 
   /// Note: no need for previous `panInGlobalSpace`; this is always in
@@ -21,20 +21,20 @@ public struct CanvasViewportMapping {
   /// This is the "subject" (the document) size in Canvas units.
   /// In local/canvas space (unscaled).
   public var canvasSize: Size<CanvasSpace>
-  public var canvasAnchor: UnitPoint
+  public var anchor: UnitPoint
 
   public init(
-    viewportRect: CGRect,
+    viewportRect: Rect<ScreenSpace>,
     pan: Point<ScreenSpace>,
     zoom: CGFloat,
     canvasSize: Size<CanvasSpace>,
-    canvasAnchor: UnitPoint
+    anchor: UnitPoint
   ) {
     self.viewportRect = viewportRect
     self.pan = pan
     self.zoom = zoom
     self.canvasSize = canvasSize
-    self.canvasAnchor = canvasAnchor
+    self.anchor = anchor
   }
 }
 
@@ -72,7 +72,7 @@ extension CanvasViewportMapping {
       return CGSize(width: offsetX, height: offsetY)
     }
 
-    return switch canvasAnchor {
+    return switch anchor {
       case .center: offset(for: .center)
       case .top: offset(for: .top)
       case .bottom: offset(for: .bottom)
@@ -84,7 +84,7 @@ extension CanvasViewportMapping {
       case .bottomTrailing: offset(for: .bottomTrailing)
       default:
         /// For any custom UnitPoint, use its normalized x/y as fractions
-        offset(for: canvasAnchor)
+        offset(for: anchor)
     }
   }
 

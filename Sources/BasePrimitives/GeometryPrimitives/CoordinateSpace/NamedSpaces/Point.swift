@@ -52,7 +52,6 @@ public struct Point<Space>: Sendable, Equatable {
 }
 
 extension Point {
-  public var cgPoint: CGPoint {
-    .init(x: x, y: y)
-  }
+  public var cgPoint: CGPoint { .init(x: x, y: y) }
+  public static var zero: Self { .init(x: 0, y: 0) }
 }
