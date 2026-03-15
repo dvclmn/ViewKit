@@ -106,7 +106,8 @@ extension CanvasViewportMapping {
 
   /// Converts a global/screen space point to local / canvas point
   /// Previously: `toLocal(point:) - > CGPoint`
-  public func toCanvas(screenPoint point: Point<ScreenSpace>) -> Point<CanvasSpace> {
+  public func toCanvas(screenPoint point: CGPoint) -> Point<CanvasSpace> {
+//  public func toCanvas(screenPoint point: Point<ScreenSpace>) -> Point<CanvasSpace> {
     /// 1. Subtract the total translation from the raw screen point
     /// 2. Divide by zoom to get the coordinate on the "original" canvas scale
     Point<CanvasSpace>(
@@ -127,7 +128,8 @@ extension CanvasViewportMapping {
 
   /// Converts a global/screen rect to local/canvas rect.
   public func toCanvas(rect: CGRect) -> CGRect {
-    let originCanvas = toCanvas(screenPoint: Point<ScreenSpace>(fromPoint: rect.origin))
+    let originCanvas = toCanvas(screenPoint: rect.origin)
+//    let originCanvas = toCanvas(screenPoint: Point<ScreenSpace>(fromPoint: rect.origin))
     return CGRect(
       origin: originCanvas.cgPoint,
       size: CGSize(
