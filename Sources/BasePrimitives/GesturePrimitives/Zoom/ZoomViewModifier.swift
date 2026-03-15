@@ -43,10 +43,8 @@ public struct ZoomModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-      .gesture(
-        magnifyGesture,
-        isEnabled: isEnabled
-      )
+      .gesture(magnifyGesture, isEnabled: isEnabled)
+    
       .onChange(of: externalZoom?.wrappedValue) { _, newValue in
         /// External source changed (e.g. reset button / slider / programmatic change).
         /// Only adopt it when we are NOT currently gesturing.
@@ -67,7 +65,8 @@ extension ZoomModifier {
         isGesturing = true
 
         /// MagnifyGesture reports absolute scale since start; convert to delta.
-        let safeLast = lastMagnification.isFinite && lastMagnification > 0
+        let safeLast =
+          lastMagnification.isFinite && lastMagnification > 0
           ? lastMagnification
           : 1
         let delta = value.magnification / safeLast

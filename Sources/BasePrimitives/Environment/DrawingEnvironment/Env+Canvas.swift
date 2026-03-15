@@ -47,6 +47,8 @@ extension EnvironmentValues {
 
   @Entry public var panOffset: CGSize = .zero
   @Entry public var rotation: Angle = .zero
+  
+  /// The hover location in resolved CanvasSpace (before pan/zoom)
   @Entry public var pointerLocation: CGPoint?
 
   public var zoomClamped: Double {

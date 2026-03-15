@@ -23,6 +23,7 @@ extension View {
   ///   - didUpdateTap: Called with the tap location in the view's coordinate space.
   public func tapDragGesture(
     rect: Binding<CGRect?>,
+    coordinateSpace: CoordinateSpace = .local,
     behaviour: DragBehavior,
     drawsMarqueeRect: Bool = true,
     tapCount: Int = 1,
@@ -32,6 +33,7 @@ extension View {
     self.modifier(
       UnifiedDragModifier(
         rect: rect,
+        coordinateSpace: coordinateSpace,
         behaviour: behaviour,
         drawsMarqueeRect: drawsMarqueeRect,
         tapCount: tapCount,
@@ -47,6 +49,7 @@ extension View {
   /// that projects the `size` component of the rect for callers that think in terms of offsets.
   public func tapDragGesture(
     translation: Binding<CGSize?>,
+    coordinateSpace: CoordinateSpace = .local,
     behaviour: DragBehavior,
     drawsMarqueeRect: Bool = true,
     tapCount: Int = 1,
@@ -56,6 +59,7 @@ extension View {
     self.modifier(
       UnifiedDragModifier(
         rect: translation.toBindingRect,
+        coordinateSpace: coordinateSpace,
         behaviour: behaviour,
         drawsMarqueeRect: drawsMarqueeRect,
         tapCount: tapCount,

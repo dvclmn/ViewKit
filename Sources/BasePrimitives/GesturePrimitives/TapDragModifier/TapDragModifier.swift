@@ -16,8 +16,11 @@ public typealias TapUpdate = (CGPoint) -> Void
 /// - Continuous: accumulates offset across drags (suitable for panning).
 /// - None: drag is disabled; tap-only.
 public struct UnifiedDragModifier: ViewModifier {
+  
   @State private var dragState: DragGestureState
+  
   @Binding var dragRect: CGRect?
+  let coordinateSpace: CoordinateSpace
   let behaviour: DragBehavior
   let drawsMarqueeRect: Bool
   let tapCount: Int
@@ -26,6 +29,7 @@ public struct UnifiedDragModifier: ViewModifier {
 
   init(
     rect: Binding<CGRect?>,
+    coordinateSpace: CoordinateSpace,
     behaviour: DragBehavior,
     drawsMarqueeRect: Bool,
     tapCount: Int,
@@ -33,6 +37,7 @@ public struct UnifiedDragModifier: ViewModifier {
     didUpdateTap: @escaping TapUpdate
   ) {
     self._dragRect = rect
+    self.coordinateSpace = coordinateSpace
     self.behaviour = behaviour
     self.drawsMarqueeRect = drawsMarqueeRect
     self.tapCount = tapCount
@@ -44,7 +49,10 @@ public struct UnifiedDragModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-      .onTapGesture(count: tapCount) { didUpdateTap($0) }
+      .onTapGesture(
+        count: tapCount,
+        coordinateSpace: coordinateSpace
+      ) { didUpdateTap($0) }
       .gesture(dragGesture, isEnabled: isDragEnabled)
       .drawMarqueeRect(rect: dragRect, isEnabled: isMarqueeRectEnabled)
       .onChange(of: behaviour) { _, newValue in

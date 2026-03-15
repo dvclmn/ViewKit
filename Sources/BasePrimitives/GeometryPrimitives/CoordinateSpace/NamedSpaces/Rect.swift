@@ -44,6 +44,8 @@ extension Rect {
     self.width = cgRect.size.width
     self.height = cgRect.size.height
   }
+  
+  public var cgRect: CGRect { .init(x: x, y: y, width: width, height: height) }
 
   public var origin: Point<Space> { .init(x: x, y: y) }
   public var size: Size<Space> { .init(width: width, height: height) }

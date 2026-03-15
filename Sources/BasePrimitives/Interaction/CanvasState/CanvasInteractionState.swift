@@ -10,6 +10,7 @@ import SwiftUI
 /// `CanvasInteractionState`'s state is owned outside of CanvasKit,
 /// by the project *using* CanvasKit. E.g. in the case of DrawString,
 /// this is owned by `BaseContainer` view.
+@MainActor
 @Observable
 public final class CanvasInteractionState {
   public var pointer: PointerState
@@ -34,4 +35,46 @@ extension CanvasInteractionState {
     pointer.reset()
     transform.reset()
   }
+}
+
+extension CanvasInteractionState {
+  package func dragRectBinding(using policy: CanvasInputPolicy) -> Binding<CGRect?> {
+    switch policy.dragBehaviour {
+      case .marquee: handleMarquee()
+      case .continuous: handleContinuous(using: policy)
+      case .none: .constant(nil)
+    }
+  }
+
+  private func handleContinuous(using policy: CanvasInputPolicy) -> Binding<CGRect?> {
+    guard policy.pointerDragPanEnabled else {
+      /// Continuous drag that isn't routed to pan (e.g. zoom tool vertical drag).
+      /// Route to pointer drag state so the operation resolver can see it.
+      return dragStateBinding()
+    }
+    return Binding {
+      self.pan.toCGRectZeroOrigin
+    } set: {
+      guard let size = $0?.size else { return }
+      self.transform.pan.update(
+        .init(fromCGSize: size),
+        phase: .changed
+      )
+    }
+  }
+
+  private func handleMarquee() -> Binding<CGRect?> {
+    dragStateBinding()
+  }
+
+  private func dragStateBinding() -> Binding<CGRect?> {
+    Binding {
+      self.pointer.drag.value?.cgRect
+    } set: { newValue in
+      self.pointer.drag.value = newValue.map {
+        Rect<ScreenSpace>(from: $0)
+      }
+    }
+  }
+
 }
