@@ -19,17 +19,17 @@ public struct CanvasTool: Sendable, Identifiable, Hashable {
 
   public let name: String
   public let icon: String
-  public let dragBehavior: DragBehavior
+//  public let dragBehavior: DragBehavior
 
   public init(
     kind: CanvasToolKind,
     name: String,
     icon: String,
-    dragBehavior: DragBehavior = .none
+//    dragBehavior: DragBehavior = .none
   ) {
     self.kind = kind
     self.name = name
     self.icon = icon
-    self.dragBehavior = dragBehavior
+//    self.dragBehavior = dragBehavior
   }
 }

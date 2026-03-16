@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+/// Supported stored properties
+/// - Pan offset
+/// - Zoom scale
+/// -
+
 /// `CanvasInteractionState`'s state is owned outside of CanvasKit,
 /// by the project *using* CanvasKit. E.g. in the case of DrawString,
 /// this is owned by `BaseContainer` view.

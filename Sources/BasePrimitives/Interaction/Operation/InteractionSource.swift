@@ -70,12 +70,13 @@ public enum GestureKind: Sendable, Equatable {
 
 public struct PointerDragKind: Sendable, Equatable {
 
-  public enum Button: Sendable {
-    case primary
-    case secondary
-    case middle
-  }
 
-  public var button: Button
+  public var button: PointerButton
   public var modifiers: Modifiers
+}
+
+public enum PointerButton: Sendable {
+  case primary
+  case secondary
+  case middle
 }

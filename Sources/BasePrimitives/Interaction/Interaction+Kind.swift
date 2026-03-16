@@ -7,21 +7,22 @@
 
 import Foundation
 
-//public enum InteractionKind: Equatable {
-//  case pointer(Pointer)
-//  case gesture(Gesture)
-//
-//  public enum Pointer: Equatable {
-//    case tap
-//    case tapDrag
-//    case hover
-//    case forceTouch
-//  }
-//
-//  /// All two finger gestures only
-//  public enum Gesture: Equatable {
-//    case pan
-//    case pinch
-//    case rotate
-//  }
-//}
+public enum InteractionKind: Equatable {
+  case pointer(Pointer)
+  case gesture(Gesture)
+  case idle
+
+  public enum Pointer: Equatable {
+    case tap
+    case tapDrag
+    case hover
+    case forceTouch
+  }
+
+  /// These are all two finger gestures only
+  public enum Gesture: Equatable {
+    case pan
+    case pinch
+    case rotate
+  }
+}
