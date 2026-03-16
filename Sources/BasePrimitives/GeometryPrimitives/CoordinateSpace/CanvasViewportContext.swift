@@ -18,13 +18,16 @@ extension CanvasViewportContext {
   public var canvasCGSize: CGSize { canvasSize.cgSize }
 
   public func viewportMapping(from state: TransformState) -> CanvasViewportMapping? {
-    viewportMapping(zoom: state.zoom.value, pan: state.pan.value)
+    viewportMapping(
+      zoom: state.scale.value,
+      pan: state.translation.value.screenSize
+    )
   }
 
   public func viewportMapping(
     zoom: CGFloat,
     pan: Size<ScreenSpace>
-//    pan: CGSize
+    //    pan: CGSize
   ) -> CanvasViewportMapping? {
     guard isValidForCoordinateMapping else { return nil }
     return CanvasViewportMapping(

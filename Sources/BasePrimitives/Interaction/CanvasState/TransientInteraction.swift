@@ -10,7 +10,7 @@ import Foundation
 public struct TransientInteraction<Value: Sendable & Equatable>: Sendable, Equatable {
   public var value: Value?
   public var phase: InteractionPhase
-  public var source: InteractionSource
+//  public var source: InteractionSource
 
   /// It's active if we have data AND the phase hasn't terminated.
   public var isActive: Bool {
@@ -20,21 +20,21 @@ public struct TransientInteraction<Value: Sendable & Equatable>: Sendable, Equat
   public init(
     _ value: Value? = nil,
     phase: InteractionPhase = .none,
-    source: InteractionSource
+//    source: InteractionSource
   ) {
     self.value = value
     self.phase = phase
-    self.source = source
+//    self.source = source
   }
 
   public mutating func update(
     _ value: Value?,
     phase: InteractionPhase,
-    source: InteractionSource,
+//    source: InteractionSource,
   ) {
     self.value = value
     self.phase = phase
-    self.source = source
+//    self.source = source
   }
 
   /// Instantly clears the transient state.

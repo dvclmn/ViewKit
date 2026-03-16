@@ -31,3 +31,6 @@ extension Size {
   public static var zero: Self { .init(width: 0, height: 0) }
 }
 
+extension CGSize {
+  package var screenSize: Size<ScreenSpace> { .init(fromCGSize: self) }
+}

@@ -12,22 +12,22 @@ import Foundation
 /// use CGPoint for tap and hover, as these stay(?) or are at least
 /// captured in screen space. I dunno, just less annoying to work
 /// with as CGPoint for now.
-public struct PointerState: Sendable, Equatable {
-  public var tap: TransientInteraction<CGPoint> = .init()
-  public var hover: TransientInteraction<CGPoint> = .init()
-  public var drag: TransientInteraction<Rect<ScreenSpace>> = .init()
-
-  public let dragThreshold: CGFloat = 6
-
-  public init() {}
-}
-
-extension PointerState {
-  public static let initial = PointerState()
-
-  public mutating func reset() {
-    tap.reset()
-    hover.reset()
-    drag.reset()
-  }
-}
+//public struct PointerState: Sendable, Equatable {
+//  public var tap: TransientInteraction<CGPoint> = .init()
+//  public var hover: TransientInteraction<CGPoint> = .init()
+//  public var drag: TransientInteraction<Rect<ScreenSpace>> = .init()
+//
+//  
+//
+//  public init() {}
+//}
+//
+//extension PointerState {
+//  public static let initial = PointerState()
+//
+//  public mutating func reset() {
+//    tap.reset()
+//    hover.reset()
+//    drag.reset()
+//  }
+//}

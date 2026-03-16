@@ -8,14 +8,18 @@
 import SwiftUI
 
 public struct TransformState: Sendable, Equatable {
-  public var translation: CGSize
-  public var scale: CGFloat
-  public var rotation: Angle
+  public var translation: ContinuousInteraction<CGSize>
+  public var scale: ContinuousInteraction<CGFloat>
+  public var rotation: ContinuousInteraction<Angle>
+
+//  public var translation: CGSize
+//  public var scale: CGFloat
+//  public var rotation: Angle
 
   public init(
-    translation: CGSize = .zero,
-    scale: CGFloat = 1.0,
-    rotation: Angle = .zero,
+    translation: ContinuousInteraction<CGSize> = .init(.zero),
+    scale: ContinuousInteraction<CGFloat> = .init(1.0),
+    rotation:  ContinuousInteraction<Angle> = .init(.zero),
   ) {
     self.translation = translation
     self.scale = scale

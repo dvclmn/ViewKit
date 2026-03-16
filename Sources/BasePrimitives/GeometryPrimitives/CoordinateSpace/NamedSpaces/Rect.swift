@@ -38,7 +38,7 @@ extension Rect {
     self.height = size.height
   }
 
-  public init(from cgRect: CGRect) {
+  public init(fromRect cgRect: CGRect) {
     self.x = cgRect.origin.x
     self.y = cgRect.origin.y
     self.width = cgRect.size.width
@@ -64,4 +64,8 @@ extension Rect {
   public var maxY: CGFloat { y + height }
   public var midX: CGFloat { x + width / 2 }
   public var midY: CGFloat { y + height / 2 }
+}
+
+extension CGRect {
+  package var screenRect: Rect<ScreenSpace> { .init(fromRect: self) }
 }

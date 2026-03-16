@@ -18,74 +18,78 @@ import SwiftUI
 //@MainActor
 @Observable
 public final class CanvasInteractionState {
-  
+
   /// General Note: May need to evolve CanvasKit to interpret a 'semantic entity',
   /// such as Strokes for Paperbark, and Cells for DrawString, etc?
-  
-//  public var pointer: PointerState
+  public var dragRect: CGRect? = nil
+  //  public var pointer: PointerState
   public var transform: TransformState
+  public let dragThreshold: CGFloat = 6
 
   public init(
-//    pointer: PointerState = .initial,
+    //    pointer: PointerState = .initial,
     transform: TransformState = .initial
   ) {
-//    self.pointer = pointer
+    //    self.pointer = pointer
     self.transform = transform
   }
 }
 
 extension CanvasInteractionState {
 
-//  public var pan: CGSize { transform.pan.value.cgSize }
-//  public var zoom: CGFloat { transform.zoom.value }
-//  public var rotation: Angle { transform.rotation.value }
+  public var translation: CGSize { transform.translation.value }
+  public var scale: CGFloat { transform.scale.value }
+  public var rotation: Angle { transform.rotation.value }
 
   public func resetAll() {
-//    pointer.reset()
+    //    pointer.reset()
+    dragRect = nil
     transform.reset()
   }
 }
 
-@MainActor
-extension CanvasInteractionState {
-  package func dragRectBinding(using policy: CanvasInputPolicy) -> Binding<CGRect?> {
-    switch policy.dragBehaviour {
-      case .marquee: handleMarquee()
-      case .continuous: handleContinuous(using: policy)
-      case .none: .constant(nil)
-    }
-  }
-
-  private func handleContinuous(using policy: CanvasInputPolicy) -> Binding<CGRect?> {
-    guard policy.pointerDragPanEnabled else {
-      /// Continuous drag that isn't routed to pan (e.g. zoom tool vertical drag).
-      /// Route to pointer drag state so the operation resolver can see it.
-      return dragStateBinding()
-    }
-    return Binding {
-      self.pan.toCGRectZeroOrigin
-    } set: {
-      guard let size = $0?.size else { return }
-      self.transform.pan.update(
-        .init(fromCGSize: size),
-        phase: .changed,
-        
-      )
-    }
-  }
-
-  private func handleMarquee() -> Binding<CGRect?> {
-    dragStateBinding()
-  }
-
-  private func dragStateBinding() -> Binding<CGRect?> {
-    Binding {
-      self.pointer.drag.value?.cgRect
-    } set: { newValue in
-      self.pointer.drag.value = newValue.map {
-        Rect<ScreenSpace>(from: $0)
-      }
-    }
-  }
-
-}
+//@MainActor
+//extension CanvasInteractionState {
+//  package func dragRectBinding(using policy: CanvasInputPolicy) -> Binding<CGRect?> {
+//    switch policy.dragBehaviour {
+//      case .marquee: handleMarquee()
+//      case .continuous: handleContinuous(using: policy)
+//      case .none: .constant(nil)
+//    }
+//  }
+//
+//  private func handleContinuous(using policy: CanvasInputPolicy) -> Binding<CGRect?> {
+//    guard policy.pointerDragPanEnabled else {
+//      /// Continuous drag that isn't routed to pan (e.g. zoom tool vertical drag).
+//      /// Route to pointer drag state so the operation resolver can see it.
+//      return dragStateBinding()
+//    }
+//    return Binding {
+//      self.transform.translation.value.toCGRectZeroOrigin
+//      //      self.pan.toCGRectZeroOrigin
+//    } set: {
+//      guard let size = $0?.size else { return }
+//      self.transform.translation.update(size, phase: .changed)
+//      //      self.transform.pan.update(
+//      //        .init(fromCGSize: size),
+//      //        phase: .changed,
+//      //
+//      //      )
+//    }
+//  }
+//
+//  private func handleMarquee() -> Binding<CGRect?> {
+//    dragStateBinding()
+//  }
+//
+//  private func dragStateBinding() -> Binding<CGRect?> {
+//    Binding {
+//      self.pointer.drag.value?.cgRect
+//    } set: { newValue in
+//      self.pointer.drag.value = newValue.map {
+//        Rect<ScreenSpace>(from: $0)
+//      }
+//    }
+//  }
+//
+//}
