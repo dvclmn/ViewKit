@@ -7,12 +7,54 @@
 
 import SwiftUI
 
+//public protocol CanvasElement: Identifiable {
+//  associatedtype ID
+//}
+//
+
+/// 1. Define what a Tool can actually output.
+public enum CanvasIntent {
+  case mutateTransform(TransformState)
+  case updateHoverLocation(CGPoint)
+  //  case updateSelection([(any CanvasElement).ID])
+  //  case updateHoverStatus((any CanvasElement).ID?)
+  case none
+}
+
 public protocol CanvasTool {
   func resolve(
     interaction: Interaction,
     currentTransform: TransformState
   ) -> CanvasIntent
 }
+
+public struct SelectTool: CanvasTool {
+  public func resolve(
+    interaction: Interaction,
+    currentTransform: TransformState
+  ) -> CanvasIntent {
+    switch interaction.kind {
+      case .hovering(let location):
+        /// 1. Convert viewport coordinate to document coordinate using currentTransform
+        /// 2. Hit-test the document to find what is under the cursor
+        /// 3. Return the intent
+        //        let hitItemID = hitTest(location: location)
+        //        return .updateHoverStatus(hitItemID)
+        return .updateHoverLocation(location)
+        
+      case .scrolling(let origin, let delta, let location):
+        
+        /// Select Tool allows standard panning
+        var newTransform = currentTransform
+        newTransform.translation.width += delta.width
+        return .mutateTransform(newTransform)
+        
+      default:
+        return .none
+    }
+  }
+}
+
 
 /// A canvas tool's identity and visual metadata.
 ///
@@ -41,24 +83,3 @@ public protocol CanvasTool {
 //  }
 //}
 
-public struct SelectTool: CanvasTool {
-  public func resolve(interaction: Interaction, currentTransform: TransformState) -> CanvasIntent {
-    switch interaction.kind {
-      case .hovering(let location):
-        // 1. Convert viewport coordinate to document coordinate using currentTransform
-        // 2. Hit-test the document to find what is under the cursor
-        // 3. Return the intent
-        let hitItemID = hitTest(location: location)
-        return .updateHoverStatus(hitItemID)
-        
-      case .scrolling(let delta):
-        // Select Tool allows standard panning
-        var newTransform = currentTransform
-        newTransform.translation.width += delta.width
-        return .mutateTransform(newTransform)
-        
-      default:
-        return .noOp
-    }
-  }
-}

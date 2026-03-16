@@ -22,26 +22,26 @@ public final class CanvasInteractionState {
   /// General Note: May need to evolve CanvasKit to interpret a 'semantic entity',
   /// such as Strokes for Paperbark, and Cells for DrawString, etc?
   
-  public var pointer: PointerState
+//  public var pointer: PointerState
   public var transform: TransformState
 
   public init(
-    pointer: PointerState = .initial,
+//    pointer: PointerState = .initial,
     transform: TransformState = .initial
   ) {
-    self.pointer = pointer
+//    self.pointer = pointer
     self.transform = transform
   }
 }
 
 extension CanvasInteractionState {
 
-  public var pan: CGSize { transform.pan.value.cgSize }
-  public var zoom: CGFloat { transform.zoom.value }
-  public var rotation: Angle { transform.rotation.value }
+//  public var pan: CGSize { transform.pan.value.cgSize }
+//  public var zoom: CGFloat { transform.zoom.value }
+//  public var rotation: Angle { transform.rotation.value }
 
   public func resetAll() {
-    pointer.reset()
+//    pointer.reset()
     transform.reset()
   }
 }

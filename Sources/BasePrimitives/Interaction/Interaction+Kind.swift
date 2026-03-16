@@ -11,11 +11,13 @@ import SwiftUI
 @MetaEnum
 public enum InteractionKind {
   case pinching(magnification: CGFloat, anchor: UnitPoint)
+  
   case scrolling(
     origin: CGPoint,
     delta: CGSize,
     location: CGPoint
   )  // Aka scroll, swipe
+  
   case rotating(Angle)
 
   case tapping(PointerButton, location: CGPoint)
