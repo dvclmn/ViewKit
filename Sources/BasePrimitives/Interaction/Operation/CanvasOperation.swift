@@ -47,7 +47,7 @@ public struct CanvasOperation: Identifiable {
   public let name: String
 
   public let phase: InteractionPhase?
-  public let transformSource: TransformSource?
+//  public let transformSource: TransformSource?
 
   /// Domain-specific payload. Use this for data like selection modes,
   /// text placement info, etc. that belongs to your app, not the framework.
@@ -57,13 +57,13 @@ public struct CanvasOperation: Identifiable {
     kind: CanvasOperation.Kind,
     name: String? = nil,
     phase: InteractionPhase? = nil,
-    transformSource: TransformSource? = nil,
+//    transformSource: TransformSource? = nil,
     userInfo: [String: AnyHashable]? = nil
   ) {
     self.kind = kind
     self.name = name ?? kind.name
     self.phase = phase
-    self.transformSource = transformSource
+//    self.transformSource = transformSource
     self.userInfo = userInfo
   }
 }
@@ -84,24 +84,24 @@ extension CanvasOperation {
     CanvasOperation(kind: .hovering)
   }
 
-  public static func panning(
-    _ src: TransformSource,
-    phase: InteractionPhase
-  ) -> CanvasOperation {
-    CanvasOperation(kind: .panning, phase: phase, transformSource: src)
-  }
-
-  public static func zooming(
-    _ src: TransformSource,
-    phase: InteractionPhase
-  ) -> CanvasOperation {
-    CanvasOperation(kind: .zooming, phase: phase, transformSource: src)
-  }
-
-  public static func selecting(
-    phase: InteractionPhase,
-    userInfo: [String: AnyHashable]? = nil
-  ) -> CanvasOperation {
-    CanvasOperation(kind: .selecting, phase: phase, userInfo: userInfo)
-  }
+//  public static func panning(
+//    _ src: TransformSource,
+//    phase: InteractionPhase
+//  ) -> CanvasOperation {
+//    CanvasOperation(kind: .panning, phase: phase, transformSource: src)
+//  }
+//
+//  public static func zooming(
+//    _ src: TransformSource,
+//    phase: InteractionPhase
+//  ) -> CanvasOperation {
+//    CanvasOperation(kind: .zooming, phase: phase, transformSource: src)
+//  }
+//
+//  public static func selecting(
+//    phase: InteractionPhase,
+//    userInfo: [String: AnyHashable]? = nil
+//  ) -> CanvasOperation {
+//    CanvasOperation(kind: .selecting, phase: phase, userInfo: userInfo)
+//  }
 }

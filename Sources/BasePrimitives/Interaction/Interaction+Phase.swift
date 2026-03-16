@@ -35,6 +35,18 @@ public enum InteractionPhase: String, Sendable, Codable {
 }
 
 extension InteractionPhase {
+  public var isActive: Bool {
+    self == .began || self == .changed || self == .stationary || self == .mayBegin
+  }
+  public var name: String {
+    switch self {
+      case .mayBegin: "May Begin"
+      default: rawValue.capitalized
+    }
+  }
+}
+
+extension InteractionPhase {
   public init(from nsEventPhase: NSEvent.Phase) {
     self =
       switch nsEventPhase {
@@ -67,16 +79,5 @@ extension InteractionPhase {
         case .active: .changed
         case .ended: .ended
       }
-  }
-
-  public var name: String {
-    switch self {
-      case .mayBegin: "May Begin"
-      default: rawValue.capitalized
-    }
-  }
-
-  public var isActive: Bool {
-    self == .began || self == .changed || self == .stationary
   }
 }
