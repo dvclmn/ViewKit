@@ -5,42 +5,48 @@
 //  Created by Dave Coleman on 11/1/2026.
 //
 
-import Foundation
+import EnumMacros
+import SwiftUI
 
-public enum Interaction {
-  case pinch
-  case pan  // Aka scroll, swipe
-  case rotate
+@MetaEnum
+public enum InteractionKind {
+  case pinching(magnification: CGFloat, anchor: UnitPoint)
+  case scrolling(
+    origin: CGPoint,
+    delta: CGSize,
+    location: CGPoint
+  )  // Aka scroll, swipe
+  case rotating(Angle)
 
-  case tap
+  case tapping(PointerButton, location: CGPoint)
   case forceTouch
-  case drag
-  case hover
+  case dragging(from: CGPoint, current: CGPoint)
+  case hovering(CGPoint)
   case idle
 }
 
-extension Interaction {
-  //  public enum TapKind {
-  //    case standard
-  //    case forceTouch
-  //  }
+//extension InteractionKind {
+//  public enum TapKind {
+//    case standard
+//    case forceTouch
+//  }
 
-  public enum Kind {
-    case gesture
-    case pointer
-    case none
-  }
-}
+//  public enum Kind {
+//    case gesture
+//    case pointer
+//    case none
+//  }
+//}
 
-extension Interaction {
-  public var kind: Interaction.Kind {
-    switch self {
-      case .pinch, .pan, .rotate: .gesture
-      case .tap, .forceTouch, .drag, .hover: .pointer
-      case .idle: .none
-    }
-  }
-}
+//extension Interaction {
+//  public var kind: Interaction.Kind {
+//    switch self {
+//      case .pinch, .pan, .rotate: .gesture
+//      case .tap, .forceTouch, .drag, .hover: .pointer
+//      case .idle: .none
+//    }
+//  }
+//}
 
 //public enum InteractionKind: Equatable {
 //  case pointer(Pointer)

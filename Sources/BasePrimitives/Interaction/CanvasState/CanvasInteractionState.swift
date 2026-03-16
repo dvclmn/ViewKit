@@ -18,6 +18,10 @@ import SwiftUI
 //@MainActor
 @Observable
 public final class CanvasInteractionState {
+  
+  /// General Note: May need to evolve CanvasKit to interpret a 'semantic entity',
+  /// such as Strokes for Paperbark, and Cells for DrawString, etc?
+  
   public var pointer: PointerState
   public var transform: TransformState
 

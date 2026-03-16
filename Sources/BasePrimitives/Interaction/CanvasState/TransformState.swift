@@ -8,7 +8,6 @@
 import SwiftUI
 
 public struct TransformState: Sendable, Equatable {
-
   public var translation: CGSize
   public var scale: CGFloat
   public var rotation: Angle

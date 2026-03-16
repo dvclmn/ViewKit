@@ -5,6 +5,14 @@
 //  Created by Dave Coleman on 9/3/2026.
 //
 
+/// 1. Define what a Tool can actually output.
+public enum CanvasIntent {
+  case mutateTransform(TransformState)
+  case updateSelection([CanvasItem.ID])
+  case updateHoverStatus(CanvasItem.ID?)
+  case noOp
+}
+
 /// The semantic operation currently being performed on the canvas.
 ///
 /// Always *computed* from inputs (tool + interaction state + modifiers) — never stored.
