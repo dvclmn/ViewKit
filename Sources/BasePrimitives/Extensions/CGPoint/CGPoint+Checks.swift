@@ -34,10 +34,6 @@ extension CGPoint {
 
     return isXWithin && isYWithin
   }
-  
-  
-  
-  
 
   public var isZero: Bool { x.isZero && y.isZero }
 

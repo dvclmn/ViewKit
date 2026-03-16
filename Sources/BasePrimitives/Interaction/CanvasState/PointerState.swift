@@ -8,11 +8,13 @@
 import CoreGraphics
 import Foundation
 
+/// Not sure if this could/should be different, but have chosen to
+/// use CGPoint for tap and hover, as these stay(?) or are at least
+/// captured in screen space. I dunno, just less annoying to work
+/// with as CGPoint for now.
 public struct PointerState: Sendable, Equatable {
   public var tap: TransientInteraction<CGPoint> = .init()
-//  public var tap: TransientInteraction<Point<ScreenSpace>> = .init()
   public var hover: TransientInteraction<CGPoint> = .init()
-//  public var hover: TransientInteraction<Point<ScreenSpace>> = .init()
   public var drag: TransientInteraction<Rect<ScreenSpace>> = .init()
 
   public let dragThreshold: CGFloat = 6

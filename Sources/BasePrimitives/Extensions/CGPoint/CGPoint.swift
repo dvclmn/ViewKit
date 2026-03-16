@@ -109,15 +109,11 @@ extension CGPoint {
     ]
 
     return anchors.min(by: {
-      distanceSquared(from: relative, to: $0) < distanceSquared(from: relative, to: $1)
+      relative.distanceSquared(to: $0) < relative.distanceSquared(to: $1)
+      //      distanceSquared(from: relative, to: $0) < distanceSquared(from: relative, to: $1)
     }) ?? .center
   }
 
-  func distanceSquared(from a: UnitPoint, to b: UnitPoint) -> CGFloat {
-    let dx = a.x - b.x
-    let dy = a.y - b.y
-    return dx * dx + dy * dy
-  }
 }
 
 extension CGPoint {

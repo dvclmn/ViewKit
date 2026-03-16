@@ -65,150 +65,57 @@ extension UnitPoint {
     return result
   }
 
-  public init(fromPoint: CGPoint, in size: CGSize) {
-    /// Avoid division by zero; if a dimension is zero, fall back to 0
-    let unitX: CGFloat =
-      !size.width.isZero
-      ? fromPoint.x / size.width
-      : 0
-
-    let unitY: CGFloat =
-      !size.height.isZero
-      ? fromPoint.y / size.height
-      : 0
-
-    /// Clamp to the unit interval `[0, 1]`
-    let clampedX = max(0, min(1, unitX))
-    let clampedY = max(0, min(1, unitY))
-
-    self.init(x: clampedX, y: clampedY)
+  /// `clamped` if true will trim any values outside of 0...1
+  public init(
+    point: CGPoint,
+    in size: CGSize,
+    clamped: Bool = true
+  ) {
+    let unitX = size.width.isZero ? 0 : point.x / size.width
+    let unitY = size.height.isZero ? 0 : point.y / size.height
+    if clamped {
+      self.init(x: max(0, min(1, unitX)), y: max(0, min(1, unitY)))
+    } else {
+      self.init(x: unitX, y: unitY)
+    }
   }
-
-  //  public func toCGPointAxis(
-  //    for axis: Axis,
-  //    length: CGFloat
-  //  ) -> CGFloat {
-  ////  ) -> CGPoint {
-  //
-  //    let point: CGPoint
-  //    switch axis {
-  //      case .horizontal:
-  //        point = CGPoint(
-  //          x: self.x * length,
-  //          y: self.y
-  //        )
-  //
-  //      case .vertical:
-  //        point = CGPoint(
-  //          x: self.x,
-  //          y: self.y * length
-  //        )
-  //
-  //    //        point = self.toCGPoint(in: CGSize(width: .zero, height: length))
-  //    }
-  //    return axis.point(fromPoint: point)
-  //
-  //    //    let initialResult = CGPoint(
-  //    //      x: self.x * length,
-  //    //      y: self.y * length
-  //    //    )
-  //    //    let resultLength = axis.point(fromPoint: initialResult)
-  //    //    let result = CGPoint(
-  //    //      x: self.x * size.width,
-  //    //      y: self.y * size.height
-  //    //    )
-  //
-  //    //    let result = valueForAxis * length
-  //    //    return resultLength
-  //  }
 
   public static func location(
     for point: CGPoint,
-    in size: CGSize
+    in size: CGSize,
+    clamped: Bool = true
   ) -> UnitPoint {
-    let result = UnitPoint(
-      x: point.x / size.width,
-      y: point.y / size.height
-    )
-    return result
+    UnitPoint(point: point, in: size, clamped: clamped)
   }
 
-  /// Corner intermediates (positioned between corners and edge centers)
-  public static let topLeadingMid = UnitPoint(x: 0.25, y: 0.25)
-  public static let topTrailingMid = UnitPoint(x: 0.75, y: 0.25)
-  public static let bottomLeadingMid = UnitPoint(x: 0.25, y: 0.75)
-  public static let bottomTrailingMid = UnitPoint(x: 0.75, y: 0.75)
-
-  /// Edge intermediates (positioned between edge centers and corners)
-  public static let topMid = UnitPoint(x: 0.5, y: 0.25)
-  public static let leadingMid = UnitPoint(x: 0.25, y: 0.5)
-  public static let trailingMid = UnitPoint(x: 0.75, y: 0.5)
-  public static let bottomMid = UnitPoint(x: 0.5, y: 0.75)
-
-  /// Quarter points along edges
-  public static let topQuarter = UnitPoint(x: 0.25, y: 0.0)
-  public static let topThreeQuarters = UnitPoint(x: 0.75, y: 0.0)
-  public static let leadingQuarter = UnitPoint(x: 0.0, y: 0.25)
-  public static let leadingThreeQuarters = UnitPoint(x: 0.0, y: 0.75)
-  public static let trailingQuarter = UnitPoint(x: 1.0, y: 0.25)
-  public static let trailingThreeQuarters = UnitPoint(x: 1.0, y: 0.75)
-  public static let bottomQuarter = UnitPoint(x: 0.25, y: 1.0)
-  public static let bottomThreeQuarters = UnitPoint(x: 0.75, y: 1.0)
-
-  /// Center region intermediates
-  public static let centerLeading = UnitPoint(x: 0.25, y: 0.5)
-  public static let centerTrailing = UnitPoint(x: 0.75, y: 0.5)
-  public static let centerTop = UnitPoint(x: 0.5, y: 0.25)
-  public static let centerBottom = UnitPoint(x: 0.5, y: 0.75)
-
-  /// Diagonal points
-  public static let diagonalQuarter = UnitPoint(x: 0.25, y: 0.25)
-  public static let diagonalThreeQuarters = UnitPoint(x: 0.75, y: 0.75)
-  public static let diagonalInverseQuarter = UnitPoint(x: 0.25, y: 0.75)
-  public static let diagonalInverseThreeQuarters = UnitPoint(x: 0.75, y: 0.25)
-
-  public var opposing: UnitPoint {
-    switch self {
-      case .top: return .bottom
-      case .bottom: return .top
-      case .leading: return .trailing
-      case .trailing: return .leading
-      case .topLeading: return .bottomTrailing
-      case .topTrailing: return .bottomLeading
-      case .bottomLeading: return .topTrailing
-      case .bottomTrailing: return .topLeading
-      default: return .center
-    }
-  }
-
-  public var toAlignment: Alignment {
-    switch self {
-      case .top: return .top
-      case .bottom: return .bottom
-      case .leading: return .leading
-      case .trailing: return .trailing
-      case .topLeading: return .topLeading
-      case .topTrailing: return .topTrailing
-      case .bottomLeading: return .bottomLeading
-      case .bottomTrailing: return .bottomTrailing
-      default: return .center
-    }
-  }
-
-  /// This is just for visual debugging
-  public var debugColour: Color {
-    switch self {
-      case .topLeading: Color.red
-      case .top: Color.blue
-      case .topTrailing: Color.orange
-      case .trailing: Color.brown
-      case .bottomTrailing: Color.purple
-      case .bottom: Color.mint
-      case .bottomLeading: Color.cyan
-      case .leading: Color.green
-      case .center: Color.yellow
-      default: Color.gray
-    }
-  }
+  //  public init(fromPoint: CGPoint, in size: CGSize) {
+  //    /// Avoid division by zero; if a dimension is zero, fall back to 0
+  //    let unitX: CGFloat =
+  //      !size.width.isZero
+  //      ? fromPoint.x / size.width
+  //      : 0
+  //
+  //    let unitY: CGFloat =
+  //      !size.height.isZero
+  //      ? fromPoint.y / size.height
+  //      : 0
+  //
+  //    /// Clamp to the unit interval `[0, 1]`
+  //    let clampedX = max(0, min(1, unitX))
+  //    let clampedY = max(0, min(1, unitY))
+  //
+  //    self.init(x: clampedX, y: clampedY)
+  //  }
+  //
+  //  public static func location(
+  //    for point: CGPoint,
+  //    in size: CGSize
+  //  ) -> UnitPoint {
+  //    let result = UnitPoint(
+  //      x: point.x / size.width,
+  //      y: point.y / size.height
+  //    )
+  //    return result
+  //  }
 
 }
