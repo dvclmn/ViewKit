@@ -5,6 +5,28 @@
 //  Created by Dave Coleman on 10/3/2026.
 //
 
+
+/// What needs to be expressed?
+///
+/// What can be performed multiple ways?
+///
+/// ## Pan
+/// - Gesture
+/// - Click and drag (both spring-loaded, and normal Tool selection)
+///
+/// ## Zoom
+/// - Gesture
+///   - Two-finger pinch
+///   - Hold Option and two-finger vertical scroll
+/// - Click and drag (spring loaded and standard)
+/// - Tap (zoom in), Tap + Option (zoom out)
+///
+/// ## Rotation
+/// - Currently Gesture-only (not implemented)
+///
+/// 
+///
+
 /// Controls which input modifiers and gestures are active on the canvas.
 ///
 /// Each field gates a specific gesture or modifier in `TransformationsModifier`:
@@ -24,7 +46,6 @@ public struct CanvasInputPolicy: Equatable, Sendable {
   public var zoomGestureEnabled: Bool
 
   /// Whether pointer click-drag can pan the canvas.
-  /// Only `true` when the Pan tool (or a spring-loaded Pan) is the effective tool.
   public var pointerDragPanEnabled: Bool
 
   /// The drag interaction mode: `.marquee`, `.continuous(axes:)`, or `.none`.

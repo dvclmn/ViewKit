@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+#warning("Consider either adding InteractionSource to this, or a new type that can express both")
+
 /// Defines the drag interaction mode applied by ``UnifiedDragModifier``.
 ///
 /// - ``marquee``: A transient selection rectangle, cleared when the drag ends.
@@ -24,13 +26,13 @@ public enum DragBehavior: Equatable, Sendable, Hashable {
   ///
   /// Each new drag begins from the offset committed by the previous drag, so
   /// movement compounds over time. Pass a ``GridAxis/Set`` to lock to an axis.
-  case continuous(axes: GridAxis.Set = .all)
+  case continuous(axes: GridAxis.Set)
 
   /// Drag gesture is inactive; no callbacks or state changes are produced.
   case none
 
   /// Convenience for `.continuous(axes: .all)`.
-  public static var continuous: Self { .continuous() }
+  public static var continuous: Self { .continuous(axes: .all) }
 }
 
 extension DragBehavior {

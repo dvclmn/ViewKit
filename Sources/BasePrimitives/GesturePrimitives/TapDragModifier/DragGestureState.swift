@@ -79,9 +79,7 @@ extension DragGestureState {
   }
 
   /// Clears the anchor. Call from `DragGesture.onEnded`.
-  mutating func end() {
-    anchor = nil
-  }
+  mutating func end() { anchor = nil }
 
   /// Applies axis constraints, zeroing out movement on the locked axis.
   private func applyAxis(

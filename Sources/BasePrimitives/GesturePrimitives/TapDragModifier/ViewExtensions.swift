@@ -24,11 +24,11 @@ extension View {
   public func tapDragGesture(
     rect: Binding<CGRect?>,
     coordinateSpace: CoordinateSpace = .local,
-//    behaviour: DragBehavior,
+    behaviour: DragBehavior,
     drawsMarqueeRect: Bool = true,
-    tapCount: Int = 1,
+    //    tapCount: Int = 1,
     minimumDistance: CGFloat = 5,
-    didUpdateTap: @escaping TapUpdate = { _ in }
+    //    didUpdateTap: @escaping TapUpdate = { _ in }
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
@@ -36,9 +36,9 @@ extension View {
         coordinateSpace: coordinateSpace,
         behaviour: behaviour,
         drawsMarqueeRect: drawsMarqueeRect,
-        tapCount: tapCount,
+        //        tapCount: tapCount,
         minimumDistance: minimumDistance,
-        didUpdateTap: didUpdateTap
+        //        didUpdateTap: didUpdateTap
       )
     )
   }
@@ -50,11 +50,11 @@ extension View {
   public func tapDragGesture(
     translation: Binding<CGSize?>,
     coordinateSpace: CoordinateSpace = .local,
-//    behaviour: DragBehavior,
+    behaviour: DragBehavior,
     drawsMarqueeRect: Bool = true,
-    tapCount: Int = 1,
+    //    tapCount: Int = 1,
     minimumDistance: CGFloat = 5,
-    didUpdateTap: @escaping TapUpdate = { _ in }
+    //    didUpdateTap: @escaping TapUpdate = { _ in }
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
@@ -62,9 +62,9 @@ extension View {
         coordinateSpace: coordinateSpace,
         behaviour: behaviour,
         drawsMarqueeRect: drawsMarqueeRect,
-        tapCount: tapCount,
+        //        tapCount: tapCount,
         minimumDistance: minimumDistance,
-        didUpdateTap: didUpdateTap
+        //        didUpdateTap: didUpdateTap
       )
     )
   }
@@ -85,7 +85,7 @@ extension View {
     reversed: Bool = false,
     tapCount: Int = 1,
     minimumDistance: CGFloat = 5,
-    didUpdateTap: @escaping TapUpdate = { _ in }
+    //    didUpdateTap: @escaping TapUpdate = { _ in }
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
@@ -93,9 +93,9 @@ extension View {
         coordinateSpace: coordinateSpace,
         behaviour: .continuous(axes: axis.toSet),
         drawsMarqueeRect: false,
-        tapCount: tapCount,
+        //        tapCount: tapCount,
         minimumDistance: minimumDistance,
-        didUpdateTap: didUpdateTap
+        //        didUpdateTap: didUpdateTap
       )
     )
   }
