@@ -24,7 +24,7 @@ extension View {
   public func tapDragGesture(
     rect: Binding<CGRect?>,
     coordinateSpace: CoordinateSpace = .local,
-    behaviour: DragBehavior,
+//    behaviour: DragBehavior,
     drawsMarqueeRect: Bool = true,
     tapCount: Int = 1,
     minimumDistance: CGFloat = 5,
@@ -50,7 +50,7 @@ extension View {
   public func tapDragGesture(
     translation: Binding<CGSize?>,
     coordinateSpace: CoordinateSpace = .local,
-    behaviour: DragBehavior,
+//    behaviour: DragBehavior,
     drawsMarqueeRect: Bool = true,
     tapCount: Int = 1,
     minimumDistance: CGFloat = 5,

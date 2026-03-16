@@ -59,7 +59,8 @@ extension CanvasInteractionState {
       guard let size = $0?.size else { return }
       self.transform.pan.update(
         .init(fromCGSize: size),
-        phase: .changed
+        phase: .changed,
+        
       )
     }
   }

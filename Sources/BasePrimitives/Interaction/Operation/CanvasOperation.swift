@@ -51,20 +51,20 @@ public struct CanvasOperation: Identifiable {
 
   /// Domain-specific payload. Use this for data like selection modes,
   /// text placement info, etc. that belongs to your app, not the framework.
-  public let userInfo: [String: AnyHashable]?
+//  public let userInfo: [String: AnyHashable]?
 
   public init(
     kind: CanvasOperation.Kind,
     name: String? = nil,
     phase: InteractionPhase? = nil,
 //    transformSource: TransformSource? = nil,
-    userInfo: [String: AnyHashable]? = nil
+//    userInfo: [String: AnyHashable]? = nil
   ) {
     self.kind = kind
     self.name = name ?? kind.name
     self.phase = phase
 //    self.transformSource = transformSource
-    self.userInfo = userInfo
+//    self.userInfo = userInfo
   }
 }
 

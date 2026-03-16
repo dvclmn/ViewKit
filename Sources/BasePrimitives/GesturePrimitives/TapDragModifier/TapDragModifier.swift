@@ -16,7 +16,6 @@ public typealias TapUpdate = (CGPoint) -> Void
 /// - Continuous: accumulates offset across drags (suitable for panning).
 /// - None: drag is disabled; tap-only.
 public struct UnifiedDragModifier: ViewModifier {
-  
   @State private var dragState: DragGestureState
   
   @Binding var dragRect: CGRect?
