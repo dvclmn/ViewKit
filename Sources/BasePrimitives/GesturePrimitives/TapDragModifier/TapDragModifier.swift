@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public typealias TapUpdate = (CGPoint) -> Void
+//public typealias TapUpdate = (CGPoint) -> Void
 
 /// A unified view modifier that handles tap and drag gestures together.
 ///
@@ -17,43 +17,40 @@ public typealias TapUpdate = (CGPoint) -> Void
 /// - None: drag is disabled; tap-only.
 public struct UnifiedDragModifier: ViewModifier {
   @State private var dragState: DragGestureState
-  
+
   @Binding var dragRect: CGRect?
   let coordinateSpace: CoordinateSpace
   let behaviour: DragBehavior
   let drawsMarqueeRect: Bool
-  let tapCount: Int
+  //  let tapCount: Int
   let minimumDistance: CGFloat
-  let didUpdateTap: TapUpdate
+  //  let didUpdateTap: TapUpdate
 
   init(
     rect: Binding<CGRect?>,
     coordinateSpace: CoordinateSpace,
     behaviour: DragBehavior,
     drawsMarqueeRect: Bool,
-    tapCount: Int,
+    //    tapCount: Int,
     minimumDistance: CGFloat,
-    didUpdateTap: @escaping TapUpdate
+    //    didUpdateTap: @escaping TapUpdate
   ) {
     self._dragRect = rect
     self.coordinateSpace = coordinateSpace
     self.behaviour = behaviour
     self.drawsMarqueeRect = drawsMarqueeRect
-    self.tapCount = tapCount
+    //    self.tapCount = tapCount
     self.minimumDistance = minimumDistance
-    self.didUpdateTap = didUpdateTap
+    //    self.didUpdateTap = didUpdateTap
 
     self._dragState = State(initialValue: DragGestureState(behaviour))
   }
 
   public func body(content: Content) -> some View {
     content
-      .onTapGesture(
-        count: tapCount,
-        coordinateSpace: coordinateSpace
-      ) { didUpdateTap($0) }
       .gesture(dragGesture, isEnabled: isDragEnabled)
       .drawMarqueeRect(rect: dragRect, isEnabled: isMarqueeRectEnabled)
+
       .onChange(of: behaviour) { _, newValue in
         dragState.behaviour = newValue
         dragState.end()
