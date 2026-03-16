@@ -24,7 +24,7 @@
 /// ## Rotation
 /// - Currently Gesture-only (not implemented)
 ///
-/// 
+///
 ///
 
 /// Controls which input modifiers and gestures are active on the canvas.

@@ -8,22 +8,36 @@
 import SwiftUI
 
 public struct TransformState: Sendable, Equatable {
-  /// These always exist, they just return to an identity value when inactive.
-  public var pan: ContinuousInteraction<Size<ScreenSpace>> = .init(.zero)
-  public var zoom: ContinuousInteraction<CGFloat> = .init(1.0)
-  public var rotation: ContinuousInteraction<Angle> = .init(.zero)
+
+  public var translation: CGSize
+  public var scale: CGFloat
+  public var rotation: Angle
+
+  public init(
+    translation: CGSize = .zero,
+    scale: CGFloat = 1.0,
+    rotation: Angle = .zero,
+  ) {
+    self.translation = translation
+    self.scale = scale
+    self.rotation = rotation
+  }
 
   public var latchedZoomFocusGlobal: CGPoint?
 
-  public init() {}
+  public static let identity: Self = .init()
 }
 
 extension TransformState {
   public static let initial = TransformState()
 
   public mutating func reset() {
-    pan = .init(.zero)
-    zoom = .init(1.0)
-    rotation = .init(.zero)
+    self = Self.identity
+    //    translation = .zero
+    //    scale = 1.0
+    //    rotation = .zero
+    //    pan = .init(.zero)
+    //    zoom = .init(1.0)
+    //    rotation = .init(.zero)
   }
 }
