@@ -31,8 +31,7 @@ extension BinaryFloatingPoint {
   }
 
   public var isGreaterThanZero: Bool { self > 0 }
+  public var isFiniteAndGreaterThanZero: Bool { isFinite && self > 0 }
   public var isGreaterThanOrEqualToZero: Bool { self >= 0 }
 
-  
-  
 }

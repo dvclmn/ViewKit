@@ -7,6 +7,14 @@
 
 import Foundation
 
+public enum InteractionSource {
+  case swipeGesture
+  case pinchGesture
+  case continuousHover
+  case pointerTapGesture
+  case pointerDragGesture
+}
+
 //public enum InteractionSource {
 //  case swipe // Aka scroll/pan
 //  case pinch

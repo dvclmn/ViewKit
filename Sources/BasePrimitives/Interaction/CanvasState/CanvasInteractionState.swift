@@ -38,16 +38,6 @@ public final class CanvasInteractionState {
 }
 
 extension CanvasInteractionState {
-  
-  public var snapshot: CanvasSnapshot {
-    .init(
-      pointer: <#T##Point<CanvasSpace>?#>,
-      isPointerInsideCanvas: <#T##Bool#>,
-      zoom: <#T##CGFloat#>,
-      pan: <#T##CGSize#>,
-      rotation: <#T##CGFloat#>
-    )
-  }
 
   public func handleInput(_ interaction: Interaction) {
     // 1. Route the input to the active tool
@@ -106,6 +96,18 @@ extension CanvasInteractionState {
   package func handleHover(_ phase: HoverPhase) {
 
   }
+  
+  
+  public var snapshot: CanvasSnapshot {
+    .init(
+      pointer: <#T##Point<CanvasSpace>?#>,
+      isPointerInsideCanvas: <#T##Bool#>,
+      zoom: <#T##CGFloat#>,
+      pan: <#T##CGSize#>,
+      rotation: <#T##CGFloat#>
+    )
+  }
+
 }
 
 extension CanvasInteractionState {
