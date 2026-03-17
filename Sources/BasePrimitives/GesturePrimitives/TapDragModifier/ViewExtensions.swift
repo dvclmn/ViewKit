@@ -21,14 +21,12 @@ extension View {
   ///   - tapCount: Number of taps required to fire `didUpdateTap` (default `1`).
   ///   - minimumDistance: Minimum drag distance before the gesture activates (default `5` pt).
   ///   - didUpdateTap: Called with the tap location in the view's coordinate space.
-  public func tapDragGesture(
+  public func pointerDragGesture(
     rect: Binding<CGRect?>,
     coordinateSpace: CoordinateSpace = .local,
     behaviour: DragBehavior,
     drawsMarqueeRect: Bool = true,
-    //    tapCount: Int = 1,
     minimumDistance: CGFloat = 5,
-    //    didUpdateTap: @escaping TapUpdate = { _ in }
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
@@ -45,9 +43,9 @@ extension View {
 
   /// Adds a unified tap and drag gesture, producing a `CGSize?` translation binding.
   ///
-  /// A convenience wrapper over ``tapDragGesture(rect:behavior:tapCount:minimumDistance:didUpdateTap:)``
+  /// A convenience wrapper over ``pointerDragGesture(rect:behavior:tapCount:minimumDistance:didUpdateTap:)``
   /// that projects the `size` component of the rect for callers that think in terms of offsets.
-  public func tapDragGesture(
+  public func pointerDragGesture(
     translation: Binding<CGSize?>,
     coordinateSpace: CoordinateSpace = .local,
     behaviour: DragBehavior,
@@ -78,7 +76,7 @@ extension View {
   ///   - scalar: Binding that receives the scalar offset along `axis`.
   ///   - axis: The axis to project onto.
   ///   - reversed: When `true`, inverts the sign of the delta (useful for vertical sliders).
-  public func tapDragGesture(
+  public func pointerDragGesture(
     scalar: Binding<CGFloat?>,
     coordinateSpace: CoordinateSpace = .local,
     axis: GridAxis,
