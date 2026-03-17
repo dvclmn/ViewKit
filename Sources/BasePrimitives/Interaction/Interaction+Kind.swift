@@ -11,19 +11,16 @@ import SwiftUI
 @MetaEnum
 public enum InteractionKind {
   case pinching(magnification: CGFloat, anchor: UnitPoint)
-  
-  case scrolling(
-    origin: CGPoint,
-    delta: CGSize,
-    location: CGPoint
-  )  // Aka scroll, swipe
-  
+  case panning(PanEvent)
   case rotating(Angle)
 
-  case tapping(PointerButton, location: CGPoint)
+  case tapping(PointerButton, location: Point<ScreenSpace>)
   case forceTouch
-  case dragging(from: CGPoint, current: CGPoint)
-  case hovering(CGPoint)
+  case dragging(
+    from: Point<ScreenSpace>,
+    current: Point<ScreenSpace>
+  )
+  case hovering(Point<ScreenSpace>)
   case idle
 }
 
@@ -32,7 +29,6 @@ public enum PointerButton: Sendable {
   case secondary
   case middle
 }
-
 
 //extension InteractionKind {
 //  public enum TapKind {

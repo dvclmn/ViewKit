@@ -11,10 +11,14 @@ import BasePrimitives
 
 public struct PanGestureView: NSViewRepresentable {
   let onPanGesture: PanOutput
+  
+  public init(onPanGesture: @escaping PanOutput) {
+    self.onPanGesture = onPanGesture
+  }
 
   public func makeNSView(context: Context) -> PanTrackingNSView {
     let view = PanTrackingNSView()
-    view.didUpdatePan = { delta, phase, modifiers in
+    view.didUpdateSwipe = { delta, phase, modifiers in
       onPanGesture(delta, phase, modifiers)
     }
     return view

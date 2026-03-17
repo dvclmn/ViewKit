@@ -35,7 +35,23 @@ public final class CanvasInteractionState {
 }
 
 extension CanvasInteractionState {
-  func handleSwipeGesture(_ panEvent: PanEvent)
+  func handleSwipeGesture(_ panEvent: PanEvent) {
+    guard store.interaction == nil else { return }
+    store.interaction = Interaction(
+      kind: .scrolling(
+        origin: .zero,
+        delta: event.delta,
+        location: event.location
+      ),
+      phase: event.phase,
+      modifiers: modifierKeys
+    )
+    //        store.handlePan(delta: delta, phase: phase, state: &interactionState)
+  }
+  
+  func handleHover(_ phase: HoverPhase) {
+    
+  }
 }
 
 extension CanvasInteractionState {
