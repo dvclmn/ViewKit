@@ -13,8 +13,8 @@ import Foundation
 /// captured in screen space. I dunno, just less annoying to work
 /// with as CGPoint for now.
 public struct PointerState: Sendable, Equatable {
-  public var tap: TransientInteraction<CGPoint> = .init()
-  public var hover: TransientInteraction<CGPoint> = .init()
+  public var tap: TransientInteraction<Point<ScreenSpace>> = .init()
+  public var hover: TransientInteraction<Point<ScreenSpace>> = .init()
   public var drag: TransientInteraction<Rect<ScreenSpace>> = .init()
 
   public let dragThreshold: CGFloat = 6
