@@ -64,7 +64,10 @@ extension UnifiedDragModifier {
   private var isMarqueeRectEnabled: Bool { behaviour.isMarquee && drawsMarqueeRect }
 
   private var dragGesture: some Gesture {
-    DragGesture(minimumDistance: minimumDistance)
+    DragGesture(
+      minimumDistance: minimumDistance,
+      coordinateSpace: coordinateSpace
+    )
       .onChanged { value in
 
         /// Anchor once per drag. Marquee uses the gesture start location;

@@ -5,20 +5,24 @@
 //  Created by Dave Coleman on 16/3/2026.
 //
 
+/// See also ``InteractionSource``
 public struct Interaction {
-  /// This is like the payload?
-  public var kind: InteractionKind
+
+  /// The interaction 'payload'
+  public var source: InteractionSource
+  public var geometry: CanvasGeometry
   public var phase: InteractionPhase
   public var modifiers: Modifiers
-  
+
   public init(
-    kind: InteractionKind,
+    source: InteractionSource,
+    geometry: CanvasGeometry,
     phase: InteractionPhase,
-    modifiers: Modifiers
+    modifiers: Modifiers,
   ) {
-    self.kind = kind
+    self.source = source
+    self.geometry = geometry
     self.phase = phase
     self.modifiers = modifiers
   }
 }
-

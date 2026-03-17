@@ -16,12 +16,12 @@ public struct SwipeEvent {
   public let modifiers: Modifiers
 }
 
-extension SwipeEvent {
-  public var interaction: Interaction {
-    .init(
-      kind: .swiping(delta: delta, location: location),
-      phase: phase,
-      modifiers: modifiers
-    )
-  }
-}
+//extension SwipeEvent {
+//  public var interaction: Interaction {
+//    .init(
+//      kind: .swiping(delta: delta, location: location),
+//      phase: phase,
+//      modifiers: modifiers
+//    )
+//  }
+//}

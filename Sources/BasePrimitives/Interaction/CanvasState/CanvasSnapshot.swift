@@ -10,7 +10,7 @@ import Foundation
 /// Computed from `Canvas​Interaction​State` + `Transform​State` + geometry.
 /// Holds only already-converted, consumer-ready values
 public struct CanvasSnapshot: Sendable {
-  public let pointer: Point<CanvasSpace>?
+  public let pointerLocation: Point<CanvasSpace>?
   public let isPointerInsideCanvas: Bool
   public let zoom: CGFloat
   public let pan: CGSize

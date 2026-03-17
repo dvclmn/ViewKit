@@ -23,13 +23,13 @@ public final class CanvasInteractionState {
   /// such as Strokes for Paperbark, and Cells for DrawString, etc?
   //  public var dragRect: CGRect? = nil
   public var transform: TransformState = .identity
-    public var pointer: PointerState
+  public var pointer: PointerState
   //  public var phase: InteractionPhase = .none
 
   public var activeTool: any CanvasTool
 
-  public init(//    pointer: PointerState = .initial,
-  //    transform: TransformState = .identity
+  public init(  //    pointer: PointerState = .initial,
+    //    transform: TransformState = .identity
     )
   {
     //    self.pointer = pointer
@@ -39,66 +39,75 @@ public final class CanvasInteractionState {
 
 extension CanvasInteractionState {
 
-  public func handleInput(_ interaction: Interaction) {
-    // 1. Route the input to the active tool
-    let intent = activeTool.resolve(interaction: interaction, currentTransform: transform)
+  public func handleInput(
+    from source: InteractionSource,
+    in geometry: CanvasGeometry,
+    phase: InteractionPhase,
+    modifiers: Modifiers,
+  ) {
+    
+    let interaction = Interaction(
+      source: source,
+      geometry: geometry,
+      phase: phase,
+      modifiers: modifiers,
+    )
+    /// Route the input to the active tool
+    let intent = activeTool.resolve(
+      interaction: interaction,
+      currentTransform: transform
+    )
 
-    // 2. Execute the tool's intent
+    /// Execute the tool's intent
     switch intent {
       case .mutateTransform(let newState):
         self.transform = newState
+
       case .updateHoverLocation(let point):
-        <#code#>
+        self.pointer.hover = point
+
       case .none:
-        <#code#>
+        break
     }
-    //    switch intent {
-    //      case .mutateTransform(let newState):
-    //        self.transform = newState
-    //      case .updateHoverStatus(let id):
-    //        // update document state
-    //        break
-    //        // ...
-    //    }
   }
 
   /// This has to be told where to put the value. It's just a swipe,
   /// doesn't know anything else
-  package func handleSwipeGesture(
-    //    _ interaction: Interaction
-    _ event: SwipeEvent,
-    //    phase: InteractionPhase,
-    //    modifiers: Modifiers
-    //    with interaction: Interaction
-  ) {
-    let interaction = Interaction(
-      kind: .swiping(delta: event.delta, location: event.location),
-      phase: event.phase,
-      modifiers: event.modifiers
-    )
-    handleInput(interaction)
+//  package func handleSwipeGesture(
+//    //    _ interaction: Interaction
+//    _ event: SwipeEvent,
+//    //    phase: InteractionPhase,
+//    //    modifiers: Modifiers
+//    //    with interaction: Interaction
+//  ) {
+//    let interaction = Interaction(
+//      kind: .swiping(delta: event.delta, location: event.location),
+//      phase: event.phase,
+//      modifiers: event.modifiers
+//    )
+//    handleInput(interaction)
+//
+//    //    self.phase = phase
+//
+//    //    guard store.interaction == nil else { return }
+//    //    store.interaction = Interaction(
+//    //      kind: .scrolling(
+//    //        origin: .zero,
+//    //        delta: event.delta,
+//    //        location: event.location
+//    //      ),
+//    //      phase: event.phase,
+//    //      modifiers: modifierKeys
+//    //    )
+//    //        store.handlePan(delta: delta, phase: phase, state: &interactionState)
+//  }
 
-    //    self.phase = phase
+//  package func handleHover(_ phase: HoverPhase) {
+//
+//  }
 
-    //    guard store.interaction == nil else { return }
-    //    store.interaction = Interaction(
-    //      kind: .scrolling(
-    //        origin: .zero,
-    //        delta: event.delta,
-    //        location: event.location
-    //      ),
-    //      phase: event.phase,
-    //      modifiers: modifierKeys
-    //    )
-    //        store.handlePan(delta: delta, phase: phase, state: &interactionState)
-  }
-
-  package func handleHover(_ phase: HoverPhase) {
-
-  }
-  
-  
   public var snapshot: CanvasSnapshot {
+    let hoverMapped =
     .init(
       pointer: <#T##Point<CanvasSpace>?#>,
       isPointerInsideCanvas: <#T##Bool#>,
@@ -112,9 +121,9 @@ extension CanvasInteractionState {
 
 extension CanvasInteractionState {
 
-  public var translation: CGSize { transform.translation.value }
-  public var scale: CGFloat { transform.scale.value }
-  public var rotation: Angle { transform.rotation.value }
+  //  public var translation: CGSize { transform.translation.value }
+  //  public var scale: CGFloat { transform.scale.value }
+  //  public var rotation: Angle { transform.rotation.value }
 
   public func resetAll() {
     //    pointer.reset()

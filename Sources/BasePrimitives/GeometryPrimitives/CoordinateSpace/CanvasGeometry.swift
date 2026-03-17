@@ -28,13 +28,3 @@ public struct CanvasGeometry: Sendable, Equatable {
     self.anchor = anchor
   }
 }
-
-extension CanvasGeometry {
-//  public func viewportMapping(from state: TransformState) -> CanvasViewportMapping? {
-//    viewportMapping(
-//      zoom: state.scale.value,
-//      pan: state.translation.value.screenSize
-//    )
-//  }
-
-}

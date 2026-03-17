@@ -8,11 +8,37 @@
 import SwiftUI
 
 public enum InteractionSource {
-  case swipeGesture
-  case pinchGesture
-  case continuousHover(HoverPhase)
-  case pointerTapGesture()
-  case pointerDragGesture
+  case swipeGesture(delta: Size<ScreenSpace>, location: Point<ScreenSpace>)
+  case pinchGesture(ZoomGestureEvent)
+  // case rotation (not yet implemented)
+  case continuousHover(Point<ScreenSpace>)
+  case pointerTapGesture(PointerButton = .primary, location: Point<ScreenSpace>)
+  case pointerDragGesture(
+    from: Point<ScreenSpace>,
+    current: Point<ScreenSpace>
+  )
+  
+//  func interaction(
+//    geometry: CanvasGeometry,
+//    modifiers: Modifiers
+//  ) -> Interaction {
+//    switch self {
+//      case .swipeGesture:
+//        <#code#>
+//      case .pinchGesture(let zoomEvent):
+//          .init(
+//            kind: .,
+//            phase: <#T##InteractionPhase#>,
+//            modifiers: <#T##Modifiers#>
+//          )
+//      case .continuousHover(let hoverPhase):
+//        <#code#>
+//      case .pointerTapGesture:
+//        <#code#>
+//      case .pointerDragGesture:
+//        <#code#>
+//    }
+//  }
 }
 
 //public enum InteractionSource {
