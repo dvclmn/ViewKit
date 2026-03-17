@@ -7,75 +7,52 @@
 
 import SwiftUI
 
+// MARK: - Mode A: Binding (simple)
+//
+// The modifier owns zoom state and writes clamped values to the binding.
+// Use when you just need a zoomable view without custom zoom logic.
+
 extension View {
-  /// Stateful + binding sync using full zoom event context.
-  /// Return `nil` from `didUpdateEvent` to accept the proposed zoom.
+
+  /// Simple binding-driven zoom. The modifier handles gesture math and clamping.
   public func zoomGesture(
     zoom: Binding<Double>,
-    isEnabled: Bool = true,
-    didUpdateEvent: @escaping ZoomEventUpdate
+    isEnabled: Bool = true
   ) -> some View {
     self.modifier(
       ZoomModifier(
-        initial: Double(zoom.wrappedValue),
+        initial: zoom.wrappedValue,
         zoom: zoom,
         isEnabled: isEnabled,
-        didUpdateEvent: didUpdateEvent
+        didUpdateEvent: { _ in nil }
       )
     )
   }
 
-  /// Stateful + binding sync.
-  /// Return `nil` from `didUpdateZoom` to accept the proposed zoom.
-  public func zoomGesture(
-    zoom: Binding<Double>,
-    isEnabled: Bool = true,
-    didUpdateZoom: @escaping ZoomUpdate = { _, _ in nil }
-  ) -> some View {
-    self.modifier(
-      ZoomModifier(
-        initial: Double(zoom.wrappedValue),
-        zoom: zoom,
-        isEnabled: isEnabled,
-        didUpdateEvent: { event in
-          didUpdateZoom(event.proposedZoom, event.phase)
-        }
-      )
-    )
-  }
-
-  /// Stateful + binding sync using full zoom event context.
-  /// Return `nil` from `didUpdateEvent` to accept the proposed zoom.
+  /// Simple binding-driven zoom (CGFloat convenience).
   public func zoomGesture(
     zoom: Binding<CGFloat>,
-    isEnabled: Bool = true,
-    didUpdateEvent: @escaping ZoomEventUpdate
+    isEnabled: Bool = true
   ) -> some View {
     self.zoomGesture(
       zoom: zoom.toBindingDouble,
-      isEnabled: isEnabled,
-      didUpdateEvent: didUpdateEvent
+      isEnabled: isEnabled
     )
   }
+}
 
-  /// Stateful + binding sync.
-  /// Return `nil` from `didUpdateZoom` to accept the proposed zoom.
-  public func zoomGesture(
-    zoom: Binding<CGFloat>,
-    isEnabled: Bool = true,
-    didUpdateZoom: @escaping ZoomUpdate = { _, _ in nil }
-  ) -> some View {
-    self.zoomGesture(
-      zoom: zoom.toBindingDouble,
-      isEnabled: isEnabled,
-      didUpdateZoom: didUpdateZoom
-    )
-  }
+// MARK: - Mode B: Event callback (advanced)
+//
+// The caller owns zoom state. The modifier tracks gesture deltas and
+// sends events; the callback returns the resolved zoom value.
+// Use when you need focus-preserving zoom, pan adjustment, or custom logic.
 
-  /// Pure internal state + callback using full zoom event context.
+extension View {
+
+  /// Event-driven zoom with full ``ZoomGestureEvent`` context.
   /// Return `nil` from `didUpdateEvent` to accept the proposed zoom.
   public func zoomGesture(
-    initial: Double,
+    initial: Double = 1,
     isEnabled: Bool = true,
     didUpdateEvent: @escaping ZoomEventUpdate
   ) -> some View {
@@ -89,12 +66,12 @@ extension View {
     )
   }
 
-  /// Pure internal state + callback.
+  /// Simplified event-driven zoom receiving just `(proposedZoom, phase)`.
   /// Return `nil` from `didUpdateZoom` to accept the proposed zoom.
   public func zoomGesture(
-    initial: Double,
+    initial: Double = 1,
     isEnabled: Bool = true,
-    didUpdateZoom: @escaping ZoomUpdate = { _, _ in nil }
+    didUpdateZoom: @escaping ZoomUpdate
   ) -> some View {
     self.modifier(
       ZoomModifier(
