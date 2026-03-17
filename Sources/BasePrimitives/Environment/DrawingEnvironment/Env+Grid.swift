@@ -51,7 +51,7 @@ extension EnvironmentValues {
     }
 
     return GridGeometry(
-      viewportRect: Rect<ScreenSpace>(from: viewportRect),
+      viewportRect: Rect<ScreenSpace>(fromRect: viewportRect),
       dimensions: gridDimensions,
       unitSize: unitSize,
       anchor: canvasAnchor

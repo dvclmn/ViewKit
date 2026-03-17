@@ -7,6 +7,11 @@
 
 import Foundation
 
+//public enum InteractionSource {
+//  case swipe // Aka scroll/pan
+//  case pinch
+//}
+
 //public enum InteractionChannel: Sendable, Equatable, Comparable {
 //  /// e.g., trackpad magnify, two-finger pan
 //  case hardwareGesture
@@ -75,8 +80,3 @@ import Foundation
 //  public var modifiers: Modifiers
 //}
 //
-//public enum PointerButton: Sendable {
-//  case primary
-//  case secondary
-//  case middle
-//}

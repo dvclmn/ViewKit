@@ -9,5 +9,11 @@ public struct Interaction {
   public var kind: InteractionKind
   public var phase: InteractionPhase
   public var modifiers: Modifiers
+  
+  public init(kind: InteractionKind, phase: InteractionPhase, modifiers: Modifiers) {
+    self.kind = kind
+    self.phase = phase
+    self.modifiers = modifiers
+  }
 }
 

@@ -27,6 +27,13 @@ public enum InteractionKind {
   case idle
 }
 
+public enum PointerButton: Sendable {
+  case primary
+  case secondary
+  case middle
+}
+
+
 //extension InteractionKind {
 //  public enum TapKind {
 //    case standard
