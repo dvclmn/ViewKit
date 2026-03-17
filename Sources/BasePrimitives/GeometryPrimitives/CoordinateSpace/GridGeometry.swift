@@ -47,9 +47,9 @@ extension GridGeometry {
     )
     self.anchor = anchor
   }
-}
+  //}
 
-extension GridGeometry: CanvasViewportContext {
+  //extension GridGeometry: CanvasViewportContext {
   public var canvasSize: Size<CanvasSpace> {
     projection.canvasSize(for: dimensions)
   }
@@ -62,5 +62,21 @@ extension GridGeometry: CustomStringConvertible {
       Labeled("Grid Dimensions", value: dimensions.description + " Cells")
       Labeled("Projection", value: projection)
     }.text
+  }
+}
+
+extension CanvasGeometry {
+  public init?(
+    viewportRect: Rect<ScreenSpace>,
+    gridDimensions: GridDimensions,
+    unitSize: CGSize,
+    anchor: UnitPoint
+  ) {
+    guard let size = gridDimensions.toScreenSize(using: unitSize) else { return nil }
+    self.init(
+      viewportRect: viewportRect,
+      canvasSize: Size<CanvasSpace>(fromCGSize: size),
+      anchor: anchor
+    )
   }
 }

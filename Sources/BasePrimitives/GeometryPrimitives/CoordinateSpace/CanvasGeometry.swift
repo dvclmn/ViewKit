@@ -8,8 +8,10 @@
 import CoreGraphics
 import SwiftUI
 
-public struct CanvasGeometry: Sendable, Equatable, CanvasViewportContext {
+public struct CanvasGeometry: Sendable, Equatable {
+//public struct CanvasGeometry: Sendable, Equatable, CanvasViewportContext {
   public var viewportRect: Rect<ScreenSpace>
+  public var canvasFrameInViewport: Rect<CanvasSpace>
   public var anchor: UnitPoint
   public var canvasSize: Size<CanvasSpace>
   
@@ -17,6 +19,7 @@ public struct CanvasGeometry: Sendable, Equatable, CanvasViewportContext {
 
   public init(
     viewportRect: Rect<ScreenSpace> = .zero,
+    canvasFrameInViewport: Rect<CanvasSpace> = .zero,
     canvasSize: Size<CanvasSpace> = .zero,
     anchor: UnitPoint = .center
   ) {
@@ -27,17 +30,11 @@ public struct CanvasGeometry: Sendable, Equatable, CanvasViewportContext {
 }
 
 extension CanvasGeometry {
-  public init?(
-    viewportRect: Rect<ScreenSpace>,
-    gridDimensions: GridDimensions,
-    unitSize: CGSize,
-    anchor: UnitPoint
-  ) {
-    guard let size = gridDimensions.toScreenSize(using: unitSize) else { return nil }
-    self.init(
-      viewportRect: viewportRect,
-      canvasSize: Size<CanvasSpace>(fromCGSize: size),
-      anchor: anchor
-    )
-  }
+//  public func viewportMapping(from state: TransformState) -> CanvasViewportMapping? {
+//    viewportMapping(
+//      zoom: state.scale.value,
+//      pan: state.translation.value.screenSize
+//    )
+//  }
+
 }
