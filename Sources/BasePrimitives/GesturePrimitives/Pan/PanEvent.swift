@@ -7,6 +7,8 @@
 
 /// Note: This size comes as deltas, which will need to be accrued
 /// Modifiers == 'modifiers held'
+public typealias SwipeOutput = (SwipeEvent) -> Void
+
 public struct SwipeEvent {
   public let delta: Size<ScreenSpace>
   public let location: Point<ScreenSpace>
@@ -14,4 +16,12 @@ public struct SwipeEvent {
   public let modifiers: Modifiers
 }
 
-public typealias SwipeOutput = (PanEvent) -> Void
+extension SwipeEvent {
+  public var interaction: Interaction {
+    .init(
+      kind: .swiping(delta: delta, location: location),
+      phase: phase,
+      modifiers: modifiers
+    )
+  }
+}

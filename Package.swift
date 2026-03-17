@@ -50,12 +50,12 @@ let package = Package(
       ]
     ),
 
-    .library(
-      name: "GestureKit",
-      targets: [
-        "GestureKit"
-      ]
-    ),
+//    .library(
+//      name: "GestureKit",
+//      targets: [
+//        "GestureKit"
+//      ]
+//    ),
 
     .library(
       name: "Wrecktangle",
@@ -149,7 +149,7 @@ let package = Package(
         .module(.sampleBuilder),
         .module(.layoutKit),
         .module(.graphicsKit),
-        .module(.gestureKit),
+//        .module(.gestureKit),
         .module(.canvasKit),
         .casePaths,
       ],
@@ -159,7 +159,7 @@ let package = Package(
       name: "CanvasKit",
       dependencies: [
         .module(.basePrimitives),
-        .module(.gestureKit),
+//        .module(.gestureKit),
       ],
     ),
 
@@ -175,14 +175,14 @@ let package = Package(
       ],
     ),
 
-    .target(
-      name: "GestureKit",
-      dependencies: [
-        .module(.basePrimitives),
-        .module(.layoutKit),
-        .casePaths,
-      ]
-    ),
+//    .target(
+//      name: "GestureKit",
+//      dependencies: [
+//        .module(.basePrimitives),
+//        .module(.layoutKit),
+//        .casePaths,
+//      ]
+//    ),
 
     .target(
       name: "GraphicsKit",
@@ -271,7 +271,7 @@ enum BaseModule {
   case baseUI
   case componentKit
   case canvasKit
-  case gestureKit
+//  case gestureKit
   case graphicsKit
   case macroHelpers
   case layoutKit
@@ -290,7 +290,7 @@ enum BaseModule {
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
       case .canvasKit: "CanvasKit"
-      case .gestureKit: "GestureKit"
+//      case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
       case .macroHelpers: "MacroHelpers"
       case .layoutKit: "LayoutKit"

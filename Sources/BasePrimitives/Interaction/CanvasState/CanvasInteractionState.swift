@@ -21,37 +21,93 @@ public final class CanvasInteractionState {
 
   /// General Note: May need to evolve CanvasKit to interpret a 'semantic entity',
   /// such as Strokes for Paperbark, and Cells for DrawString, etc?
-  public var dragRect: CGRect? = nil
-  public var pointer: PointerState
-  public var transform: TransformState
+  //  public var dragRect: CGRect? = nil
+  public var transform: TransformState = .identity
+    public var pointer: PointerState
+  //  public var phase: InteractionPhase = .none
 
-  public init(
-    pointer: PointerState = .initial,
-    transform: TransformState = .initial
-  ) {
-    self.pointer = pointer
-    self.transform = transform
+  public var activeTool: any CanvasTool
+
+  public init(//    pointer: PointerState = .initial,
+  //    transform: TransformState = .identity
+    )
+  {
+    //    self.pointer = pointer
+    //    self.transform = transform
   }
 }
 
 extension CanvasInteractionState {
-  func handleSwipeGesture(_ panEvent: PanEvent) {
-    guard store.interaction == nil else { return }
-    store.interaction = Interaction(
-      kind: .scrolling(
-        origin: .zero,
-        delta: event.delta,
-        location: event.location
-      ),
+
+  public func handleInput(_ interaction: Interaction) {
+    // 1. Route the input to the active tool
+    let intent = activeTool.resolve(interaction: interaction, currentTransform: transform)
+
+    // 2. Execute the tool's intent
+    switch intent {
+      case .mutateTransform(let newState):
+        self.transform = newState
+      case .updateHoverLocation(let point):
+        <#code#>
+      case .none:
+        <#code#>
+    }
+    //    switch intent {
+    //      case .mutateTransform(let newState):
+    //        self.transform = newState
+    //      case .updateHoverStatus(let id):
+    //        // update document state
+    //        break
+    //        // ...
+    //    }
+  }
+
+  /// This has to be told where to put the value. It's just a swipe,
+  /// doesn't know anything else
+  package func handleSwipeGesture(
+    //    _ interaction: Interaction
+    _ event: SwipeEvent,
+    //    phase: InteractionPhase,
+    //    modifiers: Modifiers
+    //    with interaction: Interaction
+  ) {
+    let interaction = Interaction(
+      kind: .swiping(delta: event.delta, location: event.location),
       phase: event.phase,
-      modifiers: modifierKeys
+      modifiers: event.modifiers
     )
+    handleInput(interaction)
+
+    //    self.phase = phase
+
+    //    guard store.interaction == nil else { return }
+    //    store.interaction = Interaction(
+    //      kind: .scrolling(
+    //        origin: .zero,
+    //        delta: event.delta,
+    //        location: event.location
+    //      ),
+    //      phase: event.phase,
+    //      modifiers: modifierKeys
+    //    )
     //        store.handlePan(delta: delta, phase: phase, state: &interactionState)
   }
-  
-  func handleHover(_ phase: HoverPhase) {
-    
+
+  package func handleHover(_ phase: HoverPhase) {
+
   }
+  
+  
+  public var snapshot: CanvasSnapshot {
+    .init(
+      pointer: <#T##Point<CanvasSpace>?#>,
+      isPointerInsideCanvas: <#T##Bool#>,
+      zoom: <#T##CGFloat#>,
+      pan: <#T##CGSize#>,
+      rotation: <#T##CGFloat#>
+    )
+  }
+
 }
 
 extension CanvasInteractionState {

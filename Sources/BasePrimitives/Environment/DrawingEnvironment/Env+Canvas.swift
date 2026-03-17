@@ -52,6 +52,7 @@ extension EnvironmentValues {
   @Entry public var pointerLocation: CGPoint?
 
   public var zoomClamped: Double {
+    guard zoomLevel.isFinite, zoomLevel.isGreaterThanZero else { return 1.0 }
     guard let zoomRange else { return zoomLevel }
     return zoomLevel.clamped(to: zoomRange)
   }

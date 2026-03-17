@@ -13,6 +13,29 @@ public typealias ZoomEventUpdate = (ZoomGestureEvent) -> Double?
 /// Return a replacement zoom value for `(proposedZoom, phase)`, or `nil` to accept.
 public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
 
+/// Converts `MagnifyGesture` into incremental zoom deltas and routes them
+/// through one of two ownership modes:
+///
+/// ## Mode A — Binding (simple)
+/// ```swift
+/// .zoomGesture(zoom: $myZoom)
+/// ```
+/// The modifier owns the gesture math, clamps to `zoomRange`, and writes the
+/// result directly to the binding. No override callback — the binding is the
+/// single source of truth.
+///
+/// ## Mode B — Event callback (advanced)
+/// ```swift
+/// .zoomGesture(initial: currentZoom, didUpdateEvent: { event in ... })
+/// ```
+/// The modifier tracks deltas internally, but the **caller** owns the zoom
+/// value. The callback receives a ``ZoomGestureEvent`` and returns the
+/// resolved zoom (or `nil` to accept the proposal). The caller is responsible
+/// for writing the result to its own state.
+///
+/// > Important: Do **not** combine a binding with an override callback.
+/// > That creates two writers for the same value and leads to double-writes.
+/// > Use Mode A *or* Mode B, not both.
 public struct ZoomModifier: ViewModifier {
   @Environment(\.unsafeZoomRange) private var unsafeZoomRange
 
@@ -44,7 +67,7 @@ public struct ZoomModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .gesture(magnifyGesture, isEnabled: isEnabled)
-    
+
       .onChange(of: externalZoom?.wrappedValue) { _, newValue in
         /// External source changed (e.g. reset button / slider / programmatic change).
         /// Only adopt it when we are NOT currently gesturing.
@@ -119,107 +142,5 @@ extension ZoomModifier {
   private func commitZoom(_ value: Double) {
     internalZoom = value
     externalZoom?.wrappedValue = value
-  }
-}
-
-extension View {
-  /// Stateful + binding sync using full zoom event context.
-  /// Return `nil` from `didUpdateEvent` to accept the proposed zoom.
-  public func zoomGesture(
-    zoom: Binding<Double>,
-    isEnabled: Bool = true,
-    didUpdateEvent: @escaping ZoomEventUpdate
-  ) -> some View {
-    self.modifier(
-      ZoomModifier(
-        initial: Double(zoom.wrappedValue),
-        zoom: zoom,
-        isEnabled: isEnabled,
-        didUpdateEvent: didUpdateEvent
-      )
-    )
-  }
-
-  /// Stateful + binding sync.
-  /// Return `nil` from `didUpdateZoom` to accept the proposed zoom.
-  public func zoomGesture(
-    zoom: Binding<Double>,
-    isEnabled: Bool = true,
-    didUpdateZoom: @escaping ZoomUpdate = { _, _ in nil }
-  ) -> some View {
-    self.modifier(
-      ZoomModifier(
-        initial: Double(zoom.wrappedValue),
-        zoom: zoom,
-        isEnabled: isEnabled,
-        didUpdateEvent: { event in
-          didUpdateZoom(event.proposedZoom, event.phase)
-        }
-      )
-    )
-  }
-
-  /// Stateful + binding sync using full zoom event context.
-  /// Return `nil` from `didUpdateEvent` to accept the proposed zoom.
-  public func zoomGesture(
-    zoom: Binding<CGFloat>,
-    isEnabled: Bool = true,
-    didUpdateEvent: @escaping ZoomEventUpdate
-  ) -> some View {
-    self.zoomGesture(
-      zoom: zoom.toBindingDouble,
-      isEnabled: isEnabled,
-      didUpdateEvent: didUpdateEvent
-    )
-  }
-
-  /// Stateful + binding sync.
-  /// Return `nil` from `didUpdateZoom` to accept the proposed zoom.
-  public func zoomGesture(
-    zoom: Binding<CGFloat>,
-    isEnabled: Bool = true,
-    didUpdateZoom: @escaping ZoomUpdate = { _, _ in nil }
-  ) -> some View {
-    self.zoomGesture(
-      zoom: zoom.toBindingDouble,
-      isEnabled: isEnabled,
-      didUpdateZoom: didUpdateZoom
-    )
-  }
-
-  /// Pure internal state + callback using full zoom event context.
-  /// Return `nil` from `didUpdateEvent` to accept the proposed zoom.
-  public func zoomGesture(
-    initial: Double,
-    isEnabled: Bool = true,
-    didUpdateEvent: @escaping ZoomEventUpdate
-  ) -> some View {
-    self.modifier(
-      ZoomModifier(
-        initial: initial,
-        zoom: nil,
-        isEnabled: isEnabled,
-        didUpdateEvent: didUpdateEvent
-      )
-    )
-  }
-
-  /// Pure internal state + callback.
-  /// Return `nil` from `didUpdateZoom` to accept the proposed zoom.
-  public func zoomGesture(
-    initial: Double,
-    isEnabled: Bool = true,
-    didUpdateZoom: @escaping ZoomUpdate = { _, _ in nil }
-  ) -> some View {
-    self.modifier(
-      ZoomModifier(
-        initial: initial,
-        zoom: nil,
-        isEnabled: isEnabled,
-        didUpdateEvent: { event in
-          didUpdateZoom(event.proposedZoom, event.phase)
-        }
-      )
-    )
   }
 }

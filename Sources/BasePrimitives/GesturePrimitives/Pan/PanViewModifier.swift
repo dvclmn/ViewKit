@@ -10,29 +10,30 @@ import SwiftUI
 
 #if canImport(AppKit)
 
-public struct PanGestureModifier: ViewModifier {
+public struct SwipeGestureModifier: ViewModifier {
 
   let isEnabled: Bool
-  let panDidChange: PanOutput
+  let onSwipeGesture: SwipeOutput
 
   public func body(content: Content) -> some View {
     content
       .overlay {
         if isEnabled {
-          PanGestureView(onPanGesture: panDidChange)
+          SwipeGestureView(onSwipeGesture)
         }
       }
   }
 }
 extension View {
-  public func panGesture(
+  /// Aka pan gesture
+  public func swipeGesture(
     isEnabled: Bool = true,
-    _ panDidChange: @escaping PanOutput
+    _ onSwipeGesture: @escaping SwipeOutput
   ) -> some View {
     self.modifier(
-      PanGestureModifier(
+      SwipeGestureModifier(
         isEnabled: isEnabled,
-        panDidChange: panDidChange
+        onSwipeGesture: onSwipeGesture
       )
     )
   }
