@@ -12,14 +12,10 @@ public struct TransformState: Sendable, Equatable {
   public var scale: ContinuousInteraction<CGFloat>
   public var rotation: ContinuousInteraction<Angle>
 
-//  public var translation: CGSize
-//  public var scale: CGFloat
-//  public var rotation: Angle
-
   public init(
     translation: ContinuousInteraction<CGSize> = .init(.zero),
     scale: ContinuousInteraction<CGFloat> = .init(1.0),
-    rotation:  ContinuousInteraction<Angle> = .init(.zero),
+    rotation: ContinuousInteraction<Angle> = .init(.zero),
   ) {
     self.translation = translation
     self.scale = scale
@@ -30,6 +26,52 @@ public struct TransformState: Sendable, Equatable {
 
   public static let identity: Self = .init()
 }
+
+// MARK: - Space Conversion
+
+extension TransformState {
+
+  /// Converts a point between screen space and canvas-local space.
+  ///
+  /// - Screen space has pan and zoom applied (i.e. what the user sees).
+  /// - Canvas space is artwork-local: no pan offset, no zoom scaling.
+  ///
+  /// Example:
+  /// ```swift
+  /// let canvasPoint = transform.convert(
+  ///   tapLocation,
+  ///   from: .screen,
+  ///   to: .canvas
+  /// )
+  /// ```
+  public func convert(
+    _ point: CGPoint,
+    from source: TransformSpace,
+    to destination: TransformSpace
+  ) -> CGPoint {
+    guard source != destination else { return point }
+
+    let pan = translation.value
+    let zoom = scale.value
+
+    switch (source, destination) {
+      case (.screen, .canvas):
+        return CGPoint(
+          x: (point.x - pan.width) / zoom,
+          y: (point.y - pan.height) / zoom
+        )
+      case (.canvas, .screen):
+        return CGPoint(
+          x: point.x * zoom + pan.width,
+          y: point.y * zoom + pan.height
+        )
+      default:
+        return point
+    }
+  }
+}
+
+// MARK: -
 
 extension TransformState {
   public static let initial = TransformState()

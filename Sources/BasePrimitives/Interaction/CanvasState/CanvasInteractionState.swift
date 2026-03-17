@@ -22,10 +22,9 @@ public final class CanvasInteractionState {
   /// General Note: May need to evolve CanvasKit to interpret a 'semantic entity',
   /// such as Strokes for Paperbark, and Cells for DrawString, etc?
   public var dragRect: CGRect? = nil
-  //  public var pointer: PointerState
+    public var pointer: PointerState
   public var transform: TransformState
-  public let dragThreshold: CGFloat = 6
-
+  
   public init(
     //    pointer: PointerState = .initial,
     transform: TransformState = .initial
