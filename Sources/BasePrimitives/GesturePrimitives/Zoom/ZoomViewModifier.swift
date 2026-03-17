@@ -13,6 +13,29 @@ public typealias ZoomEventUpdate = (ZoomGestureEvent) -> Double?
 /// Return a replacement zoom value for `(proposedZoom, phase)`, or `nil` to accept.
 public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
 
+/// Converts `MagnifyGesture` into incremental zoom deltas and routes them
+/// through one of two ownership modes:
+///
+/// ## Mode A — Binding (simple)
+/// ```swift
+/// .zoomGesture(zoom: $myZoom)
+/// ```
+/// The modifier owns the gesture math, clamps to `zoomRange`, and writes the
+/// result directly to the binding. No override callback — the binding is the
+/// single source of truth.
+///
+/// ## Mode B — Event callback (advanced)
+/// ```swift
+/// .zoomGesture(initial: currentZoom, didUpdateEvent: { event in ... })
+/// ```
+/// The modifier tracks deltas internally, but the **caller** owns the zoom
+/// value. The callback receives a ``ZoomGestureEvent`` and returns the
+/// resolved zoom (or `nil` to accept the proposal). The caller is responsible
+/// for writing the result to its own state.
+///
+/// > Important: Do **not** combine a binding with an override callback.
+/// > That creates two writers for the same value and leads to double-writes.
+/// > Use Mode A *or* Mode B, not both.
 public struct ZoomModifier: ViewModifier {
   @Environment(\.unsafeZoomRange) private var unsafeZoomRange
 
@@ -44,7 +67,7 @@ public struct ZoomModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .gesture(magnifyGesture, isEnabled: isEnabled)
-    
+
       .onChange(of: externalZoom?.wrappedValue) { _, newValue in
         /// External source changed (e.g. reset button / slider / programmatic change).
         /// Only adopt it when we are NOT currently gesturing.
