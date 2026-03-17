@@ -8,13 +8,19 @@
 import EnumMacros
 import SwiftUI
 
+/// I'm getting caught up on needing to 'hook in' to e.g. the Swipe Gesture,
+/// which typically informs Pan, but could drive other things too.
+///
+/// I should be able to justify what else may need that data, and then how
+/// it should be structured (e.g. is it based on selected Tool?)
+
 @MetaEnum
 public enum InteractionKind {
   case pinching(magnification: CGFloat, anchor: UnitPoint)
-  case panning(PanEvent)
+  case swiping(delta: Size<ScreenSpace>, location: Point<ScreenSpace>)
   case rotating(Angle)
 
-  case tapping(PointerButton, location: Point<ScreenSpace>)
+  case tapping(PointerButton = .primary, location: Point<ScreenSpace>)
   case forceTouch
   case dragging(
     from: Point<ScreenSpace>,

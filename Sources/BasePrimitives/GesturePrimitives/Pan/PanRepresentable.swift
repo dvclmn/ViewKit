@@ -9,21 +9,21 @@
 import SwiftUI
 import BasePrimitives
 
-public struct PanGestureView: NSViewRepresentable {
-  let onPanGesture: PanOutput
+public struct SwipeGestureView: NSViewRepresentable {
+  let onSwipeGesture: SwipeOutput
   
-  public init(onPanGesture: @escaping PanOutput) {
-    self.onPanGesture = onPanGesture
+  public init(_ onSwipeGesture: @escaping SwipeOutput) {
+    self.onSwipeGesture = onSwipeGesture
   }
 
-  public func makeNSView(context: Context) -> PanTrackingNSView {
-    let view = PanTrackingNSView()
-    view.didUpdateSwipe = { delta, phase, modifiers in
-      onPanGesture(delta, phase, modifiers)
+  public func makeNSView(context: Context) -> SwipeTrackingNSView {
+    let view = SwipeTrackingNSView()
+    view.onSwipeGesture = { event in
+      self.onSwipeGesture(event)
     }
     return view
   }
 
-  public func updateNSView(_ nsView: PanTrackingNSView, context: Context) {}
+  public func updateNSView(_ nsView: SwipeTrackingNSView, context: Context) {}
 }
 #endif

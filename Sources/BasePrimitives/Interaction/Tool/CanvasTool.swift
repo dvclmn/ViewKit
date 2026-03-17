@@ -15,13 +15,15 @@ import SwiftUI
 /// 1. Define what a Tool can actually output.
 public enum CanvasIntent {
   case mutateTransform(TransformState)
-  case updateHoverLocation(CGPoint)
+  case updateHoverLocation(Point<ScreenSpace>)
   //  case updateSelection([(any CanvasElement).ID])
   //  case updateHoverStatus((any CanvasElement).ID?)
   case none
 }
 
 public protocol CanvasTool {
+  /// This allows a Tool to declare what should happen when it is selected,
+  /// and certain interaction events happen
   func resolve(
     interaction: Interaction,
     currentTransform: TransformState
@@ -41,20 +43,19 @@ public struct SelectTool: CanvasTool {
         //        let hitItemID = hitTest(location: location)
         //        return .updateHoverStatus(hitItemID)
         return .updateHoverLocation(location)
-        
-      case .scrolling(let origin, let delta, let location):
-        
+
+      case .swiping(let delta, let location):
+
         /// Select Tool allows standard panning
-        var newTransform = currentTransform
-        newTransform.translation.width += delta.width
-        return .mutateTransform(newTransform)
-        
+        var new = currentTransform
+        new.translation += delta
+        return .mutateTransform(new)
+
       default:
         return .none
     }
   }
 }
-
 
 /// A canvas tool's identity and visual metadata.
 ///
@@ -82,4 +83,3 @@ public struct SelectTool: CanvasTool {
 ////    self.dragBehavior = dragBehavior
 //  }
 //}
-

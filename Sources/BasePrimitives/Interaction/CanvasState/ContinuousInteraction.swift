@@ -7,6 +7,9 @@
 
 import Foundation
 
+/// E.g. Used for Swipe gesture (Pan), Pinch gesture (Zoom)
+/// Of note: Holds a non-optional Value, because a `ContinuousInteraction`
+/// property has a resting/idle/neutral value, such as Pan having `.zero` offset
 public struct ContinuousInteraction<Value: Sendable & Equatable>: Equatable, Sendable {
   public var value: Value
   public var phase: InteractionPhase

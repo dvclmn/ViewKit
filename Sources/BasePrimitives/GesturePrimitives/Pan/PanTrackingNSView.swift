@@ -13,7 +13,7 @@ import BasePrimitives
 /// confused between Pan the Gesture Kind, and Pan from *other*
 /// input methods like click and drag.
 public class SwipeTrackingNSView: NSView {
-  var didUpdateSwipe: PanOutput = { _ in }
+  var onSwipeGesture: SwipeOutput = { _ in }
 
   public override func scrollWheel(with event: NSEvent) {
 
@@ -28,7 +28,7 @@ public class SwipeTrackingNSView: NSView {
       phase: phase,
       modifiers: modifiers
     )
-    didUpdatePan(eventData)
+    onSwipeGesture(eventData)
   }
 }
 #endif
