@@ -23,10 +23,12 @@ public final class CanvasInteractionState {
   /// such as Strokes for Paperbark, and Cells for DrawString, etc?
   //  public var dragRect: CGRect? = nil
   public var transform: TransformState = .identity
-  public var pointer: PointerState
+  public var pointer: PointerState = .initial
+  public var geometry: CanvasGeometry?
+  public var zoomRange: ClosedRange<CGFloat>?
   //  public var phase: InteractionPhase = .none
 
-  public var activeTool: any CanvasTool
+  public var activeTool: any CanvasTool = .default
 
   public init(  //    pointer: PointerState = .initial,
     //    transform: TransformState = .identity
@@ -41,11 +43,12 @@ extension CanvasInteractionState {
 
   public func handleInput(
     from source: InteractionSource,
-    in geometry: CanvasGeometry,
+    //    in geometry: CanvasGeometry,
     phase: InteractionPhase,
     modifiers: Modifiers,
   ) {
-    
+
+    guard let geometry else { return }
     let interaction = Interaction(
       source: source,
       geometry: geometry,
@@ -71,51 +74,64 @@ extension CanvasInteractionState {
     }
   }
 
-  /// This has to be told where to put the value. It's just a swipe,
-  /// doesn't know anything else
-//  package func handleSwipeGesture(
-//    //    _ interaction: Interaction
-//    _ event: SwipeEvent,
-//    //    phase: InteractionPhase,
-//    //    modifiers: Modifiers
-//    //    with interaction: Interaction
-//  ) {
-//    let interaction = Interaction(
-//      kind: .swiping(delta: event.delta, location: event.location),
-//      phase: event.phase,
-//      modifiers: event.modifiers
-//    )
-//    handleInput(interaction)
-//
-//    //    self.phase = phase
-//
-//    //    guard store.interaction == nil else { return }
-//    //    store.interaction = Interaction(
-//    //      kind: .scrolling(
-//    //        origin: .zero,
-//    //        delta: event.delta,
-//    //        location: event.location
-//    //      ),
-//    //      phase: event.phase,
-//    //      modifiers: modifierKeys
-//    //    )
-//    //        store.handlePan(delta: delta, phase: phase, state: &interactionState)
-//  }
-
-//  package func handleHover(_ phase: HoverPhase) {
-//
-//  }
-
-  public var snapshot: CanvasSnapshot {
-    let hoverMapped =
-    .init(
-      pointer: <#T##Point<CanvasSpace>?#>,
-      isPointerInsideCanvas: <#T##Bool#>,
-      zoom: <#T##CGFloat#>,
-      pan: <#T##CGSize#>,
-      rotation: <#T##CGFloat#>
+  private var coordinateSpaceMapper: CoordinateSpaceMapper? {
+    guard let geometry, let zoomRange else { return nil }
+    return .init(
+      geometry: geometry,
+      transform: transform,
+      zoomRange: zoomRange
     )
   }
+
+  public var snapshot: CanvasSnapshot? {
+    guard let hover = pointer.hover,
+      let hoverMapped = coordinateSpaceMapper?.canvasPoint(from: hover),
+      let isInside = coordinateSpaceMapper?.isInsideCanvas(hoverMapped)
+    else { return nil }
+
+    return CanvasSnapshot(
+      pointerLocation: hoverMapped,
+      isPointerInsideCanvas: isInside,
+      zoom: transform.scale,
+      pan: transform.translation.cgSize,
+      rotation: transform.rotation
+    )
+  }
+
+  /// This has to be told where to put the value. It's just a swipe,
+  /// doesn't know anything else
+  //  package func handleSwipeGesture(
+  //    //    _ interaction: Interaction
+  //    _ event: SwipeEvent,
+  //    //    phase: InteractionPhase,
+  //    //    modifiers: Modifiers
+  //    //    with interaction: Interaction
+  //  ) {
+  //    let interaction = Interaction(
+  //      kind: .swiping(delta: event.delta, location: event.location),
+  //      phase: event.phase,
+  //      modifiers: event.modifiers
+  //    )
+  //    handleInput(interaction)
+  //
+  //    //    self.phase = phase
+  //
+  //    //    guard store.interaction == nil else { return }
+  //    //    store.interaction = Interaction(
+  //    //      kind: .scrolling(
+  //    //        origin: .zero,
+  //    //        delta: event.delta,
+  //    //        location: event.location
+  //    //      ),
+  //    //      phase: event.phase,
+  //    //      modifiers: modifierKeys
+  //    //    )
+  //    //        store.handlePan(delta: delta, phase: phase, state: &interactionState)
+  //  }
+
+  //  package func handleHover(_ phase: HoverPhase) {
+  //
+  //  }
 
 }
 
@@ -125,55 +141,56 @@ extension CanvasInteractionState {
   //  public var scale: CGFloat { transform.scale.value }
   //  public var rotation: Angle { transform.rotation.value }
 
-  public func resetAll() {
+//  public func resetAll() {
     //    pointer.reset()
-    dragRect = nil
-    transform.reset()
-  }
+//    dragRect = nil
+//    pointer
+//    transform.reset()
+//  }
 }
 
-@MainActor
-extension CanvasInteractionState {
-  package func dragRectBinding(using policy: CanvasInputPolicy) -> Binding<CGRect?> {
-    switch policy.dragBehaviour {
-      case .marquee: handleMarquee()
-      case .continuous: handleContinuous(using: policy)
-      case .none: .constant(nil)
-    }
-  }
-
-  private func handleContinuous(using policy: CanvasInputPolicy) -> Binding<CGRect?> {
-    guard policy.pointerDragPanEnabled else {
-      /// Continuous drag that isn't routed to pan (e.g. zoom tool vertical drag).
-      /// Route to pointer drag state so the operation resolver can see it.
-      return dragStateBinding()
-    }
-    return Binding {
-      self.transform.translation.value.toCGRectZeroOrigin
-      //      self.pan.toCGRectZeroOrigin
-    } set: {
-      guard let size = $0?.size else { return }
-      self.transform.translation.update(size, phase: .changed)
-      //      self.transform.pan.update(
-      //        .init(fromCGSize: size),
-      //        phase: .changed,
-      //
-      //      )
-    }
-  }
-
-  private func handleMarquee() -> Binding<CGRect?> {
-    dragStateBinding()
-  }
-
-  private func dragStateBinding() -> Binding<CGRect?> {
-    Binding {
-      self.pointer.drag.value?.cgRect
-    } set: { newValue in
-      self.pointer.drag.value = newValue.map {
-        Rect<ScreenSpace>(from: $0)
-      }
-    }
-  }
-
-}
+//@MainActor
+//extension CanvasInteractionState {
+//  package func dragRectBinding(using policy: CanvasInputPolicy) -> Binding<CGRect?> {
+//    switch policy.dragBehaviour {
+//      case .marquee: handleMarquee()
+//      case .continuous: handleContinuous(using: policy)
+//      case .none: .constant(nil)
+//    }
+//  }
+//
+//  private func handleContinuous(using policy: CanvasInputPolicy) -> Binding<CGRect?> {
+//    guard policy.pointerDragPanEnabled else {
+//      /// Continuous drag that isn't routed to pan (e.g. zoom tool vertical drag).
+//      /// Route to pointer drag state so the operation resolver can see it.
+//      return dragStateBinding()
+//    }
+//    return Binding {
+//      self.transform.translation.value.toCGRectZeroOrigin
+//      //      self.pan.toCGRectZeroOrigin
+//    } set: {
+//      guard let size = $0?.size else { return }
+//      self.transform.translation.update(size, phase: .changed)
+//      //      self.transform.pan.update(
+//      //        .init(fromCGSize: size),
+//      //        phase: .changed,
+//      //
+//      //      )
+//    }
+//  }
+//
+//  private func handleMarquee() -> Binding<CGRect?> {
+//    dragStateBinding()
+//  }
+//
+//  private func dragStateBinding() -> Binding<CGRect?> {
+//    Binding {
+//      self.pointer.drag.value?.cgRect
+//    } set: { newValue in
+//      self.pointer.drag.value = newValue.map {
+//        Rect<ScreenSpace>(from: $0)
+//      }
+//    }
+//  }
+//
+//}

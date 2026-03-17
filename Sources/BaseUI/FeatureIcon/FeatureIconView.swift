@@ -6,7 +6,7 @@
 //
 
 import BasePrimitives
-import GestureKit
+//import GestureKit
 import SwiftUI
 import LayoutKit
 //import UIPrimitives
@@ -19,7 +19,7 @@ public struct FeatureIconView: View {
   public var body: some View {
     IconView(icon)
       .font(.system(size: fontSize))
-      .bouncyDrag()
+//      .bouncyDrag()
   }
 }
 

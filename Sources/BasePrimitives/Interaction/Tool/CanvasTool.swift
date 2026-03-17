@@ -12,16 +12,8 @@ import SwiftUI
 //}
 //
 
-/// 1. Define what a Tool can actually output.
-public enum CanvasIntent {
-  case mutateTransform(TransformState)
-  case updateHoverLocation(Point<ScreenSpace>)
-  //  case updateSelection([(any CanvasElement).ID])
-  //  case updateHoverStatus((any CanvasElement).ID?)
-  case none
-}
 
-public protocol CanvasTool {
+public protocol CanvasTool: Sendable {
   /// This allows a Tool to declare what should happen when it is selected,
   /// and certain interaction events happen
   func resolve(
@@ -30,29 +22,55 @@ public protocol CanvasTool {
   ) -> CanvasIntent
 }
 
+extension CanvasTool where Self == SelectTool {
+  public static var `default`: any CanvasTool { SelectTool() }
+}
+
 public struct SelectTool: CanvasTool {
   public func resolve(
     interaction: Interaction,
     currentTransform: TransformState
   ) -> CanvasIntent {
-    switch interaction.kind {
-      case .hovering(let location):
-        /// 1. Convert viewport coordinate to document coordinate using currentTransform
-        /// 2. Hit-test the document to find what is under the cursor
-        /// 3. Return the intent
-        //        let hitItemID = hitTest(location: location)
-        //        return .updateHoverStatus(hitItemID)
-        return .updateHoverLocation(location)
-
-      case .swiping(let delta, let location):
-
-        /// Select Tool allows standard panning
-        var new = currentTransform
-        new.translation += delta
-        return .mutateTransform(new)
-
-      default:
+    switch interaction.source {
+      case .swipeGesture(let delta, let location):
+        return .defaultPan(
+          delta: delta,
+          location: location,
+          transform: currentTransform
+        )
+        
+      case .pinchGesture(let event):
+        return .defaultZoom(
+          event: event,
+          transform: currentTransform
+        )
+        
+      case .continuousHover(let point):
+        return .updateHoverLocation(point)
+        
+      case .pointerTapGesture(let pointerButton, let location):
         return .none
+        
+      case .pointerDragGesture(let from, let current):
+        return .none
+    }
+//      case .hovering(let location):
+//        /// 1. Convert viewport coordinate to document coordinate using currentTransform
+//        /// 2. Hit-test the document to find what is under the cursor
+//        /// 3. Return the intent
+//        //        let hitItemID = hitTest(location: location)
+//        //        return .updateHoverStatus(hitItemID)
+//        return .updateHoverLocation(location)
+//
+//      case .swiping(let delta, let location):
+//
+//        /// Select Tool allows standard panning
+//        var new = currentTransform
+//        new.translation += delta
+//        return .mutateTransform(new)
+//
+//      default:
+//        return .none
     }
   }
 }

@@ -7,7 +7,7 @@
 
 import BasePrimitives
 import SwiftUI
-import GestureKit
+//import GestureKit
 
 @MainActor
 struct PopupView: View {

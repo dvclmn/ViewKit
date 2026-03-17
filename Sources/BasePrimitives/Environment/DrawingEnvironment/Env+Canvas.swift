@@ -17,16 +17,21 @@ extension EnvironmentValues {
 
   /// Aka artwork size, document size
   @Entry public var canvasSize: Size<CanvasSpace>?
-  @Entry public var canvasFrameInViewport: CGRect?
+  @Entry public var canvasFrameInViewport: Rect<CanvasSpace>?
+  //  @Entry public var canvasFrameInViewport: CGRect?
   @Entry public var canvasBackground: Color = Color(white: 0.04)
 
   @Entry public var canvasInputPolicy: CanvasInputPolicy = .standard
-//  @Entry public var canvasOperation: CanvasOperation = .idle()
+  //  @Entry public var canvasOperation: CanvasOperation = .idle()
 
   public var canvasGeometry: CanvasGeometry? {
-    guard let viewportRect, let canvasSize else { return nil }
+    guard let viewportRect,
+      let canvasFrameInViewport,
+      let canvasSize
+    else { return nil }
     return CanvasGeometry(
       viewportRect: Rect<ScreenSpace>(fromRect: viewportRect),
+      canvasFrameInViewport: canvasFrameInViewport,
       canvasSize: canvasSize,
       anchor: canvasAnchor
     )
@@ -47,7 +52,7 @@ extension EnvironmentValues {
 
   @Entry public var panOffset: CGSize = .zero
   @Entry public var rotation: Angle = .zero
-  
+
   /// The hover location in resolved CanvasSpace (before pan/zoom)
   @Entry public var pointerLocation: CGPoint?
 

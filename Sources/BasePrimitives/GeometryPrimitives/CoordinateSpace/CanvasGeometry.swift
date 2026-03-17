@@ -13,6 +13,7 @@ public struct CanvasGeometry: Sendable, Equatable {
   public var viewportRect: Rect<ScreenSpace>
   public var canvasFrameInViewport: Rect<CanvasSpace>
   public var anchor: UnitPoint
+//  public var canvasSize: CGSize
   public var canvasSize: Size<CanvasSpace>
   
   public static var zero: Self { .init() }
@@ -20,6 +21,7 @@ public struct CanvasGeometry: Sendable, Equatable {
   public init(
     viewportRect: Rect<ScreenSpace> = .zero,
     canvasFrameInViewport: Rect<CanvasSpace> = .zero,
+//    canvasSize: CGSize = .zero,
     canvasSize: Size<CanvasSpace> = .zero,
     anchor: UnitPoint = .center
   ) {
