@@ -5,13 +5,13 @@
 //  Created by Dave Coleman on 16/3/2026.
 //
 
-import Foundation
+import SwiftUI
 
 public enum InteractionSource {
   case swipeGesture
   case pinchGesture
-  case continuousHover
-  case pointerTapGesture
+  case continuousHover(HoverPhase)
+  case pointerTapGesture()
   case pointerDragGesture
 }
 

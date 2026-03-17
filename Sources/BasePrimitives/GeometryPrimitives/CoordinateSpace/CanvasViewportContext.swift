@@ -8,7 +8,11 @@
 import SwiftUI
 
 public protocol CanvasViewportContext: Sendable, Equatable {
+  /// The idea is that this should account for safe areas etc,
+  /// and can express this by virtue of being a rect (not just a size)
   var viewportRect: Rect<ScreenSpace> { get }
+  
+  
   var canvasSize: Size<CanvasSpace> { get }
   var anchor: UnitPoint { get }
 }
