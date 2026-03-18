@@ -19,12 +19,12 @@ extension EnvironmentValues {
 
   public var pointerGridPosition: GridPosition? {
     guard let gridGeometry else {
-      printMissing("gridGeometry", for: "pointerGridPosition")
+//      printMissing("gridGeometry", for: "pointerGridPosition")
       return nil
     }
 
     guard let pointerLocation else {
-      printMissing("pointerLocation", for: "pointerGridPosition")
+//      printMissing("pointerLocation", for: "pointerGridPosition")
       return nil
     }
 

@@ -18,7 +18,7 @@ import SwiftUI
 /// - `name` / `icon`: Display metadata for toolbar UI
 /// - `inputPolicy`: What input modes are active when this tool is selected
 /// - `resolve()`: Maps a pointer interaction to a canvas intent + domain action
-public protocol CanvasTool: Sendable {
+public protocol CanvasTool: Sendable, Identifiable where ID == CanvasToolKind {
 
   /// The tool's identity, used for keyboard binding lookups and registry.
   var kind: CanvasToolKind { get }
@@ -32,7 +32,7 @@ public protocol CanvasTool: Sendable {
   /// The input policy active when this tool is selected.
   /// Controls drag behaviour, pointer-drag-pan, etc.
   var inputPolicy: CanvasInputPolicy { get }
-  
+
   var pointerStyle: PointerStyleCompatible { get }
 
   /// Resolve the pointer style for the current interaction context.
@@ -53,6 +53,8 @@ public protocol CanvasTool: Sendable {
 // MARK: - Default implementations
 
 extension CanvasTool {
+  public var id: CanvasToolKind { kind }
+
   /// Default policy: gestures enabled, no drag, hover on.
   public var inputPolicy: CanvasInputPolicy { .standard }
 
@@ -112,7 +114,7 @@ public struct PanTool: CanvasTool {
   public let name = "Pan"
   public let icon = "hand.raised"
   public let pointerStyle: PointerStyleCompatible = .grabIdle
-  
+
   public var inputPolicy: CanvasInputPolicy {
     .init(pointerDragPanEnabled: true, dragBehaviour: .continuous)
   }

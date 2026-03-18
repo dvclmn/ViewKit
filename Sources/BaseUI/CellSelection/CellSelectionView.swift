@@ -24,7 +24,7 @@ public struct CellSelectionView<Content: View>: View {
         .allowsCanvasClipping(false)
 
       content()
-      //        .debugFrame("Canvas Content", .mint)
+//        .debugFrame("Canvas Content", .mint)
     }
     .environment(\.shouldShowInfoBarItems, true)
 
