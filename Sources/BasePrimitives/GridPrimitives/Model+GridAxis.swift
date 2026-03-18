@@ -175,19 +175,19 @@ extension GridAxis {
   }
 
   public func hasOverflow(
-    canvasFrameInViewport: CGRect?,
+    artworkFrameInViewport: CGRect?,
     buffer: CGFloat,
   ) -> Bool {
 
-    guard let canvasFrameInViewport else { return false }
+    guard let artworkFrameInViewport else { return false }
     switch self {
       case .horizontal:
-        let minX = canvasFrameInViewport.minX - buffer
+        let minX = artworkFrameInViewport.minX - buffer
         let hasOverflow: Bool = minX < 0
         return hasOverflow
 
       case .vertical:
-        let minY = canvasFrameInViewport.minY - buffer
+        let minY = artworkFrameInViewport.minY - buffer
         let hasOverflow: Bool = minY < 0
         return hasOverflow
     }

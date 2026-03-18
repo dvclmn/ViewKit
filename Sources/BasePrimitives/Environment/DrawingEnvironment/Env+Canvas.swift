@@ -17,8 +17,7 @@ extension EnvironmentValues {
 
   /// Aka artwork size, document size
   @Entry public var canvasSize: Size<CanvasSpace>?
-  @Entry public var canvasFrameInViewport: Rect<CanvasSpace>?
-  //  @Entry public var canvasFrameInViewport: CGRect?
+  @Entry public var artworkFrameInViewport: Rect<ScreenSpace>?
   @Entry public var canvasBackground: Color = Color(white: 0.04)
 
   @Entry public var canvasInputPolicy: CanvasInputPolicy = .standard
@@ -26,12 +25,12 @@ extension EnvironmentValues {
 
   public var canvasGeometry: CanvasGeometry? {
     guard let viewportRect,
-      let canvasFrameInViewport,
+      let artworkFrameInViewport,
       let canvasSize
     else { return nil }
     return CanvasGeometry(
       viewportRect: Rect<ScreenSpace>(fromRect: viewportRect),
-      canvasFrameInViewport: canvasFrameInViewport,
+      artworkFrameInViewport: artworkFrameInViewport,
       canvasSize: canvasSize,
       anchor: canvasAnchor
     )

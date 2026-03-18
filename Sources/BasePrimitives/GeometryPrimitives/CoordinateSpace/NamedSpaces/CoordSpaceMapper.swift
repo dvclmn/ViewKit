@@ -25,7 +25,7 @@ public struct CoordinateSpaceMapper {
 
 extension CoordinateSpaceMapper {
   private var canvasSize: Size<CanvasSpace> { geometry.canvasSize }
-  private var canvasFrameInViewport: Rect<CanvasSpace> { geometry.canvasFrameInViewport }
+  private var artworkFrameInViewport: Rect<CanvasSpace> { geometry.artworkFrameInViewport }
   private var zoomClamped: CGFloat {
     guard transform.scale.isFiniteAndGreaterThanZero else { return 1 }
     return transform.scale.clampedIfNeeded(to: zoomRange)
@@ -33,14 +33,14 @@ extension CoordinateSpaceMapper {
   
   /// Convert screen-space point to canvas-space
   func canvasPoint(from screenPoint: Point<ScreenSpace>) -> Point<CanvasSpace> {
-    //    let x = (screenPoint.x - canvasFrameInViewport.minX) / zoomClamped
-    //    let y = (screenPoint.y - canvasFrameInViewport.minY) / zoomClamped
+    //    let x = (screenPoint.x - artworkFrameInViewport.minX) / zoomClamped
+    //    let y = (screenPoint.y - artworkFrameInViewport.minY) / zoomClamped
     
     Point<CanvasSpace>(
       //      x: max(0, x),
       //      y: max(0, y)
-      x: (screenPoint.x - canvasFrameInViewport.minX) / zoomClamped,
-      y: (screenPoint.y - canvasFrameInViewport.minY) / zoomClamped
+      x: (screenPoint.x - artworkFrameInViewport.minX) / zoomClamped,
+      y: (screenPoint.y - artworkFrameInViewport.minY) / zoomClamped
     )
   }
   
