@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-#warning("Consider either adding InteractionSource to this, or a new type that can express both")
-
 /// Defines the drag interaction mode applied by ``UnifiedDragModifier``.
 ///
 /// - ``marquee``: A transient selection rectangle, cleared when the drag ends.

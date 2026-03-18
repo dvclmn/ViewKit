@@ -1,26 +1,9 @@
 //
 //  TransformSource.swift
-//  DrawString
+//  BaseHelpers
 //
 //  Created by Dave Coleman on 11/3/2026.
 //
 
-/// How panning was initiated — useful for debug display and
-/// for subtly different cursor/feedback behaviour.
-//public enum TransformSource: Equatable, Sendable {
-//
-//  /// Two-finger trackpad swipe for Pan, pinch for Zoom
-//  case gesture
-//
-//  /// Pan/Zoom tool selected, pointer drag
-//  case pointerDrag
-//}
-//
-//extension TransformSource {
-//  public var name: String {
-//    switch self {
-//      case .gesture: "Gesture"
-//      case .pointerDrag: "Pointer Drag"
-//    }
-//  }
-//}
+// RETIRED: The distinction between gesture vs pointer-drag origin
+// is now captured directly in InteractionSource cases.

@@ -8,14 +8,33 @@
 import SwiftUI
 
 /// Manages tool selection, spring-loading, and key bindings.
-
+///
+/// `ToolHandler` is the single owner of "which tool is active". It manages:
+/// - **Base tool**: The user's explicitly-selected tool (sticky selection)
+/// - **Spring-loaded tools**: Temporarily active while a key is held
+/// - **Effective tool**: What's actually used right now (spring-load > base)
+///
+/// `CanvasInteractionState` reads `effectiveTool` from here rather than
+/// holding `activeTool` directly (once fully wired up).
 public struct ToolHandler {
+
+  /// The user's current committed tool selection.
   private(set) public var baseTool: any CanvasTool
-//  private(set) public var activations: [ToolActivation] = []
-//  public private(set) var heldKeys: Set<KeyEquivalent> = []
-//  public private(set) var modifiers: Modifiers = []
-//  public private(set) var bindings: [ToolBinding]
-//  public private(set) var toolRegistry: [CanvasToolKind: CanvasTool]
+
+  /// Active spring-load / hold activations, most recent last.
+  public private(set) var activations: [ToolActivation] = []
+
+  /// Currently held keyboard keys.
+  public private(set) var heldKeys: Set<KeyEquivalent> = []
+
+  /// Current modifier key state.
+  public private(set) var modifiers: Modifiers = []
+
+  /// Key-to-tool mappings.
+  public private(set) var bindings: [ToolBinding]
+
+  /// All registered tools, keyed by kind.
+  public private(set) var toolRegistry: [CanvasToolKind: any CanvasTool]
 
   /// Sticky threshold: holding a sticky key longer than this arms it as a spring-load.
   /// - For `.sticky`: If released before or equal to this delay, commit to the tool.
@@ -25,28 +44,30 @@ public struct ToolHandler {
   public var springLoadDelay: TimeInterval
 
   public init(
-    baseTool: CanvasTool = .select,
-    tools: [CanvasTool] = CanvasTool.defaultTools,
+    baseTool: (any CanvasTool)? = nil,
+    tools: [any CanvasTool] = .defaultTools,
     bindings: [ToolBinding] = ToolBinding.defaultBindings(),
     springLoadDelay: TimeInterval = 0.15
   ) {
-    self.baseTool = baseTool
+    self.baseTool = baseTool ?? tools.first ?? SelectTool()
     self.bindings = bindings
     self.toolRegistry = Dictionary(uniqueKeysWithValues: tools.map { ($0.kind, $0) })
     self.springLoadDelay = springLoadDelay
   }
 }
 
+// MARK: - Available tools (for toolbar UI)
+
 extension ToolHandler {
 
   /// All registered tools, ordered by binding appearance then remaining registry entries.
   ///
-  /// Use this to populate toolbar UI — no separate `ToolSetup` needed.
-  public var availableTools: [CanvasTool] {
+  /// Use this to populate toolbar UI.
+  public var availableTools: [any CanvasTool] {
     var seen: Set<CanvasToolKind> = []
-    var result: [CanvasTool] = []
+    var result: [any CanvasTool] = []
 
-    /// Tools referenced by bindings, in binding order.
+    // Tools referenced by bindings, in binding order.
     for binding in bindings {
       guard !seen.contains(binding.target),
         let tool = toolRegistry[binding.target]
@@ -55,7 +76,7 @@ extension ToolHandler {
       result.append(tool)
     }
 
-    /// Remaining registered tools not covered by any binding.
+    // Remaining registered tools not covered by any binding.
     for (kind, tool) in toolRegistry where !seen.contains(kind) {
       result.append(tool)
     }
@@ -64,18 +85,19 @@ extension ToolHandler {
   }
 }
 
+// MARK: - Effective tool resolution
+
 extension ToolHandler {
 
   /// The currently effective tool, considering pending and armed activations.
   /// If there is any activation on the stack, its tool is effective immediately.
   /// Otherwise the base tool is effective.
-  public var effectiveTool: CanvasTool {
+  public var effectiveTool: any CanvasTool {
     activations.last?.tool ?? baseTool
   }
 
   /// The spring-loaded tool if one is armed, or `nil`.
-  /// Pass this to `OperationResolver.resolve(springLoadedTool:)`.
-  public var springLoadedTool: CanvasTool? {
+  public var springLoadedTool: (any CanvasTool)? {
     guard let armed = activations.last(where: { $0.isArmed }) else { return nil }
     return armed.tool
   }
@@ -103,24 +125,36 @@ extension ToolHandler {
     for i in activations.indices {
       let a = activations[i]
       guard a.binding.mode == .sticky,
-            !a.isArmed,
-            heldKeys.contains(a.key) else { continue }
+        !a.isArmed,
+        heldKeys.contains(a.key)
+      else { continue }
       if now.timeIntervalSince(a.startedAt) >= springLoadDelay {
         activations[i].isArmed = true
       }
     }
   }
+}
 
-  public mutating func setBaseTool(_ tool: CanvasTool) {
+// MARK: - Mutations
+
+extension ToolHandler {
+
+  public mutating func setBaseTool(_ tool: any CanvasTool) {
     baseTool = tool
     activations.removeAll()
+  }
+
+  /// Set the base tool by kind, looking it up in the registry.
+  public mutating func setBaseTool(kind: CanvasToolKind) {
+    guard let tool = toolRegistry[kind] else { return }
+    setBaseTool(tool)
   }
 
   public mutating func setBindings(_ bindings: [ToolBinding]) {
     self.bindings = bindings
   }
 
-  public mutating func registerTools(_ tools: [CanvasTool]) {
+  public mutating func registerTools(_ tools: [any CanvasTool]) {
     self.toolRegistry = Dictionary(uniqueKeysWithValues: tools.map { ($0.kind, $0) })
   }
 
@@ -156,7 +190,8 @@ extension ToolHandler {
   }
 }
 
-// MARK: - Helpers
+// MARK: - Private helpers
+
 extension ToolHandler {
 
   private func matchingBindings(for key: KeyEquivalent) -> [ToolBinding] {
@@ -214,8 +249,7 @@ extension ToolHandler {
     activations.removeAll { $0.key == key && ($0.binding.mode == .hold || $0.binding.mode == .sticky) }
   }
 
-  private func resolveTool(for kind: CanvasToolKind) -> CanvasTool {
+  private func resolveTool(for kind: CanvasToolKind) -> any CanvasTool {
     toolRegistry[kind] ?? baseTool
   }
 }
-

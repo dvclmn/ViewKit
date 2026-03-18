@@ -7,7 +7,25 @@
 
 import SwiftUI
 
-public enum InteractionSource {
+/// The raw input source from a SwiftUI gesture modifier.
+///
+/// Each case maps 1:1 to a concrete gesture modifier in `InteractionModifiers`:
+/// - `.swipeGesture` ↔ `.swipeGesture(isEnabled:_:)`
+/// - `.pinchGesture` ↔ `.pinchGesture(initial:isEnabled:didUpdateEvent:)`
+/// - `.continuousHover` ↔ `.onContinuousHover(coordinateSpace:perform:)`
+/// - `.pointerTapGesture` ↔ `.onTapGesture(count:coordinateSpace:perform:)`
+/// - `.pointerDragGesture` ↔ `.pointerDragGesture(rect:coordinateSpace:...)`
+///
+/// Under two-tier resolution:
+/// - Swipe, pinch, and hover are handled globally by `CanvasInteractionState`
+/// - Pointer tap and drag are forwarded to the active `CanvasTool.resolve()`
+public enum PointerButton: Sendable {
+  case primary
+  case secondary
+  case middle
+}
+
+public enum InteractionSource: Sendable {
   case swipeGesture(delta: Size<ScreenSpace>, location: Point<ScreenSpace>)
   case pinchGesture(ZoomGestureEvent)
   // case rotation (not yet implemented)
@@ -17,100 +35,4 @@ public enum InteractionSource {
     from: Point<ScreenSpace>,
     current: Point<ScreenSpace>
   )
-  
-//  func interaction(
-//    geometry: CanvasGeometry,
-//    modifiers: Modifiers
-//  ) -> Interaction {
-//    switch self {
-//      case .swipeGesture:
-//        <#code#>
-//      case .pinchGesture(let zoomEvent):
-//          .init(
-//            kind: .,
-//            phase: <#T##InteractionPhase#>,
-//            modifiers: <#T##Modifiers#>
-//          )
-//      case .continuousHover(let hoverPhase):
-//        <#code#>
-//      case .pointerTapGesture:
-//        <#code#>
-//      case .pointerDragGesture:
-//        <#code#>
-//    }
-//  }
 }
-
-//public enum InteractionSource {
-//  case swipe // Aka scroll/pan
-//  case pinch
-//}
-
-//public enum InteractionChannel: Sendable, Equatable, Comparable {
-//  /// e.g., trackpad magnify, two-finger pan
-//  case hardwareGesture
-//
-//  /// e.g., Space → Pan
-//  case springLoaded
-//
-//  /// e.g., Zoom tool drag
-//  case toolPointer
-//
-//  case hover
-//}
-//
-//extension InteractionChannel {
-//  public var priority: Int {
-//    switch self {
-//      case .hardwareGesture: 3
-//      case .springLoaded: 2
-//      case .toolPointer: 1
-//      case .hover: 0
-//    }
-//  }
-//}
-
-//public enum InteractionSource: Sendable, Equatable {
-//  case gesture(
-//    GestureKind,
-//    channel: InteractionChannel = .hardwareGesture
-//  )
-//  case pointerDrag(
-//    PointerDragKind,
-//    channel: InteractionChannel = .toolPointer
-//  )
-//  case keyboard(
-//    channel: InteractionChannel = .springLoaded
-//  )
-//  
-//  /// Anything not initiated directly by a user input device.
-//  /// E.g. A Fit to screen / Zoom to Selection command,
-//  /// auto-centering the canvas after a resize, etc.
-//  case programmatic(
-//    channel: InteractionChannel = .toolPointer
-//  )
-//
-//  public var channel: InteractionChannel {
-//    switch self {
-//      case .gesture(_, let c), 
-//          .pointerDrag(_, let c), 
-//          .keyboard(let c), 
-//          .programmatic(let c):
-//        return c
-//    }
-//  }
-//}
-
-//public enum GestureKind: Sendable, Equatable {
-//  case magnify
-//  case pan
-//  case rotate
-//}
-//
-//public struct PointerDragKind: Sendable, Equatable {
-//
-//
-//  public var button: PointerButton
-//  public var modifiers: Modifiers
-//}
-//
