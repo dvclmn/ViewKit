@@ -17,6 +17,7 @@ public final class CanvasInteractionState {
   public var pointer: PointerState = .initial
   public var geometry: CanvasGeometry?
   public var zoomRange: ClosedRange<CGFloat>?
+  public var modifiers: Modifiers = []
 
   public var activeTool: any CanvasTool = .default
 
@@ -24,6 +25,10 @@ public final class CanvasInteractionState {
   /// Consuming apps can observe this to react to tool-specific events
   /// (e.g. "select at point", "commit stroke").
   public var lastToolAction: ToolAction = .none
+
+  /// The most recent pointer interaction context.
+  public var lastPointerPhase: InteractionPhase = .none
+  public var lastPointerSource: InteractionSource?
 
   public init() {}
 }
@@ -46,6 +51,7 @@ extension CanvasInteractionState {
   ) {
 
     guard let geometry else { return }
+    self.modifiers = modifiers
 
     // MARK: Tier 1 — Global gestures
 
@@ -85,6 +91,8 @@ extension CanvasInteractionState {
     }
 
     // MARK: Tier 2 — Tool-specific pointer interactions
+    lastPointerSource = source
+    lastPointerPhase = phase
 
     let interaction = Interaction(
       source: source,
@@ -100,6 +108,10 @@ extension CanvasInteractionState {
 
     execute(resolution.intent)
     self.lastToolAction = resolution.action
+  }
+
+  public func updateModifiers(_ modifiers: Modifiers) {
+    self.modifiers = modifiers
   }
 
   private func execute(_ intent: CanvasIntent) {
@@ -144,6 +156,20 @@ extension CanvasInteractionState {
       zoom: transform.scale,
       pan: transform.translation.cgSize,
       rotation: transform.rotation
+    )
+  }
+}
+
+// MARK: - Pointer style resolution
+
+extension CanvasInteractionState {
+  public var pointerStyle: PointerStyleCompatible {
+    activeTool.resolvePointerStyle(
+      context: ToolPointerContext(
+        modifiers: modifiers,
+        pointerPhase: lastPointerPhase,
+        pointerSource: lastPointerSource
+      )
     )
   }
 }

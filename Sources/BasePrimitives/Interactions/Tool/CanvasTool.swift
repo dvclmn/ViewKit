@@ -35,6 +35,11 @@ public protocol CanvasTool: Sendable {
   
   var pointerStyle: PointerStyleCompatible { get }
 
+  /// Resolve the pointer style for the current interaction context.
+  func resolvePointerStyle(
+    context: ToolPointerContext
+  ) -> PointerStyleCompatible
+
   /// Resolve a pointer interaction into a canvas intent and optional domain action.
   ///
   /// Only called for pointer events (`.pointerTapGesture`, `.pointerDragGesture`).
@@ -50,6 +55,13 @@ public protocol CanvasTool: Sendable {
 extension CanvasTool {
   /// Default policy: gestures enabled, no drag, hover on.
   public var inputPolicy: CanvasInputPolicy { .standard }
+
+  /// Default pointer style behaviour: return the tool's base style.
+  public func resolvePointerStyle(
+    context: ToolPointerContext
+  ) -> PointerStyleCompatible {
+    pointerStyle
+  }
 }
 
 // MARK: - Default tool accessor
@@ -99,7 +111,7 @@ public struct PanTool: CanvasTool {
   public let kind: CanvasToolKind = .pan
   public let name = "Pan"
   public let icon = "hand.raised"
-  public let pointerStyle: PointerStyleCompatible = .default
+  public let pointerStyle: PointerStyleCompatible = .grabIdle
   
   public var inputPolicy: CanvasInputPolicy {
     .init(pointerDragPanEnabled: true, dragBehaviour: .continuous)
@@ -122,6 +134,12 @@ public struct PanTool: CanvasTool {
         return .none
     }
   }
+
+  public func resolvePointerStyle(
+    context: ToolPointerContext
+  ) -> PointerStyleCompatible {
+    context.isPointerDragging ? .grabActive : .grabIdle
+  }
 }
 
 // MARK: - Zoom Tool
@@ -132,6 +150,7 @@ public struct ZoomTool: CanvasTool {
   public let kind: CanvasToolKind = .zoom
   public let name = "Zoom"
   public let icon = "magnifyingglass"
+  public let pointerStyle: PointerStyleCompatible = .zoomIn
 
   public var inputPolicy: CanvasInputPolicy {
     .init(dragBehaviour: .continuous(axes: .vertical))
@@ -160,6 +179,12 @@ public struct ZoomTool: CanvasTool {
       default:
         return .none
     }
+  }
+
+  public func resolvePointerStyle(
+    context: ToolPointerContext
+  ) -> PointerStyleCompatible {
+    context.modifiers.contains(.option) ? .zoomOut : .zoomIn
   }
 }
 
