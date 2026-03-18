@@ -13,8 +13,8 @@ import SwiftUI
 /// `isArmed = false`. After the spring-load delay elapses, the activation
 /// is armed and becomes the effective tool. If the key is released before
 /// arming, the activation is silently discarded (brief tap = no tool switch).
-public struct ToolActivation: Hashable, Sendable {
-  public let tool: CanvasTool
+public struct ToolActivation: Sendable {
+  public let tool: any CanvasTool
   public let binding: ToolBinding
   public let startedAt: Date
   public let key: KeyEquivalent
@@ -23,7 +23,7 @@ public struct ToolActivation: Hashable, Sendable {
   public var isArmed: Bool
 
   public init(
-    tool: CanvasTool,
+    tool: any CanvasTool,
     binding: ToolBinding,
     startedAt: Date = Date(),
     key: KeyEquivalent,
@@ -34,6 +34,25 @@ public struct ToolActivation: Hashable, Sendable {
     self.startedAt = startedAt
     self.key = key
     self.isArmed = isArmed
+  }
+}
+
+// Identity is determined by binding + key + start time, not by the tool itself.
+extension ToolActivation: Equatable {
+  public static func == (lhs: Self, rhs: Self) -> Bool {
+    lhs.binding == rhs.binding
+      && lhs.key == rhs.key
+      && lhs.startedAt == rhs.startedAt
+      && lhs.isArmed == rhs.isArmed
+  }
+}
+
+extension ToolActivation: Hashable {
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(binding)
+    hasher.combine(key)
+    hasher.combine(startedAt)
+    hasher.combine(isArmed)
   }
 }
 

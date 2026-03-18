@@ -7,38 +7,28 @@
 
 import Foundation
 
-/// 1. Define what a Tool can actually output.
+/// The output of a tool's `resolve()` method.
+///
+/// These are **canvas-level state mutations** only — things that
+/// `CanvasInteractionState` knows how to execute. Domain-level
+/// outputs (e.g. "place a shape", "commit a stroke") go through
+/// `ToolAction` instead.
+///
+/// Note: Global gestures (pan via swipe, zoom via pinch, hover)
+/// are handled centrally in `handleInput()` and never produce
+/// a `CanvasIntent` from a tool.
 public enum CanvasIntent {
+
+  /// Replace the entire transform state (pan, zoom, rotation).
   case mutateTransform(TransformState)
-  case updateHoverLocation(Point<ScreenSpace>)
-  case updatePointerDrag(Rect<ScreenSpace>)  // E.g. marquee
-  /// for tools that produce domain objects (drawing a shape, placing a point)
-  //    case commitAction()
-    case updatePointerStyle(PointerStyleCompatible)
-  //  case updateSelection([(any CanvasElement).ID])
-  //  case updateHoverStatus((any CanvasElement).ID?)
+
+  /// Update the pointer drag rectangle (e.g. marquee selection,
+  /// or a tool-driven drag region).
+  case updatePointerDrag(Rect<ScreenSpace>?)
+
+  /// Update the pointer tap location.
+  case updatePointerTap(Point<ScreenSpace>?)
+
+  /// No canvas state change needed.
   case none
-}
-
-extension CanvasIntent {
-  public static func defaultPan(
-    delta: Size<ScreenSpace>,
-    location: Point<ScreenSpace>,
-    transform currentTransform: TransformState
-  ) -> Self {
-    var new = currentTransform
-    new.translation += delta
-    return .mutateTransform(new)
-  }
-
-  public static func defaultZoom(
-    event: ZoomGestureEvent,
-    transform currentTransform: TransformState
-  ) -> Self {
-    var new = currentTransform
-    new.scale = event.magnification
-    //    new.scale *= CGFloat(event.magnification)
-    return .mutateTransform(new)
-  }
-
 }

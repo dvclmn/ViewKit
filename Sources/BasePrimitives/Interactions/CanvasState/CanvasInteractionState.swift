@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-/// `CanvasInteractionState` is owned/initialised outside of CanvasKit,
-/// by the caller. E.g. in the case of DrawString,
+/// `CanvasInteractionState`'s state is owned outside of CanvasKit,
+/// by the project *using* CanvasKit. E.g. in the case of DrawString,
 /// this is owned by `BaseContainer` view.
 @Observable
 public final class CanvasInteractionState {
@@ -17,48 +17,111 @@ public final class CanvasInteractionState {
   public var pointer: PointerState = .initial
   public var geometry: CanvasGeometry?
   public var zoomRange: ClosedRange<CGFloat>?
-//  public var phase: InteractionPhase = .none
 
   public var activeTool: any CanvasTool = .default
+
+  /// The most recent domain action produced by a tool resolution.
+  /// Consuming apps can observe this to react to tool-specific events
+  /// (e.g. "select at point", "commit stroke").
+  public var lastToolAction: ToolAction = .none
 
   public init() {}
 }
 
+// MARK: - Input handling (two-tier resolution)
+
 extension CanvasInteractionState {
 
+  /// Entry point for all raw input events from gesture modifiers.
+  ///
+  /// **Tier 1 — Global gestures** (swipe, pinch, hover) are handled
+  /// centrally here. Tools never see these events.
+  ///
+  /// **Tier 2 — Pointer interactions** (tap, drag) are forwarded to
+  /// the active tool's `resolve()` method.
   public func handleInput(
     from source: InteractionSource,
     phase: InteractionPhase,
-    modifiers: Modifiers,
+    modifiers: Modifiers
   ) {
 
     guard let geometry else { return }
-    
+
+    // MARK: Tier 1 — Global gestures
+
+    switch source {
+      case .swipeGesture(let delta, _):
+        if modifiers.contains(.option) {
+          // Option + swipe = zoom (macOS convention)
+          let zoomDelta = 1.0 + (delta.cgSize.height / 200.0)
+          var new = transform
+          new.scale *= zoomDelta
+          if let zoomRange {
+            new.scale = new.scale.clamped(to: zoomRange)
+          }
+          self.transform = new
+        } else {
+          var new = transform
+          new.translation += delta
+          self.transform = new
+        }
+        return
+
+      case .pinchGesture(let event):
+        var new = transform
+        new.scale = event.magnification
+        if let zoomRange {
+          new.scale = new.scale.clamped(to: zoomRange)
+        }
+        self.transform = new
+        return
+
+      case .continuousHover(let point):
+        self.pointer.hover = point
+        return
+
+      case .pointerTapGesture, .pointerDragGesture:
+        break // Fall through to Tier 2
+    }
+
+    // MARK: Tier 2 — Tool-specific pointer interactions
+
     let interaction = Interaction(
       source: source,
       geometry: geometry,
       phase: phase,
-      modifiers: modifiers,
+      modifiers: modifiers
     )
-    
-    /// Route the input to the active tool
-    let intent = activeTool.resolve(
+
+    let resolution = activeTool.resolve(
       interaction: interaction,
       currentTransform: transform
     )
 
-    /// Execute the tool's intent
+    execute(resolution.intent)
+    self.lastToolAction = resolution.action
+  }
+
+  private func execute(_ intent: CanvasIntent) {
     switch intent {
       case .mutateTransform(let newState):
         self.transform = newState
 
-      case .updateHoverLocation(let point):
-        self.pointer.hover = point
+      case .updatePointerDrag(let rect):
+        self.pointer.drag = rect
+
+      case .updatePointerTap(let point):
+        self.pointer.tap = point
 
       case .none:
         break
     }
   }
+}
+
+// MARK: - Snapshot
+
+extension CanvasInteractionState {
 
   private var coordinateSpaceMapper: CoordinateSpaceMapper? {
     guard let geometry, let zoomRange else { return nil }
@@ -83,100 +146,4 @@ extension CanvasInteractionState {
       rotation: transform.rotation
     )
   }
-
-  /// This has to be told where to put the value. It's just a swipe,
-  /// doesn't know anything else
-  //  package func handleSwipeGesture(
-  //    //    _ interaction: Interaction
-  //    _ event: SwipeEvent,
-  //    //    phase: InteractionPhase,
-  //    //    modifiers: Modifiers
-  //    //    with interaction: Interaction
-  //  ) {
-  //    let interaction = Interaction(
-  //      kind: .swiping(delta: event.delta, location: event.location),
-  //      phase: event.phase,
-  //      modifiers: event.modifiers
-  //    )
-  //    handleInput(interaction)
-  //
-  //    //    self.phase = phase
-  //
-  //    //    guard store.interaction == nil else { return }
-  //    //    store.interaction = Interaction(
-  //    //      kind: .scrolling(
-  //    //        origin: .zero,
-  //    //        delta: event.delta,
-  //    //        location: event.location
-  //    //      ),
-  //    //      phase: event.phase,
-  //    //      modifiers: modifierKeys
-  //    //    )
-  //    //        store.handlePan(delta: delta, phase: phase, state: &interactionState)
-  //  }
-
-  //  package func handleHover(_ phase: HoverPhase) {
-  //
-  //  }
-
 }
-
-extension CanvasInteractionState {
-
-  //  public var translation: CGSize { transform.translation.value }
-  //  public var scale: CGFloat { transform.scale.value }
-  //  public var rotation: Angle { transform.rotation.value }
-
-  //  public func resetAll() {
-  //    pointer.reset()
-  //    dragRect = nil
-  //    pointer
-  //    transform.reset()
-  //  }
-}
-
-//@MainActor
-//extension CanvasInteractionState {
-//  package func dragRectBinding(using policy: CanvasInputPolicy) -> Binding<CGRect?> {
-//    switch policy.dragBehaviour {
-//      case .marquee: handleMarquee()
-//      case .continuous: handleContinuous(using: policy)
-//      case .none: .constant(nil)
-//    }
-//  }
-//
-//  private func handleContinuous(using policy: CanvasInputPolicy) -> Binding<CGRect?> {
-//    guard policy.pointerDragPanEnabled else {
-//      /// Continuous drag that isn't routed to pan (e.g. zoom tool vertical drag).
-//      /// Route to pointer drag state so the operation resolver can see it.
-//      return dragStateBinding()
-//    }
-//    return Binding {
-//      self.transform.translation.value.toCGRectZeroOrigin
-//      //      self.pan.toCGRectZeroOrigin
-//    } set: {
-//      guard let size = $0?.size else { return }
-//      self.transform.translation.update(size, phase: .changed)
-//      //      self.transform.pan.update(
-//      //        .init(fromCGSize: size),
-//      //        phase: .changed,
-//      //
-//      //      )
-//    }
-//  }
-//
-//  private func handleMarquee() -> Binding<CGRect?> {
-//    dragStateBinding()
-//  }
-//
-//  private func dragStateBinding() -> Binding<CGRect?> {
-//    Binding {
-//      self.pointer.drag.value?.cgRect
-//    } set: { newValue in
-//      self.pointer.drag.value = newValue.map {
-//        Rect<ScreenSpace>(from: $0)
-//      }
-//    }
-//  }
-//
-//}

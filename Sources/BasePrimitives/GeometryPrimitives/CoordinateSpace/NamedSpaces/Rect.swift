@@ -38,6 +38,15 @@ extension Rect {
     self.height = size.height
   }
 
+  /// Creates a rect from two corner points, normalising so origin is the min corner.
+  public init(from a: Point<Space>, to b: Point<Space>) {
+    let minX = min(a.x, b.x)
+    let minY = min(a.y, b.y)
+    let maxX = max(a.x, b.x)
+    let maxY = max(a.y, b.y)
+    self.init(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+  }
+
   public init(fromRect cgRect: CGRect) {
     self.x = cgRect.origin.x
     self.y = cgRect.origin.y
