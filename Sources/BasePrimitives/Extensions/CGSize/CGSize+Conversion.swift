@@ -10,6 +10,7 @@ import SwiftUI
 extension CGSize {
 
   public var toCGRectZeroOrigin: CGRect { CGRect(origin: .zero, size: self) }
+  
   public var toCGPoint: CGPoint { CGPoint(x: width, y: height) }
 
   public func point(for unitPoint: UnitPoint) -> CGPoint {

@@ -29,6 +29,15 @@ extension Size {
   }
 
   public static var zero: Self { .init(width: 0, height: 0) }
+
+  public var toRectZeroOrigin: Rect<Space> {
+    Rect<Space>(
+      origin: .zero,
+      size: self
+    )
+  }
+
+  public var toCGRectZeroOrigin: CGRect { .init(.zero, cgSize) }
 }
 
 extension CGSize {
