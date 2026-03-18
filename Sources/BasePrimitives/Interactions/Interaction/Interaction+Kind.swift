@@ -14,6 +14,7 @@ import SwiftUI
 /// I should be able to justify what else may need that data, and then how
 /// it should be structured (e.g. is it based on selected Tool?)
 
+/// note: E.g. Option + two-finger scroll = zoom (a macOS convention). This is a global gesture variant, not tool-specific, so it belongs in the global layer. 
 @MetaEnum
 public enum InteractionKind {
   case pinching(magnification: CGFloat, anchor: UnitPoint)
