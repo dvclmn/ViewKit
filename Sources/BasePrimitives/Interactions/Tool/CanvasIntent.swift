@@ -11,7 +11,10 @@ import Foundation
 public enum CanvasIntent {
   case mutateTransform(TransformState)
   case updateHoverLocation(Point<ScreenSpace>)
-
+  case updatePointerDrag(Rect<ScreenSpace>)  // E.g. marquee
+  /// for tools that produce domain objects (drawing a shape, placing a point)
+  //    case commitAction()
+    case updatePointerStyle(PointerStyleCompatible)
   //  case updateSelection([(any CanvasElement).ID])
   //  case updateHoverStatus((any CanvasElement).ID?)
   case none
@@ -27,15 +30,15 @@ extension CanvasIntent {
     new.translation += delta
     return .mutateTransform(new)
   }
-  
+
   public static func defaultZoom(
     event: ZoomGestureEvent,
     transform currentTransform: TransformState
   ) -> Self {
     var new = currentTransform
     new.scale = event.magnification
-//    new.scale *= CGFloat(event.magnification)
+    //    new.scale *= CGFloat(event.magnification)
     return .mutateTransform(new)
   }
-  
+
 }

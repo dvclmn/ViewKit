@@ -7,14 +7,15 @@
 
 import SwiftUI
 
-//public protocol CanvasElement: Identifiable {
-//  associatedtype ID
-//}
-//
-
 public protocol CanvasTool: Sendable {
+  
+  var inputPolicy: CanvasInputPolicy { get }
+   
   /// This allows a Tool to declare what should happen when it is selected,
   /// and certain interaction events happen
+  ///
+  /// Note: this was previously handled by now-retired types like `CanvasOperation`
+  /// and `CanvasOperation.Kind`. Now, mapping interaction to intent is owned here
   func resolve(
     interaction: Interaction,
     currentTransform: TransformState

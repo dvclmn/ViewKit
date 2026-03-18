@@ -7,54 +7,40 @@
 
 import SwiftUI
 
-/// Supported stored properties
-/// - Pan offset
-/// - Zoom scale
-/// -
-
-/// `CanvasInteractionState`'s state is owned outside of CanvasKit,
-/// by the project *using* CanvasKit. E.g. in the case of DrawString,
+/// `CanvasInteractionState` is owned/initialised outside of CanvasKit,
+/// by the caller. E.g. in the case of DrawString,
 /// this is owned by `BaseContainer` view.
-//@MainActor
 @Observable
 public final class CanvasInteractionState {
 
-  /// General Note: May need to evolve CanvasKit to interpret a 'semantic entity',
-  /// such as Strokes for Paperbark, and Cells for DrawString, etc?
-  //  public var dragRect: CGRect? = nil
   public var transform: TransformState = .identity
   public var pointer: PointerState = .initial
   public var geometry: CanvasGeometry?
   public var zoomRange: ClosedRange<CGFloat>?
-  //  public var phase: InteractionPhase = .none
+//  public var phase: InteractionPhase = .none
 
   public var activeTool: any CanvasTool = .default
 
-  public init(  //    pointer: PointerState = .initial,
-    //    transform: TransformState = .identity
-    )
-  {
-    //    self.pointer = pointer
-    //    self.transform = transform
-  }
+  public init() {}
 }
 
 extension CanvasInteractionState {
 
   public func handleInput(
     from source: InteractionSource,
-    //    in geometry: CanvasGeometry,
     phase: InteractionPhase,
     modifiers: Modifiers,
   ) {
 
     guard let geometry else { return }
+    
     let interaction = Interaction(
       source: source,
       geometry: geometry,
       phase: phase,
       modifiers: modifiers,
     )
+    
     /// Route the input to the active tool
     let intent = activeTool.resolve(
       interaction: interaction,
@@ -141,12 +127,12 @@ extension CanvasInteractionState {
   //  public var scale: CGFloat { transform.scale.value }
   //  public var rotation: Angle { transform.rotation.value }
 
-//  public func resetAll() {
-    //    pointer.reset()
-//    dragRect = nil
-//    pointer
-//    transform.reset()
-//  }
+  //  public func resetAll() {
+  //    pointer.reset()
+  //    dragRect = nil
+  //    pointer
+  //    transform.reset()
+  //  }
 }
 
 //@MainActor
