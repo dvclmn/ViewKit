@@ -21,6 +21,7 @@ extension EnvironmentValues {
   @Entry public var canvasBackground: Color = Color(white: 0.04)
 
   @Entry public var canvasInputPolicy: CanvasInputPolicy = .standard
+  @Entry public var activeTool: any CanvasTool = .default
   //  @Entry public var canvasOperation: CanvasOperation = .idle()
 
   public var canvasGeometry: CanvasGeometry? {
@@ -59,6 +60,7 @@ extension EnvironmentValues {
 
   /// The hover location in resolved CanvasSpace (before pan/zoom)
   @Entry public var pointerLocation: CGPoint?
+  @Entry public var pointerStyle: PointerStyleCompatible?
 
   public var zoomClamped: Double {
     guard zoomLevel.isFinite, zoomLevel.isGreaterThanZero else { return 1.0 }

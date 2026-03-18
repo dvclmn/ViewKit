@@ -98,7 +98,8 @@ extension ToolHandler {
 
   /// The Kind of the effective tool
   public var toolKind: CanvasToolKind { effectiveTool.kind }
-  public var pointerStyle: PointerStyleCompatible { effectiveTool.pointerStyle }
+//
+//  public var pointerStyle: PointerStyleCompatible { effectiveTool.pointerStyle }
 
   /// The spring-loaded tool if one is armed, or `nil`.
   public var springLoadedTool: (any CanvasTool)? {

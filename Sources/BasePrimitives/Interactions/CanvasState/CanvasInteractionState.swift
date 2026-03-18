@@ -19,7 +19,8 @@ public final class CanvasInteractionState {
   public var zoomRange: ClosedRange<CGFloat>?
   public var modifiers: Modifiers = []
 
-  public var activeTool: any CanvasTool = .default
+  /// Synced here via the Env
+  public var activeTool: (any CanvasTool)?
 
   /// The most recent domain action produced by a tool resolution.
   /// Consuming apps can observe this to react to tool-specific events
@@ -47,10 +48,11 @@ extension CanvasInteractionState {
   public func handleInput(
     from source: InteractionSource,
     phase: InteractionPhase,
-    modifiers: Modifiers
+    modifiers: Modifiers,
+//    activeTool: any CanvasTool
   ) {
 
-    guard let geometry else { return }
+    guard let geometry, let ac else { return }
     self.modifiers = modifiers
 
     // MARK: Tier 1 — Global gestures

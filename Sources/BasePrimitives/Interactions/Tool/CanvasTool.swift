@@ -33,12 +33,10 @@ public protocol CanvasTool: Sendable, Identifiable where ID == CanvasToolKind {
   /// Controls drag behaviour, pointer-drag-pan, etc.
   var inputPolicy: CanvasInputPolicy { get }
 
-  var pointerStyle: PointerStyleCompatible { get }
+  //  var pointerStyle: PointerStyleCompatible { get }
 
   /// Resolve the pointer style for the current interaction context.
-  func resolvePointerStyle(
-    context: ToolPointerContext
-  ) -> PointerStyleCompatible
+  func resolvePointerStyle(context: ToolPointerContext) -> PointerStyleCompatible
 
   /// Resolve a pointer interaction into a canvas intent and optional domain action.
   ///
@@ -59,11 +57,11 @@ extension CanvasTool {
   public var inputPolicy: CanvasInputPolicy { .standard }
 
   /// Default pointer style behaviour: return the tool's base style.
-  public func resolvePointerStyle(
-    context: ToolPointerContext
-  ) -> PointerStyleCompatible {
-    pointerStyle
-  }
+  //  public func resolvePointerStyle(
+  //    context: ToolPointerContext
+  //  ) -> PointerStyleCompatible {
+  //    pointerStyle
+  //  }
 }
 
 // MARK: - Default tool accessor
@@ -87,6 +85,10 @@ public struct SelectTool: CanvasTool {
   }
 
   public init() {}
+
+  public func resolvePointerStyle(context: ToolPointerContext) -> PointerStyleCompatible {
+    .default
+  }
 
   public func resolve(
     interaction: Interaction,
