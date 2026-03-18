@@ -17,7 +17,7 @@ import Foundation
 /// Note: Global gestures (pan via swipe, zoom via pinch, hover)
 /// are handled centrally in `handleInput()` and never produce
 /// a `CanvasIntent` from a tool.
-public enum CanvasIntent {
+public enum CanvasIntent: Sendable {
 
   /// Replace the entire transform state (pan, zoom, rotation).
   case mutateTransform(TransformState)
