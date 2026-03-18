@@ -7,7 +7,7 @@
 
 #if canImport(AppKit)
 import AppKit
-import BasePrimitives
+//import BasePrimitives
 
 /// Swipe == Pan — avoiding using word Pan directly, as I keep getting
 /// confused between Pan the Gesture Kind, and Pan from *other*
@@ -23,8 +23,8 @@ public class SwipeTrackingNSView: NSView {
     let modifiers = Modifiers(from: event)
 
     let eventData = SwipeEvent(
-      delta: delta,
-      location: locationInView,
+      delta: delta.screenSize,
+      location: locationInView.screenPoint,
       phase: phase,
       modifiers: modifiers
     )

@@ -12,7 +12,6 @@ import SwiftUI
 //}
 //
 
-
 public protocol CanvasTool: Sendable {
   /// This allows a Tool to declare what should happen when it is selected,
   /// and certain interaction events happen
@@ -38,40 +37,40 @@ public struct SelectTool: CanvasTool {
           location: location,
           transform: currentTransform
         )
-        
+
       case .pinchGesture(let event):
         return .defaultZoom(
           event: event,
           transform: currentTransform
         )
-        
+
       case .continuousHover(let point):
         return .updateHoverLocation(point)
-        
+
       case .pointerTapGesture(let pointerButton, let location):
         return .none
-        
+
       case .pointerDragGesture(let from, let current):
         return .none
     }
-//      case .hovering(let location):
-//        /// 1. Convert viewport coordinate to document coordinate using currentTransform
-//        /// 2. Hit-test the document to find what is under the cursor
-//        /// 3. Return the intent
-//        //        let hitItemID = hitTest(location: location)
-//        //        return .updateHoverStatus(hitItemID)
-//        return .updateHoverLocation(location)
-//
-//      case .swiping(let delta, let location):
-//
-//        /// Select Tool allows standard panning
-//        var new = currentTransform
-//        new.translation += delta
-//        return .mutateTransform(new)
-//
-//      default:
-//        return .none
-    }
+    //      case .hovering(let location):
+    //        /// 1. Convert viewport coordinate to document coordinate using currentTransform
+    //        /// 2. Hit-test the document to find what is under the cursor
+    //        /// 3. Return the intent
+    //        //        let hitItemID = hitTest(location: location)
+    //        //        return .updateHoverStatus(hitItemID)
+    //        return .updateHoverLocation(location)
+    //
+    //      case .swiping(let delta, let location):
+    //
+    //        /// Select Tool allows standard panning
+    //        var new = currentTransform
+    //        new.translation += delta
+    //        return .mutateTransform(new)
+    //
+    //      default:
+    //        return .none
+    //    }
   }
 }
 

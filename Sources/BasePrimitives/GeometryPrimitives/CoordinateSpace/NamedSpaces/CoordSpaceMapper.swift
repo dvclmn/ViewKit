@@ -24,7 +24,7 @@ public struct CoordinateSpaceMapper {
 }
 
 extension CoordinateSpaceMapper {
-  private var canvasSize: CGSize { geometry.canvasSize }
+  private var canvasSize: Size<CanvasSpace> { geometry.canvasSize }
   private var canvasFrameInViewport: Rect<CanvasSpace> { geometry.canvasFrameInViewport }
   private var zoomClamped: CGFloat {
     guard transform.scale.isFiniteAndGreaterThanZero else { return 1 }

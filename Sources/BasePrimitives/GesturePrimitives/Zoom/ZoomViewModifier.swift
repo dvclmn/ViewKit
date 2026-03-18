@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// Return a replacement zoom value, or `nil` to accept the gesture's proposal.
-public typealias ZoomEventUpdate = (ZoomGestureEvent) -> Double?
+public typealias ZoomEventUpdate = (ZoomGestureEvent, InteractionPhase) -> Double?
 
 /// Return a replacement zoom value for `(proposedZoom, phase)`, or `nil` to accept.
 public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
@@ -99,7 +99,7 @@ extension ZoomModifier {
         let proposedZoom = previousZoom * delta
 
         let event = ZoomGestureEvent(
-          phase: .changed,
+//          phase: .changed,
           previousZoom: previousZoom,
           proposedZoom: proposedZoom,
           magnification: value.magnification,
@@ -107,7 +107,11 @@ extension ZoomModifier {
           isGestureStart: isGestureStart
         )
 
-        let resolvedZoom = resolvedZoom(for: event, proposed: proposedZoom)
+        let resolvedZoom = resolvedZoom(
+          for: event,
+          phase: .changed,
+          proposed: proposedZoom
+        )
         commitZoom(resolvedZoom)
       }
       .onEnded { value in
@@ -115,7 +119,7 @@ extension ZoomModifier {
         let finalZoom = clampZoom(previousZoom)
 
         let event = ZoomGestureEvent(
-          phase: .ended,
+//          phase: .ended,
           previousZoom: previousZoom,
           proposedZoom: finalZoom,
           magnification: value.magnification,
@@ -123,7 +127,11 @@ extension ZoomModifier {
           isGestureStart: false
         )
 
-        let resolvedZoom = resolvedZoom(for: event, proposed: finalZoom)
+        let resolvedZoom = resolvedZoom(
+          for: event,
+          phase: .ended,
+          proposed: finalZoom
+        )
         commitZoom(resolvedZoom)
 
         isGesturing = false
@@ -131,8 +139,12 @@ extension ZoomModifier {
       }
   }
 
-  private func resolvedZoom(for event: ZoomGestureEvent, proposed: Double) -> Double {
-    clampZoom(didUpdateEvent(event) ?? proposed)
+  private func resolvedZoom(
+    for event: ZoomGestureEvent,
+    phase: InteractionPhase,
+    proposed: Double
+  ) -> Double {
+    clampZoom(didUpdateEvent(event, phase) ?? proposed)
   }
 
   private func clampZoom(_ value: Double) -> Double {

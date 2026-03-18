@@ -10,12 +10,12 @@ import SwiftUI
 /// Manages tool selection, spring-loading, and key bindings.
 
 public struct ToolHandler {
-  private(set) public var baseTool: CanvasTool
-  private(set) public var activations: [ToolActivation] = []
-  public private(set) var heldKeys: Set<KeyEquivalent> = []
-  public private(set) var modifiers: Modifiers = []
-  public private(set) var bindings: [ToolBinding]
-  public private(set) var toolRegistry: [CanvasToolKind: CanvasTool]
+  private(set) public var baseTool: any CanvasTool
+//  private(set) public var activations: [ToolActivation] = []
+//  public private(set) var heldKeys: Set<KeyEquivalent> = []
+//  public private(set) var modifiers: Modifiers = []
+//  public private(set) var bindings: [ToolBinding]
+//  public private(set) var toolRegistry: [CanvasToolKind: CanvasTool]
 
   /// Sticky threshold: holding a sticky key longer than this arms it as a spring-load.
   /// - For `.sticky`: If released before or equal to this delay, commit to the tool.
