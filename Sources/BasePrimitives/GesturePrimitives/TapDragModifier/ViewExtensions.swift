@@ -24,8 +24,7 @@ extension View {
   /// The modifier writes computed values to the binding and reads it back
   /// for baseline sync — making the binding the single source of truth.
   public func pointerDragGesture(
-    rect: Binding<Rect<ScreenSpace>?>,
-    //    rect: Binding<CGRect?>,
+    rect: Binding<CGRect?>,
     coordinateSpace: CoordinateSpace = .local,
     behaviour: DragBehavior,
     drawsMarqueeRect: Bool = true,
@@ -33,7 +32,7 @@ extension View {
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
-        rect: rect.toBindingCGRect,
+        rect: rect,
         writesBackToBinding: true,
         coordinateSpace: coordinateSpace,
         behaviour: behaviour,
@@ -48,7 +47,7 @@ extension View {
   /// A convenience wrapper that projects the `size` component of the rect
   /// for callers that think in terms of offsets.
   public func pointerDragGesture(
-    translation: Binding<Size<ScreenSpace>?>,
+    translation: Binding<CGSize?>,
     coordinateSpace: CoordinateSpace = .local,
     behaviour: DragBehavior,
     drawsMarqueeRect: Bool = true,
@@ -56,7 +55,7 @@ extension View {
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
-        rect: translation.toBindingCGRect,
+        rect: translation.toBindingRect,
         writesBackToBinding: true,
         coordinateSpace: coordinateSpace,
         behaviour: behaviour,
@@ -115,7 +114,7 @@ extension View {
   ///   (e.g. scroll wheel changing the pan offset) but **never writes** to it.
   ///   Pass `nil` (the default) when external sync is not needed.
   public func pointerDragGesture(
-    observing rect: Binding<Rect<ScreenSpace>?>? = nil,
+    observing rect: Binding<CGRect?>? = nil,
     coordinateSpace: CoordinateSpace = .local,
     behaviour: DragBehavior,
     drawsMarqueeRect: Bool = true,
@@ -124,7 +123,7 @@ extension View {
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
-        rect: rect?.toBindingCGRect,
+        rect: rect,
         writesBackToBinding: false,
         coordinateSpace: coordinateSpace,
         behaviour: behaviour,
@@ -141,7 +140,7 @@ extension View {
   ///
   /// - Parameter observing: Optional binding for external sync (read-only).
   public func pointerDragGesture(
-    observing rect: Binding<Rect<ScreenSpace>?>? = nil,
+    observing rect: Binding<CGRect?>? = nil,
     coordinateSpace: CoordinateSpace = .local,
     behaviour: DragBehavior,
     drawsMarqueeRect: Bool = true,
@@ -150,7 +149,7 @@ extension View {
   ) -> some View {
     self.modifier(
       UnifiedDragModifier(
-        rect: rect?.toBindingCGRect,
+        rect: rect,
         writesBackToBinding: false,
         coordinateSpace: coordinateSpace,
         behaviour: behaviour,
