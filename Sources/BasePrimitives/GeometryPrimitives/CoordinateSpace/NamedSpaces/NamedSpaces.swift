@@ -25,6 +25,7 @@ public enum ScreenSpace: Sendable, Hashable {
   /// Named coordinate space for the interactive viewport container.
   public static let screen: String = "canvasScreen"
 }
+
 public enum CanvasSpace: Sendable, Hashable {
 
   /// Named coordinate space for the untransformed artwork/document container.

@@ -96,6 +96,9 @@ extension ToolHandler {
     activations.last?.tool ?? baseTool
   }
 
+  /// The Kind of the effective tool
+  public var toolKind: CanvasToolKind { effectiveTool.kind }
+
   /// The spring-loaded tool if one is armed, or `nil`.
   public var springLoadedTool: (any CanvasTool)? {
     guard let armed = activations.last(where: { $0.isArmed }) else { return nil }

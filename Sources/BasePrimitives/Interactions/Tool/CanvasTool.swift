@@ -32,6 +32,8 @@ public protocol CanvasTool: Sendable {
   /// The input policy active when this tool is selected.
   /// Controls drag behaviour, pointer-drag-pan, etc.
   var inputPolicy: CanvasInputPolicy { get }
+  
+  var pointerStyle: PointerStyleCompatible { get }
 
   /// Resolve a pointer interaction into a canvas intent and optional domain action.
   ///
@@ -64,6 +66,7 @@ public struct SelectTool: CanvasTool {
   public let kind: CanvasToolKind = .select
   public let name = "Select"
   public let icon = "cursorarrow"
+  public let pointerStyle: PointerStyleCompatible = .default
 
   public var inputPolicy: CanvasInputPolicy {
     .init(dragBehaviour: .marquee)
@@ -96,7 +99,8 @@ public struct PanTool: CanvasTool {
   public let kind: CanvasToolKind = .pan
   public let name = "Pan"
   public let icon = "hand.raised"
-
+  public let pointerStyle: PointerStyleCompatible = .default
+  
   public var inputPolicy: CanvasInputPolicy {
     .init(pointerDragPanEnabled: true, dragBehaviour: .continuous)
   }
