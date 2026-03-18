@@ -24,7 +24,7 @@ extension View {
         initial: zoom.wrappedValue,
         zoom: zoom,
         isEnabled: isEnabled,
-        didUpdateEvent: { _ in nil }
+        didUpdateEvent: { _, _ in nil }
       )
     )
   }
@@ -78,8 +78,8 @@ extension View {
         initial: initial,
         zoom: nil,
         isEnabled: isEnabled,
-        didUpdateEvent: { event in
-          didUpdateZoom(event.proposedZoom, event.phase)
+        didUpdateEvent: { event, phase in
+          didUpdateZoom(event.proposedZoom, phase)
         }
       )
     )
