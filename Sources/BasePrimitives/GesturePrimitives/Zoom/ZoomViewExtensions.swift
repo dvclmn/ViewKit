@@ -15,7 +15,7 @@ import SwiftUI
 extension View {
 
   /// Simple binding-driven zoom. The modifier handles gesture math and clamping.
-  public func zoomGesture(
+  public func pinchGesture(
     zoom: Binding<Double>,
     isEnabled: Bool = true
   ) -> some View {
@@ -30,11 +30,11 @@ extension View {
   }
 
   /// Simple binding-driven zoom (CGFloat convenience).
-  public func zoomGesture(
+  public func pinchGesture(
     zoom: Binding<CGFloat>,
     isEnabled: Bool = true
   ) -> some View {
-    self.zoomGesture(
+    self.pinchGesture(
       zoom: zoom.toBindingDouble,
       isEnabled: isEnabled
     )
@@ -51,7 +51,7 @@ extension View {
 
   /// Event-driven zoom with full ``ZoomGestureEvent`` context.
   /// Return `nil` from `didUpdateEvent` to accept the proposed zoom.
-  public func zoomGesture(
+  public func pinchGesture(
     initial: Double = 1,
     isEnabled: Bool = true,
     didUpdateEvent: @escaping ZoomEventUpdate
@@ -68,7 +68,7 @@ extension View {
 
   /// Simplified event-driven zoom receiving just `(proposedZoom, phase)`.
   /// Return `nil` from `didUpdateZoom` to accept the proposed zoom.
-  public func zoomGesture(
+  public func pinchGesture(
     initial: Double = 1,
     isEnabled: Bool = true,
     didUpdateZoom: @escaping ZoomUpdate

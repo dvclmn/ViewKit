@@ -49,7 +49,7 @@
 //  public let phase: InteractionPhase?
 ////  public let transformSource: TransformSource?
 //
-//  /// Domain-specific payload. Use this for data like selection modes,
+//  /// Domain-specific payload. Use this for data like selection  modes,
 //  /// text placement info, etc. that belongs to your app, not the framework.
 ////  public let userInfo: [String: AnyHashable]?
 //

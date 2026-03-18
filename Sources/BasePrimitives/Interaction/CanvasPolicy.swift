@@ -29,9 +29,9 @@
 
 /// Controls which input modifiers and gestures are active on the canvas.
 ///
-/// Each field gates a specific gesture or modifier in `TransformationsModifier`:
+/// Each field gates a specific gesture or modifier in `InteractionModifiers`:
 /// - `panGestureEnabled`: Two-finger trackpad pan gesture
-/// - `zoomGestureEnabled`: Two-finger pinch-to-zoom gesture
+/// - `pinchGestureEnabled`: Two-finger pinch-to-zoom gesture
 /// - `pointerDragPanEnabled`: Whether a pointer click-drag can pan the canvas
 ///   (distinct from the two-finger gesture — this is for Pan tool drag)
 /// - `dragBehaviour`: What kind of drag interaction the pointer produces
@@ -43,7 +43,7 @@ public struct CanvasInputPolicy: Equatable, Sendable {
   public var panGestureEnabled: Bool
 
   /// Whether two-finger pinch-to-zoom is active.
-  public var zoomGestureEnabled: Bool
+  public var pinchGestureEnabled: Bool
 
   /// Whether pointer click-drag can pan the canvas.
   public var pointerDragPanEnabled: Bool
@@ -56,13 +56,13 @@ public struct CanvasInputPolicy: Equatable, Sendable {
 
   public init(
     panGestureEnabled: Bool = true,
-    zoomGestureEnabled: Bool = true,
+    pinchGestureEnabled: Bool = true,
     pointerDragPanEnabled: Bool = false,
     dragBehaviour: DragBehavior = .none,
     hoverEnabled: Bool = true
   ) {
     self.panGestureEnabled = panGestureEnabled
-    self.zoomGestureEnabled = zoomGestureEnabled
+    self.pinchGestureEnabled = pinchGestureEnabled
     self.pointerDragPanEnabled = pointerDragPanEnabled
     self.dragBehaviour = dragBehaviour
     self.hoverEnabled = hoverEnabled
@@ -72,7 +72,7 @@ public struct CanvasInputPolicy: Equatable, Sendable {
   public static let standard = CanvasInputPolicy()
 
   /// Locks zoom gesture only.
-  public static let lockScale = CanvasInputPolicy(zoomGestureEnabled: false)
+  public static let lockScale = CanvasInputPolicy(pinchGestureEnabled: false)
 }
 
 extension CanvasInputPolicy {
@@ -108,7 +108,7 @@ extension CanvasInputPolicy {
         // This prevents e.g. the Select tool from allowing continuous-drag panning.
         self = CanvasInputPolicy(
           panGestureEnabled: true,
-          zoomGestureEnabled: true,
+          pinchGestureEnabled: true,
           pointerDragPanEnabled: false,
           dragBehaviour: tool.dragBehavior,
           hoverEnabled: true
@@ -119,7 +119,7 @@ extension CanvasInputPolicy {
         // can switch mid-drag (e.g. pinch to zoom while panning).
         self = CanvasInputPolicy(
           panGestureEnabled: true,
-          zoomGestureEnabled: true,
+          pinchGestureEnabled: true,
           pointerDragPanEnabled: true,
           dragBehaviour: .continuous(),
           hoverEnabled: false
@@ -129,7 +129,7 @@ extension CanvasInputPolicy {
         // Pointer-drag zoom uses vertical axis only.
         self = CanvasInputPolicy(
           panGestureEnabled: true,
-          zoomGestureEnabled: true,
+          pinchGestureEnabled: true,
           pointerDragPanEnabled: false,
           dragBehaviour: .continuous(axes: .vertical),
           hoverEnabled: false
@@ -138,7 +138,7 @@ extension CanvasInputPolicy {
       case .selecting:
         self = CanvasInputPolicy(
           panGestureEnabled: true,
-          zoomGestureEnabled: true,
+          pinchGestureEnabled: true,
           pointerDragPanEnabled: false,
           dragBehaviour: .marquee,
           hoverEnabled: false
@@ -159,7 +159,7 @@ extension CanvasInputPolicy: CustomStringConvertible {
     """
     CanvasInputPolicy
       - panGestureEnabled: \(panGestureEnabled)
-      - zoomGestureEnabled: \(zoomGestureEnabled)
+      - pinchGestureEnabled: \(pinchGestureEnabled)
       - pointerDragPanEnabled: \(pointerDragPanEnabled)
       - dragBehaviour: \(dragBehaviour.name)
       - hoverEnabled: \(hoverEnabled)
@@ -167,6 +167,6 @@ extension CanvasInputPolicy: CustomStringConvertible {
   }
 
   public var descriptionSingleLine: String {
-    "InputPolicy [pan: \(panGestureEnabled), zoom: \(zoomGestureEnabled), dragPan: \(pointerDragPanEnabled), tapDrag: \(dragBehaviour.name), hover: \(hoverEnabled)]"
+    "InputPolicy [pan: \(panGestureEnabled), zoom: \(pinchGestureEnabled), dragPan: \(pointerDragPanEnabled), tapDrag: \(dragBehaviour.name), hover: \(hoverEnabled)]"
   }
 }
