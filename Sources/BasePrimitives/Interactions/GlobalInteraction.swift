@@ -41,8 +41,7 @@ struct GlobalInteraction {
 
       case .pinchGesture(let event):
         var new = transform
-        new.scale = event.magnification.clamped(to: zoomRange)
-
+        new.scale = event.proposedZoom.clamped(to: zoomRange)
         transform = new
         return
 

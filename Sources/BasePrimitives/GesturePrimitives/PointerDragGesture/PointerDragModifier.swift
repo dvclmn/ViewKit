@@ -45,19 +45,6 @@ public struct PointerDragModifier: ViewModifier {
   let minimumDistance: CGFloat
   let didUpdatePayload: DragEventUpdate
 
-  //  init(
-  //    coordinateSpace: CoordinateSpace,
-  //    behaviour: DragBehavior,
-  //    minimumDistance: CGFloat,
-  //    didUpdatePayload: @escaping DragEventUpdate
-  //  ) {
-  //    self.behaviour = behaviour
-  //    self.coordinateSpace = coordinateSpace
-  //    self.minimumDistance = minimumDistance
-  //    self.didUpdatePayload = didUpdatePayload
-  //    self._dragState = State(initialValue: DragGestureState(behaviour))
-  //  }
-
   public func body(content: Content) -> some View {
     content
       .gesture(dragGesture, isEnabled: behaviour.isEnabled)
