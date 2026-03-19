@@ -25,7 +25,7 @@ public struct SwipeGestureModifier: ViewModifier {
 }
 extension View {
   /// Aka pan gesture
-  public func swipeGesture(
+  public func onSwipeGesture(
     isEnabled: Bool = true,
     _ onSwipeGesture: @escaping SwipeOutput
   ) -> some View {

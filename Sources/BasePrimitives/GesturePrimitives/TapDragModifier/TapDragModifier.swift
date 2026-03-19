@@ -18,7 +18,7 @@ import SwiftUI
 ///
 /// ## Mode A — Binding (simple)
 /// ```swift
-/// .pointerDragGesture(rect: $dragRect, behaviour: .marquee)
+/// .onPointerDragGesture(rect: $dragRect, behaviour: .marquee)
 /// ```
 /// The modifier owns the gesture math and writes the result directly to the
 /// binding. No event callback — the binding is the single source of truth.
@@ -27,7 +27,7 @@ import SwiftUI
 ///
 /// ## Mode B — Event callback (advanced)
 /// ```swift
-/// .pointerDragGesture(behaviour: .marquee) { event, phase in ... }
+/// .onPointerDragGesture(behaviour: .marquee) { event, phase in ... }
 /// ```
 /// The modifier tracks state internally, but the **caller** receives raw
 /// ``DragGestureEvent`` values to route through their own pipeline (e.g.
@@ -61,7 +61,7 @@ import SwiftUI
 ///
 /// The sync only occurs when the modifier is **not** actively gesturing,
 /// to avoid fighting with the live gesture.
-public struct UnifiedDragModifier: ViewModifier {
+public struct PointerDragModifier: ViewModifier {
   @State private var dragState: DragGestureState
 
   /// Internal rect — the modifier's own source of truth.
@@ -127,7 +127,7 @@ public struct UnifiedDragModifier: ViewModifier {
   }
 }
 
-extension UnifiedDragModifier {
+extension PointerDragModifier {
   private var isDragEnabled: Bool { behaviour.isEnabled }
   private var isMarqueeRectEnabled: Bool { behaviour.isMarquee && drawsMarqueeRect }
 

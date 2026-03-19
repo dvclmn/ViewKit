@@ -9,7 +9,7 @@ import SwiftUI
 
 /// Data struct carrying drag context, analogous to ``ZoomGestureEvent``.
 ///
-/// Produced by ``UnifiedDragModifier`` on every gesture update. The caller
+/// Produced by ``PointerDragModifier`` on every gesture update. The caller
 /// receives this alongside an ``InteractionPhase`` and can use it to route
 /// drag events through a tool/interaction pipeline.
 public struct DragGestureEvent: Sendable {

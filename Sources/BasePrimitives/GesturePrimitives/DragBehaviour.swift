@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Defines the drag interaction mode applied by ``UnifiedDragModifier``.
+/// Defines the drag interaction mode applied by ``PointerDragModifier``.
 ///
 /// - ``marquee``: A transient selection rectangle, cleared when the drag ends.
 /// - ``continuous(axes:)``: An accumulated offset that persists across drags.

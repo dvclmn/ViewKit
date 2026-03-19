@@ -10,11 +10,11 @@ import SwiftUI
 /// The raw input source from a SwiftUI gesture modifier.
 ///
 /// Each case maps 1:1 to a concrete gesture modifier in `InteractionModifiers`:
-/// - `.swipeGesture` —> `.swipeGesture(isEnabled:_:)`
-/// - `.pinchGesture` —> `.pinchGesture(initial:isEnabled:didUpdateEvent:)`
+/// - `.swipeGesture` —> `.onSwipeGesture(isEnabled:_:)`
+/// - `.pinchGesture` —> `.onPinchGesture(initial:isEnabled:didUpdateEvent:)`
 /// - `.continuousHover` —> `.onContinuousHover(coordinateSpace:perform:)`
 /// - `.pointerTapGesture` —> `.onTapGesture(count:coordinateSpace:perform:)`
-/// - `.pointerDragGesture` —> `.pointerDragGesture(rect:coordinateSpace:...)`
+/// - `.pointerDragGesture` —> `.onPointerDragGesture(rect:coordinateSpace:...)`
 ///
 /// Under two-tier resolution:
 /// - Swipe, pinch, and hover are handled globally by `CanvasInteractionState`
@@ -32,10 +32,11 @@ public enum InteractionSource: Sendable {
     PointerButton = .primary,
     location: Point<ScreenSpace>
   )
-  case pointerDragGesture(
-    delta: Size<ScreenSpace>,
-    location: Point<ScreenSpace>
-  )
+  case pointerDragGesture(PointerDragPayload)
+//  case pointerDragGesture(
+//    delta: Size<ScreenSpace>,
+//    location: Point<ScreenSpace>
+//  )
 //  case pointerDragGesture(
 //    from: Point<ScreenSpace>,
 //    current: Point<ScreenSpace>
@@ -46,4 +47,12 @@ public enum PointerButton: Sendable {
   case primary
   case secondary
   case middle
+}
+
+public enum PointerDragPayload: Sendable {
+  /// For panning/continuous
+  case delta(Size<ScreenSpace>, location: Point<ScreenSpace>)
+  
+  /// For marquee/select
+  case rect(from: Point<ScreenSpace>, current: Point<ScreenSpace>)
 }

@@ -18,7 +18,7 @@ public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
 ///
 /// ## Mode A — Binding (simple)
 /// ```swift
-/// .pinchGesture(zoom: $myZoom)
+/// .onPinchGesture(zoom: $myZoom)
 /// ```
 /// The modifier owns the gesture math, clamps to `zoomRange`, and writes the
 /// result directly to the binding. No override callback — the binding is the
@@ -26,7 +26,7 @@ public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
 ///
 /// ## Mode B — Event callback (advanced)
 /// ```swift
-/// .pinchGesture(initial: currentZoom, didUpdateEvent: { event in ... })
+/// .onPinchGesture(initial: currentZoom, didUpdateEvent: { event in ... })
 /// ```
 /// The modifier tracks deltas internally, but the **caller** owns the zoom
 /// value. The callback receives a ``ZoomGestureEvent`` and returns the

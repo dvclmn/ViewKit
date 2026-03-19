@@ -8,10 +8,10 @@
 import SwiftUI
 
 // MARK: - Mode A: Binding (simple)
-//
-// The modifier owns drag state and writes results to the binding.
-// External changes to the binding (e.g. reset, programmatic pan) are
-// automatically picked up between gestures.
+
+/// The modifier owns drag state and writes results to the binding.
+/// External changes to the binding (e.g. reset, programmatic pan) are
+/// automatically picked up between gestures.
 
 extension View {
 
@@ -23,7 +23,7 @@ extension View {
   ///
   /// The modifier writes computed values to the binding and reads it back
   /// for baseline sync — making the binding the single source of truth.
-  public func pointerDragGesture(
+  public func onPointerDragGesture(
     rect: Binding<CGRect?>,
     coordinateSpace: CoordinateSpace = .local,
     behaviour: DragBehavior,
@@ -31,7 +31,7 @@ extension View {
     minimumDistance: CGFloat = 5
   ) -> some View {
     self.modifier(
-      UnifiedDragModifier(
+      PointerDragModifier(
         rect: rect,
         writesBackToBinding: true,
         coordinateSpace: coordinateSpace,
@@ -46,7 +46,7 @@ extension View {
   ///
   /// A convenience wrapper that projects the `size` component of the rect
   /// for callers that think in terms of offsets.
-  public func pointerDragGesture(
+  public func onPointerDragGesture(
     translation: Binding<CGSize?>,
     coordinateSpace: CoordinateSpace = .local,
     behaviour: DragBehavior,
@@ -54,7 +54,7 @@ extension View {
     minimumDistance: CGFloat = 5
   ) -> some View {
     self.modifier(
-      UnifiedDragModifier(
+      PointerDragModifier(
         rect: translation.toBindingRect,
         writesBackToBinding: true,
         coordinateSpace: coordinateSpace,
@@ -69,7 +69,7 @@ extension View {
   ///
   /// Useful for one-dimensional controls (sliders, knobs) that only care about
   /// movement along a single axis.
-  public func pointerDragGesture(
+  public func onPointerDragGesture(
     scalar: Binding<CGFloat?>,
     coordinateSpace: CoordinateSpace = .local,
     axis: GridAxis,
@@ -77,7 +77,7 @@ extension View {
     minimumDistance: CGFloat = 5
   ) -> some View {
     self.modifier(
-      UnifiedDragModifier(
+      PointerDragModifier(
         rect: scalar.toBindingRect(along: axis, reversed: reversed),
         writesBackToBinding: true,
         coordinateSpace: coordinateSpace,
@@ -113,7 +113,7 @@ extension View {
   ///   The modifier **reads** this to stay in sync with external mutations
   ///   (e.g. scroll wheel changing the pan offset) but **never writes** to it.
   ///   Pass `nil` (the default) when external sync is not needed.
-  public func pointerDragGesture(
+  public func onPointerDragGesture(
     observing rect: Binding<CGRect?>? = nil,
     coordinateSpace: CoordinateSpace = .local,
     behaviour: DragBehavior,
@@ -122,7 +122,7 @@ extension View {
     didUpdateEvent: @escaping DragEventUpdate
   ) -> some View {
     self.modifier(
-      UnifiedDragModifier(
+      PointerDragModifier(
         rect: rect,
         writesBackToBinding: false,
         coordinateSpace: coordinateSpace,
@@ -139,7 +139,7 @@ extension View {
   /// Convenience wrapper for callers that don't need the full event context.
   ///
   /// - Parameter observing: Optional binding for external sync (read-only).
-  public func pointerDragGesture(
+  public func onPointerDragGesture(
     observing rect: Binding<CGRect?>? = nil,
     coordinateSpace: CoordinateSpace = .local,
     behaviour: DragBehavior,
@@ -148,7 +148,7 @@ extension View {
     didUpdateDrag: @escaping DragUpdate
   ) -> some View {
     self.modifier(
-      UnifiedDragModifier(
+      PointerDragModifier(
         rect: rect,
         writesBackToBinding: false,
         coordinateSpace: coordinateSpace,

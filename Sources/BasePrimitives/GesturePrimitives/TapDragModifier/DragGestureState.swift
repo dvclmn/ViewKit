@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Internal state machine for ``UnifiedDragModifier``.
+/// Internal state machine for ``PointerDragModifier``.
 ///
 /// Handles both ``DragBehavior/marquee`` and ``DragBehavior/continuous(_:)`` modes
 /// through a shared `begin` / `update` / `end` lifecycle, driven by `DragGesture`

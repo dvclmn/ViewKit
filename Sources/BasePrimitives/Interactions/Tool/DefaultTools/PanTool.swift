@@ -27,7 +27,8 @@ public struct PanTool: CanvasTool {
     currentTransform: TransformState
   ) -> ToolResolution {
     switch interaction.source {
-      case .pointerDragGesture(let delta, _):
+      case .pointerDragGesture(let payload):
+        
 //        let delta = current - from
         var new = currentTransform
         new.translation += delta
