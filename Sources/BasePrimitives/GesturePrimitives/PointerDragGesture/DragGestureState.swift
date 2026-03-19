@@ -25,6 +25,9 @@ struct DragGestureState {
 
   /// The most recently computed result, retained so `value` stays stable between drags.
   private var lastComputedOffset: CGSize?
+  
+  /// New: remember last payload for continuity
+  private var lastPayload: PointerDragPayload?
 
   init(_ behaviour: DragBehavior) {
     self.behaviour = behaviour
@@ -33,6 +36,12 @@ struct DragGestureState {
 
 extension DragGestureState {
 
+  /// The current result as a PointerDragPayload (preferred).
+  var payload: PointerDragPayload? {
+    lastPayload
+  }
+  
+  @available(*, deprecated, message: "Prefer `PointerDragPayload` based output value. Expresses the drag output more clearly.")
   /// The current result as a rect. Origin is always `.zero`; continuous offset lives in `size`.
   var value: CGRect { lastComputedOffset?.toCGRectZeroOrigin ?? .zero }
 
@@ -42,8 +51,13 @@ extension DragGestureState {
   ///   - **Marquee**: pass `gestureValue.startLocation` so the rect grows from the tap point.
   ///   - **Continuous**: pass the current binding offset as a `CGPoint` so the next drag
   ///     compounds from the correct baseline.
+//  mutating func begin(with currentExternalValue: CGPoint? = nil) {
+//    anchor = currentExternalValue
+//  }
   mutating func begin(with currentExternalValue: CGPoint? = nil) {
     anchor = currentExternalValue
+    lastPayload = nil
+    lastComputedOffset = nil
   }
 
   /// Processes a live drag gesture value and returns the updated result.
