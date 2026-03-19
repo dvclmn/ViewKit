@@ -32,8 +32,8 @@ extension View {
   ) -> some View {
     self.modifier(
       PointerDragModifier(
-        coordinateSpace: coordinateSpace,
         behaviour: behaviour,
+        coordinateSpace: coordinateSpace,
         minimumDistance: minimumDistance,
         didUpdatePayload: didUpdatePayload
       )

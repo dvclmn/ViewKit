@@ -29,32 +29,41 @@ public typealias DragEventUpdate = (PointerDragPayload?, InteractionPhase) -> Vo
 /// The modifier draws a marquee overlay. State is cleared on gesture end.
 public struct PointerDragModifier: ViewModifier {
 
-  @State private var dragState: DragGestureState
+  @State private var dragState = DragGestureState()
 
   /// Local marquee rect for the overlay — only populated in marquee mode.
   @State private var marqueeRect: Rect<ScreenSpace>?
+
+  /// The drag mode passed from the parent (via environment → modifier init).
+  /// Stored as a `let` so SwiftUI refreshes it on every re-render, allowing
+  /// `onChange(of: behaviour)` to detect tool switches. Do NOT derive this
+  /// from `dragState.behaviour` — that creates a circular dependency where
+  /// `onChange` never fires because `@State` preserves across re-renders.
+  let behaviour: DragBehavior
 
   let coordinateSpace: CoordinateSpace
   let minimumDistance: CGFloat
   let didUpdatePayload: DragEventUpdate
 
-  init(
-    coordinateSpace: CoordinateSpace,
-    behaviour: DragBehavior,
-    minimumDistance: CGFloat,
-    didUpdatePayload: @escaping DragEventUpdate
-  ) {
-    self.coordinateSpace = coordinateSpace
-    self.minimumDistance = minimumDistance
-    self.didUpdatePayload = didUpdatePayload
-    self._dragState = State(initialValue: DragGestureState(behaviour))
-  }
+  //  init(
+  //    coordinateSpace: CoordinateSpace,
+  //    behaviour: DragBehavior,
+  //    minimumDistance: CGFloat,
+  //    didUpdatePayload: @escaping DragEventUpdate
+  //  ) {
+  //    self.behaviour = behaviour
+  //    self.coordinateSpace = coordinateSpace
+  //    self.minimumDistance = minimumDistance
+  //    self.didUpdatePayload = didUpdatePayload
+  //    self._dragState = State(initialValue: DragGestureState(behaviour))
+  //  }
 
   public func body(content: Content) -> some View {
     content
       .gesture(dragGesture, isEnabled: behaviour.isEnabled)
       .drawMarqueeRect(rect: marqueeRect?.cgRect, isEnabled: behaviour.isMarquee)
-      .onChange(of: behaviour) { _, newValue in
+      .onChange(of: behaviour, initial: true) { _, newValue in
+        /// Update `DragGestureState` so it has the right behaviour
         dragState.behaviour = newValue
         dragState.end()
         marqueeRect = nil
@@ -63,8 +72,6 @@ public struct PointerDragModifier: ViewModifier {
 }
 
 extension PointerDragModifier {
-
-  var behaviour: DragBehavior { dragState.behaviour }
 
   private var dragGesture: some Gesture {
     DragGesture(

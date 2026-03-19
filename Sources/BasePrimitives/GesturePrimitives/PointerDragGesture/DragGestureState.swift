@@ -21,15 +21,15 @@ import SwiftUI
 ///   values directly from `DragGesture.Value`. All state is cleared on end.
 struct DragGestureState {
 
-  var behaviour: DragBehavior
+  var behaviour: DragBehavior?
 
   /// For continuous mode: the previous `DragGesture.Value.translation`,
   /// used to compute the frame-to-frame delta. `nil` on first frame.
   private var previousGestureTranslation: CGSize?
 
-  init(_ behaviour: DragBehavior) {
-    self.behaviour = behaviour
-  }
+//  init(_ behaviour: DragBehavior) {
+//    self.behaviour = behaviour
+//  }
 }
 
 extension DragGestureState {
@@ -45,6 +45,7 @@ extension DragGestureState {
   mutating func update(
     _ gestureValue: DragGesture.Value
   ) -> PointerDragPayload? {
+    guard let behaviour else { return nil }
     switch behaviour {
       case .marquee:
         return .rect(
