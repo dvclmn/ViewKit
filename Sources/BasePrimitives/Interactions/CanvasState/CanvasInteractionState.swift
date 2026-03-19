@@ -73,7 +73,7 @@ extension CanvasInteractionState {
   private func execute(_ intent: CanvasIntent) {
     switch intent {
       case .mutateTransform(let transform): self.transform = transform
-      case .updatePointerDrag(let rect): self.pointer.drag = rect
+      case .updatePointerDrag(let payload): self.pointer.drag = payload
       case .updatePointerTap(let point): self.pointer.tap = point
       case .none: break
     }

@@ -17,11 +17,21 @@ public enum PointerDragPayload: Sendable, Equatable {
   case rect(from: Point<ScreenSpace>, current: Point<ScreenSpace>)
 }
 
+
 //extension PointerDragPayload {
-//  var boundingRect: CGRect? {
-//    switch self {
-//      case .delta(let size, _): /* possibly return CGRect(origin: .zero, size: size.cgSize) */
-//      case .rect(let from, let current): /* compute bounding box */
-//    }
+//  init() {
+//    
 //  }
 //}
+extension PointerDragPayload {
+  var boundingRect: Rect<ScreenSpace>? {
+    switch self {
+      case .delta: nil
+      //        return nil
+      case .rect(let from, let current):
+        Rect<ScreenSpace>(from: from, to: current)
+    //        return Rect<ScreenSpace>(fromRect: CGRect.boundingRect(from: from, to: current))
+    //        return
+    }
+  }
+}

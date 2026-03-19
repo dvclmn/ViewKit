@@ -28,12 +28,21 @@ public struct ZoomTool: CanvasTool {
     currentTransform: TransformState
   ) -> ToolResolution {
     switch interaction.source {
-      case .pointerDragGesture(let from, let current):
-        let verticalDelta = current.cgPoint.y - from.cgPoint.y
-        let zoomFactor = 1.0 + (verticalDelta / 200.0)
-        var new = currentTransform
-        new.scale *= zoomFactor
-        return .intent(.mutateTransform(new))
+      case .pointerDragGesture(let payload):
+        switch payload {
+          case .delta(let size, let location):
+            print("Not sure what to do here?")
+            return .none
+
+          case .rect(let from, let current):
+            let verticalDelta = current.cgPoint.y - from.cgPoint.y
+            let zoomFactor = 1.0 + (verticalDelta / 200.0)
+            var new = currentTransform
+            new.scale *= zoomFactor
+            return .intent(.mutateTransform(new))
+
+        }
+      //      case .pointerDragGesture(let from, let current):
 
       case .pointerTapGesture(_, _):
         let step: CGFloat = interaction.modifiers.contains(.option) ? 0.8 : 1.25

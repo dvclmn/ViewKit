@@ -23,70 +23,70 @@ extension View {
   ///
   /// The modifier writes computed values to the binding and reads it back
   /// for baseline sync — making the binding the single source of truth.
-  public func onPointerDragGesture(
-    rect: Binding<CGRect?>,
-    coordinateSpace: CoordinateSpace = .local,
-    behaviour: DragBehavior,
-    drawsMarqueeRect: Bool = true,
-    minimumDistance: CGFloat = 5
-  ) -> some View {
-    self.modifier(
-      PointerDragModifier(
-        rect: rect,
-        writesBackToBinding: true,
-        coordinateSpace: coordinateSpace,
-        behaviour: behaviour,
-        drawsMarqueeRect: drawsMarqueeRect,
-        minimumDistance: minimumDistance
-      )
-    )
-  }
+//  public func onPointerDragGesture(
+//    rect: Binding<CGRect?>,
+//    coordinateSpace: CoordinateSpace = .local,
+//    behaviour: DragBehavior,
+//    drawsMarqueeRect: Bool = true,
+//    minimumDistance: CGFloat = 5
+//  ) -> some View {
+//    self.modifier(
+//      PointerDragModifier(
+//        rect: rect,
+//        writesBackToBinding: true,
+//        coordinateSpace: coordinateSpace,
+//        behaviour: behaviour,
+//        drawsMarqueeRect: drawsMarqueeRect,
+//        minimumDistance: minimumDistance
+//      )
+//    )
+//  }
 
   /// Adds a unified tap and drag gesture, producing a `CGSize?` translation binding.
   ///
   /// A convenience wrapper that projects the `size` component of the rect
   /// for callers that think in terms of offsets.
-  public func onPointerDragGesture(
-    translation: Binding<CGSize?>,
-    coordinateSpace: CoordinateSpace = .local,
-    behaviour: DragBehavior,
-    drawsMarqueeRect: Bool = true,
-    minimumDistance: CGFloat = 5
-  ) -> some View {
-    self.modifier(
-      PointerDragModifier(
-        rect: translation.toBindingRect,
-        writesBackToBinding: true,
-        coordinateSpace: coordinateSpace,
-        behaviour: behaviour,
-        drawsMarqueeRect: drawsMarqueeRect,
-        minimumDistance: minimumDistance
-      )
-    )
-  }
+//  public func onPointerDragGesture(
+//    translation: Binding<CGSize?>,
+//    coordinateSpace: CoordinateSpace = .local,
+//    behaviour: DragBehavior,
+//    drawsMarqueeRect: Bool = true,
+//    minimumDistance: CGFloat = 5
+//  ) -> some View {
+//    self.modifier(
+//      PointerDragModifier(
+//        rect: translation.toBindingRect,
+//        writesBackToBinding: true,
+//        coordinateSpace: coordinateSpace,
+//        behaviour: behaviour,
+//        drawsMarqueeRect: drawsMarqueeRect,
+//        minimumDistance: minimumDistance
+//      )
+//    )
+//  }
 
   /// Adds a unified tap and drag gesture, projecting drag onto a single scalar axis.
   ///
   /// Useful for one-dimensional controls (sliders, knobs) that only care about
   /// movement along a single axis.
-  public func onPointerDragGesture(
-    scalar: Binding<CGFloat?>,
-    coordinateSpace: CoordinateSpace = .local,
-    axis: GridAxis,
-    reversed: Bool = false,
-    minimumDistance: CGFloat = 5
-  ) -> some View {
-    self.modifier(
-      PointerDragModifier(
-        rect: scalar.toBindingRect(along: axis, reversed: reversed),
-        writesBackToBinding: true,
-        coordinateSpace: coordinateSpace,
-        behaviour: .continuous(axes: axis.toSet),
-        drawsMarqueeRect: false,
-        minimumDistance: minimumDistance
-      )
-    )
-  }
+//  public func onPointerDragGesture(
+//    scalar: Binding<CGFloat?>,
+//    coordinateSpace: CoordinateSpace = .local,
+//    axis: GridAxis,
+//    reversed: Bool = false,
+//    minimumDistance: CGFloat = 5
+//  ) -> some View {
+//    self.modifier(
+//      PointerDragModifier(
+//        rect: scalar.toBindingRect(along: axis, reversed: reversed),
+//        writesBackToBinding: true,
+//        coordinateSpace: coordinateSpace,
+//        behaviour: .continuous(axes: axis.toSet),
+//        drawsMarqueeRect: false,
+//        minimumDistance: minimumDistance
+//      )
+//    )
+//  }
 }
 
 // MARK: - Mode B: Event callback (advanced)
@@ -114,22 +114,24 @@ extension View {
   ///   (e.g. scroll wheel changing the pan offset) but **never writes** to it.
   ///   Pass `nil` (the default) when external sync is not needed.
   public func onPointerDragGesture(
-    observing rect: Binding<CGRect?>? = nil,
+    observing payload: Binding<PointerDragPayload?>?,
+//    observing rect: Binding<CGRect?>? = nil,
     coordinateSpace: CoordinateSpace = .local,
     behaviour: DragBehavior,
-    drawsMarqueeRect: Bool = true,
+//    drawsMarqueeRect: Bool = true,
     minimumDistance: CGFloat = 5,
-    didUpdateEvent: @escaping DragEventUpdate
+    didUpdatePayload: @escaping DragEventUpdate
   ) -> some View {
     self.modifier(
       PointerDragModifier(
-        rect: rect,
+        payload: payload,
+//        rect: rect,
         writesBackToBinding: false,
         coordinateSpace: coordinateSpace,
         behaviour: behaviour,
-        drawsMarqueeRect: drawsMarqueeRect,
+//        drawsMarqueeRect: drawsMarqueeRect,
         minimumDistance: minimumDistance,
-        didUpdateEvent: didUpdateEvent
+        didUpdatePayload: didUpdatePayload
       )
     )
   }

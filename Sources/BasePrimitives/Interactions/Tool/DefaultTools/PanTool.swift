@@ -29,11 +29,18 @@ public struct PanTool: CanvasTool {
     switch interaction.source {
       case .pointerDragGesture(let payload):
         
+        switch payload {
+          case .delta(let delta, let location):
+            var new = currentTransform
+            new.translation += delta
+            
+            return .intent(.mutateTransform(new))
+
+          case .rect(let from, let current):
+            print("Not sure if this is right")
+            return .none
+        }
 //        let delta = current - from
-        var new = currentTransform
-        new.translation += delta
-        
-        return .intent(.mutateTransform(new))
 
       default:
         return .none
