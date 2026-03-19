@@ -30,15 +30,31 @@ public struct ZoomTool: CanvasTool {
     switch interaction.source {
       case .pointerDragGesture(let payload):
         switch payload {
-          case .delta(let size, let location):
-            print("Not sure what to do here?")
-            return .none
+          case .delta(let size, _):
+            var factor = ZoomComputation.factorFromDelta(
+              size.cgSize,
+              weights: .upRight,
+              sensitivity: 200
+            )
+            // Hold Option to invert the zoom direction during drag, mirroring tap behavior
+            if interaction.modifiers.contains(.option) {
+              factor = 1 / max(factor, 0.0001)
+            }
+            var new = currentTransform
+            new.scale *= factor
+            return .intent(.mutateTransform(new))
 
           case .rect(let from, let current):
-            let verticalDelta = current.cgPoint.y - from.cgPoint.y
-            let zoomFactor = 1.0 + (verticalDelta / 200.0)
+            let fromPoint = from.cgPoint
+            let toPoint = current.cgPoint
+            let factor = ZoomComputation.factorFromPoints(
+              from: fromPoint,
+              to: toPoint,
+              weights: .upRight,
+              sensitivity: 200
+            )
             var new = currentTransform
-            new.scale *= zoomFactor
+            new.scale *= factor
             return .intent(.mutateTransform(new))
 
         }

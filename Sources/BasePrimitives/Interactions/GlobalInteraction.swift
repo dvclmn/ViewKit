@@ -22,15 +22,15 @@ struct GlobalInteraction {
         /// Option + swipe = zoom
         if modifiers.contains(.option) {
 
-          /// `sensitivity`: zoom change per swipe point
-          /// Aka each pixel contributes 0.5% zoom change
-          let sensitivity: Double = 0.005
-
-          let zoomDelta = 1.0 + (delta.cgSize.height * sensitivity)
+          // Each point contributes 0.5% zoom change => sensitivity = 1 / 0.005 = 200
+          let factor = ZoomComputation.factorFromDelta(
+            CGSize(width: 0, height: delta.cgSize.height),
+            weights: .vertical,
+            sensitivity: 200
+          )
           var new = transform
-          let newScale = transform.scale * zoomDelta
+          let newScale = transform.scale * factor
           new.scale = newScale.clamped(to: zoomRange)
-          transform = new
 
         } else {
           var new = transform
@@ -57,3 +57,4 @@ struct GlobalInteraction {
     }
   }
 }
+
