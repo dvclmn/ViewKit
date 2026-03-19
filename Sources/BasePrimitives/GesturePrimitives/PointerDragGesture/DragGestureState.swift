@@ -9,25 +9,23 @@ import SwiftUI
 
 /// Internal state machine for ``PointerDragModifier``.
 ///
-/// Handles both ``DragBehavior/marquee`` and ``DragBehavior/continuous(_:)`` modes
-/// through a shared `begin` / `update` / `end` lifecycle, driven by `DragGesture`
-/// callbacks in the parent modifier.
+/// Handles both ``DragBehavior/marquee`` and ``DragBehavior/continuous(_:)`` modes:
 ///
-/// The output is always `CGRect?` so a single `Binding<CGRect?>` covers both modes:
-/// - **Marquee**: the rect from anchor to current pointer position.
-/// - **Continuous**: offset stored in `size`; `origin` is always `.zero`.
+/// - **Continuous**: Produces **frame-to-frame deltas** — the difference in
+///   `DragGesture.Value.translation` between successive `onChanged` calls.
+///   This means the modifier never needs to know the current accumulated offset,
+///   so external changes (swipe pan, programmatic reset) between drags are
+///   transparent. No baseline sync required.
+///
+/// - **Marquee**: Returns a `.rect` from `startLocation` to `location` using
+///   values directly from `DragGesture.Value`. All state is cleared on end.
 struct DragGestureState {
 
   var behaviour: DragBehavior
 
-  /// The start location captured once at the beginning of each drag gesture.
-  private(set) var anchor: CGPoint?
-
-  /// The most recently computed result, retained so `value` stays stable between drags.
-  private var lastComputedOffset: CGSize?
-
-  /// New: remember last payload for continuity
-  private var lastPayload: PointerDragPayload?
+  /// For continuous mode: the previous `DragGesture.Value.translation`,
+  /// used to compute the frame-to-frame delta. `nil` on first frame.
+  private var previousGestureTranslation: CGSize?
 
   init(_ behaviour: DragBehavior) {
     self.behaviour = behaviour
@@ -36,135 +34,61 @@ struct DragGestureState {
 
 extension DragGestureState {
 
-  /// The current result as a PointerDragPayload (preferred).
-  var payload: PointerDragPayload? {
-    lastPayload
-  }
-
-  @available(
-    *, deprecated,
-    message: "Prefer `PointerDragPayload` based output value. Expresses the drag output more clearly."
-  )
-  /// The current result as a rect. Origin is always `.zero`; continuous offset lives in `size`.
-  var value: CGRect { lastComputedOffset?.toCGRectZeroOrigin ?? .zero }
-
-  /// Captures the anchor point at the start of a drag.
+  /// Processes a drag gesture value and returns the payload for this frame.
   ///
-  /// - Parameter currentExternalValue:
-  ///   - **Marquee**: pass `gestureValue.startLocation` so the rect grows from the tap point.
-  ///   - **Continuous**: pass the current binding offset as a `CGPoint` so the next drag
-  ///     compounds from the correct baseline.
-  //  mutating func begin(with currentExternalValue: CGPoint? = nil) {
-  //    anchor = currentExternalValue
-  //  }
-  mutating func begin(with currentExternalValue: CGPoint? = nil) {
-    anchor = currentExternalValue
-    lastPayload = nil
-    lastComputedOffset = nil
-  }
-
-  /// Processes a live drag gesture value and returns the updated result.
-  ///
-  /// - Returns:
-  ///   - `.marquee`: The bounding `CGRect` from anchor to current pointer. `nil` until anchored.
-  ///   - `.continuous`: The accumulated offset rect (origin `.zero`). Falls back to `value` if not yet anchored.
-  ///   - `.none`: Always `nil`.
-
-  /// Processes a drag gesture and updates state.
-  /// Returns a PointerDragPayload (preferred).
+  /// - **Marquee**: `.rect(from: startLocation, current: location)`.
+  ///   Uses `DragGesture.Value.startLocation` which is stable across all
+  ///   `onChanged` calls within a single gesture.
+  /// - **Continuous**: `.delta(frameDelta, location)` where `frameDelta` is
+  ///   `gestureValue.translation - previousTranslation`, axis-constrained.
+  /// - **None**: `nil`.
   mutating func update(
     _ gestureValue: DragGesture.Value
   ) -> PointerDragPayload? {
     switch behaviour {
       case .marquee:
-        guard let anchor else { return nil }
-        let from = anchor
-        let current = gestureValue.location
-        let payload = PointerDragPayload.rect(
-          from: .init(fromPoint: from),
-          current: .init(fromPoint: current)
+        return .rect(
+          from: .init(fromPoint: gestureValue.startLocation),
+          current: .init(fromPoint: gestureValue.location)
         )
-        lastPayload = payload
-        return payload
-      case .continuous:
-        guard let anchor else { return lastPayload }
-        let base = anchor.toCGSize
-        let translation = applyAxis(
-          behaviour.axes,
-          base: base,
-          translation: gestureValue.translation
+
+      case .continuous(let axes):
+        let prev = previousGestureTranslation ?? .zero
+        let rawDelta = CGSize(
+          width: gestureValue.translation.width - prev.width,
+          height: gestureValue.translation.height - prev.height
         )
-        lastComputedOffset = translation
-        let payload = PointerDragPayload.delta(
-          .init(fromCGSize: translation),
+        let constrained = applyAxis(axes, delta: rawDelta)
+        previousGestureTranslation = gestureValue.translation
+        return .delta(
+          .init(fromCGSize: constrained),
           location: .init(fromPoint: gestureValue.location)
         )
-        lastPayload = payload
-        return payload
+
       case .none:
-        lastPayload = nil
         return nil
     }
   }
 
-  //  mutating func update(
-  //    _ gestureValue: DragGesture.Value
-  //  ) -> CGRect? {
-  //
-  //    switch behaviour {
-  //      case .marquee:
-  //        guard let anchor else { return nil }
-  //        let newRect = gestureValue.toRect(from: anchor, end: .standard)
-  //        lastComputedOffset = newRect.size
-  //        return newRect
-  //
-  //      case .continuous:
-  //        guard let anchor else { return value }
-  //        let base = anchor.toCGSize
-  //        let size = applyAxis(
-  //          behaviour.axes,
-  //          base: base,
-  //          translation: gestureValue.translation
-  //        )
-  //        lastComputedOffset = size
-  //        return CGRect(origin: .zero, size: size)
-  //
-  //      case .none: return nil
-  //    }
-  //  }
-
-  /// Clears the anchor. Call from `DragGesture.onEnded`.
-//  mutating func end() { anchor = nil }
-/// Clears anchor and payload state.
+  /// Clears per-gesture tracking state. Call from `DragGesture.onEnded`.
   mutating func end() {
-    anchor = nil
-    lastPayload = nil
-    lastComputedOffset = nil
+    previousGestureTranslation = nil
   }
 
+  // MARK: - Axis constraint
 
-  /// Applies axis constraints, zeroing out movement on the locked axis.
+  /// Zeroes out movement on locked axes.
   private func applyAxis(
     _ axes: GridAxis.Set,
-    base: CGSize,
-    translation: CGSize
+    delta: CGSize
   ) -> CGSize {
     switch axes {
       case .horizontal:
-        CGSize(
-          width: base.width + translation.width,
-          height: base.height
-        )
+        CGSize(width: delta.width, height: 0)
       case .vertical:
-        CGSize(
-          width: base.width,
-          height: base.height + translation.height
-        )
+        CGSize(width: 0, height: delta.height)
       default:
-        CGSize(
-          width: base.width + translation.width,
-          height: base.height + translation.height
-        )
+        delta
     }
   }
 }

@@ -30,7 +30,7 @@ public struct PanTool: CanvasTool {
       case .pointerDragGesture(let payload):
         
         switch payload {
-          case .delta(let delta, let location):
+          case .delta(let delta, _):
             var new = currentTransform
             new.translation += delta
             
