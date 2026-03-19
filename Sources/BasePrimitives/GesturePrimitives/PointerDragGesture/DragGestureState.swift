@@ -25,7 +25,7 @@ struct DragGestureState {
 
   /// The most recently computed result, retained so `value` stays stable between drags.
   private var lastComputedOffset: CGSize?
-  
+
   /// New: remember last payload for continuity
   private var lastPayload: PointerDragPayload?
 
@@ -40,8 +40,11 @@ extension DragGestureState {
   var payload: PointerDragPayload? {
     lastPayload
   }
-  
-  @available(*, deprecated, message: "Prefer `PointerDragPayload` based output value. Expresses the drag output more clearly.")
+
+  @available(
+    *, deprecated,
+    message: "Prefer `PointerDragPayload` based output value. Expresses the drag output more clearly."
+  )
   /// The current result as a rect. Origin is always `.zero`; continuous offset lives in `size`.
   var value: CGRect { lastComputedOffset?.toCGRectZeroOrigin ?? .zero }
 
@@ -51,9 +54,9 @@ extension DragGestureState {
   ///   - **Marquee**: pass `gestureValue.startLocation` so the rect grows from the tap point.
   ///   - **Continuous**: pass the current binding offset as a `CGPoint` so the next drag
   ///     compounds from the correct baseline.
-//  mutating func begin(with currentExternalValue: CGPoint? = nil) {
-//    anchor = currentExternalValue
-//  }
+  //  mutating func begin(with currentExternalValue: CGPoint? = nil) {
+  //    anchor = currentExternalValue
+  //  }
   mutating func begin(with currentExternalValue: CGPoint? = nil) {
     anchor = currentExternalValue
     lastPayload = nil
@@ -66,34 +69,79 @@ extension DragGestureState {
   ///   - `.marquee`: The bounding `CGRect` from anchor to current pointer. `nil` until anchored.
   ///   - `.continuous`: The accumulated offset rect (origin `.zero`). Falls back to `value` if not yet anchored.
   ///   - `.none`: Always `nil`.
+
+  /// Processes a drag gesture and updates state.
+  /// Returns a PointerDragPayload (preferred).
   mutating func update(
     _ gestureValue: DragGesture.Value
-  ) -> CGRect? {
-
+  ) -> PointerDragPayload? {
     switch behaviour {
       case .marquee:
         guard let anchor else { return nil }
-        let newRect = gestureValue.toRect(from: anchor, end: .standard)
-        lastComputedOffset = newRect.size
-        return newRect
-
+        let from = anchor
+        let current = gestureValue.location
+        let payload = PointerDragPayload.rect(
+          from: .init(fromPoint: from),
+          current: .init(fromPoint: current)
+        )
+        lastPayload = payload
+        return payload
       case .continuous:
-        guard let anchor else { return value }
+        guard let anchor else { return lastPayload }
         let base = anchor.toCGSize
-        let size = applyAxis(
+        let translation = applyAxis(
           behaviour.axes,
           base: base,
           translation: gestureValue.translation
         )
-        lastComputedOffset = size
-        return CGRect(origin: .zero, size: size)
-
-      case .none: return nil
+        lastComputedOffset = translation
+        let payload = PointerDragPayload.delta(
+          .init(fromCGSize: translation),
+          location: .init(fromPoint: gestureValue.location)
+        )
+        lastPayload = payload
+        return payload
+      case .none:
+        lastPayload = nil
+        return nil
     }
   }
 
+  //  mutating func update(
+  //    _ gestureValue: DragGesture.Value
+  //  ) -> CGRect? {
+  //
+  //    switch behaviour {
+  //      case .marquee:
+  //        guard let anchor else { return nil }
+  //        let newRect = gestureValue.toRect(from: anchor, end: .standard)
+  //        lastComputedOffset = newRect.size
+  //        return newRect
+  //
+  //      case .continuous:
+  //        guard let anchor else { return value }
+  //        let base = anchor.toCGSize
+  //        let size = applyAxis(
+  //          behaviour.axes,
+  //          base: base,
+  //          translation: gestureValue.translation
+  //        )
+  //        lastComputedOffset = size
+  //        return CGRect(origin: .zero, size: size)
+  //
+  //      case .none: return nil
+  //    }
+  //  }
+
   /// Clears the anchor. Call from `DragGesture.onEnded`.
-  mutating func end() { anchor = nil }
+//  mutating func end() { anchor = nil }
+/// Clears anchor and payload state.
+  mutating func end() {
+    anchor = nil
+    lastPayload = nil
+    lastComputedOffset = nil
+  }
+
 
   /// Applies axis constraints, zeroing out movement on the locked axis.
   private func applyAxis(

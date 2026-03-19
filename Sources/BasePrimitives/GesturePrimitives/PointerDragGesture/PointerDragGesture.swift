@@ -7,10 +7,19 @@
 
 import SwiftUI
 
-extension PointerDragModifier {
-  package var dragGesture: some Gesture {
+struct PointerDrag: Gesture {
+  
+  @Bindable var store: DragHandler
+//  let behaviour: DragBehavior
+//  let minDistance: CGFloat
+//  let coordinateSpace: CoordinateSpace
+//  @Binding var isGesturing: Bool
+//  @Binding var dragState: DragGestureState
+//  @Binding var internalRect: CGRect?
+  
+  var body: some Gesture {
     DragGesture(
-      minimumDistance: minimumDistance,
+      minimumDistance: minDistance,
       coordinateSpace: coordinateSpace
     )
     .onChanged { value in
@@ -61,3 +70,9 @@ extension PointerDragModifier {
     }
   }
 }
+//
+//extension PointerDragModifier {
+//  package var dragGesture: some Gesture {
+//    
+//  }
+//}
