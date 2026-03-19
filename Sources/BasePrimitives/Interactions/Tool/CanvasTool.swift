@@ -10,8 +10,8 @@ import SwiftUI
 /// A canvas tool defines how pointer interactions (tap, drag) are interpreted.
 ///
 /// Global gestures (swipe→pan, pinch→zoom, hover) are handled centrally
-/// by `CanvasInteractionState` and never reach `resolve()`. Tools only
-/// receive pointer events: taps and drags.
+/// by `CanvasInteractionState` and never reach `resolvePointerInteraction()`.
+/// Tools only receive pointer events: taps and drags.
 ///
 /// Each tool declares:
 /// - `kind`: Its identity, used for binding lookups and registry

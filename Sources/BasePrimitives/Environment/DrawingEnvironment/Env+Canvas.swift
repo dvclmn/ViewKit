@@ -22,16 +22,15 @@ extension EnvironmentValues {
 
   @Entry public var canvasInputPolicy: CanvasInputPolicy = .standard
   @Entry public var activeTool: (any CanvasTool)?
-  //  @Entry public var canvasOperation: CanvasOperation = .idle()
 
   public var canvasGeometry: CanvasGeometry? {
     guard let viewportRect,
       let artworkFrameInViewport,
       let canvasSize
     else {
-//      print(
-//        "For canvasGeometry, missing one of:\nviewportRect: \(String(describing: viewportRect)), artworkFrameInViewport: \(String(describing: artworkFrameInViewport)), or canvasSize: \(String(describing: canvasSize))\n\n"
-//      )
+      //      print(
+      //        "For canvasGeometry, missing one of:\nviewportRect: \(String(describing: viewportRect)), artworkFrameInViewport: \(String(describing: artworkFrameInViewport)), or canvasSize: \(String(describing: canvasSize))\n\n"
+      //      )
       return nil
     }
     return CanvasGeometry(

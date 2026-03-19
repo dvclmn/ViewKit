@@ -14,7 +14,7 @@ import SwiftUI
 /// - **Spring-loaded tools**: Temporarily active while a key is held
 /// - **Effective tool**: What's actually used right now (spring-load > base)
 ///
-/// `CanvasInteractionState` reads `effectiveTool` from here rather than
+/// ``CanvasInteractionState`` reads `effectiveTool` from here rather than
 /// holding `activeTool` directly (once fully wired up).
 public struct ToolHandler {
 

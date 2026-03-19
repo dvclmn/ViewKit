@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct TransformState: Sendable, Equatable {
   public var translation: Size<ScreenSpace>
-  public var scale: CGFloat
+  public var scale: Double
   public var rotation: Angle
   //  public var translation: ContinuousInteraction<CGSize>
   //  public var scale: ContinuousInteraction<CGFloat>
@@ -17,7 +17,7 @@ public struct TransformState: Sendable, Equatable {
 
   public init(
     translation: Size<ScreenSpace> = .zero,
-    scale: CGFloat = 1.0,
+    scale: Double = 1.0,
     rotation: Angle = .zero,
     //    translation: ContinuousInteraction<CGSize> = .init(.zero),
     //    scale: ContinuousInteraction<CGFloat> = .init(1.0),

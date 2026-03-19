@@ -16,7 +16,7 @@ public final class CanvasInteractionState {
   public var transform: TransformState = .identity
   public var pointer: PointerState = .initial
   public var geometry: CanvasGeometry?
-  public var zoomRange: ClosedRange<CGFloat>?
+  public var zoomRange: ClosedRange<Double>?
   //  public var modifiers: Modifiers = []
 
   /// Synced here via the Env
@@ -51,10 +51,18 @@ extension CanvasInteractionState {
     modifiers: Modifiers
   ) {
 
-    /// 1 – Global gestures
-    handleGlobalInteraction(source, modifiers: modifiers)
+    guard let zoomRange else { return }
 
-    /// 2 – Tool-specific pointer interactions
+    /// 1 – Global gestures, such as pinch to Zoom, swipe to Pan
+    GlobalInteraction.handleGlobalInteraction(
+      source,
+      zoomRange: zoomRange,
+      modifiers: modifiers,
+      transform: &transform,
+      pointer: &pointer
+    )
+
+    /// 2 – Tool-specific pointer interactions, like hover and tap
     handlePointerInteraction(
       source: source,
       phase: phase,
@@ -99,47 +107,6 @@ extension CanvasInteractionState {
     self.lastToolAction = resolution.action
   }
 
-  private func handleGlobalInteraction(
-    _ source: InteractionSource,
-    modifiers: Modifiers
-  ) {
-
-    switch source {
-      case .swipeGesture(let delta, _):
-        if modifiers.contains(.option) {
-          // Option + swipe = zoom (macOS convention)
-          let zoomDelta = 1.0 + (delta.cgSize.height / 200.0)
-          var new = transform
-          new.scale *= zoomDelta
-          if let zoomRange {
-            new.scale = new.scale.clamped(to: zoomRange)
-          }
-          self.transform = new
-        } else {
-          var new = transform
-          new.translation += delta
-          self.transform = new
-        }
-        return
-
-      case .pinchGesture(let event):
-        var new = transform
-        new.scale = event.magnification
-        if let zoomRange {
-          new.scale = new.scale.clamped(to: zoomRange)
-        }
-        self.transform = new
-        return
-
-      case .continuousHover(let point):
-        self.pointer.hover = point
-        return
-
-      case .pointerTapGesture, .pointerDragGesture:
-        break  // Fall through to Tier 2
-    }
-
-  }
 }
 
 // MARK: - Snapshot
@@ -170,8 +137,6 @@ extension CanvasInteractionState {
     )
   }
 }
-
-// MARK: - Pointer style resolution
 
 extension CanvasInteractionState {
   public func pointerStyle(with modifiers: Modifiers) -> PointerStyleCompatible? {
