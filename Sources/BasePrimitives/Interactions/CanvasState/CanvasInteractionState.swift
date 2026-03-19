@@ -86,8 +86,9 @@ extension CanvasInteractionState {
   ) {
 
     guard let geometry, let activeTool else {
-      print(
-        "Missing geometry: \(geometry.debugDescription), or activeTool: \(activeTool?.name, default: "nil")")
+//      print(
+//        "Missing geometry: \(geometry.debugDescription), or activeTool: \(activeTool?.name, default: "nil")"
+//      )
       return
     }
 

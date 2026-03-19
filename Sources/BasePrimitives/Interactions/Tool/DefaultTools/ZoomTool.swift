@@ -22,6 +22,15 @@ public struct ZoomTool: CanvasTool {
   }
 
   public init() {}
+}
+
+extension ZoomTool {
+
+  public func resolvePointerStyle(
+    context: ToolPointerContext
+  ) -> PointerStyleCompatible {
+    context.modifiers.contains(.option) ? .zoomOut : .zoomIn
+  }
 
   public func resolvePointerInteraction(
     _ interaction: Interaction,
@@ -29,34 +38,11 @@ public struct ZoomTool: CanvasTool {
   ) -> ToolResolution {
     switch interaction.source {
       case .pointerDragGesture(let payload):
-        switch payload {
-          case .delta(let size, _):
-            var factor = ZoomComputation.factorFromDelta(
-              size.cgSize,
-              weights: .upRight
-            )
-            // Hold Option to invert the zoom direction during drag, mirroring tap behavior
-            if interaction.modifiers.contains(.option) {
-              factor = 1 / max(factor, 0.0001)
-            }
-            var new = currentTransform
-            new.scale *= factor
-            return .intent(.mutateTransform(new))
-
-          case .rect(let from, let current):
-            let fromPoint = from.cgPoint
-            let toPoint = current.cgPoint
-            let factor = ZoomComputation.factorFromPoints(
-              from: fromPoint,
-              to: toPoint,
-              weights: .upRight
-            )
-            var new = currentTransform
-            new.scale *= factor
-            return .intent(.mutateTransform(new))
-
-        }
-      //      case .pointerDragGesture(let from, let current):
+        return handlePointerDrag(
+          payload,
+          interaction: interaction,
+          transform: currentTransform
+        )
 
       case .pointerTapGesture(_, _):
         let step: CGFloat = interaction.modifiers.contains(.option) ? 0.8 : 1.25
@@ -69,10 +55,42 @@ public struct ZoomTool: CanvasTool {
     }
   }
 
-  public func resolvePointerStyle(
-    context: ToolPointerContext
-  ) -> PointerStyleCompatible {
-    context.modifiers.contains(.option) ? .zoomOut : .zoomIn
-  }
 }
 
+extension ZoomTool {
+  private func handlePointerDrag(
+    _ payload: PointerDragPayload,
+    interaction: Interaction,
+    transform: TransformState
+  ) -> ToolResolution {
+
+    switch payload {
+
+      case .delta(let size, _):
+        var factor = ZoomComputation.factorFromDelta(
+          size.cgSize,
+          weights: .upRight
+        )
+        /// Hold Option to invert the zoom direction during drag, mirroring tap behavior
+        if interaction.modifiers.contains(.option) {
+          factor = 1 / max(factor, 0.0001)
+        }
+        var new = transform
+        new.scale *= factor
+        return .intent(.mutateTransform(new))
+
+      case .rect(let from, let current):
+        let fromPoint = from.cgPoint
+        let toPoint = current.cgPoint
+        let factor = ZoomComputation.factorFromPoints(
+          from: fromPoint,
+          to: toPoint,
+          weights: .upRight
+        )
+        var new = transform
+        new.scale *= factor
+        return .intent(.mutateTransform(new))
+
+    }
+  }
+}

@@ -30,6 +30,7 @@ struct GlobalInteraction {
           var new = transform
           let newScale = transform.scale * factor
           new.scale = newScale.clamped(to: zoomRange)
+          transform = new
 
         } else {
           var new = transform
