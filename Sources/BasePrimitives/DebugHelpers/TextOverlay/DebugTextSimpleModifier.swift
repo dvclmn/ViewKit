@@ -66,7 +66,7 @@ extension View {
     _ text: String,
     isEnabled: Bool = true,
     alignment: Alignment = .topLeading,
-    padding: (Edge.Set, CGFloat?) = (.all, nil)
+    padding: (Edge.Set, CGFloat?) = (.all, Styles.sizeSmall)
   ) -> some View {
     self.modifier(
       DebugTextSimpleOverlayModifier(

@@ -17,7 +17,7 @@ public final class CanvasInteractionState {
   public var pointer: PointerState = .initial
   public var geometry: CanvasGeometry?
   public var zoomRange: ClosedRange<CGFloat>?
-  public var modifiers: Modifiers = []
+  //  public var modifiers: Modifiers = []
 
   /// Synced here via the Env
   public var activeTool: (any CanvasTool)?
@@ -48,14 +48,61 @@ extension CanvasInteractionState {
   public func handleInput(
     from source: InteractionSource,
     phase: InteractionPhase,
-    modifiers: Modifiers,
-//    activeTool: any CanvasTool
+    modifiers: Modifiers
   ) {
 
-    guard let geometry, let ac else { return }
-    self.modifiers = modifiers
+    /// 1 – Global gestures
+    handleGlobalInteraction(source, modifiers: modifiers)
 
-    // MARK: Tier 1 — Global gestures
+    /// 2 – Tool-specific pointer interactions
+    handlePointerInteraction(
+      source: source,
+      phase: phase,
+      modifiers: modifiers
+    )
+  }
+
+  private func execute(_ intent: CanvasIntent) {
+    switch intent {
+      case .mutateTransform(let transform): self.transform = transform
+      case .updatePointerDrag(let rect): self.pointer.drag = rect
+      case .updatePointerTap(let point): self.pointer.tap = point
+      case .none: break
+    }
+  }
+
+  private func handlePointerInteraction(
+    source: InteractionSource,
+    phase: InteractionPhase,
+    modifiers: Modifiers
+  ) {
+
+    guard let geometry, let activeTool else {
+      print(
+        "Missing geometry: \(geometry.debugDescription), or activeTool: \(activeTool?.name, default: "nil")")
+      return
+    }
+
+    lastPointerSource = source
+    lastPointerPhase = phase
+
+    let interaction = Interaction(
+      source: source,
+      geometry: geometry,
+      phase: phase,
+      modifiers: modifiers
+    )
+
+    let resolution = activeTool.resolvePointerInteraction(interaction, currentTransform: transform)
+
+    execute(resolution.intent)
+    self.lastToolAction = resolution.action
+  }
+
+  private func handleGlobalInteraction(
+    _ source: InteractionSource,
+    modifiers: Modifiers
+  ) {
 
     switch source {
       case .swipeGesture(let delta, _):
@@ -89,47 +136,9 @@ extension CanvasInteractionState {
         return
 
       case .pointerTapGesture, .pointerDragGesture:
-        break // Fall through to Tier 2
+        break  // Fall through to Tier 2
     }
 
-    // MARK: Tier 2 — Tool-specific pointer interactions
-    lastPointerSource = source
-    lastPointerPhase = phase
-
-    let interaction = Interaction(
-      source: source,
-      geometry: geometry,
-      phase: phase,
-      modifiers: modifiers
-    )
-
-    let resolution = activeTool.resolve(
-      interaction: interaction,
-      currentTransform: transform
-    )
-
-    execute(resolution.intent)
-    self.lastToolAction = resolution.action
-  }
-
-  public func updateModifiers(_ modifiers: Modifiers) {
-    self.modifiers = modifiers
-  }
-
-  private func execute(_ intent: CanvasIntent) {
-    switch intent {
-      case .mutateTransform(let newState):
-        self.transform = newState
-
-      case .updatePointerDrag(let rect):
-        self.pointer.drag = rect
-
-      case .updatePointerTap(let point):
-        self.pointer.tap = point
-
-      case .none:
-        break
-    }
   }
 }
 
@@ -165,8 +174,8 @@ extension CanvasInteractionState {
 // MARK: - Pointer style resolution
 
 extension CanvasInteractionState {
-  public var pointerStyle: PointerStyleCompatible {
-    activeTool.resolvePointerStyle(
+  public func pointerStyle(with modifiers: Modifiers) -> PointerStyleCompatible? {
+    activeTool?.resolvePointerStyle(
       context: ToolPointerContext(
         modifiers: modifiers,
         pointerPhase: lastPointerPhase,

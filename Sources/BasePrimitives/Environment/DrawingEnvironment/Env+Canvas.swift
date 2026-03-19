@@ -21,7 +21,7 @@ extension EnvironmentValues {
   @Entry public var canvasBackground: Color = Color(white: 0.04)
 
   @Entry public var canvasInputPolicy: CanvasInputPolicy = .standard
-  @Entry public var activeTool: any CanvasTool = .default
+  @Entry public var activeTool: (any CanvasTool)?
   //  @Entry public var canvasOperation: CanvasOperation = .idle()
 
   public var canvasGeometry: CanvasGeometry? {

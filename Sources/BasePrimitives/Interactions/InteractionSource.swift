@@ -19,20 +19,27 @@ import SwiftUI
 /// Under two-tier resolution:
 /// - Swipe, pinch, and hover are handled globally by `CanvasInteractionState`
 /// - Pointer tap and drag are forwarded to the active `CanvasTool.resolve()`
-public enum PointerButton: Sendable {
-  case primary
-  case secondary
-  case middle
-}
 
 public enum InteractionSource: Sendable {
-  case swipeGesture(delta: Size<ScreenSpace>, location: Point<ScreenSpace>)
+  case swipeGesture(
+    delta: Size<ScreenSpace>,
+    location: Point<ScreenSpace>
+  )
   case pinchGesture(ZoomGestureEvent)
   // case rotation (not yet implemented)
   case continuousHover(Point<ScreenSpace>)
-  case pointerTapGesture(PointerButton = .primary, location: Point<ScreenSpace>)
+  case pointerTapGesture(
+    PointerButton = .primary,
+    location: Point<ScreenSpace>
+  )
   case pointerDragGesture(
     from: Point<ScreenSpace>,
     current: Point<ScreenSpace>
   )
+}
+
+public enum PointerButton: Sendable {
+  case primary
+  case secondary
+  case middle
 }

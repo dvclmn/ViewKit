@@ -46,13 +46,13 @@ public enum PointerStyleCompatible: Sendable {
 
   /// The pointer style for resizing a column, or vertical division.
   case columnResize
-  
+
   /// The pointer style for resizing a column, or vertical division.
   case columnResizeDirections(HorizontalDirectionCompatible.Set)
 
   /// Style for resizing a row, or horizontal division, in either direction.
   case rowResize
-  
+
   /// Style for resizing a row, or horizontal division, in either direction.
   case rowResizeDirections(VerticalDirectionCompatible.Set)
 
@@ -92,9 +92,31 @@ extension PointerStyleCompatible {
           position: position.toResizePosition,
           directions: direction.toResizeDirection
         )
-        
+
       case .image(let image, let hotSpot): .image(image, hotSpot: hotSpot)
     }
   }
   #endif
+}
+
+extension PointerStyleCompatible {
+  public var name: String {
+    switch self {
+      case .default: "Default"
+      case .horizontalText: "Horizontal Text"
+      case .verticalText: "Vertical Text"
+      case .rectSelection: "Rect Selection"
+      case .grabIdle: "Grab Idle"
+      case .grabActive: "Grab Active"
+      case .link: "Link"
+      case .zoomIn: "Zoom In"
+      case .zoomOut: "Zoom Out"
+      case .columnResize: "Column Resize"
+      case .columnResizeDirections(let set): "Column Resize Directions: \(set)"
+      case .rowResize: "Row Resize"
+      case .rowResizeDirections(let set): "Row Resize Directions: \(set)"
+      case .frameResize(let position, let directions): "Frame Resize: \(position), \(directions)"
+      case .image(let image, let hotSpot): "Image: \(image), \(hotSpot)"
+    }
+  }
 }
