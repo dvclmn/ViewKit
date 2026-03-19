@@ -49,10 +49,3 @@ public enum PointerButton: Sendable {
   case middle
 }
 
-public enum PointerDragPayload: Sendable {
-  /// For panning/continuous
-  case delta(Size<ScreenSpace>, location: Point<ScreenSpace>)
-  
-  /// For marquee/select
-  case rect(from: Point<ScreenSpace>, current: Point<ScreenSpace>)
-}

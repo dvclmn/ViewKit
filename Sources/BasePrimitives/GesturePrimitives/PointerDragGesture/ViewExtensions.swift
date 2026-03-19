@@ -139,26 +139,26 @@ extension View {
   /// Convenience wrapper for callers that don't need the full event context.
   ///
   /// - Parameter observing: Optional binding for external sync (read-only).
-  public func onPointerDragGesture(
-    observing rect: Binding<CGRect?>? = nil,
-    coordinateSpace: CoordinateSpace = .local,
-    behaviour: DragBehavior,
-    drawsMarqueeRect: Bool = true,
-    minimumDistance: CGFloat = 5,
-    didUpdateDrag: @escaping DragUpdate
-  ) -> some View {
-    self.modifier(
-      PointerDragModifier(
-        rect: rect,
-        writesBackToBinding: false,
-        coordinateSpace: coordinateSpace,
-        behaviour: behaviour,
-        drawsMarqueeRect: drawsMarqueeRect,
-        minimumDistance: minimumDistance,
-        didUpdateEvent: { event, phase in
-          didUpdateDrag(event.proposedRect, phase)
-        }
-      )
-    )
-  }
+//  public func onPointerDragGesture(
+//    observing rect: Binding<CGRect?>? = nil,
+//    coordinateSpace: CoordinateSpace = .local,
+//    behaviour: DragBehavior,
+//    drawsMarqueeRect: Bool = true,
+//    minimumDistance: CGFloat = 5,
+//    didUpdateDrag: @escaping DragUpdate
+//  ) -> some View {
+//    self.modifier(
+//      PointerDragModifier(
+//        rect: rect,
+//        writesBackToBinding: false,
+//        coordinateSpace: coordinateSpace,
+//        behaviour: behaviour,
+//        drawsMarqueeRect: drawsMarqueeRect,
+//        minimumDistance: minimumDistance,
+//        didUpdateEvent: { event, phase in
+//          didUpdateDrag(event.proposedRect, phase)
+//        }
+//      )
+//    )
+//  }
 }
