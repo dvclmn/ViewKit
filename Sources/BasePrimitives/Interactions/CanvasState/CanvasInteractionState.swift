@@ -41,7 +41,7 @@ extension CanvasInteractionState {
   /// Entry point for all raw input events from gesture modifiers.
   ///
   /// **Tier 1 — Global gestures** (swipe, pinch, hover) are handled
-  /// centrally here. Tools never see these events.
+  /// centrally here, via `GlobalInteraction`. Tools never see these events.
   ///
   /// **Tier 2 — Pointer interactions** (tap, drag) are forwarded to
   /// the active tool's `resolve()` method.

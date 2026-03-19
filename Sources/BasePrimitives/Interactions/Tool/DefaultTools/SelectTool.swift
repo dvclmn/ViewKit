@@ -35,8 +35,9 @@ public struct SelectTool: CanvasTool {
       case .pointerTapGesture(_, let location):
         return .intent(.updatePointerTap(location))
 
-      case .pointerDragGesture(let from, let current):
+      case .pointerDragGesture(let delta, let location):
         let rect = Rect<ScreenSpace>(from: from, to: current)
+//        let rect = Rect<ScreenSpace>(from: from, to: current)
         return .intent(.updatePointerDrag(rect))
 
       default:

@@ -10,12 +10,12 @@ import Foundation
 public struct CoordinateSpaceMapper {
   public let geometry: CanvasGeometry
   public let transform: TransformState
-  public let zoomRange: ClosedRange<CGFloat>?
+  public let zoomRange: ClosedRange<Double>?
 
   public init(
     geometry: CanvasGeometry,
     transform: TransformState,
-    zoomRange: ClosedRange<CGFloat>?
+    zoomRange: ClosedRange<Double>?
   ) {
     self.geometry = geometry
     self.transform = transform

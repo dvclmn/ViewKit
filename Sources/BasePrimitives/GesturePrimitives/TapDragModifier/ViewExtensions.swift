@@ -91,15 +91,15 @@ extension View {
 
 // MARK: - Mode B: Event callback (advanced)
 //
-// The caller owns drag state. The modifier tracks gesture mechanics
-// internally (anchor, accumulation, marquee drawing) and sends events;
-// the callback receives raw data to route through a tool/interaction
-// pipeline.
-//
-// External sync: Pass a binding via `observing:` so the modifier can
-// pick up changes made outside the gesture (scroll wheel, reset button,
-// programmatic pan). The modifier reads this binding but never writes
-// to it — the callback is the sole output channel.
+/// The caller owns drag state. The modifier tracks gesture mechanics
+/// internally (anchor, accumulation, marquee drawing) and sends events;
+/// the callback receives raw data to route through a tool/interaction
+/// pipeline.
+///
+/// External sync: Pass a binding via `observing:` so the modifier can
+/// pick up changes made outside the gesture (scroll wheel, reset button,
+/// programmatic pan). The modifier reads this binding but never writes
+/// to it — the callback is the sole output channel.
 
 extension View {
 
