@@ -33,8 +33,7 @@ public struct ZoomTool: CanvasTool {
           case .delta(let size, _):
             var factor = ZoomComputation.factorFromDelta(
               size.cgSize,
-              weights: .upRight,
-              sensitivity: 200
+              weights: .upRight
             )
             // Hold Option to invert the zoom direction during drag, mirroring tap behavior
             if interaction.modifiers.contains(.option) {
@@ -50,8 +49,7 @@ public struct ZoomTool: CanvasTool {
             let factor = ZoomComputation.factorFromPoints(
               from: fromPoint,
               to: toPoint,
-              weights: .upRight,
-              sensitivity: 200
+              weights: .upRight
             )
             var new = currentTransform
             new.scale *= factor
@@ -77,3 +75,4 @@ public struct ZoomTool: CanvasTool {
     context.modifiers.contains(.option) ? .zoomOut : .zoomIn
   }
 }
+

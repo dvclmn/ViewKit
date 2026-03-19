@@ -9,8 +9,13 @@ import SwiftUI
 
 /// Shared utilities for mapping pointer deltas to multiplicative zoom factors.
 ///
-/// The mapping is linear-to-multiplicative: factor = 1 + contribution / sensitivity
-/// with a minimum floor to keep the factor positive and stable.
+/// The mapping uses a user-facing sensitivity on a 0...1 scale:
+/// - 0 = not sensitive,
+/// - 1 = highly sensitive.
+///
+/// The factor is computed as:
+/// factor = 1 + contribution * perPoint
+/// where perPoint = sensitivity * maxPerPoint.
 ///
 /// Choose weights to control how horizontal and vertical movement contribute:
 /// - `.upRight`: right (+x) and up (-y) increase zoom; left and down decrease.
@@ -21,13 +26,12 @@ enum ZoomComputation {
   struct Weights {
     let x: CGFloat
     let y: CGFloat
-    
+
     /// Right (+x) and up (-y) increase zoom.
     static let upRight = Weights(x: 1, y: -1)
     /// Vertical-only: down (+y) increases zoom, up decreases.
     static let vertical = Weights(x: 0, y: 1)
   }
-
 
   // MARK: Factor computation
 
@@ -35,17 +39,22 @@ enum ZoomComputation {
   /// - Parameters:
   ///   - delta: A CGSize delta in screen space.
   ///   - weights: Axis contribution weights.
-  ///   - sensitivity: Larger = gentler; `1 / sensitivity` is the per-point zoom change.
+  ///   - sensitivity: User-facing sensitivity from 0 (not sensitive) to 1 (highly sensitive).
+  ///   - maxPerPoint: Maximum per-point zoom factor contribution.
   ///   - minFactor: Lower bound to keep factor positive.
   /// - Returns: A positive factor suitable for multiplicative scaling.
   static func factorFromDelta(
     _ delta: CGSize,
     weights: Weights = .upRight,
-    sensitivity: CGFloat = 200,
+    sensitivity: CGFloat = 1.0,
+    maxPerPoint: CGFloat = 0.005,
     minFactor: CGFloat = 0.1
   ) -> CGFloat {
     let contribution = (delta.width * weights.x) + (delta.height * weights.y)
-    let raw = 1.0 + (contribution / sensitivity)
+    /// Clamp user-facing sensitivity to 0...1, then scale by maxPerPoint to get per-point gain
+    let clamped = max(0, min(1, sensitivity))
+    let perPoint = clamped * maxPerPoint
+    let raw = 1.0 + (contribution * perPoint)
     return max(raw, minFactor)
   }
 
@@ -54,10 +63,17 @@ enum ZoomComputation {
     from: CGPoint,
     to: CGPoint,
     weights: Weights = .upRight,
-    sensitivity: CGFloat = 200,
+    sensitivity: CGFloat = 1.0,
+    maxPerPoint: CGFloat = 0.005,
     minFactor: CGFloat = 0.1
   ) -> CGFloat {
     let delta = CGSize(width: to.x - from.x, height: to.y - from.y)
-    return factorFromDelta(delta, weights: weights, sensitivity: sensitivity, minFactor: minFactor)
+    return factorFromDelta(
+      delta,
+      weights: weights,
+      sensitivity: sensitivity,
+      maxPerPoint: maxPerPoint,
+      minFactor: minFactor
+    )
   }
 }
