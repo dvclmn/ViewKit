@@ -9,7 +9,7 @@ import Foundation
 
 /// This is an improvement over the previous CGRect, which was
 /// trying to wear too many hats
-public enum PointerDragPayload: Sendable {
+public enum PointerDragPayload: Sendable, Equatable {
   /// For panning/continuous
   case delta(Size<ScreenSpace>, location: Point<ScreenSpace>)
 
@@ -17,11 +17,11 @@ public enum PointerDragPayload: Sendable {
   case rect(from: Point<ScreenSpace>, current: Point<ScreenSpace>)
 }
 
-extension PointerDragPayload {
-  var boundingRect: CGRect? {
-    switch self {
-      case .rect(let from, let current): /* compute bounding box */
-      case .delta(let size, _): /* possibly return CGRect(origin: .zero, size: size.cgSize) */
-    }
-  }
-}
+//extension PointerDragPayload {
+//  var boundingRect: CGRect? {
+//    switch self {
+//      case .delta(let size, _): /* possibly return CGRect(origin: .zero, size: size.cgSize) */
+//      case .rect(let from, let current): /* compute bounding box */
+//    }
+//  }
+//}
