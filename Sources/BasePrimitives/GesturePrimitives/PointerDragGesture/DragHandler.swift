@@ -11,33 +11,54 @@ import SwiftUI
 final class DragHandler {
   var dragState: DragGestureState
   var internalPayload: PointerDragPayload?
-  
+//  let externalPayload: Binding<PointerDragPayload?>?
+
   /// Legacy, not sure if still needed
-  var internalRect: CGRect?
-  
+//  var internalRect: CGRect?
+//  var externalRect: Binding<CGRect?>?
+
   var isGesturing: Bool = false
   let writesBackToBinding: Bool
   let coordinateSpace: CoordinateSpace
   let minimumDragDistance: CGFloat
   var didUpdateEvent: DragEventUpdate = { _, _ in }
-  
+
   init(
-    dragState: DragGestureState,
+//    externalPayload: Binding<PointerDragPayload?>?,
     internalPayload: PointerDragPayload?,
-    writesBackToBinding: Bool,
-    coordinateSpace: CoordinateSpace,
-    minimumDragDistance: CGFloat
-//    internalRect: CGRect?
+    dragState: DragGestureState,
+//    writesBackToBinding: Bool,
+//    coordinateSpace: CoordinateSpace,
+//    minimumDragDistance: CGFloat
+      //    internalRect: CGRect?
   ) {
-    self.dragState = dragState
+//    self.externalPayload = externalPayload
     self.internalPayload = internalPayload
-    self.writesBackToBinding = writesBackToBinding
-    self.coordinateSpace = coordinateSpace
-    self.minimumDragDistance = minimumDragDistance
-//    self.internalRect = internalRect
+    self.dragState = dragState
+//    self.writesBackToBinding = writesBackToBinding
+//    self.coordinateSpace = coordinateSpace
+//    self.minimumDragDistance = minimumDragDistance
+
   }
 }
 
 extension DragHandler {
+  /// Writes the rect to internal state and, in Mode A, back to the binding.
+  func commitPayload(_ payload: PointerDragPayload?) {
+//    internalRect = payload?.boundingRect
+    internalPayload = payload
+
+    if writesBackToBinding {
+      externalPayload?.wrappedValue = payload
+//      externalRect?.wrappedValue = payload?.boundingRect
+    }
+  }
+  //  func commitRect(_ rect: CGRect?) {
+  //    store.internalRect = rect
+  //    if store.writesBackToBinding {
+  //      externalRect?.wrappedValue = rect
+  //    }
+  //  }
+
   var behaviour: DragBehavior { dragState.behaviour }
 }

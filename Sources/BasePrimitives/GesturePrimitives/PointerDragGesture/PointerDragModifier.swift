@@ -25,7 +25,8 @@ public struct PointerDragModifier: ViewModifier {
   )
   /// External state to observe. In Mode A this is read-write (the modifier
   /// writes back via ``commitRect``). In Mode B this is read-only (sync only).
-  private let externalRect: Binding<CGRect?>?
+  private let externalPayload: Binding<CGRect?>?
+//  private let externalRect: Binding<CGRect?>?
 
   /// When `true`, ``commitRect`` writes to ``externalRect`` (Mode A).
   /// When `false`, the modifier only updates ``internalRect`` (Mode B).
@@ -58,11 +59,12 @@ public struct PointerDragModifier: ViewModifier {
 
     self._store = State(
       initialValue: DragHandler(
+        externalPayload: payload,
+        internalPayload: <#T##PointerDragPayload?#>
         dragState: DragGestureState(behaviour),
-        internalPayload: payload?.wrappedValue,
         writesBackToBinding: writesBackToBinding,
         coordinateSpace: coordinateSpace,
-        minimumDragDistance: minimumDistance
+        minimumDragDistance: minimumDistance,
       )
     )
     //    self._dragState = State(initialValue: DragGestureState(behaviour))
@@ -79,7 +81,7 @@ public struct PointerDragModifier: ViewModifier {
       .onChange(of: store.behaviour) { _, newValue in
         store.dragState.behaviour = newValue
         store.dragState.end()
-        commitRect(nil)
+        store.commitRect(nil)
       }
 
       .onChange(of: externalRect?.wrappedValue) { _, newValue in
@@ -97,12 +99,6 @@ extension PointerDragModifier {
   private var isMarqueeRectEnabled: Bool { store.behaviour.isMarquee }
 //  private var isMarqueeRectEnabled: Bool { behaviour.isMarquee && drawsMarqueeRect }
 
-  /// Writes the rect to internal state and, in Mode A, back to the binding.
-  private func commitRect(_ rect: CGRect?) {
-    store.internalRect = rect
-    if store.writesBackToBinding {
-      externalRect?.wrappedValue = rect
-    }
-  }
+
 
 }

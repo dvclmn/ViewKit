@@ -53,7 +53,7 @@ import SwiftUI
 //}
 
 /// Callback receiving full ``DragGestureEvent`` context plus phase.
-public typealias DragEventUpdate = (PointerDragPayload, InteractionPhase) -> Void
+public typealias DragEventUpdate = (PointerDragPayload?, InteractionPhase) -> Void
 //public typealias DragEventUpdate = (DragGestureEvent, InteractionPhase) -> Void
 
 /// Simplified callback receiving just the proposed rect and phase.
