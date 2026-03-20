@@ -26,15 +26,15 @@ public struct PanTool: CanvasTool {
     context: InteractionContext,
     currentTransform: TransformState
   ) -> ToolResolution {
+
     switch context.source {
       case .pointerDragGesture(let payload):
-
         switch payload {
           case .delta(let delta, _):
-            var new = currentTransform
-            new.translation += delta
-
-            return .canvasAdjustment(.updateTransform(new))
+            //            var new = currentTransform
+            //            new.translation += delta
+            let new = currentTransform.translation + delta
+            return .canvasAdjustment(.updateTranslation(new))
 
           case .rect(_, _):
             print("Not sure if this is right")

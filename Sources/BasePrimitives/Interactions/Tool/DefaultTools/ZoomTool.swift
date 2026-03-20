@@ -44,14 +44,15 @@ extension ZoomTool {
           payload,
           modifiers: context.modifiers,
           //          interaction: interaction,
-          transform: currentTransform
+          currentTransform: currentTransform
         )
 
       case .pointerTapGesture(_, _):
         let step = context.modifiers.contains(.option) ? 0.8 : 1.25
-        var new = currentTransform
-        new.scale *= step
-        return .canvasAdjustment(.updateTransform(new))
+        //        var new = currentTransform
+        //        new.scale *= step
+        let new = currentTransform.scale * step
+        return .canvasAdjustment(.updateScale(new))
 
       default:
         return .none
@@ -65,7 +66,7 @@ extension ZoomTool {
     _ payload: PointerDragPayload,
     modifiers: Modifiers,
     //    interaction: Interaction,
-    transform: TransformState
+    currentTransform: TransformState
   ) -> ToolResolution {
 
     switch payload {
@@ -79,21 +80,22 @@ extension ZoomTool {
         if modifiers.contains(.option) {
           factor = 1 / max(factor, 0.0001)
         }
-        var new = transform
-        new.scale *= factor
-        return .canvasAdjustment(.updateTransform(new))
+        //        var new = transform
+        //        new.scale *= factor
+        let new = currentTransform.scale * factor
+        return .canvasAdjustment(.updateScale(new))
 
       case .rect(let from, let current):
-        let fromPoint = from.cgPoint
-        let toPoint = current.cgPoint
+
         let factor = ZoomComputation.factorFromPoints(
-          from: fromPoint,
-          to: toPoint,
+          from: from.cgPoint,
+          to: current.cgPoint,
           weights: .upRight
         )
-        var new = transform
-        new.scale *= factor
-        return .canvasAdjustment(.updateTransform(new))
+        //        var new = currentTransform
+        //        new.scale *= factor
+        let new = currentTransform.scale * factor
+        return .canvasAdjustment(.updateScale(new))
 
     }
   }

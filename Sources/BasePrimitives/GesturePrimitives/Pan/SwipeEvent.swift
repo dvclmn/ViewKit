@@ -16,7 +16,9 @@ public struct SwipeEvent {
   public let modifiers: Modifiers
 }
 
-//extension SwipeEvent {
+extension SwipeEvent {
+  public var isSwiping: Bool { phase.isActive }
+}
 //  public var interaction: Interaction {
 //    .init(
 //      kind: .swiping(delta: delta, location: location),

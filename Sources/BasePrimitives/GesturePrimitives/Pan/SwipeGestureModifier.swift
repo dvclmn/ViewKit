@@ -11,6 +11,8 @@ import SwiftUI
 
 public struct SwipeGestureModifier: ViewModifier {
 
+  @State private var modifiers: Modifiers = []
+
   let isEnabled: Bool
   let onSwipeGesture: SwipeOutput
 
@@ -18,8 +20,14 @@ public struct SwipeGestureModifier: ViewModifier {
     content
       .overlay {
         if isEnabled {
-          SwipeGestureView(onSwipeGesture)
+          SwipeGestureView { event in
+            modifiers = event.modifiers
+          }
+          //          SwipeGestureView(onSwipeGesture)
+          .environment(\.modifierKeys, [])
+//          .environment(\.modifierKeys, modifiers)
         }
+        
       }
   }
 }
