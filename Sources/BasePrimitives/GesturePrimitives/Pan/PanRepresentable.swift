@@ -7,7 +7,6 @@
 
 #if canImport(AppKit)
 import SwiftUI
-import BasePrimitives
 
 public struct SwipeGestureView: NSViewRepresentable {
   let onSwipeGesture: SwipeOutput

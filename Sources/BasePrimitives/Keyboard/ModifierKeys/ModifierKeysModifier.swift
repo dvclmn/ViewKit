@@ -28,34 +28,65 @@ import SwiftUI
 public struct ModifierKeysModifier: ViewModifier {
 
   @State private var modifierKeys = Modifiers()
+  @State private var flagsChangedMonitor: Any?
+  @State private var scrollWheelMonitor: Any?
 
   let defaultKeys: EventModifiers = [.command, .shift, .option, .control, .capsLock]
 
   let keysToWatch: EventModifiers?
   public func body(content: Content) -> some View {
 
-    if #available(macOS 15, iOS 18, *) {
-      content
-        .onModifierKeysChanged(mask: keysToWatch ?? defaultKeys, initial: true) { old, new in
-          self.modifierKeys = Modifiers(from: new)
-        }
-        .environment(\.modifierKeys, modifierKeys)
+    let mask = keysToWatch ?? defaultKeys
 
-    } else {
-      #if canImport(AppKit)
-      content
-        .onAppear {
-          NSEvent.addLocalMonitorForEvents(matching: [.flagsChanged]) { event in
-            self.modifierKeys = Modifiers(from: event)
-            return event
-          }
+    let base = content
+      .onAppear { startMonitoringIfNeeded(mask: mask) }
+      .onDisappear { stopMonitoring() }
+      .environment(\.modifierKeys, modifierKeys)
+
+    if #available(macOS 15, iOS 18, *) {
+      base
+        .onModifierKeysChanged(mask: mask, initial: true) { _, new in
+          updateModifiers(Modifiers(from: new), mask: mask)
         }
-        .environment(\.modifierKeys, modifierKeys)
-      #else
-      content
-      #endif
+    } else {
+      base
     }
 
+  }
+
+  private func startMonitoringIfNeeded(mask: EventModifiers) {
+    if flagsChangedMonitor == nil {
+      flagsChangedMonitor = NSEvent.addLocalMonitorForEvents(matching: [.flagsChanged]) { event in
+        updateModifiers(Modifiers(from: event), mask: mask)
+        return event
+      }
+    }
+
+    // SwiftUI's modifier-key updates don't reliably fire during scroll/trackpad gestures.
+    // Keep the env value in sync using the modifiers attached to scroll events.
+    if scrollWheelMonitor == nil {
+      scrollWheelMonitor = NSEvent.addLocalMonitorForEvents(matching: [.scrollWheel]) { event in
+        updateModifiers(Modifiers(from: event), mask: mask)
+        return event
+      }
+    }
+  }
+
+  private func stopMonitoring() {
+    if let flagsChangedMonitor {
+      NSEvent.removeMonitor(flagsChangedMonitor)
+      self.flagsChangedMonitor = nil
+    }
+    if let scrollWheelMonitor {
+      NSEvent.removeMonitor(scrollWheelMonitor)
+      self.scrollWheelMonitor = nil
+    }
+  }
+
+  private func updateModifiers(_ modifiers: Modifiers, mask: EventModifiers) {
+    let masked = modifiers.intersection(Modifiers(from: mask))
+    guard masked != modifierKeys else { return }
+    modifierKeys = masked
   }
 }
 
