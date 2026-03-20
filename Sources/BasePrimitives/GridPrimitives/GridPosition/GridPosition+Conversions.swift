@@ -17,22 +17,38 @@ extension GridPosition {
       y: CGFloat(row) * unitSize.height
     )
   }
+
+  public func toUnitPoint(in grid: GridDimensions) -> UnitPoint {
+    /// Map discrete grid coordinates to a continuous UnitPoint in [0, 1].
+    /// Interpret (column, row) as the top-left corner of the cell and map to the cell center.
+    /// Handle degenerate grids (zero width/height) by returning .zero to avoid division by zero.
+    let width = max(grid.width, 1)
+    let height = max(grid.height, 1)
+
+    /// Clamp to valid indices to keep UnitPoint within [0, 1].
+    let clampedColumn = min(max(column, 0), width - 1)
+    let clampedRow = min(max(row, 0), height - 1)
+
+    /// Normalise to [0, 1] using cell centers. For N columns, centers are at (0.5/N, 1.5/N, ..., (N-0.5)/N).
+    let x = (CGFloat(clampedColumn) + 0.5) / CGFloat(width)
+    let y = (CGFloat(clampedRow) + 0.5) / CGFloat(height)
+
+    return UnitPoint(x: x, y: y)
+  }
+
   public func toUnitPoint(using unitSize: CGSize) -> UnitPoint? {
     guard let x = row.toScreenLength(using: unitSize.width),
       let y = column.toScreenLength(using: unitSize.height)
     else { return nil }
-    return UnitPoint(
-      x: x,
-      y: y
-    )
+    return UnitPoint(x: x, y: y)
   }
 
-  public func toCGRect(cellSize: CGSize) -> CGRect {
+  public func toCGRect(using unitSize: CGSize) -> CGRect {
     CGRect(
-      x: CGFloat(column) * cellSize.width,
-      y: CGFloat(row) * cellSize.height,
-      width: cellSize.width,
-      height: cellSize.height
+      x: CGFloat(column) * unitSize.width,
+      y: CGFloat(row) * unitSize.height,
+      width: unitSize.width,
+      height: unitSize.height
     )
   }
 
@@ -40,6 +56,8 @@ extension GridPosition {
     row * columns + column
   }
 }
+
+// MARK: - UnitPoint
 
 extension UnitPoint {
   public func toGridPosition(
@@ -58,13 +76,13 @@ extension UnitPoint {
 
 }
 
+// MARK: - CGPoint
+
 extension CGPoint {
 
   /// Returns the row and column index for a global pointer location
   /// Returns nil if the pointer is outside the grid boundaries
-  public func gridPosition(
-    geometry: GridGeometry
-  ) -> GridPosition? {
+  public func gridPosition(in geometry: GridGeometry) -> GridPosition? {
     guard
       geometry.dimensions.contains(
         point: self,

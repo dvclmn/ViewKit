@@ -6,16 +6,36 @@
 //
 
 public func + (lhs: GridPosition, rhs: GridPosition) -> GridPosition {
-  return GridPosition(column: lhs.column + rhs.column, row: lhs.row + rhs.row)
+  GridPosition(
+    column: lhs.column + rhs.column,
+    row: lhs.row + rhs.row
+  )
 }
 
+public func - (lhs: GridPosition, rhs: GridPosition) -> GridPosition {
+  GridPosition(
+    column: lhs.column - rhs.column,
+    row: lhs.row - rhs.row
+  )
+}
+
+/// Assumes Row-major ordering
 extension GridPosition: Comparable {
-  
+
   public static func < (lhs: Self, rhs: Self) -> Bool {
     (lhs.row, lhs.column) < (rhs.row, rhs.column)
   }
+
+  public static func > (lhs: Self, rhs: Self) -> Bool {
+    (lhs.row, lhs.column) > (rhs.row, rhs.column)
+  }
+
+  public static func >= (lhs: Self, rhs: Self) -> Bool {
+    (lhs.row, lhs.column) >= (rhs.row, rhs.column)
+  }
   
-  //  public static func < (lhs: GridPosition, rhs: GridPosition) -> Bool {
-  //    return (lhs.row < rhs.row) || ((lhs.row == rhs.row) && (lhs.column < rhs.column))
-  //  }
+  public static func <= (lhs: Self, rhs: Self) -> Bool {
+    (lhs.row, lhs.column) <= (rhs.row, rhs.column)
+  }
+
 }

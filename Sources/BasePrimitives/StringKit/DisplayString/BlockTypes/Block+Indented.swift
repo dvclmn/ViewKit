@@ -29,8 +29,6 @@ extension Indented {
     }
     self.init(title: indentedLines.title, content: blocks)
   }
-  //extension Indented: DisplayRenderable {
-
   public func render(
     labelStyle: AbbreviableLabel.Style = .standard,
     using format: FloatDisplayFormat
@@ -56,61 +54,4 @@ extension Indented {
     var builder = IndentedLineBuilder(indent: indent)
     return builder.build(from: content)
   }
-}
-
-private struct IndentedLineBuilder {
-  let indent: String
-
-  /// Hard coded for now
-  let glyphStyle: IndentGlyphStyle = .rounded
-
-  mutating func build(from elements: [String]) -> [String] {
-    var result: [String] = []
-    for (index, element) in elements.enumerated() {
-      let isLast = index == elements.count - 1
-      let lines = element.lines()
-      let prefixChar = (index == 0) ? (isLast ? "└─" : "├─") : (isLast ? "└─" : "├─")
-      for (lineIndex, line) in lines.enumerated() {
-        if lineIndex == 0 {
-          result.append(prefixChar + " " + line)
-        } else {
-          let continuationChar = isLast ? " " : "│"
-          result.append(continuationChar + indent + line)
-        }
-      }
-    }
-    return result
-  }
-}
-
-enum IndentGlyphStyle {
-  case standard
-  case rounded
-
-  var glyphs: IndentGlyphs {
-    switch self {
-      case .standard:
-        IndentGlyphs(
-          corner: "└",
-          join: "├",
-          horizontal: "─",
-          vertical: "│"
-        )
-      case .rounded:
-        IndentGlyphs(
-          corner: "╰",
-          join: "├",
-          horizontal: "─",
-          vertical: "│"
-        )
-    }
-  }
-
-}
-
-struct IndentGlyphs {
-  let corner: Character
-  let join: Character
-  let horizontal: Character
-  let vertical: Character
 }

@@ -26,15 +26,6 @@ public struct GridProjection: Equatable, Sendable {
   }
 }
 
-extension GridProjection: CustomStringConvertible {
-  public var description: String {
-    DisplayString {
-      Labeled("Unit Size", value: unitSize.displayString(.concise))
-      Labeled("Rounding", value: rounding.name)
-    }.text
-  }
-}
-
 extension GridProjection {
 
   /// Converts Canvas space (continuous) to Grid space (discrete).
@@ -97,5 +88,14 @@ extension GridProjection {
   ) -> GridDimensions? {
     let strategy = rounding ?? self.rounding
     return canvasSize.toGridDimensions(using: unitSize, rounding: strategy)
+  }
+}
+
+extension GridProjection: CustomStringConvertible {
+  public var description: String {
+    DisplayString {
+      Labeled("Unit Size", value: unitSize.displayString(.concise))
+      Labeled("Rounding", value: rounding.name)
+    }.text
   }
 }

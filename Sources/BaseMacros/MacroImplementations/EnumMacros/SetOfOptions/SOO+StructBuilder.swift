@@ -51,7 +51,7 @@ struct SetOfOptionsBuilder {
 extension SetOfOptionsBuilder {
 
   var access: String { parentStruct.accessLevel?.name ?? "" }
-  
+
   func build() -> [DeclSyntax] {
     let result: [DeclSyntax] =
       rawValueMethods()
@@ -77,7 +77,7 @@ extension SetOfOptionsBuilder {
 
   func rawValueMethods() -> [DeclSyntax] {
     [
-      
+
       "\(raw: access) let rawValue: \(rawType)",
       "\(raw: access) init(rawValue: \(rawType)) { self.rawValue = rawValue }",
     ]
@@ -97,7 +97,8 @@ extension SetOfOptionsBuilder {
       \(access) func stringValueJoined(isSnakeCase: Bool = false) -> String {
         var strings: [String] = []
         \(thingy)
-        return strings.joined(separator: ", ")
+      let joined = strings.joined(separator: ", ") 
+        return "[" + joined + "]"
       }
       """
       .toDeclSyntax
@@ -118,11 +119,11 @@ extension SetOfOptionsBuilder {
         let camel = element.name
         let snake = camel.camelCaseToSnakeCase
 
-        // If both versions are identical, just return the raw string literal.
+        /// If both versions are identical, just return the raw string literal.
         if camel == snake {
           return "\"\(camel)\""
         }
-        // Otherwise, return the ternary expression only; the preset supplies the `case .name:` prefix.
+        /// Otherwise, return the ternary expression only; the preset supplies the `case .name:` prefix.
         return "isSnakeCase ? \"\(snake)\" : \"\(camel)\""
       }
     )
@@ -143,7 +144,6 @@ extension SetOfOptionsBuilder {
 
 extension Enum {
   func optionSetStringBuilder(
-    //    enumName: TokenSyntax,
     snakeConditional: String
   ) -> String {
     let enumName = identifier

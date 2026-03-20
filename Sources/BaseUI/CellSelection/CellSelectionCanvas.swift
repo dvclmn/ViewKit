@@ -26,9 +26,7 @@ struct CellSelectionCanvas: View {
     Canvas(
       opaque: true,
       rendersAsynchronously: true
-    ) {
-      context,
-      size in
+    ) { context, size in
 
       context.fillCanvas(with: canvasBackground, in: size)
 
@@ -41,28 +39,7 @@ struct CellSelectionCanvas: View {
         drawsBorder: false
       )
 
-      //      context.debugEnvironmentViewportRect(in: size)
-
-      // MARK: - Selection Box
-      guard isCellSelectionEnabled else { return }
-      guard let rect = selectionRect,
-        let gridDimensions,
-        let hoverPos = pointerGridPosition
-      else { return }
-
-      let radii = rectRadii(
-        dimensions: gridDimensions,
-        position: hoverPos
-      )
-
-      let path = Path(roundedRect: rect, cornerRadii: radii)
-
-      context.fillAndStroke(
-        path,
-        fillColour: .cyan.opacity(0.25),
-        strokeColour: .blue.opacity(0.8),
-        strokeThickness: 1
-      )
+      drawSelectionBox(context)
 
     }  // END canvas
   }
@@ -70,10 +47,31 @@ struct CellSelectionCanvas: View {
 
 extension CellSelectionCanvas {
 
+  private func drawSelectionBox(_ context: GraphicsContext) {
+    guard isCellSelectionEnabled else { return }
+    guard let rect = selectionRect,
+      let gridDimensions,
+      let hoverPos = pointerGridPosition
+    else { return }
+
+    let radii = rectRadii(
+      dimensions: gridDimensions,
+      position: hoverPos
+    )
+
+    let path = Path(roundedRect: rect, cornerRadii: radii)
+
+    context.fillAndStroke(
+      path,
+      fillColour: .cyan.opacity(0.25),
+      strokeColour: .blue.opacity(0.8),
+      strokeThickness: 1
+    )
+  }
+
   private var selectionRect: CGRect? {
     guard let position = pointerGridPosition else { return nil }
     guard let cellSize = gridGeometry?.projection.unitSize else { return nil }
-    //    guard let cellSize = geometry?.projection.unitSize else { return nil }
 
     let originX = CGFloat(position.column) * cellSize.width
     let originY = CGFloat(position.row) * cellSize.height

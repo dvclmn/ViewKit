@@ -35,7 +35,8 @@ extension CanvasInputPolicy: CustomStringConvertible {
   public var description: String {
     DisplayString {
       Indented {
-        Labeled("Active Inputs", value: "[" + activeInputs.stringValueJoined() + "]")
+        Labeled("Active Inputs", value: activeInputs.stringValueJoined())
+//        Labeled("Active Inputs", value: "[" + activeInputs.stringValueJoined() + "]")
         Labeled("Drag behaviour", value: dragBehaviour.name)
       }
     }.text

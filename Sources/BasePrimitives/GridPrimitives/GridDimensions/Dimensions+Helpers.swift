@@ -7,37 +7,10 @@
 
 import Foundation
 
-// MARK: - Containment Methods
-extension GridDimensions {
-
-  public var doubled: GridDimensions {
-    GridDimensions(width: width * 2, height: height * 2)
-  }
-
-  /// Checks if a point (in canvas/screen coordinates) falls within the grid bounds.
-  public func contains(
-    point: CGPoint,
-    unitSize: CGSize
-  ) -> Bool {
-    guard let size = toScreenSize(using: unitSize)
-    else { return false }
-
-    return point.x >= 0
-      && point.y >= 0
-      && point.x < size.width
-      && point.y < size.height
-  }
-  /// Checks if a grid position is within valid bounds
-  public func contains(position: GridPosition) -> Bool {
-    return position.column >= 0
-      && position.row >= 0
-      && position.column < width
-      && position.row < height
-  }
-}
 
 // MARK: - Size Calculations
 extension GridDimensions {
+  public var doubled: GridDimensions { self * 2 }
 
   public func toScreenSize(using unitSize: CGSize) -> CGSize? {
     guard

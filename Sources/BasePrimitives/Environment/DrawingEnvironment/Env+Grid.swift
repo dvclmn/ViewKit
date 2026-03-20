@@ -14,21 +14,21 @@ extension EnvironmentValues {
   @Entry public var isShowingCellNumbers: Bool = false
   @Entry public var gridLineColour: Color = .cyan.opacity(0.17)
   @Entry public var gridLineWidth: CGFloat = 1.0
-  
+
   @Entry public var isCellSelectionEnabled: Bool = true
 
   public var pointerGridPosition: GridPosition? {
     guard let gridGeometry else {
-//      printMissing("gridGeometry", for: "pointerGridPosition")
+      //      printMissing("gridGeometry", for: "pointerGridPosition")
       return nil
     }
 
     guard let pointerLocation else {
-//      printMissing("pointerLocation", for: "pointerGridPosition")
+      //      printMissing("pointerLocation", for: "pointerGridPosition")
       return nil
     }
 
-    return pointerLocation.gridPosition(geometry: gridGeometry)
+    return pointerLocation.gridPosition(in: gridGeometry)
   }
 
   /// Note: This hard-codes / assumes `unitSize` (not `asciiUnitSize` nor
