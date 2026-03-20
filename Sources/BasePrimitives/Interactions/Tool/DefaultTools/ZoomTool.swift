@@ -51,7 +51,7 @@ extension ZoomTool {
         let step = context.modifiers.contains(.option) ? 0.8 : 1.25
         var new = currentTransform
         new.scale *= step
-        return .canvasAdjustment(.mutateTransform(new))
+        return .canvasAdjustment(.updateTransform(new))
 
       default:
         return .none
@@ -81,7 +81,7 @@ extension ZoomTool {
         }
         var new = transform
         new.scale *= factor
-        return .canvasAdjustment(.mutateTransform(new))
+        return .canvasAdjustment(.updateTransform(new))
 
       case .rect(let from, let current):
         let fromPoint = from.cgPoint
@@ -93,7 +93,7 @@ extension ZoomTool {
         )
         var new = transform
         new.scale *= factor
-        return .canvasAdjustment(.mutateTransform(new))
+        return .canvasAdjustment(.updateTransform(new))
 
     }
   }

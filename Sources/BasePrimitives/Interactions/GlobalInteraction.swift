@@ -12,30 +12,34 @@ struct GlobalInteraction {
     _ source: InteractionSource,
     zoomRange: ClosedRange<Double>,
     modifiers: Modifiers,
-    transform: inout TransformState,
-    pointer: inout PointerState,
-  ) {
+    currentTransform: TransformState,
+    //    transform: inout TransformState,
+    //    pointer: inout PointerState,
+  ) -> CanvasAdjustment {
 
     switch source {
       case .swipeGesture(let delta, _):
-        handleSwipe(
+        return handleSwipe(
           delta: delta,
           zoomRange: zoomRange,
           modifiers: modifiers,
-          transform: &transform
+          currentTransform: currentTransform
         )
 
       case .pinchGesture(let scale):
-        transform.scale = scale
+        var new = currentTransform
+        new.scale = scale
+        return .updateTransform(new)
 
       case .continuousHover(let point):
-        pointer.hover = point
+        //        pointer.hover = point
+        return .updatePointerHover(point)
 
       case .pointerTapGesture, .pointerDragGesture:
         /// Pointer events are handled on a per-Tool basis, so break here
         /// to fall through to `handlePointerInteraction`
         /// in `CanvasInteractionState`
-        break
+        return .none
     }
   }
 
@@ -43,8 +47,11 @@ struct GlobalInteraction {
     delta: Size<ScreenSpace>,
     zoomRange: ClosedRange<Double>,
     modifiers: Modifiers,
-    transform: inout TransformState,
-  ) {
+    currentTransform: TransformState,
+    //    transform: inout TransformState,
+  ) -> CanvasAdjustment {
+
+    var new = currentTransform
 
     /// If Option is held during a Swipe, it is interpreted as Zoom, not Pan
     if modifiers.contains(.option) {
@@ -54,15 +61,14 @@ struct GlobalInteraction {
         CGSize(width: 0, height: delta.cgSize.height),
         weights: .vertical
       )
-      var new = transform
-      let newScale = transform.scale * factor
+
+      let newScale = currentTransform.scale * factor
       new.scale = newScale.clamped(to: zoomRange)
-      transform = new
 
     } else {
-      var new = transform
       new.translation += delta
-      transform = new
+
     }
+    return .updateTransform(new)
   }
 }

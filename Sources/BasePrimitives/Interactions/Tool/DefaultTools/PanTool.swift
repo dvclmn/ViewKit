@@ -34,7 +34,7 @@ public struct PanTool: CanvasTool {
             var new = currentTransform
             new.translation += delta
 
-            return .canvasAdjustment(.mutateTransform(new))
+            return .canvasAdjustment(.updateTransform(new))
 
           case .rect(_, _):
             print("Not sure if this is right")

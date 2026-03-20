@@ -14,13 +14,13 @@ import Foundation
 /// outputs (e.g. "place a shape", "commit a stroke") go through
 /// `ToolAction` instead.
 ///
-/// Note: Global gestures (pan via swipe, zoom via pinch, hover)
-/// are handled centrally in `handleInput()` and never produce
-/// a `CanvasAdjustment` from a tool.
+/// Note: Could consider either wrapping up pointer state just like
+/// `updateTransform` is, or breaking out `updateTransform`
+/// into three like these pointer cases
 public enum CanvasAdjustment: Sendable {
 
   /// Replace the entire transform state (pan, zoom, rotation).
-  case mutateTransform(TransformState)
+  case updateTransform(TransformState)
 
   /// Update the pointer drag rectangle (e.g. marquee selection,
   /// or a tool-driven drag region).
@@ -28,6 +28,7 @@ public enum CanvasAdjustment: Sendable {
 
   /// Update the pointer tap location.
   case updatePointerTap(Point<ScreenSpace>?)
+  case updatePointerHover(Point<ScreenSpace>?)
 
   /// No canvas state change needed.
   case none

@@ -73,9 +73,10 @@ extension CanvasInteractionState {
 
   private func execute(_ adjustment: CanvasAdjustment) {
     switch adjustment {
-      case .mutateTransform(let transform): self.transform = transform
+      case .updateTransform(let transform): self.transform = transform
       case .updatePointerDrag(let rect): self.pointer.drag = rect
       case .updatePointerTap(let point): self.pointer.tap = point
+      case .updatePointerHover(let point): self.pointer.hover = point
       case .none: break
     }
   }
