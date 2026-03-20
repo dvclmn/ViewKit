@@ -46,7 +46,8 @@ extension ZoomTool {
 
       case .pointerTapGesture(_, _):
         let step = context.modifiers.contains(.option) ? 0.8 : 1.25
-        return adjustedZoom(currentTransform, by: step)
+        return .zoomAdjustment(for: currentTransform, by: step)
+      //        return adjustedZoom(currentTransform, by: step)
 
       default:
         return .none
@@ -73,7 +74,8 @@ extension ZoomTool {
         if modifiers.contains(.option) {
           factor = 1 / max(factor, 0.0001)
         }
-        return adjustedZoom(currentTransform, by: factor)
+        return .zoomAdjustment(for: currentTransform, by: factor)
+      //        return adjustedZoom(currentTransform, by: factor)
       //        let new = currentTransform.scale * factor
       //        return .canvasAdjustment(.updateScale(new))
 
@@ -87,16 +89,7 @@ extension ZoomTool {
 
         //        let new = currentTransform.scale * factor
         //        return .canvasAdjustment(.updateScale(new))
-        return adjustedZoom(currentTransform, by: factor)
-
+        return .zoomAdjustment(for: currentTransform, by: factor)
     }
-  }
-
-  private func adjustedZoom(
-    _ currentTransform: TransformState,
-    by factor: CGFloat
-  ) -> ToolResolution {
-    let new = currentTransform.scale * factor
-    return .canvasAdjustment(.updateScale(new))
   }
 }

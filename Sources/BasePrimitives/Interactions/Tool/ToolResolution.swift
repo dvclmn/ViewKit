@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 18/3/2026.
 //
 
+import Foundation
 
 /// The combined result of a tool resolving a pointer interaction.
 ///
@@ -14,7 +15,7 @@
 public struct ToolResolution: Sendable {
   public let adjustment: CanvasAdjustment
   public let action: ToolAction
-  
+
   public init(
     adjustment: CanvasAdjustment = .none,
     action: ToolAction = .none
@@ -22,16 +23,25 @@ public struct ToolResolution: Sendable {
     self.adjustment = adjustment
     self.action = action
   }
-  
+
   /// Convenience for returning just a canvas adjustment with no domain action.
   public static func canvasAdjustment(_ adjustment: CanvasAdjustment) -> Self {
     .init(adjustment: adjustment)
   }
-  
+
+  public static func zoomAdjustment(
+    for transform: TransformState,
+    by factor: CGFloat,
+  ) -> Self {
+    .init(adjustment: .zoomAdjustment(for: transform, by: factor))
+    //    let new = transform.scale * factor
+    //    return .init(adjustment: .updateScale(new), action: .none)
+  }
+
   /// Convenience for returning just a domain action with no canvas change.
   public static func action(_ action: ToolAction) -> Self {
     .init(action: action)
   }
-  
+
   public static let none = Self()
 }

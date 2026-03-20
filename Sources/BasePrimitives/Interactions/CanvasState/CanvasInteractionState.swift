@@ -17,7 +17,7 @@ public final class CanvasInteractionState {
   public var pointer: PointerState = .initial
   public var geometry: CanvasGeometry?
   public var zoomRange: ClosedRange<Double>?
-    public var modifiers: Modifiers = []
+  public var modifiers: Modifiers = []
 
   /// Synced here via the Env
   public var activeTool: (any CanvasTool)?
@@ -49,40 +49,23 @@ extension CanvasInteractionState {
   public func handleInput(
     _ source: InteractionSource,
     phase: InteractionPhase,
-//    modifiers: Modifiers
   ) {
 
     self.source = source
     self.phase = phase
 
-    //    guard let zoomRange else { return }
-
     /// 1 – Global gestures,
-    if let globalAdjustment = GlobalInteraction.handleGlobal(
-      source,
-      //      zoomRange: zoomRange,
-      modifiers: modifiers,
-      currentTransform: transform
-    ) {
+    if let globalAdjustment = handleGlobalInteraction() {
       executeAdjustment(globalAdjustment)
     }
 
     /// 2 – Tool-specific pointer interactions
-    let pointerAdjustment = handlePointerInteraction(
-      source: source,
-      phase: phase,
-//      modifiers: modifiers
-    )
+    let pointerAdjustment = handlePointerInteraction()
     executeAdjustment(pointerAdjustment)
 
   }
 
-  private func handlePointerInteraction(
-    source: InteractionSource,
-    phase: InteractionPhase,
-//    modifiers: Modifiers
-  ) -> CanvasAdjustment {
-
+  private func handlePointerInteraction() -> CanvasAdjustment {
     guard let activeTool else { return .none }
 
     let resolution = activeTool.resolvePointerInteraction(
@@ -97,14 +80,54 @@ extension CanvasInteractionState {
     self.lastToolAction = resolution.action
     return resolution.adjustment
   }
+}
 
-  //  private func interactionContext(modifiers: Modifiers) -> InteractionContext {
-  //
-  //  }
+extension CanvasInteractionState {
+  private func handleGlobalInteraction() -> CanvasAdjustment? {
 
+    guard let source else { return nil }
+
+    switch source {
+      case .swipeGesture(let delta, _):
+        return handleGlobalSwipe(delta: delta)
+
+      case .pinchGesture(let scale):
+        return .updateScale(scale)
+
+      case .continuousHover(let point):
+        return .updatePointerHover(point)
+
+      case .pointerTapGesture, .pointerDragGesture:
+        /// Pointer events are handled on a per-Tool basis, so break here
+        /// to fall through to `handlePointerInteraction`
+        /// in `CanvasInteractionState`
+        return nil
+    }
+  }
+
+  private func handleGlobalSwipe(delta: Size<ScreenSpace>) -> CanvasAdjustment {
+
+    /// If Option is held during a Swipe, it is interpreted as Zoom, not Pan
+    guard modifiers.contains(.option) else {
+      let newTranslation = transform.translation + delta
+      return .updateTranslation(newTranslation)
+    }
+
+    /// Each point contributes up to 0.5% zoom change at sensitivity = 1.0
+    let factor = ZoomComputation.factorFromDelta(
+      CGSize(width: 0, height: delta.cgSize.height),
+      weights: .vertical
+    )
+
+    //    let newScale = transform.scale * factor
+    //    return .updateScale(newScale)
+    return .zoomAdjustment(for: transform, by: factor)
+
+  }
+}
+extension CanvasInteractionState {
   private func executeAdjustment(_ adjustment: CanvasAdjustment) {
     switch adjustment {
-      //      case .updateTransform(let transform): self.transform = transform
       case .updateTranslation(let size): self.transform.translation = size
       case .updateScale(let scale): self.transform.scale = scale.clampedIfNeeded(to: zoomRange)
       case .updateRotation(let angle): self.transform.rotation = angle
@@ -125,7 +148,6 @@ extension CanvasInteractionState {
       )
     )
   }
-
 }
 
 // MARK: - Mapping and Snapshot

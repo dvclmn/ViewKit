@@ -35,3 +35,14 @@ public enum CanvasAdjustment: Sendable {
   /// No canvas state change needed.
   case none
 }
+
+extension CanvasAdjustment {
+  public static func zoomAdjustment(
+    for transform: TransformState,
+    by factor: CGFloat,
+  ) -> Self {
+    let new = transform.scale * factor
+    return .updateScale(new)
+//    return .init(adjustment: .updateScale(new), action: .none)
+  }
+}
