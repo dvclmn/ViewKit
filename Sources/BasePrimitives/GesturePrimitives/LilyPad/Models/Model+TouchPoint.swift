@@ -6,7 +6,6 @@
 //
 
 import CoreGraphics
-import BasePrimitives
 import Foundation
 
 /// Example logic for drawing engine

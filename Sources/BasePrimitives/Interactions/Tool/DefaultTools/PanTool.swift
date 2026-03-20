@@ -23,10 +23,11 @@ public struct PanTool: CanvasTool {
   public init() {}
 
   public func resolvePointerInteraction(
-    _ interaction: Interaction,
+    context: InteractionContext,
+//    _ interaction: Interaction,
     currentTransform: TransformState
   ) -> ToolResolution {
-    switch interaction.source {
+    switch context.source {
       case .pointerDragGesture(let payload):
         
         switch payload {
@@ -48,7 +49,7 @@ public struct PanTool: CanvasTool {
   }
 
   public func resolvePointerStyle(
-    context: ToolPointerContext
+    context: InteractionContext
   ) -> PointerStyleCompatible {
     context.isPointerDragging ? .grabActive : .grabIdle
   }

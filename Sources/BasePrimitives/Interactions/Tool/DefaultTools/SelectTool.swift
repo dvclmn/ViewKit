@@ -23,22 +23,23 @@ public struct SelectTool: CanvasTool {
 
   public init() {}
 
-  public func resolvePointerStyle(context: ToolPointerContext) -> PointerStyleCompatible {
+  public func resolvePointerStyle(context: InteractionContext) -> PointerStyleCompatible {
     .default
   }
 
   public func resolvePointerInteraction(
-    _ interaction: Interaction,
+    context: InteractionContext,
+    //    _ interaction: Interaction,
     currentTransform: TransformState
   ) -> ToolResolution {
-    switch interaction.source {
+    switch context.source {
       case .pointerTapGesture(_, let location):
         return .intent(.updatePointerTap(location))
 
       case .pointerDragGesture(let payload):
-//      case .pointerDragGesture(let delta, let location):
-//        let rect = Rect<ScreenSpace>(from: from, to: current)
-//        let rect = Rect<ScreenSpace>(from: from, to: current)
+        //      case .pointerDragGesture(let delta, let location):
+        //        let rect = Rect<ScreenSpace>(from: from, to: current)
+        //        let rect = Rect<ScreenSpace>(from: from, to: current)
         return .intent(.updatePointerDrag(payload.boundingRect))
 
       default:

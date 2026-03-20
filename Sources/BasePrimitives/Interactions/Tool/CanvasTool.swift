@@ -34,7 +34,7 @@ public protocol CanvasTool: Sendable, Identifiable where ID == CanvasToolKind {
   var inputPolicy: CanvasInputPolicy { get }
 
   /// Resolve the pointer style for the current interaction context.
-  func resolvePointerStyle(context: ToolPointerContext) -> PointerStyleCompatible
+  func resolvePointerStyle(context: InteractionContext) -> PointerStyleCompatible
 
   /// Resolve a pointer interaction into a canvas intent and optional domain action.
   ///
@@ -44,7 +44,8 @@ public protocol CanvasTool: Sendable, Identifiable where ID == CanvasToolKind {
   /// This allows a Tool to declare what should happen when it is selected,
   /// and certain interaction events happen
   func resolvePointerInteraction(
-    _ interaction: Interaction,
+    context: InteractionContext,
+//    _ interaction: Interaction,
     currentTransform: TransformState
   ) -> ToolResolution
 }

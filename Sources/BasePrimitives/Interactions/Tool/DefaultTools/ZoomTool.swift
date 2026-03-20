@@ -27,25 +27,28 @@ public struct ZoomTool: CanvasTool {
 extension ZoomTool {
 
   public func resolvePointerStyle(
-    context: ToolPointerContext
+    context: InteractionContext
   ) -> PointerStyleCompatible {
     context.modifiers.contains(.option) ? .zoomOut : .zoomIn
   }
 
   public func resolvePointerInteraction(
-    _ interaction: Interaction,
+    context: InteractionContext,
+    //    source: InteractionSource,
+    //    _ interaction: Interaction,
     currentTransform: TransformState
   ) -> ToolResolution {
-    switch interaction.source {
+    switch context.source {
       case .pointerDragGesture(let payload):
         return handlePointerDrag(
           payload,
-          interaction: interaction,
+          modifiers: context.modifiers,
+          //          interaction: interaction,
           transform: currentTransform
         )
 
       case .pointerTapGesture(_, _):
-        let step = interaction.modifiers.contains(.option) ? 0.8 : 1.25
+        let step = context.modifiers.contains(.option) ? 0.8 : 1.25
         var new = currentTransform
         new.scale *= step
         return .intent(.mutateTransform(new))
@@ -60,7 +63,8 @@ extension ZoomTool {
 extension ZoomTool {
   private func handlePointerDrag(
     _ payload: PointerDragPayload,
-    interaction: Interaction,
+    modifiers: Modifiers,
+    //    interaction: Interaction,
     transform: TransformState
   ) -> ToolResolution {
 
@@ -72,7 +76,7 @@ extension ZoomTool {
           weights: .upRight
         )
         /// Hold Option to invert the zoom direction during drag, mirroring tap behavior
-        if interaction.modifiers.contains(.option) {
+        if modifiers.contains(.option) {
           factor = 1 / max(factor, 0.0001)
         }
         var new = transform

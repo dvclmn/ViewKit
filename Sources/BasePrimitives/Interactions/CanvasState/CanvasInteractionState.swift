@@ -27,9 +27,9 @@ public final class CanvasInteractionState {
   /// (e.g. "select at point", "commit stroke").
   public var lastToolAction: ToolAction = .none
 
-  /// The most recent pointer interaction context.
-  public var lastPointerPhase: InteractionPhase = .none
-  public var lastPointerSource: InteractionSource?
+  /// The most recent interaction context.
+  public var interactionPhase: InteractionPhase = .none
+  public var interactionSource: InteractionSource?
 
   public init() {}
 }
@@ -85,24 +85,15 @@ extension CanvasInteractionState {
     modifiers: Modifiers
   ) {
 
-    guard let geometry, let activeTool else {
-//      print(
-//        "Missing geometry: \(geometry.debugDescription), or activeTool: \(activeTool?.name, default: "nil")"
-//      )
-      return
-    }
+    guard let geometry, let activeTool else { return }
 
-    lastPointerSource = source
-    lastPointerPhase = phase
+    interactionSource = source
+    interactionPhase = phase
 
-    let interaction = Interaction(
-      source: source,
-      geometry: geometry,
-      phase: phase,
-      modifiers: modifiers
+    let resolution = activeTool.resolvePointerInteraction(
+      context: InteractionContext(source: source, phase: phase, modifiers: modifiers),
+      currentTransform: transform
     )
-
-    let resolution = activeTool.resolvePointerInteraction(interaction, currentTransform: transform)
 
     execute(resolution.intent)
     self.lastToolAction = resolution.action
@@ -142,10 +133,10 @@ extension CanvasInteractionState {
 extension CanvasInteractionState {
   public func pointerStyle(with modifiers: Modifiers) -> PointerStyleCompatible? {
     activeTool?.resolvePointerStyle(
-      context: ToolPointerContext(
+      context: InteractionContext(
+        source: interactionSource,
+        phase: interactionPhase,
         modifiers: modifiers,
-        pointerPhase: lastPointerPhase,
-        pointerSource: lastPointerSource
       )
     )
   }

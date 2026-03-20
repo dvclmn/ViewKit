@@ -14,8 +14,6 @@ import SwiftUI
 /// - Pointer Drag when Zoom tool Selected
 public struct TransformState: Sendable, Equatable {
   public var translation: Size<ScreenSpace>
-  
-  
   public var scale: Double
   public var rotation: Angle
   //  public var translation: ContinuousInteraction<CGSize>

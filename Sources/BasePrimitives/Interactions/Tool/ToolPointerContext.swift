@@ -8,32 +8,32 @@
 import Foundation
 
 /// Context used by tools to resolve a pointer style for the current interaction state.
-public struct ToolPointerContext: Sendable {
+public struct InteractionContext: Sendable {
+
+  /// The most recent pointer interaction source, if any.
+  public let source: InteractionSource?
+
+  /// The most recent pointer interaction phase.
+  public let phase: InteractionPhase
 
   /// Current modifier keys state.
   public let modifiers: Modifiers
 
-  /// The most recent pointer interaction phase.
-  public let pointerPhase: InteractionPhase
-
-  /// The most recent pointer interaction source, if any.
-  public let pointerSource: InteractionSource?
-
   public init(
+    source: InteractionSource? = nil,
+    phase: InteractionPhase = .none,
     modifiers: Modifiers,
-    pointerPhase: InteractionPhase = .none,
-    pointerSource: InteractionSource? = nil
   ) {
+    self.source = source
+    self.phase = phase
     self.modifiers = modifiers
-    self.pointerPhase = pointerPhase
-    self.pointerSource = pointerSource
   }
 }
 
-extension ToolPointerContext {
+extension InteractionContext {
   /// True when the last pointer interaction is an active drag.
   public var isPointerDragging: Bool {
-    guard case .pointerDragGesture? = pointerSource else { return false }
-    return pointerPhase.isActive
+    guard case .pointerDragGesture? = source else { return false }
+    return phase.isActive
   }
 }
