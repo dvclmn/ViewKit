@@ -8,24 +8,24 @@
 
 /// The combined result of a tool resolving a pointer interaction.
 ///
-/// Separates canvas-level state changes (`intent`) from domain-level
+/// Separates canvas-level state changes (`adjustment`) from domain-level
 /// actions (`action`) so that `CanvasInteractionState` can execute the
-/// intent immediately, while the consuming app handles the action.
+/// adjustment immediately, while the consuming app handles the action.
 public struct ToolResolution: Sendable {
-  public let intent: CanvasIntent
+  public let adjustment: CanvasAdjustment
   public let action: ToolAction
   
   public init(
-    intent: CanvasIntent = .none,
+    adjustment: CanvasAdjustment = .none,
     action: ToolAction = .none
   ) {
-    self.intent = intent
+    self.adjustment = adjustment
     self.action = action
   }
   
-  /// Convenience for returning just a canvas intent with no domain action.
-  public static func intent(_ intent: CanvasIntent) -> Self {
-    .init(intent: intent)
+  /// Convenience for returning just a canvas adjustment with no domain action.
+  public static func canvasAdjustment(_ adjustment: CanvasAdjustment) -> Self {
+    .init(adjustment: adjustment)
   }
   
   /// Convenience for returning just a domain action with no canvas change.

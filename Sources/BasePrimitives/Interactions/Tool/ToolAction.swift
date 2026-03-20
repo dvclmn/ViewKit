@@ -7,9 +7,9 @@
 
 import Foundation
 
-/// Domain-level actions that tools can produce alongside canvas-level intents.
+/// Domain-level actions that tools can produce alongside canvas-level adjustments.
 ///
-/// While `CanvasIntent` handles canvas state mutations (transform, pointer state),
+/// While `CanvasAdjustment` handles canvas state mutations (transform, pointer state),
 /// `ToolAction` represents higher-level domain actions that the consuming app
 /// is responsible for interpreting.
 ///

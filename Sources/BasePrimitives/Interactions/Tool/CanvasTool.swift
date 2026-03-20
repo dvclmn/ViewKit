@@ -17,7 +17,7 @@ import SwiftUI
 /// - `kind`: Its identity, used for binding lookups and registry
 /// - `name` / `icon`: Display metadata for toolbar UI
 /// - `inputPolicy`: What input modes are active when this tool is selected
-/// - `resolve()`: Maps a pointer interaction to a canvas intent + domain action
+/// - `resolve()`: Maps a pointer interaction to a canvas adjustment + domain action
 public protocol CanvasTool: Sendable, Identifiable where ID == CanvasToolKind {
 
   /// The tool's identity, used for keyboard binding lookups and registry.
@@ -36,7 +36,7 @@ public protocol CanvasTool: Sendable, Identifiable where ID == CanvasToolKind {
   /// Resolve the pointer style for the current interaction context.
   func resolvePointerStyle(context: InteractionContext) -> PointerStyleCompatible
 
-  /// Resolve a pointer interaction into a canvas intent and optional domain action.
+  /// Resolve a pointer interaction into a canvas adjustment and optional domain action.
   ///
   /// Only called for pointer events (`.pointerTapGesture`, `.pointerDragGesture`).
   /// Global gestures are handled before this is reached.

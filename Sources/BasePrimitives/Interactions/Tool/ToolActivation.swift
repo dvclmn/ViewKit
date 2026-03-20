@@ -37,7 +37,7 @@ public struct ToolActivation: Sendable {
   }
 }
 
-// Identity is determined by binding + key + start time, not by the tool itself.
+/// Identity is determined by binding + key + start time, not by the tool itself.
 extension ToolActivation: Equatable {
   public static func == (lhs: Self, rhs: Self) -> Bool {
     lhs.binding == rhs.binding

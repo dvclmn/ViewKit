@@ -24,24 +24,23 @@ public struct PanTool: CanvasTool {
 
   public func resolvePointerInteraction(
     context: InteractionContext,
-//    _ interaction: Interaction,
+    //    _ interaction: Interaction,
     currentTransform: TransformState
   ) -> ToolResolution {
     switch context.source {
       case .pointerDragGesture(let payload):
-        
+
         switch payload {
           case .delta(let delta, _):
             var new = currentTransform
             new.translation += delta
-            
-            return .intent(.mutateTransform(new))
+
+            return .adjustment(.mutateTransform(new))
 
           case .rect(let from, let current):
             print("Not sure if this is right")
             return .none
         }
-//        let delta = current - from
 
       default:
         return .none

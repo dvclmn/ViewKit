@@ -15,9 +15,8 @@ import Foundation
 public struct PointerState: Sendable, Equatable {
   public var tap: Point<ScreenSpace>?
   public var hover: Point<ScreenSpace>?
-//  public var drag: PointerDragPayload?
   public var drag: Rect<ScreenSpace>?
-  
+
   public let dragThreshold: CGFloat = 6
 
   public init() {}
@@ -25,10 +24,4 @@ public struct PointerState: Sendable, Equatable {
 
 extension PointerState {
   public static let initial = PointerState()
-
-//  public mutating func reset() {
-//    tap.reset()
-//    hover.reset()
-//    drag.reset()
-//  }
 }

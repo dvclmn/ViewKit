@@ -28,8 +28,8 @@ public final class CanvasInteractionState {
   public var lastToolAction: ToolAction = .none
 
   /// The most recent interaction context.
-  public var interactionPhase: InteractionPhase = .none
-  public var interactionSource: InteractionSource?
+  public var phase: InteractionPhase = .none
+  public var source: InteractionSource?
 
   public init() {}
 }
@@ -70,10 +70,10 @@ extension CanvasInteractionState {
     )
   }
 
-  private func execute(_ intent: CanvasIntent) {
-    switch intent {
+  private func execute(_ adjustment: CanvasAdjustment) {
+    switch adjustment {
       case .mutateTransform(let transform): self.transform = transform
-      case .updatePointerDrag(let payload): self.pointer.drag = payload
+      case .updatePointerDrag(let rect): self.pointer.drag = rect
       case .updatePointerTap(let point): self.pointer.tap = point
       case .none: break
     }
@@ -85,17 +85,21 @@ extension CanvasInteractionState {
     modifiers: Modifiers
   ) {
 
-    guard let geometry, let activeTool else { return }
+    guard let activeTool else { return }
 
-    interactionSource = source
-    interactionPhase = phase
+    self.source = source
+    self.phase = phase
 
     let resolution = activeTool.resolvePointerInteraction(
-      context: InteractionContext(source: source, phase: phase, modifiers: modifiers),
+      context: InteractionContext(
+        source: source,
+        phase: phase,
+        modifiers: modifiers
+      ),
       currentTransform: transform
     )
 
-    execute(resolution.intent)
+    execute(resolution.adjustment)
     self.lastToolAction = resolution.action
   }
 
@@ -134,8 +138,8 @@ extension CanvasInteractionState {
   public func pointerStyle(with modifiers: Modifiers) -> PointerStyleCompatible? {
     activeTool?.resolvePointerStyle(
       context: InteractionContext(
-        source: interactionSource,
-        phase: interactionPhase,
+        source: source,
+        phase: phase,
         modifiers: modifiers,
       )
     )
