@@ -14,8 +14,7 @@ extension GridDimensions {
     guard let size = toScreenSize(using: unitSize)
     else { return false }
 
-    return point.x >= 0
-      && point.y >= 0
+    return point.isGreaterThanOrEqualToZero
       && point.x < size.width
       && point.y < size.height
   }
@@ -26,6 +25,12 @@ extension GridDimensions {
   public func contains(position: GridPosition) -> Bool {
     bounds.contains(position)
   }
+  
+  
+  /// Check if this grid can fit within another grid
+  public func fits(within other: GridDimensions) -> Bool {
+    return self.width <= other.width && self.height <= other.height
+  }
 
   /// Checks if a grid position is within valid bounds
   //  public func contains(position: GridPosition) -> Bool {
@@ -34,11 +39,11 @@ extension GridDimensions {
   //      && position.column < width
   //      && position.row < height
   //  }
-//  public func contains(position: GridPosition) -> Bool {
-//    let min = GridPosition(column: 0, row: 0)
-//
-//    /// last valid index is width-1, height-1
-//    let max = GridPosition(column: width - 1, row: height - 1)
-//    return (min...max).contains(position)
-//  }
+  //  public func contains(position: GridPosition) -> Bool {
+  //    let min = GridPosition(column: 0, row: 0)
+  //
+  //    /// last valid index is width-1, height-1
+  //    let max = GridPosition(column: width - 1, row: height - 1)
+  //    return (min...max).contains(position)
+  //  }
 }

@@ -7,27 +7,12 @@
 
 import Foundation
 
-
-// MARK: - Size Calculations
 extension GridDimensions {
+  public static var zero: GridDimensions { .init(width: 0, height: 0) }
   public var doubled: GridDimensions { self * 2 }
 
-  public func toScreenSize(using unitSize: CGSize) -> CGSize? {
-    guard
-      let width = width.toScreenLength(using: unitSize.width),
-      let height = height.toScreenLength(using: unitSize.height)
-    else { return nil }
-
-    return CGSize(width: width, height: height)
-  }
-}
-
-// MARK: - Additional Convenience Methods
-extension GridDimensions {
   /// Total number of cells in the grid
-  public var cellCount: Int {
-    width * height
-  }
+  public var cellCount: Int { width * height }
 
   /// All valid positions in the grid
   public var allPositions: [GridPosition] {
@@ -38,36 +23,14 @@ extension GridDimensions {
     }
   }
 
-  /// Check if this grid can fit within another grid
-  public func fits(within other: GridDimensions) -> Bool {
-    return self.width <= other.width && self.height <= other.height
-  }
-}
-
-extension GridDimensions {
-
-  public static let minSize = GridDimensions(
-    width: minCellsAlongLength,
-    height: minCellsAlongLength
-  )
-  public static let maxSize = GridDimensions(
-    width: maxCellsAlongLength,
-    height: maxCellsAlongLength
-  )
-
-  public static let maxCellsAlongLength: Int = 90_000
-  public static let minCellsAlongLength: Int = 1
-
-  public var respectsMaxCells: Bool {
-    return self.bothLessThan(rhs: Self.maxCellsAlongLength)
-  }
-  public var respectsMinCells: Bool {
-    return self.bothGreaterThan(rhs: Self.minCellsAlongLength)
-  }
-
-  public var bottomRight: GridPosition? {
-    guard width > 0, height > 0 else { return nil }
-    return GridPosition(column: width - 1, row: height - 1)
+  /// Aka last valid index. Will return `zero` if width or height
+  /// are not greater than zero.
+  public var bottomRight: GridPosition {
+    //    guard width > 0, height > 0 else { return nil }
+    return GridPosition(
+      column: max(0, width - 1),
+      row: max(0, height - 1)
+    )
   }
 
   public func reducedToFit(within bounds: GridDimensions) -> GridDimensions? {
@@ -76,5 +39,24 @@ extension GridDimensions {
     guard cols > 0, rows > 0 else { return nil }
     return GridDimensions(width: cols, height: rows)
   }
+
+  //  public static let minSize = GridDimensions(
+  //    width: minCellsAlongLength,
+  //    height: minCellsAlongLength
+  //  )
+  //  public static let maxSize = GridDimensions(
+  //    width: maxCellsAlongLength,
+  //    height: maxCellsAlongLength
+  //  )
+  //
+  //  public static let maxCellsAlongLength: Int = 90_000
+  //  public static let minCellsAlongLength: Int = 1
+  //
+  //  public var respectsMaxCells: Bool {
+  //    return self.bothLessThan(rhs: Self.maxCellsAlongLength)
+  //  }
+  //  public var respectsMinCells: Bool {
+  //    return self.bothGreaterThan(rhs: Self.minCellsAlongLength)
+  //  }
 
 }

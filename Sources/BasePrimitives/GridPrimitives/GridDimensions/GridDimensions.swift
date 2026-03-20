@@ -15,7 +15,7 @@ public struct GridDimensions: Sendable, Codable, Equatable, Hashable {
   public var rows: Int { height }
 
   public init(width: Int, height: Int) {
-    precondition(width > 0 && height > 0, "GridDimensions cannot have zero or negative dimensions.")
+//    precondition(width > 0 && height > 0, "GridDimensions cannot have zero or negative dimensions.")
     self.width = width
     self.height = height
   }

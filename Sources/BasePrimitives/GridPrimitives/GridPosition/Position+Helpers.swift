@@ -19,6 +19,18 @@ extension GridPosition {
     let clampedRow = max(0, min(dimensions.height - 1, row))
     return GridPosition(column: clampedColumn, row: clampedRow)
   }
+  
+//  extension GridPosition {
+    func clamped(to width: Int, height: Int) -> GridPosition {
+      GridPosition(
+        column: max(0, min(column, width - 1)),
+        row: max(0, min(row, height - 1))
+      )
+    }
+//  }
+  
+  // Usage:
+//  let safe = pos.clamped(to: width, height: height)
 
   /// Creates a GridPosition only if contained within the
   /// provided `GridDimensions`
