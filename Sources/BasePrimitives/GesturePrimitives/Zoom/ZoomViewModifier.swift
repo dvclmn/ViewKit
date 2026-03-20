@@ -79,7 +79,7 @@ public struct ZoomModifier: ViewModifier {
 
 extension ZoomModifier {
   private var magnifyGesture: some Gesture {
-    MagnifyGesture()
+    MagnifyGesture(minimumScaleDelta: 0.01)
       .onChanged { value in
         let isGestureStart = !isGesturing
         if isGestureStart {
@@ -89,9 +89,10 @@ extension ZoomModifier {
 
         /// MagnifyGesture reports absolute scale since start; convert to delta.
         let safeLast =
-          lastMagnification.isFinite && lastMagnification > 0
+          lastMagnification.isFiniteAndGreaterThanZero
           ? lastMagnification
           : 1
+        
         let delta = value.magnification / safeLast
         lastMagnification = value.magnification
 
@@ -99,7 +100,7 @@ extension ZoomModifier {
         let proposedZoom = previousZoom * delta
 
         let event = ZoomGestureEvent(
-//          phase: .changed,
+          //          phase: .changed,
           previousZoom: previousZoom,
           proposedZoom: proposedZoom,
           magnification: value.magnification,
@@ -119,7 +120,7 @@ extension ZoomModifier {
         let finalZoom = clampZoom(previousZoom)
 
         let event = ZoomGestureEvent(
-//          phase: .ended,
+          //          phase: .ended,
           previousZoom: previousZoom,
           proposedZoom: finalZoom,
           magnification: value.magnification,

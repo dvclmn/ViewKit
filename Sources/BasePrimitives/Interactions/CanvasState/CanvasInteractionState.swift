@@ -46,7 +46,7 @@ extension CanvasInteractionState {
   /// **Tier 2 — Pointer interactions** (tap, drag) are forwarded to
   /// the active tool's `resolve()` method.
   public func handleInput(
-    from source: InteractionSource,
+    _ source: InteractionSource,
     phase: InteractionPhase,
     modifiers: Modifiers
   ) {

@@ -13,11 +13,9 @@
 ///
 /// - `swipeGestureEnabled`: Two-finger trackpad pan gesture
 /// - `pinchGestureEnabled`: Two-finger pinch-to-zoom gesture
-/// - `pointerDragPanEnabled`: Whether a pointer click-drag can pan the canvas
-///   (distinct from the two-finger gesture — this is for Pan tool drag)
 /// - `dragBehaviour`: What kind of drag interaction the pointer produces
 ///   (marquee selection, continuous offset for pan/zoom, or disabled)
-/// - `hoverEnabled`: Whether pointer hover tracking is active
+/// - `hoverEnabled`: Whether pointer hover tracking is permitted
 public struct CanvasInputPolicy: Equatable, Sendable {
 
 //  public var activeInputs: ActiveInputs

@@ -41,19 +41,6 @@ extension EnvironmentValues {
     )
   }
 
-  @Entry public var zoomLevel: Double = 1.0
-  @Entry public var zoomRange: ClosedRange<Double>?
-
-  public var unsafeZoomRange: ClosedRange<Double> {
-    guard let zoomRange else {
-      assertionFailure(
-        "⚠️ Zoom range is missing from environment. Please ensure this is set high enough up the View hierarchy. Falling back to default range."
-      )
-      return 0.2...10
-    }
-    return zoomRange
-  }
-
   @Entry public var panOffset: CGSize = .zero
   @Entry public var rotation: Angle = .zero
 
@@ -61,8 +48,12 @@ extension EnvironmentValues {
   @Entry public var pointerLocation: CGPoint?
   @Entry public var pointerStyle: PointerStyleCompatible?
 
+  // MARK: - Zoom
+  @Entry public var zoomLevel: Double = 1.0
+  @Entry public var zoomRange: ClosedRange<Double>?
+
   public var zoomClamped: Double {
-    guard zoomLevel.isFinite, zoomLevel.isGreaterThanZero else { return 1.0 }
+    guard zoomLevel.isFiniteAndGreaterThanZero else { return 1.0 }
     guard let zoomRange else { return zoomLevel }
     return zoomLevel.clamped(to: zoomRange)
   }
