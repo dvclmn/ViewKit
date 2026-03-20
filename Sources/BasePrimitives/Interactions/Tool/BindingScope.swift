@@ -5,11 +5,9 @@
 //  Created by Dave Coleman on 10/3/2026.
 //
 
-import EnumMacros
 import SwiftUI
 
 /// Whether a binding applies everywhere or only when a specific tool is active.
-@MetaEnum
 public enum BindingScope: Sendable, Hashable {
   /// Applies regardless of current tool.
   case global

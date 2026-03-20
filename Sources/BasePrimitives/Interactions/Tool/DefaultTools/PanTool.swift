@@ -24,7 +24,6 @@ public struct PanTool: CanvasTool {
 
   public func resolvePointerInteraction(
     context: InteractionContext,
-    //    _ interaction: Interaction,
     currentTransform: TransformState
   ) -> ToolResolution {
     switch context.source {
@@ -35,9 +34,9 @@ public struct PanTool: CanvasTool {
             var new = currentTransform
             new.translation += delta
 
-            return .adjustment(.mutateTransform(new))
+            return .canvasAdjustment(.mutateTransform(new))
 
-          case .rect(let from, let current):
+          case .rect(_, _):
             print("Not sure if this is right")
             return .none
         }

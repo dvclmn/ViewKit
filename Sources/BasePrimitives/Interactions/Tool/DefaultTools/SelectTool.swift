@@ -34,13 +34,10 @@ public struct SelectTool: CanvasTool {
   ) -> ToolResolution {
     switch context.source {
       case .pointerTapGesture(_, let location):
-        return .adjustment(.updatePointerTap(location))
+        return .canvasAdjustment(.updatePointerTap(location))
 
       case .pointerDragGesture(let payload):
-        //      case .pointerDragGesture(let delta, let location):
-        //        let rect = Rect<ScreenSpace>(from: from, to: current)
-        //        let rect = Rect<ScreenSpace>(from: from, to: current)
-        return .adjustment(.updatePointerDrag(payload.boundingRect))
+        return .canvasAdjustment(.updatePointerDrag(payload.boundingRect))
 
       default:
         return .none

@@ -38,11 +38,7 @@ extension PointerDragPayload {
   var boundingRect: Rect<ScreenSpace>? {
     switch self {
       case .delta: nil
-      //        return nil
-      case .rect(let from, let current):
-        Rect<ScreenSpace>(from: from, to: current)
-    //        return Rect<ScreenSpace>(fromRect: CGRect.boundingRect(from: from, to: current))
-    //        return
+      case .rect(let from, let current): Rect<ScreenSpace>(from: from, to: current)
     }
   }
 }
