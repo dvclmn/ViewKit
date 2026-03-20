@@ -10,26 +10,25 @@ import Foundation
 struct GlobalInteraction {
   package static func handleGlobal(
     _ source: InteractionSource,
-    zoomRange: ClosedRange<Double>,
     modifiers: Modifiers,
     currentTransform: TransformState,
     //    transform: inout TransformState,
     //    pointer: inout PointerState,
-  ) -> CanvasAdjustment {
+  ) -> CanvasAdjustment? {
 
     switch source {
       case .swipeGesture(let delta, _):
         return handleSwipe(
           delta: delta,
-          zoomRange: zoomRange,
           modifiers: modifiers,
           currentTransform: currentTransform
         )
 
       case .pinchGesture(let scale):
-        var new = currentTransform
-        new.scale = scale
-        return .updateTransform(new)
+        //        var new = currentTransform
+        //        new.scale = scale
+        return .updateScale(scale)
+      //        return .updateTransform(new)
 
       case .continuousHover(let point):
         //        pointer.hover = point
@@ -39,36 +38,39 @@ struct GlobalInteraction {
         /// Pointer events are handled on a per-Tool basis, so break here
         /// to fall through to `handlePointerInteraction`
         /// in `CanvasInteractionState`
-        return .none
+        return nil
     }
   }
 
   private static func handleSwipe(
     delta: Size<ScreenSpace>,
-    zoomRange: ClosedRange<Double>,
+    //    zoomRange: ClosedRange<Double>,
     modifiers: Modifiers,
     currentTransform: TransformState,
     //    transform: inout TransformState,
   ) -> CanvasAdjustment {
 
-    var new = currentTransform
+    //    var new = currentTransform
 
     /// If Option is held during a Swipe, it is interpreted as Zoom, not Pan
-    if modifiers.contains(.option) {
-
-      /// Each point contributes up to 0.5% zoom change at sensitivity = 1.0
-      let factor = ZoomComputation.factorFromDelta(
-        CGSize(width: 0, height: delta.cgSize.height),
-        weights: .vertical
-      )
-
-      let newScale = currentTransform.scale * factor
-      new.scale = newScale.clamped(to: zoomRange)
-
-    } else {
-      new.translation += delta
+    guard modifiers.contains(.option) else {
+      let newTranslation = currentTransform.translation + delta
+      return .updateTranslation(newTranslation)
+      //      new.translation += delta
 
     }
-    return .updateTransform(new)
+
+    /// Each point contributes up to 0.5% zoom change at sensitivity = 1.0
+    let factor = ZoomComputation.factorFromDelta(
+      CGSize(width: 0, height: delta.cgSize.height),
+      weights: .vertical
+    )
+
+    let newScale = currentTransform.scale * factor
+    //      new.scale = newScale.clamped(to: zoomRange)
+    //      new.scale = newScale
+    return .updateScale(newScale)
+
+    //    return .updateTransform(new)
   }
 }

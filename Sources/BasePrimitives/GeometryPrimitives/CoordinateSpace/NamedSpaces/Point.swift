@@ -63,6 +63,9 @@ extension CGPoint {
 // MARK: - Arithmetic
 
 /// Subtracting two points in the same space yields a size (displacement vector).
-public func - <Space>(lhs: Point<Space>, rhs: Point<Space>) -> Size<Space> {
-  Size(width: lhs.x - rhs.x, height: lhs.y - rhs.y)
-}
+//public func - <Space>(
+//  lhs: Point<Space>,
+//  rhs: Point<Space>
+//) -> Size<Space> {
+//  Size(width: lhs.x - rhs.x, height: lhs.y - rhs.y)
+//}

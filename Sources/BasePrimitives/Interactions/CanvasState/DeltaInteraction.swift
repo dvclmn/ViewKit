@@ -35,8 +35,3 @@ extension ContinuousInteraction where Value == Size<ScreenSpace> {
 //    )
 //  }
 }
-
-public func += <Space>(lhs: inout Size<Space>, rhs: Size<Space>) {
-  lhs.width += rhs.width
-  lhs.height += rhs.height
-}

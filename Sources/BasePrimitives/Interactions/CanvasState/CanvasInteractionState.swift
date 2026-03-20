@@ -30,7 +30,7 @@ public final class CanvasInteractionState {
   /// The most recent interaction context.
   public var phase: InteractionPhase = .none
   public var source: InteractionSource?
-  public var adjustment: CanvasAdjustment?
+  //  public var adjustment: CanvasAdjustment?
 
   public init() {}
 }
@@ -55,19 +55,24 @@ extension CanvasInteractionState {
     guard let zoomRange else { return }
 
     /// 1 – Global gestures,
-    let globalAdjustment = GlobalInteraction.handleGlobal(
+    if let globalAdjustment = GlobalInteraction.handleGlobal(
       source,
-      zoomRange: zoomRange,
+      //      zoomRange: zoomRange,
       modifiers: modifiers,
       currentTransform: transform
-    )
+    ) {
+
+    }
 
     /// 2 – Tool-specific pointer interactions
-    handlePointerInteraction(
+    if let pointerAdjustment = handlePointerInteraction(
       source: source,
       phase: phase,
       modifiers: modifiers
-    )
+    ) {
+
+    }
+
   }
 
   private func handlePointerInteraction(
@@ -76,7 +81,7 @@ extension CanvasInteractionState {
     modifiers: Modifiers
   ) -> CanvasAdjustment {
 
-    guard let activeTool else { return }
+    guard let activeTool else { return .none }
 
     self.source = source
     self.phase = phase
@@ -94,9 +99,17 @@ extension CanvasInteractionState {
     self.lastToolAction = resolution.action
   }
 
+  private func interactionContext(modifiers: Modifiers) -> InteractionContext {
+
+  }
+
   private func executeAdjustment(_ adjustment: CanvasAdjustment) {
     switch adjustment {
-      case .updateTransform(let transform): self.transform = transform
+      //      case .updateTransform(let transform): self.transform = transform
+      case .updateTranslation(let size): self.transform.translation = size
+      case .updateScale(let scale): self.transform.scale = scale.clampedIfNeeded(to: zoomRange)
+      case .updateRotation(let angle): self.transform.rotation = angle
+
       case .updatePointerDrag(let rect): self.pointer.drag = rect
       case .updatePointerTap(let point): self.pointer.tap = point
       case .updatePointerHover(let point): self.pointer.hover = point

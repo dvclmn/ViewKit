@@ -40,12 +40,11 @@ public protocol CanvasTool: Sendable, Identifiable where ID == CanvasToolKind {
   ///
   /// Only called for pointer events (`.pointerTapGesture`, `.pointerDragGesture`).
   /// Global gestures are handled before this is reached.
-  
+
   /// This allows a Tool to declare what should happen when it is selected,
   /// and certain interaction events happen
   func resolvePointerInteraction(
     context: InteractionContext,
-//    _ interaction: Interaction,
     currentTransform: TransformState
   ) -> ToolResolution
 }
