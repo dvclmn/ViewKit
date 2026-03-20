@@ -8,6 +8,12 @@
 import SwiftUI
 
 /// Return a replacement zoom value, or `nil` to accept the gesture's proposal.
+/// It may be that later I use this when doing more complex processing on the zoom
+/// value, for zooming around a focus point / cursor etc
+@available(
+  *, deprecated, renamed: "ZoomUpdate",
+  message: "Considering deprecating this more verbose Zoom event type, in favour of simple Double value"
+)
 public typealias ZoomEventUpdate = (ZoomGestureEvent, InteractionPhase) -> Double?
 
 /// Return a replacement zoom value for `(proposedZoom, phase)`, or `nil` to accept.
@@ -26,7 +32,7 @@ public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
 ///
 /// ## Mode B — Event callback
 /// ```swift
-/// .onPinchGesture(initial: currentZoom, didUpdateEvent: { event in ... })
+/// .onPinchGesture(initial: currentZoom, didUpdateZoom: { event in ... })
 /// ```
 /// The modifier tracks deltas internally, but the **caller** owns the zoom
 /// value. The callback receives a ``ZoomGestureEvent`` and returns the
@@ -50,18 +56,18 @@ public struct ZoomModifier: ViewModifier {
 
   private let externalZoom: Binding<Double>?
   let isEnabled: Bool
-  let didUpdateEvent: ZoomEventUpdate
+  let didUpdateZoom: ZoomUpdate
 
   init(
     initial: Double,
     zoom: Binding<Double>? = nil,
     isEnabled: Bool,
-    didUpdateEvent: @escaping ZoomEventUpdate
+    didUpdateZoom: @escaping ZoomUpdate
   ) {
     self._internalZoom = State(initialValue: initial)
     self.externalZoom = zoom
     self.isEnabled = isEnabled
-    self.didUpdateEvent = didUpdateEvent
+    self.didUpdateZoom = didUpdateZoom
   }
 
   public func body(content: Content) -> some View {
@@ -99,17 +105,17 @@ extension ZoomModifier {
         let previousZoom = internalZoom
         let proposedZoom = previousZoom * delta
 
-        let event = ZoomGestureEvent(
-          //          phase: .changed,
-          previousZoom: previousZoom,
-          proposedZoom: proposedZoom,
-          magnification: value.magnification,
-          magnificationDelta: delta,
-          isGestureStart: isGestureStart
-        )
+        //        let event = ZoomGestureEvent(
+        //          //          phase: .changed,
+        //          previousZoom: previousZoom,
+        //          proposedZoom: proposedZoom,
+        //          magnification: value.magnification,
+        //          magnificationDelta: delta,
+        //          isGestureStart: isGestureStart
+        //        )
 
         let resolvedZoom = resolvedZoom(
-          for: event,
+          //          for: event,
           phase: .changed,
           proposed: proposedZoom
         )
@@ -119,17 +125,16 @@ extension ZoomModifier {
         let previousZoom = internalZoom
         let finalZoom = clamped(previousZoom)
 
-        let event = ZoomGestureEvent(
-          //          phase: .ended,
-          previousZoom: previousZoom,
-          proposedZoom: finalZoom,
-          magnification: value.magnification,
-          magnificationDelta: 1,
-          isGestureStart: false
-        )
+        //        let event = ZoomGestureEvent(
+        //          //          phase: .ended,
+        //          previousZoom: previousZoom,
+        //          proposedZoom: finalZoom,
+        //          magnification: value.magnification,
+        //          magnificationDelta: 1,
+        //          isGestureStart: false
+        //        )
 
         let resolvedZoom = resolvedZoom(
-          for: event,
           phase: .ended,
           proposed: finalZoom
         )
@@ -141,11 +146,11 @@ extension ZoomModifier {
   }
 
   private func resolvedZoom(
-    for event: ZoomGestureEvent,
+    //    for event: ZoomGestureEvent,
     phase: InteractionPhase,
     proposed: Double
   ) -> Double {
-    clamped(didUpdateEvent(event, phase) ?? proposed)
+    clamped(didUpdateZoom(proposed, phase) ?? proposed)
   }
 
   private func clamped(_ value: Double) -> Double {

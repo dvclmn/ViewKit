@@ -52,7 +52,7 @@ public struct CanvasInputPolicy: Equatable, Sendable {
   public static let standard = CanvasInputPolicy()
 
   /// Locks zoom gesture only.
-  public static let lockScale = CanvasInputPolicy(pinchGestureEnabled: false)
+//  public static let lockScale = CanvasInputPolicy(pinchGestureEnabled: false)
 }
 
 extension CanvasInputPolicy: CustomStringConvertible {

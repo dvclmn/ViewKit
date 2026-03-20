@@ -24,21 +24,21 @@ extension View {
         initial: zoom.wrappedValue,
         zoom: zoom,
         isEnabled: isEnabled,
-        didUpdateEvent: { _, _ in nil }
+        didUpdateZoom: { _, _ in nil }
       )
     )
   }
 
-  /// Simple binding-driven zoom (CGFloat convenience).
-  public func onPinchGesture(
-    zoom: Binding<CGFloat>,
-    isEnabled: Bool = true
-  ) -> some View {
-    self.onPinchGesture(
-      zoom: zoom.toBindingDouble,
-      isEnabled: isEnabled
-    )
-  }
+//  /// Simple binding-driven zoom (CGFloat convenience).
+//  public func onPinchGesture(
+//    zoom: Binding<CGFloat>,
+//    isEnabled: Bool = true
+//  ) -> some View {
+//    self.onPinchGesture(
+//      zoom: zoom.toBindingDouble,
+//      isEnabled: isEnabled
+//    )
+//  }
 }
 
 // MARK: - Mode B: Event callback
@@ -50,38 +50,39 @@ extension View {
 extension View {
 
   /// Event-driven zoom with full ``ZoomGestureEvent`` context.
-  /// Return `nil` from `didUpdateEvent` to accept the proposed zoom.
+  /// Return `nil` from `didUpdateZoom` to accept the proposed zoom.
   public func onPinchGesture(
     initial: Double = 1,
     isEnabled: Bool = true,
-    didUpdateEvent: @escaping ZoomEventUpdate
+    didUpdateZoom: @escaping ZoomUpdate
+//    didUpdateZoom: @escaping ZoomEventUpdate
   ) -> some View {
     self.modifier(
       ZoomModifier(
         initial: initial,
         zoom: nil,
         isEnabled: isEnabled,
-        didUpdateEvent: didUpdateEvent
+        didUpdateZoom: didUpdateZoom
       )
     )
   }
 
   /// Simplified event-driven zoom receiving just `(proposedZoom, phase)`.
   /// Return `nil` from `didUpdateZoom` to accept the proposed zoom.
-  public func onPinchGesture(
-    initial: Double = 1,
-    isEnabled: Bool = true,
-    didUpdateZoom: @escaping ZoomUpdate
-  ) -> some View {
-    self.modifier(
-      ZoomModifier(
-        initial: initial,
-        zoom: nil,
-        isEnabled: isEnabled,
-        didUpdateEvent: { event, phase in
-          didUpdateZoom(event.proposedZoom, phase)
-        }
-      )
-    )
-  }
+//  public func onPinchGesture(
+//    initial: Double = 1,
+//    isEnabled: Bool = true,
+//    didUpdateZoom: @escaping ZoomUpdate
+//  ) -> some View {
+//    self.modifier(
+//      ZoomModifier(
+//        initial: initial,
+//        zoom: nil,
+//        isEnabled: isEnabled,
+//        didUpdateZoom: { event, phase in
+//          didUpdateZoom(event.proposedZoom, phase)
+//        }
+//      )
+//    )
+//  }
 }
