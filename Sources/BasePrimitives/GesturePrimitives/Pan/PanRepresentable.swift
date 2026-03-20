@@ -8,21 +8,21 @@
 #if canImport(AppKit)
 import SwiftUI
 
-public struct SwipeGestureView: NSViewRepresentable {
-  let onSwipeGesture: SwipeOutput
+struct SwipeGestureView: NSViewRepresentable {
+  let onSwipeGesture: SwipeOutputInternal
   
-  public init(_ onSwipeGesture: @escaping SwipeOutput) {
+  init(_ onSwipeGesture: @escaping SwipeOutputInternal) {
     self.onSwipeGesture = onSwipeGesture
   }
 
-  public func makeNSView(context: Context) -> SwipeTrackingNSView {
+  func makeNSView(context: Context) -> SwipeTrackingNSView {
     let view = SwipeTrackingNSView()
-    view.onSwipeGesture = { event in
-      self.onSwipeGesture(event)
+    view.onSwipeGesture = { event, modifiers in
+      self.onSwipeGesture(event, modifiers)
     }
     return view
   }
 
-  public func updateNSView(_ nsView: SwipeTrackingNSView, context: Context) {}
+  func updateNSView(_ nsView: SwipeTrackingNSView, context: Context) {}
 }
 #endif

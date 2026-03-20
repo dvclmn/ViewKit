@@ -12,26 +12,20 @@ struct GlobalInteraction {
     _ source: InteractionSource,
     modifiers: Modifiers,
     currentTransform: TransformState,
-    //    transform: inout TransformState,
-    //    pointer: inout PointerState,
   ) -> CanvasAdjustment? {
 
     switch source {
       case .swipeGesture(let delta, _):
-        return handleSwipe(
+        return handleGlobalSwipe(
           delta: delta,
           modifiers: modifiers,
           currentTransform: currentTransform
         )
 
       case .pinchGesture(let scale):
-        //        var new = currentTransform
-        //        new.scale = scale
         return .updateScale(scale)
-      //        return .updateTransform(new)
 
       case .continuousHover(let point):
-        //        pointer.hover = point
         return .updatePointerHover(point)
 
       case .pointerTapGesture, .pointerDragGesture:
@@ -42,7 +36,7 @@ struct GlobalInteraction {
     }
   }
 
-  private static func handleSwipe(
+  private static func handleGlobalSwipe(
     delta: Size<ScreenSpace>,
     //    zoomRange: ClosedRange<Double>,
     modifiers: Modifiers,

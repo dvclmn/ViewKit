@@ -17,7 +17,7 @@ public final class CanvasInteractionState {
   public var pointer: PointerState = .initial
   public var geometry: CanvasGeometry?
   public var zoomRange: ClosedRange<Double>?
-  //  public var modifiers: Modifiers = []
+    public var modifiers: Modifiers = []
 
   /// Synced here via the Env
   public var activeTool: (any CanvasTool)?
@@ -49,7 +49,7 @@ extension CanvasInteractionState {
   public func handleInput(
     _ source: InteractionSource,
     phase: InteractionPhase,
-    modifiers: Modifiers
+//    modifiers: Modifiers
   ) {
 
     self.source = source
@@ -71,7 +71,7 @@ extension CanvasInteractionState {
     let pointerAdjustment = handlePointerInteraction(
       source: source,
       phase: phase,
-      modifiers: modifiers
+//      modifiers: modifiers
     )
     executeAdjustment(pointerAdjustment)
 
@@ -80,7 +80,7 @@ extension CanvasInteractionState {
   private func handlePointerInteraction(
     source: InteractionSource,
     phase: InteractionPhase,
-    modifiers: Modifiers
+//    modifiers: Modifiers
   ) -> CanvasAdjustment {
 
     guard let activeTool else { return .none }

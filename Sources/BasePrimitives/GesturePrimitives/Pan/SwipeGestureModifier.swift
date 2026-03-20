@@ -20,13 +20,13 @@ public struct SwipeGestureModifier: ViewModifier {
     content
       .overlay {
         if isEnabled {
-          SwipeGestureView { event in
-            modifiers = event.modifiers
+          SwipeGestureView { event, modifiers in
+            self.modifiers = modifiers
             onSwipeGesture(event)
           }
           //          SwipeGestureView(onSwipeGesture)
-          .environment(\.modifierKeys, [])
-          //          .environment(\.modifierKeys, modifiers)
+          //          .environment(\.modifierKeys, [])
+          .environment(\.modifierKeys, modifiers)
         }
 
       }

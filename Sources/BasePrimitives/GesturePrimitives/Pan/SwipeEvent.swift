@@ -8,12 +8,12 @@
 /// Note: This size comes as deltas, which will need to be accrued
 /// Modifiers == 'modifiers held'
 public typealias SwipeOutput = (SwipeEvent) -> Void
+public typealias SwipeOutputInternal = (SwipeEvent, Modifiers) -> Void
 
 public struct SwipeEvent {
   public let delta: Size<ScreenSpace>
   public let location: Point<ScreenSpace>
   public let phase: InteractionPhase
-  public let modifiers: Modifiers
 }
 
 extension SwipeEvent {
