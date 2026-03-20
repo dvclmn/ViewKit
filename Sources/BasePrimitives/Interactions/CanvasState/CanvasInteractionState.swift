@@ -30,6 +30,7 @@ public final class CanvasInteractionState {
   /// The most recent interaction context.
   public var phase: InteractionPhase = .none
   public var source: InteractionSource?
+  public var adjustment: CanvasAdjustment?
 
   public init() {}
 }
