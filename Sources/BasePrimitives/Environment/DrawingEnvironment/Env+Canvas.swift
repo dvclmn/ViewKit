@@ -52,10 +52,10 @@ extension EnvironmentValues {
   @Entry public var zoomLevel: Double = 1.0
   @Entry public var zoomRange: ClosedRange<Double>?
 
+  /// Will return unclamped if no zoom range found in the Environment
   public var zoomClamped: Double {
     guard zoomLevel.isFiniteAndGreaterThanZero else { return 1.0 }
-    guard let zoomRange else { return zoomLevel }
-    return zoomLevel.clamped(to: zoomRange)
+    return zoomLevel.clampedIfNeeded(to: zoomRange)
   }
 
 }

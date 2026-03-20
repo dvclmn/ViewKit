@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// MARK: - Mode A: Binding (simple)
+// MARK: - Mode A: Binding
 
 /// The modifier owns zoom state and writes clamped values to the binding.
 /// Use when you just need a zoomable view without custom zoom logic.
@@ -41,7 +41,7 @@ extension View {
   }
 }
 
-// MARK: - Mode B: Event callback (advanced)
+// MARK: - Mode B: Event callback
 
 /// The caller owns zoom state. The modifier tracks gesture deltas and
 /// sends events; the callback returns the resolved zoom value.

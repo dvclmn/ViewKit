@@ -8,34 +8,29 @@
 import Foundation
 
 public struct ZoomGestureEvent: Sendable {
-  
-  /// Gesture phase reported to the zoom system.
-//  public var phase: InteractionPhase
-  
+
   /// Zoom level before applying the latest magnification delta.
   public var previousZoom: Double
-  
+
   /// Proposed zoom after applying the latest delta (before any override).
   public var proposedZoom: Double
-  
+
   /// Absolute magnification since gesture start (`1` means unchanged).
   public var magnification: Double
-  
+
   /// Incremental magnification since the previous update (`1` means unchanged).
   public var magnificationDelta: Double
-  
+
   /// True for the first update event in a gesture.
   public var isGestureStart: Bool
-  
+
   public init(
-//    phase: InteractionPhase,
     previousZoom: Double,
     proposedZoom: Double,
     magnification: Double,
     magnificationDelta: Double,
     isGestureStart: Bool
   ) {
-//    self.phase = phase
     self.previousZoom = previousZoom
     self.proposedZoom = proposedZoom
     self.magnification = magnification

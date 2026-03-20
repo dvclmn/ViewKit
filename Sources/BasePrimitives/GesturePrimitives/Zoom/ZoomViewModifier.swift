@@ -16,7 +16,7 @@ public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
 /// Converts `MagnifyGesture` into incremental zoom deltas and routes them
 /// through one of two ownership modes:
 ///
-/// ## Mode A — Binding (simple)
+/// ## Mode A — Binding
 /// ```swift
 /// .onPinchGesture(zoom: $myZoom)
 /// ```
@@ -24,7 +24,7 @@ public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
 /// result directly to the binding. No override callback — the binding is the
 /// single source of truth.
 ///
-/// ## Mode B — Event callback (advanced)
+/// ## Mode B — Event callback
 /// ```swift
 /// .onPinchGesture(initial: currentZoom, didUpdateEvent: { event in ... })
 /// ```
@@ -37,7 +37,7 @@ public typealias ZoomUpdate = (Double, InteractionPhase) -> Double?
 /// > That creates two writers for the same value and leads to double-writes.
 /// > Use Mode A *or* Mode B, not both.
 public struct ZoomModifier: ViewModifier {
-  @Environment(\.unsafeZoomRange) private var unsafeZoomRange
+  @Environment(\.zoomRange) private var zoomRange
 
   /// Source of truth during the gesture.
   @State private var internalZoom: Double
@@ -72,7 +72,7 @@ public struct ZoomModifier: ViewModifier {
         /// External source changed (e.g. reset button / slider / programmatic change).
         /// Only adopt it when we are NOT currently gesturing.
         guard !isGesturing, let newValue else { return }
-        internalZoom = clampZoom(newValue)
+        internalZoom = clamped(newValue)
       }
   }
 }
@@ -92,7 +92,7 @@ extension ZoomModifier {
           lastMagnification.isFiniteAndGreaterThanZero
           ? lastMagnification
           : 1
-        
+
         let delta = value.magnification / safeLast
         lastMagnification = value.magnification
 
@@ -117,7 +117,7 @@ extension ZoomModifier {
       }
       .onEnded { value in
         let previousZoom = internalZoom
-        let finalZoom = clampZoom(previousZoom)
+        let finalZoom = clamped(previousZoom)
 
         let event = ZoomGestureEvent(
           //          phase: .ended,
@@ -145,11 +145,11 @@ extension ZoomModifier {
     phase: InteractionPhase,
     proposed: Double
   ) -> Double {
-    clampZoom(didUpdateEvent(event, phase) ?? proposed)
+    clamped(didUpdateEvent(event, phase) ?? proposed)
   }
 
-  private func clampZoom(_ value: Double) -> Double {
-    value.clamped(to: unsafeZoomRange)
+  private func clamped(_ value: Double) -> Double {
+    value.clampedIfNeeded(to: zoomRange)
   }
 
   private func commitZoom(_ value: Double) {
