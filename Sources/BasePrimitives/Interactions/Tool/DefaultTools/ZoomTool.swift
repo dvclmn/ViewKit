@@ -34,8 +34,6 @@ extension ZoomTool {
 
   public func resolvePointerInteraction(
     context: InteractionContext,
-    //    source: InteractionSource,
-    //    _ interaction: Interaction,
     currentTransform: TransformState
   ) -> ToolResolution {
     switch context.source {
@@ -43,16 +41,12 @@ extension ZoomTool {
         return handlePointerDrag(
           payload,
           modifiers: context.modifiers,
-          //          interaction: interaction,
           currentTransform: currentTransform
         )
 
       case .pointerTapGesture(_, _):
         let step = context.modifiers.contains(.option) ? 0.8 : 1.25
-        //        var new = currentTransform
-        //        new.scale *= step
-        let new = currentTransform.scale * step
-        return .canvasAdjustment(.updateScale(new))
+        return adjustedZoom(currentTransform, by: step)
 
       default:
         return .none
@@ -65,7 +59,6 @@ extension ZoomTool {
   private func handlePointerDrag(
     _ payload: PointerDragPayload,
     modifiers: Modifiers,
-    //    interaction: Interaction,
     currentTransform: TransformState
   ) -> ToolResolution {
 
@@ -80,10 +73,9 @@ extension ZoomTool {
         if modifiers.contains(.option) {
           factor = 1 / max(factor, 0.0001)
         }
-        //        var new = transform
-        //        new.scale *= factor
-        let new = currentTransform.scale * factor
-        return .canvasAdjustment(.updateScale(new))
+        return adjustedZoom(currentTransform, by: factor)
+      //        let new = currentTransform.scale * factor
+      //        return .canvasAdjustment(.updateScale(new))
 
       case .rect(let from, let current):
 
@@ -92,11 +84,19 @@ extension ZoomTool {
           to: current.cgPoint,
           weights: .upRight
         )
-        //        var new = currentTransform
-        //        new.scale *= factor
-        let new = currentTransform.scale * factor
-        return .canvasAdjustment(.updateScale(new))
+
+        //        let new = currentTransform.scale * factor
+        //        return .canvasAdjustment(.updateScale(new))
+        return adjustedZoom(currentTransform, by: factor)
 
     }
+  }
+
+  private func adjustedZoom(
+    _ currentTransform: TransformState,
+    by factor: CGFloat
+  ) -> ToolResolution {
+    let new = currentTransform.scale * factor
+    return .canvasAdjustment(.updateScale(new))
   }
 }

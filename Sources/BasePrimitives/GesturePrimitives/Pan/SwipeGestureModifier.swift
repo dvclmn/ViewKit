@@ -22,12 +22,13 @@ public struct SwipeGestureModifier: ViewModifier {
         if isEnabled {
           SwipeGestureView { event in
             modifiers = event.modifiers
+            onSwipeGesture(event)
           }
           //          SwipeGestureView(onSwipeGesture)
           .environment(\.modifierKeys, [])
-//          .environment(\.modifierKeys, modifiers)
+          //          .environment(\.modifierKeys, modifiers)
         }
-        
+
       }
   }
 }

@@ -23,13 +23,12 @@ public struct SelectTool: CanvasTool {
 
   public init() {}
 
-  public func resolvePointerStyle(context: InteractionContext) -> PointerStyleCompatible {
-    .default
-  }
+  public func resolvePointerStyle(
+    context: InteractionContext
+  ) -> PointerStyleCompatible { .default }
 
   public func resolvePointerInteraction(
     context: InteractionContext,
-    //    _ interaction: Interaction,
     currentTransform: TransformState
   ) -> ToolResolution {
     switch context.source {

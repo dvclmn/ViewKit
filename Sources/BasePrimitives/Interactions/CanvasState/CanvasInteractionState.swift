@@ -52,7 +52,10 @@ extension CanvasInteractionState {
     modifiers: Modifiers
   ) {
 
-    guard let zoomRange else { return }
+    self.source = source
+    self.phase = phase
+
+    //    guard let zoomRange else { return }
 
     /// 1 – Global gestures,
     if let globalAdjustment = GlobalInteraction.handleGlobal(
@@ -61,17 +64,16 @@ extension CanvasInteractionState {
       modifiers: modifiers,
       currentTransform: transform
     ) {
-
+      executeAdjustment(globalAdjustment)
     }
 
     /// 2 – Tool-specific pointer interactions
-    if let pointerAdjustment = handlePointerInteraction(
+    let pointerAdjustment = handlePointerInteraction(
       source: source,
       phase: phase,
       modifiers: modifiers
-    ) {
-
-    }
+    )
+    executeAdjustment(pointerAdjustment)
 
   }
 
@@ -83,9 +85,6 @@ extension CanvasInteractionState {
 
     guard let activeTool else { return .none }
 
-    self.source = source
-    self.phase = phase
-
     let resolution = activeTool.resolvePointerInteraction(
       context: InteractionContext(
         source: source,
@@ -95,13 +94,13 @@ extension CanvasInteractionState {
       currentTransform: transform
     )
 
-    executeAdjustment(resolution.adjustment)
     self.lastToolAction = resolution.action
+    return resolution.adjustment
   }
 
-  private func interactionContext(modifiers: Modifiers) -> InteractionContext {
-
-  }
+  //  private func interactionContext(modifiers: Modifiers) -> InteractionContext {
+  //
+  //  }
 
   private func executeAdjustment(_ adjustment: CanvasAdjustment) {
     switch adjustment {
