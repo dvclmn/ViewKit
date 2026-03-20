@@ -11,7 +11,7 @@
 /// environment by `InteractionStateSetupModifier`. The policy gates
 /// gesture modifiers in `InteractionModifiers`:
 ///
-/// - `panGestureEnabled`: Two-finger trackpad pan gesture
+/// - `swipeGestureEnabled`: Two-finger trackpad pan gesture
 /// - `pinchGestureEnabled`: Two-finger pinch-to-zoom gesture
 /// - `pointerDragPanEnabled`: Whether a pointer click-drag can pan the canvas
 ///   (distinct from the two-finger gesture — this is for Pan tool drag)
@@ -20,14 +20,15 @@
 /// - `hoverEnabled`: Whether pointer hover tracking is active
 public struct CanvasInputPolicy: Equatable, Sendable {
 
+//  public var activeInputs: ActiveInputs
   /// Whether two-finger trackpad pan is active.
-  public var panGestureEnabled: Bool
+  public var swipeGestureEnabled: Bool
 
   /// Whether two-finger pinch-to-zoom is active.
   public var pinchGestureEnabled: Bool
 
   /// Whether pointer click-drag can pan the canvas.
-  public var pointerDragPanEnabled: Bool
+//  public var pointerDragPanEnabled: Bool
 
   /// The drag interaction mode: `.marquee`, `.continuous(axes:)`, or `.none`.
   public var dragBehaviour: DragBehavior
@@ -36,15 +37,15 @@ public struct CanvasInputPolicy: Equatable, Sendable {
   public var hoverEnabled: Bool
 
   public init(
-    panGestureEnabled: Bool = true,
+    swipeGestureEnabled: Bool = true,
     pinchGestureEnabled: Bool = true,
-    pointerDragPanEnabled: Bool = false,
+//    pointerDragPanEnabled: Bool = false,
     dragBehaviour: DragBehavior = .none,
     hoverEnabled: Bool = true
   ) {
-    self.panGestureEnabled = panGestureEnabled
+    self.swipeGestureEnabled = swipeGestureEnabled
     self.pinchGestureEnabled = pinchGestureEnabled
-    self.pointerDragPanEnabled = pointerDragPanEnabled
+//    self.pointerDragPanEnabled = pointerDragPanEnabled
     self.dragBehaviour = dragBehaviour
     self.hoverEnabled = hoverEnabled
   }
@@ -58,17 +59,19 @@ public struct CanvasInputPolicy: Equatable, Sendable {
 
 extension CanvasInputPolicy: CustomStringConvertible {
   public var description: String {
-    """
-    CanvasInputPolicy
-      - panGestureEnabled: \(panGestureEnabled)
-      - pinchGestureEnabled: \(pinchGestureEnabled)
-      - pointerDragPanEnabled: \(pointerDragPanEnabled)
-      - dragBehaviour: \(dragBehaviour.name)
-      - hoverEnabled: \(hoverEnabled)
-    """
+    DisplayString {
+      Indented("Canvas Input Policy") {
+        Labeled("Swipe", value: swipeGestureEnabled)
+        Labeled("Pinch", value: pinchGestureEnabled)
+//        Labeled("Pointer drag pan", value: pointerDragPanEnabled)
+        Labeled("Drag behaviour", value: dragBehaviour.name)
+        Labeled("Hover", value: hoverEnabled)
+      }
+    }.text
   }
 
-  public var descriptionSingleLine: String {
-    "InputPolicy [pan: \(panGestureEnabled), zoom: \(pinchGestureEnabled), dragPan: \(pointerDragPanEnabled), tapDrag: \(dragBehaviour.name), hover: \(hoverEnabled)]"
-  }
+//  public var descriptionSingleLine: String {
+//    "InputPolicy [pan: \(swipeGestureEnabled), zoom: \(pinchGestureEnabled), dragPan: \(pointerDragPanEnabled), tapDrag: \(dragBehaviour.name), hover: \(hoverEnabled)]"
+//  }
 }
+

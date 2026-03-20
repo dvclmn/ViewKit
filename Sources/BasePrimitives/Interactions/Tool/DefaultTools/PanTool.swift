@@ -17,7 +17,7 @@ public struct PanTool: CanvasTool {
   public let pointerStyle: PointerStyleCompatible = .grabIdle
 
   public var inputPolicy: CanvasInputPolicy {
-    .init(pointerDragPanEnabled: true, dragBehaviour: .continuous)
+    .init(dragBehaviour: .continuous)
   }
 
   public init() {}
