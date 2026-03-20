@@ -42,6 +42,9 @@ struct CellSelectionCanvas: View {
       drawSelectionBox(context)
 
     }  // END canvas
+    .onCanvasTap { point in
+      <#code#>
+    }
   }
 }
 

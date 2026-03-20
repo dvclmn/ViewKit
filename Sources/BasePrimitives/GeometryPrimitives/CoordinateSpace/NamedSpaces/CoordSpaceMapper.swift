@@ -32,7 +32,7 @@ extension CoordinateSpaceMapper {
   }
 
   /// Convert screen-space point to canvas-space
-  func canvasPoint(from screenPoint: Point<ScreenSpace>) -> Point<CanvasSpace> {
+  public func canvasPoint(from screenPoint: Point<ScreenSpace>) -> Point<CanvasSpace> {
     Point<CanvasSpace>(
       x: (screenPoint.x - artworkFrame.minX) / zoomClamped,
       y: (screenPoint.y - artworkFrame.minY) / zoomClamped
@@ -46,6 +46,17 @@ extension CoordinateSpaceMapper {
 
   private var canvasXRange: Range<CGFloat> { 0..<canvasSize.width }
   private var canvasYRange: Range<CGFloat> { 0..<canvasSize.height }
+
+  /// Convert screen-space rect to canvas-space
+  public func canvasRect(from screenRect: Rect<ScreenSpace>) -> Rect<CanvasSpace> {
+    let origin = canvasPoint(from: screenRect.origin)
+    return Rect<CanvasSpace>(
+      x: origin.x,
+      y: origin.y,
+      width: screenRect.width / zoomClamped,
+      height: screenRect.height / zoomClamped
+    )
+  }
 
   public func isInsideCanvas(_ canvasPoint: Point<CanvasSpace>) -> Bool {
     canvasXRange.contains(canvasPoint.x)

@@ -32,3 +32,4 @@ public enum ToolAction: Sendable {
   /// No domain action.
   case none
 }
+

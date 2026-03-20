@@ -169,7 +169,8 @@ extension CanvasInteractionState {
     )
   }
 
-  private var coordinateSpaceMapper: CoordinateSpaceMapper? {
+  /// Exposed for event modifiers that need to convert coordinates.
+  public var coordinateSpaceMapper: CoordinateSpaceMapper? {
     guard let geometry, let zoomRange else { return nil }
     return .init(
       geometry: geometry,
