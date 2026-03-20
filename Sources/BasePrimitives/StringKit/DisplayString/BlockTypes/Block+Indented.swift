@@ -61,6 +61,9 @@ extension Indented {
 private struct IndentedLineBuilder {
   let indent: String
 
+  /// Hard coded for now
+  let glyphStyle: IndentGlyphStyle = .rounded
+
   mutating func build(from elements: [String]) -> [String] {
     var result: [String] = []
     for (index, element) in elements.enumerated() {
@@ -78,4 +81,36 @@ private struct IndentedLineBuilder {
     }
     return result
   }
+}
+
+enum IndentGlyphStyle {
+  case standard
+  case rounded
+
+  var glyphs: IndentGlyphs {
+    switch self {
+      case .standard:
+        IndentGlyphs(
+          corner: "└",
+          join: "├",
+          horizontal: "─",
+          vertical: "│"
+        )
+      case .rounded:
+        IndentGlyphs(
+          corner: "╰",
+          join: "├",
+          horizontal: "─",
+          vertical: "│"
+        )
+    }
+  }
+
+}
+
+struct IndentGlyphs {
+  let corner: Character
+  let join: Character
+  let horizontal: Character
+  let vertical: Character
 }

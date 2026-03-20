@@ -16,11 +16,7 @@ struct SetOfOptionsExtensionBuilder {
 
   let detectedStruct: Struct
 
-  init(
-    node: AttributeSyntax,
-    decl: some DeclGroupSyntax,
-  ) throws {
-
+  init(node: AttributeSyntax, decl: some DeclGroupSyntax) throws {
     guard let structDecl = decl as? StructDeclSyntax else {
       throw MacroError("@SetOfOptions can only be attached to struct declarations")
     }
@@ -36,22 +32,19 @@ extension SetOfOptionsExtensionBuilder {
     return false
   }
 
-  var inheritedTypes: [Type] {
-    detectedStruct.inheritedTypes
-  }
+  var inheritedTypes: [Type] { detectedStruct.inheritedTypes }
 }
 
 extension SetOfOptionsExtensionBuilder {
   func build() throws -> [ExtensionDeclSyntax] {
 
     let conformanceType = "OptionSet"
+
     /// Check for existing conformances
     let hasOptionSetConformance = hasConformance(named: conformanceType)
 
-    /// If already conforms, then exit early — job done!
-    guard !hasOptionSetConformance else {
-      return []
-    }
+    /// If already conforms, then exit early
+    guard !hasOptionSetConformance else { return [] }
 
     /// Otherwise, create the conformance
     let conformance = try ExtensionDeclSyntax(

@@ -10,63 +10,33 @@
 /// Each tool declares its own `inputPolicy`, which is pushed into the
 /// environment by `InteractionStateSetupModifier`. The policy gates
 /// gesture modifiers in `InteractionModifiers`:
-///
-/// - `swipeGestureEnabled`: Two-finger trackpad pan gesture
-/// - `pinchGestureEnabled`: Two-finger pinch-to-zoom gesture
-/// - `dragBehaviour`: What kind of drag interaction the pointer produces
-///   (marquee selection, continuous offset for pan/zoom, or disabled)
-/// - `hoverEnabled`: Whether pointer hover tracking is permitted
 public struct CanvasInputPolicy: Equatable, Sendable {
 
   public var activeInputs: ActiveInputs
-  /// Whether two-finger trackpad pan is active.
-  //  public var swipeGestureEnabled: Bool
 
-  /// Whether two-finger pinch-to-zoom is active.
-  //  public var pinchGestureEnabled: Bool
-
-  /// Whether pointer click-drag can pan the canvas.
-  //  public var pointerDragPanEnabled: Bool
-
-  /// The drag interaction mode: `.marquee`, `.continuous(axes:)`, or `.none`.
+  /// The drag interaction mode
   public var dragBehaviour: DragBehavior
-
-  /// Whether pointer hover position is tracked.
-  //  public var hoverEnabled: Bool
 
   public init(
     activeInputs: ActiveInputs = .all,
-    //    swipeGestureEnabled: Bool = true,
-    //    pinchGestureEnabled: Bool = true,
-    //    pointerDragPanEnabled: Bool = false,
     dragBehaviour: DragBehavior = .none,
-    //    hoverEnabled: Bool = true
+
   ) {
     self.activeInputs = activeInputs
-    //    self.swipeGestureEnabled = swipeGestureEnabled
-    //    self.pinchGestureEnabled = pinchGestureEnabled
-    //    self.pointerDragPanEnabled = pointerDragPanEnabled
     self.dragBehaviour = dragBehaviour
-    //    self.hoverEnabled = hoverEnabled
+
   }
 
   /// Default idle policy: gestures enabled, no pointer-drag pan, hover on.
   public static let standard = CanvasInputPolicy()
-
-  /// Locks zoom gesture only.
-  //  public static let lockScale = CanvasInputPolicy(pinchGestureEnabled: false)
 }
 
 extension CanvasInputPolicy: CustomStringConvertible {
   public var description: String {
     DisplayString {
-      Indented("Canvas Input Policy") {
-        Labeled("Inputs", value: activeInputs)
-        //        Labeled("Swipe", value: swipeGestureEnabled)
-        //        Labeled("Pinch", value: pinchGestureEnabled)
-        //        Labeled("Pointer drag pan", value: pointerDragPanEnabled)
+      Indented {
+        Labeled("Active Inputs", value: "[" + activeInputs.stringValueJoined() + "]")
         Labeled("Drag behaviour", value: dragBehaviour.name)
-        //        Labeled("Hover", value: hoverEnabled)
       }
     }.text
   }

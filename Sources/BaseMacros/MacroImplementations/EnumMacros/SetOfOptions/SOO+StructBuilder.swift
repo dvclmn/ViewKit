@@ -23,14 +23,13 @@ struct SetOfOptionsBuilder {
     context: some MacroExpansionContext,
   ) throws {
 
-    /// 1) Ensure we’re attached to a struct
+    /// Ensure we’re attached to a struct
     guard let structDecl = decl as? StructDeclSyntax else {
       throw MacroError("@SetOfOptions must be attached to a struct")
     }
-
     self.parentStruct = Struct(structDecl)
 
-    /// 2) Find nested enum named "Options"
+    /// Find nested enum named "Options"
     guard
       let optionsEnumDecl = structDecl.memberBlock.members
         .compactMap({ $0.decl.as(EnumDeclSyntax.self) })
@@ -38,10 +37,9 @@ struct SetOfOptionsBuilder {
     else {
       throw MacroError("@SetOfOptions requires nested enum named 'Options'")
     }
-
     self.optionsEnum = Enum(optionsEnumDecl)
 
-    /// 3) Extract RawType from attribute generic args (e.g. `@SetOfOptions<UInt8>`)
+    /// Extract RawType from attribute generic args (e.g. `@SetOfOptions<UInt8>`)
     guard let raw = Self.getRawType(from: node) else {
       throw MacroError("@SetOfOptions<RawType> generic argument is required, e.g. @SetOfOptions<UInt8>")
     }
@@ -52,11 +50,8 @@ struct SetOfOptionsBuilder {
 
 extension SetOfOptionsBuilder {
 
-  var access: String {
-    parentStruct.accessLevel?.name ?? ""
-  }
-  //  var access: String { parentStruct.accessLevel?.name ?? "" }
-
+  var access: String { parentStruct.accessLevel?.name ?? "" }
+  
   func build() -> [DeclSyntax] {
     let result: [DeclSyntax] =
       rawValueMethods()
@@ -82,6 +77,7 @@ extension SetOfOptionsBuilder {
 
   func rawValueMethods() -> [DeclSyntax] {
     [
+      
       "\(raw: access) let rawValue: \(rawType)",
       "\(raw: access) init(rawValue: \(rawType)) { self.rawValue = rawValue }",
     ]
@@ -108,11 +104,7 @@ extension SetOfOptionsBuilder {
   }
 
   func optionSetAllProperty() -> DeclSyntax {
-
     let allContent = optionsEnum.casesList(.memberList(trailing: ","))
-    //    let allContent = optionsEnum.casesList { item in
-    //      "." + item.name + ","
-    //    }
     return """
         \(access) static let all: Self = [\(allContent)]
       """

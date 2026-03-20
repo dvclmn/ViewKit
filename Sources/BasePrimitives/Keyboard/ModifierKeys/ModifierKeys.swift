@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 23/7/2024.
 //
 
-//import EnumMacros
+import EnumMacros
 import SwiftUI
 
 /// AppKit modifiers: `NSEvent.ModifierFlags`
@@ -18,7 +18,7 @@ extension EnvironmentValues {
 public typealias Modifiers = ModifierKeys
 
 /// A representation of Modifier keys that doesn't use SwiftUI or AppKit
-//@SetOfOptions<Int>
+@SetOfOptions<Int>
 public struct ModifierKeys: Sendable, Hashable {
   public enum Options: Int, CaseIterable, Identifiable, Hashable, Equatable {
     case shift
@@ -28,74 +28,6 @@ public struct ModifierKeys: Sendable, Hashable {
     case capsLock
     case numericPad
   }
-
-  public let rawValue: Int
-
-  public init(rawValue: Int) {
-    self.rawValue = rawValue
-  }
-
-  public static let shift: Self = Self(rawValue: 1 << Options.shift.rawValue)
-  public static let option: Self = Self(rawValue: 1 << Options.option.rawValue)
-  public static let command: Self = Self(rawValue: 1 << Options.command.rawValue)
-  public static let control: Self = Self(rawValue: 1 << Options.control.rawValue)
-  public static let capsLock: Self = Self(rawValue: 1 << Options.capsLock.rawValue)
-  public static let numericPad: Self = Self(rawValue: 1 << Options.numericPad.rawValue)
-
-  public static let all: Self = [
-    .shift,
-    .option,
-    .command,
-    .control,
-    .capsLock,
-    .numericPad,
-  ]
-
-  public static func stringValue(
-    for option: Options,
-    isSnakeCase: Bool = false
-  ) -> String {
-    switch option {
-      case .shift:
-        "shift"
-      case .option:
-        "option"
-      case .command:
-        "command"
-      case .control:
-        "control"
-      case .capsLock:
-        isSnakeCase ? "caps_lock" : "capsLock"
-      case .numericPad:
-        isSnakeCase ? "numeric_pad" : "numericPad"
-    }
-  }
-
-  public func stringValueJoined(isSnakeCase: Bool = false) -> String {
-    var strings: [String] = []
-    if self.contains(.shift) {
-      strings.append(Self.stringValue(for: Options.shift, isSnakeCase: isSnakeCase))
-    }
-    if self.contains(.option) {
-      strings.append(Self.stringValue(for: Options.option, isSnakeCase: isSnakeCase))
-    }
-    if self.contains(.command) {
-      strings.append(Self.stringValue(for: Options.command, isSnakeCase: isSnakeCase))
-    }
-    if self.contains(.control) {
-      strings.append(Self.stringValue(for: Options.control, isSnakeCase: isSnakeCase))
-    }
-    if self.contains(.capsLock) {
-      strings.append(Self.stringValue(for: Options.capsLock, isSnakeCase: isSnakeCase))
-    }
-    if self.contains(.numericPad) {
-      strings.append(Self.stringValue(for: Options.numericPad, isSnakeCase: isSnakeCase))
-    }
-    return strings.joined(separator: ", ")
-  }
-}
-
-nonisolated extension ModifierKeys: OptionSet {
 }
 
 extension ModifierKeys.Options {
