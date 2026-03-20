@@ -45,7 +45,7 @@ extension ZoomTool {
         )
 
       case .pointerTapGesture(_, _):
-        let step: CGFloat = interaction.modifiers.contains(.option) ? 0.8 : 1.25
+        let step = interaction.modifiers.contains(.option) ? 0.8 : 1.25
         var new = currentTransform
         new.scale *= step
         return .intent(.mutateTransform(new))

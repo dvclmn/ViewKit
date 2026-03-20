@@ -28,3 +28,7 @@ public struct CanvasGeometry: Sendable, Equatable {
     self.anchor = anchor
   }
 }
+
+extension CanvasGeometry {
+  public var viewportSize: CGSize { viewportRect.cgRect.size }
+}

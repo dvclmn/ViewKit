@@ -18,58 +18,60 @@
 /// - `hoverEnabled`: Whether pointer hover tracking is permitted
 public struct CanvasInputPolicy: Equatable, Sendable {
 
-//  public var activeInputs: ActiveInputs
+  public var activeInputs: ActiveInputs
   /// Whether two-finger trackpad pan is active.
-  public var swipeGestureEnabled: Bool
+  //  public var swipeGestureEnabled: Bool
 
   /// Whether two-finger pinch-to-zoom is active.
-  public var pinchGestureEnabled: Bool
+  //  public var pinchGestureEnabled: Bool
 
   /// Whether pointer click-drag can pan the canvas.
-//  public var pointerDragPanEnabled: Bool
+  //  public var pointerDragPanEnabled: Bool
 
   /// The drag interaction mode: `.marquee`, `.continuous(axes:)`, or `.none`.
   public var dragBehaviour: DragBehavior
 
   /// Whether pointer hover position is tracked.
-  public var hoverEnabled: Bool
+  //  public var hoverEnabled: Bool
 
   public init(
-    swipeGestureEnabled: Bool = true,
-    pinchGestureEnabled: Bool = true,
-//    pointerDragPanEnabled: Bool = false,
+    activeInputs: ActiveInputs = .all,
+    //    swipeGestureEnabled: Bool = true,
+    //    pinchGestureEnabled: Bool = true,
+    //    pointerDragPanEnabled: Bool = false,
     dragBehaviour: DragBehavior = .none,
-    hoverEnabled: Bool = true
+    //    hoverEnabled: Bool = true
   ) {
-    self.swipeGestureEnabled = swipeGestureEnabled
-    self.pinchGestureEnabled = pinchGestureEnabled
-//    self.pointerDragPanEnabled = pointerDragPanEnabled
+    self.activeInputs = activeInputs
+    //    self.swipeGestureEnabled = swipeGestureEnabled
+    //    self.pinchGestureEnabled = pinchGestureEnabled
+    //    self.pointerDragPanEnabled = pointerDragPanEnabled
     self.dragBehaviour = dragBehaviour
-    self.hoverEnabled = hoverEnabled
+    //    self.hoverEnabled = hoverEnabled
   }
 
   /// Default idle policy: gestures enabled, no pointer-drag pan, hover on.
   public static let standard = CanvasInputPolicy()
 
   /// Locks zoom gesture only.
-//  public static let lockScale = CanvasInputPolicy(pinchGestureEnabled: false)
+  //  public static let lockScale = CanvasInputPolicy(pinchGestureEnabled: false)
 }
 
 extension CanvasInputPolicy: CustomStringConvertible {
   public var description: String {
     DisplayString {
       Indented("Canvas Input Policy") {
-        Labeled("Swipe", value: swipeGestureEnabled)
-        Labeled("Pinch", value: pinchGestureEnabled)
-//        Labeled("Pointer drag pan", value: pointerDragPanEnabled)
+        Labeled("Inputs", value: activeInputs)
+        //        Labeled("Swipe", value: swipeGestureEnabled)
+        //        Labeled("Pinch", value: pinchGestureEnabled)
+        //        Labeled("Pointer drag pan", value: pointerDragPanEnabled)
         Labeled("Drag behaviour", value: dragBehaviour.name)
-        Labeled("Hover", value: hoverEnabled)
+        //        Labeled("Hover", value: hoverEnabled)
       }
     }.text
   }
 
-//  public var descriptionSingleLine: String {
-//    "InputPolicy [pan: \(swipeGestureEnabled), zoom: \(pinchGestureEnabled), dragPan: \(pointerDragPanEnabled), tapDrag: \(dragBehaviour.name), hover: \(hoverEnabled)]"
-//  }
+  //  public var descriptionSingleLine: String {
+  //    "InputPolicy [pan: \(swipeGestureEnabled), zoom: \(pinchGestureEnabled), dragPan: \(pointerDragPanEnabled), tapDrag: \(dragBehaviour.name), hover: \(hoverEnabled)]"
+  //  }
 }
-

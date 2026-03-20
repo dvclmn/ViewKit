@@ -27,9 +27,6 @@ struct DragGestureState {
   /// used to compute the frame-to-frame delta. `nil` on first frame.
   private var previousGestureTranslation: CGSize?
 
-//  init(_ behaviour: DragBehavior) {
-//    self.behaviour = behaviour
-//  }
 }
 
 extension DragGestureState {
@@ -84,12 +81,9 @@ extension DragGestureState {
     delta: CGSize
   ) -> CGSize {
     switch axes {
-      case .horizontal:
-        CGSize(width: delta.width, height: 0)
-      case .vertical:
-        CGSize(width: 0, height: delta.height)
-      default:
-        delta
+      case .horizontal: CGSize(width: delta.width, height: 0)
+      case .vertical: CGSize(width: 0, height: delta.height)
+      default: delta
     }
   }
 }
