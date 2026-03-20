@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 17/3/2026.
 //
 
-import Foundation
+import SwiftUI
 
 /// The output of a tool's `resolve()` method.
 ///
@@ -20,7 +20,9 @@ import Foundation
 public enum CanvasAdjustment: Sendable {
 
   /// Replace the entire transform state (pan, zoom, rotation).
-  case updateTransform(TransformState)
+  case updateTranslation(Size<ScreenSpace>)
+  case updateScale(Double)
+  case updateRotation(Angle)
 
   /// Update the pointer drag rectangle (e.g. marquee selection,
   /// or a tool-driven drag region).

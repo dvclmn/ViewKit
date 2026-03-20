@@ -16,17 +16,11 @@ public struct TransformState: Sendable, Equatable {
   public var translation: Size<ScreenSpace>
   public var scale: Double
   public var rotation: Angle
-  //  public var translation: ContinuousInteraction<CGSize>
-  //  public var scale: ContinuousInteraction<CGFloat>
-  //  public var rotation: ContinuousInteraction<Angle>
 
   public init(
     translation: Size<ScreenSpace> = .zero,
     scale: Double = 1.0,
     rotation: Angle = .zero,
-    //    translation: ContinuousInteraction<CGSize> = .init(.zero),
-    //    scale: ContinuousInteraction<CGFloat> = .init(1.0),
-    //    rotation: ContinuousInteraction<Angle> = .init(.zero),
   ) {
     self.translation = translation
     self.scale = scale
@@ -42,12 +36,6 @@ extension TransformState {
 
   public mutating func reset() {
     self = Self.identity
-    //    translation = .zero
-    //    scale = 1.0
-    //    rotation = .zero
-    //    pan = .init(.zero)
-    //    zoom = .init(1.0)
-    //    rotation = .init(.zero)
   }
 }
 

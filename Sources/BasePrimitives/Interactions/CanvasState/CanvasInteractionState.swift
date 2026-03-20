@@ -41,11 +41,11 @@ extension CanvasInteractionState {
 
   /// Entry point for all raw input events from gesture modifiers.
   ///
-  /// **Tier 1 — Global gestures** (swipe, pinch, hover) are handled
-  /// centrally here, via `GlobalInteraction`. Tools never see these events.
+  /// 1. Global gestures (swipe, pinch, hover) are handled centrally here,
+  /// via `GlobalInteraction`. Tools never see these events.
   ///
-  /// **Tier 2 — Pointer interactions** (tap, drag) are forwarded to
-  /// the active tool's `resolve()` method.
+  /// Pointer interactions (tap, drag) are forwarded to the active tool's
+  /// `resolvePointerInteraction()` method.
   public func handleInput(
     _ source: InteractionSource,
     phase: InteractionPhase,
@@ -54,16 +54,15 @@ extension CanvasInteractionState {
 
     guard let zoomRange else { return }
 
-    /// 1 – Global gestures, such as pinch to Zoom, swipe to Pan
-    GlobalInteraction.handleGlobalInteraction(
+    /// 1 – Global gestures,
+    let globalAdjustment = GlobalInteraction.handleGlobal(
       source,
       zoomRange: zoomRange,
       modifiers: modifiers,
-      transform: &transform,
-      pointer: &pointer
+      currentTransform: transform
     )
 
-    /// 2 – Tool-specific pointer interactions, like hover and tap
+    /// 2 – Tool-specific pointer interactions
     handlePointerInteraction(
       source: source,
       phase: phase,
@@ -71,21 +70,11 @@ extension CanvasInteractionState {
     )
   }
 
-  private func execute(_ adjustment: CanvasAdjustment) {
-    switch adjustment {
-      case .updateTransform(let transform): self.transform = transform
-      case .updatePointerDrag(let rect): self.pointer.drag = rect
-      case .updatePointerTap(let point): self.pointer.tap = point
-      case .updatePointerHover(let point): self.pointer.hover = point
-      case .none: break
-    }
-  }
-
   private func handlePointerInteraction(
     source: InteractionSource,
     phase: InteractionPhase,
     modifiers: Modifiers
-  ) {
+  ) -> CanvasAdjustment {
 
     guard let activeTool else { return }
 
@@ -101,24 +90,35 @@ extension CanvasInteractionState {
       currentTransform: transform
     )
 
-    execute(resolution.adjustment)
+    executeAdjustment(resolution.adjustment)
     self.lastToolAction = resolution.action
+  }
+
+  private func executeAdjustment(_ adjustment: CanvasAdjustment) {
+    switch adjustment {
+      case .updateTransform(let transform): self.transform = transform
+      case .updatePointerDrag(let rect): self.pointer.drag = rect
+      case .updatePointerTap(let point): self.pointer.tap = point
+      case .updatePointerHover(let point): self.pointer.hover = point
+      case .none: break
+    }
+  }
+
+  public func pointerStyle(with modifiers: Modifiers) -> PointerStyleCompatible? {
+    activeTool?.resolvePointerStyle(
+      context: InteractionContext(
+        source: source,
+        phase: phase,
+        modifiers: modifiers,
+      )
+    )
   }
 
 }
 
-// MARK: - Snapshot
+// MARK: - Mapping and Snapshot
 
 extension CanvasInteractionState {
-
-  private var coordinateSpaceMapper: CoordinateSpaceMapper? {
-    guard let geometry, let zoomRange else { return nil }
-    return .init(
-      geometry: geometry,
-      transform: transform,
-      zoomRange: zoomRange
-    )
-  }
 
   public var snapshot: CanvasSnapshot? {
     guard let hover = pointer.hover,
@@ -134,16 +134,13 @@ extension CanvasInteractionState {
       rotation: transform.rotation
     )
   }
-}
 
-extension CanvasInteractionState {
-  public func pointerStyle(with modifiers: Modifiers) -> PointerStyleCompatible? {
-    activeTool?.resolvePointerStyle(
-      context: InteractionContext(
-        source: source,
-        phase: phase,
-        modifiers: modifiers,
-      )
+  private var coordinateSpaceMapper: CoordinateSpaceMapper? {
+    guard let geometry, let zoomRange else { return nil }
+    return .init(
+      geometry: geometry,
+      transform: transform,
+      zoomRange: zoomRange
     )
   }
 }

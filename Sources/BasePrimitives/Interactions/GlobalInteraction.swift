@@ -8,7 +8,7 @@
 import Foundation
 
 struct GlobalInteraction {
-  package static func handleGlobalInteraction(
+  package static func handleGlobal(
     _ source: InteractionSource,
     zoomRange: ClosedRange<Double>,
     modifiers: Modifiers,
