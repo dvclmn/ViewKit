@@ -8,111 +8,30 @@
 import Foundation
 
 extension GridCanvas {
+
+  @Observable
+  public final class SelectionHandler {
   
-  public struct CellSelection {
-    private(set) var selected: Set<GridPosition> = []
+    private(set) public var selected: Set<GridPosition> = []
     public var lastSelected: GridPosition?
-    
+
     public var cellSize: CGSize?
     public var modifiers: Modifiers = []
-    
+
+    public init() {}
   }
 }
 
-extension GridCanvas.CellSelection {
-  
-  mutating func updateModifiers(_ modifiers: Modifiers) {
-    self.modifiers = modifiers
-  }
-  
-  mutating func updateCellSize(_ size: CGSize?) {
-    self.cellSize = size
-  }
-  
-  func selectedCells(in grid: Grid) -> [Grid.Cell] {
-    selected.compactMap { grid[at: $0] }
-    
-    //    canvas.artwork[at: position]
-    //    let cells: Artwork.Cells
-    //    for position in selectedCellPositions {
-    //      guard let newCell = canvas.artwork[at: position] else { continue }
-    //
-    //    }
-    //    canvas.artwork.cells.filter { cell in
-    ////      let pos = canvas.artwork[<#T##position: Int##Int#>]
-    //      selectedCellPositions.contains(cell.)
-    ////      selectedCellPositions.contains($0.position)
-    //    }
-    
-  }
-  
-  mutating func selectAll(in grid: Grid) {
-    fatalError("Need to fix")
-    //    let allPositions = gridCanvas.artwork.positions
-    //    self.replace(with: allPositions)
-  }
-  
-  mutating func add(_ positions: [GridPosition]) {
-    selected.formUnion(positions)
-    lastSelected = positions.last
-  }
-  
-  mutating func subtract(_ positions: [GridPosition]) {
-    selected.subtract(positions)
-    lastSelected = positions.last
-  }
-  
-  mutating func replace(with newPositions: [GridPosition]) {
-    selected = Set(newPositions)
-    lastSelected = newPositions.last
-  }
-  
-  mutating func clear() {
-    selected.removeAll()
-    lastSelected = nil
-  }
-  
-  mutating func moveCellSelection(
-    _ direction: Direction,
-    by delta: Int = 1,
-    in gridDimensions: GridDimensions,
-  ) {
-    guard let position = lastSelected else { return }
-    let newPosition = position.moved(
-      in: direction,
-      by: delta,
-      gridDimensions: gridDimensions,
-    )
-    self.replace(with: [newPosition])
-  }
-  
-  /// `applySelection` methods turned off whilst waiting for `selectionStyle`
-  /// and `CellSelectionInteraction` to be fixed
-  //  mutating func applySelection(
-  //    position: GridPosition,
-  //    cellSize: CGSize,
-  //  ) {
-  //    self.applySelection(
-  //      positions: [position],
-  //      cellSize: cellSize,
-  //    )
-  //  }
-  
-  //  mutating func applySelection(
-  //    positions: [GridPosition],
-  //    cellSize: CGSize,
-  //  ) {
-  //    //    fatalError("Currently not implemented, waiting for Interaction API to clear up")
-  //    let newPositions = selectionStyle.kind.resolvedPositions(
-  //      newPositions: positions,
-  //      lastSelected: lastSelected,
-  //      cellSize: cellSize,
-  //    )
-  //    handleSelection(forMode: selectionStyle.mode, newPositions)
-  //  }
-  
-  mutating func handleSelection(
-    forMode mode: CellSelectionMode,
+extension GridCanvas.SelectionHandler {
+
+  var mode: CellSelectionMode { .init(fromModifiers: modifiers) }
+
+//  func updateModifiers(_ modifiers: Modifiers) {
+//    self.modifiers = modifiers
+//  }
+
+  public func handleSelection(
+    //    forMode mode: CellSelectionMode,
     _ positions: [GridPosition],
   ) {
     switch mode {
@@ -126,6 +45,94 @@ extension GridCanvas.CellSelection {
         subtract(positions)
     }
   }
+  
+  public func updateCellSize(_ size: CGSize?) {
+    self.cellSize = size
+  }
+
+  func selectedCells(in grid: Grid) -> [Grid.Cell] {
+    selected.compactMap { grid[at: $0] }
+
+    //    canvas.artwork[at: position]
+    //    let cells: Artwork.Cells
+    //    for position in selectedCellPositions {
+    //      guard let newCell = canvas.artwork[at: position] else { continue }
+    //
+    //    }
+    //    canvas.artwork.cells.filter { cell in
+    ////      let pos = canvas.artwork[<#T##position: Int##Int#>]
+    //      selectedCellPositions.contains(cell.)
+    ////      selectedCellPositions.contains($0.position)
+    //    }
+
+  }
+
+  public func selectAll(in grid: Grid) {
+    fatalError("Need to fix")
+    //    let allPositions = gridCanvas.artwork.positions
+    //    self.replace(with: allPositions)
+  }
+
+  func add(_ positions: [GridPosition]) {
+    selected.formUnion(positions)
+    lastSelected = positions.last
+  }
+
+  func subtract(_ positions: [GridPosition]) {
+    selected.subtract(positions)
+    lastSelected = positions.last
+  }
+
+  func replace(with newPositions: [GridPosition]) {
+    selected = Set(newPositions)
+    lastSelected = newPositions.last
+  }
+
+  func clear() {
+    selected.removeAll()
+    lastSelected = nil
+  }
+
+ public func moveCellSelection(
+    _ direction: Direction,
+    by delta: Int = 1,
+    in gridDimensions: GridDimensions,
+  ) {
+    guard let position = lastSelected else { return }
+    let newPosition = position.moved(
+      in: direction,
+      by: delta,
+      gridDimensions: gridDimensions,
+    )
+    self.replace(with: [newPosition])
+  }
+
+  /// `applySelection` methods turned off whilst waiting for `selectionStyle`
+  /// and `CellSelectionInteraction` to be fixed
+  //  func applySelection(
+  //    position: GridPosition,
+  //    cellSize: CGSize,
+  //  ) {
+  //    self.applySelection(
+  //      positions: [position],
+  //      cellSize: cellSize,
+  //    )
+  //  }
+
+  //  func applySelection(
+  //    positions: [GridPosition],
+  //    cellSize: CGSize,
+  //  ) {
+  //    //    fatalError("Currently not implemented, waiting for Interaction API to clear up")
+  //    let newPositions = selectionStyle.kind.resolvedPositions(
+  //      newPositions: positions,
+  //      lastSelected: lastSelected,
+  //      cellSize: cellSize,
+  //    )
+  //    handleSelection(forMode: selectionStyle.mode, newPositions)
+  //  }
+
+
 }
 
 //extension Interaction {

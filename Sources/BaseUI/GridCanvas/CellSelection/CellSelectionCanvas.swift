@@ -12,6 +12,7 @@ import SwiftUI
 
 extension GridCanvas {
   struct CellSelectionCanvas: View {
+    @Environment(SelectionHandler.self) private var store
     @Environment(\.unitSize) private var unitSize
     @Environment(\.cornerRounding) private var cornerRounding
     @Environment(\.gridDimensions) private var gridDimensions
@@ -32,7 +33,7 @@ extension GridCanvas {
 
         context.fillCanvas(with: canvasBackground, in: size)
 
-        // MARK: - Grid Lines
+        /// Grid Lines
         context.drawGrid(
           domain: .canvas,
           in: size,
@@ -41,7 +42,8 @@ extension GridCanvas {
           drawsBorder: false
         )
 
-        drawSelectionBox(context)
+        /// Hovered Cell rect
+        drawHoverCell(context)
 
       }  // END canvas
 
@@ -53,6 +55,34 @@ extension GridCanvas {
 extension GridCanvas.CellSelectionCanvas {
 
   private func drawSelectionBox(_ context: GraphicsContext) {
+//    guard isCellSelectionEnabled else { return }
+//    guard let rect = selectionRect,
+//          let gridDimensions,
+//          let hoverPos = pointerGridPosition
+//    else { return }
+    
+    let positions = store.selected
+    
+//    let size: GridDimensions = .ini
+    let rect: GridRect = .init(origin: <#T##GridPosition#>, size: <#T##GridDimensions#>)
+    
+    let radii = rectRadii(
+      dimensions: gridDimensions,
+      position: hoverPos
+    )
+    
+    let path = Path(roundedRect: rect, cornerRadii: radii)
+    
+    context.fillAndStroke(
+      path,
+      fillColour: .cyan.opacity(0.25),
+      strokeColour: .blue.opacity(0.8),
+      strokeThickness: 1
+    )
+  }
+
+  
+  private func drawHoverCell(_ context: GraphicsContext) {
     guard isCellSelectionEnabled else { return }
     guard let rect = selectionRect,
       let gridDimensions,

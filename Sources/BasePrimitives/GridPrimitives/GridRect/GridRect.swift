@@ -32,4 +32,14 @@ extension GridRect {
   public func contains(_ position: GridPosition) -> Bool {
     (min...max).contains(position)
   }
+  
+  /// All valid positions within this rect, offset by `origin`.
+  /// Positions are enumerated row-major from `origin` to `max` (inclusive of origin, exclusive of max).
+  public var allPositions: [GridPosition] {
+    (0..<size.height).flatMap { row in
+      (0..<size.width).map { column in
+        GridPosition(column: origin.column + column, row: origin.row + row)
+      }
+    }
+  }
 }

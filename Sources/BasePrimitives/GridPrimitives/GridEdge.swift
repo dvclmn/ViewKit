@@ -13,13 +13,8 @@ public enum GridEdge: String, Sendable, Codable, Equatable, Hashable, CaseIterab
   case bottom
   case leading
 
-  public var isRowEdge: Bool {
-    self == .top || self == .bottom
-  }
-
-  public var isColumnEdge: Bool {
-    self == .leading || self == .trailing
-  }
+  public var isRowEdge: Bool { self == .top || self == .bottom }
+  public var isColumnEdge: Bool { self == .leading || self == .trailing }
 
   public var name: String { rawValue.capitalized }
 

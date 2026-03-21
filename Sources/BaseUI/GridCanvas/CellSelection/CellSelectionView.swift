@@ -12,7 +12,8 @@ import SwiftUI
 
 extension GridCanvas {
   public struct CellSelectionView<Content: View>: View {
-      @State private var store: SelectionHandler<Grid> = .init()
+    @Environment(SelectionHandler.self) private var store
+    @Environment(\.unitSize) private var unitSize
 
     let content: () -> Content
 
@@ -20,21 +21,34 @@ extension GridCanvas {
       self.content = content
     }
     public var body: some View {
+      
+      @Bindable var store = store
 
       GridCanvasView {
         CellSelectionCanvas()
           .allowsCanvasClipping(false)
 
+//          .onGridDrag { origin, end in
+//            <#code#>
+//          }
           .onGridTap { position in
-            
-            store.selected.insert(position)
-//            let tappedPosition
+            store.handleSelection([position])
+            //            store.selected.insert(position)
+
             print("Tapped cell: \(position)")
           }
 
         content()
       }
+
+      .debugTextOverlay(alignment: .bottomLeading) {
+        Labeled("Selected", value: store.selected.map(\.description).joined(separator: ", "))
+      }
+
       .environment(\.shouldShowInfoBarItems, true)
+
+      .syncModifiers(to: $store.modifiers)
+      .task(id: unitSize) { store.updateCellSize(unitSize) }
     }
   }
 }
