@@ -6,8 +6,12 @@
 //
 
 import BasePrimitives
+import CanvasKit
 import SwiftUI
 
+//public typealias GridCanvasView<Grid: GridShaped, Content: View> = GridCanvas<Grid>.GridCanvasView<Content>
+
+//extension GridCanvas {
 public struct GridCanvasView<Content: View>: View {
   @Environment(\.viewportRect) private var viewportRect
   @Environment(\.gridDimensions) private var gridDimensions
@@ -21,22 +25,17 @@ public struct GridCanvasView<Content: View>: View {
   }
 
   public var body: some View {
-    CanvasView(gridCanvasSize: gridCanvasSize, content: content)
+    if let gridCanvasSize {
+      CanvasView(canvasSize: gridCanvasSize, content: content)
+    } else {
+      StateView("Please provide ")
+    }
   }
 }
 
-/// A specialised CanvasView init for Grid usage
-extension CanvasView {
-  fileprivate init(
-    gridCanvasSize: Size<CanvasSpace>?,
-    @ViewBuilder content: @escaping () -> Content,
-  ) {
-    self.canvasSize = gridCanvasSize
-    self.content = content
-  }
-}
-
+//}
 extension GridCanvasView {
+  //extension GridCanvas.GridCanvasView {
   private var gridCanvasSize: Size<CanvasSpace>? {
     guard let unitSize, let gridDimensions,
       let size = gridDimensions.toScreenSize(using: unitSize)

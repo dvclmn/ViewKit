@@ -34,6 +34,10 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element 
   ) -> Rows
 }
 
+public protocol GridCell: BlankCreatable, Sendable, Equatable, Hashable {
+  
+}
+
 public protocol BlankCreatable {
   static func createBlank() -> Self
 }

@@ -46,7 +46,7 @@ extension GridCanvasGeometryModifier {
 }
 
 extension View {
-  /// A grid setup overload to accept a whole `GridCanvas`, to make it tidier
+  /// A grid setup overload to accept a whole `ASCIIDocument`, to make it tidier
   public func gridCanvasSetup(
     font: GridFont,
     fontSize: CGFloat,

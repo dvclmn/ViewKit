@@ -10,47 +10,47 @@ import CanvasKit
 import GraphicsKit
 import SwiftUI
 
-struct CellSelectionCanvas: View {
-  @Environment(\.unitSize) private var unitSize
-  @Environment(\.cornerRounding) private var cornerRounding
-  @Environment(\.gridDimensions) private var gridDimensions
-  @Environment(\.canvasBackground) private var canvasBackground
-  @Environment(\.gridGeometry) private var gridGeometry
-  @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers
-  @Environment(\.pointerGridPosition) private var pointerGridPosition
-  @Environment(\.isCellSelectionEnabled) private var isCellSelectionEnabled
+extension GridCanvas {
+  struct CellSelectionCanvas: View {
+    @Environment(\.unitSize) private var unitSize
+    @Environment(\.cornerRounding) private var cornerRounding
+    @Environment(\.gridDimensions) private var gridDimensions
+    @Environment(\.canvasBackground) private var canvasBackground
+    @Environment(\.gridGeometry) private var gridGeometry
+    @Environment(\.isShowingCellNumbers) private var isShowingCellNumbers
+    @Environment(\.pointerGridPosition) private var pointerGridPosition
+    @Environment(\.isCellSelectionEnabled) private var isCellSelectionEnabled
 
-  private let rounding: CGFloat = 4
+    private let rounding: CGFloat = 4
 
-  var body: some View {
+    var body: some View {
 
-    Canvas(
-      opaque: true,
-      rendersAsynchronously: true
-    ) { context, size in
+      Canvas(
+        opaque: true,
+        rendersAsynchronously: true
+      ) { context, size in
 
-      context.fillCanvas(with: canvasBackground, in: size)
+        context.fillCanvas(with: canvasBackground, in: size)
 
-      // MARK: - Grid Lines
-      context.drawGrid(
-        domain: .canvas,
-        in: size,
-        sizeMode: .fillContainer,
-        pinMode: .canvas,
-        drawsBorder: false
-      )
+        // MARK: - Grid Lines
+        context.drawGrid(
+          domain: .canvas,
+          in: size,
+          sizeMode: .fillContainer,
+          pinMode: .canvas,
+          drawsBorder: false
+        )
 
-      drawSelectionBox(context)
+        drawSelectionBox(context)
 
-    }  // END canvas
-    .onGridTap { position in
-      print("Tapped cell: \(position)")
+      }  // END canvas
+
     }
-    
   }
+
 }
 
-extension CellSelectionCanvas {
+extension GridCanvas.CellSelectionCanvas {
 
   private func drawSelectionBox(_ context: GraphicsContext) {
     guard isCellSelectionEnabled else { return }
