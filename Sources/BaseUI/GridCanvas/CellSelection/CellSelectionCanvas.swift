@@ -42,10 +42,13 @@ extension GridCanvas {
           drawsBorder: false
         )
 
+        drawSelection(context)
+
         /// Hovered Cell rect
         drawHoverCell(context)
 
       }  // END canvas
+      //      .onAppear { seedDebugSelectionIfNeeded() }
 
     }
   }
@@ -54,34 +57,6 @@ extension GridCanvas {
 
 extension GridCanvas.CellSelectionCanvas {
 
-  private func drawSelectionBox(_ context: GraphicsContext) {
-//    guard isCellSelectionEnabled else { return }
-//    guard let rect = selectionRect,
-//          let gridDimensions,
-//          let hoverPos = pointerGridPosition
-//    else { return }
-    
-    let positions = store.selected
-    
-//    let size: GridDimensions = .ini
-    let rect: GridRect = .init(origin: <#T##GridPosition#>, size: <#T##GridDimensions#>)
-    
-    let radii = rectRadii(
-      dimensions: gridDimensions,
-      position: hoverPos
-    )
-    
-    let path = Path(roundedRect: rect, cornerRadii: radii)
-    
-    context.fillAndStroke(
-      path,
-      fillColour: .cyan.opacity(0.25),
-      strokeColour: .blue.opacity(0.8),
-      strokeThickness: 1
-    )
-  }
-
-  
   private func drawHoverCell(_ context: GraphicsContext) {
     guard isCellSelectionEnabled else { return }
     guard let rect = selectionRect,
@@ -151,4 +126,114 @@ extension GridCanvas.CellSelectionCanvas {
       topTrailing: topTrailing
     )
   }
+
+  // MARK: - Selection Rendering
+
+  private struct OutlineSegment: Hashable {
+    let x1: Int
+    let y1: Int
+    let x2: Int
+    let y2: Int
+
+    init(_ x1: Int, _ y1: Int, _ x2: Int, _ y2: Int) {
+      // normalize so identical segments hash the same
+      if x1 < x2 || (x1 == x2 && y1 < y2) {
+        self.x1 = x1
+        self.y1 = y1
+        self.x2 = x2
+        self.y2 = y2
+      } else {
+        self.x1 = x2
+        self.y1 = y2
+        self.x2 = x1
+        self.y2 = y1
+      }
+    }
+  }
+
+  private func drawSelection(_ context: GraphicsContext) {
+    guard isCellSelectionEnabled else { return }
+    guard !store.selected.isEmpty else { return }
+    guard let cellSize = gridGeometry?.projection.unitSize ?? unitSize else { return }
+
+    // Fill selected cells
+    drawSelectionFill(context, selected: store.selected, cellSize: cellSize, color: .cyan.opacity(0.2))
+
+    // Stroke outer outline with emphasis
+    let outline = outlineSegments(from: store.selected)
+    drawSelectionOutline(
+      context, segments: outline, cellSize: cellSize, color: .blue.opacity(0.9), lineWidth: 2)
+  }
+
+  private func drawSelectionFill(
+    _ context: GraphicsContext,
+    selected: Set<GridPosition>,
+    cellSize: CGSize,
+    color: Color
+  ) {
+    for pos in selected {
+      let rect = CGRect(
+        x: CGFloat(pos.column) * cellSize.width,
+        y: CGFloat(pos.row) * cellSize.height,
+        width: cellSize.width,
+        height: cellSize.height
+      )
+      context.fill(Path(rect), with: .color(color))
+    }
+  }
+
+  private func outlineSegments(from selected: Set<GridPosition>) -> Set<OutlineSegment> {
+    var edges = Set<OutlineSegment>()
+    for pos in selected {
+      let c = pos.column
+      let r = pos.row
+
+      // Four edges of the cell in lattice coordinates
+      let top = OutlineSegment(c, r, c + 1, r)
+      let bottom = OutlineSegment(c, r + 1, c + 1, r + 1)
+      let left = OutlineSegment(c, r, c, r + 1)
+      let right = OutlineSegment(c + 1, r, c + 1, r + 1)
+
+      for e in [top, bottom, left, right] {
+        if edges.contains(e) {
+          edges.remove(e)  // shared edge -> internal -> cancel
+        } else {
+          edges.insert(e)
+        }
+      }
+    }
+    return edges
+  }
+
+  private func drawSelectionOutline(
+    _ context: GraphicsContext,
+    segments: Set<OutlineSegment>,
+    cellSize: CGSize,
+    color: Color,
+    lineWidth: CGFloat
+  ) {
+    var style = StrokeStyle(lineWidth: lineWidth, lineCap: .square, lineJoin: .round)
+    for e in segments {
+      var p = Path()
+      let p1 = CGPoint(x: CGFloat(e.x1) * cellSize.width, y: CGFloat(e.y1) * cellSize.height)
+      let p2 = CGPoint(x: CGFloat(e.x2) * cellSize.width, y: CGFloat(e.y2) * cellSize.height)
+      p.move(to: p1)
+      p.addLine(to: p2)
+      context.stroke(p, with: .color(color), style: style)
+    }
+  }
+
+  // MARK: - Debug seeding
+
+  //  private func seedDebugSelectionIfNeeded() {
+  //    #if DEBUG
+  //    if store.selected.isEmpty {
+  //      // Example: a 3x2 block starting at (2,1) plus an extra cell to make it irregular
+  //      var samples: [GridPosition] = []
+  //      for c in 0..<3 { for r in 0..<2 { samples.append(GridPosition(column: 2 + c, row: 1 + r)) } }
+  //      samples.append(GridPosition(column: 6, row: 2))
+  //      store.replace(with: samples)
+  //    }
+  //    #endif
+  //  }
 }
