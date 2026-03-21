@@ -16,7 +16,8 @@
 /// - Column-wise operations normalize rows to rectangular shape before applying changes.
 public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row, Index == Int {
 
-  associatedtype Cell: BlankCreatable, Sendable, Equatable, Hashable
+  /// Note: No Identifiable here — identity comes from GridPosition at the use site
+  associatedtype Cell: GridCell
 
   typealias Rows = [[Cell]]
   typealias Row = [Cell]

@@ -7,6 +7,8 @@
 
 import Foundation
 
+extension Character: GridCell {}
+
 extension Character: BlankCreatable {
   public static func createBlank() -> Character {
     #if DEBUG

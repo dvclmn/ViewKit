@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+// MARK: - Positioned cell entry
+
+/// A cell value paired with its position in a grid.
+/// `position` serves as the SwiftUI identity — use `id: \.position` in ForEach.
+public struct GridEntry<Cell: GridCell>: Sendable {
+  public let position: GridPosition
+  public let cell: Cell
+}
+
 // MARK: - Collection conformance
 extension GridShaped {
 
@@ -30,6 +39,20 @@ extension GridShaped {
 
   public func enumerated() -> EnumeratedSequence<Rows> {
     rows.enumerated()
+  }
+
+  /// A lazy sequence of every cell paired with its `GridPosition`.
+  /// Use `id: \.position` in SwiftUI `ForEach` — position is the stable spatial identity.
+  ///
+  ///     ForEach(grid.positionedCells, id: \.position) { entry in
+  ///         CellView(entry.cell, at: entry.position)
+  ///     }
+  public var positionedCells: some Sequence<GridEntry<Cell>> {
+    rows.lazy.enumerated().flatMap { rowIndex, row in
+      row.lazy.enumerated().map { colIndex, cell in
+        GridEntry(position: GridPosition(column: colIndex, row: rowIndex), cell: cell)
+      }
+    }
   }
 
   public mutating func append(_ row: Row) {
