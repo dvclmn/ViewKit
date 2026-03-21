@@ -26,7 +26,9 @@ extension GridCanvas {
           .allowsCanvasClipping(false)
 
           .onGridTap { position in
-            store.
+            
+            store.selected.insert(position)
+//            let tappedPosition
             print("Tapped cell: \(position)")
           }
 

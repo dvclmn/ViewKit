@@ -13,7 +13,7 @@ extension Set where Element == KeyEquivalent {
   }
 }
 
-/// See `ModifierKeys` for similar name/icon properties for modifiers
+/// See `Modifiers` for similar name/icon properties for modifiers
 extension KeyEquivalent {
 
   public func name(isAbbreviated: Bool = false) -> String {

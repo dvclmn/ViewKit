@@ -15,11 +15,11 @@ extension EnvironmentValues {
 }
 
 /// This `Modifiers` is used a lot throughout this package and various project
-public typealias Modifiers = ModifierKeys
+//public typealias Modifiers = Modifiers
 
 /// A representation of Modifier keys that doesn't use SwiftUI or AppKit
 @SetOfOptions<Int>
-public struct ModifierKeys: Sendable, Hashable {
+public struct Modifiers: Sendable, Hashable {
   public enum Options: Int, CaseIterable, Identifiable, Hashable, Equatable {
     case shift
     case option
@@ -30,15 +30,15 @@ public struct ModifierKeys: Sendable, Hashable {
   }
 }
 
-extension ModifierKeys.Options {
+extension Modifiers.Options {
   public var id: Int { rawValue }
 }
 
-extension ModifierKeys {
+extension Modifiers {
   #if canImport(AppKit)
   public init(from event: NSEvent) {
     let flags = event.modifierFlags
-    var result: ModifierKeys = []
+    var result: Modifiers = []
     if flags.contains(.shift) { result.insert(.shift) }
     if flags.contains(.control) { result.insert(.control) }
     if flags.contains(.option) { result.insert(.option) }
@@ -50,7 +50,7 @@ extension ModifierKeys {
   #endif
 
   public init(from swiftUIKey: EventModifiers) {
-    var result: ModifierKeys = []
+    var result: Modifiers = []
     if swiftUIKey.contains(.shift) { result.insert(.shift) }
     if swiftUIKey.contains(.control) { result.insert(.control) }
     if swiftUIKey.contains(.option) { result.insert(.option) }
@@ -67,14 +67,14 @@ extension ModifierKeys {
   public var isHoldingCommand: Bool { contains(.command) }
 }
 
-extension ModifierKeys {
+extension Modifiers {
 
   struct Metadata: Hashable {
     let name: String
     let symbol: String
   }
 
-  private static let metadata: [ModifierKeys: ModifierKeys.Metadata] = [
+  private static let metadata: [Modifiers: Modifiers.Metadata] = [
     .shift: .init(name: "Shift", symbol: "􀆝"),
     .control: .init(name: "Control", symbol: "􀆍"),
     .option: .init(name: "Option", symbol: "􀆕"),
@@ -83,8 +83,8 @@ extension ModifierKeys {
     .numericPad: .init(name: "Numeric Pad", symbol: "􀅱"),
   ]
 
-  //  private var individualOptions: [ModifierKeys] {
-  //    ModifierKeys.metadata.keys.filter { contains($0) }
+  //  private var individualOptions: [Modifiers] {
+  //    Modifiers.metadata.keys.filter { contains($0) }
   //  }
 
 }

@@ -27,26 +27,42 @@ extension CellSelectionMode {
       case .subtract: "Subtract"
     }
   }
+
+  init(fromModifiers modifiers: Modifiers) {
+    self = Self.mode(for: modifiers)
+  }
 }
 
 extension CellSelectionMode {
-  var modifiers: Modifiers { CellSelectionMode.modifiers(for: self) }
-  init(fromModifiers modifiers: Modifiers) { self = CellSelectionMode.mode(for: modifiers) }
+  static let modiferMap: [CellSelectionMode: Modifiers] = [
+    .new: [],
+    .add: [.command],
+    .subtract: [.option],
+  ]
 
   static func modifiers(for mode: CellSelectionMode) -> Modifiers {
-    switch mode {
-      case .new: []
-      case .add: [.command]
-      case .subtract: [.option]
-    }
+    modiferMap[mode] ?? []
   }
 
   static func mode(for modifiers: Modifiers) -> CellSelectionMode {
-    switch modifiers {
-      case [.command]: .add
-      case [.option]: .subtract
-      default: .new
+    /// 1) Exact match against the canonical map
+    if let exact = modiferMap.first(where: { $0.value == modifiers })?.key {
+      return exact
     }
+
+    /// 2) Unique superset match (e.g., Command+Shift counts as Command)
+    let supersetMatches = modiferMap.filter { (_, mapped) in
+      
+      /// treat empty mapping as requiring exact empty
+      if mapped.isEmpty { return false }
+      return modifiers.isSuperset(of: mapped)
+    }
+    if supersetMatches.count == 1, let unique = supersetMatches.first?.key {
+      return unique
+    }
+
+    /// 3) Fallback policy
+    return .new
   }
 
 }

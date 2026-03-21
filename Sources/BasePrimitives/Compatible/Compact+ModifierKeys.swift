@@ -1,5 +1,5 @@
 //
-//  Compact+ModifierKeys.swift
+//  Compact+Modifiers.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 28/1/2026.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct ModifierKeysChanged_CompatibleModifier: ViewModifier {
+public struct ModifiersChanged_CompatibleModifier: ViewModifier {
 
   let mask: EventModifiers
   let action: (_ old: EventModifiers, _ new: EventModifiers) -> Void
@@ -28,7 +28,7 @@ extension View {
     action: @escaping (_ old: EventModifiers, _ new: EventModifiers) -> Void
   ) -> some View {
     self.modifier(
-      ModifierKeysChanged_CompatibleModifier(
+      ModifiersChanged_CompatibleModifier(
         mask: mask,
         action: action
       )
