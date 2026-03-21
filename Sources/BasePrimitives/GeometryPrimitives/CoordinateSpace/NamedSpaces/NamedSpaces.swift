@@ -20,25 +20,49 @@ import SwiftUI
 ///   unitSize: CGSize
 /// ) -> GridPoint?
 /// ```
-public enum ScreenSpace: Sendable, Hashable {
-  
-  /// Named coordinate space for the interactive viewport container.
-  public static let screen: String = "canvasScreen"
+
+public protocol CanvasCoordinateSpace: Sendable, Hashable {
+
+  /// Convert a screen-space point into this coordinate space.
+  static func convert(
+    _ screenPoint: Point<ScreenSpace>,
+    using mapper: CoordinateSpaceMapper
+  ) -> Point<Self>
 }
 
-public enum CanvasSpace: Sendable, Hashable {
+public enum ScreenSpace: CanvasCoordinateSpace {
+
+  /// Named coordinate space for the interactive viewport container.
+  public static let screen: String = "canvasScreen"
+
+  public static func convert(
+    _ screenPoint: Point<ScreenSpace>,
+    using mapper: CoordinateSpaceMapper
+  ) -> Point<ScreenSpace> {
+    screenPoint
+  }
+}
+
+public enum CanvasSpace: CanvasCoordinateSpace {
 
   /// Named coordinate space for the untransformed artwork/document container.
   /// Aka artwork.
   public static let canvas: String = "canvasArtwork"
+
+  public static func convert(
+    _ screenPoint: Point<ScreenSpace>,
+    using mapper: CoordinateSpaceMapper
+  ) -> Point<CanvasSpace> {
+    mapper.canvasPoint(from: screenPoint)
+  }
 }
 
 /// For `convert(_:from:to:)` and other space-switching APIs
-public enum TransformSpace {
-
-  /// The coordinate space of the device screen (pan and zoom applied).
-  case screen
-
-  /// The local coordinate space of the canvas artwork (no pan, no zoom).
-  case canvas
-}
+//public enum CanvasCoordinateSpace {
+//
+//  /// The coordinate space of the device screen (pan and zoom applied).
+//  case screen
+//
+//  /// The local coordinate space of the canvas artwork (no pan, no zoom).
+//  case canvas
+//}
