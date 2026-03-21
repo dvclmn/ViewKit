@@ -28,6 +28,12 @@ public protocol CanvasCoordinateSpace: Sendable, Hashable {
     _ screenPoint: Point<ScreenSpace>,
     using mapper: CoordinateSpaceMapper
   ) -> Point<Self>
+
+  /// Convert a screen-space rect into this coordinate space.
+  static func convert(
+    _ screenRect: Rect<ScreenSpace>,
+    using mapper: CoordinateSpaceMapper
+  ) -> Rect<Self>
 }
 
 public enum ScreenSpace: CanvasCoordinateSpace {
@@ -40,6 +46,13 @@ public enum ScreenSpace: CanvasCoordinateSpace {
     using mapper: CoordinateSpaceMapper
   ) -> Point<ScreenSpace> {
     screenPoint
+  }
+
+  public static func convert(
+    _ screenRect: Rect<ScreenSpace>,
+    using mapper: CoordinateSpaceMapper
+  ) -> Rect<ScreenSpace> {
+    screenRect
   }
 }
 
@@ -54,6 +67,13 @@ public enum CanvasSpace: CanvasCoordinateSpace {
     using mapper: CoordinateSpaceMapper
   ) -> Point<CanvasSpace> {
     mapper.canvasPoint(from: screenPoint)
+  }
+
+  public static func convert(
+    _ screenRect: Rect<ScreenSpace>,
+    using mapper: CoordinateSpaceMapper
+  ) -> Rect<CanvasSpace> {
+    mapper.canvasRect(from: screenRect)
   }
 }
 

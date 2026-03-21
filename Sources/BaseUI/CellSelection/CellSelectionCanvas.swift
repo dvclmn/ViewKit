@@ -6,6 +6,7 @@
 //
 
 import BasePrimitives
+import CanvasKit
 import GraphicsKit
 import SwiftUI
 
@@ -42,9 +43,10 @@ struct CellSelectionCanvas: View {
       drawSelectionBox(context)
 
     }  // END canvas
-//    .onCanvasTap { point in
-//      
-//    }
+    .onGridTap { position in
+      print("Tapped cell: \(position)")
+    }
+    
   }
 }
 
