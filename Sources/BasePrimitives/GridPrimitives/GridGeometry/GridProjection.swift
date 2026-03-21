@@ -51,10 +51,12 @@ extension GridProjection {
   // MARK: - Grid to Canvas
 
   public func canvasSize(for dimensions: GridDimensions) -> Size<CanvasSpace> {
-    Size(
-      width: CGFloat(dimensions.width) * unitSize.width,
-      height: CGFloat(dimensions.height) * unitSize.height
-    )
+    let size = dimensions.toScreenSize(using: unitSize)
+    return .init(fromCGSize: size)
+//    Size(
+//      width: CGFloat(dimensions.width) * unitSize.width,
+//      height: CGFloat(dimensions.height) * unitSize.height
+//    )
   }
 
   public func canvasCGSize(for dimensions: GridDimensions) -> CGSize {
