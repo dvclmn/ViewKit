@@ -42,7 +42,7 @@ extension GridCanvas {
       }
 
       .debugTextOverlay(alignment: .bottomLeading) {
-        Labeled("Selected", value: store.selected.map(\.description).joined(separator: ", "))
+//        Labeled("Selected", value: store.selected.map(\.description).joined(separator: ", "))
       }
 
       .environment(\.shouldShowInfoBarItems, true)
