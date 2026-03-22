@@ -9,7 +9,9 @@ import Foundation
 
 extension CGSize {
 
-  /// The axis is justified here, as we need to specify the edge for `self`
+  /// The axis is required here, as we're working with two dimensional
+  /// `CGSize`, so need to address a specific dimension, based on
+  /// the appropriate convention via `AxisMapping`
   public func toGridCount(
     along axis: GridAxis,
     using unitSize: CGSize,

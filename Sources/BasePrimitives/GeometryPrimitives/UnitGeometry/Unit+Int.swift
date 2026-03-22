@@ -16,11 +16,16 @@ extension Int {
   //    return result
   //  }
 
-  public func toScreenLength(
-    using unitLength: CGFloat
-  ) -> CGFloat {
-    assert(self >= 0, "Grid length must be non-negative")
-    assert(unitLength.isFiniteAndGreaterThanZero, "Unit length must be positive and finite")
+//  public func toScreenLength(
+//    using unitLength: CGFloat
+//  ) -> CGFloat {
+//    assert(self >= 0, "Grid length must be non-negative")
+//    assert(unitLength.isFiniteAndGreaterThanZero, "Unit length must be positive and finite")
+//    return CGFloat(self) * unitLength
+//  }
+  
+  public func toScreenLength(using unitLength: CGFloat) -> CGFloat {
+    assertSafeToConvert(self, using: unitLength)
     return CGFloat(self) * unitLength
   }
 

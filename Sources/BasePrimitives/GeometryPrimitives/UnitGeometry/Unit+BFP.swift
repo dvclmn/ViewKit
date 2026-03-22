@@ -24,7 +24,7 @@ extension BinaryFloatingPoint {
     using unitLength: CGFloat,
     rounding: GridRounding = .down
   ) -> Int? {
-    guard isSafeToConvert(self, unitLength: unitLength) else { return nil }
+    guard isSafeToConvert(self, using : unitLength) else { return nil }
     let resultRounded = (CGFloat(self) / unitLength).rounded(using: rounding)
     return Int(resultRounded)
   }
@@ -36,7 +36,7 @@ extension BinaryFloatingPoint {
     using unitLength: CGFloat,
     rounding: GridRounding = .down
   ) -> Self {
-    guard isSafeToConvert(self, unitLength: unitLength),
+    guard isSafeToConvert(self, using : unitLength),
       let gridCount = self.toGridCount(using: unitLength, rounding: rounding)
     else { return self }
     
