@@ -7,7 +7,7 @@
 
 public enum ConversionSafetyPolicy {
   
-  /// Returns Bool or nil paths (your current optional APIs)
+  /// Returns Bool or nil paths (for current optional APIs)
   case checkOnly
 
   /// Debug-only assertions

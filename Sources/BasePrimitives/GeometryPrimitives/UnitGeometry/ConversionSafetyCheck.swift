@@ -7,6 +7,11 @@
 
 import Foundation
 
+private struct SafetyMessages {
+  static let nonNegative = "Grid length must be non-negative"
+  static let positiveFinite = "Unit length must be positive and finite"
+}
+
 // MARK: - Predicate (no side effects)
 
 package func isSafeToConvert<Value: BinaryInteger>(
@@ -32,9 +37,18 @@ package func assertSafeToConvert<Value: BinaryInteger>(
   file: StaticString = #fileID,
   line: UInt = #line
 ) {
-  assert(value >= 0, "Grid length must be non-negative", file: file, line: line)
   assert(
-    unitLength.isFiniteAndGreaterThanZero, "Unit length must be positive and finite", file: file, line: line)
+    value >= 0,
+    SafetyMessages.nonNegative,
+    file: file,
+    line: line
+  )
+  assert(
+    unitLength.isFiniteAndGreaterThanZero,
+    SafetyMessages.positiveFinite,
+    file: file,
+    line: line
+  )
 }
 
 @inline(__always)
@@ -44,9 +58,18 @@ package func assertSafeToConvert<Value: BinaryFloatingPoint>(
   file: StaticString = #fileID,
   line: UInt = #line
 ) {
-  assert(value >= 0, "Grid length must be non-negative", file: file, line: line)
   assert(
-    unitLength.isFiniteAndGreaterThanZero, "Unit length must be positive and finite", file: file, line: line)
+    value >= 0,
+    SafetyMessages.nonNegative,
+    file: file,
+    line: line
+  )
+  assert(
+    unitLength.isFiniteAndGreaterThanZero,
+    SafetyMessages.positiveFinite,
+    file: file,
+    line: line
+  )
 }
 
 // MARK: - Runtime enforcement (traps in Debug and Release)
@@ -58,9 +81,18 @@ package func preconditionSafeToConvert<Value: BinaryInteger>(
   file: StaticString = #fileID,
   line: UInt = #line
 ) {
-  precondition(value >= 0, "Grid length must be non-negative", file: file, line: line)
   precondition(
-    unitLength.isFiniteAndGreaterThanZero, "Unit length must be positive and finite", file: file, line: line)
+    value >= 0,
+    SafetyMessages.nonNegative,
+    file: file,
+    line: line
+  )
+  precondition(
+    unitLength.isFiniteAndGreaterThanZero,
+    SafetyMessages.positiveFinite,
+    file: file,
+    line: line
+  )
 }
 
 @inline(__always)
@@ -70,7 +102,16 @@ package func preconditionSafeToConvert<Value: BinaryFloatingPoint>(
   file: StaticString = #fileID,
   line: UInt = #line
 ) {
-  precondition(value >= 0, "Grid length must be non-negative", file: file, line: line)
   precondition(
-    unitLength.isFiniteAndGreaterThanZero, "Unit length must be positive and finite", file: file, line: line)
+    value >= 0,
+    SafetyMessages.nonNegative,
+    file: file,
+    line: line
+  )
+  precondition(
+    unitLength.isFiniteAndGreaterThanZero,
+    SafetyMessages.positiveFinite,
+    file: file,
+    line: line
+  )
 }
