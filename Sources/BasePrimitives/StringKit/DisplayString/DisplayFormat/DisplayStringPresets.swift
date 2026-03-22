@@ -13,7 +13,7 @@ public enum FloatDisplayPreset: String, CaseIterable, Sendable {
   /// Display a floating point value with `0` decimal places
   case wholeNumber
   case showSign
-  case percent
+//  case percent
 
   public var format: FloatDisplayFormat {
     switch self {
@@ -26,8 +26,8 @@ public enum FloatDisplayPreset: String, CaseIterable, Sendable {
       case .showSign:
         .init(sign: .always(renderPlusSign: false))
         
-      case .percent:
-        .init(decimalPlaces: 0)
+//      case .percent:
+//        .init(decimalPlaces: 0)
     }
   }
 }
