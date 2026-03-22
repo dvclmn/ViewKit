@@ -9,16 +9,27 @@ import Foundation
 
 extension GridDimensions {
 
-  public func toScreenSize(using unitSize: CGSize) -> CGSize {
-    let width = width.toScreenLength(using: unitSize.width)
-    let height = height.toScreenLength(using: unitSize.height)
-    return CGSize(width: width, height: height)
+  public func toScreenSize(
+    using unitSize: CGSize,
+    mapping: AxisMapping = .default
+  ) -> CGSize {
+    GridScreenConversion.screenSize(
+      for: self,
+      unitSize: unitSize,
+      mapping: mapping
+    )
   }
 
-  public func toScreenSizeIfPossible(using unitSize: CGSize?) -> CGSize? {
-    guard let unitSize,
-      let width = width.toScreenLengthIfPossible(using: unitSize.width),
-      let height = height.toScreenLengthIfPossible(using: unitSize.height)
+  public func toScreenSizeIfPossible(
+    using unitSize: CGSize?,
+    mapping: AxisMapping = .default
+  ) -> CGSize? {
+    guard let unitSize else { return nil }
+    guard
+      let width = value(along: .horizontal, mapping: mapping)
+        .toScreenLengthIfPossible(along: .horizontal, mapping: mapping, using: unitSize),
+      let height = value(along: .vertical, mapping: mapping)
+        .toScreenLengthIfPossible(along: .vertical, mapping: mapping, using: unitSize)
     else { return nil }
     return CGSize(width: width, height: height)
   }

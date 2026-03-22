@@ -65,10 +65,8 @@ extension GridProjection {
   }
 
   public func canvasPoint(for position: GridPosition) -> Point<CanvasSpace> {
-    Point(
-      x: CGFloat(position.column) * unitSize.width,
-      y: CGFloat(position.row) * unitSize.height
-    )
+    let point = GridScreenConversion.screenPoint(for: position, unitSize: unitSize)
+    return Point<CanvasSpace>(fromPoint: point)
   }
 
   // MARK: - Canvas to Grid

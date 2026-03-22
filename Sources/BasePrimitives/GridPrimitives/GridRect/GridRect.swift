@@ -47,9 +47,15 @@ extension GridRect {
 }
 
 extension CGRect {
-  public init(fromGridRect gridRect: GridRect, using unitSize: CGSize) {
-    let origin = gridRect.origin.toScreenPoint(using: unitSize)
-    let size = gridRect.size.toScreenSize(using: unitSize)
-    self.init(origin: origin, size: size)
+  public init(
+    fromGridRect gridRect: GridRect,
+    using unitSize: CGSize,
+    mapping: AxisMapping = .default
+  ) {
+    self = GridScreenConversion.screenRect(
+      for: gridRect,
+      unitSize: unitSize,
+      mapping: mapping
+    )
   }
 }

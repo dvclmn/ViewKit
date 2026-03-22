@@ -10,15 +10,14 @@ import SwiftUI
 extension GridPosition {
 
   public func toScreenPoint(
-    using unitSize: CGSize
+    using unitSize: CGSize,
+    mapping: AxisMapping = .default
   ) -> CGPoint {
-    let x = column.toScreenLength(using: unitSize.width)
-    let y = row.toScreenLength(using: unitSize.height)
-    return CGPoint(x: x, y: y)
-//    CGPoint(
-//      x: CGFloat(column) * unitSize.width,
-//      y: CGFloat(row) * unitSize.height
-//    )
+    GridScreenConversion.screenPoint(
+      for: self,
+      unitSize: unitSize,
+      mapping: mapping
+    )
   }
 
   public func toUnitPoint(in grid: GridDimensions) -> UnitPoint {
@@ -39,6 +38,10 @@ extension GridPosition {
     return UnitPoint(x: x, y: y)
   }
 
+  @available(
+    *, deprecated,
+    message: "Ambiguous. Use toScreenPoint(using:) for pixel space or toUnitPoint(in:) for unit space."
+  )
   public func toUnitPoint(using unitSize: CGSize) -> UnitPoint? {
 //    guard
       let x = column.toScreenLength(using: unitSize.width)
