@@ -13,7 +13,7 @@ extension GridPosition {
     using unitSize: CGSize
   ) -> CGPoint {
     let x = column.toScreenLength(using: unitSize.width)
-    let y = column.toScreenLength(using: unitSize.height)
+    let y = row.toScreenLength(using: unitSize.height)
     return CGPoint(x: x, y: y)
 //    CGPoint(
 //      x: CGFloat(column) * unitSize.width,
@@ -41,8 +41,8 @@ extension GridPosition {
 
   public func toUnitPoint(using unitSize: CGSize) -> UnitPoint? {
 //    guard
-      let x = row.toScreenLength(using: unitSize.width)
-      let y = column.toScreenLength(using: unitSize.height)
+      let x = column.toScreenLength(using: unitSize.width)
+      let y = row.toScreenLength(using: unitSize.height)
 //    else { return nil }
     return UnitPoint(x: x, y: y)
   }

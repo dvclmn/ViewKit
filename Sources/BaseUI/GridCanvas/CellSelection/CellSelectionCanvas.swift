@@ -187,14 +187,14 @@ extension GridCanvas.CellSelectionCanvas {
     color: Color
   ) {
     for position in selected {
-//      let gridRect = GridRect(origin: position, size: 1)
-//      let rect = CGRect(fromGridRect: gridRect, using: cellSize)
-      let rect = CGRect(
-        x: CGFloat(position.column) * cellSize.width,
-        y: CGFloat(position.row) * cellSize.height,
-        width: cellSize.width,
-        height: cellSize.height
-      )
+      let gridRect = GridRect(origin: position, size: 1)
+      let rect = CGRect(fromGridRect: gridRect, using: cellSize)
+//      let rect = CGRect(
+//        x: CGFloat(position.column) * cellSize.width,
+//        y: CGFloat(position.row) * cellSize.height,
+//        width: cellSize.width,
+//        height: cellSize.height
+//      )
       context.fill(Path(rect), with: .color(color))
     }
   }
