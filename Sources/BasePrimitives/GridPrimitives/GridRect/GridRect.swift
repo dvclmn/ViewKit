@@ -8,20 +8,21 @@
 import Foundation
 
 public struct GridRect: Sendable, Codable, Equatable, Hashable {
-  public var origin: GridPosition  // top-left
+  /// top-left
+  public var origin: GridPosition
   public var size: GridDimensions
 
   public init(origin: GridPosition, size: GridDimensions) {
     self.origin = origin
     self.size = size
   }
-}
-
-extension GridRect {
   public init(x: Int, y: Int, width: Int, height: Int) {
     self.origin = GridPosition(x: x, y: y)
     self.size = GridDimensions(width, height)
   }
+}
+
+extension GridRect {
 
   public var min: GridPosition { origin }
   public var max: GridPosition {
@@ -43,19 +44,5 @@ extension GridRect {
         GridPosition(column: origin.column + column, row: origin.row + row)
       }
     }
-  }
-}
-
-extension CGRect {
-  public init(
-    fromGridRect gridRect: GridRect,
-    using unitSize: CGSize,
-    mapping: AxisMapping = .default
-  ) {
-    self = GridScreenConversion.screenRect(
-      for: gridRect,
-      unitSize: unitSize,
-      mapping: mapping
-    )
   }
 }

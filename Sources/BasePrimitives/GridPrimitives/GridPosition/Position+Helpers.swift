@@ -39,10 +39,11 @@ extension GridPosition {
     at point: CGPoint,
     cellSize: CGSize,
   ) -> GridPosition? {
-
-    let col = Int(floor(point.x / cellSize.width))
-    let row = Int(floor(point.y / cellSize.height))
-    let candidate = GridPosition(column: col, row: row)
+    let projection = GridProjection(unitSize: cellSize, rounding: .down)
+    let canvasPoint = Point<CanvasSpace>(fromPoint: point)
+    guard let candidate = projection.gridPositionIfValid(from: canvasPoint) else {
+      return nil
+    }
     return dimensions.contains(position: candidate) ? candidate : nil
 
   }

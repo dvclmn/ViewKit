@@ -43,10 +43,8 @@ extension GridPosition {
     message: "Ambiguous. Use toScreenPoint(using:) for pixel space or toUnitPoint(in:) for unit space."
   )
   public func toUnitPoint(using unitSize: CGSize) -> UnitPoint? {
-//    guard
-      let x = column.toScreenLength(using: unitSize.width)
-      let y = row.toScreenLength(using: unitSize.height)
-//    else { return nil }
+    let x = column.toScreenLength(using: unitSize.width)
+    let y = row.toScreenLength(using: unitSize.height)
     return UnitPoint(x: x, y: y)
   }
 

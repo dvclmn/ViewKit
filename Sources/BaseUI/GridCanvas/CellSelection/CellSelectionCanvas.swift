@@ -49,11 +49,8 @@ extension GridCanvas {
         drawHoverCell(context)
 
       }  // END canvas
-      //      .onAppear { seedDebugSelectionIfNeeded() }
-
     }
   }
-
 }
 
 extension GridCanvas.CellSelectionCanvas {
@@ -84,13 +81,8 @@ extension GridCanvas.CellSelectionCanvas {
     guard let position = pointerGridPosition else { return nil }
     guard let cellSize = gridGeometry?.projection.unitSize else { return nil }
 
-    let originX = CGFloat(position.column) * cellSize.width
-    let originY = CGFloat(position.row) * cellSize.height
-    return CGRect(
-      x: originX, y: originY,
-      width: cellSize.width,
-      height: cellSize.height
-    )
+    let gridRect = GridRect(origin: position, size: 1)
+    return gridRect.toScreenRect(using: cellSize)
   }
 
   var canvasOffset: CGSize? {
@@ -133,28 +125,6 @@ extension GridCanvas.CellSelectionCanvas {
 
 extension GridCanvas.CellSelectionCanvas {
 
-  private struct OutlineSegment: Hashable {
-    let x1: Int
-    let y1: Int
-    let x2: Int
-    let y2: Int
-
-    init(_ x1: Int, _ y1: Int, _ x2: Int, _ y2: Int) {
-      /// normalize so identical segments hash the same
-      if x1 < x2 || (x1 == x2 && y1 < y2) {
-        self.x1 = x1
-        self.y1 = y1
-        self.x2 = x2
-        self.y2 = y2
-      } else {
-        self.x1 = x2
-        self.y1 = y2
-        self.x2 = x1
-        self.y2 = y1
-      }
-    }
-  }
-
   private func drawSelection(_ context: GraphicsContext) {
     guard isCellSelectionEnabled else { return }
     guard !store.selected.isEmpty else { return }
@@ -169,8 +139,8 @@ extension GridCanvas.CellSelectionCanvas {
     )
 
     /// Stroke outer outline with emphasis
-    let outline = outlineSegments(from: store.selected)
-    
+    let outline = GridSelectionOutline.segments(from: store.selected)
+
     drawSelectionOutline(
       context,
       segments: outline,
@@ -189,44 +159,19 @@ extension GridCanvas.CellSelectionCanvas {
     for position in selected {
       let gridRect = GridRect(origin: position, size: 1)
       let rect = CGRect(fromGridRect: gridRect, using: cellSize)
-//      let rect = CGRect(
-//        x: CGFloat(position.column) * cellSize.width,
-//        y: CGFloat(position.row) * cellSize.height,
-//        width: cellSize.width,
-//        height: cellSize.height
-//      )
+      //      let rect = CGRect(
+      //        x: CGFloat(position.column) * cellSize.width,
+      //        y: CGFloat(position.row) * cellSize.height,
+      //        width: cellSize.width,
+      //        height: cellSize.height
+      //      )
       context.fill(Path(rect), with: .color(color))
     }
   }
 
-  private func outlineSegments(from selected: Set<GridPosition>) -> Set<OutlineSegment> {
-    var edges = Set<OutlineSegment>()
-    for pos in selected {
-      let c = pos.column
-      let r = pos.row
-
-      /// Four edges of the cell in lattice coordinates
-      let top = OutlineSegment(c, r, c + 1, r)
-      let bottom = OutlineSegment(c, r + 1, c + 1, r + 1)
-      let left = OutlineSegment(c, r, c, r + 1)
-      let right = OutlineSegment(c + 1, r, c + 1, r + 1)
-
-      for e in [top, bottom, left, right] {
-        if edges.contains(e) {
-          
-          /// shared edge -> internal -> cancel
-          edges.remove(e)
-        } else {
-          edges.insert(e)
-        }
-      }
-    }
-    return edges
-  }
-
   private func drawSelectionOutline(
     _ context: GraphicsContext,
-    segments: Set<OutlineSegment>,
+    segments: Set<GridOutlineSegment>,
     cellSize: CGSize,
     color: Color,
     lineWidth: CGFloat
@@ -234,8 +179,14 @@ extension GridCanvas.CellSelectionCanvas {
     let style = StrokeStyle(lineWidth: lineWidth, lineCap: .square, lineJoin: .round)
     for e in segments {
       var p = Path()
-      let p1 = CGPoint(x: CGFloat(e.x1) * cellSize.width, y: CGFloat(e.y1) * cellSize.height)
-      let p2 = CGPoint(x: CGFloat(e.x2) * cellSize.width, y: CGFloat(e.y2) * cellSize.height)
+      let p1 = GridScreenConversion.screenPoint(
+        for: GridPosition(column: e.x1, row: e.y1),
+        unitSize: cellSize
+      )
+      let p2 = GridScreenConversion.screenPoint(
+        for: GridPosition(column: e.x2, row: e.y2),
+        unitSize: cellSize
+      )
       p.move(to: p1)
       p.addLine(to: p2)
       context.stroke(p, with: .color(color), style: style)

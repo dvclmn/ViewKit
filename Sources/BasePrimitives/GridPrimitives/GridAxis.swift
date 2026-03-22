@@ -142,15 +142,15 @@ extension GridAxis {
   ) -> CGPoint {
     switch self {
       case .horizontal:
-        CGPoint(
-          x: CGFloat(cellIndex - 1) * cellSize.width,
-          y: 0  // Columns align along the Y axis
+        GridScreenConversion.screenPoint(
+          for: GridPosition(column: cellIndex - 1, row: 0),
+          unitSize: cellSize
         )
 
       case .vertical:
-        CGPoint(
-          x: 0,  // Rows align down the X axis
-          y: CGFloat(cellIndex - 1) * cellSize.height
+        GridScreenConversion.screenPoint(
+          for: GridPosition(column: 0, row: cellIndex - 1),
+          unitSize: cellSize
         )
     }
   }
