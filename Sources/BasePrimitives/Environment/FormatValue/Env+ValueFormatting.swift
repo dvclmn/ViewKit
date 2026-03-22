@@ -7,10 +7,11 @@
 
 import SwiftUI
 
-// MARK: - Value formatting
+
+// MARK: - Environment values
 extension EnvironmentValues {
 
-  @Entry public var formatValue: (Double) -> String = { $0.displayString }
+  @Entry public var formatValue: ValueFormatter = .default
 
   /// E.g. 3 places: `10.056` or one place: `10.1`
   /// See `Foundation/NumberFormatStyleConfiguration/Precision`
@@ -33,11 +34,15 @@ extension EnvironmentValues {
 public protocol ValueFormattable {}
 
 extension View where Self: ValueFormattable {
-  public func formatValue(_ format: @escaping (Double) -> String) -> some View {
-    self.environment(\.formatValue, format)
+  public func formatValue(_ format: @escaping @Sendable (Double) -> String) -> some View {
+    self.environment(\.formatValue, ValueFormatter(format))
   }
 
   public func formatValue(_ preset: FloatDisplayPreset) -> some View {
-    self.environment(\.formatValue, { $0.displayString(preset) })
+    self.environment(\.formatValue, ValueFormatter { $0.displayString(preset) })
+  }
+
+  public func formatValue(_ formatter: ValueFormatter) -> some View {
+    self.environment(\.formatValue, formatter)
   }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum FloatDisplayPreset: String, CaseIterable {
+public enum FloatDisplayPreset: String, CaseIterable, Sendable {
   case standard
   case concise
   /// Display a floating point value with `0` decimal places
@@ -26,7 +26,8 @@ public enum FloatDisplayPreset: String, CaseIterable {
       case .showSign:
         .init(sign: .always(renderPlusSign: false))
         
-      case .percent: ...
+      case .percent:
+        .init(decimalPlaces: 0)
     }
   }
 }

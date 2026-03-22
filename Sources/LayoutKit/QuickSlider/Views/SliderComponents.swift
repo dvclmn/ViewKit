@@ -39,7 +39,7 @@ extension QuickSlider {
       // MARK: - Units
       if sliderComponents.contains(.units) {
         TextColumns(alignment: .trailing) {
-          Text(formatValue(value.toDouble))
+          Text(formatValue.format(value.toDouble, store.range))
         }
         .textSelection(.disabled)
         .onDoubleTap($value, defaultValue: sliderDefaultValue)
