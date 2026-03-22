@@ -50,11 +50,11 @@ extension CGSize {
   }
 }
 
-extension Optional where Wrapped == CGSize {
-  public func gridLength(
-    _ count: Int,
-    along axis: GridAxis,
-  ) -> CGFloat? {
-    return count.toScreenLength(along: axis, using: self)
-  }
-}
+//extension Optional where Wrapped == CGSize {
+//  public func gridLength(
+//    _ count: Int,
+//    along axis: GridAxis,
+//  ) -> CGFloat? {
+//    return count.toScreenLength(along: axis, using: self)
+//  }
+//}

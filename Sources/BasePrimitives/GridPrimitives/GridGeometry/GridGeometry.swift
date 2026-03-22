@@ -72,7 +72,9 @@ extension CanvasGeometry {
     unitSize: CGSize,
     anchor: UnitPoint
   ) {
-    guard let size = gridDimensions.toScreenSize(using: unitSize) else { return nil }
+//    guard
+      let size = gridDimensions.toScreenSize(using: unitSize)
+//    else { return nil }
     self.init(
       viewportRect: viewportRect,
       canvasSize: Size<CanvasSpace>(fromCGSize: size),

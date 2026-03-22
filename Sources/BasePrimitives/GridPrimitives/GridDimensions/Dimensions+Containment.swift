@@ -11,8 +11,9 @@ extension GridDimensions {
 
   /// Checks if a point (in canvas/screen coordinates) falls within the grid bounds.
   public func contains(point: CGPoint, unitSize: CGSize) -> Bool {
-    guard let size = toScreenSize(using: unitSize)
-    else { return false }
+//    guard
+      let size = toScreenSize(using: unitSize)
+//    else { return false }
 
     return point.isGreaterThanOrEqualToZero
       && point.x < size.width

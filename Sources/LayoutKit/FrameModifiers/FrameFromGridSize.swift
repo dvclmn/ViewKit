@@ -18,8 +18,8 @@ public struct FrameFromUnitSize: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .frame(
-        width: width?.toScreenLength(along: .horizontal, using: unitSize),
-        height: height?.toScreenLength(along: .vertical, using: unitSize),
+        width: width?.toScreenLengthIfPossible(along: .horizontal, using: unitSize),
+        height: height?.toScreenLengthIfPossible(along: .vertical, using: unitSize),
         alignment: alignment
       )
   }

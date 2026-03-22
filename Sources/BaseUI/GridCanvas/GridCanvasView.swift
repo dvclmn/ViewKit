@@ -37,9 +37,9 @@ public struct GridCanvasView<Content: View>: View {
 extension GridCanvasView {
   //extension GridCanvas.GridCanvasView {
   private var gridCanvasSize: Size<CanvasSpace>? {
-    guard let unitSize, let gridDimensions,
-      let size = gridDimensions.toScreenSize(using: unitSize)
-    else { return nil }
+    guard let unitSize, let gridDimensions else { return nil }
+
+    let size = gridDimensions.toScreenSize(using: unitSize)
 
     /// Verify that `toScreenSize(using:)` matches manual computation within tolerance
     let expected = CGSize(

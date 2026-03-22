@@ -11,12 +11,12 @@ package func isSafeToConvert<Value: BinaryInteger>(
   _ value: Value,
   unitLength: CGFloat
 ) -> Bool {
-  value >= 0 && unitLength > 0 && unitLength.isFinite
+  value >= 0 && unitLength.isFiniteAndGreaterThanZero
 }
 
 package func isSafeToConvert<Value: BinaryFloatingPoint>(
   _ value: Value,
   unitLength: CGFloat
 ) -> Bool {
-  value >= 0 && unitLength > 0 && unitLength.isFinite
+  value >= 0 && unitLength.isFiniteAndGreaterThanZero
 }

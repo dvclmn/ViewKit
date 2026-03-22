@@ -101,16 +101,16 @@ extension Path {
 
     /// Origin offset: if the caller wants to shift the grid (e.g. to leave room for headers),
     /// incorporate it here. For now we assume (0,0); callers can bake header space into `offset`.
-    guard
-      let originX = originOffset.x.toScreenLength(
-        along: .horizontal,
-        using: cellSize
-      ),
-      let originY = originOffset.y.toScreenLength(
-        along: .vertical,
-        using: cellSize
-      )
-    else { return Path() }
+
+    let originX = originOffset.x.toScreenLength(
+      along: .horizontal,
+      using: cellSize
+    )
+    let originY = originOffset.y.toScreenLength(
+      along: .vertical,
+      using: cellSize
+    )
+    //    else { return Path() }
 
     guard w > 0, h > 0, cw > 0, ch > 0 else { return Path() }
 

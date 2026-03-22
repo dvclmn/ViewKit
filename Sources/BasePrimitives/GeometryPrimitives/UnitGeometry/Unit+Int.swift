@@ -34,6 +34,17 @@ extension Int {
     return CGFloat(self) * unitLength
   }
   
+  public func toScreenLength(
+    along axis: GridAxis,
+    mapping: AxisMapping = .default,
+    using unitSize: CGSize
+  ) -> CGFloat {
+//    guard let unitSize else { return nil }
+    let length = unitSize.value(along: axis, mapping: mapping)
+    return toScreenLength(using: length)
+  }
+
+  
   public func toScreenLengthIfPossible(
     along axis: GridAxis,
     mapping: AxisMapping = .default,

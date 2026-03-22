@@ -37,9 +37,10 @@ extension BinaryFloatingPoint {
     rounding: GridRounding = .down
   ) -> Self {
     guard isSafeToConvert(self, unitLength: unitLength),
-      let gridCount = self.toGridCount(using: unitLength, rounding: rounding),
-      let result = gridCount.toScreenLength(using: unitLength)
+      let gridCount = self.toGridCount(using: unitLength, rounding: rounding)
     else { return self }
+    
+    let result = gridCount.toScreenLength(using: unitLength)
 
     return Self(result)
   }

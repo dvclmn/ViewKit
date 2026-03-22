@@ -8,30 +8,38 @@
 import Foundation
 
 extension GridDimensions {
-  
-  public func toScreenSize(using unitSize: CGSize) -> CGSize? {
+
+  public func toScreenSize(using unitSize: CGSize) -> CGSize {
     let width = width.toScreenLength(using: unitSize.width)
-    let height = height.toScreenLength(using: unitSize.height)    
+    let height = height.toScreenLength(using: unitSize.height)
     return CGSize(width: width, height: height)
   }
 
-//  public func toScreenSize(using unitSize: CGSize) -> CGSize {
-////    assert(width >= 0 && height >= 0, "Grid dimensions must be non-negative")
-////    assert(unitSize.width > 0 && unitSize.height > 0 && unitSize.width.isFinite && unitSize.height.isFinite,
-////           "Unit size must be positive and finite")
-//    let w = width.toScreenLength(using: <#T##CGFloat#>)
-//    return CGSize(
-//      width: CGFloat(width) * unitSize.width,
-//      height: CGFloat(height) * unitSize.height
-//    )
-//  }
-  
-//  public func toScreenSize(using unitSize: CGSize) -> CGSize? {
-//    guard
-//      let width = width.toScreenLength(using: unitSize.width),
-//      let height = height.toScreenLength(using: unitSize.height)
-//    else { return nil }
-//
-//    return CGSize(width: width, height: height)
-//  }
+  public func toScreenSizeIfPossible(using unitSize: CGSize?) -> CGSize? {
+    guard let unitSize,
+      let width = width.toScreenLengthIfPossible(using: unitSize.width),
+      let height = height.toScreenLengthIfPossible(using: unitSize.height)
+    else { return nil }
+    return CGSize(width: width, height: height)
+  }
+
+  //  public func toScreenSize(using unitSize: CGSize) -> CGSize {
+  ////    assert(width >= 0 && height >= 0, "Grid dimensions must be non-negative")
+  ////    assert(unitSize.width > 0 && unitSize.height > 0 && unitSize.width.isFinite && unitSize.height.isFinite,
+  ////           "Unit size must be positive and finite")
+  //    let w = width.toScreenLength(using: <#T##CGFloat#>)
+  //    return CGSize(
+  //      width: CGFloat(width) * unitSize.width,
+  //      height: CGFloat(height) * unitSize.height
+  //    )
+  //  }
+
+  //  public func toScreenSize(using unitSize: CGSize) -> CGSize? {
+  //    guard
+  //      let width = width.toScreenLength(using: unitSize.width),
+  //      let height = height.toScreenLength(using: unitSize.height)
+  //    else { return nil }
+  //
+  //    return CGSize(width: width, height: height)
+  //  }
 }

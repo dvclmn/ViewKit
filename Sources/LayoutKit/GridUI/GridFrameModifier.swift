@@ -30,7 +30,7 @@ extension GridFrameModifier {
     along axis: GridAxis
   ) -> CGFloat? {
     guard let value else { return nil }
-    return value.toScreenLength(along: axis, using: activeUnitSize)
+    return value.toScreenLengthIfPossible(along: axis, using: activeUnitSize)
   }
 }
 
@@ -65,7 +65,7 @@ extension GridFrameMinMaxModifier {
     along axis: GridAxis
   ) -> CGFloat? {
     guard let value else { return nil }
-    return value.toScreenLength(along: axis, using: activeUnitSize)
+    return value.toScreenLengthIfPossible(along: axis, using: activeUnitSize)
   }
 }
 

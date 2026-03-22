@@ -12,10 +12,13 @@ extension GridPosition {
   public func toScreenPoint(
     using unitSize: CGSize
   ) -> CGPoint {
-    CGPoint(
-      x: CGFloat(column) * unitSize.width,
-      y: CGFloat(row) * unitSize.height
-    )
+    let x = column.toScreenLength(using: unitSize.width)
+    let y = column.toScreenLength(using: unitSize.height)
+    return CGPoint(x: x, y: y)
+//    CGPoint(
+//      x: CGFloat(column) * unitSize.width,
+//      y: CGFloat(row) * unitSize.height
+//    )
   }
 
   public func toUnitPoint(in grid: GridDimensions) -> UnitPoint {
@@ -37,19 +40,11 @@ extension GridPosition {
   }
 
   public func toUnitPoint(using unitSize: CGSize) -> UnitPoint? {
-    guard let x = row.toScreenLength(using: unitSize.width),
+//    guard
+      let x = row.toScreenLength(using: unitSize.width)
       let y = column.toScreenLength(using: unitSize.height)
-    else { return nil }
+//    else { return nil }
     return UnitPoint(x: x, y: y)
-  }
-
-  public func toCGRect(using unitSize: CGSize) -> CGRect {
-    CGRect(
-      x: CGFloat(column) * unitSize.width,
-      y: CGFloat(row) * unitSize.height,
-      width: unitSize.width,
-      height: unitSize.height
-    )
   }
 
   public func toIndex(columns: Int) -> Int {

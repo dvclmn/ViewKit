@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 2/3/2026.
 //
 
+import Foundation
+
 public struct GridRect: Sendable, Codable, Equatable, Hashable {
   public var origin: GridPosition  // top-left
   public var size: GridDimensions
@@ -32,7 +34,7 @@ extension GridRect {
   public func contains(_ position: GridPosition) -> Bool {
     (min...max).contains(position)
   }
-  
+
   /// All valid positions within this rect, offset by `origin`.
   /// Positions are enumerated row-major from `origin` to `max` (inclusive of origin, exclusive of max).
   public var allPositions: [GridPosition] {
@@ -41,5 +43,13 @@ extension GridRect {
         GridPosition(column: origin.column + column, row: origin.row + row)
       }
     }
+  }
+}
+
+extension CGRect {
+  public init(fromGridRect gridRect: GridRect, using unitSize: CGSize) {
+    let origin = gridRect.origin.toScreenPoint(using: unitSize)
+    let size = gridRect.size.toScreenSize(using: unitSize)
+    self.init(origin: origin, size: size)
   }
 }
