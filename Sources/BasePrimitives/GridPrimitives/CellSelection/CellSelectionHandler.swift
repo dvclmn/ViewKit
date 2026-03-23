@@ -7,11 +7,6 @@
 
 import Foundation
 
-// Hold the base selection for the current drag
-private struct DragContext {
-  var base: Set<GridPosition>
-}
-
 extension GridCanvas {
 
   @Observable
@@ -23,45 +18,13 @@ extension GridCanvas {
     public var cellSize: CGSize?
     public var modifiers: Modifiers = []
 
-    private var dragContext: DragContext?
+    var dragHandler: DragSelectionHandler
 
     public init() {}
   }
 }
 
 extension GridCanvas.SelectionHandler {
-
-  /// Called on `InteractionPhase/began`
-  public func beginDragSelection() {
-    dragContext = DragContext(base: selected)
-  }
-
-  /// Called on `InteractionPhase/changed`, and on `ended` before clearing
-  /// Note: `lastSelected` is not updated here, only on end.
-  public func updateDragSelection(current: Set<GridPosition>) {
-    let base = dragContext?.base ?? []
-    selected = combinedSelection(base: base, current: current, mode: mode)
-  }
-
-  /// Called on `InteractionPhase/ended`
-  public func endDragSelection(current: Set<GridPosition>) {
-    updateDragSelection(current: current)
-    //    lastSelected = current.last
-    dragContext = nil
-  }
-
-  /// Drag helper that encodes the mode semantics for a drag preview
-  private func combinedSelection(
-    base: Set<GridPosition>,
-    current: Set<GridPosition>,
-    mode: CellSelectionMode
-  ) -> Set<GridPosition> {
-    switch mode {
-      case .new: current
-      case .add: base.union(current)
-      case .subtract: base.subtracting(current)
-    }
-  }
 
   public var mode: CellSelectionMode { .init(fromModifiers: modifiers) }
 
@@ -118,32 +81,6 @@ extension GridCanvas.SelectionHandler {
     )
     self.replace(with: [newPosition])
   }
-
-  /// `applySelection` methods turned off whilst waiting for `selectionStyle`
-  /// and `CellSelectionInteraction` to be fixed
-  //  func applySelection(
-  //    position: GridPosition,
-  //    cellSize: CGSize,
-  //  ) {
-  //    self.applySelection(
-  //      positions: [position],
-  //      cellSize: cellSize,
-  //    )
-  //  }
-
-  //  func applySelection(
-  //    positions: [GridPosition],
-  //    cellSize: CGSize,
-  //  ) {
-  //    //    fatalError("Currently not implemented, waiting for Interaction API to clear up")
-  //    let newPositions = selectionStyle.kind.resolvedPositions(
-  //      newPositions: positions,
-  //      lastSelected: lastSelected,
-  //      cellSize: cellSize,
-  //    )
-  //    handleSelection(forMode: selectionStyle.mode, newPositions)
-  //  }
-
 }
 
 //extension Interaction {

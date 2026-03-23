@@ -34,7 +34,6 @@ extension GridCanvas {
           }
           .onGridTap { position in
             store.handleSelection([position])
-            //            store.selected.insert(position)
 
             print("Tapped cell: \(position)")
           }
@@ -44,7 +43,7 @@ extension GridCanvas {
 
       .debugTextOverlay(alignment: .bottomLeading) {
         Labeled("Selection Mode", value: store.mode.name)
-        //        Labeled("Selected", value: store.selected.map(\.description).joined(separator: ", "))
+        Labeled("Selected Cells", value: store.selected.count)
       }
 
       .environment(\.shouldShowInfoBarItems, true)

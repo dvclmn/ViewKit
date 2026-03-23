@@ -11,7 +11,7 @@ import AppKit
 /// and as an individual component inside `PropertiesLabeled` (e.g. `"W 260"`).
 ///
 /// Separator ownership:
-/// - The separator between this label and its value (`propertySeparator`, default `" "`) lives here.
+/// - The separator between this label and its value (`separator`, default `" "`) lives here.
 /// - The separator between a top-level block label and its content (e.g. `": "`) is supplied
 ///   by the `DisplayBlock` rendering layer.
 /// - The delimiter between sibling components (e.g. `" x "`) lives on `PropertiesLabeled`.
@@ -23,7 +23,7 @@ public struct Labeled: Sendable {
 
   /// Separator between the label text and the value,
   /// e.g. the space in `W 260`. Defaults to `" "`.
-  public let propertySeparator: String?
+  public let separator: ComponentSeparator
 
   /// Per-item float format override. Inherits from context when `nil`.
   public let formatOverride: FloatDisplayFormat?
@@ -31,11 +31,12 @@ public struct Labeled: Sendable {
   public init(
     key: AbbreviableLabel,
     value: DisplayFragment?,
-    propertySeparator: String? = " ",
+    separator: ComponentSeparator = .colon,
+//    separator: String?,
     formatOverride: FloatDisplayFormat? = nil
   ) {
     self.key = key
-    self.propertySeparator = propertySeparator
+    self.separator = separator
     self.value = value
     self.formatOverride = formatOverride
   }
@@ -49,13 +50,13 @@ extension Labeled {
   public init(
     _ key: String,
     value: Any?,
-    propertySeparator: String = " ",
+    separator: ComponentSeparator = .colon,
     format: FloatDisplayFormat? = nil
   ) {
     self.init(
       key: AbbreviableLabel(key),
       value: value.map { DisplayFragment.make(from: $0) },
-      propertySeparator: propertySeparator,
+      separator: separator,
       formatOverride: format
     )
   }
@@ -69,7 +70,7 @@ extension Labeled {
     self.init(
       key: AbbreviableLabel(label, abbreviated: abbreviated),
       value: DisplayFragment(value),
-      propertySeparator: " ",
+      separator: .space,
       formatOverride: nil
     )
   }
@@ -92,7 +93,7 @@ extension Labeled {
     return value?.render(using: effectiveFormat)
   }
 
-  /// Renders `"<label><propertySeparator><value>"`, e.g. `"W 260"`.
+  /// Renders `"<label><separator><value>"`, e.g. `"W 260"`.
   /// Pass `.none` for `labelStyle` to suppress the label entirely.
   /// Returns `nil` if all parts are absent.
   public func toString(
@@ -101,10 +102,10 @@ extension Labeled {
   ) -> String? {
     let effectiveFormat = formatOverride ?? format
     let label: String? = labelPart(with: labelStyle)
-    let separator: String? = label != nil ? propertySeparator : nil
-    let value: String? = valuePart(using: format)
+    let separatorString: String? = label != nil ? separator.toString : nil
+    let value: String? = valuePart(using: effectiveFormat)
 
-    let result = [label, separator, value].compactMap { $0 }.joined()
+    let result = [label, separatorString, value].compactMap { $0 }.joined()
     return result.isEmpty ? nil : result
   }
 }

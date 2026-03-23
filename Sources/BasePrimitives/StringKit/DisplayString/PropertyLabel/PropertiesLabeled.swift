@@ -9,7 +9,7 @@ import Foundation
 
 /// A type with multiple named float properties, e.g. `CGPoint` (x, y) or `CGSize` (width, height).
 ///
-/// Responsibility: join its `[Labeled]` components with a `ComponentDelimiter`.
+/// Responsibility: join its `[Labeled]` components with a `ComponentSeparator`.
 /// It does not own block-level separator logic — that lives at the `DisplayBlock`/`DisplayString` layer.
 public protocol PropertiesLabeled: DisplayFragmentRenderable, DisplayPresetRenderable {
 
@@ -19,7 +19,7 @@ public protocol PropertiesLabeled: DisplayFragmentRenderable, DisplayPresetRende
   func renderProperties(
     labelStyle: AbbreviableLabel.Style,
     using format: FloatDisplayFormat,
-    delimiter: ComponentDelimiter
+    delimiter: ComponentSeparator
   ) -> String
 }
 
@@ -41,7 +41,7 @@ extension PropertiesLabeled {
   public func renderProperties(
     labelStyle: AbbreviableLabel.Style = .standard,
     using format: FloatDisplayFormat = .default,
-    delimiter: ComponentDelimiter = .comma
+    delimiter: ComponentSeparator = .comma
   ) -> String {
     components
       .map { $0.toString(labelStyle: labelStyle, using: format) ?? "" }
