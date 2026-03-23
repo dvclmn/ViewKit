@@ -10,7 +10,7 @@ import SwiftUI
 
 extension GridLineContext {
 
-  func makeOutput() -> GridLineOutput? {
+  func makeOutput() -> GridLineOutput {
     return switch sizeMode {
       case .fixed, .fill: boundedGrid()
       case .fillContainer: infiniteGrid()

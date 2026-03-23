@@ -22,7 +22,7 @@ public struct SystemColourPicker: View {
   //  let showsOpacitySlider: Bool
 
   public init(
-    colour: Binding<RGBColour>,
+    _ colour: Binding<RGBColour>,
     opacity: Binding<Double>? = nil
 //    opacity: Binding<Double?> = .constant(nil)
   ) {

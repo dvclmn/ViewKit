@@ -24,17 +24,26 @@ struct GridLineContext {
 }
 
 extension GridLineContext {
-  init?(
+  init(
     domain: GridFontDomain,
     containerSize: CGSize,
     sizeMode: GridSizeMode,
     pinMode: GridPinMode,
     drawsBorder: Bool,
     environment: EnvironmentValues
-  ) {
-    guard let unitSize = domain.unitSize(in: environment),
-      let dimensions = environment.gridDimensions
-    else { return nil }
+  ) throws {
+    let unitSize = domain.unitSize(in: environment)
+    let dimensions = environment.gridDimensions
+    
+    guard let unitSize else {
+//      printMissing("unitSize", for: "GridLineContext")
+      throw GridLineError.missingEnvUnitSize
+//      return nil
+    }
+    guard let dimensions else {
+//      printMissing("dimensions", for: "GridLineContext")
+      throw GridLineError.missingEnvGridDimensions
+    }
 
     self.unitSize = unitSize
     self.containerSize = containerSize

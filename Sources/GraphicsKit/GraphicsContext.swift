@@ -29,7 +29,7 @@ extension GraphicsContext {
     positioned debugTextPosition: DebugTextPosition = .aboveOrigin,
     colour: Color = .primary,
     fontSize: CGFloat = 11,
-    pointDisplay: DebugPoint,
+    pointDisplay: DebugPoint = .default,
   ) {
 
     let zoom = environment.zoomLevel

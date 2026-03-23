@@ -22,40 +22,71 @@ extension GraphicsContext {
     pinMode: GridPinMode = .canvas,
     drawsBorder: Bool = true
   ) {
-    
+
     // MARK: - Grid Lines
     /// Prepare context and create output
-    guard
-      let context = GridLineContext(
+
+    do {
+      let lineContext = try GridLineContext(
         domain: domain,
         containerSize: containerSize,
         sizeMode: sizeMode,
         pinMode: pinMode,
         drawsBorder: drawsBorder,
         environment: self.environment
-      ),
-      let output = context.makeOutput()
-    else { return }
-
-    /// Stroke the Grid lines
-    self.stroke(
-      output.path,
-      with: .color(environment.gridLineColour),
-      lineWidth: output.lineWidth
-    )
-
-    // MARK: - Cell Numbers
-    guard environment.isShowingCellNumbers else { return }
-    
-    output.annotations.forEach { annotation in
-      drawAnnotation(
-        annotation.text,
-        at: annotation.point,
-        cellSize: context.unitSize,
-        zoom: environment.zoomLevel,
-        zoomRange: environment.zoomRange?.toCGFloatRange
       )
+      let output = lineContext.makeOutput()
+
+      /// Stroke the Grid lines
+      self.stroke(
+        output.path,
+        with: .color(environment.gridLineColour),
+        lineWidth: output.lineWidth
+      )
+
+      // MARK: - Cell Numbers
+      guard environment.isShowingCellNumbers else { return }
+
+      output.annotations.forEach { annotation in
+        drawAnnotation(
+          annotation.text,
+          at: annotation.point,
+          cellSize: lineContext.unitSize,
+          zoom: environment.zoomLevel,
+          zoomRange: environment.zoomRange?.toCGFloatRange
+        )
+      }
+
+    } catch let error as GridLineError {
+      guard let text = error.errorDescription else {
+        return
+      }
+      self.drawDebugText(
+        text,
+        at: containerSize.midpoint,
+        positioned: .aboveOrigin,
+        fontSize: 16,
+        pointDisplay: .none
+//        colour: <#T##Color#>,
+//        fontSize: <#T##CGFloat#>,
+//        pointDisplay: <#T##DebugPoint#>
+      )
+      return
+    } catch {
+      print("Grid line error: \(error)")
+      return
     }
+    //    guard
+
+    //    else {
+    //
+    ////      self.fill(
+    ////        .init(ellipseIn: .exampleZeroOrigin100x100),
+    ////        with: .color(.blue)
+    ////      )
+    //      return
+    //    }
+
   }
 
   private func drawAnnotation(
