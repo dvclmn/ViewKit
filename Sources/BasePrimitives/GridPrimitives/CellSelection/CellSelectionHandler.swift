@@ -7,6 +7,11 @@
 
 import Foundation
 
+// Hold the base selection for the current drag
+private struct DragContext {
+  var base: Set<GridPosition>
+}
+
 extension GridCanvas {
 
   @Observable
@@ -18,11 +23,45 @@ extension GridCanvas {
     public var cellSize: CGSize?
     public var modifiers: Modifiers = []
 
+    private var dragContext: DragContext?
+
     public init() {}
   }
 }
 
 extension GridCanvas.SelectionHandler {
+
+  // Call this on .began
+  public func beginDragSelection() {
+    dragContext = DragContext(base: selected)
+  }
+
+  // Call this on .changed (and also on .ended before clearing)
+  public func updateDragSelection(current: Set<GridPosition>) {
+    let base = dragContext?.base ?? []
+    selected = combinedSelection(base: base, current: current, mode: mode)
+    // Do NOT update lastSelected here; we only want that on end.
+  }
+
+  // Call this on .ended
+  public func endDragSelection(current: Set<GridPosition>) {
+    updateDragSelection(current: current)
+    //    lastSelected = current.last
+    dragContext = nil
+  }
+
+  // Pure helper that encodes the mode semantics for a preview
+  private func combinedSelection(
+    base: Set<GridPosition>,
+    current: Set<GridPosition>,
+    mode: CellSelectionMode
+  ) -> Set<GridPosition> {
+    switch mode {
+      case .new: return current
+      case .add: return base.union(current)
+      case .subtract: return base.subtracting(current)
+    }
+  }
 
   public var mode: CellSelectionMode { .init(fromModifiers: modifiers) }
 
