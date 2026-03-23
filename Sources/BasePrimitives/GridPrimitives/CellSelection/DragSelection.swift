@@ -54,8 +54,12 @@ struct DragSelectionHandler {
     mode: CellSelectionMode
   ) -> Set<GridPosition> {
     guard let ctx = context else { return [] }
-    let current = event.current.clamped(to: ctx.dimensions)
-    let rectPositions = positions(from: ctx.anchor, to: current)
+    //    let current = event.current.clamped(to: ctx.dimensions)
+    let rectPositions = positions(
+      from: ctx.anchor,
+      to: event.current,
+      clampedTo: ctx.dimensions
+    )
     return mode.apply(base: ctx.base, current: Set(rectPositions))
     //    let current = GridPosition(event.currentPoint, clampedTo: ctx.dimensions)
     //    let rectPositions = positions(from: ctx.anchor, to: current, dimensions: ctx.dimensions)
@@ -63,14 +67,23 @@ struct DragSelectionHandler {
   }
 
   // 3) End: compute final, clear context, and return it
-  public mutating func endDragSelection(
-    current: Set<GridPosition>,
-    //    mode: CellSelectionMode
+  mutating func endDrag(
+    event: GridDragEvent,
+    mode: CellSelectionMode
   ) -> Set<GridPosition> {
-    let finalSelection = updateDragSelection(current: current, mode: mode)
+    let final = updateDrag(event: event, mode: mode)
+    //    let final = updateDragSelection(event: event)
     context = nil
-    return finalSelection
+    return final
   }
+  //  public mutating func endDragSelection(
+  //    current: Set<GridPosition>,
+  //    //    mode: CellSelectionMode
+  //  ) -> Set<GridPosition> {
+  //    let finalSelection = updateDragSelection(current: current, mode: mode)
+  //    context = nil
+  //    return finalSelection
+  //  }
 
   //  private func combinedSelection(
   //    base: Set<GridPosition>,
@@ -88,24 +101,24 @@ struct DragSelectionHandler {
   //  var clampedEnd: GridPosition { end.clamped(to: dimensions) }
 
   private func positions(
-    from a: GridPosition,
-    to b: GridPosition,
+    from start: GridPosition,
+    to current: GridPosition,
     clampedTo dimensions: GridDimensions? = nil
   ) -> [GridPosition] {
 
-    let clampedA = a.clampedIfNeeded(to: dimensions)
-    let clampedB = b.clampedIfNeeded(to: dimensions)
-    //    let clampedA: GridPosition = dimensions.map { a.clamped(to: $0) } ?? a
-    //    let clampedB: GridPosition = dimensions.map { b.clamped(to: $0) } ?? b
-    //    let clampedB = b.clamped(to: dimensions ?? .allPositions)
-    //    return positions(from: clampedA, to: clampedB)
+    let a = start.clampedIfNeeded(to: dimensions)
+    let b = current.clampedIfNeeded(to: dimensions)
+
     let minCol = min(a.column, b.column)
     let minRow = min(a.row, b.row)
     let maxCol = max(a.column, b.column)
     let maxRow = max(a.row, b.row)
     let rect = GridRect(
       origin: .init(column: minCol, row: minRow),
-      size: .init(width: maxCol - minCol + 1, height: maxRow - minRow + 1)
+      size: .init(
+        width: maxCol - minCol + 1,
+        height: maxRow - minRow + 1
+      )
     )
     return rect.allPositions
   }

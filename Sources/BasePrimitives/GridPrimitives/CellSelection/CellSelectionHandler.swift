@@ -44,43 +44,32 @@ extension GridCanvas.SelectionHandler {
 
     switch event.phase {
       case .began:
-        dragHandler.beginDragSelection(
+        dragHandler.beginDrag(
+          event: event,
           selected: selected,
-          mode: mode,
           dimensions: dimensions
         )
+      //        dragHandler.beginDragSelection(
+      //          selected: selected,
+      //          mode: mode,
+      //          dimensions: dimensions
+      //        )
       //        store.beginDragSelection()
       //        store.updateDragSelection(current: current)
 
       case .changed:
-        dragHandler.updateDragSelection(current: <#T##Set<GridPosition>#>)
-//        store.updateDragSelection(current: current)
+        selected = dragHandler.updateDrag(event: event, mode: mode)
+      //        dragHandler.updateDragSelection(current: <#T##Set<GridPosition>#>)
+      //        store.updateDragSelection(current: current)
 
       case .ended, .none:
-        store.endDragSelection(current: current)
+        let final = dragHandler.endDrag(event: event, mode: mode)
+        selected = final
+      //        lastSelected = final.toArray.last
 
       default:
         break
     }
-
-    // On pointer/drag began:
-    //    dragHandler
-    //    dragHandler.beginDragSelection(selected: selected)
-
-    // On pointer/drag changed:
-    let preview = dragHandler.updateDragSelection(current: currentPositions, mode: mode)
-    selected = preview  // source of truth stays here
-
-    // On pointer/drag ended:
-    let final = dragHandler.endDragSelection(current: currentPositions, mode: mode)
-    selected = final
-    lastSelected = final.last
-
-    //    switch mode {
-    //      case .new: replace(with: positions)
-    //      case .add: add(positions)
-    //      case .subtract: subtract(positions)
-    //    }
   }
 
   public func updateCellSize(_ size: CGSize?) {
@@ -129,51 +118,3 @@ extension GridCanvas.SelectionHandler {
     self.replace(with: [newPosition])
   }
 }
-
-//extension Interaction {
-//  func resolvedPositions(
-//    newPositions: [GridPosition],
-//    lastSelected: GridPosition?,
-//    cellSize: CGSize
-//  ) -> [GridPosition] {
-//    //    fatalError("Needs implementation after fixing up UnitRect 'positions'")
-//    switch self {
-//      case .rangeBetweenTaps:
-//        guard let first = newPositions.first, let last = lastSelected else { return [] }
-//        return UnitRect(from: last, to: first, unitSize: cellSize).gridPositions()
-//
-//      case .tap, .drag:
-//        return newPositions
-//      case .none: return []
-//    }
-//  }
-//}
-
-//  init(
-//    from pointerPhase: PointerPhase?,
-//    modifiers: Modifiers,
-//    selectedCellsCount: Int
-//  ) {
-//    guard let pointerPhase else {
-//      self = .none
-//      return
-//    }
-//
-//    let kind: InteractionKind
-//    let isDragging = pointerPhase.isDrag
-//    let isTapping = pointerPhase.isTap
-//    switch (isDragging, isTapping, modifiers) {
-//      case (false, true, _): kind = .tap
-//      case (true, false, _): kind = .tapAndDrag
-//      case (false, true, [.shift]) where selectedCellsCount > 0: kind = .rangeBetweenTaps
-//      default: kind = .none
-//    }
-//    self = kind
-//  }
-//  init(from pointerPhase: PointerPhase) {
-//    switch tapDragPhase {
-//      case .drag(type: .marquee, _): .tapAndDrag
-//      case .tap(_): .tap
-//      case .ended: .
-//    }
-//  }
