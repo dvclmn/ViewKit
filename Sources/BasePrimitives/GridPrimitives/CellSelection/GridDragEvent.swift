@@ -9,12 +9,16 @@ import Foundation
 
 public struct GridDragEvent {
   public let start: GridPosition
-  public let end: GridPosition
+  public let current: GridPosition
   public let phase: InteractionPhase
 
-  public init(start: GridPosition, end: GridPosition, phase: InteractionPhase) {
+  public init(
+    start: GridPosition,
+    current: GridPosition,
+    phase: InteractionPhase
+  ) {
     self.start = start
-    self.end = end
+    self.current = current
     self.phase = phase
   }
 }
