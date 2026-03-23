@@ -18,7 +18,7 @@ extension GridCanvas {
     public var cellSize: CGSize?
     public var modifiers: Modifiers = []
 
-    var dragHandler: DragSelectionHandler
+    var dragHandler: DragSelectionHandler = .init()
 
     public init() {}
   }
@@ -28,12 +28,59 @@ extension GridCanvas.SelectionHandler {
 
   public var mode: CellSelectionMode { .init(fromModifiers: modifiers) }
 
-  public func handleSelection(_ positions: [GridPosition]) {
+  public func handleTap(_ positions: [GridPosition]) {
     switch mode {
       case .new: replace(with: positions)
       case .add: add(positions)
       case .subtract: subtract(positions)
     }
+  }
+
+  public func handleDrag(
+    _ event: GridDragEvent,
+    dimensions: GridDimensions
+  ) {
+    //  public func handleDrag(_ positions: [GridPosition]) {
+
+    switch event.phase {
+      case .began:
+        dragHandler.beginDragSelection(
+          selected: selected,
+          mode: mode,
+          dimensions: dimensions
+        )
+      //        store.beginDragSelection()
+      //        store.updateDragSelection(current: current)
+
+      case .changed:
+        dragHandler.updateDragSelection(current: <#T##Set<GridPosition>#>)
+//        store.updateDragSelection(current: current)
+
+      case .ended, .none:
+        store.endDragSelection(current: current)
+
+      default:
+        break
+    }
+
+    // On pointer/drag began:
+    //    dragHandler
+    //    dragHandler.beginDragSelection(selected: selected)
+
+    // On pointer/drag changed:
+    let preview = dragHandler.updateDragSelection(current: currentPositions, mode: mode)
+    selected = preview  // source of truth stays here
+
+    // On pointer/drag ended:
+    let final = dragHandler.endDragSelection(current: currentPositions, mode: mode)
+    selected = final
+    lastSelected = final.last
+
+    //    switch mode {
+    //      case .new: replace(with: positions)
+    //      case .add: add(positions)
+    //      case .subtract: subtract(positions)
+    //    }
   }
 
   public func updateCellSize(_ size: CGSize?) {

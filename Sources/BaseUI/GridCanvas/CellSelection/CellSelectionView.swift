@@ -33,7 +33,7 @@ extension GridCanvas {
             handleDrag(event)
           }
           .onGridTap { position in
-            store.handleSelection([position])
+//            store.handleSelection([position])
 
             print("Tapped cell: \(position)")
           }
@@ -58,37 +58,23 @@ extension GridCanvas.CellSelectionView {
   private func handleDrag(_ event: GridDragEvent) {
     guard let dimensions = gridDimensions else { return }
 
-    let clampedStart = event.start.clamped(to: dimensions)
-    let clampedEnd = event.end.clamped(to: dimensions)
+
     let current = Set(positions(from: clampedStart, to: clampedEnd))
 
-    switch event.phase {
-      case .began:
-        store.beginDragSelection()
-        store.updateDragSelection(current: current)
-
-      case .changed:
-        store.updateDragSelection(current: current)
-
-      case .ended, .none:
-        store.endDragSelection(current: current)
-
-      default:
-        break
-    }
+//    switch event.phase {
+//      case .began:
+//        store.beginDragSelection()
+//        store.updateDragSelection(current: current)
+//
+//      case .changed:
+//        store.updateDragSelection(current: current)
+//
+//      case .ended, .none:
+//        store.endDragSelection(current: current)
+//
+//      default:
+//        break
+//    }
   }
-  private func positions(
-    from a: GridPosition,
-    to b: GridPosition
-  ) -> [GridPosition] {
-    let minCol = min(a.column, b.column)
-    let minRow = min(a.row, b.row)
-    let maxCol = max(a.column, b.column)
-    let maxRow = max(a.row, b.row)
-    let rect = GridRect(
-      origin: .init(column: minCol, row: minRow),
-      size: .init(width: maxCol - minCol + 1, height: maxRow - minRow + 1)
-    )
-    return rect.allPositions
-  }
+
 }
