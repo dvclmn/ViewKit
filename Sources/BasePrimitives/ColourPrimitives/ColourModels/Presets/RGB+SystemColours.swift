@@ -14,18 +14,18 @@ import SwiftUI
 extension RGBColour {
   
   // MARK: - SwiftUI System Colours (dark-mode approximations)
-  public static let systemRed: RGBColour       = .init(1.0,   0.271, 0.227)
-  public static let systemOrange: RGBColour    = .init(1.0,   0.624, 0.039)
-  public static let systemYellow: RGBColour    = .init(1.0,   0.839, 0.039)
-  public static let systemGreen: RGBColour     = .init(0.188, 0.820, 0.345)
-  public static let systemMint: RGBColour      = .init(0.388, 0.902, 0.886)
-  public static let systemTeal: RGBColour      = .init(0.251, 0.784, 0.878)
-  public static let systemCyan: RGBColour      = .init(0.392, 0.824, 0.988)
-  public static let systemBlue: RGBColour      = .init(0.039, 0.518, 1.0)
-  public static let systemIndigo: RGBColour    = .init(0.345, 0.337, 0.839)
-  public static let systemPurple: RGBColour    = .init(0.749, 0.353, 0.949)
-  public static let systemPink: RGBColour      = .init(1.0,   0.216, 0.373)
-  public static let systemBrown: RGBColour     = .init(0.635, 0.518, 0.369)
+  public static let red: RGBColour       = .init(1.0,   0.271, 0.227)
+  public static let orange: RGBColour    = .init(1.0,   0.624, 0.039)
+  public static let yellow: RGBColour    = .init(1.0,   0.839, 0.039)
+  public static let green: RGBColour     = .init(0.188, 0.820, 0.345)
+  public static let mint: RGBColour      = .init(0.388, 0.902, 0.886)
+  public static let teal: RGBColour      = .init(0.251, 0.784, 0.878)
+  public static let cyan: RGBColour      = .init(0.392, 0.824, 0.988)
+  public static let blue: RGBColour      = .init(0.039, 0.518, 1.0)
+  public static let indigo: RGBColour    = .init(0.345, 0.337, 0.839)
+  public static let purple: RGBColour    = .init(0.749, 0.353, 0.949)
+  public static let pink: RGBColour      = .init(1.0,   0.216, 0.373)
+  public static let brown: RGBColour     = .init(0.635, 0.518, 0.369)
 
   public static func system(
     _ colour: SystemColour,
@@ -34,58 +34,29 @@ extension RGBColour {
     RGBColour(fromSystem: colour, env: env)
   }
 
-  
-//  public static let red: RGBColour =
-//  public static let orange: RGBColour =
-//  public static let yellow: RGBColour =
-//  public static let green: RGBColour =
-//  public static let mint: RGBColour =
-//  public static let teal: RGBColour =
-//  public static let cyan: RGBColour =
-//  public static let blue: RGBColour =
-//  public static let indigo: RGBColour =
-//  public static let purple: RGBColour =
-//  public static let pink: RGBColour =
-//  public static let brown: RGBColour =
-//  public static let white: RGBColour =
-//  public static let gray: RGBColour =
-//  public static let black: RGBColour =
-//  public static let clear: RGBColour =
-//  public static let primary: RGBColour =
-//  public static let secondary: RGBColour =
-//  public static let tertiary: RGBColour =
-//  public static let quaternary: RGBColour =
-//  public static let quinary: RGBColour =
-//  public static let accentColor: RGBColour =
-//  public static let link: RGBColour =
-  
-//  public static func systemColour(env: EnvironmentValues) -> Color? {
-//
-//  }
-//
   // MARK: - Basic 16 (CSS Level 1 & 2)
   public static let black: RGBColour = #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
   public static let white: RGBColour = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
   public static let silver: RGBColour = #colorLiteral(red: 0.7529411765, green: 0.7529411765, blue: 0.7529411765, alpha: 1.0)
   public static let gray: RGBColour = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1.0)
   public static let grayAlt: RGBColour = .init(0.3, 0.3, 0.3)
-  public static let red: RGBColour = #colorLiteral(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+  public static let redWeb: RGBColour = #colorLiteral(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
   public static let maroon: RGBColour = #colorLiteral(red: 0.5019607843, green: 0.0, blue: 0.0, alpha: 1.0)
-  public static let yellow: RGBColour = #colorLiteral(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)
+  public static let yellowWeb: RGBColour = #colorLiteral(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)
   public static let olive: RGBColour = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.0, alpha: 1.0)
   public static let lime: RGBColour = #colorLiteral(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0)
-  public static let green: RGBColour = #colorLiteral(red: 0.0, green: 0.5019607843, blue: 0.0, alpha: 1.0)
+  public static let greenWeb: RGBColour = #colorLiteral(red: 0.0, green: 0.5019607843, blue: 0.0, alpha: 1.0)
   public static let aqua: RGBColour = #colorLiteral(red: 0.0, green: 1.0, blue: 1.0, alpha: 1.0)
-  public static let teal: RGBColour = #colorLiteral(red: 0.0, green: 0.5019607843, blue: 0.5019607843, alpha: 1.0)
-  public static let blue: RGBColour = #colorLiteral(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
+  public static let tealWeb: RGBColour = #colorLiteral(red: 0.0, green: 0.5019607843, blue: 0.5019607843, alpha: 1.0)
+  public static let blueWeb: RGBColour = #colorLiteral(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
   public static let navy: RGBColour = #colorLiteral(red: 0.0, green: 0.0, blue: 0.5019607843, alpha: 1.0)
   public static let fuchsia: RGBColour = #colorLiteral(red: 1.0, green: 0.0, blue: 1.0, alpha: 1.0)
-  public static let purple: RGBColour = #colorLiteral(red: 0.5019607843, green: 0.0, blue: 0.5019607843, alpha: 1.0)
+  public static let purpleWeb: RGBColour = #colorLiteral(red: 0.5019607843, green: 0.0, blue: 0.5019607843, alpha: 1.0)
   
   // MARK: - Aliases for basic colours
   
   /// cyan = aqua (`#00ffff`)
-  public static let cyan: RGBColour = #colorLiteral(red: 0.0, green: 1.0, blue: 1.0, alpha: 1.0)
+  public static let cyanWeb: RGBColour = #colorLiteral(red: 0.0, green: 1.0, blue: 1.0, alpha: 1.0)
   /// magenta = fuchsia (`#ff00ff`)
   public static let magenta: RGBColour = #colorLiteral(red: 1.0, green: 0.0, blue: 1.0, alpha: 1.0)
   /// grey = gray (`#808080`)
@@ -105,7 +76,7 @@ extension RGBColour {
   public static let lightsalmon: RGBColour = #colorLiteral(red: 1.0, green: 0.6274509804, blue: 0.4784313725, alpha: 1.0)
   
   // MARK: - Pinks
-  public static let pink: RGBColour = #colorLiteral(red: 1.0, green: 0.7529411765, blue: 0.7960784314, alpha: 1.0)
+  public static let pinkWeb: RGBColour = #colorLiteral(red: 1.0, green: 0.7529411765, blue: 0.7960784314, alpha: 1.0)
   public static let lightpink: RGBColour = #colorLiteral(red: 1.0, green: 0.7137254902, blue: 0.7568627451, alpha: 1.0)
   public static let hotpink: RGBColour = #colorLiteral(red: 1.0, green: 0.4117647059, blue: 0.7058823529, alpha: 1.0)
   public static let deeppink: RGBColour = #colorLiteral(red: 1.0, green: 0.0784313725, blue: 0.5764705882, alpha: 1.0)
@@ -113,7 +84,7 @@ extension RGBColour {
   public static let mediumvioletred: RGBColour = #colorLiteral(red: 0.7803921569, green: 0.0823529412, blue: 0.5215686275, alpha: 1.0)
   
   // MARK: - Oranges
-  public static let orange: RGBColour = #colorLiteral(red: 1.0, green: 0.6470588235, blue: 0.0, alpha: 1.0)
+  public static let orangeWeb: RGBColour = #colorLiteral(red: 1.0, green: 0.6470588235, blue: 0.0, alpha: 1.0)
   public static let darkorange: RGBColour = #colorLiteral(red: 1.0, green: 0.5490196078, blue: 0.0, alpha: 1.0)
   
   // MARK: - Yellows
@@ -171,7 +142,7 @@ extension RGBColour {
   public static let aliceblue: RGBColour = #colorLiteral(red: 0.9411764706, green: 0.9725490196, blue: 1.0, alpha: 1.0)
   
   // MARK: - Purples & Violets
-  public static let indigo: RGBColour = #colorLiteral(red: 0.2941176471, green: 0.0, blue: 0.5098039216, alpha: 1.0)
+  public static let indigoWeb: RGBColour = #colorLiteral(red: 0.2941176471, green: 0.0, blue: 0.5098039216, alpha: 1.0)
   public static let darkviolet: RGBColour = #colorLiteral(red: 0.5803921569, green: 0.0, blue: 0.8274509804, alpha: 1.0)
   public static let darkmagenta: RGBColour = #colorLiteral(red: 0.5450980392, green: 0.0, blue: 0.5450980392, alpha: 1.0)
   public static let darkorchid: RGBColour = #colorLiteral(red: 0.6, green: 0.1960784314, blue: 0.8, alpha: 1.0)
@@ -189,7 +160,7 @@ extension RGBColour {
   public static let lavender: RGBColour = #colorLiteral(red: 0.9019607843, green: 0.9019607843, blue: 0.9803921569, alpha: 1.0)
   
   // MARK: - Browns & Earth Tones
-  public static let brown: RGBColour = #colorLiteral(red: 0.6470588235, green: 0.1647058824, blue: 0.1647058824, alpha: 1.0)
+  public static let brownWeb: RGBColour = #colorLiteral(red: 0.6470588235, green: 0.1647058824, blue: 0.1647058824, alpha: 1.0)
   public static let saddlebrown: RGBColour = #colorLiteral(red: 0.5450980392, green: 0.2705882353, blue: 0.0745098039, alpha: 1.0)
   public static let sienna: RGBColour = #colorLiteral(red: 0.6274509804, green: 0.3215686275, blue: 0.1764705882, alpha: 1.0)
   public static let chocolate: RGBColour = #colorLiteral(red: 0.8235294118, green: 0.4117647059, blue: 0.1176470588, alpha: 1.0)

@@ -13,53 +13,59 @@ public struct SystemColourPicker: View {
   @Environment(\.self) private var envSelf
 
   @State private var localGridLineColour: Color
-  //  @State private var localGridLineColour: Color = .secondary
-  //  @State private var did​Load​Initial​Grid​Line​Colour: Bool = false
 
+  let title: String
   @Binding var colour: RGBColour
   var opacity: Binding<Double>?
-//  @Binding var opacity: Double?
-  //  let showsOpacitySlider: Bool
+  let presets: [RGBColour]?
 
   public init(
-    _ colour: Binding<RGBColour>,
-    opacity: Binding<Double>? = nil
-//    opacity: Binding<Double?> = .constant(nil)
+    _ title: String,
+    colour: Binding<RGBColour>,
+    opacity: Binding<Double>? = nil,
+    presets: [RGBColour]? = nil
   ) {
+    self.title = title
     self._localGridLineColour = State(initialValue: colour.wrappedValue.toColour)
-    //    self.did​Load​Initial​Grid​Line​Colour = did​Load​Initial​Grid​Line​Colour
     self._colour = colour
     self.opacity = opacity
+    self.presets = presets
   }
 
   public var body: some View {
 
-    ColorPicker("Line Colour", selection: $localGridLineColour, supportsOpacity: false)
+    ColorPicker(title, selection: $localGridLineColour, supportsOpacity: false)
 
       .task(id: localGridLineColour) {
-        //        guard did​Load​Initial​Grid​Line​Colour else { return }
         colour = RGBColour(
           colour: localGridLineColour,
           environment: envSelf,
           name: nil
         )
-        //        store.setPref(
-        //          \.gridLines.colour,
-        //          value:
-        //            RGBColour(
-        //              colour: localGridLineColour,
-        //              environment: envSelf,
-        //              name: nil
-        //            )
-        //        )
       }
-    //      .task(id: did​Load​Initial​Grid​Line​Colour) {
-    //        if !did​Load​Initial​Grid​Line​Colour {
-    //          localGridLineColour = colour.toColour
-    //          //          localGridLineColour = store.preferences.gridLines.colour.toColour
-    //          did​Load​Initial​Grid​Line​Colour = true
-    //        }
-    //      }
+
+    if let presets {
+      LabeledContent("Presets") {
+        HStack {
+          ForEach(presets) { preset in
+            Button {
+              localGridLineColour = preset.toColour
+//              self.colour = preset
+            } label: {
+              Label(preset.name ?? "Color", systemImage: Icons.circle.icon)
+                .labelStyle(.iconOnly)
+                .symbolVariant(.fill)
+                .foregroundStyle(preset.toColour)
+                .font(.title2)
+            }
+
+          }
+        }
+        //        .labelsHidden()
+      }
+      .buttonStyle(.plain)
+
+    }
 
     if let opacity {
       //    if showsOpacitySlider {
