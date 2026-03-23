@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 12/5/2025.
 //
 
-
 import SwiftUI
 
 public struct RGBColour: Identifiable, Equatable, Hashable, Sendable, Codable,
@@ -159,7 +158,7 @@ extension RGBColour {
 }
 
 extension RGBColour {
-  
+
   public var toOpaque: Self {
     RGBColour(red, green, blue, a: 1.0, name: name)
   }
@@ -199,9 +198,8 @@ extension RGBColour {
       name: "Gray"
     )
   }
-  
-}
 
+}
 
 extension RGBColour: CustomStringConvertible {
   public var description: String {

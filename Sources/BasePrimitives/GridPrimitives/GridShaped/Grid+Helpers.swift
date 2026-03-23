@@ -15,7 +15,9 @@ extension GridShaped {
     dimensions.toScreenSize(using: cellSize)
   }
 
-//  var rows: [Row] { cells }
+  public var allPositions: [GridPosition] { dimensions.allPositions }
+
+  //  var rows: [Row] { cells }
 
   /// Uses width of the widest row to derive columns
   var columns: Rows {

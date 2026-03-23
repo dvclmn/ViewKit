@@ -21,16 +21,16 @@ extension GridCanvas {
       self.content = content
     }
     public var body: some View {
-      
+
       @Bindable var store = store
 
       GridCanvasView {
         CellSelectionCanvas()
           .allowsCanvasClipping(false)
 
-//          .onGridDrag { origin, end in
-//            <#code#>
-//          }
+          .onGridDrag { origin, end in
+
+          }
           .onGridTap { position in
             store.handleSelection([position])
             //            store.selected.insert(position)
@@ -42,7 +42,8 @@ extension GridCanvas {
       }
 
       .debugTextOverlay(alignment: .bottomLeading) {
-//        Labeled("Selected", value: store.selected.map(\.description).joined(separator: ", "))
+        Labeled("Selection Mode", value: store.mode.name)
+        //        Labeled("Selected", value: store.selected.map(\.description).joined(separator: ", "))
       }
 
       .environment(\.shouldShowInfoBarItems, true)

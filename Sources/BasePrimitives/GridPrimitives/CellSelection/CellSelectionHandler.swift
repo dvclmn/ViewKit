@@ -11,7 +11,7 @@ extension GridCanvas {
 
   @Observable
   public final class SelectionHandler {
-  
+
     private(set) public var selected: Set<GridPosition> = []
     public var lastSelected: GridPosition?
 
@@ -24,53 +24,26 @@ extension GridCanvas {
 
 extension GridCanvas.SelectionHandler {
 
-  var mode: CellSelectionMode { .init(fromModifiers: modifiers) }
+  public var mode: CellSelectionMode { .init(fromModifiers: modifiers) }
 
-//  func updateModifiers(_ modifiers: Modifiers) {
-//    self.modifiers = modifiers
-//  }
-
-  public func handleSelection(
-    //    forMode mode: CellSelectionMode,
-    _ positions: [GridPosition],
-  ) {
+  public func handleSelection(_ positions: [GridPosition]) {
     switch mode {
-      case .new:
-        replace(with: positions)
-        
-      case .add:
-        add(positions)
-        
-      case .subtract:
-        subtract(positions)
+      case .new: replace(with: positions)
+      case .add: add(positions)
+      case .subtract: subtract(positions)
     }
   }
-  
+
   public func updateCellSize(_ size: CGSize?) {
     self.cellSize = size
   }
 
   func selectedCells(in grid: Grid) -> [Grid.Cell] {
     selected.compactMap { grid[at: $0] }
-
-    //    canvas.artwork[at: position]
-    //    let cells: Artwork.Cells
-    //    for position in selectedCellPositions {
-    //      guard let newCell = canvas.artwork[at: position] else { continue }
-    //
-    //    }
-    //    canvas.artwork.cells.filter { cell in
-    ////      let pos = canvas.artwork[<#T##position: Int##Int#>]
-    //      selectedCellPositions.contains(cell.)
-    ////      selectedCellPositions.contains($0.position)
-    //    }
-
   }
 
   public func selectAll(in grid: Grid) {
-    fatalError("Need to fix")
-    //    let allPositions = gridCanvas.artwork.positions
-    //    self.replace(with: allPositions)
+    self.replace(with: grid.allPositions)
   }
 
   func add(_ positions: [GridPosition]) {
@@ -88,12 +61,12 @@ extension GridCanvas.SelectionHandler {
     lastSelected = newPositions.last
   }
 
-  func clear() {
+  func clearSelection() {
     selected.removeAll()
     lastSelected = nil
   }
 
- public func moveCellSelection(
+  public func moveCellSelection(
     _ direction: Direction,
     by delta: Int = 1,
     in gridDimensions: GridDimensions,
@@ -131,7 +104,6 @@ extension GridCanvas.SelectionHandler {
   //    )
   //    handleSelection(forMode: selectionStyle.mode, newPositions)
   //  }
-
 
 }
 

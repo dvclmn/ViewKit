@@ -45,26 +45,7 @@ public struct SystemColourPicker: View {
       }
 
     if let presets {
-      LabeledContent("Presets") {
-        HStack {
-          ForEach(presets) { preset in
-            Button {
-              localGridLineColour = preset.toColour
-//              self.colour = preset
-            } label: {
-              Label(preset.name ?? "Color", systemImage: Icons.circle.icon)
-                .labelStyle(.iconOnly)
-                .symbolVariant(.fill)
-                .foregroundStyle(preset.toColour)
-                .font(.title2)
-            }
-
-          }
-        }
-        //        .labelsHidden()
-      }
-      .buttonStyle(.plain)
-
+      Presets(presets)
     }
 
     if let opacity {
@@ -78,5 +59,45 @@ public struct SystemColourPicker: View {
       .formatValue(.percent)
     }
 
+  }
+}
+extension SystemColourPicker {
+
+  // TODO: Need a comparison with a small buffer, as this doesn't catch similar values properly
+  private func isPresetSelected(_ preset: RGBColour) -> Bool {
+    preset.toColour == colour.toColour
+//    guard let presets else { return false }
+//        return presets.contains(where: { $0 == preset })
+//    return presets.contains(where: { $0.toColour == localGridLineColour })
+  }
+
+  @ViewBuilder
+  private func Presets(_ presets: [RGBColour]) -> some View {
+    LabeledContent("Presets") {
+      HStack {
+        ForEach(presets) { preset in
+          Button {
+            localGridLineColour = preset.toColour
+          } label: {
+            Label(preset.name ?? "Color", systemImage: Icons.circle.icon)
+              .labelStyle(.iconOnly)
+              .symbolVariant(.fill)
+              .foregroundStyle(preset.toColour)
+              .font(.title2)
+
+//              .padding(isPresetSelected(preset) ? 2 : 0)
+//              .overlay {
+//                if isPresetSelected(preset) {
+//                  Circle()
+//                    .fill(.clear)
+//                    .stroke(Color.accentColor, lineWidth: 3)
+//                }
+//              }
+          }
+
+        }
+      }
+    }
+    .buttonStyle(.plain)
   }
 }
