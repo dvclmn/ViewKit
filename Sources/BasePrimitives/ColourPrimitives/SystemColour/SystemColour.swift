@@ -59,6 +59,10 @@ extension SystemColour {
   public var toPrimitiveColour: PrimitiveColour? {
     PrimitiveColour(rawValue: self.rawValue)
   }
+  
+  public func rgbColour(in env: EnvironmentValues) -> RGBColour? {
+    .init(fromSystem: self, env: env)
+  }
 
 }
 

@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension SystemColour {
-  
+
   public init?(colour: Color) {
     guard
       let match = Self.allCases.first(where: { $0.toColour == colour })
@@ -18,7 +18,11 @@ extension SystemColour {
     self = match
   }
 
-  
+//  public func resolve(in env: EnvironmentValues) -> Color {
+//    let colour = self.toColour
+//    return colour.resolve(in: env)
+//  }
+
   public var toColour: Color {
     switch self {
       case .red: Color.red

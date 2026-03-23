@@ -13,6 +13,56 @@ import SwiftUI
 /// These come from standard CSS named colours
 extension RGBColour {
   
+  // MARK: - SwiftUI System Colours (dark-mode approximations)
+  public static let systemRed: RGBColour       = .init(1.0,   0.271, 0.227)
+  public static let systemOrange: RGBColour    = .init(1.0,   0.624, 0.039)
+  public static let systemYellow: RGBColour    = .init(1.0,   0.839, 0.039)
+  public static let systemGreen: RGBColour     = .init(0.188, 0.820, 0.345)
+  public static let systemMint: RGBColour      = .init(0.388, 0.902, 0.886)
+  public static let systemTeal: RGBColour      = .init(0.251, 0.784, 0.878)
+  public static let systemCyan: RGBColour      = .init(0.392, 0.824, 0.988)
+  public static let systemBlue: RGBColour      = .init(0.039, 0.518, 1.0)
+  public static let systemIndigo: RGBColour    = .init(0.345, 0.337, 0.839)
+  public static let systemPurple: RGBColour    = .init(0.749, 0.353, 0.949)
+  public static let systemPink: RGBColour      = .init(1.0,   0.216, 0.373)
+  public static let systemBrown: RGBColour     = .init(0.635, 0.518, 0.369)
+
+  public static func system(
+    _ colour: SystemColour,
+    in env: EnvironmentValues
+  ) -> RGBColour {
+    RGBColour(fromSystem: colour, env: env)
+  }
+
+  
+//  public static let red: RGBColour =
+//  public static let orange: RGBColour =
+//  public static let yellow: RGBColour =
+//  public static let green: RGBColour =
+//  public static let mint: RGBColour =
+//  public static let teal: RGBColour =
+//  public static let cyan: RGBColour =
+//  public static let blue: RGBColour =
+//  public static let indigo: RGBColour =
+//  public static let purple: RGBColour =
+//  public static let pink: RGBColour =
+//  public static let brown: RGBColour =
+//  public static let white: RGBColour =
+//  public static let gray: RGBColour =
+//  public static let black: RGBColour =
+//  public static let clear: RGBColour =
+//  public static let primary: RGBColour =
+//  public static let secondary: RGBColour =
+//  public static let tertiary: RGBColour =
+//  public static let quaternary: RGBColour =
+//  public static let quinary: RGBColour =
+//  public static let accentColor: RGBColour =
+//  public static let link: RGBColour =
+  
+//  public static func systemColour(env: EnvironmentValues) -> Color? {
+//
+//  }
+//
   // MARK: - Basic 16 (CSS Level 1 & 2)
   public static let black: RGBColour = #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
   public static let white: RGBColour = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
