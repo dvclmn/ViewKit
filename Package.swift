@@ -137,11 +137,7 @@ let package = Package(
       name: "BaseUI",
       dependencies: [
         .module(.basePrimitives),
-        .module(.sampleBuilder),
         .module(.layoutKit),
-        .module(.graphicsKit),
-        .module(.canvasKit),
-        .casePaths,
       ],
     ),
 
@@ -152,8 +148,8 @@ let package = Package(
       ],
     ),
 
-    /// Currently, this main advantage of `ComponentKit` over BaseUI (or LayoutKit)
-    /// seems to be that it doesn't depend on Gesture, Vector or CanvasKit.
+    /// Can't think of a better name for this, but `ComponentKit` exists purely
+    /// to avoid burdening `BaseUI` with `CasePaths` and `GraphicsKit`
     .target(
       name: "ComponentKit",
       dependencies: [

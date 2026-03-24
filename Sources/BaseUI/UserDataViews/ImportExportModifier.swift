@@ -10,7 +10,7 @@ import SwiftUI
 
 public struct ImportExportModifier<Store: UserDataHandler>: ViewModifier
 where Store.Value: Transferable & Codable {
-  //  @Environment(BreathingHandler.self) private var store
+
   @Environment(\.popup) private var popup
 
   @State private var isImporting: Bool = false

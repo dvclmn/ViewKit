@@ -53,7 +53,7 @@ extension CardGrid {
 
 }
 #if DEBUG
-#Preview(traits: .size(.normal)) {
+#Preview {
   // @Previewable @State var store = AppHandler()
   CardGrid(
     //    label: QuickLabel("Hello", symbol: "eye"),

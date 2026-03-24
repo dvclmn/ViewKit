@@ -6,7 +6,6 @@
 //
 
 import BasePrimitives
-import CanvasKit
 import SwiftUI
 
 //public typealias GridCanvasView<Grid: GridShaped, Content: View> = GridCanvas<Grid>.GridCanvasView<Content>
@@ -33,7 +32,6 @@ public struct GridCanvasView<Content: View>: View {
   }
 }
 
-//}
 extension GridCanvasView {
   //extension GridCanvas.GridCanvasView {
   private var gridCanvasSize: Size<CanvasSpace>? {

@@ -5,10 +5,9 @@
 //  Created by Dave Coleman on 1/10/2025.
 //
 
-
-import SwiftUI
 import BasePrimitives
 import EnumMacros
+import SwiftUI
 
 extension EnvironmentValues {
   @Entry public var keyDisplayStyle: KeyboardElementDisplayStyle = .symbolLiteral
