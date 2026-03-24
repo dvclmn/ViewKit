@@ -50,13 +50,6 @@ let package = Package(
       ]
     ),
 
-//    .library(
-//      name: "GestureKit",
-//      targets: [
-//        "GestureKit"
-//      ]
-//    ),
-
     .library(
       name: "Wrecktangle",
       targets: ["Wrecktangle"]
@@ -72,10 +65,8 @@ let package = Package(
     .package(url: "https://github.com/swiftlang/swift-syntax", from: "602.0.0"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
-    //    .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.7.2"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
-    //    .package(url: "https://github.com/jpsim/Yams", from: "6.2.1"),
   ],
 
   targets: [
@@ -149,7 +140,6 @@ let package = Package(
         .module(.sampleBuilder),
         .module(.layoutKit),
         .module(.graphicsKit),
-//        .module(.gestureKit),
         .module(.canvasKit),
         .casePaths,
       ],
@@ -158,8 +148,7 @@ let package = Package(
     .target(
       name: "CanvasKit",
       dependencies: [
-        .module(.basePrimitives),
-//        .module(.gestureKit),
+        .module(.basePrimitives)
       ],
     ),
 
@@ -174,15 +163,6 @@ let package = Package(
         .casePaths,
       ],
     ),
-
-//    .target(
-//      name: "GestureKit",
-//      dependencies: [
-//        .module(.basePrimitives),
-//        .module(.layoutKit),
-//        .casePaths,
-//      ]
-//    ),
 
     .target(
       name: "GraphicsKit",
@@ -246,18 +226,9 @@ extension Target.Dependency {
   static func module(_ baseModule: BaseModule) -> Self {
     .target(name: baseModule.name)
   }
-  //  static var sharing: Self {
-  //    .product(name: "Sharing", package: "swift-sharing")
-  //  }
   static var casePaths: Self {
     .product(name: "CasePaths", package: "swift-case-paths")
   }
-//  static var metaCodable: Self {
-//    .product(name: "MetaCodable", package: "MetaCodable")
-//  }
-//  static var nsui: Self {
-//    .product(name: "NSUI", package: "nsui")
-//  }
 }
 extension String {
   static var macrosSource: String { "Sources/BaseMacros" }
@@ -271,7 +242,6 @@ enum BaseModule {
   case baseUI
   case componentKit
   case canvasKit
-//  case gestureKit
   case graphicsKit
   case macroHelpers
   case layoutKit
@@ -290,7 +260,6 @@ enum BaseModule {
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
       case .canvasKit: "CanvasKit"
-//      case .gestureKit: "GestureKit"
       case .graphicsKit: "GraphicsKit"
       case .macroHelpers: "MacroHelpers"
       case .layoutKit: "LayoutKit"
@@ -303,4 +272,3 @@ enum BaseModule {
     }
   }
 }
-

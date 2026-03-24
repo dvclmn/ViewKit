@@ -8,7 +8,6 @@
 import BasePrimitives
 import SwiftUI
 
-
 /// `fill(size: CGSize)` is ambiguous about which size, or what size means
 ///
 /// Should probably clarify, or be specific at call sites;

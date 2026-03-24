@@ -14,5 +14,5 @@
 
 //@_exported import EnumMacros
 //@_exported import UIPrimitives
-//@_exported import SharedHelpers
+//@_exported import BasePrimitives
 //@_exported import ColourKit

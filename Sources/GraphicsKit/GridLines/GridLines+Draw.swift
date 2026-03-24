@@ -67,26 +67,12 @@ extension GraphicsContext {
         positioned: .aboveOrigin,
         fontSize: 16,
         pointDisplay: .none
-//        colour: <#T##Color#>,
-//        fontSize: <#T##CGFloat#>,
-//        pointDisplay: <#T##DebugPoint#>
       )
       return
     } catch {
       print("Grid line error: \(error)")
       return
     }
-    //    guard
-
-    //    else {
-    //
-    ////      self.fill(
-    ////        .init(ellipseIn: .exampleZeroOrigin100x100),
-    ////        with: .color(.blue)
-    ////      )
-    //      return
-    //    }
-
   }
 
   private func drawAnnotation(
