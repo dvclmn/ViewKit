@@ -30,13 +30,15 @@ extension GridCanvas {
           .allowsCanvasClipping(false)
 
           .onGridDrag { event in
+            
             handleDrag(event)
           }
-          .onGridTap { position in
-//            store.handleSelection([position])
-
-            print("Tapped cell: \(position)")
-          }
+        //          .onGridTap { position in
+        //            store.handleTap([position])
+        //            //            store.handleSelection([position])
+        //
+        //            print("Tapped cell: \(position)")
+        //          }
 
         content()
       }
@@ -55,26 +57,10 @@ extension GridCanvas {
 }
 
 extension GridCanvas.CellSelectionView {
+
   private func handleDrag(_ event: GridDragEvent) {
     guard let dimensions = gridDimensions else { return }
-
-
-    let current = Set(positions(from: clampedStart, to: clampedEnd))
-
-//    switch event.phase {
-//      case .began:
-//        store.beginDragSelection()
-//        store.updateDragSelection(current: current)
-//
-//      case .changed:
-//        store.updateDragSelection(current: current)
-//
-//      case .ended, .none:
-//        store.endDragSelection(current: current)
-//
-//      default:
-//        break
-//    }
+    store.handleDrag(event, dimensions: dimensions)
   }
 
 }

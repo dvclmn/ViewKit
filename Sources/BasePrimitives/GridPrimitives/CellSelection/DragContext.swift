@@ -16,7 +16,7 @@ struct DragContext {
   var base: Set<GridPosition>
 
   /// The dimensions the Drag event is occuring within
-  var dimensions: GridDimensions
+//  var dimensions: GridDimensions
 
   /// Based on the modifier keys held by the user at event start
 //  var mode: CellSelectionMode
@@ -25,13 +25,13 @@ struct DragContext {
     anchor: GridPosition,
 //    for event: GridDragEvent,
     currentSelection base: Set<GridPosition>,
-    dimensions: GridDimensions,
+//    dimensions: GridDimensions,
 //    mode: CellSelectionMode,
   ) {
     self.anchor = anchor
 //    self.event = event
     self.base = base
-    self.dimensions = dimensions
+//    self.dimensions = dimensions
 //    self.mode = mode
   }
 }

@@ -7,25 +7,37 @@
 
 struct DragSelectionHandler {
   private var context: DragContext?
-
+  
   init(dragContext: DragContext? = nil) {
     self.context = dragContext
   }
+}
 
-  mutating func beginDrag(
-    event: GridDragEvent,
-    selected: Set<GridPosition>,
-    //    mode: CellSelectionMode,
-    dimensions: GridDimensions
-  ) {
-    let anchor = event.start.clamped(to: dimensions)
-    context = DragContext(
-      anchor: anchor,
-      currentSelection: selected,
-      dimensions: dimensions
-    )
+//extension DragSelectionHandler {
+//  
+//  public mutating func updateContext(
+//    event: GridDragEvent,
+//    dimensions: GridDimensions
+//  ) {
+//    
+//  }
+//
+//  mutating func beginDrag(
+//    event: GridDragEvent,
+//    selected: Set<GridPosition>,
+//    //    mode: CellSelectionMode,
+////    dimensions: GridDimensions
+//  ) {
+//    
+//    let anchor = event.start.clampedIfNeeded(to: context?.dimensions)
+    
+//    context = DragContext(
+//      anchor: anchor,
+//      currentSelection: selected,
+//      dimensions: dimensions
+//    )
     //    context = DragContext(anchor: anchor, base: selected, dimensions: dimensions, mode: mode)
-  }
+//  }
 
   /// 1) Begin: capture base
   //  public mutating func beginDragSelection(
@@ -49,33 +61,57 @@ struct DragSelectionHandler {
   //    return combinedSelection(base: base, current: current, mode: mode)
   //  }
 
-  mutating func updateDrag(
-    event: GridDragEvent,
-    mode: CellSelectionMode
-  ) -> Set<GridPosition> {
-    guard let ctx = context else { return [] }
-    //    let current = event.current.clamped(to: ctx.dimensions)
-    let rectPositions = positions(
-      from: ctx.anchor,
-      to: event.current,
-      clampedTo: ctx.dimensions
-    )
-    return mode.apply(base: ctx.base, current: Set(rectPositions))
-    //    let current = GridPosition(event.currentPoint, clampedTo: ctx.dimensions)
-    //    let rectPositions = positions(from: ctx.anchor, to: current, dimensions: ctx.dimensions)
-    //    return ctx.mode.apply(base: ctx.base, current: Set(rectPositions))
-  }
+//  mutating func updateDrag(
+//    event: GridDragEvent,
+//    mode: CellSelectionMode
+//  ) -> Set<GridPosition> {
+//    guard let ctx = context else { return [] }
+//    let current = event.current.clamped(to: ctx.dimensions)
+////    let current = clamp(event.current, to: ctx.dimensions)
+//    let rectPositions = positions(
+//      from: ctx.anchor,
+//      to: current,
+//      clampedTo: ctx.dimensions
+//    )
+//    return mode.apply(base: ctx.base, current: Set(rectPositions))
+//  }
+  
+//  mutating func endDrag(
+//    event: GridDragEvent,
+//    mode: CellSelectionMode
+//  ) -> Set<GridPosition> {
+//    let final = updateDrag(event: event, mode: mode)
+//    context = nil
+//    return final
+//  }
+  
+//  mutating func updateDrag(
+//    event: GridDragEvent,
+//    mode: CellSelectionMode
+//  ) -> Set<GridPosition> {
+//    guard let ctx = context else { return [] }
+//        let current = event.current.clamped(to: ctx.dimensions)
+//    let rectPositions = positions(
+//      from: ctx.anchor,
+//      to: current,
+//      clampedTo: ctx.dimensions
+//    )
+//    return mode.apply(base: ctx.base, current: Set(rectPositions))
+//    //    let current = GridPosition(event.currentPoint, clampedTo: ctx.dimensions)
+//    //    let rectPositions = positions(from: ctx.anchor, to: current, dimensions: ctx.dimensions)
+//    //    return ctx.mode.apply(base: ctx.base, current: Set(rectPositions))
+//  }
 
   // 3) End: compute final, clear context, and return it
-  mutating func endDrag(
-    event: GridDragEvent,
-    mode: CellSelectionMode
-  ) -> Set<GridPosition> {
-    let final = updateDrag(event: event, mode: mode)
-    //    let final = updateDragSelection(event: event)
-    context = nil
-    return final
-  }
+//  mutating func endDrag(
+//    event: GridDragEvent,
+//    mode: CellSelectionMode
+//  ) -> Set<GridPosition> {
+//    let final = updateDrag(event: event, mode: mode)
+//    //    let final = updateDragSelection(event: event)
+//    context = nil
+//    return final
+//  }
   //  public mutating func endDragSelection(
   //    current: Set<GridPosition>,
   //    //    mode: CellSelectionMode
@@ -100,29 +136,8 @@ struct DragSelectionHandler {
   //  var clampedStart: GridPosition { start.clamped(to: dimensions) }
   //  var clampedEnd: GridPosition { end.clamped(to: dimensions) }
 
-  private func positions(
-    from start: GridPosition,
-    to current: GridPosition,
-    clampedTo dimensions: GridDimensions? = nil
-  ) -> [GridPosition] {
-
-    let a = start.clampedIfNeeded(to: dimensions)
-    let b = current.clampedIfNeeded(to: dimensions)
-
-    let minCol = min(a.column, b.column)
-    let minRow = min(a.row, b.row)
-    let maxCol = max(a.column, b.column)
-    let maxRow = max(a.row, b.row)
-    let rect = GridRect(
-      origin: .init(column: minCol, row: minRow),
-      size: .init(
-        width: maxCol - minCol + 1,
-        height: maxRow - minRow + 1
-      )
-    )
-    return rect.allPositions
-  }
-}
+  
+//}
 
 //struct DragSelectionHandler {
 //  private var dragContext: DragContext?
