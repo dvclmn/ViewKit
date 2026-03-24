@@ -17,15 +17,3 @@ public enum SelectionRegion {
   case rectangle(GridRect)
   case cells(Set<GridPosition>)
 }
-
-//enum SelectionTopology {
-//  case contiguous
-//  case disjoint
-//}
-//
-//enum SelectionShape {
-//  case rectangle(Rect<Int>)     // marquee
-//  case region(Set<CellIndex>)   // arbitrary blob
-//  case sparse(Set<CellIndex>)   // scattered points
-//  case multi([SelectionShape])  // multiple grouped selections
-//}

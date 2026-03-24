@@ -18,7 +18,6 @@ extension GridCanvas {
     public var cellSize: CGSize?
     public var modifiers: Modifiers = []
 
-    //    var dragHandler: DragSelectionHandler = .init()
     var dragContext: DragContext?
 
     public init() {}
@@ -41,56 +40,33 @@ extension GridCanvas.SelectionHandler {
     _ event: GridDragEvent,
     dimensions: GridDimensions
   ) {
-    //  public func handleDrag(_ positions: [GridPosition]) {
+    ensureDragContext(for: event, dimensions: dimensions)
 
     switch event.phase {
-      case .began:
-        let anchor = event.start.clamped(to: dimensions)
-
-        dragContext = .init(
-          anchor: anchor,
-          currentSelection: selected,
-          //          dimensions: dimensions
-        )
-
-      case .changed:
+      case .began, .changed:
         selected = updateDrag(event: event, dimensions: dimensions)
 
       case .ended, .none:
-        let final = updateDrag(event: event, dimensions: dimensions)
+        selected = updateDrag(event: event, dimensions: dimensions)
         dragContext = nil
-        selected = final
 
       default: break
     }
-    //    switch event.phase {
-    //      case .began:
-    //        dragHandler.beginDrag(
-    //          event: event,
-    //          selected: selected,
-    //          dimensions: dimensions
-    //        )
-    //      //        dragHandler.beginDragSelection(
-    //      //          selected: selected,
-    //      //          mode: mode,
-    //      //          dimensions: dimensions
-    //      //        )
-    //      //        store.beginDragSelection()
-    //      //        store.updateDragSelection(current: current)
-    //
-    //      case .changed:
-    //        selected = dragHandler.updateDrag(event: event, mode: mode)
-    //      //        dragHandler.updateDragSelection(current: <#T##Set<GridPosition>#>)
-    //      //        store.updateDragSelection(current: current)
-    //
-    //      case .ended, .none:
-    //        let final = dragHandler.endDrag(event: event, mode: mode)
-    //        selected = final
-    //        lastSelected = event.current.clamped(to: dimensions)
-    //
-    //      default:
-    //        break
-    //    }
+  }
+
+  /// Lazily creates drag context on first event of a gesture.
+  /// Handles the case where `.began` is never delivered (e.g. SwiftUI's
+  /// DragGesture only provides `.changed` and `.ended`).
+  private func ensureDragContext(
+    for event: GridDragEvent,
+    dimensions: GridDimensions
+  ) {
+    guard dragContext == nil else { return }
+    let anchor = event.start.clamped(to: dimensions)
+    dragContext = .init(
+      anchor: anchor,
+      currentSelection: selected,
+    )
   }
 
   private func updateDrag(
