@@ -9,6 +9,7 @@ import BasePrimitives
 import GraphicsKit
 import LayoutKit
 import SwiftUI
+import BaseUI
 
 public struct ShaderControls: View {
 

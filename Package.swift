@@ -144,7 +144,8 @@ let package = Package(
     .target(
       name: "CanvasKit",
       dependencies: [
-        .module(.basePrimitives)
+        .module(.basePrimitives),
+        .module(.baseUI),
       ],
     ),
 
@@ -153,6 +154,7 @@ let package = Package(
     .target(
       name: "ComponentKit",
       dependencies: [
+        .module(.baseUI),
         .module(.basePrimitives),
         .module(.graphicsKit),
         .module(.layoutKit),

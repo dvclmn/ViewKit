@@ -5,11 +5,10 @@
 //  Created by Dave Coleman on 27/1/2026.
 //
 
-// import ColourKit
 import BasePrimitives
-import SwiftUI
+import BaseUI
 import LayoutKit
-//import UIPrimitives
+import SwiftUI
 
 public struct ColourSliders: View {
   @Environment(\.activeColourModel) private var activeColourModel
@@ -55,7 +54,7 @@ extension ColourSliders {
       range: .unitRange,
       trackStyle: RGBTrackStyle(colour: colour, component: .green)
     )
-//    .sliderStyle(.custom(.rgb(colour, .green)))
+    //    .sliderStyle(.custom(.rgb(colour, .green)))
 
     QuickSlider(
       "B",
@@ -63,7 +62,7 @@ extension ColourSliders {
       range: .unitRange,
       trackStyle: RGBTrackStyle(colour: colour, component: .blue)
     )
-//    .sliderStyle(.custom(.rgb(colour, .blue)))
+    //    .sliderStyle(.custom(.rgb(colour, .blue)))
 
     QuickSlider(
       "A",
@@ -71,7 +70,7 @@ extension ColourSliders {
       range: .unitRange,
       trackStyle: OpacityTrackStyle(colour: colour.toOpaque)
     )
-//    .sliderStyle(.custom(.opacityCheckboard(colour.toOpaque)))
+    //    .sliderStyle(.custom(.opacityCheckboard(colour.toOpaque)))
 
   }
 
@@ -83,8 +82,8 @@ extension ColourSliders {
       range: .unitRange,
       trackStyle: HSVTrackStyle(colour: hsvColour, component: .hue)
     )
-    
-//    .sliderStyle(.custom(.hsv(hsvBinding().wrappedValue, .hue)))
+
+    //    .sliderStyle(.custom(.hsv(hsvBinding().wrappedValue, .hue)))
 
     QuickSlider(
       "S",
@@ -92,7 +91,7 @@ extension ColourSliders {
       range: .unitRange,
       trackStyle: HSVTrackStyle(colour: hsvColour, component: .saturation)
     )
-//    .sliderStyle(.custom(.hsv(hsvBinding().wrappedValue, .saturation)))
+    //    .sliderStyle(.custom(.hsv(hsvBinding().wrappedValue, .saturation)))
 
     QuickSlider(
       "V",
@@ -100,7 +99,7 @@ extension ColourSliders {
       range: .unitRange,
       trackStyle: HSVTrackStyle(colour: hsvColour, component: .brightness)
     )
-//    .sliderStyle(.custom(.hsv(hsvBinding().wrappedValue, .brightness)))
+    //    .sliderStyle(.custom(.hsv(hsvBinding().wrappedValue, .brightness)))
 
     QuickSlider(
       "A",
@@ -108,7 +107,7 @@ extension ColourSliders {
       range: .unitRange,
       trackStyle: OpacityTrackStyle(colour: colour.toOpaque)
     )
-//    .sliderStyle(.custom(.opacityCheckboard(colour.toOpaque)))
+    //    .sliderStyle(.custom(.opacityCheckboard(colour.toOpaque)))
   }
 
   private func hsvBinding() -> Binding<HSVColour> {
