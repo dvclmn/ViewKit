@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// The type returned in the callback for CanvasKit's `OnGridDragModifier`
 public struct GridDragEvent {
   public let start: GridPosition
   public let current: GridPosition

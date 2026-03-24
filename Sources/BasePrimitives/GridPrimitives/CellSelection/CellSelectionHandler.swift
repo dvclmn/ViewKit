@@ -44,10 +44,10 @@ extension GridCanvas.SelectionHandler {
 
     switch event.phase {
       case .began, .changed:
-        selected = updateDrag(event: event, dimensions: dimensions)
+        selected = updateDrag(event: event)
 
       case .ended, .none:
-        selected = updateDrag(event: event, dimensions: dimensions)
+        selected = updateDrag(event: event)
         dragContext = nil
 
       default: break
@@ -66,19 +66,18 @@ extension GridCanvas.SelectionHandler {
     dragContext = .init(
       anchor: anchor,
       currentSelection: selected,
+      dimensions: dimensions,
+      mode: mode
     )
   }
 
-  private func updateDrag(
-    event: GridDragEvent,
-    dimensions: GridDimensions,
-  ) -> Set<GridPosition> {
+  private func updateDrag(event: GridDragEvent) -> Set<GridPosition> {
     guard let dragContext else { return [] }
-    let current = event.current.clamped(to: dimensions)
+    let current = event.current.clamped(to: dragContext.dimensions)
     let rectPositions = positions(
       from: dragContext.anchor,
       to: current,
-      clampedTo: dimensions
+      clampedTo: dragContext.dimensions
     )
 
     let selection = mode.apply(

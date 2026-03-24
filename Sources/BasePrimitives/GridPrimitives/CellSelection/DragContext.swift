@@ -10,7 +10,6 @@ struct DragContext {
   /// This is ``GridDragEvent/start``
   /// Should be captured once at the beginning of the event
   let anchor: GridPosition
-  //  let event: GridDragEvent
 
   /// Any Cells selected at the beginning of the event
   var base: Set<GridPosition>
@@ -23,13 +22,11 @@ struct DragContext {
 
   init(
     anchor: GridPosition,
-    //    for event: GridDragEvent,
     currentSelection base: Set<GridPosition>,
     dimensions: GridDimensions,
     mode: CellSelectionMode,
   ) {
     self.anchor = anchor
-    //    self.event = event
     self.base = base
     self.dimensions = dimensions
     self.mode = mode

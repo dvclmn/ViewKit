@@ -28,7 +28,7 @@ public struct GridCanvasView<Content: View>: View {
     if let gridCanvasSize {
       CanvasView(canvasSize: gridCanvasSize, content: content)
     } else {
-      StateView("Please provide a Grid Canvas Size")
+      StateView("Missing Grid Dimensions", icon: .emoji("🧊"))
     }
   }
 }
