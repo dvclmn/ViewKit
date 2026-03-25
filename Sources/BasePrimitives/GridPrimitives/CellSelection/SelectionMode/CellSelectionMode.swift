@@ -16,6 +16,9 @@ public enum CellSelectionMode: Sendable, Equatable {
 
   /// Remove Cells from selection
   case subtract
+
+  ///
+  case toggle
 }
 
 extension CellSelectionMode {
@@ -24,12 +27,13 @@ extension CellSelectionMode {
       case .new: "New"
       case .add: "Add"
       case .subtract: "Subtract"
+      case .toggle: "Toggle"
     }
   }
 }
 
 extension CellSelectionMode {
-  
+
   func apply(
     base: Set<GridPosition>,
     current: Set<GridPosition>
@@ -38,7 +42,16 @@ extension CellSelectionMode {
       case .new: current
       case .add: base.union(current)
       case .subtract: base.subtracting(current)
+      case .toggle: base.symmetricDifference(current)
+    //      case .subtract: base.tog(current)
     }
   }
-  
+
+  func apply(
+    base: Set<GridPosition>,
+    element: GridPosition
+  ) -> Set<GridPosition> {
+    apply(base: base, current: [element])
+  }
+
 }
