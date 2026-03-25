@@ -36,13 +36,8 @@ extension CanvasInputPolicy: CustomStringConvertible {
     DisplayString {
       Indented {
         Labeled("Active Inputs", value: activeInputs.stringValueJoined())
-//        Labeled("Active Inputs", value: "[" + activeInputs.stringValueJoined() + "]")
         Labeled("Drag behaviour", value: dragBehaviour.name)
       }
     }.text
   }
-
-  //  public var descriptionSingleLine: String {
-  //    "InputPolicy [pan: \(swipeGestureEnabled), zoom: \(pinchGestureEnabled), dragPan: \(pointerDragPanEnabled), tapDrag: \(dragBehaviour.name), hover: \(hoverEnabled)]"
-  //  }
 }
