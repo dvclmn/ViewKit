@@ -5,11 +5,68 @@
 //  Created by Dave Coleman on 4/1/2026.
 //
 
+public enum ClearStrategy {
+  case assignBlank                        // default
+  case compactTrailingBlanksAfterClear    // assign blank, then compact
+  case removeIfTrailingOnly               // structural removal only if it’s the trailing element of that row
+}
+
+extension GridShaped {
+  public mutating func clearCells(
+    at positions: [GridPosition],
+    strategy: ClearStrategy = .assignBlank,
+    blank: @autoclosure () -> Cell
+  ) {
+    for pos in positions {
+      guard isPositionValid(pos) else { continue }
+      if pos.column < rows[pos.row].count {
+        rows[pos.row][pos.column] = blank()
+      } else {
+        // Inside bounding box but beyond row length: nothing to write,
+        // reads will still see blank via `cell(at:)`
+      }
+    }
+    
+    switch strategy {
+      case .assignBlank:
+        break
+      case .compactTrailingBlanksAfterClear:
+        compactTrailingBlanks(isBlank: { $0 == blank() })
+      case .removeIfTrailingOnly:
+        for pos in positions {
+          guard isRowValid(pos.row) else { continue }
+          var row = rows[pos.row]
+          if pos.column == row.count - 1 {
+            row.removeLast()
+            rows[pos.row] = row
+          } else if pos.column < row.count {
+            rows[pos.row][pos.column] = blank()
+          }
+        }
+    }
+  }
+  
+  public mutating func compactTrailingBlanks(isBlank: (Cell) -> Bool) {
+    for i in rows.indices {
+      var row = rows[i]
+      while let last = row.last, isBlank(last) {
+        row.removeLast()
+      }
+      rows[i] = row
+    }
+    // Optionally drop trailing empty rows:
+    while let last = rows.last, last.isEmpty {
+      rows.removeLast()
+    }
+  }
+}
+
 /// Notes after moving away from *stored* `GridPosition`s
 /// on cells, to *derived* positions.
 ///
 ///
 extension GridShaped {
+  
 
   /// When a user starts drawing in previously empty space:
   public mutating func set(_ value: Cell, at position: GridPosition) {
@@ -17,12 +74,12 @@ extension GridShaped {
     self[at: position] = value
   }
 
-  // TODO: Possibly provide option for either optional or blank?
-  public mutating func clearCells(at positions: [GridPosition]) {
-    for position in positions where isPositionValid(position) {
-      self[at: position] = Cell.createBlank()
-    }
-  }
+//  // TODO: Possibly provide option for either optional or blank?
+//  public mutating func clearCells(at positions: [GridPosition]) {
+//    for position in positions where isPositionValid(position) {
+//      self[at: position] = Cell.createBlank()
+//    }
+//  }
 
   /// Empty grid + addColumn is currently a no-op.
   /// Need to decide whether this should create a 1-row grid.

@@ -19,6 +19,9 @@
 /// This Grid is row-major, storing `[[Cell]]`where outer = rows).
 /// This is orthogonal to raggedness. A ragged grid is always ragged along the
 /// *minor* axis. Which is Columns in this Row-major case
+///
+/// Note: I am approaching Grid normalisation this way, for GridShaped:
+/// Store Ragged, think Rectangular
 public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row, Index == Int {
 
   /// Note: No Identifiable here — identity comes from GridPosition at the use site
@@ -40,11 +43,12 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element 
   ) -> Rows
 }
 
-public protocol GridCell: BlankCreatable, Sendable, Equatable, Hashable {
-  
+public protocol GridCell: Blankable, Sendable, Equatable, Hashable {
+  static func createBlank() -> Self
+  var isBlank: Bool { get }
 }
 
-public protocol BlankCreatable {
+public protocol Blankable {
   static func createBlank() -> Self
 }
 

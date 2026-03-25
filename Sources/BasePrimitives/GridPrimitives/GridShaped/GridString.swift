@@ -9,7 +9,7 @@ import Foundation
 
 extension Character: GridCell {}
 
-extension Character: BlankCreatable {
+extension Character: Blankable {
   public static func createBlank() -> Character {
     #if DEBUG
     // ░ ╳ ✕ ▚ ∑ η ✳

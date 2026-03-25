@@ -37,7 +37,7 @@ extension GridRect {
   }
 
   /// All valid positions within this rect, offset by `origin`.
-  /// Positions are enumerated row-major from `origin` to `max` (inclusive of origin, exclusive of max).
+  /// Positions are enumerated row-major from `origin` to `max` (inclusive of both `origin` and `max`).
   public var allPositions: [GridPosition] {
     (0..<size.height).flatMap { row in
       (0..<size.width).map { column in
@@ -46,3 +46,4 @@ extension GridRect {
     }
   }
 }
+
