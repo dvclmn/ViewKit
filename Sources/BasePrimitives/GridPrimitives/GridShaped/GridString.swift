@@ -20,6 +20,8 @@ extension Character: Blankable {
 
     #endif
   }
+  
+  
 }
 
 extension GridShaped where Cell == Character {

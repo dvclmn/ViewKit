@@ -6,9 +6,9 @@
 //
 
 public enum ClearStrategy {
-  case assignBlank                        // default
-  case compactTrailingBlanksAfterClear    // assign blank, then compact
-  case removeIfTrailingOnly               // structural removal only if it’s the trailing element of that row
+  case assignBlank  // default
+  case compactTrailingBlanksAfterClear  // assign blank, then compact
+  case removeIfTrailingOnly  // structural removal only if it’s the trailing element of that row
 }
 
 extension GridShaped {
@@ -17,8 +17,7 @@ extension GridShaped {
     strategy: ClearStrategy = .assignBlank,
     blank: @autoclosure () -> Cell
   ) {
-    for pos in positions {
-      guard isPositionValid(pos) else { continue }
+    for pos in positions where isPositionValid(pos) {
       if pos.column < rows[pos.row].count {
         rows[pos.row][pos.column] = blank()
       } else {
@@ -26,15 +25,14 @@ extension GridShaped {
         // reads will still see blank via `cell(at:)`
       }
     }
-    
+
     switch strategy {
       case .assignBlank:
         break
       case .compactTrailingBlanksAfterClear:
         compactTrailingBlanks(isBlank: { $0 == blank() })
       case .removeIfTrailingOnly:
-        for pos in positions {
-          guard isRowValid(pos.row) else { continue }
+        for pos in positions where isRowValid(pos.row) {
           var row = rows[pos.row]
           if pos.column == row.count - 1 {
             row.removeLast()
@@ -45,7 +43,7 @@ extension GridShaped {
         }
     }
   }
-  
+
   public mutating func compactTrailingBlanks(isBlank: (Cell) -> Bool) {
     for i in rows.indices {
       var row = rows[i]
@@ -66,7 +64,6 @@ extension GridShaped {
 ///
 ///
 extension GridShaped {
-  
 
   /// When a user starts drawing in previously empty space:
   public mutating func set(_ value: Cell, at position: GridPosition) {
@@ -74,12 +71,12 @@ extension GridShaped {
     self[at: position] = value
   }
 
-//  // TODO: Possibly provide option for either optional or blank?
-//  public mutating func clearCells(at positions: [GridPosition]) {
-//    for position in positions where isPositionValid(position) {
-//      self[at: position] = Cell.createBlank()
-//    }
-//  }
+  //  // TODO: Possibly provide option for either optional or blank?
+  //  public mutating func clearCells(at positions: [GridPosition]) {
+  //    for position in positions where isPositionValid(position) {
+  //      self[at: position] = Cell.createBlank()
+  //    }
+  //  }
 
   /// Empty grid + addColumn is currently a no-op.
   /// Need to decide whether this should create a 1-row grid.
@@ -87,7 +84,6 @@ extension GridShaped {
   @inlinable
   mutating func ensureRectangular(paddingCell: Cell = .createBlank()) {
     guard !rows.isEmpty else { return }
-    let width = columnCount
     for i in rows.indices {
       let shortfall = width - rows[i].count
       if shortfall > 0 {
@@ -117,10 +113,14 @@ extension GridShaped {
     ensureRectangular(paddingCell: blank())
 
     /// Add columns if needed
-    if columnCount < requiredColumns {
-      let delta = requiredColumns - columnCount
+    if width < requiredColumns {
+      let delta = requiredColumns - width
       addColumns(to: .trailing, count: delta)
     }
+    //    if columnCount < requiredColumns {
+    //      let delta = requiredColumns - columnCount
+    //      addColumns(to: .trailing, count: delta)
+    //    }
     //    let requiredRows = position.row + 1
     //    let requiredColumns = Swift.max(columnCount, position.column + 1)
     //
@@ -146,7 +146,7 @@ extension GridShaped {
   }
 
   mutating func removeColumns(from edge: GridEdge, count: Int = 1) {
-    precondition(columnCount > count, "Cannot remove \(count) columns; only \(columnCount) available")
+    precondition(width > count, "Cannot remove \(count) columns; only \(width) available")
     for _ in 0..<count { removeColumn(from: edge) }
   }
 
@@ -162,10 +162,10 @@ extension GridShaped {
   public mutating func addRow(to edge: GridEdge) {
     switch edge {
       case .top:
-        let newRow: Row = (0..<columnCount).map { _ in .createBlank() }
+        let newRow: Row = (0..<width).map { _ in .createBlank() }
         rows.insert(newRow, at: 0)
       case .bottom:
-        let newRow: Row = (0..<columnCount).map { _ in .createBlank() }
+        let newRow: Row = (0..<width).map { _ in .createBlank() }
         rows.append(newRow)
       default:
         break
@@ -196,9 +196,9 @@ extension GridShaped {
   }
 
   public mutating func removeColumn(from edge: GridEdge) {
-    precondition(columnCount > 1, "Cannot remove last column")
+    precondition(width > 1, "Cannot remove last column")
     ensureRectangular()
-    let targetColumn = (edge == .leading) ? 0 : columnCount - 1
+    let targetColumn = (edge == .leading) ? 0 : width - 1
     for rowIndex in rows.indices {
       rows[rowIndex].remove(at: targetColumn)
     }

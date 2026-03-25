@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-public final class CellSelectionHandler {
+public final class CellSelectionHandler<Grid: GridShaped> {
   
   private(set) public var selected: Set<GridPosition> = []
   public var lastSelected: GridPosition?

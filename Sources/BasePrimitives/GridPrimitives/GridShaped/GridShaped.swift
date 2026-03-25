@@ -44,12 +44,12 @@ public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element 
 }
 
 public protocol GridCell: Blankable, Sendable, Equatable, Hashable {
-  static func createBlank() -> Self
-  var isBlank: Bool { get }
+
 }
 
 public protocol Blankable {
   static func createBlank() -> Self
+//  var isBlank: Bool { get }
 }
 
 extension GridShaped {

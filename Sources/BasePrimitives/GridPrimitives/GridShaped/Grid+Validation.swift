@@ -92,7 +92,7 @@ extension GridShaped {
   func isColumnValidAcrossAllRows(_ column: Int) -> Bool {
     !rows.isEmpty
       && column >= 0
-      && column < columnCount
+      && column < width
       && rows.allSatisfy { $0.count > column }
   }
 }
