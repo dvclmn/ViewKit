@@ -117,68 +117,32 @@ extension GridShaped {
       let delta = requiredColumns - width
       addColumns(to: .trailing, count: delta)
     }
-    //    if columnCount < requiredColumns {
-    //      let delta = requiredColumns - columnCount
-    //      addColumns(to: .trailing, count: delta)
-    //    }
-    //    let requiredRows = position.row + 1
-    //    let requiredColumns = Swift.max(columnCount, position.column + 1)
-    //
-    //    var newCells: Cells = []
-    //
-    //    for row in 0..<requiredRows {
-    //      var newRow: Row = []
-    //      for column in 0..<requiredColumns {
-    //        let pos = GridPosition(column: column, row: row)
-    //        if let cell = self[at: pos] {
-    //          newRow.append(cell)
-    //        } else {
-    //          newRow.append(blank())
-    //        }
-    //      }
-    //      newCells.append(newRow)
-    //    }
-    //    self.cells = newCells
   }
+}
 
-  mutating func addColumns(to edge: GridEdge, count: Int = 1) {
-    for _ in 0..<count { addColumn(to: edge) }
-  }
-
-  mutating func removeColumns(from edge: GridEdge, count: Int = 1) {
-    precondition(width > count, "Cannot remove \(count) columns; only \(width) available")
-    for _ in 0..<count { removeColumn(from: edge) }
-  }
+// MARK: - Add
+extension GridShaped {
 
   mutating func addRows(to edge: GridEdge, count: Int = 1) {
     for _ in 0..<count { addRow(to: edge) }
   }
 
-  mutating func removeRows(from edge: GridEdge, count: Int = 1) {
-    precondition(rowCount > count, "Cannot remove \(count) rows; only \(rowCount) available")
-    for _ in 0..<count { removeRow(from: edge) }
-  }
-
   public mutating func addRow(to edge: GridEdge) {
+    // Ensure grid is rectangular so "width" reflects intended column count
+    ensureRectangular()
+    let newRow: Row = (0..<width).map { _ in .createBlank() }
     switch edge {
       case .top:
-        let newRow: Row = (0..<width).map { _ in .createBlank() }
         rows.insert(newRow, at: 0)
       case .bottom:
-        let newRow: Row = (0..<width).map { _ in .createBlank() }
         rows.append(newRow)
       default:
         break
     }
   }
 
-  public mutating func removeRow(from edge: GridEdge) {
-    precondition(rowCount > 1, "Cannot remove last row")
-    switch edge {
-      case .top: rows.removeFirst()
-      case .bottom: rows.removeLast()
-      default: preconditionFailure("Invalid edge for row removal")
-    }
+  mutating func addColumns(to edge: GridEdge, count: Int = 1) {
+    for _ in 0..<count { addColumn(to: edge) }
   }
 
   /// Empty grid + addColumn is currently a no-op — see comment on
@@ -195,6 +159,32 @@ extension GridShaped {
     }
   }
 
+}
+
+// MARK: - Remove
+extension GridShaped {
+
+  mutating func removeRows(from edge: GridEdge, count: Int = 1) {
+    precondition(count >= 0, "Count must be non-negative")
+    precondition(rowCount - count >= 1, "Cannot remove \(count) rows; must leave at least one row (currently \(rowCount))")
+    for _ in 0..<count { removeRow(from: edge) }
+  }
+
+  public mutating func removeRow(from edge: GridEdge) {
+    precondition(rowCount > 1, "Cannot remove last row")
+    switch edge {
+      case .top: rows.removeFirst()
+      case .bottom: rows.removeLast()
+      default: preconditionFailure("Invalid edge for row removal")
+    }
+  }
+
+  mutating func removeColumns(from edge: GridEdge, count: Int = 1) {
+    precondition(count >= 0, "Count must be non-negative")
+    precondition(width - count >= 1, "Cannot remove \(count) columns; must leave at least one column (currently \(width))")
+    for _ in 0..<count { removeColumn(from: edge) }
+  }
+
   public mutating func removeColumn(from edge: GridEdge) {
     precondition(width > 1, "Cannot remove last column")
     ensureRectangular()
@@ -204,3 +194,4 @@ extension GridShaped {
     }
   }
 }
+
