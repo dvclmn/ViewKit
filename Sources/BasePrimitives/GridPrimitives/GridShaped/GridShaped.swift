@@ -14,6 +14,11 @@
 /// Cells do not store positions.
 /// - The `subscript(at:)` never expands the grid; use `set(_:at:)` to auto-expand.
 /// - Column-wise operations normalize rows to rectangular shape before applying changes.
+///
+/// Note on Row-major vs Column-major — these describe storage order, not shape.
+/// This Grid is row-major, storing `[[Cell]]`where outer = rows).
+/// This is orthogonal to raggedness. A ragged grid is always ragged along the
+/// *minor* axis. Which is Columns in this Row-major case
 public protocol GridShaped: Collection, ExpressibleByArrayLiteral where Element == Row, Index == Int {
 
   /// Note: No Identifiable here — identity comes from GridPosition at the use site

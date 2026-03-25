@@ -43,7 +43,6 @@ extension CellSelectionMode {
       case .add: base.union(current)
       case .subtract: base.subtracting(current)
       case .toggle: base.symmetricDifference(current)
-    //      case .subtract: base.tog(current)
     }
   }
 

@@ -42,6 +42,10 @@ extension Size {
 
 extension CGSize {
   package var screenSize: Size<ScreenSpace> { .init(fromCGSize: self) }
+  
+  package init<Space>(fromSize size: Size<Space>) {
+    self.init(width: size.width, height: size.height)
+  }
 }
 
 public func += <Space>(lhs: inout Size<Space>, rhs: Size<Space>) {

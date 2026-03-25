@@ -9,15 +9,11 @@ import Foundation
 
 extension GridShaped {
 
-  public func canvasSize(
-    cellSize: CGSize
-  ) -> CGSize? {
+  public func screenSize(using cellSize: CGSize) -> CGSize? {
     dimensions.toScreenSize(using: cellSize)
   }
 
   public var allPositions: [GridPosition] { dimensions.allPositions }
-
-  //  var rows: [Row] { cells }
 
   /// Uses width of the widest row to derive columns
   var columns: Rows {
@@ -36,17 +32,37 @@ extension GridShaped {
     //    }
   }
 
+  /// The cell at this position, or a blank if the position
+  /// is within the bounding box but the row is too short.
+  public func cell(at position: GridPosition) -> Cell? {
+    guard position.row >= 0, position.row < rowCount,
+      position.column >= 0, position.column < widestRow
+    else { return nil }
+    return rows[position.row][safe: position.column] ?? .createBlank()
+  }
+
+  /// Bounding box — works for ragged or rectangular
+  public var boundingWidth: Int { widestRow }
+  public var boundingHeight: Int { rowCount }
+
+  /// True only if all rows have the same length
+  public var isRectangular: Bool {
+    guard let first = rows.first?.count else { return true }
+    return rows.allSatisfy { $0.count == first }
+  }
+
   /// The total number of cells in the grid, whether empty or not
   public var cellCount: Int { Swift.max(0, rowCount * width) }
 
   /// The total number of non-empty cells in the grid
   public var cellCountRagged: Int { rows.reduce(0) { $0 + $1.count } }
 
+  
   public var rowCount: Int { rows.count }
   public var height: Int { rowCount }
 
   /// This returns the width of the widest row. ``widestRow``
-  public var columnCount: Int { widestRow }
+//  public var columnCount: Int { widestRow }
   public var width: Int { widestRow }
   public var widestRow: Int { rows.map(\.count).max() ?? 0 }
 

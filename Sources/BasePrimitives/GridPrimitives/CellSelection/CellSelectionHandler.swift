@@ -7,33 +7,30 @@
 
 import Foundation
 
-extension GridCanvas {
-
-  @Observable
-  public final class SelectionHandler {
-
-    private(set) public var selected: Set<GridPosition> = []
-    public var lastSelected: GridPosition?
-
-    public var cellSize: CGSize?
-    public var modifiers: Modifiers = []
-
-    var dragContext: DragContext?
-
-    public init() {}
-  }
+@Observable
+public final class CellSelectionHandler {
+  
+  private(set) public var selected: Set<GridPosition> = []
+  public var lastSelected: GridPosition?
+  
+  public var cellSize: CGSize?
+  public var modifiers: Modifiers = []
+  
+  var dragContext: DragContext?
+  
+  public init() {}
 }
 
-extension GridCanvas.SelectionHandler {
+extension CellSelectionHandler {
 
   public var mode: CellSelectionMode { .init(fromModifiers: modifiers) }
 
   public func handleTap(_ positions: [GridPosition]) {
-    switch mode {
-      case .new: replace(with: positions)
-      case .add: add(positions)
-      case .subtract: subtract(positions)
-    }
+//    switch mode {
+//      case .new: replace(with: positions)
+//      case .add: add(positions)
+//      case .subtract: subtract(positions)
+//    }
   }
 
   public func handleDrag(

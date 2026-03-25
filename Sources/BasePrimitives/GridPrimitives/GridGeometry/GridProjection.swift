@@ -14,7 +14,6 @@ public struct GridProjection: Equatable, Sendable {
   /// The size of a single grid cell in Canvas Space.
   /// Aka `cellSize`
   public let unitSize: CGSize
-
   public var rounding: GridRounding = .down
 
   public init(
@@ -30,7 +29,10 @@ extension GridProjection {
 
   /// Converts Canvas space (continuous) to Grid space (discrete).
   /// Returns `nil` when input cannot be safely converted.
-  public func gridPositionIfValid(from point: Point<CanvasSpace>) -> GridPosition? {
+  public func gridPositionIfValid(
+    from point: Point<CanvasSpace>
+  ) -> GridPosition? {
+
     guard
       let column = point.x.toGridCount(using: unitSize.width, rounding: rounding),
       let row = point.y.toGridCount(using: unitSize.height, rounding: rounding)
@@ -50,23 +52,19 @@ extension GridProjection {
 
   // MARK: - Grid to Canvas
 
+  public func canvasPoint(for position: GridPosition) -> Point<CanvasSpace> {
+    let point = GridScreenConversion.screenPoint(for: position, unitSize: unitSize)
+    return Point<CanvasSpace>(fromPoint: point)
+  }
+
   public func canvasSize(for dimensions: GridDimensions) -> Size<CanvasSpace> {
     let size = dimensions.toScreenSize(using: unitSize)
     return .init(fromCGSize: size)
-//    Size(
-//      width: CGFloat(dimensions.width) * unitSize.width,
-//      height: CGFloat(dimensions.height) * unitSize.height
-//    )
   }
 
   public func canvasCGSize(for dimensions: GridDimensions) -> CGSize {
     let size = canvasSize(for: dimensions)
-    return CGSize(width: size.width, height: size.height)
-  }
-
-  public func canvasPoint(for position: GridPosition) -> Point<CanvasSpace> {
-    let point = GridScreenConversion.screenPoint(for: position, unitSize: unitSize)
-    return Point<CanvasSpace>(fromPoint: point)
+    return CGSize(fromSize: size)
   }
 
   // MARK: - Canvas to Grid
