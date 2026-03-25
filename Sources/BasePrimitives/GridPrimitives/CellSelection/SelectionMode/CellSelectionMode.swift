@@ -16,7 +16,6 @@ public enum CellSelectionMode: Sendable, Equatable {
 
   /// Remove Cells from selection
   case subtract
-
 }
 
 extension CellSelectionMode {

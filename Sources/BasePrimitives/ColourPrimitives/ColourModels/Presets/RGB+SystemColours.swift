@@ -14,7 +14,6 @@ import SwiftUI
 extension RGBColour {
   
   // MARK: - SwiftUI System Colours (dark-mode approximations)
-  public static let purple: RGBColour    = .init(0.749, 0.353, 0.949)
   public static let red: RGBColour       = #colorLiteral(red: 1.0,   green: 0.271, blue: 0.227, alpha: 1.0)
   public static let orange: RGBColour    = #colorLiteral(red: 1.0,   green: 0.624, blue: 0.039, alpha: 1.0)
   public static let yellow: RGBColour    = #colorLiteral(red: 1.0,   green: 0.839, blue: 0.039, alpha: 1.0)
