@@ -30,7 +30,7 @@ public struct FloatDisplayFormat: Equatable, Sendable {
 }
 
 extension FloatDisplayFormat {
-  public static func fromPreset(preset: FloatDisplayPreset) -> Self {
+  public static func fromPreset(_ preset: FloatDisplayPreset) -> Self {
     preset.format
   }
 

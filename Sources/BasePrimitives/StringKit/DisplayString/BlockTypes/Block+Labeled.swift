@@ -70,10 +70,8 @@ extension Labeled {
   ) {
     self.init(
       key: AbbreviableLabel(key),
-      value: <#T##DisplayFragment?#>
-        //      value: value.map { DisplayFragment.make(from: $0) },
-        //      separator: separator,
-        //      formatOverride: format
+      value: .make(from: data),
+      separator: separator,
     )
   }
 

@@ -7,8 +7,6 @@
 
 import Foundation
 
-/// When `Indented` has it's own `buildExpression`, conformance
-/// to `StyledStringConvertible` is not needed nor read
 public struct Indented: Sendable {
   public let title: String?
   public let content: [DisplayBlock]
