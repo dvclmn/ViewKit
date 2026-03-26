@@ -25,30 +25,31 @@ extension DisplayBlock {
     labelStyle: AbbreviableLabel.Style = .standard,
     using format: FloatDisplayFormat
   ) -> String {
-    let string: String? = switch self {
-      case .text(let fragment):
-        fragment.render(using: format)
+    let string: String? =
+      switch self {
+        case .text(let fragment):
+          fragment.render(using: format)
 
-      case .labeled(let label):
-        label.toString(labelStyle: labelStyle, using: format)
+        case .labeled(let label):
+          label.toString(labelStyle: labelStyle, using: format)
 
-      case .divider(let text):
-        text
+        case .divider(let text):
+          text
 
-      case .indented(let indented):
-        indented.render(labelStyle: labelStyle, using: format)
-    }
+        case .indented(let indented):
+          indented.render(labelStyle: labelStyle, using: format)
+      }
 
     return string ?? ""
   }
 }
 
-extension DisplayBlock {
-  var indentationDepth: Int {
-    switch self {
-      case .indented(let indented):
-        1 + (indented.content.map(\.indentationDepth).max() ?? 0)
-      default: 0
-    }
-  }
-}
+//extension DisplayBlock {
+//  var indentationDepth: Int {
+//    switch self {
+//      case .indented(let indented):
+//        1 + (indented.content.map(\.indentationDepth).max() ?? 0)
+//      default: 0
+//    }
+//  }
+//}

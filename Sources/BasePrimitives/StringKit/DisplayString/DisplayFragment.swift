@@ -31,8 +31,8 @@ extension String: DisplayFragmentRenderable {
 extension DisplayFragment {
   public static func make(from value: Any) -> DisplayFragment {
     switch value {
-      case let val as DisplayFragmentRenderable:
-        return DisplayFragment(val)
+      case let result as DisplayFragmentRenderable:
+        return DisplayFragment(result)
 
       case let val as CustomStringConvertible:
         return DisplayFragment(val.description)

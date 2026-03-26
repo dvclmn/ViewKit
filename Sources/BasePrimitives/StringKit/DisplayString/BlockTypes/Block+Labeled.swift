@@ -19,7 +19,6 @@ public struct Labeled: Sendable {
 
   public let key: AbbreviableLabel
   public let value: DisplayFragment?
-  //  public let contentColumnWidth: ColumnString.Width
 
   /// Separator between the label text and the value,
   /// e.g. the space in `W 260`. Defaults to `" "`.
@@ -32,7 +31,7 @@ public struct Labeled: Sendable {
     key: AbbreviableLabel,
     value: DisplayFragment?,
     separator: ComponentSeparator = .colon,
-//    separator: String?,
+    //    separator: String?,
     formatOverride: FloatDisplayFormat? = nil
   ) {
     self.key = key
@@ -60,7 +59,7 @@ extension Labeled {
       formatOverride: format
     )
   }
-  
+
   /// Convenience for Collection types
   public init<C: Collection>(
     _ key: String,
@@ -71,10 +70,10 @@ extension Labeled {
   ) {
     self.init(
       key: AbbreviableLabel(key),
-    value: <#T##DisplayFragment?#>
-//      value: value.map { DisplayFragment.make(from: $0) },
-//      separator: separator,
-//      formatOverride: format
+      value: <#T##DisplayFragment?#>
+        //      value: value.map { DisplayFragment.make(from: $0) },
+        //      separator: separator,
+        //      formatOverride: format
     )
   }
 

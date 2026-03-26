@@ -26,7 +26,7 @@ extension CellSelectionHandler {
   
   private var debugString: String {
     DisplayString {
-      Labeled("Drag Context", value: <#T##any FloatRenderable#>)
+      Labeled("Drag Context", value: dragContext)
     }.text
   }
 
