@@ -8,7 +8,7 @@
 import Foundation
 
 public enum CellSelectionMode: Sendable, Equatable {
-  case new // Aka replace?
+  case new  // Aka replace?
   case add
   case subtract
   case toggle
@@ -26,6 +26,14 @@ extension CellSelectionMode {
 }
 
 extension CellSelectionMode {
+
+  func apply(
+    base: Set<GridPosition>,
+    current: [GridPosition]
+  ) -> Set<GridPosition> {
+    let positions: Set<GridPosition> = Set(current)
+    return apply(base: base, current: positions)
+  }
 
   func apply(
     base: Set<GridPosition>,

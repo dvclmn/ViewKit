@@ -23,6 +23,12 @@ public final class CellSelectionHandler<Grid: GridShaped> {
 }
 
 extension CellSelectionHandler {
+  
+  private var debugString: String {
+    DisplayString {
+      Labeled("Drag Context", value: <#T##any FloatRenderable#>)
+    }.text
+  }
 
   private var mode: CellSelectionMode? {
     guard let gesture else { return nil }
@@ -31,27 +37,18 @@ extension CellSelectionHandler {
   //  public func mode(using gesture: SelectionGesture) -> CellSelectionMode {
   //    .init(modifiers: modifiers, gesture: gesture)
   //  }
-
+  
   public func handleTap(_ positions: [GridPosition]) {
     self.gesture = .tap
     defer { self.gesture = nil }
-
-    //    switch mode(using: .tap) {
-    //      case .new: replace(with: positions)
-    //      case .add: add(positions)
-    //      case .subtract: subtract(positions)
-    //      case .toggle:
-    //    }
-
+    applyMode(positions)
   }
 
   public func handleDrag(
     _ event: GridDragEvent,
     dimensions: GridDimensions
   ) {
-    /// Update
     self.gesture = .drag
-    defer { self.gesture = nil }
 
     ensureDragContext(for: event, dimensions: dimensions)
 
@@ -62,6 +59,7 @@ extension CellSelectionHandler {
       case .ended, .none:
         selected = updateDrag(event: event)
         dragContext = nil
+        gesture = nil
 
       default: break
     }
@@ -110,40 +108,61 @@ extension CellSelectionHandler {
     selected.compactMap { grid[at: $0] }
   }
 
-  public func selectAll(in grid: Grid) {
-    self.replace(with: grid.size.allPositions)
-  }
 }
 
 // MARK: - Set operations
 extension CellSelectionHandler {
 
-  func replace(with positions: [GridPosition]) {
-    selected = Set(positions)
+  /// Apply selection based on the provided mode
+  func applySelection(
+    for mode: CellSelectionMode,
+    _ positions: [GridPosition]
+  ) {
+    let new = mode.apply(base: selected, current: positions)
+    selected = new
     lastSelected = positions.last
   }
 
-  func add(_ positions: [GridPosition]) {
-    selected.formUnion(positions)
-    lastSelected = positions.last
+  /// Apply selection based on the current active mode
+  func applyMode(_ positions: [GridPosition]) {
+    guard let mode else { return }
+    applySelection(for: mode, positions)
   }
 
-  func subtract(_ positions: [GridPosition]) {
-    selected.subtract(positions)
-    lastSelected = positions.last
-  }
-
-  func toggle(_ position: GridPosition) {
-    selected.toggleMembership(of: position)
-    //    selected.subtract(positions)
-    //    lastSelected = positions.last
+  public func selectAll(in grid: Grid) {
+    applySelection(for: .new, grid.size.allPositions)
+    //    self.replace(with: grid.size.allPositions)
   }
 
   func clearSelection() {
     selected.removeAll()
     lastSelected = nil
   }
+}
 
+//  func replace(with positions: [GridPosition]) {
+//
+//    //    selected = Set(positions)
+//    lastSelected = positions.last
+//  }
+//
+//  func add(_ positions: [GridPosition]) {
+//    selected.formUnion(positions)
+//    lastSelected = positions.last
+//  }
+//
+//  func subtract(_ positions: [GridPosition]) {
+//    selected.subtract(positions)
+//    lastSelected = positions.last
+//  }
+//
+//  func toggle(_ position: GridPosition) {
+//    selected.toggleMembership(of: position)
+//    //    selected.subtract(positions)
+//    //    lastSelected = positions.last
+//  }
+
+extension CellSelectionHandler {
   public func moveCellSelection(
     _ direction: Direction,
     by delta: Int = 1,
@@ -155,7 +174,8 @@ extension CellSelectionHandler {
       by: delta,
       gridDimensions: gridDimensions,
     )
-    self.replace(with: [newPosition])
+    self.applySelection(for: .new, [newPosition])
+    //    self.replace(with: [newPosition])
   }
 
   private func positions(

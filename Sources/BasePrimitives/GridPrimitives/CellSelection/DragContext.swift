@@ -32,3 +32,12 @@ struct DragContext {
     self.mode = mode
   }
 }
+
+extension DragContext: CustomStringConvertible {
+  var description: String {
+    DisplayString {
+      Labeled("Anchor", value: anchor)
+      Labeled("Base Selection", value: base)
+    }.text
+  }
+}
