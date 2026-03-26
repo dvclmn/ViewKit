@@ -60,6 +60,23 @@ extension Labeled {
       formatOverride: format
     )
   }
+  
+  /// Convenience for Collection types
+  public init<C: Collection>(
+    _ key: String,
+    data: C,
+    maxItems: Int? = nil,
+    showCount: Bool = true,
+    separator: ComponentSeparator = .colon,
+  ) {
+    self.init(
+      key: AbbreviableLabel(key),
+    value: <#T##DisplayFragment?#>
+//      value: value.map { DisplayFragment.make(from: $0) },
+//      separator: separator,
+//      formatOverride: format
+    )
+  }
 
   /// Convenience init for `PropertiesLabeled` components — takes a `FloatRenderable` value directly.
   public init(
