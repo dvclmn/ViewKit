@@ -15,29 +15,29 @@
 /// - Tap + Option => Subtract (single-item remove)
 /// - No modifiers => New (replace)
 
-public struct CellSelectionAction {
-  let kind: SelectionKind
-  let modifiers: Modifiers
-
-  public init(kind: SelectionKind, modifiers: Modifiers) {
-    self.kind = kind
-    self.modifiers = modifiers
-  }
-}
-
-extension CellSelectionAction {
-
-  public var selectionMode: CellSelectionMode {
-    switch kind {
-      case .single:
-        if modifiers.isCommandOnly { return .toggle }
-        if modifiers.isOptionOnly { return .subtract }
-        return .new
-
-      case .multiple:
-        if modifiers.isCommandOnly { return .add }
-        if modifiers.isOptionOnly { return .subtract }
-        return .new
-    }
-  }
-}
+//public struct CellSelectionAction {
+//  let kind: SelectionKind
+//  let modifiers: Modifiers
+//
+//  public init(kind: SelectionKind, modifiers: Modifiers) {
+//    self.kind = kind
+//    self.modifiers = modifiers
+//  }
+//}
+//
+//extension CellSelectionAction {
+//
+//  public var selectionMode: CellSelectionMode {
+//    switch kind {
+//      case .single:
+//        if modifiers.isCommandOnly { return .toggle }
+//        if modifiers.isOptionOnly { return .subtract }
+//        return .new
+//
+//      case .multiple:
+//        if modifiers.isCommandOnly { return .add }
+//        if modifiers.isOptionOnly { return .subtract }
+//        return .new
+//    }
+//  }
+//}

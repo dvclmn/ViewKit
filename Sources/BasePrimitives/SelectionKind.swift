@@ -12,3 +12,11 @@ public enum SelectionKind {
   case single // tap
   case multiple // drag
 }
+
+
+/// Expresses how this selection was executed by the user
+@CaseDetection
+public enum SelectionGesture {
+  case tap
+  case drag
+}

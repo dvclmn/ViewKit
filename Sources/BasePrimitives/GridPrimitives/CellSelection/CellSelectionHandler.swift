@@ -9,34 +9,50 @@ import Foundation
 
 @Observable
 public final class CellSelectionHandler<Grid: GridShaped> {
-  
+
   private(set) public var selected: Set<GridPosition> = []
   public var lastSelected: GridPosition?
-  
+
   public var cellSize: CGSize?
   public var modifiers: Modifiers = []
-  
+  private var gesture: SelectionGesture?
+
   var dragContext: DragContext?
-  
+
   public init() {}
 }
 
 extension CellSelectionHandler {
 
-//  public var mode: CellSelectionMode { .init(fromModifiers: modifiers) }
+  private var mode: CellSelectionMode? {
+    guard let gesture else { return nil }
+    return .init(modifiers: modifiers, gesture: gesture)
+  }
+  //  public func mode(using gesture: SelectionGesture) -> CellSelectionMode {
+  //    .init(modifiers: modifiers, gesture: gesture)
+  //  }
 
   public func handleTap(_ positions: [GridPosition]) {
-//    switch mode {
-//      case .new: replace(with: positions)
-//      case .add: add(positions)
-//      case .subtract: subtract(positions)
-//    }
+    self.gesture = .tap
+    defer { self.gesture = nil }
+
+    //    switch mode(using: .tap) {
+    //      case .new: replace(with: positions)
+    //      case .add: add(positions)
+    //      case .subtract: subtract(positions)
+    //      case .toggle:
+    //    }
+
   }
 
   public func handleDrag(
     _ event: GridDragEvent,
     dimensions: GridDimensions
   ) {
+    /// Update
+    self.gesture = .drag
+    defer { self.gesture = nil }
+
     ensureDragContext(for: event, dimensions: dimensions)
 
     switch event.phase {
@@ -58,7 +74,7 @@ extension CellSelectionHandler {
     for event: GridDragEvent,
     dimensions: GridDimensions
   ) {
-    guard dragContext == nil else { return }
+    guard dragContext == nil, let mode else { return }
     let anchor = event.start.clamped(to: dimensions)
     dragContext = .init(
       anchor: anchor,
@@ -69,8 +85,9 @@ extension CellSelectionHandler {
   }
 
   private func updateDrag(event: GridDragEvent) -> Set<GridPosition> {
-    guard let dragContext else { return [] }
+    guard let dragContext, let mode else { return [] }
     let current = event.current.clamped(to: dragContext.dimensions)
+
     let rectPositions = positions(
       from: dragContext.anchor,
       to: current,
@@ -83,7 +100,6 @@ extension CellSelectionHandler {
     )
 
     return selection
-
   }
 
   public func updateCellSize(_ size: CGSize?) {
@@ -97,6 +113,15 @@ extension CellSelectionHandler {
   public func selectAll(in grid: Grid) {
     self.replace(with: grid.size.allPositions)
   }
+}
+
+// MARK: - Set operations
+extension CellSelectionHandler {
+
+  func replace(with positions: [GridPosition]) {
+    selected = Set(positions)
+    lastSelected = positions.last
+  }
 
   func add(_ positions: [GridPosition]) {
     selected.formUnion(positions)
@@ -108,9 +133,10 @@ extension CellSelectionHandler {
     lastSelected = positions.last
   }
 
-  func replace(with newPositions: [GridPosition]) {
-    selected = Set(newPositions)
-    lastSelected = newPositions.last
+  func toggle(_ position: GridPosition) {
+    selected.toggleMembership(of: position)
+    //    selected.subtract(positions)
+    //    lastSelected = positions.last
   }
 
   func clearSelection() {
