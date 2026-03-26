@@ -9,13 +9,12 @@ import Foundation
 
 extension GridShaped {
 
-  public func screenSize(using cellSize: CGSize) -> CGSize? {
-    dimensions.toScreenSize(using: cellSize)
-  }
-
-  public var allPositions: [GridPosition] { dimensions.allPositions }
-
-  /// Uses width of the widest row to derive columns
+  /// Uses width of the widest row to derive columns.
+  /// - Important: For ragged grids, this returns only existing cells.
+  ///   Short rows that don't have a value at `col` are skipped (via `compactMap`).
+  ///   As a result, `columns[col].count` can be less than `rowCount`.
+  ///   If you need rectangular semantics (every column has `rowCount` entries),
+  ///   consider padding first with `ensureRectangular()` or mapping missing values to `.createBlank()`.
   var columns: Rows {
     let maxCount = widestRow
     guard maxCount > 0 else { return [] }
@@ -35,19 +34,26 @@ extension GridShaped {
     else { return nil }
     return rows[position.row][safe: position.column] ?? .createBlank()
   }
-  
+
   /// Returns nil only when outside the bounding box; otherwise
   /// returns a concrete value (blank or actual).
-//  public func cellOrBlank(at position: GridPosition) -> Cell? {
-//    
-//  }
+  //  public func cellOrBlank(at position: GridPosition) -> Cell? {
+  //
+  //  }
 
   /// Bounding box — works for ragged or rectangular
   public var boundingWidth: Int { widestRow }
   public var boundingHeight: Int { rowCount }
 
-  /// The total number of cells in the grid, whether empty or not
-  public var cellCount: Int { Swift.max(0, rowCount * width) }
+  /// The total number of cells in the grid's bounding rectangle (rowCount * width).
+  /// For ragged grids, this may exceed the actual number of stored cells.
+  public var boundingCellCount: Int { Swift.max(0, rowCount * width) }
+
+  /// The total number of cells in the grid's bounding rectangle (rowCount * width).
+  /// - Deprecated: Use `boundingCellCount` instead. For the actual stored cell count on ragged grids,
+  ///   use `cellCountRagged`.
+  @available(*, deprecated, renamed: "boundingCellCount")
+  public var cellCount: Int { boundingCellCount }
 
   /// The total number of non-empty cells in the grid
   public var cellCountRagged: Int { rows.reduce(0) { $0 + $1.count } }
@@ -62,10 +68,9 @@ extension GridShaped {
   public var hasBoundingBox: Bool { rowCount > 0 || widestRow > 0 }
 
   /// Width of the first non-empty row
-//  public var canonicalColumnCount: Int {
-//    rows.first(where: { !$0.isEmpty })?.count ?? 0
-//  }
-
+  //  public var canonicalColumnCount: Int {
+  //    rows.first(where: { !$0.isEmpty })?.count ?? 0
+  //  }
 
   public var isEmpty: Bool {
     /// Previous method was ambiguous:
@@ -99,5 +104,6 @@ extension GridShaped {
       height: rowCount
     )
   }
+  public var size: GridDimensions { dimensions }
 
 }

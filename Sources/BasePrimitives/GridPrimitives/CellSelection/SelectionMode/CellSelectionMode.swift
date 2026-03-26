@@ -8,16 +8,9 @@
 import Foundation
 
 public enum CellSelectionMode: Sendable, Equatable {
-  /// Replace a Cell selection with a new one
   case new
-
-  /// Add Cells to selection
   case add
-
-  /// Remove Cells from selection
   case subtract
-
-  ///
   case toggle
 }
 

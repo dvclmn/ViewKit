@@ -65,6 +65,12 @@ extension Modifiers {
   public var isHoldingControl: Bool { contains(.control) }
   public var isHoldingOption: Bool { contains(.option) }
   public var isHoldingCommand: Bool { contains(.command) }
+
+  public var isCapsLockOnly: Bool { self == [.capsLock] }
+  public var isShiftOnly: Bool { self == [.shift] }
+  public var isControlOnly: Bool { self == [.control] }
+  public var isOptionOnly: Bool { self == [.option] }
+  public var isCommandOnly: Bool { self == [.command] }
 }
 
 extension Modifiers {

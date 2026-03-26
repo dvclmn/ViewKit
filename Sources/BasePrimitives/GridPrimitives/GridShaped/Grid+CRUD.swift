@@ -81,6 +81,10 @@ extension GridShaped {
   /// Empty grid + addColumn is currently a no-op.
   /// Need to decide whether this should create a 1-row grid.
   /// If yes, codify it (e.g., if row​Count == 0 and add​Column is called, insert a single empty row first).
+  /// Ensures that each row has `width` columns by appending `paddingCell` as needed.
+  /// - Note: If `paddingCell` construction is non-trivial, consider passing a lazily-created
+  ///   value from the caller only when padding is required. This function does not evaluate
+  ///   anything itself beyond using the provided value when padding occurs.
   @inlinable
   mutating func ensureRectangular(paddingCell: Cell = .createBlank()) {
     guard !rows.isEmpty else { return }
@@ -109,8 +113,11 @@ extension GridShaped {
       addRows(to: .bottom, count: delta)
     }
 
-    /// Normalize before adding columns
-    ensureRectangular(paddingCell: blank())
+    // Normalize before adding columns only if there is a shortfall in any row
+    if rows.contains(where: { $0.count < width }) {
+      // Evaluate blank() only when we actually need padding
+      ensureRectangular(paddingCell: blank())
+    }
 
     /// Add columns if needed
     if width < requiredColumns {

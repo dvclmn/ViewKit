@@ -12,6 +12,8 @@ public func + (lhs: GridPosition, rhs: GridPosition) -> GridPosition {
   )
 }
 
+/// Negative positions were previously disallowed, but have since decided to
+/// keep more in line with how CGPoint works. So no 
 public func - (lhs: GridPosition, rhs: GridPosition) -> GridPosition {
   GridPosition(
     column: lhs.column - rhs.column,
@@ -26,16 +28,16 @@ extension GridPosition: Comparable {
     (lhs.row, lhs.column) < (rhs.row, rhs.column)
   }
 
-  public static func > (lhs: Self, rhs: Self) -> Bool {
-    (lhs.row, lhs.column) > (rhs.row, rhs.column)
-  }
-
-  public static func >= (lhs: Self, rhs: Self) -> Bool {
-    (lhs.row, lhs.column) >= (rhs.row, rhs.column)
-  }
-  
-  public static func <= (lhs: Self, rhs: Self) -> Bool {
-    (lhs.row, lhs.column) <= (rhs.row, rhs.column)
-  }
+//  public static func > (lhs: Self, rhs: Self) -> Bool {
+//    (lhs.row, lhs.column) > (rhs.row, rhs.column)
+//  }
+//
+//  public static func >= (lhs: Self, rhs: Self) -> Bool {
+//    (lhs.row, lhs.column) >= (rhs.row, rhs.column)
+//  }
+//  
+//  public static func <= (lhs: Self, rhs: Self) -> Bool {
+//    (lhs.row, lhs.column) <= (rhs.row, rhs.column)
+//  }
 
 }

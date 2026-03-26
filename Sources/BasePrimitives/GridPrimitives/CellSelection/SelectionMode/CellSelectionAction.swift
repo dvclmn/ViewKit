@@ -30,13 +30,13 @@ extension CellSelectionAction {
   public var selectionMode: CellSelectionMode {
     switch kind {
       case .single:
-        if modifiers == [.command] { return .toggle }
-        if modifiers == [.option] { return .subtract }
+        if modifiers.isCommandOnly { return .toggle }
+        if modifiers.isOptionOnly { return .subtract }
         return .new
 
       case .multiple:
-        if modifiers == [.command] { return .add }
-        if modifiers == [.option] { return .subtract }
+        if modifiers.isCommandOnly { return .add }
+        if modifiers.isOptionOnly { return .subtract }
         return .new
     }
   }

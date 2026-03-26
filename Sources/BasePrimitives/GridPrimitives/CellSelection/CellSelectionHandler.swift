@@ -23,7 +23,7 @@ public final class CellSelectionHandler<Grid: GridShaped> {
 
 extension CellSelectionHandler {
 
-  public var mode: CellSelectionMode { .init(fromModifiers: modifiers) }
+//  public var mode: CellSelectionMode { .init(fromModifiers: modifiers) }
 
   public func handleTap(_ positions: [GridPosition]) {
 //    switch mode {
@@ -95,7 +95,7 @@ extension CellSelectionHandler {
   }
 
   public func selectAll(in grid: Grid) {
-    self.replace(with: grid.allPositions)
+    self.replace(with: grid.size.allPositions)
   }
 
   func add(_ positions: [GridPosition]) {

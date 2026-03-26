@@ -65,11 +65,15 @@ extension GridPosition {
     GridPosition(column: column + 1, row: row + 1)
   }
 
+  /// This previously clamped to a min of zero, but no longer
+  /// does, since allowing negative positions
   public func neighbour(at edge: GridEdge) -> GridPosition {
     let delta = edge.directionVector
     return GridPosition(
-      column: max(0, column + delta.column),
-      row: max(0, row + delta.row),
+      column: column + delta.column,
+//      column: max(0, column + delta.column),
+      row: row + delta.row,
+//      row: max(0, row + delta.row),
     )
   }
 
