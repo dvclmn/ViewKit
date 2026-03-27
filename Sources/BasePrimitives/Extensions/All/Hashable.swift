@@ -7,6 +7,8 @@
 
 import Foundation
 
+public protocol HashableID: Identifiable, Sendable where Self.ID: Hashable {}
+
 //extension Hashable {
 //  /// Given the ID of the right-clicked item, returns the IDs to act upon.
 //  ///
