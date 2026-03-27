@@ -14,11 +14,11 @@ let package = Package(
     /// Macros
     .library(
       name: "BaseMacros",
-      targets: ["EnumMacros", "SampleBuilder"]
+      targets: ["EnumMacros", "SampleBuilder"],
     ),
     .executable(
       name: "BaseMacrosClient",
-      targets: ["BaseMacrosClient"]
+      targets: ["BaseMacrosClient"],
     ),
 
     /// Helper Libraries
@@ -29,7 +29,7 @@ let package = Package(
       targets: [
         "BasePrimitives",
         "MacroHelpers",
-      ]
+      ],
     ),
 
     .library(
@@ -38,7 +38,7 @@ let package = Package(
         "BaseUI",
         "LayoutKit",
         "ComponentKit",
-      ]
+      ],
     ),
 
     .library(
@@ -47,12 +47,12 @@ let package = Package(
         "GraphicsKit",
         "MotionKit",
         "CanvasKit",
-      ]
+      ],
     ),
 
     .library(
       name: "Wrecktangle",
-      targets: ["Wrecktangle"]
+      targets: ["Wrecktangle"],
     ),
 
     /// Export-only libraries
@@ -61,7 +61,6 @@ let package = Package(
 
   // MARK: - Dependancies
   dependencies: [
-    //    .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.0.0"),
     .package(url: "https://github.com/swiftlang/swift-syntax", from: "602.0.0"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
@@ -170,32 +169,32 @@ let package = Package(
       ],
       resources: [
         .process("Shaders/MetalShaders")
-      ]
+      ],
     ),
 
     .target(
       name: "LayoutKit",
       dependencies: [
         .module(.basePrimitives)
-      ]
+      ],
     ),
 
     .target(
-      name: "MacroHelpers",
+      name: "MacroHelpers"
     ),
 
     .target(
       name: "MotionKit",
       dependencies: [
         .module(.basePrimitives)
-      ]
+      ],
     ),
 
     .target(
       name: "Wrecktangle",
       dependencies: [
         .module(.basePrimitives)
-      ]
+      ],
     ),
 
     // MARK: - Forwarding modules
