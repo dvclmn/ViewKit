@@ -18,5 +18,4 @@ extension ContainerValues {
   @Entry public var isFirst: Bool = false
   @Entry public var isLast: Bool = false
   @Entry public var isShowingSectionHeader: Bool = true
-  @Entry public var allowsCanvasClipping: Bool = true
 }

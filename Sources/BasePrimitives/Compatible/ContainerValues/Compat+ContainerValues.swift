@@ -29,7 +29,7 @@ public enum ContainerValueBool: ContainerValueCompatible {
   case isFirst
   case isLast
   case isShowingSectionHeader
-  case allowsCanvasClipping
+//  case allowsCanvasClipping
 }
 
 extension ContainerValueBool {
@@ -47,7 +47,7 @@ extension ContainerValueBool {
       case .isFirst: \.isFirst
       case .isLast: \.isLast
       case .isShowingSectionHeader: \.isShowingSectionHeader
-      case .allowsCanvasClipping: \.allowsCanvasClipping
+//      case .allowsCanvasClipping: \.allowsCanvasClipping
     }
   }
 }
