@@ -46,7 +46,7 @@ let package = Package(
       targets: [
         "GraphicsKit",
         "MotionKit",
-        "CanvasKit",
+//        "CanvasKit",
       ],
     ),
 
@@ -140,13 +140,13 @@ let package = Package(
       ],
     ),
 
-    .target(
-      name: "CanvasKit",
-      dependencies: [
-        .module(.basePrimitives),
-        .module(.baseUI),
-      ],
-    ),
+//    .target(
+//      name: "CanvasKit",
+//      dependencies: [
+//        .module(.basePrimitives),
+//        .module(.baseUI),
+//      ],
+//    ),
 
     /// Can't think of a better name for this, but `ComponentKit` exists purely
     /// to avoid burdening `BaseUI` with `CasePaths` and `GraphicsKit`
@@ -238,7 +238,7 @@ enum BaseModule {
   case basePrimitives
   case baseUI
   case componentKit
-  case canvasKit
+//  case canvasKit
   case graphicsKit
   case macroHelpers
   case layoutKit
@@ -256,7 +256,7 @@ enum BaseModule {
       case .basePrimitives: "BasePrimitives"
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
-      case .canvasKit: "CanvasKit"
+//      case .canvasKit: "CanvasKit"
       case .graphicsKit: "GraphicsKit"
       case .macroHelpers: "MacroHelpers"
       case .layoutKit: "LayoutKit"
