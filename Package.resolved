@@ -1,5 +1,5 @@
 {
-  "originHash" : "cd0e4ffc3b786d5e777cab79044465daafa75b529973b5ae752836ecec59c52c",
+  "originHash" : "224b9d797b7863cc166b21df0bdf75d18e16338d548e299b68baab7187f47fcc",
   "pins" : [
     {
       "identity" : "keychain-swift",
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/stackotter/swift-macro-toolkit",
       "state" : {
-        "revision" : "77d4a6d6215a0709d169fa1c2be4df8d8e5f0796",
-        "version" : "0.8.0"
+        "revision" : "569627091e1fbb8745d691aeeb008e7247dedb7c",
+        "version" : "0.6.1"
       }
     },
     {
@@ -60,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-syntax",
       "state" : {
-        "revision" : "4799286537280063c85a32f09884cfbca301b1a1",
-        "version" : "602.0.0"
+        "revision" : "0687f71944021d616d34d922343dcef086855920",
+        "version" : "600.0.1"
       }
     },
     {

@@ -6,20 +6,20 @@ import PackageDescription
 let package = Package(
   name: "BaseHelpers",
   platforms: [
-        .iOS("17.0"),
-    .macOS("14.0")
+    .iOS("17.0"),
+    .macOS("14.0"),
   ],
   products: [
 
     /// Macros
-    .library(
-      name: "BaseMacros",
-      targets: ["EnumMacros", "SampleBuilder"],
-    ),
-    .executable(
-      name: "BaseMacrosClient",
-      targets: ["BaseMacrosClient"],
-    ),
+    //    .library(
+    //      name: "BaseMacros",
+    //      targets: ["EnumMacros", "SampleBuilder"],
+    //    ),
+    //    .executable(
+    //      name: "BaseMacrosClient",
+    //      targets: ["BaseMacrosClient"],
+    //    ),
 
     /// Helper Libraries
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
@@ -27,8 +27,8 @@ let package = Package(
     .library(
       name: "BasePrimitives",
       targets: [
-        "BasePrimitives",
-        "MacroHelpers",
+        "BasePrimitives"
+        //        "MacroHelpers",
       ],
     ),
 
@@ -60,16 +60,16 @@ let package = Package(
 
   // MARK: - Dependancies
   dependencies: [
-    .package(url: "https://github.com/swiftlang/swift-syntax", from: "602.0.0"),
+    //    .package(url: "https://github.com/swiftlang/swift-syntax", from: "602.0.0"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
-    .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
+    //    .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     .package(url: "https://github.com/dvclmn/InteractionKit", branch: "main"),
+    .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
   ],
 
   targets: [
-    
 
     // MARK: - Targets
 
@@ -85,10 +85,11 @@ let package = Package(
     .target(
       name: "BasePrimitives",
       dependencies: [
-        .module(.enumMacros),
+        //        .module(.enumMacros),
+        .extDependency(.enumMacros),
         .extDependency(.casePaths),
         .extDependency(.interactionKit),
-//        .casePaths,
+        //        .casePaths,
       ],
       resources: [
         .process("Resources/Assets.xcassets"),
@@ -122,7 +123,7 @@ let package = Package(
         .module(.graphicsKit),
         .module(.layoutKit),
         .extDependency(.casePaths),
-//        .casePaths,
+        //        .casePaths,
       ],
     ),
 
@@ -131,7 +132,7 @@ let package = Package(
       dependencies: [
         .module(.basePrimitives),
         .extDependency(.casePaths),
-//        .casePaths,
+        //        .casePaths,
       ],
       resources: [
         .process("Shaders/MetalShaders")
@@ -143,10 +144,6 @@ let package = Package(
       dependencies: [
         .module(.basePrimitives)
       ],
-    ),
-
-    .target(
-      name: "MacroHelpers"
     ),
 
     .target(
@@ -202,6 +199,7 @@ extension String {
   static var macrosSource: String { "Sources/BaseMacros" }
 }
 enum ExternalDependency {
+  case enumMacros
   case casePaths
   case interactionKit
   case keychainSwift
@@ -209,6 +207,7 @@ enum ExternalDependency {
 
   var reference: (String, String?) {
     switch self {
+      case .enumMacros: ("BaseMacros", nil)
       case .casePaths: ("CasePaths", "swift-case-paths")
       case .interactionKit: ("InteractionKit", nil)
       case .keychainSwift: ("KeychainSwift", "keychain-swift")
@@ -218,14 +217,14 @@ enum ExternalDependency {
 }
 
 enum InternalModule {
-  case enumMacros
-  case sampleBuilder
+  //  case enumMacros
+  //  case sampleBuilder
   case networking
   case basePrimitives
   case baseUI
   case componentKit
   case graphicsKit
-  case macroHelpers
+//  case macroHelpers
   case layoutKit
   case motionKit
   case wrecktangle
@@ -235,15 +234,15 @@ enum InternalModule {
 
   var name: String {
     switch self {
-      case .enumMacros: "EnumMacros"
-      case .sampleBuilder: "SampleBuilder"
+      //      case .enumMacros: "EnumMacros"
+      //      case .sampleBuilder: "SampleBuilder"
       case .networking: "BaseNetworking"
       case .basePrimitives: "BasePrimitives"
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
       //      case .canvasKit: "CanvasKit"
       case .graphicsKit: "GraphicsKit"
-      case .macroHelpers: "MacroHelpers"
+//      case .macroHelpers: "MacroHelpers"
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
       case .wrecktangle: "Wrecktangle"
