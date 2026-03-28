@@ -8,15 +8,6 @@
 import EnumMacros
 import SwiftUI
 
-/// AppKit modifiers: `NSEvent.ModifierFlags`
-/// SwiftUI modifier: `EventModifiers`
-extension EnvironmentValues {
-
-}
-
-/// This `Modifiers` is used a lot throughout this package and various project
-//public typealias Modifiers = Modifiers
-
 /// A representation of Modifier keys that doesn't use SwiftUI or AppKit
 @SetOfOptions<Int>
 public struct Modifiers: Sendable, Hashable {

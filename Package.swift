@@ -66,6 +66,7 @@ let package = Package(
     .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
+    .package(url: "https://github.com/dvclmn/InteractionKit", branch: "main"),
   ],
 
   targets: [
@@ -220,18 +221,38 @@ let package = Package(
 )
 // MARK: - Type-safe convenience extensions
 extension Target.Dependency {
-  static func module(_ baseModule: BaseModule) -> Self {
-    .target(name: baseModule.name)
+  static func module(_ name: InternalModule) -> Self {
+    .target(name: name.name)
   }
-  static var casePaths: Self {
-    .product(name: "CasePaths", package: "swift-case-paths")
+//  static func product(_ name: ExternalDependency) -> Self {
+//    .target(name: name.name)
+//  }
+  
+  static func product(_ dependency: ExternalDependency) -> Self {
+    .product(
+      name: dependency.reference.0,
+      package: dependency.reference.1 ?? dependency.reference.0
+    )
   }
+//  static var casePaths: Self {
+//    .product(name: "CasePaths", package: "swift-case-paths")
+//  }
 }
 extension String {
   static var macrosSource: String { "Sources/BaseMacros" }
 }
+enum ExternalDependency {
+  case casePaths
+  case interactionKit
+  
+  var reference: (String, String?) {
+    switch self {
+        .casePaths: ("CasePaths", "swift-case-paths")
+        .interactionKit: ("InteractionKit", nil)
+    }
+}
 
-enum BaseModule {
+enum InternalModule {
   case enumMacros
   case sampleBuilder
   case networking
