@@ -15,29 +15,6 @@ import SwiftUI
 //  return lhs.distance(to: rhs) < 0.000001
 //}
 
-extension Array where Element == CGPoint {
-
-  /// Returns a view of every `stride`-th point, always including the first.
-  public func sampled(every stride: Int) -> [CGPoint] {
-    guard stride > 1, count > 1 else { return self }
-
-    var result: [CGPoint] = []
-    result.reserveCapacity(count / stride + 1)
-
-    var i = 0
-    while i < count {
-      result.append(self[i])
-      i += stride
-    }
-
-    // Optional: ensure last point is included
-    if let last = last, result.last != last {
-      result.append(last)
-    }
-
-    return result
-  }
-}
 
 extension CGPoint {
 
@@ -60,11 +37,11 @@ extension CGPoint {
   /// ```
   public func aligned(
     to unitPoint: UnitPoint,
-    in containerSize: CGSize
+    in containerSize: CGSize,
   ) -> CGPoint {
     let anchor = CGPoint(
       x: unitPoint.x * containerSize.width,
-      y: unitPoint.y * containerSize.height
+      y: unitPoint.y * containerSize.height,
     )
     return CGPoint(x: anchor.x + self.x, y: anchor.y + self.y)
   }
@@ -77,11 +54,11 @@ extension CGPoint {
   /// becomes aligned to the specified anchor.
   public func repositioned(
     to unitPoint: UnitPoint,
-    in containerSize: CGSize
+    in containerSize: CGSize,
   ) -> CGPoint {
     let anchor = CGPoint(
       x: unitPoint.x * containerSize.width,
-      y: unitPoint.y * containerSize.height)
+      y: unitPoint.y * containerSize.height,)
     return CGPoint(x: anchor.x - self.x, y: anchor.y - self.y)
   }
 
@@ -89,7 +66,7 @@ extension CGPoint {
   /// If the point is within a central region defined by tolerance, `.center` is returned.
   public func nearestAnchor(
     in size: CGSize,
-    centerTolerance: CGFloat = 0.2
+    centerTolerance: CGFloat = 0.2,
   ) -> UnitPoint {
     let relative = toUnitPoint(in: size)
 
@@ -168,7 +145,7 @@ extension CGPoint {
   public func lerp(to end: CGPoint, t: CGFloat) -> CGPoint {
     CGPoint(
       x: x.interpolated(towards: end.x, amount: t),
-      y: y.interpolated(towards: end.y, amount: t)
+      y: y.interpolated(towards: end.y, amount: t),
     )
   }
 
@@ -177,7 +154,7 @@ extension CGPoint {
   public func scaledOffset(from lastPosition: CGPoint, sensitivity: CGFloat) -> CGVector {
     CGVector(
       dx: (self.x - lastPosition.x) * sensitivity,
-      dy: (self.y - lastPosition.y) * sensitivity
+      dy: (self.y - lastPosition.y) * sensitivity,
     )
   }
 
@@ -199,7 +176,7 @@ extension CGPoint {
 
   public static func midPoint(
     from p1: CGPoint,
-    to p2: CGPoint
+    to p2: CGPoint,
   ) -> CGPoint {
     p1.lerp(to: p2, t: 0.5)
     //    return pointAlong(from: p1, to: p2, t: 0.5)

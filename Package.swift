@@ -1,4 +1,4 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.3
 
 import CompilerPluginSupport
 import PackageDescription
@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
   name: "BaseHelpers",
   platforms: [
-    .iOS("17.0"),
-    .macOS("14.0"),
+        .iOS("17.0"),
+    .macOS("14.0")
   ],
   products: [
 
@@ -46,7 +46,6 @@ let package = Package(
       targets: [
         "GraphicsKit",
         "MotionKit",
-//        "CanvasKit",
       ],
     ),
 
@@ -70,46 +69,7 @@ let package = Package(
   ],
 
   targets: [
-    // MARK: - BaseMacro targets
-    .macro(
-      name: "BaseMacrosImplementation",
-      dependencies: [
-        .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-        .product(name: "SwiftDiagnostics", package: "swift-syntax"),
-        .product(name: "MacroToolkit", package: "swift-macro-toolkit"),
-        .module(.macroHelpers),
-      ],
-      path: .macrosSource + "/MacroImplementations",
-    ),
-
-    /// Note: `path` here wants the Macro Declaration source, not the Implementation
-    .target(
-      name: "EnumMacros",
-      dependencies: [
-        "BaseMacrosImplementation",
-        .module(.macroHelpers),
-      ],
-      path: .macrosSource + "/MacroDeclarations/EnumMacros",
-    ),
-
-    .target(
-      name: "SampleBuilder",
-      dependencies: [
-        "BaseMacrosImplementation",
-        .module(.macroHelpers),
-      ],
-      path: .macrosSource + "/MacroDeclarations/SampleBuilder",
-    ),
-
-    .executableTarget(
-      name: "BaseMacrosClient",
-      dependencies: [
-        .module(.enumMacros),
-        .module(.sampleBuilder),
-        .module(.basePrimitives),
-      ],
-      path: .macrosSource + "/BaseMacrosClient",
-    ),
+    
 
     // MARK: - Targets
 
@@ -117,7 +77,8 @@ let package = Package(
       name: "BaseNetworking",
       dependencies: [
         .module(.basePrimitives),
-        .product(name: "KeychainSwift", package: "keychain-swift"),
+        .extDependency(.keychainSwift),
+        //        .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
 
@@ -125,7 +86,9 @@ let package = Package(
       name: "BasePrimitives",
       dependencies: [
         .module(.enumMacros),
-        .casePaths,
+        .extDependency(.casePaths),
+        .extDependency(.interactionKit),
+//        .casePaths,
       ],
       resources: [
         .process("Resources/Assets.xcassets"),
@@ -141,13 +104,13 @@ let package = Package(
       ],
     ),
 
-//    .target(
-//      name: "CanvasKit",
-//      dependencies: [
-//        .module(.basePrimitives),
-//        .module(.baseUI),
-//      ],
-//    ),
+    //    .target(
+    //      name: "CanvasKit",
+    //      dependencies: [
+    //        .module(.basePrimitives),
+    //        .module(.baseUI),
+    //      ],
+    //    ),
 
     /// Can't think of a better name for this, but `ComponentKit` exists purely
     /// to avoid burdening `BaseUI` with `CasePaths` and `GraphicsKit`
@@ -158,7 +121,8 @@ let package = Package(
         .module(.basePrimitives),
         .module(.graphicsKit),
         .module(.layoutKit),
-        .casePaths,
+        .extDependency(.casePaths),
+//        .casePaths,
       ],
     ),
 
@@ -166,7 +130,8 @@ let package = Package(
       name: "GraphicsKit",
       dependencies: [
         .module(.basePrimitives),
-        .casePaths,
+        .extDependency(.casePaths),
+//        .casePaths,
       ],
       resources: [
         .process("Shaders/MetalShaders")
@@ -224,19 +189,14 @@ extension Target.Dependency {
   static func module(_ name: InternalModule) -> Self {
     .target(name: name.name)
   }
-//  static func product(_ name: ExternalDependency) -> Self {
-//    .target(name: name.name)
-//  }
-  
-  static func product(_ dependency: ExternalDependency) -> Self {
+
+  static func extDependency(_ dependency: ExternalDependency) -> Self {
     .product(
       name: dependency.reference.0,
-      package: dependency.reference.1 ?? dependency.reference.0
+      package: dependency.reference.1 ?? dependency.reference.0,
     )
   }
-//  static var casePaths: Self {
-//    .product(name: "CasePaths", package: "swift-case-paths")
-//  }
+
 }
 extension String {
   static var macrosSource: String { "Sources/BaseMacros" }
@@ -244,12 +204,17 @@ extension String {
 enum ExternalDependency {
   case casePaths
   case interactionKit
-  
+  case keychainSwift
+  case macroToolkit
+
   var reference: (String, String?) {
     switch self {
-        .casePaths: ("CasePaths", "swift-case-paths")
-        .interactionKit: ("InteractionKit", nil)
+      case .casePaths: ("CasePaths", "swift-case-paths")
+      case .interactionKit: ("InteractionKit", nil)
+      case .keychainSwift: ("KeychainSwift", "keychain-swift")
+      case .macroToolkit: ("MacroToolkit", "swift-macro-toolkit")
     }
+  }
 }
 
 enum InternalModule {
@@ -276,7 +241,7 @@ enum InternalModule {
       case .basePrimitives: "BasePrimitives"
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
-//      case .canvasKit: "CanvasKit"
+      //      case .canvasKit: "CanvasKit"
       case .graphicsKit: "GraphicsKit"
       case .macroHelpers: "MacroHelpers"
       case .layoutKit: "LayoutKit"
