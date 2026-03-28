@@ -238,7 +238,6 @@ enum BaseModule {
   case basePrimitives
   case baseUI
   case componentKit
-//  case canvasKit
   case graphicsKit
   case macroHelpers
   case layoutKit
