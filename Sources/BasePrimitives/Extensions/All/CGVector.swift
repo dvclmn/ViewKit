@@ -29,36 +29,37 @@ import Foundation
 
 extension CGVector {
 
+  /// 🚨 `velocity` and  `smoothed` both moved to
+  /// InteractionKit, and subsequently lost their
+  ///  AxisMapping / CGPoint operator niceties
+  ///
   /// Raw/simple velocity
-  public static func velocity(
-    from previous: CGPoint,
-    to current: CGPoint,
-    dt deltaTime: CGFloat,
-  ) -> CGVector {
-    let delta = (current - previous) / deltaTime
-    return CGVector(dx: delta.x, dy: delta.y)
-  }
-}
-
-extension CGVector {
-
-  public static func smoothed(
-    previous smoothed: CGVector,
-    prevPosition: CGPoint,
-    currentPosition: CGPoint,
-    factor: CGFloat = 0.2,
-    dt deltaTime: CGFloat
-  ) -> Self {
-    let raw = CGVector.velocity(
-      from: prevPosition,
-      to: currentPosition,
-      dt: deltaTime
-    )
-
-    return smoothed.adjustBoth(with: raw) { _, prev, next in
-      (prev * (1 - factor)) + (next * factor)
-    }
-  }
+  //  public static func velocity(
+  //    from previous: CGPoint,
+  //    to current: CGPoint,
+  //    dt deltaTime: CGFloat,
+  //  ) -> CGVector {
+  //    let delta = (current - previous) / deltaTime
+  //    return CGVector(dx: delta.x, dy: delta.y)
+  //  }
+  //
+  //  public static func smoothed(
+  //    previous smoothed: CGVector,
+  //    prevPosition: CGPoint,
+  //    currentPosition: CGPoint,
+  //    factor: CGFloat = 0.2,
+  //    dt deltaTime: CGFloat
+  //  ) -> Self {
+  //    let raw = CGVector.velocity(
+  //      from: prevPosition,
+  //      to: currentPosition,
+  //      dt: deltaTime
+  //    )
+  //
+  //    return smoothed.adjustBoth(with: raw) { _, prev, next in
+  //      (prev * (1 - factor)) + (next * factor)
+  //    }
+  //  }
 
   /// Performs vector magnitude limiting while preserving direction
   /// Could apply to:
@@ -78,19 +79,19 @@ extension CGVector {
 
     return CGVector(
       dx: self.dx * scale,
-      dy: self.dy * scale
+      dy: self.dy * scale,
     )
   }
 
   public static func between(
     _ from: CGPoint,
     _ to: CGPoint,
-    dt: TimeInterval
+    dt: TimeInterval,
   ) -> CGVector {
     guard dt > 0 else { return .zero }
     return CGVector(
       dx: (to.x - from.x) / dt,
-      dy: (to.y - from.y) / dt
+      dy: (to.y - from.y) / dt,
     )
   }
 
@@ -111,7 +112,7 @@ extension CGVector {
   public var speed: CGFloat {
     return sqrt(dx * dx + dy * dy)
   }
-  
+
   public var magnitude: CGFloat { speed }
 
   public func normalisedSpeed(
