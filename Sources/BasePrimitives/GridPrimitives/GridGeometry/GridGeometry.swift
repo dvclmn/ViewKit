@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import SwiftUI
+import InteractionPrimitives
 
 /// Continuous/discrete geometry for grid documents.
 public struct GridGeometry: Sendable, Equatable {
@@ -65,20 +66,20 @@ extension GridGeometry: CustomStringConvertible {
   }
 }
 
-extension CanvasGeometry {
-  public init?(
-    viewportRect: Rect<ScreenSpace>,
-    gridDimensions: GridDimensions,
-    unitSize: CGSize,
-    anchor: UnitPoint
-  ) {
-//    guard
-      let size = gridDimensions.toScreenSize(using: unitSize)
-//    else { return nil }
-    self.init(
-      viewportRect: viewportRect,
-      canvasSize: Size<CanvasSpace>(fromCGSize: size),
-      anchor: anchor
-    )
-  }
-}
+//extension CanvasGeometry {
+//  public init?(
+//    viewportRect: Rect<ScreenSpace>,
+//    gridDimensions: GridDimensions,
+//    unitSize: CGSize,
+//    anchor: UnitPoint
+//  ) {
+////    guard
+//      let size = gridDimensions.toScreenSize(using: unitSize)
+////    else { return nil }
+//    self.init(
+//      viewportRect: viewportRect,
+//      canvasSize: Size<CanvasSpace>(fromCGSize: size),
+//      anchor: anchor
+//    )
+//  }
+//}

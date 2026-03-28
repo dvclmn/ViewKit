@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 23/3/2026.
 //
 
+import InteractionPrimitives
+
 extension CellSelectionMode {
 
   init(modifiers: Modifiers, gesture: SelectionGesture) {

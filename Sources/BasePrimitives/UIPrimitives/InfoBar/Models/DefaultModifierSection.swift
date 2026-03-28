@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 14/1/2026.
 //
 
+import InteractionPrimitives
+
 public enum ModifiersSectionKey: InfoBarSectionKey {
   public static let title = "Modifiers"
 }
