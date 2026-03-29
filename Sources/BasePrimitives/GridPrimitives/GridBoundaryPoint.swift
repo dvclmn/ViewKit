@@ -74,9 +74,9 @@ extension GridBoundaryPoint {
     }
   }
 
-  public var debugColour: Color {
-    toUnitPoint.debugColour
-  }
+  //  public var debugColour: Color {
+  //    toUnitPoint.debugColour
+  //  }
 
   public var toUnitPoint: UnitPoint {
     switch self {
@@ -95,16 +95,18 @@ extension GridBoundaryPoint {
   /// Checks whether a size delta is valid for the control point.
   public func isValidSizeDelta(
     from oldSize: CGSize,
-    to newSize: CGSize
+    to newSize: CGSize,
   ) -> Bool {
     switch self {
       case .top, .bottom:
-        return oldSize.width == newSize.width
+        oldSize.width == newSize.width
+
       case .leading, .trailing:
-        return oldSize.height == newSize.height
+        oldSize.height == newSize.height
+
       case .topLeading, .bottomLeading, .topTrailing, .bottomTrailing:
         /// Both axes are allowed to change at corners
-        return true
+        true
     }
   }
 
@@ -135,14 +137,14 @@ extension GridBoundaryPoint {
 
   public var affectedEdges: GridEdge.Set {
     switch self {
-      case .top: return [.top]
-      case .bottom: return [.bottom]
-      case .leading: return [.leading]
-      case .trailing: return [.trailing]
-      case .topLeading: return [.top, .leading]
-      case .topTrailing: return [.top, .trailing]
-      case .bottomLeading: return [.bottom, .leading]
-      case .bottomTrailing: return [.bottom, .trailing]
+      case .top: [.top]
+      case .bottom: [.bottom]
+      case .leading: [.leading]
+      case .trailing: [.trailing]
+      case .topLeading: [.top, .leading]
+      case .topTrailing: [.top, .trailing]
+      case .bottomLeading: [.bottom, .leading]
+      case .bottomTrailing: [.bottom, .trailing]
     }
   }
 
@@ -186,7 +188,7 @@ extension UnitPoint {
 
       default:
         fatalError(
-          "Unsupoorted unit point: \(self), for conversion to GridBoundaryPoint.")
+          "Unsupported unit point: \(self), for conversion to GridBoundaryPoint.")
     }
   }
 }
