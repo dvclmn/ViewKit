@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-extension CGPoint {
-
-  public func debugColour(unitPoint: UnitPoint, in size: CGSize) -> Color {
-    guard self.isNearUnitPoint(unitPoint, in: size) else {
-      return Color.clear
-    }
-    return unitPoint.debugColour
-  }
-}
+/// This has moved to interaction kit
+//extension CGPoint {
+//  public func debugColour(unitPoint: UnitPoint, in size: CGSize) -> Color {
+//    guard self.isNearUnitPoint(unitPoint, in: size) else {
+//      return Color.clear
+//    }
+//    return unitPoint.debugColour
+//  }
+//}

@@ -11,25 +11,12 @@ let package = Package(
   ],
   products: [
 
-    /// Macros
-    //    .library(
-    //      name: "BaseMacros",
-    //      targets: ["EnumMacros", "SampleBuilder"],
-    //    ),
-    //    .executable(
-    //      name: "BaseMacrosClient",
-    //      targets: ["BaseMacrosClient"],
-    //    ),
-
     /// Helper Libraries
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
 
     .library(
       name: "BasePrimitives",
-      targets: [
-        "BasePrimitives"
-        //        "MacroHelpers",
-      ],
+      targets: ["BasePrimitives"],
     ),
 
     .library(
@@ -60,36 +47,29 @@ let package = Package(
 
   // MARK: - Dependancies
   dependencies: [
-    //    .package(url: "https://github.com/swiftlang/swift-syntax", from: "602.0.0"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
-    //    .package(url: "https://github.com/stackotter/swift-macro-toolkit", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     .package(url: "https://github.com/dvclmn/InteractionKit", branch: "main"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
   ],
 
+  // MARK: - Targets
   targets: [
-
-    // MARK: - Targets
-
     .target(
       name: "BaseNetworking",
       dependencies: [
         .module(.basePrimitives),
         .extDependency(.keychainSwift),
-        //        .product(name: "KeychainSwift", package: "keychain-swift"),
       ],
     ),
 
     .target(
       name: "BasePrimitives",
       dependencies: [
-        //        .module(.enumMacros),
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
         .extDependency(.interactionKit),
-        //        .casePaths,
       ],
       resources: [
         .process("Resources/Assets.xcassets"),
@@ -105,14 +85,6 @@ let package = Package(
       ],
     ),
 
-    //    .target(
-    //      name: "CanvasKit",
-    //      dependencies: [
-    //        .module(.basePrimitives),
-    //        .module(.baseUI),
-    //      ],
-    //    ),
-
     /// Can't think of a better name for this, but `ComponentKit` exists purely
     /// to avoid burdening `BaseUI` with `CasePaths` and `GraphicsKit`
     .target(
@@ -123,7 +95,6 @@ let package = Package(
         .module(.graphicsKit),
         .module(.layoutKit),
         .extDependency(.casePaths),
-        //        .casePaths,
       ],
     ),
 
@@ -132,7 +103,6 @@ let package = Package(
       dependencies: [
         .module(.basePrimitives),
         .extDependency(.casePaths),
-        //        .casePaths,
       ],
       resources: [
         .process("Shaders/MetalShaders")
@@ -178,10 +148,9 @@ let package = Package(
       dependencies: [.module(.basePrimitives)],
       exclude: ["BasePrimitives.xctestplan"],
     ),
-
   ],
 )
-// MARK: - Type-safe convenience extensions
+// MARK: - Type-safe factory helpers
 extension Target.Dependency {
   static func module(_ name: InternalModule) -> Self {
     .target(name: name.name)
@@ -217,14 +186,11 @@ enum ExternalDependency {
 }
 
 enum InternalModule {
-  //  case enumMacros
-  //  case sampleBuilder
   case networking
   case basePrimitives
   case baseUI
   case componentKit
   case graphicsKit
-//  case macroHelpers
   case layoutKit
   case motionKit
   case wrecktangle
@@ -234,15 +200,11 @@ enum InternalModule {
 
   var name: String {
     switch self {
-      //      case .enumMacros: "EnumMacros"
-      //      case .sampleBuilder: "SampleBuilder"
       case .networking: "BaseNetworking"
       case .basePrimitives: "BasePrimitives"
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
-      //      case .canvasKit: "CanvasKit"
       case .graphicsKit: "GraphicsKit"
-//      case .macroHelpers: "MacroHelpers"
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
       case .wrecktangle: "Wrecktangle"

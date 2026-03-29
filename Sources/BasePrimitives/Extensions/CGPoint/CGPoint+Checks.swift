@@ -8,14 +8,7 @@
 import SwiftUI
 
 extension CGPoint {
-  public func isNearUnitPoint(
-    _ unitPoint: UnitPoint,
-    in size: CGSize,
-    threshold: CGFloat = 10
-  ) -> Bool {
-    let targetPoint = unitPoint.toCGPoint(in: size)
-    return self.distance(to: targetPoint) <= threshold
-  }
+
 
   public var isGreaterThanOrEqualToZero: Bool { x >= 0 && y >= 0 }
   public var isGreaterThanZero: Bool { x > 0 && y > 0 }

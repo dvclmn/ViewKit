@@ -71,20 +71,5 @@ extension UnitPoint {
     }
   }
   
-  /// This is just for visual debugging
-  public var debugColour: Color {
-    switch self {
-      case .topLeading: Color.red
-      case .top: Color.blue
-      case .topTrailing: Color.orange
-      case .trailing: Color.brown
-      case .bottomTrailing: Color.purple
-      case .bottom: Color.mint
-      case .bottomLeading: Color.cyan
-      case .leading: Color.green
-      case .center: Color.yellow
-      default: Color.gray
-    }
-  }
 
 }
