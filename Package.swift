@@ -164,9 +164,7 @@ extension Target.Dependency {
   }
 
 }
-extension String {
-  static var macrosSource: String { "Sources/BaseMacros" }
-}
+
 enum ExternalDependency {
   case enumMacros
   case casePaths

@@ -6,10 +6,10 @@
 //
 
 //import CoreTools
-//import EnumMacros
+import EnumMacros
 import Foundation
 
-//@CaseDetection
+@CaseDetection
 public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
 
   public static var allCases: [Self] { [.amplitude, .frequency, .phase] }

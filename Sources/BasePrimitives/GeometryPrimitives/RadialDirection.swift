@@ -24,7 +24,7 @@ extension UnitPoint {
   func directionMultiplier(
     for axis: GridAxis,
     mapping: AxisMapping = .default,
-    radial radialDirection: RadialDirection? = nil
+    radial radialDirection: RadialDirection? = nil,
   ) -> CGFloat {
     let axisValue = value(along: axis, mapping: mapping)
 
