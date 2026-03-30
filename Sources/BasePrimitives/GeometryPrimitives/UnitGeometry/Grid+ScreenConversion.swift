@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+import GeometryPrimitives
 
 /// Centralised Grid ⇄ Screen conversions that respect `AxisMapping`.
 ///
