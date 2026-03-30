@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GeometryPrimitives
 
 /// In some cases (like for `UnitPoint`) directionality can be inferred
 public enum RadialDirection: Sendable {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ResizeHandle: View {
-//  @Environment(\.layoutAxis) private var layoutAxis
+  @Environment(\.layoutAxis) private var layoutAxis
   private let handleThickness: CGFloat = 20
 
   @State private var isHovering: Bool = false

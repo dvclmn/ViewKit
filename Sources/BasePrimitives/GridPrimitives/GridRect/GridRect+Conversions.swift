@@ -6,17 +6,18 @@
 //
 
 import Foundation
+import GeometryPrimitives
 
 extension CGRect {
   public init(
     fromGridRect gridRect: GridRect,
     using unitSize: CGSize,
-    mapping: AxisMapping = .default
+    mapping: AxisMapping = .default,
   ) {
     self = GridScreenConversion.screenRect(
       for: gridRect,
       unitSize: unitSize,
-      mapping: mapping
+      mapping: mapping,
     )
   }
 }

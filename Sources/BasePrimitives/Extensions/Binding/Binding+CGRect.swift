@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GeometryPrimitives
 
 // MARK: - Binding CGRect
 extension Binding where Value == CGRect {

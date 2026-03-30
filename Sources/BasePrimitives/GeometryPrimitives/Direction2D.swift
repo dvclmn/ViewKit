@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GeometryPrimitives
 
 public struct Direction2D: Sendable, Hashable {
   public let x: CGFloat

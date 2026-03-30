@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import InteractionPrimitives
 
 @Observable
 public final class CellSelectionHandler<Grid: GridShaped> {

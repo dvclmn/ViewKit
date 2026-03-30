@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GeometryPrimitives
 
 extension String {
   public var gridDimensions: GridDimensions {
@@ -15,23 +16,22 @@ extension String {
   }
 }
 
-
 extension GridDimensions {
 
   public func toScreenSize(
     using unitSize: CGSize,
-    mapping: AxisMapping = .default
+    mapping: AxisMapping = .default,
   ) -> CGSize {
     GridScreenConversion.screenSize(
       for: self,
       unitSize: unitSize,
-      mapping: mapping
+      mapping: mapping,
     )
   }
 
   public func toScreenSizeIfPossible(
     using unitSize: CGSize?,
-    mapping: AxisMapping = .default
+    mapping: AxisMapping = .default,
   ) -> CGSize? {
     guard let unitSize else { return nil }
     guard
@@ -62,4 +62,35 @@ extension GridDimensions {
   //
   //    return CGSize(width: width, height: height)
   //  }
+}
+
+extension CGSize {
+
+  public func toGridDimensions(
+    using unitSize: CGSize,
+    rounding: GridRounding = .down,
+  ) -> GridDimensions? {
+    guard
+      let width = width.toGridCount(using: unitSize.width, rounding: rounding),
+      let height = height.toGridCount(using: unitSize.height, rounding: rounding),
+      width > 0,
+      height > 0
+    else {
+      printMissing("width or height", for: "toGridDimensions(using:rounding:)")
+      return nil
+    }
+
+    return GridDimensions(width: width, height: height)
+  }
+  
+  public func snappedToGrid(
+    using unitSize: CGSize,
+    rounding: GridRounding = .down
+  ) -> CGSize? {
+    guard let dimensions = toGridDimensions(using: unitSize, rounding: rounding) else {
+      return nil
+    }
+    return dimensions.toScreenSize(using: unitSize)
+  }
+
 }

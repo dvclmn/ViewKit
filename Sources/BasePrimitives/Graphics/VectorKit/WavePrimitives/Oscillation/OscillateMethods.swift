@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 3/2/2026.
 //
 
-//import CoreTools
-
 import Foundation
+import GeometryPrimitives
 
 /// IMPORTANT:
 /// Moving to use of ``WaveSampler``:
@@ -32,7 +31,7 @@ public func oscillate(
   base: Double,
   amplitude: Double,
   frequency: Double = 1.0,
-  phase: Double = 0.0
+  phase: Double = 0.0,
 ) -> Double {
   /// `y(t) = base + amplitude * sin(2π f t + phase)`
   let result = base + amplitude * sin(frequency.omega * time + phase)
@@ -59,7 +58,7 @@ public func oscillateAround(
   time: Double,
   //  time: TimeInterval,
   frequency: Double = 1.0,
-  phase: Double = 0.0
+  phase: Double = 0.0,
 ) -> Double {
   oscillate(time: time, base: center, amplitude: range, frequency: frequency, phase: phase)
 }
@@ -81,7 +80,7 @@ public func oscillating(
   amplitude: Double,
   frequency: Double = 1.0,
   phase: Double = 0.0,
-  baseOverride: Double? = nil
+  baseOverride: Double? = nil,
 ) -> CGPoint {
   value.adjust(axis, mapping: mapping) {
     oscillate(
@@ -89,7 +88,7 @@ public func oscillating(
       base: baseOverride ?? $0,
       amplitude: amplitude,
       frequency: frequency,
-      phase: phase
+      phase: phase,
     ).toCGFloat
   }
   //  p.adjust(axis, using: ., mapping: mapping)
@@ -126,7 +125,7 @@ public func oscillating(
   amplitude: Double,
   frequency: Double = 1.0,
   phase: Double = 0.0,
-  baseOverride: Double? = nil
+  baseOverride: Double? = nil,
 ) -> CGSize {
   value.adjust(axis, mapping: mapping) {
     oscillate(
@@ -134,7 +133,7 @@ public func oscillating(
       base: baseOverride ?? $0,
       amplitude: amplitude,
       frequency: frequency,
-      phase: phase
+      phase: phase,
     ).toCGFloat
   }
 }
@@ -145,7 +144,7 @@ public func oscillating(
 public func oscillate(
   in range: ClosedRange<Double> = -50...50,
   frequency: Double = 1.0,
-  noise: Double = 0.0  // 0.0 = predictable, 1.0 = chaotic
+  noise: Double = 0.0,  // 0.0 = predictable, 1.0 = chaotic
 ) -> Double {
   let now = Date().timeIntervalSinceReferenceDate
 

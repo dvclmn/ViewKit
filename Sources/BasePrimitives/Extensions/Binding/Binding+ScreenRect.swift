@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GeometryPrimitives
 
 extension Binding where Value == Size<ScreenSpace> {
   public var toBindingScreenRect: Binding<Rect<ScreenSpace>> {

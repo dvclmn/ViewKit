@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 8/10/2025.
 //
 
-
 import EnumMacros
+import GeometryPrimitives
 import SwiftUI
 
 @MetaEnum
@@ -28,7 +28,7 @@ extension ContentSizeMode {
   public func size(
     for containerSize: CGSize,
     aspectRatio: CGFloat,
-    insets: EdgeInsets = .zero
+    insets: EdgeInsets = .zero,
   ) -> CGSize {
 
     let sizeWithInsets: CGSize = containerSize.inset(by: insets)
@@ -38,12 +38,12 @@ extension ContentSizeMode {
         // aspectRatio is defined as height/width
         let widthBased = CGSize(
           width: sizeWithInsets.width,
-          height: sizeWithInsets.width * aspectRatio
+          height: sizeWithInsets.width * aspectRatio,
         )
         guard widthBased.height <= sizeWithInsets.height else {
           return CGSize(
             width: sizeWithInsets.height / aspectRatio,
-            height: sizeWithInsets.height
+            height: sizeWithInsets.height,
           )
         }
         return widthBased
@@ -56,13 +56,13 @@ extension ContentSizeMode {
           // Container is wider than content → match width
           return CGSize(
             width: sizeWithInsets.width,
-            height: sizeWithInsets.width * aspectRatio
+            height: sizeWithInsets.width * aspectRatio,
           )
         }
         // Container is taller than content → match height
         return CGSize(
           width: sizeWithInsets.height / aspectRatio,
-          height: sizeWithInsets.height
+          height: sizeWithInsets.height,
         )
 
       case .stretch:

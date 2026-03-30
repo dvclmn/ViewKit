@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import InteractionPrimitives
+import GeometryPrimitives
 
 extension EnvironmentValues {
 
@@ -21,44 +23,5 @@ extension EnvironmentValues {
 
   @Entry public var isCellSelectionEnabled: Bool = true
 
-  public var pointerGridPosition: GridPosition? {
-    guard let gridGeometry else {
-      //      printMissing("gridGeometry", for: "pointerGridPosition")
-      return nil
-    }
-
-    guard let pointerLocation else {
-      //      printMissing("pointerLocation", for: "pointerGridPosition")
-      return nil
-    }
-
-    return pointerLocation.gridPosition(in: gridGeometry)
-  }
-
-  /// Note: This hard-codes / assumes `unitSize` (not `asciiUnitSize` nor
-  /// `activeUnitSize`). Derives anchor from `canvasAnchor` Env value.
-  public var gridGeometry: GridGeometry? {
-
-    guard let viewportRect else {
-      //      printMissing("viewportRect", for: "gridGeometry")
-      return nil
-    }
-
-    guard let gridDimensions else {
-      //      printMissing("gridDimensions", for: "gridGeometry")
-      return nil
-    }
-
-    guard let unitSize else {
-      //      printMissing("unitSize", for: "gridGeometry")
-      return nil
-    }
-
-    return GridGeometry(
-      viewportRect: Rect<ScreenSpace>(fromRect: viewportRect),
-      dimensions: gridDimensions,
-      unitSize: unitSize,
-      anchor: canvasAnchor
-    )
-  }
+ 
 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 extension CGRect {
 
+  public var isZero: Bool { width == 0 && height == 0 }
+
   public init(x: Float, y: Float, width: Float, height: Float) {
     self.init(x: Double(x), y: Double(y), width: Double(width), height: Double(height))
   }
@@ -23,7 +25,7 @@ extension CGRect {
       x: CGFloat(x),
       y: CGFloat(y),
       width: CGFloat(width),
-      height: CGFloat(height)
+      height: CGFloat(height),
     )
   }
 
@@ -56,23 +58,23 @@ extension CGRect {
   /// to the same point in the rect.
   public func aligned(
     in container: CGSize,
-    to anchor: UnitPoint = .center
+    to anchor: UnitPoint = .center,
   ) -> CGRect {
     let origin = CGPoint(
       x: (container.width - width) * anchor.x,
-      y: (container.height - height) * anchor.y
+      y: (container.height - height) * anchor.y,
     )
     return CGRect(origin: origin, size: size)
   }
 
   public func aligned(
     in container: CGRect,
-    to anchor: UnitPoint = .center
+    to anchor: UnitPoint = .center,
   ) -> CGRect {
     let baseOrigin = aligned(in: container.size, to: anchor).origin
     let origin = CGPoint(
       x: container.minX + baseOrigin.x,
-      y: container.minY + baseOrigin.y
+      y: container.minY + baseOrigin.y,
     )
     return CGRect(origin: origin, size: size)
   }
@@ -103,24 +105,24 @@ extension CGRect {
   /// Note: previous methods `reversible`, `fromPoints(_:_:)`,
   /// `between(point1:point2:)`
   public static func boundingRect(
-    from start: CGPoint, to end: CGPoint
+    from start: CGPoint, to end: CGPoint,
   ) -> CGRect {
     let size = CGSize(
       width: end.x - start.x,
-      height: end.y - start.y
+      height: end.y - start.y,
     )
     return CGRect(origin: start, size: size).standardized
   }
 
   public static let exampleZeroOrigin100x100 = CGRect(
-    origin: .zero, size: CGSize(100, 100)
+    origin: .zero, size: CGSize(100, 100),
   )
 
 }
 
 // MARK: - Convenience initialisers
 extension CGRect {
-  
+
   /// Creates a rect with an origin of zero, and size from provided `size`
   public init(fromSize size: CGSize) {
     self.init(origin: .zero, size: size)
@@ -137,7 +139,7 @@ extension CGRect {
   public init(size: CGSize, centeredIn containerSize: CGSize) {
     let origin = CGPoint(
       x: (containerSize.width - size.width) / 2,
-      y: (containerSize.height - size.height) / 2
+      y: (containerSize.height - size.height) / 2,
     )
     self.init(origin: origin, size: size)
   }

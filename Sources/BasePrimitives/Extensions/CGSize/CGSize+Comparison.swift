@@ -7,25 +7,8 @@
 
 import Foundation
 
-extension CGRect {
-  public var isZero: Bool { width == 0 && height == 0 }
-}
-
 extension CGSize {
 
-  /// Returns true if both width and height are greater than zero
-  public var isGreaterThanZero: Bool { width > 0 && height > 0 }
-
-  /// Returns true if both width and height are greater than or equal to zero
-  public var isGreaterThanOrEqualToZero: Bool { width >= 0 && height >= 0 }
-
-  /// Returns true if both width and height is zero
-  public var isZero: Bool { width == 0 && height == 0 }
-
-  /// Returns true if either width or height is zero or negative
-  public var isLessThanOrEqualToZero: Bool {
-    !isGreaterThanZero
-  }
 
   // MARK: - Either dimension
   public func eitherDimensionIsGreaterThan(_ value: CGFloat) -> Bool {
