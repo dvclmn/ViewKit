@@ -97,7 +97,7 @@ extension GridLineContext {
 extension GridLineContext {
 
   private func handleMarker(
-    for axis: GridAxis,
+    for axis: GeometryAxis,
     at index: Int,
     position: CGFloat,
     markers: inout [GridLineAnnotation]

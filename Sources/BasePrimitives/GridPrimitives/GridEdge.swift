@@ -29,7 +29,7 @@ public enum GridEdge: String, Sendable, Codable, Equatable, Hashable, CaseIterab
     return point
   }
 
-  public var gridAxis: GridAxis {
+  public var geometryAxis: GeometryAxis {
     switch self {
       case .top, .bottom: .vertical
       case .leading, .trailing: .horizontal

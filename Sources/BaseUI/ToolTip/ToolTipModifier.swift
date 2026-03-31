@@ -67,7 +67,7 @@ extension ToolTipModifier {
   }
 
   nonisolated private func totalOffset(
-    for axis: GridAxis,
+    for axis: GeometryAxis,
     viewSize: CGSize,
     mapping: AxisMapping = .default
   ) -> CGFloat {

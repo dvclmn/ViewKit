@@ -29,7 +29,7 @@ public struct ScrollContext: Equatable, Sendable {
 extension ScrollContext {
   public init(
     fromGeometry geometry: ScrollGeometry,
-    withAxis axis: GridAxis,
+    withAxis axis: GeometryAxis,
 //    withAxis axis: Axis,
     tolerance: CGFloat = 2.0
   ) {

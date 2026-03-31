@@ -28,7 +28,7 @@ struct GridFrameModifier: ViewModifier {
 extension GridFrameModifier {
   private func length(
     from value: Int?,
-    along axis: GridAxis
+    along axis: GeometryAxis
   ) -> CGFloat? {
     guard let value else { return nil }
     return value.toScreenLengthIfPossible(along: axis, using: activeUnitSize)
@@ -63,7 +63,7 @@ struct GridFrameMinMaxModifier: ViewModifier {
 extension GridFrameMinMaxModifier {
   private func length(
     from value: Int?,
-    along axis: GridAxis
+    along axis: GeometryAxis
   ) -> CGFloat? {
     guard let value else { return nil }
     return value.toScreenLengthIfPossible(along: axis, using: activeUnitSize)

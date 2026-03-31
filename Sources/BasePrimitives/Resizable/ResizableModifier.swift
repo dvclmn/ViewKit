@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 21/2/2026.
 //
 
-
 import SwiftUI
 
 struct ResizableEdgeModifier: ViewModifier {
@@ -16,7 +15,7 @@ struct ResizableEdgeModifier: ViewModifier {
 
   init(
     initialLength: CGFloat,
-    state: ResizeState
+    state: ResizeState,
   ) {
     self._currentLength = State(initialValue: initialLength)
     self.state = state
@@ -26,7 +25,7 @@ struct ResizableEdgeModifier: ViewModifier {
     edge: Edge,
     initialLength: CGFloat,
     minLength: CGFloat,
-    maxLength: CGFloat
+    maxLength: CGFloat,
   ) {
     self._currentLength = State(initialValue: initialLength)
     self.state = ResizeState(edge: edge, minLength: minLength, maxLength: maxLength)
@@ -37,19 +36,19 @@ struct ResizableEdgeModifier: ViewModifier {
       .frame(
         maxWidth: .infinity,
         maxHeight: .infinity,
-        alignment: state.edge.toAlignment.toOpposing
+        alignment: state.edge.toAlignment.toOpposing,
       )
       .frame(
         width: state.isVertical ? nil : displaySize,
         height: state.isVertical ? displaySize : nil,
-        alignment: state.edge.toAlignment.toOpposing
+        alignment: state.edge.toAlignment.toOpposing,
       )
       .overlay(alignment: state.edge.toAlignment) {
         ResizeHandle()
           .gesture(
             ResizeGesture(
               currentLength: $currentLength,
-              state: state
+              state: state,
             ) { delta in
               dragDelta = delta
             }
@@ -71,14 +70,14 @@ extension View {
     edge: Edge,
     initialLength: CGFloat,
     minLength: CGFloat = 100,
-    maxLength: CGFloat = 600
+    maxLength: CGFloat = 600,
   ) -> some View {
     modifier(
       ResizableEdgeModifier(
         edge: edge,
         initialLength: initialLength,
         minLength: minLength,
-        maxLength: maxLength
+        maxLength: maxLength,
       )
     )
   }

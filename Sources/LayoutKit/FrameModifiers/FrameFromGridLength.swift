@@ -32,7 +32,7 @@ extension FrameFromUnitLength {
     guard let unitSize else { return nil }
     
     let screenLength = length.toScreenLength(
-      along: axis.toGridAxis,
+      along: axis.toGeometryAxis,
       mapping: axisMapping,
       using: unitSize
     )

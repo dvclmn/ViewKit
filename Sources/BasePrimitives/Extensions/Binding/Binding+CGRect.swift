@@ -63,7 +63,7 @@ extension Binding where Value == CGSize? {
 
 extension Binding where Value == CGFloat? {
   public func toBindingRect(
-    along axis: GridAxis,
+    along axis: GeometryAxis,
     reversed: Bool = false
   ) -> Binding<CGRect?> {
     return Binding<CGRect?> {

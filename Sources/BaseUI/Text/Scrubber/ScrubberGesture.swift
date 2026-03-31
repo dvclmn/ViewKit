@@ -29,7 +29,7 @@ struct ScrubDragGesture: Gesture {
       .updating($dragDelta) { gestureValue, dragDelta, _ in
         let translation =
           gestureValue.translation.value(
-            along: axis.toGridAxis,
+            along: axis.toGeometryAxis,
             mapping: .default
           )
         dragDelta = translation * sensitivity

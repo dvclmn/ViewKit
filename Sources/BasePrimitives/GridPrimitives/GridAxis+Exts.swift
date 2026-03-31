@@ -1,5 +1,5 @@
 //
-//  GridAxis+Exts.swift
+//  GeometryAxis+Exts.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 30/3/2026.
@@ -8,7 +8,7 @@
 import GeometryPrimitives
 import Foundation
 
-extension GridAxis {
+extension GeometryAxis {
   public func cellNumberPositioning(
     _ cellIndex: Int,
     cellSize: CGSize

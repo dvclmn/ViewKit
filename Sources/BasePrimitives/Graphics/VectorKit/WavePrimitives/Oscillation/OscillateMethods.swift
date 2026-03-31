@@ -73,7 +73,7 @@ public func oscillateAround(
 @inlinable
 public func oscillating(
   value: CGPoint,
-  axis: GridAxis,
+  axis: GeometryAxis,
   mapping: AxisMapping = .default,
   time: Double,
   //  time: TimeInterval,
@@ -118,7 +118,7 @@ public func oscillating(
 @inlinable
 public func oscillating(
   value: CGSize,
-  axis: GridAxis,
+  axis: GeometryAxis,
   mapping: AxisMapping = .default,
   time: Double,
   //  time: TimeInterval,

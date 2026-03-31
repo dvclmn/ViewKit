@@ -79,7 +79,7 @@ extension CheckerBoardBuilder {
   }
 
   /// Viewport bounds expressed in cell indices, plus padding
-  private func bound(_ boundary: RowColBoundary, for axis: GridAxis) -> Int {
+  private func bound(_ boundary: RowColBoundary, for axis: GeometryAxis) -> Int {
     let isMin = boundary.isMin
     let extent = axis.isHorizontal ? width : height
     let offset = axis.isHorizontal ? offsetX : offsetY

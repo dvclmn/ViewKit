@@ -39,7 +39,7 @@ extension Edge {
 
   /// Resolves which logical axis this edge belongs to.
   /// Assumes `identity` for ``AxisMapping`` as the baseline.
-  public var toGridAxis: GridAxis {
+  public var toGeometryAxis: GeometryAxis {
     let mapping: AxisMapping = .identity
     /// 1. Get the physical reality of the edge (.top -> .vertical)
     let physical = self.toAxis
@@ -49,11 +49,11 @@ extension Edge {
   }
   
   public var isVertical: Bool {
-    self.toGridAxis.isVertical
+    self.toGeometryAxis.isVertical
   }
   
   public var isHorizontal: Bool {
-    self.toGridAxis.isHorizontal
+    self.toGeometryAxis.isHorizontal
   }
 
   public static let zero: Double = 0.00

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GeometryPrimitives
 
 public struct CatmullRom {
 
