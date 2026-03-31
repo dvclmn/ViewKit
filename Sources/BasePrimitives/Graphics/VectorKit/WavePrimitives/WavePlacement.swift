@@ -5,9 +5,7 @@
 //  Created by Dave Coleman on 12/2/2026.
 //
 
-//import CoreTools
 import SwiftUI
-//import EnumMacros
 
 // MARK: - WavePlacement
 
@@ -66,7 +64,7 @@ extension WavePlacement {
     let t = Double(index) / Double(sampleCount - 1)
     return UnitPoint(
       x: start.x + (end.x - start.x) * t,
-      y: start.y + (end.y - start.y) * t
+      y: start.y + (end.y - start.y) * t,
     )
   }
 
@@ -77,12 +75,12 @@ extension WavePlacement {
   public func point(
     at index: Int,
     sampleCount: Int,
-    in size: CGSize
+    in size: CGSize,
   ) -> CGPoint {
     let u = normalisedPoint(at: index, sampleCount: sampleCount)
     return CGPoint(
       x: u.x * size.width,
-      y: u.y * size.height
+      y: u.y * size.height,
     )
   }
 }
@@ -137,12 +135,12 @@ extension WavePlacement {
     WavePlacement(
       from: UnitPoint(
         x: start.x + (end.x - start.x) * amount,
-        y: start.y + (end.y - start.y) * amount
+        y: start.y + (end.y - start.y) * amount,
       ),
       to: UnitPoint(
         x: end.x - (end.x - start.x) * amount,
-        y: end.y - (end.y - start.y) * amount
-      )
+        y: end.y - (end.y - start.y) * amount,
+      ),
     )
   }
 
@@ -156,8 +154,8 @@ extension WavePlacement {
       from: start,
       to: UnitPoint(
         x: start.x + (end.x - start.x) * extent,
-        y: start.y + (end.y - start.y) * extent
-      )
+        y: start.y + (end.y - start.y) * extent,
+      ),
     )
   }
 
@@ -169,7 +167,7 @@ extension WavePlacement {
   public func offset(x: Double = 0, y: Double = 0) -> WavePlacement {
     WavePlacement(
       from: UnitPoint(x: start.x + x, y: start.y + y),
-      to: UnitPoint(x: end.x + x, y: end.y + y)
+      to: UnitPoint(x: end.x + x, y: end.y + y),
     )
   }
 
@@ -177,7 +175,7 @@ extension WavePlacement {
   public var mirroredHorizontally: WavePlacement {
     WavePlacement(
       from: UnitPoint(x: 1 - start.x, y: start.y),
-      to: UnitPoint(x: 1 - end.x, y: end.y)
+      to: UnitPoint(x: 1 - end.x, y: end.y),
     )
   }
 
@@ -185,7 +183,7 @@ extension WavePlacement {
   public var mirroredVertically: WavePlacement {
     WavePlacement(
       from: UnitPoint(x: start.x, y: 1 - start.y),
-      to: UnitPoint(x: end.x, y: 1 - end.y)
+      to: UnitPoint(x: end.x, y: 1 - end.y),
     )
   }
 }
@@ -235,7 +233,7 @@ extension WavePlacement {
   public func resolvedSegment(in size: CGSize) -> (start: CGPoint, end: CGPoint) {
     (
       start: CGPoint(x: start.x * size.width, y: start.y * size.height),
-      end: CGPoint(x: end.x * size.width, y: end.y * size.height)
+      end: CGPoint(x: end.x * size.width, y: end.y * size.height),
     )
   }
 }

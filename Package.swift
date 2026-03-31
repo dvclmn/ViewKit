@@ -82,6 +82,7 @@ let package = Package(
       dependencies: [
         .module(.basePrimitives),
         .module(.layoutKit),
+        .extDependency(.enumMacros),
         .extDependency(.interactionKit),
       ],
     ),
@@ -117,6 +118,7 @@ let package = Package(
       dependencies: [
         .module(.basePrimitives),
         .extDependency(.interactionKit),
+        .extDependency(.enumMacros),
       ],
     ),
 

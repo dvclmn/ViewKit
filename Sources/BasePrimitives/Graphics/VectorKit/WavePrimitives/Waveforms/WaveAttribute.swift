@@ -5,11 +5,8 @@
 //  Created by Dave Coleman on 4/11/2024.
 //
 
-//import CoreTools
-import EnumMacros
 import Foundation
 
-@CaseDetection
 public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
 
   public static var allCases: [Self] { [.amplitude, .frequency, .phase] }
@@ -29,11 +26,11 @@ public enum WaveAttribute: String, Sendable, CaseIterable, Identifiable {
 
   public var id: String { rawValue }
 
-//  public var isAmplitude: Bool { self == .amplitude }
-//  public var isFrequency: Bool { self == .frequency }
-//  public var isPhase: Bool { self == .phase }
-//  public var isNoise: Bool { self == .noise }
-//  public var isCycles: Bool { self == .cycles }
+  //  public var isAmplitude: Bool { self == .amplitude }
+  //  public var isFrequency: Bool { self == .frequency }
+  //  public var isPhase: Bool { self == .phase }
+  //  public var isNoise: Bool { self == .noise }
+  //  public var isCycles: Bool { self == .cycles }
 
   public var name: (full: String, abbreviated: String) {
     switch self {

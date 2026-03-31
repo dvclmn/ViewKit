@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 19/1/2026.
 //
 
+import InteractionPrimitives
 import BasePrimitives
 import EnumMacros
 

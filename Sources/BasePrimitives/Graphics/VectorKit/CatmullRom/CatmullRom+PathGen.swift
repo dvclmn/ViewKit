@@ -8,6 +8,7 @@
 
 //import CoreTools
 import SwiftUI
+import GeometryPrimitives
 
 extension WavePathGenerator {
 

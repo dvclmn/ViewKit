@@ -6,6 +6,7 @@
 //
 
 import BasePrimitives
+import InteractionPrimitives
 import SwiftUI
 
 @Observable
@@ -46,7 +47,7 @@ extension ScrubberHandler {
   }
 
   func valueString(places: Int?) -> String {
-    valueClampedIfNeeded.displayString(places: places ?? 0)
+    valueClampedIfNeeded.displayString(.wholeNumber)
   }
   var valueClampedIfNeeded: Double {
     guard let range else { return value }
