@@ -6,6 +6,7 @@
 //
 
 import BasePrimitives
+import GeometryPrimitives
 import SwiftUI
 
 struct GridFrameModifier: ViewModifier {

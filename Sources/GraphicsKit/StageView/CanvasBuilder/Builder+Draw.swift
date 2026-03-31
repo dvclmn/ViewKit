@@ -6,6 +6,7 @@
 //
 
 import BasePrimitives
+import GeometryPrimitives
 import EnumMacros
 import SwiftUI
 

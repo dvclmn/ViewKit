@@ -103,6 +103,7 @@ let package = Package(
       name: "GraphicsKit",
       dependencies: [
         .module(.basePrimitives),
+        .extDependency(.enumMacros),
         .extDependency(.casePaths),
         .extDependency(.interactionKit),
       ],
@@ -114,7 +115,8 @@ let package = Package(
     .target(
       name: "LayoutKit",
       dependencies: [
-        .module(.basePrimitives)
+        .module(.basePrimitives),
+        .extDependency(.interactionKit),
       ],
     ),
 

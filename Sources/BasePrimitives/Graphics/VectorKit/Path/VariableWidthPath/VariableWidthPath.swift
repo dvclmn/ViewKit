@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import GeometryPrimitives
 
 public struct VariableWidthPath {
   var leftEdge: [CGPoint] = []

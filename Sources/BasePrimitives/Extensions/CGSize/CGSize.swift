@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GeometryPrimitives
 
 extension CGSize: @retroactive Hashable {
   public func hash(into hasher: inout Hasher) {
