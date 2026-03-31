@@ -82,6 +82,7 @@ let package = Package(
       dependencies: [
         .module(.basePrimitives),
         .module(.layoutKit),
+        .extDependency(.interactionKit),
       ],
     ),
 
@@ -103,6 +104,7 @@ let package = Package(
       dependencies: [
         .module(.basePrimitives),
         .extDependency(.casePaths),
+        .extDependency(.interactionKit),
       ],
       resources: [
         .process("Shaders/MetalShaders")

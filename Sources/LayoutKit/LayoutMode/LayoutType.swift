@@ -7,6 +7,7 @@
 
 import BasePrimitives
 import EnumMacros
+import GeometryPrimitives
 import SwiftUI
 
 /// This is here and not `SharedHelpers` because it relies on `LayoutKit`
