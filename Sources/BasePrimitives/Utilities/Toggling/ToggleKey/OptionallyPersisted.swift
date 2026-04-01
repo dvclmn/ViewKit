@@ -10,8 +10,8 @@ import SwiftUI
 @propertyWrapper
 public struct OptionallyPersisted<Value: Sendable>: DynamicProperty {
   
-  // 1. We redefine Strategy to hold a 'Bridge' for the persisted case.
-  // This bridge contains the logic for reading/writing specific types.
+  /// 1. We redefine Strategy to hold a 'Bridge' for the persisted case.
+  /// This bridge contains the logic for reading/writing specific types.
   public enum Strategy {
     case external(Binding<Value>)
     case persisted(key: String, defaultValue: Value, store: UserDefaults, bridge: PersistenceBridge<Value>)
@@ -20,8 +20,8 @@ public struct OptionallyPersisted<Value: Sendable>: DynamicProperty {
   
   @State private var box: Box
   
-  // 2. The main init is now fully generic.
-  // It doesn't care if Value is Bool, Int, or a complex Struct.
+  /// 2. The main init is now fully generic.
+  /// It doesn't care if Value is Bool, Int, or a complex Struct.
   public init(_ strategy: Strategy) {
     _box = State(initialValue: Box(strategy: strategy))
   }
@@ -38,7 +38,7 @@ public struct OptionallyPersisted<Value: Sendable>: DynamicProperty {
 }
 
 // MARK: - The Generic Boundary (Helper)
-// This simple struct carries the type-specific logic.
+/// This simple struct carries the type-specific logic.
 public struct PersistenceBridge<Value: Sendable>: Sendable {
   let read: @Sendable (UserDefaults, String) -> Value?
   let write: @Sendable (UserDefaults, String, Value) -> Void
@@ -55,7 +55,7 @@ extension OptionallyPersisted {
       didSet { save(value) }
     }
     
-    // 3. The Init is generic. Logic is derived strictly from the Strategy enum.
+    /// 3. The Init is generic. Logic is derived strictly from the Strategy enum.
     init(strategy: Strategy) {
       self.strategy = strategy
       
@@ -65,18 +65,18 @@ extension OptionallyPersisted {
         case .transient(let defaultValue):
           self.value = defaultValue
         case .persisted(let key, let defaultValue, let store, let bridge):
-          // The Box asks the Bridge: "Do you have a value? If not, use default."
+          /// The Box asks the Bridge: "Do you have a value? If not, use default."
           if let persistedValue = bridge.read(store, key) {
             self.value = persistedValue
           } else {
-            // Determine if we should write the default value immediately on first load
+            /// Determine if we should write the default value immediately on first load
             store.setValue(defaultValue, forKey: key) // Optional, depending on preference
             self.value = defaultValue
           }
       }
     }
     
-    // 4. Write logic is also generic.
+    /// 4. Write logic is also generic.
     private func save(_ newValue: Value) {
       switch strategy {
         case .external(let binding):
@@ -95,8 +95,8 @@ extension OptionallyPersisted {
 
 public extension OptionallyPersisted.Strategy where Value == Bool {
   
-  // This static factory method allows the user to type `.persisted(...)`
-  // without manually constructing the bridge.
+  /// This static factory method allows the user to type `.persisted(...)`
+  /// without manually constructing the bridge.
   static func persisted(
     key: String,
     defaultValue: Value,
@@ -111,13 +111,13 @@ public extension OptionallyPersisted.Strategy where Value == Bool {
   }
 }
 
-// Define the specific read/write logic for Bool
+/// Define the specific read/write logic for Bool
 extension PersistenceBridge where Value == Bool {
   static var bool: Self {
     PersistenceBridge(
       read: { store, key in
-        // UserDefaults returns nil if key doesn't exist, generic object otherwise.
-        // We explicitly check generic object existence to differentiate "false" from "not found"
+        /// UserDefaults returns nil if key doesn't exist, generic object otherwise.
+        /// We explicitly check generic object existence to differentiate "false" from "not found"
         guard store.object(forKey: key) != nil else { return nil }
         return store.bool(forKey: key)
       },
@@ -143,185 +143,3 @@ extension OptionallyPersisted where Value == Bool {
     self.init(.transient(defaultValue: defaultValue))
   }
 }
-
-//@propertyWrapper
-//public struct OptionallyPersisted<Value: Sendable>: DynamicProperty {
-//
-//  public enum Strategy {
-//    case external(Binding<Value>)
-//    case persisted(key: String, defaultValue: Value, store: UserDefaults = .standard)
-//    case transient(defaultValue: Value)
-//  }
-//
-//  @State private var box: Box
-//
-//  public init(_ strategy: Strategy) where Value == Bool {
-//    _box = State(initialValue: Box(strategy: strategy))
-//  }
-//
-//  public var wrappedValue: Value {
-//    get { box.value }
-//    nonmutating set { box.value = newValue }
-//  }
-//
-//  @MainActor
-//  public var projectedValue: Binding<Value> {
-//    Binding(get: { wrappedValue }, set: { wrappedValue = $0 })
-//  }
-//}
-//
-//extension OptionallyPersisted where Value == Bool {
-//
-//  init<K: ToggleKey>(_ key: K.Type, store: UserDefaults = .standard) {
-//    self.init(.persisted(key: K.storageKey, defaultValue: K.defaultValue, store: store))
-//  }
-//
-//  init(binding: Binding<Bool>) {
-//    self.init(.external(binding))
-//  }
-//
-//  init(transient defaultValue: Bool = false) {
-//    self.init(.transient(defaultValue: defaultValue))
-//  }
-//}
-//
-//extension OptionallyPersisted {
-//  // MARK: - Box
-//
-//  //  @MainActor
-//  @Observable
-//  fileprivate final class Box {
-//    @ObservationIgnored private let strategy: Strategy
-//
-//    var value: Value {
-//      didSet { writeIfNeeded(value) }
-//    }
-//
-//    /// Handles Boolean values, need to take care of others too
-//    init(strategy: Strategy) where Value == Bool {
-//      self.strategy = strategy
-//      self.value = Self.initialValue(for: strategy)
-//    }
-//  }
-//}
-//
-//extension OptionallyPersisted.Box where Value == Bool {
-//
-//  private static func initialValue(for strategy: OptionallyPersisted.Strategy) -> Value {
-//    switch strategy {
-//      case .external(let binding):
-//        return binding.wrappedValue
-//
-//      case .persisted(let key, let defaultValue, let store):
-//        guard store.object(forKey: key) == nil else {
-//          return store.bool(forKey: key)
-//        }
-//        store.set(defaultValue, forKey: key)
-//        return defaultValue
-//
-//      case .transient(let defaultValue):
-//        return defaultValue
-//    }
-//  }
-//}
-//extension OptionallyPersisted.Box {
-//
-//  private func writeIfNeeded(_ newValue: Value) {
-//    switch strategy {
-//      case .external(let binding):
-//        binding.wrappedValue = newValue
-//
-//      case .persisted(let key, _, let store):
-//        store.set(newValue, forKey: key)
-//
-//      case .transient:
-//        break
-//    }
-//  }
-//}
-
-//  private enum Storage: Sendable {
-//    case external(Binding<Value>)
-//    case persisted(key: String, defaultValue: Value)
-//    case transient(defaultValue: Value)
-//  }
-
-//  private let storage: Strategy
-//  @State private var transientValue: Value
-//  @AppStorage private var persistedValue: Value
-//
-//  public var wrappedValue: Value {
-//    get {
-//      switch storage {
-//        case .external(let binding):
-//          return binding.wrappedValue
-//        case .persisted:
-//          return persistedValue
-//        case .transient:
-//          return transientValue
-//      }
-//    }
-//    nonmutating set {
-//      switch storage {
-//        case .external(let binding):
-//          binding.wrappedValue = newValue
-//        case .persisted:
-//          persistedValue = newValue
-//        case .transient:
-//          transientValue = newValue
-//      }
-//    }
-//  }
-//
-//  public var projectedValue: Binding<Value> {
-//    Binding(
-//      get: { wrappedValue },
-//      set: { wrappedValue = $0 }
-//    )
-//  }
-
-//}
-
-/// Type-safe toggle persistence
-//  public init<K: ToggleKey>(_ keyType: K.Type) {
-//    self.storage = .persisted(key: K.storageKey, defaultValue: K.defaultValue)
-//    self._transientValue = State(initialValue: K.defaultValue)
-//    self._persistedValue = AppStorage(wrappedValue: K.defaultValue, K.storageKey)
-//  }
-//
-//  /// Keep external binding init
-//  public init(binding: Binding<Value>) {
-//    self.storage = .external(binding)
-//    self._transientValue = State(initialValue: binding.wrappedValue)
-//    self._persistedValue = AppStorage(wrappedValue: binding.wrappedValue, "unused")
-//  }
-//
-//  /// Transient (non-persisted) storage
-//  public init(transient defaultValue: Value) {
-//    self.storage = .transient(defaultValue: defaultValue)
-//    self._transientValue = State(initialValue: defaultValue)
-//    self._persistedValue = AppStorage(wrappedValue: defaultValue, "unused")
-//  }
-//}
-//extension OptionallyPersisted where Value == Bool {
-//
-//  /// External binding
-//  public init(binding: Binding<Value>) {
-//    self.storage = .external(binding)
-//
-//    /// Dummy initializations - these won't be used
-//    self._transientValue = State(initialValue: binding.wrappedValue)
-//    self._persistedValue = AppStorage(wrappedValue: binding.wrappedValue, "unused")
-//  }
-//
-//  /// Optional persistence
-//  public init(defaultValue: Value, persistenceKey: String? = nil) {
-//    if let key = persistenceKey {
-//      self.storage = .persisted(key: key, defaultValue: defaultValue)
-//    } else {
-//      self.storage = .transient(defaultValue: defaultValue)
-//    }
-//    self._transientValue = State(initialValue: defaultValue)
-//    self._persistedValue = AppStorage(wrappedValue: defaultValue, persistenceKey ?? "unused")
-//  }
-//}
