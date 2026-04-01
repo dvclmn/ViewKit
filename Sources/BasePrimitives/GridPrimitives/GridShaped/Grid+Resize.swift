@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GeometryPrimitives
 
 extension GridShaped {
 
@@ -17,7 +18,7 @@ extension GridShaped {
     let columns = amount.columns
 
     for edge in GridEdge.allCases where edges.contains(GridEdge.Set(edge)) {
-      switch edge.gridAxis {
+      switch edge.geometryAxis {
         case .vertical:
           if rows > 0 {
             addRows(to: edge, count: rows)
