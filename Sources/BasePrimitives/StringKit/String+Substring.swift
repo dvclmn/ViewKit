@@ -21,9 +21,6 @@ extension Substring {
     return NSRange(self.startIndex..<self.endIndex, in: text)
   }
 
-
-
-  
 }
 
 extension Array where Element == Substring {

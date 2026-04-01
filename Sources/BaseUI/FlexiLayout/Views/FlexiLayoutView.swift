@@ -97,11 +97,12 @@ extension Flexi.LayoutView {
       case .single:
         assert(
           store.multiSelection.isEmpty,
-          "`multiSelection: Set<Item.ID>` cannot be used in single selection mode.")
+          "`multiSelection: Set<Item.ID>` cannot be used in single selection mode.",)
 
       case .multi:
         assert(
-          store.singleSelection == nil, "`singleSelection: Item.ID?` cannot be used in multi selection mode.")
+          store.singleSelection == nil, "`singleSelection: Item.ID?` cannot be used in multi selection mode.",
+        )
 
     }
   }
@@ -121,7 +122,7 @@ extension Flexi.LayoutView {
     //    singleSelection: Binding<Item.ID?>,
     scrolledID: Binding<Item.ID?>? = nil,
     groupedBy groupPath: KeyPath<Item, String>? = nil,
-    @ViewBuilder content: @escaping (Item) -> Content
+    @ViewBuilder content: @escaping (Item) -> Content,
   ) {
 
     self._store = State(initialValue: FlexiHandler<Item>(mode: .single))
@@ -146,7 +147,7 @@ extension Flexi.LayoutView {
     multiSelection: Binding<Flexi.MultiSelect>,
     scrolledID: Binding<Item.ID?>? = nil,
     groupedBy groupPath: KeyPath<Item, String>? = nil,
-    @ViewBuilder content: @escaping (Item) -> Content
+    @ViewBuilder content: @escaping (Item) -> Content,
   ) {
 
     self._store = State(initialValue: FlexiHandler<Item>(mode: .multi))

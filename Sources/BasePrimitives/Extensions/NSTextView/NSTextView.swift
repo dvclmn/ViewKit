@@ -14,7 +14,7 @@ extension NSTextView {
     self.textContainer?.lineFragmentPadding = size.width
     self.textContainerInset = NSSize(
       width: 0,
-      height: size.height
+      height: size.height,
     )
   }
 
@@ -22,8 +22,7 @@ extension NSTextView {
   public var documentNSRange: NSRange {
     NSRange(location: 0, length: textStorage?.length ?? 0)
   }
-  
-  
+
   public var documentRange: NSTextRange? { self.textLayoutManager?.documentRange }
 
   public var nsString: NSString { string as NSString }
@@ -72,14 +71,14 @@ extension NSTextView {
   ) -> CGRect {
     let glyphRange = layoutManager.glyphRange(
       forCharacterRange: range,
-      actualCharacterRange: nil
+      actualCharacterRange: nil,
     )
 
     /// Get the bounding rect for this glyph range
     /// This tells us where the text physically appears on screen
     let boundingRect = layoutManager.boundingRect(
       forGlyphRange: glyphRange,
-      in: textContainer
+      in: textContainer,
     )
 
     return boundingRect
@@ -89,18 +88,18 @@ extension NSTextView {
   public func textRange(for range: NSRange) -> NSTextRange? {
     guard let tcm = self.textLayoutManager?.textContentManager else { return nil }
     return tcm.textRange(for: range)
-//    guard let textLayoutManager = self.textLayoutManager,
-//      let contentManager = textLayoutManager.textContentManager,
-//      let documentRange = contentManager.documentRange
-//    else { return nil }
-//
-//    // Calculate start and end locations based on offsets
-//    guard let start = contentManager.location(
-//        documentRange.location, offsetBy: range.location),
-//      let end = contentManager.location(start, offsetBy: range.length)
-//    else { return nil }
-//
-//    return NSTextRange(location: start, end: end)
+    //    guard let textLayoutManager = self.textLayoutManager,
+    //      let contentManager = textLayoutManager.textContentManager,
+    //      let documentRange = contentManager.documentRange
+    //    else { return nil }
+    //
+    //    // Calculate start and end locations based on offsets
+    //    guard let start = contentManager.location(
+    //        documentRange.location, offsetBy: range.location),
+    //      let end = contentManager.location(start, offsetBy: range.length)
+    //    else { return nil }
+    //
+    //    return NSTextRange(location: start, end: end)
   }
 
   /// TextKit 2 equivalent of boundingRect(forGlyphRange:...)
@@ -114,7 +113,7 @@ extension NSTextView {
     textLayoutManager.enumerateTextSegments(
       in: textRange,
       type: .standard,
-      options: []
+      options: [],
     ) {
       segmentRange, rect, baseline, textContainer in
 
