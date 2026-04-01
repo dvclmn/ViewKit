@@ -7,11 +7,11 @@
 
 //import CoreTools
 
-import Foundation
+//import Foundation
 
 //public enum CatmullRom {}
 
-extension CatmullRom {
+//extension CatmullRom {
 
   /// The value of α determines how much the physical distance between points affects the "speed" of the curve
   ///
@@ -28,32 +28,32 @@ extension CatmullRom {
   /// This tends to produce very wide, sweeping curves.
   ///
   /// In short: Alpha handles the geometry of the path (preventing loops), while tension handles the stiffness of the path.
-  public enum SplineVariant: String, Pickable, Codable, Sendable, CaseIterable, Identifiable {
-    case uniform
-    case centripetal
-    case chordal
-    public var id: String { rawValue }
-    public static var pickerLabel: QuickLabel { "Catmull-Rom Type" }
-  }
-}
+//  public enum SplineVariant: String, Pickable, Codable, Sendable, CaseIterable, Identifiable {
+//    case uniform
+//    case centripetal
+//    case chordal
+//    public var id: String { rawValue }
+//    public static var pickerLabel: QuickLabel { "Catmull-Rom Type" }
+//  }
+//}
 
-extension CatmullRom.SplineVariant {
-
-  public var alpha: CGFloat {
-    switch self {
-      case .uniform: 0
-      case .centripetal: 0.5
-      case .chordal: 1
-    }
-  }
-  public var name: String { self.rawValue.capitalized }
-
-  public var icon: String {
-    switch self {
-      case .uniform: "eye"
-      case .chordal: "eye"
-      case .centripetal: "eye"
-    //      case .none: "eye"
-    }
-  }
-}
+//extension CatmullRom.SplineVariant {
+//
+//  public var alpha: CGFloat {
+//    switch self {
+//      case .uniform: 0
+//      case .centripetal: 0.5
+//      case .chordal: 1
+//    }
+//  }
+//  public var name: String { self.rawValue.capitalized }
+//
+//  public var icon: String {
+//    switch self {
+//      case .uniform: "eye"
+//      case .chordal: "eye"
+//      case .centripetal: "eye"
+//    //      case .none: "eye"
+//    }
+//  }
+//}

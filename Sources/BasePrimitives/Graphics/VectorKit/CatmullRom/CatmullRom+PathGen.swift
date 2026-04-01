@@ -5,21 +5,20 @@
 //  Created by Dave Coleman on 7/10/2025.
 //
 
-
+import GeometryPrimitives
 //import CoreTools
 import SwiftUI
-import GeometryPrimitives
 
 extension WavePathGenerator {
 
   /// Creates a smooth Catmull-Rom spline through the given points.
   /// Uses cubic Bézier conversion for optimal rendering performance.
   package mutating func catmullRom(
-    variant: CatmullRom.SplineVariant = .centripetal,
+    variant: CatmullRom.Variant = .centripetal,
     tension: CGFloat = 0.5,
     closed: Bool = false,
     path: inout Path,
-    stamped: Stamper = { _, _, _ in }
+    stamped: Stamper = { _, _, _ in },
   ) {
     if preparePathForNonLinearIfNeeded(path: &path) { return }
 
@@ -35,7 +34,7 @@ extension WavePathGenerator {
 
       let (c1, c2) = CatmullRom.toCubicBezier(
         p0: p0, p1: p1, p2: p2, p3: p3,
-        variant: variant
+        variant: variant,
       )
 
       path.addCurve(to: p2, control1: c1, control2: c2)
@@ -46,13 +45,13 @@ extension WavePathGenerator {
       /// Close the loop by handling the wrap-around segments
       let (c1, c2) = CatmullRom.toCubicBezier(
         p0: pts[pts.count - 2], p1: pts[pts.count - 1], p2: pts[0], p3: pts[1],
-        variant: variant
+        variant: variant,
       )
       path.addCurve(to: pts[0], control1: c1, control2: c2)
 
       let (c1b, c2b) = CatmullRom.toCubicBezier(
         p0: pts[pts.count - 1], p1: pts[0], p2: pts[1], p3: pts[2],
-        variant: variant
+        variant: variant,
       )
       path.addCurve(to: pts[1], control1: c1b, control2: c2b)
     }
@@ -63,9 +62,9 @@ extension WavePathGenerator {
   /// Samples points along the spline for hit-testing or vertex buffers
   public static func sampleCatmullRom(
     points: [CGPoint],
-    variant: CatmullRom.SplineVariant = .centripetal,
+    variant: CatmullRom.Variant = .centripetal,
     closed: Bool = false,
-    samplesPerSegment: Int = 10
+    samplesPerSegment: Int = 10,
   ) -> [CGPoint] {
     guard points.count >= 2 else { return points }
 
@@ -111,7 +110,7 @@ extension WavePathGenerator {
     closed: Bool = false,
     samples: Int = 16,
     path: inout Path,
-    stamped: Stamper = { _, _, _ in }
+    stamped: Stamper = { _, _, _ in },
   ) {
     //    var path = Path()
     //    guard points.count > 1 else { return path }
@@ -164,12 +163,12 @@ extension WavePathGenerator {
     closed: Bool = false,
     samples: Int = 16,
     path: inout Path,
-    stamped: Stamper = { _, _, _ in }
+    stamped: Stamper = { _, _, _ in },
   ) {
     let handled = preparePathForNonLinearIfNeeded(
       path: &path,
       minimumRequiredPoints: 4,
-      fallback: .defaultLinear
+      fallback: .defaultLinear,
     )
     if handled { return }
 
