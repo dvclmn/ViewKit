@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 15/12/2025.
 //
 
-#if canImport(AppKit)
+//#if canImport(AppKit)
 import Foundation
 
 extension AffineTransform {
@@ -13,4 +13,4 @@ extension AffineTransform {
     self.translate(x: point.x, y: point.y)
   }
 }
-#endif
+//#endif

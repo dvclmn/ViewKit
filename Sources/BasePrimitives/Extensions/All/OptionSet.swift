@@ -41,39 +41,39 @@ extension Binding where Value: OptionSet & Sendable, Value.Element: Sendable {
 //}
 
 
-public protocol NamedOptionSet: OptionSet, CustomStringConvertible
-where Element == Self {
-  static var namedOptions: [(Self, String)] { get }
-}
-
-extension NamedOptionSet {
-  public var displayString: String {
-    let matches = Self.namedOptions
-      .filter { self.contains($0.0) }
-      .map { $0.1 }
-
-    return matches.isEmpty
-      ? "[]"
-      : "[" + matches.joined(separator: ", ") + "]"
-  }
-
-  public var description: String {
-    displayString
-  }
-}
-
-// MARK: - Conformances
-#if canImport(AppKit)
-extension NSEvent.Phase: NamedOptionSet, @retroactive CustomStringConvertible {
-  public static var namedOptions: [(NSEvent.Phase, String)] {
-    [
-      (.began, "began"),
-      (.stationary, "stationary"),
-      (.changed, "changed"),
-      (.ended, "ended"),
-      (.cancelled, "cancelled"),
-      (.mayBegin, "mayBegin"),
-    ]
-  }
-}
-#endif
+//public protocol NamedOptionSet: OptionSet, CustomStringConvertible
+//where Element == Self {
+//  static var namedOptions: [(Self, String)] { get }
+//}
+//
+//extension NamedOptionSet {
+//  public var displayString: String {
+//    let matches = Self.namedOptions
+//      .filter { self.contains($0.0) }
+//      .map { $0.1 }
+//
+//    return matches.isEmpty
+//      ? "[]"
+//      : "[" + matches.joined(separator: ", ") + "]"
+//  }
+//
+//  public var description: String {
+//    displayString
+//  }
+//}
+//
+//// MARK: - Conformances
+//#if canImport(AppKit)
+//extension NSEvent.Phase: NamedOptionSet, @retroactive CustomStringConvertible {
+//  public static var namedOptions: [(NSEvent.Phase, String)] {
+//    [
+//      (.began, "began"),
+//      (.stationary, "stationary"),
+//      (.changed, "changed"),
+//      (.ended, "ended"),
+//      (.cancelled, "cancelled"),
+//      (.mayBegin, "mayBegin"),
+//    ]
+//  }
+//}
+//#endif
