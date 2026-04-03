@@ -158,7 +158,7 @@ extension WavePathGenerator {
   // This catmull rom code courtesy of
   // https://github.com/andrelind/swift-catmullrom/tree/master
   package mutating func catmullRomAlt02(
-    variant: CatmullRom.SplineVariant,
+    variant: CatmullRom.Variant,
     tension: CGFloat = 0.5,
     closed: Bool = false,
     samples: Int = 16,

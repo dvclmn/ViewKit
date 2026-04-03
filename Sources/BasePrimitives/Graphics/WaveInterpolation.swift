@@ -7,7 +7,7 @@
 
 import CasePaths
 import EnumMacros
-
+import GeometryPrimitives
 //import CoreTools
 import SwiftUI
 
@@ -24,7 +24,7 @@ public enum WaveInterpolation: Sendable, Equatable, Codable, Hashable, Identifia
   case cubic(tension: CGFloat = 0)
   case quadratic(midpoint: Double = 0.5, cornerBias: Double = 0.5)
   case catmullRom(
-    CatmullRom.SplineVariant = .centripetal,
+    CatmullRom.Variant = .centripetal,
     tension: CGFloat = 0.5,
     samples: Int = 14
   )

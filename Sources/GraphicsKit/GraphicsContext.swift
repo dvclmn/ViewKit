@@ -6,14 +6,15 @@
 //
 
 import BasePrimitives
+import GeometryPrimitives
 import SwiftUI
 
-extension BinaryFloatingPoint {
-  func removingZoomPercent(_ zoomPercent: Self) -> Self {
-    let result = Double(self) / pow(1 + Double(zoomPercent), 1)
-    return Self(result)
-  }
-}
+//extension BinaryFloatingPoint {
+//  func removingZoomPercent(_ zoomPercent: Self) -> Self {
+//    let result = Double(self) / pow(1 + Double(zoomPercent), 1)
+//    return Self(result)
+//  }
+//}
 
 extension GraphicsContext {
 
