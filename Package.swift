@@ -10,8 +10,6 @@ let package = Package(
     .macOS("14.0"),
   ],
   products: [
-
-    /// Helper Libraries
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
 
     .library(
@@ -41,7 +39,7 @@ let package = Package(
       targets: ["Wrecktangle"],
     ),
 
-    /// Export-only libraries
+    /// Export-only library
     .library(name: "ToolKit", targets: ["ToolKit"]),
   ],
 
@@ -143,7 +141,7 @@ let package = Package(
       dependencies: [
         .module(.basePrimitives),
         .module(.baseUI),
-        .module(.graphicsKit),
+        //        .module(.graphicsKit),
       ],
     ),
 
