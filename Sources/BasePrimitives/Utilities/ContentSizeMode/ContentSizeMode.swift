@@ -6,7 +6,7 @@
 //
 
 import EnumMacros
-import GeometryPrimitives
+import InteractionKit
 import SwiftUI
 
 @MetaEnum

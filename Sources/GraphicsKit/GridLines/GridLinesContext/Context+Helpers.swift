@@ -7,7 +7,7 @@
 
 import BasePrimitives
 import SwiftUI
-import GeometryPrimitives
+import InteractionKit
 
 extension GridLineContext {
 

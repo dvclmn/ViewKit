@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import GeometryPrimitives
+import InteractionKit
 
 /// Bridges the gap between pure Grid dimensions and Canvas (continuous) space.
 /// Note: The only piece that needs to know about e.g.  ASCII cell size.

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import InteractionPrimitives
+import InteractionKit
 
 /// The type returned in the callback for CanvasKit's `OnGridDragModifier`
 public struct GridDragEvent {

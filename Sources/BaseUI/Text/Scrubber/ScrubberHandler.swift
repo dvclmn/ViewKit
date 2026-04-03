@@ -6,7 +6,7 @@
 //
 
 import BasePrimitives
-import InteractionPrimitives
+import InteractionKit
 import SwiftUI
 
 @Observable

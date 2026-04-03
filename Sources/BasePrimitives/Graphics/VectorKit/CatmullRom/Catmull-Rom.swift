@@ -7,7 +7,7 @@
 
 /// These have moved to `InteractionKit/GeometryPrimitives`
 //import Foundation
-//import GeometryPrimitives
+//import InteractionKit
 
 //extension CatmullRom {
 //public struct CatmullRom {

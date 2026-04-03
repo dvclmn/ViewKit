@@ -6,7 +6,7 @@
 //
 
 import BasePrimitives
-import GeometryPrimitives
+import InteractionKit
 import SwiftUI
 
 /// Will only 'have layout' (e.g. H or VStack) if an `axis` is supplied,

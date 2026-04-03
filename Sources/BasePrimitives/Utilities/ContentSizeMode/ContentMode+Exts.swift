@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import GeometryPrimitives
+import InteractionKit
 
 extension CGSize {
   public func aspectRatio(

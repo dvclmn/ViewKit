@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import GeometryPrimitives
+import InteractionKit
 
 /// IMPORTANT:
 /// Moving to use of ``WaveSampler``:

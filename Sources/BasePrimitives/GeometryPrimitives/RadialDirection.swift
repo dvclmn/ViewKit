@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 10/1/2026.
 //
 
-import GeometryPrimitives
+import InteractionKit
 import SwiftUI
 
 /// In some cases (like for `UnitPoint`) directionality can be inferred

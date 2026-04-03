@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import GeometryPrimitives
+import InteractionKit
 
 // MARK: - Environment values
 extension EnvironmentValues {

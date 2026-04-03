@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import GeometryPrimitives
+import InteractionKit
 
 //extension CGPoint: @retroactive Hashable {
 //  public var hashValue: Int { x.hashValue << 32 ^ y.hashValue }

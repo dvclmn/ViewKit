@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import SwiftUI
-import GeometryPrimitives
+import InteractionKit
 
 /// Continuous/discrete geometry for grid documents.
 public struct GridGeometry: Sendable, Equatable {

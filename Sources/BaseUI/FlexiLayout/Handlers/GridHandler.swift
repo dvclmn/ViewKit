@@ -9,7 +9,7 @@
 
 import SwiftUI
 import BasePrimitives
-import InteractionPrimitives
+import InteractionKit
 
 extension Flexi {
 

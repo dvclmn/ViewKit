@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 20/12/2024.
 //
 
+import InteractionKit
 import SwiftUI
-import GeometryPrimitives
 
 extension VerticalEdge {
   public var toAlignment: VerticalAlignment {
@@ -47,11 +47,11 @@ extension Edge {
     /// 2. Ask the mapping what that physical axis represents logically
     return mapping.map(physical)
   }
-  
+
   public var isVertical: Bool {
     self.toGeometryAxis.isVertical
   }
-  
+
   public var isHorizontal: Bool {
     self.toGeometryAxis.isHorizontal
   }

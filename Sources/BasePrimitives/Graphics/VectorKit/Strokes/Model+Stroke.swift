@@ -8,7 +8,7 @@
 /// Does this need to move to an 'end-domain', like Paperbark?
 
 
-//import InteractionPrimitives
+//import InteractionKit
 //import SwiftUI
 //
 //public struct Stroke: Hashable, Codable, Sendable, Identifiable {

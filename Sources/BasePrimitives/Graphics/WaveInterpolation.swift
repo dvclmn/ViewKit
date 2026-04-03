@@ -7,7 +7,7 @@
 
 import CasePaths
 import EnumMacros
-import GeometryPrimitives
+import InteractionKit
 //import CoreTools
 import SwiftUI
 

@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 23/3/2026.
 //
 
-import InteractionPrimitives
+import InteractionKit
 
 extension CellSelectionMode {
 

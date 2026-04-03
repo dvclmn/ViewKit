@@ -6,7 +6,7 @@
 //
 
 import BasePrimitives
-import GeometryPrimitives
+import InteractionKit
 import SwiftUI
 
 //#warning("USE WITH CAUTION. Causes serious performance issues for some reason, like in InfoBar")
