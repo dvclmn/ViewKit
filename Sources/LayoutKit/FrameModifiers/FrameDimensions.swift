@@ -7,6 +7,7 @@
 
 import BasePrimitives
 import SwiftUI
+import BaseTools
 
 public struct FrameGridDimensions {
   public var width: Int?

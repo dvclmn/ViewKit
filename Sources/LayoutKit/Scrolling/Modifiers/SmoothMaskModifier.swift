@@ -7,7 +7,7 @@
 
 import BasePrimitives
 import SwiftUI
-
+import GraphicsKit
 
 public struct SmoothMaskModifier: ViewModifier {
 

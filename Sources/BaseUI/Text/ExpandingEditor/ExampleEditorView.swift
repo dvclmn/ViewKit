@@ -7,7 +7,7 @@
 
 import BasePrimitives
 import SwiftUI
-
+import BaseTools
 
 struct ExpandingEditorExampleView: View {
   @State private var text: String = SampleContent.Strings.loremIpsum

@@ -172,14 +172,14 @@ extension ShaderEffect {
     lhs.reference == rhs.reference
   }
 
-//  public var shader: Shader {
-//    return Shader(
-//      function: ShaderFunction(
-//        library: .bundle(.module),
-//        name: reference.shader
-//      ),
-//      arguments: arguments
-//    )
-//  }
+  public var shader: Shader {
+    return Shader(
+      function: ShaderFunction(
+        library: .bundle(.module),
+        name: reference.shader
+      ),
+      arguments: arguments
+    )
+  }
 
 }

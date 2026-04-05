@@ -6,6 +6,7 @@
 //
 
 import BasePrimitives
+import BaseTools
 import LayoutKit
 import SwiftUI
 
@@ -22,7 +23,7 @@ public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {
     data: [Item],
     alignment: HorizontalAlignment = .leading,
     cardSize: CGSize = .localPreset,
-    @ViewBuilder content: @escaping CardItem
+    @ViewBuilder content: @escaping CardItem,
   ) {
     self.data = data
     self.alignment = alignment
@@ -36,10 +37,10 @@ public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {
       columns: .adaptive(
         mode: .fixedWidth(width: cardSize.width),
         spacing: Styles.sizeRegular,
-        alignment: .center
+        alignment: .center,
       ),
       alignment: alignment,
-      spacing: Styles.sizeRegular
+      spacing: Styles.sizeRegular,
     ) {
       ForEach(data) { item in
         ItemView(item: item, cardSize: cardSize, content: content)
@@ -58,7 +59,7 @@ extension CardGrid {
   CardGrid(
     //    label: QuickLabel("Hello", symbol: "eye"),
     data: SampleContent.Animal.withSymbols(),
-    cardSize: .localPreset
+    cardSize: .localPreset,
       //  ) { item in
   ) { item, isHovered in
     MaybeLabel(item.label)
