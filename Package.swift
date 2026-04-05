@@ -12,10 +12,10 @@ let package = Package(
   products: [
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
 
-    .library(
-      name: "BasePrimitives",
-      targets: ["BasePrimitives"],
-    ),
+    //    .library(
+    //      name: "BasePrimitives",
+    //      targets: ["BasePrimitives"],
+    //    ),
 
     .library(
       name: "BaseUI",
@@ -50,6 +50,7 @@ let package = Package(
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     .package(url: "https://github.com/dvclmn/InteractionKit", branch: "main"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
+    .package(url: "https://github.com/dvclmn/BasePrimitives", branch: "main"),
   ],
 
   // MARK: - Targets
@@ -57,28 +58,28 @@ let package = Package(
     .target(
       name: "BaseNetworking",
       dependencies: [
-        .module(.basePrimitives),
+        .extDependency(.basePrimitives),
         .extDependency(.keychainSwift),
       ],
     ),
 
-    .target(
-      name: "BasePrimitives",
-      dependencies: [
-        .extDependency(.enumMacros),
-        .extDependency(.casePaths),
-        .extDependency(.interactionKit),
-      ],
-      resources: [
-        .process("Resources/Assets.xcassets"),
-        .process("Resources/Fonts"),
-      ],
-    ),
+//    .target(
+//      name: "BasePrimitives",
+//      dependencies: [
+//        .extDependency(.enumMacros),
+//        .extDependency(.casePaths),
+//        .extDependency(.interactionKit),
+//      ],
+//      resources: [
+//        .process("Resources/Assets.xcassets"),
+//        .process("Resources/Fonts"),
+//      ],
+//    ),
 
     .target(
       name: "BaseUI",
       dependencies: [
-        .module(.basePrimitives),
+        .extDependency(.basePrimitives),
         .module(.layoutKit),
         .extDependency(.enumMacros),
         .extDependency(.interactionKit),
@@ -91,7 +92,7 @@ let package = Package(
       name: "ComponentKit",
       dependencies: [
         .module(.baseUI),
-        .module(.basePrimitives),
+        .extDependency(.basePrimitives),
         .module(.graphicsKit),
         .module(.layoutKit),
         .extDependency(.casePaths),
@@ -101,7 +102,7 @@ let package = Package(
     .target(
       name: "GraphicsKit",
       dependencies: [
-        .module(.basePrimitives),
+        .extDependency(.basePrimitives),
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
         .extDependency(.interactionKit),
@@ -114,7 +115,7 @@ let package = Package(
     .target(
       name: "LayoutKit",
       dependencies: [
-        .module(.basePrimitives),
+        .extDependency(.basePrimitives),
         .extDependency(.interactionKit),
         .extDependency(.enumMacros),
       ],
@@ -123,14 +124,14 @@ let package = Package(
     .target(
       name: "MotionKit",
       dependencies: [
-        .module(.basePrimitives)
+        .extDependency(.basePrimitives)
       ],
     ),
 
     .target(
       name: "Wrecktangle",
       dependencies: [
-        .module(.basePrimitives)
+        .extDependency(.basePrimitives)
       ],
     ),
 
@@ -139,7 +140,7 @@ let package = Package(
     .target(
       name: "ToolKit",
       dependencies: [
-        .module(.basePrimitives),
+        .extDependency(.basePrimitives),
         .module(.baseUI),
         //        .module(.graphicsKit),
       ],
@@ -170,6 +171,7 @@ extension Target.Dependency {
 }
 
 enum ExternalDependency {
+  case basePrimitives
   case enumMacros
   case casePaths
   case interactionKit
@@ -178,6 +180,7 @@ enum ExternalDependency {
 
   var reference: (String, String?) {
     switch self {
+      case .basePrimitives: ("BasePrimitives", nil)
       case .enumMacros: ("BaseMacros", nil)
       case .casePaths: ("CasePaths", "swift-case-paths")
       case .interactionKit: ("InteractionKit", nil)
@@ -189,7 +192,7 @@ enum ExternalDependency {
 
 enum InternalModule {
   case networking
-  case basePrimitives
+
   case baseUI
   case componentKit
   case graphicsKit
@@ -203,7 +206,7 @@ enum InternalModule {
   var name: String {
     switch self {
       case .networking: "BaseNetworking"
-      case .basePrimitives: "BasePrimitives"
+      //      case .basePrimitives: "BasePrimitives"
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
       case .graphicsKit: "GraphicsKit"
