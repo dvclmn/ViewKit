@@ -5,8 +5,8 @@
 //  Created by Codex on 22/3/2026.
 //
 
+import BasePrimitives
 import CoreGraphics
-
 
 /// Centralised Grid ⇄ Screen conversions that respect `AxisMapping`.
 ///
@@ -17,7 +17,7 @@ public enum GridScreenConversion {
   public static func screenPoint(
     for position: GridPosition,
     unitSize: CGSize,
-    mapping: AxisMapping = .default
+    mapping: AxisMapping = .default,
   ) -> CGPoint {
     let h = position.value(along: .horizontal, mapping: mapping)
     let v = position.value(along: .vertical, mapping: mapping)
@@ -31,7 +31,7 @@ public enum GridScreenConversion {
   public static func screenSize(
     for dimensions: GridDimensions,
     unitSize: CGSize,
-    mapping: AxisMapping = .default
+    mapping: AxisMapping = .default,
   ) -> CGSize {
     let h = dimensions.value(along: .horizontal, mapping: mapping)
     let v = dimensions.value(along: .vertical, mapping: mapping)
@@ -45,11 +45,11 @@ public enum GridScreenConversion {
   public static func screenRect(
     for rect: GridRect,
     unitSize: CGSize,
-    mapping: AxisMapping = .default
+    mapping: AxisMapping = .default,
   ) -> CGRect {
     CGRect(
       origin: screenPoint(for: rect.origin, unitSize: unitSize, mapping: mapping),
-      size: screenSize(for: rect.size, unitSize: unitSize, mapping: mapping)
+      size: screenSize(for: rect.size, unitSize: unitSize, mapping: mapping),
     )
   }
 }
@@ -58,7 +58,7 @@ extension GridRect {
 
   public func toScreenRect(
     using unitSize: CGSize,
-    mapping: AxisMapping = .default
+    mapping: AxisMapping = .default,
   ) -> CGRect {
     GridScreenConversion.screenRect(for: self, unitSize: unitSize, mapping: mapping)
   }

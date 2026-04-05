@@ -7,6 +7,7 @@
 
 import Foundation
 import InteractionKit
+import BasePrimitives
 
 /// IMPORTANT:
 /// Moving to use of ``WaveSampler``:

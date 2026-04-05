@@ -16,11 +16,11 @@ public struct GridProjection: Equatable, Sendable {
   /// The size of a single grid cell in Canvas Space.
   /// Aka `cellSize`
   public let unitSize: CGSize
-  public var rounding: GridRounding = .down
+  public var rounding: Rounding = .down
 
   public init(
     unitSize: CGSize,
-    rounding: GridRounding = .down,
+    rounding: Rounding = .down,
   ) {
     self.unitSize = unitSize
     self.rounding = rounding
@@ -72,7 +72,7 @@ extension GridProjection {
   // MARK: - Canvas to Grid
   public func gridDimensions(
     for canvasSize: Size<CanvasSpace>,
-    rounding: GridRounding? = nil,
+    rounding: Rounding? = nil,
   ) -> GridDimensions? {
     let strategy = rounding ?? self.rounding
     return CGSize(
@@ -84,7 +84,7 @@ extension GridProjection {
 
   public func gridDimensions(
     for canvasSize: CGSize,
-    rounding: GridRounding? = nil,
+    rounding: Rounding? = nil,
   ) -> GridDimensions? {
     let strategy = rounding ?? self.rounding
     return canvasSize.toGridDimensions(using: unitSize, rounding: strategy)

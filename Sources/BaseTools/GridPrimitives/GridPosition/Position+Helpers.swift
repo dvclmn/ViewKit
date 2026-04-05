@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-
+import BasePrimitives
+import InteractionKit
 
 extension GridPosition {
 
@@ -41,7 +42,7 @@ extension GridPosition {
     within dimensions: GridDimensions,
     at point: CGPoint,
     cellSize: CGSize,
-    rounding: GridRounding = .down
+    rounding: Rounding = .down
   ) -> GridPosition? {
     let projection = GridProjection(
       unitSize: cellSize,

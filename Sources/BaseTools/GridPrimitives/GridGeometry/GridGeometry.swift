@@ -37,7 +37,7 @@
 //    viewportRect: Rect<ScreenSpace> = .zero,
 //    dimensions: GridDimensions,
 //    unitSize: CGSize,
-//    rounding: GridRounding = .down,
+//    rounding: Rounding = .down,
 //    anchor: UnitPoint = .center
 //  ) {
 //    self.viewportRect = viewportRect

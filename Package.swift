@@ -126,6 +126,7 @@ let package = Package(
 
         .extDependency(.basePrimitives),
         .module(.baseTools),
+        .module(.graphicsKit),
 
         //        .extDependency(.basePrimitives),
         //        .extDependency(.interactionKit),

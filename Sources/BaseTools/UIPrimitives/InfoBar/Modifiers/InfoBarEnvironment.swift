@@ -6,6 +6,7 @@
 //
 
 import EnumMacros
+import BasePrimitives
 import SwiftUI
 
 @CaseDetection

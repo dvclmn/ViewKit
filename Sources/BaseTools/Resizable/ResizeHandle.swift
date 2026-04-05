@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BasePrimitives
 
 struct ResizeHandle: View {
   @Environment(\.layoutAxis) private var layoutAxis

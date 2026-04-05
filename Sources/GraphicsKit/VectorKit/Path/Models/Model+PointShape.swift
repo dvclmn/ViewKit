@@ -7,6 +7,7 @@
 
 //import CoreTools
 import SwiftUI
+import BasePrimitives
 
 
 public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, CaseIterable, Codable {

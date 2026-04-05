@@ -8,6 +8,7 @@
 //import CoreTools
 
 import SwiftUI
+import BaseTools
 
 public typealias IndexHorizontal = (_ index: Int, _ x: CGFloat) -> Void
 public typealias IndexVertical = (_ index: Int, _ y: CGFloat) -> Void

@@ -6,6 +6,7 @@
 //
 
 import BasePrimitives
+import BaseTools
 import SwiftUI
 
 // MARK: - Main Context
@@ -51,7 +52,7 @@ extension GridLineContext {
     self.pinMode = pinMode
     self.lineWidth = environment.gridLineWidth
     self.drawsBorder = drawsBorder
-    self.panOffset = environment.panOffset.cgSize
+    self.panOffset = environment.panOffset
     self.zoomLevel = environment.zoomLevel.toCGFloat
     self.zoomRange = environment.zoomRange?.toCGFloatRange
     self.hasCellNumbers = environment.isShowingCellNumbers

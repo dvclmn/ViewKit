@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 9/3/2026.
 //
 
+import BasePrimitives
+
 extension InfoBarItem {
   init?<K: InfoBarSectionKey>(
     fromLabeled labeled: Labeled,

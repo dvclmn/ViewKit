@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import BasePrimitives
 
 extension GridPosition {
   public mutating func offsetting(_ direction: Direction, by delta: Int = 1) {

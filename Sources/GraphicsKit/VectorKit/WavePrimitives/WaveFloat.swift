@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 1/2/2026.
 //
 
-
+import BasePrimitives
 import SwiftUI
 
 public protocol WaveFloat: BinaryFloatingPoint, Sendable, Codable, StringRenderable, FloatRenderable {
@@ -32,7 +32,7 @@ extension CGPoint {
   public init<T: WaveFloat>(fromWaveFloat x: T, y: T) {
     self.init(
       x: CGFloat(x),
-      y: CGFloat(y)
+      y: CGFloat(y),
     )
   }
 }
@@ -42,13 +42,13 @@ extension Binding where Value: WaveFloat {
   public var toBindingFloat: Binding<CGFloat> {
     Binding<CGFloat>(
       get: { CGFloat(wrappedValue) },
-      set: { wrappedValue = Value($0) }
+      set: { wrappedValue = Value($0) },
     )
   }
   public var toBindingDouble: Binding<Double> {
     Binding<Double>(
       get: { Double(wrappedValue) },
-      set: { wrappedValue = Value($0) }
+      set: { wrappedValue = Value($0) },
     )
   }
 }

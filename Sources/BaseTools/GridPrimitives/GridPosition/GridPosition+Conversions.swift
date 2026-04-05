@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-
+import BasePrimitives
+import InteractionKit
 
 extension GridPosition {
 
@@ -59,7 +60,7 @@ extension GridPosition {
 extension UnitPoint {
   public func toGridPosition(
     in dimensions: GridDimensions,
-    rounding: GridRounding
+    rounding: Rounding
   ) -> GridPosition {
 
     let colThing: CGFloat = x * CGFloat(dimensions.width)
@@ -79,19 +80,19 @@ extension CGPoint {
 
   /// Returns the row and column index for a global pointer location
   /// Returns nil if the pointer is outside the grid boundaries
-  public func gridPosition(in geometry: GridGeometry) -> GridPosition? {
-    guard
-      geometry.dimensions.contains(
-        point: self,
-        unitSize: geometry.projection.unitSize
-      )
-    else { return nil }
-
-    let point = Point<CanvasSpace>(fromPoint: self)
-    guard let candidate = geometry.projection.gridPositionIfValid(from: point) else {
-      return nil
-    }
-    return geometry.dimensions.contains(position: candidate) ? candidate : nil
-  }
+//  public func gridPosition(in geometry: GridGeometry) -> GridPosition? {
+//    guard
+//      geometry.dimensions.contains(
+//        point: self,
+//        unitSize: geometry.projection.unitSize
+//      )
+//    else { return nil }
+//
+//    let point = Point<CanvasSpace>(fromPoint: self)
+//    guard let candidate = geometry.projection.gridPositionIfValid(from: point) else {
+//      return nil
+//    }
+//    return geometry.dimensions.contains(position: candidate) ? candidate : nil
+//  }
 
 }

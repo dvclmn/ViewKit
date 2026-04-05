@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 8/10/2025.
 //
 
+import BasePrimitives
 import EnumMacros
 import InteractionKit
 import SwiftUI

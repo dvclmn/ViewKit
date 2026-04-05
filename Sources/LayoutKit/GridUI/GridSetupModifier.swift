@@ -6,6 +6,7 @@
 //
 
 import BasePrimitives
+import BaseTools
 import SwiftUI
 
 /// This handles a lot of common setup required for Grid-related domains.

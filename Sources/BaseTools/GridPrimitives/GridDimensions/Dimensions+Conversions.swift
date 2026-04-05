@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import BasePrimitives
 
 extension String {
   public var gridDimensions: GridDimensions {
@@ -34,7 +35,10 @@ extension GridDimensions {
   ) -> CGSize? {
     guard let unitSize else { return nil }
     guard
-      let width = value(along: .horizontal, mapping: mapping)
+      let width = value(
+        along: .horizontal,
+        mapping: mapping
+      )
         .toScreenLengthIfPossible(along: .horizontal, mapping: mapping, using: unitSize),
       let height = value(along: .vertical, mapping: mapping)
         .toScreenLengthIfPossible(along: .vertical, mapping: mapping, using: unitSize)
@@ -67,7 +71,7 @@ extension CGSize {
 
   public func toGridDimensions(
     using unitSize: CGSize,
-    rounding: GridRounding = .down,
+    rounding: Rounding = .down,
   ) -> GridDimensions? {
     guard
       let width = width.toGridCount(using: unitSize.width, rounding: rounding),
@@ -84,7 +88,7 @@ extension CGSize {
 
   public func snappedToGrid(
     using unitSize: CGSize,
-    rounding: GridRounding = .down,
+    rounding: Rounding = .down,
   ) -> CGSize? {
     guard let dimensions = toGridDimensions(using: unitSize, rounding: rounding) else {
       return nil

@@ -6,6 +6,7 @@
 //
 
 import BasePrimitives
+import BaseTools
 import SwiftUI
 
 public struct CharacterSizeModifier: ViewModifier {

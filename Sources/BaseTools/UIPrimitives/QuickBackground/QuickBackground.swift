@@ -7,6 +7,7 @@
 
 //import CoreTools
 import SwiftUI
+import BasePrimitives
 
 struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   @Environment(\.emphasisColour) private var emphasisColour

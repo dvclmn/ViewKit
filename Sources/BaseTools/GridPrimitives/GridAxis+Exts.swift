@@ -5,29 +5,29 @@
 //  Created by Dave Coleman on 30/3/2026.
 //
 
-
 import Foundation
+import BasePrimitives
 
 extension GeometryAxis {
   public func cellNumberPositioning(
     _ cellIndex: Int,
-    cellSize: CGSize
+    cellSize: CGSize,
   ) -> CGPoint {
     switch self {
       case .horizontal:
         GridScreenConversion.screenPoint(
           for: GridPosition(column: cellIndex - 1, row: 0),
-          unitSize: cellSize
+          unitSize: cellSize,
         )
-        
+
       case .vertical:
         GridScreenConversion.screenPoint(
           for: GridPosition(column: 0, row: cellIndex - 1),
-          unitSize: cellSize
+          unitSize: cellSize,
         )
     }
   }
-  
+
   /// The 'actual' value, for the corresponding property, from the `GridCanvas` itself
   public var dimensionsKeyPath: WritableKeyPath<GridDimensions, Int> {
     switch self {
@@ -35,7 +35,7 @@ extension GeometryAxis {
       case .vertical: \.height
     }
   }
-  
+
   public var positionKeyPath: KeyPath<GridPosition, Int> {
     switch self {
       case .horizontal: \.column
@@ -44,7 +44,6 @@ extension GeometryAxis {
   }
 
 }
-
 
 // MARK: - Index-based conformace
 extension GridPosition: AxisKeyPathWritable {

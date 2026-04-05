@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import BasePrimitives
 
 public enum GridEdge: String, Sendable, Codable, Equatable, Hashable, CaseIterable {
   case top

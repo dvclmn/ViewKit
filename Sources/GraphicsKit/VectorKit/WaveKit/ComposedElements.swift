@@ -7,7 +7,8 @@
 
 // import ColourKit
 import Foundation
-
+import BasePrimitives
+import BaseTools
 
 //import IdentifiedCollections
 

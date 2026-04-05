@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 12/2/2026.
 //
 
-
+import BasePrimitives
 import EnumMacros
 import Foundation
 
@@ -103,7 +103,7 @@ extension VisualElementKind {
   public func baseValue(
     index: Double,  // Normalised index
     settings: WaveRenderSettings,
-    viewSize size: CGSize
+    viewSize size: CGSize,
   ) -> Double {
 
     switch self {
@@ -134,7 +134,7 @@ extension VisualElementKind {
   private func baseLocation(
     _ index: Double,
     placement: WavePlacement,
-    viewSize size: CGSize
+    viewSize size: CGSize,
   ) -> (baseX: Double, baseY: Double) {
 
     var baseX: Double

@@ -8,6 +8,7 @@
 import BasePrimitives
 import SwiftUI
 import InteractionKit
+import GraphicsKit
 
 public struct ScrollMaskModifier: ViewModifier {
 

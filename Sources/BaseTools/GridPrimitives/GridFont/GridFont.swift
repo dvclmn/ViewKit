@@ -70,24 +70,29 @@ extension GridFont {
 
 }
 // MARK: - Bundled
-extension GridFont {
-  public var bundledFont: BundledFont? {
-    switch self {
-      case .terminal: .bigBlueTerm
-      default: nil
-    }
-  }
 
+#warning("Turned off for now")
+extension GridFont {
+//  public var bundledFont: BundledFont? {
+//    switch self {
+//      case .terminal: .bigBlueTerm
+//      default: nil
+//    }
+//  }
+//
   public func resolvedFont(size: CGFloat) -> Font {
     switch self {
       case .sfMono:
         return .system(size: size, design: .monospaced)
 
       default:
-        guard let bundledFont else {
-          return .custom(rawValue, fixedSize: size)
-        }
-        return bundledFont.swiftUIFont(size: size)
+        assertionFailure("Bundled fonts not yet supported / WIP")
+        return .system(size: size, design: .monospaced)
+//      default:
+//        guard let bundledFont else {
+//          return .custom(rawValue, fixedSize: size)
+//        }
+//        return bundledFont.swiftUIFont(size: size)
     }
   }
 }
