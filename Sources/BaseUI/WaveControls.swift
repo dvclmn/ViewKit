@@ -7,6 +7,7 @@
 
 import SwiftUI
 import BasePrimitives
+import GraphicsKit
 //import UIPrimitives
 //import CoreTools
 //import VectorKit

@@ -9,7 +9,6 @@ import BasePrimitives
 import GraphicsKit
 import LayoutKit
 import SwiftUI
-import BaseUI
 
 public struct ShaderControls: View {
 
@@ -27,7 +26,8 @@ public struct ShaderControls: View {
       VStack(alignment: .leading, spacing: Styles.sizeSmall) {
         SliderGroup(shader.wrappedValue.name, spacing: Styles.sizeSmall) {
 
-          SingleShaderControlView(shader: shader)
+          #warning("Need to bring this back")
+//          SingleShaderControlView(shader: shader)
         }
       }
       .padding(.bottom, Styles.sizeSmall)

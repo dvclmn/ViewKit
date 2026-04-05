@@ -7,6 +7,7 @@
 
 import BasePrimitives
 import SwiftUI
+import BaseTools
 
 struct InfoBarItemsModifier: ViewModifier {
   @Environment(\.isInfoBarPresent) private var isInfoBarPresent

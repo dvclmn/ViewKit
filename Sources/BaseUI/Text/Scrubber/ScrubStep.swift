@@ -8,6 +8,7 @@
 import InteractionKit
 import BasePrimitives
 import EnumMacros
+import BaseTools
 
 @AssociatedValues
 public enum ScrubStrategy: Equatable {

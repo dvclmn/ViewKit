@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 13/8/2025.
 //
 
+import BasePrimitives
 import CasePaths
 import EnumMacros
-import BasePrimitives
 import SwiftUI
 
 @MetaEnum
@@ -22,10 +22,10 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   case fisheye(
     origin: CGPoint,
     radius: CGFloat,
-    strength: CGFloat
+    strength: CGFloat,
   )
 
-  case glitter(spread: CGFloat, )
+  case glitter(spread: CGFloat)
 
   /// Strength: Suggested range: -0.1 to -0.4
   /// Zoom: Suggested range: 1.0 to 1.1 (to hide edges)
@@ -39,7 +39,7 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     lineSpacing: CGFloat = 1.0,
     lineIntensity: CGFloat = 1.0,
     phosphorSize: CGFloat = 1.0,
-    brightness: CGFloat = 1.0
+    brightness: CGFloat = 1.0,
   )
 
   case radialBlur(
@@ -47,19 +47,19 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     strength: CGFloat,
     start: CGFloat,
     end: CGFloat,
-    samples: CGFloat
+    samples: CGFloat,
   )
 
   case filmGrain(
     time: CGFloat,
     size: CGFloat,
     intensity: CGFloat,
-    colour: CGFloat
+    colour: CGFloat,
   )
 
   case ripplePush(
     location: CGPoint,
-    velocity: CGPoint
+    velocity: CGPoint,
   )
 
   case psych(time: CGFloat)
@@ -68,7 +68,7 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     primary: RGBColour = .white,
     secondary: RGBColour = .gray,
     scale: CGFloat = 4.0,
-    offset: CGPoint = .zero
+    offset: CGPoint = .zero,
   )
 
   //  case noShader
@@ -176,9 +176,9 @@ extension ShaderEffect {
     return Shader(
       function: ShaderFunction(
         library: .bundle(.module),
-        name: reference.shader
+        name: reference.shader,
       ),
-      arguments: arguments
+      arguments: arguments,
     )
   }
 

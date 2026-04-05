@@ -22,7 +22,7 @@ let package = Package(
       targets: [
         "BaseUI",
         "LayoutKit",
-        "ComponentKit",
+        //        "ComponentKit",
       ],
     ),
 
@@ -83,6 +83,8 @@ let package = Package(
         .module(.layoutKit),
         .extDependency(.basePrimitives),
         .module(.baseTools),
+        .module(.graphicsKit),
+        .extDependency(.casePaths),
         .extDependency(.enumMacros),
         //        .extDependency(.interactionKit),
       ],
@@ -90,19 +92,19 @@ let package = Package(
 
     /// Can't think of a better name for this, but `ComponentKit` exists purely
     /// to avoid burdening `BaseUI` with `CasePaths` and `GraphicsKit`
-    .target(
-      name: "ComponentKit",
-      dependencies: [
-        .module(.baseUI),
-
-        .extDependency(.basePrimitives),
-        .module(.baseTools),
-
-        .module(.graphicsKit),
-        .module(.layoutKit),
-        .extDependency(.casePaths),
-      ],
-    ),
+    //    .target(
+    //      name: "ComponentKit",
+    //      dependencies: [
+    //        .module(.baseUI),
+    //
+    //        .extDependency(.basePrimitives),
+    //        .module(.baseTools),
+    //
+    //        .module(.graphicsKit),
+    //        .module(.layoutKit),
+    //        .extDependency(.casePaths),
+    //      ],
+    //    ),
 
     .target(
       name: "GraphicsKit",
@@ -219,7 +221,7 @@ enum InternalModule {
   case networking
   case baseTools
   case baseUI
-  case componentKit
+  //  case componentKit
   case graphicsKit
   case layoutKit
   case motionKit
@@ -233,7 +235,7 @@ enum InternalModule {
       case .networking: "BaseNetworking"
       case .baseTools: "BaseTools"
       case .baseUI: "BaseUI"
-      case .componentKit: "ComponentKit"
+      //      case .componentKit: "ComponentKit"
       case .graphicsKit: "GraphicsKit"
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"

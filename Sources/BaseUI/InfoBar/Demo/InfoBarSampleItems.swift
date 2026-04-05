@@ -7,6 +7,7 @@
 
 import BasePrimitives
 import Foundation
+import BaseTools
 
 extension SampleContent {
   public enum ExampleSectionKey: InfoBarSectionKey {
