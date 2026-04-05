@@ -1,5 +1,5 @@
 {
-  "originHash" : "7635ceeae053c042d09428d7d678332971c53a545f4f4e8e6cb973ffec2b46ab",
+  "originHash" : "89d6e7e4787c621764aa8814f487762fc99f1ee4a0e5751b18af130600449e5a",
   "pins" : [
     {
       "identity" : "basemacros",
@@ -17,6 +17,15 @@
       "state" : {
         "branch" : "main",
         "revision" : "d8bd83aedcccf957843786ce57fb4c9d1ad0ae3c"
+      }
+    },
+    {
+      "identity" : "interactionkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dvclmn/InteractionKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "b2a208381764d9ab5124511d118622cda2e8dd83"
       }
     },
     {

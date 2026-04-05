@@ -18,7 +18,7 @@ public struct MockStreamingService: Sendable {
 
   public init(
     charactersPerSecond: Double = 20,
-    chunkSize: ClosedRange<Int> = 1...5
+    chunkSize: ClosedRange<Int> = 1...5,
   ) {
     self.charactersPerSecond = charactersPerSecond
     self.chunkSize = chunkSize
@@ -32,7 +32,7 @@ public struct MockStreamingService: Sendable {
   /// Core chunking function used by both stream types
   private func streamChunks(
     from text: String,
-    chunkHandler: @Sendable @escaping (String) async throws -> Void
+    chunkHandler: @Sendable @escaping (String) async throws -> Void,
   ) async throws {
     var remainingText = text
 
