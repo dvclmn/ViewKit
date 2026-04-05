@@ -13,8 +13,8 @@ let package = Package(
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
 
     .library(
-      name: "BaseHelpers",
-      targets: ["BaseHelpers"],
+      name: "BaseTools",
+      targets: ["BaseTools"],
     ),
 
     .library(
@@ -48,7 +48,7 @@ let package = Package(
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
-    //    .package(url: "https://github.com/dvclmn/InteractionKit", branch: "main"),
+        .package(url: "https://github.com/dvclmn/InteractionKit", branch: "main"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
     .package(url: "https://github.com/dvclmn/BasePrimitives", branch: "main"),
   ],
@@ -64,12 +64,12 @@ let package = Package(
     ),
 
     .target(
-      name: "BaseHelpers",
+      name: "BaseTools",
       dependencies: [
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
         .extDependency(.basePrimitives),
-        //        .extDependency(.interactionKit),
+                .extDependency(.interactionKit),
       ],
       //      resources: [
       //        .process("Resources/Assets.xcassets"),
@@ -82,7 +82,7 @@ let package = Package(
       dependencies: [
         .module(.layoutKit),
         .extDependency(.basePrimitives),
-        .module(.baseHelpers),
+        .module(.baseTools),
         .extDependency(.enumMacros),
         //        .extDependency(.interactionKit),
       ],
@@ -96,7 +96,7 @@ let package = Package(
         .module(.baseUI),
         
         .extDependency(.basePrimitives),
-        .module(.baseHelpers),
+        .module(.baseTools),
         
         .module(.graphicsKit),
         .module(.layoutKit),
@@ -109,7 +109,7 @@ let package = Package(
       dependencies: [
         
         .extDependency(.basePrimitives),
-        .module(.baseHelpers),
+        .module(.baseTools),
         
         
         .extDependency(.enumMacros),
@@ -126,7 +126,7 @@ let package = Package(
       dependencies: [
         
         .extDependency(.basePrimitives),
-        .module(.baseHelpers),
+        .module(.baseTools),
         
         //        .extDependency(.basePrimitives),
         //        .extDependency(.interactionKit),
@@ -139,7 +139,7 @@ let package = Package(
       dependencies: [
         
         .extDependency(.basePrimitives),
-        .module(.baseHelpers),
+        .module(.baseTools),
         
         //        .extDependency(.basePrimitives)
       ],
@@ -150,7 +150,7 @@ let package = Package(
       dependencies: [
         
         .extDependency(.basePrimitives),
-        .module(.baseHelpers),
+        .module(.baseTools),
         
         //        .extDependency(.basePrimitives)
       ],
@@ -163,7 +163,7 @@ let package = Package(
       dependencies: [
         
         .extDependency(.basePrimitives),
-        .module(.baseHelpers),
+        .module(.baseTools),
         
         //        .extDependency(.basePrimitives),
         .module(.baseUI),
@@ -199,7 +199,7 @@ enum ExternalDependency {
   case basePrimitives
   case enumMacros
   case casePaths
-  //  case interactionKit
+    case interactionKit
   case keychainSwift
   case macroToolkit
 
@@ -208,7 +208,7 @@ enum ExternalDependency {
       case .basePrimitives: ("BasePrimitives", nil)
       case .enumMacros: ("BaseMacros", nil)
       case .casePaths: ("CasePaths", "swift-case-paths")
-      //      case .interactionKit: ("InteractionKit", nil)
+            case .interactionKit: ("InteractionKit", nil)
       case .keychainSwift: ("KeychainSwift", "keychain-swift")
       case .macroToolkit: ("MacroToolkit", "swift-macro-toolkit")
     }
@@ -217,7 +217,7 @@ enum ExternalDependency {
 
 enum InternalModule {
   case networking
-  case baseHelpers
+  case baseTools
   case baseUI
   case componentKit
   case graphicsKit
@@ -231,7 +231,7 @@ enum InternalModule {
   var name: String {
     switch self {
       case .networking: "BaseNetworking"
-      case .baseHelpers: "BaseHelpers"
+      case .baseTools: "BaseTools"
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
       case .graphicsKit: "GraphicsKit"
