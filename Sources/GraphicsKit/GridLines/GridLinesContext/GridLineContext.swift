@@ -51,7 +51,7 @@ extension GridLineContext {
     self.pinMode = pinMode
     self.lineWidth = environment.gridLineWidth
     self.drawsBorder = drawsBorder
-    self.panOffset = environment.panOffset
+    self.panOffset = environment.panOffset.cgSize
     self.zoomLevel = environment.zoomLevel.toCGFloat
     self.zoomRange = environment.zoomRange?.toCGFloatRange
     self.hasCellNumbers = environment.isShowingCellNumbers
