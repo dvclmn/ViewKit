@@ -15,7 +15,7 @@ extension GridShaped {
   public mutating func clearCells(
     at positions: [GridPosition],
     strategy: ClearStrategy = .assignBlank,
-    blank: @autoclosure () -> Cell
+    blank: @autoclosure () -> Cell,
   ) {
     for pos in positions where isPositionValid(pos) {
       if pos.column < rows[pos.row].count {
@@ -99,7 +99,7 @@ extension GridShaped {
   // TODO: Need to separate inherent dimensions from user-defined 'frame'
   public mutating func expandToInclude(
     position: GridPosition,
-    blank: @autoclosure () -> Cell
+    blank: @autoclosure () -> Cell,
   ) {
     /// No-op if already valid
     if isPositionValid(position) { return }
@@ -173,7 +173,9 @@ extension GridShaped {
 
   mutating func removeRows(from edge: GridEdge, count: Int = 1) {
     precondition(count >= 0, "Count must be non-negative")
-    precondition(rowCount - count >= 1, "Cannot remove \(count) rows; must leave at least one row (currently \(rowCount))")
+    precondition(
+      rowCount - count >= 1,
+      "Cannot remove \(count) rows; must leave at least one row (currently \(rowCount))",)
     for _ in 0..<count { removeRow(from: edge) }
   }
 
@@ -188,7 +190,9 @@ extension GridShaped {
 
   mutating func removeColumns(from edge: GridEdge, count: Int = 1) {
     precondition(count >= 0, "Count must be non-negative")
-    precondition(width - count >= 1, "Cannot remove \(count) columns; must leave at least one column (currently \(width))")
+    precondition(
+      width - count >= 1,
+      "Cannot remove \(count) columns; must leave at least one column (currently \(width))",)
     for _ in 0..<count { removeColumn(from: edge) }
   }
 
@@ -201,4 +205,3 @@ extension GridShaped {
     }
   }
 }
-

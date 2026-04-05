@@ -6,7 +6,8 @@
 //
 
 import Foundation
-
+import InteractionKit
+import BasePrimitives
 
 /// Bridges the gap between pure Grid dimensions and Canvas (continuous) space.
 /// Note: The only piece that needs to know about e.g.  ASCII cell size.
@@ -19,7 +20,7 @@ public struct GridProjection: Equatable, Sendable {
 
   public init(
     unitSize: CGSize,
-    rounding: GridRounding = .down
+    rounding: GridRounding = .down,
   ) {
     self.unitSize = unitSize
     self.rounding = rounding
@@ -71,19 +72,19 @@ extension GridProjection {
   // MARK: - Canvas to Grid
   public func gridDimensions(
     for canvasSize: Size<CanvasSpace>,
-    rounding: GridRounding? = nil
+    rounding: GridRounding? = nil,
   ) -> GridDimensions? {
     let strategy = rounding ?? self.rounding
     return CGSize(
       width: canvasSize.width,
-      height: canvasSize.height
+      height: canvasSize.height,
     )
     .toGridDimensions(using: unitSize, rounding: strategy)
   }
 
   public func gridDimensions(
     for canvasSize: CGSize,
-    rounding: GridRounding? = nil
+    rounding: GridRounding? = nil,
   ) -> GridDimensions? {
     let strategy = rounding ?? self.rounding
     return canvasSize.toGridDimensions(using: unitSize, rounding: strategy)
