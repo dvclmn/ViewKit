@@ -12,10 +12,10 @@ let package = Package(
   products: [
     .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
 
-    //    .library(
-    //      name: "BasePrimitives",
-    //      targets: ["BasePrimitives"],
-    //    ),
+    .library(
+      name: "BaseHelpers",
+      targets: ["BaseHelpers"],
+    ),
 
     .library(
       name: "BaseUI",
@@ -48,7 +48,7 @@ let package = Package(
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
-    .package(url: "https://github.com/dvclmn/InteractionKit", branch: "main"),
+    //    .package(url: "https://github.com/dvclmn/InteractionKit", branch: "main"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
     .package(url: "https://github.com/dvclmn/BasePrimitives", branch: "main"),
   ],
@@ -63,26 +63,28 @@ let package = Package(
       ],
     ),
 
-//    .target(
-//      name: "BasePrimitives",
-//      dependencies: [
-//        .extDependency(.enumMacros),
-//        .extDependency(.casePaths),
-//        .extDependency(.interactionKit),
-//      ],
-//      resources: [
-//        .process("Resources/Assets.xcassets"),
-//        .process("Resources/Fonts"),
-//      ],
-//    ),
+    .target(
+      name: "BaseHelpers",
+      dependencies: [
+        .extDependency(.enumMacros),
+        .extDependency(.casePaths),
+        .extDependency(.basePrimitives),
+        //        .extDependency(.interactionKit),
+      ],
+      //      resources: [
+      //        .process("Resources/Assets.xcassets"),
+      //        .process("Resources/Fonts"),
+      //      ],
+    ),
 
     .target(
       name: "BaseUI",
       dependencies: [
-        .extDependency(.basePrimitives),
         .module(.layoutKit),
+        .extDependency(.basePrimitives),
+        .module(.baseHelpers),
         .extDependency(.enumMacros),
-        .extDependency(.interactionKit),
+        //        .extDependency(.interactionKit),
       ],
     ),
 
@@ -92,7 +94,10 @@ let package = Package(
       name: "ComponentKit",
       dependencies: [
         .module(.baseUI),
+        
         .extDependency(.basePrimitives),
+        .module(.baseHelpers),
+        
         .module(.graphicsKit),
         .module(.layoutKit),
         .extDependency(.casePaths),
@@ -102,10 +107,14 @@ let package = Package(
     .target(
       name: "GraphicsKit",
       dependencies: [
+        
         .extDependency(.basePrimitives),
+        .module(.baseHelpers),
+        
+        
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
-        .extDependency(.interactionKit),
+        //        .extDependency(.interactionKit),
       ],
       resources: [
         .process("Shaders/MetalShaders")
@@ -115,8 +124,12 @@ let package = Package(
     .target(
       name: "LayoutKit",
       dependencies: [
+        
         .extDependency(.basePrimitives),
-        .extDependency(.interactionKit),
+        .module(.baseHelpers),
+        
+        //        .extDependency(.basePrimitives),
+        //        .extDependency(.interactionKit),
         .extDependency(.enumMacros),
       ],
     ),
@@ -124,14 +137,22 @@ let package = Package(
     .target(
       name: "MotionKit",
       dependencies: [
-        .extDependency(.basePrimitives)
+        
+        .extDependency(.basePrimitives),
+        .module(.baseHelpers),
+        
+        //        .extDependency(.basePrimitives)
       ],
     ),
 
     .target(
       name: "Wrecktangle",
       dependencies: [
-        .extDependency(.basePrimitives)
+        
+        .extDependency(.basePrimitives),
+        .module(.baseHelpers),
+        
+        //        .extDependency(.basePrimitives)
       ],
     ),
 
@@ -140,7 +161,11 @@ let package = Package(
     .target(
       name: "ToolKit",
       dependencies: [
+        
         .extDependency(.basePrimitives),
+        .module(.baseHelpers),
+        
+        //        .extDependency(.basePrimitives),
         .module(.baseUI),
         //        .module(.graphicsKit),
       ],
@@ -148,11 +173,11 @@ let package = Package(
 
     // MARK: - Test targets
 
-    .testTarget(
-      name: "BasePrimitivesTests",
-      dependencies: [.module(.basePrimitives)],
-      exclude: ["BasePrimitives.xctestplan"],
-    ),
+    //    .testTarget(
+    //      name: "BasePrimitivesTests",
+    //      dependencies: [.module(.basePrimitives)],
+    //      exclude: ["BasePrimitives.xctestplan"],
+    //    ),
   ],
 )
 // MARK: - Type-safe factory helpers
@@ -174,7 +199,7 @@ enum ExternalDependency {
   case basePrimitives
   case enumMacros
   case casePaths
-  case interactionKit
+  //  case interactionKit
   case keychainSwift
   case macroToolkit
 
@@ -183,7 +208,7 @@ enum ExternalDependency {
       case .basePrimitives: ("BasePrimitives", nil)
       case .enumMacros: ("BaseMacros", nil)
       case .casePaths: ("CasePaths", "swift-case-paths")
-      case .interactionKit: ("InteractionKit", nil)
+      //      case .interactionKit: ("InteractionKit", nil)
       case .keychainSwift: ("KeychainSwift", "keychain-swift")
       case .macroToolkit: ("MacroToolkit", "swift-macro-toolkit")
     }
@@ -192,7 +217,7 @@ enum ExternalDependency {
 
 enum InternalModule {
   case networking
-
+  case baseHelpers
   case baseUI
   case componentKit
   case graphicsKit
@@ -206,7 +231,7 @@ enum InternalModule {
   var name: String {
     switch self {
       case .networking: "BaseNetworking"
-      //      case .basePrimitives: "BasePrimitives"
+      case .baseHelpers: "BaseHelpers"
       case .baseUI: "BaseUI"
       case .componentKit: "ComponentKit"
       case .graphicsKit: "GraphicsKit"

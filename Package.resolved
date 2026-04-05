@@ -1,6 +1,24 @@
 {
-  "originHash" : "224b9d797b7863cc166b21df0bdf75d18e16338d548e299b68baab7187f47fcc",
+  "originHash" : "7635ceeae053c042d09428d7d678332971c53a545f4f4e8e6cb973ffec2b46ab",
   "pins" : [
+    {
+      "identity" : "basemacros",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dvclmn/BaseMacros",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d1fc6ac6c825ac35f139f429e535c8c004a9314a"
+      }
+    },
+    {
+      "identity" : "baseprimitives",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dvclmn/BasePrimitives",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d8bd83aedcccf957843786ce57fb4c9d1ad0ae3c"
+      }
+    },
     {
       "identity" : "keychain-swift",
       "kind" : "remoteSourceControl",
