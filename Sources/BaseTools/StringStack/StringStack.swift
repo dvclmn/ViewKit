@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 14/9/2024.
 //
 
+import GridPrimitives
 import SwiftUI
 
 /// A structure representing a multiline string as a mutable stack of character rows.
