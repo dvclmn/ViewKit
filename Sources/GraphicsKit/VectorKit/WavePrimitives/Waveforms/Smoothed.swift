@@ -79,7 +79,7 @@ extension BinaryFloatingPoint {
     timeConstant: Self
   ) -> Self {
     /// Snap on first frame, or if timeConstant is too small
-    /// Very small time constants would cause erratic behavior
+    /// Very small time constants would cause erratic behaviour
     guard dt > 0 else { return target }
     guard timeConstant > 0.001 else { return target }
 

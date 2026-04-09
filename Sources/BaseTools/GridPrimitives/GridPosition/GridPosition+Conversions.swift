@@ -5,20 +5,20 @@
 //  Created by Dave Coleman on 8/1/2026.
 //
 
-import SwiftUI
 import BasePrimitives
 import InteractionKit
+import SwiftUI
 
 extension GridPosition {
 
   public func toScreenPoint(
     using unitSize: CGSize,
-    mapping: AxisMapping = .default
+    mapping: AxisMapping = .default,
   ) -> CGPoint {
     GridScreenConversion.screenPoint(
       for: self,
       unitSize: unitSize,
-      mapping: mapping
+      mapping: mapping,
     )
   }
 
@@ -60,7 +60,7 @@ extension GridPosition {
 extension UnitPoint {
   public func toGridPosition(
     in dimensions: GridDimensions,
-    rounding: Rounding
+    rounding: Rounding,
   ) -> GridPosition {
 
     let colThing: CGFloat = x * CGFloat(dimensions.width)
@@ -80,19 +80,27 @@ extension CGPoint {
 
   /// Returns the row and column index for a global pointer location
   /// Returns nil if the pointer is outside the grid boundaries
-//  public func gridPosition(in geometry: GridGeometry) -> GridPosition? {
-//    guard
-//      geometry.dimensions.contains(
-//        point: self,
-//        unitSize: geometry.projection.unitSize
-//      )
-//    else { return nil }
-//
-//    let point = Point<CanvasSpace>(fromPoint: self)
-//    guard let candidate = geometry.projection.gridPositionIfValid(from: point) else {
-//      return nil
-//    }
-//    return geometry.dimensions.contains(position: candidate) ? candidate : nil
-//  }
+  public func gridPosition(
+    in dimensions: GridDimensions,
+    rounding: Rounding = .down,
+    unitSize: CGSize,
+  ) -> GridPosition? {
+    let projection = GridProjection(
+      unitSize: unitSize,
+      rounding: rounding,
+    )
+    guard
+      dimensions.contains(
+        point: self,
+        unitSize: unitSize,
+      )
+    else { return nil }
+
+    let point = Point<CanvasSpace>(fromPoint: self)
+    guard let candidate = projection.gridPositionIfValid(from: point) else {
+      return nil
+    }
+    return dimensions.contains(position: candidate) ? candidate : nil
+  }
 
 }

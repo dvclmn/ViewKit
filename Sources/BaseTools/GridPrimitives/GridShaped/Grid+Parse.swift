@@ -29,7 +29,7 @@ public struct GridParsingOptions: OptionSet, Sendable {
   /// Treat a terminal newline as creating an extra blank row
   public static let preserveTerminalNewlineAsRow = GridParsingOptions(rawValue: 1 << 1)
 
-  /// Default behavior could be to NOT preserve the terminal newline as an extra row
+  /// Default behaviour could be to NOT preserve the terminal newline as an extra row
   public static let `default`: GridParsingOptions = [.keepBlankLines]
 }
 

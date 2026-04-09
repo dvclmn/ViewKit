@@ -33,7 +33,7 @@ using namespace metal;
 //    return position;
 //  }
 
-  // Clamp strength to [0, 1] for stability and predictable behavior
+  // Clamp strength to [0, 1] for stability and predictable behaviour
   float t = clamp(strength, 0.0, 1.0);
 
   // Smoother, boundary-preserving bulge using a shaped smoothstep curve

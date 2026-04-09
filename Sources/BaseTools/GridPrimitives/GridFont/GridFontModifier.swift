@@ -44,12 +44,12 @@ extension View {
   /// Sets the ``GridFont`` for this View. Doesn't set/change any Environment value
   public func gridFont(
     for domain: GridFontDomain = .automatic,
-    size: CGFloat? = nil,
+    fontSize: CGFloat? = nil,
     fallback: Font? = nil
   ) -> some View {
     self.modifier(
       GridFontModifier(
-        config: .domain(domain, size: size),
+        config: .domain(domain, size: fontSize),
         fallbackFont: fallback
       )
     )

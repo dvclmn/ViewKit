@@ -84,7 +84,7 @@ extension WavePathGenerator {
       if let fb = fallback?.fallback {
         fb(&path, points, &self)
       } else {
-        // Default behavior if no fallback provided: simple polyline
+        // Default behaviour if no fallback provided: simple polyline
         for i in 1..<count {
           path.addLine(to: points[i])
         }

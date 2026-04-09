@@ -29,7 +29,7 @@ extension WaveDriver {
 /// Convenience setter that accepts an Optional associated value.
 /// If `newValue` is `nil`, this is a no-op. If non-nil and the case matches, it embeds the value.
 ///
-/// This mirrors the standard CasePathable subscript(case:) setter behavior while
+/// This mirrors the standard CasePathable subscript(case:) setter behaviour while
 /// allowing a simple, optional-friendly write site.
 
 //  public mutating func updateIfNeeded<Value>(

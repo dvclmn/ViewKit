@@ -27,7 +27,7 @@ In `.internal` mode, use `resetInternal(to:)` to replace the owned offset value,
 optionally syncing the anchor if a drag is in progress.
 
 
-## Axis Behavior
+## Axis Behaviour
 
 The offset accumulation respects the configured `AxisMode`:
 - `.both`: accumulate both width and height.
@@ -37,7 +37,7 @@ The offset accumulation respects the configured `AxisMode`:
 
 ## Notes
 
-- This controller consolidates the behavior of the previous separate trackers into one,
+- This controller consolidates the behaviour of the previous separate trackers into one,
   enabling flexible ownership and better resilience to external state changes.
 - When using `.external` mode, you must provide the current offset explicitly at drag start.
 - Be mindful to call `reanchor(to:)` if the external model changes mid-gesture to prevent drift.

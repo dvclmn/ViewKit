@@ -96,7 +96,7 @@ extension WavePathGenerator {
   private static func extendEndpoints(_ points: [CGPoint]) -> [CGPoint] {
     //  private static func extendEndpoints(_ points: [CGPoint]) -> [CGPoint] {
     // For open curves, duplicate endpoints so the curve starts/ends at the first/last point
-    // You could also mirror them here if you want different endpoint behavior
+    // You could also mirror them here if you want different endpoint behaviour
     var extended = points
     extended.insert(points[0], at: 0)
     extended.append(points[points.count - 1])

@@ -64,7 +64,7 @@ extension PopupAction {
 ///   let dismiss = makeDismissalClosure(from: popupMessage.dismissal)
 ///
 ///   // Wire these into your UI (e.g., button taps call runAction())
-///   // Start dismissal behavior when appropriate
+///   // Start dismissal behaviour when appropriate
 ///   dismiss()
 /// }
 /// ```

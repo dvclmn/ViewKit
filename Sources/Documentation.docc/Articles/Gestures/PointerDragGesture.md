@@ -2,7 +2,7 @@
 
 A unified view modifier that handles tap and drag gestures together.
 
-Supports three drag modes via ``DragBehavior``:
+Supports three drag modes via ``PointerDragBehaviour``:
 - Marquee: draws a transient selection rect, cleared on drag end.
 - Continuous: accumulates offset across drags (suitable for panning).
 - None: drag is disabled; tap-only.
