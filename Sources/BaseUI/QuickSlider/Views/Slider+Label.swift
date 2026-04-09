@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 5/3/2026.
 //
 
-import LayoutKit
+import BasePrimitives
 import SwiftUI
 
 extension QuickSlider {

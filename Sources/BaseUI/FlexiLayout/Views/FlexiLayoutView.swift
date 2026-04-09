@@ -97,7 +97,7 @@ extension Flexi.LayoutView {
       case .single:
         assert(
           store.multiSelection.isEmpty,
-          "`multiSelection: Set<Item.ID>` cannot be used in single selection mode.",)
+          "`multiSelection: Set<Item.ID>` cannot be used in single selection mode.", )
 
       case .multi:
         assert(

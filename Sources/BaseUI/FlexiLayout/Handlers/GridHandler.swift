@@ -9,7 +9,7 @@
 
 import SwiftUI
 import BasePrimitives
-import InteractionKit
+//import InteractionKit
 
 extension Flexi {
 
@@ -85,7 +85,7 @@ extension Flexi.GridHandler {
   func neighbourID(
     from currentID: Item.ID,
     direction: Direction,
-    data: [Item]
+    data: [Item],
   ) -> Item.ID? {
     guard let currentIndex = data.firstIndex(where: { $0.id == currentID }),
       let columnCount
@@ -120,7 +120,7 @@ extension Flexi.GridHandler {
   }
 
   func updateSelectedItems(
-    selected: Binding<Set<Item.ID>>,
+    selected: Binding<Set<Item.ID>>
   ) {
     /// Perhaps this can be handled more centrally —
     /// but the selection Rect needs to exist for
@@ -130,7 +130,7 @@ extension Flexi.GridHandler {
     let selectionFilter: [Item.ID: CGRect] = itemFrames.filter { item, frame in
       frame.insetBy(
         dx: -selectionHitThreshold,
-        dy: -selectionHitThreshold
+        dy: -selectionHitThreshold,
       ).intersects(selectionRect)
     }
     let filteredKeys: [Item.ID] = selectionFilter.compactMap { $0.key }

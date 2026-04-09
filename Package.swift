@@ -50,6 +50,7 @@ let package = Package(
     .package(url: "https://github.com/dvclmn/InteractionKit", branch: "main"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
     .package(url: "https://github.com/dvclmn/BasePrimitives", branch: "main"),
+    .package(url: "https://github.com/dvclmn/GridKit", branch: "main"),
   ],
 
   // MARK: - Targets
@@ -69,6 +70,7 @@ let package = Package(
         .extDependency(.casePaths),
         .extDependency(.basePrimitives),
         .extDependency(.interactionKit),
+        .extDependency(.gridKit),
       ],
       //      resources: [
       //        .process("Resources/Assets.xcassets"),
@@ -199,6 +201,7 @@ extension Target.Dependency {
 enum ExternalDependency {
   case basePrimitives
   case enumMacros
+  case gridKit
   case casePaths
   case interactionKit
   case keychainSwift
@@ -208,6 +211,7 @@ enum ExternalDependency {
     switch self {
       case .basePrimitives: ("BasePrimitives", nil)
       case .enumMacros: ("BaseMacros", nil)
+      case .gridKit: ("GridKit", nil)
       case .casePaths: ("CasePaths", "swift-case-paths")
       case .interactionKit: ("InteractionKit", nil)
       case .keychainSwift: ("KeychainSwift", "keychain-swift")
