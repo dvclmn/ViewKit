@@ -22,7 +22,6 @@ let package = Package(
       targets: [
         "BaseUI",
         "LayoutKit",
-        //        "ComponentKit",
       ],
     ),
 
