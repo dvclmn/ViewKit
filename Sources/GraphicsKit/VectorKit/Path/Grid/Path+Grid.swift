@@ -7,8 +7,9 @@
 
 //import CoreTools
 
-import SwiftUI
 import BaseTools
+import GridPrimitives
+import SwiftUI
 
 public typealias IndexHorizontal = (_ index: Int, _ x: CGFloat) -> Void
 public typealias IndexVertical = (_ index: Int, _ y: CGFloat) -> Void
@@ -26,7 +27,7 @@ extension Path {
     rect: GridRect,
     cellSize: CGSize,
     containerSize: CGSize,
-    drawsBorder: Bool
+    drawsBorder: Bool,
   ) -> Path {
     // rect.origin encodes any top/leading offset caused by header row/column (row/col numbers)
     // rect.size encodes the number of grid cells to render in each direction
@@ -105,11 +106,11 @@ extension Path {
 
     let originX = originOffset.x.toScreenLength(
       along: .horizontal,
-      using: cellSize
+      using: cellSize,
     )
     let originY = originOffset.y.toScreenLength(
       along: .vertical,
-      using: cellSize
+      using: cellSize,
     )
     //    else { return Path() }
 

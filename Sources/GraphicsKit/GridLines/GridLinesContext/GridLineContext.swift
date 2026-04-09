@@ -8,6 +8,7 @@
 import BasePrimitives
 import BaseTools
 import SwiftUI
+import GridPrimitives
 
 // MARK: - Main Context
 struct GridLineContext {

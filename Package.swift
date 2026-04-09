@@ -70,7 +70,8 @@ let package = Package(
         .extDependency(.casePaths),
         .extDependency(.basePrimitives),
         .extDependency(.interactionKit),
-//        .extDependency(.gridPrimitives),
+//        .product(name: "GridPrimitives", package: "GridKit")
+        .extDependency(.gridPrimitives),
       ],
       //      resources: [
       //        .process("Resources/Assets.xcassets"),
@@ -211,7 +212,7 @@ enum ExternalDependency {
     switch self {
       case .basePrimitives: ("BasePrimitives", nil)
       case .enumMacros: ("BaseMacros", nil)
-      case .gridPrimitives: ("GridKit", "GridPrimitives")
+      case .gridPrimitives: ("GridPrimitives", "GridKit")
       case .casePaths: ("CasePaths", "swift-case-paths")
       case .interactionKit: ("InteractionKit", nil)
       case .keychainSwift: ("KeychainSwift", "keychain-swift")

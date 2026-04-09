@@ -7,6 +7,7 @@
 
 import BasePrimitives
 import BaseTools
+import GridPrimitives
 import SwiftUI
 
 /// `fill(size: CGSize)` is ambiguous about which size, or what size means

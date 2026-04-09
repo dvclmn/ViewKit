@@ -22,10 +22,11 @@ extension QuickSlider {
 
       if isASCIIMode, let unitSize {
 
-        TextSliderCore(
-          value: value,
-          unitSize: unitSize
-        )
+        Text("Not yet implemented")
+//        TextSliderCore(
+//          value: value,
+//          unitSize: unitSize
+//        )
 
       } else {
 

@@ -7,6 +7,7 @@
 
 import BasePrimitives
 import SwiftUI
+import GridPrimitives
 import BaseTools
 
 extension GraphicsContext {
