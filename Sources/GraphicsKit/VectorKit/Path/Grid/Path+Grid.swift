@@ -11,8 +11,8 @@ import BaseTools
 import GridPrimitives
 import SwiftUI
 
-public typealias IndexHorizontal = (_ index: Int, _ x: CGFloat) -> Void
-public typealias IndexVertical = (_ index: Int, _ y: CGFloat) -> Void
+//public typealias IndexHorizontal = (_ index: Int, _ x: CGFloat) -> Void
+//public typealias IndexVertical = (_ index: Int, _ y: CGFloat) -> Void
 
 public enum GridLinesMode {
   /// Draw enough lines to cover the container, choosing indices based on offset
@@ -93,8 +93,8 @@ extension Path {
     offset: CGSize,
     drawsBorder: Bool,
     edgeEpsilon: CGFloat = 0.5,
-    onHorizontalIndex: IndexHorizontal? = nil,
-    onVerticalIndex: IndexVertical? = nil,
+    onHorizontalIndex: ((GridLine) -> Void)? = nil,
+    onVerticalIndex: ((GridLine) -> Void)? = nil,
   ) -> Path {
     let w = containerSize.width
     let h = containerSize.height
@@ -112,8 +112,7 @@ extension Path {
       along: .vertical,
       using: cellSize,
     )
-    //    else { return Path() }
-
+    
     guard w > 0, h > 0, cw > 0, ch > 0 else { return Path() }
 
     let startCol = Int(floor((-offset.width) / cw))
@@ -139,7 +138,13 @@ extension Path {
 
         p.move(to: CGPoint(x: x + originX, y: originY))
         p.addLine(to: CGPoint(x: x + originX, y: originY + h))
-        onHorizontalIndex?(i, x)
+
+        let line = GridLine(
+          axis: .horizontal,
+          index: i,
+          position: x,
+        )
+        onHorizontalIndex?(line)
       }
 
       /// Rows -> horizontal lines at fixed y
@@ -150,7 +155,13 @@ extension Path {
 
         p.move(to: CGPoint(x: originX, y: y + originY))
         p.addLine(to: CGPoint(x: originX + w, y: y + originY))
-        onVerticalIndex?(i, y)
+
+        let line = GridLine(
+          axis: .vertical,
+          index: i,
+          position: y,
+        )
+        onHorizontalIndex?(line)
       }
     }
   }

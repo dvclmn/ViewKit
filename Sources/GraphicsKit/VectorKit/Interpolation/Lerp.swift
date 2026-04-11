@@ -9,21 +9,20 @@ import Foundation
 
 /// Convenience extensions
 extension BinaryFloatingPoint {
-  
+
   public func lerp(from a: Self, to b: Self) -> Self {
     lerpGlobal(from: a, to: b, self)
   }
-  
+
   public func lerpHue(
     from: Self,
     to: Self,
-    strength: Self
+    strength: Self,
   ) -> Self {
     let delta = ((to - from + 540).truncatingRemainder(dividingBy: 360)) - 180
     return (from + delta * strength).truncatingRemainder(dividingBy: 360)
   }
 }
-
 
 /// Code courtesy of https://rtorres.me/blog/lerp-swift/
 /// Written by Ramon Torres
@@ -54,7 +53,7 @@ public func lerpGlobal<V: BinaryFloatingPoint, T: BinaryFloatingPoint>(from v0: 
 public func lerp<T: BinaryFloatingPoint>(from p0: CGPoint, to p1: CGPoint, _ t: T) -> CGPoint {
   return CGPoint(
     x: lerpGlobal(from: p0.x, to: p1.x, t),
-    y: lerpGlobal(from: p0.y, to: p1.y, t)
+    y: lerpGlobal(from: p0.y, to: p1.y, t),
   )
 }
 
@@ -71,7 +70,7 @@ public func lerp<T: BinaryFloatingPoint>(from p0: CGPoint, to p1: CGPoint, _ t: 
 public func lerp<T: BinaryFloatingPoint>(from s0: CGSize, to s1: CGSize, _ t: T) -> CGSize {
   return CGSize(
     width: lerpGlobal(from: s0.width, to: s1.width, t),
-    height: lerpGlobal(from: s0.height, to: s1.height, t)
+    height: lerpGlobal(from: s0.height, to: s1.height, t),
   )
 }
 
@@ -88,7 +87,7 @@ public func lerp<T: BinaryFloatingPoint>(from s0: CGSize, to s1: CGSize, _ t: T)
 public func lerp<T: BinaryFloatingPoint>(from r0: CGRect, to r1: CGRect, _ t: T) -> CGRect {
   return CGRect(
     origin: lerp(from: r0.origin, to: r1.origin, t),
-    size: lerp(from: r0.size, to: r1.size, t)
+    size: lerp(from: r0.size, to: r1.size, t),
   )
 }
 
@@ -106,4 +105,3 @@ public func lerp<T: BinaryFloatingPoint>(from r0: CGRect, to r1: CGRect, _ t: T)
 public func inverseLerp<V: BinaryFloatingPoint, T: BinaryFloatingPoint>(_ v0: V, _ v1: V, _ v: V) -> T {
   return T((v - v0) / (v1 - v0))
 }
-

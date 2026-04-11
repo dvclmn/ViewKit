@@ -70,7 +70,6 @@ let package = Package(
         .extDependency(.casePaths),
         .extDependency(.basePrimitives),
         .extDependency(.interactionKit),
-//        .product(name: "GridPrimitives", package: "GridKit")
         .extDependency(.gridPrimitives),
       ],
       //      resources: [
