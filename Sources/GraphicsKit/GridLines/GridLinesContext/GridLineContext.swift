@@ -7,8 +7,8 @@
 
 import BasePrimitives
 import BaseTools
-import SwiftUI
 import GridPrimitives
+import SwiftUI
 
 // MARK: - Main Context
 struct GridLineContext {
@@ -32,18 +32,15 @@ extension GridLineContext {
     sizeMode: GridSizeMode,
     pinMode: GridPinMode,
     drawsBorder: Bool,
-    environment: EnvironmentValues
+    environment: EnvironmentValues,
   ) throws {
     let unitSize = domain.unitSize(in: environment)
     let dimensions = environment.gridDimensions
-    
+
     guard let unitSize else {
-//      printMissing("unitSize", for: "GridLineContext")
       throw GridLineError.missingEnvUnitSize
-//      return nil
     }
     guard let dimensions else {
-//      printMissing("dimensions", for: "GridLineContext")
       throw GridLineError.missingEnvGridDimensions
     }
 
