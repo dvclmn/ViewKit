@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 17/11/2024.
 //
 
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
 public struct WavePathGenerator {
   public var points: [CGPoint]
@@ -49,14 +49,14 @@ extension WavePathGenerator {
 extension WavePathGenerator {
   public mutating func editPath(
     with interpolation: WaveInterpolation,
-    path: inout Path
+    path: inout Path,
   ) {
     processPath(with: interpolation, stamper: { _, _, _ in }, path: &path)
   }
 
   public mutating func editPath(
     withStyle style: PathStyle,
-    path: inout Path
+    path: inout Path,
   ) {
     let stamper = makeStampClosure(from: style.stamped)
     processPath(with: style.interpolation, stamper: stamper, path: &path)

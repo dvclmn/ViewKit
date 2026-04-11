@@ -35,21 +35,22 @@ import SwiftUI
 public struct VariableWidthPath {
   var leftEdge: [CGPoint] = []
   var rightEdge: [CGPoint] = []
-
+  
   private var pendingFirstPoint: CGPoint?
   private var previousNormal: CGPoint?
   private var previousWidth: CGFloat?
-
+  
   public init() {}
+}
 
-  // MARK: - Building
+extension VariableWidthPath {
 
   /// Append a point to the stroke outline with the given width.
   ///
   /// Width is smoothed against the previous value (85/15 blend) to avoid
   /// sudden jumps from noisy velocity readings.
   public mutating func addPoint(to current: CGPoint, rawWidth: CGFloat) {
-    // Smooth width against previous
+    /// Smooth width against previous
     let width: CGFloat
     if let prev = previousWidth {
       width = prev * 0.85 + rawWidth * 0.15
@@ -58,7 +59,7 @@ public struct VariableWidthPath {
     }
     previousWidth = width
 
-    // Buffer the very first point — we need two points to compute a direction
+    /// Buffer the very first point — need two points to compute a direction
     guard pendingFirstPoint != nil || !leftEdge.isEmpty else {
       pendingFirstPoint = current
       return
@@ -69,11 +70,12 @@ public struct VariableWidthPath {
       from = pending
       pendingFirstPoint = nil
     } else {
-      from = leftEdge.last.map { pt in
-        // Back-compute the spine position from the last left edge point and normal
-        guard let n = previousNormal, let w = previousWidth else { return current }
-        return CGPoint(x: pt.x - n.x * w / 2, y: pt.y - n.y * w / 2)
-      } ?? current
+      from =
+        leftEdge.last.map { pt in
+          /// Back-compute the spine position from the last left edge point and normal
+          guard let n = previousNormal, let w = previousWidth else { return current }
+          return CGPoint(x: pt.x - n.x * w / 2, y: pt.y - n.y * w / 2)
+        } ?? current
     }
 
     if let (left, right, normal) = offsetEdges(from: from, to: current, width: width) {
@@ -82,8 +84,11 @@ public struct VariableWidthPath {
       previousNormal = normal
     }
   }
+}
 
-  // MARK: - Path generation
+// MARK: - Path generation
+
+extension VariableWidthPath {
 
   /// Generates the final filled `Path` from the accumulated edge points.
   ///
@@ -104,8 +109,6 @@ public struct VariableWidthPath {
     }
     return path
   }
-
-  // MARK: - Private
 
   private var fallbackPath: Path {
     var path = Path()
@@ -128,7 +131,7 @@ public struct VariableWidthPath {
     for i in 1..<leftEdge.count {
       let mid = CGPoint(
         x: (leftEdge[i - 1].x + leftEdge[i].x) / 2,
-        y: (leftEdge[i - 1].y + leftEdge[i].y) / 2
+        y: (leftEdge[i - 1].y + leftEdge[i].y) / 2,
       )
       path.addQuadCurve(to: mid, control: leftEdge[i - 1])
     }
@@ -139,7 +142,7 @@ public struct VariableWidthPath {
     for i in (1..<rightEdge.count).reversed() {
       let mid = CGPoint(
         x: (rightEdge[i].x + rightEdge[i - 1].x) / 2,
-        y: (rightEdge[i].y + rightEdge[i - 1].y) / 2
+        y: (rightEdge[i].y + rightEdge[i - 1].y) / 2,
       )
       path.addQuadCurve(to: mid, control: rightEdge[i])
     }
@@ -152,7 +155,7 @@ public struct VariableWidthPath {
   private mutating func offsetEdges(
     from: CGPoint,
     to current: CGPoint,
-    width: CGFloat
+    width: CGFloat,
   ) -> (left: CGPoint, right: CGPoint, normal: CGPoint)? {
     let dx = current.x - from.x
     let dy = current.y - from.y
@@ -173,7 +176,7 @@ public struct VariableWidthPath {
       normal = rawNormal
     }
 
-    // Reduce width on sharp corners to prevent edge crossing
+    /// Reduce width on sharp corners to prevent edge crossing
     let effectiveWidth: CGFloat
     if let prev = previousNormal {
       let dot = normal.x * prev.x + normal.y * prev.y
@@ -184,9 +187,9 @@ public struct VariableWidthPath {
 
     let half = effectiveWidth / 2
     return (
-      left:  CGPoint(x: current.x + normal.x * half, y: current.y + normal.y * half),
+      left: CGPoint(x: current.x + normal.x * half, y: current.y + normal.y * half),
       right: CGPoint(x: current.x - normal.x * half, y: current.y - normal.y * half),
-      normal: normal
+      normal: normal,
     )
   }
 }

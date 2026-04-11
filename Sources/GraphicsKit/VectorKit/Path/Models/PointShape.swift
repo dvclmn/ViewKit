@@ -5,10 +5,8 @@
 //  Created by Dave Coleman on 12/7/2025.
 //
 
-//import CoreTools
-import SwiftUI
 import BasePrimitives
-
+import SwiftUI
 
 public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, CaseIterable, Codable {
   case square
@@ -91,7 +89,7 @@ extension PointShape {
   )
   public func updatePath(
     in rect: CGRect,
-    path: inout Path
+    path: inout Path,
   ) {
     let center = CGPoint(x: rect.midX, y: rect.midY)
     let radius = min(rect.width, rect.height) / 2

@@ -55,30 +55,5 @@ extension Path {
     radius: CGFloat,
   ) {
     shape.addShape(to: &self, at: point, radius: radius)
-    //    shape.updatePath(center: point, radius: radius, path: &self)
   }
-
-  //  public static func createGrid(
-  //    columns: Int,
-  //    rows: Int,
-  //    cellSize: CGSize,
-  //    containerSize: CGSize
-  //  ) -> Path {
-  //    Path { p in
-  //      /// Horizontal lines
-  //      for row in 0...rows {
-  //        let y = min(CGFloat(row) * cellSize.height, containerSize.height)
-  //        p.move(to: CGPoint(x: 0, y: y))
-  //        p.addLine(to: CGPoint(x: containerSize.width, y: y))
-  //      }
-  //
-  //      /// Vertical lines
-  //      for column in 0...columns {
-  //        let x = min(CGFloat(column) * cellSize.width, containerSize.width)
-  //        p.move(to: CGPoint(x: x, y: 0))
-  //        p.addLine(to: CGPoint(x: x, y: containerSize.height))
-  //      }
-  //    }
-  //  }
-
 }

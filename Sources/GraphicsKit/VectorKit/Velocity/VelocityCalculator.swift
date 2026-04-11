@@ -38,7 +38,7 @@ public struct VelocityCalculator {
     maxVelocity: CGFloat = 400.0,
     minTimeDelta: TimeInterval = 0.001,
     maxHistoryDepth: Int = 10,
-    minPointsForWeighted: Int = 3
+    minPointsForWeighted: Int = 3,
   ) {
     self.maxVelocity = maxVelocity
     self.minTimeDelta = minTimeDelta
@@ -48,7 +48,7 @@ public struct VelocityCalculator {
 
   public func computeWeightedVelocity<T: TimestampedPosition>(
     from history: [T],
-    weights: [CGFloat] = defaultWeights
+    weights: [CGFloat] = defaultWeights,
   ) -> CGVector {
 
     /// Edge case: empty or insufficient history
@@ -79,7 +79,7 @@ public struct VelocityCalculator {
     for i in 1..<recentHistory.count {
       let velocity = computeSimpleVelocity(
         from: recentHistory[i - 1],
-        to: recentHistory[i]
+        to: recentHistory[i],
       )
 
       /// Weight index represents how recent this pair is
@@ -102,7 +102,7 @@ public struct VelocityCalculator {
 
     let finalVelocity = CGVector(
       dx: weightedDx / totalWeight,
-      dy: weightedDy / totalWeight
+      dy: weightedDy / totalWeight,
     )
 
     return finalVelocity.clampVelocity(maxVelocity: maxVelocity)
@@ -112,14 +112,14 @@ public struct VelocityCalculator {
 
   private func computeSimpleVelocity<T: TimestampedPosition>(
     from pointA: T,
-    to pointB: T
+    to pointB: T,
   ) -> CGVector {
     let dt = pointB.timestamp - pointA.timestamp
     guard dt >= minTimeDelta else { return .zero }
 
     return CGVector(
       dx: (pointB.position.x - pointA.position.x) / dt,
-      dy: (pointB.position.y - pointA.position.y) / dt
+      dy: (pointB.position.y - pointA.position.y) / dt,
     )
   }
 
@@ -144,7 +144,7 @@ extension VelocityCalculator {
   /// - Parameter decayFactor: How quickly weights decrease (0.5 = half each step)
   public static func exponentialWeights(
     count: Int,
-    decayFactor: CGFloat = 0.7
+    decayFactor: CGFloat = 0.7,
   ) -> [CGFloat] {
     guard count > 0 else { return [] }
 

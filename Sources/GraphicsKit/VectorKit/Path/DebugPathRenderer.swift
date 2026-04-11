@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 12/7/2025.
 //
 
-
 import SwiftUI
 
 public struct PathDebugRenderer {
@@ -17,7 +16,7 @@ public struct PathDebugRenderer {
     context.stroke(
       result.original,
       with: .color(config.lineStyle.colour.toColour),
-      lineWidth: config.lineStyle.lineWidth)
+      lineWidth: config.lineStyle.lineWidth,)
 
     /// Draw paths and points
     for (element, path) in result.debugPaths {
@@ -27,23 +26,23 @@ public struct PathDebugRenderer {
         context.stroke(
           result.connections,
           with: .color(element.displayColour),
-          lineWidth: config.lineStyle.lineWidth
+          lineWidth: config.lineStyle.lineWidth,
         )
       }
     }
 
     /// Draw coordinate labels
     for label in result.labelPoints where label.element.isLabelled {
-      #warning("Need to bring thid back")
-//      context.drawDebugText(
-//        label.point.debugDescription,
-//        //        label.point.displayString(places: 0, labelStyle: .none),
-//        at: label.point,
-//        positioned: .aboveOrigin,
-//        colour: .primary,
-//        fontSize: config.labelFontSize,
-//        pointDisplay: .none,
-//      )
+      #warning("Need to bring this back")
+      //      context.drawDebugText(
+      //        label.point.debugDescription,
+      //        //        label.point.displayString(places: 0, labelStyle: .none),
+      //        at: label.point,
+      //        positioned: .aboveOrigin,
+      //        colour: .primary,
+      //        fontSize: config.labelFontSize,
+      //        pointDisplay: .none,
+      //      )
     }
   }
 
@@ -74,13 +73,13 @@ extension GraphicsContext {
   public func debugPath(
     path: Path,
     config: PathDebugConfig = .init(),
-    zoomPercent: CGFloat?
+    zoomPercent: CGFloat?,
   ) {
     let result = path.analyse()
     PathDebugRenderer(
       result: result,
       config: config,
-      zoomPercent: zoomPercent
+      zoomPercent: zoomPercent,
     ).draw(in: self)
   }
 

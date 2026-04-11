@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 public struct ShapeDebug<S: Shape>: View {
 
   public let shape: S
@@ -15,7 +14,7 @@ public struct ShapeDebug<S: Shape>: View {
 
   public init(
     config: PathDebugConfig = .init(),
-    @ViewBuilder shape: @escaping () -> S
+    @ViewBuilder shape: @escaping () -> S,
   ) {
     self.config = config
     self.shape = shape()
@@ -31,7 +30,7 @@ public struct ShapeDebug<S: Shape>: View {
           PathDebugRenderer(
             result: result,
             config: config,
-            zoomPercent: nil
+            zoomPercent: nil,
           ).shapeView()
         }
       }

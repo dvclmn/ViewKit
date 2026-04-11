@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct PathDebugExampleView: View {
 
   var body: some View {
@@ -17,7 +16,7 @@ struct PathDebugExampleView: View {
 
       ShapeDebug {
         Rectangle()
-//        SwiftBird()
+        //        SwiftBird()
         //        RoundedRectangle(cornerRadius: 40)
         //          .fill(.blue)
       }
@@ -38,7 +37,7 @@ struct PathDebugExampleView: View {
             radius: radius,
             startAngle: .degrees(0),
             endAngle: .degrees(360),
-            clockwise: false
+            clockwise: false,
           )
         }
         context.stroke(circlePath, with: .color(.gray), lineWidth: 2)
