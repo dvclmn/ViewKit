@@ -6,11 +6,12 @@
 //
 
 import BasePrimitives
-import InteractionKit
 import SwiftUI
 
-//#warning("USE WITH CAUTION. Causes serious performance issues for some reason, like in InfoBar")
-@available(*, deprecated, message: "USE WITH CAUTION. Causes serious performance issues for some reason, like in InfoBar")
+@available(
+  *, deprecated,
+  message: "USE WITH CAUTION. Causes serious performance issues for some reason, like in InfoBar"
+)
 public struct DecomposedView<Content: View>: View {
   @Environment(\.layoutType) private var layoutType
 
@@ -24,7 +25,7 @@ public struct DecomposedView<Content: View>: View {
     _ subviewType: SubViewType,
     layout: LayoutType,
     spacing: CGFloat? = nil,
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: @escaping () -> Content,
   ) {
     self.subviewType = subviewType
     self.layoutTypeOverride = layout
@@ -76,13 +77,13 @@ extension DecomposedView {
     _ subviewType: SubViewType,
     axis: Axis?,
     spacing: CGFloat? = nil,
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: @escaping () -> Content,
   ) {
     self.init(
       subviewType,
       layout: LayoutType(fromAxis: axis.map { AlignedAxis(fromAxis: $0) }),
       spacing: spacing,
-      content: content
+      content: content,
     )
   }
 

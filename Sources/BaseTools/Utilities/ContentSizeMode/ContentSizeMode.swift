@@ -7,7 +7,7 @@
 
 import BasePrimitives
 import EnumMacros
-import InteractionKit
+//import InteractionKit
 import SwiftUI
 
 @MetaEnum

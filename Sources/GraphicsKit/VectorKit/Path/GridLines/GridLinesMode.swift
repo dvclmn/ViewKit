@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 11/4/2026.
 //
 
+import Foundation
+
 public enum GridLinesMode {
   /// Draw enough lines to cover the container, choosing indices based on offset
   case infinite(offset: CGSize)

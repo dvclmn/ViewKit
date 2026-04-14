@@ -7,7 +7,7 @@
 
 import BasePrimitives
 import SwiftUI
-import InteractionKit
+//import InteractionKit
 
 extension GridLineContext {
 
@@ -64,23 +64,25 @@ extension GridLineContext {
       offset: effectivePanOffset,
       drawsBorder: drawsBorder,
       edgeEpsilon: edgeEpsilon,
-      onHorizontalIndex: { index, x in
+      onHorizontalIndex: { line in
+//      onHorizontalIndex: { index, x in
 
         /// Passing `vertical` looks inverted, but it's not
         handleMarker(
           for: .vertical,
-          at: index,
-          position: x,
+          at: line.index,
+          position: line.position,
           markers: &markers
         )
       },
-      onVerticalIndex: { index, y in
+      onVerticalIndex: { line in
+//      onVerticalIndex: { index, y in
 
         /// Passing `horizontal` looks inverted, but it's not
         handleMarker(
           for: .horizontal,
-          at: index,
-          position: y,
+          at: line.index,
+          position: line.position,
           markers: &markers
         )
       }

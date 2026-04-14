@@ -7,7 +7,6 @@
 
 import CasePaths
 import EnumMacros
-import InteractionKit
 import BasePrimitives
 import SwiftUI
 
