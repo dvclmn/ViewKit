@@ -47,7 +47,7 @@ let package = Package(
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
-    .package(url: "https://github.com/dvclmn/InteractionKit", branch: "main"),
+//    .package(url: "https://github.com/dvclmn/InteractionKit", branch: "main"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
     .package(url: "https://github.com/dvclmn/BasePrimitives", branch: "main"),
     .package(url: "https://github.com/dvclmn/GridKit", branch: "main"),
@@ -69,7 +69,7 @@ let package = Package(
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
         .extDependency(.basePrimitives),
-        .extDependency(.interactionKit),
+//        .extDependency(.interactionKit),
         .extDependency(.gridPrimitives),
       ],
       //      resources: [
@@ -203,7 +203,7 @@ enum ExternalDependency {
   case enumMacros
   case gridPrimitives
   case casePaths
-  case interactionKit
+//  case interactionKit
   case keychainSwift
   case macroToolkit
 
@@ -213,7 +213,7 @@ enum ExternalDependency {
       case .enumMacros: ("BaseMacros", nil)
       case .gridPrimitives: ("GridPrimitives", "GridKit")
       case .casePaths: ("CasePaths", "swift-case-paths")
-      case .interactionKit: ("InteractionKit", nil)
+//      case .interactionKit: ("InteractionKit", nil)
       case .keychainSwift: ("KeychainSwift", "keychain-swift")
       case .macroToolkit: ("MacroToolkit", "swift-macro-toolkit")
     }

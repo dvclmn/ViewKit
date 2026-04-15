@@ -5,21 +5,26 @@
 //  Created by Dave Coleman on 9/3/2026.
 //
 
-import BasePrimitives
+@_spi(Internals) import BasePrimitives
 
 extension InfoBarItem {
+  /// `labelStyle` applies style to the value part
   init?<K: InfoBarSectionKey>(
     fromLabeled labeled: Labeled,
     section: K.Type,
     labelStyle: AbbreviableLabel.Style = .standard,
-    format: FloatDisplayFormat = .default
+    format: FloatDisplayFormat = .default,
   ) {
-    let label = labeled.labelPart(with: labelStyle)
-    guard let value = labeled.valuePart(using: format) else { return nil }
+    let label = labeled.labelPart()
+    guard let value = Labeled.valuePart(
+      for: labeled,
+      using: format,
+      with: labelStyle
+    ) else { return nil }
     self.init(
       section: section,
       label: label.map { QuickLabel(stringLiteral: $0) },
-      content: value
+      content: value,
     )
   }
 }
@@ -32,7 +37,7 @@ extension InfoBarItem: ExpressibleByStringLiteral {
     self.init(
       section: InfoBarSectionID(DebugSectionKey.self),
       label: nil,
-      content: value
+      content: value,
     )
   }
 }
@@ -45,7 +50,7 @@ extension Array where Element == DisplayBlock {
   /// divider = []
   func toInfoBarItems<K: InfoBarSectionKey>(
     section: K.Type = DebugSectionKey.self,
-    preset: FloatDisplayPreset = .standard
+    preset: FloatDisplayPreset = .standard,
   ) -> [InfoBarItem] {
     compactMap { block -> [InfoBarItem]? in
       switch block {
@@ -54,7 +59,7 @@ extension Array where Element == DisplayBlock {
             let item = InfoBarItem(
               fromBlock: block,
               section: section,
-              preset: preset
+              preset: preset,
             )
           else { return nil }
           return [item]
@@ -62,7 +67,7 @@ extension Array where Element == DisplayBlock {
         case .indented(let indented):
           return indented.toInfoBarItems(
             section: section,
-            preset: preset
+            preset: preset,
           )
 
         case .divider:
@@ -76,14 +81,14 @@ extension Array where Element == DisplayBlock {
 extension Indented {
   func toInfoBarItems<K: InfoBarSectionKey>(
     section: K.Type = DebugSectionKey.self,
-    preset: FloatDisplayPreset = .standard
+    preset: FloatDisplayPreset = .standard,
       //    format: FloatDisplayFormat = .default
   ) -> [InfoBarItem] {
     content.compactMap { indentedBlock in
       let item = InfoBarItem(
         fromBlock: indentedBlock,
         section: section,
-        preset: preset
+        preset: preset,
       )
       guard let item else { return nil }
       return item

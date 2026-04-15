@@ -72,7 +72,7 @@ extension InfoBarItem {
         self.init(
           section: section,
           label: nil,
-          content: fragment.render(using: preset.format)
+          content: fragment.render(using: preset.format, with: .standard, delimiter: ", ")
         )
 
       case .labeled(let label):

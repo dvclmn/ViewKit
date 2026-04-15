@@ -1,6 +1,6 @@
 //
 //  VariableWidthPath.swift
-//  LilyPad
+//  Lilypad
 //
 
 import SwiftUI

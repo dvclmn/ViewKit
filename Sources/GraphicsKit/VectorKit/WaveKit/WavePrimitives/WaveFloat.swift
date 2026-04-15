@@ -8,7 +8,7 @@
 import BasePrimitives
 import SwiftUI
 
-public protocol WaveFloat: BinaryFloatingPoint, Sendable, Codable, StringRenderable, FloatRenderable {
+public protocol WaveFloat: BinaryFloatingPoint, Sendable, Codable, FloatFormattable {
   static func waveSin(_ x: Self) -> Self
   static var twoPi: Self { get }
 }

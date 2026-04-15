@@ -11,13 +11,12 @@ import SwiftUI
 public struct FrameFromSizeModifier: ViewModifier {
 
   let dimensions: FrameDimensions
-
   public func body(content: Content) -> some View {
     content
       .frame(
         width: dimensions.width,
         height: dimensions.height,
-        alignment: dimensions.alignment
+        alignment: dimensions.alignment,
       )
   }
 }
@@ -28,14 +27,14 @@ extension View {
   public func frameFromLength<T: BinaryFloatingPoint>(
     _ length: T?,
     axis: Axis.Set,
-    alignment: Alignment = .center
+    alignment: Alignment = .center,
   ) -> some View {
     self.modifier(
       FrameFromSizeModifier(
         dimensions: FrameDimensions(
           fromLength: length?.toCGFloat,
           axis: axis,
-          alignment: alignment
+          alignment: alignment,
         )
       )
     )
@@ -44,14 +43,14 @@ extension View {
   /// Sets a frame with same value for width and height
   public func frameFromSquare<T: BinaryFloatingPoint>(
     _ length: T?,
-    alignment: Alignment = .center
+    alignment: Alignment = .center,
   ) -> some View {
     self.modifier(
       FrameFromSizeModifier(
         dimensions: FrameDimensions(
           fromLength: length?.toCGFloat,
           axis: [.horizontal, .vertical],
-          alignment: alignment
+          alignment: alignment,
         )
       )
     )
@@ -59,7 +58,7 @@ extension View {
 
   public func frameFromSize(
     _ size: CGSize?,
-    alignment: Alignment = .center
+    alignment: Alignment = .center,
   ) -> some View {
     self.modifier(
       FrameFromSizeModifier(

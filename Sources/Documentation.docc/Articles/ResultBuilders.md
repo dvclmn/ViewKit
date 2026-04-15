@@ -78,27 +78,27 @@ This one seems important too, but interestingly it doesn't *have* to be part of 
 
 
 
-/// Good to remember:
-/// The `{Example}Builder` (the type decorated directly with
-/// `@resultBuilder`), is not the right place to have various
-/// parameters passed in, like a function would.
-///
-/// The place for this is on the *function or type* that *uses*
-/// the builder. Such as the below `DisplayString`.
-///
-/// It accepts a parameter, `separator`, making this type
-/// the place that can be configured. Not the builder itself.
-/// ```
-/// public struct DisplayString {
-///   let content: [any StringRenderable]
-///   let separator: String
-///
-///   public init(
-///     separator: String = .defaultComponentSeparator,
-///     @DisplayStringBuilder _ content: () -> [any StringRenderable]
-///   ) {
-///     self.separator = separator
-///     self.content = content()
-///   }
-/// }
-/// ```
+Good to remember:
+The `{Example}Builder` (the type decorated directly with
+`@resultBuilder`), is not the right place to have various
+parameters passed in, like a function would.
+
+The place for this is on the *function or type* that *uses*
+the builder. Such as the below `DisplayString`.
+
+It accepts a parameter, `separator`, making this type
+the place that can be configured. Not the builder itself.
+```
+public struct DisplayString {
+  let content: [any StringRenderable]
+  let separator: String
+
+  public init(
+    separator: String = .defaultComponentSeparator,
+    @DisplayStringBuilder _ content: () -> [any StringRenderable]
+  ) {
+    self.separator = separator
+    self.content = content()
+  }
+}
+```
