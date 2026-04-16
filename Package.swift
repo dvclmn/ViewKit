@@ -47,7 +47,6 @@ let package = Package(
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
-//    .package(url: "https://github.com/dvclmn/InteractionKit", branch: "main"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
     .package(url: "https://github.com/dvclmn/BasePrimitives", branch: "main"),
     .package(url: "https://github.com/dvclmn/GridKit", branch: "main"),
@@ -69,7 +68,6 @@ let package = Package(
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
         .extDependency(.basePrimitives),
-//        .extDependency(.interactionKit),
         .extDependency(.gridPrimitives),
       ],
       //      resources: [
@@ -87,36 +85,17 @@ let package = Package(
         .module(.graphicsKit),
         .extDependency(.casePaths),
         .extDependency(.enumMacros),
-        //        .extDependency(.interactionKit),
+        .extDependency(.gridPrimitives),
       ],
     ),
-
-    /// Can't think of a better name for this, but `ComponentKit` exists purely
-    /// to avoid burdening `BaseUI` with `CasePaths` and `GraphicsKit`
-    //    .target(
-    //      name: "ComponentKit",
-    //      dependencies: [
-    //        .module(.baseUI),
-    //
-    //        .extDependency(.basePrimitives),
-    //        .module(.baseTools),
-    //
-    //        .module(.graphicsKit),
-    //        .module(.layoutKit),
-    //        .extDependency(.casePaths),
-    //      ],
-    //    ),
 
     .target(
       name: "GraphicsKit",
       dependencies: [
-
-        .extDependency(.basePrimitives),
         .module(.baseTools),
-
+        .extDependency(.basePrimitives),
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
-        //        .extDependency(.interactionKit),
       ],
       resources: [
         .process("Shaders/MetalShaders")
@@ -126,13 +105,9 @@ let package = Package(
     .target(
       name: "LayoutKit",
       dependencies: [
-
         .extDependency(.basePrimitives),
         .module(.baseTools),
         .module(.graphicsKit),
-
-        //        .extDependency(.basePrimitives),
-        //        .extDependency(.interactionKit),
         .extDependency(.enumMacros),
       ],
     ),
@@ -140,22 +115,16 @@ let package = Package(
     .target(
       name: "MotionKit",
       dependencies: [
-
         .extDependency(.basePrimitives),
         .module(.baseTools),
-
-        //        .extDependency(.basePrimitives)
       ],
     ),
 
     .target(
       name: "Wrecktangle",
       dependencies: [
-
         .extDependency(.basePrimitives),
         .module(.baseTools),
-
-        //        .extDependency(.basePrimitives)
       ],
     ),
 
@@ -164,26 +133,15 @@ let package = Package(
     .target(
       name: "ToolKit",
       dependencies: [
-
         .extDependency(.basePrimitives),
         .module(.baseTools),
-
-        //        .extDependency(.basePrimitives),
         .module(.baseUI),
-        //        .module(.graphicsKit),
       ],
     ),
 
-    // MARK: - Test targets
-
-    //    .testTarget(
-    //      name: "BasePrimitivesTests",
-    //      dependencies: [.module(.basePrimitives)],
-    //      exclude: ["BasePrimitives.xctestplan"],
-    //    ),
   ],
 )
-// MARK: - Type-safe factory helpers
+
 extension Target.Dependency {
   static func module(_ name: InternalModule) -> Self {
     .target(name: name.name)
@@ -203,7 +161,6 @@ enum ExternalDependency {
   case enumMacros
   case gridPrimitives
   case casePaths
-//  case interactionKit
   case keychainSwift
   case macroToolkit
 
@@ -213,7 +170,6 @@ enum ExternalDependency {
       case .enumMacros: ("BaseMacros", nil)
       case .gridPrimitives: ("GridPrimitives", "GridKit")
       case .casePaths: ("CasePaths", "swift-case-paths")
-//      case .interactionKit: ("InteractionKit", nil)
       case .keychainSwift: ("KeychainSwift", "keychain-swift")
       case .macroToolkit: ("MacroToolkit", "swift-macro-toolkit")
     }
@@ -224,7 +180,6 @@ enum InternalModule {
   case networking
   case baseTools
   case baseUI
-  //  case componentKit
   case graphicsKit
   case layoutKit
   case motionKit
@@ -238,7 +193,6 @@ enum InternalModule {
       case .networking: "BaseNetworking"
       case .baseTools: "BaseTools"
       case .baseUI: "BaseUI"
-      //      case .componentKit: "ComponentKit"
       case .graphicsKit: "GraphicsKit"
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
