@@ -12,6 +12,8 @@ struct DelayedActionModifier<Trigger: Equatable>: ViewModifier {
   let target: Trigger
   let delay: Duration
   let action: () -> Void
+  let releaseDelay: Duration
+  let releaseAction: (() -> Void)?
 
   @State private var task: Task<Void, Never>? = nil
 
@@ -19,14 +21,16 @@ struct DelayedActionModifier<Trigger: Equatable>: ViewModifier {
     content
       .onChange(of: trigger) { _, newTrigger in
         task?.cancel()
-        if newTrigger == target {
-          task = Task {
-            do {
-              try await Task.sleep(for: delay)
-              action()
-            } catch {
-              // Cancelled — do nothing
-            }
+        let isTarget = newTrigger == target
+        guard isTarget || releaseAction != nil else { return }
+        let pendingDelay = isTarget ? delay : releaseDelay
+        let pendingAction = isTarget ? action : releaseAction!
+        task = Task {
+          do {
+            try await Task.sleep(for: pendingDelay)
+            pendingAction()
+          } catch {
+            // Cancelled mid-delay — action intentionally skipped
           }
         }
       }
@@ -42,15 +46,18 @@ extension View {
     of trigger: Trigger,
     equals target: Trigger,
     delay: Duration = .seconds(0.5),
+    releaseDelay: Duration = .zero,
     perform action: @escaping () -> Void,
+    onRelease releaseAction: (@escaping () -> Void) = {},
   ) -> some View {
     modifier(
       DelayedActionModifier(
         trigger: trigger,
         target: target,
         delay: delay,
-        action: action
-      )
-    )
+        action: action,
+        releaseDelay: releaseDelay,
+        releaseAction: releaseAction,
+      ))
   }
 }
