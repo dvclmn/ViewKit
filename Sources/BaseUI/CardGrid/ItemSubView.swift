@@ -38,7 +38,7 @@ public struct CardViewItemModifier: ViewModifier {
       .environment(\.labelDisplay, .stacked)
       .environment(\.symbolRenderingMode, .hierarchical)
       .environment(\.symbolVariants, .fill)
-      .environment(\.iconColour, AnyShapeStyle(isEmphasised ? .primary : .secondary))
+      .iconColour(isEmphasised ? .primary : .secondary)
       .multilineTextAlignment(.center)
       .padding(Styles.sizeTiny)
       .frame(

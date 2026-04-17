@@ -7,6 +7,7 @@
 
 import Foundation
 import BasePrimitives
+import BaseTools
 
 public struct Box: Sendable {
   let components: [any Component]

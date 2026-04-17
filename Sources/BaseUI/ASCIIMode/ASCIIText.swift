@@ -38,9 +38,9 @@ extension ASCIIText {
 
 }
 #if DEBUG
-#Preview {
-//#Preview(traits: .size(.normal)) {
-  ASCIIText("I'm an ASCII Text")
+//#Preview {
+#Preview(traits: .size(.normal)) {
+  ASCIIText("I'm an ASCIIText View")
     .frame(width: 300, height: 600)
     .environment(\.isASCIIMode, true)
   //    .gridFont(.ibm, size: 40)
