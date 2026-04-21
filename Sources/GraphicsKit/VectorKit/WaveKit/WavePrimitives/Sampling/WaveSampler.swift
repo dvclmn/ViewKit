@@ -21,7 +21,7 @@ extension WaveSampler {
   public static func sample(
     _ waveform: Waveform,
     phase: T,
-//    domain: PhaseDomain = .turns,
+    //    domain: PhaseDomain = .turns,
   ) -> T {
     let pTurns: T = phase
     //    let pTurns: T =
@@ -78,9 +78,8 @@ extension WaveSampler {
   package static func sineLookup(_ phase: T) -> T {
     let tableSize = 1 << 11
     let mask = tableSize - 1
-    let isFloat = T.self == Float.self
-
-    //    let table = isFloat ? FloatSineTable.table : DoubleSineTable.table
+    //    let isFloat = T.self == Float.self
+    //        let table = isFloat ? FloatSineTable.table : DoubleSineTable.table
     guard T.self == Float.self else {
       let table = DoubleSineTable.table
       let scaled = Double(phase) * Double(tableSize)

@@ -99,7 +99,7 @@ extension ColourLevelView {
   //    //    }
   //  }
 
-  #warning("Turn this back on")
+  // TODO: Turn this back on
   //  var swatchStrokeColour: Color {
   //    return store.colourHandler.contrastingSwiftUIColour(
   //      for: level,

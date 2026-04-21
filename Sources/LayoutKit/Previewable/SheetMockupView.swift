@@ -8,7 +8,7 @@
 import BasePrimitives
 import SwiftUI
 
-#warning("Quick background currently switched off, need to find new solution")
+// TODO: Quick background currently switched off, need to find new solution
 struct SheetMockup<Sheet: View>: ViewModifier {
 
   let isPreviewing: Bool

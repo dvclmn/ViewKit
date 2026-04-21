@@ -33,7 +33,7 @@ public struct PathDebugRenderer {
 
     /// Draw coordinate labels
     for label in result.labelPoints where label.element.isLabelled {
-      #warning("Need to bring this back")
+      // TODO: Need to bring this back
       //      context.drawDebugText(
       //        label.point.debugDescription,
       //        //        label.point.displayString(places: 0, labelStyle: .none),

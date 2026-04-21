@@ -8,7 +8,7 @@
 //import CoreTools
 import SwiftUI
 
-#warning("Not sure if useful, need to inspect, then keep or remove")
+// TODO: Not sure if useful, need to inspect, then keep or remove
 public struct DebugVectorModifier: ViewModifier {
 
   let colour: Color

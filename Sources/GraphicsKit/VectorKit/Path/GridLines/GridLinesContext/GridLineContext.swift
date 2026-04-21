@@ -7,6 +7,7 @@
 
 import BasePrimitives
 import BaseTools
+import GridKit
 import GridPrimitives
 import SwiftUI
 

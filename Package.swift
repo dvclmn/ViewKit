@@ -96,6 +96,8 @@ let package = Package(
         .extDependency(.basePrimitives),
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
+        .extDependency(.gridKit),
+        .extDependency(.gridPrimitives),
       ],
       resources: [
         .process("Shaders/MetalShaders")
@@ -160,6 +162,7 @@ enum ExternalDependency {
   case basePrimitives
   case enumMacros
   case gridPrimitives
+  case gridKit
   case casePaths
   case keychainSwift
   case macroToolkit
@@ -169,6 +172,7 @@ enum ExternalDependency {
       case .basePrimitives: ("BasePrimitives", nil)
       case .enumMacros: ("BaseMacros", nil)
       case .gridPrimitives: ("GridPrimitives", "GridKit")
+      case .gridKit: ("GridKit", "GridKit")
       case .casePaths: ("CasePaths", "swift-case-paths")
       case .keychainSwift: ("KeychainSwift", "keychain-swift")
       case .macroToolkit: ("MacroToolkit", "swift-macro-toolkit")

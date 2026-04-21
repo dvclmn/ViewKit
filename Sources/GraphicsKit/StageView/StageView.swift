@@ -9,7 +9,7 @@ import BasePrimitives
 import SwiftUI
 
 public struct StageView: View {
-  @Environment(\.viewportSize) private var viewportSize
+  @Environment(\.viewportRect) private var viewportRect
   let floorConfig: FloorAppearance
 
   /// Optional override to the environment view size
@@ -93,8 +93,8 @@ public struct StageView: View {
 }
 
 extension StageView {
-  private var noViewSizeProvided: Bool { viewSize == nil && viewportSize == nil }
-  private var sizeOfView: CGSize? { viewSize ?? viewportSize }
+  private var noViewSizeProvided: Bool { viewSize == nil && viewportRect?.size == nil }
+  private var sizeOfView: CGSize? { viewSize ?? viewportRect?.size }
 }
 
 #if DEBUG

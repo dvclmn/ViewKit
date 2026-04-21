@@ -25,7 +25,7 @@ public struct PatternPreset: Sendable, Codable, Equatable, Hashable {
 }
 
 extension PatternPreset {
-  subscript(dynamicMember keyPath: CaseKeyPath<PatternStyle, PatternStyle>) -> PatternStyle? {
+  public subscript(dynamicMember keyPath: CaseKeyPath<PatternStyle, PatternStyle>) -> PatternStyle? {
     style[case: keyPath]
     //  subscript(dynamicMember keyPath: WritableKeyPath<PatternStyle, PatternStyle>) -> PatternStyle {
     //  subscript dynamicMember keyPath: WritableKeyPath<PatternConfiguration, Any> {

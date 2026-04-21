@@ -26,7 +26,8 @@ public struct ShaderControls: View {
       VStack(alignment: .leading, spacing: Styles.sizeSmall) {
         SliderGroup(shader.wrappedValue.name, spacing: Styles.sizeSmall) {
 
-          #warning("Need to bring this back")
+          // TODO: Need to bring this back
+//          #warning("Need to bring this back")
 //          SingleShaderControlView(shader: shader)
         }
       }

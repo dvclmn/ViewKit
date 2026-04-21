@@ -14,7 +14,7 @@ import GraphicsKit
 //import LayoutKit
 import SwiftUI
 
-#warning("Not compiling (Getter for 'subscript(dynamicMember:)' is unavailable), will need to try again later")
+// TODO: Not compiling (Getter for 'subscript(dynamicMember:)' is unavailable), will need to try again later
 //struct SingleShaderControlView: View {
 //
 //  @Binding var shader: ShaderEffect
