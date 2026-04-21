@@ -52,7 +52,7 @@ extension GridLineContext {
     self.drawsBorder = drawsBorder
     self.panOffset = environment.panOffset
     self.zoomLevel = environment.zoomLevel.toCGFloat
-    self.zoomRange = environment.zoomRange?.toCGFloatRange
+    self.zoomRange = environment.zoomRange.toCGFloatRange
     self.hasCellNumbers = environment.isShowingCellNumbers
     self.gridRect = GridRect(origin: .zero, size: dimensions)
   }

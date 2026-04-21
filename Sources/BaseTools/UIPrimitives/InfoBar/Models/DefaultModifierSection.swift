@@ -7,6 +7,7 @@
 
 //import InteractionKit
 import BasePrimitives
+import InputPrimitives
 
 public enum ModifiersSectionKey: InfoBarSectionKey {
   public static let title = "Modifiers"

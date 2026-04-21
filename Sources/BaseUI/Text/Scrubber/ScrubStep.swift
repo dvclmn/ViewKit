@@ -5,10 +5,10 @@
 //  Created by Dave Coleman on 19/1/2026.
 //
 
-//import InteractionKit
 import BasePrimitives
-import EnumMacros
 import BaseTools
+import EnumMacros
+import InputPrimitives
 
 @AssociatedValues
 public enum ScrubStrategy: Equatable {
@@ -36,7 +36,7 @@ extension ScrubStrategy {
   public func scrubPreset(
     //    from scrubStrategy: ScrubStrategy,
     in range: ClosedRange<Double>?,
-    envOverride: HapticPreset?
+    envOverride: HapticPreset?,
   ) -> HapticPreset {
     if let envOverride { return envOverride }
     switch self {
@@ -45,7 +45,7 @@ extension ScrubStrategy {
           return HapticPreset.none
         }
         return HapticPreset.boundary(range)
-        
+
       case .stepped(let value):
         return HapticPreset.perStep(value)
     }

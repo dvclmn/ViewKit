@@ -9,6 +9,7 @@
 
 import SwiftUI
 import BasePrimitives
+import InputPrimitives
 //import InteractionKit
 
 extension Flexi {

@@ -55,7 +55,7 @@ extension GraphicsContext {
           at: annotation.point,
           cellSize: lineContext.unitSize,
           zoom: environment.zoomLevel,
-          zoomRange: environment.zoomRange?.toCGFloatRange
+          zoomRange: environment.zoomRange.toCGFloatRange
         )
       }
 

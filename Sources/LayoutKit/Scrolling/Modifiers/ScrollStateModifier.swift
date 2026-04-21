@@ -7,6 +7,7 @@
 
 import BasePrimitives
 import SwiftUI
+import CoreUtilities
 
 public struct ScrollStateModifier: ViewModifier {
   @State private var debouncer: AsyncDebouncer?

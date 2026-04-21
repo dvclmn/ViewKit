@@ -6,6 +6,7 @@
 //
 
 import BasePrimitives
+import InputPrimitives
 //import InteractionKit
 import SwiftUI
 
