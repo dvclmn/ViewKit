@@ -65,10 +65,6 @@ let package = Package(
         .extDependency(.basePrimitives),
         .extDependency(.gridPrimitives),
       ],
-      //      resources: [
-      //        .process("Resources/Assets.xcassets"),
-      //        .process("Resources/Fonts"),
-      //      ],
     ),
 
     .target(

@@ -1,6 +1,7 @@
 # @TaskLocal
 
-Context: ``Wrecktangle``
+Example usage in [Wrecktangle](https://github.com/dvclmn/Wrecktangle)
+
  This allows the leaving off of the `Box.GlyphType.join`'s
  `Box.JoinType`, when declared in a `Part` builder closure.
  For cleaner syntax.
