@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import GridKit
+//import GridKit
 
 public struct TextColumns<Content: View>: View {
   @Environment(\.maxCharacterColumns) private var maxCharacterColumns
