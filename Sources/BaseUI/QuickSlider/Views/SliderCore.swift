@@ -12,7 +12,7 @@ extension QuickSlider {
     @Environment(SliderHandler.self) private var store
     @Environment(\.sliderDefaultValue) private var sliderDefaultValue
     @Environment(\.colorScheme) private var colourScheme
-    @Environment(\.isASCIIMode) private var isASCIIMode
+//    @Environment(\.isASCIIMode) private var isASCIIMode
     @Environment(\.unitSize) private var unitSize
     @Environment(\.stepStyle) private var stepStyle
 
@@ -20,15 +20,14 @@ extension QuickSlider {
     let track: TrackBackground
     var body: some View {
 
-      if isASCIIMode, let unitSize {
-
-        Text("Not yet implemented. Unit size is: \(unitSize, default: "nil")")
+//      if isASCIIMode, let unitSize {
+//        Text("Not yet implemented. Unit size is: \(unitSize, default: "nil")")
         //        TextSliderCore(
         //          value: value,
         //          unitSize: unitSize
         //        )
 
-      } else {
+//      } else {
 
         /// If there's a track, then it's a Custom Slider
         if let track = track(store.trackConfiguration(value: value, colourScheme: colourScheme)) {
@@ -71,7 +70,7 @@ extension QuickSlider {
             .labelsHidden()
           }
         }
-      }
+//      }
 
     }
   }

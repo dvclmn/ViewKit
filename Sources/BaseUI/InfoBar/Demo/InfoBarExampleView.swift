@@ -26,7 +26,7 @@ public struct InfoBarExampleView: View {
           value: $value.toBindingDouble,
           range: .unitRange.toDoubleRange
         )
-        .environment(\.isASCIIMode, false)
+//        .environment(\.isASCIIMode, false)
 
         QuickSlider(
           "ASCII Mode",
@@ -51,13 +51,13 @@ public struct InfoBarExampleView: View {
   }
 }
 
-#if DEBUG
-#Preview(traits: .size(.normal)) {
-  InfoBarExampleView()
-    .frame(width: 400, height: 600)
-    .environment(\.isASCIIMode, true)
-//    .onAppear {
-//      let _ = BundledFonts.registerAll()
-//    }
-}
-#endif
+//#if DEBUG
+//#Preview(traits: .size(.normal)) {
+//  InfoBarExampleView()
+//    .frame(width: 400, height: 600)
+//    .environment(\.isASCIIMode, true)
+////    .onAppear {
+////      let _ = BundledFonts.registerAll()
+////    }
+//}
+//#endif

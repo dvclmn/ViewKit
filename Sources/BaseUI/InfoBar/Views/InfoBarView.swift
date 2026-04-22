@@ -13,8 +13,8 @@ public struct InfoBarView: View {
   @Environment(\.backgroundStyle) private var backgroundStyle
   @Environment(\.modifierKeys) private var modifierKeys
   @Environment(\.isLoading) private var isLoading
-  @Environment(\.isASCIIMode) private var isASCIIMode
-  @Environment(\.asciiModeFontSize) private var asciiModeFontSize
+//  @Environment(\.isASCIIMode) private var isASCIIMode
+//  @Environment(\.asciiModeFontSize) private var asciiModeFontSize
 
   let sections: [InfoBarSection]
   let showingModifiersSection: Bool

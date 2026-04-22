@@ -6,15 +6,17 @@
 //
 
 import SwiftUI
-//import GridKit
 
+/// Previously relied on the GridKit `.characterSize` modifier,
+/// now takes character size as parameter
 public struct TextColumns<Content: View>: View {
   @Environment(\.maxCharacterColumns) private var maxCharacterColumns
   @Environment(\.isDebugMode) private var isDebugMode
 
-  @State private var characterSize: CGSize?
+  //  @State private var characterSize: CGSize?
 
   let columnCount: Int?
+  let characterSize: CGSize
   let alignment: Alignment
   let content: () -> Content
 
@@ -22,32 +24,22 @@ public struct TextColumns<Content: View>: View {
   /// value provided for `columnCount`
   public init(
     _ columnCount: Int? = nil,
+    characterSize: CGSize,
     alignment: Alignment = .center,
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: @escaping () -> Content,
   ) {
     self.columnCount = columnCount
+    self.characterSize = characterSize
     self.alignment = alignment
     self.content = content
   }
 
   public var body: some View {
 
-    /// `Text` view will not be shown, for layout only
+    /// `Text` view will not be shown, it's for layout only
     Text(characters)
       .monospaced()
       .hidden()
-      //      .frame(minWidth: screenWidth)
-      //      .gridGuide(opacity: 0.3, isEnabled: isDebugMode)
-      .environment(\.gridDimensions, .init(columnWidth, 1))
-      //      .setGridDimensions(columnWidth, height: 1)
-      .characterSize(
-        config: .passthrough,
-        //        for: font, size: fontSize,
-        mode: .debounce(0.2),
-        shouldSetEnv: true
-      ) { size in
-        self.characterSize = size
-      }
 
       /// Displays content within character-count-based confines
       .overlay(alignment: alignment) {

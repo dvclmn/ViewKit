@@ -23,9 +23,11 @@ final class SliderHandler {
   var trackWidth: Double?
 
   let thumbDiameter: Double = 16
-  //  var trackSize: CGSize = .zero
   let trackHeight: Double = 5
   let hitAreaBuffer: Double = 16
+  
+  /// May be provided by user, if used where access to GridKit is available
+  var characterSize: CGSize?
   
   let width: Int = 30
   let cellCharacters = ["░", "▒", "▓", "█"]
@@ -34,12 +36,14 @@ final class SliderHandler {
     label: QuickLabel,
     range: ClosedRange<Double>,
     step: Double?,
+    characterSize: CGSize?,
     //    minMaxLabels: (String, String)?,
     didChangeSlider: SliderOutput?
   ) {
     self.label = label
     self.range = range
     self.step = step
+    self.characterSize = characterSize
     //    self.minMaxLabels = minMaxLabels
     self.didChangeSlider = didChangeSlider
   }
