@@ -33,11 +33,6 @@ let package = Package(
       ],
     ),
 
-    .library(
-      name: "Wrecktangle",
-      targets: ["Wrecktangle"],
-    ),
-
     /// Export-only library
     .library(name: "ToolKit", targets: ["ToolKit"]),
   ],
@@ -122,14 +117,6 @@ let package = Package(
       ],
     ),
 
-    .target(
-      name: "Wrecktangle",
-      dependencies: [
-        .extDependency(.basePrimitives),
-        .module(.baseTools),
-      ],
-    ),
-
     // MARK: - Forwarding modules
 
     .target(
@@ -187,7 +174,6 @@ enum InternalModule {
   case graphicsKit
   case layoutKit
   case motionKit
-  case wrecktangle
 
   /// Export-only modules
   case toolKit
@@ -200,7 +186,6 @@ enum InternalModule {
       case .graphicsKit: "GraphicsKit"
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
-      case .wrecktangle: "Wrecktangle"
 
       /// Export-only
       case .toolKit: "ToolKit"
