@@ -22,11 +22,11 @@ extension QuickSlider {
 
       if isASCIIMode, let unitSize {
 
-        Text("Not yet implemented")
-//        TextSliderCore(
-//          value: value,
-//          unitSize: unitSize
-//        )
+        Text("Not yet implemented. Unit size is: \(unitSize, default: "nil")")
+        //        TextSliderCore(
+        //          value: value,
+        //          unitSize: unitSize
+        //        )
 
       } else {
 
@@ -48,7 +48,7 @@ extension QuickSlider {
             Slider(
               value: $value,
               in: store.range,
-              step: step
+              step: step,
             ) {
               SliderLabel(value: $value)
 
