@@ -5,15 +5,14 @@
 //  Created by Dave Coleman on 2/10/2025.
 //
 
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
 /// Note: this is specifically geared toward `LazyVGrid`,
 /// `LazyHGrid` is not supported.
 public struct GridConfig: Sendable {
 
   public let columns: ColumnConfig
-  //  public let columnMode: ColumnConfig.Mode
 
   /// Based on `LazyVStack/spacing`
   /// This is the Vertical spacing
@@ -25,20 +24,18 @@ public struct GridConfig: Sendable {
 
   public init(
     columnMode: ColumnConfig.Mode,
-    //    columns: columns: ColumnConfig,
     spacingItem: CGFloat?,
     spacingGrid: CGFloat? = nil,
     alignmentItem: Alignment? = nil,
-    alignmentGrid: HorizontalAlignment = .center
+    alignmentGrid: HorizontalAlignment = .center,
   ) {
-    //    self.columnMode = columnMode
     self.spacingGrid = spacingGrid
     self.alignmentGrid = alignmentGrid
 
     self.columns = ColumnConfig(
       mode: columnMode,
       spacing: spacingItem ?? 8,
-      alignment: alignmentItem
+      alignment: alignmentItem,
     )
   }
 }
@@ -46,11 +43,6 @@ public struct GridConfig: Sendable {
 extension GridConfig {
 
   public var gridItems: [GridItem] { self.columns.output }
-  //    self.columnMode.columns(
-  //      spacing: spacingItem,
-  //      alignment: alignmentItem
-  //    )
-  //  }
 }
 
 extension GridConfig: CustomStringConvertible {

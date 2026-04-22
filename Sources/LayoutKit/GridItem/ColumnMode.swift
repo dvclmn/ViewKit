@@ -11,10 +11,11 @@ import BasePrimitives
 extension ColumnConfig {
 
   public enum Mode: Sendable {
-    public static let `default`: Self = .adaptive(.fill(min: 60, max: 140))
-
+    
     case fixedColumns(Int, GridConfig.FitMode)
     case adaptive(GridConfig.FitMode)
+    
+    public static let `default`: Self = .adaptive(.fill(min: 60, max: 140))
   }
 }
 

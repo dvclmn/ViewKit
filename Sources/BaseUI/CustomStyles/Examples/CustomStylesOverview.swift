@@ -24,7 +24,7 @@ public struct CustomStylesOverview: View {
         .section,
         layout: .vstack(alignment: .leading),
         //        layoutType: .grid(alignment: .topLeading, horizontalSpacing: Styles.sizeSmall),
-        spacing: Styles.sizeRegular
+        spacing: Styles.sizeRegular,
       ) {
 
         Section("Labels") {
