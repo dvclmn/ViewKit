@@ -56,8 +56,8 @@ public struct InfoBarExampleView: View {
   InfoBarExampleView()
     .frame(width: 400, height: 600)
     .environment(\.isASCIIMode, true)
-    .onAppear {
-      let _ = BundledFonts.registerAll()
-    }
+//    .onAppear {
+//      let _ = BundledFonts.registerAll()
+//    }
 }
 #endif

@@ -12,7 +12,7 @@ import SwiftUI
 public struct SystemColourPicker: View {
   @Environment(\.self) private var envSelf
 
-  @State private var localGridLineColour: Color
+  @State private var localColour: Color
 
   let title: String
   @Binding var colour: RGBColour
@@ -23,10 +23,10 @@ public struct SystemColourPicker: View {
     _ title: String,
     colour: Binding<RGBColour>,
     opacity: Binding<Double>? = nil,
-    presets: [RGBColour]? = nil
+    presets: [RGBColour]? = nil,
   ) {
     self.title = title
-    self._localGridLineColour = State(initialValue: colour.wrappedValue.toColour)
+    self._localColour = State(initialValue: colour.wrappedValue.toColour)
     self._colour = colour
     self.opacity = opacity
     self.presets = presets
@@ -34,13 +34,13 @@ public struct SystemColourPicker: View {
 
   public var body: some View {
 
-    ColorPicker(title, selection: $localGridLineColour, supportsOpacity: false)
+    ColorPicker(title, selection: $localColour, supportsOpacity: false)
 
-      .task(id: localGridLineColour) {
+      .task(id: localColour) {
         colour = RGBColour(
-          colour: localGridLineColour,
+          colour: localColour,
           environment: envSelf,
-          name: nil
+          name: nil,
         )
       }
 
@@ -49,12 +49,10 @@ public struct SystemColourPicker: View {
     }
 
     if let opacity {
-      //    if showsOpacitySlider {
       QuickSlider(
         "Opacity",
         value: opacity,
-        //        value: Binding(store.$preferences.gridLines.opacity).toBindingDouble,
-        range: .unitRange
+        range: .unitRange,
       )
       .formatValue(.percent)
     }
@@ -66,9 +64,6 @@ extension SystemColourPicker {
   // TODO: Need a comparison with a small buffer, as this doesn't catch similar values properly
   private func isPresetSelected(_ preset: RGBColour) -> Bool {
     preset.toColour == colour.toColour
-//    guard let presets else { return false }
-//        return presets.contains(where: { $0 == preset })
-//    return presets.contains(where: { $0.toColour == localGridLineColour })
   }
 
   @ViewBuilder
@@ -77,22 +72,13 @@ extension SystemColourPicker {
       HStack {
         ForEach(presets) { preset in
           Button {
-            localGridLineColour = preset.toColour
+            localColour = preset.toColour
           } label: {
             Label(preset.name ?? "Color", systemImage: Icons.circle.icon)
               .labelStyle(.iconOnly)
               .symbolVariant(.fill)
               .foregroundStyle(preset.toColour)
               .font(.title2)
-
-//              .padding(isPresetSelected(preset) ? 2 : 0)
-//              .overlay {
-//                if isPresetSelected(preset) {
-//                  Circle()
-//                    .fill(.clear)
-//                    .stroke(Color.accentColor, lineWidth: 3)
-//                }
-//              }
           }
 
         }
@@ -101,3 +87,16 @@ extension SystemColourPicker {
     .buttonStyle(.plain)
   }
 }
+
+#if DEBUG
+#Preview(traits: .size(.normal)) {
+
+  @Previewable @State var colour = RGBColour.aliceblue
+  SystemColourPicker(
+    "Hello",
+    colour: $colour,
+    opacity: .constant(0.2),
+    presets: nil,
+  )
+}
+#endif
