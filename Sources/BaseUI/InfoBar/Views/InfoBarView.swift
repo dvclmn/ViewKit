@@ -74,10 +74,11 @@ public struct InfoBarView: View {
       .scrollBounceBehavior(.basedOnSize)
       .scrollIndicators(.hidden)
 
-      .gridFont(
-        config: .domain(.asciiMode),
-        fallback: .caption2.weight(.medium)
-      )
+      // TODO: Considering separating Grid / ASCII related concepts more strictly, and keeping out of BaseHelpers so it's more opt-in, rather than ambiently there all the time
+//      .gridFont(
+//        config: .domain(.asciiMode),
+//        fallback: .caption2.weight(.medium)
+//      )
       //      .font(.caption)
       //      .fontWeight(.medium)
       .frame(height: Styles.infoBarHeight)

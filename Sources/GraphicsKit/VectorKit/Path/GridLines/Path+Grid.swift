@@ -27,10 +27,11 @@ extension Path {
     let cw = cellSize.width
     let ch = cellSize.height
 
-    guard w > 0, h > 0, cw > 0, ch > 0 else { return path }
+    guard w > 0, h > 0, cw > 0, ch > 0,
+      let originX = originOffset.x.toScreenLength(along: .horizontal, using: cellSize),
+      let originY = originOffset.y.toScreenLength(along: .vertical, using: cellSize)
+    else { return path }
 
-    let originX = originOffset.x.toScreenLength(along: .horizontal, using: cellSize)
-    let originY = originOffset.y.toScreenLength(along: .vertical, using: cellSize)
     let origin = CGPoint(x: originX, y: originY)
 
     let startCol = Int(floor((-offset.width) / cw))
