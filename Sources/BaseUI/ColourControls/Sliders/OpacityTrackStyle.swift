@@ -13,6 +13,10 @@ public struct OpacityTrackStyle: SliderTrackStyle {
 
   let colour: any ColourModel
   //  let component: RGBComponent
+  
+  public init(colour: any ColourModel) {
+    self.colour = colour
+  }
 
   public func makeBody(configuration: Configuration) -> some View {
     Rectangle()
@@ -27,3 +31,4 @@ public struct OpacityTrackStyle: SliderTrackStyle {
     //      .fill(component.sliderTrackGradient(colour: colour))
   }
 }
+

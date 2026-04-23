@@ -62,7 +62,6 @@ extension QuickSlider {
       GridRow {
         /// Handles slider Label, Track, and Units display
         SliderComponents(value: $value, track: track)
-
       }
       HelpText()
 

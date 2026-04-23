@@ -34,7 +34,6 @@ extension QuickSlider {
 
       // MARK: - Main Track
       SliderCore(value: $value, track: track)
-
         .frame(width: sliderTrackMaxWidth)
         .frame(maxWidth: .infinity, alignment: .trailing)
 
@@ -43,7 +42,7 @@ extension QuickSlider {
 
         TextColumns(
           characterSize: store.characterSizeWithFallback,
-          alignment: .trailing
+          alignment: .trailing,
         ) {
           Text(formatValue.format(value.toDouble, store.range))
         }
@@ -63,7 +62,7 @@ extension QuickSlider.SliderComponents {
       return HapticPreset.boundary(store.range.toDoubleRange).shouldFire(old, new)
     }
     return HapticPreset.boundaryAndDefault(store.range.toDoubleRange, defaultValue: defaultVal).shouldFire(
-      old, new,)
+      old, new, )
   }
 
   @ViewBuilder

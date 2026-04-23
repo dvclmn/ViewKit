@@ -27,12 +27,10 @@ extension QuickSlider {
 
     @Binding var value: Double
     let track: TrackBody
-    //    let track: TrackBackground
 
     public var body: some View {
 
       Capsule()
-        //        .fill(.cyan.opacity(0.2))
         .fill(.clear)
         .viewSize(
           capture: .size,
@@ -40,35 +38,13 @@ extension QuickSlider {
           isEnabled: true,
           valueOutput: { size in
             store.trackWidth = size.width
-          }
+          },
         )
 
         .overlay {
+          TrackView()
+          ThumbView()
 
-          // MARK: - Track
-          track
-            //          track(
-            //            store.trackConfiguration(
-            //              value: value,
-            //              colourScheme: colourScheme
-            //            )
-            //          )
-            .frame(height: store.trackHeight)
-            .clipShape(clipShape)
-            .environment(\.isHovering, isHovering)
-
-          // MARK: - Thumb
-          if sliderComponents.contains(.thumb),
-            let position = store.thumbPosition(value: value.toDouble)
-          {
-
-            /// Slider thumb
-            SliderThumb(
-              diameter: store.thumbDiameter,
-              shape: .circle,
-            )
-            .position(position)
-          }
         }
         .onHover { isHovering = $0 }
         .frame(height: store.trackHeightWithBuffer)
@@ -78,6 +54,29 @@ extension QuickSlider {
 }
 
 extension QuickSlider.SliderCustom {
+
+  @ViewBuilder
+  private func TrackView() -> some View {
+    track
+      .frame(height: store.trackHeight)
+      .clipShape(clipShape)
+      .environment(\.isHovering, isHovering)
+  }
+
+  @ViewBuilder
+  private func ThumbView() -> some View {
+    if sliderComponents.contains(.thumb),
+      let position = store.thumbPosition(value: value.toDouble)
+    {
+
+      /// Slider thumb
+      SliderThumb(
+        diameter: store.thumbDiameter,
+        shape: .circle,
+      )
+      .position(position)
+    }
+  }
 
   var clipShape: AnyShape {
     switch sliderComponents {
