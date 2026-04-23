@@ -50,6 +50,11 @@ final class SliderHandler {
 }
 
 extension SliderHandler {
+  var characterSizeWithFallback: CGSize {
+    // TODO: Need to dial this in
+    let fallback = CGSize(width: 20, height: 30)
+    return characterSize ?? fallback
+  }
   var sliderTrackColumns: Int { width - 2 }
 
   func trackConfiguration(

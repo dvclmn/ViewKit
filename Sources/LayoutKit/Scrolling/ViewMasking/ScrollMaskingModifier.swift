@@ -7,7 +7,7 @@
 
 import BasePrimitives
 import SwiftUI
-import GraphicsKit
+import BaseTools
 
 public struct ScrollMaskModifier: ViewModifier {
 

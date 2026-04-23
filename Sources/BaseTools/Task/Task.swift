@@ -5,9 +5,9 @@
 //  Created by Dave Coleman on 26/9/2024.
 //
 
-import Foundation
 import BasePrimitives
 import CoreUtilities
+import Foundation
 
 /// Usage
 ///
@@ -35,7 +35,7 @@ extension Task where Success == Never, Failure == Never {
 
   @MainActor public static func debounceIfNeeded(
     _ debouncer: AsyncDebouncer?,
-    action: @escaping () -> Void
+    action: @escaping () -> Void,
   ) {
 
     if let debouncer {

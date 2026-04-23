@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 8/9/2025.
 //
 
-import BasePrimitives
 import SwiftUI
-import GraphicsKit
+import BaseTools
 
 public struct SmoothMaskModifier: ViewModifier {
 

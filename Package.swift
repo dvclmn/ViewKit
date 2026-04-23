@@ -44,7 +44,7 @@ let package = Package(
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
     .package(url: "https://github.com/dvclmn/BasePrimitives", branch: "main"),
-//    .package(url: "https://github.com/dvclmn/GridKit", branch: "main"),
+    //    .package(url: "https://github.com/dvclmn/GridKit", branch: "main"),
   ],
 
   // MARK: - Targets
@@ -52,6 +52,7 @@ let package = Package(
     .target(
       name: "BaseNetworking",
       dependencies: [
+        .module(.baseTools),
         .extDependency(.basePrimitives),
         .extDependency(.keychainSwift),
       ],
@@ -63,7 +64,6 @@ let package = Package(
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
         .extDependency(.basePrimitives),
-//        .extDependency(.gridPrimitives),
       ],
     ),
 
@@ -76,7 +76,6 @@ let package = Package(
         .module(.graphicsKit),
         .extDependency(.casePaths),
         .extDependency(.enumMacros),
-//        .extDependency(.gridPrimitives),
       ],
     ),
 
@@ -87,8 +86,6 @@ let package = Package(
         .extDependency(.basePrimitives),
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
-//        .extDependency(.gridKit),
-//        .extDependency(.gridPrimitives),
       ],
       resources: [
         .process("Shaders/MetalShaders")
@@ -100,7 +97,7 @@ let package = Package(
       dependencies: [
         .extDependency(.basePrimitives),
         .module(.baseTools),
-        .module(.graphicsKit),
+//        .module(.graphicsKit),
         .extDependency(.enumMacros),
       ],
     ),
@@ -144,8 +141,8 @@ extension Target.Dependency {
 enum ExternalDependency {
   case basePrimitives
   case enumMacros
-//  case gridPrimitives
-//  case gridKit
+  //  case gridPrimitives
+  //  case gridKit
   case casePaths
   case keychainSwift
   case macroToolkit
@@ -154,8 +151,8 @@ enum ExternalDependency {
     switch self {
       case .basePrimitives: ("BasePrimitives", nil)
       case .enumMacros: ("BaseMacros", nil)
-//      case .gridPrimitives: ("GridPrimitives", "GridKit")
-//      case .gridKit: ("GridKit", "GridKit")
+      //      case .gridPrimitives: ("GridPrimitives", "GridKit")
+      //      case .gridKit: ("GridKit", "GridKit")
       case .casePaths: ("CasePaths", "swift-case-paths")
       case .keychainSwift: ("KeychainSwift", "keychain-swift")
       case .macroToolkit: ("MacroToolkit", "swift-macro-toolkit")

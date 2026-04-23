@@ -40,12 +40,17 @@ extension QuickSlider {
 
       // MARK: - Units
       if sliderComponents.contains(.units) {
-        TextColumns(alignment: .trailing) {
+
+        TextColumns(
+          characterSize: store.characterSizeWithFallback,
+          alignment: .trailing
+        ) {
           Text(formatValue.format(value.toDouble, store.range))
         }
         .textSelection(.disabled)
         .onDoubleTap($value, defaultValue: sliderDefaultValue)
         .contextMenu { ContextMenuItems() }
+
       }
     }
   }
@@ -58,7 +63,7 @@ extension QuickSlider.SliderComponents {
       return HapticPreset.boundary(store.range.toDoubleRange).shouldFire(old, new)
     }
     return HapticPreset.boundaryAndDefault(store.range.toDoubleRange, defaultValue: defaultVal).shouldFire(
-      old, new)
+      old, new,)
   }
 
   @ViewBuilder

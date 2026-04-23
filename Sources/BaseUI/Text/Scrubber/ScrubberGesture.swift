@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 19/1/2026.
 //
 
-import BasePrimitives
+import CoreUtilities
 import SwiftUI
 
 struct ScrubDragGesture: Gesture {

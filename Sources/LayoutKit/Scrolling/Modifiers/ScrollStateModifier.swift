@@ -56,6 +56,7 @@ public struct ScrollStateModifier: ViewModifier {
             return didUpdateScrollContext(newValue)
           }
 
+          
           Task.debounceIfNeeded(debouncer) {
             performIfChanged(oldValue, newValue, perform: didUpdateScrollContext(newValue))
           }
