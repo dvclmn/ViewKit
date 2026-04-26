@@ -38,7 +38,7 @@ public struct WaveControls: View {
       Divider()
 
       Wave(.cycles)
-        .stepStyle(.stepper)
+        
     }
   }
 }
@@ -51,6 +51,7 @@ extension WaveControls {
       value: $wave.waveBinding(attribute),
       range: ranges(attribute) ?? attribute.defaultRange
     )
+    .stepStyle(.stepper)
     .formatValue {
       $0.render(using: .init(decimalPlaces: 1))
     }

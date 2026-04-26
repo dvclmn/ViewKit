@@ -22,28 +22,3 @@ extension EnvironmentValues {
   @Entry var isWithinSliderGroup: Bool = false
 
 }
-
-extension View {
-  public func sliderTrackStyle<S: SliderTrackStyle>(_ style: S) -> some View {
-    environment(\.sliderTrackStyle, AnySliderTrackStyle(style))
-  }
-}
-
-/// This is in use by e.g. `QuickSlider`, `LabeledSlider`
-public protocol SliderStylable {}
-
-extension View {
-  public func sliderComponents(_ components: SliderComponents = .all) -> some View {
-    self.environment(\.sliderComponents, components)
-  }
-
-  public func stepStyle(_ style: StepStyle) -> some View {
-    self.environment(\.stepStyle, style)
-  }
-
-  /// Max width for the track component
-  public func sliderMaxWidth(_ width: CGFloat) -> some View {
-    self.environment(\.sliderTrackMaxWidth, width)
-  }
-
-}
