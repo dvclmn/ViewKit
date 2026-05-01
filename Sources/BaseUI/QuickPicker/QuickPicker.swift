@@ -8,7 +8,8 @@
 import BasePrimitives
 import SwiftUI
 
-public struct QuickPicker<Item: Hashable & Identifiable>: View {
+public struct QuickPicker<Item: LabeledItem & Hashable>: View {
+//public struct QuickPicker<Item: Hashable & Identifiable>: View {
 
   @Environment(\.heightOverride) private var heightOverride
 
@@ -18,6 +19,7 @@ public struct QuickPicker<Item: Hashable & Identifiable>: View {
   /// The items representing what the Picker chooses from
   let sourceData: [Item]
 
+  /// `sourceData` is for when `Item` is not CaseIterable
   public init(
     title: String,
     selection: Binding<Item>,
@@ -32,39 +34,41 @@ public struct QuickPicker<Item: Hashable & Identifiable>: View {
 
     Picker(title, selection: $selection) {
       ForEach(sourceData) { item in
-        TextLabel(for: item).tag(item)
+        MaybeLabel(item.label).tag(item)
+//        TextLabel(for: item).tag(item)
       }
     }
   }
 }
 
-extension QuickPicker {
-  @ViewBuilder
-  private func TextLabel(for item: Item) -> some View {
-    Text(String(describing: item))
-  }
-}
+//extension QuickPicker {
+//  @ViewBuilder
+//  private func TextLabel(for item: Item) -> some View {
+//    Text(String(describing: item))
+//  }
+//}
 
-extension QuickPicker where Item: CustomStringConvertible {
-  @ViewBuilder
-  private func TextLabel(for item: Item) -> some View {
-    Text(item.description)
-  }
-}
-
-extension QuickPicker where Item: RawRepresentable, Item.RawValue == String {
-  @ViewBuilder
-  private func TextLabel(for item: Item) -> some View {
-    Text(item.rawValue.capitalized)
-  }
-}
-
-extension QuickPicker where Item: LabeledItem {
-  @ViewBuilder
-  private func TextLabel(for item: Item) -> some View {
-    MaybeLabel(item.label)
-  }
-}
+//extension QuickPicker where Item: CustomStringConvertible {
+//  @ViewBuilder
+//  private func TextLabel(for item: Item) -> some View {
+//    Text(item.description)
+//  }
+//}
+//
+//extension QuickPicker where Item: RawRepresentable, Item.RawValue == String {
+//  @ViewBuilder
+//  private func TextLabel(for item: Item) -> some View {
+//    Text(item.rawValue.capitalized)
+//  }
+//}
+//
+//extension QuickPicker where Item: LabeledItem {
+//  @ViewBuilder
+//  private func TextLabel(for item: Item) -> some View {
+//    MaybeLabel(item.label)
+//    EmptyView()
+//  }
+//}
 
 extension QuickPicker where Item: CaseIterable {
   public init(

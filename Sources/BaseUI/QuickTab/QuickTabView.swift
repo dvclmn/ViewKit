@@ -14,21 +14,21 @@ import LayoutKit
 public struct QuickTabView<TabItem: LabeledItem & Hashable, Content: View>: View
 where TabItem: CaseIterable, TabItem.AllCases: RandomAccessCollection {
 
-  @Binding var tab: TabItem
+  @Binding var selection: TabItem
   let tabContent: (TabItem) -> Content
 
   public init(
-    tab: Binding<TabItem>,
+    selection: Binding<TabItem>,
     @ViewBuilder tabContent: @escaping (TabItem) -> Content
   ) {
-    self._tab = tab
+    self._selection = selection
     self.tabContent = tabContent
   }
 
   public var body: some View {
 
     if #available(macOS 15, iOS 18, *) {
-      TabView(selection: $tab) {
+      TabView(selection: $selection) {
         ForEach(TabItem.allCases) { tabItem in
           Tab(value: tabItem) {
             Form {

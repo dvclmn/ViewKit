@@ -5,9 +5,8 @@
 //  Created by Dave Coleman on 19/5/2025.
 //
 
-//import CoreTools
-import SwiftUI
 import BasePrimitives
+import SwiftUI
 
 struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   @Environment(\.emphasisColour) private var emphasisColour
@@ -24,7 +23,6 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
   let glass: GlassTypeCompatible?
   let padding: CGFloat
   let tint: Color?
-  //  let tint: AnyShapeStyle?
 
   func body(content: Content) -> some View {
     content
@@ -41,13 +39,13 @@ struct QuickBackgroundModifier<S: Shape>: ViewModifier {
               LinearGradient.lightFalloff(
                 .white.opacity(0.08),
                 direction: .topLeading,
-                falloffAmount: 0.9
+                falloffAmount: 0.9,
               ),
-              lineWidth: strokeWeight ?? 1
+              lineWidth: strokeWeight ?? 1,
             )
             .stroke(
               strokeColour ?? AnyShapeStyle(Color.gray.opacity(0.08)),
-              lineWidth: strokeWeight ?? 1
+              lineWidth: strokeWeight ?? 1,
             )
         }
       }
@@ -71,10 +69,8 @@ extension View {
   /// argument, as it's handled through `shape`
   public func quickBackground<S: Shape>(
     shape: S = .rect(cornerRadius: Styles.sizeSmall),
-    //    glass: GlassTypeCompatible? = nil,
     padding: CGFloat = Styles.sizeTiny,
     tint: Color? = nil,
-    //    usesGlassEffect: Bool = false,
     isEnabled: Bool = true,
   ) -> some View {
     self.modifier(
@@ -82,7 +78,6 @@ extension View {
         isEnabled: isEnabled,
         shape: shape,
         glass: nil,
-        //        glass: usesGlassEffect ? .regular(tint: tint) : nil,
         padding: padding,
         tint: tint,
       )
@@ -94,7 +89,6 @@ extension View {
     rounding: Double = Styles.sizeSmall,
     padding: CGFloat = Styles.sizeTiny,
     tint: Color? = nil,
-    //    usesGlassEffect: Bool = false,
     isEnabled: Bool = true,
   ) -> some View {
     self.modifier(
@@ -102,16 +96,9 @@ extension View {
         isEnabled: isEnabled,
         shape: .rect(cornerRadius: rounding),
         glass: glass,
-        //        glass: usesGlassEffect ? .regular(tint: tint) : nil,
-        //        glass: glass,
         padding: padding,
         tint: tint,
-        //        tint: tint.map { AnyShapeStyle($0) } ?? .clear,
       )
     )
   }
 }
-
-//extension Color {
-//  public static var defaultQuickTint: Color { Color.black.opacity(0.2) }
-//}

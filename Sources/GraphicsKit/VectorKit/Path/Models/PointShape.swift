@@ -9,6 +9,9 @@ import BasePrimitives
 import SwiftUI
 
 public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, CaseIterable, Codable {
+  
+  public static let pickerLabel: QuickLabel = "Point Shape"
+  
   case square
   case circle
   case cross
