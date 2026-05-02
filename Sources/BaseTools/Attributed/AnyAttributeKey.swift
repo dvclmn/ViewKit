@@ -8,6 +8,7 @@
 import AppKit
 import EnumMacros
 import BasePrimitives
+import CoreUtilities
 
 /// Made as a slightly more type safe alternative to
 /// `[NSAttributedString.Key: Any]`

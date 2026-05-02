@@ -7,6 +7,7 @@
 
 import SwiftUI
 import BasePrimitives
+import CoreUtilities
 
 extension GridConfig {
 

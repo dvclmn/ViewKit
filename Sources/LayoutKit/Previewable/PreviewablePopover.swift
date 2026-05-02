@@ -7,6 +7,7 @@
 
 import BasePrimitives
 import SwiftUI
+import CoreUtilities
 
 public struct PreviewablePopoverModifier<PopoverContent: View>: ViewModifier {
   @Environment(\.layoutAlignment) private var layoutAlignment

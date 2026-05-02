@@ -7,6 +7,7 @@
 
 import SwiftUI
 import BasePrimitives
+import CoreUtilities
 
 public struct ColumnConfig: Sendable {
   

@@ -6,6 +6,7 @@
 //
 
 import BasePrimitives
+import CoreUtilities
 
 /// Describes a whole InfoBar Section
 public protocol InfoBarSectionProtocol {

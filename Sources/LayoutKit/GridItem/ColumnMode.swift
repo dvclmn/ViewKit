@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreUtilities
 import BasePrimitives
 
 extension ColumnConfig {

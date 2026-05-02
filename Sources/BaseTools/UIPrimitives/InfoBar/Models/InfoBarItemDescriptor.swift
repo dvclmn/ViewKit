@@ -7,6 +7,7 @@
 
 import Foundation
 import BasePrimitives
+import CoreUtilities
 
 /// Describes a single InfoBar Item
 public protocol InfoBarItemDescriptor {

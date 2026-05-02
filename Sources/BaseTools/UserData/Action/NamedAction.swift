@@ -7,6 +7,7 @@
 
 import Foundation
 import BasePrimitives
+import CoreUtilities
 
 public protocol NamedAction {
 //public protocol NamedAction: LabeledItem {

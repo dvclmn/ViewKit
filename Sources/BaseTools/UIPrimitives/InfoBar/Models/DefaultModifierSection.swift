@@ -7,6 +7,7 @@
 
 //import InteractionKit
 import BasePrimitives
+import CoreUtilities
 import InputPrimitives
 
 public enum ModifiersSectionKey: InfoBarSectionKey {

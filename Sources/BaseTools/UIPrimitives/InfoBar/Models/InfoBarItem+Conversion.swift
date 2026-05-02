@@ -6,6 +6,7 @@
 //
 
 @_spi(Internals) import BasePrimitives
+@_spi(Internals) import CoreUtilities
 
 extension InfoBarItem {
   /// `labelStyle` applies style to the value part
@@ -16,11 +17,13 @@ extension InfoBarItem {
     format: FloatDisplayFormat = .default,
   ) {
     let label = labeled.labelPart()
-    guard let value = Labeled.valuePart(
-      for: labeled,
-      using: format,
-      with: labelStyle
-    ) else { return nil }
+    guard
+      let value = Labeled.valuePart(
+        for: labeled,
+        using: format,
+        with: labelStyle,
+      )
+    else { return nil }
     self.init(
       section: section,
       label: label.map { QuickLabel(stringLiteral: $0) },
@@ -82,7 +85,7 @@ extension Indented {
   func toInfoBarItems<K: InfoBarSectionKey>(
     section: K.Type = DebugSectionKey.self,
     preset: FloatDisplayPreset = .standard,
-      //    format: FloatDisplayFormat = .default
+    //    format: FloatDisplayFormat = .default
   ) -> [InfoBarItem] {
     content.compactMap { indentedBlock in
       let item = InfoBarItem(
