@@ -135,7 +135,6 @@ extension Target.Dependency {
       package: dependency.reference.1 ?? dependency.reference.0,
     )
   }
-
 }
 
 enum ExternalDependency {

@@ -9,6 +9,7 @@
 // import ColourKit
 //import CoreTools
 import Foundation
+import CoreUtilities
 import BasePrimitives
 
 //import VectorKit

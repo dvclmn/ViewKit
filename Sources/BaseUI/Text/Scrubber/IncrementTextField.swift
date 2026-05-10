@@ -8,6 +8,7 @@
 import BasePrimitives
 import SwiftUI
 import InputPrimitives
+import CoreUtilities
 
 struct IncrementTextField: View {
   @Environment(\.fractionLength) private var fractionLength

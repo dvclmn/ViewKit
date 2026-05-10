@@ -6,6 +6,7 @@
 //
 
 import BasePrimitives
+import CoreUtilities
 import SwiftUI
 
 public enum MatchStrategy {
