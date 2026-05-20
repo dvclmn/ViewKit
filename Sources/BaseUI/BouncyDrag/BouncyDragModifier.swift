@@ -27,7 +27,7 @@ public struct BouncyDragModifier: ViewModifier {
   public func body(content: Content) -> some View {
     if #available(macOS 14.0, *) {
       content
-        .viewSize(mode: .debounce(1)) { size in
+        .viewSize(capture: .size, mode: .debounce(1)) { size in
           store.containerSize = size
         }
         .offset(store.dragOffset)

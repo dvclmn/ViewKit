@@ -25,7 +25,7 @@ public struct Hover3DModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-      .viewSize(mode: .debounce(0.2)) { size in
+      .viewSize(capture: .size, mode: .debounce(0.2)) { size in
         viewSize = size
       }
       .overlay {

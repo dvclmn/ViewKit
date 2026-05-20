@@ -16,7 +16,7 @@ public struct MidpointModifier: ViewModifier {
 
   public func body(content: Content) -> some View {
     content
-      .viewSize(mode: .debounce()) { viewSize = $0 }
+      .viewSize(capture: .size, mode: .debounce()) { viewSize = $0 }
       .overlay {
         Circle()
           .fill(colour.opacity(0.4))

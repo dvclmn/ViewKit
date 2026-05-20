@@ -36,7 +36,7 @@ public struct SquareColourPicker: View {
           .aspectRatio(1, contentMode: .fit)
 
           .clipShape(.rect(cornerRadius: Styles.sizeSmall))
-          .viewSize(mode: .debounce(0.1), isEnabled: true) { size in
+          .viewSize(capture: .size, mode: .debounce(0.1), isEnabled: true) { size in
             viewSize = size
           }
 

@@ -12,8 +12,6 @@ extension QuickSlider {
     @Environment(SliderHandler.self) private var store
     @Environment(\.sliderDefaultValue) private var sliderDefaultValue
     @Environment(\.colorScheme) private var colourScheme
-//    @Environment(\.isASCIIMode) private var isASCIIMode
-    @Environment(\.unitSize) private var unitSize
     @Environment(\.stepStyle) private var stepStyle
 
     @Binding var value: Double
