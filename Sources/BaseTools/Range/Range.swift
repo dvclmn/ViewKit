@@ -1,15 +1,15 @@
 //
 //  Range.swift
-//  Collection
+//  ToolKit
 //
-//  Created by Dave Coleman on 22/12/2024.
+//  Created by Dave Coleman on 1/5/2026.
 //
+
+import Foundation
 
 // Credit to Matt Massicotte and team from ChimeHQ
 // for some of these methods below
 // https://github.com/ChimeHQ/Rearrange
-
-import Foundation
 
 extension CountableClosedRange where Bound == Int {
 
@@ -90,3 +90,4 @@ extension Range where Bound: BinaryFloatingPoint {
     upperBound - lowerBound
   }
 }
+

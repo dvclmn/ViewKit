@@ -41,7 +41,6 @@ let package = Package(
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
     .package(url: "https://github.com/dvclmn/ToolKit", .upToNextMinor(from: "0.1.0")),
-    //    .package(url: "https://github.com/dvclmn/GridKit", branch: "main"),
   ],
 
   // MARK: - Targets
@@ -50,7 +49,7 @@ let package = Package(
       name: "BaseNetworking",
       dependencies: [
         .module(.baseTools),
-        .extDependency(.basePrimitives),
+        .extDependency(.coreTools),
         .extDependency(.keychainSwift),
       ],
     ),
@@ -60,7 +59,7 @@ let package = Package(
       dependencies: [
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
-        .extDependency(.basePrimitives),
+        .extDependency(.coreTools),
       ],
     ),
 
@@ -68,7 +67,7 @@ let package = Package(
       name: "BaseUI",
       dependencies: [
         .module(.layoutKit),
-        .extDependency(.basePrimitives),
+        .extDependency(.coreTools),
         .module(.baseTools),
         .module(.graphicsKit),
         .extDependency(.casePaths),
@@ -80,7 +79,7 @@ let package = Package(
       name: "GraphicsKit",
       dependencies: [
         .module(.baseTools),
-        .extDependency(.basePrimitives),
+        .extDependency(.coreTools),
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
       ],
@@ -92,9 +91,8 @@ let package = Package(
     .target(
       name: "LayoutKit",
       dependencies: [
-        .extDependency(.basePrimitives),
+        .extDependency(.coreTools),
         .module(.baseTools),
-//        .module(.graphicsKit),
         .extDependency(.enumMacros),
       ],
     ),
@@ -102,11 +100,10 @@ let package = Package(
     .target(
       name: "MotionKit",
       dependencies: [
-        .extDependency(.basePrimitives),
+        .extDependency(.coreTools),
         .module(.baseTools),
       ],
     ),
-
 
   ],
 )
@@ -125,20 +122,18 @@ extension Target.Dependency {
 }
 
 enum ExternalDependency {
-  case basePrimitives
+  case coreTools
+  case viewTools
   case enumMacros
-  //  case gridPrimitives
-  //  case gridKit
   case casePaths
   case keychainSwift
   case macroToolkit
 
   var reference: (String, String?) {
     switch self {
-      case .basePrimitives: ("BasePrimitives", nil)
+      case .viewTools: ("ViewTools", "ToolKit")
+      case .coreTools: ("CoreTools", "ToolKit")
       case .enumMacros: ("BaseMacros", nil)
-      //      case .gridPrimitives: ("GridPrimitives", "GridKit")
-      //      case .gridKit: ("GridKit", "GridKit")
       case .casePaths: ("CasePaths", "swift-case-paths")
       case .keychainSwift: ("KeychainSwift", "keychain-swift")
       case .macroToolkit: ("MacroToolkit", "swift-macro-toolkit")
@@ -153,7 +148,6 @@ enum InternalModule {
   case graphicsKit
   case layoutKit
   case motionKit
-
 
   var name: String {
     switch self {

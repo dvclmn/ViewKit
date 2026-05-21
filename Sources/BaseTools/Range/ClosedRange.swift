@@ -7,6 +7,15 @@
 
 import Foundation
 
+extension Binding where Value == ClosedRange<Int> {
+  public func toBindingBinaryFloatingPoint<T: BinaryFloatingPoint & Sendable>() -> Binding<ClosedRange<T>> {
+    Binding<ClosedRange<T>>(
+      get: { wrappedValue.toBinaryFloatingPointRange() },
+      set: { wrappedValue = $0.toIntRange }
+    )
+  }
+}
+
 extension ClosedRange where Bound == CGFloat {
   public var toDoubleRange: ClosedRange<Double> {
     Double(self.lowerBound)...Double(self.upperBound)
@@ -68,8 +77,7 @@ extension ClosedRange where Bound: BinaryFloatingPoint & Sendable {
 
 extension ClosedRange where Bound: BinaryFloatingPoint {
 
-  public static var phaseRange: Self { 0...1 * .pi }
-  public static var unitRange: Self { 0...1 }
+  
 
   /// Returns the fractional position of the given value within the range.
   /// The inverse operation of the above `value(atPercent:)`
