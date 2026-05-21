@@ -32,9 +32,6 @@ let package = Package(
         "MotionKit",
       ],
     ),
-
-    /// Export-only library
-    .library(name: "ToolKit", targets: ["ToolKit"]),
   ],
 
   // MARK: - Dependancies
@@ -43,7 +40,7 @@ let package = Package(
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
-    .package(url: "https://github.com/dvclmn/BasePrimitives", branch: "main"),
+    .package(url: "https://github.com/dvclmn/ToolKit", .upToNextMinor(from: "0.1.0")),
     //    .package(url: "https://github.com/dvclmn/GridKit", branch: "main"),
   ],
 
@@ -110,16 +107,6 @@ let package = Package(
       ],
     ),
 
-    // MARK: - Forwarding modules
-
-    .target(
-      name: "ToolKit",
-      dependencies: [
-        .extDependency(.basePrimitives),
-        .module(.baseTools),
-        .module(.baseUI),
-      ],
-    ),
 
   ],
 )
@@ -167,8 +154,6 @@ enum InternalModule {
   case layoutKit
   case motionKit
 
-  /// Export-only modules
-  case toolKit
 
   var name: String {
     switch self {
@@ -178,10 +163,6 @@ enum InternalModule {
       case .graphicsKit: "GraphicsKit"
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
-
-      /// Export-only
-      case .toolKit: "ToolKit"
-
     }
   }
 }

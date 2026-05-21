@@ -5,10 +5,9 @@
 //  Created by Dave Coleman on 14/1/2026.
 //
 
-//import InteractionKit
 import BasePrimitives
-import CoreUtilities
-import InputPrimitives
+//import CoreUtilities
+import ViewHelpers
 
 public enum ModifiersSectionKey: InfoBarSectionKey {
   public static let title = "Modifiers"

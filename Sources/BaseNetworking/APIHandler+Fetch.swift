@@ -48,7 +48,7 @@ extension APIRequest {
   }
 
   private static func printDebugResponse(_ data: Data) {
-    let debugString = data.prettyPrintedJSONString
+    let debugString = data.prettyPrinted
     print("Raw response data:\n\(debugString)")
   }
 
