@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 22/2/2026.
 //
 
+import CoreTools
 import SwiftUI
-import BasePrimitives
 
 struct ResizeHandle: View {
   @Environment(\.layoutAxis) private var layoutAxis
@@ -21,7 +21,7 @@ struct ResizeHandle: View {
         .contentShape(Rectangle())
         .frame(
           width: isVertical ? nil : handleThickness,
-          height: isVertical ? handleThickness : nil
+          height: isVertical ? handleThickness : nil,
         )
         .onHover { isHovering = $0 }
 
@@ -31,7 +31,7 @@ struct ResizeHandle: View {
         //        .fill(.thinMaterial)
         .frame(
           width: isVertical ? 40 : 4,
-          height: isVertical ? 4 : 40
+          height: isVertical ? 4 : 40,
         )
         .allowsHitTesting(false)
     }

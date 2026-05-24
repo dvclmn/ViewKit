@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import BasePrimitives
-import CoreUtilities
+import CoreTools
 
 public protocol NamedAction {
 //public protocol NamedAction: LabeledItem {

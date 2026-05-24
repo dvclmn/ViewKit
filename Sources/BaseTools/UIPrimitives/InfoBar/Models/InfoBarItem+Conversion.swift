@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 9/3/2026.
 //
 
-@_spi(Internals) import BasePrimitives
-@_spi(Internals) import CoreUtilities
+@_spi(Internals) import CoreTools
+@_spi(Internals) import ViewTools
 
 extension InfoBarItem {
   /// `labelStyle` applies style to the value part

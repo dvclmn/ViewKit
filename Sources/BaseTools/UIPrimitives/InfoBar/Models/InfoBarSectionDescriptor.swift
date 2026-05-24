@@ -5,8 +5,7 @@
 //  Created by Dave Coleman on 14/1/2026.
 //
 
-import BasePrimitives
-import CoreUtilities
+import CoreTools
 
 /// Describes a whole InfoBar Section
 public protocol InfoBarSectionProtocol {

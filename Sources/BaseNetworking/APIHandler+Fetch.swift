@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 16/1/2025.
 //
 
-import BasePrimitives
 import Foundation
 
 extension APIRequest {

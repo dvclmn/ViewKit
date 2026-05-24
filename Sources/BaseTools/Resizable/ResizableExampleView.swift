@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import BasePrimitives
+import CoreTools
 
 struct ResizableExampleView: View {
 

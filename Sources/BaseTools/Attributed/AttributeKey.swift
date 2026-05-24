@@ -6,7 +6,7 @@
 //
 
 import AppKit
-import BasePrimitives
+import CoreTools
 
 public struct AttributeKey<Value>: Sendable, Hashable {
   let nsKey: NSAttributedString.Key

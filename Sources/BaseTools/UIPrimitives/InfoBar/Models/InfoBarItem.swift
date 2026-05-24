@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import BasePrimitives
-import CoreUtilities
+import CoreTools
 
 public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
   public let id: UUID
