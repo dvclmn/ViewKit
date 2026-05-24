@@ -5,14 +5,11 @@
 //  Created by Dave Coleman on 8/10/2025.
 //
 
-import BasePrimitives
+//import BasePrimitives
 //import InteractionKit
 import SwiftUI
 
 extension GraphicsContext {
-
-
-
 
   // MARK: - Dashed Stroke
   public func dashedStroke(
@@ -25,7 +22,7 @@ extension GraphicsContext {
     self.stroke(
       path,
       with: .color(colour),
-      style: StrokeStyle.dashed(strokeWidth: strokeWidth, style: style, gap: gap)
+      style: StrokeStyle.dashed(strokeWidth: strokeWidth, style: style, gap: gap),
     )
   }
 

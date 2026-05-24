@@ -7,7 +7,8 @@
 
 // import ColourKit
 import CoreGraphics
-import BasePrimitives
+//import BasePrimitives
+import CoreTools
 import Foundation
 
 public struct PatternConfiguration: Codable, Equatable, Hashable, Sendable {

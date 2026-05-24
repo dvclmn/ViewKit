@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreTools
 
 @propertyWrapper
 public struct OptionallyPersisted<Value: Sendable>: DynamicProperty {

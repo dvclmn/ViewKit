@@ -7,6 +7,7 @@
 
 import AppKit
 import CoreTools
+import ViewTools
 
 public struct AttributeKey<Value>: Sendable, Hashable {
   let nsKey: NSAttributedString.Key

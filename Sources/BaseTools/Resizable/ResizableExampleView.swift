@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreTools
+import ViewTools
 
 struct ResizableExampleView: View {
 

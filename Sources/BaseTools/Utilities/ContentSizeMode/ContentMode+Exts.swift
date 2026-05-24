@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
-import BasePrimitives
+import ViewTools
+
+//import BasePrimitives
 
 extension CGSize {
   public func aspectRatio(
@@ -25,46 +27,6 @@ extension CGSize {
       aspectRatio: contentAspect,
       insets: insets,
     )
-
-    //    return thing
-    //    switch mode {
-    //    case .stretch:
-    //      // Ignore aspect ratio, stretch to fill destination
-    //      return size
-    //
-    //    case .fit:
-    //      // Uniformly scale to fit within destination
-    //      let widthBased = CGSize(width: size.width, height: size.width * contentAspect)
-    //      if widthBased.height <= size.height {
-    //        return widthBased
-    //      } else {
-    //        return CGSize(width: size.height / contentAspect, height: size.height)
-    //      }
-    //
-    //    case .fill:
-    //      // Uniformly scale to cover destination (may clip)
-    //      let containerAspect = size.height / size.width
-    //      if containerAspect > contentAspect {
-    //        // Container taller than content → match height
-    //        return CGSize(width: size.height / contentAspect, height: size.height)
-    //      } else {
-    //        // Container wider than content → match width
-    //        return CGSize(width: size.width, height: size.width * contentAspect)
-    //      }
-    //
-    //    case .fixed(let length, let axis):
-    //      // Fix one axis length, derive the other from aspect ratio (h/w)
-    //      switch axis {
-    //      case .horizontal:
-    //        let width = length
-    //        let height = length * contentAspect
-    //        return CGSize(width: width, height: height)
-    //      case .vertical:
-    //        let height = length
-    //        let width = length / contentAspect
-    //        return CGSize(width: width, height: height)
-    //      }
-    //    }
   }
 }
 

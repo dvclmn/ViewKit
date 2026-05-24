@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 11/7/2025.
 //
 
-import Foundation
+import SwiftUI
 
 extension Binding where Value == ClosedRange<Int> {
   public func toBindingBinaryFloatingPoint<T: BinaryFloatingPoint & Sendable>() -> Binding<ClosedRange<T>> {

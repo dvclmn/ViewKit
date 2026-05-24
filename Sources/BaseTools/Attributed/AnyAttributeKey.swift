@@ -7,6 +7,8 @@
 
 import AppKit
 import EnumMacros
+import CoreTools
+import ViewTools
 
 /// Made as a slightly more type safe alternative to
 /// `[NSAttributedString.Key: Any]`

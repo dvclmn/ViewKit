@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreTools
 
 public struct ToggleConfiguration {
   public let title: String

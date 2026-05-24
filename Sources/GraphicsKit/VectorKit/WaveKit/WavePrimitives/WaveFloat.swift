@@ -5,9 +5,10 @@
 //  Created by Dave Coleman on 1/2/2026.
 //
 
-import BasePrimitives
+//import BasePrimitives
+import CoreTools
 import SwiftUI
-import CoreUtilities
+//import CoreUtilities
 
 public protocol WaveFloat: BinaryFloatingPoint, Sendable, Codable, FloatFormattable {
   static func waveSin(_ x: Self) -> Self

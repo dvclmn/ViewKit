@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import CoreTools
 
 extension SampleContent {
   public struct ExampleDataStore {
