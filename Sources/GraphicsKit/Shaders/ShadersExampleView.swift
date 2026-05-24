@@ -3,9 +3,9 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 17/5/2025.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 import SwiftUI
 
 
@@ -17,8 +17,8 @@ public struct ShadersExampleView: View {
       ZStack {
         StageView(floorConfig: .init(), viewSize: proxy.size)
           .overlay {
-            Color.purple.opacityFaint
-            Color.black.opacityLow
+            Color.purple.opacity(0.08)
+            Color.black.opacity(0.2)
           }
 
         ForEach(EmojiBunch.allCases) { emoji in

@@ -3,9 +3,8 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 21/10/2025.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
 
 struct ToolTipView: View {

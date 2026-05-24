@@ -3,9 +3,9 @@
 //  Components
 //
 //  Created by Dave Coleman on 14/11/2024.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 import SwiftUI
 
 public struct PatternCanvas: View {

@@ -7,7 +7,8 @@
 
 
 import SwiftUI
-import BasePrimitives
+import CoreTools
+import ViewTools
 
 
 extension LabelStyle where Self == ShortcutLabel {

@@ -3,9 +3,9 @@
 //  Components
 //
 //  Created by Dave Coleman on 11/12/2024.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 import SwiftUI
 
 public struct RoughPathGenerator {

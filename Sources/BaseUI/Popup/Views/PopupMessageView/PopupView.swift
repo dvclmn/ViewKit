@@ -3,9 +3,8 @@
 //  Eucalypt
 //
 //  Created by Dave Coleman on 5/2/2024.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
 //import InteractionKit
 
@@ -49,7 +48,7 @@ struct PopupView: View {
           glass: hasGlassEffect ? .regular : nil,
           rounding: rounding,
           padding: .zero,
-          tint: message.label.role?.colour,
+          tint: message.label.role?.colour?.toColour,
           isEnabled: true
         )
         .depthShadow(

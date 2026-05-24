@@ -8,7 +8,8 @@
 import Foundation
 import GraphicsKit
 //import VectorKit
-import BasePrimitives
+import CoreTools
+import ViewTools
 
 enum DragMethod: Sendable {
   case clickAndDrag

@@ -6,7 +6,9 @@
 //
 
 import Foundation
-//import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 
 public typealias ShaderKey = ShaderEffect.Meta
 /// A strongly-typed key you can use to refer to specific shaders

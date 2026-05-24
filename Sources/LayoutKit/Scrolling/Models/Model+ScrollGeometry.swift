@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-import BasePrimitives
+import CoreTools
+import ViewTools
 
 public struct ScrollContext: Equatable, Sendable {
   /// Size of the entire content, which may be smaller

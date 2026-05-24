@@ -3,9 +3,8 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 20/9/2025.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
 import LayoutKit
 //import UIPrimitives
@@ -28,7 +27,7 @@ public struct Section_Labels: View {
       GroupBox("MaybeLabels") {
         MaybeLabel("Just a title")
         MaybeLabel(QuickLabel("Got an Emoji", icon: .emoji("🛼")))
-        MaybeLabel("Base, w/ title & icon", icon: .symbol(Icons.getRandomIcon))
+        MaybeLabel("Base, w/ title & icon", icon: .symbol(Icons.getRandom.icon))
           .labelStyle(.base)
       }
       .groupBoxStyle(.custom)

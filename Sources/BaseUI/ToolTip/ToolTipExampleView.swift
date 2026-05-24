@@ -57,7 +57,7 @@ extension ToolTipExampleView {
         //            offset: alignment == .bottom ? CGSize(30, 60) : .zero,
         alignment: alignment,
         isShowingForDebug: true,
-        color: colour.opacityLow
+        color: colour.opacity(0.2)
           //                        color: .blue
       )
 

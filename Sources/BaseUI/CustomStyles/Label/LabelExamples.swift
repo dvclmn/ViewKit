@@ -3,9 +3,8 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 7/3/2025.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import BaseTools
 import LayoutKit
 import SwiftUI
@@ -57,7 +56,7 @@ public struct LabelExampleView: View {
 extension LabelExampleView {
   @ViewBuilder
   func ExampleLabel(_ title: String) -> some View {
-    Label(title, systemImage: Icons.getRandomIcon)
+    Label(title, systemImage: Icons.getRandom.icon)
   }
 }
 #if DEBUG

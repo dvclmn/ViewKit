@@ -3,9 +3,8 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 20/9/2025.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import LayoutKit
 import SwiftUI
 
@@ -64,7 +63,7 @@ public struct CustomStylesOverview: View {
       .padding(Styles.sizeHuge)
 
     }  // END scroll view
-    .environment(\.randomIcon, Icons.getRandomIcon)
+    .environment(\.randomIcon, Icons.getRandom.icon)
   }
 }
 extension CustomStylesOverview {

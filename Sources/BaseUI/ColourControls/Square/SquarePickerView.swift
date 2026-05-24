@@ -3,9 +3,8 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 11/5/2025.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 // import ColourKit
 import SwiftUI
 

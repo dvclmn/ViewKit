@@ -3,9 +3,8 @@
 //  Components
 //
 //  Created by Dave Coleman on 10/11/2024.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
 
 public typealias SliderOutput = (SliderPhase) -> Void

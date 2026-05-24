@@ -3,9 +3,8 @@
 //  Styles
 //
 //  Created by Dave Coleman on 30/4/2024.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
 
 extension LabelStyle where Self == CustomLabel {

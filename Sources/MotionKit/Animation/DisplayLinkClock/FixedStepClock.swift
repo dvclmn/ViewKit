@@ -6,7 +6,8 @@
 //
 
 import AppKit
-import BasePrimitives
+import CoreTools
+import ViewTools
 
 /// ```
 /// var clock = FixedStepClock(step: 1.0 / 30.0)

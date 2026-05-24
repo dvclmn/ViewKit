@@ -7,7 +7,8 @@
 
 import LayoutKit
 import SwiftUI
-import BasePrimitives
+import CoreTools
+import ViewTools
 
 
 extension Flexi {

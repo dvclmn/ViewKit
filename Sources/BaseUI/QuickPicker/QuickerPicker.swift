@@ -3,9 +3,8 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 24/1/2026.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
 
 public struct QuickerPicker<SelectionValue: Hashable & Identifiable & NamedItem>: View {

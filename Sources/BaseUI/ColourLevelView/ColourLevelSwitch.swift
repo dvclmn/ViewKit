@@ -3,12 +3,11 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 24/1/2026.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
 
-public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & EnvironmentResolvableColour>: View {
+public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & EnvironmentResolvableColour & SwiftUIColourConvertible>: View {
   @Environment(\.activeColourHierarchy) private var activeHierarchicalColour
   @Environment(\.modifierKeys) private var modifierKeys
 

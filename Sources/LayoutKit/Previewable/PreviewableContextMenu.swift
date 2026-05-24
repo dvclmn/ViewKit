@@ -3,10 +3,8 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 1/10/2025.
-//
-
-import BasePrimitives
-import CoreUtilities
+import CoreTools
+import ViewTools
 import SwiftUI
 
 public struct ContextMenuPreviewModifier<MenuContent: View>: ViewModifier {

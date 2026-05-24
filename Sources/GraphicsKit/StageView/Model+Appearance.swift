@@ -3,9 +3,9 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 12/8/2025.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 import Foundation
 //import VectorKit
 

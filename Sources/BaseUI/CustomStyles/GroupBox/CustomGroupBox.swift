@@ -3,9 +3,8 @@
 //  Components
 //
 //  Created by Dave Coleman on 6/11/2024.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
 
 public struct CustomGroupBox: GroupBoxStyle {

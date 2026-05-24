@@ -3,9 +3,8 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 5/3/2026.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
 
 extension QuickSlider {

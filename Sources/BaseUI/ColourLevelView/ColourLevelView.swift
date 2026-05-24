@@ -6,11 +6,12 @@
 //
 
 // import ColourKit
-import BasePrimitives
+import CoreTools
+import ViewTools
 import GraphicsKit
 import SwiftUI
 
-public struct ColourLevelView<Colour: ColourModel & EnvironmentResolvableColour>: View {
+public struct ColourLevelView<Colour: ColourModel & EnvironmentResolvableColour & SwiftUIColourConvertible>: View {
 
   @Environment(\.modifierKeys) private var modifierKeys
 

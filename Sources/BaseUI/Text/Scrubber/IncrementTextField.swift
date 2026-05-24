@@ -3,12 +3,9 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 18/1/2026.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
-import InputPrimitives
-import CoreUtilities
 
 struct IncrementTextField: View {
   @Environment(\.fractionLength) private var fractionLength

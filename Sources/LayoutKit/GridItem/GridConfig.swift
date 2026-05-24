@@ -3,10 +3,8 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 2/10/2025.
-//
-
-import BasePrimitives
-import CoreUtilities
+import CoreTools
+import ViewTools
 import SwiftUI
 
 /// Note: this is specifically geared toward `LazyVGrid`,

@@ -3,11 +3,10 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 7/10/2025.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 //import InteractionKit
-//import CoreTools
 import SwiftUI
 
 extension WavePathGenerator {

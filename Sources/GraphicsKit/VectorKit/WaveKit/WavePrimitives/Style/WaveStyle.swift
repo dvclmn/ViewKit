@@ -6,7 +6,7 @@
 //
 
 //// import ColourKit
-//import CoreTools
+import CoreTools
 import Foundation
 
 public struct WaveStyle: Codable, Sendable, Equatable, Hashable {

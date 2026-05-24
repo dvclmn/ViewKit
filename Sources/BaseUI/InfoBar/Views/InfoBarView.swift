@@ -3,10 +3,8 @@
 //  Components
 //
 //  Created by Dave Coleman on 9/12/2024.
-//
-
-import BasePrimitives
-import CoreUtilities
+import CoreTools
+import ViewTools
 import SwiftUI
 import BaseTools
 

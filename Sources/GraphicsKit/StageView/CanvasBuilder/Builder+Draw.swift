@@ -3,11 +3,10 @@
 //  BaseDemos
 //
 //  Created by Dave Coleman on 2/2/2026.
-//
-
-//import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 //import InteractionKit
-//import CoreUtilities
 import EnumMacros
 import SwiftUI
 

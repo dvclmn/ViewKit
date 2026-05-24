@@ -3,9 +3,8 @@
 //
 //
 //  Created by Dave Coleman on 15/6/2024.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
 
 public struct FadeSlide: ViewModifier {

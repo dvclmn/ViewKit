@@ -1,5 +1,5 @@
 {
-  "originHash" : "fc535db9a80bfd2d76f3ec9b8f1249a2d816640bdc6f0491c05298151ceed4e7",
+  "originHash" : "a255fda635ca0f5d6cca152d1e76aa8e7c0fe4ce9aedcb6b258cf71b29a21366",
   "pins" : [
     {
       "identity" : "basemacros",
@@ -8,15 +8,6 @@
       "state" : {
         "branch" : "main",
         "revision" : "d1fc6ac6c825ac35f139f429e535c8c004a9314a"
-      }
-    },
-    {
-      "identity" : "baseprimitives",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/dvclmn/BasePrimitives",
-      "state" : {
-        "branch" : "main",
-        "revision" : "9e0f9fd5f87c5b4dd8f79ea75690e23c5bf905ce"
       }
     },
     {

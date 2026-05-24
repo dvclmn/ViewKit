@@ -3,9 +3,8 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 11/8/2025.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
 
 @Observable

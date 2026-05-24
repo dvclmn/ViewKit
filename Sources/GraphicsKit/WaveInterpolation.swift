@@ -7,7 +7,9 @@
 
 import CasePaths
 import EnumMacros
-import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 import SwiftUI
 
 /// Defines the interpolation method for creating smooth paths from discrete points

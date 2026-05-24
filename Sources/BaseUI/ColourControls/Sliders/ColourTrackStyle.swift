@@ -7,7 +7,8 @@
 
 import SwiftUI
 import LayoutKit
-import BasePrimitives
+import CoreTools
+import ViewTools
 
 public struct RGBTrackStyle: SliderTrackStyle {
 

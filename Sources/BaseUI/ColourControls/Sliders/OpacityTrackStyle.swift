@@ -3,18 +3,17 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 4/3/2026.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import LayoutKit
 import SwiftUI
 
 public struct OpacityTrackStyle: SliderTrackStyle {
 
-  let colour: any ColourModel
+  let colour: any ColourModel & SwiftUIColourConvertible
   //  let component: RGBComponent
   
-  public init(colour: any ColourModel) {
+  public init(colour: any ColourModel & SwiftUIColourConvertible) {
     self.colour = colour
   }
 
@@ -31,4 +30,3 @@ public struct OpacityTrackStyle: SliderTrackStyle {
     //      .fill(component.sliderTrackGradient(colour: colour))
   }
 }
-

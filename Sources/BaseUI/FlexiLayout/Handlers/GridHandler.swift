@@ -8,8 +8,8 @@
 #if os(macOS)
 
 import SwiftUI
-import BasePrimitives
-import InputPrimitives
+import CoreTools
+import ViewTools
 
 extension Flexi {
 

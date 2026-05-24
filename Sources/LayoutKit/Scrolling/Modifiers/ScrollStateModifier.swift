@@ -3,11 +3,9 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 8/3/2025.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
-import CoreUtilities
 
 public struct ScrollStateModifier: ViewModifier {
   @State private var debouncer: AsyncDebouncer?

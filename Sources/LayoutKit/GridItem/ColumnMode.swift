@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import CoreUtilities
-import BasePrimitives
+import CoreTools
+import ViewTools
 
 extension ColumnConfig {
 

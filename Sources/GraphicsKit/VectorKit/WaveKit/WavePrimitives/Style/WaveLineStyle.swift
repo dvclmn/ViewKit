@@ -8,7 +8,9 @@
 // import ColourKit
 
 import Foundation
-import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 
 public struct WaveLineStyle: Codable, Sendable, Equatable, Hashable {
   public var colour: RGBColour

@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
-import BasePrimitives
+import CoreTools
+import ViewTools
 import GraphicsKit
 //import UIPrimitives
-//import CoreTools
 //import VectorKit
 
 //#warning("Pobrbaly need to bring this back")

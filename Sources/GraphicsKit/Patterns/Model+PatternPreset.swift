@@ -6,7 +6,9 @@
 //
 
 // import ColourKit
-import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 import Foundation
 import CasePaths
 

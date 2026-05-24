@@ -8,7 +8,9 @@
 // import ColourKit
 
 import Foundation
-import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 
 public struct PointStyle: Sendable, Codable, Equatable, Hashable {
   public var shape: PointShape

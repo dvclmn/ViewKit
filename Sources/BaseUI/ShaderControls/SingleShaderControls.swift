@@ -3,9 +3,8 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 10/2/2026.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import BaseTools
 //import InteractionKit
 //#warning("Have turned this off temporarily, was getting 'Value of optional type '(strength: CGFloat, radialStrength: CGFloat)?' must be unwrapped to refer to member 'strength' of wrapped base type '(strength: CGFloat, radialStrength: CGFloat)' error messages, regarding CasePaths")

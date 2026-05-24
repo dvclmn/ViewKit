@@ -6,6 +6,7 @@
 //
 
 import KeychainSwift
+import Foundation
 //import SwiftUI
 
 @MainActor

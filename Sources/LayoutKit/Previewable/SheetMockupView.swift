@@ -3,10 +3,8 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 19/9/2025.
-//
-
-import BasePrimitives
-import CoreUtilities
+import CoreTools
+import ViewTools
 import SwiftUI
 
 // TODO: Quick background currently switched off, need to find new solution

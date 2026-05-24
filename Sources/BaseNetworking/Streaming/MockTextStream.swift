@@ -6,7 +6,7 @@
 //
 
 import BaseTools
-//import CoreTools
+import CoreTools
 import SwiftUI
 
 /// A service that provides simulated streaming responses for testing UI

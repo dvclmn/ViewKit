@@ -3,9 +3,8 @@
 //  Components
 //
 //  Created by Dave Coleman on 18/1/2025.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import SwiftUI
 
 public struct QuickPicker<Item: LabeledItem & Hashable>: View {

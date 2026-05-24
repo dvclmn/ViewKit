@@ -3,9 +3,9 @@
 //  AnimationVisualiser
 //
 //  Created by Dave Coleman on 15/11/2024.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 import SwiftUI
 
 public struct StageView: View {

@@ -3,12 +3,10 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 21/9/2025.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
 import BaseTools
 import LayoutKit
-import CoreUtilities
 import SwiftUI
 
 extension Flexi {

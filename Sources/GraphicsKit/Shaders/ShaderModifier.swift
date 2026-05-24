@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
-import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 
 public struct ShaderModifier: ViewModifier {
 

@@ -40,7 +40,7 @@ let package = Package(
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
     .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
-    .package(url: "https://github.com/dvclmn/ToolKit", .upToNextMinor(from: "0.1.0")),
+    .package(path: "../../ToolKit"),
   ],
 
   // MARK: - Targets
@@ -60,6 +60,7 @@ let package = Package(
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
         .extDependency(.coreTools),
+        .extDependency(.viewTools),
       ],
     ),
 
@@ -68,6 +69,7 @@ let package = Package(
       dependencies: [
         .module(.layoutKit),
         .extDependency(.coreTools),
+        .extDependency(.viewTools),
         .module(.baseTools),
         .module(.graphicsKit),
         .extDependency(.casePaths),
@@ -80,6 +82,7 @@ let package = Package(
       dependencies: [
         .module(.baseTools),
         .extDependency(.coreTools),
+        .extDependency(.viewTools),
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
       ],
@@ -92,6 +95,7 @@ let package = Package(
       name: "LayoutKit",
       dependencies: [
         .extDependency(.coreTools),
+        .extDependency(.viewTools),
         .module(.baseTools),
         .extDependency(.enumMacros),
       ],
@@ -101,6 +105,7 @@ let package = Package(
       name: "MotionKit",
       dependencies: [
         .extDependency(.coreTools),
+        .extDependency(.viewTools),
         .module(.baseTools),
       ],
     ),

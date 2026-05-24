@@ -3,9 +3,9 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 12/7/2025.
-//
-
-import BasePrimitives
+import CoreTools
+import ViewTools
+import BaseTools
 import SwiftUI
 
 public enum PointShape: String, Pickable, Sendable, Hashable, Identifiable, CaseIterable, Codable {
