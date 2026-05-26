@@ -10,8 +10,6 @@ let package = Package(
     .macOS("14.0"),
   ],
   products: [
-    .library(name: "BaseNetworking", targets: ["BaseNetworking"]),
-
     .library(
       name: "BaseTools",
       targets: ["BaseTools"],
@@ -36,24 +34,13 @@ let package = Package(
 
   // MARK: - Dependancies
   dependencies: [
-    .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
-    .package(url: "https://github.com/SwiftyLab/MetaCodable", from: "1.6.0"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
-    .package(path: "../../ToolKit"),
+    .package(url: "https://github.com/dvclmn/ToolKit", .upToNextMinor(from: "0.1.0")),
   ],
 
   // MARK: - Targets
   targets: [
-    .target(
-      name: "BaseNetworking",
-      dependencies: [
-        .module(.baseTools),
-        .extDependency(.coreTools),
-        .extDependency(.keychainSwift),
-      ],
-    ),
-
     .target(
       name: "BaseTools",
       dependencies: [
@@ -147,7 +134,6 @@ enum ExternalDependency {
 }
 
 enum InternalModule {
-  case networking
   case baseTools
   case baseUI
   case graphicsKit
@@ -156,7 +142,6 @@ enum InternalModule {
 
   var name: String {
     switch self {
-      case .networking: "BaseNetworking"
       case .baseTools: "BaseTools"
       case .baseUI: "BaseUI"
       case .graphicsKit: "GraphicsKit"
