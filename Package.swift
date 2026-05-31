@@ -9,6 +9,7 @@ let package = Package(
     .iOS("17.0"),
     .macOS("14.0"),
   ],
+  // MARK: - Libraries
   products: [
     .library(
       name: "BaseTools",
@@ -100,6 +101,7 @@ let package = Package(
   ],
 )
 
+// MARK: - Helpers
 extension Target.Dependency {
   static func module(_ name: InternalModule) -> Self {
     .target(name: name.name)
@@ -118,7 +120,6 @@ enum ExternalDependency {
   case viewTools
   case enumMacros
   case casePaths
-  case keychainSwift
   case macroToolkit
 
   var reference: (String, String?) {
@@ -127,7 +128,6 @@ enum ExternalDependency {
       case .coreTools: ("CoreTools", "ToolKit")
       case .enumMacros: ("BaseMacros", nil)
       case .casePaths: ("CasePaths", "swift-case-paths")
-      case .keychainSwift: ("KeychainSwift", "keychain-swift")
       case .macroToolkit: ("MacroToolkit", "swift-macro-toolkit")
     }
   }
