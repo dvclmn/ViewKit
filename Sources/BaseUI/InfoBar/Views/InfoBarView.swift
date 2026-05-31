@@ -7,6 +7,7 @@ import CoreTools
 import ViewTools
 import SwiftUI
 import BaseTools
+import StringTools
 
 public struct InfoBarView: View {
   @Environment(\.backgroundStyle) private var backgroundStyle

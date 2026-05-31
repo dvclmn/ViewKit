@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreTools
+import StringTools
 
 /// Describes a single InfoBar Item
 public protocol InfoBarItemDescriptor {

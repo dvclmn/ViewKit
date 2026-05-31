@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreTools
+import StringTools
 
 // MARK: - PreferenceKey and Reduce Function
 

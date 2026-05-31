@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import StringTools
 import CoreTools
 
 public protocol NamedAction {

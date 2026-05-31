@@ -6,6 +6,7 @@
 import CoreTools
 import ViewTools
 import BaseTools
+import StringTools
 import SwiftUI
 
 public protocol WaveFloat: BinaryFloatingPoint, Sendable, Codable, FloatFormattable {

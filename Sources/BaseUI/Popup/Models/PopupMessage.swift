@@ -7,7 +7,7 @@
 
 import CoreTools
 import ViewTools
-//import SampleBuilder
+@_spi(Internal) import StringTools
 import SwiftUI
 
 public struct PopupMessage: Sendable, Identifiable {

@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreTools
+import StringTools
 
 public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
   public let id: UUID

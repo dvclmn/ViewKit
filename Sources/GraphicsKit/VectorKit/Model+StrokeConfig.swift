@@ -5,12 +5,11 @@
 //  Created by Dave Coleman on 19/1/2026.
 //
 
-//import CasePaths
-// import ColourKit
+import BaseTools
 import CoreTools
 import Foundation
+import StringTools
 import ViewTools
-import BaseTools
 
 //import VectorKit
 
@@ -22,7 +21,7 @@ public struct StrokeConfig: Sendable, Hashable, Codable {
   public init(
     _ colour: RGBColour = .brown,
     lineWidth: CGFloat = 3.0,
-    style: PathStyle = .smooth
+    style: PathStyle = .smooth,
   ) {
     self.colour = colour
     self.lineWidth = lineWidth
@@ -41,7 +40,7 @@ extension StrokeConfig {
     Self(
       .brown,
       lineWidth: 2,
-      style: .stamped(shape: .circle, radius: 30)
+      style: .stamped(shape: .circle, radius: 30),
     )
   }
 }

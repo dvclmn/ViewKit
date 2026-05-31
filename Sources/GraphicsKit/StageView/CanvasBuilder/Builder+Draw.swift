@@ -6,9 +6,10 @@
 import CoreTools
 import ViewTools
 import BaseTools
-//import InteractionKit
+import StringTools
 import EnumMacros
 import SwiftUI
+@_spi(Internal) import StringTools
 
 @CaseDetection
 enum RowColBoundary {

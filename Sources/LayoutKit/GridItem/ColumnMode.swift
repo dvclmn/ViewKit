@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreTools
 import ViewTools
+import StringTools
 
 extension ColumnConfig {
 

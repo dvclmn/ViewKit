@@ -33,9 +33,6 @@ extension NSRange {
 
     return NSRange(start..<end)
   }
-  
-  public func toStringRange(in text: String) -> Range<String.Index>? {
-    Range(self, in: text)
-  }
+
 
 }

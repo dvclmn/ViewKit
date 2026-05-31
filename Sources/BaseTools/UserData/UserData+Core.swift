@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import CoreTools
+@_spi(Internal) import CoreTools
 
 /// Core contract for types that manage an in-memory user data value with a readiness lifecycle.
 /// Provides state, storage, and coordination for updates and persistence.

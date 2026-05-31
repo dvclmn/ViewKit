@@ -8,6 +8,7 @@
 import AppKit
 import EnumMacros
 import CoreTools
+import StringTools
 import ViewTools
 
 /// Made as a slightly more type safe alternative to

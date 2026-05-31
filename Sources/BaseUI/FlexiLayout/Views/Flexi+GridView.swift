@@ -8,6 +8,7 @@ import ViewTools
 import BaseTools
 import LayoutKit
 import SwiftUI
+import StringTools
 
 extension Flexi {
 
