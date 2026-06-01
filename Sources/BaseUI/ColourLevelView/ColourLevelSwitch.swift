@@ -3,11 +3,16 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 24/1/2026.
-import CoreTools
-import ViewTools
-import SwiftUI
+//
 
-public struct ColourLevelSwitch<Colour: ColourModel & HSVAdjustable & EnvironmentResolvableColour & SwiftUIColourConvertible>: View {
+import ColourTools
+import CoreTools
+import SwiftUI
+import ViewTools
+
+public struct ColourLevelSwitch<
+  Colour: ColourModel & HSVAdjustable & EnvironmentResolvableColour & SwiftUIColourConvertible
+>: View {
   @Environment(\.activeColourHierarchy) private var activeHierarchicalColour
   @Environment(\.modifierKeys) private var modifierKeys
 
@@ -105,7 +110,7 @@ extension ColourLevelSwitch {
   @ViewBuilder
   private func Level(
     _ slot: HierarchicalColour,
-    colour: Colour
+    colour: Colour,
   ) -> some View {
     Button {
       withAnimation(Styles.animationSpringQuickNSubtle) {
@@ -132,7 +137,7 @@ extension ColourLevelSwitch {
   @ViewBuilder
   private func ColourLevelLabel(
     _ slot: HierarchicalColour,
-    colour: Colour
+    colour: Colour,
   ) -> some View {
 
     ZStack {
@@ -142,7 +147,7 @@ extension ColourLevelSwitch {
           .checkerboard(
             primary: RGBColour.gray(1),
             secondary: RGBColour.gray(0.7),
-            scale: 5.5
+            scale: 5.5,
           )
         )
       //        .fill(colour.alpha < 0.9 ? .checkerboard(scale: 5.5) : .clear)
@@ -157,7 +162,7 @@ extension ColourLevelSwitch {
     .offset(x: offsetAmount(slot))
     .animation(
       .snappy(duration: 0.22, extraBounce: 0.13),
-      value: slot
+      value: slot,
     )
     //    .zIndex(isActiveAndSwitchMode(colourLevel) ? 2 : 1)
     .zIndex(index(for: slot))

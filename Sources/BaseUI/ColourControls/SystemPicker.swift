@@ -7,6 +7,7 @@ import CoreTools
 import ViewTools
 import LayoutKit
 import SwiftUI
+import ColourTools
 
 public struct SystemColourPicker: View {
   @Environment(\.self) private var envSelf

@@ -5,11 +5,11 @@
 //  Created by Dave Coleman on 11/2/2026.
 //
 
-// import ColourKit
 import SwiftUI
 import CoreTools
 import ViewTools
 import BaseTools
+import ColourTools
 
 public struct StageViewConfig: Codable, Sendable, Equatable, Hashable {
   var fishEye: ShaderEffect = .fisheyePresetA

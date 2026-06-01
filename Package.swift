@@ -58,6 +58,7 @@ let package = Package(
         .module(.layoutKit),
         .extDependency(.coreTools),
         .extDependency(.viewTools),
+        .extDependency(.colourTools),
         .module(.baseTools),
         .module(.graphicsKit),
         .extDependency(.casePaths),
@@ -117,6 +118,7 @@ extension Target.Dependency {
 
 enum ExternalDependency {
   case coreTools
+  case colourTools
   case viewTools
   case enumMacros
   case casePaths
@@ -124,8 +126,9 @@ enum ExternalDependency {
 
   var reference: (String, String?) {
     switch self {
-      case .viewTools: ("ViewTools", "ToolKit")
       case .coreTools: ("CoreTools", "ToolKit")
+      case .colourTools: ("ColourTools", "ToolKit")
+      case .viewTools: ("ViewTools", "ToolKit")
       case .enumMacros: ("BaseMacros", nil)
       case .casePaths: ("CasePaths", "swift-case-paths")
       case .macroToolkit: ("MacroToolkit", "swift-macro-toolkit")

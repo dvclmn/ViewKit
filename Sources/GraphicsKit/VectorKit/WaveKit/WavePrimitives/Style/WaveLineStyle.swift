@@ -5,12 +5,11 @@
 //  Created by Dave Coleman on 25/1/2026.
 //
 
-// import ColourKit
-
 import Foundation
 import CoreTools
 import ViewTools
 import BaseTools
+import ColourTools
 
 public struct WaveLineStyle: Codable, Sendable, Equatable, Hashable {
   public var colour: RGBColour

@@ -5,9 +5,10 @@
 //  Created by Dave Coleman on 4/3/2026.
 //
 
-import SwiftUI
-import LayoutKit
+import ColourTools
 import CoreTools
+import LayoutKit
+import SwiftUI
 import ViewTools
 
 public struct RGBTrackStyle: SliderTrackStyle {
@@ -43,13 +44,13 @@ extension HSVTrackStyle {
           LinearGradient(
             colors: [.gray, Color(hue: colour.hue, saturation: 1.0, brightness: 1.0)],
             startPoint: .leading,
-            endPoint: .trailing
+            endPoint: .trailing,
           )
         case .brightness:
           LinearGradient(
             colors: [.black, colour.hueSatOnly.toColour],
             startPoint: .leading,
-            endPoint: .trailing
+            endPoint: .trailing,
           )
         case .alpha:
           preconditionFailure("Don't pass alpha to create a slider track gradient")

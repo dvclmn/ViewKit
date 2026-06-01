@@ -5,10 +5,11 @@
 //  Created by Dave Coleman on 17/2/2026.
 //
 
-// import ColourKit
+import ColourTools
 import SwiftUI
 import CoreTools
 import ViewTools
+import ColourTools
 
 struct HSVRepresentationModifier<Colour: ColourModel & HSVAdjustable>: ViewModifier {
 

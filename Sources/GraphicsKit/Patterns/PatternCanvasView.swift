@@ -7,6 +7,7 @@ import CoreTools
 import ViewTools
 import BaseTools
 import SwiftUI
+import ColourTools
 
 public struct PatternCanvas: View {
 

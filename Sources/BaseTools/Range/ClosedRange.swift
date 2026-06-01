@@ -11,7 +11,7 @@ extension Binding where Value == ClosedRange<Int> {
   public func toBindingBinaryFloatingPoint<T: BinaryFloatingPoint & Sendable>() -> Binding<ClosedRange<T>> {
     Binding<ClosedRange<T>>(
       get: { wrappedValue.toBinaryFloatingPointRange() },
-      set: { wrappedValue = $0.toIntRange }
+      set: { wrappedValue = $0.toIntRange },
     )
   }
 }
@@ -45,39 +45,8 @@ extension ClosedRange where Bound == CGFloat {
     Array(stride(from: lowerBound, through: upperBound, by: stepSize))
   }
 }
-extension ClosedRange where Bound == Double {
-  public var toCGFloatRange: ClosedRange<CGFloat> {
-    CGFloat(lowerBound)...CGFloat(upperBound)
-  }
-}
-
-extension ClosedRange where Bound == Int {
-  public var toDoubleRange: ClosedRange<Double> {
-    Double(lowerBound)...CGFloat(upperBound)
-  }
-  public var toCGFloatRange: ClosedRange<CGFloat> {
-    CGFloat(lowerBound)...CGFloat(upperBound)
-  }
-  public func toBinaryFloatingPointRange<T: BinaryFloatingPoint>() -> ClosedRange<T> {
-    T(lowerBound)...T(upperBound)
-  }
-}
-
-extension ClosedRange where Bound: BinaryFloatingPoint & Sendable {
-  public var toCGFloatRange: ClosedRange<CGFloat> {
-    CGFloat(lowerBound)...CGFloat(upperBound)
-  }
-  public var toDoubleRange: ClosedRange<Double> {
-    Double(lowerBound)...Double(upperBound)
-  }
-  public var toIntRange: ClosedRange<Int> {
-    Int(lowerBound)...Int(upperBound)
-  }
-}
 
 extension ClosedRange where Bound: BinaryFloatingPoint {
-
-  
 
   /// Returns the fractional position of the given value within the range.
   /// The inverse operation of the above `value(atPercent:)`

@@ -3,10 +3,13 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 23/1/2026.
+//
+
 import CoreTools
 import ViewTools
 import LayoutKit
 import SwiftUI
+import ColourTools
 
 public struct SquareColourPicker: View {
   @Environment(\.controlSize) private var controlSize

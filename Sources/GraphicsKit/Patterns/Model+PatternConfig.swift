@@ -5,11 +5,12 @@
 //  Created by Dave Coleman on 19/11/2024.
 //
 
-// import ColourKit
+import ColourTools
 import CoreGraphics
 import CoreTools
 import ViewTools
 import BaseTools
+import ColourTools
 import Foundation
 
 public struct PatternConfiguration: Codable, Equatable, Hashable, Sendable {

@@ -6,12 +6,11 @@
 //
 
 import BaseTools
+import ColourTools
 import CoreTools
 import Foundation
 import StringTools
 import ViewTools
-
-//import VectorKit
 
 public struct StrokeConfig: Sendable, Hashable, Codable {
   public let colour: RGBColour

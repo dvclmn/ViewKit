@@ -3,14 +3,13 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 12/5/2025.
-import CoreTools
-import ViewTools
-import BaseTools
-// import ColourKit
-import SwiftUI
+//
 
-//import LayoutKit
-//import UIPrimitives
+import BaseTools
+import ColourTools
+import CoreTools
+import SwiftUI
+import ViewTools
 
 /// overlay allows view to use Checkboard underneath
 //public struct CheckerboardTrackStyle<Overlay: View>: SliderTrackStyle {
@@ -33,13 +32,13 @@ extension ShapeStyle where Self == CheckerboardPattern {
     primary: RGBColour = .white,
     secondary: RGBColour = .gray,
     scale: CGFloat = 4.0,
-    offset: CGPoint = .zero
+    offset: CGPoint = .zero,
   ) -> Self {
     CheckerboardPattern(
       primary: primary,
       secondary: secondary,
       scale: scale,
-      offset: offset
+      offset: offset,
     )
   }
 
@@ -69,7 +68,7 @@ public struct CheckerboardPattern: ShapeStyle {
       primary: primary,
       secondary: secondary,
       scale: scale,
-      offset: offset
+      offset: offset,
     ).shader
   }
 }

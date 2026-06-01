@@ -6,6 +6,7 @@
 import CoreTools
 import ViewTools
 import SwiftUI
+
 //import InteractionKit
 
 @MainActor
@@ -48,7 +49,7 @@ struct PopupView: View {
           glass: hasGlassEffect ? .regular : nil,
           rounding: rounding,
           padding: .zero,
-          tint: message.label.role?.colour?.toColour,
+//          tint: message.label.role?.colour?.toColour,
           isEnabled: true
         )
         .depthShadow(
