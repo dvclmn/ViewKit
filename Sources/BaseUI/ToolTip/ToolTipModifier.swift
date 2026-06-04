@@ -79,7 +79,7 @@ extension ToolTipModifier {
     let hasInset: Bool = !excludedAlignments.contains(toolTipAlignment)
     let insetH: CGFloat = hasInset ? -14 : 12
 
-    let defaultOffset = CGSize(insetH, 10)
+    let defaultOffset = CGSize(width: insetH, height: 10)
     let totalOffset: CGSize = defaultOffset
 
     let unitPoint = toolTipAlignment.toUnitPoint()

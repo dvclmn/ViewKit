@@ -13,7 +13,7 @@ import SwiftUI
 
 public struct LabelExampleView: View {
 
-  let elementPickerItemSize: CGSize = .init(100, 80)
+  let elementPickerItemSize: CGSize = .init(width: 100, height: 80)
   public var body: some View {
 
     ScrollView {

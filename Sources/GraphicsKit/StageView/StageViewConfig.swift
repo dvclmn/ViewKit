@@ -45,7 +45,7 @@ public struct StageViewConfig: Codable, Sendable, Equatable, Hashable {
     colour: HSVColour = .init(h: 0.1, s: 0.5, v: 0.4),
     colourSecondary: HSVColour = .init(h: 0.8, s: 0.5, v: 0.4),
     size: Double = 40,
-    offset: CGSize = CGSize(20, 30),
+    offset: CGSize = CGSize(width: 20, height: 30),
     gap: Double = 40,
     width: Double = 40,
     degrees: Double = 35,

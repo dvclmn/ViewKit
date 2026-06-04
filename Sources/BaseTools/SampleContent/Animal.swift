@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ViewTools
 import CoreTools
 
 extension SampleContent {
