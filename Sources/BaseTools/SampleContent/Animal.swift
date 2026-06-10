@@ -100,7 +100,7 @@ extension SampleContent.Animal {
         animal.label.text,
 //        animal.label.attributedText,
         icon: newIcon,
-        role: animal.label.role
+//        role: animal.label.role
       )
 
       return Self(

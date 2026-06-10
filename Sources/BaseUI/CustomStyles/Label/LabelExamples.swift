@@ -3,6 +3,8 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 7/3/2025.
+//
+
 import CoreTools
 import ViewTools
 import BaseTools
@@ -22,7 +24,7 @@ public struct LabelExampleView: View {
         CardGrid(data: SampleContent.Animal.withSymbols()) { item, isHovered in
           let label =
             isHovered
-            ? QuickLabel("Remove", icon: .preset(.trash), role: .destructive)
+            ? QuickLabel("Remove", icon: .preset(.trash))
             : item.label
 
           MaybeLabel(label)

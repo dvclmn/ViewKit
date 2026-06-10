@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
   name: "BaseHelpers",
   platforms: [
-    .iOS("17.0"),
-    .macOS("14.0"),
+    .iOS(.v17),
+    .macOS(.v14),
   ],
   // MARK: - Libraries
   products: [
@@ -48,6 +48,7 @@ let package = Package(
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
         .extDependency(.coreTools),
+        .extDependency(.stringTools),
         .extDependency(.viewTools),
       ],
     ),
@@ -57,6 +58,7 @@ let package = Package(
       dependencies: [
         .module(.layoutKit),
         .extDependency(.coreTools),
+        .extDependency(.stringTools),
         .extDependency(.viewTools),
         .extDependency(.colourTools),
         .module(.baseTools),
@@ -71,6 +73,7 @@ let package = Package(
       dependencies: [
         .module(.baseTools),
         .extDependency(.coreTools),
+        .extDependency(.stringTools),
         .extDependency(.viewTools),
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
@@ -84,6 +87,7 @@ let package = Package(
       name: "LayoutKit",
       dependencies: [
         .extDependency(.coreTools),
+        .extDependency(.stringTools),
         .extDependency(.viewTools),
         .module(.baseTools),
         .extDependency(.enumMacros),
@@ -118,6 +122,7 @@ extension Target.Dependency {
 
 enum ExternalDependency {
   case coreTools
+  case stringTools
   case colourTools
   case viewTools
   case enumMacros
@@ -127,6 +132,7 @@ enum ExternalDependency {
   var reference: (String, String?) {
     switch self {
       case .coreTools: ("CoreTools", "ToolKit")
+      case .stringTools: ("StringTools", "ToolKit")
       case .colourTools: ("ColourTools", "ToolKit")
       case .viewTools: ("ViewTools", "ToolKit")
       case .enumMacros: ("BaseMacros", nil)
