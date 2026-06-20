@@ -41,7 +41,7 @@ extension PopupMessage {
     actions: PopupAction...
   ) -> PopupMessage {
     PopupMessage(
-      label: QuickLabel(title, icon: .preset(.tick)),
+      label: LabelDescriptor(title, icon: .preset(.tick)),
       message: message,
       loading: .none,
       dismissal: .automatic(2),
@@ -55,7 +55,7 @@ extension PopupMessage {
     actions: PopupAction...
   ) -> PopupMessage {
     PopupMessage(
-      label: QuickLabel(title, icon: .preset(.warning)),
+      label: LabelDescriptor(title, icon: .preset(.warning)),
       message: message,
       loading: .none,
       actions: actions

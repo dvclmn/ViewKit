@@ -27,7 +27,7 @@ public struct CycleLayoutMode: View {
   public var body: some View {
 
     Cycler(item: $mode) { mode in
-      MaybeLabel(mode.label)
+      QuickLabel(mode.label)
     }
 
   }

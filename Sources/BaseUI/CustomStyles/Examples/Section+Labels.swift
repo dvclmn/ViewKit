@@ -25,9 +25,9 @@ public struct Section_Labels: View {
         .environment(\.labelDisplay, .stacked)
 
       GroupBox("MaybeLabels") {
-        MaybeLabel("Just a title")
-        MaybeLabel(QuickLabel("Got an Emoji", icon: .emoji("🛼")))
-        MaybeLabel("Base, w/ title & icon", icon: .symbol(Icons.getRandom.icon))
+        QuickLabel("Just a title")
+        QuickLabel(LabelDescriptor("Got an Emoji", icon: .emoji("🛼")))
+        QuickLabel("Base, w/ title & icon", icon: .symbol(Icons.getRandom.icon))
           .labelStyle(.base)
       }
       .groupBoxStyle(.custom)

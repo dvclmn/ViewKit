@@ -24,8 +24,8 @@ public protocol NamedAction {
 
 extension NamedAction {
 
-//  public var label: QuickLabel {
-//    QuickLabel(verb, symbol: icon)
+//  public var label: LabelDescriptor {
+//    LabelDescriptor(verb, symbol: icon)
 //  }
 
   public static var itemPluralName: String? { nil }
@@ -50,12 +50,12 @@ extension NamedAction {
   public func actionName(
     count: Int,
     countStrategy: CountStrategy = .showCount(evenForSingle: false)
-  ) -> QuickLabel {
+  ) -> LabelDescriptor {
 //  ) -> String {
     let noun = Self.itemName
     let pluralOverride = Self.itemPluralName
     let nounPart = pluralise(noun, count: count, countStrategy: countStrategy, irregularPlural: pluralOverride)
-    let label = QuickLabel("\(verb) \(nounPart)", symbol: self.icon)
+    let label = LabelDescriptor("\(verb) \(nounPart)", icon: icon.map { .symbol($0) })
     return label
   }
 }

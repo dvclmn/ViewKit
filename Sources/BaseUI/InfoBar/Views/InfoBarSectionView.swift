@@ -34,7 +34,7 @@ struct InfoBarSectionView: View {
         .labelIconSpacingCompatible(4)
 
       } header: {
-        MaybeLabel(sectionTitle)
+        QuickLabel(sectionTitle)
           .environment(\.labelDisplay, sectionLabelDisplay)
           .fontWeight(.semibold)
           .frame(maxHeight: .infinity)

@@ -35,7 +35,7 @@ let package = Package(
 
   // MARK: - Dependancies
   dependencies: [
-    .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.2"),
+    .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.3"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
     .package(url: "https://github.com/dvclmn/ToolKit", .upToNextMinor(from: "0.2.0")),
   ],

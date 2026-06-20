@@ -6,9 +6,10 @@
 //
 
 import CoreTools
+import LayoutKit
 import SwiftUI
 import ViewTools
-import LayoutKit
+
 //import UIPrimitives
 
 struct PopupCoreView: View {
@@ -25,7 +26,7 @@ struct PopupCoreView: View {
 
     VStack(alignment: .leading, spacing: spacing) {
 
-      MaybeLabel(popupMessage.label)
+      QuickLabel(popupMessage.label)
         .environment(\.symbolVariants, .fill)
         .environment(\.symbolRenderingMode, .hierarchical)
         .environment(\.iconColour, AnyShapeStyle(.secondary))
@@ -37,7 +38,7 @@ struct PopupCoreView: View {
         .padding(.trailing, hasCloseButton ? 20 : 0)
 
       if let messageDetail = popupMessage.message {
-        Text(messageDetail.toMarkdownCompatible)
+        Text(messageDetail)
           .foregroundStyle(.secondary)
           .font(isCompactMode ? .caption : .body)
       }
@@ -60,7 +61,7 @@ struct PopupCoreView: View {
             LinearGradient(
               colors: [.clear, .white.opacity(0.1)],
               startPoint: .center,
-              endPoint: .trailing
+              endPoint: .trailing,
             )
           )
           .frame(maxWidth: progressBarLength, maxHeight: 5)
@@ -75,7 +76,7 @@ struct PopupCoreView: View {
     .frame(
       minWidth: 200,
       //      maxWidth: 360,
-      alignment: .leading
+      alignment: .leading,
         //      alignment: layoutAlignment ?? .trailing
     )
     .multilineTextAlignment(.leading)

@@ -13,13 +13,13 @@ extension SampleContent {
 
   public struct Animal: Identifiable, Equatable, Sendable, LabeledItem {
     public let id: UUID
-    public let label: QuickLabel
+    public let label: LabelDescriptor
     let state: Bool
     let category: Category
 
     public init(
       id: UUID = UUID(),
-      label: QuickLabel,
+      label: LabelDescriptor,
       state: Bool,
       category: Category
     ) {
@@ -84,7 +84,7 @@ extension SampleContent.Animal {
   ]
 }
 
-/// Generic helper method compatible with QuickLabel structure
+/// Generic helper method compatible with LabelDescriptor structure
 extension SampleContent.Animal {
   static func mapWithIcons<T>(
     _ icons: [T],
@@ -95,8 +95,8 @@ extension SampleContent.Animal {
       let iconIndex = index < icons.count ? index : index % max(icons.count, 1)
       let newIcon = icons.isEmpty ? fallback : transform(icons[iconIndex])
 
-      /// Create new QuickLabel with the original attributedText and role, but new icon
-      let newLabel = QuickLabel(
+      /// Create new LabelDescriptor with the original attributedText and role, but new icon
+      let newLabel = LabelDescriptor(
         animal.label.text,
 //        animal.label.attributedText,
         icon: newIcon,

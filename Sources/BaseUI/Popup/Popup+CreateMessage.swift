@@ -15,7 +15,7 @@ extension Popup {
 
   public func showPopup(_ title: String) {
     Task {
-      await showAndHidePopup(popupMessage: PopupMessage(label: QuickLabel(title)))
+      await showAndHidePopup(popupMessage: PopupMessage(label: LabelDescriptor(title)))
     }
   }
 
@@ -28,7 +28,7 @@ extension Popup {
 
   public func showPopup(_ error: any LocalizedError) {
     Task { @MainActor in
-      let label = QuickLabel(
+      let label = LabelDescriptor(
         error.errorDescription ?? "An unknown error occurred",
         icon: .preset(.warning)
       )

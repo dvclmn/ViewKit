@@ -10,7 +10,7 @@ import SwiftUI
 @Observable
 final class SliderHandler {
 
-  var label: QuickLabel
+  var label: LabelDescriptor
   //  var minMaxLabels: (String, String)? = nil
   var range: ClosedRange<Double>
   var step: Double?
@@ -32,7 +32,7 @@ final class SliderHandler {
   let cellCharacters = ["░", "▒", "▓", "█"]
 
   init(
-    label: QuickLabel,
+    label: LabelDescriptor,
     range: ClosedRange<Double>,
     step: Double?,
     characterSize: CGSize?,

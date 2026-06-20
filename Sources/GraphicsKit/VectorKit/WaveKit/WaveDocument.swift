@@ -5,13 +5,11 @@
 //  Created by Dave Coleman on 12/2/2026.
 //
 
-import Foundation
-import CoreTools
-import ViewTools
 import BaseTools
 import ColourTools
-
-//import IdentifiedCollections
+import CoreTools
+import Foundation
+import ViewTools
 
 public typealias WaveElements = [VisualElementKind: WaveVisualElement]
 public struct WaveDocument: Codable, Sendable, Equatable {
@@ -26,7 +24,7 @@ public struct WaveDocument: Codable, Sendable, Equatable {
   public init(
     waves: IdentifiedList<ConfiguredWave>,
     settings: WaveRenderSettings,
-    drivers: [WaveDriver]
+    drivers: [WaveDriver],
   ) {
     self.waves = waves
     self.settings = settings
@@ -37,7 +35,7 @@ public struct WaveDocument: Codable, Sendable, Equatable {
   public init(
     waves: [ConfiguredWave],
     settings: WaveRenderSettings,
-    drivers: [WaveDriver]
+    drivers: [WaveDriver],
   ) {
     self.init(waves: IdentifiedList(waves), settings: settings, drivers: drivers)
   }
@@ -47,7 +45,7 @@ extension WaveDocument {
   public mutating func addElement(
     _ kind: VisualElementKind,
     baseValue: Double? = nil,
-    with wave: ConfiguredWave = .waveHExample
+    with wave: ConfiguredWave = .waveHExample,
   ) {
     //    let element = WaveVisualElement(
     //      kind: kind,
@@ -56,7 +54,7 @@ extension WaveDocument {
     let newDriver = WaveDriver(
       waveID: wave.id,
       elementKind: kind,
-      operation: kind.operation
+      operation: kind.operation,
     )
     waves.append(wave)
     drivers.append(newDriver)
@@ -82,14 +80,14 @@ extension WaveDocument {
     style: WaveStyle = .originalExample,
     sampleCount: Int = 20,
     placement: WavePlacement = .vertical,
-    interpolation: WaveInterpolation = .linear
+    interpolation: WaveInterpolation = .linear,
   ) -> Self {
     let settings = WaveRenderSettings(
       style: style,
       blendMode: .add,
       placement: placement,
       sampleCount: sampleCount,
-      interpolation: interpolation
+      interpolation: interpolation,
     )
 
     let drivers: [WaveDriver] = [
@@ -114,12 +112,12 @@ extension ConfiguredWave {
         amp: 100,
         freq: 0.3,
         phaseTurns: 0.6,
-        waveform: .sine()
+        waveform: .sine(),
       ),
       config: .init(
         cycles: 4,
-        noise: 0
-      )
+        noise: 0,
+      ),
     )
   }
 
@@ -129,12 +127,12 @@ extension ConfiguredWave {
         amp: 80,
         freq: 0.2,
         phaseTurns: 0,
-        waveform: .sine()
+        waveform: .sine(),
       ),
       config: .init(
         cycles: 2,
-        noise: 0
-      )
+        noise: 0,
+      ),
     )
   }
 
@@ -144,12 +142,12 @@ extension ConfiguredWave {
         amp: 0.5,
         freq: 0.2,
         phaseTurns: 0,
-        waveform: .sine()
+        waveform: .sine(),
       ),
       config: .init(
         cycles: 2,
-        noise: 0
-      )
+        noise: 0,
+      ),
     )
   }
 }
@@ -165,8 +163,8 @@ extension WaveStyle {
         shape: .circle,
         radius: 30,
         colour: RGBColour(0.3, 0.9, 0.3),
-        colourMixStrength: 3.4
-      )
+        colourMixStrength: 3.4,
+      ),
     )
   }
 }

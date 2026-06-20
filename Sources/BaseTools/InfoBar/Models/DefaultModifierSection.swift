@@ -15,7 +15,7 @@ extension InfoBarItem {
   package static func modifiersSection(_ modifiers: Modifiers?) -> InfoBarItem {
     InfoBarItem(
       section: ModifiersSectionKey.self,
-      label: QuickLabel("Modifiers", symbol: "keyboard"),
+      label: LabelDescriptor("Modifiers", symbol: "keyboard"),
       content: "Need to fix"
     )
   }

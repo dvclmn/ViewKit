@@ -55,7 +55,7 @@ extension View {
       value: items.map { text in
         InfoBarItem(
           section: key,
-          label: QuickLabel(stringLiteral: ""),
+          label: LabelDescriptor(stringLiteral: ""),
           content: text
         )
       }

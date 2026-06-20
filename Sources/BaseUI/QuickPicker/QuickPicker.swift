@@ -33,7 +33,7 @@ public struct QuickPicker<Item: LabeledItem & Hashable>: View {
 
     Picker(title, selection: $selection) {
       ForEach(sourceData) { item in
-        MaybeLabel(item.label).tag(item)
+        QuickLabel(item.label).tag(item)
 //        TextLabel(for: item).tag(item)
       }
     }

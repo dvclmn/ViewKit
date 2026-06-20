@@ -56,12 +56,12 @@ extension CardGrid {
 #Preview {
   // @Previewable @State var store = AppHandler()
   CardGrid(
-    //    label: QuickLabel("Hello", symbol: "eye"),
+    //    label: LabelDescriptor("Hello", symbol: "eye"),
     data: SampleContent.Animal.withSymbols(),
     cardSize: .localPreset,
       //  ) { item in
   ) { item, isHovered in
-    MaybeLabel(item.label)
+    QuickLabel(item.label)
   }
   // .environment(store)
 }

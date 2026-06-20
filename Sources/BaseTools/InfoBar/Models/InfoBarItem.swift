@@ -12,13 +12,13 @@ import StringTools
 public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
   public let id: UUID
   public let sectionKey: InfoBarSectionID
-  public let label: QuickLabel?
+  public let label: LabelDescriptor?
   public let columnedContent: ColumnString
 
   public init(
     id: UUID = UUID(),
     sectionKey: InfoBarSectionID,
-    label: QuickLabel?,
+    label: LabelDescriptor?,
     content: ColumnString
   ) {
     self.id = id
@@ -33,7 +33,7 @@ extension InfoBarItem {
   public var content: String { columnedContent.content }
   public init(
     section: InfoBarSectionID,
-    label: QuickLabel?,
+    label: LabelDescriptor?,
     content: String,
     columnWidth: ColumnString.Width = .default
   ) {
@@ -48,7 +48,7 @@ extension InfoBarItem {
   /// implicitly converted to a SectionID
   public init<K: InfoBarSectionKey>(
     section: K.Type,
-    label: QuickLabel?,
+    label: LabelDescriptor?,
     content: String,
     columnWidth: ColumnString.Width = .default
   ) {

@@ -13,7 +13,7 @@ import SwiftUI
 public struct PopupMessage: Sendable, Identifiable {
   public let id: UUID
 
-  var label: QuickLabel
+  var label: LabelDescriptor
   let message: String?
   let loading: PopupLoadingIndicator
   var dismissal: PopupDismissBehaviour
@@ -21,7 +21,7 @@ public struct PopupMessage: Sendable, Identifiable {
 
   public init(
     id: UUID = UUID(),
-    label: QuickLabel,
+    label: LabelDescriptor,
     message: String? = nil,
     loading: PopupLoadingIndicator = .none,
     dismissal: PopupDismissBehaviour = .manual,
@@ -50,7 +50,7 @@ extension PopupMessage {
     actions: PopupAction...
   ) -> Self {
     PopupMessage(
-      label: QuickLabel(title),
+      label: LabelDescriptor(title),
       loading: loading,
       dismissal: dismissal,
       actions: actions
@@ -66,7 +66,7 @@ extension PopupMessage {
     actions: PopupAction...
   ) -> Self {
     PopupMessage(
-      label: QuickLabel(title, icon: icon),
+      label: LabelDescriptor(title, icon: icon),
       message: message,
       loading: loading,
       dismissal: dismissal,
@@ -98,7 +98,7 @@ extension PopupMessage: CustomStringConvertible {
 
 extension PopupMessage: ExpressibleByStringLiteral {
   public init(stringLiteral value: StringLiteralType) {
-    self.init(label: QuickLabel(value))
+    self.init(label: LabelDescriptor(value))
   }
 }
 

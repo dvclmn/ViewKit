@@ -30,7 +30,7 @@ public struct InfoBarItemView: View {
     /// Spacing for Label {space} Content
     HStack(spacing: 2) {
       if let label = item.label {
-        MaybeLabel(label)
+        QuickLabel(label)
           .environment(\.labelDisplay, itemLabelDisplay)
 
           /// This seems to be behaving; this ensures that the text label

@@ -22,7 +22,7 @@ public protocol InfoBarItemDescriptor {
 
 extension InfoBarItemDescriptor {
 
-  public var label: QuickLabel { .init(labelText, icon: icon) }
+  public var label: LabelDescriptor { .init(labelText, icon: icon) }
   //  public var labelText: String { label.text }
   //  public var icon: IconLiteral { label.icon }
 

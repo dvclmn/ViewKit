@@ -24,10 +24,10 @@ public struct LabelExampleView: View {
         CardGrid(data: SampleContent.Animal.withSymbols()) { item, isHovered in
           let label =
             isHovered
-            ? QuickLabel("Remove", icon: .preset(.trash))
+            ? LabelDescriptor("Remove", icon: .preset(.trash))
             : item.label
 
-          MaybeLabel(label)
+          QuickLabel(label)
             .containerValueBool(.isEmphasised, item.label.text == "Tapir")
 
         }
@@ -42,9 +42,9 @@ public struct LabelExampleView: View {
           .labelStyle(.base)
 
         GroupBox("MaybeLabels") {
-          MaybeLabel("One with title")
-          MaybeLabel(QuickLabel("Got an Emoji", icon: .emoji("🛼")))
-          MaybeLabel("With title and icon", icon: .symbol("car"))
+          QuickLabel("One with title")
+          QuickLabel(LabelDescriptor("Got an Emoji", icon: .emoji("🛼")))
+          QuickLabel("With title and icon", icon: .symbol("car"))
         }
         .groupBoxStyle(.custom)
 

@@ -15,7 +15,7 @@ extension LabelStyle where Self == CustomLabel {
 
 }
 
-/// Note regarding `MaybeLabel`: II think I need to handle this
+/// Note regarding `QuickLabel`: II think I need to handle this
 /// once it's been composed into an actual `Label`
 public struct CustomLabel: LabelStyle {
   @Environment(\.labelDisplay) private var labelDisplay

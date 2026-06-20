@@ -66,7 +66,7 @@ extension VisualElementKind {
       case .lineWidth: "lineweight"
     }
   }
-  public var label: QuickLabel { .init(name, icon: icon) }
+  public var label: LabelDescriptor { .init(name, icon: icon) }
 }
 
 extension VisualElementKind {

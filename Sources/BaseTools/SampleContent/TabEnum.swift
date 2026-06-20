@@ -10,7 +10,7 @@ import CoreTools
 
 public enum ExampleTab: String, Pickable {
   
-  public static let pickerLabel: QuickLabel = QuickLabel("Example Tab")
+  public static let pickerLabel: LabelDescriptor = LabelDescriptor("Example Tab")
   case blim
   case fringent
   case sartim

@@ -16,7 +16,7 @@ extension QuickSlider {
     var body: some View {
 
       @Bindable var store = store
-      MaybeLabel(store.label)
+      QuickLabel(store.label)
         .onDoubleTap($value.toBindingDouble, defaultValue: sliderDefaultValue)
 
     }

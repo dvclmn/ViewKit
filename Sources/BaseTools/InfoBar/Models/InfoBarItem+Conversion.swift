@@ -27,7 +27,7 @@ extension InfoBarItem {
     else { return nil }
     self.init(
       section: section,
-      label: label.map { QuickLabel(stringLiteral: $0) },
+      label: label.map { LabelDescriptor(stringLiteral: $0) },
       content: value,
     )
   }

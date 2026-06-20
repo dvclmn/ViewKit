@@ -34,7 +34,7 @@ public struct QuickSlider<TrackBody: View>: View, ValueFormattable, SliderStylab
 
     self._store = State(
       initialValue: SliderHandler(
-        label: QuickLabel(title),
+        label: LabelDescriptor(title),
         range: range.toDoubleRange,
         step: step.toDoubleIfPresent,
         characterSize: characterSize,
@@ -88,7 +88,7 @@ extension QuickSlider {
 extension QuickSlider {
 
   // TODO: Considering pivoting to SwiftUI-style
-  // Label closure/ViewBuilder instead of QuickLabel?
+  // Label closure/ViewBuilder instead of LabelDescriptor?
   public init(
     _ title: String,
     value: Binding<Double>,
@@ -100,7 +100,7 @@ extension QuickSlider {
     self._value = value
     self._store = State(
       initialValue: SliderHandler(
-        label: QuickLabel(title),
+        label: LabelDescriptor(title),
         range: range.toDoubleRange,
         step: step.toDoubleIfPresent,
         characterSize: characterSize,

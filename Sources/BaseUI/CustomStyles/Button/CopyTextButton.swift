@@ -4,9 +4,8 @@
 //
 //  Created by Dave Coleman on 13/9/2025.
 import CoreTools
-import ViewTools
 import SwiftUI
-
+import ViewTools
 
 public struct CopyTextButton: View {
   @Environment(\.popup) private var popup

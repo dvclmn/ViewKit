@@ -35,7 +35,7 @@ where TabItem: CaseIterable, TabItem.AllCases: RandomAccessCollection {
               tabContent(tabItem)
             }  // END form
           } label: {
-            MaybeLabel(tabItem.label)
+            QuickLabel(tabItem.label)
           }
         }  // END foreach
       }
@@ -46,7 +46,7 @@ where TabItem: CaseIterable, TabItem.AllCases: RandomAccessCollection {
           Form {
             tabContent(tab)
               .tabItem {
-                MaybeLabel(tab.label)
+                QuickLabel(tab.label)
               }
           }
           .padding(Styles.sizeLarge)
