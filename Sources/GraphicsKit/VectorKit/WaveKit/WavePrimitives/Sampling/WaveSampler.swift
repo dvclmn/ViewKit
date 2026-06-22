@@ -91,8 +91,6 @@ extension WaveSampler {
   package static func sineLookup(_ phase: T) -> T {
     let tableSize = 1 << 11
     let mask = tableSize - 1
-    //    let isFloat = T.self == Float.self
-    //        let table = isFloat ? FloatSineTable.table : DoubleSineTable.table
     guard T.self == Float.self else {
       let table = DoubleSineTable.table
       let scaled = Double(phase) * Double(tableSize)
@@ -104,6 +102,7 @@ extension WaveSampler {
       let y1 = table[i1]
       return T(y0 + frac * (y1 - y0))
     }
+    
     let table = FloatSineTable.table
     let scaled = Float(phase) * Float(tableSize)
     let i = Int(floor(max(0, scaled)))
@@ -151,46 +150,3 @@ package struct FloatSineTable {
     return table
   }
 }
-
-//extension WaveSampler {
-/// Note: Scalar calls: Calling sin repeatedly per-sample can be relatively expensive.
-/// A lookup table with linear interpolation is extremely fast for single-sample access.
-/// So for scalar sampling (one value(for:at:) at a time), this use of `sineTable`
-/// is often faster and predictable.
-///
-/// Returns the waveform value for a given phase in turns.
-/// - Parameters:
-///   - waveform: The waveform shape to sample.
-///   - phase: A phase value in arbitrary units; it will be normalized to [0, 1).
-///            Interpret 1.0 as one full turn (2π radians). Values outside [0, 1)
-///            are wrapped safely before lookup.
-/// - Returns: The waveform sample in the range [-1, 1].
-//  @inlinable
-//  public static func value(
-//    for waveform: Waveform,
-//    at phase: T
-//  ) -> T {
-//    let p = Wave.wrapUnit(phase)
-//    return value(for: waveform, phaseRadians: p)
-//  }
-//
-//  /// `phaseRadians` must already be wrapped to 2π radians
-//  @inlinable
-//  public static func value(
-//    for waveform: Waveform,
-//    phaseRadians: T
-//  ) -> T {
-//    let p = phaseRadians
-//
-//    return switch waveform {
-//      case .sine: sineLookup(p)
-//
-//      /// Standard: `-1 → 1 → -1`, peaks at `0.25` and `0.75`
-//      case .triangle: T(1) - T(4) * abs(p - T(0.5))
-//
-//      /// Linear ramp: `-1 → 1`, discontinuity at integers
-//      case .sawtooth: T(2) * p - T(1)
-//      case .square: p < T(0.5) ? T(1) : T(-1)
-//    }
-//  }
-//}
