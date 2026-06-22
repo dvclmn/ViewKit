@@ -1,0 +1,26 @@
+{
+  "configurations" : [
+    {
+      "id" : "88CACE37-6920-4FA2-9B80-6CAFBC151870",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "performanceAntipatternCheckerEnabled" : true,
+    "testInteropMode" : "complete"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "GraphicsKitTests",
+        "name" : "GraphicsKitTests"
+      }
+    }
+  ],
+  "version" : 1
+}

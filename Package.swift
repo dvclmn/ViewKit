@@ -103,7 +103,13 @@ let package = Package(
       ],
     ),
 
+    .testTarget(
+      name: "GraphicsKitTests",
+      dependencies: ["GraphicsKit"],
+    ),
+
   ],
+
 )
 
 // MARK: - Helpers

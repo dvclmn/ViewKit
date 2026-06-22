@@ -5,7 +5,6 @@
 //  Created by Dave Coleman on 5/2/2026.
 //
 
-
 import Foundation
 
 public struct WaveDriver: Sendable, Codable, Equatable, Identifiable {
@@ -23,7 +22,7 @@ public struct WaveDriver: Sendable, Codable, Equatable, Identifiable {
     id: UUID = UUID(),
     waveID: ConfiguredWave.ID,
     elementKind: VisualElementKind,
-    operation: WaveOperation
+    operation: WaveOperation,
   ) {
     self.id = id
     self.waveID = waveID
@@ -49,14 +48,14 @@ extension WaveDriver {
   @inlinable
   public func applyOperation(
     to element: inout WaveVisualElement,
-    offset: Double
+    offset: Double,
   ) {
     guard element.kind == elementKind else { return }
-    
+
     let value = operation.apply(
       base: element.base,
       current: element.current,
-      offset: offset
+      offset: offset,
     )
     element.setCurrent(value)
   }

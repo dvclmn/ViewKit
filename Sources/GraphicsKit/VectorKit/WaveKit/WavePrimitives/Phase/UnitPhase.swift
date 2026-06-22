@@ -10,9 +10,14 @@ import Foundation
 public struct UnitPhase<T: WaveFloat>: Sendable, Hashable, Codable {
 
   /// Always wrapped to [0, 1)
-  public var turns: T
+  public private(set) var turns: T
 
   public init(_ turns: T) { self.turns = Self.wrap(turns) }
+
+  public init(from decoder: any Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    self.init(try container.decode(T.self, forKey: .turns))
+  }
 
   public mutating func advance(by dTurns: T) {
     turns = Self.wrap(turns + dTurns)
@@ -24,6 +29,10 @@ public struct UnitPhase<T: WaveFloat>: Sendable, Hashable, Codable {
   }
 
   @inline(__always) public var radians: T { turns * T.twoPi }
+
+  private enum CodingKeys: String, CodingKey {
+    case turns
+  }
 }
 
 extension BinaryFloatingPoint {
