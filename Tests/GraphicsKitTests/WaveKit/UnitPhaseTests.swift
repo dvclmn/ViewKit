@@ -12,8 +12,6 @@ import Testing
 @Suite("Unit phase")
 struct UnitPhaseTests {
 
-  private static let tolerance = 1e-12
-
   struct TurnsCase: Sendable {
     let input: Double
     let expected: Double
@@ -35,7 +33,7 @@ struct UnitPhaseTests {
     let phase = UnitPhase<Double>(testCase.input)
 
     #expect((0.0..<1.0).contains(phase.turns))
-    #expect(abs(phase.turns - testCase.expected) < Self.tolerance)
+    expectApproximatelyEqual(phase.turns, testCase.expected, tolerance: 1e-12)
   }
 
   @Test("Advancing wraps forwards")
@@ -44,7 +42,7 @@ struct UnitPhaseTests {
 
     phase.advance(by: 0.25)
 
-    #expect(abs(phase.turns - 0.15) < Self.tolerance)
+    expectApproximatelyEqual(phase.turns, 0.15, tolerance: 1e-12)
   }
 
   @Test("Advancing wraps backwards")
@@ -53,7 +51,7 @@ struct UnitPhaseTests {
 
     phase.advance(by: -0.25)
 
-    #expect(abs(phase.turns - 0.85) < Self.tolerance)
+    expectApproximatelyEqual(phase.turns, 0.85, tolerance: 1e-12)
   }
 
   @Test("Decoding wraps an out-of-range value")
@@ -62,7 +60,7 @@ struct UnitPhaseTests {
 
     let phase = try JSONDecoder().decode(UnitPhase<Double>.self, from: encoded)
 
-    #expect(abs(phase.turns - 0.25) < Self.tolerance)
+    expectApproximatelyEqual(phase.turns, 0.25, tolerance: 1e-12)
   }
 
   @Test("Encoding preserves the keyed turns representation")
@@ -71,7 +69,7 @@ struct UnitPhaseTests {
 
     let payload = try JSONDecoder().decode(PhasePayload.self, from: encoded)
 
-    #expect(abs(payload.turns - 0.25) < Self.tolerance)
+    expectApproximatelyEqual(payload.turns, 0.25, tolerance: 1e-12)
   }
 
   private struct PhasePayload: Codable {

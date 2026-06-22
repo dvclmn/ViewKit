@@ -16,18 +16,19 @@ public typealias Sampler = WaveSampler<Double>
 public enum WaveSampler<T: WaveFloat> {}
 
 extension WaveSampler {
-  /// Primary generic entry — callers specify domain and mode.
+  /// Samples a waveform at a normalised phase, before amplitude or visual
+  /// mapping is applied.
+  ///
+  /// The returned unit value is in `-1...1`. Discontinuous waveforms use the
+  /// following boundary policy:
+  /// - Square changes from `1` to `-1` at half a turn.
+  /// - Sawtooth wraps from its upper limit back to `-1` at a whole turn.
   @inlinable
   public static func sample(
     _ waveform: Waveform,
-    phase: T,
-    //    domain: PhaseDomain = .turns,
+    phase: UnitPhase<T>
   ) -> T {
-    let pTurns: T = phase
-    //    let pTurns: T =
-    //      (domain == .turns)
-    //      ? Wave.wrapUnit(phase)
-    //      : Wave.wrapUnit(phase / T.twoPi)
+    let pTurns = phase.turns
 
     switch waveform {
       case .sine(let mode):
@@ -39,6 +40,18 @@ extension WaveSampler {
       case .sawtooth: return T(2) * pTurns - T(1)
       case .square: return pTurns < T(0.5) ? T(1) : T(-1)
     }
+  }
+
+  /// Samples a waveform from a phase expressed in turns.
+  ///
+  /// This overload preserves the existing scalar API while making the
+  /// ``UnitPhase`` overload the authoritative implementation.
+  @inlinable
+  public static func sample(
+    _ waveform: Waveform,
+    phase: T
+  ) -> T {
+    sample(waveform, phase: UnitPhase(phase))
   }
 }
 

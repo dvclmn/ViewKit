@@ -12,8 +12,6 @@ import Testing
 @Suite("Phase unit conversion")
 struct PhaseUnitConversionTests {
 
-  private static let tolerance = 1e-12
-
   struct TurnsToRadiansCase: Sendable {
     let turns: Double
     let expectedRadians: Double
@@ -36,7 +34,11 @@ struct PhaseUnitConversionTests {
   func turnsConvertToRadians(_ testCase: TurnsToRadiansCase) {
     let phase = UnitPhase<Double>(testCase.turns)
 
-    #expect(abs(phase.radians - testCase.expectedRadians) < Self.tolerance)
+    expectApproximatelyEqual(
+      phase.radians,
+      testCase.expectedRadians,
+      tolerance: 1e-12
+    )
   }
 
   @Test(
@@ -53,6 +55,6 @@ struct PhaseUnitConversionTests {
   func radiansConvertToTurns(_ testCase: RadiansToTurnsCase) {
     let phase = RadiansPhase<Double>(testCase.radians)
 
-    #expect(abs(phase.turns - testCase.expectedTurns) < Self.tolerance)
+    expectApproximatelyEqual(phase.turns, testCase.expectedTurns, tolerance: 1e-12)
   }
 }
