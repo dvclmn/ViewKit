@@ -64,6 +64,7 @@ let package = Package(
         .extDependency(.colourTools),
         .module(.baseTools),
         .module(.graphicsKit),
+        .module(.waveKit),
         .extDependency(.casePaths),
         .extDependency(.enumMacros),
       ],
@@ -168,6 +169,7 @@ enum InternalModule {
   case graphicsKit
   case layoutKit
   case motionKit
+  case waveKit
 
   var name: String {
     switch self {
@@ -176,6 +178,7 @@ enum InternalModule {
       case .graphicsKit: "GraphicsKit"
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
+      case .waveKit: "WaveKit"
     }
   }
 }

@@ -5,12 +5,12 @@
 //  Created by Dave Coleman on 21/9/2025.
 //
 
-import CoreTools
-import ViewTools
 import BaseTools
+import CoreTools
 import LayoutKit
-import SwiftUI
 import StringTools
+import SwiftUI
+import ViewTools
 
 extension Flexi {
 
@@ -45,7 +45,7 @@ extension Flexi {
           columns: config.columns.output,
           alignment: config.alignmentGrid,
           spacing: config.spacingGrid,
-          pinnedViews: [.sectionHeaders]
+          pinnedViews: [.sectionHeaders],
         ) {
 
           GroupedView(
@@ -56,7 +56,7 @@ extension Flexi {
             Flexi.GridItem(
               item: item,
               focused: $focused,
-              content: content
+              content: content,
             )
             .environment(gridHandler)
 
@@ -92,7 +92,7 @@ extension Flexi {
       }  // END scroll
       .scrollPosition(id: $store.scrolledID)
       .debugText(debugText)
-      
+
       .getScrollContext(
         axis: .vertical
       ) { context in
@@ -128,7 +128,7 @@ extension Flexi.GridView {
       spacingItem: gridItemSpacing,
       spacingGrid: layoutSpacing,
       alignmentItem: nil,  // May add this to Env later
-      alignmentGrid: .center
+      alignmentGrid: .center,
     )
     return gridConfig ?? fallback
   }
@@ -154,7 +154,7 @@ extension Flexi.GridView {
   }
   .environment(
     \.gridColumnMode,
-    .adaptive(.fill(min: 80, max: 140))
+    .adaptive(.fill(min: 80, max: 140)),
   )
   .environment(\.gridItemSpacing, 20)
   .environment(\.layoutSpacing, 20)

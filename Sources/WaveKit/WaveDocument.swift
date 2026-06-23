@@ -10,6 +10,7 @@ import ColourTools
 import CoreTools
 import Foundation
 import ViewTools
+import GraphicsKit
 
 public typealias WaveElements = [VisualElementKind: WaveVisualElement]
 public struct WaveDocument: Codable, Sendable, Equatable {

@@ -1,4 +1,4 @@
-import GraphicsKit
+import WaveKit
 import Testing
 
 @Suite("Waveform sampling")

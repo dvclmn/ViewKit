@@ -7,9 +7,6 @@
 
 import Foundation
 import CoreTools
-//import ViewTools
-//import BaseTools
-import GraphicsKit
 import ColourTools
 
 public struct PointStyle: Sendable, Codable, Equatable, Hashable {

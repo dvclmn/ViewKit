@@ -7,23 +7,22 @@
 
 //import CasePaths
 
-extension WaveDriver {
+//extension WaveDriver {
 
-
-  /// A radius channel: scales the base radius by (1 + offset), clamped at zero.
-  //  public static func dotRadius(with wave: ConfiguredWave) -> Self {
-  //    .init(wave: wave, elementKind: .dotRadius) { base, current, offset in
-  //      max(0, base * (1 + offset))
-  //    }
-  //  }
-  //
-  //  /// A horizontal (x) channel: adds the offset to the base x position.
-  //  public static func dotHorizontal(with wave: ConfiguredWave) -> Self {
-  //    .init(wave: wave, elementKind: .dotRadius) { base, current, offset in
-  //      base + offset
-  //    }
-  //  }
-}
+/// A radius channel: scales the base radius by (1 + offset), clamped at zero.
+//  public static func dotRadius(with wave: ConfiguredWave) -> Self {
+//    .init(wave: wave, elementKind: .dotRadius) { base, current, offset in
+//      max(0, base * (1 + offset))
+//    }
+//  }
+//
+//  /// A horizontal (x) channel: adds the offset to the base x position.
+//  public static func dotHorizontal(with wave: ConfiguredWave) -> Self {
+//    .init(wave: wave, elementKind: .dotRadius) { base, current, offset in
+//      base + offset
+//    }
+//  }
+//}
 
 //extension CasePathable {
 /// Convenience setter that accepts an Optional associated value.

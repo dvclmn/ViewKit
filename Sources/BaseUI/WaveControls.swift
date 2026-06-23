@@ -9,6 +9,7 @@ import SwiftUI
 import CoreTools
 import ViewTools
 import GraphicsKit
+import WaveKit
 //import UIPrimitives
 //import VectorKit
 

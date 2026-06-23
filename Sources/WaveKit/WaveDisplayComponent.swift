@@ -9,7 +9,7 @@ import Foundation
 import CoreTools
 import ViewTools
 import BaseTools
-
+import GraphicsKit
 import EnumMacros
 
 @MetaEnum

@@ -28,7 +28,11 @@ public struct WaveLineStyle: Codable, Sendable, Equatable, Hashable {
     dashGap: Double = 0,
     dashPhase: Double = 0,
   ) {
-    self.colourMix = .init(primary: colour, secondary: colourSecondary, strength: 1.0)
+    self.colourMix = .init(
+      primary: colour,
+      secondary: colourSecondary,
+      strength: 1.0
+    )
 //    self.colour = colour
 //    self.colourSecondary = colourSecondary
     self.lineWidth = lineWidth
