@@ -1,14 +1,15 @@
 //
-//  WaveformPathGenerator.swift
+//  PathGenerator.swift
 //  AnimationVisualiser
 //
 //  Created by Dave Coleman on 17/11/2024.
 import CoreTools
-import ViewTools
-import BaseTools
+//import ViewTools
+//import BaseTools
 import SwiftUI
+import Foundation
 
-public struct WavePathGenerator {
+public struct PathGenerator {
   public var points: [CGPoint]
 
   public init(points: [CGPoint] = []) {
@@ -23,14 +24,14 @@ package typealias Stamper = (
 ) -> Void
 
 // MARK: - Create and return New Path
-extension WavePathGenerator {
+extension PathGenerator {
   /// Creates a path from a collection of points using the specified interpolation method
   /// - Parameters:
   ///   - points: Array of points to interpolate
   ///   - interpolation: The interpolation method to use
   /// - Returns: A new Path object, or nil if insufficient points
   public mutating func path(
-    with interpolation: WaveInterpolation
+    with interpolation: CurveInterpolation
   ) -> Path {
     var path = Path()
     processPath(with: interpolation, stamper: { _, _, _ in }, path: &path)
@@ -46,9 +47,9 @@ extension WavePathGenerator {
 }
 
 // MARK: - Edit Existing Path
-extension WavePathGenerator {
+extension PathGenerator {
   public mutating func editPath(
-    with interpolation: WaveInterpolation,
+    with interpolation: CurveInterpolation,
     path: inout Path,
   ) {
     processPath(with: interpolation, stamper: { _, _, _ in }, path: &path)

@@ -9,7 +9,7 @@ import BaseTools
 //import InteractionKit
 import SwiftUI
 
-extension WavePathGenerator {
+extension PathGenerator {
 
   /// Creates a smooth Catmull-Rom spline through the given points.
   /// Uses cubic Bézier conversion for optimal rendering performance.

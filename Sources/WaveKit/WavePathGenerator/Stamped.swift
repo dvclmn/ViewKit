@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension WavePathGenerator {
+extension PathGenerator {
   /// Allows injecting stamping behaviour (adding shapes at points in a path)
   /// without the path processors needing to know anything about the stamping logic itself.
   ///

@@ -1,13 +1,12 @@
+import ColourTools
 //
 //  TextTag.swift
 //  BaseComponents
 //
 //  Created by Dave Coleman on 20/7/2025.
 import CoreTools
-import ViewTools
-import ColourTools
 import SwiftUI
-
+import ViewTools
 
 public struct TextTag: View {
   @Environment(\.self) private var envSelf
@@ -17,7 +16,7 @@ public struct TextTag: View {
 
   public init(
     _ text: String,
-    colour: RGBColour
+    colour: RGBColour,
       //    colour: CodableColour = Color.gray.opacityLow
   ) {
     self.text = text
@@ -33,14 +32,14 @@ public struct TextTag: View {
         colour.contrastColour(
           strength: .moderate,
           purpose: .complementary,
-          chroma: .monochrome
+          chroma: .monochrome,
         ).toColour
-//          .contrastColour(
-//          strength: .moderate,
-//          purpose: .complementary,
-//          chroma: .monochrome,
-//          environment: envSelf
-//        ).colour
+        //          .contrastColour(
+        //          strength: .moderate,
+        //          purpose: .complementary,
+        //          chroma: .monochrome,
+        //          environment: envSelf
+        //        ).colour
       )
       .quickBackground(
         shape: .rect(cornerRadius: Styles.sizeTiny),

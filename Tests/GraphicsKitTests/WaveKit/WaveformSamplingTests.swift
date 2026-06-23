@@ -69,4 +69,68 @@ struct WaveformSamplingTests {
       }
     }
   }
+
+  /// This range exercises eight complete turns, including raw negative phases.
+  /// It concerns unit waveform output only; amplitude is applied by the
+  /// `ConfiguredWave` evaluation layer.
+  @Test("Unit samples remain in range", arguments: Waveform.allCases)
+  func unitSamplesRemainInRange(_ waveform: Waveform) {
+    for step in -256...256 {
+      let phase = Double(step) / 64
+      let value = WaveSampler<Double>.sample(waveform, phase: phase)
+
+      #expect((-1.0...1.0).contains(value))
+    }
+  }
+
+  /// This grid lands on every sixteenth lookup-table entry. It establishes
+  /// that the stored table values describe the same sine as the mathematical
+  /// implementation over both negative and positive turns.
+  @Test("Mathematical and lookup sine agree")
+  func sineModesAgree() {
+    for step in -512...512 {
+      let phase = Double(step) / 128
+      let mathematical = WaveSampler<Double>.sample(
+        .sine(mode: .math),
+        phase: phase
+      )
+      let lookup = WaveSampler<Double>.sample(
+        .sine(mode: .table),
+        phase: phase
+      )
+
+      expectApproximatelyEqual(
+        lookup,
+        mathematical,
+        tolerance: 1e-5
+      )
+    }
+  }
+
+  /// Sampling halfway between each pair of table entries exercises the linear
+  /// interpolation path, where lookup error is expected to be greatest. For
+  /// the 2,048-entry table, the measured maximum error is approximately
+  /// `1.177e-6`; the `1e-5` tolerance leaves a deliberate numerical margin.
+  @Test("Lookup sine interpolation agrees with mathematical sine")
+  func sineLookupInterpolationAgrees() {
+    let tableSize = 2_048
+
+    for step in -tableSize...tableSize {
+      let phase = (Double(step) + 0.5) / Double(tableSize)
+      let mathematical = WaveSampler<Double>.sample(
+        .sine(mode: .math),
+        phase: phase
+      )
+      let lookup = WaveSampler<Double>.sample(
+        .sine(mode: .table),
+        phase: phase
+      )
+
+      expectApproximatelyEqual(
+        lookup,
+        mathematical,
+        tolerance: 1e-5
+      )
+    }
+  }
 }

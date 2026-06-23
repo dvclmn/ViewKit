@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension WavePathGenerator {
+extension PathGenerator {
 
   // MARK: - Linear Interpolation
 

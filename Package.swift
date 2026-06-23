@@ -29,6 +29,7 @@ let package = Package(
       targets: [
         "GraphicsKit",
         "MotionKit",
+        "WaveKit",
       ],
     ),
   ],
@@ -100,6 +101,19 @@ let package = Package(
         .extDependency(.coreTools),
         .extDependency(.viewTools),
         .module(.baseTools),
+      ],
+    ),
+    .target(
+      name: "WaveKit",
+      dependencies: [
+//        .module(.baseTools),
+        .extDependency(.coreTools),
+        .extDependency(.colourTools),
+        .extDependency(.stringTools),
+        .module(.graphicsKit)
+//        .extDependency(.viewTools),
+//        .extDependency(.enumMacros),
+//        .extDependency(.casePaths),
       ],
     ),
 

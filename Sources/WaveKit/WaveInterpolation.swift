@@ -1,5 +1,5 @@
 //
-//  WaveInterpolation.swift
+//  CurveInterpolation.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 27/1/2026.
@@ -19,8 +19,8 @@ import SwiftUI
 @CaseDetection
 @CasePathable
 @dynamicMemberLookup
-public enum WaveInterpolation: Sendable, Equatable, Codable, Hashable, Identifiable, CaseIterable {
-  public static let allCases: [WaveInterpolation] = [.linear, .cubic(), .quadratic(), .catmullRom()]
+public enum CurveInterpolation: Sendable, Equatable, Codable, Hashable, Identifiable, CaseIterable {
+  public static let allCases: [CurveInterpolation] = [.linear, .cubic(), .quadratic(), .catmullRom()]
   case linear
   case cubic(tension: CGFloat = 0)
   case quadratic(midpoint: Double = 0.5, cornerBias: Double = 0.5)
@@ -47,7 +47,7 @@ public enum WaveInterpolation: Sendable, Equatable, Codable, Hashable, Identifia
 
 }
 
-extension WaveInterpolation {
+extension CurveInterpolation {
   /// Trying out allowing init from a meta enum, for cases with no assoc. values
   //  public init?(fromMeta meta: Self.Meta) {
   //    switch meta {

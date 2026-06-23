@@ -13,7 +13,7 @@ extension Array where Element == CGPoint {
     type: PathStyle = .line,
     shouldDropFirst: Bool = true,
   ) -> Path {
-    var builder = WavePathGenerator(points: self)
+    var builder = PathGenerator(points: self)
     return builder.path(withStyle: type)
   }
 }

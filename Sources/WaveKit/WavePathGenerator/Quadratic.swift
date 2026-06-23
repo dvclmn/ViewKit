@@ -12,7 +12,7 @@ enum QuadSmoothingStyle {
   case articulated  // Corner aware/preserving, 3-point control
 }
 
-extension WavePathGenerator {
+extension PathGenerator {
 
   /// t: 0 = flowing (midpoint), 1 = corner-aware (3-point influenced)
   package mutating func processQuadratic(

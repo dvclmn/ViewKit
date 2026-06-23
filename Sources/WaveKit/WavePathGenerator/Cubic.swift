@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension WavePathGenerator {
+extension PathGenerator {
 
   /// Smooth path using cubic Bézier curves derived from Catmull–Rom.
   ///

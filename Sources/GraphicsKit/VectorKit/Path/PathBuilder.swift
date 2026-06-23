@@ -48,7 +48,7 @@ import SwiftUI
 //  /// Builds a path with the configured settings
 //  public func buildPath(
 //    using points: [CGPoint],
-//    interpolation: WaveInterpolation
+//    interpolation: CurveInterpolation
 //  ) -> Path? {
 //    switch interpolation {
 //      case .linear: Path.makeLinearPath(points: points)

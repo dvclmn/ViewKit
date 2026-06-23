@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Alternative; consider leaving WavePathGenerator out of this, and
+/// Alternative; consider leaving PathGenerator out of this, and
 /// just create a tiny polyline fallback instead
 /// ```
 /// { path, pts, _ in
@@ -16,7 +16,7 @@ import SwiftUI
 ///   for p in pts.dropFirst() { path.addLine(to: p) }
 /// }
 /// ```
-package typealias PathFallBack = (inout Path, [CGPoint], inout WavePathGenerator) -> Void
+package typealias PathFallBack = (inout Path, [CGPoint], inout PathGenerator) -> Void
 package struct NonLinearPathFallback {
   let minRequiredPoints: Int
   let fallback: PathFallBack?

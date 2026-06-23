@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension WavePathGenerator {
+extension PathGenerator {
   /// This replaces existing points
   public mutating func updatePoints(_ newPoints: [CGPoint]) {
     points = newPoints
@@ -18,7 +18,7 @@ extension WavePathGenerator {
 
   /// Private overload that allows passing in a stamper
   package mutating func processPath(
-    with interpolation: WaveInterpolation,
+    with interpolation: CurveInterpolation,
     stamper: Stamper,
     path: inout Path
   ) {

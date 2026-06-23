@@ -12,13 +12,13 @@ import ColourTools
 import BaseTools
 
 public struct PathDebugConfig {
-
-  public let lineStyle: WaveLineStyle
+  
+  public let lineStyle: LineStyle
   public let fillColour: RGBColour
   public let labelFontSize: CGFloat
 
   public init(
-    lineStyle: WaveLineStyle = .init(),
+    lineStyle: LineStyle = .init(),
     fillColour: RGBColour = .orange,
     labelFontSize: CGFloat = 11,
   ) {
@@ -27,6 +27,26 @@ public struct PathDebugConfig {
     self.labelFontSize = labelFontSize
   }
 }
+
+extension PathDebugConfig {
+  public struct LineStyle {
+    public let fillColour: RGBColour
+    public let strokeColour: RGBColour
+    public let linewidth: CGFloat
+    
+    public init(
+      fillColour: RGBColour = .aliceblue,
+      strokeColour: RGBColour = .cyan,
+      linewidth: CGFloat = 1
+    ) {
+      self.fillColour = fillColour
+      self.strokeColour = strokeColour
+      self.linewidth = linewidth
+    }
+  }
+}
+
+
 
 //public struct LineStyle {
 //  public let fillColour: Color

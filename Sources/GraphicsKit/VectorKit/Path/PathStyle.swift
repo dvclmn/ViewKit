@@ -9,7 +9,7 @@ import SwiftUI
 
 /// Path style with optional stamping effect
 public struct PathStyle: Sendable, Codable, Hashable {
-  let interpolation: WaveInterpolation
+  let interpolation: CurveInterpolation
   let stamped: PointStyle?
 }
 
@@ -33,7 +33,7 @@ extension PathStyle {
   public static func stamped(
     shape: PointShape,
     radius: Double,
-    interpolation: WaveInterpolation = .quadratic(),
+    interpolation: CurveInterpolation = .quadratic(),
   ) -> Self {
     Self.init(
       interpolation: interpolation,

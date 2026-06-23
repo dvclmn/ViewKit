@@ -80,7 +80,7 @@ extension WaveDocument {
     style: WaveStyle = .originalExample,
     sampleCount: Int = 20,
     placement: WavePlacement = .vertical,
-    interpolation: WaveInterpolation = .linear,
+    interpolation: CurveInterpolation = .linear,
   ) -> Self {
     let settings = WaveRenderSettings(
       style: style,

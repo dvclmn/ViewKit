@@ -14,7 +14,7 @@ public struct WaveRenderSettings: Sendable, Codable, Equatable {
   public var blendMode: WaveBlendMode
   public var placement: WavePlacement
   public var sampleCount: Int
-  public var interpolation: WaveInterpolation
+  public var interpolation: CurveInterpolation
 
   public init(
 //    waves: IdentifiedArrayOf<ConfiguredWave>,
@@ -22,7 +22,7 @@ public struct WaveRenderSettings: Sendable, Codable, Equatable {
     blendMode: WaveBlendMode = .add,
     placement: WavePlacement = .vertical,
     sampleCount: Int = 20,
-    interpolation: WaveInterpolation = .linear
+    interpolation: CurveInterpolation = .linear
   ) {
 //    self.waves = waves
     self.style = style
