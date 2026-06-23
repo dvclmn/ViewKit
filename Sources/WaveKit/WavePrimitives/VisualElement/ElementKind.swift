@@ -1,13 +1,13 @@
+import BaseTools
 //
 //  WaveVisualElement.swift
 //  BaseDemos
 //
 //  Created by Dave Coleman on 12/2/2026.
 import CoreTools
-import ViewTools
-import BaseTools
 import EnumMacros
 import Foundation
+import ViewTools
 
 /// Might find better solution, but for now this is an easy way to avoid
 /// long strung-together guard let statements etc
@@ -17,29 +17,28 @@ import Foundation
 //@AssociatedValues
 //@CasePathable
 //@dynamicMemberLookup
-//extension WaveVisualElement {
-//@CaseDetection
-public enum VisualElementKind: String, Sendable, Identifiable, CaseIterable, Codable, Equatable, Hashable,
-  LabeledItem
-{
-  /// Dots
-  case dotX
-  case dotY
-  case dotRadius  // *2 for diameter
-  case dotHue  // 360° hue shift
+extension WaveVisualElement {
+  //@CaseDetection
+  // Previously VisualElementKind
+  public enum Kind: String, Sendable, Identifiable, CaseIterable, Codable, Equatable, Hashable, LabeledItem {
+    /// Dots
+    case dotX
+    case dotY
+    case dotRadius  // *2 for diameter
+    case dotHue  // 360° hue shift
 
-  /// Dashes
-  //    case dashLength
-  case dashGap
-  case dashPhase
+    /// Dashes
+    //    case dashLength
+    case dashGap
+    case dashPhase
 
-  case lineWidth
+    case lineWidth
 
-  public var id: String { rawValue }
+    public var id: String { rawValue }
+  }
 }
-//}
 
-extension VisualElementKind {
+extension WaveVisualElement.Kind {
 
   public var name: String {
     switch self {
@@ -69,7 +68,7 @@ extension VisualElementKind {
   public var label: LabelDescriptor { .init(name, icon: icon) }
 }
 
-extension VisualElementKind {
+extension WaveVisualElement.Kind {
 
   public var operation: WaveOperation {
     //  public func operation(operationOverride: WaveOperation? = nil) -> WaveOperation {

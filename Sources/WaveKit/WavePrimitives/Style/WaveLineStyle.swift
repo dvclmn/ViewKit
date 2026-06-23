@@ -43,6 +43,7 @@ public struct WaveLineStyle: Codable, Sendable, Equatable, Hashable {
 }
 
 extension WaveLineStyle {
+  public var baseColour: RGBColour { colourMix.primary }
   public static var example: Self {
     .init(
       colour: .green,

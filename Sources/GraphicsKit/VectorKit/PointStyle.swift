@@ -48,6 +48,7 @@ public struct PointStyle: Sendable, Codable, Equatable, Hashable {
 }
 
 extension PointStyle {
+  public var baseColour: RGBColour { colourMix.primary }
   public static var example: Self {
     .init(
       shape: .circle,

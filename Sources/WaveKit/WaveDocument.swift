@@ -12,7 +12,7 @@ import Foundation
 import ViewTools
 import GraphicsKit
 
-public typealias WaveElements = [VisualElementKind: WaveVisualElement]
+public typealias WaveElements = [WaveVisualElement.Kind: WaveVisualElement]
 public struct WaveDocument: Codable, Sendable, Equatable {
 
   public var waves: IdentifiedList<ConfiguredWave>
@@ -44,7 +44,7 @@ public struct WaveDocument: Codable, Sendable, Equatable {
 
 extension WaveDocument {
   public mutating func addElement(
-    _ kind: VisualElementKind,
+    _ kind: WaveVisualElement.Kind,
     baseValue: Double? = nil,
     with wave: ConfiguredWave = .waveHExample,
   ) {
@@ -65,7 +65,7 @@ extension WaveDocument {
     set { waves[id: waveID] = newValue }
   }
 
-  public subscript(element elementKind: VisualElementKind) -> ConfiguredWave.ID? {
+  public subscript(element elementKind: WaveVisualElement.Kind) -> ConfiguredWave.ID? {
     get {
       let driver = drivers.first { driver in
         driver.elementKind == elementKind
