@@ -3,11 +3,13 @@
 //  AnimationVisualiser
 //
 //  Created by Dave Coleman on 17/11/2024.
+//
+
 import CoreTools
 //import ViewTools
 //import BaseTools
-//import SwiftUI
-import Foundation
+import SwiftUI
+//import Foundation
 
 public struct PathGenerator {
   public var points: [CGPoint]

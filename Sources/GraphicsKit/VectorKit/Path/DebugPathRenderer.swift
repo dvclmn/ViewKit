@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ColourTools
 
 public struct PathDebugRenderer {
   let result: PathDebugResult
@@ -15,8 +16,8 @@ public struct PathDebugRenderer {
   public func draw(in context: GraphicsContext) {
     context.stroke(
       result.original,
-      with: .color(config.lineStyle.colour.toColour),
-      lineWidth: config.lineStyle.lineWidth,)
+      with: .color(config.lineStyle.fillColour.toColour),
+      lineWidth: config.lineStyle.lineWidth)
 
     /// Draw paths and points
     for (element, path) in result.debugPaths {
@@ -51,7 +52,7 @@ public struct PathDebugRenderer {
     ZStack {
       /// Original path
       result.original
-        .stroke(config.lineStyle.colour.toColour, lineWidth: config.lineStyle.lineWidth)
+        .stroke(config.lineStyle.fillColour.toColour, lineWidth: config.lineStyle.lineWidth)
 
       /// Connection lines
       result.connections

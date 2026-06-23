@@ -32,34 +32,16 @@ extension PathDebugConfig {
   public struct LineStyle {
     public let fillColour: RGBColour
     public let strokeColour: RGBColour
-    public let linewidth: CGFloat
+    public let lineWidth: CGFloat
     
     public init(
       fillColour: RGBColour = .aliceblue,
       strokeColour: RGBColour = .cyan,
-      linewidth: CGFloat = 1
+      lineWidth: CGFloat = 1
     ) {
       self.fillColour = fillColour
       self.strokeColour = strokeColour
-      self.linewidth = linewidth
+      self.lineWidth = lineWidth
     }
   }
 }
-
-
-
-//public struct LineStyle {
-//  public let fillColour: Color
-//  public let strokeColour: Color
-//  public let linewidth: CGFloat
-//
-//  public init(
-//    fillColour: Color = .indigo.opacityLow,
-//    strokeColour: Color = .cyan,
-//    linewidth: CGFloat = 1
-//  ) {
-//    self.fillColour = fillColour
-//    self.strokeColour = strokeColour
-//    self.linewidth = linewidth
-//  }
-//}

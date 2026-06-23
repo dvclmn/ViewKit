@@ -7,7 +7,7 @@
 
 import ColourTools
 
-public struct ColourMix: Sendable, Codable {
+public struct ColourMix: Sendable, Codable, Hashable {
   let primary: RGBColour
   let secondary: RGBColour?
   let strength: Double

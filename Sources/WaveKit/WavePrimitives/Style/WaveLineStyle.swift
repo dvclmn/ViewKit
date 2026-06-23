@@ -12,12 +12,13 @@ import BaseTools
 import ColourTools
 
 public struct WaveLineStyle: Codable, Sendable, Equatable, Hashable {
-  public var colour: RGBColour
-  public var colourSecondary: RGBColour?
+//  public var colour: RGBColour
+//  public var colourSecondary: RGBColour?
   public var lineWidth: Double
   public var dashes: Int
   public var dashGap: Double
   public var dashPhase: Double
+  public var colourMix: ColourMix
 
   public init(
     colour: RGBColour = .green,
@@ -27,8 +28,9 @@ public struct WaveLineStyle: Codable, Sendable, Equatable, Hashable {
     dashGap: Double = 0,
     dashPhase: Double = 0,
   ) {
-    self.colour = colour
-    self.colourSecondary = colourSecondary
+    self.colourMix = .init(primary: colour, secondary: colourSecondary, strength: 1.0)
+//    self.colour = colour
+//    self.colourSecondary = colourSecondary
     self.lineWidth = lineWidth
     self.dashes = dashes
     self.dashGap = dashGap
