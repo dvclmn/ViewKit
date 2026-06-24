@@ -120,7 +120,7 @@ let package = Package(
 
     .testTarget(
       name: "GraphicsKitTests",
-      dependencies: ["GraphicsKit"],
+      dependencies: ["GraphicsKit", "WaveKit"],
     ),
 
   ],

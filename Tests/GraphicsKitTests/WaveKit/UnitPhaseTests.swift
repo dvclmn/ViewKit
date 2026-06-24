@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import GraphicsKit
 import Testing
+import WaveKit
 
 @Suite("Unit phase")
 struct UnitPhaseTests {

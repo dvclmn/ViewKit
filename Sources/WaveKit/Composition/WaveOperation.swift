@@ -21,7 +21,7 @@ extension WaveOperation {
   public func apply(
     base: Double,
     current: Double,
-    offset: Double
+    offset: Double,
   ) -> Double {
     switch self {
       case .addToBase: base + offset

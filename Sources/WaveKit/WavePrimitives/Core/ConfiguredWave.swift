@@ -52,77 +52,84 @@ extension ConfiguredWave {
 
 extension ConfiguredWave {
 
+  /// Evaluates this wave at a normalised spatial position and elapsed time.
+  ///
+  /// Every phase component is expressed in turns:
+  ///
+  /// ```
+  /// frequency * elapsed + cycles * index + phase offset
+  /// ```
+  ///
+  /// ``WaveSampler`` owns phase wrapping and waveform evaluation. Amplitude is
+  /// applied only after the unit waveform has been sampled.
+  @inlinable
+  public func sample(
+    at index: Double,
+    elapsed: TimeInterval
+  ) -> Double {
+    let phaseTurns =
+      wave.frequency * elapsed
+      + config.cycles * index
+      + wave.unitPhase
+
+    return wave.amplitude
+      * WaveSampler<Double>.sample(wave.waveform, phase: phaseTurns)
+  }
+
+  /// Evaluates this wave at several normalised spatial positions.
+  @inlinable
+  public func samples(
+    at indices: [Double],
+    elapsed: TimeInterval
+  ) -> [Double] {
+    indices.map { sample(at: $0, elapsed: elapsed) }
+  }
+
+  /// Returns the temporal phase in radians for compatibility with the former
+  /// renderer-owned evaluation path.
+  @available(
+    *,
+    deprecated,
+    message: "Use sample(at:elapsed:) so phase units remain internal to ConfiguredWave."
+  )
   public func timePhase(from elapsed: TimeInterval) -> Double {
     .twoPi * wave.frequency * elapsed
   }
 
-  /// Radians path
-  //  @inlinable
-  //  public func sample(
-  //    at index: Double,
-  //    time: TimeInterval,
-  //    sineMode: SineMode = .auto
-  //  ) -> Double {
-  //    let timePhase = .twoPi * wave.frequency * time
-  //    let staticPhase = wave.phaseRadians
-  //    let spatial = Double(config.cycles)
-  //
-  //    let angle = timePhase + (spatial * .twoPi * index) + staticPhase
-  //    let y = WaveSampler<Double>.value(for: wave.waveform, atRadians: angle)
-  //    return wave.amplitude * y
-  //  }
-
+  /// Samples an already-combined phase expressed in turns. The index and sine
+  /// mode parameters are retained solely for source compatibility.
   @inlinable
+  @available(
+    *,
+    deprecated,
+    message: "Use sample(at:elapsed:); combinedPhase is expressed in turns."
+  )
   public func sampleAlt(
     at index: Double,
     combinedPhase: Double,
     //    time: TimeInterval,
     sineMode: SineMode = .table
   ) -> Double {
-    //    let temporalTurns = (wave.frequency * time * .twoPi)  // f*t cycles
-    //    let staticTurns = wave.phaseRadians
-    //    let spatialTurns = Double(config.cycles) * index * .twoPi
-    //    let total = temporalTurns + spatialTurns + staticTurns
-    //    let wrapped = total - floor(total)
     let y = WaveSampler<Double>.sample(wave.waveform, phase: combinedPhase)
-    //    let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: total)
     return wave.amplitude * y
   }
 
-  /// Turns path
+  /// Compatibility spelling for ``sample(at:elapsed:)``.
   @inlinable
+  @available(*, deprecated, message: "Use sample(at:elapsed:).")
   public func sampleTurns(
     at index: Double,
     time: TimeInterval,
     sineMode: SineMode = .table
   ) -> Double {
-    fatalError("Not using right now")
-//    let temporalTurns = (wave.frequency * time * .twoPi)  // f*t cycles
-//    let staticTurns = wave.phaseRadians
-//    let spatialTurns = Double(config.cycles) * index * .twoPi
-//    let total = temporalTurns + spatialTurns + staticTurns
-//    //    let wrapped = total - floor(total)
-//    let y = WaveSampler<Double>.value(for: wave.waveform, atTurns: total)
-//    return wave.amplitude * y
+    sample(at: index, elapsed: time)
   }
 
+  @available(*, deprecated, message: "Use samples(at:elapsed:).")
   public func samples(
     indices: [Double],  // Normalised, across a slice of a view
     time: TimeInterval
   ) -> [Double] {
-    fatalError("Not using right now")
-//    var ys: [Double] = []
-//    ys.reserveCapacity(indices.count)
-//    let timePhase = .twoPi * wave.frequency * time
-//    let staticPhase = wave.phaseRadians
-//    let spatial = Double(config.cycles)
-//
-//    for index in indices {
-//      let angle = timePhase + (spatial * .twoPi * index) + staticPhase
-////      let y = WaveSampler
-////      let y = WaveSampler<Double>.value(for: wave.waveform, atRadians: angle)
-//      ys.append(wave.amplitude * y)
-//    }
-//    return ys
+    samples(at: indices, elapsed: time)
   }
 }

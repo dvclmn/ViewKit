@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import GraphicsKit
 import Testing
+import WaveKit
 
 @Suite("Phase unit conversion")
 struct PhaseUnitConversionTests {
