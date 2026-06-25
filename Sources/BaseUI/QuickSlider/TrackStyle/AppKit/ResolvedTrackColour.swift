@@ -14,7 +14,7 @@ public struct ResolvedTrackColour: Equatable, Sendable {
   public var green: Double
   public var blue: Double
   public var alpha: Double
-  
+
   public init(
     red: Double,
     green: Double,
@@ -36,7 +36,7 @@ extension ResolvedTrackColour {
   ) {
     self.init(red: white, green: white, blue: white, alpha: alpha)
   }
-  
+
   public init(
     hue: Double,
     saturation: Double,
@@ -52,21 +52,21 @@ extension ResolvedTrackColour {
       )
     )
   }
-  
+
   public init(_ colour: Color) {
     self.init(NSColor(colour))
   }
-  
+
   public init(_ colour: NSColor) {
     let converted = colour.usingColorSpace(.sRGB) ?? colour
-    
+
     var red: CGFloat = 0
     var green: CGFloat = 0
     var blue: CGFloat = 0
     var alpha: CGFloat = 0
-    
+
     converted.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-    
+
     self.init(
       red: Double(red),
       green: Double(green),
@@ -74,7 +74,7 @@ extension ResolvedTrackColour {
       alpha: Double(alpha),
     )
   }
-  
+
   public func withAlpha(_ alpha: Double) -> Self {
     Self(red: red, green: green, blue: blue, alpha: alpha)
   }
@@ -96,7 +96,7 @@ extension ResolvedTrackColour {
       alpha: CGFloat(alpha),
     )
   }
-  
+
   var cgColour: CGColor {
     CGColor(
       red: CGFloat(red),
@@ -106,7 +106,6 @@ extension ResolvedTrackColour {
     )
   }
 }
-
 
 extension Double {
   fileprivate var clampedToUnit: Double {

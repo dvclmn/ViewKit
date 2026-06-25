@@ -72,6 +72,7 @@ struct AppKitSlider: NSViewRepresentable {
 }
 
 extension AppKitSlider {
+  @MainActor
   final class Coordinator: NSObject {
     var value: Binding<Double>
     var range: ClosedRange<Double>
@@ -142,21 +143,7 @@ final class TrackingSlider: NSSlider {
   }
 }
 
-final class AppKitSliderCell: NSSliderCell {
-  var track = AppKitSliderTrack(layers: [])
-  var drawsTrack = true
-  var drawsThumb = true
 
-  override func drawBar(inside rect: NSRect, flipped: Bool) {
-    guard drawsTrack else { return }
-    track.draw(in: rect)
-  }
-
-  override func drawKnob(_ knobRect: NSRect) {
-    guard drawsThumb else { return }
-    super.drawKnob(knobRect)
-  }
-}
 
 extension ControlSize {
   fileprivate var nsControlSize: NSControl.ControlSize {

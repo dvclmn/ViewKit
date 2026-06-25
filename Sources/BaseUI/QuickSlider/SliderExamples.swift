@@ -1,194 +1,248 @@
 //
-//  SliderCustomExampleView.swift
-//  BaseComponents
+//  SliderExamples.swift
+//  BaseHelpers
 //
 //  Created by Dave Coleman on 11/8/2025.
 //
 
+import ColourTools
+import CoreTools
+import SwiftUI
+import ViewTools
 
-//import CoreTools
-//import ViewTools
-//import SwiftUI
+public struct SliderExamples: View {
+  @State private var nativeValue: Double = 2.0
+  @State private var steppedValue: Double = 6.0
+  @State private var gradientValue: Double = 0.42
+  @State private var opacityValue: Double = 0.72
+  @State private var compactValue: Double = 0.58
+  @State private var colour = RGBColour(red: 0.32, green: 0.48, blue: 0.92, alpha: 0.68)
+  @State private var activeColourModel: ColourModelKind = .rgb
 
-//import ColourTools
+  public init() {}
 
-//public struct SliderExamples: View {
-//
-//  @State private var zoomValue: CGFloat = 2.0
-//  private let zoomRange: ClosedRange<CGFloat> = 0.1...20
-//
-//  public var body: some View {
-//    VStack(spacing: Styles.sizeMedium) {
-//      
-//      QuickSlider(
-//        "Normal Mode",
-//        value: $zoomValue.toBindingDouble,
-//        range: zoomRange.toDoubleRange
-//      )
-//      .environment(\.isASCIIMode, false)
-//      
-//      
-//      QuickSlider(
-//        "ASCII Mode",
-//        value: $zoomValue.toBindingDouble,
-//        range: zoomRange.toDoubleRange
-//      )
-//      
-//      .environment(\.isASCIIMode, true)
-//      
-////      QuickSlider(
-////        "Simple Slider",
-////        value: $zoomValue.toBindingDouble,
-////        range: zoomRange.toDoubleRange,
-////      )
-//
-//      //      SliderGroup("Group title") {
-//      //
-//      //        QuickSlider(
-//      //          "Simple Slider",
-//      //          value: $zoomValue.toBindingDouble,
-//      //          range: zoomRange.toDoubleRange,
-//      //        )
-//      ////        .sliderStyle(.native, components: .noLabel)
-//      //        //      .padding()
-//      //        //      .background(.mint.quinary)
-//      //
-//      //        QuickSlider(
-//      //          "Opacity Slider",
-//      //          value: $zoomValue.toBindingDouble,
-//      //          range: zoomRange.toDoubleRange,
-//      //        )
-//      ////        .sliderStyle(.custom(.opacityCheckboard(RGBColour.bisque)))
-//      //        .environment(\.sliderDefaultValue, 1.0)
-//      //
-//      //        //      .setExplicitHeight(5)
-//      //        //      .environment(\.heightOverride, 5)
-//      ////        .environment(\.trackComponents, [.thumb])
-//      //        //      .padding()
-//      //        //      .background(.purple.quinary)
-//      //
-//      //        QuickSlider(
-//      //          "No Units",
-//      //          value: $zoomValue.toBindingDouble,
-//      //          range: zoomRange.toDoubleRange,
-//      //        )
-//      ////        .environment(\.sliderComponents, [.slider, .label])
-//      //        //      .padding()
-//      //        //      .background(.yellow.quinary)
-//      //
-//      //        QuickSlider(
-//      //          "Compact",
-//      //          value: $zoomValue.toBindingDouble,
-//      //          range: zoomRange.toDoubleRange,
-//      //        )
-//      ////        .sliderStyle(.native)
-//      //        .sliderComponents([.track, .thumb])
-//      //        .gridCellColumns(3)
-//      //        //      .environment(\.heightOverride, 20)
-//      //        //      .padding()
-//      //        //      .background(.brown.quinary)
-//      //
-//      //
-//      //        //      .environment(\.heightOverride, 34)
-//      //        //      .padding()
-//      //        //      .background(.blue.quinary)
-//      //
-//      //      }
-//      //      .formatValue { $0.render(using: .init(decimalPlaces: 1)) }
-//      //      .environment(\.maxCharacterColumns, 4)
-//      //    .formStyle(.grouped)
-//
-//      //      Divider()
-//
-//      //      QuickSlider(
-//      //        "Bar Slider",
-//      //        value: $zoomValue.toBindingDouble,
-//      //        range: zoomRange.toDoubleRange,
-//      //      )
-//      ////      .sliderStyle(.custom(.clear))
-//      //      .sliderComponents([.track, .units])
-//    }  // END main vstack
-//    .padding(30)
-//    .frame(maxWidth: 320)
-//    //    .isDebugMode(true)
-//
-//  }
-//}
-//#if DEBUG
-//#Preview {
-//  SliderExamples()
-//}
-//#endif
-//
-////#if DEBUG
-////@available(macOS 15, iOS 18, *)
-////#Preview(traits: .size(.normal)) {
-////  @Previewable @State var value: Double = 2.6
-////
-////  VStack {
-////    Form {
-////      Section("Slider Preview") {
-////        QuickSlider(
-////          "First",
-////          value: $value,
-////          range: 0.1...20,
-////          //          defaultValue: 2.2,
-////        )
-////        .environment(\.sliderDefaultValue, 2.2)
-////
-////        QuickSlider(
-////          "Second",
-////          value: $value,
-////          range: 0.1...20,
-////          //          defaultValue: 2.2,
-////
-////        )
-////        .environment(\.sliderDefaultValue, 2.2)
-////
-////        QuickSlider(
-////          "Third (no label)",
-////          value: $value,
-////          range: 0.1...20,
-////          //          defaultValue: 2.2,
-////
-////        )
-////      }
-////    }
-////    .formStyle(.grouped)
-////
-////    VStack {
-////      QuickSlider(
-////        "Fourth",
-////        value: $value,
-////        range: 1...10,
-////        //        defaultValue: 5.0,
-////      )
-////      .environment(\.sliderDefaultValue, 2.2)
-////
-////      QuickSlider(
-////        "Fifth",
-////        value: $value,
-////        range: 1...10,
-////        //        defaultValue: 8.0,
-////
-////      )
-////
-////      QuickSlider(
-////        "Sixth (no label)",
-////        value: $value,
-////        range: 1...10,
-////        //        defaultValue: 8.0,
-////
-////      )
-////    }
-////    .padding()
-////    .frame(minHeight: 300)
-////    .background(.brown.quinary)
-////
-////  }
-////  .frame(maxWidth: 400)
-////  //  .setViewModes(.compact)
-////  //    .padding(80)
-////  //    .quickBackground()
-////}
-////#endif
+  public var body: some View {
+    ScrollView {
+      VStack(alignment: .leading, spacing: 18) {
+        NativeSliders()
+        Divider()
+        AppKitTrackSliders()
+        Divider()
+        ComponentSliders()
+        Divider()
+        ColourSlidersView()
+      }
+      .padding(24)
+      .frame(maxWidth: 420, alignment: .leading)
+    }
+    .frame(minWidth: 360)
+    .environment(\.layoutSpacing, 5)
+    .environment(\.maxCharacterColumns, 4)
+    .labelWeight(.semibold)
+    .labelColour(.secondary)
+  }
+}
+
+extension SliderExamples {
+  @ViewBuilder
+  private func NativeSliders() -> some View {
+    SliderGroup("Native") {
+      QuickSlider(
+        "Value",
+        value: $nativeValue,
+        range: 0.1...20,
+      )
+      .environment(\.sliderDefaultValue, 2.0)
+
+      QuickSlider(
+        "Stepped",
+        value: $steppedValue,
+        range: 0...10,
+        step: 1,
+      )
+      .environment(\.sliderDefaultValue, 5.0)
+    }
+  }
+
+  @ViewBuilder
+  private func AppKitTrackSliders() -> some View {
+    SliderGroup("AppKit tracks") {
+      QuickSlider(
+        "Gradient",
+        value: $gradientValue,
+        range: .unitRange,
+        trackStyle: ExampleGradientTrackStyle(
+          colours: [.purple, .blue, .cyan, .green]
+        ),
+      )
+      .environment(\.sliderDefaultValue, 0.5)
+
+      QuickSlider(
+        "Opacity",
+        value: $opacityValue,
+        range: .unitRange,
+        trackStyle: ExampleOpacityTrackStyle(colour: .indigo),
+      )
+      .environment(\.sliderDefaultValue, 1.0)
+
+      QuickSlider(
+        "Layered",
+        value: $compactValue,
+        range: .unitRange,
+        trackStyle: ExampleLayeredTrackStyle(),
+      )
+      .environment(\.sliderDefaultValue, 0.5)
+    }
+  }
+
+  @ViewBuilder
+  private func ComponentSliders() -> some View {
+    SliderGroup("Components") {
+      QuickSlider(
+        "Track",
+        value: $compactValue,
+        range: .unitRange,
+        trackStyle: ExampleGradientTrackStyle(
+          colours: [.orange, .pink, .purple]
+        ),
+      )
+      .sliderComponents([.label, .track, .units])
+
+      QuickSlider(
+        "Thumb",
+        value: $compactValue,
+        range: .unitRange,
+        trackStyle: ExampleGradientTrackStyle(
+          colours: [.mint, .teal, .blue]
+        ),
+      )
+      .sliderComponents([.label, .thumb, .units])
+
+      QuickSlider(
+        "No units",
+        value: $compactValue,
+        range: .unitRange,
+        trackStyle: ExampleGradientTrackStyle(
+          colours: [.red, .yellow, .green]
+        ),
+      )
+      .sliderComponents(.noUnits)
+    }
+  }
+
+  @ViewBuilder
+  private func ColourSlidersView() -> some View {
+    VStack(alignment: .leading, spacing: 8) {
+      Picker("Colour model", selection: $activeColourModel) {
+        ForEach(ColourModelKind.allCases) { model in
+          Text(model.name).tag(model)
+        }
+      }
+      .pickerStyle(.segmented)
+      .labelsHidden()
+
+      HStack(spacing: 10) {
+        RoundedRectangle(cornerRadius: 6, style: .continuous)
+          .fill(colour.toColour)
+          .frame(width: 32, height: 32)
+          .overlay {
+            RoundedRectangle(cornerRadius: 6, style: .continuous)
+              .stroke(.quaternary)
+          }
+
+        ColourSliders($colour)
+          .environment(\.activeColourModel, $activeColourModel)
+      }
+    }
+  }
+}
+
+private struct ExampleGradientTrackStyle: SliderTrackStyle {
+  var colours: [Color]
+
+  func makeBody(configuration: Configuration) -> some View {
+    Rectangle()
+      .fill(
+        LinearGradient(
+          colors: colours,
+          startPoint: .leading,
+          endPoint: .trailing,
+        )
+      )
+  }
+}
+
+private struct ExampleOpacityTrackStyle: SliderTrackStyle {
+  var colour: Color
+
+  func makeBody(configuration: Configuration) -> some View {
+    Rectangle()
+      .fill(
+        LinearGradient(
+          colors: [.clear, colour],
+          startPoint: .leading,
+          endPoint: .trailing,
+        )
+      )
+  }
+}
+
+private struct ExampleLayeredTrackStyle: SliderTrackStyle {
+  func makeBody(configuration: Configuration) -> some View {
+    Rectangle()
+      .fill(.black.opacity(0.08))
+      .overlay {
+        LinearGradient(
+          colors: [.clear, configuration.tint.opacity(0.85)],
+          startPoint: .leading,
+          endPoint: .trailing,
+        )
+      }
+  }
+}
+
+#if os(macOS)
+extension ExampleGradientTrackStyle: AppKitSliderTrackStyle {
+  func makeAppKitTrack(configuration: Configuration) -> AppKitSliderTrack {
+    AppKitSliderTrack.linearGradient(
+      colours.map(ResolvedTrackColour.init)
+    )
+  }
+}
+
+extension ExampleOpacityTrackStyle: AppKitSliderTrackStyle {
+  func makeAppKitTrack(configuration: Configuration) -> AppKitSliderTrack {
+    AppKitSliderTrack.opacityGradient(ResolvedTrackColour(colour))
+  }
+}
+
+extension ExampleLayeredTrackStyle: AppKitSliderTrackStyle {
+  func makeAppKitTrack(configuration: Configuration) -> AppKitSliderTrack {
+    AppKitSliderTrack(
+      layers: [
+        .checkerboard(
+          .init(
+            primary: .init(white: 0.94),
+            secondary: .init(white: 0.72),
+            squareLength: 5.0,
+          )
+        ),
+        .linearGradient([
+          .init(colour: .clear, location: 0.0),
+          .init(colour: ResolvedTrackColour(configuration.tint), location: 1.0),
+        ]),
+      ],
+      stroke: .init(white: 0.0, alpha: 0.24),
+    )
+  }
+}
+#endif
+
+#if DEBUG
+#Preview(traits: .size(.normal)) {
+  SliderExamples()
+}
+#endif
+
+
+

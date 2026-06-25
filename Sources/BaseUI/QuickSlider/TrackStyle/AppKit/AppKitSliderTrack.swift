@@ -54,9 +54,6 @@ extension AppKitSliderTrack {
   }
 }
 
-
-
-
 extension AppKitSliderTrack {
   func draw(in rect: NSRect) {
     guard !rect.isEmpty else { return }
@@ -141,7 +138,8 @@ extension AppKitSliderTrack.Layer {
 
     for row in 0...rows {
       for column in 0...columns {
-        let colour = (row + column).isMultiple(of: 2)
+        let colour =
+          (row + column).isMultiple(of: 2)
           ? checkerboard.primary
           : checkerboard.secondary
 
