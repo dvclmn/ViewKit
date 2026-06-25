@@ -49,6 +49,7 @@ extension QuickSlider {
               accessibilityLabel: store.label.text,
               onEditingChanged: handleOnEdit(_:),
             )
+            .padding(-AppKitSlider.pressedKnobVisualOverflow)
             .frame(height: store.trackHeightWithBuffer)
 
           } else {
