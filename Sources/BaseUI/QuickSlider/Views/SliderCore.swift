@@ -13,9 +13,14 @@ extension QuickSlider {
     @Environment(\.sliderDefaultValue) private var sliderDefaultValue
     @Environment(\.colorScheme) private var colourScheme
     @Environment(\.stepStyle) private var stepStyle
+    @Environment(\.sliderComponents) private var sliderComponents
+    @Environment(\.isEnabled) private var isEnabled
 
     @Binding var value: Double
     let track: TrackBackground
+    #if os(macOS)
+    let appKitTrack: AppKitTrackBackground?
+    #endif
     var body: some View {
 
 //      if isASCIIMode, let unitSize {
@@ -28,9 +33,30 @@ extension QuickSlider {
 //      } else {
 
         /// If there's a track, then it's a Custom Slider
-        if let track = track(store.trackConfiguration(value: value, colourScheme: colourScheme)) {
+        let configuration = store.trackConfiguration(value: value, colourScheme: colourScheme)
+        if let track = track(configuration) {
           // MARK: - Custom Slider
+          #if os(macOS)
+          if let appKitTrack = appKitTrack?(configuration) {
+            AppKitSlider(
+              value: $value,
+              range: store.range,
+              step: store.step,
+              track: appKitTrack,
+              drawsTrack: sliderComponents.contains(.track),
+              drawsThumb: sliderComponents.contains(.thumb),
+              isEnabled: isEnabled,
+              accessibilityLabel: store.label.text,
+              onEditingChanged: handleOnEdit(_:),
+            )
+            .frame(height: store.trackHeightWithBuffer)
+
+          } else {
+            SliderCustom(value: $value, track: track)
+          }
+          #else
           SliderCustom(value: $value, track: track)
+          #endif
 
         } else {
 

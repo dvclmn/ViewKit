@@ -22,6 +22,9 @@ extension QuickSlider {
 
     @Binding var value: Double
     let track: TrackBackground
+    #if os(macOS)
+    let appKitTrack: AppKitTrackBackground?
+    #endif
 
     var body: some View {
       @Bindable var store = store
@@ -32,9 +35,15 @@ extension QuickSlider {
       }
 
       // MARK: - Main Track
+      #if os(macOS)
+      SliderCore(value: $value, track: track, appKitTrack: appKitTrack)
+        .frame(width: sliderTrackMaxWidth)
+        .frame(maxWidth: .infinity, alignment: .trailing)
+      #else
       SliderCore(value: $value, track: track)
         .frame(width: sliderTrackMaxWidth)
         .frame(maxWidth: .infinity, alignment: .trailing)
+      #endif
 
       // MARK: - Units
       if sliderComponents.contains(.units) {

@@ -31,3 +31,11 @@ public struct OpacityTrackStyle: SliderTrackStyle {
     //      .fill(component.sliderTrackGradient(colour: colour))
   }
 }
+
+#if os(macOS)
+extension OpacityTrackStyle: AppKitSliderTrackStyle {
+  public func makeAppKitTrack(configuration: Configuration) -> AppKitSliderTrack {
+    AppKitSliderTrack.opacityGradient(ResolvedTrackColour(colour.toColour))
+  }
+}
+#endif

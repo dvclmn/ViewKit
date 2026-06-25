@@ -3,6 +3,8 @@
 //  Components
 //
 //  Created by Dave Coleman on 10/11/2024.
+//
+
 import CoreTools
 import ViewTools
 import SwiftUI
@@ -16,11 +18,17 @@ public struct QuickSlider<TrackBody: View>: View, ValueFormattable, SliderStylab
 
   public typealias Configuration = SliderTrackConfiguration
   typealias TrackBackground = (Configuration) -> TrackBody?
+  #if os(macOS)
+  typealias AppKitTrackBackground = (Configuration) -> AppKitSliderTrack?
+  #endif
 
   @State private var store: SliderHandler
 
   @Binding var value: Double
   private let track: TrackBackground
+  #if os(macOS)
+  private let appKitTrack: AppKitTrackBackground?
+  #endif
 
   public init(
     _ title: String,
@@ -43,6 +51,9 @@ public struct QuickSlider<TrackBody: View>: View, ValueFormattable, SliderStylab
     )
     self._value = value
     self.track = track
+    #if os(macOS)
+    self.appKitTrack = nil
+    #endif
   }
 
   public var body: some View {
@@ -60,13 +71,21 @@ extension QuickSlider {
       /// for neighbouring Sliders. As long as they're within a SliderGroup
       GridRow {
         /// Handles slider Label, Track, and Units display
+        #if os(macOS)
+        SliderComponents(value: $value, track: track, appKitTrack: appKitTrack)
+        #else
         SliderComponents(value: $value, track: track)
+        #endif
       }
       HelpText()
 
     } else {
       HStack {
+        #if os(macOS)
+        SliderComponents(value: $value, track: track, appKitTrack: appKitTrack)
+        #else
         SliderComponents(value: $value, track: track)
+        #endif
         HelpText()
       }
     }
@@ -108,6 +127,9 @@ extension QuickSlider {
       )
     )
     self.track = { _ in nil }
+    #if os(macOS)
+    self.appKitTrack = nil
+    #endif
   }
 
 }
@@ -122,17 +144,29 @@ extension QuickSlider {
     trackStyle: S,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) where S.Body == TrackBody {
-    self.init(
-      title,
-      value: value,
-      range: range,
-      step: step,
-      characterSize: characterSize,
-      track: { configuration in
-        trackStyle.makeBody(configuration: configuration)
-      },
-      didChangeSlider: didChangeSlider,
+    self._value = value
+    self._store = State(
+      initialValue: SliderHandler(
+        label: LabelDescriptor(title),
+        range: range.toDoubleRange,
+        step: step.toDoubleIfPresent,
+        characterSize: characterSize,
+        didChangeSlider: didChangeSlider,
+      )
     )
+    self.track = { configuration in
+      trackStyle.makeBody(configuration: configuration)
+    }
+
+    #if os(macOS)
+    if let appKitStyle = trackStyle as? any AppKitSliderTrackStyle {
+      self.appKitTrack = { configuration in
+        appKitStyle.makeAppKitTrack(configuration: configuration)
+      }
+    } else {
+      self.appKitTrack = nil
+    }
+    #endif
   }
 
   /// For Binding to Int more conveniently
