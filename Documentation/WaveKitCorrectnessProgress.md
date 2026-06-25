@@ -4,21 +4,11 @@ Date: 24 June 2026
 
 ## Why the original tests were green
 
-The green result was real, but narrower than the overall claim that “WaveKit is
-correct”. The phase and waveform tests exercise pure primitives: conversion,
-wrapping, waveform landmarks, periodicity, range, and lookup-table agreement.
-The implementation they exercise had already been changed so that `UnitPhase`
-wraps on initialisation. In other words, some of the tests and their repair
-arrived together; they are regression protection for that repaired contract,
-not evidence that the earlier implementation happened to be correct.
+The green result was real, but narrower than the overall claim that “WaveKit is correct”. The phase and waveform tests exercise pure primitives: conversion, wrapping, waveform landmarks, periodicity, range, and lookup-table agreement. The implementation they exercise had already been changed so that `UnitPhase` wraps on initialisation. In other words, some of the tests and their repair arrived together; they are regression protection for that repaired contract, not evidence that the earlier implementation happened to be correct.
 
-They also did not exercise the live `BreathingLoop`. That renderer independently
-combined temporal and spatial radians with a static offset in turns, then called
-`sin` directly. A correct `WaveSampler` cannot protect a caller that bypasses it.
+They also did not exercise the live `BreathingLoop`. That renderer independently combined temporal and spatial radians with a static offset in turns, then called `sin` directly. A correct `WaveSampler` cannot protect a caller that bypasses it.
 
-The WaveKit target split exposed one more gap: two phase test files still
-imported `GraphicsKit`, and the test target did not directly depend on `WaveKit`.
-The tests now import and depend on the module that owns the symbols.
+The WaveKit target split exposed one more gap: two phase test files still imported `GraphicsKit`, and the test target did not directly depend on `WaveKit`. The tests now import and depend on the module that owns the symbols.
 
 ## Implemented in BaseHelpers
 
@@ -54,10 +44,7 @@ Twenty-one focused Swift Testing tests pass across five suites:
 - configured-wave sampling; and
 - document integrity.
 
-The tests were run with a temporary local SwiftPM override for ToolKit. The
-declared remote ToolKit `0.2.0` does not currently export `ColourTools`, so a
-clean remote-only package resolution fails before compilation. The override was
-removed after verification.
+The tests were run with a temporary local SwiftPM override for ToolKit. The declared remote ToolKit `0.2.0` does not currently export `ColourTools`, so a clean remote-only package resolution fails before compilation. The override was removed after verification.
 
 ## Remaining integration work
 
@@ -79,7 +66,4 @@ The sibling BaseDemos package still needs these narrow migrations:
    deterministic-noise and multi-driver composition semantics; silently folding
    them into the new pure sampler would make its contract ambiguous again.
 
-The strongest next integration test is not another `WaveSampler` formula test.
-It is a renderer/document test proving that a quarter-turn static offset is a
-quarter cycle in the active loop, every waveform reaches the render path, and a
-dangling driver cannot prevent later drivers from being evaluated.
+The strongest next integration test is not another `WaveSampler` formula test. It is a renderer/document test proving that a quarter-turn static offset is a quarter cycle in the active loop, every waveform reaches the render path, and a dangling driver cannot prevent later drivers from being evaluated.
