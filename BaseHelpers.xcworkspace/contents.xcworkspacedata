@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:BaseHelpers">
+   </FileRef>
+   <FileRef
+      location = "container:../ToolKit">
+   </FileRef>
+   <FileRef
+      location = "container:../GridKit/GridKit">
+   </FileRef>
+   <FileRef
+      location = "container:../CanvasKit/CanvasKit">
+   </FileRef>
+   <FileRef
+      location = "container:../BaseMacros">
+   </FileRef>
+</Workspace>
