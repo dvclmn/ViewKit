@@ -63,7 +63,7 @@ let package = Package(
         .extDependency(.colourTools),
         .module(.baseTools),
         .module(.graphicsKit),
-        .module(.waveKit),
+//        .module(.waveKit),
         .extDependency(.casePaths),
         .extDependency(.enumMacros),
       ],
@@ -103,23 +103,24 @@ let package = Package(
         .module(.baseTools),
       ],
     ),
-    .target(
-      name: "WaveKit",
-      dependencies: [
-//        .module(.baseTools),
-        .extDependency(.coreTools),
-        .extDependency(.colourTools),
-        .extDependency(.stringTools),
-        .module(.graphicsKit)
-//        .extDependency(.viewTools),
-//        .extDependency(.enumMacros),
-//        .extDependency(.casePaths),
-      ],
-    ),
+//    .target(
+//      name: "WaveKit",
+//      dependencies: [
+////        .module(.baseTools),
+//        .extDependency(.coreTools),
+//        .extDependency(.colourTools),
+//        .extDependency(.stringTools),
+//        .module(.graphicsKit)
+////        .extDependency(.viewTools),
+////        .extDependency(.enumMacros),
+////        .extDependency(.casePaths),
+//      ],
+//    ),
 
     .testTarget(
       name: "GraphicsKitTests",
-      dependencies: ["GraphicsKit", "WaveKit"],
+      dependencies: ["GraphicsKit"],
+//      dependencies: ["GraphicsKit", "WaveKit"],
     ),
 
   ],
@@ -168,7 +169,7 @@ enum InternalModule {
   case graphicsKit
   case layoutKit
   case motionKit
-  case waveKit
+//  case waveKit
 
   var name: String {
     switch self {
@@ -177,7 +178,7 @@ enum InternalModule {
       case .graphicsKit: "GraphicsKit"
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
-      case .waveKit: "WaveKit"
+//      case .waveKit: "WaveKit"
     }
   }
 }
