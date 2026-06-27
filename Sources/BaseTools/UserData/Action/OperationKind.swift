@@ -9,6 +9,8 @@
 
 public enum UpdateKind {
   case withUndo(action: String? = nil)
+  
+  /// An update without any undo action associated
   case standard
 }
 

@@ -8,7 +8,7 @@ import ViewTools
 import BaseTools
 //import InteractionKit
 //#warning("Have turned this off temporarily, was getting 'Value of optional type '(strength: CGFloat, radialStrength: CGFloat)?' must be unwrapped to refer to member 'strength' of wrapped base type '(strength: CGFloat, radialStrength: CGFloat)' error messages, regarding CasePaths")
-import CasePaths
+//import CasePaths
 import GraphicsKit
 //import LayoutKit
 import SwiftUI
