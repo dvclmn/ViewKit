@@ -2,16 +2,16 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:BaseHelpers">
+      location = "container:">
    </FileRef>
    <FileRef
       location = "container:../ToolKit">
    </FileRef>
    <FileRef
-      location = "container:../GridKit/GridKit">
+      location = "container:../CanvasKit">
    </FileRef>
    <FileRef
-      location = "container:../CanvasKit/CanvasKit">
+      location = "container:../GridKit">
    </FileRef>
    <FileRef
       location = "container:../BaseMacros">

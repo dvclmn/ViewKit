@@ -29,7 +29,6 @@ let package = Package(
       targets: [
         "GraphicsKit",
         "MotionKit",
-        "WaveKit",
       ],
     ),
   ],
