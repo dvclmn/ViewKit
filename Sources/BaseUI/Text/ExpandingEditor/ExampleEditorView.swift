@@ -6,7 +6,7 @@
 import CoreTools
 import ViewTools
 import SwiftUI
-import BaseTools
+// import BaseTools
 
 struct ExpandingEditorExampleView: View {
   @State private var text: String = SampleContent.Strings.loremIpsum

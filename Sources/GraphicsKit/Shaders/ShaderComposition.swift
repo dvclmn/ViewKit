@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreTools
 import ViewTools
-import BaseTools
+// import BaseTools
 
 public protocol AnyShaderEffect {
   var shaders: [Shader] { get }

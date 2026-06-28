@@ -8,10 +8,7 @@
       location = "container:../ToolKit">
    </FileRef>
    <FileRef
-      location = "container:../CanvasKit">
-   </FileRef>
-   <FileRef
-      location = "container:../GridKit">
+      location = "container:../VectorKit">
    </FileRef>
    <FileRef
       location = "container:../BaseMacros">

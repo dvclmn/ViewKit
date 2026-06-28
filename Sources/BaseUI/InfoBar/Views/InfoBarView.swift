@@ -6,7 +6,7 @@
 import CoreTools
 import ViewTools
 import SwiftUI
-import BaseTools
+// import BaseTools
 import StringTools
 
 public struct InfoBarView: View {

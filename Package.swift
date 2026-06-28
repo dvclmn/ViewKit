@@ -59,7 +59,6 @@ let package = Package(
         .extDependency(.coreTools),
         .extDependency(.stringTools),
         .extDependency(.viewTools),
-        .module(.baseTools),
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
       ],
@@ -86,7 +85,7 @@ let package = Package(
       dependencies: [
         .extDependency(.coreTools),
         .extDependency(.viewTools),
-        .module(.baseTools),
+        .module(.viewKitCore),
       ],
     ),
 

@@ -6,7 +6,7 @@
 import CoreTools
 import ViewTools
 import SwiftUI
-import BaseTools
+// import BaseTools
 
 public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
   @Environment(\.undoManager) private var undoManager

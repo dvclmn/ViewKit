@@ -6,7 +6,7 @@
 import CoreTools
 import ViewTools
 import Foundation
-import BaseTools
+// import BaseTools
 
 extension SampleContent {
   public enum ExampleSectionKey: InfoBarSectionKey {

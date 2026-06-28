@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreTools
 import ViewTools
-import BaseTools
+// import BaseTools
 
 public struct ShaderModifier: ViewModifier {
 
