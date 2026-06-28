@@ -4,7 +4,7 @@ import CompilerPluginSupport
 import PackageDescription
 
 let package = Package(
-  name: "BaseHelpers",
+  name: "ViewKit",
   platforms: [
     .iOS(.v17),
     .macOS(.v14),
@@ -12,15 +12,11 @@ let package = Package(
   // MARK: - Libraries
   products: [
     .library(
-      name: "BaseTools",
-      targets: ["BaseTools"],
-    ),
-
-    .library(
       name: "BaseUI",
       targets: [
         "BaseUI",
-        "LayoutKit",
+        "ViewKitCore",
+//        "LayoutKit",
       ],
     ),
 
@@ -43,16 +39,6 @@ let package = Package(
 
   // MARK: - Targets
   targets: [
-    .target(
-      name: "BaseTools",
-      dependencies: [
-        .extDependency(.enumMacros),
-        .extDependency(.casePaths),
-        .extDependency(.coreTools),
-        .extDependency(.stringTools),
-        .extDependency(.viewTools),
-      ],
-    ),
 
     .target(
       name: "BaseUI",
