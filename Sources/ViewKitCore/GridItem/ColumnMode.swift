@@ -1,6 +1,6 @@
 //
 //  GridItem.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 29/6/2025.
 //

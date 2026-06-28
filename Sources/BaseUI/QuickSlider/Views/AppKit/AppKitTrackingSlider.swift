@@ -1,6 +1,6 @@
 //
 //  AppKitTrackingSlider.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 25/6/2026.
 //

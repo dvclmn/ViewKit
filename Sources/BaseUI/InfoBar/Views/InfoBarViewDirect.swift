@@ -1,6 +1,6 @@
 //
 //  InfoBarViewDirect.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 9/3/2026.
 //

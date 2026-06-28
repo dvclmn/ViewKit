@@ -1,6 +1,6 @@
 //
 //  Component+Slider.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 17/1/2026.
 //

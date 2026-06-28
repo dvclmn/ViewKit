@@ -1,6 +1,6 @@
 //
 //  InfoBar+OnPrefChange.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 11/1/2026.
 //

@@ -1,6 +1,6 @@
 //
 //  EditorView.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 16/12/2025.
 //

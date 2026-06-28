@@ -1,6 +1,6 @@
 //
 //  DisclosureGroupStyle.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 24/1/2026.
 import CoreTools

@@ -1,6 +1,6 @@
 //
 //  MidPoint.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 8/10/2025.
 //

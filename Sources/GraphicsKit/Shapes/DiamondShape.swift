@@ -1,6 +1,6 @@
 //
 //  DiamondShape.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 5/7/2025.
 //

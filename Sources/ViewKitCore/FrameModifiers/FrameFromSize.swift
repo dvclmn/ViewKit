@@ -1,6 +1,6 @@
 //
 //  FrameFromSize.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 15/10/2025.
 import CoreTools

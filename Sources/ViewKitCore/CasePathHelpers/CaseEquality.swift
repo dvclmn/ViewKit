@@ -1,6 +1,6 @@
 //
 //  CaseEquality.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 20/1/2026.
 //

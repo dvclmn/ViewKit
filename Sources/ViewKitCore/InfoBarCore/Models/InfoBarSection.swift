@@ -1,6 +1,6 @@
 //
 //  InfoBarSecton.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 13/2/2026.
 //

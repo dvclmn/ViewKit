@@ -1,6 +1,6 @@
 //
 //  ColumnsConfig.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 4/10/2025.
 //

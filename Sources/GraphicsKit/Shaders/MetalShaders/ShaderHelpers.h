@@ -1,6 +1,6 @@
 //
 //  ShaderMaths.metal
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 21/1/2026.
 //

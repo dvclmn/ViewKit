@@ -1,6 +1,6 @@
 //
 //  ControlDescriptor.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 7/2/2026.
 //

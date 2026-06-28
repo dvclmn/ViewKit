@@ -1,6 +1,6 @@
 //
 //  SliderStylable.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 23/4/2026.
 //

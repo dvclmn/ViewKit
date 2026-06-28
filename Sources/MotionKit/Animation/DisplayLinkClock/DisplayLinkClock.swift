@@ -1,6 +1,6 @@
 //
 //  DisplayLinkClock.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 28/1/2026.
 //

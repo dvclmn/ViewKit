@@ -1,6 +1,6 @@
 //
 //  Effect+Presets.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 26/1/2026.
 //

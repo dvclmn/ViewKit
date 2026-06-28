@@ -1,6 +1,6 @@
 //
 //  Slider+Label.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 5/3/2026.
 import CoreTools

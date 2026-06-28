@@ -1,6 +1,6 @@
 //
 //  ColourSliderGroup.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 27/1/2026.
 import CoreTools

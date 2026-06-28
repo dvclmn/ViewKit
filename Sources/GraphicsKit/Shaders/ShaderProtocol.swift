@@ -1,6 +1,6 @@
 //
 //  ShaderProtocol.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 29/1/2026.
 //

@@ -1,6 +1,6 @@
 //
 //  ToolTipAlignmentGuide.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 10/1/2026.
 //

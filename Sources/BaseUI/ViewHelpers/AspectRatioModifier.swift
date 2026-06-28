@@ -1,6 +1,6 @@
 //
 //  AspectRatioModifier.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 3/7/2025.
 //

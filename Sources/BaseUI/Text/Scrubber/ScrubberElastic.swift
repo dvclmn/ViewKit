@@ -1,6 +1,6 @@
 //
 //  ScrubberElastic.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 19/1/2026.
 //

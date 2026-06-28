@@ -1,6 +1,6 @@
 //
 //  ExpandingBYOEditor.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 18/12/2025.
 //

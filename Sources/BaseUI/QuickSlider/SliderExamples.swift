@@ -1,6 +1,6 @@
 //
 //  SliderExamples.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 11/8/2025.
 //

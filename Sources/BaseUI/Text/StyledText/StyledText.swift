@@ -1,6 +1,6 @@
 //
 //  StyledText.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 28/2/2026.
 import CoreTools

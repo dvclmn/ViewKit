@@ -1,6 +1,6 @@
 //
 //  TextGroupExample.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 24/11/2025.
 //

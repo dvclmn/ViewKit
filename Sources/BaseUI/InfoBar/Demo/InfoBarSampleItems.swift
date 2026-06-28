@@ -1,6 +1,6 @@
 //
 //  InfoBarSampleItems.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 14/1/2026.
 //

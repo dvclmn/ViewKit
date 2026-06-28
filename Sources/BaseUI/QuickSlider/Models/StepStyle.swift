@@ -1,6 +1,6 @@
 //
 //  StepStyle.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 4/2/2026.
 //

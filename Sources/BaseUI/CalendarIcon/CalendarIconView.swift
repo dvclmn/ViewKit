@@ -1,6 +1,6 @@
 //
 //  CalendarIconView.swift
-//  BaseHelpers
+//  ViewKit
 //
 //  Created by Dave Coleman on 21/10/2025.
 //
