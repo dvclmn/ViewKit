@@ -38,6 +38,7 @@ let package = Package(
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.3"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
     .package(url: "https://github.com/dvclmn/ToolKit", .upToNextMinor(from: "0.2.0")),
+    .package(url: "https://github.com/dvclmn/VectorKit", branch: "main"),
   ],
 
   // MARK: - Targets
@@ -63,7 +64,7 @@ let package = Package(
         .extDependency(.colourTools),
         .module(.baseTools),
         .module(.graphicsKit),
-//        .module(.waveKit),
+        //        .module(.waveKit),
         .extDependency(.casePaths),
         .extDependency(.enumMacros),
       ],
@@ -76,6 +77,7 @@ let package = Package(
         .extDependency(.coreTools),
         .extDependency(.stringTools),
         .extDependency(.viewTools),
+        .extDependency(.vectorKit),
         .extDependency(.enumMacros),
         .extDependency(.casePaths),
       ],
@@ -103,24 +105,10 @@ let package = Package(
         .module(.baseTools),
       ],
     ),
-//    .target(
-//      name: "WaveKit",
-//      dependencies: [
-////        .module(.baseTools),
-//        .extDependency(.coreTools),
-//        .extDependency(.colourTools),
-//        .extDependency(.stringTools),
-//        .module(.graphicsKit)
-////        .extDependency(.viewTools),
-////        .extDependency(.enumMacros),
-////        .extDependency(.casePaths),
-//      ],
-//    ),
 
     .testTarget(
       name: "GraphicsKitTests",
       dependencies: ["GraphicsKit"],
-//      dependencies: ["GraphicsKit", "WaveKit"],
     ),
 
   ],
@@ -146,6 +134,7 @@ enum ExternalDependency {
   case stringTools
   case colourTools
   case viewTools
+  case vectorKit
   case enumMacros
   case casePaths
   case macroToolkit
@@ -156,6 +145,7 @@ enum ExternalDependency {
       case .stringTools: ("StringTools", "ToolKit")
       case .colourTools: ("ColourTools", "ToolKit")
       case .viewTools: ("ViewTools", "ToolKit")
+      case .vectorKit: ("VectorKit", nil)
       case .enumMacros: ("BaseMacros", nil)
       case .casePaths: ("CasePaths", "swift-case-paths")
       case .macroToolkit: ("MacroToolkit", "swift-macro-toolkit")
@@ -169,7 +159,7 @@ enum InternalModule {
   case graphicsKit
   case layoutKit
   case motionKit
-//  case waveKit
+  //  case waveKit
 
   var name: String {
     switch self {
@@ -178,7 +168,7 @@ enum InternalModule {
       case .graphicsKit: "GraphicsKit"
       case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
-//      case .waveKit: "WaveKit"
+    //      case .waveKit: "WaveKit"
     }
   }
 }

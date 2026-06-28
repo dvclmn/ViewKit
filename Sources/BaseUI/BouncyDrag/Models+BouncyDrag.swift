@@ -6,10 +6,10 @@
 //
 
 import Foundation
-import GraphicsKit
-//import VectorKit
-import CoreTools
-import ViewTools
+//import GraphicsKit
+import VectorKit
+//import CoreTools
+//import ViewTools
 
 enum DragMethod: Sendable {
   case clickAndDrag
