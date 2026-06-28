@@ -3,10 +3,12 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 6/2/2026.
+//
+
 import CoreTools
-import ViewTools
 import SwiftUI
-// import BaseTools
+import ViewKitCore
+import ViewTools
 
 public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
   @Environment(\.undoManager) private var undoManager
@@ -20,7 +22,7 @@ public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
     store: Store,
     didUpdatUserData: @escaping (Store.Value) -> Void,
     //    @ViewBuilder content: @escaping (Store.Value) -> Content
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: @escaping () -> Content,
   ) {
     self.store = store
     self.didUpdatUserData = didUpdatUserData

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-// import BaseTools
+import ViewTools
 
 public struct SmoothMaskModifier: ViewModifier {
 

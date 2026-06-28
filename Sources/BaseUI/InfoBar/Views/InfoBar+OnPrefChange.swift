@@ -3,10 +3,12 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 11/1/2026.
+//
+
 import CoreTools
 import ViewTools
 import SwiftUI
-// import BaseTools
+import ViewKitCore
 
 struct InfoBarItemsModifier: ViewModifier {
   @Environment(\.isInfoBarPresent) private var isInfoBarPresent

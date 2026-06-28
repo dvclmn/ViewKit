@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 11/10/2025.
 //
 
-// import LayoutKit
+import ViewKitCore
 import SwiftUI
 
 public struct Repeater<Content: View>: View {

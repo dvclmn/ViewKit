@@ -3,12 +3,12 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 27/6/2025.
+//
+
 import CoreTools
 import ViewTools
-// import LayoutKit
+import ViewKitCore
 import SwiftUI
-// import BaseTools
-//import UIPrimitives
 
 struct InfoBarSectionView: View {
   @Environment(\.sectionLabelDisplay) private var sectionLabelDisplay

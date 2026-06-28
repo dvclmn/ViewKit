@@ -3,10 +3,12 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 14/1/2026.
+//
+
 import CoreTools
 import ViewTools
 import Foundation
-// import BaseTools
+import ViewKitCore
 
 extension SampleContent {
   public enum ExampleSectionKey: InfoBarSectionKey {

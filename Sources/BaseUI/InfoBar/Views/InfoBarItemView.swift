@@ -3,13 +3,12 @@
 //  BaseComponents
 //
 //  Created by Dave Coleman on 3/6/2025.
+//
+
 import CoreTools
 import ViewTools
-// import LayoutKit
+import ViewKitCore
 import SwiftUI
-// import BaseTools
-
-//import UIPrimitives
 
 public struct InfoBarItemView: View {
   @Environment(\.isShowingSectionHeader) private var isShowingSectionHeader

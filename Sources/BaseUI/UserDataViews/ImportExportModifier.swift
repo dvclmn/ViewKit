@@ -3,10 +3,13 @@
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 6/2/2026.
+//
+
 import CoreTools
-import ViewTools
 // import BaseTools
 import SwiftUI
+import ViewKitCore
+import ViewTools
 
 public struct ImportExportModifier<Store: UserDataHandler>: ViewModifier
 where Store.Value: Transferable & Codable {
@@ -33,15 +36,15 @@ where Store.Value: Transferable & Codable {
                     title: "See in Finder",
                     action: {
                       OpenInFinder.open(url)
-                    }
-                  )
+                    },
+                  ),
                 )
               )
 
             case .failure(let error):
               popup?.showPopup("Failed to export preset: \(error)")
           }
-        }
+        },
       )
 
       .fileImporter(
@@ -51,7 +54,7 @@ where Store.Value: Transferable & Codable {
           do {
             let newWave = try ImportHandler.loadSecurityScoped(
               result: result,
-              asType: Store.Value.self
+              asType: Store.Value.self,
             )
             store.setValue(action: .withUndo(action: "Load Preset")) {
               $0 = newWave
@@ -60,7 +63,7 @@ where Store.Value: Transferable & Codable {
           } catch {
             popup?.showPopup("File import error: \(error)")
           }
-        }
+        },
       )
 
       .toolbar {
