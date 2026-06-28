@@ -1,5 +1,5 @@
 //
-//  CardItemSubView.swift
+//  CardItemSubview.swift
 //  BaseHelpers
 //
 //  Created by Dave Coleman on 15/2/2026.
@@ -10,7 +10,7 @@ import SwiftUI
 extension CardGrid {
 
   @available(macOS 15, iOS 18, *)
-  struct ItemSubView: View {
+  struct ItemSubview: View {
     @Environment(\.isEmphasised) private var isEmphasised
 
     @Binding var isHovering: Bool

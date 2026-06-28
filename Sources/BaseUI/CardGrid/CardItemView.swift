@@ -20,7 +20,7 @@ extension CardGrid {
       if #available(macOS 15, iOS 18, *) {
 
         ForEach(subviews: content(item, isHovering)) { subview in
-          ItemSubView(
+          ItemSubview(
             isHovering: $isHovering,
             item: item,
             cardSize: cardSize,

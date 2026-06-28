@@ -1,5 +1,5 @@
 //
-//  SubView.swift
+//  Subview.swift
 //  BaseComponents
 //
 //  Created by Dave Coleman on 9/6/2025.
@@ -14,14 +14,14 @@ import SwiftUI
 public struct DecomposedView<Content: View>: View {
   @Environment(\.layoutType) private var layoutType
 
-  let subviewType: SubViewType
+  let subviewType: SubviewType
   let layoutTypeOverride: LayoutType?
   let spacing: CGFloat?
   let content: () -> Content
 
   /// Will fall back to environment `LayoutType` if no value provided for `layout`
   public init(
-    _ subviewType: SubViewType,
+    _ subviewType: SubviewType,
     layout: LayoutType,
     spacing: CGFloat? = nil,
     @ViewBuilder content: @escaping () -> Content,
@@ -35,11 +35,10 @@ public struct DecomposedView<Content: View>: View {
   public var body: some View {
 
     if #available(macOS 15, iOS 18, *) {
-
       Group {
         switch subviewType {
 
-          // MARK: - SubViews
+          // MARK: - Subviews
           case .subview:
             Group(subviews: content()) { subviewCollection in
               DynamicStack(layoutType: layoutIfPresent, spacing: spacing) {
@@ -73,7 +72,7 @@ extension DecomposedView {
 // MARK: - Additional inits
 extension DecomposedView {
   public init(
-    _ subviewType: SubViewType,
+    _ subviewType: SubviewType,
     axis: Axis?,
     spacing: CGFloat? = nil,
     @ViewBuilder content: @escaping () -> Content,
