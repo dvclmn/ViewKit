@@ -16,7 +16,6 @@ let package = Package(
       targets: [
         "BaseUI",
         "ViewKitCore",
-//        "LayoutKit",
       ],
     ),
 
@@ -43,23 +42,33 @@ let package = Package(
     .target(
       name: "BaseUI",
       dependencies: [
-        .module(.layoutKit),
+        .module(.viewKitCore),
         .extDependency(.coreTools),
         .extDependency(.stringTools),
         .extDependency(.viewTools),
         .extDependency(.colourTools),
-        .module(.baseTools),
         .module(.graphicsKit),
-        //        .module(.waveKit),
         .extDependency(.casePaths),
         .extDependency(.enumMacros),
       ],
     ),
 
     .target(
+      name: "ViewKitCore",
+      dependencies: [
+        .extDependency(.coreTools),
+        .extDependency(.stringTools),
+        .extDependency(.viewTools),
+        .module(.baseTools),
+        .extDependency(.enumMacros),
+        .extDependency(.casePaths),
+      ],
+    ),
+
+    .target(
       name: "GraphicsKit",
       dependencies: [
-        .module(.baseTools),
+        .module(.viewKitCore),
         .extDependency(.coreTools),
         .extDependency(.stringTools),
         .extDependency(.viewTools),
@@ -69,17 +78,6 @@ let package = Package(
       ],
       resources: [
         .process("Shaders/MetalShaders")
-      ],
-    ),
-
-    .target(
-      name: "LayoutKit",
-      dependencies: [
-        .extDependency(.coreTools),
-        .extDependency(.stringTools),
-        .extDependency(.viewTools),
-        .module(.baseTools),
-        .extDependency(.enumMacros),
       ],
     ),
 
@@ -140,19 +138,21 @@ enum ExternalDependency {
 }
 
 enum InternalModule {
-  case baseTools
+  //  case baseTools
   case baseUI
   case graphicsKit
-  case layoutKit
+  case viewKitCore
+  //  case layoutKit
   case motionKit
   //  case waveKit
 
   var name: String {
     switch self {
-      case .baseTools: "BaseTools"
+      //      case .baseTools: "BaseTools"
       case .baseUI: "BaseUI"
       case .graphicsKit: "GraphicsKit"
-      case .layoutKit: "LayoutKit"
+      case .viewKitCore: "ViewKitCore"
+      //      case .layoutKit: "LayoutKit"
       case .motionKit: "MotionKit"
     //      case .waveKit: "WaveKit"
     }
