@@ -1,7 +1,7 @@
-# ``BaseHelpers``
+# ``ViewKit``
 
-An overview of BaseHelpers
+An overview of ViewKit
 
 ## Overview
 
-An outline of BaseHelpers targets, and why the dependancies are structured the way they are so far.
+An outline of ViewKit targets, and why the dependancies are structured the way they are so far.
