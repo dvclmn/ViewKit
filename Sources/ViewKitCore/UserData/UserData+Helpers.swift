@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - Reading Data
 extension UserDataHandler {
 
-  /// Non-optional accessor for in-memory user data once `.ready`.
+  /// Non-optional accessor for the in-memory user data once ready.
   /// Crashes via precondition if accessed before readiness. Prefer this inside views gated on `.ready`.
   @MainActor
   public func userData(
@@ -20,7 +20,7 @@ extension UserDataHandler {
     unsafeReadyData(file: file, line: line)
   }
 
-  /// Optional accessor to inspect the current in-memory value, if initialized.
+  /// Optional accessor to inspect the current in-memory value, if initialised.
   /// Returns `nil` before the handler reaches `.ready`.
   public var userDataIfPresent: Value? { dataState.readyValue }
 
@@ -33,7 +33,7 @@ extension UserDataHandler {
   ) -> Value {
     guard let data = dataState.readyValue else {
       preconditionFailure(
-        "\(String(describing: Value.self)) accessed before `LoadState` ready. File: \(file), Line: \(line)",
+        "\(String(describing: Value.self)) accessed before `UserDataState` ready. File: \(file), Line: \(line)",
         file: file,
         line: line
       )

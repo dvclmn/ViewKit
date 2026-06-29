@@ -10,23 +10,36 @@ import SwiftUI
 import ViewKitCore
 import ViewTools
 
-public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
+public struct UserDataView<Store: UserDataHandler, Content: View>: View {
   @Environment(\.undoManager) private var undoManager
 
   @Bindable var store: Store
-  let didUpdatUserData: (Store.Value) -> Void
+  let persistUserData: (Store.Value) -> Void
   let content: () -> Content
   //  let content: (Store.Value) -> Content
 
   public init(
     store: Store,
-    didUpdatUserData: @escaping (Store.Value) -> Void,
+    persistUserData: @escaping (Store.Value) -> Void,
     //    @ViewBuilder content: @escaping (Store.Value) -> Content
     @ViewBuilder content: @escaping () -> Content,
   ) {
     self.store = store
-    self.didUpdatUserData = didUpdatUserData
+    self.persistUserData = persistUserData
     self.content = content
+  }
+
+  @available(*, deprecated, renamed: "init(store:persistUserData:content:)")
+  public init(
+    store: Store,
+    didUpdatUserData: @escaping (Store.Value) -> Void,
+    @ViewBuilder content: @escaping () -> Content,
+  ) {
+    self.init(
+      store: store,
+      persistUserData: didUpdatUserData,
+      content: content
+    )
   }
 
   public var body: some View {
@@ -52,11 +65,11 @@ public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
 
             /// Usually looks like this:
             /// ```
-            /// didUpdatUserData: { data in
+            /// persistUserData: { data in
             ///   store.$storage.withLock { $0 = data }
             /// }
             /// ```
-            store.userDataDidChange(updateStorage: didUpdatUserData)
+            store.userDataDidChange(updateStorage: persistUserData)
           }
           .task(id: undoManager) {
             store.undoManager = undoManager
@@ -66,3 +79,7 @@ public struct DataStoreView<Store: UserDataHandler, Content: View>: View {
     }
   }
 }
+
+@available(*, deprecated, renamed: "UserDataView")
+public typealias DataStoreView<Store, Content> = UserDataView<Store, Content>
+where Store: UserDataHandler, Content: View

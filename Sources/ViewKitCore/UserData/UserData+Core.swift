@@ -8,16 +8,29 @@
 import SwiftUI
 @_spi(Internal) import CoreTools
 
-/// Core contract for types that manage an in-memory user data value with a readiness lifecycle.
-/// Provides state, storage, and coordination for updates and persistence.
+/// Core contract for types that manage editable user data with a readiness
+/// lifecycle.
+///
+/// The handler deliberately separates the working value from the backing value:
+/// `dataState` owns the value currently being edited by the UI, while `storage`
+/// is the value used to hydrate and persist that working copy.
 @MainActor
 public protocol UserDataHandler: Observation.Observable, AnyObject {
   associatedtype Value: Equatable
 
-  /// Tracks whether the in-memory value is loading or `.ready`, and holds the current value when ready.
-  var dataState: LoadState<Value> { get set }
+  /// Tracks readiness and holds the editable in-memory value when ready.
+  ///
+  /// Prefer thinking of this as the handler's working user data state rather
+  /// than as a load-status flag. Mutations update this value first; persistence
+  /// to `storage` happens explicitly through `userDataDidChange`.
+  var dataState: UserDataState<Value> { get set }
 
-  /// Backing storage for persistence or disk sync. Keep in sync via `userDataDidChange`.
+  /// Backing value used for hydration and persistence.
+  ///
+  /// `UserDataView` copies this value into ``dataState`` when the handler first
+  /// becomes ready, then writes ready-value changes back through
+  /// `userDataDidChange`. It is not the live editing value while the handler is
+  /// ready.
   var storage: Value { get set }
 
   /// Optional undo manager used to register undo/redo for data mutations.
@@ -28,24 +41,29 @@ public protocol UserDataHandler: Observation.Observable, AnyObject {
   var debouncer: AsyncDebouncer { get }
   
 //  init(data: Value)
-  init(state: LoadState<Value>)
+  init(state: UserDataState<Value>)
 }
 
 // MARK: - Core storage sync
 extension UserDataHandler {
 
-  /// Marks the handler as `.ready` with the provided value.
-  /// Use after loading or hydrating initial data.
+  /// Marks the handler as ready with the provided editable value.
+  ///
+  /// This does not update ``storage``. It establishes the in-memory working
+  /// value that views and bindings should read from.
   public func setReady(_ value: Value) {
-//    print("Set \(Self.self) to status of `LoadState.ready` at \(Date.debug)")
+//    print("Set \(Self.self) to status of `UserDataState.ready` at \(Date.debug)")
     dataState = .ready(value)
   }
 
   /// Convenience flag indicating whether the handler has a ready value.
   public var isReady: Bool { dataState.isReady }
 
-  /// Core mutation pipeline for the in-memory value.
-  /// Applies the change, updates `dataState`, and optionally registers undo.
+  /// Core mutation pipeline for the editable in-memory value.
+  ///
+  /// Applies the change, publishes the new ready value, and optionally registers
+  /// undo. Persistence remains a separate step handled by
+  /// ``userDataDidChange(_:updateStorage:)``.
   @MainActor
   package func updateData(
     _ action: UpdateKind = .standard,
@@ -62,7 +80,7 @@ extension UserDataHandler {
     /// Mutate data in place
     change(&current)
 
-    /// Publish the new value.
+    /// Publish the new working value.
     dataState = .ready(current)
 
     /// Handle undo
@@ -77,7 +95,7 @@ extension UserDataHandler {
     }
   }
 
-  /// Debounced hook to sync the in-memory value to backing storage.
+  /// Debounced hook to sync the ready value to backing storage.
   /// Skips if no ready value is present.
   @MainActor
   package func userDataDidChange(

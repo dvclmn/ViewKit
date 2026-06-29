@@ -1,13 +1,17 @@
 # ``ViewKitCore``
 
-<!--@START_MENU_TOKEN@-->Summary<!--@END_MENU_TOKEN@-->
+Core value, state, and view-support types shared by ViewKit targets.
 
 ## Overview
 
-<!--@START_MENU_TOKEN@-->Text<!--@END_MENU_TOKEN@-->
+`ViewKitCore` holds the package's lower-level building blocks: user data state, case-path helpers, layout utilities, scrolling state, and other infrastructure used by higher-level SwiftUI targets.
 
 ## Topics
 
-### <!--@START_MENU_TOKEN@-->Group<!--@END_MENU_TOKEN@-->
+### User Data
 
-- <!--@START_MENU_TOKEN@-->``Symbol``<!--@END_MENU_TOKEN@-->
+- <doc:UserDataArchitecture>
+- ``UserDataHandler``
+- ``UserDataState``
+- ``UpdateKind``
+- ``UndoProvider``

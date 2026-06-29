@@ -19,6 +19,13 @@
         "identifier" : "GraphicsKitTests",
         "name" : "GraphicsKitTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ViewKitCoreTests",
+        "name" : "ViewKitCoreTests"
+      }
     }
   ],
   "version" : 1

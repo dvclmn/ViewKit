@@ -94,6 +94,14 @@ let package = Package(
       dependencies: ["GraphicsKit"],
     ),
 
+    .testTarget(
+      name: "ViewKitCoreTests",
+      dependencies: [
+        .module(.viewKitCore),
+        .extDependency(.coreTools),
+      ],
+    ),
+
   ],
 
 )

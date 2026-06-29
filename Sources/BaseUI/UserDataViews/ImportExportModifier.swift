@@ -11,6 +11,11 @@ import SwiftUI
 import ViewKitCore
 import ViewTools
 
+/// Adds JSON import and export toolbar actions for a ready user data store.
+///
+/// Apply this modifier from content that is already gated by ``UserDataView`` or
+/// an equivalent readiness check. The exporter reads `store.userData()`, which
+/// intentionally traps if the store has not reached `UserDataState.ready`.
 public struct ImportExportModifier<Store: UserDataHandler>: ViewModifier
 where Store.Value: Transferable & Codable {
 
@@ -52,12 +57,12 @@ where Store.Value: Transferable & Codable {
         allowedContentTypes: [.json],
         onCompletion: { result in
           do {
-            let newWave = try ImportHandler.loadSecurityScoped(
+            let importedValue = try ImportHandler.loadSecurityScoped(
               result: result,
               asType: Store.Value.self,
             )
             store.setValue(action: .withUndo(action: "Load Preset")) {
-              $0 = newWave
+              $0 = importedValue
             }
 
           } catch {
