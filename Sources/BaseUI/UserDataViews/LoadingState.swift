@@ -16,12 +16,10 @@ public struct UserDataView<Store: UserDataHandler, Content: View>: View {
   @Bindable var store: Store
   let persistUserData: (Store.Value) -> Void
   let content: () -> Content
-  //  let content: (Store.Value) -> Content
 
   public init(
     store: Store,
     persistUserData: @escaping (Store.Value) -> Void,
-    //    @ViewBuilder content: @escaping (Store.Value) -> Content
     @ViewBuilder content: @escaping () -> Content,
   ) {
     self.store = store
@@ -38,7 +36,7 @@ public struct UserDataView<Store: UserDataHandler, Content: View>: View {
     self.init(
       store: store,
       persistUserData: didUpdatUserData,
-      content: content
+      content: content,
     )
   }
 
@@ -58,17 +56,15 @@ public struct UserDataView<Store: UserDataHandler, Content: View>: View {
           .environment(\.isLoading, false)
 
       case .ready:
-        //      case .ready(let data):
         content()
-          //        content(data)
           .task(id: store.userDataIfPresent) {
 
-            /// Usually looks like this:
-            /// ```
-            /// persistUserData: { data in
-            ///   store.$storage.withLock { $0 = data }
-            /// }
-            /// ```
+            // Usually looks like this:
+            // ```
+            // persistUserData: { data in
+            //   store.$storage.withLock { $0 = data }
+            // }
+            // ```
             store.userDataDidChange(updateStorage: persistUserData)
           }
           .task(id: undoManager) {

@@ -26,7 +26,7 @@ public struct CaseBinding<Root, Value> {
       get: { casePath.extract(from: root.wrappedValue)! },
       set: { newValue in
         root.wrappedValue = casePath.embed(newValue)
-      }
+      },
     )
   }
 }
@@ -49,7 +49,7 @@ extension Binding {
         set: { newValue, transaction in
           guard let newValue else { return }
           self.transaction(transaction).wrappedValue[case: keyPath] = newValue
-        }
+        },
       )
     )
   }

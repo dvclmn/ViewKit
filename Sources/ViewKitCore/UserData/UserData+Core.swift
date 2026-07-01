@@ -40,7 +40,6 @@ public protocol UserDataHandler: Observation.Observable, AnyObject {
   /// Debounces outbound syncs to backing storage to avoid excessive writes.
   var debouncer: AsyncDebouncer { get }
   
-//  init(data: Value)
   init(state: UserDataState<Value>)
 }
 

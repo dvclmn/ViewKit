@@ -13,18 +13,12 @@ let package = Package(
   products: [
     .library(
       name: "BaseUI",
-      targets: [
-        "BaseUI",
-        "ViewKitCore",
-      ],
+      targets: ["BaseUI", "ViewKitCore"],
     ),
 
     .library(
       name: "GraphicsKit",
-      targets: [
-        "GraphicsKit",
-        "MotionKit",
-      ],
+      targets: ["GraphicsKit", "MotionKit"],
     ),
   ],
 
@@ -32,7 +26,7 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.3"),
     .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
-    .package(url: "https://github.com/dvclmn/ToolKit", .upToNextMinor(from: "0.2.0")),
+    .package(url: "https://github.com/dvclmn/ToolKit", .upToNextMinor(from: "0.3.0")),
     .package(url: "https://github.com/dvclmn/VectorKit", branch: "main"),
   ],
 
