@@ -6,8 +6,7 @@
 //
 
 import CasePaths
-
-import MacroHelpers
+import EnumMacroSupport
 import SwiftUI
 
 /// Owns the “case switching policy” for `MetaEnum` values.
@@ -24,7 +23,7 @@ import SwiftUI
 ///
 /// This handler is UI-agnostic: it can drive Pickers, Lists, sidebars, menus, commands, etc.
 @Observable
-public final class CasePathHandler<Enum: MetaEnum> {
+public final class CasePathHandler<Enum: MetaEnumRepresentable> {
   var selectedMeta: Enum.Meta
   @ObservationIgnored private var cache: [Enum.Meta: Enum]
   @ObservationIgnored private let fallback: CaseFallbackStrategy<Enum>

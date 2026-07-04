@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import MacroHelpers
+import EnumMacroSupport
 
-public enum CaseFallbackStrategy<Root: MetaEnum> {
+public enum CaseFallbackStrategy<Root: MetaEnumRepresentable> {
 
   /// Do not switch; keep the underlying value as-is and keep `selectedMeta` aligned to it.
   /// This s the “safe default”, and matches what the UI should do. Selection

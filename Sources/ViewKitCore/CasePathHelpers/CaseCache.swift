@@ -5,15 +5,14 @@
 //  Created by Dave Coleman on 9/2/2026.
 //
 
-
 import CasePaths
+import EnumMacroSupport
 import SwiftUI
-import MacroHelpers
 
 /// An alternative to the below `MetaCache`
 @MainActor
 @Observable
-public final class CasePayloadCache<Enum: MetaEnum> {
+public final class CasePayloadCache<Enum: MetaEnumRepresentable> {
 
   public var selectedMeta: Enum.Meta
   @ObservationIgnored private var lastByMeta: [Enum.Meta: Enum]

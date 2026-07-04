@@ -1,9 +1,11 @@
-import ColourTools
 //
 //  TextTag.swift
 //  BaseComponents
 //
 //  Created by Dave Coleman on 20/7/2025.
+//
+
+import ColourTools
 import CoreTools
 import SwiftUI
 import ViewTools
@@ -17,7 +19,7 @@ public struct TextTag: View {
   public init(
     _ text: String,
     colour: RGBColour,
-      //    colour: CodableColour = Color.gray.opacityLow
+    //    colour: CodableColour = Color.gray.opacityLow
   ) {
     self.text = text
     self.colour = colour

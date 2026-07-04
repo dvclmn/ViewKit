@@ -7,12 +7,11 @@
 
 import CasePaths
 import SwiftUI
-
-import MacroHelpers
+import EnumMacroSupport
 
 public struct CasePicker<Root, Meta, Content>: View
 where
-  Root: MetaEnum & CasePathable,
+  Root: MetaEnumRepresentable & CasePathable,
   Meta == Root.Meta,
   Content: View
 {

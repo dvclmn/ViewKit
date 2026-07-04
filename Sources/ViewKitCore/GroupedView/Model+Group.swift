@@ -11,7 +11,7 @@ public typealias ItemGroup<T> = [String: [T]]
 
 extension EnvironmentValues {
   @Entry public var sectionHeaderColour: AnyShapeStyle? = nil
-  @Entry public var sectionNameTransform: (String) -> String = { $0 }
+//  @Entry public var sectionNameTransform: (String) -> String = { $0 }
 }
 
 extension View {
@@ -28,7 +28,7 @@ extension View {
   ///   }
   /// )
   /// ```
-  public func transformSectionName(_ transform: @escaping (String) -> String) -> some View {
-    self.environment(\.sectionNameTransform, transform)
-  }
+//  public func transformSectionName(_ transform: @escaping (String) -> String) -> some View {
+//    self.environment(\.sectionNameTransform, transform)
+//  }
 }

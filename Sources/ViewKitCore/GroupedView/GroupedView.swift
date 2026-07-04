@@ -8,26 +8,36 @@
 import SwiftUI
 
 public struct GroupedView<Content: View, Item: Identifiable>: View {
-  @Environment(\.sectionNameTransform) private var sectionNameTransform
+  //  @Environment(\.sectionNameTransform) private var sectionNameTransform
   @Environment(\.sectionHeaderColour) private var sectionHeaderColour
   let data: [Item]
   let keyForValue: ((Item) -> String)?
+  let sectionNameTransform: (String) -> String
   let content: (Item) -> Content
 
   public init(
     data: [Item],
     groupedBy keyForValue: @escaping (Item) -> String,
-    @ViewBuilder content: @escaping (Item) -> Content
+    sectionNameTransform: @escaping (String) -> String = { $0 },
+    @ViewBuilder content: @escaping (Item) -> Content,
   ) {
+
+    //  public init(
+    //    data: [Item],
+    //    groupedBy keyForValue: @escaping (Item) -> String,
+    //    @ViewBuilder content: @escaping (Item) -> Content
+    //  ) {
     self.data = data
     self.keyForValue = keyForValue
+    self.sectionNameTransform = sectionNameTransform
     self.content = content
   }
 
   public init(
     data: [Item],
     groupedBy groupPath: KeyPath<Item, String>? = nil,
-    @ViewBuilder content: @escaping (Item) -> Content
+    sectionNameTransform: @escaping (String) -> String = { $0 },
+    @ViewBuilder content: @escaping (Item) -> Content,
   ) {
     self.data = data
 
@@ -36,6 +46,7 @@ public struct GroupedView<Content: View, Item: Identifiable>: View {
     } else {
       self.keyForValue = nil
     }
+    self.sectionNameTransform = sectionNameTransform
     self.content = content
   }
 

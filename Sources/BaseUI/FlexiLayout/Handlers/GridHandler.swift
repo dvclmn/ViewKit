@@ -13,7 +13,7 @@ import ViewTools
 
 extension Flexi {
 
-  @MainActor
+//  @MainActor
   @Observable
 
   final class GridHandler {

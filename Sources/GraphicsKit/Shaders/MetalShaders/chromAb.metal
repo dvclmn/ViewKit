@@ -20,25 +20,20 @@ half4 chromaticAberration(float2 position,
   half4 original_color = layer.sample(position);
   half4 new_color = original_color;
 
-//  float2 viewSize = bounds
-  // Calculate midpoint
-  
   // Extract the size (width, height) from bounds
   float2 viewSize = bounds.zw;
   
-  // If you also need the origin:
+  // Get the origin:
   float2 origin = bounds.xy;
   
   // Center in layer coordinates:
   float2 center = origin + viewSize * 0.5;
-  
-//  float2 center = viewSize * 0.5;
   float2 fromCenter = position - center;
   float distanceFromCenter = length(fromCenter);
 
   // Example: no distortion for the inner 20% of the distance to the edge
   float deadZone = 0.2;
-  float maxDist = length(center); // for normalized space, or adjust for aspect ratio
+  float maxDist = length(center); // Normalised space
   float normalisedDist = distanceFromCenter / maxDist;
   
   if (normalisedDist < deadZone) {
@@ -47,12 +42,12 @@ half4 chromaticAberration(float2 position,
   }
   
   // Only start distortion after deadZone
-  float t = clamp((normalisedDist - deadZone) / (1.0 - deadZone), 0.0, 1.0);
   // t is 0 inside dead zone, 1 at the edge
+  float t = clamp((normalisedDist - deadZone) / (1.0 - deadZone), 0.0, 1.0);
   
   float exponent = 2.0;
   
-  // Apply your exponential/cubic/etc. curve to t for fine control
+  // Apply algorithm, curve to t for fine control
   float effectStrength = pow(t, exponent);
   
   float radialMultiplier = 1.0 + effectStrength * radialStrength;

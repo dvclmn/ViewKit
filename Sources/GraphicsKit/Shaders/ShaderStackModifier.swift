@@ -3,40 +3,42 @@
 //  ViewKit
 //
 //  Created by Dave Coleman on 10/2/2026.
+//
+
 import CoreTools
-import ViewTools
-// import BaseTools
 import SwiftUI
+import ViewTools
 
 public struct ShaderStackModifier: ViewModifier {
 
   let shaders: [ShaderEffect]
   let maxOffset: CGSize
+  let isEnabled: Bool
 
   public func body(content: Content) -> some View {
     content
       .shaderEffect(
         shaders[safe: 3],
         maxOffset: maxOffset,
-        isEnabled: true
+        isEnabled: isEnabled,
       )
 
       .shaderEffect(
         shaders[safe: 2],
         maxOffset: maxOffset,
-        isEnabled: true
+        isEnabled: isEnabled,
       )
 
       .shaderEffect(
         shaders[safe: 1],
         maxOffset: maxOffset,
-        isEnabled: true
+        isEnabled: isEnabled,
       )
 
       .shaderEffect(
         shaders[safe: 0],
         maxOffset: maxOffset,
-        isEnabled: true
+        isEnabled: isEnabled,
       )
 
   }
@@ -44,23 +46,27 @@ public struct ShaderStackModifier: ViewModifier {
 extension View {
   public func shaderStack(
     _ shaders: ShaderEffect...,
-    maxOffset: CGSize? = nil
+    maxOffset: CGSize? = nil,
+    isEnabled: Bool = true,
   ) -> some View {
     self.modifier(
       ShaderStackModifier(
         shaders: shaders,
-        maxOffset: maxOffset ?? .zero
+        maxOffset: maxOffset ?? .zero,
+        isEnabled: isEnabled,
       )
     )
   }
   public func shaderStack(
     _ shaders: [ShaderEffect],
-    maxOffset: CGSize? = nil
+    maxOffset: CGSize? = nil,
+    isEnabled: Bool = true,
   ) -> some View {
     self.modifier(
       ShaderStackModifier(
         shaders: shaders,
-        maxOffset: maxOffset ?? .zero
+        maxOffset: maxOffset ?? .zero,
+        isEnabled: isEnabled,
       )
     )
   }

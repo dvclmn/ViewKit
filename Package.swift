@@ -25,7 +25,7 @@ let package = Package(
   // MARK: - Dependancies
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.3"),
-    .package(url: "https://github.com/dvclmn/BaseMacros", branch: "main"),
+    .package(url: "https://github.com/dvclmn/EnumMacros", branch: "main"),
     .package(url: "https://github.com/dvclmn/ToolKit", .upToNextMinor(from: "0.3.0")),
     .package(url: "https://github.com/dvclmn/VectorKit", branch: "main"),
   ],
@@ -131,7 +131,7 @@ enum ExternalDependency {
       case .colourTools: ("ColourTools", "ToolKit")
       case .viewTools: ("ViewTools", "ToolKit")
       case .vectorKit: ("VectorKit", nil)
-      case .enumMacros: ("BaseMacros", nil)
+      case .enumMacros: ("EnumMacros", nil)
       case .casePaths: ("CasePaths", "swift-case-paths")
       case .macroToolkit: ("MacroToolkit", "swift-macro-toolkit")
     }
