@@ -11,6 +11,6 @@
       location = "container:../VectorKit">
    </FileRef>
    <FileRef
-      location = "container:../BaseMacros">
+      location = "container:../EnumMacros">
    </FileRef>
 </Workspace>

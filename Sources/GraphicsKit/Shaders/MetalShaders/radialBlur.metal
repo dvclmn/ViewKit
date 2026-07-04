@@ -24,14 +24,15 @@ static inline float maxDistanceToBounds(float2 originN) {
                                   float4 bounds,
                                   float2 origin,          // still treated as offset from centre in normalised units
                                   float blurStrength,
-                                  float falloffCentre,    // 0..1 : where blur is 50%
-                                  float falloffWidth,     // 0..1 : transition width (softness)
+                                  float start,            // 0..1 : where blur begins
+                                  float end,              // 0..1 : where blur reaches full strength
                                   float samples
                                   ) {
   float2 size = bounds.zw;
+  float2 boundsOrigin = bounds.xy;
   
-  // Normalise position to [0,1]
-  float2 posN = position / size;
+  // Normalise position to [0,1] inside the layer bounds.
+  float2 posN = (position - boundsOrigin) / size;
   
   // Treat `origin` as a normalised offset from the layer's centre
   float2 centreN = float2(0.5, 0.5);
@@ -43,13 +44,15 @@ static inline float maxDistanceToBounds(float2 originN) {
   float maxDist = max(0.0001, maxDistanceToBounds(originN));
   float distanceN = clamp(dist / maxDist, 0.0, 1.0);
   
-  // Convert centre/width to [start,end] in a stable way
-  float halfW = max(0.0001, falloffWidth * 0.5);
-  float start = clamp(falloffCentre - halfW, 0.0, 1.0);
-  float end   = clamp(falloffCentre + halfW, 0.0, 1.0);
+  float rampStart = clamp(start, 0.0, 1.0);
+  float rampEnd = clamp(end, 0.0, 1.0);
   
-  // Blur ramps from 0 (inside start) to 1 (outside end)
-  float blurAmount = smoothstep(start, end, distanceN);
+  // Blur ramps from 0 inside `start` to 1 outside `end`.
+  // If the range collapses during animation, use a hard threshold instead of
+  // passing equal edges to smoothstep.
+  float blurAmount = (rampEnd <= rampStart)
+    ? (distanceN >= rampStart ? 1.0 : 0.0)
+    : smoothstep(rampStart, rampEnd, distanceN);
   
   if (blurAmount < 0.001) {
     return layer.sample(position);

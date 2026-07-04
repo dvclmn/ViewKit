@@ -11,11 +11,13 @@ extension ShaderEffect {
   public static let chromaticPresetA: ShaderEffect = .chromaticAberration(
     strength: 1.6,
     radialStrength: 3.0,
+    channelSeparation: 1,
   )
   
   public static let chromaticSubtle: ShaderEffect = .chromaticAberration(
     strength: 0.95,
     radialStrength: 1.5,
+    channelSeparation: 1,
   )
   
   public static let fisheyePresetA: ShaderEffect = .fisheye(

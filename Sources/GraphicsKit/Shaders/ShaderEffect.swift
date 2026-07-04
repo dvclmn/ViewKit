@@ -17,9 +17,15 @@ import SwiftUI
 @CasePathable
 @dynamicMemberLookup
 public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
+  /// Horizontal red/blue channel separation.
+  ///
+  /// `strength` blends between the original colour and the separated colour.
+  /// `channelSeparation` is the base horizontal sample distance in pixels.
+  /// `radialStrength` increases that distance towards the edge of the layer.
   case chromaticAberration(
-    strength: CGFloat,  // Aka opacity
+    strength: CGFloat,
     radialStrength: CGFloat,
+    channelSeparation: CGFloat = 1,
   )
   case fisheye(
     origin: CGPoint,
@@ -44,6 +50,11 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     brightness: CGFloat = 1.0,
   )
 
+  /// Zoom-style blur that ramps by normalised radial distance from `origin`.
+  ///
+  /// `origin` is a normalised offset from the layer centre, so `.zero` keeps the
+  /// blur centred. `start` is the distance where blur begins, and `end` is the
+  /// distance where it reaches full strength.
   case radialBlur(
     origin: CGPoint,
     strength: CGFloat,
@@ -78,14 +89,16 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
 
 extension ShaderEffect {
 
+  private static let defaultChromaticChannelSeparation: CGFloat = 1
+
   public var arguments: [Shader.Argument] {
     switch self {
-      /// Haven't yet exposed all shader controls to this case
-      case .chromaticAberration(let strength, let radialStrength):
+      case .chromaticAberration(let strength, let radialStrength, let channelSeparation):
         [
           .boundingRect,
           .float(strength),
           .float(radialStrength),
+          .float(channelSeparation),
         ]
 
       case .fisheye(let origin, let radius, let strength):
@@ -147,7 +160,7 @@ extension ShaderEffect {
   /// ```
   public var reference: (shader: String, name: String) {
     switch self {
-      case .chromaticAberration: ("chromaticAberration", "Chromatic Abberation")
+      case .chromaticAberration: ("chromaticAberration", "Chromatic Aberration")
       case .fisheye: ("fisheye", "Fish-eye")
       case .glitter: ("glitter", "Glitter")
       case .crtCurvature: ("crtCurvature", "CRT Curvature")
@@ -184,4 +197,134 @@ extension ShaderEffect {
     )
   }
 
+}
+
+extension ShaderEffect {
+
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: ShaderEffectCodingKey.self)
+
+    guard container.allKeys.count == 1, let caseKey = container.allKeys.first else {
+      throw DecodingError.dataCorrupted(
+        DecodingError.Context(
+          codingPath: decoder.codingPath,
+          debugDescription: "Expected exactly one ShaderEffect case."
+        )
+      )
+    }
+
+    let values = try container.nestedContainer(
+      keyedBy: ShaderEffectCodingKey.self,
+      forKey: caseKey
+    )
+
+    switch caseKey.stringValue {
+      case "chromaticAberration":
+        self = .chromaticAberration(
+          strength: try values.decode(CGFloat.self, forKey: .init("strength")),
+          radialStrength: try values.decode(CGFloat.self, forKey: .init("radialStrength")),
+          channelSeparation: try values.decodeIfPresent(
+            CGFloat.self,
+            forKey: .init("channelSeparation")
+          ) ?? Self.defaultChromaticChannelSeparation
+        )
+
+      case "fisheye":
+        self = .fisheye(
+          origin: try values.decode(CGPoint.self, forKey: .init("origin")),
+          radius: try values.decode(CGFloat.self, forKey: .init("radius")),
+          strength: try values.decode(CGFloat.self, forKey: .init("strength"))
+        )
+
+      case "glitter":
+        self = .glitter(
+          spread: try values.decode(CGFloat.self, forKey: .init("spread"))
+        )
+
+      case "crtCurvature":
+        self = .crtCurvature(
+          strength: try values.decodeIfPresent(CGFloat.self, forKey: .init("strength")) ?? 0.5
+        )
+
+      case "crtLines":
+        self = .crtLines(
+          lineSpacing: try values.decodeIfPresent(
+            CGFloat.self,
+            forKey: .init("lineSpacing")
+          ) ?? 1.0,
+          lineIntensity: try values.decodeIfPresent(
+            CGFloat.self,
+            forKey: .init("lineIntensity")
+          ) ?? 1.0,
+          phosphorSize: try values.decodeIfPresent(
+            CGFloat.self,
+            forKey: .init("phosphorSize")
+          ) ?? 1.0,
+          brightness: try values.decodeIfPresent(
+            CGFloat.self,
+            forKey: .init("brightness")
+          ) ?? 1.0
+        )
+
+      case "radialBlur":
+        self = .radialBlur(
+          origin: try values.decode(CGPoint.self, forKey: .init("origin")),
+          strength: try values.decode(CGFloat.self, forKey: .init("strength")),
+          start: try values.decode(CGFloat.self, forKey: .init("start")),
+          end: try values.decode(CGFloat.self, forKey: .init("end")),
+          samples: try values.decode(CGFloat.self, forKey: .init("samples"))
+        )
+
+      case "filmGrain":
+        self = .filmGrain(
+          time: try values.decode(CGFloat.self, forKey: .init("time")),
+          size: try values.decode(CGFloat.self, forKey: .init("size")),
+          intensity: try values.decode(CGFloat.self, forKey: .init("intensity")),
+          colour: try values.decode(CGFloat.self, forKey: .init("colour"))
+        )
+
+      case "ripplePush":
+        self = .ripplePush(
+          location: try values.decode(CGPoint.self, forKey: .init("location")),
+          velocity: try values.decode(CGPoint.self, forKey: .init("velocity"))
+        )
+
+      case "psych":
+        self = .psych(
+          time: try values.decode(CGFloat.self, forKey: .init("time"))
+        )
+
+      case "checkerboard":
+        self = .checkerboard(
+          primary: try values.decodeIfPresent(RGBColour.self, forKey: .init("primary")) ?? .white,
+          secondary: try values.decodeIfPresent(RGBColour.self, forKey: .init("secondary")) ?? .gray,
+          scale: try values.decodeIfPresent(CGFloat.self, forKey: .init("scale")) ?? 4.0,
+          offset: try values.decodeIfPresent(CGPoint.self, forKey: .init("offset")) ?? .zero
+        )
+
+      default:
+        throw DecodingError.dataCorruptedError(
+          forKey: caseKey,
+          in: container,
+          debugDescription: "Unknown ShaderEffect case '\(caseKey.stringValue)'."
+        )
+    }
+  }
+}
+
+private struct ShaderEffectCodingKey: CodingKey {
+  let stringValue: String
+  let intValue: Int? = nil
+
+  init(_ stringValue: String) {
+    self.stringValue = stringValue
+  }
+
+  init?(stringValue: String) {
+    self.init(stringValue)
+  }
+
+  init?(intValue: Int) {
+    nil
+  }
 }

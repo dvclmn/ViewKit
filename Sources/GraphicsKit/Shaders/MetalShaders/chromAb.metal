@@ -14,7 +14,8 @@ half4 chromaticAberration(float2 position,
                           SwiftUI::Layer layer,
                           float4 bounds,
                           float strength,
-                          float radialStrength) // how much the effect increases from center
+                          float radialStrength,
+                          float channelSeparation)
 {
   
   half4 original_color = layer.sample(position);
@@ -31,36 +32,31 @@ half4 chromaticAberration(float2 position,
   float2 fromCenter = position - center;
   float distanceFromCenter = length(fromCenter);
 
-  // Example: no distortion for the inner 20% of the distance to the edge
+  // No separation for the inner 20% of the distance to the edge.
   float deadZone = 0.2;
-  float maxDist = length(center); // Normalised space
+  float maxDist = max(0.0001, length(viewSize * 0.5));
   float normalisedDist = distanceFromCenter / maxDist;
   
   if (normalisedDist < deadZone) {
-    // No distortion, just return original color
+    // No distortion, just return original colour.
     return original_color;
   }
   
-  // Only start distortion after deadZone
-  // t is 0 inside dead zone, 1 at the edge
+  // Only start distortion after deadZone.
+  // t is 0 inside dead zone, 1 at the edge.
   float t = clamp((normalisedDist - deadZone) / (1.0 - deadZone), 0.0, 1.0);
   
   float exponent = 2.0;
   
-  // Apply algorithm, curve to t for fine control
+  // Apply algorithm, curve to t for fine control.
   float effectStrength = pow(t, exponent);
   
   float radialMultiplier = 1.0 + effectStrength * radialStrength;
   
-  // Hard coded for now, as I may not need them
-  float redDistance = 1;
-  float redAngle = 0;
-  float blueDistance = -1;
-  float blueAngle = 0;
-  
-  // Calculate offset vectors with radial scaling
-  float2 redOffset = float2(cos(redAngle), sin(redAngle)) * redDistance * radialMultiplier;
-  float2 blueOffset = float2(cos(blueAngle), sin(blueAngle)) * blueDistance * radialMultiplier;
+  // Keep the current effect as a simple horizontal red/blue split.
+  float separation = channelSeparation * radialMultiplier;
+  float2 redOffset = float2(separation, 0.0);
+  float2 blueOffset = float2(-separation, 0.0);
   
   new_color.r = layer.sample(position + redOffset).r;
   new_color.g = layer.sample(position).g;
@@ -98,4 +94,3 @@ half4 chromaticAberration(float2 position,
 //  
 //  return blended_color;
 //}
-
