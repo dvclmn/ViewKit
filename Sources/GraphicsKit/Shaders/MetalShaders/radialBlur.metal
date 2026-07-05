@@ -2,19 +2,14 @@
 #include <SwiftUI/SwiftUI_Metal.h>
 using namespace metal;
 
-static inline float maxDistanceToBounds(float2 originN) {
-  // originN is in [0,1]. Compute farthest corner distance in normalised space.
-  float2 c0 = float2(0.0, 0.0);
-  float2 c1 = float2(1.0, 0.0);
-  float2 c2 = float2(0.0, 1.0);
-  float2 c3 = float2(1.0, 1.0);
+static inline float normalisedDistanceToBounds(float2 positionN, float2 originN) {
+  float2 deltaN = positionN - originN;
+  float xLimit = deltaN.x < 0.0 ? originN.x : (1.0 - originN.x);
+  float yLimit = deltaN.y < 0.0 ? originN.y : (1.0 - originN.y);
+  float2 edgeDistance = max(float2(xLimit, yLimit), float2(0.0001));
+  float2 scaledDelta = deltaN / edgeDistance;
   
-  float d0 = length(originN - c0);
-  float d1 = length(originN - c1);
-  float d2 = length(originN - c2);
-  float d3 = length(originN - c3);
-  
-  return max(max(d0, d1), max(d2, d3));
+  return clamp(length(scaledDelta), 0.0, 1.0);
 }
 
 /// Progressive radial blur shader with zoom blur effect
@@ -28,7 +23,7 @@ static inline float maxDistanceToBounds(float2 originN) {
                                   float end,              // 0..1 : where blur reaches full strength
                                   float samples
                                   ) {
-  float2 size = bounds.zw;
+  float2 size = max(bounds.zw, float2(0.0001));
   float2 boundsOrigin = bounds.xy;
   
   // Normalise position to [0,1] inside the layer bounds.
@@ -38,11 +33,8 @@ static inline float maxDistanceToBounds(float2 originN) {
   float2 centreN = float2(0.5, 0.5);
   float2 originN = clamp(centreN + origin, 0.0, 1.0);
   
-  // Normalised distance (0..1), robust to aspect ratio + origin not centred
-  float2 deltaN = posN - originN;
-  float dist = length(deltaN);
-  float maxDist = max(0.0001, maxDistanceToBounds(originN));
-  float distanceN = clamp(dist / maxDist, 0.0, 1.0);
+  // Normalised distance (0..1), robust to aspect ratio + origin not centred.
+  float distanceN = normalisedDistanceToBounds(posN, originN);
   
   float rampStart = clamp(start, 0.0, 1.0);
   float rampEnd = clamp(end, 0.0, 1.0);
@@ -60,10 +52,11 @@ static inline float maxDistanceToBounds(float2 originN) {
   
   int actualSamples = int(mix(4.0, samples, blurAmount));
   
-  // Zoom direction in normalised space
-  float2 dirN = deltaN;
-  float lenDir = length(dirN);
-  dirN = (lenDir > 0.0001) ? (dirN / lenDir) : float2(0.0);
+  // Zoom direction in pixel space.
+  float2 originPosition = boundsOrigin + originN * size;
+  float2 direction = position - originPosition;
+  float directionLength = length(direction);
+  direction = (directionLength > 0.0001) ? (direction / directionLength) : float2(0.0);
   
   half4 color = half4(0.0);
   float totalWeight = 0.0;
@@ -77,8 +70,8 @@ static inline float maxDistanceToBounds(float2 originN) {
     
     float offset = t * blurStrength * blurAmount;
     
-    // Convert from normalised direction into pixel offset
-    float2 samplePos = position + (dirN * offset * pixelScale);
+    // Convert the normalised blur distance into a pixel offset.
+    float2 samplePos = position + (direction * offset * pixelScale);
     
     color += layer.sample(samplePos) * weight;
     totalWeight += weight;

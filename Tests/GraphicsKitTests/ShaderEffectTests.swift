@@ -143,4 +143,60 @@ struct ShaderEffectTests {
     expectApproximatelyEqual(Double(end), 0.99)
     expectApproximatelyEqual(Double(samples), 20)
   }
+
+  @Test("chromatic aberration sample offset follows channel separation and radial strength")
+  func chromaticAberrationMaximumSampleOffset() {
+    let effect = ShaderEffect.chromaticAberration(
+      strength: 0.8,
+      radialStrength: 5.8,
+      channelSeparation: 1
+    )
+
+    let offset = effect.maximumSampleOffset(for: CGSize(width: 600, height: 300))
+
+    expectApproximatelyEqual(Double(offset.width), 6.8)
+    expectApproximatelyEqual(Double(offset.height), 6.8)
+  }
+
+  @Test("radial blur sample offset scales with the shortest side")
+  func radialBlurMaximumSampleOffset() {
+    let effect = ShaderEffect.radialBlur(
+      origin: .zero,
+      strength: 0.1,
+      start: 0.95,
+      end: 0.99,
+      samples: 20
+    )
+
+    let offset = effect.maximumSampleOffset(for: CGSize(width: 600, height: 300))
+
+    expectApproximatelyEqual(Double(offset.width), 15)
+    expectApproximatelyEqual(Double(offset.height), 15)
+  }
+
+  @Test("shader stack sample offset uses the largest contained effect offset")
+  func shaderStackMaximumSampleOffset() {
+    let effects: [ShaderEffect] = [
+      .chromaticAberration(
+        strength: 0.8,
+        radialStrength: 5.8,
+        channelSeparation: 1
+      ),
+      .radialBlur(
+        origin: .zero,
+        strength: 0.1,
+        start: 0.95,
+        end: 0.99,
+        samples: 20
+      ),
+    ]
+
+    let offset = ShaderEffect.maximumSampleOffset(
+      for: effects,
+      in: CGSize(width: 600, height: 300)
+    )
+
+    expectApproximatelyEqual(Double(offset.width), 15)
+    expectApproximatelyEqual(Double(offset.height), 15)
+  }
 }

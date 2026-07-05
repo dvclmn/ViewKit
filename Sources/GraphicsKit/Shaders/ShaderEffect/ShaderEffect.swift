@@ -20,8 +20,9 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   /// Horizontal red/blue channel separation.
   ///
   /// `strength` blends between the original colour and the separated colour.
-  /// `channelSeparation` is the base horizontal sample distance in pixels.
-  /// `radialStrength` increases that distance towards the edge of the layer.
+  /// `channelSeparation` is the base horizontal sample distance in pixels, and
+  /// `radialStrength` multiplies that distance as the sample position moves from
+  /// the centre towards the layer bounds.
   case chromaticAberration(
     strength: CGFloat,
     radialStrength: CGFloat,
@@ -50,11 +51,12 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     brightness: CGFloat = 1.0,
   )
 
-  /// Zoom-style blur that ramps by normalised radial distance from `origin`.
+  /// Zoom-style blur that ramps by normalised distance from `origin` to the layer bounds.
   ///
   /// `origin` is a normalised offset from the layer centre, so `.zero` keeps the
-  /// blur centred. `start` is the distance where blur begins, and `end` is the
-  /// distance where it reaches full strength.
+  /// blur centred. `strength` is a fraction of the layer's shortest side, `start`
+  /// is the distance where blur begins, and `end` is the distance where it
+  /// reaches full strength.
   case radialBlur(
     origin: CGPoint,
     strength: CGFloat,

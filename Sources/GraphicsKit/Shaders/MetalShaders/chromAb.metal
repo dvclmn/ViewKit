@@ -9,6 +9,15 @@
 #include <SwiftUI/SwiftUI_Metal.h>
 using namespace metal;
 
+static inline float normalisedDistanceFromCentreToBounds(float2 position, float4 bounds) {
+  float2 size = max(bounds.zw, float2(0.0001));
+  float2 positionN = (position - bounds.xy) / size;
+  float2 fromCentreN = positionN - float2(0.5, 0.5);
+  float2 scaledFromCentre = fromCentreN / float2(0.5, 0.5);
+
+  return clamp(length(scaledFromCentre), 0.0, 1.0);
+}
+
 [[ stitchable ]]
 half4 chromaticAberration(float2 position,
                           SwiftUI::Layer layer,
@@ -21,22 +30,9 @@ half4 chromaticAberration(float2 position,
   half4 original_color = layer.sample(position);
   half4 new_color = original_color;
 
-  // Extract the size (width, height) from bounds
-  float2 viewSize = bounds.zw;
-  
-  // Get the origin:
-  float2 origin = bounds.xy;
-  
-  // Center in layer coordinates:
-  float2 center = origin + viewSize * 0.5;
-  float2 fromCenter = position - center;
-  float distanceFromCenter = length(fromCenter);
-
   // No separation for the inner 20% of the distance to the edge.
   float deadZone = 0.2;
-   float maxDist = length(center); // Normalised space
-//  float maxDist = max(0.0001, length(viewSize * 0.5));
-  float normalisedDist = distanceFromCenter / maxDist;
+  float normalisedDist = normalisedDistanceFromCentreToBounds(position, bounds);
   
   if (normalisedDist < deadZone) {
     // No distortion, just return original colour.
@@ -54,20 +50,10 @@ half4 chromaticAberration(float2 position,
   
   float radialMultiplier = 1.0 + effectStrength * radialStrength;
   
-  // Hard coded for now, as I may not need them
-   float redDistance = 1;
-   float redAngle = 0;
-   float blueDistance = -1;
-   float blueAngle = 0;
-  
-  // Calculate offset vectors with radial scaling
-   float2 redOffset = float2(cos(redAngle), sin(redAngle)) * redDistance * radialMultiplier;
-   float2 blueOffset = float2(cos(blueAngle), sin(blueAngle)) * blueDistance * radialMultiplier;
-  
   // Keep the current effect as a simple horizontal red/blue split.
-//  float separation = channelSeparation * radialMultiplier;
-//  float2 redOffset = float2(separation, 0.0);
-//  float2 blueOffset = float2(-separation, 0.0);
+  float separation = channelSeparation * radialMultiplier;
+  float2 redOffset = float2(separation, 0.0);
+  float2 blueOffset = float2(-separation, 0.0);
   
   new_color.r = layer.sample(position + redOffset).r;
   new_color.g = layer.sample(position).g;
