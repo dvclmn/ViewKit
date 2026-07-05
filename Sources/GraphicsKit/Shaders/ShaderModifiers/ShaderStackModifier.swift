@@ -16,8 +16,6 @@ public struct ShaderStackModifier: ViewModifier {
   let isEnabled: Bool
 
   public func body(content: Content) -> some View {
-    let slots = Self.effectSlots(from: shaders)
-
     content
       .shaderEffect(
         slots[0],
@@ -42,9 +40,13 @@ public struct ShaderStackModifier: ViewModifier {
         maxOffset: maxOffset,
         isEnabled: isEnabled,
       )
-
   }
+}
 
+extension ShaderStackModifier {
+  
+  private var slots: [ShaderEffect?] { Self.effectSlots(from: shaders) }
+  
   static func normalisedEffects(from shaders: [ShaderEffect]) -> [ShaderEffect] {
     Array(
       shaders
@@ -60,45 +62,5 @@ public struct ShaderStackModifier: ViewModifier {
       guard index < effects.count else { return nil }
       return effects[index]
     }
-  }
-}
-extension View {
-  public func shaderStack(
-    _ shaders: ShaderEffect...,
-    maxOffset: CGSize? = nil,
-    isEnabled: Bool = true,
-  ) -> some View {
-    self.modifier(
-      ShaderStackModifier(
-        shaders: shaders,
-        maxOffset: maxOffset ?? .zero,
-        isEnabled: isEnabled,
-      )
-    )
-  }
-  public func shaderStack(
-    _ shaders: [ShaderEffect],
-    maxOffset: CGSize? = nil,
-    isEnabled: Bool = true,
-  ) -> some View {
-    self.modifier(
-      ShaderStackModifier(
-        shaders: shaders,
-        maxOffset: maxOffset ?? .zero,
-        isEnabled: isEnabled,
-      )
-    )
-  }
-
-  public func shaderStack(
-    _ composition: ShaderComposition,
-    maxOffset: CGSize? = nil,
-    isEnabled: Bool = true,
-  ) -> some View {
-    shaderStack(
-      composition.effects,
-      maxOffset: maxOffset,
-      isEnabled: isEnabled,
-    )
   }
 }

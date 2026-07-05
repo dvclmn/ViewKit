@@ -8,7 +8,6 @@
 import CoreTools
 import ViewTools
 import GraphicsKit
-// import LayoutKit
 import SwiftUI
 
 public struct ShaderControls: View {
@@ -25,7 +24,7 @@ public struct ShaderControls: View {
 
       /// This controls the space between the Slider Group header and the Slider content
       VStack(alignment: .leading, spacing: Styles.sizeSmall) {
-        SliderGroup(shader.wrappedValue.name, spacing: Styles.sizeSmall) {
+        SliderGroup(shader.wrappedValue.displayName, spacing: Styles.sizeSmall) {
 
           // TODO: Need to bring this back
 //          #warning("Need to bring this back")

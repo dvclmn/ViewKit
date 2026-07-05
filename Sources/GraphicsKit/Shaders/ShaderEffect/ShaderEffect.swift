@@ -91,6 +91,8 @@ extension ShaderEffect {
     Self.stitchableShader(named: reference.shader, arguments: arguments)
   }
 
+  public var displayName: String { reference.name }
+
   /// Using the reference as the ID ensures that 'fisheye'
   /// is always the same 'item' in a ForEach, regardless of its settings.
   public var id: String { reference.shader }

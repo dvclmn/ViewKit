@@ -70,31 +70,3 @@ struct ShaderEffectApplication {
     return effect.shader
   }
 }
-extension View {
-  public func shaderEffect(
-    _ effect: ShaderEffect?,
-    isEnabled: Bool = true,
-  ) -> some View {
-    self.modifier(
-      ShaderModifier(
-        effect: effect,
-        maxOffset: .zero,
-        isEnabled: isEnabled,
-      )
-    )
-  }
-
-  public func shaderEffect(
-    _ effect: ShaderEffect?,
-    maxOffset: CGSize,
-    isEnabled: Bool = true,
-  ) -> some View {
-    self.modifier(
-      ShaderModifier(
-        effect: effect,
-        maxOffset: maxOffset,
-        isEnabled: isEnabled,
-      )
-    )
-  }
-}
