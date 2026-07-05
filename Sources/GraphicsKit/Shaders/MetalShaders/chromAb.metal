@@ -34,7 +34,8 @@ half4 chromaticAberration(float2 position,
 
   // No separation for the inner 20% of the distance to the edge.
   float deadZone = 0.2;
-  float maxDist = max(0.0001, length(viewSize * 0.5));
+   float maxDist = length(center); // Normalised space
+//  float maxDist = max(0.0001, length(viewSize * 0.5));
   float normalisedDist = distanceFromCenter / maxDist;
   
   if (normalisedDist < deadZone) {
@@ -53,10 +54,20 @@ half4 chromaticAberration(float2 position,
   
   float radialMultiplier = 1.0 + effectStrength * radialStrength;
   
+  // Hard coded for now, as I may not need them
+   float redDistance = 1;
+   float redAngle = 0;
+   float blueDistance = -1;
+   float blueAngle = 0;
+  
+  // Calculate offset vectors with radial scaling
+   float2 redOffset = float2(cos(redAngle), sin(redAngle)) * redDistance * radialMultiplier;
+   float2 blueOffset = float2(cos(blueAngle), sin(blueAngle)) * blueDistance * radialMultiplier;
+  
   // Keep the current effect as a simple horizontal red/blue split.
-  float separation = channelSeparation * radialMultiplier;
-  float2 redOffset = float2(separation, 0.0);
-  float2 blueOffset = float2(-separation, 0.0);
+//  float separation = channelSeparation * radialMultiplier;
+//  float2 redOffset = float2(separation, 0.0);
+//  float2 blueOffset = float2(-separation, 0.0);
   
   new_color.r = layer.sample(position + redOffset).r;
   new_color.g = layer.sample(position).g;
