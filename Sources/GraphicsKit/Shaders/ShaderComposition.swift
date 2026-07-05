@@ -6,10 +6,8 @@
 //
 
 import SwiftUI
-import CoreTools
-import ViewTools
-// import BaseTools
 
+@available(*, deprecated, message: "Use ShaderComposition for ordered shader stacks.")
 public protocol AnyShaderEffect {
   var shaders: [Shader] { get }
   var id: String { get }
@@ -21,6 +19,7 @@ extension ShaderEffect: AnyShaderEffect {
   public var name: String { reference.name }
 }
 
+@available(*, deprecated, message: "Use ShaderComposition.sequence(_:) for ordered shader stacks.")
 public struct CompositeEffect: AnyShaderEffect, Sendable, Hashable, Identifiable {
   public var effects: [ShaderEffect]
 
@@ -49,10 +48,14 @@ public enum ShaderComposition: Sendable, Codable, Hashable, Identifiable {
     }
   }
 
-  public var shaders: [Shader] {
+  public var effects: [ShaderEffect] {
     switch self {
-      case .single(let effect): [effect.shader]
-      case .sequence(let effects): effects.map { $0.shader }
+      case .single(let effect): [effect]
+      case .sequence(let effects): effects
     }
+  }
+
+  public var shaders: [Shader] {
+    effects.map(\.shader)
   }
 }

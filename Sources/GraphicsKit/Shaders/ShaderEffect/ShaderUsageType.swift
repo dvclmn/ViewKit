@@ -9,6 +9,17 @@ import SwiftUI
 
 extension ShaderEffect {
 
+  enum ApplicationKind: Sendable, Hashable {
+    case colourEffect
+    case distortionEffect
+    case layerEffect
+    case shapeStyle
+
+    var isViewEffect: Bool {
+      self != .shapeStyle
+    }
+  }
+
   /// Tip: `colorEffect` operates on individual pixel colors in isolation, whereas
   /// `layerEffect` provides access to the entire view layer, making it possible
   /// to sample neighboring pixels. Hence the `maxOffset` parameter.
@@ -46,13 +57,22 @@ extension ShaderEffect {
   /// ```
   /// half4 name(float2 position, args...)
   /// ```
-  @available(macOS 15.0, iOS 18.0, *)
-  public var usageType: Shader.UsageType {
+  var applicationKind: ApplicationKind {
     switch self {
       case .chromaticAberration, .glitter, .radialBlur: .layerEffect
       case .ripplePush, .crtCurvature, .fisheye: .distortionEffect
-      case .psych, .filmGrain, .crtLines: .colorEffect
+      case .psych, .filmGrain, .crtLines: .colourEffect
       case .checkerboard: .shapeStyle
+    }
+  }
+
+  @available(macOS 15.0, iOS 18.0, *)
+  public var usageType: Shader.UsageType {
+    switch applicationKind {
+      case .colourEffect: .colorEffect
+      case .distortionEffect: .distortionEffect
+      case .layerEffect: .layerEffect
+      case .shapeStyle: .shapeStyle
     }
   }
 }

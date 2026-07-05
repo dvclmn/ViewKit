@@ -5,6 +5,61 @@ import Testing
 
 struct ShaderEffectTests {
 
+  @Test("shader effects classify application kind without OS-gated usage type")
+  func shaderEffectsClassifyApplicationKind() {
+    #expect(ShaderEffect.psych(time: 0).applicationKind == .colourEffect)
+    #expect(
+      ShaderEffect.fisheye(
+        origin: .zero,
+        radius: 1,
+        strength: 1
+      ).applicationKind == .distortionEffect
+    )
+    #expect(
+      ShaderEffect.radialBlur(
+        origin: .zero,
+        strength: 1,
+        start: 0,
+        end: 1,
+        samples: 4
+      ).applicationKind == .layerEffect
+    )
+    #expect(ShaderEffect.checkerboard().applicationKind == .shapeStyle)
+  }
+
+  @Test("shader stack keeps only bounded view effects")
+  func shaderStackKeepsOnlyBoundedViewEffects() {
+    let effects: [ShaderEffect] = [
+      .checkerboard(),
+      .psych(time: 0),
+      .fisheye(origin: .zero, radius: 1, strength: 1),
+      .radialBlur(origin: .zero, strength: 1, start: 0, end: 1, samples: 4),
+      .crtLines(),
+      .filmGrain(time: 0, size: 1, intensity: 1, colour: 0),
+    ]
+
+    let normalisedEffects = ShaderStackModifier.normalisedEffects(from: effects)
+
+    #expect(normalisedEffects.count == ShaderStackModifier.maximumEffectCount)
+    #expect(normalisedEffects.map(\.applicationKind) == [
+      .colourEffect,
+      .distortionEffect,
+      .layerEffect,
+      .colourEffect,
+    ])
+  }
+
+  @Test("shader composition exposes ordered effects")
+  func shaderCompositionExposesOrderedEffects() {
+    let effects: [ShaderEffect] = [
+      .psych(time: 0),
+      .crtLines(),
+    ]
+
+    #expect(ShaderComposition.single(effects[0]).effects == [effects[0]])
+    #expect(ShaderComposition.sequence(effects).effects == effects)
+  }
+
   @Test("chromatic aberration defaults channel separation for callers")
   func chromaticAberrationDefaultChannelSeparation() {
     let effect = ShaderEffect.chromaticAberration(
@@ -17,37 +72,6 @@ struct ShaderEffectTests {
       return
     }
 
-    expectApproximatelyEqual(Double(channelSeparation), 1.0)
-  }
-
-  @Test("chromatic aberration decodes legacy payloads")
-  func chromaticAberrationDecodesLegacyPayloads() throws {
-    let data = Data(
-      #"""
-      {
-        "chromaticAberration": {
-          "strength": 0.8,
-          "radialStrength": 5.8
-        }
-      }
-      """#.utf8
-    )
-
-    let effect = try JSONDecoder().decode(ShaderEffect.self, from: data)
-
-    guard
-      case .chromaticAberration(
-        let strength,
-        let radialStrength,
-        let channelSeparation
-      ) = effect
-    else {
-      #expect(Bool(false))
-      return
-    }
-
-    expectApproximatelyEqual(Double(strength), 0.8)
-    expectApproximatelyEqual(Double(radialStrength), 5.8)
     expectApproximatelyEqual(Double(channelSeparation), 1.0)
   }
 

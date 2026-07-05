@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-//public protocol ShaderProtocol {
-//
-//}
-
 public struct OscillatingPoint {
   var time: TimeInterval
   var amplitude: CGFloat

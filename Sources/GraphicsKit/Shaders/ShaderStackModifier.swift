@@ -5,42 +5,61 @@
 //  Created by Dave Coleman on 10/2/2026.
 //
 
-import CoreTools
 import SwiftUI
-import ViewTools
 
 public struct ShaderStackModifier: ViewModifier {
+
+  public static let maximumEffectCount: Int = 4
 
   let shaders: [ShaderEffect]
   let maxOffset: CGSize
   let isEnabled: Bool
 
   public func body(content: Content) -> some View {
+    let slots = Self.effectSlots(from: shaders)
+
     content
       .shaderEffect(
-        shaders[safe: 3],
+        slots[0],
         maxOffset: maxOffset,
         isEnabled: isEnabled,
       )
 
       .shaderEffect(
-        shaders[safe: 2],
+        slots[1],
         maxOffset: maxOffset,
         isEnabled: isEnabled,
       )
 
       .shaderEffect(
-        shaders[safe: 1],
+        slots[2],
         maxOffset: maxOffset,
         isEnabled: isEnabled,
       )
 
       .shaderEffect(
-        shaders[safe: 0],
+        slots[3],
         maxOffset: maxOffset,
         isEnabled: isEnabled,
       )
 
+  }
+
+  static func normalisedEffects(from shaders: [ShaderEffect]) -> [ShaderEffect] {
+    Array(
+      shaders
+        .filter(\.applicationKind.isViewEffect)
+        .prefix(Self.maximumEffectCount)
+    )
+  }
+
+  static func effectSlots(from shaders: [ShaderEffect]) -> [ShaderEffect?] {
+    let effects = normalisedEffects(from: shaders)
+
+    return (0..<Self.maximumEffectCount).map { index in
+      guard index < effects.count else { return nil }
+      return effects[index]
+    }
   }
 }
 extension View {
@@ -70,76 +89,16 @@ extension View {
       )
     )
   }
-}
 
-//public struct ShaderStackModifier<Content: View>: View {
-//  let content: Content
-//  let effects: [ShaderEffect]
-//  let maxOffset: CGSize
-//  let isEnabled: Bool
-//
-//  public var body: some View {
-//    applyEffects(to: content, effects: effects)
-//  }
-//
-//  @ViewBuilder
-//  private func applyEffects<V: View>(
-//    to view: V,
-//    effects: [ShaderEffect]
-////    effects: ArraySlice<ShaderEffect>
-//  ) -> some View {
-//    if let first = effects.first {
-//      let remaining = effects.dropFirst()
-//      applyEffects(
-//        to: applySingleEffect(to: view, effect: first),
-//        effects: Array(remaining)
-//      )
-//    } else {
-//      view
-//    }
-//  }
-//
-//  @ViewBuilder
-//  private func applySingleEffect<V: View>(
-//    to view: V,
-//    effect: ShaderEffect
-//  ) -> some View {
-//    if #available(macOS 15, iOS 18, *) {
-//      switch effect.usageType {
-//        case .colorEffect:
-//          view.colorEffect(effect.shader, isEnabled: isEnabled)
-//        case .distortionEffect:
-//          view.distortionEffect(
-//            effect.shader,
-//            maxSampleOffset: maxOffset,
-//            isEnabled: isEnabled
-//          )
-//        case .layerEffect:
-//          view.layerEffect(
-//            effect.shader,
-//            maxSampleOffset: maxOffset,
-//            isEnabled: isEnabled
-//          )
-//        default:
-//          view
-//      }
-//    } else {
-//      view
-//    }
-//  }
-//}
-//
-//extension View {
-//  public func shaderEffects(
-//    _ effects: [ShaderEffect],
-//    maxOffset: CGSize = .zero,
-//    isEnabled: Bool = true
-//  ) -> some View {
-//    ShaderStackModifier(
-//      content: self,
-//      effects: effects,
-//      maxOffset: maxOffset,
-//      isEnabled: isEnabled
-//    )
-//  }
-//}
+  public func shaderStack(
+    _ composition: ShaderComposition,
+    maxOffset: CGSize? = nil,
+    isEnabled: Bool = true,
+  ) -> some View {
+    shaderStack(
+      composition.effects,
+      maxOffset: maxOffset,
+      isEnabled: isEnabled,
+    )
+  }
+}

@@ -83,74 +83,17 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
     scale: CGFloat = 4.0,
     offset: CGPoint = .zero,
   )
-
-  //  case noShader
 }
 
 extension ShaderEffect {
 
-  private static let defaultChromaticChannelSeparation: CGFloat = 1
-
-  public var arguments: [Shader.Argument] {
-    switch self {
-      case .chromaticAberration(let strength, let radialStrength, let channelSeparation):
-        [
-          .boundingRect,
-          .float(strength),
-          .float(radialStrength),
-          .float(channelSeparation),
-        ]
-
-      case .fisheye(let origin, let radius, let strength):
-        [.boundingRect, .float2(origin), .float(radius), .float(strength)]
-
-      case .glitter(let spread):
-        [.boundingRect, .float(spread)]
-
-      case .crtCurvature(let strength):
-        [.boundingRect, .float(strength)]
-
-      case .crtLines(let lineSpacing, let lineIntensity, let phosphorSize, let brightness):
-        [
-          .boundingRect,
-          .float(lineSpacing),
-          .float(lineIntensity),
-          .float(phosphorSize),
-          .float(brightness),
-        ]
-
-      case .radialBlur(let origin, let strength, let start, let end, let samples):
-        [
-          .boundingRect,
-          .float2(origin),
-          .float(strength),
-          .float(start),
-          .float(end),
-          .float(samples),
-        ]
-
-      case .ripplePush(let location, let velocity):
-        [.float2(location), .float2(velocity)]
-
-      case .psych(let time):
-        [.boundingRect, .float(time)]
-
-      case .filmGrain(let time, let size, let intensity, let colour):
-        [.float(time), .float(size), .float(intensity), .float(colour)]
-
-      case .checkerboard(let primary, let secondary, let scale, let offset):
-        [
-          .boundingRect,
-          .color(primary.toColour),
-          .color(secondary.toColour),
-          .float(scale),
-          .float2(offset),
-        ]
-
-    }
+  public var shader: Shader {
+    Self.stitchableShader(named: reference.shader, arguments: arguments)
   }
-}
-extension ShaderEffect {
+
+  /// Using the reference as the ID ensures that 'fisheye'
+  /// is always the same 'item' in a ForEach, regardless of its settings.
+  public var id: String { reference.shader }
 
   /// This refers to the name of the function in the `.metal` shader file.
   /// E.g. "chromaticAberration" refers to:
@@ -170,13 +113,8 @@ extension ShaderEffect {
       case .psych: ("psych", "Pysch")
       case .filmGrain: ("filmGrain", "Film Grain")
       case .checkerboard: ("checkerboard", "Checkerboard")
-    //      case .noShader: ("noShader", "No shader")
     }
   }
-
-  /// Using the reference as the ID ensures that 'fisheye'
-  /// is always the same 'item' in a ForEach, regardless of its settings.
-  public var id: String { reference.shader }
 
   /// Custom Hashable to ensure "one of each" in a Set
   public func hash(into hasher: inout Hasher) {
@@ -187,13 +125,31 @@ extension ShaderEffect {
     lhs.reference == rhs.reference
   }
 
-  public var shader: Shader {
-    return Shader(
+}
+
+extension ShaderEffect {
+  static func stitchableShader(
+    named name: String,
+    arguments: [Shader.Argument] = [],
+  ) -> Shader {
+    Shader(
       function: ShaderFunction(
         library: .bundle(.module),
-        name: reference.shader,
+        name: name,
       ),
       arguments: arguments,
     )
+  }
+
+  static var passthroughColourShader: Shader {
+    stitchableShader(named: "passthroughColour")
+  }
+
+  static var passthroughDistortionShader: Shader {
+    stitchableShader(named: "passthroughDistortion")
+  }
+
+  static var passthroughLayerShader: Shader {
+    stitchableShader(named: "passthroughLayer")
   }
 }
