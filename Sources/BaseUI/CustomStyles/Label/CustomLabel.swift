@@ -6,8 +6,8 @@
 //
 
 import CoreTools
-import ViewTools
 import SwiftUI
+import ViewTools
 
 extension LabelStyle where Self == CustomLabel {
   public static var base: Self { Self() }
@@ -25,6 +25,7 @@ public struct CustomLabel: LabelStyle {
   @Environment(\.layoutSpacing) private var layoutSpacing
   @Environment(\.layoutAlignment) private var layoutAlignment
   @Environment(\.labelFontStyle) private var labelFontStyle
+  @Environment(\.iconFontStyle) private var iconFontStyle
   @Environment(\.textAlignment) private var textAlignment
 
   let displayOverride: LabelDisplay?
@@ -52,7 +53,8 @@ public struct CustomLabel: LabelStyle {
           .labelStyle(.titleAndIcon)
 
       case .stacked:
-        /// Note: Only `LabelDisplay` that doesn't use `LabelBase`
+        // Note: `stacked` is the only `LabelDisplay` that
+        // doesn't use `LabelBase`
         Stacked(configuration)
 
       case .hidden:
@@ -73,13 +75,31 @@ extension CustomLabel {
   }
 
   @ViewBuilder
+  private func IconView(_ configuration: Configuration) -> some View {
+    if let iconFont {
+      configuration.icon
+        .font(iconFont)
+    } else {
+      configuration.icon
+    }
+//      .commonLabelStyles(for: .icon, displayOverride: adjustedLabelDisplay)
+      
+      
+  }
+
+  @ViewBuilder
+  private func TitleView(_ configuration: Configuration) -> some View {
+    configuration.title
+      .commonLabelStyles(for: .title, displayOverride: adjustedLabelDisplay)
+  }
+
+  @ViewBuilder
   private func LabelBase(_ configuration: Configuration) -> some View {
     Label {
-      configuration.title
-        .commonLabelStyles(for: .title, displayOverride: adjustedLabelDisplay)
+      TitleView(configuration)
     } icon: {
-      configuration.icon
-        .commonLabelStyles(for: .icon, displayOverride: adjustedLabelDisplay)
+      IconView(configuration)
+
     }
   }
 
@@ -87,29 +107,15 @@ extension CustomLabel {
   private func Stacked(_ configuration: Configuration) -> some View {
     VStack(
       alignment: layoutAlignment?.horizontal ?? .center,
-      spacing: layoutSpacing ?? Styles.sizeSmall
+      spacing: layoutSpacing ?? Styles.sizeSmall,
     ) {
-      configuration.icon
-        .commonLabelStyles(for: .icon, displayOverride: adjustedLabelDisplay)
-
-      configuration.title
-        .commonLabelStyles(for: .title, displayOverride: adjustedLabelDisplay)
+      IconView(configuration)
+      TitleView(configuration)
     }
   }
 
+  private var iconFont: Font? {
+    guard let iconFontStyle else { return nil }
+    return .system(iconFontStyle)
+  }
 }
-
-//extension VerticalAlignment {
-//  /// A custom alignment for image titles.
-//  private struct ImageTitleAlignment: AlignmentID {
-//    static func defaultValue(in context: ViewDimensions) -> CGFloat {
-//      /// Default to bottom alignment if no guides are set.
-//      context[VerticalAlignment.bottom]
-//    }
-//  }
-//
-//  /// A guide for aligning titles.
-//  static let imageTitleAlignmentGuide = VerticalAlignment(
-//    ImageTitleAlignment.self
-//  )
-//}

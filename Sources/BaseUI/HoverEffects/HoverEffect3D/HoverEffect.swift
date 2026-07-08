@@ -52,7 +52,7 @@ public struct Hover3DModifier: ViewModifier {
               sendHoverUpdate()
             case .ended:
               isHovering = false
-              hoverPoint = viewSize.midpoint  // Reset to center
+              hoverPoint = viewSize.midpoint  // Reset to centre
               sendHoverUpdate()
           }
         }
@@ -108,10 +108,10 @@ extension Hover3DModifier {
 
     let normalisedPoint = setAnchorToMiddle(hoverPoint)
 
-    /// Calculate the distance from center to determine rotation intensity
+    /// Calculate the distance from centre to determine rotation intensity
     let distance = sqrt(pow(normalisedPoint.x, 2) + pow(normalisedPoint.y, 2))
 
-    /// Scale the angle based on distance from center
+    /// Scale the angle based on distance from centre
     return distance * depthStrength
   }
 
@@ -131,8 +131,8 @@ extension Hover3DModifier {
 
   private func setAnchorToMiddle(_ point: CGPoint) -> CGPoint {
 
-    /// Convert from top-left origin to center origin by subtracting half the view size
-    /// This will result in values from -1 to 1 relative to the center
+    /// Convert from top-left origin to centre origin by subtracting half the view size
+    /// This will result in values from -1 to 1 relative to the centre
 
     guard viewSize.isGreaterThanOrEqualToZero else { return .zero }
 

@@ -29,11 +29,13 @@ public struct CommonLabelStyleModifier: ViewModifier {
       ///
       /// Note: So far this modifier only handles Font, foreground style and font weight
       if let configuredFont {
-        ConditionalColourView(content)
+        content
+//        ConditionalColourView(content)
           .font(configuredFont)
 
       } else {
-        ConditionalColourView(content)
+        content
+//        ConditionalColourView(content)
       }
     }  // END group
     .fontWeight(part.weight(override: weightOverride))
@@ -43,21 +45,21 @@ public struct CommonLabelStyleModifier: ViewModifier {
 }
 extension CommonLabelStyleModifier {
 
-  @ViewBuilder
-  private func ConditionalColourView(_ content: Content) -> some View {
-    if let colourOverride {
-      content
-        .foregroundStyle(colourOverride)
-    } else {
-      content
-    }
-  }
+//  @ViewBuilder
+//  private func ConditionalColourView(_ content: Content) -> some View {
+//    if let colourOverride {
+//      content
+//        .foregroundStyle(colourOverride)
+//    } else {
+//      content
+//    }
+//  }
 
-  private var colourOverride: AnyShapeStyle? {
-    if part.isIcon { return iconColour }
-    if part.isTitle { return labelColour }
-    return nil
-  }
+//  private var colourOverride: AnyShapeStyle? {
+//    if part.isIcon { return iconColour }
+//    if part.isTitle { return labelColour }
+//    return nil
+//  }
 
   private var weightOverride: Font.Weight? {
     if part.isIcon { return iconWeight }
