@@ -48,8 +48,8 @@ struct PopupView: View {
           }
         }
         .quickRoundedBackground(
-          glass: hasGlassEffect ? .regular : nil,
           rounding: rounding,
+          glass: hasGlassEffect ? .regular : nil,
           padding: .zero,
 //          tint: message.label.role?.colour?.toColour,
           isEnabled: true

@@ -35,7 +35,7 @@ struct QuickBackgroundExampleView: View {
 //          usesGlassEffect: false
         )
     }
-    .environment(\.horizontalBias, 3)
+    .environment(\.horizontalBiasOverride, 3)
     .environment(\.opticalCentreBias, 1.5)
 
     .padding(.vertical, 40)

@@ -9,6 +9,7 @@ let package = Package(
     .iOS(.v17),
     .macOS(.v14),
   ],
+
   // MARK: - Libraries
   products: [
     .library(
@@ -26,13 +27,12 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.3"),
     .package(url: "https://github.com/dvclmn/EnumMacros", branch: "main"),
-    .package(url: "https://github.com/dvclmn/ToolKit", .upToNextMinor(from: "0.3.0")),
+    .package(url: "https://github.com/dvclmn/ToolKit", from: "0.3.0"),
     .package(url: "https://github.com/dvclmn/VectorKit", branch: "main"),
   ],
 
   // MARK: - Targets
   targets: [
-
     .target(
       name: "BaseUI",
       dependencies: [
@@ -83,6 +83,7 @@ let package = Package(
       ],
     ),
 
+    // MARK: - Test Targets
     .testTarget(
       name: "GraphicsKitTests",
       dependencies: ["GraphicsKit"],
@@ -95,9 +96,7 @@ let package = Package(
         .extDependency(.coreTools),
       ],
     ),
-
   ],
-
 )
 
 // MARK: - Helpers
@@ -114,6 +113,26 @@ extension Target.Dependency {
   }
 }
 
+extension String {
+  static var toolKit: Self { "ToolKit" }
+}
+
+enum InternalModule {
+  case baseUI
+  case graphicsKit
+  case viewKitCore
+  case motionKit
+
+  var name: String {
+    switch self {
+      case .baseUI: "BaseUI"
+      case .graphicsKit: "GraphicsKit"
+      case .viewKitCore: "ViewKitCore"
+      case .motionKit: "MotionKit"
+    }
+  }
+}
+
 enum ExternalDependency {
   case coreTools
   case stringTools
@@ -126,36 +145,14 @@ enum ExternalDependency {
 
   var reference: (String, String?) {
     switch self {
-      case .coreTools: ("CoreTools", "ToolKit")
-      case .stringTools: ("StringTools", "ToolKit")
-      case .colourTools: ("ColourTools", "ToolKit")
-      case .viewTools: ("ViewTools", "ToolKit")
+      case .coreTools: ("CoreTools", .toolKit)
+      case .stringTools: ("StringTools", .toolKit)
+      case .colourTools: ("ColourTools", .toolKit)
+      case .viewTools: ("ViewTools", .toolKit)
       case .vectorKit: ("VectorKit", nil)
       case .enumMacros: ("EnumMacros", nil)
       case .casePaths: ("CasePaths", "swift-case-paths")
       case .macroToolkit: ("MacroToolkit", "swift-macro-toolkit")
-    }
-  }
-}
-
-enum InternalModule {
-  //  case baseTools
-  case baseUI
-  case graphicsKit
-  case viewKitCore
-  //  case layoutKit
-  case motionKit
-  //  case waveKit
-
-  var name: String {
-    switch self {
-      //      case .baseTools: "BaseTools"
-      case .baseUI: "BaseUI"
-      case .graphicsKit: "GraphicsKit"
-      case .viewKitCore: "ViewKitCore"
-      //      case .layoutKit: "LayoutKit"
-      case .motionKit: "MotionKit"
-    //      case .waveKit: "WaveKit"
     }
   }
 }

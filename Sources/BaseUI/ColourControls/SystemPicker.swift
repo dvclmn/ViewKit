@@ -42,7 +42,7 @@ public struct SystemColourPicker: View {
         colour = RGBColour(
           colour: localColour,
           environment: envSelf,
-          name: nil,
+//          name: nil,
         )
       }
 
@@ -76,7 +76,7 @@ extension SystemColourPicker {
           Button {
             localColour = preset.toColour
           } label: {
-            Label(preset.name ?? "Color", systemImage: Icons.circle.icon)
+            Label(preset.description, systemImage: Icons.circle.icon)
               .labelStyle(.iconOnly)
               .symbolVariant(.fill)
               .foregroundStyle(preset.toColour)

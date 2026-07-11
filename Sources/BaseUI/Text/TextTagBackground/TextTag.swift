@@ -19,7 +19,7 @@ public struct TextTag: View {
   public init(
     _ text: String,
     colour: RGBColour,
-    //    colour: CodableColour = Color.gray.opacityLow
+    //    colour: ColourDescriptor = Color.gray.opacityLow
   ) {
     self.text = text
     self.colour = colour
