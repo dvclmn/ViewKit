@@ -12,6 +12,26 @@ static inline float normalisedDistanceToBounds(float2 positionN, float2 originN)
   return clamp(length(scaledDelta), 0.0, 1.0);
 }
 
+static inline int radialBlurSampleCount(
+  float sampleFactor,
+  float shortestSide,
+  float blurAmount
+) {
+  const float minimumSampleCount = 4.0;
+  const float referenceShortestSide = 1024.0;
+  const float maximumSampleCount = 48.0;
+
+  // Preserve roughly the same distance between samples as the layer grows or
+  // shrinks. `sampleFactor` is the nominal count at the reference size.
+  float fullBlurSampleCount = clamp(
+    sampleFactor * (shortestSide / referenceShortestSide),
+    minimumSampleCount,
+    maximumSampleCount
+  );
+
+  return int(round(mix(minimumSampleCount, fullBlurSampleCount, blurAmount)));
+}
+
 /// Progressive radial blur shader with zoom blur effect
 [[ stitchable ]] half4 radialBlur(
                                   float2 position,
@@ -21,7 +41,7 @@ static inline float normalisedDistanceToBounds(float2 positionN, float2 originN)
                                   float blurStrength,
                                   float start,            // 0..1 : where blur begins
                                   float end,              // 0..1 : where blur reaches full strength
-                                  float samples
+                                  float sampleFactor      // nominal count at a 1,024-point shortest side
                                   ) {
   float2 size = max(bounds.zw, float2(0.0001));
   float2 boundsOrigin = bounds.xy;
@@ -50,7 +70,11 @@ static inline float normalisedDistanceToBounds(float2 positionN, float2 originN)
     return layer.sample(position);
   }
   
-  int actualSamples = int(mix(4.0, samples, blurAmount));
+  int actualSamples = radialBlurSampleCount(
+    sampleFactor,
+    min(size.x, size.y),
+    blurAmount
+  );
   
   // Zoom direction in pixel space.
   float2 originPosition = boundsOrigin + originN * size;

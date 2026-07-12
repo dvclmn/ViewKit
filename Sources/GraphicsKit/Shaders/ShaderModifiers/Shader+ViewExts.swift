@@ -17,7 +17,7 @@ extension View {
     self.modifier(
       ShaderModifier(
         effect: effect,
-        maxOffset: .zero,
+        maxOffset: effect?.maximumSampleOffset(for: .zero) ?? .zero,
         isEnabled: isEnabled,
       )
     )
@@ -55,13 +55,13 @@ extension View {
   
   public func shaderStack(
     _ shaders: ShaderEffect...,
-    maxOffset: CGSize? = nil,
+    maxOffset: CGSize = .zero,
     isEnabled: Bool = true,
   ) -> some View {
     self.modifier(
       ShaderStackModifier(
         shaders: shaders,
-        maxOffset: maxOffset ?? .zero,
+        maxOffset: maxOffset,
         isEnabled: isEnabled,
       )
     )
@@ -81,13 +81,13 @@ extension View {
 
   public func shaderStack(
     _ shaders: [ShaderEffect],
-    maxOffset: CGSize? = nil,
+    maxOffset: CGSize,
     isEnabled: Bool = true,
   ) -> some View {
     self.modifier(
       ShaderStackModifier(
         shaders: shaders,
-        maxOffset: maxOffset ?? .zero,
+        maxOffset: maxOffset,
         isEnabled: isEnabled,
       )
     )
@@ -107,7 +107,7 @@ extension View {
 
   public func shaderStack(
     _ composition: ShaderComposition,
-    maxOffset: CGSize? = nil,
+    maxOffset: CGSize = .zero,
     isEnabled: Bool = true,
   ) -> some View {
     shaderStack(

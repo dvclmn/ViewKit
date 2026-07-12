@@ -8,6 +8,7 @@ struct ShaderEffectTests {
   @Test("shader effects classify application kind without OS-gated usage type")
   func shaderEffectsClassifyApplicationKind() {
     #expect(ShaderEffect.psych(time: 0).applicationKind == .colourEffect)
+    #expect(ShaderEffect.crtLines().applicationKind == .layerEffect)
     #expect(
       ShaderEffect.fisheye(
         origin: .zero,
@@ -45,7 +46,7 @@ struct ShaderEffectTests {
       .colourEffect,
       .distortionEffect,
       .layerEffect,
-      .colourEffect,
+      .layerEffect,
     ])
   }
 
@@ -172,6 +173,21 @@ struct ShaderEffectTests {
 
     expectApproximatelyEqual(Double(offset.width), 15)
     expectApproximatelyEqual(Double(offset.height), 15)
+  }
+
+  @Test("CRT lines reserve enough offset to sample the centre of each source cell")
+  func crtLinesMaximumSampleOffset() {
+    let effect = ShaderEffect.crtLines(
+      lineSpacing: 6,
+      lineIntensity: 0.55,
+      phosphorSize: 4,
+      brightness: 1.35,
+    )
+
+    let offset = effect.maximumSampleOffset(for: .zero)
+
+    expectApproximatelyEqual(Double(offset.width), 2)
+    expectApproximatelyEqual(Double(offset.height), 3)
   }
 
   @Test("shader stack sample offset uses the largest contained effect offset")

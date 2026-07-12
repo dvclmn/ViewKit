@@ -16,28 +16,34 @@ public struct ShaderStackModifier: ViewModifier {
   let isEnabled: Bool
 
   public func body(content: Content) -> some View {
+    let intrinsicMaxOffset = ShaderEffect.maximumSampleOffset(for: shaders, in: .zero)
+    let resolvedMaxOffset = CGSize(
+      width: max(maxOffset.width, intrinsicMaxOffset.width),
+      height: max(maxOffset.height, intrinsicMaxOffset.height),
+    )
+
     content
       .shaderEffect(
         slots[0],
-        maxOffset: maxOffset,
+        maxOffset: resolvedMaxOffset,
         isEnabled: isEnabled,
       )
 
       .shaderEffect(
         slots[1],
-        maxOffset: maxOffset,
+        maxOffset: resolvedMaxOffset,
         isEnabled: isEnabled,
       )
 
       .shaderEffect(
         slots[2],
-        maxOffset: maxOffset,
+        maxOffset: resolvedMaxOffset,
         isEnabled: isEnabled,
       )
 
       .shaderEffect(
         slots[3],
-        maxOffset: maxOffset,
+        maxOffset: resolvedMaxOffset,
         isEnabled: isEnabled,
       )
   }

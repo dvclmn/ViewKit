@@ -40,15 +40,21 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   /// Zoom: Suggested range: 1.0 to 1.1 (to hide edges)
   case crtCurvature(strength: CGFloat = 0.5)
 
-  /// Distance between scanlines (e.g., 3.0)
-  /// Darkening strength (0.0 to 1.0)
-  /// Width of the vertical grille (e.g., 2.0),
-  /// Final gain to offset dark lines (e.g., 1.2)
+  /// Renders a reduced-resolution CRT signal through scanlines and an RGB
+  /// aperture grille.
+  ///
+  /// `lineSpacing` is the physical height, in SwiftUI points, of a scanline
+  /// period; `phosphorSize` is the width of an RGB triad. They also form the
+  /// height and width of the virtual source cells, respectively, so the input
+  /// view is sampled once per cell before the CRT structure is drawn. Keeping
+  /// the two dimensions independent avoids assuming that scanlines and triads
+  /// are the same size. `lineIntensity` controls the beam falloff between
+  /// scanlines, while `brightness` compensates for the deliberate darkening.
   case crtLines(
-    lineSpacing: CGFloat = 1.0,
-    lineIntensity: CGFloat = 1.0,
-    phosphorSize: CGFloat = 1.0,
-    brightness: CGFloat = 1.0,
+    lineSpacing: CGFloat = 3.0,
+    lineIntensity: CGFloat = 0.55,
+    phosphorSize: CGFloat = 3.0,
+    brightness: CGFloat = 1.35,
   )
 
   /// Zoom-style blur that ramps by normalised distance from `origin` to the layer bounds.
@@ -56,7 +62,9 @@ public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
   /// `origin` is a normalised offset from the layer centre, so `.zero` keeps the
   /// blur centred. `strength` is a fraction of the layer's shortest side, `start`
   /// is the distance where blur begins, and `end` is the distance where it
-  /// reaches full strength.
+  /// reaches full strength. `samples` is a quality factor rather than an exact
+  /// count: the shader treats it as the nominal count for a 1,024-point shortest
+  /// side, scales it with the view, and clamps the resulting count to `4...48`.
   case radialBlur(
     origin: CGPoint,
     strength: CGFloat,

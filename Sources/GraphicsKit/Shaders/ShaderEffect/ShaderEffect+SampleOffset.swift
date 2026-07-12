@@ -19,6 +19,12 @@ extension ShaderEffect {
         let shortestSide = max(0, min(size.width, size.height))
         return Self.squareSampleOffset(abs(strength) * shortestSide * 0.5)
 
+      case .crtLines(let lineSpacing, _, let phosphorSize, _):
+        return CGSize(
+          width: max(0.5, abs(phosphorSize)) * 0.5,
+          height: max(0.5, abs(lineSpacing)) * 0.5,
+        )
+
       default:
         return .zero
     }

@@ -59,9 +59,9 @@ extension ShaderEffect {
   /// ```
   var applicationKind: ApplicationKind {
     switch self {
-      case .chromaticAberration, .glitter, .radialBlur: .layerEffect
+      case .chromaticAberration, .glitter, .radialBlur, .crtLines: .layerEffect
       case .ripplePush, .crtCurvature, .fisheye: .distortionEffect
-      case .psych, .filmGrain, .crtLines: .colourEffect
+      case .psych, .filmGrain: .colourEffect
       case .checkerboard: .shapeStyle
     }
   }
