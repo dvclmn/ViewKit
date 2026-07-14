@@ -18,21 +18,35 @@ public struct ShaderControls: View {
   public init(shaders: Binding<[ShaderEffect]>) {
     self._shaders = shaders
   }
+
   public var body: some View {
 
-    ForEach($shaders) { shader in
+    if !shaders.isEmpty {
+      ForEach($shaders) { shader in
+        /// This controls the space between the Slider Group header and the Slider content
+        VStack(alignment: .leading, spacing: Styles.sizeSmall) {
+          SliderGroup(shader.wrappedValue.displayName, spacing: Styles.sizeSmall) {
 
-      /// This controls the space between the Slider Group header and the Slider content
-      VStack(alignment: .leading, spacing: Styles.sizeSmall) {
-        SliderGroup(shader.wrappedValue.displayName, spacing: Styles.sizeSmall) {
+            SingleShaderControlView(shader: shader)
+          }
+        }
+        .padding(.bottom, Styles.sizeSmall)
 
-          SingleShaderControlView(shader: shader)
+      }  // END foreach
+      .environment(\.layoutPadding, Styles.sizeSmall)
+    } else {
+      StateView(
+        label: .init("No Shaders", icon: .emoji("🪜")),
+        message: "There are no shaders added to the Canvas yet.",
+        isMessageCopyable: false,
+      ) {
+        Button {
+
+        } label: {
+          Label("Add", systemImage: Icons.plus.icon)
         }
       }
-      .padding(.bottom, Styles.sizeSmall)
-
-    }  // END foreach
-    .environment(\.layoutPadding, Styles.sizeSmall)
+    }
   }
 }
 

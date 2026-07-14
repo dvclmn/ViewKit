@@ -6,10 +6,9 @@
 //
 
 import CoreTools
-import ViewTools
-// import BaseTools
-import ViewKitCore
 import SwiftUI
+import ViewKitCore
+import ViewTools
 
 public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {
   @Environment(\.colourOverride) private var colourOverride
@@ -18,17 +17,20 @@ public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {
   let data: [Item]
   let alignment: HorizontalAlignment
   let cardSize: CGSize
+  let pinnedViews: PinnedScrollableViews
   let content: CardItem
 
   public init(
     data: [Item],
     alignment: HorizontalAlignment = .leading,
     cardSize: CGSize = .localPreset,
+    pinnedViews: PinnedScrollableViews = .init(),
     @ViewBuilder content: @escaping CardItem,
   ) {
     self.data = data
     self.alignment = alignment
     self.cardSize = cardSize
+    self.pinnedViews = pinnedViews
     self.content = content
   }
 
@@ -42,6 +44,7 @@ public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {
       ),
       alignment: alignment,
       spacing: Styles.sizeRegular,
+      pinnedViews: pinnedViews,
     ) {
       ForEach(data) { item in
         ItemView(item: item, cardSize: cardSize, content: content)
@@ -61,7 +64,7 @@ extension CardGrid {
     //    label: LabelDescriptor("Hello", symbol: "eye"),
     data: SampleContent.Animal.withSymbols(),
     cardSize: .localPreset,
-      //  ) { item in
+    //  ) { item in
   ) { item, isHovered in
     QuickLabel(item.label)
   }
