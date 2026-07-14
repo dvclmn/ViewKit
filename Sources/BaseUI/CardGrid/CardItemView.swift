@@ -17,24 +17,35 @@ extension CardGrid {
 
     var body: some View {
 
-      if #available(macOS 15, iOS 18, *) {
+      // NOTE: The container value is required here to allow an Item within container view `CardView` to declare `isEmphasised`.
+      // An Environment value alone can only pass data further down
+      // the view hierarchy, not back up to it's container.
+      // The container value modifier catches the value, if declared, and passes it to the environment
+      // to be styled from within `ItemViewCommonModifier`
+      Group {
+        if #available(macOS 15, iOS 18, *) {
 
-        ForEach(subviews: content(item, isHovering)) { subview in
-          ItemSubview(
-            isHovering: $isHovering,
-            item: item,
-            cardSize: cardSize,
-            subview: subview
-          )
-          .environment(\.isEmphasised, subview.containerValues.isEmphasised)
-          .environment(\.isHovering, isHovering)
-        }
+          ForEach(subviews: content(item, isHovering)) { subview in
+            subview
+              .modifier(ItemViewCommonModifier(cardSize: cardSize))
+              .environment(
+                \.isEmphasised,
+                subview.containerValues.isEmphasised,
+              )
+          }
 
-      } else {
-        content(item, isHovering)
-          .modifier(CardViewItemModifier(cardSize: cardSize))
-          .environment(\.isHovering, isHovering)
-      }  // END if available
+        } else {
+
+          // Older macOS versions will get no emphasised styling
+          content(item, isHovering)
+            .modifier(ItemViewCommonModifier(cardSize: cardSize))
+
+        }  // END if available
+      }  // END group
+
+      .onHover { isHovering = $0 }
+      .environment(\.isHovering, isHovering)
+
     }  // END view body
   }
 }

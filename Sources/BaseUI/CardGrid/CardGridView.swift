@@ -21,6 +21,7 @@ public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {
   let pinnedViews: PinnedScrollableViews
   let content: CardItem
 
+  // MARK: - Initialisers
   /// Creates an ungrouped card grid.
   public init(
     data: [Item],
@@ -77,7 +78,7 @@ public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {
     @ViewBuilder content: @escaping CardItem,
   ) where Group: Hashable & LabeledItem {
     self.init(
-      sections: .grouped(data, by: groupPath, order: sectionOrder),
+      sections: CardGridSection.grouped(data, by: groupPath, order: sectionOrder),
       alignment: alignment,
       cardSize: cardSize,
       pinnedViews: pinnedViews,
@@ -85,6 +86,7 @@ public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {
     )
   }
 
+  // MARK: - View body
   public var body: some View {
 
     LazyVGrid(
