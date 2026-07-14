@@ -6,8 +6,8 @@
 //
 
 import CoreTools
-import ViewTools
 import SwiftUI
+import ViewTools
 
 extension CardGrid {
 
@@ -27,7 +27,6 @@ extension CardGrid {
 
     }
   }
-
 }
 public struct CardViewItemModifier: ViewModifier {
   @Environment(\.isEmphasised) private var isEmphasised
@@ -45,11 +44,11 @@ public struct CardViewItemModifier: ViewModifier {
       .frame(
         width: cardSize.width,
         height: cardSize.height,
-        alignment: .center
+        alignment: .center,
       )
       .quickBackground(
         shape: .rect(cornerRadius: Styles.sizeSmall.bump),
-        padding: .zero
+        padding: .zero,
       )
       .backgroundTint(.white.opacity(tintOpacity))
   }

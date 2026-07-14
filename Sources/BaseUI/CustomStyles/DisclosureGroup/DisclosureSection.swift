@@ -6,9 +6,8 @@
 //
 
 import CoreTools
-import ViewTools
-// import BaseTools
 import SwiftUI
+import ViewTools
 
 public struct DisclosureSection<Content: View>: View {
   /// If disabled, hiding/showing is not possible
@@ -20,7 +19,7 @@ public struct DisclosureSection<Content: View>: View {
 
   private init(
     configuration: ToggleConfiguration,
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: @escaping () -> Content,
   ) {
     self.title = configuration.title
     self._isExpanded = configuration.asPropertyWrapper
@@ -30,7 +29,7 @@ public struct DisclosureSection<Content: View>: View {
   /// These just create the config and pass it to the master init
   public init<K: ToggleKey>(
     _ key: K.Type,
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: @escaping () -> Content,
   ) {
     self.init(configuration: ToggleConfiguration(key), content: content)
   }
@@ -38,7 +37,7 @@ public struct DisclosureSection<Content: View>: View {
   public init(
     _ title: String,
     binding: Binding<Bool>,
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: @escaping () -> Content,
   ) {
     self.init(configuration: ToggleConfiguration(title, binding: binding), content: content)
   }
@@ -46,7 +45,7 @@ public struct DisclosureSection<Content: View>: View {
   public init(
     _ title: String,
     transient defaultExpanded: Bool = true,
-    @ViewBuilder content: @escaping () -> Content
+    @ViewBuilder content: @escaping () -> Content,
   ) {
     self.init(configuration: ToggleConfiguration(title, transient: defaultExpanded), content: content)
   }

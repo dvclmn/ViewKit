@@ -96,6 +96,14 @@ let package = Package(
         .extDependency(.coreTools),
       ],
     ),
+
+    .testTarget(
+      name: "BaseUITests",
+      dependencies: [
+        .module(.baseUI),
+        .extDependency(.coreTools),
+      ],
+    ),
   ],
 )
 
