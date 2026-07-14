@@ -5,6 +5,42 @@ import Testing
 
 struct ShaderEffectTests {
 
+  @Test("preset factory covers every effect with two distinct variants")
+  func presetFactoryCoversEveryEffect() throws {
+    let kinds = ShaderEffect.PresetKind.allCases
+    #expect(kinds.count == 2)
+
+    for effect in ShaderEffect.Meta.allCases {
+      let presets = kinds.map { kind in
+        ShaderEffect.preset(effect, kind: kind, time: 4)
+      }
+
+      #expect(presets.allSatisfy { $0.meta == effect })
+      #expect(try JSONEncoder().encode(presets[0]) != JSONEncoder().encode(presets[1]))
+    }
+  }
+
+  @Test("preset factory resolves pixel-space effects from the supplied size")
+  func presetFactoryUsesSuppliedSize() {
+    let size = CGSize(width: 400, height: 240)
+
+    let fisheye = ShaderEffect.preset(.fisheye, in: size)
+    guard case .fisheye(let origin, _, _) = fisheye else {
+      #expect(Bool(false))
+      return
+    }
+
+    let ripple = ShaderEffect.preset(.ripplePush, kind: .pronounced, in: size)
+    guard case .ripplePush(let location, let velocity) = ripple else {
+      #expect(Bool(false))
+      return
+    }
+
+    #expect(origin == CGPoint(x: 200, y: 120))
+    #expect(location == CGPoint(x: 200, y: 120))
+    #expect(velocity == CGPoint(x: 80, y: -19.2))
+  }
+
   @Test("shader effects classify application kind without OS-gated usage type")
   func shaderEffectsClassifyApplicationKind() {
     #expect(ShaderEffect.psych(time: 0).applicationKind == .colourEffect)

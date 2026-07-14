@@ -17,6 +17,7 @@ import ViewTools
 @CasePathable
 @dynamicMemberLookup
 public enum ShaderEffect: Sendable, Codable, Hashable, Identifiable {
+
   /// Horizontal red/blue channel separation.
   ///
   /// `strength` blends between the original colour and the separated colour.
