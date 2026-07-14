@@ -64,7 +64,6 @@ extension ShaderEffect {
           .float(scale),
           .float2(offset),
         ]
-
     }
   }
 }
