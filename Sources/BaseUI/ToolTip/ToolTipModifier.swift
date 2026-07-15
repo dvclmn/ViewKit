@@ -14,7 +14,7 @@ import SwiftUI
 
 public struct ToolTipModifier: ViewModifier {
 
-  @State private var isHovered = false
+  @State private var isHovering = false
 
   let text: String
   let offset: CGSize
@@ -27,7 +27,7 @@ public struct ToolTipModifier: ViewModifier {
     content
       .debouncedHover(enterInterval: 0.4, exitInterval: 0.1) { hovering in
         withAnimation {
-          self.isHovered = hovering
+          self.isHovering = hovering
         }
       }  // END hover
 
@@ -91,7 +91,7 @@ extension ToolTipModifier {
 
   }
 
-  private var isShowing: Bool { isHovered || isShowingForDebug }
+  private var isShowing: Bool { isHovering || isShowingForDebug }
 
 }
 

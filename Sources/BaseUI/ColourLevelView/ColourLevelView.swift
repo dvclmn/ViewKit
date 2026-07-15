@@ -67,7 +67,7 @@ extension ColourLevelView {
   //  }
 
   // MARK: - Main States
-  //  var isHovered: Bool {
+  //  var isHovering: Bool {
   //    return store.colourHandler.hoveredColourLevel == level && !isHoldingOption
   //  }
   //  var isFocused: Bool {
@@ -78,11 +78,11 @@ extension ColourLevelView {
   //  }
 
   //  var swatchSize: CGFloat {
-  //    isHovered ? store.swatchDiameter + 2 : store.swatchDiameter
+  //    isHovering ? store.swatchDiameter + 2 : store.swatchDiameter
   //  }
 
   //  var isShowingSwappable: Bool {
-  //    isHovered && modifierKeys.contains(.option)
+  //    isHovering && modifierKeys.contains(.option)
   //  }
 
   //  var strokeWidth: CGFloat {

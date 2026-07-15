@@ -58,8 +58,10 @@ public struct CustomLabel: LabelStyle {
         Stacked(configuration)
 
       case .hidden:
-        LabelBase(configuration)
-          .labelsHidden()
+//        LabelBase(configuration)
+        EmptyView()
+          
+//          .labelsHidden()
 
       case .none:
         LabelBase(configuration)

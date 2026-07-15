@@ -22,7 +22,7 @@ final class ScrubberHandler {
   /// For gesture state
   var initialValue: Double
 
-  var isHovered: Bool = false
+  var isHovering: Bool = false
 
   init(
     initialValue: Double

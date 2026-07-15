@@ -42,7 +42,7 @@ struct ScrubberCore: View {
           }
         }
 
-        //        .environment(\.strokeColour, AnyShapeStyle(Color.white.opacity(store.isHovered ? 0.11 : 0)))
+        //        .environment(\.strokeColour, AnyShapeStyle(Color.white.opacity(store.isHovering ? 0.11 : 0)))
         /// Just for debug reference for now
         //        .foregroundStyle(.blue.secondary)
 
@@ -59,7 +59,7 @@ struct ScrubberCore: View {
         }
 
         .pointerStyleCompatible(.frameResize(position: .leading, directions: .all))
-        .onHover { store.isHovered = $0 }
+        .onHover { store.isHovering = $0 }
         .gesture(ScrubDragGesture(store: store), isEnabled: isDraggable)
         .sensoryFeedback(.alignment, trigger: store.value) {
           oldValue,
@@ -123,7 +123,7 @@ extension ScrubberCore {
 //  }
 
   private var isDraggableAndHovered: Bool {
-    isDraggable && store.isHovered
+    isDraggable && store.isHovering
   }
 
   private var isDraggable: Bool {

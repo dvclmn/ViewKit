@@ -18,7 +18,7 @@ struct PopupView: View {
   @Environment(\.isCompactMode) private var isCompactMode
   @Environment(\.hasCloseButton) private var hasCloseButton
   @Environment(\.hasGlassEffect) private var hasGlassEffect
-  @Environment(\.colourOverride) private var colourOverride
+//  @Environment(\.colourOverride) private var colourOverride
 
   @State private var offsetY: CGFloat = 0
   @State private var isHoveringDismiss: Bool = false

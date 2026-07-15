@@ -41,7 +41,7 @@ extension ItemViewCommonModifier {
   private var tintColour: Color? {
     let removing = isHovering && !isEmphasised
     switch (removing, isEmphasised) {
-      case (true, _): return .red.opacity(0.3)
+      case (true, _): return .red.opacity(0.2)
       case (false, true): return .white.opacity(0.1)
       default: return nil
     }

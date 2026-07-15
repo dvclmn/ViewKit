@@ -11,7 +11,7 @@ import ViewKitCore
 import ViewTools
 
 public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {
-  @Environment(\.colourOverride) private var colourOverride
+//  @Environment(\.colourOverride) private var colourOverride
   public typealias CardItem = (Item, Bool) -> Content
 
   let data: [Item]
@@ -132,7 +132,7 @@ extension CardGrid {
     data: SampleContent.Animal.withSymbols(),
     cardSize: .localPreset,
     //  ) { item in
-  ) { item, isHovered in
+  ) { item, isHovering in
     QuickLabel(item.label)
   }
   // .environment(store)

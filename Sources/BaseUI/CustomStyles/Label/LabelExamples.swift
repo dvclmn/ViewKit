@@ -21,9 +21,9 @@ public struct LabelExampleView: View {
     ScrollView {
       VStack(alignment: .leading, spacing: Styles.sizeMedium) {
 
-        CardGrid(data: SampleContent.Animal.withSymbols()) { item, isHovered in
+        CardGrid(data: SampleContent.Animal.withSymbols()) { item, isHovering in
           let label =
-            isHovered
+            isHovering
             ? LabelDescriptor("Remove", icon: .preset(.trash))
             : item.label
 
