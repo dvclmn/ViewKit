@@ -11,7 +11,6 @@ import ViewKitCore
 import ViewTools
 
 public struct CardGrid<Item: LabeledItem & Equatable, Content: View>: View {
-//  @Environment(\.colourOverride) private var colourOverride
   public typealias CardItem = (Item, Bool) -> Content
 
   let data: [Item]

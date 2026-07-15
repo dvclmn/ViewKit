@@ -21,6 +21,7 @@ struct ItemViewCommonModifier: ViewModifier {
       .environment(\.symbolVariants, .fill)
       .iconColour(isEmphasised ? .primary : .secondary)
       .environment(\.iconFontStyle, .title)
+    
       .multilineTextAlignment(.center)
       .padding(Styles.sizeTiny)
       .frame(
