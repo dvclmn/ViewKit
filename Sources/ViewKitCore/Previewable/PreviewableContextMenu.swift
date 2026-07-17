@@ -10,7 +10,9 @@ import ViewTools
 import SwiftUI
 
 public struct ContextMenuPreviewModifier<MenuContent: View>: ViewModifier {
-  @Environment(\.sizeOverride) private var sizeOverride
+//  @Environment(\.sizeOverride) private var sizeOverride
+  @Environment(\.frameWidth) private var frameWidth
+  @Environment(\.frameHeight) private var frameHeight
   @Environment(\.layoutAlignment) private var layoutAlignment
 
   let isPreviewing: Bool
@@ -24,8 +26,8 @@ public struct ContextMenuPreviewModifier<MenuContent: View>: ViewModifier {
             menuContent
           }
           .frame(
-            width: sizeOverride?.width ?? 180,
-            height: sizeOverride?.height,
+            width: frameWidth ?? 180,
+            height: frameHeight,
             alignment: .topLeading
           )
           .padding()

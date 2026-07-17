@@ -6,7 +6,8 @@
 //
 
 import Accelerate
-import CoreTools
+@_spi(Internal) import CoreTools
+@_spi(Internal) import StringTools
 import Foundation
 import SwiftUI
 

@@ -6,11 +6,11 @@
 //
 
 import CoreTools
-import ViewTools
 //import InteractionKit
 import EnumMacros
 import Foundation
 import SwiftUI
+import ViewTools
 
 public struct ToolTipModifier: ViewModifier {
 
@@ -35,16 +35,17 @@ public struct ToolTipModifier: ViewModifier {
 
         ToolTipView(
           text: text,
-          isShowing: isShowing
+          isShowing: isShowing,
+          tint: colour,
         )
-        .backgroundTint(colour)
+        //        .backgroundTint(colour)
 
         .alignmentGuide(toolTipAlignment.horizontal) { dimensions in
           dimensions.offset(
             for: toolTipAlignment,
             axis: .horizontal,
             magnitude: 1.2,
-            radial: .outward
+            radial: .outward,
           )
         }
 
@@ -53,7 +54,7 @@ public struct ToolTipModifier: ViewModifier {
             for: toolTipAlignment,
             axis: .vertical,
             magnitude: 1.2,
-            radial: .outward
+            radial: .outward,
           )
         }
         .allowsHitTesting(false)
@@ -70,7 +71,7 @@ extension ToolTipModifier {
   nonisolated private func totalOffset(
     for axis: GeometryAxis,
     viewSize: CGSize,
-    mapping: AxisMapping = .default
+    mapping: AxisMapping = .default,
   ) -> CGFloat {
     /// Note: The below `defaultOffset` bakes in a
     /// slight horizontal inset, just as it felt more pleasing.
@@ -101,7 +102,7 @@ extension View {
     offset: CGSize = .zero,
     alignment: Alignment = .center,
     isShowingForDebug: Bool = false,
-    color: Color? = nil
+    color: Color? = nil,
   ) -> some View {
     self.modifier(
       ToolTipModifier(
@@ -109,7 +110,7 @@ extension View {
         offset: offset,
         alignment: alignment,
         isShowingForDebug: isShowingForDebug,
-        colour: color
+        colour: color,
       )
     )
   }

@@ -16,6 +16,7 @@ struct ToolTipView: View {
 
   let text: String
   let isShowing: Bool
+  let tint: Color?
   var body: some View {
 
     Group {
@@ -28,6 +29,7 @@ struct ToolTipView: View {
           .padding(.vertical, 1)
           .quickBackground(
             shape: .capsule,
+            tint: tint
             //            shape: style.isCapsule ? .capsule : .rect(cornerRadius: CGFloat.defaultQuickRounding),
           )
           

@@ -11,8 +11,7 @@ import SwiftUI
 
 public struct QuickPicker<Item: LabeledItem & Hashable>: View {
 //public struct QuickPicker<Item: Hashable & Identifiable>: View {
-
-  @Environment(\.heightOverride) private var heightOverride
+//  @Environment(\.frameHeight) private var frameHeight
 
   let title: String
   @Binding var selection: Item

@@ -129,7 +129,8 @@ extension ColourLevelSwitch {
 
     } label: {
       ColourLevelLabel(slot, colour: colour)
-        .squareFrame(diameter)
+        .frameFromSquare(diameter)
+//        .squareFrame(diameter)
     }
     //    .buttonStyle(.noClickAnimation(isPlain: true))
   }

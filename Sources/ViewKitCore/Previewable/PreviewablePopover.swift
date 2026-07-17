@@ -11,7 +11,9 @@ import SwiftUI
 
 public struct PreviewablePopoverModifier<PopoverContent: View>: ViewModifier {
   @Environment(\.layoutAlignment) private var layoutAlignment
-  @Environment(\.sizeOverride) private var sizeOverride
+//  @Environment(\.sizeOverride) private var sizeOverride
+  @Environment(\.frameWidth) private var frameWidth
+  @Environment(\.frameHeight) private var frameHeight
 
   @Binding var isPresented: Bool
   let attachmentAnchor: PopoverAttachmentAnchor
@@ -34,9 +36,12 @@ public struct PreviewablePopoverModifier<PopoverContent: View>: ViewModifier {
           PopoverView()
             //            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .frame(
-              width: sizeOverride?.width,
+              width: frameWidth,
+              height: frameHeight
+            
+//              width: sizeOverride?.width,
               //              width: sizeOverride?.width ?? 400,
-              height: sizeOverride?.height
+//              height: sizeOverride?.height
                 //              height: sizeOverride?.height ?? 600
             )
           // TODO: Will need to sort something for this, now that this is in UIPrimitives

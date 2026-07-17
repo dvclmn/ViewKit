@@ -6,13 +6,13 @@
 //
 
 import CoreTools
+import SwiftUI
 // import LayoutKit
 import ViewTools
-import SwiftUI
 
 struct QuickBackgroundExampleView: View {
 
-    let width: CGFloat = 400
+  let width: CGFloat = 400
 
   var body: some View {
     VStack(spacing: Styles.sizeMedium) {
@@ -23,7 +23,7 @@ struct QuickBackgroundExampleView: View {
           shape: .rect(cornerRadius: Styles.sizeRegular),
           padding: Styles.sizeSmall,
           tint: .pink,
-//          usesGlassEffect: true
+          //          usesGlassEffect: true
         )
 
       Text("Capsule")
@@ -32,10 +32,10 @@ struct QuickBackgroundExampleView: View {
           shape: .capsule,
           padding: Styles.sizeMedium,
           tint: .black,
-//          usesGlassEffect: false
+          //          usesGlassEffect: false
         )
     }
-    .environment(\.horizontalBiasOverride, 3)
+    .environment(\.horizontalBias, 3)
     .environment(\.opticalCentreBias, 1.5)
 
     .padding(.vertical, 40)

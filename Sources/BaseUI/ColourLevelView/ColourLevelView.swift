@@ -30,7 +30,7 @@ public struct ColourLevelView<Colour: ColourModel & EnvironmentResolvableColour 
         case .background: background.toColour
       }
     }
-    .squareFrame(diameter)
+    .frameFromSquare(diameter)
 //    .frameFromSquare(diameter)
     .clipShape(.circle)
     .overlay {
