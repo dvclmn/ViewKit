@@ -9,34 +9,42 @@ import CoreTools
 import SwiftUI
 import ViewTools
 
-public struct QuickTabView<TabItem: LabeledItem & Hashable, Content: View>: View {
+public struct QuickTabView<
+  TabItem: Identifiable & Hashable,
+  TabLabel: View,
+  Content: View,
+>: View {
 
   @Binding var selection: TabItem
   let sourceData: [TabItem]
 
-  let tabContent: (TabItem) -> Content
+  let label: (TabItem) -> TabLabel
+  let content: (TabItem) -> Content
 
   public init(
     selection: Binding<TabItem>,
     sourceData: [TabItem],
-    @ViewBuilder tabContent: @escaping (TabItem) -> Content,
+    @ViewBuilder label: @escaping (TabItem) -> TabLabel,
+    @ViewBuilder content: @escaping (TabItem) -> Content,
   ) {
     self._selection = selection
     self.sourceData = sourceData
-    self.tabContent = tabContent
+    self.label = label
+    self.content = content
   }
 
   public var body: some View {
 
     if #available(macOS 15, iOS 18, *) {
       TabView(selection: $selection) {
-        ForEach(sourceData) { tabItem in
-          Tab(value: tabItem) {
+        ForEach(sourceData) { tab in
+          Tab(value: tab) {
             //            Form {
-            tabContent(tabItem)
+            content(tab)
             //            }  // END form
           } label: {
-            QuickLabel(tabItem.label)
+            label(tab)
+            //            QuickLabel(tabItem.label)
           }
         }  // END foreach
       }
@@ -45,10 +53,11 @@ public struct QuickTabView<TabItem: LabeledItem & Hashable, Content: View>: View
       TabView(selection: $selection) {
         ForEach(sourceData) { tab in
           //          Form {
-          tabContent(tab)
+          content(tab)
             .tag(tab)
             .tabItem {
-              QuickLabel(tab.label)
+              label(tab)
+              //              QuickLabel(tab.label)
             }
             //          }
             .padding(Styles.sizeLarge)
@@ -58,29 +67,55 @@ public struct QuickTabView<TabItem: LabeledItem & Hashable, Content: View>: View
   }
 }
 
-extension QuickTabView where TabItem: CaseIterable {
+extension QuickTabView {
   public init(
     selection: Binding<TabItem>,
-    @ViewBuilder tabContent: @escaping (TabItem) -> Content,
+    @ViewBuilder content: @escaping (TabItem) -> Content,
   )
   where
-    TabItem.AllCases: RandomAccessCollection, TabItem.AllCases.Element == TabItem,
-    TabItem.AllCases == [TabItem]
+    TabItem: CaseIterable,
+    TabItem.AllCases: RandomAccessCollection,
+    TabItem.AllCases.Element == TabItem,
+    TabItem.AllCases == [TabItem],
+    TabItem: LabeledItem,
+    TabLabel == QuickLabel,
   {
     self.init(
       selection: selection,
       sourceData: TabItem.allCases,
-      tabContent: tabContent,
+      label: { item in
+        QuickLabel(item.label)
+      },
+      content: content,
     )
   }
-  //  public init(
-  //    title: String,
-  //    selection: Binding<TabItem>,
-  //  ) where TabItem.AllCases: RandomAccessCollection, TabItem.AllCases.Element == TabItem, TabItem.AllCases == [TabItem] {
-  //    self.title = title
-  //    self._selection = selection
-  //    self.sourceData = Item.allCases
-  //  }
 }
+
+extension QuickTabView {
+  public init(
+    selection: Binding<TabItem>,
+    sourceData: [TabItem],
+    @ViewBuilder content: @escaping (TabItem) -> Content,
+  )
+  where TabItem: LabeledItem, TabLabel == QuickLabel {
+    self.init(
+      selection: selection,
+      sourceData: sourceData,
+      label: { item in
+        QuickLabel(item.label)
+      },
+      content: content,
+    )
+  }
+}
+//  public init(
+//    title: String,
+//    selection: Binding<TabItem>,
+//  ) where TabItem.AllCases: RandomAccessCollection, TabItem.AllCases.Element == TabItem, TabItem.AllCases == [TabItem] {
+//    self.title = title
+//    self._selection = selection
+//    self.sourceData = Item.allCases
+//  }
+//}
 
 //where TabItem: CaseIterable, TabItem.AllCases: RandomAccessCollection
