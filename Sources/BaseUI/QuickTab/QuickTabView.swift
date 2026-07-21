@@ -73,12 +73,9 @@ extension QuickTabView {
     @ViewBuilder content: @escaping (TabItem) -> Content,
   )
   where
-    TabItem: CaseIterable,
-    TabItem.AllCases: RandomAccessCollection,
+    TabItem: CaseIterable & LabeledItem, TabItem.AllCases: RandomAccessCollection,
     TabItem.AllCases.Element == TabItem,
-    TabItem.AllCases == [TabItem],
-    TabItem: LabeledItem,
-    TabLabel == QuickLabel,
+    TabItem.AllCases == [TabItem], TabLabel == QuickLabel
   {
     self.init(
       selection: selection,

@@ -20,14 +20,15 @@ import SwiftUI
 public struct CaseTabView<Root, TabLabel, Content>: View
 where
   Root: MetaEnumRepresentable & CasePathable,
+  Root.Meta: Sendable,
   TabLabel: View,
   Content: View
 {
   @Binding private var selection: Root
   @State private var state: CasePathHandler<Root>
 
-  @ViewBuilder private let label: (Root.Meta) -> TabLabel
-  @ViewBuilder private let content: (Root.Meta, CaseProxy<Root>) -> Content
+  let label: (Root.Meta) -> TabLabel
+  let content: (Root.Meta, CaseProxy<Root>) -> Content
 
   /// Creates a case-aware tab container with a custom label for each case.
   ///
@@ -51,6 +52,13 @@ where
     let metaSelection = state.metaBinding($selection)
     let proxy = CaseProxy(selection: $selection)
     let cases = Array(Root.Meta.allCases)
+
+    //    QuickTabView(
+    //      selection: metaSelection,
+    //      sourceData: cases,
+    //      label: label,
+    //      content: content
+    //    )
 
     if #available(macOS 15, iOS 18, *) {
       TabView(selection: metaSelection) {
