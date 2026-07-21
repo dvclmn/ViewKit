@@ -6,8 +6,8 @@
 //
 
 import CoreTools
-import ViewTools
 import SwiftUI
+import ViewTools
 
 public typealias SliderOutput = (SliderPhase) -> Void
 
@@ -106,6 +106,7 @@ extension QuickSlider {
 
 extension QuickSlider {
 
+  // Initialiser for a standard slider
   // TODO: Considering pivoting to SwiftUI-style
   // Label closure/ViewBuilder instead of LabelDescriptor?
   public init(
@@ -116,7 +117,6 @@ extension QuickSlider {
     characterSize: CGSize? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) where TrackBody == EmptyView {
-    self._value = value
     self._store = State(
       initialValue: SliderHandler(
         label: LabelDescriptor(title),
@@ -126,15 +126,14 @@ extension QuickSlider {
         didChangeSlider: didChangeSlider,
       )
     )
+    self._value = value
     self.track = { _ in nil }
     #if os(macOS)
     self.appKitTrack = nil
     #endif
   }
 
-}
-extension QuickSlider {
-
+  // Initialiser for a custom track style
   public init<S: SliderTrackStyle>(
     _ title: String,
     value: Binding<Double>,
@@ -144,7 +143,6 @@ extension QuickSlider {
     trackStyle: S,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) where S.Body == TrackBody {
-    self._value = value
     self._store = State(
       initialValue: SliderHandler(
         label: LabelDescriptor(title),
@@ -154,6 +152,7 @@ extension QuickSlider {
         didChangeSlider: didChangeSlider,
       )
     )
+    self._value = value
     self.track = { configuration in
       trackStyle.makeBody(configuration: configuration)
     }
@@ -179,14 +178,28 @@ extension QuickSlider {
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) where TrackBody == EmptyView {
 
-    self.init(
-      title,
-      value: intValue.toBindingDouble,
-      range: range.toDoubleRange,
-      step: step?.toDouble,
-      characterSize: characterSize,
-      track: { _ in },
-      didChangeSlider: didChangeSlider,
+    self._store = State(
+      initialValue: SliderHandler(
+        label: LabelDescriptor(title),
+        range: range.toDoubleRange,
+        step: step.toDoubleIfPresent,
+        characterSize: characterSize,
+        didChangeSlider: didChangeSlider,
+      )
     )
+    self._value = intValue.toBindingDouble
+    self.track = { _ in nil }
+#if os(macOS)
+    self.appKitTrack = nil
+#endif
+//    self.init(
+//      title,
+//      value: intValue.toBindingDouble,
+//      range: range.toDoubleRange,
+//      step: step?.toDouble,
+//      characterSize: characterSize,
+//      track: { _ in },
+//      didChangeSlider: didChangeSlider,
+//    )
   }
 }

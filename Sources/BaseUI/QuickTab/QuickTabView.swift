@@ -8,8 +8,6 @@
 import CoreTools
 import ViewTools
 import SwiftUI
-// import LayoutKit
-//import UIPrimitives
 
 public struct QuickTabView<TabItem: LabeledItem & Hashable, Content: View>: View
 where TabItem: CaseIterable, TabItem.AllCases: RandomAccessCollection {

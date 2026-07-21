@@ -6,30 +6,28 @@
 //
 
 import CoreTools
-import ViewTools
 import SwiftUI
+import ViewTools
 
 @Observable
 final class SliderHandler {
 
   var label: LabelDescriptor
-  //  var minMaxLabels: (String, String)? = nil
   var range: ClosedRange<Double>
   var step: Double?
 
   var phase: SliderPhase = .idle
   var didChangeSlider: SliderOutput?
 
-  /// Including vertical hit area buffer
   var trackWidth: Double?
 
   let thumbDiameter: Double = 16
   let trackHeight: Double = 5
   let hitAreaBuffer: Double = 16
-  
+
   /// May be provided by user, if used where access to GridKit is available
   var characterSize: CGSize?
-  
+
   let width: Int = 30
   let cellCharacters = ["░", "▒", "▓", "█"]
 
@@ -39,7 +37,7 @@ final class SliderHandler {
     step: Double?,
     characterSize: CGSize?,
     //    minMaxLabels: (String, String)?,
-    didChangeSlider: SliderOutput?
+    didChangeSlider: SliderOutput?,
   ) {
     self.label = label
     self.range = range
@@ -60,14 +58,14 @@ extension SliderHandler {
 
   func trackConfiguration(
     value: Double,
-    colourScheme: ColorScheme
-//    in env: EnvironmentValues
+    colourScheme: ColorScheme,
+      //    in env: EnvironmentValues
   ) -> SliderTrackConfiguration {
     .init(
       value: value,
       range: range,
       colorScheme: colourScheme,
-      tint: .accentColor
+      tint: .accentColor,
     )
   }
 
@@ -130,7 +128,7 @@ extension SliderHandler {
   }
 
   public func thumbPosition(
-    value: Double,
+    value: Double
     //    diameter: Double,
     //    trackSize: CGSize
   ) -> CGPoint? {

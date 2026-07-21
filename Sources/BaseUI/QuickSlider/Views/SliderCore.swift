@@ -23,85 +23,80 @@ extension QuickSlider {
     #endif
     var body: some View {
 
-//      if isASCIIMode, let unitSize {
-//        Text("Not yet implemented. Unit size is: \(unitSize, default: "nil")")
-        //        TextSliderCore(
-        //          value: value,
-        //          unitSize: unitSize
-        //        )
-
-//      } else {
-
-        /// If there's a track, then it's a Custom Slider
-        let configuration = store.trackConfiguration(value: value, colourScheme: colourScheme)
-        if let track = track(configuration) {
-          // MARK: - Custom Slider
-          #if os(macOS)
-          if let appKitTrack = appKitTrack?(configuration) {
-            AppKitSlider(
-              value: $value,
-              range: store.range,
-              step: store.step,
-              track: appKitTrack,
-              drawsTrack: sliderComponents.contains(.track),
-              drawsThumb: sliderComponents.contains(.thumb),
-              isEnabled: isEnabled,
-              accessibilityLabel: store.label.text,
-              onEditingChanged: handleOnEdit(_:),
-            )
-            .padding(-AppKitSlider.pressedKnobVisualOverflow)
-            .frame(height: store.trackHeightWithBuffer)
-
-          } else {
-            SliderCustom(value: $value, track: track)
-          }
-          #else
-          SliderCustom(value: $value, track: track)
-          #endif
+      /// If there's a track, then it's a Custom Slider
+      let configuration = store.trackConfiguration(value: value, colourScheme: colourScheme)
+      if let track = track(configuration) {
+        // MARK: - Custom Slider
+        #if os(macOS)
+        if let appKitTrack = appKitTrack?(configuration) {
+          AppKitSlider(
+            value: $value,
+            range: store.range,
+            step: store.step,
+            track: appKitTrack,
+            drawsTrack: sliderComponents.contains(.track),
+            drawsThumb: sliderComponents.contains(.thumb),
+            isEnabled: isEnabled,
+            accessibilityLabel: store.label.text,
+            onEditingChanged: handleOnEdit(_:),
+          )
+          .padding(-AppKitSlider.pressedKnobVisualOverflow)
+          .frame(height: store.trackHeightWithBuffer)
+          //          .debugFrame("AppKit-based slider track", .purple)
 
         } else {
-
-          // MARK: - Native Slider
-
-          /// Using `labelsHidden` as Label is handled in ``SliderComponents``
-          @Bindable var store = store
-
-          if let step = store.step {
-            StepperView(step)
-
-            Slider(
-              value: $value,
-              in: store.range,
-              step: step,
-            ) {
-              SliderLabel(value: $value)
-
-            } onEditingChanged: { editing in
-              handleOnEdit(editing)
-            }
-            .labelsHidden()
-
-          } else {
-
-            Slider(
-              value: $value,
-              in: store.range,
-            ) {
-              SliderLabel(value: $value)
-
-            } onEditingChanged: { editing in
-              handleOnEdit(editing)
-            }
-            .labelsHidden()
-          }
+          SliderCustom(value: $value, track: track)
         }
-//      }
+        #else
+        SliderCustom(value: $value, track: track)
+        #endif
 
+      } else {
+
+        // MARK: - Native Slider
+        NativeSliderView()
+        /// Using `labelsHidden` as Label is handled in ``SliderComponents``
+        @Bindable var store = store
+
+        
+      }
     }
   }
 }
 
 extension QuickSlider.SliderCore {
+  
+  @ViewBuilder
+  private func NativeSliderView() -> some View {
+    if let step = store.step {
+      StepperView(step)
+      
+      Slider(
+        value: $value,
+        in: store.range,
+        step: step,
+      ) {
+        QuickSlider.SliderLabel(value: $value)
+        
+      } onEditingChanged: { editing in
+        handleOnEdit(editing)
+      }
+      .labelsHidden()
+      
+    } else {
+      
+      Slider(
+        value: $value,
+        in: store.range,
+      ) {
+        QuickSlider.SliderLabel(value: $value)
+        
+      } onEditingChanged: { editing in
+        handleOnEdit(editing)
+      }
+      .labelsHidden()
+    }
+  }
 
   @ViewBuilder
   private func StepperView(_ step: Double) -> some View {
