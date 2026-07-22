@@ -11,7 +11,6 @@ import ViewTools
 
 /// The capsule presentation used internally by ``QuickPicker``.
 struct CapsulePicker<Item: LabeledItem & Hashable>: View {
-  //  @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
   let title: String
   @Binding var selection: Item
@@ -25,17 +24,21 @@ struct CapsulePicker<Item: LabeledItem & Hashable>: View {
         Button {
           select(item)
         } label: {
-          CapsulePicker_ItemLabel(label: item.label, isSelected: item == selection)
+          CapsulePicker_ItemLabel(label: item.label, isSelected: itemIsSelected(item))
           //            .border(Color.green.opacity(0.1))
         }
         .buttonStyle(.plain)
-        //        .accessibilityAddTraits(isSelected(item) ? .isSelected : [])
+        .accessibilityAddTraits(itemIsSelected(item) ? .isSelected : [])
 
-        if index < sourceData.count - 1 {
+        if dividerIsShowing(for: item, index: index) {
           Divider()
             .frame(height: 20)
-          //            .opacity((selection == item || selection == sourceData[index + 1]) ? 0 : 0.5)
         }
+        //        if index < sourceData.count - 1 {
+        //          Divider()
+        //            .frame(height: 20)
+        //            .opacity(isDividerShowing(for: item, index: index) ? 0 : 1)
+        //        }
       }
     }
     .padding(2)
@@ -47,9 +50,15 @@ struct CapsulePicker<Item: LabeledItem & Hashable>: View {
 
 extension CapsulePicker {
 
-  private func isSelected(_ item: Item) -> Bool {
+  private func itemIsSelected(_ item: Item) -> Bool {
     selection == item
+  }
 
+  private func dividerIsShowing(for item: Item, index: Int) -> Bool {
+    guard index < sourceData.count - 1 else { return false }
+
+    return !itemIsSelected(item)
+      && selection != sourceData[index + 1]
   }
 
   private func select(_ item: Item) {

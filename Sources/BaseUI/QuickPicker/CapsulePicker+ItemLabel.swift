@@ -13,24 +13,23 @@ struct CapsulePicker_ItemLabel: View {
   let label: LabelDescriptor
   let isSelected: Bool
   var body: some View {
-    
-   
+
     //          Text("Hello")
     QuickLabel(label)
-    
-    //            .font(.callout.weight(isSelected ? .semibold : .regular))
-    //            .foregroundStyle(isSelected ? .background : .primary)
+
+      //            .font(.callout.weight(isSelected ? .semibold : .regular))
+      //            .foregroundStyle(isSelected ? .background : .primary)
       .frame(maxWidth: .infinity)
       .frame(minHeight: minimumHeight)
       .contentShape(.rect)
-    //            .background {
-    //              if isSelected(item) {
-    //                Capsule()
-    //                  //                  .fill(.tint)
-    //                  .matchedGeometryEffect(id: "selectedItem", in: animation)
-    //              }
-    //            }
-    
+      .background {
+        if isSelected {
+          Capsule()
+          //                  //                  .fill(.tint)
+          //                  .matchedGeometryEffect(id: "selectedItem", in: animation)
+        }
+      }
+
   }
 }
 
