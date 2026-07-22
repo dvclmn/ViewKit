@@ -94,6 +94,7 @@ let package = Package(
       dependencies: [
         .module(.viewKitCore),
         .extDependency(.coreTools),
+        .extDependency(.enumMacros),
       ],
     ),
 

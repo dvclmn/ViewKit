@@ -6,9 +6,16 @@
 //
 
 import CasePaths
-import SwiftUI
 import EnumMacroSupport
+import SwiftUI
 
+/// A self-contained case picker and associated-value editor.
+///
+/// `CasePicker` places the case-selection control and its case-specific content
+/// in the same view hierarchy. It is suited to compact editors where those
+/// elements belong together. For a selection control whose content lives
+/// elsewhere, such as a toolbar driving an inspector body, use
+/// ``CaseMetaPicker`` with a caller-owned ``CasePathHandler``.
 public struct CasePicker<Root, Meta, Content>: View
 where
   Root: MetaEnumRepresentable & CasePathable,
@@ -35,11 +42,11 @@ where
   }
 
   public var body: some View {
-    Picker(title, selection: state.metaBinding($selection)) {
-      ForEach(Array(Meta.allCases), id: \.id) { meta in
-        Text(meta.name).tag(meta)
-      }
-    }
+    CaseMetaPicker(
+      title,
+      selection: $selection,
+      handler: state,
+    )
     content(CaseProxy(selection: $selection))
   }
 }

@@ -8,6 +8,16 @@ Core value, state, and view-support types shared by ViewKit targets.
 
 ## Topics
 
+### Case-Aware Selection
+
+- <doc:CaseAwareSelection>
+- ``CasePathHandler``
+- ``CaseMetaPicker``
+- ``CasePicker``
+- ``CaseProxy``
+- ``CaseTabView``
+- ``CaseFallbackStrategy``
+
 ### User Data
 
 - <doc:UserDataArchitecture>
