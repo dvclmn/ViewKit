@@ -13,6 +13,8 @@ public struct QuickPicker<Item: LabeledItem & Hashable>: View {
 //public struct QuickPicker<Item: Hashable & Identifiable>: View {
 //  @Environment(\.frameHeight) private var frameHeight
 
+  @Environment(\.quickPickerStyle) private var style
+
   let title: String
   @Binding var selection: Item
 
@@ -31,13 +33,21 @@ public struct QuickPicker<Item: LabeledItem & Hashable>: View {
   }
 
   public var body: some View {
+    switch style {
+      case .plain:
+        Picker(title, selection: $selection) {
+          ForEach(sourceData) { item in
+            QuickLabel(item.label).tag(item)
+          }
+        }
 
-    Picker(title, selection: $selection) {
-      ForEach(sourceData) { item in
-        QuickLabel(item.label).tag(item)
-//        TextLabel(for: item).tag(item)
+      case .capsule:
+        CapsulePicker(
+          title: title,
+          selection: $selection,
+          sourceData: sourceData,
+        )
       }
-    }
   }
 }
 
