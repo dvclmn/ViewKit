@@ -26,7 +26,7 @@ public struct ColourSliders: View {
     SliderGroup {
       switch activeColourModel.wrappedValue {
         case .rgb: RGBView()
-        case .hsv: HSVView()
+        case .hsv: HSVSliders(hsvColour: $colour.hsv)
       }
     }
     .labelWeight(.semibold)
@@ -75,41 +75,6 @@ extension ColourSliders {
 
   }
 
-  @ViewBuilder
-  private func HSVView() -> some View {
-    QuickSlider(
-      "H",
-      value: hsvBinding().hue,
-      range: .unitRange,
-      trackStyle: HSVTrackStyle(colour: hsvColour, component: .hue)
-    )
-
-    //    .sliderStyle(.custom(.hsv(hsvBinding().wrappedValue, .hue)))
-
-    QuickSlider(
-      "S",
-      value: hsvBinding().saturation,
-      range: .unitRange,
-      trackStyle: HSVTrackStyle(colour: hsvColour, component: .saturation)
-    )
-    //    .sliderStyle(.custom(.hsv(hsvBinding().wrappedValue, .saturation)))
-
-    QuickSlider(
-      "V",
-      value: hsvBinding().brightness,
-      range: .unitRange,
-      trackStyle: HSVTrackStyle(colour: hsvColour, component: .brightness)
-    )
-    //    .sliderStyle(.custom(.hsv(hsvBinding().wrappedValue, .brightness)))
-
-    QuickSlider(
-      "A",
-      value: $colour.alpha,
-      range: .unitRange,
-      trackStyle: OpacityTrackStyle(colour: colour.toOpaque)
-    )
-    //    .sliderStyle(.custom(.opacityCheckboard(colour.toOpaque)))
-  }
 
   private func hsvBinding() -> Binding<HSVColour> {
     Binding {
