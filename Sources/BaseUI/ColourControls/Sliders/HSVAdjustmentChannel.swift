@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import ViewTools
 
 struct HSVAdjustmentChannel: View {
   let title: String
   @Binding var value: Double
   @Binding var isIncluded: Bool
   let range: ClosedRange<Double>
-  let step: Double
+  let step: Double?
   let formatter: ValueFormatter
   
   init(
@@ -20,7 +21,7 @@ struct HSVAdjustmentChannel: View {
     value: Binding<Double>,
     isIncluded: Binding<Bool>,
     range: ClosedRange<Double>,
-    step: Double,
+    step: Double? = nil,
     formatter: ValueFormatter,
   ) {
     self.title = title
@@ -55,15 +56,5 @@ struct HSVAdjustmentChannel: View {
       .formatValue(formatter)
       .environment(\.sliderDefaultValue, 0)
     }
-  }
-}
-
-private extension ValueFormatter {
-  static let degrees = ValueFormatter { value in
-    String(format: "%+.0f°", value)
-  }
-  
-  static let delta = ValueFormatter { value in
-    String(format: "%+.2f", value)
   }
 }

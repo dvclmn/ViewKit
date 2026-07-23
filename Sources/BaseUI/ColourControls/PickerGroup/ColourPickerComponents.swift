@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ColourPickerComponents: OptionSet, Sendable {
+public struct ColourPickerComponents: OptionSet, Sendable, Hashable {
   public init(rawValue: Int) {
     self.rawValue = rawValue
   }

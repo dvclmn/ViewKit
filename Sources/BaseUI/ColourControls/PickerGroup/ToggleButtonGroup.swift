@@ -16,12 +16,21 @@ struct ToggleButtonGroup: View {
 
     ControlGroup {
       //    HStack {
-      Toggle(isOn: $components.bindingToggle(option: .square, preventEmpty: true)) {
+      Toggle(
+        isOn: $components[toggling: .square, preventingEmpty: true]
+//        isOn: $components.bindingToggle(option: .square, preventEmpty: true)
+      ) {
         Label("Toggle Square", systemImage: "square")
       }
       .foregroundStyle(components.contains(.square) ? .primary : .secondary)
 
-      Toggle(isOn: $components.bindingToggle(option: .sliders, preventEmpty: true)) {
+      Toggle(
+        isOn: $components[toggling: .sliders, preventingEmpty: true],
+//        isOn: $components.bindingToggle(
+//          option: .sliders,
+//          preventEmpty: true
+//        )
+      ) {
         Label("Toggle Sliders", systemImage: Icons.options.icon)
       }
       .foregroundStyle(components.contains(.sliders) ? .primary : .secondary)

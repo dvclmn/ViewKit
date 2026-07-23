@@ -107,6 +107,18 @@ extension HSVAdjustmentSliders {
   }
 }
 
+
+private extension ValueFormatter {
+  static let degrees = ValueFormatter { value in
+    String(format: "%+.0f°", value)
+  }
+  
+  static let delta = ValueFormatter { value in
+    String(format: "%+.2f", value)
+  }
+}
+
+
 #if DEBUG
 #Preview {
   @Previewable @State var adjustment = HSVAdjustment(
@@ -123,3 +135,4 @@ extension HSVAdjustmentSliders {
   .frame(maxWidth: 360)
 }
 #endif
+
