@@ -15,6 +15,8 @@ final class SliderHandler {
   var label: LabelDescriptor
   var range: ClosedRange<Double>
   var step: Double?
+  /// A native Slider's semantic neutral point on macOS and iOS 26 or later.
+  let neutralValue: Double?
 
   var phase: SliderPhase = .idle
   var didChangeSlider: SliderOutput?
@@ -35,6 +37,7 @@ final class SliderHandler {
     label: LabelDescriptor,
     range: ClosedRange<Double>,
     step: Double?,
+    neutralValue: Double?,
     characterSize: CGSize?,
     //    minMaxLabels: (String, String)?,
     didChangeSlider: SliderOutput?,
@@ -42,6 +45,7 @@ final class SliderHandler {
     self.label = label
     self.range = range
     self.step = step
+    self.neutralValue = neutralValue
     self.characterSize = characterSize
     //    self.minMaxLabels = minMaxLabels
     self.didChangeSlider = didChangeSlider

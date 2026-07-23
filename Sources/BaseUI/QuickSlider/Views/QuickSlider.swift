@@ -45,6 +45,7 @@ public struct QuickSlider<TrackBody: View>: View, ValueFormattable, SliderStylab
         label: LabelDescriptor(title),
         range: range.toDoubleRange,
         step: step.toDoubleIfPresent,
+        neutralValue: nil,
         characterSize: characterSize,
         didChangeSlider: didChangeSlider,
       )
@@ -109,11 +110,14 @@ extension QuickSlider {
   // Initialiser for a standard slider
   // TODO: Considering pivoting to SwiftUI-style
   // Label closure/ViewBuilder instead of LabelDescriptor?
+  /// On macOS and iOS 26 or later, `neutralValue` is passed to SwiftUI's
+  /// native ``SwiftUI/Slider`` to identify a semantic zero point.
   public init(
     _ title: String,
     value: Binding<Double>,
     range: ClosedRange<Double>,
     step: Double? = nil,
+    neutralValue: Double? = nil,
     characterSize: CGSize? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) where TrackBody == EmptyView {
@@ -122,6 +126,7 @@ extension QuickSlider {
         label: LabelDescriptor(title),
         range: range.toDoubleRange,
         step: step.toDoubleIfPresent,
+        neutralValue: neutralValue,
         characterSize: characterSize,
         didChangeSlider: didChangeSlider,
       )
@@ -148,6 +153,7 @@ extension QuickSlider {
         label: LabelDescriptor(title),
         range: range.toDoubleRange,
         step: step.toDoubleIfPresent,
+        neutralValue: nil,
         characterSize: characterSize,
         didChangeSlider: didChangeSlider,
       )
@@ -183,6 +189,7 @@ extension QuickSlider {
         label: LabelDescriptor(title),
         range: range.toDoubleRange,
         step: step.toDoubleIfPresent,
+        neutralValue: nil,
         characterSize: characterSize,
         didChangeSlider: didChangeSlider,
       )

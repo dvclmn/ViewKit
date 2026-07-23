@@ -70,31 +70,55 @@ extension QuickSlider.SliderCore {
   private func NativeSliderView() -> some View {
     if let step = store.step {
       StepperView(step)
-      
-      Slider(
-        value: $value,
-        in: store.range,
-        step: step,
-      ) {
-        QuickSlider.SliderLabel(value: $value)
-        
-      } onEditingChanged: { editing in
-        handleOnEdit(editing)
+
+      if #available(macOS 26.0, iOS 26.0, *) {
+        Slider(
+          value: $value,
+          in: store.range,
+          step: step,
+          neutralValue: store.neutralValue,
+        ) {
+          QuickSlider.SliderLabel(value: $value)
+        } onEditingChanged: { editing in
+          handleOnEdit(editing)
+        }
+        .labelsHidden()
+      } else {
+        Slider(
+          value: $value,
+          in: store.range,
+          step: step,
+        ) {
+          QuickSlider.SliderLabel(value: $value)
+        } onEditingChanged: { editing in
+          handleOnEdit(editing)
+        }
+        .labelsHidden()
       }
-      .labelsHidden()
       
     } else {
-      
-      Slider(
-        value: $value,
-        in: store.range,
-      ) {
-        QuickSlider.SliderLabel(value: $value)
-        
-      } onEditingChanged: { editing in
-        handleOnEdit(editing)
+      if #available(macOS 26.0, iOS 26.0, *) {
+        Slider(
+          value: $value,
+          in: store.range,
+          neutralValue: store.neutralValue,
+        ) {
+          QuickSlider.SliderLabel(value: $value)
+        } onEditingChanged: { editing in
+          handleOnEdit(editing)
+        }
+        .labelsHidden()
+      } else {
+        Slider(
+          value: $value,
+          in: store.range,
+        ) {
+          QuickSlider.SliderLabel(value: $value)
+        } onEditingChanged: { editing in
+          handleOnEdit(editing)
+        }
+        .labelsHidden()
       }
-      .labelsHidden()
     }
   }
 
