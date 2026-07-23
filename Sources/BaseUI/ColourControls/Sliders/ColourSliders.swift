@@ -26,7 +26,7 @@ public struct ColourSliders: View {
     SliderGroup {
       switch activeColourModel.wrappedValue {
         case .rgb: RGBView()
-        case .hsv: HSView()
+        case .hsv: HSVView()
       }
     }
     .labelWeight(.semibold)
@@ -76,7 +76,7 @@ extension ColourSliders {
   }
 
   @ViewBuilder
-  private func HSView() -> some View {
+  private func HSVView() -> some View {
     QuickSlider(
       "H",
       value: hsvBinding().hue,
