@@ -17,11 +17,16 @@ import ViewTools
 /// brightness use their `-1...1` delta convention. A channel's leading button
 /// controls whether this adjustment contributes to that axis: removing a
 /// channel writes `nil`; enabling it writes an explicit neutral `0`.
+/// While this editor remains alive, an excluded channel displays and restores
+/// its most recent delta rather than discarding it.
 ///
 /// The default ranges suit ColourTools' built-in modifiers, but they are an
 /// editor policy rather than a constraint imposed by ``HSVAdjustment``.
 public struct HSVAdjustmentSliders: View {
   @Binding private var adjustment: HSVAdjustment
+  /// Retains a channel's last delta while that channel is excluded from the
+  /// bound adjustment.
+  @State private var rememberedChannels: HSVAdjustment
 
   private let hueDegreesRange: ClosedRange<Double>
   private let saturationRange: ClosedRange<Double>
@@ -38,6 +43,7 @@ public struct HSVAdjustmentSliders: View {
     precondition(brightnessRange.contains(0), "A brightness adjustment range must contain zero.")
 
     self._adjustment = adjustment
+    self._rememberedChannels = State(initialValue: adjustment.wrappedValue)
     self.hueDegreesRange = hueDegreesRange
     self.saturationRange = saturationRange
     self.brightnessRange = brightnessRange
@@ -78,8 +84,12 @@ extension HSVAdjustmentSliders {
   /// ColourTools model.
   private var hueDegrees: Binding<Double> {
     Binding(
-      get: { (adjustment.hue ?? 0) * 360 },
-      set: { adjustment.hue = $0 / 360 },
+      get: { (adjustment.hue ?? rememberedChannels.hue ?? 0) * 360 },
+      set: { degrees in
+        let turns = degrees / 360
+        adjustment.hue = turns
+        rememberedChannels.hue = turns
+      },
     )
   }
 
@@ -87,8 +97,11 @@ extension HSVAdjustmentSliders {
     _ keyPath: WritableKeyPath<HSVAdjustment, Double?>
   ) -> Binding<Double> {
     Binding(
-      get: { adjustment[keyPath: keyPath] ?? 0 },
-      set: { adjustment[keyPath: keyPath] = $0 },
+      get: { adjustment[keyPath: keyPath] ?? rememberedChannels[keyPath: keyPath] ?? 0 },
+      set: { value in
+        adjustment[keyPath: keyPath] = value
+        rememberedChannels[keyPath: keyPath] = value
+      },
     )
   }
 
@@ -98,10 +111,12 @@ extension HSVAdjustmentSliders {
     Binding(
       get: { adjustment[keyPath: keyPath] != nil },
       set: { isIncluded in
-        adjustment[keyPath: keyPath] =
-          isIncluded
-          ? adjustment[keyPath: keyPath] ?? 0
-          : nil
+        if isIncluded {
+          adjustment[keyPath: keyPath] = rememberedChannels[keyPath: keyPath] ?? 0
+        } else {
+          rememberedChannels[keyPath: keyPath] = adjustment[keyPath: keyPath]
+          adjustment[keyPath: keyPath] = nil
+        }
       },
     )
   }
@@ -135,4 +150,3 @@ private extension ValueFormatter {
   .frame(maxWidth: 360)
 }
 #endif
-
