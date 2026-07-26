@@ -13,7 +13,7 @@ struct SliderConfiguration {
   let range: ClosedRange<Double>
   let step: Double?
   let neutralValue: Double?
-  let characterSize: CGSize?
+//  let characterSize: CGSize?
   let didChangeSlider: SliderOutput
   
   func trackConfiguration(

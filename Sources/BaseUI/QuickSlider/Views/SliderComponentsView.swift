@@ -46,16 +46,15 @@ extension QuickSlider {
 
       if sliderComponents.contains(.units) {
         Group {
-          if let characterSize = configuration.characterSize {
+//          if let characterSize = configuration.characterSize {
             TextColumns(
-              characterSize: characterSize,
               alignment: .trailing,
             ) {
               SliderValueText()
             }
-          } else {
-            SliderValueText()
-          }
+//          } else {
+//            SliderValueText()
+//          }
         }
         .textSelection(.disabled)
         .onDoubleTap($value, defaultValue: sliderDefaultValue)

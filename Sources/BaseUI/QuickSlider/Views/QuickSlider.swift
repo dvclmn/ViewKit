@@ -92,7 +92,7 @@ extension QuickSlider {
     range: ClosedRange<Double>,
     step: Double? = nil,
     neutralValue: Double? = nil,
-    characterSize: CGSize? = nil,
+//    characterSize: CGSize? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
     self.configuration = SliderConfiguration(
@@ -100,7 +100,7 @@ extension QuickSlider {
       range: range,
       step: step,
       neutralValue: neutralValue,
-      characterSize: characterSize,
+//      characterSize: characterSize,
       didChangeSlider: didChangeSlider,
     )
     self._value = value
@@ -120,7 +120,7 @@ extension QuickSlider {
     value: Binding<Double>,
     range: ClosedRange<Double>,
     step: Double? = nil,
-    characterSize: CGSize? = nil,
+//    characterSize: CGSize? = nil,
     trackStyle: S,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
@@ -129,7 +129,7 @@ extension QuickSlider {
       range: range,
       step: step,
       neutralValue: nil,
-      characterSize: characterSize,
+//      characterSize: characterSize,
       didChangeSlider: didChangeSlider,
     )
     self._value = value
@@ -149,7 +149,7 @@ extension QuickSlider {
     intValue: Binding<Int>,
     range: ClosedRange<Int>,
     step: Int? = nil,
-    characterSize: CGSize? = nil,
+//    characterSize: CGSize? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
   ) {
     self.configuration = SliderConfiguration(
@@ -157,7 +157,7 @@ extension QuickSlider {
       range: range.toDoubleRange,
       step: step.map(Double.init),
       neutralValue: nil,
-      characterSize: characterSize,
+//      characterSize: characterSize,
       didChangeSlider: didChangeSlider,
     )
     self._value = intValue.toBindingDouble
