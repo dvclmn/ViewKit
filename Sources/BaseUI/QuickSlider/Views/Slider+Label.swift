@@ -11,16 +11,13 @@ import SwiftUI
 
 extension QuickSlider {
   struct SliderLabel: View {
-    @Environment(SliderHandler.self) private var store
     @Environment(\.sliderDefaultValue) private var sliderDefaultValue
 
     @Binding var value: Double
+    let configuration: SliderConfiguration
     var body: some View {
-
-      @Bindable var store = store
-      QuickLabel(store.label)
+      QuickLabel(configuration.label)
         .onDoubleTap($value.toBindingDouble, defaultValue: sliderDefaultValue)
-
     }
   }
 }

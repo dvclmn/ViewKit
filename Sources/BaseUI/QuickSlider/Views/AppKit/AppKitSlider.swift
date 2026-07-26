@@ -7,9 +7,10 @@
 
 #if os(macOS)
 import AppKit
-import SwiftUI
 import CoreTools
+import SwiftUI
 
+/// SwiftUI's bridge to the AppKit slider used for custom macOS tracks.
 struct AppKitSlider: NSViewRepresentable {
   @Environment(\.controlSize) private var controlSize
 
@@ -52,25 +53,54 @@ struct AppKitSlider: NSViewRepresentable {
     context.coordinator.step = step
     context.coordinator.onEditingChanged = onEditingChanged
 
-    slider.minValue = range.lowerBound
-    slider.maxValue = range.upperBound
-    slider.isEnabled = isEnabled
-    slider.controlSize = controlSize.nsControlSize
+    var needsDisplay = false
+
+    if slider.minValue != range.lowerBound {
+      slider.minValue = range.lowerBound
+      needsDisplay = true
+    }
+    if slider.maxValue != range.upperBound {
+      slider.maxValue = range.upperBound
+      needsDisplay = true
+    }
+    if slider.isEnabled != isEnabled {
+      slider.isEnabled = isEnabled
+      needsDisplay = true
+    }
+    if slider.controlSize != controlSize.nsControlSize {
+      slider.controlSize = controlSize.nsControlSize
+      needsDisplay = true
+    }
     slider.setAccessibilityLabel(accessibilityLabel)
 
     let snappedValue = context.coordinator.snapped(value)
     if !snappedValue.isApproximatelyEqual(to: slider.doubleValue) {
       slider.doubleValue = snappedValue
+      needsDisplay = true
     }
 
     if let cell = slider.cell as? AppKitSliderCell {
-      cell.track = track
-      cell.drawsTrack = drawsTrack
-      cell.drawsThumb = drawsThumb
-      cell.horizontalVisualOverflow = Self.pressedKnobVisualOverflow
+      if cell.track != track {
+        cell.track = track
+        needsDisplay = true
+      }
+      if cell.drawsTrack != drawsTrack {
+        cell.drawsTrack = drawsTrack
+        needsDisplay = true
+      }
+      if cell.drawsThumb != drawsThumb {
+        cell.drawsThumb = drawsThumb
+        needsDisplay = true
+      }
+      if cell.horizontalVisualOverflow != Self.pressedKnobVisualOverflow {
+        cell.horizontalVisualOverflow = Self.pressedKnobVisualOverflow
+        needsDisplay = true
+      }
     }
 
-    slider.needsDisplay = true
+    if needsDisplay {
+      slider.needsDisplay = true
+    }
   }
 }
 
@@ -79,6 +109,10 @@ extension AppKitSlider {
   /// SwiftUI Previews clip AppKit representables tightly, so the view is
   /// given a matching invisible margin in `SliderCore`.
   static let pressedKnobVisualOverflow: CGFloat = 6
+
+  /// Retains the prior custom control's generous vertical hit area while
+  /// allowing AppKit to draw and track the slider itself.
+  static let controlHeight: CGFloat = 21
 }
 
 #endif

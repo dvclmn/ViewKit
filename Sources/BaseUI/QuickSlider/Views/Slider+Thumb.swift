@@ -1,6 +1,6 @@
 //
-//  SliderCustomThumb.swift
-//  BaseComponents
+//  Slider+Thumb.swift
+//  ViewKit
 //
 //  Created by Dave Coleman on 17/5/2025.
 //
@@ -9,15 +9,14 @@ import CoreTools
 import ViewTools
 import SwiftUI
 
+/// A standalone decorative thumb for controls that draw their own track.
+///
+/// `QuickSlider` no longer uses this view: custom QuickSlider tracks use the
+/// platform AppKit thumb so they retain the native interaction and appearance.
 public struct SliderThumb<ThumbShape: InsettableShape>: View {
-  @Environment(\.controlSize) private var controlSize
-
-  /// Could probably move this diameter out from here,
-  /// have it more adaptable
   let diameter: Double
   let shape: ThumbShape
 
-  let grayShade: Double = 0.9
   public init(
     diameter: Double = 16,
     shape: ThumbShape = .circle,
@@ -27,14 +26,11 @@ public struct SliderThumb<ThumbShape: InsettableShape>: View {
   }
 
   public var body: some View {
-
     FilledShape(
       shape,
       style: Color(white: 0.2),
-//      style: Color(r: grayShade, g: grayShade, b: grayShade),
       strokeColour: strokeGradient().opacity(0.32)
     )
-
     .shadow(
       color: .black.opacity(0.5),
       radius: 0.9,
@@ -42,9 +38,6 @@ public struct SliderThumb<ThumbShape: InsettableShape>: View {
       y: 0.3
     )
     .frameFromLength(diameter, axis: [.horizontal, .vertical])
-
-    //      .allowsHitTesting(false)
-
   }
 }
 extension SliderThumb {

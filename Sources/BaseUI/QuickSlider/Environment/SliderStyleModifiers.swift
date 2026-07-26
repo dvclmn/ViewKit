@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-public struct SliderStyleModifier<S: SliderTrackStyle>: ViewModifier {
-  let style: S
-  let maxWidth: CGFloat?
+/// Supplies a maximum control width to a QuickSlider view.
+public struct SliderMaxWidthModifier: ViewModifier {
+  let width: CGFloat
+
   public func body(content: Content) -> some View {
-    content
-      .environment(\.sliderTrackStyle, AnySliderTrackStyle(style))
-      .environment(\.sliderTrackMaxWidth, maxWidth)
+    content.environment(\.sliderTrackMaxWidth, width)
   }
 }
 
+/// Supplies a shared ``SliderComponents`` selection to a QuickSlider view.
 public struct SliderComponentsModifier: ViewModifier {
   let components: SliderComponents
   public func body(content: Content) -> some View {
@@ -24,8 +24,10 @@ public struct SliderComponentsModifier: ViewModifier {
   }
 }
 
+/// Supplies a supplemental stepped-control style to a QuickSlider view.
 public struct SliderStepStyleModifier: ViewModifier {
   let style: StepStyle
+
   public func body(content: Content) -> some View {
     content.environment(\.stepStyle, style)
   }

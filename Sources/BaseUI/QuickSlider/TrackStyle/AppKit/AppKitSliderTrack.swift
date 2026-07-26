@@ -9,12 +9,23 @@
 import AppKit
 import SwiftUI
 
+/// Describes the custom track drawn by a macOS `QuickSlider`.
+///
+/// A style produces an AppKit-native drawing recipe rather than a SwiftUI
+/// view. Implement this protocol only for the macOS `trackStyle:`
+/// initialiser.
 public protocol AppKitSliderTrackStyle {
-  func makeAppKitTrack(configuration: SliderTrackConfiguration) -> AppKitSliderTrack
+  typealias Configuration = SliderTrackConfiguration
+
+  /// Produces the current AppKit drawing recipe for the slider track.
+  func makeAppKitTrack(configuration: Configuration) -> AppKitSliderTrack
 }
 
-public struct AppKitSliderTrack {
+/// The AppKit drawing recipe for a custom `QuickSlider` track.
+public struct AppKitSliderTrack: Equatable {
+  /// Ordered background layers, drawn beneath the optional stroke.
   public var layers: [Layer]
+  /// The optional outline drawn around the rounded track.
   public var stroke: ResolvedTrackColour?
 
   public init(
@@ -27,6 +38,7 @@ public struct AppKitSliderTrack {
 }
 
 extension AppKitSliderTrack {
+  /// Creates a single linear-gradient track.
   public static func linearGradient(
     _ colours: [ResolvedTrackColour],
     stroke: ResolvedTrackColour? = .init(white: 0.0, alpha: 0.18),
@@ -37,6 +49,7 @@ extension AppKitSliderTrack {
     )
   }
 
+  /// Creates a checkerboard-backed alpha gradient.
   public static func opacityGradient(
     _ colour: ResolvedTrackColour,
     stroke: ResolvedTrackColour? = .init(white: 0.0, alpha: 0.18),

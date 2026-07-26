@@ -15,6 +15,13 @@ caller-defined section order.
 
 ## Topics
 
+### Quick sliders
+
+- <doc:QuickSlider>
+- ``QuickSlider``
+- ``SliderGroup``
+- ``AppKitSliderTrackStyle``
+
 ### Card grids
 
 - ``CardGrid``

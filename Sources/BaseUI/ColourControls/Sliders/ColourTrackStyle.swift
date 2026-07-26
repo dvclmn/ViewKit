@@ -5,64 +5,20 @@
 //  Created by Dave Coleman on 4/3/2026.
 //
 
+#if os(macOS)
 import ColourTools
-import CoreTools
-import GraphicsKit
-// import LayoutKit
 import SwiftUI
-import ViewTools
 
-public struct RGBTrackStyle: SliderTrackStyle {
-
+/// An AppKit track that edits one RGB component while preserving the others.
+public struct RGBTrackStyle: AppKitSliderTrackStyle {
   let colour: RGBColour
   let component: RGBComponent
 
-  public func makeBody(configuration: Configuration) -> some View {
-    Rectangle()
-      .fill(.opacityBackground)
-      .fill(component.sliderTrackGradient(colour: colour))
+  public init(colour: RGBColour, component: RGBComponent) {
+    self.colour = colour
+    self.component = component
   }
-}
 
-public struct HSVTrackStyle: SliderTrackStyle {
-
-  let colour: HSVColour
-  let component: HSVComponent
-
-  public func makeBody(configuration: Configuration) -> some View {
-    Rectangle()
-      .fill(.opacityBackground)
-      .fill(gradient)
-  }
-}
-
-extension HSVTrackStyle {
-  private var gradient: LinearGradient {
-    let gradient =
-      switch component {
-        case .hue: LinearGradient.rainbow()
-        case .saturation:
-          LinearGradient(
-            colors: [.gray, Color(hue: colour.hue, saturation: 1.0, brightness: 1.0)],
-            startPoint: .leading,
-            endPoint: .trailing,
-          )
-        case .brightness:
-          LinearGradient(
-            colors: [.black, colour.hueSatOnly.toColour],
-            startPoint: .leading,
-            endPoint: .trailing,
-          )
-        case .alpha:
-          preconditionFailure("Don't pass alpha to create a slider track gradient")
-      }
-    return gradient
-    //    return AnyShapeStyle(gradient)
-  }
-}
-
-#if os(macOS)
-extension RGBTrackStyle: AppKitSliderTrackStyle {
   public func makeAppKitTrack(configuration: Configuration) -> AppKitSliderTrack {
     switch component {
       case .red:
@@ -91,7 +47,16 @@ extension RGBTrackStyle: AppKitSliderTrackStyle {
   }
 }
 
-extension HSVTrackStyle: AppKitSliderTrackStyle {
+/// An AppKit track that edits one HSV component while preserving the others.
+public struct HSVTrackStyle: AppKitSliderTrackStyle {
+  let colour: HSVColour
+  let component: HSVComponent
+
+  public init(colour: HSVColour, component: HSVComponent) {
+    self.colour = colour
+    self.component = component
+  }
+
   public func makeAppKitTrack(configuration: Configuration) -> AppKitSliderTrack {
     switch component {
       case .hue:

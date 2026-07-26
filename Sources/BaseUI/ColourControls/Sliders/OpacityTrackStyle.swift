@@ -5,37 +5,17 @@
 //  Created by Dave Coleman on 4/3/2026.
 //
 
-import CoreTools
-import ViewTools
-// import LayoutKit
-import SwiftUI
+#if os(macOS)
 import ColourTools
 
-public struct OpacityTrackStyle: SliderTrackStyle {
-
+/// An AppKit checkerboard-backed opacity track for a fixed base colour.
+public struct OpacityTrackStyle: AppKitSliderTrackStyle {
   let colour: any ColourModel & SwiftUIColourConvertible
-  //  let component: RGBComponent
-  
+
   public init(colour: any ColourModel & SwiftUIColourConvertible) {
     self.colour = colour
   }
 
-  public func makeBody(configuration: Configuration) -> some View {
-    Rectangle()
-      .fill(
-        LinearGradient(
-          colors: [.clear, colour.toColour],
-          startPoint: .leading,
-          endPoint: .trailing
-        )
-      )
-    //      .fill(.opacityBackground)
-    //      .fill(component.sliderTrackGradient(colour: colour))
-  }
-}
-
-#if os(macOS)
-extension OpacityTrackStyle: AppKitSliderTrackStyle {
   public func makeAppKitTrack(configuration: Configuration) -> AppKitSliderTrack {
     AppKitSliderTrack.opacityGradient(ResolvedTrackColour(colour.toColour))
   }

@@ -9,10 +9,13 @@
 import Foundation
 
 extension AppKitSliderTrack {
-  public struct GradientStop {
+  /// A colour location within a linear-gradient track layer.
+  public struct GradientStop: Equatable {
+    /// The resolved sRGB colour at this location.
     public var colour: ResolvedTrackColour
+    /// The normalised position within the gradient.
     public var location: CGFloat
-    
+
     public init(
       colour: ResolvedTrackColour,
       location: CGFloat,
@@ -30,7 +33,7 @@ extension AppKitSliderTrack.GradientStop {
     guard colours.count > 1 else {
       return colours.map { Self(colour: $0, location: 0.0) }
     }
-    
+
     let divisor = CGFloat(colours.count - 1)
     return colours.enumerated().map { index, colour in
       Self(colour: colour, location: CGFloat(index) / divisor)

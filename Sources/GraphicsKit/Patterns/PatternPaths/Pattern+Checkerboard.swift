@@ -11,22 +11,6 @@ import CoreTools
 import SwiftUI
 import ViewTools
 
-/// overlay allows view to use Checkboard underneath
-//public struct CheckerboardTrackStyle<Overlay: View>: SliderTrackStyle {
-//
-//  let overlay: Overlay
-//
-//  init(
-//    @ViewBuilder overlay: @escaping () -> Overlay
-//  ) {
-//    self.overlay = overlay()
-//  }
-//
-//  public func makeBody(configuration: Configuration) -> some View {
-//    overlay
-//  }
-//}
-
 extension ShapeStyle where Self == CheckerboardPattern {
   public static func checkerboard(
     primary: RGBColour = .white,

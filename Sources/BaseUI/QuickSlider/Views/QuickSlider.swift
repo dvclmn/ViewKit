@@ -9,83 +9,60 @@ import CoreTools
 import SwiftUI
 import ViewTools
 
+/// Receives the beginning and end of a direct slider-editing interaction.
 public typealias SliderOutput = (SliderPhase) -> Void
 
-public struct QuickSlider<TrackBody: View>: View, ValueFormattable, SliderStylable {
+/// A labelled numeric control that uses SwiftUI's native slider by default.
+///
+/// On macOS, the `trackStyle:` initialiser routes to an AppKit-backed slider
+/// when a custom track is required. See <doc:QuickSlider> for the complete
+/// routing model and platform behaviour.
+public struct QuickSlider: View, ValueFormattable, SliderStylable {
   @Environment(\.isWithinSliderGroup) private var isWithinSliderGroup
   @Environment(\.sliderComponents) private var sliderComponents
   @Environment(\.helpText) private var helpText
 
-  public typealias Configuration = SliderTrackConfiguration
-  typealias TrackBackground = (Configuration) -> TrackBody?
+  @State private var handler = SliderHandler()
+
+  @Binding private var value: Double
+  private let configuration: SliderConfiguration
   #if os(macOS)
-  typealias AppKitTrackBackground = (Configuration) -> AppKitSliderTrack?
+  private let appKitTrack: ((SliderTrackConfiguration) -> AppKitSliderTrack)?
   #endif
-
-  @State private var store: SliderHandler
-
-  @Binding var value: Double
-  private let track: TrackBackground
-  #if os(macOS)
-  private let appKitTrack: AppKitTrackBackground?
-  #endif
-
-  public init(
-    _ title: String,
-    value: Binding<Double>,
-    range: ClosedRange<Double>,
-    step: Double? = nil,
-    characterSize: CGSize? = nil,
-    @ViewBuilder track: @escaping (Configuration) -> TrackBody?,
-    didChangeSlider: @escaping SliderOutput = { _ in },
-  ) {
-
-    self._store = State(
-      initialValue: SliderHandler(
-        label: LabelDescriptor(title),
-        range: range.toDoubleRange,
-        step: step.toDoubleIfPresent,
-        neutralValue: nil,
-        characterSize: characterSize,
-        didChangeSlider: didChangeSlider,
-      )
-    )
-    self._value = value
-    self.track = track
-    #if os(macOS)
-    self.appKitTrack = nil
-    #endif
-  }
 
   public var body: some View {
-
     SliderContentView()
-      .environment(store)
   }
 }
-extension QuickSlider {
 
+extension QuickSlider {
   @ViewBuilder
   private func SliderContentView() -> some View {
     if isWithinSliderGroup {
-      /// This is super useful, allowing nicely-aligned labels and tracks
-      /// for neighbouring Sliders. As long as they're within a SliderGroup
       GridRow {
-        /// Handles slider Label, Track, and Units display
         #if os(macOS)
-        SliderComponents(value: $value, track: track, appKitTrack: appKitTrack)
+        SliderComponents(
+          value: $value,
+          configuration: configuration,
+          handler: handler,
+          appKitTrack: appKitTrack,
+        )
         #else
-        SliderComponents(value: $value, track: track)
+        SliderComponents(value: $value, configuration: configuration, handler: handler)
         #endif
       }
       HelpText()
-
     } else {
       HStack {
         #if os(macOS)
-        SliderComponents(value: $value, track: track, appKitTrack: appKitTrack)
+        SliderComponents(
+          value: $value,
+          configuration: configuration,
+          handler: handler,
+          appKitTrack: appKitTrack,
+        )
         #else
-        SliderComponents(value: $value, track: track)
+        SliderComponents(value: $value, configuration: configuration, handler: handler)
         #endif
         HelpText()
       }
@@ -94,22 +71,19 @@ extension QuickSlider {
 
   @ViewBuilder
   private func HelpText() -> some View {
-    if !helpText.isEmpty {
+    if sliderComponents.contains(.helpText), !helpText.isEmpty {
       Text(helpText)
         .font(.caption2)
         .foregroundStyle(.secondary)
     }
-
   }
 }
 
 // MARK: - Initialisers
 
 extension QuickSlider {
-
-  // Initialiser for a standard slider
-  // TODO: Considering pivoting to SwiftUI-style
-  // Label closure/ViewBuilder instead of LabelDescriptor?
+  /// Creates a standard native slider.
+  ///
   /// On macOS and iOS 26 or later, `neutralValue` is passed to SwiftUI's
   /// native ``SwiftUI/Slider`` to identify a semantic zero point.
   public init(
@@ -120,26 +94,28 @@ extension QuickSlider {
     neutralValue: Double? = nil,
     characterSize: CGSize? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
-  ) where TrackBody == EmptyView {
-    self._store = State(
-      initialValue: SliderHandler(
-        label: LabelDescriptor(title),
-        range: range.toDoubleRange,
-        step: step.toDoubleIfPresent,
-        neutralValue: neutralValue,
-        characterSize: characterSize,
-        didChangeSlider: didChangeSlider,
-      )
+  ) {
+    self.configuration = SliderConfiguration(
+      label: LabelDescriptor(title),
+      range: range,
+      step: step,
+      neutralValue: neutralValue,
+      characterSize: characterSize,
+      didChangeSlider: didChangeSlider,
     )
     self._value = value
-    self.track = { _ in nil }
     #if os(macOS)
     self.appKitTrack = nil
     #endif
   }
 
-  // Initialiser for a custom track style
-  public init<S: SliderTrackStyle>(
+  #if os(macOS)
+  /// Creates a macOS slider whose track is rendered by AppKit.
+  ///
+  /// This is deliberately unavailable on iOS until BaseUI has a matching
+  /// UIKit-backed route; it never falls back to the retired SwiftUI custom
+  /// slider.
+  public init<S: AppKitSliderTrackStyle>(
     _ title: String,
     value: Binding<Double>,
     range: ClosedRange<Double>,
@@ -147,34 +123,27 @@ extension QuickSlider {
     characterSize: CGSize? = nil,
     trackStyle: S,
     didChangeSlider: @escaping SliderOutput = { _ in },
-  ) where S.Body == TrackBody {
-    self._store = State(
-      initialValue: SliderHandler(
-        label: LabelDescriptor(title),
-        range: range.toDoubleRange,
-        step: step.toDoubleIfPresent,
-        neutralValue: nil,
-        characterSize: characterSize,
-        didChangeSlider: didChangeSlider,
-      )
+  ) {
+    self.configuration = SliderConfiguration(
+      label: LabelDescriptor(title),
+      range: range,
+      step: step,
+      neutralValue: nil,
+      characterSize: characterSize,
+      didChangeSlider: didChangeSlider,
     )
     self._value = value
-    self.track = { configuration in
-      trackStyle.makeBody(configuration: configuration)
+    self.appKitTrack = { configuration in
+      trackStyle.makeAppKitTrack(configuration: configuration)
     }
-
-    #if os(macOS)
-    if let appKitStyle = trackStyle as? any AppKitSliderTrackStyle {
-      self.appKitTrack = { configuration in
-        appKitStyle.makeAppKitTrack(configuration: configuration)
-      }
-    } else {
-      self.appKitTrack = nil
-    }
-    #endif
   }
+  #endif
 
-  /// For Binding to Int more conveniently
+  /// Creates a discrete slider for an integer binding.
+  ///
+  /// An omitted step means one integer at a time. The binding rounds its
+  /// double representation on write-back, preventing floating-point noise
+  /// from being truncated towards zero.
   public init(
     _ title: String,
     intValue: Binding<Int>,
@@ -182,31 +151,46 @@ extension QuickSlider {
     step: Int? = nil,
     characterSize: CGSize? = nil,
     didChangeSlider: @escaping SliderOutput = { _ in },
-  ) where TrackBody == EmptyView {
-
-    self._store = State(
-      initialValue: SliderHandler(
-        label: LabelDescriptor(title),
-        range: range.toDoubleRange,
-        step: step.toDoubleIfPresent,
-        neutralValue: nil,
-        characterSize: characterSize,
-        didChangeSlider: didChangeSlider,
-      )
+  ) {
+    self.configuration = SliderConfiguration(
+      label: LabelDescriptor(title),
+      range: range.toDoubleRange,
+      step: Double(step ?? 1),
+      neutralValue: nil,
+      characterSize: characterSize,
+      didChangeSlider: didChangeSlider,
     )
-    self._value = intValue.toBindingDouble
-    self.track = { _ in nil }
-#if os(macOS)
+    self._value = Binding(
+      get: { Double(intValue.wrappedValue) },
+      set: { intValue.wrappedValue = Int($0.rounded()) },
+    )
+    #if os(macOS)
     self.appKitTrack = nil
-#endif
-//    self.init(
-//      title,
-//      value: intValue.toBindingDouble,
-//      range: range.toDoubleRange,
-//      step: step?.toDouble,
-//      characterSize: characterSize,
-//      track: { _ in },
-//      didChangeSlider: didChangeSlider,
-//    )
+    #endif
+  }
+}
+
+private struct SliderConfiguration {
+  let label: LabelDescriptor
+  let range: ClosedRange<Double>
+  let step: Double?
+  let neutralValue: Double?
+  let characterSize: CGSize?
+  let didChangeSlider: SliderOutput
+
+  var characterSizeWithFallback: CGSize {
+    characterSize ?? CGSize(width: 20, height: 30)
+  }
+
+  func trackConfiguration(
+    value: Double,
+    colourScheme: ColorScheme,
+  ) -> SliderTrackConfiguration {
+    SliderTrackConfiguration(
+      value: value,
+      range: range,
+      colorScheme: colourScheme,
+      tint: .accentColor,
+    )
   }
 }

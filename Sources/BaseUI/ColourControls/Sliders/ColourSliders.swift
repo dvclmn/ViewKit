@@ -13,7 +13,6 @@ import ColourTools
 
 public struct ColourSliders: View {
   @Environment(\.activeColourModel) private var activeColourModel
-  @State private var isHovering: Bool = false
 
   @Binding var colour: RGBColour
 
@@ -37,17 +36,15 @@ public struct ColourSliders: View {
 }
 
 extension ColourSliders {
-  private var hsvColour: HSVColour { hsvBinding().wrappedValue }
-
   @ViewBuilder
   private func RGBView() -> some View {
+    #if os(macOS)
     QuickSlider(
       "R",
       value: $colour.red,
       range: .unitRange,
       trackStyle: RGBTrackStyle(colour: colour, component: .red)
     )
-    //    .sliderStyle(.custom(.rgb(colour, .red)))
 
     QuickSlider(
       "G",
@@ -55,7 +52,6 @@ extension ColourSliders {
       range: .unitRange,
       trackStyle: RGBTrackStyle(colour: colour, component: .green)
     )
-    //    .sliderStyle(.custom(.rgb(colour, .green)))
 
     QuickSlider(
       "B",
@@ -63,7 +59,6 @@ extension ColourSliders {
       range: .unitRange,
       trackStyle: RGBTrackStyle(colour: colour, component: .blue)
     )
-    //    .sliderStyle(.custom(.rgb(colour, .blue)))
 
     QuickSlider(
       "A",
@@ -71,10 +66,13 @@ extension ColourSliders {
       range: .unitRange,
       trackStyle: OpacityTrackStyle(colour: colour.toOpaque)
     )
-    //    .sliderStyle(.custom(.opacityCheckboard(colour.toOpaque)))
-
+    #else
+    QuickSlider("R", value: $colour.red, range: .unitRange)
+    QuickSlider("G", value: $colour.green, range: .unitRange)
+    QuickSlider("B", value: $colour.blue, range: .unitRange)
+    QuickSlider("A", value: $colour.alpha, range: .unitRange)
+    #endif
   }
-
 
   private func hsvBinding() -> Binding<HSVColour> {
     Binding {

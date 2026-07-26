@@ -9,12 +9,14 @@ import CoreTools
 import ViewTools
 import SwiftUI
 
+/// Aligns related ``QuickSlider`` instances in a shared `Grid`.
 public struct SliderGroup<Sliders: View>: View, ValueFormattable {
   @Environment(\.layoutSpacing) private var layoutSpacing
   let title: String?
   let verticalSpacing: CGFloat?
   let content: Sliders
 
+  /// Creates a group with an optional section-style title.
   public init(
     _ title: String? = nil,
     spacing: CGFloat? = nil,

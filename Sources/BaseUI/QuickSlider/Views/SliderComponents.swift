@@ -1,79 +1,64 @@
 //
-//  Slider+Unified.swift
+//  SliderComponents.swift
 //  BaseComponents
 //
 //  Created by Dave Coleman on 11/8/2025.
 //
 
 import CoreTools
-import ViewTools
-import ViewKitCore
 import SwiftUI
+import ViewKitCore
 
 extension QuickSlider {
   struct SliderComponents: View {
-    @Environment(SliderHandler.self) private var store
     @Environment(\.sliderComponents) private var sliderComponents
     @Environment(\.sliderTrackMaxWidth) private var sliderTrackMaxWidth
     @Environment(\.formatValue) private var formatValue
     @Environment(\.sliderDefaultValue) private var sliderDefaultValue
-    @Environment(\.isDebugMode) private var isDebugMode
-
-    @State private var isHovering: Bool = false
 
     @Binding var value: Double
-    let track: TrackBackground
+    let configuration: SliderConfiguration
+    let handler: SliderHandler
     #if os(macOS)
-    let appKitTrack: AppKitTrackBackground?
+    let appKitTrack: ((SliderTrackConfiguration) -> AppKitSliderTrack)?
     #endif
 
     var body: some View {
-      @Bindable var store = store
-
-      // MARK: - Label
       if sliderComponents.contains(.label) {
-        SliderLabel(value: $value)
+        SliderLabel(value: $value, configuration: configuration)
       }
 
-      // MARK: - Main Track
       #if os(macOS)
-      SliderCore(value: $value, track: track, appKitTrack: appKitTrack)
-        .frame(width: sliderTrackMaxWidth)
-        .frame(maxWidth: .infinity, alignment: .trailing)
+      SliderCore(
+        value: $value,
+        configuration: configuration,
+        handler: handler,
+        appKitTrack: appKitTrack,
+      )
+      .frame(width: sliderTrackMaxWidth)
+      .frame(maxWidth: .infinity, alignment: .trailing)
       #else
-      SliderCore(value: $value, track: track)
+      SliderCore(value: $value, configuration: configuration, handler: handler)
         .frame(width: sliderTrackMaxWidth)
         .frame(maxWidth: .infinity, alignment: .trailing)
       #endif
 
-      // MARK: - Units
       if sliderComponents.contains(.units) {
-
         TextColumns(
-          characterSize: store.characterSizeWithFallback,
+          characterSize: configuration.characterSizeWithFallback,
           alignment: .trailing,
         ) {
-          Text(formatValue.format(value.toDouble, store.range))
+          Text(formatValue.format(value.toDouble, configuration.range))
         }
         .textSelection(.disabled)
         .onDoubleTap($value, defaultValue: sliderDefaultValue)
         .contextMenu { ContextMenuItems() }
-
       }
     }
   }
 }
 
 extension QuickSlider.SliderComponents {
-
-  private func handleHaptics(_ old: Double, _ new: Double) -> Bool {
-    guard let defaultVal = sliderDefaultValue else {
-      return HapticPreset.boundary(store.range.toDoubleRange).shouldFire(old, new)
-    }
-    return HapticPreset.boundaryAndDefault(store.range.toDoubleRange, defaultValue: defaultVal).shouldFire(
-      old, new, )
-  }
-
   @ViewBuilder
   private func ContextMenuItems() -> some View {
     Button {
@@ -91,5 +76,4 @@ extension QuickSlider.SliderComponents {
       }
     }
   }
-
 }

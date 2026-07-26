@@ -7,16 +7,22 @@
 
 import SwiftUI
 
+/// Selects the visible presentation components of a ``QuickSlider``.
 public struct SliderComponents: OptionSet, Sendable {
   public init(rawValue: Int) {
     self.rawValue = rawValue
   }
   public let rawValue: Int
 
+  /// The leading textual label.
   public static let label = Self(rawValue: 1 << 0)
+  /// The optional help text displayed beside or below the slider.
   public static let helpText = Self(rawValue: 1 << 1)
+  /// The custom AppKit track, when the slider uses `trackStyle:`.
   public static let track = Self(rawValue: 1 << 2)
+  /// The native AppKit thumb, when the slider uses `trackStyle:`.
   public static let thumb = Self(rawValue: 1 << 3)
+  /// The trailing formatted value.
   public static let units = Self(rawValue: 1 << 4)
 
   /// Common presets
@@ -47,8 +53,11 @@ extension SliderComponents {
   }
 }
 
-public enum SliderPhase {
+/// The direct editing state reported by a ``QuickSlider``.
+public enum SliderPhase: Equatable {
+  /// A pointer or keyboard editing interaction began.
   case dragging
+  /// The direct editing interaction ended.
   case idle
 
   public init(fromOnEditingChanged editingDidChange: Bool) {

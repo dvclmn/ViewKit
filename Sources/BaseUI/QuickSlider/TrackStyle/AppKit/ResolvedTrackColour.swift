@@ -9,10 +9,15 @@
 import AppKit
 import SwiftUI
 
+/// An sRGB colour resolved before AppKit draws a custom slider track.
 public struct ResolvedTrackColour: Equatable, Sendable {
+  /// The red sRGB component in `0...1`.
   public var red: Double
+  /// The green sRGB component in `0...1`.
   public var green: Double
+  /// The blue sRGB component in `0...1`.
   public var blue: Double
+  /// The opacity component in `0...1`.
   public var alpha: Double
 
   public init(

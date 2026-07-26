@@ -10,18 +10,26 @@ import Foundation
 
 // MARK: - Layer
 extension AppKitSliderTrack {
-  public enum Layer {
+  /// A drawing layer in an ``AppKitSliderTrack``.
+  public enum Layer: Equatable {
+    /// A solid colour fill.
     case colour(ResolvedTrackColour)
+    /// A left-to-right gradient with explicit stops.
     case linearGradient([GradientStop])
+    /// A checkerboard, commonly used beneath an alpha gradient.
     case checkerboard(Checkerboard)
   }
 }
 
 // MARK: - Checkerboard
 extension AppKitSliderTrack {
-  public struct Checkerboard {
+  /// Parameters for a checkerboard background layer.
+  public struct Checkerboard: Equatable {
+    /// The colour used by alternating squares.
     public var primary: ResolvedTrackColour
+    /// The colour used by the remaining squares.
     public var secondary: ResolvedTrackColour
+    /// The side length of each square in points.
     public var squareLength: CGFloat
 
     public init(

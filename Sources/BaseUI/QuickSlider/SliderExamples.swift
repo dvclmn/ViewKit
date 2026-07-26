@@ -25,10 +25,12 @@ public struct SliderExamples: View {
     ScrollView {
       VStack(alignment: .leading, spacing: 18) {
         NativeSliders()
+        #if os(macOS)
         Divider()
         AppKitTrackSliders()
         Divider()
         ComponentSliders()
+        #endif
         Divider()
         ColourSlidersView()
       }
@@ -64,6 +66,7 @@ extension SliderExamples {
     }
   }
 
+  #if os(macOS)
   @ViewBuilder
   private func AppKitTrackSliders() -> some View {
     SliderGroup("AppKit tracks") {
@@ -129,6 +132,7 @@ extension SliderExamples {
       .sliderComponents(.noUnits)
     }
   }
+  #endif
 
   @ViewBuilder
   private func ColourSlidersView() -> some View {
@@ -157,66 +161,24 @@ extension SliderExamples {
   }
 }
 
-private struct ExampleGradientTrackStyle: SliderTrackStyle {
+#if os(macOS)
+private struct ExampleGradientTrackStyle: AppKitSliderTrackStyle {
   var colours: [Color]
 
-  func makeBody(configuration: Configuration) -> some View {
-    Rectangle()
-      .fill(
-        LinearGradient(
-          colors: colours,
-          startPoint: .leading,
-          endPoint: .trailing,
-        )
-      )
+  func makeAppKitTrack(configuration: Configuration) -> AppKitSliderTrack {
+    AppKitSliderTrack.linearGradient(colours.map(ResolvedTrackColour.init))
   }
 }
 
-private struct ExampleOpacityTrackStyle: SliderTrackStyle {
+private struct ExampleOpacityTrackStyle: AppKitSliderTrackStyle {
   var colour: Color
 
-  func makeBody(configuration: Configuration) -> some View {
-    Rectangle()
-      .fill(
-        LinearGradient(
-          colors: [.clear, colour],
-          startPoint: .leading,
-          endPoint: .trailing,
-        )
-      )
-  }
-}
-
-private struct ExampleLayeredTrackStyle: SliderTrackStyle {
-  func makeBody(configuration: Configuration) -> some View {
-    Rectangle()
-      .fill(.black.opacity(0.08))
-      .overlay {
-        LinearGradient(
-          colors: [.clear, configuration.tint.opacity(0.85)],
-          startPoint: .leading,
-          endPoint: .trailing,
-        )
-      }
-  }
-}
-
-#if os(macOS)
-extension ExampleGradientTrackStyle: AppKitSliderTrackStyle {
-  func makeAppKitTrack(configuration: Configuration) -> AppKitSliderTrack {
-    AppKitSliderTrack.linearGradient(
-      colours.map(ResolvedTrackColour.init)
-    )
-  }
-}
-
-extension ExampleOpacityTrackStyle: AppKitSliderTrackStyle {
   func makeAppKitTrack(configuration: Configuration) -> AppKitSliderTrack {
     AppKitSliderTrack.opacityGradient(ResolvedTrackColour(colour))
   }
 }
 
-extension ExampleLayeredTrackStyle: AppKitSliderTrackStyle {
+private struct ExampleLayeredTrackStyle: AppKitSliderTrackStyle {
   func makeAppKitTrack(configuration: Configuration) -> AppKitSliderTrack {
     AppKitSliderTrack(
       layers: [
@@ -243,6 +205,5 @@ extension ExampleLayeredTrackStyle: AppKitSliderTrackStyle {
   SliderExamples()
 }
 #endif
-
 
 

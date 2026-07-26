@@ -13,7 +13,7 @@ struct HSVSliders: View {
 
   @Binding var hsvColour: HSVColour
   var body: some View {
-
+    #if os(macOS)
     QuickSlider(
       "H",
       value: $hsvColour.hue,
@@ -21,15 +21,12 @@ struct HSVSliders: View {
       trackStyle: HSVTrackStyle(colour: hsvColour, component: .hue),
     )
 
-    //    .sliderStyle(.custom(.hsv(hsvColour.wrappedValue, .hue)))
-
     QuickSlider(
       "S",
       value: $hsvColour.saturation,
       range: .unitRange,
       trackStyle: HSVTrackStyle(colour: hsvColour, component: .saturation),
     )
-    //    .sliderStyle(.custom(.hsv(hsvColour.wrappedValue, .saturation)))
 
     QuickSlider(
       "V",
@@ -37,16 +34,18 @@ struct HSVSliders: View {
       range: .unitRange,
       trackStyle: HSVTrackStyle(colour: hsvColour, component: .brightness),
     )
-    //    .sliderStyle(.custom(.hsv(hsvColour.wrappedValue, .brightness)))
 
     QuickSlider(
       "A",
       value: $hsvColour.alpha,
-//      value: $alpha,
       range: .unitRange,
       trackStyle: OpacityTrackStyle(colour: hsvColour.toOpaque),
     )
-    //    .sliderStyle(.custom(.opacityCheckboard(colour.toOpaque)))
-
+    #else
+    QuickSlider("H", value: $hsvColour.hue, range: .unitRange)
+    QuickSlider("S", value: $hsvColour.saturation, range: .unitRange)
+    QuickSlider("V", value: $hsvColour.brightness, range: .unitRange)
+    QuickSlider("A", value: $hsvColour.alpha, range: .unitRange)
+    #endif
   }
 }

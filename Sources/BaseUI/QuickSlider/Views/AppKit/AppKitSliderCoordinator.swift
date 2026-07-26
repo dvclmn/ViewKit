@@ -10,6 +10,7 @@ import SwiftUI
 
 extension AppKitSlider {
   @MainActor
+  /// Maintains the two-way value bridge and editing lifecycle for AppKit.
   final class Coordinator: NSObject {
     var value: Binding<Double>
     var range: ClosedRange<Double>
@@ -29,17 +30,15 @@ extension AppKitSlider {
       self.step = step
       self.onEditingChanged = onEditingChanged
     }
-    
+
     @objc func valueChanged(_ slider: NSSlider) {
       let newValue = snapped(slider.doubleValue)
 
       if !newValue.isApproximatelyEqual(to: slider.doubleValue) {
-//      if !appKitSliderValuesAreEqual(newValue, slider.doubleValue) {
         slider.doubleValue = newValue
       }
 
       if !newValue.isApproximatelyEqual(to: value.wrappedValue) {
-//      if !appKitSliderValuesAreEqual(newValue, value.wrappedValue) {
         value.wrappedValue = newValue
       }
     }
