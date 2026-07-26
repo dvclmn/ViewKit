@@ -7,6 +7,7 @@
 
 import EnumMacroSupport
 import SwiftUI
+import ViewTools
 
 /// A picker that switches an associated-value enum by case identity.
 ///
@@ -58,7 +59,7 @@ where Root: MetaEnumRepresentable, Label: View {
   }
 }
 
-extension CaseMetaPicker where Label == Text {
+extension CaseMetaPicker where Root.Meta: LabeledItem, Label == QuickLabel {
   /// Creates a case-only picker using each generated meta case's name.
   public init(
     _ title: String,
@@ -69,7 +70,8 @@ extension CaseMetaPicker where Label == Text {
       title,
       selection: selection,
       handler: handler,
-      label: { Text($0.name) },
+      label: { QuickLabel($0.label) },
+//      label: { Text($0.name) },
     )
   }
 }

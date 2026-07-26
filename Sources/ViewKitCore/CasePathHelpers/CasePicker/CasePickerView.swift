@@ -19,10 +19,9 @@ import SwiftUI
 ///
 /// The convenience initialiser labels cases with their generated names. Use the
 /// label-enabled initialiser when the picker needs richer case labels.
-public struct CasePicker<Root, Meta, Label, Content>: View
+public struct CasePicker<Root, Label, Content>: View
 where
   Root: MetaEnumRepresentable & CasePathable,
-  Meta == Root.Meta,
   Label: View,
   Content: View
 {
