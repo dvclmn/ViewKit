@@ -155,7 +155,7 @@ extension QuickSlider {
     self.configuration = SliderConfiguration(
       label: LabelDescriptor(title),
       range: range.toDoubleRange,
-      step: Double(step ?? 1),
+      step: step.map(Double.init),
       neutralValue: nil,
       characterSize: characterSize,
       didChangeSlider: didChangeSlider,
@@ -170,7 +170,7 @@ extension QuickSlider {
   }
 }
 
-private struct SliderConfiguration {
+struct SliderConfiguration {
   let label: LabelDescriptor
   let range: ClosedRange<Double>
   let step: Double?

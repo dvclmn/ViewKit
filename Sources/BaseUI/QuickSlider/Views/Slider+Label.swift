@@ -6,8 +6,8 @@
 //
 
 import CoreTools
-import ViewTools
 import SwiftUI
+import ViewTools
 
 extension QuickSlider {
   struct SliderLabel: View {

@@ -8,6 +8,7 @@
 import CoreTools
 import SwiftUI
 import ViewKitCore
+import ViewTools
 
 extension QuickSlider {
   struct SliderComponents: View {

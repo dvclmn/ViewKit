@@ -17,8 +17,7 @@ The initialiser, rather than a late style modifier, selects the control route.
 | `QuickSlider(_:intValue:range:step:)` | SwiftUI `Slider` | SwiftUI `Slider` |
 | `QuickSlider(_:value:range:trackStyle:)` | `AppKitSlider` through `NSViewRepresentable` | Unavailable |
 
-The standard `Double` initialiser is the normal choice. On macOS and iOS 26 or
-later, its `neutralValue` is forwarded to SwiftUI's native slider API. The
+The standard `Double` initialiser is the normal choice. On macOS and iOS 26 or later, its `neutralValue` is forwarded to SwiftUI's native slider API. The
 `Int` initialiser always uses a discrete step: an omitted `step` means one
 integer, and write-back rounds the temporary `Double` representation before
 updating the integer binding.
