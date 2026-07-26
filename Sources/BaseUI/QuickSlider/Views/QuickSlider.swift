@@ -160,37 +160,9 @@ extension QuickSlider {
       characterSize: characterSize,
       didChangeSlider: didChangeSlider,
     )
-    self._value = Binding(
-      get: { Double(intValue.wrappedValue) },
-      set: { intValue.wrappedValue = Int($0.rounded()) },
-    )
+    self._value = intValue.toBindingDouble
     #if os(macOS)
     self.appKitTrack = nil
     #endif
-  }
-}
-
-struct SliderConfiguration {
-  let label: LabelDescriptor
-  let range: ClosedRange<Double>
-  let step: Double?
-  let neutralValue: Double?
-  let characterSize: CGSize?
-  let didChangeSlider: SliderOutput
-
-  var characterSizeWithFallback: CGSize {
-    characterSize ?? CGSize(width: 20, height: 30)
-  }
-
-  func trackConfiguration(
-    value: Double,
-    colourScheme: ColorScheme,
-  ) -> SliderTrackConfiguration {
-    SliderTrackConfiguration(
-      value: value,
-      range: range,
-      colorScheme: colourScheme,
-      tint: .accentColor,
-    )
   }
 }

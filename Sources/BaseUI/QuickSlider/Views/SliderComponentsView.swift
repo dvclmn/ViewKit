@@ -45,11 +45,17 @@ extension QuickSlider {
       #endif
 
       if sliderComponents.contains(.units) {
-        TextColumns(
-          characterSize: configuration.characterSizeWithFallback,
-          alignment: .trailing,
-        ) {
-          Text(formatValue.format(value.toDouble, configuration.range))
+        Group {
+          if let characterSize = configuration.characterSize {
+            TextColumns(
+              characterSize: characterSize,
+              alignment: .trailing,
+            ) {
+              SliderValueText()
+            }
+          } else {
+            SliderValueText()
+          }
         }
         .textSelection(.disabled)
         .onDoubleTap($value, defaultValue: sliderDefaultValue)
@@ -60,6 +66,10 @@ extension QuickSlider {
 }
 
 extension QuickSlider.SliderComponents {
+  @ViewBuilder
+  private func SliderValueText() -> some View {
+    Text(formatValue.format(value.toDouble, configuration.range))
+  }
   @ViewBuilder
   private func ContextMenuItems() -> some View {
     Button {

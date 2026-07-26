@@ -13,8 +13,6 @@ public struct TextColumns<Content: View>: View {
   @Environment(\.maxCharacterColumns) private var maxCharacterColumns
   @Environment(\.isDebugMode) private var isDebugMode
 
-  //  @State private var characterSize: CGSize?
-
   let columnCount: Int?
   let characterSize: CGSize
   let alignment: Alignment
@@ -40,6 +38,7 @@ public struct TextColumns<Content: View>: View {
     Text(characters)
       .monospaced()
       .hidden()
+      .debugFrame(.purple)
 
       /// Displays content within character-count-based confines
       .overlay(alignment: alignment) {
