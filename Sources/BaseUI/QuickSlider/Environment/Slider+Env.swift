@@ -23,6 +23,7 @@ extension EnvironmentValues {
   @Entry public var stepStyle: StepStyle?
   /// An optional maximum width for the central slider control.
   @Entry public var sliderTrackMaxWidth: CGFloat?
+  
   @Entry var isWithinSliderGroup: Bool = false
 
 }

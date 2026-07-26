@@ -11,6 +11,7 @@ import SwiftUI
 /// now takes character size as parameter
 public struct TextColumns<Content: View>: View {
   @Environment(\.maxCharacterColumns) private var maxCharacterColumns
+  @Environment(\.textColumnCount) private var textColumnCount
   @Environment(\.isDebugMode) private var isDebugMode
 
   let columnCount: Int?
@@ -51,9 +52,12 @@ public struct TextColumns<Content: View>: View {
 }
 extension TextColumns {
 
-  private var columnWidth: Int { columnCount ?? maxCharacterColumns }
+  private var columnWidth: Int {
+    let base: Int = columnCount ?? textColumnCount ?? maxCharacterColumns
+    return min(base, maxCharacterColumns)
+  }
 
   private var characters: String {
-    return String(repeating: "0", count: min(columnWidth, maxCharacterColumns))
+    return String(repeating: "M", count: columnWidth)
   }
 }
