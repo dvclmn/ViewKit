@@ -25,7 +25,7 @@ let package = Package(
 
   // MARK: - Dependancies
   dependencies: [
-    .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.7.3"),
+    .package(url: "https://github.com/pointfreeco/swift-case-paths", branch: "1.9.1"),
     .package(url: "https://github.com/dvclmn/EnumMacros", branch: "main"),
     .package(url: "https://github.com/dvclmn/ToolKit", from: "0.3.0"),
     .package(url: "https://github.com/dvclmn/VectorKit", branch: "main"),
