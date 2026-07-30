@@ -22,7 +22,7 @@ struct AppKitSlider: NSViewRepresentable {
   var drawsTrack: Bool
   var drawsThumb: Bool
   var isEnabled: Bool
-  var accessibilityLabel: String
+  var accessibilityLabel: String?
   var onEditingChanged: (Bool) -> Void
 
   func makeCoordinator() -> Coordinator {

@@ -9,7 +9,9 @@ import SwiftUI
 import CoreTools
 
 struct SliderConfiguration {
-  let label: LabelDescriptor
+  // Provided when value for `title` is supplied.
+  // If label ViewBuilder closure is used, this has no value
+  let label: LabelDescriptor?
   let range: ClosedRange<Double>
   let step: Double?
   let neutralValue: Double?

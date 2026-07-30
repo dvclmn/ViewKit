@@ -10,14 +10,27 @@ import SwiftUI
 import ViewTools
 
 extension QuickSlider {
-  struct SliderLabel: View {
+  struct SliderLabelView: View {
     @Environment(\.sliderDefaultValue) private var sliderDefaultValue
 
     @Binding var value: Double
     let configuration: SliderConfiguration
+    let label: SliderLabel
+
     var body: some View {
-      QuickLabel(configuration.label)
-        .onDoubleTap($value.toBindingDouble, defaultValue: sliderDefaultValue)
+
+      Group {
+        if let configLabel = configuration.label {
+          QuickLabel(configLabel)
+          //          SliderLabel(value: $value, configuration: configuration)
+        } else {
+          label
+        }
+      }
+      .onDoubleTap($value.toBindingDouble, defaultValue: sliderDefaultValue)
+
+      //      QuickLabel(configuration.label)
+      //        .onDoubleTap($value.toBindingDouble, defaultValue: sliderDefaultValue)
     }
   }
 }

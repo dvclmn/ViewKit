@@ -28,4 +28,16 @@ final class SliderHandler {
     self.phase = phase
     didChangeSlider(phase)
   }
+
+  func handleOnEdit(
+    _ didEdit: Bool,
+    configuration: SliderConfiguration,
+  ) {
+    let phase = SliderPhase(fromOnEditingChanged: didEdit)
+    updatePhase(phase, didChangeSlider: configuration.didChangeSlider)
+  }
+  
+//  func labelText(with configuration: SliderConfiguration) -> String {
+//    configuration.label?.text ?? ""
+//  }
 }

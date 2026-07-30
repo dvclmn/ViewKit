@@ -16,10 +16,12 @@ extension QuickSlider {
 
     @Binding var value: Double
     let configuration: SliderConfiguration
-    let handler: SliderHandler
+    @Bindable var handler: SliderHandler
     #if os(macOS)
     let appKitTrack: ((SliderTrackConfiguration) -> AppKitSliderTrack)?
     #endif
+
+    let label: SliderLabel
 
     var body: some View {
       #if os(macOS)
@@ -34,9 +36,12 @@ extension QuickSlider {
           drawsTrack: sliderComponents.contains(.track),
           drawsThumb: sliderComponents.contains(.thumb),
           isEnabled: isEnabled,
-          accessibilityLabel: configuration.label.text,
-          onEditingChanged: handleOnEdit(_:),
-        )
+          accessibilityLabel: configuration.label?.text,
+        ) { editing in
+          handler.handleOnEdit(editing, configuration: configuration)
+        }
+        //          onEditingChanged: handleOnEdit(_:),
+
         .padding(-AppKitSlider.pressedKnobVisualOverflow)
         .frame(height: AppKitSlider.controlHeight)
       } else {
@@ -53,72 +58,20 @@ extension QuickSlider.SliderCore {
   @ViewBuilder
   private func NativeSliderView() -> some View {
     if let step = configuration.step {
-      StepperView(step)
-
-      if #available(macOS 26.0, iOS 26.0, *) {
-        Slider(
-          value: $value,
-          in: configuration.range,
-          step: step,
-          neutralValue: configuration.neutralValue,
-        ) {
-          QuickSlider.SliderLabel(value: $value, configuration: configuration)
-        } onEditingChanged: { editing in
-          handleOnEdit(editing)
-        }
-        .labelsHidden()
-      } else {
-        Slider(
-          value: $value,
-          in: configuration.range,
-          step: step,
-        ) {
-          QuickSlider.SliderLabel(value: $value, configuration: configuration)
-        } onEditingChanged: { editing in
-          handleOnEdit(editing)
-        }
-        .labelsHidden()
-      }
-    } else {
-      if #available(macOS 26.0, iOS 26.0, *) {
-        Slider(
-          value: $value,
-          in: configuration.range,
-          neutralValue: configuration.neutralValue,
-        ) {
-          QuickSlider.SliderLabel(value: $value, configuration: configuration)
-        } onEditingChanged: { editing in
-          handleOnEdit(editing)
-        }
-        .labelsHidden()
-      } else {
-        Slider(
-          value: $value,
-          in: configuration.range,
-        ) {
-          QuickSlider.SliderLabel(value: $value, configuration: configuration)
-        } onEditingChanged: { editing in
-          handleOnEdit(editing)
-        }
-        .labelsHidden()
-      }
-    }
-  }
-
-  @ViewBuilder
-  private func StepperView(_ step: Double) -> some View {
-    if stepStyle == .stepper {
-      Stepper(
-        configuration.label.text,
+      QuickSlider.NativeSlider_WithStepper(
         value: $value,
         step: step,
+        configuration: configuration,
+        handler: handler,
+//        label: label,
       )
-      .labelsHidden()
+    } else {
+      QuickSlider.NativeSlider(
+        value: $value,
+        configuration: configuration,
+        handler: handler,
+//        label: label,
+      )
     }
-  }
-
-  private func handleOnEdit(_ didEdit: Bool) {
-    let phase = SliderPhase(fromOnEditingChanged: didEdit)
-    handler.updatePhase(phase, didChangeSlider: configuration.didChangeSlider)
   }
 }

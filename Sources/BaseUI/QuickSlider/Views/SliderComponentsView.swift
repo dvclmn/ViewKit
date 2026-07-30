@@ -19,14 +19,20 @@ extension QuickSlider {
 
     @Binding var value: Double
     let configuration: SliderConfiguration
-    let handler: SliderHandler
+    @Bindable var handler: SliderHandler
     #if os(macOS)
     let appKitTrack: ((SliderTrackConfiguration) -> AppKitSliderTrack)?
     #endif
 
+    let label: SliderLabel
+
     var body: some View {
       if sliderComponents.contains(.label) {
-        SliderLabel(value: $value, configuration: configuration)
+        QuickSlider.SliderLabelView(
+          value: $value,
+          configuration: configuration,
+          label: label,
+        )
       }
 
       #if os(macOS)
@@ -35,13 +41,19 @@ extension QuickSlider {
         configuration: configuration,
         handler: handler,
         appKitTrack: appKitTrack,
+        label: label,
       )
       .frame(width: sliderTrackMaxWidth)
       .frame(maxWidth: .infinity, alignment: .trailing)
       #else
-      SliderCore(value: $value, configuration: configuration, handler: handler)
-        .frame(width: sliderTrackMaxWidth)
-        .frame(maxWidth: .infinity, alignment: .trailing)
+      SliderCore(
+        value: $value,
+        configuration: configuration,
+        handler: handler,
+        label: label,
+      )
+      .frame(width: sliderTrackMaxWidth)
+      .frame(maxWidth: .infinity, alignment: .trailing)
       #endif
 
       if sliderComponents.contains(.units) {
