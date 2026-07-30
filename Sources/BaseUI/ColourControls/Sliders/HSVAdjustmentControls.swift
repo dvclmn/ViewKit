@@ -50,32 +50,34 @@ public struct HSVAdjustmentSliders: View {
   }
 
   public var body: some View {
-    HSVAdjustmentChannel(
-      "Hue",
-      value: hueDegrees,
-      isIncluded: includesChannel(\.hue),
-      range: hueDegreesRange,
-      //      step: 1,
-      formatter: .degrees,
-    )
+    SliderGroup {
+      HSVAdjustmentChannel(
+        "Hue",
+        value: hueDegrees,
+        isIncluded: includesChannel(\.hue),
+        range: hueDegreesRange,
+        //      step: 1,
+        formatter: .degrees,
+      )
 
-    HSVAdjustmentChannel(
-      "Saturation",
-      value: channelValue(\.saturation),
-      isIncluded: includesChannel(\.saturation),
-      range: saturationRange,
-      //      step: 0.01,
-      formatter: .delta,
-    )
+      HSVAdjustmentChannel(
+        "Saturation",
+        value: channelValue(\.saturation),
+        isIncluded: includesChannel(\.saturation),
+        range: saturationRange,
+        //      step: 0.01,
+        formatter: .delta,
+      )
 
-    HSVAdjustmentChannel(
-      "Brightness",
-      value: channelValue(\.brightness),
-      isIncluded: includesChannel(\.brightness),
-      range: brightnessRange,
-      //      step: 0.01,
-      formatter: .delta,
-    )
+      HSVAdjustmentChannel(
+        "Brightness",
+        value: channelValue(\.brightness),
+        isIncluded: includesChannel(\.brightness),
+        range: brightnessRange,
+        //      step: 0.01,
+        formatter: .delta,
+      )
+    }
   }
 }
 

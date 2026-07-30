@@ -17,6 +17,7 @@ public struct CustomLabel: LabelStyle {
   @Environment(\.layoutAlignment) private var layoutAlignment
   @Environment(\.labelTextCase) private var labelTextCase
   @Environment(\.textAlignment) private var textAlignment
+  @Environment(\.font) private var font
 
   // Label Title
 //  @Environment(\.labelTitleColour) private var labelTitleColour
@@ -89,7 +90,7 @@ extension CustomLabel {
   @ViewBuilder
   private func TitleView(_ configuration: Configuration) -> some View {
     configuration.title
-      .font(labelTitleFontStyle)
+      .font(labelTitleFontStyle ?? font)
       .fontWeight(labelTitleWeight)
     //      .commonLabelStyles(for: .title, displayOverride: adjustedLabelDisplay)
   }
@@ -98,9 +99,10 @@ extension CustomLabel {
   private func IconView(_ configuration: Configuration) -> some View {
     //    if let iconFont {
     configuration.icon
-      .font(labelIconFontStyle)
+      .font(labelIconFontStyle ?? font)
       .fontWeight(labelIconWeight)
-      .tint(labelIconColour)
+//      .tint(labelIconColour)
+      .foregroundStyle(labelIconColour ?? AnyShapeStyle(.tint))
     //    } else {
     //      configuration.icon
     //    }

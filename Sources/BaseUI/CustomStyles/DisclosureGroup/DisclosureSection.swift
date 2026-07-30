@@ -63,7 +63,7 @@ public struct DisclosureSection<Content: View>: View {
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(.tertiary)
           .labelStyle(.base)
-          .labelColour(for: .icon, .secondary)
+          .labelIconColour(.secondary)
 //          .iconColour(.secondary)
       }
 
