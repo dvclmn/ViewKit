@@ -30,7 +30,8 @@ public struct ColourSliders: View {
     }
 //    .labelFontStyle(.)
 //    .labelWeight(.semibold)
-    .labelTitleColour(.secondary)
+//    .labelTitleColour(.secondary)
+    .foregroundStyle(.secondary)
     .environment(\.maxCharacterColumns, 4)
     .environment(\.layoutSpacing, 4)
   }

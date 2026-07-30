@@ -10,13 +10,24 @@ import SwiftUI
 import ViewTools
 
 public struct CustomLabel: LabelStyle {
+  // General
   @Environment(\.labelDisplay) private var labelDisplay
   @Environment(\.isCompactMode) private var isCompactMode
   @Environment(\.layoutSpacing) private var layoutSpacing
   @Environment(\.layoutAlignment) private var layoutAlignment
-  @Environment(\.labelFontStyle) private var labelFontStyle
-  @Environment(\.iconFontStyle) private var iconFontStyle
+  @Environment(\.labelTextCase) private var labelTextCase
   @Environment(\.textAlignment) private var textAlignment
+
+  // Label Title
+//  @Environment(\.labelTitleColour) private var labelTitleColour
+  @Environment(\.labelTitleWeight) private var labelTitleWeight
+  @Environment(\.labelTitleFontStyle) private var labelTitleFontStyle
+
+  // Label Icon
+  @Environment(\.labelIconColour) private var labelIconColour
+  @Environment(\.labelIconWeight) private var labelIconWeight
+  @Environment(\.labelIconFontStyle) private var labelIconFontStyle
+  //  @Environment(\.labelIconFontStyle) private var labelIconFontStyle
 
   let displayOverride: LabelDisplay?
 
@@ -72,24 +83,29 @@ extension CustomLabel {
     } icon: {
       IconView(configuration)
     }
+    .textCase(labelTextCase)
+  }
+
+  @ViewBuilder
+  private func TitleView(_ configuration: Configuration) -> some View {
+    configuration.title
+      .font(labelTitleFontStyle)
+      .fontWeight(labelTitleWeight)
+    //      .commonLabelStyles(for: .title, displayOverride: adjustedLabelDisplay)
   }
 
   @ViewBuilder
   private func IconView(_ configuration: Configuration) -> some View {
     //    if let iconFont {
     configuration.icon
-      .font(iconFontStyle)
+      .font(labelIconFontStyle)
+      .fontWeight(labelIconWeight)
+      .tint(labelIconColour)
     //    } else {
     //      configuration.icon
     //    }
     //      .commonLabelStyles(for: .icon, displayOverride: adjustedLabelDisplay)
 
-  }
-
-  @ViewBuilder
-  private func TitleView(_ configuration: Configuration) -> some View {
-    configuration.title
-    //      .commonLabelStyles(for: .title, displayOverride: adjustedLabelDisplay)
   }
 
   @ViewBuilder
@@ -101,6 +117,7 @@ extension CustomLabel {
       IconView(configuration)
       TitleView(configuration)
     }
+
   }
 
   //  private var iconFont: Font? {

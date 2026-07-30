@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreTools
 
 extension LabelStyle where Self == CustomLabel {
   public static var base: Self { Self() }

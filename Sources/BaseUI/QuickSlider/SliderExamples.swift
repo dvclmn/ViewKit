@@ -40,7 +40,7 @@ public struct SliderExamples: View {
     .frame(minWidth: 360)
     .environment(\.layoutSpacing, 5)
     .environment(\.maxCharacterColumns, 4)
-    .labelWeight(.semibold)
+    .labelFontWeight(.semibold)
     .labelColour(for: .title, .secondary)
 //    .labelColour(.secondary)
   }

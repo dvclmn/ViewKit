@@ -29,7 +29,8 @@ struct PopupCoreView: View {
       QuickLabel(popupMessage.label)
         .environment(\.symbolVariants, .fill)
         .environment(\.symbolRenderingMode, .hierarchical)
-        .environment(\.iconColour, AnyShapeStyle(.secondary))
+//        .environment(\.iconColour, AnyShapeStyle(.secondary))
+        .labelIconColour(.secondary)
 
         .font(isCompactMode ? .callout : .body.weight(.semibold))
         .fontWeight(.medium)
