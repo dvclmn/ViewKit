@@ -19,7 +19,8 @@ struct ItemViewCommonModifier: ViewModifier {
       .environment(\.labelDisplay, .stacked)
       .environment(\.symbolRenderingMode, .hierarchical)
       .environment(\.symbolVariants, .fill)
-      .iconColour(isEmphasised ? .primary : .secondary)
+      .labelColour(for: .icon, isEmphasised ? .primary : .secondary)
+//      .iconColour(isEmphasised ? .primary : .secondary)
       .environment(\.iconFontStyle, .title)
     
       .multilineTextAlignment(.center)

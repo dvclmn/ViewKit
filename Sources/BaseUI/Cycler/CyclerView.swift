@@ -11,7 +11,7 @@ import SwiftUI
 
 public struct Cycler<Item: CaseCyclable, Label: View>: View {
   @Environment(\.emphasisColour) private var emphasisColour
-  @Environment(\.labelColour) private var labelColour
+//  @Environment(\.labelColour) private var labelColour
 
   @Binding var item: Item
   let label: (Item) -> Label

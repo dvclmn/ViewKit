@@ -28,8 +28,9 @@ public struct ColourSliders: View {
         case .hsv: HSVSliders(hsvColour: $colour.hsv)
       }
     }
-    .labelWeight(.semibold)
-    .labelColour(.secondary)
+//    .labelFontStyle(.)
+//    .labelWeight(.semibold)
+    .labelTitleColour(.secondary)
     .environment(\.maxCharacterColumns, 4)
     .environment(\.layoutSpacing, 4)
   }

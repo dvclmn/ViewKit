@@ -9,16 +9,6 @@ import CoreTools
 import SwiftUI
 import ViewTools
 
-extension LabelStyle where Self == CustomLabel {
-  public static var base: Self { Self() }
-
-  /// If no value supplied for `display`, will use environment value, or fall back to `.titleAndIcon`
-  public static func base(display: LabelDisplay?) -> Self { Self(labelDisplay: display) }
-
-}
-
-/// Note regarding `QuickLabel`: II think I need to handle this
-/// once it's been composed into an actual `Label`
 public struct CustomLabel: LabelStyle {
   @Environment(\.labelDisplay) private var labelDisplay
   @Environment(\.isCompactMode) private var isCompactMode
@@ -30,16 +20,17 @@ public struct CustomLabel: LabelStyle {
 
   let displayOverride: LabelDisplay?
 
-  /// This allows the caller of `.labelStyle(.base)` to provide
-  /// a labelDisplay 'then and there', rather than requiring an additional
-  /// env value like `.environment(\.labelDisplay, .stacked)`
+  // This allows the caller of `.labelStyle(.base)` to provide
+  // a labelDisplay 'then and there' in the function signature,
+  // rather than requiring an additional call to an env value
+  // like `.environment(\.labelDisplay, .stacked)`
   public init(labelDisplay: LabelDisplay? = nil) {
     self.displayOverride = labelDisplay
   }
 
   public func makeBody(configuration: Configuration) -> some View {
 
-    switch adjustedLabelDisplay {
+    switch effectiveLabelDisplay {
       case .iconOnly:
         LabelBase(configuration)
           .labelStyle(.iconOnly)
@@ -58,13 +49,11 @@ public struct CustomLabel: LabelStyle {
         Stacked(configuration)
 
       case .hidden:
+        // Still working out what to do for this case
         LabelBase(configuration)
-//        EmptyView()
-          
-//          .labelsHidden()
+    //        EmptyView()
 
-      case .none:
-        LabelBase(configuration)
+    //          .labelsHidden()
 
     }  // END switch label display
   }
@@ -72,27 +61,8 @@ public struct CustomLabel: LabelStyle {
 
 extension CustomLabel {
 
-  private var adjustedLabelDisplay: LabelDisplay? {
-    displayOverride ?? labelDisplay
-  }
-
-  @ViewBuilder
-  private func IconView(_ configuration: Configuration) -> some View {
-    if let iconFont {
-      configuration.icon
-        .font(iconFont)
-    } else {
-      configuration.icon
-    }
-//      .commonLabelStyles(for: .icon, displayOverride: adjustedLabelDisplay)
-      
-      
-  }
-
-  @ViewBuilder
-  private func TitleView(_ configuration: Configuration) -> some View {
-    configuration.title
-      .commonLabelStyles(for: .title, displayOverride: adjustedLabelDisplay)
+  private var effectiveLabelDisplay: LabelDisplay {
+    displayOverride ?? labelDisplay ?? .titleAndIcon
   }
 
   @ViewBuilder
@@ -101,8 +71,25 @@ extension CustomLabel {
       TitleView(configuration)
     } icon: {
       IconView(configuration)
-
     }
+  }
+
+  @ViewBuilder
+  private func IconView(_ configuration: Configuration) -> some View {
+    //    if let iconFont {
+    configuration.icon
+      .font(iconFontStyle)
+    //    } else {
+    //      configuration.icon
+    //    }
+    //      .commonLabelStyles(for: .icon, displayOverride: adjustedLabelDisplay)
+
+  }
+
+  @ViewBuilder
+  private func TitleView(_ configuration: Configuration) -> some View {
+    configuration.title
+    //      .commonLabelStyles(for: .title, displayOverride: adjustedLabelDisplay)
   }
 
   @ViewBuilder
@@ -116,8 +103,8 @@ extension CustomLabel {
     }
   }
 
-  private var iconFont: Font? {
-    guard let iconFontStyle else { return nil }
-    return .system(iconFontStyle)
-  }
+  //  private var iconFont: Font? {
+  //    guard let iconFontStyle else { return nil }
+  //    return .system(iconFontStyle)
+  //  }
 }

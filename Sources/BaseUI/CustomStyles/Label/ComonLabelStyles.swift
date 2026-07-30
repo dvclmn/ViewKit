@@ -11,7 +11,7 @@ import SwiftUI
 
 public struct CommonLabelStyleModifier: ViewModifier {
   @Environment(\.labelWeight) private var labelWeight
-  @Environment(\.labelColour) private var labelColour
+  @Environment(\.labelTitleColour) private var labelTitleColour
   @Environment(\.iconWeight) private var iconWeight
   @Environment(\.iconColour) private var iconColour
   @Environment(\.iconFontSize) private var iconFontSize

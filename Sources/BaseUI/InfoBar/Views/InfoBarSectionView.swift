@@ -29,8 +29,12 @@ struct InfoBarSectionView: View {
           }
         }
         .labelStyle(.base)
-        .iconColour(.secondary)
-        .labelColour(.secondary)
+//        .labelColour(for: .icon, .secondary)
+//        .labelColour(for: .title, .secondary)
+//        .iconColour(.secondary)
+//        .labelColour(.secondary)
+        
+        .foregroundStyle(.secondary)
         .labelIconSpacingCompatible(4)
 
       } header: {

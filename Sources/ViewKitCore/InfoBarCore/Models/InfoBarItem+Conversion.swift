@@ -27,7 +27,8 @@ extension InfoBarItem {
     else { return nil }
     self.init(
       section: section,
-      label: label.map { LabelDescriptor(stringLiteral: $0) },
+      label: .init(label),
+//      label: label.map { LabelDescriptor(stringLiteral: $0) },
       content: value,
     )
   }
