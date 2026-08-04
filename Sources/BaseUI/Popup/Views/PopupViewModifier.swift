@@ -57,7 +57,7 @@ public struct PopupViewExtenderModifier: ViewModifier {
 
         } else {
           StateView("No popup set in the Environment", icon: .emoji("🚨"))
-            .quickRoundedBackground(rounding: Styles.sizeMedium)
+            .quickBackground(shape: .rounded(Styles.sizeMedium))
             .padding()
         }
       }

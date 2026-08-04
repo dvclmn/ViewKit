@@ -23,7 +23,7 @@ public struct QuickPicker<Item: LabeledItem & Hashable>: View {
 
   /// `sourceData` is for when `Item` is not CaseIterable
   public init(
-    title: String,
+    _ title: String,
     selection: Binding<Item>,
     sourceData: [Item],
   ) {
@@ -82,7 +82,7 @@ public struct QuickPicker<Item: LabeledItem & Hashable>: View {
 
 extension QuickPicker where Item: CaseIterable {
   public init(
-    title: String,
+    _ title: String,
     selection: Binding<Item>,
   ) where Item.AllCases: RandomAccessCollection, Item.AllCases.Element == Item, Item.AllCases == [Item] {
     self.title = title

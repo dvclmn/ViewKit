@@ -47,10 +47,12 @@ struct PopupView: View {
             DismissButton()
           }
         }
-        .quickRoundedBackground(
-          rounding: rounding,
+        .quickBackground(
+          shape: .rounded(rounding),
+//        .quickRoundedBackground(
+//          rounding: rounding,
           glass: hasGlassEffect ? .regular : nil,
-          padding: .zero,
+//          padding: .zero,
 //          tint: message.label.role?.colour?.toColour,
           isEnabled: true
         )

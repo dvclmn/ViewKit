@@ -26,3 +26,7 @@ caller-defined section order.
 
 - ``CardGrid``
 - ``CardGridSection``
+
+### Resizable panes
+
+- <doc:ResizableSplitPane>

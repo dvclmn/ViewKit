@@ -112,7 +112,7 @@ extension Flexi.GridView {
       "## I'm a heading"
       SampleContent.Strings.paragraphs[3]
       Indented("## Flexi+GridView") {
-        Labeled("Column count", value: self.columnCount?.toString)
+        Labeled("Column count", value: self.columnCount?.stringValue)
         //        Labeled("Grid config", value: config.description)
         config.description
       }

@@ -9,6 +9,7 @@ import ColourTools
 import CoreTools
 import ViewTools
 import SwiftUI
+import StringTools
 
 /// Presents both a Square Picker, and RGB/HSV Sliders
 public struct ColourPicker: View {
@@ -81,7 +82,7 @@ extension ColourPicker {
         activeColourModel.wrappedValue.next()
       } label: {
         Label(
-          activeColourModel.wrappedValue.name, systemImage: activeColourModel.wrappedValue.icon.toString
+          activeColourModel.wrappedValue.name, systemImage: activeColourModel.wrappedValue.icon.stringValue
         )
         .labelStyle(.iconOnly)
       }

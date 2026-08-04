@@ -6,7 +6,6 @@
 //
 
 @_spi(Internal) import CoreTools
-//@_spi(Internals) import ViewTools
 @_spi(Internal) import StringTools
 
 extension InfoBarItem {
@@ -17,7 +16,7 @@ extension InfoBarItem {
     labelStyle: AbbreviableLabel.Style = .standard,
     format: FloatDisplayFormat = .default,
   ) {
-    let label = labeled.labelPart()
+    let label = labeled.labelPart(with: labelStyle)
     guard
       let value = Labeled.valuePart(
         for: labeled,

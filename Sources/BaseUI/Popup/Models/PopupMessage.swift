@@ -79,7 +79,7 @@ extension PopupMessage {
 
   public var title: String { label.text }
   public var icon: IconLiteral? { label.icon }
-  public var iconString: String? { label.icon?.toString }
+  public var iconString: String? { label.icon?.stringValue }
 }
 
 extension PopupMessage: CustomStringConvertible {
