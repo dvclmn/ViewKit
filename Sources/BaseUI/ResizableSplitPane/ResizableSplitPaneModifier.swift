@@ -16,12 +16,16 @@ struct ResizableSplitPaneModifier: ViewModifier {
 
   private let sizing: ResizableSplitPaneSizing
   private let handleHitPadding: CGFloat
+  private let ignoredSafeAreaEdges: Edge.Set
+  private let isEnabled: Bool
 
   init(
     storageKey: String,
     defaultWidth: CGFloat,
     widthRange: ClosedRange<CGFloat>,
     handleHitPadding: CGFloat,
+    ignoredSafeAreaEdges: Edge.Set,
+    isEnabled: Bool,
     store: UserDefaults?,
   ) {
     self._storedWidth = AppStorage(
@@ -34,16 +38,21 @@ struct ResizableSplitPaneModifier: ViewModifier {
       widthRange: widthRange,
     )
     self.handleHitPadding = max(.zero, handleHitPadding)
+    self.ignoredSafeAreaEdges = ignoredSafeAreaEdges
+    self.isEnabled = isEnabled
   }
 
   func body(content: Content) -> some View {
     content
-      .frame(width: displayedWidth)
+      .frame(width: isEnabled ? displayedWidth : nil)
       .overlay(alignment: .trailing) {
-        resizeHandle
-          .offset(x: handleWidth / 2)
+        if isEnabled {
+          resizeHandle
+            .offset(x: handleWidth / 2)
+            .ignoresSafeArea(.container, edges: ignoredSafeAreaEdges)
+        }
       }
-      .zIndex(1)
+      .zIndex(isEnabled ? 1 : 0)
   }
 }
 
@@ -126,7 +135,8 @@ struct ResizableSplitPaneSizing: Equatable, Sendable {
     storedWidth: Double,
     dragTranslation: CGFloat = .zero,
   ) -> CGFloat {
-    let persistedWidth = storedWidth.isFinite
+    let persistedWidth =
+      storedWidth.isFinite
       ? CGFloat(storedWidth)
       : defaultWidth
     let proposedWidth = persistedWidth + dragTranslation
@@ -134,38 +144,6 @@ struct ResizableSplitPaneSizing: Equatable, Sendable {
     return min(
       max(proposedWidth, widthRange.lowerBound),
       widthRange.upperBound,
-    )
-  }
-}
-
-extension View {
-  /// Makes this view the leading, horizontally resizable pane in a split layout.
-  ///
-  /// Place the modified view first in an `HStack` with zero spacing. The view receives
-  /// an explicit width, while its siblings retain the `HStack`'s normal layout behaviour.
-  /// The resolved width is persisted in User Defaults when a resize gesture ends.
-  ///
-  /// - Parameters:
-  ///   - storageKey: The User Defaults key used to persist the pane width.
-  ///   - defaultWidth: The width used until a persisted value exists.
-  ///   - widthRange: The inclusive limits applied to persisted and interactive widths.
-  ///   - handleHitPadding: Invisible hit padding on each side of the one-point divider.
-  ///   - store: The User Defaults store. Pass a suite or app-group store when required.
-  public func resizableSplitPane(
-    _ storageKey: String,
-    defaultWidth: CGFloat,
-    widthRange: ClosedRange<CGFloat> = 100...600,
-    handleHitPadding: CGFloat = 8,
-    store: UserDefaults? = nil,
-  ) -> some View {
-    modifier(
-      ResizableSplitPaneModifier(
-        storageKey: storageKey,
-        defaultWidth: defaultWidth,
-        widthRange: widthRange,
-        handleHitPadding: handleHitPadding,
-        store: store,
-      )
     )
   }
 }
