@@ -19,17 +19,17 @@ public struct SubviewContent: View {
   public var body: some View {
 
     ForEach(subviews: collection) { subview in
-      DynamicStack(
-        layoutType: layoutType,
-        spacing: (spacing ?? layoutSpacing).subElementSpacingReduction()
-      ) {
+//      DynamicStack(
+//        layoutType: layoutType,
+//        spacing: (spacing ?? layoutSpacing).subElementSpacingReduction()
+//      ) {
         subview
         /// Display a divider, as dictated by the `ContainerValue`
         /// This expresses; "All subviews except for the last one"
         if subview.containerValues.hasDividers, !subview.isLastInCollection(collection) {
           ContainerDivider()
         }
-      }
+//      }
     }  // END foreach
   }
 }

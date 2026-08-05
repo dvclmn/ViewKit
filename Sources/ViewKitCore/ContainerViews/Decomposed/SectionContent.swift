@@ -35,9 +35,9 @@ public struct SectionContent: View {
       /// This second/nested `DynamicStack` (in addition to the stack
       /// in `DecomposedView`) is here to allow more control over
       /// layout *within* each section.
-      DynamicStack(layoutType: layoutType, spacing: (spacing ?? layoutSpacing).subElementSpacingReduction()) {
+//      DynamicStack(layoutType: layoutType, spacing: (spacing ?? layoutSpacing).subElementSpacingReduction()) {
         sectionElement.content
-      }
+//      }
 
       sectionElement.footer
 

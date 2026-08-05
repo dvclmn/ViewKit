@@ -17,7 +17,7 @@ public struct ContainerDivider: View {
 
     Divider()
       .frame(width: frameWidth, height: frameHeight)
-      .opacity(0.7)
+//      .opacity(0.7)
     //      .fixedSize(horizontal: false, vertical: isVerticalFixed)
 
   }
