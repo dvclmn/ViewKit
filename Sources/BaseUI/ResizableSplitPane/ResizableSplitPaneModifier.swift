@@ -10,10 +10,12 @@ import SwiftUI
 import ViewTools
 
 struct ResizableSplitPaneModifier: ViewModifier {
-  @AppStorage private var storedWidth: Double
+  @Environment(\.layoutDirection) private var layoutDirection
+  @AppStorage private var storedLength: Double
   @GestureState private var dragTranslation: CGFloat = .zero
   @State private var isHandleHovered = false
 
+  private let edge: ResizableSplitPaneEdge
   private let sizing: ResizableSplitPaneSizing
   private let handleHitPadding: CGFloat
   private let ignoredSafeAreaEdges: Edge.Set
@@ -21,21 +23,23 @@ struct ResizableSplitPaneModifier: ViewModifier {
 
   init(
     storageKey: String,
-    defaultWidth: CGFloat,
-    widthRange: ClosedRange<CGFloat>,
+    edge: Edge,
+    defaultLength: CGFloat,
+    lengthRange: ClosedRange<CGFloat>,
     handleHitPadding: CGFloat,
     ignoredSafeAreaEdges: Edge.Set,
     isEnabled: Bool,
     store: UserDefaults?,
   ) {
-    self._storedWidth = AppStorage(
-      wrappedValue: Double(defaultWidth),
+    self._storedLength = AppStorage(
+      wrappedValue: Double(defaultLength),
       storageKey,
       store: store,
     )
+    self.edge = ResizableSplitPaneEdge(edge)
     self.sizing = ResizableSplitPaneSizing(
-      defaultWidth: defaultWidth,
-      widthRange: widthRange,
+      defaultLength: defaultLength,
+      lengthRange: lengthRange,
     )
     self.handleHitPadding = max(.zero, handleHitPadding)
     self.ignoredSafeAreaEdges = ignoredSafeAreaEdges
@@ -44,11 +48,14 @@ struct ResizableSplitPaneModifier: ViewModifier {
 
   func body(content: Content) -> some View {
     content
-      .frame(width: isEnabled ? displayedWidth : nil)
-      .overlay(alignment: .trailing) {
+      .frame(width: paneWidth, height: paneHeight)
+      .overlay(alignment: edge.alignment) {
         if isEnabled {
           resizeHandle
-            .offset(x: handleWidth / 2)
+            .offset(
+              x: handleOffset.width,
+              y: handleOffset.height,
+            )
             .ignoresSafeArea(.container, edges: ignoredSafeAreaEdges)
         }
       }
@@ -57,53 +64,88 @@ struct ResizableSplitPaneModifier: ViewModifier {
 }
 
 extension ResizableSplitPaneModifier {
-  private var displayedWidth: CGFloat {
-    sizing.width(
-      storedWidth: storedWidth,
+  private var displayedLength: CGFloat {
+    sizing.length(
+      storedLength: storedLength,
       dragTranslation: dragTranslation,
     )
   }
 
-  private var handleWidth: CGFloat {
-    ResizableSplitPaneSizing.dividerWidth + (handleHitPadding * 2)
+  private var paneWidth: CGFloat? {
+    isEnabled && edge.resizeAxis == .horizontal
+      ? displayedLength
+      : nil
+  }
+
+  private var paneHeight: CGFloat? {
+    isEnabled && edge.resizeAxis == .vertical
+      ? displayedLength
+      : nil
+  }
+
+  private var handleThickness: CGFloat {
+    ResizableSplitPaneSizing.dividerThickness + (handleHitPadding * 2)
+  }
+
+  private var handleOffset: CGSize {
+    edge.handleOffset(
+      handleThickness: handleThickness,
+      layoutDirection: layoutDirection,
+    )
   }
 
   private var resizeHandle: some View {
     Color.clear
-      .frame(width: handleWidth)
+      .frame(
+        width: edge.resizeAxis == .horizontal ? handleThickness : nil,
+        height: edge.resizeAxis == .vertical ? handleThickness : nil,
+      )
       .contentShape(.rect)
       .overlay {
         Rectangle()
           .fill(.secondary.opacity(isHandleHovered ? 0.65 : 0.3))
-          .frame(width: ResizableSplitPaneSizing.dividerWidth)
+          .frame(
+            width: edge.resizeAxis == .horizontal
+              ? ResizableSplitPaneSizing.dividerThickness
+              : nil,
+            height: edge.resizeAxis == .vertical
+              ? ResizableSplitPaneSizing.dividerThickness
+              : nil,
+          )
           .allowsHitTesting(false)
       }
       .onHover { isHandleHovered = $0 }
-      .pointerStyleCompatible(.columnResize)
+      .pointerStyleCompatible(edge.pointerStyle)
       .gesture(resizeGesture)
       .accessibilityElement(children: .ignore)
       .accessibilityLabel("Resize pane")
-      .accessibilityValue("\(Int(displayedWidth.rounded())) points")
-      .accessibilityAdjustableAction(adjustWidth)
+      .accessibilityValue("\(Int(displayedLength.rounded())) points")
+      .accessibilityAdjustableAction(adjustLength)
   }
 
   private var resizeGesture: some Gesture {
     DragGesture(minimumDistance: 0, coordinateSpace: .global)
       .updating($dragTranslation) { value, translation, transaction in
         transaction.animation = nil
-        translation = value.translation.width
+        translation = edge.lengthTranslation(
+          from: value.translation,
+          layoutDirection: layoutDirection,
+        )
       }
       .onEnded { value in
-        storedWidth = Double(
-          sizing.width(
-            storedWidth: storedWidth,
-            dragTranslation: value.translation.width,
+        storedLength = Double(
+          sizing.length(
+            storedLength: storedLength,
+            dragTranslation: edge.lengthTranslation(
+              from: value.translation,
+              layoutDirection: layoutDirection,
+            ),
           )
         )
       }
   }
 
-  private func adjustWidth(_ direction: AccessibilityAdjustmentDirection) {
+  private func adjustLength(_ direction: AccessibilityAdjustmentDirection) {
     let translation: CGFloat
 
     switch direction {
@@ -115,35 +157,132 @@ extension ResizableSplitPaneModifier {
         return
     }
 
-    storedWidth = Double(
-      sizing.width(
-        storedWidth: storedWidth,
+    storedLength = Double(
+      sizing.length(
+        storedLength: storedLength,
         dragTranslation: translation,
       )
     )
   }
 }
 
+enum ResizableSplitPaneEdge: Equatable, Sendable {
+  case top
+  case leading
+  case bottom
+  case trailing
+
+  init(_ edge: Edge) {
+    switch edge {
+      case .top:
+        self = .top
+      case .leading:
+        self = .leading
+      case .bottom:
+        self = .bottom
+      case .trailing:
+        self = .trailing
+    }
+  }
+
+  var resizeAxis: Axis {
+    switch self {
+      case .leading, .trailing:
+        .horizontal
+      case .top, .bottom:
+        .vertical
+    }
+  }
+
+  var alignment: Alignment {
+    switch self {
+      case .top:
+        .top
+      case .leading:
+        .leading
+      case .bottom:
+        .bottom
+      case .trailing:
+        .trailing
+    }
+  }
+
+  var pointerStyle: PointerStyleCompatible {
+    switch resizeAxis {
+      case .horizontal:
+        .columnResize
+      case .vertical:
+        .rowResize
+    }
+  }
+
+  func lengthTranslation(
+    from translation: CGSize,
+    layoutDirection: LayoutDirection,
+  ) -> CGFloat {
+    let direction = outwardDirection(layoutDirection: layoutDirection)
+
+    return switch resizeAxis {
+      case .horizontal: translation.width * direction.width
+      case .vertical: translation.height * direction.height
+    }
+  }
+
+  func handleOffset(
+    handleThickness: CGFloat,
+    layoutDirection: LayoutDirection,
+  ) -> CGSize {
+    let direction = outwardDirection(layoutDirection: layoutDirection)
+    let distance = handleThickness / 2
+
+    return CGSize(
+      width: direction.width * distance,
+      height: direction.height * distance,
+    )
+  }
+
+  private func outwardDirection(
+    layoutDirection: LayoutDirection
+  ) -> CGSize {
+    switch self {
+      case .top:
+        CGSize(width: 0, height: -1)
+      case .leading:
+        CGSize(
+          width: layoutDirection == .leftToRight ? -1 : 1,
+          height: 0,
+        )
+      case .bottom:
+        CGSize(width: 0, height: 1)
+      case .trailing:
+        CGSize(
+          width: layoutDirection == .leftToRight ? 1 : -1,
+          height: 0,
+        )
+    }
+  }
+}
+
 struct ResizableSplitPaneSizing: Equatable, Sendable {
-  static let dividerWidth: CGFloat = 1
+  static let dividerThickness: CGFloat = 1
   static let accessibilityStep: CGFloat = 10
 
-  let defaultWidth: CGFloat
-  let widthRange: ClosedRange<CGFloat>
+  let defaultLength: CGFloat
+  let lengthRange: ClosedRange<CGFloat>
 
-  func width(
-    storedWidth: Double,
+  func length(
+    storedLength: Double,
     dragTranslation: CGFloat = .zero,
   ) -> CGFloat {
-    let persistedWidth =
-      storedWidth.isFinite
-      ? CGFloat(storedWidth)
-      : defaultWidth
-    let proposedWidth = persistedWidth + dragTranslation
+    let persistedLength =
+      storedLength.isFinite
+      ? CGFloat(storedLength)
+      : defaultLength
+    let proposedLength = persistedLength + dragTranslation
 
     return min(
-      max(proposedWidth, widthRange.lowerBound),
-      widthRange.upperBound,
+      max(proposedLength, lengthRange.lowerBound),
+      lengthRange.upperBound,
     )
   }
 }

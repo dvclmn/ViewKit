@@ -48,11 +48,14 @@ extension DividedGrid {
       Group(subviews: content) { subviews in
         ForEach(subviews: subviews) { subview in
           subview
+          //            .border(Color.green.opacity(subview.id != subviews.last?.id ? 0.3 : 1.0))
 
-                    if subview.id != subviews.last?.id {
-                      Divider()
-          //              .gridCellColumns(2)
-                    }
+          if subview.id != subviews.last?.id {
+//            GridRow {
+              Divider()
+              //                          .gridCellColumns(2)
+//            }
+          }
         }
       }  // END group
 
