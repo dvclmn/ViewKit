@@ -19,59 +19,102 @@ import ViewTools
 ///
 /// Use ``CasePicker`` instead when the picker and case-specific editor belong in
 /// one self-contained layout.
-public struct CaseMetaPicker<Root, Label>: View
-where Root: MetaEnumRepresentable, Label: View {
-  private let title: String
+public struct CaseMetaPicker<Root, PickerLabel, CaseLabel>: View
+where
+  Root: MetaEnumRepresentable,
+  PickerLabel: View,
+  CaseLabel: View
+{
   @Binding private var selection: Root
   private let handler: CasePathHandler<Root>
-  private let label: (Root.Meta) -> Label
+  private let pickerLabel: PickerLabel
+  private let caseLabel: (Root.Meta) -> CaseLabel
 
-  /// Creates a case-only picker with a custom label for each meta case.
+  /// Creates a case-only picker with custom picker and case labels.
   ///
   /// Keep `handler` at the nearest stable owner shared by every control that can
   /// change `selection`. A handler stores inactive payloads in memory, so a new
   /// handler starts a new selection history.
   ///
   /// - Parameters:
-  ///   - title: The picker's accessibility label.
   ///   - selection: The complete associated-value enum being edited.
   ///   - handler: The shared case-switching policy and in-memory payload cache.
-  ///   - label: A view describing each case-only meta value.
+  ///   - caseLabel: A view describing each case-only meta value.
+  ///   - label: A view describing the picker itself.
   public init(
-    _ title: String,
     selection: Binding<Root>,
     handler: CasePathHandler<Root>,
-    @ViewBuilder label: @escaping (Root.Meta) -> Label,
+    @ViewBuilder caseLabel: @escaping (Root.Meta) -> CaseLabel,
+    @ViewBuilder label: () -> PickerLabel,
   ) {
-    self.title = title
     self._selection = selection
     self.handler = handler
-    self.label = label
+    self.caseLabel = caseLabel
+    self.pickerLabel = label()
   }
 
   public var body: some View {
-    Picker(title, selection: handler.metaBinding($selection)) {
+    Picker(selection: handler.metaBinding($selection)) {
       ForEach(Array(Root.Meta.allCases), id: \.self) { meta in
-        label(meta)
+        caseLabel(meta)
           .tag(meta)
       }
+    } label: {
+      pickerLabel
     }
   }
 }
 
-extension CaseMetaPicker where Root.Meta: LabeledItem, Label == QuickLabel {
-  /// Creates a case-only picker using each generated meta case's name.
+extension CaseMetaPicker where PickerLabel == Text {
+  /// Creates a case-only picker with a string title and custom case labels.
+  public init(
+    _ title: String,
+    selection: Binding<Root>,
+    handler: CasePathHandler<Root>,
+    @ViewBuilder caseLabel: @escaping (Root.Meta) -> CaseLabel,
+  ) {
+    self.init(
+      selection: selection,
+      handler: handler,
+      caseLabel: caseLabel,
+      label: { Text(title) },
+    )
+  }
+}
+
+extension CaseMetaPicker where Root.Meta: LabeledItem, CaseLabel == QuickLabel {
+  /// Creates a case-only picker with a custom picker label.
+  public init(
+    selection: Binding<Root>,
+    handler: CasePathHandler<Root>,
+    @ViewBuilder label: () -> PickerLabel,
+  ) {
+    self.init(
+      selection: selection,
+      handler: handler,
+      caseLabel: { QuickLabel($0.label) },
+      label: label,
+    )
+  }
+}
+
+extension CaseMetaPicker
+where
+  Root.Meta: LabeledItem,
+  PickerLabel == Text,
+  CaseLabel == QuickLabel
+{
+  /// Creates a case-only picker with a string title.
   public init(
     _ title: String,
     selection: Binding<Root>,
     handler: CasePathHandler<Root>,
   ) {
     self.init(
-      title,
       selection: selection,
       handler: handler,
-      label: { QuickLabel($0.label) },
-//      label: { Text($0.name) },
+      caseLabel: { QuickLabel($0.label) },
+      label: { Text(title) },
     )
   }
 }

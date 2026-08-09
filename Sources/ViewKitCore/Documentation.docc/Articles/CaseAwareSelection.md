@@ -64,6 +64,26 @@ CasePicker("Interpolation", selection: $interpolation) { interpolation in
 
 The content receives a `CaseProxy`, which returns a binding only for the active case.
 
+Like SwiftUI's native controls, `CasePicker` offers separate initialisers for a string title and a custom picker label. Omit the title when supplying the label closure:
+
+```swift
+CasePicker(selection: $interpolation) { interpolation in
+  InterpolationControls(interpolation: interpolation)
+} label: {
+  Label("Interpolation", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+}
+```
+
+The picker label and the labels for its selectable cases are separate concepts. When a case needs richer presentation, use `caseLabel:` alongside either picker-label route:
+
+```swift
+CasePicker("Interpolation", selection: $interpolation) { interpolation in
+  InterpolationControls(interpolation: interpolation)
+} caseLabel: { meta in
+  Label(meta.name, systemImage: symbolName(for: meta))
+}
+```
+
 ## Separate a Toolbar Picker from Inspector Content
 
 When selection and content occupy different parts of the interface, keep the handler at their nearest stable common owner. Pass it to `CaseMetaPicker` in the toolbar, then route the complete binding in the inspector body:

@@ -16,61 +16,98 @@ import SwiftUI
 /// elements belong together. For a selection control whose content lives
 /// elsewhere, such as a toolbar driving an inspector body, use
 /// ``CaseMetaPicker`` with a caller-owned ``CasePathHandler``.
-///
-/// The convenience initialiser labels cases with their generated names. Use the
-/// label-enabled initialiser when the picker needs richer case labels.
-public struct CasePicker<Root, Label, Content>: View
+public struct CasePicker<Root, PickerLabel, CaseLabel, Content>: View
 where
   Root: MetaEnumRepresentable & CasePathable,
-  Label: View,
+  PickerLabel: View,
+  CaseLabel: View,
   Content: View
 {
-  let title: String
-  @Binding var selection: Root
+  @Binding private var selection: Root
   @State private var state: CasePathHandler<Root>
-  let content: (CaseProxy<Root>) -> Content
-  let label: (Root.Meta) -> Label
-  let clampAny: Any?
+  private let pickerLabel: PickerLabel
+  private let caseLabel: (Root.Meta) -> CaseLabel
+  private let content: (CaseProxy<Root>) -> Content
+  private let clampAny: Any?
 
-  /// Creates a self-contained case picker with custom labels for each case.
+  /// Creates a self-contained case picker with custom picker and case labels.
   ///
   /// - Parameters:
-  ///   - title: The picker's accessibility label.
   ///   - selection: The complete associated-value enum being edited.
-  ///   - label: A view describing each case-only meta value.
+  ///   - clamp: A value made available to case-specific editing infrastructure.
   ///   - content: The case-specific editor content.
+  ///   - caseLabel: A view describing each case-only meta value.
+  ///   - label: A view describing the picker itself.
   public init(
-    _ title: String,
     selection: Binding<Root>,
     clamp: Any? = nil,
     @ViewBuilder content: @escaping (CaseProxy<Root>) -> Content,
-    @ViewBuilder label: @escaping (Root.Meta) -> Label,
+    @ViewBuilder caseLabel: @escaping (Root.Meta) -> CaseLabel,
+    @ViewBuilder label: () -> PickerLabel,
   ) {
-    self.title = title
     self._selection = selection
     self._state = State(initialValue: CasePathHandler(initialValue: selection.wrappedValue))
-    self.clampAny = clamp
+    self.pickerLabel = label()
+    self.caseLabel = caseLabel
     self.content = content
-    self.label = label
+    self.clampAny = clamp
   }
 
   public var body: some View {
     CaseMetaPicker(
-      title,
       selection: $selection,
       handler: state,
-      label: label,
+      caseLabel: caseLabel,
+      label: { pickerLabel },
     )
     content(CaseProxy(selection: $selection))
   }
 }
 
-extension CasePicker where Label == Text {
-  /// Creates a self-contained case picker using each generated meta case's name.
+// MARK: - Additional initialisers
+extension CasePicker where PickerLabel == Text {
+  /// Creates a self-contained case picker with a string title and custom case labels.
+  public init(
+    _ title: String,
+    selection: Binding<Root>,
+    clamp: Any? = nil,
+    @ViewBuilder content: @escaping (CaseProxy<Root>) -> Content,
+    @ViewBuilder caseLabel: @escaping (Root.Meta) -> CaseLabel,
+  ) {
+    self.init(
+      selection: selection,
+      clamp: clamp,
+      content: content,
+      caseLabel: caseLabel,
+      label: { Text(title) },
+    )
+  }
+}
+
+extension CasePicker where CaseLabel == Text {
+  /// Creates a self-contained case picker with a custom picker label.
   ///
-  /// This preserves the concise initialiser and default labels used by earlier
-  /// versions of `CasePicker`. Supply `label:` to the designated initialiser when
-  /// the picker needs custom case labels.
+  /// Each case is represented by its generated meta case name.
+  public init(
+    selection: Binding<Root>,
+    clamp: Any? = nil,
+    @ViewBuilder content: @escaping (CaseProxy<Root>) -> Content,
+    @ViewBuilder label: () -> PickerLabel,
+  ) {
+    self.init(
+      selection: selection,
+      clamp: clamp,
+      content: content,
+      caseLabel: { Text($0.name) },
+      label: label,
+    )
+  }
+}
+
+extension CasePicker where PickerLabel == Text, CaseLabel == Text {
+  /// Creates a self-contained case picker with a string title.
+  ///
+  /// Each case is represented by its generated meta case name.
   public init(
     _ title: String,
     selection: Binding<Root>,
@@ -78,11 +115,11 @@ extension CasePicker where Label == Text {
     @ViewBuilder content: @escaping (CaseProxy<Root>) -> Content,
   ) {
     self.init(
-      title,
       selection: selection,
       clamp: clamp,
       content: content,
-      label: { Text($0.name) },
+      caseLabel: { Text($0.name) },
+      label: { Text(title) },
     )
   }
 }
