@@ -13,11 +13,11 @@ import SwiftUI
 public struct PopupMessage: Sendable, Identifiable {
   public let id: UUID
 
-  var label: LabelDescriptor
-  let message: String?
-  let loading: PopupLoadingIndicator
-  var dismissal: PopupDismissBehaviour
-  var actions: [PopupAction]
+  public var label: LabelDescriptor
+  public let message: String?
+  public let loading: PopupLoadingIndicator
+  public var dismissal: PopupDismissBehaviour
+  public var actions: [PopupAction]
 
   public init(
     id: UUID = UUID(),
@@ -46,13 +46,13 @@ extension PopupMessage {
   public static func make(
     _ title: String,
     loading: PopupLoadingIndicator = .none,
-    dismissal: PopupDismissBehaviour = .automatic(),
+    dismissal: PopupDismissBehaviour? = nil,
     actions: PopupAction...
   ) -> Self {
     PopupMessage(
       label: LabelDescriptor(title),
       loading: loading,
-      dismissal: dismissal,
+      dismissal: dismissal ?? defaultDismissal(loading: loading, actions: actions),
       actions: actions
     )
   }
@@ -62,16 +62,23 @@ extension PopupMessage {
     icon: IconLiteral,
     message: String? = nil,
     loading: PopupLoadingIndicator = .none,
-    dismissal: PopupDismissBehaviour = .automatic(),
+    dismissal: PopupDismissBehaviour? = nil,
     actions: PopupAction...
   ) -> Self {
     PopupMessage(
       label: LabelDescriptor(title, icon: icon),
       message: message,
       loading: loading,
-      dismissal: dismissal,
+      dismissal: dismissal ?? defaultDismissal(loading: loading, actions: actions),
       actions: actions
     )
+  }
+
+  private static func defaultDismissal(
+    loading: PopupLoadingIndicator,
+    actions: [PopupAction]
+  ) -> PopupDismissBehaviour {
+    loading == .none && actions.isEmpty ? .automatic() : .manual
   }
 }
 
@@ -80,6 +87,12 @@ extension PopupMessage {
   public var title: String { label.text }
   public var icon: IconLiteral? { label.icon }
   public var iconString: String? { label.icon?.stringValue }
+
+  var accessibilityAnnouncement: String {
+    [title, message]
+      .compactMap { $0 }
+      .joined(separator: ". ")
+  }
 }
 
 extension PopupMessage: CustomStringConvertible {

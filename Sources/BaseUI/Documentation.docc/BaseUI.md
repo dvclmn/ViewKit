@@ -30,3 +30,11 @@ caller-defined section order.
 ### Resizable panes
 
 - <doc:ResizableSplitPane>
+
+### Popups
+
+- <doc:Popup>
+- ``Popup``
+- ``PopupMessage``
+- ``PopupDismissBehaviour``
+- ``PopupAction``

@@ -14,25 +14,19 @@ import Foundation
 extension Popup {
 
   public func showPopup(_ title: String) {
-    Task {
-      await showAndHidePopup(popupMessage: PopupMessage(label: LabelDescriptor(title)))
-    }
+    present(PopupMessage(label: LabelDescriptor(title)))
   }
 
   public func showPopup(_ popupMessage: PopupMessage?) {
     guard let popupMessage else { return }
-    Task { @MainActor in
-      await showAndHidePopup(popupMessage: popupMessage)
-    }
+    present(popupMessage)
   }
 
   public func showPopup(_ error: any LocalizedError) {
-    Task { @MainActor in
-      let label = LabelDescriptor(
-        error.errorDescription ?? "An unknown error occurred",
-        icon: .preset(.warning)
-      )
-      showPopup(PopupMessage(label: label))
-    }
+    let label = LabelDescriptor(
+      error.errorDescription ?? "An unknown error occurred",
+      icon: .preset(.warning)
+    )
+    showPopup(PopupMessage(label: label))
   }
 }

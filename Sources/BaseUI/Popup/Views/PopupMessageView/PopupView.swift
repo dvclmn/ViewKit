@@ -94,7 +94,7 @@ extension PopupView {
   @ViewBuilder
   func DismissButton() -> some View {
     Button {
-      popup?.popupMessage = nil
+      popup?.dismiss()
     } label: {
       Label("Dismiss", systemImage: Icons.cross.icon)
         .labelStyle(.iconOnly)

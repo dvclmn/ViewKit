@@ -11,62 +11,51 @@ import SwiftUI
 @Observable
 public final class Popup: Sendable {
 
-  var popupMessage: PopupMessage? = nil
-  private var popupTask: Task<Void, Never>? = nil
+  public private(set) var popupMessage: PopupMessage?
+  private var dismissalTask: Task<Void, Never>?
 
   public init(message: PopupMessage? = nil) {
     self.popupMessage = message
+  }
+
+  isolated deinit {
+    dismissalTask?.cancel()
   }
 }
 
 extension Popup {
 
-  package func showAndHidePopup(popupMessage: PopupMessage) async {
-    //    print("Showing a popup at \(Date.debug): \(popupMessage)")
-    popupTask?.cancel()
-    popupTask = Task { @MainActor in
-      await displayPopup(popupMessage: popupMessage)
+  package func present(_ message: PopupMessage) {
+    dismissalTask?.cancel()
+    dismissalTask = nil
+    popupMessage = message
 
-      /// If no auto-dismiss duration, then we're done, and can exit
-      switch popupMessage.dismissal {
-        case .automatic(let duration, _):
-          do {
-            //            print(
-            //              "Starting count-down for auto-dismissed Popup. Auto-dismiss Duration is \(duration.displayString)"
-            //            )
-            try await Task.sleep(for: .seconds(duration))
+    AccessibilityNotification.Announcement(message.accessibilityAnnouncement).post()
 
-            await hidePopup()
+    guard let duration = message.dismissal.autoDismissDuration else { return }
 
-          } catch {
-
-          }
-
-        case .manual:
-          self.popupTask?.cancel()
-          self.popupTask = nil
+    dismissalTask = Task { @MainActor [weak self] in
+      do {
+        try await Task.sleep(for: .seconds(duration))
+      } catch is CancellationError {
+        return
+      } catch {
+        return
       }
 
-    }
-  }  // END show hide popup
-
-  @MainActor
-  private func displayPopup(popupMessage: PopupMessage) async {
-    Task { @MainActor in
-      withAnimation(.easeOut(duration: 0.1)) {
-        self.popupMessage = popupMessage
-      }
+      self?.dismiss(messageID: message.id)
     }
   }
 
-  @MainActor
-  private func hidePopup() async {
-    Task { @MainActor in
-      withAnimation(.easeInOut(duration: 0.6)) {
-        self.popupMessage = nil
-        self.popupTask?.cancel()
-        self.popupTask = nil
-      }
-    }
+  public func dismiss() {
+    dismiss(messageID: popupMessage?.id)
+  }
+
+  private func dismiss(messageID: UUID?) {
+    guard popupMessage?.id == messageID else { return }
+
+    dismissalTask?.cancel()
+    dismissalTask = nil
+    popupMessage = nil
   }
 }

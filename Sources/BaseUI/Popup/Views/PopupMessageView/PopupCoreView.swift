@@ -46,7 +46,11 @@ struct PopupCoreView: View {
 
       ForEach(popupMessage.actions) { action in
         Button(action.title) {
-          return action.action()
+          action.action()
+
+          if action.dismissesPopup {
+            popup?.dismiss()
+          }
         }
         .controlSize(isCompactMode ? .small : .regular)
         .offset(y: downwardOffset)

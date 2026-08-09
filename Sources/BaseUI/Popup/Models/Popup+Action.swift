@@ -12,16 +12,19 @@ import Foundation
 
 public struct PopupAction: Sendable, Identifiable {
   public let id: UUID
-  let title: String
+  public let title: String
+  public let dismissesPopup: Bool
   let action: @Sendable () -> Void
 
   public init(
     id: UUID = UUID(),
     title: String,
+    dismissesPopup: Bool = true,
     action: @escaping @Sendable () -> Void
   ) {
     self.id = id
     self.title = title
+    self.dismissesPopup = dismissesPopup
     self.action = action
   }
 }

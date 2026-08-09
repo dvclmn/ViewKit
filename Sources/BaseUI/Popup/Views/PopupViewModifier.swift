@@ -38,20 +38,24 @@ public struct PopupViewModifier: ViewModifier {
 /// and the Popup view is needed elsewhere in the app, such as the Settings window
 public struct PopupViewExtenderModifier: ViewModifier {
   @Environment(\.popup) private var popup
+  @Environment(\.accessibilityReduceMotion) private var accessibilityReduceMotion
 
   let debugPopup: PopupDebug
   let alignment: Alignment
   let isCompact: Bool
 
   public func body(content: Content) -> some View {
+    let message = popup.flatMap(message)
+
     content
       .overlay(alignment: alignment) {
 
         /// This allows providing a warning that there's no popup set in the Env
         if let popup {
-          if let message = message(popup) {
+          if let message {
             PopupView(message: message, alignment: alignment)
               .environment(\.isCompactMode, isCompact)
+              .transition(.opacity.combined(with: .scale(scale: 0.96)))
             //              .environment(\.hasCloseButton, hasCloseButton)
           }
 
@@ -61,6 +65,10 @@ public struct PopupViewExtenderModifier: ViewModifier {
             .padding()
         }
       }
+      .animation(
+        accessibilityReduceMotion ? nil : .smooth(duration: 0.22),
+        value: message?.id
+      )
 
   }
 }
