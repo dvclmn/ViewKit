@@ -7,7 +7,6 @@
 
 import CoreTools
 import ViewTools
-// import LayoutKit
 import SwiftUI
 
 #if canImport(AppKit)
@@ -49,7 +48,8 @@ public struct TextScrubber: View, ValueFormattable {
       } set: {
         guard let range else { return }
         self.value = $0.clamped(to: range)
-      }
+      },
+      initially: .viewToModel
     )
 
     /// These are one-way only (from outside, into this View),
