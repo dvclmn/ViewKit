@@ -25,7 +25,7 @@ extension Flexi {
     //    var gridContext: GridContext<Item>?
 
     var selected: Set<Item.ID> = []
-    var modifiers: Modifiers = []
+    var modifiers: Modifiers?
 
     /// The bounding box of the active selection
     var selectionRect: CGRect?

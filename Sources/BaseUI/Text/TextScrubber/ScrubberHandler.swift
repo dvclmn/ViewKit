@@ -43,7 +43,7 @@ extension ScrubberHandler {
 
   /// This returns a 1/10/100 increment based on modifiers,
   /// unless a specific `stepped` Strategy is selected
-  func stepSize(modifiers: Modifiers) -> Double {
+  func stepSize(modifiers: Modifiers?) -> Double {
     strategy.stepSize(with: modifiers)
   }
 
@@ -57,7 +57,7 @@ extension ScrubberHandler {
   
   func handleKeyPress(
     key: KeyEquivalent,
-    modifiers: Modifiers
+    modifiers: Modifiers?
   ) -> KeyPress.Result {
     
     let delta = stepSize(modifiers: modifiers)

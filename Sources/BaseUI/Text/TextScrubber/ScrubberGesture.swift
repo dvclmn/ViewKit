@@ -60,7 +60,7 @@ extension ScrubDragGesture {
 
   private var sensitivity: CGFloat {
     let reducedSensitivity: CGFloat = dragSensitivity * 0.35
-    let isModeChanged = modifierKeys == .option && !isDragging
+    let isModeChanged = modifierKeys == [.option] && !isDragging
     return isModeChanged ? reducedSensitivity : dragSensitivity
   }
 

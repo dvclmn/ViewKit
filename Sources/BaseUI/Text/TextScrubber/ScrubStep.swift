@@ -20,14 +20,14 @@ public enum ScrubStrategy: Equatable {
 /// For now, I will use the classic 1/10/100 steps w/ modifiers
 /// for continuous, and the specific step size for stepped.
 extension ScrubStrategy {
-  public func stepSize(with modifiers: Modifiers) -> Double {
+  public func stepSize(with modifiers: Modifiers?) -> Double {
     steppedValue ?? steppedValue(from: modifiers)
   }
 
-  private func steppedValue(from modifiers: Modifiers) -> Double {
+  private func steppedValue(from modifiers: Modifiers?) -> Double {
     switch modifiers {
-      case let mod where mod.contains(.command): 100
-      case let mod where mod.contains(.shift): 10
+      case let mod where mod.isHoldingCommand: 100
+      case let mod where mod.isHoldingShift: 10
       default: 1
     }
   }
