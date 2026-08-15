@@ -6,8 +6,8 @@
 //
 
 import CoreTools
-import ViewTools
 import SwiftUI
+import ViewTools
 
 #if canImport(AppKit)
 public struct TextScrubber: View, ValueFormattable {
@@ -33,6 +33,21 @@ public struct TextScrubber: View, ValueFormattable {
     self.range = range
   }
 
+  /// Creates a scrubber for an integer binding.
+  public init(
+    _ title: String,
+    intValue: Binding<Int>,
+    range: ClosedRange<Int>? = nil,
+    strategy: ScrubStrategy = .continuous,
+  ) {
+    self.init(
+      title,
+      value: intValue.toBindingDouble,
+      range: range?.toDoubleRange,
+      strategy: strategy,
+    )
+  }
+
   public var body: some View {
     LabeledContent(store.title) {
       ScrubberCore(store: store)
@@ -49,7 +64,7 @@ public struct TextScrubber: View, ValueFormattable {
         guard let range else { return }
         self.value = $0.clamped(to: range)
       },
-      initially: .viewToModel
+      initially: .viewToModel,
     )
 
     /// These are one-way only (from outside, into this View),

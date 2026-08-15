@@ -6,9 +6,9 @@
 //
 
 import CoreTools
-import ViewTools
 // import LayoutKit
 import SwiftUI
+import ViewTools
 
 struct ScrubberCore: View {
   @Environment(\.fractionLength) private var fractionLength
@@ -37,8 +37,8 @@ struct ScrubberCore: View {
             RoundedRectangle(cornerRadius: 7)
               .fill(Color.black.tertiary.opacity(isDraggableAndHovered ? 1.0 : 0.6))
               .stroke(Color.white.opacity(isDraggableAndHovered ? 0.1 : 0.03), lineWidth: 1)
-//              .offset(x: offsetThing)
-//              .animation(Styles.animationSpringExtraBouncy, value: store.dragRangePhase)
+            //              .offset(x: offsetThing)
+            //              .animation(Styles.animationSpringExtraBouncy, value: store.dragRangePhase)
           }
         }
 
@@ -92,35 +92,36 @@ struct ScrubberCore: View {
 }
 
 extension ScrubberCore {
-  
+
   private var offsetThing: CGFloat {
-    let base: CGFloat = switch store.dragRangePhase {
-      case .idle:
+    let base: CGFloat =
+      switch store.dragRangePhase {
+        case .idle:
           .zero
-      case .nearBoundary(let boundary, let proximity):
-        switch boundary {
-          case .leading: -proximity
-          case .trailing: proximity
-        }
-      case .overshooting(let boundary, let distance):
-        switch boundary {
-          case .leading: -distance
-          case .trailing: distance
-        }
-    }
-    
+        case .nearBoundary(let boundary, let proximity):
+          switch boundary {
+            case .leading: -proximity
+            case .trailing: proximity
+          }
+        case .overshooting(let boundary, let distance):
+          switch boundary {
+            case .leading: -distance
+            case .trailing: distance
+          }
+      }
+
     return base * 10
   }
-  
-//  private var isPullingLeft: Bool {
-//    /// This isn't a 'thing' with a range
-//    guard let range = store.range else { return false }
-//    let minCap = 2.0
-//    let totalWidth = store.value - (minCap * 2)
-//    guard range.contains((minCap * 2) + )
-//    let buffer = max()
-//    store.isDragging &&
-//  }
+
+  //  private var isPullingLeft: Bool {
+  //    /// This isn't a 'thing' with a range
+  //    guard let range = store.range else { return false }
+  //    let minCap = 2.0
+  //    let totalWidth = store.value - (minCap * 2)
+  //    guard range.contains((minCap * 2) + )
+  //    let buffer = max()
+  //    store.isDragging &&
+  //  }
 
   private var isDraggableAndHovered: Bool {
     isDraggable && store.isHovering
@@ -140,14 +141,14 @@ extension ScrubberCore {
           store.title,
           value: $store.value,
           in: range,
-          step: store.stepSize(modifiers: modifierKeys)
+          step: store.stepSize(modifiers: modifierKeys),
         )
 
       } else {
         Stepper(
           store.title,
           value: $store.value,
-          step: store.stepSize(modifiers: modifierKeys)
+          step: store.stepSize(modifiers: modifierKeys),
         )
       }
     }  // END group
