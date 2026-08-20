@@ -13,6 +13,12 @@ import ViewTools
 public struct TextScrubber: View, ValueFormattable {
   @State private var store: ScrubberHandler
 
+  private static let requiredModifierKeyMask: EventModifiers = [
+    .option,
+    .command,
+    .shift,
+  ]
+
   let title: String
   @Binding var value: Double
   let range: ClosedRange<Double>?
@@ -72,6 +78,11 @@ public struct TextScrubber: View, ValueFormattable {
     .task(id: title) { store.title = title }
     .task(id: range) { store.range = range }
     .task(id: strategy) { store.strategy = strategy }
+
+    /// Option enables drag adjustment, while Command and Shift vary the
+    /// continuous step size. Reuse adequate tracking from an ancestor or
+    /// establish it at the TextScrubber boundary when needed.
+    .ensureModifierKeys(Self.requiredModifierKeyMask)
   }
 }
 #endif

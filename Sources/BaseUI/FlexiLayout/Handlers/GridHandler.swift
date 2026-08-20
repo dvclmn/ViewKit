@@ -144,8 +144,8 @@ extension Flexi.GridHandler {
       lastClickedItemID = firstSelectedID
     }
 
-    if modifiers.contains(.command) {
-      if modifiers.contains(.shift) {
+    if modifiers.isHoldingCommand {
+      if modifiers.isHoldingShift {
         /// Command+Shift+Drag: Remove the items in the drag selection from the overall selection
         selected.wrappedValue.subtract(newSelection)
       } else {
@@ -173,11 +173,11 @@ extension Flexi.GridHandler {
     lastClickedItemID = itemID
 
     /// Handle different modifier key combinations
-    if modifiers.contains(.command) {
+    if modifiers.isHoldingCommand {
       /// Command key: Toggle selection of individual item
       handleCommandKey(id: itemID)
 
-    } else if modifiers.contains(.shift) {
+    } else if modifiers.isHoldingShift {
       handleShiftKey(id: itemID, data: data, tappedIndex: tappedIndex)
 
     } else {
@@ -214,7 +214,7 @@ extension Flexi.GridHandler {
     {
 
       /// Start with existing command-selected items
-      var newSelection = modifiers.contains(.command) ? selected : []
+      var newSelection = modifiers.isHoldingCommand ? selected : []
 
       let minIndex = min(tappedIndex, anchorIndex)
       let maxIndex = max(tappedIndex, anchorIndex)
