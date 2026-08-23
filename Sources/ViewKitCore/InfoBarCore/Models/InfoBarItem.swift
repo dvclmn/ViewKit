@@ -31,6 +31,7 @@ public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
 extension InfoBarItem {
   /// This isn't implemented just yet, it's just a passthrough
   public var content: String { columnedContent.content }
+  
   public init(
     section: InfoBarSectionID,
     label: LabelDescriptor?,

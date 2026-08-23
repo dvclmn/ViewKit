@@ -29,44 +29,6 @@ public struct InfoBarKey: PreferenceKey {
 
 // MARK: - Stable registration
 
-@MainActor
-private struct InfoBarRegistrationModifier<Value: Equatable>: ViewModifier {
-  @Environment(\.infoBarStore) private var store
-  @State private var registration = InfoBarRegistration()
-
-  let value: Value
-  let sectionKey: InfoBarSectionID
-  let isEnabled: Bool
-  let makeContent: (Value) -> InfoBarRegistration.Content
-
-  func body(content: Content) -> some View {
-    let trigger = InfoBarRegistrationTrigger(
-      value: value,
-      sectionKey: sectionKey,
-      isEnabled: isEnabled,
-      storeID: store?.id
-    )
-
-    content
-      .onChange(of: trigger, initial: true) { _, newTrigger in
-        reconcile(with: newTrigger)
-      }
-      .onDisappear {
-        registration.detach()
-      }
-  }
-
-  private func reconcile(with trigger: InfoBarRegistrationTrigger<Value>) {
-    guard trigger.isEnabled, let store else {
-      registration.detach()
-      return
-    }
-
-    registration.update(to: makeContent(trigger.value))
-    registration.attach(to: store, in: trigger.sectionKey)
-  }
-}
-
 private struct InfoBarRegistrationTrigger<Value: Equatable>: Equatable {
   let value: Value
   let sectionKey: InfoBarSectionID

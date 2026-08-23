@@ -111,12 +111,12 @@ package final class InfoBarRegistration: Identifiable {
   }
 }
 
-extension InfoBarRegistration {
-  package enum Content {
-    case items([InfoBarItem])
-    case view(AnyView)
-  }
-}
+//extension InfoBarRegistration {
+//  package enum Content {
+//    case items([InfoBarItem])
+//    case view(AnyView)
+//  }
+//}
 
 extension Array where Element == InfoBarItem {
   fileprivate func preservingIDs(from existingItems: [InfoBarItem]) -> [InfoBarItem] {

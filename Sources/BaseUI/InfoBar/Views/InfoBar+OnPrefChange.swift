@@ -13,7 +13,7 @@ import ViewKitCore
 struct InfoBarItemsModifier: ViewModifier {
   @Environment(\.infoBarStore) private var inheritedStore
   @State private var ownedStore = InfoBarStore()
-  @State private var preferenceBridge = InfoBarPreferenceBridge()
+//  @State private var preferenceBridge = InfoBarPreferenceBridge()
 
   let isEnabled: Bool
 
@@ -25,7 +25,7 @@ struct InfoBarItemsModifier: ViewModifier {
       .environment(\.isInfoBarPresent, shouldPresent || inheritedStore != nil)
       .onPreferenceChange(InfoBarKey.self) { items in
         guard inheritedStore == nil else { return }
-        preferenceBridge.update(items, in: ownedStore)
+//        preferenceBridge.update(items, in: ownedStore)
       }
       .safeAreaInset(edge: .bottom, spacing: 0) {
         if shouldPresent {

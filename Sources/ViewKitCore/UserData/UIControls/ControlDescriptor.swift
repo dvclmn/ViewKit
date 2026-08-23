@@ -49,8 +49,6 @@ public struct AnyControlDescriptor<Root> {
   private let _layout: LayoutKind?
   private let _toggleConfig: ToggleConfig?
 
-  //  private let _applyView: (Binding<Root>) -> AnyView
-
   public var kind: ControlKind { _kind }
   public var title: String? { _title }
   public var layout: LayoutKind? { _layout }
