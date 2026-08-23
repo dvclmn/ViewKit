@@ -16,43 +16,22 @@ import SwiftUI
 ///
 /// Prefer ``SwiftUI/View/infoBarItem(_:section:isEnabled:content:)`` or the
 /// existing `addInfoBarItems` modifiers, which now use stable registrations.
-public struct InfoBarKey: PreferenceKey {
-  public static let defaultValue: [InfoBarItem] = []
-
-  public static func reduce(
-    value: inout [InfoBarItem],
-    nextValue: () -> [InfoBarItem]
-  ) {
-    value.append(contentsOf: nextValue())
-  }
-}
+//public struct InfoBarKey: PreferenceKey {
+//  public static let defaultValue: [InfoBarItem] = []
+//
+//  public static func reduce(
+//    value: inout [InfoBarItem],
+//    nextValue: () -> [InfoBarItem]
+//  ) {
+//    value.append(contentsOf: nextValue())
+//  }
+//}
 
 // MARK: - Stable registration
 
-private struct InfoBarRegistrationTrigger<Value: Equatable>: Equatable {
-  let value: Value
-  let sectionKey: InfoBarSectionID
-  let isEnabled: Bool
-  let storeID: UUID?
-}
 
-package struct InfoBarItemsSnapshot: Equatable {
-  package let items: [InfoBarItem]
 
-  package init(items: [InfoBarItem]) {
-    self.items = items
-  }
 
-  package static func == (lhs: Self, rhs: Self) -> Bool {
-    guard lhs.items.count == rhs.items.count else { return false }
-
-    return zip(lhs.items, rhs.items).allSatisfy { lhsItem, rhsItem in
-      lhsItem.sectionKey == rhsItem.sectionKey
-        && lhsItem.label == rhsItem.label
-        && lhsItem.columnedContent == rhsItem.columnedContent
-    }
-  }
-}
 
 // MARK: - Rich item APIs
 

@@ -5,8 +5,8 @@
 //  Created by Dave Coleman on 13/2/2026.
 //
 
-import Foundation
 import CoreTools
+import Foundation
 import StringTools
 
 /// Describes a single InfoBar Item
@@ -28,12 +28,12 @@ extension InfoBarItemDescriptor {
 
   public func makeItem(
     from source: Source,
-    format: FloatDisplayFormat
+    format: FloatDisplayFormat,
   ) -> InfoBarItem {
     InfoBarItem(
       section: InfoBarSectionID(SectionKey.self),
       label: label,
-      content: content(from: source)
+      content: content(from: source),
       //      content: content(from: source, format: format)
     )
   }

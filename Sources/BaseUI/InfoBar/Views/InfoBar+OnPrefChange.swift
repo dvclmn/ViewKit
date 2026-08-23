@@ -13,7 +13,7 @@ import ViewKitCore
 struct InfoBarItemsModifier: ViewModifier {
   @Environment(\.infoBarStore) private var inheritedStore
   @State private var ownedStore = InfoBarStore()
-//  @State private var preferenceBridge = InfoBarPreferenceBridge()
+  //  @State private var preferenceBridge = InfoBarPreferenceBridge()
 
   let isEnabled: Bool
 
@@ -23,10 +23,10 @@ struct InfoBarItemsModifier: ViewModifier {
     content
       .environment(\.infoBarStore, activeStore)
       .environment(\.isInfoBarPresent, shouldPresent || inheritedStore != nil)
-      .onPreferenceChange(InfoBarKey.self) { items in
-        guard inheritedStore == nil else { return }
-//        preferenceBridge.update(items, in: ownedStore)
-      }
+      //      .onPreferenceChange(InfoBarKey.self) { items in
+      //        guard inheritedStore == nil else { return }
+      //        preferenceBridge.update(items, in: ownedStore)
+      //      }
       .safeAreaInset(edge: .bottom, spacing: 0) {
         if shouldPresent {
           RegisteredInfoBarView(store: ownedStore)
@@ -36,7 +36,7 @@ struct InfoBarItemsModifier: ViewModifier {
         #if DEBUG
         if isEnabled, inheritedStore != nil {
           print(
-            "⚠️ Optimization Warning: Duplicate InfoBarModifier detected at this view level. Child InfoBar is being suppressed."
+            "⚠️ Warning: Duplicate InfoBarModifier detected at this view level. Child InfoBar is being suppressed."
           )
         }
         #endif
@@ -58,60 +58,35 @@ struct InfoBarItemsModifier: ViewModifier {
   }
 }
 
-@MainActor
-private final class InfoBarPreferenceBridge {
-  private var registrations: [InfoBarSectionID: InfoBarRegistration] = [:]
-  private var snapshots: [InfoBarSectionID: InfoBarItemsSnapshot] = [:]
+//@MainActor
+//private final class InfoBarPreferenceBridge {
+//  private var registrations: [InfoBarSectionID: InfoBarRegistration] = [:]
+//  private var snapshots: [InfoBarSectionID: InfoBarItemsSnapshot] = [:]
+//
+//  func update(_ items: [InfoBarItem], in store: InfoBarStore) {
+//    var seenIDs: Set<InfoBarItem.ID> = []
+//    let uniqueItems = items.filter { seenIDs.insert($0.id).inserted }
+//    let groupedItems = Dictionary(grouping: uniqueItems, by: \.sectionKey)
+//    let removedSectionKeys = Set(registrations.keys).subtracting(groupedItems.keys)
+//
+//    for sectionKey in removedSectionKeys {
+//      guard let registration = registrations.removeValue(forKey: sectionKey) else { continue }
+//      snapshots.removeValue(forKey: sectionKey)
+//      registration.detach()
+//    }
+//
+//    for (sectionKey, sectionItems) in groupedItems {
+//      let registration = registrations[sectionKey] ?? InfoBarRegistration()
+//      let snapshot = InfoBarItemsSnapshot(items: sectionItems)
+//
+//      if snapshots[sectionKey] != snapshot {
+//        registration.update(to: .items(sectionItems))
+//        snapshots[sectionKey] = snapshot
+//      }
+//
+//      registrations[sectionKey] = registration
+//      registration.attach(to: store, in: sectionKey)
+//    }
+//  }
+//}
 
-  func update(_ items: [InfoBarItem], in store: InfoBarStore) {
-    var seenIDs: Set<InfoBarItem.ID> = []
-    let uniqueItems = items.filter { seenIDs.insert($0.id).inserted }
-    let groupedItems = Dictionary(grouping: uniqueItems, by: \.sectionKey)
-    let removedSectionKeys = Set(registrations.keys).subtracting(groupedItems.keys)
-
-    for sectionKey in removedSectionKeys {
-      guard let registration = registrations.removeValue(forKey: sectionKey) else { continue }
-      snapshots.removeValue(forKey: sectionKey)
-      registration.detach()
-    }
-
-    for (sectionKey, sectionItems) in groupedItems {
-      let registration = registrations[sectionKey] ?? InfoBarRegistration()
-      let snapshot = InfoBarItemsSnapshot(items: sectionItems)
-
-      if snapshots[sectionKey] != snapshot {
-        registration.update(to: .items(sectionItems))
-        snapshots[sectionKey] = snapshot
-      }
-
-      registrations[sectionKey] = registration
-      registration.attach(to: store, in: sectionKey)
-    }
-  }
-}
-
-extension View {
-  /// Presents one InfoBar and makes it available to contributing descendants.
-  ///
-  /// Place this modifier as high in the hierarchy as the participating views require.
-  /// Descendants contribute content with `infoBarValue`, `infoBarItem`, or the existing
-  /// `addInfoBarItems` APIs.
-  @MainActor
-  public func infoBarView(isEnabled: Bool = true) -> some View {
-    modifier(InfoBarItemsModifier(isEnabled: isEnabled))
-  }
-
-  @available(
-    *,
-    deprecated,
-    renamed: "infoBarView(isEnabled:)",
-    message: "Debouncing is no longer supported for InfoBar."
-  )
-  @MainActor
-  public func infoBarView(
-    debounceMode: DebounceMode = .debounce(0.2),
-    isEnabled: Bool = true
-  ) -> some View {
-    modifier(InfoBarItemsModifier(isEnabled: isEnabled))
-  }
-}

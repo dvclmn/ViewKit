@@ -47,15 +47,6 @@ private struct RegisteredInfoBarItemView: View {
         ForEach(items) { item in
           InfoBarItemView(item: item)
         }
-
-      case .view(let view):
-        HStack(spacing: 2) {
-          view
-
-          Divider()
-            .opacity(0.6)
-            .padding(.leading, Styles.sizeSmall)
-        }
     }
   }
 }
