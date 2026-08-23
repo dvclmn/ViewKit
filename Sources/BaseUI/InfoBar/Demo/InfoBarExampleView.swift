@@ -45,8 +45,16 @@ public struct InfoBarExampleView: View {
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .background(.black.secondary)
       .background(.purple.quinary)
-      .safeAreaPadding(.bottom, Styles.infoBarHeight)
-      .addInfoBarItems("Hello")
+      .infoBarValue(
+        value,
+        label: LabelDescriptor("Value", symbol: "slider.horizontal.3")
+      ) { value in
+        value.formatted(.number.precision(.fractionLength(3)))
+      }
+      .infoBarItem(value) { value in
+        ProgressView(value: value)
+          .frame(width: 80)
+      }
       .infoBarView()
     }
   }

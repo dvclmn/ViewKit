@@ -38,3 +38,8 @@ caller-defined section order.
 - ``PopupMessage``
 - ``PopupDismissBehaviour``
 - ``PopupAction``
+
+### Info bars
+
+- <doc:InfoBar>
+- ``InfoBarView``

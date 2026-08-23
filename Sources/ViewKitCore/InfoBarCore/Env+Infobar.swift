@@ -13,4 +13,5 @@ extension EnvironmentValues {
   @Entry public var itemLabelDisplay: LabelDisplay? = nil
   @Entry public var isInfoBarPresent: Bool = false
   @Entry public var shouldShowInfoBarItems: Bool = false
+  @Entry package var infoBarStore: InfoBarStore? = nil
 }

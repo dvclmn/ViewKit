@@ -88,4 +88,13 @@ extension InfoBarItem {
         return nil
     }
   }
+
+  package func replacingID(with id: UUID) -> Self {
+    Self(
+      id: id,
+      sectionKey: sectionKey,
+      label: label,
+      content: columnedContent
+    )
+  }
 }

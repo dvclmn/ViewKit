@@ -12,11 +12,7 @@ import ViewKitCore
 import StringTools
 
 public struct InfoBarView: View {
-  @Environment(\.backgroundStyle) private var backgroundStyle
   @Environment(\.modifierKeys) private var modifierKeys
-  @Environment(\.isLoading) private var isLoading
-//  @Environment(\.isASCIIMode) private var isASCIIMode
-//  @Environment(\.asciiModeFontSize) private var asciiModeFontSize
 
   let sections: [InfoBarSection]
   let showingModifiersSection: Bool
@@ -43,59 +39,73 @@ public struct InfoBarView: View {
         preset: .standard
       )
     }
-    let section = InfoBarSection(id: InfoBarSectionID(sectionKey), title: "I don't know", items: items)
+    let section = InfoBarSection(
+      id: InfoBarSectionID(sectionKey),
+      title: sectionKey.title,
+      items: items
+    )
     self.sections = [section]
 
   }
 
   public var body: some View {
+    InfoBarContainer(isEmpty: sections.isEmpty && !showingModifiersSection) {
+      ForEach(sections) { section in
+        InfoBarSectionView(sectionTitle: section.title, items: section.items)
+      }
 
+      if showingModifiersSection {
+        InfoBarSectionView(
+          sectionTitle: "Modifiers",
+          items: [.modifiersSection(modifierKeys)]
+        )
+      }
+    }
+  }
+}
+
+struct InfoBarContainer<Content: View>: View {
+  @Environment(\.backgroundStyle) private var backgroundStyle
+  @Environment(\.isLoading) private var isLoading
+
+  let isEmpty: Bool
+  let content: Content
+
+  init(
+    isEmpty: Bool,
+    @ViewBuilder content: () -> Content
+  ) {
+    self.isEmpty = isEmpty
+    self.content = content()
+  }
+
+  var body: some View {
     if !isLoading {
       ScrollView(.horizontal) {
-
         HStack(alignment: .firstTextBaseline, spacing: 0) {
-          if !sections.isEmpty {
-            ForEach(sections) { section in
-              InfoBarSectionView(sectionTitle: section.title, items: section.items)
-            }
-
-            if showingModifiersSection {
-              InfoBarSectionView(
-                sectionTitle: "Modifiers",
-                items: [.modifiersSection(modifierKeys)]
-              )
-            }
-            Spacer()
-
+          if isEmpty {
+            noItems("No items to display")
           } else {
-            NoItems("No items to display")
+            content
+            Spacer()
           }
-        }  // END hstack
+        }
         .safeAreaPadding(.horizontal, Styles.sizeTiny)
       }
       .scrollBounceBehavior(.basedOnSize)
       .scrollIndicators(.hidden)
-
-      // TODO: Considering separating Grid / ASCII related concepts more strictly, and keeping out of BaseHelpers so it's more opt-in, rather than ambiently there all the time
-//      .gridFont(
-//        config: .domain(.asciiMode),
-//        fallback: .caption2.weight(.medium)
-//      )
-      //      .font(.caption)
-      //      .fontWeight(.medium)
       .frame(height: Styles.infoBarHeight)
       .background(.thinMaterial, ignoresSafeAreaEdges: .horizontal)
-      .background(backgroundStyle ?? AnyShapeStyle(.black.opacity(0.06)), ignoresSafeAreaEdges: .horizontal)
-
-      /// Small top highlight for contrast against background
+      .background(
+        backgroundStyle ?? AnyShapeStyle(.black.opacity(0.06)),
+        ignoresSafeAreaEdges: .horizontal
+      )
       .overlay(alignment: .top) {
         Rectangle()
           .fill(.white.opacity(0.02))
           .frame(maxWidth: .infinity, maxHeight: 1)
       }
-
       .monospacedDigit()
-
       .environment(\.layoutAxis, .horizontal)
       .environment(\.layoutAlignment, .leading)
       .environment(\.layoutSpacing, .zero)
@@ -104,10 +114,10 @@ public struct InfoBarView: View {
   }
 }
 
-extension InfoBarView {
+extension InfoBarContainer {
 
   @ViewBuilder
-  func NoItems(_ reasonText: String) -> some View {
+  private func noItems(_ reasonText: String) -> some View {
     Text(reasonText)
       .foregroundStyle(.tertiary)
       .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)

@@ -11,11 +11,7 @@ import ViewKitCore
 import SwiftUI
 
 public struct InfoBarItemView: View {
-  @Environment(\.isShowingSectionHeader) private var isShowingSectionHeader
   @Environment(\.itemLabelDisplay) private var itemLabelDisplay
-  @Environment(\.isDebugMode) private var isDebugMode
-
-  @State private var isHoveringItem: Bool = false
 
   let item: InfoBarItem
 
@@ -38,7 +34,7 @@ public struct InfoBarItemView: View {
         //          .debugFrame("Label", .purple, isEnabled: isDebugMode)
       }
 
-      Text(String(describing: item.content))
+      Text(item.content)
 
         /// Taking the edge off the brightness
         .opacity(0.9)
@@ -50,13 +46,9 @@ public struct InfoBarItemView: View {
         /// Adds breathing room between the end of the content and its trailing Divider
         .padding(.leading, Styles.sizeSmall)
     }
-    //    .debugFrame("Item", .purple, isEnabled: isDebugMode)
     /// Some leading padding here brings the icon in from the edge a bit,
     /// including the very first item
     //    .padding(.leading, Styles.sizeTiny)
-    .onHover { hovering in
-      isHoveringItem = hovering
-    }
 
   }
 }
