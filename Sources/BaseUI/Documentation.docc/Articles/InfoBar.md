@@ -47,6 +47,6 @@ Rich content is type-erased only at the individual registration boundary. This i
 
 ## Existing item descriptors
 
-The existing `addInfoBarItems` overloads remain available and now use the same stable registration path. `InfoBarKey` remains as a compatibility bridge for clients that emit the preference directly, but new code should use registration APIs because direct preferences still require SwiftUI to aggregate values through the ancestor chain.
+The existing `infoBarItems` overloads remain available and now use the same stable registration path. `InfoBarKey` remains as a compatibility bridge for clients that emit the preference directly, but new code should use registration APIs because direct preferences still require SwiftUI to aggregate values through the ancestor chain.
 
 InfoBar uses direct stacks for its small, eager status layout. It intentionally does not use `DecomposedView`: decomposing sections and subviews adds dynamic traversal work that is unnecessary when the bar already has explicit section and item models.

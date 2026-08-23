@@ -12,7 +12,7 @@ extension View {
   ///
   /// Place this modifier as high in the hierarchy as the participating views require.
   /// Descendants contribute content with `infoBarValue`, `infoBarItem`, or the existing
-  /// `addInfoBarItems` APIs.
+  /// `infoBarItems` APIs.
   @MainActor
   public func infoBarView(isEnabled: Bool = true) -> some View {
     modifier(InfoBarItemsModifier(isEnabled: isEnabled))

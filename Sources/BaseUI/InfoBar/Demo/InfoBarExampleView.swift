@@ -51,10 +51,10 @@ public struct InfoBarExampleView: View {
       ) { value in
         value.formatted(.number.precision(.fractionLength(3)))
       }
-      .infoBarItem(value) { value in
-        ProgressView(value: value)
-          .frame(width: 80)
-      }
+//      .infoBarItem(value) { value in
+//        ProgressView(value: value)
+//          .frame(width: 80)
+//      }
       .infoBarView()
     }
   }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-private struct InfoBarRegistrationModifier<Value: Equatable>: ViewModifier {
+struct InfoBarRegistrationModifier<Value: Equatable>: ViewModifier {
   @Environment(\.infoBarStore) private var store
   @State private var registration = InfoBarRegistration()
   
