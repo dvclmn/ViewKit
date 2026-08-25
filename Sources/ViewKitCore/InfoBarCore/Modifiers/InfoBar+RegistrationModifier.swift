@@ -13,14 +13,14 @@ struct InfoBarRegistrationModifier<Value: Equatable>: ViewModifier {
   @State private var registration = InfoBarRegistration()
   
   let value: Value
-  let sectionKey: InfoBarSectionID
+  let sectionID: InfoBarSectionID?
   let isEnabled: Bool
   let makeContent: (Value) -> InfoBarRegistration.Content
   
   func body(content: Content) -> some View {
     let trigger = InfoBarRegistrationTrigger(
       value: value,
-      sectionKey: sectionKey,
+      sectionID: sectionID,
       isEnabled: isEnabled,
       storeID: store?.id
     )
@@ -41,6 +41,6 @@ struct InfoBarRegistrationModifier<Value: Equatable>: ViewModifier {
     }
     
     registration.update(to: makeContent(trigger.value))
-    registration.attach(to: store, in: trigger.sectionKey)
+    registration.attach(to: store, in: trigger.sectionID)
   }
 }

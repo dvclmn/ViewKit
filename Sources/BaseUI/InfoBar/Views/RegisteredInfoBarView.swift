@@ -14,11 +14,17 @@ struct RegisteredInfoBarView: View {
   let store: InfoBarStore
 
   var body: some View {
-    let sections = store.sections
+    let groups = store.groups
 
-    InfoBarContainer(isEmpty: sections.isEmpty) {
-      ForEach(sections) { section in
-        RegisteredInfoBarSectionView(section: section)
+    InfoBarContainer(isEmpty: groups.isEmpty) {
+      ForEach(groups) { group in
+        switch group {
+          case .unsectioned(let records):
+            RegisteredInfoBarItemsView(records: records)
+
+          case .section(let section):
+            RegisteredInfoBarSectionView(section: section)
+        }
       }
     }
   }
@@ -32,6 +38,16 @@ private struct RegisteredInfoBarSectionView: View {
       ForEach(section.records) { record in
         RegisteredInfoBarItemView(registration: record.registration)
       }
+    }
+  }
+}
+
+private struct RegisteredInfoBarItemsView: View {
+  let records: [InfoBarStore.Record]
+
+  var body: some View {
+    ForEach(records) { record in
+      RegisteredInfoBarItemView(registration: record.registration)
     }
   }
 }

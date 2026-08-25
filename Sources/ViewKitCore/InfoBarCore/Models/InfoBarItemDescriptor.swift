@@ -31,7 +31,6 @@ extension InfoBarItemDescriptor {
     format: FloatDisplayFormat,
   ) -> InfoBarItem {
     InfoBarItem(
-      section: InfoBarSectionID(SectionKey.self),
       label: label,
       content: content(from: source),
       //      content: content(from: source, format: format)

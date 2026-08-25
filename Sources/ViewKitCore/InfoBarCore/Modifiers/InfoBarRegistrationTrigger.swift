@@ -9,7 +9,7 @@ import Foundation
 
 struct InfoBarRegistrationTrigger<Value: Equatable>: Equatable {
   let value: Value
-  let sectionKey: InfoBarSectionID
+  let sectionID: InfoBarSectionID?
   let isEnabled: Bool
   let storeID: UUID?
 }

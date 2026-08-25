@@ -16,8 +16,7 @@ package struct InfoBarItemsSnapshot: Equatable {
     guard lhs.items.count == rhs.items.count else { return false }
     
     return zip(lhs.items, rhs.items).allSatisfy { lhsItem, rhsItem in
-      lhsItem.sectionKey == rhsItem.sectionKey
-      && lhsItem.label == rhsItem.label
+      lhsItem.label == rhsItem.label
       && lhsItem.content == rhsItem.content
     }
   }

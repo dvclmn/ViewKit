@@ -11,7 +11,6 @@ import StringTools
 
 public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
   public let id: UUID
-  public let sectionKey: InfoBarSectionID
   public let label: LabelDescriptor?
   public let content: ColumnString
 
@@ -20,12 +19,10 @@ public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
 
   public init(
     id: UUID = UUID(),
-    sectionKey: InfoBarSectionID,
     label: LabelDescriptor?,
     content: ColumnString,
   ) {
     self.id = id
-    self.sectionKey = sectionKey
     self.label = label
     self.content = content
   }
@@ -34,28 +31,11 @@ public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
 extension InfoBarItem {
 
   public init(
-    section: InfoBarSectionID,
     label: LabelDescriptor?,
     content: String,
     columnWidth: ColumnString.Width = .default,
   ) {
     self.init(
-      sectionKey: section,
-      label: label,
-      content: ColumnString(stringLiteral: content),
-    )
-  }
-
-  /// Allows supplying a SectionKey directly, which is then
-  /// implicitly converted to a SectionID
-  public init<K: InfoBarSectionKey>(
-    section: K.Type,
-    label: LabelDescriptor?,
-    content: String,
-    columnWidth: ColumnString.Width = .default,
-  ) {
-    self.init(
-      sectionKey: InfoBarSectionID(section),
       label: label,
       content: ColumnString(stringLiteral: content),
     )
@@ -64,22 +44,20 @@ extension InfoBarItem {
   /// Provides a way for DisplayString's Labeled to fit nicely with InfoBar
   /// Really only suitable for `text` and `labeled`. `indented`
   /// would be better suited to constructing *multiple* InfoBarItems
-  public init?<K: InfoBarSectionKey>(
+  public init?(
     fromBlock displayBlock: DisplayBlock,
-    section: K.Type = DebugSectionKey.self,
     preset: FloatDisplayPreset = .standard,
     columnWidth: ColumnString.Width = .default,
   ) {
     switch displayBlock {
       case .text(let fragment):
         self.init(
-          section: section,
           label: nil,
           content: fragment.render(using: preset.format, with: .standard, delimiter: ", "),
         )
 
       case .labeled(let label):
-        self.init(fromLabeled: label, section: section, format: preset.format)
+        self.init(fromLabeled: label, format: preset.format)
 
       case .indented:
         assertionFailure("Use extension `Array where Element == DisplayBlock` for `indented`.")
@@ -94,7 +72,6 @@ extension InfoBarItem {
   package func replacingID(with id: UUID) -> Self {
     Self(
       id: id,
-      sectionKey: sectionKey,
       label: label,
       content: content,
     )

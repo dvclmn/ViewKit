@@ -17,29 +17,34 @@ struct InfoBarStoreTests {
     let store = InfoBarStore()
     let registration = InfoBarRegistration()
 
-    registration.attach(to: store, in: InfoBarSectionID(DebugSectionKey.self))
-    registration.attach(to: store, in: InfoBarSectionID(DebugSectionKey.self))
+    registration.attach(to: store, in: nil)
+    registration.attach(to: store, in: nil)
 
     #expect(store.records.count == 1)
     #expect(store.records.first?.registration === registration)
   }
 
-  @Test("sections are sorted while registration order remains stable")
-  func sectionAndItemOrdering() {
+  @Test("groups retain first-registration order and item order within each group")
+  func groupAndItemOrdering() {
     let store = InfoBarStore()
-    let secondAlphaItem = InfoBarRegistration()
-    let betaItem = InfoBarRegistration()
     let firstAlphaItem = InfoBarRegistration()
+    let unsectionedItem = InfoBarRegistration()
+    let betaItem = InfoBarRegistration()
+    let secondAlphaItem = InfoBarRegistration()
+    let alphaID = InfoBarSectionID(AlphaSection.self)
+    let betaID = InfoBarSectionID(BetaSection.self)
 
-    store.register(firstAlphaItem, in: InfoBarSectionID(AlphaSection.self))
-    store.register(betaItem, in: InfoBarSectionID(BetaSection.self))
-    store.register(secondAlphaItem, in: InfoBarSectionID(AlphaSection.self))
+    store.register(firstAlphaItem, in: alphaID)
+    store.register(unsectionedItem, in: nil)
+    store.register(betaItem, in: betaID)
+    store.register(secondAlphaItem, in: alphaID)
 
-    #expect(store.sections.map(\.title) == ["Alpha", "Beta"])
+    #expect(store.groups.map(\.id) == [alphaID, nil, betaID])
     #expect(
-      store.sections[0].records.map(\.registration.id)
+      store.groups[0].records.map(\.registration.id)
         == [firstAlphaItem.id, secondAlphaItem.id]
     )
+    #expect(store.groups[1].records.map(\.registration.id) == [unsectionedItem.id])
   }
 
   @Test("removing a registration removes its empty section")
@@ -51,7 +56,7 @@ struct InfoBarStoreTests {
     registration.detach()
 
     #expect(store.records.isEmpty)
-    #expect(store.sections.isEmpty)
+    #expect(store.groups.isEmpty)
   }
 
   @Test("item snapshots ignore transient UUID changes")
@@ -79,7 +84,6 @@ struct InfoBarStoreTests {
 
   private func makeItem(content: String) -> InfoBarItem {
     InfoBarItem(
-      section: AlphaSection.self,
       label: LabelDescriptor("Value"),
       content: content
     )

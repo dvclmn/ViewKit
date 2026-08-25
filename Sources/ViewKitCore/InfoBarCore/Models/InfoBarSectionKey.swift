@@ -19,10 +19,6 @@ public protocol InfoBarSectionKey: Hashable, Sendable {
   static var title: String { get }
 }
 
-//extension InfoBarSectionKey {
-//  public static var `default`: Self { DebugSectionKey.self }
-//}
-
 public struct InfoBarSectionID: Hashable, Sendable {
   private let id: ObjectIdentifier
   public let title: String
@@ -42,13 +38,15 @@ public struct InfoBarSectionID: Hashable, Sendable {
 }
 
 extension InfoBarSectionID {
-  public static let exampleID: Self = .init(DebugSectionKey.self)
+  public static let exampleID: Self = .init(InfoBarExampleSectionKey.self)
 }
 
 // MARK: - Debug convenience
-/// Consider  other cases where very simple InfoBarItems way want to be
-/// created, that are even just string based, no ceremoney, that aren't
-/// neccesarily debug items.
+/// An explicit section for diagnostic content.
 public enum DebugSectionKey: InfoBarSectionKey {
   public static let title: String = "Debug"
+}
+
+private enum InfoBarExampleSectionKey: InfoBarSectionKey {
+  static let title = "Example"
 }

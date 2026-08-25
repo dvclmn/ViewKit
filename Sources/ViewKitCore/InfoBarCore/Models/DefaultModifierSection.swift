@@ -14,9 +14,8 @@ public enum ModifiersSectionKey: InfoBarSectionKey {
 
 extension InfoBarItem {
 
-  package static func modifiersSection(_ modifiers: Modifiers?) -> InfoBarItem {
+  package static func modifiersItem(_ modifiers: Modifiers?) -> InfoBarItem {
     InfoBarItem(
-      section: ModifiersSectionKey.self,
       label: LabelDescriptor("Modifiers", symbol: "keyboard"),
       content: "Need to fix"
     )

@@ -11,81 +11,60 @@ import StringTools
 import SwiftUI
 
 extension View {
-  /// Adds independently updating view content to the nearest InfoBar presenter.
-  ///
-  /// Include every changing input in `value`. InfoBar rebuilds the supplied content
-  /// only when that equatable value changes, and only the corresponding bar item is
-  /// invalidated. The content can contain any SwiftUI view, including controls.
-  ///
-  /// ```swift
-  /// CanvasView()
-  ///   .infoBarItem(pointerPosition, section: PointerSection.self) { position in
-  ///     Label(position.formatted(), systemImage: "cursorarrow.motionlines")
-  ///   }
-  /// ```
-  //  @MainActor
-  //  public func infoBarItem<
-  //    Value: Equatable,
-  //    ItemContent: View,
-  //    K: InfoBarSectionKey
-  //  >(
-  //    _ value: Value,
-  //    section: K.Type = DebugSectionKey.self,
-  //    isEnabled: Bool = true,
-  //    @ContentBuilder content: @escaping (Value) -> ItemContent
-  //  ) -> some View {
-  //    modifier(
-  //      InfoBarRegistrationModifier(
-  //        value: value,
-  //        sectionKey: InfoBarSectionID(section),
-  //        isEnabled: isEnabled,
-  //        makeContent: { value in .view(AnyView(content(value))) }
-  //      )
-  //    )
-  //  }
-
-  /// Adds view content that observes its own state to the nearest InfoBar presenter.
-  ///
-  /// Use the value-taking overload when the builder captures a changing value from
-  /// the modified view. This overload builds once per registration and is intended
-  /// for static content or a child view that observes a binding or observable model.
-  //  @MainActor
-  //  public func infoBarItem<ItemContent: View, K: InfoBarSectionKey>(
-  //    section: K.Type = DebugSectionKey.self,
-  //    isEnabled: Bool = true,
-  //    @ContentBuilder content: @escaping () -> ItemContent
-  //  ) -> some View {
-  //    modifier(
-  //      InfoBarRegistrationModifier(
-  //        value: isEnabled,
-  //        sectionKey: InfoBarSectionID(section),
-  //        isEnabled: isEnabled,
-  //        makeContent: { _ in .view(AnyView(content())) }
-  //      )
-  //    )
-  //  }
-
-  /// Adds a lightweight text value to the nearest InfoBar presenter.
+  /// Adds a lightweight, unsectioned text value to the nearest InfoBar presenter.
   ///
   /// This is the preferred path for high-frequency values such as pointer positions.
   /// It preserves the row's identity and updates only its text payload.
   @MainActor
+  public func infoBarValue<Value: Equatable>(
+    _ value: Value,
+    label: LabelDescriptor? = nil,
+    isEnabled: Bool = true,
+    format: @escaping (Value) -> String = { String(describing: $0) },
+  ) -> some View {
+    registeringInfoBarValue(
+      value,
+      label: label,
+      sectionID: nil,
+      isEnabled: isEnabled,
+      format: format,
+    )
+  }
+
+  /// Adds a lightweight text value to an explicitly named InfoBar section.
+  @MainActor
   public func infoBarValue<Value: Equatable, K: InfoBarSectionKey>(
     _ value: Value,
     label: LabelDescriptor? = nil,
-    section: K.Type = DebugSectionKey.self,
+    section: K.Type,
     isEnabled: Bool = true,
     format: @escaping (Value) -> String = { String(describing: $0) },
+  ) -> some View {
+    registeringInfoBarValue(
+      value,
+      label: label,
+      sectionID: InfoBarSectionID(section),
+      isEnabled: isEnabled,
+      format: format,
+    )
+  }
+
+  @MainActor
+  private func registeringInfoBarValue<Value: Equatable>(
+    _ value: Value,
+    label: LabelDescriptor?,
+    sectionID: InfoBarSectionID?,
+    isEnabled: Bool,
+    format: @escaping (Value) -> String,
   ) -> some View {
     modifier(
       InfoBarRegistrationModifier(
         value: value,
-        sectionKey: InfoBarSectionID(section),
+        sectionID: sectionID,
         isEnabled: isEnabled,
         makeContent: { value in
           .items([
             InfoBarItem(
-              section: section,
               label: label,
               content: format(value),
             )
@@ -99,7 +78,7 @@ extension View {
 // MARK: - Existing item APIs
 
 extension View {
-  /// Adds all cases of an item descriptor to the nearest InfoBar presenter.
+  /// Adds all cases of an item descriptor to its declared InfoBar section.
   @MainActor
   public func infoBarItems<T>(
     _ items: T.Type,
@@ -107,57 +86,68 @@ extension View {
     format: FloatDisplayFormat = .default,
   ) -> some View
   where T: InfoBarItemDescriptor & CaseIterable {
-    let currentItems = items.items(from: source, format: format)
-    let sectionKey = currentItems.first?.sectionKey ?? InfoBarSectionID(T.SectionKey.self)
-
-    return modifier(
-      InfoBarRegistrationModifier(
-        value: InfoBarItemsSnapshot(items: currentItems),
-        sectionKey: sectionKey,
-        isEnabled: true,
-        makeContent: { .items($0.items) },
-      )
+    registeringInfoBarItems(
+      T.items(from: source, format: format),
+      sectionID: InfoBarSectionID(T.SectionKey.self),
     )
   }
 
-  /// Adds text items to the nearest InfoBar presenter.
+  /// Adds unsectioned text items to the nearest InfoBar presenter.
+  @MainActor
+  public func infoBarItems(
+    _ items: String...,
+    format: FloatDisplayFormat = .default,
+  ) -> some View {
+    registeringInfoBarItems(
+      items.map { InfoBarItem(label: nil, content: $0) },
+      sectionID: nil,
+    )
+  }
+
+  /// Adds text items to an explicitly named InfoBar section.
   @MainActor
   public func infoBarItems<K: InfoBarSectionKey>(
     _ items: String...,
-    key: K.Type = DebugSectionKey.self,
+    key: K.Type,
     format: FloatDisplayFormat = .default,
   ) -> some View {
-    let currentItems = items.map { text in
-      InfoBarItem(
-        section: key,
-        label: LabelDescriptor(stringLiteral: ""),
-        content: text,
-      )
-    }
-
-    return modifier(
-      InfoBarRegistrationModifier(
-        value: InfoBarItemsSnapshot(items: currentItems),
-        sectionKey: InfoBarSectionID(key),
-        isEnabled: true,
-        makeContent: { .items($0.items) },
-      )
+    registeringInfoBarItems(
+      items.map { InfoBarItem(label: nil, content: $0) },
+      sectionID: InfoBarSectionID(key),
     )
   }
 
-  /// Adds display-string items to the nearest InfoBar presenter.
+  /// Adds unsectioned display-string items to the nearest InfoBar presenter.
+  @MainActor
+  public func infoBarItems(
+    @DisplayStringBuilder _ content: @escaping () -> [DisplayBlock],
+    preset: FloatDisplayPreset = .standard,
+  ) -> some View {
+    registeringInfoBarItems(content().toInfoBarItems(preset: preset), sectionID: nil)
+  }
+
+  /// Adds display-string items to an explicitly named InfoBar section.
   @MainActor
   public func infoBarItems<K: InfoBarSectionKey>(
     @DisplayStringBuilder _ content: @escaping () -> [DisplayBlock],
-    key: K.Type = DebugSectionKey.self,
+    key: K.Type,
     preset: FloatDisplayPreset = .standard,
   ) -> some View {
-    let currentItems = content().toInfoBarItems(section: key, preset: preset)
+    registeringInfoBarItems(
+      content().toInfoBarItems(preset: preset),
+      sectionID: InfoBarSectionID(key),
+    )
+  }
 
-    return modifier(
+  @MainActor
+  private func registeringInfoBarItems(
+    _ items: [InfoBarItem],
+    sectionID: InfoBarSectionID?,
+  ) -> some View {
+    modifier(
       InfoBarRegistrationModifier(
-        value: InfoBarItemsSnapshot(items: currentItems),
-        sectionKey: InfoBarSectionID(key),
+        value: InfoBarItemsSnapshot(items: items),
+        sectionID: sectionID,
         isEnabled: true,
         makeContent: { .items($0.items) },
       )
