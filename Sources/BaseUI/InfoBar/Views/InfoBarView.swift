@@ -16,27 +16,32 @@ public struct InfoBarView: View {
 
   let items: [InfoBarItem]
   let sections: [InfoBarSection]
+  let config: InfoBarConfiguration
   let showingModifiersSection: Bool
 
   // MARK: - Initialisers
   public init(
     items: [InfoBarItem],
     sections: [InfoBarSection],
+    config: InfoBarConfiguration,
     showingModifiersSection: Bool = false,
   ) {
     self.items = items
     self.sections = sections
+    self.config = config
     self.showingModifiersSection = showingModifiersSection
   }
 
   /// Creates an InfoBar containing unsectioned items.
   public init(
     items: [InfoBarItem],
+    config: InfoBarConfiguration,
     showingModifiersSection: Bool = false,
   ) {
     self.init(
       items: items,
       sections: [],
+      config: config,
       showingModifiersSection: showingModifiersSection,
     )
   }
@@ -44,11 +49,13 @@ public struct InfoBarView: View {
   /// Creates an InfoBar containing explicitly grouped sections.
   public init(
     sections: [InfoBarSection],
+    config: InfoBarConfiguration,
     showingModifiersSection: Bool = false,
   ) {
     self.init(
       items: [],
       sections: sections,
+      config: config,
       showingModifiersSection: showingModifiersSection,
     )
   }
@@ -60,6 +67,7 @@ public struct InfoBarView: View {
     self.init(
       items: content().toInfoBarItems(preset: .standard),
       sections: [],
+      config: .init(),
       showingModifiersSection: showingModifiersSection,
     )
   }
@@ -83,6 +91,7 @@ public struct InfoBarView: View {
         )
       }
     }
+    .environment(\.infoBarConfiguration, config)
   }
 }
 

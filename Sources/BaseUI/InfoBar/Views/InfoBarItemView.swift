@@ -6,13 +6,13 @@
 //
 
 import CoreTools
-import ViewTools
-import ViewKitCore
 import SwiftUI
+import ViewKitCore
+import ViewTools
 
 public struct InfoBarItemView: View {
   @Environment(\.itemLabelDisplay) private var itemLabelDisplay
-
+  @Environment(\.isDebugMode) private var isDebugMode
   let item: InfoBarItem
 
   public var body: some View {
@@ -23,7 +23,7 @@ public struct InfoBarItemView: View {
     /// Label text, but it is not, it is seperate.
     ///
     /// Spacing for Label {space} Content
-    HStack(spacing: 2) {
+    HStack(spacing: Styles.sizeSmall) {
       if let label = item.label {
         QuickLabel(label)
           .environment(\.labelDisplay, itemLabelDisplay)
@@ -31,6 +31,7 @@ public struct InfoBarItemView: View {
           /// This seems to be behaving; this ensures that the text label
           /// from MaybeLabel doesn't get truncated
           .fixedSize(horizontal: true, vertical: false)
+          .foregroundStyle(.tertiary)
         //          .debugFrame("Label", .purple, isEnabled: isDebugMode)
       }
 
@@ -40,11 +41,11 @@ public struct InfoBarItemView: View {
         .opacity(0.9)
         .monospacedDigit()
         .fixedSize(horizontal: true, vertical: false)
-      //        .debugFrame("Value", .brown, isEnabled: isDebugMode)
+        .debugFrame("Value", colour: .brown, isEnabled: isDebugMode)
 
       Divider().opacity(0.6)
         /// Adds breathing room between the end of the content and its trailing Divider
-        .padding(.leading, Styles.sizeSmall)
+//        .padding(.leading, Styles.sizeSmall)
     }
     /// Some leading padding here brings the icon in from the edge a bit,
     /// including the very first item
