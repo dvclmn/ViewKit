@@ -53,7 +53,8 @@ extension Array where Element == DisplayBlock {
   /// so should map each to an array
   /// divider = []
   func toInfoBarItems<K: InfoBarSectionKey>(
-    section: K.Type = DebugSectionKey.self,
+    section: K.Type? = nil,
+//    section: K.Type = DebugSectionKey.self,
     preset: FloatDisplayPreset = .standard,
   ) -> [InfoBarItem] {
     compactMap { block -> [InfoBarItem]? in

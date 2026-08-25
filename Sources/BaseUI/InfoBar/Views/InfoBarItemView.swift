@@ -34,7 +34,7 @@ public struct InfoBarItemView: View {
         //          .debugFrame("Label", .purple, isEnabled: isDebugMode)
       }
 
-      Text(item.content)
+      Text(item.resolvedContent)
 
         /// Taking the edge off the brightness
         .opacity(0.9)

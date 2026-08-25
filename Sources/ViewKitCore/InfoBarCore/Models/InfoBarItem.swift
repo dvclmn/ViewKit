@@ -5,43 +5,44 @@
 //  Created by Dave Coleman on 7/7/2025.
 //
 
-import Foundation
 import CoreTools
+import Foundation
 import StringTools
 
 public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
   public let id: UUID
   public let sectionKey: InfoBarSectionID
   public let label: LabelDescriptor?
-  public let columnedContent: ColumnString
+  public let content: ColumnString
+
+  /// Note: ColumnString isn't implemented just yet,
+  public var resolvedContent: String { content.resolvedContent }
 
   public init(
     id: UUID = UUID(),
     sectionKey: InfoBarSectionID,
     label: LabelDescriptor?,
-    content: ColumnString
+    content: ColumnString,
   ) {
     self.id = id
     self.sectionKey = sectionKey
     self.label = label
-    self.columnedContent = content
+    self.content = content
   }
 }
 
 extension InfoBarItem {
-  /// This isn't implemented just yet, it's just a passthrough
-  public var content: String { columnedContent.content }
-  
+
   public init(
     section: InfoBarSectionID,
     label: LabelDescriptor?,
     content: String,
-    columnWidth: ColumnString.Width = .default
+    columnWidth: ColumnString.Width = .default,
   ) {
     self.init(
       sectionKey: section,
       label: label,
-      content: ColumnString(stringLiteral: content)
+      content: ColumnString(stringLiteral: content),
     )
   }
 
@@ -51,12 +52,12 @@ extension InfoBarItem {
     section: K.Type,
     label: LabelDescriptor?,
     content: String,
-    columnWidth: ColumnString.Width = .default
+    columnWidth: ColumnString.Width = .default,
   ) {
     self.init(
       sectionKey: InfoBarSectionID(section),
       label: label,
-      content: ColumnString(stringLiteral: content)
+      content: ColumnString(stringLiteral: content),
     )
   }
 
@@ -67,14 +68,14 @@ extension InfoBarItem {
     fromBlock displayBlock: DisplayBlock,
     section: K.Type = DebugSectionKey.self,
     preset: FloatDisplayPreset = .standard,
-    columnWidth: ColumnString.Width = .default
+    columnWidth: ColumnString.Width = .default,
   ) {
     switch displayBlock {
       case .text(let fragment):
         self.init(
           section: section,
           label: nil,
-          content: fragment.render(using: preset.format, with: .standard, delimiter: ", ")
+          content: fragment.render(using: preset.format, with: .standard, delimiter: ", "),
         )
 
       case .labeled(let label):
@@ -95,7 +96,7 @@ extension InfoBarItem {
       id: id,
       sectionKey: sectionKey,
       label: label,
-      content: columnedContent
+      content: content,
     )
   }
 }

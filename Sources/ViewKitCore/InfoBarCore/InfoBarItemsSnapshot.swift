@@ -18,7 +18,7 @@ package struct InfoBarItemsSnapshot: Equatable {
     return zip(lhs.items, rhs.items).allSatisfy { lhsItem, rhsItem in
       lhsItem.sectionKey == rhsItem.sectionKey
       && lhsItem.label == rhsItem.label
-      && lhsItem.columnedContent == rhsItem.columnedContent
+      && lhsItem.content == rhsItem.content
     }
   }
 }
