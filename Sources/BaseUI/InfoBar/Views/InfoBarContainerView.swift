@@ -53,6 +53,7 @@ struct InfoBarContainer<Content: View>: View {
           .frame(maxWidth: .infinity, maxHeight: 1)
       }
       .monospacedDigit()
+      .font(.callout)
 //      .environment(\.layoutAxis, .horizontal)
 //      .environment(\.layoutAlignment, .leading)
 //      .environment(\.layoutSpacing, .zero)

@@ -14,8 +14,6 @@ struct RegisteredInfoBarView: View {
   let store: InfoBarStore
 
   var body: some View {
-    let groups = store.groups
-
     InfoBarContainer(isEmpty: groups.isEmpty) {
       ForEach(groups) { group in
         switch group {
@@ -30,7 +28,12 @@ struct RegisteredInfoBarView: View {
   }
 }
 
+extension RegisteredInfoBarView {
+  private var groups: [InfoBarStore.Group] { store.groups }
+}
+
 private struct RegisteredInfoBarSectionView: View {
+
   let section: InfoBarStore.Section
 
   var body: some View {

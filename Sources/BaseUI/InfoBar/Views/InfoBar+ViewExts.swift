@@ -17,18 +17,4 @@ extension View {
   public func infoBarView(isEnabled: Bool = true) -> some View {
     modifier(InfoBarItemsModifier(isEnabled: isEnabled))
   }
-
-  //  @available(
-  //    *,
-  //     deprecated,
-  //     renamed: "infoBarView(isEnabled:)",
-  //     message: "Debouncing is no longer supported for InfoBar."
-  //  )
-  //  @MainActor
-  //  public func infoBarView(
-  //    debounceMode: DebounceMode = .debounce(0.2),
-  //    isEnabled: Bool = true,
-  //  ) -> some View {
-  //    modifier(InfoBarItemsModifier(isEnabled: isEnabled))
-  //  }
 }
