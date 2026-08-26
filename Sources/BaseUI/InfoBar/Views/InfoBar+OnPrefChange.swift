@@ -24,7 +24,7 @@ struct InfoBarItemsModifier: ViewModifier {
       .environment(\.isInfoBarPresent, shouldPresent || inheritedStore != nil)
       .safeAreaInset(edge: .bottom, spacing: 0) {
         if shouldPresent {
-          RegisteredInfoBarView(store: ownedStore)
+          InfoBarView(store: ownedStore)
         }
       }
       .onAppear {

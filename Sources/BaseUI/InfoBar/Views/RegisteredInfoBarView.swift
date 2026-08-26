@@ -1,5 +1,5 @@
 //
-//  RegisteredInfoBarView.swift
+//  InfoBarView.swift
 //  ViewKit
 //
 //  Created by Dave Coleman on 23/8/2026.
@@ -10,7 +10,7 @@ import SwiftUI
 import ViewKitCore
 import ViewTools
 
-struct RegisteredInfoBarView: View {
+struct InfoBarView: View {
   let store: InfoBarStore
 
   var body: some View {
@@ -28,7 +28,7 @@ struct RegisteredInfoBarView: View {
   }
 }
 
-extension RegisteredInfoBarView {
+extension InfoBarView {
   private var groups: [InfoBarStore.Group] { store.groups }
 }
 
@@ -56,7 +56,7 @@ private struct RegisteredInfoBarItemsView: View {
 }
 
 /// This row is the observation boundary for one registration. Updating its content
-/// doesn't require `RegisteredInfoBarView` to recompute section discovery or ordering.
+/// doesn't require `InfoBarView` to recompute section discovery or ordering.
 private struct RegisteredInfoBarItemView: View {
   let registration: InfoBarRegistration
 

@@ -27,7 +27,7 @@ public struct InfoBarConfiguration {
     barHeight: CGFloat = 24,
     itemSpacing: CGFloat = 8,
     labelContentSpacing: CGFloat = 6,
-    barPaddingH: CGFloat = 6,
+    barPaddingH: CGFloat = 10,
   ) {
     self.barHeight = barHeight
     self.itemSpacing = itemSpacing
