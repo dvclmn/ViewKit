@@ -12,7 +12,7 @@ import ViewTools
 
 struct InfoBarView: View {
   let store: InfoBarStore
-
+  
   var body: some View {
     InfoBarContainer(isEmpty: groups.isEmpty) {
       ForEach(groups) { group in

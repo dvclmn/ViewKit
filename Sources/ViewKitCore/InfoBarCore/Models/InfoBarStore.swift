@@ -25,7 +25,7 @@ package final class InfoBarStore {
 
   package func register(
     _ registration: InfoBarRegistration,
-    in section: InfoBarSectionID?
+    in section: InfoBarSectionID?,
   ) {
     if let index = records.firstIndex(where: { $0.id == registration.id }) {
       guard records[index].sectionID != section else { return }
@@ -132,7 +132,7 @@ package final class InfoBarRegistration: Identifiable {
 
   package func attach(
     to store: InfoBarStore,
-    in section: InfoBarSectionID?
+    in section: InfoBarSectionID?,
   ) {
     guard registeredStore !== store || registeredSection != section else { return }
 
