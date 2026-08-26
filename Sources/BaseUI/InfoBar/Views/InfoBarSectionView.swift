@@ -8,14 +8,30 @@
 import SwiftUI
 import ViewKitCore
 
-struct InfoBarSectionView: View {
-  let sectionTitle: String
-  let items: [InfoBarItem]
+//struct InfoBarSectionView: View {
+//  let sectionTitle: String
+//  let items: [InfoBarItem]
+//
+//  var body: some View {
+//    InfoBarSectionContainer(title: sectionTitle) {
+//      ForEach(items) { item in
+//        InfoBarItemView(item: item)
+//      }
+//    }
+//  }
+//}
 
-  var body: some View {
-    InfoBarSectionContainer(title: sectionTitle) {
-      ForEach(items) { item in
-        InfoBarItemView(item: item)
+extension InfoBarView {
+
+  struct SectionView: View {
+
+    let section: InfoBarStore.Section
+
+    var body: some View {
+      InfoBarSectionContainer(title: section.title) {
+        ForEach(section.records) { record in
+          ItemListView(registration: record.registration)
+        }
       }
     }
   }
