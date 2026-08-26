@@ -43,7 +43,7 @@ extension InfoBarItem {
 
   /// Provides a way for DisplayString's Labeled to fit nicely with InfoBar
   /// Really only suitable for `text` and `labeled`. `indented`
-  /// would be better suited to constructing *multiple* InfoBarItems
+  /// would be better suited to constructing *multiple* ``InfoBarItem``s
   public init?(
     fromBlock displayBlock: DisplayBlock,
     preset: FloatDisplayPreset = .standard,

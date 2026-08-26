@@ -35,6 +35,7 @@ struct InfoBarContainer<Content: View>: View {
             Spacer()
           }
         }
+        
         // A single bit of padding at the start and the end
         .safeAreaPadding(.horizontal, config.barPaddingH)
       }
@@ -46,6 +47,7 @@ struct InfoBarContainer<Content: View>: View {
         backgroundStyle ?? AnyShapeStyle(.black.opacity(0.06)),
         ignoresSafeAreaEdges: .horizontal,
       )
+      
       // Thin horizontal highlight across the top
       .overlay(alignment: .top) {
         Rectangle()

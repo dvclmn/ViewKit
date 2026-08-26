@@ -15,6 +15,6 @@ extension View {
   /// `infoBarItems` APIs.
   @MainActor
   public func infoBarView(isEnabled: Bool = true) -> some View {
-    modifier(InfoBarItemsModifier(isEnabled: isEnabled))
+    modifier(InfoBarModifier(isEnabled: isEnabled))
   }
 }

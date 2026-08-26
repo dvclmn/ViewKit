@@ -10,7 +10,7 @@ import SwiftUI
 import ViewKitCore
 
 @MainActor
-struct InfoBarItemsModifier: ViewModifier {
+struct InfoBarModifier: ViewModifier {
   @Environment(\.infoBarStore) private var inheritedStore
   @State private var ownedStore = InfoBarStore()
 
@@ -22,16 +22,17 @@ struct InfoBarItemsModifier: ViewModifier {
     content
       .environment(\.infoBarStore, activeStore)
       .environment(\.isInfoBarPresent, shouldPresent || inheritedStore != nil)
-      .safeAreaInset(edge: .bottom, spacing: 0) {
+      .safeAreaBarCompatible(edge: .bottom, alignment: .leading, spacing: 0) {
         if shouldPresent {
           InfoBarView(store: ownedStore)
         }
+
       }
       .onAppear {
         #if DEBUG
         if isEnabled, inheritedStore != nil {
           print(
-            "⚠️ Warning: Duplicate InfoBarModifier detected at this view level. Child InfoBar is being suppressed."
+            "⚠️ Warning: Duplicate InfoBarModifier detected at this view level. Child InfoBar is being ignored."
           )
         }
         #endif
