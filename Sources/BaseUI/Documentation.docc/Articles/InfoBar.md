@@ -21,6 +21,27 @@ CanvasView()
 
 The value must be `Equatable`. InfoBar calls the formatter only when the value changes, preserves the row identity, and updates only the stored text payload. This produces an unsectioned item.
 
+## Additional view content
+
+Use the presenter’s leading and trailing content closures for richer SwiftUI content that doesn't fit the homogeneous `InfoBarItem` model. This content has a statically known view type and is rendered once at the corresponding end of the contributed item sequence; it isn't stored in `InfoBarStore` or available through descendant registration. Leading and trailing describe ordering within the same horizontally scrolling sequence, not content pinned to the physical edges of the bar.
+
+```swift
+CanvasView()
+  .infoBarValue(pointerPosition, label: LabelDescriptor("Pointer")) { position in
+    "x: \(position.x.formatted()), y: \(position.y.formatted())"
+  }
+  .infoBarView(
+    leadingContent: {
+      DocumentInfoBarPreset()
+    },
+    trailingContent: {
+      ModifierKeysInfoBarPreset()
+    }
+  )
+```
+
+Leading and trailing content inherit environment values available where `infoBarView` is applied. Environment values installed only within a descendant don't flow upwards into the presenter; pass the required state explicitly, install the environment value above `infoBarView`, or let a reusable preset establish its own local observation.
+
 ## Sections
 
 Use the section overload only when the item should be visibly grouped:

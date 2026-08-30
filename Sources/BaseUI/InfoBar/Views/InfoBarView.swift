@@ -10,20 +10,27 @@ import SwiftUI
 import ViewKitCore
 import ViewTools
 
-struct InfoBarView: View {
+struct InfoBarView<LeadingContent: View, TrailingContent: View>: View {
   let store: InfoBarStore
-  
+  let hasAdditionalContent: Bool
+  let leadingContent: LeadingContent
+  let trailingContent: TrailingContent
+
   var body: some View {
-    InfoBarContainer(isEmpty: groups.isEmpty) {
+    InfoBarContainer(isEmpty: groups.isEmpty && !hasAdditionalContent) {
+      leadingContent
+
       ForEach(groups) { group in
         switch group {
           case .unsectioned(let records):
             ItemsView(records: records)
 
           case .section(let section):
-            InfoBarView.SectionView(section: section)
+            SectionView(section: section)
         }
       }
+
+      trailingContent
     }
   }
 }
