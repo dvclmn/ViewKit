@@ -11,6 +11,17 @@ import ViewKitCore
 
 struct InfoBarItemColumnWidthTests {
   @Test
+  func stringInitialiserDefaultsToIntrinsicWidth() {
+    let item = InfoBarItem(
+      label: nil,
+      content: "Select",
+    )
+
+    #expect(item.content.width == .intrinsic)
+    #expect(item.resolvedContent == "Select")
+  }
+
+  @Test
   func stringInitialiserRetainsTheRequestedColumnWidth() {
     let item = InfoBarItem(
       label: nil,

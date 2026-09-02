@@ -16,8 +16,10 @@ public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
 
   /// The plain-text representation of the item's content.
   ///
-  /// Views should render `content.sourceContent` using the column metadata so
-  /// assistive technologies and text selection retain the complete value.
+  /// Views should render `content.sourceContent` intrinsically when no column
+  /// width is requested, or use the column metadata to reserve an explicit
+  /// width. This retains the complete value for assistive technologies and
+  /// text selection.
   public var resolvedContent: String { content.resolvedContent }
 
   public init(

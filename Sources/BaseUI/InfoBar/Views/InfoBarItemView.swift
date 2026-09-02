@@ -42,15 +42,9 @@ extension InfoBarView {
             )
         }
 
-        TextColumns(
-          item.content.resolvedColumnCount,
-          alignment: item.content.alignment.swiftUIAlignment,
-        ) {
-          Text(item.content.sourceContent)
-        }
+        contentView
         // Taking the edge off the brightness
         .opacity(0.9)
-        .fixedSize(horizontal: true, vertical: false)
         .debugFrame(
 //          "Value",
           colour: .brown,
@@ -65,6 +59,23 @@ extension InfoBarView {
       // including the very first item
       //    .padding(.leading, Styles.sizeTiny)
 
+    }
+
+    @ViewBuilder
+    private var contentView: some View {
+      switch item.content.width {
+        case .intrinsic:
+          Text(item.content.sourceContent)
+
+        case .fixed, .flexible:
+          TextColumns(
+            item.content.resolvedColumnCount,
+            alignment: item.content.alignment.swiftUIAlignment,
+          ) {
+            Text(item.content.sourceContent)
+          }
+          .fixedSize(horizontal: true, vertical: false)
+      }
     }
   }
 }
