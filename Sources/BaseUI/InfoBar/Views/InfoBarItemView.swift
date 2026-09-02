@@ -11,37 +11,21 @@ import SwiftUI
 import ViewKitCore
 import ViewTools
 
-/// This row is the observation boundary for one registration. Updating its content
-/// doesn't require `InfoBarView` to recompute section discovery or ordering.
-extension InfoBarView {
-  struct ItemListView: View {
-    let registration: InfoBarRegistration
-
-    var body: some View {
-      switch registration.content {
-        case .items(let items):
-          ForEach(items) { item in
-            ItemView(item: item)
-          }
-      }
-    }
-  }
-}
-
 extension InfoBarView {
   struct ItemView: View {
     @Environment(\.itemLabelDisplay) private var itemLabelDisplay
     @Environment(\.isDebugMode) private var isDebugMode
+    
     let item: InfoBarItem
 
     public var body: some View {
 
-      // This is the spacing between the HBar Item Icon, and
-      // the HBar item content. When set to display Icon-only,
-      // the `item.content` can deceptively look like the
-      // Label text, but it is not, it is seperate.
+      // This is the spacing between the item label, and
+      // the item content. When set to display Icon-only,
+      // the content can deceptively appear to be the
+      // text component of the label, but it is not.
       //
-      // Spacing for Label {space} Content
+      // Layout: Label (icon + text) {space} Content (text)
       HStack(spacing: Styles.sizeSmall) {
         if let label = item.label {
           QuickLabel(label)
@@ -51,7 +35,11 @@ extension InfoBarView {
             // from QuickLabel doesn't get truncated
             .fixedSize(horizontal: true, vertical: false)
             .foregroundStyle(.tertiary)
-            .debugFrame("Label", colour: .purple, isEnabled: isDebugMode)
+            .debugFrame(
+//              "Label",
+              colour: .purple,
+              isEnabled: isDebugMode
+            )
         }
 
         TextColumns(
@@ -63,7 +51,11 @@ extension InfoBarView {
         // Taking the edge off the brightness
         .opacity(0.9)
         .fixedSize(horizontal: true, vertical: false)
-        .debugFrame("Value", colour: .brown, isEnabled: isDebugMode)
+        .debugFrame(
+//          "Value",
+          colour: .brown,
+          isEnabled: isDebugMode
+        )
 
         Divider().opacity(0.6)
         // Adds breathing room between the end of the content and its trailing Divider
@@ -77,8 +69,8 @@ extension InfoBarView {
   }
 }
 
-private extension TextPadAlignment {
-  var swiftUIAlignment: Alignment {
+extension TextPadAlignment {
+  fileprivate var swiftUIAlignment: Alignment {
     switch self {
       case .leading: .leading
       case .centre: .center
