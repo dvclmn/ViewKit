@@ -14,7 +14,10 @@ public struct InfoBarItem: Sendable, Equatable, Hashable, Identifiable {
   public let label: LabelDescriptor?
   public let content: ColumnString
 
-  /// Note: ColumnString isn't implemented just yet,
+  /// The plain-text representation of the item's content.
+  ///
+  /// Views should render `content.sourceContent` using the column metadata so
+  /// assistive technologies and text selection retain the complete value.
   public var resolvedContent: String { content.resolvedContent }
 
   public init(
@@ -37,7 +40,10 @@ extension InfoBarItem {
   ) {
     self.init(
       label: label,
-      content: ColumnString(stringLiteral: content),
+      content: ColumnString(
+        content: content,
+        width: columnWidth,
+      ),
     )
   }
 
@@ -53,11 +59,22 @@ extension InfoBarItem {
       case .text(let fragment):
         self.init(
           label: nil,
-          content: fragment.render(using: preset.format, with: .standard, delimiter: ", "),
+          content: ColumnString(
+            content: fragment.render(
+              using: preset.format,
+              with: .standard,
+              delimiter: ", ",
+            ),
+            width: columnWidth,
+          ),
         )
 
       case .labeled(let label):
-        self.init(fromLabeled: label, format: preset.format)
+        self.init(
+          fromLabeled: label,
+          format: preset.format,
+          columnWidth: columnWidth,
+        )
 
       case .indented:
         assertionFailure("Use extension `Array where Element == DisplayBlock` for `indented`.")

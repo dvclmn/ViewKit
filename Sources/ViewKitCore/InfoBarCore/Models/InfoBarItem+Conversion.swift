@@ -14,6 +14,7 @@ extension InfoBarItem {
     fromLabeled labeled: Labeled,
     labelStyle: AbbreviableLabel.Style = .standard,
     format: FloatDisplayFormat = .default,
+    columnWidth: ColumnString.Width = .default,
   ) {
     let label = labeled.labelPart(with: labelStyle)
     guard
@@ -25,7 +26,10 @@ extension InfoBarItem {
     else { return nil }
     self.init(
       label: .init(label),
-      content: value,
+      content: ColumnString(
+        content: value,
+        width: columnWidth,
+      ),
     )
   }
 }

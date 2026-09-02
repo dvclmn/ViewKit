@@ -8,6 +8,7 @@
 import EnumMacroSupport
 import SwiftUI
 import ViewTools
+import CoreTools
 
 /// A picker that switches an associated-value enum by case identity.
 ///

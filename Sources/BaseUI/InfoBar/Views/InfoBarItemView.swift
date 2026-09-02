@@ -6,6 +6,7 @@
 //
 
 import CoreTools
+import StringTools
 import SwiftUI
 import ViewKitCore
 import ViewTools
@@ -53,13 +54,16 @@ extension InfoBarView {
             .debugFrame("Label", colour: .purple, isEnabled: isDebugMode)
         }
 
-        Text(item.resolvedContent)
-
-          // Taking the edge off the brightness
-          .opacity(0.9)
-          .monospacedDigit()
-          .fixedSize(horizontal: true, vertical: false)
-          .debugFrame("Value", colour: .brown, isEnabled: isDebugMode)
+        TextColumns(
+          item.content.resolvedColumnCount,
+          alignment: item.content.alignment.swiftUIAlignment,
+        ) {
+          Text(item.content.sourceContent)
+        }
+        // Taking the edge off the brightness
+        .opacity(0.9)
+        .fixedSize(horizontal: true, vertical: false)
+        .debugFrame("Value", colour: .brown, isEnabled: isDebugMode)
 
         Divider().opacity(0.6)
         // Adds breathing room between the end of the content and its trailing Divider
@@ -69,6 +73,16 @@ extension InfoBarView {
       // including the very first item
       //    .padding(.leading, Styles.sizeTiny)
 
+    }
+  }
+}
+
+private extension TextPadAlignment {
+  var swiftUIAlignment: Alignment {
+    switch self {
+      case .leading: .leading
+      case .centre: .center
+      case .trailing: .trailing
     }
   }
 }

@@ -15,12 +15,11 @@ public struct CustomLabel: LabelStyle {
   @Environment(\.isCompactMode) private var isCompactMode
   @Environment(\.layoutSpacing) private var layoutSpacing
   @Environment(\.layoutAlignment) private var layoutAlignment
-  @Environment(\.labelTextCase) private var labelTextCase
   @Environment(\.textAlignment) private var textAlignment
   @Environment(\.font) private var font
 
   // Label Title
-//  @Environment(\.labelTitleColour) private var labelTitleColour
+  //  @Environment(\.labelTitleColour) private var labelTitleColour
   @Environment(\.labelTitleWeight) private var labelTitleWeight
   @Environment(\.labelTitleFontStyle) private var labelTitleFontStyle
 
@@ -84,7 +83,7 @@ extension CustomLabel {
     } icon: {
       IconView(configuration)
     }
-    .textCase(labelTextCase)
+    .commonStyles()
   }
 
   @ViewBuilder
@@ -92,21 +91,14 @@ extension CustomLabel {
     configuration.title
       .font(labelTitleFontStyle ?? font)
       .fontWeight(labelTitleWeight)
-    //      .commonLabelStyles(for: .title, displayOverride: adjustedLabelDisplay)
   }
 
   @ViewBuilder
   private func IconView(_ configuration: Configuration) -> some View {
-    //    if let iconFont {
     configuration.icon
       .font(labelIconFontStyle ?? font)
       .fontWeight(labelIconWeight)
-//      .tint(labelIconColour)
       .foregroundStyle(labelIconColour ?? AnyShapeStyle(.tint))
-    //    } else {
-    //      configuration.icon
-    //    }
-    //      .commonLabelStyles(for: .icon, displayOverride: adjustedLabelDisplay)
 
   }
 
@@ -119,11 +111,23 @@ extension CustomLabel {
       IconView(configuration)
       TitleView(configuration)
     }
-
+    .commonStyles()
   }
+}
 
-  //  private var iconFont: Font? {
-  //    guard let iconFontStyle else { return nil }
-  //    return .system(iconFontStyle)
-  //  }
+// MARK: - Common styles
+
+private struct CommonLabelStylesModifier: ViewModifier {
+  @Environment(\.labelTextCase) private var labelTextCase
+
+  func body(content: Content) -> some View {
+    content
+      .textCase(labelTextCase)
+  }
+}
+
+extension View {
+  public func commonStyles() -> some View {
+    self.modifier(CommonLabelStylesModifier())
+  }
 }
