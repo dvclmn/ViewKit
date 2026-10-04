@@ -45,8 +45,9 @@ public struct TextTag: View {
       )
       .quickBackground(
         shape: .rect(cornerRadius: Styles.sizeTiny),
-        padding: 2,
-        tint: colour.toColour
+//        padding: 2,
+//        tint: colour.toColour
+        style: .standard(tint: colour.toColour)
       )
 //      .backgroundTint(colour.toColour)
       

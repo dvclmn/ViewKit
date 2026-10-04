@@ -105,14 +105,3 @@ extension QuickTabView {
     )
   }
 }
-//  public init(
-//    title: String,
-//    selection: Binding<TabItem>,
-//  ) where TabItem.AllCases: RandomAccessCollection, TabItem.AllCases.Element == TabItem, TabItem.AllCases == [TabItem] {
-//    self.title = title
-//    self._selection = selection
-//    self.sourceData = Item.allCases
-//  }
-//}
-
-//where TabItem: CaseIterable, TabItem.AllCases: RandomAccessCollection

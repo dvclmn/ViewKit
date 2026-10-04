@@ -51,7 +51,7 @@ struct PopupView: View {
           shape: .rounded(rounding),
 //        .quickRoundedBackground(
 //          rounding: rounding,
-          glass: hasGlassEffect ? .regular : nil,
+          style: .glass( hasGlassEffect ? .regular : nil),
 //          padding: .zero,
 //          tint: message.label.role?.colour?.toColour,
           isEnabled: true

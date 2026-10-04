@@ -1,15 +1,14 @@
 //
-//  SystemPicker.swift
+//  SystemColourPicker.swift
 //  ViewKit
 //
 //  Created by Dave Coleman on 22/3/2026.
 //
 
-import CoreTools
-import ViewTools
-// import LayoutKit
-import SwiftUI
 import ColourTools
+import CoreTools
+import SwiftUI
+import ViewTools
 
 public struct SystemColourPicker: View {
   @Environment(\.self) private var envSelf
@@ -42,7 +41,6 @@ public struct SystemColourPicker: View {
         colour = RGBColour(
           colour: localColour,
           environment: envSelf,
-//          name: nil,
         )
       }
 

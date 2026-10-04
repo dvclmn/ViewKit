@@ -20,9 +20,9 @@ struct ItemViewCommonModifier: ViewModifier {
       .environment(\.symbolRenderingMode, .hierarchical)
       .environment(\.symbolVariants, .fill)
       .labelIconColour(isEmphasised ? .primary : .secondary)
-//      .iconColour(isEmphasised ? .primary : .secondary)
+      //      .iconColour(isEmphasised ? .primary : .secondary)
       .environment(\.labelIconFontStyle, .title)
-    
+
       .multilineTextAlignment(.center)
       .padding(Styles.sizeTiny)
       .frame(
@@ -30,12 +30,13 @@ struct ItemViewCommonModifier: ViewModifier {
         height: cardSize.height,
         alignment: .center,
       )
-      .quickBackground(
-        shape: .rect(cornerRadius: Styles.sizeSmall.bump),
-        glass: .regular(tint: tintColour),
-        padding: .zero,
-      )
-//      .backgroundTint(.white.opacity(tintOpacity))
+      .quickBackground(style: .glass(.regular(tint: tintColour)))
+    //      .quickBackground(
+    //        shape: .rect(cornerRadius: Styles.sizeSmall.bump),
+    //        glass: .regular(tint: tintColour),
+    //        padding: .zero,
+    //      )
+    //      .backgroundTint(.white.opacity(tintOpacity))
   }
 }
 
@@ -48,7 +49,7 @@ extension ItemViewCommonModifier {
       default: return nil
     }
   }
-  
+
   private var tintOpacity: CGFloat {
     switch (isHovering, isEmphasised) {
       case (true, true): return 1.0

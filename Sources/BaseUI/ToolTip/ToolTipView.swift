@@ -29,7 +29,7 @@ struct ToolTipView: View {
           .padding(.vertical, 1)
           .quickBackground(
             shape: .capsule,
-            tint: tint
+            style: .standard(tint: tint)
             //            shape: style.isCapsule ? .capsule : .rect(cornerRadius: CGFloat.defaultQuickRounding),
           )
           

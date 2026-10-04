@@ -21,8 +21,8 @@ struct QuickBackgroundExampleView: View {
         .padding(40)
         .quickBackground(
           shape: .rect(cornerRadius: Styles.sizeRegular),
-          padding: Styles.sizeSmall,
-          tint: .pink,
+//          padding: Styles.sizeSmall,
+//          tint: .pink,
           //          usesGlassEffect: true
         )
 
@@ -30,8 +30,8 @@ struct QuickBackgroundExampleView: View {
         .padding(40)
         .quickBackground(
           shape: .capsule,
-          padding: Styles.sizeMedium,
-          tint: .black,
+//          padding: Styles.sizeMedium,
+//          tint: .black,
           //          usesGlassEffect: false
         )
     }
