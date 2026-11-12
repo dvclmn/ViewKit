@@ -10,8 +10,6 @@ import ViewTools
 import SwiftUI
 
 public struct QuickPicker<Item: LabeledItem & Hashable>: View {
-//public struct QuickPicker<Item: Hashable & Identifiable>: View {
-//  @Environment(\.frameHeight) private var frameHeight
 
   @Environment(\.quickPickerStyle) private var style
 
@@ -37,7 +35,9 @@ public struct QuickPicker<Item: LabeledItem & Hashable>: View {
       case .plain:
         Picker(title, selection: $selection) {
           ForEach(sourceData) { item in
-            QuickLabel(item.label).tag(item)
+            QuickLabel(item.label)
+              .tag(item)
+              
           }
         }
 
@@ -50,35 +50,6 @@ public struct QuickPicker<Item: LabeledItem & Hashable>: View {
       }
   }
 }
-
-//extension QuickPicker {
-//  @ViewBuilder
-//  private func TextLabel(for item: Item) -> some View {
-//    Text(String(describing: item))
-//  }
-//}
-
-//extension QuickPicker where Item: CustomStringConvertible {
-//  @ViewBuilder
-//  private func TextLabel(for item: Item) -> some View {
-//    Text(item.description)
-//  }
-//}
-//
-//extension QuickPicker where Item: RawRepresentable, Item.RawValue == String {
-//  @ViewBuilder
-//  private func TextLabel(for item: Item) -> some View {
-//    Text(item.rawValue.capitalized)
-//  }
-//}
-//
-//extension QuickPicker where Item: LabeledItem {
-//  @ViewBuilder
-//  private func TextLabel(for item: Item) -> some View {
-//    MaybeLabel(item.label)
-//    EmptyView()
-//  }
-//}
 
 extension QuickPicker where Item: CaseIterable {
   public init(
